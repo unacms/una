@@ -1,0 +1,84 @@
+<div class="bx_sys_default_padding" id="bx-sort-wrapper">
+    <bx_repeat:containers>
+    <div class="bx-sortable-container-wrapper">
+        <h2>__title__</h2>
+        <div class="bx-sys-mobile-page">
+            <div class="bx-sys-mobile-padding bx-sortable-connected" id="bx-sort-cont-__id__">
+                <bx_repeat:items>
+                    <div id="bx-sort-item-__id__" class="bx-sortable-item">
+                        __item__
+<!--
+                        <div class="bx-sys-mobile-padding2 bx-sys-mobile-border bx-sys-mobile-box-bg bx-sys-mobile-text">
+                            __title__
+                        </div>
+-->
+                    </div>
+                </bx_repeat:items>
+            </div>
+        </div>
+    </div>
+    <div class="bx-sortable-container-divider">
+        &nbsp;
+    </div>
+    </bx_repeat:containers>
+    <div class="clear_both">&nbsp;</div>
+</div>
+
+<script>
+	$(function() {
+		$( "__containers_ids__" ).sortable({
+            opacity: 0.6,
+            placeholder: "bx-sortable-placeholder",
+			connectWith: ".bx-sortable-connected",
+            stop: function(event, ui) {
+                var aContainersOrdered = {};
+                $('#bx-sort-wrapper .bx-sortable-connected').each(function (e) {
+                    var aContMatch;
+                    var sId = this.id;
+                    if (aContMatch = sId.match(/bx-sort-cont-([0-9a-zA-Z_]+)/)) {                        
+                        var sContId = aContMatch[1];
+                        var sIdsOrdered = '';
+                        $('#bx-sort-cont-' + sContId + ' > .bx-sortable-item').each(function (e) {
+                            var s = this.id;
+                            var aItemMatch;
+                            if (aItemMatch = s.match(/bx-sort-item-([0-9a-zA-Z_]+)/))
+                                sIdsOrdered +=  aItemMatch[1] + ',';
+                        });                        
+                        aContainersOrdered[sContId] = sIdsOrdered;
+                    }
+                });
+
+                var aContNames = [];
+                var aContData = [];
+                var i;
+                for (var sContId in aContainersOrdered) {
+                    aContNames[i] = sContId;
+                    aContData[i] = aContainersOrdered[sContId];
+                    ++i;
+                }
+
+                var oData = {                
+                    action: 'SaveItemsOrder',
+                    'cont_names[]': aContNames, 
+                    'cont_data[]': aContData                    
+                }
+
+                $.post("__post_url__", bx_query_data(oData)); 
+            }
+		}).disableSelection();
+	});
+
+    
+    function bx_query_data (o) {
+        var s = '';
+        for (var i in o) {
+            if (typeof o[i] == "object") {
+                for (var ii in o[i]) 
+                    s += i + '=' + o[i][ii] + '&';
+            } else {
+                s += i + '=' + o[i] + '&';
+            }
+        }
+        return s;
+    }
+</script>

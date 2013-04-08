@@ -1,0 +1,17 @@
+<bx_if:show_empty>
+    <div class="bx-form-input-preview-empty bx-def-font-small bx-def-color-ft-gray-l3">
+        <bx_text:_adm_txt_form_view_iu_preview_empty />
+    </div>
+</bx_if:show_empty>
+<bx_if:show_image>
+    <div class="bx-form-input-preview">
+        <img src="__url__" />
+        <bx_if:show_action_delete>
+            <p>
+                <button type="button" class="bx-btn bx-btn-small" onclick="javascript:__action__">
+                    <bx_text:_adm_txt_form_view_iu_delete />
+                </button>
+            </p>
+        </bx_if:show_action_delete>
+    </div>
+</bx_if:show_image>

@@ -1,0 +1,31 @@
+/*--- Product's style ---*/
+div.bx-std-product {
+	position: relative;
+    float: left;
+	width: 230px;
+	height: 64px;
+	margin: 0px 0px 20px 0px;
+}
+div.bx-stdp-icon {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 64px;
+	height: 64px;
+}
+div.bx-stdp-icon img {
+	width: 64px;
+    height: 64px;
+}
+div.bx-stdp-content {
+	min-height: 64px;
+    margin-left: 74px; 
+}
+div.bx-std-pc-title {
+	padding: 5px 0px 0px 0px;
+}
+div.bx-std-pc-vendor {
+	padding: 0px 0px 3px 0px;
+	font-size: 11px;
+}
+div.bx-std-pc-action {}

@@ -1,0 +1,93 @@
+div.arl-cb {
+    clear: both;
+    font-size: 0px;
+}
+div.arl-view,
+div.arl-content {
+    width: 100%;
+    position: relative;
+}
+div.arl-entries {
+    padding: 10px 10px 0px 10px;
+    position: relative;
+}
+div.arl-entry {
+    margin-bottom: 10px;
+    padding: 10px;
+
+    position: relative;
+
+    background-color: #f2f2ff
+}
+div.arl-info {
+    min-height: 38px;
+    position: relative;
+}
+div.arl-checkbox {
+    top: 10px;
+    left: 10px;
+    width: 20px;
+    height: 38px;
+    position: absolute;
+    text-align: left;
+}
+div.arl-caption,
+div.arl-date,
+div.arl-text {
+    position: relative;
+}
+a.arl-caption {
+    font-weight: bold;
+    font-size: 12px;
+}
+span.arl-caption {
+    font-size: 12px;
+    font-weight: bold;
+}
+span.arl-status {
+    font-size: 10px;
+    font-weight: bold;
+    color: #999999;
+}
+div.arl-date {
+    margin-bottom: 5px;
+
+    font-size: 9px;
+    color: #999999;
+}
+div.arl-text {
+    overflow: hidden;
+}
+div.arl-text-snippet {
+    /*
+    TEXT-OVERFLOW: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    */
+}
+div.arl-comments {
+    position: relative;
+    clear: both;
+}
+div.arl-comments div.cmt-reply {
+    padding: 0px;
+}
+div.arl-comments div.cmts {
+    padding: 0px;
+}
+div.arl-entry div.votes_small {
+    top: 10px;
+    right: 10px;
+    width: auto;
+    position: absolute;
+}
+
+div.arl-calendar-unit {
+    position: relative;
+}
+
+/*--- Admin panel ---*/
+div.block_cont {
+    padding: 0px;
+}

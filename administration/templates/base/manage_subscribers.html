@@ -1,0 +1,19 @@
+<!-- TODO: remake according to new design and principles -->
+
+<form id="adm-ms-form" name="adm-ms-form" action="" method="post">
+    <div class="adm-ms-items">
+        <bx_repeat:items>
+            <div class="adm-ms-item">
+                <div class="adm-ms-check">
+                    <input type="checkbox" class="form_input_checkbox" id="adm-mp-__id__" name="members[]" value="__id__" />
+                </div>
+                <div class="adm-ms-name">__name__</div>
+                <div class="adm-ms-email">__email__</div>
+                <div class="clear_both">&nbsp;</div>
+            </div>
+        </bx_repeat:items>
+
+    </div>
+    __paginate__
+    __controls__
+</form>

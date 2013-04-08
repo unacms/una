@@ -1,0 +1,44 @@
+
+
+/* browse unit */
+
+.bx-persons-unit {
+    width:169px;    
+    float:left;
+}
+
+.bx-persons-unit img {
+    display:inline;
+    display:inline-block;
+
+    width:64px;
+    height:64px;
+
+    vertical-align:middle;
+}
+
+.bx-persons-unit div {
+    display:inline;
+    display:inline-block;
+    
+    width:95px;
+    max-height:64px;    
+    padding-left:10px;
+    
+    text-overflow:ellipsis;
+    overflow:hidden;
+
+    vertical-align:middle;
+}
+
+/* view content */
+
+.bx-persons-preview {
+    text-align:center;
+}
+
+.bx-persons-preview img {
+	border-radius:2px;
+	-moz-border-radius:2px;
+	-webkit-border-radius:2px;    
+}

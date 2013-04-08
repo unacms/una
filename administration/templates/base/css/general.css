@@ -1,0 +1,347 @@
+/* TODO: remove or remake according to new design */
+
+@import url(../../../../templates/base/css/common.css);
+
+/*--- Body ---*/
+body {
+    background-color: #6d6d6d;
+}
+div#FloatDesc {
+    position:absolute;
+    display:none;
+    z-index:10000;
+    background-color:#ffffe0;
+    border:1px solid #000000;
+    padding:3px;
+    width:180px;
+}
+
+form, p {
+    margin:0px;
+    padding:0px;
+}
+
+a img {
+    border:none;
+}
+
+.err {
+    color: #FF0000;
+}
+
+/*--- Top Header ---*/
+div.adm-header {
+    height: 87px;
+
+    position: relative;
+
+    border-bottom: 1px solid #c8c8c8;
+    background-image: url(../images/header_bg.png);
+    background-repeat: repeat-x;
+    background-position: 0px 0px;
+}
+div.adm-header-content {
+    width: 500px;
+    margin: 0px auto;
+}
+
+img.adm-header-logo {
+    top: 0px;
+    left: 0px;
+    width: 105px;
+    height: 116px;
+
+    position:absolute;
+}
+div.adm-header-title {
+    padding: 25px 0px 25px 110px;
+
+    position: relative;
+    float: left;
+
+    line-height: 87px;
+    font-family: Copperplate Gothic Bold;
+    font-size: 48px;
+    font-weight: bold;
+    color: #333333;
+}
+div.adm-header-verion {
+    top: 20px;
+    left: 148px;
+    width: 60px;
+    height: 10px;
+    position: absolute;
+
+    line-height: 9px;
+    font-family: Verdana;
+    font-size:9px;
+}
+
+/*--- Top Menu ---*/
+div.adm-top-menu {
+    position: relative;
+    float: right;
+}
+div.adm-tm-item {
+    width: 100px;
+    height: 87px;
+
+    position: relative;
+    float: left;
+}
+div.adm-tm-item-active {
+    background-image: url(../images/tm_item_active_bg.png);
+    background-position: 0px 0px;
+    background-repeat: repeat-x;
+}
+div.adm-tm-item a {
+    width: 100px;
+    height: 87px;
+    margin: 0px;
+    padding: 0px;
+
+    display: block;
+
+    text-decoration: none;
+    color: #333333;
+}
+
+div.adm-tm-item-icon {
+    width: 32px;
+    height: 32px;
+    margin: 0px auto;
+    padding: 23px 0px 5px 0px;
+}
+div.adm-tm-item-icon img {
+    width: 32px;
+    height: 32px;
+}
+div.adm-tm-item-text {
+    text-align: center;
+    font-size: 9px;
+}
+
+/*--- Middle Part ---*/
+div.adm-middle {
+    padding: 30px 0px;
+    background-color: #ffffff;
+}
+table.adm-middle {
+    width: 900px;
+    margin: 0px auto;
+    padding: 0px;
+
+    border: 0px;
+}
+td.adm-middle-menu {
+    width: 214px;
+    padding: 0px;
+    margin: 0px;
+
+    border: 0px;
+
+    vertical-align: top;
+}
+td.adm-middle-main {
+    padding: 0px;
+    margin: 0px;
+
+    background-repeat: no-repeat;
+    background-position: 470px 0px;
+    vertical-align: top;
+}
+
+div.adm-page-header {
+    margin: 0px 0px 20px 34px;
+
+    font-weight: bold;
+    font-size: 30px;
+}
+div.adm-page-content {
+    margin: 0px 0px 0px 34px;
+}
+
+
+/*--- Footer Part ---*/
+div.adm-footer {
+    position:relative;
+    height: 73px;
+
+    background-color: #6e6e6e;
+    background-repeat: repeat-x;
+    background-image: url(../images/bottom_bord.gif);
+
+    font-size: 14px;
+    line-height: 20px;
+    color: #ffffff;
+}
+.adm-footer-logo {
+    position:absolute;
+    top:20px;
+    right:20px;
+}
+div.adm-footer-content {
+    padding: 20px 0px 0px 25px;
+}
+
+div.adm-footer a,
+div.adm-footer a:link,
+div.adm-footer a:visited,
+div.adm-footer a:hover,
+div.adm-footer a:active {
+    color:#ffffff;
+}
+
+
+/*--- DesignBox ---*/
+div.adm-design-box {
+    margin-bottom: 10px;
+
+    border: 1px solid #CCC;
+    background-image: url(../images/head_bg.gif);
+    background-repeat: repeat-x;
+    background-color: #fff;
+}
+div.adm-db-head {
+    height: 28px;
+    position: relative;
+    border-bottom: 1px solid #ccc;
+
+    line-height: 28px;
+    text-indent: 10px;
+    text-align: left;
+    text-transform: capitalize;
+
+    font-size: 12px;
+    font-weight: bold;
+    font-family: Verdana,Arial;
+    color: #333;
+}
+div.adm-db-content {
+    padding: 1px;
+    font-size: 11px;
+}
+div.adm-db-control-panel {
+    height: 30px;
+
+    background-color: #ededed;
+
+    line-height: 30px;
+    font-size: 11px;
+}
+div.adm-db-content-wrapper {
+    padding: 9px;
+    position: relative;
+}
+div.adm-design-box div.adm-db-head .dbTopMenu {
+    top: 0px;
+    right: 1px;
+
+    position: absolute;
+
+    text-transform: capitalize;
+    text-indent: 0px;
+    white-space: nowrap;
+
+    font-size: 11px;
+    font-weight: bold;
+    color: #333;
+}
+.dbTopMenu div.active,
+.dbTopMenu div.notActive {
+    float: left;
+    padding: 0px 5px;
+    border-left: 0px solid #ccc;
+    height: 28px;
+    line-height: 28px;
+    position: relative;
+    font-weight: normal;
+}
+.dbTopMenu div a,
+.dbTopMenu div a:link,
+.dbTopMenu div a:hover,
+.dbTopMenu div a:active,
+.dbTopMenu div a:visited {
+    color: #666;
+    font-family:Verdana,Arial;
+    font-size:11px;
+}
+.dbTopMenu div.active {
+    background:transparent url(../images/head_ti_left.gif) no-repeat scroll 0%;
+    cursor:pointer;
+    display:block;
+    float:left;
+    height:28px;
+    line-height:28px;
+    padding:0pt 0pt 0pt 5px;
+}
+.dbTopMenu .active span {
+    background:transparent url(../images/head_ti_right.gif) repeat-y scroll right top;
+    display:block;
+    float:left;
+    height:28px;
+    padding:0pt 5px 0pt 0px;
+}
+div.adm-db-head div.notActiveIcon {
+    background-position: 0px 5px;
+    background-repeat: no-repeat;
+    padding-left: 18px;
+}
+div.adm-design-box div.adm-db-close {
+    width: 28px;
+    height: 28px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+div.adm-design-box div.adm-db-close img {
+    width: 28px;
+    height: 28px;
+}
+table.popup_form_wrapper div.adm-design-box {
+    margin-bottom: 0px;
+}
+
+/* top settings */
+div.top_settings_block
+{
+    background-color:#EDEDED;
+    height:30px;
+    width:100%;
+    color:#666666;
+}
+
+div.top_settings_block div.ordered_block
+{
+    padding-top:5px;
+    padding-left:9px;
+    float:left;
+}
+
+div.top_settings_block div.per_page_block
+{
+    padding-top:5px;
+    float:right;
+    padding-right:9px;
+}
+
+/* RSS feed block */
+
+.adm-db-content > .RSSAggrCont > .rss_feed_wrapper
+{
+    margin: 9px;
+}
+
+.sys-adm-active-0 {
+    color:#999;
+}
+
+.sys-adm-enabled {
+    color:#fff;
+    background-color:#0b0;
+}
+
+.sys-adm-disabled {
+    color:#fff;
+    background-color:#d00;
+}
+

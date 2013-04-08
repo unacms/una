@@ -1,0 +1,42 @@
+<div class="bx_gsearch_container" id="bx_gsearch__suffix__">
+    <div class="loading_ajax"><div class="loading_ajax_rotating"></div></div>
+</div>
+<script type="text/javascript">
+
+bx_loading('bx_gsearch__suffix__', true);
+
+google.load('search', '1');
+
+function OnLoad() {
+  // Create a search control
+  var searchControl = new google.search.SearchControl();
+
+  var webSearch = new google.search.WebSearch()
+  webSearch.setSiteRestriction('__domain__');
+  searchControl.addSearcher(webSearch);
+
+  if (__is_image_search__) {
+      var imageSearch = new google.search.ImageSearch();
+      imageSearch.setSiteRestriction('__domain__');
+      searchControl.addSearcher(imageSearch);
+  }
+
+  // draw in tabbed layout mode
+  var drawOptions = new google.search.DrawOptions();
+  if (__is_tabbed_search__)
+    drawOptions.setDrawMode(google.search.SearchControl.DRAW_MODE_TABBED);
+  if (__separate_search_form__)
+    drawOptions.setSearchFormRoot(document.getElementById("bx_gsearch_form__suffix__"));
+
+  // tell the searcher to draw itself and tell it where to attach
+  searchControl.draw(document.getElementById("bx_gsearch__suffix__"), drawOptions);
+  searchControl.setNoResultsString ("<bx_text:_bx_gsearch_no_results />");
+
+  // execute an inital search
+  if ("__keyword__".length > 0)
+    searchControl.execute("__keyword__");
+}
+
+google.setOnLoadCallback(OnLoad);
+
+</script>

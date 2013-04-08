@@ -1,0 +1,18 @@
+#bx_groups_admin_listing .block_cont {
+    padding:1px;
+}
+
+table.bx_groups_actions {
+    border-collapse:collapse;
+    margin:5px;
+    width:100%;
+}
+
+table.bx_groups_actions td {
+    width:33%;
+    text-align:center;
+}
+
+.bx_groups_manage_wrapper {
+    padding:0;
+}

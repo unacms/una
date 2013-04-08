@@ -1,0 +1,17 @@
+<div class="bx-std-product">
+    <div class="bx-stdp-icon">
+        <a href="__url__">
+            <img src="__icon__" />
+        </a>
+    </div>
+    <div class="bx-stdp-content">
+        <div class="bx-std-pc-title">
+            <a href="__url__">__title__</a>
+        </div>
+        <div class="bx-std-pc-vendor bx-def-color-ft-gray-l3">__vendor__</div>
+        <div class="bx-std-pc-action">
+            <input class="bx-btn bx-btn-small" <bx_if:hide_install>style="display:none"</bx_if:hide_install> type="button" value="<bx_text:_adm_btn_install_submit />" onclick="javascript:__js_object__.install('__dir__', this)" />
+            <input class="bx-btn bx-btn-small bx-btn-disabled" <bx_if:hide_installed>style="display:none"</bx_if:hide_installed> type="button" value="<bx_text:_adm_btn_installed_submit />" />
+        </div>
+    </div>
+</div>

@@ -1,0 +1,11 @@
+body.bx-std-bg {
+	background-image: url(../images/bx-std-bg-page.jpg);
+}
+div.bx-std-page-bg {
+	background-image: url(../images/bx-std-bg-columns.png);
+	background-repeat: repeat-y;
+	background-position: 0px 0px;
+}
+div.bx-std-page-bg-empty {
+    background-image: url(../images/bx-std-spacer.gif);
+}

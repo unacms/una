@@ -1,0 +1,83 @@
+<div class="simple_messenger_chat_block __chat_block_position__" onclick="if(typeof oSimpleMessenger != 'undefined'){oSimpleMessenger.showChatWindow('__history_window_id__', this)}">
+    <div class="__block_indent__">
+        <img class="sender_status" height="16" border="0" width="16" src="__member_status__" />
+        __sender_nick__
+    </div>
+    <div class="messages_history __history_block_position__" id="__history_window_id__" style="background-image: url(__history_back_img__)" onclick="if(typeof oSimpleMessenger != 'undefined'){oSimpleMessenger.facePlate(event, this, oSimpleMessenger.placeTop)}">
+        <bx_if:menu_pos_top>
+            <div class="sender_info">
+            <table cellpadding="0" cellspacing="0">
+                <tbody>
+                    <tr>
+                        <td colspan="2">
+                            <div class="controls">
+                                <a href="javasript:void(0)" onclick="if ( typeof oSimpleMessenger != 'undefined' ) {oSimpleMessenger.showChatWindow('__history_window_id__')}return false" title="__reduce_title__">
+                                    <img src="__reduce_img__" width="14" height="14" border="0" />
+                                </a>
+                                <a href="javasript:void(0)" onclick="if ( typeof oSimpleMessenger != 'undefined' ) {oSimpleMessenger.closeChatWindow(__sender_id__)}return false" title="__close_title__">
+                                    <img src="__close_img__" width="14" height="14" border="0" />
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" class="sender_thumb">__sender_thumb__</td>
+                        <td valign="top" class="sender_info">
+                            <div class="sender_link"><a href="__sender_link__">__sender_nick__</a></div>
+                            <div class="status_text">__status_text__</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <bx_if:video_messenger>
+        <div class="video_messenger">
+            <img src="__video_img_src__" width="16" height="16" />
+            <a href="javascript:void(0)" onclick="openRayWidget('im', 'user', '__sender_id__', '__sender_passw__', '__recipient_id__');return false">__video_messenger__</a>
+        </div>
+        </bx_if:video_messenger>
+        </bx_if:menu_pos_top>
+        <div class="messages_section">__messages__</div>
+        <div class="form_advanced_table">
+            <div class="input_wrapper input_wrapper_text">
+                <div class="field_design"><img src="__field_img__" width="14" height="12" /></div>
+                <input class="form_input_text" type="text" onkeyup="if ( typeof oSimpleMessenger != 'undefined' ) { oSimpleMessenger.sendMessage(event, this, __recipient_id__)}"/>
+                <div class="input_close input_close_text"/>
+            </div>
+            <div class="clear_both"></div>
+        </div>
+        <bx_if:menu_pos_bottom>
+        <bx_if:video_messenger>
+        <div class="video_messenger">
+            <img src="__video_img_src__" width="16" height="16" />
+            <a href="javascript:void(0)" onclick="openRayWidget('im', 'user', '__sender_id__', '__sender_passw__', '__recipient_id__');return false">__video_messenger__</a>
+        </div>
+        </bx_if:video_messenger>
+        <div class="sender_info">
+            <table cellpadding="0" cellspacing="0">
+                <tbody>
+                    <tr>
+                        <td valign="top" class="sender_thumb">__sender_thumb__</td>
+                        <td valign="top" class="sender_info">
+                            <div class="sender_link"><a href="__sender_link__">__sender_nick__</a></div>
+                            <div class="status_text">__status_text__</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="controls">
+                                <a href="javasript:void(0)" onclick="if ( typeof oSimpleMessenger != 'undefined' ) {oSimpleMessenger.showChatWindow('__history_window_id__')}return false" title="__reduce_title__">
+                                    <img src="__reduce_img__" width="14" height="14" border="0" />
+                                </a>
+                                <a href="javasript:void(0)" onclick="if ( typeof oSimpleMessenger != 'undefined' ) {oSimpleMessenger.closeChatWindow(__sender_id__)}return false" title="__close_title__">
+                                    <img src="__close_img__" width="14" height="14" border="0" />
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        </bx_if:menu_pos_bottom>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+<bx_repeat:items>
+	<div class="bx-std-list-item bx-std-module __class__">
+	    <div class="bx-std-li-brd">
+            <div class="bx-std-li-ctls">
+                <bx_if:not-installed>
+                    <div class="bx-std-li-ctl1 bx-std-li-install">
+	                   <a href="javascript:void(0)" onclick="javascript:__js_object__.install('__path__')">
+	                       <bx_text:_adm_txt_modules_market_install />
+	                   </a>
+                    </div>
+                </bx_if:not-installed>
+                <bx_if:installed-on>
+                    <div class="bx-std-li-ctl1 bx-std-li-enabled">
+                        <a href="javascript:void(0)" onclick="javascript:__js_object__.disable('__path__')">
+                            <img src="<bx_image_url:bx-std-spacer.gif />" alt="<bx_text:_adm_txt_modules_market_disable />"  title="<bx_text:_adm_txt_modules_market_disable />" />
+                        </a>
+                    </div>
+                </bx_if:installed-on>
+                <bx_if:installed-off>
+                    <div class="bx-std-li-ctl1 bx-std-li-disabled">
+                        <a href="javascript:void(0)" onclick="javascript:__js_object__.enable('__path__')">
+                            <img src="<bx_image_url:bx-std-spacer.gif />" alt="<bx_text:_adm_txt_modules_market_enable />"  title="<bx_text:_adm_txt_modules_market_enable />" />
+                        </a>
+                    </div>
+                </bx_if:installed-off>
+                <div class="bx-std-li-div"></div>
+	            <div class="bx-std-li-ctl2">
+                    <bx_if:uninstall>
+						<a href="javascript:void(0)" onclick="javascript:__js_object__.uninstall('__path__')">
+						    <img src="<bx_image_url:bx-std-spacer.gif />" alt="<bx_text:_adm_txt_modules_market_uninstall />"  title="<bx_text:_adm_txt_modules_market_uninstall />" />
+						</a>
+					</bx_if:uninstall>
+					<bx_if:delete>
+                        <a href="javascript:void(0)" onclick="javascript:__js_object__.delete('__path__')" alt="<bx_text:_adm_txt_modules_market_uninstall />">
+                            <img src="<bx_image_url:bx-std-spacer.gif />" alt="<bx_text:_adm_txt_modules_market_delete />"  title="<bx_text:_adm_txt_modules_market_delete />" />
+                        </a>
+					</bx_if:delete>
+	            </div>
+	            <div class="bx-std-li-div"></div>
+            </div>
+	        <div class="bx-std-li-cnt">
+	            <div class="bx-std-li-title">
+                    <bx_if:link>
+                        <a class="bx-def-color-ft-gray-l2" href="__link__">__title__</a>
+                    </bx_if:link>
+                    <bx_if:text>
+                        <span class="bx-def-color-ft-gray-l2" href="__link__">__title__</span>
+                    </bx_if:text>
+	            </div>
+	            <div class="bx-std-li-description bx-def-color-ft-gray-l3">__note__ <a href="__link_market__" target="_blank"><bx_text:_adm_txt_modules_market_link /></a></div>
+	            <div class="bx-std-cb"></div>
+	        </div>
+	    </div>
+	</div>
+</bx_repeat:items>

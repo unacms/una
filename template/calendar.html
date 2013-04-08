@@ -1,0 +1,41 @@
+<!-- TODO: remake according to new design -->
+
+<div class="sys_cal_wrapper">
+
+<div class="dbBottomMenu">
+    <img class="bot_icon_left" src="__month_prev_icon__" alt="" />
+    <a class="backMembers" href="__month_prev_url__">__month_prev_name__</a>
+    <img class="bot_icon_right" src="__month_next_icon__" alt="" />
+    <a class="moreMembers" href="__month_next_url__">__month_next_name__</a>
+    <span class="viewAllMembers">__month_current__</span>
+</div>
+
+<table class="sys_cal_table">
+    <tr>
+        <bx_repeat:week_names>
+            <th>__name__</th>
+        </bx_repeat:week_names>
+    </tr>
+    <bx_repeat:calendar_row>
+        <tr>
+            <bx_repeat:cell>
+                <td class="__class__" valign="top">
+                    <u>__day__</u>
+                    <bx_if:num>
+                        <a href="__href__"><b>__num__</b> __entries__</a>
+                    </bx_if:num>
+                </td>
+            </bx_repeat:cell>
+        </tr>
+    </bx_repeat:calendar_row>
+</table>
+
+<div class="dbBottomMenu">
+    <img class="bot_icon_left" src="__month_prev_icon__" alt="" />
+    <a class="backMembers" href="__month_prev_url__">__month_prev_name__</a>
+    <img class="bot_icon_right" src="__month_next_icon__" alt="" />
+    <a class="moreMembers" href="__month_next_url__">__month_next_name__</a>
+    <span class="viewAllMembers">__month_current__</span>
+</div>
+
+</div>

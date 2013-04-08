@@ -1,0 +1,22 @@
+<bx_repeat:orders>
+    <div class="pmt-orders-item">
+        <div class="pmt-orders-date">__date_uf__</div>
+        <div class="pmt-orders-client">
+            <bx_if:show_link>
+                <a href="__user_url__" target="_blank">__user_name__</a>
+            </bx_if:show_link>
+            <bx_if:show_text>__user_name__</bx_if:show_text>
+        </div>
+        <div class="pmt-orders-order">__order__</div>
+        <div class="pmt-orders-amount">__amount__</div>
+        <div class="pmt-orders-license">__license__</div>
+        <div class="pmt-orders-action">
+            __products__ <bx_text:_payment_txt_more_products /> __items__ <bx_text:_payment_txt_more_items /> <a href="javascript:void(0)" onclick="javascript:__js_object__.more('history', __id__)"><bx_text:_payment_txt_action_more /></a>
+        </div>
+        <div class="pmt-cb">&nbsp;</div>
+    </div>
+</bx_repeat:orders>
+__paginate_panel__
+<div class="pmt-orders-loading" style="background-image:url(<bx_image_url:loading_bg.png />)">
+    <img src="<bx_image_url:loading.gif />" />
+</div>

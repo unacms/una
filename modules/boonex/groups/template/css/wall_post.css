@@ -1,0 +1,48 @@
+
+div.bx-groups-wall-event {
+    margin-left: 25px;
+    position: relative;
+}
+
+div.bx-groups-wall-caption {
+    height: 30px;
+    padding-left: 20px;
+    position: relative;
+    background-repeat: no-repeat;
+    background-position: 0px center;
+    line-height: 30px;
+}
+
+span.bx-groups-wall-caption-owner {
+    font-weight: bold;
+}
+
+a.bx-groups-wall-caption-link,
+a.bx-groups-wall-caption-link:link {
+    text-decoration: none;
+}
+a.bx-groups-wall-caption-link:hover,
+a.bx-groups-wall-caption-link:active {
+    text-decoration: underline;
+}
+
+
+div.bx-groups-wall-comments {
+    padding-left: 0px;
+    position: relative;
+    font-size: 10px;
+}
+
+/*--- Overwrite default Comment styles ---*/
+div.bx-groups-wall-comments div.cmts {
+    padding: 0px;
+    /*display: none;*/
+}
+div.bx-groups-wall-comments div.cmt-reply {
+    padding: 0px;
+    /*display: none;*/
+}
+div.bx-groups-wall-comments div.thumbnail_block {
+    left: -38px;
+    top: 1px;
+}

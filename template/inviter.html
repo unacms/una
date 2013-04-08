@@ -1,0 +1,18 @@
+<!-- TODO: remake according to new design and styles -->
+<div id="sys_inviter_users">
+    <div>
+        <input type="checkbox" onclick="$('#sys_inviter_users input[name=\'inviter_users[]\']').attr('checked', this.checked ? 'checked' : '')" />
+        <span><bx_text:_Select_all /></span>
+    </div>
+    <bx_repeat:rows>
+        <div>
+            <input type="checkbox" name="inviter_users[]" value="__ID__" />
+            __Icon__
+            <a href="__Link__">__NickName__</a>
+            <div class="clear_both"></div>
+        </div>
+    </bx_repeat:rows>
+    <div class="sys_inviter_no_users">
+        __msg_no_users__
+    </div>
+</div>

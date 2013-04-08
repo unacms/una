@@ -1,0 +1,32 @@
+#spy_events {
+    position:relative;
+}
+
+table.fixed_menu table.popup div.spy_events_wrapper {
+    overflow: hidden;
+    width: 210px;
+}
+
+div.spy_events_wrapper {
+    margin:10px;
+    position:relative;
+    white-space:normal;
+    padding-bottom:10px;
+}
+
+div.spy_events_wrapper_not_member {
+    height:auto;
+    padding-bottom:2px;
+    padding-top:2px;
+}
+
+div.spy_events_wrapper div.thumb_wrapper{
+    position:absolute;
+    left:0;
+    top:0;
+}
+
+
+div.spy_events_wrapper div.event_info{
+    padding-left:50px;
+}

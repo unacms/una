@@ -1,0 +1,32 @@
+<ul class="bx-menu-ver">        
+    <bx_repeat:menu_items>
+        <li class="bx-def-round-corners __class_add__">
+            <a href="__link__" target="__target__" onclick="__onclick__">
+                <div class="bx-def-padding-sec-top bx-def-padding-sec-bottom bx-def-padding-sec-left">
+                    <bx_if:icon><i class="sys-icon __icon__ bx-def-margin-sec-right"></i></bx_if:icon>
+                    <bx_if:image><img class="bx-def-margin-sec-right" style="background-image:url(__icon_url__)" src="<bx_icon_url:spacer.gif />" /></bx_if:image>
+                    __title__
+                </div>
+            </a>                
+        </li>                
+    </bx_repeat:menu_items>
+    <div class="bx-clear"></div>
+</ul>
+<script language="javascript">
+    $(document).ready(function () {
+
+        // add default class to active menu items
+        $('.bx-menu-ver > li.bx-menu-tab-active').not('.bx-def-color-bg-active').addClass('bx-def-color-bg-active');
+
+        // add default class for onhover effect
+        $('.bx-menu-ver')
+            .not('.bx-menu-ver-js-applied') // make sure to not bind events multiple times
+            .addClass('bx-menu-ver-js-applied') 
+            .find('li') // find all menu items
+            .bind('mouseenter mouseleave', function () { // bind events
+                $(this).toggleClass('bx-def-color-bg-hl');
+            }
+        );        
+
+    });
+</script>

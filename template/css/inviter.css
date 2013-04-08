@@ -1,0 +1,39 @@
+/* TODO: remake according to new design and styles */
+
+#sys_inviter_users {
+    font-size:11px;
+    border:1px solid #ccc;
+    background-color:#FFF;
+    max-height:200px;
+    overflow-y:auto;
+    width:200px;
+    position:relative;
+}
+
+#sys_inviter_users>div {
+    padding:5px;
+    text-align:left;
+    border-top:1px solid #ccc;
+    line-height:16px;
+}
+
+#sys_inviter_users>div:first-child {
+    border-top:none;
+}
+
+#sys_inviter_users>div.sys_inviter_no_users {
+    border-top:none;
+    padding:5px;
+}
+
+#sys_inviter_users>div>input {
+    display:block;
+    float:left;
+}
+
+#sys_inviter_users>div>a {
+    display:block;
+    float:left;
+    line-height:32px;
+    margin-left:5px;
+}

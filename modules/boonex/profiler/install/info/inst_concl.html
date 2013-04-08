@@ -1,0 +1,6 @@
+To complete installation add the following lines to the beginning of inc/header.inc.php file:
+
+define ('BX_PROFILER', true);
+if (BX_PROFILER && !isset($GLOBALS['bx_profiler_start']))
+    $GLOBALS['bx_profiler_start'] = microtime ();
+

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+
+	<string name="_bx_notes"><![CDATA[Notes]]></string>
+
+	<string name="_bx_notes_form_note"><![CDATA[Notes]]></string>
+	<string name="_bx_notes_form_note_display_add"><![CDATA[Add Note]]></string>
+	<string name="_bx_notes_form_note_display_edit"><![CDATA[Edit Note]]></string>
+	<string name="_bx_notes_form_note_display_delete"><![CDATA[Delete Note]]></string>
+	<string name="_bx_notes_form_note_display_view"><![CDATA[View Note]]></string>
+	<string name="_bx_notes_form_note_input_sys_do_submit"><![CDATA[Submit]]></string>
+	<string name="_bx_notes_form_note_input_do_submit"><![CDATA[Submit]]></string>
+	<string name="_bx_notes_form_note_input_sys_title"><![CDATA[Title]]></string>
+	<string name="_bx_notes_form_note_input_title"><![CDATA[Title]]></string>
+	<string name="_bx_notes_form_note_input_title_err"><![CDATA[Title is essential. Please, fill in this field]]></string>
+	<string name="_bx_notes_form_note_input_sys_text"><![CDATA[Text]]></string>
+	<string name="_bx_notes_form_note_input_text"><![CDATA[Text]]></string>
+	<string name="_bx_notes_form_note_input_text_err"><![CDATA[Text field can't be empty]]></string>
+	<string name="_bx_notes_form_note_input_sys_summary"><![CDATA[Summary]]></string>
+	<string name="_bx_notes_form_note_input_summary"><![CDATA[Summary]]></string>
+	<string name="_bx_notes_form_note_input_summary_info"><![CDATA[Summary is automatically generated if left blank]]></string>
+	<string name="_bx_notes_form_note_input_sys_delete_confirm"><![CDATA[Delete confirmation]]></string>
+	<string name="_bx_notes_form_note_input_delete_confirm"><![CDATA[I am sure I want to delete this note]]></string>
+	<string name="_bx_notes_form_note_input_delete_confirm_info"><![CDATA[This action can not be undone]]></string>
+	<string name="_bx_notes_form_note_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete the note]]></string>
+	<string name="_bx_notes_form_note_input_sys_pictures"><![CDATA[Pictures]]></string>
+	<string name="_bx_notes_form_note_input_pictures"><![CDATA[Pictures]]></string>
+    <string name="_bx_notes_form_note_input_picture_txt_delete"><![CDATA[Delete]]></string>
+    <string name="_bx_notes_form_note_input_picture_txt_insert"><![CDATA[Insert to Post]]></string>
+    <string name="_bx_notes_form_note_input_picture_txt_pic_url"><![CDATA[Picture URL:]]></string>
+    <string name="_bx_notes_form_note_input_picture_txt_use_as_thumb"><![CDATA[Use as Thumbnail]]></string>
+
+	<string name="_bx_notes_acl_action_create_note"><![CDATA[Create Note]]></string>
+	<string name="_bx_notes_acl_action_delete_note"><![CDATA[Delete Note]]></string>
+	<string name="_bx_notes_acl_action_view_note"><![CDATA[View Note]]></string>
+	<string name="_bx_notes_acl_action_set_thumb"><![CDATA[Set Note Thumbnail]]></string>
+	<string name="_bx_notes_acl_action_edit_any_note"><![CDATA[Edit Any Note]]></string>
+
+	<string name="_bx_notes_page_title_sys_create_note"><![CDATA[Create Note]]></string>
+	<string name="_bx_notes_page_title_create_note"><![CDATA[Create Note]]></string>
+	<string name="_bx_notes_page_block_title_create_note"><![CDATA[Create Note]]></string>
+	<string name="_bx_notes_page_title_sys_edit_note"><![CDATA[Edit Note]]></string>
+	<string name="_bx_notes_page_title_edit_note"><![CDATA[Edit Note]]></string>
+	<string name="_bx_notes_page_block_title_edit_note"><![CDATA[Edit Note]]></string>
+    <string name="_bx_notes_page_title_sys_delete_note"><![CDATA[Delete Note]]></string>
+    <string name="_bx_notes_page_title_delete_note"><![CDATA[Delete Note]]></string>
+    <string name="_bx_notes_page_block_title_delete_note"><![CDATA[Delete Note]]></string>
+	<string name="_bx_notes_page_title_sys_view_note"><![CDATA[View Note]]></string>
+	<string name="_bx_notes_page_title_view_note"><![CDATA[{title}]]></string>
+	<string name="_bx_notes_page_block_title_note_text"><![CDATA[{title}]]></string>
+	<string name="_bx_notes_page_block_title_note_menu"><![CDATA[Note Menu]]></string>
+	<string name="_bx_notes_page_title_browse"><![CDATA[Notes]]></string>
+	<string name="_bx_notes_page_title_search_results"><![CDATA[Notes matching "{0}"]]></string>
+	<string name="_bx_notes_page_title_browse_by_author"><![CDATA[Notes by {0}]]></string>
+    <string name="_bx_notes_page_title_browse_recent"><![CDATA[Recent Notes]]></string>
+    <string name="_bx_notes_page_title_sys_notes_home"><![CDATA[Notes Home]]></string>
+    <string name="_bx_notes_page_title_notes_home"><![CDATA[Notes]]></string>
+    <string name="_bx_notes_page_block_title_recent_notes"><![CDATA[Recent Notes]]></string>
+    <string name="_bx_notes_page_block_title_note_social_sharing"><![CDATA[Share]]></string>
+
+    <string name="_bx_notes_menu_set_title_view_note"><![CDATA[View Note]]></string>
+    <string name="_bx_notes_menu_title_view_note"><![CDATA[View Note]]></string>
+    <string name="_bx_notes_menu_item_title_system_create_note"><![CDATA[Create Note]]></string>
+    <string name="_bx_notes_menu_item_title_create_note"><![CDATA[Create Note]]></string>
+    <string name="_bx_notes_menu_item_title_system_edit_note"><![CDATA[Edit Note]]></string>
+    <string name="_bx_notes_menu_item_title_edit_note"><![CDATA[Edit Note]]></string>
+    <string name="_bx_notes_menu_item_title_system_delete_note"><![CDATA[Delete Note]]></string>
+    <string name="_bx_notes_menu_item_title_delete_note"><![CDATA[Delete Note]]></string>
+    <string name="_bx_notes_menu_item_title_system_view_note"><![CDATA[View Note]]></string>
+    <string name="_bx_notes_menu_item_title_view_note"><![CDATA[View Note]]></string>
+    <string name="_bx_notes_menu_item_title_system_notes_home"><![CDATA[Notes]]></string>
+    <string name="_bx_notes_menu_item_title_notes_home"><![CDATA[Notes]]></string>
+
+	<string name="_bx_notes_txt_error_note_creation"><![CDATA[Note creation failed]]></string>
+	<string name="_bx_notes_txt_error_note_update"><![CDATA[Note update failed]]></string>
+	<string name="_bx_notes_txt_error_note_delete"><![CDATA[Note delete failed]]></string>
+	<string name="_bx_notes_txt_error_note_is_not_defined"><![CDATA[Note isn't defined]]></string>
+    <string name="_bx_notes_txt_status_pending"><![CDATA[This note is pending approval, please wait until it is activated.]]></string>
+    <string name="_bx_notes_txt_read_more"><![CDATA[Read More]]></string>
+
+</resources>

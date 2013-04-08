@@ -1,0 +1,14 @@
+div.arl-post {
+    padding: 10px;
+    position: relative;
+}
+iframe.arl-hidden {
+    width: 1px;
+    height: 1px;
+    display: none;
+}
+
+/* expanding TinyMCE */
+.arl-post .input_wrapper_textarea {
+    width:630px;
+}

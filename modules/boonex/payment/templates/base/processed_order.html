@@ -1,0 +1,42 @@
+<div class="pmt-view-order">
+    <div class="pmt-vo-row">
+        <div class="pmt-vo-caption"><bx_text:_payment_txt_client /></div>
+        <div class="pmt-vo-content">
+            <a href="__client_url__" target="_blank">__client_name__</a>
+        </div>
+        <div class="pmt-cb">&nbsp;</div>
+    </div>
+    <div class="pmt-vo-row">
+        <div class="pmt-vo-caption"><bx_text:_payment_txt_order /></div>
+        <div class="pmt-vo-content">__order__</div>
+        <div class="pmt-cb">&nbsp;</div>
+    </div>
+    <div class="pmt-vo-row">
+        <div class="pmt-vo-caption"><bx_text:_payment_txt_processed_with /></div>
+        <div class="pmt-vo-content">__provider__</div>
+        <div class="pmt-cb">&nbsp;</div>
+    </div>
+    <div class="pmt-vo-row">
+        <div class="pmt-vo-caption"><bx_text:_payment_txt_message /></div>
+        <div class="pmt-vo-content">__error__</div>
+        <div class="pmt-cb">&nbsp;</div>
+    </div>
+    <div class="pmt-vo-row">
+        <div class="pmt-vo-caption"><bx_text:_payment_txt_date /></div>
+        <div class="pmt-vo-content">__date__</div>
+        <div class="pmt-cb">&nbsp;</div>
+    </div>
+    <div class="pmt-vo-row">
+        <div class="pmt-vo-caption"><bx_text:_payment_txt_products /></div>
+        <div class="pmt-vo-items">
+            <bx_repeat:items>
+                <bx_if:link>
+                    <a href="__url__" target="_blank">__title__</a>
+                </bx_if:link>
+                <bx_if:text>__title__</bx_if:text>
+                (__quantity__) - __price__ __currency_code__<br />
+            </bx_repeat:items>
+        </div>
+        <div class="pmt-cb">&nbsp;</div>
+    </div>
+</div>

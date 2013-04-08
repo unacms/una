@@ -1,0 +1,346 @@
+<?php defined('BX_DOL') or die('hack attempt');
+/**
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
+ */
+
+bx_import('BxDolPage');
+
+/**
+ * Page representation.
+ * @see BxDolPage
+ */
+class BxBasePage extends BxDolPage {
+
+    protected $_oTemplate;
+    protected $_oPageCacheObject = null;
+
+    public function __construct ($aObject, $oTemplate) {
+        parent::__construct ($aObject);
+
+        if ($oTemplate)
+            $this->_oTemplate = $oTemplate;
+        else
+            $this->_oTemplate = BxDolTemplate::getInstance();
+    }
+
+    /**
+     * Get page code with automatic caching, adding necessary css/js files and system template vars. 
+     * @return string.
+     */
+    public function getCode () {
+
+        if (!$this->_isVisiblePage($this->_aObject))
+            return $this->_getPageAccessDeniedMsg ();
+
+        $this->_addJsCss();
+ 
+        $this->_addSysTemplateVars();
+
+        $this->_selectMenu();
+
+        // TODO: insert profiler call here 
+
+        if (!getParam('sys_page_cache_enable') || !$this->_aObject['cache_lifetime'])
+            return $this->_getPageCode();
+        
+        $oCache = $this->_getPageCacheObject();
+        $sKey = $this->_getPageCacheKey();
+
+        $mixedRet = $oCache->getData($sKey, $this->_aObject['cache_lifetime']);
+
+        if ($mixedRet !== null) {
+            return $mixedRet;
+        } else {
+            $sPageCode = $this->_getPageCode();
+            $oCache->setData($sKey, $sPageCode, $this->_aObject['cache_lifetime']);
+        }        
+
+        return $sPageCode;
+    }
+    
+    /**
+     * Get block title.
+     * @return string
+     */
+    public function getBlockTitle ($aBlock) {
+        return $this->_replaceMarkers(_t($aBlock['title']));
+    }
+
+    /**
+     * Get page code only.
+     * @return string
+     */
+    protected function _getPageCode () {
+        $aVars = array ();
+        $aBlocks = $this->_oQuery->getPageBlocks();
+        foreach ($aBlocks as $sKey => $aCell) {
+            $sCell = '';
+            foreach ($aCell as $aBlock) {
+                $sContentWithBox = $this->_getBlockCode($aBlock);
+                if ($sContentWithBox)
+                    $sCell .= '<div class="bx-page-block-container" id="bx-page-block-' . $aBlock['id'] . '">' . $sContentWithBox . '</div>';
+            }
+            $aVars[$sKey] = $sCell;
+        }
+
+        return $this->_oTemplate->parseHtmlByName($this->_aObject['template'], $aVars);
+    }
+
+    /**
+     * Get block code.
+     * @return string
+     */
+    protected function _getBlockCode($aBlock) {
+        $sContentWithBox = '';
+
+        if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->beginPageBlock(_t($aBlock['title']), $aBlock['id']);
+
+        if ($this->_isVisibleBlock($aBlock)) {
+
+            $sFunc = '_getBlock' . ucfirst($aBlock['type']);
+            $mixedContent = $this->$sFunc($aBlock);
+
+            $sTitle = $this->getBlockTitle($aBlock);
+
+            if (is_array($mixedContent)) {
+                if (isset($mixedContent['content']))
+                    $sContentWithBox = DesignBoxContent($sTitle, $mixedContent['content'], $aBlock['designbox_id'], isset($mixedContent['menu']) ? isset($mixedContent['menu']) : false);
+            } elseif (is_string($mixedContent)) {
+                $sContentWithBox = DesignBoxContent($sTitle, $mixedContent, $aBlock['designbox_id']);
+            } else {
+                $sContentWithBox = false;
+            }
+        }
+
+        if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->endPageBlock($aBlock['id'], $sContentWithBox ? false : true, false );
+
+        return $sContentWithBox;
+    }
+
+    /**
+     * Add necessary js and css files.
+     */
+    protected function _addJsCss() {
+        $this->_oTemplate->addCss('page_layouts.css');
+    }
+
+    /**
+     * Set system template variables, like page title, meta description, meta keywords and meta robots.
+     */
+    protected function _addSysTemplateVars () {
+        $sPageTitle = $this->_getPageTitle();
+        if ($sPageTitle)
+            $this->_oTemplate->setPageHeader ($sPageTitle);
+   
+        $sMetaDesc = $this->_getPageMetaDesc();
+        if ($sMetaDesc)
+            $this->_oTemplate->setPageDescription ($sMetaDesc);
+
+        $sMetaKeywords = $this->_getPageMetaKeywords();
+        if ($sMetaKeywords)
+            $this->_oTemplate->addPageKeywords ($sMetaKeywords);
+
+        $sMetaRobots = $this->_getPageMetaRobots();
+        if ($sMetaRobots)
+            $this->_oTemplate->setPageMetaRobots ($sMetaRobots);
+    }
+
+    /**
+     * Select menu from page properties.
+     */ 
+    protected function _selectMenu () {
+        bx_import('BxDolMenu');
+        BxDolMenu::setSelected ($this->_aObject['module'], $this->_aObject['uri']); 
+    }
+
+    /**
+     * Get content for 'raw' block type.
+     * @return string
+     */
+    protected function _getBlockRaw ($aBlock) {
+        return $this->_replaceMarkers($aBlock['content']);
+    }
+
+    /**
+     * Get content for 'html' block type.
+     * @return string
+     */
+    protected function _getBlockHtml ($aBlock) {
+        return $this->_getBlockRaw ($aBlock);
+    }
+
+    /**
+     * Get content for 'lang' block type.
+     * @return string
+     */
+    protected function _getBlockLang ($aBlock) {
+        return $this->_replaceMarkers(_t(trim($aBlock['content'])));
+    }
+
+    /**
+     * Get content for 'image' block type.
+     * @return string
+     */
+    protected function _getBlockImage ($aBlock) {
+        if (empty($aBlock['content']))
+            return false;
+
+        list($iFileId, $sAlign ) = explode('#', $aBlock['content']);
+        $iFileId = (int)$iFileId;
+        if (!$iFileId)
+            return false;
+
+        bx_import('BxDolStorage');
+        $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
+        if (!$oStorage)
+            return false;
+
+        $sUrl = $oStorage->getFileUrlById($iFileId);
+        if (!$sUrl)
+            return false;
+
+        $sStyleAdd = '';
+        if ('center' == $sAlign || 'left' == $sAlign || 'right' == $sAlign)
+            $sStyleAdd = 'style="text-align:' . $sAlign . '"';
+
+        return '<div class="bx-page-image-container" ' . $sStyleAdd . '><img src="' . $sUrl . '" /></div>';
+    }
+
+    /**
+     * Get content for 'rss' block type.
+     * @return string
+     */
+    protected function _getBlockRss ($aBlock) {
+        if (empty($aBlock['content']))
+            return false;
+
+        list( $sUrl, $iNum ) = explode('#', $aBlock['content']);
+        $iNum = (int)$iNum;
+
+        bx_import('BxTemplFunctions');
+        return BxTemplFunctions::getInstance()->getRssHolder ($aBlock['id'], $iNum);
+    }
+
+    /**
+     * Get content for 'menu' block type.
+     * @return string
+     */
+    protected function _getBlockMenu ($aBlock) {
+        bx_import('BxTemplMenu');
+        $oMenu = BxTemplMenu::getObjectInstance($aBlock['content']);
+        return $oMenu ? $oMenu->getCode () : '';
+    }
+
+    /**
+     * Get content for 'service' block type.
+     * @return string
+     */
+    protected function _getBlockService ($aBlock) {
+        $a = @unserialize($aBlock['content']);
+        if (false === $a || !is_array($a))
+            return '';
+        return BxDolService::call($a['module'], $a['method'], isset($a['params']) ? $this->_replaceMarkers($a['params']) : array(), isset($a['class']) ? $a['class'] : 'Module');
+    }
+
+    /**
+     * Get page title.
+     * @return string
+     */
+    protected function _getPageTitle() {
+        return $this->_replaceMarkers(_t($this->_aObject['title']));
+    }
+
+    /**
+     * Get page meta description.
+     * @return string
+     */
+    protected function _getPageMetaDesc() {
+        return $this->_replaceMarkers(_t($this->_aObject['meta_description']));
+    }
+
+    /**
+     * Get page meta keywords.
+     * @return string
+     */
+    protected function _getPageMetaKeywords() {
+        return $this->_replaceMarkers(_t($this->_aObject['meta_keywords']));
+    }
+
+    /**
+     * Get page meta robots.
+     * @return string
+     */
+    protected function _getPageMetaRobots() {
+        return _t($this->_aObject['meta_robots']);
+    }
+
+    /**
+     * Get access denied message HTML.
+     * @return string
+     */
+    protected function _getPageAccessDeniedMsg () {
+        return MsgBox(_t('_Access denied'));
+    }
+
+
+    /**
+     * Get page cache object.
+     * @return cache object instance
+     */
+    protected function _getPageCacheObject () {
+        if ($this->_oPageCacheObject != null) {
+            return $this->_oPageCacheObject;
+        } else {
+            $sEngine = getParam('sys_page_cache_engine');
+            $this->_oPageCacheObject = bx_instance ('BxDolCache' . $sEngine);
+            if (!$this->_oPageCacheObject->isAvailable())
+                $this->_oPageCacheObject = bx_instance ('BxDolCacheFile');
+            return $this->_oPageCacheObject;
+        }
+    }
+
+    /**
+     * Get page cache key.
+     * @param $isPrefixOnly return key prefix only.
+     * @return string
+     */
+    protected function _getPageCacheKey ($isPrefixOnly = false) {
+        $s = 'page_' . $this->_aObject['object'] . '_';
+        if ($isPrefixOnly)
+            return $s;
+        $s .= $this->_getPageCacheParams ();
+        $s .= md5(BX_DOL_VERSION . BX_DOL_BUILD . BX_DOL_URL_ROOT) . '.php';
+        return $s;
+    }
+
+    /**
+     * Additional cache key. In the case of dynamic page. 
+     * For example - profile page, where each profile has own page.
+     * @return string
+     */
+    protected function _getPageCacheParams () {
+        return '';
+    }
+
+    /**
+     * Clean page cache.
+     * @param $isDelAllWithPagePrefix delete cache by prefix, it can be used for dynamic pages, like profile view, where for each profile separate cache is generated.
+     * @return string
+     */
+    protected function cleanCache ($isDelAllWithPagePrefix = false) {
+        $oCache = $this->_getPageCacheObject ();
+        $sKey = $this->_getPageCacheKey($isDelAllWithPagePrefix);
+
+        if ($isDelAllWithPagePrefix)
+            return $oCache->removeAllByPrefix($sKey);
+        else
+            return $oCache->delData($sKey);
+    }
+}
+
+/** @} */
+

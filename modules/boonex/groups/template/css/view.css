@@ -1,0 +1,34 @@
+
+table.bx_groups_fields {
+    border-collapse:collapse;
+    margin:10px;
+    padding:0;
+}
+
+td.bx_groups_field_name {
+    margin:0;
+    padding:5px 10px 5px 0;
+    text-align:left;
+    color:#999;
+    font-size:11px;
+}
+
+td.bx_groups_field_value {
+    margin:0;
+    padding:5px 10px 5px 0;
+    text-align:left;
+    font-size:11px;
+}
+
+.bx_groups_description {
+    padding:10px;
+    font-size:11px;
+}
+
+.bx_groups_profile_unit {
+    width:70px;
+    margin:0px 5px 4px 5px;
+    overflow:hidden;
+    float:left;
+}
+

@@ -1,0 +1,25 @@
+<!-- TODO: remake according to new design -->
+<div class="admin_actions_panel">
+    <table>
+        <tr>
+            <bx_if:selectAll>
+                <td><input class="admin-actions-select-all" type="checkbox" onclick="$('#{wrapperId} input[name=\'{checkboxName}[]\']:enabled').attr('checked', this.checked)"  {checked} /></td>
+                <td><bx_text:_Select_all /></td>
+            </bx_if:selectAll>
+            <td>&nbsp;</td>
+            <bx_repeat:buttons>
+                <td>
+                    <div class="input_wrapper input_wrapper_submit">
+                    <div class="button_wrapper"><input class="form_input_submit" type="{type}" name="{name}" value="{value}" {onclick} />
+                        <div class="button_wrapper_close"></div>
+                    </div>
+                    <div class="input_close input_close_submit"/>
+                    </div>
+                </td>
+            </bx_repeat:buttons>
+            <bx_if:customHTML>
+                <td>{custom_HTML}</td>
+            </bx_if:customHTML>
+        </tr>
+    </table>
+</div>

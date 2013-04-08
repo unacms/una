@@ -1,0 +1,241 @@
+<?php defined('BX_DOL') or die('hack attempt');
+/**
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
+ */
+
+bx_import('BxDolProfileQuery');
+
+define('BX_PROFILE_ACTION_AUTO', 0); ///< automatic action without any checking
+define('BX_PROFILE_ACTION_MANUAL', 1); ///< manual action performed by human 
+define('BX_PROFILE_ACTION_ROBOT', 2); ///< action peformed by some robot based on some conditions
+
+class BxDolProfile extends BxDol {
+
+    var $_iProfileID;
+    var $_oQuery;
+
+    /**
+     * Constructor
+     */
+    protected function __construct ($iProfileId) {
+        $iProfileId = (int)$iProfileId;
+        $sClass = get_class($this) . '_' . $iProfileId;
+        if (isset($GLOBALS['bxDolClasses'][$sClass]))
+            trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
+
+        parent::__construct();
+
+        $this->_iProfileID = $iProfileId; // since constructor is protected $iProfileId is always valid
+        $this->_oQuery = BxDolProfileQuery::getInstance();
+    }
+
+    /**
+     * Prevent cloning the instance
+     */
+    public function __clone() {
+        $sClass = get_class($this) . '_' . $this->_iProfileID;
+        if (isset($GLOBALS['bxDolClasses'][$sClass]))
+            trigger_error('Clone is not allowed for the class: ' . get_class($this), E_USER_ERROR);
+    }
+
+    /**
+     * Get singleton instance of the class
+     */
+    public static function getInstanceAccountProfile($iAccountId = false) {
+        $oQuery = BxDolProfileQuery::getInstance();
+        $aProfile = $oQuery->getAccountProfile($iAccountId ? $iAccountId : getLoggedId());
+        if (!$aProfile)
+            return false;
+        return $this->getInstance($aProfile['id']);
+    }
+
+    /**
+     * Get singleton instance of the class
+     */
+    public static function getInstance($mixedProfileId = false) {
+
+        if (!$mixedProfileId) {
+            $oQuery = BxDolProfileQuery::getInstance();
+            $mixedProfileId = $oQuery->getCurrentProfileByAccount(getLoggedId());
+        }
+
+        $iProfileId = self::getID($mixedProfileId);
+        if (!$iProfileId)
+            return false;
+
+        $sClass = __CLASS__ . '_' . $iProfileId;
+        if (!isset($GLOBALS['bxDolClasses'][$sClass]))
+            $GLOBALS['bxDolClasses'][$sClass] = new BxDolProfile($iProfileId);
+
+        return $GLOBALS['bxDolClasses'][$sClass];
+    }
+
+    /**
+     * Get profile id
+     */
+    public function id() {
+        return $this->_oQuery->getIdById($this->_iProfileID);
+    }
+
+    /**
+     * Check if profile status is active
+     */
+    public function isActive($iProfileId = false) {
+        $aInfo = $this->getStatus((int)$iProfileId ? $iProfileId : $this->_iProfileID);
+        return 'active' == $aInfo['status'];
+    }
+
+    /**
+     * Get profile status
+     */
+    public function getStatus($iProfileId = false) {
+        $aInfo = $this->_oQuery->getInfoById((int)$iProfileId ? $iProfileId : $this->_iProfileID);
+        return $aInfo['status'];
+    }
+
+    /**
+     * Get profile info
+     */
+    public function getInfo($iProfileId = 0) {
+        return $this->_oQuery->getInfoById((int)$iProfileId ? $iProfileId : $this->_iProfileID);
+    }
+
+    /**
+     * Validate profile id. 
+     * @param $s - profile id
+     * @return profile id or false if profile was not found
+     */
+    static public function getID($s) {
+        $iId = BxDolProfileQuery::getInstance()->getIdById((int)$s);
+        return $iId ? $iId : false;
+    }
+
+    /**
+     * Get name to display in thumbnail
+     */
+    public function getDisplayName($iProfileId = 0) {
+        $aInfo = $this->getInfo($iProfileId);
+        return BxDolService::call($aInfo['type'], 'profile_name', array($aInfo['content_id']));
+    }
+
+    /**
+     * Get profile url
+     */
+    public function getUrl($iProfileId = 0) {
+        $aInfo = $this->getInfo($iProfileId);
+        return BxDolService::call($aInfo['type'], 'profile_url', array($aInfo['content_id']));
+    }
+
+    /**
+     * Get profile unit
+     */
+    public function getUnit($iProfileId = 0) {
+        $aInfo = $this->getInfo($iProfileId);
+        return BxDolService::call($aInfo['type'], 'profile_thumb', array($aInfo['content_id']));
+    }
+
+    /**
+     * Get thumbnail
+     */
+    public function getThumb($iProfileId = 0) {
+        $aInfo = $this->getInfo($iProfileId);
+        return BxDolService::call($aInfo['type'], 'profile_thumb', array($aInfo['content_id']));
+    }
+
+    /**
+     * Delete profile.
+     */
+    function delete($ID = false) {
+
+        $ID = (int)$ID;
+        if (!$ID)
+            $ID = $this->_iProfileID;
+
+        $aProfileInfo = $this->_oQuery->getInfoById($ID);
+        if (!$aProfileInfo)
+            return false;
+
+        // create system event before deletion
+        $isStopDeletion = false;
+        bx_alert('profile', 'before_delete', $ID, 0, array('stop_deletion' => &$isStopDeletion));
+        if ($isStopDeletion)
+            return false;
+
+        // delete associated content 
+        // TODO: remake deletion of associated content
+        $this->_oQuery->res("DELETE FROM `sys_friend_list` WHERE ID = {$ID} OR Profile = {$ID}");
+        $this->_oQuery->res("DELETE FROM `sys_acl_levels_members` WHERE `IDMember` = {$ID}");
+        $this->_oQuery->res("DELETE FROM `sys_tags` WHERE `ObjID` = {$ID} AND `Type` = 'profile'");
+
+        // delete profile
+        if (!$this->_oQuery->delete($ID))
+            return false;
+
+        // create system event
+        bx_alert('profile', 'delete', $ID);
+
+        // unset class instance to prevent creating the instance again
+        $this->_iProfileID = 0;
+        $sClass = get_class($this) . '_' . $ID;
+        unset($GLOBALS['bxDolClasses'][$sClass]);        
+
+        return true;
+    }
+
+    /**
+     * Insert account and content id association. Also if currect profile id is not defined - it updates current profile id in account.
+     * @param $iAccountId account id
+     * @param $iContentId content id
+     * @param $sStatus profile status
+     * @param $sType profile content type
+     * @return inserted profile's id
+     */
+    static public function add ($iAction, $iAccountId, $iContentId, $sStatus, $sType = 'system') {
+        $oQuery = BxDolProfileQuery::getInstance();
+        if (!($iProfileId = $oQuery->insertProfile ($iAccountId, $iContentId, $sStatus, $sType)))
+            return false;
+        bx_alert('profile', 'add', $iProfileId, 0, array('module' => $sType, 'content' => $iContentId, 'account' => $iAccountId, 'status' => $sStatus, 'action' => $iAction));
+        return $iProfileId;
+    }
+
+    /**
+     * Change profile status from 'Pending' to the next level - 'Active'
+     */
+    public function approve($iAction, $iProfileId = 0) {
+        if (!$this->_oQuery->changeStatus((int)$iProfileId ? $iProfileId : $this->_iProfileID, BX_PROFILE_STATUS_ACTIVE))
+            return false;
+        bx_alert('profile', 'approve', $iProfileId, false, array('action' => $iAction));
+        // TODO: send email that profile is approved
+        return true;
+    }
+
+    /**
+     * Change profile status to 'Pending' 
+     */
+    public function disapprove($iAction, $iProfileId = 0) {
+        if (!$this->_oQuery->changeStatus((int)$iProfileId ? $iProfileId : $this->_iProfileID, BX_PROFILE_STATUS_PENDING))
+            return false;
+        bx_alert('profile', 'disapprove', $iProfileId ? $iProfileId : $this->_iProfileID, false, array('action' => $iAction));
+        // TODO: send email that profile is disapproved ?
+        return true;
+    }
+
+    /**
+     * Change profile status to 'Suspended' 
+     */
+    public function suspend($iAction, $iProfileId = 0) {
+        if (!$this->_oQuery->changeStatus((int)$iProfileId ? $iProfileId : $this->_iProfileID, BX_PROFILE_STATUS_SUSPENDED))
+            return false;
+        bx_alert('profile', 'suspend', $iProfileId, false, array('action' => $iAction));
+        // TODO: send email that profile is suspended
+        return true;
+    }
+
+}
+
+/** @} */
+

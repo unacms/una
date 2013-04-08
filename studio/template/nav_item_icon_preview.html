@@ -1,0 +1,15 @@
+<bx_if:show_empty>
+    <div class="bx-nav-item-icon-preview-empty bx-def-font-small bx-def-color-ft-gray-l3">
+        <bx_text:_adm_nav_dsc_items_icon_current />
+    </div>
+</bx_if:show_empty>
+<bx_if:show_image>
+    <div class="bx-nav-item-icon-preview">
+        <img src="__url__" />
+        <p>
+            <button class="bx_btn" bx_grid_action_single="delete_icon" bx_grid_action_data="__id__">
+                <bx_text:_adm_nav_btn_current_icon_delete />
+            </button>
+        </p>
+    </div>
+</bx_if:show_image>

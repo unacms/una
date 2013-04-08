@@ -1,0 +1,109 @@
+div.mbp-cb {
+    clear: both;
+    font-size: 0px;
+}
+div.button_wrapper {
+    margin-right: 10px;
+    position: relative;
+    float: left;
+}
+
+/*--- 'Current level' Styles ---*/
+div.status_box {
+    width: 450px;
+    margin: 10px auto 10px auto;
+
+    text-align: center;
+}
+
+/*--- 'Available levels', 'Current Level' Styles ---*/
+div.mbp-current-levels,
+div.mbp-available-levels {
+    margin: 0px 0px 10px 0px;
+}
+div.mbp-level {
+    margin: 10px 10px 0px 10px;
+    padding: 10px;
+
+    position: relative;
+
+    background-color: #f2f2ff;
+}
+div.mbp-level-icon {
+    top: 10px;
+    left: 10px;
+    width: 114px;
+    height: 114px;
+
+    position: absolute;
+
+    border: 1px solid #cccccc;
+    background-color: #ffffff;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+div.mbp-level-icon img{
+    width: 114px;
+    height: 114px;
+}
+div.mbp-level-price {
+    top: 10px;
+    right: 10px;
+    height: 16px;
+
+    position: absolute;
+
+    font-weight: bold;
+    font-size: 12px;
+}
+div.mbp-level-price div.image {
+    width: 32px;
+    height: 16px;
+
+    position: relative;
+    float: left;
+
+    background-repeat: no-repeat;
+    background-position: right center;
+}
+div.mbp-level-price div.text {
+    height: 16px;
+
+    position: relative;
+    float: left;
+}
+div.mbp-level-price img {
+    width: 16px;
+    height: 16px;
+}
+div.mbp-level-content {
+    min-height: 116px;
+    padding-left: 126px;
+}
+div.mbp-level-title {
+    font-weight: bold;
+    font-size: 12px;
+}
+div.mbp-level-info {
+    padding-top: 5px;
+}
+div.mbp-level-control {
+    padding-top: 5px;
+}
+
+/*--- 'Available levels', 'Current Level' Styles ---*/
+div.mbp-current-level {
+    margin: 0px;
+}
+div.mbp-current-level div.mbp-level {
+    margin: 0px;
+    padding: 10px;
+
+    position: relative;
+
+    background-color: #ffffff;
+}
+div.mbp-level-description {
+    min-height: 0px;
+    padding: 10px 0px 0px 0px;
+}

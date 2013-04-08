@@ -1,0 +1,38 @@
+<div id="arl-content-__sample__" class="arl-content">
+    <div class="arl-entries">
+        <bx_repeat:entries>
+            <div id="__id__" class="arl-entry">
+                __voting__
+                <bx_if:checkbox>
+                    <div class="arl-checkbox">
+                        <input type="checkbox" name="articles-ids[]" value="__id__" />
+                    </div>
+                </bx_if:checkbox>
+                <div class="arl-info">
+                    <div class="arl-caption">
+                        <a class="arl-caption" href="__link__">__caption__</a>
+                        <bx_if:status>
+                            <span class="arl-status">__status__</span>
+                        </bx_if:status>
+                        <bx_if:featured>
+                            <span class="arl-status"><bx_text:_articles_featured /></span>
+                        </bx_if:featured>
+                        <bx_if:edit_link>
+                            <a href="__edit_link_url__">__edit_link_caption__</a>
+                        </bx_if:edit_link>
+                    </div>
+                    <div class="arl-date">
+                        __date__&nbsp;&nbsp;&nbsp;
+                        <bx_text:_articles_txt_comments />: __comments__&nbsp;&nbsp;&nbsp;
+                        <bx_text:_articles_txt_categories />: <bx_repeat:categories><a href="__href__">__title__</a>&nbsp;&nbsp;</bx_repeat:categories>&nbsp;&nbsp;&nbsp;
+                        <bx_text:_articles_txt_tags />: <bx_repeat:tags><a href="__href__">__title__</a>&nbsp;&nbsp;</bx_repeat:tags>
+                    </div>
+                    <div class="arl-text__class__">__content__</div>
+                </div>
+                <div class="arl-cb">&nbsp;</div>
+            </div>
+        </bx_repeat:entries>
+    </div>
+    __paginate__
+    __loading__
+</div>

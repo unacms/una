@@ -1,0 +1,206 @@
+div.pmt-cb {
+    clear: both;
+    font-size: 0px;
+}
+iframe.hidden {
+    width: 0px;
+    height: 0px;
+    display: none;
+}
+
+div.pmt-orders-loading {
+    width: 89px;
+    height: 64px;
+    position: absolute;
+    z-index: 777;
+    display: none;
+
+    background-position: center;
+    background-repeat: no-repeat;
+}
+div.pmt-orders-loading img {
+    width: 31px;
+    height: 31px;
+    margin: 16px 0px 0px 29px;
+}
+
+
+/*--- 'Manual Order' and 'More' windows ---*/
+div#pmt-orders-more {}
+div#pmt-manual-order {}
+
+div#pmt-orders-more div.disignBoxFirst,
+div#pmt-manual-order div.disignBoxFirst {
+    margin: 0px;
+}
+div#pmt-orders-more div.boxFirstClose,
+div#pmt-manual-order div.boxFirstClose {
+    width: 28px;
+    height: 28px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+div#pmt-orders-more div.boxFirstClose img,
+div#pmt-manual-order div.boxFirstClose img {
+    width: 28px;
+    height: 28px;
+}
+div.boxContent,
+div#pmt-orders-more div.boxContent,
+div#pmt-manual-order div.boxContent {
+    position: relative;
+}
+div#pmt-om-content,
+div#pmt-mo-content {
+    min-width: 296px;
+    min-height: 100px;
+    margin: 10px;
+}
+div#pmt-mo-items {
+
+}
+div.pmt-mo-item {
+    padding: 0px;
+    margin: 0px;
+}
+div.pmt-mo-item-chb,
+div.pmt-mo-item-title,
+div.pmt-mo-item-quantity {
+    height: 28px;
+
+    position: relative;
+    float: left;
+}
+div.pmt-mo-item-chb {
+    width: 20px;
+}
+div.pmt-mo-item-chb input {
+    margin: 8px 0px 0px 5px;
+    padding: 0px;
+}
+div.pmt-mo-item-title {
+    width: 208px;
+
+    line-height: 28px;
+    text-indent: 10px;
+    overflow: hidden;
+}
+div.pmt-mo-item-quantity {
+    width: 40px;
+}
+div.pmt-mo-item-quantity div.input_wrapper_text {
+    width: 40px;
+    margin-top: 2px;
+}
+
+
+/*--- Orders Lists ---*/
+div#pmt-orders {}
+div#pmt-orders-pending,
+div#pmt-orders-processed,
+div#pmt-orders-history {
+    margin: 10px;
+
+    border: 1px solid #dadada;
+}
+
+div.adm-db-content div#pmt-orders-pending {
+    width: 929px;
+}
+
+/*--- Table Styles ---*/
+div.pmt-orders-header {
+    height: 28px;
+
+    background-color: #ececec;
+
+
+    font-size: 12px;
+}
+div.pmt-orders-content {}
+div.pmt-orders-item {
+    border-top: 1px solid #dadada;
+    background-color: #f4f7fa;
+}
+div.pmt-orders-chb,
+div.pmt-orders-date,
+div.pmt-orders-client,
+div.pmt-orders-order,
+div.pmt-orders-amount,
+div.pmt-orders-license,
+div.pmt-orders-action {
+    height: 28px;
+
+    position: relative;
+    float: left;
+
+    text-align: left;
+    text-indent: 10px;
+    line-height: 28px;
+    overflow: hidden;
+}
+div.pmt-orders-chb {
+    width: 20px;
+    text-indent: 0px;
+}
+div.pmt-orders-chb input {
+    margin: 8px 0px 0px 5px;
+    padding: 0px;
+}
+div.pmt-orders-client{
+    width: 200px;
+}
+div.pmt-orders-order {
+    width: 180px;
+}
+div.pmt-orders-order div.input_wrapper_text {
+    width: 130px;
+    margin-top: 2px;
+}
+div.pmt-orders-amount{
+    width: 80px;
+    text-align: center;
+}
+div.pmt-orders-license {
+    width: 150px;
+}
+div.pmt-orders-date {
+    width: 80px;
+}
+div.pmt-orders-action {
+    width: 197px;
+    text-align: center;
+}
+
+/*--- View Order ---*/
+div.pmt-view-order {
+    border-left: 1px solid #dadada;
+    border-right: 1px solid #dadada;
+    border-bottom: 1px solid #dadada;
+}
+div.pmt-vo-row {
+    border-top: 1px solid #dadada;
+    background-color: #f4f7fa;
+}
+div.pmt-vo-caption,
+div.pmt-vo-content,
+div.pmt-vo-items {
+    height: 28px;
+
+    position: relative;
+    float: left;
+
+    line-height: 28px;
+    overflow: hidden;
+}
+div.pmt-vo-caption {
+    width: 120px;
+    text-indent: 10px;
+}
+div.pmt-vo-content {
+    width: 174px;
+}
+div.pmt-vo-items {
+    height: auto;
+    line-height: auto;
+}

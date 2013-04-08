@@ -1,0 +1,184 @@
+<?php
+/**
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinStudio Dolphin Studio
+ * @{
+ */
+defined('BX_DOL') or die('hack attempt');
+
+bx_import('BxBaseFormView');
+bx_import('BxDolStudioTemplate');
+
+define('BX_DOL_STUDIO_METHOD_DEFAULT', 'post');
+
+class BxDolStudioForm extends BxBaseFormView {
+    function BxDolStudioForm($aInfo, $oTemplate) {
+        parent::BxBaseFormView($aInfo, $oTemplate !== false ? $oTemplate : BxDolStudioTemplate::getInstance());
+
+        $this->_sCheckerHelper = isset($this->aParams['checker_helper']) ? $this->aParams['checker_helper'] : 'BxDolStudioCheckerHelper';
+    }
+
+    function initChecker($aValues = array (), $aSpecificValues = array())  {
+        parent::initChecker($aValues, $aSpecificValues);
+
+        if($this->isSubmitted() && !$this->_isValid)
+            $this->processTranslationsValue();
+    }
+
+    function insert($aValsToAdd = array(), $isIgnore = false) {
+        $sAction = 'insert';
+        $this->processTranslationsKey($sAction);
+
+        $mixedResult = parent::insert($aValsToAdd, $isIgnore);
+        if($mixedResult !== false)
+            $this->processTranslations($sAction);
+
+        return $mixedResult;
+    }
+
+    function update($val, $aValsToAdd = array()) {
+        $sAction = 'update';
+        $this->processTranslationsKey($sAction);
+
+        $mixedResult = parent::update($val, $aValsToAdd);
+        if($mixedResult !== false)
+            $this->processTranslations($sAction);
+
+        return $mixedResult;
+    }
+
+    function processImageUploaderSave($sName, $iValue = 0) {
+        $iId = 0;
+        if($this->aInputs[$sName]['type'] != 'image_uploader')
+            return $iId;
+
+        $aInput = $this->aInputs[$sName];
+        if(!empty($_FILES[$sName]['tmp_name'])) {
+            $iProfileId = getLoggedId();
+
+            bx_import('BxDolStorage');
+            $sStorage = isset($aInput['storage_object']) && $aInput['storage_object'] != '' ? $aInput['storage_object'] : BX_DOL_STORAGE_OBJ_IMAGES;
+            $oStorage = BxDolStorage::getObjectInstance($sStorage);
+
+            if((int)$iValue != 0 && !$oStorage->deleteFile($iValue))
+                return _t('_adm_err_form_view_iu_delete');
+
+            $iId = $oStorage->storeFileFromForm($_FILES[$aInput['name']], false, $iProfileId); 
+            if($iId === false)
+                return _t('_adm_err_form_view_iu_save') . $oStorage->getErrorString();
+    
+            $oStorage->afterUploadCleanup($iId, $iProfileId);
+        }
+
+        return (int)$iId;
+    }
+
+    protected function processTranslations($sType = 'insert') {
+        $aType2Method = array(
+        	'insert' => 'addLanguageString',
+            'update' => 'updateLanguageString'
+        );
+
+        bx_import('BxDolStudioLanguagesUtils');
+        $oLanguage = BxDolStudioLanguagesUtils::getInstance();
+        $aLanguages = $oLanguage->getLanguagesInfo();
+
+        foreach($this->aInputs as $sName => $aInput)
+            if(in_array($aInput['type'], array('text_translatable', 'textarea_translatable'))) {
+                $sKey = $this->getCleanValue($sName);
+                foreach($aLanguages as $aLanguage) {
+                    $sString = BxDolForm::getSubmittedValue($sName . '-' . $aLanguage['name'], $this->aFormAttrs['method']);
+                    if($sString !== false)
+                        $oLanguage->$aType2Method[$sType]($sKey, $sString, $aLanguage['id']);
+                }
+            }
+    }
+
+    protected function processTranslationsKey($sType = 'insert') {
+        bx_import('BxDolStudioLanguagesUtils');
+        $sLanguage = BxDolStudioLanguagesUtils::getInstance()->getCurrentLangName(false);
+
+        foreach($this->aInputs as $sName => $aInput)
+            if(in_array($aInput['type'], array('text_translatable', 'textarea_translatable'))) {
+                $sKey = $this->getTranslationsKey($sType, $sName, $this->getCleanValue($sName));
+                BxDolForm::setSubmittedValue($sName, $sKey, $this->aFormAttrs['method']);
+            }
+    }
+
+    protected function processTranslationsValue () {
+        bx_import('BxDolStudioLanguagesUtils');
+        $aLanguages = BxDolStudioLanguagesUtils::getInstance()->getLanguages();
+
+        foreach($this->aInputs as $sName => $aInput)
+            if(in_array($aInput['type'], array('text_translatable', 'textarea_translatable')))
+                foreach($aLanguages as $sLangName => $sLangTitle)
+                    $this->aInputs[$sName]['values'][$sLangName] = BxDolForm::getSubmittedValue($sName . '-' . $sLangName, $this->aFormAttrs['method']);
+    }
+
+    protected function getTranslationsKey($sType, $sName, $sValue) {
+        $iRand = mktime();
+        $sPrefixDefault = "_sys_form_input";
+
+        $sName = BxDolStudioUtils::getSystemName(trim($sName));
+
+        $sResult = '';
+        switch($sType) {
+            case 'insert':
+                bx_import('BxDolStudioUtils');
+                $sValue = !empty($sValue) ? BxDolStudioUtils::getSystemName($sValue) : $sPrefixDefault;
+                $sResult = $sValue . '_' . $sName . '_' . $iRand;
+            break;
+
+            case 'update':
+                $sResult = !empty($sValue) ? $sValue : $sPrefixDefault . '_' . $sName . '_' . $iRand;
+                break;
+        }
+
+        return $sResult;
+    }
+}
+
+class BxDolStudioCheckerHelper extends BxDolFormCheckerHelper {
+    function checkAvailTranslatable($sVal, $aName, $sMethod = BX_DOL_STUDIO_METHOD_DEFAULT, $bAll = true) {
+        if(empty($sMethod) || empty($aName))
+            return false;
+
+        bx_import('BxDolStudioLanguagesUtils');
+        $aLanguages = BxDolStudioLanguagesUtils::getInstance()->getLanguages();
+
+        foreach($aLanguages as $sLangName => $sLangTitle) {
+            $sValue = BxDolForm::getSubmittedValue($aName . '-' . $sLangName, $sMethod);
+            $bValue = parent::checkAvail($sValue);
+
+            if($bAll && !$bValue)
+                return false;
+            if(!$bAll && $bValue)
+                return true;
+        }
+
+        return $bAll ? true : false;
+    }
+
+    function checkLengthTranslatable($sVal, $iLenMin, $iLenMax, $aName, $sMethod = BX_DOL_STUDIO_METHOD_DEFAULT, $bAll = true) {
+        if(empty($sMethod) || empty($aName))
+            return false;
+
+        bx_import('BxDolStudioLanguagesUtils');
+        $aLanguages = BxDolStudioLanguagesUtils::getInstance()->getLanguages();
+
+        foreach($aLanguages as $sLangName => $sLangTitle) {
+            $sValue = BxDolForm::getSubmittedValue($aName . '-' . $sLangName, $sMethod);
+            $bValue = parent::checkLength($sValue, $iLenMin, $iLenMax);
+
+            if($bAll && !$bValue)
+                return false;
+            if(!$bAll && $bValue)
+                return true;
+        }
+
+        return $bAll ? true : false;
+    }
+}
+/** @} */

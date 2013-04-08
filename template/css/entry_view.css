@@ -1,0 +1,179 @@
+/* TODO: remake according to new design */
+
+/* info block */
+
+.bx_sys_block_info {
+    margin:5px;
+}
+
+.bx_sys_block_info .memberPic {
+    width:70px;
+    overflow:hidden;
+}
+
+.bx_sys_block_info .infoUnit {
+    width:155px;
+    overflow:hidden;
+}
+
+/* images block */
+
+.bx_sys_block_images_title_curr {
+    margin:10px auto;
+    width:604px;
+    font-size:12px;
+    text-align:center;
+    font-weight:bold;
+}
+
+.bx_sys_block_images_curr {
+    border:1px solid #ccc;
+    margin:0 auto;
+    width:604px;
+    text-align:center;
+}
+
+.bx_sys_block_images_curr > img {
+    margin:2px;
+}
+
+.bx_sys_block_images_icons {
+    margin:6px 10px;
+}
+
+.bx_sys_block_images_icons > .sys_icon {
+    float:left;
+    margin:2px;
+}
+
+.bx_sys_block_images_icons > .sys_icon > img {
+    cursor:hand;
+    cursor:pointer;
+}
+
+
+/* videos block */
+
+.bx_sys_block_videos_title_curr {
+    margin:10px;
+    font-size:12px;
+    text-align:center;
+    font-weight:bold;
+}
+
+.bx_sys_block_videos_curr {
+    margin:0 10px;
+    height:400px;
+    position:relative;
+}
+
+.bx_sys_block_videos_curr > div {
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:400px;
+}
+.bx_sys_block_videos_curr div.viewFile {
+    margin: 0px auto;
+    padding: 0px;
+    border: 0px;
+}
+
+.bx_sys_block_videos_icons {
+    margin:6px 10px;
+}
+
+.bx_sys_block_videos_icons > .sys_icon {
+    float:left;
+    margin:2px;
+    width:auto;
+}
+
+.bx_sys_block_videos_icons > .sys_icon > img {
+    cursor:hand;
+    cursor:pointer;
+    height:32px;
+}
+
+/* sounds block */
+
+.bx_sys_block_sounds_title_curr {
+    margin:10px;
+    font-size:12px;
+    text-align:center;
+    font-weight:bold;
+}
+
+.bx_sys_block_sounds_curr {
+    margin:0 10px;
+    height:350px;
+    position:relative;
+}
+
+.bx_sys_block_sounds_curr > div {
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:350px;
+}
+
+.bx_sys_block_sounds_icons {
+    margin:6px 10px;
+}
+
+.bx_sys_block_sounds_icons > .sys_icon {
+    float:left;
+    margin:2px;
+    width:auto;
+}
+
+.bx_sys_block_sounds_icons > .sys_icon > img {
+    cursor:hand;
+    cursor:pointer;
+    height:32px;
+}
+
+/* files block */
+.bx_sys_files_wrapper {
+    margin:10px 5px 0px 5px;
+}
+
+.bx_sys_files_line {
+    margin:0px 5px 10px 5px;
+    background-color:#f4f7fa;
+    position:relative;
+    padding:0 0 0 48px;
+    min-height:48px;
+}
+
+.bx_sys_files_line .sys_icon {
+    position:absolute;
+    top:5px;
+    left:5px;
+}
+
+.bx_sys_files_line p {
+    display:block;
+    font-size:12px;
+    font-weight:bold;
+    padding:5px 75px 0 0;
+}
+
+.bx_sys_files_line u {
+    font-size:9px;
+    text-decoration:none;
+    font-style:normal;
+    text-transform:lowercase;
+}
+
+.bx_sys_files_line .button_wrapper {
+    float:right;
+    margin-left:5px;
+}
+
+.bx_sys_files_line .bx_sys_files_btns {
+    padding:5px 5px 5px 0;
+}
+

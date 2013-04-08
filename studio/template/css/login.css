@@ -1,0 +1,23 @@
+div.bx-std-page {
+
+}
+div.bx-std-login-form {
+	width: 595px;
+	height: auto;
+}
+div.bx-std-login-form {}
+div.bx-std-lf-input {
+	position: relative;
+	float: left;
+	width: 225px;
+	margin-right: 10px;
+}
+div.bx-std-lf-submit {
+	position: relative;
+    float: left;
+    width: 125px;
+}
+div.bx-std-lf-submit input {
+	width: 125px
+}
+

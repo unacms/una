@@ -1,0 +1,28 @@
+<div class="mbp-available-levels">
+    <bx_repeat:levels>
+        <div class="mbp-level">
+            <div class="mbp-level-icon" style="background-image:url(__icon__);">
+                <img src="<bx_image_url:spacer.gif />" />
+            </div>
+            <div class="mbp-level-price">
+                <div class="image" style="background-image:url(__currency_icon__);">&nbsp;</div>
+                <div class="text">__price__</div>
+            </div>
+            <div class="mbp-level-content">
+                <div class="mbp-level-title">
+                    <a href="javascript: void(0)" onclick="javascript: window.open('__url_root__explanation.php?explain=membership&type=__id__', '', 'width=480,height=300,menubar=no,status=no,resizable=yes,scrollbars=yes,toolbar=no, location=no');">__title__</a> (__days__)
+                </div>
+                <div class="mbp-level-info">__description__</div>
+                <div class="mbp-level-control">
+                    __add_to_cart__
+                    <div class="button_wrapper">
+                        <img src="<bx_icon_url:information.png />" class="button_icon" />
+                        <input type="button" value="<bx_text:_membership_txt_explanation />" class="form_input_submit" onclick="javascript: window.open('__url_root__explanation.php?explain=membership&type=__id__', '', 'width=480,height=300,menubar=no,status=no,resizable=yes,scrollbars=yes,toolbar=no, location=no');" />
+                        <div class="button_wrapper_close">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </bx_repeat:levels>
+    <div class="mbp-cb">&nbsp;</div>
+</div>

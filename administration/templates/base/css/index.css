@@ -1,0 +1,71 @@
+/* TODO: remove or remake according to new design */
+
+/*--- Items in Category ---*/
+div.adm-category-items {
+    padding: 10px;
+}
+div.adm-category-item {
+    position: relative;
+    margin-bottom: 10px;
+}
+div.adm-category-item img {
+    top: 3px;
+    left: 7px;
+    position: absolute;
+}
+div.adm-ci-link {
+    margin-left: 35px;
+
+    line-height: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+div.adm-ci-description {
+    margin-left: 35px;
+
+    font-size: 13px;
+}
+
+/*--- Boonex News ---*/
+div.adm-news {
+    margin: 0px 2px;
+    width: 210px;
+}
+div.adm-news-header,
+div.adm-news-footer {}
+
+div.adm-news-items,
+div.adm-news-more {
+    padding: 15px 15px 0px 15px;
+    background-color: #ececec;
+}
+div.adm-news-item {
+    padding-bottom: 8px;
+}
+/*div.adm-ni-title {
+    font-size: 12px;
+    font-weight:bold;
+    color: #3333cc;
+}*/
+div.adm-ni-title a,
+div.adm-ni-title a:link,
+div.adm-ni-title a:visited,
+div.adm-ni-title a:hover,
+div.adm-ni-title a:active
+{
+    font-size:12px;
+    font-weight:bold;
+    color:#33c;
+}
+
+div.adm-ni-content{
+    font-size: 11px;
+    color: #333333;
+    text-align:justify;
+}
+span.adm-ni-date {
+    color: #999999;
+    display:block;
+    font-size:9px;
+}
+

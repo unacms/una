@@ -1,0 +1,41 @@
+
+    /* --------------- rss items */
+
+    .rss_item_wrapper:first-child {
+        padding-top: 0px;
+    }
+
+    .rss_item_header
+    {
+        font-weight:bold;
+    }
+
+    .rss_item_info
+    {
+        padding-left:20px;
+
+        line-height:16px;
+
+        background-repeat:no-repeat;
+        background-image:url(../images/icons/clock.png);
+    }
+
+    .rss_item_desc
+    {
+
+    }
+
+    /* --------------- rss block bottom panel */
+
+    .rss_read_more
+    {
+        padding-left:20px;
+
+        line-height:30px;
+        font-weight:normal;
+        text-transform:capitalize;
+
+        background-repeat:no-repeat;
+        background-image:url(../images/icons/chain.png);
+    }
+

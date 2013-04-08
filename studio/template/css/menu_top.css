@@ -1,0 +1,43 @@
+div.bx-std-menu-top-wrp {
+    position: relative;
+    width: 100%;
+	min-height: 50px;
+}
+div.bx-std-menu-top {
+	height: 50px;
+}
+div.bx-std-menu-top-left {
+    position: absolute;
+	z-index: 3;
+    top: 0px;
+    left: 10px;
+	height: 50px;
+}
+div.bx-std-page-caption div.bx-std-menu-top-left {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+	height: 50px;
+}
+div.bx-std-menu-top-center {
+    position: relative;
+	margin: 0px auto;
+	line-height: 50px;
+	text-align: center;
+    text-shadow: 0 1px 0px rgba(0, 0, 0, 0.6), 0 -1px 0px rgba(255, 255, 255, 0.5);
+    opacity: 0.45;
+	color: #38c;
+}
+div.bx-std-menu-top-right {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+	height: 50px;
+}
+div.bx-std-page-caption div.bx-std-menu-top-right {
+    position: absolute;
+    z-index: 3;
+    top: 10px;
+    right: 10px;
+	height: 50px;
+}

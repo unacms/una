@@ -1,0 +1,41 @@
+<script language="javascript" type="text/javascript">
+<!--
+    __js_content__
+-->
+</script>
+<bx_repeat:vendors>
+    <div class="pmt-box" style="width:__box_width__px;">
+        <div class="pmt-box-cpt">
+            <div class="pmt-box-collapse" style="background-image:url(<bx_icon_url:toggle.png />)" onclick="javascript:__js_object__.toggle(this)">
+                <img src="<bx_image_url:spacer.gif />" />
+            </div>
+            <bx_if:show_link>
+                <a href="__vendor_url__">__vendor_username__</a><bx_text:_payment_txt_shopping_cart />(__items_count__) - __items_price__ __vendor_currency_code__
+            </bx_if:show_link>
+            <bx_if:show_text>__vendor_username__<bx_text:_payment_txt_shopping_cart />(__items_count__) - __items_price__ __vendor_currency_code__</bx_if:show_text>
+        </div>
+        <div class="pmt-box-cnt">
+            <form id="items_from___vendor_id__" name="items_from___vendor_id__" method="POST" action="__process_url__" onsubmit="javascript:return __js_object__.onSubmit(this)">
+                <input type="hidden" name="vendor_id" value="__vendor_id__" />
+                <div class="pmt-vendor-icon">__vendor_icon__</div>
+                <div class="pmt-providers">
+                    <bx_repeat:providers>
+                        <div class="pmt-provider">
+                            <input type="radio" name="provider" value="__name__" __checked__ />
+                            <b>__caption__</b>
+                        </div>
+                    </bx_repeat:providers>
+                </div>
+                <div class="pmt-items">
+                    <bx_repeat:items>
+                        <div class="pmt-item">
+                            <input type="checkbox" name="items[]" value="__vendor_id_____module_id_____item_id_____item_quantity__" checked="checked" />
+                            <a href="__item_url__">__item_title__</a>(__item_quantity__) - __item_price__ __vendor_currency_code__
+                        </div>
+                    </bx_repeat:items>
+                </div>
+                __control_panel__
+            </form>
+        </div>
+    </div>
+</bx_repeat:vendors>

@@ -1,0 +1,36 @@
+/**
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinStudio Dolphin Studio
+ * @{
+ */
+function BxDolStudioDesigner(oOptions) {
+	this.sActionsUrl = oOptions.sActionUrl;
+    this.sObjName = oOptions.sObjName == undefined ? 'oBxDolStudioDesigner' : oOptions.sObjName;
+    this.sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'fade' : oOptions.sAnimationEffect;
+    this.iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
+}
+
+BxDolStudioDesigner.prototype.deleteLogo = function() {
+	var $this = this;
+	var oDate = new Date();
+
+	$.post(
+		this.sActionsUrl,
+		{
+			dsg_action: 'delete_logo',
+			_t: oDate.getTime()
+		},
+		function(oData) {
+			if(oData.code != 0 && oData.message.length > 0) {
+				alert(oData.message);
+				return;
+			}
+
+			document.location.href = document.location.href; 
+		},
+		'json'
+	);
+};
+/** @} */

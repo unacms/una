@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+
+	<string name="_bx_persons"><![CDATA[Persons]]></string>
+
+	<string name="_bx_persons_form_person"><![CDATA[Persons]]></string>
+	<string name="_bx_persons_form_person_display_add"><![CDATA[Add Person]]></string>
+	<string name="_bx_persons_form_person_display_edit"><![CDATA[Edit Person]]></string>
+	<string name="_bx_persons_form_person_display_delete"><![CDATA[Delete Person]]></string>
+	<string name="_bx_persons_form_person_display_view"><![CDATA[View Person]]></string>
+	<string name="_bx_persons_form_person_input_sys_do_submit"><![CDATA[Submit]]></string>
+	<string name="_bx_persons_form_person_input_do_submit"><![CDATA[Submit]]></string>
+	<string name="_bx_persons_form_person_input_sys_fullname"><![CDATA[Full Name]]></string>
+	<string name="_bx_persons_form_person_input_fullname"><![CDATA[Full Name]]></string>
+	<string name="_bx_persons_form_person_input_fullname_err"><![CDATA[This information is essential. Please, fill in this field.]]></string>
+	<string name="_bx_persons_form_person_input_sys_sex"><![CDATA[Sex]]></string>
+	<string name="_bx_persons_form_person_input_sex"><![CDATA[Sex]]></string>
+	<string name="_bx_persons_form_person_input_sex_err"><![CDATA[Sex field is mandatory]]></string>
+	<string name="_bx_persons_form_person_input_sys_picture"><![CDATA[Profile Picture]]></string>
+	<string name="_bx_persons_form_person_input_picture"><![CDATA[Profile Picture]]></string>
+	<string name="_bx_persons_form_person_input_picture_err"><![CDATA[Profile picture is mandatory.]]></string>
+	<string name="_bx_persons_form_person_input_sys_delete_confirm"><![CDATA[Delete confirmation]]></string>
+	<string name="_bx_persons_form_person_input_delete_confirm"><![CDATA[I am sure I want to delete this profile]]></string>
+	<string name="_bx_persons_form_person_input_delete_confirm_info"><![CDATA[This action can not be undone.]]></string>
+	<string name="_bx_persons_form_person_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete your profile.]]></string>
+	<string name="_bx_persons_form_person_input_picture_btn_upload"><![CDATA[Choose Picture]]></string>
+    <string name="_bx_persons_form_person_input_picture_txt_new"><![CDATA[New Profile Picture]]></string>
+    <string name="_bx_persons_form_person_input_picture_txt_discard"><![CDATA[Discard]]></string>
+    <string name="_bx_persons_form_person_input_picture_txt_current"><![CDATA[Current Profile Picture]]></string>
+    <string name="_bx_persons_form_person_input_picture_txt_delete"><![CDATA[Delete]]></string>
+
+	<string name="_bx_persons_acl_action_create_profile"><![CDATA[Create Person's Profile]]></string>
+	<string name="_bx_persons_acl_action_delete_profile"><![CDATA[Delete Person's Profile]]></string>
+	<string name="_bx_persons_acl_action_view_profile"><![CDATA[View Person's Profile]]></string>
+	<string name="_bx_persons_acl_action_edit_any_profile"><![CDATA[Edit Any Person's Profile]]></string>
+
+	<string name="_bx_persons_page_title_sys_create_profile"><![CDATA[Create Person's Profile]]></string>
+	<string name="_bx_persons_page_title_create_profile"><![CDATA[Create Person's Profile]]></string>
+	<string name="_bx_persons_page_block_title_create_profile"><![CDATA[Create Person's Profile]]></string>
+	<string name="_bx_persons_page_title_sys_edit_profile"><![CDATA[Edit Person's Profile]]></string>
+	<string name="_bx_persons_page_title_edit_profile"><![CDATA[Edit Profile]]></string>
+	<string name="_bx_persons_page_block_title_edit_profile"><![CDATA[Edit Profile]]></string>
+	<string name="_bx_persons_page_title_sys_delete_profile"><![CDATA[Delete Person's Profile]]></string>
+	<string name="_bx_persons_page_title_delete_profile"><![CDATA[Delete Profile]]></string>
+	<string name="_bx_persons_page_block_title_delete_profile"><![CDATA[Delete Profile]]></string>
+	<string name="_bx_persons_page_title_sys_view_profile"><![CDATA[View Person's Profile]]></string>
+	<string name="_bx_persons_page_title_view_profile"><![CDATA[Person - {fullname}]]></string>
+	<string name="_bx_persons_page_block_title_profile_info"><![CDATA[Info]]></string>
+	<string name="_bx_persons_page_block_title_profile_picture"><![CDATA[Picture]]></string>
+	<string name="_bx_persons_page_block_title_profile_menu"><![CDATA[Menu]]></string>
+	<string name="_bx_persons_page_title_browse_recent"><![CDATA[Persons]]></string>
+
+    <string name="_bx_persons_menu_set_title_view_person"><![CDATA[View Person]]></string>
+    <string name="_bx_persons_menu_title_view_person"><![CDATA[View Person]]></string>
+    <string name="_bx_persons_menu_item_title_system_edit_person"><![CDATA[Edit Person]]></string>
+    <string name="_bx_persons_menu_item_title_edit_person"><![CDATA[Edit Profile]]></string>
+    <string name="_bx_persons_menu_item_title_system_delete_person"><![CDATA[Delete Person]]></string>
+    <string name="_bx_persons_menu_item_title_delete_person"><![CDATA[Delete Profile]]></string>
+    <string name="_bx_persons_menu_item_title_system_view_person"><![CDATA[View Person]]></string>
+    <string name="_bx_persons_menu_item_title_view_person"><![CDATA[View Profile]]></string>
+    <string name="_bx_persons_menu_item_title_system_persons_profile"><![CDATA[Person]]></string>
+    <string name="_bx_persons_menu_item_title_persons_profile"><![CDATA[Person]]></string>
+
+	<string name="_bx_persons_txt_error_profile_creation"><![CDATA[Profile creation failed]]></string>
+	<string name="_bx_persons_txt_error_profile_update"><![CDATA[Profile update failed]]></string>
+	<string name="_bx_persons_txt_error_profile_delete"><![CDATA[Profile delete failed]]></string>
+	<string name="_bx_persons_txt_error_profile_is_not_defined"><![CDATA[Profile isn't defined]]></string>
+
+    <string name="_bx_persons_txt_account_pending"><![CDATA[This profile is pending approval, please wait until it is activated.]]></string>
+    <string name="_bx_persons_txt_account_suspended"><![CDATA[This profile is suspended.]]></string>
+
+</resources>

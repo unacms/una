@@ -1,0 +1,64 @@
+
+/* common styles */
+
+.bx-layout-wrapper {
+    border-collapse:collapse;
+    margin:0;
+    padding:0;
+    width:100%;
+}
+
+.bx-layout-cell {
+    padding:0;
+    text-align:left;
+    vertical-align:top;
+}
+
+.bx-layout-box-wrapper:first-child {
+    padding-top:0;
+}
+
+.bx-layout-bar-width {
+    width:280px;
+}
+
+/* layout 3 columns */
+
+.bx-layout-3-columns-column3,
+.bx-layout-3-columns-column1 {
+    width:33%;
+}
+.bx-layout-3-columns-column2 {
+    width:34%;
+}
+
+/* layout 2 columns */
+
+.bx-layout-2-columns-column1 {
+    width:50%;
+}
+.bx-layout-2-columns-column2 {
+    width:50%;
+}
+
+/* layout top area 3 columns */
+
+.bx-layout-top-area-3-columns-column3,
+.bx-layout-top-area-3-columns-column1 {
+    width:33%;
+}
+
+.bx-layout-top-area-3-columns-column2 {
+    width:34%;
+}
+
+/* layout top area 2 columns */
+
+.bx-layout-top-area-2-columns-column1 {
+    width:50%;
+}
+
+.bx-layout-top-area-2-columns-column2 {
+    width:50%;
+}
+

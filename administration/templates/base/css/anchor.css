@@ -1,0 +1,20 @@
+/* TODO: remove or remake according to new design */
+
+a, a:link {
+    color:#3333CC;
+    font-family:Verdana,Arial;
+}
+a:visited {
+    color:#000099;
+}
+
+a:hover, a:active {
+    color:#3333CC;
+}
+
+a, a:link, a:visited, a:active {
+    text-decoration:none;
+}
+a:hover {
+    text-decoration:underline;
+}

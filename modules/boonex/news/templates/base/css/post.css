@@ -1,0 +1,14 @@
+div.news-post {
+    padding: 10px;
+    position: relative;
+}
+iframe.news-hidden {
+    width: 1px;
+    height: 1px;
+    display: none;
+}
+
+/* expanding TinyMCE */
+.news-post .input_wrapper_textarea {
+    width:630px;
+}

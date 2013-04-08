@@ -1,0 +1,205 @@
+div.simple_messenger_chat_block {
+    float:right;
+    cursor:pointer;
+    position:relative;
+    padding-left:5px;
+    padding-right:5px;
+    height:28px;
+    border-style:none solid;
+    border-color:transparent;
+    border-width:medium 1px;
+    margin-right:2px;
+    min-width:70px;
+    text-align:center;
+}
+
+div.simple_messenger_chat_block div.video_messenger{
+    padding:5px;
+    text-align:center;
+}
+
+div.simple_messenger_chat_block div.top_indent{
+    padding-top:5px;
+}
+
+div.simple_messenger_chat_block div.bottom_indent{
+    padding-top:7px;
+}
+
+div.chat_block_top_position{
+  margin-bottom:-1px;
+}
+
+div.chat_block_bottom_position{
+  margin-top:-1px;
+}
+
+div.active_chat_block{
+    background-color:#F8F8F7;
+    border-left:1px solid #B7B7B7;
+    border-right:1px solid #B7B7B7;
+}
+
+div.active_chat_block_blink_effect{
+    background-color:#F76666;
+}
+
+div.simple_messenger_chat_block {
+    width:102px;
+    border-left:1px solid #B4B4B4;
+}
+
+div.simple_messenger_chat_block  img{
+    vertical-align:middle;
+}
+
+div.simple_messenger_chat_block  img.devider{
+    width:2px;
+    height:25px;
+}
+
+div.simple_messenger_chat_block  div.messages_history{
+    position:absolute;
+    visibility:hidden;
+    right:-1px;
+    background-repeat: repeat;
+    width:250px;
+    border-left:1px solid #B7B7B7;
+    border-right:1px solid #B7B7B7;
+    cursor:default;
+}
+
+div.simple_messenger_chat_block   div.history_top_position {
+    border-bottom:1px solid #B7B7B7;
+}
+
+div.simple_messenger_chat_block   div.history_bottom_position {
+    border-top:1px solid #B7B7B7;
+}
+
+div.simple_messenger_chat_block  div.messages_history div.sender_info{
+    background-color:#E4E4E4;
+    padding:5px;
+}
+
+div.simple_messenger_chat_block  div.messages_history div.sender_info table{
+    width:100%;
+}
+
+div.simple_messenger_chat_block  div.messages_history div.sender_info td.sender_thumb {
+    width:70px;
+    padding-top:5px;
+    padding-left:5px;
+    padding-bottom:5px;
+}
+
+div.simple_messenger_chat_block  div.messages_history div.sender_info td.sender_info {
+    padding-top:5px;
+    padding-right:5px;
+    padding-bottom:5px;
+}
+
+div.simple_messenger_chat_block  div.messages_history div.sender_info div.controls{
+    text-align:right;
+    padding-right:5px;
+    padding-bottom:2px;
+}
+
+div.simple_messenger_chat_block  div.messages_history div.sender_info div.sender_link{
+    margin-left:10px;
+    margin-bottom:5px;
+    font-weight:bold;
+    text-align:left;
+}
+
+div.simple_messenger_chat_block  div.messages_history div.sender_info div.status_text{
+    margin-left:10px;
+    font-size:9px;
+    color:#666;
+    text-align:left;
+}
+
+div.simple_messenger_chat_block  div.messages_history div.messages_section{
+    overflow-x:hidden;
+    overflow-y:scroll;
+    height:200px;
+    text-align:left;
+    margin:10px;
+    border:1px solid #B2B2B2;
+    background-color:#fff;
+    padding:5px;
+}
+
+div.simple_messenger_chat_block  div.messages_history div.messages_section div.date{
+    float:right;
+    color:#B5B9B1;
+    font-size:9px;
+}
+
+div.simple_messenger_chat_block  div.messages_history div.messages_section div.message_wrapper{
+    border-bottom:1px solid #EEEEEE;
+    margin-bottom:5px;
+    padding-bottom:5px;
+}
+
+div.simple_messenger_chat_block  div.messages_history div.messages_section div.message_wrapper div.owner_nick{
+    float:left;
+    font-weight:bold;
+}
+
+div.simple_messenger_chat_block  div.messages_history div.messages_section div.message_wrapper div.sender{
+    color:#3B5998;
+}
+
+div.simple_messenger_chat_block  div.messages_history div.messages_section div.message_wrapper div.recipient{
+    color:#777777;
+}
+
+div.simple_messenger_chat_block  div.messages_history div.messages_section div.message_wrapper div.message{
+    margin-top:5px;
+}
+
+div.simple_messenger_chat_block  div.messages_history div.form_advanced_table{
+    border:0;
+    margin-left:10px;
+    margin-right:10px;
+    padding-bottom:10px;
+}
+
+div.field_design{
+    position:absolute;
+    top:0;
+    left:0;
+    padding-left:5px;
+    padding-top:6px;
+}
+
+div.simple_messenger_chat_block  div.messages_history div.input_wrapper_text{
+    width:225px;
+}
+
+div.simple_messenger_chat_block  div.messages_history input.form_input_text{
+    padding-left:20px;
+    width:200px;
+}
+
+div.simple_messenger_chat_block_tbl{
+    border:0;
+    width:auto;
+    margin:0 auto;
+}
+
+*div.simple_messenger_chat_block_tbl .form_input_text{
+    width:95%;
+}
+
+div.simple_messenger_chat_wrapper{
+    padding-left:20px;
+    width:auto;
+    float:none;
+    margin-top:0px;
+    margin-right:10px;
+    margin-bottom:10px;
+    margin-left:10px;
+    position:relative;
+}

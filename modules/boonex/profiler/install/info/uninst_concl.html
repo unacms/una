@@ -1,0 +1,5 @@
+To complete un-installation remove the following lines from the beginning of inc/header.inc.php file:
+
+define ('BX_PROFILER', true);
+if (BX_PROFILER && !isset($GLOBALS['bx_profiler_start']))
+    $GLOBALS['bx_profiler_start'] = microtime ();

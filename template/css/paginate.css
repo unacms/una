@@ -1,0 +1,22 @@
+
+/* * * * Pagination * * * */
+
+.bx-paginate {
+    line-height:38px;
+}
+.bx-paginate-simple {
+    line-height:22px;
+}
+
+.bx-paginate-btns,
+.bx-paginate-info {
+    float:right;
+}
+
+.bx-paginate-view-all {
+    float:left;
+}
+
+.bx-paginate-btn-next {
+    margin-left:5px;
+}

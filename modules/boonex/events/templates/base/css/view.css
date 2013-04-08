@@ -1,0 +1,56 @@
+.bx_events_view_photo {
+    width:600px;
+    text-align:center;
+    margin:0px auto 0px auto;
+    padding:2px;
+    border:1px solid #CCC;
+}
+
+.bx_events_block_info {
+    margin:5px;
+}
+
+.bx_events_block_info .memberPic {
+    width:70px;
+    overflow:hidden;
+}
+
+.bx_events_block_info .infoUnit {
+    width:143px;
+    overflow:hidden;
+}
+
+.bx_events_country_city img {
+    top:2px;
+    width:16px;
+}
+
+table.bx_events_fields {
+    border-collapse:collapse;
+    margin:10px;
+    padding:0;
+}
+
+td.bx_events_field_name {
+    margin:0;
+    padding:5px 10px 5px 0;
+    text-align:left;
+    color:#999;
+    font-size:11px;
+}
+
+td.bx_events_field_value {
+    margin:0;
+    padding:5px 10px 5px 0;
+    text-align:left;
+    font-size:11px;
+}
+
+.bx_events_description {
+    padding:10px;
+    font-size:11px;
+}
+
+.dbContent .searchrow_block_simple {
+    margin:0;
+}

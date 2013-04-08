@@ -1,0 +1,10 @@
+
+.bx-informer-msg:first-child {
+    margin-top:0;
+}
+
+.bx-informer-msg {
+    background-position:20px 20px;
+    background-repeat:no-repeat;
+    padding-left:56px;
+}

@@ -1,0 +1,404 @@
+<?php
+/**
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinStudio Dolphin Studio
+ * @{
+ */
+defined('BX_DOL') or die('hack attempt');
+
+bx_import('BxDolLanguages');
+bx_import('BxDolXmlParser');
+bx_import('BxDolStudioLanguagesUtilsQuery');
+
+class BxDolStudioLanguagesUtils extends BxDolLanguages {
+    function __construct() {
+        if(isset($GLOBALS['bxDolClasses'][get_class($this)]))
+            trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
+
+        parent::__construct();
+
+        $this->oDb = new BxDolStudioLanguagesUtilsQuery();
+    }
+
+	/**
+     * Prevent cloning the instance
+     */
+    public function __clone() {
+        if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
+            trigger_error('Clone is not allowed for the class: ' . get_class($this), E_USER_ERROR);
+    }
+
+    /**
+     * Get singleton instance of the class
+     */
+    static function getInstance() {
+        if(!isset($GLOBALS['bxDolClasses'][__CLASS__]))
+            $GLOBALS['bxDolClasses'][__CLASS__] = new BxDolStudioLanguagesUtils();
+
+        return $GLOBALS['bxDolClasses'][__CLASS__];
+    }
+
+    function getLanguageInfo($sName) {
+        $aLanguage = array();
+        $this->oDb->getLanguagesBy(array('type' => 'by_name', 'value' => $sName), $aLanguage, false);
+
+        bx_import('BxDolStudioTemplate');
+        if(!empty($aLanguage))
+            $aLanguage['icon'] = BxDolStudioTemplate::getInstance()->getIconUrl('sys_fl_' . $aLanguage['flag'] . '.gif');
+
+        return $aLanguage;
+    }
+
+    function getLanguagesInfo($bIdAsKey = false, $bActiveOnly = false) {
+        $aLanguages = array();
+        $this->oDb->getLanguagesBy(array('type' => 'all'), $aLanguages, false);
+        if(!is_array($aLanguages) || empty($aLanguages))
+            return $aLanguages;
+
+        bx_import('BxDolStudioTemplate');
+        $oTemplate  = BxDolStudioTemplate::getInstance();
+        foreach($aLanguages as $iKey => $aLanguage)
+            $aLanguages[$iKey]['icon'] = $oTemplate->getIconUrl('sys_fl_' . $aLanguage['flag'] . '.gif');
+
+        return $aLanguages;
+    }
+
+    function compileLanguage($mixedLang = 0, $bForce = false) {
+        $sType = 'all';
+        if(!empty($mixedLang)) {
+            if(is_string($mixedLang) && !is_numeric($mixedLang))
+                $sType = 'all_by_name';
+            else if(is_numeric($mixedLang) || is_int($mixedLang)) {
+                $sType = 'all_by_id';
+                $mixedLang = (int)$mixedLang;
+            }
+        }
+
+        $aLanguages = array();
+        $iLanguages = $this->oDb->getLanguagesBy(array('type' => $sType, 'value' => $mixedLang), $aLanguages);
+
+        if($iLanguages == 0)
+            return false;
+
+        bx_import('BxDolFile');
+        $oFile = BxDolFile::getInstance();
+
+        $sNewLine = "\r\n";
+        foreach($aLanguages as $aLanguage) {
+            if(!$bForce && (int)$aLanguage['enabled'] != 1)
+                continue;
+
+            $aKeys = array();
+            $this->oDb->getKeysBy(array('type' => 'by_language_id', 'value' => $aLanguage['id']), $aKeys);
+
+            $sLanguageFile = "lang-" . $aLanguage['name'] . ".php";
+            $oFile->delete('cache/' . $sLanguageFile);
+
+            $rHandle = fopen( BX_DIRECTORY_PATH_CACHE . $sLanguageFile, 'w');
+            if($rHandle === false)
+                return false;
+
+            $sContent = "<?{$sNewLine}\$GLOBALS['LANG'] = array(";
+            foreach($aKeys as $aKey) {
+                list($sKey, $sString) = str_replace(array("\\", "'"), array("\\\\", "\\'"), array($aKey['key'], $aKey['string']));
+                $sContent .= "{$sNewLine}\t'$sKey' => '$sString',";
+            }
+
+            $sContent = trim($sContent, ',');
+
+            if(fwrite($rHandle, $sContent."{$sNewLine});?>") === false)
+                return false;
+
+            if(fclose($rHandle) === false) 
+                return false;
+
+            @chmod( BX_DIRECTORY_PATH_CACHE . "lang-{$aLanguage['name']}.php", 0666);
+        }
+
+        $this->init();
+        return true;
+    }
+
+    function installLanguage($aLanguageModule, $bRecompile = true) {
+        $aLanguage = array();
+        $this->oDb->getLanguagesBy(array('type' => 'by_name', 'value' => $aLanguageModule['uri']), $aLanguage, false);
+        if(empty($aLanguage) || !is_array($aLanguage))
+            return false;
+
+        $sPath = BX_DIRECTORY_PATH_MODULES . $aLanguageModule['path'] . 'data/langs/';
+        if(!($rHandler = opendir($sPath)))
+            return false;
+    
+        $bResult = false;
+        while(($sFileName = readdir($rHandler)) !== false) {
+            if(substr($sFileName, -3) != 'xml')
+                continue;
+
+            $sModule = substr($sFileName, 0, -4);
+            $bResult |= $this->_restoreLanguageByModule($aLanguage, $sPath, $sModule);
+        }
+        closedir($rHandler);
+
+        $bResult |= $this->_restoreLanguageByModule($aLanguage, $sPath, $aLanguageModule);
+        return $bResult && ($bRecompile ? $this->compileLanguage($aLanguage['id']) : true);
+    }
+
+    function restoreLanguage($mixedLang = 0, $mixedModule = 0, $bRecompile = true) {
+        $aLanguages = array();
+        if(!empty($mixedLang)) {
+            $sType = is_string($mixedLang) && !is_numeric($mixedLang) ? 'by_name' : 'by_id';
+            $this->oDb->getLanguagesBy(array('type' => $sType, 'value' => $mixedLang), $aLanguages[0], false);
+        }
+        else
+            $this->oDb->getLanguagesBy(array('type' => 'all'), $aLanguages, false);
+
+        $bResult = true;
+        foreach($aLanguages as $aLanguage) {
+            if(empty($aLanguage) || !is_array($aLanguage))
+                continue;
+
+            bx_import('BxDolModuleQuery');
+            $aLanguageModule = BxDolModuleQuery::getInstance()->getModuleByUri($aLanguage['name']);
+            if(empty($aLanguageModule) || !is_array($aLanguageModule))
+                continue;
+
+            $sPath = BX_DIRECTORY_PATH_MODULES . $aLanguageModule['path'] . 'data/langs/';
+ 
+            if(!empty($mixedModule))
+                $bResult &= $this->_restoreLanguageByModule($aLanguage, $sPath, $mixedModule);
+            else {
+                if(!($rHandler = opendir($sPath)))
+                    continue;
+    
+                while(($sFileName = readdir($rHandler)) !== false) {
+                    if(substr($sFileName, -3) != 'xml')
+                        continue;
+
+                    $sModule = substr($sFileName, 0, -4);
+                    $bResult &= $this->_restoreLanguageByModule($aLanguage, $sPath, $sModule);
+                }
+    
+                closedir($rHandler);
+            }
+
+            if($bRecompile)
+                $bResult &= $this->compileLanguage($aLanguage['id']);
+        }
+
+        return $bResult;
+    }
+
+    function removeLanguageById($mixedLang = 0, $bRecompile = true) {
+        $aLanguages = array();
+        if(!empty($mixedLang)) {
+            $sType = is_string($mixedLang) && !is_numeric($mixedLang) ? 'by_name' : 'by_id';
+            $this->oDb->getLanguagesBy(array('type' => $sType, 'value' => $mixedLang), $aLanguages[0], false);
+        }
+        else
+            $this->oDb->getLanguagesBy(array('type' => 'all'), $aLanguages, false);
+
+        $bResult = true;
+        foreach($aLanguages as $aLanguage) {
+            if(empty($aLanguage) || !is_array($aLanguage))
+                continue;
+
+            $bResult &= (int)$this->oDb->deleteStringsBy(array('type' => 'by_lang', 'language_id' => $aLanguage['id'])) >= 0;
+
+            if($bRecompile)
+                $bResult &= $this->compileLanguage($aLanguage['id']);
+        }
+
+        return $bResult;
+    }
+
+    function removeLanguageByModule($mixedModule, $bRecompile = true) {
+        $aModule = $mixedModule;
+        if(!is_array($mixedModule)) {
+            $sMethod = is_string($mixedModule) && !is_numeric($mixedModule) ? 'getModuleByUri' : 'getModuleById';
+            $aModule = BxDolModuleQuery::getInstance()->$sMethod($mixedModule);
+        }
+
+        if(empty($aModule) || !is_array($aModule) || !$aModule['uri'] || !$aModule['lang_category'])
+            return false;
+
+        $aCategory = array();
+        $this->oDb->getCategoriesBy(array('type' => 'by_name', 'value' => $aModule['lang_category']), $aCategory, false);
+        if(empty($aCategory) || !is_array($aCategory))
+            return false;
+
+        $bResult = (int)$this->oDb->deleteKeysBy(array('type' => 'by_cat_id', 'value' => $aCategory['id'])) >= 0;
+        return $bResult && ($bRecompile ? $this->compileLanguage() : true);
+    }
+
+    function getLanguageString($sKey, $iLangId = 0) {
+        if($iLangId == 0) {
+            $aStrings = array();
+            $this->oDb->getStringsBy(array('type' => 'all_by_key_key_language_id', 'value' => $sKey), $aStrings, false);
+
+            return $aStrings;
+        }
+
+        $aString = array();
+        $this->oDb->getStringsBy(array('type' => 'by_key_language_id', 'key' => $sKey, 'language_id' => $iLangId), $aString, false);
+
+        return $aString;
+    }
+
+    function addLanguageString($sKey, $mixedString, $iLangId = 0, $iCategoryId = 0, $bRecompile = true) {
+        $iLangId = (int)$iLangId;
+
+        $iCategoryId = (int)$iCategoryId;
+        if($iCategoryId == 0)
+            $iCategoryId = BX_DOL_LANGUAGE_CATEGORY_CUSTOM;
+
+        $sKey = bx_process_input($sKey);
+        $mixedString = bx_process_input($mixedString);
+
+        $aLanguages = array();
+        $iLanguages = $this->oDb->getLanguagesBy(($iLangId == 0 ? array('type' => 'all') : array('type' => 'all_by_id', 'value' => $iLangId)), $aLanguages);
+
+        if(($iKeyId = $this->oDb->addKey($iCategoryId, $sKey)) === false)
+            return false;
+
+        foreach($aLanguages as $aLanguage) {
+            $sString = '';
+            if(is_string($mixedString))
+                $sString = $mixedString;
+            else if(is_array($mixedString))
+                $sString = $mixedString[$aLanguage['id']];
+
+            if(!$this->oDb->addString($iKeyId, $aLanguage['id'], $sString))
+                return false;
+
+            if($bRecompile)
+                $this->compileLanguage($aLanguage['id']);
+        }
+    
+        return $iKeyId;
+    }
+
+    function updateLanguageString($sKey, $sString, $iLangId = 0, $bRecompile = true) {
+        $sKey = bx_process_input($sKey);
+        $sString = bx_process_input($sString);
+        $iLangId = (int)$iLangId;
+
+        $aKey = array();
+        $this->oDb->getKeysBy(array('type' => 'by_name', 'value' => $sKey), $aKey);
+        if(empty($aKey))
+            return $this->addLanguageString($sKey, $sString, $iLangId, BX_DOL_LANGUAGE_CATEGORY_CUSTOM, $bRecompile);
+    
+        return $this->updateLanguageStringById($aKey['id'], $sString, $iLangId, $bRecompile);
+    }
+
+    function updateLanguageStringById($iKeyId, $mixedString, $iLangId = 0, $bRecompile = true) {
+        $iKeyId = (int)$iKeyId;
+        $mixedString = bx_process_input($mixedString);
+        $iLangId = (int)$iLangId;
+
+        $aLanguages = array();
+        $iLanguages = $this->oDb->getLanguagesBy(($iLangId == 0 ? array('type' => 'all') : array('type' => 'all_by_id', 'value' => $iLangId)), $aLanguages);
+
+        foreach($aLanguages as $aLanguage) {
+            $sString = '';
+            if(is_string($mixedString))
+                $sString = $mixedString;
+            else if(is_array($mixedString))
+                $sString = $mixedString[$aLanguage['id']];
+
+            if($this->oDb->updateString($iKeyId, $aLanguage['id'], $sString) && $bRecompile)
+                $this->compileLanguage($aLanguage['id']);
+        }
+
+        return true;
+    }
+
+    function deleteLanguageString($sKey, $iLangId = 0, $bRecompile = true) {
+        $iLangId = (int)$iLangId;
+        $sKey = bx_process_input($sKey);
+
+        $aKey = array();
+        $this->oDb->getKeysBy(array('type' => 'by_name', 'value' => $sKey), $aKey);
+        if(empty($aKey))
+            return false;
+
+        return $this->deleteLanguageStringById($aKey['id'], $iLangId, $bRecompile);
+    }
+
+    function deleteLanguageStringById($iKeyId, $iLangId = 0, $bRecompile = true) {
+        $iKeyId = (int)$iKeyId;
+        $iLangId = (int)$iLangId;
+
+        $aLanguages = array();
+        $iLanguages = $this->oDb->getLanguagesBy(($iLangId == 0 ? array('type' => 'all') : array('type' => 'all_by_id', 'value' => $iLangId)), $aLanguages);  
+
+        foreach($aLanguages as $aLanguage) {
+            if(!$this->oDb->deleteString($iKeyId, $aLanguage['id']))
+                continue;
+
+            if($bRecompile)
+                $this->compileLanguage($aLanguage['id']);
+        }
+
+        return $this->oDb->deleteKey($iKeyId);
+    }
+
+    function addLanguageKeys($iLanguageId, $iCategoryId, &$aKeys) {
+        $this->oDb->addKeys($iLanguageId, $iCategoryId, $aKeys);
+    }
+
+    function deleteLanguageKeys($aKeys) {
+        $this->oDb->deleteKeys($aKeys);
+    }
+
+    function addLanguageCategory($sName) {
+        return $this->oDb->addCategory($sName);
+    }
+
+    function deleteLanguageCategory($sName) {
+        return $this->oDb->deleteCategory($sName);
+    }
+
+    protected function _restoreLanguageByModule($aLanguage, $sPath, $mixedModule) {
+        $oXmlParser = BxDolXmlParser::getInstance();
+
+        $aModule = $mixedModule;
+        if(!is_array($mixedModule)) {
+            $sMethod = is_string($mixedModule) && !is_numeric($mixedModule) ? 'getModuleByUri' : 'getModuleById';
+            $aModule = BxDolModuleQuery::getInstance()->$sMethod($mixedModule);
+        }
+
+        if(empty($aModule) || !is_array($aModule) || !$aModule['uri'] || !$aModule['lang_category'])
+            return true;
+
+        $sPath = $sPath . $aModule['uri'] . '.xml';
+        if(!file_exists($sPath) && isset($aModule['path'])) {
+            $sPath = BX_DIRECTORY_PATH_MODULES . $aModule['path'] . 'install/langs/' . $aLanguage['name'] . '.xml';
+            if(!file_exists($sPath))
+                return true;
+        }
+
+        $sXmlContent = file_get_contents($sPath);
+        $sName = $oXmlParser->getAttribute($sXmlContent, 'resources', 'name');
+        $aStrings = $oXmlParser->getValues($sXmlContent, 'string');
+
+        if(empty($sName) || empty($aStrings) || $sName != $aLanguage['name'])
+            return false;
+
+        $aCategory = array();
+        $this->oDb->getCategoriesBy(array('type' => 'by_name', 'value' => $aModule['lang_category']), $aCategory, false);
+        if(empty($aCategory) || !is_array($aCategory))
+            return false;
+
+        $this->oDb->deleteStringsBy(array('type' => 'by_cat_and_lang', 'category_id' => $aCategory['id'], 'language_id' => $aLanguage['id']));
+
+        $bResult = true;
+        foreach($aStrings as $sKey => $sValue)
+            if($sKey != '')
+                $bResult &= $this->addLanguageString($sKey, $sValue, $aLanguage['id'], $aCategory['id'], false) > 0;
+
+        return $bResult;
+    }
+}
+/** @} */

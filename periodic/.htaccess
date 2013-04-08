@@ -1,0 +1,4 @@
+Deny from all
+<FilesMatch "^.*\.php|.*\.html$">
+ForceType application/x-httpd-php-source
+</FilesMatch>

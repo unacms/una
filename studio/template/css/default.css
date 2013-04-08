@@ -1,0 +1,269 @@
+/* page */
+.bx-def-page-margin {
+    margin:0 auto 0 auto;
+}
+
+/* margins */
+.bx-def-margin-non {
+    margin:0px;
+}
+.bx-def-margin-center {
+    margin:20px auto;
+}
+.bx-def-margin {
+    margin:20px;
+}
+.bx-def-margin-rightbottomleft {
+    margin:20px;
+    margin-top:0;
+}
+.bx-def-margin-topbottom {
+    margin:20px 0px;
+}
+.bx-def-margin-leftright {
+    margin:0px 20px;
+}
+.bx-def-margin-top {
+    margin-top:20px;
+}
+.bx-def-margin-right {
+    margin-right:20px;
+}
+.bx-def-margin-bottom {
+    margin-bottom:20px;
+}
+.bx-def-margin-left {
+    margin-left:20px;
+}
+
+.bx-def-margin-sec-center {
+    margin:10px auto;
+}
+.bx-def-margin-sec {
+    margin:10px;
+}
+.bx-def-margin-sec-rightbottomleft {
+    margin:10px;
+    margin-top:0;
+}
+.bx-def-margin-sec-topbottom {
+    margin:10px 0px;
+}
+.bx-def-margin-sec-leftright {
+    margin:0px 10px;
+}
+.bx-def-margin-sec-top {
+    margin-top:10px;
+}
+.bx-def-margin-sec-right {
+    margin-right:10px;
+}
+.bx-def-margin-sec-bottom {
+    margin-bottom:10px;
+}
+.bx-def-margin-sec-left {
+    margin-left:10px;
+}
+
+/* paddings */
+.bx-def-padding-non {
+	padding:0px;
+}
+.bx-def-padding {
+    padding:20px;
+}
+.bx-def-padding-rightbottomleft {
+    padding:20px;
+    padding-top:0;
+}
+.bx-def-padding-toprightleft {
+    padding:20px;
+    padding-bottom:0;
+}
+.bx-def-padding-topbottom {
+    padding:20px 0px;
+}
+.bx-def-padding-leftright {
+    padding:0px 20px;
+}
+.bx-def-padding-top {
+    padding-top:20px;
+}
+.bx-def-padding-right {
+    padding-right:20px;
+}
+.bx-def-padding-bottom {
+    padding-bottom:20px;
+}
+.bx-def-padding-left {
+    padding-left:20px;
+}
+
+.bx-def-padding-sec {
+    padding:10px;
+}
+.bx-def-padding-sec-rightbottomleft {
+    padding:10px;
+    padding-top:0;
+}
+.bx-def-padding-sec-toprightleft {
+    padding:10px;
+    padding-bottom:0;
+}
+.bx-def-padding-sec-topbottom {
+    padding:10px 0px;
+}
+.bx-def-padding-sec-leftright {
+    padding:0px 10px;
+}
+.bx-def-padding-sec-top {
+    padding-top:10px;
+}
+.bx-def-padding-sec-right {
+    padding-right:10px;
+}
+.bx-def-padding-sec-bottom {
+    padding-bottom:10px;
+}
+.bx-def-padding-sec-left {
+    padding-left:10px;
+}
+
+/* borders */
+.bx-def-border {
+    border:1px solid #dddddd;
+}
+.bx-def-border-rightbottomleft {
+    border:1px solid #dddddd;
+    padding-top:none;
+}
+.bx-def-border-top {
+    border-top:1px solid #dddddd;
+}
+.bx-def-border-right {
+    border-right:1px solid #dddddd;
+}
+.bx-def-border-bottom {
+    border-bottom:1px solid #dddddd;
+}
+.bx-def-border-left {
+    border-left:1px solid #dddddd;
+}
+
+/* shadow */
+.bx-def-shadow {
+    -moz-box-shadow: 0px 0px 2px #666666;
+    -webkit-box-shadow: 0px 0px 2px #666666;
+    box-shadow: 0px 0px 2px #666666;
+}
+
+/* round corners */
+
+.bx-def-round-corners {
+	border-radius:3px;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;	
+}
+
+/* colors backgrounds */
+
+.bx-def-color-bg-page {
+    background-color:#f2f2f2;
+}
+
+.bx-def-color-bg-block {
+    background-color:#fff;
+}
+
+.bx-def-color-bg-sec {
+    background:#f2f2f2;
+}
+
+.bx-def-color-bg-hl {
+    background-color: rgba(200, 200, 255, 0.2);
+}
+
+.bx-def-color-bg-active {
+    background-color: #ffbb33;
+}
+
+/* hr */
+
+.bx-def-hr {
+    margin-left:0;
+    margin-right:0;
+    padding:0;
+    border:none;
+    border-top:1px solid #dddddd;
+    border-bottom:1px solid #ffffff;
+    border-top:1px solid rgba(200, 200, 200, 0.5);
+    border-bottom:1px solid rgba(255, 255, 255, 0.8);
+}
+
+/* colors fonts */
+
+.bx-def-font {
+    font-family:Helvetica Neue, Helvetica, Arial, Verdana, sans-serif;
+    font-size:14px;
+    color:#333333;
+}
+
+.bx-def-font-inputs {
+    font-family:Helvetica Neue, Helvetica, Arial, Verdana, sans-serif;
+    font-size:14px;
+    color:#333333;
+}
+
+
+
+.bx-def-color-ft-gray-l1 {
+    color:#000000;
+}
+
+.bx-def-color-ft-gray-l2 {
+    color:#333333;
+}
+
+.bx-def-color-ft-gray-l3 {
+    color:#666666;
+}
+
+.bx-def-color-ft-gray-l4 {
+    color:#999999;
+}
+
+.bx-def-color-ft-grayed-i {
+    color:#999999 !important;
+}
+
+
+
+.bx-def-font-grayed {
+    color:#999;
+}
+
+.bx-def-font-small {
+    font-size:11px;
+}
+
+.bx-def-font-large {
+    font-size:18px;
+}
+
+h1,
+.bx-def-font-h1 {
+    font-size:32px;
+    font-weight:bold;
+}
+
+h2,
+.bx-def-font-h2 {
+    font-size:24px;
+    font-weight:bold;
+}
+
+h3,
+.bx-def-font-h3 {
+    font-size:18px;
+    font-weight:bold;
+}
