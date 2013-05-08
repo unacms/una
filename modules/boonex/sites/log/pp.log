@@ -1,0 +1,2286 @@
+---
+--- Get Token: 04.16.13 10:13:14
+--- Status: Failure
+--- Token: 
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => 
+    [Timestamp] => 2013-04-16T06:13:14Z
+    [Ack] => Failure
+    [CorrelationID] => 66d66faf56b8b
+    [Errors] => Array
+        (
+            [0] => ErrorType Object
+                (
+                    [ShortMessage] => Transaction refused because of an invalid argument. See additional error messages for details.
+                    [LongMessage] => ReturnURL is invalid.
+                    [ErrorCode] => 10471
+                    [SeverityCode] => Error
+                    [ErrorParameters] => 
+                )
+
+            [1] => ErrorType Object
+                (
+                    [ShortMessage] => Transaction refused because of an invalid argument. See additional error messages for details.
+                    [LongMessage] => CancelURL is invalid.
+                    [ErrorCode] => 10472
+                    [SeverityCode] => Error
+                    [ErrorParameters] => 
+                )
+
+        )
+
+    [Version] => 98.0
+    [Build] => 5691908
+)
+
+---
+
+---
+--- Get Token: 04.16.13 10:18:25
+--- Status: Success
+--- Token: RP-3BM96459KM474363E
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-3BM96459KM474363E
+    [Timestamp] => 2013-04-16T06:18:25Z
+    [Ack] => Success
+    [CorrelationID] => 7eb83581cfab1
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5691908
+)
+
+---
+
+---
+--- Get Token: 04.16.13 10:19:21
+--- Status: Success
+--- Token: RP-9HK683067P539270E
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-9HK683067P539270E
+    [Timestamp] => 2013-04-16T06:19:20Z
+    [Ack] => Success
+    [CorrelationID] => 9bc87880a451a
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5691908
+)
+
+---
+
+---
+--- Get Token: 04.16.13 10:22:32
+--- Status: Success
+--- Token: RP-36249509B5314534G
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-36249509B5314534G
+    [Timestamp] => 2013-04-16T06:22:32Z
+    [Ack] => Success
+    [CorrelationID] => a10a876f489c9
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5691908
+)
+
+---
+
+---
+--- Get Token: 04.16.13 10:24:32
+--- Status: Success
+--- Token: RP-65M212612W6682106
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-65M212612W6682106
+    [Timestamp] => 2013-04-16T06:24:31Z
+    [Ack] => Success
+    [CorrelationID] => 6b2f8549a9e6e
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5691908
+)
+
+---
+
+---
+--- Get Token: 04.16.13 10:29:16
+--- Status: Success
+--- Token: RP-6DG50216BW665643V
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-6DG50216BW665643V
+    [Timestamp] => 2013-04-16T06:29:16Z
+    [Ack] => Success
+    [CorrelationID] => f67d17d8636be
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5691908
+)
+
+---
+
+---
+--- Create Recurring: 04.16.13 10:30:49
+--- Status: Success
+--- Profile ID: I-CXVL75YHWLHN
+CreateRecurringPaymentsProfileResponseType Object
+(
+    [CreateRecurringPaymentsProfileResponseDetails] => CreateRecurringPaymentsProfileResponseDetailsType Object
+        (
+            [ProfileID] => I-CXVL75YHWLHN
+            [ProfileStatus] => ActiveProfile
+            [TransactionID] => 
+            [DCCProcessorResponse] => 
+            [DCCReturnCode] => 
+        )
+
+    [Timestamp] => 2013-04-16T06:30:49Z
+    [Ack] => Success
+    [CorrelationID] => 9893d47079247
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5650305
+)
+
+---
+
+---
+--- IPN Received: 04.16.13 10:49:35
+
+Array
+(
+    [payment_cycle] => Daily
+    [txn_type] => recurring_payment_profile_created
+    [last_name] => 
+    [next_payment_date] => 03:00:00 Apr 16, 2013 PDT
+    [residence_country] => US
+    [initial_payment_amount] => 0
+    [currency_code] => USD
+    [time_created] => 23:30:48 Apr 15, 2013 PDT
+    [verify_sign] => At432GfNgpOJUwAMYURD2OA1IWUaAd.62DxhPxdBTrQdBFjPVVYdEztI
+    [period_type] => Trial
+    [payer_status] => verified
+    [test_ipn] => 1
+    [tax] => 0
+    [payer_email] => vlnotna_personal@gmail.com
+    [first_name] => Anton
+    [receiver_email] => vlnotna_business@gmail.com
+    [payer_id] => 4FLM3N9TVFCVA
+    [product_type] => 1
+    [shipping] => 0
+    [amount_per_cycle] => 5
+    [profile_status] => Active
+    [charset] => windows-1252
+    [notify_version] => 3.7
+    [amount] => 5
+    [outstanding_balance] => 0
+    [recurring_payment_id] => I-CXVL75YHWLHN
+    [product_name] => Monthly recurring payment 69.00 with single trial period 5.00
+    [ipn_track_id] => 9893d47079247
+)
+
+---
+
+---
+--- IPN Result Message: Recurring profile was confirmed: I-CXVL75YHWLHN
+---
+
+---
+--- IPN Received: 04.16.13 10:50:38
+
+Array
+(
+    [payment_cycle] => Daily
+    [txn_type] => recurring_payment_profile_created
+    [last_name] => 
+    [next_payment_date] => 03:00:00 Apr 16, 2013 PDT
+    [residence_country] => US
+    [initial_payment_amount] => 0
+    [currency_code] => USD
+    [time_created] => 23:30:48 Apr 15, 2013 PDT
+    [verify_sign] => At432GfNgpOJUwAMYURD2OA1IWUaAd.62DxhPxdBTrQdBFjPVVYdEztI
+    [period_type] => Trial
+    [payer_status] => verified
+    [test_ipn] => 1
+    [tax] => 0
+    [payer_email] => vlnotna_personal@gmail.com
+    [first_name] => Anton
+    [receiver_email] => vlnotna_business@gmail.com
+    [payer_id] => 4FLM3N9TVFCVA
+    [product_type] => 1
+    [shipping] => 0
+    [amount_per_cycle] => 5
+    [profile_status] => Active
+    [charset] => windows-1252
+    [notify_version] => 3.7
+    [amount] => 5
+    [outstanding_balance] => 0
+    [recurring_payment_id] => I-CXVL75YHWLHN
+    [product_name] => Monthly recurring payment 69.00 with single trial period 5.00
+    [ipn_track_id] => 9893d47079247
+)
+
+---
+
+---
+--- IPN Result Message: Recurring profile was confirmed: I-CXVL75YHWLHN
+---
+
+---
+--- IPN Received: 04.16.13 11:44:42
+
+Array
+(
+    [payment_cycle] => Daily
+    [txn_type] => recurring_payment_profile_created
+    [last_name] => 
+    [next_payment_date] => 03:00:00 Apr 16, 2013 PDT
+    [residence_country] => US
+    [initial_payment_amount] => 0
+    [currency_code] => USD
+    [time_created] => 23:30:48 Apr 15, 2013 PDT
+    [verify_sign] => At432GfNgpOJUwAMYURD2OA1IWUaAd.62DxhPxdBTrQdBFjPVVYdEztI
+    [period_type] => Trial
+    [payer_status] => verified
+    [test_ipn] => 1
+    [tax] => 0
+    [payer_email] => vlnotna_personal@gmail.com
+    [first_name] => Anton
+    [receiver_email] => vlnotna_business@gmail.com
+    [payer_id] => 4FLM3N9TVFCVA
+    [product_type] => 1
+    [shipping] => 0
+    [amount_per_cycle] => 5
+    [profile_status] => Active
+    [charset] => windows-1252
+    [notify_version] => 3.7
+    [amount] => 5
+    [outstanding_balance] => 0
+    [recurring_payment_id] => I-CXVL75YHWLHN
+    [product_name] => Monthly recurring payment 69.00 with single trial period 5.00
+    [ipn_track_id] => 9893d47079247
+)
+
+---
+
+---
+--- IPN Result Message: Recurring profile was confirmed: I-CXVL75YHWLHN
+---
+
+---
+--- IPN Received: 04.16.13 12:11:18
+
+Array
+(
+    [payment_cycle] => Daily
+    [txn_type] => recurring_payment_profile_created
+    [last_name] => 
+    [next_payment_date] => 03:00:00 Apr 16, 2013 PDT
+    [residence_country] => US
+    [initial_payment_amount] => 0
+    [currency_code] => USD
+    [time_created] => 23:30:48 Apr 15, 2013 PDT
+    [verify_sign] => At432GfNgpOJUwAMYURD2OA1IWUaAd.62DxhPxdBTrQdBFjPVVYdEztI
+    [period_type] => Trial
+    [payer_status] => verified
+    [test_ipn] => 1
+    [tax] => 0
+    [payer_email] => vlnotna_personal@gmail.com
+    [first_name] => Anton
+    [receiver_email] => vlnotna_business@gmail.com
+    [payer_id] => 4FLM3N9TVFCVA
+    [product_type] => 1
+    [shipping] => 0
+    [amount_per_cycle] => 5
+    [profile_status] => Active
+    [charset] => windows-1252
+    [notify_version] => 3.7
+    [amount] => 5
+    [outstanding_balance] => 0
+    [recurring_payment_id] => I-CXVL75YHWLHN
+    [product_name] => Monthly recurring payment 69.00 with single trial period 5.00
+    [ipn_track_id] => 9893d47079247
+)
+
+---
+
+---
+--- IPN Result Message: Recurring profile was confirmed: I-CXVL75YHWLHN
+---
+
+---
+--- IPN Received: 04.16.13 12:13:19
+
+Array
+(
+    [payment_cycle] => Daily
+    [txn_type] => recurring_payment_profile_created
+    [last_name] => 
+    [next_payment_date] => 03:00:00 Apr 16, 2013 PDT
+    [residence_country] => US
+    [initial_payment_amount] => 0
+    [currency_code] => USD
+    [time_created] => 23:30:48 Apr 15, 2013 PDT
+    [verify_sign] => At432GfNgpOJUwAMYURD2OA1IWUaAd.62DxhPxdBTrQdBFjPVVYdEztI
+    [period_type] => Trial
+    [payer_status] => verified
+    [test_ipn] => 1
+    [tax] => 0
+    [payer_email] => vlnotna_personal@gmail.com
+    [first_name] => Anton
+    [receiver_email] => vlnotna_business@gmail.com
+    [payer_id] => 4FLM3N9TVFCVA
+    [product_type] => 1
+    [shipping] => 0
+    [amount_per_cycle] => 5
+    [profile_status] => Active
+    [charset] => windows-1252
+    [notify_version] => 3.7
+    [amount] => 5
+    [outstanding_balance] => 0
+    [recurring_payment_id] => I-CXVL75YHWLHN
+    [product_name] => Monthly recurring payment 69.00 with single trial period 5.00
+    [ipn_track_id] => 9893d47079247
+)
+
+---
+
+---
+--- IPN Result Message: Recurring profile was confirmed: I-CXVL75YHWLHN
+---
+
+---
+--- IPN Received: 04.16.13 12:13:40
+
+Array
+(
+    [payment_cycle] => Daily
+    [txn_type] => recurring_payment_profile_created
+    [last_name] => 
+    [next_payment_date] => 03:00:00 Apr 16, 2013 PDT
+    [residence_country] => US
+    [initial_payment_amount] => 0
+    [currency_code] => USD
+    [time_created] => 23:30:48 Apr 15, 2013 PDT
+    [verify_sign] => At432GfNgpOJUwAMYURD2OA1IWUaAd.62DxhPxdBTrQdBFjPVVYdEztI
+    [period_type] => Trial
+    [payer_status] => verified
+    [test_ipn] => 1
+    [tax] => 0
+    [payer_email] => vlnotna_personal@gmail.com
+    [first_name] => Anton
+    [receiver_email] => vlnotna_business@gmail.com
+    [payer_id] => 4FLM3N9TVFCVA
+    [product_type] => 1
+    [shipping] => 0
+    [amount_per_cycle] => 5
+    [profile_status] => Active
+    [charset] => windows-1252
+    [notify_version] => 3.7
+    [amount] => 5
+    [outstanding_balance] => 0
+    [recurring_payment_id] => I-CXVL75YHWLHN
+    [product_name] => Monthly recurring payment 69.00 with single trial period 5.00
+    [ipn_track_id] => 9893d47079247
+)
+
+---
+
+---
+--- IPN Result Message: Recurring profile was confirmed: I-CXVL75YHWLHN
+---
+
+---
+--- IPN Received: 04.16.13 12:14:49
+
+Array
+(
+    [payment_cycle] => Daily
+    [txn_type] => recurring_payment_profile_created
+    [last_name] => 
+    [next_payment_date] => 03:00:00 Apr 16, 2013 PDT
+    [residence_country] => US
+    [initial_payment_amount] => 0
+    [currency_code] => USD
+    [time_created] => 23:30:48 Apr 15, 2013 PDT
+    [verify_sign] => At432GfNgpOJUwAMYURD2OA1IWUaAd.62DxhPxdBTrQdBFjPVVYdEztI
+    [period_type] => Trial
+    [payer_status] => verified
+    [test_ipn] => 1
+    [tax] => 0
+    [payer_email] => vlnotna_personal@gmail.com
+    [first_name] => Anton
+    [receiver_email] => vlnotna_business@gmail.com
+    [payer_id] => 4FLM3N9TVFCVA
+    [product_type] => 1
+    [shipping] => 0
+    [amount_per_cycle] => 5
+    [profile_status] => Active
+    [charset] => windows-1252
+    [notify_version] => 3.7
+    [amount] => 5
+    [outstanding_balance] => 0
+    [recurring_payment_id] => I-CXVL75YHWLHN
+    [product_name] => Monthly recurring payment 69.00 with single trial period 5.00
+    [ipn_track_id] => 9893d47079247
+)
+
+---
+
+---
+--- IPN Result Message: Recurring profile was confirmed: I-CXVL75YHWLHN
+---
+
+---
+--- IPN Received: 04.16.13 12:15:44
+
+Array
+(
+    [payment_cycle] => Daily
+    [txn_type] => recurring_payment_profile_created
+    [last_name] => 
+    [next_payment_date] => 03:00:00 Apr 16, 2013 PDT
+    [residence_country] => US
+    [initial_payment_amount] => 0
+    [currency_code] => USD
+    [time_created] => 23:30:48 Apr 15, 2013 PDT
+    [verify_sign] => At432GfNgpOJUwAMYURD2OA1IWUaAd.62DxhPxdBTrQdBFjPVVYdEztI
+    [period_type] => Trial
+    [payer_status] => verified
+    [test_ipn] => 1
+    [tax] => 0
+    [payer_email] => vlnotna_personal@gmail.com
+    [first_name] => Anton
+    [receiver_email] => vlnotna_business@gmail.com
+    [payer_id] => 4FLM3N9TVFCVA
+    [product_type] => 1
+    [shipping] => 0
+    [amount_per_cycle] => 5
+    [profile_status] => Active
+    [charset] => windows-1252
+    [notify_version] => 3.7
+    [amount] => 5
+    [outstanding_balance] => 0
+    [recurring_payment_id] => I-CXVL75YHWLHN
+    [product_name] => Monthly recurring payment 69.00 with single trial period 5.00
+    [ipn_track_id] => 9893d47079247
+)
+
+---
+
+---
+--- IPN Result Message: Recurring profile was confirmed: I-CXVL75YHWLHN
+---
+
+---
+--- IPN Received: 04.16.13 12:16:07
+
+Array
+(
+    [payment_cycle] => Daily
+    [txn_type] => recurring_payment_profile_created
+    [last_name] => 
+    [next_payment_date] => 03:00:00 Apr 16, 2013 PDT
+    [residence_country] => US
+    [initial_payment_amount] => 0
+    [currency_code] => USD
+    [time_created] => 23:30:48 Apr 15, 2013 PDT
+    [verify_sign] => At432GfNgpOJUwAMYURD2OA1IWUaAd.62DxhPxdBTrQdBFjPVVYdEztI
+    [period_type] => Trial
+    [payer_status] => verified
+    [test_ipn] => 1
+    [tax] => 0
+    [payer_email] => vlnotna_personal@gmail.com
+    [first_name] => Anton
+    [receiver_email] => vlnotna_business@gmail.com
+    [payer_id] => 4FLM3N9TVFCVA
+    [product_type] => 1
+    [shipping] => 0
+    [amount_per_cycle] => 5
+    [profile_status] => Active
+    [charset] => windows-1252
+    [notify_version] => 3.7
+    [amount] => 5
+    [outstanding_balance] => 0
+    [recurring_payment_id] => I-CXVL75YHWLHN
+    [product_name] => Monthly recurring payment 69.00 with single trial period 5.00
+    [ipn_track_id] => 9893d47079247
+)
+
+---
+
+---
+--- IPN Result Message: Recurring profile was confirmed: I-CXVL75YHWLHN
+---
+
+---
+--- IPN Received: 04.16.13 12:18:26
+
+Array
+(
+    [payment_cycle] => Daily
+    [txn_type] => recurring_payment_profile_created
+    [last_name] => 
+    [next_payment_date] => 03:00:00 Apr 16, 2013 PDT
+    [residence_country] => US
+    [initial_payment_amount] => 0
+    [currency_code] => USD
+    [time_created] => 23:30:48 Apr 15, 2013 PDT
+    [verify_sign] => At432GfNgpOJUwAMYURD2OA1IWUaAd.62DxhPxdBTrQdBFjPVVYdEztI
+    [period_type] => Trial
+    [payer_status] => verified
+    [test_ipn] => 1
+    [tax] => 0
+    [payer_email] => vlnotna_personal@gmail.com
+    [first_name] => Anton
+    [receiver_email] => vlnotna_business@gmail.com
+    [payer_id] => 4FLM3N9TVFCVA
+    [product_type] => 1
+    [shipping] => 0
+    [amount_per_cycle] => 5
+    [profile_status] => Active
+    [charset] => windows-1252
+    [notify_version] => 3.7
+    [amount] => 5
+    [outstanding_balance] => 0
+    [recurring_payment_id] => I-CXVL75YHWLHN
+    [product_name] => Monthly recurring payment 69.00 with single trial period 5.00
+    [ipn_track_id] => 9893d47079247
+)
+
+---
+
+---
+--- IPN Result Message: Recurring profile was confirmed: I-CXVL75YHWLHN
+---
+
+---
+--- IPN Received: 04.16.13 12:19:28
+
+Array
+(
+    [payment_cycle] => Daily
+    [txn_type] => recurring_payment_profile_created
+    [last_name] => 
+    [next_payment_date] => 03:00:00 Apr 16, 2013 PDT
+    [residence_country] => US
+    [initial_payment_amount] => 0
+    [currency_code] => USD
+    [time_created] => 23:30:48 Apr 15, 2013 PDT
+    [verify_sign] => At432GfNgpOJUwAMYURD2OA1IWUaAd.62DxhPxdBTrQdBFjPVVYdEztI
+    [period_type] => Trial
+    [payer_status] => verified
+    [test_ipn] => 1
+    [tax] => 0
+    [payer_email] => vlnotna_personal@gmail.com
+    [first_name] => Anton
+    [receiver_email] => vlnotna_business@gmail.com
+    [payer_id] => 4FLM3N9TVFCVA
+    [product_type] => 1
+    [shipping] => 0
+    [amount_per_cycle] => 5
+    [profile_status] => Active
+    [charset] => windows-1252
+    [notify_version] => 3.7
+    [amount] => 5
+    [outstanding_balance] => 0
+    [recurring_payment_id] => I-CXVL75YHWLHN
+    [product_name] => Monthly recurring payment 69.00 with single trial period 5.00
+    [ipn_track_id] => 9893d47079247
+)
+
+---
+
+---
+--- IPN Result Message: Recurring profile was confirmed: I-CXVL75YHWLHN
+---
+
+---
+--- IPN Received: 04.16.13 12:24:38
+
+Array
+(
+    [payment_cycle] => Daily
+    [txn_type] => recurring_payment_profile_created
+    [last_name] => 
+    [next_payment_date] => 03:00:00 Apr 16, 2013 PDT
+    [residence_country] => US
+    [initial_payment_amount] => 0
+    [currency_code] => USD
+    [time_created] => 23:30:48 Apr 15, 2013 PDT
+    [verify_sign] => At432GfNgpOJUwAMYURD2OA1IWUaAd.62DxhPxdBTrQdBFjPVVYdEztI
+    [period_type] => Trial
+    [payer_status] => verified
+    [test_ipn] => 1
+    [tax] => 0
+    [payer_email] => vlnotna_personal@gmail.com
+    [first_name] => Anton
+    [receiver_email] => vlnotna_business@gmail.com
+    [payer_id] => 4FLM3N9TVFCVA
+    [product_type] => 1
+    [shipping] => 0
+    [amount_per_cycle] => 5
+    [profile_status] => Active
+    [charset] => windows-1252
+    [notify_version] => 3.7
+    [amount] => 5
+    [outstanding_balance] => 0
+    [recurring_payment_id] => I-CXVL75YHWLHN
+    [product_name] => Monthly recurring payment 69.00 with single trial period 5.00
+    [ipn_track_id] => 9893d47079247
+)
+
+---
+
+---
+--- IPN Result Message: Recurring profile was confirmed: I-CXVL75YHWLHN
+---
+
+---
+--- IPN Received: 04.16.13 12:34:15
+
+Array
+(
+    [payment_cycle] => Daily
+    [txn_type] => recurring_payment_profile_created
+    [last_name] => 
+    [next_payment_date] => 03:00:00 Apr 16, 2013 PDT
+    [residence_country] => US
+    [initial_payment_amount] => 0
+    [currency_code] => USD
+    [time_created] => 23:30:48 Apr 15, 2013 PDT
+    [verify_sign] => At432GfNgpOJUwAMYURD2OA1IWUaAd.62DxhPxdBTrQdBFjPVVYdEztI
+    [period_type] => Trial
+    [payer_status] => verified
+    [test_ipn] => 1
+    [tax] => 0
+    [payer_email] => vlnotna_personal@gmail.com
+    [first_name] => Anton
+    [receiver_email] => vlnotna_business@gmail.com
+    [payer_id] => 4FLM3N9TVFCVA
+    [product_type] => 1
+    [shipping] => 0
+    [amount_per_cycle] => 5
+    [profile_status] => Active
+    [charset] => windows-1252
+    [notify_version] => 3.7
+    [amount] => 5
+    [outstanding_balance] => 0
+    [recurring_payment_id] => I-CXVL75YHWLHN
+    [product_name] => Monthly recurring payment 69.00 with single trial period 5.00
+    [ipn_track_id] => 9893d47079247
+)
+
+---
+
+---
+--- IPN Result Message: Recurring profile was confirmed: I-CXVL75YHWLHN
+---
+
+---
+--- IPN Received: 04.16.13 12:45:55
+
+Array
+(
+    [payment_cycle] => Daily
+    [txn_type] => recurring_payment_profile_created
+    [last_name] => 
+    [next_payment_date] => 03:00:00 Apr 16, 2013 PDT
+    [residence_country] => US
+    [initial_payment_amount] => 0
+    [currency_code] => USD
+    [time_created] => 23:30:48 Apr 15, 2013 PDT
+    [verify_sign] => At432GfNgpOJUwAMYURD2OA1IWUaAd.62DxhPxdBTrQdBFjPVVYdEztI
+    [period_type] => Trial
+    [payer_status] => verified
+    [test_ipn] => 1
+    [tax] => 0
+    [payer_email] => vlnotna_personal@gmail.com
+    [first_name] => Anton
+    [receiver_email] => vlnotna_business@gmail.com
+    [payer_id] => 4FLM3N9TVFCVA
+    [product_type] => 1
+    [shipping] => 0
+    [amount_per_cycle] => 5
+    [profile_status] => Active
+    [charset] => windows-1252
+    [notify_version] => 3.7
+    [amount] => 5
+    [outstanding_balance] => 0
+    [recurring_payment_id] => I-CXVL75YHWLHN
+    [product_name] => Monthly recurring payment 69.00 with single trial period 5.00
+    [ipn_track_id] => 9893d47079247
+)
+
+---
+
+---
+--- IPN Result Message: Recurring profile was confirmed: I-CXVL75YHWLHN
+---
+
+---
+--- IPN Received: 04.16.13 12:47:04
+
+Array
+(
+    [payment_cycle] => Daily
+    [txn_type] => recurring_payment_profile_created
+    [last_name] => 
+    [next_payment_date] => 03:00:00 Apr 16, 2013 PDT
+    [residence_country] => US
+    [initial_payment_amount] => 0
+    [currency_code] => USD
+    [time_created] => 23:30:48 Apr 15, 2013 PDT
+    [verify_sign] => At432GfNgpOJUwAMYURD2OA1IWUaAd.62DxhPxdBTrQdBFjPVVYdEztI
+    [period_type] => Trial
+    [payer_status] => verified
+    [test_ipn] => 1
+    [tax] => 0
+    [payer_email] => vlnotna_personal@gmail.com
+    [first_name] => Anton
+    [receiver_email] => vlnotna_business@gmail.com
+    [payer_id] => 4FLM3N9TVFCVA
+    [product_type] => 1
+    [shipping] => 0
+    [amount_per_cycle] => 5
+    [profile_status] => Active
+    [charset] => windows-1252
+    [notify_version] => 3.7
+    [amount] => 5
+    [outstanding_balance] => 0
+    [recurring_payment_id] => I-CXVL75YHWLHN
+    [product_name] => Monthly recurring payment 69.00 with single trial period 5.00
+    [ipn_track_id] => 9893d47079247
+)
+
+---
+
+---
+--- IPN Result Message: Recurring profile was confirmed: I-CXVL75YHWLHN
+---
+
+---
+--- IPN Received: 04.17.13 09:48:59
+
+Array
+(
+    [payment_cycle] => Daily
+    [txn_type] => recurring_payment_profile_created
+    [last_name] => 
+    [next_payment_date] => 03:00:00 Apr 16, 2013 PDT
+    [residence_country] => US
+    [initial_payment_amount] => 0
+    [currency_code] => USD
+    [time_created] => 23:30:48 Apr 15, 2013 PDT
+    [verify_sign] => At432GfNgpOJUwAMYURD2OA1IWUaAd.62DxhPxdBTrQdBFjPVVYdEztI
+    [period_type] => Trial
+    [payer_status] => verified
+    [test_ipn] => 1
+    [tax] => 0
+    [payer_email] => vlnotna_personal@gmail.com
+    [first_name] => Anton
+    [receiver_email] => vlnotna_business@gmail.com
+    [payer_id] => 4FLM3N9TVFCVA
+    [product_type] => 1
+    [shipping] => 0
+    [amount_per_cycle] => 5
+    [profile_status] => Active
+    [charset] => windows-1252
+    [notify_version] => 3.7
+    [amount] => 5
+    [outstanding_balance] => 0
+    [recurring_payment_id] => I-CXVL75YHWLHN
+    [product_name] => Monthly recurring payment 69.00 with single trial period 5.00
+    [ipn_track_id] => 9893d47079247
+)
+
+---
+
+---
+--- IPN Result Message: Recurring profile was confirmed: I-CXVL75YHWLHN
+---
+
+---
+--- Get Token: 04.17.13 11:47:11
+--- Status: Success
+--- Token: RP-48Y64759XP094562N
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-48Y64759XP094562N
+    [Timestamp] => 2013-04-17T07:47:11Z
+    [Ack] => Success
+    [CorrelationID] => 5d284b8c72cfb
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5691908
+)
+
+---
+
+---
+--- Get Token: 04.17.13 14:19:02
+--- Status: Success
+--- Token: RP-1YK4262927280220X
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-1YK4262927280220X
+    [Timestamp] => 2013-04-17T10:19:03Z
+    [Ack] => Success
+    [CorrelationID] => d781ffba1084f
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5691908
+)
+
+---
+
+---
+--- Get Token: 04.17.13 14:39:21
+--- Status: Success
+--- Token: RP-4A415398XH860373R
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-4A415398XH860373R
+    [Timestamp] => 2013-04-17T10:39:22Z
+    [Ack] => Success
+    [CorrelationID] => b86656937bc4
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5691908
+)
+
+---
+
+---
+--- Get Token: 04.17.13 14:45:34
+--- Status: Success
+--- Token: RP-8YG35751EU785033N
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-8YG35751EU785033N
+    [Timestamp] => 2013-04-17T10:45:34Z
+    [Ack] => Success
+    [CorrelationID] => 4f90fc0bc5d9d
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5691908
+)
+
+---
+
+---
+--- Get Token: 04.17.13 14:50:59
+--- Status: Success
+--- Token: RP-20S26546YP1386527
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-20S26546YP1386527
+    [Timestamp] => 2013-04-17T10:51:00Z
+    [Ack] => Success
+    [CorrelationID] => 9982aa034675
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5691908
+)
+
+---
+
+---
+--- Get Token: 04.17.13 14:51:42
+--- Status: Success
+--- Token: RP-4MR200079G807435R
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-4MR200079G807435R
+    [Timestamp] => 2013-04-17T10:51:42Z
+    [Ack] => Success
+    [CorrelationID] => 7cefecf48f63a
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5691908
+)
+
+---
+
+---
+--- Get Token: 04.18.13 05:54:09
+--- Status: Success
+--- Token: RP-4E443188632060046
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-4E443188632060046
+    [Timestamp] => 2013-04-18T01:54:09Z
+    [Ack] => Success
+    [CorrelationID] => ec5606d022445
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5691908
+)
+
+---
+
+---
+--- Create Recurring: 04.18.13 05:54:36
+--- Status: Success
+--- Profile ID: I-RP3LTVL4FT5V
+CreateRecurringPaymentsProfileResponseType Object
+(
+    [CreateRecurringPaymentsProfileResponseDetails] => CreateRecurringPaymentsProfileResponseDetailsType Object
+        (
+            [ProfileID] => I-RP3LTVL4FT5V
+            [ProfileStatus] => ActiveProfile
+            [TransactionID] => 
+            [DCCProcessorResponse] => 
+            [DCCReturnCode] => 
+        )
+
+    [Timestamp] => 2013-04-18T01:54:36Z
+    [Ack] => Success
+    [CorrelationID] => 2891b491ce3c6
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5650305
+)
+
+---
+
+---
+--- IPN Received: 04.18.13 08:04:18
+
+Array
+(
+    [payment_cycle] => Daily
+    [txn_type] => recurring_payment_profile_created
+    [last_name] => 
+    [next_payment_date] => 03:00:00 Apr 18, 2013 PDT
+    [residence_country] => US
+    [initial_payment_amount] => 0
+    [currency_code] => USD
+    [time_created] => 18:54:36 Apr 17, 2013 PDT
+    [verify_sign] => AFEm.b3ZPjzc3LWYXrmK9nPKrLD3AO69AWjGgQxl3swmAlRRpRahB169
+    [period_type] => Trial
+    [payer_status] => verified
+    [test_ipn] => 1
+    [tax] => 0
+    [payer_email] => vlnotna_personal@gmail.com
+    [first_name] => Anton
+    [receiver_email] => vlnotna_business@gmail.com
+    [payer_id] => 4FLM3N9TVFCVA
+    [product_type] => 1
+    [shipping] => 0
+    [amount_per_cycle] => 5
+    [profile_status] => Active
+    [charset] => windows-1252
+    [notify_version] => 3.7
+    [amount] => 5
+    [outstanding_balance] => 0
+    [recurring_payment_id] => I-RP3LTVL4FT5V
+    [product_name] => Monthly recurring payment 69.00 with single trial period 5.00
+    [ipn_track_id] => 2891b491ce3c6
+)
+
+---
+
+---
+--- IPN Result Message: Recurring profile was confirmed: I-RP3LTVL4FT5V
+---
+
+---
+--- Get Token: 04.18.13 08:09:23
+--- Status: Success
+--- Token: RP-0S730685LW365681A
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-0S730685LW365681A
+    [Timestamp] => 2013-04-18T04:09:23Z
+    [Ack] => Success
+    [CorrelationID] => f1b5649992474
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5691908
+)
+
+---
+
+---
+--- Create Recurring: 04.18.13 08:09:36
+--- Status: Failure
+--- Profile ID: 
+CreateRecurringPaymentsProfileResponseType Object
+(
+    [CreateRecurringPaymentsProfileResponseDetails] => CreateRecurringPaymentsProfileResponseDetailsType Object
+        (
+            [ProfileID] => 
+            [ProfileStatus] => 
+            [TransactionID] => 
+            [DCCProcessorResponse] => 
+            [DCCReturnCode] => 
+        )
+
+    [Timestamp] => 2013-04-18T04:09:37Z
+    [Ack] => Failure
+    [CorrelationID] => 45328863e2419
+    [Errors] => Array
+        (
+            [0] => ErrorType Object
+                (
+                    [ShortMessage] => Invalid Token
+                    [LongMessage] => The token is invalid
+                    [ErrorCode] => 11502
+                    [SeverityCode] => Error
+                    [ErrorParameters] => 
+                )
+
+        )
+
+    [Version] => 98.0
+    [Build] => 5650305
+)
+
+---
+
+---
+--- Get Token: 04.18.13 08:46:58
+--- Status: Success
+--- Token: RP-6LV24484L9721893H
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-6LV24484L9721893H
+    [Timestamp] => 2013-04-18T04:46:59Z
+    [Ack] => Success
+    [CorrelationID] => dc35c9bccb5c5
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5691908
+)
+
+---
+
+---
+--- IPN Received: 04.18.13 11:03:18
+
+Array
+(
+    [payment_cycle] => Daily
+    [txn_type] => recurring_payment_profile_created
+    [last_name] => 
+    [next_payment_date] => 03:00:00 Apr 18, 2013 PDT
+    [residence_country] => US
+    [initial_payment_amount] => 0
+    [currency_code] => USD
+    [time_created] => 18:54:36 Apr 17, 2013 PDT
+    [verify_sign] => AFEm.b3ZPjzc3LWYXrmK9nPKrLD3AO69AWjGgQxl3swmAlRRpRahB169
+    [period_type] => Trial
+    [payer_status] => verified
+    [test_ipn] => 1
+    [tax] => 0
+    [payer_email] => vlnotna_personal@gmail.com
+    [first_name] => Anton
+    [receiver_email] => vlnotna_business@gmail.com
+    [payer_id] => 4FLM3N9TVFCVA
+    [product_type] => 1
+    [shipping] => 0
+    [amount_per_cycle] => 5
+    [profile_status] => Active
+    [charset] => windows-1252
+    [notify_version] => 3.7
+    [amount] => 5
+    [outstanding_balance] => 0
+    [recurring_payment_id] => I-RP3LTVL4FT5V
+    [product_name] => Monthly recurring payment 69.00 with single trial period 5.00
+    [ipn_track_id] => 2891b491ce3c6
+)
+
+---
+
+---
+--- IPN Result Message: Recurring profile was confirmed: I-RP3LTVL4FT5V
+---
+
+---
+--- IPN Received: 04.19.13 10:57:26
+
+Array
+(
+    [payment_cycle] => Daily
+    [txn_type] => recurring_payment_profile_cancel
+    [last_name] => 
+    [next_payment_date] => N/A
+    [residence_country] => US
+    [initial_payment_amount] => 0
+    [currency_code] => USD
+    [time_created] => 18:54:36 Apr 17, 2013 PDT
+    [verify_sign] => AZWXUskNjlRXeFlmpm4fmZpjTCjgAlwWvR9QtjWama2tChNibYfK5Ibs
+    [period_type] => Regular
+    [payer_status] => verified
+    [test_ipn] => 1
+    [tax] => 0
+    [payer_email] => vlnotna_personal@gmail.com
+    [first_name] => Anton
+    [receiver_email] => vlnotna_business@gmail.com
+    [payer_id] => 4FLM3N9TVFCVA
+    [product_type] => 1
+    [shipping] => 0
+    [amount_per_cycle] => 69
+    [profile_status] => Cancelled
+    [charset] => windows-1252
+    [notify_version] => 3.7
+    [amount] => 69
+    [outstanding_balance] => 0
+    [recurring_payment_id] => I-RP3LTVL4FT5V
+    [product_name] => Monthly recurring payment 69.00 with single trial period 5.00
+    [ipn_track_id] => b330425ba2ba
+)
+
+---
+
+---
+--- IPN Result Message: Recurring profile was canceled: I-RP3LTVL4FT5V
+---
+
+---
+--- Get Token: 04.19.13 13:23:47
+--- Status: Success
+--- Token: RP-4L122451614569214
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-4L122451614569214
+    [Timestamp] => 2013-04-19T09:23:46Z
+    [Ack] => Success
+    [CorrelationID] => 613baed5a6940
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5715372
+)
+
+---
+
+---
+--- Get Token: 04.19.13 13:30:05
+--- Status: Success
+--- Token: RP-00G090634H5059135
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-00G090634H5059135
+    [Timestamp] => 2013-04-19T09:30:05Z
+    [Ack] => Success
+    [CorrelationID] => b740ff5840bd6
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5715372
+)
+
+---
+
+---
+--- Get Token: 04.19.13 13:30:54
+--- Status: Success
+--- Token: RP-33J966641A034032E
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-33J966641A034032E
+    [Timestamp] => 2013-04-19T09:30:54Z
+    [Ack] => Success
+    [CorrelationID] => 31d0983cbab30
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5715372
+)
+
+---
+
+---
+--- Get Token: 04.19.13 13:31:38
+--- Status: Success
+--- Token: RP-72M02981WF4087712
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-72M02981WF4087712
+    [Timestamp] => 2013-04-19T09:31:38Z
+    [Ack] => Success
+    [CorrelationID] => 64dfe52335901
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5715372
+)
+
+---
+
+---
+--- Get Token: 04.19.13 13:31:47
+--- Status: Success
+--- Token: RP-8N294492P3274364M
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-8N294492P3274364M
+    [Timestamp] => 2013-04-19T09:31:47Z
+    [Ack] => Success
+    [CorrelationID] => 4f55ab5282ff8
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5715372
+)
+
+---
+
+---
+--- Get Token: 04.19.13 13:40:02
+--- Status: Success
+--- Token: RP-9R116418E4034232V
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-9R116418E4034232V
+    [Timestamp] => 2013-04-19T09:40:02Z
+    [Ack] => Success
+    [CorrelationID] => 442815cc2012d
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5715372
+)
+
+---
+
+---
+--- Create Recurring: 04.19.13 13:40:26
+--- Status: Success
+--- Profile ID: I-K1TK4PG5SNCS
+CreateRecurringPaymentsProfileResponseType Object
+(
+    [CreateRecurringPaymentsProfileResponseDetails] => CreateRecurringPaymentsProfileResponseDetailsType Object
+        (
+            [ProfileID] => I-K1TK4PG5SNCS
+            [ProfileStatus] => ActiveProfile
+            [TransactionID] => 
+            [DCCProcessorResponse] => 
+            [DCCReturnCode] => 
+        )
+
+    [Timestamp] => 2013-04-19T09:40:25Z
+    [Ack] => Success
+    [CorrelationID] => 53a13a24451
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5650305
+)
+
+---
+
+---
+--- Get Token: 04.19.13 13:49:49
+--- Status: Success
+--- Token: RP-5BC045108F805923G
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-5BC045108F805923G
+    [Timestamp] => 2013-04-19T09:49:48Z
+    [Ack] => Success
+    [CorrelationID] => 452d261e8deb3
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5715372
+)
+
+---
+
+---
+--- Create Recurring: 04.19.13 13:50:13
+--- Status: Success
+--- Profile ID: I-WNJE7LM2FPDF
+CreateRecurringPaymentsProfileResponseType Object
+(
+    [CreateRecurringPaymentsProfileResponseDetails] => CreateRecurringPaymentsProfileResponseDetailsType Object
+        (
+            [ProfileID] => I-WNJE7LM2FPDF
+            [ProfileStatus] => ActiveProfile
+            [TransactionID] => 
+            [DCCProcessorResponse] => 
+            [DCCReturnCode] => 
+        )
+
+    [Timestamp] => 2013-04-19T09:50:13Z
+    [Ack] => Success
+    [CorrelationID] => 448a78cfcec1b
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5650305
+)
+
+---
+
+---
+--- IPN Received: 04.19.13 13:53:46
+
+Array
+(
+    [payment_cycle] => Daily
+    [txn_type] => recurring_payment_profile_created
+    [last_name] => 
+    [next_payment_date] => 03:00:00 Apr 19, 2013 PDT
+    [residence_country] => US
+    [initial_payment_amount] => 0
+    [currency_code] => USD
+    [time_created] => 02:50:12 Apr 19, 2013 PDT
+    [verify_sign] => Aq4BS5XX7xKLjbxH8RH.bcgBem23AubNRkl06zWDXb893cEegq-lZhLi
+    [period_type] => Trial
+    [payer_status] => verified
+    [test_ipn] => 1
+    [tax] => 0
+    [payer_email] => vlnotna_personal@gmail.com
+    [first_name] => Anton
+    [receiver_email] => vlnotna_business@gmail.com
+    [payer_id] => 4FLM3N9TVFCVA
+    [product_type] => 1
+    [shipping] => 0
+    [amount_per_cycle] => 5
+    [profile_status] => Active
+    [charset] => windows-1252
+    [notify_version] => 3.7
+    [amount] => 5
+    [outstanding_balance] => 0
+    [recurring_payment_id] => I-WNJE7LM2FPDF
+    [product_name] => Monthly recurring payment 69.00 with single trial period 5.00
+    [ipn_track_id] => 448a78cfcec1b
+)
+
+---
+
+---
+--- IPN Result Message: Recurring profile was confirmed: I-WNJE7LM2FPDF
+---
+
+---
+--- Get Token: 04.22.13 05:31:10
+--- Status: Success
+--- Token: RP-50133463R5986334R
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-50133463R5986334R
+    [Timestamp] => 2013-04-22T01:31:09Z
+    [Ack] => Success
+    [CorrelationID] => 26be5e15e4ca
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5715372
+)
+
+---
+
+---
+--- Get Token: 04.22.13 10:05:00
+--- Status: Success
+--- Token: RP-8TS31553U12050020
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-8TS31553U12050020
+    [Timestamp] => 2013-04-22T06:05:00Z
+    [Ack] => Success
+    [CorrelationID] => 60e36aa6d9ee2
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5715372
+)
+
+---
+
+---
+--- Get Token: 04.23.13 10:05:11
+--- Status: Success
+--- Token: RP-146997360R808643S
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-146997360R808643S
+    [Timestamp] => 2013-04-23T06:05:10Z
+    [Ack] => Success
+    [CorrelationID] => c328c02c1e3d5
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5780321
+)
+
+---
+
+---
+--- Get Token: 04.23.13 10:06:16
+--- Status: Success
+--- Token: RP-2PT36445SH467670T
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-2PT36445SH467670T
+    [Timestamp] => 2013-04-23T06:06:15Z
+    [Ack] => Success
+    [CorrelationID] => b3518dd63d9d7
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5780321
+)
+
+---
+
+---
+--- Get Token: 04.23.13 10:20:58
+--- Status: Success
+--- Token: RP-85167688MR032880U
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-85167688MR032880U
+    [Timestamp] => 2013-04-23T06:20:57Z
+    [Ack] => Success
+    [CorrelationID] => 4ef1b0699651d
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5780321
+)
+
+---
+
+---
+--- Get Token: 04.23.13 10:23:17
+--- Status: Success
+--- Token: RP-9TL54591GX247981P
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-9TL54591GX247981P
+    [Timestamp] => 2013-04-23T06:23:16Z
+    [Ack] => Success
+    [CorrelationID] => a9f5dd87662e1
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5780321
+)
+
+---
+
+---
+--- Get Token: 04.24.13 05:27:40
+--- Status: Success
+--- Token: RP-79227870FB7055259
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-79227870FB7055259
+    [Timestamp] => 2013-04-24T01:27:39Z
+    [Ack] => Success
+    [CorrelationID] => 6cce9098d34fc
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5780321
+)
+
+---
+
+---
+--- Get Token: 04.24.13 07:40:17
+--- Status: Success
+--- Token: RP-44993112RL284702D
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-44993112RL284702D
+    [Timestamp] => 2013-04-24T03:40:16Z
+    [Ack] => Success
+    [CorrelationID] => 89ca53201763c
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5780321
+)
+
+---
+
+---
+--- Get Token: 04.24.13 07:42:50
+--- Status: Success
+--- Token: RP-01U75292K2643873P
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-01U75292K2643873P
+    [Timestamp] => 2013-04-24T03:42:49Z
+    [Ack] => Success
+    [CorrelationID] => 3f87340a4c7ee
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5780321
+)
+
+---
+
+---
+--- Get Token: 04.24.13 08:09:27
+--- Status: Success
+--- Token: RP-5LG13287M8310631A
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-5LG13287M8310631A
+    [Timestamp] => 2013-04-24T04:09:25Z
+    [Ack] => Success
+    [CorrelationID] => 1e4512c5b122b
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5780321
+)
+
+---
+
+---
+--- Get Token: 04.24.13 10:21:51
+--- Status: Success
+--- Token: RP-29J70639F6308350L
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-29J70639F6308350L
+    [Timestamp] => 2013-04-24T06:21:50Z
+    [Ack] => Success
+    [CorrelationID] => 575d5018c26e3
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5780321
+)
+
+---
+
+---
+--- Get Token: 04.24.13 10:54:09
+--- Status: Success
+--- Token: RP-34F89157X66381319
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-34F89157X66381319
+    [Timestamp] => 2013-04-24T06:54:08Z
+    [Ack] => Success
+    [CorrelationID] => a2389fd9d0d9c
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5780321
+)
+
+---
+
+---
+--- Get Token: 04.24.13 13:29:43
+--- Status: Success
+--- Token: RP-6HE99878ER594142F
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-6HE99878ER594142F
+    [Timestamp] => 2013-04-24T09:29:42Z
+    [Ack] => Success
+    [CorrelationID] => 94bd4df8241ce
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5780321
+)
+
+---
+
+---
+--- Get Token: 04.24.13 14:13:25
+--- Status: Success
+--- Token: RP-4UC0556795105844X
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-4UC0556795105844X
+    [Timestamp] => 2013-04-24T10:13:24Z
+    [Ack] => Success
+    [CorrelationID] => c30518be9b3e7
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5780321
+)
+
+---
+
+---
+--- Get Token: 04.25.13 05:31:48
+--- Status: Success
+--- Token: RP-6DU20954SV989163A
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-6DU20954SV989163A
+    [Timestamp] => 2013-04-25T01:31:47Z
+    [Ack] => Success
+    [CorrelationID] => f175297c77f92
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5780321
+)
+
+---
+
+---
+--- Get Token: 04.25.13 09:21:13
+--- Status: Success
+--- Token: RP-5RS61294BU4028031
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-5RS61294BU4028031
+    [Timestamp] => 2013-04-25T05:21:13Z
+    [Ack] => Success
+    [CorrelationID] => 7c6601e9eb08
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5780321
+)
+
+---
+
+---
+--- Get Token: 04.25.13 09:22:06
+--- Status: Success
+--- Token: RP-4BG90821H0601644R
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-4BG90821H0601644R
+    [Timestamp] => 2013-04-25T05:22:05Z
+    [Ack] => Success
+    [CorrelationID] => f173f030a5d15
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5780321
+)
+
+---
+
+---
+--- Get Token: 04.25.13 13:19:32
+--- Status: Success
+--- Token: RP-84S2987638432544R
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-84S2987638432544R
+    [Timestamp] => 2013-04-25T09:19:32Z
+    [Ack] => Success
+    [CorrelationID] => 6327ead276a4f
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5780321
+)
+
+---
+
+---
+--- Get Token: 04.26.13 07:31:54
+--- Status: Success
+--- Token: RP-74D96325J93208403
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-74D96325J93208403
+    [Timestamp] => 2013-04-26T03:31:54Z
+    [Ack] => Success
+    [CorrelationID] => 3fac433d13fb4
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5817241
+)
+
+---
+
+---
+--- Get Token: 04.26.13 07:32:26
+--- Status: Success
+--- Token: RP-9DJ42538S46889317
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-9DJ42538S46889317
+    [Timestamp] => 2013-04-26T03:32:26Z
+    [Ack] => Success
+    [CorrelationID] => df7c9bba38cda
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5817241
+)
+
+---
+
+---
+--- Get Token: 04.26.13 10:46:14
+--- Status: Success
+--- Token: RP-8GL53301Y1064000H
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-8GL53301Y1064000H
+    [Timestamp] => 2013-04-26T06:46:14Z
+    [Ack] => Success
+    [CorrelationID] => ca5f0173f541
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5817241
+)
+
+---
+
+---
+--- Get Token: 04.26.13 14:12:04
+--- Status: Success
+--- Token: RP-8964716049918932L
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-8964716049918932L
+    [Timestamp] => 2013-04-26T10:12:04Z
+    [Ack] => Success
+    [CorrelationID] => e93679b619ad1
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5817241
+)
+
+---
+
+---
+--- Get Token: 04.26.13 14:12:59
+--- Status: Success
+--- Token: RP-5M600284NG096652E
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-5M600284NG096652E
+    [Timestamp] => 2013-04-26T10:12:59Z
+    [Ack] => Success
+    [CorrelationID] => 995dffc7883ec
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5817241
+)
+
+---
+
+---
+--- Get Token: 04.26.13 14:14:37
+--- Status: Success
+--- Token: RP-3N076090XP013421D
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-3N076090XP013421D
+    [Timestamp] => 2013-04-26T10:14:37Z
+    [Ack] => Success
+    [CorrelationID] => 6d618c754eb1b
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5817241
+)
+
+---
+
+---
+--- Get Token: 04.26.13 14:15:03
+--- Status: Success
+--- Token: RP-82X31053GM8016606
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-82X31053GM8016606
+    [Timestamp] => 2013-04-26T10:15:03Z
+    [Ack] => Success
+    [CorrelationID] => e5a60a2b6fca7
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5817241
+)
+
+---
+
+---
+--- Get Token: 04.29.13 08:16:22
+--- Status: Success
+--- Token: RP-1PW471857R4503813
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-1PW471857R4503813
+    [Timestamp] => 2013-04-29T04:16:21Z
+    [Ack] => Success
+    [CorrelationID] => b3f2b4d9dedd4
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5817241
+)
+
+---
+
+---
+--- Get Token: 04.29.13 08:17:57
+--- Status: Success
+--- Token: RP-1CP22325T3831004H
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-1CP22325T3831004H
+    [Timestamp] => 2013-04-29T04:17:56Z
+    [Ack] => Success
+    [CorrelationID] => 3ae0738a3d107
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5817241
+)
+
+---
+
+---
+--- Get Token: 04.29.13 08:19:07
+--- Status: Success
+--- Token: RP-0XP139069L883500D
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-0XP139069L883500D
+    [Timestamp] => 2013-04-29T04:19:06Z
+    [Ack] => Success
+    [CorrelationID] => 3b8629d1a7d1
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5817241
+)
+
+---
+
+---
+--- Get Token: 04.29.13 08:33:26
+--- Status: Success
+--- Token: RP-1FJ617445L4765633
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-1FJ617445L4765633
+    [Timestamp] => 2013-04-29T04:33:25Z
+    [Ack] => Success
+    [CorrelationID] => f396b97a8f074
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5817241
+)
+
+---
+
+---
+--- Create Recurring: 04.29.13 08:34:03
+--- Status: Failure
+--- Profile ID: 
+CreateRecurringPaymentsProfileResponseType Object
+(
+    [CreateRecurringPaymentsProfileResponseDetails] => CreateRecurringPaymentsProfileResponseDetailsType Object
+        (
+            [ProfileID] => 
+            [ProfileStatus] => 
+            [TransactionID] => 
+            [DCCProcessorResponse] => 
+            [DCCReturnCode] => 
+        )
+
+    [Timestamp] => 2013-04-29T04:34:02Z
+    [Ack] => Failure
+    [CorrelationID] => ae3370e2b8d00
+    [Errors] => Array
+        (
+            [0] => ErrorType Object
+                (
+                    [ShortMessage] => Invalid Data
+                    [LongMessage] => Profile description is invalid
+                    [ErrorCode] => 11581
+                    [SeverityCode] => Error
+                    [ErrorParameters] => 
+                )
+
+        )
+
+    [Version] => 98.0
+    [Build] => 5650305
+)
+
+---
+
+---
+--- Create Recurring: 04.29.13 08:36:59
+--- Status: Failure
+--- Profile ID: 
+CreateRecurringPaymentsProfileResponseType Object
+(
+    [CreateRecurringPaymentsProfileResponseDetails] => CreateRecurringPaymentsProfileResponseDetailsType Object
+        (
+            [ProfileID] => 
+            [ProfileStatus] => 
+            [TransactionID] => 
+            [DCCProcessorResponse] => 
+            [DCCReturnCode] => 
+        )
+
+    [Timestamp] => 2013-04-29T04:36:58Z
+    [Ack] => Failure
+    [CorrelationID] => b3d6196570047
+    [Errors] => Array
+        (
+            [0] => ErrorType Object
+                (
+                    [ShortMessage] => Invalid Data
+                    [LongMessage] => Profile description is invalid
+                    [ErrorCode] => 11581
+                    [SeverityCode] => Error
+                    [ErrorParameters] => 
+                )
+
+        )
+
+    [Version] => 98.0
+    [Build] => 5650305
+)
+
+---
+
+---
+--- Get Token: 04.29.13 08:39:06
+--- Status: Success
+--- Token: RP-6YV222297M203454K
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-6YV222297M203454K
+    [Timestamp] => 2013-04-29T04:39:05Z
+    [Ack] => Success
+    [CorrelationID] => 8da797c9c61c4
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5817241
+)
+
+---
+
+---
+--- Create Recurring: 04.29.13 08:39:31
+--- Status: Failure
+--- Profile ID: 
+CreateRecurringPaymentsProfileResponseType Object
+(
+    [CreateRecurringPaymentsProfileResponseDetails] => CreateRecurringPaymentsProfileResponseDetailsType Object
+        (
+            [ProfileID] => 
+            [ProfileStatus] => 
+            [TransactionID] => 
+            [DCCProcessorResponse] => 
+            [DCCReturnCode] => 
+        )
+
+    [Timestamp] => 2013-04-29T04:39:30Z
+    [Ack] => Failure
+    [CorrelationID] => dfb1935cac5b0
+    [Errors] => Array
+        (
+            [0] => ErrorType Object
+                (
+                    [ShortMessage] => Invalid Data
+                    [LongMessage] => Profile description is invalid
+                    [ErrorCode] => 11581
+                    [SeverityCode] => Error
+                    [ErrorParameters] => 
+                )
+
+        )
+
+    [Version] => 98.0
+    [Build] => 5650305
+)
+
+---
+
+---
+--- Create Recurring: 04.29.13 08:43:32
+--- Status: Success
+--- Profile ID: I-3EFN4V4B00RT
+CreateRecurringPaymentsProfileResponseType Object
+(
+    [CreateRecurringPaymentsProfileResponseDetails] => CreateRecurringPaymentsProfileResponseDetailsType Object
+        (
+            [ProfileID] => I-3EFN4V4B00RT
+            [ProfileStatus] => ActiveProfile
+            [TransactionID] => 
+            [DCCProcessorResponse] => 
+            [DCCReturnCode] => 
+        )
+
+    [Timestamp] => 2013-04-29T04:43:31Z
+    [Ack] => Success
+    [CorrelationID] => 5e8e235d8ef59
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5650305
+)
+
+---
+
+---
+--- Get Token: 04.29.13 08:45:20
+--- Status: Success
+--- Token: RP-9574108551481362P
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-9574108551481362P
+    [Timestamp] => 2013-04-29T04:45:19Z
+    [Ack] => Success
+    [CorrelationID] => d9551ab8eb8c6
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5817241
+)
+
+---
+
+---
+--- Create Recurring: 04.29.13 08:46:09
+--- Status: Success
+--- Profile ID: I-3DETS8P03VG8
+CreateRecurringPaymentsProfileResponseType Object
+(
+    [CreateRecurringPaymentsProfileResponseDetails] => CreateRecurringPaymentsProfileResponseDetailsType Object
+        (
+            [ProfileID] => I-3DETS8P03VG8
+            [ProfileStatus] => ActiveProfile
+            [TransactionID] => 
+            [DCCProcessorResponse] => 
+            [DCCReturnCode] => 
+        )
+
+    [Timestamp] => 2013-04-29T04:46:08Z
+    [Ack] => Success
+    [CorrelationID] => a97216144d2d2
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5650305
+)
+
+---
+
+---
+--- Get Token: 04.29.13 10:07:03
+--- Status: Success
+--- Token: RP-1NN08843Y5246961V
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-1NN08843Y5246961V
+    [Timestamp] => 2013-04-29T06:07:02Z
+    [Ack] => Success
+    [CorrelationID] => 500d31859012
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5817241
+)
+
+---
+
+---
+--- Get Token: 05.02.13 11:04:47
+--- Status: Success
+--- Token: RP-1YB6857104664373V
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-1YB6857104664373V
+    [Timestamp] => 2013-05-02T07:04:45Z
+    [Ack] => Success
+    [CorrelationID] => a15d10059bf6b
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5817241
+)
+
+---
+
+---
+--- Get Token: 05.02.13 11:14:48
+--- Status: Success
+--- Token: RP-04L42678W97465310
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-04L42678W97465310
+    [Timestamp] => 2013-05-02T07:14:47Z
+    [Ack] => Success
+    [CorrelationID] => c7f99c4a3d7e4
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5817241
+)
+
+---
+
+---
+--- Get Token: 05.03.13 06:06:37
+--- Status: Success
+--- Token: RP-0W3796895S5036907
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-0W3796895S5036907
+    [Timestamp] => 2013-05-03T02:06:36Z
+    [Ack] => Success
+    [CorrelationID] => f3e1e4f03e47f
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5817241
+)
+
+---
+
+---
+--- Get Token: 05.07.13 10:42:25
+--- Status: Success
+--- Token: RP-2UJ189006Y1282625
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-2UJ189006Y1282625
+    [Timestamp] => 2013-05-07T06:42:23Z
+    [Ack] => Success
+    [CorrelationID] => 18bebd0c89b5e
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5817241
+)
+
+---
+
+---
+--- Get Token: 05.07.13 10:43:21
+--- Status: Success
+--- Token: RP-0PT45918WR8896735
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-0PT45918WR8896735
+    [Timestamp] => 2013-05-07T06:43:19Z
+    [Ack] => Success
+    [CorrelationID] => b603e5312502c
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5817241
+)
+
+---
+
+---
+--- Create Recurring: 05.07.13 10:43:49
+--- Status: Success
+--- Profile ID: I-Y5X1JKY20DSH
+CreateRecurringPaymentsProfileResponseType Object
+(
+    [CreateRecurringPaymentsProfileResponseDetails] => CreateRecurringPaymentsProfileResponseDetailsType Object
+        (
+            [ProfileID] => I-Y5X1JKY20DSH
+            [ProfileStatus] => ActiveProfile
+            [TransactionID] => 
+            [DCCProcessorResponse] => 
+            [DCCReturnCode] => 
+        )
+
+    [Timestamp] => 2013-05-07T06:43:47Z
+    [Ack] => Success
+    [CorrelationID] => a362333a6b59
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5650305
+)
+
+---
+
+---
+--- Get Token: 05.07.13 11:10:30
+--- Status: Success
+--- Token: RP-8S419639GL846210F
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-8S419639GL846210F
+    [Timestamp] => 2013-05-07T07:10:29Z
+    [Ack] => Success
+    [CorrelationID] => c623124fdcde3
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5817241
+)
+
+---
+
+---
+--- Get Token: 05.07.13 11:11:10
+--- Status: Success
+--- Token: RP-6TB59565FD037813D
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-6TB59565FD037813D
+    [Timestamp] => 2013-05-07T07:11:08Z
+    [Ack] => Success
+    [CorrelationID] => b7ea537755a3a
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5817241
+)
+
+---
+
+---
+--- Get Token: 05.07.13 11:11:46
+--- Status: Success
+--- Token: RP-63F94712BG6193349
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-63F94712BG6193349
+    [Timestamp] => 2013-05-07T07:11:44Z
+    [Ack] => Success
+    [CorrelationID] => 753500c79e994
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5817241
+)
+
+---
+
+---
+--- Get Token: 05.07.13 11:15:57
+--- Status: Success
+--- Token: RP-7NR66129L1102000A
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-7NR66129L1102000A
+    [Timestamp] => 2013-05-07T07:15:55Z
+    [Ack] => Success
+    [CorrelationID] => cea72b3a9af9
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5817241
+)
+
+---
+
+---
+--- Get Token: 05.07.13 11:16:42
+--- Status: Success
+--- Token: RP-22M49624S8659212V
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-22M49624S8659212V
+    [Timestamp] => 2013-05-07T07:16:41Z
+    [Ack] => Success
+    [CorrelationID] => e98654d2f1b37
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5817241
+)
+
+---
+
+---
+--- Get Token: 05.07.13 11:18:30
+--- Status: Success
+--- Token: RP-1G767127TK0686306
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-1G767127TK0686306
+    [Timestamp] => 2013-05-07T07:18:28Z
+    [Ack] => Success
+    [CorrelationID] => d79e1633a2ae
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5817241
+)
+
+---
+
+---
+--- Get Token: 05.07.13 11:19:00
+--- Status: Success
+--- Token: RP-935382738R5970124
+SetCustomerBillingAgreementResponseType Object
+(
+    [Token] => RP-935382738R5970124
+    [Timestamp] => 2013-05-07T07:18:58Z
+    [Ack] => Success
+    [CorrelationID] => e44233a66dc27
+    [Errors] => 
+    [Version] => 98.0
+    [Build] => 5817241
+)
+
+---
+
