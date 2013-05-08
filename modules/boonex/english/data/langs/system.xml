@@ -1502,7 +1502,16 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_Dashboard"><![CDATA[Dashboard]]></string>
 	<string name="_Status Message"><![CDATA[Status Message]]></string>
 	<string name="_Set up your status"><![CDATA[Set up your status]]></string>
-	
+
+	<!-- Splash -->
+	<string name="_sys_splash_slogan"><![CDATA[The easiest way to create your own social website.]]></string>
+	<string name="_sys_splash_inp_postfix"><![CDATA[.online.me]]></string>
+	<string name="_sys_splash_inp_placeholder"><![CDATA[site address]]></string>
+	<string name="_sys_splash_btn_start"><![CDATA[Start]]></string>
+	<string name="_sys_splash_err_domain_incorrect"><![CDATA[Domain is essential. Please, fill in this field, for example, my-first-site.]]></string>
+	<string name="_sys_splash_err_domain_is_used"><![CDATA[The domain name is already used. Try to select another one.]]></string>
+	<string name="_sys_splash_err_service_not_available"><![CDATA[The service is currently not available. Try it later, please.]]></string>
+
 	<!-- General and Launcher -->
 	<string name="_adm_tmi_cpt_edit"><![CDATA[Manage Launcher]]></string>
 	<string name="_adm_tmi_cpt_favorite"><![CDATA[Show Favorite Only]]></string>

@@ -24,6 +24,14 @@ if (!file_exists("./inc/header.inc.php"))
     exit;
 }
 
+require_once('./inc/header.inc.php');
+require_once(BX_DIRECTORY_PATH_INC . "profiles.inc.php");
+
+if(!isLogged()) {
+	require_once("./splash.php");
+	exit;
+}
+
 $_GET['i'] = 'home';
 require_once("./page.php");
 
