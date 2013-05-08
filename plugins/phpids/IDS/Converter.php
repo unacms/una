@@ -5,7 +5,7 @@
  *
  * Requirements: PHP5, SimpleXML
  *
- * Copyright (c) 2008 PHPIDS group (http://php-ids.org)
+ * Copyright (c) 2008 PHPIDS group (https://phpids.org)
  *
  * PHPIDS is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -76,26 +76,6 @@ class IDS_Converter
     }
 
     /**
-     * Make sure the value to normalize and monitor doesn't contain 
-     * possibilities for a regex DoS.
-     * 
-     * @param string $value the value to pre-sanitize
-     *
-     * @static
-     * @return string
-     */
-    public static function convertFromRepetition($value) 
-    {
-        // remove obvios repetition patterns
-        $value = preg_replace(
-            '/(?:(.{2,})\1{32,})|(?:[+=|\-@\s]{128,})/', 
-            'x', 
-            $value
-        );
-        return $value;
-    }
-
-    /**
      * Check for comments and erases them if available
      *
      * @param string $value the value to convert
@@ -123,6 +103,8 @@ class IDS_Converter
         $value = preg_replace('/(<\w+)\/+(\w+=?)/m', '$1/$2', $value);
         $value = preg_replace('/[^\\\:]\/\/(.*)$/m', '/**/$1', $value);
         $value = preg_replace('/([^\-&])#.*[\r\n\v\f]/m', '$1', $value);
+        $value = preg_replace('/([^&\-])#.*\n/m', '$1 ', $value);
+        $value = preg_replace('/^#.*\n/m', ' ', $value);
 
         return $value;
     }
@@ -265,8 +247,8 @@ class IDS_Converter
         }
         // normalize obfuscated protocol handlers
         $value = preg_replace(
-            '/(?:j\s*a\s*v\s*a\s*s\s*c\s*r\s*i\s*p\s*t\s*)|(d\s*a\s*t\s*a\s*)/ms', 
-            'javascript', $value
+            '/(?:j\s*a\s*v\s*a\s*s\s*c\s*r\s*i\s*p\s*t\s*:)|(d\s*a\s*t\s*a\s*:)/ms', 
+            'javascript:', $value
         );
         
         return $value;
@@ -304,7 +286,7 @@ class IDS_Converter
     {
         $matches = array();
         if(preg_match_all('/(?:(?:\A|[^\d])0x[a-f\d]{3,}[a-f\d]*)+/im', $value, $matches)) {
-        	foreach($matches[0] as $match) {
+            foreach($matches[0] as $match) {
                 $converted = '';
                 foreach(str_split($match, 2) as $hex_index) {
                     if(preg_match('/[a-f\d]{2,3}/i', $hex_index)) {
@@ -334,19 +316,13 @@ class IDS_Converter
             '(?:(?:^|\W)in[+\s]*\([\s\d"]+[^()]*\))/ims');
         $value   = preg_replace($pattern, '"=0', $value);
         
-        $value   = preg_replace('/\W+\s*like\s*\W+/ims', '1" OR "1"', $value);
-        $value   = preg_replace('/null[,"\s]/ims', ',0', $value);
+        $value   = preg_replace('/[^\w\)]+\s*like\s*[^\w\s]+/ims', '1" OR "1"', $value);
+        $value   = preg_replace('/null([,"\s])/ims', '0$1', $value);
         $value   = preg_replace('/\d+\./ims', ' 1', $value);
         $value   = preg_replace('/,null/ims', ',0', $value);
-        $value   = preg_replace('/(?:between|mod)/ims', 'or', $value);
+        $value   = preg_replace('/(?:between)/ims', 'or', $value);
         $value   = preg_replace('/(?:and\s+\d+\.?\d*)/ims', '', $value);
         $value   = preg_replace('/(?:\s+and\s+)/ims', ' or ', $value);
-
-        $pattern = array('/[^\w,(]null|\\\n|true|false|utc_time|' .
-                         'localtime(?:stamp)?|current_\w+|binary|' .
-                         '(?:(?:ascii|soundex|find_in_set|' .
-                         'md5|r?like)[+\s]*\([^()]+\))|(?:-+\d)/ims');
-        $value   = preg_replace($pattern, 0, $value);
 
         $pattern = array('/(?:not\s+between)|(?:is\s+not)|(?:not\s+in)|' .
                          '(?:xor|<>|rlike(?:\s+binary)?)|' .
@@ -375,7 +351,7 @@ class IDS_Converter
             chr(0), chr(1), chr(2), chr(3), chr(4), chr(5),
             chr(6), chr(7), chr(8), chr(11), chr(12), chr(14),
             chr(15), chr(16), chr(17), chr(18), chr(19), chr(24), 
-            chr(25), chr(192), chr(193), chr(238), chr(255)
+            chr(25), chr(192), chr(193), chr(238), chr(255), '\\0'
         );
         
         $value = str_replace($search, '%00', $value);
@@ -513,7 +489,7 @@ class IDS_Converter
      */
     public static function convertFromUTF7($value)
     {
-        if(preg_match('/\+A\w+-/m', $value)) {
+        if(preg_match('/\+A\w+-?/m', $value)) {
             if (function_exists('mb_convert_encoding')) {
                 if(version_compare(PHP_VERSION, '5.2.8', '<')) {
                     $tmp_chars = str_split($value);

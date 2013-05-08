@@ -5,7 +5,7 @@
  * 
  * Requirements: PHP5, SimpleXML
  *
- * Copyright (c) 2008 PHPIDS group (http://php-ids.org)
+ * Copyright (c) 2008 PHPIDS group (https://phpids.org)
  *
  * PHPIDS is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -86,12 +86,10 @@ class IDS_Log_File implements IDS_Log_Interface
     protected function __construct($logfile) 
     {
 
-        // determine correct IP address
-        if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            $this->ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } else {
-            $this->ip = $_SERVER['REMOTE_ADDR'];
-        }
+        // determine correct IP address and concat them if necessary
+        $this->ip = $_SERVER['REMOTE_ADDR'] .
+            (isset($_SERVER['HTTP_X_FORWARDED_FOR']) ?
+                ' (' . $_SERVER['HTTP_X_FORWARDED_FOR'] . ')' : '');
 
         $this->logfile = $logfile;
     }
@@ -156,13 +154,14 @@ class IDS_Log_File implements IDS_Log_Interface
         }
 
         $dataString = sprintf($format,
-                              $this->ip,
-                              date('c'),
-                              $data->getImpact(),
-                              join(' ', $data->getTags()),
-                              trim($attackedParameters),
-                              urlencode($_SERVER['REQUEST_URI']),
-                              $_SERVER['SERVER_ADDR']);
+            urlencode($this->ip),
+            date('c'),
+            $data->getImpact(),
+            join(' ', $data->getTags()),
+            urlencode(trim($attackedParameters)),
+            urlencode($_SERVER['REQUEST_URI']),
+            $_SERVER['SERVER_ADDR']
+        );
 
         return $dataString;
     }

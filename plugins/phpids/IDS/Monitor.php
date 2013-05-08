@@ -5,7 +5,7 @@
  *
  * Requirements: PHP5, SimpleXML
  *
- * Copyright (c) 2008 PHPIDS group (http://php-ids.org)
+ * Copyright (c) 2008 PHPIDS group (https://phpids.org)
  *
  * PHPIDS is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -234,12 +234,13 @@ class IDS_Monitor
      */
     public function run()
     {
+        
         if (!empty($this->request)) {
             foreach ($this->request as $key => $value) {
                 $this->_iterate($key, $value);
             }
         }
-
+         
         return $this->getReport();
     }
 
@@ -286,9 +287,10 @@ class IDS_Monitor
      */
     private function _detect($key, $value)
     {
-        
+
         // define the pre-filter
-        $prefilter = '/[^\w\s\/@!?\.]+|(?:\.\/)|(?:@@\w+)/';
+        $prefilter = '/[^\w\s\/@!?\.]+|(?:\.\/)|(?:@@\w+)' 
+            . '|(?:\+ADw)|(?:union\s+select)/i';
         
         // to increase performance, only start detection if value
         // isn't alphanumeric
@@ -301,7 +303,7 @@ class IDS_Monitor
                 return false;
             }
         }
-
+        
         // check if this field is part of the exceptions
         if (is_array($this->exceptions)) {
             foreach($this->exceptions as $exception) {
@@ -322,6 +324,11 @@ class IDS_Monitor
         if (function_exists('get_magic_quotes_gpc')
             && get_magic_quotes_gpc()) {
             $value = stripslashes($value);
+        }
+        if(function_exists('get_magic_quotes_gpc')
+            && !get_magic_quotes_gpc() 
+            && version_compare(PHP_VERSION, '5.3.0', '>=')) {
+            $value = preg_replace('/\\\(["\'\/])/im', '$1', $value);
         }
 
         // if html monitoring is enabled for this field - then do it!
@@ -488,10 +495,12 @@ class IDS_Monitor
          */
         $purified = preg_replace('/\s+alt="[^"]*"/m', null, $purified);
         $purified = preg_replace('/=?\s*"\s*"/m', null, $purified);
-        
         $original = preg_replace('/\s+alt="[^"]*"/m', null, $original);
         $original = preg_replace('/=?\s*"\s*"/m', null, $original);
         $original = preg_replace('/style\s*=\s*([^"])/m', 'style = "$1', $original);
+        
+        # deal with oversensitive CSS normalization
+        $original = preg_replace('/(?:([\w\-]+:)+\s*([^;]+;\s*))/m', '$1$2', $original);
         
         # strip whitespace between tags
         $original = trim(preg_replace('/>\s*</m', '><', $original));
@@ -513,8 +522,8 @@ class IDS_Monitor
          * Calculate the difference between the original html input
          * and the purified string.
          */
-        $array_1 = str_split(html_entity_decode(urldecode($original)));
-        $array_2 = str_split($purified);
+        $array_1 = preg_split('/(?<!^)(?!$)/u', html_entity_decode(urldecode($original)));
+        $array_2 = preg_split('/(?<!^)(?!$)/u', $purified);
 
         // create an array containing the single character differences
         $differences = array();
@@ -528,7 +537,7 @@ class IDS_Monitor
         if(intval($length) <= 10) {
             $diff = trim(join('', $differences));
         } else {
-            $diff = substr(trim(join('', $differences)), 0, strlen($original));
+            $diff = mb_substr(trim(join('', $differences)), 0, strlen($original));
         }
 
         // clean up spaces between tag delimiters
@@ -538,7 +547,7 @@ class IDS_Monitor
         $diff = preg_replace('/[^<](iframe|script|embed|object' .
             '|applet|base|img|style)/m', '<$1', $diff);
 
-        if (strlen($diff) < 4) {
+        if (mb_strlen($diff) < 4) {
             return null;
         }
 
