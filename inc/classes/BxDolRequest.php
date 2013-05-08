@@ -113,7 +113,7 @@ class BxDolRequest extends BxDol {
         $aModule = $mixedModule;
         if(is_string($mixedModule)) {
             bx_import('BxDolModuleQuery');
-            $aModule = BxDolModuleQuery::getInstance()->getModuleByUri($mixedModule);
+            $aModule = BxDolModuleQuery::getInstance()->getModuleByName($mixedModule);
         }
 
         if (!$aModule)

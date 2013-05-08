@@ -150,7 +150,7 @@ class BxDolStudioBuilderPage extends BxTemplStudioPage {
     }
 
     protected function getModuleIcon($sName) {
-        if(in_array($sName, array(BX_DOL_STUDIO_MODULE_CUSTOM, BX_DOL_STUDIO_BP_SKELETONS))) 
+        if(in_array($sName, array(BX_DOL_STUDIO_MODULE_SYSTEM, BX_DOL_STUDIO_MODULE_CUSTOM, BX_DOL_STUDIO_BP_SKELETONS))) 
             return BxDolStudioTemplate::getInstance()->getIconUrl('mi-bp-' . $sName . '.png');
 
         return BxDolStudioUtils::getModuleIcon($sName);

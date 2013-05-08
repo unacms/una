@@ -271,12 +271,14 @@
                 var eBtnCross = eWrapper.find('.bx-form-input-btn-cross');
 
                 eInput.on('focus', function () {
+                	var iTop = ($(this).outerHeight() - eBtnCross.height())/2; 
+
                     eBtnCross.show().position({
                             of: $(this),
                             my: 'right top',
                             at: 'right top',
                             collision: 'none none',
-                            offset: '-8 11'
+                            offset: '-8 ' + iTop
                     });
                 });
 

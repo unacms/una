@@ -207,7 +207,7 @@ function bx_login($iId, $bRememberMe = false) {
 
 function bx_logout($bNotify = true) {
     if ($bNotify && isMember())
-        bx_alert('profile', 'logout', (int)$_COOKIE['memberID']);
+        bx_alert('account', 'logout', (int)$_COOKIE['memberID']);
 
     $aUrl = parse_url(BX_DOL_URL_ROOT);
     $sPath = isset($aUrl['path']) && !empty($aUrl['path']) ? $aUrl['path'] : '/';

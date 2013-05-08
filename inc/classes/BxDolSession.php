@@ -127,6 +127,14 @@ class BxDolSession extends BxDol {
         return isset($this->aData[$sKey]) ? $this->aData[$sKey] : false;
     }
 
+	function getUnsetValue($sKey) {
+        $mixedValue = $this->getValue($sKey);
+        if($mixedValue !== false)
+        	$this->unsetValue($sKey);
+
+        return $mixedValue;
+    }
+
     private function save() {
         if($this->iUserId == 0)
             $this->iUserId = getLoggedId();

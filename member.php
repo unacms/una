@@ -17,8 +17,8 @@ if (isset($_POST['ID'])) { // login form is submitted
 
     bx_import ('BxDolForm');
     $oForm = BxDolForm::getObjectInstance('sys_login', 'sys_login');
-    
-    bx_alert('profile', 'before_login', 0, 0, array('form' => $oForm));
+
+    bx_alert('account', 'before_login', 0, 0, array('form' => $oForm));
 
     $oForm->initChecker();
     $oForm->setRole(bx_get('role'));    

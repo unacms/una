@@ -644,13 +644,13 @@ function _format_when ($iSec) {
     if ($iSec>0) {
         if ($iSec < 3600) {
             $i = round($iSec/60);
-            $s .= (0 == $i || 1 == $i) ? _t('_x_minute_ago', '1') : _t('_x_minute_ago', $i, 's');
+            $s .= (0 == $i || 1 == $i) ? _t('_x_minute_ago', '1', '') : _t('_x_minute_ago', $i, 's');
         } else if ($iSec < 86400) {
             $i = round($iSec/60/60);
-            $s .= (0 == $i || 1 == $i) ? _t('_x_hour_ago', '1') : _t('_x_hour_ago', $i, 's');
+            $s .= (0 == $i || 1 == $i) ? _t('_x_hour_ago', '1', '') : _t('_x_hour_ago', $i, 's');
         } else {
             $i = round($iSec/60/60/24);
-            $s .= (0 == $i || 1 == $i) ? _t('_x_day_ago', '1') : _t('_x_day_ago', $i, 's');
+            $s .= (0 == $i || 1 == $i) ? _t('_x_day_ago', '1', '') : _t('_x_day_ago', $i, 's');
         }
     } else {
         if ($iSec > -3600) {
@@ -1364,15 +1364,13 @@ function bx_convert_array2attrs ($a, $sClasses = false, $sStyles = false) {
     }
 
     foreach ($a as $sKey => $sValue) {
-
-        if (empty($sValue) || is_null($sValue)) // pass NULL values
+        if(is_null($sValue)) // pass NULL values
             continue;
 
         $sValueC = bx_html_attribute($sValue, BX_ESCAPE_STR_QUOTE);
 
         $sRet .= " $sKey=\"$sValueC\"";
     }
-
 
     return $sRet;
 }
