@@ -36,16 +36,20 @@ class BxDolTextPageView extends BxDolPageView {
         $this->_oObject = $oObject;
     }
     function getBlockCode_Content() {
-        return $this->_oObject->serviceViewBlock($this->_sName);
+        return $this->_oObject->getBlockView($this->_sName);
     }
     function getBlockCode_Comment() {
-        return $this->_oObject->serviceCommentBlock($this->_sName);
+        return $this->_oObject->getBlockComment($this->_sName);
     }
     function getBlockCode_Vote() {
-        return $this->_oObject->serviceVoteBlock($this->_sName);
+        $sContent = $this->_oObject->getBlockVote($this->_sName);
+        return !empty($sContent) ? array($sContent, array(), array(), false) : '';
     }
     function getBlockCode_Action() {
-        return $this->_oObject->serviceActionBlock($this->_sName);
+        return $this->_oObject->getBlockAction($this->_sName);
+    }
+    function getBlockCode_SocialSharing() {
+        return $this->_oObject->getBlockSocialSharing($this->_sName);
     }
 }
 ?>

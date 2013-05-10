@@ -6,8 +6,11 @@
 
 
 
-function getHtmlData( elem, url, callback, method )
+function getHtmlData( elem, url, callback, method , confirmation)
 {
+    if ('undefined' != typeof(confirmation) && confirmation && !confirm(_t('_are you sure?'))) 
+        return false;
+
     // in most cases it is element ID, in other cases - object of jQuery
     if (typeof elem == 'string')
         elem = '#' + elem; // create selector from ID
@@ -37,6 +40,10 @@ function getHtmlData( elem, url, callback, method )
 
             $block.html(data);
 
+	        $block
+			    .css('position', blockPos) // return previous value
+		        .addWebForms();
+        
             if (typeof callback == 'function')
                 callback.apply($block);
         });
@@ -44,6 +51,9 @@ function getHtmlData( elem, url, callback, method )
     } else {
 
         $block.load(url + '&_r=' + Math.random(), function() {
+	        $(this)
+			    .css('position', blockPos) // return previous value
+		        .addWebForms();
 
             if (typeof callback == 'function')
                 callback.apply(this);

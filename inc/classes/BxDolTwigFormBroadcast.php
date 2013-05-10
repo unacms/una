@@ -80,7 +80,6 @@ class BxDolTwigFormBroadcast extends BxTemplFormView {
                     'type' => 'submit',
                     'name' => 'submit_form',
                     'value' => _t('_Submit'),
-                    'colspan' => true,
                 ),
             ),
         );

@@ -83,6 +83,37 @@ class BxDolTwigPageMain extends BxTemplPage {
         return $s . $sAjaxPaginate; // TODO:
     }
 
+    function getBlockCode_Calendar($iBlockID, $sContent)
+    {
+        $aDateParams = array(0, 0);
+        $sDate = bx_get('date');
+        if ($sDate)
+            $aDateParams = explode('/', $sDate);
+
+        bx_import ('Calendar', $this->oMain->_aModule);
+        $oCalendar = bx_instance ($this->oMain->_aModule['class_prefix'] . 'Calendar', array ((int)$aDateParams[0], (int)$aDateParams[1], $this->oDb, $this->oConfig, $this->oTemplate));
+
+        $oCalendar->setBlockId($iBlockID);
+        $oCalendar->setDynamicUrl($this->oConfig->getBaseUri() . 'home/');
+
+        return $oCalendar->display(true);
+    }
+
+    function getBlockCode_Categories($iBlockID, $sContent)
+    {
+        bx_import('BxTemplCategoriesModule');
+        $aParam = array('type' => $this->oMain->_sPrefix);
+        $oCateg = new BxTemplCategoriesModule($aParam, _t('_categ_users'), BX_DOL_URL_ROOT . $this->oConfig->getBaseUri() . 'categories');
+        return $oCateg->getBlockCode_Common($iBlockId, true);
+    }
+
+    function getBlockCode_Tags($iBlockID, $sContent)
+    {
+        bx_import('BxTemplTagsModule');
+        $aParam = array('type' => $this->oMain->_sPrefix, 'orderby' => 'popular');
+        $oTags = new BxTemplTagsModule($aParam, '', BX_DOL_URL_ROOT . $this->oConfig->getBaseUri() . 'tags');
+        $aResult = $oTags->getBlockCode_All($iBlockId);
+        return $aResult[0];
 }
 
 ?>

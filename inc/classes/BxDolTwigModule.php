@@ -347,7 +347,7 @@ class BxDolTwigModule extends BxDolModule {
             $aTemplate = $oEmailTemplate->getTemplate($this->_sPrefix . '_broadcast');
             $aTemplateVars = array (
                 'BroadcastTitle' => $this->_oDb->unescape($oForm->getCleanValue ('title')),
-                'BroadcastMessage' => $this->_oDb->unescape($oForm->getCleanValue ('message')),
+                'BroadcastMessage' => nl2br($this->_oDb->unescape($oForm->getCleanValue ('message'))),
                 'EntryTitle' => $aDataEntry[$this->_oDb->_sFieldTitle],
                 'EntryUrl' => BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'view/' . $aDataEntry[$this->_oDb->_sFieldUri],
             );
@@ -415,7 +415,7 @@ class BxDolTwigModule extends BxDolModule {
                 $aInviteUsers = bx_get('inviter_users');
                 foreach ($aInviteUsers as $iRecipient) {
                     $aRecipient = getProfileInfo($iRecipient);
-                    $aPlus = array_merge (array ('NickName' => ' ' . $aRecipient['NickName']), $aPlusOriginal);
+                    $aPlus = array_merge (array ('NickName' => ' ' . getNickName($aRecipient['ID'])), $aPlusOriginal);
                     $iSuccess += sendMail(trim($aRecipient['Email']), $aTemplate['Subject'], $aTemplate['Body'], '', $aPlus) ? 1 : 0;
                 }
             }
@@ -655,6 +655,7 @@ class BxDolTwigModule extends BxDolModule {
     }
 
     function _actionDelete ($iEntryId, $sMsgSuccess) {
+        header('Content-type:text/html;charset=utf-8');
 
         $iEntryId = (int)$iEntryId;
         if (!($aDataEntry = $this->_oDb->getEntryByIdAndOwner($iEntryId, $this->_iProfileId, $this->isAdmin()))) {
@@ -681,6 +682,7 @@ class BxDolTwigModule extends BxDolModule {
     }
 
     function _actionMarkFeatured ($iEntryId, $sMsgSuccessAdd, $sMsgSuccessRemove) {
+        header('Content-type:text/html;charset=utf-8');
 
         $iEntryId = (int)$iEntryId;
         if (!($aDataEntry = $this->_oDb->getEntryByIdAndOwner($iEntryId, $this->_iProfileId, $this->isAdmin()))) {
@@ -707,6 +709,7 @@ class BxDolTwigModule extends BxDolModule {
     }
 
     function _actionJoin ($iEntryId, $iProfileId, $sMsgAlreadyJoined, $sMsgAlreadyJoinedPending, $sMsgJoinSuccess, $sMsgJoinSuccessPending, $sMsgLeaveSuccess) {
+        header('Content-type:text/html;charset=utf-8');
 
         $iEntryId = (int)$iEntryId;
         if (!($aDataEntry = $this->_oDb->getEntryByIdAndOwner($iEntryId, 0, true))) {
@@ -751,6 +754,7 @@ class BxDolTwigModule extends BxDolModule {
     }
 
     function _actionManageFansPopup ($iEntryId, $sTitle, $sFuncGetFans = 'getFans', $sFuncIsAllowedManageFans = 'isAllowedManageFans', $sFuncIsAllowedManageAdmins = 'isAllowedManageAdmins', $iMaxFans = 1000) {
+        header('Content-type:text/html;charset=utf-8');
 
         $iEntryId = (int)$iEntryId;
         if (!($aDataEntry = $this->_oDb->getEntryByIdAndOwner ($iEntryId, 0, true))) {
@@ -770,7 +774,7 @@ class BxDolTwigModule extends BxDolModule {
             exit;
         }
 
-        $sActionsUrl = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . "view/" . $aDataEntry[$this->_oDb->_sFieldUri] . '?ajax_action=';
+        $sActionsUrl = bx_append_url_params(BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . "view/" . $aDataEntry[$this->_oDb->_sFieldUri],  'ajax_action=');
         $aButtons = array (
             array (
                 'type' => 'submit',
@@ -813,7 +817,8 @@ class BxDolTwigModule extends BxDolModule {
         exit;
     }
 
-    function _actionSharePopup ($iEntryId, $sTitle) {
+    function _actionSharePopup ($iEntryId, $sTitle, $bAddTempleateExt = false) {
+        header('Content-type:text/html;charset=utf-8');
 
         $iEntryId = (int)$iEntryId;
         if (!($aDataEntry = $this->_oDb->getEntryByIdAndOwner ($iEntryId, 0, true))) {
@@ -821,28 +826,10 @@ class BxDolTwigModule extends BxDolModule {
             exit;
         }
 
-        require_once (BX_DIRECTORY_PATH_INC . "shared_sites.inc.php");
         $sEntryUrl = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'view/' . $aDataEntry[$this->_oDb->_sFieldUri];
-        $aSitesPrepare = getSitesArray ($sEntryUrl);
-        $sIconsUrl = getTemplateIcon('digg.png');
-        $sIconsUrl = str_replace('digg.png', '', $sIconsUrl);
-        $aSites = array ();
-        foreach ($aSitesPrepare as $k => $r) {
-            $aSites[] = array (
-                'icon' => $sIconsUrl . $r['icon'],
-                'name' => $k,
-                'url' => $r['url'],
-            );
-        }
 
-        $aVarsContent = array (
-            'bx_repeat:sites' => $aSites,
-        );
-        $aVarsPopup = array (
-            'title' => $sTitle,
-            'content' => $this->_oTemplate->parseHtmlByName('popup_share', $aVarsContent),
-        );
-        echo $GLOBALS['oFunctions']->transBox($this->_oTemplate->parseHtmlByName('popup', $aVarsPopup), true);
+        require_once (BX_DIRECTORY_PATH_INC . "shared_sites.inc.php");        
+        echo getSitesHtml($sEntryUrl, $sTitle);
         exit;
     }
 
@@ -1149,12 +1136,12 @@ class BxDolTwigModule extends BxDolModule {
         if ($isAdminEntries) {
             $sContent = $this->_manageEntries ('admin', '', true, 'bx_twig_admin_form', array(
                 'action_delete' => $sKeyBtnDelete,
-            ));
+            ), '', true, 0, $sUrl);
         } else {
             $sContent = $this->_manageEntries ('pending', '', true, 'bx_twig_admin_form', array(
                 'action_activate' => $sKeyBtnActivate,
                 'action_delete' => $sKeyBtnDelete,
-            ));
+            ), '', true, 0, $sUrl);
         }
 
         return $sContent;
@@ -1411,8 +1398,8 @@ class BxDolTwigModule extends BxDolModule {
         return $aDataEntry;
     }
 
-
     function _processFansActions ($aDataEntry, $iMaxFans = 1000) {
+        header('Content-type:text/html;charset=utf-8');
 
         if (false !== bx_get('ajax_action') && $this->isAllowedManageFans($aDataEntry) && 0 == strcasecmp($_SERVER['REQUEST_METHOD'], 'POST')) {
 
@@ -1558,13 +1545,15 @@ class BxDolTwigModule extends BxDolModule {
         $oPage = new $sClass ($this, $aProfile);
 
         // manage my data entries
-        if ($bAjaxMode && ($_sPrefix . '_my_active') == bx_get('block')) {
+        if ($bAjaxMode && ($this->_sPrefix . '_my_active') == bx_get('block')) {
+            header('Content-type:text/html;charset=utf-8');
             echo $oPage->getBlockCode_My();
             exit;
         }
 
         // manage my pending data entries
-        if ($bAjaxMode && ($_sPrefix . '_my_pending') == bx_get('block')) {
+        if ($bAjaxMode && ($this->_sPrefix . '_my_pending') == bx_get('block')) {
+            header('Content-type:text/html;charset=utf-8');
             echo $oPage->getBlockCode_Pending();
             exit;
         }
@@ -1603,8 +1592,12 @@ class BxDolTwigModule extends BxDolModule {
         defineMembershipActions (array('photos add', 'sounds add', 'videos add', 'files add'));
         if (!defined($sMembershipActionConstant))
             return false;
-        $aCheck = checkAction($_COOKIE['memberID'], constant($sMembershipActionConstant));
+        $aCheck = checkAction(getLoggedId(), constant($sMembershipActionConstant));
         return $aCheck[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED;
+    }
+
+    function _formatSnippetText ($aEntryData, $iMaxLen = 300) {
+        return strmaxtextlen($aEntryData[$this->_oDb->_sFieldDescription], $iMaxLen);
     }
 }
 

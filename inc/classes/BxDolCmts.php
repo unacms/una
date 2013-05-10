@@ -200,20 +200,24 @@ class BxDolCmts extends BxDol
     /**
      * check if user can post/edit or delete own comments
      */
-    function checkAction ($iAction)
-    {
+    function checkAction ($iAction, $isPerformAction = false) {
         $iId = $this->_getAuthorId();
-        $check_res = checkAction( $iId, $iAction );
+        $check_res = checkAction($iId, $iAction, $isPerformAction);
         return $check_res[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED;
     }
 
+    function checkActionErrorMsg ($iAction) {
+        $iId = $this->_getAuthorId();
+        $check_res = checkAction($iId, $iAction);
+        return $check_res[CHECK_ACTION_RESULT] != CHECK_ACTION_RESULT_ALLOWED ? $check_res[CHECK_ACTION_MESSAGE] : '';
+    }
 
     function getId () {
         return $this->_iId;
     }
 
     function isEnabled () {
-        return $this->_aSystem['is_on'];
+        return isset($this->_aSystem['is_on']) && $this->_aSystem['is_on'];
     }
 
     function getSystemName() {
@@ -351,63 +355,59 @@ class BxDolCmts extends BxDol
 
     *********************************************/
 
-
-
-    /**
-     * is rate comment allowed
-     */
-    function isRateAllowed ()
-    {
-        return $this->checkAction (ACTION_ID_COMMENTS_VOTE);
+    // is rate comment allowed
+    function isRateAllowed ($isPerformAction = false) {
+        return $this->checkAction (ACTION_ID_COMMENTS_VOTE, $isPerformAction); 
     }
 
-
+    function msgErrRateAllowed () { 
+        return $this->checkActionErrorMsg(ACTION_ID_COMMENTS_VOTE);
+    }
 
     /**
      * is post comment allowed
      */
-    function isPostReplyAllowed ()
-    {
-        return $this->checkAction (ACTION_ID_COMMENTS_POST);
+    function isPostReplyAllowed ($isPerformAction = false) {
+        return $this->checkAction (ACTION_ID_COMMENTS_POST, $isPerformAction);
     }
 
-
+    function msgErrPostReplyAllowed () {
+        return $this->checkActionErrorMsg(ACTION_ID_COMMENTS_POST);
+    }
 
     /**
      * is edit own comment allowed
      */
-    function isEditAllowed ()
-    {
-        return $this->checkAction (ACTION_ID_COMMENTS_EDIT_OWN);
+    function isEditAllowed ($isPerformAction = false) {
+        return $this->checkAction (ACTION_ID_COMMENTS_EDIT_OWN, $isPerformAction);
     }
 
-
+    function msgErrEditAllowed () {
+        return $this->checkActionErrorMsg (ACTION_ID_COMMENTS_EDIT_OWN);
+    }
 
     /**
      * is removing own comment allowed
      */
-    function isRemoveAllowed ()
-    {
-        return $this->checkAction (ACTION_ID_COMMENTS_REMOVE_OWN);
+    function isRemoveAllowed ($isPerformAction = false) {
+        return $this->checkAction (ACTION_ID_COMMENTS_REMOVE_OWN, $isPerformAction);
     }
 
-
+    function msgErrRemoveAllowed () {
+        return $this->checkActionErrorMsg(ACTION_ID_COMMENTS_REMOVE_OWN);
+    }
 
     /**
      * is edit any comment allowed
      */
-    function isEditAllowedAll ()
-    {
+    function isEditAllowedAll () {
         return isAdmin() ? true : false;
     }
-
-
 
     /**
      * is removing any comment allowed
      */
-    function isRemoveAllowedAll ()
-    {
+    function isRemoveAllowedAll () {
         return isAdmin() ? true : false;
     }
 
@@ -475,11 +475,13 @@ class BxDolCmts extends BxDol
         if(false === $iCmtNewId)
             return '';
 
-        bx_import('BxDolAlerts');
-        $oZ = new BxDolAlerts($this->_sSystem, 'commentPost', $this->getId(), $this->_getAuthorId(), array('comment_id' => $iCmtNewId));
-        $oZ->alert();
-
         $this->_triggerComment();
+
+        $this->isPostReplyAllowed(true);
+
+        bx_import('BxDolAlerts');
+        $oZ = new BxDolAlerts($this->_sSystem, 'commentPost', $this->getId(), $this->_getAuthorId(), array('comment_id' => $iCmtNewId, 'comment_author_id' => $iCmtAuthorId));
+        $oZ->alert();
 
         return $iCmtNewId;
     }
@@ -504,16 +506,19 @@ class BxDolCmts extends BxDol
 
         $isRemoveAllowed = $this->isRemoveAllowedAll() || ($aCmt['cmt_author_id'] == $this->_getAuthorId() && $this->isRemoveAllowed());
         if (!$isRemoveAllowed && $aCmt['cmt_secs_ago'] > ($this->getAllowedEditTime()+20))
-            return _t('_Access denied');
+            return $aCmt['cmt_author_id'] == $this->_getAuthorId() && !$this->isRemoveAllowed() ? strip_tags($this->msgErrRemoveAllowed()) : _t('_Access denied');
 
         if (!$this->_oQuery->removeComment ($this->getId(), $aCmt['cmt_id'], $aCmt['cmt_parent_id']))
             return _t('_Database Error');
 
-        bx_import('BxDolAlerts');
-        $oZ = new BxDolAlerts($this->_sSystem, 'commentRemoved', $this->getId(), $this->_getAuthorId(), array('comment_id' => $aCmt['cmt_id']));
-        $oZ->alert();
-
         $this->_triggerComment();
+
+        if ($aCmt['cmt_author_id'] == $this->_getAuthorId())
+           $this->isRemoveAllowed(true);
+
+        bx_import('BxDolAlerts');
+        $oZ = new BxDolAlerts($this->_sSystem, 'commentRemoved', $this->getId(), $this->_getAuthorId(), array('comment_id' => $aCmt['cmt_id'], 'comment_author_id' => $aCmt['cmt_author_id']));
+        $oZ->alert();
 
         return '';
     }
@@ -535,7 +540,7 @@ class BxDolCmts extends BxDol
 
         $isEditAllowed = $this->isEditAllowedAll() || ($aCmt['cmt_author_id'] == $this->_getAuthorId() && $this->isEditAllowed());
         if (!$isEditAllowed && $aCmt['cmt_secs_ago'] > ($this->getAllowedEditTime()+20))
-            return 'err'._t('_Access denied');
+            return 'err' . ($aCmt['cmt_author_id'] == $this->_getAuthorId() && !$this->isEditAllowed() ? strip_tags($this->msgErrEditAllowed()) : _t('_Access denied'));
 
         return $this->_getFormBox (0, $this->_prepareTextForEdit($aCmt['cmt_text']), 'updateComment(this, \''.$iCmtId.'\')');
     }
@@ -566,17 +571,18 @@ class BxDolCmts extends BxDol
         if (!$isEditAllowed && $aCmt['cmt_secs_ago'] > ($this->getAllowedEditTime()+20))
             return '{}';
 
-        if($sTextRet != $aCmt['cmt_text'] || $iCmtMood != $aCmt['cmt_mood']) {
-            if ($this->_oQuery->updateComment ($this->getId(), $aCmt['cmt_id'], $sText, $iCmtMood)) {
-                bx_import('BxDolAlerts');
-                $oZ = new BxDolAlerts($this->_sSystem, 'commentUpdated', $this->getId(), $this->_getAuthorId(), array('comment_id' => $aCmt['cmt_id']));
-                $oZ->alert();
-            }
+        if (($sTextRet != $aCmt['cmt_text'] || $iCmtMood != $aCmt['cmt_mood']) && $this->_oQuery->updateComment ($this->getId(), $aCmt['cmt_id'], $sText, $iCmtMood)) {
+            if ($aCmt['cmt_author_id'] == $this->_getAuthorId())
+               $this->isEditAllowed(true);
+
+            bx_import('BxDolAlerts');
+            $oZ = new BxDolAlerts($this->_sSystem, 'commentUpdated', $this->getId(), $this->_getAuthorId(), array('comment_id' => $aCmt['cmt_id'], 'comment_author_id' => $aCmt['cmt_author_id']));
+            $oZ->alert();
         }
 
         $aCmt = $this->_oQuery->getCommentSimple ($this->getId(), $iCmtId);
 
-        return $oJson->encode(array('text' => $aCmt['cmt_text'], 'mood' => $aCmt['cmt_mood'], _t($this->_aMoodText[$aCmt['cmt_mood']])));
+        return $oJson->encode(array('text' => $aCmt['cmt_text'], 'mood' => $aCmt['cmt_mood'], 'mood_text' => _t($this->_aMoodText[$aCmt['cmt_mood']])));
     }
 
     function actionCmtRate () {
@@ -597,8 +603,12 @@ class BxDolCmts extends BxDol
         if(!$this->_oQuery->rateComment($this->getSystemId(), $iCmtId, $iRate, $this->_getAuthorId(), $this->_getAuthorIp()))
             return _t('_Duplicate vote');
 
+        $aCmt = $this->_oQuery->getCommentSimple ($this->getId(), $iCmtId);
+
+        $this->isRateAllowed(true);
+
         bx_import('BxDolAlerts');
-        $oZ = new BxDolAlerts($this->_sSystem, 'commentRated', $this->getId(), $this->_getAuthorId(), array('comment_id' => $iCmtId, 'rate' => $iRate));
+        $oZ = new BxDolAlerts($this->_sSystem, 'commentRated', $this->getId(), $this->_getAuthorId(), array('comment_id' => $iCmtId, 'comment_author_id' => $aCmt['cmt_author_id'], 'rate' => $iRate));
         $oZ->alert();
 
         return '';

@@ -33,7 +33,7 @@ class BxDolTextPageMain extends BxDolPageView {
         $this->_oObject = $oObject;
     }
     function getBlockCode_Featured() {
-        return $this->_oObject->serviceFeaturedBlock();
+        return array($this->_oObject->serviceFeaturedBlock(), array(), array(), true);
     }
     function getBlockCode_Latest() {
         bx_import('BxDolTemplate');
@@ -45,6 +45,15 @@ class BxDolTextPageMain extends BxDolPageView {
         );
 
         return array($this->_oObject->serviceArchiveBlock(), $aTopMenu, array(), true, 'getBlockCaptionMenu');
+    }
+    function getBlockCode_Categories($iBlockId) {
+        return array($this->_oObject->serviceCategoriesBlock($iBlockId), array(), array(), true);
+    }
+    function getBlockCode_Tags($iBlockId) {
+        return array($this->_oObject->serviceTagsBlock($iBlockId), array(), array(), true);
+    }
+    function getBlockCode_Calendar($iBlockId) {
+        return array($this->_oObject->serviceGetCalendarBlock($iBlockId, array('mini_mode' => true)), array(), array(), true);
     }
 }
 ?>

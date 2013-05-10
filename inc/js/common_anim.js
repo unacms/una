@@ -84,5 +84,43 @@ $.fn.bx_loading = function(sParentSelector) {
             oLoading.hide();
     });
 };
+$.fn.bx_btn_loading = function(sParentSelector) {
+	var sAttr = 'bx-loading-id';
+	var oDate = new Date();
+    return this.each(function() {
+        var oObject = $(this);
+        if(!oObject.hasClass('bx-btn'))
+        	return;
 
+        if(oObject.is(':visible')) {
+        	var oClone = oObject.attr(sAttr, oDate.getTime()).clone().attr('disabled', 'disabled').addClass('bx-btn-loading').html(aDolLang['_sys_txt_btn_loading']);
+        	oObject.hide().after(oClone);
+        }
+        else {
+        	var iId = oObject.attr(sAttr);
+        	oObject.removeAttr(sAttr).show().siblings("[" + sAttr + "='" + iId + "']").remove();
+        }
+    });
+};
+$.fn.bx_message_box = function(sMessage, iTimer, onClose) {
+    return this.each(function() {
+        var oParent = $(this);
+        
+        if(oParent.children(':first').hasClass('MsgBox'))
+            oParent.children(':first').replaceWith(sMessage);
+        else 
+            oParent.prepend(sMessage);
+
+        if(iTimer == undefined || parseInt(iTimer) == 0)
+            return;
+
+        setTimeout(function(oParent, onClose) {
+            oParent.children('div.MsgBox:first').bx_anim('hide', 'fade', 'slow', function(){
+                $(this).remove();
+                if(onClose != undefined)
+                    onClose();
+            });
+        }, 1000 * parseInt(iTimer), oParent, onClose);
+    });
+};
 

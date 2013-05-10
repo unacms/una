@@ -36,6 +36,19 @@ class BxDolCacheFileHtml extends BxDolCacheFile {
     }
 
     /**
+     * Get full path to cache file
+     */
+    function getDataFilePath($sKey, $iTTL = false) {
+        if (!file_exists($this->sPath . $sKey))
+            return null;
+
+        if ($iTTL > 0 && $this->_removeFileIfTtlExpired ($this->sPath . $sKey, $iTTL))
+            return null;
+
+        return $this->sPath . $sKey;
+    }
+
+    /**
      * Save all data in cache file.
      *
      * @param string $sKey - file name

@@ -33,5 +33,6 @@ class BxDolCache extends BxDol {
     function setData($sKey, $mixedData, $iTTL = false) {}
     function delData($sKey) {}
     function removeAllByPrefix ($s) {}
+    function getSizeByPrefix ($s) {}
 }
 

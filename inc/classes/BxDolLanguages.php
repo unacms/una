@@ -314,4 +314,9 @@ function _t_format_currency($fPrice) {
 function _t_format_extensions($mixedExtensions) {
     return BxDolLanguages::getInstance()->_t_format_extensions($mixedExtensions);
 }
+
+function bx_lang_name()
+{
+	return BxDolLanguages::getInstance()->getCurrentLanguage();
+}
 /** @} */

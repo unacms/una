@@ -32,6 +32,13 @@ class BxDolTextConfig extends BxDolModuleConfig {
     var $_sCommentsSystemName;
     var $_bVotes;
     var $_sVotesSystemName;
+    var $_sViewsSystemName;
+    var $_sSubscriptionsSystemName;
+    var $_sActionsViewSystemName;
+    var $_sCategoriesSystemName;
+    var $_sTagsSystemName;
+    var $_sAlertsSystemName;
+    var $_sSearchSystemName;
     var $_sDateFormat;
     var $_sAnimationEffect;
     var $_iAnimationSpeed;
@@ -64,6 +71,27 @@ class BxDolTextConfig extends BxDolModuleConfig {
     }
     function getVotesSystemName() {
         return $this->_sVotesSystemName;
+    }
+    function getViewsSystemName() {
+        return $this->_sViewsSystemName;
+    }
+    function getSubscriptionsSystemName() {
+        return $this->_sSubscriptionsSystemName;
+    }
+    function getActionsViewSystemName() {
+        return $this->_sActionsViewSystemName;
+    }
+    function getCategoriesSystemName() {
+        return $this->_sCategoriesSystemName;
+    }
+    function getTagsSystemName() {
+        return $this->_sTagsSystemName;
+    }
+    function getAlertsSystemName() {
+        return $this->_sAlertsSystemName;
+    }
+    function getSearchSystemName() {
+        return $this->_sSearchSystemName;
     }
     function getDateFormat() {
         return $this->_sDateFormat;

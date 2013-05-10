@@ -10,7 +10,10 @@ define('BX_DOL_CRON_EXECUTE', '1');
 
 $aPathInfo = pathinfo(__FILE__);
 require_once ($aPathInfo['dirname'] . '/../inc/header.inc.php');
+require_once(BX_DIRECTORY_PATH_INC . 'utils.inc.php');
+require_once(BX_DIRECTORY_PATH_INC . 'profiles.inc.php' );
 
+bx_import('BxDolDb');
 
 function getRange($iLow, $iHigh, $iStep)
 {
@@ -126,6 +129,7 @@ function runJob($aJob)
         $oHandler->processing();
     }
     else if(!empty($aJob['eval'])) {
+        bx_import('BxDolService');
         eval($aJob['eval']);
     }
 }

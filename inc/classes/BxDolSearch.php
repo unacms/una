@@ -520,6 +520,8 @@ class BxDolSearchResult {
                 if (isset($aValue['operator']) && !empty($aValue['value'])) {
                    $sFieldTable = isset($aValue['table']) ? $aValue['table'] : $this->aCurrent['table'];
                    $sqlCondition = "`{$sFieldTable}`.`{$aValue['field']}` ";
+                   if (!isset($aValue['no_quote_value']))
+                       $aValue['value'] = process_db_input($aValue['value'], BX_TAGS_STRIP);
                    switch ($aValue['operator']) {
                        case 'against':
                             $aCond = isset($aValue['field']) && strlen($aValue['field']) > 0 ? $aValue['field'] : $this->aCurrent['searchFields'];
@@ -573,6 +575,10 @@ class BxDolSearchResult {
      * return array with sql elements order and ownFields
      */
     function getSorting ($sSortType = 'last') {
+        $aOverride = $this->getAlterOrder();
+        if (is_array($aOverride) && !empty($aOverride))
+            return $aOverride;
+
        $aSql = array();
        switch ($sSortType) {
            case 'rand':
@@ -597,9 +603,6 @@ class BxDolSearchResult {
            default:
                 $aSql['order'] = "ORDER BY `date` DESC";
         }
-        $aAdd = $this->getAlterOrder();
-        if (is_array($aAdd) && !empty($aAdd))
-            $aSql = $aAdd;
         return $aSql;
     }
 
@@ -654,7 +657,7 @@ class BxDolSearchResult {
             $aSql = array(
                 'function' => 'CONCAT', // TODO: get rid of CONCAT !!!
                 'operator' => 'LIKE',
-                'word' => '%' . $sKeyword . '%'
+                  'word' => '%' . preg_replace('/\s+/', '%', $sKeyword) . '%'
             );
         }
         $sqlWhere = " {$aSql['function']}(";

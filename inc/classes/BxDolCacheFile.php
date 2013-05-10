@@ -91,6 +91,24 @@ class BxDolCacheFile extends BxDolCache {
     }
 
     /**
+     * get size of cached data by name prefix
+     */
+    function getSizeByPrefix ($s) {
+        if (!($rHandler = opendir($this->sPath)))
+            return false;
+
+        $iSize = 0;
+        $l = strlen($s);
+        while (($sFile = readdir($rHandler)) !== false)
+            if (0 == strncmp($sFile, $s, $l))
+                $iSize += @filesize ($this->sPath . $sFile);
+
+        closedir($rHandler);
+
+        return $iSize;
+    }
+
+    /**
      * remove file from dist if TTL expored
      * @param string $sFile - full path to filename
      * @param int $iTTL - time to live in seconds

@@ -118,12 +118,18 @@ class BxDolCaptcha extends BxDol {
     }
 
     /**
+     * Return text entered by user
+     */
+    public function getUserResponse () {
+        // override this function in particular class
+    }
+
+    /**
      * Check if captcha is available, like all API keys are specified.
      */
     public function isAvailable () {
         // override this function in particular class
     }
-
 }
 
 /** @} */

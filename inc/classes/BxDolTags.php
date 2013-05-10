@@ -123,7 +123,7 @@ class BxDolTags extends BxDol {
         if (isset($aParam['orderby']))
         {
             if ($aParam['orderby'] == 'popular')
-                $sGroupBy .= " ORDER BY `{$this->aTagFields['tag']}` ASC, `count` DESC";
+                $sGroupBy .= " ORDER BY `count` DESC, `{$this->aTagFields['tag']}` ASC";
             else if ($aParam['orderby'] == 'recent')
                 $sGroupBy .= " ORDER BY `{$this->aTagFields['date']}` DESC, `{$this->aTagFields['tag']}` ASC";
         }
@@ -133,11 +133,10 @@ class BxDolTags extends BxDol {
             `tgs`.`{$this->aTagFields['date']}` as `{$this->aTagFields['date']}`,
             COUNT(`tgs`.`{$this->aTagFields['id']}`) AS `count`
             FROM `{$this->sTagTable}` `tgs` $sJoin $sCondition $sGroupBy $sLimit";
+        $aTotalTags = $oDb->getPairs($sqlQuery, $this->aTagFields['tag'], 'count');
 
-        $aTags = $oDb->getAll($sqlQuery);
-
-        foreach ($aTags as $aTag)
-            $aTotalTags[$aTag[$this->aTagFields['tag']]] = $aTag['count'];
+        if(isset($aParam['orderby']) && $aParam['orderby'] == 'popular')
+            ksort($aTotalTags);
 
         return $aTotalTags;
     }

@@ -85,6 +85,9 @@ class BxDolGzip extends BxDol {
             return;
         }
 
+        if (!$this->_sOutContent)
+            return;        
+
         $this->_sOutContentZipped = gzencode($this->_sOutContent, 9, FORCE_GZIP);
         $this->putFileContents($this->_sOutFile, $this->_sOutContentZipped);
 

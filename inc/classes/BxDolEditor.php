@@ -115,6 +115,13 @@ class BxDolEditor extends BxDol {
     }
 
     /**
+     * Get minimal width which is neede for editor for the provided view mode
+     */
+    public function getWidth ($iViewMode) {
+        // override this function in particular editor class
+    }
+
+    /**
      * Attach editor to HTML element, in most cases - textarea.
      * @param $sSelector - jQuery selector to attach editor to.
      * @param $iViewMode - editor view mode: BX_EDITOR_STANDARD, BX_EDITOR_MINI, BX_EDITOR_FULL

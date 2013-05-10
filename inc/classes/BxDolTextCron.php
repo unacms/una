@@ -37,24 +37,22 @@ class BxDolTextCron extends BxDolCron {
     }
 
     function processing() {
-        $sModuleName = 'bx_' . $this->_oModule->_oConfig->getUri();
-
         $aIds = array();
         if($this->_oModule->_oDb->publish($aIds))
             foreach($aIds as $iId) {
                 //--- Entry -> Publish for Alerts Engine ---//
-                $oAlert = new BxDolAlerts($sModuleName, 'publish', $iId);
+                $oAlert = new BxDolAlerts($this->_oModule->_oConfig->getAlertsSystemName(), 'publish', $iId);
                 $oAlert->alert();
                 //--- Entry -> Publish for Alerts Engine ---//
 
                 //--- Reparse Global Tags ---//
                 $oTags = new BxDolTags();
-                $oTags->reparseObjTags($sModuleName, $iId);
+                $oTags->reparseObjTags($this->_oModule->_oConfig->getTagsSystemName(), $iId);
                 //--- Reparse Global Tags ---//
 
                 //--- Reparse Global Categories ---//
                 $oCategories = new BxDolCategories();
-                $oCategories->reparseObjTags($sModuleName, $iId);
+                $oCategories->reparseObjTags($this->_oModule->_oConfig->getCategoriesSystemName(), $iId);
                 //--- Reparse Global Categories ---//
             }
     }

@@ -154,7 +154,7 @@ class BxDolTextData {
                         'pass' => 'Xss',
                     ),
                 ),
-                //'categories' => $oCategories->getGroupChooser ('bx_' . $this->_sSystem, $this->_iOwnerId, true),
+                //'categories' => $oCategories->getGroupChooser ($this->_oModule->_oConfig->getCategoriesSystemName(), $this->_iOwnerId, true),
                 'allow_comment_to' => array(),
                 'allow_vote_to' => array(),
                 'post' => array(
@@ -197,18 +197,18 @@ class BxDolTextData {
 
             //--- 'System' -> Post for Alerts Engine ---//
             bx_import('BxDolAlerts');
-            $oAlert = new BxDolAlerts('bx_' . $this->_sSystem, 'post', $iId, $this->_iOwnerId);
+            $oAlert = new BxDolAlerts($this->_oModule->_oConfig->getAlertsSystemName(), 'post', $iId, $this->_iOwnerId);
             $oAlert->alert();
             //--- 'System' -> Post for Alerts Engine ---//
 
             //--- Reparse Global Tags ---//
             $oTags = new BxDolTags();
-            $oTags->reparseObjTags('bx_' . $this->_sSystem, $iId);
+            $oTags->reparseObjTags($this->_oModule->_oConfig->getTagsSystemName(), $iId);
             //--- Reparse Global Tags ---//
 
             //--- Reparse Global Categories ---//
             $oCategories = new BxDolCategories();
-            $oCategories->reparseObjTags('bx_' . $this->_sSystem, $iId);
+            $oCategories->reparseObjTags($this->_oModule->_oConfig->getCategoriesSystemName(), $iId);
             //--- Reparse Global Categories ---//
 
             header('Location: ' . $oForm->aFormAttrs['action']);
@@ -220,7 +220,7 @@ class BxDolTextData {
         $oCategories = new BxDolCategories();
         if (isset($this->_aForm['inputs']['categories'])) {
             //--- convert post form to edit one ---//
-            $this->_aForm['inputs']['categories'] = $oCategories->getGroupChooser('bx_' . $this->_sSystem, $this->_iOwnerId, true, $aValues['categories']);
+            $this->_aForm['inputs']['categories'] = $oCategories->getGroupChooser($this->_oModule->_oConfig->getCategoriesSystemName(), $this->_iOwnerId, true, $aValues['categories']);
         }
         if(!empty($aValues) && is_array($aValues)) {
             foreach($aValues as $sKey => $sValue)
@@ -266,17 +266,17 @@ class BxDolTextData {
 
             //--- 'System' -> Edit for Alerts Engine ---//
             bx_import('BxDolAlerts');
-            $oAlert = new BxDolAlerts('bx_' . $this->_sSystem, 'edit', $aValues['id'], $this->_iOwnerId);
+            $oAlert = new BxDolAlerts($this->_oModule->_oConfig->getAlertsSystemName(), 'edit', $aValues['id'], $this->_iOwnerId);
             $oAlert->alert();
             //--- 'System' -> Edit for Alerts Engine ---//
 
             //--- Reparse Global Tags ---//
             $oTags = new BxDolTags();
-            $oTags->reparseObjTags('bx_' . $this->_sSystem, $aValues['id']);
+            $oTags->reparseObjTags($this->_oModule->_oConfig->getTagsSystemName(), $aValues['id']);
             //--- Reparse Global Tags ---//
 
             //--- Reparse Global Categories ---//
-            $oCategories->reparseObjTags('bx_' . $this->_sSystem, $aValues['id']);
+            $oCategories->reparseObjTags($this->_oModule->_oConfig->getCategoriesSystemName(), $aValues['id']);
             //--- Reparse Global Categories ---//
 
             header('Location: ' . $oForm->aFormAttrs['action']);

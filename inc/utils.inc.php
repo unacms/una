@@ -136,11 +136,14 @@ function strmaxwordlen($input, $len = 100) {
 /*
  * functions for limiting maximal text length
  */
-function strmaxtextlen($input, $len = 60) {
-    if ( strlen($input) > $len )
-        return mb_substr($input, 0, $len - 4) . "...";
-    else
-        return $input;
+function strmaxtextlen($sInput, $iMaxLen = 60) {
+    $sTail = '';
+    $s = trim(strip_tags($sInput));
+    if (mb_strlen($s) > $iMaxLen) {
+        $s = mb_substr($s, 0, $iMaxLen);
+        $sTail = '&#8230;';
+    }
+    return htmlspecialchars_adv($s) . $sTail;
 }
 
 function html2txt($content, $tags = "") {
@@ -626,9 +629,8 @@ function clear_xss($val) {
         $oConfig->set('Output.FlashCompat', 'true');
         $oConfig->set('HTML.FlashAllowFullScreen', 'true');
 
-        $oConfig->set('Filter.Custom', array (new HTMLPurifier_Filter_LocalMovie()));
+        $oConfig->set('Filter.Custom', array (new HTMLPurifier_Filter_LocalMovie(), new HTMLPurifier_Filter_YouTube(), new HTMLPurifier_Filter_YoutubeIframe()));
 
-        $oConfig->set('HTML.DefinitionID', '1');
         $oDef = $oConfig->getHTMLDefinition(true);
         $oDef->addAttribute('a', 'target', 'Enum#_blank,_self,_target,_top');
 
@@ -650,7 +652,7 @@ function _format_when ($iSec) {
             $s .= (0 == $i || 1 == $i) ? _t('_x_hour_ago', '1', '') : _t('_x_hour_ago', $i, 's');
         } else {
             $i = round($iSec/60/60/24);
-            $s .= (0 == $i || 1 == $i) ? _t('_x_day_ago', '1', '') : _t('_x_day_ago', $i, 's');
+            $s .= (0 == $i || 1 == $i) ? _t('_yesterday') : _t('_x_day_ago', $i, 's');
         }
     } else {
         if ($iSec > -3600) {
@@ -661,10 +663,19 @@ function _format_when ($iSec) {
             $s .= (0 == $i || 1 == $i) ? _t('_in_x_hour', '1') : _t('_in_x_hour', -$i, 's');
         } elseif ($iSec < -86400) {
             $i = round($iSec/60/60/24);
-            $s .= (0 == $i || 1 == $i) ? _t('_in_x_day', '1') : _t('_in_x_day', -$i, 's');
+            $s .= (0 == $i || 1 == $i) ? _t('_tomorrow') : _t('_in_x_day', -$i, 's');
         }
     }
     return $s;
+}
+
+function _format_time($iSec, $aParams = array()) {
+    $sDivider = isset($aParams['divider']) ? $aParams['divider'] : ':';
+
+    $iSec = (int)$iSec;
+    $sFormat = $iSec > 3600 ? 'H' . $sDivider . 'i' . $sDivider . 's' : 'i' . $sDivider . 's';
+
+    return gmdate($sFormat, $iSec);
 }
 
 function defineTimeInterval($iTime) {
@@ -743,7 +754,9 @@ function uriFilter ($s, $sEmpty = '-') {
         $s = get_mb_replace ('/([^\d^\w]+)/u', '-', $s); // latin characters only
 
     $s = get_mb_replace ('/([-^]+)/', '-', $s);
-    return !$s ? $sEmpty : trim($s, " -");
+    $s = get_mb_replace ('/([-]+)$/', '', $s); // remove trailing dash
+    if (!$s) $s = '-';
+    return $s;
 }
 
 function uriCheckUniq ($s, $sTable, $sField) {
@@ -759,11 +772,11 @@ function get_mb_replace ($sPattern, $sReplace, $s) {
 }
 
 function get_mb_len ($s) {
-    return mb_strlen($s);
+    return (function_exists('mb_strlen')) ? mb_strlen($s) : strlen($s);
 }
 
 function get_mb_substr ($s, $iStart, $iLen) {
-    return mb_substr ($s, $iStart, $iLen);
+    return (function_exists('mb_substr')) ? mb_substr ($s, $iStart, $iLen) : substr ($s, $iStart, $iLen);
 }
 
 function bx_mb_substr_replace($s, $sReplace, $iPosStart, $iLength) {
@@ -1170,19 +1183,6 @@ function bx_file_get_contents($sFileUrl, $aParams = array(), $bChangeTimeout = f
     return $sResult;
 }
 
-function bx_append_url_params ($sUrl, $mixedParams) {
-    $sParams = false == strpos($sUrl, '?') ? '?' : '&';
-        
-    if (is_array($mixedParams)) {
-        foreach($mixedParams as $sKey => $sValue)
-            $sParams .= $sKey . '=' . $sValue . '&';
-        $sParams = substr($sParams, 0, -1);
-    } else {
-        $sParams .= $mixedParams;
-    }    
-    return $sUrl . $sParams;
-}
-
 /**
  * perform write log into 'tmp/log.txt' (for any debug development)
  *
@@ -1329,6 +1329,88 @@ function bx_encode_url_params ($a, $aExcludeKeys = array (), $aOnlyKeys = false)
     }
     return $s;
 }
+
+function bx_append_url_params ($sUrl, $mixedParams) {
+    $sParams = false == strpos($sUrl, '?') ? '?' : '&';
+
+    if (is_array($mixedParams)) {
+        foreach($mixedParams as $sKey => $sValue)
+            $sParams .= $sKey . '=' . $sValue . '&';
+        $sParams = substr($sParams, 0, -1);
+    } else {
+        $sParams .= $mixedParams;
+    }
+    return $sUrl . $sParams;
+}
+
+function bx_rrmdir($directory) {
+    if (substr($directory,-1) == "/")
+        $directory = substr($directory,0,-1);
+
+    if (!file_exists($directory) || !is_dir($directory))
+        return false;
+    elseif (!is_readable($directory))
+        return false;
+
+    if (!($directoryHandle = opendir($directory)))
+        return false;
+
+    while ($contents = readdir($directoryHandle)) {
+        if ($contents != '.' && $contents != '..') {
+            $path = $directory . "/" . $contents;
+
+            if (is_dir($path))
+                bx_rrmdir($path);
+            else
+                unlink($path);
+        }
+    }
+
+    closedir($directoryHandle);
+
+    if (!rmdir($directory))
+        return false;
+
+    return true;
+}
+
+function bx_clear_folder ($sPath, $aExts = array ()) {
+    if (substr($$sPath,-1) == "/")
+        $sPath = substr($sPath,0,-1);
+
+    if (!file_exists($sPath) || !is_dir($sPath))
+        return false;
+    elseif (!is_readable($sPath))
+        return false;
+
+    if (!($h = opendir($sPath)))
+        return false;
+
+    while ($sFile = readdir($h)) {
+        if ('.' == $sFile || '..' == $sFile)
+            continue;
+
+        $sFullPath = $sPath . '/' . $sFile;
+
+        if (is_dir($sFullPath))
+            continue;
+
+        if (!$aExts || (($sExt = pathinfo($sFullPath, PATHINFO_EXTENSION)) && in_array($sExt, $aExts)))
+            @unlink($sFullPath);
+    }
+
+    closedir($h);
+
+    return true;
+}
+
+function bx_ltrim_str ($sString, $sPrefix, $sReplace = '') {
+    if ($sReplace && substr($sString, 0, strlen($sReplace)) == $sReplace)
+        return $sString;
+    if (substr($sString, 0, strlen($sPrefix)) == $sPrefix)
+        return $sReplace . substr($sString, strlen($sPrefix));
+    return $sString;
+} 
 
 /**
  * Convert array to attributes string

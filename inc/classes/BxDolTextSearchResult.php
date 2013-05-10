@@ -52,18 +52,22 @@ class BxDolTextSearchResult extends BxTemplSearchResultText {
 
         $this->_oModule = $oModule;
 
-        $sModuleUri = $this->_oModule->_oConfig->getUri();
-        $this->aCurrent['name'] = 'bx_' . $sModuleUri;
-        $this->aCurrent['title'] = '_' . $sModuleUri . '_lcaption_search_object';
+        $this->aCurrent['name'] = $this->_oModule->_oConfig->getSearchSystemName();
+        $this->aCurrent['title'] = '_' . $this->_oModule->_oConfig->getUri() . '_lcaption_search_object';
         $this->aCurrent['table'] = $this->_oModule->_oDb->getPrefix() . 'entries';
     }
 
     function displaySearchUnit($aData) {
-        return $this->_oModule->_oTemplate->displayList(array(
+        $aEntries = $this->_oModule->_oDb->getEntries(array(
             'sample_type' => 'search_unit',
-            'viewer_type' => 0,
             'uri' => $aData['uri']
         ));
+
+        $aParams = array(
+            'sample_type' => 'search_unit',
+            'viewer_type' => $this->_oModule->_oTextData->getViewerType()
+        );
+        return $this->_oModule->_oTemplate->displayItem($aParams, array_shift($aEntries));
     }
 
     function displayResultBlock() {
@@ -73,7 +77,7 @@ class BxDolTextSearchResult extends BxTemplSearchResultText {
         if($this->aCurrent['paginate']['totalNum'] == 0)
             $sResult = MsgBox(_t('_' . $sModuleUri . '_msg_no_results'));
 
-        return $sResult;
+        return $this->_oModule->_oTemplate->parseHtmlByName('default_margin.html', array('content' => $sResult));
     }
 
     function addCustomParts() {

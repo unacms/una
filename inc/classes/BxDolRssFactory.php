@@ -85,7 +85,7 @@ class BxDolRssFactory extends BxDol {
             $sRSSTitle = _t('_RSS_Feed_Title_Profile', $aPIDOwnerInfo['NickName'], $sUnitTitleC);
         }
 
-        if(substr($sMainLink, 0, 7) != 'http://')
+        if(substr($sMainLink, 0, 7) != 'http://' && substr($sMainLink, 0, 8) != 'https://')
             $sMainLink = BX_DOL_URL_ROOT . $sMainLink;
 
         $sRSSImage = '';

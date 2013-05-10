@@ -88,17 +88,21 @@ class BxDolCalendar extends BxDol {
             $this->iFirstWeekDay = $this->iWeekEnd-1;
     }
 
-    function _getWeekNames () {
+    function _getWeekNames ($isMiniMode = false)
+    {
+        $sPostfix = '';
+        if ($isMiniMode)
+            $sPostfix = '_mini';
         if(0 == $this->iWeekStart)
-            $aWeek[] = array('name' => _t('_week_sun'));
-        $aWeek[] = array('name' => _t('_week_mon'));
-        $aWeek[] = array('name' => _t('_week_tue'));
-        $aWeek[] = array('name' => _t('_week_wed'));
-        $aWeek[] = array('name' => _t('_week_thu'));
-        $aWeek[] = array('name' => _t('_week_fri'));
-        $aWeek[] = array('name' => _t('_week_sat'));
+            $aWeek[] = array('name' => _t('_week_sun' . $sPostfix));
+        $aWeek[] = array('name' => _t('_week_mon' . $sPostfix));
+        $aWeek[] = array('name' => _t('_week_tue' . $sPostfix));
+        $aWeek[] = array('name' => _t('_week_wed' . $sPostfix));
+        $aWeek[] = array('name' => _t('_week_thu' . $sPostfix));
+        $aWeek[] = array('name' => _t('_week_fri' . $sPostfix));
+        $aWeek[] = array('name' => _t('_week_sat' . $sPostfix));
         if(8 == $this->iWeekEnd)
-            $aWeek[] = array('name' => _t('_week_sun'));
+            $aWeek[] = array('name' => _t('_week_sun' . $sPostfix));
         return $aWeek;
     }
 
@@ -251,5 +255,11 @@ class BxDolCalendar extends BxDol {
         // override this func
         return array(_t('_item'), _t('_items'));
     }
-}
 
+    /**
+     * return url for previous/next month
+     */
+    function getMonthUrl ($isNextMoths, $isMiniMode = false) {
+        return $this->getBaseUri () . ($isNextMoths ? "{$this->iNextYear}/{$this->iNextMonth}" : "{$this->iPrevYear}/{$this->iPrevMonth}");
+    }
+}

@@ -38,6 +38,11 @@ class BxDolCronCmd extends BxDolCron {
         $db_clean_msg = (int) getParam("db_clean_msg");
         $db_clean_visits = (int) getParam("db_clean_members_visits");
         $db_clean_banners_info = (int) getParam("db_clean_banners_info");
+        $db_clean_mem_levels = (int) getParam("db_clean_mem_levels");
+
+        //clear from `sys_acl_levels_members`
+        if (db_res("DELETE FROM `sys_acl_levels_members` WHERE `DateExpires` < NOW() - INTERVAL $db_clean_mem_levels DAY"))
+            db_res("OPTIMIZE TABLE `sys_acl_levels_members`");
 
         //clear from `sys_banners_shows`
         if (db_res("DELETE FROM `sys_banners_shows` WHERE `Date` < UNIX_TIMESTAMP( NOW() - INTERVAL $db_clean_banners_info DAY )"))
@@ -222,62 +227,54 @@ class BxDolCronCmd extends BxDolCron {
 
         setParam( "cmdDay", $day );
 
-
         //========================================================================================================================
 
         // - Membership check -
         echo "\n- Membership expiration letters -\n";
 
-        $expire_notification_days = getParam("expire_notification_days");
-        $expire_notify_once = getParam("expire_notify_once");
+        $iExpireNotificationDays = (int)getParam("expire_notification_days");
+        $bExpireNotifyOnce = getParam("expire_notify_once") == 'on';
 
-        $expire_letters = 0;
+        $iExpireLetters = 0;
 
-        $exp_res = db_res( "SELECT `ID` FROM `Profiles`", 0 );
+        bx_import('BxDolDb');
+        $oDb = BxDolAcl::getInstance();
 
         bx_import('BxDolAcl');
         $oAcl = BxDolAcl::getInstance();
 
-        while( $row = mysql_fetch_array( $exp_res ) )
-        {
-            $current_membership_arr = getMemberMembershipInfo( $row['ID'] );
+        $aRow = $oDb->getFirstRow( "SELECT `ID` FROM `Profiles`");
+        while(!empty($aRow)) {
+            $aCurrentMem = getMemberMembershipInfo( $aRow['ID'] );
             // If expire_notification_days is -1 then notify after expiration
-            if ( $current_membership_arr['ID'] == MEMBERSHIP_ID_STANDARD && $expire_notification_days == -1 )
-            {
+            if ( $aCurrentMem['ID'] == MEMBERSHIP_ID_STANDARD && $iExpireNotificationDays == -1 ) {
                 // Calculate last UNIX Timestamp
-                $last_timestamp = time() - 24 * 3600;
-                $last_membership_arr = getMemberMembershipInfo( $row['ID'], $last_timestamp );
-                if ( $current_membership_arr['ID'] != $last_membership_arr['ID'] )
-                {
-                    if ($further_membership_arr['ID'] == MEMBERSHIP_ID_STANDARD)
-                    {
-                        $mail_ret = $oAcl->getExpirationLetter($row['ID'], $last_membership_arr['Name'], -1);
-                        if ( $mail_ret )
-                            $expire_letters++;
-                    }
+                $iLastTimestamp = time() - 24 * 3600;
+                $aLastMem = getMemberMembershipInfo( $aRow['ID'], $iLastTimestamp );
+                if($aCurrentMem['ID'] != $aLastMem['ID']) {
+                    $bMailResult = $oAcl->getExpirationLetter($aRow['ID'], $aLastMem['Name'], -1);
+                    if($bMailResult)
+                        $iExpireLetters++;
                 }
             }
             // If memberhip is not standard then check if it will change
-            elseif ( $current_membership_arr['ID'] != MEMBERSHIP_ID_STANDARD )
-            {
+            else if($aCurrentMem['ID'] != MEMBERSHIP_ID_STANDARD) {
                 // Calculate further UNIX Timestamp
-                $further_timestamp = time() + $expire_notification_days * 24 * 3600;
-                $further_membership_arr = getMemberMembershipInfo( $row['ID'], $further_timestamp );
-                if ( $current_membership_arr['ID'] != $further_membership_arr['ID']
-                    && $further_membership_arr['ID'] == MEMBERSHIP_ID_STANDARD )
-                {
-                    if ( !$expire_notify_once || abs($further_timestamp - $current_membership_arr['DateExpires']) < 24 * 3600 )
-                    {
-                        $mail_ret = $oAcl->getExpirationLetter( $row['ID'], $current_membership_arr['Name'],
-                            (int)( ($current_membership_arr['DateExpires'] - time()) / (24 * 3600) ) );
-                        if ( $mail_ret )
-                            $expire_letters++;
+                $iFurtherTimestamp = time() + $iExpireNotificationDays * 24 * 3600;
+                $aFurtherMem = getMemberMembershipInfo( $aRow['ID'], $iFurtherTimestamp );
+                if($aCurrentMem['ID'] != $aFurtherMem['ID'] && $aFurtherMem['ID'] == MEMBERSHIP_ID_STANDARD) {
+                    if(!$bExpireNotifyOnce || abs($iFurtherTimestamp - $aCurrentMem['DateExpires']) < 24 * 3600) {
+                        $bMailResult = $oAcl->getExpirationLetter( $aRow['ID'], $aCurrentMem['Name'], (int)(($aCurrentMem['DateExpires'] - time())/(24 * 3600)));
+                        if($bMailResult)
+                            $iExpireLetters++;
                     }
                 }
             }
+
+            $aRow = $oDb->getNextRow();
         }
 
-        echo "Send membership expire letters: $expire_letters letters\n";
+        echo "Send membership expire letters: $iExpireLetters letters\n";
 
         //========================================================================================================================
 

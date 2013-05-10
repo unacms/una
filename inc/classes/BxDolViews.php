@@ -99,6 +99,10 @@ class BxDolViews extends BxDol
 
         if ($iRet) {
             $this->_triggerView();
+
+            $oZ = new BxDolAlerts($this->_sSystem, 'view', $this->getId(), $iMemberId);
+            $oZ->alert();
+
             return true;
         }
 

@@ -229,10 +229,10 @@ class BxDolVoting extends BxDol
         if ($this->_sSystem == 'profile' && $this->getId() == getLoggedId())
             return false;
 
-        if ($this->_oQuery->putVote ($this->getId(), $_SERVER['REMOTE_ADDR'], $iVote))
-        {
+        if ($this->_oQuery->putVote ($this->getId(), getVisitorIP(), $iVote)) {
             $this->_triggerVote();
-            $oZ = new BxDolAlerts($this->_sSystem, 'rate', $this->getId(), (int)$_COOKIE['memberID'], array ('rate' => $iVote));
+
+            $oZ = new BxDolAlerts($this->_sSystem, 'rate', $this->getId(), getLoggedId(), array ('rate' => $iVote));
             $oZ->alert();
             return true;
         }
@@ -244,7 +244,7 @@ class BxDolVoting extends BxDol
         bx_import('BxDolAcl');
         if (isset($this->_checkActionResult))
             return $this->_checkActionResult;
-        $iId = (int)$_COOKIE['memberID'];
+        $iId = getLoggedId();
         $check_res = checkAction( $iId, ACTION_ID_VOTE );
         return ($this->_checkActionResult = ($check_res[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED));
     }
@@ -252,7 +252,7 @@ class BxDolVoting extends BxDol
     function isDublicateVote ()
     {
         if (!$this->isEnabled()) return false;
-        return $this->_oQuery->isDublicateVote ($this->getId(), $_SERVER['REMOTE_ADDR']);
+        return $this->_oQuery->isDublicateVote ($this->getId(), getVisitorIP());
     }
 
     function getId ()
@@ -346,7 +346,6 @@ class BxDolVoting extends BxDol
 
     /** private functions
     *********************************************/
-
 
     function _getVoteResult ()
     {

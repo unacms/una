@@ -966,6 +966,8 @@ class BxDolTemplate extends BxDol {
      * @return string result of operation or false on failure.
      */
     function getCached($sName, &$aVariables, $mixedKeyWrapperHtml = null, $sCheckIn = BX_DOL_TEMPLATE_CHECK_IN_BOTH, $bEvaluate = true) {
+        // initialization
+
         if(!$this->_bCacheEnable)
             return false;
 
@@ -974,30 +976,54 @@ class BxDolTemplate extends BxDol {
             return false;
 
         $oCacheEngine = $this->getTemplatesCacheObject ();
+        $isFileBasedEngine = $bEvaluate && method_exists($oCacheEngine, 'getDataFilePath');
+
+        // try to get cached content
 
         $sCacheVariableName = "a";
         $sCacheKey = $this->_getCacheFileName('html', $sAbsolutePath) . '.php';
-        $sCacheContent = $oCacheEngine->getData($sCacheKey);
+        if ($isFileBasedEngine)
+            $sCacheContent = $oCacheEngine->getDataFilePath($sCacheKey);
+        else
+            $sCacheContent = $oCacheEngine->getData($sCacheKey);
 
-        if($sCacheContent === null && ($sContent = file_get_contents($sAbsolutePath)) !== false && ($sContent = $this->_compileContent($sContent, "\$" . $sCacheVariableName, 1, $aVariables, $mixedKeyWrapperHtml)) !== false)
-            if($oCacheEngine->setData($sCacheKey, $sContent) !== false)
+
+        // recreate cache if it is empty
+
+        if ($sCacheContent === null && ($sContent = file_get_contents($sAbsolutePath)) !== false && ($sContent = $this->_compileContent($sContent, "\$" . $sCacheVariableName, 1, $aVariables, $mixedKeyWrapperHtml)) !== false) {
+            if (false === $oCacheEngine->setData($sCacheKey, $sContent))
+                return false;
+
+            if ($isFileBasedEngine)
+                $sCacheContent = $oCacheEngine->getDataFilePath($sCacheKey);
+            else
                 $sCacheContent = $sContent;
-
-        if($sCacheContent !== null) {
-            if(!$bEvaluate)
-                return $sCacheContent;
-
-            $$sCacheVariableName = &$aVariables;
-
-            ob_start();
-                eval('?>' . $sCacheContent); // TODO: why is eval here ? MUST BE INCLUDE ! it is cache !
-            $sContent = ob_get_clean();
-
-            return $sContent;
         }
 
-        return false;
+        if ($sCacheContent === null)
+            return false;
+
+        // return simple cache content
+
+        if(!$bEvaluate)
+            return $sCacheContent;
+
+        // return evaluated cache content
+
+        ob_start();
+
+        $$sCacheVariableName = &$aVariables;
+
+        if ($isFileBasedEngine)
+            include($sCacheContent);
+        else
+            eval('?'.'>' . $sCacheContent);
+
+        $sContent = ob_get_clean();
+
+        return $sContent;
     }
+
     /**
      * Add JS file(s) to global output.
      *
@@ -1046,7 +1072,9 @@ class BxDolTemplate extends BxDol {
         if(empty($sContent))
             return '';
 
-        $sUrl = str_replace(array(realpath(BX_DIRECTORY_PATH_ROOT), DIRECTORY_SEPARATOR), array(BX_DOL_URL_ROOT, '/'), $sPath);
+        $sUrl = bx_ltrim_str($sPath, realpath(BX_DIRECTORY_PATH_ROOT), BX_DOL_URL_ROOT);
+        $sUrl = str_replace(DIRECTORY_SEPARATOR, '/', $sPath);
+
         $sContent = "\r\n/*--- BEGIN: " . $sUrl . $sName . "---*/\r\n" . $sContent . ";\r\n/*--- END: " . $sUrl . $sName . "---*/\r\n";
         $sContent = str_replace(array("\n\r", "\r\n", "\r"), "\n", $sContent);
 
@@ -1131,7 +1159,9 @@ class BxDolTemplate extends BxDol {
         if(empty($sContent))
             return '';
 
-        $sUrl = str_replace(array(realpath(BX_DIRECTORY_PATH_ROOT), DIRECTORY_SEPARATOR), array(BX_DOL_URL_ROOT, '/'), $sPath);
+        $sUrl = bx_ltrim_str($sPath, realpath(BX_DIRECTORY_PATH_ROOT), BX_DOL_URL_ROOT);
+        $sUrl = str_replace(DIRECTORY_SEPARATOR, '/', $sPath);
+
         $sContent = "\r\n/*--- BEGIN: " . $sUrl . $sName . "---*/\r\n" . $sContent . "\r\n/*--- END: " . $sUrl . $sName . "---*/\r\n";
         $aIncluded[$sAbsolutePath] = 1;
 
@@ -1140,7 +1170,7 @@ class BxDolTemplate extends BxDol {
             $sContent = preg_replace(
                 array(
                     "'@import\s+url\s*\(\s*[\'|\"]*\s*([a-zA-Z0-9\.\/_-]+)\s*[\'|\"]*\s*\)\s*;'e",
-                    "'url\s*\(\s*[\'|\"]*\s*([a-zA-Z0-9\.\/_-]+)\s*[\'|\"]*\s*\)'e"
+                    "'url\s*\(\s*[\'|\"]*\s*([a-zA-Z0-9\.\/\?\#_-]+)\s*[\'|\"]*\s*\)'e"
                 ),
                 array(
                     "",
@@ -1157,7 +1187,7 @@ class BxDolTemplate extends BxDol {
             );
 
             $sContent = preg_replace_callback(
-                "'url\s*\(\s*[\'|\"]*\s*([a-zA-Z0-9\.\/_-]+)\s*[\'|\"]*\s*\)'",
+                "'url\s*\(\s*[\'|\"]*\s*([a-zA-Z0-9\.\/\?\#_-]+)\s*[\'|\"]*\s*\)'",
                 create_function('$aMatches', 'return BxDolTemplate::_callbackParseUrl("' . addslashes($sPath) . '", $aMatches);'),
                 $sContent
             );
@@ -1193,7 +1223,7 @@ class BxDolTemplate extends BxDol {
         $sRootPath = str_replace(DIRECTORY_SEPARATOR, '/', $sRootPath);
         $sAbsolutePath = str_replace(DIRECTORY_SEPARATOR, '/', $sAbsolutePath);
 
-        return 'url(' . str_replace($sRootPath, BX_DOL_URL_ROOT, $sAbsolutePath) . ')';
+        return 'url(' . bx_ltrim_str($sAbsolutePath, $sRootPath, BX_DOL_URL_ROOT) . ')';
     }
 
     /**
@@ -1340,12 +1370,25 @@ class BxDolTemplate extends BxDol {
                 case 'add':
                     if($bDynamic)
                         $sResult .= $this->$sMethodWrap($sUrl);
-                    else
-                        $this->aPage[$sType . '_compiled'][$sUrl] = array('url' => $sUrl, 'path' => $sPath);
+                    else {
+                        $bFound = false;
+                        foreach($this->aPage[$sType . '_compiled']  as $iKey => $aValue)
+                            if($aValue['url'] == $sUrl && $aValue['path'] == $sPath) {
+                                $bFound = true;
+                                break;
+                            }
+
+                        if(!$bFound)
+                            $this->aPage[$sType . '_compiled'][] = array('url' => $sUrl, 'path' => $sPath);
+                    }
                     break;
                 case 'delete':
                     if(!$bDynamic)
-                        unset($this->aPage[$sType . '_compiled'][$sUrl]);
+                        foreach($this->aPage[$sType . '_compiled']  as $iKey => $aValue)
+                            if($aValue['url'] == $sUrl) {
+                                unset($this->aPage[$sType . '_compiled'][$iKey]);
+                                break;
+                            }
                     break;
             }
         }
@@ -1411,7 +1454,7 @@ class BxDolTemplate extends BxDol {
             "'<bx_injection:([^\s]+) />'se",
             "'<bx_image_url:([^\s]+) \/>'se",
             "'<bx_icon_url:([^\s]+) \/>'se",
-            "'<bx_text:([^\s]+) \/>'se",
+            "'<bx_text:([_\{\}\w\d\s]+[^\s]{1}) \/>'se",
             "'<bx_text_js:([^\s]+) \/>'se",
             "'<bx_text_attribute:([^\s]+) \/>'se",
             "'<bx_menu:([^\s]+) \/>'se",
@@ -1470,11 +1513,11 @@ class BxDolTemplate extends BxDol {
                         return false;
 
                     $sIndex = "\$" . str_repeat("i", $iVarDepth);
-                    $sValue .= "<? if(is_array(" . $aVarName . "['" . $aKeys[$i] . "'])) for(" . $sIndex . "=0; " . $sIndex . "<count(" . $aVarName . "['" . $aKeys[$i] . "']); " . $sIndex . "++){ ?>";
+                    $sValue .= "<?php if(is_array(" . $aVarName . "['" . $aKeys[$i] . "'])) for(" . $sIndex . "=0; " . $sIndex . "<count(" . $aVarName . "['" . $aKeys[$i] . "']); " . $sIndex . "++){ ?>";
                     if(($sInnerValue = $this->_compileContent($aMatches[1], $aVarName . "['" . $aKeys[$i] . "'][" . $sIndex . "]", $iVarDepth + 1, current($aValues[$i]), $mixedKeyWrapperHtml)) === false)
                         return false;
                     $sValue .= $sInnerValue;
-                    $sValue .= "<?} else if(is_string(" . $aVarName . "['" . $aKeys[$i] . "'])) echo " . $aVarName . "['" . $aKeys[$i] . "']; ?>";
+                    $sValue .= "<?php } else if(is_string(" . $aVarName . "['" . $aKeys[$i] . "'])) echo " . $aVarName . "['" . $aKeys[$i] . "']; ?>";
                 }
             }
             else if(strpos($aKeys[$i], 'bx_if:') === 0) {
@@ -1488,11 +1531,11 @@ class BxDolTemplate extends BxDol {
                     if(!is_array($aValues[$i]) || !isset($aValues[$i]['content']) || empty($aValues[$i]['content']) || !is_array($aValues[$i]['content']))
                         return false;
 
-                    $sValue .= "<? if(" . $aVarName . "['" . $aKeys[$i] . "']['condition']){ ?>";
+                    $sValue .= "<?php if(" . $aVarName . "['" . $aKeys[$i] . "']['condition']){ ?>";
                     if(($sInnerValue = $this->_compileContent($aMatches[1], $aVarName . "['" . $aKeys[$i] . "']['content']", $iVarDepth, $aValues[$i]['content'], $mixedKeyWrapperHtml)) === false)
                         return false;
                     $sValue .= $sInnerValue;
-                    $sValue .= "<?}?>";
+                    $sValue .= "<?php } ?>";
                 }
             }
             else {
@@ -1511,7 +1554,7 @@ class BxDolTemplate extends BxDol {
             "'<bx_injection:([^\s]+) />'s",
             "'<bx_image_url:([^\s]+) \/>'se",
             "'<bx_icon_url:([^\s]+) \/>'se",
-            "'<bx_text:([^\s]+) \/>'se",
+            "'<bx_text:([_\{\}\w\d\s]+[^\s]{1}) \/>'se",
             "'<bx_text_js:([^\s]+) \/>'se",
             "'<bx_text_attribute:([^\s]+) \/>'se",
             "'<bx_url_root />'",
@@ -1578,7 +1621,6 @@ class BxDolTemplate extends BxDol {
                 $sResult = $aLocation[$sType] . BX_DOL_TEMPLATE_FOLDER_ROOT . $sDivider . $sFolder . $sName;
             else
                 continue;
-
             break;
         }
 
@@ -1653,7 +1695,7 @@ class BxDolTemplate extends BxDol {
         $sResult = md5($sAbsolutePath . BX_DOL_VERSION . BX_DOL_BUILD . BX_DOL_URL_ROOT);
         switch($sType) {
             case 'html':
-                $sResult = $this->_sCacheFilePrefix . getCurrentLangName() . '_' . $this->_sCode .  '_' . $sResult;
+                $sResult = $this->_sCacheFilePrefix . bx_lang_name() . '_' . $this->_sCode .  '_' . $sResult;
                 break;
             case 'css':
                 $sResult = $this->_sCssCachePrefix . $sResult;

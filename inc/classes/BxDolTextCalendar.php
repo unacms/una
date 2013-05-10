@@ -29,6 +29,9 @@ class BxDolTextCalendar extends BxTemplCalendar {
     var $_oConfig;
     var $sCssPrefix;
 
+    var $iBlockID = 0;
+    var $sDynamicUrl = '';
+
     function BxDolTextCalendar($iYear, $iMonth, &$oDb, &$oConfig) {
         parent::BxTemplCalendar($iYear, $iMonth);
 

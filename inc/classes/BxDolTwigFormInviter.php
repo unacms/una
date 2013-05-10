@@ -37,7 +37,7 @@ class BxDolTwigFormInviter extends BxTemplFormView {
             $aVisitors[] = array (
                 'Icon' => $GLOBALS['oFunctions']->getMemberIcon($r['ID'], 'left'),
                 'Link' => getProfileLink($r['ID']),
-                'NickName' => $r['NickName'],
+                'NickName' => getNickName($r['ID']),
                 'ID' => $r['ID'],
             );
         }
@@ -96,7 +96,6 @@ class BxDolTwigFormInviter extends BxTemplFormView {
                     'type' => 'submit',
                     'name' => 'submit_form',
                     'value' => _t('_Submit'),
-                    'colspan' => true,
                 ),
             ),
         );

@@ -10,26 +10,18 @@ require_once(BX_DIRECTORY_PATH_INC . "languages.inc.php");
 require_once(BX_DIRECTORY_PATH_INC . "params.inc.php");
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
+check_logged();
+
 $sSys = isset($_REQUEST['sys']) ? $_REQUEST['sys'] : '';
 $sAction = isset($_REQUEST['action']) && preg_match ('/^[A-Za-z_-]+$/', $_REQUEST['action']) ? $_REQUEST['action'] : '';
 $iId = (int)$_REQUEST['id'];
 
 bx_import ('BxTemplCmtsView');
-$aSystems =& BxDolCmts::getSystems ();
+$aSystems = BxDolCmts::getSystems ();
 
-if ($sSys && $sAction && $iId && isset($aSystems[$sSys])) {
-
-    $oCmts = null;
-    if ($aSystems[$sSys]['class_name']) {
-        require_once (BX_DIRECTORY_PATH_ROOT . $aSystems[$sSys]['class_file']);
-        $sClassName = $aSystems[$sSys]['class_name'];
-        $oCmts = new $sClassName($sSys, $iId, true);
-    } else {
-        $oCmts = new BxTemplCmtsView($sSys, $iId, true);
-    }
-
+if ($sSys && $sAction && $iId && ($oCmts = BxDolCmts::getObjectInstance($sSys, $iId, true))) {
+    header('Content-Type: text/html; charset=utf-8');
     $sMethod = 'action' . $sAction;
     echo $oCmts->$sMethod();
-
 }
 

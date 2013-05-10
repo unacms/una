@@ -33,7 +33,7 @@ class BxDolCmtsQuery extends BxDolDb
     function getComments ($iId, $iCmtParentId = 0, $iAuthorId = 0, $sCmtOrder = 'ASC', $iStart = 0, $iCount = -1)
     {
         global $sHomeUrl;
-
+        $iTimestamp = time();
         $sFields = "'' AS `cmt_rated`,";
         $sJoin = '';
         if ($iAuthorId) {
@@ -51,7 +51,7 @@ class BxDolCmtsQuery extends BxDolDb
                 `c`.`cmt_rate`,
                 `c`.`cmt_rate_count`,
                 `c`.`cmt_replies`,
-                (UNIX_TIMESTAMP() - UNIX_TIMESTAMP(`c`.`cmt_time`)) AS `cmt_secs_ago`,
+                ($iTimestamp - UNIX_TIMESTAMP(`c`.`cmt_time`)) AS `cmt_secs_ago`,
                 `p`.`id` AS `cmt_author_name`
             FROM {$this->_sTable} AS `c`
             LEFT JOIN `sys_profiles` AS `p` ON (`p`.`id` = `c`.`cmt_author_id`)
@@ -73,6 +73,7 @@ class BxDolCmtsQuery extends BxDolDb
     {
         global $sHomeUrl;
 
+        $iTimestamp = time();
         $sFields = "'' AS `cmt_rated`,";
         $sJoin = '';
         if ($iAuthorId) {
@@ -90,7 +91,7 @@ class BxDolCmtsQuery extends BxDolDb
                 `c`.`cmt_rate`,
                 `c`.`cmt_rate_count`,
                 `c`.`cmt_replies`,
-                (UNIX_TIMESTAMP() - UNIX_TIMESTAMP(`c`.`cmt_time`)) AS `cmt_secs_ago`,
+                ($iTimestamp - UNIX_TIMESTAMP(`c`.`cmt_time`)) AS `cmt_secs_ago`,
                 `p`.`NickName` AS `cmt_author_name`
             FROM {$this->_sTable} AS `c`
             LEFT JOIN `Profiles` AS `p` ON (`p`.`ID` = `c`.`cmt_author_id`)
@@ -107,9 +108,10 @@ class BxDolCmtsQuery extends BxDolDb
 
     function getCommentSimple ($iId, $iCmtId)
     {
+        $iTimestamp = time();
         $sQuery = $this->prepare("
             SELECT
-                *, (UNIX_TIMESTAMP() - UNIX_TIMESTAMP(`c`.`cmt_time`)) AS `cmt_secs_ago`
+                *, ($iTimestamp - UNIX_TIMESTAMP(`c`.`cmt_time`)) AS `cmt_secs_ago`
             FROM {$this->_sTable} AS `c`
             WHERE `cmt_object_id` = ? AND `cmt_id` = ?
             LIMIT 1", $iId, $iCmtId);
@@ -160,13 +162,14 @@ class BxDolCmtsQuery extends BxDolDb
 
     function rateComment ($iSystemId, $iCmtId, $iRate, $iAuthorId, $sAuthorIp)
     {
+        $iTimestamp = time();
         $sQuery = $this->prepare("INSERT IGNORE INTO {$this->_sTableTrack} SET
             `cmt_system_id` = ?,
             `cmt_id` = ?,
             `cmt_rate` = ?,
             `cmt_rate_author_id` = ?,
             `cmt_rate_author_nip` = INET_ATON(?),
-            `cmt_rate_ts` = UNIX_TIMESTAMP()", $iSystemId, $iCmtId, $iRate, $iAuthorId, $sAuthorIp);
+            `cmt_rate_ts` = ?", $iSystemId, $iCmtId, $iRate, $iAuthorId, $sAuthorIp, $iTimestamp);
         if ($this->query($sQuery))
         {
             $sQuery = $this->prepare("UPDATE {$this->_sTable} SET `cmt_rate` = `cmt_rate` + ?, `cmt_rate_count` = `cmt_rate_count` + 1 WHERE `cmt_id` = ? LIMIT 1", $iRate, $iCmtId);
@@ -219,11 +222,11 @@ class BxDolCmtsQuery extends BxDolDb
     }
 
     function maintenance() {
-        $iDeletedRecords = $this->query("DELETE FROM {$this->_sTableTrack} WHERE `cmt_rate_ts` < (UNIX_TIMESTAMP() - " . (int)BX_OLD_CMT_VOTES . ")");
+        $iTimestamp = time();
+        $iDeletedRecords = $this->query("DELETE FROM {$this->_sTableTrack} WHERE `cmt_rate_ts` < ($iTimestamp - " . (int)BX_OLD_CMT_VOTES . ")");
         if ($iDeletedRecords)
             $this->query("OPTIMIZE TABLE {$this->_sTableTrack}");
         return $iDeletedRecords;
     }
-
 }
 

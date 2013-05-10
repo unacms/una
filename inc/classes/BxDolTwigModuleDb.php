@@ -46,6 +46,7 @@ class BxDolTwigModuleDb extends BxDolModuleDb {
     var $_sTableFans = 'fans';
     var $_sTableAdmins = 'admins';
     var $_sFieldAllowViewTo = 'allow_view_to';
+    var $_sFieldCommentCount = 'comments_count';
 
     /**
      * Constructor.

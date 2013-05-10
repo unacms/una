@@ -68,7 +68,7 @@ function BxDolCmts (options) {
     this._sOrder = options.sOrder == 'asc' || options.sOrder == 'desc' ? options.sOrder : 'asc'; // comments' order
     this._sActionsUrl = options.sBaseUrl + 'cmts.php'; // actions url address
     this._sVideoActionsUrl = options.sBaseUrl + 'flash/XML.php'; // video actions url address
-    this._sDefaultErrMsg = undefined == options.sDefaultErrMsg ? 'Errod Occured' : ''; // default error message
+    this._sDefaultErrMsg = undefined == options.sDefaultErrMsg ? 'Errod Occured' : options.sDefaultErrMsg; // default error message
     this._sConfirmMsg = undefined == options.sConfirmMsg ? 'Are you sure?' : options.sConfirmMsg; // confirm message
 
     this._isEditAllowed = parseInt(undefined == options.isEditAllowed ? 0 : options.isEditAllowed); // is edit allowed
@@ -78,16 +78,16 @@ function BxDolCmts (options) {
     this._oSavedTexts = {};
 
     this._sAnimationEffect = undefined == options.sAnimationEffect ? 'slide' : options.sAnimationEffect;
-    this._iAnimationSpeed = undefined == options.iAnimationSpeed ? 'slow' : options.iAnimationSpeed;
+    this._iAnimationSpeed = undefined == options.sAnimationSpeed ? 'slow' : options.sAnimationSpeed;
 
     //'A' Use global allow HTML param
     this._sTextAreaId = undefined == options.sTextAreaId || options.sTextAreaId == '' ? 'cmtTextAreaParent' : options.sTextAreaId;
     this._iGlobAllowHtml = undefined == options.iGlobAllowHtml ? '0' : options.iGlobAllowHtml;
 
     // init post comment form (because browser remeber last inputs, we need to clear it)
-    if ($('#cmts-box-' + this._sSystem + '-' + this._iObjId + ' > .cmt-reply > .cmt-post-reply > form').length) {
-        $('#cmts-box-' + this._sSystem + '-' + this._iObjId + ' > .cmt-reply > .cmt-post-reply > form')[0].reset();
-        $('#cmts-box-' + this._sSystem + '-' + this._iObjId + ' > .cmt-reply > .cmt-post-reply > form > [name=CmtParent]').val(0);
+    if ($('#cmts-box-' + this._sSystem + '-' + this._iObjId + ' .cmt-post-reply form').length) {
+    	$('#cmts-box-' + this._sSystem + '-' + this._iObjId + ' .cmt-post-reply form')[0].reset();
+    	$('#cmts-box-' + this._sSystem + '-' + this._iObjId + ' .cmt-post-reply form > [name=CmtParent]').val(0);    
     }
 
     // clicks handler for ratings
@@ -118,8 +118,9 @@ BxDolCmts.prototype.changeOrder = function(oSelectDom) {
 };
 BxDolCmts.prototype.expandAll = function(oCheckbox) {
     var $this = this;
-    $.each($('#cmts-box-' + this._sSystem + '-' + this._iObjId + ' .cmt-replies > .cmt-replies-' + ($(oCheckbox).attr('checked') ? 'show' : 'hide') + ':visible'), function(){
-        $this.toggleCmts(this, parseInt($(this).parents('li.cmt').attr('id').substr(3)));
+
+    $.each($('#cmts-box-' + this._sSystem + '-' + this._iObjId + ' .cmts > .cmts > .cmt > .cmt-cont .cmt-replies-show'), function(){
+        $(this).trigger('click');
     });
 };
 BxDolCmts.prototype.changePerPage = function(oDropDown) {
@@ -168,8 +169,8 @@ BxDolCmts.prototype.reloadComment = function(iCmtId) {
 BxDolCmts.prototype.toggleReply = function(e, iCmtParentId) {
     //--- Get form for posting comment in Root ---//
     if(iCmtParentId == 0) {
-        if($('#cmts-box-' + this._sSystem + '-' + this._iObjId + ' > .cmt-reply').children().length) {
-            $('#cmts-box-' + this._sSystem + '-' + this._iObjId + ' > .cmt-reply').bxdolcmtanim('toggle', this._sAnimationEffect, this._iAnimationSpeed);
+        if($('#cmts-box-' + this._sSystem + '-' + this._iObjId + ' .cmt-reply').children().length) {
+            $('#cmts-box-' + this._sSystem + '-' + this._iObjId + ' .cmt-reply').bxdolcmtanim('toggle', this._sAnimationEffect, this._iAnimationSpeed);
         }
         else {
             var $this = this;
@@ -185,9 +186,9 @@ BxDolCmts.prototype.toggleReply = function(e, iCmtParentId) {
                 oData,
                 function (s) {
                     $this._loading(e, false);
-                    $('#cmts-box-' + $this._sSystem + '-' + $this._iObjId + ' > .cmt-reply').append($(s).addClass('cmt-post-reply-expanded').css('display', 'none')).children('.cmt-post-reply').bxdolcmtanim('toggle', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+                	$('#cmts-box-' + $this._sSystem + '-' + $this._iObjId + ' .cmt-reply').append($(s).addClass('cmt-post-reply-expanded').css('display', 'none')).children('.cmt-post-reply').bxdolcmtanim('toggle', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
                         if($this._iGlobAllowHtml == 1)
-                            $this.createEditor($this._iObjId, $('#cmts-box-' + $this._sSystem + '-' + $this._iObjId + ' .cmt-reply form').find('[name=CmtText][tinypossible=true]'));
+                        	$this.createEditor($this._iObjId, $('#cmts-box-' + $this._sSystem + '-' + $this._iObjId + ' .cmt-post-reply form').find('[name=CmtText][tinypossible=true]'));
                     });
                 }
             );
@@ -196,8 +197,8 @@ BxDolCmts.prototype.toggleReply = function(e, iCmtParentId) {
     }
     //--- Get form for posting a reply ---//
     else {
-        if ($(e).parents('#cmt' + iCmtParentId).children('.cmt-post-reply').length)
-            $(e).parents('#cmt' + iCmtParentId).children('.cmt-post-reply').bxdolcmtanim('toggle', this._sAnimationEffect, this._iAnimationSpeed);
+		if ($('#cmt' + iCmtParentId).children('.cmt-post-reply').length)
+			$('#cmt' + iCmtParentId).children('.cmt-post-reply').bxdolcmtanim('toggle', this._sAnimationEffect, this._iAnimationSpeed);
         else {
             var $this = this;
             var oData = this._getDefaultActions();
@@ -212,7 +213,7 @@ BxDolCmts.prototype.toggleReply = function(e, iCmtParentId) {
                 oData,
                 function (s) {
                     $this._loading(e, false);
-                    $(e).parents('#cmt' + iCmtParentId).children('.cmt-cont').after($(s).addClass('cmt-post-reply-expanded').css('display', 'none')).next('.cmt-post-reply').bxdolcmtanim('toggle', this._sAnimationEffect, this._iAnimationSpeed, function() {
+                	$('#cmt' + iCmtParentId).children('.cmt-cont').after($(s).addClass('cmt-post-reply-expanded').css('display', 'none')).next('.cmt-post-reply').bxdolcmtanim('toggle', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
                         if($this._iGlobAllowHtml == 1)
                             $this.createEditor(iCmtParentId, $('#cmt' + iCmtParentId + ' > .cmt-post-reply form').find('[name=CmtText][tinypossible=true]'));
                     });
@@ -246,13 +247,13 @@ BxDolCmts.prototype.toggleType = function(oLink) {
 BxDolCmts.prototype.toggleCmts = function(e, iCmtParentId) {
     //--- Load Root Comments ---//
     if(iCmtParentId == 0) {
-        if(!$('#cmts-box-' + this._sSystem + '-' + this._iObjId + ' > .cmts > ul > li').length) {
+        if(!$('#cmts-box-' + this._sSystem + '-' + this._iObjId + ' div.cmts > ul > li').length) {
             this._getCmts(e, iCmtParentId, function (){});
         }
         else
-            $('#cmts-box-' + this._sSystem + '-' + this._iObjId + ' > .cmts').bxdolcmtanim('toggle', this._sAnimationEffect, this._iAnimationSpeed);
+            $('#cmts-box-' + this._sSystem + '-' + this._iObjId + ' div.cmts').bxdolcmtanim('toggle', this._sAnimationEffect, this._iAnimationSpeed);
 
-        $('#cmts-box-' + this._sSystem + '-' + this._iObjId + ' > .cmt-replies').addClass('cmt-replies-hover').children('.cmt-replies-show').toggle().siblings('.cmt-replies-hide').toggle();
+        $('#cmts-box-' + this._sSystem + '-' + this._iObjId + ' .cmt-replies').addClass('cmt-replies-hover').children('.cmt-replies-show').toggle().siblings('.cmt-replies-hide').toggle();
     }
     //--- Load Replies ---//
     else {
@@ -326,13 +327,10 @@ BxDolCmts.prototype.cmtEdit = function(e, iCmtId) {
     else
         this._oSavedTexts[iCmtId] = $('#cmt' + iCmtId + ' .cmt-body').html();
 
-    this._loading(e, true);
-
     jQuery.post (
         this._sActionsUrl,
         oData,
         function (s) {
-            $this._loading (e, false);
 
             if ('err' == s.substring(0,3))
                 alert (s.substring(3));
@@ -361,16 +359,16 @@ BxDolCmts.prototype._getPaginate = function(e, iStart, iPerPage) {
     if(iPerPage != undefined)
         oData['CmtPerPage'] = iPerPage;
 
-    if(e)
         this._loading (e, true);
 
     jQuery.post (
         this._sActionsUrl,
         oData,
         function(s) {
-            $('#cmts-box-' + $this._sSystem + '-' + $this._iObjId + ' > .cmt-show-more').bxdolcmtanim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+            $('#cmts-box-' + $this._sSystem + '-' + $this._iObjId + ' .cmt-show-more').bxdolcmtanim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
                 if(s.length > 0) {
-                    $(this).find('.paginate').replaceWith(s);
+                    $(this).find('.paginate').remove();
+                    $(this).append(s);
                     $(this).bxdolcmtanim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
                 }
             });
@@ -399,7 +397,7 @@ BxDolCmts.prototype._getCmts = function (e, iCmtParentId, onLoad, iStart, iPerPa
         oData,
         function(s) {
             if(iCmtParentId == 0) {
-                $('#cmts-box-' + $this._sSystem + '-' + $this._iObjId + ' > .cmts > ul').bxdolcmtanim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+                $('#cmts-box-' + $this._sSystem + '-' + $this._iObjId + ' .cmts > ul').bxdolcmtanim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
                     $(this).replaceWith(s).bxdolcmtanim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
                 });
             }
@@ -419,7 +417,7 @@ BxDolCmts.prototype._getCmt = function (f, iCmtParentId, iCmtId)
     oData['action'] = 'CmtGet';
     oData['Cmt'] = iCmtId;
 
-    var eUl = $('#cmts-box-' + $this._sSystem + '-' + $this._iObjId + ' > div.cmts > ul').get();
+    var eUl = $('#cmts-box-' + $this._sSystem + '-' + $this._iObjId + ' div.cmts > ul').get();
     this._loading (eUl, true);
 
     jQuery.post (
@@ -428,17 +426,17 @@ BxDolCmts.prototype._getCmt = function (f, iCmtParentId, iCmtId)
         function (s) {
             $this._loading (eUl, false);
             if (iCmtParentId == 0) {
-                var oParent = $('#cmts-box-' + $this._sSystem + '-' + $this._iObjId + ' > div.cmts > ul');
+        	    var oParent = $('#cmts-box-' + $this._sSystem + '-' + $this._iObjId + ' div.cmts > ul');
 
                 //--- Some number of comments already loaded ---//
                 if(oParent.find('li.cmt:last').length)
                     oParent.find('li.cmt:last').after(s);
                 //--- Some number of comments exists but NOT loaded ---//
-                else if($('#cmts-box-' + $this._sSystem + '-' + $this._iObjId + ' > div.cmt-replies > a').length) {
+            	else if($('#cmts-box-' + $this._sSystem + '-' + $this._iObjId + ' div.cmt-replies > a').length) {
                     $this._getCmts(f, 0, function(){
-                        $('#cmts-box-' + $this._sSystem + '-' + $this._iObjId + ' > .cmt-replies').addClass('cmt-replies-hover').children('.cmt-replies-show').toggle().siblings('.cmt-replies-hide').toggle();
+            	        $('#cmts-box-' + $this._sSystem + '-' + $this._iObjId + ' .cmt-replies').addClass('cmt-replies-hover').children('.cmt-replies-show').toggle().siblings('.cmt-replies-hide').toggle();
                         var iCount = parseInt($('#cmts-box-' + $this._sSystem + '-' + $this._iObjId + ' > .cmt-replies > a > span').html()) + 1;
-                        $('#cmts-box-' + $this._sSystem + '-' + $this._iObjId + ' > .cmt-replies > a > span').html(iCount);
+            	        $('#cmts-box-' + $this._sSystem + '-' + $this._iObjId + ' .cmt-replies > a > span').html(iCount);
                     });
 
                 }
@@ -500,7 +498,7 @@ BxDolCmts.prototype.submitComment = function (f)
         var iParentId = parseInt($(f).children('[name = CmtParent]').val());
         oData['module'] = 'video_comments';
         oData['action'] = 'post';
-        oData['table'] = this._sSystemTable;
+        oData['system'] = this._sSystem; 
         oData['parent'] = iParentId;
         oData['id'] = this._iObjId;
         oData['author'] = this._iAuthorId;
@@ -628,7 +626,7 @@ BxDolCmts.prototype._getCheckElements = function(f, oData) {
                 try {
                     if(this.type == 'textarea' && $this._iGlobAllowHtml == 1 && typeof tinyMCE != 'undefined') {
                         var ed = tinyMCE.get(this.id);
-                        var tinyValue = ed.getContent();
+			var tinyValue = $(ed.getContent()).text();
                         eval('var isValid = "'+ tinyValue +'".match(' + $this.oCmtElements[this.name]['reg'] + ');');
                     } else {
                         eval('var isValid = this.value.match(' + $this.oCmtElements[this.name]['reg'] + ');');
@@ -665,28 +663,28 @@ BxDolCmts.prototype._getCheckElements = function(f, oData) {
 BxDolCmts.prototype._runCountdown = function(iCmtId) {
     if (this._isEditAllowed || this._isRemoveAllowed || 0 == this._iSecsToEdit) return;
 
-    $('#cmt-jp-' + iCmtId + ' span').html(this._iSecsToEdit);
+	$('#cmt-jp-' + iCmtId + ' span > b').html(this._iSecsToEdit);
 
     window.setTimeout(this._sObjName + '.onCountdown(' + iCmtId + ',' + this._iSecsToEdit +');', 1000);
 };
 
 BxDolCmts.prototype.onCountdown = function(iCmtId, i) {
-    var i = parseInt($('#cmt-jp-' + iCmtId + ' span').html());
+	var i = parseInt($('#cmt-jp-' + iCmtId + ' span > b').html());	
     if(0 == --i) {
         $('#cmt-jp-' + iCmtId).remove();
         return;
     }
     else {
-        $('#cmt-jp-' + iCmtId + ' span').html(i);
+		$('#cmt-jp-' + iCmtId + ' span > b').html(i);
         window.setTimeout(this._sObjName + '.onCountdown(' + iCmtId + ',' + i +');', 1000);
     }
 };
 
 BxDolCmts.prototype._loading = function(e, bShow) {
-    if (bShow && !$(e).next('b').length)
-        $(e).after(' <b>' + aDolLang['_sys_txt_cmt_loading'] + '</b>');
-    else if (!bShow && $(e).next('b').length)
-        $(e).next('b').remove();
+    if(bShow && !$(e).parent().find('b').length)
+        $(e).parent().append(' <b>' + aDolLang['_sys_txt_cmt_loading'] + '</b>');
+    else if (!bShow && $(e).parent().find('b').length)
+    	$(e).parent().find('b').remove();
 };
 
 BxDolCmts.prototype._err = function(e, bShow, s) {
@@ -713,7 +711,7 @@ BxDolCmts.prototype.createEditor = function(iCmtId, oTextarea, bDelayed) {
     if(!oTextarea.length)
         return;
 
-    if(oTextarea.attr('id') == 'undefined' || oTextarea.attr('id') == '')
+    if(oTextarea.attr('id') == undefined || oTextarea.attr('id') == '')
         oTextarea.attr('id', sId);
 
     if(bDelayed)
@@ -724,10 +722,14 @@ BxDolCmts.prototype.createEditor = function(iCmtId, oTextarea, bDelayed) {
 };
 
 BxDolCmts.prototype.showEditor = function(sId) {
+    if ('undefined' == typeof(tinyMCE))
+        return;
     tinyMCE.execCommand('mceAddControl', false, sId);
 };
 
 BxDolCmts.prototype.toggleEditor = function(sId) {
+    if ('undefined' == typeof(tinyMCE))
+        return;
     if(!tinyMCE.getInstanceById(sId))
         tinyMCE.execCommand('mceAddControl', false, sId);
     else

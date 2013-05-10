@@ -64,7 +64,7 @@ function applyWatermark( $srcFilename, $dstFilename, $wtrFilename, $wtrTranspare
 /**
  * Moves and resize uploaded file
  *
- * @param array $_FILES                        - system array of uploaded files
+ * @param array $aFiles						- system array of uploaded files
  * @param string $fname                        - name of "file" form
  * @param string $path_and_name                - path and name of new file to create
  * @param string $maxsize                    - max available size (optional)
@@ -76,7 +76,7 @@ function applyWatermark( $srcFilename, $dstFilename, $wtrFilename, $wtrTranspare
  *
  * NOTE: Source image should be in GIF, JPEG, PNG or BMP format
 */
-function moveUploadedImage( $_FILES, $fname, $path_and_name, $maxsize='', $imResize='true' )
+function moveUploadedImage( $aFiles, $fname, $path_and_name, $maxsize='', $imResize='true' )
 {
     global $max_photo_height;
     global $max_photo_width;
@@ -88,17 +88,14 @@ function moveUploadedImage( $_FILES, $fname, $path_and_name, $maxsize='', $imRes
     if ( !$width )
         $width = 400;
 
-    if ( $maxsize && ($_FILES[$fname]['size'] > $maxsize || $_FILES[$fname]['size'] == 0) )
-    {
-        if ( file_exists($_FILES[$fname]['tmp_name']) )
-        {
-            unlink($_FILES[$fname]['tmp_name']);
+    if ( $maxsize && ($aFiles[$fname]['size'] > $maxsize || $aFiles[$fname]['size'] == 0) ) {
+        if ( file_exists($aFiles[$fname]['tmp_name']) ) {
+            unlink($aFiles[$fname]['tmp_name']);
         }
         return false;
     }
-    else
-    {
-        $scan = getimagesize($_FILES[$fname]['tmp_name']);
+    else {
+        $scan = getimagesize($aFiles[$fname]['tmp_name']);
 
         if ( ($scan['mime'] == 'image/jpeg' && $ext = '.jpg' ) ||
             ( $scan['mime'] == 'image/gif' && $ext = '.gif' ) ||
@@ -106,14 +103,13 @@ function moveUploadedImage( $_FILES, $fname, $path_and_name, $maxsize='', $imRes
         {
 
             $path_and_name .= $ext;
-            move_uploaded_file( $_FILES[$fname]['tmp_name'], $path_and_name );
+            move_uploaded_file( $aFiles[$fname]['tmp_name'], $path_and_name );
 
             if ( $imResize )
                 imageResize( $path_and_name, $path_and_name, $width, $height );
 
         }
-        else
-        {
+        else {
             return IMAGE_ERROR_WRONG_TYPE;
         }
     }
