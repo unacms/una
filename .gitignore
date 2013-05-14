@@ -1,0 +1,16 @@
+# Exclude system cache folders
+cache/*
+cache_public/*
+tmp/*
+
+# Exclude main config file
+inc/header.inc.php
+  
+# Exclude OS X folder attributes
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+

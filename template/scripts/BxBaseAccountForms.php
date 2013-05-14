@@ -87,11 +87,10 @@ class BxBaseAccountForms extends BxDolProfileForms {
         bx_alert('account', 'added', $iAccountId);
 
         // redirect 
-        // TODO: add this url to settings
-        $this->_redirectAndExit('page.php?i=create-profiles', true, array(
+        $this->_redirectAndExit(getParam('sys_redirect_after_account_added'), true, array(
             'account_id' => $iAccountId, 
             'profile_id' => $iProfileId,
-        )); 
+        ));
     }
 
     public function editAccountEmailSettingsForm ($iAccountId) {

@@ -286,7 +286,8 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_site_logo_alt', 'Site logo ALT text', '0', 'text', '', '', '', 18),
 (@iCategoryId, 'sys_site_icon', 'Site icon image ID', '0', 'digit', '', '', '', 19),
 (@iCategoryId, 'sys_email_confirmation', 'Enable email confirmation routine', 'on', 'checkbox', '', '', '', 20),
-(@iCategoryId, 'sys_tmp_version', 'Temporary Dolphin version ', '7.0.6', 'digit', '', '', '', 21);
+(@iCategoryId, 'sys_redirect_after_account_added', 'Redirect after account creation', 'page.php?i=create-profiles', 'digit', '', '', '', 21),
+(@iCategoryId, 'sys_tmp_version', 'Temporary Dolphin version ', '7.0.6', 'digit', '', '', '', 30);
 
 
 --
