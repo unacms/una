@@ -51,7 +51,7 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 
 SET @iAddMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_add_content_links' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `order`) VALUES 
-('sys_add_content_links', 'bx_sites', 'site-create', '_bx_sites_menu_item_title_system_create_site', '_bx_sites_menu_item_title_create_site', 'page.php?i=site-create', '', '', '', '', 2147483647, 1, IFNULL(@iAddMenuOrder, 0) + 1);
+('sys_add_content_links', 'bx_sites', 'site-create', '_bx_sites_menu_item_title_system_create_site', '_bx_sites_menu_item_title_create_site', 'page.php?i=site-create', '', '', '', '', 226, 1, IFNULL(@iAddMenuOrder, 0) + 1);
 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_sites_view', '_bx_sites_menu_title_view_site', 'bx_sites_view', 'bx_sites', 6, 0, 1, 'BxSitesMenuViewSite', 'modules/boonex/sites/classes/BxSitesMenuViewSite.php');
@@ -136,5 +136,4 @@ INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `eval`) VALUES
 SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
-('account', 'join', @iHandler),
 ('account', 'login', @iHandler);

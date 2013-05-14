@@ -161,7 +161,7 @@ class BxSitesModule extends BxDolModule
 
     public function serviceResponse($oAlert)
     {
-    	if($oAlert->sUnit != 'account' || !in_array($oAlert->sAction, array('join', 'login')))
+    	if($oAlert->sUnit != 'account' || !in_array($oAlert->sAction, array('login')))
     		return;
 
 		bx_import('BxDolSession');
