@@ -65,10 +65,6 @@ class BxBaseAccountForms extends BxDolProfileForms {
         $iProfileId = BxDolProfile::add(BX_PROFILE_ACTION_MANUAL, $iAccountId, $iAccountId, BX_PROFILE_STATUS_PENDING, 'system');
         $oProfile = BxDolProfile::getInstance($iProfileId);
 
-        // login to the created account automatically
-        bx_login($iAccountId);        
-        $this->_iProfileId = bx_get_logged_profile_id();
-
         // approve profile if auto-approval is enabled and profile status is 'pending'
         $sStatus = $oProfile->getStatus();
         $isAutoApprove = true; // TODO: add setting option to auto-approve added data automatically
@@ -86,6 +82,10 @@ class BxBaseAccountForms extends BxDolProfileForms {
         // alert
         bx_alert('account', 'added', $iAccountId);
 
+        // login to the created account automatically
+        bx_login($iAccountId);        
+        $this->_iProfileId = bx_get_logged_profile_id();
+        
         // redirect 
         $this->_redirectAndExit(getParam('sys_redirect_after_account_added'), true, array(
             'account_id' => $iAccountId, 

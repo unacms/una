@@ -206,7 +206,9 @@ class BxDolProfile extends BxDol {
      * Change profile status from 'Pending' to the next level - 'Active'
      */
     public function approve($iAction, $iProfileId = 0) {
-        if (!$this->_oQuery->changeStatus((int)$iProfileId ? $iProfileId : $this->_iProfileID, BX_PROFILE_STATUS_ACTIVE))
+        if (!$iProfileId)
+            $iProfileId = $this->_iProfileID;
+        if (!$this->_oQuery->changeStatus($iProfileId, BX_PROFILE_STATUS_ACTIVE))
             return false;
         bx_alert('profile', 'approve', $iProfileId, false, array('action' => $iAction));
         // TODO: send email that profile is approved
