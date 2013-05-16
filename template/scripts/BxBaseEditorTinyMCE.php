@@ -90,7 +90,7 @@ class BxBaseEditorTinyMCE extends BxDolEditor {
     /**
      * Available editor languages
      */
-    protected static $CONF_LANGS = array('ar' => 1, 'be' => 1, 'bg' => 1, 'ca' => 1, 'cn' => 1, 'cs' => 1, 'cy' => 1, 'da' => 1, 'de' => 1, 'en' => 1, 'es' => 1, 'et' => 1, 'fi' => 1, 'fr' => 1, 'he' => 1, 'hu' => 1, 'it' => 1, 'ja' => 1, 'km' => 1, 'lt' => 1, 'mk' => 1, 'nb' => 1, 'nl' => 1, 'pl' => 1, 'pt' => 1, 'ro' => 1, 'ru' => 1, 'sk' => 1, 'sl' => 1, 'sq' => 1, 'sv' => 1, 'tr' => 1, 'zh' => 1);
+    protected static $CONF_LANGS = array('ar' => 1, 'be' => 1, 'bg' => 1, 'ca' => 1, 'cn' => 1, 'cs' => 1, 'cy' => 1, 'da' => 1, 'de' => 1, 'el' => 1, 'en' => 1, 'es' => 1, 'et' => 1, 'eu' => 1, 'fa' => 1, 'fi' => 1, 'fr' => 1, 'gl' => 1, 'he' => 1, 'hu' => 1, 'id' => 1, 'it' => 1, 'ja' => 1, 'km' => 1, 'ko' => 1, 'lt' => 1, 'lv' => 1, 'mk' => 1, 'nb' => 1, 'nl' => 1, 'no' => 1, 'pl' => 1, 'pt' => 1, 'ro' => 1, 'ru' => 1, 'sk' => 1, 'sl' => 1, 'sq' => 1, 'sv' => 1, 'tr' => 1, 'uk' => 1, 'zh' => 1);
 
     protected $_oTemplate;
     protected $_bJsCssAdded = false;
