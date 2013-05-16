@@ -226,14 +226,14 @@ function bx_process_input ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams =
         $iRet = mktime (0, 0, 0, $iMonth, $iDay, $iYear);
         return $iRet > 0 ? $iRet : false;
     case BX_DATA_DATETIME_TS:
-        if (!preg_match('#(\d+)\-(\d+)\-(\d+)[\sT]{1}(\d+):(\d+):(\d+)#', $mixedData, $m))
+        if (!preg_match('#(\d+)\-(\d+)\-(\d+)[\sT]{1}(\d+):(\d+):(\d+)#', $mixedData, $m) && !preg_match('#(\d+)\-(\d+)\-(\d+)[\sT]{1}(\d+):(\d+)#', $mixedData, $m))
             return bx_process_input ($mixedData, BX_DATA_DATE_TS, $mixedParams, $isCheckMagicQuotes);
         $iDay   = $m[3];
         $iMonth = $m[2];
         $iYear  = $m[1];
         $iH = $m[4];
         $iM = $m[5];
-        $iS = $m[6];
+        $iS = isset($m[6]) ? $m[6] : 0;
         $iRet = mktime ($iH, $iM, $iS, $iMonth, $iDay, $iYear);
         return $iRet > 0 ? $iRet : false;
 

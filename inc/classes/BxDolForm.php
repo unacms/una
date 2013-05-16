@@ -1263,7 +1263,7 @@ class BxDolFormCheckerHelper {
         $s = str_replace('T', ' ', $s);
         $s = str_replace('Z', ':00', $s);
 
-        return $this->checkPreg ($s, '#^\d+\-\d+\-\d+[\sT]{1}\d+:\d+:\d+$#');
+        return $this->checkPreg ($s, '#^\d+\-\d+\-\d+[\sT]{1}\d+:\d+[:\d+]$#');
     }
     function checkPreg ($s, $r) {
         if (is_array($s)) {

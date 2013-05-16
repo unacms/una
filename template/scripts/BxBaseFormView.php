@@ -327,6 +327,7 @@ EOS;
                 $iTime = bx_process_input ($aInput['value'], BX_DATA_DATE_TS, false, false);
                 $sValue = getLocaleDate($iTime);
             break;
+            case 'date_time':
             case 'datetime':
                 $iTime = bx_process_input ($aInput['value'], BX_DATA_DATETIME_TS, false, false);
                 $sValue = defineTimeInterval ($iTime);
@@ -548,6 +549,7 @@ BLAH;
             // standard inputs (and non-standard, interpreted as standard)
             case 'text':
             case 'datepicker':
+            case 'date_time':
             case 'datetime':
             case 'number':
             case 'checkbox':            
@@ -681,7 +683,7 @@ BLAH;
         // add default className to attributes
         $aAttrs['type'] = $aInput['type'];
         if ('datetime' == $aAttrs['type']) 
-            $aAttrs['type'] = 'text';
+            $aAttrs['type'] = 'date_time';
 
         if (isset($aInput['name'])) $aAttrs['name'] = $aInput['name'];
         if (isset($aInput['value'])) $aAttrs['value'] = $aInput['value'];
@@ -1185,12 +1187,14 @@ BLAH;
             $aCss = array(
                 'forms.css',
                 // TODO: move css to the templates folder
-                'plugins/jquery/themes/|calendar-blue.css',
                 'plugins/jquery/themes/|jquery-ui.css',
+
+                'plugins/jquery/themes/|jquery-ui-timepicker-addon.css',
             );
 
-            $aCalendarLangs = array ('en' => 1, 'af' => 1, 'al' => 1, 'bg' => 1, 'br' => 1, 'ca' => 1, 'cs' => 1, 'cy-GB' => 1, 'da' => 1, 'de' => 1, 'du' => 1, 'el' => 1, 'es' => 1, 'fi' => 1, 'fr' => 1, 'he' => 1, 'hr' => 1, 'hu' => 1, 'it' => 1, 'ja' => 1, 'jp' => 1, 'ko' => 1, 'lt' => 1, 'lv' => 1, 'nl' => 1, 'no' => 1, 'pl' => 1, 'pt' => 1, 'ro' => 1, 'ru' => 1, 'si' => 1, 'sk' => 1, 'sp' => 1, 'sv' => 1, 'tr' => 1, 'zh' => 1);
-            $aUiLangs = array ('af' => 1, 'ar-DZ' => 1, 'ar' => 1, 'az' => 1, 'bg' => 1, 'bs' => 1, 'ca' => 1, 'cs' => 1, 'cy-GB' => 1, 'da' => 1, 'de' => 1, 'el' => 1, 'en-AU' => 1, 'en-GB' => 1, 'en-NZ' => 1, 'en' => 1, 'eo' => 1, 'es' => 1, 'et' => 1, 'eu' => 1, 'fa' => 1, 'fi' => 1, 'fo' => 1, 'fr-CH' => 1, 'fr' => 1, 'gl' => 1, 'he' => 1, 'hr' => 1, 'hu' => 1, 'hy' => 1, 'id' => 1, 'is' => 1, 'it' => 1, 'ja' => 1, 'kk' => 1, 'ko' => 1, 'lb' => 1, 'lt' => 1, 'lv' => 1, 'mk' => 1, 'ml' => 1, 'ms' => 1, 'nl-BE' => 1, 'nl' => 1, 'no' => 1, 'pl' => 1, 'pt-BR' => 1, 'pt' => 1, 'rm' => 1, 'ro' => 1, 'ru' => 1, 'sk' => 1, 'sl' => 1, 'sq' => 1, 'sr-SR' => 1, 'sr' => 1, 'sv' => 1, 'ta' => 1, 'th' => 1, 'tj' => 1, 'tr' => 1, 'uk' => 1, 'vi' => 1, 'zh-CN' => 1, 'zh-HK' => 1, 'zh-TW' => 1);
+            $aUiLangs = array ('af' => 1, 'ar-DZ' => 1, 'ar' => 1, 'az' => 1, 'be' => 1, 'bg' => 1, 'bs' => 1, 'ca' => 1, 'cs' => 1, 'cy-GB' => 1, 'da' => 1, 'de' => 1, 'el' => 1, 'en-AU' => 1, 'en-GB' => 1, 'en-NZ' => 1, 'en' => 1, 'eo' => 1, 'es' => 1, 'et' => 1, 'eu' => 1, 'fa' => 1, 'fi' => 1, 'fo' => 1, 'fr-CA' => 1, 'fr-CH' => 1, 'fr' => 1, 'gl' => 1, 'he' => 1, 'hi' => 1, 'hr' => 1, 'hu' => 1, 'hy' => 1, 'id' => 1, 'is' => 1, 'it' => 1, 'ja' => 1, 'ka' => 1, 'kk' => 1, 'km' => 1, 'ko' => 1, 'ky' => 1, 'lb' => 1, 'lt' => 1, 'lv' => 1, 'mk' => 1, 'ml' => 1, 'ms' => 1, 'nb' => 1, 'nl-BE' => 1, 'nl' => 1, 'nn' => 1, 'no' => 1, 'pl' => 1, 'pt-BR' => 1, 'pt' => 1, 'rm' => 1, 'ro' => 1, 'ru' => 1, 'sk' => 1, 'sl' => 1, 'sq' => 1, 'sr-SR' => 1, 'sr' => 1, 'sv' => 1, 'ta' => 1, 'th' => 1, 'tj' => 1, 'tr' => 1, 'uk' => 1, 'vi' => 1, 'zh-CN' => 1, 'zh-HK' => 1, 'zh-TW' => 1);
+
+            $aCalendarLangs = array ('af' => 1, 'bg' => 1, 'ca' => 1, 'cs' => 1, 'da' => 1, 'de' => 1, 'el' => 1, 'es' => 1, 'et' => 1, 'eu' => 1, 'fi' => 1, 'fr' => 1, 'gl' => 1, 'he' => 1, 'hr' => 1, 'hu' => 1, 'id' => 1, 'it' => 1, 'ja' => 1, 'ko' => 1, 'lt' => 1, 'nl' => 1, 'no' => 1, 'pl' => 1, 'pt-BR' => 1, 'pt' => 1, 'ro' => 1, 'ru' => 1, 'sk' => 1, 'sv' => 1, 'th' => 1, 'tr' => 1, 'uk' => 1, 'vi' => 1, 'zh-CN' => 1, 'zh-TW' => 1);
 
             bx_import('BxDolLanguages');
             $sCalendarLang = BxDolLanguages::getInstance()->detectLanguageFromArray ($aCalendarLangs);
@@ -1207,8 +1211,9 @@ BLAH;
                 'jquery.ui.datepicker.min.js',
                 'plugins/jquery/i18n/|jquery.ui.datepicker-' . $sUiLang . '.js',
 
-                'jquery.dynDateTime.js',
-                'plugins/jquery/langs/|calendar-' . $sCalendarLang . '.js',
+                'jquery-ui-timepicker-addon.js',
+                'jquery-ui-sliderAccess.js',
+                'plugins/jquery/i18n/|jquery-ui-timepicker-' . $sCalendarLang . '.js',
             );
 
             $this->oTemplate->addJs($aJs);

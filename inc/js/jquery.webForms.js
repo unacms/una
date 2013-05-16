@@ -9,8 +9,6 @@
 
     $.fn.addWebForms = function() {
 
-        $(this).addNonWebForms();
-
         // switchers
         $('.bx-switcher-cont', this).each(function() {
             var eSwitcher = $(this);
@@ -91,15 +89,7 @@
             $('legend', eFormSection).click(fCallback);
         });
 
-    };
-
-})(jQuery);
-
-
-(function($) {
-
-    $.fn.addNonWebForms = function() {
-
+        
         $("input", this).each(function() {
 
             var onCreateRange = function (event, ui) {
@@ -200,53 +190,45 @@
 
             }
 
-            // Date picker
-            else if(this.getAttribute("type") == "datepicker") {
-
+			// Date/Time pickers
+			if (this.getAttribute("type") == "date" || this.getAttribute("type") == "date_calendar" || this.getAttribute("type") == "datetime" || this.getAttribute("type") == "date_time" || this.getAttribute("type") == "datepicker") {
                 if ($(this).hasClass('bx-form-datepicker-processed'))
                     return;
                 $(this).addClass('bx-form-datepicker-processed');
 
-                var sYearMin = '1900';
-                var sYearMax = '2100';
+                var iYearMin = '1900';
+                var iYearMax = '2100';
                 var m;
+
                 if ($(this).attr('min') && (m = $(this).attr('min').match(/^(\d{4})/)))
                     sYearMin = m[1];
                 if ($(this).attr('max') && (m = $(this).attr('max').match(/^(\d{4})/)))
                     sYearMax = m[1];
 
-                $(this).datepicker({
-                    changeYear: true,
-                    changeMonth: true,
-                    dateFormat: 'yy-mm-dd',
-                    defaultDate: '-22y',
-                    hidePrevNext: true,
-                    //showButtonPanel: false,
-                    yearRange: sYearMin + ':' + sYearMax
-                });
+                if (this.getAttribute("type") == "date" || this.getAttribute("type") == "date_calendar" || this.getAttribute("type") == "datepicker") { // Date picker
 
-                if( this.getAttribute("allow_input") == null) { 
-                    $(this).attr('readonly', 'readonly'); 
-                } 
-            }
+                    $(this).datepicker({
+                        changeYear: true,
+                        changeMonth: true,
+                        dateFormat: 'yy-mm-dd',
+                        defaultDate: '-22y',
+                        yearRange: iYearMin + ':' + iYearMax 
+                    });
 
-            // DateTime picker
-            else if ($(this).parents().filter('.bx-form-input-wrapper-datetime').length > 0) {
+                } else if(this.getAttribute("type") == "datetime" || this.getAttribute("type") == "date_time") { // DateTime picker
 
-                if ($(this).hasClass('bx-form-datetime-processed'))
-                    return;
-                $(this).addClass('bx-form-datetime-processed');
+                    $(this).datetimepicker({
+                        changeYear: true,
+                        changeMonth: true,
+                        dateFormat: 'yy-mm-dd'
+                    });
+                }
 
-                $(this)
-                .dynDateTime({
-                    ifFormat: '%Y-%m-%d %H:%M:%S',
-                    showsTime: true
-                });
+                if (window.navigator.appVersion.search(/Chrome\/(.*?) /) == -1 || parseInt(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10) < 24)
+                    if( this.getAttribute("allow_input") == null)
+                        $(this).attr('readonly', 'readonly');
 
-                if( this.getAttribute("allow_input") == null) { 
-                    $(this).attr('readonly', 'readonly'); 
-                } 
-            }
+			}
 
             // add clear input button
             var eInput = $(this);
