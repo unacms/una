@@ -162,6 +162,12 @@
 <p><b>Dear {RealName}</b>,</p>
 <p>We received a payment ({Amount}) from you. Your site was prolonged up to {NextPaymentDate}.</p>
 <bx_include_auto:_email_footer.html />]]></string>
+	<string name="_bx_sites_et_site_canceled"><![CDATA[Site was canceled.]]></string>
+	<string name="_bx_sites_et_site_canceled_subject"><![CDATA[Site was canceled.]]></string>
+	<string name="_bx_sites_et_site_canceled_body"><![CDATA[<bx_include_auto:_email_header.html />
+<p><b>Dear {RealName}</b>,</p>
+<p>Subscription for {Domain} site was canceled.</p>
+<bx_include_auto:_email_footer.html />]]></string>
 
 	<string name="_bx_sites_paypal_product_description"><![CDATA[{0} recurring payment {1} {2} with single trial period {3} {4}]]></string>
 	<string name="_bx_sites_paypal_product_description_free_trial"><![CDATA[{0} recurring payment {1} {2} with FREE trial period]]></string>

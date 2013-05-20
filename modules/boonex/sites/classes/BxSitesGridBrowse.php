@@ -133,11 +133,12 @@ class BxSitesGridBrowse extends BxTemplGrid {
         $mixedValue = _t('_bx_sites_txt_status_' . $mixedValue);
         return parent::_getCellDefault ($mixedValue, $sKey, $aField, $aRow);
     }
-    
+
 	protected function _getActionView ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array()) {
 		$a['attr']['title'] = bx_html_attribute(_t('_bx_sites_grid_browse_btn_title_view'));
         return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
     }
+
 	protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
 	{
         if(empty($this->_iProfileId))

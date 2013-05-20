@@ -119,6 +119,27 @@ class BxSitesAccount
 		$aAccount = $this->_oModule->_oDb->getAccount(array('type' => 'profile_id', 'value' => $sProfileId));
 		if(!empty($aAccount) && is_array($aAccount)) {
 			$this->_oModule->_oDb->updateAccount(array('status' => BX_SITES_ACCOUNT_STATUS_CANCELED), array('id' => $aAccount['id']));
+
+			$sFirstName = bx_process_input($aData['first_name']);
+			$sLastName = bx_process_input($aData['last_name']);
+
+			bx_import('BxDolEmailTemplates');
+			$aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('bx_sites_site_canceled',  array(
+				'RealName' => $sFirstName . (!empty($sFirstName) && !empty($sLastName) ? ' ' . $sLastName : ''),
+				'Domain' => $this->_oModule->getDomain($aAccount['domain']),
+			));
+
+			if(!empty($aTemplate)) {
+				sendMail($aAccount['email'], $aTemplate['Subject'], $aTemplate['Body']);
+
+				$sLog = "---\n";
+				$sLog .= "--- Send Email Notification: {date}\n";
+				$sLog .= "--- Email: " . $aAccount['email'] . "\n";
+				$sLog .= "--- Subject: " . $aTemplate['Subject'] . "\n";
+				$sLog .= "--- Body: " . $aTemplate['Body'] . "\n";
+				$sLog .= "---\n";
+				$this->_logEmail($sLog);
+			}
 		}
 	}
 

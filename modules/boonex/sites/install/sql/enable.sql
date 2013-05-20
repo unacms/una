@@ -101,7 +101,8 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `Body`) VALUES 
 ('bx_sites', '_bx_sites_et_site_created', 'bx_sites_site_created', '_bx_sites_et_site_created_subject', '_bx_sites_et_site_created_body'),
 ('bx_sites', '_bx_sites_et_site_created_and_paid', 'bx_sites_site_created_and_paid', '_bx_sites_et_site_created_and_paid_subject', '_bx_sites_et_site_created_and_paid_body'),
-('bx_sites', '_bx_sites_et_payment_received', 'bx_sites_payment_received', '_bx_sites_et_payment_received_subject', '_bx_sites_et_payment_received_body');
+('bx_sites', '_bx_sites_et_payment_received', 'bx_sites_payment_received', '_bx_sites_et_payment_received_subject', '_bx_sites_et_payment_received_body'),
+('bx_sites', '_bx_sites_et_site_canceled', 'bx_sites_site_canceled', '_bx_sites_et_site_canceled_subject', '_bx_sites_et_site_canceled_body');
 
 
 -- GRIDS
