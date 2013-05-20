@@ -402,6 +402,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('mod_dev_nav_item', @sName, 'target', '', '', 0, 'text', '_bx_dev_nav_txt_sys_items_target', '_bx_dev_nav_txt_items_target', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('mod_dev_nav_item', @sName, 'icon', '', '', 0, 'text', '_bx_dev_nav_txt_sys_items_icon', '_bx_dev_nav_txt_items_icon', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('mod_dev_nav_item', @sName, 'submenu_object', '', '', 0, 'text', '_bx_dev_nav_txt_sys_items_submenu_object', '_bx_dev_nav_txt_items_submenu_object', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
+('mod_dev_nav_item', @sName, 'copyable', '1', '', 0, 'checkbox', '_bx_dev_nav_txt_sys_items_copyable', '_bx_dev_nav_txt_items_copyable', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('mod_dev_nav_item', @sName, 'controls', '', 'do_submit,cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('mod_dev_nav_item', @sName, 'do_submit', '_bx_dev_nav_btn_items_add', '', 0, 'submit', '_bx_dev_nav_btn_sys_items_add', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('mod_dev_nav_item', @sName, 'cancel', '_bx_dev_nav_btn_items_cancel', '', 0, 'button', '_bx_dev_nav_btn_sys_items_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0);
@@ -417,9 +418,10 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('mod_dev_nav_item_add', 'target', 2147483647, 1, 8),
 ('mod_dev_nav_item_add', 'icon', 2147483647, 1, 9),
 ('mod_dev_nav_item_add', 'submenu_object', 2147483647, 1, 10),
-('mod_dev_nav_item_add', 'controls', 2147483647, 1, 11),
-('mod_dev_nav_item_add', 'do_submit', 2147483647, 1, 12),
-('mod_dev_nav_item_add', 'cancel', 2147483647, 1, 13),
+('mod_dev_nav_item_add', 'copyable', 2147483647, 1, 11),
+('mod_dev_nav_item_add', 'controls', 2147483647, 1, 12),
+('mod_dev_nav_item_add', 'do_submit', 2147483647, 1, 13),
+('mod_dev_nav_item_add', 'cancel', 2147483647, 1, 14),
 ('mod_dev_nav_item_edit', 'id', 2147483647, 1, 1),
 ('mod_dev_nav_item_edit', 'module', 2147483647, 1, 2),
 ('mod_dev_nav_item_edit', 'set_name', 2147483647, 1, 3),
@@ -431,9 +433,10 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('mod_dev_nav_item_edit', 'target', 2147483647, 1, 9),
 ('mod_dev_nav_item_edit', 'icon', 2147483647, 1, 10),
 ('mod_dev_nav_item_edit', 'submenu_object', 2147483647, 1, 11),
-('mod_dev_nav_item_edit', 'controls', 2147483647, 1, 12),
-('mod_dev_nav_item_edit', 'do_submit', 2147483647, 1, 13),
-('mod_dev_nav_item_edit', 'cancel', 2147483647, 1, 14);
+('mod_dev_nav_item_edit', 'copyable', 2147483647, 1, 12),
+('mod_dev_nav_item_edit', 'controls', 2147483647, 1, 13),
+('mod_dev_nav_item_edit', 'do_submit', 2147483647, 1, 14),
+('mod_dev_nav_item_edit', 'cancel', 2147483647, 1, 15);
 
 --
 -- Page Builder -> Page.

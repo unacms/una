@@ -201,6 +201,7 @@ class BxDolStudioNavigationQuery extends BxDolDb {
 				`tmi`.`submenu_object` AS `submenu_object`,
                 `tmi`.`visible_for_levels` AS `visible_for_levels`,
                 `tmi`.`active` AS `active`,
+                `tmi`.`copyable` AS `copyable`,
                 `tmi`.`order` AS `order`" . $sSelectClause . "
             FROM `sys_menu_items` AS `tmi` " . $sJoinClause . "
             WHERE 1 " . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause . " " . $sLimitClause;

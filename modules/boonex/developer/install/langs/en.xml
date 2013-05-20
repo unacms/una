@@ -290,6 +290,8 @@
     <string name="_bx_dev_nav_txt_items_icon"><![CDATA[Icon]]></string>
     <string name="_bx_dev_nav_txt_sys_items_submenu_object"><![CDATA[Submenu Object]]></string>
     <string name="_bx_dev_nav_txt_items_submenu_object"><![CDATA[Submenu Object]]></string>
+    <string name="_bx_dev_nav_txt_sys_items_copyable"><![CDATA[Copyable]]></string>
+    <string name="_bx_dev_nav_txt_items_copyable"><![CDATA[Copyable]]></string>
     <string name="_bx_dev_nav_btn_sys_items_add"><![CDATA[Add]]></string>
     <string name="_bx_dev_nav_btn_items_add"><![CDATA[Add]]></string>
     <string name="_bx_dev_nav_btn_items_save"><![CDATA[Save]]></string>
