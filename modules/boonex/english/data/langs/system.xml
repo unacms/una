@@ -3292,7 +3292,7 @@ More info about URI DNSBL: <br />
 	<string name="_sys_txt_login_error"><![CDATA[Entered email or password is incorrect. Please try again.]]></string>
     <string name="_sys_txt_login_invalid_role"><![CDATA[Access denied]]></string>
     <string name="_sys_txt_login_description"><![CDATA[Not a member yet? <a href="{0}">Join now!</a>]]></string>
-    <string name="_sys_txt_data_successfully_submitted"><![CDATA[All Done]]></string>
+    <string name="_sys_txt_data_successfully_submitted"><![CDATA[Done]]></string>
     <string name="_sys_txt_captcha_not_available"><![CDATA[CAPTCHA not available]]></string>
 
     <string name="_sys_txt_account_unconfirmed"><![CDATA[Your email address is unconfirmed. Please, check your email ({1}) for a confirmation letter and click email confirmation link. Can't find the letter? Check your SPAM folder or <a href="{0}">send the verification letter again</a>.]]></string>

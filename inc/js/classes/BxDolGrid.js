@@ -188,7 +188,7 @@ BxDolGrid.prototype.action = function (sAction, oData, sData, isDisableLoading, 
     var i;
     var $this = this;
 
-    if (typeof(isConfirm) != 'undefined' && isConfirm && !confirm('undefined' == typeof(this._oConfirmMessages[sAction]) ? _t('_sys_grid_confirmation') : this._oConfirmMessages[sAction]))
+    if (typeof(isConfirm) != 'undefined' && parseInt(isConfirm) == 1 && !confirm('undefined' == typeof(this._oConfirmMessages[sAction]) ? _t('_sys_grid_confirmation') : this._oConfirmMessages[sAction]))
         return;
 
     if (typeof(this._oQueryAppend) == 'object')

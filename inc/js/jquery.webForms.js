@@ -257,10 +257,9 @@
 
                     eBtnCross.show().position({
                             of: $(this),
-                            my: 'right top',
-                            at: 'right top',
-                            collision: 'none none',
-                            offset: '-8 ' + iTop
+                            my: 'right center',
+                            at: 'right-8 center',
+                            collision: 'none none'
                     });
                 });
 
