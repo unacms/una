@@ -463,20 +463,6 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels {
         return parent::_getCellDefault ($mixedValue, $sKey, $aField, $aRow);
     }
 
-    protected function _getCellPricingList ($mixedValue, $sKey, $aField, $aRow) {
-        $aPrices = array();
-        $iPrices = $this->oDb->getPrices(array('type' => 'by_level_id', 'value' => $aRow['ID']), $aPrices);
-
-        $mixedValue = $this->_oTemplate->parseHtmlByName('bx_a.html', array(
-            'href' => BX_DOL_URL_STUDIO . 'builder_permissions.php?page=prices&level=' . $aRow['ID'],
-            'title' => _t('_adm_prm_txt_manage_prices'),
-        	'bx_repeat:attrs' => array(),
-            'content' => _t('_adm_prm_txt_n_prices', $iPrices)
-        ));
-
-        return parent::_getCellDefault ($mixedValue, $sKey, $aField, $aRow);
-    }
-
     protected function _getCellQuotaSize ($mixedValue, $sKey, $aField, $aRow) {        
         return parent::_getCellDefault ($mixedValue > 0 ? _t_format_size($mixedValue) : '&infin;', $sKey, $aField, $aRow);
     }

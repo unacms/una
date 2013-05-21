@@ -34,8 +34,7 @@ class BxBaseStudioPermissions extends BxDolStudioPermissions {
         $aMenu = array();
         $aMenuItems = array(
             BX_DOL_STUDIO_PRM_TYPE_LEVELS, 
-            BX_DOL_STUDIO_PRM_TYPE_ACTIONS, 
-            BX_DOL_STUDIO_PRM_TYPE_PRICES
+            BX_DOL_STUDIO_PRM_TYPE_ACTIONS
         );
 
         foreach($aMenuItems as $sMenuItem)

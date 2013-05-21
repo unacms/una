@@ -39,9 +39,8 @@ class BxDolStudioPermissionsQuery extends BxDolAclQuery {
                 break;
         }
 
-        $sSql = "DELETE FROM `tal`, `tap`, `tam` 
+        $sSql = "DELETE FROM `tal`, `tam` 
         	USING `sys_acl_levels` AS `tal` 
-        	LEFT JOIN `sys_acl_level_prices` AS `tap` ON `tal`.`ID`=`tap`.`IDLevel`
         	LEFT JOIN `sys_acl_matrix` AS `tam` ON `tal`.`ID`=`tam`.`IDLevel`
         	WHERE 1 " . $sWhereClause . " " . $sLimitClause;
         return (int)$this->query($sSql) > 0;
@@ -93,23 +92,6 @@ class BxDolStudioPermissionsQuery extends BxDolAclQuery {
         $sSql = "UPDATE `sys_acl_matrix` SET `" . implode("`=?, `", array_keys($aFields)) . "`=?  WHERE `IDLevel`=? AND `IDAction`=?";
         $sSql = call_user_func_array(array($this, 'prepare'), array_merge(array($sSql), array_values($aFields), array($iLevelId, $iActionId)));
         return (int)$this->query($sSql) > 0; 
-    }
-
-    function getPriceOrderMax($iLevelId) {
-        $sSql = $this->prepare("SELECT MAX(`Order`) FROM `sys_acl_level_prices` WHERE `IDLevel`=?", $iLevelId);
-        return (int)$this->getOne($sSql);
-    }
-
-    function deletePrices($aParams) {
-        $sWhereClause = "";
-
-        switch($aParams['type']) {
-            case 'by_level_id':
-                $sWhereClause .= $this->prepare("AND `IDLevel`=?", $aParams['value']);
-                break;
-        }
-
-        return (int)$this->query("DELETE FROM `sys_acl_level_prices` WHERE 1 " . $sWhereClause) > 0;
     }
 
     function deleteActions($aParams) {
