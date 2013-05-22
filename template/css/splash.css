@@ -11,12 +11,14 @@ div.bx-std-menu-top-right {
 }
 
 /*--- Splash Logo Styles ---*/
-div.bx-splash-logo {}
+div.bx-splash-logo {
+	font-size: 40px;
+}
 span.bx-spl-green {
-	color:#77cc31;
+	color: #96fc43;
 }
 span.bx-spl-gray {
-	color:#d9d9d9;
+	color: #ffffff;
 }
 
 /*--- Splash Styles ---*/

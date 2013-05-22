@@ -270,26 +270,23 @@
 
                 $el.position({
                     of: ePointAt,
-                    my: o.pointer.align + ' top',
+                    my: o.pointer.align + '+' + parseInt(aOffset[0]) + ' top+' + parseInt(aOffset[1] - 0),
                     at: o.pointer.align + ' bottom',
-                    collision: 'flip none',
-                    offset: parseInt(aOffset[0]) + ' ' + parseInt(aOffset[1] - 0)
+                    collision: 'flip none'
                 });
 
                 $el.find('.bx-popup-box-pointer').css('display', 'block').position({
                     of: ePointAt,
-                    my: 'center top',
-                    at: 'center bottom',
-                    offset: (parseInt(aOffsetPointer[0]) + parseInt(aOffsetPointer[0])) + ' ' + (parseInt(aOffsetPointer[1]) + parseInt(aOffset[1]) + 0)
-                }); 
+                    my: 'center+' + (parseInt(aOffsetPointer[0]) + parseInt(aOffset[0])) + ' top+' + (parseInt(aOffsetPointer[1]) + parseInt(aOffset[1]) + 0),
+                    at: 'center bottom'
+                });
 
                 $(window).on('resize.popupPointer', function() {
                     $el.position({
                         of: ePointAt,
-                        my: o.pointer.align + ' top',
+                        my: o.pointer.align + '+' + parseInt(aOffset[0]) + ' top+' + parseInt(aOffset[1]),
                         at: o.pointer.align + ' bottom',
-                        collision: 'flip none',
-                        offset: parseInt(aOffset[0]) + ' ' + parseInt(aOffset[1])
+                        collision: 'flip none'
                     });
                 });
 
@@ -302,13 +299,11 @@
                 });
 
             } else if (o.position == 'centered') {
-
                 $el.position({
                     of: window,
-                    my: 'center center',
+                    my: 'center center+' + ($el.outerHeight() > $(window).height() ? parseInt(($el.outerHeight() - $(window).height()) / 2) : '0'),
                     at: 'center center',
-                    collision: 'none none',
-                    offset: '0 ' + ($el.outerHeight() > $(window).height() ? parseInt(($el.outerHeight() - $(window).height()) / 2) : '0')
+                    collision: 'none none'
                 });
 
                 // attach window resize event
@@ -316,10 +311,9 @@
 
                     $el.position({
                         of: window,
-                        my: 'center center',
+                        my: 'center center+' + ($el.outerHeight() > $(window).height() ? parseInt(($el.outerHeight() - $(window).height()) / 2) : '0'),
                         at: 'center center',
-                        collision: 'none none',
-                        offset: '0 ' + ($el.outerHeight() > $(window).height() ? parseInt(($el.outerHeight() - $(window).height()) / 2) : '0')
+                        collision: 'none none'
                     });
                 });
 
