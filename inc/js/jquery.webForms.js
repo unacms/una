@@ -21,25 +21,25 @@
             eSwitcher.on('click', function() {
                 var $this = $(this);
                 if ($this.hasClass('on')) {
-                    $this.find('input').removeAttr('checked').trigger('change');
+                    $this.find('input').prop('checked', false).trigger('change');
                     $this.removeClass('on').addClass('off');
                 } else {
                     $this.removeClass('off').addClass('on');
-                    $this.find('input').attr('checked', 'checked').trigger('change');
+                    $this.find('input').prop('checked', true).trigger('change');
                 }
                 return false;
             });
 
             eInput.on('enable', function () {
-                if ('checked' != $(this).attr('checked'))
-                    $(this).attr('checked', 'checked').trigger('change');
+                if (!$(this).prop('checked'))
+                    $(this).prop('checked', true).trigger('change');
                 if (!eSwitcher.hasClass('on'))
                     eSwitcher.removeClass('off').addClass('on');
             });
 
             eInput.on('disable', function () {
-                if (undefined != $(this).attr('checked'))
-                    $(this).removeAttr('checked').trigger('change');
+                if ($(this).prop('checked'))
+                    $(this).prop('checked', false).trigger('change');
                 if (!eSwitcher.hasClass('off'))
                     eSwitcher.removeClass('on').addClass('off');
             });
