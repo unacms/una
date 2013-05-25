@@ -17,7 +17,7 @@
 -- SQL dump of grid object:
 
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_mode`, `sorting_fields`, `override_class_name`, `override_class_file`) VALUES
-('sample', 'Sql', 'SELECT `ID`, `NickName`, `Email`, `City`, `Status` FROM `Profiles` WHERE `Role` != 3 ', 'Profiles', 'ID', 'Education', '', 5, NULL, 'start', '', 'NickName,City,Headline,DescriptionMe,Tags', 'auto', 'ID,NickName,Email,City', 'BxGridMy', 'samples/BxGridMy.php');
+('sample', 'Sql', 'SELECT `ID`, `NickName`, `Email`, `City`, `Status` FROM `sample_grid_data` WHERE `Role` != 3 ', 'sample_grid_data', 'ID', 'Order', '', 5, NULL, 'start', '', 'NickName,City,Headline,DescriptionMe,Tags', 'auto', 'ID,NickName,Email,City', 'BxGridMy', 'samples/BxGridMy.php');
 
 
 -- SQL dump of grid object fields:
@@ -43,6 +43,44 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `confirm`, `o
 ('sample', 'single', 'edit', '_Edit', 0, 2),
 ('sample', 'independent', 'add', '_Add record', 0, 1),
 ('sample', 'independent', 'settings', '_Settings', 0, 2);
+
+-- SQL dump of sample data:
+
+CREATE TABLE IF NOT EXISTS `sample_grid_data` (
+  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `NickName` varchar(255) NOT NULL DEFAULT '',
+  `Email` varchar(255) NOT NULL DEFAULT '',
+  `Status` enum('Unconfirmed','Approval','Active','Rejected','Suspended') NOT NULL DEFAULT 'Unconfirmed',
+  `Role` tinyint(4) unsigned NOT NULL DEFAULT '1',
+  `Sex` varchar(255) NOT NULL DEFAULT '',
+  `Headline` varchar(255) NOT NULL,
+  `DescriptionMe` text NOT NULL,
+  `Country` varchar(255) NOT NULL DEFAULT '',
+  `City` varchar(255) NOT NULL,
+  `DateOfBirth` date NOT NULL,
+  `Tags` varchar(255) NOT NULL DEFAULT '',
+  `Order` int(11) NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `NickName` (`NickName`),
+  KEY `Country` (`Country`),
+  KEY `DateOfBirth` (`DateOfBirth`),
+  FULLTEXT KEY `NickName_2` (`NickName`,`City`,`Headline`,`DescriptionMe`,`Tags`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=56 ;
+
+INSERT INTO `sample_grid_data` VALUES
+(1, 'admin', 'dev@boonex.com', 'Rejected', 3, '', '', '', '', '', '0000-00-00', '', 0),
+(43, 'Shmak', 'shamks@gmail.com', 'Active', 1, '', '', '', '', 'Yogurtown', '0000-00-00', '', 1),
+(45, 'Rio', 'parrot@blue.bz', 'Active', 1, '', '', '', '', 'Rio', '0000-00-00', '', 9),
+(36, 'Master Yoda', 'force@galaxy.sw', 'Active', 1, '', '', '', '', 'Sydney', '0000-00-00', '', 4),
+(28, 'petr', 'petr@petrovich.com', 'Active', 1, '', '', '', '', 'Petrovka', '0000-00-00', '', 10),
+(35, 'MrTwister', 'mr@twister.com', 'Active', 1, '', '', '', '', 'Mumbai', '0000-00-00', '', 6),
+(42, 'kokoko', 'okokok@ok.com', 'Unconfirmed', 1, '', '', '', '', 'Ok', '0000-00-00', '', 10),
+(34, 'uno', 'uno@boonex.com', 'Active', 1, '', '', '', '', 'Sydney', '0000-00-00', '', 9),
+(41, 'Dolphin User', 'user@dolphin.co', 'Active', 1, '', '', '', '', 'Seashore', '0000-00-00', '', 2),
+(10, 'Andrew5', 'uno5@boonex.com', 'Active', 1, 'male', 'Unite People!', '<p>This is a demo profile that you may find on <a href="http://www.boonex.com/dolphin">BoonEx Dolphin</a> demo sites or some default Dolphin installations. This and other demo profiles are used to post sample media content, messages and friend requests.</p>\r\n<p> </p>\r\n<p>Dolphin is a free, open-source social networking and online dating platform by <a href="http://www.boonex.com">BoonEx Community Software Experts</a>.</p>\r\n<p> </p>\r\n<p>BoonEx mission is to Unite People and thus make the world a better place.</p>', 'AU', 'Castle Hill', '1981-03-31', 'boonex, dolphin, community, unite, people', 10),
+(47, 'Bimbo', 'bambi@bumba.com', 'Unconfirmed', 1, '', '', '', '', 'Bomba', '0000-00-00', '', 3),
+(50, 'X-Man', 'x@man.me', 'Unconfirmed', 1, '', '', '', '', 'Movie City', '0000-00-00', '', 10);
+    
 
 */
  
@@ -82,7 +120,7 @@ class BxGridMy extends BxTemplGrid {
             ),
             'params' => array (
                 'db' => array(
-                    'table' => 'Profiles_!!!', 
+                    'table' => 'sample_grid_data', 
                     'key' => 'ID', 
                     'submit_name' => 'do_submit',
                 ),
