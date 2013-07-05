@@ -1,8 +1,16 @@
-/*--- Product's style ---*/
+/*--- Product's Snippet style ---*/
+div.bx-std-products {
+	position: relative;
+}
+
+div.bx-std-products div.bx-paginate div.bx-paginate-btns {
+	margin-left: 0px;
+}
+
 div.bx-std-product {
 	position: relative;
     float: left;
-	width: 230px;
+	width: 250px;
 	height: 64px;
 	margin: 0px 0px 20px 0px;
 }
@@ -20,12 +28,104 @@ div.bx-stdp-icon img {
 div.bx-stdp-content {
 	min-height: 64px;
     margin-left: 74px; 
+	margin-right: 10px;
+	overflow: hidden;
 }
 div.bx-std-pc-title {
 	padding: 5px 0px 0px 0px;
+	white-space: nowrap;	
 }
-div.bx-std-pc-vendor {
+div.bx-std-pc-vendor,
+div.bx-std-pc-count {
 	padding: 0px 0px 3px 0px;
+	white-space: nowrap;
 	font-size: 11px;
 }
+span.bx-std-pc-price,
+span.bx-std-pc-version,
+span.bx-std-pc-versions {
+	font-weight: bold;
+}
 div.bx-std-pc-action {}
+
+/*--- Product's Files style ---*/
+div.bx-std-file .bx-btn {
+	float: none;
+}
+table.bx-std-files .bx-std-ftitle {
+	padding-right: 20px; 
+	text-align: left;
+}
+table.bx-std-files .bx-std-fversion {
+	padding-right: 20px;
+	text-align: left;
+}
+
+/*--- Product View style ---*/
+div.bx-std-pv-line {
+	margin-top: 5px;
+}
+div.bx-std-pv-actions {}
+div.bx-std-pv-line span.bx-std-pv-cpt {
+	font-weight: bold;
+}
+
+div.bx-std-pv-screenshots {
+	position: relative;
+	height: 208px;
+	overflow: hidden;
+}
+div.bx-std-pvs-cnt {
+	position: relative;
+	padding: 3px;
+}
+div.bx-std-pvs-left,
+div.bx-std-pvs-right {
+	position: absolute;
+	z-index: 3;
+	display: none;
+	width: 50px;
+	height: 50px;
+	top: 76px;
+	background-color: rgba(255, 255, 255, 0.7);
+	border-radius:15px;
+	-moz-border-radius:15px;
+	-webkit-border-radius:15px;
+	line-height: 0.92em;
+	font-size: 70px;
+	cursor: pointer; 
+}
+div.bx-std-pvs-left {
+	left: 15px;
+	text-align: left;
+}
+div.bx-std-pvs-left i.sys-icon {
+	margin-left: 10px;
+	opacity: 0.5;
+}
+div.bx-std-pvs-right {
+	right: 15px;
+	text-align: right;
+}
+div.bx-std-pvs-right i.sys-icon {
+	margin-right: 10px;
+	opacity: 0.5;
+}
+div.bx-std-pvs-item {
+	position: relative;	
+	float: left;
+	width: 202px;
+    height: 202px;
+	line-height: 240px;
+	
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-color: #ffffff;
+
+	-webkit-box-shadow: 0 0 3px rgba(51, 51, 51, 0.3);
+    -moz-box-shadow: 0 0 3px rgba(51, 51, 51, 0.3);
+    box-shadow: 0 0 3px rgba(51, 51, 51, 0.3);
+
+	text-align: center;
+	overflow: hidden;
+}

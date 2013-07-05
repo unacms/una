@@ -1,0 +1,29 @@
+<div class="bx-std-product" id="bx-std-product-__id__">
+    <div class="bx-stdp-icon">
+        <a href="javascript:void(0)" onclick="javascript:__js_object__.info(__id__, this)">
+            <img src="__icon__" />
+        </a>
+    </div>
+    <div class="bx-stdp-content">
+        <div class="bx-std-pc-title">
+            <a href="javascript:void(0)" onclick="javascript:__js_object__.info(__id__, this)">__title__</a>
+        </div>
+        <bx_if:show_vendor_price>
+        	<div class="bx-std-pc-vendor bx-def-color-ft-gray-l3">__vendor__ &bull; <span class="bx-std-pc-price">__price__ __discount__</span></div>
+        </bx_if:show_vendor_price>
+        <bx_if:show_count_price>
+        	<div class="bx-std-pc-count bx-def-color-ft-gray-l3">__count__ <bx_text:_adm_str_txt_items_by /> <span class="bx-std-pc-price">__price__ __discount__</span></div>
+        </bx_if:show_count_price>
+        <div class="bx-std-pc-action">
+        	<bx_if:show_purchase>
+            	<input class="bx-btn bx-btn-small bx-std-pc-purchase" type="button" value="<bx_text:_adm_btn_purchase_submit />" onclick="javascript:__js_object__.addToCart('__vendor__', __id__, this)" />
+            </bx_if:show_purchase>
+        	<bx_if:show_download>
+            	<input class="bx-btn bx-btn-small bx-std-pc-download" type="button" value="<bx_text:_adm_btn_download_submit />" onclick="javascript:__js_object__.getFile(__id__, '__file_id__', this)" />
+            </bx_if:show_download>
+            <bx_if:show_delete>
+            	<input class="bx-btn bx-btn-small bx-std-pc-delete" type="button" value="<bx_text:_adm_btn_delete_submit />" onclick="javascript:__js_object__.deleteFromCart('__vendor__', __id__, this)" />
+            </bx_if:show_delete>
+        </div>
+    </div>
+</div>

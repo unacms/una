@@ -1594,6 +1594,7 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_adm_block_cpt_last_templates"><![CDATA[Latest Templates]]></string>
 	<string name="_adm_action_cpt_see_all_templates"><![CDATA[See All Templates]]></string>
 	<string name="_adm_block_cpt_purchases"><![CDATA[Purchases]]></string>
+	<string name="_adm_block_cpt_updates"><![CDATA[Updates]]></string>
 	<string name="_adm_btn_install_submit"><![CDATA[Install]]></string>
 	<string name="_adm_btn_installed_submit"><![CDATA[Installed]]></string>
 	<string name="_adm_btn_update_submit"><![CDATA[Update]]></string>

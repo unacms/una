@@ -315,7 +315,9 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_pb_cache_engine', 'Page blocks cache engine (other than File option may require custom server setup)', 'File', 'select', 'File,EAccelerator,Memcache,APC,XCache', '', '', 24),
 (@iCategoryId, 'sys_mm_cache_engine', 'Member menu cache engine (other than File option may require custom server setup)', 'File', 'select', 'File,EAccelerator,Memcache,APC,XCache', '', '', 25),
 (@iCategoryId, 'sys_page_cache_enable', 'Enable Page cache', '', 'checkbox', '', '', '', 26),
-(@iCategoryId, 'sys_page_cache_engine', 'Page cache engine (other than File option may require custom server setup)', 'File', 'select', 'File,EAccelerator,Memcache,APC,XCache', '', '', 27);
+(@iCategoryId, 'sys_page_cache_engine', 'Page cache engine (other than File option may require custom server setup)', 'File', 'select', 'File,EAccelerator,Memcache,APC,XCache', '', '', 27),
+(@iCategoryId, 'sys_oauth_key', 'BoonEx account key', '', 'digit', '', '', '', 28),
+(@iCategoryId, 'sys_oauth_secret', 'BoonEx account secret', '', 'digit', '', '', '', 29);
 
 
 --

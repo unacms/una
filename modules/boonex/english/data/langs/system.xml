@@ -1576,13 +1576,16 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_adm_stg_cpt_category_languages"><![CDATA[Languages]]></string>
 	<string name="_adm_stg_err_save"><![CDATA[Cannot save settings]]></string>
 	<string name="_adm_stg_scs_save"><![CDATA[Settings were successfully saved]]></string>
+
+	<!-- Store -->
 	<string name="_adm_page_cpt_store"><![CDATA[Store]]></string>
 	<string name="_adm_wgt_cpt_store"><![CDATA[Store]]></string>
 	<string name="_adm_lmi_cpt_goodies"><![CDATA[Storefront]]></string>
 	<string name="_adm_lmi_cpt_featured"><![CDATA[Featured]]></string>
 	<string name="_adm_lmi_cpt_purchases"><![CDATA[Purchases]]></string>
 	<string name="_adm_lmi_cpt_updates"><![CDATA[Updates]]></string>
-	<string name="_adm_lmi_cpt_checkout"><![CDATA[Checkout]]></string>
+	<string name="_adm_lmi_cpt_checkout"><![CDATA[Checkout {checkout_counter}]]></string>
+	<string name="_adm_lmi_cpt_downloaded"><![CDATA[Downloaded]]></string>
 	<string name="_adm_block_cpt_last_featured"><![CDATA[Latest Featured]]></string>
 	<string name="_adm_action_cpt_see_all_featured"><![CDATA[See All Featured]]></string>
 	<string name="_adm_block_cpt_last_modules"><![CDATA[Latest Modules]]></string>
@@ -1591,10 +1594,67 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_adm_action_cpt_see_all_languages"><![CDATA[See All Languages]]></string>
 	<string name="_adm_block_cpt_last_templates"><![CDATA[Latest Templates]]></string>
 	<string name="_adm_action_cpt_see_all_templates"><![CDATA[See All Templates]]></string>
+	<string name="_adm_block_cpt_featured"><![CDATA[Featured]]></string>
+	<string name="_adm_block_cpt_modules"><![CDATA[Modules]]></string>
+	<string name="_adm_block_cpt_templates"><![CDATA[Templates]]></string>
+	<string name="_adm_block_cpt_languages"><![CDATA[Languages]]></string>
 	<string name="_adm_block_cpt_purchases"><![CDATA[Purchases]]></string>
+	<string name="_adm_block_cpt_updates"><![CDATA[Updates]]></string>
+	<string name="_adm_block_cpt_checkout"><![CDATA[Checkout]]></string>
+	<string name="_adm_block_cpt_checkout_by_vendor_ccode"><![CDATA[Products from {0} ({1} {2})]]></string>
+	<string name="_adm_block_cpt_checkout_by_vendor_csign"><![CDATA[Products from {0} ({1}{2})]]></string>
+	<string name="_adm_action_cpt_checkout"><![CDATA[Checkout]]></string>
+	<string name="_adm_action_cpt_delete_all"><![CDATA[Delete All]]></string>
+	<string name="_adm_block_cpt_downloaded_modules"><![CDATA[Modules]]></string>
+	<string name="_adm_block_cpt_downloaded_updates"><![CDATA[Updates]]></string>
 	<string name="_adm_btn_install_submit"><![CDATA[Install]]></string>
 	<string name="_adm_btn_installed_submit"><![CDATA[Installed]]></string>
+	<string name="_adm_btn_purchase_submit"><![CDATA[Purchase]]></string>
+	<string name="_adm_btn_download_submit"><![CDATA[Download]]></string>
+	<string name="_adm_btn_delete_submit"><![CDATA[Delete]]></string>
+	<string name="_adm_btn_cancel_submit"><![CDATA[Cancel]]></string>
 	<string name="_adm_btn_update_submit"><![CDATA[Update]]></string>
+	<string name="_adm_str_txt_update_from_to"><![CDATA[{0} - {1}]]></string>
+	<string name="_adm_str_txt_price_ccode"><![CDATA[{0} {1}]]></string>
+	<string name="_adm_str_txt_price_csign"><![CDATA[{0}{1}]]></string>
+	<string name="_adm_str_txt_discount_ccode"><![CDATA[({0} {1} for Premium)]]></string>
+	<string name="_adm_str_txt_discount_csign"><![CDATA[({0}{1} for Premium)]]></string>
+	<string name="_adm_str_txt_items_by"><![CDATA[item(s) by]]></string>
+	<string name="_adm_str_txt_price_free"><![CDATA[Free]]></string>
+	<string name="_adm_str_cpt_files_file"><![CDATA[File]]></string>
+	<string name="_adm_str_cpt_files_version"><![CDATA[Version]]></string>
+	<string name="_adm_str_txt_pv_title"><![CDATA[Title]]></string>
+	<string name="_adm_str_txt_pv_vendor"><![CDATA[Vendor]]></string>
+	<string name="_adm_str_txt_pv_version"><![CDATA[Version]]></string>
+	<string name="_adm_str_txt_pv_price"><![CDATA[Price]]></string>
+	<string name="_adm_str_txt_pv_discount"><![CDATA[Discount]]></string>
+	<string name="_adm_str_txt_pv_discount_off_ccode"><![CDATA[{0}% ({1} {2}) off for Premium]]></string>
+	<string name="_adm_str_txt_pv_discount_off_csign"><![CDATA[{0}% ({1}{2}) off for Premium]]></string>
+	<string name="_adm_str_txt_pv_category"><![CDATA[Category]]></string>
+	<string name="_adm_str_txt_pv_tags"><![CDATA[Tags]]></string>
+	<string name="_adm_str_txt_pv_stats"><![CDATA[Stats]]></string>
+	<string name="_adm_str_txt_pv_stats_reviews"><![CDATA[{0} reviews]]></string>
+	<string name="_adm_str_txt_pv_stats_likes"><![CDATA[{0} likes]]></string>
+	<string name="_adm_str_txt_pv_stats_views"><![CDATA[{0} views]]></string>
+	<string name="_adm_str_txt_pv_created"><![CDATA[Created]]></string>
+	<string name="_adm_str_txt_pv_updated"><![CDATA[Updated]]></string>
+	<string name="_adm_str_txt_pv_description"><![CDATA[Description]]></string>
+	<string name="_adm_str_err_no_product_info"><![CDATA[Cannot load product info. Try again later.]]></string>
+	<string name="_adm_err_str_no_files"><![CDATA[Cannot get a list of downloadable packages attached to this product.]]></string>
+	<string name="_adm_str_err_download_failed"><![CDATA[Download faild. Please report.]]></string>
+	<string name="_adm_str_err_cannot_write"><![CDATA[Cannot save downloaded file.]]></string>
+	<string name="_adm_str_err_zip_not_available"><![CDATA[ZIP library is not available.]]></string>
+	<string name="_adm_str_err_cannot_unzip_package"><![CDATA[Cannot unarchive ZIP package.]]></string>
+	<string name="_adm_str_err_no_ftp_info"><![CDATA[FTP access info was not specified. You may enter it via Settings -> Other.]]></string>
+	<string name="_adm_str_err_cannot_connect_to_ftp"><![CDATA[Cannot connect to FTP server.]]></string>
+	<string name="_adm_str_err_destination_not_valid"><![CDATA[Destination FTP folder doesn't look like a valid Dolphin root folder.]]></string>
+	<string name="_adm_str_err_wrong_package_format"><![CDATA[Wrong package format.]]></string>
+	<string name="_adm_str_err_ftp_copy_failed"><![CDATA[FTP transfer failed, please check write permission for this FTP user.]]></string>
+	<string name="_adm_str_msg_download_successfully"><![CDATA[Module was successfully downloaded. You may install it via Store -> Downloaded.]]></string>
+	<string name="_adm_msg_oauth_need_authorize"><![CDATA[You need to to login into your <b>BoonEx</b> account to get data. Click <a href="{0}">here</a> to login.]]></string>
+	<string name="_adm_err_oauth_empty_key_secret"><![CDATA[You need to enter Key and Secret provided by <b>BoonEx</b> in Settings -> Other]]></string>
+	<string name="_adm_err_oauth_cannot_get_token"><![CDATA[Cannot connect to <b>BoonEx</b>. Please try again later.]]></string>
+	<string name="_adm_err_oauth_cannot_read_answer"><![CDATA[Cannot get a valid answer from <b>BoonEx</b>. Please try again later.]]></string>
 	<string name="_adm_act_err_failed_page_loading"><![CDATA[Cannot load the page]]></string>
 
     <!-- Extensions -->
@@ -2356,6 +2416,11 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_adm_txt_modules_path_to_dolphin"><![CDATA[Path to Dolphin\'s folder]]></string>
 	<string name="_adm_err_modules_empty_path_to_dolphin"><![CDATA[Please enter path to Dolphin folder on your FTP server.]]></string>
 	<string name="_adm_btn_modules_upload"><![CDATA[Upload]]></string>
+	<string name="_adm_err_modules_cannot_add_to_cart"><![CDATA[Cannot add the product to shopping cart.]]></string>
+	<string name="_adm_err_modules_cannot_delete_from_cart"><![CDATA[Cannot delete the product(s) from shopping cart.]]></string>
+	<string name="_adm_err_modules_cannot_checkout_empty_vendor"><![CDATA[Cannot checkout. The vendor is unknown.]]></string>
+	<string name="_adm_msg_modules_success_added_to_cart"><![CDATA[The product was successfully added to shopping cart.]]></string>
+	<string name="_adm_msg_modules_success_checkouted"><![CDATA[The payment was successfully accepted and should be processed automatically in a few minutes. Then the purchased product(s) will be available in Store -> Purchases.<br />Note. If it doesn't happen for some reason, you need to contact with product's vendor and provide him with your payment's details. He'll be able to process payment manually if the payment was received.]]></string>
 	<string name="_adm_msg_modules_success_upload"><![CDATA[The package was uploaded successfully]]></string>
 	<string name="_adm_msg_modules_success_delete"><![CDATA[The package was deleted successfully]]></string>
 	<string name="_adm_msg_modules_success_install"><![CDATA[The package was installed successfully]]></string>
@@ -2422,7 +2487,6 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_adm_err_modules_already_installed"><![CDATA[The module was already installed.]]></string>
 	<string name="_adm_txt_modules_params_used"><![CDATA[A module with similar unique parameters is already installed.]]></string>
 	<string name="_adm_txt_modules_operation_update"><![CDATA[Installation of update <b>{0}</b> from {1} up to {2}]]></string>
-	<string name="_adm_txt_modules_title_update"><![CDATA[<span class="modules-item-title">{0}</span> ({1} - {2})]]></string>
 	<string name="_adm_txt_modules_upload"><![CDATA[Add New Module]]></string>
 	<string name="_adm_txt_modules_market"><![CDATA[BoonEx Market]]></string>
 	<string name="_adm_txt_modules_updates"><![CDATA[Available Updates]]></string>

@@ -11,7 +11,7 @@ defined('BX_DOL') or die('hack attempt');
 bx_import('BxDolStudioInstaller');
 
 class BxDolStudioUpdater extends BxDolStudioInstaller {
-    function BxDolStudioUpdater($aConfig) {
+    public function BxDolStudioUpdater($aConfig) {
         parent::BxDolStudioInstaller($aConfig);
         $this->_sModulePath = $this->_sBasePath . $aConfig['module_dir'];
 
@@ -31,7 +31,7 @@ class BxDolStudioUpdater extends BxDolStudioInstaller {
         ));
     }
 
-    function update($aParams) {
+    public function update($aParams) {
         $oDb = BxDolDb::getInstance();
 
         $aResult = array(
@@ -76,100 +76,77 @@ class BxDolStudioUpdater extends BxDolStudioInstaller {
             $oDb->query($sQuery);
 
             $aFiles = array();
-            $this->_hash(BX_DIRECTORY_PATH_ROOT . 'modules/' . $this->_aConfig['home_dir'], $aFiles);
+            $this->_hash(BX_DIRECTORY_PATH_ROOT . 'modules/' . $this->_aConfig['module_dir'], $aFiles);
             foreach($aFiles as $aFile) {
                 $sQuery = $oDb->prepare("INSERT IGNORE INTO `sys_modules_file_tracks`(`module_id`, `file`, `hash`) VALUES(?, ?, ?)", $aModuleInfo['id'], $aFile['file'], $aFile['hash']);
                 $oDb->query($sQuery);
             }
+
+            //--- Remove update pckage ---//
+            $this->delete();
         }
 
         return $aResult;
     }
 
     //--- Action Methods ---//
-    function actionUpdateFiles($bInstall = true) {
+    public function actionUpdateFiles($bInstall = true) {
         $sPath = $this->_sHomePath . 'source/';
         if(!file_exists($sPath))
-            return BX_DOL_INSTALLER_FAILED;
+            return BX_DOL_STUDIO_INSTALLER_FAILED;
 
+		bx_import('BxDolFtp');
         $oFtp = new BxDolFtp($_SERVER['HTTP_HOST'], getParam('sys_ftp_login'), getParam('sys_ftp_password'), getParam('sys_ftp_dir'));
         if($oFtp->connect() == false)
-            return BX_DOL_INSTALLER_FAILED;
+            return BX_DOL_STUDIO_INSTALLER_FAILED;
 
-        return $oFtp->copy($sPath . '*', 'modules/' . $this->_aConfig['module_dir']) ? BX_DOL_INSTALLER_SUCCESS : BX_DOL_INSTALLER_FAILED;
+        return $oFtp->copy($sPath . '*', 'modules/' . $this->_aConfig['module_dir']) ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
 
-    function actionUpdateLanguages($bInstall = true) {
+    public function actionUpdateLanguages($bInstall = true) {
         $oDb = BxDolDb::getInstance();
 
-        $aLanguages = $oDb->getAll("SELECT `ID` AS `id`, `Name` AS `name`, `Title` AS `title` FROM `sys_localization_languages`");
+        bx_import('BxDolStudioLanguagesUtils');
+        $oLanguages = BxDolStudioLanguagesUtils::getInstance();
+        $aLanguages = $oLanguages->getLanguages();
 
         //--- Process languages' key=>value pears ---//
-        $sModuleConfig = $this->_sHomePath .'install/config.php';
+        $sModuleConfig = $this->_sHomePath . 'install/config.php';
         if(!file_exists($sModuleConfig))
-            return array('code' => BX_DOL_INSTALLER_FAILED, 'content' => '_adm_err_modules_module_config_not_found');
+            return BX_DOL_STUDIO_INSTALLER_FAILED;
 
         include($sModuleConfig);
-        $sQuery = $oDb->prepare("SELECT `ID` FROM `sys_localization_categories` WHERE `Name`=? LIMIT 1", $aConfig['language_category']);
-        $iCategoryId = (int)$oDb->getOne($sQuery);
+        $iCategoryId = $oLanguages->getLanguageCategory($aConfig['language_category']);
 
-        foreach($aLanguages as $aLanguage)
-            $this->_updateLanguage($bInstall, $aLanguage, $iCategoryId);
+        foreach($aLanguages as $sName => $sTitle)
+            $this->_updateLanguage($bInstall, $sName, $iCategoryId);
 
-        //--- Recompile all language files ---//
-        $aResult = array();
-        foreach($aLanguages as $aLanguage) {
-            $bResult = compileLanguage($aLanguage['id']);
-
-            if(!$bResult)
-                $aResult[] = $aLanguage['title'];
-        }
-        return empty($aResult) ? BX_DOL_INSTALLER_SUCCESS : array('code' => BX_DOL_INSTALLER_FAILED, 'content' => $aResult);
+        return $oLanguages->compileLanguage(0, true) ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
 
-    //--- Protected methods ---//
-
-    function _updateLanguage($bInstall, $aLanguage, $iCategoryId = 0) {
+    protected function _updateLanguage($bInstall, $sLanguage, $iCategoryId = 0) {
         $oDb = BxDolDb::getInstance();
+        $oLanguages = BxDolStudioLanguagesUtils::getInstance();
 
-        $sPath = $this->_sHomePath . 'install/langs/' . $aLanguage['name'] . '.php';
-        if(!file_exists($sPath)) return false;
+        $sPath = $this->_sHomePath . 'install/langs/' . $sLanguage . '.xml';
+        $aLanguageInfo = $oLanguages->readLanguage($sPath, 'update');
+        if(empty($aLanguageInfo))
+        	return false;
 
-        include($sPath);
+		$iLanguage = $oLanguages->getLangId($sLanguage);
 
         //--- Process delete ---//
-        if (isset($aLangContentDelete) && is_array($aLangContentDelete)) {
-            foreach ($aLangContentDelete as $sKey) {
-                $sQuery = $oDb->prepare("DELETE FROM `sys_localization_keys`, `sys_localization_strings` USING `sys_localization_keys`, `sys_localization_strings` WHERE `sys_localization_keys`.`ID`=`sys_localization_strings`.`IDKey` AND `sys_localization_keys`.`Key`=? AND `sys_localization_strings`.`IDLanguage`=?", $sKey, $aLanguage['id']);
-                $oDb->query($sQuery);
-            }
-        }
+        if(isset($aLanguageInfo['strings_del']) && is_array($aLanguageInfo['strings_del']))
+			$oLanguages->deleteLanguageKeys($aLanguageInfo['strings_del']);
 
         //--- Process add ---//
-        if (isset($aLangContentAdd) && is_array($aLangContentAdd)) {
-            foreach ($aLangContentAdd as $sKey => $sValue) {
-                $sQuery = $oDb->prepare("INSERT IGNORE INTO `sys_localization_keys`(`IDCategory`, `Key`) VALUES(?, ?)", $iCategoryId, $sKey);
-                $mixedResult = $oDb->query($sQuery);
-                if($mixedResult === false || $mixedResult <= 0)
-                    continue;
+        if(isset($aLanguageInfo['strings_add']) && is_array($aLanguageInfo['strings_add']))
+			$oLanguages->addLanguageKeys($iLanguage, $iCategoryId, $aLanguageInfo['strings_add']);
 
-                $iLangKeyId = (int)$oDb->lastId();
-                $sQuery = $oDb->prepare("INSERT INTO `sys_localization_strings`(`IDKey`, `IDLanguage`, `String`) VALUES(?, ?, ?)", $iLangKeyId, $aLanguage['id'], $sValue);
-                $oDb->query($sQuery);
-            }
-        }
-
-        //--- Process Update ---//
-        if (isset($aLangContentUpdate) && is_array($aLangContentUpdate)) {
-            foreach ($aLangContentUpdate as $sKey => $sValue) {
-                $sQuery = $oDb->prepare("SELECT `ID` FROM `sys_localization_keys` WHERE `Key`=?", $sKey);
-                $iLangKeyId = (int)$MySQL->getOne($sQuery);
-                if($iLangKeyId == 0)
-                    continue;
-
-                $sQuery = $oDb->prepare("UPDATE `sys_localization_strings` SET `String`=? WHERE `IDKey`=? AND `IDLanguage`=?", $sValue, $iLangKeyId, $aLanguage['id']);
-                $oDb->query($sQuery);
-            }
+        //--- Process update ---//
+        if(isset($aLanguageInfo['strings_upd']) && is_array($aLanguageInfo['strings_upd'])) {
+        	$oLanguages->deleteLanguageKeys($aLanguageInfo['strings_upd']);
+        	$oLanguages->addLanguageKeys($iLanguage, $iCategoryId, $aLanguageInfo['strings_upd']);
         }
 
         return true;

@@ -26,6 +26,12 @@
 .bx-def-margin-top {
     margin-top:20px;
 }
+.bx-def-margin-top-auto {
+    margin-top:20px;
+}
+.bx-def-margin-top-auto:first-child {
+    margin-top:0px;
+}
 .bx-def-margin-right {
     margin-right:20px;
 }
@@ -35,7 +41,12 @@
 .bx-def-margin-left {
     margin-left:20px;
 }
-
+.bx-def-margin-left-auto {
+    margin-left:20px;
+}
+.bx-def-margin-left-auto:first-child {
+    margin-left:0px;
+}
 .bx-def-margin-sec-center {
     margin:10px auto;
 }
@@ -55,6 +66,12 @@
 .bx-def-margin-sec-top {
     margin-top:10px;
 }
+.bx-def-margin-sec-top-auto {
+    margin-top:10px;
+}
+.bx-def-margin-sec-top-auto:first-child {
+    margin-top:0px;
+}
 .bx-def-margin-sec-right {
     margin-right:10px;
 }
@@ -63,6 +80,12 @@
 }
 .bx-def-margin-sec-left {
     margin-left:10px;
+}
+.bx-def-margin-sec-left-auto {
+    margin-left:10px;
+}
+.bx-def-margin-sec-left-auto:first-child {
+    margin-left:0px;
 }
 
 /* paddings */

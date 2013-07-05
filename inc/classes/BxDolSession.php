@@ -100,6 +100,11 @@ class BxDolSession extends BxDol {
         return $this->sId;
     }
 
+    function setUserId($iUserId) {
+    	$this->iUserId = $iUserId;
+    	$this->save();
+    }
+
     function setValue($sKey, $mixedValue) {
         if(empty($this->sId))
             $this->start();

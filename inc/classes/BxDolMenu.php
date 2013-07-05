@@ -187,10 +187,11 @@ class BxDolMenu extends BxDol {
         if (empty($this->_aMarkers))
             return $a;
         $aReplacebleFields = array ('title', 'link', 'onclick');
-        foreach ($aReplacebleFields as $sField) {
-            foreach ($this->_aMarkers as $sKey => $sValue)
-                $a[$sField] = str_replace('{' . $sKey . '}', $sValue, $a[$sField]);
-        }
+        foreach ($aReplacebleFields as $sField)
+        	if(isset($a[$sField]))
+            	foreach ($this->_aMarkers as $sKey => $sValue)
+                	$a[$sField] = str_replace('{' . $sKey . '}', $sValue, $a[$sField]);
+
         return $a;
     }
 

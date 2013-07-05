@@ -141,6 +141,8 @@ div.bx-std-pmen-item {
 div.bx-std-pmen-item-cnt {
 	padding-left: 66px;
 }
+span.bx-std-pmen-item-counter {}
+span.bx-std-pmen-ic-num {}
 div.bx-std-pmen-item img {
 	position: absolute;
 	top: 7px;
@@ -183,8 +185,14 @@ div.bx-std-bcap-actions {
     top: 0px;
     right: 0px;
 }
-div.bx-std-bcap-action {
+div.bx-std-bcap-action,
+div.bx-std-bcap-action-div {
+	position: relative;
+	float: left;
     line-height: 25px;
+}
+div.bx-std-bcap-action-div:first-child {
+	display: none;
 }
 div.bx-std-block-panel-top {}
 div.bx-std-block-content {}

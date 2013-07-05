@@ -66,7 +66,7 @@ class BxDolModuleQuery extends BxDolDb {
 	    return (int)$this->getOne($sSql) > 0;
 	}
     function getModules() {
-        $sSql = "SELECT `id`, `type` `title`, `vendor`, `version`, `product_url`, `update_url`, `path`, `uri`, `class_prefix`, `db_prefix`, `lang_category`, `date`, `enabled` FROM `sys_modules` ORDER BY `title`";
+        $sSql = "SELECT `id`, `type`, `name`, `title`, `vendor`, `version`, `product_url`, `update_url`, `path`, `uri`, `class_prefix`, `db_prefix`, `lang_category`, `date`, `enabled` FROM `sys_modules` ORDER BY `title`";
         return $this->fromMemory('sys_modules', 'getAll', $sSql);
     }
     function getModulesBy($aParams = array()) {

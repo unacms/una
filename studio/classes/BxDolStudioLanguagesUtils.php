@@ -65,6 +65,31 @@ class BxDolStudioLanguagesUtils extends BxDolLanguages {
         return $aLanguages;
     }
 
+    function readLanguage($sPath, $sType = 'restore') {
+    	if(!file_exists($sPath))
+    		return array();
+
+    	$oXmlParser = BxDolXmlParser::getInstance();
+    	$sXmlContent = file_get_contents($sPath);
+
+    	$aResult = array();
+		$aResult['name'] = $oXmlParser->getAttribute($sXmlContent, 'resources', 'name');
+
+    	switch($sType) {
+    		case 'restore':
+    			$aResult['strings'] = $oXmlParser->getValues($sXmlContent, 'string');
+    			break;
+
+    		case 'update':
+    			$aResult['strings_del'] = $oXmlParser->getValues($sXmlContent, 'string_del');
+    			$aResult['strings_add'] = $oXmlParser->getValues($sXmlContent, 'string_add');
+    			$aResult['strings_upd'] = $oXmlParser->getValues($sXmlContent, 'string_upd');
+    			break;
+    	}
+
+    	return $aResult;
+    }
+
     function compileLanguage($mixedLang = 0, $bForce = false) {
         $sType = 'all';
         if(!empty($mixedLang)) {
@@ -379,11 +404,8 @@ class BxDolStudioLanguagesUtils extends BxDolLanguages {
                 return true;
         }
 
-        $sXmlContent = file_get_contents($sPath);
-        $sName = $oXmlParser->getAttribute($sXmlContent, 'resources', 'name');
-        $aStrings = $oXmlParser->getValues($sXmlContent, 'string');
-
-        if(empty($sName) || empty($aStrings) || $sName != $aLanguage['name'])
+        $aLanguageInfo = $this->readLanguage($sPath);
+        if(empty($aLanguageInfo['name']) || empty($aLanguageInfo['strings']) || $aLanguageInfo['name'] != $aLanguage['name'])
             return false;
 
         $aCategory = array();
@@ -394,7 +416,7 @@ class BxDolStudioLanguagesUtils extends BxDolLanguages {
         $this->oDb->deleteStringsBy(array('type' => 'by_cat_and_lang', 'category_id' => $aCategory['id'], 'language_id' => $aLanguage['id']));
 
         $bResult = true;
-        foreach($aStrings as $sKey => $sValue)
+        foreach($aLanguageInfo['strings'] as $sKey => $sValue)
             if($sKey != '')
                 $bResult &= $this->addLanguageString($sKey, $sValue, $aLanguage['id'], $aCategory['id'], false) > 0;
 

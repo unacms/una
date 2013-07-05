@@ -15,16 +15,31 @@ define('BX_DOL_STUDIO_STR_TYPE_DEFAULT', 'goodies');
 
 class BxDolStudioStore extends BxTemplStudioPage {
     protected $sPage;
-    protected $aProducts;
+    protected $aContent;
+
+    protected $iClient;
+
+    protected $aAlias;
 
     function BxDolStudioStore($sPage = "") {
         parent::BxTemplStudioPage('store');
 
         $this->oDb = new BxDolStudioStoreQuery();
 
+        $this->aAlias = array(
+        	'tag' => array(
+        		'modules' => 'extensions',
+        		'languages' => 'translations'
+        	),
+        	'category' => array()
+        );
+
         $this->sPage = BX_DOL_STUDIO_STR_TYPE_DEFAULT;
         if(is_string($sPage) && !empty($sPage))
             $this->sPage = $sPage;
+
+		bx_import('BxDolStudioOAuth');
+        $this->iClient = BxDolStudioOAuth::getAuthorizedClient();
 
         //--- Check actions ---//
         if(($sAction = bx_get('str_action')) !== false) {
@@ -32,18 +47,84 @@ class BxDolStudioStore extends BxTemplStudioPage {
 
             $aResult = array('code' => 1, 'message' => _t('_adm_mod_err_cannot_process_action'));
 	        switch($sAction) {
-	            case 'get-products-by-type':
-	                $sValue = bx_process_input(bx_get('str_value'));
+	        	/*
+	        	 * NOTE. Is needed for download popup selector. Isn't used for now.
+	        	 */
+	        	case 'get-files':
+			    	$iId = (int)bx_get('str_id');
+			    	$sType = bx_process_input(bx_get('str_type'));
+			        $aResult = $this->getFiles($iId, $sType);
+			    	break;
 
-	                $sMethod = 'load' . ucfirst($sValue);
-	                if(method_exists($this, $sMethod)) {
-	                    $this->sPage = $sValue;
-		                $this->aProducts = $this->$sMethod();
-                        $aResult = array('code' => 0, 'content' => $this->getPageCode());
-	                }
-	                else 
-	                    $aResult = array('code' => 1, 'message' => _t('_adm_act_err_failed_page_loading'));
+	        	case 'get-file':
+	        		$iId = (int)bx_get('str_id');
+	        		$aResult = $this->getFile($iId);
+	        		break;
+
+				case 'get-product':
+	        		$iId = (int)bx_get('str_id');
+	        		$aResult = $this->getProduct($iId);
+	        		break;
+
+	            case 'get-products-by-type':
+	                $this->sPage = bx_process_input(bx_get('str_value'));
+
+	                $sContent = $this->getPageCode();
+	                if(!empty($sContent))
+						$aResult = array('code' => 0, 'content' => $sContent);
+					else
+						$aResult = array('code' => 1, 'message' => _t('_adm_act_err_failed_page_loading'));
 	                break;
+
+	            case 'get-products-by-page':
+	            	$this->sPage = bx_process_input(bx_get('str_type'));
+
+	            	$sContent = $this->getPageContent();
+	            	if(!empty($sContent))
+	            		$aResult = array('code' => 0, 'content' => $sContent);
+	            	else 
+	            		$aResult = array('code' => 1, 'message' => _t('_adm_act_err_failed_page_loading'));
+	            	break;
+
+	            case 'add-to-cart':
+	            	$sVendor = bx_process_input(bx_get('str_vendor'));
+	            	$iItem = (int)bx_get('str_item');
+	            	$iItemCount = 1;
+
+	            	if(empty($sVendor) || empty($iItem)) {
+	            		$aResult = array('code' => 1, 'message' => _t('_adm_err_modules_cannot_add_to_cart'));
+	            		break;
+	            	}
+
+	            	bx_import('BxDolStudioCart');
+	            	BxDolStudioCart::getInstance()->add($sVendor, $iItem, $iItemCount);
+	            	$aResult = array('code' => 0, 'message' => _t('_adm_msg_modules_success_added_to_cart'));
+	            	break;
+
+	            case 'delete-from-cart':
+	            	$sVendor = bx_process_input(bx_get('str_vendor'));
+	            	$iItem = (int)bx_get('str_item');
+
+		        	if(empty($sVendor)) {
+	            		$aResult = array('code' => 1, 'message' => _t('_adm_err_modules_cannot_delete_from_cart'));
+	            		break;
+	            	}
+
+	            	bx_import('BxDolStudioCart');
+	            	BxDolStudioCart::getInstance()->delete($sVendor, $iItem);
+	            	$aResult = array('code' => 0, 'message' => '');
+	            	break;
+
+	            case 'checkout-cart':
+	            	$sVendor = bx_process_input(bx_get('str_vendor'));
+	        		if(empty($sVendor)) {
+	            		$aResult = array('code' => 1, 'message' => _t('_adm_err_modules_cannot_checkout_empty_vendor'));
+	            		break;
+	            	}
+
+	            	$sLocation = $this->checkoutCart($sVendor);
+					$aResult = array('code' => 0, 'message' => '', 'redirect' => $sLocation);
+	            	break;
 
 	        	case 'install':
 	        	    $sValue = bx_process_input(bx_get('str_value'));
@@ -53,14 +134,32 @@ class BxDolStudioStore extends BxTemplStudioPage {
                     bx_import('BxDolStudioInstallerUtils');
 	        		$aResult = BxDolStudioInstallerUtils::getInstance()->perform($sValue, 'install');
 	        		break;
+
+				case 'update':
+	        	    $sValue = bx_process_input(bx_get('str_value'));
+	        	    if(empty($sValue))
+	                    break;
+
+                    bx_import('BxDolStudioInstallerUtils');
+	        		$aResult = BxDolStudioInstallerUtils::getInstance()->perform($sValue, 'update');
+	        		break;
+
+				case 'delete':
+	        	    $sValue = bx_process_input(bx_get('str_value'));
+	        	    if(empty($sValue))
+	                    break;
+
+                    bx_import('BxDolStudioInstallerUtils');
+	        		$aResult = BxDolStudioInstallerUtils::getInstance()->perform($sValue, 'delete');
+	        		break;
 	        }
 
 	        if(!empty($aResult['message'])) {
                 bx_import('BxDolStudioTemplate');
-                $sContent = BxDolStudioTemplate::getInstance()->parseHtmlByName('mod_action_result.html', array('content' => $aResult['message']));
+                $aResult['message'] = BxDolStudioTemplate::getInstance()->parseHtmlByName('mod_action_result.html', array('content' => $aResult['message']));
 
                 bx_import('BxTemplStudioFunctions');
-                $aResult['message'] = BxTemplStudioFunctions::getInstance()->transBox($sContent);
+                $aResult['message'] = BxTemplStudioFunctions::getInstance()->transBox($aResult['message']);
             }
 
 	        $oJson = new Services_JSON();		        
@@ -70,8 +169,12 @@ class BxDolStudioStore extends BxTemplStudioPage {
     }
 
     protected function loadGoodies() {
+    	$iPerPage = 5;
         $aProducts = array();
         $sJsObject = $this->getPageJsObject();
+
+        bx_import('BxDolStudioJson');
+        $oJson = BxDolStudioJson::getInstance();
 
         // Load featured
         $aProducts[] = array(
@@ -79,16 +182,17 @@ class BxDolStudioStore extends BxTemplStudioPage {
             'actions' => array(
                 array('name' => 'featured', 'caption' => '_adm_action_cpt_see_all_featured', 'url' => 'javascript:void(0)', 'onclick' => $sJsObject . ".changePage('featured', this)")
             ), 
-            'items' => array()
+            'items' => $oJson->load(BX_DOL_UNITY_URL_MARKET . 'json_browse_featured', array('start' => 0, 'per_page' => $iPerPage, 'client' => $this->iClient))
         );
 
+        
         // Load modules
         $aProducts[] = array(
             'caption' => '_adm_block_cpt_last_modules',
             'actions' => array(
                 array('name' => 'modules', 'caption' => '_adm_action_cpt_see_all_modules', 'url' => 'javascript:void(0)', 'onclick' => $sJsObject . ".changePage('modules', this)")
             ), 
-            'items' => array()
+            'items' => $oJson->load(BX_DOL_UNITY_URL_MARKET . 'json_browse_by_tag', array('value' => 'extensions', 'start' => 0, 'per_page' => $iPerPage, 'client' => $this->iClient))
         );
 
         // Load templates
@@ -97,7 +201,7 @@ class BxDolStudioStore extends BxTemplStudioPage {
             'actions' => array(
                 array('name' => 'templates', 'caption' => '_adm_action_cpt_see_all_templates', 'url' => 'javascript:void(0)', 'onclick' => $sJsObject . ".changePage('templates', this)")
             ), 
-            'items' => array()
+            'items' => $oJson->load(BX_DOL_UNITY_URL_MARKET . 'json_browse_by_tag', array('value' => 'templates', 'start' => 0, 'per_page' => $iPerPage, 'client' => $this->iClient))
         );
 
         // Load languages
@@ -106,79 +210,185 @@ class BxDolStudioStore extends BxTemplStudioPage {
             'actions' => array(
                 array('name' => 'languages', 'caption' => '_adm_action_cpt_see_all_languages', 'url' => 'javascript:void(0)', 'onclick' => $sJsObject . ".changePage('languages', this)")
             ), 
-            'items' => array()
+            'items' => $oJson->load(BX_DOL_UNITY_URL_MARKET . 'json_browse_by_tag', array('value' => 'translations', 'start' => 0, 'per_page' => $iPerPage, 'client' => $this->iClient))
         );
-                
+
         return $aProducts;
     }
 
-    protected function loadPurchases() {
-        $aProducts = array();
-        $oTemplate = BxDolStudioTemplate::getInstance();
+    protected function loadFeatured($iStart, $iPerPage) {
+    	bx_import('BxDolStudioJson');
+        return BxDolStudioJson::getInstance()->load(BX_DOL_UNITY_URL_MARKET . 'json_browse_featured', array('start' => $iStart, 'per_page' => $iPerPage, 'client' => $this->iClient));
+    }
 
-        $aInstalled = $this->oDb->getModules();
-        $aInstalledInfo = array();
-        foreach($aInstalled as $aModule)
-            $aInstalledInfo[$aModule['path']] = $aModule;
-        $aInstalledPathes = array_keys($aInstalledInfo);
+	protected function loadTag($sTag, $iStart, $iPerPage) {
+    	bx_import('BxDolStudioJson');
+        return BxDolStudioJson::getInstance()->load(BX_DOL_UNITY_URL_MARKET . 'json_browse_by_tag', array('value' => $this->aliasToNameTag($sTag), 'start' => $iStart, 'per_page' => $iPerPage, 'client' => $this->iClient));
+    }
 
-        $iOrder = 0;
-        $sPath = BX_DIRECTORY_PATH_ROOT . 'modules/';
-        if(($rHandleVendor = opendir($sPath)) !== false) {
-            while(($sVendor = readdir($rHandleVendor)) !== false) {
-                if(substr($sVendor, 0, 1) == '.' || !is_dir($sPath . $sVendor)) 
-                    continue;
+	protected function loadPurchases() {
+    	bx_import('BxDolStudioOAuth');
+        return BxDolStudioOAuth::getInstance()->loadItems(array('dol_type' => 'purchased_products'));
+    }
 
-                if(($rHandleModule = opendir($sPath . $sVendor)) !== false) {
-                    while(($sModule = readdir($rHandleModule)) !== false) {
-                        if(!is_dir($sPath . $sVendor . '/' . $sModule) || substr($sModule, 0, 1) == '.')
-                            continue;
+	protected function loadUpdates() {
+        bx_import('BxDolModuleQuery');
+        $oModules = BxDolModuleQuery::getInstance();
+        $aModules = $oModules->getModules();
 
-                        $sConfigPath = $sPath . $sVendor . '/' . $sModule . '/install/config.php';
-                        if(!file_exists($sConfigPath)) 
-                            continue;
+        $aParams = array();
+        foreach($aModules as $aModule) {
+        	if(!isset($aModule['name']) || empty($aModule['name']))
+        		continue;
 
-                        include($sConfigPath);
-                        $sModulePath = $aConfig['home_dir'];
-                        $sTitle = bx_process_output($aConfig['title']);
-
-                        $bInstalled = in_array($sModulePath, $aInstalledPathes);
-                        $bEnabled = $bInstalled && (int)$aInstalledInfo[$sModulePath]['enabled'] == 1;
-
-                        $sLinkMarket = '';
-                        if(isset($aConfig['product_url'])) {
-                            $aTmplVars = array(
-                            	'vendor' => $aConfig['vendor'],
-                            	'version' => $aConfig['version'],
-                                'uri' => $aConfig['home_uri'],
-                                'title' => $aConfig['title']
-                            );
-
-                            $sLinkMarket = $oTemplate->parseHtmlByContent(bx_html_attribute($aConfig['product_url']), $aTmplVars, array('{', '}'));
-                        }
-
-                        $aProducts[$sTitle] = array(
-                        	'name' => $aConfig['name'],
-                            'title' => $sTitle,
-                        	'vendor' => $aConfig['vendor'],
-                        	'version' => $aConfig['version'],
-                            'uri' => $aConfig['home_uri'],
-                            'dir' => $aConfig['home_dir'],
-                            'title' => $sTitle,
-                            'note' => isset($aConfig['note']) ? bx_process_output($aConfig['note']) : '',
-                            'link_market' => $sLinkMarket,
-                            'installed' => $bInstalled,
-                            'enabled' => $bInstalled && $bEnabled
-                        );
-                    }
-                    closedir($rHandleModule);
-                }
-            }
-            closedir($rHandleVendor);
+			$aParams[] = array(
+				'name' => $aModule['name'],
+				'version' => $aModule['version'],
+			);
         }
 
-        ksort($aProducts);
-        return $aProducts;
+        bx_import('BxDolStudioOAuth');
+        return BxDolStudioOAuth::getInstance()->loadItems(array('dol_type' => 'available_updates', 'dol_products' => base64_encode(serialize($aParams))));
+    }
+
+    protected function loadCheckout() {
+    	bx_import('BxDolStudioJson');
+    	$oJson = BxDolStudioJson::getInstance();
+
+    	bx_import('BxDolStudioCart');
+		$aVendors = BxDolStudioCart::getInstance()->parseByVendor();
+
+		$aResult = array();
+		foreach($aVendors as $sVendor => $aItems) {
+			$aIds = $aCounts = array();
+			foreach($aItems as $aItem) {
+				$aIds[] = $aItem['item_id'];
+				$aCounts[$aItem['item_id']] = $aItem['item_count'];
+			}
+
+			$aProducts = $oJson->load(BX_DOL_UNITY_URL_MARKET . 'json_browse_selected', array('products' => base64_encode(serialize($aIds))));
+			if(!empty($aProducts))
+				$aResult[$sVendor] = array(
+					'ids' => $aIds,
+					'counts' => $aCounts,
+					'products' => $aProducts
+				);
+		}
+
+        return $aResult;
+    }
+
+    protected function loadDownloaded() {
+    	bx_import('BxDolStudioInstallerUtils');
+    	$oInstallerUtils = BxDolStudioInstallerUtils::getInstance();
+
+        return array(
+        	'modules' => $oInstallerUtils->loadModules(),
+        	'updates' => $oInstallerUtils->loadUpdates()
+        );
+    }
+
+    protected function loadProduct($iId) {
+    	bx_import('BxDolStudioJson');
+        $oJson = BxDolStudioJson::getInstance();
+
+        return $oJson->load(BX_DOL_UNITY_URL_MARKET . 'json_get_product_by_id', array('value' => $iId, 'client' => $this->iClient));
+    }
+
+    /*
+     * NOTE. Is needed for download popup selector. Isn't used for now.
+     */
+    protected function loadFiles($iId, $sType) {
+    	bx_import('BxDolStudioOAuth');
+        return BxDolStudioOAuth::getInstance()->loadItems(array('dol_type' => 'product_files', 'dol_product_id' => $iId, 'dol_file_type' => $sType));
+    }
+
+	protected function loadFile($iId) {
+    	bx_import('BxDolStudioOAuth');
+        $aItem = BxDolStudioOAuth::getInstance()->loadItems(array('dol_type' => 'product_file', 'dol_file_id' => $iId));
+		if(empty($aItem) || !is_array($aItem))
+			return $aItem;
+
+		//--- write ZIP archive.
+		$sFilePath = BX_DIRECTORY_PATH_TMP . $aItem['name'];
+		if (!$rHandler = fopen($sFilePath, 'w'))
+			return _t('_adm_str_err_cannot_write');
+
+		if (!fwrite($rHandler, urldecode($aItem['content'])))
+			return _t('_adm_str_err_cannot_write');
+
+    	fclose($rHandler);
+
+    	//--- Unarchive package.
+    	if(!class_exists('ZipArchive'))
+            return _t('_adm_str_err_zip_not_available');
+
+		$oZip = new ZipArchive();
+		if($oZip->open($sFilePath) !== true)
+        	return _t('_adm_str_err_cannot_unzip_package');
+
+        $sPackageRootFolder = $oZip->numFiles > 0 ? $oZip->getNameIndex(0) : false;
+		if($sPackageRootFolder && file_exists(BX_DIRECTORY_PATH_TMP . $sPackageRootFolder)) // remove existing tmp folder with the same name
+        	bx_rrmdir(BX_DIRECTORY_PATH_TMP . $sPackageRootFolder);
+
+		if($sPackageRootFolder && !$oZip->extractTo(BX_DIRECTORY_PATH_TMP))
+        	return _t('_adm_str_err_cannot_unzip_package');
+
+		$oZip->close();
+
+		//--- Move unarchived package.
+		$sLogin = getParam('sys_ftp_login');
+		$sPassword = getParam('sys_ftp_password');
+		$sPath = getParam('sys_ftp_dir');
+		if(empty($sLogin) || empty($sPassword) || empty($sPath))
+			return _t('_adm_str_err_no_ftp_info');
+
+		bx_import('BxDolFtp');
+		$oFtp = new BxDolFtp($_SERVER['HTTP_HOST'], $sLogin, $sPassword, $sPath);
+
+		if(!$oFtp->connect())
+        	return _t('_adm_str_err_cannot_connect_to_ftp');
+
+		if(!$oFtp->isDolphin())
+			return _t('_adm_str_err_destination_not_valid');
+
+		$sConfigPath = BX_DIRECTORY_PATH_TMP . $sPackageRootFolder . '/install/config.php';
+		if(!file_exists($sConfigPath))
+			return _t('_adm_str_err_wrong_package_format');
+
+		include($sConfigPath);
+		if(empty($aConfig) || empty($aConfig['home_dir']) || !$oFtp->copy(BX_DIRECTORY_PATH_TMP . $sPackageRootFolder . '/', 'modules/' . $aConfig['home_dir']))
+			return _t('_adm_str_err_ftp_copy_failed');
+
+        return true;
+    }
+
+    private function checkoutCart($sVendor) {
+    	bx_import('BxDolStudioCart');
+		$oCart = BxDolStudioCart::getInstance();
+
+		$aItems = $oCart->getByVendor($sVendor);
+		if(empty($aItems) || !is_array($aItems))
+			return false;
+
+		$aIds = array();
+		foreach($aItems as $aItem)
+			$aIds[] = $aItem['item_id'];
+
+		$sSid = generateSid();
+		return BX_DOL_UNITY_URL_MARKET . 'purchase/' . $sVendor . '?sid=' . $sSid . '&products=' . base64_encode(implode(',', $aIds));
+    }
+
+    private function aliasToNameTag($sAlias) {
+    	return $this->aliasToName('tag', $sAlias);
+    }
+
+	private function aliasToNameCategory($sAlias) {
+    	return $this->aliasToName('category', $sAlias);
+    }
+
+    private function aliasToName($sType, $sAlias) {
+    	return isset($this->aAlias[$sType][$sAlias]) ? $this->aAlias[$sType][$sAlias] : $sAlias;
     }
 }
 /** @} */

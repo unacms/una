@@ -160,7 +160,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
         );
     }
 
-    function install($aParams, $bEnable = false) {
+    public function install($aParams, $bEnable = false) {
         //--- Check whether the module was already installed ---//
         if($this->oDb->isModule($this->_aConfig['home_uri']))
             return array(
@@ -250,7 +250,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
         return $aResult;
     }
 
-    function uninstall($aParams, $bDisable = false) {
+    public function uninstall($aParams, $bDisable = false) {
         //--- Check whether the module was already uninstalled ---//
         if(!$this->oDb->isModule($this->_aConfig['home_uri']))
             return array(
@@ -302,7 +302,28 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
         return $aResult;
     }
 
-    function recompile($aParams) {
+	public function delete() {
+		bx_import('BxDolFtp');
+        $oFtp = new BxDolFtp($_SERVER['HTTP_HOST'], getParam('sys_ftp_login'), getParam('sys_ftp_password'), getParam('sys_ftp_dir'));
+        if(!$oFtp->connect())
+        	return array(
+                'message' => _t('_adm_err_modules_cannot_connect_to_ftp'),
+                'result' => false
+            );
+
+		if(!$oFtp->delete('modules/' . $this->_aConfig['home_dir']))
+			return array(
+                'message' => _t('_adm_err_modules_cannot_remove_package'),
+                'result' => false
+            );
+
+        return array(
+        	'message' => '', //_t('_adm_msg_modules_success_delete'), 
+        	'result' => true
+        );
+    }
+
+    public function recompile($aParams) {
         bx_import('BxDolStudioLanguagesUtils');
         $oLanguages = BxDolStudioLanguagesUtils::getInstance();
 
@@ -324,7 +345,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
         return $aResult;
     }
 
-    function enable($aParams) {
+    public function enable($aParams) {
         $aModule = $this->oDb->getModuleByUri($this->_aConfig['home_uri']);
 
         //--- Check whether the module is installed ---//
@@ -353,7 +374,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
         return $aResult;
     }
 
-    function disable($aParams) {
+    public function disable($aParams) {
         $aModule = $this->oDb->getModuleByUri($this->_aConfig['home_uri']);
 
         //--- Check whether the module is installed ---//

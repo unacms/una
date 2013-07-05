@@ -122,9 +122,12 @@ class BxBaseStudioPage extends BxDolStudioPage {
         return '';
     }
 
-    function getPageMenu($aMenu) {
+    function getPageMenu($aMenu, $aMarkers = array()) {
         bx_import('BxTemplStudioMenu');
         $oMenu = new BxTemplStudioMenu(array('template' => 'menu_side.html', 'menu_items' => $aMenu));
+        if(!empty($aMarkers))
+        	$oMenu->addMarkers($aMarkers);
+
         return $oMenu->getCode();
     }
 

@@ -181,7 +181,6 @@ function isLoggedBanned($iCurUserID = 0) {
 }
 
 function bx_login($iId, $bRememberMe = false) {
-
     bx_import('BxDolAccountQuery');
     $oAccountQuery = BxDolAccountQuery::getInstance();
 
@@ -197,6 +196,9 @@ function bx_login($iId, $bRememberMe = false) {
     $_COOKIE['memberID'] = $iId;
     setcookie("memberPassword", $sPassword, $iCookieTime, $sPath, $sHost, false, true /* http only */);
     $_COOKIE['memberPassword'] = $sPassword;
+
+    bx_import('BxDolSession');
+	BxDolSession::getInstance()->setUserId($iId);
 
     $oAccountQuery->updateLoggedIn($iId);
 
@@ -217,6 +219,9 @@ function bx_logout($bNotify = true) {
 
     unset($_COOKIE['memberID']);
     unset($_COOKIE['memberPassword']);
+
+    bx_import('BxDolSession');
+	BxDolSession::getInstance()->destroy();
 }
 
 function check_logged() {
