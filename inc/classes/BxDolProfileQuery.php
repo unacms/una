@@ -56,7 +56,7 @@ class BxDolProfileQuery extends BxDolDb {
      * @return array if aprofile ids, key is profile id
      */
     public function getAccountProfile ($iAccountId) {
-        $sSql = $this->prepare("SELECT * FROM `sys_profiles` WHERE `account_id` = ? AND `profile_id` = ?", $iAccountId, $iAccountId);
+        $sSql = $this->prepare("SELECT * FROM `sys_profiles` WHERE `account_id` = ? AND `content_id` = ?", $iAccountId, $iAccountId);
         return $this->getRow($sSql);
     }
 
