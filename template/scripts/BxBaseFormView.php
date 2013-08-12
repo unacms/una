@@ -711,7 +711,7 @@ BLAH;
      */
     function genInputSwitcher(&$aInput) {
         $aInput['type'] = 'checkbox';
-        $sCheckbox = $this->genInputStandard(&$aInput);
+        $sCheckbox = $this->genInputStandard($aInput);
         $aInput['type'] = 'switcher';
 
         $sClass = 'off';
@@ -884,7 +884,7 @@ BLAH;
      */
     function genInputSelect(&$aInput) {
         $sCurValue = isset($aInput['value']) ? $aInput['value'] : '';
-        return $this->_genInputSelect(&$aInput, false, $sCurValue, '_isSelected');
+        return $this->_genInputSelect($aInput, false, $sCurValue, '_isSelected');
     }
 
     /**
@@ -897,7 +897,7 @@ BLAH;
         $aCurValues = array();
         if (isset($aInput['value']) && $aInput['value'])
             $aCurValues = is_array($aInput['value']) ? $aInput['value'] : array(); 
-        return $this->_genInputSelect(&$aInput, true, $aCurValues, '_isSelectedMultiple');
+        return $this->_genInputSelect($aInput, true, $aCurValues, '_isSelectedMultiple');
     }
 
     /**

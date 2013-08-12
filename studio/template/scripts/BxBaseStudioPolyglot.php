@@ -24,7 +24,7 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot {
     function getPageJsObject() {
         return 'oBxDolStudioPolyglot';
     }
-    function getPageMenu() {
+    function getPageMenu($aMenu = array(), $aMarkers = array()) {
         $sJsObject = $this->getPageJsObject();
 
         $aMenu = array();
@@ -45,7 +45,7 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot {
         return parent::getPageMenu($aMenu);
     }
 
-    function getPageCode() {
+    function getPageCode($bHidden = false) {
         $sMethod = 'get' . ucfirst($this->sPage);
         if(!method_exists($this, $sMethod))
             return '';

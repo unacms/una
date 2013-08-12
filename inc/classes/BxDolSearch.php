@@ -341,7 +341,7 @@ class BxDolSearchResult {
     /**
      * Get html code of pagination
      */
-    function showPagination () {
+    function showPagination ($bAdmin = false, $bChangePage = true, $bPageReload = true) {
 
     }
 

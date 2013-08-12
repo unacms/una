@@ -31,7 +31,7 @@ class BxBaseStudioStore extends BxDolStudioStore {
         return 'oBxDolStudioStore';
     }
 
-    function getPageMenu() {
+    function getPageMenu($aMenu = array(), $aMarkers = array()) {
         $sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
 
@@ -62,7 +62,7 @@ class BxBaseStudioStore extends BxDolStudioStore {
         return parent::getPageMenu($aMenu, $aMarkers);
     }
 
-    function getPageCode() {
+    function getPageCode($bHidden = false) {
         $sMethod = 'get' . ucfirst($this->sPage);
         if(!method_exists($this, $sMethod))
             return '';

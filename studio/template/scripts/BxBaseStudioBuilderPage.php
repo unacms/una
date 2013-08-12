@@ -71,7 +71,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
         return 'oBxDolStudioBuilderPage';
     }
 
-    function getPageMenu() {
+    function getPageMenu($aMenu = array(), $aMarkers = array()) {
         $aMenuItems = array(
             BX_DOL_STUDIO_MODULE_SYSTEM => array( 
             	'name' => BX_DOL_STUDIO_MODULE_SYSTEM,
@@ -105,7 +105,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
         return parent::getPageMenu($aMenu);
     }
 
-    function getPageCode() {
+    function getPageCode($bHidden = false) {
         bx_import('BxTemplPage');
         $oPage = BxTemplPage::getObjectInstance($this->sPage);
 

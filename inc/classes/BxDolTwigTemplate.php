@@ -36,7 +36,7 @@ class BxDolTwigTemplate extends BxDolModuleTemplate {
         BxDolStudioTemplate::getInstance()->addJs ($sName);
     }
 
-    function parseHtmlByName ($sName, &$aVars) {
+    function parseHtmlByName ($sName, $aVars, $mixedKeyWrapperHtml = null, $sCheckIn = BX_DOL_TEMPLATE_CHECK_IN_BOTH) {
         return parent::parseHtmlByName (strlen($sName) > 5 && strpos($sName, '.html', strlen($sName) - 5) ? $sName : $sName.'.html', $aVars);
     }
 

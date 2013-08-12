@@ -38,11 +38,11 @@ class BxDolStudioForm extends BxBaseFormView {
         return $mixedResult;
     }
 
-    function update($val, $aValsToAdd = array()) {
+    function update($val, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null) {
         $sAction = 'update';
         $this->processTranslationsKey($sAction);
 
-        $mixedResult = parent::update($val, $aValsToAdd);
+        $mixedResult = parent::update($val, $aValsToAdd, $aTrackTextFieldsChanges);
         if($mixedResult !== false)
             $this->processTranslations($sAction);
 

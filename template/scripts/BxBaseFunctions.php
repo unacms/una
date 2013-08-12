@@ -36,7 +36,7 @@ class BxBaseFunctions extends BxDol {
             trigger_error('Clone is not allowed for the class: ' . get_class($this), E_USER_ERROR);
     }
 
-    function getInstance() {
+    public static function getInstance() {
         if(!isset($GLOBALS['bxDolClasses']['BxTemplFunctions']))
             $GLOBALS['bxDolClasses']['BxTemplFunctions'] = new BxTemplFunctions();
 
@@ -153,7 +153,7 @@ class BxBaseFunctions extends BxDol {
     }
 
     function msgBox($sText, $iTimer = 0, $sOnClose = "") {    	
-        $iId = mktime() . mt_rand(1, 1000);
+        $iId = time() . mt_rand(1, 1000);
 
         return $this->_oTemplate->parseHtmlByName('messageBox.html', array(
             'id' => $iId,
@@ -184,7 +184,7 @@ class BxBaseFunctions extends BxDol {
      */
     function popupBox($sName, $sTitle, $sContent, $isHiddenByDefault = false) {
 
-        $iId = !empty($sName) ? $sName : mktime();
+        $iId = !empty($sName) ? $sName : time();
 
         return $this->_oTemplate->parseHtmlByName('popup_box.html', array(
             'id' => $iId,

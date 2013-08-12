@@ -24,7 +24,7 @@ class BxDevStudioPage extends BxTemplStudioModule {
         $this->sUrl = BX_DOL_URL_STUDIO . 'module.php?name=%s&page=%s';
     }
 
-    function getPageMenu() {
+    function getPageMenu($aMenu = array(), $aMarkers = array()) {
         $this->aMenuItems = array();
         foreach($this->oModule->aTools as $aTool)
             $this->aMenuItems[] = array(
@@ -40,7 +40,7 @@ class BxDevStudioPage extends BxTemplStudioModule {
         return $oMenu->getCode();
     }
 
-    function getPageCode() {
+    function getPageCode($bHidden = false) {
         if(in_array($this->sPage, array('general')) || (int)$this->aModule['enabled'] == 0)
             $this->oModule->_oTemplate->addStudioInjection('injection_body_style', 'text', ' bx-dev-page-body-single');
         else

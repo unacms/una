@@ -35,7 +35,7 @@ class BxDolService extends BxDol {
         parent::BxDol();
     }
 
-    function call($mixed, $sMethod, $aParams = array(), $sClass = 'Module') {
+    public static function call($mixed, $sMethod, $aParams = array(), $sClass = 'Module') {
         bx_import('BxDolModuleQuery');
         $oDb = BxDolModuleQuery::getInstance();
 

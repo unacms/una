@@ -67,7 +67,7 @@ class BxBaseConfig extends BxDol {
         $this -> bAnonymousMode = getParam('anon_mode');;
     }
 
-    function getInstance() {
+    public static function getInstance() {
         if(!isset($GLOBALS['bxDolClasses'][__CLASS__]))
             $GLOBALS['bxDolClasses'][__CLASS__] = new BxTemplConfig();
 

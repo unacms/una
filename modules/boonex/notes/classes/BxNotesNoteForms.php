@@ -148,7 +148,7 @@ class BxNotesNoteForms extends BxDolProfileForms {
         if (!$oForm->isSubmittedAndValid())
             return $oForm->getCode();
 
-        if (!$oForm->delete ($aContentInfo['id'], $aContentInfo)) {
+        if (!$oForm->delete ($aContentInfo['id'])) {
             if (!$oForm->isValid())
                 return $oForm->getCode();
             else

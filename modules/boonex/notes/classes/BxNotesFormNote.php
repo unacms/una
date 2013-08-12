@@ -113,7 +113,7 @@ class BxNotesFormNote extends BxTemplFormView {
         return $iRet;
     }
 
-    function delete ($iContentId, $aContentInfo) {
+    function delete ($iContentId) {
 
         // delete associated files
 
@@ -122,7 +122,7 @@ class BxNotesFormNote extends BxTemplFormView {
         if (!$oStorage)
             return false;
 
-        $aGhostFiles = $oStorage->getGhosts (bx_get_logged_profile_id(), $aContentInfo['id']);
+        $aGhostFiles = $oStorage->getGhosts (bx_get_logged_profile_id(), $iContentId);
         if ($aGhostFiles)
             foreach ($aGhostFiles as $aFile)
                 $this->_deleteFile($aFile['id']);

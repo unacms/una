@@ -39,7 +39,7 @@ class BxDolSplashMenuTop extends BxTemplStudioMenuTop
         );
 	}
 
-	function getInstance() {
+	public static function getInstance() {
         if(!isset($GLOBALS['bxDolClasses']['BxDolSplashMenuTop']))
             $GLOBALS['bxDolClasses']['BxDolSplashMenuTop'] = new BxDolSplashMenuTop();
 

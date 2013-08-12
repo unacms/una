@@ -15,7 +15,7 @@ class BxDolRequest extends BxDol {
     function BxDolRequest() {
         parent::BxDol();
     }
-    function processAsFile($aModule, &$aRequest) {
+    public static function processAsFile($aModule, &$aRequest) {
         if(empty($aRequest) || ($sFileName = array_shift($aRequest)) == "")
             $sFileName = 'index';
 
@@ -28,7 +28,7 @@ class BxDolRequest extends BxDol {
             if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->endModule('file', $sPrHash);
         }
     }
-    static function processAsAction($aModule, &$aRequest, $sClass = "Module") {
+    public static function processAsAction($aModule, &$aRequest, $sClass = "Module") {
         $sAction = empty($aRequest) || (isset($aRequest[0]) && empty($aRequest[0])) ? 'Home' : array_shift($aRequest);
         $sMethod = 'action' . str_replace(' ', '', ucwords(str_replace('_', ' ', $sAction)));
 
@@ -42,7 +42,7 @@ class BxDolRequest extends BxDol {
 
         return $mixedRet;
     }
-    function processAsService($aModule, $sMethod, $aParams, $sClass = "Module") {
+    public static function processAsService($aModule, $sMethod, $aParams, $sClass = "Module") {
         if (isset($aModule['name']) && 'system' == $aModule['name'] && 'Module' == $sClass) 
             $sClass = 'BaseServices';
 
@@ -58,23 +58,23 @@ class BxDolRequest extends BxDol {
 
         return $mixedRet;
     }
-    function serviceExists($mixedModule, $sMethod, $sClass = "Module") {
+    public static function serviceExists($mixedModule, $sMethod, $sClass = "Module") {
         return BxDolRequest::_methodExists($mixedModule, 'service', $sMethod, $sClass);
     }
-    function actionExists($mixedModule, $sMethod, $sClass = "Module") {
+    public static function actionExists($mixedModule, $sMethod, $sClass = "Module") {
         return BxDolRequest::_methodExists($mixedModule, 'action', $sMethod, $sClass);
     }
-    function moduleNotFound($sModule) {
+    public static function moduleNotFound($sModule) {
         BxDolRequest::_error('module', $sModule);
     }
-    function pageNotFound($sPage, $sModule) {
+    public static function pageNotFound($sPage, $sModule) {
         BxDolRequest::_error('page', $sPage, $sModule);
     }
-    function methodNotFound($sMethod, $sModule) {
+    public static function methodNotFound($sMethod, $sModule) {
         BxDolRequest::_error('method', $sMethod, $sModule);
     }
 
-    function _perform($aModule, $sClass, $sMethod, $aParams, $bTerminateOnError = true) {
+    protected static function _perform($aModule, $sClass, $sMethod, $aParams, $bTerminateOnError = true) {
         $sClass = $aModule['class_prefix'] . $sClass;        
 
         $oModule = BxDolRequest::_require($aModule, $sClass);
@@ -91,7 +91,7 @@ class BxDolRequest extends BxDol {
         else if(!$bMethod && !$bTerminateOnError)
             return false;
     }
-    function _require($aModule, $sClass) {
+    protected static function _require($aModule, $sClass) {
         if(!isset($GLOBALS['bxDolClasses'][$sClass])) {
             if ($aModule['path']) {
                 $sFile = BX_DIRECTORY_PATH_MODULES . $aModule['path'] . 'classes/' . $sClass . '.php';
@@ -109,7 +109,7 @@ class BxDolRequest extends BxDol {
 
         return $oModule;
     }
-    function _methodExists($mixedModule, $sMethodType, $sMethodName, $sClass = "Module"){
+    protected static function _methodExists($mixedModule, $sMethodType, $sMethodName, $sClass = "Module"){
         $aModule = $mixedModule;
         if(is_string($mixedModule)) {
             bx_import('BxDolModuleQuery');
@@ -126,7 +126,7 @@ class BxDolRequest extends BxDol {
         $sMethod = $sMethodType . str_replace(' ', '', ucwords(str_replace('_', ' ', $sMethodName)));
         return method_exists($oModule, $sMethod);
     }
-    function _error($sType, $sParam1 = '', $sParam2 = '') {
+    protected static function _error($sType, $sParam1 = '', $sParam2 = '') {
         header('Status: 404 Not Found');
         header('HTTP/1.0 404 Not Found');
 
