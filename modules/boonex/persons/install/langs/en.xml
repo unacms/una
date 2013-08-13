@@ -49,6 +49,7 @@
 	<string name="_bx_persons_page_block_title_profile_picture"><![CDATA[Picture]]></string>
 	<string name="_bx_persons_page_block_title_profile_menu"><![CDATA[Menu]]></string>
 	<string name="_bx_persons_page_title_browse_recent"><![CDATA[Persons]]></string>
+	<string name="_bx_persons_page_block_title_latest_persons"><![CDATA[Recent Persons]]></string>
 
     <string name="_bx_persons_menu_set_title_view_person"><![CDATA[View Person]]></string>
     <string name="_bx_persons_menu_title_view_person"><![CDATA[View Person]]></string>
@@ -60,6 +61,8 @@
     <string name="_bx_persons_menu_item_title_view_person"><![CDATA[View Profile]]></string>
     <string name="_bx_persons_menu_item_title_system_persons_profile"><![CDATA[Person]]></string>
     <string name="_bx_persons_menu_item_title_persons_profile"><![CDATA[Person]]></string>
+    <string name="_bx_persons_menu_item_title_system_create_person"><![CDATA[Create Person]]></string>
+    <string name="_bx_persons_menu_item_title_create_person"><![CDATA[Create Person]]></string>
 
 	<string name="_bx_persons_txt_error_profile_creation"><![CDATA[Profile creation failed]]></string>
 	<string name="_bx_persons_txt_error_profile_update"><![CDATA[Profile update failed]]></string>

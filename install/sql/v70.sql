@@ -286,7 +286,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_site_logo_alt', 'Site logo ALT text', '0', 'text', '', '', '', 18),
 (@iCategoryId, 'sys_site_icon', 'Site icon image ID', '0', 'digit', '', '', '', 19),
 (@iCategoryId, 'sys_email_confirmation', 'Enable email confirmation routine', 'on', 'checkbox', '', '', '', 20),
-(@iCategoryId, 'sys_redirect_after_account_added', 'Redirect after account creation', 'page.php?i=create-profiles', 'digit', '', '', '', 21),
+(@iCategoryId, 'sys_redirect_after_account_added', 'Redirect after account creation', 'page.php?i=create-persons-profile', 'digit', '', '', '', 21),
 (@iCategoryId, 'sys_tmp_version', 'Temporary Dolphin version ', '7.0.6', 'digit', '', '', '', 30);
 
 
@@ -2854,7 +2854,6 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 -- add content menu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `order`) VALUES
 ('sys_account_links', 'system', 'account', '_sys_menu_item_title_system_account', '_sys_menu_item_title_account', 'member.php', '', '', '', '', 2147483646, 1, 1),
-('sys_account_links', 'system', 'create-profiles', '_sys_menu_item_title_system_create_profile', '_sys_menu_item_title_create_profile', 'page.php?i=create-profiles', '', '', '', '', 2147483646, 1, 2),
 ('sys_account_links', 'system', 'logout', '_sys_menu_item_title_system_logout', '_sys_menu_item_title_logout', 'logout.php', '', '', '', '', 2147483646, 1, 3);
 
 -- account settings menu
