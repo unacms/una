@@ -1,28 +1,22 @@
 /* TODO: remake according to the new design */
-
-    div.clear_both {
-        font-size: 0px;
-    }
     /*--- General Styles ---*/
     div.cmts {
-        padding: 10px 10px 0px 10px;
-        /*position: relativ_e;*/
+		margin-top: 20px;
     }
+
     ul.cmts {
         margin: 0px;
         padding: 0px;
         list-style: none;
     }
-    ul.cmts-margin {
-        margin-left: 5px !important;
-    }
-    ul.cmts ul.cmts {
-        margin-bottom: 5px;
-    }
+    ul.cmts-margin {}
     ul.cmts li.cmt {
-        margin-left: 38px;
+        padding-left: 84px;
     }
-    li.cmt-just-posted {
+    li.cmt-more {
+		padding: 5px 0px;
+    	background-color: #ededed;
+    	text-indent: 5px;
     }
     li.cmt-err {
         color: red;
@@ -44,336 +38,38 @@
        font-size: 11px;
        color: #333333;
     }
-    li.cmt-replacement div.cmt-rate {
-       top: 5px;
-       right: 0px;
-    }
 
-    /*--- Comment/Reply Box Styles ---*/
+    /*--- Comment ---*/
     div.cmt-cont {
-        position: relative;/*keep*/
-    }
-    div.cmt-post-reply {
         position: relative;
+    	min-height: 64px;
     }
-    div.cmt-cont div.thumbnail_block,
-    div.cmt-post-reply div.thumbnail_block {
-        left: -38px;
-        top: 1px;
-        position: absolute;
+	div.cmt-cont .bullet {
+		padding: 0px 3px;
     }
-    table.cmt-balloon {
-        width: 100%;
-        padding: 0px;
-        margin: 0px;
-        /*position: relativ_e;*/
-        border: 0px;
-        border-collapse: collapse;
-        font-size: 11px;
+    div.cmt-icon {
+		position: absolute;
+    	top: 0px;
+    	left: -84px;
+    	width: 64px;
+    	height: 64px;
+    	background-color: #cccccc;
     }
-    table.cmt-balloon tr,
-    table.cmt-balloon td {
-        margin: 0px;
-        padding: 0px;
-        border: 0px;
+    span.cmt-author {
+		font-weight: bold;
     }
-    tr.cmt-head {
-        height: 22px;
-        /*position: relativ_e;*/
-        line-height: 20px;
-    }
-    tr.cmt-jp {
-        padding-bottom: 5px;
-        /*position: relativ_e;*/
-    }
-    /*tr.cmt-head a,
-    tr.cmt-jp a {
+    span.cmt-author a {
         text-decoration: none;
-    }
-    tr.cmt-head a:hover,
-    tr.cmt-head a:active,
-    tr.cmt-jp a:hover,
-    tr.cmt-jp a:active {
-        text-decoration: underline;
-    }*/
-   /* td.cmt-head-l,
-    td.cmt-head-m,
-    td.cmt-head-r {
-        position: relativ_e;
-    }*/
-    td.cmt-head-l,
-    td.wcmt-head-l,
-    ul.cmts-margin td.cmt-head-l,
-    div.cmt-post-reply td.cmt-head-l {
-        width: 14px;
-        background-image: url(../images/icons/cmt-bln-tl.png);
-        background-repeat: no-repeat;
-        font-size: 0px;
-    }
-    td.wcmt-head-l,
-    ul.cmts-margin td.cmt-head-l {
-        background-image: url(../images/icons/cmt-reply-bln-tl.png);
-    }
-    div.cmt-post-reply td.cmt-head-l {
-        background-image: url(../images/icons/cmt-frm-bln-tl.png);
-    }
-    td.cmt-head-m,
-    td.wcmt-head-m,
-    ul.cmts-margin td.cmt-head-m,
-    div.cmt-post-reply td.cmt-head-m {
-        background-image: url(../images/icons/cmt-bln-tm.png);
-        background-repeat: repeat-x;
-    }
-    td.wcmt-head-m,
-    ul.cmts-margin td.cmt-head-m {
-        background-image: url(../images/icons/cmt-reply-bln-tm.png);
-    }
-    div.cmt-post-reply td.cmt-head-m {
-        background-image: url(../images/icons/cmt-frm-bln-tm.png);
-    }
-    td.cmt-head-r,
-    td.wcmt-head-r,
-    ul.cmts-margin td.cmt-head-r,
-    div.cmt-post-reply td.cmt-head-r {
-        width: 9px;
-        background-image: url(../images/icons/cmt-bln-tr.png);
-        background-repeat: no-repeat;
-        font-size: 0px;
-    }
-    td.wcmt-head-r,
-    ul.cmts-margin td.cmt-head-r {
-        background-image: url(../images/icons/cmt-reply-bln-tr.png);
-    }
-    div.cmt-post-reply td.cmt-head-r {
-        background-image: url(../images/icons/cmt-frm-bln-tr.png);
-    }
-    /*td.cmt-cont {
-        position: relativ_e;
-    }*/
-    /*td.cmt-cont-l,
-    td.cmt-cont-m,
-    td.cmt-cont-r {
-        position: relativ_e;
-    }*/
-    td.cmt-cont-l,
-    td.wcmt-cont-l,
-    ul.cmts-margin td.cmt-cont-l,
-    div.cmt-post-reply td.cmt-cont-l {
-        width: 14px;
-        background-image: url(../images/icons/cmt-bln-ml.png);
-        background-repeat: repeat-y;
-        font-size: 0px;
-    }
-    td.wcmt-cont-l,
-    ul.cmts-margin td.cmt-cont-l {
-        background-image: url(../images/icons/cmt-reply-bln-ml.png);
-    }
-    div.cmt-post-reply td.cmt-cont-l {
-        background-image: url(../images/icons/cmt-frm-bln-ml.png);
-    }
-    td.cmt-cont-m {
-        background-color: #e9ecff;
-    }
-    td.wcmt-cont-m,
-    ul.cmts-margin td.cmt-cont-m {
-        background-color: #ffffff;
-    }
-    div.cmt-post-reply td.cmt-cont-m {
-        background-color: #ffffcc;
-    }
-    td.cmt-cont-r,
-    td.wcmt-cont-r,
-    ul.cmts-margin td.cmt-cont-r,
-    div.cmt-post-reply td.cmt-cont-r {
-        width: 9px;
-        background-image: url(../images/icons/cmt-bln-mr.png);
-        background-repeat: repeat-y;
-        font-size: 0px;
-    }
-    td.wcmt-cont-r,
-    ul.cmts-margin td.cmt-cont-r {
-        background-image: url(../images/icons/cmt-reply-bln-mr.png);
-    }
-    div.cmt-post-reply td.cmt-cont-r {
-        background-image: url(../images/icons/cmt-frm-bln-mr.png);
-    }
-    /*tr.cmt-foot {
-        height: 8px;
-
-        position: relativ_e;
-
-        font-size: 0px;
-    }*/
-    /*td.cmt-foot-l,
-    td.cmt-foot-m,
-    td.cmt-foot-r {
-        position: relativ_e;
-    }*/
-    td.cmt-foot-l,
-    td.wcmt-foot-l,
-    ul.cmts-margin td.cmt-foot-l,
-    div.cmt-post-reply td.cmt-foot-l {
-        width: 14px;
-        background-image: url(../images/icons/cmt-bln-bl.png);
-        background-repeat: no-repeat;
-        font-size: 0px;
-    }
-    td.wcmt-foot-l,
-    ul.cmts-margin td.cmt-foot-l {
-        background-image: url(../images/icons/cmt-reply-bln-bl.png);
-    }
-    div.cmt-post-reply td.cmt-foot-l {
-        background-image: url(../images/icons/cmt-frm-bln-bl.png);
-    }
-    td.cmt-foot-m,
-    td.wcmt-foot-m,
-    ul.cmts-margin td.cmt-foot-m,
-    div.cmt-post-reply td.cmt-foot-m {
-        background-image: url(../images/icons/cmt-bln-bm.png);
-        background-repeat: repeat-x;
-    }
-    td.wcmt-foot-m,
-    ul.cmts-margin td.cmt-foot-m {
-        background-image: url(../images/icons/cmt-reply-bln-bm.png);
-    }
-    div.cmt-post-reply td.cmt-foot-m {
-        background-image: url(../images/icons/cmt-frm-bln-bm.png);
-    }
-    td.cmt-foot-r,
-    td.wcmt-foot-r,
-    ul.cmts-margin td.cmt-foot-r,
-    div.cmt-post-reply td.cmt-foot-r {
-        width: 9px;
-        background-image: url(../images/icons/cmt-bln-br.png);
-        background-repeat: no-repeat;
-        font-size: 0px;
-    }
-    td.wcmt-foot-r,
-    ul.cmts-margin td.cmt-foot-r {
-        background-image: url(../images/icons/cmt-reply-bln-br.png);
-    }
-    div.cmt-post-reply td.cmt-foot-r {
-        background-image: url(../images/icons/cmt-frm-bln-br.png);
-    }
-    a.cmt-author {
-        text-decoration: none;
-        /*text-transform: capitalize;
-        color: #3333cc;*/
     }
     span.cmt-posted-ago {
         text-transform: lovercase;
-        font-size: 10px;
-        color: #999999;
     }
-    /*div.cmt-body,
-    div.cmt-mood {
-        position: relativ_e;
-    }*/
-    div.cmt-mood {
-        display: none;
+	span.cmt-points {
+        text-transform: lovercase;
     }
-
-    /*--- View Replies Styles---*/
-    div.cmt-replies,
-    div.cmt-replies-hover {
-        margin: 0px 0px 5px 5px;
-        /*position: relativ_e;*/
-        font-size: 10px;
-    }
-    div.cmt-replies {
-        clear: left;
-        float: left;
-    }
-    div.cmt-replies a.cmt-replies-show,
-    div.cmt-replies a.cmt-replies-hide {
-        padding-left: 10px;
-        background-image:url(../images/icons/cmt-show-hide.png);
-        background-repeat:no-repeat;
-        text-decoration: none;
-    }
-    div.cmt-replies a.cmt-replies-show {
-        background-position:0px 0px;
-    }
-    div.cmt-replies a.cmt-replies-hide {
-        display: none;
-        background-position: 0px -13px;
-    }
-
-    /*--- Post Reply Styles ---*/
-    div.cmt-reply-to,
-    div.cmt-post-reply-to {
-        margin: 0px 2px 5px 0px;
-        /*position: relativ_e;*/
-        font-size: 10px;
-    }
-    div.cmt-post-reply-to {
-        float: right;
-    }
-    div.cmt-reply-to a,
-    div.cmt-post-reply-to a {
-       text-decoration: none;
-    }
-
-    /*--- Rate Styles ---*/
-    div.cmt-rate {
-        top: 2px;
-        right: 6px;
-        position: absolute;
-        z-index: 7;
-        text-transform: lowercase;
-        text-decoration: none;
-        font-size: 11px;
-    }
-    div.cmt-points,
-    div.cmt-buttons {
-       /*position: relativ_e;*/
-       float: left;
-    }
-    div.cmt-points {
-       padding-right: 3px;
-       line-height: 20px;
-    }
-    div.cmt-buttons {
-       padding: 4px 0px;
-    }
-    div.cmt-buttons a.cmt-pos,
-    div.cmt-buttons a.cmt-pos:active,
-    div.cmt-buttons a.cmt-pos:visited,
-    div.cmt-buttons a.cmt-neg,
-    div.cmt-buttons a.cmt-neg:active,
-    div.cmt-buttons a.cmt-neg:visited {
-        font-size: 10px;
-        text-decoration: none;
-    }
-    div.cmt-buttons a.cmt-pos img,
-    div.cmt-buttons a.cmt-neg img {
-        width: 12px;
-        height: 12px;
-        background-image: url(../images/icons/cmt-rate.png);
-        background-repeat: no-repeat;
-    }
-    a.cmt-pos img,
-    a.cmt-pos:active img,
-    a.cmt-pos:visited img {
-        background-position: 0px 0px;
-    }
-    a.cmt-pos:hover img {
-        background-position:0px -12px;
-    }
-    a.cmt-neg img,
-    a.cmt-neg:active img,
-    a.cmt-neg:visited img {
-        margin-left: 3px;
-        background-position:-12px 0px;
-    }
-    a.cmt-neg:hover img {
-        background-position:-12px -12px;
-    }
-    div.cmt-rate-disabled div.cmt-buttons a.cmt-pos    img {
-        background-position:-0px -24px;
-    }
-    div.cmt-rate-disabled div.cmt-buttons a.cmt-neg img {
-        background-position:-12px -24px;
+    div.cmt-actions {}
+    div.cmt-actions span.bullet:first-child {
+		display: none;
     }
 
     /*--- Browse Styles ---*/
@@ -383,93 +79,26 @@
         font-size: 11px;
         color: #666666;
     }
-    div.cmt-order,
-    div.cmt-pages {
-       height: 30px;
-       /*position: relativ_e; */
-       float: left;
-       text-align: left;
-       line-height: 30px;
-    }
-    div.cmt-order {
-        padding-left: 10px;
-    }
-    div.cmt-pages {
-        padding-right: 10px;
-        float: right;
-    }
-    div.cmt-order select,
-    div.cmt-pages select {
-       margin: 0px;
-    }
-
-    /*--- Show More(Paginate) Styles ---*/
-    div.cmt-show-more {
-        height: 30px;
-        background-color: #ededed;
-        text-align: center;
-    }
-    div.cmt-show-more a b,
-    div.cmt-show-more a u {
-        text-decoration: none;
-        font-weight: normal;
-    }
 
     /*--- Add Comment/Reply Styles ---*/
     div.cmt-reply {
-        padding: 10px;
-        /*position: relativ_e;*/
+		position: relative;
+        padding-left: 84px;
     }
+	div.cmt-reply-expanded {}
     div.cmt-post-reply {
-        margin-left: 38px;
-        padding: 0px;
-        /*position: relativ_e;*/
-        font-size: 11px;
-    }
-    div.cmt-post-reply div.cmt-reply-head {
-        padding: 5px 0px;
+        position: relative;
     }
     div.cmt-post-reply form {
         display: block;
     }
     div.cmt-post-reply textarea,
-    div.cmt-post-reply-to textarea,
     div.cmt-body textarea {
         width: 100%;
-        height: 50px;
+        height: 64px;
         padding: 0px;
         margin: 0px;
         border: 0px;
-    }
-    div.cmt-post-reply-expanded    {
-        margin: 0px 0px 10px 43px;
-    }
-    td.cmt-head-m a.cmt-post-reply-text,
-    td.cmt-head-m a.cmt-post-reply-video {
-        height: 16px;
-        margin: 10px 0px;
-        padding-left: 20px;
-        /*position: relativ_e;*/
-        float: left;
-        background-repeat: no-repeat;
-        background-position: 0px center;
-        line-height: 16px;
-    }
-    td.cmt-head-m a.cmt-post-reply-text {
-        padding-right: 14px;
-        background-image: url(../images/icons/cmt-reply-write.png);
-    }
-    td.cmt-head-m a.cmt-post-reply-video {
-        background-image: url(../images/icons/cmt-reply-record.png);
-    }
-    td.cmt-head-m a.comment {
-        display: block;
-    }
-    td.cmt-head-m a.reply {
-        display: none;
-    }
-    td.cmt-head-m a.inactive {
-        color: #666666;
     }
     div.cmt-post-reply-text {
         margin-bottom: 10px;
@@ -481,40 +110,9 @@
         /*position: relativ_e;*/
         display: none;
     }
-    div.cmt-post-reply-post {
-        /*position: relativ_e;*/
-        clear: left;
-        float: left;
-    }
-    div.cmt-post-reply-mood {
-        /*position: relativ_e;*/
-        float: right;
-    }
-    div.cmt-post-reply-mood input {
-        margin-top: 0px;
-    }
-    div.cmt-post-mood-ctl,
-    div.cmt-post-mood-lbl {
-        height: 13px;
-        margin-top: 4px;
-        /*position: relativ_e;*/
-        float: left;
-    }
-    div.cmt-post-mood-lbl {
-        line-height: 13px;
-    }
+    div.cmt-post-reply-post {}
+    a.cmt-comment-vote,
     a.cmt-comment-manage-edit,
-    a.cmt-comment-manage-delete {
-        height: 16px;
-        padding: 5px 14px 5px 20px;
-        /*position: relativ_e;*/
-        background-repeat: no-repeat;
-        background-position: 0px center;
-        line-height: 16px;
-    }
-    a.cmt-comment-manage-edit {
-        background-image: url(../images/icons/cmt-edit.png);
-    }
-    a.cmt-comment-manage-delete {
-        background-image: url(../images/icons/cmt-delete.png);
+    a.cmt-comment-manage-delete,
+    a.cmt-comment-replies {
     }

@@ -6,9 +6,11 @@
  */
 
 require_once('./inc/header.inc.php');
-require_once(BX_DIRECTORY_PATH_INC . "languages.inc.php");
 require_once(BX_DIRECTORY_PATH_INC . "params.inc.php");
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
+
+bx_import('BxDolAcl');
+bx_import('BxDolLanguages');
 
 check_logged();
 
@@ -17,9 +19,9 @@ $sAction = isset($_REQUEST['action']) && preg_match ('/^[A-Za-z_-]+$/', $_REQUES
 $iId = (int)$_REQUEST['id'];
 
 bx_import ('BxTemplCmtsView');
-$aSystems = BxDolCmts::getSystems ();
+$oCmts = new BxTemplCmtsView($sSys, $iId);
 
-if ($sSys && $sAction && $iId && ($oCmts = BxDolCmts::getObjectInstance($sSys, $iId, true))) {
+if ($sSys && $sAction && $iId && $oCmts) {
     header('Content-Type: text/html; charset=utf-8');
     $sMethod = 'action' . $sAction;
     echo $oCmts->$sMethod();

@@ -24,6 +24,11 @@ define('BX_DATA_DATE', 7); ///< date data type stored as yyyy-mm-dd
 define('BX_DATA_DATE_TS', 8); ///< date data type stored as unixtimestamp
 define('BX_DATA_DATETIME_TS', 9); ///< date/time data type stored as unixtimestamp
 
+define('BX_SLASHES_AUTO', 0);
+define('BX_SLASHES_ADD', 1);
+define('BX_SLASHES_STRIP', 2);
+define('BX_SLASHES_NO_ACTION', 3);
+
 define('BX_ESCAPE_STR_AUTO', 0); ///< turn apostropes and quote signs into html special chars, for use in @see bx_js_string and @see bx_html_attribute
 define('BX_ESCAPE_STR_APOS', 1); ///< escape apostrophes only, for js strings enclosed in apostrophes, for use in @see bx_js_string and @see bx_html_attribute
 define('BX_ESCAPE_STR_QUOTE', 2); ///< escape quotes only, for js strings enclosed in quotes, for use in @see bx_js_string and @see bx_html_attribute
@@ -657,10 +662,10 @@ function _format_when ($iSec) {
     } else {
         if ($iSec > -3600) {
             $i = round($iSec/60);
-            $s .= (0 == $i || 1 == $i) ? _t('_in_x_minute', '1') : _t('_in_x_minute', -$i, 's');
+            $s .= (0 == $i || 1 == $i) ? _t('_in_x_minute', '1', '') : _t('_in_x_minute', -$i, 's');
         } else if ($iSec > -86400) {
             $i = round($iSec/60/60);
-            $s .= (0 == $i || 1 == $i) ? _t('_in_x_hour', '1') : _t('_in_x_hour', -$i, 's');
+            $s .= (0 == $i || 1 == $i) ? _t('_in_x_hour', '1', '') : _t('_in_x_hour', -$i, 's');
         } elseif ($iSec < -86400) {
             $i = round($iSec/60/60/24);
             $s .= (0 == $i || 1 == $i) ? _t('_tomorrow') : _t('_in_x_day', -$i, 's');

@@ -11,6 +11,10 @@ bx_import('BxDolCmtsQuery');
 
 define('BX_OLD_CMT_VOTES', 365*86400); ///< comment votes older than this number of seconds will be deleted automatically 
 
+define('BX_CMT_SHOW_HEAD', 'head');
+define('BX_CMT_SHOW_TAIL', 'tail');
+
+
 /** 
  * @page objects 
  * @section comments Comments
@@ -35,16 +39,11 @@ define('BX_OLD_CMT_VOTES', 365*86400); ///< comment votes older than this number
  * - ObjectName - your unique module name, with vendor prefix, lowercase and spaces are underscored
  * - TableCmts - table name where comments are stored
  * - TableTrack - table name where comments ratings are stored
- * - AllowTags - 0 or 1 allow HTML tags in comments or not
  * - Nl2br - convert new lines to <br /> on saving
- * - SecToEdit - number of second to allow author to delete or edit comment
  * - PerView - number of comments on a page
  * - IsRatable - 0 or 1 allow to rate comments or not
  * - ViewingThreshold - comment viewing treshost, if comment is below this number it is hidden by default
- * - AnimationEffect - animation effect for comments, slide or fade
- * - AnimationSpeed - animation speen in milliseconds
  * - IsOn - is this comment object enabled
- * - IsMood - allow user to select comment as negative, positive or neutral
  * - RootStylePrefix - toot comments style prefix, if you need root comments look different
  * - TriggerTable - table to be updated upon each comment
  * - TriggerFieldId - TriggerTable table field with unique record id of
@@ -111,18 +110,11 @@ class BxDolCmts extends BxDol
 
     var $_iId = 0;  ///< obect id to be commented
     var $sTextAreaId;
-    var $iGlobAllowHtml;
-    var $iGlobUseTinyMCE;
     var $_sSystem = 'profile';  ///< current comment system name
     var $_aSystem = array ();   ///< current comments system array
     var $_aCmtElements = array (); ///< comment submit form elements
     var $_oQuery = null;
-    var $_sOrder = 'desc';
-    var $_aMoodText = array(
-        '-1' => '_sys_txt_cmt_mood_negative',
-        '0' => '_sys_txt_cmt_mood_neutral',
-        '1' => '_sys_txt_cmt_mood_positive',
-    );
+    var $_sOrder = 'asc';
 
     /**
      * Constructor
@@ -133,19 +125,21 @@ class BxDolCmts extends BxDol
     {
         parent::BxDol();
 
-        $this->_aCmtElements = array (
-            'CmtParent'    => array ( 'reg' => '/^[0-9]+$/', 'msg' => _t('_bad comment parent id') ),
-            'CmtText'     => array ( 'reg' => '/^.{3,2048}$/m', 'msg' => _t('_Please enter 3-2048 characters') ),
-            'CmtMood'     => array ( 'reg' => '/^-?[0-9]?$/m', 'msg' => _t('_You need to select the mood') ),
-        );
-
-        $this->_aSystems =& $this->getSystems ();
+        $this->_aSystems = $this->getSystems();
 
         $this->_sSystem = $sSystem;
-        if (isset($this->_aSystems[$sSystem]))
+        if(isset($this->_aSystems[$sSystem]))
             $this->_aSystem = $this->_aSystems[$sSystem];
         else
             return;
+
+		$iCmtTextMin = (int)$this->_aSystem['chars_post_min'];
+		$iCmtTextMax = (int)$this->_aSystem['chars_post_max'];
+		
+		$this->_aCmtElements = array (
+            'CmtParent' => array ('reg' => '/^[0-9]+$/', 'msg' => _t('_bad comment parent id')),
+            'CmtText' => array ('reg' => '/^.{' . $iCmtTextMin . ',' . $iCmtTextMax . '}$/m', 'msg' => _t('_Please enter ' . $iCmtTextMin . '-' . $iCmtTextMax . ' characters'))
+        );
 
         $this->_oQuery = new BxDolCmtsQuery($this->_aSystem);
 
@@ -153,8 +147,6 @@ class BxDolCmts extends BxDol
             $this->init($iId);
 
         $this->sTextAreaId = "cmt" . str_replace(' ', '', ucwords(str_replace('_', ' ', $this->_sSystem))) . "TextAreaParent";
-        $this->iGlobAllowHtml = (getParam("enable_tiny_in_comments") == "on") ? 1 : 0;
-        $this->iGlobUseTinyMCE = $this->iGlobAllowHtml;
     }
 
     function & getSystems ()
@@ -167,16 +159,19 @@ class BxDolCmts extends BxDol
                     `ObjectName` AS `name`,
                     `TableCmts` AS `table_cmts`,
                     `TableTrack` AS `table_track`,
-                    `AllowTags` AS `allow_tags`,
+                    `CharsPostMin` AS `chars_post_min`,
+                    `CharsPostMax` AS `chars_post_max`,
+                    `CharsDisplayMax` AS `chars_display_max`,
                     `Nl2br` AS `nl2br`,
-                    `SecToEdit` AS `sec_to_edit`,
                     `PerView` AS `per_view`,
+                    `PerViewReplies` AS `per_view_replies`,
+                    `NumberOfLevels` AS `number_of_levels`,
+                    `IsLevelsSwitch` AS `is_levels_switch`,
+                    `Show` AS `show`,
+                    `IsShowSwitch` AS `is_show_switch`,
                     `IsRatable` AS `is_ratable`,
                     `ViewingThreshold` AS `viewing_threshold`,
-                    `AnimationEffect` AS `animation_effect`,
-                    `AnimationSpeed` AS `animation_speed`,
                     `IsOn` AS `is_on`,
-                    `IsMood` AS `is_mood`,
                     `RootStylePrefix` AS `root_style_prefix`,
                     `TriggerTable` AS `trigger_table`,
                     `TriggerFieldId` AS `trigger_field_id`,
@@ -190,41 +185,47 @@ class BxDolCmts extends BxDol
 
     function init ($iId)
     {
-        if (!$this->isEnabled()) return;
+        if (!$this->isEnabled()) 
+        	return;
+
         if (empty($this->iId) && $iId)
-        {
             $this->setId($iId);
-        }
     }
 
     /**
      * check if user can post/edit or delete own comments
      */
-    function checkAction ($iAction, $isPerformAction = false) {
+    function checkAction ($iAction, $isPerformAction = false)
+    {
         $iId = $this->_getAuthorId();
         $check_res = checkAction($iId, $iAction, $isPerformAction);
         return $check_res[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED;
     }
 
-    function checkActionErrorMsg ($iAction) {
+    function checkActionErrorMsg ($iAction)
+    {
         $iId = $this->_getAuthorId();
         $check_res = checkAction($iId, $iAction);
         return $check_res[CHECK_ACTION_RESULT] != CHECK_ACTION_RESULT_ALLOWED ? $check_res[CHECK_ACTION_MESSAGE] : '';
     }
 
-    function getId () {
+    function getId ()
+    {
         return $this->_iId;
     }
 
-    function isEnabled () {
+    function isEnabled ()
+    {
         return isset($this->_aSystem['is_on']) && $this->_aSystem['is_on'];
     }
 
-    function getSystemName() {
+    function getSystemName()
+    {
         return $this->_sSystem;
     }
 
-    function getOrder () {
+    function getOrder ()
+    {
         return $this->_sOrder;
     }
 
@@ -244,42 +245,20 @@ class BxDolCmts extends BxDol
         return isset($this->_aSystems[$sSystem]);
     }
 
-
-
-    function isTagsAllowed ()
-    {
-        return $this->_aSystem['allow_tags'];
-    }
-
-
-
     function isNl2br ()
     {
         return $this->_aSystem['nl2br'];
     }
-
-
 
     function isRatable ()
     {
         return $this->_aSystem['is_ratable'];
     }
 
-
-
-    function getAllowedEditTime ()
+    function getPerView ($iCmtParentId = 0)
     {
-        return $this->_aSystem['sec_to_edit'];
+        return $iCmtParentId == 0 ? $this->_aSystem['per_view'] : $this->_aSystem['per_view_replies'];
     }
-
-
-
-    function getPerView ()
-    {
-        return $this->_aSystem['per_view'];
-    }
-
-
 
     function getSystemId ()
     {
@@ -400,18 +379,16 @@ class BxDolCmts extends BxDol
     /**
      * is edit any comment allowed
      */
-    function isEditAllowedAll () {
-        return isAdmin() ? true : false;
+    function isEditAllowedAll ($isPerformAction = false) {
+        return isAdmin() || $this->checkAction (ACTION_ID_COMMENTS_EDIT_ALL, $isPerformAction) ? true : false;
     }
 
     /**
      * is removing any comment allowed
      */
-    function isRemoveAllowedAll () {
-        return isAdmin() ? true : false;
+    function isRemoveAllowedAll ($isPerformAction = false) {
+        return isAdmin() || $this->checkAction (ACTION_ID_COMMENTS_REMOVE_ALL, $isPerformAction) ? true : false;
     }
-
-
 
     /**
      * actions functions
@@ -421,9 +398,10 @@ class BxDolCmts extends BxDol
            return '';
 
         $iCmtStart = isset($_REQUEST['CmtStart']) ? bx_process_input($_REQUEST['CmtStart'], BX_DATA_INT) : 0;
+        $iCmtNum = isset($_REQUEST['CmtNum']) ? bx_process_input($_REQUEST['CmtNum'], BX_DATA_INT) : -1;
         $iCmtPerPage= isset($_REQUEST['CmtPerPage']) ? bx_process_input($_REQUEST['CmtPerPage'], BX_DATA_INT) : $this->getPerView();
 
-        return $this->getPaginate($iCmtStart, $iCmtPerPage);
+        return $this->getPaginate($iCmtStart, $iCmtNum, $iCmtPerPage);
     }
 
     function actionFormGet () {
@@ -433,7 +411,7 @@ class BxDolCmts extends BxDol
         $sCmtType = isset($_REQUEST['CmtType']) ? bx_process_input($_REQUEST['CmtType']) : 'reply';
         $iCmtParentId= isset($_REQUEST['CmtParent']) ? bx_process_input($_REQUEST['CmtParent'], BX_DATA_INT) : 0;
 
-        return $this->getForm($sCmtType, $iCmtParentId);
+        return $this->getFormBox($sCmtType, $iCmtParentId);
     }
 
     function actionCmtsGet () {
@@ -441,11 +419,9 @@ class BxDolCmts extends BxDol
            return '';
 
         $iCmtParentId = bx_process_input($_REQUEST['CmtParent'], BX_DATA_INT);
-        $sCmtOrder = isset($_REQUEST['CmtOrder']) ? bx_process_input($_REQUEST['CmtOrder']) : $this->_sOrder;
-        $iCmtStart = isset($_REQUEST['CmtStart']) ? bx_process_input($_REQUEST['CmtStart'], BX_DATA_INT) : 0;
-        $iCmtPerPage= isset($_REQUEST['CmtPerPage']) ? bx_process_input($_REQUEST['CmtPerPage'], BX_DATA_INT) : -1;
-
-        return $this->getComments($iCmtParentId, $sCmtOrder, $iCmtStart, $iCmtPerPage);
+        $iCmtStart = isset($_REQUEST['CmtStart']) ? bx_process_input($_REQUEST['CmtStart'], BX_DATA_INT) : -1;
+        $iCmtPerView = isset($_REQUEST['CmtPerView']) ? bx_process_input($_REQUEST['CmtPerView'], BX_DATA_INT) : -1;
+        return $this->getComments($iCmtParentId, $iCmtStart, $iCmtPerView);
     }
 
     function actionCmtGet () {
@@ -453,25 +429,27 @@ class BxDolCmts extends BxDol
            return '';
 
         $iCmtId = bx_process_input($_REQUEST['Cmt'], BX_DATA_INT);
-        return $this->getComment ($iCmtId, (isset($_REQUEST['Type']) ? bx_process_input($_REQUEST['Type']) : 'new'));
+        return $this->getComment($iCmtId);
     }
 
     function actionCmtPost ()
     {
-        if (!$this->isEnabled()) return '';
-        if (!$this->isPostReplyAllowed ()) return '';
+        if(!$this->isEnabled())
+        	return '';
+
+        if(!$this->isPostReplyAllowed())
+        	return '';
 
         $iCmtParentId = bx_process_input($_REQUEST['CmtParent'], BX_DATA_INT);
-        $iMood = bx_process_input($_REQUEST['CmtMood'], BX_DATA_INT);
-        $sCmtText = bx_process_input($_REQUEST['CmtText']);
+		$iCmtAuthorId = $this->_getAuthorId();
 
-        if ($this->_isSpam($sCmtText))
+        $sCmtText = bx_process_input($_REQUEST['CmtText']);
+        if($this->_isSpam($sCmtText))
             return sprintf(_t("_sys_spam_detected"), BX_DOL_URL_ROOT . 'contact.php');
 
         $sText = $this->_prepareTextForSave ($sCmtText);
 
-        $iCmtNewId = $this->_oQuery->addComment ($this->getId(), $iCmtParentId, $this->_getAuthorId(), $sText, $iMood);
-
+        $iCmtNewId = $this->_oQuery->addComment ($this->getId(), $iCmtParentId, $iCmtAuthorId, $sText);
         if(false === $iCmtNewId)
             return '';
 
@@ -480,7 +458,7 @@ class BxDolCmts extends BxDol
         $this->isPostReplyAllowed(true);
 
         bx_import('BxDolAlerts');
-        $oZ = new BxDolAlerts($this->_sSystem, 'commentPost', $this->getId(), $this->_getAuthorId(), array('comment_id' => $iCmtNewId, 'comment_author_id' => $iCmtAuthorId));
+        $oZ = new BxDolAlerts($this->_sSystem, 'commentPost', $this->getId(), $iCmtAuthorId, array('comment_id' => $iCmtNewId, 'comment_author_id' => $iCmtAuthorId));
         $oZ->alert();
 
         return $iCmtNewId;
@@ -505,7 +483,7 @@ class BxDolCmts extends BxDol
             return _t('_Can not delete comments with replies');
 
         $isRemoveAllowed = $this->isRemoveAllowedAll() || ($aCmt['cmt_author_id'] == $this->_getAuthorId() && $this->isRemoveAllowed());
-        if (!$isRemoveAllowed && $aCmt['cmt_secs_ago'] > ($this->getAllowedEditTime()+20))
+        if (!$isRemoveAllowed)
             return $aCmt['cmt_author_id'] == $this->_getAuthorId() && !$this->isRemoveAllowed() ? strip_tags($this->msgErrRemoveAllowed()) : _t('_Access denied');
 
         if (!$this->_oQuery->removeComment ($this->getId(), $aCmt['cmt_id'], $aCmt['cmt_parent_id']))
@@ -530,21 +508,21 @@ class BxDolCmts extends BxDol
      */
     function actionCmtEdit ()
     {
-        if (!$this->isEnabled()) return '';
+        if (!$this->isEnabled())
+        	return '';
 
         $iCmtId = bx_process_input($_REQUEST['Cmt'], BX_DATA_INT);
-        $aCmt = $this->_oQuery->getCommentSimple ($this->getId(), $iCmtId);
 
+        $aCmt = $this->_oQuery->getCommentSimple ($this->getId(), $iCmtId);
         if (!$aCmt)
             return 'err'._t('_No such comment');
 
         $isEditAllowed = $this->isEditAllowedAll() || ($aCmt['cmt_author_id'] == $this->_getAuthorId() && $this->isEditAllowed());
-        if (!$isEditAllowed && $aCmt['cmt_secs_ago'] > ($this->getAllowedEditTime()+20))
+        if(!$isEditAllowed)
             return 'err' . ($aCmt['cmt_author_id'] == $this->_getAuthorId() && !$this->isEditAllowed() ? strip_tags($this->msgErrEditAllowed()) : _t('_Access denied'));
 
-        return $this->_getFormBox (0, $this->_prepareTextForEdit($aCmt['cmt_text']), 'updateComment(this, \''.$iCmtId.'\')');
+        return $this->getForm(0, $this->_prepareTextForEdit($aCmt['cmt_text']), 'cmtUpdate(this, ' . $iCmtId . ')');
     }
-
 
     function actionCmtEditSubmit() {
 
@@ -554,7 +532,6 @@ class BxDolCmts extends BxDol
         $oJson = new Services_JSON();
 
         $iCmtId = bx_process_input($_REQUEST['Cmt'], BX_DATA_INT);
-        $iCmtMood = bx_process_input($_REQUEST['CmtMood'], BX_DATA_INT);
         $sCmtText = bx_process_input($_REQUEST['CmtText']);
 
         if ($this->_isSpam($sCmtText))
@@ -567,11 +544,10 @@ class BxDolCmts extends BxDol
             return '{}';
 
         $isEditAllowed = $this->isEditAllowedAll() || ($aCmt['cmt_author_id'] == $this->_getAuthorId() && $this->isEditAllowed());
-
-        if (!$isEditAllowed && $aCmt['cmt_secs_ago'] > ($this->getAllowedEditTime()+20))
+        if (!$isEditAllowed)
             return '{}';
 
-        if (($sTextRet != $aCmt['cmt_text'] || $iCmtMood != $aCmt['cmt_mood']) && $this->_oQuery->updateComment ($this->getId(), $aCmt['cmt_id'], $sText, $iCmtMood)) {
+        if ($sText != $aCmt['cmt_text'] && $this->_oQuery->updateComment ($this->getId(), $aCmt['cmt_id'], $sText)) {
             if ($aCmt['cmt_author_id'] == $this->_getAuthorId())
                $this->isEditAllowed(true);
 
@@ -581,8 +557,7 @@ class BxDolCmts extends BxDol
         }
 
         $aCmt = $this->_oQuery->getCommentSimple ($this->getId(), $iCmtId);
-
-        return $oJson->encode(array('text' => $aCmt['cmt_text'], 'mood' => $aCmt['cmt_mood'], 'mood_text' => _t($this->_aMoodText[$aCmt['cmt_mood']])));
+        return $oJson->encode(array('text' => $aCmt['cmt_text']));
     }
 
     function actionCmtRate () {
@@ -640,11 +615,9 @@ class BxDolCmts extends BxDol
         return $s;
     }
 
-    function _prepareTextForSave ($s) {
-
-        if ($this->iGlobUseTinyMCE || $this->isTagsAllowed())
-            $iDataAction = BX_DATA_HTML;
-        elseif (!$this->iGlobUseTinyMCE && $this->isNl2br())
+    function _prepareTextForSave ($s) 
+    {
+        if ($this->isNl2br())
             $iDataAction = BX_DATA_TEXT_MULTILINE;
         else
             $iDataAction = BX_DATA_TEXT; // TODO: make sure that it is processed before output !

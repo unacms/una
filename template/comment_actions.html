@@ -1,0 +1,20 @@
+<div class="__style_prefix__-actions">
+	<bx_if:show_edit>
+		<span class="bullet">&#183;</span><a class="__style_prefix__-comment-manage-edit bx-def-font-grayed" title="<bx_text:_Edit />" href="javascript:void(0)" onclick="__js_object__.cmtEdit(this, __id__); return false;"><bx_text:_Edit /></a>
+	</bx_if:show_edit>
+	<bx_if:show_delete>
+		<span class="bullet">&#183;</span><a class="__style_prefix__-comment-manage-delete bx-def-font-grayed" title="<bx_text:_Delete />" href="javascript:void(0)" onclick="__js_object__.cmtRemove(this, __id__); return false;"><bx_text:_Delete /></a>
+	</bx_if:show_delete>
+	<bx_if:show_rate>
+		<span class="bullet">&#183;</span><a class="__style_prefix__-comment-vote bx-def-font-grayed" title="<bx_text:_Plus />" href="javascript:void(0)" onclick="__js_object__.cmtRate(this, __id__, 1)"><bx_text:_Plus /></a>
+		<!--
+		<span class="bullet">&#183;</span><a class="__style_prefix__-comment-vote bx-def-font-grayed" title="<bx_text:_Minus />" href="javascript:void(0)" onclick="__js_object__.cmtRate(this, __id__, -1)"><bx_text:_Minus /></a>
+		-->
+	</bx_if:show_rate>
+	<bx_if:show_reply>
+		<span class="bullet">&#183;</span><a class="__style_prefix__-comment-reply bx-def-font-grayed" href="javascript:void(0)" onclick="__js_object__.toggleReply(this, __id__); return false;">__text__</a>
+	</bx_if:show_reply>
+	<bx_if:show_replies>
+		<span class="bullet">&#183;</span><a class="__style_prefix__-comment-replies bx-def-font-grayed" href="javascript:void(0)" onclick="__js_object__.toggleCmts(this, __id__); return false;">__text__</a>
+	</bx_if:show_replies>
+</div>

@@ -25,6 +25,18 @@ class BxBaseServiceAccount extends BxDol {
         $this->_oAccountQuery = BxDolAccountQuery::getInstance();
     }
 
+	public function serviceAccountComments ($iAccountId = false) {
+        if (false === $iAccountId)
+            $iAccountId = getLoggedId();
+
+		bx_import('BxTemplCmtsView');
+		$oCmts = new BxTemplCmtsView('profile', (int)$iAccountId);
+		if(!$oCmts->isEnabled())
+			return '';
+
+        return $oCmts->getCommentsFirst();
+    }
+    
     public function serviceCreateAccountForm () {
         return $this->_oAccountForms->createAccountForm();
     }

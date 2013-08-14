@@ -150,16 +150,19 @@ CREATE TABLE `sys_objects_cmts` (
   `ObjectName` varchar(50) NOT NULL,
   `TableCmts` varchar(50) NOT NULL,
   `TableTrack` varchar(50) NOT NULL,
-  `AllowTags` smallint(1) NOT NULL,
-  `Nl2br` smallint(1) NOT NULL,
-  `SecToEdit` smallint(6) NOT NULL,
+  `CharsPostMin` int(10) NOT NULL,
+  `CharsPostMax` int(10) NOT NULL,
+  `CharsDisplayMax` int(10) NOT NULL,
+  `Nl2br` smallint(1) NOT NULL,  
   `PerView` smallint(6) NOT NULL,
+  `PerViewReplies` smallint(6) NOT NULL,
+  `NumberOfLevels` smallint(6) NOT NULL,
+  `IsLevelsSwitch` smallint(1) NOT NULL,
+  `Show` varchar(50) NOT NULL,
+  `IsShowSwitch` smallint(1) NOT NULL,
   `IsRatable` smallint(1) NOT NULL,
   `ViewingThreshold` smallint(6) NOT NULL,
-  `AnimationEffect` varchar(50) NOT NULL,
-  `AnimationSpeed` smallint(6) NOT NULL,
   `IsOn` smallint(1) NOT NULL,
-  `IsMood` smallint(1) NOT NULL,
   `RootStylePrefix` varchar(16) NOT NULL default 'cmt',
   `TriggerTable` varchar(32) NOT NULL,
   `TriggerFieldId` varchar(32) NOT NULL,
@@ -637,8 +640,10 @@ INSERT INTO `sys_acl_actions` (`ID`, `Module`, `Name`, `AdditionalParamName`, `T
 (7, 'system', 'comments vote', NULL, '_sys_acl_action_comments_vote', '', 0, 1),
 (8, 'system', 'comments edit own', NULL, '_sys_acl_action_comments_edit_own', '', 0, 1),
 (9, 'system', 'comments remove own', NULL, '_sys_acl_action_comments_remove_own', '', 0, 1),
-(10, 'system', 'create account', NULL, '_sys_acl_action_create_account', '_sys_acl_action_create_account_desc', 0, 2147483646),
-(12, 'system', 'delete account', NULL, '_sys_acl_action_delete_account', '_sys_acl_action_delete_account_desc', 0, 2147483646);
+(10, 'system', 'comments edit all', NULL, '_sys_acl_action_comments_edit_all', '', 0, 1),
+(11, 'system', 'comments remove all', NULL, '_sys_acl_action_comments_remove_all', '', 0, 1),
+(12, 'system', 'create account', NULL, '_sys_acl_action_create_account', '_sys_acl_action_create_account_desc', 0, 2147483646),
+(13, 'system', 'delete account', NULL, '_sys_acl_action_delete_account', '_sys_acl_action_delete_account_desc', 0, 2147483646);
 
 
 CREATE TABLE `sys_acl_actions_track` (

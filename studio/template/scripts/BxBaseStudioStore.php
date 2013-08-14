@@ -13,7 +13,7 @@ bx_import('BxDolStudioStore');
 bx_import('BxTemplStudioFunctions');
 
 class BxBaseStudioStore extends BxDolStudioStore {
-	protected $iPerPageDefault = 4;
+	protected $iPerPageDefault = 24;
 
     function BxBaseStudioStore($sPage = "") {
         parent::BxDolStudioStore($sPage);

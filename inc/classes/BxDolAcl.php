@@ -45,6 +45,8 @@ define('ACTION_ID_COMMENTS_POST', 6);
 define('ACTION_ID_COMMENTS_VOTE', 7);
 define('ACTION_ID_COMMENTS_EDIT_OWN', 8);
 define('ACTION_ID_COMMENTS_REMOVE_OWN', 9);
+define('ACTION_ID_COMMENTS_EDIT_ALL', 10);
+define('ACTION_ID_COMMENTS_REMOVE_ALL', 11);
 
 /**
  * Standard membership ID's
