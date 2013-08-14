@@ -21,7 +21,7 @@ class BxBaseStudioFunctions extends BxBaseFunctions {
         parent::BxBaseFunctions($oTemplate ? $oTemplate : BxDolStudioTemplate::getInstance());
     }
 
-    function getInstance() {
+    public static function getInstance() {
         if(!isset($GLOBALS['bxDolClasses']['BxBaseStudioFunctions']))
             $GLOBALS['bxDolClasses']['BxBaseStudioFunctions'] = new BxTemplStudioFunctions();
 

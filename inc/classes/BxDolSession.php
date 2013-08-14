@@ -41,7 +41,7 @@ class BxDolSession extends BxDol {
     /**
      * Get singleton instance of the class
      */
-    function getInstance() {
+    public static function getInstance() {
         if(!isset($GLOBALS['bxDolClasses'][__CLASS__]))
             $GLOBALS['bxDolClasses'][__CLASS__] = new BxDolSession();
 

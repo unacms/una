@@ -341,7 +341,7 @@ class BxDolSearchResult {
     /**
      * Get html code of pagination
      */
-    function showPagination () {
+    function showPagination ($bAdmin = false, $bChangePage = true, $bPageReload = true) {
 
     }
 
@@ -520,8 +520,6 @@ class BxDolSearchResult {
                 if (isset($aValue['operator']) && !empty($aValue['value'])) {
                    $sFieldTable = isset($aValue['table']) ? $aValue['table'] : $this->aCurrent['table'];
                    $sqlCondition = "`{$sFieldTable}`.`{$aValue['field']}` ";
-                   if (!isset($aValue['no_quote_value']))
-                       $aValue['value'] = process_db_input($aValue['value'], BX_TAGS_STRIP);
                    switch ($aValue['operator']) {
                        case 'against':
                             $aCond = isset($aValue['field']) && strlen($aValue['field']) > 0 ? $aValue['field'] : $this->aCurrent['searchFields'];
@@ -536,7 +534,7 @@ class BxDolSearchResult {
                             $sqlCondition .= strtoupper($aValue['operator']) . '('.$sValuesString.')';
                             break;
                        default:
-                               $sqlCondition .= $aValue['operator'] . (isset($aValue['no_quote_value']) && $aValue['no_quote_value'] ?  $aValue['value'] : "'" . $aValue['value'] . "'");
+                               $sqlCondition .= $aValue['operator'] . (isset($aValue['no_quote_value']) && $aValue['no_quote_value'] ?  $aValue['value'] : "'" . $oDb->escape($aValue['value']) . "'");
                        break;
                     }
                 }

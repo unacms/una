@@ -44,7 +44,7 @@ class BxBaseStudioDesign extends BxDolStudioDesign {
 
         return parent::getPageAttributes();
     }
-    function getPageMenu() {
+    function getPageMenu($aMenu = array(), $aMarkers = array()) {
         $sJsObject = $this->getPageJsObject();
 
         $aMenu = array();            
@@ -59,7 +59,7 @@ class BxBaseStudioDesign extends BxDolStudioDesign {
 
         return parent::getPageMenu($aMenu);
     }
-    function getPageCode() {
+    function getPageCode($bHidden = false) {
         $sMethod = 'get' . ucfirst($this->sPage);
         if(!method_exists($this, $sMethod))
             return '';

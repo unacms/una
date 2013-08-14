@@ -50,7 +50,7 @@ class BxDolTwigSearchResult extends BxTemplSearchResult  {
         return $oMain->_oTemplate->unit($aData, $this->sUnitTemplate);
     }
 
-    function showPagination($bAdmin = false) {
+    function showPagination($bAdmin = false, $bChangePage = true, $bPageReload = true) {
 
         $oMain = $this->getMain();
         $oConfig = $oMain->_oConfig;

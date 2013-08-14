@@ -903,7 +903,7 @@ class BxDolForm extends BxDol {
         return ($this->isSubmitted() && $this->isValid());
     }
 
-    function getSubmittedValue($sKey, $sMethod, &$aSpecificValues = false) {
+    public static function getSubmittedValue($sKey, $sMethod, &$aSpecificValues = false) {
         $aData = array();
         if($sMethod == BX_DOL_FORM_METHOD_GET) {
             $aData = &$_GET;
@@ -949,11 +949,11 @@ class BxDolForm extends BxDol {
         if($bReturn)
             return $sToken;
     }
-    function getCsrfToken() {
+    public static function getCsrfToken() {
         $oSession = BxDolSession::getInstance();
         return $oSession->getValue('csrf_token');
     }
-    function getCsrfTokenTime() {
+    public static function getCsrfTokenTime() {
         $oSession = BxDolSession::getInstance();
         return $oSession->getValue('csrf_token_time');
     }

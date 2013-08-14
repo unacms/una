@@ -19,7 +19,7 @@ class BxBaseStudioMenuTop extends BxDolStudioMenuTop {
         parent::BxDolStudioMenuTop();
     }
 
-    function getInstance() {
+    public static function getInstance() {
         if(!isset($GLOBALS['bxDolClasses']['BxBaseStudioMenuTop']))
             $GLOBALS['bxDolClasses']['BxBaseStudioMenuTop'] = new BxTemplStudioMenuTop();
 

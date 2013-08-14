@@ -26,7 +26,7 @@ class BxBaseStudioSettings extends BxDolStudioSettings {
     function getPageJsObject() {
         return 'oBxDolStudioSettings';
     }
-    function getPageMenu() {
+    function getPageMenu($aMenu = array(), $aMarkers = array()) {
         $aTypes = $aMenu = array();
         if($this->oDb->getTypes(array('type' => 'all'), $aTypes) > 0 ) {
             $aTypesGrouped = array();

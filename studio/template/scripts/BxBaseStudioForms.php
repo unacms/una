@@ -35,7 +35,7 @@ class BxBaseStudioForms extends BxDolStudioForms {
     function getPageJsObject() {
         return '';
     }
-    function getPageMenu() {
+    function getPageMenu($aMenu = array(), $aMarkers = array()) {
         $sJsObject = $this->getPageJsObject();
 
         $aMenu = array();
@@ -57,7 +57,7 @@ class BxBaseStudioForms extends BxDolStudioForms {
 
         return parent::getPageMenu($aMenu);
     }
-    function getPageCode() {
+    function getPageCode($bHidden = false) {
         $sMethod = 'get' .  $this->getClassName($this->sPage);
         if(!method_exists($this, $sMethod))
             return '';
