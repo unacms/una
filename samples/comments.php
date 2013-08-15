@@ -9,7 +9,7 @@
 
 /** 
  * @page samples
- * @section cut_strings Cut strings
+ * @section comments Comments
  */
 
 /**
