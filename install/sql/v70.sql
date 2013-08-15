@@ -3052,6 +3052,47 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 -- --------------------------------------------------------
 
 
+CREATE TABLE IF NOT EXISTS `sys_objects_connection` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `object` varchar(32) NOT NULL,
+  `table` varchar(255) NOT NULL,
+  `type` enum('one-way','mutual') NOT NULL,
+  `override_class_name` varchar(255) NOT NULL,
+  `override_class_file` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `object` (`object`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+INSERT INTO `sys_objects_connection` (`object`, `table`, `type`, `override_class_name`, `override_class_file`) VALUES
+('sys_profiles_friends', 'sys_profiles_conn_friends', 'mutual', '', ''),
+('sys_profiles_contacts', 'sys_profiles_conn_contacts', 'one-way', '', '');
+
+
+CREATE TABLE IF NOT EXISTS `sys_profiles_conn_contacts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `initiator` int(11) NOT NULL,
+  `content` int(11) NOT NULL,
+  `added` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `initiator` (`initiator`,`content`),
+  KEY `content` (`content`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `sys_profiles_conn_friends` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `initiator` int(11) NOT NULL,
+  `content` int(11) NOT NULL,
+  `mutual` tinyint(4) NOT NULL,
+  `added` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `initiator` (`initiator`,`content`),
+  KEY `content` (`content`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+-- --------------------------------------------------------
+
+
 CREATE TABLE IF NOT EXISTS `sys_objects_transcoder_images` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `object` varchar(32) NOT NULL,

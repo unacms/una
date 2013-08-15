@@ -16,25 +16,25 @@ class BxPersonsSearchResult extends BxDolTwigSearchResult {
     var $aCurrent = array(
         'name' => 'bx_persons',
         'title' => '_bx_persons_page_title_browse',
-        'table' => 'bx_persons_data',
-        'ownFields' => array('id', 'fullname', 'picture', 'added'),
+        'table' => 'sys_profiles',
+        'ownFields' => array(),
         'searchFields' => array('fullname'),
         'restriction' => array(
-            'profile' => array('value' => 'bx_persons', 'field' => 'type', 'operator' => '=', 'table' => 'sys_profiles'),
-            'activeStatus' => array('value' => 'active', 'field' => 'status', 'operator' => '=', 'table' => 'sys_profiles'),
-            'owner' => array('value' => '', 'field' => 'author', 'operator' => '='),
+            'perofileStatus' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
+            'perofileType' => array('value' => 'bx_persons', 'field' => 'type', 'operator' => '='),
+            'owner' => array('value' => '', 'field' => 'author', 'operator' => '=', 'table' => 'bx_persons_data'),
         ),
         'join' => array (
             'profile' => array(
                 'type' => 'INNER',
-                    'table' => 'sys_profiles',
-                    'mainField' => 'id',
-                    'onField' => 'content_id',
-                    'joinFields' => array('status'),
+                'table' => 'bx_persons_data',
+                'mainField' => 'content_id',
+                'onField' => 'id',
+                'joinFields' => array('id', 'fullname', 'picture', 'added'),
             ),
         ),
         'paginate' => array('perPage' => 20, 'start' => 0),
-        'sorting' => 'last',
+        'sorting' => 'none',
         'rss' => array(
             'title' => '',
             'link' => '',
@@ -52,14 +52,31 @@ class BxPersonsSearchResult extends BxDolTwigSearchResult {
         'ident' => 'id'
     );
 
-
-    function __construct($sMode = '', $sValue = '', $sValue2 = '', $sValue3 = '') {
+    function __construct($sMode = '', $mixedParams = false) {
 
         $oModuleMain = $this->getMain();
 
         switch ($sMode) {
 
+            case 'connections':
+                $aParams = $mixedParams;
+                bx_import('BxDolConnection');
+                $oConnection = isset($aParams['object']) ? BxDolConnection::getObjectInstance($aParams['object']) : false;
+                if ($oConnection && isset($aParams['profile']) && (int)$aParams['profile']) {
+
+                    $sMethod = 'getConnectedContentAsCondition';
+                    if (isset($aParams['type']) && $aParams['type'] == 'initiators')
+                        $sMethod = 'getConnectedInitiatorsAsCondition';
+
+                    $a = $oConnection->$sMethod('id', (int)$aParams['profile'], isset($aParams['mutual']) ? $aParams['mutual'] : false);
+                    $this->aCurrent['restriction'] = array_merge($this->aCurrent['restriction'], $a['restriction']);
+                    $this->aCurrent['join'] = array_merge($this->aCurrent['join'], $a['join']);
+
+                }
+                break;
+
             case 'search':
+                $sValue = $mixedParams;
                 if ($sValue)
                     $this->aCurrent['restriction']['keyword'] = array('value' => $sValue,'field' => '','operator' => 'against');
 
@@ -69,14 +86,14 @@ class BxPersonsSearchResult extends BxDolTwigSearchResult {
                 break;
 
             case 'user':
-                $iProfileId = (int)$sValue;                
+                $iProfileId = (int)$mixedParams;
                 $aContentInfo = $oModuleMain->_oDb->getContentInfoById($iContentId);
                 if (!$aContentInfo)
                     $this->isError = true;
                 else
                     $this->aCurrent['restriction']['owner']['value'] = $iProfileId;
 
-                $this->sBrowseUrl = "browse/user/$sValue";
+                $this->sBrowseUrl = "browse/user/$iProfileId";
                 $this->aCurrent['title'] = _t('_bx_persons_page_title_browse_by_author', $aContentInfo['fullname']); // TODO: owner name here
                 if (bx_get('rss')) {
                     $aData = getProfileInfo($iProfileId);
@@ -112,12 +129,15 @@ class BxPersonsSearchResult extends BxDolTwigSearchResult {
     }
 
     function getAlterOrder() {
-        if ($this->aCurrent['sorting'] == 'last') {
+        switch ($this->aCurrent['sorting']) {
+        case 'none':
+            return array();
+        case 'last':
+        default:
             $aSql = array();
             $aSql['order'] = " ORDER BY `bx_persons_data`.`added` DESC";
             return $aSql;
         }
-        return array();
     }
 
     function displayResultBlock () {        

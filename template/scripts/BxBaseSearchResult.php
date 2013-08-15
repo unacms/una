@@ -12,7 +12,7 @@
 bx_import('BxDolSearch');
 class BxBaseSearchResult extends BxDolSearchResult {
 
-    protected $iDesignBoxTemplate = 11;
+    protected $iDesignBoxTemplate = BX_DB_PADDING_DEF;
     protected $aPermalinks;
     protected $aConstants;
 

@@ -70,10 +70,24 @@ class BxPersonsModule extends BxDolModule {
         return $this->_serviceBrowse ('recent');
     }
 
-    public function _serviceBrowse ($sMode, $aParams = false) {
-        $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
+    public function serviceBrowseConnections ($iProfileId, $sObjectConnections = 'sys_profiles_friends', $sConnectionsType = 'content', $iMutual = false, $iDesignBox = BX_DB_PADDING_DEF) {
+        return $this->_serviceBrowse (
+            'connections', 
+            array(
+                'object' => $sObjectConnections,
+                'type' => $sConnectionsType,
+                'mutual' => $iMutual,
+                'profile' => (int)$iProfileId),  
+            $iDesignBox
+        );
+    }
+
+    public function _serviceBrowse ($sMode, $aParams = false, $iDesignBox = BX_DB_PADDING_DEF) {
         bx_import('SearchResult', $this->_aModule);
+        $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
         $o = new $sClass($sMode, $aParams);
+
+        $o->setDesignBoxTemplateId($iDesignBox);
 
         if ($o->isError)
             return false;

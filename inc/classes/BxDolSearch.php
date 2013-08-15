@@ -517,7 +517,7 @@ class BxDolSearchResult {
             $aWhere[] = '1';
             foreach ($this->aCurrent['restriction'] as $sKey => $aValue) {
                 $sqlCondition = '';
-                if (isset($aValue['operator']) && !empty($aValue['value'])) {
+                if (isset($aValue['operator']) && isset($aValue['value']) && $aValue['value'] !== '' && $aValue['value'] !== false && $aValue['value'] !== null) {
                    $sFieldTable = isset($aValue['table']) ? $aValue['table'] : $this->aCurrent['table'];
                    $sqlCondition = "`{$sFieldTable}`.`{$aValue['field']}` ";
                    switch ($aValue['operator']) {
