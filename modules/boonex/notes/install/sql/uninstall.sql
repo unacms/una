@@ -20,6 +20,7 @@ DELETE FROM `sys_form_inputs` WHERE `module` = 'bx_notes';
 DELETE FROM `sys_form_display_inputs` WHERE `display_name`='bx_notes_note_add';
 DELETE FROM `sys_form_display_inputs` WHERE `display_name`='bx_notes_note_edit';
 DELETE FROM `sys_form_display_inputs` WHERE `display_name`='bx_notes_note_view';
+DELETE FROM `sys_form_display_inputs` WHERE `display_name`='bx_notes_note_delete';
 
 -- STUDIO PAGE & WIDGET
 

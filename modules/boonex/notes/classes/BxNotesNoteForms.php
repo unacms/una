@@ -110,7 +110,7 @@ class BxNotesNoteForms extends BxDolProfileForms {
         }
 
         // change profile to 'pending' only if profile is 'active'
-        if (!$isAutoApprove && BX_PROFILE_STATUS_ACTIVE == $aProfileInfo['status'] && !empty($aTrackTextFieldsChanges['changed_fields']))
+        if (/*!$isAutoApprove &&*/ BX_PROFILE_STATUS_ACTIVE == $aProfileInfo['status'] && !empty($aTrackTextFieldsChanges['changed_fields']))
             $oProfile->disapprove(BX_PROFILE_ACTION_AUTO);
 
         // perform action
