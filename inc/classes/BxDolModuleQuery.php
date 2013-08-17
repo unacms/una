@@ -70,7 +70,7 @@ class BxDolModuleQuery extends BxDolDb {
         return $this->fromMemory('sys_modules', 'getAll', $sSql);
     }
 
-/*    
+
     function getModulesBy($aParams = array()) {
         $sPostfix = $sWhereClause = "";
 
@@ -115,7 +115,6 @@ class BxDolModuleQuery extends BxDolDb {
         	ORDER BY `title`";
         return $this->fromMemory('sys_modules' . $sPostfix, 'getAll', $sSql);
     }
-*/
 
     function getModulesUri() {
         $sSql = "SELECT `uri` FROM `sys_modules` ORDER BY `uri`";
