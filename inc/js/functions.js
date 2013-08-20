@@ -21,9 +21,10 @@ function getHtmlData( elem, url, callback, method , confirmation)
 
     $block.css('position', 'relative'); // set temporarily for displaying "loading icon"
 
-    var $loadingDiv = $('<div class="bx-loading-ajax"><div class="bx-loading-ajax-rotating"></div></div>').appendTo($block);
+    bx_loading_content($block, true);
+    var $loadingDiv = $block.find('.bx-loading-ajax');
 
-     var iLeftOff = parseInt(($block.innerWidth() / 2.0) - ($loadingDiv.outerWidth()  / 2.0));
+    var iLeftOff = parseInt(($block.innerWidth() / 2.0) - ($loadingDiv.outerWidth()  / 2.0));
     var iTopOff  = parseInt(($block.innerHeight() / 2.0) - ($loadingDiv.outerHeight()));
     if (iTopOff<0) iTopOff = 0;
 
@@ -51,9 +52,10 @@ function getHtmlData( elem, url, callback, method , confirmation)
     } else {
 
         $block.load(url + '&_r=' + Math.random(), function() {
-	        $(this)
-			    .css('position', blockPos) // return previous value
-		        .addWebForms();
+	        $(this).css('position', blockPos); // return previous value
+
+            if ($.isFunction($.addWebForms))
+		        $(this).addWebForms();
 
             if (typeof callback == 'function')
                 callback.apply(this);
@@ -144,16 +146,25 @@ function showPopupAnyHtml(sUrl, sId) {
 }
 
 
+function bx_loading_animate (e) {
+    if (!e.length)
+        return false;
+    if (e.find('.bx-sys-spinner').length)
+        return false;
+    return new Spinner(aSpinnerOpts).spin(e.get(0));
+}
+
 function bx_loading_content (elem, b, isReplace) {
     var block = $(elem);
-    if (1 == b || true == b) {
-        if ('undefined' != typeof(isReplace) && isReplace)
-            block.html('<div class="bx-loading-ajax" style="position:static;"><div class="bx-loading-ajax-rotating"></div></div>');
-        else
-            block.append('<div class="bx-loading-ajax"><div class="bx-loading-ajax-rotating"></div></div>');
-    } else {
+    if (!b) {
         block.find(".bx-loading-ajax").remove();
-    }
+    } else if (!block.find('.bx-loading-ajax').length) {
+        if ('undefined' != typeof(isReplace) && isReplace)
+            block.html('<div class="bx-loading-ajax" style="position:static;"></div>');
+        else
+            block.append('<div class="bx-loading-ajax"></div>');
+        bx_loading_animate(block.find('.bx-loading-ajax'));
+    } 
 }
 
 function bx_loading (elem, b) {

@@ -7,7 +7,7 @@
 // jQuery plugin - Dolphin RSS Aggregator
 (function($){
     $.fn.dolRSSFeed = function(sForceUrl) {
-        return this.each( function(){
+        return this.each( function() {
 
             var $Cont = $(this);
             var iRSSID = $Cont.attr( 'rssid' );
@@ -18,6 +18,8 @@
             var iMemID  = parseInt( $Cont.attr( 'member' ) || 0 );
 
             var sFeedURL = (sForceUrl != undefined) ? sForceUrl : sUrlRoot + 'get_rss_feed.php?ID=' + iRSSID + '&member=' + iMemID;
+
+            bx_loading_animate($(this).find('.bx-loading-ajax'));
 
             $.getFeed( {
                 url: sFeedURL ,

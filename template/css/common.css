@@ -161,12 +161,11 @@ blockquote {
 
 .bx-loading-ajax {
     position:absolute;
-    width:43px;
-    height:11px;
+    width:60px;
+    height:60px;
     z-index:10;
     margin-left:auto;
     margin-right:auto;
-    padding:10px 10px;
 
     background-color:rgb(148, 189, 233);
     background-color:rgba(128, 169, 213, 0.5);
@@ -177,13 +176,6 @@ blockquote {
 
     text-align:center;
     color:#CCCCCC;
-}
-.bx-loading-ajax-rotating {
-    width:43px;
-    height:11px;
-    z-index:11;
-
-    background-image:url(../images/loading.gif);
 }
 
 /* --------------- button */

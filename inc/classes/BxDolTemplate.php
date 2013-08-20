@@ -301,9 +301,11 @@ class BxDolTemplate extends BxDol {
         //--- Load default JS ---//
         $this->addJs(array(
             'jquery.js',
+            'jquery.migrate.js',
             'functions.js',
             'jquery.dolPopup.js',
             'jquery.ui.position.min.js',
+            BX_DOL_URL_PLUGINS . 'spin.min.js',
         ));
 
         //--- Load injection's cache ---//
