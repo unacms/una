@@ -20,10 +20,10 @@
     <script type="text/javascript" language="javascript">
         var sUrlRoot = '<bx_url_root />';
         var aSpinnerOpts = {
-            lines: 8, // The number of lines to draw
+            lines: 7, // The number of lines to draw
             length: 0, // The length of each line
             width: 8, // The line thickness
-            radius: 10, // The radius of the inner circle
+            radius: 7, // The radius of the inner circle
             corners: 1, // Corner roundness (0..1)
             rotate: 0, // The rotation offset
             direction: 1, // 1: clockwise, -1: counterclockwise
@@ -36,7 +36,13 @@
             zIndex: 2e9, // The z-index (defaults to 2000000000)
             top: 'auto', // Top position relative to parent in px
             left: 'auto' // Left position relative to parent in px
-        };        
+        };
+        var aSpinnerSmallOpts = $.extend({}, aSpinnerOpts, {
+            lines: 6,
+            width: 6,
+            radius: 4,
+            color: '#333'
+        }); 
     </script>
     __extra_js__
 

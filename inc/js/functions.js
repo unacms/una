@@ -146,7 +146,18 @@ function showPopupAnyHtml(sUrl, sId) {
 }
 
 
+function bx_loading_btn (e, b) {
+    e = $(e);
+    if (!b) {
+        e.find('.bx-loading-ajax-btn').remove();
+    } else if (!e.find('.bx-loading-ajax-btn').length) {
+        e.append('<b class="bx-loading-ajax-btn"></b>');
+        new Spinner(aSpinnerSmallOpts).spin(e.find('.bx-loading-ajax-btn').get(0));
+    }
+}
+
 function bx_loading_animate (e) {
+    e = $(e);
     if (!e.length)
         return false;
     if (e.find('.bx-sys-spinner').length)

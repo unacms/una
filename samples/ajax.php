@@ -21,7 +21,7 @@ bx_import('BxDolLanguages');
 bx_import('BxTemplFunctions');
 
 if  (bx_get('ajax') || (isset( $_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
-    sleep(5);
+    sleep(3);
     echo '<div class="bx-def-padding bx-def-color-bg-block">AJAX content here: ' .  date(DATE_RFC822) . '</div>';
     exit;
 }
@@ -39,10 +39,22 @@ $oTemplate->getPageCode();
 function PageCompMainCode() {
 
     ob_start();
+?>
+    <script>
+    function ajaxTest(e) {
+        bx_loading_btn(e, 1);
+        getHtmlData('bx-result', 'samples/ajax.php?ajax=1', function () {
+            bx_loading_btn(e, 0);
+        });
+    }
+    </script>
+    <button class="bx-btn" onclick="getHtmlData('bx-result', 'samples/ajax.php?ajax=1')">Нажми Меня</button>
+    <button class="bx-btn bx-def-margin-left" onclick="ajaxTest(this)">И Меня!</button>
 
-    echo '<button class="bx-btn" onclick="getHtmlData(\'bx-result\', \'' . BX_DOL_URL_ROOT . 'samples/ajax.php?ajax=1\')">Нажми Меня</button><div class="bx-clear"></div>';
-    echo '<div id="bx-result" style="width:500px; height:200px;" class="bx-def-border bx-def-round-corners bx-def-margin-top"></div>';
+    <div class="bx-clear"></div>
 
+    <div id="bx-result" style="width:500px; height:200px;" class="bx-def-border bx-def-round-corners bx-def-margin-top"></div>
+<?php
     return DesignBoxContent("AJAX", ob_get_clean(), BX_DB_PADDING_DEF);
 }
 

@@ -161,8 +161,8 @@ blockquote {
 
 .bx-loading-ajax {
     position:absolute;
-    width:60px;
-    height:60px;
+    width:50px;
+    height:50px;
     z-index:10;
     margin-left:auto;
     margin-right:auto;
@@ -172,10 +172,18 @@ blockquote {
 
 	border-radius:5px;
 	-moz-border-radius:5px;
-	-webkit-border-radius:5px;	
+	-webkit-border-radius:5px;
 
     text-align:center;
     color:#CCCCCC;
+}
+
+.bx-loading-ajax-btn {
+    display:inline-block;
+    width:20px;
+    height:20px;
+    margin-left:5px;
+    vertical-align:middle;
 }
 
 /* --------------- button */
