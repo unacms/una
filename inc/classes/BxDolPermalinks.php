@@ -160,12 +160,13 @@ class BxDolPermalinks extends BxDolDb {
     /**
      * Make permalink from link.
      * @param $sLink - relative URL.
+     * @param $aParams - params to add to the url.
      * @return - relative permalinked URL if it was detected and permalinks are ON or unchanged URL otherwise.
      */
-    function permalink($sLink) {
+    function permalink($sLink, $aParams = array()) {
 
         $sRet = null;
-        bx_alert('system', 'permalink', 0, 0, array('link' => $sLink, 'return_data' => &$sRet));
+        bx_alert('system', 'permalink', 0, 0, array('link' => $sLink, 'params' => &$aParams, 'return_data' => &$sRet));
         if (null !== $sRet)
             return $sRet;
 
@@ -181,11 +182,11 @@ class BxDolPermalinks extends BxDolDb {
             if (!$this->_isEnabled($sKey))
                 return $sLink;
 
-            return $this->aLinksStandard[$sKey]['permalink'] . $sPage;
+            return bx_append_url_params($this->aLinksStandard[$sKey]['permalink'] . $sPage, $aParams);
 
         }
 
-        return $this->_isEnabled($sLink) ? $this->aLinksStandard[$sLink]['permalink'] : $sLink;
+        return bx_append_url_params($this->_isEnabled($sLink) ? $this->aLinksStandard[$sLink]['permalink'] : $sLink, $aParams);
     }
 
     /**

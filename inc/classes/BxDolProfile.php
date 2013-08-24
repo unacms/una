@@ -43,18 +43,29 @@ class BxDolProfile extends BxDol {
     }
 
     /**
-     * Get singleton instance of the class
+     * Get singleton instance of the class by account id
      */
     public static function getInstanceAccountProfile($iAccountId = false) {
         $oQuery = BxDolProfileQuery::getInstance();
         $aProfile = $oQuery->getAccountProfile($iAccountId ? $iAccountId : getLoggedId());
         if (!$aProfile)
             return false;
-        return $this->getInstance($aProfile['id']);
+        return self::getInstance($aProfile['id']);
     }
 
     /**
-     * Get singleton instance of the class
+     * Get singleton instance of the class by account id, content id and type
+     */
+    public static function getInstanceByContentTypeAccount($iContent, $sType, $iAccountId = false) {
+        $oQuery = BxDolProfileQuery::getInstance();
+        $aProfile = $oQuery->getProfileByContentTypeAccount($iContent, $sType, $iAccountId ? $iAccountId : getLoggedId());
+        if (!$aProfile)
+            return false;
+        return self::getInstance($aProfile['id']);
+    }
+
+    /**
+     * Get singleton instance of the class by profile id
      */
     public static function getInstance($mixedProfileId = false) {
 
@@ -79,6 +90,14 @@ class BxDolProfile extends BxDol {
      */
     public function id() {
         return $this->_oQuery->getIdById($this->_iProfileID);
+    }
+
+    /**
+     * Get account id associated with the profile
+     */
+    public function getAccountId() {
+        $aInfo = $this->getInfo();
+        return $aInfo['account_id'];
     }
 
     /**
@@ -237,6 +256,29 @@ class BxDolProfile extends BxDol {
         return true;
     }
 
+
+    /**
+     * Display informer message if it is possible to switch to this profile
+     */
+    public function checkSwitchToProfile($oTemplate = null, $iViewerAccountId = false, $iViewerProfileId = false) {
+        if (false === $iViewerAccountId)
+            $iViewerAccountId = getLoggedId();
+        if (false === $iViewerProfileId)
+            $iViewerProfileId = bx_get_logged_profile_id();
+
+        if (!$iViewerAccountId || !$iViewerProfileId)
+            return;
+
+        if ($iViewerAccountId != $this->getAccountId() ||  $iViewerProfileId == $this->id())
+            return;
+
+        bx_import('BxDolInformer');
+        bx_import('BxDolPermalinks');
+        $oInformer = BxDolInformer::getInstance($oTemplate);
+        if ($oInformer)
+            $oInformer->add('sys-switch-profile-context', _t('_sys_txt_account_profile_context_change_suggestion', BxDolPermalinks::getInstance()->permalink('page.php?i=account-profile-switcher', array('switch_to_profile' => $this->id()))), BX_INFORMER_INFO);
+
+    }
 }
 
 /** @} */

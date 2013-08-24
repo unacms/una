@@ -70,7 +70,7 @@ class BxDolAccount extends BxDol {
     public function isConfirmed($iAccountId = false) {
         if (!getParam('sys_email_confirmation')) // if email_confirmation procedure is disabled, always return true
             return true;
-        $a = $this->getInfo((int)$iAccountId);        
+        $a = $this->getInfo((int)$iAccountId);
         return $a['email_confirmed'] ? true : false;
     }
 
@@ -92,6 +92,25 @@ class BxDolAccount extends BxDol {
         }
         return false;
     }    
+
+    public function updateProfileContext($iSwitchToProfileId, $iAccountId = false) {
+        $iId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
+        $aInfo = $this->getInfo((int)$iId);
+        if (!$aInfo)
+            return false;
+
+        $ret = null;
+        bx_alert('account', 'before_switch_context', $iId, $iSwitchToProfileId, array('profile_id_current' => $aInfo['profile_id'], 'override_result' => &$ret));
+        if ($ret !== null)
+            return $ret;
+
+        if ($this->_oQuery->updateCurrentProfile($iId, $iSwitchToProfileId)) {
+            bx_alert('account', 'switch_context', $iId, $iSwitchToProfileId, array('profile_id_old' => $aInfo['profile_id']));
+            return true;
+        }
+
+        return false;
+    }
 
     /**
      * Send "confirmation" email

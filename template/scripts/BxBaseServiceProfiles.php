@@ -28,13 +28,50 @@ class BxBaseServiceProfiles extends BxDol {
         $s = '';
         foreach ($aProfiles as $aProfile)
             if ($aProfile['type'] != 'system')
-            $s .= BxDolService::call($aProfile['type'], 'profile_thumb', array($aProfile['content_id']));
+                $s .= BxDolService::call($aProfile['type'], 'profile_unit', array($aProfile['content_id']));
 
         if (!$s) 
             $s = MsgBox(_t('_sys_txt_empty'));
 
         return $s . '<div class="bx-clear"></div>';
 
+    }
+
+    public function serviceAccountProfileSwitcher ($iAccountId = false) {
+        bx_import('BxDolProfileQuery');
+        $oProfilesQuery = BxDolProfileQuery::getInstance();
+
+        $aProfiles = $oProfilesQuery->getProfilesByAccount($iAccountId ? $iAccountId : getLoggedId());
+        if (!$aProfiles)
+            return false;
+        
+        $iLoggedPofileId = bx_get_logged_profile_id();
+        $aVars = array (
+            'bx_repeat:row' => array(),
+        );
+        foreach ($aProfiles as $aProfile) {
+            //if ($aProfile['type'] == 'system')
+            //    continue;
+            $aVars['bx_repeat:row'][] = array (
+                'bx_if:active' => array (
+                    'condition' => $iLoggedPofileId == $aProfile['id'],
+                    'content' => array('id' => $aProfile['id']), 
+                ),
+                'bx_if:inactive' => array (
+                    'condition' => $iLoggedPofileId != $aProfile['id'],
+                    'content' => array('id' => $aProfile['id'], 'url_switch' => BxDolPermalinks::getInstance()->permalink('page.php?i=account-profile-switcher', array('switch_to_profile' => $aProfile['id']))),
+                ),
+                'unit' => BxDolService::call($aProfile['type'], 'profile_unit', array($aProfile['content_id'])),
+            );
+        }
+
+        if (!$aVars['bx_repeat:row']) 
+            return MsgBox(_t('_sys_txt_empty'));
+
+        bx_import('BxDolTemplate');
+        $oTemplate = BxDolTemplate::getInstance();
+        $oTemplate->addCss('account.css');
+        return $oTemplate->parseHtmlByName('profile_switch_row.html', $aVars);
     }
 
 }

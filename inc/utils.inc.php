@@ -1336,6 +1336,9 @@ function bx_encode_url_params ($a, $aExcludeKeys = array (), $aOnlyKeys = false)
 }
 
 function bx_append_url_params ($sUrl, $mixedParams) {
+    if (!$mixedParams)
+        return $sUrl;
+
     $sParams = false == strpos($sUrl, '?') ? '?' : '&';
 
     if (is_array($mixedParams)) {

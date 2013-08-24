@@ -44,7 +44,7 @@ class BxPersonsModule extends BxDolModule {
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
         if (!$aContentInfo)
             return false;        
-        return $this->_oTemplate->unit($aContentInfo);
+        return $this->_oTemplate->thumb($aContentInfo);
     }
 
     public function serviceProfileName ($iContentId) {

@@ -61,6 +61,16 @@ class BxDolProfileQuery extends BxDolDb {
     }
 
     /**
+     * Get profile by account id.
+     * @param string $iAccountId account id
+     * @return array if aprofile ids, key is profile id
+     */
+    public function getProfileByContentTypeAccount ($iContentId, $sType, $iAccountId) {
+        $sSql = $this->prepare("SELECT * FROM `sys_profiles` WHERE `account_id` = ? AND `type` = ? AND `content_id` = ?", $iAccountId, $sType, $iContentId);
+        return $this->getRow($sSql);
+    }
+
+    /**
      * Insert account and content id association. Also if currect profile id is not defined - it updates current profile id in account.
      * @param $iAccountId account id
      * @param $iContentId content id

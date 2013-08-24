@@ -42,7 +42,26 @@ class BxBasePageAccount extends BxTemplPage {
                 if ($oInformer)
                     $oInformer->add('sys-account-status-not-active', _t($this->_aMapStatus2LangKey[$sStatus]), BX_INFORMER_ALERT);
             }
-        }        
+        }
+
+        // switch profile context
+        if ($iSwitchToProfileId = (int)bx_get('switch_to_profile')) {
+            bx_import('BxDolInformer');
+            $oInformer = BxDolInformer::getInstance($this->_oTemplate);
+            $oProfile = BxDolProfile::getInstance($iSwitchToProfileId);
+            $sInformerMsg = '';
+
+            if ($oProfile && $oProfile->getAccountId() == getLoggedId()) {
+                bx_import('BxDolProfile');
+                $oAccount = BxDolAccount::getInstance();
+                if ($oAccount->updateProfileContext($iSwitchToProfileId))
+                    $sInformerMsg = _t('_sys_txt_account_profile_context_changed_success', $oProfile->getDisplayName());
+            } 
+
+            if ($oInformer)
+                $oInformer->add('sys-account-profile-context-change-result', $sInformerMsg ? $sInformerMsg : _t('_Error occured'), $sInformerMsg ? BX_INFORMER_INFO : BX_INFORMER_ALERT);
+        }
+
     }
 
     protected function _getPageCacheParams () {

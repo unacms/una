@@ -35,6 +35,15 @@ blockquote {
     font-size:1px;
 }
 
+.bx-clearfix:before,
+.bx-clearfix:after {
+    content:"";
+    display:table;
+}
+.bx-clearfix:after {
+    clear:both;
+}
+
 /* --------------- design boxes */
 
 .bx-db-container {

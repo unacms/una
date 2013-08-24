@@ -3278,8 +3278,7 @@ More info about URI DNSBL: <br />
     <string name="_sys_menu_item_title_system_account_settings_info"><![CDATA[Info]]></string>
     <string name="_sys_menu_item_title_system_account_settings_email"><![CDATA[Email]]></string>
     <string name="_sys_menu_item_title_system_account_settings_pwd"><![CDATA[Password]]></string>
-    <string name="_sys_menu_item_title_system_account_settings_delete"><![CDATA[Delete Account]]></string>
-     
+    <string name="_sys_menu_item_title_system_account_settings_delete"><![CDATA[Delete Account]]></string>     
     <string name="_sys_menu_item_title_system_account"><![CDATA[Account]]></string>
     <string name="_sys_menu_item_title_system_create_profile"><![CDATA[Create Profile]]></string>
     <string name="_sys_menu_item_title_system_logout"><![CDATA[Log Out]]></string>
@@ -3287,6 +3286,7 @@ More info about URI DNSBL: <br />
     <string name="_sys_menu_item_title_system_account_settings_email"><![CDATA[Email]]></string>
     <string name="_sys_menu_item_title_system_account_settings_pwd"><![CDATA[Password]]></string>
     <string name="_sys_menu_item_title_system_account_settings_delete"><![CDATA[Delete Account]]></string>
+    <string name="_sys_menu_item_title_system_account_profile_context"><![CDATA[Profile Context]]></string>
 
     <string name="_sys_menu_item_title_home"><![CDATA[Home]]></string>
     <string name="_sys_menu_item_title_about"><![CDATA[About]]></string>    
@@ -3297,6 +3297,7 @@ More info about URI DNSBL: <br />
     <string name="_sys_menu_item_title_account_settings_pwd"><![CDATA[Password]]></string>
     <string name="_sys_menu_item_title_account_settings_info"><![CDATA[Info]]></string>
     <string name="_sys_menu_item_title_account_settings_delete"><![CDATA[Delete Account]]></string>
+    <string name="_sys_menu_item_title_account_profile_context"><![CDATA[Profile Context]]></string>
 
     <string name="_sys_menu_set_title_site"><![CDATA[Site]]></string>
     <string name="_sys_menu_set_title_footer"><![CDATA[Footer]]></string>
@@ -3354,6 +3355,8 @@ More info about URI DNSBL: <br />
     <string name="_sys_txt_account_pending"><![CDATA[Your account is pending approval, please wait until it is activated.]]></string>
     <string name="_sys_txt_account_suspended"><![CDATA[Your account is suspended.]]></string>
     <string name="_sys_txt_account_already_created"><![CDATA[Account is already created.]]></string>
+    <string name="_sys_txt_account_profile_context_changed_success"><![CDATA[Profile context has beed succesfully changed to: <b>{0}</b>]]></string>
+    <string name="_sys_txt_account_profile_context_change_suggestion"><![CDATA[This is your profile, you can <a href="{0}">change profile context</a> to this profile]]></string>
 
     <string name="_sys_txt_error_account_creation"><![CDATA[Account creation failed]]></string>
     <string name="_sys_txt_error_account_update"><![CDATA[Account update failed]]></string>
@@ -3460,6 +3463,8 @@ More info about URI DNSBL: <br />
     <string name="_sys_page_title_system_confirm_email"><![CDATA[Email Confirmation]]></string>
     <string name="_sys_page_title_system_unsubscribe_notifications"><![CDATA[Unsubscribe From Notifications]]></string>
     <string name="_sys_page_title_system_unsubscribe_news"><![CDATA[Unsubscribe From Newsletters]]></string>
+    <string name="_sys_page_title_system_account_profile_switcher"><![CDATA[Profile Context Switcher]]></string>
+    <string name="_sys_page_title_account_profile_switcher"><![CDATA[Profile Context Switcher]]></string>
 
     <string name="_sys_page_title_home"><![CDATA[{site_title} :: Homepage]]></string>
     <string name="_sys_page_title_about"><![CDATA[About]]></string>
@@ -3489,6 +3494,7 @@ More info about URI DNSBL: <br />
     <string name="_sys_page_block_title_existing_profiles"><![CDATA[Existing Profiles]]></string>
     <string name="_sys_page_block_title_create_profile"><![CDATA[Create New Profile]]></string>
     <string name="_sys_page_block_title_my_profiles"><![CDATA[My Profiles]]></string>
+    <string name="_sys_page_block_title_account_profile_switcher"><![CDATA[Profile Context Switcher]]></string>
 
 	<string name="_sys_acl_action_not_allowed"><![CDATA[Your current membership (<b>{2}</b>) doesn't allow you to <b>{1}</b>.]]></string>
 	<string name="_sys_acl_action_limit_reached"><![CDATA[You have reached your limit for now. Your current membership (<b>{2}</b>) allows you to {1} no more than {3} times]]></string>

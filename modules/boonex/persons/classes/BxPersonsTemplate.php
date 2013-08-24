@@ -24,16 +24,13 @@ class BxPersonsTemplate extends BxDolTwigTemplate {
         $this->addCss ('main.css');
     }
 
+    /**
+     * Get profile unit
+     */
     function unit ($aData, $sTemplateName = 'unit.html') {
 
         // get picture thumb url
-        $sPictureThumb = '';
-        if ($aData[BxPersonsConfig::$FIELD_PICTURE]) {
-            bx_import('BxDolImageTranscoder');                    
-            $oImagesTranscoder = BxDolImageTranscoder::getObjectInstance(BxPersonsConfig::$OBJECT_IMAGES_TRANSCODER_THUMB);
-            if ($oImagesTranscoder)
-                $sPictureThumb = $oImagesTranscoder->getImageUrl($aData[BxPersonsConfig::$FIELD_PICTURE]);
-        }
+        $sPictureThumb = $this->thumb ($aData);
 
         // get person's url
         bx_import('BxDolPermalinks');
@@ -42,13 +39,26 @@ class BxPersonsTemplate extends BxDolTwigTemplate {
         // generate html
         $aVars = array (
             'id' => $aData['id'],
-            'thumb_url' => $sPictureThumb ? $sPictureThumb : $this->getImageUrl('no-picture-thumb.png'),
+            'thumb_url' => $sPictureThumb,
             'content_url' => $sUrl,
             'title' => $aData[BxPersonsConfig::$FIELD_NAME],
         );
 
         return $this->parseHtmlByName($sTemplateName, $aVars);
 
+    }
+
+    /**
+     * Get profile picture thumb url
+     */
+    function thumb ($aData, $bSubstituteNoImage = true) {
+        if ($aData[BxPersonsConfig::$FIELD_PICTURE]) {
+            bx_import('BxDolImageTranscoder');                    
+            $oImagesTranscoder = BxDolImageTranscoder::getObjectInstance(BxPersonsConfig::$OBJECT_IMAGES_TRANSCODER_THUMB);
+            if ($oImagesTranscoder)
+                return $oImagesTranscoder->getImageUrl($aData[BxPersonsConfig::$FIELD_PICTURE]);
+        }
+        return $bSubstituteNoImage ? $this->getImageUrl('no-picture-thumb.png') : '';
     }
 
 }

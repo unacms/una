@@ -36,8 +36,11 @@ class BxPersonsPageProfile extends BxTemplPage {
         if ($this->_aContentInfo)
             $this->addMarkers($this->_aContentInfo); // every profile field can be used as marker
 
+        bx_import('BxDolProfile');        
+        $oProfileAuthor = $this->_aContentInfo ? BxDolProfile::getInstance($this->_aContentInfo['author']) : false;
+
         // display message if profile isn't active
-        if ($this->_aContentInfo && bx_get_logged_profile_id() == $this->_aContentInfo['author']) { 
+        if ($oProfileAuthor && bx_get_logged_profile_id() == $oProfileAuthor->id()) { 
             $sStatus = $this->_aContentInfo['profile_status'];
             if (isset($this->_aMapStatus2LangKey[$sStatus])) {
                 bx_import('BxDolInformer');
@@ -45,8 +48,12 @@ class BxPersonsPageProfile extends BxTemplPage {
                 if ($oInformer)
                     $oInformer->add('bx-persons-status-not-active', _t($this->_aMapStatus2LangKey[$sStatus]), BX_INFORMER_ALERT);
             }
-        }        
+        }
 
+        // display message if it is possible to switch to this profile
+        $oProfile = $this->_aContentInfo ? BxDolProfile::getInstanceByContentTypeAccount($this->_aContentInfo['id'], 'bx_persons') : false;
+        if ($oProfile)
+            $oProfile->checkSwitchToProfile($this->_oTemplate);
     }
 
     public function getCode () {
