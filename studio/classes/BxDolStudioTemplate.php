@@ -69,8 +69,10 @@ class BxDolStudioTemplate extends BxDolTemplate {
         //--- Add default JS in output
 		$this->addJs(array(
 		    'jquery.js',
+            'jquery.migrate.js',
 		    'jquery.dolPopup.js',
 		    'jquery.ui.position.min.js',
+            BX_DOL_URL_PLUGINS . 'spin.min.js',
 		));
     }
 
