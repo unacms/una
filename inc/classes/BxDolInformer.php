@@ -9,6 +9,7 @@
 
 define('BX_INFORMER_ALERT', 1); 
 define('BX_INFORMER_INFO', 2);
+define('BX_INFORMER_ERROR', 3);
 
 /** 
  * @page objects 
@@ -74,7 +75,7 @@ class BxDolInformer extends BxDol {
      * Add message to informer.
      * @param $sId - message id
      * @param $sMsg - message text
-     * @param $iType - message type: BX_INFORMER_ALERT or BX_INFORMER_INFO
+     * @param $iType - message type: BX_INFORMER_ALERT, BX_INFORMER_INFO or BX_INFORMER_ERROR
      */
     public function add ($sId, $sMsg, $iType = BX_INFORMER_INFO) {
         $this->_aMessages[$sId] = array (

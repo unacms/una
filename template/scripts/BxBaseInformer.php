@@ -20,12 +20,14 @@ class BxBaseInformer extends BxDolInformer {
     protected $_oTemplate;
 
     protected $_aMapType2Icon = array(
-        BX_INFORMER_ALERT => 'exclamation-red-frame.png',
-        BX_INFORMER_INFO => 'information-frame.png',
+        BX_INFORMER_ALERT => 'exclamation col-red3',
+        BX_INFORMER_INFO => 'info col-blue2-dark',
+        BX_INFORMER_ERROR => 'ban-circle col-red1',
     );
     protected $_aMapType2Class = array(
         BX_INFORMER_ALERT => 'bx-informer-msg-alert',
         BX_INFORMER_INFO => 'bx-informer-msg-info',
+        BX_INFORMER_ERROR => 'bx-informer-msg-error',
     );
 
     public function __construct ($oTemplate) {
@@ -49,7 +51,7 @@ class BxBaseInformer extends BxDolInformer {
 
         foreach ($this->_aMessages as $sId => $a) {
             $this->_aMessages[$sId]['class'] = $this->_aMapType2Class[$a['type']];
-            $this->_aMessages[$sId]['icon_url'] = $this->_oTemplate->getIconUrl($this->_aMapType2Icon[$a['type']]);
+            $this->_aMessages[$sId]['icon'] = $this->_aMapType2Icon[$a['type']];
         }
 
         $this->_addJsCss();
@@ -64,7 +66,7 @@ class BxBaseInformer extends BxDolInformer {
     protected function _addJsCss() {
         if ($this->_bJsCssAdded)
             return;
-        $this->_oTemplate->addCss('informer.css');
+        $this->_oTemplate->addCss(array('informer.css', 'colors.css'));
         $this->_bJsCssAdded = true;
     }
 }
