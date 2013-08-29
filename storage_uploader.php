@@ -65,7 +65,7 @@ switch ($sAction) {
 
         bx_import('BxDolLanguages');
 
-        $oUploader->handleUploads(isset($_FILES['f']) ? $_FILES['f'] : null, $isMultiple, $iContentId);
+        $oUploader->handleUploads(bx_get_logged_profile_id(), isset($_FILES['f']) ? $_FILES['f'] : null, $isMultiple, $iContentId);
         break;
 
 }

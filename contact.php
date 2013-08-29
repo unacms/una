@@ -123,7 +123,7 @@ function PageCompPageMainCodeWithForm() {
             'attachment' => array(
                 'type' => 'files',
                 'storage_object' => 'sample2',
-                'uploaders' => array ('Simple', 'HTML5'),
+                'uploaders' => array ('sys_simple', 'sys_html5'),
                 'images_transcoder' => 'sample2',
                 'multiple' => true,
                 'content_id' => 0,

@@ -1,10 +1,11 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 bx_import ('BxDolUploader');
 
@@ -16,8 +17,8 @@ class BxBaseUploaderSimple extends BxDolUploader {
 
     var $_sIframeId;
 
-    function BxBaseUploaderSimple ($aObject, $sStorageObject, $sUniqId) {
-        parent::BxDolUploader($aObject, $sStorageObject, $sUniqId);
+    function __construct ($aObject, $sStorageObject, $sUniqId) {
+        parent::__construct($aObject, $sStorageObject, $sUniqId);
         $this->_sIframeId = 'bx-form-input-files-' . $sUniqId . '-iframe';
         $this->_sButtonTemplate = 'uploader_button_simple.html';
     }
@@ -48,7 +49,7 @@ class BxBaseUploaderSimple extends BxDolUploader {
             'uploader_instance_name' => $this->getNameJsInstanceUploader(),
             'restrictions_text' => $this->getRestrictionsText(),
             'iframe_id' => $this->_sIframeId,
-            'engine' => $this->_aObject['engine'],
+            'engine' => $this->_aObject['object'],
             'storage_object' => $this->_sStorageObject,
             'uniq_id' => $this->_sUniqId,
             'multiple' => $isMultiple,
@@ -62,3 +63,4 @@ class BxBaseUploaderSimple extends BxDolUploader {
 
 }
 
+/** @} */

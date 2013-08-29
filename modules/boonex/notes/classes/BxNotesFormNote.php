@@ -40,7 +40,7 @@ class BxNotesFormNote extends BxTemplFormView {
 
         if (isset($this->aInputs[BxNotesConfig::$FIELD_PHOTO])) {
             $this->aInputs[BxNotesConfig::$FIELD_PHOTO]['storage_object'] = BxNotesConfig::$OBJECT_STORAGE;
-            $this->aInputs[BxNotesConfig::$FIELD_PHOTO]['uploaders'] = array('Simple', 'HTML5');
+            $this->aInputs[BxNotesConfig::$FIELD_PHOTO]['uploaders'] = array('sys_simple', 'sys_html5');
             $this->aInputs[BxNotesConfig::$FIELD_PHOTO]['images_transcoder'] = BxNotesConfig::$OBJECT_IMAGES_TRANSCODER_PREVIEW;
             $this->aInputs[BxNotesConfig::$FIELD_PHOTO]['multiple'] = true;
             $this->aInputs[BxNotesConfig::$FIELD_PHOTO]['content_id'] = 0;

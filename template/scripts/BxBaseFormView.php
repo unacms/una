@@ -869,9 +869,9 @@ BLAH;
             'uploaders_buttons' => $sUploaders,
             'info' => $sInfo,
             'error' => $sError,
-            'id_container_errors' => $oUploader->getIdContainerErrors(),
-            'id_container_result' => $oUploader->getIdContainerResult(),
-            'uploader_instance_name' => $oUploader->getNameJsInstanceUploader(),
+            'id_container_errors' => $oUploader ? $oUploader->getIdContainerErrors() : '',
+            'id_container_result' => $oUploader ? $oUploader->getIdContainerResult() : '',
+            'uploader_instance_name' => $oUploader ? $oUploader->getNameJsInstanceUploader() : '',
             'is_init_ghosts' => isset($aInput['init_ghosts']) && !$aInput['init_ghosts'] ? 0 : 1,
         ));
     }
