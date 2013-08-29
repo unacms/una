@@ -31,6 +31,10 @@ INSERT INTO `sys_transcoder_images_filters` (`transcoder_object`, `filter`, `fil
 ('bx_persons_thumb', 'Resize', 'a:4:{s:1:"w";s:2:"64";s:1:"h";s:2:"64";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0'),
 ('bx_persons_preview', 'Resize', 'a:4:{s:1:"w";s:3:"278";s:1:"h";s:3:"278";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0');
 
+-- UPLOADERS
+
+INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
+('bx_persons_avatar', 1, 'BxPersonsAvatarUploader', 'modules/boonex/persons/classes/BxPersonsAvatarUploader.php');
 
 -- PAGES
 

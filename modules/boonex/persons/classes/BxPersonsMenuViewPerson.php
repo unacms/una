@@ -36,16 +36,18 @@ class BxPersonsMenuViewPerson extends BxTemplMenu {
      */ 
     protected function _isVisible ($a) {
 
-        $iProfileId = bx_get_logged_profile_id();
+        bx_import('BxDolProfile');
+        $oAccountProfile = BxDolProfile::getInstanceAccountProfile();
+        $iAccountProfileId = $oAccountProfile->id();
 
         // TODO: separate checking for every menu item
 
         // all links are visible for owner
-        if ($this->_aContentInfo['author'] == $iProfileId)
+        if ($this->_aContentInfo['author'] == $iAccountProfileId)
             return true;
 
         // all links are visible for admin/moderator
-        $aCheck = checkActionModule($iProfileId, 'edit any person profile', 'bx_persons'); 
+        $aCheck = checkActionModule($iAccountProfileId, 'edit any person profile', 'bx_persons'); 
         if ($aCheck[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED)
             return true;
 

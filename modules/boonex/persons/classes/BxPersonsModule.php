@@ -227,6 +227,7 @@ class BxPersonsModule extends BxDolModule {
         $iContentId = (int)$iContentId;
 
         if (!$iFileId) {
+            header('Content-type: text/html; charset=utf-8');
             echo _t('_sys_txt_error_occured');        
             exit;
         }
