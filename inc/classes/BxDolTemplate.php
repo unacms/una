@@ -525,7 +525,7 @@ class BxDolTemplate extends BxDol {
      * @return location key. Is needed to remove the location.
      */
     function addDynamicLocation($sLocationPath, $sLocationUrl) {
-        $sLocationKey = mktime();
+        $sLocationKey = time();
         $this->addLocation($sLocationKey, $sLocationPath, $sLocationUrl);
 
         return $sLocationKey;
@@ -562,7 +562,7 @@ class BxDolTemplate extends BxDol {
      * @return location key. Is needed to remove the location.
      */
     function addDynamicLocationJs($sLocationPath, $sLocationUrl) {
-        $sLocationKey = mktime();
+        $sLocationKey = time();
         $this->addLocationJs($sLocationKey, $sLocationPath, $sLocationUrl);
 
         return $sLocationKey;

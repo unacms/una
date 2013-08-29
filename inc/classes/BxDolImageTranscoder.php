@@ -479,7 +479,7 @@ class BxDolImageTranscoder extends BxDol {
 
     protected function applyFilter_Grayscale ($sFile, $aParams) { 
         bx_import ('BxDolImageResize');
-        $o =& BxDolImageResize::getInstance();
+        $o = BxDolImageResize::getInstance();
         $o->removeCropOptions ();
 
         $this->_checkForceType ($o, $aParams);
@@ -492,7 +492,7 @@ class BxDolImageTranscoder extends BxDol {
 
     protected function applyFilter_Resize ($sFile, $aParams) { 
         bx_import ('BxDolImageResize');
-        $o =& BxDolImageResize::getInstance();
+        $o = BxDolImageResize::getInstance();
         $o->removeCropOptions ();
 
         if (isset($aParams['w']) && isset($aParams['h']))
