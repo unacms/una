@@ -11,8 +11,15 @@ bx_import('BxDolCmtsQuery');
 
 define('BX_OLD_CMT_VOTES', 365*86400); ///< comment votes older than this number of seconds will be deleted automatically 
 
-define('BX_CMT_SHOW_HEAD', 'head');
-define('BX_CMT_SHOW_TAIL', 'tail');
+define('BX_CMT_DISPLAY_FLAT', 'flat');
+define('BX_CMT_DISPLAY_THREADED', 'threaded');
+
+define('BX_CMT_BROWSE_HEAD', 'head');
+define('BX_CMT_BROWSE_TAIL', 'tail');
+
+define('BX_CMT_PFP_TOP', 'top');
+define('BX_CMT_PFP_BOTTOM', 'bottom');
+define('BX_CMT_PFP_BOTH', 'both');
 
 
 /** 
@@ -107,14 +114,22 @@ define('BX_CMT_SHOW_TAIL', 'tail');
  */
 class BxDolCmts extends BxDol
 {
+	var $_oQuery = null;
+	var $_sHomeUrl = '';
+	var $_sViewUrl = '';
 
-    var $_iId = 0;  ///< obect id to be commented
-    var $sTextAreaId;
-    var $_sSystem = 'profile';  ///< current comment system name
-    var $_aSystem = array ();   ///< current comments system array
+	var $_sSystem = 'profile'; ///< current comment system name
+    var $_aSystem = array (); ///< current comments system array
+    var $_iId = 0; ///< obect id to be commented
+
     var $_aCmtElements = array (); ///< comment submit form elements
-    var $_oQuery = null;
-    var $_sOrder = 'asc';
+
+    var $_sDisplayType = '';
+    var $_iDpMaxLevel = 0;
+    var $_bDpOpened = false; ///< applied for Threaded comments only
+
+    var $_sBrowseType = '';
+    var $_sOrder = '';
 
     /**
      * Constructor
@@ -135,18 +150,24 @@ class BxDolCmts extends BxDol
 
 		$iCmtTextMin = (int)$this->_aSystem['chars_post_min'];
 		$iCmtTextMax = (int)$this->_aSystem['chars_post_max'];
-		
 		$this->_aCmtElements = array (
-            'CmtParent' => array ('reg' => '/^[0-9]+$/', 'msg' => _t('_bad comment parent id')),
-            'CmtText' => array ('reg' => '/^.{' . $iCmtTextMin . ',' . $iCmtTextMax . '}$/m', 'msg' => _t('_Please enter ' . $iCmtTextMin . '-' . $iCmtTextMax . ' characters'))
+            'CmtParent' => array ('reg' => '^[0-9]+$', 'msg' => _t('_bad comment parent id')),
+            'CmtText' => array ('reg' => '^.{' . $iCmtTextMin . ',' . $iCmtTextMax . '}$', 'msg' => _t('_Please enter ' . $iCmtTextMin . '-' . $iCmtTextMax . ' characters'))
         );
 
+        $this->_iDpMaxLevel = 3;//(int)$this->_aSystem['number_of_levels'];
+        $this->_sDisplayType = $this->_iDpMaxLevel == 0 ? BX_CMT_DISPLAY_FLAT : BX_CMT_DISPLAY_THREADED;
+        $this->_bDpOpened = true;
+
+        $this->_sBrowseType = $this->_aSystem['browse_type'];
+        $this->_sOrder = 'asc';
+
         $this->_oQuery = new BxDolCmtsQuery($this->_aSystem);
+        $this->_sHomeUrl = BX_DOL_URL_ROOT . trim($_SERVER['REQUEST_URI'], '/');
+        $this->_sViewUrl = BX_DOL_URL_ROOT . 'cmts.php';
 
         if ($iInit)
             $this->init($iId);
-
-        $this->sTextAreaId = "cmt" . str_replace(' ', '', ucwords(str_replace('_', ' ', $this->_sSystem))) . "TextAreaParent";
     }
 
     function & getSystems ()
@@ -165,10 +186,11 @@ class BxDolCmts extends BxDol
                     `Nl2br` AS `nl2br`,
                     `PerView` AS `per_view`,
                     `PerViewReplies` AS `per_view_replies`,
+                    `BrowseType` AS `browse_type`,
+                    `IsBrowseSwitch` AS `is_browse_switch`,
+                    `PostFormPosition` AS `post_form_position`,
                     `NumberOfLevels` AS `number_of_levels`,
-                    `IsLevelsSwitch` AS `is_levels_switch`,
-                    `Show` AS `show`,
-                    `IsShowSwitch` AS `is_show_switch`,
+                    `IsDisplaySwitch` AS `is_display_switch`,
                     `IsRatable` AS `is_ratable`,
                     `ViewingThreshold` AS `viewing_threshold`,
                     `IsOn` AS `is_on`,
@@ -408,10 +430,11 @@ class BxDolCmts extends BxDol
         if (!$this->isEnabled())
            return '';
 
-        $sCmtType = isset($_REQUEST['CmtType']) ? bx_process_input($_REQUEST['CmtType']) : 'reply';
         $iCmtParentId= isset($_REQUEST['CmtParent']) ? bx_process_input($_REQUEST['CmtParent'], BX_DATA_INT) : 0;
+        $sCmtBrowse = isset($_REQUEST['CmtBrowse']) ? bx_process_input($_REQUEST['CmtBrowse'], BX_DATA_TEXT) : '';
+        $sCmtDisplay = isset($_REQUEST['CmtDisplay']) ? bx_process_input($_REQUEST['CmtDisplay'], BX_DATA_TEXT) : '';
 
-        return $this->getFormBox($sCmtType, $iCmtParentId);
+        return $this->getFormBox(array('parent_id' => $iCmtParentId, 'type' => $sCmtBrowse), array('type' => $sCmtDisplay));
     }
 
     function actionCmtsGet () {
@@ -421,7 +444,10 @@ class BxDolCmts extends BxDol
         $iCmtParentId = bx_process_input($_REQUEST['CmtParent'], BX_DATA_INT);
         $iCmtStart = isset($_REQUEST['CmtStart']) ? bx_process_input($_REQUEST['CmtStart'], BX_DATA_INT) : -1;
         $iCmtPerView = isset($_REQUEST['CmtPerView']) ? bx_process_input($_REQUEST['CmtPerView'], BX_DATA_INT) : -1;
-        return $this->getComments($iCmtParentId, $iCmtStart, $iCmtPerView);
+        $sCmtBrowse = isset($_REQUEST['CmtBrowse']) ? bx_process_input($_REQUEST['CmtBrowse'], BX_DATA_TEXT) : '';
+        $sCmtDisplay = isset($_REQUEST['CmtDisplay']) ? bx_process_input($_REQUEST['CmtDisplay'], BX_DATA_TEXT) : '';
+
+        return $this->getComments(array('parent_id' => $iCmtParentId, 'start' => $iCmtStart, 'per_view' => $iCmtPerView, 'type' => $sCmtBrowse), array('type' => $sCmtDisplay));
     }
 
     function actionCmtGet () {
@@ -429,7 +455,9 @@ class BxDolCmts extends BxDol
            return '';
 
         $iCmtId = bx_process_input($_REQUEST['Cmt'], BX_DATA_INT);
-        return $this->getComment($iCmtId);
+        $sCmtDisplay = isset($_REQUEST['CmtDisplay']) ? bx_process_input($_REQUEST['CmtDisplay'], BX_DATA_TEXT) : '';
+
+        return $this->getComment($iCmtId, array('type' => $sCmtDisplay));
     }
 
     function actionCmtPost ()

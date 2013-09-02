@@ -335,3 +335,25 @@ ul.bx-menu-floating-blocks {
 .bx-menu-floating-blocks-title {
     text-align:center;
 }
+
+
+/* --------------- interactive block menu */
+ul.bx-menu-inter {
+	padding:0;
+    margin:0;
+	list-style:none;
+}
+ul.bx-menu-inter li {
+    float:left;
+}
+li.bx-menu-inter-div {
+	padding: 0px 3px;
+}
+li.bx-menu-inter-div:first-child {
+	display: none;
+}
+li.bx-menu-inter-act {}
+li.bx-menu-inter-pas {}
+li.bx-menu-inter-hidden {
+	display: none;
+}

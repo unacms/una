@@ -1,8 +1,6 @@
 /* TODO: remake according to the new design */
     /*--- General Styles ---*/
-    div.cmts {
-		margin-top: 20px;
-    }
+    div.cmts {}
 
     ul.cmts {
         margin: 0px;
@@ -10,10 +8,15 @@
         list-style: none;
     }
     ul.cmts-margin {}
-    ul.cmts li.cmt {
-        padding-left: 84px;
+    li.cmt,
+    ul.cmts-margin li.cmt {
+		margin-top: 20px;
     }
-    li.cmt-more {
+    li.cmt:first-child {
+		margin-top: 0px;
+    }
+    li.cmt-more {}
+    div.cmt-more-cont {
 		padding: 5px 0px;
     	background-color: #ededed;
     	text-indent: 5px;
@@ -42,6 +45,7 @@
     /*--- Comment ---*/
     div.cmt-cont {
         position: relative;
+    	padding-left: 84px;
     	min-height: 64px;
     }
 	div.cmt-cont .bullet {
@@ -50,7 +54,7 @@
     div.cmt-icon {
 		position: absolute;
     	top: 0px;
-    	left: -84px;
+    	left: 0px;
     	width: 64px;
     	height: 64px;
     	background-color: #cccccc;
@@ -74,20 +78,47 @@
 
     /*--- Browse Styles ---*/
     div.cmt-browse {
-        /*position: relativ_e;*/
-        background-color: #ededed;
-        font-size: 11px;
-        color: #666666;
+
     }
+    div.cmt-browse-left {
+		position: relative;
+    	float: left;
+    }
+    div.cmt-browse-right {
+    	position: relative;
+    	float: right;
+	}
+	div.cmt-browse-right ul.bx-menu-inter  {
+		float: left;
+	}
+
+	div.cmt-browse-item,
+	div.cmt-browse-item-div,
+	div.cmt-browse-type-div {
+		position: relative;
+		float: left;
+	}
+	div.cmt-browse-item-div {
+		padding: 0px 3px;
+	}
+	div.cmt-browse-type-div {
+		padding: 0px 5px;
+	}
 
     /*--- Add Comment/Reply Styles ---*/
     div.cmt-reply {
 		position: relative;
-        padding-left: 84px;
+    }
+    div.cmt-reply-top {
+		margin-bottom: 40px;
+    }
+	div.cmt-reply-bottom {
+		margin-top: 40px;
     }
 	div.cmt-reply-expanded {}
     div.cmt-post-reply {
         position: relative;
+    	padding-left: 84px;
     }
     div.cmt-post-reply form {
         display: block;

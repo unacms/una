@@ -15,14 +15,15 @@
 /**
  * DB Queries.
 
-INSERT INTO `sys_objects_cmts` (`ObjectName`, `TableCmts`, `TableTrack`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Nl2br`, `PerView`, `PerViewReplies`, `NumberOfLevels`, `IsLevelsSwitch`, `Show`, `IsShowSwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES
-('profile', 'sys_cmts_profile', 'sys_cmts_track', 3, 2048, 100, 1, 5, 3, 0, 0, 'tail', 0, 1, -3, 1, 'cmt', '', '', '', '', '');
+INSERT INTO `sys_objects_cmts` (`ID`, `ObjectName`, `TableCmts`, `TableTrack`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Nl2br`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES
+(1, 'profile', 'sys_cmts_sample', 'sys_cmts_sample_track', 3, 2048, 100, 1, 5, 3, 'tail', 1, 'both', 1, 1, 1, -3, 1, 'cmt', '', '', '', '', '');
 
-CREATE TABLE IF NOT EXISTS `sys_cmts_profile` (
+CREATE TABLE IF NOT EXISTS `sys_cmts_sample` (
   `cmt_id` int(11) NOT NULL AUTO_INCREMENT,
   `cmt_parent_id` int(11) NOT NULL DEFAULT '0',
   `cmt_object_id` int(11) NOT NULL DEFAULT '0',
   `cmt_author_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `cmt_level` int(11) NOT NULL DEFAULT '0',
   `cmt_text` text NOT NULL,
   `cmt_mood` tinyint(4) NOT NULL DEFAULT '0',
   `cmt_rate` int(11) NOT NULL DEFAULT '0',
@@ -33,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `sys_cmts_profile` (
   KEY `cmt_object_id` (`cmt_object_id`,`cmt_parent_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `sys_cmts_track` (
+CREATE TABLE IF NOT EXISTS `sys_cmts_sample_track` (
   `cmt_system_id` int(11) NOT NULL DEFAULT '0',
   `cmt_id` int(11) NOT NULL DEFAULT '0',
   `cmt_rate` tinyint(4) NOT NULL DEFAULT '0',
@@ -72,7 +73,7 @@ function PageCompMainCode() {
 	if(!$oCmts->isEnabled())
 		return '';
 
-    return DesignBoxContent("Comments",  $oCmts->getCommentsFirst(), BX_DB_PADDING_DEF);
+    return DesignBoxContent("Comments",  $oCmts->getCommentsBlock(), BX_DB_PADDING_DEF);
 }
 
 

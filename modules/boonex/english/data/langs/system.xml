@@ -1166,6 +1166,13 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_N_replies"><![CDATA[<span>{0}</span> replies]]></string>
 	<string name="_N_comments"><![CDATA[<span>{0}</span> comments]]></string>
 	<string name="_Comment_to_this_comment"><![CDATA[Comment]]></string>
+	<string name="_cmt_display_flat"><![CDATA[Flat]]></string>
+	<string name="_cmt_display_threaded"><![CDATA[Threaded]]></string>
+	<string name="_cmt_browse_tail"><![CDATA[Newest]]></string>
+	<string name="_cmt_browse_head"><![CDATA[Oldest]]></string>
+	<string name="_cmt_browse_popular"><![CDATA[Popular]]></string>
+	<string name="_cmt_browse_connection"><![CDATA[Connection]]></string>
+	<string name="_cmt_page_header_view"><![CDATA[View comment]]></string>
 	<string name="_Reply_to_this_comment"><![CDATA[Reply]]></string>
 	<string name="_Add Your Comment"><![CDATA[Comment]]></string>
 	<string name="_Submit_Comment"><![CDATA[Post]]></string>

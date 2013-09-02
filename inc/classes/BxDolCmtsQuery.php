@@ -31,7 +31,11 @@ class BxDolCmtsQuery extends BxDolDb
     }
 
 	function getCommentsCount ($iId, $iCmtParentId = 0) {
-		$sQuery = $this->prepare("SELECT COUNT(*) FROM `{$this->_sTable}` WHERE `cmt_object_id` = ? AND `cmt_parent_id` = ?", $iId, $iCmtParentId);
+		$sWhereParent = '';
+        if((int)$iCmtParentId >= 0)
+        	$sWhereParent = $this->prepare(" AND `cmt_parent_id` = ?", $iCmtParentId);
+
+		$sQuery = $this->prepare("SELECT COUNT(*) FROM `{$this->_sTable}` WHERE `cmt_object_id` = ?" . $sWhereParent, $iId);
 		return (int)$this->getOne($sQuery);
 	}
 
@@ -41,13 +45,17 @@ class BxDolCmtsQuery extends BxDolDb
         $iTimestamp = time();
         $sFields = "'' AS `cmt_rated`,";
 
-        $sJoin = '';
+        $sJoin = "";
         if ($iAuthorId) {
-            $sFields = '`r`.`cmt_rate` AS `cmt_rated`,';
-            $sJoin = $this->prepare("LEFT JOIN {$this->_sTableTrack} AS `r` ON (`r`.`cmt_system_id` = ? AND `r`.`cmt_id` = `c`.`cmt_id` AND `r`.`cmt_rate_author_id` = ?)", $this->_aSystem['system_id'], $iAuthorId);
+            $sFields = "`r`.`cmt_rate` AS `cmt_rated`,";
+            $sJoin = $this->prepare("LEFT JOIN `{$this->_sTableTrack}` AS `r` ON (`r`.`cmt_system_id` = ? AND `r`.`cmt_id` = `c`.`cmt_id` AND `r`.`cmt_rate_author_id` = ?)", $this->_aSystem['system_id'], $iAuthorId);
         }
 
-        $sLimit = $iCount != -1 ? $this->prepare(' LIMIT ?, ?', (int)$iStart, (int)$iCount) : '';
+        $sWhereParent = '';
+        if((int)$iCmtParentId >= 0)
+        	$sWhereParent = $this->prepare(" AND `c`.`cmt_parent_id` = ?", $iCmtParentId);
+
+        $sLimit = $iCount != -1 ? $this->prepare(" LIMIT ?, ?", (int)$iStart, (int)$iCount) : '';
 
         $sQuery = $this->prepare("SELECT
                 $sFields
@@ -55,18 +63,17 @@ class BxDolCmtsQuery extends BxDolDb
                 `c`.`cmt_parent_id`,
                 `c`.`cmt_object_id`,
                 `c`.`cmt_author_id`,
+                `c`.`cmt_level`,
                 `c`.`cmt_text`,
                 `c`.`cmt_mood`,
                 `c`.`cmt_rate`,
                 `c`.`cmt_rate_count`,
                 `c`.`cmt_replies`,
-                (? - UNIX_TIMESTAMP(`c`.`cmt_time`)) AS `cmt_secs_ago`,
-                `p`.`id` AS `cmt_author_name`
-            FROM {$this->_sTable} AS `c`
-            LEFT JOIN `sys_profiles` AS `p` ON (`p`.`id` = `c`.`cmt_author_id`)
+                (? - UNIX_TIMESTAMP(`c`.`cmt_time`)) AS `cmt_secs_ago`
+            FROM `{$this->_sTable}` AS `c`
             $sJoin
-            WHERE `c`.`cmt_object_id` = ? AND `c`.`cmt_parent_id` = ?
-            ORDER BY `c`.`cmt_time` " . (strtoupper($sCmtOrder) == 'ASC' ? 'ASC' : 'DESC') . $sLimit, $iTimestamp, $iId, $iCmtParentId);
+            WHERE `c`.`cmt_object_id` = ?" . $sWhereParent . "
+            ORDER BY `c`.`cmt_time` " . (strtoupper($sCmtOrder) == 'ASC' ? 'ASC' : 'DESC') . $sLimit, $iTimestamp, $iId);
 
         $a = $this->getAll($sQuery);
 
@@ -95,15 +102,14 @@ class BxDolCmtsQuery extends BxDolDb
                 `c`.`cmt_parent_id`,
                 `c`.`cmt_object_id`,
                 `c`.`cmt_author_id`,
+                `c`.`cmt_level`,
                 `c`.`cmt_text`,
                 `c`.`cmt_mood`,
                 `c`.`cmt_rate`,
                 `c`.`cmt_rate_count`,
                 `c`.`cmt_replies`,
-                ($iTimestamp - UNIX_TIMESTAMP(`c`.`cmt_time`)) AS `cmt_secs_ago`,
-                `p`.`NickName` AS `cmt_author_name`
+                ($iTimestamp - UNIX_TIMESTAMP(`c`.`cmt_time`)) AS `cmt_secs_ago`
             FROM {$this->_sTable} AS `c`
-            LEFT JOIN `Profiles` AS `p` ON (`p`.`ID` = `c`.`cmt_author_id`)
             $sJoin
             WHERE `c`.`cmt_object_id` = ? AND `c`.`cmt_id` = ?
             LIMIT 1", $iId, $iCmtId);
@@ -129,20 +135,22 @@ class BxDolCmtsQuery extends BxDolDb
 
     function addComment ($iId, $iCmtParentId, $iAuthorId, $sText)
     {
+    	$sQuery = $this->prepare("SELECT `cmt_level`+1 FROM {$this->_sTable} WHERE `cmt_id`=? LIMIT 1", $iCmtParentId);
+    	$iLevel = (int)$iCmtParentId > 0 ? (int)$this->getOne($sQuery) : 0;
+
         $sQuery = $this->prepare("INSERT INTO {$this->_sTable} SET
             `cmt_parent_id` = ?,
             `cmt_object_id` = ?,
             `cmt_author_id` = ?,
+            `cmt_level` = ?,
             `cmt_text` = ?,
-            `cmt_time` = NOW()", $iCmtParentId, $iId, $iAuthorId, $sText);
-        if (!$this->query($sQuery))
-        {
+            `cmt_time` = NOW()", $iCmtParentId, $iId, $iAuthorId, $iLevel, $sText);
+        if(!$this->query($sQuery))
             return false;
-        }
 
         $iRet = $this->lastId();
 
-        if ($iCmtParentId) {
+        if($iCmtParentId) {
             $sQuery = $this->prepare("UPDATE {$this->_sTable} SET `cmt_replies` = `cmt_replies` + 1 WHERE `cmt_id` = ? LIMIT 1", $iCmtParentId);
             $this->query ($sQuery);
         }

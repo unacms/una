@@ -61,8 +61,8 @@ ini_set('magic_quotes_sybase', 0);
 /*----------Vars----------------*/
     $aConf = array();
     $aConf['release'] = '24.03.11';
-    $aConf['iVersion'] = '7.0';
-    $aConf['iPatch'] = '6';
+    $aConf['iVersion'] = '8.0';
+    $aConf['iPatch'] = '0';
     $aConf['dolFile'] = '../inc/header.inc.php';
     $aConf['confDir'] = '../inc/';
     $aConf['headerTempl'] = <<<EOS
@@ -140,6 +140,17 @@ define('BX_DOL_DIR_STUDIO', BX_DIRECTORY_PATH_ROOT . BX_DOL_STUDIO_FOLDER . '/')
 define('BX_DOL_DIR_STUDIO_INC', BX_DOL_DIR_STUDIO . 'inc/');
 define('BX_DOL_DIR_STUDIO_CLASSES', BX_DOL_DIR_STUDIO . 'classes/');
 define('BX_DOL_DIR_STUDIO_BASE', BX_DOL_DIR_STUDIO . 'template/');
+
+//--- BoonEx Unity Settings ---//
+define('BX_DOL_UNITY_URL_ROOT', 'http://www.boonex.com/');
+define('BX_DOL_UNITY_URL_MARKET', BX_DOL_UNITY_URL_ROOT . 'market/');
+define('BX_DOL_UNITY_URL_PRODUCT', BX_DOL_UNITY_URL_ROOT . 'm/');
+
+//--- BoonEx OAuth Settings ---//
+define('BX_DOL_OAUTH_URL_REQUEST_TOKEN', BX_DOL_UNITY_URL_ROOT . 'scripts_public/oauth_request_token.php5');
+define('BX_DOL_OAUTH_URL_AUTHORIZE', BX_DOL_UNITY_URL_ROOT . 'scripts_public/oauth_authorize.php5');
+define('BX_DOL_OAUTH_URL_ACCESS_TOKEN', BX_DOL_UNITY_URL_ROOT . 'scripts_public/oauth_access_token.php5');
+define('BX_DOL_OAUTH_URL_FETCH_DATA', BX_DOL_UNITY_URL_ROOT . 'scripts_public/oauth_fetch_data.php5');
 
 //--- User Roles ---//
 define('BX_DOL_ROLE_GUEST', 0);
