@@ -43,29 +43,33 @@ class BxDolProfile extends BxDol {
     }
 
     /**
-     * Get singleton instance of the class by account id
+     * Get singleton instance of Account Profile by account id
      */
     public static function getInstanceAccountProfile($iAccountId = false) {
+        if (!$iAccountId)
+            $iAccountId = getLoggedId();
         $oQuery = BxDolProfileQuery::getInstance();
-        $aProfile = $oQuery->getAccountProfile($iAccountId ? $iAccountId : getLoggedId());
+        $aProfile = $oQuery->getProfileByContentTypeAccount($iAccountId, 'system', $iAccountId);
         if (!$aProfile)
             return false;
         return self::getInstance($aProfile['id']);
     }
 
     /**
-     * Get singleton instance of the class by account id, content id and type
+     * Get singleton instance of Profile by account id, content id and type
      */
     public static function getInstanceByContentTypeAccount($iContent, $sType, $iAccountId = false) {
+        if (!$iAccountId)
+            $iAccountId = getLoggedId();
         $oQuery = BxDolProfileQuery::getInstance();
-        $aProfile = $oQuery->getProfileByContentTypeAccount($iContent, $sType, $iAccountId ? $iAccountId : getLoggedId());
+        $aProfile = $oQuery->getProfileByContentTypeAccount($iContent, $sType, $iAccountId);
         if (!$aProfile)
             return false;
         return self::getInstance($aProfile['id']);
     }
 
     /**
-     * Get singleton instance of the class by profile id
+     * Get singleton instance of Profile by profile id
      */
     public static function getInstance($mixedProfileId = false) {
 

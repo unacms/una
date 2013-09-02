@@ -17,21 +17,26 @@ bx_import('BxTemplFormView');
 class BxPersonsFormPerson extends BxTemplFormView {
 
     protected $_oModule;
+    protected $_iAccountProfileId;
 
     public function __construct($aInfo, $oTemplate = false) {                
         parent::__construct($aInfo, $oTemplate);
+
+        bx_import('BxDolProfile');
+        $oAccountProfile = BxDolProfile::getInstanceAccountProfile();
+        $this->_iAccountProfileId = $oAccountProfile->id();
 
         $this->_oModule = BxDolModule::getInstance('bx_persons');
 
         if (isset($this->aInputs[BxPersonsConfig::$FIELD_PICTURE])) {
             $this->aInputs[BxPersonsConfig::$FIELD_PICTURE]['storage_object'] = BxPersonsConfig::$OBJECT_STORAGE;
-            $this->aInputs[BxPersonsConfig::$FIELD_PICTURE]['uploaders'] = array('Simple');
+            $this->aInputs[BxPersonsConfig::$FIELD_PICTURE]['uploaders'] = array('bx_persons_avatar');
             $this->aInputs[BxPersonsConfig::$FIELD_PICTURE]['images_transcoder'] = BxPersonsConfig::$OBJECT_IMAGES_TRANSCODER_THUMB;
             $this->aInputs[BxPersonsConfig::$FIELD_PICTURE]['multiple'] = false;
             $this->aInputs[BxPersonsConfig::$FIELD_PICTURE]['content_id'] = 0;
             $this->aInputs[BxPersonsConfig::$FIELD_PICTURE]['upload_buttons_titles'] = _t('_bx_persons_form_person_input_picture_btn_upload');
             $this->aInputs[BxPersonsConfig::$FIELD_PICTURE]['ghost_template'] = '';
-        }        
+        }   
     }
 
     function initChecker ($aValues = array (), $aSpecificValues = array())  {
@@ -60,9 +65,9 @@ class BxPersonsFormPerson extends BxTemplFormView {
         return parent::initChecker($aValues, $aSpecificValues);
     }
 
-    public function insert ($aValsToAdd = array(), $isIgnore = false) {        
+    public function insert ($aValsToAdd = array(), $isIgnore = false) {
         $aValsToAdd = array_merge($aValsToAdd, array (
-            BxPersonsConfig::$FIELD_AUTHOR => bx_get_logged_profile_id (),
+            BxPersonsConfig::$FIELD_AUTHOR => $this->_iAccountProfileId,
             BxPersonsConfig::$FIELD_ADDED => time(),
             BxPersonsConfig::$FIELD_CHANGED => time(),
         ));
@@ -78,7 +83,7 @@ class BxPersonsFormPerson extends BxTemplFormView {
         return $iRet;
     }
 
-    function delete ($iContentId, $aContentInfo) {
+    function delete ($iContentId, $aContentInfo = array()) {
 
         if (!$this->_deleteFile($aContentInfo[BxPersonsConfig::$FIELD_PICTURE]))
             return false;
@@ -87,7 +92,6 @@ class BxPersonsFormPerson extends BxTemplFormView {
     }
 
     function deleteGhost ($iFileId, $iContentId, $isRestoreOriginal = true) {
-        $iProfileId = bx_get_logged_profile_id();         
 
         if (CHECK_ACTION_RESULT_ALLOWED != ($sMsg = $this->_oModule->isAllowedAdd()))
             return $sMsg;
@@ -97,16 +101,15 @@ class BxPersonsFormPerson extends BxTemplFormView {
         if (!$oStorage)
             return _t('_sys_txt_error_occured');
 
-        if (!$oStorage->deleteFile($iFileId, $iProfileId))
+        if (!$oStorage->deleteFile($iFileId, $this->_iAccountProfileId))
             return _t('_sys_txt_error_occured');
 
-        $this->_oModule->_oDb->updateContentPictureById($iContentId, $iProfileId, 0);
+        $this->_oModule->_oDb->updateContentPictureById($iContentId, $this->_iAccountProfileId, 0);
 
         return '';
     }
 
     function discardGhost ($iFileId, $iContentId, $isRestoreOriginal = true) {
-        $iProfileId = bx_get_logged_profile_id();         
 
         if (CHECK_ACTION_RESULT_ALLOWED != ($sMsg = $this->_oModule->isAllowedAdd()))
             return $sMsg;
@@ -117,14 +120,14 @@ class BxPersonsFormPerson extends BxTemplFormView {
             return _t('_sys_txt_error_occured');
     
         
-        $aFiles = $oStorage->getGhosts($iProfileId, $iContentId);        
+        $aFiles = $oStorage->getGhosts($this->_iAccountProfileId, $iContentId);        
         if (!$aFiles)
             return _t('_sys_txt_error_occured');
 
         $isFileDeleted = false;
         foreach ($aFiles as $aFile) {
             if ($aFile['id'] == $iFileId) {
-                $isFileDeleted = $oStorage->deleteFile($aFile['id'], $iProfileId);
+                $isFileDeleted = $oStorage->deleteFile($aFile['id'], $this->_iAccountProfileId);
                 break;
             }
         }
@@ -137,7 +140,7 @@ class BxPersonsFormPerson extends BxTemplFormView {
             if (!$aContentInfo)
                 return _t('_sys_txt_error_occured');
             if ($aContentInfo[BxPersonsConfig::$FIELD_PICTURE])
-                if (!$oStorage->insertGhost($aContentInfo[BxPersonsConfig::$FIELD_PICTURE], $iProfileId, $iContentId))
+                if (!$oStorage->insertGhost($aContentInfo[BxPersonsConfig::$FIELD_PICTURE], $this->_iAccountProfileId, $iContentId))
                     return _t('_sys_txt_error_occured');
         }
 
@@ -151,23 +154,22 @@ class BxPersonsFormPerson extends BxTemplFormView {
             return false;
 
         $iErrors = 0;
-        $iProfileId = bx_get_logged_profile_id(); 
 
         $a = array($iContentId);
         if ($isCheckForZero)
             $a[] = 0;
 
         foreach ($a as $iForceContentId) {
-            $aFiles = $oStorage->getGhosts($iProfileId, $iForceContentId);
+            $aFiles = $oStorage->getGhosts($this->_iAccountProfileId, $iForceContentId);
             foreach ($aFiles as $aFile) {
                 if ($iFileId == $aFile['id']) { 
                     // save only one file
                     if (0 == $iForceContentId && $isCheckForZero) // if we are adding content, then associate ghosts with just added content
-                        if (!$oStorage->updateGhostsContentId($iFileId, $iProfileId, $iContentId))
+                        if (!$oStorage->updateGhostsContentId($iFileId, $this->_iAccountProfileId, $iContentId))
                             ++$iErrors;
                 } else {
                     // delete all other files
-                    if (!$oStorage->deleteFile($aFile['id'], $iProfileId)) 
+                    if (!$oStorage->deleteFile($aFile['id'], $this->_iAccountProfileId)) 
                         ++$iErrors;
                 }
             }
@@ -187,8 +189,7 @@ class BxPersonsFormPerson extends BxTemplFormView {
         if (!$oStorage->getFile($iFileId))
             return true;
 
-        $iProfileId = bx_get_logged_profile_id(); 
-        return $oStorage->deleteFile($iFileId, $iProfileId);
+        return $oStorage->deleteFile($iFileId, $this->_iAccountProfileId);
     }
 
 

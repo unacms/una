@@ -1,10 +1,11 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 bx_import ('BxDolUploader');
 
@@ -17,10 +18,10 @@ class BxBaseUploaderHTML5 extends BxDolUploader {
 
     var $_sDivId; ///< div id where upload button will be placed
 
-    function BxBaseUploaderHTML5 ($aObject, $sStorageObject, $sUniqId) {
-        parent::BxDolUploader($aObject, $sStorageObject, $sUniqId);
+    function __construct ($aObject, $sStorageObject, $sUniqId) {
+        parent::__construct($aObject, $sStorageObject, $sUniqId);
 
-        $this->_sDivId = 'bx-form-input-files-' . $sUniqId . '-div-' . $this->_aObject['engine'];
+        $this->_sDivId = 'bx-form-input-files-' . $sUniqId . '-div-' . $this->_aObject['object'];
         $this->_sButtonTemplate = 'uploader_button_html5.html';
     }
 
@@ -103,3 +104,4 @@ class BxBaseUploaderHTML5 extends BxDolUploader {
     }
 }
 
+/** @} */

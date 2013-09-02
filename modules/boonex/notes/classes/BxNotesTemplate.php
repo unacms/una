@@ -41,6 +41,10 @@ class BxNotesTemplate extends BxDolTwigTemplate {
 
         bx_import('BxDolProfile');
         $oProfile = BxDolProfile::getInstance($aData['author']);
+        if (!$oProfile) {
+            bx_import('BxDolProfileUndefined');
+            $oProfile = BxDolProfileUndefined::getInstance();
+        }
 
         $sSummary = $aData['summary'];
         if (!$sSummary) {

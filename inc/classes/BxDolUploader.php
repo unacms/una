@@ -1,10 +1,13 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
+
+bx_import('BxDolUploaderQuery');
 
 /**
  * Uploaders are disigned to work as form field in forms. @see BxDolForm.
@@ -16,8 +19,8 @@ defined('BX_DOL') or die('hack attempt');
  *     'type' => 'files', // this is new form type, which enable upholders automatically
  *     'storage_object' => 'sample', // the storage object, where uploaded files are going to be saved
  *     'images_transcoder' => 'sample2', // images transcoder object to use for images preview
- *     'uploaders' => array ('Simple', 'HTML5'), // the set of uploaders to use to upload files 
- *     'upload_buttons_titles' => array('Simple' => 'Upload one by one', 'HTML5' => 'Upload several files in bulk'); // change default button titles, array with button names, or string to assign to all bnuttons
+ *     'uploaders' => array ('sys_simple', 'sys_html5'), // the set of uploaders to use to upload files 
+ *     'upload_buttons_titles' => array('sys_simple' => 'Upload one by one', 'sys_html5' => 'Upload several files in bulk'); // change default button titles, array with button names, or string to assign to all bnuttons
  *     'multiple' => true, // allow to upload multiple files per one upload
  *     'content_id' => 4321, // content id to associate ghost files with
  *     'ghost_template' => $mixedGhostTemplate, // template for nested form
@@ -28,8 +31,8 @@ defined('BX_DOL') or die('hack attempt');
  *
  * 
  * Available uploaders:
- * - Simple - upload files using standard HTML forms.
- * - HTML5 - upload files using AJAX uploader with multiple files selection support (without flash), 
+ * - sys_simple - upload files using standard HTML forms.
+ * - sys_html5 - upload files using AJAX uploader with multiple files selection support (without flash), 
  *   it works in Firefox and WebKit(Safari, Chrome) browsers only, but has fallback for other browsers (IE, Opera).
  *
  * 
@@ -116,16 +119,16 @@ abstract class BxDolUploader extends BxDol {
     /**
      * constructor
      */
-    protected function BxDolUploader($aObject, $sStorageObject, $sUniqId) {
-        parent::BxDol();
+    protected function __construct($aObject, $sStorageObject, $sUniqId) {
+        parent::__construct();
         $this->_aObject = $aObject;
         $this->_sStorageObject = $sStorageObject;          
      
         $this->_sUniqId = $sUniqId;
 
-        $this->_sUploaderJsInstance = 'glUploader_' . $sUniqId . '_' . $this->_aObject['engine'];
-        $this->_sUploadInProgressContainerId = 'bx-form-input-files-' . $sUniqId . '-upload-in-progress-' . $this->_aObject['engine'];
-        $this->_sPopupContainerId = 'bx-form-input-files-' . $sUniqId . '-popup-wrapper-' . $this->_aObject['engine'];
+        $this->_sUploaderJsInstance = 'glUploader_' . $sUniqId . '_' . $this->_aObject['object'];
+        $this->_sUploadInProgressContainerId = 'bx-form-input-files-' . $sUniqId . '-upload-in-progress-' . $this->_aObject['object'];
+        $this->_sPopupContainerId = 'bx-form-input-files-' . $sUniqId . '-popup-wrapper-' . $this->_aObject['object'];
 
         $this->_sResultContainerId = 'bx-form-input-files-' . $sUniqId . '-upload-result';
         $this->_sErrorsContainerId = 'bx-form-input-files-' . $sUniqId . '-errors'; 
@@ -133,27 +136,23 @@ abstract class BxDolUploader extends BxDol {
     }
 
     static public function getObjectInstance($sObject, $sStorageObject, $sResultContainerId) {
-
-        if (isset($GLOBALS['bxDolClasses']['BxDolUploader!'.$sObject]))
-            return $GLOBALS['bxDolClasses']['BxDolUploader!'.$sObject];
-
-        $aUploaders = array (
-            'Simple' => array ('engine' => 'Simple', 'active' => 1),
-            'HTML5' => array ('engine' => 'HTML5', 'active' => 1),
-        );
-
-        $aObject = isset($aUploaders[$sObject]) ? $aUploaders[$sObject] : false;
-        if (!$aObject || !is_array($aObject))
+        
+        $aObject = BxDolUploaderQuery::getUploaderObject($sObject);
+        if (!$aObject || !is_array($aObject) || !$aObject['active'])
             return false;
 
-        $sClass = 'BxTemplUploader' . $aObject['engine'];
-        bx_import($sClass);
+        $sClass = $aObject['override_class_name'];
+        if (!empty($aObject['override_class_file']))
+            require_once(BX_DIRECTORY_PATH_ROOT . $aObject['override_class_file']);
+        else    
+            bx_import($sClass);
+
         $o = new $sClass($aObject, $sStorageObject, $sResultContainerId);
 
         if (!$o->isInstalled() || !$o->isAvailable())
             return false;
 
-        return ($GLOBALS['bxDolClasses']['BxDolUploader!'.$sObject] = $o);
+        return $o;
     }
 
     /**
@@ -197,12 +196,10 @@ abstract class BxDolUploader extends BxDol {
      * @param $mixedFiles as usual $_FILES['some_name'] array, but maybe some other params depending on the uploader
      * @return nothing, but if some files failed to upload, the actual error message can be determined by calling BxDolUploader::getUploadErrorMessages()
      */
-    public function handleUploads ($mixedFiles, $isMultiple = true, $iContentId = false) {
+    public function handleUploads ($iProfileId, $mixedFiles, $isMultiple = true, $iContentId = false) {
 
         bx_import('BxDolStorage');
         $oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
-
-        $iProfileId = bx_get_logged_profile_id();
 
         if (false == ($aMultipleFiles = $oStorage->convertMultipleFilesArray($mixedFiles)))
             $aMultipleFiles = array($mixedFiles);
@@ -260,7 +257,7 @@ abstract class BxDolUploader extends BxDol {
 
         $aParamsDefault = array (
             'uploader_instance_name' => $this->getNameJsInstanceUploader(),
-            'engine' => $this->_aObject['engine'],
+            'engine' => $this->_aObject['object'],
             'storage_object' => $this->_sStorageObject,
             'uniq_id' => $this->_sUniqId,
             'template_ghost' => $sJsValue, 
@@ -388,3 +385,4 @@ abstract class BxDolUploader extends BxDol {
     }
 }
 
+/** @} */

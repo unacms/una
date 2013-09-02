@@ -157,7 +157,7 @@ class BxDolAccount extends BxDol {
      * Get account url
      */
     public function getUrl($iAccountId = false) {
-        return '';
+        return 'javascript:void(0);';
     }
 
     /**

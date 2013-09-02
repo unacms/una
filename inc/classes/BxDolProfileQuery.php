@@ -43,21 +43,11 @@ class BxDolProfileQuery extends BxDolDb {
     /**
      * Get all account profiles.
      * @param string $iAccountId account id
-     * @return array if aprofile ids, key is profile id
+     * @return profile array
      */
     public function getProfilesByAccount ($iAccountId) {
         $sSql = $this->prepare("SELECT * FROM `sys_profiles` WHERE `account_id` = ?", $iAccountId);
         return $this->getAllWithKey($sSql, 'id');
-    }
-
-    /**
-     * Get account profile.
-     * @param string $iAccountId account id
-     * @return array if aprofile ids, key is profile id
-     */
-    public function getAccountProfile ($iAccountId) {
-        $sSql = $this->prepare("SELECT * FROM `sys_profiles` WHERE `account_id` = ? AND `content_id` = ?", $iAccountId, $iAccountId);
-        return $this->getRow($sSql);
     }
 
     /**
