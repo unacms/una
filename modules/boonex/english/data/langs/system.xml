@@ -1176,7 +1176,11 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_Reply_to_this_comment"><![CDATA[Reply]]></string>
 	<string name="_Add Your Comment"><![CDATA[Comment]]></string>
 	<string name="_Submit_Comment"><![CDATA[Post]]></string>
-	<string name="_load_more_comments"><![CDATA[Load More]]></string>
+	<string name="_load_more_comments_head"><![CDATA[See Newer Comments...]]></string>
+	<string name="_load_more_comments_tail"><![CDATA[See Older Comments...]]></string>
+	<string name="_load_more_comments_popular"><![CDATA[See More Comments...]]></string>
+	<string name="_load_more_comments_connection"><![CDATA[See More Comments...]]></string>
+	<string name="_cmt_track_replies"><![CDATA[track replies]]></string>
 	<string name="_in_reply_to"><![CDATA[in reply to]]></string>
 	<string name="_Can not delete comments with replies"><![CDATA[Cannot delete comments with replies]]></string>
 	<string name="_Access denied"><![CDATA[Access denied]]></string>

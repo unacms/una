@@ -15,12 +15,6 @@
     li.cmt:first-child {
 		margin-top: 0px;
     }
-    li.cmt-more {}
-    div.cmt-more-cont {
-		padding: 5px 0px;
-    	background-color: #ededed;
-    	text-indent: 5px;
-    }
     li.cmt-err {
         color: red;
     }
@@ -42,6 +36,37 @@
        color: #333333;
     }
 
+	/*--- More ---*/
+    li.cmt-more {}
+	li.cmt-more-root {}
+	div.cmt-more-cont {}
+	div.cmt-more-line {}
+
+	li.cmt-more div.cmt-more-cont {
+		font-weight: bold;
+	}
+	li.cmt-more div.cmt-more-line {
+		display: none;
+	}
+
+	
+    li.cmt-more-root div.cmt-more-cont {
+    	position: relative;
+		text-align: center;
+    }
+    li.cmt-more-root div.cmt-more-line {
+    	position: absolute;
+    	top: 50%;
+    	width: 100%;
+		border-width: 4px;
+    	borded-bottom: none;
+    }
+    li.cmt-more-root .bx-btn {
+    	position: relative;
+		float: none;
+    	display: inline-block;
+    }    
+
     /*--- Comment ---*/
     div.cmt-cont {
         position: relative;
@@ -57,7 +82,10 @@
     	left: 0px;
     	width: 64px;
     	height: 64px;
-    	background-color: #cccccc;
+    	text-align: center;
+    }
+    div.cmt-icon .sys-icon {
+		font-size: 64px;
     }
     span.cmt-author {
 		font-weight: bold;
@@ -115,11 +143,20 @@
 	div.cmt-reply-bottom {
 		margin-top: 40px;
     }
-	div.cmt-reply-expanded {}
-    div.cmt-post-reply {
+	div.cmt-post-reply {
         position: relative;
     	padding-left: 84px;
     }
+    form.cmt-post-reply .bx-form-input-textarea {
+		height: 64px;
+    }
+    form.cmt-post-reply .bx-form-input-submit {
+		margin-right: 30px;
+    }
+    
+    /*
+	div.cmt-reply-expanded {}
+    
     div.cmt-post-reply form {
         display: block;
     }
@@ -147,3 +184,4 @@
     a.cmt-comment-manage-delete,
     a.cmt-comment-replies {
     }
+    */

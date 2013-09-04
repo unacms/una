@@ -16,9 +16,9 @@
  * DB Queries.
 
 INSERT INTO `sys_objects_cmts` (`ID`, `ObjectName`, `TableCmts`, `TableTrack`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Nl2br`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES
-(1, 'profile', 'sys_cmts_sample', 'sys_cmts_sample_track', 3, 2048, 100, 1, 5, 3, 'tail', 1, 'both', 1, 1, 1, -3, 1, 'cmt', '', '', '', '', '');
+(1, 'sample', 'sample_cmts', 'sample_cmts_track', 1, 5000, 1000, 1, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', '', '', '', '', '');
 
-CREATE TABLE IF NOT EXISTS `sys_cmts_sample` (
+CREATE TABLE IF NOT EXISTS `sample_cmts` (
   `cmt_id` int(11) NOT NULL AUTO_INCREMENT,
   `cmt_parent_id` int(11) NOT NULL DEFAULT '0',
   `cmt_object_id` int(11) NOT NULL DEFAULT '0',
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `sys_cmts_sample` (
   KEY `cmt_object_id` (`cmt_object_id`,`cmt_parent_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `sys_cmts_sample_track` (
+CREATE TABLE IF NOT EXISTS `sample_cmts_track` (
   `cmt_system_id` int(11) NOT NULL DEFAULT '0',
   `cmt_id` int(11) NOT NULL DEFAULT '0',
   `cmt_rate` tinyint(4) NOT NULL DEFAULT '0',
@@ -57,7 +57,7 @@ bx_import('BxTemplFunctions');
 
 $oTemplate = BxDolTemplate::getInstance();
 $oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);
-$oTemplate->setPageHeader ("Comments");
+$oTemplate->setPageHeader ('Comments');
 $oTemplate->setPageContent ('page_main_code', PageCompMainCode());
 $oTemplate->getPageCode();
 
@@ -66,10 +66,10 @@ $oTemplate->getPageCode();
  * page code function
  */
 function PageCompMainCode() {
-	$iAccountId = getLoggedId();
+	$iObjectId = 1;
 
 	bx_import('BxTemplCmtsView');
-	$oCmts = new BxTemplCmtsView('profile', (int)$iAccountId);
+	$oCmts = new BxTemplCmtsView('sample', $iObjectId);
 	if(!$oCmts->isEnabled())
 		return '';
 

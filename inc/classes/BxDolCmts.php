@@ -16,6 +16,15 @@ define('BX_CMT_DISPLAY_THREADED', 'threaded');
 
 define('BX_CMT_BROWSE_HEAD', 'head');
 define('BX_CMT_BROWSE_TAIL', 'tail');
+define('BX_CMT_BROWSE_POPULAR', 'popular');
+define('BX_CMT_BROWSE_CONNECTION', 'connection');
+
+define('BX_CMT_ORDER_BY_DATE', 'date');
+define('BX_CMT_ORDER_BY_POPULAR', 'popular');
+define('BX_CMT_ORDER_BY_CONNECTION', 'connection');
+
+define('BX_CMT_ORDER_WAY_ASC', 'asc');
+define('BX_CMT_ORDER_WAY_DESC', 'desc');
 
 define('BX_CMT_PFP_TOP', 'top');
 define('BX_CMT_PFP_BOTTOM', 'bottom');
@@ -129,7 +138,7 @@ class BxDolCmts extends BxDol
     var $_bDpOpened = false; ///< applied for Threaded comments only
 
     var $_sBrowseType = '';
-    var $_sOrder = '';
+    var $_aOrder = array();
 
     /**
      * Constructor
@@ -155,12 +164,15 @@ class BxDolCmts extends BxDol
             'CmtText' => array ('reg' => '^.{' . $iCmtTextMin . ',' . $iCmtTextMax . '}$', 'msg' => _t('_Please enter ' . $iCmtTextMin . '-' . $iCmtTextMax . ' characters'))
         );
 
-        $this->_iDpMaxLevel = 3;//(int)$this->_aSystem['number_of_levels'];
+        $this->_iDpMaxLevel = (int)$this->_aSystem['number_of_levels'];
         $this->_sDisplayType = $this->_iDpMaxLevel == 0 ? BX_CMT_DISPLAY_FLAT : BX_CMT_DISPLAY_THREADED;
         $this->_bDpOpened = true;
 
         $this->_sBrowseType = $this->_aSystem['browse_type'];
-        $this->_sOrder = 'asc';
+        $this->_aOrder = array(
+        	'by' => BX_CMT_ORDER_BY_DATE, 
+        	'way' => BX_CMT_ORDER_WAY_ASC
+        );
 
         $this->_oQuery = new BxDolCmtsQuery($this->_aSystem);
         $this->_sHomeUrl = BX_DOL_URL_ROOT . trim($_SERVER['REQUEST_URI'], '/');
@@ -170,10 +182,9 @@ class BxDolCmts extends BxDol
             $this->init($iId);
     }
 
-    function & getSystems ()
+    function &getSystems ()
     {
-        if (!isset($GLOBALS['bx_dol_cmts_systems']))
-        {
+        if (!isset($GLOBALS['bx_dol_cmts_systems'])) {
             $GLOBALS['bx_dol_cmts_systems'] = BxDolDb::getInstance()->fromCache('sys_objects_cmts', 'getAllWithKey', '
                 SELECT
                     `ID` as `system_id`,
@@ -260,6 +271,10 @@ class BxDolCmts extends BxDol
         $this->_iId = $iId;
     }
 
+    function setHomeUrl($sUrl)
+    {
+    	$this->_sHomeUrl = $sUrl; 
+    }
 
 
     function isValidSystem ($sSystem)
@@ -306,9 +321,9 @@ class BxDolCmts extends BxDol
     /** comments functions
      *********************************************/
 
-    function getCommentsArray ($iCmtParentId, $sCmtOrder, $iStart = 0, $iCount = -1)
+    function getCommentsArray ($iParentId, $aOrder, $iStart = 0, $iCount = -1)
     {
-        return $this->_oQuery->getComments ($this->getId(), $iCmtParentId, $this->_getAuthorId(), $sCmtOrder, $iStart, $iCount);
+        return $this->_oQuery->getComments ($this->getId(), $iParentId, $this->_getAuthorId(), $aOrder, $iStart, $iCount);
     }
 
     function getCommentRow ($iCmtId)
@@ -455,9 +470,10 @@ class BxDolCmts extends BxDol
            return '';
 
         $iCmtId = bx_process_input($_REQUEST['Cmt'], BX_DATA_INT);
+        $sCmtBrowse = isset($_REQUEST['CmtBrowse']) ? bx_process_input($_REQUEST['CmtBrowse'], BX_DATA_TEXT) : '';
         $sCmtDisplay = isset($_REQUEST['CmtDisplay']) ? bx_process_input($_REQUEST['CmtDisplay'], BX_DATA_TEXT) : '';
 
-        return $this->getComment($iCmtId, array('type' => $sCmtDisplay));
+        return $this->getComment($iCmtId, array('type' => $sCmtBrowse), array('type' => $sCmtDisplay));
     }
 
     function actionCmtPost ()
@@ -623,7 +639,7 @@ class BxDolCmts extends BxDol
 
     function _getAuthorId ()
     {
-        return isMember() ? $_COOKIE['memberID'] : 0;
+        return isMember() ? bx_get_logged_profile_id() : 0;
     }
 
     function _getAuthorPassword ()
@@ -634,6 +650,16 @@ class BxDolCmts extends BxDol
     function _getAuthorIp ()
     {
         return $_SERVER['REMOTE_ADDR'];
+    }
+
+	function _getAuthorInfo($iAuthorId = 0)
+    {
+		$oProfile = BxDolProfile::getInstance($iAuthorId);
+		return array(
+			$oProfile->getDisplayName(), 
+			$oProfile->getUrl(), 
+			$oProfile->getThumb()
+		);
     }
 
     function _prepareTextForEdit ($s)
@@ -651,6 +677,59 @@ class BxDolCmts extends BxDol
             $iDataAction = BX_DATA_TEXT; // TODO: make sure that it is processed before output !
 
         return bx_process_input($s, $iDataAction);
+    }
+
+	function _prepareParams(&$aBp, &$aDp)
+    {
+    	$aBp['type'] = isset($aBp['type']) && !empty($aBp['type']) ? $aBp['type'] : $this->_sBrowseType;
+    	$aBp['parent_id'] = isset($aBp['parent_id']) ? $aBp['parent_id'] : 0;
+    	$aBp['start'] = isset($aBp['start']) ? $aBp['start'] : -1;
+    	$aBp['per_view'] = isset($aBp['per_view']) ? $aBp['per_view'] : -1;
+    	$aBp['order']['by'] = isset($aBp['order_by']) ? $aBp['order_by'] : $this->_aOrder['by'];
+    	$aBp['order']['way'] = isset($aBp['order_way']) ? $aBp['order_way'] : $this->_aOrder['way'];
+
+    	$aDp['type'] = isset($aDp['type']) && !empty($aDp['type']) ? $aDp['type'] : $this->_sDisplayType;
+    	$aDp['opened'] = isset($aDp['opened']) ? $aDp['opened'] : $this->_bDpOpened;
+
+		switch($aDp['type']) {
+			case BX_CMT_DISPLAY_FLAT:
+				$aBp['parent_id'] = -1;
+				$aBp['per_view'] = $aBp['per_view'] != -1 ? $aBp['per_view'] : $this->getPerView(0);
+				break;
+
+			case BX_CMT_DISPLAY_THREADED:
+				$aBp['per_view'] = $aBp['per_view'] != -1 ? $aBp['per_view'] : $this->getPerView($aBp['parent_id']);
+				break;
+		}
+
+		switch ($aBp['type']) {
+			case BX_CMT_BROWSE_POPULAR:
+				$aBp['order'] = array(
+					'by' => BX_CMT_ORDER_BY_POPULAR,
+					'way' => BX_CMT_ORDER_WAY_DESC
+				);
+				break;
+
+			case BX_CMT_BROWSE_CONNECTION:
+				$aBp['order'] = array(
+					'by' => BX_CMT_ORDER_BY_CONNECTION,
+					'way' => BX_CMT_ORDER_WAY_DESC
+				);
+				break;
+		}
+
+		$aBp['count'] = $this->_oQuery->getCommentsCount($this->_iId, $aBp['parent_id']);
+		if($aBp['start'] != -1)
+			return;
+
+		$aBp['start'] = 0;
+		if($aBp['type'] == BX_CMT_BROWSE_TAIL) {
+			$aBp['start'] = $aBp['count'] - $aBp['per_view'];
+			if($aBp['start'] < 0) {
+    			$aBp['per_view'] += $aBp['start'];
+    			$aBp['start'] = 0;
+			}
+		}
     }
 
     function _triggerComment()

@@ -898,7 +898,7 @@ function bx_is_spam ($val, $isStripSlashes = BX_SLASHES_AUTO) {
     if (isAdmin())
         return false;
 
-    if (bx_is_ip_whitelisted($sCurIP))
+    if (bx_is_ip_whitelisted())
         return false;
 
     if (get_magic_quotes_gpc() && $isStripSlashes == BX_SLASHES_AUTO)

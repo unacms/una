@@ -39,7 +39,7 @@ class BxDolCmtsQuery extends BxDolDb
 		return (int)$this->getOne($sQuery);
 	}
 
-    function getComments ($iId, $iCmtParentId = 0, $iAuthorId = 0, $sCmtOrder = 'ASC', $iStart = 0, $iCount = -1)
+    function getComments ($iId, $iCmtParentId = 0, $iAuthorId = 0, $aOrder = array(), $iStart = 0, $iCount = -1)
     {
         global $sHomeUrl;
         $iTimestamp = time();
@@ -48,13 +48,38 @@ class BxDolCmtsQuery extends BxDolDb
         $sJoin = "";
         if ($iAuthorId) {
             $sFields = "`r`.`cmt_rate` AS `cmt_rated`,";
-            $sJoin = $this->prepare("LEFT JOIN `{$this->_sTableTrack}` AS `r` ON (`r`.`cmt_system_id` = ? AND `r`.`cmt_id` = `c`.`cmt_id` AND `r`.`cmt_rate_author_id` = ?)", $this->_aSystem['system_id'], $iAuthorId);
+            $sJoin = $this->prepare(" LEFT JOIN `{$this->_sTableTrack}` AS `r` ON (`r`.`cmt_system_id` = ? AND `r`.`cmt_id` = `c`.`cmt_id` AND `r`.`cmt_rate_author_id` = ?)", $this->_aSystem['system_id'], $iAuthorId);
         }
 
         $sWhereParent = '';
         if((int)$iCmtParentId >= 0)
         	$sWhereParent = $this->prepare(" AND `c`.`cmt_parent_id` = ?", $iCmtParentId);
 
+        $sOder = " ORDER BY `c`.`cmt_time` ASC";
+        if(isset($aOrder['by']) && isset($aOrder['way'])) {
+        	$aOrder['way'] = strtoupper(in_array($aOrder['way'], array(BX_CMT_ORDER_WAY_ASC, BX_CMT_ORDER_WAY_DESC)) ? $aOrder['way'] : BX_CMT_ORDER_WAY_ASC);
+
+        	switch($aOrder['by']) {
+        		case BX_CMT_ORDER_BY_DATE:
+        			$sOder = " ORDER BY `c`.`cmt_time` " . $aOrder['way'];
+        			break;
+
+        		case BX_CMT_ORDER_BY_POPULAR:
+        			$sOder = " ORDER BY `c`.`cmt_rate` " . $aOrder['way'];
+        			break;
+
+        		case BX_CMT_ORDER_BY_CONNECTION:
+        			$sFields .= " IF(NOT ISNULL(`tcc`.`id`), 1, 0) AS `cmt_author_contact`,";
+        			$sFields .= " IF(NOT ISNULL(`tcf`.`id`), 1, 0) AS `cmt_author_friend`,";
+
+        			$sJoin .= $this->prepare(" LEFT JOIN `sys_profiles_conn_contacts` AS `tcc` ON ((`c`.`cmt_author_id`=`tcc`.`initiator` AND `tcc`.`content`=?) OR (`c`.`cmt_author_id`=`tcc`.`content` AND `tcc`.`initiator`=?))", $iAuthorId, $iAuthorId);
+        			$sJoin .= $this->prepare(" LEFT JOIN `sys_profiles_conn_friends` AS `tcf` ON ((`c`.`cmt_author_id`=`tcf`.`initiator` AND `tcf`.`content`=?) OR (`c`.`cmt_author_id`=`tcf`.`content` AND `tcf`.`initiator`=?))", $iAuthorId, $iAuthorId);
+
+        			$sOder = " ORDER BY `cmt_author_friend` " . $aOrder['way'] . ",`cmt_author_contact` " . $aOrder['way'] . ",`c`.`cmt_time` ASC";
+        			break;
+	        }
+        }
+         
         $sLimit = $iCount != -1 ? $this->prepare(" LIMIT ?, ?", (int)$iStart, (int)$iCount) : '';
 
         $sQuery = $this->prepare("SELECT
@@ -72,8 +97,7 @@ class BxDolCmtsQuery extends BxDolDb
                 (? - UNIX_TIMESTAMP(`c`.`cmt_time`)) AS `cmt_secs_ago`
             FROM `{$this->_sTable}` AS `c`
             $sJoin
-            WHERE `c`.`cmt_object_id` = ?" . $sWhereParent . "
-            ORDER BY `c`.`cmt_time` " . (strtoupper($sCmtOrder) == 'ASC' ? 'ASC' : 'DESC') . $sLimit, $iTimestamp, $iId);
+            WHERE `c`.`cmt_object_id` = ?" . $sWhereParent . $sOder . $sLimit, $iTimestamp, $iId);
 
         $a = $this->getAll($sQuery);
 

@@ -3,7 +3,14 @@
 		<a name="__system____id__"></a>
 		<div class="bx-def-hr bx-def-margin-bottom"></div>
 		<div class="__style_prefix__-cont">
-			<div class="__style_prefix__-icon">__author_icon__</div>
+			<div class="__style_prefix__-icon">
+				<bx_if:show_icon>
+					<img src="__author_icon__" />
+				</bx_if:show_icon>
+				<bx_if:show_icon_empty>
+					<i class="sys-icon user"></i>
+				</bx_if:show_icon_empty>
+			</div>
 			<div class="__style_prefix__-head">
 				<span class="__style_prefix__-author">
 					<bx_if:show_author_link><a href="__author_link__">__author_name__</a> </bx_if:show_author_link>

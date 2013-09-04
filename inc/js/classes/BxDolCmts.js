@@ -225,7 +225,7 @@ BxDolCmts.prototype.cmtMore = function(oLink, iCmtParentId, iStart, iPerView)
 {
 	var $this = this;
 	this._getCmts(oLink, iCmtParentId, iStart, iPerView, this._sBrowseType, this._sDisplayType, function(sListId, sContent) {
-		$this._cmtsReplace($(oLink).parents('.cmt-more'), sContent);
+		$this._cmtsReplace($(oLink).parents('li:first'), sContent);
 	});
 };
 
@@ -391,6 +391,7 @@ BxDolCmts.prototype._getCmt = function (f, iCmtParentId, iCmtId)
     var oData = this._getDefaultActions();
     oData['action'] = 'CmtGet';
     oData['Cmt'] = iCmtId;
+    oData['CmtBrowse'] = this._sBrowseType;
     oData['CmtDisplay'] = this._sDisplayType;
 
     var sParentId =  this._sRootId + ' #cmt' + iCmtParentId;
@@ -488,10 +489,8 @@ BxDolCmts.prototype._getDefaultActions = function() {
 };
 
 BxDolCmts.prototype._loading = function(e, bShow) {
-    if(bShow && !$(e).parent().find('b').length)
-        $(e).parent().append(' <b>' + aDolLang['_sys_txt_cmt_loading'] + '</b>');
-    else if (!bShow && $(e).parent().find('b').length)
-    	$(e).parent().find('b').remove();
+	var oParent = $(e).length ? $(e).parents('.bx-db-content:first') : $('body'); 
+	bx_loading(oParent, bShow);
 };
 
 BxDolCmts.prototype._error = function(e, bShow, s) {

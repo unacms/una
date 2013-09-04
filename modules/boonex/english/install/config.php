@@ -33,7 +33,7 @@ $aConfig = array(
     'update_url' => 'http://www.boonex.com/m/{uri}',
 
     'compatible_with' => array(
-        '7.0.6'
+        '8.0.x'
     ),
 
     /**
