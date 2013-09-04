@@ -1,7 +1,0 @@
-<?php
-
-$aLangContent = array(
-
-);
-
-?>

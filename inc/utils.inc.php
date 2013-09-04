@@ -104,33 +104,6 @@ function getLocaleFormat($iCode = BX_DOL_LOCALE_DATE_SHORT, $iType = BX_DOL_LOCA
     return $sResult;
 }
 
-/**
- * Function will check on blocked status;
- *
- * @param  : $iFirstProfile (integer) - first profile's id;
- * @param  : $iSecondProfile (integer) - second profile's id;
- * @return : (boolean) - true if pair will blocked;
- */
-function isBlocked($iFirstProfile, $iSecondProfile)
-{
-    $iFirstProfile = (int)$iFirstProfile;
-    $iSecondProfile = (int)$iSecondProfile;
-    $sQuery = "SELECT COUNT(*) FROM `sys_block_list` WHERE `ID` = {$iFirstProfile} AND `Profile` = {$iSecondProfile}";
-    return db_value( $sQuery) ? true : false;
-}
-
-/*
- * function for work with profile
- */
-function is_friends($id1, $id2) {
-    $id1 = (int)$id1;
-    $id2 = (int)$id2;
-    if ($id1 == 0 || $id2 == 0)
-       return;
-    $cnt = db_arr("SELECT SUM(`Check`) AS 'cnt' FROM `sys_friend_list` WHERE `ID`='{$id1}' AND `Profile`='{$id2}' OR `ID`='{$id2}' AND `Profile`='{$id1}'");
-    return ($cnt['cnt'] > 0 ? true : false);
-}
-
 /*
  * functions for limiting maximal word length
  */

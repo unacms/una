@@ -104,12 +104,12 @@ class BxDolAccount extends BxDol {
         if ($ret !== null)
             return $ret;
 
-        if ($this->_oQuery->updateCurrentProfile($iId, $iSwitchToProfileId)) {
-            bx_alert('account', 'switch_context', $iId, $iSwitchToProfileId, array('profile_id_old' => $aInfo['profile_id']));
-            return true;
-        }
+        if (!$this->_oQuery->updateCurrentProfile($iId, $iSwitchToProfileId))
+            return false;
 
-        return false;
+        bx_alert('account', 'switch_context', $iId, $iSwitchToProfileId, array('profile_id_old' => $aInfo['profile_id']));
+
+        return true;
     }
 
     /**
@@ -211,19 +211,14 @@ class BxDolAccount extends BxDol {
         bx_import('BxDolAccountQuery');
         $oAccountQuery = BxDolAccountQuery::getInstance();
 
-        // delete associated content 
-        // TODO: remake deletion of associated content
-        //$oAccountQuery->res("DELETE FROM `sys_admin_ban_list` WHERE `ProfID`='". $ID . "' LIMIT 1");
-        //$oAccountQuery->res("DELETE FROM `sys_block_list` WHERE `ID` = '{$ID}' OR `Profile` = '{$ID}'" );
-
         bx_import('BxDolProfile');
         $oProfileQuery = BxDolProfileQuery::getInstance();
         $aProfiles = $oProfileQuery->getProfilesByAccount($ID);
         foreach ($aProfiles as $iProfileId => $aRow) {
             $oProfile = BxDolProfile::getInstance($iProfileId);
             if (!$oProfile)
-                continue;
-            $oProfile->delete();
+                continue;            
+            $oProfile->delete(false, true);
         }
 
         // delete profile

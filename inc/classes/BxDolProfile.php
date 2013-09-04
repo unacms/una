@@ -171,8 +171,11 @@ class BxDolProfile extends BxDol {
 
     /**
      * Delete profile.
+     * @param $ID - optional profile id to delete
+     * @param $bForceDelete - force deletetion is case of account profile deletion
+     * @return false on error, or true on success
      */
-    function delete($ID = false) {
+    function delete($ID = false, $bForceDelete = false) {
 
         $ID = (int)$ID;
         if (!$ID)
@@ -182,6 +185,19 @@ class BxDolProfile extends BxDol {
         if (!$aProfileInfo)
             return false;
 
+        // delete system profiles (accounts) is not allowed, instead - delete whole account
+        if (!$bForceDelete && 'system' == $aProfileInfo['type'])
+            return false;
+    
+        // switch profile context if deleted profile is active profile context
+        bx_import('BxDolAccount');
+        $oAccount = BxDolAccount::getInstance ($aProfileInfo['account_id']);
+        $aAccountInfo = $oAccount->getInfo();
+        if (!$bForceDelete && $ID == $aAccountInfo['profile_id']) {
+            $oProfileAccount = BxDolProfile::getInstanceAccountProfile($aProfileInfo['account_id']);
+            $oAccount->updateProfileContext($oProfileAccount->id());
+        }
+
         // create system event before deletion
         $isStopDeletion = false;
         bx_alert('profile', 'before_delete', $ID, 0, array('stop_deletion' => &$isStopDeletion));
@@ -190,7 +206,6 @@ class BxDolProfile extends BxDol {
 
         // delete associated content 
         // TODO: remake deletion of associated content
-        $this->_oQuery->res("DELETE FROM `sys_friend_list` WHERE ID = {$ID} OR Profile = {$ID}");
         $this->_oQuery->res("DELETE FROM `sys_acl_levels_members` WHERE `IDMember` = {$ID}");
         $this->_oQuery->res("DELETE FROM `sys_tags` WHERE `ObjID` = {$ID} AND `Type` = 'profile'");
 
