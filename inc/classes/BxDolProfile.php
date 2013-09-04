@@ -158,7 +158,7 @@ class BxDolProfile extends BxDol {
      */
     public function getUnit($iProfileId = 0) {
         $aInfo = $this->getInfo($iProfileId);
-        return BxDolService::call($aInfo['type'], 'profile_thumb', array($aInfo['content_id']));
+        return BxDolService::call($aInfo['type'], 'profile_unit', array($aInfo['content_id']));
     }
 
     /**
