@@ -55,7 +55,7 @@ bx_import('BxDolEmailTemplatesQuery');
  * @endcode
  * 
  */
-class BxDolEmailTemplates extends BxDol {
+class BxDolEmailTemplates extends BxDol implements iBxDolSingleton {
 
     protected $_oEmailTemplatesQuery;
 

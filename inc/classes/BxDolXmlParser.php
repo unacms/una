@@ -1,15 +1,17 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
 
 defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxDol');
 
-class BxDolXmlParser extends BxDol {
+class BxDolXmlParser extends BxDol implements iBxDolSingleton {
     protected $rParser;
 
     function BxDolXmlParser() {
@@ -193,4 +195,5 @@ class BxDolXmlParser extends BxDol {
         return $sContent;
     }
 }
+
 /** @} */

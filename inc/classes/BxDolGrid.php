@@ -246,7 +246,7 @@
  * 
  */
 
-class BxDolGrid extends BxDol {
+class BxDolGrid extends BxDol implements iBxDolFactoryObject {
 
     protected $_sObject;
     protected $_aOptions;

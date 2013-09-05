@@ -11,16 +11,16 @@ defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxDolStudioMenuTop');
 
-class BxBaseStudioMenuTop extends BxDolStudioMenuTop { 
+class BxBaseStudioMenuTop extends BxDolStudioMenuTop implements iBxDolSingleton { 
     function BxBaseStudioMenuTop() {
-        if(isset($GLOBALS['bxDolClasses'][get_class($this)]))
+        if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
         parent::BxDolStudioMenuTop();
     }
 
     public static function getInstance() {
-        if(!isset($GLOBALS['bxDolClasses']['BxBaseStudioMenuTop']))
+        if (!isset($GLOBALS['bxDolClasses']['BxBaseStudioMenuTop']))
             $GLOBALS['bxDolClasses']['BxBaseStudioMenuTop'] = new BxTemplStudioMenuTop();
 
         return $GLOBALS['bxDolClasses']['BxBaseStudioMenuTop'];

@@ -1,17 +1,18 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxDol');
 
 /**
  * System class for main configuration settings.
  */
-class BxDolConfig extends BxDol {
+class BxDolConfig extends BxDol implements iBxDolSingleton {
     var $aUrlStatic;
     var $aUrlDynamic;
 
@@ -117,3 +118,5 @@ class BxDolConfig extends BxDol {
         return 'BX_' . strtoupper(implode('_', $aArgs));
     }
 }
+
+/** @} */

@@ -14,10 +14,10 @@ define('BX_PAGE_COLUMN_DUAL', 3); ///< page, with 2 columns
 
 bx_import('BxDolTemplate');
 
-class BxDolStudioTemplate extends BxDolTemplate {
+class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton {
 
     function BxDolStudioTemplate() {
-        if(isset($GLOBALS['bxDolClasses'][get_class($this)]))
+        if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
         parent::BxDolTemplate();
@@ -48,7 +48,7 @@ class BxDolStudioTemplate extends BxDolTemplate {
      * Get singleton instance of the class
      */
     public static function getInstance() {
-        if(!isset($GLOBALS['bxDolClasses'][__CLASS__])) {
+        if (!isset($GLOBALS['bxDolClasses'][__CLASS__])) {
             $GLOBALS['bxDolClasses'][__CLASS__] = new BxDolStudioTemplate();
             $GLOBALS['bxDolClasses'][__CLASS__]->init();
         }

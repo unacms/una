@@ -9,7 +9,7 @@
 
 bx_import('BxDolDb');
 
-class BxDolLanguagesQuery extends BxDolDb {
+class BxDolLanguagesQuery extends BxDolDb implements iBxDolSingleton {
 
     function __construct() {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
@@ -275,4 +275,3 @@ class BxDolLanguagesQuery extends BxDolDb {
 }
 
 /** @} */
-

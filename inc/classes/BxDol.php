@@ -14,11 +14,48 @@
  */
 
 
+/**
+ * Base class for all Dolphin classes
+ */
 class BxDol {
-
     function BxDol () {
 
     }
+}
+
+/**
+ * Singleton interface, for objects with one instance only
+ */
+interface iBxDolSingleton {
+    public static function getInstance();
+}
+
+/**
+ * Factory interface for object instances, once instance per object name
+ */
+interface iBxDolFactoryObject {
+    static public function getObjectInstance($sObject);
+}
+
+/**
+ * Profile interface, class must implement basic profile methods to be compliant with Profile interface
+ */
+interface iBxDolProfile {
+    public function id();
+    public function getDisplayName();
+    public function getUrl();
+    public function getUnit();
+    public function getThumb();
+}
+
+/**
+ * Profile services module interface, module class must implement basic profile services to be compliant with Profile interface
+ */
+interface iBxDolProfileService {
+    public function serviceProfileUnit ($iContentId);
+    public function serviceProfileThumb ($iContentId);
+    public function serviceProfileName ($iContentId);
+    public function serviceProfileUrl ($iContentId);
 }
 
 /** @} */

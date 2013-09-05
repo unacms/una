@@ -10,7 +10,7 @@ defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxDolStudioPageQuery');
 
-class BxDolStudioWidgetsQuery extends BxDolStudioPageQuery {
+class BxDolStudioWidgetsQuery extends BxDolStudioPageQuery implements iBxDolSingleton {
     function BxDolStudioWidgetsQuery() {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
@@ -31,7 +31,7 @@ class BxDolStudioWidgetsQuery extends BxDolStudioPageQuery {
      */
     public static function getInstance() {
     	$sClass = __CLASS__;
-        if(!isset($GLOBALS['bxDolClasses'][__CLASS__]))
+        if (!isset($GLOBALS['bxDolClasses'][__CLASS__]))
             $GLOBALS['bxDolClasses'][__CLASS__] = new $sClass();
 
         return $GLOBALS['bxDolClasses'][__CLASS__];

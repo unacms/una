@@ -1,17 +1,18 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxDolSessionQuery');
 
 define('BX_DOL_SESSION_LIFETIME', 3600);
 define('BX_DOL_SESSION_COOKIE', 'memberSession');
 
-class BxDolSession extends BxDol {
+class BxDolSession extends BxDol implements iBxDolSingleton {
     var $oDb;
     var $sId;
     var $iUserId;
@@ -151,3 +152,4 @@ class BxDolSession extends BxDol {
     }
 }
 
+/** @} */

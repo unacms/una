@@ -1,10 +1,11 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 define('BX_DOL_STORAGE_ERR_OK', 0);
 
@@ -195,7 +196,7 @@ bx_import('BxDolStorageQuery');
  * you control this period using 'token_life' field in 'sys_objects_storage' table.
  * 
  */
-abstract class BxDolStorage extends BxDol {
+abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
 
     protected $_aObject; ///< object properties
     protected $_iCacheControl; ///< browser cache in seconds, 0 - disabled
@@ -1091,3 +1092,5 @@ class BxDolStorageHelperStorage {
         return $this->aFile['size'];
     }
 }
+
+/** @} */

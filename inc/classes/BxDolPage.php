@@ -118,10 +118,7 @@ bx_import('BxDolPageQuery');
  * @endcode
  *
  */
-
-
-
-class BxDolPage extends BxDol {
+class BxDolPage extends BxDol implements iBxDolFactoryObject {
 
     protected $_sObject;
     protected $_aObject;

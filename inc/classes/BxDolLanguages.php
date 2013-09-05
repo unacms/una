@@ -1,10 +1,11 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxDol');
 bx_import('BxDolLanguagesQuery');
@@ -12,7 +13,7 @@ bx_import('BxDolLanguagesQuery');
 define('BX_DOL_LANGUAGE_CATEGORY_SYSTEM', 1);
 define('BX_DOL_LANGUAGE_CATEGORY_CUSTOM', 2);
 
-class BxDolLanguages extends BxDol {
+class BxDolLanguages extends BxDol implements iBxDolSingleton {
     protected $oDb;
     protected $sCurrentLanguage;
 
@@ -319,4 +320,5 @@ function bx_lang_name()
 {
 	return BxDolLanguages::getInstance()->getCurrentLanguage();
 }
+
 /** @} */

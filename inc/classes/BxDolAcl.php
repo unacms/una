@@ -76,7 +76,7 @@ define('CHECK_ACTION_RESULT_LIMIT_REACHED', 3);
 define('CHECK_ACTION_RESULT_NOT_ALLOWED_BEFORE', 4);
 define('CHECK_ACTION_RESULT_NOT_ALLOWED_AFTER', 5);
 
-class BxDolAcl extends BxDol {
+class BxDolAcl extends BxDol implements iBxDolSingleton {
 
     protected $oDb;
 

@@ -10,7 +10,7 @@
 /**
  * System services.
  */
-class BxBaseServices extends BxDol {
+class BxBaseServices extends BxDol implements iBxDolProfileService {
     public function __construct() {
         parent::__construct();
     }

@@ -67,7 +67,7 @@ define('BX_EDITOR_MINI', 3);
  * @endcode
  * 
  */
-class BxDolEditor extends BxDol {
+class BxDolEditor extends BxDol implements iBxDolFactoryObject {
 
     protected $_sObject;
     protected $_aObject;

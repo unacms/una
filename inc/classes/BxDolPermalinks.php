@@ -53,7 +53,7 @@ bx_import('BxDolDb');
  * - $aExtra['return_data'] - it is possible to override default behavior, by setting 'return_data' to non NULL value.
  *
  */
-class BxDolPermalinks extends BxDolDb {
+class BxDolPermalinks extends BxDolDb implements iBxDolSingleton {
     var $sCacheFile;
     var $aLinksStandard;
     var $aLinksPermalink;

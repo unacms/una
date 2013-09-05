@@ -17,7 +17,7 @@ bx_import('BxDolStudioTemplate');
 bx_import('BxTemplStudioMenuTop');
 bx_import('BxTemplFormView');
 
-class BxDolSplashMenuTop extends BxTemplStudioMenuTop
+class BxDolSplashMenuTop extends BxTemplStudioMenuTop implements iBxDolSingleton
 {
 	function BxDolSplashMenuTop()
 	{

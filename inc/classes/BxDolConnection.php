@@ -102,7 +102,7 @@ define('BX_CONNECTIONS_TYPE_MUTUAL', 'mutual');
  * @endcode
  * 
  */
-class BxDolConnection extends BxDol {
+class BxDolConnection extends BxDol implements iBxDolFactoryObject {
 
     protected $_sObject;
     protected $_aObject;

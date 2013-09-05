@@ -1,10 +1,11 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 ini_set('pcre.backtrack_limit', 1000000);
 
@@ -23,6 +24,7 @@ define('BX_PAGE_CLEAR', 2); ///< clear page, without any headers and footers
 define('BX_PAGE_POPUP', 44); ///< popup page, without any headers and footers
 define('BX_PAGE_TRANSITION', 150); ///< transition page with redirect to display some msg, like 'please wait', without headers footers
 define('BX_PAGE_MOBILE', 11); ///< mobile page
+
 /**
  * Template engine.
  *
@@ -83,7 +85,7 @@ define('BX_PAGE_MOBILE', 11); ///< mobile page
  *
  *
  * Example of usage:
- * \code
+ * @code
  *  $oSysTemplate = BxDolTemplate::getInstance();
  *
  *  $oSysTemplate->addCss(array('test1.css', 'test2.css'));
@@ -110,7 +112,7 @@ define('BX_PAGE_MOBILE', 11); ///< mobile page
  *        )
  *     )
  *  ));
- * \endcode
+ * @endcode
  *
  *
  * Memberships/ACL:
@@ -121,7 +123,7 @@ define('BX_PAGE_MOBILE', 11); ///< mobile page
  * no alerts available
  *
  */
-class BxDolTemplate extends BxDol {
+class BxDolTemplate extends BxDol implements iBxDolSingleton {
     /**
      * Main fields
      */
@@ -1905,3 +1907,4 @@ class BxDolTemplate extends BxDol {
 	}
 }
 
+/** @} */

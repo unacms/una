@@ -23,8 +23,10 @@ bx_import('BxDolSocialSharingQuery');
  * 
  * @section example Example of usage:
  *
+ * @code
  * bx_import('BxTemplSocialSharing');
  * echo BxTemplSocialSharing::getInstance()->getCode($sUrl, $sTitle);
+ * @endcode
  *
  *
  * @section alerts Alerts:
@@ -37,7 +39,7 @@ bx_import('BxDolSocialSharingQuery');
  *      override_output - override output string
  *
  */ 
-class BxDolSocialSharing extends BxDol
+class BxDolSocialSharing extends BxDol implements iBxDolSingleton
 {
     protected $_oQuery;
 	protected $_aSocialButtons = array (); // active social buttons array

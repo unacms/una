@@ -22,7 +22,7 @@
  * }
  * @endcode
  */
-class BxDolProfileUndefined extends BxDol {
+class BxDolProfileUndefined extends BxDol implements iBxDolSingleton, iBxDolProfile {
 
     /**
      * Constructor

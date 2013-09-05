@@ -13,7 +13,7 @@ define('BX_PROFILE_ACTION_AUTO', 0); ///< automatic action without any checking
 define('BX_PROFILE_ACTION_MANUAL', 1); ///< manual action performed by human 
 define('BX_PROFILE_ACTION_ROBOT', 2); ///< action peformed by some robot based on some conditions
 
-class BxDolProfile extends BxDol {
+class BxDolProfile extends BxDol implements iBxDolProfile {
 
     var $_iProfileID;
     var $_oQuery;

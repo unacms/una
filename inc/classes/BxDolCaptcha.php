@@ -53,7 +53,7 @@ bx_import('BxDolCaptchaQuery');
  *      echo 'captcha is incorrect'; // 
  * @endcode
  */
-class BxDolCaptcha extends BxDol {
+class BxDolCaptcha extends BxDol implements iBxDolFactoryObject {
 
     protected $_sObject;
     protected $_aObject;

@@ -1,10 +1,11 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 // Function error codes
 define( 'IMAGE_ERROR_SUCCESS',               0 );
@@ -29,7 +30,7 @@ define( 'IMAGE_TYPE_GIF',         1 );
 define( 'IMAGE_TYPE_JPG',         2 );
 define( 'IMAGE_TYPE_PNG',         3 );
 
-class BxDolImageResize extends BxDol {
+class BxDolImageResize extends BxDol implements iBxDolSingleton {
 
     var $w = 64, $h = 64; ///< size of destination image
     var $_isCrop = false;
@@ -549,3 +550,4 @@ class BxDolImageResize extends BxDol {
     }
 }
 
+/** @} */

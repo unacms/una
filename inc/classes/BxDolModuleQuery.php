@@ -1,14 +1,15 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxDolDb');
 
-class BxDolModuleQuery extends BxDolDb {
+class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton {
     function BxDolModuleQuery() {
     	if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
@@ -33,6 +34,7 @@ class BxDolModuleQuery extends BxDolDb {
 
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
+
     function getModuleById($iId) {
         $sSql = $this->prepare("SELECT `id`, `name`, `title`, `vendor`, `version`, `product_url`, `update_url`, `path`, `uri`, `class_prefix`, `db_prefix`, `lang_category`, `date`, `enabled` FROM `sys_modules` WHERE `id`=? LIMIT 1", $iId);
         return $this->fromMemory('sys_modules_' . $iId, 'getRow', $sSql);
@@ -125,3 +127,5 @@ class BxDolModuleQuery extends BxDolDb {
         return $this->getAll($sSql);
     }
 }
+
+/** @} */

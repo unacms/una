@@ -12,7 +12,7 @@ defined('BX_DOL') or die('hack attempt');
 bx_import('BxDolStudioTemplate');
 bx_import('BxBaseFunctions');
 
-class BxBaseStudioFunctions extends BxBaseFunctions {
+class BxBaseStudioFunctions extends BxBaseFunctions implements iBxDolSingleton {
 
     function BxBaseStudioFunctions($oTemplate = false) {
     	if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
@@ -22,7 +22,7 @@ class BxBaseStudioFunctions extends BxBaseFunctions {
     }
 
     public static function getInstance() {
-        if(!isset($GLOBALS['bxDolClasses']['BxBaseStudioFunctions']))
+        if (!isset($GLOBALS['bxDolClasses']['BxBaseStudioFunctions']))
             $GLOBALS['bxDolClasses']['BxBaseStudioFunctions'] = new BxTemplStudioFunctions();
 
         return $GLOBALS['bxDolClasses']['BxBaseStudioFunctions'];

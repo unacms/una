@@ -17,7 +17,7 @@ bx_import ('BxDolAcl');
  *
  * Basic person profiles.
  */
-class BxPersonsModule extends BxDolModule {
+class BxPersonsModule extends BxDolModule implements iBxDolProfileService {
 
     protected $_iProfileId;
 

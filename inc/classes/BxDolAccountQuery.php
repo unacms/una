@@ -12,7 +12,7 @@ bx_import('BxDolDb');
 /**
  * All queries related to account
  */
-class BxDolAccountQuery extends BxDolDb {
+class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton {
 
     public function __construct() {
 

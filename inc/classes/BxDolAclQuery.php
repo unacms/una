@@ -1,14 +1,19 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxDolDb');
 
-class BxDolAclQuery extends BxDolDb {
+/**
+ * Database queries for ACL
+ * @see BxDolAcl
+ */
+class BxDolAclQuery extends BxDolDb implements iBxDolSingleton {
     function __construct() {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
@@ -250,4 +255,5 @@ class BxDolAclQuery extends BxDolDb {
         return (int)$this->query($sQuery) > 0;
     }
 }
+
 /** @} */
