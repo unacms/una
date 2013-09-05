@@ -255,6 +255,9 @@ blockquote {
     vertical-align:middle;
     font-size:16px;
 }
+.bx-btn .sys-icon-bigger {
+    font-size:20px;
+}
 
 .bx-btn u {
     display:block;

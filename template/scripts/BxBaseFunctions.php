@@ -566,7 +566,7 @@ EOF;
             if ($sMenu) {
                 $sId = 'bx-menu-db-' . time() . rand(0, PHP_INT_MAX);
                 $sCode .= '<div id="' . $sId . '" style="display:none;">' . BxTemplFunctions::getInstance()->transBox('<div class="bx-def-padding bx-def-color-bg-block">' . $sMenu . '</div>') . '</div>';
-                $aButtonMenu = array ('icon' => 'ui-menu-blue.png', 'onclick' => 'if ($(\'#' . $sId . ':visible\').length) $(\'#' . $sId . '\').dolPopupHide(); else $(\'#' . $sId . '\').dolPopup({pointer:{el:$(this)}})');
+                $aButtonMenu = array ('icon' => 'ellipsis-vertical', 'onclick' => 'if ($(\'#' . $sId . ':visible\').length) $(\'#' . $sId . '\').dolPopupHide(); else $(\'#' . $sId . '\').dolPopup({pointer:{el:$(this)}})');
             }
             
         }
@@ -588,7 +588,7 @@ EOF;
                 $sAttrs = bx_convert_array2attrs ($aAttrs, 'bx-btn bx-def-margin-sec-left');
 
                 $sCode .= '<button ' . $sAttrs . '>';
-                $sCode .= !empty($aButton['icon']) ? '<i style="background-image:url(' . $this->_oTemplate->getIconUrl($aButton['icon']) . ')"></i>' : '';
+                $sCode .= !empty($aButton['icon']) ? '<i class="sys-icon sys-icon-bigger ' . $aButton['icon'] . '"></i>' : '';
                 $sCode .= !empty($aButton['title']) ? $aButton['title'] : '';
                 $sCode .= '</button>';
             }
