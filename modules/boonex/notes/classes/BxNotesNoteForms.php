@@ -77,7 +77,7 @@ class BxNotesNoteForms extends BxDolProfileForms {
     public function editDataForm ($iContentId, $sDisplay = 'bx_notes_note_edit') {
 
         // get content data and profile info
-        list ($oProfile, $aProfileInfo, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
+        list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         if (!$aContentInfo)
             return MsgBox(_t('_bx_notes_txt_error_note_is_not_defined')); 
 
@@ -99,7 +99,7 @@ class BxNotesNoteForms extends BxDolProfileForms {
         $aTrackTextFieldsChanges = null;
 /* TODO: status
         $isAutoApprove = getParam('bx_notes_autoapproval') ? true : false;
-        if (!$isAutoApprove && BX_PROFILE_STATUS_ACTIVE == $aProfileInfo['status'])
+        if (!$isAutoApprove && $oProfile->isActive()))
             $aTrackTextFieldsChanges = array ();
 */
         if (!$oForm->update ($aContentInfo['id'], array(), $aTrackTextFieldsChanges)) {
@@ -110,7 +110,7 @@ class BxNotesNoteForms extends BxDolProfileForms {
         }
 
         // change profile to 'pending' only if profile is 'active'
-        if (/*!$isAutoApprove &&*/ BX_PROFILE_STATUS_ACTIVE == $aProfileInfo['status'] && !empty($aTrackTextFieldsChanges['changed_fields']))
+        if (/*!$isAutoApprove &&*/ $oProfile->isActive() && !empty($aTrackTextFieldsChanges['changed_fields']))
             $oProfile->disapprove(BX_PROFILE_ACTION_AUTO);
 
         // perform action
@@ -130,7 +130,7 @@ class BxNotesNoteForms extends BxDolProfileForms {
     public function deleteDataForm ($iContentId, $sDisplay = 'bx_notes_note_delete') {
 
         // get content data and profile info
-        list ($oProfile, $aProfileInfo, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
+        list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         if (!$aContentInfo)
             return MsgBox(_t('_bx_notes_txt_error_note_is_not_defined')); 
 
@@ -172,7 +172,7 @@ class BxNotesNoteForms extends BxDolProfileForms {
     public function viewDataForm ($iContentId) {
 
         // get content data and profile info
-        list ($oProfile, $aProfileInfo, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
+        list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         if (!$aContentInfo)
             return MsgBox(_t('_bx_notes_txt_error_note_is_not_defined')); 
 
@@ -199,7 +199,7 @@ class BxNotesNoteForms extends BxDolProfileForms {
     public function viewDataText ($iContentId) {
 
         // get content data and profile info
-        list ($oProfile, $aProfileInfo, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
+        list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         if (!$aContentInfo)
             return MsgBox(_t('_bx_notes_txt_error_note_is_not_defined')); 
 
@@ -218,7 +218,6 @@ class BxNotesNoteForms extends BxDolProfileForms {
     protected function _getProfileAndContentData ($iContentId) {
     
         $aContentInfo = array();
-        $aProfileInfo = array();
         $oProfile = false;
         
         $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
@@ -226,9 +225,12 @@ class BxNotesNoteForms extends BxDolProfileForms {
             return array (false, false, false);
 
         $oProfile = BxDolProfile::getInstance($aContentInfo['author']);
-        $aProfileInfo = $oProfile->getInfo();
+        if (!$oProfile) {
+            bx_import('BxDolProfileUndefined');
+            $oProfile = BxDolProfileUndefined::getInstance();
+        }
 
-        return array ($oProfile, $aProfileInfo, $aContentInfo);
+        return array ($oProfile, $aContentInfo);
     }
 
 }
