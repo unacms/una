@@ -91,8 +91,8 @@ class BxBaseCmtsView extends BxDolCmts {
     /**
      * get full comments block with initializations
      */
-    function getCommentsBlock($iParentId = 0) {
-    	$aBp = array('parent_id' => $iParentId);
+    function getCommentsBlock($iParentId = 0, $iVParentId = 0) {
+    	$aBp = array('parent_id' => $iParentId, 'vparent_id' => $iVParentId);
 
     	$sCmts = $this->getComments($aBp);
 
@@ -124,7 +124,7 @@ class BxBaseCmtsView extends BxDolCmts {
     {
     	$this->_prepareParams($aBp, $aDp);
 
-		$aCmts = $this->getCommentsArray($aBp['parent_id'], $aBp['order'], $aBp['start'], $aBp['per_view']);
+		$aCmts = $this->getCommentsArray($aBp['vparent_id'], $aBp['order'], $aBp['start'], $aBp['per_view']);
 		if(empty($aCmts) || !is_array($aCmts))
 			return '';
 
@@ -210,8 +210,8 @@ class BxBaseCmtsView extends BxDolCmts {
 		}
  
 		$sReplies = '';
-		if((int)$r['cmt_replies'] > 0 && !empty($aDp) && $aDp['type'] == BX_CMT_DISPLAY_THREADED && $aDp['opened'])
-			$sReplies = $this->getComments(array('parent_id' => $r['cmt_id'], 'type' => $aBp['type']), $aDp);
+		if((int)$r['cmt_replies'] > 0 && !empty($aDp) && $aDp['type'] == BX_CMT_DISPLAY_THREADED)
+			$sReplies = $this->getComments(array('parent_id' => $r['cmt_id'], 'vparent_id' => $r['cmt_id'], 'type' => $aBp['type']), $aDp);
 
 		$bAuthorIcon = !empty($sAuthorIcon);
         return $oTemplate->parseHtmlByName('comment.html', array(
@@ -219,7 +219,6 @@ class BxBaseCmtsView extends BxDolCmts {
         	'style_prefix' => $this->_sStylePrefix,
         	'id' => $r['cmt_id'],
         	'class' => $sClass,
-        	'margin' => $this->_getLevelGap($r, $aDp),
         	'bx_if:show_icon' => array(
         		'condition' => $bAuthorIcon,
         		'content' => array(
@@ -355,15 +354,6 @@ class BxBaseCmtsView extends BxDolCmts {
         			'id' => $a['cmt_id']
         		)
         	),
-        	'bx_if:show_replies' => array(
-				'condition' => (int)$a['cmt_replies'] > 0 && !empty($aDp) && $aDp['type'] == BX_CMT_DISPLAY_THREADED && !$aDp['opened'],
-        		'content' => array(
-        			'js_object' => $this->_sJsObjName,
-        			'style_prefix' => $this->_sStylePrefix,
-        			'id' => $a['cmt_id'],
-        			'text' => _t((isset($a['cmt_type']) && $a['cmt_type'] == 'comment' ? '_N_comments' : '_N_replies'), $a['cmt_replies'])
-        		)
-        	),
         	'bx_if:show_edit' => array(
 				'condition' => $isEditAllowedPermanently,
         		'content' => array(
@@ -400,7 +390,6 @@ class BxBaseCmtsView extends BxDolCmts {
 		$bAuthorIcon = !empty($sAuthorIcon);
     	return BxDolTemplate::getInstance()->parseHtmlByName('comment_reply_box.html', array(
     		'style_prefix' => $this->_sStylePrefix,
-    		'margin' => $this->_getLevelGapByParent($iCmtParentId, $aDp),
     		'bx_if:show_class' => array(
     			'condition' => !empty($sPosition),
     			'content' => array(
@@ -496,7 +485,7 @@ class BxBaseCmtsView extends BxDolCmts {
     			break;
     	}
 
-    	$bRoot = (int)$aBp['parent_id'] <= 0;
+    	$bRoot = (int)$aBp['vparent_id'] <= 0;
 
     	$sMore = BxDolTemplate::getInstance()->parseHtmlByName('comment_more.html', array(
 			'js_object' => $this->_sJsObjName,
@@ -505,12 +494,11 @@ class BxBaseCmtsView extends BxDolCmts {
     			'condition' => $bRoot,
     			'content' => array()
     		),
-    		'margin' => $this->_getLevelGapByParent($aBp['parent_id'], $aDp),
     		'bx_if:is_button' => array(
     			'condition' => $bRoot,
     			'content' => array()
     		),
-			'parent_id' => $aBp['parent_id'],
+			'parent_id' => $aBp['vparent_id'],
     		'start' => $iStart,
     		'per_view' => $iPerView,
     		'title' => _t('_load_more_comments_' . $aBp['type'])

@@ -13,15 +13,25 @@ bx_import('BxDolDb');
  */
 class BxDolCmtsQuery extends BxDolDb
 {
-    var $_aSystem; ///< current voting system
+	var $_oMain;
+
     var $_sTable;
     var $_sTableTrack;
+    var $_sTriggerTable;
+    var $_sTriggerFieldId;
+    var $_sTriggerFieldComments;
 
-    function BxDolCmtsQuery(&$aSystem)
+    function BxDolCmtsQuery(&$oMain)
     {
-        $this->_aSystem = &$aSystem;
-        $this->_sTable = $this->_aSystem['table_cmts'];
-        $this->_sTableTrack = $this->_aSystem['table_track'];
+    	$this->_oMain = $oMain;
+
+    	$aSystem = $this->_oMain->getSystemInfo();
+        $this->_sTable = $aSystem['table_cmts'];
+        $this->_sTableTrack = $aSystem['table_track'];
+        $this->_sTriggerTable = $aSystem['trigger_table'];
+        $this->_sTriggerFieldId = $aSystem['trigger_field_id'];
+        $this->_sTriggerFieldComments = $aSystem['trigger_field_comments'];
+
         parent::BxDolDb();
     }
 
@@ -30,16 +40,16 @@ class BxDolCmtsQuery extends BxDolDb
         return $this->_sTable;
     }
 
-	function getCommentsCount ($iId, $iCmtParentId = 0) {
+	function getCommentsCount ($iId, $iCmtVParentId = 0) {
 		$sWhereParent = '';
-        if((int)$iCmtParentId >= 0)
-        	$sWhereParent = $this->prepare(" AND `cmt_parent_id` = ?", $iCmtParentId);
+        if((int)$iCmtVParentId >= 0)
+        	$sWhereParent = $this->prepare(" AND `cmt_vparent_id` = ?", $iCmtVParentId);
 
 		$sQuery = $this->prepare("SELECT COUNT(*) FROM `{$this->_sTable}` WHERE `cmt_object_id` = ?" . $sWhereParent, $iId);
 		return (int)$this->getOne($sQuery);
 	}
 
-    function getComments ($iId, $iCmtParentId = 0, $iAuthorId = 0, $aOrder = array(), $iStart = 0, $iCount = -1)
+    function getComments ($iId, $iCmtVParentId = 0, $iAuthorId = 0, $aOrder = array(), $iStart = 0, $iCount = -1)
     {
         global $sHomeUrl;
         $iTimestamp = time();
@@ -48,12 +58,12 @@ class BxDolCmtsQuery extends BxDolDb
         $sJoin = "";
         if ($iAuthorId) {
             $sFields = "`r`.`cmt_rate` AS `cmt_rated`,";
-            $sJoin = $this->prepare(" LEFT JOIN `{$this->_sTableTrack}` AS `r` ON (`r`.`cmt_system_id` = ? AND `r`.`cmt_id` = `c`.`cmt_id` AND `r`.`cmt_rate_author_id` = ?)", $this->_aSystem['system_id'], $iAuthorId);
+            $sJoin = $this->prepare(" LEFT JOIN `{$this->_sTableTrack}` AS `r` ON (`r`.`cmt_system_id` = ? AND `r`.`cmt_id` = `c`.`cmt_id` AND `r`.`cmt_rate_author_id` = ?)", $this->_oMain->getSystemId(), $iAuthorId);
         }
 
         $sWhereParent = '';
-        if((int)$iCmtParentId >= 0)
-        	$sWhereParent = $this->prepare(" AND `c`.`cmt_parent_id` = ?", $iCmtParentId);
+        if((int)$iCmtVParentId >= 0)
+        	$sWhereParent = $this->prepare(" AND `c`.`cmt_vparent_id` = ?", $iCmtVParentId);
 
         $sOder = " ORDER BY `c`.`cmt_time` ASC";
         if(isset($aOrder['by']) && isset($aOrder['way'])) {
@@ -86,6 +96,7 @@ class BxDolCmtsQuery extends BxDolDb
                 $sFields
                 `c`.`cmt_id`,
                 `c`.`cmt_parent_id`,
+                `c`.`cmt_vparent_id`,
                 `c`.`cmt_object_id`,
                 `c`.`cmt_author_id`,
                 `c`.`cmt_level`,
@@ -118,12 +129,13 @@ class BxDolCmtsQuery extends BxDolDb
         $sJoin = '';
         if ($iAuthorId) {
             $sFields = '`r`.`cmt_rate` AS `cmt_rated`,';
-            $sJoin = $this->prepare("LEFT JOIN {$this->_sTableTrack} AS `r` ON (`r`.`cmt_system_id` = ? AND `r`.`cmt_id` = `c`.`cmt_id` AND `r`.`cmt_rate_author_id` = ?)", $this->_aSystem['system_id'], $iAuthorId);
+            $sJoin = $this->prepare("LEFT JOIN {$this->_sTableTrack} AS `r` ON (`r`.`cmt_system_id` = ? AND `r`.`cmt_id` = `c`.`cmt_id` AND `r`.`cmt_rate_author_id` = ?)", $this->_oMain->getSystemId(), $iAuthorId);
         }
         $sQuery = $this->prepare("SELECT
                 $sFields
                 `c`.`cmt_id`,
                 `c`.`cmt_parent_id`,
+                `c`.`cmt_vparent_id`,
                 `c`.`cmt_object_id`,
                 `c`.`cmt_author_id`,
                 `c`.`cmt_level`,
@@ -159,16 +171,24 @@ class BxDolCmtsQuery extends BxDolDb
 
     function addComment ($iId, $iCmtParentId, $iAuthorId, $sText)
     {
-    	$sQuery = $this->prepare("SELECT `cmt_level`+1 FROM {$this->_sTable} WHERE `cmt_id`=? LIMIT 1", $iCmtParentId);
-    	$iLevel = (int)$iCmtParentId > 0 ? (int)$this->getOne($sQuery) : 0;
+    	$iLevel = 0;
+    	$iCmtVisualParentId = 0;
+    	if((int)$iCmtParentId > 0) {
+    		$sQuery = $this->prepare("SELECT `cmt_vparent_id`, `cmt_level` FROM {$this->_sTable} WHERE `cmt_id`=? LIMIT 1", $iCmtParentId);
+    		$aParent = $this->getRow($sQuery);
+
+    		$iLevel = (int)$aParent['cmt_level'] + 1;
+    		$iCmtVisualParentId = $iLevel > $this->_oMain->getMaxLevel() ? $aParent['cmt_vparent_id'] : $iCmtParentId;
+    	}
 
         $sQuery = $this->prepare("INSERT INTO {$this->_sTable} SET
             `cmt_parent_id` = ?,
+            `cmt_vparent_id` = ?,
             `cmt_object_id` = ?,
             `cmt_author_id` = ?,
             `cmt_level` = ?,
             `cmt_text` = ?,
-            `cmt_time` = NOW()", $iCmtParentId, $iId, $iAuthorId, $iLevel, $sText);
+            `cmt_time` = NOW()", $iCmtParentId, $iCmtVisualParentId, $iId, $iAuthorId, $iLevel, $sText);
         if(!$this->query($sQuery))
             return false;
 
@@ -257,7 +277,7 @@ class BxDolCmtsQuery extends BxDolDb
 
     function updateTriggerTable($iId, $iCount)
     {
-        $sQuery = $this->prepare("UPDATE `{$this->_aSystem['trigger_table']}` SET `{$this->_aSystem['trigger_field_comments']}` = ? WHERE `{$this->_aSystem['trigger_field_id']}` = ? LIMIT 1", $iCount, $iId);
+        $sQuery = $this->prepare("UPDATE `{$this->_sTriggerTable}` SET `{$this->_sTriggerFieldComments}` = ? WHERE `{$this->_sTriggerFieldId}` = ? LIMIT 1", $iCount, $iId);
         return $this->query($sQuery);
     }
 

@@ -223,9 +223,9 @@
     margin-right:0;
     padding:0;
     border:none;
-    border-top:1px solid #dddddd;
+    border-top:1px solid #eeeeee;
     border-bottom:1px solid #ffffff;
-    border-top:1px solid rgba(200, 200, 200, 0.5);
+    border-top:1px solid rgba(238, 238, 238, 0.5);
     border-bottom:1px solid rgba(255, 255, 255, 0.8);
 }
 .bx-def-hr-auto:first-child {

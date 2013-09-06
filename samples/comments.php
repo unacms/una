@@ -21,6 +21,7 @@ INSERT INTO `sys_objects_cmts` (`ID`, `ObjectName`, `TableCmts`, `TableTrack`, `
 CREATE TABLE IF NOT EXISTS `sample_cmts` (
   `cmt_id` int(11) NOT NULL AUTO_INCREMENT,
   `cmt_parent_id` int(11) NOT NULL DEFAULT '0',
+  `cmt_vparent_id` int(11) NOT NULL DEFAULT '0',
   `cmt_object_id` int(11) NOT NULL DEFAULT '0',
   `cmt_author_id` int(10) unsigned NOT NULL DEFAULT '0',
   `cmt_level` int(11) NOT NULL DEFAULT '0',

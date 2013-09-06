@@ -313,16 +313,6 @@ BxDolCmts.prototype.toggleReply = function(e, iCmtParentId)
     }
 };
 
-BxDolCmts.prototype.toggleCmts = function(e, iCmtParentId)
-{
-	var sListId =  this._sRootId + ' #cmt' + iCmtParentId + ' > ul';
-
-	if(!$(sListId + ' > li').length)
-		this._getCmts(e, iCmtParentId, undefined, undefined, this._sBrowseType, this._sDisplayType);
-	else
-		$( sListId).bx_anim('toggle', this._sAnimationEffect, this._iAnimationSpeed);
-};
-
 // get comment replies via ajax request
 BxDolCmts.prototype._getCmts = function (e, iCmtParentId, iStart, iPerView, sBrowseType, sDisplayType, onLoad)
 {
@@ -394,54 +384,29 @@ BxDolCmts.prototype._getCmt = function (f, iCmtParentId, iCmtId)
     oData['CmtBrowse'] = this._sBrowseType;
     oData['CmtDisplay'] = this._sDisplayType;
 
-    var sParentId =  this._sRootId + ' #cmt' + iCmtParentId;
-    var sListId =  sParentId + ' > ul';
-
-    var oList = $(sListId).get();
-    this._loading (oList);
+    this._loading (f);
 
     jQuery.post (
         this._sActionsUrl,
         oData,
-        function (s) {
-            $this._loading (oList, false);
+        function (oData) {
+            $this._loading (f, false);
 
-            if (iCmtParentId == 0) {
-                //--- Some number of comments already loaded ---//
-                if($(sListId + ' > li.cmt').length)
-                    $(sListId + ' > li.cmt:last').after($(s).hide()).next('li.cmt:hidden').bx_anim('toggle', $this._sAnimationEffect, $this._iAnimationSpeed);
-                //-- There is no comments at all ---//
-                else
-                    $(sListId + ' > li.cmt-no').bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {                    	
-                    	$(this).after($(s).hide()).next('li').bx_anim('toggle', $this._sAnimationEffect, $this._iAnimationSpeed);
-                    	$(this).remove();
-                    });
-            }
-            else {
-                $(sParentId + ' > .cmt-reply').bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-                	var sRepliesId = sParentId + ' .cmt-cont > .cmt-actions > a.cmt-comment-replies';
-                	var sCounterId = sRepliesId + ' > span';
-                	
-                    //--- there was no comments and we added new
-                    if(!$(sListId + ' > li.cmt').length && !$(sRepliesId).length)
-                        $(sListId).hide().append(s).bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
-                    //--- there is some number of comments but they are not loaded.
-                    else if(!$(sListId + ' > li.cmt').length && parseInt($(sCounterId).html()) > 0) {
-                    	$(sCounterId).html(parseInt($(sCounterId).html()) + 1);
-                        $this._getCmts(f, iCmtParentId);
-                    }
-                    //--- there is some number of comments and they are loaded.
-                    else if($(sListId + ' > li.cmt').length) {
-                    	$(sCounterId).html(parseInt($(sCounterId).html()) + 1);
+            var sListId = $this._sRootId + ' #cmt' + oData.vparent_id + ' > ul';
+            var sReplyFormId = $this._sRootId + ' #cmt' + oData.parent_id + ' > .cmt-reply';
 
-                        if($(sListId).is(':visible'))
-                            $(sListId).append($(s).hide()).children('li.cmt:last-of-type').bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
-                        else
-                            $(sListId).append(s).bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
-                    }
-                });
-            }
-        }
+            //--- Hide reply form ---//
+            if($(sReplyFormId).length)
+            	$(sReplyFormId).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed);
+
+            //--- Some number of comments already loaded ---//
+            if($(sListId + ' > li.cmt').length)
+                $(sListId + ' > li.cmt:last').after($(oData.content).hide()).next('li.cmt:hidden').bx_anim('toggle', $this._sAnimationEffect, $this._iAnimationSpeed);
+            //-- There is no comments at all ---//
+            else
+            	$(sListId).hide().append(oData.content).bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
+        },
+        'json'
     );
 };
 

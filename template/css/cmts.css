@@ -10,7 +10,11 @@
     ul.cmts-margin {}
     li.cmt,
     ul.cmts-margin li.cmt {
+    	position: relative;
+    	padding-top: 20px;
+    	padding-left: 84px;
 		margin-top: 20px;
+    	border-top: 1px solid #eeeeee;
     }
     li.cmt:first-child {
 		margin-top: 0px;
@@ -65,12 +69,12 @@
     	position: relative;
 		float: none;
     	display: inline-block;
+    	text-transform: uppercase;
     }    
 
     /*--- Comment ---*/
     div.cmt-cont {
         position: relative;
-    	padding-left: 84px;
     	min-height: 64px;
     }
 	div.cmt-cont .bullet {
@@ -78,7 +82,7 @@
     }
     div.cmt-icon {
 		position: absolute;
-    	top: 0px;
+    	top: 20px;
     	left: 0px;
     	width: 64px;
     	height: 64px;
@@ -145,6 +149,7 @@
     }
 	div.cmt-post-reply {
         position: relative;
+		padding-top: 20px;
     	padding-left: 84px;
     }
     form.cmt-post-reply .bx-form-input-textarea {
@@ -152,6 +157,7 @@
     }
     form.cmt-post-reply .bx-form-input-submit {
 		margin-right: 30px;
+    	text-transform: uppercase;
     }
     
     /*

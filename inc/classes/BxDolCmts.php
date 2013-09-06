@@ -135,7 +135,6 @@ class BxDolCmts extends BxDol
 
     var $_sDisplayType = '';
     var $_iDpMaxLevel = 0;
-    var $_bDpOpened = false; ///< applied for Threaded comments only
 
     var $_sBrowseType = '';
     var $_aOrder = array();
@@ -166,7 +165,6 @@ class BxDolCmts extends BxDol
 
         $this->_iDpMaxLevel = (int)$this->_aSystem['number_of_levels'];
         $this->_sDisplayType = $this->_iDpMaxLevel == 0 ? BX_CMT_DISPLAY_FLAT : BX_CMT_DISPLAY_THREADED;
-        $this->_bDpOpened = true;
 
         $this->_sBrowseType = $this->_aSystem['browse_type'];
         $this->_aOrder = array(
@@ -174,7 +172,7 @@ class BxDolCmts extends BxDol
         	'way' => BX_CMT_ORDER_WAY_ASC
         );
 
-        $this->_oQuery = new BxDolCmtsQuery($this->_aSystem);
+        $this->_oQuery = new BxDolCmtsQuery($this);
         $this->_sHomeUrl = BX_DOL_URL_ROOT . trim($_SERVER['REQUEST_URI'], '/');
         $this->_sViewUrl = BX_DOL_URL_ROOT . 'cmts.php';
 
@@ -252,32 +250,35 @@ class BxDolCmts extends BxDol
         return isset($this->_aSystem['is_on']) && $this->_aSystem['is_on'];
     }
 
+	function getSystemId()
+    {
+        return $this->_aSystem['system_id'];
+    }
+
     function getSystemName()
     {
         return $this->_sSystem;
     }
 
+	function getSystemInfo()
+    {
+        return $this->_aSystem;
+    }
+	function getMaxLevel()
+	{
+		return $this->_iDpMaxLevel;
+	}
     function getOrder ()
     {
         return $this->_sOrder;
     }
 
-    /**
-     * set id to operate with votes
-     */
-    function setId ($iId)
+	function getPerView ($iCmtParentId = 0)
     {
-        if ($iId == $this->getId()) return;
-        $this->_iId = $iId;
+        return $iCmtParentId == 0 ? $this->_aSystem['per_view'] : $this->_aSystem['per_view_replies'];
     }
 
-    function setHomeUrl($sUrl)
-    {
-    	$this->_sHomeUrl = $sUrl; 
-    }
-
-
-    function isValidSystem ($sSystem)
+	function isValidSystem ($sSystem)
     {
         return isset($this->_aSystems[$sSystem]);
     }
@@ -292,14 +293,18 @@ class BxDolCmts extends BxDol
         return $this->_aSystem['is_ratable'];
     }
 
-    function getPerView ($iCmtParentId = 0)
+    /**
+     * set id to operate with votes
+     */
+    function setId ($iId)
     {
-        return $iCmtParentId == 0 ? $this->_aSystem['per_view'] : $this->_aSystem['per_view_replies'];
+        if ($iId == $this->getId()) return;
+        $this->_iId = $iId;
     }
 
-    function getSystemId ()
+    function setHomeUrl($sUrl)
     {
-        return $this->_aSystem['system_id'];
+    	$this->_sHomeUrl = $sUrl; 
     }
 
     /**
@@ -321,9 +326,9 @@ class BxDolCmts extends BxDol
     /** comments functions
      *********************************************/
 
-    function getCommentsArray ($iParentId, $aOrder, $iStart = 0, $iCount = -1)
+    function getCommentsArray ($iVParentId, $aOrder, $iStart = 0, $iCount = -1)
     {
-        return $this->_oQuery->getComments ($this->getId(), $iParentId, $this->_getAuthorId(), $aOrder, $iStart, $iCount);
+        return $this->_oQuery->getComments ($this->getId(), $iVParentId, $this->_getAuthorId(), $aOrder, $iStart, $iCount);
     }
 
     function getCommentRow ($iCmtId)
@@ -456,13 +461,13 @@ class BxDolCmts extends BxDol
         if (!$this->isEnabled())
            return '';
 
-        $iCmtParentId = bx_process_input($_REQUEST['CmtParent'], BX_DATA_INT);
+        $iCmtVParentId = bx_process_input($_REQUEST['CmtParent'], BX_DATA_INT);
         $iCmtStart = isset($_REQUEST['CmtStart']) ? bx_process_input($_REQUEST['CmtStart'], BX_DATA_INT) : -1;
         $iCmtPerView = isset($_REQUEST['CmtPerView']) ? bx_process_input($_REQUEST['CmtPerView'], BX_DATA_INT) : -1;
         $sCmtBrowse = isset($_REQUEST['CmtBrowse']) ? bx_process_input($_REQUEST['CmtBrowse'], BX_DATA_TEXT) : '';
         $sCmtDisplay = isset($_REQUEST['CmtDisplay']) ? bx_process_input($_REQUEST['CmtDisplay'], BX_DATA_TEXT) : '';
 
-        return $this->getComments(array('parent_id' => $iCmtParentId, 'start' => $iCmtStart, 'per_view' => $iCmtPerView, 'type' => $sCmtBrowse), array('type' => $sCmtDisplay));
+        return $this->getComments(array('vparent_id' => $iCmtVParentId, 'start' => $iCmtStart, 'per_view' => $iCmtPerView, 'type' => $sCmtBrowse), array('type' => $sCmtDisplay));
     }
 
     function actionCmtGet () {
@@ -473,7 +478,16 @@ class BxDolCmts extends BxDol
         $sCmtBrowse = isset($_REQUEST['CmtBrowse']) ? bx_process_input($_REQUEST['CmtBrowse'], BX_DATA_TEXT) : '';
         $sCmtDisplay = isset($_REQUEST['CmtDisplay']) ? bx_process_input($_REQUEST['CmtDisplay'], BX_DATA_TEXT) : '';
 
-        return $this->getComment($iCmtId, array('type' => $sCmtBrowse), array('type' => $sCmtDisplay));
+        $aCmt = $this->getCommentRow($iCmtId);
+        
+        require_once( BX_DIRECTORY_PATH_PLUGINS . 'Services_JSON.php' );
+        $oJson = new Services_JSON();
+
+        return $oJson->encode(array(
+        	'parent_id' => $aCmt['cmt_parent_id'],
+        	'vparent_id' => $aCmt['cmt_vparent_id'],
+        	'content' => $this->getComment($aCmt, array('type' => $sCmtBrowse), array('type' => $sCmtDisplay))
+        ));
     }
 
     function actionCmtPost ()
@@ -689,16 +703,15 @@ class BxDolCmts extends BxDol
     	$aBp['order']['way'] = isset($aBp['order_way']) ? $aBp['order_way'] : $this->_aOrder['way'];
 
     	$aDp['type'] = isset($aDp['type']) && !empty($aDp['type']) ? $aDp['type'] : $this->_sDisplayType;
-    	$aDp['opened'] = isset($aDp['opened']) ? $aDp['opened'] : $this->_bDpOpened;
 
 		switch($aDp['type']) {
 			case BX_CMT_DISPLAY_FLAT:
-				$aBp['parent_id'] = -1;
+				$aBp['vparent_id'] = -1;
 				$aBp['per_view'] = $aBp['per_view'] != -1 ? $aBp['per_view'] : $this->getPerView(0);
 				break;
 
 			case BX_CMT_DISPLAY_THREADED:
-				$aBp['per_view'] = $aBp['per_view'] != -1 ? $aBp['per_view'] : $this->getPerView($aBp['parent_id']);
+				$aBp['per_view'] = $aBp['per_view'] != -1 ? $aBp['per_view'] : $this->getPerView($aBp['vparent_id']);
 				break;
 		}
 
@@ -718,7 +731,7 @@ class BxDolCmts extends BxDol
 				break;
 		}
 
-		$aBp['count'] = $this->_oQuery->getCommentsCount($this->_iId, $aBp['parent_id']);
+		$aBp['count'] = $this->_oQuery->getCommentsCount($this->_iId, $aBp['vparent_id']);
 		if($aBp['start'] != -1)
 			return;
 
