@@ -146,6 +146,14 @@
     }
 	div.cmt-reply-bottom {
 		margin-top: 40px;
+		border-top: 1px solid #eeeeee;
+    }
+    li.cmt div.cmt-reply-top {
+    	margin-bottom: 0px;
+	}
+    li.cmt div.cmt-reply-bottom {
+    	margin-top: 0px;
+		border-top: none;
     }
 	div.cmt-post-reply {
         position: relative;
@@ -156,7 +164,6 @@
 		height: 64px;
     }
     form.cmt-post-reply .bx-form-input-submit {
-		margin-right: 30px;
     	text-transform: uppercase;
     }
     

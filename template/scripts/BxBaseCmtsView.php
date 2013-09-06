@@ -442,10 +442,10 @@ class BxBaseCmtsView extends BxDolCmts {
 					'value' => $sText,
 					'required' => false,
 				),
-				'CmtControls' => array(
-					'type' => 'input_set',
-					0 => array('type' => 'submit', 'name' => 'CmtSubmit', 'value' => _t('_Submit_Comment')),
-					1 => array('type' => 'switcher', 'name' => 'CmtSubscribe', 'label' => _t('_cmt_track_replies')),
+				'CmtSubmit' => array(
+					'type' => 'submit', 
+					'name' => 'CmtSubmit', 
+					'value' => _t('_Submit_Comment')
 				)
 			)
 		);
