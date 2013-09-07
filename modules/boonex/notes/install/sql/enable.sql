@@ -38,39 +38,38 @@ INSERT INTO `sys_transcoder_images_filters` (`transcoder_object`, `filter`, `fil
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_notes_create_note', '_bx_notes_page_title_sys_create_note', '_bx_notes_page_title_create_note', 'bx_notes', 5, 2147483647, 1, 'create-note', 'page.php?i=create-note', '', '', '', 0, 1, 0, '', '');
 
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_notes_create_note', 1, 'bx_notes', '_bx_notes_page_block_title_create_note', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_notes\";s:6:\"method\";s:11:\"create_note\";}', 0, 1, 1);
+INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
+('bx_notes_create_note', 1, 'bx_notes', '_bx_notes_page_block_title_create_note', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_notes";s:6:"method";s:13:"entity_create";}', 0, 1, 1);
 
 --
 -- Dumping data for 'bx_notes_edit_note' page
 --
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_notes_edit_note', '_bx_notes_page_title_sys_edit_note', '_bx_notes_page_title_edit_note', 'bx_notes', 1, 2147483647, 1, 'edit-note', '', '', '', '', 0, 1, 0, 'BxNotesPageNote', 'modules/boonex/notes/classes/BxNotesPageNote.php');
+('bx_notes_edit_note', '_bx_notes_page_title_sys_edit_note', '_bx_notes_page_title_edit_note', 'bx_notes', 5, 2147483647, 1, 'edit-note', '', '', '', '', 0, 1, 0, 'BxNotesPageNote', 'modules/boonex/notes/classes/BxNotesPageNote.php');
 
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_notes_edit_note', 2, 'bx_notes', '_bx_notes_page_block_title_edit_note', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_notes\";s:6:\"method\";s:9:\"edit_note\";}', 0, 1, 0),
-('bx_notes_edit_note', 1, 'bx_notes', '_bx_notes_page_block_title_note_menu', 13, 2147483647, 'menu', 'bx_notes_view', 0, 1, 2);
+INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
+('bx_notes_edit_note', 1, 'bx_notes', '_bx_notes_page_block_title_edit_note', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_notes";s:6:"method";s:17:"entity_edit_block";}', 0, 1, 0);
 
 --
 -- Dumping data for 'bx_notes_delete_note' page
 --
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_notes_delete_note', '_bx_notes_page_title_sys_delete_note', '_bx_notes_page_title_delete_note', 'bx_notes', 1, 2147483647, 1, 'delete-note', '', '', '', '', 0, 1, 0, 'BxNotesPageNote', 'modules/boonex/notes/classes/BxNotesPageNote.php');
+('bx_notes_delete_note', '_bx_notes_page_title_sys_delete_note', '_bx_notes_page_title_delete_note', 'bx_notes', 5, 2147483647, 1, 'delete-note', '', '', '', '', 0, 1, 0, 'BxNotesPageNote', 'modules/boonex/notes/classes/BxNotesPageNote.php');
 
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_notes_delete_note', 2, 'bx_notes', '_bx_notes_page_block_title_delete_note', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_notes\";s:6:\"method\";s:11:\"delete_note\";}', 0, 1, 0),
-('bx_notes_delete_note', 1, 'bx_notes', '_bx_notes_page_block_title_note_menu', 13, 2147483647, 'menu', 'bx_notes_view', 0, 1, 2);
+INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
+('bx_notes_delete_note', 1, 'bx_notes', '_bx_notes_page_block_title_delete_note', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_notes";s:6:"method";s:19:"entity_delete_block";}', 0, 1, 0);
 
 --
 -- Dumping data for 'bx_notes_view_note' page
 --
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_notes_view_note', '_bx_notes_page_title_sys_view_note', '_bx_notes_page_title_view_note', 'bx_notes', 1, 2147483647, 1, 'view-note', '', '', '', '', 0, 1, 0, 'BxNotesPageNote', 'modules/boonex/notes/classes/BxNotesPageNote.php');
+('bx_notes_view_note', '_bx_notes_page_title_sys_view_note', '_bx_notes_page_title_view_note', 'bx_notes', 6, 2147483647, 1, 'view-note', '', '', '', '', 0, 1, 0, 'BxNotesPageNote', 'modules/boonex/notes/classes/BxNotesPageNote.php');
 
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_notes_view_note', 2, 'bx_notes', '_bx_notes_page_block_title_note_text', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_notes\";s:6:\"method\";s:9:\"note_text\";}', 0, 0, 0),
-('bx_notes_view_note', 1, 'bx_notes', '_bx_notes_page_block_title_note_menu', 13, 2147483647, 'menu', 'bx_notes_view', 0, 0, 0),
-('bx_notes_view_note', 1, 'bx_notes', '_bx_notes_page_block_title_note_social_sharing', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_notes\";s:6:\"method\";s:19:\"note_social_sharing\";}', 0, 0, 1);
+INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
+('bx_notes_view_note', 1, 'bx_notes', '_bx_notes_page_block_title_note_text', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_notes";s:6:"method";s:17:"entity_text_block";}', 0, 0, 0),
+('bx_notes_view_note', 2, 'bx_notes', '_bx_notes_page_block_title_note_social_sharing', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_notes";s:6:"method";s:21:"entity_social_sharing";}', 0, 0, 1),
+('bx_notes_view_note', 2, 'bx_notes', '_bx_notes_page_block_title_note_author', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_notes";s:6:"method";s:13:"entity_author";}', 0, 0, 0),
+('bx_notes_view_note', 3, 'bx_notes', '_bx_notes_page_block_title_note_comments', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_notes";s:6:"method";s:15:"entity_comments";}', 0, 0, 0);
 
 --
 -- Dumping data for 'bx_notes_home' page
@@ -78,9 +77,8 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_notes_home', '_bx_notes_page_title_sys_notes_home', '_bx_notes_page_title_notes_home', 'bx_notes', 5, 2147483647, 1, 'notes-home', 'page.php?i=notes-home', '', '', '', 0, 1, 0, '', '');
 
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_notes_home', 1, 'bx_notes', '_bx_notes_page_block_title_recent_notes', 0, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_notes\";s:6:\"method\";s:19:\"browse_recent_notes\";}', 0, 0, 0);
-
+INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
+('bx_notes_home', 1, 'bx_notes', '_bx_notes_page_block_title_recent_notes', 0, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_notes";s:6:"method";s:19:"browse_recent_notes";}', 0, 0, 0);
 
 -- MENU
 
@@ -96,7 +94,7 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 -- Dumping data for 'bx_notes_view' menu
 --
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_notes_view', '_bx_notes_menu_title_view_note', 'bx_notes_view', 'bx_notes', 6, 0, 1, 'BxNotesMenuViewNote', 'modules/boonex/notes/classes/BxNotesMenuViewNote.php');
+('bx_notes_view', '_bx_notes_menu_title_view_note', 'bx_notes_view', 'bx_notes', 4, 0, 1, 'BxNotesMenuViewNote', 'modules/boonex/notes/classes/BxNotesMenuViewNote.php');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_notes_view', 'bx_notes', '_bx_notes_menu_set_title_view_note', 0);

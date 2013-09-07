@@ -57,6 +57,8 @@
     <string name="_bx_notes_page_title_notes_home"><![CDATA[Notes]]></string>
     <string name="_bx_notes_page_block_title_recent_notes"><![CDATA[Recent Notes]]></string>
     <string name="_bx_notes_page_block_title_note_social_sharing"><![CDATA[Share]]></string>
+    <string name="_bx_notes_page_block_title_note_author"><![CDATA[Author]]></string>
+    <string name="_bx_notes_page_block_title_note_comments"><![CDATA[Comments]]></string>
 
     <string name="_bx_notes_menu_set_title_view_note"><![CDATA[View Note]]></string>
     <string name="_bx_notes_menu_title_view_note"><![CDATA[View Note]]></string>
