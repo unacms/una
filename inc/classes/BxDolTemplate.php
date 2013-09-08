@@ -298,6 +298,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
             'default.css',
             'general.css',
             'icons.css',
+            'colors.css',
         ));
 
         //--- Load default JS ---//

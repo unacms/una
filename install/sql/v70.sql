@@ -2749,7 +2749,8 @@ INSERT INTO `sys_menu_templates` (`id`, `template`, `title`) VALUES
 (4, 'menu_vertical_lite.html', '_sys_menu_template_title_ver_lite'),
 (5, 'menu_toolbar.html', '_sys_menu_template_title_toolbar'),
 (6, 'menu_vertical.html', '_sys_menu_template_title_ver'),
-(7, 'menu_floating_blocks.html', '_sys_menu_template_title_floating_blocks');
+(7, 'menu_floating_blocks.html', '_sys_menu_template_title_floating_blocks'),
+(8, 'menu_main_submenu.html', '_sys_menu_template_title_main_submenu');
 
 CREATE TABLE IF NOT EXISTS `sys_objects_menu` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -2767,7 +2768,8 @@ CREATE TABLE IF NOT EXISTS `sys_objects_menu` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
-('sys_site', '_sys_menu_title_main', 'sys_site', 'system', 1, 0, 1, '', ''),
+('sys_site', '_sys_menu_title_main', 'sys_site', 'system', 4, 0, 1, '', ''),
+('sys_site_submenu', '_sys_menu_title_submenu', 'sys_site', 'system', 1, 0, 1, 'BxTemplMenuSubmenu', ''),
 ('sys_footer', '_sys_menu_title_footer', 'sys_footer', 'system', 2, 0, 1, '', ''),
 ('sys_toolbar_site', '_sys_menu_title_toolbar_site', 'sys_toolbar_site', 'system', 5, 0, 1, '', ''),
 ('sys_toolbar_member', '_sys_menu_title_toolbar_member', 'sys_toolbar_member', 'system', 5, 0, 1, '', ''),
@@ -2817,8 +2819,8 @@ CREATE TABLE IF NOT EXISTS `sys_menu_items` (
 
 -- site menu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `order`) VALUES
-('sys_site', 'system', 'home', '_sys_menu_item_title_system_home', '_sys_menu_item_title_home', 'index.php', '', '', '', '', 2147483647, 1, 1),
-('sys_site', 'system', 'about', '_sys_menu_item_title_system_about', '_sys_menu_item_title_about', 'page.php?i=about', '', '', '', '', 2147483647, 1, 2);
+('sys_site', 'system', 'home', '_sys_menu_item_title_system_home', '_sys_menu_item_title_home', 'index.php', '', '', 'home col-gray-dark', '', 2147483647, 1, 1),
+('sys_site', 'system', 'about', '_sys_menu_item_title_system_about', '_sys_menu_item_title_about', 'page.php?i=about', '', '', 'info-sign col-blue3-dark', '', 2147483647, 1, 2);
 
 -- footer menu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `order`) VALUES
@@ -2826,7 +2828,8 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 
 -- site toolbar menu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `order`) VALUES
-('sys_toolbar_site', 'system', 'search', '_sys_menu_item_title_system_search', '', 'javascript:void(0);', 'alert(''TODO: search popup here''); return false;', '', 'search', '', 2147483647, 1, 1);
+('sys_toolbar_site', 'system', 'main-menu', '_sys_menu_item_title_system_main_menu', '', 'javascript:void(0);', 'bx_menu_popup(''sys_site'', this);', '', 'reorder', '', 2147483647, 1, 1),
+('sys_toolbar_site', 'system', 'search', '_sys_menu_item_title_system_search', '', 'javascript:void(0);', 'alert(''TODO: search popup here''); return false;', '', 'search', '', 2147483647, 1, 2);
 
 -- member toolbar menu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `order`) VALUES

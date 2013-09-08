@@ -66,7 +66,7 @@ class BxBaseInformer extends BxDolInformer {
     protected function _addJsCss() {
         if ($this->_bJsCssAdded)
             return;
-        $this->_oTemplate->addCss(array('informer.css', 'colors.css'));
+        $this->_oTemplate->addCss(array('informer.css'));
         $this->_bJsCssAdded = true;
     }
 }

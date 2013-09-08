@@ -26,11 +26,16 @@ class BxNotesModule extends BxDolModule {
 
     // ====== SERVICE METHODS
 
-    public function serviceBrowseRecentNotes () {
+    public function serviceBrowseRecent () {
+        return $this->_serviceBrowse ('recent');
+    }
+
+    public function serviceBrowseFeatured () {
         return $this->_serviceBrowse ('recent');
     }
 
     public function _serviceBrowse ($sMode, $aParams = false) {
+
         $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
         bx_import('SearchResult', $this->_aModule);
         $o = new $sClass($sMode, $aParams);
