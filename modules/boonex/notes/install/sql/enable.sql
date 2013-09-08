@@ -104,7 +104,7 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 
 SET @iSiteMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_site' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `order`) VALUES 
-('sys_site', 'bx_notes', 'notes-home', '_bx_notes_menu_item_title_system_notes_home', '_bx_notes_menu_item_title_notes_home', 'page.php?i=notes-home', '', '', 'file-text col-red3', '', 2147483647, 1, IFNULL(@iSiteMenuOrder, 0) + 1);
+('sys_site', 'bx_notes', 'notes-home', '_bx_notes_menu_item_title_system_notes_home', '_bx_notes_menu_item_title_notes_home', 'page.php?i=notes-home', '', '', 'file-text col-red3', 'bx_notes_submenu', 2147483647, 1, IFNULL(@iSiteMenuOrder, 0) + 1);
 
 SET @iAddMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_add_content_links' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `order`) VALUES 
