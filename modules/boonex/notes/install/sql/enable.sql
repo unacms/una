@@ -128,14 +128,14 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 -- Dumping data for 'bx_notes_submenu' menu
 --
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_notes_submenu', '_bx_notes_menu_title_submenu', 'bx_notes_submenu', 'bx_notes', 1, 0, 1, '', '');
+('bx_notes_submenu', '_bx_notes_menu_title_submenu', 'bx_notes_submenu', 'bx_notes', 8, 0, 1, '', '');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_notes_submenu', 'bx_notes', '_bx_notes_menu_set_title_submenu', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_notes_submenu', 'bx_notes', 'notes-home', '_bx_notes_menu_item_title_system_notes_recent', '_bx_notes_menu_item_title_notes_recent', 'page.php?i=notes-home', '', '', '', '', 2147483647, 1, 1, 0),
-('bx_notes_submenu', 'bx_notes', 'notes-featured', '_bx_notes_menu_item_title_system_notes_featured', '_bx_notes_menu_item_title_notes_featured', 'page.php?i=notes-featured', '', '', '', '', 2147483647, 1, 1, 0);
+('bx_notes_submenu', 'bx_notes', 'notes-home', '_bx_notes_menu_item_title_system_notes_recent', '_bx_notes_menu_item_title_notes_recent', 'page.php?i=notes-home', '', '', '', '', 2147483647, 1, 1, 1),
+('bx_notes_submenu', 'bx_notes', 'notes-featured', '_bx_notes_menu_item_title_system_notes_featured', '_bx_notes_menu_item_title_notes_featured', 'page.php?i=notes-featured', '', '', '', '', 2147483647, 1, 1, 2);
 
 --
 -- Dumping data for 'bx_notes_view_submenu' menu
@@ -147,8 +147,8 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_notes_view_submenu', 'bx_notes', '_bx_notes_menu_set_title_view_note_submenu', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_notes_view_submenu', 'bx_notes', 'view-note', '_bx_notes_menu_item_title_system_view_note', '_bx_notes_menu_item_title_view_note_submenu_note', 'page.php?i=view-note&id={content_id}', '', '', '', '', 2147483647, 1, 1, 0),
-('bx_notes_view_submenu', 'bx_notes', 'view-note-comments', '_bx_notes_menu_item_title_system_view_note_comments', '_bx_notes_menu_item_title_view_note_submenu_comments', 'page.php?i=view-note-comments&id={content_id}', '', '', '', '', 2147483647, 1, 0, 0);
+('bx_notes_view_submenu', 'bx_notes', 'view-note', '_bx_notes_menu_item_title_system_view_note', '_bx_notes_menu_item_title_view_note_submenu_note', 'page.php?i=view-note&id={content_id}', '', '', '', '', 2147483647, 1, 1, 1),
+('bx_notes_view_submenu', 'bx_notes', 'view-note-comments', '_bx_notes_menu_item_title_system_view_note_comments', '_bx_notes_menu_item_title_view_note_submenu_comments', 'page.php?i=view-note-comments&id={content_id}', '', '', '', '', 2147483647, 1, 0, 2);
 
 
 -- ACL
