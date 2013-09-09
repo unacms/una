@@ -85,12 +85,12 @@ BxDolCmts.prototype.cmtUpdate = function (f, iCmtId)
     // submit form
     oData['action'] = 'CmtEditSubmit';
     oData['Cmt'] = iCmtId;
-    this._loading (eSubmit, true);
+    this._loadingInBlock (eSubmit, true);
     jQuery.post (
         this._sActionsUrl,
         oData,
         function (oResponse) {
-            $this._loading (eSubmit, false);
+            $this._loadingInBlock (eSubmit, false);
             if (!jQuery.trim(oResponse.text).length)
                 $this._error(eSubmit, true, jQuery.trim(oResponse.err).length ? oResponse.err : aDolLang['_Error occured']); // display error
             else
@@ -114,13 +114,13 @@ BxDolCmts.prototype.cmtReload = function(iCmtId) {
     oData['Type'] = 'reload';
 
     var eUl = $('#cmts-box-' + $this._sSystem + '-' + $this._iObjId + ' > div.cmts > ul').get();
-    this._loading (eUl, true);
+    this._loadingInBlock (eUl, true);
 
     jQuery.post (
         this._sActionsUrl,
         oData,
         function (s) {
-            $this._loading (eUl, false);
+            $this._loadingInBlock (eUl, false);
             $('#cmts-box-' + $this._sSystem + '-' + $this._iObjId + ' li#cmt' + iCmtId).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
                 $(this).replaceWith(s);
             });
@@ -231,13 +231,13 @@ BxDolCmts.prototype.cmtMore = function(oLink, iCmtParentId, iStart, iPerView)
 	if(bButton)
 		this._loadingInButton(oLink, true);
 	else 
-		this._loading(oLink, true);
+		this._loading($(oLink).parents('ul.cmts:first'), true);
 
 	this._getCmts(null, iCmtParentId, iStart, iPerView, this._sBrowseType, this._sDisplayType, function(sListId, sContent) {
 		if(bButton)
 			$this._loadingInButton(oLink, false);
 		else 
-			$this._loading(oLink, false);
+			$this._loading($(oLink).parents('ul.cmts:first'), false);
 
 		$this._cmtsReplace($(oLink).parents('li:first'), sContent);
 	});
@@ -346,14 +346,14 @@ BxDolCmts.prototype._getCmts = function (e, iCmtParentId, iStart, iPerView, sBro
     var sListId =  this._sRootId + ' #cmt' + iCmtParentId + ' > ul:first';
 
     if(e)
-        this._loading(e, true);
+        this._loadingInBlock(e, true);
 
     jQuery.post (
         this._sActionsUrl,
         oData,
         function(s) {
         	if(e)
-        		$this._loading(e, false);
+        		$this._loadingInBlock(e, false);
 
         	if(typeof onLoad == 'function')
     			onLoad(sListId, s);
@@ -399,13 +399,13 @@ BxDolCmts.prototype._getCmt = function (f, iCmtParentId, iCmtId)
     oData['CmtBrowse'] = this._sBrowseType;
     oData['CmtDisplay'] = this._sDisplayType;
 
-    this._loading (f);
+    this._loadingInBlock (f);
 
     jQuery.post (
         this._sActionsUrl,
         oData,
         function (oData) {
-            $this._loading (f, false);
+            $this._loadingInBlock (f, false);
 
             var sListId = $this._sRootId + ' #cmt' + oData.vparent_id + ' > ul';
             var sReplyFormId = $this._sRootId + ' #cmt' + oData.parent_id + ' > .cmt-reply';
@@ -469,6 +469,11 @@ BxDolCmts.prototype._getDefaultActions = function() {
 };
 
 BxDolCmts.prototype._loading = function(e, bShow) {
+	var oParent = $(e).length ? $(e) : $('body'); 
+	bx_loading(oParent, bShow);
+};
+
+BxDolCmts.prototype._loadingInBlock = function(e, bShow) {
 	var oParent = $(e).length ? $(e).parents('.bx-db-content:first') : $('body'); 
 	bx_loading(oParent, bShow);
 };

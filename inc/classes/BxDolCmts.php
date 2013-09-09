@@ -134,10 +134,14 @@ class BxDolCmts extends BxDol
     var $_aCmtElements = array (); ///< comment submit form elements
 
     var $_sDisplayType = '';
+    var $_sDpSessionKey = '';
     var $_iDpMaxLevel = 0;
 
     var $_sBrowseType = '';
+    var $_sBpSessionKey = ''; 
     var $_aOrder = array();
+
+    var $_iRememberTime = 2592000;
 
     /**
      * Constructor
@@ -165,12 +169,21 @@ class BxDolCmts extends BxDol
 
         $this->_iDpMaxLevel = (int)$this->_aSystem['number_of_levels'];
         $this->_sDisplayType = $this->_iDpMaxLevel == 0 ? BX_CMT_DISPLAY_FLAT : BX_CMT_DISPLAY_THREADED;
+        $this->_sDpSessionKey = 'bx_' . $this->_sSystem . '_dp_';
 
         $this->_sBrowseType = $this->_aSystem['browse_type'];
+        $this->_sBpSessionKey = 'bx_' . $this->_sSystem . '_bp_';
         $this->_aOrder = array(
         	'by' => BX_CMT_ORDER_BY_DATE, 
         	'way' => BX_CMT_ORDER_WAY_ASC
         );
+
+        list($mixedUserBp, $mixedUserDp) = $this->_getUserChoice();
+        if(!empty($mixedUserBp))
+        	$this->_sBrowseType = $mixedUserBp;
+
+		if(!empty($mixedUserDp))
+			$this->_sDisplayType = $mixedUserDp;
 
         $this->_oQuery = new BxDolCmtsQuery($this);
         $this->_sHomeUrl = BX_DOL_URL_ROOT . trim($_SERVER['REQUEST_URI'], '/');
@@ -322,10 +335,8 @@ class BxDolCmts extends BxDol
         return $iDeletedRecords;
     }
 
-
     /** comments functions
      *********************************************/
-
     function getCommentsArray ($iVParentId, $aOrder, $iStart = 0, $iCount = -1)
     {
         return $this->_oQuery->getComments ($this->getId(), $iVParentId, $this->_getAuthorId(), $aOrder, $iStart, $iCount);
@@ -341,8 +352,6 @@ class BxDolCmts extends BxDol
         return $this->_oQuery->deleteObjectComments ($iObjectId ? $iObjectId : $this->getId());
     }
 
-
-
     /**
      * delete all profiles comments in all systems, if some replies exist, set this comment to anonymous
      */
@@ -356,14 +365,10 @@ class BxDolCmts extends BxDol
         return true;
     }
 
-
-
     function getCommentsTableName ()
     {
         return $this->_oQuery->getTableName ();
     }
-
-
 
     function getObjectCommentsCount ($iObjectId = 0)
     {
@@ -373,7 +378,6 @@ class BxDolCmts extends BxDol
 
 
     /** permissions functions
-
     *********************************************/
 
     // is rate comment allowed
@@ -743,6 +747,8 @@ class BxDolCmts extends BxDol
     			$aBp['start'] = 0;
 			}
 		}
+
+		$this->_setUserChoice($aBp['type'], $aDp['type']);
     }
 
     function _triggerComment()
@@ -758,6 +764,40 @@ class BxDolCmts extends BxDol
 
     function _isSpam($s) {
         return bx_is_spam($s);
+    }
+
+    function _getUserChoice()
+    {
+    	$mixedBp = $mixedDp = false;
+    	if(!isLogged())
+    		return array($mixedBp, $mixedDp);
+
+    	$iUserId = $this->_getAuthorId();
+
+    	bx_import('BxDolSession');
+    	$oSession = BxDolSession::getInstance();
+
+    	$mixedBp = $oSession->getValue($this->_sBpSessionKey . $iUserId);
+    	$mixedDp = $oSession->getValue($this->_sDpSessionKey . $iUserId);
+
+    	return array($mixedBp, $mixedDp);
+    }
+
+    function _setUserChoice($sBp, $sDp)
+    {
+    	if(!isLogged())
+    		return;
+
+    	$iUserId = $this->_getAuthorId();
+
+    	bx_import('BxDolSession');
+    	$oSession = BxDolSession::getInstance();
+
+    	if(!empty($sBp))
+	    	$oSession->setValue($this->_sBpSessionKey . $iUserId, $sBp);
+
+    	if(!empty($sDp))
+    		$oSession->setValue($this->_sDpSessionKey . $iUserId, $sDp);
     }
 }
 
