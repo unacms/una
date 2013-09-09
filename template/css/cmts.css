@@ -13,8 +13,10 @@
         list-style: none;
     }
     ul.cmts-margin {}
-    li.cmt {
+    li.cmt,
+    ul.cmts-margin li.cmt {
     	position: relative;
+    	margin-top: 20px;
     	padding-left: 84px;
     }
     li.cmt:first-child {
@@ -42,7 +44,9 @@
     }
 
 	/*--- More ---*/
-    li.cmt-more {}
+    li.cmt-more {
+		border-top: 1px solid #eeeeee;
+    }
 	li.cmt-more-root {}
 	div.cmt-more-cont {}
 	div.cmt-more-line {}
