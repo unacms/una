@@ -20,14 +20,13 @@ TRUNCATE TABLE `bx_notes_photos_resized`;
 -- PAGES
 
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_notes';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_notes' OR `object` = 'bx_notes_create_note' OR `object` = 'bx_notes_edit_note' OR `object` = 'bx_notes_view_note' OR `object` = 'bx_notes_home';
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_notes' OR `object` = 'bx_notes_create_note' OR `object` = 'bx_notes_edit_note' OR `object` = 'bx_notes_view_note' OR `object` = 'bx_notes_view_note_comments' OR `object` = 'bx_notes_home' OR `object` = 'bx_notes_featured';
 
 -- MENU
 
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_notes';
 DELETE FROM `sys_menu_sets` WHERE `module` = 'bx_notes';
-DELETE FROM `sys_menu_items` WHERE `module` = 'bx_notes' OR `set_name` = 'bx_notes_view';
-
+DELETE FROM `sys_menu_items` WHERE `module` = 'bx_notes' OR `set_name` = 'bx_notes_view' OR `set_name` = 'bx_notes_submenu' OR `set_name` = 'bx_notes_view_submenu';
 
 -- ACL
 

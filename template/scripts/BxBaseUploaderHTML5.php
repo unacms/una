@@ -76,7 +76,7 @@ class BxBaseUploaderHTML5 extends BxDolUploader {
      * @param $mixedFiles as usual $_FILES['some_name'] array, but maybe some other params depending on the uploader
      * @return nothing, but if some files failed to upload, the actual error message can be determined by calling BxDolUploader::getUploadErrorMessages()
      */
-    public function handleUploads ($mixedFiles, $isMultiple = true, $iContentId = false) {
+    public function handleUploads ($iProfileId, $mixedFiles, $isMultiple = true, $iContentId = false) {
 
         bx_import('BxDolStorage');
         $oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);

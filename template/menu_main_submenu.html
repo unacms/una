@@ -1,0 +1,14 @@
+<ul id="bx-menu-main-submenu" class="bx-menu-main-submenu bx-def-font-h3 bx-clearfix">
+    <li class="bx-menu-main-submenu-div"><a>&nbsp;</a></li>
+    <bx_repeat:menu_items>
+        <li class="bx-def-padding-left __class_add__"><a href="__link__" target="__target__" onclick="__onclick__">__title__</a></li>
+    </bx_repeat:menu_items>
+</ul>
+<script>
+    $(document).ready(function () {
+        $('#bx-menu-main-submenu li').click(function () {
+            $('#bx-menu-main-submenu li').removeClass('bx-menu-tab-active');
+            $(this).addClass('bx-menu-tab-active');
+        });
+    });
+</script>

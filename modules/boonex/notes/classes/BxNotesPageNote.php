@@ -26,6 +26,11 @@ class BxNotesPageNote extends BxTemplPage {
     public function __construct($aObject, $oTemplate = false) {
         parent::__construct($aObject, $oTemplate);
 
+        // select view note submenu
+        bx_import('BxDolMenu');
+        $oMenuSumbemu = BxDolMenu::getObjectInstance('sys_site_submenu');
+        $oMenuSumbemu->setObjectSubmenu('bx_notes_view_submenu', 'notes-home');
+
         $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
         if ($iContentId) {
             $oModuleMain = BxDolModule::getInstance('bx_notes');

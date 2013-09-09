@@ -916,7 +916,7 @@ class BxDolForm extends BxDol {
         return isset($aData[$sKey]) ? $aData[$sKey] : false;
     }
     
-    function setSubmittedValue($sKey, $mixedValue, $sMethod, &$aSpecificValues = false) {
+    public static function setSubmittedValue($sKey, $mixedValue, $sMethod, &$aSpecificValues = false) {
         $aData = array();
         if($sMethod == BX_DOL_FORM_METHOD_GET) {
             $aData = &$_GET;

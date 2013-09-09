@@ -118,7 +118,7 @@ class BxDolStudioForm extends BxBaseFormView {
     }
 
     protected function getTranslationsKey($sType, $sName, $sValue) {
-        $iRand = mktime();
+        $iRand = time();
         $sPrefixDefault = "_sys_form_input";
 
         $sName = BxDolStudioUtils::getSystemName(trim($sName));

@@ -108,8 +108,7 @@ class BxDolProfile extends BxDol implements iBxDolProfile {
      * Check if profile status is active
      */
     public function isActive($iProfileId = false) {
-        $aInfo = $this->getStatus($iProfileId);
-        return BX_PROFILE_STATUS_ACTIVE == $aInfo['status'];
+        return BX_PROFILE_STATUS_ACTIVE == $this->getStatus($iProfileId);
     }
 
     /**

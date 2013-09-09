@@ -26,11 +26,16 @@ class BxNotesModule extends BxDolModule {
 
     // ====== SERVICE METHODS
 
-    public function serviceBrowseRecentNotes () {
+    public function serviceBrowseRecent () {
+        return $this->_serviceBrowse ('recent');
+    }
+
+    public function serviceBrowseFeatured () {
         return $this->_serviceBrowse ('recent');
     }
 
     public function _serviceBrowse ($sMode, $aParams = false) {
+
         $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
         bx_import('SearchResult', $this->_aModule);
         $o = new $sClass($sMode, $aParams);
@@ -44,13 +49,16 @@ class BxNotesModule extends BxDolModule {
             return false;
     }
 
-    public function serviceCreateNote () {
+    public function serviceEntityCreate () {
         bx_import('NoteForms', $this->_aModule);
         $oProfileForms = new BxNotesNoteForms($this);
         return $oProfileForms->addDataForm();
     }
 
-    public function serviceEditNote ($iContentId = 0) {
+    /**
+     * @return edit note form string
+     */
+    public function serviceEntityEdit ($iContentId = 0) {
         if (!$iContentId)
             $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
         if (!$iContentId)
@@ -61,9 +69,17 @@ class BxNotesModule extends BxDolModule {
     }
 
     /**
-     * @return empty string on success or non-empty error string on error
-     */    
-    public function serviceDeleteNote ($iContentId = 0) {
+     * @return edit note form block
+     */
+    public function serviceEntityEditBlock ($iContentId = 0) {
+        $s = $this->serviceEntityEdit($iContentId);
+        return array('content' => $s, 'menu' => 'bx_notes_view');
+    }
+
+    /**
+     * @return delete note form string
+     */
+    public function serviceEntityDelete ($iContentId = 0) {
         if (!$iContentId)
             $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
         if (!$iContentId)
@@ -73,7 +89,18 @@ class BxNotesModule extends BxDolModule {
         return $oProfileForms->deleteDataForm((int)$iContentId);
     }
 
-    public function serviceNoteText ($iContentId = 0) {
+    /**
+     * @return delete note form block
+     */
+    public function serviceEntityDeleteBlock ($iContentId = 0) {
+        $s = $this->serviceEntityDelete($iContentId);
+        return array('content' => $s, 'menu' => 'bx_notes_view');
+    }
+
+    /**
+     * Just a note's text
+     */
+    public function serviceEntityText ($iContentId = 0) {
         if (!$iContentId)
             $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
         if (!$iContentId)
@@ -83,7 +110,15 @@ class BxNotesModule extends BxDolModule {
         return $oProfileForms->viewDataText((int)$iContentId);
     }
 
-    public function serviceNoteInfo ($iContentId = 0) {
+    /**
+     * A note's text with some additional controls, like menu
+     */
+    public function serviceEntityTextBlock ($iContentId = 0) {
+        $s = $this->serviceEntityText($iContentId);
+        return array('content' => $s, 'menu' => 'bx_notes_view');
+    }
+
+    public function serviceEntityInfo ($iContentId = 0) {
         if (!$iContentId)
             $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
         if (!$iContentId)
@@ -93,7 +128,7 @@ class BxNotesModule extends BxDolModule {
         return $oProfileForms->viewDataForm((int)$iContentId);
     }
 
-    public function serviceNoteSocialSharing ($iContentId = 0) {
+    public function serviceEntitySocialSharing ($iContentId = 0) {
         if (!$iContentId)
             $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
         if (!$iContentId)
@@ -119,6 +154,30 @@ class BxNotesModule extends BxDolModule {
 
         bx_import('BxTemplSocialSharing');
         return BxTemplSocialSharing::getInstance()->getCode($sUrl, $aContentInfo['title'], $aCustomParams);
+    }
+
+    public function serviceEntityComments ($iContentId = 0) {
+        if (!$iContentId)
+            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if (!$iContentId)
+            return false;
+        return "TODO: Comments here";
+    }
+
+    public function serviceEntityAuthor ($iContentId = 0) {
+        if (!$iContentId)
+            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if (!$iContentId)
+            return false;
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if (!$aContentInfo)
+            return false;
+        $oProfile = BxDolProfile::getInstance($aContentInfo[BxNotesConfig::$FIELD_AUTHOR]);
+        if (!$oProfile) {
+            bx_import('BxDolProfileUndefined');
+            $oProfile = BxDolProfileUndefined::getInstance();
+        }
+        return $oProfile->getUnit();
     }
 
     // ====== ACTION METHODS

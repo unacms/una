@@ -3268,6 +3268,7 @@ More info about URI DNSBL: <br />
 
 	<string name="_sys_menu_title_rss"><![CDATA[RSS]]></string>
 	<string name="_sys_menu_title_main"><![CDATA[Site Navigation]]></string>
+	<string name="_sys_menu_title_submenu"><![CDATA[Site Submenu]]></string>
 	<string name="_sys_menu_title_footer"><![CDATA[Footer Links]]></string>
     <string name="_sys_menu_title_toolbar_site"><![CDATA[Site Toolbar]]></string>
     <string name="_sys_menu_title_toolbar_member"><![CDATA[Member Toolbar]]></string>
@@ -3278,6 +3279,7 @@ More info about URI DNSBL: <br />
 
     <string name="_sys_menu_item_title_system_home"><![CDATA[Home]]></string>
     <string name="_sys_menu_item_title_system_about"><![CDATA[About]]></string>
+    <string name="_sys_menu_item_title_system_main_menu"><![CDATA[Main Menu]]></string>
     <string name="_sys_menu_item_title_system_search"><![CDATA[Search]]></string>
     <string name="_sys_menu_item_title_system_add_content"><![CDATA[Add Content]]></string>
     <string name="_sys_menu_item_title_system_notifications"><![CDATA[Notifications]]></string>
@@ -3319,6 +3321,7 @@ More info about URI DNSBL: <br />
     <string name="_sys_menu_set_title_profile_create_links"><![CDATA[Create Profile Links]]></string>
 
 	<string name="_sys_menu_template_title_main"><![CDATA[Site Navigation]]></string>
+    <string name="_sys_menu_template_title_main_submenu"><![CDATA[Site Navigation Submenu]]></string>
 	<string name="_sys_menu_template_title_footer"><![CDATA[Footer Links]]></string>
     <string name="_sys_menu_template_title_hor"><![CDATA[Horizontal Links]]></string>
     <string name="_sys_menu_template_title_ver"><![CDATA[Vertical Links]]></string>

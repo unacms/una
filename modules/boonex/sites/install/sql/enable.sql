@@ -47,7 +47,7 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 -- MENU
 SET @iSiteMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_site' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `order`) VALUES 
-('sys_site', 'bx_sites', 'sites-home', '_bx_sites_menu_item_title_system_sites_home', '_bx_sites_menu_item_title_sites_home', 'page.php?i=sites-home', '', '', '', '', 226, 1, IFNULL(@iSiteMenuOrder, 0) + 1);
+('sys_site', 'bx_sites', 'sites-home', '_bx_sites_menu_item_title_system_sites_home', '_bx_sites_menu_item_title_sites_home', 'page.php?i=sites-home', '', '', 'globe col-green1', '', 226, 1, IFNULL(@iSiteMenuOrder, 0) + 1);
 
 SET @iAddMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_add_content_links' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `order`) VALUES 
