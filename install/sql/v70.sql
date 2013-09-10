@@ -141,6 +141,7 @@ CREATE TABLE `sys_objects_cmts` (
   `ViewingThreshold` smallint(6) NOT NULL,
   `IsOn` smallint(1) NOT NULL,
   `RootStylePrefix` varchar(16) NOT NULL default 'cmt',
+  `BaseUrl` varchar(256) NOT NULL,
   `TriggerTable` varchar(32) NOT NULL,
   `TriggerFieldId` varchar(32) NOT NULL,
   `TriggerFieldComments` varchar(32) NOT NULL,
@@ -639,17 +640,6 @@ SET @iPremium = 8;
 
 INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
--- account create
-(@iUnauthenticated, 10),
-
--- account delete
-(@iStandard, 12),
-(@iUnconfirmed, 12),
-(@iPending, 12),
-(@iModerator, 12),
-(@iAdministrator, 12),
-(@iPremium, 12),
-
 -- vote 
 (@iStandard, 3),
 (@iModerator, 3),
@@ -678,7 +668,26 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iStandard, 9),
 (@iModerator, 9),
 (@iAdministrator, 9),
-(@iPremium, 9);
+(@iPremium, 9),
+
+-- commets edit all
+(@iModerator, 10),
+(@iAdministrator, 10),
+
+-- commets remove all
+(@iModerator, 11),
+(@iAdministrator, 11),
+
+-- account create
+(@iUnauthenticated, 12),
+
+-- account delete
+(@iStandard, 13),
+(@iUnconfirmed, 13),
+(@iPending, 13),
+(@iModerator, 13),
+(@iAdministrator, 13),
+(@iPremium, 13);
 
 
 

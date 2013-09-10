@@ -11,7 +11,7 @@ function BxDolCmts (options) {
     this._sSystemTable = options.sSystemTable; // current comment system table name
     this._iAuthorId = options.iAuthorId; // this comment's author ID.
     this._iObjId = options.iObjId; // this object id comments
-    this._sActionsUrl = options.sBaseUrl + 'cmts.php'; // actions url address
+    this._sActionsUrl = options.sRootUrl + 'cmts.php'; // actions url address
 
     this._sPostFormPosition = undefined == options.sPostFormPosition ? 'top' : options.sPostFormPosition;
     this._sBrowseType = undefined == options.sBrowseType ? 'tail' : options.sBrowseType;
@@ -270,7 +270,7 @@ BxDolCmts.prototype.showReplacement = function(iCmtId)
 
 BxDolCmts.prototype.seeMore = function(oLink)
 {
-	$(oLink).next('span').show().prev('a').remove();
+	$(oLink).parent('span').next('span').show().prev('span').remove();
 };
 
 BxDolCmts.prototype.toggleReply = function(e, iCmtParentId)

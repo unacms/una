@@ -123,25 +123,26 @@ define('BX_CMT_PFP_BOTH', 'both');
  */
 class BxDolCmts extends BxDol
 {
-	var $_oQuery = null;
-	var $_sHomeUrl = '';
-	var $_sViewUrl = '';
+	protected $_oQuery = null;
+	protected $_sViewUrl = '';
+	protected $_sBaseUrl = '';
 
-	var $_sSystem = 'profile'; ///< current comment system name
-    var $_aSystem = array (); ///< current comments system array
-    var $_iId = 0; ///< obect id to be commented
+	protected $_sSystem = 'profile'; ///< current comment system name
+    protected $_aSystem = array (); ///< current comments system array
+    protected $_iId = 0; ///< obect id to be commented
 
-    var $_aCmtElements = array (); ///< comment submit form elements
+    protected $_aMarkers = array ();
+    protected $_aPostElements = array (); ///< comment submit form elements
 
-    var $_sDisplayType = '';
-    var $_sDpSessionKey = '';
-    var $_iDpMaxLevel = 0;
+    protected $_sDisplayType = '';
+    protected $_sDpSessionKey = '';
+    protected $_iDpMaxLevel = 0;
 
-    var $_sBrowseType = '';
-    var $_sBpSessionKey = ''; 
-    var $_aOrder = array();
+    protected $_sBrowseType = '';
+    protected $_sBpSessionKey = ''; 
+    protected $_aOrder = array();
 
-    var $_iRememberTime = 2592000;
+    protected $_iRememberTime = 2592000;
 
     /**
      * Constructor
@@ -162,9 +163,9 @@ class BxDolCmts extends BxDol
 
 		$iCmtTextMin = (int)$this->_aSystem['chars_post_min'];
 		$iCmtTextMax = (int)$this->_aSystem['chars_post_max'];
-		$this->_aCmtElements = array (
+		$this->_aPostElements = array (
             'CmtParent' => array ('reg' => '^[0-9]+$', 'msg' => _t('_bad comment parent id')),
-            'CmtText' => array ('reg' => '^.{' . $iCmtTextMin . ',' . $iCmtTextMax . '}$', 'msg' => _t('_Please enter ' . $iCmtTextMin . '-' . $iCmtTextMax . ' characters'))
+            'CmtText' => array ('reg' => '^.{' . $iCmtTextMin . ',' . $iCmtTextMax . '}$', 'msg' => _t('_Please enter n1-n2 characters', $iCmtTextMin, $iCmtTextMax))
         );
 
         $this->_iDpMaxLevel = (int)$this->_aSystem['number_of_levels'];
@@ -186,8 +187,11 @@ class BxDolCmts extends BxDol
 			$this->_sDisplayType = $mixedUserDp;
 
         $this->_oQuery = new BxDolCmtsQuery($this);
-        $this->_sHomeUrl = BX_DOL_URL_ROOT . trim($_SERVER['REQUEST_URI'], '/');
+
         $this->_sViewUrl = BX_DOL_URL_ROOT . 'cmts.php';
+        $this->_sBaseUrl = $this->_aSystem['base_url'];
+        if(get_mb_substr($this->_sBaseUrl, 0, 4) != 'http')
+        	$this->_sBaseUrl = BX_DOL_URL_ROOT . $this->_sBaseUrl;
 
         if ($iInit)
             $this->init($iId);
@@ -217,6 +221,7 @@ class BxDolCmts extends BxDol
                     `ViewingThreshold` AS `viewing_threshold`,
                     `IsOn` AS `is_on`,
                     `RootStylePrefix` AS `root_style_prefix`,
+                    `BaseUrl` AS `base_url`,
                     `TriggerTable` AS `trigger_table`,
                     `TriggerFieldId` AS `trigger_field_id`,
                     `TriggerFieldComments` AS `trigger_field_comments`,
@@ -234,23 +239,11 @@ class BxDolCmts extends BxDol
 
         if (empty($this->iId) && $iId)
             $this->setId($iId);
-    }
 
-    /**
-     * check if user can post/edit or delete own comments
-     */
-    function checkAction ($iAction, $isPerformAction = false)
-    {
-        $iId = $this->_getAuthorId();
-        $check_res = checkAction($iId, $iAction, $isPerformAction);
-        return $check_res[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED;
-    }
-
-    function checkActionErrorMsg ($iAction)
-    {
-        $iId = $this->_getAuthorId();
-        $check_res = checkAction($iId, $iAction);
-        return $check_res[CHECK_ACTION_RESULT] != CHECK_ACTION_RESULT_ALLOWED ? $check_res[CHECK_ACTION_MESSAGE] : '';
+		$this->addMarkers(array(
+			'object_id' => $this->getId(),
+			'user_id' => $this->_getAuthorId()
+		));
     }
 
     function getId ()
@@ -315,11 +308,6 @@ class BxDolCmts extends BxDol
         $this->_iId = $iId;
     }
 
-    function setHomeUrl($sUrl)
-    {
-    	$this->_sHomeUrl = $sUrl; 
-    }
-
     /**
      * it is called on cron every day or similar period to clean old comment votes
      */
@@ -374,18 +362,41 @@ class BxDolCmts extends BxDol
     {
         return $this->_oQuery->getObjectCommentsCount ($iObjectId ? $iObjectId : $this->getId());
     }
-
-
+	/**
+     * Add replace markers.
+     * @param $a array of markers as key => value
+     * @return true on success or false on error
+     */
+    public function addMarkers ($a) {
+        if (empty($a) || !is_array($a))
+            return false;
+        $this->_aMarkers = array_merge ($this->_aMarkers, $a);
+        return true;
+    }
 
     /** permissions functions
     *********************************************/
+    function checkAction ($iAction, $isPerformAction = false)
+    {
+        $iId = $this->_getAuthorId();
+        $check_res = checkAction($iId, $iAction, $isPerformAction);
+        return $check_res[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED;
+    }
 
-    // is rate comment allowed
-    function isRateAllowed ($isPerformAction = false) {
+    function checkActionErrorMsg ($iAction)
+    {
+        $iId = $this->_getAuthorId();
+        $check_res = checkAction($iId, $iAction);
+        return $check_res[CHECK_ACTION_RESULT] != CHECK_ACTION_RESULT_ALLOWED ? $check_res[CHECK_ACTION_MESSAGE] : '';
+    }
+
+    function isRateAllowed ($isPerformAction = false)
+    {
         return $this->checkAction (ACTION_ID_COMMENTS_VOTE, $isPerformAction); 
     }
 
-    function msgErrRateAllowed () { 
+    function msgErrRateAllowed ()
+    { 
         return $this->checkActionErrorMsg(ACTION_ID_COMMENTS_VOTE);
     }
 
@@ -396,43 +407,50 @@ class BxDolCmts extends BxDol
         return $this->checkAction (ACTION_ID_COMMENTS_POST, $isPerformAction);
     }
 
-    function msgErrPostReplyAllowed () {
+    function msgErrPostReplyAllowed ()
+    {
         return $this->checkActionErrorMsg(ACTION_ID_COMMENTS_POST);
     }
 
     /**
      * is edit own comment allowed
      */
-    function isEditAllowed ($isPerformAction = false) {
+    function isEditAllowed ($isPerformAction = false)
+    {
         return $this->checkAction (ACTION_ID_COMMENTS_EDIT_OWN, $isPerformAction);
     }
 
-    function msgErrEditAllowed () {
+    function msgErrEditAllowed ()
+    {
         return $this->checkActionErrorMsg (ACTION_ID_COMMENTS_EDIT_OWN);
     }
 
     /**
      * is removing own comment allowed
      */
-    function isRemoveAllowed ($isPerformAction = false) {
+    function isRemoveAllowed ($isPerformAction = false)
+    {
         return $this->checkAction (ACTION_ID_COMMENTS_REMOVE_OWN, $isPerformAction);
     }
 
-    function msgErrRemoveAllowed () {
+    function msgErrRemoveAllowed ()
+    {
         return $this->checkActionErrorMsg(ACTION_ID_COMMENTS_REMOVE_OWN);
     }
 
     /**
      * is edit any comment allowed
      */
-    function isEditAllowedAll ($isPerformAction = false) {
+    function isEditAllowedAll ($isPerformAction = false)
+    {
         return isAdmin() || $this->checkAction (ACTION_ID_COMMENTS_EDIT_ALL, $isPerformAction) ? true : false;
     }
 
     /**
      * is removing any comment allowed
      */
-    function isRemoveAllowedAll ($isPerformAction = false) {
+    function isRemoveAllowedAll ($isPerformAction = false)
+    {
         return isAdmin() || $this->checkAction (ACTION_ID_COMMENTS_REMOVE_ALL, $isPerformAction) ? true : false;
     }
 
@@ -672,7 +690,13 @@ class BxDolCmts extends BxDol
 
 	function _getAuthorInfo($iAuthorId = 0)
     {
+    	bx_import('BxDolProfile');
 		$oProfile = BxDolProfile::getInstance($iAuthorId);
+		if (!$oProfile) {
+			bx_import('BxDolProfileUndefined');
+			$oProfile = BxDolProfileUndefined::getInstance();
+		}
+
 		return array(
 			$oProfile->getDisplayName(), 
 			$oProfile->getUrl(), 
@@ -689,12 +713,18 @@ class BxDolCmts extends BxDol
 
     function _prepareTextForSave ($s) 
     {
-        if ($this->isNl2br())
-            $iDataAction = BX_DATA_TEXT_MULTILINE;
-        else
-            $iDataAction = BX_DATA_TEXT; // TODO: make sure that it is processed before output !
+    	$iDataAction = $this->isNl2br() ? BX_DATA_TEXT_MULTILINE : BX_DATA_TEXT; // TODO: make sure that it is processed before output !
+		return bx_process_input($s, $iDataAction);
+    }
 
-        return bx_process_input($s, $iDataAction);
+    function _prepareTextForOutput ($s)
+    {
+    	$iDataAction = $this->isNl2br() ? BX_DATA_TEXT_MULTILINE : BX_DATA_TEXT;
+
+		$s = bx_process_output($s, $iDataAction);
+		$s = preg_replace("/((https?|ftp|news):\/\/)?([a-z]([a-z0-9\-]*\.)+(aero|arpa|biz|com|coop|edu|gov|info|int|jobs|mil|museum|name|nato|net|org|pro|travel|[a-z]{2})|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))(\/[a-z0-9_\-\.~]+)*(\/([a-z0-9_\-\.]*)(\?[a-z0-9+_\-\.%=&amp;]*)?)?(#[a-z][a-z0-9_]*)?/", '<a href="$0" target="_blank">$0</a>', $s);
+
+		return $s; 
     }
 
 	function _prepareParams(&$aBp, &$aDp)
@@ -764,6 +794,26 @@ class BxDolCmts extends BxDol
 
     function _isSpam($s) {
         return bx_is_spam($s);
+    }
+
+	/**
+     * Replace provided markers in a string
+     * @param $mixed string or array to replace markers in
+     * @return string where all occured markers are replaced
+     */ 
+    protected function _replaceMarkers ($mixed) {
+        if (empty($this->_aMarkers))
+            return $mixed;
+
+        if (is_array($mixed)) {
+            foreach ($mixed as $sKey => $sValue)
+                $mixed[$sKey] = $this->_replaceMarkers ($sValue);
+        } else {
+            foreach ($this->_aMarkers as $sKey => $sValue)
+                $mixed = str_replace('{' . $sKey . '}', $sValue, $mixed);
+        }
+
+        return $mixed;
     }
 
     function _getUserChoice()

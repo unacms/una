@@ -624,7 +624,7 @@ function _format_when ($iSec) {
     if ($iSec>0) {
         if ($iSec < 3600) {
             $i = round($iSec/60);
-            $s .= (0 == $i || 1 == $i) ? _t('_x_minute_ago', '1', '') : _t('_x_minute_ago', $i, 's');
+            $s .= (0 == $i || 1 == $i) ? _t('_1_minute_ago') : _t('_x_minute_ago', $i, 's');
         } else if ($iSec < 86400) {
             $i = round($iSec/60/60);
             $s .= (0 == $i || 1 == $i) ? _t('_x_hour_ago', '1', '') : _t('_x_hour_ago', $i, 's');
@@ -635,7 +635,7 @@ function _format_when ($iSec) {
     } else {
         if ($iSec > -3600) {
             $i = round($iSec/60);
-            $s .= (0 == $i || 1 == $i) ? _t('_in_x_minute', '1', '') : _t('_in_x_minute', -$i, 's');
+            $s .= (0 == $i || 1 == $i) ? _t('_in_1_minute') : _t('_in_x_minute', -$i, 's');
         } else if ($iSec > -86400) {
             $i = round($iSec/60/60);
             $s .= (0 == $i || 1 == $i) ? _t('_in_x_hour', '1', '') : _t('_in_x_hour', -$i, 's');

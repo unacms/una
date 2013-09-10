@@ -62,7 +62,7 @@ class BxBaseCmtsView extends BxDolCmts {
             <script  type=\"text/javascript\">
                 var " . $this->_sJsObjName . " = new BxDolCmts({
                     sObjName: '" . $this->_sJsObjName . "',
-                    sBaseUrl: '" . BX_DOL_URL_ROOT . "',
+                    sRootUrl: '" . BX_DOL_URL_ROOT . "',
                     sSystem: '" . $this->getSystemName() . "',
                     sSystemTable: '" . $this->_aSystem['table_cmts'] . "',
                     iAuthorId: '" . $this->_getAuthorId() . "',
@@ -71,7 +71,7 @@ class BxBaseCmtsView extends BxDolCmts {
     				sBrowseType: '" . $this->_sBrowseType . "',
     				sDisplayType: '" . $this->_sDisplayType . "'});
                 " . $this->_sJsObjName . ".oCmtElements = {";
-        for (reset($this->_aCmtElements); list($k,$r) = each ($this->_aCmtElements); ) {
+        for (reset($this->_aPostElements); list($k,$r) = each ($this->_aPostElements); ) {
             $ret .= "\n'$k' : { 'reg' : '{$r['reg']}', 'msg' : \"". bx_js_string(trim($r['msg'])) . "\" },";
         }
         $ret = substr($ret, 0, -1);
@@ -144,7 +144,7 @@ class BxBaseCmtsView extends BxDolCmts {
     	return BxDolTemplate::getInstance()->parseHtmlByName('comment_block.html', array(
     		'system' => $this->_sSystem,
     		'id' => $this->getId(),
-    		'comment' => $this->getComment($iCmtId, array(), array('type' => BX_CMT_DISPLAY_THREADED, 'opened' => true)),
+    		'comment' => $this->getComment($iCmtId, array('type' => $this->_sBrowseType), array('type' => BX_CMT_DISPLAY_THREADED)),
     		'script' => $this->getScript()
     	));
     }
@@ -186,16 +186,19 @@ class BxBaseCmtsView extends BxDolCmts {
 
 		$sActions = $this->_getActionsBox($r, $aDp);
 
-		$sText = bx_process_output($r['cmt_text'], BX_DATA_TEXT_MULTILINE);
+		$sText = $r['cmt_text'];
 		$sTextMore = '';
 
 		$iMaxLength = (int)$this->_aSystem['chars_display_max'];
 		if(strlen($sText) > $iMaxLength) {
 			$iLength = strpos($sText, ' ', $iMaxLength);
 			
-			$sTextMore = substr($sText, $iLength);
-			$sText = substr($sText, 0, $iLength);
+			$sTextMore = trim(substr($sText, $iLength));
+			$sText = trim(substr($sText, 0, $iLength));
 		}
+
+		$sText = $this->_prepareTextForOutput($sText);
+		$sTextMore = $this->_prepareTextForOutput($sTextMore);
 
 		$aTmplReplyTo = array();
 		if((int)$r['cmt_parent_id'] != 0) {
@@ -204,7 +207,7 @@ class BxBaseCmtsView extends BxDolCmts {
 
 			$aTmplReplyTo = array(
 				'style_prefix' => $this->_sStylePrefix,
-        		'par_cmt_link' => $this->_sHomeUrl. '#' . $this->_sSystem . $r['cmt_parent_id'],
+        		'par_cmt_link' => $this->_replaceMarkers($this->_sBaseUrl) . '#' . $this->_sSystem . $r['cmt_parent_id'],
         		'par_cmt_author' => $sParAuthorName
         	);
 		}
@@ -250,6 +253,7 @@ class BxBaseCmtsView extends BxDolCmts {
         	'bx_if:show_more' => array(
         		'condition' => !empty($sTextMore),
         		'content' => array(
+        			'style_prefix' => $this->_sStylePrefix,
         			'js_object' => $this->_sJsObjName,
         			'text_more' => $sTextMore
         		)
@@ -501,7 +505,7 @@ class BxBaseCmtsView extends BxDolCmts {
 			'parent_id' => $aBp['vparent_id'],
     		'start' => $iStart,
     		'per_view' => $iPerView,
-    		'title' => _t('_load_more_comments_' . $aBp['type'])
+    		'title' => _t('_load_more_' . ($aBp['vparent_id'] == 0 ? 'comments' : 'replies') . '_' . $aBp['type'])
 		));
 
     	switch($aBp['type']) {
