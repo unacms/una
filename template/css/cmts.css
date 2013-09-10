@@ -110,7 +110,8 @@
     }
     div.cmt-actions {}
     div.cmt-actions a,
-    div.cmt-actions span {
+    div.cmt-actions span.bullet,
+    div.cmt-actions span.cmt-points {
 		display: block;
     	float: left;
     }
