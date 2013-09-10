@@ -1143,10 +1143,12 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_x_minute_ago"><![CDATA[{0} minute{1} ago]]></string>
 	<string name="_x_hour_ago"><![CDATA[{0} hour{1} ago]]></string>
 	<string name="_x_day_ago"><![CDATA[{0} day{1} ago]]></string>
+	<string name="_1_day_ago"><![CDATA[Yesterday]]></string>
 	<string name="_in_1_minute"><![CDATA[Just now]]></string>
 	<string name="_in_x_minute"><![CDATA[In {0} minute{1}]]></string>
 	<string name="_in_x_hour"><![CDATA[In {0} hour{1}]]></string>
 	<string name="_in_x_day"><![CDATA[In {0} day{1}]]></string>
+	<string name="_in_1_day"><![CDATA[Tomorrow]]></string>
 	<string name="_Shoutbox"><![CDATA[Shoutbox]]></string>
 	<string name="_powered_by"><![CDATA[Powered by]]></string>
 	<string name="_about_BoonEx"><![CDATA[BoonEx - Community Software;  Dating And Social Networking Scripts; Video Chat And More.]]></string>

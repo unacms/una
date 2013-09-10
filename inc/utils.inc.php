@@ -630,7 +630,7 @@ function _format_when ($iSec) {
             $s .= (0 == $i || 1 == $i) ? _t('_x_hour_ago', '1', '') : _t('_x_hour_ago', $i, 's');
         } else {
             $i = round($iSec/60/60/24);
-            $s .= (0 == $i || 1 == $i) ? _t('_yesterday') : _t('_x_day_ago', $i, 's');
+            $s .= (0 == $i || 1 == $i) ? _t('_1_day_ago') : _t('_x_day_ago', $i, 's');
         }
     } else {
         if ($iSec > -3600) {
@@ -641,7 +641,7 @@ function _format_when ($iSec) {
             $s .= (0 == $i || 1 == $i) ? _t('_in_x_hour', '1', '') : _t('_in_x_hour', -$i, 's');
         } elseif ($iSec < -86400) {
             $i = round($iSec/60/60/24);
-            $s .= (0 == $i || 1 == $i) ? _t('_tomorrow') : _t('_in_x_day', -$i, 's');
+            $s .= (0 == $i || 1 == $i) ? _t('_in_1_day') : _t('_in_x_day', -$i, 's');
         }
     }
     return $s;
