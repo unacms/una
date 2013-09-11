@@ -224,6 +224,7 @@ class BxDolCmts extends BxDol
                     `BaseUrl` AS `base_url`,
                     `TriggerTable` AS `trigger_table`,
                     `TriggerFieldId` AS `trigger_field_id`,
+                    `TriggerFieldTitle` AS `trigger_field_title`,
                     `TriggerFieldComments` AS `trigger_field_comments`,
                     `ClassName` AS `class_name`,
                     `ClassFile` AS `class_file`
@@ -282,6 +283,11 @@ class BxDolCmts extends BxDol
 	function getPerView ($iCmtParentId = 0)
     {
         return $iCmtParentId == 0 ? $this->_aSystem['per_view'] : $this->_aSystem['per_view_replies'];
+    }
+
+    function getBaseUrl()
+    {
+    	return $this->_replaceMarkers($this->_sBaseUrl);
     }
 
 	function isValidSystem ($sSystem)
@@ -356,6 +362,11 @@ class BxDolCmts extends BxDol
     function getCommentsTableName ()
     {
         return $this->_oQuery->getTableName ();
+    }
+
+    function getObjectTitle ($iObjectId = 0)
+    {
+    	return $this->_oQuery->getObjectTitle ($iObjectId ? $iObjectId : $this->getId());
     }
 
     function getObjectCommentsCount ($iObjectId = 0)

@@ -15,13 +15,13 @@ bx_import('BxDolLanguages');
 check_logged();
 
 $sSys = isset($_REQUEST['sys']) ? $_REQUEST['sys'] : '';
-$iId = (int)$_REQUEST['id'];
+$iObjectId = (int)$_REQUEST['id'];
 $sAction = isset($_REQUEST['action']) && preg_match ('/^[A-Za-z_-]+$/', $_REQUEST['action']) ? $_REQUEST['action'] : '';
 
 bx_import ('BxTemplCmtsView');
-$oCmts = new BxTemplCmtsView($sSys, $iId);
+$oCmts = new BxTemplCmtsView($sSys, $iObjectId);
 
-if ($oCmts && $sSys && $iId) {
+if ($oCmts && $sSys && $iObjectId) {
 	if($sAction) {
 	    header('Content-Type: text/html; charset=utf-8');
 	    $sMethod = 'action' . $sAction;
@@ -31,12 +31,15 @@ if ($oCmts && $sSys && $iId) {
 
 	$iCmtId = bx_get('cmt_id');
 	if($iCmtId !== false) {
-		$sTitle = _t('_cmt_page_header_view');
+		$sObjectTitle = $oCmts->getObjectTitle($iObjectId);
+
+		$sHeader = _t('_cmt_page_view_header', $sObjectTitle);
+		$sTitle = _t('_cmt_page_view_title', $oCmts->getBaseUrl(), $sObjectTitle);
 		$sContent = DesignBoxContent($sTitle, $oCmts->getCommentBlock($iCmtId), BX_DB_PADDING_DEF);
 
 		$oTemplate = BxDolTemplate::getInstance();
 		$oTemplate->setPageNameIndex(BX_PAGE_DEFAULT);
-		$oTemplate->setPageHeader($sTitle);
+		$oTemplate->setPageHeader($sHeader);
 		$oTemplate->setPageContent('page_main_code', $sContent);
 		$oTemplate->getPageCode();
 	}

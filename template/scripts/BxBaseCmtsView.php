@@ -207,7 +207,7 @@ class BxBaseCmtsView extends BxDolCmts {
 
 			$aTmplReplyTo = array(
 				'style_prefix' => $this->_sStylePrefix,
-        		'par_cmt_link' => $this->_replaceMarkers($this->_sBaseUrl) . '#' . $this->_sSystem . $r['cmt_parent_id'],
+        		'par_cmt_link' => $this->getBaseUrl() . '#' . $this->_sSystem . $r['cmt_parent_id'],
         		'par_cmt_author' => $sParAuthorName
         	);
 		}

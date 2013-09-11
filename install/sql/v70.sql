@@ -144,6 +144,7 @@ CREATE TABLE `sys_objects_cmts` (
   `BaseUrl` varchar(256) NOT NULL,
   `TriggerTable` varchar(32) NOT NULL,
   `TriggerFieldId` varchar(32) NOT NULL,
+  `TriggerFieldTitle` varchar(32) NOT NULL,
   `TriggerFieldComments` varchar(32) NOT NULL,
   `ClassName` varchar(32) NOT NULL,
   `ClassFile` varchar(256) NOT NULL,

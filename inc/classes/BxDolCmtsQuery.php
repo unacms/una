@@ -13,13 +13,14 @@ bx_import('BxDolDb');
  */
 class BxDolCmtsQuery extends BxDolDb
 {
-	var $_oMain;
+	protected $_oMain;
 
-    var $_sTable;
-    var $_sTableTrack;
-    var $_sTriggerTable;
-    var $_sTriggerFieldId;
-    var $_sTriggerFieldComments;
+    protected $_sTable;
+    protected $_sTableTrack;
+    protected $_sTriggerTable;
+    protected $_sTriggerFieldId;
+    protected $_sTriggerFieldTitle;
+    protected $_sTriggerFieldComments;
 
     function BxDolCmtsQuery(&$oMain)
     {
@@ -30,6 +31,7 @@ class BxDolCmtsQuery extends BxDolDb
         $this->_sTableTrack = $aSystem['table_track'];
         $this->_sTriggerTable = $aSystem['trigger_table'];
         $this->_sTriggerFieldId = $aSystem['trigger_field_id'];
+        $this->_sTriggerFieldTitle = $aSystem['trigger_field_title'];
         $this->_sTriggerFieldComments = $aSystem['trigger_field_comments'];
 
         parent::BxDolDb();
@@ -273,6 +275,12 @@ class BxDolCmtsQuery extends BxDolDb
             $sWhere = $this->prepare(" AND `cmt_parent_id` = ?", $iParentId);
         $sQuery = $this->prepare("SELECT COUNT(*) FROM `" . $this->_sTable ."` WHERE `cmt_object_id` = ? " . $sWhere, $iObjectId);
         return $this->getOne ($sQuery);
+    }
+
+	function getObjectTitle($iId)
+    {
+        $sQuery = $this->prepare("SELECT `{$this->_sTriggerFieldTitle}` FROM `{$this->_sTriggerTable}` WHERE `{$this->_sTriggerFieldId}` = ? LIMIT 1", $iId);
+        return $this->getOne($sQuery);
     }
 
     function updateTriggerTable($iId, $iCount)
