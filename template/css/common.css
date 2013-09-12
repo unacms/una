@@ -16,6 +16,7 @@ a > img {
 }
 
 body {
+	min-width: 1018px;
     padding:0;
     margin:0;
 }
