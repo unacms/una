@@ -1,0 +1,18 @@
+@media (max-width:520px) {
+
+
+.bx-def-media-phone-hide {
+    display:none;
+}
+.bx-def-media-phone-show-block {
+    display:block;
+}
+
+/* default.css */ 
+
+.bx-def-page-width {
+    width:auto;
+}
+
+
+} /* @media end */
