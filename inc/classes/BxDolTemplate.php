@@ -299,6 +299,9 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
             'general.css',
             'icons.css',
             'colors.css',
+            'media-tablet.css',
+            'media-phone.css',
+            'media-print.css',
         ));
 
         //--- Load default JS ---//
@@ -1464,7 +1467,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
             "'<bx_text_attribute:([^\s]+) \/>'se",
             "'<bx_menu:([^\s]+) \/>'se",
             "'<bx_url_root />'",
-            "'<bx_url_studio />'"
+            "'<bx_url_studio />'",
         ));
         $aValues = array_merge($aValues, array(
             "\$this->parseHtmlByName('\\1', \$aVariables, \$mixedKeyWrapperHtml, BX_DOL_TEMPLATE_CHECK_IN_BOTH)",
@@ -1478,7 +1481,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
             "bx_html_attribute(_t('\\1'))",
             "\$this->getMenu('\\1')",
             BX_DOL_URL_ROOT,
-            BX_DOL_URL_STUDIO
+            BX_DOL_URL_STUDIO,
         ));
 
         //--- Parse Predefined Keys ---//
