@@ -161,7 +161,13 @@ class BxNotesModule extends BxDolModule {
             $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
         if (!$iContentId)
             return false;
-        return "TODO: Comments here";
+
+		bx_import('BxTemplCmtsView');
+		$oCmts = new BxTemplCmtsView(BxNotesConfig::$OBJECT_COMMENTS, $iContentId);
+		if(!$oCmts->isEnabled())
+			return false;
+
+        return $oCmts->getCommentsBlock();
     }
 
     public function serviceEntityAuthor ($iContentId = 0) {

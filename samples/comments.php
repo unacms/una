@@ -54,6 +54,7 @@ CREATE TABLE IF NOT EXISTS `sample_cmts_trigger` (
 
 INSERT INTO `sample_cmts_trigger` (`id`, `title`, `comments`) VALUES
 (1, 'Sample Comments', 0);
+
  */
 
 $aPathInfo = pathinfo(__FILE__);
@@ -85,7 +86,5 @@ function PageCompMainCode() {
 
     return DesignBoxContent("Comments",  $oCmts->getCommentsBlock(), BX_DB_PADDING_DEF);
 }
-
-
 
 /** @} */

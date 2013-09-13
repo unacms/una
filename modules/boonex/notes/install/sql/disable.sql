@@ -33,3 +33,5 @@ DELETE FROM `sys_menu_items` WHERE `module` = 'bx_notes' OR `set_name` = 'bx_not
 DELETE `sys_acl_actions`, `sys_acl_matrix` FROM `sys_acl_actions`, `sys_acl_matrix` WHERE `sys_acl_matrix`.`IDAction` = `sys_acl_actions`.`ID` AND `sys_acl_actions`.`Module` = 'bx_notes';
 DELETE FROM `sys_acl_actions` WHERE `Module` = 'bx_notes';
 
+-- COMMENTS
+DELETE FROM `sys_objects_cmts` WHERE `ObjectName`='bx_notes';

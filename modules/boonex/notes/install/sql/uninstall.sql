@@ -9,6 +9,11 @@ DROP TABLE IF EXISTS `bx_notes_posts`;
 DROP TABLE IF EXISTS `bx_notes_photos`; 
 DROP TABLE IF EXISTS `bx_notes_photos_resized`;
 
+-- TABLE: COMMENTS
+
+DROP TABLE IF EXISTS `bx_notes_cmts`;
+DROP TABLE IF EXISTS `bx_notes_cmts_track`;
+
 -- FORMS
 
 DELETE FROM `sys_objects_form` WHERE `module` = 'bx_notes';

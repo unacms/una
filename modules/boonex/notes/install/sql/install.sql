@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS `bx_notes_posts` (
   `title` varchar(255) NOT NULL,
   `text` text NOT NULL,
   `summary` text NOT NULL,
+  `comments` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -45,6 +46,35 @@ CREATE TABLE IF NOT EXISTS `bx_notes_photos_resized` (
   `private` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `remote_id` (`remote_id`)
+);
+
+-- TABLE: COMMENTS
+
+CREATE TABLE IF NOT EXISTS `bx_notes_cmts` (
+  `cmt_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cmt_parent_id` int(11) NOT NULL DEFAULT '0',
+  `cmt_vparent_id` int(11) NOT NULL DEFAULT '0',
+  `cmt_object_id` int(11) NOT NULL DEFAULT '0',
+  `cmt_author_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `cmt_level` int(11) NOT NULL DEFAULT '0',
+  `cmt_text` text NOT NULL,
+  `cmt_mood` tinyint(4) NOT NULL DEFAULT '0',
+  `cmt_rate` int(11) NOT NULL DEFAULT '0',
+  `cmt_rate_count` int(11) NOT NULL DEFAULT '0',
+  `cmt_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `cmt_replies` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`cmt_id`),
+  KEY `cmt_object_id` (`cmt_object_id`,`cmt_parent_id`)
+);
+
+CREATE TABLE IF NOT EXISTS `bx_notes_cmts_track` (
+  `cmt_system_id` int(11) NOT NULL DEFAULT '0',
+  `cmt_id` int(11) NOT NULL DEFAULT '0',
+  `cmt_rate` tinyint(4) NOT NULL DEFAULT '0',
+  `cmt_rate_author_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `cmt_rate_author_nip` int(11) unsigned NOT NULL DEFAULT '0',
+  `cmt_rate_ts` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`cmt_system_id`,`cmt_id`,`cmt_rate_author_nip`)
 );
 
 -- FORMS
