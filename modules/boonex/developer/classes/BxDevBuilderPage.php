@@ -120,7 +120,10 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage {
     protected function actionPageExport() {
         $sContentInsert = $sContentDelete = "";
 
-        $aPage = $this->aPageRebuild;
+        $aPage = array();
+		$this->oDb->getPages(array('type' => 'by_object', 'value' => $this->sPage), $aPage, false);
+    	if(empty($aPage) || !is_array($aPage))
+            return array();
 
         $sContentInsert .= ($this->oModule->_oDb->getQueryInsert('sys_objects_page', array($aPage), "Dumping data for '" . $aPage['object'] . "' page"));
         $sContentDelete .= ($this->oModule->_oDb->getQueryDelete('sys_objects_page', 'object', array($aPage), "Deleting data for '" . $aPage['object'] . "' page"));
@@ -210,11 +213,48 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage {
                     'disable' => true
                 )
             ),
-			'inputs' => parent::getSettingsOptions(true)
+			'inputs' => array(
+            	'object'  => array(
+					'type' => 'text',
+	                'name' => 'object',
+	                'caption' => _t('_bx_dev_bp_txt_page_object'),
+	                'info' => '',
+	                'value' => $this->aPageRebuild['object'],
+	                'required' => '',
+            		'attrs' => array(
+                        'disabled' => 'disabled'
+                    ),
+				)
+            )
         ); 
 
+        $aForm['inputs'] += parent::getSettingsOptions(true);
+
         $aForm['inputs']['title_system']['type'] = 'text';
+        $aForm['inputs']['title_system']['caption'] = _t('_bx_dev_bp_txt_page_title_system');        
         $aForm['inputs']['title']['type'] = 'text';
+
+        $aUri = array(
+			'uri'  => array(
+				'type' => 'text',
+	            'name' => 'uri',
+	            'caption' => _t('_bx_dev_bp_txt_page_uri'),
+	            'info' => '',
+	            'value' => $this->aPageRebuild['uri'],
+	            'required' => '',
+        		'db' => array (
+                	'pass' => 'Xss',
+				),
+			)
+		);
+        $aForm['inputs'] = bx_array_insert_before($aUri, $aForm['inputs'], 'url');
+
+        $aForm['inputs']['url']['caption'] = _t('_bx_dev_bp_txt_page_url');
+        $aForm['inputs']['url']['db'] = array (
+			'pass' => 'Xss',
+		);
+        unset($aForm['inputs']['url']['attrs']['disabled']);
+
         $aForm['inputs']['deletable'] = array(
             'type' => 'checkbox',
             'name' => 'deletable',

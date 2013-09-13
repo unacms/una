@@ -47,6 +47,7 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery {
         $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . "
                 `tp`.`id` AS `id`,
                 `tp`.`object` AS `object`,
+                `tp`.`uri` AS `uri`,
                 `tp`.`title_system` AS `title_system`,
                 `tp`.`title` AS `title`,
                 `tp`.`module` AS `module`,
