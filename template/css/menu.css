@@ -133,13 +133,13 @@ ul.bx-menu-verlit {
     float:left;
 }
 
-.bx-menu-main-submenu-div {
-    width:0px;
-    height:100%;
-    border-left: 1px solid #dddddd;
-    border-right: 1px solid #ffffff;
-    border-left: 1px solid rgba(200, 200, 200, 0.5);
-    border-right: 1px solid rgba(255, 255, 255, 0.8);
+#bx-menu-main-container #bx-menu-main-submenu:first-child .bx-menu-main-submenu-div:first-child {
+    display:none;
+}
+
+.bx-menu-main-submenu-div .sys-icon {
+    font-size:32px;
+    vertical-align:middle;
 }
 
 ul.bx-menu-main-submenu,
@@ -155,6 +155,7 @@ ul.bx-menu-main {
     margin:0;
 }
 
+.bx-menu-main li a,
 .bx-menu-main li span,
 .bx-menu-main li .sys-icon,
 .bx-menu-main-submenu li a {
