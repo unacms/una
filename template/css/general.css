@@ -9,6 +9,7 @@
     position: fixed;
     width:100%;
     min-height: 60px;
+    z-index:10000;
 
     border-bottom: 2px solid #383d66;
     border-top: 1px solid #666;

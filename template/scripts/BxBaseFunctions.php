@@ -566,7 +566,7 @@ EOF;
             if ($sMenu) {
                 $sId = 'bx-menu-db-' . time() . rand(0, PHP_INT_MAX);
                 $sCode .= '<div id="' . $sId . '" style="display:none;">' . BxTemplFunctions::getInstance()->transBox('<div class="bx-def-padding bx-def-color-bg-block">' . $sMenu . '</div>') . '</div>';
-                $aButtonMenu = array ('icon' => 'ellipsis-vertical', 'onclick' => 'if ($(\'#' . $sId . ':visible\').length) $(\'#' . $sId . '\').dolPopupHide(); else $(\'#' . $sId . '\').dolPopup({pointer:{el:$(this)}})');
+                $aButtonMenu = array ('icon' => 'reorder', 'onclick' => 'if ($(\'#' . $sId . ':visible\').length) $(\'#' . $sId . '\').dolPopupHide(); else $(\'#' . $sId . '\').dolPopup({pointer:{el:$(this)}})');
             }
             
         }
