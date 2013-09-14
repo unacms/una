@@ -60,11 +60,11 @@ class BxBaseMenuSubmenu extends BxTemplMenu
         if ($this->_sObjectSubmenu)
             $oSubmenu = BxDolMenu::getObjectInstance($this->_sObjectSubmenu);
                 
-        if ('home' == $aMenuItemSelected['name']) {
+        if (!$oSubmenu) {
             $oSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu_main');
             return $oSubmenu->getCode();
         } else {
-            return $this->_oTemplate->parseHtmlByName($this->_aObject['template'], $aVars) . ($oSubmenu ? $oSubmenu->getCode() : '');
+            return $this->_oTemplate->parseHtmlByName($this->_aObject['template'], $aVars) . $oSubmenu->getCode();
         }
     }
 
