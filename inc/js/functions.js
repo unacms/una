@@ -250,10 +250,10 @@ function bx_center_content (sSel, sBlockStyle) {
  * @param e - element to show popup at
  * @param o - menu object name
  */
-function bx_menu_popup (o, e) {
-    $(e).dolPopupAjax({
-        url: 'menu.php?o=' + o
-    });
+function bx_menu_popup (o, e, options) {
+    var options = options || {};
+    var o = $.extend({}, $.fn.dolPopupDefaultOptions, options, {url: 'menu.php?o=' + o});
+    $(e).dolPopupAjax(o);
 }
 
 function validateLoginForm(eForm) {

@@ -29,7 +29,7 @@
 
     $.fn.dolPopup = function(options) {
         var options = options || {};
-        var o = $.extend({}, $.fn.dolPopupDefaultOptions, options);        
+        var o = $.extend({}, $.fn.dolPopupDefaultOptions, options);
 
         if (false != o.pointer) {
             o.fog = false;
@@ -211,7 +211,7 @@
                     bx_menu_on(e, true);
 
                 $("#bx-popup-ajax-wrapper-" + id).dolPopup({
-                    pointer: $.isWindow(e[0]) ? false : {el:$(e), align:'center'},
+                    pointer: $.isWindow(e[0]) ? false : $.extend({}, {el:$(e), align:'center'}, options.pointer),
                     onHide: function () {
                         if (!$.isWindow(e[0]))
                             bx_menu_on(e, false);
@@ -236,7 +236,7 @@
 
                 $('#bx-popup-ajax-wrapper-' + id).find(options.container).load(sUrlRoot + options.url, function () {                    
                     $('#bx-popup-ajax-wrapper-' + id)._dolPopupSetPosition({
-                        pointer: $.isWindow(e[0]) ? false : {el:e, align:'center'}
+                        pointer: $.isWindow(e[0]) ? false : $.extend({}, {el:e, align:'center'}, options.pointer),
                     });
                 });
 

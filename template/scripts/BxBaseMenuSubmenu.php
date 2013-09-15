@@ -42,8 +42,8 @@ class BxBaseMenuSubmenu extends BxTemplMenu
     public function getCode () 
     {
         $aMenuItemSelected = $this->_getSelectedMenuItem ();
-        if (!$aMenuItemSelected)
-            return false;
+//        if (!$aMenuItemSelected)
+//            return false;
 
         if (!$this->_sObjectSubmenu && $aMenuItemSelected['submenu_object'])
             $this->_sObjectSubmenu = $aMenuItemSelected['submenu_object'];

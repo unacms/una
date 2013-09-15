@@ -88,6 +88,13 @@ class BxDolProfileUndefined extends BxDol implements iBxDolSingleton, iBxDolProf
     }
 
     /**
+     * Get profile icon
+     */
+    public function getIcon() {
+        return '';
+    }
+
+    /**
      * Check if profile is active
      */
     public function isActive() {

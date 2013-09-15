@@ -46,6 +46,7 @@ interface iBxDolProfile {
     public function getUrl();
     public function getUnit();
     public function getThumb();
+    public function getIcon();
     public function isActive();
 }
 

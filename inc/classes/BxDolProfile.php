@@ -161,11 +161,19 @@ class BxDolProfile extends BxDol implements iBxDolProfile {
     }
 
     /**
-     * Get thumbnail
+     * Get thumbnail url
      */
     public function getThumb($iProfileId = 0) {
         $aInfo = $this->getInfo($iProfileId);
         return BxDolService::call($aInfo['type'], 'profile_thumb', array($aInfo['content_id']));
+    }
+
+    /**
+     * Get icon url
+     */
+    public function getIcon($iProfileId = 0) {
+        $aInfo = $this->getInfo($iProfileId);
+        return BxDolService::call($aInfo['type'], 'profile_icon', array($aInfo['content_id']));
     }
 
     /**

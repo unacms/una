@@ -21,6 +21,7 @@ class BxPersonsConfig extends BxDolModuleConfig {
 
     public static $OBJECT_STORAGE = 'bx_persons_pictures';
     public static $OBJECT_IMAGES_TRANSCODER_THUMB = 'bx_persons_thumb';
+    public static $OBJECT_IMAGES_TRANSCODER_ICON = 'bx_persons_icon';
     public static $OBJECT_IMAGES_TRANSCODER_PREVIEW = 'bx_persons_preview';
 
     /**

@@ -212,12 +212,21 @@
     background-color:#f2f2f2;
 }
 
-.bx-def-color-bg-hl {
+.bx-def-color-bg-hl,
+.bx-def-color-bg-hl-hover:hover {
     background-color: rgba(200, 200, 255, 0.2);
+
+    -moz-box-shadow: inset 0px 0px -1px 0px rgba(200, 200, 255, 0.2);
+    -webkit-box-shadow: inset 0px 0px -1px 0px rgba(200, 200, 255, 0.2);
+    box-shadow: inset 0px 0px -1px 0px rgba(200, 200, 255, 0.2);
 }
 
 .bx-def-color-bg-active {
-    background-color: #ffeac1;  
+    background-color: rgba(255, 234, 193, 0.5);
+
+    -moz-box-shadow: inset 0px 0px -1px 0px rgba(255, 234, 193, 0.5);
+    -webkit-box-shadow: inset 0px 0px -1px 0px rgba(255, 234, 193, 0.5);
+    box-shadow: inset 0px 0px -1px 0px rgba(255, 234, 193, 0.5);
 }
 
 /* hr */
@@ -356,6 +365,17 @@ h3,
 
 /* image/thumbnail default styles */
 .bx-def-thumb {
+    -moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.8);
+    -webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.8);
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
+
+	border-radius:2px;
+	-moz-border-radius:2px;
+	-webkit-border-radius:2px;
+
+    overflow:hidden;
+}
+.bx-def-icon {
     -moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.8);
     -webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.8);
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);

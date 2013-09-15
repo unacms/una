@@ -52,15 +52,28 @@ class BxPersonsTemplate extends BxDolTwigTemplate {
      * Get profile picture thumb url
      */
     function thumb ($aData, $bSubstituteNoImage = true) {
+        return $this->_image (BxPersonsConfig::$OBJECT_IMAGES_TRANSCODER_THUMB, 'no-picture-thumb.png', $aData, $bSubstituteNoImage);
+    }
+
+    /**
+     * Get profile picture icon url
+     */
+    function icon ($aData, $bSubstituteNoImage = true) {
+        return $this->_image (BxPersonsConfig::$OBJECT_IMAGES_TRANSCODER_ICON, 'no-picture-icon.png', $aData, $bSubstituteNoImage);
+    }
+
+    /**
+     * Get profile picture icon url
+     */
+    function _image ($sTranscodeObject, $sNoImage, $aData, $bSubstituteNoImage = true) {
         if ($aData[BxPersonsConfig::$FIELD_PICTURE]) {
             bx_import('BxDolImageTranscoder');                    
-            $oImagesTranscoder = BxDolImageTranscoder::getObjectInstance(BxPersonsConfig::$OBJECT_IMAGES_TRANSCODER_THUMB);
+            $oImagesTranscoder = BxDolImageTranscoder::getObjectInstance($sTranscodeObject);
             if ($oImagesTranscoder)
                 return $oImagesTranscoder->getImageUrl($aData[BxPersonsConfig::$FIELD_PICTURE]);
         }
-        return $bSubstituteNoImage ? $this->getImageUrl('no-picture-thumb.png') : '';
+        return $bSubstituteNoImage ? $this->getImageUrl('no-picture-icon.png') : '';
     }
-
 }
 
 /** @} */ 

@@ -12,8 +12,8 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 DELETE FROM `sys_objects_storage` WHERE `object` = 'bx_persons_pictures' OR `object` = 'bx_persons_pictures_resized';
 DELETE FROM `sys_storage_tokens` WHERE `object` = 'bx_persons_pictures' OR `object` = 'bx_persons_pictures_resized';
 
-DELETE FROM `sys_objects_transcoder_images` WHERE `object` = 'bx_persons_thumb' OR `object` = 'bx_persons_preview';
-DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` = 'bx_persons_thumb' OR `transcoder_object` = 'bx_persons_preview';
+DELETE FROM `sys_objects_transcoder_images` WHERE `object` = 'bx_persons_icon' OR `object` = 'bx_persons_thumb' OR `object` = 'bx_persons_preview';
+DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` = 'bx_persons_icon' OR `transcoder_object` = 'bx_persons_thumb' OR `transcoder_object` = 'bx_persons_preview';
 -- TODO: delete resized picture files as well
 TRUNCATE TABLE `bx_persons_pictures_resized`; 
 

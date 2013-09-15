@@ -42,7 +42,7 @@ class BxBaseMenu extends BxDolMenu {
             return false;
 
         $this->_addJsCss();
-                
+
         return $this->_oTemplate->parseHtmlByName($this->_aObject['template'], $aVars);
     }
 

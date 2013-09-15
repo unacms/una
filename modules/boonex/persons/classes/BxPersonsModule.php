@@ -47,6 +47,15 @@ class BxPersonsModule extends BxDolModule implements iBxDolProfileService {
         return $this->_oTemplate->thumb($aContentInfo);
     }
 
+    public function serviceProfileIcon ($iContentId) {
+        if (!$iContentId)
+            return false;
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if (!$aContentInfo)
+            return false;        
+        return $this->_oTemplate->icon($aContentInfo);
+    }
+
     public function serviceProfileName ($iContentId) {
         if (!$iContentId)
             return false;
