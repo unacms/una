@@ -11,9 +11,6 @@
     display:inline;
     display:inline-block;
 
-    width:64px;
-    height:64px;
-
     vertical-align:middle;
 }
 
@@ -22,7 +19,6 @@
     display:inline-block;
     
     width:95px;
-    max-height:64px;    
     padding-left:10px;
     
     text-overflow:ellipsis;

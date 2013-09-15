@@ -387,3 +387,16 @@ h3,
     overflow:hidden;
 }
 
+.bx-def-thumb-size {
+    width:64px;
+    height:64px;
+}
+.bx-def-thumb-size-max-height {
+    max-height:64px;
+}
+
+.bx-def-icon-size {
+    width:32px;
+    height:32px;
+}
+

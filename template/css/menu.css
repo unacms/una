@@ -223,8 +223,6 @@ ul.bx-menu-toolbar li:active a {
 }
 
 ul.bx-menu-toolbar li img {
-    width:32px;
-    height:32px;
     background-position:center center;
     background-repeat:no-repeat;
 }
