@@ -46,12 +46,12 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 
 -- MENU
 SET @iSiteMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_site' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
-INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `order`) VALUES 
-('sys_site', 'bx_sites', 'sites-home', '_bx_sites_menu_item_title_system_sites_home', '_bx_sites_menu_item_title_sites_home', 'page.php?i=sites-home', '', '', 'globe col-green1', '', 226, 1, IFNULL(@iSiteMenuOrder, 0) + 1);
+INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('sys_site', 'bx_sites', 'sites-home', '_bx_sites_menu_item_title_system_sites_home', '_bx_sites_menu_item_title_sites_home', 'page.php?i=sites-home', '', '', 'globe col-green1', '', 226, 1, 1, IFNULL(@iSiteMenuOrder, 0) + 1);
 
 SET @iAddMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_add_content_links' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
-INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `order`) VALUES 
-('sys_add_content_links', 'bx_sites', 'site-create', '_bx_sites_menu_item_title_system_create_site', '_bx_sites_menu_item_title_create_site', 'page.php?i=site-create', '', '', '', '', 226, 1, IFNULL(@iAddMenuOrder, 0) + 1);
+INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('sys_add_content_links', 'bx_sites', 'site-create', '_bx_sites_menu_item_title_system_create_site', '_bx_sites_menu_item_title_create_site', 'page.php?i=site-create', '', '', '', '', 226, 1, 1, IFNULL(@iAddMenuOrder, 0) + 1);
 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_sites_view', '_bx_sites_menu_title_view_site', 'bx_sites_view', 'bx_sites', 6, 0, 1, 'BxSitesMenuViewSite', 'modules/boonex/sites/classes/BxSitesMenuViewSite.php');
@@ -59,10 +59,10 @@ INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `templat
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_sites_view', 'bx_sites', '_bx_sites_menu_set_title_view_site', 0);
 
-INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `order`) VALUES 
-('bx_sites_view', 'bx_sites', 'view-note', '_bx_sites_menu_item_title_system_view_site', '_bx_sites_menu_item_title_view_site', 'page.php?i=site-view&id={content_id}', '', '', 'eye-open', '', 2147483647, 1, 0),
-('bx_sites_view', 'bx_sites', 'edit-note', '_bx_sites_menu_item_title_system_edit_site', '_bx_sites_menu_item_title_edit_site', 'page.php?i=site-edit&id={content_id}', '', '', 'pencil', '', 2147483647, 1, 1),
-('bx_sites_view', 'bx_sites', 'delete-note', '_bx_sites_menu_item_title_system_delete_site', '_bx_sites_menu_item_title_delete_site', 'page.php?i=site-delete&id={content_id}', '', '', 'remove', '', 2147483647, 1, 2);
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('bx_sites_view', 'bx_sites', 'view-note', '_bx_sites_menu_item_title_system_view_site', '_bx_sites_menu_item_title_view_site', 'page.php?i=site-view&id={content_id}', '', '', 'eye-open', '', 2147483647, 1, 0, 0),
+('bx_sites_view', 'bx_sites', 'edit-note', '_bx_sites_menu_item_title_system_edit_site', '_bx_sites_menu_item_title_edit_site', 'page.php?i=site-edit&id={content_id}', '', '', 'pencil', '', 2147483647, 1, 0, 1),
+('bx_sites_view', 'bx_sites', 'delete-note', '_bx_sites_menu_item_title_system_delete_site', '_bx_sites_menu_item_title_delete_site', 'page.php?i=site-delete&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 2);
 
 
 -- ACL

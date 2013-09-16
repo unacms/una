@@ -103,12 +103,12 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 -- MENU
 
 SET @iSiteMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_site' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
-INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `order`) VALUES 
-('sys_site', 'bx_notes', 'notes-home', '_bx_notes_menu_item_title_system_notes_home', '_bx_notes_menu_item_title_notes_home', 'page.php?i=notes-home', '', '', 'file-text col-red3', 'bx_notes_submenu', 2147483647, 1, IFNULL(@iSiteMenuOrder, 0) + 1);
+INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('sys_site', 'bx_notes', 'notes-home', '_bx_notes_menu_item_title_system_notes_home', '_bx_notes_menu_item_title_notes_home', 'page.php?i=notes-home', '', '', 'file-text col-red3', 'bx_notes_submenu', 2147483647, 1, 1, IFNULL(@iSiteMenuOrder, 0) + 1);
 
 SET @iAddMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_add_content_links' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
-INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `order`) VALUES 
-('sys_add_content_links', 'bx_notes', 'create-note', '_bx_notes_menu_item_title_system_create_note', '_bx_notes_menu_item_title_create_note', 'page.php?i=create-note', '', '', '', '', 2147483647, 1, IFNULL(@iAddMenuOrder, 0) + 1);
+INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('sys_add_content_links', 'bx_notes', 'create-note', '_bx_notes_menu_item_title_system_create_note', '_bx_notes_menu_item_title_create_note', 'page.php?i=create-note', '', '', '', '', 2147483647, 1, 1, IFNULL(@iAddMenuOrder, 0) + 1);
 
 --
 -- Dumping data for 'bx_notes_view' menu
@@ -119,10 +119,10 @@ INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `templat
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_notes_view', 'bx_notes', '_bx_notes_menu_set_title_view_note', 0);
 
-INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `order`) VALUES 
-('bx_notes_view', 'bx_notes', 'view-note', '_bx_notes_menu_item_title_system_view_note', '_bx_notes_menu_item_title_view_note', 'page.php?i=view-note&id={content_id}', '', '', 'eye-open', '', 2147483647, 1, 0),
-('bx_notes_view', 'bx_notes', 'edit-note', '_bx_notes_menu_item_title_system_edit_note', '_bx_notes_menu_item_title_edit_note', 'page.php?i=edit-note&id={content_id}', '', '', 'pencil', '', 2147483647, 1, 1),
-('bx_notes_view', 'bx_notes', 'delete-note', '_bx_notes_menu_item_title_system_delete_note', '_bx_notes_menu_item_title_delete_note', 'page.php?i=delete-note&id={content_id}', '', '', 'remove', '', 2147483647, 1, 2);
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('bx_notes_view', 'bx_notes', 'view-note', '_bx_notes_menu_item_title_system_view_note', '_bx_notes_menu_item_title_view_note', 'page.php?i=view-note&id={content_id}', '', '', 'eye-open', '', 2147483647, 1, 0, 0),
+('bx_notes_view', 'bx_notes', 'edit-note', '_bx_notes_menu_item_title_system_edit_note', '_bx_notes_menu_item_title_edit_note', 'page.php?i=edit-note&id={content_id}', '', '', 'pencil', '', 2147483647, 1, 0, 1),
+('bx_notes_view', 'bx_notes', 'delete-note', '_bx_notes_menu_item_title_system_delete_note', '_bx_notes_menu_item_title_delete_note', 'page.php?i=delete-note&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 2);
 
 --
 -- Dumping data for 'bx_notes_submenu' menu
@@ -147,7 +147,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_notes_view_submenu', 'bx_notes', '_bx_notes_menu_set_title_view_note_submenu', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_notes_view_submenu', 'bx_notes', 'view-note', '_bx_notes_menu_item_title_system_view_note', '_bx_notes_menu_item_title_view_note_submenu_note', 'page.php?i=view-note&id={content_id}', '', '', '', '', 2147483647, 1, 1, 1),
+('bx_notes_view_submenu', 'bx_notes', 'view-note', '_bx_notes_menu_item_title_system_view_note', '_bx_notes_menu_item_title_view_note_submenu_note', 'page.php?i=view-note&id={content_id}', '', '', '', '', 2147483647, 1, 0, 1),
 ('bx_notes_view_submenu', 'bx_notes', 'view-note-comments', '_bx_notes_menu_item_title_system_view_note_comments', '_bx_notes_menu_item_title_view_note_submenu_comments', 'page.php?i=view-note-comments&id={content_id}', '', '', '', '', 2147483647, 1, 0, 2);
 
 

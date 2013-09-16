@@ -86,8 +86,8 @@ INSERT INTO `sys_objects_views` VALUES(NULL, 'bx_groups', 'bx_groups_views_track
 -- site menu 
 
 SET @iMenuSiteMaxOrder := (SELECT MAX(`order`) FROM `sys_menu_items` WHERE `set_name` = 'sys_site');
-INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title`, `link`, `onclick`, `target`, `icon`, `visible_for_levels`, `active`, `order`) VALUES
-('sys_site', 'bx_groups', 'groups', '_bx_groups_menu_root', 'modules/?r=groups/home/', '', '', '', 2147483647, 1, @iMenuSiteMaxOrder + 1);
+INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title`, `link`, `onclick`, `target`, `icon`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
+('sys_site', 'bx_groups', 'groups', '_bx_groups_menu_root', 'modules/?r=groups/home/', '', '', '', 2147483647, 1, 1, @iMenuSiteMaxOrder + 1);
 
 -- groups menu 
 
@@ -97,16 +97,16 @@ INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `templa
 INSERT INTO `sys_menu_sets` (`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_groups', 'bx_groups', '_bx_groups_menu_set_title_main', 0);
 
-INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title`, `link`, `onclick`, `target`, `icon`, `visible_for_levels`, `active`, `order`) VALUES
-('bx_groups', 'bx_groups', 'main_page', '_bx_groups_menu_main', 'modules/?r=groups/home/', '', '', '', 2147483647, 1, 1),
-('bx_groups', 'bx_groups', 'recent', '_bx_groups_menu_recent', 'modules/?r=groups/browse/recent', '', '', '', 2147483647, 1, 2),
-('bx_groups', 'bx_groups', 'top_rated', '_bx_groups_menu_top_rated', 'modules/?r=groups/browse/top', '', '', '', 2147483647, 1, 3),
-('bx_groups', 'bx_groups', 'popular', '_bx_groups_menu_popular', 'modules/?r=groups/browse/popular', '', '', '', 2147483647, 1, 4),
-('bx_groups', 'bx_groups', 'featured', '_bx_groups_menu_featured', 'modules/?r=groups/browse/featured', '', '', '', 2147483647, 1, 5),
-('bx_groups', 'bx_groups', 'tags', '_bx_groups_menu_tags', 'modules/?r=groups/tags', '', '', '', 2147483647, 1, 6),
-('bx_groups', 'bx_groups', 'categories', '_bx_groups_menu_categories', 'modules/?r=groups/categories', '', '', '', 2147483647, 1, 7),
-('bx_groups', 'bx_groups', 'calendar', '_bx_groups_menu_calendar', 'modules/?r=groups/calendar', '', '', '', 2147483647, 1, 8),
-('bx_groups', 'bx_groups', 'search', '_bx_groups_menu_search', 'modules/?r=groups/search', '', '', '', 2147483647, 1, 9);
+INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title`, `link`, `onclick`, `target`, `icon`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
+('bx_groups', 'bx_groups', 'main_page', '_bx_groups_menu_main', 'modules/?r=groups/home/', '', '', '', 2147483647, 1, 1, 1),
+('bx_groups', 'bx_groups', 'recent', '_bx_groups_menu_recent', 'modules/?r=groups/browse/recent', '', '', '', 2147483647, 1, 1, 2),
+('bx_groups', 'bx_groups', 'top_rated', '_bx_groups_menu_top_rated', 'modules/?r=groups/browse/top', '', '', '', 2147483647, 1, 1, 3),
+('bx_groups', 'bx_groups', 'popular', '_bx_groups_menu_popular', 'modules/?r=groups/browse/popular', '', '', '', 2147483647, 1, 1, 4),
+('bx_groups', 'bx_groups', 'featured', '_bx_groups_menu_featured', 'modules/?r=groups/browse/featured', '', '', '', 2147483647, 1, 1, 5),
+('bx_groups', 'bx_groups', 'tags', '_bx_groups_menu_tags', 'modules/?r=groups/tags', '', '', '', 2147483647, 1, 1, 6),
+('bx_groups', 'bx_groups', 'categories', '_bx_groups_menu_categories', 'modules/?r=groups/categories', '', '', '', 2147483647, 1, 1, 7),
+('bx_groups', 'bx_groups', 'calendar', '_bx_groups_menu_calendar', 'modules/?r=groups/calendar', '', '', '', 2147483647, 1, 1, 8),
+('bx_groups', 'bx_groups', 'search', '_bx_groups_menu_search', 'modules/?r=groups/search', '', '', '', 2147483647, 1, 1, 9);
 
 -- group view menu 
 
@@ -116,11 +116,11 @@ INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `templa
 INSERT INTO `sys_menu_sets` (`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_groups_view', 'bx_groups', '_bx_groups_menu_set_title_group_view', 0);
 
-INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title`, `link`, `onclick`, `target`, `icon`, `visible_for_levels`, `active`, `order`) VALUES
-('bx_groups_view', 'bx_groups', 'view', '_bx_groups_menu_view_group', 'modules/?r=groups/view/{bx_groups_view_uri}', '', '', '', 2147483647, 1, 1),
-('bx_groups_view', 'bx_groups', 'view_forum', '_bx_groups_menu_view_forum', 'forum/groups/forum/{bx_groups_view_uri}-0.htm', '', '', '', 2147483647, 1, 2),
-('bx_groups_view', 'bx_groups', 'view_fans', '_bx_groups_menu_view_fans', 'modules/?r=groups/browse_fans/{bx_groups_view_uri}', '', '', '', 2147483647, 1, 3),
-('bx_groups_view', 'bx_groups', 'view_comments', '_bx_groups_menu_view_comments', 'modules/?r=groups/comments/{bx_groups_view_uri}', '', '', '', 2147483647, 1, 4);
+INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title`, `link`, `onclick`, `target`, `icon`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
+('bx_groups_view', 'bx_groups', 'view', '_bx_groups_menu_view_group', 'modules/?r=groups/view/{bx_groups_view_uri}', '', '', '', 2147483647, 1, 1, 1),
+('bx_groups_view', 'bx_groups', 'view_forum', '_bx_groups_menu_view_forum', 'forum/groups/forum/{bx_groups_view_uri}-0.htm', '', '', '', 2147483647, 1, 1, 2),
+('bx_groups_view', 'bx_groups', 'view_fans', '_bx_groups_menu_view_fans', 'modules/?r=groups/browse_fans/{bx_groups_view_uri}', '', '', '', 2147483647, 1, 1, 3),
+('bx_groups_view', 'bx_groups', 'view_comments', '_bx_groups_menu_view_comments', 'modules/?r=groups/comments/{bx_groups_view_uri}', '', '', '', 2147483647, 1, 1, 4);
 
 
 -- site stats

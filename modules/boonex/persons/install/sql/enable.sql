@@ -89,12 +89,12 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 -- MENU
 
 --SET @iCreateProfileMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_profiles_create' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
---INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `order`) VALUES
---('sys_profiles_create', 'bx_persons', 'create-person-profile', '_bx_persons_menu_item_title_system_persons_profile', '_bx_persons_menu_item_title_persons_profile', 'page.php?i=create-persons-profile', '', '', 'user', '', 2147483647, 1, IFNULL(@iCreateProfileMenuOrder, 0) + 1);
+--INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
+--('sys_profiles_create', 'bx_persons', 'create-person-profile', '_bx_persons_menu_item_title_system_persons_profile', '_bx_persons_menu_item_title_persons_profile', 'page.php?i=create-persons-profile', '', '', 'user', '', 2147483647, 1, 1, IFNULL(@iCreateProfileMenuOrder, 0) + 1);
 
 SET @iAddMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_add_content_links' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
-INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `order`) VALUES 
-('sys_add_content_links', 'bx_persons', 'create-persons-profile', '_bx_persons_menu_item_title_system_create_person', '_bx_persons_menu_item_title_create_person', 'page.php?i=create-persons-profile', '', '', '', '', 2147483647, 1, IFNULL(@iAddMenuOrder, 0) + 1);
+INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('sys_add_content_links', 'bx_persons', 'create-persons-profile', '_bx_persons_menu_item_title_system_create_person', '_bx_persons_menu_item_title_create_person', 'page.php?i=create-persons-profile', '', '', '', '', 2147483647, 1, 1, IFNULL(@iAddMenuOrder, 0) + 1);
 
 
 --
@@ -106,10 +106,10 @@ INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `templat
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_persons_view', 'bx_persons', '_bx_persons_menu_set_title_view_person', 0);
 
-INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `order`) VALUES 
-('bx_persons_view', 'bx_persons', 'view-persons-profile', '_bx_persons_menu_item_title_system_view_person', '_bx_persons_menu_item_title_view_person', 'page.php?i=view-persons-profile&id={content_id}', '', '', 'user', '', 2147483647, 1, 0),
-('bx_persons_view', 'bx_persons', 'edit-persons-profile', '_bx_persons_menu_item_title_system_edit_person', '_bx_persons_menu_item_title_edit_person', 'page.php?i=edit-persons-profile&id={content_id}', '', '', 'pencil', '', 2147483647, 1, 1),
-('bx_persons_view', 'bx_persons', 'delete-persons-profile', '_bx_persons_menu_item_title_system_delete_person', '_bx_persons_menu_item_title_delete_person', 'page.php?i=delete-persons-profile&id={content_id}', '', '', 'remove', '', 2147483647, 1, 2);
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('bx_persons_view', 'bx_persons', 'view-persons-profile', '_bx_persons_menu_item_title_system_view_person', '_bx_persons_menu_item_title_view_person', 'page.php?i=view-persons-profile&id={content_id}', '', '', 'user', '', 2147483647, 1, 0, 0),
+('bx_persons_view', 'bx_persons', 'edit-persons-profile', '_bx_persons_menu_item_title_system_edit_person', '_bx_persons_menu_item_title_edit_person', 'page.php?i=edit-persons-profile&id={content_id}', '', '', 'pencil', '', 2147483647, 1, 0, 1),
+('bx_persons_view', 'bx_persons', 'delete-persons-profile', '_bx_persons_menu_item_title_system_delete_person', '_bx_persons_menu_item_title_delete_person', 'page.php?i=delete-persons-profile&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 2);
 
 
 -- ACL
