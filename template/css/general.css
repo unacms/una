@@ -29,25 +29,25 @@
 
 #bx-menu-toolbar-1-container,
 #bx-menu-toolbar-2-container {
+    position:absolute;
+    top:0px;
     padding-top:5px;
-    width:35%;
 }
 
 #bx-menu-toolbar-1-container {
-    float:left;
+    left:0px;
     text-align:left;
 }
 
 #bx-menu-toolbar-2-container {
-    float:right;
+    right:0px;
     text-align:right;
 }
 
-#bx-logo-container {    
-    float:left;
-    width:30%;
-
-    line-height: 60px;
+#bx-logo-container {
+    min-height: 54px;
+    padding-top: 6px; 
+    vertical-align: middle;
     text-align: center; 
     text-shadow: 0px 0px 2px #000;
 }

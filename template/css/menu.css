@@ -159,6 +159,10 @@ ul.bx-menu-main {
 
 /* --------------- toolbar menu */
 
+#bx-popup-ajax-wrapper-sys_site .bx-popup-content-wrapped {
+    padding:12px;
+}
+
 #bx-menu-toolbar-1-container .bx-menu-toolbar {
     float:left;
 }

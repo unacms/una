@@ -51,6 +51,7 @@ class BxBaseMenuSubmenu extends BxTemplMenu
         $aVars = array (
             'object' => $this->_sObject,
             'title' => $aMenuItemSelected['title'],
+            'link' => $aMenuItemSelected['link'],
             'icon' => $aMenuItemSelected['icon'],
         );
 

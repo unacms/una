@@ -252,7 +252,7 @@ function bx_center_content (sSel, sBlockStyle) {
  */
 function bx_menu_popup (o, e, options) {
     var options = options || {};
-    var o = $.extend({}, $.fn.dolPopupDefaultOptions, options, {url: 'menu.php?o=' + o});
+    var o = $.extend({}, $.fn.dolPopupDefaultOptions, options, {id: o, url: 'menu.php?o=' + o});
     $(e).dolPopupAjax(o);
 }
 

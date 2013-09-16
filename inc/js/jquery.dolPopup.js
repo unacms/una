@@ -227,7 +227,7 @@
                 bx_loading_content($('#bx-popup-ajax-wrapper-' + id + ' .bx-popup-content-wrapped'), true, true);
 
                 $('#bx-popup-ajax-wrapper-' + id).dolPopup({
-                    pointer: $.isWindow(e[0]) ? false : {el:e, align:'center'},
+                    pointer: $.isWindow(e[0]) ? false : $.extend({}, {el:e, align:'center'}, options.pointer),
                     onHide: function () {
                         if (!$.isWindow(e[0]))
                             bx_menu_on(e, false);

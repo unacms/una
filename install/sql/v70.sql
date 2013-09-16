@@ -2839,15 +2839,12 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 
 -- site toolbar menu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `order`) VALUES
-('sys_toolbar_site', 'system', 'main-menu', '_sys_menu_item_title_system_main_menu', '', 'javascript:void(0);', 'bx_menu_popup(''sys_site'', this);', '', 'reorder', '', 2147483647, 1, 1),
-('sys_toolbar_site', 'system', 'search', '_sys_menu_item_title_system_search', '', 'javascript:void(0);', 'alert(''TODO: search popup here''); return false;', '', 'search', '', 2147483647, 1, 2);
+('sys_toolbar_site', 'system', 'main-menu', '_sys_menu_item_title_system_main_menu', '', 'javascript:void(0);', 'bx_menu_popup(''sys_site'', this);', '', 'reorder', '', 2147483647, 1, 1);
 
 -- member toolbar menu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `order`) VALUES
-('sys_toolbar_member', 'system', 'add-content', '_sys_menu_item_title_system_add_content', '', 'javascript:void(0)', 'bx_menu_popup(''sys_add_content'', this);', '', 'plus', 'sys_add_content', 510, 1, 1),
-('sys_toolbar_member', 'system', 'notifications', '_sys_menu_item_title_system_notifications', '', 'javascript:void(0);', 'alert(''TODO: notification popup here''); return false;', '', 'flag', '', 510, 1, 2),
-('sys_toolbar_member', 'system', 'account', '_sys_menu_item_title_system_account', '', 'javascript:void(0);', 'bx_menu_popup(''sys_account'', this);', '', 'user', 'sys_account', 510, 1, 3),
-('sys_toolbar_member', 'system', 'create-account', '_sys_menu_item_title_system_create_account', '', 'page.php?i=create-account', '', '', 'user', '', 1, 1, 4);
+('sys_toolbar_member', 'system', 'account', '_sys_menu_item_title_system_account', '', 'javascript:void(0);', 'bx_menu_popup(''sys_account'', this);', '', 'user', 'sys_account', 510, 1, 1),
+('sys_toolbar_member', 'system', 'create-account', '_sys_menu_item_title_system_create_account', '', 'page.php?i=create-account', '', '', 'user', '', 1, 1, 2);
 
 -- add content menu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `order`) VALUES
