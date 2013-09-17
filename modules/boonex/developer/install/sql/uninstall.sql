@@ -22,7 +22,16 @@ DELETE FROM `sys_objects_grid` WHERE `object` IN ('mod_dev_nav_menus', 'mod_dev_
 DELETE FROM `sys_grid_fields` WHERE `object` IN ('mod_dev_nav_menus', 'mod_dev_nav_sets', 'mod_dev_nav_items');
 DELETE FROM `sys_grid_actions` WHERE `object` IN ('mod_dev_nav_menus', 'mod_dev_nav_sets', 'mod_dev_nav_items');
 
+--
+-- Polyglot
+--
+DELETE FROM `sys_objects_grid` WHERE `object` IN ('mod_dev_pgt_manage');
+DELETE FROM `sys_grid_fields` WHERE `object` IN ('mod_dev_pgt_manage');
+DELETE FROM `sys_grid_actions` WHERE `object` IN ('mod_dev_pgt_manage');
 
+--
+-- Forms All
+--
 DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN  (SELECT `display_name` FROM `sys_form_displays` WHERE `module`=@sName);
 DELETE FROM `sys_form_inputs` WHERE `module`=@sName;
 DELETE FROM `sys_form_displays` WHERE `module`=@sName;

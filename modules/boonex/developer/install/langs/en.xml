@@ -382,8 +382,6 @@
     <string name="_bx_dev_pgt_txt_manage_gl_title"><![CDATA[Module]]></string>
     <string name="_bx_dev_pgt_btn_manage_gl_recompile"><![CDATA[Recompile All]]></string>
     <string name="_bx_dev_pgt_btn_manage_gl_restore"><![CDATA[Restore All]]></string>
-    <string name="_bx_dev_pgt_txt_manage_recompile"><![CDATA[recompile]]></string>
-    <string name="_bx_dev_pgt_txt_manage_restore"><![CDATA[restore]]></string>
     <string name="_bx_dev_pgt_txt_manage_recompile_title_sing"><![CDATA[Recompile %s languege for %s module.]]></string>
     <string name="_bx_dev_pgt_txt_manage_restore_title_sing"><![CDATA[Restore %s languege for %s module.]]></string>
     <string name="_bx_dev_pgt_txt_manage_recompile_title_plur"><![CDATA[Recompile %s languege for all modules.]]></string>
