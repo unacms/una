@@ -1,16 +1,17 @@
-function BxArlMain(oOptions) {
+function BxDevMain(oOptions) {
     this._sSystem = oOptions.sSystem;
     this._sActionsUrl = oOptions.sActionUrl;
-    this._sObjName = oOptions.sObjName == undefined ? 'oArlMain' : oOptions.sObjName;
+    this._sObjName = oOptions.sObjName == undefined ? 'oDevMain' : oOptions.sObjName;
     this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'slide' : oOptions.sAnimationEffect;
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
 }
-BxArlMain.prototype.changePage = function(iStart, iPerPage, sType, sTypeParams) {
+
+BxDevMain.prototype.pgtRecompile = function(sLanguage) {
     var $this = this;
     var oDate = new Date();
     var oParams = {
         _t:oDate.getTime()
-    }
+    };
 
     if(sTypeParams)
         oParams['params'] = sTypeParams;
@@ -33,21 +34,4 @@ BxArlMain.prototype.changePage = function(iStart, iPerPage, sType, sTypeParams) 
         },
         'html'
     );
-}
-BxArlMain.prototype.deleteEntry = function(iId) {
-    var $this = this;
-
-    $.post(
-        this._sActionsUrl + "act_delete/",
-        {id:iId},
-        function(sData) {
-            var iCode = parseInt(sData);
-            if(iCode == 1) {
-                alert(aDolLang['_articles_msg_success_delete']);
-                window.location.href = $this._sActionsUrl
-            }
-            else
-                alert(aDolLang['_articles_msg_failed_delete']);
-        }
-    )
-}
+};

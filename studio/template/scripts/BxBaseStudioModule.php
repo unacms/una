@@ -64,6 +64,7 @@ class BxBaseStudioModule extends BxDolStudioModule {
 
         return parent::getPageMenu($aMenu);
     }
+
     function getPageCode($bHidden = false) {
         $sMethod = 'get' . ucfirst($this->sPage);
         if(!method_exists($this, $sMethod))

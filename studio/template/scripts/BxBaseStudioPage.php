@@ -13,6 +13,8 @@ bx_import('BxDolStudioPage');
 bx_import('BxDolStudioTemplate');
 bx_import('BxTemplStudioFunctions');
 
+require_once(BX_DIRECTORY_PATH_PLUGINS . 'Services_JSON.php');
+
 class BxBaseStudioPage extends BxDolStudioPage {
 
     function BxBaseStudioPage($mixedPageName) {
@@ -33,8 +35,31 @@ class BxBaseStudioPage extends BxDolStudioPage {
         return array('common_anim.js', 'page.js');
     }
 
-    function getPageJsObject() {
+    function getPageJsClass() {
         return '';
+    }
+
+	function getPageJsObject() {
+        return '';
+    }
+
+	function getPageJsCode($aOptions = array(), $bWrap = true) {
+        $sJsClass = $this->getPageJsClass();
+        $sJsObject = $this->getPageJsObject();
+        if(empty($sJsClass) || empty($sJsObject))
+        	return '';
+
+		$sOptions = '{}';
+		if(!empty($aOptions)) {
+			$oJson = new Services_JSON();		        
+			$sOptions = $oJson->encode($aOptions);
+		}
+
+        $sContent = 'var ' . $sJsObject . ' = new ' . $sJsClass . '(' . $sOptions . ');';
+		if($bWrap)
+        	$sContent = BxDolStudioTemplate::getInstance()->_wrapInTagJsCode($sContent);
+
+        return $sContent;
     }
 
     function getPageCss() {

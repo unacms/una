@@ -513,3 +513,17 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('mod_dev_bp_block_edit', 'controls', 2147483647, 1, 10),
 ('mod_dev_bp_block_edit', 'do_submit', 2147483647, 1, 11),
 ('mod_dev_bp_block_edit', 'cancel', 2147483647, 1, 12);
+
+--
+-- Polyglot -> Grid descriptors
+--
+INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `override_class_name`, `override_class_file`) VALUES
+('mod_dev_pgt_manage', 'Sql', 'SELECT * FROM `sys_modules` WHERE 1 ', 'sys_modules', 'id', '', '', '', 100, NULL, '', '', '', '', '', '', '', 'BxDevPolyglotManage', 'modules/boonex/developer/classes/BxDevPolyglotManage.php');
+
+
+INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
+('mod_dev_pgt_manage', 'title', '_bx_dev_pgt_txt_manage_gl_title', '100%', 0, '', '', 1);
+
+INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
+('mod_dev_pgt_manage', 'independent', 'recompile', '_bx_dev_pgt_btn_manage_gl_recompile', '', 0, 1),
+('mod_dev_pgt_manage', 'independent', 'restore', '_bx_dev_pgt_btn_manage_gl_restore', '', 0, 2);

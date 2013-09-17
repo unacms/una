@@ -87,6 +87,20 @@ class BxDevStudioPage extends BxTemplStudioModule {
         return $this->oModule->_oTemplate->displayPageContent($oContent);
     }
 
+	protected function getPolyglot() {
+        $sType = bx_get('pgt_type');
+        $sType = $sType !== false ? bx_process_input($sType) : '';
+
+        $sPage = bx_get('pgt_page');
+        $sPage = $sPage !== false ? bx_process_input($sPage) : '';
+
+        $oContent = new BxDevPolyglot(array(
+            'page' => $sPage,
+            'url' => sprintf($this->sUrl, $this->sModule, BX_DEV_TOOLS_POLYGLOT),
+        ));
+        return $this->oModule->_oTemplate->displayPageContent($oContent);
+    }
+
     protected function getPermissions() {
         $sPage = bx_get('prm_page');
         $sPage = $sPage !== false ? bx_process_input($sPage) : '';

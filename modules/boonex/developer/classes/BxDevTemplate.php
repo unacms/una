@@ -23,7 +23,7 @@ class BxDevTemplate extends BxDolModuleTemplate {
         $this->addStudioJs($oContent->getPageJs(), false, false);
         return $this->parseHtmlByName('page_content.html', array(
             'page_menu_code' => $oContent->getPageMenu(),
-        	'page_main_code' => $oContent->getPageCode()
+        	'page_main_code' => $oContent->getPageJsCode() . $oContent->getPageCode()
         ));
     } 
 }

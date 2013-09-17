@@ -15,12 +15,14 @@ require_once('BxDevForms.php');
 require_once('BxDevFunctions.php');
 require_once('BxDevBuilderPage.php');
 require_once('BxDevNavigation.php');
+require_once('BxDevPolyglot.php');
 require_once('BxDevPermissions.php');
 
 define('BX_DEV_TOOLS_GENERAL', 'general');
 define('BX_DEV_TOOLS_FORMS', 'forms');
 define('BX_DEV_TOOLS_PAGES', 'pages');
 define('BX_DEV_TOOLS_NAVIGATION', 'navigation');
+define('BX_DEV_TOOLS_POLYGLOT', 'polyglot');
 define('BX_DEV_TOOLS_PERMISSIONS', 'permissions');
 
 class BxDevModule extends BxDolModule {
@@ -34,6 +36,7 @@ class BxDevModule extends BxDolModule {
             array('name' => BX_DEV_TOOLS_FORMS, 'title' => ''),
             array('name' => BX_DEV_TOOLS_NAVIGATION, 'title' => ''),
             array('name' => BX_DEV_TOOLS_PAGES, 'title' => ''),
+            array('name' => BX_DEV_TOOLS_POLYGLOT, 'title' => ''),
             //array('name' => BX_DEV_TOOLS_PERMISSIONS, 'title' => ''),
         );
     }

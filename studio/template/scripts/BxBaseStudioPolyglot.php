@@ -12,8 +12,21 @@ defined('BX_DOL') or die('hack attempt');
 bx_import('BxDolStudioPolyglot');
 
 class BxBaseStudioPolyglot extends BxDolStudioPolyglot {
+	protected $sSubpageUrl;
+	protected $aMenuItems = array(
+        BX_DOL_STUDIO_PGT_TYPE_GENERAL, 
+        BX_DOL_STUDIO_PGT_TYPE_KEYS, 
+    	BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES
+	);
+    protected $aGridObjects = array(
+        'keys' => 'sys_studio_lang_keys',
+        'etemplates' => 'sys_studio_lang_etemplates',
+    );
+
     function BxBaseStudioPolyglot($sPage = '') {
         parent::BxDolStudioPolyglot($sPage);
+
+        $this->sSubpageUrl = BX_DOL_URL_STUDIO . 'polyglot.php?page=';
     }
     function getPageCss() {
         return array_merge(parent::getPageCss(), array('forms.css', 'paginate.css', 'polyglot.css'));
@@ -21,23 +34,28 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot {
     function getPageJs() {
         return array_merge(parent::getPageJs(), array('jquery.autoresize.js', 'settings.js', 'polyglot.js'));
     }
+	function getPageJsClass() {
+        return 'BxDolStudioPolyglot';
+    }
     function getPageJsObject() {
         return 'oBxDolStudioPolyglot';
+    }
+    function getPageJsCode($aOptions = array(), $bWrap = true) {
+    	$aOptions = array_merge($aOptions, array(
+    		'sActionUrl' => BX_DOL_URL_STUDIO . 'polyglot.php'
+    	));
+
+    	return parent::getPageJsCode($aOptions, $bWrap);
     }
     function getPageMenu($aMenu = array(), $aMarkers = array()) {
         $sJsObject = $this->getPageJsObject();
 
         $aMenu = array();
-        $aMenuItems = array(
-            BX_DOL_STUDIO_PGT_TYPE_GENERAL, 
-            BX_DOL_STUDIO_PGT_TYPE_KEYS, 
-            BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES
-        );
-        foreach($aMenuItems as $sMenuItem)
+        foreach($this->aMenuItems as $sMenuItem)
             $aMenu[] = array(
                 'name' => $sMenuItem,
                 'icon' => 'mi-pgt-' . $sMenuItem . '.png',
-            	'link' => BX_DOL_URL_STUDIO . 'polyglot.php?page=' . $sMenuItem,
+            	'link' => $this->sSubpageUrl . $sMenuItem,
             	'title' => _t('_adm_lmi_cpt_' . $sMenuItem),
             	'selected' => $sMenuItem == $this->sPage
             );
@@ -72,11 +90,11 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot {
     }
 
     protected function getKeys() {
-        return $this->getGrid('sys_studio_lang_keys');
+        return $this->getGrid($this->aGridObjects['keys']);
     }
 
     protected function getEtemplates() {
-        return $this->getGrid('sys_studio_lang_etemplates');
+        return $this->getGrid($this->aGridObjects['etemplates']);
     }
 
     protected function getGrid($sObjectName) {
@@ -88,7 +106,6 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot {
             return '';
 
         $aTmplVars = array(
-            'js_object' => $this->getPageJsObject(),
         	'bx_repeat:blocks' => array(
                 array(
                 	'caption' => '',

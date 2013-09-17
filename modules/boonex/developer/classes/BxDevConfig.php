@@ -11,9 +11,47 @@
 
 bx_import('BxDolModuleConfig');
 
-class BxDevConfig extends BxDolModuleConfig {
-    function BxDevConfig($aModule) {
+class BxDevConfig extends BxDolModuleConfig
+{
+	protected $aJsClasses;
+    protected $aJsObjects;
+	protected $sAnimationEffect;
+    protected $iAnimationSpeed;
+
+    function BxDevConfig($aModule)
+    {
         parent::BxDolModuleConfig($aModule);
+
+        $this->aJsClasses = array('polyglot' => 'BxDevPolyglot');
+        $this->aJsObjects = array('polyglot' => 'oBxDevPolyglot');
+        $this->sAnimationEffect = 'fade';
+        $this->iAnimationSpeed = 'slow';
+    }
+
+	function getJsClass($sType = 'main')
+	{
+        if(empty($sType))
+            return $this->aJsClasses;
+
+        return $this->aJsClasses[$sType];
+    }
+
+    function getJsObject($sType = 'main')
+    {
+        if(empty($sType))
+            return $this->aJsObjects;
+
+        return $this->aJsObjects[$sType];
+    }
+
+	function getAnimationEffect()
+	{
+        return $this->sAnimationEffect;
+    }
+
+    function getAnimationSpeed()
+    {
+        return $this->iAnimationSpeed;
     }
 }
 

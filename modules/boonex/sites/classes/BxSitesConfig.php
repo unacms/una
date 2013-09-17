@@ -20,10 +20,10 @@ class BxSitesConfig extends BxDolModuleConfig
     
     //General
     protected $sDomainMask;
-    protected $_aJsClasses;
-    protected $_aJsObjects;
-    protected $_sAnimationEffect;
-    protected $_iAnimationSpeed;
+    protected $aJsClasses;
+    protected $aJsObjects;
+    protected $sAnimationEffect;
+    protected $iAnimationSpeed;
 
     //PayPal payments integration
     protected $iTrialMaxNumber;
@@ -193,12 +193,12 @@ class BxSitesConfig extends BxDolModuleConfig
 
 	function getAnimationEffect()
 	{
-        return $this->_sAnimationEffect;
+        return $this->sAnimationEffect;
     }
 
     function getAnimationSpeed()
     {
-        return $this->_iAnimationSpeed;
+        return $this->iAnimationSpeed;
     }
 }
 
