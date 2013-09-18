@@ -120,12 +120,20 @@
     span.cmt-author a {
         text-decoration: none;
     }
+    span.cmt-reply-to span.bullet:first-child {
+		display: none;
+    }
     span.cmt-posted-ago {
         text-transform: lovercase;
     }
 	span.cmt-points {
         text-transform: lovercase;
     }
+    /*--- Experimental Layout ---*/
+    span.cmt-body-see-more a {
+		font-weight: bold;
+    }
+    /*--- Experimental Layout ---*/
     div.cmt-actions {}
     div.cmt-actions a,
     div.cmt-actions span.bullet,

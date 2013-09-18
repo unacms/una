@@ -216,6 +216,12 @@ class BxBaseCmtsView extends BxDolCmts {
 		if((int)$r['cmt_replies'] > 0 && !empty($aDp) && $aDp['type'] == BX_CMT_DISPLAY_THREADED)
 			$sReplies = $this->getComments(array('parent_id' => $r['cmt_id'], 'vparent_id' => $r['cmt_id'], 'type' => $aBp['type']), $aDp);
 
+		//--- Experimental layout ---//
+		$iUserId = $this->_getAuthorId();
+        $isEditAllowedPermanently = ($r['cmt_author_id'] == $iUserId && $this->isEditAllowed()) || $this->isEditAllowedAll();
+        $isRemoveAllowedPermanently = ($r['cmt_author_id'] == $iUserId && $this->isRemoveAllowed()) || $this->isRemoveAllowedAll();
+        //--- Experimental layout ---//
+        
 		$bAuthorIcon = !empty($sAuthorIcon);
         return $oTemplate->parseHtmlByName('comment.html', array(
         	'system' => $this->_sSystem,
@@ -249,6 +255,15 @@ class BxBaseCmtsView extends BxDolCmts {
         		'condition' => !empty($aTmplReplyTo),
         		'content' => $aTmplReplyTo
         	),
+        	//--- Experimental layout ---//
+        	'view_link' => bx_append_url_params($this->_sViewUrl, array(
+        		'sys' => $this->_sSystem,
+        		'id' => $this->_iId,
+        		'cmt_id' => $r['cmt_id']
+        	)),
+        	'ago' => $r['cmt_ago'],
+        	'points' => _t($r['cmt_rate'] == 1 || $r['cmt_rate'] == -1 ? '_N_point' : '_N_points', $r['cmt_rate']),
+        	//--- Experimental layout ---//
         	'text' => $sText,
         	'bx_if:show_more' => array(
         		'condition' => !empty($sTextMore),
@@ -258,7 +273,42 @@ class BxBaseCmtsView extends BxDolCmts {
         			'text_more' => $sTextMore
         		)
         	),
-        	'actions' => $sActions,
+        	//--- Experimental layout ---//
+        	'bx_if:show_reply' => array(
+				'condition' => $this->isPostReplyAllowed(),
+        		'content' => array(
+        			'js_object' => $this->_sJsObjName,
+        			'style_prefix' => $this->_sStylePrefix,
+        			'id' => $r['cmt_id'],
+        			'text' => _t(isset($r['cmt_type']) && $r['cmt_type'] == 'comment' ? '_Comment_to_this_comment' : '_Reply_to_this_comment')
+        		)
+        	),
+        	'bx_if:show_rate' => array(
+				'condition' => $this->isRatable(),
+        		'content' => array(
+        			'js_object' => $this->_sJsObjName,
+        			'style_prefix' => $this->_sStylePrefix,
+        			'id' => $r['cmt_id']
+        		)
+        	),
+        	'bx_if:show_edit' => array(
+				'condition' => $isEditAllowedPermanently,
+        		'content' => array(
+        			'js_object' => $this->_sJsObjName,
+        			'style_prefix' => $this->_sStylePrefix,
+        			'id' => $r['cmt_id']
+        		)
+        	),
+        	'bx_if:show_delete' => array(
+				'condition' => $isRemoveAllowedPermanently,
+        		'content' => array(
+        			'js_object' => $this->_sJsObjName,
+        			'style_prefix' => $this->_sStylePrefix,
+        			'id' => $r['cmt_id']
+        		)
+        	),
+        	'actions' => '',//$sActions,
+        	//--- Experimental layout ---//
         	'replies' =>  $sReplies
         ));
     }
