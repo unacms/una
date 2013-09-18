@@ -85,15 +85,13 @@
 	div.cmt-cont .bullet {
 		padding: 0px 5px;
     }
-    div.cmt-icon {
+    div.cmt-thumb {
 		position: absolute;
     	top: 20px;
     	left: 0px;
-    	width: 64px;
-    	height: 64px;
     	text-align: center;
     }
-    div.cmt-icon .sys-icon {
+    div.cmt-thumb .sys-icon {
 		font-size: 64px;
     }
     span.cmt-author {
