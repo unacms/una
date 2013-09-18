@@ -18,11 +18,20 @@ class BxDevTemplate extends BxDolModuleTemplate {
         $this->addStudioCss(array('main.css'));       
     }
 
-    function displayPageContent(&$oContent) {
-        $this->addStudioCss($oContent->getPageCss(), false, false);
+    function displayPageContent($sPage, &$oContent) {
+    	$this->addStudioCss($oContent->getPageCss(), false, false);
         $this->addStudioJs($oContent->getPageJs(), false, false);
+
+    	$sMenu = $oContent->getPageMenu();
+    	$sContent = $oContent->getPageJsCode() . $oContent->getPageCode();
+    	if(in_array($sPage, array('general')) || empty($sMenu)) {
+            $this->addStudioInjection('injection_body_style', 'text', ' bx-dev-page-body-single');
+            return $sContent;
+    	}
+
+		$this->addStudioInjection('injection_body_style', 'text', ' bx-dev-page-body-columns');
         return $this->parseHtmlByName('page_content.html', array(
-            'page_menu_code' => $oContent->getPageMenu(),
+            'page_menu_code' => $sMenu,
         	'page_main_code' => $oContent->getPageJsCode() . $oContent->getPageCode()
         ));
     } 

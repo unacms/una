@@ -15,9 +15,7 @@ class BxDevPolyglot extends BxTemplStudioPolyglot
 {
     protected $oModule;
     protected $aParams;
-    protected $aMenuItems = array(
-        BX_DOL_STUDIO_PGT_TYPE_GENERAL,
-	);
+    protected $aMenuItems = array();
     protected $aGridObjects = array(
         'manage' => 'mod_dev_pgt_manage'
     );

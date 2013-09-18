@@ -40,13 +40,11 @@ class BxDevStudioPage extends BxTemplStudioModule {
         return $oMenu->getCode();
     }
 
-    function getPageCode($bHidden = false) {
-        if(in_array($this->sPage, array('general')) || (int)$this->aModule['enabled'] == 0)
-            $this->oModule->_oTemplate->addStudioInjection('injection_body_style', 'text', ' bx-dev-page-body-single');
-        else
-            $this->oModule->_oTemplate->addStudioInjection('injection_body_style', 'text', ' bx-dev-page-body-columns'); 
+	protected function getGeneral() {
+        bx_import('BxTemplStudioSettings');
+        $oContent = new BxTemplStudioSettings($this->sModule);
 
-        return parent::getPageCode();
+		return $this->oModule->_oTemplate->displayPageContent($this->sPage, $oContent);
     }
 
     protected function getForms() {
@@ -57,7 +55,7 @@ class BxDevStudioPage extends BxTemplStudioModule {
             'page' => $sPage,
             'url' => sprintf($this->sUrl, $this->sModule, BX_DEV_TOOLS_FORMS),
         ));
-        return $this->oModule->_oTemplate->displayPageContent($oContent);
+        return $this->oModule->_oTemplate->displayPageContent($this->sPage, $oContent);
     }
 
     protected function getNavigation() {
@@ -68,7 +66,7 @@ class BxDevStudioPage extends BxTemplStudioModule {
             'page' => $sPage,
             'url' => sprintf($this->sUrl, $this->sModule, BX_DEV_TOOLS_NAVIGATION),
         ));
-        return $this->oModule->_oTemplate->displayPageContent($oContent);
+        return $this->oModule->_oTemplate->displayPageContent($this->sPage, $oContent);
     }
 
     protected function getPages() {
@@ -84,7 +82,7 @@ class BxDevStudioPage extends BxTemplStudioModule {
             'url' => sprintf($this->sUrl, $this->sModule, BX_DEV_TOOLS_PAGES),
         ));
         $oContent->init();
-        return $this->oModule->_oTemplate->displayPageContent($oContent);
+        return $this->oModule->_oTemplate->displayPageContent($this->sPage, $oContent);
     }
 
 	protected function getPolyglot() {
@@ -98,7 +96,7 @@ class BxDevStudioPage extends BxTemplStudioModule {
             'page' => $sPage,
             'url' => sprintf($this->sUrl, $this->sModule, BX_DEV_TOOLS_POLYGLOT),
         ));
-        return $this->oModule->_oTemplate->displayPageContent($oContent);
+        return $this->oModule->_oTemplate->displayPageContent($this->sPage, $oContent);
     }
 
     protected function getPermissions() {
@@ -109,7 +107,7 @@ class BxDevStudioPage extends BxTemplStudioModule {
             'page' => $sPage,
             'url' => sprintf($this->sUrl, $this->sModule, BX_DEV_TOOLS_PERMISSIONS),
         ));
-        return $this->oModule->_oTemplate->displayPageContent($oContent);
+        return $this->oModule->_oTemplate->displayPageContent($this->sPage, $oContent);
     }
 }
 

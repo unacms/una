@@ -77,8 +77,7 @@ class BxDevPolyglotManage extends BxTemplStudioGrid {
 				$sTitle = _t('_bx_dev_pgt_txt_manage_' . $sAction . '_title' . ($bAll ? '_plur' : '_sing'));
 				$sContent = _t('_bx_dev_pgt_txt_manage_' . $sAction);
 
-				$mixedValue .= $this->_oTemplate->parseHtmlByName('bx_a.html', array(
-		            'href' => 'javascript:void(0)',
+				$mixedValue .= $this->_oTemplate->parseHtmlByName('bx_btn.html', array(
 		            'title' => sprintf($sTitle, $aField['title'], $aRow['title']),
 		        	'bx_repeat:attrs' => array(
 						array('key' => 'class', 'value' => 'bx-btn bx-def-margin-sec-left-auto'),
