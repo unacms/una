@@ -8,7 +8,7 @@
 #bx-toolbar {
     position: fixed;
     width:100%;
-    min-height: 60px;
+    min-height:50px;
     z-index:900;
 
     border-bottom: 2px solid #383d66;
@@ -45,7 +45,7 @@
 }
 
 #bx-logo-container {
-    min-height: 54px;
+    min-height: 44px;
     padding-top: 6px; 
     vertical-align: middle;
     text-align: center; 
@@ -55,12 +55,14 @@
 #bx-logo-container a {  
     color: #fff;
     text-decoration:none;
+    font-size:30px;
+    font-weight:bold;
 }  
 
 /* --------------- menu bar */
 
 #bx-menu-main-bar-wrapper {
-    padding-top:60px;
+    padding-top:50px;
     border-bottom:1px solid rgba(255, 255, 255, 0.8);
 }
 
@@ -68,7 +70,7 @@
     background-color:#ffffff;
     border-bottom:1px solid #d0d0d0;
 
-    line-height:49px;
+    line-height:39px;
 
 	-webkit-box-shadow: inset 0px -1px 0px rgba(128, 128, 128, 0.1);
 	-moz-box-shadow: inset 0px -1px 0px rgba(128, 128, 128, 0.1);

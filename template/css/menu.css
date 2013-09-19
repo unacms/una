@@ -184,11 +184,11 @@ ul.bx-menu-toolbar li {
 ul.bx-menu-toolbar li a {
     position:relative;
     display:block;
-    padding-top:7px;
+    padding-top:4px;
     min-width:48px;
-    height:41px;
+    height:36px;
 
-    line-height:34px;
+    line-height:32px;
     font-size: 16px;
     font-weight: bold;
     text-align: center;
@@ -214,8 +214,8 @@ ul.bx-menu-toolbar li:hover a {
 
 ul.bx-menu-toolbar li.bx-menu-tab-active a,
 ul.bx-menu-toolbar li:active a {
-    height:40px;
-    padding-top:8px;
+    height:35px;
+    padding-top:5px;
 
     background-color:rgba(0, 0, 0, 0.05);
 
@@ -231,7 +231,7 @@ ul.bx-menu-toolbar li img {
     background-repeat:no-repeat;
 }
 
-ul.bx-menu-toolbar li .sys-icon {    
+ul.bx-menu-toolbar li .sys-icon {
     display:inline-block;
     vertical-align:middle;
     font-size:32px;
