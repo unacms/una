@@ -262,7 +262,8 @@ class BxBaseCmtsView extends BxDolCmts {
         		'cmt_id' => $r['cmt_id']
         	)),
         	'ago' => $r['cmt_ago'],
-        	'points' => _t($r['cmt_rate'] == 1 || $r['cmt_rate'] == -1 ? '_N_point' : '_N_points', $r['cmt_rate']),
+        	'points_num' => $r['cmt_rate'],
+        	'points_txt' => _t($r['cmt_rate'] == 1 || $r['cmt_rate'] == -1 ? '_cmt_point' : '_cmt_points'),
         	//--- Experimental layout ---//
         	'text' => $sText,
         	'bx_if:show_more' => array(

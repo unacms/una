@@ -107,7 +107,7 @@
     }
     div.cmt-thumb {
 		position: absolute;
-    	top: 20px;
+    	top: 0px;
     	left: 0px;
     	text-align: center;
     }
@@ -120,9 +120,20 @@
     span.cmt-author a {
         text-decoration: none;
     }
+    /*--- Experimental Layout ---*/
+    span.cmt-reply-to {
+		display: inline-block;
+    }
+	span.cmt-reply-to a,
+    span.cmt-reply-to span {
+		display: block;
+    	float: left;
+    	line-height: 0.8em;
+    }
     span.cmt-reply-to span.bullet:first-child {
 		display: none;
     }
+    /*--- Experimental Layout ---*/
     span.cmt-posted-ago {
         text-transform: lovercase;
     }
@@ -133,7 +144,20 @@
     span.cmt-body-see-more a {
 		font-weight: bold;
     }
+    span.cmt-actions {
+		display: inline-block;
+    }
+	span.cmt-actions a,
+    span.cmt-actions span.bullet {
+		display: block;
+    	float: left;
+    	line-height: 0.8em;
+    }
+    span.cmt-actions span.bullet:first-child {
+		display: none;
+    }
     /*--- Experimental Layout ---*/
+    /*
     div.cmt-actions {}
     div.cmt-actions a,
     div.cmt-actions span.bullet,
@@ -144,6 +168,7 @@
     div.cmt-actions span.bullet:first-child {
 		display: none;
     }
+    */
 
     /*--- Browse Styles ---*/
     div.cmt-browse {
