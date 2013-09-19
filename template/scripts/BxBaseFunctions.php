@@ -572,7 +572,7 @@ EOF;
         }
 
         if ($aButtons) {
-            $sCode .= '<div class="bx-db-menu bx-def-padding-right"><div class="bx-db-menu-tab bx-db-menu-tab-btn">';
+            $sCode .= '<div class="bx-db-menu"><div class="bx-db-menu-tab bx-db-menu-tab-btn">';
             foreach ($aButtons as $aButton) {
                 if (isset($aButton['menu']) && $aButton['menu']) {
                     if (!$aButtonMenu)

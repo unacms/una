@@ -50,16 +50,15 @@ blockquote {
 }
 
 .bx-db-title {
+    display:inline-block;
     float:left;
-}
-
-.bx-db-content {
-
+    line-height:40px;
 }
 
 .bx-db-menu {
     line-height:40px;
     float: right;
+    vertical-align:baseline;
 }
 
 .bx-db-menu-tab {
@@ -69,10 +68,6 @@ blockquote {
 
 .bx-db-menu-tab-active {
     text-decoration:underline;
-}
-
-.bx-db-menu-tab-btn {
-    padding-top:20px;
 }
 
 /* --------------- popup boxes */
