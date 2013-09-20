@@ -216,12 +216,6 @@ class BxBaseCmtsView extends BxDolCmts {
 		if((int)$r['cmt_replies'] > 0 && !empty($aDp) && $aDp['type'] == BX_CMT_DISPLAY_THREADED)
 			$sReplies = $this->getComments(array('parent_id' => $r['cmt_id'], 'vparent_id' => $r['cmt_id'], 'type' => $aBp['type']), $aDp);
 
-		//--- Experimental layout ---//
-		$iUserId = $this->_getAuthorId();
-        $isEditAllowedPermanently = ($r['cmt_author_id'] == $iUserId && $this->isEditAllowed()) || $this->isEditAllowedAll();
-        $isRemoveAllowedPermanently = ($r['cmt_author_id'] == $iUserId && $this->isRemoveAllowed()) || $this->isRemoveAllowedAll();
-        //--- Experimental layout ---//
-        
 		$bAuthorIcon = !empty($sAuthorIcon);
         return $oTemplate->parseHtmlByName('comment.html', array(
         	'system' => $this->_sSystem,
@@ -255,7 +249,6 @@ class BxBaseCmtsView extends BxDolCmts {
         		'condition' => !empty($aTmplReplyTo),
         		'content' => $aTmplReplyTo
         	),
-        	//--- Experimental layout ---//
         	'view_link' => bx_append_url_params($this->_sViewUrl, array(
         		'sys' => $this->_sSystem,
         		'id' => $this->_iId,
@@ -264,7 +257,6 @@ class BxBaseCmtsView extends BxDolCmts {
         	'ago' => $r['cmt_ago'],
         	'points_num' => $r['cmt_rate'],
         	'points_txt' => _t($r['cmt_rate'] == 1 || $r['cmt_rate'] == -1 ? '_cmt_point' : '_cmt_points'),
-        	//--- Experimental layout ---//
         	'text' => $sText,
         	'bx_if:show_more' => array(
         		'condition' => !empty($sTextMore),
@@ -274,42 +266,7 @@ class BxBaseCmtsView extends BxDolCmts {
         			'text_more' => $sTextMore
         		)
         	),
-        	//--- Experimental layout ---//
-        	'bx_if:show_reply' => array(
-				'condition' => $this->isPostReplyAllowed(),
-        		'content' => array(
-        			'js_object' => $this->_sJsObjName,
-        			'style_prefix' => $this->_sStylePrefix,
-        			'id' => $r['cmt_id'],
-        			'text' => _t(isset($r['cmt_type']) && $r['cmt_type'] == 'comment' ? '_Comment_to_this_comment' : '_Reply_to_this_comment')
-        		)
-        	),
-        	'bx_if:show_rate' => array(
-				'condition' => $this->isRatable(),
-        		'content' => array(
-        			'js_object' => $this->_sJsObjName,
-        			'style_prefix' => $this->_sStylePrefix,
-        			'id' => $r['cmt_id']
-        		)
-        	),
-        	'bx_if:show_edit' => array(
-				'condition' => $isEditAllowedPermanently,
-        		'content' => array(
-        			'js_object' => $this->_sJsObjName,
-        			'style_prefix' => $this->_sStylePrefix,
-        			'id' => $r['cmt_id']
-        		)
-        	),
-        	'bx_if:show_delete' => array(
-				'condition' => $isRemoveAllowedPermanently,
-        		'content' => array(
-        			'js_object' => $this->_sJsObjName,
-        			'style_prefix' => $this->_sStylePrefix,
-        			'id' => $r['cmt_id']
-        		)
-        	),
-        	'actions' => '',//$sActions,
-        	//--- Experimental layout ---//
+        	'actions' => $sActions,
         	'replies' =>  $sReplies
         ));
     }
@@ -378,11 +335,29 @@ class BxBaseCmtsView extends BxDolCmts {
 
 	function _getActionsBox(&$a, $aDp = array())
     {
+    	$oTemplate = BxDolTemplate::getInstance();
+
         $iUserId = $this->_getAuthorId();
         $isEditAllowedPermanently = ($a['cmt_author_id'] == $iUserId && $this->isEditAllowed()) || $this->isEditAllowedAll();
         $isRemoveAllowedPermanently = ($a['cmt_author_id'] == $iUserId && $this->isRemoveAllowed()) || $this->isRemoveAllowedAll();
 
-        return BxDolTemplate::getInstance()->parseHtmlByName('comment_actions.html', array(
+		$sManagePopupId = $sManagePopupText = '';
+        if($isEditAllowedPermanently || $isRemoveAllowedPermanently) {
+			$aMenu = array(
+				array('name' => 'cmt-edit', 'icon' => '', 'onclick' => $this->_sJsObjName . ".cmtEdit(this, " . $a['cmt_id'] . ")", 'title' => _t('_Edit')),
+				array('name' => 'cmt-delete', 'icon' => '', 'onclick' => $this->_sJsObjName . ".cmtRemove(this, " . $a['cmt_id'] . ")", 'title' => _t('_Delete')),
+			);
+
+        	bx_import('BxTemplStudioMenu');
+        	$oMenu = new BxTemplStudioMenu(array('template' => 'menu_vertical_lite.html', 'menu_items' => $aMenu));
+
+        	bx_import('BxTemplStudioFunctions');
+	        $sManagePopupText = BxTemplStudioFunctions::getInstance()->transBox($oTemplate->parseHtmlByName('comment_manage.html', array(
+	        	'content' => $oMenu->getCode()
+	        )));
+        }
+
+        return $oTemplate->parseHtmlByName('comment_actions.html', array(
         	'id' => $a['cmt_id'],
         	'style_prefix' => $this->_sStylePrefix,
         	'view_link' => bx_append_url_params($this->_sViewUrl, array(
@@ -409,22 +384,16 @@ class BxBaseCmtsView extends BxDolCmts {
         			'id' => $a['cmt_id']
         		)
         	),
-        	'bx_if:show_edit' => array(
-				'condition' => $isEditAllowedPermanently,
+        	'bx_if:show_manage' => array(
+        		'condition' => $isEditAllowedPermanently || $isRemoveAllowedPermanently,
         		'content' => array(
         			'js_object' => $this->_sJsObjName,
         			'style_prefix' => $this->_sStylePrefix,
-        			'id' => $a['cmt_id']
+        			'id' => $a['cmt_id'],
+        			'popup_id' => $this->_sSystem . '-manage' . $a['cmt_id'],
+        			'popup_text' => $sManagePopupText
         		)
-        	),
-        	'bx_if:show_delete' => array(
-				'condition' => $isRemoveAllowedPermanently,
-        		'content' => array(
-        			'js_object' => $this->_sJsObjName,
-        			'style_prefix' => $this->_sStylePrefix,
-        			'id' => $a['cmt_id']
-        		)
-        	),
+        	)
         ));
     }
 
@@ -460,6 +429,19 @@ class BxBaseCmtsView extends BxDolCmts {
         	'bx_if:show_icon_empty' => array(
         		'condition' => !$bAuthorIcon,
         		'content' => array()
+        	),
+        	'bx_if:show_author_link' => array(
+        		'condition' => !empty($sAuthorLink),
+        		'content' => array(
+        			'author_link' => $sAuthorLink,
+        			'author_name' => $sAuthorName
+        		)
+        	),
+        	'bx_if:show_author_text' => array(
+        		'condition' => empty($sAuthorLink),
+        		'content' => array(
+        			'author_name' => $sAuthorName
+        		)
         	),
 			'form' => $this->_getPostReplyForm($iCmtParentId)
     	));

@@ -166,6 +166,8 @@ BxDolCmts.prototype.cmtEdit = function(oLink, iCmtId) {
     oData['action'] = 'CmtEdit';
     oData['Cmt'] = iCmtId;
 
+    $(oLink).parents('.cmt-comment-manage:first').dolPopupHide();
+
     var sBodyId = this._sRootId + ' #cmt' + iCmtId + ' .cmt-body:first';
     if ($(sBodyId + ' > form').length) {
         $(sBodyId).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
@@ -297,7 +299,7 @@ BxDolCmts.prototype.toggleReply = function(e, iCmtParentId)
             function (s) {
                 $this._loadingInContent(e, false);
 
-                var oForm = $(s).css('display', 'none');
+                var oForm = $(s).css('display', 'none').addClass('cmt-reply-margin');
                 var sFormClass = oForm.attr('class');
                 var oFormSibling = $(sParentId + ' > ul.cmts:first');
                 switch($this._sPostFormPosition) {
@@ -325,6 +327,21 @@ BxDolCmts.prototype.toggleReply = function(e, iCmtParentId)
             }
         );
     }
+};
+
+BxDolCmts.prototype.toggleManagePopup = function(oLink, iCmtId) {
+	var oPopup = $(oLink).siblings('.cmt-comment-manage');
+	console.log(oPopup);
+	if(oPopup.is(':visible')) {
+		oPopup.dolPopupHide();
+		return;
+	}
+
+		oPopup.dolPopup({
+			pointer:{
+				el:$(oLink)
+			}
+		});
 };
 
 // get comment replies via ajax request
@@ -479,7 +496,7 @@ BxDolCmts.prototype._loadingInBlock = function(e, bShow) {
 };
 
 BxDolCmts.prototype._loadingInContent = function(e, bShow) {
-	var oParent = $(e).length ? $(e).parents('.cmt-cont:first,.cmt-post-reply:first') : $('body'); 
+	var oParent = $(e).length ? $(e).parents('li.cmt:first,.cmt-reply:first') : $('body'); 
 	bx_loading(oParent, bShow);
 };
 BxDolCmts.prototype._loadingInButton = function(e, bShow) {

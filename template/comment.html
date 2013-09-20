@@ -1,61 +1,35 @@
 <li id="cmt__id__" class="__style_prefix____class__">
 	<a name="__system____id__"></a>
-	<div class="__style_prefix__-thumb bx-def-thumb bx-def-thumb-size">
-		<bx_if:show_icon>
-			<img src="__author_icon__" />
-		</bx_if:show_icon>
-		<bx_if:show_icon_empty>
-			<i class="sys-icon user"></i>
-		</bx_if:show_icon_empty>
-	</div>
-	<div class="__style_prefix__-cont bx-def-border bx-def-round-corners">
-		<div class="__style_prefix__-cont-cnt">
-			<div class="__style_prefix__-head">
-				<span class="__style_prefix__-author bx-def-font-h3">
-					<bx_if:show_author_link><a href="__author_link__">__author_name__</a> </bx_if:show_author_link>
-					<bx_if:show_author_text>__author_name__ </bx_if:show_author_text>
-				</span>
-				<!-- 
-				<bbx_if:show_reply_to>
-					<span class="__style_prefix__-reply-to bx-def-padding-left bx-def-font-small bx-def-font-grayed">
-						<bx_text:_in_reply_to /> <a href="__par_cmt_link__">__par_cmt_author__</a>
-					</span>
-				</bbx_if:show_reply_to>
-				-->
-				<!-- Experimental Layout -->
-				<span class="__style_prefix__-reply-to bx-def-padding-left bx-def-font-small bx-def-font-grayed">
-					<bx_if:show_reply_to>
-						<span><bx_text:_in_reply_to />&nbsp;</span><a href="__par_cmt_link__">__par_cmt_author__</a>
-					</bx_if:show_reply_to>
-					<span class="bullet">&#183;</span><a class="__style_prefix__-ago" href="__view_link__">__ago__</a>
-					<span class="bullet">&#183;</span><span class="__style_prefix__-points"><span>__points_num__</span>&nbsp;__points_txt__</span>
-				</span>
-				<!-- Experimental Layout -->
-			</div>
-			<div class="__style_prefix__-body bx-def-margin-thd-topbottom">
-				__text__<bx_if:show_more><span class="__style_prefix__-body-see-more">... <a class="bx-def-font-small" href="javascript:void(0)" onclick="__js_object__.seeMore(this);"><bx_text:_see_more /></a></span><span style="display:none;"> __text_more__</span></bx_if:show_more>
-				<!-- Experimental Layout -->
-				<span class="__style_prefix__-actions bx-def-padding-left bx-def-font-small bx-clearfix">
-					<bx_if:show_rate>
-						<span class="bullet">&#183;</span><a class="__style_prefix__-comment-vote" title="<bx_text:_Plus />" href="javascript:void(0)" onclick="__js_object__.cmtRate(this, __id__, 1)"><bx_text:_Plus /></a>
-						<!--
-						<span class="bullet">&#183;</span><a class="__style_prefix__-comment-vote" title="<bx_text:_Minus />" href="javascript:void(0)" onclick="__js_object__.cmtRate(this, __id__, -1)"><bx_text:_Minus /></a>
-						-->
-					</bx_if:show_rate>
-					<bx_if:show_reply>
-						<span class="bullet">&#183;</span><a class="__style_prefix__-comment-reply" href="javascript:void(0)" onclick="__js_object__.toggleReply(this, __id__); return false;">__text__</a>
-					</bx_if:show_reply>
-					<bx_if:show_edit>
-						<span class="bullet">&#183;</span><a class="__style_prefix__-comment-manage-edit" title="<bx_text:_Edit />" href="javascript:void(0)" onclick="__js_object__.cmtEdit(this, __id__); return false;"><bx_text:_Edit /></a>
-					</bx_if:show_edit>
-					<bx_if:show_delete>
-						<span class="bullet">&#183;</span><a class="__style_prefix__-comment-manage-delete" title="<bx_text:_Delete />" href="javascript:void(0)" onclick="__js_object__.cmtRemove(this, __id__); return false;"><bx_text:_Delete /></a>
-					</bx_if:show_delete>
-				</span>
-				<!-- Experimental Layout -->
-			</div>
-			__actions__
+	<div class="__style_prefix__-author">
+		<div class="__style_prefix__-icon bx-def-icon bx-def-icon-size">
+			<bx_if:show_icon>
+				<img src="__author_icon__" />
+			</bx_if:show_icon>
+			<bx_if:show_icon_empty>
+				<i class="sys-icon user"></i>
+			</bx_if:show_icon_empty>
+		</div>
+		<div class="cmt-username bx-def-icon-size-min-height">
+			<span class="__style_prefix__-username bx-def-font-h3">
+				<bx_if:show_author_link><a href="__author_link__">__author_name__</a> </bx_if:show_author_link>
+				<bx_if:show_author_text>__author_name__ </bx_if:show_author_text>
+			</span>
+			<span class="__style_prefix__-reply-to bx-def-padding-left bx-def-font-small bx-def-font-grayed">
+				<bx_if:show_reply_to>
+					<span><bx_text:_in_reply_to />&nbsp;</span><a href="__par_cmt_link__">__par_cmt_author__</a>
+				</bx_if:show_reply_to>
+				<span class="bullet">&#183;</span><a class="__style_prefix__-ago" href="__view_link__">__ago__</a>
+				<span class="bullet">&#183;</span><span class="__style_prefix__-points"><span>__points_num__</span>&nbsp;__points_txt__</span>
+			</span>
 		</div>
 	</div>
+	<div class="__style_prefix__-cont bx-def-margin-sec-top bx-def-border bx-def-round-corners">
+		<div class="__style_prefix__-cont-cnt">
+			<div class="__style_prefix__-body bx-def-margin-thd-topbottom">
+				__text__<bx_if:show_more><span class="__style_prefix__-body-see-more">... <a class="bx-def-font-small" href="javascript:void(0)" onclick="__js_object__.seeMore(this);"><bx_text:_see_more /></a></span><span style="display:none;"> __text_more__</span></bx_if:show_more>
+			</div>
+		</div>
+	</div>
+	__actions__
 	<ul class="cmts cmts-margin">__replies__</ul>
 </li>

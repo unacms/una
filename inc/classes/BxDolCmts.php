@@ -711,7 +711,7 @@ class BxDolCmts extends BxDol
 		return array(
 			$oProfile->getDisplayName(), 
 			$oProfile->getUrl(), 
-			$oProfile->getThumb()
+			$oProfile->getIcon()
 		);
     }
 

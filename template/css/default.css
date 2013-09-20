@@ -236,9 +236,9 @@
     margin-right:0;
     padding:0;
     border:none;
-    border-top:1px solid #eeeeee;
+    border-top:1px solid #dddddd;
     border-bottom:1px solid #ffffff;
-    border-top:1px solid rgba(238, 238, 238, 0.5);
+    border-top:1px solid rgba(221, 221, 221, 0.5);
     border-bottom:1px solid rgba(255, 255, 255, 0.8);
 }
 .bx-def-hr-auto:first-child {
@@ -394,9 +394,16 @@ h3,
 .bx-def-thumb-size-max-height {
     max-height:64px;
 }
-
+.bx-def-thumb-size-min-height {
+    min-height:64px;
+}
 .bx-def-icon-size {
     width:32px;
     height:32px;
 }
-
+.bx-def-icon-size-max-height {
+    max-height:32px;
+}
+.bx-def-icon-size-min-height {
+    min-height:32px;
+}

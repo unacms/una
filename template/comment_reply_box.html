@@ -1,13 +1,21 @@
-<div class="__style_prefix__-reply<bx_if:show_class> __class__</bx_if:show_class> cmt-border bx-def-margin-top bx-def-padding-top">
-	<div class="__style_prefix__-thumb bx-def-thumb bx-def-thumb-size">
-		<bx_if:show_icon>
-			<img src="__author_icon__" />
-		</bx_if:show_icon>
-		<bx_if:show_icon_empty>
-			<i class="sys-icon user"></i>
-		</bx_if:show_icon_empty>
+<div class="__style_prefix__-reply<bx_if:show_class> __class__</bx_if:show_class> bx-def-margin-top">
+	<div class="__style_prefix__-author">
+		<div class="__style_prefix__-icon bx-def-icon bx-def-icon-size">
+			<bx_if:show_icon>
+				<img src="__author_icon__" />
+			</bx_if:show_icon>
+			<bx_if:show_icon_empty>
+				<i class="sys-icon user"></i>
+			</bx_if:show_icon_empty>
+		</div>
+		<div class="cmt-username bx-def-icon-size-min-height">
+			<span class="__style_prefix__-username bx-def-font-h3">
+				<bx_if:show_author_link><a href="__author_link__">__author_name__</a> </bx_if:show_author_link>
+				<bx_if:show_author_text>__author_name__ </bx_if:show_author_text>
+			</span>
+		</div>
 	</div>
-	<div class="__style_prefix__-post-reply">
+	<div class="__style_prefix__-post-reply bx-def-margin-sec-top">
 	    __form__
 	</div>
 </div>
