@@ -19,9 +19,6 @@
     ul.cmts-margin li.cmt {
     	position: relative;
     }
-    li.cmt:first-child {
-		margin-top: 0px;
-    }
     li.cmt-err {
         color: red;
     }
@@ -151,7 +148,6 @@
     /*--- Comment Body ---*/
     div.cmt-cont {
         position: relative;
-    	background-color:#ffffff;
     }
 	div.cmt-cont .bullet,
 	div.cmt-author .bullet {
@@ -182,10 +178,24 @@
 
     /*--- Comment Actions ---*/
 	div.cmt-actions {
-		text-align: right;
-    }
+		position: relative;
+		z-index: 1;
+		top: -1px;
+		border-top: 0px;
+		border-top-left-radius: 0px;
+		-moz-border-top-left-radius: 0px;
+		-webkit-border-top-left-radius: 0px;
+		border-top-right-radius: 0px;
+		-moz-border-top-right-radius: 0px;
+		-webkit-border-top-right-radius: 0px;
+		background-color: rgba(255, 255, 255, 0.3);
+		line-height: 30px;
+	}
 	div.cmt-actions a {
 		text-decoration: none;
+    }
+    div.cmt-actions a i.sys-icon {
+		padding-right: 5px;
     }
     div.cmt-comment-manage {
     	position: relative;
@@ -201,7 +211,6 @@
     }
 	div.cmt-reply-bottom {
 		margin-top: 40px;
-		border-top: 1px solid #eeeeee;
     }
     li.cmt div.cmt-reply-top {
     	margin-bottom: 0px;
