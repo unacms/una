@@ -179,24 +179,17 @@
     /*--- Comment Actions ---*/
 	div.cmt-actions {
 		position: relative;
-		z-index: 1;
-		top: -1px;
-		border-top: 0px;
-		border-top-left-radius: 0px;
-		-moz-border-top-left-radius: 0px;
-		-webkit-border-top-left-radius: 0px;
-		border-top-right-radius: 0px;
-		-moz-border-top-right-radius: 0px;
-		-webkit-border-top-right-radius: 0px;
-		background-color: rgba(255, 255, 255, 0.3);
-		line-height: 30px;
+		text-align: right;
 	}
 	div.cmt-actions a {
 		text-decoration: none;
     }
-    div.cmt-actions a i.sys-icon {
-		padding-right: 5px;
+    div.cmt-actions a:hover {
+		color: #006699;
     }
+    div.cmt-actions i.sys-icon {
+    	font-size: 1.5em;
+	}
     div.cmt-comment-manage {
     	position: relative;
     	text-align: left;
