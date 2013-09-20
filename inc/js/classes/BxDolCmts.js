@@ -299,27 +299,27 @@ BxDolCmts.prototype.toggleReply = function(e, iCmtParentId)
             function (s) {
                 $this._loadingInContent(e, false);
 
-                var oForm = $(s).css('display', 'none').addClass('cmt-reply-margin');
+                var oForm = $(s).css('display', 'none');
                 var sFormClass = oForm.attr('class');
                 var oFormSibling = $(sParentId + ' > ul.cmts:first');
                 switch($this._sPostFormPosition) {
                 	case 'top':
-                		oForm.addClass(sFormClass + '-' + $this._sPostFormPosition);
+                		oForm.addClass('cmt-reply-margin').addClass(sFormClass + '-' + $this._sPostFormPosition);
                 		oFormSibling.before(oForm);
                 		break;
 
                 	case 'bottom':
-                		oForm.addClass(sFormClass + '-' + $this._sPostFormPosition);
+                		oForm.addClass('cmt-reply-margin').addClass(sFormClass + '-' + $this._sPostFormPosition);
                 		oFormSibling.after(oForm);
                 		break;
 
                 	case 'both':
                 		var oFormClone = oForm.clone();
 
-                		oForm.addClass(sFormClass + '-top');
+                		oForm.addClass('cmt-reply-margin').addClass(sFormClass + '-top');
                 		oFormSibling.before(oForm);
 
-                		oFormClone.addClass(sFormClass + '-bottom');
+                		oFormClone.addClass('cmt-reply-margin').addClass(sFormClass + '-bottom');
                 		oFormSibling.after(oFormClone);
                 		break;
                 }
@@ -331,17 +331,35 @@ BxDolCmts.prototype.toggleReply = function(e, iCmtParentId)
 
 BxDolCmts.prototype.toggleManagePopup = function(oLink, iCmtId) {
 	var oPopup = $(oLink).siblings('.cmt-comment-manage');
-	console.log(oPopup);
 	if(oPopup.is(':visible')) {
 		oPopup.dolPopupHide();
 		return;
 	}
 
-		oPopup.dolPopup({
-			pointer:{
-				el:$(oLink)
-			}
-		});
+	oPopup.dolPopup({
+		pointer:{
+			el:$(oLink)
+		}
+	});
+};
+
+BxDolCmts.prototype.togglePlusedByPopup = function(oLink, iCmtId) {
+	var $this = this;
+    var oData = this._getDefaultActions();
+    oData['action'] = 'PlusedByGet';
+    oData['CmtId'] = iCmtId;
+
+	$this._loadingInContent(oLink, true);
+
+	jQuery.post (
+		this._sActionsUrl,
+        oData,
+        function (s) {
+			$this._loadingInContent(oLink, false);
+			
+			alert(s);
+        }
+	);
 };
 
 // get comment replies via ajax request

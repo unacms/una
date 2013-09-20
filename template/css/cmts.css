@@ -201,16 +201,15 @@
     }
     div.cmt-reply-top {
 		margin-bottom: 40px;
-    }
+    }    
 	div.cmt-reply-bottom {
 		margin-top: 40px;
     }
     li.cmt div.cmt-reply-top {
-    	margin-bottom: 0px;
+    	margin-bottom: 20px;
 	}
     li.cmt div.cmt-reply-bottom {
-    	margin-top: 0px;
-		border-top: none;
+    	margin-top: 20px;
     }
 	div.cmt-post-reply {
         position: relative;

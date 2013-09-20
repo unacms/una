@@ -490,6 +490,15 @@ class BxDolCmts extends BxDol
         return $this->getFormBox(array('parent_id' => $iCmtParentId, 'type' => $sCmtBrowse), array('type' => $sCmtDisplay));
     }
 
+	function actionPlusedByGet () {
+        if (!$this->isEnabled())
+           return '';
+
+        $iCmtId= isset($_REQUEST['CmtId']) ? bx_process_input($_REQUEST['CmtId'], BX_DATA_INT) : 0;
+
+        return 'list will be here';
+    }
+
     function actionCmtsGet () {
         if (!$this->isEnabled())
            return '';

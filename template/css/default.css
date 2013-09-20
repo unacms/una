@@ -296,9 +296,9 @@
 
 /* shadow */
 .bx-def-shadow {
-    -webkit-box-shadow: 0 1px 3px rgba(51, 51, 51, 0.3);
-    -moz-box-shadow: 0 1px 3px rgba(51, 51, 51, 0.3);
-    box-shadow: 0 1px 3px rgba(51, 51, 51, 0.3);
+    -webkit-box-shadow: 0 1px 3px rgba(51, 51, 51, 0.1);
+    -moz-box-shadow: 0 1px 3px rgba(51, 51, 51, 0.1);
+    box-shadow: 0 0px 2px rgba(51, 51, 51, 0.1);
 }
 
 /* round corders */
