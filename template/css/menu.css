@@ -121,6 +121,7 @@ ul.bx-menu-verlit {
 #bx-menu-main-submenu,
 #bx-menu-main {
     float:left;
+    line-height:39px;
 }
 
 #bx-menu-main-container #bx-menu-main-submenu:first-child .bx-menu-main-submenu-div:first-child {
@@ -161,6 +162,37 @@ ul.bx-menu-main {
 .bx-menu-main li span {
     color:#000;
 }
+
+
+/* --------------- action menu */
+
+#bx-menu-action {
+    float:right;
+}
+
+ul.bx-menu-action {
+    padding:0;
+    margin:0;
+    list-style:none;
+    line-height:39px;
+}
+.bx-menu-action li {
+    float:left;
+    margin:0;
+}
+.bx-menu-action li a {
+    text-decoration:none;
+    line-height:normal;
+}
+.bx-menu-action li .sys-icon {
+    display:inline-block;
+    width:24px;
+    height:24px;
+    font-size:24px;
+    text-align:center;
+    vertical-align:middle;
+}
+
 
 /* --------------- toolbar menu */
 
@@ -339,3 +371,4 @@ li.bx-menu-inter-pas {}
 li.bx-menu-inter-hidden {
 	display: none;
 }
+

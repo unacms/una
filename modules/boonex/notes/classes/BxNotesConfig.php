@@ -16,6 +16,7 @@ class BxNotesConfig extends BxDolModuleConfig {
     public static $FIELD_AUTHOR = 'author';
     public static $FIELD_ADDED = 'added';
     public static $FIELD_CHANGED = 'changed';
+    public static $FIELD_TITLE = 'title';
     public static $FIELD_TEXT = 'text';
     public static $FIELD_TEXT_ID = 'note-text';
     public static $FIELD_SUMMARY = 'summary';

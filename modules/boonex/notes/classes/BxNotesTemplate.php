@@ -79,6 +79,13 @@ class BxNotesTemplate extends BxDolTwigTemplate {
         return $this->parseHtmlByName($sTemplateName, $aVars);
     }
 
+    function entryText ($aData, $sTemplateName = 'entry-text.html') {
+        $aVars = $aData;
+        $aVars['entry_title'] = $aData[BxNotesConfig::$FIELD_TITLE];
+        $aVars['entry_text'] = $aData[BxNotesConfig::$FIELD_TEXT];
+        return $this->parseHtmlByName($sTemplateName, $aVars);
+    }
+
 }
 
 /** @} */ 

@@ -246,7 +246,7 @@ function bx_center_content (sSel, sBlockStyle) {
 }
 
 /**
- * Show pointer popup with menu.
+ * Show pointer popup with menu from URL.
  * @param e - element to show popup at
  * @param o - menu object name
  */
@@ -254,6 +254,21 @@ function bx_menu_popup (o, e, options) {
     var options = options || {};
     var o = $.extend({}, $.fn.dolPopupDefaultOptions, options, {id: o, url: 'menu.php?o=' + o});
     $(e).dolPopupAjax(o);
+}
+
+/**
+ * Show pointer popup with menu from existing HTML.
+ * @param jSel - jQuery selector for html to show in popup
+ * @param e - element to show popup at
+ * @param options - popup options
+ */
+function bx_menu_popup_inline (jSel, e, options) {
+    var options = options || {};
+    var o = $.extend({}, $.fn.dolPopupDefaultOptions, options, {pointer:{el:$(e)}});
+    if ($(jSel + ':visible').length) 
+        $(jSel).dolPopupHide(); 
+    else 
+        $(jSel).dolPopup(o);
 }
 
 function validateLoginForm(eForm) {

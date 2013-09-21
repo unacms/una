@@ -24,6 +24,7 @@ class BxNotesMenuViewNote extends BxTemplMenu {
 
         $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
 
+        bx_import('BxDolModule');
         $this->_oModule = BxDolModule::getInstance('bx_notes');
         $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
         if ($this->_aContentInfo)
