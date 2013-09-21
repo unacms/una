@@ -56,22 +56,27 @@ ul.bx-menu-ver {
     color:#000;
 }
 
+.bx-menu-ver li img,
+.bx-menu-ver li .sys-icon,
+.bx-menu-ver li span {
+    display:inline-block;
+    vertical-align:middle;
+}
+.bx-menu-ver li img,
+.bx-menu-ver li .sys-icon {
+    width:20px;
+    height:20px;
+    margin-right:2px;
+    text-align:center;
+}
+
 .bx-menu-ver li img {
-    width:16px;
-    height:16px;
     background-position:center center;
     background-repeat:no-repeat;
-    vertical-align:bottom;
 }
 
 .bx-menu-ver li .sys-icon {
-
-    display:inline-block;
-    width:16px;
-
-    text-align:center;
-    font-size:16px;
-
+    font-size:20px;
 }
 
 .bx-menu-ver .bx-def-hr {
