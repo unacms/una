@@ -238,7 +238,7 @@ class BxSitesModule extends BxDolModule
 	public function isAllowedAdd ($isPerformAction = false)
     {
         $aCheck = checkActionModule($this->_iProfileId, 'create site', $this->getName(), $isPerformAction);
-        if ($aCheck[CHECK_ACTION_RESULT] != CHECK_ACTION_RESULT_ALLOWED)
+        if ($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
             return $aCheck[CHECK_ACTION_MESSAGE];
 
         return CHECK_ACTION_RESULT_ALLOWED;
@@ -274,7 +274,7 @@ class BxSitesModule extends BxDolModule
     public function isModeratorAccess ($isPerformAction = false)
     {
         $aCheck = checkActionModule($this->_iProfileId, 'manage sites', $this->getName(), $isPerformAction); 
-        return $aCheck[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED;
+        return $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED;
     }
 
 
