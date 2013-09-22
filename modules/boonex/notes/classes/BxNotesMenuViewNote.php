@@ -31,6 +31,12 @@ class BxNotesMenuViewNote extends BxTemplMenu {
             $this->addMarkers(array('content_id' => $this->_aContentInfo['id']));
     }
 
+    public function getCode () {
+        if (!bx_get_logged_profile_id())
+            return false;
+        return parent::getCode ();
+    }
+
     /**
      * Check if menu items is visible.
      * @param $a menu item array
@@ -44,9 +50,20 @@ class BxNotesMenuViewNote extends BxTemplMenu {
         if ($this->_aContentInfo['author'] == $iProfileId)
             return true;
 
-        // all links are visible for admin/moderator
-        $aCheck = checkActionModule($iProfileId, 'edit any note', 'bx_notes');
-        if ($aCheck[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED)
+        $sFuncCheckAccess = false;
+        switch ($a['name']) {
+            case 'view-note':
+                $sFuncCheckAccess = 'isAllowedView';
+                break;
+            case 'edit-note':
+                $sFuncCheckAccess = 'isAllowedEdit';
+                break;
+            case 'delete-note':
+                $sFuncCheckAccess = 'isAllowedDelete';
+                break;
+        }
+
+        if ($sFuncCheckAccess && CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->$sFuncCheckAccess($this->_aContentInfo))
             return true;
 
         // default visible settings

@@ -40,6 +40,8 @@ class BxBaseMenuAction extends BxTemplMenu
 
         $oMenu = BxTemplMenu::getObjectInstance($this->_sMenu);
         $sMenu = $oMenu ? $oMenu->getCode () : '';
+        if (!$sMenu)
+            return false;
 
         $a['popup'] = BxTemplFunctions::getInstance()->transBox('<div class="bx-def-padding bx-def-color-bg-block">' . $sMenu . '</div>');
         

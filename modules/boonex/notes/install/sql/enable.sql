@@ -120,9 +120,9 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_notes_view', 'bx_notes', '_bx_notes_menu_set_title_view_note', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_notes_view', 'bx_notes', 'view-note', '_bx_notes_menu_item_title_system_view_note', '_bx_notes_menu_item_title_view_note', 'page.php?i=view-note&id={content_id}', '', '', 'eye-open', '', 2147483647, 1, 0, 0),
-('bx_notes_view', 'bx_notes', 'edit-note', '_bx_notes_menu_item_title_system_edit_note', '_bx_notes_menu_item_title_edit_note', 'page.php?i=edit-note&id={content_id}', '', '', 'pencil', '', 2147483647, 1, 0, 1),
-('bx_notes_view', 'bx_notes', 'delete-note', '_bx_notes_menu_item_title_system_delete_note', '_bx_notes_menu_item_title_delete_note', 'page.php?i=delete-note&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 2);
+('bx_notes_view', 'bx_notes', 'view-note', '_bx_notes_menu_item_title_system_view_note', '_bx_notes_menu_item_title_view_note', 'page.php?i=view-note&id={content_id}', '', '', 'eye-open', '', 0, 1, 0, 0),
+('bx_notes_view', 'bx_notes', 'edit-note', '_bx_notes_menu_item_title_system_edit_note', '_bx_notes_menu_item_title_edit_note', 'page.php?i=edit-note&id={content_id}', '', '', 'pencil', '', 0, 1, 0, 1),
+('bx_notes_view', 'bx_notes', 'delete-note', '_bx_notes_menu_item_title_system_delete_note', '_bx_notes_menu_item_title_delete_note', 'page.php?i=delete-note&id={content_id}', '', '', 'remove', '', 0, 1, 0, 2);
 
 --
 -- Dumping data for 'bx_notes_submenu' menu

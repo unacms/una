@@ -67,7 +67,7 @@ class BxNotesFormNote extends BxTemplFormView {
                 'summary_id' => BxNotesConfig::$FIELD_SUMMARY_ID,
                 'thumb_id' => $aContentInfo[BxNotesConfig::$FIELD_THUMB],
                 'bx_if:set_thumb' => array (
-                    'condition' => CHECK_ACTION_RESULT_ALLOWED == $this->_oModule->isAllowedSetThumb(),
+                    'condition' => CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->isAllowedSetThumb(),
                     'content' => array (
                         'name_thumb' => BxNotesConfig::$FIELD_THUMB,
                     ),
@@ -85,7 +85,7 @@ class BxNotesFormNote extends BxTemplFormView {
         $aValsToAdd[BxNotesConfig::$FIELD_ADDED] = time();
         $aValsToAdd[BxNotesConfig::$FIELD_CHANGED] = time();
 
-        if (CHECK_ACTION_RESULT_ALLOWED == $this->_oModule->isAllowedSetThumb()) {
+        if (CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->isAllowedSetThumb()) {
             $aThumb = isset($_POST[BxNotesConfig::$FIELD_THUMB]) ? bx_process_input ($_POST[BxNotesConfig::$FIELD_THUMB], BX_DATA_INT) : false;
             $aValsToAdd[BxNotesConfig::$FIELD_THUMB] = 0;
             if (!empty($aThumb) && is_array($aThumb) && ($iFileThumb = array_pop($aThumb)))
@@ -101,7 +101,7 @@ class BxNotesFormNote extends BxTemplFormView {
 
         $aValsToAdd[BxNotesConfig::$FIELD_CHANGED] = time();
 
-        if (CHECK_ACTION_RESULT_ALLOWED == $this->_oModule->isAllowedSetThumb()) {
+        if (CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->isAllowedSetThumb()) {
             $aThumb = bx_process_input ($_POST[BxNotesConfig::$FIELD_THUMB], BX_DATA_INT);
             $aValsToAdd[BxNotesConfig::$FIELD_THUMB] = 0;
             if (!empty($aThumb) && is_array($aThumb) && ($iFileThumb = array_pop($aThumb)))
