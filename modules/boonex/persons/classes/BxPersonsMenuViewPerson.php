@@ -17,14 +17,15 @@ bx_import('BxTemplMenu');
 class BxPersonsMenuViewPerson extends BxTemplMenu {
 
     protected $_aContentInfo;
+    protected $_oModule;
 
     public function __construct($aObject, $oTemplate = false) {
         parent::__construct($aObject, $oTemplate);
 
         $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
 
-        $oModuleMain = BxDolModule::getInstance('bx_persons');
-        $this->_aContentInfo = $oModuleMain->_oDb->getContentInfoById($iContentId);
+        $this->_oModule = BxDolModule::getInstance('bx_persons');
+        $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
         if ($this->_aContentInfo)
             $this->addMarkers(array('content_id' => $this->_aContentInfo['id']));
     }
@@ -36,22 +37,21 @@ class BxPersonsMenuViewPerson extends BxTemplMenu {
      */ 
     protected function _isVisible ($a) {
 
-        bx_import('BxDolProfile');
-        $oAccountProfile = BxDolProfile::getInstanceAccountProfile();
-        $iAccountProfileId = $oAccountProfile->id();
+        $sFuncCheckAccess = false;
+        switch ($a['name']) {
+            case 'view-persons-profile':
+                $sFuncCheckAccess = 'isAllowedView';
+                break;
+            case 'edit-persons-profile':
+                $sFuncCheckAccess = 'isAllowedEdit';
+                break;
+            case 'delete-persons-profile':
+                $sFuncCheckAccess = 'isAllowedDelete';
+                break;
+        }
 
-        // TODO: separate checking for every menu item
-
-        // all links are visible for owner
-        if ($this->_aContentInfo['author'] == $iAccountProfileId)
+        if ($sFuncCheckAccess && CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->$sFuncCheckAccess($this->_aContentInfo))
             return true;
-
-        // all links are visible for admin/moderator
-        $aCheck = checkActionModule($iAccountProfileId, 'edit any person profile', 'bx_persons'); 
-        if ($aCheck[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED)
-            return true;
-
-        return false; // TODO: since default visible settings are overriden - hide it from builder.
 
         // default visible settings
         bx_import('BxDolAcl');

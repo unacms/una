@@ -93,7 +93,7 @@ class BxPersonsFormPerson extends BxTemplFormView {
 
     function deleteGhost ($iFileId, $iContentId, $isRestoreOriginal = true) {
 
-        if (CHECK_ACTION_RESULT_ALLOWED != ($sMsg = $this->_oModule->isAllowedAdd()))
+        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->isAllowedAdd()))
             return $sMsg;
 
         bx_import('BxDolStorage');
@@ -111,7 +111,7 @@ class BxPersonsFormPerson extends BxTemplFormView {
 
     function discardGhost ($iFileId, $iContentId, $isRestoreOriginal = true) {
 
-        if (CHECK_ACTION_RESULT_ALLOWED != ($sMsg = $this->_oModule->isAllowedAdd()))
+        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->isAllowedAdd()))
             return $sMsg;
 
         bx_import('BxDolStorage');
