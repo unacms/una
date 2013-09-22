@@ -1593,7 +1593,7 @@ class BxDolTwigModule extends BxDolModule {
         if (!defined($sMembershipActionConstant))
             return false;
         $aCheck = checkAction(getLoggedId(), constant($sMembershipActionConstant));
-        return $aCheck[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED;
+        return $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED;
     }
 
     function _formatSnippetText ($aEntryData, $iMaxLen = 300) {
