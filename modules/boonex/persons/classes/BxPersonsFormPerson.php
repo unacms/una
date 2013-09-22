@@ -24,7 +24,8 @@ class BxPersonsFormPerson extends BxTemplFormView {
 
         bx_import('BxDolProfile');
         $oAccountProfile = BxDolProfile::getInstanceAccountProfile();
-        $this->_iAccountProfileId = $oAccountProfile->id();
+        if ($oAccountProfile)
+            $this->_iAccountProfileId = $oAccountProfile->id();
 
         $this->_oModule = BxDolModule::getInstance('bx_persons');
 

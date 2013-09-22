@@ -9,12 +9,12 @@
  * @{
  */
 
-bx_import('BxDolTwigTemplate');
+bx_import('BxDolModuleTemplate');
 
 /*
  * Notes module representation.
  */
-class BxNotesTemplate extends BxDolTwigTemplate {
+class BxNotesTemplate extends BxDolModuleTemplate {
 
     /**
      * Constructor

@@ -9,12 +9,12 @@
  * @{
  */
 
-bx_import('BxDolTwigModuleDb');
+bx_import('BxDolModuleDb');
 
 /*
  * Notes module database queries
  */
-class BxNotesDb extends BxDolTwigModuleDb {
+class BxNotesDb extends BxDolModuleDb {
 
     /*
      * Constructor.
