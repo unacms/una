@@ -198,6 +198,7 @@ ul.bx-menu-action {
 
 #bx-popup-ajax-wrapper-sys_site .bx-popup-content-wrapped {
     padding:12px;
+    width:140px;
 }
 
 #bx-menu-toolbar-1-container .bx-menu-toolbar {
@@ -293,23 +294,17 @@ ul.bx-menu-floating-blocks {
     *display: inline;
     vertical-align:top;    
 
-    width:170px;
-    height:170px;
+    width:64px;
+    height:64px;
 }
 
 .bx-menu-floating-blocks li:hover {
     opacity:0.8;
-    -moz-box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.4), inset 0px 1px 0px 0px rgba(255, 255, 255, 0.3), inset 0px -1px 0px 0px rgba(0, 0, 0, 0.5);
-    -webkit-box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.4), inset 0px 1px 0px 0px rgba(255, 255, 255, 0.3), inset 0px -1px 0px 0px rgba(0, 0, 0, 0.5);
-    box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.4), inset 0px 1px 0px 0px rgba(255, 255, 255, 0.3), inset 0px -1px 0px 0px rgba(0, 0, 0, 0.3);
 }
 
 .bx-menu-floating-blocks li:active,
 .bx-menu-floating-blocks li.bx-menu-tab-active {
     opacity:1.0;
-    -moz-box-shadow:  inset 0px 0px 1px 0px rgba(0, 0, 0, 0.4), inset 0px 1px 0px 0px rgba(0, 0, 0, 0.3);
-    -webkit-box-shadow:  inset 0px 0px 1px 0px rgba(0, 0, 0, 0.4), inset 0px 1px 0px 0px rgba(0, 0, 0, 0.3);
-    box-shadow: inset 0px 0px 1px 0px rgba(0, 0, 0, 0.4), inset 0px 1px 0px 0px rgba(0, 0, 0, 0.2);
 }
 
 .bx-menu-floating-blocks li a {
@@ -321,29 +316,25 @@ ul.bx-menu-floating-blocks {
     color:#000;
 }
 
-.bx-menu-floating-blocks li img {
+.bx-menu-floating-blocks li img,
+.bx-menu-floating-blocks li .sys-icon {
     display:block;
-    width:128px;
-    height:128px;
+    width:32px;
+    height:32px;
+    margin:8px 16px 3px 16px;
 
-    margin:10px 34px 5px 20px;
+}
 
+.bx-menu-floating-blocks li img {
     background-position:center center;
     background-repeat:no-repeat;
 }
 
 .bx-menu-floating-blocks li .sys-icon {
-
-    display:block;
-    width:128px;
-    height:128px;
-    line-height:128px;
-
-    margin:15px 34px 0px 20px;
-
+    line-height:32px;
     text-align:center;
     vertical-align:bottom;
-    font-size:142px;
+    font-size:32px;
 }
 
 .bx-menu-floating-blocks-title {
