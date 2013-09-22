@@ -9,7 +9,7 @@
  * @{
  */
 
-bx_import('BxDolTextDb');
+bx_import('BxDolModuleDb');
 
 class BxDevDb extends BxDolModuleDb {
     function BxDevDb(&$oConfig) {
