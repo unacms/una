@@ -24,7 +24,7 @@ $aConfig = array(
     'update_url' => 'http://www.boonex.com/products/{uri}',
 
     'compatible_with' => array(
-        '8.0.0'
+        '8.0.x'
     ),
 
     /**
