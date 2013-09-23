@@ -3299,29 +3299,29 @@ More info about URI DNSBL: <br />
     <string name="_sys_menu_item_title_system_create_account"><![CDATA[Create Account]]></string>
     <string name="_sys_menu_item_title_system_create_profile"><![CDATA[Create Profile]]></string>
     <string name="_sys_menu_item_title_system_logout"><![CDATA[Log Out]]></string>
-    <string name="_sys_menu_item_title_system_account_settings_info"><![CDATA[Info]]></string>
-    <string name="_sys_menu_item_title_system_account_settings_email"><![CDATA[Email]]></string>
-    <string name="_sys_menu_item_title_system_account_settings_pwd"><![CDATA[Password]]></string>
+    <string name="_sys_menu_item_title_system_account_settings_info"><![CDATA[Edit Account]]></string>
+    <string name="_sys_menu_item_title_system_account_settings_email"><![CDATA[Email Settings]]></string>
+    <string name="_sys_menu_item_title_system_account_settings_pwd"><![CDATA[Change Password]]></string>
     <string name="_sys_menu_item_title_system_account_settings_delete"><![CDATA[Delete Account]]></string>     
     <string name="_sys_menu_item_title_system_account"><![CDATA[Account]]></string>
     <string name="_sys_menu_item_title_system_create_profile"><![CDATA[Create Profile]]></string>
     <string name="_sys_menu_item_title_system_logout"><![CDATA[Log Out]]></string>
-    <string name="_sys_menu_item_title_system_account_settings_info"><![CDATA[Info]]></string>
-    <string name="_sys_menu_item_title_system_account_settings_email"><![CDATA[Email]]></string>
-    <string name="_sys_menu_item_title_system_account_settings_pwd"><![CDATA[Password]]></string>
+    <string name="_sys_menu_item_title_system_account_settings_info"><![CDATA[Edit Account]]></string>
+    <string name="_sys_menu_item_title_system_account_settings_email"><![CDATA[Email Settings]]></string>
+    <string name="_sys_menu_item_title_system_account_settings_pwd"><![CDATA[Change Password]]></string>
     <string name="_sys_menu_item_title_system_account_settings_delete"><![CDATA[Delete Account]]></string>
-    <string name="_sys_menu_item_title_system_account_profile_context"><![CDATA[Current Profile]]></string>
+    <string name="_sys_menu_item_title_system_account_profile_context"><![CDATA[Switch Profile]]></string>
 
     <string name="_sys_menu_item_title_home"><![CDATA[Home]]></string>
     <string name="_sys_menu_item_title_about"><![CDATA[About]]></string>    
     <string name="_sys_menu_item_title_account"><![CDATA[Account]]></string>
     <string name="_sys_menu_item_title_create_profile"><![CDATA[Create Profile]]></string>
     <string name="_sys_menu_item_title_logout"><![CDATA[Log Out]]></string>
-    <string name="_sys_menu_item_title_account_settings_email"><![CDATA[Email]]></string>
-    <string name="_sys_menu_item_title_account_settings_pwd"><![CDATA[Password]]></string>
-    <string name="_sys_menu_item_title_account_settings_info"><![CDATA[Info]]></string>
+    <string name="_sys_menu_item_title_account_settings_email"><![CDATA[Email Settings]]></string>
+    <string name="_sys_menu_item_title_account_settings_pwd"><![CDATA[Change Password]]></string>
+    <string name="_sys_menu_item_title_account_settings_info"><![CDATA[Edit Account]]></string>
     <string name="_sys_menu_item_title_account_settings_delete"><![CDATA[Delete Account]]></string>
-    <string name="_sys_menu_item_title_account_profile_context"><![CDATA[Current Profile]]></string>
+    <string name="_sys_menu_item_title_account_profile_context"><![CDATA[Switch Profile]]></string>
 
     <string name="_sys_menu_set_title_site"><![CDATA[Site]]></string>
     <string name="_sys_menu_set_title_footer"><![CDATA[Footer]]></string>
@@ -3404,8 +3404,8 @@ More info about URI DNSBL: <br />
     <string name="_sys_form_display_login"><![CDATA[Login]]></string>
     <string name="_sys_form_display_account_create"><![CDATA[Create Account]]></string>
     <string name="_sys_form_display_account_settings_email"><![CDATA[Email Settings]]></string>
-    <string name="_sys_form_display_account_settings_password"><![CDATA[Password Settings]]></string>
-    <string name="_sys_form_display_account_settings_info"><![CDATA[Account Info]]></string>
+    <string name="_sys_form_display_account_settings_password"><![CDATA[Change Password]]></string>
+    <string name="_sys_form_display_account_settings_info"><![CDATA[Edit Account]]></string>
     <string name="_sys_form_display_account_settings_delete"><![CDATA[Delete Account]]></string>
     <string name="_sys_form_display_forgot_password"><![CDATA[Forgot Password]]></string>
     <string name="_sys_form_display_confirm_email"><![CDATA[Email Confirmation]]></string>
@@ -3485,14 +3485,14 @@ More info about URI DNSBL: <br />
     <string name="_sys_page_title_system_create_profiles"><![CDATA[Create Profiles]]></string>
     <string name="_sys_page_title_system_forgot_password"><![CDATA[Forgot Password]]></string>
     <string name="_sys_page_title_system_account_settings_email"><![CDATA[Email Settings]]></string>
-    <string name="_sys_page_title_system_account_settings_pwd"><![CDATA[Password Settings]]></string>
-    <string name="_sys_page_title_system_account_settings_info"><![CDATA[Account Info]]></string>
+    <string name="_sys_page_title_system_account_settings_pwd"><![CDATA[Change Password]]></string>
+    <string name="_sys_page_title_system_account_settings_info"><![CDATA[Edit Account]]></string>
     <string name="_sys_page_title_system_account_settings_delete"><![CDATA[Delete Account]]></string>
     <string name="_sys_page_title_system_confirm_email"><![CDATA[Email Confirmation]]></string>
     <string name="_sys_page_title_system_unsubscribe_notifications"><![CDATA[Unsubscribe From Notifications]]></string>
     <string name="_sys_page_title_system_unsubscribe_news"><![CDATA[Unsubscribe From Newsletters]]></string>
-    <string name="_sys_page_title_system_account_profile_switcher"><![CDATA[Current Profile Switcher]]></string>
-    <string name="_sys_page_title_account_profile_switcher"><![CDATA[Current Profile Switcher]]></string>
+    <string name="_sys_page_title_system_account_profile_switcher"><![CDATA[Switch Profile]]></string>
+    <string name="_sys_page_title_account_profile_switcher"><![CDATA[Switch Profile]]></string>
 
     <string name="_sys_page_title_home"><![CDATA[{site_title} :: Homepage]]></string>
     <string name="_sys_page_title_about"><![CDATA[About]]></string>
@@ -3500,8 +3500,8 @@ More info about URI DNSBL: <br />
     <string name="_sys_page_title_create_profiles"><![CDATA[Create Profiles]]></string>    
     <string name="_sys_page_title_forgot_password"><![CDATA[Forgot Password]]></string>
     <string name="_sys_page_title_account_settings_email"><![CDATA[Email Settings]]></string>
-    <string name="_sys_page_title_account_settings_pwd"><![CDATA[Password Settings]]></string>
-    <string name="_sys_page_title_account_settings_info"><![CDATA[Account Info]]></string>
+    <string name="_sys_page_title_account_settings_pwd"><![CDATA[Change Password]]></string>
+    <string name="_sys_page_title_account_settings_info"><![CDATA[Edit Account]]></string>
     <string name="_sys_page_title_account_settings_delete"><![CDATA[Delete Account]]></string>
     <string name="_sys_page_title_confirm_email"><![CDATA[Email Confirmation]]></string>
     <string name="_sys_page_title_unsubscribe_notifications"><![CDATA[Unsubscribe From Site Notifications]]></string>
@@ -3513,8 +3513,8 @@ More info about URI DNSBL: <br />
     <string name="_sys_page_block_title_create_account"><![CDATA[Create Account]]></string>
     <string name="_sys_page_block_title_account_settings_menu"><![CDATA[Account Settings]]></string>
     <string name="_sys_page_block_title_account_settings_email"><![CDATA[Email Settings]]></string>
-    <string name="_sys_page_block_title_account_settings_pwd"><![CDATA[Password Settings]]></string>
-    <string name="_sys_page_block_title_account_settings_info"><![CDATA[Account Info]]></string>
+    <string name="_sys_page_block_title_account_settings_pwd"><![CDATA[Change Password]]></string>
+    <string name="_sys_page_block_title_account_settings_info"><![CDATA[Edit Account]]></string>
     <string name="_sys_page_block_title_account_settings_delete"><![CDATA[Delete Account]]></string>
     <string name="_sys_page_block_title_confirm_email"><![CDATA[Email Confirmation]]></string>
     <string name="_sys_page_block_title_unsubscribe_notifications"><![CDATA[Unsubscribe From Site Notifications]]></string>
@@ -3522,7 +3522,7 @@ More info about URI DNSBL: <br />
     <string name="_sys_page_block_title_existing_profiles"><![CDATA[Existing Profiles]]></string>
     <string name="_sys_page_block_title_create_profile"><![CDATA[Create New Profile]]></string>
     <string name="_sys_page_block_title_my_profiles"><![CDATA[My Profiles]]></string>
-    <string name="_sys_page_block_title_account_profile_switcher"><![CDATA[Current Profile Switcher]]></string>
+    <string name="_sys_page_block_title_account_profile_switcher"><![CDATA[Switch Profile]]></string>
 
 	<string name="_sys_acl_action_not_allowed"><![CDATA[Your current membership (<b>{2}</b>) doesn't allow you to <b>{1}</b>.]]></string>
 	<string name="_sys_acl_action_limit_reached"><![CDATA[You have reached your limit for now. Your current membership (<b>{2}</b>) allows you to {1} no more than {3} times]]></string>
