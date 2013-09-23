@@ -9,12 +9,12 @@
  * @{
  */
 
-bx_import('BxDolTwigModuleDb');
+bx_import('BxDolModuleDb');
 
 /*
  * Notes module database queries
  */
-class BxSitesDb extends BxDolTwigModuleDb
+class BxSitesDb extends BxDolModuleDb
 {
     function __construct(&$oConfig)
     {

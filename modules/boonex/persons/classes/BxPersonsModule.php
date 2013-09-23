@@ -20,10 +20,12 @@ bx_import ('BxDolAcl');
 class BxPersonsModule extends BxDolModule implements iBxDolProfileService {
 
     protected $_iProfileId;
+    protected $_iAccountId;
 
     function __construct(&$aModule) {
         parent::__construct($aModule);
         $this->_iProfileId = bx_get_logged_profile_id();
+        $this->_iAccountId = getLoggedId();
     }
 
     // ====== SERVICE METHODS
@@ -188,7 +190,7 @@ class BxPersonsModule extends BxDolModule implements iBxDolProfileService {
             $sValue = uri2title($sValue);
 */
 
-        if (CHECK_ACTION_RESULT_ALLOWED != $this->isAllowedBrowse()) {
+        if (CHECK_ACTION_RESULT_ALLOWED !== $this->isAllowedBrowse()) {
             $this->_oTemplate->displayAccessDenied ();
             return;
         }
@@ -254,7 +256,7 @@ class BxPersonsModule extends BxDolModule implements iBxDolProfileService {
     function _checkModeratorAccess ($isPerformAction = false) {
         // check moderator ACL
         $aCheck = checkActionModule($this->_iProfileId, 'edit any person profile', $this->getName(), $isPerformAction); 
-        return $aCheck[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED;
+        return $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED;
     }
 
     /**
@@ -268,7 +270,7 @@ class BxPersonsModule extends BxDolModule implements iBxDolProfileService {
 
         // check ACL
         $aCheck = checkActionModule($this->_iProfileId, 'view person profile', $this->getName(), $isPerformAction);
-        if ($aCheck[CHECK_ACTION_RESULT] != CHECK_ACTION_RESULT_ALLOWED)
+        if ($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
             return $aCheck[CHECK_ACTION_MESSAGE];
 
         // TODO: check privacy
@@ -289,7 +291,7 @@ class BxPersonsModule extends BxDolModule implements iBxDolProfileService {
     function isAllowedAdd ($isPerformAction = false) {
         // check ACL
         $aCheck = checkActionModule($this->_iProfileId, 'create person profile', $this->getName(), $isPerformAction);
-        if ($aCheck[CHECK_ACTION_RESULT] != CHECK_ACTION_RESULT_ALLOWED)
+        if ($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
             return $aCheck[CHECK_ACTION_MESSAGE];
         return CHECK_ACTION_RESULT_ALLOWED;
     }
@@ -298,9 +300,16 @@ class BxPersonsModule extends BxDolModule implements iBxDolProfileService {
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. 
      */
     function isAllowedEdit ($aDataEntry, $isPerformAction = false) {
-        // moderator and owner always have access
-        if ($aDataEntry[BxPersonsConfig::$FIELD_AUTHOR] == $this->_iProfileId || $this->_checkModeratorAccess($isPerformAction))
+        // moderator always has access
+        if ($this->_checkModeratorAccess($isPerformAction))
             return CHECK_ACTION_RESULT_ALLOWED;
+
+        // owner (checked by account! not as profile as ususal) always have access
+        bx_import('BxDolProfile');
+        $oProfileAurhor = BxDolProfile::getInstance($aDataEntry[BxPersonsConfig::$FIELD_AUTHOR]);
+        if ($oProfileAurhor->getAccountId() == $this->_iAccountId)
+            return CHECK_ACTION_RESULT_ALLOWED;
+
         return _t('_sys_txt_access_denied');
     }
 
@@ -312,12 +321,15 @@ class BxPersonsModule extends BxDolModule implements iBxDolProfileService {
         if ($this->_checkModeratorAccess($isPerformAction))
             return CHECK_ACTION_RESULT_ALLOWED;
 
-        // check ACL
-        $aCheck = checkActionModule($this->_iProfileId, 'delete person profile', $this->getName(), $isPerformAction);
-        if ($aCheck[CHECK_ACTION_RESULT] != CHECK_ACTION_RESULT_ALLOWED)
-            return $aCheck[CHECK_ACTION_MESSAGE];
+        // check ACL and owner (checked by account! not as profile as ususal)
+        bx_import('BxDolProfile');
+        $oProfileAurhor = BxDolProfile::getInstance($aDataEntry[BxPersonsConfig::$FIELD_AUTHOR]);
 
-        return CHECK_ACTION_RESULT_ALLOWED;
+        $aCheck = checkActionModule($this->_iProfileId, 'delete person profile', $this->getName(), $isPerformAction);
+        if ($oProfileAurhor->getAccountId() == $this->_iAccountId && $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED)
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+        return _t('_sys_txt_access_denied');
     }
 
 }

@@ -1,6 +1,6 @@
-<ul class="bx-menu-floating-blocks">
+<ul class="bx-menu-floating-blocks bx-menu-object-__object__ bx-clearfix">
     <bx_repeat:menu_items>
-        <li class="bx-def-round-corners __class_add__">
+        <li class="bx-def-round-corners bx-def-color-bg-hl-hover __class_add__">
             <a href="__link__" target="__target__" onclick="__onclick__">
                     <div class="bx-menu-floating-blocks-icon">
                         <bx_if:icon><i class="sys-icon __icon__"></i></bx_if:icon>
@@ -10,25 +10,10 @@
             </a>                
         </li>                
     </bx_repeat:menu_items>
-    <div class="bx-clear"></div>
 </ul>
 <script language="javascript">
-    $(document).ready(function () {        
-
+    $(document).ready(function () {
         // add default class to active menu items
         $('.bx-menu-floating-blocks > li.bx-menu-tab-active').not('.bx-def-color-bg-active').addClass('bx-def-color-bg-active');
-
-        // add default class for onhover effect
-        $('.bx-menu-floating-blocks')
-            .not('.bx-menu-floating-blocks-js-applied') // make sure to not bind events multiple times
-            .addClass('bx-menu-floating-blocks-js-applied') 
-            .find('li') // find all menu items
-            .bind('mouseenter mouseleave', function () { // bind events
-                $(this).toggleClass('bx-def-color-bg-hl');
-            }
-        );                
-
-        bx_center_content ('.bx-menu-floating-blocks', '.bx-menu-floating-blocks > li');
-
     });
 </script>

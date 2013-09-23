@@ -19,14 +19,14 @@
 * see license.txt file; if not, write to marketing@boonex.com
 ***************************************************************************/
 
-bx_import('BxDolTwigTemplate');
+bx_import('BxDolModuleTemplate');
 
 if ((int)phpversion() < 5)
     require_once(BX_DIRECTORY_PATH_MODULES . 'boonex/profiler/inc/fb4.php');
 else
     require_once(BX_DIRECTORY_PATH_MODULES . 'boonex/profiler/inc/fb5.php');
 
-class BxProfilerTemplate extends BxDolTwigTemplate {
+class BxProfilerTemplate extends BxDolModuleTemplate {
 
     var $_isAjaxOutput = false;
 
@@ -35,7 +35,7 @@ class BxProfilerTemplate extends BxDolTwigTemplate {
      */
     function BxProfilerTemplate(&$oConfig) {
         $oDb = null;
-        parent::BxDolTwigTemplate($oConfig, $oDb);
+        parent::BxDolModuleTemplate($oConfig, $oDb);
         $this->_isAjaxOutput = $this->_isAjaxRequest();
     }
 

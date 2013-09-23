@@ -210,6 +210,22 @@ class BxNotesNoteForms extends BxDolProfileForms {
         return $aContentInfo[BxNotesConfig::$FIELD_TEXT];
     }
 
+    /**
+     * @return main content text 
+     */
+    public function viewDataEntry ($iContentId) {
+
+        // get content data and profile info
+        list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
+        if (!$aContentInfo)
+            return MsgBox(_t('_bx_notes_txt_error_note_is_not_defined')); 
+
+        // check access
+        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->isAllowedView($aContentInfo)))
+            return MsgBox($sMsg);
+
+        return $this->_oModule->_oTemplate->entryText($aContentInfo);
+    }
 
 
     /**

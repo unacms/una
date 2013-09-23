@@ -69,14 +69,6 @@ class BxNotesModule extends BxDolModule {
     }
 
     /**
-     * @return edit note form block
-     */
-    public function serviceEntityEditBlock ($iContentId = 0) {
-        $s = $this->serviceEntityEdit($iContentId);
-        return array('content' => $s, 'menu' => 'bx_notes_view');
-    }
-
-    /**
      * @return delete note form string
      */
     public function serviceEntityDelete ($iContentId = 0) {
@@ -90,32 +82,16 @@ class BxNotesModule extends BxDolModule {
     }
 
     /**
-     * @return delete note form block
+     * A note's text with some additional controls, like menu
      */
-    public function serviceEntityDeleteBlock ($iContentId = 0) {
-        $s = $this->serviceEntityDelete($iContentId);
-        return array('content' => $s, 'menu' => 'bx_notes_view');
-    }
-
-    /**
-     * Just a note's text
-     */
-    public function serviceEntityText ($iContentId = 0) {
+    public function serviceEntityTextBlock ($iContentId = 0) {
         if (!$iContentId)
             $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
         if (!$iContentId)
             return false;
         bx_import('NoteForms', $this->_aModule);
         $oProfileForms = new BxNotesNoteForms($this);
-        return $oProfileForms->viewDataText((int)$iContentId);
-    }
-
-    /**
-     * A note's text with some additional controls, like menu
-     */
-    public function serviceEntityTextBlock ($iContentId = 0) {
-        $s = $this->serviceEntityText($iContentId);
-        return array('content' => $s, 'menu' => 'bx_notes_view');
+        return $oProfileForms->viewDataEntry((int)$iContentId);
     }
 
     public function serviceEntityInfo ($iContentId = 0) {
@@ -205,7 +181,7 @@ class BxNotesModule extends BxDolModule {
             $sValue = uri2title($sValue);
 */
 
-        if (CHECK_ACTION_RESULT_ALLOWED != $this->isAllowedBrowse()) {
+        if (CHECK_ACTION_RESULT_ALLOWED !== $this->isAllowedBrowse()) {
             $this->_oTemplate->displayAccessDenied ();
             return;
         }
@@ -245,7 +221,7 @@ class BxNotesModule extends BxDolModule {
     function _checkModeratorAccess ($isPerformAction = false) {
         // check moderator ACnoteL
         $aCheck = checkActionModule($this->_iProfileId, 'edit any note', $this->getName(), $isPerformAction); 
-        return $aCheck[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED;
+        return $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED;
     }
 
     /**
@@ -259,7 +235,7 @@ class BxNotesModule extends BxDolModule {
 
         // check ACL
         $aCheck = checkActionModule($this->_iProfileId, 'view note', $this->getName(), $isPerformAction);
-        if ($aCheck[CHECK_ACTION_RESULT] != CHECK_ACTION_RESULT_ALLOWED)
+        if ($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
             return $aCheck[CHECK_ACTION_MESSAGE];
 
         // TODO: check privacy
@@ -280,7 +256,7 @@ class BxNotesModule extends BxDolModule {
     function isAllowedAdd ($isPerformAction = false) {
         // check ACL
         $aCheck = checkActionModule($this->_iProfileId, 'create note', $this->getName(), $isPerformAction);
-        if ($aCheck[CHECK_ACTION_RESULT] != CHECK_ACTION_RESULT_ALLOWED)
+        if ($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
             return $aCheck[CHECK_ACTION_MESSAGE];
         return CHECK_ACTION_RESULT_ALLOWED;
     }
@@ -305,10 +281,10 @@ class BxNotesModule extends BxDolModule {
 
         // check ACL
         $aCheck = checkActionModule($this->_iProfileId, 'delete note', $this->getName(), $isPerformAction);
-        if ($aCheck[CHECK_ACTION_RESULT] != CHECK_ACTION_RESULT_ALLOWED)
-            return $aCheck[CHECK_ACTION_MESSAGE];
+        if ($aDataEntry[BxNotesConfig::$FIELD_AUTHOR] == $this->_iProfileId && $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED)
+            return CHECK_ACTION_RESULT_ALLOWED;
 
-        return CHECK_ACTION_RESULT_ALLOWED;
+        return _t('_sys_txt_access_denied');
     }
 
     /**
@@ -317,7 +293,7 @@ class BxNotesModule extends BxDolModule {
     function isAllowedSetThumb () {
         // check ACL
         $aCheck = checkActionModule($this->_iProfileId, 'set thumb', $this->getName(), false);
-        if ($aCheck[CHECK_ACTION_RESULT] != CHECK_ACTION_RESULT_ALLOWED)
+        if ($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
             return $aCheck[CHECK_ACTION_MESSAGE];
         return CHECK_ACTION_RESULT_ALLOWED;
     }

@@ -107,9 +107,9 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_persons_view', 'bx_persons', '_bx_persons_menu_set_title_view_person', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_persons_view', 'bx_persons', 'view-persons-profile', '_bx_persons_menu_item_title_system_view_person', '_bx_persons_menu_item_title_view_person', 'page.php?i=view-persons-profile&id={content_id}', '', '', 'user', '', 2147483647, 1, 0, 0),
-('bx_persons_view', 'bx_persons', 'edit-persons-profile', '_bx_persons_menu_item_title_system_edit_person', '_bx_persons_menu_item_title_edit_person', 'page.php?i=edit-persons-profile&id={content_id}', '', '', 'pencil', '', 2147483647, 1, 0, 1),
-('bx_persons_view', 'bx_persons', 'delete-persons-profile', '_bx_persons_menu_item_title_system_delete_person', '_bx_persons_menu_item_title_delete_person', 'page.php?i=delete-persons-profile&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 2);
+('bx_persons_view', 'bx_persons', 'view-persons-profile', '_bx_persons_menu_item_title_system_view_person', '_bx_persons_menu_item_title_view_person', 'page.php?i=view-persons-profile&id={content_id}', '', '', 'user', '', 0, 1, 0, 0),
+('bx_persons_view', 'bx_persons', 'edit-persons-profile', '_bx_persons_menu_item_title_system_edit_person', '_bx_persons_menu_item_title_edit_person', 'page.php?i=edit-persons-profile&id={content_id}', '', '', 'pencil', '', 0, 1, 0, 1),
+('bx_persons_view', 'bx_persons', 'delete-persons-profile', '_bx_persons_menu_item_title_system_delete_person', '_bx_persons_menu_item_title_delete_person', 'page.php?i=delete-persons-profile&id={content_id}', '', '', 'remove', '', 0, 1, 0, 2);
 
 
 -- ACL

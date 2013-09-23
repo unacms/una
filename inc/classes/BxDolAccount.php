@@ -281,7 +281,7 @@ class BxDolAccount extends BxDol {
      */
     static public function isAllowedCreate ($iProfileId, $isPerformAction = false) {
         $aCheck = checkActionModule($iProfileId, 'create account', 'system', $isPerformAction);
-        if ($aCheck[CHECK_ACTION_RESULT] != CHECK_ACTION_RESULT_ALLOWED)
+        if ($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
             return MsgBox($aCheck[CHECK_ACTION_MESSAGE]);
         return CHECK_ACTION_RESULT_ALLOWED;
     }
@@ -308,7 +308,7 @@ class BxDolAccount extends BxDol {
      */
     static public function isAllowedDelete ($iProfileId, $aContentInfo, $isPerformAction = false) {
         $aCheck = checkActionModule($iProfileId, 'delete account', 'system', $isPerformAction);
-        if ($aCheck[CHECK_ACTION_RESULT] != CHECK_ACTION_RESULT_ALLOWED)
+        if ($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
             return MsgBox($aCheck[CHECK_ACTION_MESSAGE]);
         return CHECK_ACTION_RESULT_ALLOWED;
     }

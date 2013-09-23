@@ -19,12 +19,12 @@
 * see license.txt file; if not, write to marketing@boonex.com
 ***************************************************************************/
 
-bx_import ('BxDolTwigTemplate');
+bx_import ('BxDolModuleTemplate');
 
-class BxSMTPTemplate extends BxDolTwigTemplate {
+class BxSMTPTemplate extends BxDolModuleTemplate {
     
 	function BxSMTPTemplate(&$oConfig, &$oDb) {
-	    parent::BxDolTwigTemplate($oConfig, $oDb);
+	    parent::BxDolModuleTemplate($oConfig, $oDb);
     }    
 }
 

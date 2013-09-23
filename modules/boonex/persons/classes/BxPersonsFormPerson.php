@@ -24,7 +24,8 @@ class BxPersonsFormPerson extends BxTemplFormView {
 
         bx_import('BxDolProfile');
         $oAccountProfile = BxDolProfile::getInstanceAccountProfile();
-        $this->_iAccountProfileId = $oAccountProfile->id();
+        if ($oAccountProfile)
+            $this->_iAccountProfileId = $oAccountProfile->id();
 
         $this->_oModule = BxDolModule::getInstance('bx_persons');
 
@@ -93,7 +94,7 @@ class BxPersonsFormPerson extends BxTemplFormView {
 
     function deleteGhost ($iFileId, $iContentId, $isRestoreOriginal = true) {
 
-        if (CHECK_ACTION_RESULT_ALLOWED != ($sMsg = $this->_oModule->isAllowedAdd()))
+        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->isAllowedAdd()))
             return $sMsg;
 
         bx_import('BxDolStorage');
@@ -111,7 +112,7 @@ class BxPersonsFormPerson extends BxTemplFormView {
 
     function discardGhost ($iFileId, $iContentId, $isRestoreOriginal = true) {
 
-        if (CHECK_ACTION_RESULT_ALLOWED != ($sMsg = $this->_oModule->isAllowedAdd()))
+        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->isAllowedAdd()))
             return $sMsg;
 
         bx_import('BxDolStorage');

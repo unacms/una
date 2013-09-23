@@ -9,12 +9,12 @@
  * @{
  */
 
-bx_import('BxDolTwigTemplate');
+bx_import('BxDolModuleTemplate');
 
 /*
  * Notes module representation.
  */
-class BxNotesTemplate extends BxDolTwigTemplate {
+class BxNotesTemplate extends BxDolModuleTemplate {
 
     /**
      * Constructor
@@ -76,6 +76,13 @@ class BxNotesTemplate extends BxDolTwigTemplate {
             ),
         );
 
+        return $this->parseHtmlByName($sTemplateName, $aVars);
+    }
+
+    function entryText ($aData, $sTemplateName = 'entry-text.html') {
+        $aVars = $aData;
+        $aVars['entry_title'] = $aData[BxNotesConfig::$FIELD_TITLE];
+        $aVars['entry_text'] = $aData[BxNotesConfig::$FIELD_TEXT];
         return $this->parseHtmlByName($sTemplateName, $aVars);
     }
 

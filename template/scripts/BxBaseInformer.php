@@ -19,11 +19,6 @@ class BxBaseInformer extends BxDolInformer {
 
     protected $_oTemplate;
 
-    protected $_aMapType2Icon = array(
-        BX_INFORMER_ALERT => 'exclamation col-red3',
-        BX_INFORMER_INFO => 'info col-blue2-dark',
-        BX_INFORMER_ERROR => 'ban-circle col-red1',
-    );
     protected $_aMapType2Class = array(
         BX_INFORMER_ALERT => 'bx-informer-msg-alert',
         BX_INFORMER_INFO => 'bx-informer-msg-info',
@@ -49,10 +44,8 @@ class BxBaseInformer extends BxDolInformer {
         if (!$this->_aMessages)
             return '';
 
-        foreach ($this->_aMessages as $sId => $a) {
+        foreach ($this->_aMessages as $sId => $a)
             $this->_aMessages[$sId]['class'] = $this->_aMapType2Class[$a['type']];
-            $this->_aMessages[$sId]['icon'] = $this->_aMapType2Icon[$a['type']];
-        }
 
         $this->_addJsCss();
         return $this->_oTemplate->parseHtmlByName('informer.html', array(

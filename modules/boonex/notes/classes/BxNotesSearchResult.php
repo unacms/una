@@ -9,9 +9,9 @@
  * @{
  */
 
-bx_import('BxDolTwigSearchResult');
+bx_import('BxTemplSearchResult');
 
-class BxNotesSearchResult extends BxDolTwigSearchResult {
+class BxNotesSearchResult extends BxTemplSearchResult {
 
     var $aCurrent = array(
         'name' => 'bx_notes',

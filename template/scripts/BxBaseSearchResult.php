@@ -12,6 +12,12 @@
 bx_import('BxDolSearch');
 class BxBaseSearchResult extends BxDolSearchResult {
 
+    public $isError;
+
+    protected $sBrowseUrl;
+    protected $sUnitTemplate = 'unit.html';
+    protected $sFilterName;
+
     protected $iDesignBoxTemplate = BX_DB_PADDING_DEF;
     protected $aPermalinks;
     protected $aConstants;
@@ -25,6 +31,10 @@ class BxBaseSearchResult extends BxDolSearchResult {
             bx_import('BxTemplFunctions');
             $this->oFunctions = BxTemplFunctions::getInstance();
         }
+    }
+
+    function getMain() {
+        // override this to return main module class
     }
 
     function isPermalinkEnabled() {
@@ -68,6 +78,11 @@ class BxBaseSearchResult extends BxDolSearchResult {
         if (!isset($_GET['searchMode']))
             $sCode = '<div id="page_block_'.$this->id.'">'.$sCode.'<div class="clear_both"></div></div>';
         return $sCode;
+    }
+
+    function displaySearchUnit ($aData) {
+        $oMain = $this->getMain();
+        return $oMain->_oTemplate->unit($aData, $this->sUnitTemplate);
     }
 
     function _transformData ($aUnit, $sTempl, $sCssHeader = '') {
@@ -170,32 +185,39 @@ EOF;
     }
 
     function showPagination($bAdmin = false, $bChangePage = true, $bPageReload = true) {
-        $sPageLink = $this->getCurrentUrl('browseAll', 0, '');
-        $aLinkAddon = $this->getLinkAddByPrams();
 
-        if ($aLinkAddon) {
-           foreach($aLinkAddon as $sValue)
-                $sPageLink .= $sValue;
-        }
-
-        if(!$this->id)
-            $this->id = 0;
-
-        $sLoadDynamicUrl = $this->id .', \'searchKeywordContent.php?searchMode=ajax&section[]=' . $this->aCurrent['name'] . $aLinkAddon['params'];
-        $sKeyword = bx_get('keyword');
-        if ($sKeyword !== false && mb_strlen($sKeyword) > 0)
-            $sLoadDynamicUrl .= '&keyword=' . rawurlencode($sKeyword);
+        $oMain = $this->getMain();
+        $oConfig = $oMain->_oConfig;
         bx_import('BxDolPaginate');
-        $oPaginate = new BxDolPaginate(
-            array(
-                'page_url' => $sPageLink,
-                'num' => $this->aCurrent['paginate']['num'],
-                'per_page' => $this->aCurrent['paginate']['perPage'],
-                'start' => $this->aCurrent['paginate']['start'],
-            ),
-            $bAdmin ? BxDolTemplateAdmin::getInstance() : BxDolTemplate::getInstance()
-        );
-        return '<div class="clear_both"></div>' . $oPaginate->getPaginate();
+        $sUrlStart = BX_DOL_URL_ROOT . $oConfig->getBaseUri() . $this->sBrowseUrl;
+        $sUrlStart .= (false === strpos($sUrlStart, '?') ? '?' : '&');
+
+        bx_import('BxTemplPaginate');
+        $oPaginate = new BxTemplPaginate(array(
+            'page_url' => $sUrlStart . 'start={start}&per_page={per_page}' . (false !== bx_get($this->sFilterName) ? '&' . $this->sFilterName . '=' . bx_get($this->sFilterName) : ''),
+            'num' => $this->aCurrent['paginate']['num'],
+            'per_page' => $this->aCurrent['paginate']['perPage'],
+            'start' => $this->aCurrent['paginate']['start'],
+        ));
+
+        return '<div class="clear_both"></div>'.$oPaginate->getPaginate();
+    }
+
+    function showPaginationAjax($sBlockId) {
+        $oMain = $this->getMain();
+        $oConfig = $oMain->_oConfig;
+        bx_import('BxDolPaginate');
+        $sUrlStart = BX_DOL_URL_ROOT . $oConfig->getBaseUri() . $this->sBrowseUrl;
+        $sUrlStart .= (false === strpos($sUrlStart, '?') ? '?' : '&');
+
+        $oPaginate = new BxDolPaginate(array(
+            'page_url' => 'javascript:void(0);',
+            'num' => $this->aCurrent['paginate']['num'],
+            'per_page' => $this->aCurrent['paginate']['perPage'],
+            'start' => $this->aCurrent['paginate']['start'],
+        ));
+
+        return $oPaginate->getSimplePaginate(false, -1, -1, false);
     }
 
     function getLinkAddByPrams ($aExclude = array()) {

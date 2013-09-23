@@ -607,7 +607,7 @@ function clear_xss($val) {
         $oConfig->set('Output.FlashCompat', 'true');
         $oConfig->set('HTML.FlashAllowFullScreen', 'true');
 
-        $oConfig->set('Filter.Custom', array (new HTMLPurifier_Filter_LocalMovie(), new HTMLPurifier_Filter_YouTube(), new HTMLPurifier_Filter_YoutubeIframe()));
+        $oConfig->set('Filter.Custom', array (new HTMLPurifier_Filter_YouTube(), new HTMLPurifier_Filter_YoutubeIframe()));
 
         $oDef = $oConfig->getHTMLDefinition(true);
         $oDef->addAttribute('a', 'target', 'Enum#_blank,_self,_target,_top');

@@ -167,7 +167,7 @@ class BxDolAcl extends BxDol implements iBxDolSingleton {
      * $aResult[CHECK_ACTION_MESSAGE] contains a message with detailed information about the result,
      * already processed by the language file
      *
-     * if $aResult[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED then this node contains
+     * if $aResult[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED then this node contains
      * an empty string
      *
      * The error messages themselves are stored in the language file. Additional variables are

@@ -24,10 +24,17 @@ class BxNotesMenuViewNote extends BxTemplMenu {
 
         $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
 
+        bx_import('BxDolModule');
         $this->_oModule = BxDolModule::getInstance('bx_notes');
         $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
         if ($this->_aContentInfo)
             $this->addMarkers(array('content_id' => $this->_aContentInfo['id']));
+    }
+
+    public function getCode () {
+        if (!bx_get_logged_profile_id())
+            return false;
+        return parent::getCode ();
     }
 
     /**
@@ -43,9 +50,20 @@ class BxNotesMenuViewNote extends BxTemplMenu {
         if ($this->_aContentInfo['author'] == $iProfileId)
             return true;
 
-        // all links are visible for admin/moderator
-        $aCheck = checkActionModule($iProfileId, 'edit any note', 'bx_notes');
-        if ($aCheck[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED)
+        $sFuncCheckAccess = false;
+        switch ($a['name']) {
+            case 'view-note':
+                $sFuncCheckAccess = 'isAllowedView';
+                break;
+            case 'edit-note':
+                $sFuncCheckAccess = 'isAllowedEdit';
+                break;
+            case 'delete-note':
+                $sFuncCheckAccess = 'isAllowedDelete';
+                break;
+        }
+
+        if ($sFuncCheckAccess && CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->$sFuncCheckAccess($this->_aContentInfo))
             return true;
 
         // default visible settings

@@ -1,8 +1,0 @@
-TODO: remove or replace according to new design
-
-The following are used, but should be replaces or deleted too:
-mm_item_arrow_bg.png logo.png 
-
-The following are used for login form for now:
-admin_login_admin_logo.png admin_login_bg.png admin_login_button.png admin_login_icon.png admin_login_input.png admin_login_input_long.png 
-

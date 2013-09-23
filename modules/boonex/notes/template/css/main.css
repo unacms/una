@@ -14,3 +14,10 @@
 .bx-notes-unit-thumb {
     float:right;
 }
+
+/* enity view */
+
+.bx-notes-entity-content * {
+    max-width:100%;
+    overflow:hidden;
+}

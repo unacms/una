@@ -23,7 +23,7 @@ $aConfig = array(
     'update_url' => '',
 
     'compatible_with' => array(
-        '7.0.6'
+        '8.0.x'
     ),
 
     /**

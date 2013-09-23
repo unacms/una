@@ -201,7 +201,7 @@
 
 /* colors */
 .bx-def-color-bg-page {
-    background-color:#f2f2f2;
+    background-color:blue;
     background-image:url(../images/bg-page.png);
 }
 .bx-def-color-bg-block {
@@ -216,6 +216,7 @@
 
 .bx-def-color-bg-hl,
 .bx-def-color-bg-hl-hover:hover {
+    background-color: rgb(220, 220, 255);
     background-color: rgba(200, 200, 255, 0.2);
 
     -moz-box-shadow: inset 0px 0px -1px 0px rgba(200, 200, 255, 0.2);

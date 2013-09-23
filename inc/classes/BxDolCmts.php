@@ -391,14 +391,14 @@ class BxDolCmts extends BxDol
     {
         $iId = $this->_getAuthorId();
         $check_res = checkAction($iId, $iAction, $isPerformAction);
-        return $check_res[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED;
+        return $check_res[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED;
     }
 
     function checkActionErrorMsg ($iAction)
     {
         $iId = $this->_getAuthorId();
         $check_res = checkAction($iId, $iAction);
-        return $check_res[CHECK_ACTION_RESULT] != CHECK_ACTION_RESULT_ALLOWED ? $check_res[CHECK_ACTION_MESSAGE] : '';
+        return $check_res[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $check_res[CHECK_ACTION_MESSAGE] : '';
     }
 
     function isRateAllowed ($isPerformAction = false)

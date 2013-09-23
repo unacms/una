@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources name="ru" flag="ru" title="Russian">
-	<string name="_bx_snd_wgt_cpt"><![CDATA[Sundance]]></string>
-	<string name="_bx_snd_stg_cpt_type"><![CDATA[Sundance]]></string>
-	<string name="_bx_snd_stg_cpt_category_system"><![CDATA[Общие]]></string>
-	<string name="_bx_snd_lmi_cpt_general"><![CDATA[Общие]]></string>
-	<string name="_bx_snd_lmi_cpt_colors"><![CDATA[Цвета]]></string>
-	<string name="_bx_snd_lmi_cpt_fonts"><![CDATA[Шрифты]]></string>
-</resources>

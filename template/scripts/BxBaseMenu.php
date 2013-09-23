@@ -33,10 +33,7 @@ class BxBaseMenu extends BxDolMenu {
      */
     public function getCode () {
 
-        $aVars = array (
-            'object' => $this->_sObject,
-            'bx_repeat:menu_items' => $this->_getMenuItems (),
-        );
+        $aVars = $this->_getTemplateVars ();
 
         if (empty($aVars['bx_repeat:menu_items']))
             return false;
@@ -44,6 +41,17 @@ class BxBaseMenu extends BxDolMenu {
         $this->_addJsCss();
 
         return $this->_oTemplate->parseHtmlByName($this->_aObject['template'], $aVars);
+    }
+
+    /** 
+     * Get template variables array
+     * @return array
+     */
+    protected function _getTemplateVars () {
+        return array (
+            'object' => $this->_sObject,
+            'bx_repeat:menu_items' => $this->_getMenuItems (),
+        );
     }
 
     /** 
