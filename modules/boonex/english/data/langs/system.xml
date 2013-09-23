@@ -3383,7 +3383,7 @@ More info about URI DNSBL: <br />
     <string name="_sys_txt_account_pending"><![CDATA[Your account is pending approval, please wait until it is activated.]]></string>
     <string name="_sys_txt_account_suspended"><![CDATA[Your account is suspended.]]></string>
     <string name="_sys_txt_account_already_created"><![CDATA[Account is already created.]]></string>
-    <string name="_sys_txt_account_profile_context_changed_success"><![CDATA[Current profile has beed succesfully changed to: <b>{0}</b>]]></string>
+    <string name="_sys_txt_account_profile_context_changed_success"><![CDATA[Current profile has been succesfully changed to: <b>{0}</b>]]></string>
     <string name="_sys_txt_account_profile_context_change_suggestion"><![CDATA[This is your profile, you can <a href="{0}">change your current profile</a> to this profile]]></string>
 
     <string name="_sys_txt_error_account_creation"><![CDATA[Account creation failed]]></string>
