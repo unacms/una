@@ -300,15 +300,11 @@ class BxBaseCmtsView extends BxDolCmts {
 			);
     	}
 
-    	$sContent = $oTemplate->parseHtmlByName('comment_pb_list.html', array(
+    	bx_import('BxTemplStudioFunctions');
+        $sContent = BxTemplStudioFunctions::getInstance()->transBox($oTemplate->parseHtmlByName('comment_pb_list.html', array(
     		'style_prefix' => $this->_sStylePrefix,
     		'bx_repeat:list' => $aTmplUsers
-    	));
-
-    	bx_import('BxTemplStudioFunctions');
-        $sContent = BxTemplStudioFunctions::getInstance()->transBox($oTemplate->parseHtmlByName('comment_manage.html', array(
-        	'content' => $sContent
-        )));
+    	)));
 
         return $oTemplate->parseHtmlByName('comment_plused_by.html', array(
         	'style_prefix' => $this->_sStylePrefix,

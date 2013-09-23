@@ -193,10 +193,11 @@
     }
 
     /*--- Comment Plused By ---*/
-    div.cmt-pb-list {
-		max-height: 200px;
-    	min-width: 185px;
-    	overflow: auto;
+    div.cmt-pb-list {}
+    div.cmt-pb-list-cnt {
+    	max-height: 200px;
+    	min-width: 195px;
+		overflow: auto;
     }
     div.cmt-pb-list div.bx-persons-unit {
 		float: none;
