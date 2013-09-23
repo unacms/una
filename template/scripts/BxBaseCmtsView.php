@@ -220,6 +220,7 @@ class BxBaseCmtsView extends BxDolCmts {
         return $oTemplate->parseHtmlByName('comment.html', array(
         	'system' => $this->_sSystem,
         	'style_prefix' => $this->_sStylePrefix,
+        	'js_object' => $this->_sJsObjName,
         	'id' => $r['cmt_id'],
         	'class' => $sClass,
         	'bx_if:show_icon' => array(
@@ -255,18 +256,11 @@ class BxBaseCmtsView extends BxDolCmts {
         		'cmt_id' => $r['cmt_id']
         	)),
         	'ago' => $r['cmt_ago'],
-        	'bx_if:show_rate_count' => array(
-        		'condition' => (int)$r['cmt_rate'] > 0,
-        		'content' => array(
-        			'style_prefix' => $this->_sStylePrefix,
-        			'js_object' => $this->_sJsObjName,
-        			'id' => $r['cmt_id'],
-        			'points' => _t($r['cmt_rate'] == 1 || $r['cmt_rate'] == -1 ? '_N_point' : '_N_points', $r['cmt_rate']),
-        	
-		        	'points_num' => $r['cmt_rate'],
-		        	'points_txt' => _t($r['cmt_rate'] == 1 || $r['cmt_rate'] == -1 ? '_cmt_point' : '_cmt_points'),
-        		)
+        	'bx_if:hide_rate_count' => array(
+        		'condition' => (int)$r['cmt_rate'] <= 0,
+        		'content' => array()
         	),
+        	'points' => _t(in_array($r['cmt_rate'], array(-1, 0, 1)) ? '_N_point' : '_N_points', $r['cmt_rate']),
         	'text' => $sText,
         	'bx_if:show_more' => array(
         		'condition' => !empty($sTextMore),
@@ -396,6 +390,7 @@ class BxBaseCmtsView extends BxDolCmts {
 	        )));
         }
 
+        $bRated = (int)$a['cmt_rated'] > 0;
         return $oTemplate->parseHtmlByName('comment_actions.html', array(
         	'id' => $a['cmt_id'],
         	'style_prefix' => $this->_sStylePrefix,
@@ -420,7 +415,15 @@ class BxBaseCmtsView extends BxDolCmts {
         		'content' => array(
         			'js_object' => $this->_sJsObjName,
         			'style_prefix' => $this->_sStylePrefix,
-        			'id' => $a['cmt_id']
+        			'id' => $a['cmt_id'],
+        			'bx_if:hide_rate_plus' => array(
+        				'condition' => $bRated,
+        				'content' => array()
+        			),
+        			'bx_if:hide_rate_minus' => array(
+        				'condition' => !$bRated,
+        				'content' => array()
+        			)
         		)
         	),
         	'bx_if:show_manage' => array(

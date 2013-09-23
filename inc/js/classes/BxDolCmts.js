@@ -212,15 +212,15 @@ BxDolCmts.prototype.cmtRate = function(e, iCmtId, iRate)
         function (s) {
             $this._loadingInContent (e, false);
 
-            if(jQuery.trim(s).length)
+            if(jQuery.trim(s).length) {
                 alert(s);
-            else if(iRate == 1) {
-                var oPoints = $(e).parents('.cmt:first').find('.cmt-points span');
-                oPoints.html(parseInt(oPoints.html()) + iRate);
+                return;
             }
-            else if(iRate == -1) {
-                $this.cmtReload(iCmtId);
-            }
+
+            var oPoints = $(e).parents('.cmt:first').find('.cmt-points span');
+            oPoints.html(parseInt(oPoints.html()) + iRate).parents('.cmt-points-wrp:first').bx_anim(parseInt(oPoints.html()) > 0 ? 'show' : 'hide');
+
+            $(e).hide().siblings('.cmt-comment-vote:hidden').show();
         }
     );
 };

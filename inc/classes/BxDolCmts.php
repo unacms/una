@@ -30,6 +30,9 @@ define('BX_CMT_PFP_TOP', 'top');
 define('BX_CMT_PFP_BOTTOM', 'bottom');
 define('BX_CMT_PFP_BOTH', 'both');
 
+define('BX_CMT_RATE_VALUE_PLUS', 1);
+define('BX_CMT_RATE_VALUE_MINUS', -1);
+
 
 /** 
  * @page objects 
@@ -660,17 +663,18 @@ class BxDolCmts extends BxDol
     }
 
     function actionCmtRate () {
-        if (!$this->isEnabled()) return _t('_Error occured');
-        if (!$this->isRatable()) return _t('_Error occured');
-        if (!$this->isRateAllowed()) return _t('_Access denied');
+        if (!$this->isEnabled() || !$this->isRatable()) 
+        	return _t('_Error occured');
+        if (!$this->isRateAllowed()) 
+        	return _t('_Access denied');
 
         $iCmtId = bx_process_input($_REQUEST['Cmt'], BX_DATA_INT);
         $iRate = bx_process_input($_REQUEST['Rate'], BX_DATA_INT);
 
         if($iRate >= 1)
-            $iRate = 1;
+            $iRate = BX_CMT_RATE_VALUE_PLUS;
         elseif($iRate <= -1)
-            $iRate = -1;
+            $iRate = BX_CMT_RATE_VALUE_MINUS;
         else
             return _t('_Error occured');
 

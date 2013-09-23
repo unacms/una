@@ -224,18 +224,35 @@ class BxDolCmtsQuery extends BxDolDb
 
     function rateComment ($iSystemId, $iCmtId, $iRate, $iAuthorId, $sAuthorIp)
     {
+    	$iCount = 0;
         $iTimestamp = time();
-        $sQuery = $this->prepare("INSERT IGNORE INTO {$this->_sTableTrack} SET
-            `cmt_system_id` = ?,
-            `cmt_id` = ?,
-            `cmt_rate` = ?,
-            `cmt_rate_author_id` = ?,
-            `cmt_rate_author_nip` = INET_ATON(?),
-            `cmt_rate_ts` = ?", $iSystemId, $iCmtId, $iRate, $iAuthorId, $sAuthorIp, $iTimestamp);
-        if ($this->query($sQuery))
-        {
-            $sQuery = $this->prepare("UPDATE {$this->_sTable} SET `cmt_rate` = `cmt_rate` + ?, `cmt_rate_count` = `cmt_rate_count` + 1 WHERE `cmt_id` = ? LIMIT 1", $iRate, $iCmtId);
+
+        if($iRate == BX_CMT_RATE_VALUE_PLUS) {
+        	$iCount = 1;
+	        $sQuery = $this->prepare("INSERT IGNORE INTO `{$this->_sTableTrack}` SET
+	            `cmt_system_id` = ?,
+	            `cmt_id` = ?,
+	            `cmt_rate` = ?,
+	            `cmt_rate_author_id` = ?,
+	            `cmt_rate_author_nip` = INET_ATON(?),
+	            `cmt_rate_ts` = ?", $iSystemId, $iCmtId, $iRate, $iAuthorId, $sAuthorIp, $iTimestamp);
+        }
+        else if($iRate == BX_CMT_RATE_VALUE_MINUS) {
+        	$iCount = -1;
+        	$sQuery = $this->prepare("DELETE FROM `{$this->_sTableTrack}` WHERE
+	            `cmt_system_id` = ? AND 
+	            `cmt_id` = ? AND 
+	            `cmt_rate_author_id` = ?", $iSystemId, $iCmtId, $iAuthorId);
+        }
+
+        if ($this->query($sQuery)) {
+            $sQuery = $this->prepare("UPDATE `{$this->_sTable}` SET 
+            		`cmt_rate` = `cmt_rate` + ?, 
+            		`cmt_rate_count` = `cmt_rate_count` + ? 
+            	WHERE `cmt_id` = ? 
+            	LIMIT 1", $iRate, $iCount, $iCmtId);
             $this->query($sQuery);
+
             return true;
         }
 
