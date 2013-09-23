@@ -1162,8 +1162,8 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_buried"><![CDATA[buried]]></string>
 	<string name="_toggle"><![CDATA[toggle]]></string>
 	<string name="_see_more"><![CDATA[see more]]></string>
-	<string name="_cmt_point"><![CDATA[plus]]></string>
-	<string name="_cmt_points"><![CDATA[pluses]]></string>
+	<string name="_N_point"><![CDATA[<span>{0}</span> plus]]></string>
+	<string name="_N_points"><![CDATA[<span>{0}</span> pluses]]></string>
 	<string name="_Plus"><![CDATA[Plus]]></string>
 	<string name="_Plused_by_popup"><![CDATA[Plused by]]></string>
 	<string name="_Minus"><![CDATA[Minus]]></string>

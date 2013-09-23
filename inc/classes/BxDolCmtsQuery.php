@@ -242,6 +242,12 @@ class BxDolCmtsQuery extends BxDolDb
         return false;
     }
 
+    function getRatedBy ($iSystemId, $iCmtId)
+    {
+    	$sQuery = $this->prepare("SELECT `cmt_rate_author_id` FROM `{$this->_sTableTrack}` WHERE `cmt_system_id`=? AND `cmt_id`=?", $iSystemId, $iCmtId);
+    	return $this->getColumn($sQuery);
+    }
+
     function deleteAuthorComments ($iAuthorId)
     {
         $isDelOccured = 0;

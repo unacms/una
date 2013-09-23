@@ -138,6 +138,11 @@
     span.cmt-reply-to span.bullet:first-child {
 		display: none;
     }
+    span.cmt-reply-to a.cmt-points span {
+		display: inline;
+    	float: none;
+    }
+    
     span.cmt-posted-ago {
         text-transform: lovercase;
     }
@@ -179,13 +184,11 @@
     /*--- Comment Actions ---*/
 	div.cmt-actions {
 		position: relative;
+		min-height: 22px;
 		text-align: right;
 	}
 	div.cmt-actions a {
 		text-decoration: none;
-    }
-    div.cmt-actions a:hover {
-		color: #006699;
     }
     div.cmt-actions i.sys-icon {
     	font-size: 1.5em;
@@ -193,6 +196,17 @@
     div.cmt-comment-manage {
     	position: relative;
     	text-align: left;
+    }
+
+    /*--- Comment Plused By ---*/
+    div.cmt-pb-list {
+		max-height: 200px;
+    	min-width: 185px;
+    	overflow: auto;
+    }
+    div.cmt-pb-list div.bx-persons-unit {
+		float: none;
+    	margin-right: 0px;
     }
 
     /*--- Add Comment/Reply Styles ---*/
@@ -209,7 +223,8 @@
     	margin-bottom: 20px;
 	}
     li.cmt div.cmt-reply-bottom {
-    	margin-top: 20px;
+    	margin-top: 0px;
+    	margin-bottom: 20px;
     }
 	div.cmt-post-reply {
         position: relative;

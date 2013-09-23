@@ -1,15 +1,15 @@
 <div class="__style_prefix__-actions bx-def-margin-thd-top">
 	<bx_if:show_reply>
-		<a class="__style_prefix__-comment-reply bx-def-margin-sec-left-auto bx-def-font-grayed" href="javascript:void(0)" onclick="__js_object__.toggleReply(this, __id__); return false;" title="__text__"><i class="sys-icon reply"></i></a>
+		<a class="__style_prefix__-comment-reply bx-def-margin-sec-left-auto" href="javascript:void(0)" onclick="__js_object__.toggleReply(this, __id__); return false;" title="__text__"><i class="sys-icon reply"></i></a>
 	</bx_if:show_reply>
 	<bx_if:show_rate>
-		<a class="__style_prefix__-comment-vote bx-def-margin-sec-left-auto bx-def-font-grayed" title="<bx_text:_Plus />" href="javascript:void(0)" onclick="__js_object__.cmtRate(this, __id__, 1)" title="<bx_text:_Plus />"><i class="sys-icon plus"></i></a>
+		<a class="__style_prefix__-comment-vote bx-def-margin-sec-left-auto" title="<bx_text:_Plus />" href="javascript:void(0)" onclick="__js_object__.cmtRate(this, __id__, 1)" title="<bx_text:_Plus />"><i class="sys-icon plus"></i></a>
 		<!--
-		<a class="__style_prefix__-comment-vote bx-def-margin-sec-left-auto bx-def-font-grayed" title="<bx_text:_Minus />" href="javascript:void(0)" onclick="__js_object__.cmtRate(this, __id__, -1)" title="<bx_text:_Minus />"><i class="sys-icon minus"></i></a>
+		<a class="__style_prefix__-comment-vote bx-def-margin-sec-left-auto" title="<bx_text:_Minus />" href="javascript:void(0)" onclick="__js_object__.cmtRate(this, __id__, -1)" title="<bx_text:_Minus />"><i class="sys-icon minus"></i></a>
 		-->
 	</bx_if:show_rate>
 	<bx_if:show_manage>
-		<a class="__style_prefix__-comment-manage bx-def-margin-sec-left-auto bx-def-font-grayed" href="javascript:void(0)" onclick="__js_object__.toggleManagePopup(this, __id__); return false;" title="<bx_text:_Manage />"><i class="sys-icon cog"></i></a>
+		<a class="__style_prefix__-comment-manage bx-def-margin-sec-left-auto" href="javascript:void(0)" onclick="__js_object__.toggleManagePopup(this, __id__); return false;" title="<bx_text:_Manage />"><i class="sys-icon cog"></i></a>
 		<div id="__popup_id__" class="__style_prefix__-comment-manage" style="display:none;">__popup_text__</div>
 	</bx_if:show_manage>
 </div>

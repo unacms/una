@@ -261,6 +261,8 @@ class BxBaseCmtsView extends BxDolCmts {
         			'style_prefix' => $this->_sStylePrefix,
         			'js_object' => $this->_sJsObjName,
         			'id' => $r['cmt_id'],
+        			'points' => _t($r['cmt_rate'] == 1 || $r['cmt_rate'] == -1 ? '_N_point' : '_N_points', $r['cmt_rate']),
+        	
 		        	'points_num' => $r['cmt_rate'],
 		        	'points_txt' => _t($r['cmt_rate'] == 1 || $r['cmt_rate'] == -1 ? '_cmt_point' : '_cmt_points'),
         		)
@@ -287,6 +289,35 @@ class BxBaseCmtsView extends BxDolCmts {
 	function getForm($iCmtParentId, $sText, $sFunction)
 	{
         return $this->_getPostReplyForm($iCmtParentId, $sText, $sFunction);
+    }
+
+    function getPlusedBy($iCmtId)
+    {
+    	$oTemplate = BxDolTemplate::getInstance();
+
+    	$aTmplUsers = array();
+
+    	$aUserIds = $this->_oQuery->getRatedBy($this->_aSystem['system_id'], $iCmtId);
+    	foreach($aUserIds as $iUserId) {
+    		list($sUserName, $sUserUrl, $sUserIcon, $sUserUnit) = $this->_getAuthorInfo($iUserId);
+			$aTmplUsers[] = array('user_unit' => $sUserUnit);
+    	}
+
+    	$sContent = $oTemplate->parseHtmlByName('comment_pb_list.html', array(
+    		'style_prefix' => $this->_sStylePrefix,
+    		'bx_repeat:list' => $aTmplUsers
+    	));
+
+    	bx_import('BxTemplStudioFunctions');
+        $sContent = BxTemplStudioFunctions::getInstance()->transBox($oTemplate->parseHtmlByName('comment_manage.html', array(
+        	'content' => $sContent
+        )));
+
+        return $oTemplate->parseHtmlByName('comment_plused_by.html', array(
+        	'style_prefix' => $this->_sStylePrefix,
+        	'id' => $this->_sSystem . '-plused-by' . $iCmtId,
+        	'content' => $sContent
+        ));
     }
 
     /**
@@ -385,7 +416,7 @@ class BxBaseCmtsView extends BxDolCmts {
         		)
         	),
         	'bx_if:show_rate' => array(
-				'condition' => $this->isRatable(),
+				'condition' => $this->isRatable() && $this->isRateAllowed(),
         		'content' => array(
         			'js_object' => $this->_sJsObjName,
         			'style_prefix' => $this->_sStylePrefix,

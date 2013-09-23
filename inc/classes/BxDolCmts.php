@@ -495,8 +495,7 @@ class BxDolCmts extends BxDol
            return '';
 
         $iCmtId= isset($_REQUEST['CmtId']) ? bx_process_input($_REQUEST['CmtId'], BX_DATA_INT) : 0;
-
-        return 'list will be here';
+        return $this->getPlusedBy($iCmtId);
     }
 
     function actionCmtsGet () {
@@ -720,7 +719,8 @@ class BxDolCmts extends BxDol
 		return array(
 			$oProfile->getDisplayName(), 
 			$oProfile->getUrl(), 
-			$oProfile->getIcon()
+			$oProfile->getIcon(),
+			$oProfile->getUnit()
 		);
     }
 

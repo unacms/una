@@ -356,8 +356,15 @@ BxDolCmts.prototype.togglePlusedByPopup = function(oLink, iCmtId) {
         oData,
         function (s) {
 			$this._loadingInContent(oLink, false);
-			
-			alert(s);
+
+			var oPopup = $(s).hide(); 
+
+	    	$('#' + oPopup.attr('id')).remove();
+	        oPopup.prependTo('body').dolPopup({
+	        	pointer:{
+	    			el:$(oLink)
+	    		}
+	        });
         }
 	);
 };
