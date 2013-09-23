@@ -257,6 +257,7 @@
             
             if (o.pointer != false) {                
                 
+                var yOffset = 3;
                 var ePointAt = 'string' == o.pointer.el ? $(o.pointer.el) : o.pointer.el;
                 if (!ePointAt)
                     ePointAt = $('body');
@@ -270,21 +271,21 @@
 
                 $el.position({
                     of: ePointAt,
-                    my: o.pointer.align + '+' + parseInt(aOffset[0]) + ' top+' + parseInt(aOffset[1] - 0),
+                    my: o.pointer.align + '+' + parseInt(aOffset[0]) + ' top+' + yOffset + '+' + parseInt(aOffset[1] - 0),
                     at: o.pointer.align + ' bottom',
                     collision: 'flip none'
                 });
 
                 $el.find('.bx-popup-box-pointer').css('display', 'block').position({
                     of: ePointAt,
-                    my: 'center+' + (parseInt(aOffsetPointer[0]) + parseInt(aOffset[0])) + ' top+' + (parseInt(aOffsetPointer[1]) + parseInt(aOffset[1]) + 0),
+                    my: 'center+' + (parseInt(aOffsetPointer[0]) + parseInt(aOffset[0])) + ' top+' + yOffset + '+' + (parseInt(aOffsetPointer[1]) + parseInt(aOffset[1]) + 0),
                     at: 'center bottom'
                 });
 
                 $(window).on('resize.popupPointer', function() {
                     $el.position({
                         of: ePointAt,
-                        my: o.pointer.align + '+' + parseInt(aOffset[0]) + ' top+' + parseInt(aOffset[1]),
+                        my: o.pointer.align + '+' + parseInt(aOffset[0]) + ' top+' + yOffset + '+' + parseInt(aOffset[1]),
                         at: o.pointer.align + ' bottom',
                         collision: 'flip none'
                     });
