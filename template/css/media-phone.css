@@ -8,6 +8,26 @@
     display:block;
 }
 
+
+.bx-def-constraint-all *,
+.bx-def-constraint-list ol, .bx-def-constraint-list ul,
+.bx-def-constraint-pre pre,
+.bx-def-constraint-object object,
+.bx-def-constraint-iframe iframe,
+.bx-def-constraint-img img {
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+
+    max-width:300px !important;
+    overflow:hidden !important;
+}
+.bx-def-constraint-pre pre {
+    overflow:scroll !important;
+}
+
+
 /* default.css */ 
 
 .bx-def-page-width {

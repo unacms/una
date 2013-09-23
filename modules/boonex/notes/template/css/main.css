@@ -17,7 +17,7 @@
 
 /* enity view */
 
-.bx-notes-entity-content * {
-    max-width:100%;
-    overflow:hidden;
+.bx-notes-entity-content > p {
+    max-width:95% !important;
+    overflow:scroll !important;
 }

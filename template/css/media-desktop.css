@@ -1,10 +1,10 @@
-@media (min-width:520px) and (max-width:1024px) {
+@media (min-width:1024px) {
 
 
-.bx-def-media-tablet-hide {
+.bx-def-media-desktop-hide {
     display:none;
 }
-.bx-def-media-tablet-show-block {
+.bx-def-media-desktop-show-block {
     display:block;
 }
 
@@ -20,18 +20,11 @@
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 
-    max-width:500px !important;
+    max-width:900px !important;
     overflow:hidden !important;
 }
 .bx-def-constraint-pre pre {
     overflow:scroll !important;
-}
-
-
-/* default.css */
-
-.bx-def-page-width {
-    width:auto;
 }
 
 
