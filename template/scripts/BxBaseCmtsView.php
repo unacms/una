@@ -294,7 +294,10 @@ class BxBaseCmtsView extends BxDolCmts {
     	$aUserIds = $this->_oQuery->getRatedBy($this->_aSystem['system_id'], $iCmtId);
     	foreach($aUserIds as $iUserId) {
     		list($sUserName, $sUserUrl, $sUserIcon, $sUserUnit) = $this->_getAuthorInfo($iUserId);
-			$aTmplUsers[] = array('user_unit' => $sUserUnit);
+			$aTmplUsers[] = array(
+				'style_prefix' => $this->_sStylePrefix,
+				'user_unit' => $sUserUnit
+			);
     	}
 
     	$sContent = $oTemplate->parseHtmlByName('comment_pb_list.html', array(
