@@ -299,6 +299,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
             'general.css',
             'icons.css',
             'colors.css',
+            'media-desktop.css',
             'media-tablet.css',
             'media-phone.css',
             'media-print.css',
