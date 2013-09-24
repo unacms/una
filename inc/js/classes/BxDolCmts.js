@@ -349,6 +349,12 @@ BxDolCmts.prototype.togglePlusedByPopup = function(oLink, iCmtId) {
     oData['action'] = 'PlusedByGet';
     oData['CmtId'] = iCmtId;
 
+    var oPopup = $(".bx-popup-applied:visible");
+    if(oPopup.length) {
+    	oPopup.dolPopupHide();
+    	return;
+    }
+
 	$this._loadingInContent(oLink, true);
 
 	jQuery.post (
