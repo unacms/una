@@ -171,6 +171,12 @@
     	top: -5px;
 		border-bottom-color: #ffffff;
     }
+    div.cmt-cont .cmt-post-reply .bx-form-element-wrapper {
+		margin-top: 10px;
+    }
+	div.cmt-cont .cmt-post-reply .bx-form-element-wrapper:first-child {
+		margin-top: 0px;
+    }
     span.cmt-body-see-more a {
 		font-weight: bold;
     }
