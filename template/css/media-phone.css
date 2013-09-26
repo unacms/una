@@ -1,4 +1,4 @@
-@media (max-width:520px) {
+@media (max-width:720px) {
 
 
 .bx-def-media-phone-hide {
@@ -34,5 +34,15 @@
     width:auto;
 }
 
+/* page layouts */
+
+.bx-layout-col {
+    float:none !important;
+    width:auto !important;
+}
+
+.bx-layout-cell {
+    padding:0 !important;
+}
 
 } /* @media end */
