@@ -260,7 +260,7 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields {
         }
         else {
             bx_import('BxTemplStudioFunctions');
-            $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-form-field-show-to-popup', _t('_adm_form_txt_field_show_to_popup', _t($aField['caption'])), $this->_oTemplate->parseHtmlByName('form_add_field.html', array(
+            $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-form-field-show-to-popup', _t('_adm_form_txt_field_show_to_popup', _t($aField['caption_system'])), $this->_oTemplate->parseHtmlByName('form_add_field.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
                 'form' => $oForm->getCode(true),
                 'object' => $this->_sObject,

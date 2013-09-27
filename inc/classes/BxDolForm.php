@@ -891,6 +891,15 @@ class BxDolForm extends BxDol {
         return BxDolForm::getSubmittedValue($this->aParams['db']['submit_name'], $this->aFormAttrs['method'], $this->_aSpecificValues) ? true : false;
     }
 
+    function setId ($sId) {
+    	$this->id = $sId;
+    	$this->aFormAttrs['id'] = $sId;
+    }
+
+    function setName($sName) {
+    	$this->aFormAttrs['name'] = $sName;
+    }
+
     function setValid ($isValid) {
         $this->_isValid = $isValid;
     }
@@ -1130,7 +1139,7 @@ class BxDolFormChecker {
                     continue;
 
                 ++$iErrors;
-                $aInputs[$k]['error'] = sprintf(_t("_sys_spam_detected"), BX_DOL_URL_ROOT . 'contact.php');
+                $aInputs[$k]['error'] = _t('_sys_spam_detected', BX_DOL_URL_ROOT . 'contact.php');
 
             }
         }

@@ -123,7 +123,7 @@ CREATE TABLE `sys_objects_categories` (
 
 CREATE TABLE `sys_objects_cmts` (
   `ID` int(10) unsigned NOT NULL auto_increment,
-  `ObjectName` varchar(50) NOT NULL,
+  `Name` varchar(50) NOT NULL,
   `TableCmts` varchar(50) NOT NULL,
   `TableTrack` varchar(50) NOT NULL,
   `CharsPostMin` int(10) NOT NULL,
@@ -983,9 +983,42 @@ CREATE TABLE `sys_images` (
   UNIQUE KEY `remote_id` (`remote_id`)
 );
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sys_images_cmts`
+--
+CREATE TABLE IF NOT EXISTS `sys_images_cmts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `profile_id` int(10) unsigned NOT NULL,
+  `remote_id` varchar(255) NOT NULL,
+  `path` varchar(255) NOT NULL,
+  `file_name` varchar(255) NOT NULL,
+  `mime_type` varchar(128) NOT NULL,
+  `ext` varchar(32) NOT NULL,
+  `size` int(11) NOT NULL,
+  `added` int(11) NOT NULL,
+  `modified` int(11) NOT NULL,
+  `private` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `remote_id` (`remote_id`)
+);
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `sys_images_cmts2entries`
+--
+CREATE TABLE IF NOT EXISTS `sys_images_cmts2entries` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `system_id` int(11) NOT NULL DEFAULT '0',
+  `cmt_id` int(11) NOT NULL DEFAULT '0',
+  `image_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `image` (`system_id`,`cmt_id`,`image_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
 
 CREATE TABLE `sys_injections` (
   `id` int(11) unsigned NOT NULL auto_increment,
@@ -999,7 +1032,7 @@ CREATE TABLE `sys_injections` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
-
+-- --------------------------------------------------------
 
 CREATE TABLE `sys_injections_admin` (
   `id` int(11) unsigned NOT NULL auto_increment,
@@ -1267,7 +1300,8 @@ CREATE TABLE IF NOT EXISTS `sys_objects_storage` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
-('sys_images', 'Local', '', 360, 2592000, 0, 'sys_images', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0);
+('sys_images', 'Local', '', 360, 2592000, 0, 'sys_images', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
+('sys_images_cmts', 'Local', '', 360, 2592000, 3, 'sys_images_cmts', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0);
 
 CREATE TABLE IF NOT EXISTS `sys_storage_user_quotas` (
   `profile_id` int(11) NOT NULL,
@@ -2220,7 +2254,8 @@ CREATE TABLE IF NOT EXISTS `sys_objects_uploader` (
 
 INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
 ('sys_simple', 1, 'BxTemplUploaderSimple', ''),
-('sys_html5', 1, 'BxTemplUploaderHTML5', '');
+('sys_html5', 1, 'BxTemplUploaderHTML5', ''),
+('sys_simple_cmts', 1, 'BxTemplCmtsUploaderSimple', '');
 
 
 -- --------------------------------------------------------
@@ -2252,7 +2287,8 @@ INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_att
 ('sys_account', 'system', '_sys_form_account', '', '', 'do_submit', 'sys_accounts', 'id', '', '', 'a:1:{s:14:"checker_helper";s:26:"BxFormAccountCheckerHelper";}', 0, 1, 'BxTemplFormAccount', ''),
 ('sys_forgot_password', 'system', '_sys_form_forgot_password', '', '', 'do_submit', '', '', '', '', 'a:1:{s:14:"checker_helper";s:33:"BxFormForgotPasswordCheckerHelper";}', 0, 1, 'BxTemplFormForgotPassword', ''),
 ('sys_confirm_email', 'system', '_sys_form_confirm_email', '', '', 'do_submit', '', '', '', '', 'a:1:{s:14:"checker_helper";s:31:"BxFormConfirmEmailCheckerHelper";}', 0, 1, 'BxTemplFormConfirmEmail', ''),
-('sys_unsubscribe', 'system', '_sys_form_unsubscribe', '', '', 'do_submit', 'sys_accounts', 'id', '', '', '', 0, 1, 'BxTemplFormAccount', '');
+('sys_unsubscribe', 'system', '_sys_form_unsubscribe', '', '', 'do_submit', 'sys_accounts', 'id', '', '', '', 0, 1, 'BxTemplFormAccount', ''),
+('sys_comment', 'system', '_sys_form_comment', 'cmts.php', 'a:3:{s:2:"id";s:17:"cmt-%s-form-%s-%d";s:4:"name";s:17:"cmt-%s-form-%s-%d";s:5:"class";s:14:"cmt-post-reply";}', 'cmt_submit', '', 'cmt_id', '', '', '', 0, 1, '', '');
 
 CREATE TABLE IF NOT EXISTS `sys_form_displays` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -2275,7 +2311,9 @@ INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `v
 ('sys_forgot_password', 'system', 'sys_forgot_password', '_sys_form_display_forgot_password', 0),
 ('sys_confirm_email', 'system', 'sys_confirm_email', '_sys_form_display_confirm_email', 0),
 ('sys_unsubscribe_updates', 'system', 'sys_unsubscribe', '_sys_form_display_unsubscribe_updates', 0),
-('sys_unsubscribe_news', 'system', 'sys_unsubscribe', '_sys_form_display_unsubscribe_news', 0);
+('sys_unsubscribe_news', 'system', 'sys_unsubscribe', '_sys_form_display_unsubscribe_news', 0),
+('sys_comment_post', 'system', 'sys_comment', '_sys_form_display_comment_post', 0),
+('sys_comment_edit', 'system', 'sys_comment', '_sys_form_display_comment_edit', 0);
 
 
 CREATE TABLE IF NOT EXISTS `sys_form_inputs` (
@@ -2339,7 +2377,16 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('sys_unsubscribe', 'system', 'code', '', '', 0, 'hidden', '_sys_form_unsubscribe_input_caption_system_code', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('sys_unsubscribe', 'system', 'receive_updates', '1', '', 0, 'switcher', '_sys_form_unsubscribe_input_caption_system_receive_updates', '_sys_form_unsubscribe_input_receive_updates', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('sys_unsubscribe', 'system', 'receive_news', '1', '', 0, 'switcher', '_sys_form_unsubscribe_input_caption_system_receive_news', '_sys_form_unsubscribe_input_receive_news', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
-('sys_unsubscribe', 'system', 'do_submit', '_sys_form_unsubscribe_input_submit', '', 0, 'submit', '_sys_form_unsubscribe_input_caption_system_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
+('sys_unsubscribe', 'system', 'do_submit', '_sys_form_unsubscribe_input_submit', '', 0, 'submit', '_sys_form_unsubscribe_input_caption_system_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+
+('sys_comment', 'system', 'sys', '', '', 0, 'hidden', '_sys_form_comment_input_caption_system_sys', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('sys_comment', 'system', 'id', '', '', 0, 'hidden', '_sys_form_comment_input_caption_system_id', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('sys_comment', 'system', 'action', '', '', 0, 'hidden', '_sys_form_comment_input_caption_system_action', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('sys_comment', 'system', 'cmt_id', '', '', 0, 'hidden', '_sys_form_comment_input_caption_system_cmt_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('sys_comment', 'system', 'cmt_parent_id', '', '', 0, 'hidden', '_sys_form_comment_input_caption_system_cmt_parent_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('sys_comment', 'system', 'cmt_text', '', '', 0, 'textarea', '_sys_form_comment_input_caption_system_cmt_text', '', '', 0, 0, 0, '', '', '', 'Length', 'a:2:{s:3:"min";i:1;s:3:"max";i:5000;}', '_Please enter n1-n2 characters', 'Xss', '', 1, 0),
+('sys_comment', 'system', 'cmt_image', '', '', 0, 'files', '_sys_form_comment_input_caption_system_cmt_image', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('sys_comment', 'system', 'cmt_submit', '_sys_form_comment_input_submit', '', 0, 'submit', '_sys_form_comment_input_caption_system_cmt_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
 
 
 CREATE TABLE IF NOT EXISTS `sys_form_display_inputs` (
@@ -2405,7 +2452,25 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('sys_unsubscribe_news', 'id', 2147483647, 1, 1),
 ('sys_unsubscribe_news', 'code', 2147483647, 1, 2),
 ('sys_unsubscribe_news', 'receive_news', 2147483647, 1, 3),
-('sys_unsubscribe_news', 'do_submit', 2147483647, 1, 4);
+('sys_unsubscribe_news', 'do_submit', 2147483647, 1, 4),
+
+('sys_comment_post', 'sys', 2147483647, 1, 1),
+('sys_comment_post', 'id', 2147483647, 1, 2),
+('sys_comment_post', 'action', 2147483647, 1, 3),
+('sys_comment_post', 'cmt_id', 2147483647, 0, 4),
+('sys_comment_post', 'cmt_parent_id', 2147483647, 1, 5),
+('sys_comment_post', 'cmt_text', 2147483647, 1, 6),
+('sys_comment_post', 'cmt_image', 2147483647, 1, 7),
+('sys_comment_post', 'cmt_submit', 2147483647, 1, 8),
+
+('sys_comment_edit', 'sys', 2147483647, 1, 1),
+('sys_comment_edit', 'id', 2147483647, 1, 2),
+('sys_comment_edit', 'action', 2147483647, 1, 3),
+('sys_comment_edit', 'cmt_id', 2147483647, 1, 4),
+('sys_comment_edit', 'cmt_parent_id', 2147483647, 1, 5),
+('sys_comment_edit', 'cmt_text', 2147483647, 1, 6),
+('sys_comment_edit', 'cmt_image', 2147483647, 1, 7),
+('sys_comment_edit', 'cmt_submit', 2147483647, 1, 8);
 
 
 CREATE TABLE `sys_form_pre_lists` (
@@ -3106,8 +3171,8 @@ CREATE TABLE IF NOT EXISTS `sys_objects_transcoder_images` (
 INSERT INTO `sys_objects_transcoder_images` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`) VALUES 
 ('sys_icon_apple', 'sys_images', 'Storage', 'a:1:{s:6:"object";s:10:"sys_images";}', 'no', '0', '0', '0'),
 ('sys_icon_facebook', 'sys_images', 'Storage', 'a:1:{s:6:"object";s:10:"sys_images";}', 'no', '0', '0', '0'),
-('sys_icon_favicon', 'sys_images', 'Storage', 'a:1:{s:6:"object";s:10:"sys_images";}', 'no', '0', '0', '0');
-
+('sys_icon_favicon', 'sys_images', 'Storage', 'a:1:{s:6:"object";s:10:"sys_images";}', 'no', '0', '0', '0'),
+('sys_images_cmts_preview', 'sys_images_cmts', 'Storage', 'a:1:{s:6:"object";s:15:"sys_images_cmts";}', 'no', '1', '2592000', '0');
 
 
 CREATE TABLE IF NOT EXISTS `sys_transcoder_images_files` (
@@ -3132,7 +3197,8 @@ CREATE TABLE IF NOT EXISTS `sys_transcoder_images_filters` (
 INSERT INTO `sys_transcoder_images_filters` (`transcoder_object`, `filter`, `filter_params`, `order`) VALUES 
 ('sys_icon_apple', 'Resize', 'a:4:{s:1:"w";s:3:"129";s:1:"h";s:3:"129";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"png";}', '0'),
 ('sys_icon_facebook', 'Resize', 'a:4:{s:1:"w";s:3:"100";s:1:"h";s:3:"100";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"png";}', '0'),
-('sys_icon_favicon', 'Resize', 'a:4:{s:1:"w";s:2:"16";s:1:"h";s:2:"16";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"png";}', '0');
+('sys_icon_favicon', 'Resize', 'a:4:{s:1:"w";s:2:"16";s:1:"h";s:2:"16";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"png";}', '0'),
+('sys_images_cmts_preview', 'Resize', 'a:4:{s:1:"w";s:3:"100";s:1:"h";s:3:"100";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0');
 
 
 -- --------------------------------------------------------

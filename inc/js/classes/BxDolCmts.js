@@ -5,7 +5,6 @@
  */
 
 function BxDolCmts (options) {
-    this.oCmtElements = {}; // form elements
     this._sObjName = undefined == options.sObjName ? 'oCmts' : options.sObjName;    // javascript object name, to run current object instance from onTimer
     this._sSystem = options.sSystem; // current comment system
     this._sSystemTable = options.sSystemTable; // current comment system table name
@@ -31,140 +30,106 @@ function BxDolCmts (options) {
 }
 
 /*--- Main layout functionality ---*/
-BxDolCmts.prototype.cmtSubmit = function (f)
+BxDolCmts.prototype.cmtInitFormPost = function(sCmtFormId)
 {
-    var eSubmit = $(f).children().find(':submit').get();
-    var $this = this;
-    var oData = this._getDefaultActions();
+	var $this = this;
+	var oCmtForm = $('#' + sCmtFormId);
 
-    // hide any errors before submitting
-    $this._error(eSubmit, false);
-
-    // get and check form elements
-    if (!this._getCheckElements (f, oData)) 
-    	return;
-
-    // submit form
-    oData['action'] = 'CmtPost';
-
-    this._loadingInButton(eSubmit, true);
-
-    jQuery.post (
-        this._sActionsUrl,
-        oData,
-        function (s) {
-            $this._loadingInButton(eSubmit, false);
-
-            var iNewCmtId = parseInt(s);
-            if(iNewCmtId > 0) {
-                $(f).find(':input:not(:button,:submit,[type = hidden],[type = radio],[type = checkbox])').val('');
-                $this._getCmt(f, oData['CmtParent'], iNewCmtId); // display just posted comment
-            }
-            else if (!jQuery.trim(s).length) {
-                $this._error(eSubmit, true, aDolLang['_Error occured']); // display error
-            }
-            else {
-                $this._error(eSubmit, true, s); // display error
-            }
-        }
-    );
-};
-
-BxDolCmts.prototype.cmtUpdate = function (f, iCmtId)
-{
-    var eSubmit = $(f).find(':submit').get();
-    var $this = this;
-    var oData = this._getDefaultActions();
-
-    $this._error(eSubmit, false); // hide any errors before submitting
-
-    if (!this._getCheckElements (f, oData)) return; // get and check form elements
-
-    this._oSavedTexts[iCmtId] = '';
-
-    // submit form
-    oData['action'] = 'CmtEditSubmit';
-    oData['Cmt'] = iCmtId;
-    this._loadingInBlock (eSubmit, true);
-    jQuery.post (
-        this._sActionsUrl,
-        oData,
-        function (oResponse) {
-            $this._loadingInBlock (eSubmit, false);
-            if (!jQuery.trim(oResponse.text).length)
-                $this._error(eSubmit, true, jQuery.trim(oResponse.err).length ? oResponse.err : aDolLang['_Error occured']); // display error
-            else
-                $('#cmt' + iCmtId + ' .cmt-body').bx_anim(
-                    'hide',
-                    $this._sAnimationEffect,
-                    $this._iAnimationSpeed,
-                    function() {
-                        $(this).html(oResponse.text).bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
-                    });
+	oCmtForm.ajaxForm({
+        dataType: "json",
+        beforeSubmit: function (formData, jqForm, options) {
+        	window[$this._sObjName].cmtBeforePostSubmit(oCmtForm);
         },
-        'json'
-    );
+        success: function (oData) {
+        	window[$this._sObjName].cmtAfterPostSubmit(oCmtForm, oData);
+        }
+    });
 };
 
-BxDolCmts.prototype.cmtReload = function(iCmtId) {
-    var $this = this;
-    var oData = this._getDefaultActions();
-    oData['action'] = 'CmtGet';
-    oData['Cmt'] = iCmtId;
-    oData['Type'] = 'reload';
-
-    var eUl = $('#cmts-box-' + $this._sSystem + '-' + $this._iObjId + ' > div.cmts > ul').get();
-    this._loadingInBlock (eUl, true);
-
-    jQuery.post (
-        this._sActionsUrl,
-        oData,
-        function (s) {
-            $this._loadingInBlock (eUl, false);
-            $('#cmts-box-' + $this._sSystem + '-' + $this._iObjId + ' li#cmt' + iCmtId).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-                $(this).replaceWith(s);
-            });
-
-        }
-    );
-
+BxDolCmts.prototype.cmtBeforePostSubmit = function(oCmtForm)
+{
+	this._loadingInButton($(oCmtForm).children().find(':submit'), true);
 };
 
-BxDolCmts.prototype.cmtRemove = function(e, iCmtId) {
-    if (!this._confirm()) return;
+BxDolCmts.prototype.cmtAfterPostSubmit = function (oCmtForm, oData)
+{
+	this._loadingInButton($(oCmtForm).children().find(':submit'), false);
 
-    var $this = this;
-    var oData = this._getDefaultActions();
-    oData['action'] = 'CmtRemove';
-    oData['Cmt'] = iCmtId;
+	if(oData && oData.msg != undefined)
+        alert(oData.msg);
 
-    this._loadingInContent(e, true);
-
-    jQuery.post (
-        this._sActionsUrl,
-        oData,
-        function(s) {
-            $this._loadingInContent(e, false);
-
-            if (jQuery.trim(s).length)
-                alert(s);
-            else
-                $('#cmt' + iCmtId).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-                	var oCounter = $(this).parent('ul.cmts').siblings('.cmt-cont').find('.cmt-actions a.cmt-comment-replies span');
-                	if(oCounter)
-                		oCounter.html(oCounter.html() - 1);
-
-                	$(this).remove();
-                });
+	if(oData && oData.id != undefined) {
+		var iCmtId = parseInt(oData.id);
+        if(iCmtId > 0) {
+            $(oCmtForm).find(':input:not(:button,:submit,[type = hidden],[type = radio],[type = checkbox])').val('');
+            $(oCmtForm).find('.bx-form-warn').hide().html('');
+            this._getCmt(oCmtForm, iCmtId);
         }
-    );
+
+        return;
+	}
+
+	if(oData && oData.form != undefined && oData.form_id != undefined) {
+		$('#' + oData.form_id).replaceWith(oData.form);
+		this.cmtInitFormPost(oData.form_id);
+
+		return;
+	}
+};
+
+BxDolCmts.prototype.cmtInitFormEdit = function(sCmtFormId)
+{
+	var $this = this;
+	var oCmtForm = $('#' + sCmtFormId);
+
+	oCmtForm.ajaxForm({
+        dataType: "json",
+        beforeSubmit: function (formData, jqForm, options) {
+        	window[$this._sObjName].cmtBeforeEditSubmit(oCmtForm);
+        },
+        success: function (oData) {
+        	window[$this._sObjName].cmtAfterEditSubmit(oCmtForm, oData);
+        }
+    });
+};
+
+BxDolCmts.prototype.cmtBeforeEditSubmit = function(oCmtForm)
+{
+	this._loadingInButton($(oCmtForm).children().find(':submit'), true);
+};
+
+BxDolCmts.prototype.cmtAfterEditSubmit = function (oCmtForm, oData)
+{
+	var $this = this;
+	this._loadingInButton($(oCmtForm).children().find(':submit'), false);
+
+	if(oData && oData.msg != undefined)
+        alert(oData.msg);
+
+	if(oData && oData.id != undefined && oData.text != undefined) {
+		var iCmtId = parseInt(oData.id);
+		if(iCmtId > 0) {
+			$('#cmt' + iCmtId + ' .cmt-body').bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
+				$(this).html(oData.text).bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
+			});
+        }
+
+        return;
+	}
+
+	if(oData && oData.form != undefined && oData.form_id != undefined) {
+		$('#' + oData.form_id).replaceWith(oData.form);
+		this.cmtInitFormEdit(oData.form_id);
+
+		return;
+	}
 };
 
 BxDolCmts.prototype.cmtEdit = function(oLink, iCmtId) {
     var $this = this;
-    var oData = this._getDefaultActions();
-    oData['action'] = 'CmtEdit';
-    oData['Cmt'] = iCmtId;
+    var oParams = this._getDefaultActions();
+    oParams['action'] = 'GetFormEdit';
+    oParams['Cmt'] = iCmtId;
 
     $(oLink).parents('.cmt-comment-manage:first').dolPopupHide();
 
@@ -182,50 +147,90 @@ BxDolCmts.prototype.cmtEdit = function(oLink, iCmtId) {
 
     jQuery.post (
         this._sActionsUrl,
-        oData,
-        function (s) {
+        oParams,
+        function (oData) {
         	$this._loadingInContent (oLink, false);
 
-        	if(s.substring(0,3) == 'err')
-        		alert(s.substring(3));
-            else
-                $(sBodyId).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-                    $(this).html(s).bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
+        	if(oData && oData.msg != undefined)
+                alert(oData.msg);
+
+        	if(oData && oData.form != undefined && oData.form_id != undefined) {
+        		$(sBodyId).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+                    $(this).html(oData.form).bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+                    	$this.cmtInitFormEdit(oData.form_id);
+                    });
                 });
-        }
+        	}
+        },
+        'json'
+    );
+};
+
+BxDolCmts.prototype.cmtRemove = function(e, iCmtId) {
+    if (!this._confirm()) 
+    	return;
+
+    var $this = this;
+    var oParams = this._getDefaultActions();
+    oParams['action'] = 'Remove';
+    oParams['Cmt'] = iCmtId;
+
+    this._loadingInContent(e, true);
+
+    jQuery.post (
+        this._sActionsUrl,
+        oParams,
+        function(oData) {
+            $this._loadingInContent(e, false);
+
+            if(oData && oData.msg != undefined)
+                alert(oData.msg);
+
+            if(oData && oData.id != undefined) {
+            	$('#cmt' + oData.id).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+                	var oCounter = $(this).parent('ul.cmts').siblings('.cmt-cont').find('.cmt-actions a.cmt-comment-replies span');
+                	if(oCounter)
+                		oCounter.html(oCounter.html() - 1);
+
+                	$(this).remove();
+                });
+            }
+        },
+        'json'
     );
 };
 
 BxDolCmts.prototype.cmtRate = function(e, iCmtId, iRate) 
 {
     var $this = this;
-    var oData = this._getDefaultActions();
-    oData['action'] = 'CmtRate';
-    oData['Cmt'] = iCmtId;
-    oData['Rate'] = iRate;
+    var oParams = this._getDefaultActions();
+    oParams['action'] = 'Rate';
+    oParams['Cmt'] = iCmtId;
+    oParams['Rate'] = iRate;
 
     this._loadingInContent (e, true);
 
     jQuery.post (
         this._sActionsUrl,
-        oData,
-        function (s) {
+        oParams,
+        function(oData) {
             $this._loadingInContent (e, false);
 
-            if(jQuery.trim(s).length) {
-                alert(s);
-                return;
+            if(oData && oData.msg != undefined)
+                alert(oData.msg);
+
+            if(oData && oData.id != undefined && oData.rate != undefined) {
+	            var oPoints = $(e).parents('.cmt:first').find('.cmt-points span');
+	            oPoints.html(parseInt(oPoints.html()) + oData.rate).parents('.cmt-points-wrp:first').bx_anim(parseInt(oPoints.html()) > 0 ? 'show' : 'hide');
+	
+	            $(e).hide().siblings('.cmt-comment-vote:hidden').show();
             }
-
-            var oPoints = $(e).parents('.cmt:first').find('.cmt-points span');
-            oPoints.html(parseInt(oPoints.html()) + iRate).parents('.cmt-points-wrp:first').bx_anim(parseInt(oPoints.html()) > 0 ? 'show' : 'hide');
-
-            $(e).hide().siblings('.cmt-comment-vote:hidden').show();
-        }
+        },
+        'json'
     );
 };
 
-BxDolCmts.prototype.cmtMore = function(oLink, iCmtParentId, iStart, iPerView)
+BxDolCmts.prototype.cmtLoad = function(oLink, iCmtParentId, iStart, iPerView)
 {
 	var $this = this;
 	var bButton = $(oLink).hasClass('bx-btn');
@@ -270,7 +275,7 @@ BxDolCmts.prototype.showReplacement = function(iCmtId)
     });
 };
 
-BxDolCmts.prototype.seeMore = function(oLink)
+BxDolCmts.prototype.showMore = function(oLink)
 {
 	$(oLink).parent('span').next('span').show().prev('span').remove();
 };
@@ -285,7 +290,7 @@ BxDolCmts.prototype.toggleReply = function(e, iCmtParentId)
     else {
         var $this = this;
         var oData = this._getDefaultActions();
-        oData['action'] = 'FormGet';
+        oData['action'] = 'GetFormPost';
         oData['CmtType'] = 'reply';
         oData['CmtParent'] = iCmtParentId;
         oData['CmtBrowse'] = this._sBrowseType;
@@ -346,7 +351,7 @@ BxDolCmts.prototype.toggleManagePopup = function(oLink, iCmtId) {
 BxDolCmts.prototype.togglePlusedByPopup = function(oLink, iCmtId) {
 	var $this = this;
     var oData = this._getDefaultActions();
-    oData['action'] = 'PlusedByGet';
+    oData['action'] = 'GetPlusedBy';
     oData['CmtId'] = iCmtId;
 
     var oPopup = $(".bx-popup-applied:visible");
@@ -375,12 +380,47 @@ BxDolCmts.prototype.togglePlusedByPopup = function(oLink, iCmtId) {
 	);
 };
 
-// get comment replies via ajax request
+
+BxDolCmts.prototype._getCmt = function (e, iCmtId)
+{
+    var $this = this;
+    var oData = this._getDefaultActions();
+    oData['action'] = 'GetCmt';
+    oData['Cmt'] = iCmtId;
+    oData['CmtBrowse'] = this._sBrowseType;
+    oData['CmtDisplay'] = this._sDisplayType;
+
+    this._loadingInBlock (e);
+
+    jQuery.post (
+        this._sActionsUrl,
+        oData,
+        function (oData) {
+            $this._loadingInBlock (e, false);
+
+            var sListId = $this._sRootId + ' #cmt' + oData.vparent_id + ' > ul';
+            var sReplyFormId = $this._sRootId + ' #cmt' + oData.parent_id + ' > .cmt-reply';
+
+            //--- Hide reply form ---//
+            if($(sReplyFormId).length)
+            	$(sReplyFormId).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed);
+
+            //--- Some number of comments already loaded ---//
+            if($(sListId + ' > li.cmt').length)
+                $(sListId + ' > li.cmt:last').after($(oData.content).hide()).next('li.cmt:hidden').bx_anim('toggle', $this._sAnimationEffect, $this._iAnimationSpeed);
+            //-- There is no comments at all ---//
+            else
+            	$(sListId).hide().html(oData.content).bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
+        },
+        'json'
+    );
+};
+
 BxDolCmts.prototype._getCmts = function (e, iCmtParentId, iStart, iPerView, sBrowseType, sDisplayType, onLoad)
 {
     var $this = this;
     var oData = this._getDefaultActions();    
-    oData['action'] = 'CmtsGet';
+    oData['action'] = 'GetCmts';
     oData['CmtParent'] = iCmtParentId;
     if(parseInt(iStart) >= 0)
         oData['CmtStart'] = iStart;
@@ -437,78 +477,6 @@ BxDolCmts.prototype._cmtsReplaceContent = function(oParent, sContent)
 	});
 };
 
-// get just posted 1 comment via ajax request
-BxDolCmts.prototype._getCmt = function (f, iCmtParentId, iCmtId)
-{
-    var $this = this;
-    var oData = this._getDefaultActions();
-    oData['action'] = 'CmtGet';
-    oData['Cmt'] = iCmtId;
-    oData['CmtBrowse'] = this._sBrowseType;
-    oData['CmtDisplay'] = this._sDisplayType;
-
-    this._loadingInBlock (f);
-
-    jQuery.post (
-        this._sActionsUrl,
-        oData,
-        function (oData) {
-            $this._loadingInBlock (f, false);
-
-            var sListId = $this._sRootId + ' #cmt' + oData.vparent_id + ' > ul';
-            var sReplyFormId = $this._sRootId + ' #cmt' + oData.parent_id + ' > .cmt-reply';
-
-            //--- Hide reply form ---//
-            if($(sReplyFormId).length)
-            	$(sReplyFormId).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed);
-
-            //--- Some number of comments already loaded ---//
-            if($(sListId + ' > li.cmt').length)
-                $(sListId + ' > li.cmt:last').after($(oData.content).hide()).next('li.cmt:hidden').bx_anim('toggle', $this._sAnimationEffect, $this._iAnimationSpeed);
-            //-- There is no comments at all ---//
-            else
-            	$(sListId).hide().html(oData.content).bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
-        },
-        'json'
-    );
-};
-
-// check and get post new comment form elements
-BxDolCmts.prototype._getCheckElements = function(f, oData) {
-    var $this = this;
-    var bSuccess = true;
-    // check/get form elements
-    jQuery.each( $(f).find(':input'), function () {
-        if (this.name.length && $this.oCmtElements[this.name]) {
-            var isValid = true;
-
-            //--- Check form's data ---//
-            if ($this.oCmtElements[this.name]['reg']) {
-                try {
-                	var r = new RegExp($this.oCmtElements[this.name]['reg']); 
-                 	isValid = r.test(this.value.replace(/(\n|\r)/g, ''));
-                } catch (ex) {};
-            }
-            if (!isValid) {
-                bSuccess = false;
-                $this._error(this, true, $this.oCmtElements[this.name]['msg']);
-            }
-            else {
-                $this._error(this, false);
-            }
-
-            //--- Fill in data array ---//
-            if(this.type == 'radio') {
-                if(this.checked)
-                    oData[this.name] = this.value;
-            }
-            else
-                oData[this.name] = this.value;
-        }
-    });
-    return bSuccess;
-};
-
 BxDolCmts.prototype._getDefaultActions = function() {
     return {
         'sys': this._sSystem,
@@ -530,18 +498,12 @@ BxDolCmts.prototype._loadingInContent = function(e, bShow) {
 	var oParent = $(e).length ? $(e).parents('li.cmt:first,.cmt-reply:first') : $('body'); 
 	bx_loading(oParent, bShow);
 };
+
 BxDolCmts.prototype._loadingInButton = function(e, bShow) {
 	if($(e).length)
 		bx_loading_btn($(e), bShow);
 	else
 		bx_loading($('body'), bShow);	
-};
-
-BxDolCmts.prototype._error = function(e, bShow, s) {
-    if (bShow && !$(e).next('.cmt-err').length)
-        $(e).after(' <b class="cmt-err">' + s + '</b>');
-    else if (!bShow && $(e).next('.cmt-err').length)
-        $(e).next('.cmt-err').remove();
 };
 
 BxDolCmts.prototype._confirm = function() {

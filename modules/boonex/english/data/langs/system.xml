@@ -1180,9 +1180,9 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_cmt_browse_connection"><![CDATA[Connection]]></string>
 	<string name="_cmt_page_view_header"><![CDATA[Comment to {0}]]></string>
 	<string name="_cmt_page_view_title"><![CDATA[Comment to <a href="{0}">{1}</a>]]></string>
+	<string name="_cmt_err_cannot_perform_action"><![CDATA[Cannot perform action. Please report.]]></string>
 	<string name="_Reply_to_this_comment"><![CDATA[Reply]]></string>
 	<string name="_Add Your Comment"><![CDATA[Comment]]></string>
-	<string name="_Submit_Comment"><![CDATA[Post]]></string>
 	<string name="_load_more_comments_head"><![CDATA[See Newer Comments...]]></string>
 	<string name="_load_more_comments_tail"><![CDATA[See Older Comments...]]></string>
 	<string name="_load_more_comments_popular"><![CDATA[See More Comments...]]></string>
@@ -2136,7 +2136,7 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
     <string name="_adm_form_err_field_edit"><![CDATA[Cannot update field]]></string>
     <string name="_adm_form_btn_field_delete"><![CDATA[Delete field]]></string>
     <string name="_adm_from_err_field_delete"><![CDATA[Cannot delete field]]></string>
-    <string name="_adm_form_txt_field_show_to_popup"><![CDATA[Show "{0}" menu item to: ]]></string>
+    <string name="_adm_form_txt_field_show_to_popup"><![CDATA[Show "{0}" form field to: ]]></string>
     <string name="_adm_form_err_field_show_to"><![CDATA[Cannot update field]]></string>
     <string name="_adm_form_txt_field_visible_for"><![CDATA[Visible For]]></string>
     <string name="_adm_form_txt_field_visible_for_all"><![CDATA[Anyone]]></string>
@@ -3153,7 +3153,6 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_edit_profile_info"><![CDATA[Edit profile info]]></string>
 	<string name="_edit_profile_privacy"><![CDATA[Edit profile privacy]]></string>
 	<string name="_edit_profile_privacy_save"><![CDATA[Save]]></string>
-	<string name="_bad comment parent id"><![CDATA[bad comment parent id]]></string>
 	<string name="_Please enter n1-n2 characters"><![CDATA[Please enter {0}-{1} characters]]></string>
 	<string name="_Remove friend"><![CDATA[Remove friend]]></string>
 	<string name="_Friend was removed"><![CDATA[Friend was removed]]></string>
@@ -3199,7 +3198,7 @@ More info about URI DNSBL: <br />
 	<string name="_sys_adm_fld_dnsbl_recheck"><![CDATA[Recheck IP]]></string>
 	<string name="_sys_adm_fld_dnsbluri_recheck"><![CDATA[Recheck Domain]]></string>
 	<string name="_sys_sucess_result"><![CDATA[Data has been succesfully submited.]]></string>
-	<string name="_sys_spam_detected"><![CDATA[Sorry, it looks like you are trying to submit spam, if you believe that it is not spam please submit false positive report here: %s]]></string>
+	<string name="_sys_spam_detected"><![CDATA[Sorry, it looks like you are trying to submit spam, if you believe that it is not spam please submit false positive report here: {0}]]></string>
 	<string name="_sys_adm_enabled"><![CDATA[Enabled]]></string>
 	<string name="_sys_adm_disabled"><![CDATA[Disabled]]></string>
 	<string name="_sys_adm_akismet_key_valid"><![CDATA[Your Akismet key is valid.]]></string>
@@ -3400,6 +3399,7 @@ More info about URI DNSBL: <br />
     <string name="_sys_form_forgot_password"><![CDATA[Forgot Password]]></string>
     <string name="_sys_form_confirm_email"><![CDATA[Email Confirmation]]></string>
     <string name="_sys_form_unsubscribe"><![CDATA[Unsubscribe]]></string>
+    <string name="_sys_form_comment"><![CDATA[Comment]]></string>
 
     <string name="_sys_form_display_login"><![CDATA[Login]]></string>
     <string name="_sys_form_display_account_create"><![CDATA[Create Account]]></string>
@@ -3411,6 +3411,9 @@ More info about URI DNSBL: <br />
     <string name="_sys_form_display_confirm_email"><![CDATA[Email Confirmation]]></string>
     <string name="_sys_form_display_unsubscribe_updates"><![CDATA[Unsubscribe From Updates]]></string>
     <string name="_sys_form_display_unsubscribe_news"><![CDATA[Unsubscribe From Newsletters]]></string>
+    <string name="_sys_form_display_comment_post"><![CDATA[Comment From Post]]></string>
+    <string name="_sys_form_display_comment_edit"><![CDATA[Comment From Edit]]></string>
+    
 
     <string name="_sys_form_login_input_caption_system_role"><![CDATA[Role]]></string>
     <string name="_sys_form_login_input_caption_system_relocate"><![CDATA[Relocate]]></string>
@@ -3475,7 +3478,21 @@ More info about URI DNSBL: <br />
     <string name="_sys_form_unsubscribe_input_caption_system_receive_news"><![CDATA[Receive Newsletters]]></string>
     <string name="_sys_form_unsubscribe_input_receive_news"><![CDATA[Receive Newsletters]]></string>    
     <string name="_sys_form_unsubscribe_input_caption_system_do_submit"><![CDATA[Submit]]></string>
-    <string name="_sys_form_unsubscribe_input_submit"><![CDATA[Submit]]></string>    
+    <string name="_sys_form_unsubscribe_input_submit"><![CDATA[Submit]]></string>
+    
+    <string name="_sys_form_comment_input_caption_system_sys"><![CDATA[Object Type]]></string>
+    <string name="_sys_form_comment_input_caption_system_id"><![CDATA[Object ID]]></string>
+    <string name="_sys_form_comment_input_caption_system_action"><![CDATA[Action]]></string>
+    <string name="_sys_form_comment_input_caption_system_cmt_id"><![CDATA[Comment ID]]></string>
+    <string name="_sys_form_comment_input_caption_system_cmt_parent_id"><![CDATA[Parent ID]]></string>
+    <string name="_sys_form_comment_input_caption_system_cmt_text"><![CDATA[Text]]></string>
+    <string name="_sys_form_comment_input_caption_system_cmt_image"><![CDATA[Image]]></string>
+    <string name="_sys_form_comment_input_caption_system_cmt_submit"><![CDATA[Submit]]></string>
+    <string name="_sys_form_comment_input_submit"><![CDATA[Submit]]></string>
+    <string name=""><![CDATA[]]></string>
+    <string name=""><![CDATA[]]></string>
+    <string name=""><![CDATA[]]></string>
+    <string name=""><![CDATA[]]></string>
 
     <string name="_sys_page_lang_block_about"><![CDATA[This site is powered by BoonEx Dolphin. The rest is a mystery.]]></string>
 

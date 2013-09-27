@@ -15,7 +15,7 @@
 /**
  * DB Queries.
 
-INSERT INTO `sys_objects_cmts` (`ID`, `ObjectName`, `TableCmts`, `TableTrack`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Nl2br`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `BaseUrl`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldTitle`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES
+INSERT INTO `sys_objects_cmts` (`ID`, `Name`, `TableCmts`, `TableTrack`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Nl2br`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `BaseUrl`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldTitle`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES
 (1, 'sample', 'sample_cmts', 'sample_cmts_track', 1, 5000, 1000, 1, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'samples/comments.php', 'sample_cmts_trigger', 'id', 'title', 'comments', '', '');
 
 CREATE TABLE IF NOT EXISTS `sample_cmts` (
@@ -26,10 +26,9 @@ CREATE TABLE IF NOT EXISTS `sample_cmts` (
   `cmt_author_id` int(10) unsigned NOT NULL DEFAULT '0',
   `cmt_level` int(11) NOT NULL DEFAULT '0',
   `cmt_text` text NOT NULL,
-  `cmt_mood` tinyint(4) NOT NULL DEFAULT '0',
   `cmt_rate` int(11) NOT NULL DEFAULT '0',
   `cmt_rate_count` int(11) NOT NULL DEFAULT '0',
-  `cmt_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `cmt_time` int(11) unsigned NOT NULL DEFAULT '0',
   `cmt_replies` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`cmt_id`),
   KEY `cmt_object_id` (`cmt_object_id`,`cmt_parent_id`)

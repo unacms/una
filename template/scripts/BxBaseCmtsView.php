@@ -45,7 +45,7 @@ class BxBaseCmtsView extends BxDolCmts {
      */
     function getExtraJs ()
     {
-        BxDolTemplate::getInstance()->addJs(array('common_anim.js', 'BxDolCmts.js'));
+        BxDolTemplate::getInstance()->addJs(array('common_anim.js', 'jquery.form.js', 'BxDolCmts.js'));
     }
 
 	/**
@@ -69,13 +69,7 @@ class BxBaseCmtsView extends BxDolCmts {
                     iObjId: '" . $this->getId () . "',
                     sPostFormPosition: '" . $this->_aSystem['post_form_position'] . "',
     				sBrowseType: '" . $this->_sBrowseType . "',
-    				sDisplayType: '" . $this->_sDisplayType . "'});
-                " . $this->_sJsObjName . ".oCmtElements = {";
-        for (reset($this->_aPostElements); list($k,$r) = each ($this->_aPostElements); ) {
-            $ret .= "\n'$k' : { 'reg' : '{$r['reg']}', 'msg' : \"". bx_js_string(trim($r['msg'])) . "\" },";
-        }
-        $ret = substr($ret, 0, -1);
-        $ret .= "\n};\n";
+    				sDisplayType: '" . $this->_sDisplayType . "'});\n";
         $ret .= "</script>";
 
         $this->getExtraJs();
@@ -107,8 +101,8 @@ class BxBaseCmtsView extends BxDolCmts {
 			),
 			'controls' => $this->_getControlsBox(),
     		'comments' => $sCmts,
-    		'post_form_top' => $this->_getPostReplyBox($aBp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_TOP)),
-			'post_form_bottom'  => $this->_getPostReplyBox($aBp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_BOTTOM)),
+    		'post_form_top' => $this->getFormBoxPost($aBp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_TOP)),
+			'post_form_bottom'  => $this->getFormBoxPost($aBp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_BOTTOM)),
     		'script' => $this->getScript()
     	));
     }
@@ -275,14 +269,24 @@ class BxBaseCmtsView extends BxDolCmts {
         ));
     }
 
-    function getFormBox($aBp = array(), $aDp = array())
+    function getFormBoxPost($aBp = array(), $aDp = array())
     {
-        return $this->_getPostReplyBox($aBp, $aDp);
+        return $this->_getFormBox(BX_CMT_ACTION_POST, $aBp, $aDp);
     }
 
-	function getForm($iCmtParentId, $sText, $sFunction)
+	function getFormBoxEdit($aBp = array(), $aDp = array())
+    {
+        return $this->_getFormBox(BX_CMT_ACTION_EDIT, $aBp, $aDp);
+    }
+
+	function getFormPost($iCmtParentId = 0)
 	{
-        return $this->_getPostReplyForm($iCmtParentId, $sText, $sFunction);
+        return $this->_getFormPost($iCmtParentId);
+    }
+
+	function getFormEdit($aCmt)
+	{
+        return $this->_getFormEdit($aCmt);
     }
 
     function getPlusedBy($iCmtId)
@@ -316,7 +320,7 @@ class BxBaseCmtsView extends BxDolCmts {
     /**
      * private functions
      */
-    function _getControlsBox()
+    protected function _getControlsBox()
     {
     	$oTemplate = BxDolTemplate::getInstance();
 
@@ -365,7 +369,7 @@ class BxBaseCmtsView extends BxDolCmts {
 		));
     }
 
-	function _getActionsBox(&$a, $aDp = array())
+	protected function _getActionsBox(&$a, $aDp = array())
     {
     	$oTemplate = BxDolTemplate::getInstance();
 
@@ -376,15 +380,16 @@ class BxBaseCmtsView extends BxDolCmts {
 		$sManagePopupId = $sManagePopupText = '';
         if($isEditAllowedPermanently || $isRemoveAllowedPermanently) {
 			$aMenu = array(
-				array('name' => 'cmt-edit', 'icon' => '', 'onclick' => $this->_sJsObjName . ".cmtEdit(this, " . $a['cmt_id'] . ")", 'title' => _t('_Edit')),
-				array('name' => 'cmt-delete', 'icon' => '', 'onclick' => $this->_sJsObjName . ".cmtRemove(this, " . $a['cmt_id'] . ")", 'title' => _t('_Delete')),
+				array('name' => 'cmt-edit', 'icon' => 'pencil', 'onclick' => $this->_sJsObjName . ".cmtEdit(this, " . $a['cmt_id'] . ")", 'title' => _t('_Edit')),
+				array('name' => 'cmt-delete', 'icon' => 'remove', 'onclick' => $this->_sJsObjName . ".cmtRemove(this, " . $a['cmt_id'] . ")", 'title' => _t('_Delete')),
 			);
 
         	bx_import('BxTemplStudioMenu');
-        	$oMenu = new BxTemplStudioMenu(array('template' => 'menu_vertical_lite.html', 'menu_items' => $aMenu));
+        	$oMenu = new BxTemplStudioMenu(array('template' => 'menu_vertical.html', 'menu_items' => $aMenu));
 
         	bx_import('BxTemplStudioFunctions');
 	        $sManagePopupText = BxTemplStudioFunctions::getInstance()->transBox($oTemplate->parseHtmlByName('comment_manage.html', array(
+	        	'style_prefix' => $this->_sStylePrefix,
 	        	'content' => $oMenu->getCode()
 	        )));
         }
@@ -438,7 +443,7 @@ class BxBaseCmtsView extends BxDolCmts {
         ));
     }
 
-    function _getPostReplyBox($aBp, $aDp)
+    protected function _getFormBox($sType, $aBp, $aDp)
     {
     	$iCmtParentId = isset($aBp['parent_id']) ? (int)$aBp['parent_id'] : 0;
     	$sPosition = isset($aDp['position']) ? $aDp['position'] : '';
@@ -452,8 +457,12 @@ class BxBaseCmtsView extends BxDolCmts {
 		if(!empty($sPosition) && $sPositionSystem != BX_CMT_PFP_BOTH && $sPositionSystem != $sPosition)
 			return '';
 
+		$sMethod = '_getForm' . ucfirst($sType);
+		$aForm = $this->$sMethod($iCmtParentId);
+
 		$bAuthorIcon = !empty($sAuthorIcon);
     	return BxDolTemplate::getInstance()->parseHtmlByName('comment_reply_box.html', array(
+    		'js_object' => $this->_sJsObjName,
     		'style_prefix' => $this->_sStylePrefix,
     		'bx_if:show_class' => array(
     			'condition' => !empty($sPosition),
@@ -484,56 +493,145 @@ class BxBaseCmtsView extends BxDolCmts {
         			'author_name' => $sAuthorName
         		)
         	),
-			'form' => $this->_getPostReplyForm($iCmtParentId)
+			'form' => $aForm['form'],
+        	'form_id' => $aForm['form_id'],
     	));
     }
 
-    function _getPostReplyForm($iCmtParentId = 0, $sText = "", $sFunction = "cmtSubmit(this)")
+    protected function _getFormPost($iCmtParentId = 0)
     {
-    	$aForm = array(
-			'form_attrs' => array(
-				'name' => 'cmt-post-reply-' . $this->_sSystem,
-				'method' => 'post',
-    			'onsubmit' => $this->_sJsObjName . '.' . $sFunction . '; return false;',
-    			'class' => 'cmt-post-reply'
-			 ), 
-			'params' => array (
-				'csrf' => array(
-					'disable' => true,
-				)
-			),
-			'inputs' => array(
-				'CmtParent' => array(
-					'type' => 'hidden',
-					'name' => 'CmtParent',
-					'value' => $iCmtParentId
-				),
-				'CmtType' => array(
-					'type' => 'hidden',
-					'name' => 'CmtType',
-					'value' => 'text'
-				),
-				'CmtText' => array(
-					'type' => 'textarea',
-					'name' => 'CmtText',
-					'caption' => '',
-					'value' => $sText,
-					'required' => false,
-				),
-				'CmtSubmit' => array(
-					'type' => 'submit', 
-					'name' => 'CmtSubmit', 
-					'value' => _t('_Submit_Comment')
-				)
-			)
-		);
+    	$oForm = $this->_getFormObject(BX_CMT_ACTION_POST, $iCmtParentId);
+        $oForm->aInputs['cmt_parent_id']['value'] = $iCmtParentId;
+    	$oForm->initChecker();
 
-		bx_import('BxTemplFormView');
-		$oForm = new BxTemplFormView ($aForm);
-		return $oForm->getCode();
+        if($oForm->isSubmittedAndValid()) {
+        	$iCmtAuthorId = $this->_getAuthorId();
+        	$iCmtParentId = $oForm->getCleanValue('cmt_parent_id');
+
+        	$sCmtText = $oForm->getCleanValue('cmt_text');
+	        if($this->_isSpam($sCmtText))
+	            return array('msg' => _t('_sys_spam_detected', BX_DOL_URL_ROOT . 'contact.php'));
+
+			$sCmtText = $this->_prepareTextForSave ($sCmtText);
+			$oForm->setSubmittedValue('cmt_text', $sCmtText, $oForm->aFormAttrs['method']);
+
+	        $iLevel = 0;
+	    	$iCmtVisualParentId = 0;
+	    	if((int)$iCmtParentId > 0) {
+	    		$aParent = $this->getCommentRow($iCmtParentId);
+
+	    		$iLevel = (int)$aParent['cmt_level'] + 1;
+	    		$iCmtVisualParentId = $iLevel > $this->getMaxLevel() ? $aParent['cmt_vparent_id'] : $iCmtParentId;
+	    	}
+
+			$iCmtId = (int)$oForm->insert(array('cmt_vparent_id' => $iCmtVisualParentId, 'cmt_object_id' => $this->_iId, 'cmt_author_id' => $iCmtAuthorId, 'cmt_level' => $iLevel, 'cmt_time' => mktime()));
+			if($iCmtId != 0) {
+				$aImages = $oForm->getCleanValue('cmt_image');
+				if(!empty($aImages) || is_array($aImages))
+					foreach($aImages as $iImage)
+						$this->_oQuery->saveImages($this->_aSystem['system_id'], $iCmtId, $iImage);
+
+				if($iCmtParentId) 
+        			$this->_oQuery->updateRepliesCount($iCmtParentId, 1);
+
+				$this->_triggerComment();
+
+		        $this->isPostReplyAllowed(true);
+
+		        bx_import('BxDolAlerts');
+		        $oZ = new BxDolAlerts($this->_sSystem, 'commentPost', $this->getId(), $iCmtAuthorId, array('comment_id' => $iCmtId, 'comment_author_id' => $iCmtAuthorId));
+		        $oZ->alert();
+
+		        return array('id' => $iCmtId);
+			}
+
+			return array('msg' => _t('_cmt_err_cannot_perform_action'));
+        }
+
+        return array('form' => $oForm->getCode(), 'form_id' => $oForm->id);
     }
 
-	function _getMoreLink($sCmts, $aBp = array(), $aDp = array())
+	protected function _getFormEdit($iCmtId)
+    {
+	    $aCmt = $this->_oQuery->getCommentSimple ($this->getId(), $iCmtId);
+        if(!$aCmt)
+        	return array('msg' => _t('_No such comment'));
+
+		$iCmtAuthorId = $this->_getAuthorId();
+        if(!$this->isEditAllowedAll() && ($aCmt['cmt_author_id'] != $iCmtAuthorId || !$this->isEditAllowed()))
+        	return array('msg' => $aCmt['cmt_author_id'] == $iCmtAuthorId && !$this->isEditAllowed() ? strip_tags($this->msgErrEditAllowed()) : _t('_Access denied'));
+
+		$oForm = $this->_getFormObject(BX_CMT_ACTION_EDIT, $aCmt['cmt_id']);
+
+		$oForm->initChecker($aCmt);
+		if($oForm->isSubmittedAndValid()) {
+			$sCmtText = $oForm->getCleanValue('cmt_text');
+	        if($this->_isSpam($sCmtText))
+	            return array('msg' => _t('_sys_spam_detected', BX_DOL_URL_ROOT . 'contact.php'));
+
+			$sCmtText = $this->_prepareTextForSave ($sCmtText);
+			$oForm->setSubmittedValue('cmt_text', $sCmtText, $oForm->aFormAttrs['method']);
+
+	        if($oForm->update($iCmtId)) {
+				if ($aCmt['cmt_author_id'] == $iCmtAuthorId)
+               		$this->isEditAllowed(true);
+
+	            bx_import('BxDolAlerts');
+	            $oZ = new BxDolAlerts($this->_sSystem, 'commentUpdated', $this->getId(), $iCmtAuthorId, array('comment_id' => $aCmt['cmt_id'], 'comment_author_id' => $aCmt['cmt_author_id']));
+	            $oZ->alert();
+
+	            return array('id' => $iCmtId, 'text' => $sCmtText);
+	        }
+
+	        return array('msg' => _t('_cmt_err_cannot_perform_action'));
+		}
+
+		return array('form' => $oForm->getCode(), 'form_id' => $oForm->id);
+    }
+
+	protected function _getFormObject($sAction, $iId)
+    {
+    	$sActionCap = ucfirst($sAction);
+    	$sDisplayName = '_sFormDisplay' . $sActionCap;
+
+    	bx_import('BxDolForm');
+        $oForm = BxDolForm::getObjectInstance($this->_sFormObject, $this->$sDisplayName);
+        $oForm->setId(sprintf($oForm->aFormAttrs['id'], $sAction, $this->_sSystem, $iId));
+        $oForm->setName(sprintf($oForm->aFormAttrs['name'], $sAction, $this->_sSystem, $iId));
+        $oForm->aParams['db']['table'] = $this->_aSystem['table_cmts'];
+        $oForm->aInputs['sys']['value'] = $this->_sSystem;
+        $oForm->aInputs['id']['value'] = $this->_iId;
+        $oForm->aInputs['action']['value'] = 'Submit' . $sActionCap . 'Form';
+
+        $aFormNested = array(
+        	'params' =>array(
+        		'nested_form_template' => 'comments_uploader_nfw.html'
+        	),
+	        'inputs' => array(),
+	    );
+
+	    bx_import('BxDolFormNested');
+	    $oFormNested = new BxDolFormNested('cmt_image', $aFormNested, 'cmt_submit');
+
+        $oForm->aInputs['cmt_image']['storage_object'] = $this->_sStorageObject;
+        $oForm->aInputs['cmt_image']['images_transcoder'] = $this->_sTranscoderPreview;
+        $oForm->aInputs['cmt_image']['uploaders'] = array('sys_simple_cmts');
+        $oForm->aInputs['cmt_image']['upload_buttons_titles'] = array('Simple' => 'camera');
+        $oForm->aInputs['cmt_image']['multiple'] = true;
+        $oForm->aInputs['cmt_image']['ghost_template'] = $oFormNested;
+
+        if(isset($oForm->aInputs['cmt_text'])) {
+        	$iCmtTextMin = (int)$this->_aSystem['chars_post_min'];
+			$iCmtTextMax = (int)$this->_aSystem['chars_post_max'];
+
+        	$oForm->aInputs['cmt_text']['checker']['params'] = array($iCmtTextMin, $iCmtTextMax);
+        	$oForm->aInputs['cmt_text']['checker']['error'] = _t('_Please enter n1-n2 characters', $iCmtTextMin, $iCmtTextMax);
+        }
+
+        return $oForm;
+    }
+
+	protected function _getMoreLink($sCmts, $aBp = array(), $aDp = array())
     {
     	$iStart = $iPerView = 0;
     	switch($aBp['type']) {
@@ -597,22 +695,16 @@ class BxBaseCmtsView extends BxDolCmts {
     	return $sCmts;
     }
 
-    function _getLevelGap($a, $aDp = array())
-    {
-    	if($aDp['type'] != BX_CMT_DISPLAY_THREADED || !is_array($a) || !isset($a['cmt_level']))
-    		return 0;
+	protected function _echoResultJson($a, $isAutoWrapForFormFileSubmit = false) {
 
-    	return 84 * ((int)$a['cmt_level'] <= $this->_iDpMaxLevel ? (int)$a['cmt_level'] : $this->_iDpMaxLevel);
-    }
+        header('Content-type: text/html; charset=utf-8');    
 
-    function _getLevelGapByParent($iParentId, $aDp = array()) {
-		if($aDp['type'] != BX_CMT_DISPLAY_THREADED || (int)$iParentId == 0)
-    		return 0;
+        require_once(BX_DIRECTORY_PATH_PLUGINS . 'Services_JSON.php');
 
-		$a = $this->getCommentRow($iParentId);
-		if(isset($a['cmt_level']))
-			$a['cmt_level'] += 1;
-
-		return $this->_getLevelGap($a, $aDp);
+        $oParser = new Services_JSON();
+        $s = $oParser->encode($a);
+        if ($isAutoWrapForFormFileSubmit && !empty($_FILES)) 
+            $s = '<textarea>' . $s . '</textarea>'; // http://jquery.malsup.com/form/#file-upload
+        echo $s;
     }
 }

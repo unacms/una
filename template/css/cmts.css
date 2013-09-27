@@ -195,6 +195,7 @@
 	}
     div.cmt-comment-manage {
     	position: relative;
+    	min-width: 150px; 
     	text-align: left;
     }
 
@@ -231,9 +232,26 @@
 	div.cmt-post-reply {
         position: relative;
     }
+
+    /*--- Add Comment/Reply Form Styles ---*/
     form.cmt-post-reply .bx-form-input-textarea {
 		height: 64px;
     }
     form.cmt-post-reply .bx-form-input-submit {
     	text-transform: uppercase;
+    }
+    form.cmt-post-reply .bx-form-input-files-uploaders {
+		text-align: right;
+    }
+
+    a.cmts-uploader-button {
+		
+    }
+    div.cmts-uploader-file {
+		position: relative;
+    	float: left;
+    }
+    div.cmts-uploader-file-preview {
+		width: 100px;
+    	height: 100px;
     }

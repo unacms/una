@@ -368,7 +368,7 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels {
             if(!empty($_FILES['Icon']['tmp_name'])) {
                 bx_import('BxDolStorage');
                 $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
-    
+
                 if(is_numeric($aLevel['icon']) && (int)$aLevel['icon'] != 0 && !$oStorage->deleteFile((int)$aLevel['icon'], 0)) {
                     $this->_echoResultJson(array('msg' => _t('_adm_prm_err_level_icon_remove')), true);
                     return;
