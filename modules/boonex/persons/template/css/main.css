@@ -30,11 +30,9 @@
 /* view content */
 
 .bx-persons-preview {
+    max-width:278px;
     text-align:center;
 }
-
 .bx-persons-preview img {
-	border-radius:2px;
-	-moz-border-radius:2px;
-	-webkit-border-radius:2px;    
+    width:100%;
 }

@@ -47,6 +47,7 @@ blockquote {
 /* --------------- design boxes */
 
 .bx-db-container {
+    overflow:hidden;
 }
 
 .bx-db-title {
