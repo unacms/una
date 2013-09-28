@@ -114,7 +114,7 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 -- Dumping data for 'bx_notes_view' menu
 --
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_notes_view', '_bx_notes_menu_title_view_note', 'bx_notes_view', 'bx_notes', 4, 0, 1, 'BxNotesMenuViewNote', 'modules/boonex/notes/classes/BxNotesMenuViewNote.php');
+('bx_notes_view', '_bx_notes_menu_title_view_note', 'bx_notes_view', 'bx_notes', 10, 0, 1, 'BxNotesMenuViewNote', 'modules/boonex/notes/classes/BxNotesMenuViewNote.php');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_notes_view', 'bx_notes', '_bx_notes_menu_set_title_view_note', 0);

@@ -3340,6 +3340,7 @@ More info about URI DNSBL: <br />
     <string name="_sys_menu_template_title_ver_lite"><![CDATA[Vertical Links (lite)]]></string>
     <string name="_sys_menu_template_title_toolbar"><![CDATA[Toolbar Buttons]]></string>
     <string name="_sys_menu_template_title_floating_blocks"><![CDATA[Floating Blocks]]></string>
+    <string name="_sys_menu_template_title_floating_circles"><![CDATA[Floating Circles]]></string>
     <string name="_sys_menu_template_title_action"><![CDATA[Action Menu]]></string>
 
     <string name="_sys_designbox_0"><![CDATA[Content only]]></string>

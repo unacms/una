@@ -218,18 +218,10 @@
 .bx-def-color-bg-hl-hover:hover {
     background-color: rgb(220, 220, 255);
     background-color: rgba(200, 200, 255, 0.2);
-
-    -moz-box-shadow: inset 0px 0px -1px 0px rgba(200, 200, 255, 0.2);
-    -webkit-box-shadow: inset 0px 0px -1px 0px rgba(200, 200, 255, 0.2);
-    box-shadow: inset 0px 0px -1px 0px rgba(200, 200, 255, 0.2);
 }
 
 .bx-def-color-bg-active {
     background-color: rgba(255, 234, 193, 0.5);
-
-    -moz-box-shadow: inset 0px 0px -1px 0px rgba(255, 234, 193, 0.5);
-    -webkit-box-shadow: inset 0px 0px -1px 0px rgba(255, 234, 193, 0.5);
-    box-shadow: inset 0px 0px -1px 0px rgba(255, 234, 193, 0.5);
 }
 
 /* hr */
@@ -318,6 +310,21 @@
 	border-radius:3px;
 	-moz-border-radius:3px;
 	-webkit-border-radius:3px;	
+}
+
+/* circle */
+.bx-def-circle {
+    background-color:#fff;
+    border:2px solid #fff;
+    border-radius:50%;
+	-moz-border-radius:50%;
+	-webkit-border-radius:50%;
+
+    -webkit-box-shadow: 0 1px 3px rgba(51, 51, 51, 0.5);
+    -moz-box-shadow: 0 1px 3px rgba(51, 51, 51, 0.5);
+    box-shadow: 0 0px 2px rgba(51, 51, 51, 0.5);
+
+    overflow:hidden;
 }
 
 /* fonts */

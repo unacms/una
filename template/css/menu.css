@@ -163,37 +163,6 @@ ul.bx-menu-main {
     color:#000;
 }
 
-
-/* --------------- action menu */
-
-#bx-menu-action {
-    float:right;
-}
-
-ul.bx-menu-action {
-    padding:0;
-    margin:0;
-    list-style:none;
-    line-height:39px;
-}
-.bx-menu-action li {
-    float:left;
-    margin:0;
-}
-.bx-menu-action li a {
-    text-decoration:none;
-    line-height:normal;
-}
-.bx-menu-action li .sys-icon {
-    display:inline-block;
-    width:24px;
-    height:24px;
-    font-size:24px;
-    text-align:center;
-    vertical-align:middle;
-}
-
-
 /* --------------- toolbar menu */
 
 #bx-popup-ajax-wrapper-sys_site .bx-popup-content-wrapped {
@@ -341,6 +310,105 @@ ul.bx-menu-floating-blocks {
     text-align:center;
 }
 
+
+/* --------------- floating circles menu */
+
+ul.bx-menu-floating-circles {
+    padding:0;
+    margin:0;
+    list-style:none;    
+}
+
+.bx-menu-floating-circles li {
+    display:inline;
+    display:inline-block;
+    width:44px;
+    height:44px;
+    vertical-align:top;
+    opacity:0.8;
+}
+
+.bx-menu-floating-circles li:hover,
+.bx-menu-floating-circles li:active {
+    opacity:1.0;
+}
+
+.bx-menu-floating-circles li a {
+    display:block;
+    width:100%;
+    height:100%;
+    text-decoration:none;
+}
+
+.bx-menu-floating-circles li .sys-icon {
+    display:block;
+    padding:10px;
+    width:24px;
+    height:24px;
+    line-height:24px;
+    font-size:24px;
+    text-align:center;
+    vertical-align:middle;
+}
+
+.bx-menu-floating-circles li img {
+    width:100%;
+    height:100%;
+    background-position:center center;
+    background-repeat:no-repeat;
+}
+
+/* --------------- action menu */
+
+.bx-menu-action-wrapper {
+    position:fixed; 
+    height:44px; 
+    bottom:0px; 
+    right:-5px;
+    z-index:910;
+}
+
+.bx-menu-action-buttons,
+.bx-menu-action {
+    position:relative;
+    float:right;
+}
+
+ul.bx-menu-action {
+    padding:0;
+    margin-top:20px;
+    list-style:none;
+}
+.bx-menu-action li {
+    float:left;
+    margin:0;
+}
+.bx-menu-action li a {
+    display:block;
+    text-decoration:none;
+    line-height:normal;
+
+    transform:rotate(180deg);
+    -ms-transform:rotate(180deg);
+    -webkit-transform:rotate(180deg);
+
+    transition: transform .5s;
+    -webkit-transition: -webkit-transform .5s;
+}
+.bx-menu-action li a.bx-menu-action-hidden {
+    transform:rotate(0deg);
+    -ms-transform:rotate(0deg);
+    -webkit-transform:rotate(0deg);
+}
+
+.bx-menu-action li .sys-icon {
+    display:inline-block;
+    width:24px;
+    height:24px;
+    font-size:24px;
+    text-align:center;
+    vertical-align:middle;
+}
 
 /* --------------- interactive block menu */
 ul.bx-menu-inter {

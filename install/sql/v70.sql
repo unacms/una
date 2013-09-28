@@ -2826,7 +2826,8 @@ INSERT INTO `sys_menu_templates` (`id`, `template`, `title`) VALUES
 (6, 'menu_vertical.html', '_sys_menu_template_title_ver'),
 (7, 'menu_floating_blocks.html', '_sys_menu_template_title_floating_blocks'),
 (8, 'menu_main_submenu.html', '_sys_menu_template_title_main_submenu'),
-(9, 'menu_action.html', '_sys_menu_template_title_action');
+(9, 'menu_action.html', '_sys_menu_template_title_action'),
+(10, 'menu_floating_circles.html', '_sys_menu_template_title_floating_circles');
 
 CREATE TABLE IF NOT EXISTS `sys_objects_menu` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -2901,7 +2902,7 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 
 -- action menu
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_site_action', 'system', 'action', '_sys_menu_item_title_system_action', '', 'javascript:void(0);', 'bx_menu_popup_inline(\'#bx-menu-action-popup-sys_site_action\', this);', '', 'collapse', '', 2147483647, 1, 0, 0);
+('sys_site_action', 'system', 'action', '_sys_menu_item_title_system_action', '', 'javascript:void(0);', 'bx_menu_action_toggle (this);', '', 'caret-left', '', 2147483647, 1, 0, 0);
 
 -- footer menu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
