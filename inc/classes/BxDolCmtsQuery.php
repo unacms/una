@@ -22,6 +22,9 @@ class BxDolCmtsQuery extends BxDolDb
     protected $_sTriggerFieldTitle;
     protected $_sTriggerFieldComments;
 
+    protected $_sTableImages;
+    protected $_sTableImages2Entries;
+
     function BxDolCmtsQuery(&$oMain)
     {
     	$this->_oMain = $oMain;
@@ -33,6 +36,9 @@ class BxDolCmtsQuery extends BxDolDb
         $this->_sTriggerFieldId = $aSystem['trigger_field_id'];
         $this->_sTriggerFieldTitle = $aSystem['trigger_field_title'];
         $this->_sTriggerFieldComments = $aSystem['trigger_field_comments'];
+
+        $this->_sTableImages = $aSystem['table_images'];
+        $this->_sTableImages2Entries = $aSystem['table_images2entries'];
 
         parent::BxDolDb();
     }
@@ -103,11 +109,10 @@ class BxDolCmtsQuery extends BxDolDb
                 `c`.`cmt_author_id`,
                 `c`.`cmt_level`,
                 `c`.`cmt_text`,
-                `c`.`cmt_mood`,
                 `c`.`cmt_rate`,
                 `c`.`cmt_rate_count`,
                 `c`.`cmt_replies`,
-                (? - UNIX_TIMESTAMP(`c`.`cmt_time`)) AS `cmt_secs_ago`
+                (? - `c`.`cmt_time`) AS `cmt_secs_ago`
             FROM `{$this->_sTable}` AS `c`
             $sJoin
             WHERE `c`.`cmt_object_id` = ?" . $sWhereParent . $sOder . $sLimit, $iTimestamp, $iId);
@@ -142,11 +147,10 @@ class BxDolCmtsQuery extends BxDolDb
                 `c`.`cmt_author_id`,
                 `c`.`cmt_level`,
                 `c`.`cmt_text`,
-                `c`.`cmt_mood`,
                 `c`.`cmt_rate`,
                 `c`.`cmt_rate_count`,
                 `c`.`cmt_replies`,
-                ($iTimestamp - UNIX_TIMESTAMP(`c`.`cmt_time`)) AS `cmt_secs_ago`
+                ($iTimestamp - `c`.`cmt_time`) AS `cmt_secs_ago`
             FROM {$this->_sTable} AS `c`
             $sJoin
             WHERE `c`.`cmt_object_id` = ? AND `c`.`cmt_id` = ?
@@ -164,44 +168,11 @@ class BxDolCmtsQuery extends BxDolDb
         $iTimestamp = time();
         $sQuery = $this->prepare("
             SELECT
-                *, ($iTimestamp - UNIX_TIMESTAMP(`c`.`cmt_time`)) AS `cmt_secs_ago`
+                *, ($iTimestamp - `c`.`cmt_time`) AS `cmt_secs_ago`
             FROM {$this->_sTable} AS `c`
             WHERE `cmt_object_id` = ? AND `cmt_id` = ?
             LIMIT 1", $iId, $iCmtId);
         return $this->getRow($sQuery);
-    }
-
-    function addComment ($iId, $iCmtParentId, $iAuthorId, $sText)
-    {
-    	$iLevel = 0;
-    	$iCmtVisualParentId = 0;
-    	if((int)$iCmtParentId > 0) {
-    		$sQuery = $this->prepare("SELECT `cmt_vparent_id`, `cmt_level` FROM {$this->_sTable} WHERE `cmt_id`=? LIMIT 1", $iCmtParentId);
-    		$aParent = $this->getRow($sQuery);
-
-    		$iLevel = (int)$aParent['cmt_level'] + 1;
-    		$iCmtVisualParentId = $iLevel > $this->_oMain->getMaxLevel() ? $aParent['cmt_vparent_id'] : $iCmtParentId;
-    	}
-
-        $sQuery = $this->prepare("INSERT INTO {$this->_sTable} SET
-            `cmt_parent_id` = ?,
-            `cmt_vparent_id` = ?,
-            `cmt_object_id` = ?,
-            `cmt_author_id` = ?,
-            `cmt_level` = ?,
-            `cmt_text` = ?,
-            `cmt_time` = NOW()", $iCmtParentId, $iCmtVisualParentId, $iId, $iAuthorId, $iLevel, $sText);
-        if(!$this->query($sQuery))
-            return false;
-
-        $iRet = $this->lastId();
-
-        if($iCmtParentId) {
-            $sQuery = $this->prepare("UPDATE {$this->_sTable} SET `cmt_replies` = `cmt_replies` + 1 WHERE `cmt_id` = ? LIMIT 1", $iCmtParentId);
-            $this->query ($sQuery);
-        }
-
-        return $iRet;
     }
 
     function removeComment ($iId, $iCmtId, $iCmtParentId)
@@ -210,16 +181,22 @@ class BxDolCmtsQuery extends BxDolDb
         if (!$this->query($sQuery))
             return false;
 
-        $sQuery = $this->prepare("UPDATE {$this->_sTable} SET `cmt_replies` = `cmt_replies` - 1 WHERE `cmt_id` = ? LIMIT 1", $iCmtParentId);
-        $this->query ($sQuery);
+		if($iCmtParentId) 
+        	$this->updateRepliesCount($iCmtParentId, -1);
 
         return true;
     }
 
-    function updateComment ($iId, $iCmtId, $sText)
+	function saveImages($iSystemId, $iCmtId, $iImageId)
+	{
+		$sQuery = $this->prepare("INSERT IGNORE INTO `{$this->_sTableImages2Entries}` SET `system_id`=?, `cmt_id`=?, `image_id`=?", $iSystemId, $iCmtId, $iImageId);
+		return (int)$this->query($sQuery) > 0;
+	}
+
+    function updateRepliesCount($iCmtId, $iCount)
     {
-        $sQuery = $this->prepare("UPDATE {$this->_sTable} SET `cmt_text` = ?  WHERE `cmt_object_id` = ? AND `cmt_id` = ? LIMIT 1", $sText, $iId, $iCmtId);
-        return $this->query($sQuery);
+    	$sQuery = $this->prepare("UPDATE `{$this->_sTable}` SET `cmt_replies`=`cmt_replies`+? WHERE `cmt_id`=? LIMIT 1", $iCount, $iCmtId);
+		return $this->query($sQuery);
     }
 
     function rateComment ($iSystemId, $iCmtId, $iRate, $iAuthorId, $sAuthorIp)
@@ -312,7 +289,8 @@ class BxDolCmtsQuery extends BxDolDb
         return $this->query($sQuery);
     }
 
-    function maintenance() {
+    function maintenance()
+    {
         $iTimestamp = time();
         $iDeletedRecords = $this->query("DELETE FROM {$this->_sTableTrack} WHERE `cmt_rate_ts` < ($iTimestamp - " . (int)BX_OLD_CMT_VOTES . ")");
         if ($iDeletedRecords)
@@ -320,4 +298,3 @@ class BxDolCmtsQuery extends BxDolDb
         return $iDeletedRecords;
     }
 }
-
