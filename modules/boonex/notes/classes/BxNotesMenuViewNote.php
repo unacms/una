@@ -31,12 +31,6 @@ class BxNotesMenuViewNote extends BxTemplMenu {
             $this->addMarkers(array('content_id' => $this->_aContentInfo['id']));
     }
 
-    public function getCode () {
-        if (!bx_get_logged_profile_id())
-            return false;
-        return parent::getCode ();
-    }
-
     /**
      * Check if menu items is visible.
      * @param $a menu item array
@@ -46,13 +40,11 @@ class BxNotesMenuViewNote extends BxTemplMenu {
 
         $iProfileId = bx_get_logged_profile_id();
 
-        // all links are visible for owner
-        if ($this->_aContentInfo['author'] == $iProfileId)
-            return true;
-
         $sFuncCheckAccess = false;
         switch ($a['name']) {
             case 'view-note':
+                if ($this->_aContentInfo[BxNotesConfig::$FIELD_AUTHOR] != $iProfileId && 'bx_notes_view' == $this->_sObject) // TODO: this is temporary - to hide single view item from menu
+                    return false;
                 $sFuncCheckAccess = 'isAllowedView';
                 break;
             case 'edit-note':
