@@ -15,9 +15,3 @@
     float:right;
 }
 
-/* enity view */
-
-.bx-notes-entity-content > p {
-    max-width:95% !important;
-    overflow:scroll !important;
-}
