@@ -15,7 +15,7 @@ bx_import('BxDolLanguages');
 bx_import('BxDolMenu');
 bx_import('BxDolTemplate');
 
-BxDolMenu::setSelected ('system', 'contact'); 
+BxDolMenu::setSelectedGlobal ('system', 'contact'); 
 
 $oTemplate = BxDolTemplate::getInstance();
 $oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);
