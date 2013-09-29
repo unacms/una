@@ -47,7 +47,7 @@
     <string name="_bx_notes_page_block_title_delete_note"><![CDATA[Delete Note]]></string>
 	<string name="_bx_notes_page_title_sys_view_note"><![CDATA[View Note]]></string>
 	<string name="_bx_notes_page_title_view_note"><![CDATA[{title}]]></string>
-	<string name="_bx_notes_page_block_title_note_text"><![CDATA[{title}]]></string>
+	<string name="_bx_notes_page_block_title_note_text"><![CDATA[Note Text]]></string>
 	<string name="_bx_notes_page_block_title_note_menu"><![CDATA[Note Menu]]></string>
 	<string name="_bx_notes_page_title_browse"><![CDATA[Notes]]></string>
 	<string name="_bx_notes_page_title_search_results"><![CDATA[Notes matching "{0}"]]></string>

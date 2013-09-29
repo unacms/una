@@ -97,7 +97,8 @@
 
 /* --------------- social buttons */
 
-.bx-social-sharing .bx-social-sharing-btn:first-child {
-    margin-top:0;
+.bx-social-sharing .bx-social-sharing-btn {
+    width:150px;
+    float:left;
 }
 
