@@ -3365,7 +3365,7 @@ More info about URI DNSBL: <br />
     <string name="_sys_txt_confirm_email_error_occured"><![CDATA[Error occured, please try to login to your account and resend verification email.]]></string>
     <string name="_sys_txt_confirm_email_success"><![CDATA[You email address was successfully confirmed.]]></string>
     <string name="_sys_txt_confirm_email_desc"><![CDATA[Please enter confirmation code which was sent to your email address, or just click confirmation link in the same email message.]]></string>
-    <string name="_sys_txt_confirm_email_sent"><![CDATA[Email verification letter was send, please check your inbox.]]></string>
+    <string name="_sys_txt_confirm_email_sent"><![CDATA[Email verification letter was sent, please check your inbox.]]></string>
     <string name="_sys_txt_confirm_email_sent_failed"><![CDATA[Error occured, please report error to site administrator.]]></string>
     <string name="_sys_txt_confirm_email_already_confirmed"><![CDATA[Your email address is already confirmed.]]></string>
     <string name="_sys_txt_unsubscribe_wrong_link"><![CDATA[Unsubscribe link is wrong.]]></string>

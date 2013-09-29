@@ -87,6 +87,10 @@
 
 /* --------------- footer */
 
+#bx-footer {
+    margin-bottom:60px;
+}
+
 #bx-footer-copyright {
     float:right;
 }
