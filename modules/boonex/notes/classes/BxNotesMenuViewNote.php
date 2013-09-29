@@ -40,11 +40,13 @@ class BxNotesMenuViewNote extends BxTemplMenu {
 
         $iProfileId = bx_get_logged_profile_id();
 
+        // don't show current item, also this will solve problem when only one view note item is visible
+        if ('bx_notes_view' == $this->_sObject && $this->_isSelected($a))
+            return false;
+
         $sFuncCheckAccess = false;
         switch ($a['name']) {
             case 'view-note':
-                if ($this->_aContentInfo[BxNotesConfig::$FIELD_AUTHOR] != $iProfileId && 'bx_notes_view' == $this->_sObject) // TODO: this is temporary - to hide single view item from menu
-                    return false;
                 $sFuncCheckAccess = 'isAllowedView';
                 break;
             case 'edit-note':
