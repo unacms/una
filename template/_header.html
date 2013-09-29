@@ -24,7 +24,9 @@
 
     <bx_include_js />
     <script type="text/javascript" language="javascript">
+
         var sUrlRoot = '<bx_url_root />';
+
         var aSpinnerOpts = {
             lines: 7, // The number of lines to draw
             length: 0, // The length of each line
@@ -51,6 +53,11 @@
             top: 'auto',
             left: 'auto'
         }); 
+
+        $(document).ready(function () {
+            $('#bx-toolbar').css({opacity: 1});
+        });
+
     </script>
     __extra_js__
 
