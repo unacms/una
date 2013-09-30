@@ -309,6 +309,8 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
         $this->addJs(array(
             'jquery.js',
             'jquery.migrate.js',
+            'jquery.easing.js',
+            'jquery.cookie.js',
             'functions.js',
             'jquery.dolPopup.js',
             'jquery.ui.position.min.js',

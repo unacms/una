@@ -67,7 +67,13 @@ class BxBasePageAccount extends BxTemplPage {
     protected function _getPageCacheParams () {
         return getLoggedId(); // cache is different for every account
     }
-    
+
+    protected function _getBlockCode($aBlock) {
+        $sAdd = '';
+        if ('service' == $aBlock['type'] && $aBlock['content'])
+            $sAdd = '<a id="top" class="bx-anchor-invisible">&nbsp;</a>';
+        return $sAdd . parent::_getBlockCode ($aBlock);
+    }
 }
 
 /** @} */

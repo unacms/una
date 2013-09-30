@@ -89,6 +89,9 @@ class BxDolMenu extends BxDol implements iBxDolFactoryObject {
     protected static $SEL_MODULE = '';
     protected static $SEL_NAME = '';
 
+    protected $_sSelModule;
+    protected $_sSelName;
+
     protected $_sObject;
     protected $_aObject;
     protected $_oQuery;
@@ -138,13 +141,23 @@ class BxDolMenu extends BxDol implements iBxDolFactoryObject {
     }
 
     /**
-     * Set selected menu item.
+     * Set selected menu item globally.
      * @param $sModule menu item module to set as selected
      * @param $sName menu item name to set as selected
      */
-    static public function setSelected ($sModule, $sName) {
+    static public function setSelectedGlobal ($sModule, $sName) {
         self::$SEL_MODULE = $sModule;
         self::$SEL_NAME = $sName;
+    }
+
+    /**
+     * Set selected menu item for current menu object only.
+     * @param $sModule menu item module to set as selected
+     * @param $sName menu item name to set as selected
+     */
+    public function setSelected ($sModule, $sName) {
+        $this->_sSelModule = $sModule;
+        $this->_sSelName = $sName;
     }
 
     /**
@@ -165,6 +178,8 @@ class BxDolMenu extends BxDol implements iBxDolFactoryObject {
      * @return boolean
      */ 
     protected function _isSelected ($a) {
+        if ($this->_sSelModule || $this->_sSelName)
+            return (!isset($a['module']) || $a['module'] == $this->_sSelModule) && (isset($a['name']) && $a['name'] == $this->_sSelName) ? true : false;
         return (!isset($a['module']) || $a['module'] == self::$SEL_MODULE) && (isset($a['name']) && $a['name'] == self::$SEL_NAME) ? true : false;
     }
 

@@ -86,6 +86,18 @@ class BxNotesTemplate extends BxDolModuleTemplate {
         return $this->parseHtmlByName($sTemplateName, $aVars);
     }
 
+    function entryAuthor ($aData, $oProfile, $sTemplateName = 'author.html') {
+        if (!$oProfile)
+            return '';
+        $aVars = array (
+            'author_url' => $oProfile->getUrl(),
+            'author_thumb_url' => $oProfile->getThumb(),
+            'author_title' => $oProfile->getDisplayName(),
+            'entry_posting_date' => defineTimeInterval($aData['added']),
+        );
+        return $this->parseHtmlByName($sTemplateName, $aVars);
+    }
+
 }
 
 /** @} */ 

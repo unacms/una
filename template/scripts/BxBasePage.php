@@ -159,7 +159,7 @@ class BxBasePage extends BxDolPage {
      */ 
     protected function _selectMenu () {
         bx_import('BxDolMenu');
-        BxDolMenu::setSelected ($this->_aObject['module'], $this->_aObject['uri']); 
+        BxDolMenu::setSelectedGlobal ($this->_aObject['module'], $this->_aObject['uri']); 
     }
 
     /**

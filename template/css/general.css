@@ -21,6 +21,11 @@
     -moz-box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.8);
     -webkit-box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.8);
     box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.8);
+
+    opacity:0;
+
+    transition: opacity .3s;
+    -webkit-transition: opacity .3s;
 }
 
 #bx-toolbar-content {
@@ -82,13 +87,18 @@
 
 /* --------------- footer */
 
+#bx-footer {
+    margin-bottom:60px;
+}
+
 #bx-footer-copyright {
     float:right;
 }
 
 /* --------------- social buttons */
 
-.bx-social-sharing .bx-social-sharing-btn:first-child {
-    margin-top:0;
+.bx-social-sharing .bx-social-sharing-btn {
+    width:150px;
+    float:left;
 }
 

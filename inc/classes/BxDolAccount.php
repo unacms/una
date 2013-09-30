@@ -182,7 +182,7 @@ class BxDolAccount extends BxDol {
     static public function getID($s) {
         $oQuery = BxDolAccountQuery::getInstance();
 
-        if (preg_match("/^[_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,4}$/", $s)) {
+        if (preg_match("/^[_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,4}$/i", $s)) {
             $iId = (int)$oQuery->getIdByEmail($s);
             return $iId ? $iId : false;
         }

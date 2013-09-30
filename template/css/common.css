@@ -44,11 +44,22 @@ blockquote {
     clear:both;
 }
 
-/* --------------- design boxes */
-
-.bx-db-container {
+.bx-anchor-invisible,
+.bx-anchor {
+    padding-top:60px;
+    margin-top:-60px;
+    -webkit-background-clip:content-box;
+    background-clip:content-box;
+}
+.bx-anchor-invisible {
+    display:block;
+    display:inline-block;
+    height:0px;
+    width:0px;
     overflow:hidden;
 }
+
+/* --------------- design boxes */
 
 .bx-db-title {
     display:inline-block;

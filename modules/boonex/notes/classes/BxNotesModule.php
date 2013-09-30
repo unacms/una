@@ -129,7 +129,7 @@ class BxNotesModule extends BxDolModule {
         }
 
         bx_import('BxTemplSocialSharing');
-        return BxTemplSocialSharing::getInstance()->getCode($sUrl, $aContentInfo['title'], $aCustomParams);
+        return BxTemplSocialSharing::getInstance()->getCode(BX_DOL_URL_ROOT . $sUrl, $aContentInfo['title'], $aCustomParams);
     }
 
     public function serviceEntityComments ($iContentId = 0) {
@@ -159,7 +159,7 @@ class BxNotesModule extends BxDolModule {
             bx_import('BxDolProfileUndefined');
             $oProfile = BxDolProfileUndefined::getInstance();
         }
-        return $oProfile->getUnit();
+        return $this->_oTemplate->entryAuthor ($aContentInfo, $oProfile);
     }
 
     // ====== ACTION METHODS

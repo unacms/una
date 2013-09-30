@@ -15,9 +15,25 @@
     float:right;
 }
 
-/* enity view */
+/* author block */
 
-.bx-notes-entity-content > p {
-    max-width:95% !important;
-    overflow:scroll !important;
+.bx-notes-author {
 }
+
+.bx-notes-author img {
+    display:inline;
+    display:inline-block;
+
+    vertical-align:middle;
+}
+
+.bx-notes-author div {
+    display:inline;
+    display:inline-block;
+    
+    text-overflow:ellipsis;
+    overflow:hidden;
+
+    vertical-align:middle;
+}
+

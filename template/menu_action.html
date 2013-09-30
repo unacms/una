@@ -1,7 +1,32 @@
-<ul id="bx-menu-action" class="bx-menu-action bx-menu-object-__object__ bx-def-font-h3 bx-clearfix">
-    <bx_repeat:menu_items>
-        <li class="bx-def-padding-sec-right bx-def-padding-sec-left __class_add__"><a href="__link__" target="__target__" onclick="__onclick__"><i class="sys-icon __icon__"></i>__title__</a></li>
-    </bx_repeat:menu_items>
-</ul>
+<div class="bx-menu-action-wrapper bx-clearfix">
+    <ul id="bx-menu-action" class="bx-menu-action bx-menu-object-__object__ bx-def-font-h3 bx-def-margin-sec-left bx-clearfix">
+        <bx_repeat:menu_items>
+            <li class="bx-def-circle __class_add__"><a class="bx-menu-action-toggle" href="__link__" target="__target__" onclick="__onclick__"><i class="sys-icon __icon__"></i><span>__title__</span></a></li>
+        </bx_repeat:menu_items>
+    </ul>
+    <div class="bx-menu-action-buttons">
+        __buttons__
+    </div>
+</div>
+<script language="javascript">
+    var sBxMenuActionHide = 'bx-menu-action-hide-__buttons_object__';
 
-<div id="bx-menu-action-popup-__object__" style="display:none">__popup__</div>
+    $(document).ready(function () {
+        if ($.cookie(sBxMenuActionHide))
+            bx_menu_action_toggle($('.bx-menu-action-toggle'), true);
+    });
+
+    function bx_menu_action_toggle (e, bForceHide) {
+        if ($('.bx-menu-action-buttons').is(':visible') || ('undefined' != typeof(bForceHide) && bForceHide)) {
+            $(e).addClass('bx-menu-action-hidden');
+            $('.bx-menu-action-buttons').animate({left:'100%', opacity:0}, bForceHide ? 0 : 1000, 'easeInOutCubic', function () {
+                $(this).hide();
+            });
+            $.cookie(sBxMenuActionHide, 1);
+        } else {
+            $(e).removeClass('bx-menu-action-hidden');
+            $('.bx-menu-action-buttons').show().animate({left:'0px', opacity:1}, 1000, 'easeInOutCubic');
+            $.removeCookie(sBxMenuActionHide);
+        }
+    }
+</script>
