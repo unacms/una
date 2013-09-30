@@ -30,6 +30,15 @@
 			<div class="__style_prefix__-body bx-def-margin-thd-topbottom">
 				__text__<bx_if:show_more><span class="__style_prefix__-body-see-more">... <a class="bx-def-font-small" href="javascript:void(0)" onclick="__js_object__.showMore(this);"><bx_text:_see_more /></a></span><span style="display:none;"> __text_more__</span></bx_if:show_more>
 			</div>
+			<bx_if:show_attached>
+				<div class="__style_prefix__-attached bx-def-margin-thd-topbottom bx-clearfix">
+					<bx_repeat:attached>
+						<div class="__style_prefix__-attached-preview bx-def-thumb bx-def-margin-sec-left-auto">
+							<img src="__image__" />
+						</div>
+					</bx_repeat:attached>
+				</div>
+			</bx_if:show_attached>
 		</div>
 	</div>
 	__actions__

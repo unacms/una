@@ -546,7 +546,7 @@ EOF;
 
                 bx_import('BxTemplMenu');
                 $oMenu = BxTemplMenu::getObjectInstance($mixedMenu);
-                $sMenu = $oMenu ? $oMenu->getCode () : '';
+                $sMenu = $oMenu ? $oMenu->getCode () : $mixedMenu;
 
             } elseif (is_object($mixedMenu) && is_a($mixedMenu, 'BxTemplMenu')) {
 

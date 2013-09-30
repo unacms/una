@@ -1007,6 +1007,27 @@ CREATE TABLE IF NOT EXISTS `sys_images_cmts` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `sys_images_cmts_preview`
+--
+CREATE TABLE IF NOT EXISTS `sys_images_cmts_preview` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `profile_id` int(10) unsigned NOT NULL,
+  `remote_id` varchar(255) NOT NULL,
+  `path` varchar(255) NOT NULL,
+  `file_name` varchar(255) NOT NULL,
+  `mime_type` varchar(128) NOT NULL,
+  `ext` varchar(32) NOT NULL,
+  `size` int(11) NOT NULL,
+  `added` int(11) NOT NULL,
+  `modified` int(11) NOT NULL,
+  `private` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `remote_id` (`remote_id`)
+);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `sys_images_cmts2entries`
 --
 CREATE TABLE IF NOT EXISTS `sys_images_cmts2entries` (
@@ -1301,7 +1322,8 @@ CREATE TABLE IF NOT EXISTS `sys_objects_storage` (
 
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
 ('sys_images', 'Local', '', 360, 2592000, 0, 'sys_images', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
-('sys_images_cmts', 'Local', '', 360, 2592000, 3, 'sys_images_cmts', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0);
+('sys_images_cmts', 'Local', '', 360, 2592000, 3, 'sys_images_cmts', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
+('sys_images_cmts_preview', 'Local', '', 360, 2592000, 3, 'sys_images_cmts_preview', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0);
 
 CREATE TABLE IF NOT EXISTS `sys_storage_user_quotas` (
   `profile_id` int(11) NOT NULL,
@@ -2469,7 +2491,7 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('sys_comment_edit', 'cmt_id', 2147483647, 1, 4),
 ('sys_comment_edit', 'cmt_parent_id', 2147483647, 1, 5),
 ('sys_comment_edit', 'cmt_text', 2147483647, 1, 6),
-('sys_comment_edit', 'cmt_image', 2147483647, 1, 7),
+('sys_comment_edit', 'cmt_image', 2147483647, 0, 7),
 ('sys_comment_edit', 'cmt_submit', 2147483647, 1, 8);
 
 
@@ -3172,7 +3194,7 @@ INSERT INTO `sys_objects_transcoder_images` (`object`, `storage_object`, `source
 ('sys_icon_apple', 'sys_images', 'Storage', 'a:1:{s:6:"object";s:10:"sys_images";}', 'no', '0', '0', '0'),
 ('sys_icon_facebook', 'sys_images', 'Storage', 'a:1:{s:6:"object";s:10:"sys_images";}', 'no', '0', '0', '0'),
 ('sys_icon_favicon', 'sys_images', 'Storage', 'a:1:{s:6:"object";s:10:"sys_images";}', 'no', '0', '0', '0'),
-('sys_images_cmts_preview', 'sys_images_cmts', 'Storage', 'a:1:{s:6:"object";s:15:"sys_images_cmts";}', 'no', '1', '2592000', '0');
+('sys_images_cmts_preview', 'sys_images_cmts_preview', 'Storage', 'a:1:{s:6:"object";s:15:"sys_images_cmts";}', 'no', '1', '2592000', '0');
 
 
 CREATE TABLE IF NOT EXISTS `sys_transcoder_images_files` (

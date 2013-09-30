@@ -85,12 +85,13 @@ class BxBaseCmtsView extends BxDolCmts {
     /**
      * get full comments block with initializations
      */
-    function getCommentsBlock($iParentId = 0, $iVParentId = 0) {
+    function getCommentsBlock($iParentId = 0, $iVParentId = 0, $bInDesignbox = true) {
     	$aBp = array('parent_id' => $iParentId, 'vparent_id' => $iVParentId);
 
     	$sCmts = $this->getComments($aBp);
 
-    	return BxDolTemplate::getInstance()->parseHtmlByName('comments_block.html', array(
+    	$sCaption = _t('_cmt_block_comments_title', $this->_oQuery->getCommentsCount($this->_iId));
+    	$sContent = BxDolTemplate::getInstance()->parseHtmlByName('comments_block.html', array(
     		'system' => $this->_sSystem,
     		'id' => $this->getId(),
     		'bx_if:show_empty' => array(
@@ -99,12 +100,13 @@ class BxBaseCmtsView extends BxDolCmts {
 					'style_prefix' => $this->_sStylePrefix
 				)
 			),
-			'controls' => $this->_getControlsBox(),
     		'comments' => $sCmts,
     		'post_form_top' => $this->getFormBoxPost($aBp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_TOP)),
 			'post_form_bottom'  => $this->getFormBoxPost($aBp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_BOTTOM)),
     		'script' => $this->getScript()
     	));
+
+    	return $bInDesignbox ? DesignBoxContent($sCaption, $sContent, BX_DB_PADDING_DEF, $this->_getControlsBox()) : $sContent;
     }
 
     /**
@@ -205,7 +207,20 @@ class BxBaseCmtsView extends BxDolCmts {
         		'par_cmt_author' => $sParAuthorName
         	);
 		}
- 
+
+		$aTmplImages = array();
+		$aImages = $this->_oQuery->getImages($this->_aSystem['system_id'], $r['cmt_id']);
+		if(!empty($aImages) && is_array($aImages)) {
+			bx_import('BxDolImageTranscoder');
+        	$oTranscoder = BxDolImageTranscoder::getObjectInstance($this->_sTranscoderPreview);
+
+        	foreach($aImages as $aImage)
+        		$aTmplImages[] = array(
+        			'style_prefix' => $this->_sStylePrefix,
+        			'image' => $oTranscoder->getImageUrl($aImage['image_id'])
+        		);
+		}
+
 		$sReplies = '';
 		if((int)$r['cmt_replies'] > 0 && !empty($aDp) && $aDp['type'] == BX_CMT_DISPLAY_THREADED)
 			$sReplies = $this->getComments(array('parent_id' => $r['cmt_id'], 'vparent_id' => $r['cmt_id'], 'type' => $aBp['type']), $aDp);
@@ -262,6 +277,13 @@ class BxBaseCmtsView extends BxDolCmts {
         			'style_prefix' => $this->_sStylePrefix,
         			'js_object' => $this->_sJsObjName,
         			'text_more' => $sTextMore
+        		)
+        	),
+        	'bx_if:show_attached' => array(
+        		'condition' => !empty($aTmplImages),
+        		'content' => array(
+        			'style_prefix' => $this->_sStylePrefix,
+        			'bx_repeat:attached' => $aTmplImages
         		)
         	),
         	'actions' => $sActions,
@@ -333,7 +355,7 @@ class BxBaseCmtsView extends BxDolCmts {
 			);
 
     		bx_import('BxTemplMenuInteractive');
-			$oMenu = new BxTemplMenuInteractive(array('template' => 'menu_interactive.html', 'menu_id'=> $this->_sSystem . '-display', 'menu_items' => $aDisplayLinks));
+			$oMenu = new BxTemplMenuInteractive(array('template' => 'menu_interactive_vertical.html', 'menu_id'=> $this->_sSystem . '-display', 'menu_items' => $aDisplayLinks));
 			$oMenu->setSelected('', $this->_sSystem . '-' . $this->_sDisplayType);
         	$sDisplay = $oMenu->getCode();
     	}
@@ -349,15 +371,12 @@ class BxBaseCmtsView extends BxDolCmts {
     		);
 
     		bx_import('BxTemplMenuInteractive');
-			$oMenu = new BxTemplMenuInteractive(array('template' => 'menu_interactive.html', 'menu_id'=> $this->_sSystem . '-browse', 'menu_items' => $aBrowseLinks));
+			$oMenu = new BxTemplMenuInteractive(array('template' => 'menu_interactive_vertical.html', 'menu_id'=> $this->_sSystem . '-browse', 'menu_items' => $aBrowseLinks));
 			$oMenu->setSelected('', $this->_sSystem . '-' . $this->_sBrowseType);
         	$sBrowse = $oMenu->getCode();
     	}
-    	
+
     	return $oTemplate->parseHtmlByName('comments_controls.html', array(
-			'js_object' => $this->_sJsObjName,
-			'style_prefix' => $this->_sStylePrefix,
-			'comments_count' => _t('_N_comments', $this->_oQuery->getCommentsCount($this->_iId)),
     		'display_switcher' => $bDisplay ? $sDisplay : '',
     		'bx_if:is_divider' => array(
     			'condition' => $bDisplay && $bBrowse,
@@ -527,9 +546,14 @@ class BxBaseCmtsView extends BxDolCmts {
 			$iCmtId = (int)$oForm->insert(array('cmt_vparent_id' => $iCmtVisualParentId, 'cmt_object_id' => $this->_iId, 'cmt_author_id' => $iCmtAuthorId, 'cmt_level' => $iLevel, 'cmt_time' => mktime()));
 			if($iCmtId != 0) {
 				$aImages = $oForm->getCleanValue('cmt_image');
-				if(!empty($aImages) || is_array($aImages))
-					foreach($aImages as $iImage)
-						$this->_oQuery->saveImages($this->_aSystem['system_id'], $iCmtId, $iImage);
+				if(!empty($aImages) || is_array($aImages)) {
+					bx_import('BxDolStorage');
+					$oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
+
+					foreach($aImages as $iImageId)
+						if($this->_oQuery->saveImages($this->_aSystem['system_id'], $iCmtId, $iImageId))
+							$oStorage->afterUploadCleanup($iImageId, $iCmtAuthorId);
+				}
 
 				if($iCmtParentId) 
         			$this->_oQuery->updateRepliesCount($iCmtParentId, 1);
@@ -542,7 +566,7 @@ class BxBaseCmtsView extends BxDolCmts {
 		        $oZ = new BxDolAlerts($this->_sSystem, 'commentPost', $this->getId(), $iCmtAuthorId, array('comment_id' => $iCmtId, 'comment_author_id' => $iCmtAuthorId));
 		        $oZ->alert();
 
-		        return array('id' => $iCmtId);
+		        return array('id' => $iCmtId, 'parent_id' => $iCmtParentId);
 			}
 
 			return array('msg' => _t('_cmt_err_cannot_perform_action'));
@@ -603,22 +627,24 @@ class BxBaseCmtsView extends BxDolCmts {
         $oForm->aInputs['id']['value'] = $this->_iId;
         $oForm->aInputs['action']['value'] = 'Submit' . $sActionCap . 'Form';
 
-        $aFormNested = array(
-        	'params' =>array(
-        		'nested_form_template' => 'comments_uploader_nfw.html'
-        	),
-	        'inputs' => array(),
-	    );
+	    if(isset($oForm->aInputs['cmt_image'])) {
+	    	$aFormNested = array(
+	        	'params' =>array(
+	        		'nested_form_template' => 'comments_uploader_nfw.html'
+	        	),
+		        'inputs' => array(),
+		    );
 
-	    bx_import('BxDolFormNested');
-	    $oFormNested = new BxDolFormNested('cmt_image', $aFormNested, 'cmt_submit');
-
-        $oForm->aInputs['cmt_image']['storage_object'] = $this->_sStorageObject;
-        $oForm->aInputs['cmt_image']['images_transcoder'] = $this->_sTranscoderPreview;
-        $oForm->aInputs['cmt_image']['uploaders'] = array('sys_simple_cmts');
-        $oForm->aInputs['cmt_image']['upload_buttons_titles'] = array('Simple' => 'camera');
-        $oForm->aInputs['cmt_image']['multiple'] = true;
-        $oForm->aInputs['cmt_image']['ghost_template'] = $oFormNested;
+		    bx_import('BxDolFormNested');
+		    $oFormNested = new BxDolFormNested('cmt_image', $aFormNested, 'cmt_submit');
+	
+	        $oForm->aInputs['cmt_image']['storage_object'] = $this->_sStorageObject;
+	        $oForm->aInputs['cmt_image']['images_transcoder'] = $this->_sTranscoderPreview;
+	        $oForm->aInputs['cmt_image']['uploaders'] = array('sys_simple_cmts');
+	        $oForm->aInputs['cmt_image']['upload_buttons_titles'] = array('Simple' => 'camera');
+	        $oForm->aInputs['cmt_image']['multiple'] = true;
+	        $oForm->aInputs['cmt_image']['ghost_template'] = $oFormNested;
+	    }
 
         if(isset($oForm->aInputs['cmt_text'])) {
         	$iCmtTextMin = (int)$this->_aSystem['chars_post_min'];

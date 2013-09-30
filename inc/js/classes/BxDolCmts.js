@@ -61,9 +61,10 @@ BxDolCmts.prototype.cmtAfterPostSubmit = function (oCmtForm, oData)
 	if(oData && oData.id != undefined) {
 		var iCmtId = parseInt(oData.id);
         if(iCmtId > 0) {
-            $(oCmtForm).find(':input:not(:button,:submit,[type = hidden],[type = radio],[type = checkbox])').val('');
-            $(oCmtForm).find('.bx-form-warn').hide().html('');
             this._getCmt(oCmtForm, iCmtId);
+            this._getForm(undefined, parseInt(oData.parent_id), function(sForm) {
+            	oCmtForm.parents('.cmt-reply:first').hide().html($(sForm).html()).show();
+            });
         }
 
         return;
@@ -282,56 +283,42 @@ BxDolCmts.prototype.showMore = function(oLink)
 
 BxDolCmts.prototype.toggleReply = function(e, iCmtParentId)
 {
+	var $this = this;
 	var sParentId = this._sRootId + ' #cmt' + iCmtParentId;
+
 	var sReplyId = sParentId + ' > .cmt-reply';
-
-    if ($(sReplyId).length)
+    if ($(sReplyId).length) {
 		$(sReplyId).bx_anim('toggle', this._sAnimationEffect, this._iAnimationSpeed);
-    else {
-        var $this = this;
-        var oData = this._getDefaultActions();
-        oData['action'] = 'GetFormPost';
-        oData['CmtType'] = 'reply';
-        oData['CmtParent'] = iCmtParentId;
-        oData['CmtBrowse'] = this._sBrowseType;
-        oData['CmtDisplay'] = this._sDisplayType;
-
-        $this._loadingInContent(e, true);
-
-        jQuery.post (
-            this._sActionsUrl,
-            oData,
-            function (s) {
-                $this._loadingInContent(e, false);
-
-                var oForm = $(s).css('display', 'none');
-                var sFormClass = oForm.attr('class');
-                var oFormSibling = $(sParentId + ' > ul.cmts:first');
-                switch($this._sPostFormPosition) {
-                	case 'top':
-                		oForm.addClass('cmt-reply-margin').addClass(sFormClass + '-' + $this._sPostFormPosition);
-                		oFormSibling.before(oForm);
-                		break;
-
-                	case 'bottom':
-                		oForm.addClass('cmt-reply-margin').addClass(sFormClass + '-' + $this._sPostFormPosition);
-                		oFormSibling.after(oForm);
-                		break;
-
-                	case 'both':
-                		var oFormClone = oForm.clone();
-
-                		oForm.addClass('cmt-reply-margin').addClass(sFormClass + '-top');
-                		oFormSibling.before(oForm);
-
-                		oFormClone.addClass('cmt-reply-margin').addClass(sFormClass + '-bottom');
-                		oFormSibling.after(oFormClone);
-                		break;
-                }
-            	$(sParentId).children('.cmt-reply').bx_anim('toggle', $this._sAnimationEffect, $this._iAnimationSpeed);
-            }
-        );
+		return;
     }
+
+	this._getForm(e, iCmtParentId, function(sForm) {
+		var oForm = $(sForm).css('display', 'none');
+        var sFormClass = oForm.attr('class');
+        var oFormSibling = $(sParentId + ' > ul.cmts:first');
+        switch($this._sPostFormPosition) {
+        	case 'top':
+        		oForm.addClass('cmt-reply-margin').addClass(sFormClass + '-' + $this._sPostFormPosition);
+        		oFormSibling.before(oForm);
+        		break;
+
+        	case 'bottom':
+        		oForm.addClass('cmt-reply-margin').addClass(sFormClass + '-' + $this._sPostFormPosition);
+        		oFormSibling.after(oForm);
+        		break;
+
+        	case 'both':
+        		var oFormClone = oForm.clone();
+
+        		oForm.addClass('cmt-reply-margin').addClass(sFormClass + '-top');
+        		oFormSibling.before(oForm);
+
+        		oFormClone.addClass('cmt-reply-margin').addClass(sFormClass + '-bottom');
+        		oFormSibling.after(oFormClone);
+        		break;
+        }
+    	$(sParentId).children('.cmt-reply').bx_anim('toggle', $this._sAnimationEffect, $this._iAnimationSpeed);    		
+	});
 };
 
 BxDolCmts.prototype.toggleManagePopup = function(oLink, iCmtId) {
@@ -360,7 +347,7 @@ BxDolCmts.prototype.togglePlusedByPopup = function(oLink, iCmtId) {
     	return;
     }
 
-	$this._loadingInContent(oLink, true);
+	this._loadingInContent(oLink, true);
 
 	jQuery.post (
 		this._sActionsUrl,
@@ -449,6 +436,35 @@ BxDolCmts.prototype._getCmts = function (e, iCmtParentId, iStart, iPerView, sBro
         		$this._cmtsAppend(sListId, s);
         }
     );
+};
+
+BxDolCmts.prototype._getForm = function (e, iCmtParentId, onLoad)
+{
+	var $this = this;
+
+    var oData = this._getDefaultActions();
+    oData['action'] = 'GetFormPost';
+    oData['CmtType'] = 'reply';
+    oData['CmtParent'] = iCmtParentId;
+    oData['CmtBrowse'] = this._sBrowseType;
+    oData['CmtDisplay'] = this._sDisplayType;
+
+    
+    
+    if(e)
+    	this._loadingInContent(e, true);
+
+    jQuery.post (
+        this._sActionsUrl,
+        oData,
+        function (s) {
+        	if(e)
+        		$this._loadingInContent(e, false);
+
+            if(typeof onLoad == 'function')
+    			onLoad(s);
+        }
+    );	
 };
 
 BxDolCmts.prototype._cmtsAppend = function(sIdTo, sContent)

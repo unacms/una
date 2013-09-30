@@ -40,35 +40,6 @@
        color: #333333;
     }
 
-	/*--- Browse Styles ---*/
-    div.cmt-browse {
-
-    }
-    div.cmt-browse-left {
-		position: relative;
-    	float: left;
-    }
-    div.cmt-browse-right {
-    	position: relative;
-    	float: right;
-	}
-	div.cmt-browse-right ul.bx-menu-inter  {
-		float: left;
-	}
-
-	div.cmt-browse-item,
-	div.cmt-browse-item-div,
-	div.cmt-browse-type-div {
-		position: relative;
-		float: left;
-	}
-	div.cmt-browse-item-div {
-		padding: 0px 3px;
-	}
-	div.cmt-browse-type-div {
-		padding: 0px 5px;
-	}
-
 	/*--- More ---*/
     li.cmt-more {}
 	li.cmt-more-root {}
@@ -180,6 +151,14 @@
     span.cmt-body-see-more a {
 		font-weight: bold;
     }
+
+    div.cmt-attached-preview {
+		position: relative;
+    	float: left;
+
+    	width: 100px;
+    	height: 100px;
+    } 
 
     /*--- Comment Actions ---*/
 	div.cmt-actions {

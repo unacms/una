@@ -584,6 +584,15 @@ class BxDolCmts extends BxDol
         if($this->_oQuery->removeComment ($this->getId(), $aCmt['cmt_id'], $aCmt['cmt_parent_id'])) {
         	$this->_triggerComment();
 
+        	bx_import('BxDolStorage');
+			$oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
+
+			$aImages = $this->_oQuery->getImages($this->_aSystem['system_id'], $aCmt['cmt_id']);
+			foreach($aImages as $aImage)
+				$oStorage->deleteFile($aImage['image_id']);
+
+        	$this->_oQuery->deleteImages($this->_aSystem['system_id'], $aCmt['cmt_id']);
+
 	        if($aCmt['cmt_author_id'] == $iCmtAuthorId)
 				$this->isRemoveAllowed(true);
 
