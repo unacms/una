@@ -630,7 +630,21 @@ function _format_when ($iSec) {
             $s .= (0 == $i || 1 == $i) ? _t('_x_hour_ago', '1', '') : _t('_x_hour_ago', $i, 's');
         } else {
             $i = round($iSec/60/60/24);
-            $s .= (0 == $i || 1 == $i) ? _t('_1_day_ago') : _t('_x_day_ago', $i, 's');
+            if(0 == $i || 1 == $i)
+            	$s .= _t('_1_day_ago');
+            else if($i > 1 && $i <= 5)
+            	$s .= _t('_x_day_ago', $i, 's');
+            else {
+            	$iNow = mktime();
+            	$iNowDayOfYear = date('z', $iNow);
+
+            	$iDate = $iNow - $iSec; 
+            	$iDay = date('j', $iDate);
+            	$iMonth = date('n', $iDate);
+            	$iYear = date('Y', $iDate);
+
+            	$s .= trim(_t('_day_of_' . $iMonth . '_short', $iDay, ($i > $iNowDayOfYear ? $iYear : '')));
+            }
         }
     } else {
         if ($iSec > -3600) {
