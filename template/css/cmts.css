@@ -238,7 +238,12 @@
 		position: relative;
     	float: left;
     }
-    div.cmts-uploader-file-preview {
+    div.cmts-uploader-file-preview,
+    div.cmts-uploader-file-preview img {
 		width: 100px;
     	height: 100px;
+    }
+    div.cmts-uploader-file-preview img {
+		background-position: center center;
+		background-repeat: no-repeat;
     }
