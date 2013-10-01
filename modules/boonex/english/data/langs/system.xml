@@ -1140,9 +1140,9 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_disable able to rate"><![CDATA[Disable rate]]></string>
 	<string name="_member_banned"><![CDATA[Sorry, you\'ve been banned]]></string>
 	<string name="_1_minute_ago"><![CDATA[Now]]></string>
-	<string name="_x_minute_ago"><![CDATA[{0}m ago]]></string>
-	<string name="_x_hour_ago"><![CDATA[{0}h ago]]></string>
-	<string name="_x_day_ago"><![CDATA[{0}d ago]]></string>
+	<string name="_x_minute_ago"><![CDATA[{0} m ago]]></string>
+	<string name="_x_hour_ago"><![CDATA[{0} h ago]]></string>
+	<string name="_x_day_ago"><![CDATA[{0} d ago]]></string>
 	<string name="_x_day_y_month"><![CDATA[{0} {1}]]></string>
 	<string name="_1_day_ago"><![CDATA[Yesterday]]></string>
 	<string name="_in_1_minute"><![CDATA[Just now]]></string>
