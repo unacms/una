@@ -295,13 +295,13 @@ BxDolCmts.prototype.showImage = function(oLink, iId) {
         this._sActionsUrl,
         oData,
         function (s) {
-        	if(oLink)
-        		$this._loadingInContent(oLink, false);
-
         	var oPopup = $(s).hide(); 
 
 	    	$('#' + oPopup.attr('id')).remove();
 	        oPopup.prependTo('body').find('img').bind('load', function() {
+	        	if(oLink)
+	        		$this._loadingInContent(oLink, false);
+
 	        	$(this).parents('.cmt-attached-image').dolPopup({
 		        	fog: {
 						color: '#fff',
