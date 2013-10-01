@@ -281,6 +281,38 @@ BxDolCmts.prototype.showMore = function(oLink)
 	$(oLink).parent('span').next('span').show().prev('span').remove();
 };
 
+BxDolCmts.prototype.showImage = function(oLink, iId) {
+	var $this = this;
+
+    var oData = this._getDefaultActions();
+    oData['action'] = 'GetImage';
+    oData['ImgId'] = iId;
+
+    if(oLink)
+    	this._loadingInContent(oLink, true);
+
+    jQuery.post (
+        this._sActionsUrl,
+        oData,
+        function (s) {
+        	if(oLink)
+        		$this._loadingInContent(oLink, false);
+
+        	var oPopup = $(s).hide(); 
+
+	    	$('#' + oPopup.attr('id')).remove();
+	        oPopup.prependTo('body').find('img').bind('load', function() {
+	        	$(this).parents('.cmt-attached-image').dolPopup({
+		        	fog: {
+						color: '#fff',
+						opacity: .7
+		            }
+		        });	        	
+	        });	        
+        }
+    );
+};
+
 BxDolCmts.prototype.toggleReply = function(e, iCmtParentId)
 {
 	var $this = this;
@@ -464,7 +496,7 @@ BxDolCmts.prototype._getForm = function (e, iCmtParentId, onLoad)
             if(typeof onLoad == 'function')
     			onLoad(s);
         }
-    );	
+    );
 };
 
 BxDolCmts.prototype._cmtsAppend = function(sIdTo, sContent)

@@ -166,6 +166,12 @@
 		background-repeat: no-repeat;
 	}
 
+	div.cmt-attached-image img {
+		position: relative;
+		max-width: 600px;
+		max-height: 600px;
+	}
+	
     /*--- Comment Actions ---*/
 	div.cmt-actions {
 		position: relative;

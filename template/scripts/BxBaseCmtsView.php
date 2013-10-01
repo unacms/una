@@ -217,6 +217,8 @@ class BxBaseCmtsView extends BxDolCmts {
         	foreach($aImages as $aImage)
         		$aTmplImages[] = array(
         			'style_prefix' => $this->_sStylePrefix,
+        			'js_object' => $this->_sJsObjName,
+        			'id' => $aImage['image_id'],
         			'image' => $oTranscoder->getImageUrl($aImage['image_id'])
         		);
 		}
@@ -334,7 +336,31 @@ class BxBaseCmtsView extends BxDolCmts {
 
         return $oTemplate->parseHtmlByName('comment_plused_by.html', array(
         	'style_prefix' => $this->_sStylePrefix,
-        	'id' => $this->_sSystem . '-plused-by' . $iCmtId,
+        	'id' => $this->_sSystem . '-plused-by',
+        	'content' => $sContent
+        ));
+    }
+
+    function getImage($iImgId)
+    {
+    	$oTemplate = BxDolTemplate::getInstance();
+
+    	bx_import('BxDolStorage');
+		$oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
+
+    	bx_import('BxTemplStudioFunctions');
+        $sContent = BxTemplStudioFunctions::getInstance()->transBox($oTemplate->parseHtmlByName('bx_img.html', array(
+    		'bx_if:class' => array(
+        		'condition' => false,
+        		'content' => array()
+        	),
+    		'src' => $oStorage->getFileUrlById($iImgId),
+        	'alt' => _t('_cmt_view_attached_image')
+    	)));
+
+        return $oTemplate->parseHtmlByName('comment_image.html', array(
+        	'style_prefix' => $this->_sStylePrefix,
+        	'id' => $this->_sSystem . '-attached-image', 
         	'content' => $sContent
         ));
     }

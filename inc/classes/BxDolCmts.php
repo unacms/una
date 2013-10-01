@@ -492,7 +492,7 @@ class BxDolCmts extends BxDol
         if (!$this->isEnabled())
            return '';
 
-        $iCmtId= isset($_REQUEST['CmtId']) ? bx_process_input($_REQUEST['CmtId'], BX_DATA_INT) : 0;
+        $iCmtId = isset($_REQUEST['CmtId']) ? bx_process_input($_REQUEST['CmtId'], BX_DATA_INT) : 0;
         return $this->getPlusedBy($iCmtId);
     }
 
@@ -523,6 +523,15 @@ class BxDolCmts extends BxDol
         $sCmtDisplay = isset($_REQUEST['CmtDisplay']) ? bx_process_input($_REQUEST['CmtDisplay'], BX_DATA_TEXT) : '';
 
         return $this->getComments(array('vparent_id' => $iCmtVParentId, 'start' => $iCmtStart, 'per_view' => $iCmtPerView, 'type' => $sCmtBrowse), array('type' => $sCmtDisplay));
+    }
+
+	function actionGetImage ()
+    {
+    	if (!$this->isEnabled())
+           return '';
+
+		$iImgId = bx_process_input(bx_get('ImgId'), BX_DATA_INT);
+        return $this->getImage($iImgId);
     }
 
     function actionSubmitPostForm()
