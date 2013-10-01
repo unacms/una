@@ -233,6 +233,7 @@
     a.cmts-uploader-button {
 		position: absolute;
     	right: 0px;
+    	text-decoration: none;
     }
     div.cmts-uploader-file {
 		position: relative;
