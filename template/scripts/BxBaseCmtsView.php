@@ -499,11 +499,11 @@ class BxBaseCmtsView extends BxDolCmts {
     	list($sAuthorName, $sAuthorLink, $sAuthorIcon) = $this->_getAuthorInfo();
 
 		$sPositionSystem = $this->_aSystem['post_form_position'];
-		if(!empty($sPosition) && $sPositionSystem != BX_CMT_PFP_BOTH && $sPositionSystem != $sPosition)
+		if(!empty($sPosition) && $sPositionSystem != $sPosition)
 			return '';
 
 		$sMethod = '_getForm' . ucfirst($sType);
-		$aForm = $this->$sMethod($iCmtParentId, $sPosition);
+		$aForm = $this->$sMethod($iCmtParentId);
 
 		$bAuthorIcon = !empty($sAuthorIcon);
     	return BxDolTemplate::getInstance()->parseHtmlByName('comment_reply_box.html', array(
@@ -543,9 +543,9 @@ class BxBaseCmtsView extends BxDolCmts {
     	));
     }
 
-    protected function _getFormPost($iCmtParentId = 0, $sPosition = '')
+    protected function _getFormPost($iCmtParentId = 0)
     {
-    	$oForm = $this->_getFormObject(BX_CMT_ACTION_POST, $iCmtParentId, $sPosition);
+    	$oForm = $this->_getFormObject(BX_CMT_ACTION_POST, $iCmtParentId);
         $oForm->aInputs['cmt_parent_id']['value'] = $iCmtParentId;
     	$oForm->initChecker();
 
@@ -601,7 +601,7 @@ class BxBaseCmtsView extends BxDolCmts {
         return array('form' => $oForm->getCode(), 'form_id' => $oForm->id);
     }
 
-	protected function _getFormEdit($iCmtId, $sPosition = '')
+	protected function _getFormEdit($iCmtId)
     {
 	    $aCmt = $this->_oQuery->getCommentSimple ($this->getId(), $iCmtId);
         if(!$aCmt)
@@ -611,7 +611,7 @@ class BxBaseCmtsView extends BxDolCmts {
         if(!$this->isEditAllowedAll() && ($aCmt['cmt_author_id'] != $iCmtAuthorId || !$this->isEditAllowed()))
         	return array('msg' => $aCmt['cmt_author_id'] == $iCmtAuthorId && !$this->isEditAllowed() ? strip_tags($this->msgErrEditAllowed()) : _t('_Access denied'));
 
-		$oForm = $this->_getFormObject(BX_CMT_ACTION_EDIT, $aCmt['cmt_id'], $sPosition);
+		$oForm = $this->_getFormObject(BX_CMT_ACTION_EDIT, $aCmt['cmt_id']);
 
 		$oForm->initChecker($aCmt);
 		if($oForm->isSubmittedAndValid()) {
@@ -639,15 +639,15 @@ class BxBaseCmtsView extends BxDolCmts {
 		return array('form' => $oForm->getCode(), 'form_id' => $oForm->id);
     }
 
-	protected function _getFormObject($sAction, $iId, $sPosition)
+	protected function _getFormObject($sAction, $iId)
     {
     	$sActionCap = ucfirst($sAction);
     	$sDisplayName = '_sFormDisplay' . $sActionCap;
 
     	bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance($this->_sFormObject, $this->$sDisplayName);
-        $oForm->setId(sprintf($oForm->aFormAttrs['id'], $sAction, $this->_sSystem, $iId) . (!empty($sPosition) ? '-' . $sPosition : ''));
-        $oForm->setName(sprintf($oForm->aFormAttrs['name'], $sAction, $this->_sSystem, $iId) . (!empty($sPosition) ? '-' . $sPosition : ''));
+        $oForm->setId(sprintf($oForm->aFormAttrs['id'], $sAction, $this->_sSystem, $iId));
+        $oForm->setName(sprintf($oForm->aFormAttrs['name'], $sAction, $this->_sSystem, $iId));
         $oForm->aParams['db']['table'] = $this->_aSystem['table_cmts'];
         $oForm->aInputs['sys']['value'] = $this->_sSystem;
         $oForm->aInputs['id']['value'] = $this->_iId;

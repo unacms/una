@@ -31,7 +31,6 @@ define('BX_CMT_ORDER_WAY_DESC', 'desc');
 
 define('BX_CMT_PFP_TOP', 'top');
 define('BX_CMT_PFP_BOTTOM', 'bottom');
-define('BX_CMT_PFP_BOTH', 'both');
 
 define('BX_CMT_RATE_VALUE_PLUS', 1);
 define('BX_CMT_RATE_VALUE_MINUS', -1);
@@ -624,7 +623,7 @@ class BxDolCmts extends BxDol
         }
 
         if (!$this->isRateAllowed()) {
-        	$this->_echoResultJson(array('msg' => _t('_Access denied')));
+        	$this->_echoResultJson(array('msg' => $this->msgErrRateAllowed()));
         	return ;
         }
 

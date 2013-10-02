@@ -182,6 +182,8 @@
 		text-decoration: none;
     }
     div.cmt-actions i.sys-icon {
+    	min-width: 18px;
+    	min-height: 22px; 
     	font-size: 1.5em;
 	}
     div.cmt-comment-manage {

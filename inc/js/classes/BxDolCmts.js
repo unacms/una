@@ -338,16 +338,6 @@ BxDolCmts.prototype.toggleReply = function(e, iCmtParentId)
         		oForm.addClass('cmt-reply-margin').addClass(sFormClass + '-' + $this._sPostFormPosition);
         		oFormSibling.after(oForm);
         		break;
-
-        	case 'both':
-        		var oFormClone = oForm.clone();
-
-        		oForm.addClass('cmt-reply-margin').addClass(sFormClass + '-top');
-        		oFormSibling.before(oForm);
-
-        		oFormClone.addClass('cmt-reply-margin').addClass(sFormClass + '-bottom');
-        		oFormSibling.after(oFormClone);
-        		break;
         }
     	$(sParentId).children('.cmt-reply').bx_anim('toggle', $this._sAnimationEffect, $this._iAnimationSpeed);    		
 	});
