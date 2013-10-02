@@ -412,7 +412,7 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage {
         parent::onSaveBlock($oForm, $aBlock);
 
         if($aBlock['type'] == BX_DOL_STUDIO_BP_BLOCK_SERVICE && isset($oForm->aInputs['content'])) {
-            $sValue = BxDolForm::getSubmittedValue('content', $oForm->aFormAttrs['method']);
+            $sValue = $oForm->getCleanValue('content');
             $sValue = BxDevFunctions::serializeString($sValue);
             BxDolForm::setSubmittedValue('content', $sValue, $oForm->aFormAttrs['method']);
         }

@@ -220,7 +220,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
                 bx_import('BxDolStudioLanguagesUtils');
                 $sLanguage = BxDolStudioLanguagesUtils::getInstance()->getCurrentLangName(false);
 
-                $sName = BxDolForm::getSubmittedValue('title-' . $sLanguage, $aForm['form_attrs']['method']);
+                $sName = BxDolForm::getSubmittedValue('title_system-' . $sLanguage, $aForm['form_attrs']['method']);
                 $sName = uriGenerate($sName, 'sys_menu_items', 'name', 'item');
             }
 
