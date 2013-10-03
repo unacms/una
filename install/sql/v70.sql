@@ -466,6 +466,18 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_template_page_width_min', 'Min page width(in pixels)', '774', 'digit', '', '', '', 9),
 (@iCategoryId, 'sys_template_page_width_max', 'Max page width(in pixels)', '1600', 'digit', '', '', '', 10);
 
+--
+-- CATEGORY: date/time format
+--
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'date_time_format', '_adm_stg_cpt_category_datetime_format', 0, 25);
+SET @iCategoryId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
+(@iCategoryId, 'sys_format_date', 'Date Format', 'MMMM Do YYYY', 'digit', '', '', '', 10),
+(@iCategoryId, 'sys_format_time', 'Time Format', 'HH:mm', 'digit', '', '', '', 12),
+(@iCategoryId, 'sys_format_datetime', 'Datetime Format', 'MMMM Do YYYY, h:mm:ss a', 'digit', '', '', '', 14),
+(@iCategoryId, 'sys_format_timeago', 'Use \'time ago\' format for dates less than this number of seconds', 432000, 'digit', '', '', '', 20);
+
 -- --------------------------------------------------------
 
 --

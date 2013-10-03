@@ -654,6 +654,19 @@ EOF;
         return $sRet;
     }
 
+    /**
+     * Output time wrapped in <time> tag
+     * @param $iUnixTimestamp time as unixtimestamp
+     * @param $sFormatIdentifier output format identifier
+     *     @see BX_FORMAT_DATE
+     *     @see BX_FORMAT_TIME
+     *     @see BX_FORMAT_DATE_TIME
+     */
+    function timeForJs ($iUnixTimestamp, $sFormatIdentifier = BX_FORMAT_DATE) {
+        $sDateUTC = bx_time_utc ($iUnixTimestamp);
+        return '<time datetime="' . $sDateUTC . '" data-bx-format="' . getParam($sFormatIdentifier) . '" data-bx-autoformat="' . getParam('sys_format_timeago') . '">' . $sDateUTC . '</time>';
+    }
+
 }
 
 /** @} */

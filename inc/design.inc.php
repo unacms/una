@@ -49,6 +49,24 @@ define('BX_DB_PADDING_DEF', 11);
  */
 define('BX_DB_PADDING_NO_CAPTION', 13);
 
+
+/**
+ * Date format identifier for use in @see bx_time_js function
+ */
+define('BX_FORMAT_DATE', 'sys_format_date');
+
+/**
+ * Time format identifier for use in @see bx_time_js function
+ */
+define('BX_FORMAT_TIME', 'sys_format_time');
+
+/**
+ * Datetime format identifier for use in @see bx_time_js function
+ */
+define('BX_FORMAT_DATE_TIME', 'sys_format_datetime');
+
+
+
 /**
  * Display "design box" HTML code
  *
@@ -305,6 +323,28 @@ function getBlockWidth ($iAllWidth, $iUnitWidth, $iNumElements) {
 function getMemberLoginFormCode($sID = 'member_login_form', $sParams = '')
 {
     trigger_error ("Replace getMemberLoginFormCode with BxDolService::call('system', 'login_form', array(), 'TemplServiceLogin')", E_USER_ERROR);
+}
+
+/**
+ * Output time wrapped in <time> tag
+ * @param $iUnixTimestamp time as unixtimestamp
+ * @param $sFormatIdentifier output format identifier
+ *     @see BX_FORMAT_DATE
+ *     @see BX_FORMAT_TIME
+ *     @see BX_FORMAT_DATE_TIME
+ */
+function bx_time_js ($iUnixTimestamp, $sFormatIdentifier = BX_FORMAT_DATE) {
+    bx_import('BxTemplFunctions');
+    return BxTemplFunctions::getInstance()->timeForJs ($iUnixTimestamp, $sFormatIdentifier);
+}
+
+/**
+ * Get UTC/GMT time string in ISO8601 date format from provided unix timestamp
+ * @param $iUnixTimestamp - unix timestamp
+ * @return ISO8601 formatted date/time string
+ */
+function bx_time_utc ($iUnixTimestamp) {
+    return gmdate(DATE_ISO8601, $iUnixTimestamp);
 }
 
 bx_import('BxDolAlerts');
