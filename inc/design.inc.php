@@ -50,21 +50,9 @@ define('BX_DB_PADDING_DEF', 11);
 define('BX_DB_PADDING_NO_CAPTION', 13);
 
 
-/**
- * Date format identifier for use in @see bx_time_js function
- */
-define('BX_FORMAT_DATE', 'sys_format_date');
-
-/**
- * Time format identifier for use in @see bx_time_js function
- */
-define('BX_FORMAT_TIME', 'sys_format_time');
-
-/**
- * Datetime format identifier for use in @see bx_time_js function
- */
-define('BX_FORMAT_DATE_TIME', 'sys_format_datetime');
-
+define('BX_FORMAT_DATE', 'sys_format_date'); ///< date format identifier for use in @see bx_time_js function
+define('BX_FORMAT_TIME', 'sys_format_time'); ///< time format identifier for use in @see bx_time_js function
+define('BX_FORMAT_DATE_TIME', 'sys_format_datetime'); ///< datetime format identifier for use in @see bx_time_js function
 
 
 /**

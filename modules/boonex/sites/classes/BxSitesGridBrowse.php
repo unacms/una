@@ -125,7 +125,7 @@ class BxSitesGridBrowse extends BxTemplGrid {
     }
 
 	protected function _getCellCreated ($mixedValue, $sKey, $aField, $aRow) {
-        $mixedValue = _format_when(mktime() - (int)$mixedValue);
+        $mixedValue = bx_time_js((int)$mixedValue);
         return parent::_getCellDefault ($mixedValue, $sKey, $aField, $aRow);
     }
 

@@ -362,15 +362,8 @@ SET @iCategoryId = LAST_INSERT_ID();
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryId, 'currency_code', 'Currency code (for checkout system)', 'USD', 'select', 'USD,EURO', 'return strlen($arg0) > 0;', 'Cannot be empty.', 1),
 (@iCategoryId, 'currency_sign', 'Currency sign (for display purposes only)', '&#36;', 'digit', '', 'return strlen($arg0) > 0;', 'Cannot be empty.', 2),
-(@iCategoryId, 'time_format_php', 'Time Format(for code)', 'H:i', 'digit', '', '', '', 3),
-(@iCategoryId, 'short_date_format_php', 'Short Date Format(for code)', 'd.m.Y', 'digit', '', '', '', 4),
-(@iCategoryId, 'date_format_php', 'Long Date Format(for code)', 'd.m.Y H:i', 'digit', '', '', '', 5),
-(@iCategoryId, 'time_format', 'Time Format(for database)', '%H:%i', 'digit', '', '', '', 6),
-(@iCategoryId, 'short_date_format', 'Short Date Format(for database)', '%d.%m.%Y', 'digit', '', '', '', 7),
-(@iCategoryId, 'date_format', 'Long Date Format(for database)', '%d.%m.%Y %H:%i', 'digit', '', '', '', 8),
 (@iCategoryId, 'enable_gd', 'Use GD library for image processing', 'on', 'checkbox', '', '', '', 10),
 (@iCategoryId, 'sys_calendar_starts_sunday', 'Does Calender start on Sunday?', '', 'checkbox', '', '', '', 11),
-(@iCategoryId, 'php_date_format', 'PHP date format', 'F j, Y', 'digit', '', '', '', 12),
 (@iCategoryId, 'license_code', 'Dolphin License Code', '', 'digit', '', '', '', 13),
 (@iCategoryId, 'boonexAffID', 'My BoonEx Affiliate ID', '', 'digit', '', '', '', 14),
 (@iCategoryId, 'useLikeOperator', 'Use operator LIKE for search (recommended for small content)', 'on', 'checkbox', '', '', '', 15);
