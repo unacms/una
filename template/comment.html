@@ -1,5 +1,5 @@
 <li id="cmt__id__" class="__style_prefix____class__">
-	<a id="__system____id__" class="bx-anchor-invisible">&nbsp;</a>
+	<a id="__system____id__" class="__style_prefix__-anchor bx-anchor-invisible">&nbsp;</a>
 	<div class="__style_prefix__-author">
 		<div class="__style_prefix__-icon bx-def-icon bx-def-icon-size">
 			<bx_if:show_icon>
@@ -30,6 +30,17 @@
 			<div class="__style_prefix__-body bx-def-margin-thd-topbottom">
 				__text__<bx_if:show_more><span class="__style_prefix__-body-see-more">... <a class="bx-def-font-small" href="javascript:void(0)" onclick="__js_object__.showMore(this);"><bx_text:_see_more /></a></span><span style="display:none;"> __text_more__</span></bx_if:show_more>
 			</div>
+			<bx_if:show_attached>
+				<div class="__style_prefix__-attached bx-def-margin-thd-topbottom bx-clearfix">
+					<bx_repeat:attached>
+						<div class="__style_prefix__-attached-preview bx-def-thumb bx-def-margin-sec-left-auto">
+							<a href="javascript:void(0)" onclick="__js_object__.showImage(this, __id__); return false;" title="<bx_text:_cmt_view_attached_image />">
+								<img src="<bx_image_url:spacer.gif />" style="background-image:url(__image__)" />
+							</a>
+						</div>
+					</bx_repeat:attached>
+				</div>
+			</bx_if:show_attached>
 		</div>
 	</div>
 	__actions__

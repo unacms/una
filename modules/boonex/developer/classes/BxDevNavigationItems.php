@@ -105,7 +105,7 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems {
         }
         else {
             bx_import('BxTemplStudioFunctions');
-            $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-nav-item-edit-popup', _t('_bx_dev_nav_txt_items_edit_popup', _t($aItem['title'])), $this->oModule->_oTemplate->parseHtmlByName('nav_add_item.html', array(
+            $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-nav-item-edit-popup', _t('_bx_dev_nav_txt_items_edit_popup', _t($aItem['title_system'])), $this->oModule->_oTemplate->parseHtmlByName('nav_add_item.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
                 'form' => $oForm->getCode(true),
                 'object' => $this->_sObject,
@@ -124,13 +124,6 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems {
         $aInputs['module']['values'] = array_merge(array('' => _t('_bx_dev_nav_txt_select_module')), BxDolStudioUtils::getModules());
         $aInputs['module']['value'] = $this->sModule;
 
-        $aSets = array();
-        $this->oDb->getSets(array('type' => 'by_module', 'value' => $this->sModule), $aSets, false);
-        foreach($aSets as $aSet)
-            $aInputs['set_name']['values'][$aSet['set_name']] = _t($aSet['title']);
-
-        asort($aInputs['set_name']['values']);
-        $aInputs['set_name']['values'] = array_merge(array('' => _t('_bx_dev_nav_txt_select_set')), $aInputs['set_name']['values']);
         $aInputs['set_name']['value'] = $this->sSet;
     }
 }

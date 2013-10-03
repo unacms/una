@@ -83,7 +83,7 @@ function PageCompMainCode() {
 	if(!$oCmts->isEnabled())
 		return '';
 
-    return DesignBoxContent("Comments",  $oCmts->getCommentsBlock(), BX_DB_PADDING_DEF);
+    return $oCmts->getCommentsBlock();
 }
 
 /** @} */

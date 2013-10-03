@@ -31,7 +31,6 @@ define('BX_CMT_ORDER_WAY_DESC', 'desc');
 
 define('BX_CMT_PFP_TOP', 'top');
 define('BX_CMT_PFP_BOTTOM', 'bottom');
-define('BX_CMT_PFP_BOTH', 'both');
 
 define('BX_CMT_RATE_VALUE_PLUS', 1);
 define('BX_CMT_RATE_VALUE_MINUS', -1);
@@ -492,7 +491,7 @@ class BxDolCmts extends BxDol
         if (!$this->isEnabled())
            return '';
 
-        $iCmtId= isset($_REQUEST['CmtId']) ? bx_process_input($_REQUEST['CmtId'], BX_DATA_INT) : 0;
+        $iCmtId = isset($_REQUEST['CmtId']) ? bx_process_input($_REQUEST['CmtId'], BX_DATA_INT) : 0;
         return $this->getPlusedBy($iCmtId);
     }
 
@@ -523,6 +522,15 @@ class BxDolCmts extends BxDol
         $sCmtDisplay = isset($_REQUEST['CmtDisplay']) ? bx_process_input($_REQUEST['CmtDisplay'], BX_DATA_TEXT) : '';
 
         return $this->getComments(array('vparent_id' => $iCmtVParentId, 'start' => $iCmtStart, 'per_view' => $iCmtPerView, 'type' => $sCmtBrowse), array('type' => $sCmtDisplay));
+    }
+
+	function actionGetImage ()
+    {
+    	if (!$this->isEnabled())
+           return '';
+
+		$iImgId = bx_process_input(bx_get('ImgId'), BX_DATA_INT);
+        return $this->getImage($iImgId);
     }
 
     function actionSubmitPostForm()
@@ -584,6 +592,15 @@ class BxDolCmts extends BxDol
         if($this->_oQuery->removeComment ($this->getId(), $aCmt['cmt_id'], $aCmt['cmt_parent_id'])) {
         	$this->_triggerComment();
 
+        	bx_import('BxDolStorage');
+			$oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
+
+			$aImages = $this->_oQuery->getImages($this->_aSystem['system_id'], $aCmt['cmt_id']);
+			foreach($aImages as $aImage)
+				$oStorage->deleteFile($aImage['image_id']);
+
+        	$this->_oQuery->deleteImages($this->_aSystem['system_id'], $aCmt['cmt_id']);
+
 	        if($aCmt['cmt_author_id'] == $iCmtAuthorId)
 				$this->isRemoveAllowed(true);
 
@@ -606,7 +623,7 @@ class BxDolCmts extends BxDol
         }
 
         if (!$this->isRateAllowed()) {
-        	$this->_echoResultJson(array('msg' => _t('_Access denied')));
+        	$this->_echoResultJson(array('msg' => $this->msgErrRateAllowed()));
         	return ;
         }
 
@@ -642,7 +659,7 @@ class BxDolCmts extends BxDol
 	        return;
         }
 
-        $this->_echoResultJson(array('msg' => _t('_cmt_err_cannot_perform_action')));
+        $this->_echoResultJson(array('msg' => _t('_cmt_err_duplicate')));
     }
 
     /** 

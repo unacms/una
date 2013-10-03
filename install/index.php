@@ -124,6 +124,7 @@ define('BX_DOL_INT_MAX', 2147483647);
 define('BX_DOL_TRANSCODER_OBJ_ICON_APPLE', 'sys_icon_apple');
 define('BX_DOL_TRANSCODER_OBJ_ICON_FACEBOOK', 'sys_icon_facebook');
 define('BX_DOL_TRANSCODER_OBJ_ICON_FAVICON', 'sys_icon_favicon');
+define('BX_DOL_TRANSCODER_OBJ_IMAGE_PREVIEW_CMTS', 'sys_images_cmts_preview');
 
 //--- Module types ---//
 define('BX_DOL_MODULE_TYPE_MODULE', 'module');
@@ -1203,7 +1204,8 @@ function genMainDolphinPage() {
     $aTranscoders = array(
         BX_DOL_TRANSCODER_OBJ_ICON_APPLE, 
         BX_DOL_TRANSCODER_OBJ_ICON_FACEBOOK, 
-        BX_DOL_TRANSCODER_OBJ_ICON_FAVICON
+        BX_DOL_TRANSCODER_OBJ_ICON_FAVICON,
+        BX_DOL_TRANSCODER_OBJ_IMAGE_PREVIEW_CMTS
     );
 
     bx_import('BxDolImageTranscoder');

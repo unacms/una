@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `bx_notes_cmts` (
   `cmt_mood` tinyint(4) NOT NULL DEFAULT '0',
   `cmt_rate` int(11) NOT NULL DEFAULT '0',
   `cmt_rate_count` int(11) NOT NULL DEFAULT '0',
-  `cmt_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `cmt_time` int(11) unsigned NOT NULL DEFAULT '0',
   `cmt_replies` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`cmt_id`),
   KEY `cmt_object_id` (`cmt_object_id`,`cmt_parent_id`)

@@ -193,6 +193,18 @@ class BxDolCmtsQuery extends BxDolDb
 		return (int)$this->query($sQuery) > 0;
 	}
 
+    function getImages($iSystemId, $iCmtId)
+    {
+    	$sQuery = $this->prepare("SELECT * FROM `{$this->_sTableImages2Entries}` WHERE `system_id`=? AND `cmt_id`=?", $iSystemId, $iCmtId);
+    	return $this->getAll($sQuery);
+    }
+
+	function deleteImages($iSystemId, $iCmtId)
+	{
+		$sQuery = $this->prepare("DELETE FROM `{$this->_sTableImages2Entries}` WHERE `system_id`=? AND `cmt_id`=?", $iSystemId, $iCmtId);
+    	return $this->query($sQuery);
+	}
+
     function updateRepliesCount($iCmtId, $iCount)
     {
     	$sQuery = $this->prepare("UPDATE `{$this->_sTable}` SET `cmt_replies`=`cmt_replies`+? WHERE `cmt_id`=? LIMIT 1", $iCount, $iCmtId);

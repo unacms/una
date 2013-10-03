@@ -411,7 +411,8 @@ ul.bx-menu-action {
 }
 
 /* --------------- interactive block menu */
-ul.bx-menu-inter {
+ul.bx-menu-inter,
+ul.bx-menu-inter-vert {
 	padding:0;
     margin:0;
 	list-style:none;
