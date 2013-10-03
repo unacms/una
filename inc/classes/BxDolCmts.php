@@ -659,7 +659,7 @@ class BxDolCmts extends BxDol
 	        return;
         }
 
-        $this->_echoResultJson(array('msg' => _t('_cmt_err_cannot_perform_action')));
+        $this->_echoResultJson(array('msg' => _t('_cmt_err_duplicate')));
     }
 
     /** 

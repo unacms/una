@@ -1184,6 +1184,7 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_cmt_block_comments_title"><![CDATA[Comments ({0})]]></string>
 	<string name="_cmt_view_attached_image"><![CDATA[View attached image]]></string>
 	<string name="_cmt_err_cannot_perform_action"><![CDATA[Cannot perform action. Please report.]]></string>
+	<string name="_cmt_err_duplicate"><![CDATA[Duplicate vote.]]></string>
 	<string name="_Reply_to_this_comment"><![CDATA[Reply]]></string>
 	<string name="_Add Your Comment"><![CDATA[Comment]]></string>
 	<string name="_load_more_comments_head"><![CDATA[See Newer Comments...]]></string>

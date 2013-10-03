@@ -221,9 +221,9 @@ BxDolCmts.prototype.cmtRate = function(e, iCmtId, iRate)
                 alert(oData.msg);
 
             if(oData && oData.id != undefined && oData.rate != undefined) {
-	            var oPoints = $(e).parents('.cmt:first').find('.cmt-points span');
+	            var oPoints = $(e).parents('.cmt:first').find('.cmt-points:first span');
 	            oPoints.html(parseInt(oPoints.html()) + oData.rate).parents('.cmt-points-wrp:first').bx_anim(parseInt(oPoints.html()) > 0 ? 'show' : 'hide');
-	
+
 	            $(e).hide().siblings('.cmt-comment-vote:hidden').show();
             }
         },
@@ -516,9 +516,11 @@ BxDolCmts.prototype._cmtsReplaceContent = function(oParent, sContent)
 };
 
 BxDolCmts.prototype._getDefaultActions = function() {
+	var oDate = new Date();
     return {
-        'sys': this._sSystem,
-        'id': this._iObjId
+        sys: this._sSystem,
+        id: this._iObjId,
+        _t: oDate.getTime()
     };
 };
 
