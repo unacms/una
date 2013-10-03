@@ -148,6 +148,24 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject {
     }
 
     /**
+     * Register handlers array
+     * It can be called upon module enable event.
+     * @param $mixed array of transcoders objects, or just one object 
+     */
+    static public function registerHandlersArray ($mixed) {
+        self::_registerHandlersArray ($mixed, 'registerHandlers');
+    }
+
+    /**
+     * Unregister handlers array
+     * It can be called upon module disbale event.
+     * @param $mixed array of transcoders objects, or just one object 
+     */
+    static public function unregisterHandlersArray ($mixed) {
+        self::_registerHandlersArray ($mixed, 'unregisterHandlers');
+    }
+
+    /**
      * Called automatically, upon local(transcoded) file deletetion.
      */
     static public function onAlertResponseFileDeleteLocal ($sObject, $oAlert) {
@@ -553,6 +571,16 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject {
         $this->_oDb->oParams->clearCache();
         $oCacheDb = $this->_oDb->getDbCacheObject();
         return $oCacheDb->removeAllByPrefix('db_');
+    }
+
+    static protected function _registerHandlersArray ($mixed, $sFunc) {
+        if (!is_array($mixed))
+            $mixed = array($mixed);
+        foreach ($mixed as $sObject) {
+            $oTranscoder = self::getObjectInstance($sObject);
+            if ($oTranscoder)
+                $oTranscoder->$sFunc();
+        }
     }
 }
 

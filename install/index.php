@@ -1209,8 +1209,7 @@ function genMainDolphinPage() {
     );
 
     bx_import('BxDolImageTranscoder');
-    foreach($aTranscoders as $sTranscoder)
-        BxDolImageTranscoder::getObjectInstance($sTranscoder)->registerHandlers();
+    BxDolImageTranscoder::registerHandlersArray($aTranscoders);
 
     /**
      * Perform admin login. 

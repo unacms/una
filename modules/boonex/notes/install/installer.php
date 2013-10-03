@@ -10,8 +10,11 @@
  */
 
 bx_import('BxDolStudioInstaller');
+bx_import('BxDolImageTranscoder');
 
 class BxNotesInstaller extends BxDolStudioInstaller {
+
+    protected $_aTranscoders = array ('bx_notes_preview');
 
     function __construct($aConfig) {
         parent::__construct($aConfig);
@@ -20,10 +23,20 @@ class BxNotesInstaller extends BxDolStudioInstaller {
     function enable($aParams) {
         $aResult = parent::enable($aParams);
 
-        bx_import('BxDolImageTranscoder');
-        $oTranscoder = BxDolImageTranscoder::getObjectInstance('bx_notes_preview');
-        if ($oTranscoder)
-            $oTranscoder->registerHandlers();
+        if ($aResult['result']) // register it only in case of successful enable
+            BxDolImageTranscoder::registerHandlersArray($this->_aTranscoders);
+
+        return $aResult;
+    }
+
+    function disable($aParams) {
+        
+        BxDolImageTranscoder::unregisterHandlersArray($this->_aTranscoders);
+
+        $aResult = parent::disable($aParams);
+
+        if (!$aResult['result']) // we need to register it back if disable failed
+            BxDolImageTranscoder::registerHandlersArray($this->_aTranscoders);
 
         return $aResult;
     }

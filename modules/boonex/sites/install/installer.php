@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  * 
- * @defgroup    Notes Notes
+ * @defgroup    Sites Sites
  * @ingroup     DolphinModules
  *
  * @{
@@ -18,14 +18,13 @@ class BxSitesInstaller extends BxDolStudioInstaller {
     }
 
     function enable($aParams) {
-        $aResult = parent::enable($aParams);
 
-        bx_import('BxDolImageTranscoder');
-        $oTranscoder = BxDolImageTranscoder::getObjectInstance('bx_notes_preview');
-        if ($oTranscoder)
-            $oTranscoder->registerHandlers();
+        return parent::enable($aParams);
+    }
 
-        return $aResult;
+    function disable($aParams) {
+
+        return parent::disable($aParams);
     }
 
     function install($aParams) {
