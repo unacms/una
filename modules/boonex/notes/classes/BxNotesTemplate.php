@@ -66,7 +66,7 @@ class BxNotesTemplate extends BxDolModuleTemplate {
             'summary' => $sSummary,
             'author' => $oProfile->getDisplayName(),
             'author_url' => $oProfile->getUrl(),
-            'when' => defineTimeInterval($aData['added']),
+            'entry_posting_date' => bx_time_js($aData['added'], BX_FORMAT_DATE),
             'bx_if:thumb' => array (
                 'condition' => $sPhotoThumb,
                 'content' => array (

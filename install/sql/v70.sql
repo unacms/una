@@ -473,9 +473,9 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `or
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'sys_format_date', 'Date Format', 'MMMM Do YYYY', 'digit', '', '', '', 10),
+(@iCategoryId, 'sys_format_date', 'Date Format', 'D MMM YYYY', 'digit', '', '', '', 10),
 (@iCategoryId, 'sys_format_time', 'Time Format', 'HH:mm', 'digit', '', '', '', 12),
-(@iCategoryId, 'sys_format_datetime', 'Datetime Format', 'MMMM Do YYYY, h:mm:ss a', 'digit', '', '', '', 14),
+(@iCategoryId, 'sys_format_datetime', 'Datetime Format', 'D MMM YYYY h:mm:ss a', 'digit', '', '', '', 14),
 (@iCategoryId, 'sys_format_timeago', 'Use \'time ago\' format for dates less than this number of seconds', 432000, 'digit', '', '', '', 20);
 
 -- --------------------------------------------------------
