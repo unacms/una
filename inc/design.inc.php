@@ -314,16 +314,23 @@ function getMemberLoginFormCode($sID = 'member_login_form', $sParams = '')
 }
 
 /**
- * Output time wrapped in <time> tag
+ * Output time wrapped in <time> tag in HTML.
+ * Then time is autoformatted using JS upon page load, this is aumatically converted to user's timezone and
+ * updated in realtime in case of short periods of 'from now' time format.
+ *
+ * This is just short version for:
+ * @see BxTemplFunctions::timeForJs
+ * 
  * @param $iUnixTimestamp time as unixtimestamp
  * @param $sFormatIdentifier output format identifier
  *     @see BX_FORMAT_DATE
  *     @see BX_FORMAT_TIME
  *     @see BX_FORMAT_DATE_TIME
+ * @param $bForceFormat force provided format and don't use "from now" time autoformat.
  */
-function bx_time_js ($iUnixTimestamp, $sFormatIdentifier = BX_FORMAT_DATE) {
+function bx_time_js ($iUnixTimestamp, $sFormatIdentifier = BX_FORMAT_DATE, $bForceFormat = false) {
     bx_import('BxTemplFunctions');
-    return BxTemplFunctions::getInstance()->timeForJs ($iUnixTimestamp, $sFormatIdentifier);
+    return BxTemplFunctions::getInstance()->timeForJs ($iUnixTimestamp, $sFormatIdentifier, $bForceFormat);
 }
 
 /**
