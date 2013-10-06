@@ -47,13 +47,13 @@
     -ms-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-
-    background-color: #333;
+    
     background: url(../images/no-picture-cover.png) no-repeat center center; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    background-color: #333;
 }
 
 .bx-persons-cover-info {
