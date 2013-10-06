@@ -9,28 +9,29 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 
 -- STORAGES & TRANSCODERS
 
-DELETE FROM `sys_objects_storage` WHERE `object` = 'bx_persons_pictures' OR `object` = 'bx_persons_pictures_resized';
-DELETE FROM `sys_storage_tokens` WHERE `object` = 'bx_persons_pictures' OR `object` = 'bx_persons_pictures_resized';
+DELETE FROM `sys_objects_storage` WHERE `object` IN('bx_persons_pictures', 'bx_persons_pictures_resized', 'bx_persons_pictures_covers');
+DELETE FROM `sys_storage_tokens` WHERE `object` IN('bx_persons_pictures', 'bx_persons_pictures_resized', 'bx_persons_pictures_covers');
 
-DELETE FROM `sys_objects_transcoder_images` WHERE `object` = 'bx_persons_icon' OR `object` = 'bx_persons_thumb' OR `object` = 'bx_persons_preview';
-DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` = 'bx_persons_icon' OR `transcoder_object` = 'bx_persons_thumb' OR `transcoder_object` = 'bx_persons_preview';
+DELETE FROM `sys_objects_transcoder_images` WHERE `object` IN('bx_persons_icon', 'bx_persons_thumb', 'bx_persons_preview', 'bx_persons_cover', 'bx_persons_cover_thumb');
+DELETE FROM `sys_transcoder_images_filters` WHERE `transcoder_object` IN('bx_persons_icon', 'bx_persons_thumb', 'bx_persons_preview', 'bx_persons_cover', 'bx_persons_cover_thumb');
+DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_persons_icon', 'bx_persons_thumb', 'bx_persons_preview', 'bx_persons_cover', 'bx_persons_cover_thumb');
 -- TODO: delete resized picture files as well
 TRUNCATE TABLE `bx_persons_pictures_resized`; 
 
 -- UPLOADERS
 
-DELETE FROM `sys_objects_uploader` WHERE `object` = 'bx_persons_avatar';
+DELETE FROM `sys_objects_uploader` WHERE `object` IN('bx_persons_avatar', 'bx_persons_cover');
 
 -- PAGES
 
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_persons';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_persons' OR `object` = 'bx_persons_create_profile' OR `object` = 'bx_persons_delete_profile' OR `object` = 'bx_persons_edit_profile' OR `object` = 'bx_persons_view_profile';
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_persons' OR `object` IN('bx_persons_create_profile', 'bx_persons_delete_profile', 'bx_persons_edit_profile', 'bx_persons_view_profile', 'bx_persons_profile_info');
 
 -- MENU
 
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_persons';
 DELETE FROM `sys_menu_sets` WHERE `module` = 'bx_persons';
-DELETE FROM `sys_menu_items` WHERE `module` = 'bx_persons' OR `set_name` = 'bx_persons_view';
+DELETE FROM `sys_menu_items` WHERE `module` = 'bx_persons' OR `set_name` IN('bx_persons_view', 'bx_persons_view_submenu');
 
 -- ACL
 

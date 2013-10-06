@@ -8,6 +8,7 @@ DELETE FROM sys_profiles WHERE `type` = 'bx_persons';
 
 -- TODO: delete picture files as well
 DROP TABLE IF EXISTS `bx_persons_pictures`; 
+DROP TABLE IF EXISTS `bx_persons_pictures_covers`; 
 DROP TABLE IF EXISTS `bx_persons_pictures_resized`;
 
 -- FORMS

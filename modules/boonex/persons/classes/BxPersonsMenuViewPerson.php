@@ -37,6 +37,10 @@ class BxPersonsMenuViewPerson extends BxTemplMenu {
      */ 
     protected function _isVisible ($a) {
 
+        // don't show current item, also this will solve problem when only one view note item is visible
+        if ('bx_persons_view' == $this->_sObject && $this->_isSelected($a))
+            return false;
+
         $sFuncCheckAccess = false;
         switch ($a['name']) {
             case 'view-persons-profile':
