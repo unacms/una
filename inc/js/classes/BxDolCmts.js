@@ -321,10 +321,13 @@ BxDolCmts.prototype.toggleReply = function(e, iCmtParentId)
 {
 	var $this = this;
 	var sParentId = this._sRootId + ' #cmt' + iCmtParentId;
+	var fOnShow = function() {
+		$(this).find('textarea:first').focus();
+	};
 
 	var sReplyId = sParentId + ' > .cmt-reply';
     if ($(sReplyId).length) {
-		$(sReplyId).bx_anim('toggle', this._sAnimationEffect, this._iAnimationSpeed);
+		$(sReplyId).bx_anim('toggle', this._sAnimationEffect, this._iAnimationSpeed, fOnShow);
 		return;
     }
 
@@ -343,7 +346,7 @@ BxDolCmts.prototype.toggleReply = function(e, iCmtParentId)
         		oFormSibling.after(oForm);
         		break;
         }
-    	$(sParentId).children('.cmt-reply').bx_anim('toggle', $this._sAnimationEffect, $this._iAnimationSpeed);    		
+    	$(sParentId).children('.cmt-reply').bx_anim('toggle', $this._sAnimationEffect, $this._iAnimationSpeed, fOnShow);    		
 	});
 };
 

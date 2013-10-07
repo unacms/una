@@ -219,7 +219,6 @@ class BxBaseCmtsView extends BxDolCmts {
         			'style_prefix' => $this->_sStylePrefix,
         			'js_object' => $this->_sJsObjName,
         			'id' => $aImage['image_id'],
-        			'title' => bx_html_attribute(_t('_cmt_view_attached_image')),
         			'image' => $oTranscoder->getImageUrl($aImage['image_id'])
         		);
 		}
@@ -272,7 +271,6 @@ class BxBaseCmtsView extends BxDolCmts {
         		'condition' => (int)$aCmt['cmt_rate'] <= 0,
         		'content' => array()
         	),
-        	'title_plused_by' => bx_html_attribute(_t('_Plused_by_popup')),
         	'points' => _t(in_array($aCmt['cmt_rate'], array(-1, 0, 1)) ? '_N_point' : '_N_points', $aCmt['cmt_rate']),
         	'text' => $sText,
         	'bx_if:show_more' => array(
@@ -474,9 +472,7 @@ class BxBaseCmtsView extends BxDolCmts {
         			'bx_if:hide_rate_minus' => array(
         				'condition' => !$bRated,
         				'content' => array()
-        			),
-        			'title_plus' => bx_html_attribute(_t('_Plus')),
-        			'title_minus' => bx_html_attribute(_t('_Minus')),
+        			)
         		)
         	),
         	'bx_if:show_manage' => array(
@@ -485,7 +481,6 @@ class BxBaseCmtsView extends BxDolCmts {
         			'js_object' => $this->_sJsObjName,
         			'style_prefix' => $this->_sStylePrefix,
         			'id' => $aCmt['cmt_id'],
-        			'title_manage' => bx_html_attribute(_t('_Manage')),
         			'popup_id' => $this->_sSystem . '-manage' . $aCmt['cmt_id'],
         			'popup_text' => $sManagePopupText
         		)
