@@ -49,6 +49,12 @@ define('BX_DB_PADDING_DEF', 11);
  */
 define('BX_DB_PADDING_NO_CAPTION', 13);
 
+
+define('BX_FORMAT_DATE', 'sys_format_date'); ///< date format identifier for use in @see bx_time_js function
+define('BX_FORMAT_TIME', 'sys_format_time'); ///< time format identifier for use in @see bx_time_js function
+define('BX_FORMAT_DATE_TIME', 'sys_format_datetime'); ///< datetime format identifier for use in @see bx_time_js function
+
+
 /**
  * Display "design box" HTML code
  *
@@ -305,6 +311,35 @@ function getBlockWidth ($iAllWidth, $iUnitWidth, $iNumElements) {
 function getMemberLoginFormCode($sID = 'member_login_form', $sParams = '')
 {
     trigger_error ("Replace getMemberLoginFormCode with BxDolService::call('system', 'login_form', array(), 'TemplServiceLogin')", E_USER_ERROR);
+}
+
+/**
+ * Output time wrapped in <time> tag in HTML.
+ * Then time is autoformatted using JS upon page load, this is aumatically converted to user's timezone and
+ * updated in realtime in case of short periods of 'from now' time format.
+ *
+ * This is just short version for:
+ * @see BxTemplFunctions::timeForJs
+ * 
+ * @param $iUnixTimestamp time as unixtimestamp
+ * @param $sFormatIdentifier output format identifier
+ *     @see BX_FORMAT_DATE
+ *     @see BX_FORMAT_TIME
+ *     @see BX_FORMAT_DATE_TIME
+ * @param $bForceFormat force provided format and don't use "from now" time autoformat.
+ */
+function bx_time_js ($iUnixTimestamp, $sFormatIdentifier = BX_FORMAT_DATE, $bForceFormat = false) {
+    bx_import('BxTemplFunctions');
+    return BxTemplFunctions::getInstance()->timeForJs ($iUnixTimestamp, $sFormatIdentifier, $bForceFormat);
+}
+
+/**
+ * Get UTC/GMT time string in ISO8601 date format from provided unix timestamp
+ * @param $iUnixTimestamp - unix timestamp
+ * @return ISO8601 formatted date/time string
+ */
+function bx_time_utc ($iUnixTimestamp) {
+    return gmdate(DATE_ISO8601, $iUnixTimestamp);
 }
 
 bx_import('BxDolAlerts');

@@ -17,7 +17,7 @@ class BxBaseMenuSubmenu extends BxTemplMenu
 {
 
     protected $_sObjectSubmenu = false;
-    protected $_sMainMenuItemSelected = false;
+    protected $_mixedMainMenuItemSelected = false;
 
     public function __construct ($aObject, $oTemplate) 
     {
@@ -27,12 +27,12 @@ class BxBaseMenuSubmenu extends BxTemplMenu
     /**
      * Set current submenu object
      * @param $sMenuObject menu object name
-     * @param $sForceMainMenuSelection force main menu item selection by meni item name
+     * @param $sForceMainMenuSelection force main menu item selection by menu item name
      */
     public function setObjectSubmenu ($sMenuObject, $sForceMainMenuSelection = false)
     { 
         $this->_sObjectSubmenu = $sMenuObject; 
-        $this->_sMainMenuItemSelected = $sForceMainMenuSelection;
+        $this->_mixedMainMenuItemSelected = $sForceMainMenuSelection;
     }
 
     /** 
@@ -70,6 +70,9 @@ class BxBaseMenuSubmenu extends BxTemplMenu
     }
 
     protected function _getSelectedMenuItem () {
+        if (is_array($this->_mixedMainMenuItemSelected))
+            return $this->_mixedMainMenuItemSelected;
+
         $aRet = array();
         if (!isset($this->_aObject['menu_items']))
             $this->_aObject['menu_items'] = $this->_oQuery->getMenuItems();
@@ -84,8 +87,8 @@ class BxBaseMenuSubmenu extends BxTemplMenu
 
             $isSelected = false;
 
-            if ($this->_sMainMenuItemSelected)
-                $isSelected = $this->_sMainMenuItemSelected == $a['name'];
+            if ($this->_mixedMainMenuItemSelected)
+                $isSelected = $this->_mixedMainMenuItemSelected == $a['name'];
             else 
                 $isSelected = $this->_isSelected($a) || ($this->_sObjectSubmenu && $this->_sObjectSubmenu == $a['submenu_object']);
 

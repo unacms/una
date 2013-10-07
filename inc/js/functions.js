@@ -287,3 +287,41 @@ function validateLoginForm(eForm) {
     return false;
 }
 
+/**
+ * convert <time> tags to human readable format
+ * @param sLang - use sLang localization
+ * @param isAutoupdate - for internal usage only
+ */
+function bx_time(sLang, isAutoupdate) {
+    var iAutoupdate = 22*60*60; // autoupdate time in realtime if less than 22 hours
+    var sSel = 'time';
+
+    if ('undefined' != typeof(isAutoupdate) && isAutoupdate)
+        sSel += '.bx-time-autoupdate';
+
+    $(sSel).each(function () {
+        var s;
+        var sTime = $(this).attr('datetime');
+        var iSecondsDiff = moment(sTime).unix() - moment().unix();
+        if (iSecondsDiff < 0)
+            iSecondsDiff = -iSecondsDiff;
+
+        if (iSecondsDiff < $(this).attr('data-bx-autoformat'))
+            s = moment(sTime).lang(sLang).fromNow(); // 'time ago' format
+        else
+            s = moment(sTime).lang(sLang).format($(this).attr('data-bx-format')); // custom format
+
+        if (iSecondsDiff < iAutoupdate)
+            $(this).addClass('bx-time-autoupdate');
+        else
+            $(this).removeClass('bx-time-autoupdate');
+
+        $(this).html(s);
+    });
+
+    if ($('time.bx-time-autoupdate').size()) {
+        setTimeout(function () {
+            bx_time(sLang, true);
+        }, 30000);
+    }
+}

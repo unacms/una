@@ -325,12 +325,12 @@ EOS;
 
             case 'datepicker':
                 $iTime = bx_process_input ($aInput['value'], BX_DATA_DATE_TS, false, false);
-                $sValue = getLocaleDate($iTime);
+                $sValue = bx_time_js ($iTime, BX_FORMAT_DATE);
             break;
             case 'date_time':
             case 'datetime':
                 $iTime = bx_process_input ($aInput['value'], BX_DATA_DATETIME_TS, false, false);
-                $sValue = defineTimeInterval ($iTime);
+                $sValue = bx_time_js ($iTime, BX_FORMAT_DATE_TIME);
             break;
 
             case 'checkbox_set':

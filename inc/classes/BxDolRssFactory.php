@@ -54,7 +54,7 @@ class BxDolRssFactory extends BxDol {
         $sUnits = '';
         $sRSSLast = '';
         if (isset($aRssData[0]))
-            $sRSSLast = getLocaleDate($aRssData[0][$aFields['DateTimeUTS']], 6);
+            $sRSSLast = bx_time_utc($aRssData[0][$aFields['DateTimeUTS']]);
 
         if ($iPID > 0)
             $aPIDOwnerInfo = getProfileInfo($iPID);
@@ -67,7 +67,7 @@ class BxDolRssFactory extends BxDol {
                 $sUnitGuid = $aUnitInfo[$aFields['Guid']];
 
                 $sUnitTitle = strmaxwordlen(strip_tags($aUnitInfo[$aFields['Title']]), 100);
-                $sUnitDate = getLocaleDate($aUnitInfo[$aFields['DateTimeUTS']], 6);
+                $sUnitDate = bx_time_utc($aUnitInfo[$aFields['DateTimeUTS']]);
 
                 $sLinkMore = '';
                 if ( strlen( $aUnitInfo[$aFields['Desc']]) > $iUnitLimitChars ) {

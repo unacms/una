@@ -1,14 +1,4 @@
-    <a href="javascript:void(0);" onclick="__uploader_instance_name__.showUploaderForm();" class="bx-btn bx-btn-small bx-def-margin-sec-top bx-def-margin-sec-left cmts-uploader-button">
-    	<i class="sys-icon __button_title__"></i>
-    </a>
-    <script>
-        $(document).ready(function(){
-            __uploader_instance_name__ = new BxDolUploaderSimple('__engine__', '__storage_object__', '__uniq_id__', {
-                'multiple': __multiple__,
-                'content_id': '__content_id__',
-                'images_transcoder' : '__images_transcoder__',
-                'template_error_msg': '<div class="bx-uploader-msg-err">{error}</div>',
-                'template_ghost': __template_ghost__
-            });
-        });                
-    </script>
+<a href="javascript:void(0);" onclick="__uploader_instance_name__.showUploaderForm();" class="bx-btn bx-btn-small bx-def-margin-sec-top bx-def-margin-sec-left cmts-uploader-button">
+    <i class="sys-icon __button_title__"></i>
+</a>
+<bx_include_auto:uploader_button_simple_js.html />

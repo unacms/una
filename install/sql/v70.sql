@@ -362,15 +362,8 @@ SET @iCategoryId = LAST_INSERT_ID();
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryId, 'currency_code', 'Currency code (for checkout system)', 'USD', 'select', 'USD,EURO', 'return strlen($arg0) > 0;', 'Cannot be empty.', 1),
 (@iCategoryId, 'currency_sign', 'Currency sign (for display purposes only)', '&#36;', 'digit', '', 'return strlen($arg0) > 0;', 'Cannot be empty.', 2),
-(@iCategoryId, 'time_format_php', 'Time Format(for code)', 'H:i', 'digit', '', '', '', 3),
-(@iCategoryId, 'short_date_format_php', 'Short Date Format(for code)', 'd.m.Y', 'digit', '', '', '', 4),
-(@iCategoryId, 'date_format_php', 'Long Date Format(for code)', 'd.m.Y H:i', 'digit', '', '', '', 5),
-(@iCategoryId, 'time_format', 'Time Format(for database)', '%H:%i', 'digit', '', '', '', 6),
-(@iCategoryId, 'short_date_format', 'Short Date Format(for database)', '%d.%m.%Y', 'digit', '', '', '', 7),
-(@iCategoryId, 'date_format', 'Long Date Format(for database)', '%d.%m.%Y %H:%i', 'digit', '', '', '', 8),
 (@iCategoryId, 'enable_gd', 'Use GD library for image processing', 'on', 'checkbox', '', '', '', 10),
 (@iCategoryId, 'sys_calendar_starts_sunday', 'Does Calender start on Sunday?', '', 'checkbox', '', '', '', 11),
-(@iCategoryId, 'php_date_format', 'PHP date format', 'F j, Y', 'digit', '', '', '', 12),
 (@iCategoryId, 'license_code', 'Dolphin License Code', '', 'digit', '', '', '', 13),
 (@iCategoryId, 'boonexAffID', 'My BoonEx Affiliate ID', '', 'digit', '', '', '', 14),
 (@iCategoryId, 'useLikeOperator', 'Use operator LIKE for search (recommended for small content)', 'on', 'checkbox', '', '', '', 15);
@@ -465,6 +458,18 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_template_cache_compress_enable', 'Enable compression for JS/CSS files(cache should be enabled)', 'on', 'checkbox', '', '', '', 8),
 (@iCategoryId, 'sys_template_page_width_min', 'Min page width(in pixels)', '774', 'digit', '', '', '', 9),
 (@iCategoryId, 'sys_template_page_width_max', 'Max page width(in pixels)', '1600', 'digit', '', '', '', 10);
+
+--
+-- CATEGORY: date/time format
+--
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'date_time_format', '_adm_stg_cpt_category_datetime_format', 0, 25);
+SET @iCategoryId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
+(@iCategoryId, 'sys_format_date', 'Date Format', 'D MMM YYYY', 'digit', '', '', '', 10),
+(@iCategoryId, 'sys_format_time', 'Time Format', 'HH:mm', 'digit', '', '', '', 12),
+(@iCategoryId, 'sys_format_datetime', 'Datetime Format', 'D MMM YYYY h:mm:ss a', 'digit', '', '', '', 14),
+(@iCategoryId, 'sys_format_timeago', 'Use \'time ago\' format for dates less than this number of seconds', 432000, 'digit', '', '', '', 20);
 
 -- --------------------------------------------------------
 

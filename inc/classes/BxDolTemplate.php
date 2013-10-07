@@ -315,6 +315,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
             'jquery.dolPopup.js',
             'jquery.ui.position.min.js',
             BX_DOL_URL_PLUGINS . 'spin.min.js',
+            BX_DOL_URL_PLUGINS . 'moment/moment+langs.min.js',
         ));
 
         //--- Load injection's cache ---//
@@ -905,6 +906,9 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
             case 'main_div_width':
                 if(!empty($this->aPage['width']))
                     $sRet = bx_html_attribute($this->aPage['width']);
+                break;
+            case 'lang':
+                $sRet = bx_lang_name();
                 break;
             case 'main_logo':
                 bx_import('BxTemplFunctions');

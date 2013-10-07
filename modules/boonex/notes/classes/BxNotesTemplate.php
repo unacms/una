@@ -66,7 +66,7 @@ class BxNotesTemplate extends BxDolModuleTemplate {
             'summary' => $sSummary,
             'author' => $oProfile->getDisplayName(),
             'author_url' => $oProfile->getUrl(),
-            'when' => defineTimeInterval($aData['added']),
+            'entry_posting_date' => bx_time_js($aData['added'], BX_FORMAT_DATE),
             'bx_if:thumb' => array (
                 'condition' => $sPhotoThumb,
                 'content' => array (
@@ -93,7 +93,7 @@ class BxNotesTemplate extends BxDolModuleTemplate {
             'author_url' => $oProfile->getUrl(),
             'author_thumb_url' => $oProfile->getThumb(),
             'author_title' => $oProfile->getDisplayName(),
-            'entry_posting_date' => defineTimeInterval($aData['added']),
+            'entry_posting_date' =>  bx_time_js($aData['added'], BX_FORMAT_DATE),
         );
         return $this->parseHtmlByName($sTemplateName, $aVars);
     }

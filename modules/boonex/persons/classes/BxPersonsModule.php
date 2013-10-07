@@ -145,7 +145,20 @@ class BxPersonsModule extends BxDolModule implements iBxDolProfileService {
         return $oProfileForms->viewDataForm((int)$iContentId);
     }
 
-    public function serviceProfilePicture ($iContentId = 0) {
+    public function serviceProfileCover ($iContentId = 0) {
+       if (!$iContentId)
+            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if (!$iContentId)
+            return false;
+
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if (!$aContentInfo)
+            return false;
+
+        return $this->_oTemplate->cover($aContentInfo);
+    }
+
+    public function serviceProfileFriends ($iContentId = 0) {
         if (!$iContentId)
             $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
         if (!$iContentId)
@@ -155,20 +168,7 @@ class BxPersonsModule extends BxDolModule implements iBxDolProfileService {
         if (!$aContentInfo)
             return false;
         
-        $sImageUrl = '';
-        if (isset($aContentInfo[BxPersonsConfig::$FIELD_PICTURE]) && $aContentInfo[BxPersonsConfig::$FIELD_PICTURE]) {
-            bx_import('BxDolImageTranscoder');        
-            $oImagesTranscoder = BxDolImageTranscoder::getObjectInstance(BxPersonsConfig::$OBJECT_IMAGES_TRANSCODER_PREVIEW);
-            if (!$oImagesTranscoder)
-                return false;
-            $sImageUrl = $oImagesTranscoder->getImageUrl($aContentInfo[BxPersonsConfig::$FIELD_PICTURE]);
-        } 
-
-        if (!$sImageUrl)
-            $sImageUrl = $this->_oTemplate->getImageUrl('no-picture-preview.png');
-
-        $aVars = array ('url' => $sImageUrl);
-        return $this->_oTemplate->parseHtmlByName('block_picture.html', $aVars);
+        return 'TODO: friends here';
     }
 
     // ====== ACTION METHODS
@@ -225,15 +225,15 @@ class BxPersonsModule extends BxDolModule implements iBxDolProfileService {
         $oTemplate->getPageCode();
     }
 
-    function actionDiscardGhost ($iFileId, $iContentId = 0) {
-        $this->_actionWithGhost('discardGhost', $iFileId, $iContentId);
+    function actionDiscardGhost ($iFileId, $iContentId = 0, $sFieldName = '') {
+        $this->_actionWithGhost('discardGhost', $iFileId, $iContentId, $sFieldName);
     }
 
-    function actionDeleteGhost ($iFileId, $iContentId = 0) {
-        $this->_actionWithGhost('deleteGhost', $iFileId, $iContentId);
+    function actionDeleteGhost ($iFileId, $iContentId = 0, $sFieldName = '') {
+        $this->_actionWithGhost('deleteGhost', $iFileId, $iContentId, $sFieldName);
     }
 
-    function _actionWithGhost ($sAction, $iFileId, $iContentId = 0) {
+    function _actionWithGhost ($sAction, $iFileId, $iContentId = 0, $sFieldName = '') {
         $iFileId = (int)$iFileId;
         $iContentId = (int)$iContentId;
 
@@ -247,7 +247,7 @@ class BxPersonsModule extends BxDolModule implements iBxDolProfileService {
         $oForm = BxDolForm::getObjectInstance('bx_person', 'bx_person_add'); 
 
         header('Content-type: text/html; charset=utf-8');
-        echo $oForm->$sAction($iFileId, $iContentId);
+        echo $oForm->$sAction($iFileId, $iContentId, true, $sFieldName);
         exit;
     }
 

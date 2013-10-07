@@ -292,7 +292,7 @@ class BxSitesGridOverview extends BxTemplGrid {
     			'title' => '_bx_sites_grid_overview_txt_payment_last',
     			'type' => '_bx_sites_txt_payment_type_' . $aPayment['type'],
     			'transaction' => $aPayment['transaction'], 
-    			'when' => getLocaleDate($aPayment['when']),
+    			'when' => bx_time_js($aPayment['when']),
     			'amount' => number_format($aPayment['amount'], 2) . ' ' .$sCurrency
     		);
 
@@ -317,7 +317,7 @@ class BxSitesGridOverview extends BxTemplGrid {
 	    		'title' => '_bx_sites_grid_overview_txt_payment_next',
 	    		'type' => '',
 	    		'transaction' => '', 
-	    		'when' => getLocaleDate($iNextPayment),
+	    		'when' => bx_time_js($iNextPayment),
 	    		'amount' => number_format($aAmount, 2) . ' ' .$sCurrency
 	    	);
     	}

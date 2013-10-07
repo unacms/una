@@ -12,9 +12,9 @@
 bx_import('BxTemplUploaderSimple');
 
 /**
- * Person avatar uploader
+ * Person uploader for avatar and cover images
  */
-class BxPersonsAvatarUploader extends BxTemplUploaderSimple {
+class BxPersonsUploader extends BxTemplUploaderSimple {
 
     protected $_iAccountProfileId;
 

@@ -1,17 +1,17 @@
-<div id="bx-uploader-file-{file_id}" class="bx-uploader-ghost">
+<div id="bx-uploader-file-{file_id}" class="bx-uploader-ghost bx-def-margin-sec-top">
     <input type="hidden" name="__name__" value="{file_id}" />
     <img src="{file_icon}" class="bx-def-margin-sec-right" style="vertical-align:middle;" />
     <span class="bx-uploader-ghost-draft">
         <bx_text:_bx_persons_form_person_input_picture_txt_new />
-        <a class="bx-btn bx-btn-small" style="float:none; display:inline-block;" href="javascript:void(0);" onclick="bx_persons_discard_ghost({file_id}, __content_id__, {js_instance_name});"><bx_text:_bx_persons_form_person_input_picture_txt_discard /></a>
+        <a class="bx-btn bx-btn-small" style="float:none; display:inline-block;" href="javascript:void(0);" onclick="bx_persons_discard_ghost({file_id}, __content_id__, {js_instance_name}, '__name__');"><bx_text:_bx_persons_form_person_input_picture_txt_discard /></a>
     </span>
     <span class="bx-uploader-ghost-current" style="display:none;">
         <bx_text:_bx_persons_form_person_input_picture_txt_current />
         <bx_if:not_required>
-            <a class="bx-btn bx-btn-small" style="float:none; display:inline-block;" href="javascript:void(0);" onclick="bx_persons_delete_ghost({file_id}, __content_id__, {js_instance_name});"><bx_text:_bx_persons_form_person_input_picture_txt_delete /></a>
+            <a class="bx-btn bx-btn-small" style="float:none; display:inline-block;" href="javascript:void(0);" onclick="bx_persons_delete_ghost({file_id}, __content_id__, {js_instance_name}, '__name__');"><bx_text:_bx_persons_form_person_input_picture_txt_delete /></a>
         </bx_if:not_required>
     </span>
     <script>
-        bx_persons_toggle_draft({file_id}, __current_picture_id__);
+        bx_persons_toggle_draft({file_id}, __current_picture_id__, '__name__');
     </script>
 </div>

@@ -28,8 +28,8 @@ class BxPersonsDb extends BxDolModuleDb {
         return $this->getRow($sQuery);
     }
 
-    function updateContentPictureById($iContentId, $iProfileId, $iPictureId) {
-        $sQuery = $this->prepare ("UPDATE `" . $this->_sPrefix . "data` SET `" . BxPersonsConfig::$FIELD_PICTURE . "` = ? WHERE `id` = ? AND `author` = ?", $iPictureId, $iContentId, $iProfileId);
+    function updateContentPictureById($iContentId, $iProfileId, $iPictureId, $sFieldPicture) {
+        $sQuery = $this->prepare ("UPDATE `" . $this->_sPrefix . "data` SET `" . $sFieldPicture . "` = ? WHERE `id` = ? AND `author` = ?", $iPictureId, $iContentId, $iProfileId);
         return $this->res($sQuery);
     }
 

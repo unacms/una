@@ -91,7 +91,7 @@ class BxSitesAccount
 					'Domain' => $this->_oModule->getDomain($aAccount['domain']),
 					'Email' => $aUpdateParams['email'],
 					'Status' => _t('_bx_sites_txt_status_' . BX_SITES_ACCOUNT_STATUS_TRIAL),
-					'NextPaymentDate' => getLocaleDate($aUpdateParams['paid']),
+					'NextPaymentDate' => bx_time_js($aUpdateParams['paid']),
 					'DetailsFormUrl' => BX_DOL_URL_ROOT . $oPermalinks->permalink('page.php?i=site-edit&sid=' . $aAccount['pd_profile_sid'])
 				));
 
@@ -203,7 +203,7 @@ class BxSitesAccount
 					'Email' => $aAccount['email'],
 					'Amount' => $fAmount . ' ' . $this->_oModule->_oConfig->getCurrencyCode(),
 					'Status' => _t('_bx_sites_txt_status_' . $sActStatus),
-					'NextPaymentDate' => getLocaleDate($iPaidUntil),
+					'NextPaymentDate' => bx_time_js($iPaidUntil),
 					'DetailsFormUrl' => BX_DOL_URL_ROOT . $oPermalinks->permalink('page.php?i=site-edit&sid=' . $aAccount['pd_profile_sid'])
 				));
 			}
@@ -213,7 +213,7 @@ class BxSitesAccount
 				$aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('bx_sites_payment_received',  array(
 					'RealName' => $sFirstName . (!empty($sFirstName) && !empty($sLastName) ? ' ' . $sLastName : ''),
 					'Amount' => $fAmount . ' ' . $this->_oModule->_oConfig->getCurrencyCode(),
-					'NextPaymentDate' => getLocaleDate($iPaidUntil)
+					'NextPaymentDate' => bx_time_js($iPaidUntil)
 				));
 			}
 

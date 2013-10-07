@@ -7,13 +7,6 @@
  * @{
  */
 
-define('BX_DOL_LOCALE_TIME', 2);
-define('BX_DOL_LOCALE_DATE_SHORT', 4);
-define('BX_DOL_LOCALE_DATE', 5);
-
-define('BX_DOL_LOCALE_PHP', 1);
-define('BX_DOL_LOCALE_DB', 2);
-
 define('BX_DATA_TEXT', 1); ///< regular text data type
 define('BX_DATA_TEXT_MULTILINE', 2); ///< regular multiline text data type
 define('BX_DATA_INT', 3); ///< integer data type
@@ -54,54 +47,6 @@ function uri2title($sValue) {
         array('&', '/', '\\', '"', '+'),
         $sValue
     );
-}
-
-/**
- * Convert date(timestamp) in accordance with requested format code.
- *
- * @param string $sTimestamp - timestamp
- * @param integer $iCode - format code
- *                  1(4) - short date format. @see sys_options -> short_date_format_php
- *                  2 - time format. @see sys_options -> time_format_php
- *                  3(5) - long date format. @see sys_options -> date_format_php
- *                  6 - RFC 2822 date format.
- */
-function getLocaleDate($sTimestamp = '', $iCode = BX_DOL_LOCALE_DATE_SHORT) {
-    $sFormat = (int)$iCode == 6 ? 'r' : getLocaleFormat($iCode);
-
-    return date($sFormat, $sTimestamp);
-}
-/**
- * Get data format in accordance with requested format code and format type.
- *
- * @param integer $iCode - format code
- *                  1(4) - short date format. @see sys_options -> short_date_format_php
- *                  2 - time format. @see sys_options -> time_format_php
- *                  3(5) - long date format. @see sys_options -> date_format_php
- *                  6 - RFC 2822 date format.
- * @param integer $iType - format type
- *                  1 - for PHP code.
- *                  2 - for database.
- */
-function getLocaleFormat($iCode = BX_DOL_LOCALE_DATE_SHORT, $iType = BX_DOL_LOCALE_PHP) {
-    $sPostfix = (int)$iType == BX_DOL_LOCALE_PHP ? '_php' : '';
-
-    $sResult = '';
-    switch ($iCode) {
-        case 2:
-            $sResult = getParam('time_format' . $sPostfix);
-            break;
-        case 1:
-        case 4:
-            $sResult = getParam('short_date_format' . $sPostfix);
-            break;
-        case 3:
-        case 5:
-            $sResult = getParam('date_format' . $sPostfix);
-            break;
-    }
-
-    return $sResult;
 }
 
 /*
@@ -659,21 +604,6 @@ function _format_when ($iSec) {
         }
     }
     return $s;
-}
-
-function _format_time($iSec, $aParams = array()) {
-    $sDivider = isset($aParams['divider']) ? $aParams['divider'] : ':';
-
-    $iSec = (int)$iSec;
-    $sFormat = $iSec > 3600 ? 'H' . $sDivider . 'i' . $sDivider . 's' : 'i' . $sDivider . 's';
-
-    return gmdate($sFormat, $iSec);
-}
-
-function defineTimeInterval($iTime) {
-    $iTime = time() - (int)$iTime;
-    $sCode = _format_when($iTime);
-    return $sCode;
 }
 
 function execSqlFile($sFileName) {

@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS `bx_persons_data` (
   `added` int(11) NOT NULL,
   `changed` int(11) NOT NULL,
   `picture` int(11) NOT NULL,
+  `cover` int(11) NOT NULL,
   `fullname` varchar(255) NOT NULL,
   `sex` int(11) NOT NULL,
   PRIMARY KEY (`id`)
@@ -16,6 +17,22 @@ CREATE TABLE IF NOT EXISTS `bx_persons_data` (
 -- TABLE: STORAGES & TRANSCODERS
 
 CREATE TABLE `bx_persons_pictures` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `profile_id` int(10) unsigned NOT NULL,
+  `remote_id` varchar(255) NOT NULL,
+  `path` varchar(255) NOT NULL,
+  `file_name` varchar(255) NOT NULL,
+  `mime_type` varchar(128) NOT NULL,
+  `ext` varchar(32) NOT NULL,
+  `size` int(11) NOT NULL,
+  `added` int(11) NOT NULL,
+  `modified` int(11) NOT NULL,
+  `private` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `remote_id` (`remote_id`)
+);
+
+CREATE TABLE `bx_persons_pictures_covers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(10) unsigned NOT NULL,
   `remote_id` varchar(255) NOT NULL,
@@ -63,29 +80,34 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_person', 'bx_persons', 'do_submit', '_sys_form_account_input_submit', '', 0, 'submit', '_bx_persons_form_person_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_person', 'bx_persons', 'fullname', '', '', 0, 'text', '_bx_persons_form_person_input_sys_fullname', '_bx_persons_form_person_input_fullname', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_persons_form_person_input_fullname_err', 'Xss', '', 1, 0),
 ('bx_person', 'bx_persons', 'picture', '', '', 0, 'files', '_bx_persons_form_person_input_sys_picture', '_bx_persons_form_person_input_picture', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_persons_form_person_input_picture_err', 'Int', '', 1, 0),
+('bx_person', 'bx_persons', 'cover', '', '', 0, 'files', '_bx_persons_form_person_input_sys_cover', '_bx_persons_form_person_input_cover', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_person', 'bx_persons', 'sex', 1, '#!Sex', 0, 'radio_set', '_bx_persons_form_person_input_sys_sex', '_bx_persons_form_person_input_sex', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_persons_form_person_input_sex_err', 'Xss', '', 1, 1);
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
 ('bx_person_add', 'delete_confirm', 2147483647, 0, 1),
 ('bx_person_add', 'picture', 2147483647, 1, 2),
-('bx_person_add', 'fullname', 2147483647, 1, 3),
-('bx_person_add', 'sex', 2147483647, 1, 4),
-('bx_person_add', 'do_submit', 2147483647, 1, 5),
+('bx_person_add', 'cover', 2147483647, 1, 3),
+('bx_person_add', 'fullname', 2147483647, 1, 4),
+('bx_person_add', 'sex', 2147483647, 1, 5),
+('bx_person_add', 'do_submit', 2147483647, 1, 6),
 ('bx_person_delete', 'picture', 2147483647, 0, 0),
+('bx_person_delete', 'cover', 2147483647, 0, 0),
 ('bx_person_delete', 'delete_confirm', 2147483647, 1, 0),
 ('bx_person_delete', 'do_submit', 2147483647, 1, 1),
 ('bx_person_delete', 'fullname', 2147483647, 0, 2),
 ('bx_person_delete', 'sex', 2147483647, 0, 3),
 ('bx_person_edit', 'delete_confirm', 2147483647, 0, 1),
 ('bx_person_edit', 'picture', 2147483647, 1, 2),
-('bx_person_edit', 'fullname', 2147483647, 1, 3),
-('bx_person_edit', 'sex', 2147483647, 1, 4),
-('bx_person_edit', 'do_submit', 2147483647, 1, 5),
+('bx_person_edit', 'cover', 2147483647, 1, 3),
+('bx_person_edit', 'fullname', 2147483647, 1, 4),
+('bx_person_edit', 'sex', 2147483647, 1, 5),
+('bx_person_edit', 'do_submit', 2147483647, 1, 6),
 ('bx_person_view', 'delete_confirm', 2147483647, 0, 1),
 ('bx_person_view', 'picture', 2147483647, 0, 2),
-('bx_person_view', 'fullname', 2147483647, 1, 3),
-('bx_person_view', 'sex', 2147483647, 1, 4),
-('bx_person_view', 'do_submit', 2147483647, 0, 5);
+('bx_person_view', 'cover', 2147483647, 0, 3),
+('bx_person_view', 'fullname', 2147483647, 1, 4),
+('bx_person_view', 'sex', 2147483647, 1, 5),
+('bx_person_view', 'do_submit', 2147483647, 0, 6);
 
 -- STUDIO PAGE & WIDGET
 
