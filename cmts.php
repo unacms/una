@@ -18,8 +18,8 @@ $sSys = isset($_REQUEST['sys']) ? $_REQUEST['sys'] : '';
 $iObjectId = (int)$_REQUEST['id'];
 $sAction = isset($_REQUEST['action']) && preg_match ('/^[A-Za-z_-]+$/', $_REQUEST['action']) ? $_REQUEST['action'] : '';
 
-bx_import ('BxTemplCmtsView');
-$oCmts = new BxTemplCmtsView($sSys, $iObjectId);
+bx_import('BxDolCmts');
+$oCmts = BxDolCmts::getObjectInstance($sSys, $iObjectId, true);
 
 if ($oCmts && $sSys && $iObjectId) {
 	if($sAction) {

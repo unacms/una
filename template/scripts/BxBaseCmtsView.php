@@ -219,6 +219,7 @@ class BxBaseCmtsView extends BxDolCmts {
         			'style_prefix' => $this->_sStylePrefix,
         			'js_object' => $this->_sJsObjName,
         			'id' => $aImage['image_id'],
+        			'title' => bx_html_attribute(_t('_cmt_view_attached_image')),
         			'image' => $oTranscoder->getImageUrl($aImage['image_id'])
         		);
 		}
@@ -271,6 +272,7 @@ class BxBaseCmtsView extends BxDolCmts {
         		'condition' => (int)$r['cmt_rate'] <= 0,
         		'content' => array()
         	),
+        	'title_plused_by' => bx_html_attribute(_t('_Plused_by_popup')),
         	'points' => _t(in_array($r['cmt_rate'], array(-1, 0, 1)) ? '_N_point' : '_N_points', $r['cmt_rate']),
         	'text' => $sText,
         	'bx_if:show_more' => array(
@@ -355,7 +357,7 @@ class BxBaseCmtsView extends BxDolCmts {
         		'content' => array()
         	),
     		'src' => $oStorage->getFileUrlById($iImgId),
-        	'alt' => _t('_cmt_view_attached_image')
+        	'alt' => bx_html_attribute(_t('_cmt_view_attached_image'))
     	)));
 
         return $oTemplate->parseHtmlByName('comment_image.html', array(
@@ -456,7 +458,7 @@ class BxBaseCmtsView extends BxDolCmts {
         			'js_object' => $this->_sJsObjName,
         			'style_prefix' => $this->_sStylePrefix,
         			'id' => $a['cmt_id'],
-        			'text' => _t(isset($a['cmt_type']) && $a['cmt_type'] == 'comment' ? '_Comment_to_this_comment' : '_Reply_to_this_comment')
+        			'title_reply' => bx_html_attribute(_t(isset($a['cmt_type']) && $a['cmt_type'] == 'comment' ? '_Comment_to_this_comment' : '_Reply_to_this_comment'))
         		)
         	),
         	'bx_if:show_rate' => array(
@@ -472,7 +474,9 @@ class BxBaseCmtsView extends BxDolCmts {
         			'bx_if:hide_rate_minus' => array(
         				'condition' => !$bRated,
         				'content' => array()
-        			)
+        			),
+        			'title_plus' => bx_html_attribute(_t('_Plus')),
+        			'title_minus' => bx_html_attribute(_t('_Minus')),
         		)
         	),
         	'bx_if:show_manage' => array(
@@ -481,6 +485,7 @@ class BxBaseCmtsView extends BxDolCmts {
         			'js_object' => $this->_sJsObjName,
         			'style_prefix' => $this->_sStylePrefix,
         			'id' => $a['cmt_id'],
+        			'title_manage' => bx_html_attribute(_t('_Manage')),
         			'popup_id' => $this->_sSystem . '-manage' . $a['cmt_id'],
         			'popup_text' => $sManagePopupText
         		)

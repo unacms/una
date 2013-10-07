@@ -215,6 +215,36 @@ class BxDolCmts extends BxDol
             $this->init($iId);
     }
 
+	/**
+     * get comments object instanse
+     * @param $sSys comments object name 
+     * @param $iId associated content id, where comments are postred in
+     * @param $iInit perform initialization
+     * @return null on error, or ready to use class instance
+     */ 
+    static function getObjectInstance($sSys, $iId, $iInit = true) 
+    {
+    	if(isset($GLOBALS['bxDolClasses']['BxDolCmts!' . $sSys . $iId]))
+            return $GLOBALS['bxDolClasses']['BxDolCmts!' . $sSys . $iId];
+
+        $aSystems = self::getSystems();
+        if (!isset($aSystems[$sSys]))
+            return null;
+
+        bx_import('BxTemplCmtsView');
+        $sClassName = 'BxTemplCmtsView';
+        if(!empty($aSystems[$sSys]['class_name'])) {
+        	$sClassName = $aSystems[$sSys]['class_name'];
+        	if(!empty($aSystems[$sSys]['class_file']))
+                require_once(BX_DIRECTORY_PATH_ROOT . $aSystems[$sSys]['class_file']);
+            else
+                bx_import($sClassName);
+        }
+
+        $o = new $sClassName($sSys, $iId, true);
+        return ($GLOBALS['bxDolClasses']['BxDolCmts!' . $sSys . $iId] = $o);
+    }
+
     function &getSystems ()
     {
         if (!isset($GLOBALS['bx_dol_cmts_systems'])) {

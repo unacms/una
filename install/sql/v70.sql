@@ -5,7 +5,7 @@
 -- --------------------------------------------------------
 
 SET NAMES 'utf8';
-DROP TABLE IF EXISTS `sys_categories`, `sys_keys`, `sys_objects_editor`, `sys_objects_captcha`, `sys_objects_social_sharing`, `sys_objects_categories`, `sys_objects_cmts`, `sys_email_templates`, `sys_options`, `sys_options_cats`, `sys_ip_list`, `sys_ip_members_visits`, `sys_localization_categories`, `sys_localization_keys`, `sys_localization_languages`, `sys_localization_string_params`, `sys_localization_strings`, `sys_acl_actions`, `sys_acl_actions_track`, `sys_acl_matrix`, `sys_acl_level_prices`, `sys_acl_levels`, `sys_sessions`, `sys_acl_levels_members`, `sys_objects_search`, `sys_stat_site`, `sys_alerts`, `sys_alerts_handlers`, `sys_injections`, `sys_injections_admin`, `sys_modules`, `sys_modules_file_tracks`, `sys_permalinks`, `sys_privacy_actions`, `sys_privacy_defaults`, `sys_privacy_groups`, `sys_privacy_members`, `sys_tags`, `sys_objects_tag`, `sys_transactions`, `sys_objects_auths`, `sys_objects_vote`, `sys_objects_views`, `sys_cron_jobs`, `sys_dnsbl_rules`, `sys_dnsbl_block_log`, `sys_dnsbluri_zones`, `sys_menu_mobile`, `sys_menu_mobile_pages`, `sys_objects_storage`, `sys_objects_uploader`, `sys_storage_user_quotas`, `sys_storage_tokens`, `sys_storage_ghosts`, `sys_storage_mime_types`, `sys_objects_transcoder_images`, `sys_transcoder_images_files`, `sys_transcoder_images_filters`,`sys_accounts`,`sys_profiles`;
+DROP TABLE IF EXISTS `sys_categories`, `sys_keys`, `sys_objects_editor`, `sys_objects_captcha`, `sys_objects_social_sharing`, `sys_objects_categories`, `sys_objects_cmts`, `sys_email_templates`, `sys_options`, `sys_options_cats`, `sys_ip_list`, `sys_ip_members_visits`, `sys_localization_categories`, `sys_localization_keys`, `sys_localization_languages`, `sys_localization_string_params`, `sys_localization_strings`, `sys_acl_actions`, `sys_acl_actions_track`, `sys_acl_matrix`, `sys_acl_level_prices`, `sys_acl_levels`, `sys_sessions`, `sys_acl_levels_members`, `sys_objects_search`, `sys_stat_site`, `sys_alerts`, `sys_alerts_handlers`, `sys_injections`, `sys_injections_admin`, `sys_modules`, `sys_modules_file_tracks`, `sys_permalinks`, `sys_objects_privacy`, `sys_privacy_defaults`, `sys_privacy_groups`, `sys_privacy_members`, `sys_tags`, `sys_objects_tag`, `sys_transactions`, `sys_objects_auths`, `sys_objects_vote`, `sys_objects_views`, `sys_cron_jobs`, `sys_dnsbl_rules`, `sys_dnsbl_block_log`, `sys_dnsbluri_zones`, `sys_menu_mobile`, `sys_menu_mobile_pages`, `sys_objects_storage`, `sys_objects_uploader`, `sys_storage_user_quotas`, `sys_storage_tokens`, `sys_storage_ghosts`, `sys_storage_mime_types`, `sys_objects_transcoder_images`, `sys_transcoder_images_files`, `sys_transcoder_images_filters`,`sys_accounts`,`sys_profiles`;
 ALTER DATABASE DEFAULT CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci';
 
 
@@ -1126,61 +1126,31 @@ CREATE TABLE `sys_objects_views` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
-
 --
--- Table structure for table `sys_privacy_groups`
+-- Table structure for table `sys_objects_privacy`
 --
-CREATE TABLE `sys_privacy_groups` (
-  `id` int(11) unsigned NOT NULL auto_increment,
-  `owner_id` int(11) NOT NULL default '0',
-  `parent_id` int(11) NOT NULL default '0',
-  `title` varchar(255) NOT NULL default '',
-  `home_url` varchar(255) NOT NULL default '',
-  `get_parent` text NOT NULL default '',
-  `get_content` text NOT NULL default '',
-  `members_count` int(11) NOT NULL default '0', 
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `sys_privacy_groups`
---
-INSERT INTO `sys_privacy_groups`(`id`, `owner_id`, `parent_id`, `title`, `home_url`, `get_parent`, `get_content`, `members_count`) VALUES
-('1', '0', '0', '', '', '$aProfile = getProfileInfo($arg1); return (int)$aProfile[\'PrivacyDefaultGroup\'];', '', 0),
-('2', '0', '0', '', '', '', 'return false;', 0),
-('3', '0', '0', '', '', '', 'return true;', 0),
-('4', '0', '0', '', '', '', 'return isMember();', 0),
-('5', '0', '0', '', 'communicator.php?communicator_mode=friends_list', '', '$aIds = $arg0->fromMemory($arg0->_sGroupFriendsCache . $arg1, "getColumn", "SELECT `p`.`ID` AS `id` FROM `Profiles` AS `p` LEFT JOIN `sys_friend_list` AS `f1` ON (`f1`.`ID`=`p`.`ID` AND `f1`.`Profile`=\'" . $arg1 . "\' AND `f1`.`Check`=1) LEFT JOIN `sys_friend_list` AS `f2` ON (`f2`.`Profile`=p.`ID` AND `f2`.`ID`=\'" . $arg1 . "\' AND `f2`.`Check`=1) WHERE 1 AND (`f1`.`ID` IS NOT NULL OR `f2`.`ID` IS NOT NULL)"); return in_array($arg2, $aIds);', 0);
-
---
--- Table structure for table `sys_privacy_members`
---
-CREATE TABLE `sys_privacy_members` (
-  `id` int(11) NOT NULL auto_increment,  
-  `group_id` int(11) NOT NULL default '0',
-  `member_id` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`id`),
-  UNIQUE KEY `group_member` (`group_id`, `member_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
---
--- Table structure for table `sys_privacy_actions`
---
-CREATE TABLE `sys_privacy_actions` (
-  `id` int(11) NOT NULL auto_increment,  
-  `module_uri` varchar(64) NOT NULL default '',
-  `name` varchar(255) NOT NULL default '',
+CREATE TABLE `sys_objects_privacy` (
+  `id` int(11) NOT NULL auto_increment,
+  `object` varchar(64) NOT NULL default '',
+  `module` varchar(64) NOT NULL default '',
+  `action` varchar(255) NOT NULL default '',
   `title` varchar(255) NOT NULL default '',
   `default_group` varchar(255) NOT NULL default '1',
-  PRIMARY KEY  (`id`),
-  UNIQUE KEY `action` (`module_uri`, `name` )
+  `table` varchar(255) NOT NULL default '',
+  `table_field_id` varchar(255) NOT NULL default '',
+  `table_field_author` varchar(255) NOT NULL default '',
+  `override_class_name` varchar(255) NOT NULL default '',
+  `override_class_file` varchar(255) NOT NULL default '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `object` (`object`),
+  UNIQUE KEY `action` (`module`, `action`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `sys_privacy_actions`
+-- Dumping data for table `sys_objects_privacy`
 --
-INSERT INTO `sys_privacy_actions`(`module_uri`, `name`, `title`, `default_group`) VALUES
-('profile', 'view_block', '_ps_view_block', '3');
+INSERT INTO `sys_objects_privacy`(`object`, `module`, `action`, `title`, `default_group`, `table`, `table_field_id`, `table_field_author`, `override_class_name`, `override_class_file`) VALUES
+('profile_view_block', 'profile', 'view_block', '_ps_view_block', '3', 'Profiles', 'ID', 'ID', '', '');
 
 --
 -- Table structure for table `sys_privacy_defaults`
@@ -1192,6 +1162,27 @@ CREATE TABLE `sys_privacy_defaults` (
   PRIMARY KEY  (`owner_id`, `action_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
+--
+-- Table structure for table `sys_privacy_groups`
+--
+CREATE TABLE `sys_privacy_groups` (
+  `id` int(11) unsigned NOT NULL auto_increment,
+  `title` varchar(255) NOT NULL default '',
+  `check` text NOT NULL default '',
+  `active` tinyint(4) NOT NULL default '1',
+  `visible` tinyint(4) NOT NULL default '1',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `sys_privacy_groups`
+--
+INSERT INTO `sys_privacy_groups`(`id`, `title`, `check`, `active`, `visible`) VALUES
+('1', '', '', 1, 0),
+('2', '_sys_ps_group_title_me_only', '@me_only', 1, 1),
+('3', '_sys_ps_group_title_public', '@public', 1, 1),
+('4', '_sys_ps_group_title_members', '@members', 1, 1),
+('5', '_sys_ps_group_title_friends', '@friends', 1, 1);
 
 --
 -- Table structure for table `sys_cron_jobs`

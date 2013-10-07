@@ -1451,6 +1451,11 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_prof_status"><![CDATA[{0} is {1} now]]></string>
 	<string name="_sys_admin_filter"><![CDATA[Filter:]]></string>
 	<string name="_sys_admin_apply"><![CDATA[Apply]]></string>
+	<string name="_sys_ps_group_title_me_only"><![CDATA[Me Only]]></string>
+	<string name="_sys_ps_group_title_public"><![CDATA[Public]]></string>
+	<string name="_sys_ps_group_title_members"><![CDATA[Members]]></string>
+	<string name="_sys_ps_group_title_friends"><![CDATA[Friends]]></string>
+	<!--
 	<string name="_ps_pcpt_privacy_settings"><![CDATA[Privacy Settings]]></string>
 	<string name="_ps_bcpt_my_groups"><![CDATA[My Privacy Groups]]></string>
 	<string name="_ps_bcpt_create_group"><![CDATA[Create New Privacy Group]]></string>
@@ -1477,6 +1482,7 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_ps_ferr_incorrect_select"><![CDATA[You need to select some value]]></string>
 	<string name="_ps_tmenu_privacy_settings"><![CDATA[Privacy Settings]]></string>
 	<string name="_ps_view_block"><![CDATA[Allow to view blocks]]></string>
+	-->
 	<string name="_Mail"><![CDATA[Mail]]></string>
 	<string name="_sys_from_album"><![CDATA[from album]]></string>
 	<string name="_View"><![CDATA[View]]></string>
