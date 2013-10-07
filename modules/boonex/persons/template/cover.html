@@ -1,8 +1,39 @@
 
-<div class="bx-persons-cover bx-def-round-corners" style="background-image:url(__cover_url__)">
+<div class="bx-persons-cover">
+    <a class="bx-persons-cover-image bx-def-round-corners" href="__cover_href__" onclick="bx_persons_popup_cover()" style="background-image:url(__cover_url__)">&nbsp;</a>
     <div class="bx-persons-cover-info bx-def-padding">
         <img class="bx-def-margin-right bx-def-round-corners" src="__preview_url__" />
         <h1 class="bx-def-margin-sec-bottom bx-def-margin-sec-top">__title__</h1>
     </div>
 </div>
 
+<div id="bx-persons-popup-cover" style="display:none;">
+    __cover_popup__
+</div>
+
+<script>
+    function bx_persons_popup_cover () {
+        var w = $(window).width(),
+            h = $(window).height(),
+            eImg = new Image();
+
+        if (!$('#bx-persons-popup-cover-image').size())
+            return;
+
+        eImg.src = '__cover_url__';
+
+        if (eImg.width > eImg.height && eImg.width > w * .9) {
+            $('#bx-persons-popup-cover-image').css({
+                width: '' + parseInt(w * .9) + 'px',
+                height: 'auto'
+            });
+        } else if (eImg.height > eImg.width && eImg.height > h * .9) {
+            $('#bx-persons-popup-cover-image').css({
+                width: 'auto',
+                height: '' + parseInt(h * .9) + 'px'
+            });
+        }
+
+        $('#bx-persons-popup-cover').dolPopup();
+    }
+</script>

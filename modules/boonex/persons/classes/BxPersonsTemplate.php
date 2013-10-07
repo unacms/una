@@ -48,19 +48,39 @@ class BxPersonsTemplate extends BxDolModuleTemplate {
     /**
      * Get profile cover
      */
-    function cover ($aData, $sTemplateName = 'cover.html') {
+    function cover ($aData, $sTemplateName = 'cover.html') {        
+
+        $oModuleMain = BxDolModule::getInstance('bx_persons');
+        $sUrlCover = $this->urlCover ($aData);
+        $sUrlCoverChange = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=edit-persons-cover&id=' . $aData['id']);
 
         // get person's url
         bx_import('BxDolPermalinks');
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=view-persons-profile&id=' . $aData['id']);
 
-        // generate html
+        $sCoverPopup = '';
+        if ($aData[BxPersonsConfig::$FIELD_COVER]) {
+            bx_import('BxTemplFunctions');
+            $sCoverPopup = BxTemplFunctions::getInstance()->transBox($this->parseHtmlByName('cover_popup.html', array (
+                'cover_url' => $sUrlCover,
+                'bx_if:owner' => array (
+                    'condition' => CHECK_ACTION_RESULT_ALLOWED === $oModuleMain->isAllowedChangeCover($aData),
+                    'content' => array (
+                        'change_cover_url' => $sUrlCoverChange,
+                    ),
+                ),
+            )), true);
+        }
+
+        // generate html        
         $aVars = array (
             'id' => $aData['id'],
-            'cover_url' => $this->urlCover ($aData),
+            'cover_url' => $sUrlCover,
             'preview_url' => $this->urlPreview ($aData),
             'content_url' => $sUrl,
             'title' => $aData[BxPersonsConfig::$FIELD_NAME],
+            'cover_popup' => $sCoverPopup,
+            'cover_href' => !$aData[BxPersonsConfig::$FIELD_COVER] && CHECK_ACTION_RESULT_ALLOWED === $oModuleMain->isAllowedChangeCover($aData) ? $sUrlCoverChange : 'javascript:void(0);',
         );
 
         return $this->parseHtmlByName($sTemplateName, $aVars);

@@ -6,6 +6,7 @@
 	<string name="_bx_persons_form_person"><![CDATA[Persons]]></string>
 	<string name="_bx_persons_form_person_display_add"><![CDATA[Add Person]]></string>
 	<string name="_bx_persons_form_person_display_edit"><![CDATA[Edit Person]]></string>
+	<string name="_bx_persons_form_person_display_edit_cover"><![CDATA[Edit Cover]]></string>
 	<string name="_bx_persons_form_person_display_delete"><![CDATA[Delete Person]]></string>
 	<string name="_bx_persons_form_person_display_view"><![CDATA[View Person]]></string>
 	<string name="_bx_persons_form_person_input_sys_do_submit"><![CDATA[Submit]]></string>
@@ -38,24 +39,27 @@
 
 	<string name="_bx_persons_page_title_sys_create_profile"><![CDATA[Create Person's Profile]]></string>
 	<string name="_bx_persons_page_title_create_profile"><![CDATA[Create Person's Profile]]></string>
-	<string name="_bx_persons_page_block_title_create_profile"><![CDATA[Create Person's Profile]]></string>
 	<string name="_bx_persons_page_title_sys_edit_profile"><![CDATA[Edit Person's Profile]]></string>
 	<string name="_bx_persons_page_title_edit_profile"><![CDATA[Edit Profile]]></string>
-	<string name="_bx_persons_page_block_title_edit_profile"><![CDATA[Edit Profile]]></string>
+	<string name="_bx_persons_page_title_sys_edit_profile_cover"><![CDATA[Edit Profile Cover]]></string>
+	<string name="_bx_persons_page_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>
 	<string name="_bx_persons_page_title_sys_delete_profile"><![CDATA[Delete Person's Profile]]></string>
 	<string name="_bx_persons_page_title_delete_profile"><![CDATA[Delete Profile]]></string>
-	<string name="_bx_persons_page_block_title_delete_profile"><![CDATA[Delete Profile]]></string>
 	<string name="_bx_persons_page_title_sys_view_profile"><![CDATA[View Person's Profile]]></string>
 	<string name="_bx_persons_page_title_view_profile"><![CDATA[{fullname}]]></string>
+	<string name="_bx_persons_page_title_browse_recent"><![CDATA[Persons]]></string>
+	<string name="_bx_persons_page_title_sys_profile_info"><![CDATA[Profile Info]]></string>
+	<string name="_bx_persons_page_title_profile_info"><![CDATA[Info about {fullname}]]></string>
+
+	<string name="_bx_persons_page_block_title_create_profile"><![CDATA[Create Person's Profile]]></string>
+	<string name="_bx_persons_page_block_title_edit_profile"><![CDATA[Edit Profile]]></string>
+	<string name="_bx_persons_page_block_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>
+	<string name="_bx_persons_page_block_title_delete_profile"><![CDATA[Delete Profile]]></string>
 	<string name="_bx_persons_page_block_title_profile_info"><![CDATA[Info]]></string>
 	<string name="_bx_persons_page_block_title_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_persons_page_block_title_profile_cover"><![CDATA[Profile Cover]]></string>
 	<string name="_bx_persons_page_block_title_profile_menu"><![CDATA[Menu]]></string>
-	<string name="_bx_persons_page_title_browse_recent"><![CDATA[Persons]]></string>
 	<string name="_bx_persons_page_block_title_latest_persons"><![CDATA[Recent Persons]]></string>
-	<string name="_bx_persons_page_title_sys_profile_info"><![CDATA[Profile Info]]></string>
-	<string name="_bx_persons_page_title_profile_info"><![CDATA[Info about {fullname}]]></string>
-
 
     <string name="_bx_persons_menu_set_title_view_person"><![CDATA[View Person]]></string>
     <string name="_bx_persons_menu_set_title_view_person_submenu"><![CDATA[View Person Submenu]]></string>
@@ -81,5 +85,7 @@
 
     <string name="_bx_persons_txt_account_pending"><![CDATA[This profile is pending approval, please wait until it is activated.]]></string>
     <string name="_bx_persons_txt_account_suspended"><![CDATA[This profile is suspended.]]></string>
+
+    <string name="_bx_persons_txt_change_cover"><![CDATA[Change Cover Image]]></string>
 
 </resources>

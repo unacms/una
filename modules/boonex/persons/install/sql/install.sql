@@ -73,6 +73,7 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 ('bx_person', 'bx_person_add', 'bx_persons', 0, '_bx_persons_form_person_display_add'),
 ('bx_person', 'bx_person_delete', 'bx_persons', 0, '_bx_persons_form_person_display_delete'),
 ('bx_person', 'bx_person_edit', 'bx_persons', 0, '_bx_persons_form_person_display_edit'),
+('bx_person', 'bx_person_edit_cover', 'bx_persons', 0, '_bx_persons_form_person_display_edit_cover'),
 ('bx_person', 'bx_person_view', 'bx_persons', 1, '_bx_persons_form_person_display_view');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
@@ -85,8 +86,8 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
 ('bx_person_add', 'delete_confirm', 2147483647, 0, 1),
-('bx_person_add', 'picture', 2147483647, 1, 2),
-('bx_person_add', 'cover', 2147483647, 1, 3),
+('bx_person_add', 'cover', 2147483647, 0, 2),
+('bx_person_add', 'picture', 2147483647, 1, 3),
 ('bx_person_add', 'fullname', 2147483647, 1, 4),
 ('bx_person_add', 'sex', 2147483647, 1, 5),
 ('bx_person_add', 'do_submit', 2147483647, 1, 6),
@@ -97,11 +98,13 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_person_delete', 'fullname', 2147483647, 0, 2),
 ('bx_person_delete', 'sex', 2147483647, 0, 3),
 ('bx_person_edit', 'delete_confirm', 2147483647, 0, 1),
-('bx_person_edit', 'picture', 2147483647, 1, 2),
-('bx_person_edit', 'cover', 2147483647, 1, 3),
+('bx_person_edit', 'cover', 2147483647, 0, 2),
+('bx_person_edit', 'picture', 2147483647, 1, 3),
 ('bx_person_edit', 'fullname', 2147483647, 1, 4),
 ('bx_person_edit', 'sex', 2147483647, 1, 5),
 ('bx_person_edit', 'do_submit', 2147483647, 1, 6),
+('bx_person_edit_cover', 'cover', 2147483647, 1, 1),
+('bx_person_edit_cover', 'do_submit', 2147483647, 1, 2),
 ('bx_person_view', 'delete_confirm', 2147483647, 0, 1),
 ('bx_person_view', 'picture', 2147483647, 0, 2),
 ('bx_person_view', 'cover', 2147483647, 0, 3),

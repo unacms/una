@@ -125,6 +125,16 @@ class BxPersonsModule extends BxDolModule implements iBxDolProfileService {
         return $oProfileForms->editDataForm((int)$iContentId);
     }
 
+    public function serviceEditCover ($iContentId = 0) {
+        if (!$iContentId)
+            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if (!$iContentId)
+            return false;
+        bx_import('ProfileForms', $this->_aModule);
+        $oProfileForms = new BxPersonsProfileForms($this);
+        return $oProfileForms->editDataForm((int)$iContentId, 'bx_person_edit_cover');
+    }
+
     public function serviceDeleteProfile ($iContentId = 0) {
         if (!$iContentId)
             $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
@@ -300,6 +310,23 @@ class BxPersonsModule extends BxDolModule implements iBxDolProfileService {
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. 
      */
     function isAllowedEdit ($aDataEntry, $isPerformAction = false) {
+        // moderator always has access
+        if ($this->_checkModeratorAccess($isPerformAction))
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+        // owner (checked by account! not as profile as ususal) always have access
+        bx_import('BxDolProfile');
+        $oProfileAurhor = BxDolProfile::getInstance($aDataEntry[BxPersonsConfig::$FIELD_AUTHOR]);
+        if ($oProfileAurhor->getAccountId() == $this->_iAccountId)
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+        return _t('_sys_txt_access_denied');
+    }
+
+    /**
+     * Check if user can change cover image
+     */
+    function isAllowedChangeCover ($aDataEntry, $isPerformAction = false) {
         // moderator always has access
         if ($this->_checkModeratorAccess($isPerformAction))
             return CHECK_ACTION_RESULT_ALLOWED;
