@@ -112,6 +112,7 @@ class BxDolCmtsQuery extends BxDolDb
                 `c`.`cmt_rate`,
                 `c`.`cmt_rate_count`,
                 `c`.`cmt_replies`,
+                `c`.`cmt_time`,
                 (? - `c`.`cmt_time`) AS `cmt_secs_ago`
             FROM `{$this->_sTable}` AS `c`
             $sJoin
@@ -150,6 +151,7 @@ class BxDolCmtsQuery extends BxDolDb
                 `c`.`cmt_rate`,
                 `c`.`cmt_rate_count`,
                 `c`.`cmt_replies`,
+                `c`.`cmt_time`,
                 ($iTimestamp - `c`.`cmt_time`) AS `cmt_secs_ago`
             FROM {$this->_sTable} AS `c`
             $sJoin

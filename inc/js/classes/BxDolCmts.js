@@ -313,6 +313,10 @@ BxDolCmts.prototype.showImage = function(oLink, iId) {
     );
 };
 
+BxDolCmts.prototype.hideImage = function(oLink) {
+	$(".bx-popup-applied:visible").dolPopupHide();
+};
+
 BxDolCmts.prototype.toggleReply = function(e, iCmtParentId)
 {
 	var $this = this;

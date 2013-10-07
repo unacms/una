@@ -140,6 +140,8 @@ class BxDolCmts extends BxDol
 	protected $_sTableImages;
 	protected $_sTableImages2Entries;
 
+	protected $_aImageUploaders;
+
 	protected $_sViewUrl = '';
 	protected $_sBaseUrl = '';
 
@@ -176,8 +178,8 @@ class BxDolCmts extends BxDol
         else
             return;
 
-		$this->_aSystem['table_images'] = 'sys_images_cmts';
-		$this->_aSystem['table_images2entries'] = 'sys_images_cmts2entries';
+		$this->_aSystem['table_images'] = 'sys_cmts_images';
+		$this->_aSystem['table_images2entries'] = 'sys_cmts_images2entries';
 
         $this->_iDpMaxLevel = (int)$this->_aSystem['number_of_levels'];
         $this->_sDisplayType = $this->_iDpMaxLevel == 0 ? BX_CMT_DISPLAY_FLAT : BX_CMT_DISPLAY_THREADED;
@@ -208,8 +210,10 @@ class BxDolCmts extends BxDol
 		$this->_sFormDisplayPost = 'sys_comment_post';
 		$this->_sFormDisplayEdit = 'sys_comment_edit';
 
-		$this->_sStorageObject = 'sys_images_cmts';
-		$this->_sTranscoderPreview = 'sys_images_cmts_preview';
+		$this->_sStorageObject = 'sys_cmts_images';
+		$this->_sTranscoderPreview = 'sys_cmts_images_preview';
+
+		$this->_aImageUploaders = array('sys_cmts_simple');
 
         if ($iInit)
             $this->init($iId);
