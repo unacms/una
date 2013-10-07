@@ -125,8 +125,8 @@ class BxBaseCmtsView extends BxDolCmts {
 			return '';
 
 		$sCmts = '';
-		foreach($aCmts as $k => $r)
-			$sCmts .= $this->getComment($r, $aBp, $aDp);
+		foreach($aCmts as $k => $aCmt)
+			$sCmts .= $this->getComment($aCmt, $aBp, $aDp);
 
 		$sCmts = $this->_getMoreLink($sCmts, $aBp, $aDp);
 		return $sCmts;
@@ -156,20 +156,20 @@ class BxBaseCmtsView extends BxDolCmts {
     	$oTemplate = BxDolTemplate::getInstance();
 
     	$iUserId = $this->_getAuthorId();
-    	$r = !is_array($mixedCmt) ? $this->getCommentRow((int)$mixedCmt) : $mixedCmt;
+    	$aCmt = !is_array($mixedCmt) ? $this->getCommentRow((int)$mixedCmt) : $mixedCmt;
 
-        list($sAuthorName, $sAuthorLink, $sAuthorIcon) = $this->_getAuthorInfo($r['cmt_author_id']);
+        list($sAuthorName, $sAuthorLink, $sAuthorIcon) = $this->_getAuthorInfo($aCmt['cmt_author_id']);
 
         $sClass = $sRet = '';
-        if($r['cmt_rated'] == -1 || $r['cmt_rate'] < $this->_aSystem['viewing_threshold']) {
+        if($aCmt['cmt_rated'] == -1 || $aCmt['cmt_rate'] < $this->_aSystem['viewing_threshold']) {
         	$oTemplate->pareseHtmlByName('comment_hidden.html', array(
         		'js_object' => $this->_sJsObjName,
-        		'id' => $r['cmt_id'],
+        		'id' => $aCmt['cmt_id'],
         		'title' => bx_process_output(_t('_hidden_comment', $sAuthorName)),
         		'bx_if:show_replies' => array(
-        			'condition' => $r['cmt_replies'] > 0,
+        			'condition' => $aCmt['cmt_replies'] > 0,
         			'content' => array(
-						'replies' => _t('_Show N replies', $r['cmt_replies'])
+						'replies' => _t('_Show N replies', $aCmt['cmt_replies'])
         			)
         		)
         	));
@@ -177,12 +177,12 @@ class BxBaseCmtsView extends BxDolCmts {
             $sClass = ' cmt-hidden';
         }
 
-		if($r['cmt_author_id'] == $iUserId)
+		if($aCmt['cmt_author_id'] == $iUserId)
 			$sClass .= ' cmt-mine';
 
-		$sActions = $this->_getActionsBox($r, $aDp);
+		$sActions = $this->_getActionsBox($aCmt, $aDp);
 
-		$sText = $r['cmt_text'];
+		$sText = $aCmt['cmt_text'];
 		$sTextMore = '';
 
 		$iMaxLength = (int)$this->_aSystem['chars_display_max'];
@@ -197,19 +197,19 @@ class BxBaseCmtsView extends BxDolCmts {
 		$sTextMore = $this->_prepareTextForOutput($sTextMore);
 
 		$aTmplReplyTo = array();
-		if((int)$r['cmt_parent_id'] != 0) {
-			$aParent = $this->getCommentRow($r['cmt_parent_id']);
+		if((int)$aCmt['cmt_parent_id'] != 0) {
+			$aParent = $this->getCommentRow($aCmt['cmt_parent_id']);
 			list($sParAuthorName, $sParAuthorLink, $sParAuthorIcon) = $this->_getAuthorInfo($aParent['cmt_author_id']);
 
 			$aTmplReplyTo = array(
 				'style_prefix' => $this->_sStylePrefix,
-        		'par_cmt_link' => $this->getBaseUrl() . '#' . $this->_sSystem . $r['cmt_parent_id'],
+        		'par_cmt_link' => $this->getBaseUrl() . '#' . $this->_sSystem . $aCmt['cmt_parent_id'],
         		'par_cmt_author' => $sParAuthorName
         	);
 		}
 
 		$aTmplImages = array();
-		$aImages = $this->_oQuery->getImages($this->_aSystem['system_id'], $r['cmt_id']);
+		$aImages = $this->_oQuery->getImages($this->_aSystem['system_id'], $aCmt['cmt_id']);
 		if(!empty($aImages) && is_array($aImages)) {
 			bx_import('BxDolImageTranscoder');
         	$oTranscoder = BxDolImageTranscoder::getObjectInstance($this->_sTranscoderPreview);
@@ -219,21 +219,20 @@ class BxBaseCmtsView extends BxDolCmts {
         			'style_prefix' => $this->_sStylePrefix,
         			'js_object' => $this->_sJsObjName,
         			'id' => $aImage['image_id'],
-        			'title' => bx_html_attribute(_t('_cmt_view_attached_image')),
         			'image' => $oTranscoder->getImageUrl($aImage['image_id'])
         		);
 		}
 
 		$sReplies = '';
-		if((int)$r['cmt_replies'] > 0 && !empty($aDp) && $aDp['type'] == BX_CMT_DISPLAY_THREADED)
-			$sReplies = $this->getComments(array('parent_id' => $r['cmt_id'], 'vparent_id' => $r['cmt_id'], 'type' => $aBp['type']), $aDp);
+		if((int)$aCmt['cmt_replies'] > 0 && !empty($aDp) && $aDp['type'] == BX_CMT_DISPLAY_THREADED)
+			$sReplies = $this->getComments(array('parent_id' => $aCmt['cmt_id'], 'vparent_id' => $aCmt['cmt_id'], 'type' => $aBp['type']), $aDp);
 
 		$bAuthorIcon = !empty($sAuthorIcon);
         return $oTemplate->parseHtmlByName('comment.html', array(
         	'system' => $this->_sSystem,
         	'style_prefix' => $this->_sStylePrefix,
         	'js_object' => $this->_sJsObjName,
-        	'id' => $r['cmt_id'],
+        	'id' => $aCmt['cmt_id'],
         	'class' => $sClass,
         	'bx_if:show_icon' => array(
         		'condition' => $bAuthorIcon,
@@ -265,15 +264,14 @@ class BxBaseCmtsView extends BxDolCmts {
         	'view_link' => bx_append_url_params($this->_sViewUrl, array(
         		'sys' => $this->_sSystem,
         		'id' => $this->_iId,
-        		'cmt_id' => $r['cmt_id']
+        		'cmt_id' => $aCmt['cmt_id']
         	)),
-        	'ago' => $r['cmt_ago'],
+        	'ago' => bx_time_js($aCmt['cmt_time']),
         	'bx_if:hide_rate_count' => array(
-        		'condition' => (int)$r['cmt_rate'] <= 0,
+        		'condition' => (int)$aCmt['cmt_rate'] <= 0,
         		'content' => array()
         	),
-        	'title_plused_by' => bx_html_attribute(_t('_Plused_by_popup')),
-        	'points' => _t(in_array($r['cmt_rate'], array(-1, 0, 1)) ? '_N_point' : '_N_points', $r['cmt_rate']),
+        	'points' => _t(in_array($aCmt['cmt_rate'], array(-1, 0, 1)) ? '_N_point' : '_N_points', $aCmt['cmt_rate']),
         	'text' => $sText,
         	'bx_if:show_more' => array(
         		'condition' => !empty($sTextMore),
@@ -352,12 +350,12 @@ class BxBaseCmtsView extends BxDolCmts {
 
     	bx_import('BxTemplStudioFunctions');
         $sContent = BxTemplStudioFunctions::getInstance()->transBox($oTemplate->parseHtmlByName('bx_img.html', array(
-    		'bx_if:class' => array(
-        		'condition' => false,
-        		'content' => array()
-        	),
     		'src' => $oStorage->getFileUrlById($iImgId),
-        	'alt' => bx_html_attribute(_t('_cmt_view_attached_image'))
+        	'bx_repeat:attrs' => array(
+        		array('key' => 'alt', 'value' => bx_html_attribute(_t('_cmt_view_attached_image'))),
+        		array('key' => 'title', 'value' => bx_html_attribute(_t('_cmt_close_attached_image'))),
+        		array('key' => 'onclick', 'value' => $this->_sJsObjName . '.hideImage(this);')
+        	)
     	)));
 
         return $oTemplate->parseHtmlByName('comment_image.html', array(
@@ -416,19 +414,19 @@ class BxBaseCmtsView extends BxDolCmts {
 		));
     }
 
-	protected function _getActionsBox(&$a, $aDp = array())
+	protected function _getActionsBox(&$aCmt, $aDp = array())
     {
     	$oTemplate = BxDolTemplate::getInstance();
 
         $iUserId = $this->_getAuthorId();
-        $isEditAllowedPermanently = ($a['cmt_author_id'] == $iUserId && $this->isEditAllowed()) || $this->isEditAllowedAll();
-        $isRemoveAllowedPermanently = ($a['cmt_author_id'] == $iUserId && $this->isRemoveAllowed()) || $this->isRemoveAllowedAll();
+        $isEditAllowedPermanently = ($aCmt['cmt_author_id'] == $iUserId && $this->isEditAllowed()) || $this->isEditAllowedAll();
+        $isRemoveAllowedPermanently = ($aCmt['cmt_author_id'] == $iUserId && $this->isRemoveAllowed()) || $this->isRemoveAllowedAll();
 
 		$sManagePopupId = $sManagePopupText = '';
         if($isEditAllowedPermanently || $isRemoveAllowedPermanently) {
 			$aMenu = array(
-				array('name' => 'cmt-edit', 'icon' => 'pencil', 'onclick' => $this->_sJsObjName . ".cmtEdit(this, " . $a['cmt_id'] . ")", 'title' => _t('_Edit')),
-				array('name' => 'cmt-delete', 'icon' => 'remove', 'onclick' => $this->_sJsObjName . ".cmtRemove(this, " . $a['cmt_id'] . ")", 'title' => _t('_Delete')),
+				array('name' => 'cmt-edit', 'icon' => 'pencil', 'onclick' => $this->_sJsObjName . ".cmtEdit(this, " . $aCmt['cmt_id'] . ")", 'title' => _t('_Edit')),
+				array('name' => 'cmt-delete', 'icon' => 'remove', 'onclick' => $this->_sJsObjName . ".cmtRemove(this, " . $aCmt['cmt_id'] . ")", 'title' => _t('_Delete')),
 			);
 
         	bx_import('BxTemplStudioMenu');
@@ -441,24 +439,24 @@ class BxBaseCmtsView extends BxDolCmts {
 	        )));
         }
 
-        $bRated = (int)$a['cmt_rated'] > 0;
+        $bRated = (int)$aCmt['cmt_rated'] > 0;
         return $oTemplate->parseHtmlByName('comment_actions.html', array(
-        	'id' => $a['cmt_id'],
+        	'id' => $aCmt['cmt_id'],
         	'style_prefix' => $this->_sStylePrefix,
         	'view_link' => bx_append_url_params($this->_sViewUrl, array(
         		'sys' => $this->_sSystem,
         		'id' => $this->_iId,
-        		'cmt_id' => $a['cmt_id']
+        		'cmt_id' => $aCmt['cmt_id']
         	)),
-        	'ago' => $a['cmt_ago'],
-        	'points' => _t($a['cmt_rate'] == 1 || $a['cmt_rate'] == -1 ? '_N_point' : '_N_points', $a['cmt_rate']),
+        	'ago' => $aCmt['cmt_ago'],
+        	'points' => _t($aCmt['cmt_rate'] == 1 || $aCmt['cmt_rate'] == -1 ? '_N_point' : '_N_points', $aCmt['cmt_rate']),
         	'bx_if:show_reply' => array(
 				'condition' => $this->isPostReplyAllowed(),
         		'content' => array(
         			'js_object' => $this->_sJsObjName,
         			'style_prefix' => $this->_sStylePrefix,
-        			'id' => $a['cmt_id'],
-        			'title_reply' => bx_html_attribute(_t(isset($a['cmt_type']) && $a['cmt_type'] == 'comment' ? '_Comment_to_this_comment' : '_Reply_to_this_comment'))
+        			'id' => $aCmt['cmt_id'],
+        			'title_reply' => bx_html_attribute(_t(isset($aCmt['cmt_type']) && $aCmt['cmt_type'] == 'comment' ? '_Comment_to_this_comment' : '_Reply_to_this_comment'))
         		)
         	),
         	'bx_if:show_rate' => array(
@@ -466,7 +464,7 @@ class BxBaseCmtsView extends BxDolCmts {
         		'content' => array(
         			'js_object' => $this->_sJsObjName,
         			'style_prefix' => $this->_sStylePrefix,
-        			'id' => $a['cmt_id'],
+        			'id' => $aCmt['cmt_id'],
         			'bx_if:hide_rate_plus' => array(
         				'condition' => $bRated,
         				'content' => array()
@@ -474,9 +472,7 @@ class BxBaseCmtsView extends BxDolCmts {
         			'bx_if:hide_rate_minus' => array(
         				'condition' => !$bRated,
         				'content' => array()
-        			),
-        			'title_plus' => bx_html_attribute(_t('_Plus')),
-        			'title_minus' => bx_html_attribute(_t('_Minus')),
+        			)
         		)
         	),
         	'bx_if:show_manage' => array(
@@ -484,9 +480,8 @@ class BxBaseCmtsView extends BxDolCmts {
         		'content' => array(
         			'js_object' => $this->_sJsObjName,
         			'style_prefix' => $this->_sStylePrefix,
-        			'id' => $a['cmt_id'],
-        			'title_manage' => bx_html_attribute(_t('_Manage')),
-        			'popup_id' => $this->_sSystem . '-manage' . $a['cmt_id'],
+        			'id' => $aCmt['cmt_id'],
+        			'popup_id' => $this->_sSystem . '-manage' . $aCmt['cmt_id'],
         			'popup_text' => $sManagePopupText
         		)
         	)
@@ -574,7 +569,7 @@ class BxBaseCmtsView extends BxDolCmts {
 	    		$iCmtVisualParentId = $iLevel > $this->getMaxLevel() ? $aParent['cmt_vparent_id'] : $iCmtParentId;
 	    	}
 
-			$iCmtId = (int)$oForm->insert(array('cmt_vparent_id' => $iCmtVisualParentId, 'cmt_object_id' => $this->_iId, 'cmt_author_id' => $iCmtAuthorId, 'cmt_level' => $iLevel, 'cmt_time' => mktime()));
+			$iCmtId = (int)$oForm->insert(array('cmt_vparent_id' => $iCmtVisualParentId, 'cmt_object_id' => $this->_iId, 'cmt_author_id' => $iCmtAuthorId, 'cmt_level' => $iLevel, 'cmt_time' => time()));
 			if($iCmtId != 0) {
 				$aImages = $oForm->getCleanValue('cmt_image');
 				if(!empty($aImages) || is_array($aImages)) {
@@ -671,7 +666,7 @@ class BxBaseCmtsView extends BxDolCmts {
 	
 	        $oForm->aInputs['cmt_image']['storage_object'] = $this->_sStorageObject;
 	        $oForm->aInputs['cmt_image']['images_transcoder'] = $this->_sTranscoderPreview;
-	        $oForm->aInputs['cmt_image']['uploaders'] = array('sys_simple_cmts');
+	        $oForm->aInputs['cmt_image']['uploaders'] = $this->_aImageUploaders;
 	        $oForm->aInputs['cmt_image']['upload_buttons_titles'] = array('Simple' => 'camera');
 	        $oForm->aInputs['cmt_image']['multiple'] = true;
 	        $oForm->aInputs['cmt_image']['ghost_template'] = $oFormNested;

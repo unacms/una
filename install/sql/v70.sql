@@ -5,7 +5,7 @@
 -- --------------------------------------------------------
 
 SET NAMES 'utf8';
-DROP TABLE IF EXISTS `sys_categories`, `sys_keys`, `sys_objects_editor`, `sys_objects_captcha`, `sys_objects_social_sharing`, `sys_objects_categories`, `sys_objects_cmts`, `sys_email_templates`, `sys_options`, `sys_options_cats`, `sys_ip_list`, `sys_ip_members_visits`, `sys_localization_categories`, `sys_localization_keys`, `sys_localization_languages`, `sys_localization_string_params`, `sys_localization_strings`, `sys_acl_actions`, `sys_acl_actions_track`, `sys_acl_matrix`, `sys_acl_level_prices`, `sys_acl_levels`, `sys_sessions`, `sys_acl_levels_members`, `sys_objects_search`, `sys_stat_site`, `sys_alerts`, `sys_alerts_handlers`, `sys_injections`, `sys_injections_admin`, `sys_modules`, `sys_modules_file_tracks`, `sys_permalinks`, `sys_objects_privacy`, `sys_privacy_defaults`, `sys_privacy_groups`, `sys_privacy_members`, `sys_tags`, `sys_objects_tag`, `sys_transactions`, `sys_objects_auths`, `sys_objects_vote`, `sys_objects_views`, `sys_cron_jobs`, `sys_dnsbl_rules`, `sys_dnsbl_block_log`, `sys_dnsbluri_zones`, `sys_menu_mobile`, `sys_menu_mobile_pages`, `sys_objects_storage`, `sys_objects_uploader`, `sys_storage_user_quotas`, `sys_storage_tokens`, `sys_storage_ghosts`, `sys_storage_mime_types`, `sys_objects_transcoder_images`, `sys_transcoder_images_files`, `sys_transcoder_images_filters`,`sys_accounts`,`sys_profiles`;
+DROP TABLE IF EXISTS `sys_categories`, `sys_keys`, `sys_objects_editor`, `sys_objects_captcha`, `sys_objects_social_sharing`, `sys_objects_categories`, `sys_objects_cmts`, `sys_cmts_images`, `sys_cmts_images_preview`, `sys_cmts_images2entries`, `sys_email_templates`, `sys_options`, `sys_options_cats`, `sys_ip_list`, `sys_ip_members_visits`, `sys_localization_categories`, `sys_localization_keys`, `sys_localization_languages`, `sys_localization_string_params`, `sys_localization_strings`, `sys_acl_actions`, `sys_acl_actions_track`, `sys_acl_matrix`, `sys_acl_level_prices`, `sys_acl_levels`, `sys_sessions`, `sys_acl_levels_members`, `sys_objects_search`, `sys_stat_site`, `sys_alerts`, `sys_alerts_handlers`, `sys_injections`, `sys_injections_admin`, `sys_modules`, `sys_modules_file_tracks`, `sys_permalinks`, `sys_objects_privacy`, `sys_privacy_defaults`, `sys_privacy_groups`, `sys_privacy_members`, `sys_tags`, `sys_objects_tag`, `sys_transactions`, `sys_objects_auths`, `sys_objects_vote`, `sys_objects_views`, `sys_cron_jobs`, `sys_dnsbl_rules`, `sys_dnsbl_block_log`, `sys_dnsbluri_zones`, `sys_menu_mobile`, `sys_menu_mobile_pages`, `sys_objects_storage`, `sys_objects_uploader`, `sys_storage_user_quotas`, `sys_storage_tokens`, `sys_storage_ghosts`, `sys_storage_mime_types`, `sys_objects_transcoder_images`, `sys_transcoder_images_files`, `sys_transcoder_images_filters`,`sys_accounts`,`sys_profiles`;
 ALTER DATABASE DEFAULT CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci';
 
 
@@ -991,9 +991,9 @@ CREATE TABLE `sys_images` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sys_images_cmts`
+-- Table structure for table `sys_cmts_images`
 --
-CREATE TABLE IF NOT EXISTS `sys_images_cmts` (
+CREATE TABLE IF NOT EXISTS `sys_cmts_images` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(10) unsigned NOT NULL,
   `remote_id` varchar(255) NOT NULL,
@@ -1012,9 +1012,9 @@ CREATE TABLE IF NOT EXISTS `sys_images_cmts` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sys_images_cmts_preview`
+-- Table structure for table `sys_cmts_images_preview`
 --
-CREATE TABLE IF NOT EXISTS `sys_images_cmts_preview` (
+CREATE TABLE IF NOT EXISTS `sys_cmts_images_preview` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(10) unsigned NOT NULL,
   `remote_id` varchar(255) NOT NULL,
@@ -1033,9 +1033,9 @@ CREATE TABLE IF NOT EXISTS `sys_images_cmts_preview` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sys_images_cmts2entries`
+-- Table structure for table `sys_cmts_images2entries`
 --
-CREATE TABLE IF NOT EXISTS `sys_images_cmts2entries` (
+CREATE TABLE IF NOT EXISTS `sys_cmts_images2entries` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `system_id` int(11) NOT NULL DEFAULT '0',
   `cmt_id` int(11) NOT NULL DEFAULT '0',
@@ -1318,8 +1318,8 @@ CREATE TABLE IF NOT EXISTS `sys_objects_storage` (
 
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
 ('sys_images', 'Local', '', 360, 2592000, 0, 'sys_images', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
-('sys_images_cmts', 'Local', '', 360, 2592000, 3, 'sys_images_cmts', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
-('sys_images_cmts_preview', 'Local', '', 360, 2592000, 3, 'sys_images_cmts_preview', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0);
+('sys_cmts_images', 'Local', '', 360, 2592000, 3, 'sys_cmts_images', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
+('sys_cmts_images_preview', 'Local', '', 360, 2592000, 3, 'sys_cmts_images_preview', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0);
 
 CREATE TABLE IF NOT EXISTS `sys_storage_user_quotas` (
   `profile_id` int(11) NOT NULL,
@@ -2273,7 +2273,7 @@ CREATE TABLE IF NOT EXISTS `sys_objects_uploader` (
 INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
 ('sys_simple', 1, 'BxTemplUploaderSimple', ''),
 ('sys_html5', 1, 'BxTemplUploaderHTML5', ''),
-('sys_simple_cmts', 1, 'BxTemplCmtsUploaderSimple', '');
+('sys_cmts_simple', 1, 'BxTemplCmtsUploaderSimple', '');
 
 
 -- --------------------------------------------------------
@@ -3191,7 +3191,7 @@ INSERT INTO `sys_objects_transcoder_images` (`object`, `storage_object`, `source
 ('sys_icon_apple', 'sys_images', 'Storage', 'a:1:{s:6:"object";s:10:"sys_images";}', 'no', '0', '0', '0'),
 ('sys_icon_facebook', 'sys_images', 'Storage', 'a:1:{s:6:"object";s:10:"sys_images";}', 'no', '0', '0', '0'),
 ('sys_icon_favicon', 'sys_images', 'Storage', 'a:1:{s:6:"object";s:10:"sys_images";}', 'no', '0', '0', '0'),
-('sys_images_cmts_preview', 'sys_images_cmts_preview', 'Storage', 'a:1:{s:6:"object";s:15:"sys_images_cmts";}', 'no', '1', '2592000', '0');
+('sys_cmts_images_preview', 'sys_cmts_images_preview', 'Storage', 'a:1:{s:6:"object";s:15:"sys_cmts_images";}', 'no', '1', '2592000', '0');
 
 
 CREATE TABLE IF NOT EXISTS `sys_transcoder_images_files` (
@@ -3217,7 +3217,7 @@ INSERT INTO `sys_transcoder_images_filters` (`transcoder_object`, `filter`, `fil
 ('sys_icon_apple', 'Resize', 'a:4:{s:1:"w";s:3:"129";s:1:"h";s:3:"129";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"png";}', '0'),
 ('sys_icon_facebook', 'Resize', 'a:4:{s:1:"w";s:3:"100";s:1:"h";s:3:"100";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"png";}', '0'),
 ('sys_icon_favicon', 'Resize', 'a:4:{s:1:"w";s:2:"16";s:1:"h";s:2:"16";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"png";}', '0'),
-('sys_images_cmts_preview', 'Resize', 'a:4:{s:1:"w";s:3:"100";s:1:"h";s:3:"100";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0');
+('sys_cmts_images_preview', 'Resize', 'a:4:{s:1:"w";s:3:"100";s:1:"h";s:3:"100";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0');
 
 
 -- --------------------------------------------------------
