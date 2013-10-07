@@ -92,7 +92,7 @@ class BxPersonsTemplate extends BxDolModuleTemplate {
      * Get profile cover image url
      */
     function urlCover ($aData, $bSubstituteNoImage = true) {
-        return $this->_image (BxPersonsConfig::$FIELD_COVER, BxPersonsConfig::$OBJECT_IMAGES_TRANSCODER_COVER, 'no-picture-cover.jpg', $aData, $bSubstituteNoImage);
+        return $this->_image (BxPersonsConfig::$FIELD_COVER, BxPersonsConfig::$OBJECT_IMAGES_TRANSCODER_COVER, 'no-picture-cover.png', $aData, $bSubstituteNoImage);
     }
 
     /**
