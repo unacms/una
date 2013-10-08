@@ -541,8 +541,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
         if($this->oDb->deletePages(array('type' => 'by_object', 'value' => $this->sPage))) {
             $oLangauge->deleteLanguageString($this->aPageRebuild['title_system']);
             $oLangauge->deleteLanguageString($this->aPageRebuild['title']);
-            return array('eval' => 'window.parent.location.href = "' . BX_DOL_URL_STUDIO . 'builder_page.php?type=' . $this->sType . '";');
-        }        
+            return array('eval' => 'window.parent.location.href = "' . sprintf($this->sTypeUrl, $this->sType) . '";');
+        }
 
         return array('msg' => _t('_adm_bp_err_page_delete'));
     }
