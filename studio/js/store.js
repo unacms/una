@@ -316,7 +316,7 @@ BxDolStudioStore.prototype.changePage = function(sType) {
 		},
 		function(oData) {
 			if(oData.code != 0) {
-				alert(oData.message);
+				$this.showPopup('bx-std-str-popup-browsing', oData.message);
 				return;
 			}
 
@@ -348,7 +348,7 @@ BxDolStudioStore.prototype.changePagePaginate = function(oButton, sType, iStart,
 		},
 		function(oData) {
 			if(oData.code != 0) {
-				alert(oData.message);
+				$this.showPopup('bx-std-str-popup-browsing', oData.message);
 				return;
 			}
 
