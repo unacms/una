@@ -50,10 +50,10 @@ define('BX_CONNECTIONS_TYPE_MUTUAL', 'mutual');
  */
 
 /**
- * Connection is usefull when you need to organize some sorts of connections between different conetent, 
+ * Connection is usefull when you need to organize some sorts of connections between different content, 
  * for example: friends, contacts, favorites, block lists, subscriptions, etc.
  * 
- * Two types of connections are supported one way connections (blick list, favourites) and mutual (friends). 
+ * Two types of connections are supported one way connections (block list, favourites) and mutual (friends). 
  *
  *
  * @section connection_create Creating the Connection object:
