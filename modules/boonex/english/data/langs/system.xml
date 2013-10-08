@@ -1455,7 +1455,7 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_sys_ps_group_title_me_only"><![CDATA[Me Only]]></string>
 	<string name="_sys_ps_group_title_public"><![CDATA[Public]]></string>
 	<string name="_sys_ps_group_title_members"><![CDATA[Members]]></string>
-	<string name="_sys_ps_group_title_friends"><![CDATA[Friends]]></string>
+	<string name="_sys_ps_group_title_connections"><![CDATA[Connections]]></string>
 	<!--
 	<string name="_ps_pcpt_privacy_settings"><![CDATA[Privacy Settings]]></string>
 	<string name="_ps_bcpt_my_groups"><![CDATA[My Privacy Groups]]></string>

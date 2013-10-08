@@ -1187,7 +1187,7 @@ INSERT INTO `sys_privacy_groups`(`id`, `title`, `check`, `active`, `visible`) VA
 ('2', '_sys_ps_group_title_me_only', '@me_only', 1, 1),
 ('3', '_sys_ps_group_title_public', '@public', 1, 1),
 ('4', '_sys_ps_group_title_members', '@members', 1, 1),
-('5', '_sys_ps_group_title_friends', '@friends', 1, 1);
+('5', '_sys_ps_group_title_connections', '@connections', 1, 1);
 
 --
 -- Table structure for table `sys_cron_jobs`

@@ -151,17 +151,16 @@ class BxDolPrivacyQuery extends BxDolDb
         return $this->query($sSql);
     }
 
-    public function getContentFriends($iOwnerId)
+    function getContentByGroupAsSQLPart($sField, $mixedGroupId)
     {
-    	$sQuery = $this->prepare("SELECT 
-    			`p`.`ID` AS `id` 
-    		FROM `Profiles` AS `p` 
-    		LEFT JOIN `sys_friend_list` AS `f1` ON (`f1`.`ID`=`p`.`ID` AND `f1`.`Profile`=? AND `f1`.`Check`=1) 
-    		LEFT JOIN `sys_friend_list` AS `f2` ON (`f2`.`Profile`=p.`ID` AND `f2`.`ID`=? AND `f2`.`Check`=1) 
-    		WHERE 1 AND (`f1`.`ID` IS NOT NULL OR `f2`.`ID` IS NOT NULL)", $iOwnerId);
+    	if(is_array($mixedGroupId))
+    		$sWhere = " AND `" . $this->_sTable . "`.`" . $sField . "` IN (" . $this->implode_escape($mixedGroupId) . ")";
+    	else
+    		$sWhere = $this->prepare(" AND `" . $this->_sTable . "`.`" . $sField . "` = ?", $mixedGroupId);
 
-    	$sCacheKey = $this->_sCacheGroupFriends . $iOwnerId;
-		return $this->fromMemory($sCacheKey, 'getColumn', $sQuery);
+    	return array(
+    		'where' => $sWhere
+    	);
     }
 
     protected function _getAction($sModule, $sAction)
