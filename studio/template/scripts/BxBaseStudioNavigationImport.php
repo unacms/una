@@ -52,7 +52,7 @@ class BxBaseStudioNavigationImport extends BxDolStudioNavigationImport {
             unset($aItem['id']);
             $aItem['set_name'] = $this->sSet;
             $aItem['module'] = BX_DOL_STUDIO_MODULE_CUSTOM;
-            $aItem['title'] .= '_' . mktime();
+            $aItem['title'] .= '_' . time();
             $aItem['icon'] = $mixedIcon != 0 ? $mixedIcon : '';
             $aItem['active'] = 1;
             $aItem['order'] = $this->oDb->getItemOrderMax($this->sSet) + 1;

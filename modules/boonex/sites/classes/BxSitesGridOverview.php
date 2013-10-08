@@ -41,7 +41,7 @@ class BxSitesGridOverview extends BxTemplGrid {
             return;
         }
 
-        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&_r=' . mktime(); 
+        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&_r=' . time(); 
 		$oForm->aParams['db']['submit_name'] = 'do_confirm';
 
         $iAccountId = (int)bx_get('account');
@@ -96,7 +96,7 @@ class BxSitesGridOverview extends BxTemplGrid {
             return;
         }
 
-        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&_r=' . mktime(); 
+        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&_r=' . time(); 
 
         $iAccountId = (int)bx_get('account');
         if($iAccountId !== false)
@@ -132,7 +132,7 @@ class BxSitesGridOverview extends BxTemplGrid {
             return;
         }
 
-        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&_r=' . mktime();
+        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&_r=' . time();
         $oForm->aFormAttrs['onsubmit'] = 'return ' . $this->_oModule->_oConfig->getJsObject() . '.onCancelSubscription(this);'; 
 		$oForm->aParams['db']['submit_name'] = 'do_cancel';
 
@@ -187,7 +187,7 @@ class BxSitesGridOverview extends BxTemplGrid {
             return;
         }
 
-        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&_r=' . mktime(); 
+        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&_r=' . time(); 
 		$oForm->aParams['db']['submit_name'] = 'do_reactivate';
 
         $iAccountId = (int)bx_get('account');
@@ -236,7 +236,7 @@ class BxSitesGridOverview extends BxTemplGrid {
             return;
         }
 
-        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&_r=' . mktime(); 
+        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&_r=' . time(); 
 
         $iAccountId = (int)bx_get('account');
         if($iAccountId !== false)

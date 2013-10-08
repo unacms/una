@@ -65,7 +65,7 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems {
         }
     }
 
-    public function performActionEdit() {
+    public function performActionEdit($bUpdateGrid = false) {
         $sAction = 'edit';
 
         $aIds = bx_get('ids');

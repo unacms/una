@@ -654,7 +654,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
 
             $bResult = true;
             foreach($aBlocks as $aBlock) {
-                $sTitleKey = $this->getSystemName($aBlock['title'] . '_' . mktime());
+                $sTitleKey = $this->getSystemName($aBlock['title'] . '_' . time());
                 $sTitleValue = _t($aBlock['title']);
 
                 unset($aBlock['id']);
@@ -667,7 +667,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
                 //--- Process Lang copy
                 $sContentKey = $sContentValue = "";
                 if($aBlock['type'] == BX_DOL_STUDIO_BP_BLOCK_LANG && $aBlock['content'] != '') {
-                    $sContentKey = $this->getSystemName($aBlock['content'] . '_' . mktime());
+                    $sContentKey = $this->getSystemName($aBlock['content'] . '_' . time());
                     $sContentValue = _t($aBlock['content']);
 
                     $aBlock['content'] = $sContentKey;

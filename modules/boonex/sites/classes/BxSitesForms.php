@@ -51,7 +51,7 @@ class BxSitesForms extends BxDolProfileForms
 
 		$iAccountId = $oForm->insert(array(
 			'owner_id' => bx_get_logged_profile_id(),
-			'created' => mktime(),
+			'created' => time(),
 			'status' => BX_SITES_ACCOUNT_STATUS_UNCONFIRMED
 		));
 

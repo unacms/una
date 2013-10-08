@@ -172,7 +172,7 @@ class BxSitesModule extends BxDolModule
 		$iAccountId = $this->_oDb->insertAccount(array(
 			'owner_id' => $oAlert->iObject,
 			'domain' => $sDomain,
-			'created' => mktime(),
+			'created' => time(),
 			'status' => BX_SITES_ACCOUNT_STATUS_UNCONFIRMED
 		));
 

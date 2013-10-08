@@ -580,7 +580,7 @@ function _format_when ($iSec) {
             else if($i > 1 && $i <= 5)
             	$s .= _t('_x_day_ago', $i, 's');
             else {
-            	$iNow = mktime();
+            	$iNow = time();
             	$iNowDayOfYear = date('z', $iNow);
 
             	$iDate = $iNow - $iSec; 
