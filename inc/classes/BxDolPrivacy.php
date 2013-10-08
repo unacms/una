@@ -80,7 +80,7 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
      * @param $sObject object name
      * @return object instance or false on error
      */
-    static public function getObjectInstance($sObject)
+    public static function getObjectInstance($sObject)
     {
         if(isset($GLOBALS['bxDolClasses']['BxDolPrivacy!' . $sObject]))
             return $GLOBALS['bxDolClasses']['BxDolPrivacy!' . $sObject];
@@ -113,7 +113,7 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
      * @param  array $aParams an array of custom selector's params (dynamic_groups - an array of arrays('key' => group_id, 'value' => group_title), title - the title to be used for generated field).
      * @return an array with Select element description.
      */
-    static public function getGroupChooser($sModule, $sAction, $iOwnerId = 0, $aParams = array())
+    public static function getGroupChooser($sModule, $sAction, $iOwnerId = 0, $aParams = array())
     {
         if(empty($sModule) || empty($sAction))
             return array();
@@ -169,7 +169,7 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
      * @param  string $sAction action name.
      * @return string with field name.
      */
-    static public function getFieldName($sAction)
+    public static function getFieldName($sAction)
     {
         return 'allow_' . strtolower(str_replace(' ', '-', $sAction)) . '_to';
     }

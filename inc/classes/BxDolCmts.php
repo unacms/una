@@ -226,7 +226,7 @@ class BxDolCmts extends BxDol
      * @param $iInit perform initialization
      * @return null on error, or ready to use class instance
      */ 
-    static function getObjectInstance($sSys, $iId, $iInit = true) 
+    public static function getObjectInstance($sSys, $iId, $iInit = true) 
     {
     	if(isset($GLOBALS['bxDolClasses']['BxDolCmts!' . $sSys . $iId]))
             return $GLOBALS['bxDolClasses']['BxDolCmts!' . $sSys . $iId];
@@ -249,7 +249,7 @@ class BxDolCmts extends BxDol
         return ($GLOBALS['bxDolClasses']['BxDolCmts!' . $sSys . $iId] = $o);
     }
 
-    function &getSystems ()
+    public static function &getSystems ()
     {
         if (!isset($GLOBALS['bx_dol_cmts_systems'])) {
             $GLOBALS['bx_dol_cmts_systems'] = BxDolDb::getInstance()->fromCache('sys_objects_cmts', 'getAllWithKey', '

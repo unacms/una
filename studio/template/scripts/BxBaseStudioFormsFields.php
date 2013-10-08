@@ -70,7 +70,7 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields {
         $iId = $aIds[0];
 
         $aField = array();
-        $this->oDb->getFields(array('type' => 'by_object_id', 'object' => $this->sObject, 'id' => (int)$iId), $aField, false);
+        $this->oDb->getInputs(array('type' => 'by_object_id', 'object' => $this->sObject, 'id' => (int)$iId), $aField, false);
         if(empty($aField) || !is_array($aField)) {
             $this->_echoResultJson(array());
             exit;
@@ -109,7 +109,7 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields {
         $aIdsAffected = array ();
         foreach($aIds as $iId) {
             $aField = array();
-            $this->oDb->getFields(array('type' => 'by_object_id', 'object' => $this->sObject, 'id' => (int)$iId), $aField, false);
+            $this->oDb->getInputs(array('type' => 'by_object_id', 'object' => $this->sObject, 'id' => (int)$iId), $aField, false);
             if(empty($aField) || !is_array($aField))
                 continue;
 
@@ -119,7 +119,7 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields {
             $sClass = $this->sClass . $this->getClassName($aField['type']);
             $oClass = new $sClass(array('module' => $this->sModule, 'object' => $this->sObject, 'display' => $this->sDisplay));
 
-            if((int)$this->_delete($iId) <= 0 || !$this->oDb->deleteFieds(array('type' => 'by_id', 'value' => $aField['id'], 'object' => $aField['object'], 'name' => $aField['name'])))
+            if((int)$this->_delete($iId) <= 0 || !$this->oDb->deleteInputs(array('type' => 'by_id', 'value' => $aField['id'], 'object' => $aField['object'], 'name' => $aField['name'])))
                 continue;
 
             $oClass->alterRemove($aField['name']);
@@ -157,7 +157,7 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields {
         $iId = $aIds[0];
                 
         $aField = array();
-        $this->oDb->getFields(array('type' => 'by_object_id', 'object' => $this->sObject, 'id' => (int)$iId), $aField, false);
+        $this->oDb->getInputs(array('type' => 'by_object_id', 'object' => $this->sObject, 'id' => (int)$iId), $aField, false);
         if(empty($aField) || !is_array($aField)) {
             $this->_echoResultJson(array());
             exit;
@@ -300,7 +300,7 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields {
 
         if(!empty($aDisplays)) {
             $aDisplaysGrouped = $aCounter = array();
-            $this->oDb->getFields(array('type' => 'counter_by_displays'), $aCounter, false);
+            $this->oDb->getInputs(array('type' => 'counter_by_displays'), $aCounter, false);
     
             foreach($aDisplays as $aDisplay)
                 $aDisplaysGrouped[_t($aDisplay['form_title'])][] = $aDisplay;
@@ -428,7 +428,7 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields {
         );
 
         $aCounter = array();
-        $this->oDb->getFields(array('type' => 'counter_by_modules'), $aCounter, false);
+        $this->oDb->getInputs(array('type' => 'counter_by_modules'), $aCounter, false);
         foreach($aInputModules['values'] as $sKey => $sValue)
                 $aInputModules['values'][$sKey] = $aInputModules['values'][$sKey] . " (" . (isset($aCounter[$sKey]) ? $aCounter[$sKey] : "0") . ")";
 

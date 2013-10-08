@@ -63,7 +63,7 @@ class BxBaseStudioStore extends BxDolStudioStore {
     }
 
     function getPageCode($bHidden = false) {
-        $sMethod = 'get' . ucfirst($this->sPage);
+        $sMethod = 'get' . ucfirst($this->sPage) . 'List';
         if(!method_exists($this, $sMethod))
             return '';
 
@@ -71,14 +71,14 @@ class BxBaseStudioStore extends BxDolStudioStore {
     }
 
 	function getPageContent() {
-        $sMethod = 'get' . ucfirst($this->sPage);
+        $sMethod = 'get' . ucfirst($this->sPage) . 'List';
         if(!method_exists($this, $sMethod))
             return '';
 
         return $this->$sMethod(false);
     }
 
-    protected function getGoodies() {
+    protected function getGoodiesList() {
         $sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
 
@@ -102,7 +102,7 @@ class BxBaseStudioStore extends BxDolStudioStore {
         return $oTemplate->parseHtmlByName('store.html', $aTmplVars);
     }
 
-	protected function getFeatured($bWrapInBlock = true) {
+	protected function getFeaturedList($bWrapInBlock = true) {
         $sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
 
@@ -140,15 +140,15 @@ class BxBaseStudioStore extends BxDolStudioStore {
         ));
     }
 
-    protected function getModules($bWrapInBlock = true) {
+    protected function getModulesList($bWrapInBlock = true) {
     	return $this->getTag('modules', $bWrapInBlock);
     }
 
-	protected function getTemplates($bWrapInBlock = true) {
+	protected function getTemplatesList($bWrapInBlock = true) {
     	return $this->getTag('templates', $bWrapInBlock);
     }
 
-	protected function getLanguages($bWrapInBlock = true) {
+	protected function getLanguagesList($bWrapInBlock = true) {
     	return $this->getTag('languages', $bWrapInBlock);
     }
 
@@ -190,7 +190,7 @@ class BxBaseStudioStore extends BxDolStudioStore {
         ));
     }
 
-    protected function getPurchases() {
+    protected function getPurchasesList() {
         $sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
 
@@ -209,7 +209,7 @@ class BxBaseStudioStore extends BxDolStudioStore {
         return $oTemplate->parseHtmlByName('store.html', $aTmplVars);
     }
 
-	protected function getUpdates() {
+	protected function getUpdatesList() {
         $sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
 
@@ -228,7 +228,7 @@ class BxBaseStudioStore extends BxDolStudioStore {
         return $oTemplate->parseHtmlByName('store.html', $aTmplVars);
     }
 
-	protected function getCheckout() {
+	protected function getCheckoutList() {
         $sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
 
@@ -280,7 +280,7 @@ class BxBaseStudioStore extends BxDolStudioStore {
         ));
     }
 
-	protected function getDownloaded() {
+	protected function getDownloadedList() {
         $sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
 

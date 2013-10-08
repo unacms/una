@@ -45,7 +45,7 @@ class BxDolStudioFormsFields extends BxTemplStudioGrid {
         if(empty($this->sObject) || empty($this->sDisplay))
             return array();
 
-        $this->oDb->checkFieldsInDisplays($this->sObject, $this->sDisplay);
+        $this->oDb->checkInputsInDisplays($this->sObject, $this->sDisplay);
 
         $this->_aOptions['source'] = $this->oDb->prepare($this->_aOptions['source'], $this->sObject, $this->sDisplay);
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);

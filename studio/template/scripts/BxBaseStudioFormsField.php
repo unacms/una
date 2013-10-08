@@ -413,7 +413,7 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField {
 
         $sName = get_mb_replace('/([^\d^\w^\s]+)/u', '', $mixedCaption);
         $sName = $this->getSystemName(trim($sName));
-        if($this->oDb->isField($sObject, $sName))
+        if($this->oDb->isInput($sObject, $sName))
             $sName = $this->genFieldName($sObject, $sName);
 
         return $sName;
@@ -608,7 +608,7 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField {
 
     protected function genFieldName($sObject, $sPrefix = 'field') {
         $aFields = array();
-        $this->oDb->getFields(array('type' => 'by_object_name_filter', 'object' => $sObject, 'name_filter' => $sPrefix . '%'), $aFields, false);
+        $this->oDb->getInputs(array('type' => 'by_object_name_filter', 'object' => $sObject, 'name_filter' => $sPrefix . '%'), $aFields, false);
 
         for($iIndex = 1; true; $iIndex++)
             if(!in_array($sPrefix . $iIndex, $aFields))

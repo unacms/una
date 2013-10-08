@@ -147,12 +147,12 @@ class BxDolStudioFormsQuery extends BxDolDb {
         return (int)$this->getOne("SELECT FOUND_ROWS()");
     }
 
-    function isField($sObject, $sName) {
+    function isInput($sObject, $sName) {
         $sSql = $this->prepare("SELECT `id` FROM `sys_form_inputs` WHERE `object`=? AND `name`=? LIMIT 1", $sObject, $sName);
         return (int)$this->getOne($sSql) > 0;
     }
 
-    function getFields($aParams, &$aItems, $bReturnCount = true) {
+    function getInputs($aParams, &$aItems, $bReturnCount = true) {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sSelectClause = $sFromClause = $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
 
@@ -237,7 +237,7 @@ class BxDolStudioFormsQuery extends BxDolDb {
         return (int)$this->getOne("SELECT FOUND_ROWS()");
     }
 
-    function deleteFieds($aParams) {
+    function deleteInputs($aParams) {
         $sWhereClause = $sLimitClause = "";
 
         switch($aParams['type']) {
@@ -257,7 +257,7 @@ class BxDolStudioFormsQuery extends BxDolDb {
         return (int)$this->query($sSql) > 0;
     }
 
-    function checkFieldsInDisplays($sObject, $sDisplayName) {
+    function checkInputsInDisplays($sObject, $sDisplayName) {
         $aDisplay = array();
         $this->getDisplays(array('type' => 'by_object_display', 'object' => $sObject, 'display' => $sDisplayName), $aDisplay, false);
         if(empty($aDisplay) || !is_array($aDisplay))
@@ -267,7 +267,7 @@ class BxDolStudioFormsQuery extends BxDolDb {
         return (int)$this->query($sSql) > 0;
     }
 
-    function getFieldOrderMax($sDisplayName) {
+    function getInputOrderMax($sDisplayName) {
         $sSql = $this->prepare("SELECT MAX(`order`) FROM `sys_form_display_inputs` WHERE `display_name`=? LIMIT 1", $sDisplayName);
         return (int)$this->getOne($sSql);
     }
