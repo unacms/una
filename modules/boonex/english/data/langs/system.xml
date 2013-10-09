@@ -1721,7 +1721,7 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_adm_dsg_txt_alt_text"><![CDATA[Logo Text]]></string>
 	<string name="_adm_dsg_dsc_alt_text"><![CDATA[Serves as "ALT" text for logo image. Used as a logo when no logo image is uploaded.]]></string>
 	<string name="_adm_btn_designer_submit"><![CDATA[Submit]]></string>
-	<string name="_adm_dsg_txt_icon_apple"><![CDATA[Apple Touch Devices (129x129)]]></string>
+	<string name="_adm_dsg_txt_icon_apple"><![CDATA[Apple Touch Devices (152x152)]]></string>
 	<string name="_adm_dsg_txt_icon_facebook"><![CDATA[Facebook Share (100x100)]]></string>
 	<string name="_adm_dsg_txt_icon_favicon"><![CDATA[Favicon (16x16)]]></string>
 	<string name="_adm_dsg_txt_upload_icon"><![CDATA[Upload New Site Icon]]></string>

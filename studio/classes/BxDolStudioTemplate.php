@@ -89,21 +89,29 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton {
             case 'page_charset':
                 $sRet = 'UTF-8';
                 break;
+            case 'page_robots':
+                if(!empty($this->aPage['robots']) && is_string($this->aPage['robots']))
+                    $sRet = '<meta name="robots" content="' . bx_html_attribute($this->aPage['robots']) . '" />';
+                break;
             case 'page_keywords':
                 if(!empty($this->aPage['keywords']) && is_array($this->aPage['keywords']))
                     $sRet = '<meta name="keywords" content="' . bx_html_attribute(implode(',', $this->aPage['keywords'])) . '" />';
                 break;
-            case 'page_description':
+			case 'page_description':
                 if(!empty($this->aPage['description']) && is_string($this->aPage['description']))
                     $sRet = '<meta name="description" content="' . bx_html_attribute($this->aPage['description']) . '" />';
                 break;
-             case 'page_header':
+            case 'page_header':
                 if(isset($this->aPage['header']))
                     $sRet = bx_process_output($this->aPage['header']);
                 break;
             case 'page_header_text':
                 if(isset($this->aPage['header_text']))
                     $sRet = bx_process_output($this->aPage['header_text']);
+                break;
+			case 'page_icons':
+                bx_import('BxTemplFunctions');
+                $sRet = BxTemplFunctions::getInstance()->getMetaIcons();
                 break;
             case 'page_breadcrumb':
             	$sRet = $this->getPageBreadcrumb();

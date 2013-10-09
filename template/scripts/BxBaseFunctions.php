@@ -624,32 +624,40 @@ EOF;
      * Get HTML code for meta icons.
      * @return HTML string to insert into HEAD section
      */
-    function getMetaIcons() {
+    function getMetaIcons()
+    {
+    	$iId = (int)getParam('sys_site_icon');
+    	$sImageUrlFav = $sImageUrlFcb = $sImageUrlApl = '';
 
-        if (!($iId = (int)getParam('sys_site_icon')))
-            return '';
+        if(!empty($iId)) {
+        	bx_import('BxDolImageTranscoder');
 
-        bx_import('BxDolImageTranscoder');
+        	// favicon icon
+	        $oTranscoder = BxDolImageTranscoder::getObjectInstance(BX_DOL_TRANSCODER_OBJ_ICON_FAVICON);
+	        $sImageUrlFav = $oTranscoder->getImageUrl($iId);
 
-        $sRet = '';
+	        // facebook icon
+	        $oTranscoder = BxDolImageTranscoder::getObjectInstance(BX_DOL_TRANSCODER_OBJ_ICON_FACEBOOK);
+	        $sImageUrlFcb = $oTranscoder->getImageUrl($iId);
+
+	        //apple touch icon
+	        $oTranscoder = BxDolImageTranscoder::getObjectInstance(BX_DOL_TRANSCODER_OBJ_ICON_APPLE);
+	        $sImageUrlApl = $oTranscoder->getImageUrl($iId);
+        }
+
+        if(empty($sImageUrlFav))
+        	$sImageUrlFav = $this->_oTemplate->getIconUrl('favicon.png');
         
-        // favicon icon
-        $oTranscoder = BxDolImageTranscoder::getObjectInstance(BX_DOL_TRANSCODER_OBJ_ICON_FAVICON);
-        $sImageUrl = $oTranscoder->getImageUrl($iId);
-        if ($sImageUrl)
-            $sRet .= '<link rel="icon" type="image/png" href="' . $sImageUrl . '" />';
+		if(empty($sImageUrlFcb))
+			$sImageUrlFcb = $this->_oTemplate->getIconUrl('facebook-icon.png');
 
-        // apple icon
-        $oTranscoder = BxDolImageTranscoder::getObjectInstance(BX_DOL_TRANSCODER_OBJ_ICON_APPLE);
-        $sImageUrl = $oTranscoder->getImageUrl($iId);
-        if ($sImageUrl)
-            $sRet .= '<link rel="apple-touch-icon" href="' . $sImageUrl . '" />';
+		if(empty($sImageUrlApl))
+			$sImageUrlApl = $this->_oTemplate->getIconUrl('apple-touch-icon.png');
 
-        // facebook icon
-        $oTranscoder = BxDolImageTranscoder::getObjectInstance(BX_DOL_TRANSCODER_OBJ_ICON_FACEBOOK);
-        $sImageUrl = $oTranscoder->getImageUrl($iId);
-        if ($sImageUrl)
-            $sRet .= '<link rel="image_src" href="' . $sImageUrl . '" />';
+		$sRet = '';
+		$sRet .= '<link rel="icon" sizes="16x16" type="image/png" href="' . $sImageUrlFav . '" />';
+		$sRet .= '<link rel="image_src" sizes="100x100" href="' . $sImageUrlFcb . '" />';
+		$sRet .= '<link rel="apple-touch-icon" sizes="152x152" href="' . $sImageUrlApl . '" />';
 
         return $sRet;
     }
