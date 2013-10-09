@@ -102,7 +102,7 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject {
      * @param $sObject - name of trancode object.
      * @return false on error or instance of BxDolImageTranscoder class.
      */
-    static public function getObjectInstance($sObject) {
+    public static function getObjectInstance($sObject) {
 
         if (isset($GLOBALS['bxDolClasses']['BxDolImageTranscoder!'.$sObject]))
             return $GLOBALS['bxDolClasses']['BxDolImageTranscoder!'.$sObject];

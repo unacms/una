@@ -12,7 +12,7 @@ class BxDolIO extends BxDol {
         parent::BxDol();
     }
 
-    function isExecutable($sFile) {
+    public static function isExecutable($sFile) {
         clearstatcache();
 
         $aPathInfo = pathinfo(__FILE__);
@@ -21,7 +21,7 @@ class BxDolIO extends BxDol {
         return (is_file($sFile) && is_executable($sFile));
     }
 
-    function isWritable($sFile, $sPrePath = '/../../') {
+    public static function isWritable($sFile, $sPrePath = '/../../') {
         clearstatcache();
 
         $aPathInfo = pathinfo(__FILE__);
@@ -30,7 +30,7 @@ class BxDolIO extends BxDol {
         return is_readable($sFile) && is_writable($sFile);
     }
 
-    function getPermissions($sFileName) {
+    public static function getPermissions($sFileName) {
         $sPath = isset($GLOBALS['logged']['admin']) && $GLOBALS['logged']['admin'] ? BX_DIRECTORY_PATH_ROOT : '../';
 
         clearstatcache();

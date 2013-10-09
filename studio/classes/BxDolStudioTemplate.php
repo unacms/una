@@ -151,7 +151,7 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton {
                 break;
             }
 
-        $sRet = BxDolTemplate::processInjection($this->getPageNameIndex(), $sKey, $sRet);
+        $sRet = $this->processInjection($this->getPageNameIndex(), $sKey, $sRet);
         return $sRet;
     }
 

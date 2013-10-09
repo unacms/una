@@ -267,7 +267,7 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject {
      * @param $sObject object name
      * @return object instance or false on error
      */
-    static public function getObjectInstance($sObject) {
+    public static function getObjectInstance($sObject) {
 
         if (isset($GLOBALS['bxDolClasses']['BxDolGrid!'.$sObject]))
             return $GLOBALS['bxDolClasses']['BxDolGrid!'.$sObject];

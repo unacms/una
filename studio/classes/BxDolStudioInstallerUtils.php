@@ -28,7 +28,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
     /**
      * Get singleton instance of the class
      */
-    static function getInstance() {
+    public static function getInstance() {
         if (!isset($GLOBALS['bxDolClasses'][__CLASS__]))
             $GLOBALS['bxDolClasses'][__CLASS__] = new BxDolStudioInstallerUtils();
 

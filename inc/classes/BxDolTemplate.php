@@ -956,7 +956,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
                 $sRet = ($sTemplAdd = BxTemplFunctions::getInstance()->TemplPageAddComponent($sKey)) !== false ? $sTemplAdd : $aKeyWrappers['left'] . $sKey . $aKeyWrappers['right'];
             }
 
-        $sRet = BxDolTemplate::processInjection(isset($this->aPage['name_index']) ? (int)$this->aPage['name_index'] : 0, $sKey, $sRet);
+        $sRet = $this->processInjection(isset($this->aPage['name_index']) ? (int)$this->aPage['name_index'] : 0, $sKey, $sRet);
         return $sRet;
     }
     /**
@@ -1222,13 +1222,13 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     }
 
     /**
-     * Private callback function for CSS compiler.
+     * Static callback function for CSS compiler.
      *
      * @param string $sPath CSS file absolute path.
      * @param array $aMatches matched parts of image's URL.
      * @return string converted image's URL.
      */
-    function _callbackParseUrl($sPath, $aMatches) {
+    public static function _callbackParseUrl($sPath, $aMatches) {
         $sFile = basename($aMatches[1]);
         $sDirectory = dirname($aMatches[1]);
 

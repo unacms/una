@@ -126,7 +126,7 @@ EOF;
 
         $sRows = '';
         $aIPsList = BxDolDb::getInstance()->getALl("SELECT *, FROM_UNIXTIME(`LastDT`) AS `LastDT_U` FROM `sys_ip_list` ORDER BY `From` ASC");
-        while ($aIPsList as $aIPList) {
+        foreach ($aIPsList as $aIPList) {
             $iID = (int)$aIPList['ID'];
             $sFrom = long2ip($aIPList['From']);
 

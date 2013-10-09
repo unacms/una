@@ -25,7 +25,7 @@ class BxDolStudioCart extends BxDol implements iBxDolSingleton {
             trigger_error('Clone is not allowed for the class: ' . get_class($this), E_USER_ERROR);
     }
 
-	static function getInstance() {
+	public static function getInstance() {
         if (!isset($GLOBALS['bxDolClasses'][__CLASS__])) {
         	$sClass = __CLASS__;
             $GLOBALS['bxDolClasses'][__CLASS__] = new $sClass();
@@ -40,7 +40,7 @@ class BxDolStudioCart extends BxDol implements iBxDolSingleton {
      * @param string/array $mixed - string with cart items divided with (:) or an array of cart items.
      * @return array with items.
      */
-    static function items2array($mixed) {
+    public static function items2array($mixed) {
         $aResult = array();
         if(empty($mixed))
         	return $aResult;

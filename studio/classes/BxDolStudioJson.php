@@ -20,7 +20,7 @@ class BxDolStudioJson extends BxDol implements iBxDolSingleton {
             trigger_error('Clone is not allowed for the class: ' . get_class($this), E_USER_ERROR);
     }
 
-	static function getInstance() {
+	public static function getInstance() {
         if (!isset($GLOBALS['bxDolClasses'][__CLASS__])) {
             $GLOBALS['bxDolClasses'][__CLASS__] = new BxDolStudioJson();
         }

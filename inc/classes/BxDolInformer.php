@@ -61,7 +61,7 @@ class BxDolInformer extends BxDol {
      * Get Informer object instance 
      * @return object instance or false on error
      */
-    static public function getInstance($oTemplate = false) {
+    public static function getInstance($oTemplate = false) {
         if (isset($GLOBALS['bxDolClasses']['BxDolInformer']))
             return $GLOBALS['bxDolClasses']['BxDolInformer'];
     

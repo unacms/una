@@ -220,7 +220,7 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
      * @param $sObject object name
      * @return object instance or false on error
      */
-    static public function getObjectInstance($sObject) {
+    public static function getObjectInstance($sObject) {
 
         if (isset($GLOBALS['bxDolClasses']['BxDolStorage!'.$sObject]))
             return $GLOBALS['bxDolClasses']['BxDolStorage!'.$sObject];
@@ -244,7 +244,7 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
      * It is alutomatically called upin cron execution, usually once in a day.
      * @return number of deleted records
      */
-    static public function pruning() {
+    public static function pruning() {
         $iDeleted = 0;
         $a = BxDolStorageQuery::getStorageObjects();
         foreach ($a as $aObject) {

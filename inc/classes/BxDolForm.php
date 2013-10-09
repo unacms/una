@@ -801,7 +801,7 @@ class BxDolForm extends BxDol {
      * @param $sUseValues use default(BX_DATA_VALUES_DEFAULT) or additional(BX_DATA_VALUES_ADDITIONAL) value titles, if additinal value title is missing default title is used
      * @return data items array
      */
-    static public function getDataItems($sKey, $isUseForSet = false, $sUseValues = BX_DATA_VALUES_DEFAULT) {
+    public static function getDataItems($sKey, $isUseForSet = false, $sUseValues = BX_DATA_VALUES_DEFAULT) {
         bx_import('BxDolFormQuery');
         return BxDolFormQuery::getDataItems($sKey, $isUseForSet, $sUseValues);
     }
@@ -939,7 +939,7 @@ class BxDolForm extends BxDol {
     }
 
     // Static Methods related to CSRF Tocken
-    function genCsrfToken($bReturn = false) {
+	public static function genCsrfToken($bReturn = false) {
         $oDb = BxDolDb::getInstance();
         if ($oDb->getParam('sys_security_form_token_enable') != 'on')
             return false;

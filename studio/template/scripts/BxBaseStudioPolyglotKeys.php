@@ -121,8 +121,8 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys {
             $this->_echoResultJson($aRes, true);
         }
         else {
-            bx_import('BxTemplFunctions');
-            $sContent = BxTemplFunctions::getInstance()->popupBox('adm-lang-new-key-popup', _t('_adm_pgt_txt_nkp_add_popup'), $this->_oTemplate->parseHtmlByName('pgt_new_key.html', array(
+            bx_import('BxTemplStudioFunctions');
+            $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-lang-new-key-popup', _t('_adm_pgt_txt_nkp_add_popup'), $this->_oTemplate->parseHtmlByName('pgt_new_key.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
                 'form' => $oForm->getCode(true),
                 'object' => $this->_sObject,
@@ -238,8 +238,8 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys {
             $this->_echoResultJson($aRes, true);
         }
         else {
-            bx_import('BxTemplFunctions');
-            $sContent = BxTemplFunctions::getInstance()->popupBox('adm-lang-edit-key-popup', _t('_adm_pgt_txt_nkp_edit_popup', $aKey['key']), $this->_oTemplate->parseHtmlByName('pgt_new_key.html', array(
+            bx_import('BxTemplStudioFunctions');
+            $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-lang-edit-key-popup', _t('_adm_pgt_txt_nkp_edit_popup', $aKey['key']), $this->_oTemplate->parseHtmlByName('pgt_new_key.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
                 'form' => $oForm->getCode(true),
                 'object' => $this->_sObject,

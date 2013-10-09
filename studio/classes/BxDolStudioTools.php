@@ -278,11 +278,11 @@ EOF;
             $sAwaitedPerm = ($iCurType==1) ? $sWritableC : $sWritableC;
 
             $sElemCntStyle = ($i%2==0) ? 'even' : 'odd' ;
-            $bAccessible = ($iCurType==1) ? $this->isWritable($sCurElement) : $this->isWritable($sCurElement);
+            $bAccessible = ($iCurType==1) ? self::isWritable($sCurElement) : self::isWritable($sCurElement);
 
             if ($sCurElement == 'flash/modules/global/app/ffmpeg.exe') {
                 $sAwaitedPerm = $sExecutableC;
-                $bAccessible = $this->isExecutable($sCurElement);
+                $bAccessible = self::isExecutable($sCurElement);
             }
 
             if ($bAccessible) {
@@ -304,7 +304,7 @@ EOF;
 </tr>
 EOF;
             } else {
-                $sPerm = $this->getPermissions($sCurElement);
+                $sPerm = self::getPermissions($sCurElement);
                 $sResultPerm = '';
                 if ($sPerm==false) {
                     $sResultPerm = $sNotExistsC;
