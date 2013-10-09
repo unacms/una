@@ -2339,6 +2339,7 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
     <string name="_adm_bp_err_block_edit"><![CDATA[Cannot update block]]></string>
     <string name="_adm_bp_err_block_delete"><![CDATA[Cannot delete block]]></string>
     <string name="_adm_bp_err_block_not_found"><![CDATA[The requested block cannot be found.]]></string>
+    <string name="_adm_bp_err_block_not_deletable"><![CDATA[The requested block cannot be deleted.]]></string>
     <string name="_adm_bp_err_block_remove_old_image"><![CDATA[Cannot remove an old image]]></string>
     <string name="_adm_bp_txt_block_title"><![CDATA[Title]]></string>
     <string name="_adm_bp_dsc_block_title"><![CDATA[Short name for the block, visible in block header.]]></string>

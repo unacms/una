@@ -202,6 +202,22 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage {
         return array('popup' => $sContent);
     }
 
+	protected function actionBlockDelete() {
+        $sJsObject = $this->getPageJsObject();
+        $iId = (int)bx_get('id');
+
+        $aBlock = array();
+        $this->oDb->getBlocks(array('type' => 'by_id', 'value' => $iId), $aBlock, false);
+        if(empty($aBlock) || !is_array($aBlock))
+            return array('msg' => _t('_bx_dev_bp_err_block_not_found'));
+
+        if(!$this->oDb->deleteBlocks(array('type' => 'by_id', 'value' => $iId)))
+            return array('msg' => _t('_bx_dev_bp_err_block_delete'));
+
+        $this->onBlockDelete($aBlock);
+        return array('eval' => $sJsObject . '.onDeleteBlock(' . $iId . ', oData)');
+    }
+
     protected function getSettingsOptions($bInputsOnly = false) {
         $aForm = array(
             'form_attrs' => array(
@@ -399,7 +415,9 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage {
         $aBlock['visible_for_levels'] = $oForm->aInputs['visible_for_levels']['value'];
 
         $oForm->aInputs = $this->addInArray($oForm->aInputs, 'visible_for_levels', $this->getBlockContent($aBlock));
+
         $oForm->aInputs['controls'][0]['value'] = _t('_bx_dev_bp_btn_block_save');
+        $oForm->aInputs['controls'][2]['attrs']['onclick'] = $this->getPageJsObject() . ".deleteBlock(" . $aBlock['id'] . ")";
 
         if($aBlock['type'] == BX_DOL_STUDIO_BP_BLOCK_SERVICE)
             $aBlock['content'] = BxDevFunctions::unserializeString($aBlock['content']);

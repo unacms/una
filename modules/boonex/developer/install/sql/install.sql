@@ -76,7 +76,7 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 -- Forms Builder -> Forms.
 --
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
-('mod_dev_forms_form', @sName, '_bx_dev_frm_txt_forms_form', '', '', 'do_submit', 'sys_objects_form', 'id', '', '', '', 0, 1, '', '');
+('mod_dev_forms_form', @sName, '_bx_dev_frm_txt_forms_form', '', '', 'do_submit', 'sys_objects_form', 'id', '', '', '', 0, 1, 'BxDevFormView', 'modules/boonex/developer/classes/BxDevFormView.php');
 
 INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
 ('mod_dev_forms_form_add', @sName, 'mod_dev_forms_form', '_bx_dev_frm_txt_forms_display_add', 0),
@@ -143,7 +143,7 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 -- Forms Builder -> Displays.
 --
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
-('mod_dev_forms_display', @sName, '_bx_dev_frm_txt_displays_diplay', '', '', 'do_submit', 'sys_form_displays', 'id', '', '', '', 0, 1, '', '');
+('mod_dev_forms_display', @sName, '_bx_dev_frm_txt_displays_diplay', '', '', 'do_submit', 'sys_form_displays', 'id', '', '', '', 0, 1, 'BxDevFormView', 'modules/boonex/developer/classes/BxDevFormView.php');
 
 INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
 ('mod_dev_forms_display_add', @sName, 'mod_dev_forms_display', '_bx_dev_frm_txt_displays_display_add', 0),
@@ -183,7 +183,7 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 -- Forms Builder -> Pre Lists.
 --
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
-('mod_dev_forms_prelist', @sName, '_bx_dev_frm_txt_prelists_prelist', '', '', 'do_submit', 'sys_form_pre_lists', 'id', '', '', '', 0, 1, '', '');
+('mod_dev_forms_prelist', @sName, '_bx_dev_frm_txt_prelists_prelist', '', '', 'do_submit', 'sys_form_pre_lists', 'id', '', '', '', 0, 1, 'BxDevFormView', 'modules/boonex/developer/classes/BxDevFormView.php');
 
 INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
 ('mod_dev_forms_prelist_add', @sName, 'mod_dev_forms_prelist', '_bx_dev_frm_txt_prelists_display_add', 0),
@@ -219,7 +219,7 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 -- Forms Builder -> Pre Values.
 --
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
-('mod_dev_forms_prevalue', @sName, '_bx_dev_frm_txt_prevalues_prevalue', '', '', 'do_submit', 'sys_form_pre_values', 'id', '', '', '', 0, 1, '', '');
+('mod_dev_forms_prevalue', @sName, '_bx_dev_frm_txt_prevalues_prevalue', '', '', 'do_submit', 'sys_form_pre_values', 'id', '', '', '', 0, 1, 'BxDevFormView', 'modules/boonex/developer/classes/BxDevFormView.php');
 
 INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
 ('mod_dev_forms_prevalue_add', @sName, 'mod_dev_forms_prevalue', '_bx_dev_frm_txt_prevalues_display_add', 0),
@@ -300,7 +300,7 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 -- Navigation Builder -> Menus.
 --
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
-('mod_dev_nav_menu', @sName, '_bx_dev_nav_txt_menus_menu', '', '', 'do_submit', 'sys_objects_menu', 'id', '', '', '', 0, 1, '', '');
+('mod_dev_nav_menu', @sName, '_bx_dev_nav_txt_menus_menu', '', '', 'do_submit', 'sys_objects_menu', 'id', '', '', '', 0, 1, 'BxDevFormView', 'modules/boonex/developer/classes/BxDevFormView.php');
 
 INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
 ('mod_dev_nav_menu_add', @sName, 'mod_dev_nav_menu', '_bx_dev_nav_txt_menus_display_add', 0),
@@ -349,7 +349,7 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 -- Navigation Builder -> Sets.
 --
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
-('mod_dev_nav_set', @sName, '_bx_dev_nav_txt_sets_set', '', '', 'do_submit', 'sys_menu_sets', 'set_name', '', '', '', 0, 1, '', '');
+('mod_dev_nav_set', @sName, '_bx_dev_nav_txt_sets_set', '', '', 'do_submit', 'sys_menu_sets', 'set_name', '', '', '', 0, 1, 'BxDevFormView', 'modules/boonex/developer/classes/BxDevFormView.php');
 
 INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
 ('mod_dev_nav_set_add', @sName, 'mod_dev_nav_set', '_bx_dev_nav_txt_sets_display_add', 0),
@@ -384,7 +384,7 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 -- Navigation Builder -> Items.
 --
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
-('mod_dev_nav_item', @sName, '_bx_dev_nav_txt_items_item', '', '', 'do_submit', 'sys_menu_items', 'id', '', '', '', 0, 1, '', '');
+('mod_dev_nav_item', @sName, '_bx_dev_nav_txt_items_item', '', '', 'do_submit', 'sys_menu_items', 'id', '', '', '', 0, 1, 'BxDevFormView', 'modules/boonex/developer/classes/BxDevFormView.php');
 
 INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
 ('mod_dev_nav_item_add', @sName, 'mod_dev_nav_item', '_bx_dev_nav_txt_items_display_add', 0),
@@ -442,7 +442,7 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 -- Page Builder -> Page.
 --
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
-('mod_dev_bp_page', @sName, '_bx_dev_bp_txt_page_form', '', '', 'do_submit', 'sys_objects_page', 'id', '', '', '', 0, 1, '', '');
+('mod_dev_bp_page', @sName, '_bx_dev_bp_txt_page_form', '', '', 'do_submit', 'sys_objects_page', 'id', '', '', '', 0, 1, 'BxDevFormView', 'modules/boonex/developer/classes/BxDevFormView.php');
 
 INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
 ('mod_dev_bp_page_add', @sName, 'mod_dev_bp_page', '_bx_dev_bp_txt_page_display_add', 0);
@@ -481,7 +481,7 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 -- Page Builder -> Block.
 --
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
-('mod_dev_bp_block', @sName, '_bx_dev_bp_txt_block_form', '', '', 'do_submit', 'sys_pages_blocks', 'id', '', '', '', 0, 1, '', '');
+('mod_dev_bp_block', @sName, '_bx_dev_bp_txt_block_form', '', '', 'do_submit', 'sys_pages_blocks', 'id', '', '', '', 0, 1, 'BxDevFormView', 'modules/boonex/developer/classes/BxDevFormView.php');
 
 INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
 ('mod_dev_bp_block_edit', @sName, 'mod_dev_bp_block', '_bx_dev_bp_txt_block_display_edit', 0);
@@ -496,9 +496,10 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('mod_dev_bp_block', @sName, 'visible_for_levels', '', '', 0, 'checkbox_set', '_bx_dev_bp_txt_sys_block_visible_for_levels', '_bx_dev_bp_txt_block_visible_for_levels', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('mod_dev_bp_block', @sName, 'deletable', '1', '', 0, 'checkbox', '_bx_dev_bp_txt_sys_block_deletable', '_bx_dev_bp_txt_block_deletable', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('mod_dev_bp_block', @sName, 'copyable', '1', '', 0, 'checkbox', '_bx_dev_bp_txt_sys_block_copyable', '_bx_dev_bp_txt_block_copyable', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
-('mod_dev_bp_block', @sName, 'controls', '', 'do_submit,cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('mod_dev_bp_block', @sName, 'controls', '', 'do_submit,cancel,delete', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('mod_dev_bp_block', @sName, 'do_submit', '_bx_dev_bp_btn_block_add', '', 0, 'submit', '_bx_dev_bp_btn_sys_block_add', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
-('mod_dev_bp_block', @sName, 'cancel', '_bx_dev_bp_btn_block_cancel', '', 0, 'button', '_bx_dev_bp_btn_sys_block_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0);
+('mod_dev_bp_block', @sName, 'cancel', '_bx_dev_bp_btn_block_cancel', '', 0, 'button', '_bx_dev_bp_btn_sys_block_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0),
+('mod_dev_bp_block', @sName, 'delete', '_bx_dev_bp_btn_block_delete', '', 0, 'button', '_bx_dev_bp_btn_sys_block_delete', '', '', 0, 0, 0, 'a:1:{s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0);
 
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
 ('mod_dev_bp_block_edit', 'id', 2147483647, 1, 1),
@@ -512,7 +513,8 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('mod_dev_bp_block_edit', 'copyable', 2147483647, 1, 9),
 ('mod_dev_bp_block_edit', 'controls', 2147483647, 1, 10),
 ('mod_dev_bp_block_edit', 'do_submit', 2147483647, 1, 11),
-('mod_dev_bp_block_edit', 'cancel', 2147483647, 1, 12);
+('mod_dev_bp_block_edit', 'cancel', 2147483647, 1, 12),
+('mod_dev_bp_block_edit', 'delete', 2147483647, 1, 13);
 
 --
 -- Polyglot -> Grid descriptors

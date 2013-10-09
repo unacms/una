@@ -49,8 +49,7 @@ class BxDolStudioForm extends BxBaseFormView {
         return $mixedResult;
     }
 
-    function processImageUploaderSave($sName, $iValue = 0) {
-        $iId = 0;
+    function processImageUploaderSave($sName, $iId = 0) {
         if($this->aInputs[$sName]['type'] != 'image_uploader')
             return $iId;
 
@@ -62,7 +61,7 @@ class BxDolStudioForm extends BxBaseFormView {
             $sStorage = isset($aInput['storage_object']) && $aInput['storage_object'] != '' ? $aInput['storage_object'] : BX_DOL_STORAGE_OBJ_IMAGES;
             $oStorage = BxDolStorage::getObjectInstance($sStorage);
 
-            if((int)$iValue != 0 && !$oStorage->deleteFile($iValue))
+            if((int)$iId != 0 && !$oStorage->deleteFile($iId))
                 return _t('_adm_err_form_view_iu_delete');
 
             $iId = $oStorage->storeFileFromForm($_FILES[$aInput['name']], false, $iProfileId); 

@@ -833,15 +833,6 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
                             'onclick' => "$('.bx-popup-applied:visible').dolPopupHide()",
                             'class' => 'bx-def-margin-sec-left',
                         ),
-                    ),
-                    array (
-                        'type' => 'reset',
-                        'name' => 'close',
-                        'value' => _t('_adm_bp_btn_block_delete'),
-                        'attrs' => array(
-                            'onclick' => $this->getPageJsObject() . ".deleteBlock(" . $aBlock['id'] . ")",
-                            'class' => 'bx-def-margin-sec-left',
-                        ),
                     )
                 )
             )
@@ -855,6 +846,17 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
         BxDolStudioUtils::getVisibilityValues($aBlock['visible_for_levels'], $aForm['inputs']['visible_for_levels']['values'], $aForm['inputs']['visible_for_levels']['value']);
 
         $aForm['inputs'] = $this->addInArray($aForm['inputs'], 'visible_for_levels', $this->getBlockContent($aBlock));
+
+        if((int)$aBlock['deletable'] != 0)
+        	$aForm['inputs']['controls'][] = array (
+				'type' => 'reset',
+				'name' => 'close',
+				'value' => _t('_adm_bp_btn_block_delete'),
+				'attrs' => array(
+					'onclick' => $this->getPageJsObject() . ".deleteBlock(" . $aBlock['id'] . ")",
+					'class' => 'bx-def-margin-sec-left',
+				),
+			);
 
         $oForm = new BxTemplStudioFormView($aForm);
         $oForm->initChecker();
@@ -885,6 +887,9 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
         $this->oDb->getBlocks(array('type' => 'by_id', 'value' => $iId), $aBlock, false);
         if(empty($aBlock) || !is_array($aBlock))
             return array('msg' => _t('_adm_bp_err_block_not_found'));
+
+		if((int)$aBlock['deletable'] == 0)
+            return array('msg' => _t('_adm_bp_err_block_not_deletable'));
 
         if(!$this->oDb->deleteBlocks(array('type' => 'by_id', 'value' => $iId)))
             return array('msg' => _t('_adm_bp_err_block_delete'));
@@ -1302,8 +1307,6 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
                 break;
 
             case BX_DOL_STUDIO_BP_BLOCK_IMAGE:
-                $aForm['form_attrs']['enctype'] = 'multipart/form-data';
-
                 $iImageId = $sImageAlign = '';
                 if($aBlock['content'] != '')
                     list($iImageId, $sImageAlign) = explode($this->sParamsDivider, $aBlock['content']);
