@@ -10,7 +10,8 @@ div.bx-dev-add-item-cnt {}
 div.bx-dev-nav-export {}
 div.bx-dev-nav-export-cnt {}
 
-div#grid-popup-mod_dev_nav_menus-export div.bx-popup-width {
+div#grid-popup-mod_dev_nav_menus-export div.bx-popup-width,
+div#grid-popup-mod_dev_nav_items-import div.bx-popup-width {
     width: 800px;
 }
 

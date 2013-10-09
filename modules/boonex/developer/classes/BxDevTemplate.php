@@ -32,7 +32,7 @@ class BxDevTemplate extends BxDolModuleTemplate {
 		$this->addStudioInjection('injection_body_style', 'text', ' bx-dev-page-body-columns');
         return $this->parseHtmlByName('page_content.html', array(
             'page_menu_code' => $sMenu,
-        	'page_main_code' => $oContent->getPageJsCode() . $oContent->getPageCode()
+        	'page_main_code' => $sContent
         ));
     } 
 }

@@ -151,12 +151,12 @@ class BxDevFormsForms extends BxTemplStudioFormsForms {
         $sContentDelete .= $this->oModule->_oDb->getQueryDelete('sys_form_displays', 'object', array($aForm), false);
 
         $aFields = array();
-        $this->oDb->getFields(array('type' => 'dump_inputs', 'value' => $aForm['object']), $aFields, false);
+        $this->oDb->getInputs(array('type' => 'dump_inputs', 'value' => $aForm['object']), $aFields, false);
         $sContentInsert .= $this->oModule->_oDb->getQueryInsert('sys_form_inputs', $aFields);
         $sContentDelete .= $this->oModule->_oDb->getQueryDelete('sys_form_inputs', 'object', array($aForm), false);
 
         $aConnections = array();
-        $this->oDb->getFields(array('type' => 'dump_connections', 'value' => $aForm['object']), $aConnections, false);
+        $this->oDb->getInputs(array('type' => 'dump_connections', 'value' => $aForm['object']), $aConnections, false);
         $sContentInsert .= $this->oModule->_oDb->getQueryInsert('sys_form_display_inputs', $aConnections);
         $sContentDelete .= $this->oModule->_oDb->getQueryDelete('sys_form_display_inputs', 'display_name', $aDisplays);
 
