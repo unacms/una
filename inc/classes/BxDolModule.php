@@ -78,7 +78,7 @@ class BxDolModule extends BxDol {
      *
      * @param $sName module name.
      */
-    static function getInstance($sName) {
+    public static function getInstance($sName) {
         if(empty($sName))
             return null;
 
@@ -100,12 +100,27 @@ class BxDolModule extends BxDol {
         return $GLOBALS['bxDolClasses'][$sClassName];
     }
 
+    public static function getTitle($sUri) {
+        return _t(self::getTitleKey($sUri));
+    }
+
+    public static function getTitleKey($sUri) {
+        return '_sys_module_' . strtolower(str_replace(' ', '_', $sUri));
+    }
+
+	/**
+     * get module name
+     */
+    function getName() {
+        return $this->_aModule['name'];
+    }
+
     /**
      * Check whether user logged in or not.
      *
      * @return boolean result of operation.
      */
-    function isLogged() {
+    public function isLogged() {
         return isLogged();
     }
 
@@ -114,7 +129,7 @@ class BxDolModule extends BxDol {
      *
      * @return integer user ID.
      */
-    function getUserId() {
+    public function getUserId() {
         return getLoggedId();
     }
 
@@ -123,25 +138,9 @@ class BxDolModule extends BxDol {
      *
      * @return string user password.
      */
-    function getUserPassword () {
+    public function getUserPassword () {
         return getLoggedPassword();
     }
-
-    function getTitle($sUri) {
-        return _t(BxDolModule::getTitleKey($sUri));
-    }
-
-    function getTitleKey($sUri) {
-        return '_sys_module_' . strtolower(str_replace(' ', '_', $sUri));
-    }
-
-    /**
-     * get module name
-     */
-    function getName() {
-        return $this->_aModule['name'];
-    }
-
 }
 
 /** @} */
