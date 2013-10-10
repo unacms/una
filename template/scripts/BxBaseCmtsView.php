@@ -448,7 +448,6 @@ class BxBaseCmtsView extends BxDolCmts {
         		'id' => $this->_iId,
         		'cmt_id' => $aCmt['cmt_id']
         	)),
-        	'ago' => $aCmt['cmt_ago'],
         	'points' => _t($aCmt['cmt_rate'] == 1 || $aCmt['cmt_rate'] == -1 ? '_N_point' : '_N_points', $aCmt['cmt_rate']),
         	'bx_if:show_reply' => array(
 				'condition' => $this->isPostReplyAllowed(),

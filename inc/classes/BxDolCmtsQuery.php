@@ -59,8 +59,6 @@ class BxDolCmtsQuery extends BxDolDb
 
     function getComments ($iId, $iCmtVParentId = 0, $iAuthorId = 0, $aOrder = array(), $iStart = 0, $iCount = -1)
     {
-        global $sHomeUrl;
-        $iTimestamp = time();
         $sFields = "'' AS `cmt_rated`,";
 
         $sJoin = "";
@@ -97,7 +95,7 @@ class BxDolCmtsQuery extends BxDolDb
         			break;
 	        }
         }
-         
+
         $sLimit = $iCount != -1 ? $this->prepare(" LIMIT ?, ?", (int)$iStart, (int)$iCount) : '';
 
         $sQuery = $this->prepare("SELECT
@@ -112,33 +110,24 @@ class BxDolCmtsQuery extends BxDolDb
                 `c`.`cmt_rate`,
                 `c`.`cmt_rate_count`,
                 `c`.`cmt_replies`,
-                `c`.`cmt_time`,
-                (? - `c`.`cmt_time`) AS `cmt_secs_ago`
+                `c`.`cmt_time`
             FROM `{$this->_sTable}` AS `c`
             $sJoin
-            WHERE `c`.`cmt_object_id` = ?" . $sWhereParent . $sOder . $sLimit, $iTimestamp, $iId);
+            WHERE `c`.`cmt_object_id` = ?" . $sWhereParent . $sOder . $sLimit, $iId);
 
-        $a = $this->getAll($sQuery);
-
-        for(reset($a) ; list ($k) = each ($a) ; ) {
-            $a[$k]['cmt_text'] = str_replace("[ray_url]", $sHomeUrl, $a[$k]['cmt_text']);
-             $a[$k]['cmt_ago'] = _format_when ($a[$k]['cmt_secs_ago']);
-        }
-
-        return $a;
+        return $this->getAll($sQuery);
     }
 
     function getComment ($iId, $iCmtId, $iAuthorId = 0)
     {
-        global $sHomeUrl;
-
-        $iTimestamp = time();
         $sFields = "'' AS `cmt_rated`,";
+
         $sJoin = '';
         if ($iAuthorId) {
             $sFields = '`r`.`cmt_rate` AS `cmt_rated`,';
             $sJoin = $this->prepare("LEFT JOIN {$this->_sTableTrack} AS `r` ON (`r`.`cmt_system_id` = ? AND `r`.`cmt_id` = `c`.`cmt_id` AND `r`.`cmt_rate_author_id` = ?)", $this->_oMain->getSystemId(), $iAuthorId);
         }
+
         $sQuery = $this->prepare("SELECT
                 $sFields
                 `c`.`cmt_id`,
@@ -151,29 +140,17 @@ class BxDolCmtsQuery extends BxDolDb
                 `c`.`cmt_rate`,
                 `c`.`cmt_rate_count`,
                 `c`.`cmt_replies`,
-                `c`.`cmt_time`,
-                ($iTimestamp - `c`.`cmt_time`) AS `cmt_secs_ago`
+                `c`.`cmt_time`
             FROM {$this->_sTable} AS `c`
             $sJoin
             WHERE `c`.`cmt_object_id` = ? AND `c`.`cmt_id` = ?
             LIMIT 1", $iId, $iCmtId);
-        $aComment = $this->getRow($sQuery);
-
-        $aComment['cmt_text'] = str_replace("[ray_url]", $sHomeUrl, $aComment['cmt_text']);
-        $aComment['cmt_ago'] = _format_when($aComment['cmt_secs_ago']);
-
-        return $aComment;
+        return $this->getRow($sQuery);
     }
 
     function getCommentSimple ($iId, $iCmtId)
     {
-        $iTimestamp = time();
-        $sQuery = $this->prepare("
-            SELECT
-                *, ($iTimestamp - `c`.`cmt_time`) AS `cmt_secs_ago`
-            FROM {$this->_sTable} AS `c`
-            WHERE `cmt_object_id` = ? AND `cmt_id` = ?
-            LIMIT 1", $iId, $iCmtId);
+        $sQuery = $this->prepare("SELECT * FROM {$this->_sTable} AS `c` WHERE `cmt_object_id` = ? AND `cmt_id` = ? LIMIT 1", $iId, $iCmtId);
         return $this->getRow($sQuery);
     }
 
