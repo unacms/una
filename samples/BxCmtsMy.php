@@ -101,7 +101,8 @@ class BxCmtsMy extends BxTemplCmtsView
     	bx_import('BxDolPrivacy');
     	$sFieldName = BxDolPrivacy::getFieldName($sAction);
     	$aFieldDescriptor = BxDolPrivacy::getGroupChooser($sModule, $sAction);
-
+		$aFieldDescriptor['caption'] = '';
+	
     	$oForm->aInputs = bx_array_insert_after(array($sFieldName => $aFieldDescriptor), $oForm->aInputs, 'cmt_text');
     	return $oForm;
     }

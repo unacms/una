@@ -1452,7 +1452,7 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_prof_status"><![CDATA[{0} is {1} now]]></string>
 	<string name="_sys_admin_filter"><![CDATA[Filter:]]></string>
 	<string name="_sys_admin_apply"><![CDATA[Apply]]></string>
-	<string name="_sys_ps_group_title_me_only"><![CDATA[Me Only]]></string>
+	<string name="_sys_ps_group_title_me_only"><![CDATA[Me only]]></string>
 	<string name="_sys_ps_group_title_public"><![CDATA[Public]]></string>
 	<string name="_sys_ps_group_title_members"><![CDATA[Members]]></string>
 	<string name="_sys_ps_group_title_connections"><![CDATA[Connections]]></string>
