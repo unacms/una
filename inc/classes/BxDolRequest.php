@@ -92,22 +92,24 @@ class BxDolRequest extends BxDol {
             return false;
     }
     protected static function _require($aModule, $sClass) {
-        if(!isset($GLOBALS['bxDolClasses'][$sClass])) {
-            if ($aModule['path']) {
-                $sFile = BX_DIRECTORY_PATH_MODULES . $aModule['path'] . 'classes/' . $sClass . '.php';
-                if(!file_exists($sFile)) 
-                    return false;
-                require_once($sFile);
-            } else {
-                bx_import($sClass);
-            }
-            $oModule = new $sClass($aModule);
-            $GLOBALS['bxDolClasses'][$sClass] = $oModule;
-        }
-        else
-            $oModule = $GLOBALS['bxDolClasses'][$sClass];
+        if(isset($GLOBALS['bxDolClasses'][$sClass])) 
+        	return $GLOBALS['bxDolClasses'][$sClass];
 
-        return $oModule;
+		if($aModule['path']) {
+        	$sFile = BX_DIRECTORY_PATH_MODULES . $aModule['path'] . 'classes/' . $sClass . '.php';
+            if(!file_exists($sFile)) 
+            	return false;
+
+			require_once($sFile);
+		}
+		else
+        	bx_import($sClass);
+
+		if(!class_exists($sClass)) 
+			return false;
+
+		$GLOBALS['bxDolClasses'][$sClass] = new $sClass($aModule);
+        return $GLOBALS['bxDolClasses'][$sClass];
     }
     protected static function _methodExists($mixedModule, $sMethodType, $sMethodName, $sClass = "Module"){
         $aModule = $mixedModule;

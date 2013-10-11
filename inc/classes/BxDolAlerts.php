@@ -55,7 +55,7 @@ class BxDolAlerts extends BxDol {
      * @param int $iObjectId - object id
      * @param int $iSenderId - sender (action's author) profile id, if it is false - then currectly logged in profile id is used
      */
-    function BxDolAlerts($sUnit, $sAction, $iObjectId, $iSender = false, $aExtras = array()) {
+    public function BxDolAlerts($sUnit, $sAction, $iObjectId, $iSender = false, $aExtras = array()) {
         parent::BxDol();
 
         $oDb = BxDolDb::getInstance();
@@ -83,7 +83,7 @@ class BxDolAlerts extends BxDol {
     /**
      * Notifies the necessary handlers about the alert.
      */
-    function alert() {
+    public function alert() {
 
         if (isset($this->_aAlerts[$this->sUnit]) && isset($this->_aAlerts[$this->sUnit][$this->sAction]))
             foreach($this->_aAlerts[$this->sUnit][$this->sAction] as $iHandlerId) {
@@ -106,7 +106,7 @@ class BxDolAlerts extends BxDol {
      *
      * @return an array with all alerts and handlers.
      */
-    function cache() {
+    public static function cache() {
         $oDb = BxDolDb::getInstance();
         $aResult = array('alerts' => array(), 'handlers' => array());
 
@@ -125,13 +125,13 @@ class BxDolAlerts extends BxDol {
     }
 }
 
-class BxDolAlertsResponse extends BxDol {
-
-    function BxDolAlertsResponse() {
+class BxDolAlertsResponse extends BxDol
+{
+    public function BxDolAlertsResponse() {
         parent::BxDol();
     }
 
-    function response($oAlert) {
+    public function response($oAlert) {
     }
 }
 
