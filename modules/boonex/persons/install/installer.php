@@ -41,14 +41,14 @@ class BxPersonsInstaller extends BxDolStudioInstaller {
         return $aResult;
     }
 
-    function install($aParams) {
+    function install($aParams, $bEnable = false) {
 
-        return parent::install($aParams);
+        return parent::install($aParams, $bEnable);
     }
 
-    function uninstall($aParams) {
+    function uninstall($aParams, $bDisable = false) {
 
-        return parent::uninstall($aParams);
+        return parent::uninstall($aParams, $bDisable);
     }
 }
 

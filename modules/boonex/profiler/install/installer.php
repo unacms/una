@@ -17,9 +17,9 @@ class BxProfilerInstaller extends BxDolStudioInstaller {
         parent::__construct($aConfig);
     }
 
-    function install($aParams) {
+    function install($aParams, $bEnable = false) {
 
-        $aResult = parent::install($aParams);
+        $aResult = parent::install($aParams, $bEnable);
 /*
         $this->updateEmailTemplatesExceptions ();
         $this->updateProfileFieldsHtml ();
@@ -28,9 +28,9 @@ class BxProfilerInstaller extends BxDolStudioInstaller {
         return $aResult;
     }
 
-    function uninstall($aParams) {
+    function uninstall($aParams, $bDisable = false) {
 
-        return parent::uninstall($aParams);
+        return parent::uninstall($aParams, $bDisable);
     }
 }
 
