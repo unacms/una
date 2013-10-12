@@ -1,8 +1,8 @@
 
 <div class="bx-persons-cover">
-    <a class="bx-persons-cover-image bx-def-round-corners" href="__cover_href__" onclick="bx_persons_popup_cover()" style="background-image:url(__cover_url__)">&nbsp;</a>
+    <a class="bx-persons-cover-image bx-def-round-corners" href="__cover_href__" onclick="bx_persons_popup('bx-persons-popup-cover', '__cover_url__')" style="background-image:url(__cover_url__)">&nbsp;</a>
     <div class="bx-persons-cover-info bx-def-padding">
-        <img class="bx-def-margin-right bx-def-round-corners" src="__preview_url__" />
+        <a href="__picture_href__" onclick="bx_persons_popup('bx-persons-popup-picture', '__picture_url__')"><img class="bx-def-margin-right bx-def-round-corners" src="__picture_preview_url__" /></a>
         <h1 class="bx-def-margin-sec-bottom bx-def-margin-sec-top">__title__</h1>
     </div>
 </div>
@@ -11,29 +11,50 @@
     __cover_popup__
 </div>
 
+<div id="bx-persons-popup-picture" style="display:none;">
+    __picture_popup__
+</div>
+
 <script>
-    function bx_persons_popup_cover () {
-        var w = $(window).width(),
+    function bx_persons_popup (sId, sUrl) {
+        var k = .95,
+            w = $(window).width(),
             h = $(window).height(),
             eImg = new Image();
 
-        if (!$('#bx-persons-popup-cover-image').size())
+        if (!$('#' + sId + ' .bx-persons-popup-image').size())
             return;
 
-        eImg.src = '__cover_url__';
+        eImg.src = sUrl;
 
-        if (eImg.width > eImg.height && eImg.width > w * .9) {
-            $('#bx-persons-popup-cover-image').css({
-                width: '' + parseInt(w * .9) + 'px',
-                height: 'auto'
-            });
-        } else if (eImg.height > eImg.width && eImg.height > h * .9) {
-            $('#bx-persons-popup-cover-image').css({
-                width: 'auto',
-                height: '' + parseInt(h * .9) + 'px'
-            });
-        }
+        $(eImg).on('load', function () {
 
-        $('#bx-persons-popup-cover').dolPopup();
+            // fit image into the browser window
+            if ((w * k - eImg.width) < (h * k - eImg.height)) {
+                $('#' + sId + ' .bx-persons-popup-image').css({
+                    width: '' + (eImg.width > w * k ? parseInt(w * k) : eImg.width) + 'px',
+                    height: 'auto'
+                });
+            } else {
+                $('#' + sId + ' .bx-persons-popup-image').css({
+                    width: 'auto',
+                    height: '' + (eImg.height > h * k ? parseInt(h * k) : eImg.height) + 'px',
+                });
+            }
+
+            // show popup
+            $('#' + sId).dolPopup();
+
+            // hide popup upon clicking/tapping on the image
+            var fCallback = function (e) {
+                e.stopPropagation();
+                $('#' + sId).dolPopupHide();
+            };
+            $('#' + sId + ' .bx-persons-popup-image').on({
+                click: fCallback,
+                touchend: fCallback
+            });
+
+        });
     }
 </script>

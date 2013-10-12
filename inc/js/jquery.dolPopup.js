@@ -95,7 +95,7 @@
 
                     // attach event for outer click checking
                     if (o.closeOnOuterClick) {
-                        $(document).click(function(e) {
+                        var fCallback = function(e) {
                             if ($el.hasClass('bx-popup-applied') && $el.is(':visible')) {
                                 if ($(e.target).parents('#' + $el.attr('id')).length == 0) {
                                     $el.dolPopupHide();
@@ -103,6 +103,11 @@
                             }
 
                             return true;
+                        }
+
+                        $(document).on({
+                            click: fCallback,
+                            touchend: fCallback
                         });
                     }
                 }

@@ -18,10 +18,14 @@
 	<string name="_bx_persons_form_person_input_sex"><![CDATA[Sex]]></string>
 	<string name="_bx_persons_form_person_input_sex_err"><![CDATA[Sex field is mandatory]]></string>
 	<string name="_bx_persons_form_person_input_sys_picture"><![CDATA[Profile Picture]]></string>
-	<string name="_bx_persons_form_person_input_picture"><![CDATA[Profile Picture]]></string>
+	<string name="_bx_persons_form_person_input_picture"><![CDATA[Upload New Profile Picture]]></string>
+	<string name="_bx_persons_form_person_input_sys_picture_preview"><![CDATA[Profile Picture Preview]]></string>
+	<string name="_bx_persons_form_person_input_picture_preview"><![CDATA[Current Profile Picture]]></string>
 	<string name="_bx_persons_form_person_input_picture_err"><![CDATA[Profile picture is mandatory.]]></string>
-	<string name="_bx_persons_form_person_input_sys_cover"><![CDATA[Cover Image]]></string>
-	<string name="_bx_persons_form_person_input_cover"><![CDATA[Cover Image]]></string>
+	<string name="_bx_persons_form_person_input_sys_cover"><![CDATA[Cover Picture]]></string>
+	<string name="_bx_persons_form_person_input_cover"><![CDATA[Upload New Cover Picture]]></string>
+	<string name="_bx_persons_form_person_input_sys_cover_preview"><![CDATA[Cover Picture Preview]]></string>
+	<string name="_bx_persons_form_person_input_cover_preview"><![CDATA[Current Cover Picture]]></string>
 	<string name="_bx_persons_form_person_input_sys_delete_confirm"><![CDATA[Delete confirmation]]></string>
 	<string name="_bx_persons_form_person_input_delete_confirm"><![CDATA[I am sure I want to delete this profile]]></string>
 	<string name="_bx_persons_form_person_input_delete_confirm_info"><![CDATA[This action can not be undone.]]></string>
@@ -86,6 +90,6 @@
     <string name="_bx_persons_txt_account_pending"><![CDATA[This profile is pending approval, please wait until it is activated.]]></string>
     <string name="_bx_persons_txt_account_suspended"><![CDATA[This profile is suspended.]]></string>
 
-    <string name="_bx_persons_txt_change_cover"><![CDATA[Change Cover Image]]></string>
-
+    <string name="_bx_persons_txt_change_image"><![CDATA[Change Picure]]></string>
+    <string name="_bx_persons_txt_no_picture_uploaded"><![CDATA[No picture uploaded]]></string>
 </resources>

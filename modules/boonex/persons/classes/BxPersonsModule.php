@@ -235,32 +235,6 @@ class BxPersonsModule extends BxDolModule implements iBxDolProfileService {
         $oTemplate->getPageCode();
     }
 
-    function actionDiscardGhost ($iFileId, $iContentId = 0, $sFieldName = '') {
-        $this->_actionWithGhost('discardGhost', $iFileId, $iContentId, $sFieldName);
-    }
-
-    function actionDeleteGhost ($iFileId, $iContentId = 0, $sFieldName = '') {
-        $this->_actionWithGhost('deleteGhost', $iFileId, $iContentId, $sFieldName);
-    }
-
-    function _actionWithGhost ($sAction, $iFileId, $iContentId = 0, $sFieldName = '') {
-        $iFileId = (int)$iFileId;
-        $iContentId = (int)$iContentId;
-
-        if (!$iFileId) {
-            header('Content-type: text/html; charset=utf-8');
-            echo _t('_sys_txt_error_occured');        
-            exit;
-        }
-
-        bx_import('BxDolForm');
-        $oForm = BxDolForm::getObjectInstance('bx_person', 'bx_person_add'); 
-
-        header('Content-type: text/html; charset=utf-8');
-        echo $oForm->$sAction($iFileId, $iContentId, true, $sFieldName);
-        exit;
-    }
-
     // ====== PERMISSION METHODS
 
     function _checkModeratorAccess ($isPerformAction = false) {
