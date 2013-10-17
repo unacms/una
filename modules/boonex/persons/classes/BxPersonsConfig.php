@@ -13,6 +13,7 @@ bx_import('BxDolModuleConfig');
 
 class BxPersonsConfig extends BxDolModuleConfig {
 
+    public static $FIELD_ID = 'id';
     public static $FIELD_AUTHOR = 'author';
     public static $FIELD_ADDED = 'added';
     public static $FIELD_CHANGED = 'changed';

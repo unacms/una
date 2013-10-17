@@ -89,6 +89,8 @@
 
     <string name="_bx_persons_txt_account_pending"><![CDATA[This profile is pending approval, please wait until it is activated.]]></string>
     <string name="_bx_persons_txt_account_suspended"><![CDATA[This profile is suspended.]]></string>
+    <string name="_bx_persons_txt_connection_pending_initiator"><![CDATA[Your connection request to this profile is awaiting confirmation.]]></string>
+    <string name="_bx_persons_txt_connection_pending_content"><![CDATA[You have pending connection request from this profile - <a href="javascript:void(0);" onclick="bx_conn_action('sys_profiles_connections', 'add', '{profile_id}')">Accept</a> or <a href="javascript:void(0);" onclick="bx_conn_action('sys_profiles_connections', 'reject', '{profile_id}')">Reject</a>?]]></string>
 
     <string name="_bx_persons_txt_change_image"><![CDATA[Change Picure]]></string>
     <string name="_bx_persons_txt_no_picture_uploaded"><![CDATA[No picture uploaded]]></string>

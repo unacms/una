@@ -318,6 +318,11 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
             BX_DOL_URL_PLUGINS . 'moment/moment+langs.min.js',
         ));
 
+        //--- Load default JS ---//
+        $this->addJsTranslation(array(
+            '_are you sure?',
+        ));
+
         //--- Load injection's cache ---//
         $oDb = BxDolDb::getInstance();
         $oCache = $oDb->getDbCacheObject();

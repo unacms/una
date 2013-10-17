@@ -151,6 +151,67 @@ class BxDolConnection extends BxDol implements iBxDolFactoryObject {
         return ($GLOBALS['bxDolClasses']['BxDolConnection!'.$sObject] = $o);
     }
 
+    /**
+     * Add new connection.
+     * @param $iContent content to make connection to, in most cases some content id, or other profile id in case of friends
+     * @return array
+     */ 
+    public function actionAdd () {
+        return $this->_action ('addConnection', '_sys_conn_err_connection_already_exists', false, true);
+    }
+
+    /**
+     * Remove connection.
+     * @param $iContent content to make connection to, in most cases some content id, or other profile id in case of friends
+     * @return array
+     */ 
+    public function actionRemove () {
+        return $this->_action ('removeConnection', '_sys_conn_err_connection_does_not_exists', false);
+    }
+
+    /**
+     * Reject connection request.
+     * @param $iContent content to make connection to, in most cases some content id, or other profile id in case of friends
+     * @return array
+     */ 
+    public function actionReject () {
+        return $this->_action ('removeConnection', '_sys_conn_err_connection_does_not_exists', true);
+    }
+
+    protected function _action ($sMethod, $sErrorKey, $bSwapInitiatorAndContent, $isMutual = false) {
+        bx_import('BxDolLanguages');
+        $iContent = 0;
+        $iInitiator = 0;
+        if ($bSwapInitiatorAndContent) {
+            $iInitiator = bx_process_input($_POST['id'], BX_DATA_INT);
+            $iContent = bx_get_logged_profile_id();
+        } else {
+            $iContent = bx_process_input($_POST['id'], BX_DATA_INT);
+            $iInitiator = bx_get_logged_profile_id();
+        }
+
+        if (!$iContent || !$iInitiator)
+            return array ('err' => true, 'msg' => _t('_sys_conn_err_input_data_is_not_defined'));
+
+        if (!$this->$sMethod((int)$iInitiator, (int)$iContent)) {
+            if ($isMutual && BX_CONNECTIONS_TYPE_MUTUAL == $this->_sType && $this->isConnected((int)$iInitiator, (int)$iContent, false) && !$this->isConnected((int)$iInitiator, (int)$iContent, true))
+                return array ('err' => true, 'msg' => _t('_sys_conn_err_connection_is_awaiting_confirmation'));
+
+            return array ('err' => true, 'msg' => _t($sErrorKey));
+        }
+
+        return array ('err' => false, 'msg' => _t('_sys_conn_msg_success'));
+    }
+
+    public function outputActionResult ($mixed, $sFormat = 'json') {
+        switch ($sFormat) {
+            case 'json':
+            default:
+                header('Content-Type: application/json; charset=utf-8');
+                echo json_encode($mixed);  
+        }
+        exit;
+    }
 
     /**
      * Add new connection.
@@ -330,6 +391,19 @@ class BxDolConnection extends BxDol implements iBxDolFactoryObject {
         return false === $isMutual ? true : $oConnection['mutual'];
     }
 
+    /**
+     * Check if initiator and content are connected but connetion is not mutual, for checking pending connection requests. 
+     * This method makes sense only when type of connection is mutual.
+     * @param $iInitiator initiator of the connection
+     * @param $iContent connected content or other profile id in case of friends
+     * @return true - if content and initiator are connected but connection is not mutual or false in all other cases
+     */    
+    public function isConnectedNotMutual ($iInitiator, $iContent) {
+        $oConnection = $this->_oQuery->getConnection ($iInitiator, $iContent);
+        if (!$oConnection)
+            return false;
+        return $oConnection['mutual'] ? false : true;
+    }
 
 }
 

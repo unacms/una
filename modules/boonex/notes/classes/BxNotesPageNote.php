@@ -11,6 +11,7 @@
 
 bx_import('BxTemplPage');
 bx_import('BxDolModule');
+bx_import('BxDolMenu');
 
 /**
  * Note create/edit pages.
@@ -27,7 +28,6 @@ class BxNotesPageNote extends BxTemplPage {
         parent::__construct($aObject, $oTemplate);
 
         // select view note submenu
-        bx_import('BxDolMenu');
         $oMenuSumbemu = BxDolMenu::getObjectInstance('sys_site_submenu');
         $oMenuSumbemu->setObjectSubmenu('bx_notes_view_submenu', 'notes-home');
 

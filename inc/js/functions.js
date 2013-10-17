@@ -325,3 +325,39 @@ function bx_time(sLang, isAutoupdate) {
         }, 30000);
     }
 }
+
+/**
+ * Perform connections AJAX request. 
+ * In case of error - it shows js alert with error message.
+ * In case of success - the page is reloaded.
+ * 
+ * @param sObj - connections object
+ * @param sAction - 'add', 'remove' or 'reject'
+ * @param iContentId - content id, initiator is always current logged in user
+ * @param bConfirm - show confirmation dialog
+ */
+function bx_conn_action(sObj, sAction, iContentId, bConfirm) {
+    if ('undefined' != typeof(bConfirm) && bConfirm && !confirm(_t('_are you sure?')))
+        return;
+                
+    var aParams = {
+        obj: sObj,
+        act: sAction,
+        id: iContentId
+    };
+    var fCallback = function (data) {
+        if ('object' != typeof(data))
+            return;
+        if (data.err)
+            alert(data.msg);
+        else
+            location.reload();
+    };
+    $.ajax({
+        dataType: 'json',
+        url: sUrlRoot + 'conn.php',
+        data: aParams,
+        type: 'POST',
+        success: fCallback
+    });
+}
