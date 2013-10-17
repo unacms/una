@@ -55,7 +55,8 @@ define('BX_CONNECTIONS_TYPE_MUTUAL', 'mutual');
  * 
  * Two types of connections are supported one way connections (block list, favourites) and mutual (friends). 
  *
- *
+ * For automatic handling of connections (like, add/remove connection in frontend) refer to JS function: @see bx_conn_action()
+ * 
  * @section connection_create Creating the Connection object:
  *
  * Step 1:
