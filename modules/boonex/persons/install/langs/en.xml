@@ -81,6 +81,14 @@
     <string name="_bx_persons_menu_item_title_create_person"><![CDATA[Create Person]]></string>
     <string name="_bx_persons_menu_item_title_system_view_person_info"><![CDATA[Info]]></string>
     <string name="_bx_persons_menu_item_title_view_person_info"><![CDATA[Info]]></string>
+    <string name="_bx_persons_menu_item_title_system_connect"><![CDATA[Connect]]></string>
+    <string name="_bx_persons_menu_item_title_connect"><![CDATA[Connect]]></string>
+    <string name="_bx_persons_menu_item_title_system_disconnect"><![CDATA[Disconnect]]></string>
+    <string name="_bx_persons_menu_item_title_disconnect"><![CDATA[Disconnect]]></string>
+    <string name="_bx_persons_menu_item_title_system_subscribe"><![CDATA[Subscribe]]></string>
+    <string name="_bx_persons_menu_item_title_subscribe"><![CDATA[Subscribe]]></string>
+    <string name="_bx_persons_menu_item_title_system_unsubscribe"><![CDATA[Unsubscribe]]></string>
+    <string name="_bx_persons_menu_item_title_unsubscribe"><![CDATA[Unsubscribe]]></string>
 
 	<string name="_bx_persons_txt_error_profile_creation"><![CDATA[Profile creation failed]]></string>
 	<string name="_bx_persons_txt_error_profile_update"><![CDATA[Profile update failed]]></string>

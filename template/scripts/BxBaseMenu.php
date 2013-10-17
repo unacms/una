@@ -78,6 +78,7 @@ class BxBaseMenu extends BxDolMenu {
             $a['class_add'] = $this->_isSelected($a) ? 'bx-menu-tab-active' : '';
             $a['link'] = isset($a['link']) ? $this->_oPermalinks->permalink($a['link']) : 'javascript:void(0);';
             $a['title'] = _t($a['title']);
+            $a['title_attr'] = bx_html_attribute($a['title']);
             $a['bx_if:image'] = array (
                 'condition' => (bool)$sIconUrl,
                 'content' => array('icon_url' => $sIconUrl), 
