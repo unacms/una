@@ -118,9 +118,20 @@ ul.bx-menu-verlit {
 
 /* --------------- main menu */
 
+#bx-menu-main-container {
+    height:39px;
+    white-space: nowrap;
+    overflow:hidden;    
+}
+
+#bx-menu-main-container-scroller {
+    overflow:auto;
+    height:60px;
+}
+
 #bx-menu-main-submenu,
 #bx-menu-main {
-    float:left;
+    display:inline-block;
     line-height:39px;
 }
 
@@ -135,15 +146,16 @@ ul.bx-menu-verlit {
 }
 
 ul.bx-menu-main-submenu,
-ul.bx-menu-main {
+ul.bx-menu-main {    
     padding:0;
     margin:0;
     list-style:none;
+    white-space:nowrap;
 }
 
 .bx-menu-main-submenu li,
 .bx-menu-main li {
-    float:left;
+    display:inline-block;
     margin:0;
 }
 
