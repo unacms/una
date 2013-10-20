@@ -87,7 +87,7 @@ class BxNotesSearchResult extends BxTemplSearchResult {
             case '':
                 bx_import('BxDolPrivacy');
                 $oPrivacy = BxDolPrivacy::getObjectInstance(BxNotesConfig::$OBJECT_PRIVACY_VIEW);
-                $a = $oPrivacy->getContentPublicAsCondition('view');
+                $a = $oPrivacy ? $oPrivacy->getContentPublicAsCondition('view') : array();
                 if (isset($a['restriction']))
                     $this->aCurrent['restriction'] = array_merge($this->aCurrent['restriction'], $a['restriction']);
                 if (isset($a['join']))

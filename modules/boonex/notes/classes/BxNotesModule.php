@@ -247,7 +247,7 @@ class BxNotesModule extends BxDolModule {
         // check privacy 
     	bx_import('BxDolPrivacy');
     	$oPrivacy = BxDolPrivacy::getObjectInstance(BxNotesConfig::$OBJECT_PRIVACY_VIEW);
-		if (!$oPrivacy->check($aDataEntry[BxNotesConfig::$FIELD_ID]))
+		if ($oPrivacy && !$oPrivacy->check($aDataEntry[BxNotesConfig::$FIELD_ID]))
             return _t('_sys_access_denied_to_private_content');
 
         return CHECK_ACTION_RESULT_ALLOWED;

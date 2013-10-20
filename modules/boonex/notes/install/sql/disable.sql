@@ -28,6 +28,10 @@ DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_notes';
 DELETE FROM `sys_menu_sets` WHERE `module` = 'bx_notes';
 DELETE FROM `sys_menu_items` WHERE `module` = 'bx_notes' OR `set_name` IN('bx_notes_view', 'bx_notes_submenu', 'bx_notes_view_submenu');
 
+-- PRIVACY 
+
+DELETE FROM `sys_objects_privacy` WHERE `object` = 'bx_notes_allow_view_to';
+
 -- ACL
 
 DELETE `sys_acl_actions`, `sys_acl_matrix` FROM `sys_acl_actions`, `sys_acl_matrix` WHERE `sys_acl_matrix`.`IDAction` = `sys_acl_actions`.`ID` AND `sys_acl_actions`.`Module` = 'bx_notes';
