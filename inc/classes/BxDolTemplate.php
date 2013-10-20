@@ -1809,18 +1809,21 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      * Functions to display pages with errors, messages and so on.
      *
      */
-    function displayAccessDenied () {
-        $this->displayMsg('_Access denied', true);
+    function displayAccessDenied ($sMsg = '') {
+        header("HTTP/1.0 403 Forbidden");
+        $this->displayMsg($sMsg ? $sMsg : _t('_Access denied'));
     }
-    function displayNoData () {
-        $this->displayMsg('_Empty', true);
+    function displayNoData ($sMsg = '') {
+        header("HTTP/1.0 204 No Content");
+        $this->displayMsg($sMsg ? $sMsg : _t('_Empty'));
     }
-    function displayErrorOccured () {
-        $this->displayMsg('_Error Occured', true);
+    function displayErrorOccured ($sMsg = '') {
+        header("HTTP/1.0 500 Internal Server Error");
+        $this->displayMsg($sMsg ? $sMsg : _t('_Error Occured'));
     }
-    function displayPageNotFound () {
+    function displayPageNotFound ($sMsg = '') {
         header("HTTP/1.0 404 Not Found");
-        $this->displayMsg('_sys_request_page_not_found_cpt', true);
+        $this->displayMsg($sMsg ? $sMsg : _t('_sys_request_page_not_found_cpt'));
     }
     function displayMsg ($s, $bTranslate = false) {
         $sTitle = $bTranslate ? _t($s) : $s;

@@ -1131,9 +1131,10 @@ CREATE TABLE `sys_objects_views` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
---
--- Table structure for table `sys_objects_privacy`
---
+
+-- --------------------------------------------------------
+
+
 CREATE TABLE `sys_objects_privacy` (
   `id` int(11) NOT NULL auto_increment,
   `object` varchar(64) NOT NULL default '',
@@ -1151,15 +1152,6 @@ CREATE TABLE `sys_objects_privacy` (
   UNIQUE KEY `action` (`module`, `action`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `sys_objects_privacy`
---
-INSERT INTO `sys_objects_privacy`(`object`, `module`, `action`, `title`, `default_group`, `table`, `table_field_id`, `table_field_author`, `override_class_name`, `override_class_file`) VALUES
-('profile_view_block', 'profile', 'view_block', '_ps_view_block', '3', 'Profiles', 'ID', 'ID', '', '');
-
---
--- Table structure for table `sys_privacy_defaults`
---
 CREATE TABLE `sys_privacy_defaults` (  
   `owner_id` int(11) NOT NULL default '0',
   `action_id` int(11) NOT NULL default '0',
@@ -1167,9 +1159,6 @@ CREATE TABLE `sys_privacy_defaults` (
   PRIMARY KEY  (`owner_id`, `action_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
---
--- Table structure for table `sys_privacy_groups`
---
 CREATE TABLE `sys_privacy_groups` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `title` varchar(255) NOT NULL default '',
@@ -1179,15 +1168,16 @@ CREATE TABLE `sys_privacy_groups` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `sys_privacy_groups`
---
 INSERT INTO `sys_privacy_groups`(`id`, `title`, `check`, `active`, `visible`) VALUES
 ('1', '', '', 1, 0),
 ('2', '_sys_ps_group_title_me_only', '@me_only', 1, 1),
 ('3', '_sys_ps_group_title_public', '@public', 1, 1),
 ('4', '_sys_ps_group_title_members', '@members', 1, 1),
 ('5', '_sys_ps_group_title_connections', '@connections', 1, 1);
+
+
+-- --------------------------------------------------------
+
 
 --
 -- Table structure for table `sys_cron_jobs`

@@ -3585,6 +3585,8 @@ More info about URI DNSBL: <br />
     <string name="_sys_conn_err_connection_is_awaiting_confirmation"><![CDATA[Connection request is awaiting confirmation]]></string>
     <string name="_sys_conn_msg_success"><![CDATA[Operation has beed succesfully completed]]></string>
 
+    <string name="_sys_access_denied_to_private_content"><![CDATA[Access denied. This is private content.]]></string>
+
     <!-- ********************** -->
     <!-- Auto Installed Modules -->
     <!-- ********************** -->

@@ -194,6 +194,15 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
     }
 
     /**
+     * Get necessary condition array to use privacy in search classes
+     * @param $sAction action to be checked
+     * @return array of conditions, for now with 'restriction' part only is returned
+     */
+    public function getContentPublicAsCondition($sAction) {
+        return $this->getContentByGroupAsCondition($sAction, isLogged() ? array(BX_DOL_PG_ALL, BX_DOL_PG_MEMBERS) : BX_DOL_PG_ALL);
+    }
+
+    /**
      * Get necessary parts of SQL query to use privacy in other queries
      * @param $sAction action to be checked
      * @param $mixedGroupId group ID or array of group IDs

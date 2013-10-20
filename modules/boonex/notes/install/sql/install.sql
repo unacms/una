@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS `bx_notes_posts` (
   `text` text NOT NULL,
   `summary` text NOT NULL,
   `comments` int(11) NOT NULL,
+  `allow_view_to` int(11) NOT NULL DEFAULT '3',
   PRIMARY KEY (`id`)
 );
 
@@ -94,7 +95,8 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_notes', 'bx_notes', 'title', '', '', 0, 'text', '_bx_notes_form_note_input_sys_title', '_bx_notes_form_note_input_title', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_notes_form_note_input_title_err', 'Xss', '', 1, 0),
 ('bx_notes', 'bx_notes', 'text', '', '', 0, 'textarea', '_bx_notes_form_note_input_sys_text', '_bx_notes_form_note_input_text', '', 1, 0, 2, '', '', '', 'Avail', '', '_bx_notes_form_note_input_text_err', 'XssHtml', '', 1, 0),
 ('bx_notes', 'bx_notes', 'summary', '', '', 0, 'textarea', '_bx_notes_form_note_input_sys_summary', '_bx_notes_form_note_input_summary', '_bx_notes_form_note_input_summary_info', 0, 0, 3, '', '', '', '', '', '', 'XssHtml', '', 1, 0),
-('bx_notes', 'bx_notes', 'pictures', '', '', 0, 'files', '_bx_notes_form_note_input_sys_pictures', '_bx_notes_form_note_input_pictures', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
+('bx_notes', 'bx_notes', 'pictures', '', '', 0, 'files', '_bx_notes_form_note_input_sys_pictures', '_bx_notes_form_note_input_pictures', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_notes', 'bx_notes', 'allow_view_to', '', '', 0, 'custom', '_bx_notes_form_note_input_sys_allow_view_to', '_bx_notes_form_note_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
 
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
 ('bx_notes_note_add', 'delete_confirm', 2147483647, 0, 1),
@@ -102,16 +104,19 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_notes_note_add', 'text', 2147483647, 1, 3),
 ('bx_notes_note_add', 'pictures', 2147483647, 1, 4),
 ('bx_notes_note_add', 'summary', 2147483647, 1, 5),
-('bx_notes_note_add', 'do_submit', 2147483647, 1, 6),
+('bx_notes_note_add', 'allow_view_to', 2147483647, 1, 6),
+('bx_notes_note_add', 'do_submit', 2147483647, 1, 7),
 
 ('bx_notes_note_edit', 'delete_confirm', 2147483647, 0, 1),
 ('bx_notes_note_edit', 'title', 2147483647, 1, 2),
 ('bx_notes_note_edit', 'text', 2147483647, 1, 3),
 ('bx_notes_note_edit', 'pictures', 2147483647, 1, 4),
 ('bx_notes_note_edit', 'summary', 2147483647, 1, 5),
-('bx_notes_note_edit', 'do_submit', 2147483647, 1, 6),
+('bx_notes_note_edit', 'allow_view_to', 2147483647, 1, 6),
+('bx_notes_note_edit', 'do_submit', 2147483647, 1, 7),
 
 ('bx_notes_note_view', 'delete_confirm', 2147483647, 0, 0),
+('bx_notes_note_view', 'allow_view_to', 2147483647, 0, 0),
 ('bx_notes_note_view', 'do_submit', 2147483647, 0, 0),
 ('bx_notes_note_view', 'summary', 2147483647, 0, 0),
 ('bx_notes_note_view', 'text', 2147483647, 0, 0),
@@ -120,6 +125,7 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 
 ('bx_notes_note_delete', 'delete_confirm', 2147483647, 1, 1),
 ('bx_notes_note_delete', 'do_submit', 2147483647, 1, 2),
+('bx_notes_note_delete', 'allow_view_to', 2147483647, 0, 0),
 ('bx_notes_note_delete', 'pictures', 2147483647, 0, 0),
 ('bx_notes_note_delete', 'summary', 2147483647, 0, 0),
 ('bx_notes_note_delete', 'text', 2147483647, 0, 0),
