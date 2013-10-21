@@ -51,12 +51,22 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton {
     }
 
     /**
-     * Get profile by account id.
+     * Get profile by content id, type and account.
      * @param string $iAccountId account id
      * @return array if aprofile ids, key is profile id
      */
     public function getProfileByContentTypeAccount ($iContentId, $sType, $iAccountId) {
         $sSql = $this->prepare("SELECT * FROM `sys_profiles` WHERE `account_id` = ? AND `type` = ? AND `content_id` = ?", $iAccountId, $sType, $iContentId);
+        return $this->getRow($sSql);
+    }
+
+    /**
+     * Get profile by content id and type.
+     * @param string $iAccountId account id
+     * @return array if aprofile ids, key is profile id
+     */
+    public function getProfileByContentAndType ($iContentId, $sType) {
+        $sSql = $this->prepare("SELECT * FROM `sys_profiles` WHERE `content_id` = ? AND `type` = ?", $iContentId, $sType);
         return $this->getRow($sSql);
     }
 
