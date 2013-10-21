@@ -26,12 +26,16 @@ class BxNotesModule extends BxDolModule {
 
     // ====== SERVICE METHODS
 
-    public function serviceBrowseRecent () {
-        return $this->_serviceBrowse ('recent');
+    public function serviceBrowsePublic () {
+        return $this->_serviceBrowse ('public');
     }
 
     public function serviceBrowseFeatured () {
-        return $this->_serviceBrowse ('recent');
+        return $this->_serviceBrowse ('public');
+    }
+
+    public function serviceBrowseMy () {
+        return $this->_serviceBrowse ('my');
     }
 
     public function _serviceBrowse ($sMode, $aParams = false) {
@@ -39,6 +43,8 @@ class BxNotesModule extends BxDolModule {
         $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
         bx_import('SearchResult', $this->_aModule);
         $o = new $sClass($sMode, $aParams);
+        
+        $o->setDisplayEmptyMsg(true);
 
         if ($o->isError)
             return false;
@@ -258,7 +264,11 @@ class BxNotesModule extends BxDolModule {
         if ($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
             return $aCheck[CHECK_ACTION_MESSAGE];
 
-        // TODO: check privacy
+        // check privacy 
+    	bx_import('BxDolPrivacy');
+    	$oPrivacy = BxDolPrivacy::getObjectInstance(BxNotesConfig::$OBJECT_PRIVACY_VIEW);
+		if ($oPrivacy && !$oPrivacy->check($aDataEntry[BxNotesConfig::$FIELD_ID]))
+            return _t('_sys_access_denied_to_private_content');
 
         return CHECK_ACTION_RESULT_ALLOWED;
     }

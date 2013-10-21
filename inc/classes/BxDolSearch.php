@@ -211,6 +211,10 @@ class BxDolSearchResult {
     var $oRate = null;
 
     var $bCustomParts = false;
+    var $bDisplayEmptyMsg = false;
+    var $sDisplayEmptyMsgKey = '';
+
+    var $bProcessPrivateContent = true;
 
     /**
      * constructor
@@ -219,6 +223,25 @@ class BxDolSearchResult {
     function BxDolSearchResult () {
         if (isset($this->aPseud['id']))
             $this->aCurrent['ident'] = $this->aPseud['id'];
+    }
+
+    /**
+     * Display empty message if there is no content, custom empty message can be used.
+     * @param $b - boolan value to enable or disable 'empty' message
+     * @param $sLangKey [optional] - custom 'empty' message
+     */
+    public function setDisplayEmptyMsg($b, $sLangKey = '') {
+        $this->bDisplayEmptyMsg = $b;
+        if ($sLangKey)
+           $this->sDisplayEmptyMsgKey = $sLangKey;
+    }
+
+    /**
+     * Perform privacy checking for every unit
+     * @param $b - boolan value to enable or disable privacy checking
+     */
+    public function setProcessPrivateContent ($b) {
+        $this->bProcessPrivateContent = $b;
     }
 
     /**
@@ -231,8 +254,9 @@ class BxDolSearchResult {
             $sPaginate = $this->showPagination();
             $sCode = $this->displaySearchBox($sCode, $sPaginate);
         }
-        else
-            $sCode = '';
+        else {
+            $sCode = $this->bDisplayEmptyMsg ? $this->displaySearchBox(MsgBox(_t($this->sDisplayEmptyMsgKey ? $this->sDisplayEmptyMsgKey : '_Empty'))) : '';
+        }
         return $sCode;
     }
 

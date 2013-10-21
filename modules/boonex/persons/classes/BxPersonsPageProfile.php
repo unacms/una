@@ -13,6 +13,7 @@ bx_import('BxTemplPage');
 bx_import('BxDolModule');
 bx_import('BxDolMenu');
 bx_import('BxDolProfile');
+bx_import('BxDolInformer');
 
 /**
  * Profile create/edit/delete pages.
@@ -30,6 +31,8 @@ class BxPersonsPageProfile extends BxTemplPage {
 
     public function __construct($aObject, $oTemplate = false) {
         parent::__construct($aObject, $oTemplate);
+
+        $aInformers = array ();
 
         // get profile info
         $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
@@ -55,24 +58,45 @@ class BxPersonsPageProfile extends BxTemplPage {
         $oMenuAction = BxDolMenu::getObjectInstance('sys_site_action');
         $oMenuAction->setActionsMenu('bx_persons_view');        
 
-        // add replacible markers
+        // add replaceable markers
         $this->addMarkers($this->_aContentInfo); // every profile field can be used as marker
+        $this->addMarkers(array('profile_id' => $this->_oProfile->id())); // profile id field is also suported
 
         // display message if profile isn't active
         if (bx_get_logged_profile_id() == $this->_oProfileAuthor->id()) { 
             $sStatus = $this->_aContentInfo['profile_status'];
             if (isset($this->_aMapStatus2LangKey[$sStatus])) {
-                bx_import('BxDolInformer');
-                $oInformer = BxDolInformer::getInstance($this->_oTemplate);
-                if ($oInformer)
-                    $oInformer->add('bx-persons-status-not-active', _t($this->_aMapStatus2LangKey[$sStatus]), BX_INFORMER_ALERT);
+                $aInformers[] = array ('name' => 'bx-persons-status-not-active', 'msg' => _t($this->_aMapStatus2LangKey[$sStatus]), 'type' => BX_INFORMER_ALERT);
             }
+        }
+
+        // display pending connetion requests
+        if (isLogged()) {
+            $aInformer = false;
+            bx_import('BxDolConnection');
+            $oConn = BxDolConnection::getObjectInstance('sys_profiles_connections');
+            if ($oConn->isConnectedNotMutual(bx_get_logged_profile_id(), $this->_oProfile->id()))
+                $aInformer = array ('name' => 'bx-persons-connection-pending-initiator', 'msg' => _t('_bx_persons_txt_connection_pending_initiator'), 'type' => BX_INFORMER_ALERT);
+            elseif ($oConn->isConnectedNotMutual($this->_oProfile->id(), bx_get_logged_profile_id()))
+                $aInformer = array ('name' => 'bx-persons-connection-pending-content', 'msg' => _t('_bx_persons_txt_connection_pending_content'), 'type' => BX_INFORMER_ALERT);
+            if ($aInformer)
+                $aInformers[] = $aInformer;
         }
 
         // display message if it is possible to switch to this profile
         $oProfile = $this->_aContentInfo ? BxDolProfile::getInstanceByContentTypeAccount($this->_aContentInfo['id'], 'bx_persons') : false;
         if ($oProfile)
             $oProfile->checkSwitchToProfile($this->_oTemplate);
+
+        // add informers
+        if ($aInformers) {            
+            $oInformer = BxDolInformer::getInstance($this->_oTemplate);
+            if ($oInformer) {
+                foreach ($aInformers as $a)
+                    $oInformer->add($a['name'], $this->_replaceMarkers($a['msg']), $a['type']);
+            }
+        }
+
     }
 
     public function getCode () {

@@ -82,7 +82,7 @@ class BxBaseSearchResult extends BxDolSearchResult {
 
     function displaySearchUnit ($aData) {
         $oMain = $this->getMain();
-        return $oMain->_oTemplate->unit($aData, $this->sUnitTemplate);
+        return $oMain->_oTemplate->unit($aData, $this->bProcessPrivateContent, $this->sUnitTemplate);
     }
 
     function _transformData ($aUnit, $sTempl, $sCssHeader = '') {

@@ -11,12 +11,14 @@
 
 bx_import('BxTemplPage');
 bx_import('BxDolModule');
+bx_import('BxDolMenu');
 
 /**
  * Note create/edit pages.
  */
 class BxNotesPageNote extends BxTemplPage {    
     
+    protected $_oModule;
     protected $_aContentInfo = false;
 
     protected $_aMapStatus2LangKey = array (
@@ -26,8 +28,9 @@ class BxNotesPageNote extends BxTemplPage {
     public function __construct($aObject, $oTemplate = false) {
         parent::__construct($aObject, $oTemplate);
 
+        $this->_oModule = BxDolModule::getInstance('bx_notes');
+        
         // select view note submenu
-        bx_import('BxDolMenu');
         $oMenuSumbemu = BxDolMenu::getObjectInstance('sys_site_submenu');
         $oMenuSumbemu->setObjectSubmenu('bx_notes_view_submenu', 'notes-home');
 
@@ -36,14 +39,12 @@ class BxNotesPageNote extends BxTemplPage {
         $oMenuAction->setActionsMenu('bx_notes_view');
 
         $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        if ($iContentId) {
-            $oModuleMain = BxDolModule::getInstance('bx_notes');
-            $this->_aContentInfo = $oModuleMain->_oDb->getContentInfoById($iContentId);
-        }
+        if ($iContentId)
+            $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
 
         if ($this->_aContentInfo)
             $this->addMarkers($this->_aContentInfo); // every field can be used as marker
-
+    
 /* TODO: status
         // display message if profile isn't active
         if ($this->_aContentInfo && bx_get_logged_profile_id() == $this->_aContentInfo['author']) { 
@@ -59,15 +60,23 @@ class BxNotesPageNote extends BxTemplPage {
     }
 
     public function getCode () {
+
         if (!$this->_aContentInfo) { // if note is not found - display standard "404 page not found" page
             $this->_oTemplate->displayPageNotFound();
             exit;
         }
+
+        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->isAllowedView($this->_aContentInfo))) {
+			$this->_oTemplate->displayAccessDenied($sMsg);
+            exit;
+        }
+        $this->_oModule->isAllowedView($this->_aContentInfo, true);
+
         return parent::getCode ();
     }
 
     protected function _getPageCacheParams () {
-        return $this->_aContentInfo['id']; // cache is different for every note
+        return $this->_aContentInfo[BxNotesConfig::$FIELD_ID]; // cache is different for every note
     }
 
 }

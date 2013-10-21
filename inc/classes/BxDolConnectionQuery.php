@@ -91,12 +91,16 @@ class BxDolConnectionQuery extends BxDolDb {
         if ($this->getConnection($iInitiator, $iContent)) // connection already exists
             return false;
 
+        $iMutual = 0;
+        $sMutualField = '';
         if (BX_CONNECTIONS_TYPE_MUTUAL == $this->_sType) {
             $aConnectionMutual = $this->getConnection($iContent, $iInitiator);
             $iMutual = $aConnectionMutual ? 1 : 0;
-        }
+            $sMutualField = $this->prepare(", `mutual` = ?", $iMutual);
+        } 
 
-        $sQuery = $this->prepare("INSERT INTO `" . $this->_sTable . "` SET `initiator` = ?, `content` = ?, `mutual` = ?, `added` = ?", $iInitiator, $iContent, $iMutual, time());
+        $sQuery = $this->prepare("INSERT INTO `" . $this->_sTable . "` SET `initiator` = ?, `content` = ?, `added` = ?", $iInitiator, $iContent, time());
+        $sQuery .= $sMutualField;
         if (!$this->query($sQuery))
             return false;
 
@@ -122,10 +126,8 @@ class BxDolConnectionQuery extends BxDolDb {
         if (!$this->query($sQuery))
             return false;
 
-        if (BX_CONNECTIONS_TYPE_MUTUAL == $this->_sType && $aConnection['mutual']) {
-            if (!$this->removeConnection($iContent, $iInitiator)) // in case of mutual connection - remove both connections
-                return false;
-        }
+        if (BX_CONNECTIONS_TYPE_MUTUAL == $this->_sType && $aConnection['mutual'])
+            $this->removeConnection($iContent, $iInitiator);
 
         return true;
     }

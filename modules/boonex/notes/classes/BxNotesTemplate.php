@@ -24,7 +24,15 @@ class BxNotesTemplate extends BxDolModuleTemplate {
         $this->addCss ('main.css');
     }
 
-    function unit ($aData, $sTemplateName = 'unit.html') {
+    function unit ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html') {
+
+        $oModule = BxDolModule::getInstance('bx_notes');
+        if ($isCheckPrivateContent && CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $oModule->isAllowedView($aData))) {
+            $aVars = array (
+                'summary' => $sMsg,
+            );
+            return $this->parseHtmlByName('unit_private.html', $aVars);
+        }
 
         // get thumb url
         $sPhotoThumb = '';

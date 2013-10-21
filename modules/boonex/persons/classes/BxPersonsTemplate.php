@@ -50,23 +50,41 @@ class BxPersonsTemplate extends BxDolModuleTemplate {
      */
     function cover ($aData, $sTemplateName = 'cover.html') {        
 
-        $oModuleMain = BxDolModule::getInstance('bx_persons');
-        $sUrlCover = $this->urlCover ($aData);
-        $sUrlCoverChange = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=edit-persons-cover&id=' . $aData['id']);
-
-        // get person's url
         bx_import('BxDolPermalinks');
+
+        $oModuleMain = BxDolModule::getInstance('bx_persons');
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=view-persons-profile&id=' . $aData['id']);
+
+        $sUrlPicture = $this->urlPicture ($aData);
+        $sUrlPreview = $this->urlPreview ($aData);
+        $sUrlPictureChange = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=edit-persons-profile&id=' . $aData['id']);
+
+        $sUrlCover = $this->urlCover ($aData);
+        $sUrlCoverChange = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=edit-persons-cover&id=' . $aData['id']);        
 
         $sCoverPopup = '';
         if ($aData[BxPersonsConfig::$FIELD_COVER]) {
             bx_import('BxTemplFunctions');
-            $sCoverPopup = BxTemplFunctions::getInstance()->transBox($this->parseHtmlByName('cover_popup.html', array (
-                'cover_url' => $sUrlCover,
+            $sCoverPopup = BxTemplFunctions::getInstance()->transBox($this->parseHtmlByName('image_popup.html', array (
+                'image_url' => $sUrlCover,
                 'bx_if:owner' => array (
                     'condition' => CHECK_ACTION_RESULT_ALLOWED === $oModuleMain->isAllowedChangeCover($aData),
                     'content' => array (
-                        'change_cover_url' => $sUrlCoverChange,
+                        'change_image_url' => $sUrlCoverChange,
+                    ),
+                ),
+            )), true);
+        }
+
+        $sPicturePopup = '';
+        if ($aData[BxPersonsConfig::$FIELD_PICTURE]) {
+            bx_import('BxTemplFunctions');
+            $sPicturePopup = BxTemplFunctions::getInstance()->transBox($this->parseHtmlByName('image_popup.html', array (
+                'image_url' => $sUrlPicture,
+                'bx_if:owner' => array (
+                    'condition' => CHECK_ACTION_RESULT_ALLOWED === $oModuleMain->isAllowedEdit($aData),
+                    'content' => array (
+                        'change_image_url' => $sUrlPictureChange,
                     ),
                 ),
             )), true);
@@ -75,11 +93,16 @@ class BxPersonsTemplate extends BxDolModuleTemplate {
         // generate html        
         $aVars = array (
             'id' => $aData['id'],
-            'cover_url' => $sUrlCover,
-            'preview_url' => $this->urlPreview ($aData),
             'content_url' => $sUrl,
             'title' => $aData[BxPersonsConfig::$FIELD_NAME],
+
+            'picture_preview_url' => $sUrlPreview,
+            'picture_url' => $sUrlPicture,
+            'picture_popup' => $sPicturePopup,
+            'picture_href' => !$aData[BxPersonsConfig::$FIELD_PICTURE] && CHECK_ACTION_RESULT_ALLOWED === $oModuleMain->isAllowedEdit($aData) ? $sUrlPictureChange : 'javascript:void(0);',
+
             'cover_popup' => $sCoverPopup,
+            'cover_url' => $sUrlCover,
             'cover_href' => !$aData[BxPersonsConfig::$FIELD_COVER] && CHECK_ACTION_RESULT_ALLOWED === $oModuleMain->isAllowedChangeCover($aData) ? $sUrlCoverChange : 'javascript:void(0);',
         );
 
@@ -102,10 +125,17 @@ class BxPersonsTemplate extends BxDolModuleTemplate {
     }
 
     /**
-     * Get profile picture icon url
+     * Get profile picture preview url
      */
     function urlPreview ($aData, $bSubstituteNoImage = true) {
         return $this->_image (BxPersonsConfig::$FIELD_PICTURE, BxPersonsConfig::$OBJECT_IMAGES_TRANSCODER_PREVIEW, 'no-picture-preview.png', $aData, $bSubstituteNoImage);
+    }
+
+    /**
+     * Get profile picture url
+     */
+    function urlPicture ($aData, $bSubstituteNoImage = true) {
+        return $this->_image (BxPersonsConfig::$FIELD_PICTURE, BxPersonsConfig::$OBJECT_IMAGES_TRANSCODER_PICTURE, 'no-picture-preview.png', $aData, $bSubstituteNoImage);
     }
 
     /**

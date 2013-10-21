@@ -87,11 +87,11 @@
     text-shadow: 0px 0px 2px #000;
 }
 
-#bx-persons-popup-cover-wrapper {
+.bx-persons-popup-wrapper {
     position:relative;
 }
 
-#bx-persons-popup-cover-btn {
+.bx-persons-popup-btn {
     position:absolute;
     top:0;
     right:0;

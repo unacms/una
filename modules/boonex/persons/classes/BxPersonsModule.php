@@ -81,7 +81,7 @@ class BxPersonsModule extends BxDolModule implements iBxDolProfileService {
         return $this->_serviceBrowse ('recent');
     }
 
-    public function serviceBrowseConnections ($iProfileId, $sObjectConnections = 'sys_profiles_friends', $sConnectionsType = 'content', $iMutual = false, $iDesignBox = BX_DB_PADDING_DEF) {
+    public function serviceBrowseConnections ($iProfileId, $sObjectConnections = 'sys_profiles_connections', $sConnectionsType = 'content', $iMutual = false, $iDesignBox = BX_DB_PADDING_DEF) {
         return $this->_serviceBrowse (
             'connections', 
             array(
@@ -235,32 +235,6 @@ class BxPersonsModule extends BxDolModule implements iBxDolProfileService {
         $oTemplate->getPageCode();
     }
 
-    function actionDiscardGhost ($iFileId, $iContentId = 0, $sFieldName = '') {
-        $this->_actionWithGhost('discardGhost', $iFileId, $iContentId, $sFieldName);
-    }
-
-    function actionDeleteGhost ($iFileId, $iContentId = 0, $sFieldName = '') {
-        $this->_actionWithGhost('deleteGhost', $iFileId, $iContentId, $sFieldName);
-    }
-
-    function _actionWithGhost ($sAction, $iFileId, $iContentId = 0, $sFieldName = '') {
-        $iFileId = (int)$iFileId;
-        $iContentId = (int)$iContentId;
-
-        if (!$iFileId) {
-            header('Content-type: text/html; charset=utf-8');
-            echo _t('_sys_txt_error_occured');        
-            exit;
-        }
-
-        bx_import('BxDolForm');
-        $oForm = BxDolForm::getObjectInstance('bx_person', 'bx_person_add'); 
-
-        header('Content-type: text/html; charset=utf-8');
-        echo $oForm->$sAction($iFileId, $iContentId, true, $sFieldName);
-        exit;
-    }
-
     // ====== PERMISSION METHODS
 
     function _checkModeratorAccess ($isPerformAction = false) {
@@ -359,6 +333,52 @@ class BxPersonsModule extends BxDolModule implements iBxDolProfileService {
         return _t('_sys_txt_access_denied');
     }
 
+    /**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. 
+     */
+    function isAllowedConnectAdd (&$aDataEntry, $isPerformAction = false) {
+        return $this->_isAllowedConnect ($aDataEntry, $isPerformAction, 'sys_profiles_connections', true, false);
+    }
+
+    /**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. 
+     */
+    function isAllowedConnectRemove (&$aDataEntry, $isPerformAction = false) {
+        return $this->_isAllowedConnect ($aDataEntry, $isPerformAction, 'sys_profiles_connections', true, true);
+    }
+
+    /**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. 
+     */
+    function isAllowedSubscribeAdd (&$aDataEntry, $isPerformAction = false) {
+        return $this->_isAllowedConnect ($aDataEntry, $isPerformAction, 'sys_profiles_subscriptions', false, false);
+    }
+
+    /**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. 
+     */
+    function isAllowedSubscribeRemove (&$aDataEntry, $isPerformAction = false) {
+        return $this->_isAllowedConnect ($aDataEntry, $isPerformAction, 'sys_profiles_subscriptions', false, true);
+    }
+
+    function _isAllowedConnect (&$aDataEntry, $isPerformAction, $sObjConnection, $isMutual, $isInvertResult) {
+        if (!$this->_iProfileId)
+            return _t('_sys_txt_access_denied');
+
+        $oProfileAuthor = BxDolProfile::getInstance($aDataEntry[BxPersonsConfig::$FIELD_AUTHOR]);
+        $oProfile = $oProfileAuthor ? BxDolProfile::getInstanceByContentTypeAccount($aDataEntry[BxPersonsConfig::$FIELD_ID], 'bx_persons', $oProfileAuthor->getAccountId()) : false;
+        if (!$oProfile || $oProfile->id() == $this->_iProfileId)
+            return _t('_sys_txt_access_denied');
+
+        bx_import('BxDolConnection');
+        $oConn = BxDolConnection::getObjectInstance($sObjConnection);
+        $isConnected = $oConn->isConnected($this->_iProfileId, $oProfile->id(), $isMutual);
+
+        if ($isInvertResult)
+            $isConnected = !$isConnected;
+
+        return $isConnected ? _t('_sys_txt_access_denied') : CHECK_ACTION_RESULT_ALLOWED;
+    }
 }
 
 /** @} */ 

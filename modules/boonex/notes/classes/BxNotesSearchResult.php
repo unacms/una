@@ -20,7 +20,7 @@ class BxNotesSearchResult extends BxTemplSearchResult {
         'ownFields' => array('id', 'title', 'text', 'summary', 'thumb', 'author', 'added'),
         'searchFields' => array('title', 'text'),
         'restriction' => array(
-            'owner' => array('value' => '', 'field' => 'author', 'operator' => '='),
+            'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
         ),
         'paginate' => array('perPage' => 8, 'start' => 0),
         'sorting' => 'last',
@@ -76,9 +76,25 @@ class BxNotesSearchResult extends BxTemplSearchResult {
                     }
                 }
                 break;
+
+            case 'my':
+                $this->sBrowseUrl = 'browse/my';
+                $this->aCurrent['restriction']['author']['value'] = bx_get_logged_profile_id();
+                $this->aCurrent['title'] = _t('_bx_notes_page_title_browse_my');
+                break;
             
-            case 'recent':
+            case 'public':
             case '':
+                bx_import('BxDolPrivacy');
+                $oPrivacy = BxDolPrivacy::getObjectInstance(BxNotesConfig::$OBJECT_PRIVACY_VIEW);
+                $a = $oPrivacy ? $oPrivacy->getContentPublicAsCondition('view') : array();
+                if (isset($a['restriction']))
+                    $this->aCurrent['restriction'] = array_merge($this->aCurrent['restriction'], $a['restriction']);
+                if (isset($a['join']))
+                    $this->aCurrent['join'] = array_merge($this->aCurrent['join'], $a['join']);
+                if (isset($a['restriction']) || isset($a['join']))
+                    $this->setProcessPrivateContent(false);
+
                 $this->sBrowseUrl = 'browse/recent';
                 $this->aCurrent['title'] = _t('_bx_notes_page_title_browse_recent');
                 break;

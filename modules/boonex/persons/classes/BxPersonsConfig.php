@@ -13,18 +13,22 @@ bx_import('BxDolModuleConfig');
 
 class BxPersonsConfig extends BxDolModuleConfig {
 
+    public static $FIELD_ID = 'id';
     public static $FIELD_AUTHOR = 'author';
     public static $FIELD_ADDED = 'added';
     public static $FIELD_CHANGED = 'changed';
     public static $FIELD_NAME = 'fullname';
     public static $FIELD_PICTURE = 'picture';
+    public static $FIELD_PICTURE_PREVIEW = 'picture_preview';
     public static $FIELD_COVER = 'cover';
+    public static $FIELD_COVER_PREVIEW = 'cover_preview';
 
     public static $OBJECT_STORAGE = 'bx_persons_pictures';
-    public static $OBJECT_STORAGE_COVER = 'bx_persons_pictures_covers';
+    public static $OBJECT_STORAGE_COVER = 'bx_persons_pictures';
     public static $OBJECT_IMAGES_TRANSCODER_THUMB = 'bx_persons_thumb';
     public static $OBJECT_IMAGES_TRANSCODER_ICON = 'bx_persons_icon';
     public static $OBJECT_IMAGES_TRANSCODER_PREVIEW = 'bx_persons_preview';
+    public static $OBJECT_IMAGES_TRANSCODER_PICTURE = 'bx_persons_picture';
     public static $OBJECT_IMAGES_TRANSCODER_COVER = 'bx_persons_cover';
     public static $OBJECT_IMAGES_TRANSCODER_COVER_THUMB = 'bx_persons_cover_thumb';
 

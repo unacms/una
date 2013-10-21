@@ -10,6 +10,8 @@
  */
 
 bx_import('BxTemplFormView');
+bx_import('BxDolProfile');
+bx_import('BxDolStorage');
 
 /**
  * Create/Edit Person Form.
@@ -27,70 +29,59 @@ class BxPersonsFormPerson extends BxTemplFormView {
             BxPersonsConfig::$FIELD_PICTURE => array (
                 'storage_object' => BxPersonsConfig::$OBJECT_STORAGE,
                 'images_transcoder' => BxPersonsConfig::$OBJECT_IMAGES_TRANSCODER_THUMB,
-                'uploaders' => array('bx_persons_avatar'),
+                'field_preview' => BxPersonsConfig::$FIELD_PICTURE_PREVIEW,
             ),
             BxPersonsConfig::$FIELD_COVER => array (
                 'storage_object' => BxPersonsConfig::$OBJECT_STORAGE_COVER,
                 'images_transcoder' => BxPersonsConfig::$OBJECT_IMAGES_TRANSCODER_COVER_THUMB,
-                'uploaders' => array('bx_persons_cover'),
+                'field_preview' => BxPersonsConfig::$FIELD_COVER_PREVIEW,
             ),
         );
+        $this->_aImageFields[BxPersonsConfig::$FIELD_PICTURE_PREVIEW] = $this->_aImageFields[BxPersonsConfig::$FIELD_PICTURE];
+        $this->_aImageFields[BxPersonsConfig::$FIELD_COVER_PREVIEW] = $this->_aImageFields[BxPersonsConfig::$FIELD_COVER];
 
-        bx_import('BxDolProfile');
         $oAccountProfile = BxDolProfile::getInstanceAccountProfile();
         if ($oAccountProfile)
             $this->_iAccountProfileId = $oAccountProfile->id();
 
         $this->_oModule = BxDolModule::getInstance('bx_persons');
-
-
-        $aDefaultsFieldImage = array (
-            'storage_object' => BxPersonsConfig::$OBJECT_STORAGE,
-            'uploaders' => array('bx_persons_avatar'),
-            'images_transcoder' => BxPersonsConfig::$OBJECT_IMAGES_TRANSCODER_THUMB,
-            'multiple' => false,
-            'content_id' => 0,
-            'upload_buttons_titles' => _t('_bx_persons_form_person_input_picture_btn_upload'),
-            'ghost_template' => '',
-        );
-
-        foreach ($this->_aImageFields as $sField => $aVals) {
-            if (!isset($this->aInputs[$sField]))
-                continue;
-            foreach ($aDefaultsFieldImage as $k => $v )
-                $this->aInputs[$sField][$k] = isset($aVals[$k]) ? $aVals[$k] : $v;
-        }
-
     }
 
     function initChecker ($aValues = array (), $aSpecificValues = array())  {
 
+        parent::initChecker($aValues, $aSpecificValues);
+
         foreach ($this->_aImageFields as $sField => $aVals) {
-            if (!isset($this->aInputs[$sField]))
+            if (!isset($this->aInputs[$sField]) || !isset($aValues[$sField]))
                 continue;
 
             if ($aValues && !empty($aValues['id'])) 
                 $this->aInputs[$sField]['content_id'] = $aValues['id'];
 
-            bx_import('BxDolUploader');
-            $oUploader = BxDolUploader::getObjectInstance($this->aInputs[$sField]['uploaders'][0], $this->aInputs[$sField]['storage_object'], rand(0, PHP_INT_MAX));
-            
+            $sErrorString = '';
+            $this->aInputs[$sField]['file_id'] = $this->_processFile ($sField, $aValues[$sField], $sErrorString);
+            if ($sErrorString) {
+                $this->aInputs[$sField]['error'] = $sErrorString;
+                $this->setValid(false);
+            }
+
+            $oTranscoder = BxDolImageTranscoder::getObjectInstance($aVals['images_transcoder']);
+
             $aVars = array (
-                'name' => $this->aInputs[$sField]['name'],
-                'content_id' => $this->aInputs[$sField]['content_id'],
-                'current_picture_id' => (isset($aValues[$sField]) ? $aValues[$sField] : 0),
-                'uploader_js_instance_name' => $oUploader->getNameJsInstanceUploader(),
-                'bx_if:not_required' => array (
-                    'condition' => !$this->aInputs[$sField]['required'],
-                    'content' => array(
-                        'name' => $this->aInputs[$sField]['name'],
+                'bx_if:picture' => array (
+                    'condition' => $oTranscoder && $aValues[$sField] ? true : false,
+                    'content' => array (
+                        'picture_url' => $oTranscoder ? $oTranscoder->getImageUrl($aValues[$sField]) : '',
                     ),
                 ),
-            );            
-            $this->aInputs[$sField]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName('form_ghost_template.html', $aVars);
+                'bx_if:no_picture' => array (
+                    'condition' => !$oTranscoder || !$aValues[$sField] ? true : false,
+                    'content' => array (),
+                ),
+            );
+            $this->aInputs[$aVals['field_preview']]['content'] = $this->_oModule->_oTemplate->parseHtmlByName('picture_preview.html', $aVars);
         }
         
-        return parent::initChecker($aValues, $aSpecificValues);
     }
 
     public function insert ($aValsToAdd = array(), $isIgnore = false) {
@@ -98,146 +89,57 @@ class BxPersonsFormPerson extends BxTemplFormView {
             BxPersonsConfig::$FIELD_AUTHOR => $this->_iAccountProfileId,
             BxPersonsConfig::$FIELD_ADDED => time(),
             BxPersonsConfig::$FIELD_CHANGED => time(),
+            BxPersonsConfig::$FIELD_COVER => $this->aInputs[BxPersonsConfig::$FIELD_COVER]['file_id'],
+            BxPersonsConfig::$FIELD_PICTURE => $this->aInputs[BxPersonsConfig::$FIELD_PICTURE]['file_id'],
         ));
-        if ($iContentId = parent::insert ($aValsToAdd, $isIgnore)) {
-            foreach ($this->_aImageFields as $sField => $aVals)
-                $this->_processFiles ((int)$this->getCleanValue($sField), $iContentId, true, $sField);
-        }
-        return $iContentId;
+        return parent::insert ($aValsToAdd, $isIgnore);
     }
 
     function update ($iContentId, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null) {        
         $aValsToAdd[BxPersonsConfig::$FIELD_CHANGED] = time();
-        if ($iRet = parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges)) {
-            foreach ($this->_aImageFields as $sField => $aVals)
-                $this->_processFiles ((int)$this->getCleanValue($sField), $iContentId, false, $sField);
-        }
-        return $iRet;
+        if (isset($this->aInputs[BxPersonsConfig::$FIELD_COVER]))
+            $aValsToAdd[BxPersonsConfig::$FIELD_COVER] = $this->aInputs[BxPersonsConfig::$FIELD_COVER]['file_id'];
+        if (isset($this->aInputs[BxPersonsConfig::$FIELD_PICTURE]))
+            $aValsToAdd[BxPersonsConfig::$FIELD_PICTURE] = $this->aInputs[BxPersonsConfig::$FIELD_PICTURE]['file_id'];
+
+        return parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
     }
 
     function delete ($iContentId, $aContentInfo = array()) {
 
-        // TODO: clean db field after deletion
-        // TODO: delete proper file! cover or avatar - NOT BOTH!
-        // TODO: also old image is not deleted when new image is uploaded
-        if (!$this->_deleteFile($aContentInfo[BxPersonsConfig::$FIELD_PICTURE], BxPersonsConfig::$OBJECT_STORAGE) && !$this->_deleteFile($aContentInfo[BxPersonsConfig::$FIELD_COVER], BxPersonsConfig::$OBJECT_STORAGE_COVER))
-            return false;
+        foreach ($this->_aImageFields as $sField => $aVals) {
+            if (isset($aContentInfo[$sField]) && $aContentInfo[$sField])
+                $htis->_deleteFile ($aContentInfo[$sField], $aVals['storage_object']);
+        }
 
         return parent::delete($iContentId);
     }
 
-    function deleteGhost ($iFileId, $iContentId, $isRestoreOriginal = true, $sFieldName = '') {
+    function _processFile ($sField, $iFileIdOld, &$sErrorString) {
+        if (empty($_FILES[$sField]['tmp_name']))
+            return $iFileIdOld;
 
-        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->isAllowedAdd()))
-            return $sMsg;
-
-        foreach ($this->_aImageFields as $sField => $aVals) {
-
-            if ($sField != $sFieldName)
-                continue;
-
-            bx_import('BxDolStorage');
-            $oStorage = BxDolStorage::getObjectInstance($aVals['storage_object']);
-            if (!$oStorage)
-                return _t('_sys_txt_error_occured');
-
-            if (!$oStorage->deleteFile($iFileId, $this->_iAccountProfileId))
-                return _t('_sys_txt_error_occured');
-
-            $this->_oModule->_oDb->updateContentPictureById($iContentId, $this->_iAccountProfileId, 0, $sField);
-        }
-
-        return '';
-    }
-
-    function discardGhost ($iFileId, $iContentId, $isRestoreOriginal = true, $sFieldName = '') {
-
-        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->isAllowedAdd()))
-            return $sMsg;
-
-
-        foreach ($this->_aImageFields as $sField => $aVals) {
-
-            if ($sField != $sFieldName)
-                continue;
-
-            bx_import('BxDolStorage');
-            $oStorage = BxDolStorage::getObjectInstance($aVals['storage_object']);
-            if (!$oStorage)
-                return _t('_sys_txt_error_occured');
-        
-            
-            $aFiles = $oStorage->getGhosts($this->_iAccountProfileId, $iContentId);        
-            if (!$aFiles)
-                return _t('_sys_txt_error_occured');
-
-            $isFileDeleted = false;
-            foreach ($aFiles as $aFile) {
-                if ($aFile['id'] == $iFileId) {
-                    $isFileDeleted = $oStorage->deleteFile($aFile['id'], $this->_iAccountProfileId);
-                    break;
-                }
-            }
-     
-            if (!$isFileDeleted)
-                return _t('_sys_txt_error_occured');
-
-            if ($isRestoreOriginal && $iContentId) {
-                $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
-                if (!$aContentInfo)
-                    return _t('_sys_txt_error_occured');
-
-                
-                if ($aContentInfo[$sField])
-                    if (!$oStorage->insertGhost($aContentInfo[$sField], $this->_iAccountProfileId, $iContentId))
-                        return _t('_sys_txt_error_occured');
-                
-            }
-
-        }
-
-        return '';
-    }
-
-    function _processFiles ($iFileId, $iContentId = 0, $isCheckForZero = false, $sField = '') {
-        if (!isset($this->_aImageFields[$sField]))
-            return false;
-
-        bx_import('BxDolStorage');
         $oStorage = BxDolStorage::getObjectInstance($this->_aImageFields[$sField]['storage_object']);
         if (!$oStorage)
-            return false;
+            return $iFileIdOld;
 
-        $iErrors = 0;
+        // delete previous file
+        $this->_deleteFile($iFileIdOld, $this->_aImageFields[$sField]['storage_object']);
 
-        $a = array($iContentId);
-        if ($isCheckForZero)
-            $a[] = 0;
-
-        foreach ($a as $iForceContentId) {
-            $aFiles = $oStorage->getGhosts($this->_iAccountProfileId, $iForceContentId);
-            foreach ($aFiles as $aFile) {
-                if ($iFileId == $aFile['id']) { 
-                    // save only one file
-                    if (0 == $iForceContentId && $isCheckForZero) // if we are adding content, then associate ghosts with just added content
-                        if (!$oStorage->updateGhostsContentId($iFileId, $this->_iAccountProfileId, $iContentId))
-                            ++$iErrors;
-                } else {
-                    // delete all other files
-                    if (!$oStorage->deleteFile($aFile['id'], $this->_iAccountProfileId)) 
-                        ++$iErrors;
-                }
-            }
+        // process new file and return new file id
+        if (!($iFileId = $oStorage->storeFileFromForm($_FILES[$sField], false, $this->_iAccountProfileId))) {
+            $sErrorString = $oStorage->getErrorString();
+            return 0;
         }
-        return $iErrors ? false : true;
+
+        return $iFileId;
     }
 
     function _deleteFile ($iFileId, $sStorageObject) {
 
         if (!$iFileId)
-            return true;        
+            return true;
 
-        bx_import('BxDolStorage');
         if (!($oStorage = BxDolStorage::getObjectInstance($sStorageObject)))
             return false;
 

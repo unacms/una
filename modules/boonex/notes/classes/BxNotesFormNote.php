@@ -48,6 +48,10 @@ class BxNotesFormNote extends BxTemplFormView {
             $this->aInputs[BxNotesConfig::$FIELD_PHOTO]['ghost_template'] = '';
         }
 
+        if (isset($this->aInputs[BxNotesConfig::$FIELD_ALLOW_VIEW_TO])) {
+            bx_import('BxDolPrivacy');
+            $this->aInputs[BxNotesConfig::$FIELD_ALLOW_VIEW_TO] = BxDolPrivacy::getGroupChooser('bx_notes', 'view');
+        }
     }
 
     function initChecker ($aValues = array (), $aSpecificValues = array())  {

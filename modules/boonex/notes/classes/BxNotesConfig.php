@@ -13,6 +13,7 @@ bx_import('BxDolModuleConfig');
 
 class BxNotesConfig extends BxDolModuleConfig {
 
+    public static $FIELD_ID = 'id';
     public static $FIELD_AUTHOR = 'author';
     public static $FIELD_ADDED = 'added';
     public static $FIELD_CHANGED = 'changed';
@@ -21,12 +22,14 @@ class BxNotesConfig extends BxDolModuleConfig {
     public static $FIELD_TEXT_ID = 'note-text';
     public static $FIELD_SUMMARY = 'summary';
     public static $FIELD_SUMMARY_ID = 'note-summary';
+    public static $FIELD_ALLOW_VIEW_TO = 'allow_view_to';
     public static $FIELD_PHOTO = 'pictures';
     public static $FIELD_THUMB = 'thumb';
 
     public static $OBJECT_STORAGE = 'bx_notes_photos';
     public static $OBJECT_IMAGES_TRANSCODER_PREVIEW = 'bx_notes_preview';
     public static $OBJECT_COMMENTS = 'bx_notes';
+    public static $OBJECT_PRIVACY_VIEW = 'bx_notes_allow_view_to';
 
     /**
      * Constructor

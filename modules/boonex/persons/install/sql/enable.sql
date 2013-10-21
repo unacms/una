@@ -19,28 +19,26 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 SET @iTotalPicturesSize = IFNULL((SELECT SUM(`size`) FROM `bx_persons_pictures`), 0);
 SET @iTotalPicturesNum = IFNULL((SELECT COUNT(*) FROM `bx_persons_pictures`), 0);
 
-SET @iTotalPicturesCoversSize = IFNULL((SELECT SUM(`size`) FROM `bx_persons_pictures_covers`), 0);
-SET @iTotalPicturesCoversNum = IFNULL((SELECT COUNT(*) FROM `bx_persons_pictures_covers`), 0);
-
 SET @iTotalPicturesResizedSize = IFNULL((SELECT SUM(`size`) FROM `bx_persons_pictures_resized`), 0);
 SET @iTotalPicturesResizedNum = IFNULL((SELECT COUNT(*) FROM `bx_persons_pictures_resized`), 0);
 
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
 ('bx_persons_pictures', 'Local', '', 360, 2592000, 3, 'bx_persons_pictures', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, @iTotalPicturesSize, 0, @iTotalPicturesNum, 0, 0),
-('bx_persons_pictures_covers', 'Local', '', 360, 2592000, 3, 'bx_persons_pictures_covers', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, @iTotalPicturesCoversSize, 0, @iTotalPicturesCoversNum, 0, 0),
 ('bx_persons_pictures_resized', 'Local', '', 360, 2592000, 3, 'bx_persons_pictures_resized', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, @iTotalPicturesResizedSize, 0, @iTotalPicturesResizedNum, 0, 0);
 
 INSERT INTO `sys_objects_transcoder_images` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`) VALUES 
 ('bx_persons_icon', 'bx_persons_pictures_resized', 'Storage', 'a:1:{s:6:"object";s:19:"bx_persons_pictures";}', 'no', '1', '2592000', '0'),
 ('bx_persons_thumb', 'bx_persons_pictures_resized', 'Storage', 'a:1:{s:6:"object";s:19:"bx_persons_pictures";}', 'no', '1', '2592000', '0'),
 ('bx_persons_preview', 'bx_persons_pictures_resized', 'Storage', 'a:1:{s:6:"object";s:19:"bx_persons_pictures";}', 'no', '1', '2592000', '0'),
-('bx_persons_cover', 'bx_persons_pictures_resized', 'Storage', 'a:1:{s:6:"object";s:26:"bx_persons_pictures_covers";}', 'no', '1', '2592000', '0'),
-('bx_persons_cover_thumb', 'bx_persons_pictures_resized', 'Storage', 'a:1:{s:6:"object";s:26:"bx_persons_pictures_covers";}', 'no', '1', '2592000', '0');
+('bx_persons_picture', 'bx_persons_pictures_resized', 'Storage', 'a:1:{s:6:"object";s:19:"bx_persons_pictures";}', 'no', '1', '2592000', '0'),
+('bx_persons_cover', 'bx_persons_pictures_resized', 'Storage', 'a:1:{s:6:"object";s:19:"bx_persons_pictures";}', 'no', '1', '2592000', '0'),
+('bx_persons_cover_thumb', 'bx_persons_pictures_resized', 'Storage', 'a:1:{s:6:"object";s:19:"bx_persons_pictures";}', 'no', '1', '2592000', '0');
 
 INSERT INTO `sys_transcoder_images_filters` (`transcoder_object`, `filter`, `filter_params`, `order`) VALUES 
 ('bx_persons_icon', 'Resize', 'a:4:{s:1:"w";s:2:"32";s:1:"h";s:2:"32";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0'),
 ('bx_persons_thumb', 'Resize', 'a:4:{s:1:"w";s:2:"64";s:1:"h";s:2:"64";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0'),
 ('bx_persons_preview', 'Resize', 'a:4:{s:1:"w";s:3:"150";s:1:"h";s:3:"150";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0'),
+('bx_persons_picture', 'Resize', 'a:4:{s:1:"w";s:4:"1024";s:1:"h";s:4:"1024";s:13:"square_resize";s:1:"0";s:10:"force_type";s:3:"jpg";}', '0'),
 ('bx_persons_cover', 'Resize', 'a:4:{s:1:"w";s:4:"1024";s:1:"h";s:4:"1024";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0'),
 ('bx_persons_cover_thumb', 'Resize', 'a:4:{s:1:"w";s:2:"64";s:1:"h";s:2:"64";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0');
 
@@ -135,9 +133,13 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_persons_view', 'bx_persons', '_bx_persons_menu_set_title_view_person', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_persons_view', 'bx_persons', 'view-persons-profile', '_bx_persons_menu_item_title_system_view_person', '_bx_persons_menu_item_title_view_person', 'page.php?i=view-persons-profile&id={content_id}', '', '', 'user', '', 0, 1, 0, 0),
-('bx_persons_view', 'bx_persons', 'edit-persons-profile', '_bx_persons_menu_item_title_system_edit_person', '_bx_persons_menu_item_title_edit_person', 'page.php?i=edit-persons-profile&id={content_id}', '', '', 'pencil', '', 0, 1, 0, 1),
-('bx_persons_view', 'bx_persons', 'delete-persons-profile', '_bx_persons_menu_item_title_system_delete_person', '_bx_persons_menu_item_title_delete_person', 'page.php?i=delete-persons-profile&id={content_id}', '', '', 'remove', '', 0, 1, 0, 2);
+('bx_persons_view', 'bx_persons', 'profile-connect-add', '_bx_persons_menu_item_title_system_connect', '_bx_persons_menu_item_title_connect', 'javascript:void(0)', 'bx_conn_action(\'sys_profiles_connections\', \'add\', \'{profile_id}\')', '', 'smile', '', 2147483647, 1, 0, 0),
+('bx_persons_view', 'bx_persons', 'profile-connect-remove', '_bx_persons_menu_item_title_system_disconnect', '_bx_persons_menu_item_title_disconnect', 'javascript:void(0)', 'bx_conn_action(\'sys_profiles_connections\', \'remove\', \'{profile_id}\', true)', '', 'frown', '', 2147483647, 1, 0, 1),
+('bx_persons_view', 'bx_persons', 'profile-subscribe-add', '_bx_persons_menu_item_title_system_subscribe', '_bx_persons_menu_item_title_subscribe', 'javascript:void(0)', 'bx_conn_action(\'sys_profiles_subscriptions\', \'add\', \'{profile_id}\')', '', 'plus-sign-alt', '', 2147483647, 1, 0, 2),
+('bx_persons_view', 'bx_persons', 'profile-subscribe-remove', '_bx_persons_menu_item_title_system_unsubscribe', '_bx_persons_menu_item_title_unsubscribe', 'javascript:void(0)', 'bx_conn_action(\'sys_profiles_subscriptions\', \'remove\', \'{profile_id}\')', '', 'minus-sign-alt', '', 2147483647, 1, 0, 3),
+('bx_persons_view', 'bx_persons', 'view-persons-profile', '_bx_persons_menu_item_title_system_view_person', '_bx_persons_menu_item_title_view_person', 'page.php?i=view-persons-profile&id={content_id}', '', '', 'user', '', 2147483647, 1, 0, 4),
+('bx_persons_view', 'bx_persons', 'edit-persons-profile', '_bx_persons_menu_item_title_system_edit_person', '_bx_persons_menu_item_title_edit_person', 'page.php?i=edit-persons-profile&id={content_id}', '', '', 'pencil', '', 2147483647, 1, 0, 5),
+('bx_persons_view', 'bx_persons', 'delete-persons-profile', '_bx_persons_menu_item_title_system_delete_person', '_bx_persons_menu_item_title_delete_person', 'page.php?i=delete-persons-profile&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 6);
 
 --
 -- Dumping data for 'bx_persons_view_submenu' menu
