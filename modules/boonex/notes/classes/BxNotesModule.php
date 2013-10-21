@@ -162,6 +162,26 @@ class BxNotesModule extends BxDolModule {
         return $this->_oTemplate->entryAuthor ($aContentInfo, $oProfile);
     }
 
+	public function serviceGetTimelineData()
+    {
+        return array(
+            'handlers' => array(
+                array('type' => 'insert', 'alert_unit' => $this->_aModule['name'], 'alert_action' => 'added', 'module_name' => $this->_aModule['name'], 'module_method' => 'get_timeline_post', 'module_params' => '', 'module_class' => 'Module',  'groupable' => 0, 'group_by' => ''),
+                array('type' => 'update', 'alert_unit' => $this->_aModule['name'], 'alert_action' => 'edited'),
+                array('type' => 'delete', 'alert_unit' => $this->_aModule['name'], 'alert_action' => 'deleted')
+            ),
+            'alerts' => array(
+                array('unit' => $this->_aModule['name'], 'action' => 'added'),
+                array('unit' => $this->_aModule['name'], 'action' => 'edited'),
+                array('unit' => $this->_aModule['name'], 'action' => 'deleted'),
+            )
+        );
+    }
+    public function serviceGetTimelinePost()
+    {
+    
+    }
+
     // ====== ACTION METHODS
 
     function actionBrowse ($sMode = '') {

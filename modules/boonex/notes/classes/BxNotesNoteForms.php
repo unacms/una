@@ -65,7 +65,9 @@ class BxNotesNoteForms extends BxDolProfileForms {
         $this->_oModule->isAllowedAdd(true);
 
         // alert
-        bx_alert($this->_oModule->getName(), 'added', $iContentId);
+        //TODO: Pass a valid Note's privacy view group.
+        bx_import('BxDolPrivacy');
+        bx_alert($this->_oModule->getName(), 'added', $iContentId, false, array('privacy_view' => BX_DOL_PG_ALL));
 
         // redirect 
         $this->_redirectAndExit('page.php?i=view-note&id=' . $iContentId);
@@ -117,7 +119,9 @@ class BxNotesNoteForms extends BxDolProfileForms {
         $this->_oModule->isAllowedEdit($aContentInfo, true);
 
         // create an alert
-        bx_alert($this->_oModule->getName(), 'edited', $aContentInfo['id']); 
+        //TODO: Pass a valid Note's privacy view group.
+        bx_import('BxDolPrivacy');
+        bx_alert($this->_oModule->getName(), 'edited', $aContentInfo['id'], false, array('privacy_view' => BX_DOL_PG_MEMBERS)); 
 
         // redirect 
         $this->_redirectAndExit('page.php?i=view-note&id=' . $aContentInfo['id']);
