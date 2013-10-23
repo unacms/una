@@ -319,6 +319,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
         ));
 
         //--- Load default JS ---//
+        bx_import('BxDolLanguages');
         $this->addJsTranslation(array(
             '_are you sure?',
         ));
