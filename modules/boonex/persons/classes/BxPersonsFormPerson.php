@@ -12,6 +12,7 @@
 bx_import('BxTemplFormView');
 bx_import('BxDolProfile');
 bx_import('BxDolStorage');
+bx_import('BxDolImageTranscoder');
 
 /**
  * Create/Edit Person Form.
@@ -52,36 +53,38 @@ class BxPersonsFormPerson extends BxTemplFormView {
         parent::initChecker($aValues, $aSpecificValues);
 
         foreach ($this->_aImageFields as $sField => $aVals) {
-            if (!isset($this->aInputs[$sField]) || !isset($aValues[$sField]))
+            if (!isset($this->aInputs[$sField]))
                 continue;
 
             if ($aValues && !empty($aValues['id'])) 
                 $this->aInputs[$sField]['content_id'] = $aValues['id'];
 
             $sErrorString = '';
-            $this->aInputs[$sField]['file_id'] = $this->_processFile ($sField, $aValues[$sField], $sErrorString);
+            $this->aInputs[$sField]['file_id'] = $this->_processFile ($sField, isset($aValues[$sField]) ? $aValues[$sField] : 0, $sErrorString);
             if ($sErrorString) {
                 $this->aInputs[$sField]['error'] = $sErrorString;
                 $this->setValid(false);
             }
 
+            if (!isset($this->aInputs[$aVals['field_preview']]) || !empty($this->aInputs[$aVals['field_preview']]['content']))
+                continue;
+
             $oTranscoder = BxDolImageTranscoder::getObjectInstance($aVals['images_transcoder']);
 
             $aVars = array (
                 'bx_if:picture' => array (
-                    'condition' => $oTranscoder && $aValues[$sField] ? true : false,
+                    'condition' => $oTranscoder && isset($aValues[$sField]) && $aValues[$sField] ? true : false,
                     'content' => array (
-                        'picture_url' => $oTranscoder ? $oTranscoder->getImageUrl($aValues[$sField]) : '',
+                        'picture_url' => $oTranscoder && isset($aValues[$sField]) && $aValues[$sField] ? $oTranscoder->getImageUrl($aValues[$sField]) : '',
                     ),
                 ),
                 'bx_if:no_picture' => array (
-                    'condition' => !$oTranscoder || !$aValues[$sField] ? true : false,
+                    'condition' => !$oTranscoder || !isset($aValues[$sField]) || !$aValues[$sField] ? true : false,
                     'content' => array (),
                 ),
             );
             $this->aInputs[$aVals['field_preview']]['content'] = $this->_oModule->_oTemplate->parseHtmlByName('picture_preview.html', $aVars);
         }
-        
     }
 
     public function insert ($aValsToAdd = array(), $isIgnore = false) {
@@ -89,9 +92,20 @@ class BxPersonsFormPerson extends BxTemplFormView {
             BxPersonsConfig::$FIELD_AUTHOR => $this->_iAccountProfileId,
             BxPersonsConfig::$FIELD_ADDED => time(),
             BxPersonsConfig::$FIELD_CHANGED => time(),
-            BxPersonsConfig::$FIELD_COVER => $this->aInputs[BxPersonsConfig::$FIELD_COVER]['file_id'],
-            BxPersonsConfig::$FIELD_PICTURE => $this->aInputs[BxPersonsConfig::$FIELD_PICTURE]['file_id'],
         ));
+        
+        if (isset($this->aInputs[BxPersonsConfig::$FIELD_PICTURE])) {
+            $aValsToAdd = array_merge($aValsToAdd, array (
+                BxPersonsConfig::$FIELD_PICTURE => $this->aInputs[BxPersonsConfig::$FIELD_PICTURE]['file_id'],
+            ));
+        }
+
+        if (isset($this->aInputs[BxPersonsConfig::$FIELD_COVER])) {
+            $aValsToAdd = array_merge($aValsToAdd, array (
+                BxPersonsConfig::$FIELD_COVER => $this->aInputs[BxPersonsConfig::$FIELD_COVER]['file_id'],
+            ));
+        }
+
         return parent::insert ($aValsToAdd, $isIgnore);
     }
 
