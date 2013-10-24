@@ -187,14 +187,13 @@ class BxTimelineModule extends BxDolModule
 		}
 
         if (!$iProfileId)
-            return '';
-
+            return array();
 
 		$this->_iOwnerId = $iProfileId;
         list($sUserName, $sUserUrl) = $this->getUserInfo($iProfileId);
 
         if($this->_iOwnerId != $this->getUserId() && !$this->isAllowedPost())
-            return "";
+            return array();
 
 		$sJsObject = $this->_oConfig->getJsObject('post');
         $aMenu = array(
@@ -225,7 +224,7 @@ class BxTimelineModule extends BxDolModule
 		}
 
         if (!$iProfileId)
-            return '';
+            return array();
 
 		$this->_iOwnerId = $iProfileId;
         list($sUserName, $sUserUrl) = $this->getUserInfo($iProfileId);
