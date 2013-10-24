@@ -1,0 +1,26 @@
+div.timeline-post {
+    position: relative;
+}
+
+div.timeline-ptype-cnt {
+    position: relative;
+    display: block;
+}
+div.timeline-text,
+div.timeline-link,
+div.timeline-photo,
+div.timeline-video,
+div.timeline-music {
+    padding: 0px;
+    display: none;
+    border: 0px;
+}
+
+/*--- Post Type TEXT Styles ---*/
+div.timeline-text {
+    display: block;    
+}
+div.timeline-text div.input_wrapper_textarea {
+    width: auto;
+    float: none;
+}

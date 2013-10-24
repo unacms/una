@@ -1,0 +1,15 @@
+<span class="wall-date bx-def-font-grayed">__date__</span>
+<bx_if:show_delete>
+    <span class="bullet">&#183;</span>
+    <a class="wall-delete" href="javascript:void(0)" onclick="javascript:__js_view_object__.deletePost(__id__);">
+        <bx_text:_wall_post_delete />
+    </a>
+</bx_if:show_delete>
+<bx_if:show_replies>
+    <span class="bullet">&#183;</span>
+    __content__
+</bx_if:show_replies>
+<bx_if:show_reply>
+    <span class="bullet">&#183;</span>
+    __content__
+</bx_if:show_reply>
