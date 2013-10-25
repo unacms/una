@@ -93,7 +93,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 		list($sContent, $sLoadMore) = $this->getPosts($iOwnerId, 'desc', $iStart, $iPerPage, $sFilter, $iTimeline, $aModules);
 
     	$this->addCss(array('plugins/jquery/themes/|jquery-ui.css', 'view.css'));
-        $this->addJs(array('jquery.ui.all.min.js', 'jquery.masonry.min.js', 'common_anim.js', 'main.js', 'view.js'));
+        $this->addJs(array('jquery.ui.all.min.js', 'plugins/|masonry.pkgd.min.js', 'common_anim.js', 'main.js', 'view.js'));
     	return $this->parseHtmlByName('view.html', array(
     		'style_prefix' => $this->_oConfig->getPrefix('style'),
             'timeline' => $this->getTimeline($iOwnerId, $iStart, $iPerPage, $sFilter, $iTimeline, $aModules),
@@ -283,10 +283,25 @@ class BxTimelineTemplate extends BxDolModuleTemplate
         		'condition' => !empty($aTmplVarsTimelineOwner),
         		'content' => $aTmplVarsTimelineOwner
         	),
+        	'item_date' => bx_time_js($aEvent['date'])
         );
 
         switch(str_replace($sPrefix, '', $aEvent['type'])) {
             case 'text':
+            	$sContent = $aContent['content'];
+				$sContentMore = '';
+
+				$iMaxLength = $this->_oConfig->getCharsDisplayMax();
+				if(strlen($sContent) > $iMaxLength) {
+					$iLength = strpos($sContent, ' ', $iMaxLength);
+					
+					$sContentMore = trim(substr($sContent, $iLength));
+					$sContent = trim(substr($sContent, 0, $iLength));
+				}
+
+				$sContent = $this->_prepareTextForOutput($sContent);
+				$sContentMore = $this->_prepareTextForOutput($sContentMore);
+		
             	$aTmplVars = array_merge($aTmplVars, array(
             		'bx_if:show_title' => array(
 		        		'condition' => false,
@@ -296,7 +311,15 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 		        		'condition' => !empty($aContent['content']),
 		        		'content' => array(
 		        			'style_prefix' => $sStylePrefix,
-		        			'item_content' => $aContent['content']
+		        			'item_content' => $sContent,
+				        	'bx_if:show_more' => array(
+				        		'condition' => !empty($sContentMore),
+				        		'content' => array(
+				        			'style_prefix' => $sStylePrefix,
+				        			'js_object' => $sJsObject,
+				        			'item_content_more' => $sContentMore
+				        		)
+				        	),
 		        		)
 		        	)
             	));
@@ -334,12 +357,19 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 
         return $this->parseHtmlByName(str_replace($sPrefix, '', $aEvent['type']) . '.html', $aTmplVars);
     }
-    
-    
-    
 
-    
-    
+	protected function _prepareTextForOutput($s)
+    {
+		$s = bx_process_output($s, BX_DATA_TEXT);
+		$s = preg_replace("/((https?|ftp|news):\/\/)?([a-z]([a-z0-9\-]*\.)+(aero|arpa|biz|com|coop|edu|gov|info|int|jobs|mil|museum|name|nato|net|org|pro|travel|[a-z]{2})|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))(\/[a-z0-9_\-\.~]+)*(\/([a-z0-9_\-\.]*)(\?[a-z0-9+_\-\.%=&amp;]*)?)?(#[a-z][a-z0-9_]*)?/", '<a href="$0" target="_blank">$0</a>', $s);
+
+		return $s; 
+    }
+
+
+
+
+
     /*
 
 	function getDividerToday(&$aEvent)

@@ -6,7 +6,10 @@ div.bx-tl-view {
 	position: relative;
 }
 div.bx-tl-cnt {}
-div.bx-tl-items {}
+div.bx-tl-items {
+	margin-left: -10px;
+	margin-right: -10px;
+}
 
 /*--- Load More Style ---*/
 div.bx-tl-load-more .bx-btn {
@@ -16,7 +19,10 @@ div.bx-tl-load-more .bx-btn {
 /*--- Item Style ---*/
 div.bx-tl-item {
 	position: relative;
-	width: 183px;
+	width: 33.3%;
+}
+div.bx-tl-item-ind {
+	position: relative;
 }
 div.bx-tl-item-cnt {
 	position: relative;
@@ -25,14 +31,17 @@ div.bx-tl-item-cnt {
 }
 div.bx-tl-item-menu {
 	position: absolute;
-	top: 0px;
-	right: -10px;
+	top: 20px;
+	right: 20px;
 }
 div.bx-tl-item-menu-button {
 	width: 20px;
 	height: 20px;
 	line-height: 20px;
 	text-align: center;
+}
+div.bx-tl-item-menu-button a:hover {
+	text-decoration: none;
 }
 div.bx-tl-item-menu .bx-menu-verlit li {
 	white-space: nowrap;
@@ -47,8 +56,11 @@ div.bx-tl-owner-icon {
 	left: 0px;
 }
 div.bx-tl-owner-name,
-div.bx-tl-title {
+div.bx-tl-date {
 	margin-left: 42px;
+}
+span.bx-tl-content-see-more a {
+	font-weight: bold;
 }
 
 /*--- Empty Style ---*/

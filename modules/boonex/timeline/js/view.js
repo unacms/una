@@ -77,17 +77,22 @@ BxTimelineView.prototype.deletePost = function(oLink, iId) {
                     $(this).remove();
 
                     if(oView.find('.bx-tl-item').length != 0) {
-                    	oView.find('.bx-tl-items').masonry('reload');
+                    	$this.reloadMasonry();
                     	return;
                     } 
 
-                    oView.find('.bx-tl-items').masonry('destroy');
+                    $this.destroyMasonry();
                     oView.find('.bx-tl-load-more').hide();
                     oView.find('.bx-tl-empty').show();
                 });                        
         },
         'json'
     );
+};
+
+BxTimelineView.prototype.showMoreContent = function(oLink) {
+	$(oLink).parent('span').next('span').show().prev('span').remove();
+	this.reloadMasonry();
 };
 
 BxTimelineView.prototype.showPostMenu = function(oLink) {
@@ -120,9 +125,7 @@ BxTimelineView.prototype._getPosts = function(oElement, sAction) {
 	        	switch(sAction) { 
 	        		case 'page':
 	        			$this.loadingInButton(oElement, false);
-
-	        			var oItems = $(oData.items);        			
-	        			oView.find('.bx-tl-items').append(oItems).masonry('appended', oItems);
+	        			$this.appendMasonry(oData.items);
 			            break;
 
 	        		default:
@@ -131,13 +134,13 @@ BxTimelineView.prototype._getPosts = function(oElement, sAction) {
 	        			oView.find('.bx-tl-items').bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
 			                $(this).html(oData.items).show();
 
-			                if($(this).find('.bx-tl-item').length == 0) {
-			                	$(this).masonry('destroy');
+			                if($this.isMasonryEmpty()) {
+			                	$this.destroyMasonry();
 			                	return;
 			                }
 
-			                if($(this).hasClass('masonry'))
-			                	$(this).masonry('reload');
+			                if($this.isMasonry())
+			                	$this.reloadMasonry();
 			        		else
 			        			$this.initMasonry();
 			            });

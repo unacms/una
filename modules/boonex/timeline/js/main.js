@@ -1,18 +1,43 @@
 function BxTimelineMain() {
 	this.sIdView = '#bx-timeline';
 	this.sIdItem = '#bx-timeline-item-';
+
+	this.sClassMasonry = "bx-tl-masonry";
 }
+
+BxTimelineMain.prototype.isMasonry = function() {
+	return $(this.sIdView + ' .bx-tl-items').hasClass(this.sClassMasonry);
+};
+
+BxTimelineMain.prototype.isMasonryEmpty = function() {
+	return $(this.sIdView + ' .bx-tl-items .bx-tl-item').length == 0;
+};
 
 BxTimelineMain.prototype.initMasonry = function() {
 	var oItems = $(this.sIdView + ' .bx-tl-items');
 
 	if(oItems.find('.bx-tl-item').length > 0)
-		oItems.masonry({
-		  itemSelector: '.bx-tl-item',
-		  columnWidth: 183,
-		  gutterWidth: 20,
-		  isAnimated: false
+		oItems.addClass(this.sClassMasonry).masonry({
+		  itemSelector: '.bx-tl-item'
 		});
+};
+
+BxTimelineMain.prototype.destroyMasonry = function() {
+	$(this.sIdView + ' .bx-tl-items').removeClass(this.sClassMasonry).masonry('destroy');
+};
+
+BxTimelineMain.prototype.appendMasonry = function(oItems) {
+	var oItems = $(oItems);        			
+	$(this.sIdView + ' .bx-tl-items').append(oItems).masonry('appended', oItems);
+};
+
+BxTimelineMain.prototype.prependMasonry = function(oItems) {
+	var oItems = $(oItems);        			
+	$(this.sIdView + ' .bx-tl-items').prepend(oItems).masonry('prepended', oItems);
+};
+
+BxTimelineMain.prototype.reloadMasonry = function() {
+	$(this.sIdView + ' .bx-tl-items').masonry('reloadItems').masonry('layout');
 };
 
 BxTimelineMain.prototype.loadingInButton = function(e, bShow) {

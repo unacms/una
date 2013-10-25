@@ -41,7 +41,7 @@
 	<string name="_bx_timeline_page_block_title_post"><![CDATA[Post to Timeline]]></string>
 	<string name="_bx_timeline_page_block_title_view"><![CDATA[View Timeline]]></string>
 	<string name="_bx_timeline_page_block_title_post_profile"><![CDATA[Post to Timeline]]></string>
-	<string name="_bx_timeline_page_block_title_view_profile"><![CDATA[View Timeline]]></string>
+	<string name="_bx_timeline_page_block_title_view_profile"><![CDATA[Timeline]]></string>
 
 	<!--
     <string name="_bx_timeline_menu_set_title_XXX"><![CDATA[Notes Submenu]]></string>

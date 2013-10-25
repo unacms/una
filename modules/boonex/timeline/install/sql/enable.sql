@@ -29,7 +29,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_timeline_events_per_page_profile', '10', @iCategId, 'Number of events are displayed on Profile page', 'digit', '', '', '', 3),
 ('bx_timeline_events_per_page_account', '20', @iCategId, 'Number of events are displayed on Account page', 'digit', '', '', '', 4),
 ('bx_timeline_rss_length', '5', @iCategId, 'The length of RSS feed', 'digit', '', '', '', 5),
-('bx_timeline_events_hide', '', @iCategId, 'Hide events from Timeline', 'list', '', '', 'PHP:return BxDolService::call(\'bx_timeline\', \'get_actions_checklist\');', 6);
+('bx_timeline_events_hide', '', @iCategId, 'Hide events from Timeline', 'list', '', '', 'PHP:return BxDolService::call(\'bx_timeline\', \'get_actions_checklist\');', 6),
+('bx_timeline_chars_display_max', '300', @iCategId, 'Max number of displayed character in text post', 'digit', '', '', '', 7);
 
 
 -- ACL

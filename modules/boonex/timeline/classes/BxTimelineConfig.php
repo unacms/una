@@ -25,6 +25,7 @@ class BxTimelineConfig extends BxDolModuleConfig
     protected $_iPerPageProfile;
     protected $_iPerPageAccount;
     protected $_iRssLength;
+    protected $_iCharsDisplayMax;
 
     protected $_aHandlers;
     protected $_aHandlersHidden;
@@ -79,12 +80,12 @@ class BxTimelineConfig extends BxDolModuleConfig
 
         $this->_bAllowDelete = $this->_oDb->getParam('bx_timeline_enable_delete') == 'on';
         $this->_bAllowGuestComments = $this->_oDb->getParam('bx_timeline_enable_guest_comments') == 'on';
-        
-        
-        
+
         $this->_iPerPageProfile = (int)$this->_oDb->getParam('bx_timeline_events_per_page_profile');
         $this->_iPerPageAccount = (int)$this->_oDb->getParam('bx_timeline_events_per_page_account');
         $this->_iRssLength = (int)$this->_oDb->getParam('bx_timeline_rss_length');
+
+        $this->_iCharsDisplayMax = (int)$this->_oDb->getParam('bx_timeline_chars_display_max');        
 
 		$aHandlers = $this->_oDb->getHandlers();
         foreach($aHandlers as $aHandler) {
@@ -160,6 +161,11 @@ class BxTimelineConfig extends BxDolModuleConfig
 	public function getRssLength()
     {
         return $this->_iRssLength;
+    }
+
+    public function getCharsDisplayMax()
+    {
+    	return $this->_iCharsDisplayMax;
     }
 
 	public function isHandler($sKey = '')

@@ -120,11 +120,10 @@ BxTimelinePost.prototype._getPost = function(oElement, iPostId) {
         		if(oView.find('.bx-tl-empty').is(':visible'))
         			oView.find('.bx-tl-empty').hide();
 
-        		var oItems = oView.find('.bx-tl-items');
-        		if(oItems.prepend(oData.item).hasClass('masonry'))
-        			oItems.masonry('reload');
-        		else
+        		if(!$this.isMasonry())
         			$this.initMasonry();
+
+        		$this.prependMasonry(oData.item);
         	}
         },
         'json'
