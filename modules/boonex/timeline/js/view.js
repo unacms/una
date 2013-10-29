@@ -9,6 +9,9 @@ function BxTimelineView(oOptions) {
     var $this = this;
     $(document).ready(function() {
     	$this.initMasonry();
+    	$('.bx-tl-item-image').load(function() {
+    		$this.reloadMasonry();
+    	});
     });
 }
 
