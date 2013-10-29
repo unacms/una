@@ -27,7 +27,6 @@ div.bx-tl-item-ind {
 div.bx-tl-item-cnt {
 	position: relative;
 	background-color: #ffffff;
-	overflow: hidden;
 }
 div.bx-tl-item-menu {
 	position: absolute;
@@ -46,7 +45,19 @@ div.bx-tl-item-menu-button a:hover {
 div.bx-tl-item-menu .bx-menu-verlit li {
 	white-space: nowrap;
 }
-
+div.bx-tl-item-image {
+	margin-left: -22px;
+	margin-top: -20px;
+	margin-right: -22px;
+	padding: 1px;
+	border: 1px solid #4a4a4a;
+	text-align: center;
+	overflow: hidden;
+}
+div.bx-tl-item-image img {
+	max-width: 319px;
+	max-height: 319px;
+}
 div.bx-tl-owner {
 	position: relative;
 }

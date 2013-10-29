@@ -24,6 +24,12 @@ define('BX_TIMELINE_FILTER_OTHER', 'other');
 
 define('BX_TIMELINE_DIVIDER_ID', ',');
 
+define('BX_TIMELINE_PARSE_TYPE_TEXT', 'text');
+define('BX_TIMELINE_PARSE_TYPE_LINK', 'link');
+define('BX_TIMELINE_PARSE_TYPE_IMAGE', 'image');
+define('BX_TIMELINE_PARSE_TYPE_DEFAULT', BX_TIMELINE_PARSE_TYPE_TEXT);
+
+
 class BxTimelineModule extends BxDolModule
 {
     var $_iOwnerId;
@@ -319,9 +325,9 @@ class BxTimelineModule extends BxDolModule
 	        $sDescription = $aMatch ? $aMatch[1] : '';
 
 	        $sContent = serialize(array(
-				'title' => $sTitle,
 				'url' => strpos($sUrl, 'http://') === false && strpos($sUrl, 'https://') === false ? 'http://' . $sUrl : $sUrl,
-				'description' => $sDescription
+	        	'title' => $sTitle,
+				'text' => $sDescription
 			));
 	        BxDolForm::setSubmittedValue('content', $sContent, $oForm->aFormAttrs['method']);
 

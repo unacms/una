@@ -16,10 +16,21 @@ BxTimelineMain.prototype.isMasonryEmpty = function() {
 BxTimelineMain.prototype.initMasonry = function() {
 	var oItems = $(this.sIdView + ' .bx-tl-items');
 
-	if(oItems.find('.bx-tl-item').length > 0)
+	if(oItems.find('.bx-tl-item').length > 0) {
 		oItems.addClass(this.sClassMasonry).masonry({
 		  itemSelector: '.bx-tl-item'
+		}).masonry('on', 'layoutComplete', function() {
+			$('img.bx-tl-item-image').each(function() {
+				var oImg = $(this);
+
+				/*
+				var iImgWrpWidth = oImg.parents('div.bx-tl-item-image:first').width();
+				if(iImgWrpWidth < oImg.width())
+					oImg.width(iImgWrpWidth);
+				*/
+			});
 		});
+	}
 };
 
 BxTimelineMain.prototype.destroyMasonry = function() {

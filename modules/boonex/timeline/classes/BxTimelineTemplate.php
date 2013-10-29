@@ -209,56 +209,88 @@ class BxTimelineTemplate extends BxDolModuleTemplate
         return $this->parseHtmlByName('load_more.html', $aTmplVars);
     }
 
-	public function getCommon($aEvent)
+    public function getCommon($aEvent)
     {
-        $sPrefix = $this->_oConfig->getPrefix('common_post');
+    	$sPrefix = $this->_oConfig->getPrefix('common_post');
         if(strpos($aEvent['type'], $sPrefix) !== 0)
             return '';
 
-/*
+        /*
         if(in_array($aEvent['type'], array($sPrefix . 'photos', $sPrefix . 'sounds', $sPrefix . 'videos'))) {
             $aContent = unserialize($aEvent['content']);
             $aEvent = array_merge($aEvent, $this->getCommonMedia($aContent['type'], (int)$aContent['id']));
             if(empty($aEvent['content']) || (int)$aEvent['content'] > 0)
                 return '';
         }
-*/
+		*/
 
+		$aEvent['object_owner_id'] = $aEvent['object_id'];
+
+		if(!empty($aEvent['content']))
+			$aEvent['content'] = unserialize($aEvent['content']);
+
+		return $this->_getPost(str_replace($sPrefix, '', $aEvent['type']), $aEvent);
+    }
+
+	function getSystem($aEvent)
+    {
+        $aResult = $this->_getSystemData($aEvent);
+		if(empty($aResult) || empty($aResult['content']))
+			return '';
+
+		if((empty($aEvent['title']) && !empty($aResult['title'])) || (empty($aEvent['description']) && !empty($aResult['description'])))
+        	$this->_oDb->updateEvent(array(
+            	'title' => bx_process_input($aResult['title'], BX_TAGS_STRIP),
+                'description' => bx_process_input($aResult['description'], BX_TAGS_STRIP)
+			), array('id' => $aEvent['id']));
+
+		$sComments = '';
+
+		/*
+		 * TODO: Comments
+		if(!in_array($aEvent['type'], array('profile', 'friend')) && $aEvent['action'] != 'commentPost') {
+        	$sType = $aEvent['type'];
+            $iObjectId = $aEvent['object_id'];
+            if(strpos($iObjectId, ',') !== false) {
+            	$sType = isset($aResult['grouped']['group_cmts_name']) ? $aResult['grouped']['group_cmts_name'] : '';
+                $iObjectId = isset($aResult['grouped']['group_id']) ? (int)$aResult['grouped']['group_id'] : 0;
+			}
+
+			bx_import('Cmts', $this->_aModule);
+            $oComments = new BxTimelineCmts($sType, $iObjectId);
+            if($oComments->isEnabled())
+            	$sComments = $oComments->getCommentsFirstSystem('comment', $aEvent['id']);
+			else
+            	$sComments = $this->getDefaultComments($aEvent['id']);
+		} 
+        else
+        	$sComments = $this->getDefaultComments($aEvent['id']);
+		*/
+
+		if(is_string($aResult['content']))
+			return $this->parseHtmlByContent($aResult['content'], array(
+	            'post_id' => $aEvent['id'],
+	            'comments' => $sComments
+	        ));
+
+		$aEvent['object_owner_id'] = $aResult['owner_id'];
+		$aEvent['content'] = $aResult['content'];
+
+		$sType = !empty($aResult['content_type']) ? $aResult['content_type'] : BX_TIMELINE_PARSE_TYPE_DEFAULT;
+        return $this->_getPost($sType, $aEvent);
+    }
+
+	protected function _getPost($sType, $aEvent)
+    {
 		$oModule = $this->getModule();
 		$sStylePrefix = $this->_oConfig->getPrefix('style');
 		$sJsObject = $this->_oConfig->getJsObject('view');
 
-        list($sAuthorName, $sAuthorUrl, $sAuthorIcon) = $oModule->getUserInfo($aEvent['object_id']);
+        list($sAuthorName, $sAuthorUrl, $sAuthorIcon) = $oModule->getUserInfo($aEvent['object_owner_id']);
         $bAuthorIcon = !empty($sAuthorIcon);
 
-        $aMenuItems = array();
-        if($oModule->isAllowedDelete())
-        	$aMenuItems[] = array('name' => 'timeline-item-delete', 'link' => 'javascript:void(0)', 'onclick' => "javascript:" . $sJsObject . ".deletePost(this, " . $aEvent['id'] . ")", 'target' => '_self', 'icon' => 'remove', 'title' => _t('_bx_timeline_menu_item_delete'));
-
-		$aTmplVarsMenu = array();
-		if(!empty($aMenuItems)) {
-			bx_import('BxTemplFunctions');
-
-			$aTmplVarsMenu = array(
-        		'style_prefix' => $sStylePrefix,
-        		'js_object' => $sJsObject,
-				'menu' => BxTemplFunctions::getInstance()->designBoxMenu(array ('template' => 'menu_vertical_lite.html', 'menu_items' => $aMenuItems))
-			);
-		}
-
-        $aTmplVarsTimelineOwner = array();
-        if((int)$aEvent['owner_id'] != (int)$aEvent['object_id']) {
-        	list($sTimelineAuthorName, $sTimelineAuthorUrl) = $oModule->getUserInfo($aEvent['owner_id']);
-
-        	$aTmplVarsTimelineOwner = array(
-				'owner_url' => $sTimelineAuthorUrl,
-        		'owner_username' => $sTimelineAuthorName,
-			);
-        }
-
-        $aContent = array();
-		if(!empty($aEvent['content']))
-			$aContent = unserialize($aEvent['content']);
+        $aTmplVarsMenu = $this->_getTmplVarsItemMenu($aEvent);
+        $aTmplVarsTimelineOwner = $this->_getTmplVarsTimelineOwner($aEvent);
 
         $aTmplVars = array (
         	'style_prefix' => $sStylePrefix,
@@ -286,78 +318,167 @@ class BxTimelineTemplate extends BxDolModuleTemplate
         	'item_date' => bx_time_js($aEvent['date'])
         );
 
-        switch(str_replace($sPrefix, '', $aEvent['type'])) {
-            case 'text':
-            	$sContent = $aContent['content'];
-				$sContentMore = '';
-
-				$iMaxLength = $this->_oConfig->getCharsDisplayMax();
-				if(strlen($sContent) > $iMaxLength) {
-					$iLength = strpos($sContent, ' ', $iMaxLength);
-					
-					$sContentMore = trim(substr($sContent, $iLength));
-					$sContent = trim(substr($sContent, 0, $iLength));
-				}
-
-				$sContent = $this->_prepareTextForOutput($sContent);
-				$sContentMore = $this->_prepareTextForOutput($sContentMore);
-		
-            	$aTmplVars = array_merge($aTmplVars, array(
-            		'bx_if:show_title' => array(
-		        		'condition' => false,
-            			'content' => array()
-		        	),
-		        	'bx_if:show_content' => array(
-		        		'condition' => !empty($aContent['content']),
-		        		'content' => array(
-		        			'style_prefix' => $sStylePrefix,
-		        			'item_content' => $sContent,
-				        	'bx_if:show_more' => array(
-				        		'condition' => !empty($sContentMore),
-				        		'content' => array(
-				        			'style_prefix' => $sStylePrefix,
-				        			'js_object' => $sJsObject,
-				        			'item_content_more' => $sContentMore
-				        		)
-				        	),
-		        		)
-		        	)
-            	));
-				break;
-
-            case 'link':
-                $aTmplVars = array_merge($aTmplVars, array(
-            		'bx_if:show_title' => array(
-		        		'condition' => true,
-            			'content' => array(
-                			'style_prefix' => $sStylePrefix,
-                			'item_url' => $aContent['url'],
-                			'item_title' => $aContent['title']
-                		)
-		        	),
-		        	'bx_if:show_content' => array(
-		        		'condition' => !empty($aContent['content']),
-		        		'content' => array(
-		        			'item_content' => $aContent['description']
-		        		)
-		        	)
-            	));
-                break;
-            case 'photos':
-            case 'videos':
-            case 'sounds':
-                break;
+        $sMethod = '_getTmplVarsContent' . ucfirst($sType);
+        if(method_exists($this, $sMethod)) {
+        	$aTmplVarsContent = $this->$sMethod($aEvent['content']);
+        	if(is_array($aTmplVarsContent))
+        		$aTmplVars = array_merge($aTmplVars, $aTmplVarsContent);
         }
-        
+
         /*
+         * TODO: Comments
         bx_import('Cmts', $this->_aModule);
         $oComments = new BxTimelineCmts($this->_oConfig->getCommentSystemName(), $aEvent['id']);
         $aTmplVars = array_merge($aTmplVars, array('comments_content' => $oComments->getCommentsFirst('comment')));
 		*/
 
-        return $this->parseHtmlByName(str_replace($sPrefix, '', $aEvent['type']) . '.html', $aTmplVars);
+        return $this->parseHtmlByName($sType . '.html', $aTmplVars);
     }
 
+    protected function _getTmplVarsItemMenu(&$aEvent) {
+    	$oModule = $this->getModule();
+    	$sStylePrefix = $this->_oConfig->getPrefix('style');
+		$sJsObject = $this->_oConfig->getJsObject('view');
+
+    	$aMenuItems = array();
+        if($oModule->isAllowedDelete())
+        	$aMenuItems[] = array('name' => 'timeline-item-delete', 'link' => 'javascript:void(0)', 'onclick' => "javascript:" . $sJsObject . ".deletePost(this, " . $aEvent['id'] . ")", 'target' => '_self', 'icon' => 'remove', 'title' => _t('_bx_timeline_menu_item_delete'));
+
+		$aTmplVarsMenu = array();
+		if(!empty($aMenuItems)) {
+			bx_import('BxTemplFunctions');
+
+			$aTmplVarsMenu = array(
+        		'style_prefix' => $sStylePrefix,
+        		'js_object' => $sJsObject,
+				'menu' => BxTemplFunctions::getInstance()->designBoxMenu(array ('template' => 'menu_vertical_lite.html', 'menu_items' => $aMenuItems))
+			);
+		}
+
+		return $aTmplVarsMenu;
+    }
+
+    protected function _getTmplVarsTimelineOwner(&$aEvent)
+    {
+    	$oModule = $this->getModule();
+
+    	$aTmplVarsTimelineOwner = array();
+        if((int)$aEvent['owner_id'] != (int)$aEvent['object_owner_id']) {
+        	list($sTimelineAuthorName, $sTimelineAuthorUrl) = $oModule->getUserInfo($aEvent['owner_id']);
+
+        	$aTmplVarsTimelineOwner = array(
+				'owner_url' => $sTimelineAuthorUrl,
+        		'owner_username' => $sTimelineAuthorName,
+			);
+        }
+
+        return $aTmplVarsTimelineOwner;
+    }
+
+	protected function _getTmplVarsContentText($aContent)
+    {
+    	$sStylePrefix = $this->_oConfig->getPrefix('style');
+		$sJsObject = $this->_oConfig->getJsObject('view');
+
+		$sUrl = isset($aContent['url']) ? $aContent['url'] : '';
+		$sTile = isset($aContent['title']) ? $aContent['title'] : '';
+
+    	$sText = isset($aContent['text']) ? $aContent['text'] : '';
+		$sTextMore = '';
+
+		$iMaxLength = $this->_oConfig->getCharsDisplayMax();
+		if(strlen($sText) > $iMaxLength) {
+			$iLength = strpos($sText, ' ', $iMaxLength);
+
+			$sTextMore = trim(substr($sText, $iLength));
+			$sText = trim(substr($sText, 0, $iLength));
+		}
+
+		$sText = $this->_prepareTextForOutput($sText);
+		$sTextMore = $this->_prepareTextForOutput($sTextMore);
+
+		return array(
+			'bx_if:show_image' => array(
+				'condition' => false,
+            	'content' => array()
+			),
+        	'bx_if:show_title' => array(
+		    	'condition' => !empty($sTile),
+            	'content' => array(
+					'style_prefix' => $sStylePrefix,
+					'item_url' => $sUrl,
+					'item_title' => $sTile,
+				)
+			),
+			'bx_if:show_content' => array(
+				'condition' => !empty($sText),
+		        'content' => array(
+		        	'style_prefix' => $sStylePrefix,
+		        	'item_content' => $sText,
+				    'bx_if:show_more' => array(
+				    	'condition' => !empty($sTextMore),
+				        'content' => array(
+				        	'style_prefix' => $sStylePrefix,
+				        	'js_object' => $sJsObject,
+				        	'item_content_more' => $sTextMore
+				        )
+					),
+		        )
+			)
+		);
+    }
+
+	protected function _getTmplVarsContentLink($aContent)
+    {
+    	return $this->_getTmplVarsContentText($aContent);
+    }
+
+    protected function _getTmplVarsContentImage($aContent)
+    {
+    	$aTmplVarsContent = $this->_getTmplVarsContentText($aContent);
+    	if(!isset($aContent['image']) || empty($aContent['image']))
+    		return $aTmplVarsContent;
+
+		$sStylePrefix = $this->_oConfig->getPrefix('style');
+
+		$sImageUrl = $aContent['image'];
+		$sImageTitle = isset($aContent['title']) ? $aContent['title'] : '';
+
+    	return array_merge($aTmplVarsContent, array(
+    		'bx_if:show_image' => array(
+				'condition' => true,
+            	'content' => array(
+    				'style_prefix' => $sStylePrefix,
+    				'image_url' => $sImageUrl,
+    				'image_title' => $sImageTitle,
+    			)
+			)
+    	));
+    }
+
+    protected function _getSystemData(&$aEvent)
+    {
+    	$sHandler = $aEvent['type'] . '_' . $aEvent['action'];
+        if(!$this->_oConfig->isHandler($sHandler))
+            return '';
+
+		$mixedResult = array();
+        $aHandler = $this->_oConfig->getHandlers($sHandler);
+        if(empty($aHandler['module_uri']) && empty($aHandler['module_class']) && empty($aHandler['module_method'])) {
+            $sMethod = 'display' . str_replace(' ', '', ucwords(str_replace('_', ' ', $aHandler['alert_unit'] . '_' . $aHandler['alert_action'])));
+            if(!method_exists($this, $sMethod))
+                return '';
+
+            $mixedResult = $this->$sMethod($aEvent);
+        }
+        else {
+            $aEvent['js_mode'] = $this->_oConfig->getJsMode();
+
+            $mixedResult = BxDolService::call($aHandler['module_name'], $aHandler['module_method'], array($aEvent), $aHandler['module_class']);
+        }
+
+        return $mixedResult;
+    } 
 	protected function _prepareTextForOutput($s)
     {
 		$s = bx_process_output($s, BX_DATA_TEXT);
@@ -427,216 +548,6 @@ class BxTimelineTemplate extends BxDolModuleTemplate
     }
 
     */
-    
-    
-    
-    
-
-	
-
-    /**
-     * Common public methods.
-     * Is used to display events on the Wall.
-     */
-    function getSystem($aEvent, $sDisplayType = BX_WALL_VIEW_TIMELINE)
-    {
-    	return "";
-
-        $sResult = "";
-
-        $sHandler = $aEvent['type'] . '_' . $aEvent['action'];
-        if(!$this->_oConfig->isHandler($sHandler))
-            return '';
-
-        $aHandler = $this->_oConfig->getHandlers($sHandler);
-        if(empty($aHandler['module_uri']) && empty($aHandler['module_class']) && empty($aHandler['module_method'])) {
-            $sMethod = 'display' . str_replace(' ', '', ucwords(str_replace('_', ' ', $aHandler['alert_unit'] . '_' . $aHandler['alert_action'])));
-            if(!method_exists($this, $sMethod))
-                return '';
-
-            $aResult = $this->$sMethod($aEvent, $sDisplayType);
-        } else {
-            $aEvent['js_mode'] = $this->_oConfig->getJsMode();
-
-            $sMethod = $aHandler['module_method'] .  ($sDisplayType == BX_WALL_VIEW_OUTLINE ? '_' . BX_WALL_VIEW_OUTLINE : '');
-            $aResult = BxDolService::call($aHandler['module_uri'], $sMethod, array($aEvent), $aHandler['module_class']);
-
-            if(isset($aResult['save']))
-                $this->_oDb->updateEvent($aResult['save'], array('id' => $aEvent['id']));
-        }
-
-        $bResult = !empty($aResult);
-        if($bResult && isset($aResult['perform_delete']) && $aResult['perform_delete'] == true) {
-            $this->_oDb->deleteEvent(array('id' => $aEvent['id']));
-            return '';
-        } else if(!$bResult || ($bResult && empty($aResult['content'])))
-            return '';
-
-        $sComments = "";
-        if($sDisplayType == BX_WALL_VIEW_TIMELINE) {
-            if((empty($aEvent['title']) && !empty($aResult['title'])) || (empty($aEvent['description']) && !empty($aResult['description'])))
-                $this->_oDb->updateEvent(array(
-                    'title' => process_db_input($aResult['title'], BX_TAGS_STRIP),
-                    'description' => process_db_input($aResult['description'], BX_TAGS_STRIP)
-                ), array('id' => $aEvent['id']));
-
-            if(!in_array($aEvent['type'], array('profile', 'friend')) && $aEvent['action'] != 'commentPost') {
-                $sType = $aEvent['type'];
-                $iObjectId = $aEvent['object_id'];
-                if(strpos($iObjectId, ',') !== false) {
-                    $sType = isset($aResult['grouped']['group_cmts_name']) ? $aResult['grouped']['group_cmts_name'] : '';
-                    $iObjectId = isset($aResult['grouped']['group_id']) ? (int)$aResult['grouped']['group_id'] : 0;
-                }
-
-                bx_import('Cmts', $this->_aModule);
-                $oComments = new BxTimelineCmts($sType, $iObjectId);
-                if($oComments->isEnabled())
-                    $sComments = $oComments->getCommentsFirstSystem('comment', $aEvent['id']);
-                else
-                    $sComments = $this->getDefaultComments($aEvent['id']);
-            } else
-                $sComments = $this->getDefaultComments($aEvent['id']);
-        }
-
-        return $this->parseHtmlByContent($aResult['content'], array(
-            'post_id' => $aEvent['id'],
-            'post_owner_icon' => get_member_icon($aEvent['owner_id'], 'none'),
-            'comments_content' => $sComments
-        ));
-    }
-
-    function displayProfileEdit($aEvent)
-    {
-        $aOwner = $this->_oDb->getUser($aEvent['owner_id']);
-        if(empty($aOwner))
-            return array('perform_delete' => true);
-
-        if($aOwner['status'] != 'Active')
-            return "";
-
-        if($aOwner['couple'] == 0 && $aOwner['sex'] == 'male')
-            $sTxtEditedProfile = _t('_wall_edited_his_profile');
-        else if($aOwner['couple'] == 0 && $aOwner['sex'] == 'female')
-            $sTxtEditedProfile = _t('_wall_edited_her_profile');
-        else if($aOwner['couple'] > 0)
-            $sTxtEditedProfile = _t('_wall_edited_their_profile');
-
-        $sOwner = getNickName((int)$aEvent['owner_id']);
-        return array(
-            'title' => $sOwner . ' ' . $sTxtEditedProfile,
-            'description' => '',
-            'content' => $this->parseHtmlByName('p_edit.html', array(
-                'cpt_user_name' => $sOwner,
-                'cpt_edited_profile' => $sTxtEditedProfile,
-                'cpt_info_url' => getProfileLink($aOwner['id']),
-                'post_id' => $aEvent['id']
-            ))
-        );
-    }
-
-    function displayProfileEditStatusMessage($aEvent)
-    {
-        $aOwner = $this->_oDb->getUser($aEvent['owner_id']);
-        if(empty($aOwner))
-            return array('perform_delete' => true);
-
-        if($aOwner['status'] != 'Active')
-            return "";
-
-        if($aOwner['couple'] == 0 && $aOwner['sex'] == 'male')
-            $sTxtEditedProfile = _t('_wall_edited_his_profile_status_message');
-        else if($aOwner['couple'] == 0 && $aOwner['sex'] == 'female')
-            $sTxtEditedProfile = _t('_wall_edited_her_profile_status_message');
-        else if($aOwner['couple'] > 0)
-            $sTxtEditedProfile = _t('_wall_edited_their_profile_status_message');
-
-        $aParams = array();
-        if(!empty($aEvent['content']))
-            $aParams = unserialize($aEvent['content']);
-
-        $sOwner = getNickName((int)$aEvent['owner_id']);
-        $sMessage = isset($aParams[0]) ? stripslashes($aParams[0]) : '';
-        return array(
-            'title' => $sOwner . ' ' . $sTxtEditedProfile,
-            'description' => $sMessage,
-            'content' => $this->parseHtmlByName('p_edit_status_message.html', array(
-                'cpt_user_name' => $sOwner,
-                'cpt_edited_profile_status_message' => $sTxtEditedProfile,
-                'cnt_status_message' => $sMessage,
-                'post_id' => $aEvent['id']
-            ))
-        );
-    }
-
-    function displayProfileCommentPost($aEvent)
-    {
-        $iId = (int)$aEvent['object_id'];
-        $iOwner = (int)$aEvent['owner_id'];
-        $sOwner = getNickName($iOwner);
-
-        $aItem = getProfileInfo($iId);
-		if(empty($aItem) || !is_array($aItem))
-        	return array('perform_delete' => true);
-
-        $aContent = unserialize($aEvent['content']);
-        if(empty($aContent) || !isset($aContent['comment_id']))
-            return '';
-
-        bx_import('BxDolCmtsProfile');
-        $oCmts = new BxDolCmtsProfile('profile', $iId);
-        if(!$oCmts->isEnabled())
-            return '';
-
-        $aItem['url'] = getProfileLink($iId);
-        $aComment = $oCmts->getCommentRow((int)$aContent['comment_id']);
-
-        $sTextAddedNew = _t('_wall_added_new_comment_profile');
-        $sTextWallObject = _t('_wall_object_profile');
-        $aTmplVars = array(
-            'cpt_user_name' => $sOwner,
-            'cpt_added_new' => $sTextAddedNew,
-            'cpt_object' => $sTextWallObject,
-            'cpt_item_url' => $aItem['url'],
-            'cnt_comment_text' => $aComment['cmt_text'],
-            'cnt_item_page' => $aItem['url'],
-            'cnt_item_icon' => get_member_thumbnail($iId, 'none', true),
-            'cnt_item_title' => $aItem['title'],
-            'cnt_item_description' => $aItem['description'],
-            'post_id' => $aEvent['id'],
-        );
-        return array(
-            'title' => $sOwner . ' ' . $sTextAddedNew . ' ' . $sTextWallObject,
-            'description' => $aComment['cmt_text'],
-            'content' => $this->parseHtmlByName('p_comment.html', $aTmplVars)
-        );
-    }
-
-    function displayFriendAccept($aEvent)
-    {
-        $aOwner = $this->_oDb->getUser($aEvent['owner_id']);
-        $aFriend = $this->_oDb->getUser($aEvent['object_id']);
-        if(empty($aOwner) || empty($aFriend))
-            return array('perform_delete' => true);
-
-        if($aOwner['status'] != 'Active' || $aFriend['status'] != 'Active')
-            return "";
-
-        $sOwner = getNickName((int)$aEvent['owner_id']);
-
-        $iFriend = (int)$aFriend['id'];
-        $sFriend = getNickName($iFriend);
-        return array(
-            'title' => $sOwner . ' ' . _t('_wall_friends_with') . ' ' . $aFriend['username'],
-            'description' => '',
-            'content' => $this->parseHtmlByName('f_accept.html', array(
-                'cpt_user_name' => $sOwner,
-                'cpt_friend_url' => getProfileLink($aFriend['id']),
-                'cpt_friend_name' => $sFriend,
-                'cnt_friend' => get_member_thumbnail($iFriend, 'none', true),
-                'post_id' => $aEvent['id']
-            ))
-        );
-    }
 
     function getCommonMedia($sType, $iObject)
     {

@@ -1,6 +1,11 @@
 <div id="bx-timeline-item-__post_id__" class="__style_prefix__-item">
 	<div class="__style_prefix__-item-ind bx-def-padding-sec">
 	    <div class="__style_prefix__-item-cnt bx-def-padding bx-def-round-corners bx-def-shadow">
+	    	<bx_if:show_image>
+	    		<div class="__style_prefix__-item-image bx-def-thumb bx-def-margin-sec-bottom">
+	    			<img class="__style_prefix__-item-image" alt="__image_title__" src="__image_url__" />
+	    		</div>
+	    	</bx_if:show_image>
 	    	<div class="__style_prefix__-owner bx-def-icon-size-min-height"> 
 		       	<div class="__style_prefix__-owner-icon bx-def-icon bx-def-icon-size">
 					<bx_if:show_icon>
@@ -29,7 +34,7 @@
 				__item_content__<bx_if:show_more><span class="__style_prefix__-content-see-more">... <a class="bx-def-font-small" href="javascript:void(0)" onclick="__js_object__.showMoreContent(this);"><bx_text:_see_more /></a></span><span style="display:none;"> __item_content_more__</span></bx_if:show_more>
 				</div>
 			</bx_if:show_content>
-	
+
 			<!--
 			<div class="__style_prefix__-comments bx-def-margin-sec-top bx-def-border bx-def-round-corners">
 				<i class="sys-icon comment-alt"></i>
