@@ -10,6 +10,9 @@ div.bx-tl-items {
 	margin-left: -10px;
 	margin-right: -10px;
 }
+.bx-tl-grid-sizer {
+	width: 100%;
+}
 
 /*--- Load More Style ---*/
 div.bx-tl-load-more .bx-btn {
@@ -19,7 +22,6 @@ div.bx-tl-load-more .bx-btn {
 /*--- Item Style ---*/
 div.bx-tl-item {
 	position: relative;
-	width: 33.3%;
 }
 div.bx-tl-item-ind {
 	position: relative;

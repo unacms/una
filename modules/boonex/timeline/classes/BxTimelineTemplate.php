@@ -92,7 +92,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 
 		list($sContent, $sLoadMore) = $this->getPosts($iOwnerId, 'desc', $iStart, $iPerPage, $sFilter, $iTimeline, $aModules);
 
-    	$this->addCss(array('plugins/jquery/themes/|jquery-ui.css', 'view.css'));
+    	$this->addCss(array('plugins/jquery/themes/|jquery-ui.css', 'view.css', 'view-media-tablet.css', 'view-media-desktop.css'));
         $this->addJs(array('jquery.ui.all.min.js', 'plugins/|masonry.pkgd.min.js', 'common_anim.js', 'main.js', 'view.js'));
     	return $this->parseHtmlByName('view.html', array(
     		'style_prefix' => $this->_oConfig->getPrefix('style'),

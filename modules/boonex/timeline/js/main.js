@@ -18,7 +18,8 @@ BxTimelineMain.prototype.initMasonry = function() {
 
 	if(oItems.find('.bx-tl-item').length > 0) {
 		oItems.addClass(this.sClassMasonry).masonry({
-		  itemSelector: '.bx-tl-item'
+		  itemSelector: '.bx-tl-item',
+		  columnWidth: '.bx-tl-grid-sizer'
 		}).masonry('on', 'layoutComplete', function() {
 			$('img.bx-tl-item-image').each(function() {
 				var oImg = $(this);
