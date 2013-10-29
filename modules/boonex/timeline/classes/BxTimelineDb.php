@@ -246,7 +246,9 @@ class BxTimelineDb extends BxDolModuleDb
                 `te`.`action` AS `action`,
                 `te`.`content` AS `content`,
                 `te`.`date` AS `date`,
-                ROUND((UNIX_TIMESTAMP() - `te`.`date`)/86400) AS `ago_days`
+                DAYOFYEAR(FROM_UNIXTIME(`te`.`date`)) AS `day_date`,
+                DAYOFYEAR(NOW()) AS `day_now`,
+                (UNIX_TIMESTAMP() - `te`.`date`)/86400 AS `ago_days`
             FROM `" . $this->_sPrefix . "events` AS `te`
             LEFT JOIN `" . $this->_sPrefix . "handlers` AS `th` ON `te`.`type`=`th`.`alert_unit` AND `te`.`action`=`th`.`alert_action` " . $sJoinClause . " 
             WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
@@ -260,7 +262,7 @@ class BxTimelineDb extends BxDolModuleDb
         if(empty($aEvent) || !is_array($aEvent))
             return 0;
 
-        return (int)$aEvent['ago_days'];
+        return $aEvent['day_date'] == $aEvent['day_now'] ? (int)floor($aEvent['ago_days']) : (int)ceil($aEvent['ago_days']);
     }
     
     

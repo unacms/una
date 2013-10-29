@@ -20,16 +20,6 @@ BxTimelineMain.prototype.initMasonry = function() {
 		oItems.addClass(this.sClassMasonry).masonry({
 		  itemSelector: '.bx-tl-item',
 		  columnWidth: '.bx-tl-grid-sizer'
-		}).masonry('on', 'layoutComplete', function() {
-			$('img.bx-tl-item-image').each(function() {
-				var oImg = $(this);
-
-				/*
-				var iImgWrpWidth = oImg.parents('div.bx-tl-item-image:first').width();
-				if(iImgWrpWidth < oImg.width())
-					oImg.width(iImgWrpWidth);
-				*/
-			});
 		});
 	}
 };
