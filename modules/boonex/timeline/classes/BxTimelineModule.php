@@ -271,7 +271,7 @@ class BxTimelineModule extends BxDolModule
         	BxDolForm::setSubmittedValue('type', $sType, $oForm->aFormAttrs['method']);
 
         	$sContent = $sDescription = $oForm->getCleanValue('content');
-        	$sContent = serialize(array('content' => $sContent));
+        	$sContent = serialize(array('text' => $sContent));
         	BxDolForm::setSubmittedValue('content', $sContent, $oForm->aFormAttrs['method']);
 
         	bx_import('BxDolPrivacy');
