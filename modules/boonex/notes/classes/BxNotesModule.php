@@ -168,6 +168,63 @@ class BxNotesModule extends BxDolModule {
         return $this->_oTemplate->entryAuthor ($aContentInfo, $oProfile);
     }
 
+	public function serviceGetTimelineData()
+    {
+        return array(
+            'handlers' => array(
+                array('type' => 'insert', 'alert_unit' => $this->_aModule['name'], 'alert_action' => 'added', 'module_name' => $this->_aModule['name'], 'module_method' => 'get_timeline_post', 'module_class' => 'Module',  'groupable' => 0, 'group_by' => ''),
+                array('type' => 'update', 'alert_unit' => $this->_aModule['name'], 'alert_action' => 'edited'),
+                array('type' => 'delete', 'alert_unit' => $this->_aModule['name'], 'alert_action' => 'deleted')
+            ),
+            'alerts' => array(
+                array('unit' => $this->_aModule['name'], 'action' => 'added'),
+                array('unit' => $this->_aModule['name'], 'action' => 'edited'),
+                array('unit' => $this->_aModule['name'], 'action' => 'deleted'),
+            )
+        );
+    }
+
+    public function serviceGetTimelinePost($aEvent)
+    {
+    	$aContentInfo = $this->_oDb->getContentInfoById($aEvent['object_id']);
+    	if(empty($aContentInfo) || !is_array($aContentInfo))
+    		return '';
+
+    	bx_import('BxDolPermalinks');
+		$sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=view-note&id=' . $aContentInfo['id']);
+
+	    $sImage = '';
+        if($aContentInfo[BxNotesConfig::$FIELD_THUMB]) {
+        	bx_import('BxDolStorage');
+			$oStorage = BxDolStorage::getObjectInstance(BxNotesConfig::$OBJECT_STORAGE);
+            if($oStorage)
+				$sImage = $oStorage->getFileUrlById($aContentInfo[BxNotesConfig::$FIELD_THUMB]);
+        }
+
+        $aComments = array(); 
+        bx_import('BxDolCmts');
+        $oCmts = BxDolCmts::getObjectInstance(BxNotesConfig::$OBJECT_COMMENTS, $aEvent['object_id']);
+		if($oCmts->isEnabled())
+			$aComments = array(
+				'count' => $aContentInfo['comments'],
+    			'url' => $oCmts->getListUrl()
+			);
+
+    	return array(
+    		'owner_id' => $aContentInfo[BxNotesConfig::$FIELD_AUTHOR],
+    		'content_type' => !empty($sImage) ? 'image' : 'text', //how to parse content, 'text' by default.
+    		'content' => array(
+    			'url' => $sUrl,
+    			'title' => $aContentInfo[BxNotesConfig::$FIELD_TITLE],
+    			'text' => $aContentInfo[BxNotesConfig::$FIELD_TEXT],
+    			'image' => $sImage
+    		), //a string to display or array to parse default template before displaying.
+    		'comments'=> $aComments,
+    		'title' => '', //may be empty.
+    		'description' => '' //may be empty. 
+    	);
+    }
+
     // ====== ACTION METHODS
 
     function actionBrowse ($sMode = '') {

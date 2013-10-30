@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+
+	<string name="_bx_timeline"><![CDATA[Timeline]]></string>
+
+	<!--
+	<string name="_bx_timeline_form_XXX"><![CDATA[]]></string>
+	<string name="_bx_timeline_form_XXX_display_XXX"><![CDATA[]]></string>
+	<string name="_bx_timeline_form_XXX_input_sys_do_submit"><![CDATA[Submit]]></string>
+	<string name="_bx_timeline_form_XXX_input_do_submit"><![CDATA[Submit]]></string>
+	-->
+
+	<string name="_bx_timeline_form_text"><![CDATA[Write Post]]></string>
+	<string name="_bx_timeline_form_text_display_add"><![CDATA[Write Post]]></string>
+	<string name="_bx_timeline_form_text_input_sys_owner_id"><![CDATA[Owner ID]]></string>
+	<string name="_bx_timeline_form_text_input_sys_action"><![CDATA[Action]]></string>
+	<string name="_bx_timeline_form_text_input_sys_type"><![CDATA[Type]]></string>
+	<string name="_bx_timeline_form_text_input_sys_content"><![CDATA[Content]]></string>
+	<string name="_bx_timeline_form_text_input_content"><![CDATA[]]></string>
+	<string name="_bx_timeline_form_text_input_err_content"><![CDATA[The message to be posted is empty]]></string>
+	<string name="_bx_timeline_form_text_input_sys_do_submit"><![CDATA[Post]]></string>
+	<string name="_bx_timeline_form_text_input_do_submit"><![CDATA[Post]]></string>
+
+	<string name="_bx_timeline_form_link"><![CDATA[Share a Link]]></string>
+	<string name="_bx_timeline_form_link_display_add"><![CDATA[Share a Link]]></string>
+	<string name="_bx_timeline_form_link_input_sys_owner_id"><![CDATA[Owner ID]]></string>
+	<string name="_bx_timeline_form_link_input_sys_action"><![CDATA[Action]]></string>
+	<string name="_bx_timeline_form_link_input_sys_type"><![CDATA[Type]]></string>
+	<string name="_bx_timeline_form_link_input_sys_content"><![CDATA[Content]]></string>
+	<string name="_bx_timeline_form_link_input_content"><![CDATA[]]></string>
+	<string name="_bx_timeline_form_link_input_err_content"><![CDATA[The link to be posted is empty]]></string>
+	<string name="_bx_timeline_form_link_input_sys_do_submit"><![CDATA[Post]]></string>
+	<string name="_bx_timeline_form_link_input_do_submit"><![CDATA[Post]]></string>
+
+	<string name="_bx_timeline_acl_action_post"><![CDATA[Post]]></string>
+	<string name="_bx_timeline_acl_action_delete"><![CDATA[Delete]]></string>
+	<string name="_bx_timeline_acl_action_comment"><![CDATA[Comment]]></string>
+
+	<string name="_bx_timeline_page_title_sys_view"><![CDATA[View Timeline]]></string>
+	<string name="_bx_timeline_page_title_view"><![CDATA[View Timeline]]></string>
+	<string name="_bx_timeline_page_block_title_post"><![CDATA[Post to Timeline]]></string>
+	<string name="_bx_timeline_page_block_title_view"><![CDATA[View Timeline]]></string>
+	<string name="_bx_timeline_page_block_title_post_profile"><![CDATA[Post to Timeline]]></string>
+	<string name="_bx_timeline_page_block_title_view_profile"><![CDATA[Timeline]]></string>
+	<string name="_bx_timeline_page_block_title_comments"><![CDATA[Comments]]></string>
+
+	<!--
+    <string name="_bx_timeline_menu_set_title_XXX"><![CDATA[Notes Submenu]]></string>
+    <string name="_bx_timeline_menu_item_title_system_XXX"><![CDATA[]]></string>
+    <string name="_bx_timeline_menu_item_title_XXX"><![CDATA[]]></string>
+
+	<string name="_bx_timeline_txt_error_XXX"><![CDATA[]]></string>
+    -->
+
+    <string name="_bx_timeline_menu_item_view_all"><![CDATA[All posts]]></string>
+    <string name="_bx_timeline_menu_item_view_owner"><![CDATA[Posts by {0}]]></string>
+    <string name="_bx_timeline_menu_item_view_other"><![CDATA[Posts by others]]></string>
+    <string name="_bx_timeline_menu_item_get_rss"><![CDATA[RSS]]></string>
+
+    <string name="_bx_timeline_menu_item_write"><![CDATA[Write]]></string>
+    <string name="_bx_timeline_menu_item_share_link"><![CDATA[Share a link]]></string>
+    <string name="_bx_timeline_menu_item_add_photo"><![CDATA[Add a photo]]></string>
+    <string name="_bx_timeline_menu_item_add_music"><![CDATA[Add a sound]]></string>
+    <string name="_bx_timeline_menu_item_add_video"><![CDATA[Add a video]]></string>
+
+    <string name="_bx_timeline_menu_item_delete"><![CDATA[Delete]]></string>
+
+	<string name="_bx_timeline_alert_module_XXX"><![CDATA[]]></string>
+	<string name="_bx_timeline_alert_action_added"><![CDATA[add]]></string>
+
+	<string name="_bx_timeline_txt_msg_no_results"><![CDATA[Empty]]></string>
+	<string name="_bx_timeline_txt_msg_not_allowed_post"><![CDATA[Your membership level does not allow you to post here]]></string>
+	<string name="_bx_timeline_txt_err_cannot_perform_action"><![CDATA[Cannot perform action. Please report.]]></string>
+
+	<string name="_bx_timeline_txt_load_more"><![CDATA[Load More]]></string>
+	<string name="_bx_timeline_txt_wrote"><![CDATA[wrote]]></string>
+	<string name="_bx_timeline_txt_shared_link"><![CDATA[shared a link]]></string>
+	<string name="_bx_timeline_txt_date_from"><![CDATA[today]]></string>
+	<string name="_bx_timeline_txt_date_to"><![CDATA[olden days]]></string>
+	<string name="_bx_timeline_txt_view_comments"><![CDATA[View comments]]></string>
+	<string name="_bx_timeline_txt_n_comments"><![CDATA[{0} comments]]></string>
+
+</resources>

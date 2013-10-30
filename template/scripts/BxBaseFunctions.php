@@ -565,7 +565,7 @@ EOF;
 
             if ($sMenu) {
                 $sId = 'bx-menu-db-' . time() . rand(0, PHP_INT_MAX);
-                $sCode .= '<div id="' . $sId . '" style="display:none;">' . BxTemplFunctions::getInstance()->transBox('<div class="bx-def-padding bx-def-color-bg-block">' . $sMenu . '</div>') . '</div>';
+                $sCode .= '<div class="bx-db-menu-popup" id="' . $sId . '" style="display:none;">' . BxTemplFunctions::getInstance()->transBox('<div class="bx-def-padding bx-def-color-bg-block">' . $sMenu . '</div>') . '</div>';
                 $aButtonMenu = array ('icon' => 'reorder', 'onclick' => "bx_menu_popup_inline('#" . $sId . "', this)");
             }
             
