@@ -144,6 +144,7 @@ class BxDolCmts extends BxDol
 
 	protected $_sViewUrl = '';
 	protected $_sBaseUrl = '';
+	protected $_sListAnchor = '';
 
 	protected $_sSystem = 'profile'; ///< current comment system name
     protected $_aSystem = array (); ///< current comments system array
@@ -203,6 +204,7 @@ class BxDolCmts extends BxDol
         $this->_sBaseUrl = $this->_aSystem['base_url'];
         if(get_mb_substr($this->_sBaseUrl, 0, 4) != 'http')
         	$this->_sBaseUrl = BX_DOL_URL_ROOT . $this->_sBaseUrl;
+		$this->_sListAnchor = "cmts-anchor-%s-%d";
 
 		$this->_oQuery = new BxDolCmtsQuery($this);
 
@@ -285,7 +287,7 @@ class BxDolCmts extends BxDol
         return $GLOBALS['bx_dol_cmts_systems'];
     }
 
-    function init ($iId)
+    public function init ($iId)
     {
         if (!$this->isEnabled()) 
         	return;
@@ -299,63 +301,80 @@ class BxDolCmts extends BxDol
 		));
     }
 
-    function getId ()
+    public function getId ()
     {
         return $this->_iId;
     }
 
-    function isEnabled ()
+    public function isEnabled ()
     {
         return isset($this->_aSystem['is_on']) && $this->_aSystem['is_on'];
     }
 
-	function getSystemId()
+	public function getSystemId()
     {
         return $this->_aSystem['system_id'];
     }
 
-    function getSystemName()
+    public function getSystemName()
     {
         return $this->_sSystem;
     }
 
-	function getSystemInfo()
+	public function getSystemInfo()
     {
         return $this->_aSystem;
     }
-	function getMaxLevel()
+
+	public function getMaxLevel()
 	{
 		return $this->_iDpMaxLevel;
 	}
-    function getOrder ()
+
+    public function getOrder ()
     {
         return $this->_sOrder;
     }
 
-	function getPerView ($iCmtParentId = 0)
+	public function getPerView ($iCmtParentId = 0)
     {
         return $iCmtParentId == 0 ? $this->_aSystem['per_view'] : $this->_aSystem['per_view_replies'];
     }
 
-    function getBaseUrl()
+    public function getBaseUrl()
     {
     	return $this->_replaceMarkers($this->_sBaseUrl);
     }
 
-    function isNl2br ()
+    public function getListUrl()
+    {
+    	return $this->getBaseUrl() . '#' . $this->getListAnchor();
+    }
+
+    public function getListAnchor()
+    {
+    	return sprintf($this->_sListAnchor, str_replace('_', '-', $this->getSystemName()), $this->getId());
+    }
+
+    public function isNl2br ()
     {
         return $this->_aSystem['nl2br'];
     }
 
-    function isRatable ()
+    public function isRatable ()
     {
         return $this->_aSystem['is_ratable'];
+    }
+
+    public function isAttachImageEnabled()
+    {
+    	return true;
     }
 
     /**
      * set id to operate with votes
      */
-    function setId ($iId)
+    public function setId ($iId)
     {
         if ($iId == $this->getId()) return;
         $this->_iId = $iId;
@@ -364,7 +383,7 @@ class BxDolCmts extends BxDol
     /**
      * it is called on cron every day or similar period to clean old comment votes
      */
-    function maintenance () {
+    public function maintenance () {
         $iDeletedRecords = 0;
         foreach ($this->_aSystems as $aSystem) {
             if (!$aSystem['is_on'])                
@@ -391,37 +410,37 @@ class BxDolCmts extends BxDol
     /** 
      * Database functions
      */
-	function getCommentsTableName ()
+	public function getCommentsTableName ()
     {
         return $this->_oQuery->getTableName ();
     }
 
-    function getObjectTitle ($iObjectId = 0)
+    public function getObjectTitle ($iObjectId = 0)
     {
     	return $this->_oQuery->getObjectTitle ($iObjectId ? $iObjectId : $this->getId());
     }
 
-    function getObjectCommentsCount ($iObjectId = 0)
+    public function getObjectCommentsCount ($iObjectId = 0)
     {
         return $this->_oQuery->getObjectCommentsCount ($iObjectId ? $iObjectId : $this->getId());
     }
 
-    function getCommentsArray ($iVParentId, $aOrder, $iStart = 0, $iCount = -1)
+    public function getCommentsArray ($iVParentId, $aOrder, $iStart = 0, $iCount = -1)
     {
         return $this->_oQuery->getComments ($this->getId(), $iVParentId, $this->_getAuthorId(), $aOrder, $iStart, $iCount);
     }
 
-    function getCommentRow ($iCmtId)
+    public function getCommentRow ($iCmtId)
     {
         return $this->_oQuery->getComment ($this->getId(), $iCmtId, $this->_getAuthorId());
     }
 
-    function onObjectDelete ($iObjectId = 0)
+    public function onObjectDelete ($iObjectId = 0)
     {
         return $this->_oQuery->deleteObjectComments ($iObjectId ? $iObjectId : $this->getId());
     }
 
-    function onAuthorDelete ($iAuthorId)
+    public function onAuthorDelete ($iAuthorId)
     {
     	foreach($this->_aSystems as $sSystem => $aSystem) {
             $oQuery = new BxDolCmtsQuery($aSystem);
@@ -433,65 +452,65 @@ class BxDolCmts extends BxDol
     /** 
      * Permissions functions
      */
-    function checkAction ($iAction, $isPerformAction = false)
+    public function checkAction ($iAction, $isPerformAction = false)
     {
         $iId = $this->_getAuthorId();
         $check_res = checkAction($iId, $iAction, $isPerformAction);
         return $check_res[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED;
     }
 
-    function checkActionErrorMsg ($iAction)
+    public function checkActionErrorMsg ($iAction)
     {
         $iId = $this->_getAuthorId();
         $check_res = checkAction($iId, $iAction);
         return $check_res[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $check_res[CHECK_ACTION_MESSAGE] : '';
     }
 
-    function isRateAllowed ($isPerformAction = false)
+    public function isRateAllowed ($isPerformAction = false)
     {
         return $this->checkAction (ACTION_ID_COMMENTS_VOTE, $isPerformAction); 
     }
 
-    function msgErrRateAllowed ()
+    public function msgErrRateAllowed ()
     { 
         return $this->checkActionErrorMsg(ACTION_ID_COMMENTS_VOTE);
     }
 
-    function isPostReplyAllowed ($isPerformAction = false) {
+    public function isPostReplyAllowed ($isPerformAction = false) {
         return $this->checkAction (ACTION_ID_COMMENTS_POST, $isPerformAction);
     }
 
-    function msgErrPostReplyAllowed ()
+    public function msgErrPostReplyAllowed ()
     {
         return $this->checkActionErrorMsg(ACTION_ID_COMMENTS_POST);
     }
 
-    function isEditAllowed ($isPerformAction = false)
+    public function isEditAllowed ($isPerformAction = false)
     {
         return $this->checkAction (ACTION_ID_COMMENTS_EDIT_OWN, $isPerformAction);
     }
 
-    function msgErrEditAllowed ()
+    public function msgErrEditAllowed ()
     {
         return $this->checkActionErrorMsg (ACTION_ID_COMMENTS_EDIT_OWN);
     }
 
-    function isRemoveAllowed ($isPerformAction = false)
+    public function isRemoveAllowed ($isPerformAction = false)
     {
         return $this->checkAction (ACTION_ID_COMMENTS_REMOVE_OWN, $isPerformAction);
     }
 
-    function msgErrRemoveAllowed ()
+    public function msgErrRemoveAllowed ()
     {
         return $this->checkActionErrorMsg(ACTION_ID_COMMENTS_REMOVE_OWN);
     }
 
-    function isEditAllowedAll ($isPerformAction = false)
+    public function isEditAllowedAll ($isPerformAction = false)
     {
         return isAdmin() || $this->checkAction (ACTION_ID_COMMENTS_EDIT_ALL, $isPerformAction) ? true : false;
     }
 
-    function isRemoveAllowedAll ($isPerformAction = false)
+    public function isRemoveAllowedAll ($isPerformAction = false)
     {
         return isAdmin() || $this->checkAction (ACTION_ID_COMMENTS_REMOVE_ALL, $isPerformAction) ? true : false;
     }
@@ -499,7 +518,7 @@ class BxDolCmts extends BxDol
     /**
      * Actions functions
      */
-    function actionGetFormPost () {
+    public function actionGetFormPost () {
         if (!$this->isEnabled())
            return '';
 
@@ -510,7 +529,7 @@ class BxDolCmts extends BxDol
         return $this->getFormBoxPost(array('parent_id' => $iCmtParentId, 'type' => $sCmtBrowse), array('type' => $sCmtDisplay));
     }
 
-	function actionGetFormEdit ()
+	public function actionGetFormEdit ()
     {
         if (!$this->isEnabled()){
         	$this->_echoResultJson(array());
@@ -521,7 +540,7 @@ class BxDolCmts extends BxDol
         $this->_echoResultJson($this->getFormEdit($iCmtId));
     }
 
-	function actionGetPlusedBy () {
+	public function actionGetPlusedBy () {
         if (!$this->isEnabled())
            return '';
 
@@ -529,7 +548,7 @@ class BxDolCmts extends BxDol
         return $this->getPlusedBy($iCmtId);
     }
 
-    function actionGetCmt () {
+    public function actionGetCmt () {
         if (!$this->isEnabled())
            return '';
 
@@ -545,7 +564,7 @@ class BxDolCmts extends BxDol
         ));
     }
 
-    function actionGetCmts () {
+    public function actionGetCmts () {
         if (!$this->isEnabled())
            return '';
 
@@ -558,7 +577,7 @@ class BxDolCmts extends BxDol
         return $this->getComments(array('vparent_id' => $iCmtVParentId, 'start' => $iCmtStart, 'per_view' => $iCmtPerView, 'type' => $sCmtBrowse), array('type' => $sCmtDisplay));
     }
 
-	function actionGetImage ()
+	public function actionGetImage ()
     {
     	if (!$this->isEnabled())
            return '';
@@ -567,7 +586,7 @@ class BxDolCmts extends BxDol
         return $this->getImage($iImgId);
     }
 
-    function actionSubmitPostForm()
+    public function actionSubmitPostForm()
     {
         if(!$this->isEnabled() || !$this->isPostReplyAllowed()) {
         	$this->_echoResultJson(array());
@@ -581,7 +600,7 @@ class BxDolCmts extends BxDol
 		$this->_echoResultJson($this->getFormPost($iCmtParentId));
     }
 
-	function actionSubmitEditForm()
+	public function actionSubmitEditForm()
 	{
         if (!$this->isEnabled()) {
         	$this->_echoResultJson(array());
@@ -595,7 +614,7 @@ class BxDolCmts extends BxDol
         $this->_echoResultJson($this->getFormEdit($iCmtId));
     }
 
-    function actionRemove()
+    public function actionRemove()
     {
         if (!$this->isEnabled()) {
         	$this->_echoResultJson(array());
@@ -649,7 +668,7 @@ class BxDolCmts extends BxDol
         $this->_echoResultJson(array('msg' => _t('_cmt_err_cannot_perform_action')));
     }
 
-    function actionRate()
+    public function actionRate()
     {
         if (!$this->isEnabled() || !$this->isRatable()) {
         	$this->_echoResultJson(array('msg' => _t('_Error occured')));

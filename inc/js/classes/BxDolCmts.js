@@ -22,10 +22,10 @@ function BxDolCmts (options) {
     this._oSavedTexts = {};
     this._sRootId = '#cmts-box-' + this._sSystem + '-' + this._iObjId;
 
-    // init post comment form (because browser remeber last inputs, we need to clear it)
-    if ($('#cmts-box-' + this._sSystem + '-' + this._iObjId + ' .cmt-post-reply form').length) {
-    	$('#cmts-box-' + this._sSystem + '-' + this._iObjId + ' .cmt-post-reply form')[0].reset();
-    	$('#cmts-box-' + this._sSystem + '-' + this._iObjId + ' .cmt-post-reply form > [name=CmtParent]').val(0);    
+    // init post comment form
+    if ($(this._sRootId + ' .cmt-post-reply form').length) {
+    	var sFormId = $(this._sRootId + ' .cmt-post-reply form').attr('id');
+    	this.cmtInitFormPost(sFormId);
     }
 }
 
@@ -346,6 +346,10 @@ BxDolCmts.prototype.toggleReply = function(e, iCmtParentId)
         		oFormSibling.after(oForm);
         		break;
         }
+
+        var sFormId = oForm.find('form').attr('id');
+        $this.cmtInitFormPost(sFormId);
+
     	$(sParentId).children('.cmt-reply').bx_anim('toggle', $this._sAnimationEffect, $this._iAnimationSpeed, fOnShow);    		
 	});
 };
@@ -478,8 +482,6 @@ BxDolCmts.prototype._getForm = function (e, iCmtParentId, onLoad)
     oData['CmtBrowse'] = this._sBrowseType;
     oData['CmtDisplay'] = this._sDisplayType;
 
-    
-    
     if(e)
     	this._loadingInContent(e, true);
 

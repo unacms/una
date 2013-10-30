@@ -22,7 +22,7 @@ class BxBaseCmtsView extends BxDolCmts {
         if(empty($sSystem))
             return;
 
-        $this->_sJsObjName = 'oCmts' . ucfirst($sSystem) . $iId;
+        $this->_sJsObjName = 'oCmts' . str_replace(' ', '', ucwords(str_replace(array('_' , '-'), array(' ', ' '), $sSystem))) . $iId;
         $this->_sStylePrefix = isset($this->_aSystem['root_style_prefix']) ? $this->_aSystem['root_style_prefix'] : 'cmt';
 
         BxDolTemplate::getInstance()->addJsTranslation('_sys_txt_cmt_loading');
@@ -33,7 +33,7 @@ class BxBaseCmtsView extends BxDolCmts {
      *
      * @return string
      */
-    function getExtraCss ()
+    public static function getExtraCss ()
     {
         BxDolTemplate::getInstance()->addCss(array('cmts.css'));
     }
@@ -43,9 +43,14 @@ class BxBaseCmtsView extends BxDolCmts {
      *
      * @return string
      */
-    function getExtraJs ()
+    public static function getExtraJs ()
     {
-        BxDolTemplate::getInstance()->addJs(array('common_anim.js', 'jquery.form.js', 'BxDolCmts.js'));
+    	$oTemplate = BxDolTemplate::getInstance();
+        $oTemplate->addJs(array('common_anim.js', 'jquery.form.js', 'BxDolCmts.js'));
+        $oTemplate->addJsTranslation(array(
+        	'_Error occured',
+        	'_Are you sure?'
+        ));
     }
 
 	/**
@@ -72,13 +77,9 @@ class BxBaseCmtsView extends BxDolCmts {
     				sDisplayType: '" . $this->_sDisplayType . "'});\n";
         $ret .= "</script>";
 
-        $this->getExtraJs();
-        $this->getExtraCss();
-        BxDolTemplate::getInstance()->addJsTranslation(array(
-        	'_Error occured',
-        	'_Are you sure?'
-        ));
-        
+        self::getExtraJs();
+        self::getExtraCss();
+
         return $ret;
     }
 
@@ -93,6 +94,7 @@ class BxBaseCmtsView extends BxDolCmts {
     	$sCaption = _t('_cmt_block_comments_title', $this->_oQuery->getCommentsCount($this->_iId));
     	$sContent = BxDolTemplate::getInstance()->parseHtmlByName('comments_block.html', array(
     		'system' => $this->_sSystem,
+    		'list_anchor' => $this->getListAnchor(),
     		'id' => $this->getId(),
     		'bx_if:show_empty' => array(
 				'condition' => $sCmts == '',
@@ -209,18 +211,20 @@ class BxBaseCmtsView extends BxDolCmts {
 		}
 
 		$aTmplImages = array();
-		$aImages = $this->_oQuery->getImages($this->_aSystem['system_id'], $aCmt['cmt_id']);
-		if(!empty($aImages) && is_array($aImages)) {
-			bx_import('BxDolImageTranscoder');
-        	$oTranscoder = BxDolImageTranscoder::getObjectInstance($this->_sTranscoderPreview);
-
-        	foreach($aImages as $aImage)
-        		$aTmplImages[] = array(
-        			'style_prefix' => $this->_sStylePrefix,
-        			'js_object' => $this->_sJsObjName,
-        			'id' => $aImage['image_id'],
-        			'image' => $oTranscoder->getImageUrl($aImage['image_id'])
-        		);
+		if($this->isAttachImageEnabled()) {
+			$aImages = $this->_oQuery->getImages($this->_aSystem['system_id'], $aCmt['cmt_id']);
+			if(!empty($aImages) && is_array($aImages)) {
+				bx_import('BxDolImageTranscoder');
+	        	$oTranscoder = BxDolImageTranscoder::getObjectInstance($this->_sTranscoderPreview);
+	
+	        	foreach($aImages as $aImage)
+	        		$aTmplImages[] = array(
+	        			'style_prefix' => $this->_sStylePrefix,
+	        			'js_object' => $this->_sJsObjName,
+	        			'id' => $aImage['image_id'],
+	        			'image' => $oTranscoder->getImageUrl($aImage['image_id'])
+	        		);
+			}
 		}
 
 		$sReplies = '';
@@ -343,6 +347,9 @@ class BxBaseCmtsView extends BxDolCmts {
 
     function getImage($iImgId)
     {
+    	if(!$this->isAttachImageEnabled())
+    		return '';
+
     	$oTemplate = BxDolTemplate::getInstance();
 
     	bx_import('BxDolStorage');
@@ -570,14 +577,16 @@ class BxBaseCmtsView extends BxDolCmts {
 
 			$iCmtId = (int)$oForm->insert(array('cmt_vparent_id' => $iCmtVisualParentId, 'cmt_object_id' => $this->_iId, 'cmt_author_id' => $iCmtAuthorId, 'cmt_level' => $iLevel, 'cmt_time' => time()));
 			if($iCmtId != 0) {
-				$aImages = $oForm->getCleanValue('cmt_image');
-				if(!empty($aImages) || is_array($aImages)) {
-					bx_import('BxDolStorage');
-					$oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
-
-					foreach($aImages as $iImageId)
-						if($this->_oQuery->saveImages($this->_aSystem['system_id'], $iCmtId, $iImageId))
-							$oStorage->afterUploadCleanup($iImageId, $iCmtAuthorId);
+				if($this->isAttachImageEnabled()) {
+					$aImages = $oForm->getCleanValue('cmt_image');
+					if(!empty($aImages) && is_array($aImages)) {
+						bx_import('BxDolStorage');
+						$oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
+	
+						foreach($aImages as $iImageId)
+							if($this->_oQuery->saveImages($this->_aSystem['system_id'], $iCmtId, $iImageId))
+								$oStorage->afterUploadCleanup($iImageId, $iCmtAuthorId);
+					}
 				}
 
 				if($iCmtParentId) 
@@ -651,6 +660,9 @@ class BxBaseCmtsView extends BxDolCmts {
         $oForm->aInputs['sys']['value'] = $this->_sSystem;
         $oForm->aInputs['id']['value'] = $this->_iId;
         $oForm->aInputs['action']['value'] = 'Submit' . $sActionCap . 'Form';
+
+        if(!$this->isAttachImageEnabled())
+        	unset($oForm->aInputs['cmt_image']);
 
 	    if(isset($oForm->aInputs['cmt_image'])) {
 	    	$aFormNested = array(
