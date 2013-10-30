@@ -36,11 +36,15 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 -- ACL
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('bx_timeline', 'post', NULL, '_bx_timeline_acl_action_post', '', 1, 1);
-SET @iIdActionPostComment = LAST_INSERT_ID();
+SET @iIdActionPost = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('bx_timeline', 'delete', NULL, '_bx_timeline_acl_action_delete', '', 1, 1);
-SET @iIdActionDeleteComment = LAST_INSERT_ID();
+SET @iIdActionDelete = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('bx_timeline', 'comment', NULL, '_bx_timeline_acl_action_comment', '', 1, 1);
+SET @iIdActionComment = LAST_INSERT_ID();
 
 SET @iUnauthenticated = 1;
 SET @iStandard = 2;
@@ -53,15 +57,21 @@ SET @iPremium = 8;
 
 INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
--- post comment
-(@iStandard, @iIdActionPostComment),
-(@iModerator, @iIdActionPostComment),
-(@iAdministrator, @iIdActionPostComment),
-(@iPremium, @iIdActionPostComment),
+-- post
+(@iStandard, @iIdActionPost),
+(@iModerator, @iIdActionPost),
+(@iAdministrator, @iIdActionPost),
+(@iPremium, @iIdActionPost),
 
--- delete comment
-(@iModerator, @iIdActionDeleteComment),
-(@iAdministrator, @iIdActionDeleteComment);
+-- delete
+(@iModerator, @iIdActionDelete),
+(@iAdministrator, @iIdActionDelete),
+
+-- comment
+(@iStandard, @iIdActionComment),
+(@iModerator, @iIdActionComment),
+(@iAdministrator, @iIdActionComment),
+(@iPremium, @iIdActionComment);
 
 
 -- ALERTS
@@ -71,4 +81,4 @@ INSERT INTO `sys_alerts_handlers`(`name`, `class`, `file`, `eval`) VALUES
 
 -- COMMENTS
 INSERT INTO `sys_objects_cmts` (`Name`, `TableCmts`, `TableTrack`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Nl2br`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `BaseUrl`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldTitle`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES
-('bx_timeline', 'bx_timeline_comments', 'bx_timeline_comments_track', 1, 5000, 1000, 1, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', '', '', '', '', '', 'BxTimelineCmts', 'modules/boonex/timeline/classes/BxTimelineCmts.php');
+('bx_timeline', 'bx_timeline_comments', 'bx_timeline_comments_track', 1, 5000, 1000, 1, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', '', 'bx_timeline_events', 'id', 'title', 'comments', 'BxTimelineCmts', 'modules/boonex/timeline/classes/BxTimelineCmts.php');

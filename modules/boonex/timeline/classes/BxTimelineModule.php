@@ -145,6 +145,16 @@ class BxTimelineModule extends BxDolModule
         $this->_echoResultJson(array('timeline' => $sTimeline));
     }
 
+    public function actionGetComments()
+    {
+    	$this->_iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
+
+    	$iId = bx_process_input(bx_get('id'), BX_DATA_INT);
+    	$aComments = $this->_oTemplate->getComments($iId);
+
+    	$this->_echoResultJson($aComments);
+    }
+
 	/**
      * SERVICE METHODS
      */
@@ -356,6 +366,19 @@ class BxTimelineModule extends BxDolModule
         return array('form' => $oForm->getCode(), 'form_id' => $oForm->id);
     }
 
+    public function getCmtsObject($iId, $bPerform = false)
+    {
+    	if(!$this->isAllowedComment($bPerform))
+    		return false;
+
+    	bx_import('BxDolCmts');
+        $oCmts = BxDolCmts::getObjectInstance($this->_oConfig->getSystemName('comment'), $iId);
+		if(!$oCmts->isEnabled())
+			return false;
+
+		return $oCmts;
+    }
+
 	public function getUserId()
     {
         return isLogged() ? bx_get_logged_profile_id() : 0;
@@ -401,6 +424,19 @@ class BxTimelineModule extends BxDolModule
            return true;
 
         $aCheckResult = checkActionModule($iUserId, 'delete', $this->getName(), $bPerform);
+        return $aCheckResult[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED;
+    }
+
+	public function isAllowedComment($bPerform = false)
+    {
+		if(isAdmin())
+			return true;
+
+        $iUserId = $this->getUserId();
+		if($iUserId == 0 && $this->_oConfig->isAllowGuestComments())
+			return true;
+
+        $aCheckResult = checkActionModule($iUserId, 'comment', $this->getName(), $bPerform);
         return $aCheckResult[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED;
     }
 

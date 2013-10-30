@@ -245,6 +245,7 @@ class BxTimelineDb extends BxDolModuleDb
                 `te`.`type` AS `type`,
                 `te`.`action` AS `action`,
                 `te`.`content` AS `content`,
+                `te`.`comments` AS `comments`,
                 `te`.`date` AS `date`,
                 DAYOFYEAR(FROM_UNIXTIME(`te`.`date`)) AS `day_date`,
                 DAYOFYEAR(NOW()) AS `day_now`,

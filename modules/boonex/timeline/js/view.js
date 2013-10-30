@@ -103,6 +103,39 @@ BxTimelineView.prototype.showPostMenu = function(oLink) {
 	bx_menu_popup_inline('#' + sId, oLink);
 };
 
+BxTimelineView.prototype.showComments = function(oLink, iId) {
+	var $this = this;
+
+    var oData = this._getDefaultData();
+    oData['id'] = iId;
+
+    if(oLink)
+    	this.loadingInBlock(oLink, true);
+
+    jQuery.post (
+        this._sActionsUrl + 'get_comments',
+        oData,
+        function(oData) {
+        	if(oLink)
+        		$this.loadingInBlock(oLink, false);
+
+        	if(!oData.popup)
+        		return;
+
+        	var oPopup = $(oData.popup); 
+
+	    	$('#' + oPopup.attr('id')).remove();
+	        oPopup.prependTo('body').dolPopup({
+	        	fog: {
+					color: '#fff',
+					opacity: .7
+	            }
+	        });
+        },
+        'json'
+    );
+};
+
 BxTimelineView.prototype._getPosts = function(oElement, sAction) {
     var $this = this;
     var oView = $(this.sIdView);

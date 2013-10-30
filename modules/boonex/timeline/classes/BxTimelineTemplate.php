@@ -13,14 +13,9 @@ bx_import('BxDolModuleTemplate');
 
 class BxTimelineTemplate extends BxDolModuleTemplate
 {
-    /**
-     * Constructor
-     */
     function __construct(&$oConfig, &$oDb)
     {
         parent::BxDolModuleTemplate($oConfig, $oDb);
-
-        $this->_aTemplates = array('comments', 'comments_actions', 'common_media');
     }
 
     protected function getModule()
@@ -94,6 +89,9 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 
     	$this->addCss(array('plugins/jquery/themes/|jquery-ui.css', 'view.css', 'view-media-tablet.css', 'view-media-desktop.css'));
         $this->addJs(array('jquery.ui.all.min.js', 'plugins/|masonry.pkgd.min.js', 'common_anim.js', 'main.js', 'view.js'));
+
+		BxTimelineCmts::includeCssJs();
+
     	return $this->parseHtmlByName('view.html', array(
     		'style_prefix' => $this->_oConfig->getPrefix('style'),
             'timeline' => $this->getTimeline($iOwnerId, $iStart, $iPerPage, $sFilter, $iTimeline, $aModules),
@@ -209,33 +207,32 @@ class BxTimelineTemplate extends BxDolModuleTemplate
         return $this->parseHtmlByName('load_more.html', $aTmplVars);
     }
 
-    public function getCommon($aEvent)
+    public function getComments($iId)
     {
-    	$sPrefix = $this->_oConfig->getPrefix('common_post');
-        if(strpos($aEvent['type'], $sPrefix) !== 0)
-            return '';
+    	$oModule = $this->getModule();
+    	$sStylePrefix = $this->_oConfig->getPrefix('style');
 
-        /*
-        if(in_array($aEvent['type'], array($sPrefix . 'photos', $sPrefix . 'sounds', $sPrefix . 'videos'))) {
-            $aContent = unserialize($aEvent['content']);
-            $aEvent = array_merge($aEvent, $this->getCommonMedia($aContent['type'], (int)$aContent['id']));
-            if(empty($aEvent['content']) || (int)$aEvent['content'] > 0)
-                return '';
-        }
-		*/
+    	$oCmts = $oModule->getCmtsObject($iId);
+    	if($oCmts === false)
+			return array();
 
-		$aEvent['object_owner_id'] = $aEvent['object_id'];
+		$sName = $sStylePrefix . '-comments-' . $iId;
+		$sTitle = _t('_bx_timeline_page_block_title_comments');
+		$sContent = $this->parseHtmlByName('comments.html', array(
+        	'style_prefix' => $sStylePrefix,
+        	'content' => $oCmts->getCommentsBlock()
+        ));
 
-		if(!empty($aEvent['content']))
-			$aEvent['content'] = unserialize($aEvent['content']);
+		bx_import('BxTemplFunctions');
+        $sContent = BxTemplFunctions::getInstance()->popupBox($sName, $sTitle, $sContent);
 
-		return $this->_getPost(str_replace($sPrefix, '', $aEvent['type']), $aEvent);
+        return array('popup' => $sContent);
     }
 
 	function getSystem($aEvent)
     {
         $aResult = $this->_getSystemData($aEvent);
-		if(empty($aResult) || empty($aResult['content']))
+		if(empty($aResult) || empty($aResult['owner_id']) || empty($aResult['content']))
 			return '';
 
 		if((empty($aEvent['title']) && !empty($aResult['title'])) || (empty($aEvent['description']) && !empty($aResult['description'])))
@@ -244,40 +241,37 @@ class BxTimelineTemplate extends BxDolModuleTemplate
                 'description' => bx_process_input($aResult['description'], BX_TAGS_STRIP)
 			), array('id' => $aEvent['id']));
 
-		$sComments = '';
-
-		/*
-		 * TODO: Comments
-		if(!in_array($aEvent['type'], array('profile', 'friend')) && $aEvent['action'] != 'commentPost') {
-        	$sType = $aEvent['type'];
-            $iObjectId = $aEvent['object_id'];
-            if(strpos($iObjectId, ',') !== false) {
-            	$sType = isset($aResult['grouped']['group_cmts_name']) ? $aResult['grouped']['group_cmts_name'] : '';
-                $iObjectId = isset($aResult['grouped']['group_id']) ? (int)$aResult['grouped']['group_id'] : 0;
-			}
-
-			bx_import('Cmts', $this->_aModule);
-            $oComments = new BxTimelineCmts($sType, $iObjectId);
-            if($oComments->isEnabled())
-            	$sComments = $oComments->getCommentsFirstSystem('comment', $aEvent['id']);
-			else
-            	$sComments = $this->getDefaultComments($aEvent['id']);
-		} 
-        else
-        	$sComments = $this->getDefaultComments($aEvent['id']);
-		*/
-
 		if(is_string($aResult['content']))
-			return $this->parseHtmlByContent($aResult['content'], array(
-	            'post_id' => $aEvent['id'],
-	            'comments' => $sComments
-	        ));
+			return $aResult['content'];
 
 		$aEvent['object_owner_id'] = $aResult['owner_id'];
 		$aEvent['content'] = $aResult['content'];
+		$aEvent['comments'] = $aResult['comments'];
 
 		$sType = !empty($aResult['content_type']) ? $aResult['content_type'] : BX_TIMELINE_PARSE_TYPE_DEFAULT;
         return $this->_getPost($sType, $aEvent);
+    }
+
+    public function getCommon($aEvent)
+    {
+    	$sPrefix = $this->_oConfig->getPrefix('common_post');
+        if(strpos($aEvent['type'], $sPrefix) !== 0)
+            return '';
+
+		$aEvent['object_owner_id'] = $aEvent['object_id'];
+
+		if(!empty($aEvent['content']))
+			$aEvent['content'] = unserialize($aEvent['content']);
+
+		$oModule = $this->getModule();
+        $oCmts = $oModule->getCmtsObject($aEvent['id']);
+        if($oCmts !== false)
+        	$aEvent['comments'] = array(
+				'count' => $aEvent['comments'],
+				'onclick' => 'javascript:' . $this->_oConfig->getJsObject('view') . '.showComments(this, ' . $aEvent['id'] . ')'
+			);
+
+		return $this->_getPost(str_replace($sPrefix, '', $aEvent['type']), $aEvent);
     }
 
 	protected function _getPost($sType, $aEvent)
@@ -315,8 +309,18 @@ class BxTimelineTemplate extends BxDolModuleTemplate
         		'condition' => !empty($aTmplVarsTimelineOwner),
         		'content' => $aTmplVarsTimelineOwner
         	),
-        	'item_date' => bx_time_js($aEvent['date'])
+        	'item_date' => bx_time_js($aEvent['date']),
+        	'bx_if:show_comments' => array(
+				'condition' => false,
+				'content' => array()
+			)
         );
+
+        if(!empty($aEvent['comments']) && is_array($aEvent['comments'])) {
+        	$aTmplVarsComments = $this->_getTmplVarsComments($aEvent['comments']);
+        	if(is_array($aTmplVarsComments))
+        		$aTmplVars = array_merge($aTmplVars, $aTmplVarsComments);
+        }
 
         $sMethod = '_getTmplVarsContent' . ucfirst($sType);
         if(method_exists($this, $sMethod)) {
@@ -324,13 +328,6 @@ class BxTimelineTemplate extends BxDolModuleTemplate
         	if(is_array($aTmplVarsContent))
         		$aTmplVars = array_merge($aTmplVars, $aTmplVarsContent);
         }
-
-        /*
-         * TODO: Comments
-        bx_import('Cmts', $this->_aModule);
-        $oComments = new BxTimelineCmts($this->_oConfig->getCommentSystemName(), $aEvent['id']);
-        $aTmplVars = array_merge($aTmplVars, array('comments_content' => $oComments->getCommentsFirst('comment')));
-		*/
 
         return $this->parseHtmlByName($sType . '.html', $aTmplVars);
     }
@@ -373,6 +370,28 @@ class BxTimelineTemplate extends BxDolModuleTemplate
         }
 
         return $aTmplVarsTimelineOwner;
+    }
+
+	protected function _getTmplVarsComments($aComments)
+    {
+    	$iCount = isset($aComments['count']) ? (int)$aComments['count'] : 0;
+		$sViewUrl = isset($aComments['url']) ? $aComments['url'] : 'javascript:void(0)';
+
+		$aTmplVarsAttrs = array();
+		if(isset($aComments['onclick']))
+			$aTmplVarsAttrs[] = array('key' => 'onclick', 'value' => $aComments['onclick']);
+
+		return array(
+    		'bx_if:show_comments' => array(
+    			'condition' => true,
+    			'content' => array(
+					'href' => $sViewUrl,
+					'title' => _t('_bx_timeline_txt_view_comments'),
+					'bx_repeat:attrs' => $aTmplVarsAttrs,
+					'content' => _t('_bx_timeline_txt_n_comments', $iCount)
+				)
+			)
+		);
     }
 
 	protected function _getTmplVarsContentText($aContent)
@@ -485,104 +504,6 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 		$s = preg_replace("/((https?|ftp|news):\/\/)?([a-z]([a-z0-9\-]*\.)+(aero|arpa|biz|com|coop|edu|gov|info|int|jobs|mil|museum|name|nato|net|org|pro|travel|[a-z]{2})|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))(\/[a-z0-9_\-\.~]+)*(\/([a-z0-9_\-\.]*)(\?[a-z0-9+_\-\.%=&amp;]*)?)?(#[a-z][a-z0-9_]*)?/", '<a href="$0" target="_blank">$0</a>', $s);
 
 		return $s; 
-    }
-
-
-
-
-
-    /*
-
-	function getDividerToday(&$aEvent)
-    {
-        return $this->parseHtmlByTemplateName('divider', array(
-            'cpt_class' => 'wall-divider-today ' . ($aEvent['days'] == $aEvent['today'] && !empty($aEvent['content']) ? 'visible' : 'hidden'),
-            'content' => _t('_wall_today')
-        ));
-    }
-
-	function getDivider(&$iDays, &$aEvent)
-    {
-        if($iDays == $aEvent['days'])
-            return "";
-
-        if($aEvent['days'] == $aEvent['today']) {
-            $iDays = $aEvent['days'];
-            return "";
-        }
-
-        $sDaysAgo = "";
-        $iDaysAgo = (int)$aEvent['ago_days'];
-        if($iDaysAgo == 1)
-            $sDaysAgo = _t('_wall_1_days_ago');
-        else if($iDaysAgo > 1 && $iDaysAgo < 31)
-            $sDaysAgo = _t('_wall_n_days_ago', $aEvent['ago_days']);
-        else
-            $sDaysAgo = $aEvent['print_date'];
-
-        $sResult = $this->parseHtmlByTemplateName('divider', array(
-            'cpt_class' => 'wall-divider',
-            'content' => $sDaysAgo
-        ));
-
-        $iDays = $aEvent['days'];
-        return $sResult;
-    }
-
-	function getLoadMoreOutline($iStart, $iPerPage, $bEnabled = true, $bVisible = true)
-    {
-        $aTmplVars = array(
-            'visible' => $bVisible ? 'block' : 'none',
-            'bx_if:is_disabled' => array(
-                'condition' => !$bEnabled,
-                'content' => array()
-            ),
-            'bx_if:show_on_click' => array(
-                'condition' => $bEnabled,
-                'content' => array(
-                    'on_click' => $this->_oConfig->getJsObject('outline') . '.changePage(' . ($iStart + $iPerPage) . ', ' . $iPerPage . ')'
-                )
-            )
-        );
-        return $this->parseHtmlByName('load_more.html', $aTmplVars);
-    }
-
-    */
-
-    function getCommonMedia($sType, $iObject)
-    {
-        $aConverter = array('photos' => 'photo', 'sounds' => 'music', 'videos' => 'video');
-
-        $aMediaInfo = BxDolService::call($sType, 'get_' . $aConverter[$sType] . '_array', array($iObject, 'browse'), 'Search');
-        $aOwner = $this->_oDb->getUser($aMediaInfo['owner']);
-
-        $sAddedMediaTxt = _t('_wall_added_' . $sType);
-
-        $sContent = '';
-        if(!empty($aMediaInfo) && is_array($aMediaInfo) && !empty($aMediaInfo['file']))
-            $aContent = array(
-                'title' => $aOwner['username'] . ' ' . $sAddedMediaTxt,
-                'description' => $aMediaInfo['description'],
-                'content' => $this->parseHtmlByTemplateName('common_media', array(
-                    'image_url' =>  isset($aMediaInfo['file']) ? $aMediaInfo['file'] : '',
-                    'image_width' => isset($aMediaInfo['width']) ? (int)$aMediaInfo['width'] : 0,
-                    'image_height' => isset($aMediaInfo['height']) ? (int)$aMediaInfo['height'] : 0,
-                    'link' => isset($aMediaInfo['url']) ? $aMediaInfo['url'] : '',
-                    'title' => isset($aMediaInfo['title']) ? bx_html_attribute($aMediaInfo['title']) : '',
-                    'description' => isset($aMediaInfo['description']) ? $aMediaInfo['description'] : ''
-                ))
-            );
-        else
-            $aContent = array('title' => '', 'description' => '', 'content' => $iObject);
-
-        return $aContent;
-    }
-
-    function getDefaultComments($iEventId)
-    {
-    	bx_import('Cmts', $this->_aModule);
-        $oComments = new BxTimelineCmts($this->_oConfig->getCommentSystemName(), $iEventId);
-        return $oComments->getCommentsFirst('comment');
     }
 }
 

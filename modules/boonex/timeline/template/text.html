@@ -2,7 +2,7 @@
 	<div class="__style_prefix__-item-ind bx-def-padding-sec">
 	    <div class="__style_prefix__-item-cnt bx-def-padding bx-def-round-corners bx-def-shadow">
 	    	<bx_if:show_image>
-	    		<div class="__style_prefix__-item-image bx-def-thumb bx-def-margin-sec-bottom">
+	    		<div class="__style_prefix__-item-image bx-def-thumb bx-def-margin-bottom">
 	    			<img class="__style_prefix__-item-image" alt="__image_title__" src="__image_url__" />
 	    		</div>
 	    	</bx_if:show_image>
@@ -22,7 +22,21 @@
 			        	<a href="__owner_url__" class="__style_prefix__-timeline-owner-name">__owner_username__</a>
 			        </bx_if:show_timeline_owner>
 				</div>
-				<div class="__style_prefix__-date bx-def-font-small bx-def-font-grayed">__item_date__</div>
+				<div class="__style_prefix__-date bx-def-font-small bx-def-font-grayed">__item_date__
+					<bx_if:show_comments>
+						<i class="sys-icon comments bx-def-padding-left bx-def-padding-thd-right"></i><bx_include_auto:bx_a.html />
+					</bx_if:show_comments>
+				</div>
+				<bx_if:show_menu>
+					<div class="__style_prefix__-item-menu">
+						__menu__
+						<div class="__style_prefix__-item-menu-button">
+				   			<a href="javascript:void(0)" onclick="javascript:__js_object__.showPostMenu(this);">
+								<i class="sys-icon chevron-down"></i>
+							</a>
+						</div>
+					</div>
+			   	</bx_if:show_menu>
 			</div>
 			<bx_if:show_title>
 				<div class="__style_prefix__-title bx-def-margin-sec-top bx-def-font-large">
@@ -42,15 +56,5 @@
 			</div>
 			-->
 		</div>
-		<bx_if:show_menu>
-			<div class="__style_prefix__-item-menu">
-				__menu__
-				<div class="__style_prefix__-item-menu-button">
-		   			<a href="javascript:void(0)" onclick="javascript:__js_object__.showPostMenu(this);">
-						<i class="sys-icon chevron-down"></i>
-					</a>
-				</div>
-			</div>
-	   	</bx_if:show_menu>
 	</div>
 </div>

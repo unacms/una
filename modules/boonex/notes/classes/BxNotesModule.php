@@ -201,15 +201,25 @@ class BxNotesModule extends BxDolModule {
 				$sImage = $oStorage->getFileUrlById($aContentInfo[BxNotesConfig::$FIELD_THUMB]);
         }
 
+        $aComments = array(); 
+        bx_import('BxDolCmts');
+        $oCmts = BxDolCmts::getObjectInstance(BxNotesConfig::$OBJECT_COMMENTS, $aEvent['object_id']);
+		if($oCmts->isEnabled())
+			$aComments = array(
+				'count' => $aContentInfo['comments'],
+    			'url' => $oCmts->getListUrl()
+			);
+
     	return array(
     		'owner_id' => $aContentInfo[BxNotesConfig::$FIELD_AUTHOR],
+    		'content_type' => !empty($sImage) ? 'image' : 'text', //how to parse content, 'text' by default.
     		'content' => array(
     			'url' => $sUrl,
     			'title' => $aContentInfo[BxNotesConfig::$FIELD_TITLE],
     			'text' => $aContentInfo[BxNotesConfig::$FIELD_TEXT],
     			'image' => $sImage
     		), //a string to display or array to parse default template before displaying.
-    		'content_type' => !empty($sImage) ? 'image' : 'text', //how to parse content, 'text' by default.
+    		'comments'=> $aComments,
     		'title' => '', //may be empty.
     		'description' => '' //may be empty. 
     	);
