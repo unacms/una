@@ -339,7 +339,7 @@ function bx_time_js ($iUnixTimestamp, $sFormatIdentifier = BX_FORMAT_DATE, $bFor
  * @return ISO8601 formatted date/time string
  */
 function bx_time_utc ($iUnixTimestamp) {
-    return gmdate(DATE_ISO8601, $iUnixTimestamp);
+    return gmdate(DATE_ISO8601, (int)$iUnixTimestamp);
 }
 
 bx_import('BxDolAlerts');
