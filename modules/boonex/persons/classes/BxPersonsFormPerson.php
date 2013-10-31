@@ -123,7 +123,7 @@ class BxPersonsFormPerson extends BxTemplFormView {
 
         foreach ($this->_aImageFields as $sField => $aVals) {
             if (isset($aContentInfo[$sField]) && $aContentInfo[$sField])
-                $htis->_deleteFile ($aContentInfo[$sField], $aVals['storage_object']);
+                $this->_deleteFile ($aContentInfo[$sField], $aVals['storage_object']);
         }
 
         return parent::delete($iContentId);

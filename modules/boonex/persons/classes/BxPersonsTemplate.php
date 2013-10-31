@@ -27,8 +27,10 @@ class BxPersonsTemplate extends BxDolModuleTemplate {
     /**
      * Get profile unit
      */
-    function unit ($aData, $sTemplateName = 'unit.html') {
+    function unit ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html') {
 
+        // TODO: add privacy checking here
+    
         // get person's url
         bx_import('BxDolPermalinks');
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=view-persons-profile&id=' . $aData['id']);
