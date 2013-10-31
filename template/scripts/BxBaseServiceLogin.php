@@ -60,7 +60,7 @@ class BxBaseServiceLogin extends BxDol {
         $sJoinText = '';        
         if (strpos($sParams, 'no_join_text') === false) {
             bx_import('BxDolPermalinks');
-            $sJoinText = '<div class="bx-def-margin-sec-top">' . _t('_sys_txt_login_description', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account')) . '</div>';
+            $sJoinText = '<hr class="bx-def-hr bx-def-margin-sec-topbottom" /><div>' . _t('_sys_txt_login_description', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account')) . '</div>';
         }
 
         BxDolTemplate::getInstance()->addJs(array('jquery.form.js'));

@@ -86,10 +86,10 @@
     <string name="_bx_notes_menu_item_title_view_note"><![CDATA[View Note]]></string>
     <string name="_bx_notes_menu_item_title_system_notes_home"><![CDATA[Notes]]></string>
     <string name="_bx_notes_menu_item_title_notes_home"><![CDATA[Notes]]></string>
-    <string name="_bx_notes_menu_item_title_system_notes_public"><![CDATA[Public Notes]]></string>
-    <string name="_bx_notes_menu_item_title_notes_public"><![CDATA[Public Notes]]></string>
-    <string name="_bx_notes_menu_item_title_system_notes_featured"><![CDATA[Featured Notes]]></string>
-    <string name="_bx_notes_menu_item_title_notes_featured"><![CDATA[Featured Notes]]></string>
+    <string name="_bx_notes_menu_item_title_system_notes_public"><![CDATA[Public]]></string>
+    <string name="_bx_notes_menu_item_title_notes_public"><![CDATA[Public]]></string>
+    <string name="_bx_notes_menu_item_title_system_notes_featured"><![CDATA[Featured]]></string>
+    <string name="_bx_notes_menu_item_title_notes_featured"><![CDATA[Featured]]></string>
     <string name="_bx_notes_menu_item_title_system_notes_my"><![CDATA[My Notes]]></string>
     <string name="_bx_notes_menu_item_title_notes_my"><![CDATA[My Notes]]></string>
     <string name="_bx_notes_menu_title_view_note_submenu"><![CDATA[View Note Submenu]]></string>
