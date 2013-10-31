@@ -239,7 +239,8 @@
                     }
                 });
 
-                $('#bx-popup-ajax-wrapper-' + id).find(options.container).load(sUrlRoot + options.url, function () {                    
+                $('#bx-popup-ajax-wrapper-' + id).find(options.container).load(sUrlRoot + options.url, function () {
+                    $(this).bxTime();
                     $('#bx-popup-ajax-wrapper-' + id)._dolPopupSetPosition({
                         pointer: $.isWindow(e[0]) ? false : $.extend({}, {el:e, align:'center'}, options.pointer),
                     });

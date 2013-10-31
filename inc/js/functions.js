@@ -41,9 +41,13 @@ function getHtmlData( elem, url, callback, method , confirmation)
 
             $block.html(data);
 
-	        $block
-			    .css('position', blockPos) // return previous value
-		        .addWebForms();
+	        $block.css('position', blockPos); // return previous value
+
+            if ($.isFunction($.addWebForms))
+		        $block.addWebForms();
+
+            if ($.isFunction($.bxTime))
+		        $block.bxTime();
         
             if (typeof callback == 'function')
                 callback.apply($block);
@@ -56,6 +60,9 @@ function getHtmlData( elem, url, callback, method , confirmation)
 
             if ($.isFunction($.addWebForms))
 		        $(this).addWebForms();
+
+            if ($.isFunction($.bxTime))
+		        $(this).bxTime();
 
             if (typeof callback == 'function')
                 callback.apply(this);
@@ -292,14 +299,22 @@ function validateLoginForm(eForm) {
  * @param sLang - use sLang localization
  * @param isAutoupdate - for internal usage only
  */
-function bx_time(sLang, isAutoupdate) {
+function bx_time(sLang, isAutoupdate, sRootSel) {
+    if ('undefined' == typeof(sRootSel))
+        sRootSel = 'body';
     var iAutoupdate = 22*60*60; // autoupdate time in realtime if less than 22 hours
     var sSel = 'time';
+
+    if ('undefined' == typeof(sLang)) {
+        sLang = glBxTimeLang;
+    } else {
+        glBxTimeLang = sLang;
+    }
 
     if ('undefined' != typeof(isAutoupdate) && isAutoupdate)
         sSel += '.bx-time-autoupdate';
 
-    $(sSel).each(function () {
+    $(sRootSel).find(sSel).each(function () {
         var s;
         var sTime = $(this).attr('datetime');
         var iSecondsDiff = moment(sTime).unix() - moment().unix();
@@ -325,6 +340,14 @@ function bx_time(sLang, isAutoupdate) {
         }, 30000);
     }
 }
+
+(function($) {
+    $.fn.bxTime = function() {
+        bx_time(undefined, undefined, this);
+        return this;
+    }; 
+} (jQuery));
+
 
 /**
  * Perform connections AJAX request. 

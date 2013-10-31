@@ -130,7 +130,7 @@ BxTimelineView.prototype.showComments = function(oLink, iId) {
 					color: '#fff',
 					opacity: .7
 	            }
-	        });
+	        }).bxTime();
         },
         'json'
     );
