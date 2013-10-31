@@ -90,6 +90,8 @@ class BxTimelineTemplate extends BxDolModuleTemplate
     	$this->addCss(array('plugins/jquery/themes/|jquery-ui.css', 'view.css', 'view-media-tablet.css', 'view-media-desktop.css'));
         $this->addJs(array('jquery.ui.all.min.js', 'plugins/|masonry.pkgd.min.js', 'common_anim.js', 'main.js', 'view.js'));
 
+        $oModule = $this->getModule();
+        bx_import('Cmts', $oModule->_aModule);
 		BxTimelineCmts::includeCssJs();
 
     	return $this->parseHtmlByName('view.html', array(
