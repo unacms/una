@@ -34,7 +34,7 @@ BxDolCmts.prototype.cmtInitFormPost = function(sCmtFormId)
 {
 	var $this = this;
 	var oCmtForm = $('#' + sCmtFormId);
-console.log(oCmtForm);
+
 	oCmtForm.ajaxForm({
         dataType: "json",
         beforeSubmit: function (formData, jqForm, options) {
