@@ -2923,7 +2923,7 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 -- member toolbar menu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
 ('sys_toolbar_member', 'system', 'account', '_sys_menu_item_title_system_account', '', 'javascript:void(0);', 'bx_menu_popup(''sys_account'', this);', '', 'user', 'sys_account', 510, 1, 0, 1),
-('sys_toolbar_member', 'system', 'create-account', '_sys_menu_item_title_system_create_account', '', 'page.php?i=create-account', '', '', 'user', '', 1, 1, 0, 2);
+('sys_toolbar_member', 'system', 'login', '_sys_menu_item_title_system_login', '', 'page.php?i=login', '', '', 'user', '', 1, 1, 0, 2);
 
 -- add content menu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
@@ -3240,7 +3240,8 @@ CREATE TABLE IF NOT EXISTS `sys_objects_page` (
 INSERT INTO `sys_objects_page` (`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES
 ('sys_home', 'home', '_sys_page_title_system_home', '_sys_page_title_home', 'system', 5, 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxTemplPageHome', ''),
 ('sys_about', 'about', '_sys_page_title_system_about', '_sys_page_title_about', 'system', 5, 2147483647, 1, 'page.php?i=about', '', '', '', 0, 1, 0, '', ''),
-('sys_create_account', 'create-account', '_sys_page_title_system_create_account', '_sys_page_title_create_account', 'system', 1, 2147483647, 1, 'page.php?i=create-account', '', '', '', 0, 1, 0, '', ''),
+('sys_create_account', 'create-account', '_sys_page_title_system_create_account', '_sys_page_title_create_account', 'system', 5, 2147483647, 1, 'page.php?i=create-account', '', '', '', 0, 1, 0, '', ''),
+('sys_login', 'login', '_sys_page_title_system_login', '_sys_page_title_login', 'system', 5, 2147483647, 1, 'page.php?i=login', '', '', '', 0, 1, 0, '', ''),
 ('sys_forgot_password', 'forgot-password', '_sys_page_title_system_forgot_password', '_sys_page_title_forgot_password', 'system', 5, 2147483647, 1, 'page.php?i=forgot-password', '', '', '', 0, 1, 0, '', ''),
 ('sys_confirm_email', 'confirm-email', '_sys_page_title_system_confirm_email', '_sys_page_title_confirm_email', 'system', 5, 2147483647, 1, 'page.php?i=confirm-email', '', '', '', 0, 1, 0, '', ''),
 ('sys_account_settings_email', 'account-settings-email', '_sys_page_title_system_account_settings_email', '_sys_page_title_account_settings_email', 'system', 1, 2147483647, 1, 'member.php', '', '', '', 0, 1, 0, 'BxTemplPageAccount', ''),
@@ -3323,12 +3324,14 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 
 -- content blocks
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
+
 ('sys_home', 1, 'system', '_sys_page_block_title_login', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:10:"login_form";s:6:"params";a:1:{i:0;s:12:"no_join_text";}s:5:"class";s:17:"TemplServiceLogin";}', 0, 1, 1),
 
 ('sys_about', 1, 'system', '_sys_page_block_title_about', 11, 2147483647, 'lang', '_sys_page_lang_block_about', 0, 1, 1),
 
-('sys_create_account', 1, 'system', '_sys_page_block_title_login', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:10:"login_form";s:6:"params";a:1:{i:0;s:12:"no_join_text";}s:5:"class";s:17:"TemplServiceLogin";}', 0, 1, 1),
-('sys_create_account', 2, 'system', '_sys_page_block_title_create_account', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:19:"create_account_form";s:6:"params";a:0:{}s:5:"class";s:19:"TemplServiceAccount";}', 0, 1, 1),
+('sys_create_account', 1, 'system', '_sys_page_block_title_create_account', 11, 2147483647, 'service', 'a:4:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:19:\"create_account_form\";s:6:\"params\";a:0:{}s:5:\"class\";s:19:\"TemplServiceAccount\";}', 0, 1, 1),
+
+('sys_login', 1, 'system', '_sys_page_block_title_login', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:10:\"login_form\";s:5:\"class\";s:17:\"TemplServiceLogin\";}', 0, 1, 1),
 
 ('sys_forgot_password', 1, 'system', '_sys_page_block_title_forgot_password', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:15:"forgot_password";s:6:"params";a:0:{}s:5:"class";s:19:"TemplServiceAccount";}', 0, 1, 1),
 
