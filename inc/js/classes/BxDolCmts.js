@@ -34,7 +34,7 @@ BxDolCmts.prototype.cmtInitFormPost = function(sCmtFormId)
 {
 	var $this = this;
 	var oCmtForm = $('#' + sCmtFormId);
-
+console.log(oCmtForm);
 	oCmtForm.ajaxForm({
         dataType: "json",
         beforeSubmit: function (formData, jqForm, options) {
@@ -61,9 +61,15 @@ BxDolCmts.prototype.cmtAfterPostSubmit = function (oCmtForm, oData)
 	if(oData && oData.id != undefined) {
 		var iCmtId = parseInt(oData.id);
         if(iCmtId > 0) {
+        	var $this = this;
+
             this._getCmt(oCmtForm, iCmtId);
             this._getForm(undefined, parseInt(oData.parent_id), function(sForm) {
-            	oCmtForm.parents('.cmt-reply:first').hide().html($(sForm).html()).show();
+            	var oForm = $(sForm);
+            	oCmtForm.parents('.cmt-reply:first').hide().html(oForm.html()).show();
+
+            	var sFormId = oForm.find('form').attr('id');
+            	$this.cmtInitFormPost(sFormId);
             });
         }
 
