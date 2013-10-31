@@ -34,6 +34,12 @@
     width:auto;
 }
 
+/* common.css */
+
+.bx-popup-width {
+	width:auto;
+}
+
 /* page layouts */
 
 .bx-layout-col {

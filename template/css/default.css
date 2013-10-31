@@ -375,10 +375,6 @@ h3,
 
 /* image/thumbnail default styles */
 .bx-def-thumb {
-    -moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.8);
-    -webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.8);
-    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
-
 	border-radius:2px;
 	-moz-border-radius:2px;
 	-webkit-border-radius:2px;
@@ -386,10 +382,6 @@ h3,
     overflow:hidden;
 }
 .bx-def-icon {
-    -moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.8);
-    -webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.8);
-    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
-
 	border-radius:2px;
 	-moz-border-radius:2px;
 	-webkit-border-radius:2px;
