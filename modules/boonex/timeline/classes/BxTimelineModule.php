@@ -368,9 +368,6 @@ class BxTimelineModule extends BxDolModule
 
     public function getCmtsObject($iId, $bPerform = false)
     {
-    	if(!$this->isAllowedComment($bPerform))
-    		return false;
-
     	bx_import('BxDolCmts');
         $oCmts = BxDolCmts::getObjectInstance($this->_oConfig->getSystemName('comment'), $iId);
 		if(!$oCmts->isEnabled())
