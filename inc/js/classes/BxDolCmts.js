@@ -433,10 +433,10 @@ BxDolCmts.prototype._getCmt = function (e, iCmtId)
 
             //--- Some number of comments already loaded ---//
             if($(sListId + ' > li.cmt').length)
-                $(sListId + ' > li.cmt:last').after($(oData.content).hide()).next('li.cmt:hidden').bx_anim('toggle', $this._sAnimationEffect, $this._iAnimationSpeed);
+                $(sListId + ' > li.cmt:last').after($(oData.content).hide()).next('li.cmt:hidden').bxTime().bx_anim('toggle', $this._sAnimationEffect, $this._iAnimationSpeed);
             //-- There is no comments at all ---//
             else
-            	$(sListId).hide().html(oData.content).bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
+            	$(sListId).hide().html(oData.content).bxTime().bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
         },
         'json'
     );
@@ -506,19 +506,19 @@ BxDolCmts.prototype._getForm = function (e, iCmtParentId, onLoad)
 
 BxDolCmts.prototype._cmtsAppend = function(sIdTo, sContent)
 {
-	$(sIdTo).append($(sContent).hide()).children(':hidden').bx_anim('show', this._sAnimationEffect, this._iAnimationSpeed);
+	$(sIdTo).append($(sContent).hide()).children(':hidden').bxTime().bx_anim('show', this._sAnimationEffect, this._iAnimationSpeed);
 };
 
 BxDolCmts.prototype._cmtsPrepend = function(sIdTo, sContent)
 {
-	$(sIdTo).prepend($(sContent).hide()).children(':hidden').bx_anim('show', this._sAnimationEffect, this._iAnimationSpeed);
+	$(sIdTo).prepend($(sContent).hide()).children(':hidden').bxTime().bx_anim('show', this._sAnimationEffect, this._iAnimationSpeed);
 };
 
 BxDolCmts.prototype._cmtsReplace = function(oReplace, sContent)
 {
 	var $this = this;
 	$(oReplace).bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
-		$(this).after($(sContent).hide()).nextAll(':hidden').bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
+		$(this).after($(sContent).hide()).nextAll(':hidden').bxTime().bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
 		$(this).remove();
 	});
 };
@@ -526,7 +526,7 @@ BxDolCmts.prototype._cmtsReplaceContent = function(oParent, sContent)
 {
 	var $this = this;
 	$(oParent).bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
-		$(this).html(sContent).bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
+		$(this).html(sContent).bxTime().bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
 	});
 };
 

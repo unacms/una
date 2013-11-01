@@ -123,7 +123,7 @@ BxTimelinePost.prototype._getPost = function(oElement, iPostId) {
         		if(!$this.isMasonry())
         			$this.initMasonry();
 
-        		$this.prependMasonry(oData.item);
+        		$this.prependMasonry($(oData.item).bxTime());
         	}
         },
         'json'

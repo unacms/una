@@ -161,14 +161,14 @@ BxTimelineView.prototype._getPosts = function(oElement, sAction) {
 	        	switch(sAction) { 
 	        		case 'page':
 	        			$this.loadingInButton(oElement, false);
-	        			$this.appendMasonry(oData.items);
+	        			$this.appendMasonry($(oData.items).bxTime());
 			            break;
 
 	        		default:
 	        			$this.loadingInBlock(oElement, false);
 
 	        			oView.find('.bx-tl-items').bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-			                $(this).html(oData.items).show();
+			                $(this).html(oData.items).show().bxTime();
 
 			                if($this.isMasonryEmpty()) {
 			                	$this.destroyMasonry();

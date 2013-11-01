@@ -85,13 +85,13 @@ class BxDolCmtsQuery extends BxDolDb
         			break;
 
         		case BX_CMT_ORDER_BY_CONNECTION:
-        			$sFields .= " IF(NOT ISNULL(`tcc`.`id`), 1, 0) AS `cmt_author_contact`,";
-        			$sFields .= " IF(NOT ISNULL(`tcf`.`id`), 1, 0) AS `cmt_author_friend`,";
+        			$sFields .= " IF(NOT ISNULL(`tcs`.`id`), 1, 0) AS `cmt_author_subscriptions`,";
+        			$sFields .= " IF(NOT ISNULL(`tcc`.`id`), 1, 0) AS `cmt_author_connections`,";
 
-        			$sJoin .= $this->prepare(" LEFT JOIN `sys_profiles_conn_contacts` AS `tcc` ON ((`c`.`cmt_author_id`=`tcc`.`initiator` AND `tcc`.`content`=?) OR (`c`.`cmt_author_id`=`tcc`.`content` AND `tcc`.`initiator`=?))", $iAuthorId, $iAuthorId);
-        			$sJoin .= $this->prepare(" LEFT JOIN `sys_profiles_conn_friends` AS `tcf` ON ((`c`.`cmt_author_id`=`tcf`.`initiator` AND `tcf`.`content`=?) OR (`c`.`cmt_author_id`=`tcf`.`content` AND `tcf`.`initiator`=?))", $iAuthorId, $iAuthorId);
+        			$sJoin .= $this->prepare(" LEFT JOIN `sys_profiles_conn_subscriptions` AS `tcs` ON ((`c`.`cmt_author_id`=`tcs`.`initiator` AND `tcs`.`content`=?) OR (`c`.`cmt_author_id`=`tcs`.`content` AND `tcs`.`initiator`=?))", $iAuthorId, $iAuthorId);
+        			$sJoin .= $this->prepare(" LEFT JOIN `sys_profiles_conn_connections` AS `tcc` ON ((`c`.`cmt_author_id`=`tcc`.`initiator` AND `tcc`.`content`=?) OR (`c`.`cmt_author_id`=`tcc`.`content` AND `tcc`.`initiator`=?))", $iAuthorId, $iAuthorId);
 
-        			$sOder = " ORDER BY `cmt_author_friend` " . $aOrder['way'] . ",`cmt_author_contact` " . $aOrder['way'] . ",`c`.`cmt_time` ASC";
+        			$sOder = " ORDER BY `cmt_author_connections` " . $aOrder['way'] . ",`cmt_author_subscriptions` " . $aOrder['way'] . ",`c`.`cmt_time` ASC";
         			break;
 	        }
         }
