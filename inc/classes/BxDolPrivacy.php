@@ -198,8 +198,17 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
      * @param $sAction action to be checked
      * @return array of conditions, for now with 'restriction' part only is returned
      */
-    public function getContentPublicAsCondition($sAction) {
-        return $this->getContentByGroupAsCondition($sAction, isLogged() ? array(BX_DOL_PG_ALL, BX_DOL_PG_MEMBERS) : BX_DOL_PG_ALL);
+    public function getContentPublicAsCondition($sAction, $iProfileIdOwner = 0) {
+        $mixedPrivacyGroups = BX_DOL_PG_ALL;
+        if (isLogged()) {
+            if (bx_get_logged_profile_id() == $iProfileIdOwner)
+                return array();
+            if ($iProfileIdOwner && $this->checkConnections($iProfileIdOwner, bx_get_logged_profile_id()))
+                $mixedPrivacyGroups = array(BX_DOL_PG_ALL, BX_DOL_PG_MEMBERS, BX_DOL_PG_CONNECTIONS);
+            else
+                $mixedPrivacyGroups = array(BX_DOL_PG_ALL, BX_DOL_PG_MEMBERS);
+        }
+        return $this->getContentByGroupAsCondition($sAction, $mixedPrivacyGroups);
     }
 
     /**

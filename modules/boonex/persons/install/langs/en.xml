@@ -50,10 +50,10 @@
 	<string name="_bx_persons_page_title_sys_delete_profile"><![CDATA[Delete Person's Profile]]></string>
 	<string name="_bx_persons_page_title_delete_profile"><![CDATA[Delete Profile]]></string>
 	<string name="_bx_persons_page_title_sys_view_profile"><![CDATA[View Person's Profile]]></string>
-	<string name="_bx_persons_page_title_view_profile"><![CDATA[{fullname}]]></string>
+	<string name="_bx_persons_page_title_view_profile"><![CDATA[{display_name}]]></string>
 	<string name="_bx_persons_page_title_browse_recent"><![CDATA[Persons]]></string>
 	<string name="_bx_persons_page_title_sys_profile_info"><![CDATA[Profile Info]]></string>
-	<string name="_bx_persons_page_title_profile_info"><![CDATA[Info about {fullname}]]></string>
+	<string name="_bx_persons_page_title_profile_info"><![CDATA[Info about {display_name}]]></string>
 
 	<string name="_bx_persons_page_block_title_create_profile"><![CDATA[Create Person's Profile]]></string>
 	<string name="_bx_persons_page_block_title_edit_profile"><![CDATA[Edit Profile]]></string>

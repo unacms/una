@@ -216,6 +216,8 @@ class BxDolSearchResult {
 
     var $bProcessPrivateContent = true;
 
+    protected $_aMarkers = array ();
+
     /**
      * constructor
      * filling identificator field
@@ -723,6 +725,38 @@ class BxDolSearchResult {
      */
     function _getPseud () {
 
+    }
+
+    /**
+     * Add replace markers. Markers are replaced in titles and browse urls
+     * @param $a array of markers as key => value
+     * @return true on success or false on error
+     */
+    public function addMarkers ($a) {
+        if (empty($a) || !is_array($a))
+            return false;
+        $this->_aMarkers = array_merge ($this->_aMarkers, $a);
+        return true;
+    }
+
+    /**
+     * Replace provided markers in a string
+     * @param $mixed string or array to replace markers in
+     * @return string where all occured markers are replaced
+     */ 
+    protected function _replaceMarkers ($mixed) {
+        if (empty($this->_aMarkers))
+            return $mixed;
+
+        if (is_array($mixed)) {
+            foreach ($mixed as $sKey => $sValue)
+                $mixed[$sKey] = $this->_replaceMarkers ($sValue);
+        } else {
+            foreach ($this->_aMarkers as $sKey => $sValue)
+                $mixed = str_replace('{' . $sKey . '}', $sValue, $mixed);
+        }
+
+        return $mixed;
     }
 }
 

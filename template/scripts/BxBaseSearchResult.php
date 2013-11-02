@@ -19,7 +19,6 @@ class BxBaseSearchResult extends BxDolSearchResult {
     protected $sFilterName;
 
     protected $iDesignBoxTemplate = BX_DB_PADDING_DEF;
-    protected $aPermalinks;
     protected $aConstants;
 
     function __construct($oFunctions = false) {
@@ -35,10 +34,6 @@ class BxBaseSearchResult extends BxDolSearchResult {
 
     function getMain() {
         // override this to return main module class
-    }
-
-    function isPermalinkEnabled() {
-       return isset($this->_isPermalinkEnabled) ? $this->_isPermalinkEnabled : ($this->_isPermalinkEnabled = (getParam($this->aPermalinks['param']) == 'on'));
     }
 
     function getCurrentUrl ($sType, $iId, $sUri, $aOwner = '') {
@@ -184,12 +179,14 @@ class BxBaseSearchResult extends BxDolSearchResult {
 EOF;
     }
 
-    function showPagination($bAdmin = false, $bChangePage = true, $bPageReload = true) {
-
+    function showPagination($bAdmin = false, $bChangePage = true, $bPageReload = true)
+    {
         $oMain = $this->getMain();
         $oConfig = $oMain->_oConfig;
-        bx_import('BxDolPaginate');
-        $sUrlStart = BX_DOL_URL_ROOT . $oConfig->getBaseUri() . $this->sBrowseUrl;
+
+        bx_import('BxDolPermalinks');
+        $oPermalinks = BxDolPermalinks::getInstance();
+        $sUrlStart = BX_DOL_URL_ROOT . $oPermalinks->permalink($this->sBrowseUrl);
         $sUrlStart .= (false === strpos($sUrlStart, '?') ? '?' : '&');
 
         bx_import('BxTemplPaginate');
@@ -206,11 +203,14 @@ EOF;
     function showPaginationAjax($sBlockId) {
         $oMain = $this->getMain();
         $oConfig = $oMain->_oConfig;
-        bx_import('BxDolPaginate');
-        $sUrlStart = BX_DOL_URL_ROOT . $oConfig->getBaseUri() . $this->sBrowseUrl;
+        
+        bx_import('BxDolPermalinks');
+        $oPermalinks = BxDolPermalinks::getInstance();
+        $sUrlStart = BX_DOL_URL_ROOT . $oPermalinks->permalink($this->sBrowseUrl);
         $sUrlStart .= (false === strpos($sUrlStart, '?') ? '?' : '&');
 
-        $oPaginate = new BxDolPaginate(array(
+        bx_import('BxTemplPaginate');
+        $oPaginate = new BxTemplPaginate(array(
             'page_url' => 'javascript:void(0);',
             'num' => $this->aCurrent['paginate']['num'],
             'per_page' => $this->aCurrent['paginate']['perPage'],

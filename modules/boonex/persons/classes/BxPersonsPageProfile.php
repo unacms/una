@@ -21,6 +21,7 @@ bx_import('BxDolInformer');
 class BxPersonsPageProfile extends BxTemplPage {    
     
     protected $_aContentInfo;
+    protected $_aProfileInfo;
     protected $_oProfile;
     protected $_oProfileAuthor;
 
@@ -41,14 +42,15 @@ class BxPersonsPageProfile extends BxTemplPage {
             $this->_aContentInfo = $oModuleMain->_oDb->getContentInfoById($iContentId);
             $this->_oProfileAuthor = $this->_aContentInfo ? BxDolProfile::getInstance($this->_aContentInfo[BxPersonsConfig::$FIELD_AUTHOR]) : false;
             $this->_oProfile = $this->_oProfileAuthor ? BxDolProfile::getInstanceByContentTypeAccount($iContentId, 'bx_persons', $this->_oProfileAuthor->getAccountId()) : false;
+            $this->_aProfileInfo = $this->_oProfile ? $this->_oProfile->getInfo() : array();
         }
 
         if (!$this->_aContentInfo || !$this->_oProfile)
             return;
 
-        // select view note submenu        
-        $oMenuSumbemu = BxDolMenu::getObjectInstance('sys_site_submenu');
-        $oMenuSumbemu->setObjectSubmenu('bx_persons_view_submenu', array (
+        // select view profile submenu 
+        $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
+        $oMenuSubmenu->setObjectSubmenu('bx_persons_view_submenu', array (
             'title' => $this->_oProfile->getDisplayName(),
             'link' => $this->_oProfile->getUrl(),
             'icon' => $this->_oProfile->getIcon(),
@@ -59,8 +61,9 @@ class BxPersonsPageProfile extends BxTemplPage {
         $oMenuAction->setActionsMenu('bx_persons_view');        
 
         // add replaceable markers
-        $this->addMarkers($this->_aContentInfo); // every profile field can be used as marker
+        $this->addMarkers($this->_aProfileInfo); // every content field can be used as marker
         $this->addMarkers(array('profile_id' => $this->_oProfile->id())); // profile id field is also suported
+        $this->addMarkers(array('display_name' => $this->_oProfile->getDisplayName())); // profile display name is also suported
 
         // display message if profile isn't active
         if (bx_get_logged_profile_id() == $this->_oProfileAuthor->id()) { 
