@@ -121,7 +121,7 @@ class BxBaseStudioPage extends BxDolStudioPage {
         if($bHelp)
             $aItems['help'] = array(
                 'name' => 'help',
-                'icon' => 'question-sign',
+                'icon' => 'question-circle',
                 'onclick' => BX_DOL_STUDIO_PAGE_JS_OBJECT . ".togglePopup('help', this)",
                 'title' => '_adm_txt_show_help'
             );
