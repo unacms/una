@@ -77,11 +77,11 @@ class BxPersonsPageProfile extends BxTemplPage {
         if (isLogged()) {
             $aInformer = false;
             bx_import('BxDolConnection');
-            $oConn = BxDolConnection::getObjectInstance('sys_profiles_connections');
+            $oConn = BxDolConnection::getObjectInstance('sys_profiles_friends');
             if ($oConn->isConnectedNotMutual(bx_get_logged_profile_id(), $this->_oProfile->id()))
-                $aInformer = array ('name' => 'bx-persons-connection-pending-initiator', 'msg' => _t('_bx_persons_txt_connection_pending_initiator'), 'type' => BX_INFORMER_ALERT);
+                $aInformer = array ('name' => 'bx-persons-friend-pending-initiator', 'msg' => _t('_bx_persons_txt_friend_pending_initiator'), 'type' => BX_INFORMER_ALERT);
             elseif ($oConn->isConnectedNotMutual($this->_oProfile->id(), bx_get_logged_profile_id()))
-                $aInformer = array ('name' => 'bx-persons-connection-pending-content', 'msg' => _t('_bx_persons_txt_connection_pending_content'), 'type' => BX_INFORMER_ALERT);
+                $aInformer = array ('name' => 'bx-persons-friend-pending-content', 'msg' => _t('_bx_persons_txt_friend_pending_content'), 'type' => BX_INFORMER_ALERT);
             if ($aInformer)
                 $aInformers[] = $aInformer;
         }

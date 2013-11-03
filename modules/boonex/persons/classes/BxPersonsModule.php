@@ -81,7 +81,7 @@ class BxPersonsModule extends BxDolModule implements iBxDolProfileService {
         return $this->_serviceBrowse ('recent');
     }
 
-    public function serviceBrowseConnections ($iProfileId, $sObjectConnections = 'sys_profiles_connections', $sConnectionsType = 'content', $iMutual = false, $iDesignBox = BX_DB_PADDING_DEF) {
+    public function serviceBrowseConnections ($iProfileId, $sObjectConnections = 'sys_profiles_friends', $sConnectionsType = 'content', $iMutual = false, $iDesignBox = BX_DB_PADDING_DEF) {
         return $this->_serviceBrowse (
             'connections', 
             array(
@@ -336,15 +336,15 @@ class BxPersonsModule extends BxDolModule implements iBxDolProfileService {
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. 
      */
-    function isAllowedConnectAdd (&$aDataEntry, $isPerformAction = false) {
-        return $this->_isAllowedConnect ($aDataEntry, $isPerformAction, 'sys_profiles_connections', true, false);
+    function isAllowedFriendAdd (&$aDataEntry, $isPerformAction = false) {
+        return $this->_isAllowedConnect ($aDataEntry, $isPerformAction, 'sys_profiles_friends', true, false);
     }
 
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. 
      */
-    function isAllowedConnectRemove (&$aDataEntry, $isPerformAction = false) {
-        return $this->_isAllowedConnect ($aDataEntry, $isPerformAction, 'sys_profiles_connections', true, true);
+    function isAllowedFriendRemove (&$aDataEntry, $isPerformAction = false) {
+        return $this->_isAllowedConnect ($aDataEntry, $isPerformAction, 'sys_profiles_friends', true, true);
     }
 
     /**

@@ -89,7 +89,7 @@ class BxDolCmtsQuery extends BxDolDb
         			$sFields .= " IF(NOT ISNULL(`tcc`.`id`), 1, 0) AS `cmt_author_connections`,";
 
         			$sJoin .= $this->prepare(" LEFT JOIN `sys_profiles_conn_subscriptions` AS `tcs` ON ((`c`.`cmt_author_id`=`tcs`.`initiator` AND `tcs`.`content`=?) OR (`c`.`cmt_author_id`=`tcs`.`content` AND `tcs`.`initiator`=?))", $iAuthorId, $iAuthorId);
-        			$sJoin .= $this->prepare(" LEFT JOIN `sys_profiles_conn_connections` AS `tcc` ON ((`c`.`cmt_author_id`=`tcc`.`initiator` AND `tcc`.`content`=?) OR (`c`.`cmt_author_id`=`tcc`.`content` AND `tcc`.`initiator`=?))", $iAuthorId, $iAuthorId);
+        			$sJoin .= $this->prepare(" LEFT JOIN `sys_profiles_conn_friends` AS `tcc` ON ((`c`.`cmt_author_id`=`tcc`.`initiator` AND `tcc`.`content`=?) OR (`c`.`cmt_author_id`=`tcc`.`content` AND `tcc`.`initiator`=?))", $iAuthorId, $iAuthorId);
 
         			$sOder = " ORDER BY `cmt_author_connections` " . $aOrder['way'] . ",`cmt_author_subscriptions` " . $aOrder['way'] . ",`c`.`cmt_time` ASC";
         			break;

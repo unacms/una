@@ -3134,7 +3134,7 @@ CREATE TABLE IF NOT EXISTS `sys_objects_connection` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `sys_objects_connection` (`object`, `table`, `type`, `override_class_name`, `override_class_file`) VALUES
-('sys_profiles_connections', 'sys_profiles_conn_connections', 'mutual', '', ''),
+('sys_profiles_friends', 'sys_profiles_conn_friends', 'mutual', '', ''),
 ('sys_profiles_subscriptions', 'sys_profiles_conn_subscriptions', 'one-way', '', '');
 
 
@@ -3148,7 +3148,7 @@ CREATE TABLE IF NOT EXISTS `sys_profiles_conn_subscriptions` (
   KEY `content` (`content`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `sys_profiles_conn_connections` (
+CREATE TABLE IF NOT EXISTS `sys_profiles_conn_friends` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `initiator` int(11) NOT NULL,
   `content` int(11) NOT NULL,

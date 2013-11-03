@@ -70,11 +70,11 @@ class BxPersonsMenuViewPerson extends BxTemplMenu {
             case 'delete-persons-profile':
                 $sFuncCheckAccess = 'isAllowedDelete';
                 break;
-            case 'profile-connect-add':
-                $sFuncCheckAccess = 'isAllowedConnectAdd';
+            case 'profile-friend-add':
+                $sFuncCheckAccess = 'isAllowedFriendAdd';
                 break;
-            case 'profile-connect-remove':
-                $sFuncCheckAccess = 'isAllowedConnectRemove';
+            case 'profile-friend-remove':
+                $sFuncCheckAccess = 'isAllowedFriendRemove';
                 break;
             case 'profile-subscribe-add':
                 $sFuncCheckAccess = 'isAllowedSubscribeAdd';

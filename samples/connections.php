@@ -53,7 +53,7 @@ function PageCompMainCode() {
 
     // config: for displaying and data generation
     $sType = 'bx_persons'; // profiles type
-    $sObject = 'sys_profiles_connections'; // connections object
+    $sObject = 'sys_profiles_friends'; // connections object
 
 
     if ('gen' == bx_get('action') || (isset($_SERVER['argv'][1]) && 'gen' == $_SERVER['argv'][1])) {
@@ -140,19 +140,19 @@ function PageCompMainCode() {
         case 'search-results':
 
             echo "<h2>Mutual Content (like Friends)</h2>";
-            echo BxDolService::call('bx_persons', 'browse_connections', array($iProfileId, 'sys_profiles_connections', 'content', 1, BX_DB_CONTENT_ONLY));
+            echo BxDolService::call('bx_persons', 'browse_connections', array($iProfileId, 'sys_profiles_friends', 'content', 1, BX_DB_CONTENT_ONLY));
 
             echo "<h2>Connected Content</h2>";
-            echo BxDolService::call('bx_persons', 'browse_connections', array($iProfileId, 'sys_profiles_connections', 'content', false, BX_DB_CONTENT_ONLY));
+            echo BxDolService::call('bx_persons', 'browse_connections', array($iProfileId, 'sys_profiles_friends', 'content', false, BX_DB_CONTENT_ONLY));
 
             echo "<h2>Connected Initiators</h2>";
-            echo BxDolService::call('bx_persons', 'browse_connections', array($iProfileId, 'sys_profiles_connections', 'initiators', false, BX_DB_CONTENT_ONLY));
+            echo BxDolService::call('bx_persons', 'browse_connections', array($iProfileId, 'sys_profiles_friends', 'initiators', false, BX_DB_CONTENT_ONLY));
 
             echo "<h2>Connected Content without mutual content (like Friend Requests sent)</h2>";
-            echo BxDolService::call('bx_persons', 'browse_connections', array($iProfileId, 'sys_profiles_connections', 'content', 0, BX_DB_CONTENT_ONLY));
+            echo BxDolService::call('bx_persons', 'browse_connections', array($iProfileId, 'sys_profiles_friends', 'content', 0, BX_DB_CONTENT_ONLY));
 
             echo "<h2>Connected Initiators without mutual content (like Friend Requests received)</h2>";
-            echo BxDolService::call('bx_persons', 'browse_connections', array($iProfileId, 'sys_profiles_connections', 'initiators', 0, BX_DB_CONTENT_ONLY));
+            echo BxDolService::call('bx_persons', 'browse_connections', array($iProfileId, 'sys_profiles_friends', 'initiators', 0, BX_DB_CONTENT_ONLY));
             
         break;
     }
