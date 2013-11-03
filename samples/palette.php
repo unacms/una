@@ -38,16 +38,32 @@ function PageCompMainCode() {
     
     $aColors = array ('red1', 'red1-dark', 'red2', 'red2-dark', 'red3', 'red3-dark', 'green1', 'green1-dark', 'green2', 'green2-dark', 'green3', 'green3-dark', 'blue1', 'blue1-dark', 'blue2', 'blue2-dark', 'blue3', 'blue3-dark', 'gray', 'gray-dark');
 
+    $aDefBg = array ('bx-def-color-bg-page', 'bx-def-color-bg-block', 'bx-def-color-bg-box', 'bx-def-color-bg-sec', 'bx-def-color-bg-active', 'bx-def-color-bg-hl', 'bx-def-color-bg-hl-hover');
+
+    $sStyle = 'width:300px; height:100px; line-height:100px; display:inline-block; font-size:20px; font-weight:bold; text-align:center;';
+
     foreach ($aColors as $sColor) {
         $sClass = 'bx-def-round-corners bx-def-margin-right bx-def-margin-bottom';
         $sClassFt = 'col-'.$sColor;
         $sClassBg = 'bg-col-'.$sColor;        
-        $sStyle = 'width:300px; height:100px; line-height:100px; display:inline-block; font-size:20px; font-weight:bold; text-align:center;';
 ?>
-    <div>
-        <div class="<?=$sClass;?> <?=$sClassBg;?>" style="<?=$sStyle;?> color:#fff;">.<?=$sClassBg;?></div>
-        <div class="<?=$sClass;?> <?=$sClassFt;?>" style="<?=$sStyle;?> border:1px solid #ccc;">.<?=$sClassFt;?></div>
-    </div>
+        <div>
+            <div class="<?=$sClass;?> <?=$sClassBg;?>" style="<?=$sStyle;?> color:#fff;">.<?=$sClassBg;?></div>
+            <div class="<?=$sClass;?> <?=$sClassFt;?>" style="<?=$sStyle;?> border:1px solid #ccc;">.<?=$sClassFt;?></div>
+        </div>
+<?php
+    }
+
+?>
+        <hr class="bx-def-hr bx-def-margin-top bx-def-margin-bottom" />
+<?php
+
+    foreach ($aDefBg as $sClassBg) {
+        $sClass = 'bx-def-round-corners bx-def-margin-right bx-def-margin-bottom';
+?>
+        <div>
+            <div class="<?=$sClass;?> <?=$sClassBg;?> bx-def-border" style="<?=$sStyle;?>">.<?=$sClassBg;?></div>
+        </div>
 <?php
     }
 
