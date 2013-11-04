@@ -32,12 +32,20 @@ BxTimelineMain.prototype.destroyMasonry = function() {
 };
 
 BxTimelineMain.prototype.appendMasonry = function(oItems) {
-	var oItems = $(oItems);        			
+	var $this = this;
+	var oItems = $(oItems);
+	oItems.find('img.bx-tl-item-image').load(function() {
+		$this.reloadMasonry();
+	});
 	$(this.sIdView + ' .bx-tl-items').append(oItems).masonry('appended', oItems);
 };
 
 BxTimelineMain.prototype.prependMasonry = function(oItems) {
-	var oItems = $(oItems);        			
+	var $this = this;
+	var oItems = $(oItems);
+	oItems.find('img.bx-tl-item-image').load(function() {
+		$this.reloadMasonry();
+	});
 	$(this.sIdView + ' .bx-tl-items').prepend(oItems).masonry('prepended', oItems);
 };
 

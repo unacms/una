@@ -12,7 +12,7 @@ function BxTimelineView(oOptions) {
     	$('.bx-tl-item').resize(function() {
     		$this.reloadMasonry();
     	});
-    	$('.bx-tl-item-image').load(function() {
+    	$('img.bx-tl-item-image').load(function() {
     		$this.reloadMasonry();
     	});
     });
