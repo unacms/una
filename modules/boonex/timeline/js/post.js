@@ -5,6 +5,14 @@ function BxTimelinePost(oOptions) {
     this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'slide' : oOptions.sAnimationEffect;
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
     this._oRequestParams = oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams;
+
+    var $this = this;
+    $(document).ready(function () {
+    	$($this.sIdPost + ' form').each(function() {
+    		var sId = $(this).attr('id');
+    		$this.initFormPost(sId);
+    	});
+	});
 }
 
 BxTimelinePost.prototype = new BxTimelineMain();
@@ -67,7 +75,7 @@ BxTimelinePost.prototype.changePostType = function(oLink, sType) {
     	return;
     }
 
-    if(sType == 'photo' || sType == 'music' || sType == 'video') {
+    if(sType == 'music' || sType == 'video') {
         jQuery.post (
             $this._sActionsUrl + 'get_' + sType + '_uploaders/' + this._iOwnerId,
             {},

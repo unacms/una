@@ -1,8 +1,11 @@
 function BxTimelineMain() {
+	this.sIdPost = '#bx-timeline-post';
+	
 	this.sIdView = '#bx-timeline';
 	this.sIdItem = '#bx-timeline-item-';
+	this.sIdComments = '#bx-timeline-comments-';
 
-	this.sClassMasonry = "bx-tl-masonry";
+	this.sClassMasonry = 'bx-tl-masonry';
 }
 
 BxTimelineMain.prototype.isMasonry = function() {

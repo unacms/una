@@ -34,7 +34,50 @@ INSERT INTO `bx_timeline_handlers`(`type`, `alert_unit`, `alert_action`, `conten
 ('insert', 'timeline_common_sounds', '', ''),
 ('insert', 'timeline_common_videos', '', '');
 
--- TABLE: COMMENTS
+-- TABLES: UPLOADERS
+CREATE TABLE IF NOT EXISTS `bx_timeline_photos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `profile_id` int(10) unsigned NOT NULL,
+  `remote_id` varchar(255) NOT NULL,
+  `path` varchar(255) NOT NULL,
+  `file_name` varchar(255) NOT NULL,
+  `mime_type` varchar(128) NOT NULL,
+  `ext` varchar(32) NOT NULL,
+  `size` int(11) NOT NULL,
+  `added` int(11) NOT NULL,
+  `modified` int(11) NOT NULL,
+  `private` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `remote_id` (`remote_id`)
+);
+
+CREATE TABLE IF NOT EXISTS `bx_timeline_photos_preview` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `profile_id` int(10) unsigned NOT NULL,
+  `remote_id` varchar(255) NOT NULL,
+  `path` varchar(255) NOT NULL,
+  `file_name` varchar(255) NOT NULL,
+  `mime_type` varchar(128) NOT NULL,
+  `ext` varchar(32) NOT NULL,
+  `size` int(11) NOT NULL,
+  `added` int(11) NOT NULL,
+  `modified` int(11) NOT NULL,
+  `private` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `remote_id` (`remote_id`)
+);
+
+CREATE TABLE IF NOT EXISTS `bx_timeline_photos2events` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `event_id` int(11) NOT NULL DEFAULT '0',
+  `photo_id` int(11) NOT NULL DEFAULT '0',
+  `title` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `text` text collate utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `photo` (`event_id`, `photo_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+-- TABLES: COMMENTS
 CREATE TABLE IF NOT EXISTS `bx_timeline_comments` (
   `cmt_id` int(11) NOT NULL AUTO_INCREMENT,
   `cmt_parent_id` int(11) NOT NULL DEFAULT '0',
@@ -103,6 +146,27 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('mod_tml_link_add', 'owner_id', 2147483647, 1, 3),
 ('mod_tml_link_add', 'content', 2147483647, 1, 4),
 ('mod_tml_link_add', 'do_submit', 2147483647, 1, 5);
+
+-- Forms -> Photo
+INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
+('mod_tml_photo', @sName, '_bx_timeline_form_photo', '', '', 'do_submit', 'bx_timeline_events', 'id', '', '', '', 0, 1, '', '');
+
+INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
+('mod_tml_photo_add', @sName, 'mod_tml_photo', '_bx_timeline_form_photo_display_add', 0);
+
+INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES
+('mod_tml_photo', @sName, 'type', 'photo', '', 0, 'hidden', '_bx_timeline_form_photo_input_sys_type', '', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
+('mod_tml_photo', @sName, 'action', '', '', 0, 'hidden', '_bx_timeline_form_photo_input_sys_action', '', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
+('mod_tml_photo', @sName, 'owner_id', '0', '', 0, 'hidden', '_bx_timeline_form_photo_input_sys_owner_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('mod_tml_photo', @sName, 'content', '', '', 0, 'files', '_bx_timeline_form_photo_input_sys_content', '_bx_timeline_form_photo_input_content', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
+('mod_tml_photo', @sName, 'do_submit', '_bx_timeline_form_photo_input_do_submit', '', 0, 'submit', '_bx_timeline_form_photo_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
+
+INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
+('mod_tml_photo_add', 'type', 2147483647, 1, 1),
+('mod_tml_photo_add', 'action', 2147483647, 1, 2),
+('mod_tml_photo_add', 'owner_id', 2147483647, 1, 3),
+('mod_tml_photo_add', 'content', 2147483647, 1, 4),
+('mod_tml_photo_add', 'do_submit', 2147483647, 1, 5);
 
 -- STUDIO PAGE & WIDGET
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES

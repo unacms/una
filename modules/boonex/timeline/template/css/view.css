@@ -115,9 +115,4 @@ div.bx-tl-timeline .ui-slider-handle:hover {
 }
 
 /*--- Comments Styles ---*/
-div.bx-tl-comments {
-	margin: -20px;
-	max-height: 500px;
-	overflow: auto;
-}
-div.bx-tl-comments-cnt {}
+div.bx-tl-comments {}

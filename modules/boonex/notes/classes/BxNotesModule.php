@@ -191,8 +191,9 @@ class BxNotesModule extends BxDolModule {
     		return '';
 
     	bx_import('BxDolPermalinks');
-		$sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=view-note&id=' . $aContentInfo['id']);
+		$sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=view-note&id=' . $aContentInfo[BxNotesConfig::$FIELD_ID]);
 
+		//--- Image(s)
 	    $sImage = '';
         if($aContentInfo[BxNotesConfig::$FIELD_THUMB]) {
         	bx_import('BxDolStorage');
@@ -201,25 +202,33 @@ class BxNotesModule extends BxDolModule {
 				$sImage = $oStorage->getFileUrlById($aContentInfo[BxNotesConfig::$FIELD_THUMB]);
         }
 
-        $aComments = array(); 
+        //--- Comments
         bx_import('BxDolCmts');
         $oCmts = BxDolCmts::getObjectInstance(BxNotesConfig::$OBJECT_COMMENTS, $aEvent['object_id']);
+
+        $aComments = array(); 
 		if($oCmts->isEnabled())
 			$aComments = array(
-				'count' => $aContentInfo['comments'],
-    			'url' => $oCmts->getListUrl()
+				'system' => BxNotesConfig::$OBJECT_COMMENTS,
+				'object_id' => $aContentInfo[BxNotesConfig::$FIELD_ID],
+				'count' => $aContentInfo['comments']
 			);
 
     	return array(
     		'owner_id' => $aContentInfo[BxNotesConfig::$FIELD_AUTHOR],
-    		'content_type' => !empty($sImage) ? 'image' : 'text', //how to parse content, 'text' by default.
+    		'content_type' => !empty($sImage) ? 'photo' : 'text', //how to parse content, 'text' by default.
     		'content' => array(
     			'url' => $sUrl,
     			'title' => $aContentInfo[BxNotesConfig::$FIELD_TITLE],
     			'text' => $aContentInfo[BxNotesConfig::$FIELD_TEXT],
-    			'image' => $sImage
+    			'images' => array(
+    				array(
+    					'url' => $sUrl,
+    					'src' => $sImage
+    				)
+    			)
     		), //a string to display or array to parse default template before displaying.
-    		'comments'=> $aComments,
+    		'comments' => $aComments,
     		'title' => '', //may be empty.
     		'description' => '' //may be empty. 
     	);

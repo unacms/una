@@ -30,6 +30,10 @@ class BxTimelineConfig extends BxDolModuleConfig
     protected $_aHandlers;
     protected $_aHandlersHidden;
 
+    protected $_sStorageObject;
+    protected $_sTranscoderObjectPreview;
+    protected $_aImageUploaders;
+
     protected $_bJsMode;
     protected $_aJsClass;
     protected $_aJsObjects;
@@ -53,6 +57,10 @@ class BxTimelineConfig extends BxDolModuleConfig
 
         $this->_aHandlersHidden = array();
         $this->_aHandlers = array();
+
+        $this->_sStorageObject = 'bx_timeline_photos';
+        $this->_sTranscoderObjectPreview = 'bx_timeline_photos_preview';
+        $this->_aImageUploaders = array('bx_timeline_simple');        
 
         $this->_bJsMode = false;
         $this->_aJsClass = array(
@@ -141,6 +149,35 @@ class BxTimelineConfig extends BxDolModuleConfig
     	}
     	
         return $sResult;
+    }
+
+    public function getObject($sType)
+    {
+    	$sResult = '';
+
+    	switch($sType) {
+    		case 'storage':
+    			$sResult = $this->_sStorageObject;
+    			break;
+    		case 'transcoder_preview':
+    			$sResult = $this->_sTranscoderObjectPreview;
+    			break;
+    	}
+
+        return $sResult;
+    }
+
+    public function getUploaders($sType)
+    {
+    	$aResult = '';
+
+    	switch($sType) {
+    		case 'image':
+    			$aResult = $this->_aImageUploaders;
+    			break;
+    	}
+
+        return $aResult; 
     }
 
     public function getPerPage($sPage = 'profile')

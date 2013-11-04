@@ -9,6 +9,9 @@ function BxTimelineView(oOptions) {
     var $this = this;
     $(document).ready(function() {
     	$this.initMasonry();
+    	$('.bx-tl-item').resize(function() {
+    		$this.reloadMasonry();
+    	});
     	$('.bx-tl-item-image').load(function() {
     		$this.reloadMasonry();
     	});
@@ -103,14 +106,20 @@ BxTimelineView.prototype.showPostMenu = function(oLink) {
 	bx_menu_popup_inline('#' + sId, oLink);
 };
 
-BxTimelineView.prototype.showComments = function(oLink, iId) {
+BxTimelineView.prototype.showComments = function(oLink, sSystem, iId) {
 	var $this = this;
 
     var oData = this._getDefaultData();
     oData['id'] = iId;
+    oData['system'] = sSystem;
 
     if(oLink)
     	this.loadingInBlock(oLink, true);
+
+    if($(this.sIdComments + iId + ':hidden').length > 0) {
+    	$(oLink).next(this.sIdComments + iId + ':hidden').bx_anim('show', this._sAnimationEffect, this._iAnimationSpeed);
+    	return;
+    }
 
     jQuery.post (
         this._sActionsUrl + 'get_comments',
@@ -119,18 +128,12 @@ BxTimelineView.prototype.showComments = function(oLink, iId) {
         	if(oLink)
         		$this.loadingInBlock(oLink, false);
 
-        	if(!oData.popup)
+        	if(!oData.content)
         		return;
 
-        	var oPopup = $(oData.popup); 
-
-	    	$('#' + oPopup.attr('id')).remove();
-	        oPopup.prependTo('body').dolPopup({
-	        	fog: {
-					color: '#fff',
-					opacity: .7
-	            }
-	        }).bxTime();
+        	$(oLink).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+        		$(this).parents('.bx-tl-comments-link:first').after($(oData.content).hide()).next($this.sIdComments + iId + ':hidden').bxTime().bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
+    		});
         },
         'json'
     );

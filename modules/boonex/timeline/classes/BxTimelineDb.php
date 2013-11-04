@@ -24,13 +24,13 @@ class BxTimelineDb extends BxDolModuleDb
         $this->_oConfig = $oConfig;
     }
 
-    function getAlertHandlerId()
+    public function getAlertHandlerId()
     {
     	$sQuery = $this->prepare("SELECT `id` FROM `sys_alerts_handlers` WHERE `name`=? LIMIT 1", $this->_oConfig->getSystemName('alert'));
         return (int)$this->getOne($sQuery);
     }
 
-    function insertData($aData)
+    public function insertData($aData)
     {
         foreach($aData['handlers'] as $aHandler) {
             //--- Delete module related events ---//
@@ -73,7 +73,7 @@ class BxTimelineDb extends BxDolModuleDb
         }
     }
 
-    function deleteData($aData)
+    public function deleteData($aData)
     {
         foreach($aData['handlers'] as $aHandler) {
             //--- Delete module related events ---//
@@ -105,7 +105,7 @@ class BxTimelineDb extends BxDolModuleDb
         }
     }
 
-    function getHandlers($aParams = array())
+    public function getHandlers($aParams = array())
     {
         $sMethod = 'getAll';
         $sWhereClause = '';
@@ -125,7 +125,7 @@ class BxTimelineDb extends BxDolModuleDb
         return $this->$sMethod($sSql);
     }
 
-    function insertEvent($aParamsSet)
+    public function insertEvent($aParamsSet)
     {
     	if(empty($aParamsSet))
     		return 0;
@@ -148,7 +148,7 @@ class BxTimelineDb extends BxDolModuleDb
 
         return $iId;
     }
-    function updateEvent($aParamsSet, $aParamsWhere)
+    public function updateEvent($aParamsSet, $aParamsWhere)
     {
     	if(empty($aParamsSet) || empty($aParamsWhere))
     		return false;
@@ -165,7 +165,7 @@ class BxTimelineDb extends BxDolModuleDb
         return $this->query($sSql);
     }
 
-    function deleteEvent($aParams, $sWhereAddon = "")
+    public function deleteEvent($aParams, $sWhereAddon = "")
     {
         $aWhere = array();
         foreach($aParams as $sKey => $sValue)
@@ -175,7 +175,7 @@ class BxTimelineDb extends BxDolModuleDb
         return $this->query($sSql);
     }
 
-    function getEvents($aParams)
+    public function getEvents($aParams)
     {
     	$sMethod = 'getAll';
         $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
@@ -213,7 +213,7 @@ class BxTimelineDb extends BxDolModuleDb
                 $sWhereClause .= isset($aParams['filter']) ? $this->_getFilterAddon($aParams['owner_id'], $aParams['filter']) : '';
                 $sWhereClause .= $sWhereModuleFilter;
                 $sOrderClause = isset($aParams['order']) ? "ORDER BY `te`.`date` " . strtoupper($aParams['order']) : "";
-                $sLimitClause = isset($aParams['count']) ? "LIMIT " . $aParams['start'] . ", " . $aParams['count'] : "";
+                $sLimitClause = isset($aParams['per_page']) ? "LIMIT " . $aParams['start'] . ", " . $aParams['per_page'] : "";
                 break;
 
             case 'last':
@@ -265,41 +265,56 @@ class BxTimelineDb extends BxDolModuleDb
 
         return $aEvent['day_date'] == $aEvent['day_now'] ? (int)floor($aEvent['ago_days']) : (int)ceil($aEvent['ago_days']);
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    function deleteEventCommon($aParams)
+
+	public function savePhoto($iEventId, $iPhId, $sPhTitle, $sPhText)
+	{
+		$sQuery = $this->prepare("INSERT INTO `" . $this->_sPrefix . "photos2events` SET `event_id`=?, `photo_id`=?, `title`=?, `text`=?", $iEventId, $iPhId, $sPhTitle, $sPhText);
+		return (int)$this->query($sQuery) > 0;
+	}
+
+	public function deletePhotos($iEventId)
+	{
+		$sQuery = $this->prepare("DELETE FROM `" . $this->_sPrefix . "photos2events` WHERE `event_id` = ?", $iEventId);
+		return (int)$this->query($sQuery) > 0;
+	}
+
+	public function getPhotos($iEventId)
+	{
+		$sQuery = $this->prepare("SELECT
+				 `tpe`.`photo_id` AS `id`,
+				 `tpe`.`title` AS `title`,
+				 `tpe`.`text` AS `text`
+			FROM `" . $this->_sPrefix . "photos2events` AS `tpe` 
+			LEFT JOIN `" . $this->_sPrefix . "photos` AS `tp` ON `tpe`.`photo_id` = `tp`.`id` 
+			WHERE `tpe`.`event_id` = ?", $iEventId);
+
+		return $this->getAll($sQuery);
+	}
+
+	protected function _getFilterAddon($iOwnerId, $sFilter)
     {
-        return $this->deleteEvent($aParams, " AND `type` LIKE '" . $this->_oConfig->getCommonPostPrefix() . "%'");
-    }
-    function getUser($mixed, $sType = 'id')
-    {
-        switch($sType) {
-            case 'id':
-                $sWhereClause = "`ID`='" . $mixed . "'";
+        switch($sFilter) {
+            case BX_TIMELINE_FILTER_OWNER:
+                $sFilterAddon = " AND `te`.`action`='' AND `te`.`object_id`='" . $iOwnerId . "' ";
                 break;
-            case 'username':
-                $sWhereClause = "`NickName`='" . $mixed . "'";
+            case BX_TIMELINE_FILTER_OTHER:
+                $sFilterAddon = " AND `te`.`action`='' AND `te`.`object_id`<>'" . $iOwnerId . "' ";
                 break;
+            case BX_TIMELINE_FILTER_ALL:
+            default:
+                $sFilterAddon = "";
         }
-
-        $sSql = "SELECT `ID` AS `id`, `Couple` AS `couple`, `NickName` AS `username`, `Password` AS `password`, `Email` AS `email`, `Sex` AS `sex`, `Status` AS `status` FROM `Profiles` WHERE " . $sWhereClause . " LIMIT 1";
-        $aUser = $this->getRow($sSql);
-
-        if(empty($aUser))
-            $aUser = array('id' => 0, 'couple' => 0, 'username' => _t('_wall_anonymous'), 'password' => '', 'email' => '', 'sex' => 'male');
-
-        return $aUser;
+        return $sFilterAddon;
     }
 
+    
+    
+    
+    
+    
+    
+    
     //--- View Events Functions ---//
-
-
     function getEventsCount($iOwnerId, $sFilter, $sTimeline, $aModules)
     {
         $sWhereClause = "";
@@ -390,23 +405,6 @@ class BxTimelineDb extends BxDolModuleDb
 
         $sSql = "SELECT `Categories` FROM `" . $aType2Db[$sType]['table'] . "` WHERE `" . $aType2Db[$sType]['id'] . "`='" . $iId . "' LIMIT 1";
         return $this->getOne($sSql);
-    }
-
-    //--- Private functions ---//
-    function _getFilterAddon($iOwnerId, $sFilter)
-    {
-        switch($sFilter) {
-            case BX_TIMELINE_FILTER_OWNER:
-                $sFilterAddon = " AND `te`.`action`='' AND `te`.`object_id`='" . $iOwnerId . "' ";
-                break;
-            case BX_TIMELINE_FILTER_OTHER:
-                $sFilterAddon = " AND `te`.`action`='' AND `te`.`object_id`<>'" . $iOwnerId . "' ";
-                break;
-            case BX_TIMELINE_FILTER_ALL:
-            default:
-                $sFilterAddon = "";
-        }
-        return $sFilterAddon;
     }
 }
 

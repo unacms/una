@@ -1,11 +1,11 @@
 <div id="bx-timeline-item-__post_id__" class="__style_prefix__-item bx-tl-grid-sizer">
 	<div class="__style_prefix__-item-ind bx-def-padding-sec">
 	    <div class="__style_prefix__-item-cnt bx-def-padding bx-def-round-corners bx-def-shadow">
-	    	<bx_if:show_image>
-	    		<div class="__style_prefix__-item-image bx-def-thumb bx-def-margin-bottom">
-	    			<img class="__style_prefix__-item-image" alt="__image_title__" src="__image_url__" />
-	    		</div>
-	    	</bx_if:show_image>
+	    	<bx_if:show_images>
+	    		<bx_repeat:images>
+		    		<div class="__style_prefix__-item-image bx-def-thumb bx-def-margin-bottom">__image__</div>
+		    	</bx_repeat:images>
+	    	</bx_if:show_images>
 	    	<div class="__style_prefix__-owner bx-def-icon-size-min-height"> 
 		       	<div class="__style_prefix__-owner-icon bx-def-icon bx-def-icon-size">
 					<bx_if:show_icon>
@@ -22,11 +22,7 @@
 			        	<a href="__owner_url__" class="__style_prefix__-timeline-owner-name">__owner_username__</a>
 			        </bx_if:show_timeline_owner>
 				</div>
-				<div class="__style_prefix__-date bx-def-font-small bx-def-font-grayed">__item_date__
-					<bx_if:show_comments>
-						<i class="sys-icon comments bx-def-padding-left bx-def-padding-thd-right"></i><bx_include_auto:bx_a.html />
-					</bx_if:show_comments>
-				</div>
+				<div class="__style_prefix__-date bx-def-font-small bx-def-font-grayed">__item_date__</div>
 				<bx_if:show_menu>
 					<div class="__style_prefix__-item-menu">
 						__menu__
@@ -39,9 +35,7 @@
 			   	</bx_if:show_menu>
 			</div>
 			<bx_if:show_title>
-				<div class="__style_prefix__-title bx-def-margin-sec-top bx-def-font-large">
-					<a href="__item_url__">__item_title__</a>
-				</div>
+				<div class="__style_prefix__-title bx-def-margin-sec-top bx-def-font-large">__title__</div>
 			</bx_if:show_title>
 			<bx_if:show_content>
 				<div class="__style_prefix__-content bx-def-margin-sec-top bx-def-font-grayed">
@@ -49,6 +43,9 @@
 				</div>
 			</bx_if:show_content>
 
+			<bx_if:show_comments>
+				<div class="__style_prefix__-comments-link bx-def-margin-sec-top">__link__</div>
+			</bx_if:show_comments>
 			<!--
 			<div class="__style_prefix__-comments bx-def-margin-sec-top bx-def-border bx-def-round-corners">
 				<i class="sys-icon comment-alt"></i>

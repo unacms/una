@@ -26,7 +26,7 @@ define('BX_TIMELINE_DIVIDER_ID', ',');
 
 define('BX_TIMELINE_PARSE_TYPE_TEXT', 'text');
 define('BX_TIMELINE_PARSE_TYPE_LINK', 'link');
-define('BX_TIMELINE_PARSE_TYPE_IMAGE', 'image');
+define('BX_TIMELINE_PARSE_TYPE_PHOTO', 'photo');
 define('BX_TIMELINE_PARSE_TYPE_DEFAULT', BX_TIMELINE_PARSE_TYPE_TEXT);
 
 
@@ -91,6 +91,18 @@ class BxTimelineModule extends BxDolModule
             return;
         }
 
+        $aPhotos = $this->_oDb->getPhotos($iPostId);
+		if(is_array($aPhotos) && !empty($aPhotos)) {
+			bx_import('BxDolStorage');
+			$oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage'));
+
+			foreach($aPhotos as $aPhoto)
+				$oStorage->deleteFile($aPhoto['id']);
+
+			$this->_oDb->deletePhotos($iPostId);
+		}
+			
+
 		//--- Event -> Delete for Alerts Engine ---//
         bx_import('BxDolAlerts');
         $oAlert = new BxDolAlerts($this->_oConfig->getSystemName('alert'), 'delete', $iPostId, $this->getUserId());
@@ -107,7 +119,7 @@ class BxTimelineModule extends BxDolModule
         $this->_iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
         $aEvent = $this->_oDb->getEvents(array('type' => 'id', 'object_id' => bx_process_input(bx_get('post_id'), BX_DATA_INT)));
 
-        $this->_echoResultJson(array('item' => $this->_oTemplate->getCommon($aEvent)));
+        $this->_echoResultJson(array('item' => $this->_oTemplate->getCommon($aEvent, array('type' => 'owner', 'owner_id' => $this->_iOwnerId))));
     }
 
 	function actionGetPosts()
@@ -115,7 +127,16 @@ class BxTimelineModule extends BxDolModule
         $this->_oConfig->setJsMode(true);
 
 		list($iStart, $iPerPage, $sFilter, $iTimeline, $aModules) = $this->_prepareParams();
-		list($sItems, $sLoadMore) = $this->_oTemplate->getPosts($this->_iOwnerId, 'desc', $iStart, $iPerPage, $sFilter, $iTimeline, $aModules);
+		list($sItems, $sLoadMore) = $this->_oTemplate->getPosts(array(
+			'type' => 'owner',
+			'owner_id' => $this->_iOwnerId, 
+			'order' => 'desc', 
+			'start' => $iStart, 
+			'per_page' => $iPerPage, 
+			'filter' => $sFilter, 
+			'timeline' => $iTimeline, 
+			'modules' => $aModules
+		));
 
 		$this->_echoResultJson(array('items' => $sItems, 'load_more' => $sLoadMore));
     }
@@ -149,8 +170,10 @@ class BxTimelineModule extends BxDolModule
     {
     	$this->_iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
 
+    	$sSystem = bx_process_input(bx_get('system'), BX_DATA_TEXT);
     	$iId = bx_process_input(bx_get('id'), BX_DATA_INT);
-    	$aComments = $this->_oTemplate->getComments($iId);
+
+    	$aComments = $this->_oTemplate->getComments($sSystem, $iId);
 
     	$this->_echoResultJson($aComments);
     }
@@ -215,10 +238,9 @@ class BxTimelineModule extends BxDolModule
         $aMenu = array(
 			array('id' => 'timeline-ptype-text', 'name' => 'timeline-ptype-text', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => "javascript:" . $sJsObject . ".changePostType(this, 'text')", 'target' => '_self', 'title' => _t('_bx_timeline_menu_item_write')),
 			array('id' => 'timeline-ptype-link', 'name' => 'timeline-ptype-link', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => "javascript:" . $sJsObject . ".changePostType(this, 'link')", 'target' => '_self', 'title' => _t('_bx_timeline_menu_item_share_link')),
+			array('id' => 'timeline-ptype-photo', 'name' => 'timeline-ptype-photo', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => "javascript:" . $sJsObject . ".changePostType(this, 'photo')", 'target' => '_self', 'title' => _t('_bx_timeline_menu_item_add_photo'))
         );
 
-        if($this->_oDb->isModule('photos'))
-            $aMenu[] = array('id' => 'timeline-ptype-photo', 'name' => 'timeline-ptype-photo', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => "javascript:" . $sJsObject . ".changePostType(this, 'photo')", 'target' => '_self', 'title' => _t('_bx_timeline_menu_item_add_photo'));
         if($this->_oDb->isModule('sounds'))
             $aMenu[] = array('id' => 'timeline-ptype-sound', 'name' => 'timeline-ptype-sound', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => "javascript:" . $sJsObject . ".changePostType(this, 'sound')", 'target' => '_self', 'title' => _t('_bx_timeline_menu_item_add_music'));
         if($this->_oDb->isModule('videos'))
@@ -294,11 +316,7 @@ class BxTimelineModule extends BxDolModule
 			));
 
 			if($iId != 0) {
-				//--- Event -> Post for Alerts Engine ---//
-                bx_import('BxDolAlerts');
-                $oAlert = new BxDolAlerts($this->_oConfig->getSystemName('alert'), 'post', $iId, $iUserId);
-                $oAlert->alert();
-                //--- Event -> Post for Alerts Engine ---//
+				$this->_onPost($iId, $iUserId);
 
                 return array('id' => $iId);
 			}
@@ -351,11 +369,7 @@ class BxTimelineModule extends BxDolModule
 			));
 
 			if($iId != 0) {
-				//--- Event -> Post for Alerts Engine ---//
-                bx_import('BxDolAlerts');
-                $oAlert = new BxDolAlerts($this->_oConfig->getSystemName('alert'), 'post', $iId, $iUserId);
-                $oAlert->alert();
-                //--- Event -> Post for Alerts Engine ---//
+				$this->_onPost($iId, $iUserId);
 
                 return array('id' => $iId);
 			}
@@ -366,10 +380,107 @@ class BxTimelineModule extends BxDolModule
         return array('form' => $oForm->getCode(), 'form_id' => $oForm->id);
     }
 
-    public function getCmtsObject($iId, $bPerform = false)
+    public function getFormPhoto()
+    {
+    	$aFormNested = array(
+			'inputs' => array(
+		    	'file_title' => array(
+		        	'type' => 'text',
+		            'name' => 'file_title[]',
+		            'value' => '{file_title}',
+		            'caption' => _t('_bx_timeline_form_photo_input_title'),
+		            'required' => true,
+		            'checker' => array(
+		            	'func' => 'length',
+		                'params' => array(1, 150),
+		                'error' => _t('_bx_timeline_form_photo_input_err_title')
+					),
+					'db' => array (
+ 						'pass' => 'Xss',
+ 					),
+				),
+
+				'file_text' => array(
+		        	'type' => 'textarea',
+		            'name' => 'file_text[]',
+		            'caption' => _t('_bx_timeline_form_photo_input_description'),
+		            'required' => true,
+		            'checker' => array(
+		            	'func' => 'length',
+		                'params' => array(10, 5000),
+		                'error' => _t('_bx_timeline_form_photo_input_err_description')
+					),
+					'db' => array (
+ 						'pass' => 'Xss',
+ 					),
+				),
+			),
+		);
+
+    	bx_import('BxDolForm');
+        $oForm = BxDolForm::getObjectInstance('mod_tml_photo', 'mod_tml_photo_add');
+        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'post/';
+        $oForm->aInputs['owner_id']['value'] = $this->_iOwnerId;
+
+	    bx_import('BxDolFormNested');
+	    $oFormNested = new BxDolFormNested('content', $aFormNested, 'do_submit');
+
+        $oForm->aInputs['content']['storage_object'] = $this->_oConfig->getObject('storage');
+        $oForm->aInputs['content']['images_transcoder'] = $this->_oConfig->getObject('transcoder_preview');
+        $oForm->aInputs['content']['uploaders'] = $this->_oConfig->getUploaders('image');
+        $oForm->aInputs['content']['multiple'] = false;
+        $oForm->aInputs['content']['ghost_template'] = $oFormNested;
+
+        $oForm->initChecker();
+        if($oForm->isSubmittedAndValid()) {
+        	$iUserId = $this->getUserId();
+        	list($sUserName) = $this->getUserInfo($iUserId);
+
+        	$sType = $oForm->getCleanValue('type');
+        	$sType = $this->_oConfig->getPrefix('common_post') . $sType;
+        	BxDolForm::setSubmittedValue('type', $sType, $oForm->aFormAttrs['method']);
+
+        	$aPhIds = $oForm->getCleanValue('content');
+        	BxDolForm::setSubmittedValue('content', serialize(array()), $oForm->aFormAttrs['method']);
+
+        	bx_import('BxDolPrivacy');
+        	$iId = $oForm->insert(array(
+        		'object_id' => $iUserId,
+        		'object_privacy_view' => BX_DOL_PG_ALL,
+				'title' => bx_process_input($sUserName . ' ' . _t('_bx_timeline_txt_added_photo')),
+				'description' => '',
+        		'date' => time()
+			));
+
+			if($iId != 0) {
+				$iPhIds = count($aPhIds);
+				if($iPhIds > 0) {
+					$aPhTitles = $oForm->getCleanValue('file_title');
+					$aPhTexts = $oForm->getCleanValue('file_text');
+
+					bx_import('BxDolStorage');
+					$oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage'));
+
+					for($i = 0; $i < $iPhIds; $i++) 
+						if($this->_oDb->savePhoto($iId, $aPhIds[$i], $aPhTitles[$i], $aPhTexts[$i]))
+							$oStorage->afterUploadCleanup($aPhIds[$i], $iUserId);
+				}
+
+				$this->_onPost($iId, $iUserId);
+
+                return array('id' => $iId);
+			}
+
+			return array('msg' => _t('_bx_timeline_txt_err_cannot_perform_action'));
+        }
+
+        return array('form' => $oForm->getCode(), 'form_id' => $oForm->id);
+    }
+
+    public function getCmtsObject($sSystem, $iId)
     {
     	bx_import('BxDolCmts');
-        $oCmts = BxDolCmts::getObjectInstance($this->_oConfig->getSystemName('comment'), $iId);
+        $oCmts = BxDolCmts::getObjectInstance($sSystem, $iId);
 		if(!$oCmts->isEnabled())
 			return false;
 
@@ -480,6 +591,15 @@ class BxTimelineModule extends BxDolModule
         }
 
         BxDolAlerts::cache();
+    }
+
+    protected function _onPost($iId, $iUserId)
+    {
+    	//--- Event -> Post for Alerts Engine ---//
+		bx_import('BxDolAlerts');
+        $oAlert = new BxDolAlerts($this->_oConfig->getSystemName('alert'), 'post', $iId, $iUserId);
+        $oAlert->alert();
+        //--- Event -> Post for Alerts Engine ---//
     }
 
 	protected function _echoResultJson($a, $isAutoWrapForFormFileSubmit = false) {
