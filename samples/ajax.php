@@ -22,11 +22,12 @@ bx_import('BxTemplFunctions');
 
 if  (bx_get('ajax') || (isset( $_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
     sleep(3);
-    echo '<div class="bx-def-padding bx-def-color-bg-block">AJAX content here: ' .  date(DATE_RFC822) . '</div>';
+    echo '<div class="bx-def-padding bx-def-color-bg-block">AJAX content here: ' .  bx_time_js(time(), BX_FORMAT_DATE_TIME, rand(0, 1)) . '</div>';
     exit;
 }
 
 $oTemplate = BxDolTemplate::getInstance();
+$oTemplate->addJs('jquery.webForms.js');
 $oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);
 $oTemplate->setPageHeader ("AJAX");
 $oTemplate->setPageContent ('page_main_code', PageCompMainCode());

@@ -41,8 +41,9 @@ class BxNotesSearchResult extends BxTemplSearchResult {
     );
 
 
-    function __construct($sMode = '', $sValue = '', $sValue2 = '', $sValue3 = '') {
+    function __construct($sMode = '', $aParams) {
 
+        $oProfileAuthor = null;
         $oModuleMain = $this->getMain();
 
         switch ($sMode) {
@@ -56,46 +57,23 @@ class BxNotesSearchResult extends BxTemplSearchResult {
                 unset($this->aCurrent['rss']);
                 break;
 
-            case 'user':
-                $iProfileId = (int)$sValue;                
-                $aContentInfo = $oModuleMain->_oDb->getContentInfoById($iContentId);
-                if (!$aContentInfo)
+            case 'author':
+                bx_import('BxDolProfile');                
+                $oProfileAuthor = BxDolProfile::getInstance((int)$aParams['author']);
+                if (!$oProfileAuthor) {
                     $this->isError = true;
-                else
-                    $this->aCurrent['restriction']['owner']['value'] = $iProfileId;
-
-                $this->sBrowseUrl = "browse/user/$sValue";
-                $this->aCurrent['title'] = _t('_bx_notes_page_title_browse_by_author', $aContentInfo['fullname']); // TODO: owner name here
-                if (bx_get('rss')) {
-                    $aData = getProfileInfo($iProfileId);
-                    if ($aData['Avatar']) {
-                        $a = array ('ID' => $aData['author_id'], 'Avatar' => $aData['thumb']);
-                        $aImage = BxDolService::call('photos', 'get_image', array($a, 'browse'), 'Search');
-                        if (!$aImage['no_image'])
-                            $this->aCurrent['rss']['image'] = $aImage['file'];
-                    }
+                    break;
                 }
-                break;
 
-            case 'my':
-                $this->sBrowseUrl = 'browse/my';
-                $this->aCurrent['restriction']['author']['value'] = bx_get_logged_profile_id();
-                $this->aCurrent['title'] = _t('_bx_notes_page_title_browse_my');
+                $this->aCurrent['restriction']['author']['value'] = $oProfileAuthor->id();
+
+                $this->sBrowseUrl = 'page.php?i=notes-author&profile_id={profile_id}';
+                $this->aCurrent['title'] = _t('_bx_notes_page_title_browse_by_author');               
                 break;
             
             case 'public':
             case '':
-                bx_import('BxDolPrivacy');
-                $oPrivacy = BxDolPrivacy::getObjectInstance(BxNotesConfig::$OBJECT_PRIVACY_VIEW);
-                $a = $oPrivacy ? $oPrivacy->getContentPublicAsCondition('view') : array();
-                if (isset($a['restriction']))
-                    $this->aCurrent['restriction'] = array_merge($this->aCurrent['restriction'], $a['restriction']);
-                if (isset($a['join']))
-                    $this->aCurrent['join'] = array_merge($this->aCurrent['join'], $a['join']);
-                if (isset($a['restriction']) || isset($a['join']))
-                    $this->setProcessPrivateContent(false);
-
-                $this->sBrowseUrl = 'browse/recent';
+                $this->sBrowseUrl = 'page.php?i=notes-home';
                 $this->aCurrent['title'] = _t('_bx_notes_page_title_browse_recent');
                 break;
 
@@ -103,16 +81,37 @@ class BxNotesSearchResult extends BxTemplSearchResult {
                 $this->isError = true;
         }
 
-        // $this->aCurrent['paginate']['perPage'] = $oModuleMain->_oDb->getParam('bx_groups_perpage_browse'); // TODO:
-
-        if (isset($this->aCurrent['rss']))
-            $this->aCurrent['rss']['link'] = BX_DOL_URL_ROOT . $oModuleMain->_oConfig->getBaseUri() . $this->sBrowseUrl;
-
-        if (bx_get('rss')) {
-            $this->aCurrent['paginate']['perPage'] = 10;//$oModuleMain->_oDb->getParam('bx_groups_max_rss_num');
+        // add replacable markers and replace them
+        if ($oProfileAuthor) {
+            $this->addMarkers($oProfileAuthor->getInfo()); // profile info is replacable
+            $this->addMarkers(array('profile_id' => $oProfileAuthor->id())); // profile id is replacable
+            $this->addMarkers(array('display_name' => $oProfileAuthor->getDisplayName())); // profile display name is replacable
         }
 
+        $this->sBrowseUrl = $this->_replaceMarkers($this->sBrowseUrl);
+        $this->aCurrent['title'] = $this->_replaceMarkers($this->aCurrent['title']);
+
+        // add conditions for private content
+        bx_import('BxDolPrivacy');
+        $oPrivacy = BxDolPrivacy::getObjectInstance(BxNotesConfig::$OBJECT_PRIVACY_VIEW);
+        $a = $oPrivacy ? $oPrivacy->getContentPublicAsCondition('view', $oProfileAuthor ? $oProfileAuthor->id() : 0) : array();
+        if (isset($a['restriction']))
+            $this->aCurrent['restriction'] = array_merge($this->aCurrent['restriction'], $a['restriction']);
+        if (isset($a['join']))
+            $this->aCurrent['join'] = array_merge($this->aCurrent['join'], $a['join']);
+
+        $this->setProcessPrivateContent(false);
+
+        // set rss links if required
+        if (isset($this->aCurrent['rss']))
+            $this->aCurrent['rss']['link'] = BX_DOL_URL_ROOT . $this->sBrowseUrl;
+
+        if (bx_get('rss'))
+            $this->aCurrent['paginate']['perPage'] = 10;//$oModuleMain->_oDb->getParam('bx_groups_max_rss_num');
+
         $this->sFilterName = 'bx_notes_filter';
+
+        // $this->aCurrent['paginate']['perPage'] = $oModuleMain->_oDb->getParam('bx_groups_perpage_browse'); // TODO:
 
         parent::__construct();
     }

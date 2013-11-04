@@ -14,7 +14,7 @@ bx_import('BxTemplMenu');
 /**
  * 'View Note' menu.
  */
-class BxNotesMenuViewNote extends BxTemplMenu {
+class BxNotesMenuView extends BxTemplMenu {
 
     protected $_aContentInfo;
     protected $_oModule;

@@ -34,8 +34,12 @@ class BxNotesModule extends BxDolModule {
         return $this->_serviceBrowse ('public');
     }
 
-    public function serviceBrowseMy () {
-        return $this->_serviceBrowse ('my');
+    public function serviceBrowseAuthor ($iProfileId = 0) {
+        if (!$iProfileId)
+            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+        if (!$iProfileId)
+            return '';
+        return $this->_serviceBrowse ('author', array('author' => $iProfileId));
     }
 
     public function _serviceBrowse ($sMode, $aParams = false) {

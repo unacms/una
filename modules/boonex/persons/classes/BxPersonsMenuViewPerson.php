@@ -10,32 +10,36 @@
  */
 
 bx_import('BxTemplMenu');
+bx_import('BxDolProfile');
 
 /**
  * 'View person' menu.
  */
 class BxPersonsMenuViewPerson extends BxTemplMenu {
 
+    protected $_oProfile;
     protected $_aContentInfo;
+    protected $_aProfileInfo;
     protected $_oModule;
 
     public function __construct($aObject, $oTemplate = false) {
         parent::__construct($aObject, $oTemplate);
 
+        $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
         $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if ($iProfileId)
+            $this->_oProfile = BxDolProfile::getInstance($iProfileId);
+        if (!$this->_oProfile && $iContentId)
+            $this->_oProfile = BxDolProfile::getInstanceByContentAndType($iContentId, 'bx_persons');
 
-        $this->_oModule = BxDolModule::getInstance('bx_persons');
-        $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
+        if ($this->_oProfile) {
+            $this->_aProfileInfo = $this->_oProfile->getInfo();
 
-        if ($this->_aContentInfo) {
+            $this->_oModule = BxDolModule::getInstance('bx_persons');
+            $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($this->_aProfileInfo['content_id']);
 
-            $oProfileAuthor = BxDolProfile::getInstance($this->_aContentInfo[BxPersonsConfig::$FIELD_AUTHOR]);
-            $oProfile = $oProfileAuthor ? BxDolProfile::getInstanceByContentTypeAccount($iContentId, 'bx_persons', $oProfileAuthor->getAccountId()) : false;
-
-            $this->addMarkers(array(
-                'content_id' => $this->_aContentInfo['id'],
-                'profile_id' => $oProfile ? $oProfile->id() : 0
-            ));
+            $this->addMarkers($this->_aProfileInfo);
+            $this->addMarkers(array('profile_id' => $this->_oProfile->id()));
         }
     }
 
@@ -66,11 +70,11 @@ class BxPersonsMenuViewPerson extends BxTemplMenu {
             case 'delete-persons-profile':
                 $sFuncCheckAccess = 'isAllowedDelete';
                 break;
-            case 'profile-connect-add':
-                $sFuncCheckAccess = 'isAllowedConnectAdd';
+            case 'profile-friend-add':
+                $sFuncCheckAccess = 'isAllowedFriendAdd';
                 break;
-            case 'profile-connect-remove':
-                $sFuncCheckAccess = 'isAllowedConnectRemove';
+            case 'profile-friend-remove':
+                $sFuncCheckAccess = 'isAllowedFriendRemove';
                 break;
             case 'profile-subscribe-add':
                 $sFuncCheckAccess = 'isAllowedSubscribeAdd';
@@ -79,6 +83,9 @@ class BxPersonsMenuViewPerson extends BxTemplMenu {
                 $sFuncCheckAccess = 'isAllowedSubscribeRemove';
                 break;
         }
+
+        if (!$sFuncCheckAccess)
+            return true;
 
         return $sFuncCheckAccess && CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->$sFuncCheckAccess($this->_aContentInfo) ? true : false;
     }

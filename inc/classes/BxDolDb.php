@@ -632,7 +632,7 @@ EOJ;
         if (is_array($mixed)) {
             $s = '';
             foreach ($mixed as $v)
-                $s .= is_numeric($v) ? $v : "'" . mysql_real_escape_string($v) . "',";
+                $s .= (is_numeric($v) ? $v : "'" . mysql_real_escape_string($v) . "'") . ',';
             if ($s)
                 return substr($s, 0, -1);
             else

@@ -40,15 +40,10 @@ function getHtmlData( elem, url, callback, method , confirmation)
         $.post(url, function(data) {
 
             $block.html(data);
+	        $block.css('position', blockPos).bxTime();
+            if ($.isFunction($.fn.addWebForms))
+                $block.addWebForms();
 
-	        $block.css('position', blockPos); // return previous value
-
-            if ($.isFunction($.addWebForms))
-		        $block.addWebForms();
-
-            if ($.isFunction($.bxTime))
-		        $block.bxTime();
-        
             if (typeof callback == 'function')
                 callback.apply($block);
         });
@@ -56,13 +51,10 @@ function getHtmlData( elem, url, callback, method , confirmation)
     } else {
 
         $block.load(url + '&_r=' + Math.random(), function() {
-	        $(this).css('position', blockPos); // return previous value
 
-            if ($.isFunction($.addWebForms))
-		        $(this).addWebForms();
-
-            if ($.isFunction($.bxTime))
-		        $(this).bxTime();
+	        $(this).css('position', blockPos).bxTime();
+            if ($.isFunction($.fn.addWebForms))
+                $(this).addWebForms();
 
             if (typeof callback == 'function')
                 callback.apply(this);
