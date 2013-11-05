@@ -153,7 +153,7 @@ class BxNotesModule extends BxDolModule {
 		if(!$oCmts->isEnabled())
 			return false;
 
-        return $oCmts->getCommentsBlock();
+        return $oCmts->getCommentsBlock(0, 0, false);
     }
 
     public function serviceEntityAuthor ($iContentId = 0) {
