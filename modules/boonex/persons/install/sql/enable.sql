@@ -128,7 +128,7 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 -- Dumping data for 'bx_persons_view' menu
 --
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_persons_view', '_bx_persons_menu_title_view_person', 'bx_persons_view', 'bx_persons', 10, 0, 1, 'BxPersonsMenuViewPerson', 'modules/boonex/persons/classes/BxPersonsMenuViewPerson.php');
+('bx_persons_view', '_bx_persons_menu_title_view_person', 'bx_persons_view', 'bx_persons', 9, 0, 1, 'BxPersonsMenuViewPerson', 'modules/boonex/persons/classes/BxPersonsMenuViewPerson.php');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_persons_view', 'bx_persons', '_bx_persons_menu_set_title_view_person', 0);
