@@ -82,6 +82,10 @@ blockquote {
     text-decoration:underline;
 }
 
+.bx-db-menu-tab-btn a {
+    text-decoration:none;
+}
+
 /* --------------- popup boxes */
 
 .bx-popup-width {
@@ -270,6 +274,14 @@ blockquote {
     text-decoration:none;
     background-repeat:no-repeat;
     background-position:0px center;
+}
+
+.bx-btn u.sys-icon {
+    padding-left:0px;
+}
+
+.bx-btn u.sys-icon:before {
+    margin-right:8px;
 }
 
 button.bx-btn,
