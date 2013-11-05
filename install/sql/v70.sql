@@ -2834,8 +2834,7 @@ INSERT INTO `sys_menu_templates` (`id`, `template`, `title`) VALUES
 (6, 'menu_vertical.html', '_sys_menu_template_title_ver'),
 (7, 'menu_floating_blocks.html', '_sys_menu_template_title_floating_blocks'),
 (8, 'menu_main_submenu.html', '_sys_menu_template_title_main_submenu'),
-(9, 'menu_action.html', '_sys_menu_template_title_action'),
-(10, 'menu_floating_circles.html', '_sys_menu_template_title_floating_circles');
+(9, 'menu_buttons_hor.html', '_sys_menu_template_title_buttons_hor');
 
 CREATE TABLE IF NOT EXISTS `sys_objects_menu` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -2856,7 +2855,6 @@ INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `templa
 ('sys_site', '_sys_menu_title_main', 'sys_site', 'system', 7, 0, 1, '', ''),
 ('sys_site_submenu', '_sys_menu_title_submenu', 'sys_site', 'system', 1, 0, 1, 'BxTemplMenuSubmenu', ''),
 ('sys_site_submenu_main', '_sys_menu_title_submenu_main', 'sys_site', 'system', 8, 0, 1, '', ''),
-('sys_site_action', '_sys_menu_title_action', 'sys_site_action', 'system', 9, 0, 1, 'BxTemplMenuAction', ''),
 ('sys_footer', '_sys_menu_title_footer', 'sys_footer', 'system', 2, 0, 1, '', ''),
 ('sys_toolbar_site', '_sys_menu_title_toolbar_site', 'sys_toolbar_site', 'system', 5, 0, 1, '', ''),
 ('sys_toolbar_member', '_sys_menu_title_toolbar_member', 'sys_toolbar_member', 'system', 5, 0, 1, 'BxTemplMenuToolbar', ''),
@@ -2875,7 +2873,6 @@ CREATE TABLE IF NOT EXISTS `sys_menu_sets` (
 
 INSERT INTO `sys_menu_sets` (`set_name`, `module`, `title`, `deletable`) VALUES
 ('sys_site', 'system', '_sys_menu_set_title_site', 0),
-('sys_site_action', 'system', '_sys_menu_set_title_action', 0),
 ('sys_footer', 'system', '_sys_menu_set_title_footer', 0),
 ('sys_toolbar_site', 'system', '_sys_menu_set_title_toolbar_site', 0),
 ('sys_toolbar_member', 'system', '_sys_menu_set_title_toolbar_member', 0),
@@ -2907,10 +2904,6 @@ CREATE TABLE IF NOT EXISTS `sys_menu_items` (
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
 ('sys_site', 'system', 'home', '_sys_menu_item_title_system_home', '_sys_menu_item_title_home', 'index.php', '', '', 'home col-gray-dark', '', 2147483647, 1, 1, 1),
 ('sys_site', 'system', 'about', '_sys_menu_item_title_system_about', '_sys_menu_item_title_about', 'page.php?i=about', '', '', 'info-circle col-blue3-dark', '', 2147483647, 1, 1, 2);
-
--- action menu
-INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_site_action', 'system', 'action', '_sys_menu_item_title_system_action', '', 'javascript:void(0);', 'bx_menu_action_toggle (this);', '', 'caret-left', '', 2147483647, 1, 0, 0);
 
 -- footer menu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES

@@ -168,6 +168,17 @@ class BxPersonsModule extends BxDolModule implements iBxDolProfileService {
         return $this->_oTemplate->cover($aContentInfo);
     }
 
+    public function serviceProfileActions ($iContentId = 0) {
+       if (!$iContentId)
+            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if (!$iContentId)
+            return false;
+
+        bx_import('BxTemplMenu');
+        $oMenu = BxTemplMenu::getObjectInstance('bx_persons_view');
+        return $oMenu ? $oMenu->getCode() : false;
+    }
+
     public function serviceProfileFriends ($iContentId = 0) {
         if (!$iContentId)
             $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);

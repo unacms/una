@@ -279,6 +279,7 @@ input.bx-btn {
 }
 .bx-btn:hover {	
     color:#000;
+    text-decoration:none;
 
     border-color:#aaa #999 #888 #999;
 

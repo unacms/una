@@ -63,6 +63,7 @@
 	<string name="_bx_persons_page_block_title_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_persons_page_block_title_profile_cover"><![CDATA[Profile Cover]]></string>
 	<string name="_bx_persons_page_block_title_profile_menu"><![CDATA[Menu]]></string>
+	<string name="_bx_persons_page_block_title_profile_actions"><![CDATA[Actions]]></string>
 	<string name="_bx_persons_page_block_title_latest_persons"><![CDATA[Recent Persons]]></string>
 
     <string name="_bx_persons_menu_set_title_view_person"><![CDATA[View Person]]></string>

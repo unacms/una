@@ -312,28 +312,6 @@
 	-webkit-border-radius:3px;	
 }
 
-/* circle */
-.bx-def-circle {
-    background-color:#fff;
-/*    
-    border:2px solid #fff;
-*/
-    border-radius:50%;
-	-moz-border-radius:50%;
-	-webkit-border-radius:50%;
-/*
-    -webkit-box-shadow: 0 1px 3px rgba(51, 51, 51, 0.5);
-    -moz-box-shadow: 0 1px 3px rgba(51, 51, 51, 0.5);
-    box-shadow: 0 0px 2px rgba(51, 51, 51, 0.5);
-*/
-    overflow:hidden;
-
-    border: 1px solid #999999;
-    -webkit-box-shadow: 0 0px 3px rgba(51, 51, 51, 0.3);
-    -moz-box-shadow: 0 0px 3px rgba(51, 51, 51, 0.3);
-    box-shadow: 0 0px 3px rgba(51, 51, 51, 0.3);
-}
-
 /* fonts */
 
 /* NOTE: bx-def-font, h1, h2, h3 styles were copied to editor.css */

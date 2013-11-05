@@ -67,9 +67,10 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_notes_view_note', 1, 'bx_notes', '_bx_notes_page_block_title_note_author', 0, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_notes\";s:6:\"method\";s:13:\"entity_author\";}', 0, 0, 0),
-('bx_notes_view_note', 1, 'bx_notes', '_bx_notes_page_block_title_note_text', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_notes\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1),
-('bx_notes_view_note', 1, 'bx_notes', '_bx_notes_page_block_title_note_social_sharing', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_notes\";s:6:\"method\";s:21:\"entity_social_sharing\";}', 0, 0, 2),
-('bx_notes_view_note', 1, 'bx_notes', '_bx_notes_page_block_title_note_comments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_notes\";s:6:\"method\";s:15:\"entity_comments\";}', 0, 0, 3);
+('bx_notes_view_note', 1, 'bx_notes', '_bx_notes_page_block_title_note_actions', 0, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_notes\";s:6:\"method\";s:14:\"entity_actions\";}', 0, 0, 1),
+('bx_notes_view_note', 1, 'bx_notes', '_bx_notes_page_block_title_note_text', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_notes\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 2),
+('bx_notes_view_note', 1, 'bx_notes', '_bx_notes_page_block_title_note_social_sharing', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_notes\";s:6:\"method\";s:21:\"entity_social_sharing\";}', 0, 0, 3),
+('bx_notes_view_note', 1, 'bx_notes', '_bx_notes_page_block_title_note_comments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_notes\";s:6:\"method\";s:15:\"entity_comments\";}', 0, 0, 4);
 
 --
 -- Dumping data for 'bx_notes_view_note_comments' page

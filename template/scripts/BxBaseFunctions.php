@@ -585,12 +585,12 @@ EOF;
                     $aAttrs['onclick'] = $aButton['onclick'];
                 if (!empty($aButton['class']))
                     $aAttrs['class'] = $aButton['class'];
-                $sAttrs = bx_convert_array2attrs ($aAttrs, 'bx-btn bx-def-margin-sec-left');
+                $sAttrs = bx_convert_array2attrs ($aAttrs, 'bx-def-margin-sec-left');
 
-                $sCode .= '<button ' . $sAttrs . '>';
-                $sCode .= !empty($aButton['icon']) ? '<i class="sys-icon sys-icon-bigger ' . $aButton['icon'] . '"></i>' : '';
+                $sCode .= '<a href="javascript:void(0);" ' . $sAttrs . '>';
+                $sCode .= !empty($aButton['icon']) ? '<i class="sys-icon ' . $aButton['icon'] . ' bx-def-font-h2"></i>' : '';
                 $sCode .= !empty($aButton['title']) ? $aButton['title'] : '';
-                $sCode .= '</button>';
+                $sCode .= '</a>';
             }
             $sCode .= '</div></div>';
         }
