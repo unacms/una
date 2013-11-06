@@ -1,11 +1,12 @@
 function BxTimelineMain() {
 	this.sIdPost = '#bx-timeline-post';
-	
+
 	this.sIdView = '#bx-timeline';
 	this.sIdItem = '#bx-timeline-item-';
-	this.sIdComments = '#bx-timeline-comments-';
 
 	this.sClassMasonry = 'bx-tl-masonry';
+	this.sClassActions = 'bx-tl-actions';
+	this.sClassComments = 'bx-tl-comments';
 }
 
 BxTimelineMain.prototype.isMasonry = function() {
@@ -58,6 +59,11 @@ BxTimelineMain.prototype.loadingInButton = function(e, bShow) {
 		bx_loading_btn($(e), bShow);
 	else
 		bx_loading($('body'), bShow);	
+};
+
+BxTimelineMain.prototype.loadingInItem = function(e, bShow) {
+	var oParent = $(e).length ? $(e).parents('.bx-tl-item:first') : $('body'); 
+	bx_loading(oParent, bShow);
 };
 
 BxTimelineMain.prototype.loadingInBlock = function(e, bShow) {

@@ -51,7 +51,7 @@ class BxTimelineModule extends BxDolModule
     {
         parent::BxDolModule($aModule);
         $this->_oConfig->init($this->_oDb);
-
+        $this->_oTemplate->init();
         $this->_iOwnerId = 0;
     }
 
@@ -173,9 +173,22 @@ class BxTimelineModule extends BxDolModule
     	$sSystem = bx_process_input(bx_get('system'), BX_DATA_TEXT);
     	$iId = bx_process_input(bx_get('id'), BX_DATA_INT);
 
-    	$aComments = $this->_oTemplate->getComments($sSystem, $iId);
+    	$sComments = $this->_oTemplate->getComments($sSystem, $iId);
 
-    	$this->_echoResultJson($aComments);
+    	$this->_echoResultJson(array('content' => $sComments));
+    }
+
+    public function actionGetPostPopup()
+    {
+    	$iItemId = bx_process_input(bx_get('id'), BX_DATA_INT);
+    	if(!$iItemId) {
+    		$this->_echoResultJson(array());
+    		return;
+    	}
+
+    	$sContent = $this->_oTemplate->getViewItemPopup($iItemId);
+
+    	$this->_echoResultJson(array('popup' => $sContent));
     }
 
 	/**
@@ -281,6 +294,15 @@ class BxTimelineModule extends BxDolModule
 
 		$sContent = $this->_oTemplate->getViewBlock($this->_iOwnerId, $iStart, $iPerPage, $sFilter, $iTimeline, $aModules);
         return array('content' => $sContent, 'menu' => $oMenu);
+    }
+
+    public function serviceGetBlockItem()
+    {
+    	$iItemId = bx_process_input(bx_get('id'), BX_DATA_INT);
+    	if(!$iItemId)
+    		return array();
+
+    	return array('content' => $this->_oTemplate->getViewItemBlock($iItemId));
     }
 
     /*
@@ -479,6 +501,9 @@ class BxTimelineModule extends BxDolModule
 
     public function getCmtsObject($sSystem, $iId)
     {
+    	if(empty($sSystem) || (int)$iId == 0)
+    		return false;
+
     	bx_import('BxDolCmts');
         $oCmts = BxDolCmts::getObjectInstance($sSystem, $iId);
 		if(!$oCmts->isEnabled())

@@ -54,10 +54,13 @@
 
 	<string name="_bx_timeline_page_title_sys_view"><![CDATA[View Timeline]]></string>
 	<string name="_bx_timeline_page_title_view"><![CDATA[View Timeline]]></string>
+	<string name="_bx_timeline_page_title_sys_item"><![CDATA[Timeline Item]]></string>
+	<string name="_bx_timeline_page_title_item"><![CDATA[Timeline Item]]></string>
 	<string name="_bx_timeline_page_block_title_post"><![CDATA[Post to Timeline]]></string>
 	<string name="_bx_timeline_page_block_title_view"><![CDATA[View Timeline]]></string>
 	<string name="_bx_timeline_page_block_title_post_profile"><![CDATA[Post to Timeline]]></string>
 	<string name="_bx_timeline_page_block_title_view_profile"><![CDATA[Timeline]]></string>
+	<string name="_bx_timeline_page_block_title_item"><![CDATA[Item]]></string>
 
 	<!--
     <string name="_bx_timeline_menu_set_title_XXX"><![CDATA[Notes Submenu]]></string>
@@ -93,8 +96,10 @@
 	<string name="_bx_timeline_txt_added_photo"><![CDATA[added a photo]]></string>
 	<string name="_bx_timeline_txt_date_from"><![CDATA[today]]></string>
 	<string name="_bx_timeline_txt_date_to"><![CDATA[olden days]]></string>
-	<string name="_bx_timeline_txt_view_comments"><![CDATA[View comments]]></string>
-	<string name="_bx_timeline_txt_add_comment"><![CDATA[Add comment]]></string>
+	
+	<string name="_bx_timeline_txt_comment"><![CDATA[Comment]]></string>
 	<string name="_bx_timeline_txt_n_comments"><![CDATA[{0} comments]]></string>
 
+	<string name="_bx_timeline_txt_plus"><![CDATA[Plus]]></string>
+	
 </resources>

@@ -79,6 +79,13 @@ span.bx-tl-content-see-more a {
 	font-weight: bold;
 }
 
+
+/*--- View Item Popup Style ---*/
+div.bx-tl-item-popup div.bx-tl-item {
+	width: 100%;
+} 
+
+
 /*--- Empty Style ---*/
 div.bx-tl-empty div.bx-msg-box-container {
 	margin-top: 0px;

@@ -18,12 +18,6 @@ class BxTimelineCmts extends BxTemplCmtsView
         parent::BxTemplCmtsView($sSystem, $iId, $iInit);
     }
 
-    public static function includeCssJs()
-    {
-		self::getExtraJs();
-		self::getExtraCss();
-    }
-
     public function isAttachImageEnabled()
     {
     	return false;

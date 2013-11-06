@@ -101,42 +101,82 @@ BxTimelineView.prototype.showMoreContent = function(oLink) {
 	this.reloadMasonry();
 };
 
-BxTimelineView.prototype.showPostMenu = function(oLink) {
+BxTimelineView.prototype.showItemMenu = function(oLink) {
 	var sId = $(oLink).parents('.bx-tl-item-menu:first').children('.bx-db-menu-popup:hidden').attr('id');
 	bx_menu_popup_inline('#' + sId, oLink);
 };
 
-BxTimelineView.prototype.showComments = function(oLink, sSystem, iId) {
+BxTimelineView.prototype.showItem = function(oLink, iId) {
+	var $this = this;
+
+    var oData = this._getDefaultData();    
+    oData['id'] = iId;
+
+	if(oLink)
+    	this.loadingInItem(oLink, true);
+
+	jQuery.post (
+		this._sActionsUrl + 'get_post_popup',
+	    oData,
+	    function(oData) {
+			if(oLink)
+				$this.loadingInItem(oLink, false);
+
+			if(!oData.popup)
+				return;
+
+			var oPopup = $(oData.popup).hide(); 
+
+	        $('#' + oPopup.attr('id')).remove();
+	        oPopup.prependTo('body').bxTime().dolPopup({
+	        	fog: {
+	        		color: '#fff',
+	    			opacity: 0.7
+	        	}
+	        });
+		},
+	    'json'
+	);
+
+	return false;
+};
+
+BxTimelineView.prototype.commentItem = function(oLink, sSystem, iId) {
 	var $this = this;
 
     var oData = this._getDefaultData();
+    oData['system'] = sSystem;    
     oData['id'] = iId;
-    oData['system'] = sSystem;
 
-    if(oLink)
-    	this.loadingInBlock(oLink, true);
+    var oActions = $(oLink).parents('.' + this.sClassActions + ':first');
+    var oComments = oActions.next('.' + this.sClassComments);
 
-    if($(this.sIdComments + iId + ':hidden').length > 0) {
-    	$(oLink).next(this.sIdComments + iId + ':hidden').bx_anim('show', this._sAnimationEffect, this._iAnimationSpeed);
+    if(oComments.length > 0) {
+    	oComments.bx_anim('toggle', this._sAnimationEffect, this._iAnimationSpeed);
     	return;
     }
+
+    if(oLink)
+    	this.loadingInItem(oLink, true);
 
     jQuery.post (
         this._sActionsUrl + 'get_comments',
         oData,
         function(oData) {
         	if(oLink)
-        		$this.loadingInBlock(oLink, false);
+        		$this.loadingInItem(oLink, false);
 
         	if(!oData.content)
         		return;
 
-        	$(oLink).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-        		$(this).parents('.bx-tl-comments-link:first').after($(oData.content).hide()).next($this.sIdComments + iId + ':hidden').bxTime().bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
-    		});
+        	oActions.after($(oData.content).hide()).next('.' + $this.sClassComments + ':hidden').bxTime().bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
         },
         'json'
     );
+};
+
+BxTimelineView.prototype.voteItem = function(oLink) {
+	alert('Votes will be here.');
 };
 
 BxTimelineView.prototype._getPosts = function(oElement, sAction) {

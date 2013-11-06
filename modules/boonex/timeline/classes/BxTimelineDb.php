@@ -193,7 +193,7 @@ class BxTimelineDb extends BxDolModuleDb
         switch($aParams['type']) {
             case 'id':
             	$sMethod = 'getRow';
-                $sWhereClause = $this->prepare("AND `te`.`id`=? ", $aParams['object_id']);
+                $sWhereClause = $this->prepare("AND `te`.`id`=? ", $aParams['value']);
                 $sLimitClause = "LIMIT 1";
                 break;
 
