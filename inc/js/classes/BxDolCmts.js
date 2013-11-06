@@ -361,7 +361,7 @@ BxDolCmts.prototype.toggleReply = function(e, iCmtParentId)
 };
 
 BxDolCmts.prototype.toggleManagePopup = function(oLink, iCmtId) {
-	var oPopup = $(oLink).siblings('.cmt-comment-manage');
+	var oPopup = $('#' + this._sSystem + '-manage-' + iCmtId);
 	if(oPopup.is(':visible')) {
 		oPopup.dolPopupHide();
 		return;

@@ -29,28 +29,22 @@ class BxBaseCmtsView extends BxDolCmts {
     }
 
 	/**
-     * Get comments css file string
-     *
-     * @return string
+     * Add comments CSS/JS
      */
-    public static function getExtraCss ()
-    {
-        BxDolTemplate::getInstance()->addCss(array('cmts.css'));
-    }
-
-    /**
-     * Get comments js file string
-     *
-     * @return string
-     */
-    public static function getExtraJs ()
+    public function addCssJs ()
     {
     	$oTemplate = BxDolTemplate::getInstance();
+
+        $oTemplate->addCss(array('cmts.css'));
         $oTemplate->addJs(array('common_anim.js', 'jquery.form.js', 'BxDolCmts.js'));
         $oTemplate->addJsTranslation(array(
         	'_Error occured',
         	'_Are you sure?'
         ));
+
+        bx_import('BxDolForm');
+        $oForm = BxDolForm::getObjectInstance($this->_sFormObject, $this->_sFormDisplayPost);
+		$oForm->addCssJs();
     }
 
 	/**
@@ -60,27 +54,19 @@ class BxBaseCmtsView extends BxDolCmts {
      */
     function getScript()
     {
-        $sToggleAdd = '';
+        $this->addCssJs();
 
-        $ret = '';
-        $ret .= $sToggleAdd . "
-            <script  type=\"text/javascript\">
-                var " . $this->_sJsObjName . " = new BxDolCmts({
-                    sObjName: '" . $this->_sJsObjName . "',
-                    sRootUrl: '" . BX_DOL_URL_ROOT . "',
-                    sSystem: '" . $this->getSystemName() . "',
-                    sSystemTable: '" . $this->_aSystem['table_cmts'] . "',
-                    iAuthorId: '" . $this->_getAuthorId() . "',
-                    iObjId: '" . $this->getId () . "',
-                    sPostFormPosition: '" . $this->_aSystem['post_form_position'] . "',
-    				sBrowseType: '" . $this->_sBrowseType . "',
-    				sDisplayType: '" . $this->_sDisplayType . "'});\n";
-        $ret .= "</script>";
-
-        self::getExtraJs();
-        self::getExtraCss();
-
-        return $ret;
+        return BxDolTemplate::getInstance()->_wrapInTagJsCode("var " . $this->_sJsObjName . " = new BxDolCmts({
+        	sObjName: '" . $this->_sJsObjName . "',
+            sRootUrl: '" . BX_DOL_URL_ROOT . "',
+            sSystem: '" . $this->getSystemName() . "',
+            sSystemTable: '" . $this->_aSystem['table_cmts'] . "',
+            iAuthorId: '" . $this->_getAuthorId() . "',
+            iObjId: '" . $this->getId () . "',
+            sPostFormPosition: '" . $this->_aSystem['post_form_position'] . "',
+    		sBrowseType: '" . $this->_sBrowseType . "',
+    		sDisplayType: '" . $this->_sDisplayType . "'
+    	});");
     }
 
     /**
@@ -487,7 +473,7 @@ class BxBaseCmtsView extends BxDolCmts {
         			'js_object' => $this->_sJsObjName,
         			'style_prefix' => $this->_sStylePrefix,
         			'id' => $aCmt['cmt_id'],
-        			'popup_id' => $this->_sSystem . '-manage' . $aCmt['cmt_id'],
+        			'popup_id' => $this->_sSystem . '-manage-' . $aCmt['cmt_id'],
         			'popup_text' => $sManagePopupText
         		)
         	)
@@ -502,7 +488,11 @@ class BxBaseCmtsView extends BxDolCmts {
     	if(!$this->isPostReplyAllowed())
     		return '';
 
+/*
+		//TODO: Remove if it's not needed.
     	list($sAuthorName, $sAuthorLink, $sAuthorIcon) = $this->_getAuthorInfo();
+    	$bAuthorIcon = !empty($sAuthorIcon);
+*/
 
 		$sPositionSystem = $this->_aSystem['post_form_position'];
 		if(!empty($sPosition) && $sPositionSystem != $sPosition)
@@ -511,7 +501,6 @@ class BxBaseCmtsView extends BxDolCmts {
 		$sMethod = '_getForm' . ucfirst($sType);
 		$aForm = $this->$sMethod($iCmtParentId);
 
-		$bAuthorIcon = !empty($sAuthorIcon);
     	return BxDolTemplate::getInstance()->parseHtmlByName('comment_reply_box.html', array(
     		'js_object' => $this->_sJsObjName,
     		'style_prefix' => $this->_sStylePrefix,
@@ -521,6 +510,8 @@ class BxBaseCmtsView extends BxDolCmts {
     				'class' => $this->_sStylePrefix . '-reply-' . $sPosition
     			)
     		),
+/*
+			//TODO: Remove if it's not needed.
     		'bx_if:show_icon' => array(
         		'condition' => $bAuthorIcon,
         		'content' => array(
@@ -544,6 +535,7 @@ class BxBaseCmtsView extends BxDolCmts {
         			'author_name' => $sAuthorName
         		)
         	),
+*/
 			'form' => $aForm['form'],
         	'form_id' => $aForm['form_id'],
     	));
