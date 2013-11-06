@@ -34,10 +34,6 @@ class BxNotesPageNote extends BxTemplPage {
         $oMenuSumbemu = BxDolMenu::getObjectInstance('sys_site_submenu');
         $oMenuSumbemu->setObjectSubmenu('bx_notes_view_submenu', 'notes-home');
 
-        // set actions menu
-        $oMenuAction = BxDolMenu::getObjectInstance('sys_site_action');
-        $oMenuAction->setActionsMenu('bx_notes_view');
-
         $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
         if ($iContentId)
             $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);

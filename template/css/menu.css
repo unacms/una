@@ -322,54 +322,6 @@ ul.bx-menu-floating-blocks {
     text-align:center;
 }
 
-
-/* --------------- floating circles menu */
-
-ul.bx-menu-floating-circles {
-    padding:0;
-    margin:0;
-    list-style:none;    
-}
-
-.bx-menu-floating-circles li {
-    display:inline;
-    display:inline-block;
-    width:44px;
-    height:44px;
-    vertical-align:top;
-    opacity:0.8;
-}
-
-.bx-menu-floating-circles li:hover,
-.bx-menu-floating-circles li:active {
-    opacity:1.0;
-}
-
-.bx-menu-floating-circles li a {
-    display:block;
-    width:100%;
-    height:100%;
-    text-decoration:none;
-}
-
-.bx-menu-floating-circles li .sys-icon {
-    display:block;
-    padding:10px;
-    width:24px;
-    height:24px;
-    line-height:24px;
-    font-size:24px;
-    text-align:center;
-    vertical-align:middle;
-}
-
-.bx-menu-floating-circles li img {
-    width:100%;
-    height:100%;
-    background-position:center center;
-    background-repeat:no-repeat;
-}
-
 /* --------------- action menu */
 
 .bx-menu-action-wrapper {
@@ -443,4 +395,18 @@ li.bx-menu-inter-pas {}
 li.bx-menu-inter-hidden {
 	display: none;
 }
+
+/* --------------- horizontal buttons menu */
+
+ul.bx-menu-btns-hor {
+	padding:0;
+    margin:0;
+	list-style:none;
+    text-align:center;
+}
+ul.bx-menu-btns-hor li {
+    display:inline;
+    display:inline-block;
+}
+
 

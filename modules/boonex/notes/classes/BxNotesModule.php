@@ -153,7 +153,7 @@ class BxNotesModule extends BxDolModule {
 		if(!$oCmts->isEnabled())
 			return false;
 
-        return $oCmts->getCommentsBlock();
+        return $oCmts->getCommentsBlock(0, 0, false);
     }
 
     public function serviceEntityAuthor ($iContentId = 0) {
@@ -170,6 +170,17 @@ class BxNotesModule extends BxDolModule {
             $oProfile = BxDolProfileUndefined::getInstance();
         }
         return $this->_oTemplate->entryAuthor ($aContentInfo, $oProfile);
+    }
+
+    public function serviceEntityActions ($iContentId = 0) {
+        if (!$iContentId)
+            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if (!$iContentId)
+            return false;
+
+        bx_import('BxTemplMenu');
+        $oMenu = BxTemplMenu::getObjectInstance('bx_notes_view');
+        return $oMenu ? $oMenu->getCode() : false;
     }
 
 	public function serviceGetTimelineData()

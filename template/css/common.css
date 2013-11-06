@@ -82,6 +82,10 @@ blockquote {
     text-decoration:underline;
 }
 
+.bx-db-menu-tab-btn a {
+    text-decoration:none;
+}
+
 /* --------------- popup boxes */
 
 .bx-popup-width {
@@ -245,15 +249,19 @@ blockquote {
 .bx-btn:first-child {
     margin-left:0;
 }
-.bx-btn i {
-    display:block;
-    min-width:16px;
-    min-height:16px;
-	font-style:normal;	
-    background-repeat:no-repeat;
-    background-position:0px 0px;
+.bx-btn img,
+.bx-btn i.sys-icon {
+    margin-right:3px;
+    vertical-align:middle;
 }
-
+.bx-btn img {
+    width:16px;
+    height:16px;
+}
+.bx-btn u {
+    text-decoration:none;
+    vertical-align:middle;
+}
 .bx-btn .sys-icon {
     vertical-align:middle;
     font-size:16px;
@@ -262,15 +270,6 @@ blockquote {
     font-size:20px;
 }
 
-.bx-btn u {
-    display:block;
-    min-width:16px;
-    min-height:16px;
-    padding-left:20px;
-    text-decoration:none;
-    background-repeat:no-repeat;
-    background-position:0px center;
-}
 
 button.bx-btn,
 input.bx-btn {    
@@ -280,6 +279,7 @@ input.bx-btn {
 }
 .bx-btn:hover {	
     color:#000;
+    text-decoration:none;
 
     border-color:#aaa #999 #888 #999;
 

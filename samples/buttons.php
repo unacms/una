@@ -9,8 +9,25 @@
 
 /** 
  * @page samples
- * @section cut_strings Cut strings
+ * @section button Buttons
  */
+
+/**
+ * There are default css classes for buttons.
+ *
+ * .bx-btn - standard button
+ * .bx-btn .bx-btn-small - small buttom 
+ * 
+ * To make button with font icon, add icon before text and wrap text in 'u' tag:
+ * @code
+ *   <i class="sys-icon fire-extinguisher"></i><u>Button text</u>
+ * @endcode
+ *
+ * To make button with image, add 'img' tag before text and wrap text in 'u' tag:
+ * @code
+ *   <img src="clock.png" /><u>Button text</u>
+ * @endcode
+ */ 
 
 $aPathInfo = pathinfo(__FILE__);
 require_once ($aPathInfo['dirname'] . '/../inc/header.inc.php');
@@ -32,25 +49,31 @@ $oTemplate->getPageCode();
  */
 function PageCompMainCode() {
 
+    ob_start();
+?>
+    <button class="bx-btn bx-def-margin-right">Button text</button>
+    <button class="bx-btn bx-btn-img bx-def-margin-right"><img src="template/images/icons/clock.png" /></button>
+    <button class="bx-btn bx-btn-img bx-def-margin-right"><img src="template/images/icons/clock.png"><u>Button text</u></button>
 
-    echo '<button class="bx-btn">Button 1</button>';
-    echo '<div class="bx-clear"></div><hr class="bx-def-hr" />';
+    <div class="bx-clear"></div><hr class="bx-def-hr bx-def-margin-topbottom" />
 
-    echo '<button class="bx-btn bx-btn-img"><i style="background-image:url(template/images/icons/clock.png)"></i></button>';
-    echo '<div class="bx-clear"></div><hr class="bx-def-hr" />';
+    <button class="bx-btn bx-btn-small bx-def-margin-right">Button text</button>
+    <button class="bx-btn bx-btn-small bx-btn-img bx-def-margin-right"><img src="template/images/icons/clock.png" /></button>
+    <button class="bx-btn bx-btn-small bx-btn-img bx-def-margin-right"><img src="template/images/icons/clock.png" /><u>Button text</u></button>
 
-    echo '<button class="bx-btn bx-btn-img"><u style="background-image:url(template/images/icons/clock.png)">Button 1</u></button>';
-    echo '<div class="bx-clear"></div><hr class="bx-def-hr" />';
+    <div class="bx-clear"></div><hr class="bx-def-hr bx-def-margin-topbottom" />
 
+    <button class="bx-btn bx-def-margin-right"><i class="sys-icon fire-extinguisher"></i></button>
+    <button class="bx-btn bx-def-margin-right"><i class="sys-icon fire-extinguisher sys-icon-bigger"></i></button>
+    <button class="bx-btn bx-def-margin-right"><i class="sys-icon fire-extinguisher sys-icon-bigger col-red1"></i></button>
+    <button class="bx-btn bx-def-margin-right"><i class="sys-icon fire-extinguisher"></i><u>Button text</u></button>
 
-    echo '<button class="bx-btn bx-btn-small">Button 1</button>';
-    echo '<div class="bx-clear"></div><hr class="bx-def-hr" />';
+    <div class="bx-clear"></div><hr class="bx-def-hr bx-def-margin-topbottom" />
 
-    echo '<button class="bx-btn bx-btn-small bx-btn-img"><i style="background-image:url(template/images/icons/clock.png)"></i></button>';
-    echo '<div class="bx-clear"></div><hr class="bx-def-hr" />';
+    <button class="bx-btn bx-btn-small bx-def-margin-right"><i class="sys-icon fire-extinguisher"></i></button>
+    <button class="bx-btn bx-btn-small bx-def-margin-right"><i class="sys-icon fire-extinguisher"></i><u>Button text</u></button>
 
-    echo '<button class="bx-btn bx-btn-small bx-btn-img"><u style="background-image:url(template/images/icons/clock.png)">Button 1</u></button>';
-    echo '<div class="bx-clear"></div><hr class="bx-def-hr" />';
+<?php
 
     return DesignBoxContent("Buttons", ob_get_clean(), BX_DB_PADDING_DEF);
 }

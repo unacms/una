@@ -56,10 +56,6 @@ class BxPersonsPageProfile extends BxTemplPage {
             'icon' => $this->_oProfile->getIcon(),
         ));
 
-        // set actions menu
-        $oMenuAction = BxDolMenu::getObjectInstance('sys_site_action');
-        $oMenuAction->setActionsMenu('bx_persons_view');        
-
         // add replaceable markers
         $this->addMarkers($this->_aProfileInfo); // every content field can be used as marker
         $this->addMarkers(array('profile_id' => $this->_oProfile->id())); // profile id field is also suported

@@ -94,7 +94,12 @@ class BxBaseCmtsView extends BxDolCmts {
     		'script' => $this->getScript()
     	));
 
-    	return $bInDesignbox ? DesignBoxContent($sCaption, $sContent, BX_DB_PADDING_DEF, $this->_getControlsBox()) : $sContent;
+    	return $bInDesignbox ? DesignBoxContent($sCaption, $sContent, BX_DB_PADDING_DEF, $this->_getControlsBox()) : array(
+            'title' => $sCaption, 
+            'content' => $sContent,
+            'designbox_id' => BX_DB_PADDING_DEF,
+            'menu' => $this->_getControlsBox(),
+        ); 
     }
 
     /**
