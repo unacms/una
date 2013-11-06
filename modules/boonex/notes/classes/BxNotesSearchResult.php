@@ -94,7 +94,7 @@ class BxNotesSearchResult extends BxTemplSearchResult {
         // add conditions for private content
         bx_import('BxDolPrivacy');
         $oPrivacy = BxDolPrivacy::getObjectInstance(BxNotesConfig::$OBJECT_PRIVACY_VIEW);
-        $a = $oPrivacy ? $oPrivacy->getContentPublicAsCondition('view', $oProfileAuthor ? $oProfileAuthor->id() : 0) : array();
+        $a = $oPrivacy ? $oPrivacy->getContentPublicAsCondition($oProfileAuthor ? $oProfileAuthor->id() : 0) : array();
         if (isset($a['restriction']))
             $this->aCurrent['restriction'] = array_merge($this->aCurrent['restriction'], $a['restriction']);
         if (isset($a['join']))

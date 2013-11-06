@@ -50,7 +50,7 @@ class BxNotesFormNote extends BxTemplFormView {
 
         if (isset($this->aInputs[BxNotesConfig::$FIELD_ALLOW_VIEW_TO])) {
             bx_import('BxDolPrivacy');
-            $this->aInputs[BxNotesConfig::$FIELD_ALLOW_VIEW_TO] = BxDolPrivacy::getGroupChooser('bx_notes', 'view');
+            $this->aInputs[BxNotesConfig::$FIELD_ALLOW_VIEW_TO] = BxDolPrivacy::getGroupChooser(BxNotesConfig::$OBJECT_PRIVACY_VIEW);
         }
     }
 
