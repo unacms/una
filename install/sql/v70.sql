@@ -174,7 +174,8 @@ INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `B
 ('system', '_sys_et_txt_name_system_forgot', 't_Forgot', '_sys_et_txt_subject_forgot', '_sys_et_txt_body_forgot'),
 ('system', '_sys_et_txt_name_system_password_reset', 't_PasswordReset', '_sys_et_txt_subject_password_reset', '_sys_et_txt_body_password_reset'),
 ('system', '_sys_et_txt_name_system_mem_expiration', 't_MemExpiration', '_sys_et_txt_subject_mem_expiration', '_sys_et_txt_body_mem_expiration'),
-('system', '_sys_et_txt_name_system_mem_changed', 't_MemChanged', '_sys_et_txt_subject_mem_changed', '_sys_et_txt_body_mem_changed');
+('system', '_sys_et_txt_name_system_mem_changed', 't_MemChanged', '_sys_et_txt_subject_mem_changed', '_sys_et_txt_body_mem_changed'),
+('system', '_sys_et_txt_name_system_comment_replied', 't_CommentReplied', '_sys_et_txt_subject_comment_replied', '_sys_et_txt_body_comment_replied');
 
 -- --------------------------------------------------------
 
@@ -1172,8 +1173,8 @@ INSERT INTO `sys_privacy_groups`(`id`, `title`, `check`, `active`, `visible`) VA
 ('1', '', '', 1, 0),
 ('2', '_sys_ps_group_title_me_only', '@me_only', 1, 1),
 ('3', '_sys_ps_group_title_public', '@public', 1, 1),
-('4', '_sys_ps_group_title_members', '@members', 1, 1),
-('5', '_sys_ps_group_title_connections', '@connections', 1, 1);
+('4', '_sys_ps_group_title_members', '@members', 0, 0),
+('5', '_sys_ps_group_title_friends', '@friends', 1, 1);
 
 
 -- --------------------------------------------------------

@@ -733,7 +733,20 @@ class BxDolCmts extends BxDol
         return $_SERVER['REMOTE_ADDR'];
     }
 
+    
 	protected function _getAuthorInfo($iAuthorId = 0)
+    {
+    	$oProfile = $this->_getAuthorObject($iAuthorId);
+
+		return array(
+			$oProfile->getDisplayName(), 
+			$oProfile->getUrl(), 
+			$oProfile->getIcon(),
+			$oProfile->getUnit()
+		);
+    }
+
+    protected function _getAuthorObject($iAuthorId = 0)
     {
     	bx_import('BxDolProfile');
 		$oProfile = BxDolProfile::getInstance($iAuthorId);
@@ -742,12 +755,7 @@ class BxDolCmts extends BxDol
 			$oProfile = BxDolProfileUndefined::getInstance();
 		}
 
-		return array(
-			$oProfile->getDisplayName(), 
-			$oProfile->getUrl(), 
-			$oProfile->getIcon(),
-			$oProfile->getUnit()
-		);
+		return $oProfile;
     }
 
     protected function _prepareTextForEdit ($s)
@@ -894,6 +902,28 @@ class BxDolCmts extends BxDol
 
     	if(!empty($sDp))
     		$oSession->setValue($this->_sDpSessionKey . $iUserId, $sDp);
+    }
+
+	protected function _sendNotificationEmail($iCmtId, $iCmtParentId)
+	{
+		$aCmt = $this->getCommentRow($iCmtId);
+		$aCmtParent = $this->getCommentRow($iCmtParentId);
+		if(empty($aCmt) || !is_array($aCmt) || empty($aCmtParent) || !is_array($aCmtParent) || (int)$aCmt['cmt_author_id'] == (int)$aCmtParent['cmt_author_id'])
+			return;
+
+		$oProfile = $this->_getAuthorObject($aCmtParent['cmt_author_id']);
+
+		bx_import('BxDolAccount');
+		$iAccount = $oProfile->getAccountId();
+    	$aAccount = BxDolAccount::getInstance($iAccount)->getInfo();
+
+        $aPlus = array();
+        $aPlus['reply_text'] = bx_process_output($aCmt['cmt_text']);
+        $aPlus['comment_url'] = sprintf('%scmts.php?sys=%s&id=1&cmt_id=%d', BX_DOL_URL_ROOT, $this->_sSystem, $iCmtParentId);
+
+        bx_import('BxDolEmailTemplates');
+        $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_CommentReplied', $aPlus);
+        return $aTemplate && sendMail($aAccount['email'], $aTemplate['Subject'], $aTemplate['Body']);
     }
 }
 

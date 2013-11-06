@@ -586,8 +586,11 @@ class BxBaseCmtsView extends BxDolCmts {
 					}
 				}
 
-				if($iCmtParentId) 
+				if($iCmtParentId) {
         			$this->_oQuery->updateRepliesCount($iCmtParentId, 1);
+
+        			$this->_sendNotificationEmail($iCmtId, $iCmtParentId);
+				}
 
 				$this->_triggerComment();
 
