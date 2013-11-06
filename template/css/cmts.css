@@ -20,7 +20,7 @@
     	position: relative;
     }
     ul.cmts-margin li.cmt:first-child {
-		margin-top: 10px;
+		margin-top: 20px;
     }
     li.cmt-err {
         color: red;
@@ -209,11 +209,11 @@
 		margin-top: 40px;
     }
     li.cmt div.cmt-reply-top {
-    	margin-top: 10px;
+    	margin-top: 20px;
     	margin-bottom: 20px;
 	}
     li.cmt div.cmt-reply-bottom {
-    	margin-top: 10px;
+    	margin-top: 20px;
     	margin-bottom: 20px;
     }
 	div.cmt-post-reply {
