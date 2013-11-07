@@ -13,8 +13,9 @@ function BxDolCmts (options) {
     this._sActionsUrl = options.sRootUrl + 'cmts.php'; // actions url address
 
     this._sPostFormPosition = undefined == options.sPostFormPosition ? 'top' : options.sPostFormPosition;
-    this._sBrowseType = undefined == options.sBrowseType ? 'tail' : options.sBrowseType;
     this._sDisplayType = undefined == options.sDisplayType ? 'threaded' : options.sDisplayType;
+    this._sBrowseType = undefined == options.sBrowseType ? 'tail' : options.sBrowseType;
+    this._sBrowseFilter = undefined == options.sBrowseFilter ? 'all' : options.sBrowseFilter;
 
     this._sAnimationEffect = 'fade';
     this._iAnimationSpeed = 'slow';
@@ -247,7 +248,7 @@ BxDolCmts.prototype.cmtLoad = function(oLink, iCmtParentId, iStart, iPerView)
 	else 
 		this._loading($(oLink).parents('ul.cmts:first'), true);
 
-	this._getCmts(null, iCmtParentId, iStart, iPerView, this._sBrowseType, this._sDisplayType, function(sListId, sContent) {
+	this._getCmts(null, iCmtParentId, iStart, iPerView, this._sDisplayType, this._sBrowseType, this._sBrowseFilter, function(sListId, sContent) {
 		if(bButton)
 			$this._loadingInButton(oLink, false);
 		else 
@@ -260,7 +261,7 @@ BxDolCmts.prototype.cmtLoad = function(oLink, iCmtParentId, iStart, iPerView)
 BxDolCmts.prototype.cmtChangeDisplay = function(oLink, sType)
 {
 	var $this = this;
-	this._getCmts(oLink, 0, undefined, undefined, this._sBrowseType, sType, function(sListId, sContent) {
+	this._getCmts(oLink, 0, undefined, undefined, sType, this._sBrowseType, this._sBrowseFilter, function(sListId, sContent) {
 		$this._sDisplayType = sType;
 		$this._cmtsReplaceContent($(sListId), sContent);
 	});
@@ -269,8 +270,17 @@ BxDolCmts.prototype.cmtChangeDisplay = function(oLink, sType)
 BxDolCmts.prototype.cmtChangeBrowse = function(oLink, sType)
 {
 	var $this = this;
-	this._getCmts(oLink, 0, undefined, undefined, sType, this._sDisplayType, function(sListId, sContent) {
+	this._getCmts(oLink, 0, undefined, undefined, this._sDisplayType, sType, this._sBrowseFilter, function(sListId, sContent) {
 		$this._sBrowseType = sType;
+		$this._cmtsReplaceContent($(sListId), sContent);
+	});
+};
+
+BxDolCmts.prototype.cmtChangeFilter = function(oLink, sType)
+{
+	var $this = this;
+	this._getCmts(oLink, 0, undefined, undefined, this._sDisplayType, $this._sBrowseType, sType, function(sListId, sContent) {
+		$this._sBrowseFilter = sType;
 		$this._cmtsReplaceContent($(sListId), sContent);
 	});
 };
@@ -442,7 +452,7 @@ BxDolCmts.prototype._getCmt = function (e, iCmtId)
     );
 };
 
-BxDolCmts.prototype._getCmts = function (e, iCmtParentId, iStart, iPerView, sBrowseType, sDisplayType, onLoad)
+BxDolCmts.prototype._getCmts = function (e, iCmtParentId, iStart, iPerView, sDisplayType, sBrowseType, sBrowseFilter, onLoad)
 {
     var $this = this;
     var oData = this._getDefaultActions();    
@@ -456,6 +466,8 @@ BxDolCmts.prototype._getCmts = function (e, iCmtParentId, iStart, iPerView, sBro
         oData['CmtDisplay'] = sDisplayType;
     if(sBrowseType)
         oData['CmtBrowse'] = sBrowseType;
+    if(sBrowseFilter)
+        oData['CmtFilter'] = sBrowseFilter;
 
     var sListId =  this._sRootId + ' #cmt' + iCmtParentId + ' > ul:first';
 
@@ -562,5 +574,5 @@ BxDolCmts.prototype._loadingInButton = function(e, bShow) {
 };
 
 BxDolCmts.prototype._confirm = function() {
-    return confirm(aDolLang['_Are you sure?']);
+    return confirm(_t('_are you sure?'));
 };

@@ -48,50 +48,62 @@ class BxDolCmtsQuery extends BxDolDb
         return $this->_sTable;
     }
 
-	function getCommentsCount ($iId, $iCmtVParentId = 0) {
+	function getCommentsCount ($iId, $iCmtVParentId = 0, $iAuthorId = 0, $sFilter = '') {
 		$sWhereParent = '';
         if((int)$iCmtVParentId >= 0)
-        	$sWhereParent = $this->prepare(" AND `cmt_vparent_id` = ?", $iCmtVParentId);
+        	$sWhereParent = $this->prepare(" AND `{$this->_sTable}`.`cmt_vparent_id` = ?", $iCmtVParentId);
 
-		$sQuery = $this->prepare("SELECT COUNT(*) FROM `{$this->_sTable}` WHERE `cmt_object_id` = ?" . $sWhereParent, $iId);
+        $sJoin = '';
+		if(in_array($sFilter, array(BX_CMT_FILTER_FRIENDS, BX_CMT_FILTER_SUBSCRIPTIONS))) {
+			bx_import('BxDolConnection');
+			$oConnection = BxDolConnection::getObjectInstance($this->_oMain->getConnectionObject($sFilter));
+			
+			$aQueryParts = $oConnection->getConnectedContentAsSQLParts($this->_sTable, 'cmt_author_id', $iAuthorId);
+			$sJoin .= ' ' . $aQueryParts['join'];
+		}
+
+		$sQuery = $this->prepare("SELECT 
+				COUNT(*) 
+			FROM `{$this->_sTable}`
+			$sJoin 
+			WHERE `{$this->_sTable}`.`cmt_object_id` = ?" . $sWhereParent, $iId);
+
 		return (int)$this->getOne($sQuery);
 	}
 
-    function getComments ($iId, $iCmtVParentId = 0, $iAuthorId = 0, $aOrder = array(), $iStart = 0, $iCount = -1)
+    function getComments ($iId, $iCmtVParentId = 0, $iAuthorId = 0, $sFilter = '', $aOrder = array(), $iStart = 0, $iCount = -1)
     {
         $sFields = "'' AS `cmt_rated`,";
 
         $sJoin = "";
         if ($iAuthorId) {
             $sFields = "`r`.`cmt_rate` AS `cmt_rated`,";
-            $sJoin = $this->prepare(" LEFT JOIN `{$this->_sTableTrack}` AS `r` ON (`r`.`cmt_system_id` = ? AND `r`.`cmt_id` = `c`.`cmt_id` AND `r`.`cmt_rate_author_id` = ?)", $this->_oMain->getSystemId(), $iAuthorId);
+            $sJoin = $this->prepare(" LEFT JOIN `{$this->_sTableTrack}` AS `r` ON (`r`.`cmt_system_id` = ? AND `r`.`cmt_id` = `{$this->_sTable}`.`cmt_id` AND `r`.`cmt_rate_author_id` = ?)", $this->_oMain->getSystemId(), $iAuthorId);
         }
 
         $sWhereParent = '';
         if((int)$iCmtVParentId >= 0)
-        	$sWhereParent = $this->prepare(" AND `c`.`cmt_vparent_id` = ?", $iCmtVParentId);
+        	$sWhereParent = $this->prepare(" AND `{$this->_sTable}`.`cmt_vparent_id` = ?", $iCmtVParentId);
 
-        $sOder = " ORDER BY `c`.`cmt_time` ASC";
+		if(in_array($sFilter, array(BX_CMT_FILTER_FRIENDS, BX_CMT_FILTER_SUBSCRIPTIONS))) {
+			bx_import('BxDolConnection');
+			$oConnection = BxDolConnection::getObjectInstance($this->_oMain->getConnectionObject($sFilter));
+			
+			$aQueryParts = $oConnection->getConnectedContentAsSQLParts($this->_sTable, 'cmt_author_id', $iAuthorId);
+			$sJoin .= ' ' . $aQueryParts['join'];
+		}
+
+        $sOder = " ORDER BY `{$this->_sTable}`.`cmt_time` ASC";
         if(isset($aOrder['by']) && isset($aOrder['way'])) {
         	$aOrder['way'] = strtoupper(in_array($aOrder['way'], array(BX_CMT_ORDER_WAY_ASC, BX_CMT_ORDER_WAY_DESC)) ? $aOrder['way'] : BX_CMT_ORDER_WAY_ASC);
 
         	switch($aOrder['by']) {
         		case BX_CMT_ORDER_BY_DATE:
-        			$sOder = " ORDER BY `c`.`cmt_time` " . $aOrder['way'];
+        			$sOder = " ORDER BY `{$this->_sTable}`.`cmt_time` " . $aOrder['way'];
         			break;
 
         		case BX_CMT_ORDER_BY_POPULAR:
-        			$sOder = " ORDER BY `c`.`cmt_rate` " . $aOrder['way'];
-        			break;
-
-        		case BX_CMT_ORDER_BY_CONNECTION:
-        			$sFields .= " IF(NOT ISNULL(`tcs`.`id`), 1, 0) AS `cmt_author_subscriptions`,";
-        			$sFields .= " IF(NOT ISNULL(`tcc`.`id`), 1, 0) AS `cmt_author_connections`,";
-
-        			$sJoin .= $this->prepare(" LEFT JOIN `sys_profiles_conn_subscriptions` AS `tcs` ON ((`c`.`cmt_author_id`=`tcs`.`initiator` AND `tcs`.`content`=?) OR (`c`.`cmt_author_id`=`tcs`.`content` AND `tcs`.`initiator`=?))", $iAuthorId, $iAuthorId);
-        			$sJoin .= $this->prepare(" LEFT JOIN `sys_profiles_conn_friends` AS `tcc` ON ((`c`.`cmt_author_id`=`tcc`.`initiator` AND `tcc`.`content`=?) OR (`c`.`cmt_author_id`=`tcc`.`content` AND `tcc`.`initiator`=?))", $iAuthorId, $iAuthorId);
-
-        			$sOder = " ORDER BY `cmt_author_connections` " . $aOrder['way'] . ",`cmt_author_subscriptions` " . $aOrder['way'] . ",`c`.`cmt_time` ASC";
+        			$sOder = " ORDER BY `{$this->_sTable}`.`cmt_rate` " . $aOrder['way'];
         			break;
 	        }
         }
@@ -100,20 +112,20 @@ class BxDolCmtsQuery extends BxDolDb
 
         $sQuery = $this->prepare("SELECT
                 $sFields
-                `c`.`cmt_id`,
-                `c`.`cmt_parent_id`,
-                `c`.`cmt_vparent_id`,
-                `c`.`cmt_object_id`,
-                `c`.`cmt_author_id`,
-                `c`.`cmt_level`,
-                `c`.`cmt_text`,
-                `c`.`cmt_rate`,
-                `c`.`cmt_rate_count`,
-                `c`.`cmt_replies`,
-                `c`.`cmt_time`
-            FROM `{$this->_sTable}` AS `c`
+                `{$this->_sTable}`.`cmt_id`,
+                `{$this->_sTable}`.`cmt_parent_id`,
+                `{$this->_sTable}`.`cmt_vparent_id`,
+                `{$this->_sTable}`.`cmt_object_id`,
+                `{$this->_sTable}`.`cmt_author_id`,
+                `{$this->_sTable}`.`cmt_level`,
+                `{$this->_sTable}`.`cmt_text`,
+                `{$this->_sTable}`.`cmt_rate`,
+                `{$this->_sTable}`.`cmt_rate_count`,
+                `{$this->_sTable}`.`cmt_replies`,
+                `{$this->_sTable}`.`cmt_time`
+            FROM `{$this->_sTable}`
             $sJoin
-            WHERE `c`.`cmt_object_id` = ?" . $sWhereParent . $sOder . $sLimit, $iId);
+            WHERE `{$this->_sTable}`.`cmt_object_id` = ?" . $sWhereParent . $sOder . $sLimit, $iId);
 
         return $this->getAll($sQuery);
     }
@@ -257,15 +269,6 @@ class BxDolCmtsQuery extends BxDolDb
         $sQuery = $this->prepare("DELETE FROM {$this->_sTable} WHERE `cmt_object_id` = ?", $iObjectId);
         $this->query ($sQuery);
         $this->query ("OPTIMIZE TABLE {$this->_sTable}");
-    }
-
-    function getObjectCommentsCount ($iObjectId, $iParentId = -1)
-    {
-        $sWhere = '';
-        if ($iParentId != -1)
-            $sWhere = $this->prepare(" AND `cmt_parent_id` = ?", $iParentId);
-        $sQuery = $this->prepare("SELECT COUNT(*) FROM `" . $this->_sTable ."` WHERE `cmt_object_id` = ? " . $sWhere, $iObjectId);
-        return $this->getOne ($sQuery);
     }
 
 	function getObjectTitle($iId)

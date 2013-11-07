@@ -37,10 +37,6 @@ class BxBaseCmtsView extends BxDolCmts {
 
         $oTemplate->addCss(array('cmts.css'));
         $oTemplate->addJs(array('common_anim.js', 'jquery.form.js', 'BxDolCmts.js'));
-        $oTemplate->addJsTranslation(array(
-        	'_Error occured',
-        	'_Are you sure?'
-        ));
 
         bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance($this->_sFormObject, $this->_sFormDisplayPost);
@@ -77,7 +73,7 @@ class BxBaseCmtsView extends BxDolCmts {
 
     	$sCmts = $this->getComments($aBp);
 
-    	$sCaption = _t('_cmt_block_comments_title', $this->_oQuery->getCommentsCount($this->_iId));
+    	$sCaption = _t('_cmt_block_comments_title', $this->getCommentsCount());
     	$sContent = BxDolTemplate::getInstance()->parseHtmlByName('comments_block.html', array(
     		'system' => $this->_sSystem,
     		'list_anchor' => $this->getListAnchor(),
@@ -113,7 +109,7 @@ class BxBaseCmtsView extends BxDolCmts {
     {
     	$this->_prepareParams($aBp, $aDp);
 
-		$aCmts = $this->getCommentsArray($aBp['vparent_id'], $aBp['order'], $aBp['start'], $aBp['per_view']);
+		$aCmts = $this->getCommentsArray($aBp['vparent_id'], $aBp['filter'], $aBp['order'], $aBp['start'], $aBp['per_view']);
 		if(empty($aCmts) || !is_array($aCmts))
 			return '';
 
@@ -384,31 +380,51 @@ class BxBaseCmtsView extends BxDolCmts {
         	$sDisplay = $oMenu->getCode();
     	}
 
-    	$sBrowse = '';
-    	$bBrowse = (int)$this->_aSystem['is_browse_switch'] == 1;
-    	if($bBrowse) {
+    	$sBrowseType = '';
+    	$bBrowseType = (int)$this->_aSystem['is_browse_switch'] == 1;
+    	if($bBrowseType) {
     		$aBrowseLinks = array(
     			array('id' => $this->_sSystem . '-tail', 'name' => $this->_sSystem . '-tail', 'class' => '', 'title' => '_cmt_browse_tail', 'target' => '_self', 'onclick' => 'javascript:' . $this->_sJsObjName . '.cmtChangeBrowse(this, \'tail\');'),
 				array('id' => $this->_sSystem . '-head', 'name' => $this->_sSystem . '-head', 'class' => '', 'title' => '_cmt_browse_head', 'target' => '_self', 'onclick' => 'javascript:' . $this->_sJsObjName . '.cmtChangeBrowse(this, \'head\');'),
 				array('id' => $this->_sSystem . '-popular', 'name' => $this->_sSystem . '-popular', 'class' => '', 'title' => '_cmt_browse_popular', 'target' => '_self', 'onclick' => 'javascript:' . $this->_sJsObjName . '.cmtChangeBrowse(this, \'popular\');'),
-				array('id' => $this->_sSystem . '-connection', 'name' => $this->_sSystem . '-connection', 'class' => '', 'title' => '_cmt_browse_connection', 'target' => '_self', 'onclick' => 'javascript:' . $this->_sJsObjName . '.cmtChangeBrowse(this, \'connection\');')
     		);
 
     		bx_import('BxTemplMenuInteractive');
 			$oMenu = new BxTemplMenuInteractive(array('template' => 'menu_interactive_vertical.html', 'menu_id'=> $this->_sSystem . '-browse', 'menu_items' => $aBrowseLinks));
 			$oMenu->setSelected('', $this->_sSystem . '-' . $this->_sBrowseType);
-        	$sBrowse = $oMenu->getCode();
+        	$sBrowseType = $oMenu->getCode();
+    	}
+
+    	$sBrowseFilter = '';
+    	$bBrowseFilter = $bBrowseType;
+    	if($bBrowseFilter) {
+    		$aFilterLinks = array(
+	        	array('id' => $this->_sSystem . '-all', 'name' => $this->_sSystem . '-all', 'class' => '', 'title' => '_cmt_browse_all', 'target' => '_self', 'onclick' => 'javascript:' . $this->_sJsObjName . '.cmtChangeFilter(this, \'all\');'),
+        		array('id' => $this->_sSystem . '-friends', 'name' => $this->_sSystem . '-friends', 'class' => '', 'title' => '_cmt_browse_friends', 'target' => '_self', 'onclick' => 'javascript:' . $this->_sJsObjName . '.cmtChangeFilter(this, \'friends\');'),
+				array('id' => $this->_sSystem . '-subscriptions', 'name' => $this->_sSystem . '-subscriptions', 'class' => '', 'title' => '_cmt_browse_subscriptions', 'target' => '_self', 'onclick' => 'javascript:' . $this->_sJsObjName . '.cmtChangeFilter(this, \'subscriptions\');')
+        	);
+
+        	$oMenu = new BxTemplMenuInteractive(array('template' => 'menu_interactive_vertical.html', 'menu_id'=> $this->_sSystem . '-filter', 'menu_items' => $aFilterLinks));
+			$oMenu->setSelected('', $this->_sSystem . '-' . $this->_sBrowseFilter);
+        	$sBrowseFilter = $oMenu->getCode();
     	}
 
     	return $oTemplate->parseHtmlByName('comments_controls.html', array(
     		'display_switcher' => $bDisplay ? $sDisplay : '',
-    		'bx_if:is_divider' => array(
-    			'condition' => $bDisplay && $bBrowse,
+    		'bx_if:is_divider_1' => array(
+    			'condition' => $bDisplay && $bBrowseType,
     			'content' => array(
     				'style_prefix' => $this->_sStylePrefix,
     			)
     		),
-    		'browse_switcher' => $bBrowse ? $sBrowse : '',
+    		'browse_switcher' => $bBrowseType ? $sBrowseType : '',
+    		'bx_if:is_divider_2' => array(
+    			'condition' => $bBrowseType && $bBrowseFilter,
+    			'content' => array(
+    				'style_prefix' => $this->_sStylePrefix,
+    			)
+    		),
+    		'filter_switcher' => $bBrowseFilter ? $sBrowseFilter : '',
 		));
     }
 

@@ -179,10 +179,8 @@
 		text-decoration: none;
 		color: rgba(0, 102, 153, 1.0);
     }
-    div.cmt-comment-manage {
-    	position: relative;
-    	min-width: 150px; 
-    	text-align: left;
+    div.cmt-comment-manage .bx-menu-ver li {
+		white-space: nowrap;
     }
 
     /*--- Comment Plused By ---*/

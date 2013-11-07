@@ -1036,7 +1036,6 @@ We may update our Privacy Statement from time to time so please visit this page 
 	<string name="_Week"><![CDATA[Week]]></string>
 	<string name="_Year"><![CDATA[Year]]></string>
 	<string name="_Hacker String"><![CDATA[This may be a hacker string]]></string>
-	<string name="_Error Occured"><![CDATA[Error Occured]]></string>
 	<string name="_Get BoonEx ID"><![CDATA[Get BoonEx ID]]></string>
 	<string name="_Import BoonEx ID"><![CDATA[Import BoonEx ID]]></string>
 	<string name="_Import"><![CDATA[Import]]></string>
@@ -1156,10 +1155,9 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_FieldCaption_TermsOfUse_Join"><![CDATA[I have read and agreed with <a href="terms_of_use.php" target="_blank">Terms of Use</a>.]]></string>
 	<string name="_You must agree with terms of use"><![CDATA[You must agree with terms of use]]></string>
 	<string name="_There_are_no_comments_yet"><![CDATA[There are no comments yet]]></string>
-	<string name="_Error occured"><![CDATA[Error occurred]]></string>
+	<string name="_error occured"><![CDATA[Error occurred]]></string>
 	<string name="_Duplicate vote"><![CDATA[Duplicate vote]]></string>
 	<string name="_No such comment"><![CDATA[No such comment]]></string>
-	<string name="_Are you sure?"><![CDATA[Are you sure?]]></string>
 	<string name="_buried"><![CDATA[buried]]></string>
 	<string name="_toggle"><![CDATA[toggle]]></string>
 	<string name="_see_more"><![CDATA[see more]]></string>
@@ -1178,7 +1176,9 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_cmt_browse_tail"><![CDATA[Newest]]></string>
 	<string name="_cmt_browse_head"><![CDATA[Oldest]]></string>
 	<string name="_cmt_browse_popular"><![CDATA[Popular]]></string>
-	<string name="_cmt_browse_connection"><![CDATA[Connection]]></string>
+	<string name="_cmt_browse_all"><![CDATA[All]]></string>
+	<string name="_cmt_browse_friends"><![CDATA[Friends]]></string>
+	<string name="_cmt_browse_subscriptions"><![CDATA[Subscriptions]]></string>
 	<string name="_cmt_page_view_header"><![CDATA[Comment to {0}]]></string>
 	<string name="_cmt_page_view_title"><![CDATA[Comment to <a href="{0}">{1}</a>]]></string>
 	<string name="_cmt_block_comments_title"><![CDATA[Comments ({0})]]></string>

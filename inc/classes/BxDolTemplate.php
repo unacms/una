@@ -322,6 +322,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
         bx_import('BxDolLanguages');
         $this->addJsTranslation(array(
             '_are you sure?',
+        	'_error occured'
         ));
 
         //--- Load injection's cache ---//

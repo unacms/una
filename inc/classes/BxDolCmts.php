@@ -24,7 +24,10 @@ define('BX_CMT_BROWSE_CONNECTION', 'connection');
 
 define('BX_CMT_ORDER_BY_DATE', 'date');
 define('BX_CMT_ORDER_BY_POPULAR', 'popular');
-define('BX_CMT_ORDER_BY_CONNECTION', 'connection');
+
+define('BX_CMT_FILTER_ALL', 'all');
+define('BX_CMT_FILTER_FRIENDS', 'friends');
+define('BX_CMT_FILTER_SUBSCRIPTIONS', 'subscriptions');
 
 define('BX_CMT_ORDER_WAY_ASC', 'asc');
 define('BX_CMT_ORDER_WAY_DESC', 'desc');
@@ -142,6 +145,9 @@ class BxDolCmts extends BxDol
 
 	protected $_aImageUploaders;
 
+	protected $_sConnObjFriends;
+	protected $_sConnObjSubscriptions;
+
 	protected $_sViewUrl = '';
 	protected $_sBaseUrl = '';
 	protected $_sListAnchor = '';
@@ -157,7 +163,9 @@ class BxDolCmts extends BxDol
     protected $_iDpMaxLevel = 0;
 
     protected $_sBrowseType = '';
-    protected $_sBpSessionKey = ''; 
+    protected $_sBrowseFilter = '';
+    protected $_sBpSessionKeyType = '';
+    protected $_sBpSessionKeyFilter = ''; 
     protected $_aOrder = array();
 
     protected $_iRememberTime = 2592000;
@@ -187,18 +195,21 @@ class BxDolCmts extends BxDol
         $this->_sDpSessionKey = 'bx_' . $this->_sSystem . '_dp_';
 
         $this->_sBrowseType = $this->_aSystem['browse_type'];
-        $this->_sBpSessionKey = 'bx_' . $this->_sSystem . '_bp_';
+        $this->_sBrowseFilter = BX_CMT_FILTER_ALL;
+        $this->_sBpSessionKeyType = 'bx_' . $this->_sSystem . '_bpt_';
+        $this->_sBpSessionKeyFilter = 'bx_' . $this->_sSystem . '_bpf_';
         $this->_aOrder = array(
         	'by' => BX_CMT_ORDER_BY_DATE, 
         	'way' => BX_CMT_ORDER_WAY_ASC
         );
 
-        list($mixedUserBp, $mixedUserDp) = $this->_getUserChoice();
-        if(!empty($mixedUserBp))
-        	$this->_sBrowseType = $mixedUserBp;
-
+        list($mixedUserDp, $mixedUserBpType, $mixedUserBpFilter) = $this->_getUserChoice();
 		if(!empty($mixedUserDp))
 			$this->_sDisplayType = $mixedUserDp;
+        if(!empty($mixedUserBpType))
+        	$this->_sBrowseType = $mixedUserBpType;
+		if(!empty($mixedUserBpFilter))
+        	$this->_sBrowseFilter = $mixedUserBpFilter;
 
         $this->_sViewUrl = BX_DOL_URL_ROOT . 'cmts.php';
         $this->_sBaseUrl = $this->_aSystem['base_url'];
@@ -216,6 +227,9 @@ class BxDolCmts extends BxDol
 		$this->_sTranscoderPreview = 'sys_cmts_images_preview';
 
 		$this->_aImageUploaders = array('sys_cmts_simple');
+		
+		$this->_sConnObjFriends = 'sys_profiles_friends';
+		$this->_sConnObjSubscriptions = 'sys_profiles_subscriptions';
 
         if ($iInit)
             $this->init($iId);
@@ -356,6 +370,22 @@ class BxDolCmts extends BxDol
     	return sprintf($this->_sListAnchor, str_replace('_', '-', $this->getSystemName()), $this->getId());
     }
 
+    public function getConnectionObject($sType)
+    {
+    	$sResult = '';
+
+    	switch($sType) {
+    		case BX_CMT_FILTER_FRIENDS:
+    			$sResult = $this->_sConnObjFriends;
+    			break;
+    		case BX_CMT_FILTER_SUBSCRIPTIONS:
+    			$sResult = $this->_sConnObjSubscriptions;
+    			break;
+    	}
+
+    	return $sResult;
+    } 
+
     public function isNl2br ()
     {
         return $this->_aSystem['nl2br'];
@@ -420,14 +450,14 @@ class BxDolCmts extends BxDol
     	return $this->_oQuery->getObjectTitle ($iObjectId ? $iObjectId : $this->getId());
     }
 
-    public function getObjectCommentsCount ($iObjectId = 0)
+	public function getCommentsCount ($iObjectId = 0, $iCmtVParentId = 0, $sFilter = '')
     {
-        return $this->_oQuery->getObjectCommentsCount ($iObjectId ? $iObjectId : $this->getId());
+        return $this->_oQuery->getCommentsCount ($iObjectId ? $iObjectId : $this->getId(), $iCmtVParentId, $this->_getAuthorId(), $sFilter);
     }
 
-    public function getCommentsArray ($iVParentId, $aOrder, $iStart = 0, $iCount = -1)
+    public function getCommentsArray ($iVParentId, $sFilter, $aOrder, $iStart = 0, $iCount = -1)
     {
-        return $this->_oQuery->getComments ($this->getId(), $iVParentId, $this->_getAuthorId(), $aOrder, $iStart, $iCount);
+        return $this->_oQuery->getComments ($this->getId(), $iVParentId, $this->_getAuthorId(), $sFilter, $aOrder, $iStart, $iCount);
     }
 
     public function getCommentRow ($iCmtId)
@@ -573,8 +603,9 @@ class BxDolCmts extends BxDol
         $iCmtPerView = isset($_REQUEST['CmtPerView']) ? bx_process_input($_REQUEST['CmtPerView'], BX_DATA_INT) : -1;
         $sCmtBrowse = isset($_REQUEST['CmtBrowse']) ? bx_process_input($_REQUEST['CmtBrowse'], BX_DATA_TEXT) : '';
         $sCmtDisplay = isset($_REQUEST['CmtDisplay']) ? bx_process_input($_REQUEST['CmtDisplay'], BX_DATA_TEXT) : '';
+        $sCmtFilter = isset($_REQUEST['CmtFilter']) ? bx_process_input($_REQUEST['CmtFilter'], BX_DATA_TEXT) : '';
 
-        return $this->getComments(array('vparent_id' => $iCmtVParentId, 'start' => $iCmtStart, 'per_view' => $iCmtPerView, 'type' => $sCmtBrowse), array('type' => $sCmtDisplay));
+        return $this->getComments(array('vparent_id' => $iCmtVParentId, 'start' => $iCmtStart, 'per_view' => $iCmtPerView, 'type' => $sCmtBrowse, 'filter' => $sCmtFilter), array('type' => $sCmtDisplay));
     }
 
 	public function actionGetImage ()
@@ -784,6 +815,7 @@ class BxDolCmts extends BxDol
 	protected function _prepareParams(&$aBp, &$aDp)
     {
     	$aBp['type'] = isset($aBp['type']) && !empty($aBp['type']) ? $aBp['type'] : $this->_sBrowseType;
+    	$aBp['filter'] = isset($aBp['filter']) && !empty($aBp['filter']) ? $aBp['filter'] : $this->_sBrowseFilter;
     	$aBp['parent_id'] = isset($aBp['parent_id']) ? $aBp['parent_id'] : 0;
     	$aBp['start'] = isset($aBp['start']) ? $aBp['start'] : -1;
     	$aBp['per_view'] = isset($aBp['per_view']) ? $aBp['per_view'] : -1;
@@ -810,16 +842,9 @@ class BxDolCmts extends BxDol
 					'way' => BX_CMT_ORDER_WAY_DESC
 				);
 				break;
-
-			case BX_CMT_BROWSE_CONNECTION:
-				$aBp['order'] = array(
-					'by' => BX_CMT_ORDER_BY_CONNECTION,
-					'way' => BX_CMT_ORDER_WAY_DESC
-				);
-				break;
 		}
 
-		$aBp['count'] = $this->_oQuery->getCommentsCount($this->_iId, $aBp['vparent_id']);
+		$aBp['count'] = $this->getCommentsCount($this->_iId, $aBp['vparent_id'], $aBp['filter']);
 		if($aBp['start'] != -1)
 			return;
 
@@ -832,17 +857,19 @@ class BxDolCmts extends BxDol
 			}
 		}
 
-		$this->_setUserChoice($aBp['type'], $aDp['type']);
+		$this->_setUserChoice($aDp['type'], $aBp['type'], $aBp['filter']);
     }
 
     protected function _triggerComment()
     {
-        if (!$this->_aSystem['trigger_table'])
+        if(!$this->_aSystem['trigger_table'])
             return false;
+
         $iId = $this->getId();
-        if (!$iId)
+        if(!$iId)
             return false;
-        $iCount = $this->_oQuery->getObjectCommentsCount ($iId);
+
+        $iCount = $this->getCommentsCount($iId);
         return $this->_oQuery->updateTriggerTable($iId, $iCount);
     }
 
@@ -881,13 +908,14 @@ class BxDolCmts extends BxDol
     	bx_import('BxDolSession');
     	$oSession = BxDolSession::getInstance();
 
-    	$mixedBp = $oSession->getValue($this->_sBpSessionKey . $iUserId);
     	$mixedDp = $oSession->getValue($this->_sDpSessionKey . $iUserId);
+    	$mixedBpType = $oSession->getValue($this->_sBpSessionKeyType . $iUserId);
+    	$mixedBpFilter = $oSession->getValue($this->_sBpSessionKeyFilter . $iUserId);
 
-    	return array($mixedBp, $mixedDp);
+    	return array($mixedDp, $mixedBpType, $mixedBpFilter);
     }
 
-    protected function _setUserChoice($sBp, $sDp)
+    protected function _setUserChoice($sDp, $sBpType, $sBpFilter)
     {
     	if(!isLogged())
     		return;
@@ -897,11 +925,14 @@ class BxDolCmts extends BxDol
     	bx_import('BxDolSession');
     	$oSession = BxDolSession::getInstance();
 
-    	if(!empty($sBp))
-	    	$oSession->setValue($this->_sBpSessionKey . $iUserId, $sBp);
-
     	if(!empty($sDp))
     		$oSession->setValue($this->_sDpSessionKey . $iUserId, $sDp);
+
+    	if(!empty($sBpType))
+	    	$oSession->setValue($this->_sBpSessionKeyType . $iUserId, $sBpType);
+	    	
+	    if(!empty($sBpFilter))
+	    	$oSession->setValue($this->_sBpSessionKeyFilter . $iUserId, $sBpFilter);
     }
 
 	protected function _sendNotificationEmail($iCmtId, $iCmtParentId)
