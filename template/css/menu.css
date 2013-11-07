@@ -119,7 +119,7 @@ ul.bx-menu-verlit {
 /* --------------- main menu */
 
 #bx-menu-main-container {
-    height:39px;
+    height:36px;
     white-space: nowrap;
     overflow:hidden;    
 }
@@ -132,7 +132,8 @@ ul.bx-menu-verlit {
 #bx-menu-main-submenu,
 #bx-menu-main {
     display:inline-block;
-    line-height:39px;
+    line-height:36px;
+    vertical-align:top;
 }
 
 #bx-menu-main-container #bx-menu-main-submenu:first-child .bx-menu-main-submenu-div:first-child {
@@ -157,6 +158,7 @@ ul.bx-menu-main {
 .bx-menu-main li {
     display:inline-block;
     margin:0;
+    vertical-align:top;
 }
 
 .bx-menu-main li a,
@@ -214,7 +216,6 @@ ul.bx-menu-toolbar li a {
     vertical-align:middle;
     color: #fff;
     text-decoration:none;
-    text-shadow: rgba(0, 0, 0, 0.5) 0px 1px 0px;
 }
 
 ul.bx-menu-toolbar li:first-child a {
@@ -227,8 +228,6 @@ ul.bx-menu-toolbar li:hover a {
     -moz-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.3), 0px -1px 0px 0px rgba(255, 255, 255, 0.3);
     -webkit-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.3), 0px -1px 0px 0px rgba(255, 255, 255, 0.3);
     box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.3), 0px -1px 0px 0px rgba(255, 255, 255, 0.3);
-    
-    text-shadow: 0px 0px 1px #000;
 }
 
 ul.bx-menu-toolbar li.bx-menu-tab-active a,
@@ -241,8 +240,6 @@ ul.bx-menu-toolbar li:active a {
     -moz-box-shadow: inset 0px 1px 1px 0px rgba(0, 0, 0, 0.3), 0px 1px 0px 0px rgba(255, 255, 255, 0.3);
     -webkit-box-shadow: inset 0px 1px 1px 0px rgba(0, 0, 0, 0.3), 0px 1px 0px 0px rgba(255, 255, 255, 0.3);
     box-shadow: inset 0px 1px 1px 0px rgba(0, 0, 0, 0.3), 0px 1px 0px 0px rgba(255, 255, 255, 0.3);
-    
-    text-shadow: 0px 0px 1px #000;
 }
 
 ul.bx-menu-toolbar li img {
@@ -255,8 +252,6 @@ ul.bx-menu-toolbar li .sys-icon {
     vertical-align:middle;
     font-size:32px;
     text-align:center;
-    
-    text-shadow: 0px 0px 2px #000;
 }
 
 
