@@ -78,12 +78,6 @@ class BxBaseCmtsView extends BxDolCmts {
     		'system' => $this->_sSystem,
     		'list_anchor' => $this->getListAnchor(),
     		'id' => $this->getId(),
-    		'bx_if:show_empty' => array(
-				'condition' => $sCmts == '',
-				'content' => array(
-					'style_prefix' => $this->_sStylePrefix
-				)
-			),
     		'comments' => $sCmts,
     		'post_form_top' => $this->getFormBoxPost($aBp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_TOP)),
 			'post_form_bottom'  => $this->getFormBoxPost($aBp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_BOTTOM)),
@@ -111,7 +105,7 @@ class BxBaseCmtsView extends BxDolCmts {
 
 		$aCmts = $this->getCommentsArray($aBp['vparent_id'], $aBp['filter'], $aBp['order'], $aBp['start'], $aBp['per_view']);
 		if(empty($aCmts) || !is_array($aCmts))
-			return '';
+			return $this->_getEmpty();
 
 		$sCmts = '';
 		foreach($aCmts as $k => $aCmt)
@@ -774,6 +768,12 @@ class BxBaseCmtsView extends BxDolCmts {
     	return $sCmts;
     }
 
+    protected function _getEmpty()
+    {
+    	return BxDolTemplate::getInstance()->parseHtmlByName('comment_empty.html', array(
+    		'style_prefix' => $this->_sStylePrefix
+    	));
+    } 
 	protected function _echoResultJson($a, $isAutoWrapForFormFileSubmit = false) {
 
         header('Content-type: text/html; charset=utf-8');    
