@@ -35,6 +35,9 @@ div.bx-tl-item-menu {
 	top: 0px;
 	right: 0px;
 }
+div.bx-tl-item-menu .bx-menu-ver li {
+	white-space: nowrap;
+}
 div.bx-tl-item-menu-button {
 	width: 20px;
 	height: 20px;
@@ -47,9 +50,6 @@ div.bx-tl-item-menu-button a {
 div.bx-tl-item-menu-button a:hover {
 	text-decoration: none;
 	color: rgba(0, 102, 153, 1.0);
-}
-div.bx-tl-item-menu .bx-menu-verlit li {
-	white-space: nowrap;
 }
 div.bx-tl-item-image {
 	margin-left: -20px;

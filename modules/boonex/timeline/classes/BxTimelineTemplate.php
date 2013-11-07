@@ -428,7 +428,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 			$aTmplVarsMenu = array(
         		'style_prefix' => $sStylePrefix,
         		'js_object' => $sJsObject,
-				'menu' => BxTemplFunctions::getInstance()->designBoxMenu(array ('template' => 'menu_vertical_lite.html', 'menu_items' => $aMenuItems))
+				'menu' => BxTemplFunctions::getInstance()->designBoxMenu(array ('template' => 'menu_vertical.html', 'menu_items' => $aMenuItems))
 			);
 		}
 
