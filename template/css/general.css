@@ -11,16 +11,11 @@
     min-height:50px;
     z-index:900;
 
-    border-bottom: 2px solid #383d66;
-    border-top: 1px solid #666;
+    border-bottom: 1px solid #383d66;
 
     background-image: url(../images/bg-toolbar.png);
     background-repeat: repeat-x;
     background-color:#0764a7;
-
-    -moz-box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.8);
-    -webkit-box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.8);
-    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.8);
 
     opacity:0;
 
@@ -54,7 +49,6 @@
     padding-top: 6px; 
     vertical-align: middle;
     text-align: center; 
-    text-shadow: 0px 0px 2px #000;
 }
 
 #bx-logo-container a {  
@@ -74,10 +68,6 @@
 #bx-menu-main-bar {
     background-color:#ffffff;
     border-bottom:1px solid #d0d0d0;
-
-	-webkit-box-shadow: inset 0px -1px 0px rgba(128, 128, 128, 0.1);
-	-moz-box-shadow: inset 0px -1px 0px rgba(128, 128, 128, 0.1);
-	box-shadow: inset 0px -1px 0px rgba(128, 128, 128, 0.1);
 }
 
 
