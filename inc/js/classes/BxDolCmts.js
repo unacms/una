@@ -338,7 +338,6 @@ BxDolCmts.prototype.toggleReply = function(e, iCmtParentId)
     }
 
 	this._getForm(e, iCmtParentId, function(sForm) {
-		console.log(sForm);
 		var oForm = $(sForm).hide();
         var sFormClass = oForm.attr('class');
         var oFormSibling = $(sParentId + ' > ul.cmts:first');
