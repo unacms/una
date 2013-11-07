@@ -252,7 +252,6 @@ blockquote {
 .bx-btn img,
 .bx-btn i.sys-icon {
     margin-right:3px;
-    vertical-align:middle;
 }
 .bx-btn img {
     width:16px;
@@ -260,10 +259,8 @@ blockquote {
 }
 .bx-btn u {
     text-decoration:none;
-    vertical-align:middle;
 }
 .bx-btn .sys-icon {
-    vertical-align:middle;
     font-size:16px;
 }
 .bx-btn .sys-icon-bigger {
