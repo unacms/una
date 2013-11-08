@@ -34,6 +34,9 @@ class BxTimelineConfig extends BxDolModuleConfig
     protected $_sTranscoderObjectPreview;
     protected $_aImageUploaders;
 
+    protected $_sConnObjFriends;
+	protected $_sConnObjSubscriptions;
+
     protected $_bJsMode;
     protected $_aJsClass;
     protected $_aJsObjects;
@@ -61,6 +64,9 @@ class BxTimelineConfig extends BxDolModuleConfig
         $this->_sStorageObject = 'bx_timeline_photos';
         $this->_sTranscoderObjectPreview = 'bx_timeline_photos_preview';
         $this->_aImageUploaders = array('bx_timeline_simple');        
+
+        $this->_sConnObjFriends = 'sys_profiles_friends';
+		$this->_sConnObjSubscriptions = 'sys_profiles_subscriptions';
 
         $this->_bJsMode = false;
         $this->_aJsClass = array(
@@ -161,6 +167,12 @@ class BxTimelineConfig extends BxDolModuleConfig
     			break;
     		case 'transcoder_preview':
     			$sResult = $this->_sTranscoderObjectPreview;
+    			break;
+    		case 'conn_friends':
+    			$sResult = $this->_sConnObjFriends;
+    			break;
+    		case 'conn_subscriptions':
+    			$sResult = $this->_sConnObjSubscriptions;
     			break;
     	}
 

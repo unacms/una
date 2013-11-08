@@ -57,14 +57,12 @@ class BxTimelineTemplate extends BxDolModuleTemplate
     public function getPostBlock($iOwnerId)
     {
     	$oModule = $this->getModule();
-    	$sJsObject = $this->_oConfig->getJsObject('post');
-
     	$aFormText = $oModule->getFormText();
     	$aFormLink = $oModule->getFormLink();
     	$aFormPhoto = $oModule->getFormPhoto();
 
         return $this->parseHtmlByName('post.html', array (
-            'js_object' => $sJsObject,
+            'js_object' => $this->_oConfig->getJsObject('post'),
         	'js_content' => $this->getJsCode('post', array(
             	'owner_id' => $iOwnerId 
         	)),
@@ -77,41 +75,24 @@ class BxTimelineTemplate extends BxDolModuleTemplate
         ));        
     }
 
-    public function getViewBlock($iOwnerId, $iStart, $iPerPage, $sFilter, $iTimeline, $aModules)
+    public function getViewBlock($aParams)
     {
-    	if($iStart == -1)
-           $iStart = 0;
-        if($iPerPage == -1)
-           $iPerPage = $this->_oConfig->getPerPage();
-		if($iTimeline == -1)
-           $iTimeline = $this->_oDb->getMaxDuration($iOwnerId, $sFilter, $aModules);
-        if(empty($sFilter))
-            $sFilter = BX_TIMELINE_FILTER_ALL;
-
-		list($sContent, $sLoadMore) = $this->getPosts(array(
-			'type' => 'owner',
-			'owner_id' => $iOwnerId, 
-		 	'order' => 'desc', 
-			'start' => $iStart, 
-			'per_page' => $iPerPage, 
-			'filter' => $sFilter, 
-			'timeline' => $iTimeline, 
-			'modules' => $aModules
-		));
+		list($sContent, $sLoadMore) = $this->getPosts($aParams);
 
     	$this->getCssJs();
     	return $this->parseHtmlByName('view.html', array(
     		'style_prefix' => $this->_oConfig->getPrefix('style'),
-            'timeline' => $this->getTimeline($iOwnerId, $iStart, $iPerPage, $sFilter, $iTimeline, $aModules),
+            'timeline' => $this->getTimeline($aParams),
             'content' => $sContent,
     		'load_more' =>  $sLoadMore,
             'js_content' => $this->getJsCode('view', array(
-            	'owner_id' => $iOwnerId, 
-            	'start' => $iStart, 
-            	'per_page' => $iPerPage, 
-            	'filter' => $sFilter, 
-            	'timeline' => $iTimeline, 
-            	'modules' => $aModules
+    			'type' => $aParams['type'],
+            	'owner_id' => $aParams['owner_id'], 
+            	'start' => $aParams['start'], 
+            	'per_page' => $aParams['per_page'], 
+            	'filter' => $aParams['filter'],
+            	'modules' => $aParams['modules'], 
+            	'timeline' => $aParams['timeline'],
 			))
         ));
     }
@@ -162,6 +143,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
         }
 
         //--- Check for Next
+        $aParamsDb['browse'] = 'list';
         $aParamsDb['per_page'] += 1;
         $aEvents = $this->_oDb->getEvents($aParamsDb);
 
@@ -200,9 +182,11 @@ class BxTimelineTemplate extends BxDolModuleTemplate
         ));
     }
 
-	public function getTimeline($iOwnerId, $iStart, $iPerPage, $sFilter, $iTimeline, $aModules)
+	public function getTimeline($aParams)
     {
-        $iMaxDuration = $this->_oDb->getMaxDuration($iOwnerId, $sFilter, $aModules);
+    	$iTimeline = $aParams['timeline'];
+
+        $iMaxDuration = $this->_oDb->getMaxDuration($aParams);
         if($iMaxDuration <= $this->_oConfig->getTimelineVisibilityThreshold())
 			return '';
 
@@ -346,7 +330,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
         $aTmplVarsMenu = $this->_getTmplVarsItemMenu($aEvent);
 
         $aTmplVarsTimelineOwner = array();
-        if(isset($aBrowseParams['type']) && $aBrowseParams['type'] == 'friends')
+        if(isset($aBrowseParams['type']) && $aBrowseParams['type'] == BX_TIMELINE_TYPE_CONNECTIONS)
         	$aTmplVarsTimelineOwner = $this->_getTmplVarsTimelineOwner($aEvent);
 
 		bx_import('BxDolPermalinks');

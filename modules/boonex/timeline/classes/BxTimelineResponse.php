@@ -25,6 +25,7 @@ class BxTimelineResponse extends BxDolAlertsResponse
 
         $this->_oModule = $oModule;
     }
+
     /**
      * Overwtire the method of parent class.
      *
@@ -60,6 +61,9 @@ class BxTimelineResponse extends BxDolAlertsResponse
 					'description' => ''
 		        ));
 
+		        if(!empty($iId))
+		        	$this->_oModule->onUpdate($oAlert->iSender);
+
 		        $this->_oModule->_oDb->updateSimilarObject($iId, $oAlert);		
 		        break;
 
@@ -75,6 +79,7 @@ class BxTimelineResponse extends BxDolAlertsResponse
 		}
     }
 
+    //TODO: Remove if it's not used. 
     protected function _responseInner($oAlert)
     {
     	$this->_oModule->_iOwnerId = (int)$oAlert->aExtras['owner_id'];
@@ -94,6 +99,9 @@ class BxTimelineResponse extends BxDolAlertsResponse
 			'title' => bx_process_input($aMediaInfo['title']), 
 			'description' => bx_process_input($aMediaInfo['description'])
         ));
+
+        if(!empty($iId))
+			$this->_oModule->onUpdate($this->_oModule->_iOwnerId);
 
 		echo $this->_oModule->_oTemplate->_wrapInTagJsCode("parent." . $this->_oModule->_sJsPostObject . "._getPost(null, " . $iId . ");");
     }

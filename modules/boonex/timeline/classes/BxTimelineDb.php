@@ -14,6 +14,10 @@ bx_import('BxDolModuleDb');
 class BxTimelineDb extends BxDolModuleDb
 {
     var $_oConfig;
+
+    var $_sTable;
+    var $_sTableHandlers;
+
     /*
      * Constructor.
      */
@@ -22,6 +26,9 @@ class BxTimelineDb extends BxDolModuleDb
         parent::__construct($oConfig);
 
         $this->_oConfig = $oConfig;
+
+        $this->_sTable = $this->_sPrefix . 'events';
+        $this->_sTableHandlers = $this->_sPrefix . 'handlers';
     }
 
     public function getAlertHandlerId()
@@ -49,7 +56,7 @@ class BxTimelineDb extends BxDolModuleDb
 
             //--- Update Timeline Handlers ---//
             $sQuery = $this->prepare("INSERT INTO 
-            		`" . $this->_sPrefix . "handlers`
+            		`{$this->_sTableHandlers}`
             	SET
             		`type`=?,
             		`alert_unit`=?, 
@@ -81,7 +88,7 @@ class BxTimelineDb extends BxDolModuleDb
 
             //--- Update Wall Handlers ---//
             $sQuery = $this->prepare("DELETE FROM 
-            		`" . $this->_sPrefix . "handlers` 
+            		`{$this->_sTableHandlers}` 
             	WHERE 
             		`alert_unit`=? AND 
             		`alert_action`=?
@@ -119,7 +126,7 @@ class BxTimelineDb extends BxDolModuleDb
                 `alert_unit` AS `alert_unit`,
                 `alert_action` AS `alert_action`,
                 `content` AS `content`
-            FROM `" . $this->_sPrefix . "handlers`
+            FROM `{$this->_sTableHandlers}`
             WHERE 1 AND `alert_unit` NOT LIKE ('" . $this->_oConfig->getPrefix('common_post') . "%')" . $sWhereClause;
 
         return $this->$sMethod($sSql);
@@ -133,21 +140,13 @@ class BxTimelineDb extends BxDolModuleDb
     	$aSet = array();
         foreach($aParamsSet as $sKey => $sValue)
            $aSet[] = $this->prepare("`" . $sKey . "`=?", $sValue);
-           
-        if((int)$this->query("INSERT INTO `" . $this->_sPrefix . "events` SET " . implode(", ", $aSet) . ", `date`=UNIX_TIMESTAMP()") <= 0)
+
+        if((int)$this->query("INSERT INTO `{$this->_sTable}` SET " . implode(", ", $aSet) . ", `date`=UNIX_TIMESTAMP()") <= 0)
             return 0;
 
-        $iId = (int)$this->lastId();
-        if($iId > 0 && isset($aParamsSet['owner_id']) && (int)$aParamsSet['owner_id'] > 0) {
-			//--- Wall -> Update for Alerts Engine ---//
-            bx_import('BxDolAlerts');
-            $oAlert = new BxDolAlerts('bx_' . $this->_oConfig->getUri(), 'update', $aParamsSet['owner_id']);
-            $oAlert->alert();
-            //--- Wall -> Update for Alerts Engine ---//
-        }
-
-        return $iId;
+        return (int)$this->lastId();
     }
+
     public function updateEvent($aParamsSet, $aParamsWhere)
     {
     	if(empty($aParamsSet) || empty($aParamsWhere))
@@ -161,7 +160,7 @@ class BxTimelineDb extends BxDolModuleDb
         foreach($aParamsWhere as $sKey => $sValue)
            $aWhere[] = $this->prepare("`" . $sKey . "`=?", $sValue);
 
-        $sSql = "UPDATE `" . $this->_sPrefix . "events` SET " . implode(", ", $aSet) . " WHERE " . implode(" AND ", $aWhere);
+        $sSql = "UPDATE `{$this->_sTable}` SET " . implode(", ", $aSet) . " WHERE " . implode(" AND ", $aWhere);
         return $this->query($sSql);
     }
 
@@ -171,7 +170,7 @@ class BxTimelineDb extends BxDolModuleDb
         foreach($aParams as $sKey => $sValue)
            $aWhere[] = $this->prepare("`" . $sKey . "`=?", $sValue);
 
-        $sSql = "DELETE FROM `" . $this->_sPrefix . "events` WHERE " . implode(" AND ", $aWhere) . $sWhereAddon;
+        $sSql = "DELETE FROM `{$this->_sTable}` WHERE " . implode(" AND ", $aWhere) . $sWhereAddon;
         return $this->query($sSql);
     }
 
@@ -180,86 +179,95 @@ class BxTimelineDb extends BxDolModuleDb
     	$sMethod = 'getAll';
         $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
 
-        $sWhereModuleFilter = '';
-        if(isset($aParams['modules']) && !empty($aParams['modules']) && is_array($aParams['modules']))
-        	$sWhereModuleFilter = "AND `type` IN (" . $this->implode_escape($aParams['modules']) . ") ";
-
-        if(isset($aParams['timeline'])) {            
-            $iDays = (int)$aParams['timeline'];
-            $iNowMorning = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
-            $sWhereClause .= $this->prepare("AND `date`>=? ", ($iNowMorning - 86400 * $iDays));
-        }
-
-        switch($aParams['type']) {
+        switch($aParams['browse']) {
             case 'id':
             	$sMethod = 'getRow';
-                $sWhereClause = $this->prepare("AND `te`.`id`=? ", $aParams['value']);
+                $sWhereClause = $this->prepare("AND `{$this->_sTable}`.`id`=? ", $aParams['value']);
                 $sLimitClause = "LIMIT 1";
                 break;
 
-            case 'owner':
-		        if($sWhereModuleFilter == '') {
+			case 'last':
+			case 'list':
+		        //--- Apply filter
+		    	if(isset($aParams['filter']))
+					$sWhereClause .= $this->_getFilterAddon($aParams['owner_id'], $aParams['filter']);
+
+				//--- Apply timeline
+		        if(isset($aParams['timeline'])) {            
+		            $iDays = (int)$aParams['timeline'];
+		            $iNowMorning = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
+		            $sWhereClause .= $this->prepare("AND `date`>=? ", ($iNowMorning - 86400 * $iDays));
+		        }
+
+		        //--- Apply modules or handlers filter
+		        $sWhereModuleFilter = '';
+		        if(isset($aParams['modules']) && !empty($aParams['modules']) && is_array($aParams['modules']))
+		        	$sWhereModuleFilter = "AND `type` IN (" . $this->implode_escape($aParams['modules']) . ") ";
+
+		    	if($sWhereModuleFilter == '') {
 					$aHidden = $this->_oConfig->getHandlersHidden();
 					$sWhereModuleFilter = is_array($aHidden) && !empty($aHidden) ? "AND `th`.`id` NOT IN (" . $this->implode_escape($aHidden) . ") " : "";
 				}
 
-                if(!empty($aParams['owner_id'])) {
-                    if(!is_array($aParams['owner_id']))
-                        $sWhereClause .= $this->prepare("AND `te`.`owner_id`=? ", $aParams['owner_id']);
-                    else
-                        $sWhereClause .= "AND `te`.`owner_id` IN (" . $this->implode_escape($aParams['owner_id']) . ") ";
+				if($sWhereModuleFilter == '')
+					$sWhereClause .= $sWhereModuleFilter;
+
+				//--- Check type
+				if(!empty($aParams['owner_id']))
+					switch($aParams['type']) {
+						case BX_TIMELINE_TYPE_OWNER:
+							$sWhereClause .= $this->prepare("AND `{$this->_sTable}`.`owner_id`=? ", $aParams['owner_id']);
+							break;
+
+						case BX_TIMELINE_TYPE_CONNECTIONS:
+							bx_import('BxDolConnection');
+							$oConnection = BxDolConnection::getObjectInstance($this->_oConfig->getObject('conn_friends'));
+		
+							$aQueryParts = $oConnection->getConnectedContentAsSQLParts($this->_sPrefix . "events", 'owner_id', $aParams['owner_id']);
+							$sJoinClause .= ' ' . $aQueryParts['join'];
+							break;
+					}
+
+                switch($aParams['browse']) {
+                	case 'last':
+                		$sMethod = 'getRow';
+                		$sOrderClause = "ORDER BY `{$this->_sTable}`.`date` ASC";
+                		$sLimitClause = "LIMIT 1";
+                		break;
+                	case 'list':
+                		$sOrderClause = "ORDER BY `{$this->_sTable}`.`date` DESC";
+                		$sLimitClause = isset($aParams['per_page']) ? "LIMIT " . $aParams['start'] . ", " . $aParams['per_page'] : "";
+                		break;
                 }
-
-                $sWhereClause .= isset($aParams['filter']) ? $this->_getFilterAddon($aParams['owner_id'], $aParams['filter']) : '';
-                $sWhereClause .= $sWhereModuleFilter;
-                $sOrderClause = isset($aParams['order']) ? "ORDER BY `te`.`date` " . strtoupper($aParams['order']) : "";
-                $sLimitClause = isset($aParams['per_page']) ? "LIMIT " . $aParams['start'] . ", " . $aParams['per_page'] : "";
-                break;
-
-            case 'last':
-            	$sMethod = 'getRow';
-
-		        if($sWhereModuleFilter == '') {
-					$aHidden = $this->_oConfig->getHandlersHidden();
-					$sWhereModuleFilter = is_array($aHidden) && !empty($aHidden) ? "AND `th`.`id` NOT IN (" . $this->implode_escape($aHidden) . ") " : "";
-				}
-
-                if(!empty($aParams['owner_id'])) {
-                    if(!is_array($aParams['owner_id']))
-                        $sWhereClause .= $this->prepare("AND `te`.`owner_id`=? ", $aParams['owner_id']);
-                    else
-                        $sWhereClause .= "AND `te`.`owner_id` IN (" . $this->implode_escape($aParams['owner_id']) . ") ";
-                }
-
-                $sWhereClause .= isset($aParams['filter']) ? $this->_getFilterAddon($aParams['owner_id'], $aParams['filter']) : '';
-                $sWhereClause .= $sWhereModuleFilter;
-                $sOrderClause = "ORDER BY `te`.`date` ASC";
-                $sLimitClause = "LIMIT 1";
                 break;
         }
 
         $sSql = "SELECT
-                `te`.`id` AS `id`,
-                `te`.`owner_id` AS `owner_id`,
-                `te`.`object_id` AS `object_id`,
-                `te`.`type` AS `type`,
-                `te`.`action` AS `action`,
-                `te`.`content` AS `content`,
-                `te`.`comments` AS `comments`,
-                `te`.`date` AS `date`,
-                DAYOFYEAR(FROM_UNIXTIME(`te`.`date`)) AS `day_date`,
+                `{$this->_sTable}`.`id` AS `id`,
+                `{$this->_sTable}`.`owner_id` AS `owner_id`,
+                `{$this->_sTable}`.`object_id` AS `object_id`,
+                `{$this->_sTable}`.`type` AS `type`,
+                `{$this->_sTable}`.`action` AS `action`,
+                `{$this->_sTable}`.`content` AS `content`,
+                `{$this->_sTable}`.`comments` AS `comments`,
+                `{$this->_sTable}`.`date` AS `date`,
+                DAYOFYEAR(FROM_UNIXTIME(`{$this->_sTable}`.`date`)) AS `day_date`,
                 DAYOFYEAR(NOW()) AS `day_now`,
-                (UNIX_TIMESTAMP() - `te`.`date`)/86400 AS `ago_days`
-            FROM `" . $this->_sPrefix . "events` AS `te`
-            LEFT JOIN `" . $this->_sPrefix . "handlers` AS `th` ON `te`.`type`=`th`.`alert_unit` AND `te`.`action`=`th`.`alert_action` " . $sJoinClause . " 
+                (UNIX_TIMESTAMP() - `{$this->_sTable}`.`date`)/86400 AS `ago_days`
+            FROM `{$this->_sTable}`
+            LEFT JOIN `{$this->_sTableHandlers}` ON `{$this->_sTable}`.`type`=`{$this->_sTableHandlers}`.`alert_unit` AND `{$this->_sTable}`.`action`=`{$this->_sTableHandlers}`.`alert_action` " . $sJoinClause . " 
             WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
 
         return $this->$sMethod($sSql);
     }
 
-    public function getMaxDuration($iOwnerId, $sFilter, $aModules)
+    public function getMaxDuration($aParams)
     {
-		$aEvent = $this->getEvents(array('type' => 'last', 'owner_id' => $iOwnerId, 'filter' => $sFilter, 'modules' => $aModules));
+    	$aParams['browse'] = 'last';
+    	if(isset($aParams['timeline']))
+    		unset($aParams['timeline']);
+
+		$aEvent = $this->getEvents($aParams);
         if(empty($aEvent) || !is_array($aEvent))
             return 0;
 
@@ -338,7 +346,7 @@ class BxTimelineDb extends BxDolModuleDb
 
 		$sWhereClause .= $this->_getFilterAddon($iOwnerId, $sFilter);
 
-        $sSql = "SELECT COUNT(*) FROM `" . $this->_sPrefix . "events` WHERE " . $sWhereClause . " LIMIT 1";
+        $sSql = "SELECT COUNT(*) FROM `{$this->_sTable}` WHERE " . $sWhereClause . " LIMIT 1";
         return $this->getOne($sSql);
     }
 
@@ -368,7 +376,7 @@ class BxTimelineDb extends BxDolModuleDb
         if(isset($aHandler['group_by']))
             $sWhereClause .= "AND `content` LIKE '%" . $oAlert->aExtras[$aHandler['group_by']] . "%' ";
 
-        $sSql = "UPDATE `" . $this->_sPrefix . "events`
+        $sSql = "UPDATE `{$this->_sTable}`
             SET
                 `object_id`=CONCAT(`object_id`, '," . $oAlert->iObject . "'),
                 `title`='',
