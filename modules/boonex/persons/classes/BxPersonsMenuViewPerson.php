@@ -11,6 +11,7 @@
 
 bx_import('BxTemplMenu');
 bx_import('BxDolProfile');
+bx_import('BxDolModule');
 
 /**
  * 'View person' menu.
@@ -40,6 +41,26 @@ class BxPersonsMenuViewPerson extends BxTemplMenu {
 
             $this->addMarkers($this->_aProfileInfo);
             $this->addMarkers(array('profile_id' => $this->_oProfile->id()));
+
+            if (isLogged()) {
+                bx_import('BxDolConnection');
+                $oConn = BxDolConnection::getObjectInstance('sys_profiles_friends');
+                if ($oConn->isConnectedNotMutual(bx_get_logged_profile_id(), $this->_oProfile->id()))
+                    $this->addMarkers(array(
+                        'title_add_friend' => _t('_bx_persons_menu_item_title_befriend_sent'), 
+                        'title_remove_friend' => _t('_bx_persons_menu_item_title_unfriend_cancel_request'),
+                    ));
+                elseif ($oConn->isConnectedNotMutual($this->_oProfile->id(), bx_get_logged_profile_id()))
+                    $this->addMarkers(array(
+                        'title_add_friend' => _t('_bx_persons_menu_item_title_befriend_confirm'),
+                        'title_remove_friend' => _t('_bx_persons_menu_item_title_unfriend_reject_request'),
+                    ));
+                else
+                    $this->addMarkers(array(
+                        'title_add_friend' => _t('_bx_persons_menu_item_title_befriend'),
+                        'title_remove_friend' => _t('_bx_persons_menu_item_title_unfriend'),
+                    ));
+            }
         }
     }
 
@@ -56,8 +77,8 @@ class BxPersonsMenuViewPerson extends BxTemplMenu {
             return false;
 
         // don't show current item, also this will solve problem when only one view note item is visible
-        if ('bx_persons_view' == $this->_sObject && $this->_isSelected($a))
-            return false;
+//        if ('bx_persons_view_actions' == $this->_sObject && $this->_isSelected($a))
+//            return false;
 
         $sFuncCheckAccess = false;
         switch ($a['name']) {
@@ -82,12 +103,15 @@ class BxPersonsMenuViewPerson extends BxTemplMenu {
             case 'profile-subscribe-remove':
                 $sFuncCheckAccess = 'isAllowedSubscribeRemove';
                 break;
+            case 'profile-actions-more':
+                $sFuncCheckAccess = 'isAllowedViewMoreMenu';
+                break;            
         }
 
         if (!$sFuncCheckAccess)
             return true;
 
-        return $sFuncCheckAccess && CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->$sFuncCheckAccess($this->_aContentInfo) ? true : false;
+        return $sFuncCheckAccess && $this->_oModule && CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->$sFuncCheckAccess($this->_aContentInfo) ? true : false;
     }
 
 }

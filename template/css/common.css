@@ -201,6 +201,10 @@ blockquote {
     margin-left:5px;
     vertical-align:middle;
 }
+.bx-btn .bx-loading-ajax-btn {
+    margin-top:8px;
+    vertical-align:top;
+}
 
 /* --------------- button */
 
@@ -249,15 +253,12 @@ blockquote {
 .bx-btn:first-child {
     margin-left:0;
 }
-.bx-btn img,
-.bx-btn i.sys-icon {
-    margin-right:3px;
-}
 .bx-btn img {
     width:16px;
     height:16px;
 }
 .bx-btn u {
+    margin-left:2px;
     text-decoration:none;
 }
 .bx-btn .sys-icon {

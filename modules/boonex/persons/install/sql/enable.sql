@@ -125,22 +125,34 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 
 
 --
--- Dumping data for 'bx_persons_view' menu
+-- Dumping data for 'bx_persons_view_actions' menu
 --
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_persons_view', '_bx_persons_menu_title_view_person', 'bx_persons_view', 'bx_persons', 9, 0, 1, 'BxPersonsMenuViewPerson', 'modules/boonex/persons/classes/BxPersonsMenuViewPerson.php');
+('bx_persons_view_actions', '_bx_persons_menu_title_view_person_actions', 'bx_persons_view_actions', 'bx_persons', 9, 0, 1, 'BxPersonsMenuViewPerson', 'modules/boonex/persons/classes/BxPersonsMenuViewPerson.php');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
-('bx_persons_view', 'bx_persons', '_bx_persons_menu_set_title_view_person', 0);
+('bx_persons_view_actions', 'bx_persons', '_bx_persons_menu_set_title_view_person_actions', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_persons_view', 'bx_persons', 'profile-friend-add', '_bx_persons_menu_item_title_system_befriend', '_bx_persons_menu_item_title_befriend', 'javascript:void(0)', 'bx_conn_action(\'sys_profiles_friends\', \'add\', \'{profile_id}\')', '', 'plus', '', 2147483647, 1, 0, 0),
-('bx_persons_view', 'bx_persons', 'profile-friend-remove', '_bx_persons_menu_item_title_system_unfriend', '_bx_persons_menu_item_title_unfriend', 'javascript:void(0)', 'bx_conn_action(\'sys_profiles_friends\', \'remove\', \'{profile_id}\', true)', '', 'plus-circle', '', 2147483647, 1, 0, 1),
-('bx_persons_view', 'bx_persons', 'profile-subscribe-add', '_bx_persons_menu_item_title_system_subscribe', '_bx_persons_menu_item_title_subscribe', 'javascript:void(0)', 'bx_conn_action(\'sys_profiles_subscriptions\', \'add\', \'{profile_id}\')', '', 'check', '', 2147483647, 1, 0, 2),
-('bx_persons_view', 'bx_persons', 'profile-subscribe-remove', '_bx_persons_menu_item_title_system_unsubscribe', '_bx_persons_menu_item_title_unsubscribe', 'javascript:void(0)', 'bx_conn_action(\'sys_profiles_subscriptions\', \'remove\', \'{profile_id}\')', '', 'check-circle', '', 2147483647, 1, 0, 3),
-('bx_persons_view', 'bx_persons', 'view-persons-profile', '_bx_persons_menu_item_title_system_view_person', '_bx_persons_menu_item_title_view_person', 'page.php?i=view-persons-profile&id={content_id}', '', '', 'user', '', 2147483647, 1, 0, 4),
-('bx_persons_view', 'bx_persons', 'edit-persons-profile', '_bx_persons_menu_item_title_system_edit_person', '_bx_persons_menu_item_title_edit_person', 'page.php?i=edit-persons-profile&id={content_id}', '', '', 'pencil', '', 2147483647, 1, 0, 5),
-('bx_persons_view', 'bx_persons', 'delete-persons-profile', '_bx_persons_menu_item_title_system_delete_person', '_bx_persons_menu_item_title_delete_person', 'page.php?i=delete-persons-profile&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 6);
+('bx_persons_view_actions', 'bx_persons', 'profile-friend-add', '_bx_persons_menu_item_title_system_befriend', '{title_add_friend}', 'javascript:void(0)', 'bx_conn_action(this, \'sys_profiles_friends\', \'add\', \'{profile_id}\')', '', 'plus', '', 2147483647, 1, 0, 10),
+('bx_persons_view_actions', 'bx_persons', 'profile-subscribe-add', '_bx_persons_menu_item_title_system_subscribe', '_bx_persons_menu_item_title_subscribe', 'javascript:void(0)', 'bx_conn_action(this, \'sys_profiles_subscriptions\', \'add\', \'{profile_id}\')', '', 'check', '', 2147483647, 1, 0, 20),
+('bx_persons_view_actions', 'bx_persons', 'profile-actions-more', '_bx_persons_menu_item_title_system_more_actions', '_bx_persons_menu_item_title_more_actions', 'javascript:void(0)', 'bx_menu_popup(''bx_persons_view_actions_more'', this, {}, {profile_id:{profile_id}});', '', 'cog', '', 2147483647, 1, 0, 30);
+
+--
+-- Dumping data for 'bx_persons_view_actions_more' menu
+--
+INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
+('bx_persons_view_actions_more', '_bx_persons_menu_title_view_person_actions_more', 'bx_persons_view_actions_more', 'bx_persons', 6, 0, 1, 'BxPersonsMenuViewPerson', 'modules/boonex/persons/classes/BxPersonsMenuViewPerson.php');
+
+INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
+('bx_persons_view_actions_more', 'bx_persons', '_bx_persons_menu_set_title_view_person_actions_more', 0);
+
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('bx_persons_view_actions_more', 'bx_persons', 'profile-friend-remove', '_bx_persons_menu_item_title_system_unfriend', '{title_remove_friend}', 'javascript:void(0)', 'bx_conn_action(this, \'sys_profiles_friends\', \'remove\', \'{profile_id}\')', '', 'minus', '', 2147483647, 1, 0, 10),
+('bx_persons_view_actions_more', 'bx_persons', 'profile-subscribe-remove', '_bx_persons_menu_item_title_system_unsubscribe', '_bx_persons_menu_item_title_unsubscribe', 'javascript:void(0)', 'bx_conn_action(this, \'sys_profiles_subscriptions\', \'remove\', \'{profile_id}\')', '', 'check', '', 2147483647, 1, 0, 20),
+('bx_persons_view_actions_more', 'bx_persons', 'edit-persons-profile', '_bx_persons_menu_item_title_system_edit_person', '_bx_persons_menu_item_title_edit_person', 'page.php?i=edit-persons-profile&id={content_id}', '', '', 'pencil', '', 2147483647, 1, 0, 30),
+('bx_persons_view_actions_more', 'bx_persons', 'delete-persons-profile', '_bx_persons_menu_item_title_system_delete_person', '_bx_persons_menu_item_title_delete_person', 'page.php?i=delete-persons-profile&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 40);
+
 
 --
 -- Dumping data for 'bx_persons_view_submenu' menu
