@@ -162,11 +162,10 @@ blockquote {
     margin-right:auto;
     margin-left:auto;
 
-    background-color:#F8F8F8;
-    border:7px solid #e2e2e2;
+    background-color:rgba(200, 200, 200, 0.3);
 
     text-align:center;
-    color:#CCCCCC;
+    color:#fff;
     font-weight:bold;
     font-size:14px;
     padding:10px;
