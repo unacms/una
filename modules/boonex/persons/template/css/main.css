@@ -61,7 +61,7 @@ a.bx-persons-cover-image:hover,
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    background-color: #333;
+    background-color: #eee;
 }
 
 .bx-persons-cover-info {
