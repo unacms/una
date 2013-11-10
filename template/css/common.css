@@ -364,6 +364,39 @@ input.bx-btn {
     line-height:16px; 
 }
 
+.bx-btn-group .bx-btn {
+    margin-left:0px;
+    margin-right:0px;
+}
+
+.bx-btn-group .bx-btn + .bx-btn {
+    border-left:none;
+}
+
+.bx-btn-group .bx-btn + .bx-btn:not(:last-child) {
+	border-radius:0px;
+	-moz-border-radius:0px;
+	-webkit-border-radius:0px;
+}
+
+.bx-btn-group .bx-btn:first-child {
+    -webkit-border-top-right-radius: 0px;
+    -webkit-border-bottom-right-radius: 0px;
+    -moz-border-radius-topright: 0px;
+    -moz-border-radius-bottomright: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.bx-btn-group .bx-btn:last-child {
+    -webkit-border-top-left-radius: 0px;
+    -webkit-border-bottom-left-radius: 0px;
+    -moz-border-radius-topleft: 0px;
+    -moz-border-radius-bottomleft: 0px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
 /* --------------- button at the end of cut string */
 
 .bx-str-limit {

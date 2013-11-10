@@ -284,8 +284,8 @@ abstract class BxDolPaginate extends BxDol {
                     'lnk_content' => $this->_sViewAllCaption,
                 ),
             ),
-            'btn_prev' => '<a href="' . $sPrevLnkUrl . '" ' . $sPrevLnkClick . ' class="bx-paginate-btn-prev bx-btn bx-btn-symbol' . $sClassAdd . $sPrevClassAdd . '">' . _t('_sys_paginate_prev') . '</a>',
-            'btn_next' => '<a href="' . $sNextLnkUrl . '" ' . $sNextLnkClick . ' class="bx-paginate-btn-next bx-btn bx-btn-symbol' . $sClassAdd . $sNextClassAdd . '">' . _t('_sys_paginate_next') . '</a>',
+            'btn_prev' => '<a href="' . $sPrevLnkUrl . '" ' . $sPrevLnkClick . ' class="bx-paginate-btn-prev bx-btn' . $sClassAdd . $sPrevClassAdd . '"><i class="sys-icon sys-icon-bigger angle-double-left"></i></a>',
+            'btn_next' => '<a href="' . $sNextLnkUrl . '" ' . $sNextLnkClick . ' class="bx-paginate-btn-next bx-btn' . $sClassAdd . $sNextClassAdd . '"><i class="sys-icon sys-icon-bigger angle-double-right"></i></a>',
             'paginate_class' => $this->_sPaginateClass,
         );
 

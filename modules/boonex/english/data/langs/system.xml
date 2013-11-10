@@ -3306,8 +3306,6 @@ More info about URI DNSBL: <br />
     <string name="_sys_x_days"><![CDATA[{0} days]]></string>
 	<string name="_sys_paginate_info"><![CDATA[{0}-{1}]]></string>
 	<string name="_sys_paginate_view_all"><![CDATA[View All]]></string>
-	<string name="_sys_paginate_next"><![CDATA[&#187;]]></string>
-	<string name="_sys_paginate_prev"><![CDATA[&#171;]]></string>
 
 	<string name="_sys_menu_title_rss"><![CDATA[RSS]]></string>
 	<string name="_sys_menu_title_main"><![CDATA[Site Navigation]]></string>
