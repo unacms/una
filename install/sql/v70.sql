@@ -2916,7 +2916,7 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 
 -- member toolbar menu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
-('sys_toolbar_member', 'system', 'account', '_sys_menu_item_title_system_account', '', 'javascript:void(0);', 'bx_menu_popup(''sys_account'', this);', '', 'user', 'sys_account', 510, 1, 0, 1),
+('sys_toolbar_member', 'system', 'account', '_sys_menu_item_title_system_account_menu', '_sys_menu_item_title_account_menu', 'javascript:void(0);', 'bx_menu_popup(''sys_account'', this);', '', 'user', 'sys_account', 510, 1, 0, 1),
 ('sys_toolbar_member', 'system', 'login', '_sys_menu_item_title_system_login', '', 'page.php?i=login', '', '', 'user', '', 1, 1, 0, 2);
 
 -- add content menu

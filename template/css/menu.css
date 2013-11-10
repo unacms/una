@@ -218,6 +218,16 @@ ul.bx-menu-toolbar li a {
     text-decoration:none;
 }
 
+ul.bx-menu-toolbar li a .sys-icon, 
+ul.bx-menu-toolbar li a img,
+ul.bx-menu-toolbar li a span {
+    vertical-align:middle;
+    margin:0 5px 0 5px;
+}
+ul.bx-menu-toolbar li a span {
+    margin-right:0px;
+}
+
 ul.bx-menu-toolbar li:first-child a {
     margin-left:0;
 }

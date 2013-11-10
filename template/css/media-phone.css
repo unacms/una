@@ -51,4 +51,10 @@
     padding:0 !important;
 }
 
+/* menu.css */
+
+ul.bx-menu-toolbar li a span {
+    display:none;
+}
+
 } /* @media end */

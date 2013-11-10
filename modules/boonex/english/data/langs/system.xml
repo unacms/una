@@ -3343,6 +3343,7 @@ More info about URI DNSBL: <br />
     <string name="_sys_menu_item_title_system_account_settings_pwd"><![CDATA[Change Password]]></string>
     <string name="_sys_menu_item_title_system_account_settings_delete"><![CDATA[Delete Account]]></string>
     <string name="_sys_menu_item_title_system_account_profile_context"><![CDATA[Switch Profile]]></string>
+    <string name="_sys_menu_item_title_system_account_menu"><![CDATA[Account]]></string>
 
     <string name="_sys_menu_item_title_home"><![CDATA[Home]]></string>
     <string name="_sys_menu_item_title_about"><![CDATA[About]]></string>    
@@ -3354,6 +3355,7 @@ More info about URI DNSBL: <br />
     <string name="_sys_menu_item_title_account_settings_info"><![CDATA[Edit Account]]></string>
     <string name="_sys_menu_item_title_account_settings_delete"><![CDATA[Delete Account]]></string>
     <string name="_sys_menu_item_title_account_profile_context"><![CDATA[Switch Profile]]></string>
+    <string name="_sys_menu_item_title_account_menu"><![CDATA[{member_display_name}]]></string>
 
     <string name="_sys_menu_set_title_site"><![CDATA[Site]]></string>
     <string name="_sys_menu_set_title_footer"><![CDATA[Footer]]></string>
