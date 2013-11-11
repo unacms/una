@@ -84,7 +84,7 @@
     <string name="_bx_persons_menu_item_title_view_person_info"><![CDATA[Info]]></string>
     <string name="_bx_persons_menu_item_title_system_befriend"><![CDATA[Add friend]]></string>
     <string name="_bx_persons_menu_item_title_befriend"><![CDATA[Add friend]]></string>
-    <string name="_bx_persons_menu_item_title_befriend_sent"><![CDATA[Friend request sent]]></string>
+    <string name="_bx_persons_menu_item_title_befriend_sent"><![CDATA[Add friend (requested)]]></string>
     <string name="_bx_persons_menu_item_title_befriend_confirm"><![CDATA[Accept friend request]]></string>
     <string name="_bx_persons_menu_item_title_system_unfriend"><![CDATA[Unfriend]]></string>
     <string name="_bx_persons_menu_item_title_unfriend"><![CDATA[Unfriend]]></string>
