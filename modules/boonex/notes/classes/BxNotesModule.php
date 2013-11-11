@@ -183,6 +183,17 @@ class BxNotesModule extends BxDolModule {
         return $oMenu ? $oMenu->getCode() : false;
     }
 
+    public function serviceMyEntriesActions ($iProfileId = 0) {
+        if (!$iProfileId)
+            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+        if (!$iProfileId || $iProfileId != $this->_iProfileId)
+            return false;
+
+        bx_import('BxTemplMenu');
+        $oMenu = BxTemplMenu::getObjectInstance('bx_notes_my');
+        return $oMenu ? $oMenu->getCode() : false;
+    }
+
 	public function serviceGetTimelineData()
     {
         return array(
