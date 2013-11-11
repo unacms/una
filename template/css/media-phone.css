@@ -23,6 +23,9 @@
     max-width:300px !important;
     overflow:hidden !important;
 }
+.bx-def-constraint-img img {
+    height:auto !important;
+}
 .bx-def-constraint-pre pre {
     overflow:scroll !important;
 }
