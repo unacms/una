@@ -47,6 +47,11 @@ class BxDolPageQuery extends BxDolDb {
         return $aRet;
     }
 
+    public function getPageBlock($iBlockId) {
+        $sQuery = $this->prepare("SELECT * FROM `sys_pages_blocks` WHERE `object` = ? AND `id` = ?", $this->_aObject['object'], $iBlockId);
+        return $this->getRow($sQuery);
+    }
+
     public function getPageBlockContent($iId) {
         $sQuery = $this->prepare("SELECT `content` FROM `sys_pages_blocks` WHERE `id` = ?", $iId);
         return $this->getOne($sQuery);

@@ -70,6 +70,7 @@
     <string name="_bx_notes_page_title_sys_notes_author"><![CDATA[Notes of author]]></string>
     <string name="_bx_notes_page_title_notes_author"><![CDATA[Notes of {display_name}]]></string>
     <string name="_bx_notes_page_block_title_notes_author"><![CDATA[Notes of author]]></string>   
+    <string name="_bx_notes_page_block_title_notes_actions"><![CDATA[Notes actions]]></string>
 
     <string name="_bx_notes_menu_set_title_view_note"><![CDATA[View Note]]></string>
     <string name="_bx_notes_menu_title_view_note"><![CDATA[View Note]]></string>

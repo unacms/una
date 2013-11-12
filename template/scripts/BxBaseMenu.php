@@ -71,13 +71,14 @@ class BxBaseMenu extends BxDolMenu {
             if (isset($a['visible_for_levels']) && !$this->_isVisible($a))
                 continue;
 
+            $a['title'] = _t($a['title']);
+
             $a = $this->_replaceMarkers($a);
 
             list ($sIcon, $sIconUrl) = $this->_getMenuIcon($a);
 
             $a['class_add'] = $this->_isSelected($a) ? 'bx-menu-tab-active' : '';
-            $a['link'] = isset($a['link']) ? $this->_oPermalinks->permalink($a['link']) : 'javascript:void(0);';
-            $a['title'] = _t($a['title']);
+            $a['link'] = isset($a['link']) ? $this->_oPermalinks->permalink($a['link']) : 'javascript:void(0);';            
             $a['title_attr'] = bx_html_attribute($a['title']);
             $a['bx_if:image'] = array (
                 'condition' => (bool)$sIconUrl,
@@ -86,6 +87,10 @@ class BxBaseMenu extends BxDolMenu {
             $a['bx_if:icon'] = array (
                 'condition' => (bool)$sIcon,
                 'content' => array('icon' => $sIcon), 
+            );
+            $a['bx_if:title'] = array (
+                'condition' => (bool)$a['title'],
+                'content' => array('title' => $a['title']), 
             );
 
             $aRet[] = $a;

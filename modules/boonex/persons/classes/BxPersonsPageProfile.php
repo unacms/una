@@ -68,7 +68,7 @@ class BxPersonsPageProfile extends BxTemplPage {
                 $aInformers[] = array ('name' => 'bx-persons-status-not-active', 'msg' => _t($this->_aMapStatus2LangKey[$sStatus]), 'type' => BX_INFORMER_ALERT);
             }
         }
-
+/*
         // display pending connetion requests
         if (isLogged()) {
             $aInformer = false;
@@ -81,7 +81,7 @@ class BxPersonsPageProfile extends BxTemplPage {
             if ($aInformer)
                 $aInformers[] = $aInformer;
         }
-
+*/
         // display message if it is possible to switch to this profile
         $oProfile = $this->_aContentInfo ? BxDolProfile::getInstanceByContentTypeAccount($this->_aContentInfo['id'], 'bx_persons') : false;
         if ($oProfile)

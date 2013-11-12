@@ -2425,6 +2425,8 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
     <string name="_sys_layout_top_area_bar_right"><![CDATA[Top area with right bar]]></string>
     <string name="_sys_layout_top_area_3_columns"><![CDATA[Top area with 3 columns]]></string>
     <string name="_sys_layout_top_area_2_columns"><![CDATA[Top area with 2 columns]]></string>
+    <string name="_sys_layout_topbottom_area_2_columns"><![CDATA[Top&bottom areas with 2 columns in the middle]]></string>
+    <string name="_sys_layout_bottom_area_2_columns"><![CDATA[Bottom area with 2 columns at top]]></string>
     <string name="_sys_block_types_system"><![CDATA[System]]></string>
     <string name="_sys_block_types_custom"><![CDATA[Custom]]></string>
     <string name="_sys_block_types_skeletons"><![CDATA[Skeletons]]></string>
@@ -3306,8 +3308,6 @@ More info about URI DNSBL: <br />
     <string name="_sys_x_days"><![CDATA[{0} days]]></string>
 	<string name="_sys_paginate_info"><![CDATA[{0}-{1}]]></string>
 	<string name="_sys_paginate_view_all"><![CDATA[View All]]></string>
-	<string name="_sys_paginate_next"><![CDATA[&#187;]]></string>
-	<string name="_sys_paginate_prev"><![CDATA[&#171;]]></string>
 
 	<string name="_sys_menu_title_rss"><![CDATA[RSS]]></string>
 	<string name="_sys_menu_title_main"><![CDATA[Site Navigation]]></string>
@@ -3343,6 +3343,7 @@ More info about URI DNSBL: <br />
     <string name="_sys_menu_item_title_system_account_settings_pwd"><![CDATA[Change Password]]></string>
     <string name="_sys_menu_item_title_system_account_settings_delete"><![CDATA[Delete Account]]></string>
     <string name="_sys_menu_item_title_system_account_profile_context"><![CDATA[Switch Profile]]></string>
+    <string name="_sys_menu_item_title_system_account_menu"><![CDATA[Account]]></string>
 
     <string name="_sys_menu_item_title_home"><![CDATA[Home]]></string>
     <string name="_sys_menu_item_title_about"><![CDATA[About]]></string>    
@@ -3354,6 +3355,7 @@ More info about URI DNSBL: <br />
     <string name="_sys_menu_item_title_account_settings_info"><![CDATA[Edit Account]]></string>
     <string name="_sys_menu_item_title_account_settings_delete"><![CDATA[Delete Account]]></string>
     <string name="_sys_menu_item_title_account_profile_context"><![CDATA[Switch Profile]]></string>
+    <string name="_sys_menu_item_title_account_menu"><![CDATA[{member_display_name}]]></string>
 
     <string name="_sys_menu_set_title_site"><![CDATA[Site]]></string>
     <string name="_sys_menu_set_title_footer"><![CDATA[Footer]]></string>

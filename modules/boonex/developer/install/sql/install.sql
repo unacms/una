@@ -55,7 +55,7 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
 ('mod_dev_forms', 'independent', 'add', '_bx_dev_frm_btn_forms_gl_create', '', 0, 1),
-('mod_dev_forms', 'single', 'export', '', 'download-alt', 0, 1),
+('mod_dev_forms', 'single', 'export', '', 'download', 0, 1),
 ('mod_dev_forms', 'single', 'edit', '', 'pencil', 0, 2),
 ('mod_dev_forms_displays', 'independent', 'add', '_bx_dev_frm_btn_displays_gl_create', '', 0, 1),
 ('mod_dev_forms_displays', 'single', 'edit', '', 'pencil', 0, 1),
@@ -64,7 +64,7 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 ('mod_dev_forms_fields', 'single', 'show_to', '_bx_dev_frm_btn_fields_visible', '', 0, 3),
 ('mod_dev_forms_fields', 'independent', 'add', '_bx_dev_frm_btn_fields_create', '', 0, 1),
 ('mod_dev_forms_pre_lists', 'independent', 'add', '_bx_dev_frm_btn_pre_lists_create', '', 0, 1),
-('mod_dev_forms_pre_lists', 'single', 'export', '', 'download-alt', 0, 1),
+('mod_dev_forms_pre_lists', 'single', 'export', '', 'download', 0, 1),
 ('mod_dev_forms_pre_lists', 'single', 'edit', '', 'pencil', 0, 2),
 ('mod_dev_forms_pre_lists', 'single', 'delete', '', 'remove', 1, 3),
 ('mod_dev_forms_pre_values', 'independent', 'add', '_bx_dev_frm_btn_pre_values_create', '', 0, 1),
@@ -284,7 +284,7 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
 ('mod_dev_nav_menus', 'independent', 'add', '_bx_dev_nav_btn_menus_gl_create', '', 0, 1),
-('mod_dev_nav_menus', 'single', 'export', '', 'download-alt', 0, 1),
+('mod_dev_nav_menus', 'single', 'export', '', 'download', 0, 1),
 ('mod_dev_nav_menus', 'single', 'edit', '', 'pencil', 0, 2),
 ('mod_dev_nav_menus', 'single', 'delete', '', 'remove', 1, 3),
 ('mod_dev_nav_sets', 'independent', 'add', '_bx_dev_nav_btn_sets_gl_create', '', 0, 1),

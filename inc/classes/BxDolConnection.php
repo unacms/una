@@ -167,6 +167,9 @@ class BxDolConnection extends BxDol implements iBxDolFactoryObject {
      * @return array
      */ 
     public function actionRemove () {
+        $a = $this->actionReject();
+        if (false == $a['err'])
+            return $a;
         return $this->_action ('removeConnection', '_sys_conn_err_connection_does_not_exists', false);
     }
 

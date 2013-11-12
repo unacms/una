@@ -33,6 +33,18 @@ class BxBasePage extends BxDolPage {
      */
     public function getCode () {
 
+        if (bx_get('dynamic') && ($iBlockId = (int)bx_get('pageBlock'))) {
+
+            if (!$this->_isVisiblePage($this->_aObject)) {
+                header('HTTP/1.0 403 Forbidden');
+                exit;
+            }
+            
+            header( 'Content-type:text/html;charset=utf-8' );
+            echo $this->_getBlockOnlyCode($iBlockId);
+            exit;
+        }
+
         if (!$this->_isVisiblePage($this->_aObject))
             return $this->_getPageAccessDeniedMsg ();
 
@@ -88,6 +100,15 @@ class BxBasePage extends BxDolPage {
         }
 
         return $this->_oTemplate->parseHtmlByName($this->_aObject['template'], $aVars);
+    }
+
+    /**
+     * Get one block code only.
+     * @return string
+     */
+    protected function _getBlockOnlyCode ($iBlockId) {
+        $aBlock = $this->_oQuery->getPageBlock((int)$iBlockId);
+        return $this->_getBlockCode($aBlock);
     }
 
     /**

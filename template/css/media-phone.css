@@ -23,6 +23,9 @@
     max-width:300px !important;
     overflow:hidden !important;
 }
+.bx-def-constraint-img img {
+    height:auto !important;
+}
 .bx-def-constraint-pre pre {
     overflow:scroll !important;
 }
@@ -49,6 +52,12 @@
 
 .bx-layout-cell {
     padding:0 !important;
+}
+
+/* menu.css */
+
+ul.bx-menu-toolbar li a span {
+    display:none;
 }
 
 } /* @media end */

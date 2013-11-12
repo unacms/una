@@ -63,13 +63,29 @@ function getHtmlData( elem, url, callback, method , confirmation)
     }
 }
 
-
-function loadDynamicBlock( iBlockID, sUrl ) {
-    if( $ == undefined )
+/**
+ * This function reloads page block automatically, 
+ * just provide any element inside the block and this function will reload the block.
+ * @param e - element inside the block
+ * @return true on success, or false on error - particularly, if block isn't found
+ */
+function loadDynamicBlockAuto(e) {
+    var sUrl = location.href;
+    var sId = $(e).parents('.bx-page-block-container:first').attr('id');
+    
+    if (!sId || !sId.length)
         return false;
 
-    getHtmlData($('#page_block_' + iBlockID), (sUrl + '&dynamic=tab&pageBlock=' + iBlockID));
+    var aMatches = sId.match(/\-(\d+)$/);
+    if (!aMatches || !aMatches[1])
+        return false;
+        
+    loadDynamicBlock(parseInt(aMatches[1]), sUrl);
+    return true;
+}
 
+function loadDynamicBlock(iBlockID, sUrl) {
+    getHtmlData($('#bx-page-block-' + iBlockID), bx_append_url_params(sUrl, 'dynamic=tab&pageBlock=' + iBlockID));
     return true;
 }
 
@@ -147,6 +163,10 @@ function showPopupAnyHtml(sUrl, sId) {
 
 function bx_loading_btn (e, b) {
     e = $(e);
+
+    if (e.children('div').size())
+        e = e.children('div').first();
+
     if (!b) {
         e.find('.bx-loading-ajax-btn').remove();
     } else if (!e.find('.bx-loading-ajax-btn').length) {
@@ -246,12 +266,15 @@ function bx_center_content (sSel, sBlockStyle) {
 
 /**
  * Show pointer popup with menu from URL.
- * @param e - element to show popup at
  * @param o - menu object name
+ * @param e - element to show popup at
+ * @param options - popup options
+ * @param vars - additional GET variables
  */
-function bx_menu_popup (o, e, options) {
+function bx_menu_popup (o, e, options, vars) {
     var options = options || {};
-    var o = $.extend({}, $.fn.dolPopupDefaultOptions, options, {id: o, url: 'menu.php?o=' + o});
+    var vars = vars || {};
+    var o = $.extend({}, $.fn.dolPopupDefaultOptions, options, {id: o, url: bx_append_url_params('menu.php', $.extend({o:o}, vars))});
     $(e).dolPopupAjax(o);
 }
 
@@ -351,7 +374,7 @@ function bx_time(sLang, isAutoupdate, sRootSel) {
  * @param iContentId - content id, initiator is always current logged in user
  * @param bConfirm - show confirmation dialog
  */
-function bx_conn_action(sObj, sAction, iContentId, bConfirm) {
+function bx_conn_action(e, sObj, sAction, iContentId, bConfirm) {
     if ('undefined' != typeof(bConfirm) && bConfirm && !confirm(_t('_are you sure?')))
         return;
                 
@@ -361,13 +384,21 @@ function bx_conn_action(sObj, sAction, iContentId, bConfirm) {
         id: iContentId
     };
     var fCallback = function (data) {
+        bx_loading_btn(e, 0);
         if ('object' != typeof(data))
             return;
-        if (data.err)
+        if (data.err) {
             alert(data.msg);
-        else
-            location.reload();
+        } else {
+            if (!loadDynamicBlockAuto(e))
+                location.reload();
+            else
+                $('#bx-popup-ajax-wrapper-bx_persons_view_actions_more').remove();
+        }
     };
+
+    bx_loading_btn(e, 1);
+
     $.ajax({
         dataType: 'json',
         url: sUrlRoot + 'conn.php',
@@ -375,4 +406,24 @@ function bx_conn_action(sObj, sAction, iContentId, bConfirm) {
         type: 'POST',
         success: fCallback
     });
+}
+
+function bx_append_url_params (sUrl, mixedParams) {
+    var sParams = sUrl.indexOf('?') == -1 ? '?' : '&';
+
+    if(mixedParams instanceof Array) {
+    	for(var i in mixedParams)
+            sParams += i + '=' + mixedParams[i] + '&';
+        sParams = sParams.substr(0, sParams.length-1);
+    }
+    else if(mixedParams instanceof Object) {
+    	$.each(mixedParams, function(sKey, sValue) {
+    		sParams += sKey + '=' + sValue + '&';
+    	});
+        sParams = sParams.substr(0, sParams.length-1);
+    }
+    else
+        sParams += mixedParams;
+
+    return sUrl + sParams;
 }

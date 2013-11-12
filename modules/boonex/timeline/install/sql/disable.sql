@@ -19,7 +19,7 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 
 -- UPLOADERS
 DELETE FROM `sys_objects_uploader` WHERE `object` = 'bx_timeline_simple';
-DEKETE FROM `sys_objects_storage` WHERE `object` IN ('bx_timeline_photos', 'bx_timeline_photos_preview');
+DELETE FROM `sys_objects_storage` WHERE `object` IN ('bx_timeline_photos', 'bx_timeline_photos_preview');
 DELETE FROM `sys_objects_transcoder_images` WHERE `object` IN ('bx_timeline_photos_preview');
 DELETE FROM `sys_transcoder_images_filters` WHERE `transcoder_object` IN ('bx_timeline_photos_preview');
 

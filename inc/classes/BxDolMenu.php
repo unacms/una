@@ -109,6 +109,18 @@ class BxDolMenu extends BxDol implements iBxDolFactoryObject {
         $this->_aObject = $aObject;
         $this->_oQuery = new BxDolMenuQuery($this->_aObject);
         $this->_oPermalinks = BxDolPermalinks::getInstance();
+
+        if (isLogged()) {
+            bx_import('BxDolProfile');
+            $oProfile = BxDolProfile::getInstance();
+            if ($oProfile) {
+                $this->addMarkers(array(
+                    'member_id' => $oProfile->id(),
+                    'member_display_name' => $oProfile->getDisplayName(),
+                    'member_url' => $oProfile->getUrl(),
+                ));
+            }
+        }
     }
 
     /**

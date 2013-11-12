@@ -175,7 +175,7 @@ class BxPersonsModule extends BxDolModule implements iBxDolProfileService {
             return false;
 
         bx_import('BxTemplMenu');
-        $oMenu = BxTemplMenu::getObjectInstance('bx_persons_view');
+        $oMenu = BxTemplMenu::getObjectInstance('bx_persons_view_actions');
         return $oMenu ? $oMenu->getCode() : false;
     }
 
@@ -347,6 +347,17 @@ class BxPersonsModule extends BxDolModule implements iBxDolProfileService {
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. 
      */
+    function isAllowedViewMoreMenu (&$aDataEntry, $isPerformAction = false) {
+        bx_import('BxTemplMenu');
+        $oMenu = BxTemplMenu::getObjectInstance('bx_persons_view_actions_more');
+        if (!$oMenu || !$oMenu->getCode())
+            return _t('_sys_txt_access_denied');
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
+
+    /**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. 
+     */
     function isAllowedFriendAdd (&$aDataEntry, $isPerformAction = false) {
         return $this->_isAllowedConnect ($aDataEntry, $isPerformAction, 'sys_profiles_friends', true, false);
     }
@@ -355,7 +366,9 @@ class BxPersonsModule extends BxDolModule implements iBxDolProfileService {
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. 
      */
     function isAllowedFriendRemove (&$aDataEntry, $isPerformAction = false) {
-        return $this->_isAllowedConnect ($aDataEntry, $isPerformAction, 'sys_profiles_friends', true, true);
+        if (CHECK_ACTION_RESULT_ALLOWED === $this->_isAllowedConnect ($aDataEntry, $isPerformAction, 'sys_profiles_friends', false, true, true))
+            return CHECK_ACTION_RESULT_ALLOWED;
+        return $this->_isAllowedConnect ($aDataEntry, $isPerformAction, 'sys_profiles_friends', false, true, false);
     }
 
     /**
@@ -372,7 +385,7 @@ class BxPersonsModule extends BxDolModule implements iBxDolProfileService {
         return $this->_isAllowedConnect ($aDataEntry, $isPerformAction, 'sys_profiles_subscriptions', false, true);
     }
 
-    function _isAllowedConnect (&$aDataEntry, $isPerformAction, $sObjConnection, $isMutual, $isInvertResult) {
+    function _isAllowedConnect (&$aDataEntry, $isPerformAction, $sObjConnection, $isMutual, $isInvertResult, $isSwap = false) {
         if (!$this->_iProfileId)
             return _t('_sys_txt_access_denied');
 
@@ -383,7 +396,10 @@ class BxPersonsModule extends BxDolModule implements iBxDolProfileService {
 
         bx_import('BxDolConnection');
         $oConn = BxDolConnection::getObjectInstance($sObjConnection);
-        $isConnected = $oConn->isConnected($this->_iProfileId, $oProfile->id(), $isMutual);
+        if ($isSwap)
+            $isConnected = $oConn->isConnected($oProfile->id(), $this->_iProfileId, $isMutual);
+        else
+            $isConnected = $oConn->isConnected($this->_iProfileId, $oProfile->id(), $isMutual);
 
         if ($isInvertResult)
             $isConnected = !$isConnected;
