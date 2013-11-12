@@ -4,6 +4,8 @@ DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_timeline';
 
 
 -- MENU
+DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_timeline';
+DELETE FROM `sys_menu_sets` WHERE `module` = 'bx_timeline';
 DELETE FROM `sys_menu_items` WHERE `module` = 'bx_timeline';
 
 

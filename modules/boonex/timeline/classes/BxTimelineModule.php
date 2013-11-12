@@ -237,21 +237,10 @@ class BxTimelineModule extends BxDolModule
         if($this->_iOwnerId != $this->getUserId() && !$this->isAllowedPost())
             return array();
 
-		$sJsObject = $this->_oConfig->getJsObject('post');
-        $aMenu = array(
-			array('id' => 'timeline-ptype-text', 'name' => 'timeline-ptype-text', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => "javascript:" . $sJsObject . ".changePostType(this, 'text')", 'target' => '_self', 'title' => _t('_bx_timeline_menu_item_write')),
-			array('id' => 'timeline-ptype-link', 'name' => 'timeline-ptype-link', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => "javascript:" . $sJsObject . ".changePostType(this, 'link')", 'target' => '_self', 'title' => _t('_bx_timeline_menu_item_share_link')),
-			array('id' => 'timeline-ptype-photo', 'name' => 'timeline-ptype-photo', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => "javascript:" . $sJsObject . ".changePostType(this, 'photo')", 'target' => '_self', 'title' => _t('_bx_timeline_menu_item_add_photo'))
-        );
-
-        if($this->_oDb->isModule('sounds'))
-            $aMenu[] = array('id' => 'timeline-ptype-sound', 'name' => 'timeline-ptype-sound', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => "javascript:" . $sJsObject . ".changePostType(this, 'sound')", 'target' => '_self', 'title' => _t('_bx_timeline_menu_item_add_music'));
-        if($this->_oDb->isModule('videos'))
-            $aMenu[] = array('id' => 'timeline-ptype-video', 'name' => 'timeline-ptype-video', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => "javascript:" . $sJsObject . ".changePostType(this, 'video')", 'target' => '_self', 'title' => _t('_bx_timeline_menu_item_add_video'));
-
-		bx_import('BxTemplMenuInteractive');
-		$oMenu = new BxTemplMenuInteractive(array('template' => 'menu_interactive_vertical.html', 'menu_id'=> 'timeline-post-menu', 'menu_items' => $aMenu));
-		$oMenu->setSelected('', 'timeline-ptype-text');
+		bx_import('BxDolMenu');
+		$oMenu = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_post'));
+		$oMenu->setMenuId('timeline-post-menu');
+		$oMenu->setSelected($this->getName(), 'post-text');
 
         $sContent = $this->_oTemplate->getPostBlock($this->_iOwnerId);
         return array('content' => $sContent, 'menu' => $oMenu);
@@ -549,30 +538,33 @@ class BxTimelineModule extends BxDolModule
         return $aCheckResult[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED;
     }
 
-    public function isAllowedDelete($bPerform = false)
+    public function isAllowedDelete($aEvent, $bPerform = false)
     {
         if(isAdmin())
             return true;
 
         $iUserId = (int)$this->getUserId();
-        if($this->_iOwnerId == $iUserId)
+        if((int)$aEvent['owner_id'] == $iUserId)
            return true;
 
         $aCheckResult = checkActionModule($iUserId, 'delete', $this->getName(), $bPerform);
         return $aCheckResult[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED;
     }
 
-	public function isAllowedComment($bPerform = false)
+	public function isAllowedComment($aEvent, $bPerform = false)
     {
+    	$mixedComments = $this->getCommentsData($aEvent);
+    	if($mixedComments === false)
+    		return false;
+
+		list($sSystem, $iObjectId) = $mixedComments;
+		$oCmts = $this->getCmtsObject($sSystem, $iObjectId);
+    	$oCmts->addCssJs();
+
 		if(isAdmin())
 			return true;
 
-        $iUserId = $this->getUserId();
-		if($iUserId == 0 && $this->_oConfig->isAllowGuestComments())
-			return true;
-
-        $aCheckResult = checkActionModule($iUserId, 'comment', $this->getName(), $bPerform);
-        return $aCheckResult[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED;
+        return $oCmts->isPostReplyAllowed($bPerform);
     }
 
 	public function onPost($iId, $iUserId)
@@ -593,6 +585,22 @@ class BxTimelineModule extends BxDolModule
 		//--- Timeline -> Update for Alerts Engine ---//
     }
 
+    public function getCommentsData(&$aEvent)
+    {
+    	if(empty($aEvent['comments']) || !is_array($aEvent['comments']))
+    		return false; 
+
+    	$aComments = $aEvent['comments'];
+
+		$sSystem = isset($aComments['system']) ? $aComments['system'] : '';
+	    $iObjectId = isset($aComments['object_id']) ? (int)$aComments['object_id'] : 0;
+	    $iCount = isset($aComments['count']) ? (int)$aComments['count'] : 0;
+	    if($sSystem == '' || $iObjectId == 0 || ($iCount == 0 && !isLogged()))
+	    	return false;
+
+		return array($sSystem, $iObjectId, $iCount);
+    }
+    
     protected function _prepareParams($sType, $iOwnerId, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline)
     {
     	$aParams = array();

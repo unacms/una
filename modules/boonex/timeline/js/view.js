@@ -103,7 +103,8 @@ BxTimelineView.prototype.showMoreContent = function(oLink) {
 
 BxTimelineView.prototype.showItemMenu = function(oLink) {
 	var sId = $(oLink).parents('.bx-tl-item-menu:first').children('.bx-db-menu-popup:hidden').attr('id');
-	bx_menu_popup_inline('#' + sId, oLink);
+	if(sId)
+		bx_menu_popup_inline('#' + sId, oLink);
 };
 
 BxTimelineView.prototype.showItem = function(oLink, iId) {

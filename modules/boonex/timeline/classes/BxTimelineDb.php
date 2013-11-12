@@ -221,7 +221,7 @@ class BxTimelineDb extends BxDolModuleDb
 
 						case BX_TIMELINE_TYPE_CONNECTIONS:
 							bx_import('BxDolConnection');
-							$oConnection = BxDolConnection::getObjectInstance($this->_oConfig->getObject('conn_friends'));
+							$oConnection = BxDolConnection::getObjectInstance($this->_oConfig->getObject('conn_subscriptions'));
 		
 							$aQueryParts = $oConnection->getConnectedContentAsSQLParts($this->_sPrefix . "events", 'owner_id', $aParams['owner_id']);
 							$sJoinClause .= ' ' . $aQueryParts['join'];
