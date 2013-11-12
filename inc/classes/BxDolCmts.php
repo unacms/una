@@ -148,6 +148,9 @@ class BxDolCmts extends BxDol
 	protected $_sConnObjFriends;
 	protected $_sConnObjSubscriptions;
 
+	protected $_sMenuObjManage;
+	protected $_sMenuObjActions;
+
 	protected $_sViewUrl = '';
 	protected $_sBaseUrl = '';
 	protected $_sListAnchor = '';
@@ -231,6 +234,9 @@ class BxDolCmts extends BxDol
 		$this->_sConnObjFriends = 'sys_profiles_friends';
 		$this->_sConnObjSubscriptions = 'sys_profiles_subscriptions';
 
+		$this->_sMenuObjManage = 'sys_cmts_item_manage';
+		$this->_sMenuObjActions = 'sys_cmts_item_actions';
+		
         if ($iInit)
             $this->init($iId);
     }
@@ -384,7 +390,7 @@ class BxDolCmts extends BxDol
     	}
 
     	return $sResult;
-    } 
+    }
 
     public function isNl2br ()
     {
@@ -498,6 +504,9 @@ class BxDolCmts extends BxDol
 
     public function isRateAllowed ($isPerformAction = false)
     {
+    	if(!$this->isRatable())
+    		return false;
+
         return $this->checkAction (ACTION_ID_COMMENTS_VOTE, $isPerformAction); 
     }
 
@@ -506,7 +515,8 @@ class BxDolCmts extends BxDol
         return $this->checkActionErrorMsg(ACTION_ID_COMMENTS_VOTE);
     }
 
-    public function isPostReplyAllowed ($isPerformAction = false) {
+    public function isPostReplyAllowed ($isPerformAction = false)
+    {
         return $this->checkAction (ACTION_ID_COMMENTS_POST, $isPerformAction);
     }
 
@@ -515,9 +525,15 @@ class BxDolCmts extends BxDol
         return $this->checkActionErrorMsg(ACTION_ID_COMMENTS_POST);
     }
 
-    public function isEditAllowed ($isPerformAction = false)
+    public function isEditAllowed ($aCmt, $isPerformAction = false)
     {
-        return $this->checkAction (ACTION_ID_COMMENTS_EDIT_OWN, $isPerformAction);
+    	if(isAdmin())
+    		return true;
+
+		if($aCmt['cmt_author_id'] == $this->_getAuthorId() && $this->checkAction (ACTION_ID_COMMENTS_EDIT_OWN, $isPerformAction))
+			return true;
+
+        return $this->checkAction(ACTION_ID_COMMENTS_EDIT_ALL, $isPerformAction);
     }
 
     public function msgErrEditAllowed ()
@@ -525,24 +541,20 @@ class BxDolCmts extends BxDol
         return $this->checkActionErrorMsg (ACTION_ID_COMMENTS_EDIT_OWN);
     }
 
-    public function isRemoveAllowed ($isPerformAction = false)
+    public function isRemoveAllowed ($aCmt, $isPerformAction = false)
     {
-        return $this->checkAction (ACTION_ID_COMMENTS_REMOVE_OWN, $isPerformAction);
+    	if(isAdmin())
+    		return true;
+
+		if($aCmt['cmt_author_id'] == $this->_getAuthorId() && $this->checkAction (ACTION_ID_COMMENTS_REMOVE_OWN, $isPerformAction))
+			return true;
+
+        return $this->checkAction (ACTION_ID_COMMENTS_REMOVE_ALL, $isPerformAction);
     }
 
     public function msgErrRemoveAllowed ()
     {
         return $this->checkActionErrorMsg(ACTION_ID_COMMENTS_REMOVE_OWN);
-    }
-
-    public function isEditAllowedAll ($isPerformAction = false)
-    {
-        return isAdmin() || $this->checkAction (ACTION_ID_COMMENTS_EDIT_ALL, $isPerformAction) ? true : false;
-    }
-
-    public function isRemoveAllowedAll ($isPerformAction = false)
-    {
-        return isAdmin() || $this->checkAction (ACTION_ID_COMMENTS_REMOVE_ALL, $isPerformAction) ? true : false;
     }
 
     /**
@@ -668,8 +680,8 @@ class BxDolCmts extends BxDol
         }
 
         $iCmtAuthorId = $this->_getAuthorId();
-        if(!$this->isRemoveAllowedAll() && ($aCmt['cmt_author_id'] != $iCmtAuthorId || !$this->isRemoveAllowed())) {
-        	$this->_echoResultJson(array('msg' => $aCmt['cmt_author_id'] == $iCmtAuthorId && !$this->isRemoveAllowed() ? strip_tags($this->msgErrRemoveAllowed()) : _t('_Access denied')));
+        if(!$this->isRemoveAllowed($aCmt)) {
+        	$this->_echoResultJson(array('msg' => $aCmt['cmt_author_id'] == $iCmtAuthorId ? strip_tags($this->msgErrRemoveAllowed()) : _t('_Access denied')));
         	return;
         }
 
@@ -685,8 +697,7 @@ class BxDolCmts extends BxDol
 
         	$this->_oQuery->deleteImages($this->_aSystem['system_id'], $aCmt['cmt_id']);
 
-	        if($aCmt['cmt_author_id'] == $iCmtAuthorId)
-				$this->isRemoveAllowed(true);
+			$this->isRemoveAllowed(true);
 
 	        bx_import('BxDolAlerts');
 	        $oZ = new BxDolAlerts($this->_sSystem, 'commentRemoved', $this->getId(), $iCmtAuthorId, array('comment_id' => $aCmt['cmt_id'], 'comment_author_id' => $aCmt['cmt_author_id']));
@@ -733,7 +744,8 @@ class BxDolCmts extends BxDol
         if($this->_oQuery->rateComment($this->getSystemId(), $iCmtId, $iRate, $iCmtAuthorId, $this->_getAuthorIp())) {
         	$aCmt = $this->_oQuery->getCommentSimple($this->getId(), $iCmtId);
 
-	        $this->isRateAllowed(true);
+        	if($iRate == BX_CMT_RATE_VALUE_PLUS)
+	        	$this->isRateAllowed(true);
 
 	        bx_import('BxDolAlerts');
 	        $oZ = new BxDolAlerts($this->_sSystem, 'commentRated', $this->getId(), $iCmtAuthorId, array('comment_id' => $iCmtId, 'comment_author_id' => $aCmt['cmt_author_id'], 'rate' => $iRate));
