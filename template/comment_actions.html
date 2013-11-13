@@ -1,6 +1,11 @@
-<div class="__style_prefix__-actions bx-def-margin-sec-top bx-def-font-middle">__menu_actions__</div>
+<div class="__style_prefix__-actions bx-def-margin-sec-top bx-clearfix">
+	__menu_actions__
+	<div class="__style_prefix__-points-wrp bx-def-margin-left" <bx_if:hide_rate_count>style="display:none;"</bx_if:hide_rate_count>>
+		<a class="__style_prefix__-points" href="javascript:void(0)" onclick="__js_object__.togglePlusedByPopup(this, __id__); return false;" title="<bx_text_attribute:_Plused_by_popup />">__points__</a>
+	</div>
+</div>
 <bx_if:show_menu_manage>
-	<div class="__style_prefix__-comment-manage-link">
+	<div class="__style_prefix__-comment-manage-link bx-def-font-large">
 		<a class="__style_prefix__-comment-manage bx-def-margin-sec-left-auto" href="javascript:void(0)" onclick="__js_object__.toggleManagePopup(this, __id__); return false;" title="<bx_text_attribute:_Manage />"><i class="sys-icon chevron-down"></i></a>
 	</div>
 	<div id="__popup_id__" class="__style_prefix__-comment-manage" style="display:none;">__popup_text__</div>

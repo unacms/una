@@ -257,11 +257,6 @@ class BxBaseCmtsView extends BxDolCmts {
         		'cmt_id' => $aCmt['cmt_id']
         	)),
         	'ago' => bx_time_js($aCmt['cmt_time']),
-        	'bx_if:hide_rate_count' => array(
-        		'condition' => (int)$aCmt['cmt_rate'] <= 0,
-        		'content' => array()
-        	),
-        	'points' => _t(in_array($aCmt['cmt_rate'], array(-1, 0, 1)) ? '_N_point' : '_N_points', $aCmt['cmt_rate']),
         	'text' => $sText,
         	'bx_if:show_more' => array(
         		'condition' => !empty($sTextMore),
@@ -456,6 +451,11 @@ class BxBaseCmtsView extends BxDolCmts {
         	'id' => $aCmt['cmt_id'],
         	'style_prefix' => $this->_sStylePrefix,
         	'menu_actions' => $oMenuActions->getCode(),
+        	'bx_if:hide_rate_count' => array(
+        		'condition' => (int)$aCmt['cmt_rate'] <= 0,
+        		'content' => array()
+        	),
+        	'points' => _t(in_array($aCmt['cmt_rate'], array(-1, 0, 1)) ? '_N_point' : '_N_points', $aCmt['cmt_rate']),
         	'bx_if:show_menu_manage' => array(
         		'condition' => $bMenuManage,
         		'content' => array(

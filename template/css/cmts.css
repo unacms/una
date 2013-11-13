@@ -13,7 +13,7 @@
     }
     ul.cmts-margin,
     div.cmt-reply-margin {
-		padding-left: 30px;
+		padding-left: 42px;
     }
     li.cmt,
     ul.cmts-margin li.cmt {
@@ -81,9 +81,6 @@
     }    
 
     /*--- Comment Author ---*/
-    div.cmt-author {
-		position: relative;
-    }
 	div.cmt-icon {
 		position: absolute;
 		top: 0px;
@@ -93,23 +90,26 @@
     div.cmt-icon .sys-icon {
 		font-size: 2.125em;
     }
-    div.cmt-username {
+    div.cmt-info {
     	position: realtive;
     	padding-left: 42px;
 	}
-    span.cmt-username a {
+	div.cmt-head div.cmt-username,
+	div.cmt-head div.cmt-username,
+	div.cmt-head div.cmt-ago,
+	div.cmt-head div.cmt-reply-to,
+	div.cmt-head div.bullet {
+		display: inline-block;
+	}
+	div.cmt-head div.bullet {
+		padding: 0px;
+	}
+
+    div.cmt-username a {
         text-decoration: none;
     }
-	span.cmt-reply-to {
-		display: inline-block;
-    }
-	span.cmt-reply-to a,
-    span.cmt-reply-to span {
-		display: block;
-    	float: left;
-    	line-height: 0.8em;
-    }
-    span.cmt-reply-to a.cmt-points span {
+
+    div.cmt-reply-to a.cmt-points span {
 		display: inline;
     	float: none;
     }
@@ -125,8 +125,7 @@
     div.cmt-cont {
         position: relative;
     }
-	div.cmt-cont .bullet,
-	div.cmt-author .bullet {
+	div.cmt-cont .bullet {
 		padding: 0px 5px;
     }
     div.cmt-cont .cmt-post-reply .bx-form-element-wrapper {
@@ -164,13 +163,15 @@
 	div.cmt-actions {
 		position: relative;
 	}
-	div.cmt-actions a {
-		text-decoration: none;
-    }
+	div.cmt-actions ul.bx-menu-hor,
+	div.cmt-points-wrp {
+		position: relative;
+		float: left;
+	}
     div.cmt-comment-manage-link {
 		position: absolute;
-    	top: 10px;
-    	right: 10px;
+    	top: 0px;
+    	right: 0px;
     }
     div.cmt-comment-manage-link a {
 		color: rgba(0, 102, 153, 0.5);

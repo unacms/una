@@ -53,7 +53,8 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_timeline_menu_item_actions', 'bx_timeline', 'item-comment', '_bx_timeline_menu_item_title_system_item_comment', '_bx_timeline_menu_item_title_item_comment', 'javascript:void(0)', 'javascript:{js_object_view}.commentItem(this, ''{comments_system}'', {content_id})', '_self', 'comment', '', 2147483647, 1, 0, 0),
-('bx_timeline_menu_item_actions', 'bx_timeline', 'item-vote', '_bx_timeline_menu_item_title_system_item_vote', '_bx_timeline_menu_item_title_item_vote', 'javascript:void(0)', 'javascript:{js_object_view}.voteItem(this, {content_id})', '_self', 'plus', '', 2147483647, 1, 0, 0);
+('bx_timeline_menu_item_actions', 'bx_timeline', 'item-vote', '_bx_timeline_menu_item_title_system_item_vote', '_bx_timeline_menu_item_title_item_vote', 'javascript:void(0)', 'javascript:{js_object_view}.voteItem(this, {content_id})', '_self', 'plus', '', 2147483647, 1, 0, 0),
+('bx_timeline_menu_item_actions', 'bx_timeline', 'item-share', '_bx_timeline_menu_item_title_system_item_share', '_bx_timeline_menu_item_title_item_share', 'javascript:void(0)', 'javascript:{js_object_view}.shareItem(this, {content_id})', '_self', 'fa-share-square-o', '', 2147483647, 1, 0, 0);
 
 -- MENU: Account Settings
 SET @iMIOrder = (SELECT MAX(`order`) FROM `sys_menu_items` WHERE `set_name`='sys_account_settings' LIMIT 1);
