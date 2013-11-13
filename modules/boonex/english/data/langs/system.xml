@@ -1196,7 +1196,7 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_load_more_replies_tail"><![CDATA[See Older Replies...]]></string>
 	<string name="_load_more_replies_popular"><![CDATA[See More Replies...]]></string>
 	<string name="_load_more_replies_connection"><![CDATA[See More Replies...]]></string>	
-	<string name="_in_reply_to"><![CDATA[replied to]]></string>
+	<string name="_in_reply_to"><![CDATA[to]]></string>
 	<string name="_Can not delete comments with replies"><![CDATA[Cannot delete comments with replies]]></string>
 	<string name="_Access denied"><![CDATA[Access denied]]></string>
 	<string name="_Save"><![CDATA[Save]]></string>

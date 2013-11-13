@@ -2946,8 +2946,8 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 -- comment actions menu
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('sys_cmts_item_actions', 'system', 'item-reply', '_sys_menu_item_title_system_cmts_item_reply', '_sys_menu_item_title_cmts_item_reply', 'javascript:void(0)', 'javascript:{js_object}.toggleReply(this, {content_id})', '_self', 'reply', '', 2147483647, 1, 0, 0),
-('sys_cmts_item_actions', 'system', 'item-rate-plus', '_sys_menu_item_title_system_cmts_item_rate_plus', '_sys_menu_item_title_cmts_item_rate_plus', 'javascript:void(0)', 'javascript:{js_object}.cmtRate(this, {content_id}, 1)', '_self', 'plus-circle', '', 2147483647, 1, 0, 0),
-('sys_cmts_item_actions', 'system', 'item-rate-minus', '_sys_menu_item_title_system_cmts_item_rate_minus', '_sys_menu_item_title_cmts_item_rate_minus', 'javascript:void(0)', 'javascript:{js_object}.cmtRate(this, {content_id}, -1)', '_self', 'minus-circle', '', 2147483647, 1, 0, 0);
+('sys_cmts_item_actions', 'system', 'item-rate-plus', '_sys_menu_item_title_system_cmts_item_rate_plus', '_sys_menu_item_title_cmts_item_rate_plus', 'javascript:void(0)', 'javascript:{js_object}.cmtRate(this, {content_id}, 1)', '_self', 'plus', '', 2147483647, 1, 0, 0),
+('sys_cmts_item_actions', 'system', 'item-rate-minus', '_sys_menu_item_title_system_cmts_item_rate_minus', '_sys_menu_item_title_cmts_item_rate_minus', 'javascript:void(0)', 'javascript:{js_object}.cmtRate(this, {content_id}, -1)', '_self', 'minus', '', 2147483647, 1, 0, 0);
 
 -- --------------------------------------------------------
 
