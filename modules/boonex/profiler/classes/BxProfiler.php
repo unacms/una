@@ -67,12 +67,12 @@ class BxProfiler {
 
         $aCss = array (
             BX_DOL_URL_MODULES.'boonex/profiler/templates/base/css/profiler.css',
-            BX_DOL_URL_MODULES.'boonex/profiler/plugins/jush/jush.css',
+            BX_DOL_URL_PLUGINS.'jush/jush.css',
         );
         $aJs = array (
             BX_DOL_URL_MODULES.'boonex/profiler/js/profiler.js',
             BX_DOL_URL_ROOT.'plugins/jquery/jquery.tablesorter.js',
-            BX_DOL_URL_MODULES.'boonex/profiler/plugins/jush/jush.js',
+            BX_DOL_URL_PLUGINS.'jush/jush.js',
         );
 
         foreach ($aCss as $sCssUrl) {
