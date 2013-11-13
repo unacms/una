@@ -230,8 +230,6 @@ BxDolCmts.prototype.cmtRate = function(e, iCmtId, iRate)
             if(oData && oData.id != undefined && oData.rate != undefined) {
 	            var oPoints = $(e).parents('.cmt:first').find('.cmt-points:first span');
 	            oPoints.html(parseInt(oPoints.html()) + oData.rate).parents('.cmt-points-wrp:first').bx_anim(parseInt(oPoints.html()) > 0 ? 'show' : 'hide');
-
-	            $(e).hide().siblings('.cmt-comment-vote:hidden').show();
             }
         },
         'json'

@@ -14,9 +14,15 @@ div.bx-tl-items {
 	width: 100%;
 }
 
+/*--- Back Style ---*/
+
 /*--- Load More Style ---*/
-div.bx-tl-load-more .bx-btn {
-    float: none;
+div.bx-tl-load-more {}
+
+div.bx-tl-jump-to {
+	position: relative;
+	float: right;
+	line-height: 36px;
 }
 
 /*--- Item Style ---*/
@@ -53,7 +59,6 @@ div.bx-tl-item-menu-button a:hover {
 }
 div.bx-tl-item-image {
 	margin-left: -20px;
-	margin-top: -20px;
 	margin-right: -20px;
 	border: 1px solid #ffffff;
 	text-align: center;
@@ -93,6 +98,8 @@ div.bx-tl-empty div.bx-msg-box-container {
 }
 
 /*--- Timeline Styles ---*/
+/*
+//TODO: Remove if old timeline slider is not used
 div.bx-tl-timeline {}
 div.bx-tl-timeline-date-from,
 div.bx-tl-timeline-date-to {
@@ -120,6 +127,7 @@ div.bx-tl-timeline .ui-slider-handle {
 div.bx-tl-timeline .ui-slider-handle:hover {
 	text-decoration: none;
 }
+*/
 
 /*--- Comments Styles ---*/
 div.bx-tl-comments {}

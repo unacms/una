@@ -50,7 +50,6 @@ class BxBaseMenuInteractive extends BxTemplMenu {
             $this->_aObject['menu_items'] = $this->_oQuery->getMenuItems();
 
         foreach ($this->_aObject['menu_items'] as $a) {
-
             if (isset($a['active']) && !$a['active'])
                 continue;
 

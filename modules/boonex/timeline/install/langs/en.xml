@@ -66,25 +66,39 @@
 	<string name="_bx_timeline_page_block_title_view_account"><![CDATA[Timeline]]></string>
 
 	<!--
+	<string name="_bx_timeline_menu_title_XXX"><![CDATA[View Person Submenu]]></string>
     <string name="_bx_timeline_menu_set_title_XXX"><![CDATA[Notes Submenu]]></string>
     <string name="_bx_timeline_menu_item_title_system_XXX"><![CDATA[]]></string>
     <string name="_bx_timeline_menu_item_title_XXX"><![CDATA[]]></string>
 
 	<string name="_bx_timeline_txt_error_XXX"><![CDATA[]]></string>
-    -->
+    -->    
 
     <string name="_bx_timeline_menu_item_view_all"><![CDATA[All posts]]></string>
     <string name="_bx_timeline_menu_item_view_owner"><![CDATA[Posts by {0}]]></string>
     <string name="_bx_timeline_menu_item_view_other"><![CDATA[Posts by others]]></string>
     <string name="_bx_timeline_menu_item_get_rss"><![CDATA[RSS]]></string>
 
-    <string name="_bx_timeline_menu_item_write"><![CDATA[Write]]></string>
-    <string name="_bx_timeline_menu_item_share_link"><![CDATA[Share a link]]></string>
-    <string name="_bx_timeline_menu_item_add_photo"><![CDATA[Add a photo]]></string>
-    <string name="_bx_timeline_menu_item_add_music"><![CDATA[Add a sound]]></string>
-    <string name="_bx_timeline_menu_item_add_video"><![CDATA[Add a video]]></string>
+	<string name="_bx_timeline_menu_title_post"><![CDATA[Post Item]]></string>
+    <string name="_bx_timeline_menu_set_title_post"><![CDATA[Post Item]]></string>
+    <string name="_bx_timeline_menu_item_title_system_post_text"><![CDATA[Post Text]]></string>
+    <string name="_bx_timeline_menu_item_title_post_text"><![CDATA[Write]]></string>
+    <string name="_bx_timeline_menu_item_title_system_post_link"><![CDATA[Post Link]]></string>
+    <string name="_bx_timeline_menu_item_title_post_link"><![CDATA[Share a link]]></string>
+    <string name="_bx_timeline_menu_item_title_system_post_photo"><![CDATA[Post Photo]]></string>
+    <string name="_bx_timeline_menu_item_title_post_photo"><![CDATA[Add a photo]]></string>
 
-    <string name="_bx_timeline_menu_item_delete"><![CDATA[Delete]]></string>
+    <string name="_bx_timeline_menu_title_item_manage"><![CDATA[Manage Item]]></string>
+    <string name="_bx_timeline_menu_set_title_item_manage"><![CDATA[Manage Item]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_delete"><![CDATA[Delete]]></string>
+    <string name="_bx_timeline_menu_item_title_item_delete"><![CDATA[Delete]]></string>
+
+	<string name="_bx_timeline_menu_title_item_actions"><![CDATA[Item Actions]]></string>
+    <string name="_bx_timeline_menu_set_title_item_actions"><![CDATA[Item Actions]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_comment"><![CDATA[Comment]]></string>
+    <string name="_bx_timeline_menu_item_title_item_comment"><![CDATA[Comment]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_vote"><![CDATA[Vote]]></string>
+    <string name="_bx_timeline_menu_item_title_item_vote"><![CDATA[Vote]]></string>
 
     <string name="_bx_timeline_menu_item_title_system_timeline"><![CDATA[Timeline]]></string>
     <string name="_bx_timeline_menu_item_title_timeline"><![CDATA[Timeline]]></string>
@@ -97,14 +111,12 @@
 	<string name="_bx_timeline_txt_err_cannot_perform_action"><![CDATA[Cannot perform action. Please report.]]></string>
 
 	<string name="_bx_timeline_txt_load_more"><![CDATA[Load More]]></string>
+	<string name="_bx_timeline_txt_or_jump_to"><![CDATA[... or jump to:]]></string>
+	<string name="_bx_timeline_txt_jump_to_n_year"><![CDATA[Jump to {0} year]]></string>
+	<string name="_bx_timeline_txt_jump_to_recent"><![CDATA[Jump to recent posts]]></string>
 	<string name="_bx_timeline_txt_wrote"><![CDATA[wrote]]></string>
 	<string name="_bx_timeline_txt_shared_link"><![CDATA[shared a link]]></string>
 	<string name="_bx_timeline_txt_added_photo"><![CDATA[added a photo]]></string>
-	<string name="_bx_timeline_txt_date_from"><![CDATA[today]]></string>
-	<string name="_bx_timeline_txt_date_to"><![CDATA[olden days]]></string>
-	
-	<string name="_bx_timeline_txt_comment"><![CDATA[Comment]]></string>
-	<string name="_bx_timeline_txt_n_comments"><![CDATA[{0} comments]]></string>
 
 	<string name="_bx_timeline_txt_plus"><![CDATA[Plus]]></string>
 	

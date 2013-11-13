@@ -3319,6 +3319,8 @@ More info about URI DNSBL: <br />
     <string name="_sys_menu_title_account_settings"><![CDATA[Account Settings Menu]]></string>
     <string name="_sys_menu_title_add_content"><![CDATA[Add Content Menu]]></string>
     <string name="_sys_menu_title_profiles_create"><![CDATA[Create Profiles]]></string>
+    <string name="_sys_menu_title_cmts_item_manage"><![CDATA[Manage Comment]]></string>
+    <string name="_sys_menu_title_cmts_item_actions"><![CDATA[Comment Actions]]></string>
 
     <string name="_sys_menu_item_title_system_home"><![CDATA[Home]]></string>
     <string name="_sys_menu_item_title_system_about"><![CDATA[About]]></string>
@@ -3345,6 +3347,17 @@ More info about URI DNSBL: <br />
     <string name="_sys_menu_item_title_system_account_profile_context"><![CDATA[Switch Profile]]></string>
     <string name="_sys_menu_item_title_system_account_menu"><![CDATA[Account]]></string>
 
+	<string name="_sys_menu_item_title_system_cmts_item_edit"><![CDATA[Edit]]></string>
+	<string name="_sys_menu_item_title_cmts_item_edit"><![CDATA[Edit]]></string>
+	<string name="_sys_menu_item_title_system_cmts_item_delete"><![CDATA[Delete]]></string>
+	<string name="_sys_menu_item_title_cmts_item_delete"><![CDATA[Delete]]></string>
+	<string name="_sys_menu_item_title_system_cmts_item_reply"><![CDATA[Reply]]></string>
+	<string name="_sys_menu_item_title_cmts_item_reply"><![CDATA[Reply]]></string>
+	<string name="_sys_menu_item_title_system_cmts_item_rate_plus"><![CDATA[Plus]]></string>
+	<string name="_sys_menu_item_title_cmts_item_rate_plus"><![CDATA[Plus]]></string>
+	<string name="_sys_menu_item_title_system_cmts_item_rate_minus"><![CDATA[Minus]]></string>
+	<string name="_sys_menu_item_title_cmts_item_rate_minus"><![CDATA[Minus]]></string>
+
     <string name="_sys_menu_item_title_home"><![CDATA[Home]]></string>
     <string name="_sys_menu_item_title_about"><![CDATA[About]]></string>    
     <string name="_sys_menu_item_title_account"><![CDATA[Account]]></string>
@@ -3365,6 +3378,8 @@ More info about URI DNSBL: <br />
     <string name="_sys_menu_set_title_add_content"><![CDATA[Add Content]]></string>
     <string name="_sys_menu_set_title_account_settings"><![CDATA[Account Settings]]></string>
     <string name="_sys_menu_set_title_profile_create_links"><![CDATA[Create Profile Links]]></string>
+    <string name="_sys_menu_set_title_cmts_item_manage"><![CDATA[Manage Comment]]></string>
+    <string name="_sys_menu_set_title_cmts_item_actions"><![CDATA[Comment Actions]]></string>
 
 	<string name="_sys_menu_template_title_main"><![CDATA[Site Navigation]]></string>
     <string name="_sys_menu_template_title_main_submenu"><![CDATA[Site Navigation Submenu]]></string>
@@ -3375,6 +3390,8 @@ More info about URI DNSBL: <br />
     <string name="_sys_menu_template_title_toolbar"><![CDATA[Toolbar Buttons]]></string>
     <string name="_sys_menu_template_title_floating_blocks"><![CDATA[Floating Blocks]]></string>
     <string name="_sys_menu_template_title_buttons_hor"><![CDATA[Horizontal Buttons]]></string>
+    <string name="_sys_menu_template_title_inline"><![CDATA[Inline]]></string>
+    <string name="_sys_menu_template_title_interactive_vertical"><![CDATA[Interactive Vertical Links]]></string>
 
     <string name="_sys_designbox_0"><![CDATA[Content only]]></string>
     <string name="_sys_designbox_1"><![CDATA[Content + title + background]]></string>

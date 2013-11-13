@@ -2835,7 +2835,9 @@ INSERT INTO `sys_menu_templates` (`id`, `template`, `title`) VALUES
 (6, 'menu_vertical.html', '_sys_menu_template_title_ver'),
 (7, 'menu_floating_blocks.html', '_sys_menu_template_title_floating_blocks'),
 (8, 'menu_main_submenu.html', '_sys_menu_template_title_main_submenu'),
-(9, 'menu_buttons_hor.html', '_sys_menu_template_title_buttons_hor');
+(9, 'menu_buttons_hor.html', '_sys_menu_template_title_buttons_hor'),
+(10, 'menu_inline.html', '_sys_menu_template_title_inline'),
+(11, 'menu_interactive_vertical.html', '_sys_menu_template_title_interactive_vertical');
 
 CREATE TABLE IF NOT EXISTS `sys_objects_menu` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -2862,7 +2864,9 @@ INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `templa
 ('sys_account', '_sys_menu_title_account', 'sys_account_links', 'system', 4, 0, 1, '', ''),
 ('sys_add_content', '_sys_menu_title_add_content', 'sys_add_content_links', 'system', 4, 0, 1, '', ''),
 ('sys_account_settings', '_sys_menu_title_account_settings', 'sys_account_settings', 'system', 6, 0, 1, '', ''),
-('sys_profiles_create', '_sys_menu_title_profiles_create', 'sys_profiles_create', 'system', 4, 0, 1, '', '');
+('sys_profiles_create', '_sys_menu_title_profiles_create', 'sys_profiles_create', 'system', 4, 0, 1, '', ''),
+('sys_cmts_item_manage', '_sys_menu_title_cmts_item_manage', 'sys_cmts_item_manage', 'system', 6, 0, 1, 'BxTemplMenuCmts', ''),
+('sys_cmts_item_actions', '_sys_menu_title_cmts_item_actions', 'sys_cmts_item_actions', 'system', 10, 0, 1, 'BxTemplMenuCmts', '');
 
 CREATE TABLE IF NOT EXISTS `sys_menu_sets` (
   `set_name` varchar(32) NOT NULL,
@@ -2880,7 +2884,9 @@ INSERT INTO `sys_menu_sets` (`set_name`, `module`, `title`, `deletable`) VALUES
 ('sys_account_links', 'system', '_sys_menu_set_title_account', 0),
 ('sys_add_content_links', 'system', '_sys_menu_set_title_add_content', 0),
 ('sys_account_settings', 'system', '_sys_menu_set_title_account_settings', 0),
-('sys_profiles_create', 'system', '_sys_menu_set_title_profile_create_links', 0);
+('sys_profiles_create', 'system', '_sys_menu_set_title_profile_create_links', 0),
+('sys_cmts_item_manage', 'system', '_sys_menu_set_title_cmts_item_manage', 0),
+('sys_cmts_item_actions', 'system', '_sys_menu_set_title_cmts_item_actions', 0);
 
 CREATE TABLE IF NOT EXISTS `sys_menu_items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -2932,6 +2938,16 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 ('sys_account_settings', 'system', 'account-settings-password', '_sys_menu_item_title_system_account_settings_pwd', '_sys_menu_item_title_account_settings_pwd', 'page.php?i=account-settings-password#top', '', '', 'key', '', 2147483646, 1, 1, 4),
 ('sys_account_settings', 'system', 'account-settings-delete', '_sys_menu_item_title_system_account_settings_delete', '_sys_menu_item_title_account_settings_delete', 'page.php?i=account-settings-delete#top', '', '', 'remove', '', 2147483646, 1, 1, 5);
 
+-- comment manage menu
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('sys_cmts_item_manage', 'system', 'item-edit', '_sys_menu_item_title_system_cmts_item_edit', '_sys_menu_item_title_cmts_item_edit', 'javascript:void(0)', 'javascript:{js_object}.cmtEdit(this, {content_id})', '_self', 'pencil', '', 2147483647, 1, 0, 0),
+('sys_cmts_item_manage', 'system', 'item-delete', '_sys_menu_item_title_system_cmts_item_delete', '_sys_menu_item_title_cmts_item_delete', 'javascript:void(0)', 'javascript:{js_object}.cmtRemove(this, {content_id})', '_self', 'remove', '', 2147483647, 1, 0, 0);
+
+-- comment actions menu
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('sys_cmts_item_actions', 'system', 'item-reply', '_sys_menu_item_title_system_cmts_item_reply', '_sys_menu_item_title_cmts_item_reply', 'javascript:void(0)', 'javascript:{js_object}.toggleReply(this, {content_id})', '_self', 'reply', '', 2147483647, 1, 0, 0),
+('sys_cmts_item_actions', 'system', 'item-rate-plus', '_sys_menu_item_title_system_cmts_item_rate_plus', '_sys_menu_item_title_cmts_item_rate_plus', 'javascript:void(0)', 'javascript:{js_object}.cmtRate(this, {content_id}, 1)', '_self', 'plus-circle', '', 2147483647, 1, 0, 0),
+('sys_cmts_item_actions', 'system', 'item-rate-minus', '_sys_menu_item_title_system_cmts_item_rate_minus', '_sys_menu_item_title_cmts_item_rate_minus', 'javascript:void(0)', 'javascript:{js_object}.cmtRate(this, {content_id}, -1)', '_self', 'minus-circle', '', 2147483647, 1, 0, 0);
 
 -- --------------------------------------------------------
 

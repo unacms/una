@@ -34,8 +34,11 @@ class BxTimelineConfig extends BxDolModuleConfig
     protected $_sTranscoderObjectPreview;
     protected $_aImageUploaders;
 
-    protected $_sConnObjFriends;
 	protected $_sConnObjSubscriptions;
+
+	protected $_sMenuPost;
+	protected $_sMenuItemManage;
+	protected $_sMenuItemActions;
 
     protected $_bJsMode;
     protected $_aJsClass;
@@ -65,8 +68,11 @@ class BxTimelineConfig extends BxDolModuleConfig
         $this->_sTranscoderObjectPreview = 'bx_timeline_photos_preview';
         $this->_aImageUploaders = array('bx_timeline_simple');        
 
-        $this->_sConnObjFriends = 'sys_profiles_friends';
 		$this->_sConnObjSubscriptions = 'sys_profiles_subscriptions';
+
+		$this->_sMenuPost = 'bx_timeline_menu_post';
+		$this->_sMenuItemManage = 'bx_timeline_menu_item_manage';
+		$this->_sMenuItemActions = 'bx_timeline_menu_item_actions';
 
         $this->_bJsMode = false;
         $this->_aJsClass = array(
@@ -168,11 +174,17 @@ class BxTimelineConfig extends BxDolModuleConfig
     		case 'transcoder_preview':
     			$sResult = $this->_sTranscoderObjectPreview;
     			break;
-    		case 'conn_friends':
-    			$sResult = $this->_sConnObjFriends;
-    			break;
     		case 'conn_subscriptions':
     			$sResult = $this->_sConnObjSubscriptions;
+    			break;
+    		case 'menu_post':
+    			$sResult = $this->_sMenuPost;
+    			break;
+    		case 'menu_item_manage':
+    			$sResult = $this->_sMenuItemManage;
+    			break;
+    		case 'menu_item_actions':
+    			$sResult = $this->_sMenuItemActions;
     			break;
     	}
 

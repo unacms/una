@@ -20,7 +20,42 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 ('bx_persons_view_profile', @iPBCellProfile, 'bx_timeline', '_bx_timeline_page_block_title_view_profile', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:22:"get_block_view_profile";}', 0, 1, IFNULL(@iPBOrderProfile, 0) + 2);
 
 
--- MENU
+-- MENUS
+
+-- MENU: Post Item (Text, Link, Photo)
+INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
+('bx_timeline_menu_post', '_bx_timeline_menu_title_post', 'bx_timeline_menu_post', 'bx_timeline', 11, 0, 1, 'BxTimelineMenuPost', 'modules/boonex/timeline/classes/BxTimelineMenuPost.php');
+
+INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
+('bx_timeline_menu_post', 'bx_timeline', '_bx_timeline_menu_set_title_post', 0);
+
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('bx_timeline_menu_post', 'bx_timeline', 'post-text', '_bx_timeline_menu_item_title_system_post_text', '_bx_timeline_menu_item_title_post_text', 'javascript:void(0)', 'javascript:{js_object_post}.changePostType(this, ''text'')', '_self', '', '', 2147483647, 1, 0, 0),
+('bx_timeline_menu_post', 'bx_timeline', 'post-link', '_bx_timeline_menu_item_title_system_post_link', '_bx_timeline_menu_item_title_post_link', 'javascript:void(0)', 'javascript:{js_object_post}.changePostType(this, ''link'')', '_self', '', '', 2147483647, 1, 0, 0),
+('bx_timeline_menu_post', 'bx_timeline', 'post-photo', '_bx_timeline_menu_item_title_system_post_photo', '_bx_timeline_menu_item_title_post_photo', 'javascript:void(0)', 'javascript:{js_object_post}.changePostType(this, ''photo'')', '_self', '', '', 2147483647, 1, 0, 0);
+
+-- MENU: Item Manage (Delete)
+INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
+('bx_timeline_menu_item_manage', '_bx_timeline_menu_title_item_manage', 'bx_timeline_menu_item_manage', 'bx_timeline', 6, 0, 1, 'BxTimelineMenuItem', 'modules/boonex/timeline/classes/BxTimelineMenuItem.php');
+
+INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
+('bx_timeline_menu_item_manage', 'bx_timeline', '_bx_timeline_menu_set_title_item_manage', 0);
+
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('bx_timeline_menu_item_manage', 'bx_timeline', 'item-delete', '_bx_timeline_menu_item_title_system_item_delete', '_bx_timeline_menu_item_title_item_delete', 'javascript:void(0)', 'javascript:{js_object_view}.deletePost(this, {content_id})', '_self', 'remove', '', 2147483647, 1, 0, 0);
+
+-- MENU: Item Actions (Comment, Plus)
+INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
+('bx_timeline_menu_item_actions', '_bx_timeline_menu_title_item_actions', 'bx_timeline_menu_item_actions', 'bx_timeline', 10, 0, 1, 'BxTimelineMenuItem', 'modules/boonex/timeline/classes/BxTimelineMenuItem.php');
+
+INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
+('bx_timeline_menu_item_actions', 'bx_timeline', '_bx_timeline_menu_set_title_item_actions', 0);
+
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('bx_timeline_menu_item_actions', 'bx_timeline', 'item-comment', '_bx_timeline_menu_item_title_system_item_comment', '_bx_timeline_menu_item_title_item_comment', 'javascript:void(0)', 'javascript:{js_object_view}.commentItem(this, ''{comments_system}'', {content_id})', '_self', 'comment', '', 2147483647, 1, 0, 0),
+('bx_timeline_menu_item_actions', 'bx_timeline', 'item-vote', '_bx_timeline_menu_item_title_system_item_vote', '_bx_timeline_menu_item_title_item_vote', 'javascript:void(0)', 'javascript:{js_object_view}.voteItem(this, {content_id})', '_self', 'plus', '', 2147483647, 1, 0, 0);
+
+-- MENU: Account Settings
 SET @iMIOrder = (SELECT MAX(`order`) FROM `sys_menu_items` WHERE `set_name`='sys_account_settings' LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
 ('sys_account_settings', 'bx_timeline', 'account-settings-timeline', '_bx_timeline_menu_item_title_system_timeline', '_bx_timeline_menu_item_title_timeline', 'page.php?i=timeline-account', '', '', 'clock-o', '', 2147483646, 1, 1, @iMIOrder + 1);
@@ -70,10 +105,6 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 ('bx_timeline', 'delete', NULL, '_bx_timeline_acl_action_delete', '', 1, 1);
 SET @iIdActionDelete = LAST_INSERT_ID();
 
-INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('bx_timeline', 'comment', NULL, '_bx_timeline_acl_action_comment', '', 1, 1);
-SET @iIdActionComment = LAST_INSERT_ID();
-
 SET @iUnauthenticated = 1;
 SET @iStandard = 2;
 SET @iUnconfirmed = 3;
@@ -94,12 +125,6 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 -- delete
 (@iModerator, @iIdActionDelete),
 (@iAdministrator, @iIdActionDelete),
-
--- comment
-(@iStandard, @iIdActionComment),
-(@iModerator, @iIdActionComment),
-(@iAdministrator, @iIdActionComment),
-(@iPremium, @iIdActionComment);
 
 
 -- ALERTS

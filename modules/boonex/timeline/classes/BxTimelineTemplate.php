@@ -77,12 +77,16 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 
     public function getViewBlock($aParams)
     {
-		list($sContent, $sLoadMore) = $this->getPosts($aParams);
+		list($sContent, $sLoadMore, $sBack) = $this->getPosts($aParams);
 
     	$this->getCssJs();
     	return $this->parseHtmlByName('view.html', array(
     		'style_prefix' => $this->_oConfig->getPrefix('style'),
+    		/*
+		    //TODO: Remove if old timeline slider is not used
             'timeline' => $this->getTimeline($aParams),
+            */
+    		'back' => $sBack,
             'content' => $sContent,
     		'load_more' =>  $sLoadMore,
             'js_content' => $this->getJsCode('view', array(
@@ -99,7 +103,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 
     public function getViewItemBlock($iId)
     {
-    	$aEvent = $this->_oDb->getEvents(array('type' => 'id', 'value' => $iId));
+    	$aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
     	if(empty($aEvent))
     		return '';
 
@@ -169,8 +173,12 @@ class BxTimelineTemplate extends BxDolModuleTemplate
             $sContent .= $sEvent;
         }
 
-        $sLoadMore = $this->getLoadMore($iStart, $iPerPage, $bNext, $iEvents > 0);
-        return array($sContent, $sLoadMore);
+        $iYearSel = (int)$aParams['timeline'];
+        $iYearMin = $this->_oDb->getMaxDuration($aParams);
+
+        $sBack = $this->getBack($iYearSel);
+        $sLoadMore = $this->getLoadMore($iStart, $iPerPage, $bNext, $iYearSel, $iYearMin, $iEvents > 0);
+        return array($sContent, $sLoadMore, $sBack);
     }
 
 	public function getEmpty($bVisible)
@@ -201,11 +209,49 @@ class BxTimelineTemplate extends BxDolModuleTemplate
         	'value' => $iTimeline
         ));
     }
+	public function getBack($iYearSel)
+	{
+		if($iYearSel == 0)
+			return '';
 
-	public function getLoadMore($iStart, $iPerPage, $bEnabled = true, $bVisible = true)
+		$sStylePrefix = $this->_oConfig->getPrefix('style');
+    	$sJsObject = $this->_oConfig->getJsObject('view');
+
+		$iYearNow = date('Y', time());
+		return $this->parseHtmlByName('back.html', array(
+			'style_prefix' => $sStylePrefix,
+			'href' => 'javascript:void(0)',
+    		'title' => _t('_bx_timeline_txt_jump_to_n_year', $iYearNow),
+    		'bx_repeat:attrs' => array(
+    			array('key' => 'onclick', 'value' => 'javascript:' . $sJsObject . '.changeTimeline(this, 0)')
+    		),
+    		'content' => _t('_bx_timeline_txt_jump_to_recent')
+		));
+	}
+
+	public function getLoadMore($iStart, $iPerPage, $bEnabled, $iYearSel, $iYearMin, $bVisible = true)
     {
+    	$sStylePrefix = $this->_oConfig->getPrefix('style');
+    	$sJsObject = $this->_oConfig->getJsObject('view');
+
+    	$sYears = '';
+    	if(!empty($iYearMin)) {
+    		$iYearMax = date('Y', time()) - 1;
+    		for($i = $iYearMax; $i >= $iYearMin; $i--)
+    			$sYears .= ($i != $iYearSel ? $this->parseHtmlByName('bx_a.html', array(
+    				'href' => 'javascript:void(0)',
+    				'title' => _t('_bx_timeline_txt_jump_to_n_year', $i),
+    				'bx_repeat:attrs' => array(
+    					array('key' => 'onclick', 'value' => 'javascript:' . $sJsObject . '.changeTimeline(this, ' . $i . ')')
+    				),
+    				'content' => $i
+    			)) : $i) . ', ';
+    		
+    		$sYears = substr($sYears, 0, -2);
+    	}
+    	
         $aTmplVars = array(
-        	'style_prefix' => $this->_oConfig->getPrefix('style'),
+        	'style_prefix' => $sStylePrefix,
             'visible' => $bVisible ? 'block' : 'none',
             'bx_if:is_disabled' => array(
                 'condition' => !$bEnabled,
@@ -214,8 +260,15 @@ class BxTimelineTemplate extends BxDolModuleTemplate
             'bx_if:show_on_click' => array(
                 'condition' => $bEnabled,
                 'content' => array(
-                    'on_click' => $this->_oConfig->getJsObject('view') . '.changePage(this, ' . ($iStart + $iPerPage) . ', ' . $iPerPage . ')'
+                    'on_click' => 'javascript:' . $sJsObject . '.changePage(this, ' . ($iStart + $iPerPage) . ', ' . $iPerPage . ')'
                 )
+            ),
+            'bx_if:show_jump_to' => array(
+            	'condition' => !empty($sYears),
+                'content' => array(
+            		'style_prefix' => $sStylePrefix,
+            		'years' => $sYears
+            	)
             )
         );
         return $this->parseHtmlByName('load_more.html', $aTmplVars);
@@ -327,7 +380,8 @@ class BxTimelineTemplate extends BxDolModuleTemplate
         list($sAuthorName, $sAuthorUrl, $sAuthorIcon) = $oModule->getUserInfo($aEvent['object_owner_id']);
         $bAuthorIcon = !empty($sAuthorIcon);
 
-        $aTmplVarsMenu = $this->_getTmplVarsItemMenu($aEvent);
+        $aTmplVarsMenuItemManage = $this->_getTmplVarsMenuItemManage($aEvent, $aBrowseParams);
+        $aTmplVarsMenuItemActions = $this->_getTmplVarsMenuItemActions($aEvent, $aBrowseParams);
 
         $aTmplVarsTimelineOwner = array();
         if(isset($aBrowseParams['type']) && $aBrowseParams['type'] == BX_TIMELINE_TYPE_CONNECTIONS)
@@ -340,9 +394,9 @@ class BxTimelineTemplate extends BxDolModuleTemplate
         	'style_prefix' => $sStylePrefix,
         	'js_object' => $sJsObject,
         	'id' => $aEvent['id'],
-        	'bx_if:show_menu' => array(
-        		'condition' => !empty($aTmplVarsMenu),
-        		'content' => $aTmplVarsMenu
+        	'bx_if:show_menu_item_manage' => array(
+        		'condition' => !empty($aTmplVarsMenuItemManage),
+        		'content' => $aTmplVarsMenuItemManage
         	),
         	'bx_if:show_icon' => array(
         		'condition' => $bAuthorIcon,
@@ -362,29 +416,12 @@ class BxTimelineTemplate extends BxDolModuleTemplate
         	),
         	'item_view_url' => $sViewUrl,
         	'item_date' => bx_time_js($aEvent['date']),
-        	'bx_if:show_comments' => array(
-				'condition' => false,
-				'content' => array()
+			'bx_if:show_menu_item_actions' => array(
+				'condition' => !empty($aTmplVarsMenuItemActions),
+        		'content' => $aTmplVarsMenuItemActions
 			),
-			'bx_if:show_votes' => array(
-				'condition' => false,
-				'content' => array()
-			),
-			'comments' => ''
+			'comments' => $this->_getComments($aEvent, $aBrowseParams)
         );
-
-        //--- Add Comments
-        if(!empty($aEvent['comments']) && is_array($aEvent['comments'])) {
-        	$aTmplVarsComments = $this->_getTmplVarsComments($aEvent['comments'], $aBrowseParams);
-        	if(is_array($aTmplVarsComments))
-        		$aTmplVars = array_merge($aTmplVars, $aTmplVarsComments);
-        }
-
-        //--- Add Votes
-        $aEvent['votes'] = '';
-        $aTmplVarsVotes = $this->_getTmplVarsVotes($aEvent['votes']);
-		if(is_array($aTmplVarsVotes))
-        	$aTmplVars = array_merge($aTmplVars, $aTmplVarsVotes);
 
         $sMethod = '_getTmplVarsContent' . ucfirst($sType);
         if(method_exists($this, $sMethod)) {
@@ -396,27 +433,51 @@ class BxTimelineTemplate extends BxDolModuleTemplate
         return $this->parseHtmlByName($sType . '.html', $aTmplVars);
     }
 
-    protected function _getTmplVarsItemMenu(&$aEvent) {
+	protected function _getComments($aEvent, $aBrowseParams)
+    {
+    	$mixedComments = $this->getModule()->getCommentsData($aEvent);
+    	if($mixedComments === false || !isset($aBrowseParams['type']) || $aBrowseParams['type'] != 'view_item')
+    		return '';
+
+    	list($sSystem, $iObjectId, $iCount) = $mixedComments;
+		return $this->getComments($sSystem, $iObjectId);
+    }
+
+    protected function _getTmplVarsMenuItemManage(&$aEvent) {
     	$oModule = $this->getModule();
-    	$sStylePrefix = $this->_oConfig->getPrefix('style');
-		$sJsObject = $this->_oConfig->getJsObject('view');
 
-    	$aMenuItems = array();
-        if($oModule->isAllowedDelete())
-        	$aMenuItems[] = array('name' => 'timeline-item-delete', 'link' => 'javascript:void(0)', 'onclick' => "javascript:" . $sJsObject . ".deletePost(this, " . $aEvent['id'] . ")", 'target' => '_self', 'icon' => 'remove', 'title' => _t('_bx_timeline_menu_item_delete'));
+		bx_import('BxDolMenu');
+		$oMenu = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_manage'));
+		$oMenu->setEvent($aEvent);
 
-		$aTmplVarsMenu = array();
-		if(!empty($aMenuItems)) {
-			bx_import('BxTemplFunctions');
+		bx_import('BxTemplFunctions');
+		$sMenu = BxTemplFunctions::getInstance()->designBoxMenu($oMenu);
+		if(empty($sMenu))
+			return array();
 
-			$aTmplVarsMenu = array(
-        		'style_prefix' => $sStylePrefix,
-        		'js_object' => $sJsObject,
-				'menu' => BxTemplFunctions::getInstance()->designBoxMenu(array ('template' => 'menu_vertical.html', 'menu_items' => $aMenuItems))
-			);
-		}
+		return array(
+        	'style_prefix' => $this->_oConfig->getPrefix('style'),
+        	'js_object' => $this->_oConfig->getJsObject('view'),
+			'menu_item_manage' => $sMenu
+		);
+    }
 
-		return $aTmplVarsMenu;
+    protected function _getTmplVarsMenuItemActions(&$aEvent) {
+    	$oModule = $this->getModule();
+
+		bx_import('BxDolMenu');
+		$oMenu = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_actions'));
+		$oMenu->setEvent($aEvent);
+
+		$sMenu = $oMenu->getCode();
+		if(empty($sMenu))
+			return array();
+
+		return array(
+        	'style_prefix' => $this->_oConfig->getPrefix('style'),
+        	'js_object' => $this->_oConfig->getJsObject('view'),
+			'menu_item_actions' => $sMenu
+		);
     }
 
     protected function _getTmplVarsTimelineOwner(&$aEvent)
@@ -434,60 +495,6 @@ class BxTimelineTemplate extends BxDolModuleTemplate
         }
 
         return $aTmplVarsTimelineOwner;
-    }
-
-	protected function _getTmplVarsComments($aComments, $aBrowseParams)
-    {
-    	$sStylePrefix = $this->_oConfig->getPrefix('style');
-
-    	$sSystem = isset($aComments['system']) ? $aComments['system'] : '';
-    	$iObjectId = isset($aComments['object_id']) ? (int)$aComments['object_id'] : 0;
-    	$iCount = isset($aComments['count']) ? (int)$aComments['count'] : 0;
-    	if($sSystem == '' || $iObjectId == 0 || ($iCount == 0 && !isLogged()))
-    		return array();
-
-    	$oCmts = $this->getModule()->getCmtsObject($sSystem, $iObjectId);
-    	$oCmts->addCssJs();
-
-    	$sComments = '';
-    	if(isset($aBrowseParams['type']) && $aBrowseParams['type'] == 'view_item')
-			$sComments = $this->getComments($sSystem, $iObjectId);
-
-		return array(
-    		'bx_if:show_comments' => array(
-    			'condition' => true,
-    			'content' => array(
-					'style_prefix' => $sStylePrefix,
-					'url' => 'javascript:void(0)',
-					'onclick' => "javascript:" . $this->_oConfig->getJsObject('view') . ".commentItem(this, '" . $sSystem . "', " . $iObjectId . ")",
-					'content' => $iCount > 0 ? _t('_bx_timeline_txt_n_comments', $iCount) : _t('_bx_timeline_txt_comment')
-				)
-			),
-			'comments' => $sComments
-		);
-    }
-
-	protected function _getTmplVarsVotes($aVotes)
-    {
-    	$sStylePrefix = $this->_oConfig->getPrefix('style');
-/*
-    	$sSystem = isset($aComments['system']) ? $aComments['system'] : '';
-    	$iObjectId = isset($aComments['object_id']) ? (int)$aComments['object_id'] : 0;
-    	$iCount = isset($aComments['count']) ? (int)$aComments['count'] : 0;
-    	if($sSystem == '' || $iObjectId == 0 || ($iCount == 0 && !isLogged()))
-    		return array();
-*/
-		return array(
-    		'bx_if:show_votes' => array(
-    			'condition' => true,
-    			'content' => array(
-					'style_prefix' => $sStylePrefix,
-					'url' => 'javascript:void(0)',
-					'onclick' => "javascript:" . $this->_oConfig->getJsObject('view') . ".voteItem(this)",
-					'content' => _t('_bx_timeline_txt_plus')
-				)
-			)
-		);
     }
 
 	protected function _getTmplVarsContentText($aContent)
@@ -638,6 +645,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 
         return $mixedResult;
     }
+
 	protected function _prepareTextForOutput($s)
     {
 		$s = bx_process_output($s, BX_DATA_TEXT);

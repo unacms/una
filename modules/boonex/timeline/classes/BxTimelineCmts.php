@@ -22,16 +22,6 @@ class BxTimelineCmts extends BxTemplCmtsView
     {
     	return false;
     }
-
-	public function isPostReplyAllowed ($isPerformAction = false)
-	{
-		bx_import('BxDolModule');
-		$oModule = BxDolModule::getInstance('bx_timeline');
-		if(!$oModule->isAllowedComment($isPerformAction))
-			return false;
-
-        return parent::isPostReplyAllowed($isPerformAction);
-    }
 }
 
 /** @} */ 

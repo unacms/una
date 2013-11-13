@@ -43,12 +43,17 @@ class BxBaseCmtsView extends BxDolCmts {
 		$oForm->addCssJs();
     }
 
+    public function getJsObjectName()
+    {
+    	return $this->_sJsObjName;
+    }
+
 	/**
      * Get initialization section of comments box
      *
      * @return string
      */
-    function getScript()
+    public function getScript()
     {
         $this->addCssJs();
 
@@ -424,72 +429,41 @@ class BxBaseCmtsView extends BxDolCmts {
 
 	protected function _getActionsBox(&$aCmt, $aDp = array())
     {
+    	$iUserId = $this->_getAuthorId();
     	$oTemplate = BxDolTemplate::getInstance();
 
-        $iUserId = $this->_getAuthorId();
-        $isEditAllowedPermanently = ($aCmt['cmt_author_id'] == $iUserId && $this->isEditAllowed()) || $this->isEditAllowedAll();
-        $isRemoveAllowedPermanently = ($aCmt['cmt_author_id'] == $iUserId && $this->isRemoveAllowed()) || $this->isRemoveAllowedAll();
+    	//--- Actions Menu
+		bx_import('BxDolMenu');
+		$oMenuActions = BxDolMenu::getObjectInstance($this->_sMenuObjActions);
+		$oMenuActions->setCmtsData($this, $aCmt['cmt_id']);
 
-		$sManagePopupId = $sManagePopupText = '';
-        if($isEditAllowedPermanently || $isRemoveAllowedPermanently) {
-			$aMenu = array(
-				array('name' => 'cmt-edit', 'icon' => 'pencil', 'onclick' => $this->_sJsObjName . ".cmtEdit(this, " . $aCmt['cmt_id'] . ")", 'title' => _t('_Edit')),
-				array('name' => 'cmt-delete', 'icon' => 'remove', 'onclick' => $this->_sJsObjName . ".cmtRemove(this, " . $aCmt['cmt_id'] . ")", 'title' => _t('_Delete')),
-			);
+    	
+        //--- Manage Menu
+		$oMenuManage = BxDolMenu::getObjectInstance($this->_sMenuObjManage);
+		$oMenuManage->setCmtsData($this, $aCmt['cmt_id']);
 
-        	bx_import('BxTemplStudioMenu');
-        	$oMenu = new BxTemplStudioMenu(array('template' => 'menu_vertical.html', 'menu_items' => $aMenu));
+		$sMenuManage = $oMenuManage->getCode();
+		$bMenuManage = !empty($sMenuManage);
+		if($bMenuManage) {
+			bx_import('BxTemplStudioFunctions');
+			$sMenuManage = BxTemplStudioFunctions::getInstance()->transBox($oTemplate->parseHtmlByName('comment_manage.html', array(
+				'style_prefix' => $this->_sStylePrefix,
+				'content' => $sMenuManage
+			)));
+		}
 
-        	bx_import('BxTemplStudioFunctions');
-	        $sManagePopupText = BxTemplStudioFunctions::getInstance()->transBox($oTemplate->parseHtmlByName('comment_manage.html', array(
-	        	'style_prefix' => $this->_sStylePrefix,
-	        	'content' => $oMenu->getCode()
-	        )));
-        }
-
-        $bRated = (int)$aCmt['cmt_rated'] > 0;
         return $oTemplate->parseHtmlByName('comment_actions.html', array(
         	'id' => $aCmt['cmt_id'],
         	'style_prefix' => $this->_sStylePrefix,
-        	'view_link' => bx_append_url_params($this->_sViewUrl, array(
-        		'sys' => $this->_sSystem,
-        		'id' => $this->_iId,
-        		'cmt_id' => $aCmt['cmt_id']
-        	)),
-        	'points' => _t($aCmt['cmt_rate'] == 1 || $aCmt['cmt_rate'] == -1 ? '_N_point' : '_N_points', $aCmt['cmt_rate']),
-        	'bx_if:show_reply' => array(
-				'condition' => $this->isPostReplyAllowed(),
-        		'content' => array(
-        			'js_object' => $this->_sJsObjName,
-        			'style_prefix' => $this->_sStylePrefix,
-        			'id' => $aCmt['cmt_id'],
-        			'title_reply' => bx_html_attribute(_t(isset($aCmt['cmt_type']) && $aCmt['cmt_type'] == 'comment' ? '_Comment_to_this_comment' : '_Reply_to_this_comment'))
-        		)
-        	),
-        	'bx_if:show_rate' => array(
-				'condition' => $this->isRatable() && $this->isRateAllowed(),
-        		'content' => array(
-        			'js_object' => $this->_sJsObjName,
-        			'style_prefix' => $this->_sStylePrefix,
-        			'id' => $aCmt['cmt_id'],
-        			'bx_if:hide_rate_plus' => array(
-        				'condition' => $bRated,
-        				'content' => array()
-        			),
-        			'bx_if:hide_rate_minus' => array(
-        				'condition' => !$bRated,
-        				'content' => array()
-        			)
-        		)
-        	),
-        	'bx_if:show_manage' => array(
-        		'condition' => $isEditAllowedPermanently || $isRemoveAllowedPermanently,
+        	'menu_actions' => $oMenuActions->getCode(),
+        	'bx_if:show_menu_manage' => array(
+        		'condition' => $bMenuManage,
         		'content' => array(
         			'js_object' => $this->_sJsObjName,
         			'style_prefix' => $this->_sStylePrefix,
         			'id' => $aCmt['cmt_id'],
         			'popup_id' => $this->_sSystem . '-manage-' . $aCmt['cmt_id'],
-        			'popup_text' => $sManagePopupText
+        			'popup_text' => $sMenuManage
         		)
         	)
         ));
@@ -626,8 +600,8 @@ class BxBaseCmtsView extends BxDolCmts {
         	return array('msg' => _t('_No such comment'));
 
 		$iCmtAuthorId = $this->_getAuthorId();
-        if(!$this->isEditAllowedAll() && ($aCmt['cmt_author_id'] != $iCmtAuthorId || !$this->isEditAllowed()))
-        	return array('msg' => $aCmt['cmt_author_id'] == $iCmtAuthorId && !$this->isEditAllowed() ? strip_tags($this->msgErrEditAllowed()) : _t('_Access denied'));
+        if(!$this->isEditAllowed($aCmt))
+        	return array('msg' => $aCmt['cmt_author_id'] == $iCmtAuthorId ? strip_tags($this->msgErrEditAllowed()) : _t('_Access denied'));
 
 		$oForm = $this->_getFormObject(BX_CMT_ACTION_EDIT, $aCmt['cmt_id']);
 
@@ -641,8 +615,7 @@ class BxBaseCmtsView extends BxDolCmts {
 			$oForm->setSubmittedValue('cmt_text', $sCmtText, $oForm->aFormAttrs['method']);
 
 	        if($oForm->update($iCmtId)) {
-				if ($aCmt['cmt_author_id'] == $iCmtAuthorId)
-               		$this->isEditAllowed(true);
+				$this->isEditAllowed(true);
 
 	            bx_import('BxDolAlerts');
 	            $oZ = new BxDolAlerts($this->_sSystem, 'commentUpdated', $this->getId(), $iCmtAuthorId, array('comment_id' => $aCmt['cmt_id'], 'comment_author_id' => $aCmt['cmt_author_id']));
