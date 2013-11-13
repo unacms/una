@@ -57,11 +57,21 @@ BxTimelineView.prototype.changeFilter = function(oLink) {
     this._getPosts(oLink, 'filter');
 };
 
+/*
+//TODO: Remove if old timeline slider is not used
 BxTimelineView.prototype.changeTimeline = function(oEvent, oUi) {
 	this._oRequestParams.start = 0;
     this._oRequestParams.timeline = oUi.value;
 
 	this._getPosts($(oUi.handle), 'timeline');
+};
+*/
+
+BxTimelineView.prototype.changeTimeline = function(oLink, iYear) {
+	this._oRequestParams.start = 0;
+    this._oRequestParams.timeline = iYear;
+
+	this._getPosts(oLink, 'timeline');
 };
 
 BxTimelineView.prototype.deletePost = function(oLink, iId) {
@@ -198,21 +208,20 @@ BxTimelineView.prototype._getPosts = function(oElement, sAction) {
         this._sActionsUrl + 'get_posts/',
         this._getDefaultData(),
         function(oData) {
-        	if($.trim(oData.load_more).length > 0)
-        		oView.find('.bx-tl-load-more').replaceWith(oData.load_more);
+        	if(oData && oData.items != undefined) {
+        		var sItems = $.trim(oData.items);
 
-        	if($.trim(oData.items).length > 0)
 	        	switch(sAction) { 
 	        		case 'page':
 	        			$this.loadingInButton(oElement, false);
-	        			$this.appendMasonry($(oData.items).bxTime());
+	        			$this.appendMasonry($(sItems).bxTime());
 			            break;
 
 	        		default:
 	        			$this.loadingInBlock(oElement, false);
 
 	        			oView.find('.bx-tl-items').bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-			                $(this).html(oData.items).show().bxTime();
+			                $(this).html(sItems).show().bxTime();
 
 			                if($this.isMasonryEmpty()) {
 			                	$this.destroyMasonry();
@@ -226,6 +235,13 @@ BxTimelineView.prototype._getPosts = function(oElement, sAction) {
 			            });
 		            	break;
 	            }
+        	}
+
+        	if(oData && oData.load_more != undefined)
+        		oView.find('.bx-tl-load-more-holder').html($.trim(oData.load_more));
+
+        	if(oData && oData.back != undefined)
+        		oView.find('.bx-tl-back-holder').html($.trim(oData.back));
         },
         'json'
     );

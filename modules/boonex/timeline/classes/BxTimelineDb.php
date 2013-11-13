@@ -193,10 +193,15 @@ class BxTimelineDb extends BxDolModuleDb
 					$sWhereClause .= $this->_getFilterAddon($aParams['owner_id'], $aParams['filter']);
 
 				//--- Apply timeline
-		        if(isset($aParams['timeline'])) {            
+		        if(isset($aParams['timeline']) && !empty($aParams['timeline'])) {
+		        	/*
+		        	//TODO: Remove if old timeline slider is not used
 		            $iDays = (int)$aParams['timeline'];
 		            $iNowMorning = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
 		            $sWhereClause .= $this->prepare("AND `date`>=? ", ($iNowMorning - 86400 * $iDays));
+		            */
+		        	$iYear = (int)$aParams['timeline'];
+		        	$sWhereClause .= $this->prepare("AND `date`<=? ", mktime(23, 59, 59, 12, 31, $iYear));
 		        }
 
 		        //--- Apply modules or handlers filter
@@ -225,6 +230,11 @@ class BxTimelineDb extends BxDolModuleDb
 		
 							$aQueryParts = $oConnection->getConnectedContentAsSQLParts($this->_sPrefix . "events", 'owner_id', $aParams['owner_id']);
 							$sJoinClause .= ' ' . $aQueryParts['join'];
+
+							$iUserId = bx_get_logged_profile_id();
+							$sCommonPostPrefix = $this->_oConfig->getPrefix('common_post');
+
+							$sWhereClause .= "AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` <> " . $iUserId . ", 1)";
 							break;
 					}
 
@@ -251,6 +261,7 @@ class BxTimelineDb extends BxDolModuleDb
                 `{$this->_sTable}`.`content` AS `content`,
                 `{$this->_sTable}`.`comments` AS `comments`,
                 `{$this->_sTable}`.`date` AS `date`,
+                YEAR(FROM_UNIXTIME(`{$this->_sTable}`.`date`)) AS `year`,
                 DAYOFYEAR(FROM_UNIXTIME(`{$this->_sTable}`.`date`)) AS `day_date`,
                 DAYOFYEAR(NOW()) AS `day_now`,
                 (UNIX_TIMESTAMP() - `{$this->_sTable}`.`date`)/86400 AS `ago_days`
@@ -271,7 +282,12 @@ class BxTimelineDb extends BxDolModuleDb
         if(empty($aEvent) || !is_array($aEvent))
             return 0;
 
+		$iNowYear = date('Y', time());
+		return (int)$aEvent['year'] < $iNowYear ? (int)$aEvent['year'] : 0;
+        /*
+		//TODO: Remove if old timeline slider is not used
         return $aEvent['day_date'] == $aEvent['day_now'] ? (int)floor($aEvent['ago_days']) : (int)ceil($aEvent['ago_days']);
+        */
     }
 
 	public function savePhoto($iEventId, $iPhId, $sPhTitle, $sPhText)

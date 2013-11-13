@@ -77,12 +77,16 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 
     public function getViewBlock($aParams)
     {
-		list($sContent, $sLoadMore) = $this->getPosts($aParams);
+		list($sContent, $sLoadMore, $sBack) = $this->getPosts($aParams);
 
     	$this->getCssJs();
     	return $this->parseHtmlByName('view.html', array(
     		'style_prefix' => $this->_oConfig->getPrefix('style'),
+    		/*
+		    //TODO: Remove if old timeline slider is not used
             'timeline' => $this->getTimeline($aParams),
+            */
+    		'back' => $sBack,
             'content' => $sContent,
     		'load_more' =>  $sLoadMore,
             'js_content' => $this->getJsCode('view', array(
@@ -169,8 +173,12 @@ class BxTimelineTemplate extends BxDolModuleTemplate
             $sContent .= $sEvent;
         }
 
-        $sLoadMore = $this->getLoadMore($iStart, $iPerPage, $bNext, $iEvents > 0);
-        return array($sContent, $sLoadMore);
+        $iYearSel = (int)$aParams['timeline'];
+        $iYearMin = $this->_oDb->getMaxDuration($aParams);
+
+        $sBack = $this->getBack($iYearSel);
+        $sLoadMore = $this->getLoadMore($iStart, $iPerPage, $bNext, $iYearSel, $iYearMin, $iEvents > 0);
+        return array($sContent, $sLoadMore, $sBack);
     }
 
 	public function getEmpty($bVisible)
@@ -201,11 +209,49 @@ class BxTimelineTemplate extends BxDolModuleTemplate
         	'value' => $iTimeline
         ));
     }
+	public function getBack($iYearSel)
+	{
+		if($iYearSel == 0)
+			return '';
 
-	public function getLoadMore($iStart, $iPerPage, $bEnabled = true, $bVisible = true)
+		$sStylePrefix = $this->_oConfig->getPrefix('style');
+    	$sJsObject = $this->_oConfig->getJsObject('view');
+
+		$iYearNow = date('Y', time());
+		return $this->parseHtmlByName('back.html', array(
+			'style_prefix' => $sStylePrefix,
+			'href' => 'javascript:void(0)',
+    		'title' => _t('_bx_timeline_txt_jump_to_n_year', $iYearNow),
+    		'bx_repeat:attrs' => array(
+    			array('key' => 'onclick', 'value' => 'javascript:' . $sJsObject . '.changeTimeline(this, 0)')
+    		),
+    		'content' => _t('_bx_timeline_txt_jump_to_recent')
+		));
+	}
+
+	public function getLoadMore($iStart, $iPerPage, $bEnabled, $iYearSel, $iYearMin, $bVisible = true)
     {
+    	$sStylePrefix = $this->_oConfig->getPrefix('style');
+    	$sJsObject = $this->_oConfig->getJsObject('view');
+
+    	$sYears = '';
+    	if(!empty($iYearMin)) {
+    		$iYearMax = date('Y', time()) - 1;
+    		for($i = $iYearMax; $i >= $iYearMin; $i--)
+    			$sYears .= ($i != $iYearSel ? $this->parseHtmlByName('bx_a.html', array(
+    				'href' => 'javascript:void(0)',
+    				'title' => _t('_bx_timeline_txt_jump_to_n_year', $i),
+    				'bx_repeat:attrs' => array(
+    					array('key' => 'onclick', 'value' => 'javascript:' . $sJsObject . '.changeTimeline(this, ' . $i . ')')
+    				),
+    				'content' => $i
+    			)) : $i) . ', ';
+    		
+    		$sYears = substr($sYears, 0, -2);
+    	}
+    	
         $aTmplVars = array(
-        	'style_prefix' => $this->_oConfig->getPrefix('style'),
+        	'style_prefix' => $sStylePrefix,
             'visible' => $bVisible ? 'block' : 'none',
             'bx_if:is_disabled' => array(
                 'condition' => !$bEnabled,
@@ -214,8 +260,15 @@ class BxTimelineTemplate extends BxDolModuleTemplate
             'bx_if:show_on_click' => array(
                 'condition' => $bEnabled,
                 'content' => array(
-                    'on_click' => $this->_oConfig->getJsObject('view') . '.changePage(this, ' . ($iStart + $iPerPage) . ', ' . $iPerPage . ')'
+                    'on_click' => 'javascript:' . $sJsObject . '.changePage(this, ' . ($iStart + $iPerPage) . ', ' . $iPerPage . ')'
                 )
+            ),
+            'bx_if:show_jump_to' => array(
+            	'condition' => !empty($sYears),
+                'content' => array(
+            		'style_prefix' => $sStylePrefix,
+            		'years' => $sYears
+            	)
             )
         );
         return $this->parseHtmlByName('load_more.html', $aTmplVars);

@@ -111,11 +111,12 @@
 	<string name="_bx_timeline_txt_err_cannot_perform_action"><![CDATA[Cannot perform action. Please report.]]></string>
 
 	<string name="_bx_timeline_txt_load_more"><![CDATA[Load More]]></string>
+	<string name="_bx_timeline_txt_or_jump_to"><![CDATA[... or jump to:]]></string>
+	<string name="_bx_timeline_txt_jump_to_n_year"><![CDATA[Jump to {0} year]]></string>
+	<string name="_bx_timeline_txt_jump_to_recent"><![CDATA[Jump to recent posts]]></string>
 	<string name="_bx_timeline_txt_wrote"><![CDATA[wrote]]></string>
 	<string name="_bx_timeline_txt_shared_link"><![CDATA[shared a link]]></string>
 	<string name="_bx_timeline_txt_added_photo"><![CDATA[added a photo]]></string>
-	<string name="_bx_timeline_txt_date_from"><![CDATA[today]]></string>
-	<string name="_bx_timeline_txt_date_to"><![CDATA[olden days]]></string>
 
 	<string name="_bx_timeline_txt_plus"><![CDATA[Plus]]></string>
 	

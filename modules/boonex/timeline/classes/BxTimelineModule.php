@@ -130,9 +130,9 @@ class BxTimelineModule extends BxDolModule
         $this->_oConfig->setJsMode(true);
 
 		$aParams = $this->_prepareParamsGet();
-		list($sItems, $sLoadMore) = $this->_oTemplate->getPosts($aParams);
+		list($sItems, $sLoadMore, $sBack) = $this->_oTemplate->getPosts($aParams);
 
-		$this->_echoResultJson(array('items' => $sItems, 'load_more' => $sLoadMore));
+		$this->_echoResultJson(array('items' => $sItems, 'load_more' => $sLoadMore, 'back' => $sBack));
     }
 
     public function actionGetPostForm($sType)
@@ -610,7 +610,7 @@ class BxTimelineModule extends BxDolModule
     	$aParams['per_page'] = (int)$iPerPage > 0 ? $iPerPage : $this->_oConfig->getPerPage();
     	$aParams['filter'] = !empty($sFilter) ? $sFilter : BX_TIMELINE_FILTER_ALL;
     	$aParams['modules'] = is_array($aModules) && !empty($aModules) ? $aModules : array();
-    	$aParams['timeline'] = (int)$iTimeline > 0 ? $iTimeline : $this->_oDb->getMaxDuration($aParams);
+    	$aParams['timeline'] = (int)$iTimeline > 0 ? $iTimeline : 0;
 
     	return $aParams;
     }
@@ -638,7 +638,7 @@ class BxTimelineModule extends BxDolModule
 		$aParams['modules'] = $aModules !== false ? bx_process_input($aModules, BX_DATA_TEXT) : array();
 
 		$iTimeline = bx_get('timeline');
-		$aParams['timeline'] = $iTimeline !== false ? bx_process_input($iTimeline, BX_DATA_INT) : $this->_oDb->getMaxDuration($aParams);
+		$aParams['timeline'] = $iTimeline !== false ? bx_process_input($iTimeline, BX_DATA_INT) : 0;
 
 		return $aParams;
     }

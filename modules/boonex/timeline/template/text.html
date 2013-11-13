@@ -1,11 +1,6 @@
 <div id="bx-timeline-item-__id__" class="__style_prefix__-item bx-tl-grid-sizer">
 	<div class="__style_prefix__-item-ind bx-def-padding-sec">
 	    <div class="__style_prefix__-item-cnt bx-def-padding bx-def-round-corners bx-def-shadow">
-	    	<bx_if:show_images>
-	    		<bx_repeat:images>
-		    		<div class="__style_prefix__-item-image bx-def-thumb bx-def-margin-bottom">__image__</div>
-		    	</bx_repeat:images>
-	    	</bx_if:show_images>
 	    	<div class="__style_prefix__-owner bx-def-margin-bottom bx-def-icon-size-min-height"> 
 		       	<div class="__style_prefix__-owner-icon bx-def-icon bx-def-icon-size">
 					<bx_if:show_icon>
@@ -36,6 +31,11 @@
 					</div>
 			   	</bx_if:show_menu_item_manage>
 			</div>
+			<bx_if:show_images>
+	    		<bx_repeat:images>
+		    		<div class="__style_prefix__-item-image bx-def-thumb bx-def-margin-bottom">__image__</div>
+		    	</bx_repeat:images>
+	    	</bx_if:show_images>
 			<bx_if:show_title>
 				<div class="__style_prefix__-title bx-def-margin-sec-bottom bx-def-font-large">__title__</div>
 			</bx_if:show_title>
