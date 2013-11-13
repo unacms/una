@@ -24,12 +24,14 @@ class BxBaseSocialSharing extends BxDolSocialSharing
         $this->_oTemplate = $oTemplate ? $oTemplate : BxDolTemplate::getInstance();
 	}
 
-    public function getCode ($sUrl, $sTitle, $aCustomVars = false) {
+    public function getCode ($sContentId, $sModuleName, $sUrl, $sTitle, $aCustomVars = false) {
 
         // define markers for replacments
         bx_import('BxDolLanguages');
         $sLang = BxDolLanguages::getInstance()->getCurrentLanguage();
         $aMarkers = array (
+            'id' => $sContentId,
+            'module' => $sModuleName,
             'url' => $sUrl,
             'url_encoded' => rawurlencode($sUrl),
             'lang' => $sLang, 
@@ -62,8 +64,21 @@ class BxBaseSocialSharing extends BxDolSocialSharing
         // prepare buttons
         $aButtons = array();
         foreach ($this->_aSocialButtons as $aButton) {
-            $sButton = $this->_replaceMarkers($aButton['content'], $aMarkers);
-            if (preg_match('/{[A-Za-z0-9_]+}/', $sButton)) // if not all markers are replaced skip it
+
+            switch ($aButton['type']) {
+                case 'html':
+                    $sButton = $this->_replaceMarkers($aButton['content'], $aMarkers);
+                    break;
+                case 'service':
+                    $a = @unserialize($aButton['content']);
+                    if (false === $a || !is_array($a))
+                        break;
+                    $a = $this->_replaceMarkers($a, $aMarkers);
+                    $sButton = BxDolService::call($a['module'], $a['method'], isset($a['params']) ? $a['params'] : array(), isset($a['class']) ? $a['class'] : 'Module');
+                    break;
+            }
+            
+            if (!isset($sButton) || preg_match('/{[A-Za-z0-9_]+}/', $sButton)) // if not all markers are replaced skip it
                 continue;
             $aButtons[] = array ('button' => $sButton);
         }

@@ -79,14 +79,20 @@ class BxDolSocialSharing extends BxDol implements iBxDolSingleton
      * @param $a - markers array
      * @return string with replaces markers
      */ 
-    protected function _replaceMarkers ($s, $a) {
-        if (empty($s) || empty($a) || !is_array($a))
+    protected function _replaceMarkers ($mixed, $aMarkers) {
+        if (empty($mixed) || empty($aMarkers) || !is_array($aMarkers))
             return $s;
 
-        foreach ($a as $sKey => $sValue)
-            $s = str_replace('{' . $sKey . '}', $sValue, $s);
 
-        return $s;
+        if (is_array($mixed)) {
+            foreach ($mixed as $sKey => $sValue)
+                $mixed[$sKey] = $this->_replaceMarkers ($sValue, $aMarkers);
+        } else {
+            foreach ($aMarkers as $sKey => $sValue)
+                $mixed = str_replace('{' . $sKey . '}', $sValue, $mixed);
+        }
+        
+        return $mixed;
     }
 
     /**
