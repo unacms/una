@@ -911,9 +911,9 @@ class BxDolCmts extends BxDol
 
     protected function _getUserChoice()
     {
-    	$mixedBp = $mixedDp = false;
+    	$mixedDp = $mixedBpType = $mixedBpFilter = false;
     	if(!isLogged())
-    		return array($mixedBp, $mixedDp);
+    		return array($mixedDp, $mixedBpType, $mixedBpFilter);
 
     	$iUserId = $this->_getAuthorId();
 

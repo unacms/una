@@ -137,7 +137,11 @@
     span.cmt-body-see-more a {
 		font-weight: bold;
     }
-
+    
+    div.cmt-attached {
+		margin-left: -5px;
+    	margin-right: -5px;
+    }
     div.cmt-attached-preview,
     div.cmt-attached-preview img {
     	width: 100px;
