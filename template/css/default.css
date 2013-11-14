@@ -201,8 +201,7 @@
 
 /* colors */
 .bx-def-color-bg-page {
-    background-color:#f3f4fa;
-    background-image:url(../images/bg-page.png);
+    background-color:#fff;
 }
 .bx-def-color-bg-block {
     background-color:#fff;
@@ -216,12 +215,13 @@
 
 .bx-def-color-bg-hl,
 .bx-def-color-bg-hl-hover:hover {
-    background-color: rgb(220, 220, 255);
-    background-color: rgba(200, 200, 255, 0.2);
+    background-color: #f3fdec;
+    background-color: rgba(196, 248, 156, 0.2);
 }
 
 .bx-def-color-bg-active {
-    background-color: rgba(255, 234, 193, 0.5);
+    background-color: #e6fad7;
+    background-color: rgba(196, 248, 156, 0.4);
 }
 
 /* hr */
@@ -301,31 +301,23 @@
 	-webkit-border-radius:3px;	
 }
 
-/* round corders with border to use in INPUT areas */
-.bx-def-round-corners-with-border {
-    border-width: 1px;
-    border-style: solid;
-    border-color: #B2B2B2 #D9D9D9 #D9D9D9 #B2B2B2;
-
-	border-radius:3px;
-	-moz-border-radius:3px;
-	-webkit-border-radius:3px;	
-}
-
 /* fonts */
 
 /* NOTE: bx-def-font, h1, h2, h3 styles were copied to editor.css */
 
 .bx-def-font {
-    font-family: Helvetica Neue, Helvetica, Arial, Verdana, sans-serif;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+    font-weight: 300;
     font-size:14px;
-    font-size:0.875rem;
+    font-size:1rem;
     color:#333;
 }
 
 .bx-def-font-inputs {
-    font-family: Helvetica Neue, Helvetica, Arial, Verdana, sans-serif;
-    font-size:0.875;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+    font-weight: 300;
+    font-size:14px;
+    font-size:1rem;
     color:#333;
 }
 
@@ -335,38 +327,38 @@
 
 .bx-def-font-small {
     font-size:12px;
-    font-size:0.75rem;
+    font-size:0.8rem;
 }
 
 .bx-def-font-middle {
     font-size:13px;
-    font-size:0.85rem;
+    font-size:0.9rem;
 }
 
 .bx-def-font-large {
     font-size:16px;
-    font-size:1.125rem;
+    font-size:1.2rem;
 }
 
 h1,
 .bx-def-font-h1 {
     font-size:24px;
     font-size:2.4rem;
-    font-weight:bold;
+    font-weight:normal;
 }
 
 h2,
 .bx-def-font-h2 {
     font-size:18px;
     font-size:1.6rem;
-    font-weight:bold;
+    font-weight:normal;
 }
 
 h3,
 .bx-def-font-h3 {
     font-size:16px;
-    font-size:1.1rem;
-    font-weight:bold;
+    font-size:1.2rem;
+    font-weight:normal;
 }
 
 /* image/thumbnail default styles */
