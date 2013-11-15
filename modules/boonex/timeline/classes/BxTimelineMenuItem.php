@@ -34,12 +34,40 @@ class BxTimelineMenuItem extends BxTemplMenu {
     		return;
 
     	$this->_aEvent = $aEvent;
-    	
+
     	$sCommentsSystem = '';
-    	if(isset($aEvent['comments']) && is_array($aEvent['comments']) && isset($aEvent['comments']['system']))
+    	$iCommentsCount = 0;
+    	if(isset($aEvent['comments']) && is_array($aEvent['comments']) && isset($aEvent['comments']['system'])) {
     		$sCommentsSystem = $aEvent['comments']['system'];
+    		$iCommentsCount = (int)$aEvent['comments']['count'];
+    	}
+
+		$sCommonPrefix = $this->_oModule->_oConfig->getPrefix('common_post');
+
+		$iOwnerId = $this->_oModule->getUserId(); //--- in whose timeline the content will be shared
+		$sType = $aEvent['type'];
+		$sAction = $aEvent['action'];
+
+		if($this->_oModule->_oConfig->isSystem($sType, $sAction))
+			$iObjectId = $aEvent['object_id'];
+		else {
+			$iObjectId = $aEvent['id'];
+
+			if(str_replace($sCommonPrefix, '', $sType) == BX_TIMELINE_PARSE_TYPE_SHARE) {
+				$sType = $aEvent['content']['type'];
+				$sAction = $aEvent['content']['action'];
+				$iObjectId = $aEvent['content']['object_id'];
+			}
+		}
 
     	$this->addMarkers(array(
+    		//--- For Share Button
+    		'share_onclick' => $this->_oModule->serviceGetShareOnclick($iOwnerId, $sType, $sAction, $iObjectId),
+			//--- For Share Button
+
+			'counter_shares' => (int)$aEvent['shares'] > 0 ? ' (' . $aEvent['shares'] . ')' : '', 
+    		'counter_comments' => $iCommentsCount > 0 ? ' (' . $iCommentsCount . ')' : '',
+
 			'content_id' => $aEvent['id'],
 			'comments_system' => $sCommentsSystem
 		));    	

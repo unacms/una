@@ -106,5 +106,6 @@
 	<string name="_bx_notes_txt_error_note_is_not_defined"><![CDATA[Note isn't defined]]></string>
     <string name="_bx_notes_txt_status_pending"><![CDATA[This note is pending approval, please wait until it is activated.]]></string>
     <string name="_bx_notes_txt_read_more"><![CDATA[Read More]]></string>
+    <string name="_bx_notes_txt_sample_single"><![CDATA[note]]></string>
 
 </resources>

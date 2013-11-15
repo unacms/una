@@ -287,9 +287,19 @@ class BxTimelineConfig extends BxDolModuleConfig
     	return $this->_iPrivacyViewDefault;
     }
 
-    public function getTimelineVisibilityThreshold()
+    /**
+     * Ancillary functions
+     */
+    public function getItemViewUrl(&$aEvent)
     {
-    	return $this->_iTimelineVisibilityThreshold;
+    	bx_import('BxDolPermalinks');
+		return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=timeline-item&id=' . $aEvent['id']);
+    }
+
+	public function isSystem($sType, $sAction)
+    {
+    	$sPrefix = $this->getPrefix('common_post');
+    	return strpos($sType, $sPrefix) === false && !empty($sAction);
     }
 }
 

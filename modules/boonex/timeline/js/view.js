@@ -20,26 +20,6 @@ function BxTimelineView(oOptions) {
 
 BxTimelineView.prototype = new BxTimelineMain();
 
-BxTimelineView.prototype.initSlider = function(oOptions) {
-	var $this = this;
-	var oSlider = $(this.sIdView + ' .bx-tl-timeline-slider');
-	if(oSlider.length > 0) {
-		oSlider.slider({
-			min: oOptions.min,
-			max: oOptions.max,
-			value: oOptions.value,
-			slide: function(e, ui) {
-			    $(ui.handle).html(ui.value);
-			},
-			change: function(e, ui) {
-				$this.changeTimeline(e, ui);
-			}
-		});
-
-		$('.ui-slider-handle', oSlider).html(oSlider.slider('value'));
-	}
-};
-
 BxTimelineView.prototype.changePage = function(oElement, iStart, iPerPage) {
 	this._oRequestParams.start = iStart;
     this._oRequestParams.per_page = iPerPage;
@@ -53,19 +33,8 @@ BxTimelineView.prototype.changeFilter = function(oLink) {
     this._oRequestParams.start = 0;
     this._oRequestParams.filter = sId.substr(sId.lastIndexOf('-') + 1, sId.length);
 
-    this._getTimeline(oLink);
     this._getPosts(oLink, 'filter');
 };
-
-/*
-//TODO: Remove if old timeline slider is not used
-BxTimelineView.prototype.changeTimeline = function(oEvent, oUi) {
-	this._oRequestParams.start = 0;
-    this._oRequestParams.timeline = oUi.value;
-
-	this._getPosts($(oUi.handle), 'timeline');
-};
-*/
 
 BxTimelineView.prototype.changeTimeline = function(oLink, iYear) {
 	this._oRequestParams.start = 0;
@@ -78,7 +47,7 @@ BxTimelineView.prototype.deletePost = function(oLink, iId) {
     var $this = this;
     var oView = $(this.sIdView);
     var oData = this._getDefaultData();
-    oData['post_id'] = iId;
+    oData['id'] = iId;
 
     this.loadingInBlock(oLink, true);
 
@@ -190,6 +159,32 @@ BxTimelineView.prototype.voteItem = function(oLink) {
 	alert('Votes will be here.');
 };
 
+BxTimelineView.prototype.shareItem = function(oLink, iOwnerId, sType, sAction, iId) {
+	var $this = this;
+	var oDate = new Date();
+	var oParams = {
+		owner_id: iOwnerId,
+		type: sType,
+		action: sAction,
+		object_id: iId,
+		_t: oDate.getTime()	
+	};
+
+	this.loadingInItem(oLink, true);
+
+	jQuery.post(
+        this._sActionsUrl + 'share/',
+        oParams,
+        function(oData) {
+        	$this.loadingInItem(oLink, false);
+
+        	if(oData && oData.msg != undefined)
+                alert(oData.msg);
+        },
+        'json'
+    );
+};
+
 BxTimelineView.prototype._getPosts = function(oElement, sAction) {
     var $this = this;
     var oView = $(this.sIdView);
@@ -242,25 +237,6 @@ BxTimelineView.prototype._getPosts = function(oElement, sAction) {
 
         	if(oData && oData.back != undefined)
         		oView.find('.bx-tl-back-holder').html($.trim(oData.back));
-        },
-        'json'
-    );
-};
-
-BxTimelineView.prototype._getTimeline = function(oElement) {
-    var $this = this;
-    var oView = $(this.sIdView);
-
-    this.loadingInBlock(oElement, true);
-
-    jQuery.post (
-        this._sActionsUrl + 'get_timeline/',
-        this._getDefaultData(),
-        function(oData) {                                    
-        	$this.loadingInBlock(oElement, false);
-
-        	if($.trim(oData.timeline).length > 0)
-        		oView.find('.bx-tl-timeline').replaceWith(oData.timeline);
         },
         'json'
     );

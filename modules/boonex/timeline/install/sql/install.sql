@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_events` (
   `title` varchar(255) collate utf8_unicode_ci NOT NULL,
   `description` text collate utf8_unicode_ci NOT NULL,
   `comments` int(11) unsigned NOT NULL default '0',
+  `shares` int(11) unsigned NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `owner_id` (`owner_id`)

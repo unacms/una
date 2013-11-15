@@ -244,6 +244,7 @@ class BxNotesModule extends BxDolModule {
     		'owner_id' => $aContentInfo[BxNotesConfig::$FIELD_AUTHOR],
     		'content_type' => !empty($sImage) ? 'photo' : 'text', //how to parse content, 'text' by default.
     		'content' => array(
+    			'sample' => _t('_bx_notes_txt_sample_single'),
     			'url' => $sUrl,
     			'title' => $aContentInfo[BxNotesConfig::$FIELD_TITLE],
     			'text' => $aContentInfo[BxNotesConfig::$FIELD_TEXT],

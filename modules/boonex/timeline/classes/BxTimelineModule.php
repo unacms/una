@@ -25,11 +25,10 @@ define('BX_TIMELINE_FILTER_ALL', 'all');
 define('BX_TIMELINE_FILTER_OWNER', 'owner');
 define('BX_TIMELINE_FILTER_OTHER', 'other');
 
-define('BX_TIMELINE_DIVIDER_ID', ',');
-
 define('BX_TIMELINE_PARSE_TYPE_TEXT', 'text');
 define('BX_TIMELINE_PARSE_TYPE_LINK', 'link');
 define('BX_TIMELINE_PARSE_TYPE_PHOTO', 'photo');
+define('BX_TIMELINE_PARSE_TYPE_SHARE', 'share');
 define('BX_TIMELINE_PARSE_TYPE_DEFAULT', BX_TIMELINE_PARSE_TYPE_TEXT);
 
 
@@ -88,30 +87,47 @@ class BxTimelineModule extends BxDolModule
             return;
         }
 
-        $iPostId = bx_process_input(bx_get('post_id'), BX_DATA_INT);
-        if(!$this->_oDb->deleteEvent(array('id' => $iPostId))) {
+        $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
+
+        if(!$this->_oDb->deleteEvent(array('id' => $iId))) {
         	$this->_echoResultJson(array('code' => 2));
             return;
         }
 
-        $aPhotos = $this->_oDb->getPhotos($iPostId);
-		if(is_array($aPhotos) && !empty($aPhotos)) {
-			bx_import('BxDolStorage');
-			$oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage'));
+        $this->onDelete($aEvent);
 
-			foreach($aPhotos as $aPhoto)
-				$oStorage->deleteFile($aPhoto['id']);
+        $this->_echoResultJson(array('code' => 0, 'id' => $iId));
+    }
 
-			$this->_oDb->deletePhotos($iPostId);
-		}
+	public function actionShare()
+    {
+    	$iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
+    	$aContent = array(
+    		'type' => bx_process_input(bx_get('type'), BX_DATA_TEXT),
+    		'action' => bx_process_input(bx_get('action'), BX_DATA_TEXT),
+    		'object_id' => bx_process_input(bx_get('object_id'), BX_DATA_INT),	
+    	);
 
-		//--- Event -> Delete for Alerts Engine ---//
-        bx_import('BxDolAlerts');
-        $oAlert = new BxDolAlerts($this->_oConfig->getSystemName('alert'), 'delete', $iPostId, $this->getUserId());
-        $oAlert->alert();
-        //--- Event -> Delete for Alerts Engine ---//
+		$iId = $this->_oDb->insertEvent(array(
+            'owner_id' => $iOwnerId,
+            'type' => $this->_oConfig->getPrefix('common_post') . 'share',
+            'action' => '',
+        	'object_id' => $this->getUserId(),
+        	'object_privacy_view' => $this->_oConfig->getPrivacyViewDefault(),
+            'content' => serialize($aContent),
+			'title' => '',
+			'description' => ''
+        ));
 
-        $this->_echoResultJson(array('code' => 0, 'id' => $iPostId));
+        if(!empty($iId)) {
+        	$this->onShare($iId);
+
+        	$this->_echoResultJson(array('msg' => _t('_bx_timeline_txt_msg_success_share')));
+        	return;
+        }
+
+		$this->_echoResultJson(array('msg' => _t('_bx_timeline_txt_err_cannot_share')));
     }
 
     function actionGetPost()
@@ -119,10 +135,10 @@ class BxTimelineModule extends BxDolModule
         $this->_oConfig->setJsMode(true);
         $this->_iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
 
-        $iEvent = bx_process_input(bx_get('post_id'), BX_DATA_INT);
+        $iEvent = bx_process_input(bx_get('id'), BX_DATA_INT);
         $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iEvent));
 
-        $this->_echoResultJson(array('item' => $this->_oTemplate->getCommon($aEvent, array('type' => 'owner', 'owner_id' => $this->_iOwnerId))));
+        $this->_echoResultJson(array('item' => $this->_oTemplate->getPost($aEvent, array('type' => 'owner', 'owner_id' => $this->_iOwnerId))));
     }
 
 	function actionGetPosts()
@@ -147,14 +163,6 @@ class BxTimelineModule extends BxDolModule
     	$aResult = $this->$sMethod();
 
     	$this->_echoResultJson($aResult);
-    }
-
-	public function actionGetTimeline()
-    {
-        $aParams = $this->_prepareParamsGet();
-        $sTimeline = $this->_oTemplate->getTimeline($aParams);
-
-        $this->_echoResultJson(array('timeline' => $sTimeline));
     }
 
     public function actionGetComments()
@@ -296,6 +304,15 @@ class BxTimelineModule extends BxDolModule
     	return array('content' => $this->_oTemplate->getViewItemBlock($iItemId));
     }
 
+	public function serviceGetShareOnclick($iOwnerId, $sType, $sAction, $iObjectId)
+    {
+    	$sJsObject = $this->_oConfig->getJsObject('view');
+    	$sFormat = "%s.shareItem(this, %d, '%s', '%s', %d);";
+
+    	$iOwnerId = !empty($iOwnerId) ? (int)$iOwnerId : $this->getUserId(); //--- in whose timeline the content will be shared
+    	return sprintf($sFormat, $sJsObject, $iOwnerId, $sType, $sAction, (int)$iObjectId);
+    }
+
     /*
      * COMMON METHODS 
      */
@@ -319,17 +336,16 @@ class BxTimelineModule extends BxDolModule
         	$sContent = serialize(array('text' => $sContent));
         	BxDolForm::setSubmittedValue('content', $sContent, $oForm->aFormAttrs['method']);
 
-        	bx_import('BxDolPrivacy');
         	$iId = $oForm->insert(array(
         		'object_id' => $iUserId,
-        		'object_privacy_view' => BX_DOL_PG_ALL,
+        		'object_privacy_view' => $this->_oConfig->getPrivacyViewDefault(),
 				'title' => bx_process_input($sUserName . ' ' . _t('_bx_timeline_txt_wrote')),
 				'description' => $sDescription,
         		'date' => time()
 			));
 
-			if($iId != 0) {
-				$this->onPost($iId, $iUserId);
+			if(!empty($iId)) {
+				$this->onPost($iId);
 
                 return array('id' => $iId);
 			}
@@ -372,17 +388,16 @@ class BxTimelineModule extends BxDolModule
 			));
 	        BxDolForm::setSubmittedValue('content', $sContent, $oForm->aFormAttrs['method']);
 
-        	bx_import('BxDolPrivacy');
         	$iId = $oForm->insert(array(
         		'object_id' => $iUserId,
-        		'object_privacy_view' => BX_DOL_PG_ALL,
+        		'object_privacy_view' => $this->_oConfig->getPrivacyViewDefault(),
 				'title' => bx_process_input($sUserName . ' ' . _t('_bx_timeline_txt_shared_link')),
 				'description' => bx_process_input($sUrl . ' - ' . $sTitle),
         		'date' => time()
 			));
 
-			if($iId != 0) {
-				$this->onPost($iId, $iUserId);
+			if(!empty($iId)) {
+				$this->onPost($iId);
 
                 return array('id' => $iId);
 			}
@@ -456,16 +471,15 @@ class BxTimelineModule extends BxDolModule
         	$aPhIds = $oForm->getCleanValue('content');
         	BxDolForm::setSubmittedValue('content', serialize(array()), $oForm->aFormAttrs['method']);
 
-        	bx_import('BxDolPrivacy');
         	$iId = $oForm->insert(array(
         		'object_id' => $iUserId,
-        		'object_privacy_view' => BX_DOL_PG_ALL,
+        		'object_privacy_view' => $this->_oConfig->getPrivacyViewDefault(),
 				'title' => bx_process_input($sUserName . ' ' . _t('_bx_timeline_txt_added_photo')),
 				'description' => '',
         		'date' => time()
 			));
 
-			if($iId != 0) {
+			if(!empty($iId)) {
 				$iPhIds = count($aPhIds);
 				if($iPhIds > 0) {
 					$aPhTitles = $oForm->getCleanValue('file_title');
@@ -479,7 +493,7 @@ class BxTimelineModule extends BxDolModule
 							$oStorage->afterUploadCleanup($aPhIds[$i], $iUserId);
 				}
 
-				$this->onPost($iId, $iUserId);
+				$this->onPost($iId);
 
                 return array('id' => $iId);
 			}
@@ -553,7 +567,7 @@ class BxTimelineModule extends BxDolModule
 
 	public function isAllowedComment($aEvent, $bPerform = false)
     {
-    	$mixedComments = $this->getCommentsData($aEvent);
+    	$mixedComments = $this->getCommentsData($aEvent['comments']);
     	if($mixedComments === false)
     		return false;
 
@@ -567,30 +581,70 @@ class BxTimelineModule extends BxDolModule
         return $oCmts->isPostReplyAllowed($bPerform);
     }
 
-	public function onPost($iId, $iUserId)
+	public function onPost($iId)
     {
+    	$aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
+    	
+    	if($this->_oConfig->isSystem($aEvent['type'], $aEvent['action'])) {
+    		$sPostType = 'system';
+    		$iSenderId = $aEvent['owner_id'];
+    	}
+    	else {
+    		$sPostType = 'common';
+    		$iSenderId = $aEvent['object_id'];
+    	}
+
     	//--- Event -> Post for Alerts Engine ---//
 		bx_import('BxDolAlerts');
-        $oAlert = new BxDolAlerts($this->_oConfig->getSystemName('alert'), 'post', $iId, $iUserId);
+        $oAlert = new BxDolAlerts($this->_oConfig->getSystemName('alert'), 'post_' . $sPostType, $iId, $iSenderId);
         $oAlert->alert();
         //--- Event -> Post for Alerts Engine ---//
     }
 
-    public function onUpdate($iOwnerId)
+	public function onShare($iId)
     {
+    	$aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
+
+		$aContent = unserialize($aEvent['content']);
+    	$iSharedId = $this->_oDb->updateSharesCounter($aContent['type'], $aContent['action'], $aContent['object_id']);
+
 		//--- Timeline -> Update for Alerts Engine ---//
 		bx_import('BxDolAlerts');
-		$oAlert = new BxDolAlerts($this->_oConfig->getSystemName('alert'), 'update', $iOwnerId);
+		$oAlert = new BxDolAlerts($this->_oConfig->getSystemName('alert'), 'share', $iSharedId, $aEvent['object_id']);
 		$oAlert->alert();
 		//--- Timeline -> Update for Alerts Engine ---//
     }
 
-    public function getCommentsData(&$aEvent)
+    public function onDelete($aEvent)
     {
-    	if(empty($aEvent['comments']) || !is_array($aEvent['comments']))
-    		return false; 
+		$aPhotos = $this->_oDb->getPhotos($aEvent['id']);
+		if(is_array($aPhotos) && !empty($aPhotos)) {
+			bx_import('BxDolStorage');
+			$oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage'));
 
-    	$aComments = $aEvent['comments'];
+			foreach($aPhotos as $aPhoto)
+				$oStorage->deleteFile($aPhoto['id']);
+
+			$this->_oDb->deletePhotos($aEvent['id']);
+		}
+
+		if($aEvent['type'] == $this->_oConfig->getPrefix('common_post') . BX_TIMELINE_PARSE_TYPE_SHARE) {
+			$aContent = unserialize($aEvent['content']);
+			$this->_oDb->updateSharesCounter($aContent['type'], $aContent['action'], $aContent['object_id'], -1);
+		}
+		
+		
+		//--- Event -> Delete for Alerts Engine ---//
+        bx_import('BxDolAlerts');
+        $oAlert = new BxDolAlerts($this->_oConfig->getSystemName('alert'), 'delete', $aEvent['id'], $this->getUserId());
+        $oAlert->alert();
+        //--- Event -> Delete for Alerts Engine ---//
+    }
+
+    public function getCommentsData(&$aComments)
+    {
+    	if(empty($aComments) || !is_array($aComments))
+    		return false; 
 
 		$sSystem = isset($aComments['system']) ? $aComments['system'] : '';
 	    $iObjectId = isset($aComments['object_id']) ? (int)$aComments['object_id'] : 0;

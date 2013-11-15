@@ -110,7 +110,7 @@ BxTimelinePost.prototype._getForm = function(oElement, sType) {
 BxTimelinePost.prototype._getPost = function(oElement, iPostId) {
     var $this = this;
     var oData = this._getDefaultData();
-    oData['post_id'] = iPostId;
+    oData['id'] = iPostId;
 
     var oView = $(this.sIdView);
     this.loadingInBlock(oView, true);

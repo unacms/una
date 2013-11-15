@@ -96,11 +96,11 @@
 	<string name="_bx_timeline_menu_title_item_actions"><![CDATA[Item Actions]]></string>
     <string name="_bx_timeline_menu_set_title_item_actions"><![CDATA[Item Actions]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_comment"><![CDATA[Comment]]></string>
-    <string name="_bx_timeline_menu_item_title_item_comment"><![CDATA[Comment]]></string>
+    <string name="_bx_timeline_menu_item_title_item_comment"><![CDATA[Comment{counter_comments}]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_vote"><![CDATA[Vote]]></string>
     <string name="_bx_timeline_menu_item_title_item_vote"><![CDATA[Vote]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_share"><![CDATA[Share]]></string>
-    <string name="_bx_timeline_menu_item_title_item_share"><![CDATA[Share]]></string>
+    <string name="_bx_timeline_menu_item_title_item_share"><![CDATA[Share{counter_shares}]]></string>
 
     <string name="_bx_timeline_menu_item_title_system_timeline"><![CDATA[Timeline]]></string>
     <string name="_bx_timeline_menu_item_title_timeline"><![CDATA[Timeline]]></string>
@@ -119,6 +119,13 @@
 	<string name="_bx_timeline_txt_wrote"><![CDATA[wrote]]></string>
 	<string name="_bx_timeline_txt_shared_link"><![CDATA[shared a link]]></string>
 	<string name="_bx_timeline_txt_added_photo"><![CDATA[added a photo]]></string>
+	<string name="_bx_timeline_txt_common_text"><![CDATA[text]]></string>
+	<string name="_bx_timeline_txt_common_link"><![CDATA[link]]></string>
+	<string name="_bx_timeline_txt_common_photo"><![CDATA[photo]]></string>
+	
+	<string name="_bx_timeline_txt_shared"><![CDATA[Shared {0}'s {1}.]]></string>
+	<string name="_bx_timeline_txt_err_cannot_share"><![CDATA[Cannot share. Please report.]]></string>
+	<string name="_bx_timeline_txt_msg_success_share"><![CDATA[Shared successfully.]]></string>
 
 	<string name="_bx_timeline_txt_plus"><![CDATA[Plus]]></string>
 	

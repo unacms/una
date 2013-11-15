@@ -36,6 +36,7 @@ div.bx-tl-item-cnt {
 	position: relative;
 	background-color: #ffffff;
 }
+/*+++ Item Menu +++*/
 div.bx-tl-item-menu {
 	position: absolute;
 	top: 0px;
@@ -57,6 +58,22 @@ div.bx-tl-item-menu-button a:hover {
 	text-decoration: none;
 	color: rgba(0, 102, 153, 1.0);
 }
+
+/*+++ Item Owner +++*/
+div.bx-tl-item-owner {
+	position: relative;
+}
+div.bx-tl-owner-icon {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+div.bx-tl-owner-name,
+div.bx-tl-item-info {
+	margin-left: 42px;
+}
+
+/*+++ Item Image +++*/
 div.bx-tl-item-image {
 	margin-left: -20px;
 	margin-right: -20px;
@@ -68,21 +85,32 @@ div.bx-tl-item-image img {
 	max-width: 319px;
 	max-height: 319px;
 }
-div.bx-tl-owner {
-	position: relative;
-}
-div.bx-tl-owner-icon {
-	position: absolute;
-	top: 0px;
-	left: 0px;
-}
-div.bx-tl-owner-name,
-div.bx-tl-date {
-	margin-left: 42px;
-}
+
+/*+++ Item Text +++*/
+div.bx-tl-item-text {}
 span.bx-tl-content-see-more a {
 	font-weight: bold;
 }
+
+/*+++ Item Shared +++*/
+div.bx-tl-shared div.bx-tl-item-text {
+	padding-left: 5px;
+	border-left: 1px solid #999999;
+}
+div.bx-tl-shared div.bx-tl-title {
+	font-size: 1.0em;
+}
+div.bx-tl-shared div.bx-tl-title a {
+	color: #999999;
+}
+div.bx-tl-shared div.bx-tl-content {
+	font-size: 0.875em;
+	color: #999999;
+}
+
+
+/*+++ Item Actions +++*/
+div.bx-tl-item-actions {}
 
 
 /*--- View Item Popup Style ---*/
