@@ -139,7 +139,7 @@ class BxNotesModule extends BxDolModule {
         }
 
         bx_import('BxTemplSocialSharing');
-        return BxTemplSocialSharing::getInstance()->getCode(BX_DOL_URL_ROOT . $sUrl, $aContentInfo['title'], $aCustomParams);
+        return BxTemplSocialSharing::getInstance()->getCode($iContentId, 'bx_notes', BX_DOL_URL_ROOT . $sUrl, $aContentInfo['title'], $aCustomParams);
     }
 
     public function serviceEntityComments ($iContentId = 0) {

@@ -24,10 +24,12 @@ require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 bx_import('BxDolLanguages');
 bx_import('BxTemplFunctions');
 
-$GLOBALS['SAMPLE_TEXT'] = "Lorem ipsum dolor sit amet, vitae tractatos philosophia ius ei, per id causae integre voluptatibus. An iusto rationibus concludaturque vix, ei dicat admodum minimum vix. Vim ne eruditi scripserit. Nonumy dolorem ex eum, te quo aliquid mnesarchum, ea mel dico populo. Accumsan platonem salutandi te mei, nostro epicurei per ea. Sed ut nonumy sapientem, stet postea periculis eu nec, et purto erat facilisis sed.
-";
+$GLOBALS['SAMPLE_TEXT'] = 'Lorem ipsum dolor sit amet, <b>vitae tractatos philosophia ius ei</b>, per id causae integre voluptatibus. An iusto <a href="javascript:void(0);">rationibus concludaturque vix</a>, ei dicat admodum minimum vix. Vim ne eruditi scripserit. Nonumy dolorem ex eum, <i>te quo aliquid mnesarchum</i>, ea mel dico populo. Accumsan platonem salutandi te mei, nostro epicurei per ea. Sed ut nonumy sapientem, <u>stet postea periculis eu nec</u>, et purto erat facilisis sed.
+';
 
-$GLOBALS['SAMPLE_TITLE'] = "Lorem ipsum dolor sit amet";
+$GLOBALS['SAMPLE_TITLE'] = 'Lorem ipsum dolor sit amet';
+
+$GLOBALS['SAMPLE_THUMB'] = 'modules/boonex/persons/template/images/no-picture-preview.png';
 
 $oTemplate = BxDolTemplate::getInstance();
 $oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);
@@ -152,16 +154,15 @@ function Samples_Buttons()
     ?>
 <button class="bx-btn bx-def-margin-right">Button</button>
 <button class="bx-btn bx-btn-primary bx-def-margin-right">Primary button</button>
-<button class="bx-btn bx-btn-img bx-def-margin-right"><img src="template/images/icons/clock.png" /></button>
-<button class="bx-btn bx-btn-img bx-def-margin-right"><img src="template/images/icons/clock.png"><u>Button</u></button>
+<button class="bx-btn bx-btn-disabled bx-def-margin-right">Disabled button</button>
     <?php
     $aBlocks['.bx-btn'] = ob_get_clean();
     
     ob_start();
     ?>
 <button class="bx-btn bx-btn-small bx-def-margin-right">Button</button>
-<button class="bx-btn bx-btn-small bx-btn-img bx-def-margin-right"><img src="template/images/icons/clock.png" /></button>
-<button class="bx-btn bx-btn-small bx-btn-img bx-def-margin-right"><img src="template/images/icons/clock.png" /><u>Button</u></button>
+<button class="bx-btn bx-btn-small bx-btn-primary bx-def-margin-right">Primary button</button>
+<button class="bx-btn bx-btn-small bx-btn-disabled bx-def-margin-right">Disabled button</button>
     <?php
     $aBlocks['.bx-btn .bx-btn-small'] = ob_get_clean();
 
@@ -169,7 +170,7 @@ function Samples_Buttons()
     ?>
 <button class="bx-btn bx-def-margin-right"><i class="sys-icon fire-extinguisher"></i></button>
 <button class="bx-btn bx-def-margin-right"><i class="sys-icon fire-extinguisher sys-icon-bigger"></i></button>
-<button class="bx-btn bx-def-margin-right"><i class="sys-icon fire-extinguisher sys-icon-bigger col-red1"></i></button>
+<button class="bx-btn bx-def-margin-right"><i class="sys-icon fire-extinguisher sys-icon-bigger col-red2"></i></button>
 <button class="bx-btn bx-def-margin-right"><i class="sys-icon fire-extinguisher"></i><u>Button</u></button>
     <?php
     $aBlocks['.bx-btn with icon'] = ob_get_clean();
@@ -180,6 +181,20 @@ function Samples_Buttons()
 <button class="bx-btn bx-btn-small bx-def-margin-right"><i class="sys-icon fire-extinguisher"></i><u>Button</u></button>
     <?php
     $aBlocks['.bx-btn .bx-btn-small with icon'] = ob_get_clean();
+
+    ob_start();
+    ?>
+<button class="bx-btn bx-btn-img bx-def-margin-right"><img src="template/images/icons/clock.png" /></button>
+<button class="bx-btn bx-btn-img bx-def-margin-right"><img src="template/images/icons/clock.png"><u>Button</u></button>
+    <?php
+    $aBlocks['.bx-btn with image'] = ob_get_clean();
+
+    ob_start();
+    ?>
+<button class="bx-btn bx-btn-small bx-btn-img bx-def-margin-right"><img src="template/images/icons/clock.png" /></button>
+<button class="bx-btn bx-btn-small bx-btn-img bx-def-margin-right"><img src="template/images/icons/clock.png" /><u>Button</u></button>
+    <?php
+    $aBlocks['.bx-btn .bx-btn-small with image'] = ob_get_clean();
 
     ob_start();
     ?>
@@ -284,7 +299,7 @@ function Samples_BordersCornersShadow()
 {    
     $aBlocks = array ();
      
-    $aClasses = array ('bx-def-border', 'bx-def-border-left bx-def-border-bottom', 'bx-def-border bx-def-round-corners', 'bx-def-round-corners-with-border', 'bx-def-shadow');
+    $aClasses = array ('bx-def-border', 'bx-def-border-left bx-def-border-bottom', 'bx-def-border bx-def-round-corners', 'bx-def-shadow');
     foreach ($aClasses as $sClass) {
         ob_start();
         ?>
@@ -305,7 +320,7 @@ function Samples_ThumbsIconsUnits()
     foreach ($aClasses as $sClass) {
         ob_start();
         ?>
-<img class="<?=$sClass; ?>" src="http://farm8.staticflickr.com/7413/10593220664_99831fab5a_q.jpg" />
+<img class="<?=$sClass; ?>" src="<?=$GLOBALS['SAMPLE_THUMB']; ?>" />
         <?php
         $aBlocks['.' . implode(" .", explode(' ', $sClass))] = ob_get_clean();
     }
@@ -313,7 +328,7 @@ function Samples_ThumbsIconsUnits()
     ob_start();
     ?>
 <div class="bx-def-unit">
-    <a href="javascript:void(0);"><img class="bx-def-thumb bx-def-thumb-size" src="http://farm8.staticflickr.com/7413/10593220664_99831fab5a_q.jpg" /></a>
+    <a href="javascript:void(0);"><img class="bx-def-thumb bx-def-thumb-size" src="<?=$GLOBALS['SAMPLE_THUMB']; ?>" /></a>
     <div class="bx-def-unit-info bx-def-thumb-size-max-height bx-def-padding-left">
         <span class="bx-def-font-large">Some info here</span><br />
         <span class="bx-def-font-grayed">additional info</span>
@@ -325,7 +340,7 @@ function Samples_ThumbsIconsUnits()
     ob_start();
     ?>
 <div class="bx-def-unit">
-    <a href="javascript:void(0);"><img class="bx-def-icon bx-def-icon-size" src="http://farm8.staticflickr.com/7413/10593220664_99831fab5a_q.jpg" /></a>
+    <a href="javascript:void(0);"><img class="bx-def-icon bx-def-icon-size" src="<?=$GLOBALS['SAMPLE_THUMB']; ?>" /></a>
     <div class="bx-def-unit-info bx-def-icon-size-max-height bx-def-padding-sec-left">
         Some info here
     </div>

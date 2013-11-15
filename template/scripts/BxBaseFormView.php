@@ -768,7 +768,7 @@ BLAH;
         if (isset($aInput['label']))
             $aAttrs['id'] = $this->getInputId($aInput);
 
-        $sAttrs = bx_convert_array2attrs($aAttrs, "bx-form-input-{$aInput['type']}" . ((isset($aInput['html']) and $aInput['html'] and $this->addHtmlEditor($aInput['html'], $aInput)) ? ' bx-form-input-html' : ''));
+        $sAttrs = bx_convert_array2attrs($aAttrs, "bx-def-font-inputs bx-form-input-{$aInput['type']}" . ((isset($aInput['html']) and $aInput['html'] and $this->addHtmlEditor($aInput['html'], $aInput)) ? ' bx-form-input-html' : ''));
 
         $sValue = isset($aInput['value']) ? bx_process_output($aInput['value']) : '';
 
@@ -945,7 +945,7 @@ BLAH;
         if (isset($aInput['label']))
             $aAttrs['id'] = $this->getInputId($aInput);
 
-        $sAttrs = bx_convert_array2attrs($aAttrs, "bx-form-input-{$aInput['type']}");
+        $sAttrs = bx_convert_array2attrs($aAttrs, "bx-def-font-inputs bx-form-input-{$aInput['type']}");
 
         // generate options
         $sOptions = '';

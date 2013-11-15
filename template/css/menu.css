@@ -120,6 +120,7 @@ ul.bx-menu-verlit {
 
 #bx-menu-main-container {
     height:36px;
+    height:2.2rem;
     white-space: nowrap;
     overflow:hidden;    
 }
@@ -127,12 +128,14 @@ ul.bx-menu-verlit {
 #bx-menu-main-container-scroller {
     overflow:auto;
     height:60px;
+    height:4rem;
 }
 
 #bx-menu-main-submenu,
 #bx-menu-main {
     display:inline-block;
     line-height:36px;
+    line-height:2.2rem;
     vertical-align:top;
 }
 
@@ -142,8 +145,7 @@ ul.bx-menu-verlit {
 
 .bx-menu-main-submenu-div .sys-icon {
     font-size:32px;
-    color:#bbb;
-    vertical-align:middle;
+    font-size:2rem;
 }
 
 ul.bx-menu-main-submenu,
@@ -166,10 +168,13 @@ ul.bx-menu-main {
 .bx-menu-main li .sys-icon,
 .bx-menu-main-submenu li a {
     text-decoration:none;
-    vertical-align:middle;
+    font-weight:300;
+    font-size:16px;
+    font-size:1.2rem;
 }
 .bx-menu-main li .sys-icon {
     font-size:32px;
+    font-size:2rem;
 }
 
 .bx-menu-main-submenu li.bx-menu-tab-active a,
@@ -211,7 +216,6 @@ ul.bx-menu-toolbar li a {
 
     line-height:32px;
     font-size: 16px;
-    font-weight: bold;
     text-align: center;
     vertical-align:middle;
     color: #fff;

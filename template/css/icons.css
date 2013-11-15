@@ -55,7 +55,7 @@
 }
 .sys-icon.remove:before,
 .sys-icon.times:before {
-  content: "\f00d"; color:#d00;
+  content: "\f00d";
 }
 .sys-icon.search-plus:before {
   content: "\f00e";

@@ -246,7 +246,7 @@
                 if ('relative' != eWrapper.css('position') && 'absolute' != eWrapper.css('position'))
                     eWrapper.css('position', 'relative');
 
-                eWrapper.append('<div style="display:none;" class="bx-form-input-btn-cross"><i class="sys-icon remove"></i></div>');
+                eWrapper.append('<div style="display:none;" class="bx-form-input-btn-cross bx-def-font-grayed"><i class="sys-icon remove"></i></div>');
 
                 eInput.css('padding-right', parseInt(eInput.css('padding-right')) + 16 + 'px');
 
