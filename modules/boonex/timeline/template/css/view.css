@@ -34,7 +34,6 @@ div.bx-tl-item-ind {
 }
 div.bx-tl-item-cnt {
 	position: relative;
-	background-color: #ffffff;
 }
 /*+++ Item Menu +++*/
 div.bx-tl-item-menu {
@@ -52,11 +51,11 @@ div.bx-tl-item-menu-button {
 	text-align: center;
 }
 div.bx-tl-item-menu-button a {
-	color: rgba(0, 102, 153, 0.5);
+	color: rgba(56, 120, 119, 0.5);
 }
 div.bx-tl-item-menu-button a:hover {
 	text-decoration: none;
-	color: rgba(0, 102, 153, 1.0);
+	color: rgba(56, 120, 119, 1.0);
 }
 
 /*+++ Item Owner +++*/
@@ -77,7 +76,6 @@ div.bx-tl-item-info {
 div.bx-tl-item-image {
 	margin-left: -20px;
 	margin-right: -20px;
-	border: 1px solid #ffffff;
 	text-align: center;
 	overflow: hidden;
 }

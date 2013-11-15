@@ -178,11 +178,11 @@
     	right: 0px;
     }
     div.cmt-comment-manage-link a {
-		color: rgba(0, 102, 153, 0.5);
+		color: rgba(56, 120, 119, 0.5);
     }
     div.cmt-comment-manage-link a:hover {
 		text-decoration: none;
-		color: rgba(0, 102, 153, 1.0);
+		color: rgba(56, 120, 119, 1.0);
     }
     div.cmt-comment-manage .bx-menu-ver li {
 		white-space: nowrap;
