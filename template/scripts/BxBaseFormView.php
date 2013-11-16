@@ -721,8 +721,8 @@ BLAH;
         return '
 			<div class="bx-switcher-cont ' . $sClass . '">' . $sCheckbox . '
 				<div class="bx-switcher-canvas">
-					<div class="bx-switcher-on">&nbsp;</div>
-                    <div class="bx-switcher-off"><div></div></div>
+					<div class="bx-switcher-on"><i class="sys-icon check"></i></div>
+                    <div class="bx-switcher-off"><i class="sys-icon times"></i></div>
 					<div class="bx-switcher-handler">&nbsp;</div>
 				</div>
 			</div>';
