@@ -25,7 +25,7 @@ bx_import('BxDolSocialSharingQuery');
  *
  * @code
  * bx_import('BxTemplSocialSharing');
- * echo BxTemplSocialSharing::getInstance()->getCode($sUrl, $sTitle);
+ * echo BxTemplSocialSharing::getInstance()->getCode($iId, $sModuleName, $sUrl, $sTitle);
  * @endcode
  *
  *
@@ -69,7 +69,7 @@ class BxDolSocialSharing extends BxDol implements iBxDolSingleton
         return ($GLOBALS['bxDolClasses']['BxDolSocialSharing'] = $o);
     }
 
-    public function getCode ($sUrl, $sTitle, $aCustomVars = false) {
+    public function getCode ($sContentId, $sModuleName, $sUrl, $sTitle, $aCustomVars = false) {
         // overrided in template class
     }
 
