@@ -80,7 +80,7 @@ class BxBaseSocialSharing extends BxDolSocialSharing
             
             if (!isset($sButton) || preg_match('/{[A-Za-z0-9_]+}/', $sButton)) // if not all markers are replaced skip it
                 continue;
-            $aButtons[] = array ('button' => $sButton);
+            $aButtons[] = array ('button' => $sButton, 'object' => $aButton['object']);
         }
 
         // output

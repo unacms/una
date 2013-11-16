@@ -84,8 +84,18 @@
 
 /* --------------- social buttons */
 
-.bx-social-sharing .bx-social-sharing-btn {
-    width:150px;
+.bx-social-sharing-btn {
     float:left;
 }
 
+.bx-social-sharing-btn a,
+.bx-social-sharing-btn .sys-icon {
+    font-size:2rem;
+    text-decoration:none;
+    vertical-align:middle;
+}
+.bx-social-sharing-btn span {
+    font-size:1.5rem;
+    vertical-align:middle;
+    margin:0 0.2rem;
+}
