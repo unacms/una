@@ -1,5 +1,8 @@
 @media (max-width:720px) {
 
+html {
+    font-size:70%;
+}
 
 .bx-def-media-phone-hide {
     display:none;

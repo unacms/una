@@ -1,5 +1,8 @@
 @media (min-width:1024px) {
 
+html {
+    font-size:100%;
+}
 
 .bx-def-media-desktop-hide {
     display:none;
