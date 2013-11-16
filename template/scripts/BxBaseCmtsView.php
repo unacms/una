@@ -449,6 +449,7 @@ class BxBaseCmtsView extends BxDolCmts {
 
         return $oTemplate->parseHtmlByName('comment_actions.html', array(
         	'id' => $aCmt['cmt_id'],
+        	'js_object' => $this->_sJsObjName,
         	'style_prefix' => $this->_sStylePrefix,
         	'menu_actions' => $oMenuActions->getCode(),
         	'bx_if:hide_rate_count' => array(

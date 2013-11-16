@@ -62,7 +62,7 @@ class BxTimelineResponse extends BxDolAlertsResponse
 		        ));
 
 		        if(!empty($iId))
-		        	$this->_oModule->onUpdate($oAlert->iSender);
+		        	$this->_oModule->onPost($iId);
 
 		        $this->_oModule->_oDb->updateSimilarObject($iId, $oAlert);		
 		        break;
@@ -88,7 +88,7 @@ class BxTimelineResponse extends BxDolAlertsResponse
 
 		$iId = $this->_oModule->_oDb->insertEvent(array(
             'owner_id' => $this->_oModule->_iOwnerId,
-            'type' => $this->_oModule->_oConfig->getCommonPostPrefix() . $sMedia,
+            'type' => $this->_oModule->_oConfig->getPrefix('common_post') . $sMedia,
             'action' => '',
 			'object_id' => $this->_oModule->_getUserId(),
 			'object_privacy_view' => $this->_getPrivacyView($oAlert->aExtras),
@@ -101,7 +101,7 @@ class BxTimelineResponse extends BxDolAlertsResponse
         ));
 
         if(!empty($iId))
-			$this->_oModule->onUpdate($this->_oModule->_iOwnerId);
+			$this->_oModule->onPost($iId);
 
 		echo $this->_oModule->_oTemplate->_wrapInTagJsCode("parent." . $this->_oModule->_sJsPostObject . "._getPost(null, " . $iId . ");");
     }

@@ -186,6 +186,12 @@ class BxTimelineDb extends BxDolModuleDb
                 $sLimitClause = "LIMIT 1";
                 break;
 
+			case 'descriptor':
+            	$sMethod = 'getRow';
+                $sWhereClause = $this->prepare("AND `{$this->_sTable}`.`type`=? AND `{$this->_sTable}`.`action`=? AND `{$this->_sTable}`.`object_id`=? ", $aParams['type'], $aParams['action'], $aParams['object_id']);
+                $sLimitClause = "LIMIT 1";
+                break;
+
 			case 'last':
 			case 'list':
 		        //--- Apply filter
@@ -255,11 +261,12 @@ class BxTimelineDb extends BxDolModuleDb
         $sSql = "SELECT
                 `{$this->_sTable}`.`id` AS `id`,
                 `{$this->_sTable}`.`owner_id` AS `owner_id`,
-                `{$this->_sTable}`.`object_id` AS `object_id`,
                 `{$this->_sTable}`.`type` AS `type`,
                 `{$this->_sTable}`.`action` AS `action`,
+                `{$this->_sTable}`.`object_id` AS `object_id`,
                 `{$this->_sTable}`.`content` AS `content`,
                 `{$this->_sTable}`.`comments` AS `comments`,
+                `{$this->_sTable}`.`shares` AS `shares`,
                 `{$this->_sTable}`.`date` AS `date`,
                 YEAR(FROM_UNIXTIME(`{$this->_sTable}`.`date`)) AS `year`,
                 DAYOFYEAR(FROM_UNIXTIME(`{$this->_sTable}`.`date`)) AS `day_date`,
@@ -284,12 +291,25 @@ class BxTimelineDb extends BxDolModuleDb
 
 		$iNowYear = date('Y', time());
 		return (int)$aEvent['year'] < $iNowYear ? (int)$aEvent['year'] : 0;
-        /*
-		//TODO: Remove if old timeline slider is not used
-        return $aEvent['day_date'] == $aEvent['day_now'] ? (int)floor($aEvent['ago_days']) : (int)ceil($aEvent['ago_days']);
-        */
     }
 
+    public function updateSharesCounter($sType, $sActions, $iObjectId, $iIncrement = 1)
+    {
+    	if($this->_oConfig->isSystem($sType, $sActions))
+			$aParams = array('browse' => 'descriptor', 'type' => $sType, 'action' => $sActions, 'object_id' => $iObjectId);
+		else 
+			$aParams = array('browse' => 'id', 'value' => $iObjectId);
+
+		$aEvent = $this->getEvents($aParams);
+		if(!empty($aEvent) && is_array($aEvent) && ($iIncrement > 0 || (int)$aEvent['shares'] > 0)) {
+			$this->updateEvent(array('shares' => (int)$aEvent['shares'] + $iIncrement), array('id' => $aEvent['id']));
+
+			return (int)$aEvent['id'];
+		}
+
+		return 0;
+    }
+    
 	public function savePhoto($iEventId, $iPhId, $sPhTitle, $sPhText)
 	{
 		$sQuery = $this->prepare("INSERT INTO `" . $this->_sPrefix . "photos2events` SET `event_id`=?, `photo_id`=?, `title`=?, `text`=?", $iEventId, $iPhId, $sPhTitle, $sPhText);
@@ -416,19 +436,6 @@ class BxTimelineDb extends BxDolModuleDb
     {
         $sSql = "SELECT COUNT(`cmt_id`) FROM `" . $this->_sPrefix . "comments` WHERE `cmt_object_id`='" . $iId . "' AND `cmt_parent_id`='0' LIMIT 1";
         return (int)$this->getOne($sSql);
-    }
-
-    //--- Shared Media Functions ---//
-    function getSharedCategory($sType, $iId)
-    {
-        $aType2Db = array(
-            'sharedPhoto' => array('table' =>'bx_shared_photo_files', 'id' => 'medID'),
-            'sharedMusic' => array('table' => 'RayMp3Files', 'id' => 'ID'),
-            'sharedVideo' => array('table' => 'RayVideoFiles', 'id' => 'ID')
-        );
-
-        $sSql = "SELECT `Categories` FROM `" . $aType2Db[$sType]['table'] . "` WHERE `" . $aType2Db[$sType]['id'] . "`='" . $iId . "' LIMIT 1";
-        return $this->getOne($sSql);
     }
 }
 

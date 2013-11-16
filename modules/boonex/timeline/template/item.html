@@ -1,0 +1,53 @@
+<div id="bx-timeline-item-__id__" class="__style_prefix__-item bx-tl-grid-sizer">
+	<div class="__style_prefix__-item-ind bx-def-padding-sec">
+	    <div class="__style_prefix__-item-cnt bx-def-padding bx-def-round-corners bx-def-color-bg-sec">
+	    	<div class="__style_prefix__-item-owner bx-def-margin-bottom bx-def-icon-size-min-height"> 
+		       	<div class="__style_prefix__-owner-icon bx-def-icon bx-def-icon-size">
+					<bx_if:show_icon>
+						<img src="__author_icon__" />
+					</bx_if:show_icon>
+					<bx_if:show_icon_empty>
+						<i class="sys-icon user"></i>
+					</bx_if:show_icon_empty>
+				</div>
+				<div class="__style_prefix__-owner-name">
+					<a href="__item_owner_url__" class="__style_prefix__-owner-name">__item_owner_name__</a>
+		            <bx_if:show_timeline_owner>
+			        	<i class="sys-icon caret-right"></i>
+			        	<a href="__owner_url__" class="__style_prefix__-timeline-owner-name">__owner_username__</a>
+			        </bx_if:show_timeline_owner>
+				</div>
+				<div class="__style_prefix__-item-info bx-def-font-small bx-def-font-grayed">
+					<a class="__style_prefix__-date" href="__item_view_url__" onclick="javascript:return __js_object__.showItem(this, __id__)">__item_date__</a>
+					<!--
+					//Comments and Shares counters
+
+					<bx_if:show_counter_comments>
+						<span class="bullet">&#183;</span>&nbsp;<i class="sys-icon comment"></i>__counter__
+					</bx_if:show_counter_comments>
+					<bx_if:show_counter_shares>
+						<span class="bullet">&#183;</span>&nbsp;<i class="sys-icon share-square-o"></i>__counter__
+					</bx_if:show_counter_shares>
+					-->
+				</div>
+				<bx_if:show_menu_item_manage>
+					<div class="__style_prefix__-item-menu">
+						__menu_item_manage__
+						<div class="__style_prefix__-item-menu-button bx-def-font-large">
+				   			<a href="javascript:void(0)" onclick="javascript:__js_object__.showItemMenu(this);">
+								<i class="sys-icon chevron-down"></i>
+							</a>
+						</div>
+					</div>
+			   	</bx_if:show_menu_item_manage>
+			</div>
+			__content__
+			<bx_if:show_menu_item_actions>
+				<div class="__style_prefix__-item-actions">
+					__menu_item_actions__
+				</div>
+			</bx_if:show_menu_item_actions>
+			__comments__
+		</div>
+	</div>
+</div>
