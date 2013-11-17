@@ -125,7 +125,7 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
 -- delete
 (@iModerator, @iIdActionDelete),
-(@iAdministrator, @iIdActionDelete),
+(@iAdministrator, @iIdActionDelete);
 
 
 -- ALERTS
