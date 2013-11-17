@@ -355,7 +355,7 @@ function Samples_Fonts()
 {    
     $aBlocks = array ();
      
-    $aClasses = array ('' => 'SAMPLE_TEXT', 'bx-def-font-grayed' => 'SAMPLE_TEXT', 'bx-def-font-small' => 'SAMPLE_TEXT', 'bx-def-font-middle' => 'SAMPLE_TEXT', 'bx-def-font-large' => 'SAMPLE_TEXT', 'bx-def-font-h1' => 'SAMPLE_TITLE', 'bx-def-font-h2' => 'SAMPLE_TITLE', 'bx-def-font-h3' => 'SAMPLE_TITLE');
+    $aClasses = array ('' => 'SAMPLE_TEXT', 'bx-def-font-grayed' => 'SAMPLE_TEXT', 'bx-def-font-small' => 'SAMPLE_TEXT', 'bx-def-font-middle' => 'SAMPLE_TEXT', 'bx-def-font-large' => 'SAMPLE_TEXT', 'bx-def-font-h1' => 'SAMPLE_TITLE', 'bx-def-font-h2' => 'SAMPLE_TITLE', 'bx-def-font-h3' => 'SAMPLE_TITLE', 'bx-def-font-contrasted bx-def-font-h2 bg-col-green3' => 'SAMPLE_TITLE');
     foreach ($aClasses as $sClass => $sSampleText) {
         ob_start();
         ?>

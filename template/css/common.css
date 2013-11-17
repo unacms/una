@@ -124,7 +124,6 @@ blockquote {
 
 .bx-popup-header h2 {
     margin:0;
-    color: #ffffff;
     text-shadow: #000 0px 1px 2px;
     text-align:center;
 }
@@ -165,7 +164,6 @@ blockquote {
     background-color:rgba(200, 200, 200, 0.3);
 
     text-align:center;
-    color:#fff;
     font-weight:bold;
     font-size:1rem;
     padding:10px;
