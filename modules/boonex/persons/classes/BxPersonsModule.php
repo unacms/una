@@ -30,32 +30,29 @@ class BxPersonsModule extends BxDolModule implements iBxDolProfileService {
 
     // ====== SERVICE METHODS
 
-
     public function serviceProfileUnit ($iContentId) {
-        if (!$iContentId)
-            return false;
-        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-        if (!$aContentInfo)
-            return false;        
-        return $this->_oTemplate->unit($aContentInfo);
+        return $this->_serviceTemplateFunc('unit', $iContentId);
+    }
+
+    public function serviceProfileAvatar ($iContentId) {
+        return $this->_serviceTemplateFunc('urlAvatar', $iContentId);
     }
 
     public function serviceProfileThumb ($iContentId) {
-        if (!$iContentId)
-            return false;
-        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-        if (!$aContentInfo)
-            return false;        
-        return $this->_oTemplate->thumb($aContentInfo);
+        return $this->_serviceTemplateFunc('thumb', $iContentId);
     }
 
     public function serviceProfileIcon ($iContentId) {
+        return $this->_serviceTemplateFunc('icon', $iContentId);
+    }
+
+    protected function _serviceTemplateFunc ($sFunc, $iContentId) {
         if (!$iContentId)
             return false;
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
         if (!$aContentInfo)
             return false;        
-        return $this->_oTemplate->icon($aContentInfo);
+        return $this->_oTemplate->$sFunc($aContentInfo);
     }
 
     public function serviceProfileName ($iContentId) {
@@ -93,7 +90,7 @@ class BxPersonsModule extends BxDolModule implements iBxDolProfileService {
         );
     }
 
-    public function _serviceBrowse ($sMode, $aParams = false, $iDesignBox = BX_DB_PADDING_DEF) {
+    protected function _serviceBrowse ($sMode, $aParams = false, $iDesignBox = BX_DB_PADDING_DEF) {
         bx_import('SearchResult', $this->_aModule);
         $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
         $o = new $sClass($sMode, $aParams);

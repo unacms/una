@@ -325,6 +325,10 @@
     color:#999;
 }
 
+.bx-def-font-contrasted {
+    color:#fff;
+}
+
 .bx-def-font-small {
     font-size:12px;
     font-size:0.8rem;
@@ -362,48 +366,78 @@ h3,
 }
 
 /* image/thumbnail default styles */
-.bx-def-thumb {
-	border-radius:3px;
-	-moz-border-radius:3px;
-	-webkit-border-radius:3px;
 
-    overflow:hidden;
-}
+.bx-def-ava,
+.bx-def-thumb,
 .bx-def-icon {
-	border-radius:3px;
-	-moz-border-radius:3px;
-	-webkit-border-radius:3px;
+	border-radius:0.2rem;
+	-moz-border-radius:0.2rem;
+	-webkit-border-radius:0.2rem;
 
     overflow:hidden;
 }
+
+
+.bx-def-ava-size {
+    width:96px;
+    width:6rem;
+    height:96px;
+    height:6rem;
+}
+.bx-def-ava-size-max-height {
+    max-height:96px;
+    max-height:6rem;
+}
+.bx-def-ava-size-min-height {
+    min-height:96px;
+    min-height:6rem;
+}
+
 
 .bx-def-thumb-size {
-    width:64px;
-    height:64px;
+    width:48px;
+    width:3rem;
+    height:48px;
+    height:3rem;
 }
 .bx-def-thumb-size-max-height {
-    max-height:64px;
+    max-height:48px;
+    max-height:3rem;
 }
 .bx-def-thumb-size-min-height {
     min-height:64px;
+    min-height:3rem;
 }
+
+
 .bx-def-icon-size {
     width:32px;
+    width:2rem;
     height:32px;
+    height:2rem;
 }
 .bx-def-icon-size-max-height {
     max-height:32px;
+    max-height:2rem;
 }
 .bx-def-icon-size-min-height {
     min-height:32px;
+    min-height:2rem;
 }
+
 
 .bx-def-unit .bx-def-unit-info,
 .bx-def-unit img {
+    display:inline;
     display:inline-block;
     vertical-align:middle;
 }
 .bx-def-unit-info {
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+
     text-overflow:ellipsis;
     overflow:hidden;
 }

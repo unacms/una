@@ -32,7 +32,7 @@ class BxBaseMenuToolbar extends BxTemplMenu
 
             bx_import('BxDolProfile');
             $oProfile = BxDolProfile::getInstance(bx_get_logged_profile_id ());
-            $sUrlIcon = $oProfile->getIcon();
+            $sUrlIcon = $oProfile->getThumb();
             if (!$sUrlIcon) 
                 break;
 

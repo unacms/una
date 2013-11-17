@@ -168,9 +168,23 @@ class BxDolAccount extends BxDol {
     }
 
     /**
-     * Get account url
+     * Get avatar picture url
+     */
+    public function getAvatar($iAccountId = false) {
+        return '';
+    }
+
+    /**
+     * Get thumb picture url
      */
     public function getThumb($iAccountId = false) {
+        return '';
+    }
+
+    /**
+     * Get icon picture url
+     */
+    public function getIcon($iAccountId = false) {
         return '';
     }
 

@@ -14,7 +14,7 @@ bx_import('BxDolImageTranscoder');
 
 class BxPersonsInstaller extends BxDolStudioInstaller {
 
-    protected $_aTranscoders = array ('bx_persons_thumb', 'bx_persons_preview');
+    protected $_aTranscoders = array ('bx_persons_thumb', 'bx_persons_avatar');
 
     function __construct($aConfig) {
         parent::__construct($aConfig);

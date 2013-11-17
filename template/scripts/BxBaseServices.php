@@ -16,37 +16,36 @@ class BxBaseServices extends BxDol implements iBxDolProfileService {
     }
 
     public function serviceProfileUnit ($iContentId) {
-        if (!$iContentId)
-            return false;
-        if (!($oAccount = BxDolAccount::getInstance($iContentId)))
-            return false;        
-        return $oAccount->getUnit();
+        return $this->_serviceProfileFunc('getUnit', $iContentId);
+    }
+
+    public function serviceProfileAvatar ($iContentId) {
+        return $this->_serviceProfileFunc('getAvatar', $iContentId);
     }
 
     public function serviceProfileThumb ($iContentId) {
-        if (!$iContentId)
-            return false;
-        if (!($oAccount = BxDolAccount::getInstance($iContentId)))
-            return false;        
-        return $oAccount->getThumb();
+        return $this->_serviceProfileFunc('getThumb', $iContentId);
+    }
+
+    public function serviceProfileIcon ($iContentId) {
+        return $this->_serviceProfileFunc('getIcon', $iContentId);
     }
 
     public function serviceProfileName ($iContentId) {
-        if (!$iContentId)
-            return false;
-        if (!($oAccount = BxDolAccount::getInstance($iContentId)))
-            return false;        
-        return $oAccount->getDisplayName();
+        return $this->_serviceProfileFunc('getDisplayName', $iContentId);
     }
 
     public function serviceProfileUrl ($iContentId) {
+        return $this->_serviceProfileFunc('getUrl', $iContentId);
+    }
+
+    public function _serviceProfileFunc ($sFunc, $iContentId) {
         if (!$iContentId)
             return false;
         if (!($oAccount = BxDolAccount::getInstance($iContentId)))
             return false;        
-        return $oAccount->getUrl();
+        return $oAccount->$sFunc();
     }
-
 }
 
 /** @} */

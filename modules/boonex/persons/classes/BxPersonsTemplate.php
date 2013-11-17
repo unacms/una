@@ -58,7 +58,7 @@ class BxPersonsTemplate extends BxDolModuleTemplate {
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=view-persons-profile&id=' . $aData['id']);
 
         $sUrlPicture = $this->urlPicture ($aData);
-        $sUrlPreview = $this->urlPreview ($aData);
+        $sUrlAvatar = $this->urlAvatar ($aData);
         $sUrlPictureChange = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=edit-persons-profile&id=' . $aData['id']);
 
         $sUrlCover = $this->urlCover ($aData);
@@ -98,7 +98,7 @@ class BxPersonsTemplate extends BxDolModuleTemplate {
             'content_url' => $sUrl,
             'title' => $aData[BxPersonsConfig::$FIELD_NAME],
 
-            'picture_preview_url' => $sUrlPreview,
+            'picture_avatar_url' => $sUrlAvatar,
             'picture_url' => $sUrlPicture,
             'picture_popup' => $sPicturePopup,
             'picture_href' => !$aData[BxPersonsConfig::$FIELD_PICTURE] && CHECK_ACTION_RESULT_ALLOWED === $oModuleMain->isAllowedEdit($aData) ? $sUrlPictureChange : 'javascript:void(0);',
@@ -129,8 +129,8 @@ class BxPersonsTemplate extends BxDolModuleTemplate {
     /**
      * Get profile picture preview url
      */
-    function urlPreview ($aData, $bSubstituteNoImage = true) {
-        return $this->_image (BxPersonsConfig::$FIELD_PICTURE, BxPersonsConfig::$OBJECT_IMAGES_TRANSCODER_PREVIEW, 'no-picture-preview.png', $aData, $bSubstituteNoImage);
+    function urlAvatar ($aData, $bSubstituteNoImage = true) {
+        return $this->_image (BxPersonsConfig::$FIELD_PICTURE, BxPersonsConfig::$OBJECT_IMAGES_TRANSCODER_AVATAR, 'no-picture-preview.png', $aData, $bSubstituteNoImage);
     }
 
     /**

@@ -12,9 +12,9 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 DELETE FROM `sys_objects_storage` WHERE `object` IN('bx_persons_pictures', 'bx_persons_pictures_resized');
 DELETE FROM `sys_storage_tokens` WHERE `object` IN('bx_persons_pictures', 'bx_persons_pictures_resized');
 
-DELETE FROM `sys_objects_transcoder_images` WHERE `object` IN('bx_persons_icon', 'bx_persons_thumb', 'bx_persons_preview', 'bx_persons_picture', 'bx_persons_cover', 'bx_persons_cover_thumb');
-DELETE FROM `sys_transcoder_images_filters` WHERE `transcoder_object` IN('bx_persons_icon', 'bx_persons_thumb', 'bx_persons_preview', 'bx_persons_picture', 'bx_persons_cover', 'bx_persons_cover_thumb');
-DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_persons_icon', 'bx_persons_thumb', 'bx_persons_preview', 'bx_persons_picture', 'bx_persons_cover', 'bx_persons_cover_thumb');
+DELETE FROM `sys_objects_transcoder_images` WHERE `object` IN('bx_persons_icon', 'bx_persons_thumb', 'bx_persons_avatar', 'bx_persons_picture', 'bx_persons_cover', 'bx_persons_cover_thumb');
+DELETE FROM `sys_transcoder_images_filters` WHERE `transcoder_object` IN('bx_persons_icon', 'bx_persons_thumb', 'bx_persons_avatar', 'bx_persons_picture', 'bx_persons_cover', 'bx_persons_cover_thumb');
+DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_persons_icon', 'bx_persons_thumb', 'bx_persons_avatar', 'bx_persons_picture', 'bx_persons_cover', 'bx_persons_cover_thumb');
 -- TODO: delete resized picture files as well
 TRUNCATE TABLE `bx_persons_pictures_resized`; 
 

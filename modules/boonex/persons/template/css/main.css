@@ -3,34 +3,21 @@
 /* browse unit */
 
 .bx-persons-unit {
-    width:169px;    
+    width:188px;
+    width:11.8rem;
     float:left;
 }
 
-.bx-persons-unit img {
-    display:inline;
-    display:inline-block;
-
-    vertical-align:middle;
-}
-
 .bx-persons-unit div {
-    display:inline;
-    display:inline-block;
-    
-    width:95px;
-    padding-left:10px;
-    
-    text-overflow:ellipsis;
-    overflow:hidden;
-
-    vertical-align:middle;
+    width:140px;
+    width:8.8rem;
 }
 
 /* view content */
 
 .bx-persons-preview {
     max-width:278px;
+    max-width:17.375rem;
     text-align:center;
 }
 .bx-persons-preview img {
@@ -41,7 +28,8 @@
 
 .bx-persons-cover {
     position:relative;
-    height:300px;
+    height:320px;
+    height:20rem;
 
     -moz-box-sizing: border-box;
     -ms-box-sizing: border-box;
@@ -72,21 +60,20 @@ a.bx-persons-cover-image:hover,
 
 .bx-persons-cover-info img,
 .bx-persons-cover-info h1 {
-    display:inline-block;
     vertical-align:bottom;
 }
 
 .bx-persons-cover-info img {
     border:3px solid #fff;
-	-moz-box-shadow:0px 0px 0px 1px #000;
-	-webkit-box-shadow:0px 0px 0px 1px #000;
-    box-shadow:0px 0px 0px 1px #000;
+    border:0.2rem solid #fff;
+	-moz-box-shadow:0px 0px 0px 0.0625rem #000;
+	-webkit-box-shadow:0px 0px 0px 0.0625rem #000;
+    box-shadow:0px 0px 0px 0.0625rem #000;
 }
 
 .bx-persons-cover-info h1 {
     padding:0;
-    color:#fff;
-    text-shadow: 0px 0px 2px #000;
+    text-shadow: 0px 0px 0.125rem #000;
 }
 
 .bx-persons-popup-wrapper {

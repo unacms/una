@@ -75,7 +75,6 @@ INSERT INTO `sys_objects_social_sharing` (`object`, `type`, `content`, `order`, 
 ('pinterest', 'html', '<a target="_blank" href="http://pinterest.com/pin/create/button/?url={url_encoded}&media={img_url_encoded}&description={title_encoded}" class="pin-it-button" count-layout="horizontal"><i class="sys-icon pinterest-square"></i></a>', 4, 1);
 
 
-
 -- --------------------------------------------------------
 
 

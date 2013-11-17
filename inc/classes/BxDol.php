@@ -45,6 +45,7 @@ interface iBxDolProfile {
     public function getDisplayName();
     public function getUrl();
     public function getUnit();
+    public function getAvatar();
     public function getThumb();
     public function getIcon();
     public function isActive();
@@ -55,7 +56,9 @@ interface iBxDolProfile {
  */
 interface iBxDolProfileService {
     public function serviceProfileUnit ($iContentId);
+    public function serviceProfileAvatar ($iContentId);
     public function serviceProfileThumb ($iContentId);
+    public function serviceProfileIcon ($iContentId);
     public function serviceProfileName ($iContentId);
     public function serviceProfileUrl ($iContentId);
 }
