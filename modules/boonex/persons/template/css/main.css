@@ -71,9 +71,10 @@ a.bx-persons-cover-image:hover,
     box-shadow:0px 0px 0px 0.0625rem #000;
 }
 
-.bx-persons-cover-info h1 {
+.bx-persons-cover-info h1.bx-def-unit-info {
     padding:0;
     text-shadow: 0px 0px 0.125rem #000;
+    line-height:normal;
 }
 
 .bx-persons-popup-wrapper {
