@@ -15,26 +15,3 @@
     float:right;
 }
 
-/* author block */
-
-.bx-notes-author {
-}
-
-.bx-notes-author img {
-    display:inline;
-    display:inline-block;
-
-    vertical-align:middle;
-}
-
-.bx-notes-author div {
-    display:inline;
-    display:inline-block;
-    
-    text-overflow:ellipsis;
-    overflow:hidden;
-
-    vertical-align:middle;
-    line-height:1.5em;
-}
-

@@ -431,6 +431,7 @@ h3,
     display:inline;
     display:inline-block;
     vertical-align:middle;
+    line-height:1.2rem;
 }
 .bx-def-unit-info {
     -moz-box-sizing: border-box;
