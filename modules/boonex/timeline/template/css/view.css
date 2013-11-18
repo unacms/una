@@ -62,14 +62,10 @@ div.bx-tl-item-menu-button a:hover {
 div.bx-tl-item-owner {
 	position: relative;
 }
-div.bx-tl-owner-icon {
+div.bx-tl-owner-avatar {
 	position: absolute;
 	top: 0px;
 	left: 0px;
-}
-div.bx-tl-owner-name,
-div.bx-tl-item-info {
-	margin-left: 42px;
 }
 
 /*+++ Item Image +++*/

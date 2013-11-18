@@ -489,7 +489,10 @@ h3,
     min-height:64px;
     min-height:3rem;
 }
-
+.bx-def-thumb-size-left-indent {
+	margin-left: 60px;
+	margin-left: 3.75rem;
+}
 
 .bx-def-icon-size {
     width:32px;

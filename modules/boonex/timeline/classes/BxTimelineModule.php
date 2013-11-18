@@ -534,7 +534,7 @@ class BxTimelineModule extends BxDolModule
 		return array(
 			$oProfile->getDisplayName(), 
 			$oProfile->getUrl(), 
-			$oProfile->getIcon(),
+			$oProfile->getThumb(),
 			$oProfile->getUnit()
 		);
     }
