@@ -81,18 +81,17 @@
     }    
 
     /*--- Comment Author ---*/
-	div.cmt-icon {
+	div.cmt-avatar {
 		position: absolute;
 		top: 0px;
 		left: 0px;
     	text-align: center;
     }
-    div.cmt-icon .sys-icon {
-		font-size: 2.125em;
+    div.cmt-avatar .sys-icon {
+		font-size: 3.75rem;
     }
     div.cmt-info {
     	position: realtive;
-    	padding-left: 42px;
 	}
 	div.cmt-head div.cmt-username,
 	div.cmt-head div.cmt-username,
