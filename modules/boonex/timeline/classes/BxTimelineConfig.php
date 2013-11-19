@@ -290,6 +290,12 @@ class BxTimelineConfig extends BxDolModuleConfig
     /**
      * Ancillary functions
      */
+	public function getViewUrl($iOwnerId)
+    {
+    	bx_import('BxDolPermalinks');
+		return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=timeline-view&id=' . $iOwnerId);
+    }
+
     public function getItemViewUrl(&$aEvent)
     {
     	bx_import('BxDolPermalinks');

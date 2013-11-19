@@ -28,8 +28,8 @@ class BxDolRssFactory extends BxDol {
     function GenRssByData($aRssData, $sUnitTitleC, $sMainLink) {
 
         return $this->GenRssByCustomData($aRssData, $sUnitTitleC, $sMainLink, array(
+        	'Guid' => 'UnitID',
             'Link' => 'UnitLink',
-            'Guid' => 'UnitID',
             'Title' => 'UnitTitle',
             'DateTimeUTS' => 'UnitDateTimeUTS',
             'Desc' => 'UnitDesc',
@@ -93,7 +93,7 @@ class BxDolRssFactory extends BxDol {
             $sRSSImage = "<image><url>{$sImage}</url><title>{$sRSSTitle}</title><link>{$sMainLink}</link></image>";
         }
 
-        return "<?xml version=\"1.0\" encoding=\"UTF-8\"?><rss version=\"2.0\"><channel><title>{$sRSSTitle}</title><link>{$sMainLink}</link><description>{$sRSSTitle}</description><lastBuildDate>{$sRSSLast}</lastBuildDate>{$sRSSImage}{$sUnitRSSFeed}</channel></rss>";
+        return "<?xml version=\"1.0\" encoding=\"UTF-8\"?><rss version=\"2.0\"><channel><title>{$sRSSTitle}</title><link><![CDATA[{$sMainLink}]]></link><description>{$sRSSTitle}</description><lastBuildDate>{$sRSSLast}</lastBuildDate>{$sRSSImage}{$sUnitRSSFeed}</channel></rss>";
     }
 
 }

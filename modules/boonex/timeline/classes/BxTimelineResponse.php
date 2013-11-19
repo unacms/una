@@ -64,6 +64,7 @@ class BxTimelineResponse extends BxDolAlertsResponse
 		        if(!empty($iId))
 		        	$this->_oModule->onPost($iId);
 
+				//TODO: Remove the call and the function itself if GROUPING feature won't be used. 
 		        $this->_oModule->_oDb->updateSimilarObject($iId, $oAlert);		
 		        break;
 

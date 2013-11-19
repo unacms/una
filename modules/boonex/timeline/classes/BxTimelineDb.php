@@ -200,12 +200,6 @@ class BxTimelineDb extends BxDolModuleDb
 
 				//--- Apply timeline
 		        if(isset($aParams['timeline']) && !empty($aParams['timeline'])) {
-		        	/*
-		        	//TODO: Remove if old timeline slider is not used
-		            $iDays = (int)$aParams['timeline'];
-		            $iNowMorning = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
-		            $sWhereClause .= $this->prepare("AND `date`>=? ", ($iNowMorning - 86400 * $iDays));
-		            */
 		        	$iYear = (int)$aParams['timeline'];
 		        	$sWhereClause .= $this->prepare("AND `date`<=? ", mktime(23, 59, 59, 12, 31, $iYear));
 		        }
@@ -266,6 +260,8 @@ class BxTimelineDb extends BxDolModuleDb
                 `{$this->_sTable}`.`object_id` AS `object_id`,
                 `{$this->_sTable}`.`content` AS `content`,
                 `{$this->_sTable}`.`comments` AS `comments`,
+                `{$this->_sTable}`.`title` AS `title`,
+                `{$this->_sTable}`.`description` AS `description`,
                 `{$this->_sTable}`.`shares` AS `shares`,
                 `{$this->_sTable}`.`date` AS `date`,
                 YEAR(FROM_UNIXTIME(`{$this->_sTable}`.`date`)) AS `year`,
@@ -351,40 +347,6 @@ class BxTimelineDb extends BxDolModuleDb
         return $sFilterAddon;
     }
 
-    
-    
-    
-    
-    
-    
-    
-    //--- View Events Functions ---//
-    function getEventsCount($iOwnerId, $sFilter, $sTimeline, $aModules)
-    {
-        $sWhereClause = "";
-        if(!empty($iOwnerId)) {
-            if(!is_array($iOwnerId))
-                $sWhereClause = "`owner_id`='" . $iOwnerId . "' ";
-            else
-                $sWhereClause = "`owner_id` IN ('" . implode("','", $iOwnerId) . "') ";
-        }
-
-    	if(!empty($sTimeline) && strpos($sTimeline, BX_WALL_DIVIDER_TIMELINE) !== false) {
-            list($iTLStart, $iTLEnd) = explode(BX_WALL_DIVIDER_TIMELINE, $sTimeline);
-
-            $iNowMorning = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
-            $iNowEvening = mktime(23, 59, 59, date('m'), date('d'), date('Y'));
-            $sWhereClause .= "AND `date`>='" . ($iNowMorning - 86400 * $iTLEnd) . "' AND `date`<='" . ($iNowEvening - 86400 * $iTLStart) . "' ";
-        }
-
-        if(!empty($aModules) && is_array($aModules))
-        	$sWhereClause .= "AND `type` IN ('" . implode("','", $aModules) . "') ";
-
-		$sWhereClause .= $this->_getFilterAddon($iOwnerId, $sFilter);
-
-        $sSql = "SELECT COUNT(*) FROM `{$this->_sTable}` WHERE " . $sWhereClause . " LIMIT 1";
-        return $this->getOne($sSql);
-    }
 
     function updateSimilarObject($iId, &$oAlert, $sDuration = 'day')
     {
@@ -429,13 +391,6 @@ class BxTimelineDb extends BxDolModuleDb
             $this->deleteEvent(array('id' => $iId));
 
         return $mixedResult;
-    }
-
-    //--- Comment Functions ---//
-    function getCommentsCount($iId)
-    {
-        $sSql = "SELECT COUNT(`cmt_id`) FROM `" . $this->_sPrefix . "comments` WHERE `cmt_object_id`='" . $iId . "' AND `cmt_parent_id`='0' LIMIT 1";
-        return (int)$this->getOne($sSql);
     }
 }
 

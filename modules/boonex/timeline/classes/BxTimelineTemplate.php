@@ -128,11 +128,24 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 		if(empty($aResult) || empty($aResult['owner_id']) || empty($aResult['content']))
 			return '';
 
-		if((empty($aEvent['title']) && !empty($aResult['title'])) || (empty($aEvent['description']) && !empty($aResult['description'])))
+		list($sUserName) = $this->getModule()->getUserInfo($aResult['owner_id']);
+
+		if(empty($aEvent['title']) || empty($aEvent['description'])) {
+			$sTitle = !empty($aResult['title']) ? $aResult['title'] : '';
+			if($sTitle == '') {
+				$sSample = !empty($aResult['content']['sample']) ? $aResult['content']['sample'] : '_bx_timeline_txt_sample';
+				$sTitle = _t('_bx_timeline_txt_user_added_sample', $sUserName, _t($sSample));
+			}
+
+			$sDescription = !empty($aResult['description']) ? $aResult['description'] : '';
+			if($sDescription == '' && !empty($aResult['content']['text']))
+				$sDescription = $aResult['content']['text'];
+
         	$this->_oDb->updateEvent(array(
-            	'title' => bx_process_input($aResult['title'], BX_TAGS_STRIP),
-                'description' => bx_process_input($aResult['description'], BX_TAGS_STRIP)
+            	'title' => bx_process_input(strip_tags($sTitle)),
+                'description' => bx_process_input(strip_tags($sDescription))
 			), array('id' => $aEvent['id']));
+		}
 
 		if(is_string($aResult['content']))
 			return $aResult['content'];
@@ -161,7 +174,6 @@ class BxTimelineTemplate extends BxDolModuleTemplate
         }
 
         //--- Check for Next
-        $aParamsDb['browse'] = 'list';
         $aParamsDb['per_page'] += 1;
         $aEvents = $this->_oDb->getEvents($aParamsDb);
 
@@ -563,11 +575,12 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 			'content' => $aContent['owner_name']
 		));
 
-		$sSampleLink = empty($aContent['url']) ? $aContent['sample'] : $this->parseHtmlByName('bx_a.html', array(
+		$sSample = _t($aContent['sample']);
+		$sSampleLink = empty($aContent['url']) ? $sSample : $this->parseHtmlByName('bx_a.html', array(
 			'href' => $aContent['url'],
 			'title' => '',
 			'bx_repeat:attrs' => array(),
-			'content' => $aContent['sample']
+			'content' => $sSample
 		));
 
 		$sTitle = _t('_bx_timeline_txt_shared', $sOwnerLink, $sSampleLink);
@@ -625,7 +638,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
     		'owner_id' => $aEvent['object_id'],
     		'content_type' => $sType,
     		'content' => array(
-    			'sample' => _t('_bx_timeline_txt_common_' . $sType),
+    			'sample' => '_bx_timeline_txt_common_' . $sType,
     			'url' => $this->_oConfig->getItemViewUrl($aEvent)
     		), //a string to display or array to parse default template before displaying.
     		'comments' => '',
@@ -680,6 +693,12 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 				$aResult['content']['parse_type'] = $aShared['content_type'];
 				$aResult['content']['owner_id'] = $aShared['owner_id'];
 				list($aResult['content']['owner_name'], $aResult['content']['owner_url']) = $oModule->getUserInfo($aShared['owner_id']);
+
+				list($sUserName) = $oModule->getUserInfo($aEvent['object_id']);
+				$sSample = !empty($aResult['content']['sample']) ? $aResult['content']['sample'] : '_bx_timeline_txt_sample';
+
+				$aResult['title'] = _t('_bx_timeline_txt_user_shared_sample', $sUserName, $aResult['content']['owner_name'], _t($sSample));
+				$aResult['description'] = '';
 				break;
 		}
 

@@ -189,6 +189,36 @@ class BxTimelineModule extends BxDolModule
     	$this->_echoResultJson(array('popup' => $sContent));
     }
 
+    function actionRss($iOwnerId)
+    {
+    	list($sUserName) = $this->getUserInfo($iOwnerId);
+
+    	$sRssCaption = _t('_bx_timeline_txt_rss_caption', $sUserName);
+    	$sRssLink = $this->_oConfig->getViewUrl($iOwnerId);
+
+    	$aParams = $this->_prepareParams('owner', $iOwnerId, 0, $this->_oConfig->getRssLength(), '', array(), 0);
+        $aEvents = $this->_oDb->getEvents($aParams);
+
+        $aRssData = array();
+        foreach($aEvents as $aEvent) {
+            if(empty($aEvent['title'])) continue;
+
+            $aRssData[$aEvent['id']] = array(
+               'UnitID' => $aEvent['id'],
+               'UnitTitle' => $aEvent['title'],
+               'UnitLink' => $this->_oConfig->getItemViewUrl($aEvent),
+               'UnitDesc' => $aEvent['description'],
+               'UnitDateTimeUTS' => $aEvent['date'],
+            );
+        }
+
+        bx_import('BxDolRssFactory');
+        $oRss = new BxDolRssFactory();
+
+        header('Content-Type: text/html; charset=utf-8');
+        echo $oRss->GenRssByData($aRssData, $sRssCaption, $sRssLink);
+    }
+
 	/**
      * SERVICE METHODS
      */
@@ -229,11 +259,17 @@ class BxTimelineModule extends BxDolModule
         $oResponse->response($oAlert);
     }
 
+    public function serviceGetBlockPost($iProfileId = 0)
+    {
+    	return $this->serviceGetBlockPostProfile($iProfileId);
+    }
+
 	public function serviceGetBlockPostProfile($iProfileId = 0)
 	{
-		if (!$iProfileId && bx_get('id') !== false) {
-			$iProfileId = bx_process_input(bx_get('id'), BX_DATA_INT);
-            $iProfileId = BxDolProfile::getInstanceByContentAndType($iProfileId, 'bx_persons')->id();
+		if(!$iProfileId && bx_get('id') !== false) {
+			$oProfile = BxDolProfile::getInstanceByContentAndType(bx_process_input(bx_get('id'), BX_DATA_INT), 'bx_persons');
+			if(!empty($oProfile))
+            	$iProfileId = $oProfile->id();
 		}
 
         if (!$iProfileId)
@@ -254,11 +290,21 @@ class BxTimelineModule extends BxDolModule
         return array('content' => $sContent, 'menu' => $oMenu);
 	}
 
+	public function serviceGetBlockView($iProfileId = 0)
+	{
+		$aBlock = $this->serviceGetBlockViewProfile($iProfileId);
+		if(!empty($aBlock))
+			return $aBlock;
+
+    	return array('content' => MsgBox(_t('_bx_timeline_txt_msg_no_results'))); 
+    }
+
 	public function serviceGetBlockViewProfile($iProfileId = 0, $iStart = -1, $iPerPage = -1, $sFilter = '', $aModules = array(), $iTimeline = -1)
 	{
-		if (!$iProfileId) {
-			$iProfileId = bx_process_input(bx_get('id'), BX_DATA_INT);
-            $iProfileId = BxDolProfile::getInstanceByContentAndType($iProfileId, 'bx_persons')->id();
+		if(!$iProfileId && bx_get('id') !== false) {
+			$oProfile = BxDolProfile::getInstanceByContentAndType(bx_process_input(bx_get('id'), BX_DATA_INT), 'bx_persons');
+			if(!empty($oProfile))
+            	$iProfileId = $oProfile->id();
 		}
 
         if (!$iProfileId)
@@ -274,13 +320,13 @@ class BxTimelineModule extends BxDolModule
 			array('id' => 'timeline-view-all', 'name' => 'timeline-view-all', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:' . $sJsObject . '.changeFilter(this)', 'target' => '_self', 'title' => _t('_bx_timeline_menu_item_view_all'), 'active' => 1),
             array('id' => 'timeline-view-owner', 'name' => 'timeline-view-owner', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:' . $sJsObject . '.changeFilter(this)', 'target' => '_self', 'title' => _t('_bx_timeline_menu_item_view_owner', $sUserName)),
             array('id' => 'timeline-view-other', 'name' => 'timeline-view-other', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:' . $sJsObject . '.changeFilter(this)', 'target' => '_self', 'title' => _t('_bx_timeline_menu_item_view_other')),
-            //array('id' => 'timeline-get-rss', 'name' => 'timeline-get-rss', 'class' => '', 'link' => BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'rss/' . $iProfileId . '/', 'target' => '_self', 'title' => _t('_bx_timeline_menu_item_get_rss')),
+            array('id' => 'timeline-get-rss', 'name' => 'timeline-get-rss', 'class' => '', 'link' => BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'rss/' . $iProfileId . '/', 'target' => '_blank', 'title' => _t('_bx_timeline_menu_item_get_rss')),
         );
 
         bx_import('BxTemplMenuInteractive');
 		$oMenu = new BxTemplMenuInteractive(array('template' => 'menu_interactive_vertical.html', 'menu_id'=> 'timeline-view-all', 'menu_items' => $aMenu));
 		$oMenu->setSelected('', 'timeline-view-all');
-		
+
 		$sContent = $this->_oTemplate->getViewBlock($aParams);
         return array('content' => $sContent, 'menu' => $oMenu);
     }
@@ -470,17 +516,17 @@ class BxTimelineModule extends BxDolModule
 
         	$aPhIds = $oForm->getCleanValue('content');
         	BxDolForm::setSubmittedValue('content', serialize(array()), $oForm->aFormAttrs['method']);
+        	$iPhIds = count($aPhIds);
 
         	$iId = $oForm->insert(array(
         		'object_id' => $iUserId,
         		'object_privacy_view' => $this->_oConfig->getPrivacyViewDefault(),
-				'title' => bx_process_input($sUserName . ' ' . _t('_bx_timeline_txt_added_photo')),
+				'title' => bx_process_input($sUserName . ' ' . _t('_bx_timeline_txt_added_photo' . ($iPhIds > 1 ? 's' : ''))),
 				'description' => '',
         		'date' => time()
 			));
 
 			if(!empty($iId)) {
-				$iPhIds = count($aPhIds);
 				if($iPhIds > 0) {
 					$aPhTitles = $oForm->getCleanValue('file_title');
 					$aPhTexts = $oForm->getCleanValue('file_text');
@@ -658,6 +704,7 @@ class BxTimelineModule extends BxDolModule
     protected function _prepareParams($sType, $iOwnerId, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline)
     {
     	$aParams = array();
+    	$aParams['browse'] = 'list';
     	$aParams['type'] = !empty($sType) ? $sType : BX_TIMELINE_TYPE_OWNER;
 		$aParams['owner_id'] = (int)$iOwnerId != 0 ? $iOwnerId : $this->getUserId();
     	$aParams['start'] = (int)$iStart > 0 ? $iStart : 0;
@@ -672,6 +719,7 @@ class BxTimelineModule extends BxDolModule
     protected function _prepareParamsGet()
     {
     	$aParams = array();
+    	$aParams['browse'] = 'list';
 
     	$sType = bx_get('type');
 		$aParams['type'] = $sType !== false ? bx_process_input($sType, BX_DATA_TEXT) : BX_TIMELINE_TYPE_OWNER;
@@ -729,55 +777,6 @@ class BxTimelineModule extends BxDolModule
         if ($isAutoWrapForFormFileSubmit && !empty($_FILES)) 
             $s = '<textarea>' . $s . '</textarea>'; // http://jquery.malsup.com/form/#file-upload
         echo $s;
-    }
-    
-    
-    
-    
-    
-    
-    
-   
-   
-    /**
-     * Get RSS for specified owner.
-     *
-     * @param  string $sUsername wall owner username
-     * @return string with RSS.
-     */
-    function actionRss($sUsername)
-    {
-        $aOwner = $this->_oDb->getUser($sUsername, 'username');
-
-        $aEvents = $this->_oDb->getEvents(array(
-            'type' => 'owner',
-            'owner_id' => $aOwner['id'],
-            'order' => 'desc',
-            'start' => 0,
-            'count' => $this->_oConfig->getRssLength(),
-            'filter' => ''
-        ));
-
-        $sRssBaseUrl = $this->_oConfig->getBaseUri() . 'index/' . $aOwner['username'] . '/';
-        $aRssData = array();
-        foreach($aEvents as $aEvent) {
-            if(empty($aEvent['title'])) continue;
-
-            $aRssData[$aEvent['id']] = array(
-               'UnitID' => $aEvent['id'],
-               'OwnerID' => $aOwner['id'],
-               'UnitTitle' => $aEvent['title'],
-               'UnitLink' => BX_DOL_URL_ROOT . $sRssBaseUrl . '#wall-event-' . $aEvent['id'],
-               'UnitDesc' => $aEvent['description'],
-               'UnitDateTimeUTS' => $aEvent['date'],
-               'UnitIcon' => ''
-            );
-        }
-
-        $oRss = new BxDolRssFactory();
-
-        header('Content-Type: text/html; charset=utf-8');
-        return $oRss->GenRssByData($aRssData, $aOwner['username'] . ' ' . _t('_wall_rss_caption'), $sRssBaseUrl);
     }
 }
 
