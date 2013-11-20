@@ -124,6 +124,10 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
     	        foreach($aBlocks as $aBlock)
     	            $aTmplVarsCell['bx_repeat:blocks'][] = array(
     	                'html_id' => $this->aHtmlIds['block_id'] . $aBlock['id'],
+    	            	'bx_if:is_inactive' => array(
+    	                    'condition' => (int)$aBlock['active'] == 0,
+    	                    'content' => array()
+    	                ),
     	                'bx_if:show_link' => array(
     	                    'condition' => true,
     	                    'content' => array(
@@ -813,6 +817,17 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
                     'tr_attrs' => array(
                         'style' => $aBlock['visible_for_levels'] == BX_DOL_INT_MAX ? 'display:none' : ''
                     ),
+                    'db' => array (
+                        'pass' => 'Int',
+                    )
+                ),
+                'active' => array(
+                    'type' => 'switcher',
+                    'name' => 'active',
+                	'caption' => _t('_adm_bp_txt_block_active'),
+                    'info' => '',
+                    'value' => '1',
+                	'checked' => $aBlock['active'] == '1',
                     'db' => array (
                         'pass' => 'Int',
                     )

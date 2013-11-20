@@ -223,6 +223,7 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery {
                 `tpb`.`content` AS `content`,
                 `tpb`.`deletable` AS `deletable`,
                 `tpb`.`copyable` AS `copyable`,
+                `tpb`.`active` AS `active`,
                 `tpb`.`order` AS `order`" . $sSelectClause . "
             FROM `sys_pages_blocks` AS `tpb` " . $sJoinClause . "
             WHERE 1 " . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause . " " . $sLimitClause;

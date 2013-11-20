@@ -39,7 +39,9 @@ div.adm-bp-block {
     background-image: -o-linear-gradient(top, #fff, #ececec); 
     background-image: linear-gradient(top, #fff, #ececec);	
 }
-
+div.adm-bpb-inactive {
+	opacity: 0.5;
+}
 div.adm-bp-block-empty {
     height: 42px;
 	border-style: dashed;

@@ -2360,6 +2360,7 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
     <string name="_adm_bp_txt_block_visible_for_selected"><![CDATA[Selected levels]]></string>
     <string name="_adm_bp_txt_block_visible_for_levels"><![CDATA[Select Levels]]></string>
     <string name="_adm_bp_dsc_block_visible_for_levels"><![CDATA[Select user levels that can see this block]]></string>
+    <string name="_adm_bp_txt_block_active"><![CDATA[Active]]></string>
     <string name="_adm_bp_btn_block_save"><![CDATA[Save]]></string>
     <string name="_adm_bp_btn_block_cancel"><![CDATA[Cancel]]></string>
     <string name="_adm_bp_btn_block_delete"><![CDATA[Delete]]></string>

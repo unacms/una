@@ -41,7 +41,7 @@ class BxDolPageQuery extends BxDolDb {
     public function getPageBlocks() {
         $aRet = array ();
         for ($i = 1 ; $i <= $this->_aObject['cells_number'] ; ++$i) {
-            $sQuery = $this->prepare("SELECT * FROM `sys_pages_blocks` WHERE `object` = ? AND `cell_id` = ? ORDER BY `order` ASC", $this->_aObject['object'], $i);
+            $sQuery = $this->prepare("SELECT * FROM `sys_pages_blocks` WHERE `object` = ? AND `cell_id` = ? AND `active` = 1 ORDER BY `order` ASC", $this->_aObject['object'], $i);
             $aRet['cell_'.$i] = $this->getAll($sQuery);
         }
         return $aRet;
