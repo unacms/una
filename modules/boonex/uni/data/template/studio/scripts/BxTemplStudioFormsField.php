@@ -83,6 +83,12 @@ class BxTemplStudioFormsFieldFile extends BxBaseStudioFormsFieldFile {
     }
 }
 
+class BxTemplStudioFormsFieldFiles extends BxBaseStudioFormsFieldFiles { 
+    function __construct($aParams = array(), $aField = array()) {
+        parent::__construct($aParams, $aField);
+    }
+}
+
 class BxTemplStudioFormsFieldSlider extends BxBaseStudioFormsFieldSlider { 
     function __construct($aParams = array(), $aField = array()) {
         parent::__construct($aParams, $aField);

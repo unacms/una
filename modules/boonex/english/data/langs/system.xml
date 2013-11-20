@@ -2205,6 +2205,9 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
     <string name="_adm_form_txt_field_type_custom"><![CDATA[custom]]></string>
     <string name="_adm_form_txt_field_type_value"><![CDATA[info]]></string>
     <string name="_adm_form_txt_field_type_captcha"><![CDATA[captcha]]></string>
+    <string name="_adm_form_txt_field_type_file"><![CDATA[file]]></string>
+    <string name="_adm_form_txt_field_type_files"><![CDATA[files]]></string>
+    <string name="_adm_form_txt_field_type_custom"><![CDATA[custom]]></string>
     <string name="_adm_form_txt_field_type_display"><![CDATA[Type]]></string>
     <string name="_adm_form_txt_field_caption_system"><![CDATA[System Name]]></string>
     <string name="_adm_form_dsc_field_caption_system"><![CDATA[Field name, displayed in Studio only.]]></string>

@@ -954,6 +954,14 @@ class BxBaseStudioFormsFieldFile extends BxBaseStudioFormsFieldText {
     }
 }
 
+class BxBaseStudioFormsFieldFiles extends BxBaseStudioFormsFieldFile {
+    protected $sType = 'files';
+
+    function __construct($aParams = array(), $aField = array()) {
+        parent::__construct($aParams, $aField);
+    }
+}
+
 class BxBaseStudioFormsFieldNumber extends BxBaseStudioFormsFieldText {
     protected $sType = 'number';
     protected $aCheckFunctions = array('avail', 'length', 'preg');

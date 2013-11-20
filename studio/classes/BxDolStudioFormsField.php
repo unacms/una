@@ -28,7 +28,7 @@ class BxDolStudioFormsField extends BxDol {
         parent::__construct();
 
         $this->oDb = new BxDolStudioFormsQuery(); 
-        $this->aTypes = array('block_header', 'text', 'datepicker', 'datetime', 'number', 'checkbox', 'password', 'slider', 'doublerange', 'hidden', 'switcher', 'reset', 'submit', 'textarea', 'select', 'select_multiple', 'checkbox_set', 'radio_set', 'value', 'captcha');
+        $this->aTypes = array('block_header', 'text', 'datepicker', 'datetime', 'number', 'checkbox', 'password', 'slider', 'doublerange', 'hidden', 'switcher', 'reset', 'submit', 'textarea', 'select', 'select_multiple', 'checkbox_set', 'radio_set', 'value', 'captcha', 'file', 'files', 'custom');
         $this->aTypesRelated = array(
             'select_multiple' => array('types' => array('select_multiple', 'checkbox_set'), 'reload_on_change' => 0),
         	'checkbox_set' => array('types' => array('select_multiple', 'checkbox_set'), 'reload_on_change' => 0),
