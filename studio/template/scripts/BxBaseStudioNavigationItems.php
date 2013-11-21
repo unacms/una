@@ -148,17 +148,33 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
                     'db' => array (
                         'pass' => 'Xss',
                     )
-                ),
+                ), 
                 'icon' => array(
-                    'type' => 'file',
+                    'type' => 'text',
                     'name' => 'icon',
                     'caption' => _t('_adm_nav_txt_items_icon'),
-                	'info' => _t('_adm_nav_dsc_items_icon'),
+                    'info' => _t('_adm_nav_dsc_items_icon'),
+                    'value' => '',
+                    'required' => '0',
+                    'db' => array (
+                        'pass' => 'Xss',
+                    ),
+                    'checker' => array (
+                        'func' => '',
+                        'params' => array(),
+                        'error' => _t('_adm_nav_err_items_icon'),
+                    ),
+                ),
+                'icon_image' => array(
+                    'type' => 'file',
+                    'name' => 'icon_image',
+                    'caption' => _t('_adm_nav_txt_items_icon_image'),
+                	'info' => _t('_adm_nav_dsc_items_icon_image'),
                     'value' => '',
                     'checker' => array (
                         'func' => '',
                         'params' => '',
-                        'error' => _t('_adm_nav_err_items_icon'),
+                        'error' => _t('_adm_nav_err_items_icon_image'),
                     ),
                 ),
                 'controls' => array(
@@ -195,18 +211,23 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
 
         if($oForm->isSubmittedAndValid()) {
             $mixedIcon = '';
-            if(!empty($_FILES['icon']['tmp_name'])) {
+            if(!empty($_FILES['icon_image']['tmp_name'])) {
                 bx_import('BxDolStorage');
                 $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
     
-                $mixedIcon = $oStorage->storeFileFromForm($_FILES['icon'], false, 0); 
+                $mixedIcon = $oStorage->storeFileFromForm($_FILES['icon_image'], false, 0); 
                 if($mixedIcon === false) {
-                    $this->_echoResultJson(array('msg' => _t('_adm_nav_err_items_icon') . $oStorage->getErrorString()), true);
+                    $this->_echoResultJson(array('msg' => _t('_adm_nav_err_items_icon_image') . $oStorage->getErrorString()), true);
                     return;
                 }
 
                 $oStorage->afterUploadCleanup($mixedIcon, 0);
             }
+
+            if(empty($mixedIcon))
+            	$mixedIcon = $oForm->getCleanValue('icon');
+
+			BxDolForm::setSubmittedValue('icon', $mixedIcon, $aForm['form_attrs']['method']);
 
             bx_import('BxDolPermalinks');
             $oPermalinks = BxDolPermalinks::getInstance();
@@ -231,7 +252,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
                 BxDolForm::setSubmittedValue('onclick', 'bx_menu_popup(\'' . $sSubmenu . '\', this);', $aForm['form_attrs']['method']);
             }
 
-            $iId = (int)$oForm->insert(array('module' => BX_DOL_STUDIO_MODULE_CUSTOM, 'name' => $sName, 'icon' => $mixedIcon, 'active' => 1, 'order' => $this->oDb->getItemOrderMax($this->sSet) + 1));
+            $iId = (int)$oForm->insert(array('module' => BX_DOL_STUDIO_MODULE_CUSTOM, 'name' => $sName, 'active' => 1, 'order' => $this->oDb->getItemOrderMax($this->sSet) + 1));
             if($iId != 0)
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
             else
@@ -383,23 +404,39 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
                         'pass' => 'Xss',
                     )
                 ),
-                'icon_preview' => array(
-                    'type' => 'custom',
-                    'name' => 'icon_preview',
-                	'caption' => _t('_adm_nav_txt_items_icon_old'),
-                    'content' => ''
-                ),
                 'icon' => array(
-                    'type' => 'file',
+                    'type' => 'text',
                     'name' => 'icon',
-                    'caption' => _t('_adm_nav_txt_items_icon_new'),
-                	'info' => _t('_adm_nav_dsc_items_icon'),
+                    'caption' => _t('_adm_nav_txt_items_icon'),
+                    'info' => _t('_adm_nav_dsc_items_icon'),
+                    'value' => '',
+                    'required' => '0',
+                    'db' => array (
+                        'pass' => 'Xss',
+                    ),
+                    'checker' => array (
+                        'func' => '',
+                        'params' => array(),
+                        'error' => _t('_adm_nav_err_items_icon'),
+                    ),
+                ),
+                'icon_image' => array(
+                    'type' => 'file',
+                    'name' => 'icon_image',
+                    'caption' => _t('_adm_nav_txt_items_icon_image_new'),
+                	'info' => _t('_adm_nav_dsc_items_icon_image'),
                     'value' => '',
                     'checker' => array (
                         'func' => '',
                         'params' => '',
-                        'error' => _t('_adm_nav_err_items_icon'),
+                        'error' => _t('_adm_nav_err_items_icon_image'),
                     ),
+                ),
+                'icon_preview' => array(
+                    'type' => 'custom',
+                    'name' => 'icon_preview',
+                	'caption' => _t('_adm_nav_txt_items_icon_image_old'),
+                    'content' => ''
                 ),
                 'controls' => array(
                     'name' => 'controls', 
@@ -441,43 +478,42 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
             $aForm['inputs']['target']['tr_attrs']['style'] = 'display:none;';
         }
 
-        $sFileUrl = "";
+        $sIconImage = $sIconFont = "";
         if(!empty($aItem['icon'])) {
             if((int)$aItem['icon'] != 0) {
                 bx_import('BxDolStorage');
                 $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
-        
-                $sFileUrl = $oStorage->getFileUrlById((int)$aItem['icon']);
+
+                $sIconImage = $oStorage->getFileUrlById((int)$aItem['icon']);
             }
-            else 
-                $sFileUrl = $this->_oTemplate->getIconUrl($aItem['icon']);
+            else {
+                $sIconFont = $aItem['icon'];
+                $aForm['inputs']['icon']['value'] = $sIconFont;
+            }
         }
 
+        $bIconImage = !empty($sIconImage);
+		$bIconFont = !empty($sIconFont);
         $aTmplVars = array(
-            'bx_if:show_empty' => array(
-                'condition' => true,
+            'bx_if:show_icon_empty' => array(
+                'condition' => !$bIconImage && !$bIconFont,
                 'content' => array()
             ),
-            'bx_if:show_image' => array(
-                'condition' => false,
-                'content' => array()
+            'bx_if:show_icon_image' => array(
+                'condition' => $bIconImage,
+                'content' => array(
+            		'js_object' => $this->getJsObject(),
+                    'url' => $sIconImage,
+					'id' => $aItem['id']
+            	)
+            ),
+            'bx_if:show_icon_font' => array(
+                'condition' => $bIconFont,
+                'content' => array(
+            		'icon' => $sIconFont
+            	)
             )
         );
-        if(!empty($sFileUrl)) 
-            $aTmplVars = array(
-                'bx_if:show_empty' => array(
-                    'condition' => false,
-                    'content' => array()
-                ),
-                'bx_if:show_image' => array(
-                    'condition' => true,
-                    'content' => array(
-                        'js_object' => $this->getJsObject(),
-                    	'url' => $sFileUrl,
-                        'id' => $aItem['id']
-                    )
-                )
-            );
 
         $aForm['inputs']['icon_preview']['content'] = $this->_oTemplate->parseHtmlByName('nav_item_icon_preview.html', $aTmplVars);
 
@@ -486,17 +522,17 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
 
         if($oForm->isSubmittedAndValid()) {
             $mixedIcon = 0;
-            if(!empty($_FILES['icon']['tmp_name'])) {
+            if(!empty($_FILES['icon_image']['tmp_name'])) {
                 bx_import('BxDolStorage');
                 $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
     
                 if(is_numeric($aItem['icon']) && (int)$aItem['icon'] != 0 && !$oStorage->deleteFile((int)$aItem['icon'], 0)) {
-                    $this->_echoResultJson(array('msg' => _t('_adm_nav_err_items_icon_remove')), true);
+                    $this->_echoResultJson(array('msg' => _t('_adm_nav_err_items_icon_image_remove')), true);
                     return;
                 }
 
-                if(($mixedIcon = $oStorage->storeFileFromForm($_FILES['icon'], false, 0)) === false) {
-                    $this->_echoResultJson(array('msg' => _t('_adm_nav_err_items_icon') . $oStorage->getErrorString()), true);
+                if(($mixedIcon = $oStorage->storeFileFromForm($_FILES['icon_image'], false, 0)) === false) {
+                    $this->_echoResultJson(array('msg' => _t('_adm_nav_err_items_icon_image') . $oStorage->getErrorString()), true);
                     return;
                 }
 
