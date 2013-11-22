@@ -113,8 +113,6 @@ blockquote {
 
     border-bottom: 2px solid #383d66;
 
-    background-image: url(../images/bg-toolbar.png);
-    background-repeat: repeat-x;
     background-color:#0764a7;
 }
 
@@ -124,8 +122,8 @@ blockquote {
 
 .bx-popup-header h2 {
     margin:0;
-    text-shadow: #000 0px 1px 2px;
     text-align:center;
+    color:#FFFFFF;
 }
 
 .bx-popup-box-pointer {

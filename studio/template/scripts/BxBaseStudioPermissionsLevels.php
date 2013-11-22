@@ -15,12 +15,17 @@ bx_import('BxTemplStudioFormView');
 class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels {
     public static $iBinMB = 1048576;
 
+    protected $sUrlPage;
+
     function __construct($aOptions, $oTemplate = false) {
         parent::__construct($aOptions, $oTemplate);
 
         $this->_aOptions['actions_single']['edit']['attr']['title'] = _t('_adm_prm_btn_level_edit');
         $this->_aOptions['actions_single']['delete']['attr']['title'] = _t('_adm_prm_btn_level_delete');
+
+        $this->sUrlPage = BX_DOL_URL_STUDIO . 'builder_permissions.php?page=levels';
     }
+
     public function performActionAdd() {
         $sAction = 'add';
 
@@ -140,14 +145,31 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels {
                     ),
                 ),
                 'Icon' => array(
-                    'type' => 'file',
+                    'type' => 'text',
                     'name' => 'Icon',
                     'caption' => _t('_adm_prm_txt_level_icon'),
+                    'info' => _t('_adm_prm_dsc_level_icon'),
+                    'value' => '',
+                    'required' => '0',
+                    'db' => array (
+                        'pass' => 'Xss',
+                    ),
+                    'checker' => array (
+                        'func' => '',
+                        'params' => array(),
+                        'error' => _t('_adm_prm_err_level_icon'),
+                    ),
+                ),
+                'Icon_image' => array(
+                    'type' => 'file',
+                    'name' => 'Icon_image',
+                    'caption' => _t('_adm_prm_txt_level_icon_image'),
+                	'info' => _t('_adm_prm_dsc_level_icon_image'),
                     'value' => '',
                     'checker' => array (
                         'func' => '',
                         'params' => '',
-                        'error' => _t('_adm_prm_err_level_icon'),
+                        'error' => _t('_adm_prm_err_level_icon_image'),
                     ),
                 ),
                 'controls' => array(
@@ -180,19 +202,27 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels {
                 return;
             }
 
-            $mixedIcon = 'acl-unconfirmed.png';
-            if(!empty($_FILES['Icon']['tmp_name'])) {
+            $mixedIcon = '';
+            if(!empty($_FILES['Icon_image']['tmp_name'])) {
                 bx_import('BxDolStorage');
                 $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
     
-                $mixedIcon = $oStorage->storeFileFromForm($_FILES['Icon'], false, 0); 
+                $mixedIcon = $oStorage->storeFileFromForm($_FILES['Icon_image'], false, 0); 
                 if($mixedIcon === false) {
-                    $this->_echoResultJson(array('msg' => _t('_adm_prm_err_level_icon') . $oStorage->getErrorString()), true);
+                    $this->_echoResultJson(array('msg' => _t('_adm_prm_err_level_icon_image') . $oStorage->getErrorString()), true);
                     return;
                 }
 
                 $oStorage->afterUploadCleanup($mixedIcon, 0);
             }
+
+            if(empty($mixedIcon))
+            	$mixedIcon = $oForm->getCleanValue('Icon');
+
+			if(empty($mixedIcon))
+				$mixedIcon = 'acl-unconfirmed.png';
+
+			BxDolForm::setSubmittedValue('Icon', $mixedIcon, $aForm['form_attrs']['method']);
 
             $fQuotaSize = round($oForm->getCleanValue('QuotaSize'), 1);
             BxDolForm::setSubmittedValue('QuotaSize', self::$iBinMB * $fQuotaSize, $aForm['form_attrs']['method']);
@@ -328,15 +358,38 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels {
                     ),
                 ),
                 'Icon' => array(
-                    'type' => 'file',
+                    'type' => 'text',
                     'name' => 'Icon',
                     'caption' => _t('_adm_prm_txt_level_icon'),
+                    'info' => _t('_adm_prm_dsc_level_icon'),
+                    'value' => '',
+                    'required' => '0',
+                    'db' => array (
+                        'pass' => 'Xss',
+                    ),
+                    'checker' => array (
+                        'func' => '',
+                        'params' => array(),
+                        'error' => _t('_adm_prm_err_level_icon'),
+                    ),
+                ),
+                'Icon_image' => array(
+                    'type' => 'file',
+                    'name' => 'Icon_image',
+                    'caption' => _t('_adm_prm_txt_level_icon_image_new'),
+                	'info' => _t('_adm_prm_dsc_level_icon_image'),
                     'value' => '',
                     'checker' => array (
                         'func' => '',
                         'params' => '',
-                        'error' => _t('_adm_prm_err_level_icon'),
+                        'error' => _t('_adm_prm_err_level_icon_image'),
                     ),
+                ),
+                'Icon_preview' => array(
+                    'type' => 'custom',
+                    'name' => 'Icon_preview',
+                	'caption' => _t('_adm_prm_txt_level_icon_image_old'),
+                    'content' => ''
                 ),
                 'controls' => array(
                     'name' => 'controls', 
@@ -359,29 +412,58 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels {
             )
         );
 
+        $sIconImage = $sIconFont = "";
+        if(!empty($aLevel['icon'])) {
+            if(is_numeric($aLevel['icon']) && (int)$aLevel['icon'] != 0) {
+                bx_import('BxDolStorage');
+                $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
+
+                $sIconImage = $oStorage->getFileUrlById((int)$aLevel['icon']);
+            }
+            else {
+                $sIconFont = $aLevel['icon'];
+                $aForm['inputs']['Icon']['value'] = $sIconFont;
+            }
+        }
+
+        $aForm['inputs']['Icon_preview']['content'] = $this->_getIconPreview($aLevel['id'], $sIconImage, $sIconFont);
+
         bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView($aForm);
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
-            $mixedIcon = 0;
-            if(!empty($_FILES['Icon']['tmp_name'])) {
-                bx_import('BxDolStorage');
+        	$bIconImageCur = is_numeric($aLevel['icon']) && (int)$aLevel['icon'] != 0;
+        	$bIconImageNew = !empty($_FILES['Icon_image']['tmp_name']);
+
+        	$sIconFont = $oForm->getCleanValue('Icon');
+        	$bIconFont = !empty($sIconFont);
+
+			if($bIconImageCur && ($bIconImageNew || $bIconFont)) {
+				bx_import('BxDolStorage');
                 $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
+                if(!$oStorage->deleteFile((int)$aLevel['icon'], 0)) {
+                    $this->_echoResultJson(array('msg' => _t('_adm_prm_err_level_icon_image_remove')), true);
+                    return;
+                }
+			}
 
-                if(is_numeric($aLevel['icon']) && (int)$aLevel['icon'] != 0 && !$oStorage->deleteFile((int)$aLevel['icon'], 0)) {
-                    $this->_echoResultJson(array('msg' => _t('_adm_prm_err_level_icon_remove')), true);
+			$sIcon = $sIconFont;
+        	if($bIconImageNew) {
+        		bx_import('BxDolStorage');
+                $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
+        		$sIcon = $oStorage->storeFileFromForm($_FILES['Icon_image'], false, 0);
+                if($sIcon === false) {
+                    $this->_echoResultJson(array('msg' => _t('_adm_prm_err_level_icon_image') . $oStorage->getErrorString()), true);
                     return;
                 }
 
-                $mixedIcon = $oStorage->storeFileFromForm($_FILES['Icon'], false, 0); 
-                if($mixedIcon === false) {
-                    $this->_echoResultJson(array('msg' => _t('_adm_prm_err_level_icon') . $oStorage->getErrorString()), true);
-                    return;
-                }
+                $oStorage->afterUploadCleanup($sIcon, 0);
+        	}
+        	else if($bIconImageCur && !$bIconFont)
+        		$sIcon = $aLevel['icon'];
 
-                $oStorage->afterUploadCleanup($mixedIcon, 0);
-            }
+			BxDolForm::setSubmittedValue('Icon', $sIcon, $aForm['form_attrs']['method']);
 
             $fQuotaSize = round($oForm->getCleanValue('QuotaSize'), 1);
             BxDolForm::setSubmittedValue('QuotaSize', self::$iBinMB * $fQuotaSize, $aForm['form_attrs']['method']);
@@ -389,7 +471,7 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels {
             $fQuotaMaxFileSize = round($oForm->getCleanValue('QuotaMaxFileSize'), 1);
             BxDolForm::setSubmittedValue('QuotaMaxFileSize', self::$iBinMB * $fQuotaMaxFileSize, $aForm['form_attrs']['method']);
 
-            if($oForm->update($iId, (int)$mixedIcon != 0 ? array('Icon' => $mixedIcon) : array()) !== false)
+            if($oForm->update($iId) !== false)
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
             else
                 $aRes = array('msg' => _t('_adm_prm_err_level_edit'));
@@ -429,9 +511,53 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels {
         $this->_echoResultJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t('_adm_prm_err_level_delete')));
     }
 
+    public function performActionDeleteIcon() {
+        $sAction = 'delete_icon';
+
+        $aIds = bx_get('ids');
+        if(empty($aIds[0])) {
+            $this->_echoResultJson(array());
+            exit;
+        }
+
+        $iId = (int)$aIds[0];
+
+        $aLevel = array();
+        $iLevel = $this->oDb->getLevels(array('type' => 'by_id', 'value' => $iId), $aLevel);
+        if($iLevel != 1 || empty($aLevel)){
+            $this->_echoResultJson(array());
+            exit;
+        }
+
+        if(is_numeric($aLevel['icon']) && (int)$aLevel['icon'] != 0) {
+            bx_import('BxDolStorage');
+            if(!BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES)->deleteFile((int)$aLevel['icon'], 0)) {
+                $this->_echoResultJson(array());
+                exit;
+            }
+        }
+
+        if($this->oDb->updateLevels($aLevel['id'], array('icon' => '')) !== false)
+            $this->_echoResultJson(array('grid' => $this->getCode(false), 'blink' => $iId, 'preview' => $this->_getIconPreview($aLevel['id']), 'eval' => $this->getJsObject() . ".onDeleteIcon(oData)"), true);
+    }
+
+	public function getJsObject() {
+        return 'oBxDolStudioPermissionsLevels';
+    }
+
+	public function getCode($isDisplayHeader = true) {
+        return $this->_oTemplate->parseHtmlByName('prm_levels.html', array(
+            'content' => parent::getCode($isDisplayHeader),
+            'js_object' => $this->getJsObject(),
+        	'page_url' => $this->sUrlPage,
+            'grid_object' => $this->_sObject,
+            'params_divider' => $this->sParamsDivider
+        ));
+    }
+
     protected function _addJsCss() {
         parent::_addJsCss();
-        $this->_oTemplate->addJs(array('jquery.form.js'));
+        $this->_oTemplate->addJs(array('jquery.form.js', 'permissions_levels.js'));
 
         bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
@@ -480,6 +606,33 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels {
             return '';
 
         return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
+    }
+
+	protected function _getIconPreview($iId, $sIconImage = '', $sIconFont = '') {
+    	$bIconImage = !empty($sIconImage);
+		$bIconFont = !empty($sIconFont);
+
+        return $this->_oTemplate->parseHtmlByName('prm_level_icon_preview.html', array(
+        	'id' => $iId,
+            'bx_if:show_icon_empty' => array(
+                'condition' => !$bIconImage && !$bIconFont,
+                'content' => array()
+            ),
+            'bx_if:show_icon_image' => array(
+                'condition' => $bIconImage,
+                'content' => array(
+            		'js_object' => $this->getJsObject(),
+                    'url' => $sIconImage,
+					'id' => $iId
+            	)
+            ),
+            'bx_if:show_icon_font' => array(
+                'condition' => $bIconFont,
+                'content' => array(
+            		'icon' => $sIconFont
+            	)
+            )
+        ));
     }
 
     protected function getAvailableId() {

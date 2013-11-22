@@ -90,4 +90,11 @@ BxDolStudioNavigationItems.prototype.reloadGrid = function(sModule, sSet) {
 BxDolStudioNavigationItems.prototype.onChangeVisibleFor = function(oSelect) {
 	$('#bx-form-element-visible_for_levels').bx_anim($(oSelect).val() == 'all' ? 'hide' : 'show', this.sAnimationEffect, this.iAnimationSpeed);
 };
+
+BxDolStudioNavigationItems.prototype.onDeleteIcon = function(oData) {
+	if (oData && oData.preview != undefined) {
+		var sPreviewId = $(oData.preview).attr('id');
+		$('#' + sPreviewId).replaceWith(oData.preview);
+	}
+};
 /** @} */

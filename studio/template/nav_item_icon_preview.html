@@ -1,20 +1,18 @@
-<bx_if:show_icon_empty>
-    <div class="bx-nav-item-icon-preview-empty bx-def-font-small bx-def-color-ft-gray-l3">
-        <bx_text:_adm_nav_dsc_items_icon_image_current />
-    </div>
-</bx_if:show_icon_empty>
-<bx_if:show_icon_image>
-    <div class="bx-nav-item-icon-preview">
+<div id="bx-nav-item-icon-preview-__id__" class="bx-nav-item-icon-preview">
+	<bx_if:show_icon_empty>
+	    <span class="bx-def-font-small bx-def-color-ft-gray-l3">
+	        <bx_text:_adm_nav_dsc_items_icon_image_current />
+	    </span>
+	</bx_if:show_icon_empty>
+	<bx_if:show_icon_image>
         <img src="__url__" />
         <p>
-            <button class="bx_btn" bx_grid_action_single="delete_icon" bx_grid_action_data="__id__">
+            <button type="button" class="bx_btn" bx_grid_action_single="delete_icon" bx_grid_action_data="__id__">
                 <bx_text:_adm_nav_btn_current_icon_image_delete />
             </button>
         </p>
-    </div>
-</bx_if:show_icon_image>
-<bx_if:show_icon_font>
-	<div class="bx-nav-item-icon-preview">
+	</bx_if:show_icon_image>
+	<bx_if:show_icon_font>
 		<i class="sys-icon __icon__"></i>
-	</div>
-</bx_if:show_icon_font>
+	</bx_if:show_icon_font>
+</div>

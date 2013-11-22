@@ -210,7 +210,6 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
-            $mixedIcon = '';
             if(!empty($_FILES['icon_image']['tmp_name'])) {
                 bx_import('BxDolStorage');
                 $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
@@ -222,12 +221,8 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
                 }
 
                 $oStorage->afterUploadCleanup($mixedIcon, 0);
-            }
-
-            if(empty($mixedIcon))
-            	$mixedIcon = $oForm->getCleanValue('icon');
-
-			BxDolForm::setSubmittedValue('icon', $mixedIcon, $aForm['form_attrs']['method']);
+                BxDolForm::setSubmittedValue('icon', $mixedIcon, $aForm['form_attrs']['method']);
+            }		
 
             bx_import('BxDolPermalinks');
             $oPermalinks = BxDolPermalinks::getInstance();
@@ -480,7 +475,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
 
         $sIconImage = $sIconFont = "";
         if(!empty($aItem['icon'])) {
-            if((int)$aItem['icon'] != 0) {
+            if(is_numeric($aItem['icon']) && (int)$aItem['icon'] != 0) {
                 bx_import('BxDolStorage');
                 $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
 
@@ -492,54 +487,45 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
             }
         }
 
-        $bIconImage = !empty($sIconImage);
-		$bIconFont = !empty($sIconFont);
-        $aTmplVars = array(
-            'bx_if:show_icon_empty' => array(
-                'condition' => !$bIconImage && !$bIconFont,
-                'content' => array()
-            ),
-            'bx_if:show_icon_image' => array(
-                'condition' => $bIconImage,
-                'content' => array(
-            		'js_object' => $this->getJsObject(),
-                    'url' => $sIconImage,
-					'id' => $aItem['id']
-            	)
-            ),
-            'bx_if:show_icon_font' => array(
-                'condition' => $bIconFont,
-                'content' => array(
-            		'icon' => $sIconFont
-            	)
-            )
-        );
-
-        $aForm['inputs']['icon_preview']['content'] = $this->_oTemplate->parseHtmlByName('nav_item_icon_preview.html', $aTmplVars);
+        $aForm['inputs']['icon_preview']['content'] = $this->_getIconPreview($aItem['id'], $sIconImage, $sIconFont);
 
         $oForm = new BxTemplStudioFormView($aForm);
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
-            $mixedIcon = 0;
-            if(!empty($_FILES['icon_image']['tmp_name'])) {
-                bx_import('BxDolStorage');
+        	$bIconImageCur = is_numeric($aItem['icon']) && (int)$aItem['icon'] != 0;
+        	$bIconImageNew = !empty($_FILES['icon_image']['tmp_name']);
+
+        	$sIconFont = $oForm->getCleanValue('icon');
+        	$bIconFont = !empty($sIconFont);
+
+			if($bIconImageCur && ($bIconImageNew || $bIconFont)) {
+				bx_import('BxDolStorage');
                 $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
-    
-                if(is_numeric($aItem['icon']) && (int)$aItem['icon'] != 0 && !$oStorage->deleteFile((int)$aItem['icon'], 0)) {
+                if(!$oStorage->deleteFile((int)$aItem['icon'], 0)) {
                     $this->_echoResultJson(array('msg' => _t('_adm_nav_err_items_icon_image_remove')), true);
                     return;
                 }
+			}
 
-                if(($mixedIcon = $oStorage->storeFileFromForm($_FILES['icon_image'], false, 0)) === false) {
+			$sIcon = $sIconFont;
+        	if($bIconImageNew) {
+        		bx_import('BxDolStorage');
+                $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
+        		$sIcon = $oStorage->storeFileFromForm($_FILES['icon_image'], false, 0);
+                if($sIcon === false) {
                     $this->_echoResultJson(array('msg' => _t('_adm_nav_err_items_icon_image') . $oStorage->getErrorString()), true);
                     return;
                 }
 
-                $oStorage->afterUploadCleanup($mixedIcon, 0);
-            }
+                $oStorage->afterUploadCleanup($sIcon, 0);
+        	}
+        	else if($bIconImageCur && !$bIconFont)
+        		$sIcon = $aItem['icon'];
 
-            bx_import('BxDolPermalinks');
+			BxDolForm::setSubmittedValue('icon', $sIcon, $aForm['form_attrs']['method']);
+
+			bx_import('BxDolPermalinks');
             $sLink = $oForm->getCleanValue('link');
             $sLink = BxDolPermalinks::getInstance()->unpermalink($sLink);
             BxDolForm::setSubmittedValue('link', $sLink, $aForm['form_attrs']['method']);
@@ -560,7 +546,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
             if($sTarget === false && !in_array($aItem['target'], array('', '_blank'))) 
                 unset($oForm->aInputs['target']);
 
-            if($oForm->update($iId, (int)$mixedIcon != 0 ? array('icon' => $mixedIcon) : array()) !== false)
+            if($oForm->update($iId) !== false)
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
             else
                 $aRes = array('msg' => _t('_adm_nav_err_items_edit'));
@@ -740,10 +726,12 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
         $sAction = 'delete_icon';
 
         $aIds = bx_get('ids');
-        if(!isset($aIds[0]) || ($iId = (int)$aIds[0]) == 0) {
+        if(empty($aIds[0])) {
             $this->_echoResultJson(array());
             exit;
         }
+
+        $iId = (int)$aIds[0];
 
         $aItem = array();
         $iItem = $this->oDb->getItems(array('type' => 'by_id', 'value' => $iId), $aItem);
@@ -761,14 +749,14 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
         }
 
         if($this->oDb->updateItem($aItem['id'], array('icon' => '')) !== false)
-            $this->performActionEdit(true);
+            $this->_echoResultJson(array('grid' => $this->getCode(false), 'blink' => $iId, 'preview' => $this->_getIconPreview($aItem['id']), 'eval' => $this->getJsObject() . ".onDeleteIcon(oData)"), true);
     }
 
-    function getJsObject() {
+    public function getJsObject() {
         return 'oBxDolStudioNavigationItems';
     }
 
-    function getSetsSelector($sModule = '') {
+    public function getSetsSelector($sModule = '') {
         bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
 
@@ -802,7 +790,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
         return $oForm->genRow($aInputSets);
     }
 
-    function getCode($isDisplayHeader = true) {
+    public function getCode($isDisplayHeader = true) {
         return $this->_oTemplate->parseHtmlByName('nav_items.html', array(
             'content' => parent::getCode($isDisplayHeader),
             'js_object' => $this->getJsObject(),
@@ -947,6 +935,33 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
         $sContent .= $oForm->genRow($aInputSearch);
 
         return $sContent;
+    }
+
+    protected function _getIconPreview($iId, $sIconImage = '', $sIconFont = '') {
+    	$bIconImage = !empty($sIconImage);
+		$bIconFont = !empty($sIconFont);
+
+        return $this->_oTemplate->parseHtmlByName('nav_item_icon_preview.html', array(
+        	'id' => $iId,
+            'bx_if:show_icon_empty' => array(
+                'condition' => !$bIconImage && !$bIconFont,
+                'content' => array()
+            ),
+            'bx_if:show_icon_image' => array(
+                'condition' => $bIconImage,
+                'content' => array(
+            		'js_object' => $this->getJsObject(),
+                    'url' => $sIconImage,
+					'id' => $iId
+            	)
+            ),
+            'bx_if:show_icon_font' => array(
+                'condition' => $bIconFont,
+                'content' => array(
+            		'icon' => $sIconFont
+            	)
+            )
+        ));
     }
 }
 /** @} */

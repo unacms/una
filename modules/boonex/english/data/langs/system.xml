@@ -1896,8 +1896,14 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
     <string name="_adm_prm_dsc_level_name"><![CDATA[Short name for the membership level (i.e Premium, Gold, Newcomer, etc.)]]></string>
     <string name="_adm_prm_err_level_name"><![CDATA[You need to enter name(3, 100) for membership level]]></string>
     <string name="_adm_prm_txt_level_icon"><![CDATA[Icon]]></string>
-    <string name="_adm_prm_err_level_icon"><![CDATA[Cannot upload icon: ]]></string>
-    <string name="_adm_prm_err_level_icon_remove"><![CDATA[Cannot remove icon]]></string>
+    <string name="_adm_prm_dsc_level_icon"><![CDATA[You may use font icon here]]></string>
+    <string name="_adm_prm_err_level_icon"><![CDATA[You need to enter font icon name here.]]></string>
+    <string name="_adm_prm_txt_level_icon_image"><![CDATA[]]></string>
+    <string name="_adm_prm_txt_level_icon_image_old"><![CDATA[Current Icon]]></string>
+    <string name="_adm_prm_txt_level_icon_image_new"><![CDATA[]]></string>
+    <string name="_adm_prm_dsc_level_icon_image"><![CDATA[or upload an image.]]></string>    
+    <string name="_adm_prm_err_level_icon_image"><![CDATA[Cannot upload icon: ]]></string>
+    <string name="_adm_prm_err_level_icon_image_remove"><![CDATA[Cannot remove icon]]></string>
     <string name="_adm_prm_txt_level_description"><![CDATA[Description]]></string>
     <string name="_adm_prm_dsc_level_description"><![CDATA[Brief overview of terms and advantages of this level.]]></string>
     <string name="_adm_prm_txt_level_quota_size"><![CDATA[Storage Limit(Mb)]]></string>

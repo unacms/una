@@ -3,6 +3,9 @@
         __form__
         <script type="text/javascript">
             $(document).ready(function () {
+            	if($("[bx_grid_action_single = 'delete_icon']").length > 0)
+            	    glGrids.__object__._bindActionsSingle($("#__form_id__"));
+
                 $("#__form_id__").ajaxForm({ 
                     dataType: "json",
                     beforeSubmit: function (formData, jqForm, options) {
