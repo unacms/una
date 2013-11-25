@@ -50,7 +50,8 @@
 
 	<string name="_bx_timeline_acl_action_post"><![CDATA[Post]]></string>
 	<string name="_bx_timeline_acl_action_delete"><![CDATA[Delete]]></string>
-	<string name="_bx_timeline_acl_action_comment"><![CDATA[Comment]]></string>
+	<string name="_bx_timeline_acl_action_vote"><![CDATA[Vote]]></string>
+	<string name="_bx_timeline_acl_action_share"><![CDATA[Share]]></string>
 
 	<string name="_bx_timeline_page_title_sys_view"><![CDATA[Timeline]]></string>
 	<string name="_bx_timeline_page_title_view"><![CDATA[Timeline]]></string>

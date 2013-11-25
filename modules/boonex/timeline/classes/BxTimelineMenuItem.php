@@ -96,6 +96,18 @@ class BxTimelineMenuItem extends BxTemplMenu {
                 if(!empty($this->_aEvent))
                 	$aCheckFuncParams = array($this->_aEvent);
                 break;
+
+			case 'item-vote':
+                $sCheckFuncName = 'isAllowedVote';
+                if(!empty($this->_aEvent))
+                	$aCheckFuncParams = array($this->_aEvent);
+                break;
+
+			case 'item-share':
+                $sCheckFuncName = 'isAllowedShare';
+                if(!empty($this->_aEvent))
+                	$aCheckFuncParams = array($this->_aEvent);
+                break;
         }
 
         if(!$sCheckFuncName || !method_exists($this->_oModule, $sCheckFuncName))

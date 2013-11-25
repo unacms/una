@@ -14,9 +14,9 @@ bx_import('BxDolLanguages');
 
 check_logged();
 
-$sSys = isset($_REQUEST['sys']) ? $_REQUEST['sys'] : '';
-$iObjectId = (int)$_REQUEST['id'];
-$sAction = isset($_REQUEST['action']) && preg_match ('/^[A-Za-z_-]+$/', $_REQUEST['action']) ? $_REQUEST['action'] : '';
+$sSys = isset($_REQUEST['sys']) ? bx_process_input($_REQUEST['sys']) : '';
+$iObjectId = isset($_REQUEST['id']) ? bx_process_input($_REQUEST['id'], BX_DATA_INT) : 0;
+$sAction = isset($_REQUEST['action']) && preg_match ('/^[A-Za-z_-]+$/', $_REQUEST['action']) ? bx_process_input($_REQUEST['action']) : '';
 
 bx_import('BxDolCmts');
 $oCmts = BxDolCmts::getObjectInstance($sSys, $iObjectId, true);

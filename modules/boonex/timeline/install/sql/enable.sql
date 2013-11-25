@@ -106,6 +106,14 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 ('bx_timeline', 'delete', NULL, '_bx_timeline_acl_action_delete', '', 1, 1);
 SET @iIdActionDelete = LAST_INSERT_ID();
 
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('bx_timeline', 'vote', NULL, '_bx_timeline_acl_action_vote', '', 1, 1);
+SET @iIdActionVote = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('bx_timeline', 'share', NULL, '_bx_timeline_acl_action_share', '', 1, 1);
+SET @iIdActionShare = LAST_INSERT_ID();
+
 SET @iUnauthenticated = 1;
 SET @iStandard = 2;
 SET @iUnconfirmed = 3;
@@ -125,7 +133,19 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
 -- delete
 (@iModerator, @iIdActionDelete),
-(@iAdministrator, @iIdActionDelete);
+(@iAdministrator, @iIdActionDelete),
+
+-- vote
+(@iStandard, @iIdActionVote),
+(@iModerator, @iIdActionVote),
+(@iAdministrator, @iIdActionVote),
+(@iPremium, @iIdActionVote),
+
+-- share
+(@iStandard, @iIdActionShare),
+(@iModerator, @iIdActionShare),
+(@iAdministrator, @iIdActionShare),
+(@iPremium, @iIdActionShare);
 
 
 -- ALERTS

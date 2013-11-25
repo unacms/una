@@ -183,12 +183,11 @@ class BxDolCmts extends BxDol
         parent::BxDol();
 
         $this->_aSystems = $this->getSystems();
+		if(!isset($this->_aSystems[$sSystem]))
+			return;
 
         $this->_sSystem = $sSystem;
-        if(isset($this->_aSystems[$sSystem]))
-            $this->_aSystem = $this->_aSystems[$sSystem];
-        else
-            return;
+        $this->_aSystem = $this->_aSystems[$sSystem];
 
 		$this->_aSystem['table_images'] = 'sys_cmts_images';
 		$this->_aSystem['table_images2entries'] = 'sys_cmts_images2entries';

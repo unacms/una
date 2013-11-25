@@ -621,10 +621,40 @@ class BxTimelineModule extends BxDolModule
 		$oCmts = $this->getCmtsObject($sSystem, $iObjectId);
     	$oCmts->addCssJs();
 
+    	$iUserId = (int)$this->getUserId();
+    	if($iUserId == 0)
+    		return false;
+
 		if(isAdmin())
 			return true;
 
         return $oCmts->isPostReplyAllowed($bPerform);
+    }
+
+	public function isAllowedVote($aEvent, $bPerform = false)
+    {
+    	$iUserId = (int)$this->getUserId();
+    	if($iUserId == 0)
+    		return false;
+
+    	if(isAdmin())
+			return true;
+
+		$aCheckResult = checkActionModule($iUserId, 'vote', $this->getName(), $bPerform);
+        return $aCheckResult[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED;
+    }
+
+    public function isAllowedShare($aEvent, $bPerform = false)
+    {
+    	$iUserId = (int)$this->getUserId();
+    	if($iUserId == 0)
+    		return false;
+
+    	if(isAdmin())
+			return true;
+
+		$aCheckResult = checkActionModule($iUserId, 'share', $this->getName(), $bPerform);
+        return $aCheckResult[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED;
     }
 
 	public function onPost($iId)
