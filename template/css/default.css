@@ -53,56 +53,56 @@
     margin-left:0;
 }
 
-.bx-def-margin-sec {
+.bx-def-margin-sec { /* 26.13.13: prev val 0.6rem; */
     margin:10px;
-    margin:0.6rem;
+    margin:0.5rem;
 }
 .bx-def-margin-sec-rightbottomleft {
     margin-right:10px;
-    margin-right:0.6rem;
+    margin-right:0.5rem;
     margin-bottom:10px;
-    margin-bottom:0.6rem;
+    margin-bottom:0.5rem;
     margin-left:10px;
-    margin-left:0.6rem;
+    margin-left:0.5rem;
 }
 .bx-def-margin-sec-leftright {
     margin-left:10px;
-    margin-left:0.6rem;
+    margin-left:0.5rem;
     margin-right:10px;
-    margin-right:0.6rem;
+    margin-right:0.5rem;
 }
 .bx-def-margin-sec-topbottom {
     margin-top:10px;
-    margin-top:0.6rem;
+    margin-top:0.5rem;
     margin-bottom:10px;
-    margin-bottom:0.6rem;
+    margin-bottom:0.5rem;
 }
 .bx-def-margin-sec-top {
     margin-top:10px;
-    margin-top:0.6rem;
+    margin-top:0.5rem;
 }
 .bx-def-margin-sec-top-auto {
     margin-top:10px;
-    margin-top:0.6rem;
+    margin-top:0.5rem;
 }
 .bx-def-margin-sec-top-auto:first-child {
     margin-top:0;
 }
 .bx-def-margin-sec-right {
     margin-right:10px;
-    margin-right:0.6rem;
+    margin-right:0.5rem;
 }
 .bx-def-margin-sec-bottom {
     margin-bottom:10px;
-    margin-bottom:0.6rem;
+    margin-bottom:0.5rem;
 }
 .bx-def-margin-sec-left {
     margin-left:10px;
-    margin-left:0.6rem;
+    margin-left:0.5rem;
 }
 .bx-def-margin-sec-left-auto {
     margin-left:10px;
-    margin-left:0.6rem;
+    margin-left:0.5rem;
 }
 .bx-def-margin-sec-left-auto:first-child {
     margin-left:0;
@@ -387,8 +387,8 @@
 /* NOTE: bx-def-font, h1, h2, h3 styles were copied to editor.css */
 
 .bx-def-font {
-    font-family:"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
-    font-weight:300;
+    font-family:"Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; /* 26.13.13: prev val "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;*/ 
+    font-weight:400; /* 26.13.13: prev val 300 */
     font-size:14px;
     font-size:1rem;
     color:#333;

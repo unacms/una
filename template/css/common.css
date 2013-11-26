@@ -4,7 +4,7 @@
 a {
     text-decoration:none;
     outline:none;
-    color:#387877;
+    color:#3e8685; /* 26.13.13: prev val #387877; */
 }
 
 a:hover {

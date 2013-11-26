@@ -55,6 +55,6 @@
 
 .col-gray { color: #616161; }
 .bg-col-gray { background-color: #616161; }
-.col-gray-dark { color: #575757; }
+.col-gray-dark { color: #333333; } /* 26.13.13: prev val #575757; */
 .bg-col-gray-dark { background-color: #575757; }
 
