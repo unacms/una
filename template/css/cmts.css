@@ -13,14 +13,15 @@
     }
     ul.cmts-margin,
     div.cmt-reply-margin {
-		padding-left: 42px;
+		padding-left: 60px;
     }
     li.cmt,
     ul.cmts-margin li.cmt {
     	position: relative;
     }
     ul.cmts-margin li.cmt:first-child {
-		margin-top: 20px;
+		margin-top: 30px;
+    	margin-top: 2rem;
     }
     li.cmt-err {
         color: red;
@@ -64,7 +65,6 @@
 	
     li.cmt-more-root div.cmt-more-cont {
     	position: relative;
-		text-align: center;
     }
     li.cmt-more-root div.cmt-more-line {
     	position: absolute;
@@ -166,6 +166,8 @@
 	div.cmt-actions {
 		position: relative;
 	}
+	div.cmt-ago,
+	div.cmt-actions div.bullet,
 	div.cmt-actions ul.bx-menu-hor,
 	div.cmt-points-wrp {
 		position: relative;

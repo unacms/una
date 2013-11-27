@@ -13,7 +13,7 @@ bx_import('BxTemplMenu');
  * Menu representation.
  * @see BxDolMenu
  */
-class BxBaseMenuCmts extends BxTemplMenu 
+class BxBaseCmtsMenu extends BxTemplMenu 
 {
 	protected $_oCmts;
 	protected $_aCmt;
@@ -66,18 +66,24 @@ class BxBaseMenuCmts extends BxTemplMenu
                 break;
 
 			case 'item-rate-plus':
+				/*
+				//TODO: remove if Minus won't be used
 				if(!empty($this->_aCmt) && (int)$this->_aCmt['cmt_rated'] > 0)
 					return false;
+				*/
 
 				$sCheckFuncName = 'isRateAllowed';
                 break;
 
+			/*
+			//TODO: remove if Minus won't be used
 			case 'item-rate-minus':
 				if(!empty($this->_aCmt) && (int)$this->_aCmt['cmt_rated'] <= 0)
 					return false;
 
                 $sCheckFuncName = 'isRateAllowed';
                 break;
+			*/
         }
 
         if(!$sCheckFuncName || !method_exists($this->_oCmts, $sCheckFuncName))

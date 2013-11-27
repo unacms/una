@@ -14,8 +14,8 @@ bx_import('BxTemplPaginate');
  * @see BxDolCmts
  */
 class BxBaseCmtsView extends BxDolCmts {
-	var $_sJsObjName;
-    var $_sStylePrefix;
+	protected $_sJsObjName;
+    protected $_sStylePrefix;
 
     function BxBaseCmtsView( $sSystem, $iId, $iInit = 1 ) {
         BxDolCmts::BxDolCmts( $sSystem, $iId, $iInit );
@@ -77,6 +77,8 @@ class BxBaseCmtsView extends BxDolCmts {
     	$aBp = array('parent_id' => $iParentId, 'vparent_id' => $iVParentId);
 
     	$sCmts = $this->getComments($aBp);
+    	if(empty($sCmts))
+			$sCmts = $this->_getEmpty();
 
     	$sCaption = _t('_cmt_block_comments_title', $this->getCommentsCount());
     	$sContent = BxDolTemplate::getInstance()->parseHtmlByName('comments_block.html', array(
@@ -110,7 +112,7 @@ class BxBaseCmtsView extends BxDolCmts {
 
 		$aCmts = $this->getCommentsArray($aBp['vparent_id'], $aBp['filter'], $aBp['order'], $aBp['start'], $aBp['per_view']);
 		if(empty($aCmts) || !is_array($aCmts))
-			return $this->_getEmpty();
+			return '';
 
 		$sCmts = '';
 		foreach($aCmts as $k => $aCmt)
@@ -251,12 +253,6 @@ class BxBaseCmtsView extends BxDolCmts {
         		'condition' => !empty($aTmplReplyTo),
         		'content' => $aTmplReplyTo
         	),
-        	'view_link' => bx_append_url_params($this->_sViewUrl, array(
-        		'sys' => $this->_sSystem,
-        		'id' => $this->_iId,
-        		'cmt_id' => $aCmt['cmt_id']
-        	)),
-        	'ago' => bx_time_js($aCmt['cmt_time']),
         	'text' => $sText,
         	'bx_if:show_more' => array(
         		'condition' => !empty($sTextMore),
@@ -451,6 +447,12 @@ class BxBaseCmtsView extends BxDolCmts {
         	'id' => $aCmt['cmt_id'],
         	'js_object' => $this->_sJsObjName,
         	'style_prefix' => $this->_sStylePrefix,
+        	'view_link' => bx_append_url_params($this->_sViewUrl, array(
+        		'sys' => $this->_sSystem,
+        		'id' => $this->_iId,
+        		'cmt_id' => $aCmt['cmt_id']
+        	)),
+        	'ago' => bx_time_js($aCmt['cmt_time']),
         	'menu_actions' => $oMenuActions->getCode(),
         	'bx_if:hide_rate_count' => array(
         		'condition' => (int)$aCmt['cmt_rate'] <= 0,

@@ -31,6 +31,13 @@ ul.bx-menu-hor {
     color:#000;
 }
 
+.bx-menu-hor.bx-menu-hor-inline li {
+	margin-left:0px;
+}
+.bx-menu-hor.bx-menu-hor-inline li:first-child {
+	display: none;
+}
+
 /* --------------- vertical menu */
 
 ul.bx-menu-ver {

@@ -282,13 +282,4 @@ class BxDolCmtsQuery extends BxDolDb
         $sQuery = $this->prepare("UPDATE `{$this->_sTriggerTable}` SET `{$this->_sTriggerFieldComments}` = ? WHERE `{$this->_sTriggerFieldId}` = ? LIMIT 1", $iCount, $iId);
         return $this->query($sQuery);
     }
-
-    function maintenance()
-    {
-        $iTimestamp = time();
-        $iDeletedRecords = $this->query("DELETE FROM {$this->_sTableTrack} WHERE `cmt_rate_ts` < ($iTimestamp - " . (int)BX_OLD_CMT_VOTES . ")");
-        if ($iDeletedRecords)
-            $this->query("OPTIMIZE TABLE {$this->_sTableTrack}");
-        return $iDeletedRecords;
-    }
 }

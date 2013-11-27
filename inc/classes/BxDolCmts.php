@@ -9,7 +9,7 @@
 
 bx_import('BxDolCmtsQuery');
 
-define('BX_OLD_CMT_VOTES', 365*86400); ///< comment votes older than this number of seconds will be deleted automatically 
+define('BX_CMT_OLD_VOTES', 365*86400); ///< comment votes older than this number of seconds will be deleted automatically 
 
 define('BX_CMT_ACTION_POST', 'post');
 define('BX_CMT_ACTION_EDIT', 'edit');
@@ -306,6 +306,29 @@ class BxDolCmts extends BxDol
         return $GLOBALS['bx_dol_cmts_systems'];
     }
 
+	/**
+     * it is called on cron every day or similar period to clean old comment votes
+     */
+    public static function maintenance() {        
+        $iResult = 0;
+        $oDb = BxDolDb::getInstance();
+
+        $aSystems = self::getSystems();
+        foreach($aSystems as $aSystem) {
+			if(!$aSystem['is_on'])
+				continue;
+
+            $sQuery = $oDb->prepare("DELETE FROM `{$aSystem['table_track']}` WHERE `cmt_rate_ts` < (UNIX_TIMESTAMP() - ?)", BX_CMT_OLD_VOTES);
+            $iDeleted = (int)$oDb->query($sQuery);
+            if($iDeleted > 0)
+            	$oDb->query("OPTIMIZE TABLE `{$aSystem['table_track']}`");
+
+			$iResult += $iDeleted;
+        }
+
+        return $iResult;
+    }
+
     public function init ($iId)
     {
         if (!$this->isEnabled()) 
@@ -413,21 +436,6 @@ class BxDolCmts extends BxDol
     {
         if ($iId == $this->getId()) return;
         $this->_iId = $iId;
-    }
-
-    /**
-     * it is called on cron every day or similar period to clean old comment votes
-     */
-    public function maintenance () {
-        $iDeletedRecords = 0;
-        foreach ($this->_aSystems as $aSystem) {
-            if (!$aSystem['is_on'])                
-                continue;
-            $oQuery = new BxDolCmtsQuery($aSystem);
-            $iDeletedRecords += $oQuery->maintenance();
-            unset($oQuery);
-        }
-        return $iDeletedRecords;
     }
 
 	/**
@@ -815,10 +823,16 @@ class BxDolCmts extends BxDol
 
     protected function _prepareTextForOutput ($s)
     {
+    	$sHttp = '';
     	$iDataAction = $this->isNl2br() ? BX_DATA_TEXT_MULTILINE : BX_DATA_TEXT;
+		$sPattern = "/((https?|ftp|news):\/\/)?([a-z]([a-z0-9\-]*\.)+(aero|arpa|biz|com|coop|edu|gov|info|int|jobs|mil|museum|name|nato|net|org|pro|travel|[a-z]{2})|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))(\/[a-z0-9_\-\.~]+)*(\/([a-z0-9_\-\.]*)(\?[a-z0-9+_\-\.%=&amp;]*)?)?(#[a-z][a-z0-9_]*)?/";
+
+    	$aMatches = array();
+    	if(preg_match($sPattern, $s, $aMatches) && empty($aMatches[1]))
+    		$sHttp = 'http://';
 
 		$s = bx_process_output($s, $iDataAction);
-		$s = preg_replace("/((https?|ftp|news):\/\/)?([a-z]([a-z0-9\-]*\.)+(aero|arpa|biz|com|coop|edu|gov|info|int|jobs|mil|museum|name|nato|net|org|pro|travel|[a-z]{2})|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))(\/[a-z0-9_\-\.~]+)*(\/([a-z0-9_\-\.]*)(\?[a-z0-9+_\-\.%=&amp;]*)?)?(#[a-z][a-z0-9_]*)?/", '<a href="$0" target="_blank">$0</a>', $s);
+		$s = preg_replace($sPattern, '<a href="' . $sHttp . '$0" target="_blank">$0</a>', $s);
 
 		return $s; 
     }

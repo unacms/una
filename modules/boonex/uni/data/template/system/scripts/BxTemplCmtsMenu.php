@@ -7,12 +7,12 @@
  * @{
  */
 
-bx_import('BxBaseMenuCmts');
+bx_import('BxBaseCmtsMenu');
 
 /**
  * @see BxDolMenu
  */
-class BxTemplMenuCmts extends BxBaseMenuCmts {
+class BxTemplCmtsMenu extends BxBaseCmtsMenu {
 
     public function __construct ($aObject, $oTemplate = false) {
         parent::__construct ($aObject, $oTemplate);
