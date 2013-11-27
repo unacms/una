@@ -1,8 +1,8 @@
 
 /* margins */
-.bx-def-margin {
-    margin:30px;	/* 27.11.13 old value:20px; */ 
-    margin:2rem;	/* 27.11.13 old value:1.2rem; */
+.bx-def-margin { /* 27.11.13 old value: 20px; 1.2rem; */ 
+    margin:30px;
+    margin:2rem;
 }
 .bx-def-margin-rightbottomleft {
     margin-right:30px;
@@ -395,8 +395,8 @@
 }
 
 .bx-def-font-inputs {
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
-    font-weight: 300;
+    font-family:"Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; /* 27.13.13: prev val "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;*/ 
+    font-weight:400; /* 27.13.13: prev val 300 */
     font-size:14px;
     font-size:1rem;
     color:#333;
