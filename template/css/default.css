@@ -1,53 +1,53 @@
 
 /* margins */
-.bx-def-margin { /* 27.11.13 old value: 20px; 1.2rem; */ 
-    margin:30px;
-    margin:2rem;
+.bx-def-margin { 
+    margin:20px;
+    margin:1.2rem;
 }
 .bx-def-margin-rightbottomleft {
-    margin-right:30px;
-    margin-right:2rem;
-    margin-bottom:30px;
-    margin-bottom:2rem;
-    margin-left:30px;
-    margin-left:2rem;
+    margin-right:20px;
+    margin-right:1.2rem;
+    margin-bottom:20px;
+    margin-bottom:1.2rem;
+    margin-left:20px;
+    margin-left:1.2rem;
 }
 .bx-def-margin-leftright {
-    margin: 0px 30px;
-    margin: 0 2rem;
+    margin: 0px 20px;
+    margin: 0 1.2rem;
 }
 .bx-def-margin-topbottom {
-    margin-top:30px;
-    margin-top:2rem;
-    margin-bottom:30px;
-    margin-bottom:2rem;
+    margin-top:20px;
+    margin-top:1.2rem;
+    margin-bottom:20px;
+    margin-bottom:1.2rem;
 }
 .bx-def-margin-top {
-    margin-top:30px;
-    margin-top:2rem;
+    margin-top:20px;
+    margin-top:1.2rem;
 }
 .bx-def-margin-top-auto {
-    margin-top:30px;
-    margin-top:2rem;
+    margin-top:20px;
+    margin-top:1.2rem;
 }
 .bx-def-margin-top-auto:first-child {
     margin-top:0;
 }
 .bx-def-margin-right {
-    margin-right:30px;
-    margin-right:2rem;
+    margin-right:20px;
+    margin-right:1.2rem;
 }
 .bx-def-margin-bottom {
-    margin-bottom:30px;
-    margin-bottom:2rem;
+    margin-bottom:20px;
+    margin-bottom:1.2rem;
 }
 .bx-def-margin-left {
-    margin-left:30px;
-    margin-left:2rem;
+    margin-left:20px;
+    margin-left:1.2rem;
 }
 .bx-def-margin-left-auto {
-    margin-left:30px;
-    margin-left:2rem;
+    margin-left:20px;
+    margin-left:1.2rem;
 }
 .bx-def-margin-left-auto:first-child {
     margin-left:0;

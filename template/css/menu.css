@@ -15,11 +15,6 @@ ul.bx-menu-hor {
 
 .bx-menu-hor li {
     float:left;
-    margin-left:20px;
-}
-
-.bx-menu-hor li:first-child {
-    margin-left:0px;
 }
 
 .bx-menu-hor li a {
@@ -29,13 +24,6 @@ ul.bx-menu-hor {
 
 .bx-menu-hor li.bx-menu-tab-active a {
     color:#000;
-}
-
-.bx-menu-hor.bx-menu-hor-inline li {
-	margin-left:0px;
-}
-.bx-menu-hor.bx-menu-hor-inline li:first-child {
-	display: none;
 }
 
 /* --------------- vertical menu */
