@@ -346,17 +346,14 @@ BxDolCmts.prototype.toggleReply = function(e, iCmtParentId)
     }
 
 	this._getForm(e, iCmtParentId, function(sForm) {
-		var oForm = $(sForm).hide();
-        var sFormClass = oForm.attr('class');
+		var oForm = $(sForm).hide().addClass('cmt-reply-' + $this._sPostFormPosition).addClass('cmt-reply-margin');
         var oFormSibling = $(sParentId + ' > ul.cmts:first');
         switch($this._sPostFormPosition) {
         	case 'top':
-        		oForm.addClass('cmt-reply-margin').addClass(sFormClass + '-' + $this._sPostFormPosition);
         		oFormSibling.before(oForm);
         		break;
 
         	case 'bottom':
-        		oForm.addClass('cmt-reply-margin').addClass(sFormClass + '-' + $this._sPostFormPosition);
         		oFormSibling.after(oForm);
         		break;
         }

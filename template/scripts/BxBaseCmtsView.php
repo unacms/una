@@ -480,12 +480,6 @@ class BxBaseCmtsView extends BxDolCmts {
     	if(!$this->isPostReplyAllowed())
     		return '';
 
-/*
-		//TODO: Remove if it's not needed.
-    	list($sAuthorName, $sAuthorLink, $sAuthorIcon) = $this->_getAuthorInfo();
-    	$bAuthorIcon = !empty($sAuthorIcon);
-*/
-
 		$sPositionSystem = $this->_aSystem['post_form_position'];
 		if(!empty($sPosition) && $sPositionSystem != $sPosition)
 			return '';
@@ -502,32 +496,6 @@ class BxBaseCmtsView extends BxDolCmts {
     				'class' => $this->_sStylePrefix . '-reply-' . $sPosition
     			)
     		),
-/*
-			//TODO: Remove if it's not needed.
-    		'bx_if:show_icon' => array(
-        		'condition' => $bAuthorIcon,
-        		'content' => array(
-        			'author_icon' => $sAuthorIcon
-        		)
-        	),
-        	'bx_if:show_icon_empty' => array(
-        		'condition' => !$bAuthorIcon,
-        		'content' => array()
-        	),
-        	'bx_if:show_author_link' => array(
-        		'condition' => !empty($sAuthorLink),
-        		'content' => array(
-        			'author_link' => $sAuthorLink,
-        			'author_name' => $sAuthorName
-        		)
-        	),
-        	'bx_if:show_author_text' => array(
-        		'condition' => empty($sAuthorLink),
-        		'content' => array(
-        			'author_name' => $sAuthorName
-        		)
-        	),
-*/
 			'form' => $aForm['form'],
         	'form_id' => $aForm['form_id'],
     	));
