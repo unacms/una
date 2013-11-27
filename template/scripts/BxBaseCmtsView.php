@@ -719,10 +719,6 @@ class BxBaseCmtsView extends BxDolCmts {
     			'condition' => $bRoot,
     			'content' => array()
     		),
-    		'bx_if:is_button' => array(
-    			'condition' => $bRoot,
-    			'content' => array()
-    		),
 			'parent_id' => $aBp['vparent_id'],
     		'start' => $iStart,
     		'per_view' => $iPerView,

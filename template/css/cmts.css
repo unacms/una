@@ -13,15 +13,11 @@
     }
     ul.cmts-margin,
     div.cmt-reply-margin {
+    	padding-top: 20px;
 		padding-left: 60px;
     }
-    li.cmt,
-    ul.cmts-margin li.cmt {
+    li.cmt {
     	position: relative;
-    }
-    ul.cmts-margin li.cmt:first-child {
-		margin-top: 30px;
-    	margin-top: 2rem;
     }
     li.cmt-err {
         color: red;
@@ -43,23 +39,16 @@
        font-size: 11px;
        color: #333333;
     }
+    div.cmt-cnt {
+		position: relative;
+    }
 
 	/*--- More ---*/
     li.cmt-more {}
-	li.cmt-more-root {
-		margin-top: 20px;
-		margin-bottom: 20px;
-	}
-	div.cmt-more-cont {}
-	div.cmt-more-line {
-		border-bottom: 0px;
-	}
+	li.cmt-more-root {}
 
-	li.cmt-more div.cmt-more-cont {
+	div.cmt-more-cont {
 		font-weight: bold;
-	}
-	li.cmt-more div.cmt-more-line {
-		display: none;
 	}
 
 	

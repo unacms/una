@@ -3551,8 +3551,8 @@ More info about URI DNSBL: <br />
     <string name="_sys_form_comment_input_caption_system_cmt_parent_id"><![CDATA[Parent ID]]></string>
     <string name="_sys_form_comment_input_caption_system_cmt_text"><![CDATA[Text]]></string>
     <string name="_sys_form_comment_input_caption_system_cmt_image"><![CDATA[Image]]></string>
-    <string name="_sys_form_comment_input_caption_system_cmt_submit"><![CDATA[Submit]]></string>
-    <string name="_sys_form_comment_input_submit"><![CDATA[Submit]]></string>
+    <string name="_sys_form_comment_input_caption_system_cmt_submit"><![CDATA[Post]]></string>
+    <string name="_sys_form_comment_input_submit"><![CDATA[Post]]></string>
     <string name=""><![CDATA[]]></string>
     <string name=""><![CDATA[]]></string>
     <string name=""><![CDATA[]]></string>

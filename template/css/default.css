@@ -175,6 +175,12 @@
     padding-right:20px;
     padding-right:1.2rem;
 }
+.bx-def-padding-topbottom {
+    padding-top:20px;
+    padding-top:1.2rem;
+    padding-bottom:20px;
+    padding-bottom:1.2rem;
+}
 .bx-def-padding-top {
     padding-top:20px;
     padding-top:1.2rem;
