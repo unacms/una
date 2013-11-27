@@ -45,9 +45,15 @@
     -ms-box-sizing: border-box;
     box-sizing: border-box;
 
+    height: 48px;
+    height: 3rem;
+           
     margin:0 48px;
     margin:0 3rem;
 
+    line-height: 48px;
+    line-height: 3rem;
+    
     vertical-align: middle;
     text-align: center;
 
