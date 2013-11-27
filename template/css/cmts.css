@@ -92,10 +92,6 @@
 		padding: 0px;
 	}
 
-    div.cmt-username a {
-        text-decoration: none;
-    }
-
     div.cmt-reply-to a.cmt-points span {
 		display: inline;
     	float: none;

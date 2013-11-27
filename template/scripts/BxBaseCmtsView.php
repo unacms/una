@@ -575,6 +575,7 @@ class BxBaseCmtsView extends BxDolCmts {
         	return array('msg' => $aCmt['cmt_author_id'] == $iCmtAuthorId ? strip_tags($this->msgErrEditAllowed()) : _t('_Access denied'));
 
 		$oForm = $this->_getFormObject(BX_CMT_ACTION_EDIT, $aCmt['cmt_id']);
+		$aCmt['cmt_text'] = $this->_prepareTextForEdit($aCmt['cmt_text']);
 
 		$oForm->initChecker($aCmt);
 		if($oForm->isSubmittedAndValid()) {

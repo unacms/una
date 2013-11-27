@@ -812,6 +812,7 @@ class BxDolCmts extends BxDol
     {
         if ($this->isNl2br())
             return str_replace('<br />', "", $s);
+
         return $s;
     }
 
