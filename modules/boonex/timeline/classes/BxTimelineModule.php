@@ -563,6 +563,19 @@ class BxTimelineModule extends BxDolModule
 		return $oCmts;
     }
 
+	public function getVoteObject($sSystem, $iId)
+    {
+    	if(empty($sSystem) || (int)$iId == 0)
+    		return false;
+
+    	bx_import('BxDolVote');
+        $oVote = BxDolVote::getObjectInstance($sSystem, $iId);
+		if(!$oVote->isEnabled())
+			return false;
+
+		return $oVote;
+    }
+    
 	public function getUserId()
     {
         return isLogged() ? bx_get_logged_profile_id() : 0;
@@ -633,6 +646,14 @@ class BxTimelineModule extends BxDolModule
 
 	public function isAllowedVote($aEvent, $bPerform = false)
     {
+    	$mixedVotes = $this->getVotesData($aEvent['votes']);
+    	if($mixedVotes === false)
+    		return false;
+
+		list($sSystem, $iObjectId) = $mixedVotes;
+		$oVote = $this->getVoteObject($sSystem, $iObjectId);
+    	$oVote->addCssJs();
+
     	$iUserId = (int)$this->getUserId();
     	if($iUserId == 0)
     		return false;
@@ -640,8 +661,7 @@ class BxTimelineModule extends BxDolModule
     	if(isAdmin())
 			return true;
 
-		$aCheckResult = checkActionModule($iUserId, 'vote', $this->getName(), $bPerform);
-        return $aCheckResult[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED;
+        return $oVote->isAllowedVote($bPerform);
     }
 
     public function isAllowedShare($aEvent, $bPerform = false)
@@ -715,6 +735,20 @@ class BxTimelineModule extends BxDolModule
         $oAlert = new BxDolAlerts($this->_oConfig->getSystemName('alert'), 'delete', $aEvent['id'], $this->getUserId());
         $oAlert->alert();
         //--- Event -> Delete for Alerts Engine ---//
+    }
+
+	public function getVotesData(&$aVotes)
+    {
+    	if(empty($aVotes) || !is_array($aVotes))
+    		return false; 
+
+		$sSystem = isset($aVotes['system']) ? $aVotes['system'] : '';
+	    $iObjectId = isset($aVotes['object_id']) ? (int)$aVotes['object_id'] : 0;
+	    $iCount = isset($aVotes['count']) ? (int)$aVotes['count'] : 0;
+	    if($sSystem == '' || $iObjectId == 0)
+	    	return false;
+
+		return array($sSystem, $iObjectId, $iCount);
     }
 
     public function getCommentsData(&$aComments)

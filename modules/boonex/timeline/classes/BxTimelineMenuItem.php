@@ -35,14 +35,13 @@ class BxTimelineMenuItem extends BxTemplMenu {
 
     	$this->_aEvent = $aEvent;
 
-    	$sCommentsSystem = '';
-    	$iCommentsCount = 0;
-    	if(isset($aEvent['comments']) && is_array($aEvent['comments']) && isset($aEvent['comments']['system'])) {
-    		$sCommentsSystem = $aEvent['comments']['system'];
-    		$iCommentsCount = (int)$aEvent['comments']['count'];
-    	}
+    	$sVotesOnclick = '';
+    	if(isset($aEvent['votes']) && is_array($aEvent['votes']) && isset($aEvent['votes']['system']))
+    		$sVotesOnclick = $this->_oModule->getVoteObject($aEvent['votes']['system'], $aEvent['votes']['object_id'])->getJsClick();
 
-		$sCommonPrefix = $this->_oModule->_oConfig->getPrefix('common_post');
+    	$sCommentsSystem = '';
+    	if(isset($aEvent['comments']) && is_array($aEvent['comments']) && isset($aEvent['comments']['system']))
+    		$sCommentsSystem = $aEvent['comments']['system'];
 
 		$iOwnerId = $this->_oModule->getUserId(); //--- in whose timeline the content will be shared
 		$sType = $aEvent['type'];
@@ -53,6 +52,7 @@ class BxTimelineMenuItem extends BxTemplMenu {
 		else {
 			$iObjectId = $aEvent['id'];
 
+			$sCommonPrefix = $this->_oModule->_oConfig->getPrefix('common_post');
 			if(str_replace($sCommonPrefix, '', $sType) == BX_TIMELINE_PARSE_TYPE_SHARE) {
 				$sType = $aEvent['content']['type'];
 				$sAction = $aEvent['content']['action'];
@@ -61,15 +61,9 @@ class BxTimelineMenuItem extends BxTemplMenu {
 		}
 
     	$this->addMarkers(array(
-    		//--- For Share Button
     		'share_onclick' => $this->_oModule->serviceGetShareOnclick($iOwnerId, $sType, $sAction, $iObjectId),
-			//--- For Share Button
-
-			'counter_shares' => (int)$aEvent['shares'] > 0 ? ' (' . $aEvent['shares'] . ')' : '', 
-    		'counter_comments' => $iCommentsCount > 0 ? ' (' . $iCommentsCount . ')' : '',
-
-			'content_id' => $aEvent['id'],
-			'comments_system' => $sCommentsSystem
+    		'comment_onclick' => $this->_oModule->_oConfig->getJsObject('view') . ".commentItem(this, '" . $sCommentsSystem . "', " . $aEvent['id'] . ")",
+    		'vote_onclick' => $sVotesOnclick
 		));    	
     }
 
@@ -116,6 +110,34 @@ class BxTimelineMenuItem extends BxTemplMenu {
 		return call_user_func_array(array($this->_oModule, $sCheckFuncName), $aCheckFuncParams);
     }
 
+    /** 
+     * Get menu items array, which are ready to pass to template.
+     * @return array
+     */
+    protected function _getMenuItems() {
+    	$aItems = parent::_getMenuItems();
+
+    	foreach($aItems as $iKey => $aItem)
+    		switch($aItem['name']) {
+    			case 'item-vote':
+    				if(isset($this->_aEvent['votes']) && is_array($this->_aEvent['votes']) && isset($this->_aEvent['votes']['system'])) {
+			    		$oVote = $this->_oModule->getVoteObject($this->_aEvent['votes']['system'], $this->_aEvent['votes']['object_id']);
+
+			    		$aItems[$iKey]['addon'] = $oVote->getCounter();
+			    	}
+    				break;
+
+    			case 'item-comment':
+    				$aItems[$iKey]['addon'] = (int)$this->_aEvent['comments']['count'] > 0 ? (int)$this->_aEvent['comments']['count'] : 0;
+    				break;
+
+    			case 'item-share':
+    				$aItems[$iKey]['addon'] = (int)$this->_aEvent['shares'] > 0 ? $this->_aEvent['shares'] : '';
+    				break;
+    		}
+
+		return $aItems;
+    }
 }
 
 /** @} */

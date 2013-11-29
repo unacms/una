@@ -88,11 +88,11 @@
 	<string name="_bx_timeline_menu_title_item_actions"><![CDATA[Item Actions]]></string>
     <string name="_bx_timeline_menu_set_title_item_actions"><![CDATA[Item Actions]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_comment"><![CDATA[Comment]]></string>
-    <string name="_bx_timeline_menu_item_title_item_comment"><![CDATA[Comment{counter_comments}]]></string>
+    <string name="_bx_timeline_menu_item_title_item_comment"><![CDATA[]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_vote"><![CDATA[Vote]]></string>
-    <string name="_bx_timeline_menu_item_title_item_vote"><![CDATA[Vote]]></string>
+    <string name="_bx_timeline_menu_item_title_item_vote"><![CDATA[]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_share"><![CDATA[Share]]></string>
-    <string name="_bx_timeline_menu_item_title_item_share"><![CDATA[Share{counter_shares}]]></string>
+    <string name="_bx_timeline_menu_item_title_item_share"><![CDATA[]]></string>
 
     <string name="_bx_timeline_menu_item_title_system_timeline"><![CDATA[Timeline]]></string>
     <string name="_bx_timeline_menu_item_title_timeline"><![CDATA[Timeline]]></string>

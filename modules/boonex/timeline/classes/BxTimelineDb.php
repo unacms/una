@@ -259,6 +259,8 @@ class BxTimelineDb extends BxDolModuleDb
                 `{$this->_sTable}`.`action` AS `action`,
                 `{$this->_sTable}`.`object_id` AS `object_id`,
                 `{$this->_sTable}`.`content` AS `content`,
+                `{$this->_sTable}`.`rate` AS `rate`,
+                `{$this->_sTable}`.`votes` AS `votes`,
                 `{$this->_sTable}`.`comments` AS `comments`,
                 `{$this->_sTable}`.`title` AS `title`,
                 `{$this->_sTable}`.`description` AS `description`,

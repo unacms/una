@@ -147,11 +147,9 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 			), array('id' => $aEvent['id']));
 		}
 
-		if(is_string($aResult['content']))
-			return $aResult['content'];
-
 		$aEvent['object_owner_id'] = $aResult['owner_id'];
 		$aEvent['content'] = $aResult['content'];
+		$aEvent['votes'] = $aResult['votes'];
 		$aEvent['comments'] = $aResult['comments'];
 
 		$sType = !empty($aResult['content_type']) ? $aResult['content_type'] : BX_TIMELINE_PARSE_TYPE_DEFAULT;
@@ -298,6 +296,18 @@ class BxTimelineTemplate extends BxDolModuleTemplate
         ));
     }
 
+	public function getVotes($sSystem, $iId)
+    {
+    	$oModule = $this->getModule();
+    	$sStylePrefix = $this->_oConfig->getPrefix('style');
+
+    	$oVote = $oModule->getVoteObject($sSystem, $iId);
+    	if($oVote === false)
+			return '';
+
+		return $oVote->getJsScript();
+    }
+
 	protected function _getPost($sType, $aEvent, $aBrowseParams = array())
     {
 		$oModule = $this->getModule();
@@ -358,12 +368,13 @@ class BxTimelineTemplate extends BxDolModuleTemplate
         		)
         	),
 */
-        	'content' => $this->_getContent($sType, $aEvent['content'], $aBrowseParams),
+        	'content' => is_string($aEvent['content']) ? $aEvent['content'] : $this->_getContent($sType, $aEvent['content'], $aBrowseParams),
 			'bx_if:show_menu_item_actions' => array(
 				'condition' => !empty($aTmplVarsMenuItemActions),
         		'content' => $aTmplVarsMenuItemActions
 			),
-			'comments' => isset($aBrowseParams['type']) && $aBrowseParams['type'] == 'view_item' ? $this->_getComments($aEvent['comments']) : ''
+			'comments' => isset($aBrowseParams['type']) && $aBrowseParams['type'] == 'view_item' ? $this->_getComments($aEvent['comments']) : '',
+			'votes' => $this->_getVotes($aEvent['votes'])
         );
 
         return $this->parseHtmlByName('item.html', $aTmplVars);
@@ -387,6 +398,16 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 
     	list($sSystem, $iObjectId, $iCount) = $mixedComments;
 		return $this->getComments($sSystem, $iObjectId);
+    }
+
+	protected function _getVotes($aVotes)
+    {
+    	$mixedVotes = $this->getModule()->getVotesData($aVotes);
+    	if($mixedVotes === false) 
+    		return '';
+
+    	list($sSystem, $iObjectId, $iCount) = $mixedVotes;
+		return $this->getVotes($sSystem, $iObjectId);
     }
 
     protected function _getTmplVarsMenuItemManage(&$aEvent) {
@@ -641,6 +662,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
     			'sample' => '_bx_timeline_txt_common_' . $sType,
     			'url' => $this->_oConfig->getItemViewUrl($aEvent)
     		), //a string to display or array to parse default template before displaying.
+    		'votes' => '',
     		'comments' => '',
     		'title' => '', //may be empty.
     		'description' => '' //may be empty. 
@@ -701,6 +723,14 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 				$aResult['description'] = '';
 				break;
 		}
+
+		$sSystem = $this->_oConfig->getSystemName('vote');
+        if($oModule->getVoteObject($sSystem, $aEvent['id']) !== false)
+        	$aResult['votes'] = array(
+        		'system' => $sSystem,
+        		'object_id' => $aEvent['id'],
+				'count' => $aEvent['votes']
+			);
 
 		$sSystem = $this->_oConfig->getSystemName('comment');
         if($oModule->getCmtsObject($sSystem, $aEvent['id']) !== false)

@@ -18,6 +18,7 @@ class BxTimelineConfig extends BxDolModuleConfig
 
     protected $_sAlertSystemName;
     protected $_sCommentSystemName;
+    protected $_sVoteSystemName;
 
     protected $_bAllowDelete;
     protected $_bAllowGuestComments;
@@ -60,6 +61,7 @@ class BxTimelineConfig extends BxDolModuleConfig
 
         $this->_sAlertSystemName = $this->_sName;
         $this->_sCommentSystemName = $this->_sName;
+        $this->_sVoteSystemName = $this->_sName;
 
         $this->_aHandlersHidden = array();
         $this->_aHandlers = array();
@@ -142,8 +144,11 @@ class BxTimelineConfig extends BxDolModuleConfig
     		case 'comment':
     			$sResult = $this->_sCommentSystemName;
     			break;
+    		case 'vote':
+    			$sResult = $this->_sVoteSystemName;
+    			break;
     	}
-    	
+
         return $sResult;
     }
 

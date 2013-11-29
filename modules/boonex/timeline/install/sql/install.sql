@@ -11,6 +11,8 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_events` (
   `content` text collate utf8_unicode_ci NOT NULL,
   `title` varchar(255) collate utf8_unicode_ci NOT NULL,
   `description` text collate utf8_unicode_ci NOT NULL,
+  `rate` float NOT NULL default '0',
+  `votes` int(11) unsigned NOT NULL default '0',
   `comments` int(11) unsigned NOT NULL default '0',
   `shares` int(11) unsigned NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
@@ -104,6 +106,23 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_comments_track` (
   `cmt_rate_ts` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`cmt_system_id`,`cmt_id`,`cmt_rate_author_nip`)
 );
+
+-- TABLES: VOTES
+CREATE TABLE IF NOT EXISTS `bx_timeline_votes` (
+  `object_id` int(11) NOT NULL default '0',
+  `count` int(11) NOT NULL default '0',
+  `sum` int(11) NOT NULL default '0',
+  UNIQUE KEY `object_id` (`object_id`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `bx_timeline_votes_track` (
+  `object_id` int(11) NOT NULL default '0',
+  `author_id` int(11) NOT NULL default '0',
+  `author_nip` int(11) NOT NULL default '0',
+  `value` tinyint(4) NOT NULL default '0',
+  `date` int(11) NOT NULL default '0',
+  KEY `vote` (`object_id`, `author_nip`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8;
 
 
 -- Forms -> Text

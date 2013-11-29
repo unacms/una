@@ -36,3 +36,7 @@ DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandlerId LIMIT 1;
 
 -- COMMENTS
 DELETE FROM `sys_objects_cmts` WHERE `Name`='bx_timeline' LIMIT 1;
+
+
+-- VOTES
+DELETE FROM `sys_objects_vote` WHERE `Name`='bx_timeline' LIMIT 1;
