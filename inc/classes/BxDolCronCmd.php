@@ -113,14 +113,12 @@ class BxDolCronCmd extends BxDolCron {
         $iDeletedViews = $oBxViews->maintenance ();
 
         // clean old votes
-        bx_import('BxDolVoting');
-        $oBxVotes = new BxDolVoting('', 0);
-        $iDeletedVotes = $oBxVotes->maintenance ();
+        bx_import('BxDolVote');
+        BxDolVote::maintenance();
 
         // clean comments ratings
         bx_import('BxDolCmts');
-        $oBxCmts = new BxDolCmts('', 0);
-        $iDeletedCommentVotes = $oBxCmts->maintenance ();
+        BxDolCmts::maintenance();
 
         // clean storage engine expired private file tokens
         bx_import('BxDolStorage');

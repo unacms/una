@@ -22,6 +22,10 @@ ul.bx-menu-hor {
     text-decoration:none;
 }
 
+.bx-menu-hor-inline li a {
+	display:inline;
+}
+
 .bx-menu-hor li.bx-menu-tab-active a {
     color:#000;
 }

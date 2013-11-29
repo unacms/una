@@ -93,6 +93,8 @@ class BxBaseMenu extends BxDolMenu {
                 'content' => array('title' => $a['title']), 
             );
 
+            $a['addon'] = '';
+            
             $aRet[] = $a;
         }
 

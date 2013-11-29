@@ -1,0 +1,76 @@
+/*--- Comment Plused By ---*/
+div.bx-vote-by-list {}
+div.bx-vote-by-list-cnt {
+	max-height: 200px;
+	min-width: 225px;
+	overflow: auto;
+}
+div.bx-vote-by-list div.bx-persons-unit {
+	float: none;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+    
+/*--- Likes based Element Styles ---*/
+.bx-vote-likes .bx-vote-element-holder,
+.bx-vote-likes .bx-vote-counter-holder {
+	line-height: 36px;
+	line-height: 2.2rem;
+}
+div.bx-vote-likes div.bx-vote-element-holder,
+div.bx-vote-likes div.bx-vote-counter-holder {
+	position: relative;
+	float: left;
+}
+
+
+/*--- Stars based Element Styles ---*/
+.bx-vote-stars .bx-vote-element-holder,
+.bx-vote-stars .bx-vote-counter-holder {
+	line-height: 16px;
+	line-height: 1rem;
+}
+
+div.bx-vote-stars div.bx-vote-element-holder,
+div.bx-vote-stars div.bx-vote-counter-holder {
+	position: relative;
+	float: left;
+}
+
+/*--- Stars Styles ---*/
+div.bx-vote-element {
+	position: relative;
+}
+span.bx-vote-stars div.bx-vote-element {
+	display: inline-block;
+}
+div.bx-vote-underlay {}
+div.bx-vote-slider {
+    position: absolute;
+	z-index: 1;
+    top: 0px;
+    left: 0px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+i.bx-vote-star,
+span.bx-vote-star {
+	display: inline-block;
+	height: 16px;
+	height: 1rem;
+	width: 16px;
+    width: 1rem;	
+    margin: 0;
+    padding: 0;
+    text-align: center;
+	color: #3e8685;
+}
+div.bx-vote-buttons {
+    position: absolute;
+	z-index: 2;
+	top: 0px;
+	left: 0px;
+}
+div.bx-vote-buttons a:hover {
+	text-decoration: none;
+}

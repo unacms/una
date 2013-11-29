@@ -6,16 +6,16 @@
  */
 defined('BX_DOL') or die('hack attempt');
 
-bx_import('BxBaseVotingView');
+bx_import('BxBaseVoteView');
 
 /**
- * @see BxDolVoting
+ * @see BxDolVote
  */
-class BxTemplVotingView extends BxBaseVotingView
+class BxTemplVoteView extends BxBaseVoteView
 {
-    function BxTemplVotingView( $sSystem, $iId, $iInit = 1 )
+    function __construct($sSystem, $iId, $iInit = 1)
     {
-        BxBaseVotingView::BxBaseVotingView( $sSystem, $iId, $iInit );
+		parent::__construct($sSystem, $iId, $iInit);
     }
 }
 

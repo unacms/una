@@ -910,23 +910,21 @@ CREATE TABLE `sys_transactions` (
 --
 
 CREATE TABLE `sys_objects_vote` (
-  `ID` int(10) unsigned NOT NULL auto_increment,
-  `ObjectName` varchar(50) NOT NULL,
-  `TableRating` varchar(50) NOT NULL,
-  `TableTrack` varchar(50) NOT NULL,
-  `RowPrefix` varchar(20) NOT NULL,
-  `MaxVotes` smallint(2) NOT NULL,
-  `PostName` varchar(50) NOT NULL,
-  `IsDuplicate` varchar(80) NOT NULL,
-  `IsOn` smallint(1) NOT NULL,
-  `className` varchar(50) NOT NULL default '',
-  `classFile` varchar(100) NOT NULL default '',
-  `TriggerTable` varchar(32) NOT NULL,
-  `TriggerFieldRate` varchar(32) NOT NULL,
-  `TriggerFieldRateCount` varchar(32) NOT NULL,
-  `TriggerFieldId` varchar(32) NOT NULL,
-  `OverrideClassName` varchar(32) NOT NULL,
-  `OverrideClassFile` varchar(256) NOT NULL,
+  `ID` int(11) unsigned NOT NULL auto_increment,
+  `Name` varchar(50) NOT NULL default '',
+  `TableMain` varchar(50) NOT NULL default '',
+  `TableTrack` varchar(50) NOT NULL default '',
+  `PostTimeout` int(11) NOT NULL default '0',
+  `MinValue` tinyint(4) NOT NULL default '1',
+  `MaxValue` tinyint(4) NOT NULL default '5',
+  `IsUndo` tinyint(1) NOT NULL default '0',
+  `IsOn` tinyint(1) NOT NULL default '1',
+  `TriggerTable` varchar(32) NOT NULL default '',
+  `TriggerFieldId` varchar(32) NOT NULL default '',
+  `TriggerFieldRate` varchar(32) NOT NULL default '',
+  `TriggerFieldRateCount` varchar(32) NOT NULL default '',
+  `ClassName` varchar(32) NOT NULL default '',
+  `ClassFile` varchar(256) NOT NULL default '',
   PRIMARY KEY  (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
@@ -2869,8 +2867,8 @@ INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `templa
 ('sys_add_content', '_sys_menu_title_add_content', 'sys_add_content_links', 'system', 4, 0, 1, '', ''),
 ('sys_account_settings', '_sys_menu_title_account_settings', 'sys_account_settings', 'system', 6, 0, 1, '', ''),
 ('sys_profiles_create', '_sys_menu_title_profiles_create', 'sys_profiles_create', 'system', 4, 0, 1, '', ''),
-('sys_cmts_item_manage', '_sys_menu_title_cmts_item_manage', 'sys_cmts_item_manage', 'system', 6, 0, 1, 'BxTemplMenuCmts', ''),
-('sys_cmts_item_actions', '_sys_menu_title_cmts_item_actions', 'sys_cmts_item_actions', 'system', 10, 0, 1, 'BxTemplMenuCmts', '');
+('sys_cmts_item_manage', '_sys_menu_title_cmts_item_manage', 'sys_cmts_item_manage', 'system', 6, 0, 1, 'BxTemplCmtsMenu', ''),
+('sys_cmts_item_actions', '_sys_menu_title_cmts_item_actions', 'sys_cmts_item_actions', 'system', 10, 0, 1, 'BxTemplCmtsMenu', '');
 
 CREATE TABLE IF NOT EXISTS `sys_menu_sets` (
   `set_name` varchar(32) NOT NULL,
@@ -2948,10 +2946,11 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('sys_cmts_item_manage', 'system', 'item-delete', '_sys_menu_item_title_system_cmts_item_delete', '_sys_menu_item_title_cmts_item_delete', 'javascript:void(0)', 'javascript:{js_object}.cmtRemove(this, {content_id})', '_self', 'remove', '', 2147483647, 1, 0, 0);
 
 -- comment actions menu
+-- TODO: Remove Minus and replace Plus with simply Rate 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_cmts_item_actions', 'system', 'item-reply', '_sys_menu_item_title_system_cmts_item_reply', '_sys_menu_item_title_cmts_item_reply', 'javascript:void(0)', 'javascript:{js_object}.toggleReply(this, {content_id})', '_self', 'reply', '', 2147483647, 1, 0, 0),
-('sys_cmts_item_actions', 'system', 'item-rate-plus', '_sys_menu_item_title_system_cmts_item_rate_plus', '_sys_menu_item_title_cmts_item_rate_plus', 'javascript:void(0)', 'javascript:{js_object}.cmtRate(this, {content_id}, 1)', '_self', 'plus', '', 2147483647, 1, 0, 0),
-('sys_cmts_item_actions', 'system', 'item-rate-minus', '_sys_menu_item_title_system_cmts_item_rate_minus', '_sys_menu_item_title_cmts_item_rate_minus', 'javascript:void(0)', 'javascript:{js_object}.cmtRate(this, {content_id}, -1)', '_self', 'minus', '', 2147483647, 1, 0, 0);
+('sys_cmts_item_actions', 'system', 'item-rate-plus', '_sys_menu_item_title_system_cmts_item_rate_plus', '_sys_menu_item_title_cmts_item_rate_plus', 'javascript:void(0)', 'javascript:{js_object}.cmtRate(this, {content_id}, 1)', '_self', 'plus', '', 2147483647, 1, 0, 1),
+('sys_cmts_item_actions', 'system', 'item-rate-minus', '_sys_menu_item_title_system_cmts_item_rate_minus', '_sys_menu_item_title_cmts_item_rate_minus', 'javascript:void(0)', 'javascript:{js_object}.cmtRate(this, {content_id}, -1)', '_self', 'minus', '', 2147483647, 0, 0, 0);
+('sys_cmts_item_actions', 'system', 'item-reply', '_sys_menu_item_title_system_cmts_item_reply', '_sys_menu_item_title_cmts_item_reply', 'javascript:void(0)', 'javascript:{js_object}.toggleReply(this, {content_id})', '_self', 'reply', '', 2147483647, 1, 0, 2),
 
 -- --------------------------------------------------------
 

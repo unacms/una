@@ -6,23 +6,24 @@
  */
 
 require_once('./inc/header.inc.php');
+require_once(BX_DIRECTORY_PATH_INC . "params.inc.php");
+require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
-bx_import("BxDolVoting");
+bx_import('BxDolAcl');
+bx_import('BxDolLanguages');
 
-$aSystems =& BxDolVoting::getSystems ();
+check_logged();
 
-$sSys = isset($_GET['sys']) ? bx_process_input($_GET['sys']) : false;
-$iId = isset($_GET['id']) ? bx_process_input($_GET['id'], BX_DATA_INT) : 0;
+$sSys = isset($_REQUEST['sys']) ? bx_process_input($_REQUEST['sys']) : false;
+$iObjectId = isset($_REQUEST['id']) ? bx_process_input($_REQUEST['id'], BX_DATA_INT) : 0;
+$sAction = isset($_REQUEST['action']) && preg_match ('/^[A-Za-z_-]+$/', $_REQUEST['action']) ? bx_process_input($_REQUEST['action']) : '';
 
-if ($sSys && isset($aSystems[$sSys])) {
+bx_import("BxDolVote");
+$oVote = BxDolVote::getObjectInstance($sSys, $iObjectId, true);
 
-    if ($aSystems[$sSys]['override_class_name']) {
-        require_once (BX_DIRECTORY_PATH_ROOT . $aSystems[$sSys]['override_class_file']);
-        $sClassName = $aSystems[$sSys]['override_class_name'];
-        new $sClassName($sSys, $iId);
-    } else {
-        new BxDolVoting($sSys, $iId);
-    }
-
+if ($oVote && $sSys && $iObjectId && $sAction) {
+    header('Content-Type: text/html; charset=utf-8');
+    $sMethod = 'action' . ucfirst($sAction);
+    if(method_exists($oVote, $sMethod))
+    	echo $oVote->$sMethod();
 }
-

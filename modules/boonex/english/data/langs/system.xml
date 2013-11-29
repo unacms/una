@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="en" flag="en" title="English">
-	<string name="_{0} votes"><![CDATA[{0} votes]]></string>
 	<string name="_add"><![CDATA[add]]></string>
 	<string name="_bottom_text"><![CDATA[2002-{0}. Product of <a class="bottom_text" href="http://www.boonex.com/">BoonEx Group</a>.]]></string>
 	<string name="_copyright"><![CDATA[&copy; {0} Company]]></string>
@@ -1156,7 +1155,6 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_You must agree with terms of use"><![CDATA[You must agree with terms of use]]></string>
 	<string name="_There_are_no_comments_yet"><![CDATA[There are no comments yet]]></string>
 	<string name="_error occured"><![CDATA[Error occurred]]></string>
-	<string name="_Duplicate vote"><![CDATA[Duplicate vote]]></string>
 	<string name="_No such comment"><![CDATA[No such comment]]></string>
 	<string name="_buried"><![CDATA[buried]]></string>
 	<string name="_toggle"><![CDATA[toggle]]></string>
@@ -1171,6 +1169,7 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_N_replies"><![CDATA[<span>{0}</span> replies]]></string>
 	<string name="_N_comments"><![CDATA[<span>{0}</span> comments]]></string>
 	<string name="_Comment_to_this_comment"><![CDATA[Comment]]></string>
+
 	<string name="_cmt_display_flat"><![CDATA[Flat]]></string>
 	<string name="_cmt_display_threaded"><![CDATA[Threaded]]></string>
 	<string name="_cmt_browse_tail"><![CDATA[Newest]]></string>
@@ -1186,6 +1185,8 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_cmt_close_attached_image"><![CDATA[Close]]></string>
 	<string name="_cmt_err_cannot_perform_action"><![CDATA[Cannot perform action. Please report.]]></string>
 	<string name="_cmt_err_duplicate"><![CDATA[Duplicate vote.]]></string>
+	<string name="_vote_do_like"><![CDATA[Plus]]></string>
+	<string name="_vote_err_duplicate_vote"><![CDATA[Duplicate vote]]></string>
 	<string name="_Reply_to_this_comment"><![CDATA[Reply]]></string>
 	<string name="_Add Your Comment"><![CDATA[Comment]]></string>
 	<string name="_load_more_comments_head"><![CDATA[See Newer Comments...]]></string>
@@ -3553,10 +3554,6 @@ More info about URI DNSBL: <br />
     <string name="_sys_form_comment_input_caption_system_cmt_image"><![CDATA[Image]]></string>
     <string name="_sys_form_comment_input_caption_system_cmt_submit"><![CDATA[Post]]></string>
     <string name="_sys_form_comment_input_submit"><![CDATA[Post]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
 
     <string name="_sys_page_lang_block_about"><![CDATA[This site is powered by BoonEx Dolphin. The rest is a mystery.]]></string>
 
