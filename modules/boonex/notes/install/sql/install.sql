@@ -10,7 +10,9 @@ CREATE TABLE IF NOT EXISTS `bx_notes_posts` (
   `title` varchar(255) NOT NULL,
   `text` text NOT NULL,
   `summary` text NOT NULL,
-  `comments` int(11) NOT NULL,
+  `rate` float NOT NULL default '0',
+  `votes` int(11) NOT NULL default '0',
+  `comments` int(11) NOT NULL default '0',
   `allow_view_to` int(11) NOT NULL DEFAULT '3',
   PRIMARY KEY (`id`)
 );
@@ -50,7 +52,6 @@ CREATE TABLE IF NOT EXISTS `bx_notes_photos_resized` (
 );
 
 -- TABLE: COMMENTS
-
 CREATE TABLE IF NOT EXISTS `bx_notes_cmts` (
   `cmt_id` int(11) NOT NULL AUTO_INCREMENT,
   `cmt_parent_id` int(11) NOT NULL DEFAULT '0',
@@ -78,8 +79,24 @@ CREATE TABLE IF NOT EXISTS `bx_notes_cmts_track` (
   PRIMARY KEY (`cmt_system_id`,`cmt_id`,`cmt_rate_author_nip`)
 );
 
--- FORMS
+-- TABLE: VOTES
+CREATE TABLE IF NOT EXISTS `bx_notes_votes` (
+  `object_id` int(11) NOT NULL default '0',
+  `count` int(11) NOT NULL default '0',
+  `sum` int(11) NOT NULL default '0',
+  UNIQUE KEY `object_id` (`object_id`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8;
 
+CREATE TABLE IF NOT EXISTS `bx_notes_votes_track` (
+  `object_id` int(11) NOT NULL default '0',
+  `author_id` int(11) NOT NULL default '0',
+  `author_nip` int(11) NOT NULL default '0',
+  `value` tinyint(4) NOT NULL default '0',
+  `date` int(11) NOT NULL default '0',
+  KEY `vote` (`object_id`, `author_nip`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+
+-- FORMS
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_notes', 'bx_notes', '_bx_notes_form_note', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_notes_posts', 'id', '', '', 'do_submit', '', 0, 1, 'BxNotesFormNote', 'modules/boonex/notes/classes/BxNotesFormNote.php');
 

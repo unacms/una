@@ -28,6 +28,7 @@ class BxNotesConfig extends BxDolModuleConfig {
 
     public static $OBJECT_STORAGE = 'bx_notes_photos';
     public static $OBJECT_IMAGES_TRANSCODER_PREVIEW = 'bx_notes_preview';
+    public static $OBJECT_VOTES = 'bx_notes';
     public static $OBJECT_COMMENTS = 'bx_notes';
     public static $OBJECT_PRIVACY_VIEW = 'bx_notes_allow_view_to';
 

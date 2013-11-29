@@ -228,6 +228,18 @@ class BxNotesModule extends BxDolModule {
 				$sImage = $oStorage->getFileUrlById($aContentInfo[BxNotesConfig::$FIELD_THUMB]);
         }
 
+        //--- Votes
+        bx_import('BxDolVote');
+        $oVotes = BxDolVote::getObjectInstance(BxNotesConfig::$OBJECT_VOTES, $aEvent['object_id']);
+
+        $aVotes = array(); 
+		if($oVotes->isEnabled())
+			$aVotes = array(
+				'system' => BxNotesConfig::$OBJECT_VOTES,
+				'object_id' => $aContentInfo[BxNotesConfig::$FIELD_ID],
+				'count' => $aContentInfo['votes']
+			);
+
         //--- Comments
         bx_import('BxDolCmts');
         $oCmts = BxDolCmts::getObjectInstance(BxNotesConfig::$OBJECT_COMMENTS, $aEvent['object_id']);
@@ -255,6 +267,7 @@ class BxNotesModule extends BxDolModule {
     				)
     			)
     		), //a string to display or array to parse default template before displaying.
+    		'votes' => $aVotes,
     		'comments' => $aComments,
     		'title' => '', //may be empty.
     		'description' => '' //may be empty. 

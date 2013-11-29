@@ -39,3 +39,6 @@ DELETE FROM `sys_acl_actions` WHERE `Module` = 'bx_notes';
 
 -- COMMENTS
 DELETE FROM `sys_objects_cmts` WHERE `Name`='bx_notes';
+
+-- VOTES
+DELETE FROM `sys_objects_vote` WHERE `Name`='bx_notes';
