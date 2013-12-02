@@ -95,7 +95,7 @@ BxTimelineView.prototype.showItem = function(oLink, iId) {
 	if(oLink)
     	this.loadingInItem(oLink, true);
 
-	jQuery.post (
+	jQuery.get (
 		this._sActionsUrl + 'get_post_popup',
 	    oData,
 	    function(oData) {
@@ -105,7 +105,7 @@ BxTimelineView.prototype.showItem = function(oLink, iId) {
 			if(!oData.popup)
 				return;
 
-			var oPopup = $(oData.popup).hide(); 
+			var oPopup = $(oData.popup).addClass('bx-popup-width bx-tl-item-popup').hide(); 
 
 	        $('#' + oPopup.attr('id')).remove();
 	        oPopup.prependTo('body').bxTime().dolPopup({
@@ -139,7 +139,7 @@ BxTimelineView.prototype.commentItem = function(oLink, sSystem, iId) {
     if(oLink)
     	this.loadingInItem(oLink, true);
 
-    jQuery.post (
+    jQuery.get (
         this._sActionsUrl + 'get_comments',
         oData,
         function(oData) {
@@ -199,7 +199,7 @@ BxTimelineView.prototype._getPosts = function(oElement, sAction) {
 			break;
 	}
 
-    jQuery.post(
+    jQuery.get(
         this._sActionsUrl + 'get_posts/',
         this._getDefaultData(),
         function(oData) {

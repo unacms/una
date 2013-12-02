@@ -250,19 +250,10 @@ class BxBaseVoteView extends BxDolVote
 		if(empty($aTmplUsers))
 			$aTmplUsers = MsgBox(_t('_Empty'));
 
-    	$oTemplate = BxDolTemplate::getInstance();
-
-    	bx_import('BxTemplStudioFunctions');
-        $sContent = BxTemplStudioFunctions::getInstance()->transBox($oTemplate->parseHtmlByName('vote_by_list.html', array(
+    	return BxDolTemplate::getInstance()->parseHtmlByName('vote_by_list.html', array(
     		'style_prefix' => $this->_sStylePrefix,
     		'bx_repeat:list' => $aTmplUsers
-    	)));
-
-        return $oTemplate->parseHtmlByName('vote_by.html', array(
-        	'style_prefix' => $this->_sStylePrefix,
-        	'id' => $this->_aHtmlIds['by_popup'],
-        	'content' => $sContent
-        ));
+    	));
     }
 
 	protected function _echoResultJson($a, $isAutoWrapForFormFileSubmit = false)

@@ -52,9 +52,9 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_timeline_menu_item_actions', 'bx_timeline', '_bx_timeline_menu_set_title_item_actions', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_timeline_menu_item_actions', 'bx_timeline', 'item-comment', '_bx_timeline_menu_item_title_system_item_comment', '_bx_timeline_menu_item_title_item_comment', 'javascript:void(0)', 'javascript:{comment_onclick}', '_self', 'comment', '', 2147483647, 1, 0, 0),
-('bx_timeline_menu_item_actions', 'bx_timeline', 'item-vote', '_bx_timeline_menu_item_title_system_item_vote', '_bx_timeline_menu_item_title_item_vote', 'javascript:void(0)', 'javascript:{vote_onclick})', '_self', 'plus', '', 2147483647, 1, 0, 0),
-('bx_timeline_menu_item_actions', 'bx_timeline', 'item-share', '_bx_timeline_menu_item_title_system_item_share', '_bx_timeline_menu_item_title_item_share', 'javascript:void(0)', 'javascript:{share_onclick}', '_self', 'share-square-o', '', 2147483647, 1, 0, 0);
+('bx_timeline_menu_item_actions', 'bx_timeline', 'item-comment', '_bx_timeline_menu_item_title_system_item_comment', '_bx_timeline_menu_item_title_item_comment', 'javascript:void(0)', 'javascript:{comment_onclick}', '_self', 'comment', '', 2147483647, 1, 0, 1),
+('bx_timeline_menu_item_actions', 'bx_timeline', 'item-vote', '_bx_timeline_menu_item_title_system_item_vote', '_bx_timeline_menu_item_title_item_vote', 'javascript:void(0)', 'javascript:{vote_onclick}', '_self', 'plus', '', 2147483647, 1, 0, 2),
+('bx_timeline_menu_item_actions', 'bx_timeline', 'item-share', '_bx_timeline_menu_item_title_system_item_share', '_bx_timeline_menu_item_title_item_share', 'javascript:void(0)', 'javascript:{share_onclick}', '_self', 'share-square-o', '', 2147483647, 1, 0, 3);
 
 -- MENU: Account Settings
 SET @iMIOrder = (SELECT MAX(`order`) FROM `sys_menu_items` WHERE `set_name`='sys_account_settings' LIMIT 1);

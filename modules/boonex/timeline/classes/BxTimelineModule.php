@@ -184,9 +184,9 @@ class BxTimelineModule extends BxDolModule
     		return;
     	}
 
-    	$sContent = $this->_oTemplate->getViewItemPopup($iItemId);
-
-    	$this->_echoResultJson(array('popup' => $sContent));
+    	$this->_echoResultJson(array(
+    		'popup' => $this->_oTemplate->getViewItemPopup($iItemId)
+    	));
     }
 
     function actionRss($iOwnerId)

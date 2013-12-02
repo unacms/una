@@ -12,7 +12,8 @@ function BxDolVote(options)
     this._iObjId = options.iObjId; // this object id comments
     this._iLikeMode = undefined == options.iLikeMode ? 0 : options.iLikeMode;
 
-    this._sActionsUrl = options.sRootUrl + 'vote.php'; // actions url address
+    this._sActionsUri = 'vote.php';
+    this._sActionsUrl = options.sRootUrl + this._sActionsUri; // actions url address
 
     this._sAnimationEffect = 'fade';
     this._iAnimationSpeed = 'slow';
@@ -38,30 +39,10 @@ BxDolVote.prototype.toggleByPopup = function(oLink) {
     var oData = this._getDefaultParams();
     oData['action'] = 'GetVotedBy';
 
-    var oPopup = $(".bx-popup-applied:visible");
-    if(oPopup.length) {
-    	oPopup.dolPopupHide();
-    	return;
-    }
-
-	this._loadingInButton(oLink, true);
-
-	jQuery.post (
-		this._sActionsUrl,
-        oData,
-        function (s) {
-			$this._loadingInButton(oLink, false);
-
-			var oPopup = $(s).hide(); 
-
-	    	$('#' + oPopup.attr('id')).remove();
-	        oPopup.prependTo('body').dolPopup({
-	        	pointer:{
-	    			el:$(oLink)
-	    		}
-	        });
-        }
-	);
+	$(oLink).dolPopupAjax({
+		id: this._aHtmlIds['by_popup'], 
+		url: bx_append_url_params(this._sActionsUri, oData)
+	});
 };
 
 BxDolVote.prototype.over = function (oLink)
