@@ -181,7 +181,7 @@ class BxBaseStudioFormView extends BxDolStudioForm {
         }
 
         $sPopup = $this->oTemplate->parseHtmlByName('form_view_translator.html', array('bx_repeat:languages' => $aTmplVars));
-        $sPopup = $oFunctions->transBox($sPopup);
+        $sPopup = $oFunctions->transBox('bx-form-field-translator-popup-' . $sInputName, $sPopup, true);
 
         $aLanguage = $oLanguage->getLanguageInfo($sLanguage);
         $sControl = $this->oTemplate->parseHtmlByName('form_view_translatable.html', array(

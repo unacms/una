@@ -101,9 +101,8 @@ class BxBaseStudioFunctions extends BxBaseFunctions implements iBxDolSingleton {
             'action_url' => BX_DOL_URL_ROOT . 'member.php',
             'forgot_password_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password'),
 	    ));
-	    $sHtml = $this->transBox($sHtml);
 	    $sHtml = $oTemplate->parseHtmlByName('login.html', array (
-	        'form' => $sHtml,
+	        'form' => $this->transBox('bx-std-login-form-box', $sHtml, true),
 	    ));
 
 	    $oTemplate->setPageNameIndex(BX_PAGE_CLEAR);

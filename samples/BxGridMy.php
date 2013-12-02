@@ -207,7 +207,7 @@ class BxGridMy extends BxTemplGrid {
 
             bx_import('BxTemplFunctions');
             // we need to use 'transBox' function to properly display 'popup'
-            $s = BxTemplFunctions::getInstance()->transBox('
+            $s = BxTemplFunctions::getInstance()->transBox('', '
                 <div class="bx-def-padding-top bx-def-padding-left bx-def-padding-right bx-def-color-bg-block" style="width:300px;">' . $oForm->getCode() . '</div>
                 <script>
                     $(document).ready(function () {

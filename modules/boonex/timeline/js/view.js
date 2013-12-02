@@ -81,7 +81,7 @@ BxTimelineView.prototype.showMoreContent = function(oLink) {
 };
 
 BxTimelineView.prototype.showItemMenu = function(oLink) {
-	var sId = $(oLink).parents('.bx-tl-item-menu:first').children('.bx-db-menu-popup:hidden').attr('id');
+	var sId = $(oLink).parents('.bx-tl-item-menu:first').children('.bx-popup-wrapper:hidden').attr('id');
 	if(sId)
 		bx_menu_popup_inline('#' + sId, oLink);
 };

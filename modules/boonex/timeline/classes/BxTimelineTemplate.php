@@ -112,14 +112,8 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 
     public function getViewItemPopup($iId)
     {
-    	$sContent = $this->getViewItemBlock($iId);
-
     	bx_import('BxTemplFunctions');
-    	return $this->parsePageByName('view_item.html', array(
-    		'style_prefix' => $this->_oConfig->getPrefix('style'),
-    		'id' => $iId,
-    		'content' => BxTemplFunctions::getInstance()->transBox($sContent)
-    	));
+    	return BxTemplFunctions::getInstance()->transBox('bx-timeline-item-popup-' + $iId, $this->getViewItemBlock($iId));
     }
 
     public function getPost(&$aEvent, $aBrowseParams = array())

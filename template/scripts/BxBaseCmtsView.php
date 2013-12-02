@@ -309,17 +309,13 @@ class BxBaseCmtsView extends BxDolCmts {
 			);
     	}
 
-    	bx_import('BxTemplStudioFunctions');
-        $sContent = BxTemplStudioFunctions::getInstance()->transBox($oTemplate->parseHtmlByName('comment_pb_list.html', array(
+    	$sContent = $oTemplate->parseHtmlByName('comment_plused_by.html', array(
     		'style_prefix' => $this->_sStylePrefix,
     		'bx_repeat:list' => $aTmplUsers
-    	)));
+    	));
 
-        return $oTemplate->parseHtmlByName('comment_plused_by.html', array(
-        	'style_prefix' => $this->_sStylePrefix,
-        	'id' => $this->_sSystem . '-plused-by',
-        	'content' => $sContent
-        ));
+    	bx_import('BxTemplStudioFunctions');
+        return BxTemplStudioFunctions::getInstance()->transBox($this->_sSystem . '-plused-by', $sContent, true);
     }
 
     function getImage($iImgId)
@@ -332,21 +328,18 @@ class BxBaseCmtsView extends BxDolCmts {
     	bx_import('BxDolStorage');
 		$oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
 
-    	bx_import('BxTemplStudioFunctions');
-        $sContent = BxTemplStudioFunctions::getInstance()->transBox($oTemplate->parseHtmlByName('bx_img.html', array(
+		$sContent = $oTemplate->parseHtmlByName('bx_img.html', array(
     		'src' => $oStorage->getFileUrlById($iImgId),
         	'bx_repeat:attrs' => array(
         		array('key' => 'alt', 'value' => bx_html_attribute(_t('_cmt_view_attached_image'))),
         		array('key' => 'title', 'value' => bx_html_attribute(_t('_cmt_close_attached_image'))),
-        		array('key' => 'onclick', 'value' => $this->_sJsObjName . '.hideImage(this);')
+        		array('key' => 'onclick', 'value' => $this->_sJsObjName . '.hideImage(this);'),
+        		array('key' => 'class', 'value' => $this->_sStylePrefix . '-attached-image')
         	)
-    	)));
+    	));
 
-        return $oTemplate->parseHtmlByName('comment_image.html', array(
-        	'style_prefix' => $this->_sStylePrefix,
-        	'id' => $this->_sSystem . '-attached-image', 
-        	'content' => $sContent
-        ));
+    	bx_import('BxTemplStudioFunctions');
+        return BxTemplStudioFunctions::getInstance()->transBox($this->_sSystem . '-attached-image', $sContent, true);
     }
 
     /**
@@ -436,11 +429,13 @@ class BxBaseCmtsView extends BxDolCmts {
 		$sMenuManage = $oMenuManage->getCode();
 		$bMenuManage = !empty($sMenuManage);
 		if($bMenuManage) {
-			bx_import('BxTemplStudioFunctions');
-			$sMenuManage = BxTemplStudioFunctions::getInstance()->transBox($oTemplate->parseHtmlByName('comment_manage.html', array(
+			$sMenuManage = $oTemplate->parseHtmlByName('comment_manage.html', array(
 				'style_prefix' => $this->_sStylePrefix,
 				'content' => $sMenuManage
-			)));
+			));
+
+			bx_import('BxTemplFunctions');
+			$sMenuManage = BxTemplFunctions::getInstance()->transBox($this->_sSystem . '-manage-' . $aCmt['cmt_id'], $sMenuManage, true);
 		}
 
         return $oTemplate->parseHtmlByName('comment_actions.html', array(
@@ -465,7 +460,6 @@ class BxBaseCmtsView extends BxDolCmts {
         			'js_object' => $this->_sJsObjName,
         			'style_prefix' => $this->_sStylePrefix,
         			'id' => $aCmt['cmt_id'],
-        			'popup_id' => $this->_sSystem . '-manage-' . $aCmt['cmt_id'],
         			'popup_text' => $sMenuManage
         		)
         	)

@@ -159,7 +159,7 @@ class BxDolStudioStore extends BxTemplStudioPage {
                 $aResult['message'] = BxDolStudioTemplate::getInstance()->parseHtmlByName('mod_action_result.html', array('content' => $aResult['message']));
 
                 bx_import('BxTemplStudioFunctions');
-                $aResult['message'] = BxTemplStudioFunctions::getInstance()->transBox($aResult['message']);
+                $aResult['message'] = BxTemplStudioFunctions::getInstance()->transBox('', $aResult['message']);
             }
 
 	        $oJson = new Services_JSON();		        

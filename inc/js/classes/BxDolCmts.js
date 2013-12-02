@@ -305,7 +305,7 @@ BxDolCmts.prototype.showImage = function(oLink, iId) {
     if(oLink)
     	this._loadingInContent(oLink, true);
 
-    jQuery.post (
+    jQuery.get (
         this._sActionsUrl,
         oData,
         function (s) {
@@ -316,7 +316,7 @@ BxDolCmts.prototype.showImage = function(oLink, iId) {
 	        	if(oLink)
 	        		$this._loadingInContent(oLink, false);
 
-	        	$(this).parents('.cmt-attached-image').dolPopup({
+	        	$(this).parents('.bx-popup-wrapper').dolPopup({
 		        	fog: {
 						color: '#fff',
 						opacity: .7

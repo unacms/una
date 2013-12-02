@@ -68,7 +68,7 @@ class BxBaseUploaderHTML5 extends BxDolUploader {
         ));
 
         bx_import('BxTemplFunctions');
-        return BxTemplFunctions::getInstance()->transBox($sForm);
+        return BxTemplFunctions::getInstance()->transBox('', $sForm);
     }
 
     /**

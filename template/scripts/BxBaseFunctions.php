@@ -179,12 +179,12 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton {
     /**
      * Get standard popup box with title.
      *
+     * @param string $sName - unique name
      * @param string $sTitle - translated title
      * @param string $sContent - content of the box
      * @return HTML string
      */
     function popupBox($sName, $sTitle, $sContent, $isHiddenByDefault = false) {
-
         $iId = !empty($sName) ? $sName : time();
 
         return $this->_oTemplate->parseHtmlByName('popup_box.html', array(
@@ -198,13 +198,20 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton {
     /**
      * Get popup box without title.
      *
+     * @param string $sName - unique name
      * @param string $sContent - content of the box
      * @return HTML string
      */
-    function transBox($sContent, $isPlaceInCenter = false) {
+    function transBox($sName, $sContent, $isHiddenByDefault = false, $isPlaceInCenter = false) {
+    	$iId = !empty($sName) ? $sName : time();
+
         return
             ($isPlaceInCenter ? '<div class="login_ajax_wrap">' : '') .
-                $this->_oTemplate->parseHtmlByName('popup_trans.html', array('content' => $sContent)) .
+                $this->_oTemplate->parseHtmlByName('popup_trans.html', array(
+                	'id' => $iId,
+                	'wrapper_style' => $isHiddenByDefault ? 'display:none;' : '',
+                	'content' => $sContent
+                )) .
             ($isPlaceInCenter ? '</div>' : '');
     }
 
@@ -565,7 +572,7 @@ EOF;
 
             if ($sMenu) {
                 $sId = 'bx-menu-db-' . time() . rand(0, PHP_INT_MAX);
-                $sCode .= '<div class="bx-db-menu-popup" id="' . $sId . '" style="display:none;">' . BxTemplFunctions::getInstance()->transBox('<div class="bx-def-padding bx-def-color-bg-block">' . $sMenu . '</div>') . '</div>';
+                $sCode .= BxTemplFunctions::getInstance()->transBox($sId, '<div class="bx-def-padding bx-def-color-bg-block">' . $sMenu . '</div>', true);
                 $aButtonMenu = array ('icon' => 'reorder', 'onclick' => "bx_menu_popup_inline('#" . $sId . "', this)");
             }
             

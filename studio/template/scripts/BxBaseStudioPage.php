@@ -89,16 +89,12 @@ class BxBaseStudioPage extends BxDolStudioPage {
         $oFunctions = BxTemplStudioFunctions::getInstance();
 
         $sHelp = $this->getPageCaptionHelp();
-        if(($bHelp = strlen($sHelp)) > 0) {
-            $sHelp = $oFunctions->transBox($sHelp);
-            $sHelp = $oTemplate->parseHtmlByName('page_caption_help_popup.html', array('content' => $sHelp));
-        }
+        if(($bHelp = strlen($sHelp)) > 0)
+            $sHelp = $oFunctions->transBox('bx-std-pcap-menu-popup-help', $sHelp, true);
 
         $sActions = $this->getPageCaptionActions();
-        if(($bActions = strlen($sActions)) > 0) {
-            $sActions = $oFunctions->transBox($sActions);
-            $sActions = $oTemplate->parseHtmlByName('page_caption_actions_popup.html', array('content' => $sActions));
-        }
+        if(($bActions = strlen($sActions)) > 0)
+            $sActions = $oFunctions->transBox('bx-std-pcap-menu-popup-actions', $sActions, true);
 
         $oTemplate->addInjection('injection_header', 'text', $sHelp . $sActions);
 

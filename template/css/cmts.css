@@ -139,7 +139,7 @@
 		background-repeat: no-repeat;
 	}
 
-	div.cmt-attached-image img {
+	img.cmt-attached-image {
 		position: relative;
 		max-width: 600px;
 		max-height: 600px;

@@ -41,7 +41,7 @@ function PageCompMainCode() {
     ob_start();    
     
     // transBox
-    echo '<div id="bx-sample-popup-transbox" style="display:none;">' . BxTemplFunctions::getInstance()->transBox('<div class="bx-def-padding">transBox</div>') . '</div>';
+    echo BxTemplFunctions::getInstance()->transBox('bx-sample-popup-transbox', '<div class="bx-def-padding">transBox</div>', true);
     echo '<button class="bx-btn" onclick="$(\'#bx-sample-popup-transbox\').dolPopup()">transBox</button>';
 
     // transBox AJAX
@@ -59,7 +59,7 @@ function PageCompMainCode() {
     echo '<hr class="bx-def-hr" />';
 
     // transBox with pointer
-    echo '<div id="bx-sample-popup-transbox-with-pointer" style="display:none;">' . BxTemplFunctions::getInstance()->transBox('<div class="bx-def-padding">transBox with pointer</div>') . '</div>';
+    echo BxTemplFunctions::getInstance()->transBox('bx-sample-popup-transbox-with-pointer', '<div class="bx-def-padding">transBox with pointer</div>', true);
     echo '<button class="bx-btn" onclick="$(\'#bx-sample-popup-transbox-with-pointer\').dolPopup({pointer:{el:$(this)}})">transBox with pointer</button>';
 
     // popupBox with pointer

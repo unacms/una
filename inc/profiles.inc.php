@@ -249,7 +249,7 @@ function bx_login_form($bStudio = false, $bAjaxMode = false) {
     $sFormCode = BxDolService::call('system', 'login_form', array(), 'TemplServiceLogin');
 
     if ($bAjaxMode) {
-        echo $GLOBALS['oFunctions']->transBox($sFormCode, true);
+        echo $GLOBALS['oFunctions']->transBox('', $sFormCode, false, true);
         exit;
     }
 

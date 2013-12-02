@@ -67,7 +67,7 @@ class BxPersonsTemplate extends BxDolModuleTemplate {
         $sCoverPopup = '';
         if ($aData[BxPersonsConfig::$FIELD_COVER]) {
             bx_import('BxTemplFunctions');
-            $sCoverPopup = BxTemplFunctions::getInstance()->transBox($this->parseHtmlByName('image_popup.html', array (
+            $sCoverPopup = BxTemplFunctions::getInstance()->transBox('bx-persons-popup-cover', $this->parseHtmlByName('image_popup.html', array (
                 'image_url' => $sUrlCover,
                 'bx_if:owner' => array (
                     'condition' => CHECK_ACTION_RESULT_ALLOWED === $oModuleMain->isAllowedChangeCover($aData),
@@ -75,13 +75,13 @@ class BxPersonsTemplate extends BxDolModuleTemplate {
                         'change_image_url' => $sUrlCoverChange,
                     ),
                 ),
-            )), true);
+            )), true, true);
         }
 
         $sPicturePopup = '';
         if ($aData[BxPersonsConfig::$FIELD_PICTURE]) {
             bx_import('BxTemplFunctions');
-            $sPicturePopup = BxTemplFunctions::getInstance()->transBox($this->parseHtmlByName('image_popup.html', array (
+            $sPicturePopup = BxTemplFunctions::getInstance()->transBox('bx-persons-popup-picture', $this->parseHtmlByName('image_popup.html', array (
                 'image_url' => $sUrlPicture,
                 'bx_if:owner' => array (
                     'condition' => CHECK_ACTION_RESULT_ALLOWED === $oModuleMain->isAllowedEdit($aData),
@@ -89,7 +89,7 @@ class BxPersonsTemplate extends BxDolModuleTemplate {
                         'change_image_url' => $sUrlPictureChange,
                     ),
                 ),
-            )), true);
+            )), true, true);
         }
 
         // generate html        
