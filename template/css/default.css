@@ -457,9 +457,9 @@ h3,
 .bx-def-ava,
 .bx-def-thumb,
 .bx-def-icon {
-	border-radius:0.2rem;
-	-moz-border-radius:0.2rem;
-	-webkit-border-radius:0.2rem;
+	border-radius:5rem;
+	-moz-border-radius:5rem;
+	-webkit-border-radius:5rem;
 
     overflow:hidden;
 }
