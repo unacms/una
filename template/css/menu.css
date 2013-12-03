@@ -239,8 +239,11 @@ ul.bx-menu-toolbar li:first-child a {
 }
 
 ul.bx-menu-toolbar li img {
+	margin-top: -2px;
     background-position:center center;
     background-repeat:no-repeat;
+	border:2px solid #fff;
+    border:0.15rem solid #fff;
 }
 
 ul.bx-menu-toolbar li .sys-icon {
