@@ -344,24 +344,6 @@ class BxTimelineTemplate extends BxDolModuleTemplate
         	),
         	'item_view_url' => $this->_oConfig->getItemViewUrl($aEvent),
         	'item_date' => bx_time_js($aEvent['date']),
-/*
-			//Comments and Shares counters
-
-        	'bx_if:show_counter_comments' => array(
-        		'condition' => (int)$aEvent['comments']['count'] > 0,
-        		'content' => array(
-        			'style_prefix' => $sStylePrefix,
-        			'counter' => $aEvent['comments']['count']
-        		)
-        	),
-        	'bx_if:show_counter_shares' => array(
-        		'condition' => (int)$aEvent['shares'] > 0,
-        		'content' => array(
-        			'style_prefix' => $sStylePrefix,
-        			'counter' => $aEvent['shares']
-        		)
-        	),
-*/
         	'content' => is_string($aEvent['content']) ? $aEvent['content'] : $this->_getContent($sType, $aEvent['content'], $aBrowseParams),
 			'bx_if:show_menu_item_actions' => array(
 				'condition' => !empty($aTmplVarsMenuItemActions),
