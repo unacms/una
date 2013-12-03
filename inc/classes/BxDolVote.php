@@ -314,14 +314,14 @@ class BxDolVote extends BxDol
 		$iAuthorId = $this->_getAuthorId();
 		$iAuthorIp = $this->_getAuthorIp();
 
-		$bUndo = $this->isUndo() && $this->_oQuery->isVoted($iObjectId, $iAuthorId, $iAuthorIp) ? true : false;
+		$bUndo = $this->isUndo() && $this->_oQuery->isVoted($iObjectId, $iAuthorId) ? true : false;
 
 		if(!$bUndo && !$this->isAllowedVote()) {
 			$this->_echoResultJson(array('code' => 2, 'msg' => $this->msgErrAllowedVote()));
         	return;
 		}
 
-    	if(!$bUndo && !$this->_oQuery->isPostTimeoutEnded($iObjectId, $iAuthorIp)) {
+    	if(!$this->isLikeMode() && !$this->_oQuery->isPostTimeoutEnded($iObjectId, $iAuthorIp)) {
 			$this->_echoResultJson(array('code' => 3, 'msg' => _t('_vote_err_duplicate_vote')));
         	return;
 		}

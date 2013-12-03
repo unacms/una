@@ -30,6 +30,11 @@ ul.bx-menu-hor {
     color:#000;
 }
 
+.bx-menu-hor li img,
+.bx-menu-hor li .sys-icon {
+	display:inline-block;
+}
+
 /* --------------- vertical menu */
 
 ul.bx-menu-ver {

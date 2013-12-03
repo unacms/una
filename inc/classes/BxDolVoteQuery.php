@@ -47,7 +47,8 @@ class BxDolVoteQuery extends BxDolDb
     	if($this->_iPostTimeout == 0) 
     		return true;
 
-		$sQuery = $this->prepare("SELECT `object_id` FROM `{$this->_sTableTrack}` WHERE `object_id` = ? AND `author_nip` = ? AND `date` > (UNIX_TIMESTAMP() - ?)", $iObjectId, ip2long($sAuthorIp), $this->_iPostTimeout);
+		$iAuthorNip = ip2long($sAuthorIp);
+		$sQuery = $this->prepare("SELECT `object_id` FROM `{$this->_sTableTrack}` WHERE `object_id` = ? AND `author_nip` = ? AND `date` > (UNIX_TIMESTAMP() - ?)", $iObjectId, $iAuthorNip, $this->_iPostTimeout);
 		return (int)$this->getOne($sQuery) == 0;
     }
 
@@ -62,11 +63,9 @@ class BxDolVoteQuery extends BxDolDb
 		return $aResult;
     }
 
-    public function isVoted($iObjectId, $iAuthorId, $sAuthorIp)
+    public function isVoted($iObjectId, $iAuthorId)
     {
-    	$iAuthorNip = ip2long($sAuthorIp);
-
-		$sQuery = $this->prepare("SELECT `object_id` FROM `{$this->_sTableTrack}` WHERE `object_id` = ? AND `author_nip` = ? LIMIT 1", $iObjectId, $iAuthorNip);
+		$sQuery = $this->prepare("SELECT `object_id` FROM `{$this->_sTableTrack}` WHERE `object_id` = ? AND `author_id` = ? LIMIT 1", $iObjectId, $iAuthorId);
 		return (int)$this->getOne($sQuery) != 0;
     }
 
@@ -85,11 +84,12 @@ class BxDolVoteQuery extends BxDolDb
         if((int)$this->query($sQuery) == 0) 
         	return false;
 
-		$iAuthorNip = ip2long($sAuthorIp);
         if($bUndo)
-        	$sQuery = $this->prepare("DELETE FROM `{$this->_sTableTrack}` WHERE `object_id` = ? AND `author_nip` = ? LIMIT 1", $iObjectId, $iAuthorNip);
-        else
+        	$sQuery = $this->prepare("DELETE FROM `{$this->_sTableTrack}` WHERE `object_id` = ? AND `author_id` = ? LIMIT 1", $iObjectId, $iAuthorId);
+        else {
+        	$iAuthorNip = ip2long($sAuthorIp);
         	$sQuery = $this->prepare("INSERT INTO `{$this->_sTableTrack}` SET `object_id` = ?, `author_id` = ?, `author_nip` = ?, `value` = ?, `date` = UNIX_TIMESTAMP()", $iObjectId, $iAuthorId, $iAuthorNip, $iValue);
+        }
 
         return (int)$this->query($sQuery) > 0;
     }
