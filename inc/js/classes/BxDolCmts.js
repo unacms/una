@@ -7,7 +7,6 @@
 function BxDolCmts (options) {
     this._sObjName = undefined == options.sObjName ? 'oCmts' : options.sObjName;    // javascript object name, to run current object instance from onTimer
     this._sSystem = options.sSystem; // current comment system
-    this._sSystemTable = options.sSystemTable; // current comment system table name
     this._iAuthorId = options.iAuthorId; // this comment's author ID.
     this._iObjId = options.iObjId; // this object id comments
     this._sActionsUrl = options.sRootUrl + 'cmts.php'; // actions url address
@@ -202,34 +201,6 @@ BxDolCmts.prototype.cmtRemove = function(e, iCmtId) {
 
                 	$(this).remove();
                 });
-            }
-        },
-        'json'
-    );
-};
-
-BxDolCmts.prototype.cmtRate = function(e, iCmtId, iRate) 
-{
-    var $this = this;
-    var oParams = this._getDefaultActions();
-    oParams['action'] = 'Rate';
-    oParams['Cmt'] = iCmtId;
-    oParams['Rate'] = iRate;
-
-    this._loadingInContent (e, true);
-
-    jQuery.post (
-        this._sActionsUrl,
-        oParams,
-        function(oData) {
-            $this._loadingInContent (e, false);
-
-            if(oData && oData.msg != undefined)
-                alert(oData.msg);
-
-            if(oData && oData.id != undefined && oData.rate != undefined) {
-	            var oPoints = $(e).parents('.cmt:first').find('.cmt-points:first span');
-	            oPoints.html(parseInt(oPoints.html()) + oData.rate).parents('.cmt-points-wrp:first').bx_anim(parseInt(oPoints.html()) > 0 ? 'show' : 'hide');
             }
         },
         'json'

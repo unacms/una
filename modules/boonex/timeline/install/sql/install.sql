@@ -89,22 +89,10 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_comments` (
   `cmt_author_id` int(10) unsigned NOT NULL DEFAULT '0',
   `cmt_level` int(11) NOT NULL DEFAULT '0',
   `cmt_text` text NOT NULL,
-  `cmt_rate` int(11) NOT NULL DEFAULT '0',
-  `cmt_rate_count` int(11) NOT NULL DEFAULT '0',
   `cmt_time` int(11) unsigned NOT NULL DEFAULT '0',
   `cmt_replies` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`cmt_id`),
   KEY `cmt_object_id` (`cmt_object_id`,`cmt_parent_id`)
-);
-
-CREATE TABLE IF NOT EXISTS `bx_timeline_comments_track` (
-  `cmt_system_id` int(11) NOT NULL DEFAULT '0',
-  `cmt_id` int(11) NOT NULL DEFAULT '0',
-  `cmt_rate` tinyint(4) NOT NULL DEFAULT '0',
-  `cmt_rate_author_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `cmt_rate_author_nip` int(11) unsigned NOT NULL DEFAULT '0',
-  `cmt_rate_ts` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`cmt_system_id`,`cmt_id`,`cmt_rate_author_nip`)
 );
 
 -- TABLES: VOTES

@@ -8,7 +8,6 @@ DROP TABLE IF EXISTS `bx_timeline_photos_preview`;
 DROP TABLE IF EXISTS `bx_timeline_photos2events`;
 
 DROP TABLE IF EXISTS `bx_timeline_comments`;
-DROP TABLE IF EXISTS `bx_timeline_comments_track`;
 
 DROP TABLE IF EXISTS `bx_timeline_votes`;
 DROP TABLE IF EXISTS `bx_timeline_votes_track`

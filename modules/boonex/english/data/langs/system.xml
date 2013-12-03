@@ -1969,7 +1969,6 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
     <string name="_sys_acl_action_send_messages"><![CDATA[Send Messages]]></string>
     <string name="_sys_acl_action_get_email"><![CDATA[Get Email]]></string>
     <string name="_sys_acl_action_comments_post"><![CDATA[Comments Post]]></string>
-    <string name="_sys_acl_action_comments_vote"><![CDATA[Comments Vote]]></string>
     <string name="_sys_acl_action_comments_edit_own"><![CDATA[Comments Edit Own]]></string>
     <string name="_sys_acl_action_comments_remove_own"><![CDATA[Comments Remove Own]]></string>
 	<string name="_sys_acl_action_comments_edit_all"><![CDATA[Comments Edit All]]></string>
@@ -3367,8 +3366,8 @@ More info about URI DNSBL: <br />
 	<string name="_sys_menu_item_title_cmts_item_delete"><![CDATA[Delete]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_reply"><![CDATA[Reply]]></string>
 	<string name="_sys_menu_item_title_cmts_item_reply"><![CDATA[]]></string>
-	<string name="_sys_menu_item_title_system_cmts_item_rate_plus"><![CDATA[Plus]]></string>
-	<string name="_sys_menu_item_title_cmts_item_rate_plus"><![CDATA[]]></string>
+	<string name="_sys_menu_item_title_system_cmts_item_vote"><![CDATA[Plus]]></string>
+	<string name="_sys_menu_item_title_cmts_item_vote"><![CDATA[]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_rate_minus"><![CDATA[Minus]]></string>
 	<string name="_sys_menu_item_title_cmts_item_rate_minus"><![CDATA[]]></string>
 

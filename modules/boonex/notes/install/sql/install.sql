@@ -69,16 +69,6 @@ CREATE TABLE IF NOT EXISTS `bx_notes_cmts` (
   KEY `cmt_object_id` (`cmt_object_id`,`cmt_parent_id`)
 );
 
-CREATE TABLE IF NOT EXISTS `bx_notes_cmts_track` (
-  `cmt_system_id` int(11) NOT NULL DEFAULT '0',
-  `cmt_id` int(11) NOT NULL DEFAULT '0',
-  `cmt_rate` tinyint(4) NOT NULL DEFAULT '0',
-  `cmt_rate_author_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `cmt_rate_author_nip` int(11) unsigned NOT NULL DEFAULT '0',
-  `cmt_rate_ts` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`cmt_system_id`,`cmt_id`,`cmt_rate_author_nip`)
-);
-
 -- TABLE: VOTES
 CREATE TABLE IF NOT EXISTS `bx_notes_votes` (
   `object_id` int(11) NOT NULL default '0',

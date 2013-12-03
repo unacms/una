@@ -62,13 +62,13 @@ define('BX_CMT_RATE_VALUE_MINUS', -1);
  * - ID - autoincremented id for internal usage
  * - ObjectName - your unique module name, with vendor prefix, lowercase and spaces are underscored
  * - TableCmts - table name where comments are stored
- * - TableTrack - table name where comments ratings are stored
  * - Nl2br - convert new lines to <br /> on saving
  * - PerView - number of comments on a page
  * - IsRatable - 0 or 1 allow to rate comments or not
  * - ViewingThreshold - comment viewing treshost, if comment is below this number it is hidden by default
  * - IsOn - is this comment object enabled
- * - RootStylePrefix - toot comments style prefix, if you need root comments look different
+ * - RootStylePrefix - toot comments style prefix, if you need root comments look different\
+ * - ObjectVote - Vote object name to process comments' votes. May be empty if Comment Vote is not needed.
  * - TriggerTable - table to be updated upon each comment
  * - TriggerFieldId - TriggerTable table field with unique record id of
  * - TriggerFieldComments - TriggerTable table field with comments count, it will be updated automatically upon eaech comment
@@ -277,8 +277,7 @@ class BxDolCmts extends BxDol
                 SELECT
                     `ID` as `system_id`,
                     `Name` AS `name`,
-                    `TableCmts` AS `table_cmts`,
-                    `TableTrack` AS `table_track`,
+                    `Table` AS `table`,
                     `CharsPostMin` AS `chars_post_min`,
                     `CharsPostMax` AS `chars_post_max`,
                     `CharsDisplayMax` AS `chars_display_max`,
@@ -295,6 +294,7 @@ class BxDolCmts extends BxDol
                     `IsOn` AS `is_on`,
                     `RootStylePrefix` AS `root_style_prefix`,
                     `BaseUrl` AS `base_url`,
+                    `ObjectVote` AS `object_vote`,
                     `TriggerTable` AS `trigger_table`,
                     `TriggerFieldId` AS `trigger_field_id`,
                     `TriggerFieldTitle` AS `trigger_field_title`,
@@ -414,6 +414,19 @@ class BxDolCmts extends BxDol
     	return $sResult;
     }
 
+	public function getVoteObject($iId)
+    {
+    	if(empty($this->_aSystem['object_vote']))
+    		return false;
+
+    	bx_import('BxDolVote');
+        $oVote = BxDolVote::getObjectInstance($this->_aSystem['object_vote'], $iId);
+		if(!$oVote->isEnabled())
+			return false;
+
+		return $oVote;
+    }
+
     public function isNl2br ()
     {
         return $this->_aSystem['nl2br'];
@@ -509,17 +522,28 @@ class BxDolCmts extends BxDol
         return $check_res[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $check_res[CHECK_ACTION_MESSAGE] : '';
     }
 
-    public function isRateAllowed ($isPerformAction = false)
+    public function isVoteAllowed ($aCmt, $isPerformAction = false)
     {
     	if(!$this->isRatable())
     		return false;
 
-        return $this->checkAction (ACTION_ID_COMMENTS_VOTE, $isPerformAction); 
+		$oVote = $this->getVoteObject($aCmt['cmt_id']);
+    	if($oVote === false)
+    		return false;
+
+    	$iUserId = (int)$this->_getAuthorId();
+    	if($iUserId == 0)
+    		return false;
+
+    	if(isAdmin())
+			return true;
+
+        return $oVote->isAllowedVote($isPerformAction); 
     }
 
-    public function msgErrRateAllowed ()
+    public function msgErrVoteAllowed ()
     { 
-        return $this->checkActionErrorMsg(ACTION_ID_COMMENTS_VOTE);
+        return $this->checkActionErrorMsg(ACTION_ID_VOTE);
     }
 
     public function isPostReplyAllowed ($isPerformAction = false)
@@ -587,14 +611,6 @@ class BxDolCmts extends BxDol
 
 		$iCmtId = bx_process_input(bx_get('Cmt'), BX_DATA_INT);
         $this->_echoResultJson($this->getFormEdit($iCmtId));
-    }
-
-	public function actionGetPlusedBy () {
-        if (!$this->isEnabled())
-           return '';
-
-        $iCmtId = isset($_REQUEST['CmtId']) ? bx_process_input($_REQUEST['CmtId'], BX_DATA_INT) : 0;
-        return $this->getPlusedBy($iCmtId);
     }
 
     public function actionGetCmt () {
@@ -715,54 +731,6 @@ class BxDolCmts extends BxDol
         }
 
         $this->_echoResultJson(array('msg' => _t('_cmt_err_cannot_perform_action')));
-    }
-
-    public function actionRate()
-    {
-        if (!$this->isEnabled() || !$this->isRatable()) {
-        	$this->_echoResultJson(array('msg' => _t('_Error occured')));
-        	return;
-        }
-
-        if (!$this->isRateAllowed()) {
-        	$this->_echoResultJson(array('msg' => $this->msgErrRateAllowed()));
-        	return ;
-        }
-
-        $iCmtId = 0;
-        if(bx_get('Cmt') !== false)
-        	$iCmtId = bx_process_input(bx_get('Cmt'), BX_DATA_INT);
-
-		$iRate = 0;
-		if(bx_get('Rate') !== false)
-        	$iRate = bx_process_input(bx_get('Rate'), BX_DATA_INT);
-
-		if($iCmtId == 0 || $iRate == 0) {
-			$this->_echoResultJson(array('msg' => _t('_Error occured')));
-        	return;
-		}
-
-        if($iRate >= 1)
-            $iRate = BX_CMT_RATE_VALUE_PLUS;
-        elseif($iRate <= -1)
-            $iRate = BX_CMT_RATE_VALUE_MINUS;
-
-		$iCmtAuthorId = $this->_getAuthorId();
-        if($this->_oQuery->rateComment($this->getSystemId(), $iCmtId, $iRate, $iCmtAuthorId, $this->_getAuthorIp())) {
-        	$aCmt = $this->_oQuery->getCommentSimple($this->getId(), $iCmtId);
-
-        	if($iRate == BX_CMT_RATE_VALUE_PLUS)
-	        	$this->isRateAllowed(true);
-
-	        bx_import('BxDolAlerts');
-	        $oZ = new BxDolAlerts($this->_sSystem, 'commentRated', $this->getId(), $iCmtAuthorId, array('comment_id' => $iCmtId, 'comment_author_id' => $aCmt['cmt_author_id'], 'rate' => $iRate));
-	        $oZ->alert();
-
-	        $this->_echoResultJson(array('id' => $iCmtId, 'rate' => $iRate));
-	        return;
-        }
-
-        $this->_echoResultJson(array('msg' => _t('_cmt_err_duplicate')));
     }
 
     /** 

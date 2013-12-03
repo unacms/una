@@ -53,7 +53,7 @@ class BxBaseCmtsView extends BxDolCmts {
      *
      * @return string
      */
-    public function getScript()
+    public function getJsScript()
     {
         $this->addCssJs();
 
@@ -61,7 +61,6 @@ class BxBaseCmtsView extends BxDolCmts {
         	sObjName: '" . $this->_sJsObjName . "',
             sRootUrl: '" . BX_DOL_URL_ROOT . "',
             sSystem: '" . $this->getSystemName() . "',
-            sSystemTable: '" . $this->_aSystem['table_cmts'] . "',
             iAuthorId: '" . $this->_getAuthorId() . "',
             iObjId: '" . $this->getId () . "',
             sPostFormPosition: '" . $this->_aSystem['post_form_position'] . "',
@@ -88,7 +87,7 @@ class BxBaseCmtsView extends BxDolCmts {
     		'comments' => $sCmts,
     		'post_form_top' => $this->getFormBoxPost($aBp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_TOP)),
 			'post_form_bottom'  => $this->getFormBoxPost($aBp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_BOTTOM)),
-    		'script' => $this->getScript()
+    		'script' => $this->getJsScript()
     	));
 
     	return $bInDesignbox ? DesignBoxContent($sCaption, $sContent, BX_DB_PADDING_DEF, $this->_getControlsBox()) : array(
@@ -131,7 +130,7 @@ class BxBaseCmtsView extends BxDolCmts {
     		'system' => $this->_sSystem,
     		'id' => $this->getId(),
     		'comment' => $this->getComment($iCmtId, array('type' => $this->_sBrowseType), array('type' => BX_CMT_DISPLAY_THREADED)),
-    		'script' => $this->getScript()
+    		'script' => $this->getJsScript()
     	));
     }
 
@@ -151,7 +150,7 @@ class BxBaseCmtsView extends BxDolCmts {
         list($sAuthorName, $sAuthorLink, $sAuthorIcon) = $this->_getAuthorInfo($aCmt['cmt_author_id']);
 
         $sClass = $sRet = '';
-        if($aCmt['cmt_rated'] == -1 || $aCmt['cmt_rate'] < $this->_aSystem['viewing_threshold']) {
+        if(isset($aCmt['vote_rate']) && (float)$aCmt['vote_rate'] < $this->_aSystem['viewing_threshold']) {
         	$oTemplate->pareseHtmlByName('comment_hidden.html', array(
         		'js_object' => $this->_sJsObjName,
         		'id' => $aCmt['cmt_id'],
@@ -420,8 +419,12 @@ class BxBaseCmtsView extends BxDolCmts {
 		bx_import('BxDolMenu');
 		$oMenuActions = BxDolMenu::getObjectInstance($this->_sMenuObjActions);
 		$oMenuActions->setCmtsData($this, $aCmt['cmt_id']);
+		$sMenuActions = $oMenuActions->getCode();
 
-    	
+		$oVote = $this->getVoteObject($aCmt['cmt_id']);
+		if($oVote !== false)
+			$sMenuActions .= $oVote->getJsScript();
+
         //--- Manage Menu
 		$oMenuManage = BxDolMenu::getObjectInstance($this->_sMenuObjManage);
 		$oMenuManage->setCmtsData($this, $aCmt['cmt_id']);
@@ -448,12 +451,14 @@ class BxBaseCmtsView extends BxDolCmts {
         		'cmt_id' => $aCmt['cmt_id']
         	)),
         	'ago' => bx_time_js($aCmt['cmt_time']),
-        	'menu_actions' => $oMenuActions->getCode(),
+        	'menu_actions' => $sMenuActions,
+/*
         	'bx_if:hide_rate_count' => array(
         		'condition' => (int)$aCmt['cmt_rate'] <= 0,
         		'content' => array()
         	),
         	'points' => _t(in_array($aCmt['cmt_rate'], array(-1, 0, 1)) ? '_N_point' : '_N_points', $aCmt['cmt_rate']),
+*/
         	'bx_if:show_menu_manage' => array(
         		'condition' => $bMenuManage,
         		'content' => array(
@@ -605,7 +610,7 @@ class BxBaseCmtsView extends BxDolCmts {
         $oForm = BxDolForm::getObjectInstance($this->_sFormObject, $this->$sDisplayName);
         $oForm->setId(sprintf($oForm->aFormAttrs['id'], $sAction, $this->_sSystem, $iId));
         $oForm->setName(sprintf($oForm->aFormAttrs['name'], $sAction, $this->_sSystem, $iId));
-        $oForm->aParams['db']['table'] = $this->_aSystem['table_cmts'];
+        $oForm->aParams['db']['table'] = $this->_aSystem['table'];
         $oForm->aInputs['sys']['value'] = $this->_sSystem;
         $oForm->aInputs['id']['value'] = $this->_iId;
         $oForm->aInputs['action']['value'] = 'Submit' . $sActionCap . 'Form';

@@ -128,8 +128,7 @@ CREATE TABLE `sys_objects_categories` (
 CREATE TABLE `sys_objects_cmts` (
   `ID` int(10) unsigned NOT NULL auto_increment,
   `Name` varchar(50) NOT NULL,
-  `TableCmts` varchar(50) NOT NULL,
-  `TableTrack` varchar(50) NOT NULL,
+  `Table` varchar(50) NOT NULL,
   `CharsPostMin` int(10) NOT NULL,
   `CharsPostMax` int(10) NOT NULL,
   `CharsDisplayMax` int(10) NOT NULL,
@@ -146,6 +145,7 @@ CREATE TABLE `sys_objects_cmts` (
   `IsOn` smallint(1) NOT NULL,
   `RootStylePrefix` varchar(16) NOT NULL default 'cmt',
   `BaseUrl` varchar(256) NOT NULL,
+  `ObjectVote` varchar(32) NOT NULL,
   `TriggerTable` varchar(32) NOT NULL,
   `TriggerFieldId` varchar(32) NOT NULL,
   `TriggerFieldTitle` varchar(32) NOT NULL,
@@ -610,7 +610,6 @@ CREATE TABLE `sys_acl_actions` (
 INSERT INTO `sys_acl_actions` (`ID`, `Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 (3, 'system', 'vote', NULL, '_sys_acl_action_vote', '', 0, 0),
 (6, 'system', 'comments post', NULL, '_sys_acl_action_comments_post', '', 0, 1),
-(7, 'system', 'comments vote', NULL, '_sys_acl_action_comments_vote', '', 0, 1),
 (8, 'system', 'comments edit own', NULL, '_sys_acl_action_comments_edit_own', '', 0, 1),
 (9, 'system', 'comments remove own', NULL, '_sys_acl_action_comments_remove_own', '', 0, 1),
 (10, 'system', 'comments edit all', NULL, '_sys_acl_action_comments_edit_all', '', 0, 1),
@@ -2946,10 +2945,8 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('sys_cmts_item_manage', 'system', 'item-delete', '_sys_menu_item_title_system_cmts_item_delete', '_sys_menu_item_title_cmts_item_delete', 'javascript:void(0)', 'javascript:{js_object}.cmtRemove(this, {content_id})', '_self', 'remove', '', 2147483647, 1, 0, 0);
 
 -- comment actions menu
--- TODO: Remove Minus and replace Plus with simply Rate 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_cmts_item_actions', 'system', 'item-rate-plus', '_sys_menu_item_title_system_cmts_item_rate_plus', '_sys_menu_item_title_cmts_item_rate_plus', 'javascript:void(0)', 'javascript:{js_object}.cmtRate(this, {content_id}, 1)', '_self', 'plus', '', 2147483647, 1, 0, 1),
-('sys_cmts_item_actions', 'system', 'item-rate-minus', '_sys_menu_item_title_system_cmts_item_rate_minus', '_sys_menu_item_title_cmts_item_rate_minus', 'javascript:void(0)', 'javascript:{js_object}.cmtRate(this, {content_id}, -1)', '_self', 'minus', '', 2147483647, 0, 0, 0);
+('sys_cmts_item_actions', 'system', 'item-vote', '_sys_menu_item_title_system_cmts_item_vote', '_sys_menu_item_title_cmts_item_vote', 'javascript:void(0)', 'javascript:{vote_onclick}', '_self', 'plus', '', 2147483647, 1, 0, 1),
 ('sys_cmts_item_actions', 'system', 'item-reply', '_sys_menu_item_title_system_cmts_item_reply', '_sys_menu_item_title_cmts_item_reply', 'javascript:void(0)', 'javascript:{js_object}.toggleReply(this, {content_id})', '_self', 'reply', '', 2147483647, 1, 0, 2),
 
 -- --------------------------------------------------------

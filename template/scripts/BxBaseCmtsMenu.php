@@ -31,8 +31,14 @@ class BxBaseCmtsMenu extends BxTemplMenu
 		$this->_oCmts = $oCmts;
 		$this->_aCmt = $oCmts->getCommentRow($iCmtId);
 
+		$sVotesOnclick = '';
+		$oVote = $this->_oCmts->getVoteObject($iCmtId);
+		if($oVote !== false)
+			$sVotesOnclick = $oVote->getJsClick();
+
 		$this->addMarkers(array(
     		'js_object' => $oCmts->getJsObjectName(),
+			'vote_onclick' => $sVotesOnclick,
 			'content_id' => $iCmtId
     	));
     }
@@ -61,35 +67,40 @@ class BxBaseCmtsMenu extends BxTemplMenu
         			$aCheckFuncParams = array($this->_aCmt);
         		break;
 
+			case 'item-vote':
+				$sCheckFuncName = 'isVoteAllowed';
+				if(!empty($this->_aCmt))
+        			$aCheckFuncParams = array($this->_aCmt);
+                break;
+
             case 'item-reply':
                 $sCheckFuncName = 'isPostReplyAllowed';
                 break;
-
-			case 'item-rate-plus':
-				/*
-				//TODO: remove if Minus won't be used
-				if(!empty($this->_aCmt) && (int)$this->_aCmt['cmt_rated'] > 0)
-					return false;
-				*/
-
-				$sCheckFuncName = 'isRateAllowed';
-                break;
-
-			/*
-			//TODO: remove if Minus won't be used
-			case 'item-rate-minus':
-				if(!empty($this->_aCmt) && (int)$this->_aCmt['cmt_rated'] <= 0)
-					return false;
-
-                $sCheckFuncName = 'isRateAllowed';
-                break;
-			*/
         }
 
         if(!$sCheckFuncName || !method_exists($this->_oCmts, $sCheckFuncName))
 			return true;
 
 		return call_user_func_array(array($this->_oCmts, $sCheckFuncName), $aCheckFuncParams);
+    }
+
+	/** 
+     * Get menu items array, which are ready to pass to template.
+     * @return array
+     */
+    protected function _getMenuItems() {
+    	$aItems = parent::_getMenuItems();
+
+    	foreach($aItems as $iKey => $aItem)
+    		switch($aItem['name']) {
+    			case 'item-vote':
+    				$oVote = $this->_oCmts->getVoteObject($this->_aCmt['cmt_id']);
+					if($oVote !== false)
+						$aItems[$iKey]['addon'] = $oVote->getCounter();
+    				break;
+    		}
+
+		return $aItems;
     }
 }
 

@@ -16,7 +16,6 @@ class BxDolCmtsQuery extends BxDolDb
 	protected $_oMain;
 
     protected $_sTable;
-    protected $_sTableTrack;
     protected $_sTriggerTable;
     protected $_sTriggerFieldId;
     protected $_sTriggerFieldTitle;
@@ -30,8 +29,7 @@ class BxDolCmtsQuery extends BxDolDb
     	$this->_oMain = $oMain;
 
     	$aSystem = $this->_oMain->getSystemInfo();
-        $this->_sTable = $aSystem['table_cmts'];
-        $this->_sTableTrack = $aSystem['table_track'];
+        $this->_sTable = $aSystem['table'];
         $this->_sTriggerTable = $aSystem['trigger_table'];
         $this->_sTriggerFieldId = $aSystem['trigger_field_id'];
         $this->_sTriggerFieldTitle = $aSystem['trigger_field_title'];
@@ -73,12 +71,14 @@ class BxDolCmtsQuery extends BxDolDb
 
     function getComments ($iId, $iCmtVParentId = 0, $iAuthorId = 0, $sFilter = '', $aOrder = array(), $iStart = 0, $iCount = -1)
     {
-        $sFields = "'' AS `cmt_rated`,";
+        $sFields = $sJoin = "";
 
-        $sJoin = "";
-        if ($iAuthorId) {
-            $sFields = "`r`.`cmt_rate` AS `cmt_rated`,";
-            $sJoin = $this->prepare(" LEFT JOIN `{$this->_sTableTrack}` AS `r` ON (`r`.`cmt_system_id` = ? AND `r`.`cmt_id` = `{$this->_sTable}`.`cmt_id` AND `r`.`cmt_rate_author_id` = ?)", $this->_oMain->getSystemId(), $iAuthorId);
+	    $oVote = $this->_oMain->getVoteObject(0);
+        if($oVote !== false) {
+        	$aSql = $oVote->getSqlParts($this->_sTable, 'cmt_id');
+
+        	$sFields .= $aSql['fields'];
+        	$sJoin .= $aSql['join'];
         }
 
         $sWhereParent = '';
@@ -111,7 +111,6 @@ class BxDolCmtsQuery extends BxDolDb
         $sLimit = $iCount != -1 ? $this->prepare(" LIMIT ?, ?", (int)$iStart, (int)$iCount) : '';
 
         $sQuery = $this->prepare("SELECT
-                $sFields
                 `{$this->_sTable}`.`cmt_id`,
                 `{$this->_sTable}`.`cmt_parent_id`,
                 `{$this->_sTable}`.`cmt_vparent_id`,
@@ -119,10 +118,9 @@ class BxDolCmtsQuery extends BxDolDb
                 `{$this->_sTable}`.`cmt_author_id`,
                 `{$this->_sTable}`.`cmt_level`,
                 `{$this->_sTable}`.`cmt_text`,
-                `{$this->_sTable}`.`cmt_rate`,
-                `{$this->_sTable}`.`cmt_rate_count`,
                 `{$this->_sTable}`.`cmt_replies`,
                 `{$this->_sTable}`.`cmt_time`
+                $sFields
             FROM `{$this->_sTable}`
             $sJoin
             WHERE `{$this->_sTable}`.`cmt_object_id` = ?" . $sWhereParent . $sOder . $sLimit, $iId);
@@ -132,16 +130,17 @@ class BxDolCmtsQuery extends BxDolDb
 
     function getComment ($iId, $iCmtId, $iAuthorId = 0)
     {
-        $sFields = "'' AS `cmt_rated`,";
+        $sFields = $sJoin = "";
 
-        $sJoin = '';
-        if ($iAuthorId) {
-            $sFields = '`r`.`cmt_rate` AS `cmt_rated`,';
-            $sJoin = $this->prepare("LEFT JOIN {$this->_sTableTrack} AS `r` ON (`r`.`cmt_system_id` = ? AND `r`.`cmt_id` = `c`.`cmt_id` AND `r`.`cmt_rate_author_id` = ?)", $this->_oMain->getSystemId(), $iAuthorId);
+    	$oVote = $this->_oMain->getVoteObject($iCmtId);
+        if($oVote !== false) {
+        	$aSql = $oVote->getSqlParts($this->_sTable, 'cmt_id');
+
+        	$sFields .= $aSql['fields'];
+        	$sJoin .= $aSql['join'];
         }
 
         $sQuery = $this->prepare("SELECT
-                $sFields
                 `c`.`cmt_id`,
                 `c`.`cmt_parent_id`,
                 `c`.`cmt_vparent_id`,
@@ -149,10 +148,9 @@ class BxDolCmtsQuery extends BxDolDb
                 `c`.`cmt_author_id`,
                 `c`.`cmt_level`,
                 `c`.`cmt_text`,
-                `c`.`cmt_rate`,
-                `c`.`cmt_rate_count`,
                 `c`.`cmt_replies`,
                 `c`.`cmt_time`
+                $sFields
             FROM {$this->_sTable} AS `c`
             $sJoin
             WHERE `c`.`cmt_object_id` = ? AND `c`.`cmt_id` = ?
@@ -200,49 +198,6 @@ class BxDolCmtsQuery extends BxDolDb
     {
     	$sQuery = $this->prepare("UPDATE `{$this->_sTable}` SET `cmt_replies`=`cmt_replies`+? WHERE `cmt_id`=? LIMIT 1", $iCount, $iCmtId);
 		return $this->query($sQuery);
-    }
-
-    function rateComment ($iSystemId, $iCmtId, $iRate, $iAuthorId, $sAuthorIp)
-    {
-    	$iCount = 0;
-        $iTimestamp = time();
-
-        if($iRate == BX_CMT_RATE_VALUE_PLUS) {
-        	$iCount = 1;
-	        $sQuery = $this->prepare("INSERT IGNORE INTO `{$this->_sTableTrack}` SET
-	            `cmt_system_id` = ?,
-	            `cmt_id` = ?,
-	            `cmt_rate` = ?,
-	            `cmt_rate_author_id` = ?,
-	            `cmt_rate_author_nip` = INET_ATON(?),
-	            `cmt_rate_ts` = ?", $iSystemId, $iCmtId, $iRate, $iAuthorId, $sAuthorIp, $iTimestamp);
-        }
-        else if($iRate == BX_CMT_RATE_VALUE_MINUS) {
-        	$iCount = -1;
-        	$sQuery = $this->prepare("DELETE FROM `{$this->_sTableTrack}` WHERE
-	            `cmt_system_id` = ? AND 
-	            `cmt_id` = ? AND 
-	            `cmt_rate_author_id` = ?", $iSystemId, $iCmtId, $iAuthorId);
-        }
-
-        if ($this->query($sQuery)) {
-            $sQuery = $this->prepare("UPDATE `{$this->_sTable}` SET 
-            		`cmt_rate` = `cmt_rate` + ?, 
-            		`cmt_rate_count` = `cmt_rate_count` + ? 
-            	WHERE `cmt_id` = ? 
-            	LIMIT 1", $iRate, $iCount, $iCmtId);
-            $this->query($sQuery);
-
-            return true;
-        }
-
-        return false;
-    }
-
-    function getRatedBy ($iSystemId, $iCmtId)
-    {
-    	$sQuery = $this->prepare("SELECT `cmt_rate_author_id` FROM `{$this->_sTableTrack}` WHERE `cmt_system_id`=? AND `cmt_id`=?", $iSystemId, $iCmtId);
-    	return $this->getColumn($sQuery);
     }
 
     function deleteAuthorComments ($iAuthorId)
