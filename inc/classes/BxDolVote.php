@@ -100,27 +100,6 @@ define('BX_DOL_VOTE_USAGE_DEFAULT', BX_DOL_VOTE_USAGE_BLOCK);
  *
  */
 
-/*
-
-CREATE TABLE IF NOT EXISTS `sample_votes` (
-  `object_id` int(11) NOT NULL default '0',
-  `count` int(11) NOT NULL default '0',
-  `sum` int(11) NOT NULL default '0',
-  UNIQUE KEY `object_id` (`object_id`)
-) ENGINE=MYISAM DEFAULT CHARSET=utf8;
-
-CREATE TABLE IF NOT EXISTS `sample_votes_track` (
-  `object_id` int(11) NOT NULL default '0',
-  `author_id` int(11) NOT NULL default '0',
-  `author_nip` int(11) unsigned NOT NULL default '0',
-  `value` tinyint(4) NOT NULL default '0',
-  `date` int(11) NOT NULL default '0',
-  KEY `vote` (`object_id`, `author_nip`)
-) ENGINE=MYISAM DEFAULT CHARSET=utf8;
-
- */
-
-
 class BxDolVote extends BxDol
 {
     var $_iId = 0;    ///< item id to be rated
