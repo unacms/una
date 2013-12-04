@@ -27,7 +27,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 	public function getCssJs()
     {
     	$this->addCss(array('plugins/jquery/themes/|jquery-ui.css', 'view.css', 'view-media-tablet.css', 'view-media-desktop.css', 'post.css'));
-        $this->addJs(array('jquery.ui.all.min.js', 'jquery.resize.js', 'plugins/|masonry.pkgd.min.js', 'common_anim.js', 'main.js', 'view.js', 'post.js'));
+        $this->addJs(array('jquery.ui.all.min.js', 'jquery.resize.js', 'plugins/|masonry.pkgd.min.js', 'common_anim.js', 'main.js', 'view.js', 'post.js', 'share.js'));
     }
 
     public function getJsCode($sType, $aRequestParams = array(), $bWrap = true)
@@ -35,17 +35,21 @@ class BxTimelineTemplate extends BxDolModuleTemplate
     	$oJson = new Services_JSON();
     	$oModule = $this->getModule();
 
+    	$sBaseUri = $this->_oConfig->getBaseUri();
     	$sJsClass = $this->_oConfig->getJsClass($sType);
-    	$sJsObject = $this->_oConfig->getJsObject($sType);    	
+    	$sJsObject = $this->_oConfig->getJsObject($sType);
+    	$aHtmlIds = $this->_oConfig->getHtmlIds($sType);
 
         ob_start();
 ?>
 		var <?=$sJsObject; ?> = new <?=$sJsClass; ?>({
-            sActionUrl: '<?=BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri(); ?>',
+			sActionUri: '<?=$sBaseUri; ?>',
+            sActionUrl: '<?=BX_DOL_URL_ROOT . $sBaseUri; ?>',
 			sObjName: '<?=$sJsObject; ?>',
 			iOwnerId: <?=$oModule->_iOwnerId; ?>,
             sAnimationEffect: '<?=$this->_oConfig->getAnimationEffect(); ?>',
             iAnimationSpeed: '<?=$this->_oConfig->getAnimationSpeed(); ?>',
+            aHtmlIds: <?=$oJson->encode($aHtmlIds); ?>,
             oRequestParams: <?php echo !empty($aRequestParams) ? $oJson->encode($aRequestParams) : '{}'; ?>
         });
 <?php
@@ -93,7 +97,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
             	'filter' => $aParams['filter'],
             	'modules' => $aParams['modules'], 
             	'timeline' => $aParams['timeline'],
-			))
+			)) . $this->getJsCode('share')
         ));
     }
 
@@ -104,7 +108,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
     		return '';
 
     	$sContent = $this->getJsCode('view');
-    	$sContent .= $this->getPost($aEvent, array('type' => 'view_item'));
+    	$sContent .= $this->getPost($aEvent, array('type' => BX_TIMELINE_TYPE_ITEM));
 
 		$this->getCssJs();
     	return $sContent;
@@ -112,8 +116,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 
     public function getViewItemPopup($iId)
     {
-    	bx_import('BxTemplFunctions');
-    	return BxTemplFunctions::getInstance()->transBox('bx-timeline-item-popup-' . $iId, $this->getViewItemBlock($iId));
+    	return $this->getViewItemBlock($iId);
     }
 
     public function getPost(&$aEvent, $aBrowseParams = array())
@@ -290,16 +293,44 @@ class BxTimelineTemplate extends BxDolModuleTemplate
         ));
     }
 
-	public function getVotes($sSystem, $iId)
+    public function getShareCounter($sType, $sActions, $iObjectId)
     {
+    	$sStylePrefix = $this->_oConfig->getPrefix('style');
+    	$sJsObject = $this->_oConfig->getJsObject('share');
+
+    	$aEvent = $this->_oDb->getShared($sType, $sActions, $iObjectId);
+
+    	return $this->parseHtmlByName('share_counter.html', array(
+    		'style_prefix' => $sStylePrefix,
+    		'js_object' => $sJsObject,
+			'html_id_counter' => $this->_oConfig->getHtmlIds('share', 'counter') . $aEvent['id'],
+    		'id' => $aEvent['id'],
+			'counter' => !empty($aEvent['shares']) && (int)$aEvent['shares'] > 0 ? $aEvent['shares'] : ''
+    	));
+    }
+
+	public function getSharedBy($iId)
+    {
+    	$aTmplUsers = array();
     	$oModule = $this->getModule();
     	$sStylePrefix = $this->_oConfig->getPrefix('style');
 
-    	$oVote = $oModule->getVoteObject($sSystem, $iId);
-    	if($oVote === false)
-			return '';
+    	$aUserIds = $this->_oDb->getSharedBy($iId);
+    	foreach($aUserIds as $iUserId) {
+    		list($sUserName, $sUserUrl, $sUserIcon, $sUserUnit) = $oModule->getUserInfo($iUserId);
+			$aTmplUsers[] = array(
+				'style_prefix' => $sStylePrefix,
+				'user_unit' => $sUserUnit
+			);
+    	}
 
-		return $oVote->getJsScript();
+		if(empty($aTmplUsers))
+			$aTmplUsers = MsgBox(_t('_Empty'));
+
+    	return $this->parseHtmlByName('share_by_list.html', array(
+    		'style_prefix' => $sStylePrefix,
+    		'bx_repeat:list' => $aTmplUsers
+    	));
     }
 
 	protected function _getPost($sType, $aEvent, $aBrowseParams = array())
@@ -318,9 +349,12 @@ class BxTimelineTemplate extends BxDolModuleTemplate
         if(isset($aBrowseParams['type']) && $aBrowseParams['type'] == BX_TIMELINE_TYPE_CONNECTIONS)
         	$aTmplVarsTimelineOwner = $this->_getTmplVarsTimelineOwner($aEvent);
 
+		$bBrowseItem = isset($aBrowseParams['type']) && $aBrowseParams['type'] == BX_TIMELINE_TYPE_ITEM;
+
         $aTmplVars = array (
         	'style_prefix' => $sStylePrefix,
         	'js_object' => $sJsObject,
+        	'class' => $bBrowseItem ? 'bx-tl-view-sizer' : 'bx-tl-grid-sizer',
         	'id' => $aEvent['id'],
         	'bx_if:show_menu_item_manage' => array(
         		'condition' => !empty($aTmplVarsMenuItemManage),
@@ -349,7 +383,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 				'condition' => !empty($aTmplVarsMenuItemActions),
         		'content' => $aTmplVarsMenuItemActions
 			),
-			'comments' => isset($aBrowseParams['type']) && $aBrowseParams['type'] == 'view_item' ? $this->_getComments($aEvent['comments']) : '',
+			'comments' => $bBrowseItem ? $this->_getComments($aEvent['comments']) : '',
 			'votes' => $this->_getVotes($aEvent['votes'])
         );
 
@@ -378,12 +412,18 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 
 	protected function _getVotes($aVotes)
     {
-    	$mixedVotes = $this->getModule()->getVotesData($aVotes);
+    	$oModule = $this->getModule();
+
+    	$mixedVotes = $oModule->getVotesData($aVotes);
     	if($mixedVotes === false) 
     		return '';
 
     	list($sSystem, $iObjectId, $iCount) = $mixedVotes;
-		return $this->getVotes($sSystem, $iObjectId);
+    	$oVote = $oModule->getVoteObject($sSystem, $iObjectId);
+    	if($oVote === false)
+			return '';
+
+		return $oVote->getJsScript();
     }
 
     protected function _getTmplVarsMenuItemManage(&$aEvent) {

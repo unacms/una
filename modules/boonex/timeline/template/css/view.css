@@ -13,6 +13,10 @@ div.bx-tl-items {
 .bx-tl-grid-sizer {
 	width: 100%;
 }
+.bx-tl-view-sizer {
+	width: 500px;
+	width: 30rem;
+}
 
 /*--- Back Style ---*/
 
@@ -56,6 +60,9 @@ div.bx-tl-item-menu-button a {
 div.bx-tl-item-menu-button a:hover {
 	text-decoration: none;
 	color: rgba(56, 120, 119, 1.0);
+}
+div.bx-tl-item-menu-button i.sys-icon {
+	display: inline-block;
 }
 
 /*+++ Item Owner +++*/
@@ -105,12 +112,6 @@ div.bx-tl-shared div.bx-tl-content {
 
 /*+++ Item Actions +++*/
 div.bx-tl-item-actions {}
-
-
-/*--- View Item Popup Style ---*/
-div.bx-tl-item-popup div.bx-tl-item {
-	width: 100%;
-} 
 
 
 /*--- Empty Style ---*/

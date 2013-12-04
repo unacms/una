@@ -16,6 +16,7 @@ require_once( BX_DIRECTORY_PATH_PLUGINS . 'Services_JSON.php' );
 
 define('BX_TIMELINE_TYPE_OWNER', 'owner');
 define('BX_TIMELINE_TYPE_CONNECTIONS', 'connections');
+define('BX_TIMELINE_TYPE_ITEM', 'view_item');
 
 define('BX_TIMELINE_HANDLER_TYPE_INSERT', 'insert');
 define('BX_TIMELINE_HANDLER_TYPE_UPDATE', 'update');
@@ -70,25 +71,29 @@ class BxTimelineModule extends BxDolModule
 		}
 
         $this->_iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
-        if (!$this->isAllowedPost(true)) {
-        	$this->_echoResultJson(array('msg' => bx_js_string(_t('_bx_timeline_txt_msg_not_allowed_post'))));
+
+        $mixedAllowed = $this->isAllowedPost(true);
+        if($mixedAllowed !== true) {
+        	$this->_echoResultJson(array('msg' => strip_tags($mixedAllowed)));
 			return;
         }
-        $aResult = $this->$sMethod();
 
+        $aResult = $this->$sMethod();
         $this->_echoResultJson($aResult);
     }
 
 	function actionDelete()
     {
         $this->_iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
-        if(!$this->isAllowedDelete(true)) {
-            $this->_echoResultJson(array('code' => 1));
-            return;
-        }
 
         $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
         $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
+
+        $mixedAllowed = $this->isAllowedDelete($aEvent, true);
+        if($mixedAllowed !== true) {
+            $this->_echoResultJson(array('code' => 1, 'msg' => strip_tags($mixedAllowed)));
+            return;
+        }
 
         if(!$this->_oDb->deleteEvent(array('id' => $iId))) {
         	$this->_echoResultJson(array('code' => 2));
@@ -109,6 +114,18 @@ class BxTimelineModule extends BxDolModule
     		'object_id' => bx_process_input(bx_get('object_id'), BX_DATA_INT),	
     	);
 
+    	$aShared = $this->_oDb->getShared($aContent['type'], $aContent['action'], $aContent['object_id']);
+		if(empty($aShared) || !is_array($aShared)) {
+			$this->_echoResultJson(array('code' => 1, 'msg' => _t('_bx_timeline_txt_err_cannot_share')));
+        	return;
+		}
+
+	    $mixedAllowed = $this->isAllowedShare($aShared, true);
+        if($mixedAllowed !== true) {
+            $this->_echoResultJson(array('code' => 2, 'msg' => strip_tags($mixedAllowed)));
+            return;
+        }
+
 		$iId = $this->_oDb->insertEvent(array(
             'owner_id' => $iOwnerId,
             'type' => $this->_oConfig->getPrefix('common_post') . 'share',
@@ -121,13 +138,13 @@ class BxTimelineModule extends BxDolModule
         ));
 
         if(!empty($iId)) {
-        	$this->onShare($iId);
+        	$this->onShare($iId, $aShared);
 
-        	$this->_echoResultJson(array('msg' => _t('_bx_timeline_txt_msg_success_share')));
+        	$this->_echoResultJson(array('code' => 0, 'msg' => _t('_bx_timeline_txt_msg_success_share')));
         	return;
         }
 
-		$this->_echoResultJson(array('msg' => _t('_bx_timeline_txt_err_cannot_share')));
+		$this->_echoResultJson(array('code' => 3, 'msg' => _t('_bx_timeline_txt_err_cannot_share')));
     }
 
     function actionGetPost()
@@ -184,9 +201,13 @@ class BxTimelineModule extends BxDolModule
     		return;
     	}
 
-    	$this->_echoResultJson(array(
-    		'popup' => $this->_oTemplate->getViewItemPopup($iItemId)
-    	));
+    	echo $this->_oTemplate->getViewItemPopup($iItemId);
+    }
+
+	public function actionGetSharedBy() {
+        $iSharedId = bx_process_input(bx_get('id'), BX_DATA_INT);
+
+        echo $this->_oTemplate->getSharedBy($iSharedId);
     }
 
     function actionRss($iOwnerId)
@@ -278,7 +299,7 @@ class BxTimelineModule extends BxDolModule
 		$this->_iOwnerId = $iProfileId;
         list($sUserName, $sUserUrl) = $this->getUserInfo($iProfileId);
 
-        if($this->_iOwnerId != $this->getUserId() && !$this->isAllowedPost())
+        if($this->isAllowedPost() !== true)
             return array();
 
 		bx_import('BxDolMenu');
@@ -311,7 +332,7 @@ class BxTimelineModule extends BxDolModule
             return array();
 
 		$sJsObject = $this->_oConfig->getJsObject('view');
-		$aParams = $this->_prepareParams('owner', $iProfileId, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline);
+		$aParams = $this->_prepareParams(BX_TIMELINE_TYPE_OWNER, $iProfileId, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline);
 
 		$this->_iOwnerId = $aParams['owner_id'];
 		list($sUserName, $sUserUrl) = $this->getUserInfo($aParams['owner_id']);
@@ -333,7 +354,7 @@ class BxTimelineModule extends BxDolModule
 
     public function serviceGetBlockViewAccount($iProfileId = 0, $iStart = -1, $iPerPage = -1, $iTimeline = -1, $sFilter = '', $aModules = array())
     {
-    	$aParams = $this->_prepareParams('connections', $iProfileId, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline);
+    	$aParams = $this->_prepareParams(BX_TIMELINE_TYPE_CONNECTIONS, $iProfileId, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline);
 
     	$this->_iOwnerId = $aParams['owner_id'];
 
@@ -350,13 +371,25 @@ class BxTimelineModule extends BxDolModule
     	return array('content' => $this->_oTemplate->getViewItemBlock($iItemId));
     }
 
-	public function serviceGetShareOnclick($iOwnerId, $sType, $sAction, $iObjectId)
+    public function serviceGetShareJsScript()
     {
-    	$sJsObject = $this->_oConfig->getJsObject('view');
+    	$this->_oTemplate->addJs(array('main.js', 'share.js'));
+
+		return $this->_oTemplate->getJsCode('share');
+    }
+
+	public function serviceGetShareJsClick($iOwnerId, $sType, $sAction, $iObjectId)
+    {
+    	$sJsObject = $this->_oConfig->getJsObject('share');
     	$sFormat = "%s.shareItem(this, %d, '%s', '%s', %d);";
 
     	$iOwnerId = !empty($iOwnerId) ? (int)$iOwnerId : $this->getUserId(); //--- in whose timeline the content will be shared
     	return sprintf($sFormat, $sJsObject, $iOwnerId, $sType, $sAction, (int)$iObjectId);
+    }
+
+    public function serviceGetShareCounter($sType, $sAction, $iObjectId)
+    {
+    	return $this->_oTemplate->getShareCounter($sType, $sAction, $iObjectId);
     }
 
     /*
@@ -581,6 +614,11 @@ class BxTimelineModule extends BxDolModule
         return isLogged() ? bx_get_logged_profile_id() : 0;
     }
 
+	public function getUserIp()
+    {
+        return $_SERVER['REMOTE_ADDR'];
+    }
+
 	public function getUserInfo($iUserId = 0)
     {
     	bx_import('BxDolProfile');
@@ -598,17 +636,25 @@ class BxTimelineModule extends BxDolModule
 		);
     }
 
+    //--- Check permissions methods ---//
+    public function checkActionErrorMsg ($iAction)
+    {
+        $iId = $this->_getAuthorId();
+        $check_res = checkAction($iId, $iAction);
+        return $check_res[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $check_res[CHECK_ACTION_MESSAGE] : '';
+    }
+    
     public function isAllowedPost($bPerform = false)
     {
 		if(isAdmin())
 			return true;
 
-        $iUserId = $this->getUserId();
-		if($iUserId == 0 && $this->_oConfig->isAllowGuestComments())
+		$iUserId = $this->getUserId();
+		if($this->_iOwnerId == $this->getUserId())
 			return true;
 
         $aCheckResult = checkActionModule($iUserId, 'post', $this->getName(), $bPerform);
-        return $aCheckResult[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED;
+        return $aCheckResult[CHECK_ACTION_RESULT] != CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
     }
 
     public function isAllowedDelete($aEvent, $bPerform = false)
@@ -617,11 +663,11 @@ class BxTimelineModule extends BxDolModule
             return true;
 
         $iUserId = (int)$this->getUserId();
-        if((int)$aEvent['owner_id'] == $iUserId)
+        if((int)$aEvent['owner_id'] == $iUserId && $this->_oConfig->isAllowDelete())
            return true;
 
         $aCheckResult = checkActionModule($iUserId, 'delete', $this->getName(), $bPerform);
-        return $aCheckResult[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED;
+        return $aCheckResult[CHECK_ACTION_RESULT] != CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
     }
 
 	public function isAllowedComment($aEvent, $bPerform = false)
@@ -666,15 +712,15 @@ class BxTimelineModule extends BxDolModule
 
     public function isAllowedShare($aEvent, $bPerform = false)
     {
+    	if(isAdmin())
+			return true;
+
     	$iUserId = (int)$this->getUserId();
     	if($iUserId == 0)
     		return false;
 
-    	if(isAdmin())
-			return true;
-
 		$aCheckResult = checkActionModule($iUserId, 'share', $this->getName(), $bPerform);
-        return $aCheckResult[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED;
+        return $aCheckResult[CHECK_ACTION_RESULT] != CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
     }
 
 	public function onPost($iId)
@@ -697,16 +743,25 @@ class BxTimelineModule extends BxDolModule
         //--- Event -> Post for Alerts Engine ---//
     }
 
-	public function onShare($iId)
+	public function onShare($iId, $aShared = array())
     {
     	$aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
 
-		$aContent = unserialize($aEvent['content']);
-    	$iSharedId = $this->_oDb->updateSharesCounter($aContent['type'], $aContent['action'], $aContent['object_id']);
+    	if(empty($aShared)) {
+			$aContent = unserialize($aEvent['content']);
+
+			$aShared = $this->_oDb->getShared($aContent['type'], $aContent['action'], $aContent['object_id']);
+			if(empty($aShared) || !is_array($aShared))
+				return;
+    	}
+
+		$iUserId = $this->getUserId();
+		$this->_oDb->insertShareTrack($aEvent['id'], $iUserId, $this->getUserIp(), $aShared['id']);
+    	$this->_oDb->updateShareCounter($aShared['id'], $aShared['shares']);
 
 		//--- Timeline -> Update for Alerts Engine ---//
 		bx_import('BxDolAlerts');
-		$oAlert = new BxDolAlerts($this->_oConfig->getSystemName('alert'), 'share', $iSharedId, $aEvent['object_id']);
+		$oAlert = new BxDolAlerts($this->_oConfig->getSystemName('alert'), 'share', $aShared['id'], $iUserId);
 		$oAlert->alert();
 		//--- Timeline -> Update for Alerts Engine ---//
     }
@@ -725,11 +780,14 @@ class BxTimelineModule extends BxDolModule
 		}
 
 		if($aEvent['type'] == $this->_oConfig->getPrefix('common_post') . BX_TIMELINE_PARSE_TYPE_SHARE) {
+			$this->_oDb->deleteShareTrack($aEvent['id']);
+
 			$aContent = unserialize($aEvent['content']);
-			$this->_oDb->updateSharesCounter($aContent['type'], $aContent['action'], $aContent['object_id'], -1);
+			$aShared = $this->_oDb->getShared($aContent['type'], $aContent['action'], $aContent['object_id']);
+			if(!empty($aShared) && is_array($aShared))
+				$this->_oDb->updateShareCounter($aShared['id'], $aShared['shares'], -1);
 		}
-		
-		
+
 		//--- Event -> Delete for Alerts Engine ---//
         bx_import('BxDolAlerts');
         $oAlert = new BxDolAlerts($this->_oConfig->getSystemName('alert'), 'delete', $aEvent['id'], $this->getUserId());

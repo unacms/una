@@ -80,6 +80,17 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_photos2events` (
   UNIQUE KEY `photo` (`event_id`, `photo_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
+-- TABLES: SHARES
+CREATE TABLE IF NOT EXISTS `bx_timeline_shares_track` (
+  `event_id` int(11) NOT NULL default '0',
+  `author_id` int(11) NOT NULL default '0',
+  `author_nip` int(11) unsigned NOT NULL default '0',
+  `shared_id` int(11) NOT NULL default '0',
+  `date` int(11) NOT NULL default '0',
+  UNIQUE KEY `event_id` (`event_id`),
+  KEY `share` (`shared_id`, `author_nip`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+
 -- TABLES: COMMENTS
 CREATE TABLE IF NOT EXISTS `bx_timeline_comments` (
   `cmt_id` int(11) NOT NULL AUTO_INCREMENT,

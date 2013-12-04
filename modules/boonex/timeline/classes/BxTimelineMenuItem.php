@@ -43,7 +43,7 @@ class BxTimelineMenuItem extends BxTemplMenu {
     	if(isset($aEvent['comments']) && is_array($aEvent['comments']) && isset($aEvent['comments']['system']))
     		$sCommentsSystem = $aEvent['comments']['system'];
 
-		$iOwnerId = $this->_oModule->getUserId(); //--- in whose timeline the content will be shared
+    	$iOwnerId = $this->_oModule->getUserId(); //--- in whose timeline the content will be shared
 		$sType = $aEvent['type'];
 		$sAction = $aEvent['action'];
 
@@ -62,7 +62,7 @@ class BxTimelineMenuItem extends BxTemplMenu {
 
     	$this->addMarkers(array(
     		'content_id' => $aEvent['id'],
-    		'share_onclick' => $this->_oModule->serviceGetShareOnclick($iOwnerId, $sType, $sAction, $iObjectId),
+    		'share_onclick' => $this->_oModule->serviceGetShareJsClick($iOwnerId, $sType, $sAction, $iObjectId),
     		'comment_onclick' => $this->_oModule->_oConfig->getJsObject('view') . ".commentItem(this, '" . $sCommentsSystem . "', " . $aEvent['id'] . ")",
     		'vote_onclick' => $sVotesOnclick
 		));    	
@@ -107,8 +107,8 @@ class BxTimelineMenuItem extends BxTemplMenu {
 
         if(!$sCheckFuncName || !method_exists($this->_oModule, $sCheckFuncName))
 			return true;
-
-		return call_user_func_array(array($this->_oModule, $sCheckFuncName), $aCheckFuncParams);
+ 
+		return call_user_func_array(array($this->_oModule, $sCheckFuncName), $aCheckFuncParams) === true;
     }
 
     /** 
@@ -133,7 +133,11 @@ class BxTimelineMenuItem extends BxTemplMenu {
     				break;
 
     			case 'item-share':
-    				$aItems[$iKey]['addon'] = (int)$this->_aEvent['shares'] > 0 ? $this->_aEvent['shares'] : '';
+    				$sType = $this->_aEvent['type'];
+					$sAction = $this->_aEvent['action'];
+					$iObjectId = $this->_oModule->_oConfig->isSystem($sType, $sAction) ? $this->_aEvent['object_id'] : $this->_aEvent['id'];
+
+    				$aItems[$iKey]['addon'] = $this->_oModule->serviceGetShareCounter($sType, $sAction, $iObjectId);
     				break;
     		}
 

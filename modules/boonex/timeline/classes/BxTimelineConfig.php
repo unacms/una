@@ -21,7 +21,6 @@ class BxTimelineConfig extends BxDolModuleConfig
     protected $_sVoteSystemName;
 
     protected $_bAllowDelete;
-    protected $_bAllowGuestComments;
 
     protected $_iPerPageProfile;
     protected $_iPerPageAccount;
@@ -44,6 +43,8 @@ class BxTimelineConfig extends BxDolModuleConfig
     protected $_bJsMode;
     protected $_aJsClass;
     protected $_aJsObjects;
+
+    protected $_aHtmlIds;
 
 	protected $_sAnimationEffect;
     protected $_iAnimationSpeed;
@@ -79,12 +80,26 @@ class BxTimelineConfig extends BxDolModuleConfig
         $this->_bJsMode = false;
         $this->_aJsClass = array(
         	'main' => 'BxTimelineMain',
+            'view' => 'BxTimelineView',
             'post' => 'BxTimelinePost',
-            'view' => 'BxTimelineView'
+        	'share' => 'BxTimelineShare'
         );
         $this->_aJsObjects = array(
-            'post' => 'oTimelinePost',
-            'view' => 'oTimelineView'
+            'view' => 'oTimelineView',
+        	'post' => 'oTimelinePost',
+        	'share' => 'oTimelineShare'
+        );
+
+        $sHtmlPrefix = str_replace('_', '-', $this->_sName);
+        $this->_aHtmlIds = array(
+			'view' => array(
+        		'item_popup' => $sHtmlPrefix . '-item-popup-',
+        	),
+        	'post' => array(),
+        	'share' => array(
+        		'counter' => $sHtmlPrefix . '-share-counter-',
+        		'by_popup' => $sHtmlPrefix . '-share-by-',
+        	)
         );
 
         $this->_sAnimationEffect = 'fade';
@@ -101,7 +116,6 @@ class BxTimelineConfig extends BxDolModuleConfig
         $this->_oDb = &$oDb;
 
         $this->_bAllowDelete = $this->_oDb->getParam('bx_timeline_enable_delete') == 'on';
-        $this->_bAllowGuestComments = $this->_oDb->getParam('bx_timeline_enable_guest_comments') == 'on';
 
         $this->_iPerPageProfile = (int)$this->_oDb->getParam('bx_timeline_events_per_page_profile');
         $this->_iPerPageAccount = (int)$this->_oDb->getParam('bx_timeline_events_per_page_account');
@@ -128,10 +142,6 @@ class BxTimelineConfig extends BxDolModuleConfig
     public function isAllowDelete()
     {
     	return $this->_bAllowDelete;
-    }
-    public function isAllowGuestComments()
-    {
-    	return $this->_bAllowGuestComments;
     }
     public function getSystemName($sType)
     {
@@ -275,6 +285,14 @@ class BxTimelineConfig extends BxDolModuleConfig
 	public function getJsObject($sType)
     {
         return $this->_aJsObjects[$sType];
+    }
+
+	public function getHtmlIds($sType, $sKey = '')
+    {
+    	if(empty($sKey))
+    		return $this->_aHtmlIds[$sType];
+
+        return $this->_aHtmlIds[$sType][$sKey];
     }
 
 	public function getAnimationEffect()

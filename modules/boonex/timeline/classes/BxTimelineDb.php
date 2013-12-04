@@ -17,6 +17,7 @@ class BxTimelineDb extends BxDolModuleDb
 
     var $_sTable;
     var $_sTableHandlers;
+    var $_sTablesShareTrack;
 
     /*
      * Constructor.
@@ -29,6 +30,7 @@ class BxTimelineDb extends BxDolModuleDb
 
         $this->_sTable = $this->_sPrefix . 'events';
         $this->_sTableHandlers = $this->_sPrefix . 'handlers';
+        $this->_sTableSharesTrack = $this->_sPrefix . 'shares_track';
     }
 
     public function getAlertHandlerId()
@@ -291,23 +293,42 @@ class BxTimelineDb extends BxDolModuleDb
 		return (int)$aEvent['year'] < $iNowYear ? (int)$aEvent['year'] : 0;
     }
 
-    public function updateSharesCounter($sType, $sActions, $iObjectId, $iIncrement = 1)
+    //--- Share related methods ---//
+    public function insertShareTrack($iEventId, $iAuthorId, $sAuthorIp, $iSharedId)
+    {
+    	$iAuthorNip = ip2long($sAuthorIp);
+		$sQuery = $this->prepare("INSERT INTO `{$this->_sTableSharesTrack}` SET `event_id` = ?, `author_id` = ?, `author_nip` = ?, `shared_id` = ?, `date` = UNIX_TIMESTAMP()", $iEventId, $iAuthorId, $iAuthorNip, $iSharedId);
+		return (int)$this->query($sQuery) > 0;
+    }
+
+    public function deleteShareTrack($iEventId)
+    {
+    	$sQuery = $this->prepare("DELETE FROM `{$this->_sTableSharesTrack}` WHERE `event_id` = ?", $iEventId);
+		return (int)$this->query($sQuery) > 0;
+    }
+
+	public function updateShareCounter($iId, $iCounter, $iIncrement = 1)
+    {
+    	return (int)$this->updateEvent(array('shares' => (int)$iCounter + $iIncrement), array('id' => $iId)) > 0;
+    }
+    
+    public function getShared($sType, $sActions, $iObjectId)
     {
     	if($this->_oConfig->isSystem($sType, $sActions))
 			$aParams = array('browse' => 'descriptor', 'type' => $sType, 'action' => $sActions, 'object_id' => $iObjectId);
 		else 
 			$aParams = array('browse' => 'id', 'value' => $iObjectId);
 
-		$aEvent = $this->getEvents($aParams);
-		if(!empty($aEvent) && is_array($aEvent) && ($iIncrement > 0 || (int)$aEvent['shares'] > 0)) {
-			$this->updateEvent(array('shares' => (int)$aEvent['shares'] + $iIncrement), array('id' => $aEvent['id']));
-
-			return (int)$aEvent['id'];
-		}
-
-		return 0;
+		return $this->getEvents($aParams);
     }
-    
+
+	function getSharedBy($iSharedId)
+    {
+    	$sQuery = $this->prepare("SELECT `author_id` FROM `{$this->_sTableSharesTrack}` WHERE `shared_id`=?", $iSharedId);
+    	return $this->getColumn($sQuery);
+    }
+
+	//--- Photo uploader related methods ---//
 	public function savePhoto($iEventId, $iPhId, $sPhTitle, $sPhText)
 	{
 		$sQuery = $this->prepare("INSERT INTO `" . $this->_sPrefix . "photos2events` SET `event_id`=?, `photo_id`=?, `title`=?, `text`=?", $iEventId, $iPhId, $sPhTitle, $sPhText);
