@@ -15,3 +15,12 @@
     float:right;
 }
 
+/* view page */
+.bx-notes-entity-actions .bx-vote,
+.bx-notes-entity-actions .bx-tl-share {
+	position: relative;
+	float: left;
+}
+.bx-notes-entity-actions .bx-tl-share {
+	margin-left: 20px;
+}
