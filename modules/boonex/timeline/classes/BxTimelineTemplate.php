@@ -26,7 +26,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 
 	public function getCssJs()
     {
-    	$this->addCss(array('plugins/jquery/themes/|jquery-ui.css', 'view.css', 'view-media-tablet.css', 'view-media-desktop.css', 'post.css'));
+    	$this->addCss(array('plugins/jquery/themes/|jquery-ui.css', 'view.css', 'view-media-tablet.css', 'view-media-desktop.css', 'post.css', 'share.css'));
         $this->addJs(array('jquery.ui.all.min.js', 'jquery.resize.js', 'plugins/|masonry.pkgd.min.js', 'common_anim.js', 'main.js', 'view.js', 'post.js', 'share.js'));
     }
 
@@ -293,12 +293,43 @@ class BxTimelineTemplate extends BxDolModuleTemplate
         ));
     }
 
-    public function getShareCounter($sType, $sActions, $iObjectId)
+	public function getShareElement($iOwnerId, $sType, $sAction, $iObjectId, $aParams = array())
+    {
+    	$sStylePrefix = $this->_oConfig->getPrefix('style');
+
+    	$aShared = $this->_oDb->getShared($sType, $sAction, $iObjectId);
+
+    	$sDoShare = $this->parseHtmlByName('bx_a.html', array(
+    		'href' => 'javascript:void(0)',
+    		'title' => _t('_bx_timeline_txt_do_share'),
+    		'bx_repeat:attrs' => array(
+    			array('key' => 'onclick', 'value' => $this->getShareJsClick($iOwnerId, $sType, $sAction, $iObjectId))
+    		),
+    		'content' => $this->parseHtmlByName('bx_icon.html', array('name' => 'share'))
+    	));
+
+    	return $this->parseHtmlByName('share_element_block.html', array(
+    		'style_prefix' => $sStylePrefix,
+    		'html_id' => $this->_oConfig->getHtmlIds('share', 'main') . $aShared['id'],
+    		'count' => $aShared['shares'],
+    		'do_share' => $sDoShare,
+    		'bx_if:show_counter' => array(
+    			'condition' => isset($aParams['show_counter']) && $aParams['show_counter'] === true,
+    			'content' => array(
+    				'style_prefix' => $sStylePrefix,
+    				'counter' => $this->getShareCounter($sType, $sAction, $iObjectId)
+    			)
+    		),
+    		'script' => $this->getShareJsScript()
+    	));
+    }
+
+    public function getShareCounter($sType, $sAction, $iObjectId)
     {
     	$sStylePrefix = $this->_oConfig->getPrefix('style');
     	$sJsObject = $this->_oConfig->getJsObject('share');
 
-    	$aEvent = $this->_oDb->getShared($sType, $sActions, $iObjectId);
+    	$aEvent = $this->_oDb->getShared($sType, $sAction, $iObjectId);
 
     	return $this->parseHtmlByName('share_counter.html', array(
     		'style_prefix' => $sStylePrefix,
@@ -331,6 +362,23 @@ class BxTimelineTemplate extends BxDolModuleTemplate
     		'style_prefix' => $sStylePrefix,
     		'bx_repeat:list' => $aTmplUsers
     	));
+    }
+
+	public function getShareJsScript()
+    {
+    	$this->addCss(array('share.css'));
+    	$this->addJs(array('main.js', 'share.js'));
+
+		return $this->getJsCode('share');
+    }
+
+    public function getShareJsClick($iOwnerId, $sType, $sAction, $iObjectId)
+    {
+    	$sJsObject = $this->_oConfig->getJsObject('share');
+    	$sFormat = "%s.shareItem(this, %d, '%s', '%s', %d);";
+
+    	$iOwnerId = !empty($iOwnerId) ? (int)$iOwnerId : $this->getUserId(); //--- in whose timeline the content will be shared
+    	return sprintf($sFormat, $sJsObject, $iOwnerId, $sType, $sAction, (int)$iObjectId);
     }
 
 	protected function _getPost($sType, $aEvent, $aBrowseParams = array())

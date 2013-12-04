@@ -312,10 +312,10 @@ class BxTimelineDb extends BxDolModuleDb
     	return (int)$this->updateEvent(array('shares' => (int)$iCounter + $iIncrement), array('id' => $iId)) > 0;
     }
     
-    public function getShared($sType, $sActions, $iObjectId)
+    public function getShared($sType, $sAction, $iObjectId)
     {
-    	if($this->_oConfig->isSystem($sType, $sActions))
-			$aParams = array('browse' => 'descriptor', 'type' => $sType, 'action' => $sActions, 'object_id' => $iObjectId);
+    	if($this->_oConfig->isSystem($sType, $sAction))
+			$aParams = array('browse' => 'descriptor', 'type' => $sType, 'action' => $sAction, 'object_id' => $iObjectId);
 		else 
 			$aParams = array('browse' => 'id', 'value' => $iObjectId);
 

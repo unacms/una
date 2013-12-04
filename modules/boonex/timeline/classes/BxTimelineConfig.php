@@ -45,6 +45,7 @@ class BxTimelineConfig extends BxDolModuleConfig
     protected $_aJsObjects;
 
     protected $_aHtmlIds;
+    protected $_aShareDefaults;
 
 	protected $_sAnimationEffect;
     protected $_iAnimationSpeed;
@@ -97,11 +98,19 @@ class BxTimelineConfig extends BxDolModuleConfig
         	),
         	'post' => array(),
         	'share' => array(
+        		'main' => $sHtmlPrefix . '-share-',
         		'counter' => $sHtmlPrefix . '-share-counter-',
         		'by_popup' => $sHtmlPrefix . '-share-by-',
         	)
         );
 
+        $this->_aShareDefaults = array(
+			'show_do_share_as_button' => false,
+			'show_do_share_icon' => true,
+			'show_do_share_label' => false,
+			'show_counter' => true
+		);
+        
         $this->_sAnimationEffect = 'fade';
         $this->_iAnimationSpeed = 'slow';
         $this->_sStylePrefix = 'bx-tl';
@@ -293,6 +302,11 @@ class BxTimelineConfig extends BxDolModuleConfig
     		return $this->_aHtmlIds[$sType];
 
         return $this->_aHtmlIds[$sType][$sKey];
+    }
+
+    public function getShareDefaults()
+    {
+    	return $this->_aShareDefaults;
     }
 
 	public function getAnimationEffect()

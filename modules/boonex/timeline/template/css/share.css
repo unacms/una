@@ -1,0 +1,10 @@
+.bx-tl-share .bx-tl-share-element-holder,
+.bx-tl-share .bx-tl-share-counter-holder {
+	line-height: 36px;
+	line-height: 2.2rem;
+}
+div.bx-tl-share div.bx-tl-share-element-holder,
+div.bx-tl-share div.bx-tl-share-counter-holder {
+	position: relative;
+	float: left;
+}

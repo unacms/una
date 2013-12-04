@@ -43,15 +43,13 @@ class BxBaseVoteView extends BxDolVote
         $this->_aElementDefaults = array(
         	'stars' => array(
 	        	'show_do_vote_legend' => false,
-        		'show_counter' => true,
-        		'show_counter_labled' => true,
+        		'show_counter' => true
 	        ),
 	        'likes' => array(
 	        	'show_do_vote_as_button' => false,
 	        	'show_do_vote_icon' => true,
 	        	'show_do_vote_label' => false,
-        		'show_counter' => true,
-	        	'show_counter_labled' => true,
+        		'show_counter' => true
         	)
         );
 

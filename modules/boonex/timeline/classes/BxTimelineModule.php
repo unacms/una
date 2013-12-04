@@ -371,25 +371,26 @@ class BxTimelineModule extends BxDolModule
     	return array('content' => $this->_oTemplate->getViewItemBlock($iItemId));
     }
 
+    public function serviceGetShareElementBlock($iOwnerId, $sType, $sAction, $iObjectId, $aParams = array())
+    {
+    	$aParams = array_merge($aParams, $this->_oConfig->getShareDefaults());
+
+    	return $this->_oTemplate->getShareElement($iOwnerId, $sType, $sAction, $iObjectId, $aParams);
+    }
+
+	public function serviceGetShareCounter($sType, $sAction, $iObjectId)
+    {
+    	return $this->_oTemplate->getShareCounter($sType, $sAction, $iObjectId);
+    }
+
     public function serviceGetShareJsScript()
     {
-    	$this->_oTemplate->addJs(array('main.js', 'share.js'));
-
-		return $this->_oTemplate->getJsCode('share');
+		return $this->_oTemplate->getShareJsScript();
     }
 
 	public function serviceGetShareJsClick($iOwnerId, $sType, $sAction, $iObjectId)
     {
-    	$sJsObject = $this->_oConfig->getJsObject('share');
-    	$sFormat = "%s.shareItem(this, %d, '%s', '%s', %d);";
-
-    	$iOwnerId = !empty($iOwnerId) ? (int)$iOwnerId : $this->getUserId(); //--- in whose timeline the content will be shared
-    	return sprintf($sFormat, $sJsObject, $iOwnerId, $sType, $sAction, (int)$iObjectId);
-    }
-
-    public function serviceGetShareCounter($sType, $sAction, $iObjectId)
-    {
-    	return $this->_oTemplate->getShareCounter($sType, $sAction, $iObjectId);
+    	return $this->_oTemplate->getShareJsClick($iOwnerId, $sType, $sAction, $iObjectId);
     }
 
     /*
