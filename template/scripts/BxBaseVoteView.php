@@ -47,6 +47,7 @@ class BxBaseVoteView extends BxDolVote
 	        ),
 	        'likes' => array(
 	        	'show_do_vote_as_button' => false,
+	        	'show_do_vote_as_button_small' => false,
 	        	'show_do_vote_icon' => true,
 	        	'show_do_vote_label' => false,
         		'show_counter' => true
@@ -127,7 +128,11 @@ class BxBaseVoteView extends BxDolVote
 
 	public function getElement($aParams = array())
     {
-    	$sType = $this->isLikeMode() ? BX_DOL_VOTE_TYPE_LIKES : BX_DOL_VOTE_TYPE_STARS;
+    	$bLike =  $this->isLikeMode();
+    	$sType = $bLike ? BX_DOL_VOTE_TYPE_LIKES : BX_DOL_VOTE_TYPE_STARS;
+
+    	$bShowDoVoteAsButtonSmall = $bLike && isset($aParams['show_do_vote_as_button_small']) && $aParams['show_do_vote_as_button_small'] == true;
+		$bShowDoVoteAsButton = $bLike && !$bShowDoVoteAsButtonSmall && isset($aParams['show_do_vote_as_button']) && $aParams['show_do_vote_as_button'] == true;
 
     	$sMethodDoVote = '_getDoVote' . ucfirst($sType);
     	if(!method_exists($this, $sMethodDoVote))
@@ -140,7 +145,7 @@ class BxBaseVoteView extends BxDolVote
     	return BxDolTemplate::getInstance()->parseHtmlByName($sTmplName, array(
     		'style_prefix' => $this->_sStylePrefix,
     		'html_id' => $this->_aHtmlIds['main_' . $sType],
-    		'type' => $sType,
+    		'class' => $this->_sStylePrefix . '-' . $sType . ($bShowDoVoteAsButton ? '-button' : '') . ($bShowDoVoteAsButtonSmall ? '-button-small' : ''),
     		'rate' => $aVote['rate'],
     		'count' => $aVote['count'],
     		'do_vote' => $this->$sMethodDoVote($aParams),
@@ -203,13 +208,13 @@ class BxBaseVoteView extends BxDolVote
 
     protected function _getDoVoteLikes($aParams = array())
     {
+    	$bShowDoVoteAsButtonSmall = isset($aParams['show_do_vote_as_button_small']) && $aParams['show_do_vote_as_button_small'] == true;
+		$bShowDoVoteAsButton = !$bShowDoVoteAsButtonSmall && isset($aParams['show_do_vote_as_button']) && $aParams['show_do_vote_as_button'] == true;
+
     	return BxDolTemplate::getInstance()->parseHtmlByName($this->_sTmplNameDoVoteLikes, array(
     		'style_prefix' => $this->_sStylePrefix,
     		'js_object' => $this->getJsObjectName(),
-    		'bx_if:show_as_button' => array(
-    			'condition' => isset($aParams['show_as_button']) && $aParams['show_as_button'] === true,
-    			'content' => array()
-    		),
+    		'class' => ($bShowDoVoteAsButton ? 'bx-btn' : '') . ($bShowDoVoteAsButtonSmall ? 'bx-btn bx-btn-small' : ''),
     		'value' => $this->getMinValue(),
     		'do_vote' => $this->_getLabelDoLike($aParams),
     	));

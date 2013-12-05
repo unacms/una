@@ -10,31 +10,43 @@ div.bx-vote-by-list div.bx-persons-unit {
 	margin-right: 0px;
 	margin-bottom: 0px;
 }
-    
-/*--- Likes based Element Styles ---*/
-.bx-vote-likes .bx-vote-element-holder,
-.bx-vote-likes .bx-vote-counter-holder {
-	line-height: 36px;
-	line-height: 2.2rem;
-}
-div.bx-vote-likes div.bx-vote-element-holder,
-div.bx-vote-likes div.bx-vote-counter-holder {
+
+/*--- Vote Element Styles ---*/
+div.bx-vote div.bx-vote-element-holder,
+div.bx-vote div.bx-vote-counter-holder {
 	position: relative;
 	float: left;
 }
 
+/*--- Likes based Element Styles ---*/
+.bx-vote-likes .bx-vote-element-holder,
+.bx-vote-likes .bx-vote-counter-holder {
+	line-height: 20px;
+	line-height: 1.25rem;
+}
+
+.bx-vote-likes-button .bx-vote-element-holder,
+.bx-vote-likes-button .bx-vote-counter-holder {
+	line-height: 36px;
+	line-height: 2.2rem;
+}
+
+.bx-vote-likes-button-small .bx-vote-element-holder,
+.bx-vote-likes-button-small .bx-vote-counter-holder {
+	line-height: 24px;
+	line-height: 1.6rem;
+}
+
+.bx-vote-likes-button .bx-vote-counter-holder,
+.bx-vote-likes-button-small .bx-vote-counter-holder {
+	font-size: 1.5rem;
+}
 
 /*--- Stars based Element Styles ---*/
 .bx-vote-stars .bx-vote-element-holder,
 .bx-vote-stars .bx-vote-counter-holder {
 	line-height: 16px;
 	line-height: 1rem;
-}
-
-div.bx-vote-stars div.bx-vote-element-holder,
-div.bx-vote-stars div.bx-vote-counter-holder {
-	position: relative;
-	float: left;
 }
 
 /*--- Stars Styles ---*/
