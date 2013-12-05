@@ -299,6 +299,9 @@ class BxTimelineTemplate extends BxDolModuleTemplate
     	if(empty($aShared) || !is_array($aShared))
     		return '';
 
+    	if($this->getModule()->isAllowedShare($aShared) !== true)
+    		return '';
+
 		$bShowDoShareAsButtonSmall = isset($aParams['show_do_share_as_button_small']) && $aParams['show_do_share_as_button_small'] == true;
 		$bShowDoShareAsButton = !$bShowDoShareAsButtonSmall && isset($aParams['show_do_share_as_button']) && $aParams['show_do_share_as_button'] == true;
 
@@ -395,7 +398,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
     	$sJsObject = $this->_oConfig->getJsObject('share');
     	$sFormat = "%s.shareItem(this, %d, '%s', '%s', %d);";
 
-    	$iOwnerId = !empty($iOwnerId) ? (int)$iOwnerId : $this->getUserId(); //--- in whose timeline the content will be shared
+    	$iOwnerId = !empty($iOwnerId) ? (int)$iOwnerId : $this->getModule()->getUserId(); //--- in whose timeline the content will be shared
     	return sprintf($sFormat, $sJsObject, $iOwnerId, $sType, $sAction, (int)$iObjectId);
     }
 
