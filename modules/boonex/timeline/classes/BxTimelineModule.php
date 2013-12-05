@@ -140,7 +140,8 @@ class BxTimelineModule extends BxDolModule
         if(!empty($iId)) {
         	$this->onShare($iId, $aShared);
 
-        	$this->_echoResultJson(array('code' => 0, 'msg' => _t('_bx_timeline_txt_msg_success_share')));
+        	$sCounter = $this->_oTemplate->getShareCounter($aContent['type'], $aContent['action'], $aContent['object_id']);
+        	$this->_echoResultJson(array('code' => 0, 'counter' => $sCounter, 'msg' => _t('_bx_timeline_txt_msg_success_share')));
         	return;
         }
 

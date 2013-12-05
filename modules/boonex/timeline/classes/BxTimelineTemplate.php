@@ -295,26 +295,40 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 
 	public function getShareElement($iOwnerId, $sType, $sAction, $iObjectId, $aParams = array())
     {
-    	$sStylePrefix = $this->_oConfig->getPrefix('style');
-
     	$aShared = $this->_oDb->getShared($sType, $sAction, $iObjectId);
+    	if(empty($aShared) || !is_array($aShared))
+    		return '';
+
+		$bShowDoShareAsButton = isset($aParams['show_do_share_as_button']) && $aParams['show_do_share_as_button'] == true;
+		$bShowDoShareIcon = isset($aParams['show_do_share_icon']) && $aParams['show_do_share_icon'] == true;
+		$bShowDoShareLabel = isset($aParams['show_do_share_label']) && $aParams['show_do_share_label'] == true;
+		$bShowCounter = isset($aParams['show_counter']) && $aParams['show_counter'] === true;
+
+		$sDoShare = '';
+		if($bShowDoShareIcon)
+			$sDoShare .= $this->parseHtmlByName('bx_icon.html', array('name' => 'share'));
+
+		if($bShowDoShareLabel)
+			$sDoShare .= ($sDoShare != '' ? ' ' : '') . _t('_bx_timeline_txt_do_share');
 
     	$sDoShare = $this->parseHtmlByName('bx_a.html', array(
     		'href' => 'javascript:void(0)',
     		'title' => _t('_bx_timeline_txt_do_share'),
     		'bx_repeat:attrs' => array(
+    			array('key' => 'class', 'value' => ($bShowDoShareAsButton ? 'bx-btn' : '')),
     			array('key' => 'onclick', 'value' => $this->getShareJsClick($iOwnerId, $sType, $sAction, $iObjectId))
     		),
-    		'content' => $this->parseHtmlByName('bx_icon.html', array('name' => 'share'))
+    		'content' => $sDoShare
     	));
 
+    	$sStylePrefix = $this->_oConfig->getPrefix('style');
     	return $this->parseHtmlByName('share_element_block.html', array(
     		'style_prefix' => $sStylePrefix,
     		'html_id' => $this->_oConfig->getHtmlIds('share', 'main') . $aShared['id'],
     		'count' => $aShared['shares'],
     		'do_share' => $sDoShare,
     		'bx_if:show_counter' => array(
-    			'condition' => isset($aParams['show_counter']) && $aParams['show_counter'] === true,
+    			'condition' => $bShowCounter,
     			'content' => array(
     				'style_prefix' => $sStylePrefix,
     				'counter' => $this->getShareCounter($sType, $sAction, $iObjectId)

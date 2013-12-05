@@ -110,7 +110,7 @@ class BxTimelineConfig extends BxDolModuleConfig
 			'show_do_share_label' => false,
 			'show_counter' => true
 		);
-        
+
         $this->_sAnimationEffect = 'fade';
         $this->_iAnimationSpeed = 'slow';
         $this->_sStylePrefix = 'bx-tl';

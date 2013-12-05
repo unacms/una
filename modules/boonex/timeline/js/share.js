@@ -32,6 +32,11 @@ BxTimelineShare.prototype.shareItem = function(oLink, iOwnerId, sType, sAction, 
 
         	if(oData && oData.msg != undefined)
                 alert(oData.msg);
+
+        	if(oData && oData.counter != undefined) {
+        		var sCounterId = $(oData.counter).attr('id');
+        		$('#' + sCounterId).replaceWith(oData.counter);
+        	}
         },
         'json'
     );
