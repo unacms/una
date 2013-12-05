@@ -128,6 +128,9 @@ class BxBaseVoteView extends BxDolVote
 
 	public function getElement($aParams = array())
     {
+    	if(!$this->isAllowedVote())
+    		return '';
+
     	$bLike =  $this->isLikeMode();
     	$sType = $bLike ? BX_DOL_VOTE_TYPE_LIKES : BX_DOL_VOTE_TYPE_STARS;
 

@@ -316,7 +316,7 @@ class BxDolVote extends BxDol
 
 		$bUndo = $this->isUndo() && $this->_oQuery->isVoted($iObjectId, $iAuthorId) ? true : false;
 
-		if(!$bUndo && !$this->isAllowedVote()) {
+		if(!$bUndo && !$this->isAllowedVote(true)) {
 			$this->_echoResultJson(array('code' => 2, 'msg' => $this->msgErrAllowedVote()));
         	return;
 		}
