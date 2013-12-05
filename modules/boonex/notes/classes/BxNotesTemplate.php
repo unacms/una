@@ -92,14 +92,6 @@ class BxNotesTemplate extends BxDolModuleTemplate {
         $aVars['entry_title'] = $aData[BxNotesConfig::$FIELD_TITLE];
         $aVars['entry_text'] = $aData[BxNotesConfig::$FIELD_TEXT];
 
-        //TODO: Rebuild using menus engine when it will be ready for such elements like Vote, Share, etc. 
-        bx_import('BxDolVote');
-        $oVotes = BxDolVote::getObjectInstance(BxNotesConfig::$OBJECT_VOTES, $aData[BxNotesConfig::$FIELD_ID]);
-        $aVars['entry_actions'] = $oVotes->getElementBlock();
-
-        if(BxDolRequest::serviceExists('bx_timeline', 'get_share_element_block'))
-        	$aVars['entry_actions'] .= BxDolService::call('bx_timeline', 'get_share_element_block', array(bx_get_logged_profile_id(), 'bx_notes', 'added', $aData[BxNotesConfig::$FIELD_ID]));
-
         return $this->parseHtmlByName($sTemplateName, $aVars);
     }
 
