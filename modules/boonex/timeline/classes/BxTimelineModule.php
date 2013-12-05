@@ -374,7 +374,7 @@ class BxTimelineModule extends BxDolModule
 
     public function serviceGetShareElementBlock($iOwnerId, $sType, $sAction, $iObjectId, $aParams = array())
     {
-    	$aParams = array_merge($aParams, $this->_oConfig->getShareDefaults());
+    	$aParams = array_merge($this->_oConfig->getShareDefaults(), $aParams);
 
     	return $this->_oTemplate->getShareElement($iOwnerId, $sType, $sAction, $iObjectId, $aParams);
     }

@@ -106,6 +106,7 @@ class BxTimelineConfig extends BxDolModuleConfig
 
         $this->_aShareDefaults = array(
 			'show_do_share_as_button' => false,
+        	'show_do_share_as_button_small' => false,
 			'show_do_share_icon' => true,
 			'show_do_share_label' => false,
 			'show_counter' => true

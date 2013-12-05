@@ -299,7 +299,9 @@ class BxTimelineTemplate extends BxDolModuleTemplate
     	if(empty($aShared) || !is_array($aShared))
     		return '';
 
-		$bShowDoShareAsButton = isset($aParams['show_do_share_as_button']) && $aParams['show_do_share_as_button'] == true;
+		$bShowDoShareAsButtonSmall = isset($aParams['show_do_share_as_button_small']) && $aParams['show_do_share_as_button_small'] == true;
+		$bShowDoShareAsButton = !$bShowDoShareAsButtonSmall && isset($aParams['show_do_share_as_button']) && $aParams['show_do_share_as_button'] == true;
+
 		$bShowDoShareIcon = isset($aParams['show_do_share_icon']) && $aParams['show_do_share_icon'] == true;
 		$bShowDoShareLabel = isset($aParams['show_do_share_label']) && $aParams['show_do_share_label'] == true;
 		$bShowCounter = isset($aParams['show_counter']) && $aParams['show_counter'] === true;
@@ -315,16 +317,18 @@ class BxTimelineTemplate extends BxDolModuleTemplate
     		'href' => 'javascript:void(0)',
     		'title' => _t('_bx_timeline_txt_do_share'),
     		'bx_repeat:attrs' => array(
-    			array('key' => 'class', 'value' => ($bShowDoShareAsButton ? 'bx-btn' : '')),
+    			array('key' => 'class', 'value' => ($bShowDoShareAsButton ? 'bx-btn' : '') . ($bShowDoShareAsButtonSmall ? 'bx-btn bx-btn-small' : '')),
     			array('key' => 'onclick', 'value' => $this->getShareJsClick($iOwnerId, $sType, $sAction, $iObjectId))
     		),
     		'content' => $sDoShare
     	));
 
     	$sStylePrefix = $this->_oConfig->getPrefix('style');
+    	$sStylePrefixShare = $sStylePrefix . '-share-';
     	return $this->parseHtmlByName('share_element_block.html', array(
     		'style_prefix' => $sStylePrefix,
     		'html_id' => $this->_oConfig->getHtmlIds('share', 'main') . $aShared['id'],
+    		'class' => ($bShowDoShareAsButton ? $sStylePrefixShare . 'button' : '') . ($bShowDoShareAsButtonSmall ? $sStylePrefixShare . 'button-small' : ''),
     		'count' => $aShared['shares'],
     		'do_share' => $sDoShare,
     		'bx_if:show_counter' => array(
