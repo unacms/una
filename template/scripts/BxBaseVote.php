@@ -12,7 +12,7 @@ bx_import('BxDolTemplate');
 /**
  * @see BxDolVote
  */
-class BxBaseVoteView extends BxDolVote
+class BxBaseVote extends BxDolVote
 {
 	protected $_sJsObjName;
 	protected $_sStylePrefix;

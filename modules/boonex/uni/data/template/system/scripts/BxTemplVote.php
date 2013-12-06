@@ -6,12 +6,12 @@
  */
 defined('BX_DOL') or die('hack attempt');
 
-bx_import('BxBaseVoteView');
+bx_import('BxBaseVote');
 
 /**
  * @see BxDolVote
  */
-class BxTemplVoteView extends BxBaseVoteView
+class BxTemplVote extends BxBaseVote
 {
     function __construct($sSystem, $iId, $iInit = 1)
     {

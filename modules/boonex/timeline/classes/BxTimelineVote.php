@@ -9,9 +9,9 @@
  * @{
  */
 
-bx_import('BxTemplVoteView');
+bx_import('BxTemplVote');
 
-class BxTimelineVote extends BxTemplVoteView
+class BxTimelineVote extends BxTemplVote
 {
     function __construct($sSystem, $iId, $iInit = 1)
     {

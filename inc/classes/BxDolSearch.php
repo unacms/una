@@ -714,8 +714,8 @@ class BxDolSearchResult {
      */
     function getRatePart () {
         if ($this->iRate == 1) {
-            bx_import('BxTemplVoteView');
-           $this->oRate = new BxTemplVoteView($this->aCurrent['name'], 0, 0);
+            bx_import('BxTemplVote');
+           $this->oRate = new BxTemplVote($this->aCurrent['name'], 0, 0);
         }
     }
 

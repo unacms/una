@@ -23,8 +23,8 @@ define('BX_DOL_VOTE_USAGE_DEFAULT', BX_DOL_VOTE_USAGE_BLOCK);
  *
  * Related classes:
  * - BxDolVoteQuery - vote database queries
- * - BxBaseVoteView - vote base representation
- * - BxTemplVoteView - custom template representation
+ * - BxBaseVote - vote base representation
+ * - BxTemplVote - custom template representation
  *
  * AJAX vote for any content. Stars and Plus based representations are supported.
  *
@@ -123,8 +123,8 @@ class BxDolVote extends BxDol
         if(!isset($aSystems[$sSys]))
             return null;
 
-        bx_import('BxTemplVoteView');
-        $sClassName = 'BxTemplVoteView';
+        bx_import('BxTemplVote');
+        $sClassName = 'BxTemplVote';
         if(!empty($aSystems[$sSys]['class_name'])) {
         	$sClassName = $aSystems[$sSys]['class_name'];
         	if(!empty($aSystems[$sSys]['class_file']))
