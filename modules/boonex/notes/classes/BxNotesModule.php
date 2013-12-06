@@ -164,8 +164,8 @@ class BxNotesModule extends BxDolModule {
         if (!$iContentId)
             return false;
 
-		bx_import('BxTemplCmtsView');
-		$oCmts = new BxTemplCmtsView(BxNotesConfig::$OBJECT_COMMENTS, $iContentId);
+		bx_import('BxDolCmts');
+		$oCmts = BxDolCmts::getObjectInstance(BxNotesConfig::$OBJECT_COMMENTS, $iContentId);
 		if(!$oCmts->isEnabled())
 			return false;
 

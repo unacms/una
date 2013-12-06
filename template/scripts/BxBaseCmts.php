@@ -13,11 +13,11 @@ bx_import('BxTemplPaginate');
 /**
  * @see BxDolCmts
  */
-class BxBaseCmtsView extends BxDolCmts {
+class BxBaseCmts extends BxDolCmts {
 	protected $_sJsObjName;
     protected $_sStylePrefix;
 
-    function BxBaseCmtsView( $sSystem, $iId, $iInit = 1 ) {
+    function BxBaseCmts( $sSystem, $iId, $iInit = 1 ) {
         BxDolCmts::BxDolCmts( $sSystem, $iId, $iInit );
         if(empty($sSystem))
             return;

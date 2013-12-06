@@ -88,13 +88,13 @@ INSERT INTO `sys_objects_privacy`(`object`, `module`, `action`, `title`, `defaul
 
 require_once(BX_DOL_DIR_STUDIO_INC . "utils.inc.php");
 
-bx_import('BxTemplCmtsView');
+bx_import('BxTemplCmts');
 
-class BxCmtsMy extends BxTemplCmtsView
+class BxCmtsMy extends BxTemplCmts
 {
 	function BxCmtsMy( $sSystem, $iId, $iInit = 1 )
 	{
-        BxTemplCmtsView::BxTemplCmtsView( $sSystem, $iId, $iInit );
+        parent::BxTemplCmts( $sSystem, $iId, $iInit );
     }
 
     function getComment($mixedCmt, $aBp = array(), $aDp = array())

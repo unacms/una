@@ -9,13 +9,13 @@
  * @{
  */
 
-bx_import('BxTemplCmtsView');
+bx_import('BxTemplCmts');
 
-class BxTimelineCmts extends BxTemplCmtsView
+class BxTimelineCmts extends BxTemplCmts
 {
     function __construct($sSystem, $iId, $iInit = 1)
     {
-        parent::BxTemplCmtsView($sSystem, $iId, $iInit);
+        parent::BxTemplCmts($sSystem, $iId, $iInit);
     }
 
     public function isAttachImageEnabled()

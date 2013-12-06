@@ -50,8 +50,8 @@ define('BX_CMT_RATE_VALUE_MINUS', -1);
  *
  * Related classes:
  * - BxDolCmtsQuery - comments database queries
- * - BxBaseCmtsView - comments base representation
- * - BxTemplCmtsView - custom template representation
+ * - BxBaseCmts - comments base representation
+ * - BxTemplCmts - custom template representation
  *
  * AJAX comments for any content.
  * Self moderated - users rate all comments, and if comment is
@@ -83,14 +83,14 @@ define('BX_CMT_RATE_VALUE_MINUS', -1);
  * After filling in the table you can show comments section in any place, using the following code:
  *
  * @code
- * bx_import ('BxTemplCmtsView');
- * $o = new BxTemplCmtsView ('value of ObjectName field', $iYourEntryId);
+ * bx_import ('BxTemplCmts');
+ * $o = new BxTemplCmts('value of ObjectName field', $iYourEntryId);
  * if ($o->isEnabled())
  *     echo $o->getCommentsFirst ();
  * @endcode
  *
- * Please note that you never need to use BxDolCmts class directly, use BxTemplCmtsView instead.
- * Also if you override comments class with your own then make it child of BxTemplCmtsView class.
+ * Please note that you never need to use BxDolCmts class directly, use BxTemplCmts instead.
+ * Also if you override comments class with your own then make it child of BxTemplCmts class.
  *
  *
  *
@@ -256,8 +256,8 @@ class BxDolCmts extends BxDol
         if (!isset($aSystems[$sSys]))
             return null;
 
-        bx_import('BxTemplCmtsView');
-        $sClassName = 'BxTemplCmtsView';
+        bx_import('BxTemplCmts');
+        $sClassName = 'BxTemplCmts';
         if(!empty($aSystems[$sSys]['class_name'])) {
         	$sClassName = $aSystems[$sSys]['class_name'];
         	if(!empty($aSystems[$sSys]['class_file']))

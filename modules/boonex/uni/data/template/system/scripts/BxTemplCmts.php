@@ -6,15 +6,15 @@
  */
 defined('BX_DOL') or die('hack attempt');
 
-bx_import('BxBaseCmtsView');
+bx_import('BxBaseCmts');
 
 /**
  * @see BxDolCmts
  */
-class BxTemplCmtsView extends BxBaseCmtsView {
+class BxTemplCmts extends BxBaseCmts {
 
-    function BxTemplCmtsView( $sSystem, $iId, $iInit = 1 ) {
-        BxBaseCmtsView::BxBaseCmtsView( $sSystem, $iId, $iInit );
+    function BxTemplCmts( $sSystem, $iId, $iInit = 1 ) {
+        BxBaseCmts::BxBaseCmts( $sSystem, $iId, $iInit );
     }
 }
 
