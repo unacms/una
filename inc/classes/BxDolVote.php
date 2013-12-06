@@ -18,12 +18,6 @@ define('BX_DOL_VOTE_USAGE_BLOCK', 'block');
 define('BX_DOL_VOTE_USAGE_INLINE', 'inline');
 define('BX_DOL_VOTE_USAGE_DEFAULT', BX_DOL_VOTE_USAGE_BLOCK);
 
-/** 
- * @page objects 
- * @section vote Vote
- * @ref BxDolVote
- */
-
 /**
  * Vote for any content
  *
@@ -32,17 +26,18 @@ define('BX_DOL_VOTE_USAGE_DEFAULT', BX_DOL_VOTE_USAGE_BLOCK);
  * - BxBaseVoteView - vote base representation
  * - BxTemplVoteView - custom template representation
  *
- * AJAX vote for any content. Big and small vote stars are supported.
+ * AJAX vote for any content. Stars and Plus based representations are supported.
  *
- * To add vote section to your site you need to add a record to 'sys_objects_vote' table:
+ * To add vote section to your feature you need to add a record to 'sys_objects_vote' table:
  *
  * - ID - autoincremented id for internal usage
  * - Name - your unique module name, with vendor prefix, lowercase and spaces are underscored
  * - TableMain - table name where summary votigs are stored
  * - TableTrack - table name where each vote is stored
  * - PostTimeout - number of seconds to not allow duplicate vote
+ * - MinValue - min vote value, 1 by default
  * - MaxValue - max vote value, 5 by default
- * - IsUndo - is Undo enabled 
+ * - IsUndo - is Undo enabled for Plus based votes 
  * - IsOn - is this vote object enabled
  * - TriggerTable - table to be updated upon each vote
  * - TriggerFieldId - TriggerTable table field with unique record id, primary key
@@ -56,32 +51,16 @@ define('BX_DOL_VOTE_USAGE_DEFAULT', BX_DOL_VOTE_USAGE_BLOCK);
  *
  *
  * @section example Example of usage:
- * After filling in the table you can show big vote in any place, using the following code:
+ * To get Star based vote you need to have different values for MinValue and MaxValue (for example 1 and 5) 
+ * and IsUndo should be equal to 0. To get Plus(Like) based vote you need to have equal values 
+ * for MinValue and MaxValue (for example 1) and IsUndo should be equal to 1. After filling the other 
+ * paramenters in the table you can show vote in any place, using the following code:
  * @code
- * bx_import('BxTemplVoteView');
- * $o = new BxTemplVoteView ('value of ObjectName field', $iYourEntryId);
+ * bx_import('BxDolVote');
+ * $o = BxDolVote::getObjectInstance('system object name', $iYourEntryId);
  * if (!$o->isEnabled()) return '';
- *     echo $o->getBigVote (1); // 1 - rate is allowed
+ *     echo $o->getElementBlock();
  * @endcode
- *
- * And small vote, using the following code:
- * @code
- * $o = new BxTemplVoteView ('value of ObjectName field', $iYourEntryId);
- * if (!$o->isEnabled()) return '';
- *     echo $o->getSmallVote (0); // 0 - rate is not allowed, like readonly votes
- * @endcode
- *
- * In some cases votes are already in database and there is no need to execute additional query to get ratings,
- * so you can use the following code:
- * @code
- * $o = new BxTemplVoteView ('value of ObjectName field', 0);
- * foreach ($aRecords as $aData)
- *     echo $o->getJustVoteElement(0, $aData['ID'], $aData['voting_rate']);
- * @endcode
- *
- * Please note that you never need to use BxDolVote class directly, use BxTemplVoteView instead.
- * Also if you override vote class with your own then make it child of BxTemplVoteView class.
- *
  *
  *
  * @section acl Memberships/ACL:
