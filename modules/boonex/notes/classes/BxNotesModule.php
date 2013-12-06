@@ -141,11 +141,11 @@ class BxNotesModule extends BxDolModule {
         //TODO: Rebuild using menus engine when it will be ready for such elements like Vote, Share, etc.
         bx_import('BxDolVote');
         $oVotes = BxDolVote::getObjectInstance(BxNotesConfig::$OBJECT_VOTES, $aContentInfo[BxNotesConfig::$FIELD_ID]);
-        $sVotes = $oVotes->getElementBlock(array('show_do_vote_as_button_small' => true)); 
+        $sVotes = $oVotes->getElementBlock(array('show_do_vote_as_button' => true)); 
 
         $sShare = '';
         if(BxDolRequest::serviceExists('bx_timeline', 'get_share_element_block'))
-        	$sShare = BxDolService::call('bx_timeline', 'get_share_element_block', array(bx_get_logged_profile_id(), 'bx_notes', 'added', $aContentInfo[BxNotesConfig::$FIELD_ID], array('show_do_share_as_button_small' => true)));
+        	$sShare = BxDolService::call('bx_timeline', 'get_share_element_block', array(bx_get_logged_profile_id(), 'bx_notes', 'added', $aContentInfo[BxNotesConfig::$FIELD_ID], array('show_do_share_as_button' => true)));
 
         bx_import('BxTemplSocialSharing');
 		$sSocial = BxTemplSocialSharing::getInstance()->getCode($iContentId, 'bx_notes', BX_DOL_URL_ROOT . $sUrl, $aContentInfo['title'], $aCustomParams);

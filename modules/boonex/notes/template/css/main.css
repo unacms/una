@@ -21,12 +21,4 @@
 .bx-notes-entity-share .bx-social-sharing {
 	position: relative;
 	float: left;
-	margin-left: 0.5rem;
-}
-.bx-notes-entity-share .bx-vote,
-.bx-notes-entity-share .bx-tl-share {
-	padding: 3px 0px;
-}
-.bx-notes-entity-share .bx-vote {
-	margin-left: 0px;
 }
