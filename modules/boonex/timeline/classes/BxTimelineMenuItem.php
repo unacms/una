@@ -64,7 +64,7 @@ class BxTimelineMenuItem extends BxTemplMenu {
     		'content_id' => $aEvent['id'],
     		'share_onclick' => $this->_oModule->serviceGetShareJsClick($iOwnerId, $sType, $sAction, $iObjectId),
     		'comment_onclick' => $this->_oModule->_oConfig->getJsObject('view') . ".commentItem(this, '" . $sCommentsSystem . "', " . $aEvent['id'] . ")",
-    		'comment_count' => (int)$this->_aEvent['comments']['count'] > 0 ? (int)$this->_aEvent['comments']['count'] : 0,
+    		'comment_count' => (int)$this->_aEvent['comments']['count'] > 0 ? (int)$this->_aEvent['comments']['count'] : '',
     		'vote_onclick' => $sVotesOnclick
 		));    	
     }
