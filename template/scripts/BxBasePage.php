@@ -94,7 +94,7 @@ class BxBasePage extends BxDolPage {
             foreach ($aCell as $aBlock) {
                 $sContentWithBox = $this->_getBlockCode($aBlock);
                 if ($sContentWithBox)
-                    $sCell .= '<div class="bx-page-block-container" id="bx-page-block-' . $aBlock['id'] . '">' . $sContentWithBox . '</div>';
+                    $sCell .= '<div class="bx-page-block-container bx-def-padding-topbottom" id="bx-page-block-' . $aBlock['id'] . '">' . $sContentWithBox . '</div>';
             }
             $aVars[$sKey] = $sCell;
         }

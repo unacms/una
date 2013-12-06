@@ -172,7 +172,6 @@ ul.bx-menu-main {
 .bx-menu-main li .sys-icon,
 .bx-menu-main-submenu li a {
     text-decoration:none;
-    font-weight:300;
     font-size:16px;
     font-size:1.2rem;
 }
