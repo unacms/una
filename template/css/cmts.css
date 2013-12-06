@@ -43,8 +43,10 @@
     }
 
 	/*--- More ---*/
-    li.cmt-more {}
-	li.cmt-more-root {}
+    li.cmt-more,
+	li.cmt-more-root {
+		text-transform:uppercase;
+	}
 
 	div.cmt-more-cont {
 		font-weight: bold;
