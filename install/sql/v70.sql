@@ -69,10 +69,10 @@ CREATE TABLE IF NOT EXISTS `sys_objects_social_sharing` (
 
 
 INSERT INTO `sys_objects_social_sharing` (`object`, `type`, `content`, `order`, `active`) VALUES
-('facebook', 'html', '<a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={url_encoded}"><i class="sys-icon facebook-square"></i><span>32</span></a>', 1, 1),
-('googleplus', 'html', '<a target="_blank" href="https://plus.google.com/share?url={url_encoded}"><i class="sys-icon google-plus-square"></i></a>', 2, 1),
-('twitter', 'html', '<a  target="_blank" href="https://twitter.com/share?url={url_encoded}"><i class="sys-icon twitter-square"></i></a>', 3, 1),
-('pinterest', 'html', '<a target="_blank" href="http://pinterest.com/pin/create/button/?url={url_encoded}&media={img_url_encoded}&description={title_encoded}" class="pin-it-button" count-layout="horizontal"><i class="sys-icon pinterest-square"></i></a>', 4, 1);
+('facebook', 'html', '<a class="bx-btn" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={url_encoded}"><i class="sys-icon facebook"></i><span>32</span></a>', 1, 1),
+('googleplus', 'html', '<a class="bx-btn" target="_blank" href="https://plus.google.com/share?url={url_encoded}"><i class="sys-icon google-plus"></i></a>', 2, 1),
+('twitter', 'html', '<a class="bx-btn" target="_blank" href="https://twitter.com/share?url={url_encoded}"><i class="sys-icon twitter"></i></a>', 3, 1),
+('pinterest', 'html', '<a class="bx-btn" target="_blank" href="http://pinterest.com/pin/create/button/?url={url_encoded}&media={img_url_encoded}&description={title_encoded}" class="pin-it-button" count-layout="horizontal"><i class="sys-icon pinterest"></i></a>', 4, 1);
 
 
 -- --------------------------------------------------------
@@ -3296,13 +3296,13 @@ CREATE TABLE IF NOT EXISTS `sys_pages_design_boxes` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `sys_pages_design_boxes` (`id`, `title`, `template`, `order`) VALUES
-(0, '_sys_designbox_0', 'designbox_0.html', '1'),
-(1, '_sys_designbox_1', 'designbox_1.html', '4'),
-(2, '_sys_designbox_2', 'designbox_2.html', '0'),
-(3, '_sys_designbox_3', 'designbox_3.html', '2'),
-(10, '_sys_designbox_10', 'designbox_10.html', '0'),
-(11, '_sys_designbox_11', 'designbox_11.html', '5'),
-(13, '_sys_designbox_13', 'designbox_13.html', '3');
+(0, '_sys_designbox_0', 'designbox_0.html', '2'),
+(1, '_sys_designbox_1', 'designbox_1.html', '6'),
+(2, '_sys_designbox_2', 'designbox_2.html', '1'),
+(3, '_sys_designbox_3', 'designbox_3.html', '4'),
+(10, '_sys_designbox_10', 'designbox_10.html', '3'),
+(11, '_sys_designbox_11', 'designbox_11.html', '7'),
+(13, '_sys_designbox_13', 'designbox_13.html', '5');
 
 
 
