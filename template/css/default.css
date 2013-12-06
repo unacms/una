@@ -311,9 +311,9 @@
     margin-left:0;
     margin-right:0;
     padding:0;
-    border:none;
+    border:0px;
     border-top:1px solid #d0d0d0;
-    border-top:0.0625rem solid #d0d0d0;
+    border-top:0.07rem solid #d0d0d0;
 }
 .bx-def-hr-auto:first-child {
 	display: none;
