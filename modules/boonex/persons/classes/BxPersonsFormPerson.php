@@ -126,6 +126,9 @@ class BxPersonsFormPerson extends BxTemplFormView {
                 $this->_deleteFile ($aContentInfo[$sField], $aVals['storage_object']);
         }
 
+        bx_import('BxDolView');
+		BxDolView::getObjectInstance(BxPersonsConfig::$OBJECT_VIEWS, $iContentId)->onObjectDelete();
+
         return parent::delete($iContentId);
     }
 

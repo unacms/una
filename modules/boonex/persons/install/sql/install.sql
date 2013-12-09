@@ -1,6 +1,5 @@
 
--- TABLE: PROFILES 
-
+-- TABLE: PROFILES
 CREATE TABLE IF NOT EXISTS `bx_persons_data` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `author` int(10) unsigned NOT NULL,
@@ -10,12 +9,11 @@ CREATE TABLE IF NOT EXISTS `bx_persons_data` (
   `cover` int(11) NOT NULL,
   `fullname` varchar(255) NOT NULL,
   `sex` int(11) NOT NULL,
+  `views` int(11) NOT NULL default '0',
   PRIMARY KEY (`id`)
 );
 
-
 -- TABLE: STORAGES & TRANSCODERS
-
 CREATE TABLE `bx_persons_pictures` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(10) unsigned NOT NULL,
@@ -48,8 +46,16 @@ CREATE TABLE `bx_persons_pictures_resized` (
   UNIQUE KEY `remote_id` (`remote_id`)
 );
 
--- FORMS
+-- TABLE: VIEWS
+CREATE TABLE `bx_persons_views_track` (
+  `object_id` int(11) NOT NULL default '0',
+  `viewer_id` int(11) NOT NULL default '0',
+  `viewer_nip` int(11) unsigned NOT NULL default '0',
+  `date` int(11) NOT NULL default '0',
+  KEY `id` (`object_id`,`viewer_id`,`viewer_nip`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- FORMS
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_person', 'bx_persons', '_bx_persons_form_person', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_persons_data', 'id', '', '', 'do_submit', '', 0, 1, 'BxPersonsFormPerson', 'modules/boonex/persons/classes/BxPersonsFormPerson.php');
 

@@ -34,7 +34,8 @@ DELETE FROM `sys_menu_sets` WHERE `module` = 'bx_persons';
 DELETE FROM `sys_menu_items` WHERE `module` = 'bx_persons' OR `set_name` IN('bx_persons_view_submenu', 'bx_persons_view_actions', 'bx_persons_view_actions_more');
 
 -- ACL
-
 DELETE `sys_acl_actions`, `sys_acl_matrix` FROM `sys_acl_actions`, `sys_acl_matrix` WHERE `sys_acl_matrix`.`IDAction` = `sys_acl_actions`.`ID` AND `sys_acl_actions`.`Module` = 'bx_persons';
 DELETE FROM `sys_acl_actions` WHERE `Module` = 'bx_persons';
 
+-- VIEWS
+DELETE FROM `sys_objects_view` WHERE `Name`='bx_persons';

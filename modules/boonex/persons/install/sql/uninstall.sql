@@ -1,6 +1,5 @@
 
 -- TABLE: PROFILES 
-
 DROP TABLE IF EXISTS `bx_persons_data`;
 DELETE FROM sys_profiles WHERE `type` = 'bx_persons';
 
@@ -10,8 +9,10 @@ DELETE FROM sys_profiles WHERE `type` = 'bx_persons';
 DROP TABLE IF EXISTS `bx_persons_pictures`; 
 DROP TABLE IF EXISTS `bx_persons_pictures_resized`;
 
--- FORMS
+-- TABLE: VIEWS
+DROP TABLE IF EXISTS `bx_persons_views_track`;
 
+-- FORMS
 DELETE FROM `sys_objects_form` WHERE `module` = 'bx_persons';
 
 DELETE FROM `sys_form_displays` WHERE `module` = 'bx_persons';

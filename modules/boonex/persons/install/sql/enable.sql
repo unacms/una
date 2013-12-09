@@ -228,3 +228,7 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iModerator, @iIdActionProfileEditAny),
 (@iAdministrator, @iIdActionProfileEditAny);
 
+
+-- VIEWS
+INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_persons', 'bx_persons_views_track', '86400', '1', 'bx_persons_data', 'id', 'views', '', '');

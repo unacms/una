@@ -31,6 +31,7 @@ class BxPersonsConfig extends BxDolModuleConfig {
     public static $OBJECT_IMAGES_TRANSCODER_PICTURE = 'bx_persons_picture';
     public static $OBJECT_IMAGES_TRANSCODER_COVER = 'bx_persons_cover';
     public static $OBJECT_IMAGES_TRANSCODER_COVER_THUMB = 'bx_persons_cover_thumb';
+	public static $OBJECT_VIEWS = 'bx_persons';
 
     /**
      * Constructor
