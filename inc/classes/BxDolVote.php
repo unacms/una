@@ -377,6 +377,10 @@ class BxDolVote extends BxDol
         return $this->checkActionErrorMsg(ACTION_ID_VOTE);
     }
 
+    function onObjectDelete($iObjectId = 0)
+    {
+    	$this->_oQuery->deleteObjectVotes($iObjectId ? $iObjectId : $this->getId());
+    }
 
     /** 
      * Internal functions

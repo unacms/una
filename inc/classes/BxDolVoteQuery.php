@@ -94,16 +94,7 @@ class BxDolVoteQuery extends BxDolDb
         return (int)$this->query($sQuery) > 0;
     }
 
-	public function updateTriggerTable($iObjectId) {
-		$aVote = $this->getVote($iObjectId);
-		if(empty($aVote) || !is_array($aVote))
-			return false;
-
-        $sQuery = $this->prepare("UPDATE `{$this->_sTriggerTable}` SET `{$this->_sTriggerFieldCount}` = ?, `{$this->_sTriggerFieldRate}` = ? WHERE `{$this->_sTriggerFieldId}` = ?", $aVote['count'], $aVote['rate'], $iObjectId);
-        return (int)$this->query($sQuery) > 0;
-    }
-
-    function getSqlParts($sMainTable, $sMainField)
+    public function getSqlParts($sMainTable, $sMainField)
     {
     	if(empty($sMainTable) || empty($sMainField))
 			return array();
@@ -114,10 +105,32 @@ class BxDolVoteQuery extends BxDolDb
         );
     }
 
-    function getVotedBy($iObjectId)
+    public function getVotedBy($iObjectId)
     {
     	$sQuery = $this->prepare("SELECT `author_id` FROM `{$this->_sTableTrack}` WHERE `object_id`=?", $iObjectId);
     	return $this->getColumn($sQuery);
+    }
+
+	public function deleteObjectVotes($iObjectId)
+    {
+    	$sQuery = $this->prepare("DELETE FROM {$this->_sTable} WHERE `object_id` = ?", $iObjectId);
+        $this->query ($sQuery);
+
+        $this->query ("OPTIMIZE TABLE {$this->_sTable}");
+
+        $sQuery = $this->prepare("DELETE FROM {$this->_sTableTrack} WHERE `object_id` = ?", $iObjectId);
+        $this->query ($sQuery);
+
+        $this->query ("OPTIMIZE TABLE {$this->_sTableTrack}");
+    }
+
+	public function updateTriggerTable($iObjectId) {
+		$aVote = $this->getVote($iObjectId);
+		if(empty($aVote) || !is_array($aVote))
+			return false;
+
+        $sQuery = $this->prepare("UPDATE `{$this->_sTriggerTable}` SET `{$this->_sTriggerFieldCount}` = ?, `{$this->_sTriggerFieldRate}` = ? WHERE `{$this->_sTriggerFieldId}` = ?", $aVote['count'], $aVote['rate'], $iObjectId);
+        return (int)$this->query($sQuery) > 0;
     }
 }
 
