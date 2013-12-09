@@ -99,6 +99,10 @@ class BxNotesModule extends BxDolModule {
             $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
         if (!$iContentId)
             return false;
+
+		bx_import('BxDolView');
+		BxDolView::getObjectInstance(BxNotesConfig::$OBJECT_VIEWS, $iContentId)->doView();
+
         bx_import('NoteForms', $this->_aModule);
         $oProfileForms = new BxNotesNoteForms($this);
         return $oProfileForms->viewDataEntry((int)$iContentId);

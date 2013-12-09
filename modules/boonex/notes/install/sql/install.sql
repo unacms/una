@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS `bx_notes_posts` (
   `title` varchar(255) NOT NULL,
   `text` text NOT NULL,
   `summary` text NOT NULL,
+  `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
   `votes` int(11) NOT NULL default '0',
   `comments` int(11) NOT NULL default '0',
@@ -85,6 +86,15 @@ CREATE TABLE IF NOT EXISTS `bx_notes_votes_track` (
   `date` int(11) NOT NULL default '0',
   KEY `vote` (`object_id`, `author_nip`)
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+
+-- TABLE: VIEWS
+CREATE TABLE `bx_notes_views_track` (
+  `object_id` int(11) NOT NULL default '0',
+  `viewer_id` int(11) NOT NULL default '0',
+  `viewer_nip` int(11) unsigned NOT NULL default '0',
+  `date` int(11) NOT NULL default '0',
+  KEY `id` (`object_id`,`viewer_id`,`viewer_nip`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- FORMS
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 

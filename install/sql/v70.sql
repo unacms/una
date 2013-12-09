@@ -5,7 +5,7 @@
 -- --------------------------------------------------------
 
 SET NAMES 'utf8';
-DROP TABLE IF EXISTS `sys_categories`, `sys_keys`, `sys_objects_editor`, `sys_objects_captcha`, `sys_objects_social_sharing`, `sys_objects_categories`, `sys_objects_cmts`, `sys_cmts_images`, `sys_cmts_images_preview`, `sys_cmts_images2entries`, `sys_email_templates`, `sys_options`, `sys_options_cats`, `sys_ip_list`, `sys_ip_members_visits`, `sys_localization_categories`, `sys_localization_keys`, `sys_localization_languages`, `sys_localization_string_params`, `sys_localization_strings`, `sys_acl_actions`, `sys_acl_actions_track`, `sys_acl_matrix`, `sys_acl_level_prices`, `sys_acl_levels`, `sys_sessions`, `sys_acl_levels_members`, `sys_objects_search`, `sys_stat_site`, `sys_alerts`, `sys_alerts_handlers`, `sys_injections`, `sys_injections_admin`, `sys_modules`, `sys_modules_file_tracks`, `sys_permalinks`, `sys_objects_privacy`, `sys_privacy_defaults`, `sys_privacy_groups`, `sys_privacy_members`, `sys_tags`, `sys_objects_tag`, `sys_transactions`, `sys_objects_auths`, `sys_objects_vote`, `sys_objects_views`, `sys_cron_jobs`, `sys_dnsbl_rules`, `sys_dnsbl_block_log`, `sys_dnsbluri_zones`, `sys_menu_mobile`, `sys_menu_mobile_pages`, `sys_objects_storage`, `sys_objects_uploader`, `sys_storage_user_quotas`, `sys_storage_tokens`, `sys_storage_ghosts`, `sys_storage_mime_types`, `sys_objects_transcoder_images`, `sys_transcoder_images_files`, `sys_transcoder_images_filters`,`sys_accounts`,`sys_profiles`;
+DROP TABLE IF EXISTS `sys_categories`, `sys_keys`, `sys_objects_editor`, `sys_objects_captcha`, `sys_objects_social_sharing`, `sys_objects_categories`, `sys_objects_cmts`, `sys_cmts_images`, `sys_cmts_images_preview`, `sys_cmts_images2entries`, `sys_email_templates`, `sys_options`, `sys_options_cats`, `sys_ip_list`, `sys_ip_members_visits`, `sys_localization_categories`, `sys_localization_keys`, `sys_localization_languages`, `sys_localization_string_params`, `sys_localization_strings`, `sys_acl_actions`, `sys_acl_actions_track`, `sys_acl_matrix`, `sys_acl_level_prices`, `sys_acl_levels`, `sys_sessions`, `sys_acl_levels_members`, `sys_objects_search`, `sys_stat_site`, `sys_alerts`, `sys_alerts_handlers`, `sys_injections`, `sys_injections_admin`, `sys_modules`, `sys_modules_file_tracks`, `sys_permalinks`, `sys_objects_privacy`, `sys_privacy_defaults`, `sys_privacy_groups`, `sys_privacy_members`, `sys_tags`, `sys_objects_tag`, `sys_transactions`, `sys_objects_auths`, `sys_objects_vote`, `sys_objects_view`, `sys_cron_jobs`, `sys_dnsbl_rules`, `sys_dnsbl_block_log`, `sys_dnsbluri_zones`, `sys_menu_mobile`, `sys_menu_mobile_pages`, `sys_objects_storage`, `sys_objects_uploader`, `sys_storage_user_quotas`, `sys_storage_tokens`, `sys_storage_ghosts`, `sys_storage_mime_types`, `sys_objects_transcoder_images`, `sys_transcoder_images_files`, `sys_transcoder_images_filters`,`sys_accounts`,`sys_profiles`;
 ALTER DATABASE DEFAULT CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci';
 
 
@@ -1121,15 +1121,17 @@ CREATE TABLE `sys_alerts` (
 -- --------------------------------------------------------
 
 
-CREATE TABLE `sys_objects_views` (
+CREATE TABLE `sys_objects_view` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(32) NOT NULL,
   `table_track` varchar(32) NOT NULL,
   `period` int(11) NOT NULL default '86400',
+  `is_on` tinyint(4) NOT NULL default '1',
   `trigger_table` varchar(32) NOT NULL,
   `trigger_field_id` varchar(32) NOT NULL,
-  `trigger_field_views` varchar(32) NOT NULL,
-  `is_on` tinyint(4) NOT NULL default '1',
+  `trigger_field_count` varchar(32) NOT NULL,
+  `class_name` varchar(32) NOT NULL default '',
+  `class_file` varchar(256) NOT NULL default '',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 

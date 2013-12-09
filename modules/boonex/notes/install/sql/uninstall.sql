@@ -16,8 +16,10 @@ DROP TABLE IF EXISTS `bx_notes_cmts`;
 DROP TABLE IF EXISTS `bx_notes_votes`;
 DROP TABLE IF EXISTS `bx_notes_votes_track`;
 
--- FORMS
+-- TABLE: VIEWS
+DROP TABLE IF EXISTS `bx_notes_views_track`;
 
+-- FORMS
 DELETE FROM `sys_objects_form` WHERE `module` = 'bx_notes';
 
 DELETE FROM `sys_form_displays` WHERE `module` = 'bx_notes';

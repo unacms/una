@@ -133,6 +133,15 @@ class BxNotesFormNote extends BxTemplFormView {
 
         // delete db record
 
+        bx_import('BxDolView');
+		BxDolView::getObjectInstance(BxNotesConfig::$OBJECT_VIEWS, $iContentId)->onObjectDelete();
+
+		bx_import('BxDolVote');
+		BxDolVote::getObjectInstance(BxNotesConfig::$OBJECT_VOTES, $iContentId)->onObjectDelete();
+
+		bx_import('BxDolCmts');
+		BxDolCmts::getObjectInstance(BxNotesConfig::$OBJECT_COMMENTS, $iContentId)->onObjectDelete();
+
         return parent::delete($iContentId);
     }
 
