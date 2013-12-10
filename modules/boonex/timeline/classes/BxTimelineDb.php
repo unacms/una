@@ -50,8 +50,7 @@ class BxTimelineDb extends BxDolModuleDb
             	$sContent = serialize(array(
             		'module_name' => $aHandler['module_name'],
             		'module_method' => $aHandler['module_method'],
-            		'module_params' => $aHandler['module_params'],
-            		'module_class' => $aHandler['module_class'],
+            		'module_class' => !empty($aHandler['module_class']) ? $aHandler['module_class'] : 'Module',
             		'groupable' => $aHandler['groupable'],
             		'group_by' => $aHandler['group_by']
             	));
