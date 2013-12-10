@@ -11,7 +11,7 @@ defined('BX_DOL') or die('hack attempt');
 bx_import('BxTemplStudioPage');
 bx_import('BxDolStudioStoreQuery');
 
-define('BX_DOL_STUDIO_STR_TYPE_DEFAULT', 'goodies');
+define('BX_DOL_STUDIO_STR_TYPE_DEFAULT', 'downloaded');
 
 class BxDolStudioStore extends BxTemplStudioPage {
     protected $sPage;

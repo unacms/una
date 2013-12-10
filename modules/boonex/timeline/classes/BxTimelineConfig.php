@@ -32,11 +32,11 @@ class BxTimelineConfig extends BxDolModuleConfig
 
     protected $_sStorageObject;
     protected $_sTranscoderObjectPreview;
+    protected $_sTranscoderObjectView;
     protected $_aImageUploaders;
 
 	protected $_sConnObjSubscriptions;
 
-	protected $_sMenuPost;
 	protected $_sMenuItemManage;
 	protected $_sMenuItemActions;
 
@@ -68,15 +68,15 @@ class BxTimelineConfig extends BxDolModuleConfig
         $this->_aHandlersHidden = array();
         $this->_aHandlers = array();
 
-        $this->_sStorageObject = 'bx_timeline_photos';
-        $this->_sTranscoderObjectPreview = 'bx_timeline_photos_preview';
-        $this->_aImageUploaders = array('bx_timeline_simple');        
+        $this->_sStorageObject = $this->_sName . '_photos';
+        $this->_sTranscoderObjectPreview = $this->_sName . '_photos_preview';
+        $this->_sTranscoderObjectView = $this->_sName . '_photos_view';
+        $this->_aImageUploaders = array($this->_sName . '_simple');        
 
 		$this->_sConnObjSubscriptions = 'sys_profiles_subscriptions';
 
-		$this->_sMenuPost = 'bx_timeline_menu_post';
-		$this->_sMenuItemManage = 'bx_timeline_menu_item_manage';
-		$this->_sMenuItemActions = 'bx_timeline_menu_item_actions';
+		$this->_sMenuItemManage = $this->_sName . '_menu_item_manage';
+		$this->_sMenuItemActions = $this->_sName . '_menu_item_actions';
 
         $this->_bJsMode = false;
         $this->_aJsClass = array(
@@ -199,11 +199,11 @@ class BxTimelineConfig extends BxDolModuleConfig
     		case 'transcoder_preview':
     			$sResult = $this->_sTranscoderObjectPreview;
     			break;
+    		case 'transcoder_view':
+    			$sResult = $this->_sTranscoderObjectView;
+    			break;
     		case 'conn_subscriptions':
     			$sResult = $this->_sConnObjSubscriptions;
-    			break;
-    		case 'menu_post':
-    			$sResult = $this->_sMenuPost;
     			break;
     		case 'menu_item_manage':
     			$sResult = $this->_sMenuItemManage;

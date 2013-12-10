@@ -32,8 +32,7 @@ class BxBaseUploaderHTML5 extends BxDolUploader {
     public function getUploaderButton($sGhostTemplate, $isMultiple = true, $aParams = array()) {
         $s = parent::getUploaderButton($sGhostTemplate, $isMultiple, $aParams);
 
-        $oTemplate = BxDolTemplate::getInstance();
-        $oTemplate->addJs(BX_DOL_URL_PLUGINS . 'fileuploader.js');
+        $this->_oTemplate->addJs(BX_DOL_URL_PLUGINS . 'fileuploader.js');
 
         return $s;
     }
@@ -57,8 +56,7 @@ class BxBaseUploaderHTML5 extends BxDolUploader {
     public function getUploaderForm($isMultiple = true, $iContentId = false) {
         parent::getUploaderForm($isMultiple, $iContentId);
 
-        $oTemplate = BxDolTemplate::getInstance();
-        $sForm = $oTemplate->parseHtmlByName('uploader_form_html5.html', array(
+        $sForm = $this->_oTemplate->parseHtmlByName('uploader_form_html5.html', array(
             'form_container_id' => $this->_sFormContainerId,
             'errors_container_id' => $this->_sErrorsContainerId,
             'uploader_instance_name' => $this->getNameJsInstanceUploader(),

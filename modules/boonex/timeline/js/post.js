@@ -66,47 +66,25 @@ BxTimelinePost.prototype.afterFormPostSubmit = function (oForm, oData)
 	}
 };
 
-BxTimelinePost.prototype.changePostType = function(oLink, sType) {    
-    var $this = this;
-
-    var oContent = $('#timeline-ptype-cnt-' + sType);
-    if(oContent.html() != '') {
-    	$('.timeline-ptype-cnt:visible').bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
-    		oContent.bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
-    	});
-    	return;
-    }
-
-    if(sType == 'music' || sType == 'video') {
-        jQuery.post (
-            $this._sActionsUrl + 'get_' + sType + '_uploaders/' + this._iOwnerId,
-            {},
-            function(sResult) {
-            	if($.trim(sResult).length) {
-            		oContent.filter(':visible').find('iframe[name=upload_file_frame]').remove();
-            		oContent.filter('.wall_' + sType).html(sResult);            	   
-            		$this._animContent(oLink, sType);
-            	}
-            }
-        );
-    }    
+BxTimelinePost.prototype.showLinkField = function(oElement) {
+	$(oElement).parents('form:first').find('#bx-form-element-link').bx_anim('toggle', this._sAnimationEffect, this._iAnimationSpeed);
 };
 
 BxTimelinePost.prototype._getForm = function(oElement, sType) {
-	var $this = this;
+    var $this = this;
     var oData = this._getDefaultData();
 
-	jQuery.post (
-        this._sActionsUrl + 'get_post_form/' + sType + '/',
-        oData,
-        function(oData) {
-        	if(oData && oData.form != undefined && oData.form_id != undefined) {
-	        	$('#' + oData.form_id).replaceWith(oData.form);
-	        	$this.initFormPost(oData.form_id);
-        	}
-        },
-        'json'
-    );
+    jQuery.post (
+    this._sActionsUrl + 'get_post_form/' + sType + '/',
+    oData,
+    function(oData) {
+            if(oData && oData.form != undefined && oData.form_id != undefined) {
+                    $('#' + oData.form_id).replaceWith(oData.form);
+                    $this.initFormPost(oData.form_id);
+            }
+    },
+    'json'
+);
 };
 
 BxTimelinePost.prototype._getPost = function(oElement, iPostId) {

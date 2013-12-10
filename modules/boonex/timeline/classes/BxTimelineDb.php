@@ -329,7 +329,7 @@ class BxTimelineDb extends BxDolModuleDb
     }
 
 	//--- Photo uploader related methods ---//
-	public function savePhoto($iEventId, $iPhId, $sPhTitle, $sPhText)
+	public function savePhoto($iEventId, $iPhId, $sPhTitle = '', $sPhText = '')
 	{
 		$sQuery = $this->prepare("INSERT INTO `" . $this->_sPrefix . "photos2events` SET `event_id`=?, `photo_id`=?, `title`=?, `text`=?", $iEventId, $iPhId, $sPhTitle, $sPhText);
 		return (int)$this->query($sQuery) > 0;

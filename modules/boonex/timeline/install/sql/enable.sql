@@ -22,18 +22,6 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 
 -- MENUS
 
--- MENU: Post Item (Text, Link, Photo)
-INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_timeline_menu_post', '_bx_timeline_menu_title_post', 'bx_timeline_menu_post', 'bx_timeline', 11, 0, 1, 'BxTimelineMenuPost', 'modules/boonex/timeline/classes/BxTimelineMenuPost.php');
-
-INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
-('bx_timeline_menu_post', 'bx_timeline', '_bx_timeline_menu_set_title_post', 0);
-
-INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_timeline_menu_post', 'bx_timeline', 'post-text', '_bx_timeline_menu_item_title_system_post_text', '_bx_timeline_menu_item_title_post_text', 'javascript:void(0)', 'javascript:{js_object_post}.changePostType(this, ''text'')', '_self', '', '', 2147483647, 1, 0, 0),
-('bx_timeline_menu_post', 'bx_timeline', 'post-link', '_bx_timeline_menu_item_title_system_post_link', '_bx_timeline_menu_item_title_post_link', 'javascript:void(0)', 'javascript:{js_object_post}.changePostType(this, ''link'')', '_self', '', '', 2147483647, 1, 0, 0),
-('bx_timeline_menu_post', 'bx_timeline', 'post-photo', '_bx_timeline_menu_item_title_system_post_photo', '_bx_timeline_menu_item_title_post_photo', 'javascript:void(0)', 'javascript:{js_object_post}.changePostType(this, ''photo'')', '_self', '', '', 2147483647, 1, 0, 0);
-
 -- MENU: Item Manage (Delete)
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_timeline_menu_item_manage', '_bx_timeline_menu_title_item_manage', 'bx_timeline_menu_item_manage', 'bx_timeline', 6, 0, 1, 'BxTimelineMenuItem', 'modules/boonex/timeline/classes/BxTimelineMenuItem.php');
@@ -83,17 +71,20 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 
 -- UPLOADERS
 INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
-('bx_timeline_simple', 1, 'BxTemplUploaderSimple', '');
+('bx_timeline_simple', 1, 'BxTimelineUploaderSimple', 'modules/boonex/timeline/classes/BxTimelineUploaderSimple.php');
 
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
 ('bx_timeline_photos', 'Local', '', 360, 2592000, 3, 'bx_timeline_photos', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
-('bx_timeline_photos_preview', 'Local', '', 360, 2592000, 3, 'bx_timeline_photos_preview', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0);
+('bx_timeline_photos_preview', 'Local', '', 360, 2592000, 3, 'bx_timeline_photos_preview', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
+('bx_timeline_photos_view', 'Local', '', 360, 2592000, 3, 'bx_timeline_photos_view', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0);
 
 INSERT INTO `sys_objects_transcoder_images` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`) VALUES
-('bx_timeline_photos_preview', 'bx_timeline_photos_preview', 'Storage', 'a:1:{s:6:"object";s:18:"bx_timeline_photos";}', 'no', '1', '2592000', '0');
+('bx_timeline_photos_preview', 'bx_timeline_photos_preview', 'Storage', 'a:1:{s:6:"object";s:18:"bx_timeline_photos";}', 'no', '1', '2592000', '0'),
+('bx_timeline_photos_view', 'bx_timeline_photos_view', 'Storage', 'a:1:{s:6:"object";s:18:"bx_timeline_photos";}', 'no', '1', '2592000', '0');
 
 INSERT INTO `sys_transcoder_images_filters` (`transcoder_object`, `filter`, `filter_params`, `order`) VALUES
-('bx_timeline_photos_preview', 'Resize', 'a:4:{s:1:"w";s:3:"319";s:1:"h";s:3:"319";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0');
+('bx_timeline_photos_preview', 'Resize', 'a:4:{s:1:"w";s:3:"100";s:1:"h";s:3:"100";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0'),
+('bx_timeline_photos_view', 'Resize', 'a:4:{s:1:"w";s:3:"318";s:1:"h";s:3:"318";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0');
 
 
 -- ACL

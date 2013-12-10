@@ -70,6 +70,22 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_photos_preview` (
   UNIQUE KEY `remote_id` (`remote_id`)
 );
 
+CREATE TABLE IF NOT EXISTS `bx_timeline_photos_view` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `profile_id` int(10) unsigned NOT NULL,
+  `remote_id` varchar(255) NOT NULL,
+  `path` varchar(255) NOT NULL,
+  `file_name` varchar(255) NOT NULL,
+  `mime_type` varchar(128) NOT NULL,
+  `ext` varchar(32) NOT NULL,
+  `size` int(11) NOT NULL,
+  `added` int(11) NOT NULL,
+  `modified` int(11) NOT NULL,
+  `private` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `remote_id` (`remote_id`)
+);
+
 CREATE TABLE IF NOT EXISTS `bx_timeline_photos2events` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `event_id` int(11) NOT NULL DEFAULT '0',
@@ -124,68 +140,31 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_votes_track` (
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;
 
 
--- Forms -> Text
+-- Forms -> Post
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
-('mod_tml_text', @sName, '_bx_timeline_form_text', '', '', 'do_submit', 'bx_timeline_events', 'id', '', '', '', 0, 1, '', '');
+('mod_tml_post', @sName, '_bx_timeline_form_post', '', '', 'do_submit', 'bx_timeline_events', 'id', '', '', '', 0, 1, '', '');
 
 INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
-('mod_tml_text_add', @sName, 'mod_tml_text', '_bx_timeline_form_text_display_add', 0);
+('mod_tml_post_add', @sName, 'mod_tml_post', '_bx_timeline_form_post_display_add', 0);
 
 INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES
-('mod_tml_text', @sName, 'type', 'text', '', 0, 'hidden', '_bx_timeline_form_text_input_sys_type', '', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
-('mod_tml_text', @sName, 'action', '', '', 0, 'hidden', '_bx_timeline_form_text_input_sys_action', '', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
-('mod_tml_text', @sName, 'owner_id', '0', '', 0, 'hidden', '_bx_timeline_form_text_input_sys_owner_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
-('mod_tml_text', @sName, 'content', '', '', 0, 'textarea', '_bx_timeline_form_text_input_sys_content', '_bx_timeline_form_text_input_content', '', 0, 0, 0, '', '', '', 'Avail', '', '_bx_timeline_form_text_input_err_content', 'Xss', '', 0, 0),
-('mod_tml_text', @sName, 'do_submit', '_bx_timeline_form_text_input_do_submit', '', 0, 'submit', '_bx_timeline_form_text_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
+('mod_tml_post', @sName, 'type', 'post', '', 0, 'hidden', '_bx_timeline_form_post_input_sys_type', '', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
+('mod_tml_post', @sName, 'action', '', '', 0, 'hidden', '_bx_timeline_form_post_input_sys_action', '', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
+('mod_tml_post', @sName, 'owner_id', '0', '', 0, 'hidden', '_bx_timeline_form_post_input_sys_owner_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('mod_tml_post', @sName, 'text', '', '', 0, 'textarea', '_bx_timeline_form_post_input_sys_text', '_bx_timeline_form_post_input_text', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
+('mod_tml_post', @sName, 'link', '', '', 0, 'text', '_bx_timeline_form_post_input_sys_link', '_bx_timeline_form_post_input_link', '', 0, 0, 0, '', 'a:1:{s:5:"style";s:12:"display:none";}', '', '', '', '', 'Xss', '', 0, 0),
+('mod_tml_post', @sName, 'photo', '', '', 0, 'files', '_bx_timeline_form_post_input_sys_photo', '_bx_timeline_form_post_input_photo', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
+('mod_tml_post', @sName, 'do_submit', '_bx_timeline_form_post_input_do_submit', '', 0, 'submit', '_bx_timeline_form_post_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
 
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
-('mod_tml_text_add', 'type', 2147483647, 1, 1),
-('mod_tml_text_add', 'action', 2147483647, 1, 2),
-('mod_tml_text_add', 'owner_id', 2147483647, 1, 3),
-('mod_tml_text_add', 'content', 2147483647, 1, 4),
-('mod_tml_text_add', 'do_submit', 2147483647, 1, 5);
+('mod_tml_post_add', 'type', 2147483647, 1, 1),
+('mod_tml_post_add', 'action', 2147483647, 1, 2),
+('mod_tml_post_add', 'owner_id', 2147483647, 1, 3),
+('mod_tml_post_add', 'text', 2147483647, 1, 4),
+('mod_tml_post_add', 'link', 2147483647, 1, 5),
+('mod_tml_post_add', 'photo', 2147483647, 1, 6),
+('mod_tml_post_add', 'do_submit', 2147483647, 1, 7);
 
--- Forms -> Link
-INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
-('mod_tml_link', @sName, '_bx_timeline_form_link', '', '', 'do_submit', 'bx_timeline_events', 'id', '', '', '', 0, 1, '', '');
-
-INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
-('mod_tml_link_add', @sName, 'mod_tml_link', '_bx_timeline_form_link_display_add', 0);
-
-INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES
-('mod_tml_link', @sName, 'type', 'link', '', 0, 'hidden', '_bx_timeline_form_link_input_sys_type', '', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
-('mod_tml_link', @sName, 'action', '', '', 0, 'hidden', '_bx_timeline_form_link_input_sys_action', '', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
-('mod_tml_link', @sName, 'owner_id', '0', '', 0, 'hidden', '_bx_timeline_form_link_input_sys_owner_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
-('mod_tml_link', @sName, 'content', '', '', 0, 'text', '_bx_timeline_form_link_input_sys_content', '_bx_timeline_form_link_input_content', '', 0, 0, 0, '', '', '', 'Avail', '', '_bx_timeline_form_link_input_err_content', 'Xss', '', 0, 0),
-('mod_tml_link', @sName, 'do_submit', '_bx_timeline_form_link_input_do_submit', '', 0, 'submit', '_bx_timeline_form_link_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
-
-INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
-('mod_tml_link_add', 'type', 2147483647, 1, 1),
-('mod_tml_link_add', 'action', 2147483647, 1, 2),
-('mod_tml_link_add', 'owner_id', 2147483647, 1, 3),
-('mod_tml_link_add', 'content', 2147483647, 1, 4),
-('mod_tml_link_add', 'do_submit', 2147483647, 1, 5);
-
--- Forms -> Photo
-INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
-('mod_tml_photo', @sName, '_bx_timeline_form_photo', '', '', 'do_submit', 'bx_timeline_events', 'id', '', '', '', 0, 1, '', '');
-
-INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
-('mod_tml_photo_add', @sName, 'mod_tml_photo', '_bx_timeline_form_photo_display_add', 0);
-
-INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES
-('mod_tml_photo', @sName, 'type', 'photo', '', 0, 'hidden', '_bx_timeline_form_photo_input_sys_type', '', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
-('mod_tml_photo', @sName, 'action', '', '', 0, 'hidden', '_bx_timeline_form_photo_input_sys_action', '', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
-('mod_tml_photo', @sName, 'owner_id', '0', '', 0, 'hidden', '_bx_timeline_form_photo_input_sys_owner_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
-('mod_tml_photo', @sName, 'content', '', '', 0, 'files', '_bx_timeline_form_photo_input_sys_content', '_bx_timeline_form_photo_input_content', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
-('mod_tml_photo', @sName, 'do_submit', '_bx_timeline_form_photo_input_do_submit', '', 0, 'submit', '_bx_timeline_form_photo_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
-
-INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
-('mod_tml_photo_add', 'type', 2147483647, 1, 1),
-('mod_tml_photo_add', 'action', 2147483647, 1, 2),
-('mod_tml_photo_add', 'owner_id', 2147483647, 1, 3),
-('mod_tml_photo_add', 'content', 2147483647, 1, 4),
-('mod_tml_photo_add', 'do_submit', 2147483647, 1, 5);
 
 -- STUDIO PAGE & WIDGET
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES

@@ -29,8 +29,10 @@ define('BX_TIMELINE_FILTER_OTHER', 'other');
 define('BX_TIMELINE_PARSE_TYPE_TEXT', 'text');
 define('BX_TIMELINE_PARSE_TYPE_LINK', 'link');
 define('BX_TIMELINE_PARSE_TYPE_PHOTO', 'photo');
+
+define('BX_TIMELINE_PARSE_TYPE_POST', 'post');
 define('BX_TIMELINE_PARSE_TYPE_SHARE', 'share');
-define('BX_TIMELINE_PARSE_TYPE_DEFAULT', BX_TIMELINE_PARSE_TYPE_TEXT);
+define('BX_TIMELINE_PARSE_TYPE_DEFAULT', BX_TIMELINE_PARSE_TYPE_POST);
 
 
 class BxTimelineModule extends BxDolModule
@@ -169,18 +171,18 @@ class BxTimelineModule extends BxDolModule
 		$this->_echoResultJson(array('items' => $sItems, 'load_more' => $sLoadMore, 'back' => $sBack));
     }
 
-    public function actionGetPostForm($sType)
+	public function actionGetPostForm($sType)
     {
-    	$this->_iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
+        $this->_iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
 
-    	$sMethod = 'getForm' . ucfirst($sType);
-		if(!method_exists($this, $sMethod)) {
-			$this->_echoResultJson(array());
-        	return;
-		}
-    	$aResult = $this->$sMethod();
+        $sMethod = 'getForm' . ucfirst($sType);
+        if(!method_exists($this, $sMethod)) {
+            $this->_echoResultJson(array());
+            return;
+        }
+        $aResult = $this->$sMethod();
 
-    	$this->_echoResultJson($aResult);
+        $this->_echoResultJson($aResult);
     }
 
     public function actionGetComments()
@@ -294,7 +296,7 @@ class BxTimelineModule extends BxDolModule
             	$iProfileId = $oProfile->id();
 		}
 
-        if (!$iProfileId)
+        if(!$iProfileId)
             return array();
 
 		$this->_iOwnerId = $iProfileId;
@@ -303,13 +305,9 @@ class BxTimelineModule extends BxDolModule
         if($this->isAllowedPost() !== true)
             return array();
 
-		bx_import('BxDolMenu');
-		$oMenu = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_post'));
-		$oMenu->setMenuId('timeline-post-menu');
-		$oMenu->setSelected($this->getName(), 'post-text');
-
-        $sContent = $this->_oTemplate->getPostBlock($this->_iOwnerId);
-        return array('content' => $sContent, 'menu' => $oMenu);
+        return array(
+        	'content' => $this->_oTemplate->getPostBlock($this->_iOwnerId)
+        );
 	}
 
 	public function serviceGetBlockView($iProfileId = 0)
@@ -397,12 +395,31 @@ class BxTimelineModule extends BxDolModule
     /*
      * COMMON METHODS 
      */
-	public function getFormText()
+	public function getFormPost()
     {
     	bx_import('BxDolForm');
-        $oForm = BxDolForm::getObjectInstance('mod_tml_text', 'mod_tml_text_add');
+        $oForm = BxDolForm::getObjectInstance('mod_tml_post', 'mod_tml_post_add');
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'post/';
         $oForm->aInputs['owner_id']['value'] = $this->_iOwnerId;
+
+	    if(isset($oForm->aInputs['photo'])) {
+	    	$aFormNested = array(
+	        	'params' =>array(
+	        		'nested_form_template' => 'uploader_nfw.html'
+	        	),
+		        'inputs' => array(),
+		    );
+
+		    bx_import('BxDolFormNested');
+		    $oFormNested = new BxDolFormNested('photo', $aFormNested, 'do_submit', $this->_oTemplate);
+	
+	        $oForm->aInputs['photo']['storage_object'] = $this->_oConfig->getObject('storage');
+	        $oForm->aInputs['photo']['images_transcoder'] = $this->_oConfig->getObject('transcoder_preview');
+	        $oForm->aInputs['photo']['uploaders'] = $this->_oConfig->getUploaders('image');
+	        $oForm->aInputs['photo']['upload_buttons_titles'] = array('Simple' => 'camera');
+	        $oForm->aInputs['photo']['multiple'] = false;
+	        $oForm->aInputs['photo']['ghost_template'] = $oFormNested;
+	    }
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
@@ -413,164 +430,60 @@ class BxTimelineModule extends BxDolModule
         	$sType = $this->_oConfig->getPrefix('common_post') . $sType;
         	BxDolForm::setSubmittedValue('type', $sType, $oForm->aFormAttrs['method']);
 
-        	$sContent = $sDescription = $oForm->getCleanValue('content');
-        	$sContent = serialize(array('text' => $sContent));
-        	BxDolForm::setSubmittedValue('content', $sContent, $oForm->aFormAttrs['method']);
+        	$aContent = array();
+
+        	//--- Process Text ---//
+        	$sText = $oForm->getCleanValue('text');
+        	unset($oForm->aInputs['text']);
+
+        	$aContent['text'] = $sText;
+
+        	//--- Process Link ---//
+			$sLink = $oForm->getCleanValue('link');
+			unset($oForm->aInputs['link']);
+
+			if(!empty($sLink)) {
+	        	$sLinkContent = bx_file_get_contents($sLink);
+	
+	        	$aMatch = array();
+		        preg_match("/<title>(.*)<\/title>/", $sLinkContent, $aMatch);
+		        $sLinkTitle = $aMatch ? $aMatch[1] : '';
+		
+		        preg_match("/<meta.*name[='\" ]+description['\"].*content[='\" ]+(.*)['\"].*><\/meta>/", $sLinkContent, $aMatch);
+		        $sLinkDescription = $aMatch ? $aMatch[1] : '';
+	
+		        $aContent['url'] = strpos($sLink, 'http://') === false && strpos($sLink, 'https://') === false ? 'http://' . $sLink : $sLink;
+		        $aContent['title'] = $sLinkTitle;
+		        if(empty($aContent['text']) && !empty($sLinkDescription))
+					$aContent['text'] = $sLinkDescription;
+			}
+
+			//--- Process Photos ---//
+			$aPhIds = $oForm->getCleanValue('photo');
+        	unset($oForm->aInputs['photo']);
+
+        	$sTitle = _t('_bx_timeline_txt_user_added_sample', $sUserName, _t('_bx_timeline_txt_sample'));
+			$sDescription = $aContent['text'];
+			if(empty($sDescription) && !empty($aContent['link_text']))
+				$sDescription = $aContent['link_text'];
 
         	$iId = $oForm->insert(array(
         		'object_id' => $iUserId,
         		'object_privacy_view' => $this->_oConfig->getPrivacyViewDefault(),
-				'title' => bx_process_input($sUserName . ' ' . _t('_bx_timeline_txt_wrote')),
+        		'content' => serialize($aContent),
+				'title' => $sTitle,
 				'description' => $sDescription,
         		'date' => time()
 			));
 
 			if(!empty($iId)) {
-				$this->onPost($iId);
-
-                return array('id' => $iId);
-			}
-
-			return array('msg' => _t('_bx_timeline_txt_err_cannot_perform_action'));
-        }
-
-        return array('form' => $oForm->getCode(), 'form_id' => $oForm->id);
-    }
-
-	public function getFormLink()
-    {
-        bx_import('BxDolForm');
-        $oForm = BxDolForm::getObjectInstance('mod_tml_link', 'mod_tml_link_add');
-        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'post/';
-        $oForm->aInputs['owner_id']['value'] = $this->_iOwnerId;
-
-        $oForm->initChecker();
-        if($oForm->isSubmittedAndValid()) {
-        	$iUserId = $this->getUserId();
-        	list($sUserName) = $this->getUserInfo($iUserId);
-
-        	$sType = $oForm->getCleanValue('type');
-        	$sType = $this->_oConfig->getPrefix('common_post') . $sType;
-        	BxDolForm::setSubmittedValue('type', $sType, $oForm->aFormAttrs['method']);
-
-        	$sUrl = $oForm->getCleanValue('content');
-        	$sContent = bx_file_get_contents($sUrl);
-
-	        preg_match("/<title>(.*)<\/title>/", $sContent, $aMatch);
-	        $sTitle = $aMatch ? $aMatch[1] : '';
-	
-	        preg_match("/<meta.*name[='\" ]+description['\"].*content[='\" ]+(.*)['\"].*><\/meta>/", $sContent, $aMatch);
-	        $sDescription = $aMatch ? $aMatch[1] : '';
-
-	        $sContent = serialize(array(
-				'url' => strpos($sUrl, 'http://') === false && strpos($sUrl, 'https://') === false ? 'http://' . $sUrl : $sUrl,
-	        	'title' => $sTitle,
-				'text' => $sDescription
-			));
-	        BxDolForm::setSubmittedValue('content', $sContent, $oForm->aFormAttrs['method']);
-
-        	$iId = $oForm->insert(array(
-        		'object_id' => $iUserId,
-        		'object_privacy_view' => $this->_oConfig->getPrivacyViewDefault(),
-				'title' => bx_process_input($sUserName . ' ' . _t('_bx_timeline_txt_shared_link')),
-				'description' => bx_process_input($sUrl . ' - ' . $sTitle),
-        		'date' => time()
-			));
-
-			if(!empty($iId)) {
-				$this->onPost($iId);
-
-                return array('id' => $iId);
-			}
-
-			return array('msg' => _t('_bx_timeline_txt_err_cannot_perform_action'));
-        }
-
-        return array('form' => $oForm->getCode(), 'form_id' => $oForm->id);
-    }
-
-    public function getFormPhoto()
-    {
-    	$aFormNested = array(
-			'inputs' => array(
-		    	'file_title' => array(
-		        	'type' => 'text',
-		            'name' => 'file_title[]',
-		            'value' => '{file_title}',
-		            'caption' => _t('_bx_timeline_form_photo_input_title'),
-		            'required' => true,
-		            'checker' => array(
-		            	'func' => 'length',
-		                'params' => array(1, 150),
-		                'error' => _t('_bx_timeline_form_photo_input_err_title')
-					),
-					'db' => array (
- 						'pass' => 'Xss',
- 					),
-				),
-
-				'file_text' => array(
-		        	'type' => 'textarea',
-		            'name' => 'file_text[]',
-		            'caption' => _t('_bx_timeline_form_photo_input_description'),
-		            'required' => true,
-		            'checker' => array(
-		            	'func' => 'length',
-		                'params' => array(10, 5000),
-		                'error' => _t('_bx_timeline_form_photo_input_err_description')
-					),
-					'db' => array (
- 						'pass' => 'Xss',
- 					),
-				),
-			),
-		);
-
-    	bx_import('BxDolForm');
-        $oForm = BxDolForm::getObjectInstance('mod_tml_photo', 'mod_tml_photo_add');
-        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'post/';
-        $oForm->aInputs['owner_id']['value'] = $this->_iOwnerId;
-
-	    bx_import('BxDolFormNested');
-	    $oFormNested = new BxDolFormNested('content', $aFormNested, 'do_submit');
-
-        $oForm->aInputs['content']['storage_object'] = $this->_oConfig->getObject('storage');
-        $oForm->aInputs['content']['images_transcoder'] = $this->_oConfig->getObject('transcoder_preview');
-        $oForm->aInputs['content']['uploaders'] = $this->_oConfig->getUploaders('image');
-        $oForm->aInputs['content']['multiple'] = false;
-        $oForm->aInputs['content']['ghost_template'] = $oFormNested;
-
-        $oForm->initChecker();
-        if($oForm->isSubmittedAndValid()) {
-        	$iUserId = $this->getUserId();
-        	list($sUserName) = $this->getUserInfo($iUserId);
-
-        	$sType = $oForm->getCleanValue('type');
-        	$sType = $this->_oConfig->getPrefix('common_post') . $sType;
-        	BxDolForm::setSubmittedValue('type', $sType, $oForm->aFormAttrs['method']);
-
-        	$aPhIds = $oForm->getCleanValue('content');
-        	BxDolForm::setSubmittedValue('content', serialize(array()), $oForm->aFormAttrs['method']);
-        	$iPhIds = count($aPhIds);
-
-        	$iId = $oForm->insert(array(
-        		'object_id' => $iUserId,
-        		'object_privacy_view' => $this->_oConfig->getPrivacyViewDefault(),
-				'title' => bx_process_input($sUserName . ' ' . _t('_bx_timeline_txt_added_photo' . ($iPhIds > 1 ? 's' : ''))),
-				'description' => '',
-        		'date' => time()
-			));
-
-			if(!empty($iId)) {
-				if($iPhIds > 0) {
-					$aPhTitles = $oForm->getCleanValue('file_title');
-					$aPhTexts = $oForm->getCleanValue('file_text');
-
+				if(!empty($aPhIds) && is_array($aPhIds)) {
 					bx_import('BxDolStorage');
 					$oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage'));
 
+					$iPhIds = count($aPhIds);
 					for($i = 0; $i < $iPhIds; $i++) 
-						if($this->_oDb->savePhoto($iId, $aPhIds[$i], $aPhTitles[$i], $aPhTexts[$i]))
+						if($this->_oDb->savePhoto($iId, $aPhIds[$i]))
 							$oStorage->afterUploadCleanup($aPhIds[$i], $iUserId);
 				}
 

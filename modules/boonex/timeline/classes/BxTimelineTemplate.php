@@ -27,7 +27,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 	public function getCssJs()
     {
     	$this->addCss(array('plugins/jquery/themes/|jquery-ui.css', 'view.css', 'view-media-tablet.css', 'view-media-desktop.css', 'post.css', 'share.css'));
-        $this->addJs(array('jquery.ui.all.min.js', 'jquery.resize.js', 'plugins/|masonry.pkgd.min.js', 'common_anim.js', 'main.js', 'view.js', 'post.js', 'share.js'));
+        $this->addJs(array('jquery.ui.all.min.js', 'jquery.form.js', 'jquery.resize.js', 'plugins/|masonry.pkgd.min.js', 'common_anim.js', 'main.js', 'view.js', 'post.js', 'share.js'));
     }
 
     public function getJsCode($sType, $aRequestParams = array(), $bWrap = true)
@@ -55,27 +55,21 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 <?php
 		$sContent = ob_get_clean();
 
+		$this->getCssJs();
         return !$bWrap ? $sContent : $this->_wrapInTagJsCode($sContent);
     }
 
     public function getPostBlock($iOwnerId)
     {
-    	$oModule = $this->getModule();
-    	$aFormText = $oModule->getFormText();
-    	$aFormLink = $oModule->getFormLink();
-    	$aFormPhoto = $oModule->getFormPhoto();
+    	$aForm = $this->getModule()->getFormPost();
 
-        return $this->parseHtmlByName('post.html', array (
+        return $this->parseHtmlByName('block_post.html', array (
+        	'style_prefix' => $this->_oConfig->getPrefix('style'),
             'js_object' => $this->_oConfig->getJsObject('post'),
         	'js_content' => $this->getJsCode('post', array(
             	'owner_id' => $iOwnerId 
         	)),
-            'text_form' => $aFormText['form'],
-            'link_form' => $aFormLink['form'],
-            'photo_form' => $aFormPhoto['form'],
-        	
-        	'music_form' => '',
-            'video_form' => '',
+            'form' => $aForm['form']
         ));        
     }
 
@@ -83,8 +77,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
     {
 		list($sContent, $sLoadMore, $sBack) = $this->getPosts($aParams);
 
-    	$this->getCssJs();
-    	return $this->parseHtmlByName('view.html', array(
+    	return $this->parseHtmlByName('block_view.html', array(
     		'style_prefix' => $this->_oConfig->getPrefix('style'),
     		'back' => $sBack,
             'content' => $sContent,
@@ -109,8 +102,6 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 
     	$sContent = $this->getJsCode('view');
     	$sContent .= $this->getPost($aEvent, array('type' => BX_TIMELINE_TYPE_ITEM));
-
-		$this->getCssJs();
     	return $sContent;
     }
 
@@ -459,14 +450,14 @@ class BxTimelineTemplate extends BxDolModuleTemplate
         return $this->parseHtmlByName('item.html', $aTmplVars);
     }
 
-    protected function _getContent($sType, $aContent)
+    protected function _getContent($sType, $aContent, $aBrowseParams = array())
     {
     	$sMethod = '_getTmplVarsContent' . ucfirst($sType);
         if(!method_exists($this, $sMethod)) 
         	return '';
 
        	$aTmplVars = $this->$sMethod($aContent);
-       	return $this->parseHtmlByName($sType . '.html', $aTmplVars);
+       	return $this->parseHtmlByName('type_' . $sType . '.html', $aTmplVars);
     }
 
 	protected function _getComments($aComments)
@@ -549,11 +540,12 @@ class BxTimelineTemplate extends BxDolModuleTemplate
         return $aTmplVarsTimelineOwner;
     }
 
-	protected function _getTmplVarsContentText($aContent)
+	protected function _getTmplVarsContentPost($aContent)
     {
     	$sStylePrefix = $this->_oConfig->getPrefix('style');
 		$sJsObject = $this->_oConfig->getJsObject('view');
 
+		//--- Process Text and Links ---// 
 		$sUrl = isset($aContent['url']) ? $aContent['url'] : '';
 		$sTitle = isset($aContent['title']) ? bx_process_input(strip_tags($aContent['title'])) : '';
 		if(!empty($sUrl) && !empty($sTitle))
@@ -566,7 +558,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 				'content' => $sTitle
 			));
 
-    	$sText = isset($aContent['text']) ? bx_process_input(strip_tags($aContent['text'])) : '';
+		$sText = isset($aContent['text']) ? bx_process_input(strip_tags($aContent['text'])) : '';
 		$sTextMore = '';
 
 		$iMaxLength = $this->_oConfig->getCharsDisplayMax();
@@ -580,11 +572,45 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 		$sText = $this->_prepareTextForOutput($sText);
 		$sTextMore = $this->_prepareTextForOutput($sTextMore);
 
+		//--- Process Photos ---//
+		$aTmplVarsImages = array();
+		if(!empty($aContent['images']))
+			foreach($aContent['images'] as $aImage) {
+				$sImage = '';
+				if(isset($aImage['src']) && !empty($aImage['src']))
+					$sImage = $this->parseHtmlByName('bx_img.html', array(
+						'src' => $aImage['src'],
+						'bx_repeat:attrs' => array(
+							array('key' => 'class', 'value' => $sStylePrefix . '-item-image')
+						)
+					));
+	
+				if(!empty($sImage) && (isset($aImage['url']) || isset($aImage['onclick']))) {
+					$aAttrs = array();
+					if(isset($aImage['onclick']))
+						$aAttrs[] = array('key' => 'onclick', 'value' => $aImage['onclick']);
+	
+					$sImage = $this->parseHtmlByName('bx_a.html', array(
+						'href' => isset($aImage['url']) ? $aImage['url'] : 'javascript:void(0)',
+						'title' => '',
+						'bx_repeat:attrs' => $aAttrs,
+						'content' => $sImage
+					));
+				}
+	
+				$aTmplVarsImages[] = array(
+					'style_prefix' => $sStylePrefix,
+					'image' => $sImage
+				);
+			}
+
 		return array(
 			'style_prefix' => $sStylePrefix,
 			'bx_if:show_images' => array(
-				'condition' => false,
-            	'content' => array()
+				'condition' => !empty($aTmplVarsImages),
+            	'content' => array(
+    				'bx_repeat:images' => $aTmplVarsImages
+    			)
 			),
         	'bx_if:show_title' => array(
 		    	'condition' => !empty($sTitle),
@@ -609,63 +635,6 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 		        )
 			)
 		);
-    }
-
-	protected function _getTmplVarsContentLink($aContent)
-    {
-    	return $this->_getTmplVarsContentText($aContent);
-    }
-
-    protected function _getTmplVarsContentPhoto($aContent)
-    {
-    	$aTmplVarsContent = $this->_getTmplVarsContentText($aContent);
-    	if(!isset($aContent['images']) || empty($aContent['images']))
-    		return $aTmplVarsContent;
-
-		$sStylePrefix = $this->_oConfig->getPrefix('style');
-		$sTitleDefault = isset($aContent['title']) && !empty($aContent['title']) ? $aContent['title'] : "";
-
-		$aTmplVarsImages = array();
-		foreach($aContent['images'] as $aImage) {
-			$sTitle = isset($aImage['title']) && !empty($aImage['title']) ? $aImage['title'] : $sTitleDefault;
-
-			$sImage = '';
-			if(isset($aImage['src']) && !empty($aImage['src']))
-				$sImage = $this->parseHtmlByName('bx_img.html', array(
-					'src' => $aImage['src'],
-					'bx_repeat:attrs' => array(
-						array('key' => 'class', 'value' => $sStylePrefix . '-item-image'),
-						array('key' => 'title', 'value' => $sTitle)
-					)
-				));
-
-			if(!empty($sImage) && (isset($aImage['url']) || isset($aImage['onclick']))) {
-				$aAttrs = array();
-				if(isset($aImage['onclick']))
-					$aAttrs[] = array('key' => 'onclick', 'value' => $aImage['onclick']);
-
-				$sImage = $this->parseHtmlByName('bx_a.html', array(
-					'href' => isset($aImage['url']) ? $aImage['url'] : 'javascript:void(0)',
-					'title' => $sTitle,
-					'bx_repeat:attrs' => $aAttrs,
-					'content' => $sImage
-				));
-			}
-
-			$aTmplVarsImages[] = array(
-				'style_prefix' => $sStylePrefix,
-				'image' => $sImage
-			);
-		}
-
-    	return array_merge($aTmplVarsContent, array(
-    		'bx_if:show_images' => array(
-				'condition' => !empty($aTmplVarsImages),
-            	'content' => array(
-    				'bx_repeat:images' => $aTmplVarsImages
-    			)
-			)
-    	));
     }
 
 	protected function _getTmplVarsContentShare($aContent)
@@ -754,27 +723,16 @@ class BxTimelineTemplate extends BxDolModuleTemplate
     	);
 
 		switch($sType) {
-			case BX_TIMELINE_PARSE_TYPE_TEXT:
-			case BX_TIMELINE_PARSE_TYPE_LINK:
-				if(empty($aEvent['content']))
-					break;
+			case BX_TIMELINE_PARSE_TYPE_POST:
+				if(!empty($aEvent['content']))
+					$aResult['content'] = array_merge($aResult['content'], unserialize($aEvent['content']));
 
-				$aResult['content'] = array_merge($aResult['content'], unserialize($aEvent['content']));
-				break;
-
-			case BX_TIMELINE_PARSE_TYPE_PHOTO:
 				$aPhotos = $this->_oDb->getPhotos($aEvent['id']);
 				if(!is_array($aPhotos) || empty($aPhotos))
 					break;
 
-	        	$aFirst = current($aPhotos);
-	        	if($aFirst !== false) {
-	        		$aResult['content']['title'] = isset($aFirst['title']) ? $aFirst['title'] : '';
-	        		$aResult['content']['text'] = isset($aFirst['text']) ? $aFirst['text'] : '';
-	        	}
-
 				bx_import('BxDolImageTranscoder');
-	        	$oTranscoder = BxDolImageTranscoder::getObjectInstance($this->_oConfig->getObject('transcoder_preview'));
+	        	$oTranscoder = BxDolImageTranscoder::getObjectInstance($this->_oConfig->getObject('transcoder_view'));
 
 				foreach($aPhotos as $aPhoto)
 					$aResult['content']['images'][] = array(
@@ -797,7 +755,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 					$aShared = $this->_getSystemData($aContent); 
 
 				$aResult['content'] = array_merge($aContent, $aShared['content']);
-				$aResult['content']['parse_type'] = $aShared['content_type'];
+				$aResult['content']['parse_type'] = !empty($aShared['content_type']) ? $aShared['content_type'] : BX_TIMELINE_PARSE_TYPE_DEFAULT;
 				$aResult['content']['owner_id'] = $aShared['owner_id'];
 				list($aResult['content']['owner_name'], $aResult['content']['owner_url']) = $oModule->getUserInfo($aShared['owner_id']);
 

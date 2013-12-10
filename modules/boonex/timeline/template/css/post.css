@@ -1,26 +1,40 @@
-div.timeline-post {
+div.bx-tl-post {
     position: relative;
 }
-
-div.timeline-ptype-cnt {
+div.bx-tl-post-cnt {
     position: relative;
     display: block;
 }
-div.timeline-text,
-div.timeline-link,
-div.timeline-photo,
-div.timeline-video,
-div.timeline-music {
-    padding: 0px;
-    display: none;
-    border: 0px;
-}
 
-/*--- Post Type TEXT Styles ---*/
-div.timeline-text {
-    display: block;    
-}
-div.timeline-text div.input_wrapper_textarea {
+/*--- Post Form Styles ---*/
+div#bx-timeline-post div.input_wrapper_textarea {
     width: auto;
     float: none;
+}
+div#bx-timeline-post div#bx-form-element-photo,
+div#bx-timeline-post .bx-form-input-files-uploaders {
+	margin-top: 0px;
+}
+div.bx-tl-uploader-buttons {
+	position: absolute;
+	right: 0px;
+}
+a.bx-tl-uploader-button {
+	text-decoration: none;
+}
+div.bx-tl-uploader-file {
+	position: relative;
+	float: left;
+}
+div.bx-tl-uploader-file-preview {
+	overflow: hidden;
+}
+div.bx-tl-uploader-file-preview,
+div.bx-tl-uploader-file-preview img {
+	width: 100px;
+	height: 100px;
+}
+div.bx-tl-uploader-file-preview img {
+	background-position: center center;
+	background-repeat: no-repeat;
 }

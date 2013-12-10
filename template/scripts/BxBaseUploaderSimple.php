@@ -42,8 +42,7 @@ class BxBaseUploaderSimple extends BxDolUploader {
     public function getUploaderForm($isMultiple = true, $iContentId = false) {
         parent::getUploaderForm($isMultiple, $iContentId);
 
-        $oTemplate = BxDolTemplate::getInstance();
-        $sForm = $oTemplate->parseHtmlByName('uploader_form_simple.html', array(
+        $sForm = $this->_oTemplate->parseHtmlByName('uploader_form_simple.html', array(
             'form_container_id' => $this->_sFormContainerId,
             'errors_container_id' => $this->_sErrorsContainerId,
             'uploader_instance_name' => $this->getNameJsInstanceUploader(),

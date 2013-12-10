@@ -219,6 +219,9 @@
 		position: relative;
     	float: left;
     }
+    div.cmts-uploader-file-preview {
+		overflow: hidden;
+    }
     div.cmts-uploader-file-preview,
     div.cmts-uploader-file-preview img {
 		width: 100px;

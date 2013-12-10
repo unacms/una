@@ -5,12 +5,13 @@ DROP TABLE IF EXISTS `bx_timeline_handlers`;
 
 DROP TABLE IF EXISTS `bx_timeline_photos`;
 DROP TABLE IF EXISTS `bx_timeline_photos_preview`;
+DROP TABLE IF EXISTS `bx_timeline_photos_view`;
 DROP TABLE IF EXISTS `bx_timeline_photos2events`;
 
 DROP TABLE IF EXISTS `bx_timeline_comments`;
 
 DROP TABLE IF EXISTS `bx_timeline_votes`;
-DROP TABLE IF EXISTS `bx_timeline_votes_track`
+DROP TABLE IF EXISTS `bx_timeline_votes_track`;
 
 -- Forms All
 DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN  (SELECT `display_name` FROM `sys_form_displays` WHERE `module` = @sName);

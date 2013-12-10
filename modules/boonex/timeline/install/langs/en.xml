@@ -3,50 +3,19 @@
 
 	<string name="_bx_timeline"><![CDATA[Timeline]]></string>
 
-	<!--
-	<string name="_bx_timeline_form_XXX"><![CDATA[]]></string>
-	<string name="_bx_timeline_form_XXX_display_XXX"><![CDATA[]]></string>
-	<string name="_bx_timeline_form_XXX_input_sys_do_submit"><![CDATA[Submit]]></string>
-	<string name="_bx_timeline_form_XXX_input_do_submit"><![CDATA[Submit]]></string>
-	-->
-
-	<string name="_bx_timeline_form_text"><![CDATA[Write Post]]></string>
-	<string name="_bx_timeline_form_text_display_add"><![CDATA[Write Post]]></string>
-	<string name="_bx_timeline_form_text_input_sys_owner_id"><![CDATA[Owner ID]]></string>
-	<string name="_bx_timeline_form_text_input_sys_action"><![CDATA[Action]]></string>
-	<string name="_bx_timeline_form_text_input_sys_type"><![CDATA[Type]]></string>
-	<string name="_bx_timeline_form_text_input_sys_content"><![CDATA[Content]]></string>
-	<string name="_bx_timeline_form_text_input_content"><![CDATA[]]></string>
-	<string name="_bx_timeline_form_text_input_err_content"><![CDATA[The message to be posted is empty]]></string>
-	<string name="_bx_timeline_form_text_input_sys_do_submit"><![CDATA[Post]]></string>
-	<string name="_bx_timeline_form_text_input_do_submit"><![CDATA[Post]]></string>
-
-	<string name="_bx_timeline_form_link"><![CDATA[Share a Link]]></string>
-	<string name="_bx_timeline_form_link_display_add"><![CDATA[Share a Link]]></string>
-	<string name="_bx_timeline_form_link_input_sys_owner_id"><![CDATA[Owner ID]]></string>
-	<string name="_bx_timeline_form_link_input_sys_action"><![CDATA[Action]]></string>
-	<string name="_bx_timeline_form_link_input_sys_type"><![CDATA[Type]]></string>
-	<string name="_bx_timeline_form_link_input_sys_content"><![CDATA[Content]]></string>
-	<string name="_bx_timeline_form_link_input_content"><![CDATA[]]></string>
-	<string name="_bx_timeline_form_link_input_err_content"><![CDATA[The link to be posted is empty]]></string>
-	<string name="_bx_timeline_form_link_input_sys_do_submit"><![CDATA[Post]]></string>
-	<string name="_bx_timeline_form_link_input_do_submit"><![CDATA[Post]]></string>
-
-	<string name="_bx_timeline_form_photo"><![CDATA[Post an Image]]></string>
-	<string name="_bx_timeline_form_photo_display_add"><![CDATA[Post an Image]]></string>
-	<string name="_bx_timeline_form_photo_input_sys_owner_id"><![CDATA[Owner ID]]></string>
-	<string name="_bx_timeline_form_photo_input_sys_action"><![CDATA[Action]]></string>
-	<string name="_bx_timeline_form_photo_input_sys_type"><![CDATA[Type]]></string>
-	<string name="_bx_timeline_form_photo_input_sys_content"><![CDATA[Content]]></string>
-	<string name="_bx_timeline_form_photo_input_content"><![CDATA[]]></string>
-	<string name="_bx_timeline_form_photo_input_sys_do_submit"><![CDATA[Post]]></string>
-	<string name="_bx_timeline_form_photo_input_do_submit"><![CDATA[Post]]></string>
-	<string name="_bx_timeline_form_photo_input_title"><![CDATA[Title]]></string>
-	<string name="_bx_timeline_form_photo_input_err_title"><![CDATA[Title is required.]]></string>
-	<string name="_bx_timeline_form_photo_input_title"><![CDATA[Title]]></string>
-	<string name="_bx_timeline_form_photo_input_err_title"><![CDATA[Title is required.]]></string>
-	<string name="_bx_timeline_form_photo_input_description"><![CDATA[Description]]></string>
-	<string name="_bx_timeline_form_photo_input_err_description"><![CDATA[Description is required.]]></string>
+	<string name="_bx_timeline_form_post"><![CDATA[Post]]></string>
+	<string name="_bx_timeline_form_post_display_add"><![CDATA[Write Post]]></string>
+	<string name="_bx_timeline_form_post_input_sys_owner_id"><![CDATA[Owner ID]]></string>
+	<string name="_bx_timeline_form_post_input_sys_action"><![CDATA[Action]]></string>
+	<string name="_bx_timeline_form_post_input_sys_type"><![CDATA[Type]]></string>
+	<string name="_bx_timeline_form_post_input_sys_text"><![CDATA[Content]]></string>
+	<string name="_bx_timeline_form_post_input_text"><![CDATA[]]></string>
+	<string name="_bx_timeline_form_post_input_sys_link"><![CDATA[Link]]></string>
+	<string name="_bx_timeline_form_post_input_link"><![CDATA[]]></string>
+	<string name="_bx_timeline_form_post_input_sys_photo"><![CDATA[Content]]></string>
+	<string name="_bx_timeline_form_post_input_photo"><![CDATA[]]></string>
+	<string name="_bx_timeline_form_post_input_sys_do_submit"><![CDATA[Post]]></string>
+	<string name="_bx_timeline_form_post_input_do_submit"><![CDATA[Post]]></string>
 
 	<string name="_bx_timeline_acl_action_post"><![CDATA[Post]]></string>
 	<string name="_bx_timeline_acl_action_delete"><![CDATA[Delete]]></string>
@@ -108,23 +77,15 @@
 	<string name="_bx_timeline_txt_jump_to_n_year"><![CDATA[Jump to {0} year]]></string>
 	<string name="_bx_timeline_txt_jump_to_recent"><![CDATA[Jump to recent posts]]></string>
 
-	<string name="_bx_timeline_txt_wrote"><![CDATA[wrote]]></string>
-	<string name="_bx_timeline_txt_shared_link"><![CDATA[shared a link]]></string>
-	<string name="_bx_timeline_txt_added_photo"><![CDATA[added a photo]]></string>
-	<string name="_bx_timeline_txt_added_photos"><![CDATA[added photos]]></string>
-	<string name="_bx_timeline_txt_common_text"><![CDATA[post]]></string>
-	<string name="_bx_timeline_txt_common_link"><![CDATA[link]]></string>
-	<string name="_bx_timeline_txt_common_photo"><![CDATA[photo]]></string>
-
 	<string name="_bx_timeline_txt_rss_caption"><![CDATA[{0}'s timeline]]></string>
 	<string name="_bx_timeline_txt_user_added_sample"><![CDATA[{0} added {1}]]></string>
 	<string name="_bx_timeline_txt_user_shared_sample"><![CDATA[{0} shared {1}'s {2}]]></string>
-	<string name="_bx_timeline_txt_sample"><![CDATA[item]]></string>
+	<string name="_bx_timeline_txt_sample"><![CDATA[post]]></string>
 
 	<string name="_bx_timeline_txt_do_share"><![CDATA[Share]]></string>
 	<string name="_bx_timeline_txt_shared"><![CDATA[Shared {0}'s {1}.]]></string>
 	<string name="_bx_timeline_txt_err_cannot_share"><![CDATA[Cannot share. Please report.]]></string>
-	<string name="_bx_timeline_txt_msg_success_share"><![CDATA[Shared successfully.]]></string>
+	<string name="_bx_timeline_txt_msg_success_share"><![CDATA[]]></string>
 
 	<string name="_bx_timeline_txt_plus"><![CDATA[Plus]]></string>
 	

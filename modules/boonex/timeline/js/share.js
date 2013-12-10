@@ -30,7 +30,7 @@ BxTimelineShare.prototype.shareItem = function(oLink, iOwnerId, sType, sAction, 
         function(oData) {
         	$this.loadingInItem(oLink, false);
 
-        	if(oData && oData.msg != undefined)
+        	if(oData && oData.msg != undefined && oData.msg.length > 0)
                 alert(oData.msg);
 
         	if(oData && oData.counter != undefined) {

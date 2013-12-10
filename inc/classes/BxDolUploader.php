@@ -102,6 +102,7 @@ bx_import('BxDolUploaderQuery');
  *
  */
 abstract class BxDolUploader extends BxDol {
+	protected $_oTemplate;
 
     protected $_aObject; ///< object properties
     protected $_sStorageObject; ///< storage object name    
@@ -121,6 +122,8 @@ abstract class BxDolUploader extends BxDol {
      */
     protected function __construct($aObject, $sStorageObject, $sUniqId) {
         parent::__construct();
+        $this->_oTemplate = BxDolTemplate::getInstance();
+
         $this->_aObject = $aObject;
         $this->_sStorageObject = $sStorageObject;          
      
@@ -231,13 +234,11 @@ abstract class BxDolUploader extends BxDol {
      * Show uploader button.
      * @return HTML string 
      */
-    public function getUploaderButton($mixedGhostTemplate, $isMultiple = true, $aParams = array()) { 
-        $oTemplate = BxDolTemplate::getInstance();
+    public function getUploaderButton($mixedGhostTemplate, $isMultiple = true, $aParams = array()) {
+        $this->_oTemplate->addCss('uploaders.css');
 
-        $oTemplate->addCss('uploaders.css');
-
-        $oTemplate->addJs('BxDolUploader.js');
-        $oTemplate->addJsTranslation(array(
+        $this->_oTemplate->addJs('BxDolUploader.js');
+        $this->_oTemplate->addJsTranslation(array(
             '_sys_uploader_confirm_leaving_page',
             '_sys_uploader_confirm_close_popup',
             '_sys_uploader_upload_canceled',
@@ -264,7 +265,7 @@ abstract class BxDolUploader extends BxDol {
             'multiple' => $isMultiple ? 1 : 0,
         );
         $aParams = array_merge($aParamsDefault, $aParams);
-        return $oTemplate->parseHtmlByName($this->_sButtonTemplate, $aParams);
+        return $this->_oTemplate->parseHtmlByName($this->_sButtonTemplate, $aParams);
     }
 
     /**
@@ -287,9 +288,6 @@ abstract class BxDolUploader extends BxDol {
      * @return HTML or JSON string
      */
     public function getGhosts($iProfileId, $sFormat, $sImagesTranscoder = false, $iContentId = false) {
-
-        $oTemplate = BxDolTemplate::getInstance();
-
         bx_import('BxDolStorage');
         $oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
 
@@ -302,7 +300,7 @@ abstract class BxDolUploader extends BxDol {
         $a = '';
         $aGhosts = $oStorage->getGhosts($iProfileId, $iContentId);
         foreach ($aGhosts as $aFile) {
-            $sFileIcon = $oImagesTranscoder && 0 == strncmp($aFile['mime_type'], 'image/', 6) ? $oImagesTranscoder->getImageUrl($aFile['id']) : $oTemplate->getIconUrl($oStorage->getIconNameByFileName($aFile['file_name']));
+            $sFileIcon = $oImagesTranscoder && 0 == strncmp($aFile['mime_type'], 'image/', 6) ? $oImagesTranscoder->getImageUrl($aFile['id']) : $this->_oTemplate->getIconUrl($oStorage->getIconNameByFileName($aFile['file_name']));
             $a[$aFile['id']] = array (
                 'file_id' => $aFile['id'],
                 'file_name' => $aFile['file_name'],
