@@ -713,7 +713,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
     		'owner_id' => $aEvent['object_id'],
     		'content_type' => $sType,
     		'content' => array(
-    			'sample' => '_bx_timeline_txt_common_' . $sType,
+    			'sample' => '_bx_timeline_txt_sample',
     			'url' => $this->_oConfig->getItemViewUrl($aEvent)
     		), //a string to display or array to parse default template before displaying.
     		'votes' => '',
