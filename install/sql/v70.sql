@@ -454,7 +454,7 @@ SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryId, 'site_title', 'Site Name', 'Community', 'digit', '', '', '', 1),
-(@iCategoryId, 'template', 'Default Template', '', 'select', 'PHP:$aValues = get_templates_array(); $aResult = array(); foreach($aValues as $sKey => $sValue) $aResult[] = array(\'key\' => $sKey, \'value\' => $sValue); return $aResult;', 'return (strlen($arg0) > 0 && file_exists(BX_DIRECTORY_PATH_ROOT . "templates/tmpl_" . $arg0)) ? true : false;', 'Template cannot be empty and must have a valid name.', 2),
+(@iCategoryId, 'template', 'Default Template', '', 'select', 'PHP:$aValues = get_templates_array(); $aResult = array(); foreach($aValues as $sKey => $sValue) $aResult[] = array(\'key\' => $sKey, \'value\' => $sValue); return $aResult;', 'bx_import(\'BxDolModuleQuery\'); return (strlen($arg0) > 0 && BxDolModuleQuery::getInstance()->isEnabled($arg0)) ? true : false;', 'Template cannot be empty and must have a valid name.', 2),
 (@iCategoryId, 'enable_template', 'Show Template Switcher', 'on', 'checkbox', '', '', '', 3),
 (@iCategoryId, 'sys_template_cache_enable', 'Enable cache for HTML files', '', 'checkbox', '', '', '', 4),
 (@iCategoryId, 'sys_template_cache_engine', 'Template cache engine (other than FileHtml option may require custom server setup)', 'FileHtml', 'select', 'FileHtml,EAccelerator,Memcache,APC,XCache', '', '', 5),

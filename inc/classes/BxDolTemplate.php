@@ -284,8 +284,10 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
             'robots' => '',
             'css_name' => array(),
             'css_compiled' => array(),
+        	'css_system' => array(),
             'js_name' => array(),
             'js_compiled' => array(),
+        	'js_system' => array(),
             'js_options' => array(),
             'js_translations' => array(),
             'js_images' => array(),
@@ -293,7 +295,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
         );
 
         //--- Load default CSS ---//
-        $this->addCss(array(
+        $this->addCssSystem(array(
             'common.css',
             'default.css',
             'general.css',
@@ -306,7 +308,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
         ));
 
         //--- Load default JS ---//
-        $this->addJs(array(
+        $this->addJsSystem(array(
             'jquery.js',
             'jquery.migrate.js',
             'jquery.easing.js',
@@ -853,13 +855,13 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
         if(strpos($sContent , '<bx_include_css />') !== false) {
             if (!empty($this->aPage['css_name']))
                 $this->addCss($this->aPage['css_name']);
-            $sContent = str_replace('<bx_include_css />', $this->includeFiles('css'), $sContent);
+            $sContent = str_replace('<bx_include_css />', $this->includeFiles('css', true) . $this->includeFiles('css'), $sContent);
         }
 
         if(strpos($sContent , '<bx_include_js />') !== false) {
             if (!empty($this->aPage['js_name']))
                 $this->addJs($this->aPage['js_name']);
-            $sContent = str_replace('<bx_include_js />', $this->includeFiles('js'), $sContent);
+            $sContent = str_replace('<bx_include_js />', $this->includeFiles('js', true) . $this->includeFiles('js'), $sContent);
         }
 
         if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->endPage($sContent);
@@ -1056,6 +1058,19 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     function addJs($mixedFiles, $bDynamic = false) {
         return $this->_processFiles('js', 'add', $mixedFiles, $bDynamic);
     }
+
+	/**
+     * Add System JS file(s) to global output. 
+     * System JS files are the files which are attached to all pages. They will be cached separately from the others.
+     *
+     * @param mixed $mixedFiles string value represents a single JS file name. An array - array of JS file names.
+     * @param boolean $bDynamic in the dynamic mode JS file(s) are not included to global output, but are returned from the function directly.
+     * @return boolean/string result of operation.
+     */
+    function addJsSystem($mixedFiles) {
+        return $this->_processFiles('js', 'add', $mixedFiles, false, true);
+    }
+
     /**
      * Delete JS file(s) from global output.
      *
@@ -1065,6 +1080,17 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     function deleteJs($mixedFiles) {
         return $this->_processFiles('js', 'delete', $mixedFiles);
     }
+
+    /**
+     * Delete System JS file(s) from global output.
+     *
+     * @param mixed $mixedFiles string value represents a single JS file name. An array - array of JS file names.
+     * @return boolean result of operation.
+     */
+    function deleteJsSystem($mixedFiles) {
+        return $this->_processFiles('js', 'delete', $mixedFiles, false, true);
+    }
+
     /**
      * Compile JS files in one file.
      *
@@ -1143,6 +1169,18 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     function addCss($mixedFiles, $bDynamic = false) {
         return $this->_processFiles('css', 'add', $mixedFiles, $bDynamic);
     }
+
+	/**
+     * Add System CSS file(s) to global output.
+     * System CSS files are the files which are attached to all pages. They will be cached separately from the others.
+     *
+     * @param mixed $mixedFiles string value represents a single CSS file name. An array - array of CSS file names.
+     * @return boolean/string result of operation
+     */
+    function addCssSystem($mixedFiles) {
+        return $this->_processFiles('css', 'add', $mixedFiles, false, true);
+    }
+
     /**
      * Delete CSS file(s) from global output.
      *
@@ -1151,6 +1189,15 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      */
     function deleteCss($mixedFiles){
         return $this->_processFiles('css', 'delete', $mixedFiles);
+    }
+	/**
+     * Delete System CSS file(s) from global output.
+     *
+     * @param mixed $mixedFiles string value represents a single CSS file name. An array - array of CSS file names.
+     * @return boolean result of operation.
+     */
+    function deleteCssSystem($mixedFiles){
+        return $this->_processFiles('css', 'delete', $mixedFiles, false, true);
     }
     /**
      * Compile CSS files' structure(@see @import css_file_path) in one file.
@@ -1192,7 +1239,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
             $sContent = preg_replace(
                 array(
                     "'@import\s+url\s*\(\s*[\'|\"]*\s*([a-zA-Z0-9\.\/_-]+)\s*[\'|\"]*\s*\)\s*;'e",
-                    "'url\s*\(\s*[\'|\"]*\s*([a-zA-Z0-9\.\/\?\#_-]+)\s*[\'|\"]*\s*\)'e"
+                    "'url\s*\(\s*[\'|\"]*\s*([a-zA-Z0-9\.\/\?\#_=-]+)\s*[\'|\"]*\s*\)'e"
                 ),
                 array(
                     "",
@@ -1209,7 +1256,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
             );
 
             $sContent = preg_replace_callback(
-                "'url\s*\(\s*[\'|\"]*\s*([a-zA-Z0-9\.\/\?\#_-]+)\s*[\'|\"]*\s*\)'",
+                "'url\s*\(\s*[\'|\"]*\s*([a-zA-Z0-9\.\/\?\#_=-]+)\s*[\'|\"]*\s*\)'",
                 create_function('$aMatches', 'return BxDolTemplate::_callbackParseUrl("' . addslashes($sPath) . '", $aMatches);'),
                 $sContent
             );
@@ -1275,10 +1322,11 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      * @param string $sType the type of file('js' or 'css')
      * @return string the result CSS code.
      */
-    function includeFiles($sType) {
+    function includeFiles($sType, $bSystem = false) {
         $sUpcaseType = ucfirst($sType);
 
-        $aFiles = isset($this->aPage[$sType . '_compiled']) ? $this->aPage[$sType . '_compiled'] : array();
+        $sArrayKey = $sType . ($bSystem ? '_system' : '_compiled');
+        $aFiles = isset($this->aPage[$sArrayKey]) ? $this->aPage[$sArrayKey] : array();
         if(empty($aFiles) || !is_array($aFiles))
             return "";
 
@@ -1355,7 +1403,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      * @param mixed $mixedFiles string value represents a single CSS file name. An array - array of CSS file names.
      * @return boolean result of operation.
      */
-    function _processFiles($sType, $sAction, $mixedFiles, $bDynamic = false) {
+    function _processFiles($sType, $sAction, $mixedFiles, $bDynamic = false, $bSystem = false) {
         if(empty($mixedFiles))
             return $bDynamic ? "" : false;
 
@@ -1388,27 +1436,28 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
             if(empty($sPath) || empty($sUrl))
                 continue;
 
+			$sArrayKey = $sType . ($bSystem ? '_system' : '_compiled');
             switch($sAction) {
                 case 'add':
                     if($bDynamic)
                         $sResult .= $this->$sMethodWrap($sUrl);
                     else {
                         $bFound = false;
-                        foreach($this->aPage[$sType . '_compiled']  as $iKey => $aValue)
+                        foreach($this->aPage[$sArrayKey]  as $iKey => $aValue)
                             if($aValue['url'] == $sUrl && $aValue['path'] == $sPath) {
                                 $bFound = true;
                                 break;
                             }
 
                         if(!$bFound)
-                            $this->aPage[$sType . '_compiled'][] = array('url' => $sUrl, 'path' => $sPath);
+                            $this->aPage[$sArrayKey][] = array('url' => $sUrl, 'path' => $sPath);
                     }
                     break;
                 case 'delete':
                     if(!$bDynamic)
-                        foreach($this->aPage[$sType . '_compiled']  as $iKey => $aValue)
+                        foreach($this->aPage[$sArrayKey]  as $iKey => $aValue)
                             if($aValue['url'] == $sUrl) {
-                                unset($this->aPage[$sType . '_compiled'][$iKey]);
+                                unset($this->aPage[$sArrayKey][$iKey]);
                                 break;
                             }
                     break;

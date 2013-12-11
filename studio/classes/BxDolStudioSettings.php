@@ -97,12 +97,6 @@ class BxDolStudioSettings extends BxTemplStudioPage {
         if(is_array($mixedValue))
             $mixedValue = implode(',', $mixedValue);
 
-        switch($aOption['type']) {
-            case 'checkbox':
-                $mixedValue = $mixedValue === true ? 'on' : '';
-                break;
-        }
-
         return $mixedValue;
     }
 

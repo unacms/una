@@ -67,12 +67,18 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton {
 	    $sSql = "SELECT `id` FROM `sys_modules` WHERE `uri`='" . $sUri . "' || `path`='" . $sPath . "' || `db_prefix`='" . $sPrefixDb . "' || `class_prefix`='" . $sPrefixClass . "' LIMIT 1";
 	    return (int)$this->getOne($sSql) > 0;
 	}
+	function isEnabled($sUri) {
+        $sSql = $this->prepare("SELECT `id` FROM `sys_modules` WHERE `uri`=? AND `enabled`='1' LIMIT 1", $sUri);
+        return (int)$this->getOne($sSql) > 0;
+    }
+    function isEnabledByName($sName) {
+        $sSql = $this->prepare("SELECT `id` FROM `sys_modules` WHERE `name`=? AND `enabled`='1' LIMIT 1", $sName);
+        return (int)$this->getOne($sSql) > 0;
+    }
     function getModules() {
         $sSql = "SELECT `id`, `type`, `name`, `title`, `vendor`, `version`, `product_url`, `update_url`, `path`, `uri`, `class_prefix`, `db_prefix`, `lang_category`, `date`, `enabled` FROM `sys_modules` ORDER BY `title`";
         return $this->fromMemory('sys_modules', 'getAll', $sSql);
     }
-
-
     function getModulesBy($aParams = array()) {
         $sPostfix = $sWhereClause = "";
 
