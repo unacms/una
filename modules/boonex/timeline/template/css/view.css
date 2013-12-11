@@ -14,7 +14,7 @@ div.bx-tl-items {
 	width: 100%;
 }
 .bx-tl-view-sizer {
-	max-width: 30rem;
+	width: 100%;
 }
 .bx-tl-view-sizer div.bx-tl-item-ind {
 	padding: 0px;

@@ -220,6 +220,7 @@
             else
             	parseInt(2147483647 * Math.random());
 
+            var oPointerOptions = $.isWindow(e[0]) ? false : $.extend({}, {el:$(e), align:'center'}, options.pointer);
             if ($("#bx-popup-ajax-wrapper-" + id + ":visible").length) { // if popup exists and is shown - hide it
                 
                 $("#bx-popup-ajax-wrapper-" + id).dolPopupHide();
@@ -229,13 +230,13 @@
                 if (!$.isWindow(e[0]))
                     bx_menu_on(e, true);
 
-                $("#bx-popup-ajax-wrapper-" + id).dolPopup({
-                    pointer: $.isWindow(e[0]) ? false : $.extend({}, {el:$(e), align:'center'}, options.pointer),
+                $("#bx-popup-ajax-wrapper-" + id).dolPopup($.extend({}, options, {
+                    pointer: oPointerOptions,
                     onHide: function () {
                         if (!$.isWindow(e[0]))
                             bx_menu_on(e, false);
                     }
-                });
+                }));
 
             } else { // if popup doesn't exists - create new one from provided url
 
@@ -245,18 +246,26 @@
                 $('body').append('<div id="bx-popup-ajax-wrapper-' + id + '" style="display:none;">' + $('#bx-popup-loading').html() + '</div>');
                 bx_loading_content($('#bx-popup-ajax-wrapper-' + id + ' .bx-popup-content-wrapped'), true, true);
 
-                $('#bx-popup-ajax-wrapper-' + id).dolPopup({
-                    pointer: $.isWindow(e[0]) ? false : $.extend({}, {el:e, align:'center'}, options.pointer),
+                $('#bx-popup-ajax-wrapper-' + id).dolPopup($.extend({}, options, {
+                    pointer: oPointerOptions,
                     onHide: function () {
                         if (!$.isWindow(e[0]))
                             bx_menu_on(e, false);
                     }
-                });
+                }));
 
-                $('#bx-popup-ajax-wrapper-' + id).find(options.container).load(sUrlRoot + options.url, function () {
+                var sPopupId = '#bx-popup-ajax-wrapper-' + id;
+                $(sPopupId).find(options.container).load(sUrlRoot + options.url, function () {
                     $(this).bxTime();
-                    $('#bx-popup-ajax-wrapper-' + id)._dolPopupSetPosition({
-                        pointer: $.isWindow(e[0]) ? false : $.extend({}, {el:e, align:'center'}, options.pointer),
+
+                    $(sPopupId)._dolPopupSetPosition({
+                        pointer: oPointerOptions
+                    });
+
+                    $(sPopupId).find('img').load(function() {
+                    	$(sPopupId)._dolPopupSetPosition({
+                            pointer: oPointerOptions
+                        });
                     });
                 });
 

@@ -109,6 +109,23 @@ class BxTimelineTemplate extends BxDolModuleTemplate
     {
     	return $this->getViewItemBlock($iId);
     }
+    
+    public function getViewPhotoPopup($iId)
+    {
+    	$sStylePrefix = $this->_oConfig->getPrefix('style');
+    	$sJsObject = $this->_oConfig->getJsObject('view');
+
+    	bx_import('BxDolStorage');
+		$oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage'));
+
+		return $this->parseHtmlByName('bx_img.html', array(
+    		'src' => $oStorage->getFileUrlById($iId),
+        	'bx_repeat:attrs' => array(
+        		array('key' => 'onclick', 'value' => $sJsObject . '.hidePhoto(this)'),
+        		array('key' => 'class', 'value' => $sStylePrefix . '-attached-image')
+        	)
+    	));
+    }
 
     public function getPost(&$aEvent, $aBrowseParams = array())
     {
@@ -546,8 +563,8 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 		$sJsObject = $this->_oConfig->getJsObject('view');
 
 		//--- Process Text and Links ---// 
-		$sUrl = isset($aContent['url']) ? $aContent['url'] : '';
-		$sTitle = isset($aContent['title']) ? bx_process_input(strip_tags($aContent['title'])) : '';
+		$sUrl = isset($aContent['url']) ? bx_process_output($aContent['url']) : '';
+		$sTitle = isset($aContent['title']) ? bx_process_output($aContent['title']) : '';
 		if(!empty($sUrl) && !empty($sTitle))
 			$sTitle = $this->parseHtmlByName('bx_a.html', array(
 				'href' => $sUrl,
@@ -558,7 +575,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 				'content' => $sTitle
 			));
 
-		$sText = isset($aContent['text']) ? bx_process_input(strip_tags($aContent['text'])) : '';
+		$sText = isset($aContent['text']) ? strip_tags($aContent['text'], '<p><br>') : '';
 		$sTextMore = '';
 
 		$iMaxLength = $this->_oConfig->getCharsDisplayMax();
@@ -706,6 +723,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
     protected function _getCommonData(&$aEvent)
     {
     	$oModule = $this->getModule();
+    	$sJsObject = $this->_oConfig->getJsObject('view');
     	$sPrefix = $this->_oConfig->getPrefix('common_post');
 		$sType = str_replace($sPrefix, '', $aEvent['type']);
 
@@ -737,8 +755,9 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 				foreach($aPhotos as $aPhoto)
 					$aResult['content']['images'][] = array(
 						'src' => $oTranscoder->getImageUrl($aPhoto['id']),
-						'title' => isset($aPhoto['title']) ? $aPhoto['title'] : '' 
-					); 
+						'title' => isset($aPhoto['title']) ? $aPhoto['title'] : '',
+						'onclick' => $sJsObject . '.showPhoto(this, ' . $aPhoto['id'] . ')'
+					);
 				break;
 
 			case BX_TIMELINE_PARSE_TYPE_SHARE:
@@ -788,10 +807,17 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 
 	protected function _prepareTextForOutput($s)
     {
-		$s = bx_process_output($s, BX_DATA_TEXT);
-		$s = preg_replace("/((https?|ftp|news):\/\/)?([a-z]([a-z0-9\-]*\.)+(aero|arpa|biz|com|coop|edu|gov|info|int|jobs|mil|museum|name|nato|net|org|pro|travel|[a-z]{2})|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))(\/[a-z0-9_\-\.~]+)*(\/([a-z0-9_\-\.]*)(\?[a-z0-9+_\-\.%=&amp;]*)?)?(#[a-z][a-z0-9_]*)?/", '<a href="$0" target="_blank">$0</a>', $s);
+		$sHttp = '';
+		$sPattern = "/((https?|ftp|news):\/\/)?([a-z]([a-z0-9\-]*\.)+(aero|arpa|biz|com|coop|edu|gov|info|int|jobs|mil|museum|name|nato|net|org|pro|travel|[a-z]{2})|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))(\/[a-z0-9_\-\.~]+)*(\/([a-z0-9_\-\.]*)(\?[a-z0-9+_\-\.%=&amp;]*)?)?(#[a-z][a-z0-9_]*)?/";
 
-		return $s; 
+    	$aMatches = array();
+    	if(preg_match($sPattern, $s, $aMatches) && empty($aMatches[1]))
+    		$sHttp = 'http://';
+
+		$s = bx_process_output($s, BX_DATA_TEXT_MULTILINE);
+		$s = preg_replace($sPattern, '<a href="' . $sHttp . '$0" target="_blank">$0</a>', $s);
+
+		return $s;
     }
 }
 

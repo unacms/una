@@ -103,6 +103,18 @@ BxTimelineView.prototype.showItem = function(oLink, iId) {
 	return false;
 };
 
+BxTimelineView.prototype.showPhoto = function(oLink, iId) {
+    var oData = this._getDefaultData();    
+    oData['id'] = iId;
+
+    $(window).dolPopupAjax({
+		id: this._aHtmlIds['photo_popup'] + iId,
+		url: bx_append_url_params(this._sActionsUri + 'get_photo_popup/', oData)
+	});
+
+	return false;
+};
+
 BxTimelineView.prototype.commentItem = function(oLink, sSystem, iId) {
 	var $this = this;
 

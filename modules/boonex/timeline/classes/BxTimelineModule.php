@@ -199,12 +199,19 @@ class BxTimelineModule extends BxDolModule
     public function actionGetPostPopup()
     {
     	$iItemId = bx_process_input(bx_get('id'), BX_DATA_INT);
-    	if(!$iItemId) {
-    		$this->_echoResultJson(array());
-    		return;
-    	}
+    	if(!$iItemId) 
+			return;
 
     	echo $this->_oTemplate->getViewItemPopup($iItemId);
+    }
+
+	public function actionGetPhotoPopup()
+    {
+    	$iPhotoId = bx_process_input(bx_get('id'), BX_DATA_INT);
+    	if(!$iPhotoId)
+			return;
+
+    	echo $this->_oTemplate->getViewPhotoPopup($iPhotoId);
     }
 
 	public function actionGetSharedBy() {
@@ -436,7 +443,7 @@ class BxTimelineModule extends BxDolModule
         	$sText = $oForm->getCleanValue('text');
         	unset($oForm->aInputs['text']);
 
-        	$aContent['text'] = $sText;
+        	$aContent['text'] = $this->_prepareTextForSave($sText);
 
         	//--- Process Link ---//
 			$sLink = $oForm->getCleanValue('link');
@@ -780,6 +787,11 @@ class BxTimelineModule extends BxDolModule
 		$aParams['timeline'] = $iTimeline !== false ? bx_process_input($iTimeline, BX_DATA_INT) : 0;
 
 		return $aParams;
+    }
+
+	protected function _prepareTextForSave($s) 
+    {
+		return bx_process_input($s, BX_DATA_TEXT_MULTILINE);
     }
 
 	protected function _updateHandlers($sModuleUri = 'all', $bInstall = true)
