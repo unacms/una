@@ -115,6 +115,10 @@ BxTimelineView.prototype.showPhoto = function(oLink, iId) {
 	return false;
 };
 
+BxTimelineView.prototype.hidePhoto = function(oLink) {
+	$(".bx-popup-applied:visible").dolPopupHide();
+};
+
 BxTimelineView.prototype.commentItem = function(oLink, sSystem, iId) {
 	var $this = this;
 

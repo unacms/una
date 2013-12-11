@@ -112,9 +112,18 @@ div.bx-tl-shared div.bx-tl-content {
 	color: #999999;
 }
 
-
 /*+++ Item Actions +++*/
 div.bx-tl-item-actions {}
+
+
+/*--- View Image Style ---*/
+img.bx-tl-attached-image {
+	max-width: 640px;
+	max-width: 40rem;
+
+	max-height: 640px;
+	max-height: 40rem;
+}
 
 
 /*--- Empty Style ---*/
@@ -123,37 +132,6 @@ div.bx-tl-empty div.bx-msg-box-container {
 	margin-bottom: 0px;
 }
 
-/*--- Timeline Styles ---*/
-/*
-//TODO: Remove if old timeline slider is not used
-div.bx-tl-timeline {}
-div.bx-tl-timeline-date-from,
-div.bx-tl-timeline-date-to {
-	position: absolute;
-	height: 1.8em;
-	top: 0px;
-	line-height: 1.8em;
-}
-div.bx-tl-timeline-date-from {
-	left: 0px;
-}
-div.bx-tl-timeline-date-to {
-	right: 0px;
-}
-div.bx-tl-timeline .ui-slider-horizontal {
-	height: 1.1em;
-}
-div.bx-tl-timeline .ui-slider-handle {
-	width: auto;
-	height: 1.5em;
-	padding: 0px 3px;
-	line-height: 1.5em;
-	text-align: center;
-}
-div.bx-tl-timeline .ui-slider-handle:hover {
-	text-decoration: none;
-}
-*/
 
 /*--- Comments Styles ---*/
 div.bx-tl-comments {}
