@@ -53,6 +53,7 @@ class BxTimelineConfig extends BxDolModuleConfig
 	protected $_sCommonPostPrefix;
 	protected $_iPrivacyViewDefault;
 	protected $_iTimelineVisibilityThreshold;
+	protected $_aPregPatterns;
 
     /**
      * Constructor
@@ -97,7 +98,11 @@ class BxTimelineConfig extends BxDolModuleConfig
         		'item_popup' => $sHtmlPrefix . '-item-popup-',
         		'photo_popup' => $sHtmlPrefix . '-photo-popup-',
         	),
-        	'post' => array(),
+        	'post' => array(
+        		'attach_link_popup' =>  $sHtmlPrefix . '-attach-link-popup',
+        		'attach_link_form_field' => $sHtmlPrefix . '-attach-link-form_field',
+        		'attach_link_item' => $sHtmlPrefix . '-attach-link-item-',
+        	),
         	'share' => array(
         		'main' => $sHtmlPrefix . '-share-',
         		'counter' => $sHtmlPrefix . '-share-counter-',
@@ -119,6 +124,12 @@ class BxTimelineConfig extends BxDolModuleConfig
         $this->_sCommonPostPrefix = 'timeline_common_';
 		$this->_iPrivacyViewDefault = BX_DOL_PG_ALL;
 		$this->_iTimelineVisibilityThreshold = 0;
+
+		$this->_aPregPatterns = array(
+			"meta_title" => "/<title>(.*)<\/title>/",
+			"meta_description" => "/<meta[\s]+[^>]*?name[\s]?=[\s\"\']+description[\s\"\']+content[\s]?=[\s\"\']+(.*?)[\"\']+.*?>/",
+			"url" => "/((https?|ftp|news):\/\/)?([a-z]([a-z0-9\-]*\.)+(aero|arpa|biz|com|coop|edu|gov|info|int|jobs|mil|museum|name|nato|net|org|pro|travel|[a-z]{2})|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))(\/[a-z0-9_\-\.~]+)*(\/([a-z0-9_\-\.]*)(\?[a-z0-9+_\-\.%=&amp;]*)?)?(#[a-z][a-z0-9_]*)?/"
+		);
 		
     }
 
@@ -324,6 +335,11 @@ class BxTimelineConfig extends BxDolModuleConfig
     public function getPrivacyViewDefault()
     {
     	return $this->_iPrivacyViewDefault;
+    }
+
+	public function getPregPattern($sType)
+    {
+        return $this->_aPregPatterns[$sType];
     }
 
     /**

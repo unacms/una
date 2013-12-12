@@ -196,8 +196,6 @@
 
         return this.each(function() {
             var e = $(this);
-            var id;
-
             /*
              * TODO: Remove commented if modified version is working properly. Old version was commented because it doesn't work 
              * for different identical popups with different content which are applied to Window, because the first call sets 
@@ -213,24 +211,34 @@
             */
 
             // get id
+            var sPopupId = '';
+            var sIdPrefix = 'bx-popup-ajax-wrapper-';
             if(typeof(e.attr('bx-popup-id')) != 'undefined')
-            	id = e.attr('bx-popup-id');
+            	sPopupId = sIdPrefix + e.attr('bx-popup-id');
             else if(typeof(options.id) != 'undefined')
-            	id = options.id;
+            	switch(typeof(options.id)) {
+            		case 'string':
+            			sPopupId = sIdPrefix + options.id;
+            			break;
+
+            		case 'object':
+            			sPopupId = typeof(options.id.force) != 'undefined' && options.id.force ? options.id.value : sIdPrefix + options.id.value;
+            			break;
+            	}
             else
-            	parseInt(2147483647 * Math.random());
+            	sPopupId = sIdPrefix + parseInt(2147483647 * Math.random());
 
             var oPointerOptions = $.isWindow(e[0]) ? false : $.extend({}, {el:$(e), align:'center'}, options.pointer);
-            if ($("#bx-popup-ajax-wrapper-" + id + ":visible").length) { // if popup exists and is shown - hide it
+            if ($('#' + sPopupId + ':visible').length) { // if popup exists and is shown - hide it
                 
-                $("#bx-popup-ajax-wrapper-" + id).dolPopupHide();
+                $('#' + sPopupId).dolPopupHide();
 
-            } else if ($("#bx-popup-ajax-wrapper-" + id).length) { // if popup exists but not shown - unhide it
+            } else if ($('#' + sPopupId).length) { // if popup exists but not shown - unhide it
 
                 if (!$.isWindow(e[0]))
                     bx_menu_on(e, true);
 
-                $("#bx-popup-ajax-wrapper-" + id).dolPopup($.extend({}, options, {
+                $('#' + sPopupId).dolPopup($.extend({}, options, {
                     pointer: oPointerOptions,
                     onHide: function () {
                         if (!$.isWindow(e[0]))
@@ -243,10 +251,10 @@
                 if (!$.isWindow(e[0]))
                     bx_menu_on(e, true);
 
-                $('body').append('<div id="bx-popup-ajax-wrapper-' + id + '" style="display:none;">' + $('#bx-popup-loading').html() + '</div>');
-                bx_loading_content($('#bx-popup-ajax-wrapper-' + id + ' .bx-popup-content-wrapped'), true, true);
+                $('body').append('<div id="' + sPopupId + '" style="display:none;">' + $('#bx-popup-loading').html() + '</div>');
+                bx_loading_content($('#' + sPopupId + ' .bx-popup-content-wrapped'), true, true);
 
-                $('#bx-popup-ajax-wrapper-' + id).dolPopup($.extend({}, options, {
+                $('#' + sPopupId).dolPopup($.extend({}, options, {
                     pointer: oPointerOptions,
                     onHide: function () {
                         if (!$.isWindow(e[0]))
@@ -254,23 +262,20 @@
                     }
                 }));
 
-                var sPopupId = '#bx-popup-ajax-wrapper-' + id;
-                $(sPopupId).find(options.container).load(sUrlRoot + options.url, function () {
+                $('#' + sPopupId).find(options.container).load(sUrlRoot + options.url, function () {
                     $(this).bxTime();
 
-                    $(sPopupId)._dolPopupSetPosition({
+                    $('#' + sPopupId)._dolPopupSetPosition({
                         pointer: oPointerOptions
                     });
 
-                    $(sPopupId).find('img').load(function() {
-                    	$(sPopupId)._dolPopupSetPosition({
+                    $('#' + sPopupId).find('img').load(function() {
+                    	$('#' + sPopupId)._dolPopupSetPosition({
                             pointer: oPointerOptions
                         });
                     });
                 });
-
             }
-
         });
     };
 

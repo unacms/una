@@ -80,23 +80,34 @@ div.bx-tl-owner-avatar {
 	left: 0px;
 }
 
-/*+++ Item Image +++*/
-div.bx-tl-item-image {
-	margin-left: -20px;
-	margin-right: -20px;
-	text-align: center;
-	overflow: hidden;
-}
-div.bx-tl-item-image img {
-	max-width: 319px;
-	max-height: 319px;
-}
 
 /*+++ Item Text +++*/
 div.bx-tl-item-text {}
 span.bx-tl-content-see-more a {
 	font-weight: bold;
 }
+
+/*+++ Item Link +++*/
+div.bx-tl-item-links {}
+
+div.bx-tl-item-link {
+	
+}
+
+/*+++ Item Image +++*/
+div.bx-tl-item-images {
+	margin-left: -20px;
+	margin-right: -20px;
+}
+div.bx-tl-item-image {
+	text-align: center;
+	overflow: hidden;
+}
+div.bx-tl-item-image img {
+	max-width: 318px;
+	max-height: 318px;
+}
+
 
 /*+++ Item Shared +++*/
 div.bx-tl-shared div.bx-tl-item-text {

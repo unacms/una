@@ -410,6 +410,59 @@ class BxTimelineTemplate extends BxDolModuleTemplate
     	return sprintf($sFormat, $sJsObject, $iOwnerId, $sType, $sAction, (int)$iObjectId);
     }
 
+    public function getAttachLinkForm()
+    {
+    	$sStylePrefix = $this->_oConfig->getPrefix('style');
+    	$sJsObject = $this->_oConfig->getJsObject('post');
+
+    	$aForm = $this->getModule()->getFormAttachLink();
+
+    	return $this->parseHtmlByName('attach_link_form.html', array(
+    		'style_prefix' => $sStylePrefix,
+    		'js_object' => $sJsObject,
+    		'form_id' => $aForm['form_id'],
+			'form' => $aForm['form'],
+    	));
+    }
+
+    public function getAttachLinkField($iUserId)
+    {
+    	$sStylePrefix = $this->_oConfig->getPrefix('style');
+    	$sJsObject = $this->_oConfig->getJsObject('post');
+
+    	$aLinks = $this->_oDb->getUnusedLinks($iUserId);
+
+    	$sLinks = '';
+    	foreach($aLinks as $aLink)
+    		$sLinks .= $this->getAttachLinkItem($iUserId, $aLink);
+
+    	return $this->parsePageByName('attach_link_form_field.html', array(
+    		'html_id' => $this->_oConfig->getHtmlIds('post', 'attach_link_form_field'),
+    		'style_prefix' => $sStylePrefix,
+    		'links' => $sLinks
+    	));
+    }
+
+    public function getAttachLinkItem($iUserId, $mixedLink)
+    {
+    	$aLink = is_array($mixedLink) ? $mixedLink : $this->_oDb->getUnusedLinks($iUserId, (int)$mixedLink); 
+		if(empty($aLink) || !is_array($aLink))
+			return '';
+
+		$sStylePrefix = $this->_oConfig->getPrefix('style');
+    	$sJsObject = $this->_oConfig->getJsObject('post');
+    	$sLinkIdPrefix = $this->_oConfig->getHtmlIds('post', 'attach_link_item');
+
+		return $this->parsePageByName('attach_link_item.html', array(
+			'html_id' => $sLinkIdPrefix . $aLink['id'],
+			'style_prefix' => $sStylePrefix,
+    		'js_object' => $sJsObject,
+    		'id' => $aLink['id'],
+    		'url' => $aLink['url'],
+    		'title' => $aLink['title'],
+		));
+    }
+
 	protected function _getPost($sType, $aEvent, $aBrowseParams = array())
     {
 		$oModule = $this->getModule();
@@ -562,7 +615,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
     	$sStylePrefix = $this->_oConfig->getPrefix('style');
 		$sJsObject = $this->_oConfig->getJsObject('view');
 
-		//--- Process Text and Links ---// 
+		//--- Process Text ---// 
 		$sUrl = isset($aContent['url']) ? bx_process_output($aContent['url']) : '';
 		$sTitle = isset($aContent['title']) ? bx_process_output($aContent['title']) : '';
 		if(!empty($sUrl) && !empty($sTitle))
@@ -588,6 +641,23 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 
 		$sText = $this->_prepareTextForOutput($sText);
 		$sTextMore = $this->_prepareTextForOutput($sTextMore);
+
+		//--- Process Links ---//
+		$aTmplVarsLinks = array();
+		if(!empty($aContent['links']))
+			foreach($aContent['links'] as $aLink)
+				$aTmplVarsLinks[] = array(
+					'style_prefix' => $sStylePrefix,
+					'url' => $aLink['url'],
+					'title' => $aLink['title'],
+					'bx_if:show_text' => array(
+						'condition' => !empty($aLink['text']),
+						'content' => array(
+							'style_prefix' => $sStylePrefix,
+							'text' => $aLink['text']
+						)
+					)
+				);
 
 		//--- Process Photos ---//
 		$aTmplVarsImages = array();
@@ -623,12 +693,6 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 
 		return array(
 			'style_prefix' => $sStylePrefix,
-			'bx_if:show_images' => array(
-				'condition' => !empty($aTmplVarsImages),
-            	'content' => array(
-    				'bx_repeat:images' => $aTmplVarsImages
-    			)
-			),
         	'bx_if:show_title' => array(
 		    	'condition' => !empty($sTitle),
             	'content' => array(
@@ -650,6 +714,20 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 				        )
 					),
 		        )
+			),
+			'bx_if:show_links' => array(
+				'condition' => !empty($aTmplVarsLinks),
+            	'content' => array(
+					'style_prefix' => $sStylePrefix,
+    				'bx_repeat:links' => $aTmplVarsLinks
+    			)
+			),
+			'bx_if:show_images' => array(
+				'condition' => !empty($aTmplVarsImages),
+            	'content' => array(
+					'style_prefix' => $sStylePrefix,
+    				'bx_repeat:images' => $aTmplVarsImages
+    			)
 			)
 		);
     }
@@ -745,19 +823,27 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 				if(!empty($aEvent['content']))
 					$aResult['content'] = array_merge($aResult['content'], unserialize($aEvent['content']));
 
+				$aLinks = $this->_oDb->getLinks($aEvent['id']);
+				if(!empty($aLinks) && is_array($aLinks))
+					foreach($aLinks as $aLink)
+						$aResult['content']['links'][] = array(
+							'url' => $aLink['url'],
+							'title' => $aLink['title'],
+							'text' => $aLink['text']
+						);
+
 				$aPhotos = $this->_oDb->getPhotos($aEvent['id']);
-				if(!is_array($aPhotos) || empty($aPhotos))
-					break;
+				if(!empty($aPhotos) && is_array($aPhotos)) {
+					bx_import('BxDolImageTranscoder');
+		        	$oTranscoder = BxDolImageTranscoder::getObjectInstance($this->_oConfig->getObject('transcoder_view'));
 
-				bx_import('BxDolImageTranscoder');
-	        	$oTranscoder = BxDolImageTranscoder::getObjectInstance($this->_oConfig->getObject('transcoder_view'));
-
-				foreach($aPhotos as $aPhoto)
-					$aResult['content']['images'][] = array(
-						'src' => $oTranscoder->getImageUrl($aPhoto['id']),
-						'title' => isset($aPhoto['title']) ? $aPhoto['title'] : '',
-						'onclick' => $sJsObject . '.showPhoto(this, ' . $aPhoto['id'] . ')'
-					);
+					foreach($aPhotos as $aPhoto)
+						$aResult['content']['images'][] = array(
+							'src' => $oTranscoder->getImageUrl($aPhoto['id']),
+							'title' => '',
+							'onclick' => $sJsObject . '.showPhoto(this, ' . $aPhoto['id'] . ')'
+						);
+				}
 				break;
 
 			case BX_TIMELINE_PARSE_TYPE_SHARE:
@@ -808,7 +894,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 	protected function _prepareTextForOutput($s)
     {
 		$sHttp = '';
-		$sPattern = "/((https?|ftp|news):\/\/)?([a-z]([a-z0-9\-]*\.)+(aero|arpa|biz|com|coop|edu|gov|info|int|jobs|mil|museum|name|nato|net|org|pro|travel|[a-z]{2})|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))(\/[a-z0-9_\-\.~]+)*(\/([a-z0-9_\-\.]*)(\?[a-z0-9+_\-\.%=&amp;]*)?)?(#[a-z][a-z0-9_]*)?/";
+		$sPattern = $this->_oConfig->getPregPattern('url');
 
     	$aMatches = array();
     	if(preg_match($sPattern, $s, $aMatches) && empty($aMatches[1]))

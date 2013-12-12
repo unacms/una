@@ -328,9 +328,9 @@ class BxTimelineDb extends BxDolModuleDb
     }
 
 	//--- Photo uploader related methods ---//
-	public function savePhoto($iEventId, $iPhId, $sPhTitle = '', $sPhText = '')
+	public function savePhoto($iEventId, $iPhId)
 	{
-		$sQuery = $this->prepare("INSERT INTO `" . $this->_sPrefix . "photos2events` SET `event_id`=?, `photo_id`=?, `title`=?, `text`=?", $iEventId, $iPhId, $sPhTitle, $sPhText);
+		$sQuery = $this->prepare("INSERT INTO `" . $this->_sPrefix . "photos2events` SET `event_id`=?, `photo_id`=?", $iEventId, $iPhId);
 		return (int)$this->query($sQuery) > 0;
 	}
 
@@ -343,12 +343,74 @@ class BxTimelineDb extends BxDolModuleDb
 	public function getPhotos($iEventId)
 	{
 		$sQuery = $this->prepare("SELECT
-				 `tpe`.`photo_id` AS `id`,
-				 `tpe`.`title` AS `title`,
-				 `tpe`.`text` AS `text`
+				 `tpe`.`photo_id` AS `id`
 			FROM `" . $this->_sPrefix . "photos2events` AS `tpe` 
 			LEFT JOIN `" . $this->_sPrefix . "photos` AS `tp` ON `tpe`.`photo_id` = `tp`.`id` 
 			WHERE `tpe`.`event_id` = ?", $iEventId);
+
+		return $this->getAll($sQuery);
+	}
+
+	//--- Link attach related methods ---//
+	public function getUnusedLinks($iUserId, $iLinkId = 0)
+	{
+		$sMethod = 'getAll';
+
+		$sWhereAddon = '';
+		if(!empty($iLinkId)) {
+			$sMethod = 'getRow';
+			$sWhereAddon = $this->prepare(" AND `tl`.`id`=?", $iLinkId);
+		}
+
+		$sQuery = $this->prepare("SELECT 
+				`tl`.`id` AS `id`,
+				`tl`.`profile_id` AS `profile_id`,
+				`tl`.`url` AS `url`,
+				`tl`.`title` AS `title`,
+				`tl`.`text` AS `text`,
+				`tl`.`added` AS `added`
+			FROM `" . $this->_sPrefix . "links` AS `tl`
+			LEFT JOIN `" . $this->_sPrefix . "links2events` AS `tle` ON `tl`.`id`=`tle`.`link_id`
+			WHERE `tl`.`profile_id`=? AND ISNULL(`tle`.`event_id`)" . $sWhereAddon . "
+			ORDER BY `tl`.`added` DESC", $iUserId);
+
+		return $this->$sMethod($sQuery);
+	}
+
+	public function deleteUnusedLinks($iUserId, $iLinkId = 0)
+	{
+		$sWhereAddon = '';
+		if(!empty($iLinkId))
+			$sWhereAddon = $this->prepare(" AND `id`=?", $iLinkId);
+
+		$sQuery = $this->prepare("DELETE FROM `" . $this->_sPrefix . "links` WHERE `profile_id`=?" . $sWhereAddon, $iUserId);
+		return $this->query($sQuery);
+	}
+
+	public function saveLink($iEventId, $iLinkId)
+	{
+		$sQuery = $this->prepare("INSERT INTO `" . $this->_sPrefix . "links2events` SET `event_id`=?, `link_id`=?", $iEventId, $iLinkId);
+		return (int)$this->query($sQuery) > 0;
+	}
+
+	public function deleteLinks($iEventId)
+	{
+		$sQuery = $this->prepare("DELETE FROM `tl`, `tle` USING `" . $this->_sPrefix . "links` AS `tl` LEFT JOIN `" . $this->_sPrefix . "links2events` AS `tle` ON `tl`.`id`=`tle`.`link_id` WHERE `tle`.`event_id` = ?", $iEventId);
+		return (int)$this->query($sQuery) > 0;
+	}
+
+	public function getLinks($iEventId)
+	{
+		$sQuery = $this->prepare("SELECT 
+				`tl`.`id` AS `id`,
+				`tl`.`profile_id` AS `profile_id`,
+				`tl`.`url` AS `url`,
+				`tl`.`title` AS `title`,
+				`tl`.`text` AS `text`,
+				`tl`.`added` AS `added`
+			FROM `" . $this->_sPrefix . "links` AS `tl`
+			LEFT JOIN `" . $this->_sPrefix . "links2events` AS `tle` ON `tl`.`id`=`tle`.`link_id`
+			WHERE `tle`.`event_id`=?", $iEventId);
 
 		return $this->getAll($sQuery);
 	}

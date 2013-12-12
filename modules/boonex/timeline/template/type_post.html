@@ -1,8 +1,3 @@
-<bx_if:show_images>
-	<bx_repeat:images>
-   		<div class="__style_prefix__-item-image bx-def-margin-bottom">__image__</div>
-   	</bx_repeat:images>
-</bx_if:show_images>
 <div class="__style_prefix__-item-text">
 	<bx_if:show_title>
 		<div class="__style_prefix__-title bx-def-margin-sec-bottom bx-def-font-large">__title__</div>
@@ -13,3 +8,24 @@
 		</div>
 	</bx_if:show_content>
 </div>
+<bx_if:show_links>
+	<div class="__style_prefix__-item-links bx-def-margin-top">
+		<bx_repeat:links>
+	   		<div class="__style_prefix__-item-link bx-def-margin-top-auto bx-def-padding-sec bx-def-border">
+	   			<div class="__style_prefix__-il-title">
+	   				<a href="__url__">__title__</a>
+	   			</div>
+	   			<bx_if:show_text>
+	   				<div class="__style_prefix__-il-text bx-def-font-small bx-def-font-grayed">__text__</div>
+	   			</bx_if:show_text>
+	   		</div>
+	   	</bx_repeat:links>
+	</div>
+</bx_if:show_links>
+<bx_if:show_images>
+	<div class="__style_prefix__-item-images bx-def-margin-top">
+		<bx_repeat:images>
+	   		<div class="__style_prefix__-item-image bx-def-margin-top-auto">__image__</div>
+	   	</bx_repeat:images>
+	</div>
+</bx_if:show_images>

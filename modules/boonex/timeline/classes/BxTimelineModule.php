@@ -214,6 +214,35 @@ class BxTimelineModule extends BxDolModule
     	echo $this->_oTemplate->getViewPhotoPopup($iPhotoId);
     }
 
+    public function actionAddAttachLink()
+    {
+    	$aResult = $this->getFormAttachLink();
+
+    	$this->_echoResultJson($aResult);
+    }
+
+    public function actionDeleteAttachLink()
+    {
+    	$iLinkId = bx_process_input(bx_get('id'), BX_DATA_INT);
+    	if(empty($iLinkId)) {
+            $this->_echoResultJson(array());
+            return;
+        }
+
+        $aResult = array();
+        if($this->_oDb->deleteUnusedLinks($this->getUserId(), $iLinkId))
+        	$aResult = array('code' => 0);
+        else 
+        	$aResult = array('code' => 1, 'msg' => _t('_bx_timeline_form_post_input_link_err_delete'));
+
+		$this->_echoResultJson($aResult);
+    }
+
+	public function actionGetAttachLinkForm()
+    {
+    	echo $this->_oTemplate->getAttachLinkForm();
+    }
+
 	public function actionGetSharedBy() {
         $iSharedId = bx_process_input(bx_get('id'), BX_DATA_INT);
 
@@ -402,12 +431,48 @@ class BxTimelineModule extends BxDolModule
     /*
      * COMMON METHODS 
      */
+    public function getFormAttachLink()
+    {
+    	$iUserId = $this->getUserId();
+
+    	bx_import('BxDolForm');
+        $oForm = BxDolForm::getObjectInstance('mod_tml_attach_link', 'mod_tml_attach_link_add');
+        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'add_attach_link/';
+        $oForm->aInputs['url']['checker']['params']['preg'] = $this->_oConfig->getPregPattern('url');
+
+        $oForm->initChecker();
+        if($oForm->isSubmittedAndValid()) {
+			$sLink = $oForm->getCleanValue('url');
+        	$sLinkContent = bx_file_get_contents($sLink);
+
+        	$aMatch = array();
+	        preg_match($this->_oConfig->getPregPattern('meta_title'), $sLinkContent, $aMatch);
+	        $sLinkTitle = $aMatch ? $aMatch[1] : '';
+
+	        preg_match($this->_oConfig->getPregPattern('meta_description'), $sLinkContent, $aMatch);
+	        $sLinkDescription = $aMatch ? $aMatch[1] : '';
+
+			$iId = (int)$oForm->insert(array('profile_id' => $iUserId, 'title' => $sLinkTitle, 'text' => $sLinkDescription, 'added' => time()));
+            if(!empty($iId))
+            	return array('item' => $this->_oTemplate->getAttachLinkItem($iUserId, $iId));
+
+			return array('msg' => _t('_adm_nav_err_menus_create'));
+        }
+
+        return array('form' => $oForm->getCode(), 'form_id' => $oForm->id);
+    }
+
 	public function getFormPost()
     {
+    	$iUserId = $this->getUserId();
+
     	bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance('mod_tml_post', 'mod_tml_post_add');
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'post/';
         $oForm->aInputs['owner_id']['value'] = $this->_iOwnerId;
+
+        if(isset($oForm->aInputs['link']))
+        	$oForm->aInputs['link']['content'] = $this->_oTemplate->getAttachLinkField($iUserId);
 
 	    if(isset($oForm->aInputs['photo'])) {
 	    	$aFormNested = array(
@@ -424,13 +489,12 @@ class BxTimelineModule extends BxDolModule
 	        $oForm->aInputs['photo']['images_transcoder'] = $this->_oConfig->getObject('transcoder_preview');
 	        $oForm->aInputs['photo']['uploaders'] = $this->_oConfig->getUploaders('image');
 	        $oForm->aInputs['photo']['upload_buttons_titles'] = array('Simple' => 'camera');
-	        $oForm->aInputs['photo']['multiple'] = false;
+	        $oForm->aInputs['photo']['multiple'] = true;
 	        $oForm->aInputs['photo']['ghost_template'] = $oFormNested;
 	    }
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
-        	$iUserId = $this->getUserId();
         	list($sUserName) = $this->getUserInfo($iUserId);
 
         	$sType = $oForm->getCleanValue('type');
@@ -446,33 +510,15 @@ class BxTimelineModule extends BxDolModule
         	$aContent['text'] = $this->_prepareTextForSave($sText);
 
         	//--- Process Link ---//
-			$sLink = $oForm->getCleanValue('link');
-			unset($oForm->aInputs['link']);
-
-			if(!empty($sLink)) {
-	        	$sLinkContent = bx_file_get_contents($sLink);
-	
-	        	$aMatch = array();
-		        preg_match("/<title>(.*)<\/title>/", $sLinkContent, $aMatch);
-		        $sLinkTitle = $aMatch ? $aMatch[1] : '';
-		
-		        preg_match("/<meta.*name[='\" ]+description['\"].*content[='\" ]+(.*)['\"].*><\/meta>/", $sLinkContent, $aMatch);
-		        $sLinkDescription = $aMatch ? $aMatch[1] : '';
-	
-		        $aContent['url'] = strpos($sLink, 'http://') === false && strpos($sLink, 'https://') === false ? 'http://' . $sLink : $sLink;
-		        $aContent['title'] = $sLinkTitle;
-		        if(empty($aContent['text']) && !empty($sLinkDescription))
-					$aContent['text'] = $sLinkDescription;
-			}
+			$aLinkIds = $oForm->getCleanValue('link');
+        	unset($oForm->aInputs['link']);
 
 			//--- Process Photos ---//
-			$aPhIds = $oForm->getCleanValue('photo');
+			$aPhotoIds = $oForm->getCleanValue('photo');
         	unset($oForm->aInputs['photo']);
 
         	$sTitle = _t('_bx_timeline_txt_user_added_sample', $sUserName, _t('_bx_timeline_txt_sample'));
-			$sDescription = $aContent['text'];
-			if(empty($sDescription) && !empty($aContent['link_text']))
-				$sDescription = $aContent['link_text'];
+			$sDescription = !empty($aContent['text']) ? $aContent['text'] : '';
 
         	$iId = $oForm->insert(array(
         		'object_id' => $iUserId,
@@ -484,14 +530,17 @@ class BxTimelineModule extends BxDolModule
 			));
 
 			if(!empty($iId)) {
-				if(!empty($aPhIds) && is_array($aPhIds)) {
+				if(!empty($aLinkIds) && is_array($aLinkIds))
+					foreach($aLinkIds as $iLinkId) 
+						$this->_oDb->saveLink($iId, $iLinkId);
+
+				if(!empty($aPhotoIds) && is_array($aPhotoIds)) {
 					bx_import('BxDolStorage');
 					$oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage'));
 
-					$iPhIds = count($aPhIds);
-					for($i = 0; $i < $iPhIds; $i++) 
-						if($this->_oDb->savePhoto($iId, $aPhIds[$i]))
-							$oStorage->afterUploadCleanup($aPhIds[$i], $iUserId);
+					foreach($aPhotoIds as $iPhotoId) 
+						if($this->_oDb->savePhoto($iId, $iPhotoId))
+							$oStorage->afterUploadCleanup($iPhotoId, $iUserId);
 				}
 
 				$this->onPost($iId);
@@ -701,6 +750,8 @@ class BxTimelineModule extends BxDolModule
 			$this->_oDb->deletePhotos($aEvent['id']);
 		}
 
+		$this->_oDb->deleteLinks($aEvent['id']);
+		
 		if($aEvent['type'] == $this->_oConfig->getPrefix('common_post') . BX_TIMELINE_PARSE_TYPE_SHARE) {
 			$this->_oDb->deleteShareTrack($aEvent['id']);
 
