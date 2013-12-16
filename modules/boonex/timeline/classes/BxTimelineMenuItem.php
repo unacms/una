@@ -63,8 +63,6 @@ class BxTimelineMenuItem extends BxTemplMenu {
     	$this->addMarkers(array(
     		'content_id' => $aEvent['id'],
     		'share_onclick' => $this->_oModule->serviceGetShareJsClick($iOwnerId, $sType, $sAction, $iObjectId),
-    		'comment_onclick' => $this->_oModule->_oConfig->getJsObject('view') . ".commentItem(this, '" . $sCommentsSystem . "', " . $aEvent['id'] . ")",
-    		'comment_count' => (int)$this->_aEvent['comments']['count'] > 0 ? (int)$this->_aEvent['comments']['count'] : '',
     		'vote_onclick' => $sVotesOnclick
 		));    	
     }
@@ -121,6 +119,19 @@ class BxTimelineMenuItem extends BxTemplMenu {
 
     	foreach($aItems as $iKey => $aItem)
     		switch($aItem['name']) {
+    			case 'item-comment':
+    				if(isset($this->_aEvent['comments']) && is_array($this->_aEvent['comments']) && isset($this->_aEvent['comments']['system'])) {
+			    		$aItems[$iKey]['addon'] = $this->_oModule->_oTemplate->parseHtmlByName('bx_a.html', array(
+			    			'href' => 'javascript:void(0)',
+			    			'title' => _t('_bx_timeline_menu_item_title_item_comment'),
+				    		'bx_repeat:attrs' => array(
+		    					array('key' => 'onclick', 'value' => "javascript:" . $this->_oModule->_oConfig->getJsObject('view') . ".commentItem(this, '" . $this->_aEvent['comments']['system'] . "', " . $this->_aEvent['id'] . ")")
+		    				),
+			    			'content' => (int)$this->_aEvent['comments']['count'] > 0 ? (int)$this->_aEvent['comments']['count'] : ''
+			    		));
+			    	}
+    				break;
+
     			case 'item-vote':
     				if(isset($this->_aEvent['votes']) && is_array($this->_aEvent['votes']) && isset($this->_aEvent['votes']['system'])) {
 			    		$oVote = $this->_oModule->getVoteObject($this->_aEvent['votes']['system'], $this->_aEvent['votes']['object_id']);

@@ -381,11 +381,14 @@ class BxTimelineTemplate extends BxDolModuleTemplate
     	$aEvent = $this->_oDb->getShared($sType, $sAction, $iObjectId);
 
     	return $this->parseHtmlByName('share_counter.html', array(
-    		'style_prefix' => $sStylePrefix,
-    		'js_object' => $sJsObject,
-			'html_id_counter' => $this->_oConfig->getHtmlIds('share', 'counter') . $aEvent['id'],
-    		'id' => $aEvent['id'],
-			'counter' => !empty($aEvent['shares']) && (int)$aEvent['shares'] > 0 ? $aEvent['shares'] : ''
+    		'href' => 'javascript:void(0)',
+    		'title' => _t('_bx_timeline_txt_shared_by'),
+    		'bx_repeat:attrs' => array(
+    			array('key' => 'id', 'value' => $this->_oConfig->getHtmlIds('share', 'counter') . $aEvent['id']),
+    			array('key' => 'class', 'value' => $sStylePrefix . '-counter'),
+				array('key' => 'onclick', 'value' => 'javascript:' . $sJsObject . '.toggleByPopup(this, ' . $aEvent['id'] . ')')
+			),
+	    	'content' => !empty($aEvent['shares']) && (int)$aEvent['shares'] > 0 ? $aEvent['shares'] : ''
     	));
     }
 
