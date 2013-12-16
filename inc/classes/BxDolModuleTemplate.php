@@ -38,6 +38,10 @@ class BxDolModuleTemplate extends BxDolTemplate {
         return $this->_addFiles(BxDolTemplate::getInstance(), 'addJs', 'addLocationJs', 'removeLocationJs', 'js/', $mixedFiles, $bDynamic, true);
     }
 
+    function addJsTranslation($mixedKey) {
+    	BxDolTemplate::getInstance()->addJsTranslation($mixedKey);
+    }
+
     function addStudioCss($mixedFiles, $bDynamic = false, $bSearchInModule = true) {
         bx_import('BxDolStudioTemplate');
         return $this->_addFiles(BxDolStudioTemplate::getInstance(), 'addCss', 'addLocation', 'removeLocation', '', $mixedFiles, $bDynamic, $bSearchInModule);

@@ -207,11 +207,13 @@ class BxTimelineModule extends BxDolModule
 
 	public function actionGetPhotoPopup()
     {
-    	$iPhotoId = bx_process_input(bx_get('id'), BX_DATA_INT);
-    	if(!$iPhotoId)
+    	$iEventId = bx_process_input(bx_get('event_id'), BX_DATA_INT);
+    	$iStart = bx_process_input(bx_get('start'), BX_DATA_INT);
+
+    	if(!$iEventId)
 			return;
 
-    	echo $this->_oTemplate->getViewPhotoPopup($iPhotoId);
+    	echo $this->_oTemplate->getPhotoPopup($iEventId, $iStart);
     }
 
     public function actionAddAttachLink()
@@ -403,7 +405,7 @@ class BxTimelineModule extends BxDolModule
     	if(!$iItemId)
     		return array();
 
-    	return array('content' => $this->_oTemplate->getViewItemBlock($iItemId));
+    	return array('content' => $this->_oTemplate->getItemBlock($iItemId));
     }
 
     public function serviceGetShareElementBlock($iOwnerId, $sType, $sAction, $iObjectId, $aParams = array())
@@ -740,12 +742,12 @@ class BxTimelineModule extends BxDolModule
     public function onDelete($aEvent)
     {
 		$aPhotos = $this->_oDb->getPhotos($aEvent['id']);
-		if(is_array($aPhotos) && !empty($aPhotos)) {
+		if(!empty($aPhotos) && is_array($aPhotos)) {
 			bx_import('BxDolStorage');
 			$oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage'));
 
-			foreach($aPhotos as $aPhoto)
-				$oStorage->deleteFile($aPhoto['id']);
+			foreach($aPhotos as $iPhotoId)
+				$oStorage->deleteFile($iPhotoId);
 
 			$this->_oDb->deletePhotos($aEvent['id']);
 		}

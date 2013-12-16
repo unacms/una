@@ -71,6 +71,11 @@ BxTimelineMain.prototype.loadingInBlock = function(e, bShow) {
 	bx_loading(oParent, bShow);
 };
 
+BxTimelineMain.prototype.loadingInPopup = function(e, bShow) {
+	var oParent = $(e).length ? $(e).parents('.bx-popup-content:first') : $('body'); 
+	bx_loading(oParent, bShow);
+};
+
 BxTimelineMain.prototype._loading = function(e, bShow) {
 	var oParent = $(e).length ? $(e) : $('body'); 
 	bx_loading(oParent, bShow);
@@ -78,6 +83,5 @@ BxTimelineMain.prototype._loading = function(e, bShow) {
 
 BxTimelineMain.prototype._getDefaultData = function () {
 	var oDate = new Date();
-	this._oRequestParams._t = oDate.getTime();
-    return this._oRequestParams;
+    return jQuery.extend({}, this._oRequestParams, {_t:oDate.getTime()});
 };

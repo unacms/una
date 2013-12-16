@@ -94,7 +94,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
         ));
     }
 
-    public function getViewItemBlock($iId)
+    public function getItemBlock($iId)
     {
     	$aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
     	if(empty($aEvent))
@@ -105,24 +105,44 @@ class BxTimelineTemplate extends BxDolModuleTemplate
     	return $sContent;
     }
 
-    public function getViewItemPopup($iId)
+    public function getItemPopup($iId)
     {
-    	return $this->getViewItemBlock($iId);
+    	return $this->getItemBlock($iId);
     }
-    
-    public function getViewPhotoPopup($iId)
+
+    public function getPhotoPopup($iEventId, $iStart)
     {
     	$sStylePrefix = $this->_oConfig->getPrefix('style');
     	$sJsObject = $this->_oConfig->getJsObject('view');
 
-    	bx_import('BxDolStorage');
-		$oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage'));
+    	$aPhotos = $this->_oDb->getPhotos($iEventId);
+    	$iPhotos = count($aPhotos);
 
-		return $this->parseHtmlByName('bx_img.html', array(
-    		'src' => $oStorage->getFileUrlById($iId),
-        	'bx_repeat:attrs' => array(
-        		array('key' => 'onclick', 'value' => $sJsObject . '.hidePhoto(this)'),
-        		array('key' => 'class', 'value' => $sStylePrefix . '-attached-image')
+		if(empty($aPhotos[$iStart]))
+    		return MsgBox(_t('_Empty'));
+
+    	$sPaginate = '';
+    	if($iPhotos > 1) {
+			bx_import('BxTemplPaginate');
+	    	$oPaginate = new BxTemplPaginate(array(
+				'start' => $iStart,
+	    		'num' => (isset($aPhotos[$iStart + 1]) ? 2 : 1),
+				'per_page' => 1,
+				'on_change_page' => $sJsObject . '.showPhoto(this, ' . $iEventId . ', {start})'
+	    	));
+
+	    	$sPaginate = $oPaginate->getSimplePaginate();
+    	}
+
+		return $this->parseHtmlByName('attach_photo_popup.html', array(
+			'style_prefix' => $sStylePrefix,
+			'photo' => $this->_getPhoto($aPhotos[$iStart]),
+        	'bx_if:show_paginate' => array(
+        		'condition' => !empty($sPaginate),
+        		'content' => array(
+        			'style_prefix' => $sStylePrefix,
+        			'paginate' => $sPaginate
+        		)
         	)
     	));
     }
@@ -256,13 +276,13 @@ class BxTimelineTemplate extends BxDolModuleTemplate
     				),
     				'content' => $i
     			)) : $i) . ', ';
-    		
+
     		$sYears = substr($sYears, 0, -2);
     	}
     	
         $aTmplVars = array(
         	'style_prefix' => $sStylePrefix,
-            'visible' => $bVisible ? 'block' : 'none',
+            'visible' => $bEnabled && $bVisible ? 'block' : 'none',
             'bx_if:is_disabled' => array(
                 'condition' => !$bEnabled,
                 'content' => array()
@@ -526,7 +546,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
         if(!method_exists($this, $sMethod)) 
         	return '';
 
-       	$aTmplVars = $this->$sMethod($aContent);
+       	$aTmplVars = $this->$sMethod($aContent, $aBrowseParams);
        	return $this->parseHtmlByName('type_' . $sType . '.html', $aTmplVars);
     }
 
@@ -554,6 +574,23 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 			return '';
 
 		return $oVote->getJsScript();
+    }
+
+	protected function _getPhoto($iPhotoId)
+    {
+		$sStylePrefix = $this->_oConfig->getPrefix('style');
+    	$sJsObject = $this->_oConfig->getJsObject('view');
+
+    	bx_import('BxDolStorage');
+		$oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage'));
+
+		return $this->parsePageByName('bx_img.html', array(
+			'src' => $oStorage->getFileUrlById($iPhotoId),
+        	'bx_repeat:attrs' => array(
+        		array('key' => 'onclick', 'value' => $sJsObject . '.hidePhoto(this)'),
+        		array('key' => 'class', 'value' => $sStylePrefix . '-attached-image')
+        	),
+		));
     }
 
     protected function _getTmplVarsMenuItemManage(&$aEvent) {
@@ -610,7 +647,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
         return $aTmplVarsTimelineOwner;
     }
 
-	protected function _getTmplVarsContentPost($aContent)
+	protected function _getTmplVarsContentPost($aContent, $aBrowseParams = array())
     {
     	$sStylePrefix = $this->_oConfig->getPrefix('style');
 		$sJsObject = $this->_oConfig->getJsObject('view');
@@ -661,17 +698,19 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 
 		//--- Process Photos ---//
 		$aTmplVarsImages = array();
-		if(!empty($aContent['images']))
+		if(!empty($aContent['images'])) {
+			$bBrowseItem = isset($aBrowseParams['type']) && $aBrowseParams['type'] == BX_TIMELINE_TYPE_ITEM;
+
 			foreach($aContent['images'] as $aImage) {
 				$sImage = '';
-				if(isset($aImage['src']) && !empty($aImage['src']))
+				if(!empty($aImage['src']))
 					$sImage = $this->parseHtmlByName('bx_img.html', array(
-						'src' => $aImage['src'],
+						'src' => $bBrowseItem && !empty($aImage['src_orig']) ? $aImage['src_orig'] : $aImage['src'],
 						'bx_repeat:attrs' => array(
 							array('key' => 'class', 'value' => $sStylePrefix . '-item-image')
 						)
 					));
-	
+
 				if(!empty($sImage) && (isset($aImage['url']) || isset($aImage['onclick']))) {
 					$aAttrs = array();
 					if(isset($aImage['onclick']))
@@ -684,12 +723,13 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 						'content' => $sImage
 					));
 				}
-	
+
 				$aTmplVarsImages[] = array(
 					'style_prefix' => $sStylePrefix,
 					'image' => $sImage
 				);
 			}
+		}
 
 		return array(
 			'style_prefix' => $sStylePrefix,
@@ -732,7 +772,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 		);
     }
 
-	protected function _getTmplVarsContentShare($aContent)
+	protected function _getTmplVarsContentShare($aContent, $aBrowseParams = array())
     {
     	$sStylePrefix = $this->_oConfig->getPrefix('style');
     	$sCommonPrefix = $this->_oConfig->getPrefix('common_post');
@@ -834,15 +874,22 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 
 				$aPhotos = $this->_oDb->getPhotos($aEvent['id']);
 				if(!empty($aPhotos) && is_array($aPhotos)) {
+					bx_import('BxDolStorage');
+					$oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage'));
+
 					bx_import('BxDolImageTranscoder');
 		        	$oTranscoder = BxDolImageTranscoder::getObjectInstance($this->_oConfig->getObject('transcoder_view'));
 
-					foreach($aPhotos as $aPhoto)
+					foreach($aPhotos as $iPhotoId) {
+						$iPhotoIndex = array_search($iPhotoId, $aPhotos);
+
 						$aResult['content']['images'][] = array(
-							'src' => $oTranscoder->getImageUrl($aPhoto['id']),
+							'src' => $oTranscoder->getImageUrl($iPhotoId),
+							'src_orig' => $oStorage->getFileUrlById($iPhotoId),
 							'title' => '',
-							'onclick' => $sJsObject . '.showPhoto(this, ' . $aPhoto['id'] . ')'
+							'onclick' => $sJsObject . '.showPhoto(this, ' . $aEvent['id'] . ', ' . $iPhotoIndex . ')'
 						);
+					}
 				}
 				break;
 

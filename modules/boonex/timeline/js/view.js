@@ -103,12 +103,19 @@ BxTimelineView.prototype.showItem = function(oLink, iId) {
 	return false;
 };
 
-BxTimelineView.prototype.showPhoto = function(oLink, iId) {
-    var oData = this._getDefaultData();    
-    oData['id'] = iId;
+BxTimelineView.prototype.showPhoto = function(oLink, iEventId, iStart) {
+    var oData = this._getDefaultData();
+    oData['event_id'] = iEventId;
+    oData['start'] = iStart;
+
+    var sId = this._aHtmlIds['photo_popup'] + iEventId;
+    if($('#' + sId).length != 0)
+    	$('#' + sId).bx_anim('hide', this._sAnimationEffect, 0, function() {
+    		$(this).remove();    		
+    	});
 
     $(window).dolPopupAjax({
-		id: this._aHtmlIds['photo_popup'] + iId,
+		id: {value: this._aHtmlIds['photo_popup'] + iEventId, force: true},
 		url: bx_append_url_params(this._sActionsUri + 'get_photo_popup/', oData)
 	});
 

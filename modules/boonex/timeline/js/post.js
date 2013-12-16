@@ -116,7 +116,7 @@ BxTimelinePost.prototype.afterFormAttachLinkSubmit = function (oForm, oData)
 
 BxTimelinePost.prototype.deleteAttachLink = function(oLink, iId) {
 	var $this = this;
-    var oData = this._getDefaultData();    
+    var oData = this._getDefaultData();
     oData['id'] = iId;
 
     var oAttachLink = $('#' + this._aHtmlIds['attach_link_item'] + iId);

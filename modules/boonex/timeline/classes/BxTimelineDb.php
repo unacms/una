@@ -340,15 +340,19 @@ class BxTimelineDb extends BxDolModuleDb
 		return (int)$this->query($sQuery) > 0;
 	}
 
-	public function getPhotos($iEventId)
+	public function getPhotos($iEventId, $iOffset = 0)
 	{
+		$sLimitAddon = '';
+		if($iOffset != 0)
+			$sLimitAddon = $this->prepare(" OFFSET ?", $iOffset);
+
 		$sQuery = $this->prepare("SELECT
 				 `tpe`.`photo_id` AS `id`
 			FROM `" . $this->_sPrefix . "photos2events` AS `tpe` 
 			LEFT JOIN `" . $this->_sPrefix . "photos` AS `tp` ON `tpe`.`photo_id` = `tp`.`id` 
-			WHERE `tpe`.`event_id` = ?", $iEventId);
+			WHERE `tpe`.`event_id` = ?" . $sLimitAddon, $iEventId);
 
-		return $this->getAll($sQuery);
+		return $this->getColumn($sQuery);
 	}
 
 	//--- Link attach related methods ---//

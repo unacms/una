@@ -107,6 +107,10 @@ div.bx-tl-item-image img {
 	max-width: 318px;
 	max-height: 318px;
 }
+.bx-tl-view-sizer div.bx-tl-item-image img {
+	max-width: 100%;
+	max-height: 100%;
+}
 
 
 /*+++ Item Shared +++*/
@@ -130,6 +134,11 @@ div.bx-tl-item-actions {}
 
 
 /*--- View Image Style ---*/
+div.bx-tl-attach-photo-popup {}
+div.bx-tl-paginate div.bx-paginate {
+	position: relative;
+	float: right;
+}
 img.bx-tl-attached-image {
 	max-width: 640px;
 	max-width: 40rem;
