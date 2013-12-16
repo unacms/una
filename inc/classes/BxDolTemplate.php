@@ -153,14 +153,28 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     var $_sCachePublicFolderUrl;
     var $_sCachePublicFolderPath;
     var $_sCacheFilePrefix;
+
     var $_bImagesInline;
     var $_iImagesMaxSize;
+
     var $_bCssCache;
     var $_bCssArchive;
     var $_sCssCachePrefix;
+
     var $_bJsCache;
     var $_bJsArchive;
     var $_sJsCachePrefix;
+
+    /**
+     * Less related fields
+     */
+    protected $_bLessEnable;
+    protected $_sLessCachePrefix;
+
+    /**
+     * Minify related fields
+     */
+    protected $_bMinifyEnable;
 
     protected $aPage;
     protected $aPageContent;
@@ -234,6 +248,11 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
         $this->_bJsCache = !defined('BX_DOL_CRON_EXECUTE') && getParam('sys_template_cache_js_enable') == 'on';
         $this->_bJsArchive = $this->_bJsCache && $bArchive;
         $this->_sJsCachePrefix = $this->_sCacheFilePrefix . 'js_';
+
+        $this->_bLessEnable = true;
+        $this->_sLessCachePrefix = $this->_sCacheFilePrefix . 'less_';
+
+        $this->_bMinifyEnable = true;
 
         $this->aPage = array();
         $this->aPageContent = array();
@@ -1264,6 +1283,33 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
         return $sContent;
     }
 
+	/**
+     * Less CSS
+     *
+     * @param mixed $mixed CSS string to process with Less compiler or an array with CSS file's Path and URL. 
+     * @param boolean $bContent whether $mixed has CSS content or file path.
+     * @return string minified CSS string.
+     */
+    function _lessCss($mixed) {
+    	require_once(BX_DIRECTORY_PATH_PLUGINS . 'lessphp/lessc.inc.php');
+        $oLess = new lessc();
+
+    	if(is_array($mixed) && isset($mixed['url']) && isset($mixed['path'])) {
+    		$sPathFile = realpath($mixed['path']);
+    		$aInfoFile = pathinfo($sPathFile);
+    		if($aInfoFile['extension'] != 'less')
+    			return $mixed;
+
+			$sPathRoot = realpath(BX_DIRECTORY_PATH_ROOT);
+    		$sFile = $this->_sLessCachePrefix . trim(str_replace(array($sPathRoot, '.' . $aInfoFile['extension'], DIRECTORY_SEPARATOR), array('', '', '_'), $sPathFile), '_') . '.css';
+
+    		$oLess->checkedCompile($mixed['path'], $this->_sCachePublicFolderPath . $sFile);
+    		return array('url' => $this->_sCachePublicFolderUrl . $sFile, 'path' => $this->_sCachePublicFolderPath . $sFile);
+    	}
+
+        return $oLess->compile($mixed);
+    }
+
     /**
      * Minify CSS
      *
@@ -1336,6 +1382,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
         //--- If cache already exists, return it ---//
         $sMethodWrap = '_wrapInTag' . $sUpcaseType;
         $sMethodCompile = '_compile' . $sUpcaseType;
+        $sMethodLess = '_less' . $sUpcaseType;
         $sMethodMinify = '_minify' . $sUpcaseType;
 
         ksort($aFiles);
@@ -1361,7 +1408,10 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
             if(($sContent = $this->$sMethodCompile($aFile['path'], $aIncluded)) !== false)
                 $sResult .= $sContent;
 
-        if (method_exists($this, $sMethodMinify))
+		if ($this->_bLessEnable && method_exists($this, $sMethodLess))
+            $sResult = $this->$sMethodLess($sResult);
+
+        if ($this->_bMinifyEnable && method_exists($this, $sMethodMinify))
             $sResult = $this->$sMethodMinify($sResult);
 
         $mixedWriteResult = false;
@@ -1372,7 +1422,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
         }
 
         if($mixedWriteResult === false)
-            return $this->_includeFile($sType, $aFiles);
+            return $this->_includeFiles($sType, $aFiles);
 
         if($this->{'_b' . $sUpcaseType . 'Archive'})
             $sCacheAbsoluteUrl = $this->_getLoaderUrl($sType, $sName);
@@ -1387,11 +1437,18 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      * @return string result of operation.
      */
     function _includeFiles($sType, &$aFiles) {
-        $sMethod = '_wrapInTag' . ucfirst($sType);
+    	$sUpcaseType = ucfirst($sType);
+
+        $sMethodWrap = '_wrapInTag' . $sUpcaseType;
+        $sMethodLess = '_less' . $sUpcaseType;
 
         $sResult = "";
-        foreach($aFiles as $aFile)
-           $sResult .= $this->$sMethod($aFile['url']);
+        foreach($aFiles as $aFile) {
+        	if($this->_bLessEnable && method_exists($this, $sMethodLess))
+        		$aFile = $this->$sMethodLess($aFile, false);
+
+			$sResult .= $this->$sMethodWrap($aFile['url']);
+        }
 
         return $sResult;
     }
