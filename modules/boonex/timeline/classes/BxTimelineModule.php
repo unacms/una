@@ -277,7 +277,7 @@ class BxTimelineModule extends BxDolModule
         bx_import('BxDolRssFactory');
         $oRss = new BxDolRssFactory();
 
-        header('Content-Type: text/html; charset=utf-8');
+        header('Content-Type: application/xml; charset=utf-8');
         echo $oRss->GenRssByData($aRssData, $sRssCaption, $sRssLink);
     }
 
