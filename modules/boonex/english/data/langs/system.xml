@@ -1187,6 +1187,7 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_cmt_err_duplicate"><![CDATA[Duplicate vote.]]></string>
 	<string name="_vote_do_like"><![CDATA[Plus]]></string>
 	<string name="_vote_err_duplicate_vote"><![CDATA[Duplicate vote]]></string>
+	<string name="_vote_do_like_by"><![CDATA[Plused by]]></string>
 	<string name="_Reply_to_this_comment"><![CDATA[Reply]]></string>
 	<string name="_Add Your Comment"><![CDATA[Comment]]></string>
 	<string name="_load_more_comments_head"><![CDATA[See Newer Comments...]]></string>

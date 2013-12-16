@@ -105,10 +105,14 @@ class BxBaseVote extends BxDolVote
     	$aVote = $this->_oQuery->getVote($this->getId());
 
     	return BxDolTemplate::getInstance()->parseHtmlByName($this->_sTmplNameCounter, array(
-    		'style_prefix' => $this->_sStylePrefix,
-    		'js_object' => $sJsObject,
-			'html_id_counter' => $this->_aHtmlIds['counter'],
-			'counter' => (int)$aVote['count'] > 0 ? $this->_getLabelCounter($aVote['count']) : ''
+    		'href' => 'javascript:void(0)',
+    		'title' => _t('_vote_do_like_by'),
+    		'bx_repeat:attrs' => array(
+    			array('key' => 'id', 'value' => $this->_aHtmlIds['counter']),
+    			array('key' => 'class', 'value' => $this->_sStylePrefix . '-counter'),
+				array('key' => 'onclick', 'value' => 'javascript:' . $sJsObject . '.toggleByPopup(this)')
+			),
+			'content' => (int)$aVote['count'] > 0 ? $this->_getLabelCounter($aVote['count']) : ''
     	));
     }
 
