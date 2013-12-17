@@ -316,7 +316,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
         //--- Load default CSS ---//
         $this->addCssSystem(array(
             'common.css',
-            'default.css',
+            'default.less',
             'general.css',
             'icons.css',
             'colors.css',
