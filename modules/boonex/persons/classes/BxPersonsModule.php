@@ -148,9 +148,6 @@ class BxPersonsModule extends BxDolModule implements iBxDolProfileService {
         if (!$iContentId)
             return false;
 
-		bx_import('BxDolView');
-		BxDolView::getObjectInstance(BxPersonsConfig::$OBJECT_VIEWS, $iContentId)->doView();
-
         bx_import('ProfileForms', $this->_aModule);
         $oProfileForms = new BxPersonsProfileForms($this);
         return $oProfileForms->viewDataForm((int)$iContentId);

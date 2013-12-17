@@ -96,6 +96,8 @@ class BxPersonsPageProfile extends BxTemplPage {
             }
         }
 
+		bx_import('BxDolView');
+		BxDolView::getObjectInstance(BxPersonsConfig::$OBJECT_VIEWS, $iContentId)->doView();
     }
 
     public function getCode () {
