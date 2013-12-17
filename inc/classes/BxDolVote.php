@@ -18,6 +18,12 @@ define('BX_DOL_VOTE_USAGE_BLOCK', 'block');
 define('BX_DOL_VOTE_USAGE_INLINE', 'inline');
 define('BX_DOL_VOTE_USAGE_DEFAULT', BX_DOL_VOTE_USAGE_BLOCK);
 
+/** 
+ * @page objects
+ * @section votes Votes
+ * @ref BxDolVote
+ */
+
 /**
  * Vote for any content
  *
@@ -81,11 +87,11 @@ define('BX_DOL_VOTE_USAGE_DEFAULT', BX_DOL_VOTE_USAGE_BLOCK);
 
 class BxDolVote extends BxDol
 {
-    var $_iId = 0;    ///< item id to be rated
-    var $_sSystem = ''; ///< current rating system name
-    var $_aSystem = array(); ///< current rating system array
+    protected $_iId = 0;    ///< item id to be rated
+    protected $_sSystem = ''; ///< current rating system name
+    protected $_aSystem = array(); ///< current rating system array
 
-    var $_oQuery = null;
+    protected $_oQuery = null;
 
     protected function __construct($sSystem, $iId, $iInit = 1)
     {
@@ -432,4 +438,4 @@ class BxDolVote extends BxDol
     }
 }
 
-/** @} */ 
+/** @} */
