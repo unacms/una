@@ -102,7 +102,7 @@ class BxDolVoteQuery extends BxDolDb
 
         return array (
             'fields' => ",`{$this->_sTable}`.`count` as `vote_count`, (`{$this->_sTable}`.`sum` / `{$this->_sTable}`.`count`) AS `vote_rate` ",
-            'join' => $this->prepare(" LEFT JOIN `{$this->_sTable}` ON (`{$this->_sTable}`.`object_id` = ?) ", "`{$sMainTable}`.`{$sMainField}`"),
+            'join' => " LEFT JOIN `{$this->_sTable}` ON (`{$this->_sTable}`.`object_id` = `{$sMainTable}`.`{$sMainField}`) ",
         );
     }
 
