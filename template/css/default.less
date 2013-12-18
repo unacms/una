@@ -1,6 +1,6 @@
 /* Default Variables */
 @bx-dv-font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-@bx-dv-font-size: 14px;
+@bx-dv-font-size: 16px;
 @bx-dv-font-weight: 400;
 @bx-dv-font-color: #333;
 
@@ -29,15 +29,24 @@
     margin-left: @bx-dv-font-size * @dimension;
     margin-left: @dimension;
 }
+.bx-dm-margin-rightbottomleft-neg (@dimension: 1.2rem) {
+	.bx-dm-margin-rightbottomleft(-@dimension);
+}
 .bx-dm-margin-leftright (@dimension: 1.2rem) {
     margin: 0px @bx-dv-font-size * @dimension;
     margin: 0px @dimension;
+}
+.bx-dm-margin-leftright-neg (@dimension: 1.2rem) {
+    .bx-dm-margin-leftright(-@dimension);
 }
 .bx-dm-margin-topbottom (@dimension: 1.2rem) {
     margin-top: @bx-dv-font-size * @dimension;
     margin-top: @dimension;
     margin-bottom: @bx-dv-font-size * @dimension;
     margin-bottom: @dimension;
+}
+.bx-dm-margin-topbottom-neg (@dimension: 1.2rem) {
+	.bx-dm-margin-topbottom(-@dimension);
 }
 .bx-dm-margin-top (@dimension: 1.2rem) {
     margin-top: @bx-dv-font-size * @dimension;
@@ -205,6 +214,9 @@
 .bx-def-margin-leftright {
 	.bx-dm-margin-leftright;
 }
+.bx-def-margin-leftright-neg {
+	.bx-dm-margin-leftright-neg;
+}
 .bx-def-margin-topbottom {
 	.bx-dm-margin-topbottom;
 }
@@ -235,6 +247,9 @@
 }
 .bx-def-margin-sec-leftright {
 	.bx-dm-margin-leftright(0.5rem);
+}
+.bx-def-margin-sec-leftright-neg {
+	.bx-dm-margin-leftright-neg(0.5rem);
 }
 .bf-margin-sec-topbottom {
 	.bx-dm-margin-topbottom(0.5rem);

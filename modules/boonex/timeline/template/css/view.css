@@ -5,11 +5,6 @@
 div.bx-tl-view {
 	position: relative;
 }
-div.bx-tl-cnt {}
-div.bx-tl-items {
-	margin-left: -10px;
-	margin-right: -10px;
-}
 .bx-tl-grid-sizer {
 	width: 100%;
 }
@@ -19,6 +14,7 @@ div.bx-tl-items {
 .bx-tl-view-sizer div.bx-tl-item-ind {
 	padding: 0px;
 }
+
 
 /*--- Back Style ---*/
 
@@ -30,6 +26,7 @@ div.bx-tl-jump-to {
 	position: relative;
 	float: right;
 	line-height: 36px;
+	line-height: 2.25rem;
 }
 
 
@@ -44,6 +41,7 @@ div.bx-tl-item-cnt {
 	position: relative;
 	overflow: hidden;
 }
+
 /*+++ Item Menu +++*/
 div.bx-tl-item-menu {
 	position: absolute;
@@ -55,8 +53,11 @@ div.bx-tl-item-menu .bx-menu-ver li {
 }
 div.bx-tl-item-menu-button {
 	width: 20px;
+	width: 1.2rem;
 	height: 20px;
+	height: 1.2rem;
 	line-height: 20px;
+	line-height: 1.2rem;
 	text-align: center;
 }
 div.bx-tl-item-menu-button a {
@@ -80,52 +81,38 @@ div.bx-tl-owner-avatar {
 	left: 0px;
 }
 
-
 /*+++ Item Text +++*/
 div.bx-tl-item-text {}
 span.bx-tl-content-see-more a {
 	font-weight: bold;
 }
 
-/*+++ Item Link +++*/
-div.bx-tl-item-links {}
-
-div.bx-tl-item-link {
-	
-}
-
 /*+++ Item Image +++*/
-div.bx-tl-item-images {
-	margin-left: -20px;
-	margin-right: -20px;
-}
 div.bx-tl-item-image {
 	text-align: center;
 	overflow: hidden;
 }
 div.bx-tl-item-image img {
-	max-width: 318px;
-	max-height: 318px;
-}
-.bx-tl-view-sizer div.bx-tl-item-image img {
 	max-width: 100%;
 	max-height: 100%;
 }
 
-
 /*+++ Item Shared +++*/
 div.bx-tl-shared div.bx-tl-item-text {
 	padding-left: 5px;
+	padding-left: 0.3rem;
+
 	border-left: 1px solid #999999;
+	border-left: 0.07rem solid #999999;
 }
 div.bx-tl-shared div.bx-tl-title {
-	font-size: 1.0em;
+	font-size: 1.0rem;
 }
 div.bx-tl-shared div.bx-tl-title a {
 	color: #999999;
 }
 div.bx-tl-shared div.bx-tl-content {
-	font-size: 0.875em;
+	font-size: 0.875rem;
 	color: #999999;
 }
 
