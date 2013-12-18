@@ -55,18 +55,19 @@ class BxBaseCmts extends BxDolCmts {
      */
     public function getJsScript()
     {
-        $this->addCssJs();
+        $aParams = array(
+        	'sObjName' => $this->_sJsObjName,
+        	'sRootUrl' => BX_DOL_URL_ROOT,
+        	'sSystem' => $this->getSystemName(),
+        	'iAuthorId' => $this->_getAuthorId(),
+        	'iObjId' => $this->getId(),
+        	'sPostFormPosition' => $this->_aSystem['post_form_position'],
+        	'sBrowseType' => $this->_sBrowseType,
+        	'sDisplayType' => $this->_sDisplayType
+        );
 
-        return BxDolTemplate::getInstance()->_wrapInTagJsCode("var " . $this->_sJsObjName . " = new BxDolCmts({
-        	sObjName: '" . $this->_sJsObjName . "',
-            sRootUrl: '" . BX_DOL_URL_ROOT . "',
-            sSystem: '" . $this->getSystemName() . "',
-            iAuthorId: '" . $this->_getAuthorId() . "',
-            iObjId: '" . $this->getId () . "',
-            sPostFormPosition: '" . $this->_aSystem['post_form_position'] . "',
-    		sBrowseType: '" . $this->_sBrowseType . "',
-    		sDisplayType: '" . $this->_sDisplayType . "'
-    	});");
+        $this->addCssJs();
+        return BxDolTemplate::getInstance()->_wrapInTagJsCode("var " . $this->_sJsObjName . " = new BxDolCmts(" . json_encode($aParams) . ");");
     }
 
     /**

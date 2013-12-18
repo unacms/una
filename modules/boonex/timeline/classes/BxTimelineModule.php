@@ -589,7 +589,7 @@ class BxTimelineModule extends BxDolModule
 
 	public function getUserIp()
     {
-        return $_SERVER['REMOTE_ADDR'];
+        return getVisitorIP();
     }
 
 	public function getUserInfo($iUserId = 0)

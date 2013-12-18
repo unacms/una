@@ -48,8 +48,9 @@ class BxDolVoteQuery extends BxDolDb
     	if($this->_iPostTimeout == 0) 
     		return true;
 
+		$iDate = time() - $this->_iPostTimeout;
 		$iAuthorNip = ip2long($sAuthorIp);
-		$sQuery = $this->prepare("SELECT `object_id` FROM `{$this->_sTableTrack}` WHERE `object_id` = ? AND `author_nip` = ? AND `date` > (UNIX_TIMESTAMP() - ?)", $iObjectId, $iAuthorNip, $this->_iPostTimeout);
+		$sQuery = $this->prepare("SELECT `object_id` FROM `{$this->_sTableTrack}` WHERE `object_id` = ? AND `author_nip` = ? AND `date` > ?", $iObjectId, $iAuthorNip, $iDate);
 		return (int)$this->getOne($sQuery) == 0;
     }
 
@@ -88,8 +89,9 @@ class BxDolVoteQuery extends BxDolDb
         if($bUndo)
         	$sQuery = $this->prepare("DELETE FROM `{$this->_sTableTrack}` WHERE `object_id` = ? AND `author_id` = ? LIMIT 1", $iObjectId, $iAuthorId);
         else {
+        	$iNow = time();
         	$iAuthorNip = ip2long($sAuthorIp);
-        	$sQuery = $this->prepare("INSERT INTO `{$this->_sTableTrack}` SET `object_id` = ?, `author_id` = ?, `author_nip` = ?, `value` = ?, `date` = UNIX_TIMESTAMP()", $iObjectId, $iAuthorId, $iAuthorNip, $iValue);
+        	$sQuery = $this->prepare("INSERT INTO `{$this->_sTableTrack}` SET `object_id` = ?, `author_id` = ?, `author_nip` = ?, `value` = ?, `date` = ?", $iObjectId, $iAuthorId, $iAuthorNip, $iValue, $iNow);
         }
 
         return (int)$this->query($sQuery) > 0;
@@ -102,7 +104,7 @@ class BxDolVoteQuery extends BxDolDb
 
         return array (
             'fields' => ",`{$this->_sTable}`.`count` as `vote_count`, (`{$this->_sTable}`.`sum` / `{$this->_sTable}`.`count`) AS `vote_rate` ",
-            'join' => $this->prepare(" LEFT JOIN `{$this->_sTable}` ON (`{$this->_sTable}`.`object_id` = ?) ", "`{$sMainTable}`.`{$sMainField}`"),
+            'join' => " LEFT JOIN `{$this->_sTable}` ON (`{$this->_sTable}`.`object_id` = `{$sMainTable}`.`{$sMainField}`) ",
         );
     }
 

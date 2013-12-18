@@ -748,7 +748,7 @@ class BxDolCmts extends BxDol
 
     protected function _getAuthorIp ()
     {
-        return $_SERVER['REMOTE_ADDR'];
+        return getVisitorIP();
     }
 
     

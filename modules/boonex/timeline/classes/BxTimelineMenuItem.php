@@ -62,6 +62,7 @@ class BxTimelineMenuItem extends BxTemplMenu {
 
     	$this->addMarkers(array(
     		'content_id' => $aEvent['id'],
+    		'comment_onclick' => $this->_oModule->_oConfig->getJsObject('view') . ".commentItem(this, '" . $this->_aEvent['comments']['system'] . "', " . $this->_aEvent['id'] . ")",
     		'share_onclick' => $this->_oModule->serviceGetShareJsClick($iOwnerId, $sType, $sAction, $iObjectId),
     		'vote_onclick' => $sVotesOnclick
 		));    	

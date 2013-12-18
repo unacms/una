@@ -316,7 +316,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
         //--- Load default CSS ---//
         $this->addCssSystem(array(
             'common.css',
-            'default.css',
+            'default.less',
             'general.css',
             'icons.css',
             'colors.css',
@@ -1301,7 +1301,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     			return $mixed;
 
 			$sPathRoot = realpath(BX_DIRECTORY_PATH_ROOT);
-    		$sFile = $this->_sLessCachePrefix . trim(str_replace(array($sPathRoot, '.' . $aInfoFile['extension'], DIRECTORY_SEPARATOR), array('', '', '_'), $sPathFile), '_') . '.css';
+    		$sFile = $this->_sLessCachePrefix . trim(str_replace(array('.' . $aInfoFile['extension'], DIRECTORY_SEPARATOR), array('', '_'), bx_ltrim_str($sPathFile, $sPathRoot)), '_') . '.css';
 
     		$oLess->checkedCompile($mixed['path'], $this->_sCachePublicFolderPath . $sFile);
     		return array('url' => $this->_sCachePublicFolderUrl . $sFile, 'path' => $this->_sCachePublicFolderPath . $sFile);

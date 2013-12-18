@@ -267,10 +267,7 @@ class BxTimelineDb extends BxDolModuleDb
                 `{$this->_sTable}`.`description` AS `description`,
                 `{$this->_sTable}`.`shares` AS `shares`,
                 `{$this->_sTable}`.`date` AS `date`,
-                YEAR(FROM_UNIXTIME(`{$this->_sTable}`.`date`)) AS `year`,
-                DAYOFYEAR(FROM_UNIXTIME(`{$this->_sTable}`.`date`)) AS `day_date`,
-                DAYOFYEAR(NOW()) AS `day_now`,
-                (UNIX_TIMESTAMP() - `{$this->_sTable}`.`date`)/86400 AS `ago_days`
+                YEAR(FROM_UNIXTIME(`{$this->_sTable}`.`date`)) AS `year`
             FROM `{$this->_sTable}`
             LEFT JOIN `{$this->_sTableHandlers}` ON `{$this->_sTable}`.`type`=`{$this->_sTableHandlers}`.`alert_unit` AND `{$this->_sTable}`.`action`=`{$this->_sTableHandlers}`.`alert_action` " . $sJoinClause . " 
             WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
@@ -295,8 +292,9 @@ class BxTimelineDb extends BxDolModuleDb
     //--- Share related methods ---//
     public function insertShareTrack($iEventId, $iAuthorId, $sAuthorIp, $iSharedId)
     {
+    	$iNow = time();
     	$iAuthorNip = ip2long($sAuthorIp);
-		$sQuery = $this->prepare("INSERT INTO `{$this->_sTableSharesTrack}` SET `event_id` = ?, `author_id` = ?, `author_nip` = ?, `shared_id` = ?, `date` = UNIX_TIMESTAMP()", $iEventId, $iAuthorId, $iAuthorNip, $iSharedId);
+		$sQuery = $this->prepare("INSERT INTO `{$this->_sTableSharesTrack}` SET `event_id` = ?, `author_id` = ?, `author_nip` = ?, `shared_id` = ?, `date` = ?", $iEventId, $iAuthorId, $iAuthorNip, $iSharedId, $iNow);
 		return (int)$this->query($sQuery) > 0;
     }
 
