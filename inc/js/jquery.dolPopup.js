@@ -251,8 +251,10 @@
                 if (!$.isWindow(e[0]))
                     bx_menu_on(e, true);
 
-                $('body').append('<div id="' + sPopupId + '" style="display:none;">' + $('#bx-popup-loading').html() + '</div>');
-                bx_loading_content($('#' + sPopupId + ' .bx-popup-content-wrapped'), true, true);
+                $('<div id="' + sPopupId + '" style="display:none;">' + $('#bx-popup-loading').html() + '</div>').appendTo('body').find(options.container).hide();
+
+                var oLoading = $('#' + sPopupId + ' .bx-popup-loading-wrapped');
+                bx_loading_content(oLoading, true, true);
 
                 $('#' + sPopupId).dolPopup($.extend({}, options, {
                     pointer: oPointerOptions,
@@ -262,18 +264,21 @@
                     }
                 }));
 
+                var fOnLoad = function() {
+                	bx_loading_content(oLoading, false);
+
+                	$('#' + sPopupId + ' ' + options.container).bxTime().show();
+
+					$('#' + sPopupId)._dolPopupSetPosition({
+						pointer: oPointerOptions
+					});
+                };
+                
                 $('#' + sPopupId).find(options.container).load(sUrlRoot + options.url, function () {
-                    $(this).bxTime();
-
-                    $('#' + sPopupId)._dolPopupSetPosition({
-                        pointer: oPointerOptions
-                    });
-
-                    $('#' + sPopupId).find('img').load(function() {
-                    	$('#' + sPopupId)._dolPopupSetPosition({
-                            pointer: oPointerOptions
-                        });
-                    });
+                	if($('#' + sPopupId).find('img').length > 0)
+                		$('#' + sPopupId).find('img').load(fOnLoad);
+                	else
+                		fOnLoad();
                 });
             }
         });
