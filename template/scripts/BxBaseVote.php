@@ -75,21 +75,19 @@ class BxBaseVote extends BxDolVote
 
 	public function getJsScript()
     {
+        $aParams = array(
+        	'sObjName' => $this->_sJsObjName,
+        	'sSystem' => $this->getSystemName(),
+        	'iAuthorId' => $this->_getAuthorId(),
+        	'iObjId' => $this->getId(),
+        	'iLikeMode' => $this->isLikeMode() ? 1 : 0,
+        	'sRootUrl' => BX_DOL_URL_ROOT,
+        	'sStylePrefix' => $this->_sStylePrefix,
+        	'aHtmlIds' => $this->_aHtmlIds
+        );
+
         $this->addCssJs();
-
-        require_once(BX_DIRECTORY_PATH_PLUGINS . 'Services_JSON.php');
-        $oJson = new Services_JSON();
-
-        return BxDolTemplate::getInstance()->_wrapInTagJsCode("var " . $this->_sJsObjName . " = new BxDolVote({
-        	sObjName: '" . $this->_sJsObjName . "',
-            sSystem: '" . $this->getSystemName() . "',
-            iAuthorId: '" . $this->_getAuthorId() . "',
-            iObjId: '" . $this->getId() . "',
-            iLikeMode: " . ($this->isLikeMode() ? 1 : 0) . ",
-            sRootUrl: '" . BX_DOL_URL_ROOT . "',
-            sStylePrefix: '" . $this->_sStylePrefix . "',
-            aHtmlIds: " . $oJson->encode($this->_aHtmlIds) . ",
-    	});");
+        return BxDolTemplate::getInstance()->_wrapInTagJsCode("var " . $this->_sJsObjName . " = new BxDolVote(" . json_encode($aParams) . ");");
     }
 
     public function getJsClick()

@@ -398,7 +398,7 @@ class BxDolVote extends BxDol
 
     protected function _getAuthorIp ()
     {
-        return $_SERVER['REMOTE_ADDR'];
+        return getVisitorIP();
     }
 
 	protected function _getAuthorInfo($iAuthorId = 0)
