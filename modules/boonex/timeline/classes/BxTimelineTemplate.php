@@ -32,28 +32,24 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 
     public function getJsCode($sType, $aRequestParams = array(), $bWrap = true)
     {
-    	$oJson = new Services_JSON();
     	$oModule = $this->getModule();
 
     	$sBaseUri = $this->_oConfig->getBaseUri();
     	$sJsClass = $this->_oConfig->getJsClass($sType);
     	$sJsObject = $this->_oConfig->getJsObject($sType);
-    	$aHtmlIds = $this->_oConfig->getHtmlIds($sType);
 
-        ob_start();
-?>
-		var <?=$sJsObject; ?> = new <?=$sJsClass; ?>({
-			sActionUri: '<?=$sBaseUri; ?>',
-            sActionUrl: '<?=BX_DOL_URL_ROOT . $sBaseUri; ?>',
-			sObjName: '<?=$sJsObject; ?>',
-			iOwnerId: <?=$oModule->_iOwnerId; ?>,
-            sAnimationEffect: '<?=$this->_oConfig->getAnimationEffect(); ?>',
-            iAnimationSpeed: '<?=$this->_oConfig->getAnimationSpeed(); ?>',
-            aHtmlIds: <?=$oJson->encode($aHtmlIds); ?>,
-            oRequestParams: <?php echo !empty($aRequestParams) ? $oJson->encode($aRequestParams) : '{}'; ?>
-        });
-<?php
-		$sContent = ob_get_clean();
+    	$aParams = array(
+    		'sActionUri' => $sBaseUri,
+    		'sActionUrl' => BX_DOL_URL_ROOT . $sBaseUri,
+    		'sObjName' => $sJsObject,
+    		'iOwnerId' => $oModule->_iOwnerId,
+    		'sAnimationEffect' => $this->_oConfig->getAnimationEffect(),
+    		'iAnimationSpeed' => $this->_oConfig->getAnimationSpeed(),
+    		'aHtmlIds' => $this->_oConfig->getHtmlIds($sType),
+    		'oRequestParams' => !empty($aRequestParams) ? $aRequestParams : array()
+    	);
+
+		$sContent = "var " . $sJsObject . " = new " . $sJsClass . "(" . json_encode($aParams) . ");";
 
 		$this->getCssJs();
         return !$bWrap ? $sContent : $this->_wrapInTagJsCode($sContent);
@@ -656,7 +652,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 		$sJsObject = $this->_oConfig->getJsObject('view');
 
 		//--- Process Text ---// 
-		$sUrl = isset($aContent['url']) ? bx_process_output($aContent['url']) : '';
+		$sUrl = isset($aContent['url']) ? bx_html_attribute($aContent['url']) : '';
 		$sTitle = isset($aContent['title']) ? bx_process_output($aContent['title']) : '';
 		if(!empty($sUrl) && !empty($sTitle))
 			$sTitle = $this->parseHtmlByName('bx_a.html', array(
