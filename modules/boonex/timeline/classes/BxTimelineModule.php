@@ -321,15 +321,18 @@ class BxTimelineModule extends BxDolModule
         $oResponse->response($oAlert);
     }
 
-    public function serviceGetBlockPost($iProfileId = 0)
+    /*
+	 * Get Post block for a separate page. 
+	 */
+    public function serviceGetBlockPost($sProfileModule = 'bx_persons', $iProfileId = 0)
     {
-    	return $this->serviceGetBlockPostProfile($iProfileId);
+    	return $this->serviceGetBlockPostProfile($sProfileModule, $iProfileId);
     }
 
-	public function serviceGetBlockPostProfile($iProfileId = 0)
+	public function serviceGetBlockPostProfile($sProfileModule = 'bx_persons', $iProfileId = 0)
 	{
-		if(!$iProfileId && bx_get('id') !== false) {
-			$oProfile = BxDolProfile::getInstanceByContentAndType(bx_process_input(bx_get('id'), BX_DATA_INT), 'bx_persons');
+		if(empty($iProfileId) && !empty($sProfileModule) && bx_get('id') !== false) {
+			$oProfile = BxDolProfile::getInstanceByContentAndType(bx_process_input(bx_get('id'), BX_DATA_INT), $sProfileModule);
 			if(!empty($oProfile))
             	$iProfileId = $oProfile->id();
 		}
@@ -348,19 +351,22 @@ class BxTimelineModule extends BxDolModule
         );
 	}
 
-	public function serviceGetBlockView($iProfileId = 0)
+	/*
+	 * Get View block for a separate page. Will return a block with "Empty" message if nothing found. 
+	 */
+	public function serviceGetBlockView($sProfileModule = 'bx_persons', $iProfileId = 0)
 	{
-		$aBlock = $this->serviceGetBlockViewProfile($iProfileId);
+		$aBlock = $this->serviceGetBlockViewProfile($sProfileModule, $iProfileId);
 		if(!empty($aBlock))
 			return $aBlock;
 
     	return array('content' => MsgBox(_t('_bx_timeline_txt_msg_no_results'))); 
     }
 
-	public function serviceGetBlockViewProfile($iProfileId = 0, $iStart = -1, $iPerPage = -1, $sFilter = '', $aModules = array(), $iTimeline = -1)
+	public function serviceGetBlockViewProfile($sProfileModule = 'bx_persons', $iProfileId = 0, $iStart = -1, $iPerPage = -1, $sFilter = '', $aModules = array(), $iTimeline = -1)
 	{
-		if(!$iProfileId && bx_get('id') !== false) {
-			$oProfile = BxDolProfile::getInstanceByContentAndType(bx_process_input(bx_get('id'), BX_DATA_INT), 'bx_persons');
+		if(empty($iProfileId) && !empty($sProfileModule) && bx_get('id') !== false) {
+			$oProfile = BxDolProfile::getInstanceByContentAndType(bx_process_input(bx_get('id'), BX_DATA_INT), $sProfileModule);
 			if(!empty($oProfile))
             	$iProfileId = $oProfile->id();
 		}
