@@ -62,6 +62,7 @@ bx_import('BxDolPermalinks');
  * - onclick: menu item onclick event.
  * - target: menu item target.
  * - icon: menu item icon, please note that some templates can still display menu as text without icons.
+ * - addon: display additional data near menu item, only for supported menu templates, this is serialized array of service call parameters: module - module name, method - service method name, params - array of parameters.
  * - visible_for_levels: bit field with set of member level ids. To use member level id in bit field - the level id minus 1 as power of 2 is used, for example:
  *      - user level id = 1 -> 2^(1-1) = 1
  *      - user level id = 2 -> 2^(2-1) = 2
