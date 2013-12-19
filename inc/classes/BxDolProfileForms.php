@@ -36,18 +36,7 @@ class BxDolProfileForms extends BxDol {
      * @return string where all markers are replaced
      */ 
     protected function _replaceMarkers ($mixed, $aMarkers) {
-        if (empty($aMarkers))
-            return $mixed;
-
-        if (is_array($mixed)) {
-            foreach ($mixed as $sKey => $sValue)
-                $mixed[$sKey] = $this->_replaceMarkers ($sValue);
-        } else {
-            foreach ($aMarkers as $sKey => $sValue)
-                $mixed = str_replace('{' . $sKey . '}', $sValue, $mixed);
-        }
-
-        return $mixed;
+        return bx_replace_markers($mixed, $aMarkers);
     }
 
 }

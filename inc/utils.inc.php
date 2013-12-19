@@ -1437,6 +1437,20 @@ function getSitesArray ($sLink) {
     return $aSites;
 }
 
+function bx_replace_markers($mixed, $aMarkers) {
+    if (empty($aMarkers))
+        return $mixed;
+
+    if (is_array($mixed)) {
+        foreach ($mixed as $sKey => $sValue)
+            $mixed[$sKey] = bx_replace_markers ($sValue, $aMarkers);
+    } else {
+        foreach ($aMarkers as $sKey => $sValue)
+            $mixed = str_replace('{' . $sKey . '}', $sValue, $mixed);
+    }
+
+    return $mixed;
+}
 
 /** @} */ 
 

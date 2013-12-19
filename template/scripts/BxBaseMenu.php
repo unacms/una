@@ -93,7 +93,7 @@ class BxBaseMenu extends BxDolMenu {
                 'content' => array('title' => $a['title']), 
             );
 
-            $a['addon'] = '';
+            $a['addon'] = $this->_getMenuAddon($a);
             
             $aRet[] = $a;
         }
@@ -117,6 +117,15 @@ class BxBaseMenu extends BxDolMenu {
             }
         }
         return array ($sIcon, $sIconUrl);
+    }
+
+    protected function _getMenuAddon ($aMenuItem) {
+        if (empty($aMenuItem['addon']))
+            return '';
+        $a = @unserialize($aMenuItem['addon']);
+        if (false === $a || !is_array($a))
+            return '';
+        return BxDolService::call($a['module'], $a['method'], isset($a['params']) ? bx_replace_markers($a['params'], $this->_aMarkers) : array(), isset($a['class']) ? $a['class'] : 'Module');
     }
 
     /**

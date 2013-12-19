@@ -16,6 +16,10 @@ class BxBaseServiceLogin extends BxDol {
         parent::__construct();
     }
 
+    public function serviceTest ($n = 1) {
+        return $n*2;
+    }
+
     public function serviceLoginForm ($sParams = '') {
 
         if (isLogged()) {
