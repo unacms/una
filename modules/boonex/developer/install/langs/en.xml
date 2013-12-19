@@ -373,6 +373,8 @@
     <string name="_bx_dev_bp_txt_block_deletable"><![CDATA[Deletable]]></string>
     <string name="_bx_dev_bp_txt_sys_block_copyable"><![CDATA[Copyable]]></string>
     <string name="_bx_dev_bp_txt_block_copyable"><![CDATA[Copyable]]></string>
+    <string name="_bx_dev_bp_txt_sys_block_active"><![CDATA[Active]]></string>
+    <string name="_bx_dev_bp_txt_block_active"><![CDATA[Active]]></string>
     <string name="_bx_dev_bp_btn_sys_block_add"><![CDATA[Add]]></string>
     <string name="_bx_dev_bp_btn_block_add"><![CDATA[Add]]></string>
     <string name="_bx_dev_bp_btn_block_save"><![CDATA[Save]]></string>

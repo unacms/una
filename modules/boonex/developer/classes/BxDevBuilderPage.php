@@ -272,7 +272,7 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage {
         unset($aForm['inputs']['url']['attrs']['disabled']);
 
         $aForm['inputs']['deletable'] = array(
-            'type' => 'checkbox',
+            'type' => 'switcher',
             'name' => 'deletable',
             'caption' => _t('_bx_dev_bp_txt_page_deletable'),
             'info' => '',
@@ -330,7 +330,7 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage {
         unset($aForm['inputs']['cache_lifetime']['attrs']);
 
         $aForm['inputs']['cache_editable'] = array(
-            'type' => 'checkbox',
+            'type' => 'switcher',
             'name' => 'cache_editable',
             'caption' => _t('_bx_dev_bp_txt_page_cache_editable'),
             'info' => '',

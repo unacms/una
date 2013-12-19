@@ -508,7 +508,7 @@ EOF;
         // add button width popup
         $sId = 'bx-str-limit-' . rand(1, PHP_INT_MAX);
         $sPopup = '<img class="bx-str-limit" onclick="$(\'#' . $sId . '\').dolPopup({pointer:{el:$(this), offset:\'10 1\'}})" src="' . $this->getTemplateImage('str-limit.png') . '"/>';
-        $sPopup .= '<div id="' . $sId . '" style="display:none;">' . BxTemplFunctions::getInstance()->transBox('<div class="bx-def-padding bx-def-color-bg-block">'.$sString.'</div>') . '</div>';
+        $sPopup .= '<div id="' . $sId . '" style="display:none;">' . BxTemplFunctions::getInstance()->transBox('', '<div class="bx-def-padding bx-def-color-bg-block">'.$sString.'</div>') . '</div>';
 
         return $bReturnString ? $sResult . $sPopup : array($sResult, $sPopup);
     }

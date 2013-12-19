@@ -350,39 +350,6 @@ BxDolCmts.prototype.toggleManagePopup = function(oLink, iCmtId) {
 	});
 };
 
-BxDolCmts.prototype.togglePlusedByPopup = function(oLink, iCmtId) {
-	var $this = this;
-    var oData = this._getDefaultActions();
-    oData['action'] = 'GetPlusedBy';
-    oData['CmtId'] = iCmtId;
-
-    var oPopup = $(".bx-popup-applied:visible");
-    if(oPopup.length) {
-    	oPopup.dolPopupHide();
-    	return;
-    }
-
-	this._loadingInContent(oLink, true);
-
-	jQuery.post (
-		this._sActionsUrl,
-        oData,
-        function (s) {
-			$this._loadingInContent(oLink, false);
-
-			var oPopup = $(s).hide(); 
-
-	    	$('#' + oPopup.attr('id')).remove();
-	        oPopup.prependTo('body').dolPopup({
-	        	pointer:{
-	    			el:$(oLink)
-	    		}
-	        });
-        }
-	);
-};
-
-
 BxDolCmts.prototype._getCmt = function (e, iCmtId)
 {
     var $this = this;

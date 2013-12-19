@@ -810,7 +810,7 @@ class BxBaseStudioFormsFieldText extends BxBaseStudioFormsFieldBlockHeader {
                 )
             ),
             'required' => array(
-                'type' => 'checkbox',
+                'type' => 'switcher',
                 'name' => 'required',
                 'caption' => _t('_adm_form_txt_field_required'),
                 'info' => _t('_adm_form_dsc_field_required'),
