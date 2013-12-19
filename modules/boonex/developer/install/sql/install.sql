@@ -95,7 +95,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('mod_dev_forms_form', @sName, 'uri', '', '', 0, 'text', '_bx_dev_frm_txt_sys_forms_uri', '_bx_dev_frm_txt_forms_uri', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('mod_dev_forms_form', @sName, 'uri_title', '', '', 0, 'text', '_bx_dev_frm_txt_sys_forms_uri_title', '_bx_dev_frm_txt_forms_uri_title', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('mod_dev_forms_form', @sName, 'params', '', '', 0, 'textarea', '_bx_dev_frm_txt_sys_forms_params', '_bx_dev_frm_txt_forms_params', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
-('mod_dev_forms_form', @sName, 'deletable', '1', '', 0, 'checkbox', '_bx_dev_frm_txt_sys_forms_deletable', '_bx_dev_frm_txt_forms_deletable', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('mod_dev_forms_form', @sName, 'deletable', '1', '', 0, 'switcher', '_bx_dev_frm_txt_sys_forms_deletable', '_bx_dev_frm_txt_forms_deletable', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('mod_dev_forms_form', @sName, 'override_class_name', '', '', 0, 'text', '_bx_dev_frm_txt_sys_forms_override_class_name', '_bx_dev_frm_txt_forms_override_class_name', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('mod_dev_forms_form', @sName, 'override_class_file', '', '', 0, 'text', '_bx_dev_frm_txt_sys_forms_override_class_file', '_bx_dev_frm_txt_forms_override_class_file', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('mod_dev_forms_form', @sName, 'controls', '', 'do_submit,cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
@@ -155,7 +155,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('mod_dev_forms_display', @sName, 'module', '', '', 0, 'select', '_bx_dev_frm_txt_sys_displays_module', '_bx_dev_frm_txt_displays_module', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_dev_frm_err_displays_module', 'Xss', '', 0, 0),
 ('mod_dev_forms_display', @sName, 'object', '', '', 0, 'select', '_bx_dev_frm_txt_sys_displays_object', '_bx_dev_frm_txt_displays_object', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_dev_frm_err_displays_object', 'Xss', '', 0, 0),
 ('mod_dev_forms_display', @sName, 'title', '', '', 0, 'text', '_bx_dev_frm_txt_sys_displays_title', '_bx_dev_frm_txt_displays_title', '', 1, 0, 0, '', '', '', 'Length', 'a:2:{s:3:"min";i:6;s:3:"max";i:100;}', '_bx_dev_frm_err_displays_title', 'Xss', '', 0, 0),
-('mod_dev_forms_display', @sName, 'view_mode', '1', '', 0, 'checkbox', '_bx_dev_frm_txt_sys_displays_view_mode', '_bx_dev_frm_txt_displays_view_mode', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('mod_dev_forms_display', @sName, 'view_mode', '1', '', 0, 'switcher', '_bx_dev_frm_txt_sys_displays_view_mode', '_bx_dev_frm_txt_displays_view_mode', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('mod_dev_forms_display', @sName, 'controls', '', 'do_submit,cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('mod_dev_forms_display', @sName, 'do_submit', '_bx_dev_frm_btn_displays_add', '', 0, 'submit', '_bx_dev_frm_btn_sys_displays_add', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('mod_dev_forms_display', @sName, 'cancel', '_bx_dev_frm_btn_displays_cancel', '', 0, 'button', '_bx_dev_frm_btn_sys_displays_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0);
@@ -194,7 +194,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('mod_dev_forms_prelist', @sName, 'key', '', '', 0, 'text', '_bx_dev_frm_txt_sys_prelists_key', '_bx_dev_frm_txt_prelists_key', '', 1, 0, 0, '', '', '', 'Length', 'a:2:{s:3:"min";i:6;s:3:"max";i:100;}', '_bx_dev_frm_err_prelists_key', 'Xss', '', 0, 0),
 ('mod_dev_forms_prelist', @sName, 'module', '', '', 0, 'select', '_bx_dev_frm_txt_sys_prelists_module', '_bx_dev_frm_txt_prelists_module', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_dev_frm_err_prelists_module', 'Xss', '', 0, 0),
 ('mod_dev_forms_prelist', @sName, 'title', '', '', 0, 'text', '_bx_dev_frm_txt_sys_prelists_title', '_bx_dev_frm_txt_prelists_title', '', 1, 0, 0, '', '', '', 'Length', 'a:2:{s:3:"min";i:6;s:3:"max";i:100;}', '_bx_dev_frm_err_prelists_title', 'Xss', '', 0, 0),
-('mod_dev_forms_prelist', @sName, 'use_for_sets', '1', '', 1, 'checkbox', '_bx_dev_frm_txt_sys_prelists_use_for_sets', '_bx_dev_frm_txt_prelists_use_for_sets', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('mod_dev_forms_prelist', @sName, 'use_for_sets', '1', '', 1, 'switcher', '_bx_dev_frm_txt_sys_prelists_use_for_sets', '_bx_dev_frm_txt_prelists_use_for_sets', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('mod_dev_forms_prelist', @sName, 'controls', '', 'do_submit,cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('mod_dev_forms_prelist', @sName, 'do_submit', '_bx_dev_frm_btn_prelists_add', '', 0, 'submit', '_bx_dev_frm_btn_sys_prelists_add', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('mod_dev_forms_prelist', @sName, 'cancel', '_bx_dev_frm_btn_prelists_cancel', '', 0, 'button', '_bx_dev_frm_btn_sys_prelists_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0);
@@ -313,7 +313,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('mod_dev_nav_menu', @sName, 'title', '', '', 0, 'text', '_bx_dev_nav_txt_sys_menus_title', '_bx_dev_nav_txt_menus_title', '', 1, 0, 0, '', '', '', 'Length', 'a:2:{s:3:"min";i:6;s:3:"max";i:100;}', '_bx_dev_nav_err_menus_title', 'Xss', '', 0, 0),
 ('mod_dev_nav_menu', @sName, 'set_name', '', '', 0, 'select', '_bx_dev_nav_txt_sys_menus_set_name', '_bx_dev_nav_txt_menus_set_name', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_dev_nav_err_menus_set_name', 'Xss', '', 0, 0),
 ('mod_dev_nav_menu', @sName, 'template_id', '', '', 0, 'select', '_bx_dev_nav_txt_sys_menus_template_id', '_bx_dev_nav_txt_menus_template_id', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_dev_nav_err_menus_template_id', 'Int', '', 0, 0),
-('mod_dev_nav_menu', @sName, 'deletable', '1', '', 0, 'checkbox', '_bx_dev_nav_txt_sys_menus_deletable', '_bx_dev_nav_txt_menus_deletable', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('mod_dev_nav_menu', @sName, 'deletable', '1', '', 0, 'switcher', '_bx_dev_nav_txt_sys_menus_deletable', '_bx_dev_nav_txt_menus_deletable', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('mod_dev_nav_menu', @sName, 'override_class_name', '', '', 0, 'text', '_bx_dev_nav_txt_sys_menus_override_class_name', '_bx_dev_nav_txt_menus_override_class_name', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('mod_dev_nav_menu', @sName, 'override_class_file', '', '', 0, 'text', '_bx_dev_nav_txt_sys_menus_override_class_file', '_bx_dev_nav_txt_menus_override_class_file', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('mod_dev_nav_menu', @sName, 'controls', '', 'do_submit,cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
@@ -359,7 +359,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('mod_dev_nav_set', @sName, 'module', '', '', 0, 'select', '_bx_dev_nav_txt_sys_sets_module', '_bx_dev_nav_txt_sets_module', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_dev_nav_err_sets_module', 'Xss', '', 0, 0),
 ('mod_dev_nav_set', @sName, 'set_name', '', '', 0, 'text', '_bx_dev_nav_txt_sys_sets_set_name', '_bx_dev_nav_txt_sets_set_name', '', 1, 0, 0, '', '', '', 'Length', 'a:2:{s:3:"min";i:6;s:3:"max";i:100;}', '_bx_dev_nav_err_sets_set_name', 'Xss', '', 0, 0),
 ('mod_dev_nav_set', @sName, 'title', '', '', 0, 'text', '_bx_dev_nav_txt_sys_sets_title', '_bx_dev_nav_txt_sets_title', '', 1, 0, 0, '', '', '', 'Length', 'a:2:{s:3:"min";i:6;s:3:"max";i:100;}', '_bx_dev_nav_err_sets_title', 'Xss', '', 0, 0),
-('mod_dev_nav_set', @sName, 'deletable', '1', '', 0, 'checkbox', '_bx_dev_nav_txt_sys_sets_deletable', '_bx_dev_nav_txt_sets_deletable', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('mod_dev_nav_set', @sName, 'deletable', '1', '', 0, 'switcher', '_bx_dev_nav_txt_sys_sets_deletable', '_bx_dev_nav_txt_sets_deletable', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('mod_dev_nav_set', @sName, 'controls', '', 'do_submit,cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('mod_dev_nav_set', @sName, 'do_submit', '_bx_dev_nav_btn_sets_add', '', 0, 'submit', '_bx_dev_nav_btn_sys_sets_add', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('mod_dev_nav_set', @sName, 'cancel', '_bx_dev_nav_btn_sets_cancel', '', 0, 'button', '_bx_dev_nav_btn_sys_sets_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0);
@@ -402,7 +402,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('mod_dev_nav_item', @sName, 'target', '', '', 0, 'text', '_bx_dev_nav_txt_sys_items_target', '_bx_dev_nav_txt_items_target', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('mod_dev_nav_item', @sName, 'icon', '', '', 0, 'text', '_bx_dev_nav_txt_sys_items_icon', '_bx_dev_nav_txt_items_icon', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('mod_dev_nav_item', @sName, 'submenu_object', '', '', 0, 'text', '_bx_dev_nav_txt_sys_items_submenu_object', '_bx_dev_nav_txt_items_submenu_object', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
-('mod_dev_nav_item', @sName, 'copyable', '1', '', 0, 'checkbox', '_bx_dev_nav_txt_sys_items_copyable', '_bx_dev_nav_txt_items_copyable', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('mod_dev_nav_item', @sName, 'copyable', '1', '', 0, 'switcher', '_bx_dev_nav_txt_sys_items_copyable', '_bx_dev_nav_txt_items_copyable', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('mod_dev_nav_item', @sName, 'controls', '', 'do_submit,cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('mod_dev_nav_item', @sName, 'do_submit', '_bx_dev_nav_btn_items_add', '', 0, 'submit', '_bx_dev_nav_btn_sys_items_add', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('mod_dev_nav_item', @sName, 'cancel', '_bx_dev_nav_btn_items_cancel', '', 0, 'button', '_bx_dev_nav_btn_sys_items_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0);
@@ -455,7 +455,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('mod_dev_bp_page', @sName, 'uri', '', '', 0, 'text', '_bx_dev_bp_txt_sys_page_uri', '_bx_dev_bp_txt_page_uri', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('mod_dev_bp_page', @sName, 'url', '', '', 0, 'text', '_bx_dev_bp_txt_sys_page_url', '_bx_dev_bp_txt_page_url', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('mod_dev_bp_page', @sName, 'layout_id', '', '', 0, 'select', '_bx_dev_bp_txt_sys_page_layout_id', '_bx_dev_bp_txt_page_layout_id', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_dev_bp_err_page_layout_id', 'Int', '', 0, 0),
-('mod_dev_bp_page', @sName, 'deletable', '1', '', 0, 'checkbox', '_bx_dev_bp_txt_sys_page_deletable', '_bx_dev_bp_txt_page_deletable', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('mod_dev_bp_page', @sName, 'deletable', '1', '', 0, 'switcher', '_bx_dev_bp_txt_sys_page_deletable', '_bx_dev_bp_txt_page_deletable', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('mod_dev_bp_page', @sName, 'override_class_name', '', '', 0, 'text', '_bx_dev_bp_txt_sys_page_override_class_name', '_bx_dev_bp_txt_page_override_class_name', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('mod_dev_bp_page', @sName, 'override_class_file', '', '', 0, 'text', '_bx_dev_bp_txt_sys_page_override_class_file', '_bx_dev_bp_txt_page_override_class_file', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('mod_dev_bp_page', @sName, 'controls', '', 'do_submit,cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
@@ -494,8 +494,9 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('mod_dev_bp_block', @sName, 'designbox_id', '', '', 0, 'select', '_bx_dev_bp_txt_sys_block_designbox_id', '_bx_dev_bp_txt_block_designbox_id', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_dev_bp_err_block_designbox_id', 'Xss', '', 0, 0),
 ('mod_dev_bp_block', @sName, 'visible_for', '', '', 0, 'select', '_bx_dev_bp_txt_sys_block_visible_for', '_bx_dev_bp_txt_block_visible_for', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('mod_dev_bp_block', @sName, 'visible_for_levels', '', '', 0, 'checkbox_set', '_bx_dev_bp_txt_sys_block_visible_for_levels', '_bx_dev_bp_txt_block_visible_for_levels', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
-('mod_dev_bp_block', @sName, 'deletable', '1', '', 0, 'checkbox', '_bx_dev_bp_txt_sys_block_deletable', '_bx_dev_bp_txt_block_deletable', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
-('mod_dev_bp_block', @sName, 'copyable', '1', '', 0, 'checkbox', '_bx_dev_bp_txt_sys_block_copyable', '_bx_dev_bp_txt_block_copyable', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('mod_dev_bp_block', @sName, 'deletable', '1', '', 0, 'switcher', '_bx_dev_bp_txt_sys_block_deletable', '_bx_dev_bp_txt_block_deletable', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('mod_dev_bp_block', @sName, 'copyable', '1', '', 0, 'switcher', '_bx_dev_bp_txt_sys_block_copyable', '_bx_dev_bp_txt_block_copyable', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('mod_dev_bp_block', @sName, 'active', '1', '', 0, 'switcher', '_bx_dev_bp_txt_sys_block_active', '_bx_dev_bp_txt_block_active', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('mod_dev_bp_block', @sName, 'controls', '', 'do_submit,cancel,delete', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('mod_dev_bp_block', @sName, 'do_submit', '_bx_dev_bp_btn_block_add', '', 0, 'submit', '_bx_dev_bp_btn_sys_block_add', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('mod_dev_bp_block', @sName, 'cancel', '_bx_dev_bp_btn_block_cancel', '', 0, 'button', '_bx_dev_bp_btn_sys_block_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0),
@@ -511,10 +512,11 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('mod_dev_bp_block_edit', 'visible_for_levels', 2147483647, 1, 7),
 ('mod_dev_bp_block_edit', 'deletable', 2147483647, 1, 8),
 ('mod_dev_bp_block_edit', 'copyable', 2147483647, 1, 9),
-('mod_dev_bp_block_edit', 'controls', 2147483647, 1, 10),
-('mod_dev_bp_block_edit', 'do_submit', 2147483647, 1, 11),
-('mod_dev_bp_block_edit', 'cancel', 2147483647, 1, 12),
-('mod_dev_bp_block_edit', 'delete', 2147483647, 1, 13);
+('mod_dev_bp_block_edit', 'active', 2147483647, 1, 10),
+('mod_dev_bp_block_edit', 'controls', 2147483647, 1, 11),
+('mod_dev_bp_block_edit', 'do_submit', 2147483647, 1, 12),
+('mod_dev_bp_block_edit', 'cancel', 2147483647, 1, 13),
+('mod_dev_bp_block_edit', 'delete', 2147483647, 1, 14);
 
 --
 -- Polyglot -> Grid descriptors
