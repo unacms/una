@@ -33,7 +33,9 @@ div.bx-tl-uploader-file-preview {
 div.bx-tl-uploader-file-preview,
 div.bx-tl-uploader-file-preview img {
 	width: 100px;
+	width: 6.25rem;
 	height: 100px;
+	height: 6.25rem;
 }
 div.bx-tl-uploader-file-preview img {
 	background-position: center center;

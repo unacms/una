@@ -928,8 +928,10 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
                 $sRet = BxTemplFunctions::getInstance()->getMetaIcons();
                 break;
             case 'popup_loading':
+            	$sContent = $this->parsePageByName('popup_loading.html', array());
+
                 bx_import('BxTemplFunctions');
-                $sRet = BxTemplFunctions::getInstance()->transBox('bx-popup-loading', '<div class="bx-def-padding bx-popup-content-wrapped"></div>', true);
+                $sRet = BxTemplFunctions::getInstance()->transBox('bx-popup-loading', $sContent, true);
                 break;
             case 'main_div_width':
                 if(!empty($this->aPage['width']))

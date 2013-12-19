@@ -141,19 +141,19 @@ class BxDolCmtsQuery extends BxDolDb
         }
 
         $sQuery = $this->prepare("SELECT
-                `c`.`cmt_id`,
-                `c`.`cmt_parent_id`,
-                `c`.`cmt_vparent_id`,
-                `c`.`cmt_object_id`,
-                `c`.`cmt_author_id`,
-                `c`.`cmt_level`,
-                `c`.`cmt_text`,
-                `c`.`cmt_replies`,
-                `c`.`cmt_time`
+                `{$this->_sTable}`.`cmt_id`,
+                `{$this->_sTable}`.`cmt_parent_id`,
+                `{$this->_sTable}`.`cmt_vparent_id`,
+                `{$this->_sTable}`.`cmt_object_id`,
+                `{$this->_sTable}`.`cmt_author_id`,
+                `{$this->_sTable}`.`cmt_level`,
+                `{$this->_sTable}`.`cmt_text`,
+                `{$this->_sTable}`.`cmt_replies`,
+                `{$this->_sTable}`.`cmt_time`
                 $sFields
-            FROM {$this->_sTable} AS `c`
+            FROM `{$this->_sTable}`
             $sJoin
-            WHERE `c`.`cmt_object_id` = ? AND `c`.`cmt_id` = ?
+            WHERE `{$this->_sTable}`.`cmt_object_id` = ? AND `{$this->_sTable}`.`cmt_id` = ?
             LIMIT 1", $iId, $iCmtId);
         return $this->getRow($sQuery);
     }
