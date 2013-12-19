@@ -2902,6 +2902,7 @@ CREATE TABLE IF NOT EXISTS `sys_menu_items` (
   `onclick` varchar(255) NOT NULL,
   `target` varchar(255) NOT NULL,
   `icon` varchar(255) NOT NULL,
+  `addon` text NOT NULL,
   `submenu_object` varchar(32) NOT NULL,
   `visible_for_levels` int(11) NOT NULL DEFAULT '2147483647',
   `active` tinyint(4) NOT NULL DEFAULT '1',
