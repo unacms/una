@@ -653,11 +653,16 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 
 		//--- Process Text ---// 
 		$sUrl = isset($aContent['url']) ? bx_html_attribute($aContent['url']) : '';
-		$sTitle = isset($aContent['title']) ? bx_process_output($aContent['title']) : '';
+		$sTitle = $sTitleAttr = '';
+		if(isset($aContent['title'])) {
+			$sTitle = bx_process_output($aContent['title']);
+			$sTitleAttr = bx_html_attribute($aContent['title']);
+		}
+
 		if(!empty($sUrl) && !empty($sTitle))
 			$sTitle = $this->parseHtmlByName('bx_a.html', array(
 				'href' => $sUrl,
-				'title' => $sTitle,
+				'title' => $sTitleAttr,
 				'bx_repeat:attrs' => array(
 					array('key' => 'class', 'value' => $sStylePrefix . '-title')
 				),
