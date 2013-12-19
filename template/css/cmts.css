@@ -28,15 +28,15 @@
        display: none;
     }
     li.cmt-replacement {
-       height: 30px;
-       margin-bottom: 10px;
-       position: relative;
-       background-color: #ededed;
-       overflow: hidden;
-       text-indent: 10px;
-       line-height: 30px;
-       font-size: 11px;
-       color: #333333;
+    	position: relative;
+		height: 30px;
+		height: 1.875rem;
+		background-color: #ededed;
+		text-indent: 10px;
+    	text-indent: 0.5rem;
+		line-height: 30px;
+    	line-height: 1.875rem;
+    	overflow: hidden;
     }
     div.cmt-cnt {
 		position: relative;
@@ -56,13 +56,6 @@
     li.cmt-more-root div.cmt-more-cont {
     	position: relative;
     }
-    li.cmt-more-root div.cmt-more-line {
-    	position: absolute;
-    	top: 50%;
-    	width: 100%;
-		border-width: 4px;
-    	borded-bottom: none;
-    }
     li.cmt-more-root .bx-btn {
     	position: relative;
 		float: none;
@@ -78,6 +71,7 @@
     	text-align: center;
     }
     div.cmt-avatar .sys-icon {
+    	font-size: 60px;
 		font-size: 3.75rem;
     }
     div.cmt-info {
@@ -112,9 +106,11 @@
     }
 	div.cmt-cont .bullet {
 		padding: 0px 5px;
+		padding: 0px 0.3rem;
     }
     div.cmt-cont .cmt-post-reply .bx-form-element-wrapper {
 		margin-top: 10px;
+    	margin-top: 0.5rem;
     }
 	div.cmt-cont .cmt-post-reply .bx-form-element-wrapper:first-child {
 		margin-top: 0px;
@@ -122,18 +118,15 @@
     span.cmt-body-see-more a {
 		font-weight: bold;
     }
-    
-    div.cmt-attached {
-		margin-left: -5px;
-    	margin-right: -5px;
-    }
     div.cmt-attached-preview {
 		overflow:hidden;
     }
     div.cmt-attached-preview,
     div.cmt-attached-preview img {
     	width: 100px;
+    	width: 6.25rem;
     	height: 100px;
+    	height: 6.25rem;
     }
     div.cmt-attached-preview {
     	position: relative;
@@ -147,7 +140,9 @@
 	img.cmt-attached-image {
 		position: relative;
 		max-width: 600px;
+		max-width: 37.5rem;
 		max-height: 600px;
+		max-height: 37.5rem;
 		cursor: pointer;
 	}
 	
@@ -177,19 +172,6 @@
 		white-space: nowrap;
     }
 
-    /*--- Comment Plused By ---*/
-    div.cmt-pb-list {}
-    div.cmt-pb-list-cnt {
-    	max-height: 200px;
-    	min-width: 195px;
-		overflow: auto;
-    }
-    div.cmt-pb-list div.bx-persons-unit {
-		float: none;
-    	margin-right: 0px;
-    	margin-bottom: 0px;
-    }
-
     /*--- Add Comment/Reply Styles ---*/
     div.cmt-reply {
 		position: relative;
@@ -201,6 +183,7 @@
     /*--- Add Comment/Reply Form Styles ---*/
     form.cmt-post-reply .bx-form-input-textarea {
 		height: 64px;
+    	height: 4rem;
     }
     form.cmt-post-reply .bx-form-input-submit {
     	text-transform: uppercase;
@@ -225,7 +208,9 @@
     div.cmts-uploader-file-preview,
     div.cmts-uploader-file-preview img {
 		width: 100px;
+    	width: 6.25rem;
     	height: 100px;
+    	height: 6.25rem;
     }
     div.cmts-uploader-file-preview img {
 		background-position: center center;

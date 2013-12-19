@@ -294,30 +294,6 @@ class BxBaseCmts extends BxDolCmts {
         return $this->_getFormEdit($aCmt);
     }
 
-    function getPlusedBy($iCmtId)
-    {
-    	$oTemplate = BxDolTemplate::getInstance();
-
-    	$aTmplUsers = array();
-
-    	$aUserIds = $this->_oQuery->getRatedBy($this->_aSystem['system_id'], $iCmtId);
-    	foreach($aUserIds as $iUserId) {
-    		list($sUserName, $sUserUrl, $sUserIcon, $sUserUnit) = $this->_getAuthorInfo($iUserId);
-			$aTmplUsers[] = array(
-				'style_prefix' => $this->_sStylePrefix,
-				'user_unit' => $sUserUnit
-			);
-    	}
-
-    	$sContent = $oTemplate->parseHtmlByName('comment_plused_by.html', array(
-    		'style_prefix' => $this->_sStylePrefix,
-    		'bx_repeat:list' => $aTmplUsers
-    	));
-
-    	bx_import('BxTemplStudioFunctions');
-        return BxTemplStudioFunctions::getInstance()->transBox($this->_sSystem . '-plused-by', $sContent, true);
-    }
-
     function getImage($iImgId)
     {
     	if(!$this->isAttachImageEnabled())

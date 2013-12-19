@@ -2,7 +2,9 @@
 div.bx-vote-by-list {}
 div.bx-vote-by-list-cnt {
 	max-height: 200px;
-	min-width: 225px;
+	max-height: 12.5rem;
+	min-width: 220px;
+	min-width: 13.75rem;
 	overflow: auto;
 }
 div.bx-vote-by-list div.bx-persons-unit {
