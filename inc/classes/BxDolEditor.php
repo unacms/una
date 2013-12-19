@@ -147,11 +147,7 @@ class BxDolEditor extends BxDol implements iBxDolFactoryObject {
     protected function _replaceMarkers ($s, $a) {
         if (empty($s) || empty($a) || !is_array($a))
             return $s;
-
-        foreach ($a as $sKey => $sValue)
-            $s = str_replace('{' . $sKey . '}', $sValue, $s);
-
-        return $s;
+        return bx_replace_markers($s, $a);
     }
 
 }

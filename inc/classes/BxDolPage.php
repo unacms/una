@@ -194,18 +194,7 @@ class BxDolPage extends BxDol implements iBxDolFactoryObject {
      * @return string where all occured markers are replaced
      */ 
     protected function _replaceMarkers ($mixed) {
-        if (empty($this->_aMarkers))
-            return $mixed;
-
-        if (is_array($mixed)) {
-            foreach ($mixed as $sKey => $sValue)
-                $mixed[$sKey] = $this->_replaceMarkers ($sValue);
-        } else {
-            foreach ($this->_aMarkers as $sKey => $sValue)
-                $mixed = str_replace('{' . $sKey . '}', $sValue, $mixed);
-        }
-
-        return $mixed;
+        return bx_replace_markers($mixed, $this->_aMarkers);
     }
 
     /**

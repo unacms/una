@@ -215,10 +215,8 @@ class BxDolMenu extends BxDol implements iBxDolFactoryObject {
             return $a;
         $aReplacebleFields = array ('title', 'link', 'onclick');
         foreach ($aReplacebleFields as $sField)
-        	if(isset($a[$sField]))
-            	foreach ($this->_aMarkers as $sKey => $sValue)
-                	$a[$sField] = str_replace('{' . $sKey . '}', $sValue, $a[$sField]);
-
+        	if (isset($a[$sField]))
+                $a[$sField] = bx_replace_markers($a[$sField], $this->_aMarkers);
         return $a;
     }
 
