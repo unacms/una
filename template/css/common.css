@@ -110,10 +110,7 @@ blockquote {
 
 .bx-popup-header {
     position:relative;
-
-    border-bottom: 2px solid #383d66;
-
-    background-color:#0764a7;
+    background-color: #3b8686;
 }
 
 .bx-popup-header .bx-db-menu-tab-btn {

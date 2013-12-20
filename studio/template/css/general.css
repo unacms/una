@@ -2,12 +2,11 @@ html,
 body {
 	height: 100%;
 }
-body.bx-std-bg {
-	background-image: url(../images/bx-std-bg-main.png);
-    background-size:50px 50px;
-}
 iframe.bx-std-hidden {
 	display: none;
+}
+body.bx-std-bg {
+	background-color: #3b8686;
 }
 div.bx-std-cb {
     clear: both;
@@ -60,21 +59,16 @@ div.bx-std-content-wrp {
 div.bx-std-page-caption {
 	position: relative;
 	height: 70px;
-	border-bottom: 2px solid #383d66;
-	background-image: url(../images/bx-std-bg-caption.jpg);
-	background-position: 0px 0px;
+	background-image: url("../images/bx-std-bg-caption.png");
+    background-position: 0 0;
     background-repeat: repeat-x;
-	-moz-box-shadow: 0px 0px 5px rgba(51, 51, 51, 0.7);
-    -webkit-box-shadow: 0px 0px 5px rgba(51, 51, 51, 0.7);
-    box-shadow: 0px 0px 5px rgba(51, 51, 51, 0.7);
 }
 div.bx-std-pcap-icon {}
 div.bx-std-pcap-text {
 	position: relative;
-	line-height: 71px;
-	text-align: center;	
-	color: #ffffff;
-    text-shadow: #000 0px 1px 2px;
+	line-height: 70px;
+	text-align: center;
+	font-size: 2rem;
 }
 div.bx-std-pcap-menu-popup {
 	position: absolute;
@@ -155,15 +149,11 @@ div.bx-std-pmen-item i.sys-icon {
     left: 20px;
 }
 div.bx-menu-tab-active {
-	border-top: 1px solid #4482ba;
-    border-bottom: 1px solid #333852;
-	background-image: url(../images/bx-std-bg-mi-selected.jpg);
-	background-repeat: repeat-x;
-	text-shadow: #000000 0px 1px 2px;
+	background-color: #f2f2f2;
 }
 div.bx-menu-tab-active a,
 div.bx-menu-tab-active:hover a {
-	color: #ffffff;
+	color: #333333;
     text-decoration:none;
 }
 
