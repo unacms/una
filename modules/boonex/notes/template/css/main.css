@@ -1,6 +1,10 @@
 
 /* unit */
 
+.bx-notes-unit:first-child h2 {
+    padding-top:0;
+}
+
 .bx-notes-unit h2 {
     margin:0;
 }
