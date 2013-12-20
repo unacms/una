@@ -1,15 +1,13 @@
 
-/* search results */
-
-.bx-notes-wrapper .bx-def-hr:first-child {
-    display:none;
-}
-
-.bx-notes-wrapper .bx-def-hr:first-child + .bx-notes-unit h2 {
-    margin-top:0;
-}
-
 /* unit */
+
+.bx-notes-unit h2 {
+    margin:0;
+}
+
+.bx-notes-unit .sys-icon {
+    vertical-align:middle;
+}
 
 .bx-notes-unit-thumb {
     float:right;
