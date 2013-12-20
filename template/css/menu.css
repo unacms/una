@@ -187,11 +187,11 @@ ul.bx-menu-main {
 
 /* --------------- toolbar menu */
 
-#bx-popup-ajax-wrapper-sys_site .bx-popup-content-wrapped {
+#bx-popup-ajax-wrapper-sys_site .bx-popup-content-indent {
     padding:12px;
     padding:0.75rem;
-    width:140px;
-    width:8.75rem;
+    width:134px;
+    width:8.375rem;
 }
 
 #bx-menu-toolbar-1-container .bx-menu-toolbar {
