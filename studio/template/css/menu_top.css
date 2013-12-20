@@ -24,9 +24,7 @@ div.bx-std-menu-top-center {
 	margin: 0px auto;
 	line-height: 50px;
 	text-align: center;
-    text-shadow: 0 1px 0px rgba(0, 0, 0, 0.6), 0 -1px 0px rgba(255, 255, 255, 0.5);
-    opacity: 0.45;
-	color: #38c;
+	font-size: 2rem;
 }
 div.bx-std-menu-top-right {
     position: absolute;

@@ -60,14 +60,14 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton {
         parent::init();
 
         //--- Add default CSS in output
-		$this->addCss(array(
+		$this->addCssSystem(array(
 			'common.css',
-			'default.css',
+			'default.less',
 			'general.css',
 		));
 
         //--- Add default JS in output
-		$this->addJs(array(
+		$this->addJsSystem(array(
 		    'jquery.js',
             'jquery.migrate.js',
 		    'jquery.dolPopup.js',
