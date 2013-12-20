@@ -27,9 +27,9 @@
 }
 .bx-def-margin-top-auto {
     .margin-top(@bx-margin);
-}
-.bx-def-margin-top-auto:first-child {
-    .margin-top(0px);
+    &:first-child {
+        .margin-top(0px);
+    }
 }
 .bx-def-margin-right {
     .margin-right(@bx-margin);
@@ -42,9 +42,9 @@
 }
 .bx-def-margin-left-auto {
     .margin-left(@bx-margin);
-}
-.bx-def-margin-left-auto:first-child {
-    .margin-left(0);
+    &:first-child {
+        .margin-left(0);
+    }
 }
 
 .bx-def-margin-sec {
@@ -72,9 +72,9 @@
 }
 .bx-def-margin-sec-top-auto {
     .margin-top(@bx-margin-sec);
-}
-.bx-def-margin-sec-top-auto:first-child {
-    .margin-top(0);
+    &:first-child {
+        .margin-top(0);
+    }
 }
 .bx-def-margin-sec-right {
     .margin-right(@bx-margin-sec);
@@ -87,9 +87,9 @@
 }
 .bx-def-margin-sec-left-auto {
     .margin-left(@bx-margin-sec);
-}
-.bx-def-margin-sec-left-auto:first-child {
-    .margin-left(0);
+    &:first-child {
+        .margin-left(0);
+    }
 }
 
 .bx-def-margin-thd {
@@ -117,9 +117,9 @@
 }
 .bx-def-margin-thd-top-auto {
     .margin-top(@bx-margin-thd);
-}
-.bx-def-margin-thd-top-auto:first-child {
-    .margin-top(0);
+    &:first-child {
+        .margin-top(0);
+    }
 }
 .bx-def-margin-thd-right {
     .margin-right(@bx-margin-thd);
@@ -249,7 +249,7 @@
     margin-right:0;
     padding:0;
     border:0px;
-    .border-top(1px, solid, #d0d0d0);
+    .border-top(@bx-border-width, @bx-border-type, @bx-border-color);
 }
 .bx-def-hr-auto:first-child {
 	display: none;
@@ -274,33 +274,33 @@
 
 /* border for common layout elements likedesign boxes, pads, menu items, etc */
 .bx-def-border {
-    .border(1px, solid, #d0d0d0);
+    .border(@bx-border-width, @bx-border-type, @bx-border-color);
 }
 .bx-def-border-rightbottomleft {
-    .border-right(1px, solid, #d0d0d0);
-    .border-bottom(1px, solid, #d0d0d0);
-    .border-left(1px, solid, #d0d0d0);
+    .border-right(@bx-border-width, @bx-border-type, @bx-border-color);
+    .border-bottom(@bx-border-width, @bx-border-type, @bx-border-color);
+    .border-left(@bx-border-width, @bx-border-type, @bx-border-color);
 }
 .bx-def-border-top {
-    .border-top(1px, solid, #d0d0d0);
+    .border-top(@bx-border-width, @bx-border-type, @bx-border-color);
 }
 .bx-def-border-top-auto {
-    .border-top(1px, solid, #d0d0d0);
-}
-.bx-def-border-top-auto:first-child {
-    border-top:none;
+    .border-top(@bx-border-width, @bx-border-type, @bx-border-color);
+    &:first-child {
+        border-top:none;
+    }
 }
 .bx-def-border-right {
-    .border-right(1px, solid, #d0d0d0);
+    .border-right(@bx-border-width, @bx-border-type, @bx-border-color);
 }
 .bx-def-border-bottom {
-    .border-bottom(1px, solid, #d0d0d0);
+    .border-bottom(@bx-border-width, @bx-border-type, @bx-border-color);
 }
 .bx-def-border-left {
-    .border-left(1px, solid, #d0d0d0);
+    .border-left(@bx-border-width, @bx-border-type, @bx-border-color);
 }
 .bx-def-border-right {
-    .border-right(1px, solid, #d0d0d0);
+    .border-right(@bx-border-width, @bx-border-type, @bx-border-color);
 }
 
 /* shadow */
@@ -310,7 +310,7 @@
 
 /* round corders */
 .bx-def-round-corners {
-    .radius(3px);
+    .radius(@bx-round-corners-radius);
 }
 
 /* fonts */
@@ -320,52 +320,52 @@
 .bx-def-font {
     font-family:@bx-font-family;
     font-weight:400; /* 26.13.13: prev val 300 */
-    .font-size(16px);
-    color:#333;
+    .font-size(@bx-font-size-default);
+    color:@bx-font-color-default;
 }
 
 .bx-def-font-inputs {
     font-family:@bx-font-family;
     font-weight:400; /* 27.13.13: prev val 300 */
-    .font-size(16px);
-    color:#333;
+    .font-size(@bx-font-size-default);
+    color:@bx-font-color-default;
 }
 
 .bx-def-font-grayed {
-    color:#999;
+    color:@bx-font-color-grayed;
 }
 
 .bx-def-font-contrasted {
-    color:#fff;
+    color:@bx-font-color-contrasted;
 }
 
 .bx-def-font-small {
-    .font-size(12px);
+    .font-size(@bx-font-size-small);
 }
 
 .bx-def-font-middle {
-    .font-size(14px);
+    .font-size(@bx-font-size-middle);
 }
 
 .bx-def-font-large {
-    .font-size(18px);
+    .font-size(@bx-font-size-large);
 }
 
 h1,
 .bx-def-font-h1 {
-    .font-size(24px);
+    .font-size(@bx-font-size-h1);
     font-weight:normal;
 }
 
 h2,
 .bx-def-font-h2 {
-    .font-size(18px);
+    .font-size(@bx-font-size-h2);
     font-weight:normal;
 }
 
 h3,
 .bx-def-font-h3 {
-    .font-size(16px);
+    .font-size(@bx-font-size-h3);
     font-weight:normal;
 }
 
@@ -375,7 +375,6 @@ h3,
 .bx-def-thumb,
 .bx-def-icon {
     .radius(80px);
-
     overflow:hidden;
 }
 
