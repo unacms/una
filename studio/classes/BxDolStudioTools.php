@@ -11,15 +11,15 @@ require_once('./../inc/classes/BxDolIO.php');
 
 // TODO: consider rewriting installer
 
-class BxDolAdminTools extends BxDolIO
+class BxDolStuioTools extends BxDolIO
 {
 
     protected $sTroubledElements;
 
-    protected $aInstallDirs;
-    protected $aInstallFiles;
-    protected $aPostInstallPermDirs;
-    protected $aPostInstallPermFiles;
+    public $aInstallDirs;
+    public $aInstallFiles;
+    public $aPostInstallPermDirs;
+    public $aPostInstallPermFiles;
 
     function __construct()
     {

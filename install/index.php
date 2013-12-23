@@ -764,7 +764,7 @@ function checkPostInstallPermissions(&$sError) {
     $sFoldersErr = $sFilesErr = $sErrorMessage = '';
     
     require_once('../studio/classes/BxDolStudioTools.php');
-    $oAdmTools = new BxDolAdminTools();
+    $oAdmTools = new BxDolStudioTools();
     $oBxDolIO = new BxDolIO();
 
     $aInstallDirsMerged = array_merge($aTemporalityWritableFolders, $oAdmTools->aPostInstallPermDirs);
@@ -800,7 +800,7 @@ function genPostInstallPermissionTable($sErrorMessage = '') {
     $sErrors = printInstallError($sErrorMessage);
 
     require_once('../studio/classes/BxDolStudioTools.php');
-    $oAdmTools = new BxDolAdminTools();
+    $oAdmTools = new BxDolStudioTools();
     $oBxDolIO = new BxDolIO();
 
     $aInstallDirsMerged = array_merge($aTemporalityWritableFolders, $oAdmTools->aPostInstallPermDirs);
@@ -1080,7 +1080,7 @@ function checkPreInstallPermission(&$sError) {
     $oBxDolIO = new BxDolIO();
 
     require_once('../studio/classes/BxDolStudioTools.php');
-    $oAdmTools = new BxDolAdminTools();
+    $oAdmTools = new BxDolStudioTools();
 
     $aInstallDirsMerged = array_merge($aTemporalityWritableFolders, $oAdmTools->aInstallDirs);
     foreach ($aInstallDirsMerged as $sFolder) {
@@ -1135,7 +1135,7 @@ function genPreInstallPermissionTable($sErrorMessage = '') {
     $sError = printInstallError($sErrorMessage);
 
     require_once('../studio/classes/BxDolStudioTools.php');
-    $oAdmTools = new BxDolAdminTools();
+    $oAdmTools = new BxDolStudioTools();
     $oAdmTools->aInstallDirs = array_merge($aTemporalityWritableFolders, $oAdmTools->aInstallDirs);
     $sPermTable = $oAdmTools->GenCommonCode();
     $sPermTable .= $oAdmTools->GenPermTable();
