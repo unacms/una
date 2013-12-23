@@ -1,4 +1,4 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
@@ -6,25 +6,24 @@
  * @defgroup    DolphinStudio Dolphin Studio
  * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 require_once('./../inc/classes/BxDolIO.php');
 
 // TODO: consider rewriting installer
 
-class BxDolAdminTools extends BxDolIO {
+class BxDolAdminTools extends BxDolIO
+{
 
-    var $sTroubledElements;
+    protected $sTroubledElements;
 
-    var $aInstallDirs;
-    var $aInstallFiles;
-    var $aFlashDirs;
-    var $aFlashFiles;
-    var $aPostInstallPermDirs;
-    var $aPostInstallPermFiles;
+    protected $aInstallDirs;
+    protected $aInstallFiles;
+    protected $aPostInstallPermDirs;
+    protected $aPostInstallPermFiles;
 
-    function BxDolAdminTools() {
-        parent::BxDolIO();
+    function __construct()
+    {
+        parent::__construct();
 
         $this->sTroubledElements = '';
 
@@ -33,19 +32,9 @@ class BxDolAdminTools extends BxDolIO {
             'cache_public',
             'tmp',
             'plugins/htmlpurifier/standalone/HTMLPurifier/DefinitionCache/Serializer',
-            'plugins/htmlpurifier/standalone/HTMLPurifier/DefinitionCache/Serializer/HTML',
-            'plugins/htmlpurifier/standalone/HTMLPurifier/DefinitionCache/Serializer/CSS',
-            'plugins/htmlpurifier/standalone/HTMLPurifier/DefinitionCache/Serializer/Test',
-            'plugins/htmlpurifier/standalone/HTMLPurifier/DefinitionCache/Serializer/URI',
         );
 
         $this->aInstallFiles = array(
-        );
-
-        $this->aFlashDirs = array(
-        );
-
-        $this->aFlashFiles = array(
         );
 
         $this->aPostInstallPermDirs = array(
@@ -55,7 +44,8 @@ class BxDolAdminTools extends BxDolIO {
         );
     }
 
-    function GenCommonCode() {
+    function GenCommonCode()
+    {
         $sAdditionDir = (isAdmin()==true) ? BX_DOL_URL_ROOT : '../';
         $sMasterSwPic = $sAdditionDir . 'media/images/master_nav.gif';
 
@@ -74,7 +64,7 @@ class BxDolAdminTools extends BxDolIO {
 
     .right_side_sw_caption {
         float:right;
-        width:60px;
+        font-weight:normal;
     }
 
     tr.head td {
@@ -158,25 +148,67 @@ EOF;
         return $sRet;
     }
 
-    function GenPermTable() {
+    /**
+     * Generate permissions table for modules
+     * @param $iType - 1: folder, 2: file
+     * @return HTML 
+     */ 
+    function GenPermTableForModules($iType) 
+    {
+        $aList = array ();
+        bx_import('BxDolModuleDb');
+        $oDbModules = new BxDolModuleDb();
+        $aModules = $oDbModules->getModules();
+        foreach ($aModules as $a) {
+            if (empty($a['path']) || !include(BX_DIRECTORY_PATH_MODULES . $a['path'] . 'install/config.php'))
+                continue;
+            if (empty($aConfig['install_permissions']) || !is_array($aConfig['install_permissions']['writable']))
+                continue;
+            foreach ($aConfig['install_permissions']['writable'] as $sPath) {
+                if (1 == $iType && is_dir(BX_DIRECTORY_PATH_MODULES . $a['path'] . $sPath))
+                    $aList[] = basename(BX_DIRECTORY_PATH_MODULES) . '/' . $a['path'] . $sPath;
+                elseif (2 == $iType && is_file(BX_DIRECTORY_PATH_MODULES . $a['path'] . $sPath))
+                    $aList[] = basename(BX_DIRECTORY_PATH_MODULES) . '/' . $a['path'] . $sPath;
+            }
+        }
+        return $this->GenArrElemPerm($aList, $iType);
+    }
+
+    function GenPermTable($isShowModules = false)
+    {
+        $sModulesDirsC = function_exists('_t') ? _t('_adm_admtools_modules_dirs') : 'Modules Directories';
+        $sModulesFilesC = function_exists('_t') ? _t('_adm_admtools_modules_files') : 'Modules Files';
         $sDirsC = function_exists('_t') ? _t('_adm_admtools_Directories') : 'Directories';
         $sFilesC = function_exists('_t') ? _t('_adm_admtools_Files') : 'Files';
         $sElementsC = function_exists('_t') ? _t('_adm_admtools_Elements') : 'Elements';
-        $sFlashC = function_exists('_t') ? _t('_adm_admtools_Flash') : 'Flash';
         $sCurrentLevelC = function_exists('_t') ? _t('_adm_admtools_Current_level') : 'Current level';
         $sDesiredLevelC = function_exists('_t') ? _t('_adm_admtools_Desired_level') : 'Desired level';
-        $sBadFilesC = function_exists('_t') ? _t('_adm_admtools_Bad_files') : 'Next files and directories have inappropriate permissions';
-        $sShowOnlyBadC = function_exists('_t') ? _t('_adm_admtools_Only_bad_files') : 'Show only troubled files and directories with inappropriate permissions';
-        $sShowAllC = function_exists('_t') ? _t('_adm_admtools_Show_all_files') : 'Show all files and directories';
+        $sBadFilesC = function_exists('_t') ? _t('_adm_admtools_Bad_files') : 'The following files and directories have inappropriate permissions';
+        $sShowOnlyBadC = function_exists('_t') ? _t('_adm_admtools_Only_bad_files') : 'Show only files and directories with inappropriate permissions';
         $sDescriptionC = function_exists('_t') ? _t('_adm_admtools_Perm_description') : 'Dolphin needs special access for certain files and directories. Please, change permissions as specified in the chart below. Helpful info about permissions is <a href="http://www.boonex.com/trac/dolphin/wiki/DetailedInstall#Permissions" target="_blank">available here</a>.';
 
         $this->sTroubledElements = '';
 
         $sInstallDirs = $this->GenArrElemPerm($this->aInstallDirs, 1);
-        $sFlashDirs = $this->GenArrElemPerm($this->aFlashDirs, 1);
         $sInstallFiles = $this->GenArrElemPerm($this->aInstallFiles, 2);
-        $sFlashFiles = $this->GenArrElemPerm($this->aFlashFiles, 2);
-
+        if ($isShowModules) {
+            $sModulesDirs = $this->GenPermTableForModules(1);
+            $sModulesFiles = $this->GenPermTableForModules(2);
+            if ($sModulesDirs)
+                $sModulesDirs = "
+                    <tr class='head'>
+                        <td>{$sModulesDirsC}</td>
+                        <td>{$sCurrentLevelC}</td>
+                        <td>{$sDesiredLevelC}</td>
+                    </tr>" . $sModulesDirs;
+            if ($sModulesFiles)
+                $sModulesFiles = "
+                    <tr class='head'>
+                        <td>{$sModulesFilesC}</td>
+                        <td>{$sCurrentLevelC}</td>
+                        <td>{$sDesiredLevelC}</td>
+                    </tr>" . $sModulesFiles;
+        }
         $sAdditionDir = (isAdmin()==true) ? BX_DOL_URL_ROOT : '../';
         $sLeftAddEl = (isAdmin()==true) ? '<div class="left_side_sw_caption">'.$sDescriptionC.'</div>' : '';
 
@@ -185,16 +217,18 @@ EOF;
         $sRet = <<<EOF
 <script type="text/javascript">
     <!--
-    function callSwitcher(){
+    function callSwitcher()
+    {
         $('table.install_table tr:not(.troubled)').toggle();
     }
 
-    function switchToTroubled(viewType) {
-        if (viewType == 'A') {
+    function switchToTroubled(e)
+    {
+        if (!e.checked) {
             $("#btn-alls-off").attr("id", "btn-alls-on");
             $("#btn-troubled-on").attr("id", "btn-troubled-off");
             $('table.install_table tr:not(.troubled)').show();
-        } else if (viewType == 'T') {
+        } else  {
             $("#btn-alls-on").attr("id", "btn-alls-off");
             $("#btn-troubled-off").attr("id", "btn-troubled-on");
             $('table.install_table tr:not(.troubled)').hide();
@@ -209,8 +243,7 @@ EOF;
         <td colspan="3" style="text-align:center;">
         {$sLeftAddEl}
         <div class="right_side_sw_caption">
-            <a onclick="return switchToTroubled('A')" href="#"><img id="btn-alls-on" src="{$sSpacerPic}" alt="{$sShowAllC}" title="{$sShowAllC}" /></a>
-            <a onclick="return switchToTroubled('T')" href="#"><img id="btn-troubled-off" src="{$sSpacerPic}" alt="{$sShowOnlyBadC}" title="{$sShowOnlyBadC}" /></a>
+            <input type="checkbox" id="bx-install-permissions-show-erros-only" onclick="switchToTroubled(this)" /> <label for="bx-install-permissions-show-erros-only">$sShowOnlyBadC</label>
         </div>
         <div class="clear_both"></div>
         </td>
@@ -224,12 +257,7 @@ EOF;
         <td>{$sDesiredLevelC}</td>
     </tr>
     {$sInstallDirs}
-    <tr class="head">
-        <td>{$sFlashC} {$sDirsC}</td>
-        <td>{$sCurrentLevelC}</td>
-        <td>{$sDesiredLevelC}</td>
-    </tr>
-    {$sFlashDirs}
+    {$sModulesDirs}
     <tr class="head">
         <td colspan="3" style="text-align:center;">{$sFilesC}</td>
     </tr>
@@ -239,12 +267,7 @@ EOF;
         <td>{$sDesiredLevelC}</td>
     </tr>
     {$sInstallFiles}
-    <tr class="head">
-        <td>{$sFlashC} {$sFilesC}</td>
-        <td>{$sCurrentLevelC}</td>
-        <td>{$sDesiredLevelC}</td>
-    </tr>
-    {$sFlashFiles}
+    {$sModulesFiles}
     <tr class="head troubled">
         <td colspan="3" style="text-align:center;">{$sBadFilesC}</td>
     </tr>
@@ -259,7 +282,9 @@ EOF;
         return $sRet;
     }
 
-    function GenArrElemPerm($aElements, $iType) { //$iType: 1 - folder, 2 - file
+    //$iType: 1 - folder, 2 - file
+    function GenArrElemPerm($aElements, $iType)
+    { 
         if (!is_array($aElements) || empty($aElements))
             return '';
         $sWritableC = function_exists('_t') ? _t('_adm_admtools_Writable') : 'Writable';
@@ -278,11 +303,11 @@ EOF;
             $sAwaitedPerm = ($iCurType==1) ? $sWritableC : $sWritableC;
 
             $sElemCntStyle = ($i%2==0) ? 'even' : 'odd' ;
-            $bAccessible = ($iCurType==1) ? self::isWritable($sCurElement) : self::isWritable($sCurElement);
+            $bAccessible = ($iCurType==1) ? $this->isWritable($sCurElement) : $this->isWritable($sCurElement);
 
             if ($sCurElement == 'flash/modules/global/app/ffmpeg.exe') {
                 $sAwaitedPerm = $sExecutableC;
-                $bAccessible = self::isExecutable($sCurElement);
+                $bAccessible = $this->isExecutable($sCurElement);
             }
 
             if ($bAccessible) {
@@ -304,7 +329,7 @@ EOF;
 </tr>
 EOF;
             } else {
-                $sPerm = self::getPermissions($sCurElement);
+                $sPerm = $this->getPermissions($sCurElement);
                 $sResultPerm = '';
                 if ($sPerm==false) {
                     $sResultPerm = $sNotExistsC;
@@ -348,14 +373,16 @@ EOF;
         return $sElements;
     }
 
-    function performInstalCheck() { //check requirements
+    //check requirements
+    function performInstalCheck()
+    {
         $aErrors = array();
 
         $aErrors[] = (ini_get('register_globals') == 0) ? '' : '<font color="red">register_globals is On (warning, you should have this param in Off state, or your site will unsafe)</font>';
         $aErrors[] = (ini_get('safe_mode') == 0) ? '' : '<font color="red">safe_mode is On, disable it</font>';
-        //$aErrors[] = (ini_get('allow_url_fopen') == 0) ? 'Off (warning, better keep this parameter in On to able register Dolphin' : '';
         $aErrors[] = (((int)phpversion()) < 4) ? '<font color="red">PHP version too old, update server please</font>' : '';
-        $aErrors[] = (! extension_loaded( 'mbstring')) ? '<font color="red">mbstring extension not installed. <b>Warning!</b> Dolphin cannot work without <b>mbstring</b> extension.</font>' : '';
+        $aErrors[] = (!extension_loaded( 'mbstring')) ? '<font color="red">mbstring extension not installed. <b>Warning!</b> Dolphin cannot work without <b>mbstring</b> extension.</font>' : '';
+        $aErrors[] = (ini_get('short_open_tag') == 0 && version_compare(phpversion(), "5.4", "<") == 1) ? '<font color="red">short_open_tag is Off (must be On!)<b>Warning!</b> Dolphin cannot work without <b>short_open_tag</b>.</font>' : '';
 
         if (version_compare(phpversion(), "5.2", ">") == 1) {
             $aErrors[] = (ini_get('allow_url_include') == 0) ? '' : '<font color="red">allow_url_include is On (warning, you should have this param in Off state, or your site will unsafe)</font>';
@@ -374,17 +401,17 @@ EOF;
         }
     }
 
-    function GenCacheEnginesTable() {
-
+    function GenCacheEnginesTable()
+    {
         $sRet = '<table width="100%" cellspacing="1" cellpadding="0" class="install_table">';
         $sRet .= '
 <tr class="head troubled">
     <td></td>
     <td class="center_aligned">' . _t('_sys_adm_installed') . '</td>
-    <td class="center_aligned">' . _t('_sys_adm_available') . '</td>
+    <td class="center_aligned">' . _t('_sys_adm_cache_support') . '</td>
 </tr>';
 
-        $aEngines = array ('File', 'EAccelerator', 'Memcache', 'APC', 'XCache');
+        $aEngines = array ('File', 'Memcache', 'APC', 'XCache');
         foreach ($aEngines as $sEngine) {
             $oCacheObject = @bx_instance ('BxDolCache' . $sEngine);
             $sRet .= '
@@ -399,30 +426,29 @@ EOF;
         return $sRet;
     }
 
-    function GenTabbedPage() {
+    function GenTabbedPage($isShowModules = false)
+    {
         $sTitleC = _t('_adm_admtools_title');
-        $sAuditC = _t('_adm_admtools_Audit');
-        $sPermissionsC = _t('_adm_admtools_Permissions');
-        $sCacheEnginesC = _t('_adm_admtools_cache_engines');
+        $sAuditC = _t('');
+        $sPermissionsC = _t('');
+        $sCacheEnginesC = _t('');
 
         $sAuditTab = $this->GenAuditPage();
-        $sPermissionsTab = $this->GenPermTable();
+        $sPermissionsTab = $this->GenPermTable($isShowModules);
         $sCacheEnginesTab = $this->GenCacheEnginesTable();
 
         $sBoxContent = <<<EOF
 <script type="text/javascript">
     <!--
-    function switchAdmPage(iPageID) {
-        //make all tabs - inactive
-        //mace selected tab - active
-        //hide all pages
-        //show selected page
+    function switchAdmPage(oLink)
+    {
+        var sType = $(oLink).attr('id').replace('main_menu', '');
+        var sName = '#page' + sType;
 
-        $(".dbTopMenu").children().removeClass().toggleClass("notActive");
-        $("#main_menu" + iPageID).removeClass().toggleClass("active");
-
-        $("#adm_pages").children().removeClass().toggleClass("hidden");
-        $("#adm_pages #page" + iPageID).removeClass().toggleClass("visible");
+        $(oLink).parent('.notActive').hide().siblings('.notActive:hidden').show().siblings('.active').hide().siblings('#' + $(oLink).attr('id') + '-act').show();
+        $(sName).siblings('div:visible').bx_anim('hide', 'fade', 'slow', function(){
+            $(sName).bx_anim('show', 'fade', 'slow');
+        });
 
         return false;
     }
@@ -431,28 +457,26 @@ EOF;
 
 <div class="boxContent" id="adm_pages">
     <div id="page0" class="visible">{$sAuditTab}</div>
-    <div id="page1" class="visible">{$sPermissionsTab}</div>
-    <div id="page3" class="hidden">
+    <div id="page1" class="hidden">{$sPermissionsTab}</div>
+    <div id="page2" class="hidden">
         <iframe frameborder="0" width="100%" height="800" scrolling="auto" src="host_tools.php?get_phpinfo=true"></iframe>
     </div>
-    <div id="page4" class="hidden">{$sCacheEnginesTab}</div>
+    <div id="page3" class="hidden">{$sCacheEnginesTab}</div>
 </div>
 EOF;
 
-        $sActions = <<<EOF
-<div class="dbTopMenu">
-    <div class="active" id="main_menu0"><span><a href="#" class="top_members_menu" onclick="switchAdmPage(0); return false;">{$sAuditC}</a></span></div>
-    <div class="notActive" id="main_menu3"><span><a href="#" class="top_members_menu" onclick="switchAdmPage(3); return false;">phpinfo</a></span></div>
-    <div class="notActive" id="main_menu4"><span><a href="#" class="top_members_menu" onclick="switchAdmPage(4); return false;">{$sCacheEnginesC}</a></span></div>
-</div>
-EOF;
+        $aTopItems = array(
+            'main_menu0' => array('href' => 'javascript:void(0)', 'onclick' => 'javascript:switchAdmPage(this)', 'title' => _t('_adm_admtools_Audit'), 'active' => 1),
+            'main_menu1' => array('href' => 'javascript:void(0)', 'onclick' => 'javascript:switchAdmPage(this)', 'title' => _t('_adm_admtools_Permissions'), 'active' => 0),
+            'main_menu2' => array('href' => 'javascript:void(0)', 'onclick' => 'javascript:switchAdmPage(this)', 'title' => _t('_adm_admtools_phpinfo'), 'active' => 0),
+        );
 
-        $sWrappedBox = $GLOBALS['oAdmTemplate']->parseHtmlByName('design_box_content.html', array('content' => $sBoxContent));
-        return DesignBoxContent($sTitleC, $sWrappedBox, 1, $sActions);
+        return DesignBoxAdmin($sTitleC, $sBoxContent, $aTopItems, '', 11);
     }
 
     //************
-    function isFolderReadWrite($filename) {
+    function isFolderReadWrite($filename)
+    {
         clearstatcache();
 
         $aPathInfo = pathinfo(__FILE__);
@@ -461,7 +485,8 @@ EOF;
         return (@file_exists($filename . '/.') && is_readable( $filename ) && is_writable( $filename ) ) ? true : false;
     }
 
-    function isFileReadWrite($filename) {
+    function isFileReadWrite($filename)
+    {
         clearstatcache();
 
         $aPathInfo = pathinfo(__FILE__);
@@ -470,7 +495,8 @@ EOF;
         return (is_file($filename) && is_readable( $filename ) && is_writable( $filename ) ) ? true : false;
     }
 
-    function isFileExecutable($filename) {
+    function isFileExecutable($filename)
+    {
         clearstatcache();
 
         $aPathInfo = pathinfo(__FILE__);
@@ -481,7 +507,8 @@ EOF;
 
     //************
 
-    function isAllowUrlInclude() {
+    function isAllowUrlInclude()
+    {
         if (version_compare(phpversion(), "5.2", ">") == 1) {
             $sAllowUrlInclude = ini_get('allow_url_include');
             return !($sAllowUrlInclude == 0);
@@ -489,9 +516,8 @@ EOF;
         return false;
     }
 
-
-    function GenAuditPage() {
-
+    function GenAuditPage()
+    {
         $sDolphinPath = BX_DIRECTORY_PATH_ROOT;
 
         $sEmailToCkeckMailSending = getParam('site_email');
@@ -507,7 +533,7 @@ EOF;
 
         $a = unserialize(file_get_contents("http://www.php.net/releases/index.php?serialize=1"));
         $sLatestPhpVersion = $a[5]['version'];
-        $sLatestPhp52Version = '5.2.17';
+        $sLatestPhp53Version = '5.3.18';
 
         $aPhpSettings = array (
             'allow_url_fopen' => array('op' => '=', 'val' => true, 'type' => 'bool'),
@@ -523,9 +549,14 @@ EOF;
             'php module: curl' => array('op' => 'module', 'val' => 'curl'),
             'php module: gd' => array('op' => 'module', 'val' => 'gd'),
             'php module: mbstring' => array('op' => 'module', 'val' => 'mbstring'),
+            'php module: xsl' => array('op' => 'module', 'val' => 'xsl', 'warn' => 1),
+            'php module: json' => array('op' => 'module', 'val' => 'json', 'warn' => 1),
             'php module: openssl' => array('op' => 'module', 'val' => 'openssl', 'warn' => 1),
+            'php module: zip' => array('op' => 'module', 'val' => 'zip', 'warn' => 1),
             'php module: ftp' => array('op' => 'module', 'val' => 'ftp', 'warn' => 1),
         );
+        if (version_compare(phpversion(), "5.4", ">=") == 1)
+            unset($aPhpSettings['short_open_tag']);
 
         $aMysqlSettings = array (
             'key_buffer_size' => array('op' => '>=', 'val' => 128*1024, 'type' => 'bytes'),
@@ -573,48 +604,40 @@ EOF;
 .undef {
     color:gray;
 }
-.code {
-    border:1px solid #090;
-    color:#090;
-    padding:10px;
-    margin:10px;
-    width:550px;
-    overflow:scroll;
-}
 </style>
 <h2>Software requirements</h2>
 <ul>
-    <li><b>PHP</b>: 
-        <?php 
+    <li><b>PHP</b>:
+        <?php
         $sPhpVer = PHP_VERSION;
-        echo $sPhpVer . ' - '; 
+        echo $sPhpVer . ' - ';
         if (version_compare($sPhpVer, $sMinPhpVer, '<'))
             echo '<b class="fail">FAIL</b> (your version is incompatible with Dolphin, must be at least ' . $sMinPhpVer . ')';
-        elseif (version_compare($sPhpVer, '5.3.0', '>=') && version_compare($sPhpVer, '6.0.0', '<') && !version_compare($sPhpVer, $sLatestPhpVersion, '>='))
-            echo '<b class="warn">WARNING</b> (your PHP version is outdated, upgrade to the latest ' . $sLatestPhpVersion . ' maybe required)';
-        elseif (version_compare($sPhpVer, '5.2.0', '>=') && version_compare($sPhpVer, '5.3.0', '<') && !version_compare($sPhpVer, $sLatestPhp52Version, '>='))
-            echo '<b class="warn">WARNING</b> (your PHP version is outdated, upgrade to the latest ' . $sLatestPhp52Version . ' maybe required)';
+        elseif (version_compare($sPhpVer, '5.4.0', '>=') && version_compare($sPhpVer, '6.0.0', '<') && !version_compare($sPhpVer, $sLatestPhpVersion, '>='))
+            echo '<b class="warn">WARNING</b> (your PHP version is probably outdated, upgrade to the latest ' . $sLatestPhpVersion . ' maybe required)';
+        elseif (version_compare($sPhpVer, '5.2.0', '>=') && version_compare($sPhpVer, '5.4.0', '<') && !version_compare($sPhpVer, $sLatestPhp53Version, '>='))
+            echo '<b class="warn">WARNING</b> (your PHP version is probably outdated, upgrade to the latest ' . $sLatestPhp53Version . ' maybe required)';
         else
             echo '<b class="ok">OK</b>';
-        
+
         ?>
         <ul>
-        <?php 
+        <?php
         foreach ($aPhpSettings as $sName => $r) {
             $a = $this->checkPhpSetting($sName, $r);
             echo "<li>$sName = " . $this->format_output($a['real_val'], $r) ." - ";
             if ($a['res'])
                 echo '<b class="ok">OK</b>';
             elseif ($r['warn'])
-                echo "<b class='warn'>WARNING</b> (should be {$r['op']} " . $this->format_output($r['val'], $r) . ")"; 
+                echo "<b class='warn'>WARNING</b> (should be {$r['op']} " . $this->format_output($r['val'], $r) . ")";
             else
-                echo "<b class='fail'>FAIL</b> (must be {$r['op']} " . $this->format_output($r['val'], $r) . ")"; 
+                echo "<b class='fail'>FAIL</b> (must be {$r['op']} " . $this->format_output($r['val'], $r) . ")";
             echo "</li>\n";
-        } 
+        }
         ?>
         </ul>
     </li>
-    <li><b>MySQL</b>: 
+    <li><b>MySQL</b>:
         <?php
             $sMysqlVer = mysql_get_server_info($GLOBALS['bx_db_link']);
             echo $sMysqlVer . ' - ';
@@ -637,18 +660,15 @@ EOF;
             <?php
                 foreach ($aRequiredApacheModules as $sName => $sNameCompiledName)
                     echo '<li>' . $sName . ' - ' . $this->checkApacheModule($sName, $sNameCompiledName) . '</li>';
-            ?>           
+            ?>
         </ul>
-    </li> 
+    </li>
     <li><b>OS</b>:
         <?php
             echo php_uname();
         ?>
-    </li> 
+    </li>
 </ul>
-
-
-
 
 <h2>Hardware requirements</h2>
 <p>
@@ -659,8 +679,8 @@ EOF;
 <h2>Site setup</h2>
 <ul>
     <li>
-        <b>Dolphin version</b> = 
-        <?php            
+        <b>Dolphin version</b> =
+        <?php
             $sDolphinVer = BX_DOL_VERSION . '.' . BX_DOL_BUILD;
             echo $sDolphinVer . ' - ';
             if (!version_compare($sDolphinVer, $sLatestDolphinVer, '>='))
@@ -672,7 +692,7 @@ EOF;
     <li>
         <b>files and folders permissions</b>
         <br />
-        Please <a href="javascript:void(0);" onclick="switchAdmPage(1);">click here</a> to find out if dolphin permissions are correct.
+        Please <a href="javascript:void(0);" onclick="switchAdmPage($('#main_menu1'));">click here</a> to find out if dolphin permissions are correct.
     </li>
     <li>
         <b>ffmpeg</b>
@@ -681,7 +701,8 @@ EOF;
     </li>
     <li>
         <script language="javascript">
-            function bx_sys_adm_audit_test_email() {
+            function bx_sys_adm_audit_test_email()
+            {
                 $('#bx-sys-adm-audit-test-email').html('Sending...');
                 $.post('<?php echo BX_DOL_URL_STUDIO; ?>host_tools.php?action=audit_send_test_email', function(data) {
                     $('#bx-sys-adm-audit-test-email').html(data);
@@ -696,39 +717,26 @@ EOF;
         <pre class="code"><?php echo `crontab -l 2>&1`;?></pre>
         if you are unsure if output is correct then <a href="#manual_audit">manual server audit</a> may be reqired.
     </li>
-    <li>
-        <b>media server</b>
-        <br />
-        Please follow <a href="<?php echo BX_DOL_URL_STUDIO; ?>flash.php">this link</a> to check media server settings. Also you can try video chat - if video chat is working then most probably that flash media server is working correctly, however it doesn't guarantee that all other flash media server application will work.
-    </li>
-    <li>
-        <b>forums</b>
-        <br />
-        Please follow <a href="<?php echo BX_DOL_URL_ROOT; ?>forum/">this link</a> to check if forum is functioning properly. If it is working but '[L[' signs are displayed everywhere, then you need to <a href="<?php echo BX_DOL_URL_ROOT; ?>forum/?action=goto&manage_forum=1">compile language file</a> (you maybe be need to compile language file separately for every language and template you have).
-    </li>
 </ul>
-
-
-
 
 <h2>Site optimization</h2>
 <ul>
-    <li><b>PHP</b>: 
+    <li><b>PHP</b>:
         <ul>
-            <li><b>php accelerator</b> = 
+            <li><b>PHP accelerator</b> =
             <?php
                 $sAccel = $this->getPhpAccelerator();
                 if (!$sAccel)
-                    echo 'NO - <b class="warn">WARNING</b> (Dolphin can be much faster if you install some php accelator))';
+                    echo 'NO - <b class="warn">WARNING</b> (Dolphin can be much faster if you install some PHP accelerator))';
                 else
                     echo $sAccel . ' - <b class="ok">OK</b>';
             ?>
             </li>
-            <li><b>php setup</b> = 
+            <li><b>PHP setup</b> =
             <?php
                 $sSapi = php_sapi_name();
                 echo $sSapi . ' - ';
-                if (0 == strncasecmp('cgi', $sSapi, 3))
+                if (0 == strcasecmp('cgi', $sSapi))
                     echo '<b class="warn">WARNING</b> (your PHP setup maybe very inefficient, <a href="?action=phpinfo">please check it for sure</a> and try to switch to mod_php, apache dso module or FastCGI)';
                 else
                     echo '<b class="ok">OK</b>';
@@ -736,20 +744,20 @@ EOF;
             </li>
         </ul>
     </li>
-    <li><b>MySQL</b>: 
+    <li><b>MySQL</b>:
         <ul>
-            <?php                
+            <?php
                 foreach ($aMysqlSettings as $sName => $r) {
                     $a = $this->checkMysqlSetting($sName, $r, $l);
                     echo "<li><b>$sName</b> = " . $this->format_output($a['real_val'], $r) ." - " . ($a['res'] ? '<b class="ok">OK</b>' : "<b class='fail'>FAIL</b> (must be {$r['op']} " . $this->format_output($r['val'], $r) . ")") . "</li>\n";
-                } 
+                }
             ?>
         </ul>
     </li>
-    <li><b>Web-server</b>: 
+    <li><b>Web-server</b>:
         <ul>
             <li>
-                <b>User-side caching for static conten</b> = 
+                <b>User-side caching for static conten</b> =
                 <a href="<?php echo $this->getUrlForGooglePageSpeed('LeverageBrowserCaching'); ?>">click here to check it in Google Page Speed</a>
                 <br />
                 If it is not enabled then please consider implement this optimization, since it improve perceived site speed and save the bandwidth, refer to <a target="_blank" href="http://www.boonex.com/trac/dolphin/wiki/HostingServerSetupRecommendations#Usersidecachingforstaticcontent">this tutorial</a> on how to do this.
@@ -757,7 +765,7 @@ EOF;
                 <?php
                     $sName = 'expires_module';
                     echo 'To apply this optimization you need to have <b>' . $sName . '</b> Apache module - ' . $this->checkApacheModule($sName);
-                ?> 
+                ?>
             </li>
             <li>
                 <b>Server-side content compression</b> = can be checked <a href="#manual_audit">manually</a> or in "Page Speed" tool build-in into browser.
@@ -766,16 +774,16 @@ EOF;
                 </textarea>
                 <br />
                 <?php
-                    $sName = 'deflate_module';                
+                    $sName = 'deflate_module';
                     echo 'To apply this optimization you need to have <b>' . $sName . '</b> Apache module - ' . $this->checkApacheModule($sName);
-                ?> 
+                ?>
             </li>
         </ul>
     </li>
-    <li><b>Dolphin</b>: 
+    <li><b>Dolphin</b>:
         <ul>
             <?php
-                
+
                 foreach ($aDolphinOptimizationSettings as $sName => $a) {
 
                     echo "<li><b>$sName</b> = ";
@@ -783,17 +791,17 @@ EOF;
                     echo ('always_on' == $a['enabled'] || getParam($a['enabled'])) ? 'On' : 'Off';
 
                     if ($a['cache_engine'])
-                        echo " (" . getParam($a['cache_engine']) . ' based cache engine)'; 
+                        echo " (" . getParam($a['cache_engine']) . ' based cache engine)';
 
                     echo ' - ';
 
                     if ('always_on' != $a['enabled'] && !getParam($a['enabled']))
                         echo '<b class="fail">FAIL</b> (please enable this cache in Dolphin Admin Panel -> Settings -> Advanced Settings)';
                     elseif ($a['check_accel'] && !$this->getPhpAccelerator() && 'File' == getParam($a['cache_engine']))
-                        echo '<b class="warn">WARNING</b> (installing php accelerator will speed-up file cache)';
+                        echo '<b class="warn">WARNING</b> (installing PHP accelerator will speed-up file cache)';
                     else
                         echo '<b class="ok">OK</b>';
-                    
+
                     echo "</li>\n";
                 }
 
@@ -805,7 +813,7 @@ EOF;
 <a name="manual_audit"></a>
 <h2>Manual Server Audit</h2>
 <p>
-    Some things can not be determined automatically, manual server audit is required to check it. If you don't know how to do it by yourself you can submit <a target="_blank" href="http://www.boonex.com/help/tickets">BoonEx Server Audit Request</a>. Also if you are owner of <a target="_blank" href="http://www.boonex.com/enterprise">Enterprise package</a> - you have 1 free Server Audit Request.
+    Some things can not be determined automatically, manual server audit is required to check it. If you don't know how to do it by yourself you can submit <a target="_blank" href="http://www.boonex.com/help/tickets">BoonEx Server Audit Request</a>.
 </p>
 
 <?php
@@ -813,8 +821,8 @@ EOF;
         return ob_get_clean();
     }
 
-    function checkPhpSetting($sName, $a) {
-
+    function checkPhpSetting($sName, $a)
+    {
         $mixedVal = ini_get($sName);
         $mixedVal = $this->format_input ($mixedVal, $a);
 
@@ -827,7 +835,7 @@ EOF;
                 $bResult = (isset($a['unlimited']) && $mixedVal == $a['unlimited']) ? true : ($mixedVal > $a['val']);
                 break;
             case '>=':
-                $bResult = (isset($a['unlimited']) && $mixedVal == $a['unlimited']) ? true :($mixedVal >= $a['val']);
+                $bResult = (isset($a['unlimited']) && $mixedVal == $a['unlimited']) ? true : ($mixedVal >= $a['val']);
                 break;
             case '=':
             default:
@@ -836,8 +844,8 @@ EOF;
         return array ('res' => $bResult, 'real_val' => $mixedVal);
     }
 
-    function checkMysqlSetting($sName, $a, $l) {    
-
+    function checkMysqlSetting($sName, $a, $l)
+    {
         $mixedVal = $this->mysqlGetOption($sName, $l);
         $mixedVal = $this->format_input ($mixedVal, $a);
 
@@ -858,7 +866,8 @@ EOF;
         return array ('res' => $bResult, 'real_val' => $mixedVal);
     }
 
-    function format_output ($mixedVal, $a) {
+    function format_output ($mixedVal, $a)
+    {
         switch ($a['type']) {
             case 'bool':
                 return $mixedVal ? 'On' : 'Off';
@@ -867,7 +876,8 @@ EOF;
         }
     }
 
-    function format_input ($mixedVal, $a) {
+    function format_input ($mixedVal, $a)
+    {
         switch ($a['type']) {
             case 'bytes':
                 return $this->format_bytes ($mixedVal);
@@ -876,11 +886,13 @@ EOF;
         }
     }
 
-    function format_bytes($val) {
+    function format_bytes($val)
+    {
         return return_bytes($val);
     }
 
-    function checkApacheModule ($sModule, $sNameCompiledName = '') {
+    function checkApacheModule ($sModule, $sNameCompiledName = '')
+    {
         $a = array (
             'deflate_module' => 'mod_deflate',
             'expires_module' => 'mod_expires',
@@ -890,16 +902,16 @@ EOF;
 
         if (function_exists('apache_get_modules')) {
 
-	    	$aModules = apache_get_modules();
+            $aModules = apache_get_modules();
             $ret = in_array($sNameCompiledName, $aModules);
 
         } else {
 
-            $sApachectlPath = trim(`which apachectl`); 
+            $sApachectlPath = trim(`which apachectl`);
             if (!$sApachectlPath)
-                $sApachectlPath = trim(`which apache2ctl`); 
+                $sApachectlPath = trim(`which apache2ctl`);
             if (!$sApachectlPath)
-                $sApachectlPath = trim(`which /usr/local/apache/bin/apachectl`);     
+                $sApachectlPath = trim(`which /usr/local/apache/bin/apachectl`);
             if (!$sApachectlPath)
                 $sApachectlPath = trim(`which /usr/local/apache/bin/apache2ctl`);
             if (!$sApachectlPath)
@@ -914,7 +926,8 @@ EOF;
     }
 
 
-    function getPhpAccelerator () {   
+    function getPhpAccelerator ()
+    {
         $aAccelerators = array (
             'eAccelerator' => array('op' => 'module', 'val' => 'eaccelerator'),
             'APC' => array('op' => 'module', 'val' => 'apc'),
@@ -928,16 +941,19 @@ EOF;
         return false;
     }
 
-    function mysqlGetOption ($s, $l) {
+    function mysqlGetOption ($s, $l)
+    {
         return db_value("SELECT @@{$s}", $l);
     }
 
-    function getUrlForGooglePageSpeed ($sRule) {
+    function getUrlForGooglePageSpeed ($sRule)
+    {
         $sUrl = urlencode(BX_DOL_URL_ROOT);
         return 'http://pagespeed.googlelabs.com/#url=' . $sUrl . '&mobile=false&rule=' . $sRule;
     }
 
-    function sendTestEmail () {
+    function sendTestEmail ()
+    {
         $sEmailToCkeckMailSending = getParam('site_email');
         $mixedRet = sendMail($sEmailToCkeckMailSending, 'Audit Test Email', 'Sample text for testing<br /><u><b>Sample text for testing</b></u>', '', array(), BX_EMAIL_SYSTEM);
         if (!$mixedRet)
@@ -945,6 +961,5 @@ EOF;
         else
             return 'test mail was send, please check ' . $sEmailToCkeckMailSending . ' mailbox';
     }
-
 }
 /** @} */

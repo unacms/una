@@ -1,18 +1,21 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
-class BxDolIO extends BxDol {
-
-    function BxDolIO() {
-        parent::BxDol();
+class BxDolIO extends BxDol
+{
+    function __construct() 
+    {
+        parent::__construct();
     }
 
-    public static function isExecutable($sFile) {
+    public static function isExecutable($sFile)
+    {
         clearstatcache();
 
         $aPathInfo = pathinfo(__FILE__);
@@ -21,7 +24,8 @@ class BxDolIO extends BxDol {
         return (is_file($sFile) && is_executable($sFile));
     }
 
-    public static function isWritable($sFile, $sPrePath = '/../../') {
+    public static function isWritable($sFile, $sPrePath = '/../../')
+    {
         clearstatcache();
 
         $aPathInfo = pathinfo(__FILE__);
@@ -30,7 +34,8 @@ class BxDolIO extends BxDol {
         return is_readable($sFile) && is_writable($sFile);
     }
 
-    public static function getPermissions($sFileName) {
+    public static function getPermissions($sFileName)
+    {
         $sPath = isset($GLOBALS['logged']['admin']) && $GLOBALS['logged']['admin'] ? BX_DIRECTORY_PATH_ROOT : '../';
 
         clearstatcache();
@@ -41,3 +46,4 @@ class BxDolIO extends BxDol {
     }
 }
 
+/** @} */
