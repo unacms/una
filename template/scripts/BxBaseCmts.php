@@ -318,6 +318,11 @@ class BxBaseCmts extends BxDolCmts {
         return BxTemplStudioFunctions::getInstance()->transBox($this->_sSystem . '-attached-image', $sContent, true);
     }
 
+    public function serviceGetMenuItemAddonVote($iCmtId)
+    {
+    	echo 111; exit;
+    }
+
     /**
      * private functions
      */
