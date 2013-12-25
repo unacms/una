@@ -37,9 +37,11 @@ class BxBaseCmtsMenu extends BxTemplMenu
 			$sVotesOnclick = $oVote->getJsClick();
 
 		$this->addMarkers(array(
-    		'js_object' => $oCmts->getJsObjectName(),
+			'cmt_system' => $this->_oCmts->getSystemName(),
+			'cmt_id' => $this->_oCmts->getId(),
+			'content_id' => $iCmtId,
 			'vote_onclick' => $sVotesOnclick,
-			'content_id' => $iCmtId
+			'rate_onclick' => $oCmts->getJsObjectName() . '.toggleReply(this, ' . $iCmtId . ')',
     	));
     }
 
@@ -82,25 +84,6 @@ class BxBaseCmtsMenu extends BxTemplMenu
 			return true;
 
 		return call_user_func_array(array($this->_oCmts, $sCheckFuncName), $aCheckFuncParams);
-    }
-
-	/** 
-     * Get menu items array, which are ready to pass to template.
-     * @return array
-     */
-    protected function _getMenuItems() {
-    	$aItems = parent::_getMenuItems();
-
-    	foreach($aItems as $iKey => $aItem)
-    		switch($aItem['name']) {
-    			case 'item-vote':
-    				$oVote = $this->_oCmts->getVoteObject($this->_aCmt['cmt_id']);
-					if($oVote !== false)
-						$aItems[$iKey]['addon'] = $oVote->getCounter();
-    				break;
-    		}
-
-		return $aItems;
     }
 }
 

@@ -436,6 +436,46 @@ class BxTimelineModule extends BxDolModule
     	return $this->_oTemplate->getShareJsClick($iOwnerId, $sType, $sAction, $iObjectId);
     }
 
+    public function serviceGetMenuItemAddonComment($sSystem, $iObjectId)
+    {
+		if(empty($sSystem) || empty($iObjectId))
+			return '';
+
+		$oCmts = $this->getCmtsObject($sSystem, $iObjectId);
+		if($oCmts === false)
+			return '';
+
+		$iCounter = (int)$oCmts->getCommentsCount();
+		return  $this->_oTemplate->parseHtmlByName('bx_a.html', array(
+			'href' => 'javascript:void(0)',
+			'title' => _t('_bx_timeline_menu_item_title_item_comment'),
+			'bx_repeat:attrs' => array(
+    			array('key' => 'onclick', 'value' => "javascript:" . $this->_oConfig->getJsObject('view') . ".commentItem(this, '" . $sSystem . "', " . $iObjectId . ")")
+    		),
+	    	'content' => $iCounter > 0 ? $iCounter : ''
+		));		
+    }
+
+    public function serviceGetMenuItemAddonVote($sSystem, $iObjectId)
+    {
+    	if(empty($sSystem) || empty($iObjectId))
+    		return '';
+
+    	$oVote = $this->getVoteObject($sSystem, $iObjectId);
+    	if($oVote === false)
+    		return '';
+
+   		return $oVote->getCounter();		
+    }
+
+    public function serviceGetMenuItemAddonShare($sType, $sAction, $iObjectId)
+    {
+    	if(empty($sType) || empty($iObjectId))
+    		return '';
+
+		return $this->serviceGetShareCounter($sType, $sAction, $iObjectId);
+    }
+
     /*
      * COMMON METHODS 
      */
