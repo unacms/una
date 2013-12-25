@@ -140,9 +140,11 @@ class BxNotesModule extends BxDolModule {
         }
 
         //TODO: Rebuild using menus engine when it will be ready for such elements like Vote, Share, etc.
+        $sVotes = '';
         bx_import('BxDolVote');
         $oVotes = BxDolVote::getObjectInstance(BxNotesConfig::$OBJECT_VOTES, $aContentInfo[BxNotesConfig::$FIELD_ID]);
-        $sVotes = $oVotes->getElementBlock(array('show_do_vote_as_button' => true)); 
+        if ($oVotes)
+            $sVotes = $oVotes->getElementBlock(array('show_do_vote_as_button' => true)); 
 
         $sShare = '';
         if(BxDolRequest::serviceExists('bx_timeline', 'get_share_element_block'))
@@ -250,7 +252,7 @@ class BxNotesModule extends BxDolModule {
         $oVotes = BxDolVote::getObjectInstance(BxNotesConfig::$OBJECT_VOTES, $aEvent['object_id']);
 
         $aVotes = array(); 
-		if($oVotes->isEnabled())
+		if ($oVotes && $oVotes->isEnabled())
 			$aVotes = array(
 				'system' => BxNotesConfig::$OBJECT_VOTES,
 				'object_id' => $aContentInfo[BxNotesConfig::$FIELD_ID],

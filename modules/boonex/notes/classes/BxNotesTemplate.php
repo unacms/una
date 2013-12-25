@@ -61,7 +61,7 @@ class BxNotesTemplate extends BxDolModuleTemplate {
             $sLinkMore = '';
             if (mb_strlen($sSummary) > $iLimitChars) {
                 $sSummary = mb_substr($sSummary, 0, $iLimitChars);
-                $sLinkMore = ' <a title="' . htmlspecialchars_adv(_t('_bx_notes_txt_read_more')) . '" href="' . $sUrl . '">&hellip;</a>';
+                $sLinkMore = ' <a title="' . bx_html_attribute(_t('_bx_notes_txt_read_more', $aData['title'])) . '" href="' . $sUrl . '"><i class="sys-icon ellipsis-horizontal"></i></a>';
             }
             $sSummary = htmlspecialchars_adv($sSummary) . $sLinkMore;
         }

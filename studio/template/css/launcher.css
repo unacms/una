@@ -76,9 +76,9 @@ div.bx-std-widget-nl {
     border-radius: 32px;
 
     /* big shadow */
-    -moz-box-shadow: 0px 15px 20px rgba(51, 51, 51, 0.7);
-    -webkit-box-shadow: 0px 15px 20px rgba(51, 51, 51, 0.7);
-    box-shadow: 0px 15px 20px rgba(51, 51, 51, 0.7);
+    -moz-box-shadow: 0px 15px 20px rgba(51, 51, 51, 0.55);
+    -webkit-box-shadow: 0px 15px 20px rgba(51, 51, 51, 0.55);
+    box-shadow: 0px 15px 20px rgba(51, 51, 51, 0.55);
 }
 
 .bx-std-widget-icon-trans {
@@ -93,15 +93,15 @@ div.bx-std-widget-nl {
 }
 
 .bx-std-widget-icon:hover .bx-std-widget-shadow {
-    -moz-box-shadow: 0px 12px 15px rgba(51, 51, 51, 0.7);
-    -webkit-box-shadow: 0px 12px 15px rgba(51, 51, 51, 0.7);
-    box-shadow: 0px 12px 15px rgba(51, 51, 51, 0.7);
+    -moz-box-shadow: 0px 12px 15px rgba(51, 51, 51, 0.55);
+    -webkit-box-shadow: 0px 12px 15px rgba(51, 51, 51, 0.55);
+    box-shadow: 0px 12px 15px rgba(51, 51, 51, 0.55);
 }
 
 .bx-std-widget-dragging .bx-std-widget-shadow {
-    -moz-box-shadow: 0px 25px 40px rgba(51, 51, 51, 0.7);
-    -webkit-box-shadow: 0px 25px 40px rgba(51, 51, 51, 0.7);
-    box-shadow: 0px 25px 40px rgba(51, 51, 51, 0.7);
+    -moz-box-shadow: 0px 25px 40px rgba(51, 51, 51, 0.55);
+    -webkit-box-shadow: 0px 25px 40px rgba(51, 51, 51, 0.55);
+    box-shadow: 0px 25px 40px rgba(51, 51, 51, 0.55);
 }
 
 .bx-std-widget-icon-disabled {

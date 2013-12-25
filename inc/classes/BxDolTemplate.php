@@ -179,6 +179,8 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     protected $aPage;
     protected $aPageContent;
 
+    protected $_oConfigTemplate;
+
     /**
      * Constructor
      */
@@ -358,6 +360,9 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
             $oCache->setData ($oDb->genDbCacheKey($this->_sInjectionsCache), $aInjections);
         }
         $this->aPage['injections'] = $aInjections;
+
+        bx_import('BxTemplConfig');
+        $this->_oConfigTemplate = BxTemplConfig::getInstance();
     }
 
     /**
@@ -1295,6 +1300,8 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     function _lessCss($mixed) {
     	require_once(BX_DIRECTORY_PATH_PLUGINS . 'lessphp/lessc.inc.php');
         $oLess = new lessc();
+        
+        $oLess->setVariables($this->_oConfigTemplate->aLessConfig);
 
     	if(is_array($mixed) && isset($mixed['url']) && isset($mixed['path'])) {
     		$sPathFile = realpath($mixed['path']);
