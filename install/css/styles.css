@@ -1,0 +1,43 @@
+
+
+html, body {
+    margin: 0;
+	height: 100%;
+}
+.bx-install-page {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -60px; /* the bottom margin is the negative value of the footer's height */
+}
+.bx-install-footer-push,
+.bx-install-footer {
+    height: 60px;
+    line-height: 60px;
+}
+
+.bx-install-footer-text {
+    float:left;
+}
+
+.bx-install-footer-copyright {
+    float:right;
+}
+
+.bx-install-initial {
+    text-align:center;
+}
+
+.bx-install-initial img {
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
+    width:500px;
+    max-width:90%;
+}
+
+.bx-install-initial .bx-btn {
+    display:inline;
+    display:inline-block;
+    float:none;
+}

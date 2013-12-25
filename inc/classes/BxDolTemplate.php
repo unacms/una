@@ -297,7 +297,6 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
         //--- Load page elements related static variables ---//
         $this->aPage = array(
             'name_index' => BX_PAGE_DEFAULT,
-            'width' => getParam('main_div_width'),
             'header' => '',
             'header_text' => '',
             'keywords' => array(),
@@ -363,24 +362,6 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
 
         bx_import('BxTemplConfig');
         $this->_oConfigTemplate = BxTemplConfig::getInstance();
-    }
-
-    /**
-     * Get page width.
-     *
-     * @return string with page width.
-     */
-    function getPageWidth() {
-        return $this->aPage['width'];
-    }
-
-    /**
-     * Set page width.
-     *
-     * @param string $sWidth necessary page width.
-     */
-    function setPageWidth($sWidth) {
-        $this->aPage['width'] = $sWidth;
     }
 
     /**
@@ -937,10 +918,6 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
 
                 bx_import('BxTemplFunctions');
                 $sRet = BxTemplFunctions::getInstance()->transBox('bx-popup-loading', $sContent, true);
-                break;
-            case 'main_div_width':
-                if(!empty($this->aPage['width']))
-                    $sRet = bx_html_attribute($this->aPage['width']);
                 break;
             case 'lang':
                 $sRet = bx_lang_name();
@@ -2039,6 +2016,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
 	       $oTemplate = $this;
 
 	    header( 'Content-type: text/html; charset=utf-8' );
+        header( 'X-Frame-Options: sameorigin' );
 	    echo $oTemplate->parsePageByName('page_' . $oTemplate->getPageNameIndex() . '.html', $oTemplate->getPageContent());
 	}
 }
