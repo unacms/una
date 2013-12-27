@@ -1687,7 +1687,7 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_adm_str_err_zip_not_available"><![CDATA[ZIP library is not available.]]></string>
 	<string name="_adm_str_err_cannot_unzip_package"><![CDATA[Cannot unarchive ZIP package.]]></string>
 	<string name="_adm_str_err_no_ftp_info"><![CDATA[FTP access info was not specified. You may enter it via Settings -> Other.]]></string>
-	<string name="_adm_str_err_cannot_connect_to_ftp"><![CDATA[Cannot connect to FTP server.]]></string>
+	<string name="_adm_str_err_cannot_connect_to_ftp"><![CDATA[Cannot connect to FTP server. Please check FTP access details in Settings -> Other.]]></string>
 	<string name="_adm_str_err_destination_not_valid"><![CDATA[Destination FTP folder doesn't look like a valid Dolphin root folder.]]></string>
 	<string name="_adm_str_err_wrong_package_format"><![CDATA[Wrong package format.]]></string>
 	<string name="_adm_str_err_ftp_copy_failed"><![CDATA[FTP transfer failed, please check write permission for this FTP user.]]></string>
@@ -2498,7 +2498,7 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_adm_err_modules_cannot_connect_to_ftp"><![CDATA[Cannot connect to FTP server]]></string>
 	<string name="_adm_err_modules_cannot_upload_package"><![CDATA[Cannot upload the package]]></string>
 	<string name="_adm_err_modules_cannot_remove_package"><![CDATA[Cannot remove package.]]></string>
-	<string name="_adm_err_modules_process_action_failed"><![CDATA[An error occured. Contact with module\'s vendor]]></string>
+	<string name="_adm_err_modules_process_action_failed"><![CDATA[An error occured. Contact with module's vendor]]></string>
 	<string name="_adm_err_modules_already_uninstalled"><![CDATA[The module was already uninstalled.]]></string>
 	<string name="_adm_err_modules_already_enabled"><![CDATA[The module is already enabled.]]></string>
 	<string name="_adm_err_modules_already_disabled"><![CDATA[The module is already disabled.]]></string>
@@ -2511,7 +2511,8 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_adm_err_modules_wrong_dependency_install"><![CDATA[The following modules should be installed first:]]></string>
 	<string name="_adm_err_modules_wrong_dependency_uninstall"><![CDATA[Failed to uninstall. The module has the following dependent modules. You need to uninstall them first.]]></string>
 	<string name="_adm_err_modules_wrong_dependency_disable"><![CDATA[Failed to disable. The module has the following dependent modules. You need to disable them first.]]></string>
-	<string name="_adm_err_modules_wrong_permissions"><![CDATA[You need to change permissions for the following files and folders:]]></string>
+	<string name="_adm_err_modules_wrong_permissions_check"><![CDATA[You need to change permissions for the following files and folders:]]></string>
+	<string name="_adm_err_modules_wrong_permissions_change"><![CDATA[Unable to change permissions automatically. You need to manually change them for the following files and folders and try again:]]></string>
 	<string name="_adm_err_modules_wrong_permissions_msg"><![CDATA[{0} - {1}]]></string>
 	<string name="_adm_err_modules_wrong_mysql_query"><![CDATA[There are errors in the following MySQL queries:]]></string>
 	<string name="_adm_err_modules_wrong_mysql_query_msg"><![CDATA[Error: {0}]]></string>
@@ -2525,7 +2526,8 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_adm_txt_modules_check_script_version"><![CDATA[Check the Dolphin version for compatibility:]]></string>
 	<string name="_adm_txt_modules_check_dependencies"><![CDATA[Check module dependencies:]]></string>
 	<string name="_adm_txt_modules_show_introduction"><![CDATA[Introduction from vendor:]]></string>
-	<string name="_adm_txt_modules_change_permissions"><![CDATA[Checking permissions:]]></string>
+	<string name="_adm_txt_modules_check_permissions"><![CDATA[Checking permissions:]]></string>
+	<string name="_adm_txt_modules_change_permissions"><![CDATA[Changing permissions:]]></string>
 	<string name="_adm_txt_modules_move_sources"><![CDATA[Move source files:]]></string>
 	<string name="_adm_txt_modules_execute_sql"><![CDATA[Changing database:]]></string>
 	<string name="_adm_txt_modules_install_language"><![CDATA[Install language:]]></string>

@@ -24,7 +24,7 @@ class BxDolFtp extends BxDolFile {
     }
     function connect() {
         $this->_rStream = ftp_connect($this->_sHost);
-        return ftp_login($this->_rStream, $this->_sLogin, $this->_sPassword);
+        return @ftp_login($this->_rStream, $this->_sLogin, $this->_sPassword);
     }
     function isDolphin() {
         return @ftp_size($this->_rStream, $this->_sPathTo . 'inc/header.inc.php') > 0;
@@ -146,5 +146,12 @@ class BxDolFtp extends BxDolFile {
         ftp_chdir($this->_rStream, $sPwd);
         return true;
     }
+	protected function _setPermissions($sPath, $sMode) {
+		$aConvert = array('writable' => 0666, 'executable' => 0777);
 
+    	if(@ftp_chmod($this->_rStream, $aConvert[$sMode], $sPath) === false)
+    		return false;
+
+		return true;
+    }
 }
