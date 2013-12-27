@@ -1,20 +1,23 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxDolIO');
 
-class BxDolInstallerUtils extends BxDolIO {
-
-    function BxDolInstallerUtils() {
-        parent::BxDolIO();
+class BxDolInstallerUtils extends BxDolIO
+{
+    function __construct()
+    {
+        parent::__construct();
     }
 
-    function isXsltEnabled() {
+    function isXsltEnabled()
+    {
         if (((int)phpversion()) >= 5) {
             if (class_exists ('DOMDocument') && class_exists ('XsltProcessor'))
                 return true;
@@ -27,7 +30,8 @@ class BxDolInstallerUtils extends BxDolIO {
         return false;
     }
 
-    function isAllowUrlInclude() {
+    function isAllowUrlInclude()
+    {
         if (version_compare(phpversion(), "5.2", ">") == 1) {
             $sAllowUrlInclude = ini_get('allow_url_include');
             return !($sAllowUrlInclude == 0);
@@ -35,37 +39,45 @@ class BxDolInstallerUtils extends BxDolIO {
         return false;
     }
 
-    function isModuleInstalled($sUri) {
+    function isModuleInstalled($sUri)
+    {
         bx_import('BxDolModuleQuery');
         return BxDolModuleQuery::getInstance()->isModule($sUri);
     }
 
 
-    function addHtmlFields ($a) {
+    function addHtmlFields ($a)
+    {
         $this->_addFields ('html', $a);
     }
 
-    function removeHtmlFields () {
+    function removeHtmlFields ()
+    {
         $this->_removeFields('html');
     }
 
-    function addJsonFields ($a) {
+    function addJsonFields ($a)
+    {
         $this->_addFields ('json', $a);
     }
 
-    function removeJsonFields () {
+    function removeJsonFields ()
+    {
         $this->_removeFields('json');
     }
 
-    function addExceptionsFields ($a) {
+    function addExceptionsFields ($a)
+    {
         $this->_addFields ('exceptions', $a);
     }
 
-    function removeExceptionsFields () {
+    function removeExceptionsFields ()
+    {
         $this->_removeFields('exceptions');
     }
 
-    function updateSystemExceptions () {
+    function updateSystemExceptions ()
+    {
         $s = getParam('sys_exceptions_fields');
         if (!$s) {
             $a = array ();
@@ -83,7 +95,8 @@ class BxDolInstallerUtils extends BxDolIO {
         $GLOBALS['MySQL']->fromCache ('sys_exceptions_fields', 'getOne', "SELECT `VALUE` FROM `sys_options` WHERE `Name` = 'sys_exceptions_fields' LIMIT 1");
     }
 
-    function updateEmailTemplatesExceptions () {
+    function updateEmailTemplatesExceptions ()
+    {
         $s = getParam('sys_exceptions_fields');
         if (!$s) {
             $a = array ();
@@ -100,7 +113,8 @@ class BxDolInstallerUtils extends BxDolIO {
         $oDb->fromCache ('sys_exceptions_fields', 'getOne', "SELECT `VALUE` FROM `sys_options` WHERE `Name` = 'sys_exceptions_fields' LIMIT 1");
     }
 
-    function updateProfileFieldsHtml () {
+    function updateProfileFieldsHtml ()
+    {
         $s = getParam('sys_html_fields');
         if (!$s) {
             $a = array ();
@@ -119,7 +133,8 @@ class BxDolInstallerUtils extends BxDolIO {
 
     //--- Protected methods ---//
 
-    function _getEmailTemplatesHtmlFields () {
+    function _getEmailTemplatesHtmlFields ()
+    {
         $oDb = BxDolDb::getInstance();
         $aRet = array ();
         $a = $oDb->getAll ("SELECT `Name` FROM `sys_email_templates`");
@@ -132,7 +147,8 @@ class BxDolInstallerUtils extends BxDolIO {
         return $aRet;
     }
 
-    function _getSystemProfileHtmlFields () {
+    function _getSystemProfileHtmlFields ()
+    {
         $oDb = BxDolDb::getInstance();
         $aRet = array ();
         $a = $oDb->getAll ("SELECT `Name` FROM `sys_profile_fields` WHERE `Type` = 'html_area'");
@@ -143,7 +159,8 @@ class BxDolInstallerUtils extends BxDolIO {
         return $aRet;
     }
 
-    function _addFields ($sType, $a) {
+    function _addFields ($sType, $a)
+    {
         switch ($sType) {
         case 'html':
         case 'json':
@@ -163,7 +180,8 @@ class BxDolInstallerUtils extends BxDolIO {
         setParam ("sys_{$sType}_fields", $s);
     }
 
-    function _removeFields ($sType) {
+    function _removeFields ($sType)
+    {
         switch ($sType) {
         case 'html':
         case 'json':
@@ -185,3 +203,4 @@ class BxDolInstallerUtils extends BxDolIO {
 
 }
 
+/** @} */

@@ -101,6 +101,21 @@ class BxDolDb extends BxDol implements iBxDolSingleton {
         mysql_close($this->link);
     }
 
+    /**
+     * get mysql server info
+     */
+    function getServerInfo()
+    {
+        return mysql_get_server_info($this->link);
+    }
+
+    /**
+     * get mysql option
+     */
+    function getOption($sName)
+    {
+        return $this->getOne("SELECT @@{$sName}");
+    }
 
     /**
      * execute sql query and return one row result

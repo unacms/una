@@ -116,10 +116,6 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton {
             case 'page_breadcrumb':
             	$sRet = $this->getPageBreadcrumb();
             	break;
-            case 'main_div_width':
-                if(!empty($this->aPage['width']))
-                    $sRet = bx_html_attribute($this->aPage['width']);
-                break;
             case 'dol_images':
                 $sRet = $this->_processJsImages();
                 break;
