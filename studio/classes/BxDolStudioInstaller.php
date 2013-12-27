@@ -48,7 +48,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
     var $_bShowOnSuccess = false;
 
     function BxDolStudioInstaller($aConfig) {
-        parent::BxDolInstallerUtils();
+        parent::__construct();
 
         $this->oDb = new BxDolStudioInstallerQuery();
 
