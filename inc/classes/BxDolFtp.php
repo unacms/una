@@ -120,6 +120,14 @@ class BxDolFtp extends BxDolFile {
     protected function _isDirectory($sFilePath) {
         return preg_match("/^([a-zA-Z0-9@~_\.\\\\\/:-]+)[\\\\\/]([a-zA-Z0-9~_-]+)[\\\\\/]?$/", $sFilePath) ? true : false;
     }
+	protected function _setPermissions($sPath, $sMode) {
+		$aConvert = array('writable' => 0666, 'executable' => 0777);
+
+    	if(@ftp_chmod($this->_rStream, $aConvert[$sMode], $sPath) === false)
+    		return false;
+
+		return true;
+    }
     protected function _ftpMkDirR($sPath) {
         $sPwd = ftp_pwd ($this->_rStream);
         $aParts = explode("/", $sPath);
@@ -145,13 +153,5 @@ class BxDolFtp extends BxDolFile {
         }
         ftp_chdir($this->_rStream, $sPwd);
         return true;
-    }
-	protected function _setPermissions($sPath, $sMode) {
-		$aConvert = array('writable' => 0666, 'executable' => 0777);
-
-    	if(@ftp_chmod($this->_rStream, $aConvert[$sMode], $sPath) === false)
-    		return false;
-
-		return true;
     }
 }

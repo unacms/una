@@ -560,7 +560,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
         foreach($aPermissions as $sPermissions => $aFiles) {
         	$sCheckFunction = 'is' . ucfirst($sPermissions);
             foreach($aFiles as $sFile) {
-            	$sPath = str_replace(BX_DIRECTORY_PATH_ROOT, '', $this->_sModulePath . $sFile);
+            	$sPath = bx_ltrim_str($this->_sModulePath . $sFile, BX_DIRECTORY_PATH_ROOT);
             	if(BxDolInstallerUtils::$sCheckFunction($sPath))
             		continue;
 
