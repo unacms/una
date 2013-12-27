@@ -47,6 +47,16 @@ class BxDolFile extends BxDol implements iBxDolSingleton {
         return $this->_deleteDirectory($sPath);
     }
 
+	function getPermissions($sPath) {
+    	$sPath = $this->_sPathTo . $sPath;
+    	return $this->_getPermissions($sPath);
+    }
+
+	function setPermissions($sPath, $sMode) {
+    	$sPath = $this->_sPathTo . $sPath;
+    	return $this->_setPermissions($sPath, $sMode);
+    }
+
     protected function _copyFile($sFilePathFrom, $sFilePathTo) {
         if(file_exists($sFilePathTo))
             return true;
@@ -140,6 +150,22 @@ class BxDolFile extends BxDol implements iBxDolSingleton {
 
     protected function _isDirectory($sFilePath) {
         return preg_match("/^([a-zA-Z0-9@~_\.\\\\\/:-]+)[\\\\\/]([a-zA-Z0-9~_-]+)[\\\\\/]?$/", $sFilePath) ? true : false;
+    }
+
+	protected function _getPermissions($sPath) {
+        clearstatcache();
+
+        $hPerms = @fileperms($sPath);
+        if($hPerms == false)
+            return false;
+
+        return substr(decoct($hPerms), -3);
+    }
+
+	protected function _setPermissions($sPath, $sMode) {
+		$aConvert = array('writable' => 0666, 'executable' => 0777);
+
+		return chmod($sPath, $aConvert[$sMode]);
     }
 }
 
