@@ -30,6 +30,7 @@ class BxDolInstallView
 
     protected $_aFilesJs = array (
         'plugins/jquery/jquery.js',
+        'inc/js/jquery.dolPopup.js',
     );
 
     function __construct()

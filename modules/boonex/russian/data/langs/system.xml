@@ -3427,4 +3427,16 @@ More info about URI DNSBL: <br />
 
     <string name="_sys_profile_system"><![CDATA[Account]]></string>
 
+    <string name="_sys_audit_version"><![CDATA[версия]]></string>
+    <string name="_sys_audit_title_fail"><![CDATA[ПРОВАЛ]]></string>
+    <string name="_sys_audit_title_warn"><![CDATA[ПРЕДУПРЕЖДЕНИЕ]]></string>
+    <string name="_sys_audit_title_undef"><![CDATA[НЕ ОПРЕДЕЛЕНО]]></string>
+    <string name="_sys_audit_title_ok"><![CDATA[ПОРЯДОК]]></string>
+    <string name="_sys_audit_msg_should_be"><![CDATA[хорошо бы {0} {1}]]></string>
+    <string name="_sys_audit_msg_must_be"><![CDATA[нужно {0} {1}]]></string>
+
+    <string name="_sys_inst_start_installation"><![CDATA[Начать инсталляцию]]></string>
+    <string name="_sys_inst_server_audit"><![CDATA[Аудит сервера]]></string>
+    <string name="_sys_inst_hosting_warnings"><![CDATA[Есть некоторые замечания к настройкам сервера, можно перейти к <a href="?action=audit">аудиту сервера</a> для более подробной информации.]]></string>
+
 </resources>

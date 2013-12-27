@@ -28,7 +28,7 @@ html, body {
     text-align:center;
 }
 
-.bx-install-initial img {
+.bx-install-initial img.bx-install-dolphin {
     display:block;
     margin-left:auto;
     margin-right:auto;
@@ -40,4 +40,13 @@ html, body {
     display:inline;
     display:inline-block;
     float:none;
+}
+
+.bx-install-initial-langs {
+    text-align:center;
+}
+
+.bx-install-initial-langs img {
+    width:32px;
+    height:32px;
 }

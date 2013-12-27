@@ -273,8 +273,10 @@
 						pointer: oPointerOptions
 					});
                 };
-                
-                $('#' + sPopupId).find(options.container).load(sUrlRoot + options.url, function () {
+
+                var sUrl = (options.url.indexOf('http://') == 0 || options.url.indexOf('https://') == 0 || options.url.indexOf('/') == 0 ? '' : sUrlRoot) + options.url;
+
+                $('#' + sPopupId).find(options.container).load(sUrl, function () {
                 	if($('#' + sPopupId).find('img').length > 0)
                 		$('#' + sPopupId).find('img').load(fOnLoad);
                 	else

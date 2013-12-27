@@ -42,14 +42,18 @@ class BxDolInstallController
     {
         $this->_oView->pageStart();
 
+        $aLangs = BxDolInstallLang::getInstance()->getAvailableLanguages();
+
         $oAudit = new BxDolStudioToolsAudit();
         $aErrors = $oAudit->checkRequirements(BX_DOL_AUDIT_FAIL);
         $aWarnings = $oAudit->checkRequirements(BX_DOL_AUDIT_WARN);
+
         $oAudit->generateStyles();
+
         if (empty($aErrors))
-            $this->_oView->out('initial.php', compact('aWarnings'));
+            $this->_oView->out('initial.php', compact('aLangs', 'aWarnings'));
         else
-            $this->_oView->out('initial_fail.php', compact('aErrors'));
+            $this->_oView->out('initial_fail.php', compact('aLangs', 'aErrors'));
 
         $this->_oView->pageEnd('Dolphin 8.0.0 Installation');
     }
