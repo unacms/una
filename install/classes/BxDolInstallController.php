@@ -57,6 +57,22 @@ class BxDolInstallController
 
         $this->_oView->pageEnd('Dolphin 8.0.0 Installation');
     }
+    function actionPermissions () 
+    {
+        $this->_oView->pageStart();
+
+        $oAdmTools = new BxDolStudioTools();
+        
+        $sPermissionsStyles = $oAdmTools->generateStyles();
+
+        ob_start();
+        $bPermissionsOk = $oAdmTools->checkPermissions();
+        $sPermissionsTable = ob_get_clean();
+
+        $this->_oView->out('permissions.php', compact('sPermissionsStyles', 'sPermissionsTable', 'bPermissionsOk'));
+
+        $this->_oView->pageEnd('Dolphin 8.0.0 Installation');
+    }
 }
 
 /** @} */

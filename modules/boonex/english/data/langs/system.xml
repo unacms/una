@@ -3026,22 +3026,23 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_adm_ambuilder_Small_Icon"><![CDATA[Small Icon]]></string>
 	<string name="_adm_ambuilder_Big_Icon"><![CDATA[Big Icon]]></string>
 	<string name="_adm_mbuilder_All_Items"><![CDATA[All Items]]></string>
+	<string name="_adm_admtools_Path"><![CDATA[Path]]></string>
 	<string name="_adm_admtools_title"><![CDATA[Admin Tools]]></string>
 	<string name="_adm_admtools_Directories"><![CDATA[Directories]]></string>
 	<string name="_adm_admtools_Files"><![CDATA[Files]]></string>
 	<string name="_adm_admtools_Elements"><![CDATA[Elements]]></string>
 	<string name="_adm_admtools_Flash"><![CDATA[Flash]]></string>
-	<string name="_adm_admtools_Current_level"><![CDATA[Current level]]></string>
-	<string name="_adm_admtools_Desired_level"><![CDATA[Desired level]]></string>
+	<string name="_adm_admtools_Current_level"><![CDATA[Current status]]></string>
+	<string name="_adm_admtools_Desired_level"><![CDATA[Desired status]]></string>
 	<string name="_adm_admtools_Bad_files"><![CDATA[Next files and directories have inappropriate permissions]]></string>
 	<string name="_adm_admtools_Only_bad_files"><![CDATA[Show only troubled files and directories with inappropriate permissions]]></string>
 	<string name="_adm_admtools_Show_all_files"><![CDATA[Show all files and directories]]></string>
 	<string name="_adm_admtools_Perm_description"><![CDATA[Dolphin needs special access for certain files and directories. Please, change permissions as specified in the chart below. Helpful info about permissions is <a href="http://www.boonex.com/trac/dolphin/wiki/DetailedInstall#Permissions" target="_blank">available here</a>.]]></string>
 	<string name="_adm_admtools_Writable"><![CDATA[Writable]]></string>
-	<string name="_adm_admtools_Non_Writable"><![CDATA[Non-Writable]]></string>
-	<string name="_adm_admtools_Not_Exists"><![CDATA[Not Exists]]></string>
+	<string name="_adm_admtools_Non_Writable"><![CDATA[Not writable]]></string>
+	<string name="_adm_admtools_Not_Exists"><![CDATA[Not exists]]></string>
 	<string name="_adm_admtools_Executable"><![CDATA[Executable]]></string>
-	<string name="_adm_admtools_Non_Executable"><![CDATA[Non-Executable]]></string>
+	<string name="_adm_admtools_Non_Executable"><![CDATA[Not executable]]></string>
 	<string name="_adm_admtools_Permissions"><![CDATA[Permissions]]></string>
 	<string name="_sys_invitation_no_users_selected"><![CDATA[Please check at least one user or write at least one email]]></string>
 	<string name="_sys_invitation_step_select_users"><![CDATA[Select Users]]></string>
@@ -3678,10 +3679,14 @@ If you don't know how to do it by yourself you can submit <a target="_blank" hre
     <string name="_sys_audit_msg_mail_send_failed"><![CDATA[mail send failed]]></string>
     <string name="_sys_audit_msg_mail_sent"><![CDATA[test mail was send, please check {0} mailbox]]></string>
 
+    <string name="_sys_inst_msg_permissions_wrong"><![CDATA[Some files or folders rights aren't correct, please set necessary permissions then click "Continue".]]></string>
+
     <string name="_sys_inst_start_installation"><![CDATA[Start installation]]></string>
     <string name="_sys_inst_server_audit"><![CDATA[Server audit]]></string>
     <string name="_sys_inst_hosting_warnings"><![CDATA[Your hosting setup has some warnings, for the complete report go to <a href="?action=audit">server audit page</a>.]]></string>
     <string name="_sys_inst_hosting_fails"><![CDATA[Your hosting doesn't meet minimal requirements:]]></string>
+    <string name="_sys_inst_refresh"><![CDATA[Refresh]]></string>
+    <string name="_sys_inst_continue"><![CDATA[Continue]]></string>
 
     <!-- ********************** -->
     <!-- Auto Installed Modules -->

@@ -4,6 +4,14 @@ html, body {
     margin: 0;
 	height: 100%;
 }
+
+.bx-install-permissions .bx-btn,
+.bx-install-initial .bx-btn {
+    display:inline;
+    display:inline-block;
+    float:none;
+}
+
 .bx-install-page {
 	min-height: 100%;
 	height: auto !important;
@@ -36,12 +44,6 @@ html, body {
     max-width:90%;
 }
 
-.bx-install-initial .bx-btn {
-    display:inline;
-    display:inline-block;
-    float:none;
-}
-
 .bx-install-initial-langs {
     text-align:center;
 }
@@ -49,4 +51,8 @@ html, body {
 .bx-install-initial-langs img {
     width:32px;
     height:32px;
+}
+
+.bx-install-permissions-buttons {
+    text-align:center;
 }
