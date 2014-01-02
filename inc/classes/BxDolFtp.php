@@ -121,7 +121,10 @@ class BxDolFtp extends BxDolFile {
         return preg_match("/^([a-zA-Z0-9@~_\.\\\\\/:-]+)[\\\\\/]([a-zA-Z0-9~_-]+)[\\\\\/]?$/", $sFilePath) ? true : false;
     }
 	protected function _setPermissions($sPath, $sMode) {
-		$aConvert = array('writable' => 0666, 'executable' => 0777);
+		$aConvert = array(
+			'writable' => $this->_isDirectory($sPath) ? 0777 : 0666, 
+			'executable' => 0777
+		);
 
     	if(@ftp_chmod($this->_rStream, $aConvert[$sMode], $sPath) === false)
     		return false;
