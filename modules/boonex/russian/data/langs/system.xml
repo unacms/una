@@ -3436,6 +3436,12 @@ More info about URI DNSBL: <br />
     <string name="_sys_audit_msg_should_be"><![CDATA[хорошо бы {0} {1}]]></string>
     <string name="_sys_audit_msg_must_be"><![CDATA[нужно {0} {1}]]></string>
 
+    <string name="_sys_inst_conf_error"><![CDATA[Тут нужно ввести верные данные]]></string>
+    <string name="_sys_inst_conf_desc"><![CDATA[{0}{1}<br />Пример: {2}]]></string>
+    <string name="_sys_inst_conf_found"><![CDATA[<span style="color:green">Найдено</span>]]></string>
+    <string name="_sys_inst_conf_not_found"><![CDATA[<span style="color:red">Не найдено</span>]]></string>
+
+    <string name="_sys_inst_title"><![CDATA[Инсталляция Дельфина {0}.{1}]]></string>
     <string name="_sys_inst_start_installation"><![CDATA[Начать инсталляцию]]></string>
     <string name="_sys_inst_server_audit"><![CDATA[Аудит сервера]]></string>
     <string name="_sys_inst_hosting_warnings"><![CDATA[Есть некоторые замечания к настройкам сервера, можно перейти к <a href="?action=audit">аудиту сервера</a> для более подробной информации.]]></string>

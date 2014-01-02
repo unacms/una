@@ -10,6 +10,9 @@
 define('BX_DOL', 1);
 define('BX_DOL_INSTALL', 1);
 
+define('BX_DOL_VER', '8.0');
+define('BX_DOL_BUILD', '0');
+
 define ('BX_INSTALL_DEFAULT_LANGUAGE', 'en');
 
 define ('BX_INSTALL_URL_ROOT', '../');
@@ -38,6 +41,7 @@ require_once('../studio/classes/BxDolStudioToolsAudit.php');
 require_once(BX_INSTALL_DIR_CLASSES . 'BxDolInstallController.php');
 require_once(BX_INSTALL_DIR_CLASSES . 'BxDolInstallView.php');
 require_once(BX_INSTALL_DIR_CLASSES . 'BxDolInstallLang.php');
+require_once(BX_INSTALL_DIR_CLASSES . 'BxDolInstallSiteConfig.php');
 
 $oController = new BxDolInstallController ();
 $oController->run(isset($_REQUEST['action']) ? $_REQUEST['action'] : '');

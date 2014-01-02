@@ -19,7 +19,7 @@ class BxDolInstallController
 
     function run ($sAction = '') 
     {
-        $sMethod = 'action' . ucfirst($sAction);
+        $sMethod = 'action' . str_replace(' ', '', ucwords(str_replace('_', ' ', $sAction)));
         if ($sAction && method_exists($this, $sMethod))
             $this->$sMethod ();
         else
@@ -35,7 +35,7 @@ class BxDolInstallController
 
         $this->_oView->out('audit.php', compact('sAuditOutput'));
 
-        $this->_oView->pageEnd('Dolphin 8.0.0 Installation');
+        $this->_oView->pageEnd($this->_getTitle());
     }
 
     function actionInitial () 
@@ -55,8 +55,9 @@ class BxDolInstallController
         else
             $this->_oView->out('initial_fail.php', compact('aLangs', 'aErrors'));
 
-        $this->_oView->pageEnd('Dolphin 8.0.0 Installation');
+        $this->_oView->pageEnd($this->_getTitle());
     }
+
     function actionPermissions () 
     {
         $this->_oView->pageStart();
@@ -71,7 +72,23 @@ class BxDolInstallController
 
         $this->_oView->out('permissions.php', compact('sPermissionsStyles', 'sPermissionsTable', 'bPermissionsOk'));
 
-        $this->_oView->pageEnd('Dolphin 8.0.0 Installation');
+        $this->_oView->pageEnd($this->_getTitle());
+    }
+
+    function actionSiteConfig () 
+    {
+        $this->_oView->pageStart();
+
+        $oSiteConfig = new BxDolInstallSiteConfig();
+        $sForm = $oSiteConfig->getFormHtml();
+
+        $this->_oView->out('site_config.php', compact('sForm'));
+
+        $this->_oView->pageEnd($this->_getTitle());
+    }
+
+    protected function _getTitle() {
+        return _t('_sys_inst_title', BX_DOL_VER, BX_DOL_BUILD);
     }
 }
 

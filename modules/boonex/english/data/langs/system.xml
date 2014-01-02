@@ -3044,6 +3044,7 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_adm_admtools_Executable"><![CDATA[Executable]]></string>
 	<string name="_adm_admtools_Non_Executable"><![CDATA[Not executable]]></string>
 	<string name="_adm_admtools_Permissions"><![CDATA[Permissions]]></string>
+	<string name="_adm_admtools_Site_config"><![CDATA[Site configuration]]></string>
 	<string name="_sys_invitation_no_users_selected"><![CDATA[Please check at least one user or write at least one email]]></string>
 	<string name="_sys_invitation_step_select_users"><![CDATA[Select Users]]></string>
 	<string name="_sys_invitation_step_select_users_info"><![CDATA[Users are from your contacts, friends and favorites]]></string>
@@ -3679,8 +3680,48 @@ If you don't know how to do it by yourself you can submit <a target="_blank" hre
     <string name="_sys_audit_msg_mail_send_failed"><![CDATA[mail send failed]]></string>
     <string name="_sys_audit_msg_mail_sent"><![CDATA[test mail was send, please check {0} mailbox]]></string>
 
+    <string name="_sys_inst_conf_error"><![CDATA[Please, input valid data here.]]></string>
+    <string name="_sys_inst_conf_desc"><![CDATA[{0}{1}<br />Example: {2}]]></string>
+    <string name="_sys_inst_conf_found"><![CDATA[<span style="color:green">Found</span>]]></string>
+    <string name="_sys_inst_conf_not_found"><![CDATA[<span style="color:red">Not found</span>]]></string>
+    <string name="_sys_inst_conf_section_paths"><![CDATA[Site paths]]></string>
+    <string name="_sys_inst_conf_section_db_config"><![CDATA[DB config]]></string>
+    <string name="_sys_inst_conf_section_site_info"><![CDATA[Site info]]></string>
+
+    <string name="_sys_inst_conf_field_site_url"><![CDATA[Site URL]]></string>
+    <string name="_sys_inst_conf_desc_site_url"><![CDATA[Your site URL here (slash at the end is required).]]></string>
+    <string name="_sys_inst_conf_field_root_dir"><![CDATA[Site directory]]></string>
+    <string name="_sys_inst_conf_desc_root_dir"><![CDATA[Path to directory where Dolphin files are stored.]]></string>
+    <string name="_sys_inst_conf_field_path_to_binary"><![CDATA[Path to '{0}' binary]]></string>
+    <string name="_sys_inst_conf_desc_path_to_binary"><![CDATA[If '{0}' binary doesn\'t exist, you need to install <a target="_blank" href="http://www.imagemagick.org/">ImageMagick</a>.]]></string>
+    <string name="_sys_inst_conf_field_db_host"><![CDATA[Database host name]]></string>
+    <string name="_sys_inst_conf_desc_db_host"><![CDATA[Your MySQL database host name here.]]></string>
+    <string name="_sys_inst_conf_field_db_port"><![CDATA[Database host port number]]></string>
+    <string name="_sys_inst_conf_desc_db_port"><![CDATA[Leave blank or specify custom MySQL database host port number.]]></string>
+    <string name="_sys_inst_conf_field_db_sock"><![CDATA[Database socket path]]></string>
+    <string name="_sys_inst_conf_desc_db_sock"><![CDATA[Leave blank or specify MySQL database socket path.]]></string>
+    <string name="_sys_inst_conf_field_db_name"><![CDATA[Database name]]></string>
+    <string name="_sys_inst_conf_desc_db_name"><![CDATA[Your MySQL database name here.]]></string>
+    <string name="_sys_inst_conf_field_db_user"><![CDATA[Database user]]></string>
+    <string name="_sys_inst_conf_desc_db_user"><![CDATA[Your MySQL database user name with read/write access.]]></string>
+    <string name="_sys_inst_conf_field_db_pwd"><![CDATA[Database password]]></string>
+    <string name="_sys_inst_conf_desc_db_pwd"><![CDATA[Your MySQL database password here.]]></string>
+    <string name="_sys_inst_conf_field_site_title"><![CDATA[Site title]]></string>
+    <string name="_sys_inst_conf_desc_site_title"><![CDATA[The name of your site.]]></string>
+    <string name="_sys_inst_conf_field_site_desc"><![CDATA[Site description]]></string>
+    <string name="_sys_inst_conf_desc_site_desc"><![CDATA[Meta description of your site.]]></string>
+    <string name="_sys_inst_conf_field_site_email"><![CDATA[Site e-mail]]></string>
+    <string name="_sys_inst_conf_desc_site_email"><![CDATA[Email to send site messages from.]]></string>
+    <string name="_sys_inst_conf_field_admin_email"><![CDATA[Admin e-mail]]></string>
+    <string name="_sys_inst_conf_desc_admin_email"><![CDATA[Admin user e-mail address.]]></string>
+    <string name="_sys_inst_conf_field_admin_username"><![CDATA[Admin user name]]></string>
+    <string name="_sys_inst_conf_desc_admin_username"><![CDATA[Admin user name here.]]></string>
+    <string name="_sys_inst_conf_field_admin_pwd"><![CDATA[Admin password]]></string>
+    <string name="_sys_inst_conf_desc_admin_pwd"><![CDATA[Admin user password here.]]></string>
+
     <string name="_sys_inst_msg_permissions_wrong"><![CDATA[Some files or folders rights aren't correct, please set necessary permissions then click "Continue".]]></string>
 
+    <string name="_sys_inst_title"><![CDATA[Dolphin {0}.{1} Installation]]></string>
     <string name="_sys_inst_start_installation"><![CDATA[Start installation]]></string>
     <string name="_sys_inst_server_audit"><![CDATA[Server audit]]></string>
     <string name="_sys_inst_hosting_warnings"><![CDATA[Your hosting setup has some warnings, for the complete report go to <a href="?action=audit">server audit page</a>.]]></string>

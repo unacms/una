@@ -12,6 +12,13 @@ html, body {
     float:none;
 }
 
+.bx-install-initial,
+.bx-install-initial-langs,
+.bx-install-permissions-buttons,
+.bx-install-site-config .bx-form-input-wrapper-submit {
+    text-align:center;
+}
+
 .bx-install-page {
 	min-height: 100%;
 	height: auto !important;
@@ -32,10 +39,6 @@ html, body {
     float:right;
 }
 
-.bx-install-initial {
-    text-align:center;
-}
-
 .bx-install-initial img.bx-install-dolphin {
     display:block;
     margin-left:auto;
@@ -44,15 +47,11 @@ html, body {
     max-width:90%;
 }
 
-.bx-install-initial-langs {
-    text-align:center;
-}
-
 .bx-install-initial-langs img {
     width:32px;
     height:32px;
 }
 
-.bx-install-permissions-buttons {
-    text-align:center;
-}
+.bx-install-site-config .bx-form-input-wrapper-submit button {
+    display:inline-block;
+} 
