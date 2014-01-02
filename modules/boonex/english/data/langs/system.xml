@@ -3026,22 +3026,23 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_adm_ambuilder_Small_Icon"><![CDATA[Small Icon]]></string>
 	<string name="_adm_ambuilder_Big_Icon"><![CDATA[Big Icon]]></string>
 	<string name="_adm_mbuilder_All_Items"><![CDATA[All Items]]></string>
+	<string name="_adm_admtools_Path"><![CDATA[Path]]></string>
 	<string name="_adm_admtools_title"><![CDATA[Admin Tools]]></string>
 	<string name="_adm_admtools_Directories"><![CDATA[Directories]]></string>
 	<string name="_adm_admtools_Files"><![CDATA[Files]]></string>
 	<string name="_adm_admtools_Elements"><![CDATA[Elements]]></string>
 	<string name="_adm_admtools_Flash"><![CDATA[Flash]]></string>
-	<string name="_adm_admtools_Current_level"><![CDATA[Current level]]></string>
-	<string name="_adm_admtools_Desired_level"><![CDATA[Desired level]]></string>
+	<string name="_adm_admtools_Current_level"><![CDATA[Current status]]></string>
+	<string name="_adm_admtools_Desired_level"><![CDATA[Desired status]]></string>
 	<string name="_adm_admtools_Bad_files"><![CDATA[Next files and directories have inappropriate permissions]]></string>
 	<string name="_adm_admtools_Only_bad_files"><![CDATA[Show only troubled files and directories with inappropriate permissions]]></string>
 	<string name="_adm_admtools_Show_all_files"><![CDATA[Show all files and directories]]></string>
 	<string name="_adm_admtools_Perm_description"><![CDATA[Dolphin needs special access for certain files and directories. Please, change permissions as specified in the chart below. Helpful info about permissions is <a href="http://www.boonex.com/trac/dolphin/wiki/DetailedInstall#Permissions" target="_blank">available here</a>.]]></string>
 	<string name="_adm_admtools_Writable"><![CDATA[Writable]]></string>
-	<string name="_adm_admtools_Non_Writable"><![CDATA[Non-Writable]]></string>
-	<string name="_adm_admtools_Not_Exists"><![CDATA[Not Exists]]></string>
+	<string name="_adm_admtools_Non_Writable"><![CDATA[Not writable]]></string>
+	<string name="_adm_admtools_Not_Exists"><![CDATA[Not exists]]></string>
 	<string name="_adm_admtools_Executable"><![CDATA[Executable]]></string>
-	<string name="_adm_admtools_Non_Executable"><![CDATA[Non-Executable]]></string>
+	<string name="_adm_admtools_Non_Executable"><![CDATA[Not executable]]></string>
 	<string name="_adm_admtools_Permissions"><![CDATA[Permissions]]></string>
 	<string name="_sys_invitation_no_users_selected"><![CDATA[Please check at least one user or write at least one email]]></string>
 	<string name="_sys_invitation_step_select_users"><![CDATA[Select Users]]></string>
@@ -3625,6 +3626,67 @@ More info about URI DNSBL: <br />
     <string name="_sys_conn_msg_success"><![CDATA[Operation has beed succesfully completed]]></string>
 
     <string name="_sys_access_denied_to_private_content"><![CDATA[Access denied. This is private content.]]></string>
+
+    <string name="_sys_audit_version"><![CDATA[version]]></string>
+    <string name="_sys_audit_version_dolphin"><![CDATA[Dolphin version]]></string>
+    <string name="_sys_audit_permissions"><![CDATA[Files and folders permissions]]></string>
+    <string name="_sys_audit_mail_sending"><![CDATA[Mail sending]]></string>
+    <string name="_sys_audit_cron_jobs"><![CDATA[Cron jobs]]></string>
+    <string name="_sys_audit_php_accelerator"><![CDATA[PHP accelerator]]></string>
+    <string name="_sys_audit_php_setup"><![CDATA[PHP setup]]></string>
+    <string name="_sys_audit_userside_caching"><![CDATA[User-side caching for static content]]></string>
+    <string name="_sys_audit_serverside_compression"><![CDATA[Server-side content compression]]></string>
+    <string name="_sys_audit_title_fail"><![CDATA[FAIL]]></string>
+    <string name="_sys_audit_title_warn"><![CDATA[WARNING]]></string>
+    <string name="_sys_audit_title_undef"><![CDATA[UNDEFINED]]></string>
+    <string name="_sys_audit_title_ok"><![CDATA[OK]]></string>
+    <string name="_sys_audit_header_requirements"><![CDATA[Requirements]]></string>
+    <string name="_sys_audit_header_site_setup"><![CDATA[Site setup]]></string>
+    <string name="_sys_audit_header_site_optimization"><![CDATA[Site optimization]]></string>
+    <string name="_sys_audit_header_manual_audit"><![CDATA[Manual Server Audit]]></string>
+    <string name="_sys_audit_section_webserver"><![CDATA[Web-server]]></string>
+    <string name="_sys_audit_section_os"><![CDATA[OS]]></string>
+    <string name="_sys_audit_section_hardware"><![CDATA[Hardware]]></string>
+    <string name="_sys_audit_msg_should_be"><![CDATA[should be {0} {1}]]></string>
+    <string name="_sys_audit_msg_must_be"><![CDATA[must be {0} {1}]]></string>
+    <string name="_sys_audit_msg_value_checking_failed"><![CDATA[value checking failed]]></string>
+    <string name="_sys_audit_msg_version_is_incompatible"><![CDATA[your version is incompatible with Dolphin, must be at least {0}]]></string>
+    <string name="_sys_audit_msg_version_is_outdated"><![CDATA[your version is probably outdated, upgrade to the latest {0} maybe required]]></string>
+    <string name="_sys_audit_msg_hardware_requirements"><![CDATA[Hardware requirements can not be determined automatically - <a href="#manual_audit">manual server audit</a> may be required.]]></string>
+    <string name="_sys_audit_msg_permissions"><![CDATA[please <a href="javascript:void(0);" onclick="switchAdmPage($('#main_menu1'));">click here</a> to find out if dolphin permissions are correct.]]></string>
+    <string name="_sys_audit_msg_ffmpeg"><![CDATA[<pre class="code">{0}</pre>if you don't know if output is correct then <a href="#manual_audit">manual server audit</a> may be required.]]></string>
+    <string name="_sys_audit_msg_mail_sending"><![CDATA[<span id="bx-sys-adm-audit-test-email"><a href="javascript:void(0);" onclick="bx_sys_adm_audit_test_email()">click here</a> to send test email</span>]]></string>
+    <string name="_sys_audit_msg_cron_jobs"><![CDATA[<pre class="code">{0}</pre> if you are unsure if output is correct then <a href="#manual_audit">manual server audit</a> may be required]]></string>
+    <string name="_sys_audit_msg_php_accelerator_missing"><![CDATA[Dolphin can be much faster if you install some PHP accelerator]]></string>
+    <string name="_sys_audit_msg_php_setup_inefficient"><![CDATA[your PHP setup maybe very inefficient, <a href="javascript:void(0)" onclick="bx_sys_adm_audit_phpinfo()">please check it for sure</a> and try to switch to mod_php, apache dso module or FastCGI]]></string>
+    <string name="_sys_audit_msg_userside_caching"><![CDATA[
+<a href="{0}">click here to check it in Google Page Speed</a><br />
+If it is not enabled then please consider implement this optimization, since it improve perceived site speed and save the bandwidth, refer to <a target="_blank" href="http://www.boonex.com/trac/dolphin/wiki/HostingServerSetupRecommendations#Usersidecachingforstaticcontent">this tutorial</a> on how to do this.<br />{1}]]></string>
+    <string name="_sys_audit_msg_serverside_compression"><![CDATA[
+can be checked <a href="#manual_audit">manually</a> or in "Page Speed" tool build-in into browser.<br />
+If it is not enabled then please consider implement this optimization, since it improve perceived site speed and save the bandwidth, refer to <a href="http://www.boonex.com/trac/dolphin/wiki/HostingServerSetupRecommendations#Serversidecontentcompression">this tutorial</a> on how to do this.<br />{0}]]></string>
+    <string name="_sys_audit_msg_optimization_apache_module"><![CDATA[To apply this optimization you need to have <b>{0}</b> - {1}]]></string>
+    <string name="_sys_audit_msg_apache_module_undef"><![CDATA[try to check manually: apachectl -M 2>&1 | grep {0}]]></string>
+    <string name="_sys_audit_msg_apache_module_fail"><![CDATA[you will need to install {0} for Apache]]></string>
+
+    <string name="_sys_audit_msg_dolphin_optimization_fail"><![CDATA[please enable this cache in Dolphin Admin Panel -> Settings -> Advanced Settings]]></string>
+    <string name="_sys_audit_msg_dolphin_optimization_warn"><![CDATA[installing PHP accelerator will speed-up file cache]]></string>
+    <string name="_sys_audit_msg_dolphin_x_based_cache_engine"><![CDATA[ ({0} based cache engine)]]></string>
+    <string name="_sys_audit_msg_manual_audit"><![CDATA[<p>
+Some things can not be determined automatically, manual server audit is required to check it. 
+If you don't know how to do it by yourself you can submit <a target="_blank" href="http://www.boonex.com/help/tickets">BoonEx Server Audit Request</a>.
+</p>]]></string>
+    <string name="_sys_audit_msg_mail_send_failed"><![CDATA[mail send failed]]></string>
+    <string name="_sys_audit_msg_mail_sent"><![CDATA[test mail was send, please check {0} mailbox]]></string>
+
+    <string name="_sys_inst_msg_permissions_wrong"><![CDATA[Some files or folders rights aren't correct, please set necessary permissions then click "Continue".]]></string>
+
+    <string name="_sys_inst_start_installation"><![CDATA[Start installation]]></string>
+    <string name="_sys_inst_server_audit"><![CDATA[Server audit]]></string>
+    <string name="_sys_inst_hosting_warnings"><![CDATA[Your hosting setup has some warnings, for the complete report go to <a href="?action=audit">server audit page</a>.]]></string>
+    <string name="_sys_inst_hosting_fails"><![CDATA[Your hosting doesn't meet minimal requirements:]]></string>
+    <string name="_sys_inst_refresh"><![CDATA[Refresh]]></string>
+    <string name="_sys_inst_continue"><![CDATA[Continue]]></string>
 
     <!-- ********************** -->
     <!-- Auto Installed Modules -->

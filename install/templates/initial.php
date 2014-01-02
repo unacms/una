@@ -1,10 +1,16 @@
 <div class="bx-install-initial">
-    <img class="bx-def-margin-bottom" src="img/dolphin.png" />
-    <a href="javascript:void(0);" class="bx-btn bx-btn-primary">Start installation</a>
-    <a href="?action=audit" class="bx-btn">Server audit</a>
+
+    <img class="bx-def-margin-bottom bx-install-dolphin" src="img/dolphin.png" alt="Dolphin 8" />
+
+    <?php include('lang_swither.php'); ?>
+
+    <a href="?action=permissions" class="bx-btn bx-btn-primary"><? echo _t('_sys_inst_start_installation'); ?></a>
+    <a href="?action=audit" class="bx-btn"><? echo _t('_sys_inst_server_audit'); ?></a>
+
     <?php if ($aWarnings): ?>
     <div class="bx-install-initial-waring bx-def-margin-top">
-        Your hosting setup has some warnings, for the complete report go to <a href="?action=audit">server audit page</a>.
+        <?php echo _t('_sys_inst_hosting_warnings'); ?>
     </div>
     <?php endif; ?>
+
 </div>

@@ -17,7 +17,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         parent::__construct();
     }
 
-	/**
+    /**
      * Prevent cloning the instance
      */
     public function __clone() {

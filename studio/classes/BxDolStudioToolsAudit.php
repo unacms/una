@@ -41,10 +41,10 @@ class BxDolStudioToolsAudit extends BxDol
         );
 
         $this->aType2Title = array (
-            BX_DOL_AUDIT_FAIL => 'FAIL',
-            BX_DOL_AUDIT_WARN => 'WARNING',
-            BX_DOL_AUDIT_UNDEF => 'UNDEFINED',
-            BX_DOL_AUDIT_OK => 'OK',
+            BX_DOL_AUDIT_FAIL => _t('_sys_audit_title_fail'),
+            BX_DOL_AUDIT_WARN => _t('_sys_audit_title_warn'),
+            BX_DOL_AUDIT_UNDEF => _t('_sys_audit_title_undef'),
+            BX_DOL_AUDIT_OK => _t('_sys_audit_title_ok'),
         );
 
         $this->sLatestPhp53Version = '5.3.28';
@@ -68,6 +68,7 @@ class BxDolStudioToolsAudit extends BxDol
             'php module: openssl' => array('op' => 'module', 'val' => 'openssl', 'warn' => 1),
             'php module: zip' => array('op' => 'module', 'val' => 'zip', 'warn' => 1),
             'php module: ftp' => array('op' => 'module', 'val' => 'ftp', 'warn' => 1),
+            'php module: oauth' => array('op' => 'module', 'val' => 'oauth', 'warn' => 1),
         );
 
         $this->sMinMysqlVer = '4.1.2';
@@ -94,6 +95,30 @@ class BxDolStudioToolsAudit extends BxDol
         $this->aRequiredApacheModules = array (
             'rewrite_module' => 'mod_rewrite',
         );
+
+        if (isset($_GET['action'])) {
+            $sOutput = null;
+            switch ($_GET['action']) {
+                case 'audit_send_test_email':
+                    $sOutput = $this->sendTestEmail();
+                    break;
+                case 'phpinfo':
+                    ob_start();
+                    phpinfo();
+                    $sOutput = ob_get_clean();
+                    break;
+                case 'phpinfo_popup':
+                    $sUrlSelf = bx_js_string($_SERVER['PHP_SELF'], BX_ESCAPE_STR_APOS);
+                    $sUrlSelf = bx_append_url_params($sUrlSelf, array('action' => 'phpinfo'));
+                    $sOutput = '<iframe width="640" height="480" src="' . $sUrlSelf . '"></iframe>';
+                    break;
+            }
+            if ($sOutput) {
+                header('Content-type: text/html; charset=utf-8');
+                echo $sOutput;
+                exit;
+            }
+        }
     }
 
     public function generate()
@@ -103,7 +128,8 @@ class BxDolStudioToolsAudit extends BxDol
         $this->setErrorReporting();
 
         $this->generateStyles();
-        
+        $this->generateJs();
+
         $this->requirements();
 
         if (defined('BX_DOL_VERSION'))
@@ -138,6 +164,31 @@ class BxDolStudioToolsAudit extends BxDol
         <?php
     }
 
+    public function generateJs() 
+    {
+        $sUrlSelf = bx_js_string($_SERVER['PHP_SELF'], BX_ESCAPE_STR_APOS);
+        ?>
+        <script language="javascript">
+            function bx_sys_adm_audit_test_email()
+            {
+                var sEmail = prompt('<?php echo _t('_Email'); ?>', '<?php echo function_exists('getParam') ? getParam('site_email') : ''; ?>');
+                if (null == sEmail || ('string' == (typeof sEmail) && !sEmail.length))
+                    return;
+
+                $('#bx-sys-adm-audit-test-email').html('Sending...');
+                $.post('<?php echo bx_append_url_params($sUrlSelf, array('action' => 'audit_send_test_email')); ?>&email=' + sEmail, function(data) {
+                    $('#bx-sys-adm-audit-test-email').html(data);
+                });
+            }
+
+            function bx_sys_adm_audit_phpinfo()
+            {
+                $(window).dolPopupAjax({url: '<?php echo bx_append_url_params($sUrlSelf, array('action' => 'phpinfo_popup')); ?>'});
+            }
+        </script>
+        <?php
+    }
+
     public function checkRequirements($sType = BX_DOL_AUDIT_FAIL)
     {
         $this->setErrorReporting();
@@ -156,7 +207,7 @@ class BxDolStudioToolsAudit extends BxDol
 
     protected function requirements()
     {
-        echo '<h1>Requirements</h1>';
+        echo '<h1>' . _t('_sys_audit_header_requirements') . '</h1>';
         $this->requirementsPHP();
         if (class_exists('BxDolDb'))
             $this->requirementsMySQL();
@@ -177,38 +228,36 @@ class BxDolStudioToolsAudit extends BxDol
 
         $sPhpVer = PHP_VERSION;        
         if (empty($sLatestPhpVersion))
-            $aMessages['version'] = array('type' => BX_DOL_AUDIT_UNDEF, 'msg' => 'value checking failed', 'params' => array ('real_val' => $sPhpVer));
+            $aVer = array('type' => BX_DOL_AUDIT_UNDEF, 'msg' => _t('_sys_audit_msg_value_checking_failed'), 'params' => array ('real_val' => $sPhpVer));
         elseif (version_compare($sPhpVer, $this->sMinPhpVer, '<'))
-            $aMessages['version'] = array('type' => BX_DOL_AUDIT_FAIL, 'msg' => 'your version is incompatible with Dolphin, must be at least ' . $this->sMinPhpVer, 'params' => array ('real_val' => $sPhpVer));
+            $aVer = array('type' => BX_DOL_AUDIT_FAIL, 'msg' => _t('_sys_audit_msg_version_is_incompatible', $this->sMinPhpVer), 'params' => array ('real_val' => $sPhpVer));
         elseif (version_compare($sPhpVer, '5.4.0', '>=') && version_compare($sPhpVer, '6.0.0', '<') && !version_compare($sPhpVer, $sLatestPhpVersion, '>='))
-            $aMessages['version'] = array('type' => BX_DOL_AUDIT_WARN, 'msg' => 'your PHP version is probably outdated, upgrade to the latest ' . $sLatestPhpVersion . ' maybe required', 'params' => array ('real_val' => $sPhpVer));
+            $aVer = array('type' => BX_DOL_AUDIT_WARN, 'msg' => _t('_sys_audit_msg_version_is_outdated', $sLatestPhpVersion), 'params' => array ('real_val' => $sPhpVer));
         elseif (version_compare($sPhpVer, '5.2.0', '>=') && version_compare($sPhpVer, '5.4.0', '<') && !version_compare($sPhpVer, $this->sLatestPhp53Version, '>='))
-            $aMessages['version'] = array('type' => BX_DOL_AUDIT_WARN, 'msg' => 'your PHP version is probably outdated, upgrade to the latest ' . $this->sLatestPhp53Version . ' maybe required', 'params' => array ('real_val' => $sPhpVer));
+            $aVer = array('type' => BX_DOL_AUDIT_WARN, 'msg' => _t('_sys_audit_msg_version_is_outdated', $this->sLatestPhp53Version), 'params' => array ('real_val' => $sPhpVer));
         else
-            $aMessages['version'] = array('type' => BX_DOL_AUDIT_OK, 'params' => array ('real_val' => $sPhpVer));
+            $aVer = array('type' => BX_DOL_AUDIT_OK, 'params' => array ('real_val' => $sPhpVer));
+        $aMessages[_t('_sys_audit_version')] = $aVer;
 
         foreach ($this->aPhpSettings as $sName => $r) {
             $a = $this->checkPhpSetting($sName, $r);
             if ($a['res'])
                 $aMessages[$sName] = array('type' => BX_DOL_AUDIT_OK, 'params' => $a);
             elseif (isset($r['warn']) && $r['warn'])
-                $aMessages[$sName] = array('type' => BX_DOL_AUDIT_WARN, 'msg' => "should be {$r['op']} " . $this->format_output($r['val'], $r), 'params' => $a);
+                $aMessages[$sName] = array('type' => BX_DOL_AUDIT_WARN, 'msg' => _t('_sys_audit_msg_should_be', $r['op'], $this->format_output($r['val'], $r)), 'params' => $a);
             else
-                $aMessages[$sName] = array('type' => BX_DOL_AUDIT_FAIL, 'msg' => "must be {$r['op']} " . $this->format_output($r['val'], $r), 'params' => $a);
+                $aMessages[$sName] = array('type' => BX_DOL_AUDIT_FAIL, 'msg' => _t('_sys_audit_msg_must_be', $r['op'], $this->format_output($r['val'], $r)), 'params' => $a);
         }
 
         if (null !== $aOutputMessages)
             $aOutputMessages = $aMessages;
 
         if ($bEcho) {
-            echo '<b>PHP</b>: ';
-            echo '<ul>';
+            $s = '';
             foreach ($aMessages as $sName => $r) {
-                echo "<li>$sName = " . $this->format_output($r['params']['real_val'], isset($this->aPhpSettings[$sName]) ? $this->aPhpSettings[$sName] : '') . " - ";
-                echo $this->getMsgHTML($sName, $r);
-                echo "</li>\n";
+                $s .= $this->getBlock($sName, $this->format_output($r['params']['real_val'], isset($this->aPhpSettings[$sName]) ? $this->aPhpSettings[$sName] : ''), $this->getMsgHTML($sName, $r));
             }
-            echo '</ul>';
+            echo $this->getSection('PHP', '', $s);
         }
     }
 
@@ -218,42 +267,41 @@ class BxDolStudioToolsAudit extends BxDol
         if (preg_match ('/^(\d+)\.(\d+)\.(\d+)/', $sMysqlVer, $m)) {
             $sMysqlVer = "{$m[1]}.{$m[2]}.{$m[3]}";
             if (version_compare($sMysqlVer, $this->sMinMysqlVer, '<'))
-                $aMessage = array('type' => BX_DOL_AUDIT_FAIL, 'msg' => 'your version is incompatible with Dolphin, must be at least ' . $this->sMinMysqlVer);
+                $aMessage = array('type' => BX_DOL_AUDIT_FAIL, 'msg' => _t('_sys_audit_msg_version_is_incompatible', $this->sMinMysqlVer));
             else
                 $aMessage = array('type' => BX_DOL_AUDIT_OK);
         } else {
-            $aMessage = array('type' => BX_DOL_AUDIT_UNDEF, 'msg' => 'value checking failed');
+            $aMessage = array('type' => BX_DOL_AUDIT_UNDEF, 'msg' => _t('_sys_audit_msg_value_checking_failed'));
         }
 
-        echo '<b>MySQL</b>: ' . $sMysqlVer . ' - ';
-        echo $this->getMsgHTML('version', $aMessage);
+        $s = $this->getBlock(_t('_sys_audit_version'), $sMysqlVer, $this->getMsgHTML(_t('_sys_audit_version'), $aMessage));
+        echo $this->getSection('MySQL', '', $s);
     }
 
     protected function requirementsWebServer()
     {
-        echo '<b>Web-server</b>: ';
-        echo $_SERVER['SERVER_SOFTWARE'];
-        echo '<ul>';
+        $s = '';
         foreach ($this->aRequiredApacheModules as $sName => $sNameCompiledName)
-            echo '<li>' . $sName . ' - ' . $this->checkApacheModule($sName, $sNameCompiledName) . '</li>';
-        echo '</ul>';
+            $s .= $this->getBlock($sName, '', $this->checkApacheModule($sName, $sNameCompiledName));
+
+        echo $this->getSection(_t('_sys_audit_section_webserver'), $_SERVER['SERVER_SOFTWARE'], $s);
     }
 
     protected function requirementsOS() 
     {
-        echo '<b>OS</b>: <ul><li>' . php_uname() . '</li></ul>';
+        $s = $this->getBlock(php_uname());
+        echo $this->getSection(_t('_sys_audit_section_os'), '', $s);
     }
 
     protected function requirementsHardware()
     {
-        ?>
-        <b>Hardware</b>: <ul><li>Hardware requirements can not be determined automatically - <a href="#manual_audit">manual server audit</a> may be required.</li></ul>
-        <?php
+        $s = $this->getBlock(_t('_sys_audit_msg_hardware_requirements'));
+        echo $this->getSection(_t('_sys_audit_section_hardware'), '', $s);
     }
 
     protected function siteSetup()
     {
-        $sDolphinPath = defined('BX_DIRECTORY_PATH_ROOT') ? BX_DIRECTORY_PATH_ROOT : './../';
+        $sDolphinPath = defined('BX_DIRECTORY_PATH_ROOT') ? BX_DIRECTORY_PATH_ROOT : BX_INSTALL_DIR_ROOT;
 
         $sEmailToCkeckMailSending = function_exists('getParam') ? getParam('site_email') : '';
 
@@ -262,56 +310,26 @@ class BxDolStudioToolsAudit extends BxDol
             $sLatestDolphinVer = $m[1];
         else
             $sLatestDolphinVer = 'undefined';
+       
+        $sDolphinVer = BX_DOL_VERSION . '.' . BX_DOL_BUILD;
+        $aMessage = array('type' => BX_DOL_AUDIT_OK);
+        if (!version_compare($sDolphinVer, $sLatestDolphinVer, '>='))
+            $aMessage = array('type' => BX_DOL_AUDIT_WARN, 'msg' => _t('_sys_audit_msg_version_is_outdated', $sLatestDolphinVer));
 
-        ?>
-<h1>Site setup</h1>
-<ul>
-    <li>
-        <b>Dolphin version</b> = 
-        <?php
-            $sDolphinVer = BX_DOL_VERSION . '.' . BX_DOL_BUILD;
-            echo $sDolphinVer . ' - ';
-            if (!version_compare($sDolphinVer, $sLatestDolphinVer, '>='))
-                echo '<b class="warn">WARNING</b> (your Dolphin version is outdated please upgrade to the latest ' . $sLatestDolphinVer . ' version)';
-            else
-                echo '<b class="ok">OK</b>';
-        ?>
-    </li>
-    <li>
-        <b>files and folders permissions</b>
-        <br />
-        Please <a href="javascript:void(0);" onclick="switchAdmPage($('#main_menu1'));">click here</a> to find out if dolphin permissions are correct.
-    </li>
-    <li>
-        <b>ffmpeg</b>
-        <pre class="code"><?php echo `{$sDolphinPath}flash/modules/global/app/ffmpeg.exe 2>&1`;?></pre>
-        if you don't know if output is correct then <a href="#manual_audit">manual server audit</a> may be required.
-    </li>
-    <li>
-        <script language="javascript">
-            function bx_sys_adm_audit_test_email()
-            {
-                $('#bx-sys-adm-audit-test-email').html('Sending...');
-                $.post('<?php echo BX_DOL_URL_STUDIO; ?>host_tools.php?action=audit_send_test_email', function(data) {
-                    $('#bx-sys-adm-audit-test-email').html(data);
-                });
-            }
-        </script>
-        <b>mail sending - </b>
-        <span id="bx-sys-adm-audit-test-email"><a href="javascript:void(0);" onclick="bx_sys_adm_audit_test_email()">click here</a> to send test email to <?php echo $sEmailToCkeckMailSending; ?></span>
-    </li>
-    <li>
-        <b>cronjobs</b>
-        <pre class="code"><?php echo `crontab -l 2>&1`;?></pre>
-        if you are unsure if output is correct then <a href="#manual_audit">manual server audit</a> may be required.
-    </li>
-</ul>
-        <?php
+        $s = '';
+        $s .= $this->getBlock(_t('_sys_audit_version_dolphin'), $sDolphinVer, $this->getMsgHTML(_t('_sys_audit_version_dolphin'), $aMessage));
+        $s .= $this->getBlock(_t('_sys_audit_permissions'), '', _t('_sys_audit_msg_permissions'));
+        $s .= $this->getBlock('ffmpeg', '', _t('_sys_audit_msg_ffmpeg', `{$sDolphinPath}flash/modules/global/app/ffmpeg.exe 2>&1`));
+        $s .= $this->getBlock(_t('_sys_audit_mail_sending'), '', _t('_sys_audit_msg_mail_sending'));
+        $s .= $this->getBlock(_t('_sys_audit_cron_jobs'), '', _t('_sys_audit_msg_cron_jobs', `crontab -l 2>&1`));
+
+        echo '<h1>' . _t('_sys_audit_header_site_setup') . '</h1>';
+        echo "<ul>$s</ul>";
     }
 
     protected function optimization()
     {
-        echo '<h1>Site optimization</h1>';
+        echo '<h1>' . _t('_sys_audit_header_site_optimization') . '</h1>';
 
         $this->optimizationPhp();
 
@@ -326,130 +344,84 @@ class BxDolStudioToolsAudit extends BxDol
 
     protected function optimizationPhp()
     {
-        ?>
-        <b>PHP</b>:
-        <ul>
-            <li>
-                <?php echo $this->optimizationPhpAccelerator(); ?>
-            </li>
-            <li>
-                <?php echo $this->optimizationPhpSetup(); ?>
-            </li>
-        </ul>
-        <?php
-    }
+        $s = '';
+        $aMessage = array();
 
-    protected function optimizationPhpAccelerator()
-    {            
-        echo "<b>PHP accelerator</b> = ";
         $sAccel = $this->getPhpAccelerator();
         if (!$sAccel)
-            echo 'NO - <b class="warn">WARNING</b> (Dolphin can be much faster if you install some PHP accelerator))';
+            $aMessage = array('type' => BX_DOL_AUDIT_WARN, 'msg' => _t('_sys_audit_msg_php_accelerator_missing'));
         else
-            echo $sAccel . ' - <b class="ok">OK</b>';
-    }
+            $aMessage = array('type' => BX_DOL_AUDIT_OK);
+        $s .= $this->getBlock(_t('_sys_audit_php_accelerator'), $sAccel, $this->getMsgHTML(_t('_sys_audit_php_accelerator'), $aMessage));
 
-    protected function optimizationPhpSetup()
-    {
-        echo "<b>PHP setup</b> = ";
         $sSapi = php_sapi_name();
-        echo $sSapi . ' - ';
         if (0 == strcasecmp('cgi', $sSapi))
-            echo '<b class="warn">WARNING</b> (your PHP setup maybe very inefficient, <a href="?action=phpinfo">please check it for sure</a> and try to switch to mod_php, apache dso module or FastCGI)';
+            $aMessage = array('type' => BX_DOL_AUDIT_WARN, 'msg' => _t('_sys_audit_msg_php_setup_inefficient'));
         else
-            echo '<b class="ok">OK</b>';
+            $aMessage = array('type' => BX_DOL_AUDIT_OK);
+        $s .= $this->getBlock(_t('_sys_audit_php_setup'), $sSapi, $this->getMsgHTML(_t('_sys_audit_php_setup'), $aMessage));
+
+        echo $this->getSection('PHP', '', $s);
     }
 
     protected function optimizationMySQL()
     {
+        $s = '';
         $oDb = BxDolDb::getInstance();
 
-        ?>
-        <b>MySQL</b>:
-        <ul>
-            <?php
-                foreach ($this->aMysqlOptimizationSettings as $sName => $r) {
-                    $a = $this->checkMysqlSetting($sName, $r, $oDb);
-                    echo "<li><b>$sName</b> = " . $this->format_output($a['real_val'], $r) ." - " . ($a['res'] ? '<b class="ok">OK</b>' : "<b class='fail'>FAIL</b> (must be {$r['op']} " . $this->format_output($r['val'], $r) . ")") . "</li>\n";
-                }
-            ?>
-        </ul>
-        <?php
+        foreach ($this->aMysqlOptimizationSettings as $sName => $r) {
+            $a = $this->checkMysqlSetting($sName, $r, $oDb);
+            $aMessage = array('type' => BX_DOL_AUDIT_OK);
+            if (!$a['res'])
+                $aMessage = array('type' => BX_DOL_AUDIT_FAIL, 'msg' => _t('_sys_audit_msg_must_be', $r['op'], $this->format_output($r['val'], $r)));
+            $s .= $this->getBlock($sName, $this->format_output($a['real_val'], $r), $this->getMsgHTML($sName, $aMessage));
+        }
+
+        echo $this->getSection('MySQL', '', $s);
     }
 
     protected function optimizationWebServer()
     {
-        ?>
-        <b>Web-server</b>:
-        <ul>
-            <li>
-                <b>User-side caching for static content</b> =
-                <a href="<?php echo $this->getUrlForGooglePageSpeed('LeverageBrowserCaching'); ?>">click here to check it in Google Page Speed</a>
-                <br />
-                If it is not enabled then please consider implement this optimization, since it improve perceived site speed and save the bandwidth, refer to <a target="_blank" href="http://www.boonex.com/trac/dolphin/wiki/HostingServerSetupRecommendations#Usersidecachingforstaticcontent">this tutorial</a> on how to do this.
-                <br />
-                <?php
-                    $sName = 'expires_module';
-                    echo 'To apply this optimization you need to have <b>' . $sName . '</b> Apache module - ' . $this->checkApacheModule($sName);
-                ?>
-            </li>
-            <li>
-                <b>Server-side content compression</b> = can be checked <a href="#manual_audit">manually</a> or in "Page Speed" tool build-in into browser.
-                <br />
-                If it is not enabled then please consider implement this optimization, since it improve perceived site speed and save the bandwidth, refer to <a href="http://www.boonex.com/trac/dolphin/wiki/HostingServerSetupRecommendations#Serversidecontentcompression">this tutorial</a> on how to do this.
-                </textarea>
-                <br />
-                <?php
-                    $sName = 'deflate_module';
-                    echo 'To apply this optimization you need to have <b>' . $sName . '</b> Apache module - ' . $this->checkApacheModule($sName);
-                ?>
-            </li>
-        </ul>
-        <?php
+        $s = '';
+
+        $sName = 'expires_module';
+        $sApacheModuleChack = _t('_sys_audit_msg_optimization_apache_module', $sName, $this->checkApacheModule($sName));
+        $s .= $this->getBlock(_t('_sys_audit_userside_caching'), '', _t('_sys_audit_msg_userside_caching', $this->getUrlForGooglePageSpeed('LeverageBrowserCaching'), $sApacheModuleChack));
+
+        $sName = 'deflate_module';
+        $sApacheModuleChack = _t('_sys_audit_msg_optimization_apache_module', $sName, $this->checkApacheModule($sName));
+        $s .= $this->getBlock(_t('_sys_audit_serverside_compression'), '', _t('_sys_audit_msg_serverside_compression', $sApacheModuleChack));
+
+        echo $this->getSection(_t('_sys_audit_section_webserver'), '', $s);
     }
 
     protected function optimizationDolphin()
     {
-        ?>
-        <b>Dolphin</b>:
-        <ul>
-            <?php
+        $s = '';      
+        foreach ($this->aDolphinOptimizationSettings as $sName => $a) {
 
-                foreach ($this->aDolphinOptimizationSettings as $sName => $a) {
+            $sVal = ('always_on' == $a['enabled'] || getParam($a['enabled'])) ? 'On' : 'Off';
+            if ($a['cache_engine'])
+                $sVal .= _t('_sys_audit_msg_dolphin_x_based_cache_engine', getParam($a['cache_engine']));
 
-                    echo "<li><b>$sName</b> = ";
+            if ('always_on' != $a['enabled'] && !getParam($a['enabled']))
+                $aMessage = array('type' => BX_DOL_AUDIT_FAIL, 'msg' => _t('_sys_audit_msg_dolphin_optimization_fail'));
+            elseif ($a['check_accel'] && !$this->getPhpAccelerator() && 'File' == getParam($a['cache_engine']))
+                $aMessage = array('type' => BX_DOL_AUDIT_WARN, 'msg' => _t('_sys_audit_msg_dolphin_optimization_warn'));
+            else
+                $aMessage = array('type' => BX_DOL_AUDIT_OK);
 
-                    echo ('always_on' == $a['enabled'] || getParam($a['enabled'])) ? 'On' : 'Off';
+            $s .= $this->getBlock($sName, $sVal, $this->getMsgHTML($sName, $aMessage));
+        }
 
-                    if ($a['cache_engine'])
-                        echo " (" . getParam($a['cache_engine']) . ' based cache engine)';
-
-                    echo ' - ';
-
-                    if ('always_on' != $a['enabled'] && !getParam($a['enabled']))
-                        echo '<b class="fail">FAIL</b> (please enable this cache in Dolphin Admin Panel -> Settings -> Advanced Settings)';
-                    elseif ($a['check_accel'] && !$this->getPhpAccelerator() && 'File' == getParam($a['cache_engine']))
-                        echo '<b class="warn">WARNING</b> (installing PHP accelerator will speed-up file cache)';
-                    else
-                        echo '<b class="ok">OK</b>';
-
-                    echo "</li>\n";
-                }
-
-            ?>
-        </ul>
-        <?php
+        echo $this->getSection('Dolphin', '', $s);
     }
 
     protected function manualCheck()
     {
-        ?>
-<a name="manual_audit"></a>
-<h1>Manual Server Audit</h1>
-<p>
-    Some things can not be determined automatically, manual server audit is required to check it. If you don't know how to do it by yourself you can submit <a target="_blank" href="http://www.boonex.com/help/tickets">BoonEx Server Audit Request</a>.
-</p>
-        <?php
+        echo '<a name="manual_audit"></a>';
+        echo '<h1>' . _t('_sys_audit_header_manual_audit') . '</h1>';
+        echo _t('_sys_audit_msg_manual_audit');
     }
 
     protected function checkPhpSetting($sName, $a)
@@ -541,15 +513,20 @@ class BxDolStudioToolsAudit extends BxDol
                 $sApachectlPath = trim(`which /usr/local/apache/bin/apachectl`);
             if (!$sApachectlPath)
                 $sApachectlPath = trim(`which /usr/local/apache/bin/apache2ctl`);
-            if (!$sApachectlPath)
-                return '<b class="undef">UNDEFINED</b> (try to check manually: apachectl -M 2>&1 | grep ' . $sModule . ')';
-
+            if (!$sApachectlPath) {
+                $aMessage = array('type' => BX_DOL_AUDIT_UNDEF, 'msg' => _t('_sys_audit_msg_apache_module_undef', $sModule));
+                return $this->getBlock($sModule, '', $this->getMsgHTML($sModule, $aMessage));
+            }
             $ret = (boolean)`$sApachectlPath -M 2>&1 | grep $sModule`;
             if (!$ret)
                 $ret = (boolean)`$sApachectlPath -l 2>&1 | grep $sNameCompiledName`;
         }
 
-        return $ret ? '<b class="ok">OK</b>' : '<b class="fail">FAIL</b> (You will need to install ' . $sModule . ' for Apache)';
+        $aMessage = array('type' => BX_DOL_AUDIT_OK);
+        if (!$ret)
+            $aMessage = array('type' => BX_DOL_AUDIT_FAIL, 'msg' => _t('_sys_audit_msg_apache_module_fail', $sModule));
+
+        return $this->getBlock('', '', $this->getMsgHTML($sModule, $aMessage), false);
     }
 
 
@@ -576,16 +553,18 @@ class BxDolStudioToolsAudit extends BxDol
 
     protected function sendTestEmail ()
     {
-        $sEmailToCkeckMailSending = getParam('site_email');
+        $sEmailToCkeckMailSending = isset($_GET['email']) ? $_GET['email'] : getParam('site_email');
         $mixedRet = sendMail($sEmailToCkeckMailSending, 'Audit Test Email', 'Sample text for testing<br /><u><b>Sample text for testing</b></u>', '', array(), BX_EMAIL_SYSTEM);
-        if (!$mixedRet)
-            return '<b class="fail">FAIL</b> (mail send failed)';
-        else
-            return 'test mail was send, please check ' . $sEmailToCkeckMailSending . ' mailbox';
+        if (!$mixedRet) {
+            $aMessage = array('type' => BX_DOL_AUDIT_FAIL, 'msg' => _t('_sys_audit_msg_mail_send_failed'));
+            return $this->getBlock('', '', $this->getMsgHTML(_t('_sys_audit_mail_sending'), $aMessage), false);
+        } else {
+            return _t('_sys_audit_msg_mail_sent', $sEmailToCkeckMailSending);
+        }
     }
 
     protected function setErrorReporting () 
-    {   
+    {
         if (version_compare(phpversion(), "5.3.0", ">=") == 1)
             $this->iPhpErrorReporting = error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED & ~E_STRICT);
         else
@@ -597,6 +576,25 @@ class BxDolStudioToolsAudit extends BxDol
         error_reporting($this->iPhpErrorReporting);
     }
     
+    protected function getSection($sTitle, $sTitleAddon, $sContent) {
+        $s = '<b>' . $sTitle . '</b>: ' . $sTitleAddon;
+        $s .= '<ul>';
+        $s .= $sContent;
+        $s .= '</ul>';
+        return $s;
+    }
+
+    protected function getBlock($sName, $sValue = '', $sMsg = '', $bWrapAsListItem = true) {
+        $s = $bWrapAsListItem ? '<li>'  : '';
+        if ($sName !== '')
+            $s .= "$sName ";
+        if ($sValue !== '')
+            $s .= " = $sValue ";
+        if ($sMsg)
+                $s .= ($s ? " - " : '') . $sMsg;
+        return $s . ($bWrapAsListItem ? '</li>' : '') . "\n";
+    }
+
     protected function getMsgHTML($sName, $a) 
     {
         $s = '';

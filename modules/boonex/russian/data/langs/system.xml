@@ -2910,6 +2910,7 @@ Without doing that you won't be submitted to our database.</p>
 	<string name="_adm_ambuilder_Small_Icon"><![CDATA[Small Icon]]></string>
 	<string name="_adm_ambuilder_Big_Icon"><![CDATA[Big Icon]]></string>
 	<string name="_adm_mbuilder_All_Items"><![CDATA[All Items]]></string>
+	<string name="_adm_admtools_Path"><![CDATA[Путь]]></string>
 	<string name="_adm_admtools_title"><![CDATA[Admin Tools]]></string>
 	<string name="_adm_admtools_Directories"><![CDATA[Directories]]></string>
 	<string name="_adm_admtools_Files"><![CDATA[Files]]></string>
@@ -2918,7 +2919,7 @@ Without doing that you won't be submitted to our database.</p>
 	<string name="_adm_admtools_Current_level"><![CDATA[Current level]]></string>
 	<string name="_adm_admtools_Desired_level"><![CDATA[Desired level]]></string>
 	<string name="_adm_admtools_Bad_files"><![CDATA[Next files and directories have inappropriate permissions]]></string>
-	<string name="_adm_admtools_Only_bad_files"><![CDATA[Show only troubled files and directories with inappropriate permissions]]></string>
+	<string name="_adm_admtools_Only_bad_files"><![CDATA[Показывать только файлы и папки с неправильными правами]]></string>
 	<string name="_adm_admtools_Show_all_files"><![CDATA[Show all files and directories]]></string>
 	<string name="_adm_admtools_Perm_description"><![CDATA[Dolphin needs special access for certain files and directories. Please, change permissions as specified in the chart below. Helpful info about permissions is <a href="http://www.boonex.com/trac/dolphin/wiki/DetailedInstall#Permissions" target="_blank">available here</a>.]]></string>
 	<string name="_adm_admtools_Writable"><![CDATA[Writable]]></string>
@@ -3426,5 +3427,17 @@ More info about URI DNSBL: <br />
     <string name="_sys_acl_action_suspended"><![CDATA[You can't <b>{1}</b> becuase your profile was suspended, if you don't know why - try to send message to <a href="mailto:{7}">administrator</a>.]]></string>
 
     <string name="_sys_profile_system"><![CDATA[Account]]></string>
+
+    <string name="_sys_audit_version"><![CDATA[версия]]></string>
+    <string name="_sys_audit_title_fail"><![CDATA[ПРОВАЛ]]></string>
+    <string name="_sys_audit_title_warn"><![CDATA[ПРЕДУПРЕЖДЕНИЕ]]></string>
+    <string name="_sys_audit_title_undef"><![CDATA[НЕ ОПРЕДЕЛЕНО]]></string>
+    <string name="_sys_audit_title_ok"><![CDATA[ПОРЯДОК]]></string>
+    <string name="_sys_audit_msg_should_be"><![CDATA[хорошо бы {0} {1}]]></string>
+    <string name="_sys_audit_msg_must_be"><![CDATA[нужно {0} {1}]]></string>
+
+    <string name="_sys_inst_start_installation"><![CDATA[Начать инсталляцию]]></string>
+    <string name="_sys_inst_server_audit"><![CDATA[Аудит сервера]]></string>
+    <string name="_sys_inst_hosting_warnings"><![CDATA[Есть некоторые замечания к настройкам сервера, можно перейти к <a href="?action=audit">аудиту сервера</a> для более подробной информации.]]></string>
 
 </resources>

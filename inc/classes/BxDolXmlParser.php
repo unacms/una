@@ -7,8 +7,6 @@
  * @{
  */
 
-defined('BX_DOL') or die('hack attempt');
-
 bx_import('BxDol');
 
 class BxDolXmlParser extends BxDol implements iBxDolSingleton {

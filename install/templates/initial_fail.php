@@ -1,9 +1,14 @@
 <div class="bx-install-initial-fail">
-    Your hosting doesn't meet minimal requirements:
+
+    <?php include('lang_swither.php'); ?>
+
+    <?php echo _t('_sys_inst_hosting_fails'); ?>
     <ul>
     <?php foreach ($aErrors as $sMsg): ?>
         <li><?=$sMsg; ?></li>
     <?php endforeach; ?>
     </ul>
-    <a href="?action=audit" class="bx-btn">Server audit</a>
+
+    <a href="?action=audit" class="bx-btn"><? echo _t('_sys_inst_server_audit'); ?></a>
+
 </div>

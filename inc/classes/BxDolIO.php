@@ -24,7 +24,7 @@ class BxDolIO extends BxDol
         return (is_file($sFile) && is_executable($sFile));
     }
 
-    public static function isWritable($sFile, $sPrePath = '/../../')
+    public static function isWritable($sFile)
     {
         clearstatcache();
 
