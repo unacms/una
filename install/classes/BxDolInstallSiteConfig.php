@@ -7,12 +7,25 @@
  * @{
  */
 
+define('BX_INSTALL_ERR_GENERAL', 'general');
+
 class BxDolInstallSiteConfig
 {
+    protected $_sSqlDb = 'sql/v70.sql';
+    protected $_sSqlAddon = 'sql/addon.sql';
+
+    protected $_sPatternHeader = 'patterns/header.inc.php';
+
+    protected $_aDbErrorMap;
     protected $_aConfig;
 
     public function __construct()
     {
+        $this->_aDbErrorMap = array (
+            'Database connect failed' => array ('fields' => array('db_host', 'db_user', 'db_password'), 'msg' => _t('_sys_inst_msg_db_err_connect')),
+            'Database select failed' => array ('fields' => array('db_name'), 'msg' => _t('_sys_inst_msg_db_err_select')),
+        );
+
         $this->_aConfig = array (
 
             // path config
@@ -30,14 +43,14 @@ class BxDolInstallSiteConfig
                 'def_exp' => array('defUrl', ''),
                 'check' => array('checkLength', 10),
             ),
-            'dir_root' => array(
+            'root_dir' => array(
                 'name' => _t('_sys_inst_conf_field_root_dir'),
                 'ex' => '/home/mydomain/public_html/',
                 'desc' => _t('_sys_inst_conf_desc_root_dir'),
                 'def_exp' => array('defPath', ''),
                 'check' => array('checkLength', 1),
             ),
-            'dir_convert' => array(
+            'convert_path' => array(
                 'name' => _t('_sys_inst_conf_field_path_to_binary', 'convert'),
                 'ex' => '/usr/local/bin/convert',
                 'desc' => _t('_sys_inst_conf_desc_path_to_binary', 'convert'),
@@ -45,7 +58,7 @@ class BxDolInstallSiteConfig
                 'def_exp' => array('defImageMagickBin', 'convert'),
                 'check' => array('checkLength', 7),
             ),
-            'dir_composite' => array(
+            'composite_path' => array(
                 'name' => _t('_sys_inst_conf_field_path_to_binary', 'composite'),
                 'ex' => '/usr/local/bin/composite',
                 'desc' => _t('_sys_inst_conf_desc_path_to_binary', 'composite'),
@@ -71,33 +84,39 @@ class BxDolInstallSiteConfig
                 'desc' => _t('_sys_inst_conf_desc_db_host'),
                 'def' => 'localhost',
                 'check' => array('checkLength', 1),
+                'db_conf' => 'host',
             ),
             'db_port' => array(
                 'name' => _t('_sys_inst_conf_field_db_port'),
                 'ex' => '5506',
                 'desc' => _t('_sys_inst_conf_desc_db_port'),
+                'db_conf' => 'port',
             ),
             'db_sock' => array(
                 'name' => _t('_sys_inst_conf_field_db_sock'),
                 'ex' => '/tmp/mysql.sock',
                 'desc' => _t('_sys_inst_conf_desc_db_sock'),
+                'db_conf' => 'sock',
             ),
             'db_name' => array(
                 'name' => _t('_sys_inst_conf_field_db_name'),
                 'ex' => 'mydomian_dolphin',
                 'desc' => _t('_sys_inst_conf_desc_db_name'),
                 'check' => array('checkLength', 1),
+                'db_conf' => 'name',
             ),
             'db_user' => array(
                 'name' => _t('_sys_inst_conf_field_db_user'),
                 'ex' => 'mydomian_dolphin',
                 'desc' => _t('_sys_inst_conf_desc_db_user'),
                 'check' => array('checkLength', 1),
+                'db_conf' => 'user',
             ),
             'db_password' => array(
                 'name' => _t('_sys_inst_conf_field_db_pwd'),
                 'ex' => 'Super*Secret#Word_1234',
                 'desc' => _t('_sys_inst_conf_desc_db_pwd'),
+                'db_conf' => 'pwd',
             ),
 
             'section_db_config_close' => array(
@@ -158,15 +177,24 @@ class BxDolInstallSiteConfig
     {
         $aErrorFields = array();
         if (isset($_POST['site_config'])) {
-            $aErrorFields = $this->checkConfig();
+            $aErrorFields = $this->processConfigData($this->processInputData($_POST));
             if (empty($aErrorFields)) {
-                die('TODO: everything is correct - save data and redirect to the next step');
+                $sHost = $_SERVER['HTTP_HOST'];
+                $sUri = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+                $sPage = 'index.php?action=finish';
+                header("Location: http://{$sHost}{$sUri}/{$sPage}");
+                exit;
             }
         }
+
+        $sErrorMessage = '';
+        if (isset($aErrorFields[BX_INSTALL_ERR_GENERAL]) && $aErrorFields[BX_INSTALL_ERR_GENERAL])
+            $sErrorMessage = '<div class="bx-install-error-message bx-def-padding bx-def-margin-bottom">' . $aErrorFields[BX_INSTALL_ERR_GENERAL] . '</div>';
 
         $sRows = $this->getFormFields($aErrorFields);
         $sSubmitTitle = _t('_Submit');
         return <<<EOF
+            {$sErrorMessage}
             <form method="post">
                 <div class="bx-form-advanced-wrapper sys_account_wrapper">
 
@@ -187,16 +215,126 @@ class BxDolInstallSiteConfig
 EOF;
     }
 
-    public function checkConfig() 
+    public function processConfigData ($a) 
+    {
+        $aSteps = array('checkConfig', 'processConfigDataDb', 'processConfigDataHeader');
+        foreach ($aSteps as $sFunc) {
+            $aErrors = $this->{$sFunc} ($a);
+            if (!empty($aErrors))
+                return $aErrors;
+        }
+
+        return array();
+    }
+
+    protected function checkConfig($a) 
     {
         $aErrorFields = array();
-        foreach ($this->_aConfig as $sKey => $a) {
-            if (!$this->check ($sKey, isset($_POST[$sKey]) ? $_POST[$sKey] : '', $a)) {
+        foreach ($this->_aConfig as $sKey => $r) {
+            if (!$this->check ($sKey, isset($a[$sKey]) ? $a[$sKey] : '', $r))
                 $aErrorFields[$sKey] = true;
-                unset($_POST[$sKey]);
-            }
         }
         return $aErrorFields;
+    }
+
+    public function processConfigDataDb ($a)
+    {
+        $aDbConf = array ('error_checking' => false);
+        foreach ($this->_aConfig as $sKey => $r)
+            if (isset($this->_aConfig[$sKey]['db_conf']))
+                $aDbConf[$this->_aConfig[$sKey]['db_conf']] = $a[$sKey];
+
+        $sErrorMessage = '';
+        $oDb = BxDolDb::getInstance($aDbConf, $sErrorMessage);
+        if (!$oDb) {
+            $aErrorFields = array();
+            if (isset($this->_aDbErrorMap[$sErrorMessage])) {
+                foreach ($this->_aDbErrorMap[$sErrorMessage]['fields'] as $sField)
+                    $aErrorFields[$sField] = true;
+                $aErrorFields[BX_INSTALL_ERR_GENERAL] = $this->_aDbErrorMap[$sErrorMessage]['msg'];
+            } else {
+                $aErrorFields[BX_INSTALL_ERR_GENERAL] = $sErrorMessage;
+            }
+            return $aErrorFields;
+        }
+
+        $mixedRes = $oDb->executeSQL($this->_sSqlDb);
+        if (true !== $mixedRes)
+            return $this->dbErrors2ErrorFields($mixedRes);
+
+        $mixedRes = $oDb->executeSQL($this->_sSqlAddon, $this->getMarkersForDb($a, $oDb));
+        if (true !== $mixedRes)
+            return $this->dbErrors2ErrorFields($mixedRes);
+
+        return array();
+    }
+
+    public function processConfigDataHeader ($a) 
+    {
+        $aMarkers = $this->getMarkersForPhp($a);
+        
+        $sFile = $this->_sPatternHeader;
+        $sHeader = file_get_contents($sFile);
+        if (false === $sHeader)
+            return array(BX_INSTALL_ERR_GENERAL => _t('_sys_inst_msg_file_read_failed', $sFile));
+    
+        $sHeader = str_replace(array_keys($aMarkers), array_values($aMarkers), $sHeader);
+
+        if (false === file_put_contents(BX_INSTALL_PATH_HEADER, $sHeader))
+            return array(BX_INSTALL_ERR_GENERAL => _t('_sys_inst_msg_file_write_failed', BX_INSTALL_PATH_HEADER));
+
+        @chmod(BX_INSTALL_PATH_HEADER, 0666);
+
+        return array();
+    }
+
+    protected function dbErrors2ErrorFields ($a) 
+    {
+        $s = '';
+        foreach ($a as $r) 
+            $s = $r['error'] . ': <br />' . $r['query'] . '<br />';
+        return array(BX_INSTALL_ERR_GENERAL => $s);
+    }
+
+    protected function processInputData ($a) 
+    {
+        foreach ($a as $sKey => $mixedValue) 
+            $a[$sKey] = bx_process_input($mixedValue);
+        return $a;
+    }
+
+    protected function getMarkers($a)
+    {
+        $aMarkers = array();
+        foreach($this->_aConfig as $sKey => $r)
+            $aMarkers[$sKey] = isset($a[$sKey]) ? $a[$sKey] : '';
+
+        $aMarkers['admin_pwd_salt'] = genRndPwd();
+        $aMarkers['admin_pwd_hash'] = encryptUserPwd($a['admin_password'], $aMarkers['admin_pwd_salt']);
+        $aMarkers['current_timestamp'] = time();
+        $aMarkers['version'] = BX_DOL_VER;
+        $aMarkers['secret'] = genRndPwd(11);
+
+        return $aMarkers;
+    }
+
+    protected function getMarkersForDb($a, $oDb) 
+    {
+        $a = $this->getMarkers($a);
+        $aMarkers = array();
+        foreach ($a as $sKey => $mixedVal) {
+            $aMarkers['from'][] = '{' . $sKey . '}';
+            $aMarkers['to'][] = $oDb->escape($mixedVal);
+        }
+        return $aMarkers;
+    }
+
+    protected function getMarkersForPhp($a) 
+    {
+        $a = $this->getMarkers($a);
+        foreach ($a as $sKey => $mixedVal)
+            $a['%' . strtoupper($sKey) . '%'] = bx_php_string_apos($mixedVal);
+        return $a;
     }
 
     protected function getFormFields($aErrorFields) 

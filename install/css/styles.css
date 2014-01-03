@@ -19,6 +19,11 @@ html, body {
     text-align:center;
 }
 
+.bx-install-error-message {
+    border:1px solid #966;
+    background-color:#c99
+}
+
 .bx-install-page {
 	min-height: 100%;
 	height: auto !important;

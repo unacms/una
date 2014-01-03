@@ -87,8 +87,19 @@ class BxDolInstallController
         $this->_oView->pageEnd($this->_getTitle());
     }
 
+    function actionFinish () 
+    {
+        $this->_oView->pageStart();
+
+        $s = 'TODO: finish page';
+
+        $this->_oView->out('finish.php', compact('s'));
+
+        $this->_oView->pageEnd($this->_getTitle());
+    }
+
     protected function _getTitle() {
-        return _t('_sys_inst_title', BX_DOL_VER, BX_DOL_BUILD);
+        return _t('_sys_inst_title', BX_DOL_VER);
     }
 }
 

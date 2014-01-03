@@ -3441,7 +3441,10 @@ More info about URI DNSBL: <br />
     <string name="_sys_inst_conf_found"><![CDATA[<span style="color:green">Найдено</span>]]></string>
     <string name="_sys_inst_conf_not_found"><![CDATA[<span style="color:red">Не найдено</span>]]></string>
 
-    <string name="_sys_inst_title"><![CDATA[Инсталляция Дельфина {0}.{1}]]></string>
+    <string name="_sys_inst_msg_db_err_connect"><![CDATA[Ошибка соединения с базой]]></string>
+    <string name="_sys_inst_msg_db_err_select"><![CDATA[Ошибка выбора базы]]></string>
+
+    <string name="_sys_inst_title"><![CDATA[Инсталляция Дельфина {0}]]></string>
     <string name="_sys_inst_start_installation"><![CDATA[Начать инсталляцию]]></string>
     <string name="_sys_inst_server_audit"><![CDATA[Аудит сервера]]></string>
     <string name="_sys_inst_hosting_warnings"><![CDATA[Есть некоторые замечания к настройкам сервера, можно перейти к <a href="?action=audit">аудиту сервера</a> для более подробной информации.]]></string>
