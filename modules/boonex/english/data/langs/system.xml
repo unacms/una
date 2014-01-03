@@ -3679,6 +3679,7 @@ If you don't know how to do it by yourself you can submit <a target="_blank" hre
     <string name="_sys_audit_msg_mail_send_failed"><![CDATA[mail send failed]]></string>
     <string name="_sys_audit_msg_mail_sent"><![CDATA[test mail was send, please check {0} mailbox]]></string>
 
+    <string name="_sys_inst_conf_no_example"><![CDATA[no example]]></string>
     <string name="_sys_inst_conf_error"><![CDATA[Please, input valid data here.]]></string>
     <string name="_sys_inst_conf_desc"><![CDATA[{0}{1}<br />Example: {2}]]></string>
     <string name="_sys_inst_conf_found"><![CDATA[<span style="color:green">Found</span>]]></string>
@@ -3686,6 +3687,7 @@ If you don't know how to do it by yourself you can submit <a target="_blank" hre
     <string name="_sys_inst_conf_section_paths"><![CDATA[Site paths]]></string>
     <string name="_sys_inst_conf_section_db_config"><![CDATA[DB config]]></string>
     <string name="_sys_inst_conf_section_site_info"><![CDATA[Site info]]></string>
+    <string name="_sys_inst_conf_section_modules"><![CDATA[Modules]]></string>
 
     <string name="_sys_inst_conf_field_site_url"><![CDATA[Site URL]]></string>
     <string name="_sys_inst_conf_desc_site_url"><![CDATA[Your site URL here (slash at the end is required).]]></string>
@@ -3717,6 +3719,10 @@ If you don't know how to do it by yourself you can submit <a target="_blank" hre
     <string name="_sys_inst_conf_desc_admin_username"><![CDATA[Admin user name here.]]></string>
     <string name="_sys_inst_conf_field_admin_pwd"><![CDATA[Admin password]]></string>
     <string name="_sys_inst_conf_desc_admin_pwd"><![CDATA[Admin user password here.]]></string>
+    <string name="_sys_inst_conf_field_language"><![CDATA[Language]]></string>
+    <string name="_sys_inst_conf_desc_language"><![CDATA[Language to install by default.]]></string>
+    <string name="_sys_inst_conf_field_template"><![CDATA[Template]]></string>
+    <string name="_sys_inst_conf_desc_template"><![CDATA[Template to install by default.]]></string>
 
     <string name="_sys_inst_msg_permissions_wrong"><![CDATA[Some files or folders rights aren't correct, please set necessary permissions then click "Continue".]]></string>
     <string name="_sys_inst_msg_db_err_connect"><![CDATA[Database connect failed]]></string>

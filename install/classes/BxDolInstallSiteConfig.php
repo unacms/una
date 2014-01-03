@@ -170,6 +170,34 @@ class BxDolInstallSiteConfig
             'section_site_info_close' => array(
                 'func' => 'rowSectionClose',
             ),
+
+            // modules
+
+            'section_modules_open' => array(
+                'name' => _t('_sys_inst_conf_section_modules'),
+                'func' => 'rowSectionOpen',
+            ),
+
+            'language' => array(
+                'name' => _t('_sys_inst_conf_field_language'),
+                'desc' => _t('_sys_inst_conf_desc_language'),
+                'def' => isset($_COOKIE['lang']) ? $_COOKIE['lang'] : (isset($_GET['lang']) ? $_GET['lang'] : 'en'),
+                'func' => 'rowSelect',
+                'vals' => $this->getSelectValues(BX_DOL_MODULE_TYPE_LANGUAGE),
+            ),
+
+            'template' => array(
+                'name' => _t('_sys_inst_conf_field_template'),
+                'desc' => _t('_sys_inst_conf_desc_template'),
+                'def' => 'uni',
+                'func' => 'rowSelect',
+                'vals' => $this->getSelectValues(BX_DOL_MODULE_TYPE_TEMPLATE),
+            ),
+
+            'section_modules_close' => array(
+                'func' => 'rowSectionClose',
+            ),
+
         );
     }
 
@@ -217,7 +245,7 @@ EOF;
 
     public function processConfigData ($a) 
     {
-        $aSteps = array('checkConfig', 'processConfigDataDb', 'processConfigDataHeader');
+        $aSteps = array('checkConfig', 'processConfigDataDb', 'processConfigDataHeader', 'processModules');
         foreach ($aSteps as $sFunc) {
             $aErrors = $this->{$sFunc} ($a);
             if (!empty($aErrors))
@@ -288,6 +316,11 @@ EOF;
         return array();
     }
 
+    public function processModules ($a) 
+    {
+        return array(BX_INSTALL_ERR_GENERAL => 'TODO:<br />Language to install: ' . $a['language'] . '<br />Template to install: ' . $a['template']);
+    }
+
     protected function dbErrors2ErrorFields ($a) 
     {
         $s = '';
@@ -350,10 +383,26 @@ EOF;
     
     protected function rowInput ($sKey, $a, $isError = false) 
     {
-        $sAutoMessage = "";
+        $sAutoMessage = '';
         $sValue = bx_html_attribute($this->def ($sKey, $a, $sAutoMessage));
+        $sInput = '<input type="text" name="' . $sKey. '" value="' . $sValue . '" class="bx-def-font-inputs bx-form-input-text" />';
+        return $this->rowWrapper ($sInput, $sAutoMessage, 'text', $sKey, $a, $isError);
+    }
 
-        $sDesc = _t('_sys_inst_conf_desc', $sAutoMessage, $a['desc'], $a['ex']);
+    protected function rowSelect ($sKey, $a, $isError = false) 
+    {
+        $sAutoMessage = '';
+        $sValue = bx_html_attribute($this->def ($sKey, $a, $sAutoMessage));
+        $sValues = '';
+        foreach ($a['vals'] as $sVal => $sTitle)
+            $sValues .= '<option value="' . $sVal . '" ' . ($sVal == $sValue ? 'selected="selected"' : '') . '>' . $sTitle . '</option>';
+        $sInput = '<select name="' . $sKey . '" class="bx-def-font-inputs bx-form-input-select">' . $sValues . '</select>';
+        return $this->rowWrapper ($sInput, $sAutoMessage, 'select', $sKey, $a, $isError);
+    }
+
+    protected function rowWrapper ($sInput, $sAutoMessage, $sType, $sKey, $a, $isError = false)
+    {
+        $sDesc = _t('_sys_inst_conf_desc', $sAutoMessage, $a['desc'], isset($a['ex']) ? $a['ex'] : _t('_sys_inst_conf_no_example'));
 
         $sError = '';
         if ($isError)
@@ -370,8 +419,8 @@ EOF;
                     {$sRequired}
                 </div>
                 <div class="bx-form-value">
-                    <div class="bx-form-input-wrapper bx-form-input-wrapper-text">
-                        <input type="text" name="{$sKey}" value="{$sValue}" class="bx-def-font-inputs bx-form-input-text" />
+                    <div class="bx-form-input-wrapper bx-form-input-wrapper-{$sType}">
+                        $sInput
                     </div>
                     $sError
                     <div class="bx-form-info bx-def-font-grayed bx-def-font-small">
@@ -421,14 +470,14 @@ EOF;
     {
         if (isset($_POST[$sKey]))
             return bx_process_pass($_POST[$sKey]);
-        if (empty($a['def_exp']))
-            return '';
-        $s = $this->{$a['def_exp'][0]}($a['def_exp'][1]);
-        if ($s) {
-            $sAutoMessage = _t('_sys_inst_conf_found') . '<br />';
-            return $s;
-        } else {
-            $sAutoMessage = _t('_sys_inst_conf_not_found') . '<br />';
+        if (!empty($a['def_exp'])) {
+            $s = $this->{$a['def_exp'][0]}($a['def_exp'][1]);
+            if ($s) {
+                $sAutoMessage = _t('_sys_inst_conf_found') . '<br />';
+                return $s;
+            } else {
+                $sAutoMessage = _t('_sys_inst_conf_not_found') . '<br />';
+            }
         }
         return isset($a['def']) ? $a['def'] : '';
     }
@@ -459,6 +508,16 @@ EOF;
             if (file_exists($sPath . $sBin))
                 return $sPath . $sBin;
         return '';
+    }
+
+    protected function getSelectValues($sType)
+    {
+        $a = array();
+        $oModulesTools = new BxDolInstallModulesTools();
+        $aModules = $oModulesTools->getModules($sType);
+        foreach ($aModules as $sName => $aConfig)
+            $a[$aConfig['home_uri']] = $aConfig['title'];
+        return $a;
     }
 }
 

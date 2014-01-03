@@ -42,6 +42,7 @@ require_once('../studio/classes/BxDolStudioToolsAudit.php');
 
 require_once(BX_INSTALL_DIR_CLASSES . 'BxDolInstallController.php');
 require_once(BX_INSTALL_DIR_CLASSES . 'BxDolInstallView.php');
+require_once(BX_INSTALL_DIR_CLASSES . 'BxDolInstallModulesTools.php');
 require_once(BX_INSTALL_DIR_CLASSES . 'BxDolInstallLang.php');
 require_once(BX_INSTALL_DIR_CLASSES . 'BxDolInstallSiteConfig.php');
 

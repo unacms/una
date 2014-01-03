@@ -11,20 +11,22 @@ class BxDolInstallLang
 {
     protected $_aLang;
     protected $_sLang;
+    protected $_oModulesTools;
 
     public function __construct($sLang) 
     {
+        $this->_oModulesTools = new BxDolInstallModulesTools();
         if (!$sLang)
             $sLang = BX_INSTALL_DEFAULT_LANGUAGE;
-        $aModules = $this->getModules('language');
-        $aModuleConfig = $this->getModuleConfigByLang ($sLang, $aModules);
+        $aModules = $this->_oModulesTools->getModules('language');
+        $aModuleConfig = $this->_oModulesTools->getModuleConfigByUri ($sLang, $aModules);
         if (!$aModuleConfig && BX_INSTALL_DEFAULT_LANGUAGE != $sLang) {
             $sLang = BX_INSTALL_DEFAULT_LANGUAGE;
-            $aModuleConfig = $this->getModuleConfigByLang ($sLang, $aModules);
+            $aModuleConfig = $this->_oModulesTools->getModuleConfigByUri ($sLang, $aModules);
         }
 
         $this->_sLang = $sLang;
-        $this->_aLang = $this->readLanguage($aModuleConfig);
+        $this->_aLang = $this->_oModulesTools->readLanguage($aModuleConfig);
     }
 
     static function getInstance($sLang = '') {
@@ -52,7 +54,7 @@ class BxDolInstallLang
    
     public function getAvailableLanguages () {
         $aRet = array();
-        $aModules = $this->getModules('language');
+        $aModules = $this->_oModulesTools->getModules('language');
         foreach ($aModules as $aModuleConfig)
             $aRet[$aModuleConfig['home_uri']] = array(
                 'code' => $aModuleConfig['home_uri'],
@@ -62,65 +64,6 @@ class BxDolInstallLang
         return $aRet;
     }
 
-    public function getModules ($sType = null) {
-    	$aModules = array();
-
-        $sPath = BX_INSTALL_DIR_MODULES;
-        if (($rHandleVendor = opendir($sPath)) !== false) {
-            while (($sVendor = readdir($rHandleVendor)) !== false) {
-                if (substr($sVendor, 0, 1) == '.' || !is_dir($sPath . $sVendor)) 
-                    continue;
-
-                if (($rHandleModule = opendir($sPath . $sVendor)) !== false) {
-                    while(($sModule = readdir($rHandleModule)) !== false) {
-                        if(!is_dir($sPath . $sVendor . '/' . $sModule) || substr($sModule, 0, 1) == '.')
-                            continue;
-
-						$sConfigPath = $sPath . $sVendor . '/' . $sModule . '/install/config.php';
-						$aModuleConfig = $this->getModuleConfigByConfigPath($sConfigPath);
-						if (empty($aModuleConfig) || ($sType && $sType != $aModuleConfig['type']))
-							continue;
-
-						$aModules[$aModuleConfig['name']] = $aModuleConfig;
-                    }
-                    closedir($rHandleModule);
-                }
-            }
-            closedir($rHandleVendor);
-        }
-
-        ksort($aModules);
-        return $aModules;
-    }
-
-    protected function getModuleConfigByConfigPath ($sConfigPath) {
-		if (!file_exists($sConfigPath))
-			return array();
-
-		include($sConfigPath);
-
-        return $aConfig;
-    }
-
-    protected function getModuleConfigByLang ($sLang, $aModules) {
-        foreach ($aModules as $aModuleConfig)
-            if ($sLang == $aModuleConfig['home_uri'])
-                return $aModuleConfig;
-        return null;
-    }
-
-    protected function readLanguage ($aModuleConfig) {
-        $sPath = BX_INSTALL_DIR_MODULES . $aModuleConfig['home_dir'] . 'data/langs/system.xml';
-
-    	if(!file_exists($sPath))
-    		return array();
-
-    	$oXmlParser = BxDolXmlParser::getInstance();
-    	$sXmlContent = file_get_contents($sPath);
-
-        return $oXmlParser->getValues($sXmlContent, 'string');
-    }
-    
 }
 
 if (!function_exists('_t')) {
