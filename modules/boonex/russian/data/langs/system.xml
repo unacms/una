@@ -96,11 +96,11 @@
 	<string name="_General self-description"><![CDATA[General self-description]]></string>
 	<string name="_Affiliate Program"><![CDATA[Affiliate Program]]></string>
 	<string name="_Congratulation"><![CDATA[<font color=red>Congratulations!!!</font><br />]]></string>
-	<string name="_Got_members_part_1"><![CDATA[You\'ve got ]]></string>
+	<string name="_Got_members_part_1"><![CDATA[You've got ]]></string>
 	<string name="_Got_members_part_2"><![CDATA[ member(s) engaged. ]]></string>
 	<string name="_Need_more_members"><![CDATA[(Need more members engaged to get new membership status )]]></string>
 	<string name="_Choose_membership"><![CDATA[ You may choose your membership status]]></string>
-	<string name="_Got_new_membership_part_1"><![CDATA[<center>Congratulations!!!<br />You\'re a <font color=red>]]></string>
+	<string name="_Got_new_membership_part_1"><![CDATA[<center>Congratulations!!!<br />You're a <font color=red>]]></string>
 	<string name="_Got_new_membership_part_2"><![CDATA[ </font>member now. Your membership will expire in ]]></string>
 	<string name="_Got_new_membership_part_3"><![CDATA[ days.</center>]]></string>
 	<string name="_no_info"><![CDATA[No info]]></string>
@@ -207,7 +207,7 @@
 	<string name="_Retrieve my information"><![CDATA[Retrieve my information]]></string>
 	<string name="_RSS Feed"><![CDATA[RSS Feed]]></string>
 	<string name="_RSS_Feed_Title_Common"><![CDATA[{0} RSS]]></string>
-	<string name="_RSS_Feed_Title_Profile"><![CDATA[{0}\'s Recent {1}]]></string>
+	<string name="_RSS_Feed_Title_Profile"><![CDATA[{0}'s Recent {1}]]></string>
 	<string name="_Quick Search"><![CDATA[Quick Search]]></string>
 	<string name="_Save Changes"><![CDATA[Save Changes]]></string>
 	<string name="_Services"><![CDATA[Services]]></string>
@@ -240,8 +240,8 @@
 	<string name="_Sex"><![CDATA[Sex]]></string>
 	<string name="_Show"><![CDATA[Show]]></string>
 	<string name="_Show me"><![CDATA[Show me]]></string>
-	<string name="_sorry, i can not define you ip adress. IT\'S TIME TO COME OUT !"><![CDATA[Sorry, I can\'t define your IP address. IT\'S TIME TO COME OUT!]]></string>
-	<string name="_Sorry, user is OFFLINE"><![CDATA[Sorry, but user is OFFLINE at the moment.\\nPlease try later...]]></string>
+	<string name="_sorry, i can not define you ip adress. IT'S TIME TO COME OUT !"><![CDATA[Sorry, I can't define your IP address. IT'S TIME TO COME OUT!]]></string>
+	<string name="_Sorry, user is OFFLINE"><![CDATA[Sorry, but user is OFFLINE at the moment.\nPlease try later...]]></string>
 	<string name="_Spam report"><![CDATA[Report Spam]]></string>
 	<string name="_Status"><![CDATA[Status]]></string>
 	<string name="_Stories2"><![CDATA[Feedback]]></string>
@@ -332,7 +332,7 @@
 <a href="http://www.boonex.com/products/dolphin/">Dolphin</a> Smart Community Builder is based on aeDating, the most popular dating software on the internet. Since the first Dolphin version was released on May 2006, it has been modernized, supplemented, improved considerably and become an even more popular Community software than the aeDating script was.<br>
 In conformity with the <a href="http://www.boonex.com/mission/">"Unite People"</a> mission, BoonEx strongly believes that Community software should be offered free of charge, since the Community unites people of different cultures, nationalities and races.<br><br>
 BoonEx carries out its mission through <a href="http://www.boonex.com/products/dolphin/">Dolphin</a> (by improving it constantly and releasing new versions called the latest and modern technologies) but through the <a href="http://www.boonex.com/unity/">Unity - the Community of Communities</a> (by supporting Unity where webmasters and web developers can communicate with each other to share their knowledges and experience).<br>
-BoonEx has worked in the software market since 2001. From that time, BoonEx experinced ups and downs but was seeking for progress always: we\'ve been developing the aeDating software which got high positions and was the most popular dating software. The dating software time passed and now Community sites run the show and we are very excited to deliver the best community software!
+BoonEx has worked in the software market since 2001. From that time, BoonEx experinced ups and downs but was seeking for progress always: we've been developing the aeDating software which got high positions and was the most popular dating software. The dating software time passed and now Community sites run the show and we are very excited to deliver the best community software!
 </div>
 </div>]]></string>
 	<string name="_ADM_PROFILE_SEND_MSG"><![CDATA[Message was successfully sent.]]></string>
@@ -359,24 +359,24 @@ We offer commissions for webmasters who refer visitors to our site. Go to <a hre
 	<string name="_DELETE_SUCCESS"><![CDATA[You account was successfully deleted]]></string>
 	<string name="_DELETE_TEXT"><![CDATA[All your content will be deleted. Are you sure you want to delete your account?]]></string>
 	<string name="_PWD_INVALID2"><![CDATA[Password must be from 5 to 8 characters long or password confirmation failed.]]></string>
-	<string name="_EMAIL_CONF_FAILED_EX"><![CDATA[This could happen because of improper web links displayed by some web mail services. If you see this message, please try to <u>exactly</u> copy the link supplied with the confirmation e-mail and paste it into your browser\'s address bar <b>or</b> just enter the confirmation code (which also comes with the e-mail) below:]]></string>
+	<string name="_EMAIL_CONF_FAILED_EX"><![CDATA[This could happen because of improper web links displayed by some web mail services. If you see this message, please try to <u>exactly</u> copy the link supplied with the confirmation e-mail and paste it into your browser's address bar <b>or</b> just enter the confirmation code (which also comes with the e-mail) below:]]></string>
 	<string name="_EMAIL_CONF_NOT_SENT"><![CDATA[<b>Mail has NOT been sent.</b><br />Unfortunately we could not send the confirmation e-mail to you at this time. Please, try later. We appologize for any inconvenience. <a href="contact.php">Please report this bug to</a> the administrator</a>.]]></string>
 	<string name="_EMAIL_CONF_SENT"><![CDATA[<b>Mail has been successfully sent.</b><br />You will receive it within a minute.]]></string>
 	<string name="_EMAIL_CONF_SUCCEEDED"><![CDATA[Congratulations! Your e-mail confirmation succeeded.<br /><br />Your profile has been successfully created, but it is awaiting review to be activated. Thank you for your patience.]]></string>
-	<string name="_EMAIL_INVALID_AFF"><![CDATA[E-mail address doesn\'t seem to be valid.]]></string>
+	<string name="_EMAIL_INVALID_AFF"><![CDATA[E-mail address doesn't seem to be valid.]]></string>
 	<string name="_ENTER_CONF_CODE"><![CDATA[Enter confirmation code]]></string>
 	<string name="_FAILED_TO_DELETE_PIC"><![CDATA[Failed to delete picture.<br /><div class=small>(Error code: {0})</div>]]></string>
 	<string name="_FAILED_TO_SEND_MESSAGE"><![CDATA[Failed to send message to one or more recipients.]]></string>
 	<string name="_FAILED_TO_SEND_MESSAGE_BLOCK"><![CDATA[Failed to send message. You are in the block list of this member]]></string>
 	<string name="_FAILED_TO_SEND_MESSAGE_NOT_ACTIVE"><![CDATA[Failed to send message. Recipient is not an active member. <a href="{0}">[Click here]</a> to send another message.]]></string>
-	<string name="_FAILED_TO_UPLOAD_PIC"><![CDATA[Failed to upload file <b>{0}</b>! Make sure it\'s a picture of <b>jpg</b>, <b>gif</b>, or <b>png</b> format.<br /><div class=small>(Error code: {1})</div><br /><br />]]></string>
-	<string name="_FREEMAIL_ALREADY_SENT"><![CDATA[You already requested !!! this member\'s contact information for free. You can see it in <a href="profile.php?ID={0}">their profile</a>, or in <a href="communicator.php">your communicator</a>.]]></string>
+	<string name="_FAILED_TO_UPLOAD_PIC"><![CDATA[Failed to upload file <b>{0}</b>! Make sure it's a picture of <b>jpg</b>, <b>gif</b>, or <b>png</b> format.<br /><div class=small>(Error code: {1})</div><br /><br />]]></string>
+	<string name="_FREEMAIL_ALREADY_SENT"><![CDATA[You already requested !!! this member's contact information for free. You can see it in <a href="profile.php?ID={0}">their profile</a>, or in <a href="communicator.php">your communicator</a>.]]></string>
 	<string name="_FREEMAIL_BLOCK"><![CDATA[Sorry, contact information could not be sent to you. You are in the block list of this member]]></string>
 	<string name="_FREEMAIL_ERROR"><![CDATA[Sorry, contact information could not be sent to you at this time. Make sure that:<br /><br /><ul><li>You are logged in and </li><li>your profile is in active mode.</li></ul><br /><br />Thank you.]]></string>
-	<string name="_FREEMAIL_NOT_ALLOWED"><![CDATA[Sorry, this member\'s contact information cannot be received for free. You must purchase it.]]></string>
+	<string name="_FREEMAIL_NOT_ALLOWED"><![CDATA[Sorry, this member's contact information cannot be received for free. You must purchase it.]]></string>
 	<string name="_FREEMAIL_NOT_KISSED"><![CDATA[You were not greeted by {0} member.]]></string>
-	<string name="_FREEMAIL_SENT"><![CDATA[You have just been sent an e-mail with {0}\'s contact information.]]></string>
-	<string name="_INCORRECT_EMAIL"><![CDATA[The e-mail you entered doesn\'t seem to be valid. Please, try again.]]></string>	
+	<string name="_FREEMAIL_SENT"><![CDATA[You have just been sent an e-mail with {0}'s contact information.]]></string>
+	<string name="_INCORRECT_EMAIL"><![CDATA[The e-mail you entered doesn't seem to be valid. Please, try again.]]></string>	
 	<string name="_JOIN1_AFF"><![CDATA[Go here to become an affiliate of this site for free.<br /><br />]]></string>
 	<string name="_JOIN_AFF2"><![CDATA[Congratulations! You are an affiliate of {1} now. You can login <a href="{0}">here</a>]]></string>
 	<string name="_JOIN_AFF_ID"><![CDATA[Use <font color=red><b>{0}</b></font> ID number for login, please do not forget your ID number]]></string>
@@ -401,10 +401,10 @@ We offer commissions for webmasters who refer visitors to our site. Go to <a hre
 	<string name="_VIEW_MEMBERSHIP_ACTIONS"><![CDATA[View Allowed Actions]]></string>
 	<string name="_MEMBERSHIP_STANDARD"><![CDATA[You are a standard member.]]></string>
 	<string name="_MEMBERSHIP_UPGRADE_FROM_STANDARD"><![CDATA[]]></string>
-	<string name="_MESSAGE_SENT"><![CDATA[Message has been successfully sent. <a href="{0}">Send</a> another message or <a href="{1}">view</a> {2}\'s profile.]]></string>
+	<string name="_MESSAGE_SENT"><![CDATA[Message has been successfully sent. <a href="{0}">Send</a> another message or <a href="{1}">view</a> {2}'s profile.]]></string>
 	<string name="_NICK_LEAST2"><![CDATA[Username must be from {0} to {1} characters long.]]></string>
 	<string name="_NO_LINKS"><![CDATA[No links available]]></string>
-	<string name="_NO_NEED_TO_CONFIRM_EMAIL"><![CDATA[There is no need to confirm your account e-mail because it\'s already confirmed and you proved your ownership of the e-mail address.]]></string>
+	<string name="_NO_NEED_TO_CONFIRM_EMAIL"><![CDATA[There is no need to confirm your account e-mail because it's already confirmed and you proved your ownership of the e-mail address.]]></string>
 	<string name="_NO_RESULTS"><![CDATA[<b>No results found.</b> <br /> <a href="search.php">Start again</a> and try to broaden your search.]]></string>
 	<string name="_NO_STORIES"><![CDATA[No feedback available]]></string>
 	<string name="_NOT_RECOGNIZED"><![CDATA[You are NOT recognized as a {0} member]]></string>
@@ -414,7 +414,7 @@ We offer commissions for webmasters who refer visitors to our site. Go to <a hre
 	<string name="_PROFILE_NOT_AVAILABLE"><![CDATA[Profile is not available.]]></string>
 	<string name="_PRIVACY"><![CDATA[<div class="privacy_cont">
 <div class="privacy_snippet">
-We are glad to welcome you to <a href="http://www.boonex.com/products/dolphin/">Dolphin Smart Community Builder</a>. Please read this privacy statement to ensure that we are committed to keeping secure the privacy of our members\' (customers) details.<br><br>
+We are glad to welcome you to <a href="http://www.boonex.com/products/dolphin/">Dolphin Smart Community Builder</a>. Please read this privacy statement to ensure that we are committed to keeping secure the privacy of our members' (customers) details.<br><br>
 <b>What information do we collect?</b><br>
 Since <a href="http://www.boonex.com/">BoonEx</a> is providing you the software and support to build a website, we may require from you some information that may be considered as personally identifiable.<br><br>
 
@@ -425,7 +425,7 @@ Please provide us with the following information about yourself:
 <li>password</li>
 <li>e-mail address</li></ul><br>
 Other personal information that we may possibly need:
-To be able to render the services you\'ve ordered, we may need information about your website: site URL, FTP, cPanel or SSH accesses.<br><br>
+To be able to render the services you've ordered, we may need information about your website: site URL, FTP, cPanel or SSH accesses.<br><br>
 <b>Copyrights</b><br>
 All <a href="http://www.boonex.com/">BoonEx.com</a> site contents copyrights are reserved by BoonEx Ltd. and content copying and duplication are strongly prohibited.<br><br>
 <b>Acceptance of agreements</b><br>
@@ -434,14 +434,14 @@ We may update our Privacy Statement from time to time so please visit this page 
 </div>
 </div>]]></string>
 	<string name="_RECOGNIZED"><![CDATA[You are recognized as a {0} member]]></string>
-	<string name="_RESULT0"><![CDATA[<b>The transaction didn\'t proceed.</b> Make sure you have entered your credit card information correctly and try again.]]></string>
+	<string name="_RESULT0"><![CDATA[<b>The transaction didn't proceed.</b> Make sure you have entered your credit card information correctly and try again.]]></string>
 	<string name="_RESULT-1"><![CDATA[<b>Transaction verification failed.</b> You seem to have tried to cheat our security system. Your IP is logged and reported. If you are persistent in your attempts you will be banned from our system services access.]]></string>
 	<string name="_RESULT-1_A"><![CDATA[Transaction verification failed.]]></string>
 	<string name="_RESULT-1_D"><![CDATA[You seem to have tried to cheat our security system. Your IP is logged and reported. If you are persistent in your attempts you will be banned from our system services access.]]></string>
 	<string name="_RESULT1000"><![CDATA[You do not have enough credits]]></string>
 	<string name="_RESULT1_DESC"><![CDATA[The e-mail with contact information has been just sent to you.]]></string>
 	<string name="_RESULT1_THANK"><![CDATA[Thank you for your participation in {0} We appreciate your purchase and you will be responded to via email at {1}]]></string>
-	<string name="_RESULT2DESC"><![CDATA[You have successfully made your purchase at {0}, however the e-mail with contact information could not be sent to you right now. Don\'t worry, if you are our member your purchase has been recorded and you can retrieve all information in your <a href="communicator.php">Communicator</a>.]]></string>
+	<string name="_RESULT2DESC"><![CDATA[You have successfully made your purchase at {0}, however the e-mail with contact information could not be sent to you right now. Don't worry, if you are our member your purchase has been recorded and you can retrieve all information in your <a href="communicator.php">Communicator</a>.]]></string>
 	<string name="_SEND_MESSAGE"><![CDATA[send message]]></string>
 	<string name="_SEND_MSG_TO"><![CDATA[Recipient:]]></string>
 	<string name="_STORY_ADDED"><![CDATA[Feedback was added]]></string>
@@ -667,7 +667,7 @@ We may update our Privacy Statement from time to time so please visit this page 
 	<string name="__Congo, Democratic Republic of the"><![CDATA[Congo, Democratic Republic of the]]></string>
 	<string name="__Central African Republic"><![CDATA[Central African Republic]]></string>
 	<string name="__Congo, Republic of the"><![CDATA[Congo, Republic of the]]></string>
-	<string name="__Cote d\'Ivoire"><![CDATA[Cote d\'Ivoire]]></string>
+	<string name="__Cote d'Ivoire"><![CDATA[Cote d'Ivoire]]></string>
 	<string name="__Falkland Islands (Islas Malvinas)"><![CDATA[Falkland Islands (Islas Malvinas)]]></string>
 	<string name="__Micronesia, Federated States of"><![CDATA[Micronesia, Federated States of]]></string>
 	<string name="__French Guiana"><![CDATA[French Guiana]]></string>
@@ -857,7 +857,7 @@ We may update our Privacy Statement from time to time so please visit this page 
 	<string name="_loading ..."><![CDATA[loading ...]]></string>
 	<string name="_make it"><![CDATA[make it]]></string>
 	<string name="_use gallery"><![CDATA[use gallery]]></string>
-	<string name="_view other members\' galleries"><![CDATA[view other member galleries]]></string>
+	<string name="_view other members' galleries"><![CDATA[view other member galleries]]></string>
 	<string name="_Recipient"><![CDATA[Recipient]]></string>
 	<string name="__All"><![CDATA[All]]></string>
 	<string name="_contact_us"><![CDATA[Contact Us]]></string>
@@ -896,7 +896,7 @@ We may update our Privacy Statement from time to time so please visit this page 
 	<string name="_Invite others"><![CDATA[Invite others]]></string>
 	<string name="_Upload image"><![CDATA[Upload image]]></string>
 	<string name="_Post topic"><![CDATA[Post topic]]></string>
-	<string name="_You\'re not creator"><![CDATA[You\'re not the creator]]></string>
+	<string name="_You're not creator"><![CDATA[You're not the creator]]></string>
 	<string name="_Keyword"><![CDATA[Keyword]]></string>
 	<string name="_Advanced search"><![CDATA[Advanced search]]></string>
 	<string name="_Uploaded by"><![CDATA[Uploaded by]]></string>
@@ -981,7 +981,7 @@ We may update our Privacy Statement from time to time so please visit this page 
 	<string name="_Bookmark"><![CDATA[Bookmark]]></string>
 	<string name="_or"><![CDATA[or]]></string>
 	<string name="_Feedback"><![CDATA[Feedback]]></string>
-	<string name="_Sorry, you\'re already joined"><![CDATA[Sorry, you\'ve already joined]]></string>
+	<string name="_Sorry, you're already joined"><![CDATA[Sorry, you've already joined]]></string>
 	<string name="_Befriend"><![CDATA[Befriend]]></string>
 	<string name="_EditProfile"><![CDATA[Edit]]></string>
 	<string name="_SendLetter"><![CDATA[Contact]]></string>
@@ -1063,7 +1063,7 @@ When uploading the material, you provide {0} and its members with the right to u
 3. STRONGLY PROHIBITED
 
 - Media files having negative or any other psychological or mental influence.
-- Media files containing children\'s porno.
+- Media files containing children's porno.
 - Media containing naked views of you or your children.
 If you do not agree with these stipulations, you may not upload any media files.]]></string>
 	<string name="_Tags"><![CDATA[Tags]]></string>
@@ -1094,8 +1094,8 @@ If you do not agree with these stipulations, you may not upload any media files.
 	<string name="_Sorry, no members found"><![CDATA[Sorry, no members found]]></string>
 	<string name="_PWD_INVALID3"><![CDATA[Password confirmation failed]]></string>
 	<string name="_Change Password"><![CDATA[Change Password]]></string>
-	<string name="_DateOfBirth_err_msg"><![CDATA[Your age doesn\'t allow access to this site]]></string>
-	<string name="_No file"><![CDATA[Requested File Doesn\'t Exist]]></string>
+	<string name="_DateOfBirth_err_msg"><![CDATA[Your age doesn't allow access to this site]]></string>
+	<string name="_No file"><![CDATA[Requested File Doesn't Exist]]></string>
 	<string name="_Admin Panel"><![CDATA[Admin Panel]]></string>
 	<string name="_File upload error"><![CDATA[File upload error]]></string>
 	<string name="_send greetings"><![CDATA[send greetings]]></string>
@@ -1138,7 +1138,7 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_FieldCaption_Misc Info_Search"><![CDATA[Options]]></string>
 	<string name="_enable able to rate"><![CDATA[Enable rate]]></string>
 	<string name="_disable able to rate"><![CDATA[Disable rate]]></string>
-	<string name="_member_banned"><![CDATA[Sorry, you\'ve been banned]]></string>
+	<string name="_member_banned"><![CDATA[Sorry, you've been banned]]></string>
 	<string name="_1_minute_ago"><![CDATA[Now]]></string>
 	<string name="_x_minute_ago"><![CDATA[{0} m ago]]></string>
 	<string name="_x_hour_ago"><![CDATA[{0} h ago]]></string>
@@ -1182,7 +1182,7 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_Print As"><![CDATA[Print As]]></string>
 	<string name="_Hide N replies"><![CDATA[<span>{0}</span> replies]]></string>
 	<string name="_Counter"><![CDATA[Counter]]></string>
-	<string name="_Reply to Someone comment"><![CDATA[Reply to {0}\'s comment]]></string>
+	<string name="_Reply to Someone comment"><![CDATA[Reply to {0}'s comment]]></string>
 	<string name="_See all music of this user"><![CDATA[See all music files of this user]]></string>
 	<string name="_View All"><![CDATA[View All]]></string>
 	<string name="_too_many_files"><![CDATA[You have reached allowed file limit]]></string>
@@ -2370,7 +2370,7 @@ Without doing that you won't be submitted to our database.</p>
 	<string name="_adm_err_modules_empty_login"><![CDATA[Please enter FTP login name.]]></string> 
 	<string name="_adm_txt_modules_password"><![CDATA[Password]]></string>
 	<string name="_adm_err_modules_empty_password"><![CDATA[Please enter FTP password.]]></string>
-	<string name="_adm_txt_modules_path_to_dolphin"><![CDATA[Path to Dolphin\'s folder]]></string>
+	<string name="_adm_txt_modules_path_to_dolphin"><![CDATA[Path to Dolphin's folder]]></string>
 	<string name="_adm_err_modules_empty_path_to_dolphin"><![CDATA[Please enter path to Dolphin folder on your FTP server.]]></string>
 	<string name="_adm_btn_modules_upload"><![CDATA[Upload]]></string>
 	<string name="_adm_msg_modules_success_upload"><![CDATA[The package was uploaded successfully]]></string>
@@ -2384,14 +2384,14 @@ Without doing that you won't be submitted to our database.</p>
 	<string name="_adm_err_modules_cannot_connect_to_ftp"><![CDATA[Cannot connect to FTP server]]></string>
 	<string name="_adm_err_modules_cannot_upload_package"><![CDATA[Cannot upload the package]]></string>
 	<string name="_adm_err_modules_cannot_remove_package"><![CDATA[Cannot remove package.]]></string>
-	<string name="_adm_err_modules_process_action_failed"><![CDATA[An error occured. Contact with module\'s vendor]]></string>
+	<string name="_adm_err_modules_process_action_failed"><![CDATA[An error occured. Contact with module's vendor]]></string>
 	<string name="_adm_err_modules_already_uninstalled"><![CDATA[The module was already uninstalled.]]></string>
 	<string name="_adm_err_modules_already_enabled"><![CDATA[The module is already enabled.]]></string>
 	<string name="_adm_err_modules_already_disabled"><![CDATA[The module is already disabled.]]></string>
 	<string name="_adm_err_modules_module_not_found"><![CDATA[Module not found]]></string>
 	<string name="_adm_err_modules_module_not_installed"><![CDATA[Module not installed]]></string>
 	<string name="_adm_err_modules_module_was_modified"><![CDATA[Module was modified]]></string>
-	<string name="_adm_err_modules_module_config_not_found"><![CDATA[Module\'s config file was not found]]></string>
+	<string name="_adm_err_modules_module_config_not_found"><![CDATA[Module's config file was not found]]></string>
 	<string name="_adm_err_modules_wrong_version"><![CDATA[The module has incompatible version]]></string>
 	<string name="_adm_err_modules_wrong_version_script"><![CDATA[The module is not compatible with your version of Dolphin script]]></string>
 	<string name="_adm_err_modules_wrong_dependency_install"><![CDATA[The following modules should be installed first:]]></string>
@@ -2464,8 +2464,8 @@ Without doing that you won't be submitted to our database.</p>
 	<string name="_adm_box_cpt_mlevel_levels"><![CDATA[Levels]]></string>
 	<string name="_adm_box_cpt_mlevel_create"><![CDATA[Create]]></string>
 	<string name="_adm_box_cpt_mlevel_edit"><![CDATA[Edit]]></string>
-	<string name="_adm_box_cpt_mlevel_actions"><![CDATA[Actions of \'{0}\' membership level]]></string>
-	<string name="_adm_box_cpt_mlevel_prices"><![CDATA[Pricing for \'{0}\' membership level]]></string>
+	<string name="_adm_box_cpt_mlevel_actions"><![CDATA[Actions of '{0}' membership level]]></string>
+	<string name="_adm_box_cpt_mlevel_prices"><![CDATA[Pricing for '{0}' membership level]]></string>
 	<string name="_adm_box_cpt_mlevel_action"><![CDATA[Manage Action]]></string>
 	<string name="_adm_box_cpt_email_settings"><![CDATA[Settings]]></string>
 	<string name="_adm_box_cpt_email_templates"><![CDATA[Templates]]></string>
@@ -2548,9 +2548,9 @@ Without doing that you won't be submitted to our database.</p>
 	<string name="_adm_txt_settings_wrong_conf_pasword"><![CDATA[Confirmation does not match password]]></string>
 	<string name="_adm_txt_settings_file_not_image"><![CDATA[The uploaded file is not an image]]></string>
 	<string name="_adm_txt_settings_file_wrong_format"><![CDATA[The uploaded file is not a JPEG, GIF or PNG file]]></string>
-	<string name="_adm_txt_settings_file_cannot_move"><![CDATA[Couldn\'t move uploaded file]]></string>
+	<string name="_adm_txt_settings_file_cannot_move"><![CDATA[Couldn't move uploaded file]]></string>
 	<string name="_adm_txt_settings_file_cannot_delete"><![CDATA[Could not delete file]]></string>
-	<string name="_adm_txt_settings_logo_wrong_size"><![CDATA[You\'ve entered incorrect sizes]]></string>
+	<string name="_adm_txt_settings_logo_wrong_size"><![CDATA[You've entered incorrect sizes]]></string>
 	<string name="_adm_txt_settings_image_cannot_resize"><![CDATA[Resize failed]]></string>
 	<string name="_adm_txt_settings_old_password"><![CDATA[Old Password]]></string>
 	<string name="_adm_txt_settings_new_password"><![CDATA[New Password]]></string>
@@ -2802,7 +2802,7 @@ Without doing that you won't be submitted to our database.</p>
 	<string name="_adm_fields_default_value"><![CDATA[Default value]]></string>
 	<string name="_adm_fields_default_value_desc"><![CDATA[Default value set into database(!) if not set by user. Non-mandatory. For boolean fields use 0 or 1. For dates use format: YYYY-MM-DD. Please do not change it if in doubt!]]></string>
 	<string name="_adm_fields_mandatory_error_message"><![CDATA[Mandatory error message]]></string>
-	<string name="_adm_fields_mandatory_error_message_desc"><![CDATA[Error message returned if user didn\'t specify value when field is mandatory. Translated to default language (for other languages - use key: _FieldError_{0}_Mandatory). This texts is non-mandatory field is non-mandatory.]]></string>
+	<string name="_adm_fields_mandatory_error_message_desc"><![CDATA[Error message returned if user didn't specify value when field is mandatory. Translated to default language (for other languages - use key: _FieldError_{0}_Mandatory). This texts is non-mandatory field is non-mandatory.]]></string>
 	<string name="_adm_fields_minimum_exceed_error_message"><![CDATA[Minimum exceed error message]]></string>
 	<string name="_adm_fields_minimum_exceed_error_message_desc"><![CDATA[Error message returned when field minimum limit exceeded. Translated to default language (for other languages - use key: _FieldError_{0}_Min). Non-mandatory if minimum limit is not defined.]]></string>
 	<string name="_adm_fields_maximum_exceed_error_message"><![CDATA[Maximum exceed error message]]></string>
@@ -2826,8 +2826,8 @@ Without doing that you won't be submitted to our database.</p>
 	<string name="_adm_fields_error_you_must_enter_caption"><![CDATA[You must enter the caption.]]></string>
 	<string name="_adm_fields_error_name_latin"><![CDATA[The name must begin with a latin letter and contain only latin letters, numbers or underscores.]]></string>
 	<string name="_adm_fields_error_name_already_exists"><![CDATA[A field with such name already exists. Please select another.]]></string>
-	<string name="_adm_fields_error_i_dont_know_this_type"><![CDATA[I don\'t know this type.]]></string>
-	<string name="_adm_fields_error_i_dont_know_this_control_type"><![CDATA[I don\'t know this control type.]]></string>
+	<string name="_adm_fields_error_i_dont_know_this_type"><![CDATA[I don't know this type.]]></string>
+	<string name="_adm_fields_error_i_dont_know_this_control_type"><![CDATA[I don't know this control type.]]></string>
 	<string name="_adm_fields_error_you_must_enter_values"><![CDATA[You must enter values]]></string>
 	<string name="_adm_fields_error_you_entered_incorrect_link"><![CDATA[You entered incorrect link]]></string>
 	<string name="_adm_fields_error_you_entered_incorrect_value"><![CDATA[You entered an incorrect value]]></string>
@@ -2972,7 +2972,7 @@ Without doing that you won't be submitted to our database.</p>
 	<string name="_categ_form_add"><![CDATA[Add Category]]></string>
 	<string name="_categ_form_field_name_err"><![CDATA[Please specify name from 3 to 100 characters]]></string>
 	<string name="_categ_form_type"><![CDATA[Type]]></string>
-	<string name="_categ_exist_err"><![CDATA[Category named \'%s\' already exists]]></string>
+	<string name="_categ_exist_err"><![CDATA[Category named '%s' already exists]]></string>
 	<string name="_FieldError_City_Mandatory"><![CDATA[You must specify your city]]></string>
 	<string name="_FieldError_Country_Mandatory"><![CDATA[You must specify your country]]></string>
 	<string name="_FieldError_zip_Mandatory"><![CDATA[You must specify your ZIP code]]></string>
@@ -3001,7 +3001,7 @@ Without doing that you won't be submitted to our database.</p>
 	<string name="_FieldValues_In a Relationship"><![CDATA[In a Relationship]]></string>
 	<string name="_FieldValues_Engaged"><![CDATA[Engaged]]></string>
 	<string name="_FieldValues_Married"><![CDATA[Married]]></string>
-	<string name="_FieldValues_It\'s Complicated"><![CDATA[It\'s Complicated]]></string>
+	<string name="_FieldValues_It's Complicated"><![CDATA[It's Complicated]]></string>
 	<string name="_FieldValues_In an Open Relationship"><![CDATA[In an Open Relationship]]></string>
 	<string name="_FieldCaption_Hobbies_Edit"><![CDATA[Hobbies]]></string>
 	<string name="_FieldDesc_Hobbies_Edit"><![CDATA[Your hobbies]]></string>
@@ -3085,7 +3085,7 @@ Without doing that you won't be submitted to our database.</p>
 	<string name="_Errors in join form"><![CDATA[Form contains errors, please review errors and try again.]]></string>
 	<string name="_Refresh"><![CDATA[Refresh]]></string>
 	<string name="_FieldCaption_City_Search"><![CDATA[City]]></string>
-	<string name="_FAILED_TO_SEND_MESSAGE_MEMBERSHIP_DISALLOW"><![CDATA[Your membership level doesn\'t allow you to send message]]></string>
+	<string name="_FAILED_TO_SEND_MESSAGE_MEMBERSHIP_DISALLOW"><![CDATA[Your membership level doesn't allow you to send message]]></string>
 	<string name="_edit_profile_info"><![CDATA[Edit profile info]]></string>
 	<string name="_edit_profile_privacy"><![CDATA[Edit profile privacy]]></string>
 	<string name="_edit_profile_privacy_save"><![CDATA[Save]]></string>
@@ -3175,7 +3175,7 @@ More info about URI DNSBL: <br />
 	<string name="_sys_storage_restriction_ext_allowed"><![CDATA[Please, upload only files of these types: {0}]]></string>
 	<string name="_sys_storage_restriction_ext_denied"><![CDATA[You may upload any types of files except for {0}]]></string>
 	<string name="_sys_storage_restriction_size"><![CDATA[Maximum file size limit is {0}]]></string>
-	<string name="_sys_uploader_confirm_leaving_page"><![CDATA[Upload is in progress! Stay cool and don\'t close this page, or it will cut off half-way.]]></string> // TODO: &apos; appears in this text for some reason !
+	<string name="_sys_uploader_confirm_leaving_page"><![CDATA[Upload is in progress! Stay cool and don't close this page, or it will cut off half-way.]]></string> <!-- TODO: &apos; appears in this text for some reason ! -->
 	<string name="_sys_uploader_confirm_close_popup"><![CDATA[Oh no! Are you sure? This may discard uploading files, seriously.]]></string>
 	<string name="_sys_uploader_upload_canceled"><![CDATA[Too bad. Upload canceled.]]></string>
 	<string name="_sys_uploader_close"><![CDATA[Close]]></string>
