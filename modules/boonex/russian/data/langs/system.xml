@@ -1566,32 +1566,123 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 
     <!-- Settings -->
 	<string name="_adm_wgt_cpt_settings"><![CDATA[Settings]]></string>
+	<string name="_adm_stg_cpt_type_system"><![CDATA[System]]></string>
 	<string name="_adm_stg_cpt_category_system"><![CDATA[System]]></string>
-	<string name="_adm_stg_cpt_category_profiles"><![CDATA[Profiles]]></string>
-	<string name="_adm_stg_cpt_category_galleries"><![CDATA[Galleries]]></string>
-	<string name="_adm_stg_cpt_category_other"><![CDATA[Other]]></string>
-	<string name="_adm_stg_cpt_category_emails"><![CDATA[Emails]]></string>
-	<string name="_adm_stg_cpt_category_memberships"><![CDATA[Memberships]]></string>
-	<string name="_adm_stg_cpt_category_postmoderation"><![CDATA[Postmoderation]]></string>
-	<string name="_adm_stg_cpt_category_site_settings"><![CDATA[Main Site Settings]]></string>
-	<string name="_adm_stg_cpt_category_index_settings"><![CDATA[Index page settings]]></string>
-	<string name="_adm_stg_cpt_category_privacy_settings"><![CDATA[Privacy Settings]]></string>
-	<string name="_adm_stg_cpt_category_news"><![CDATA[News]]></string>
-	<string name="_adm_stg_cpt_category_pruning"><![CDATA[Pruning]]></string>
-	<string name="_adm_stg_cpt_category_matches"><![CDATA[Matches]]></string>
-	<string name="_adm_stg_cpt_category_templates"><![CDATA[Templates]]></string>
-	<string name="_adm_stg_cpt_category_security"><![CDATA[Security]]></string>
-	<string name="_adm_stg_cpt_category_variables"><![CDATA[Variables]]></string>
-	<string name="_adm_stg_cpt_category_watermarks"><![CDATA[Watermarks]]></string>
-	<string name="_adm_stg_cpt_category_meta_tags"><![CDATA[Meta Tags]]></string>
-	<string name="_adm_stg_cpt_category_media"><![CDATA[Media]]></string>
-	<string name="_adm_stg_cpt_category_tags"><![CDATA[Tags]]></string>
-	<string name="_adm_stg_cpt_category_permalinks"><![CDATA[Permalinks]]></string>
-	<string name="_adm_stg_cpt_category_categories"><![CDATA[Categories]]></string>
-	<string name="_adm_stg_cpt_category_storage"><![CDATA[Storage]]></string>
+
+	<!-- Settings: Languages -->
 	<string name="_adm_stg_cpt_category_languages"><![CDATA[Languages]]></string>
+	<string name="_adm_stg_cpt_option_lang_default"><![CDATA[Default Language]]></string>
+	<string name="_adm_stg_cpt_option_sys_calendar_starts_sunday"><![CDATA[Does Calender start on Sunday?]]></string>
+	<string name="_adm_stg_cpt_option_sys_format_date"><![CDATA[Date Format]]></string>
+	<string name="_adm_stg_cpt_option_sys_format_time"><![CDATA[Time Format]]></string>
+	<string name="_adm_stg_cpt_option_sys_format_datetime"><![CDATA[Datetime Format]]></string>
+	<string name="_adm_stg_cpt_option_sys_format_timeago"><![CDATA[Use 'time ago' format for dates less than this number of seconds]]></string>
+
+	<!-- Settings: Templates -->
+	<string name="_adm_stg_cpt_category_templates"><![CDATA[Templates]]></string>
+	<string name="_adm_stg_cpt_option_template"><![CDATA[Default Template]]></string>
+	<string name="_adm_stg_cpt_option_enable_template"><![CDATA[Show Template Switcher]]></string>
+	<string name="_adm_stg_cpt_option_sys_template_page_width_min"><![CDATA[Min page width(in pixels)]]></string>
+	<string name="_adm_stg_cpt_option_sys_template_page_width_max"><![CDATA[Max page width(in pixels)]]></string>
+
+	<!-- Settings: Cache -->
+	<string name="_adm_stg_cpt_category_cache"><![CDATA[Cache]]></string>
+	<string name="_adm_stg_cpt_option_sys_db_cache_enable"><![CDATA[Enable DB cache]]></string>
+	<string name="_adm_stg_cpt_option_sys_db_cache_engine"><![CDATA[DB cache engine (other than File option may require custom server setup)]]></string>
+	<string name="_adm_stg_cpt_option_sys_cache_memcache_host"><![CDATA[Memcached server host]]></string>
+	<string name="_adm_stg_cpt_option_sys_cache_memcache_port"><![CDATA[Memcached server port]]></string>
+	<string name="_adm_stg_cpt_option_sys_page_cache_enable"><![CDATA[Enable Page cache]]></string>
+	<string name="_adm_stg_cpt_option_sys_page_cache_engine"><![CDATA[Page cache engine (other than File option may require custom server setup)]]></string>
+	<string name="_adm_stg_cpt_option_sys_pb_cache_enable"><![CDATA[Enable page blocks cache]]></string>
+	<string name="_adm_stg_cpt_option_sys_pb_cache_engine"><![CDATA[Page blocks cache engine (other than File option may require custom server setup)]]></string>
+	<string name="_adm_stg_cpt_option_sys_mm_cache_engine"><![CDATA[Member menu cache engine (other than File option may require custom server setup)]]></string>
+	<string name="_adm_stg_cpt_option_sys_template_cache_enable"><![CDATA[Enable cache for HTML files]]></string>
+	<string name="_adm_stg_cpt_option_sys_template_cache_engine"><![CDATA[Template cache engine (other than FileHtml option may require custom server setup)]]></string>
+	<string name="_adm_stg_cpt_option_sys_template_cache_css_enable"><![CDATA[Enable cache for CSS files]]></string>
+	<string name="_adm_stg_cpt_option_sys_template_cache_js_enable"><![CDATA[Enable cache for JS files]]></string>
+	<string name="_adm_stg_cpt_option_sys_template_cache_compress_enable"><![CDATA[Enable compression for JS/CSS files(cache should be enabled)]]></string>
+
+	<!-- Settings: Categories -->
+	<string name="_adm_stg_cpt_category_categories"><![CDATA[Categories]]></string>
+	<string name="_adm_stg_cpt_option_categ_perpage_browse"><![CDATA[Number of categories to show on browse pages]]></string>
+	<string name="_adm_stg_cpt_option_categ_show_columns"><![CDATA[Number of columns to show categories]]></string>
+
+	<!-- Settings: General -->
+	<string name="_adm_stg_cpt_category_general"><![CDATA[General]]></string>
+	<string name="_adm_stg_cpt_option_sys_ftp_login"><![CDATA[FTP server login]]></string>
+	<string name="_adm_stg_cpt_option_sys_ftp_password"><![CDATA[FTP server password]]></string>
+	<string name="_adm_stg_cpt_option_sys_ftp_dir"><![CDATA[Path to Dolphin on FTP server]]></string>
+	<string name="_adm_stg_cpt_option_sys_oauth_key"><![CDATA[BoonEx account key]]></string>
+	<string name="_adm_stg_cpt_option_sys_oauth_secret"><![CDATA[BoonEx account secret]]></string>
+	<string name="_adm_stg_cpt_option_boonex_aff_id"><![CDATA[My BoonEx Affiliate ID]]></string>
+	<string name="_adm_stg_cpt_option_currency_code"><![CDATA[Currency code (for checkout system)]]></string>
+	<string name="_adm_stg_cpt_option_currency_sign"><![CDATA[Currency sign (for display purposes only)]]></string>
+	<string name="_adm_stg_cpt_option_enable_gd"><![CDATA[Use GD library for image processing]]></string>
+	<string name="_adm_stg_cpt_option_use_like_operator"><![CDATA[Use operator LIKE for search (recommended for small content)]]></string>
+	<string name="_adm_stg_cpt_option_"><![CDATA[]]></string>
+
+	<!-- Settings: Massmailer -->
+	<string name="_adm_stg_cpt_category_massmailer"><![CDATA[Massmailer]]></string>
+	<string name="_adm_stg_cpt_option_msgs_per_start"><![CDATA[Send emails from queue, it happens every cron execution (5m-1h)]]></string>
+
+	<!-- Settings: Memberships -->
+	<string name="_adm_stg_cpt_category_memberships"><![CDATA[Memberships]]></string>
+	<string name="_adm_stg_cpt_option_expire_notification_days"><![CDATA[Number of days before membership expiration to notify members ( -1 = after expiration )]]></string>
+	<string name="_adm_stg_cpt_option_expire_notify_once"><![CDATA[Notify members about membership expiration only once (every day otherwise)]]></string>
+
+	<!-- Settings: Permalinks -->
+	<string name="_adm_stg_cpt_category_permalinks"><![CDATA[Permalinks]]></string>
+	<string name="_adm_stg_cpt_option_permalinks_pages"><![CDATA[Enable friendly permalinks for Pages]]></string>
+	<string name="_adm_stg_cpt_option_permalinks_modules"><![CDATA[Enable friendly permalinks for Modules]]></string>
+
+	<!-- Settings: Pruning -->
+	<string name="_adm_stg_cpt_category_pruning"><![CDATA[Pruning]]></string>
+	<string name="_adm_stg_cpt_option_db_clean_members_visits"><![CDATA[Delete stored members IPs older than (days)]]></string>
+	<string name="_adm_stg_cpt_option_db_clean_mem_levels"><![CDATA[Delete membership levels expired for (days)]]></string>
+
+	<!-- Settings: Security -->
+	<string name="_adm_stg_cpt_category_security"><![CDATA[Security]]></string>
+	<string name="_adm_stg_cpt_option_enable_member_store_ip"><![CDATA[When a member login into dolphin that the IP address from that person will be saved into the database]]></string>
+	<string name="_adm_stg_cpt_option_ip_blacklist_mode"><![CDATA[IP Blacklist system mode (1 - total block, 2 - login block)]]></string>
+	<string name="_adm_stg_cpt_option_ip_list_global_type"><![CDATA[IP List Type (1 - all allowed except listed, 2 - all blocked except listed, 0 - disabled)]]></string>
+	<string name="_adm_stg_cpt_option_sys_security_impact_threshold_log"><![CDATA[Total security impact threshold to send report]]></string>
+	<string name="_adm_stg_cpt_option_sys_security_impact_threshold_block"><![CDATA[Total security impact threshold to send report and block aggressor]]></string>		
+	<string name="_adm_stg_cpt_option_sys_security_form_token_enable"><![CDATA[Enable CSRF tocken in forms]]></string>
+	<string name="_adm_stg_cpt_option_sys_security_form_token_lifetime"><![CDATA[CSRF tocken lifetime in seconds(0 - do not track time)]]></string>
+	<string name="_adm_stg_cpt_option_sys_dnsbl_enable"><![CDATA[Enable DNS Block Lists]]></string>
+	<string name="_adm_stg_cpt_option_sys_uridnsbl_enable"><![CDATA[Enable URI DNS Block Lists]]></string>
+	<string name="_adm_stg_cpt_option_sys_akismet_enable"><![CDATA[Enable Akismet]]></string>
+	<string name="_adm_stg_cpt_option_sys_akismet_api_key"><![CDATA[Akismet API Key]]></string>
+	<string name="_adm_stg_cpt_option_sys_antispam_block"><![CDATA[Total block all spam content]]></string>
+	<string name="_adm_stg_cpt_option_sys_antispam_report"><![CDATA[Send report to admin if spam content discovered]]></string>
+	<string name="_adm_stg_cpt_option_sys_recaptcha_key_public"><![CDATA[reCAPTCHA public key]]></string>
+	<string name="_adm_stg_cpt_option_sys_recaptcha_key_private"><![CDATA[reCAPTCHA private key]]></string>
+
+	<!-- Settings: Site Settings -->
+	<string name="_adm_stg_cpt_category_site_settings"><![CDATA[Site Settings]]></string>
+	<string name="_adm_stg_cpt_option_site_email"><![CDATA[Site Email]]></string>
+	<string name="_adm_stg_cpt_option_site_email_notify"><![CDATA[Site Email Notify]]></string>
+	<string name="_adm_stg_cpt_option_site_email_bug_report"><![CDATA[Site Email Bug Report]]></string>
+	<string name="_adm_stg_cpt_option_site_title"><![CDATA[Site Title]]></string>
+
+	<!-- Settings: Storage -->
+	<string name="_adm_stg_cpt_category_storage"><![CDATA[Storage]]></string>
+	<string name="_adm_stg_cpt_option_sys_storage_default"><![CDATA[Default storage engine (other than Local may require custom/additional setup)]]></string>
+	<string name="_adm_stg_cpt_option_sys_storage_s3_access_key"><![CDATA[AWS Access Key]]></string>
+	<string name="_adm_stg_cpt_option_sys_storage_s3_secret_key"><![CDATA[AWS Secret Key]]></string>
+	<string name="_adm_stg_cpt_option_sys_storage_s3_bucket"><![CDATA[AWS Bucket]]></string>
+	<string name="_adm_stg_cpt_option_sys_storage_s3_domain"><![CDATA[AWS Custom domain (require custom DNS setup)]]></string>
+
+	<!-- Settings: Tags -->
+	<string name="_adm_stg_cpt_category_tags"><![CDATA[Tags]]></string>
+	<string name="_adm_stg_cpt_option_tags_non_parsable"><![CDATA[Non-parsable tags (type all tags in lower case, delimit them by comma)]]></string>
+	<string name="_adm_stg_cpt_option_tags_perpage_browse"><![CDATA[Number of tags to show on browse pages]]></string>
+	<string name="_adm_stg_cpt_option_tags_show_limit"><![CDATA[Number of tags to show limit]]></string>
+
 	<string name="_adm_stg_err_save"><![CDATA[Cannot save settings]]></string>
 	<string name="_adm_stg_scs_save"><![CDATA[Settings were successfully saved]]></string>
+
+	<!-- Store -->
 	<string name="_adm_page_cpt_store"><![CDATA[Store]]></string>
 	<string name="_adm_wgt_cpt_store"><![CDATA[Store]]></string>
 	<string name="_adm_lmi_cpt_goodies"><![CDATA[All Goodies]]></string>

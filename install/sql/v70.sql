@@ -237,244 +237,229 @@ INSERT INTO `sys_options_types`(`group`, `name`, `caption`, `icon`, `order`) VAL
 SET @iTypeId = LAST_INSERT_ID();
 
 --
--- CATEGORY: system
+-- CATEGORY (HIDDEN): System
 --
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'system', '_adm_stg_cpt_category_system', 1, 1);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryId, 'cmdDay', '', '10', 'digit', '', '', '', 1),
-(@iCategoryId, 'tags_last_parse_time', 'Temporary value when tags cron-job was runed last time', '0', 'digit', '', '', '', 3),
-(@iCategoryId, 'license_expiration', 'Dolphin License Expiration', '', 'digit', '', '', '', 6),
-(@iCategoryId, 'license_checksum', 'Dolphin License Checksum', '', 'digit', '', '', '', 7),
-(@iCategoryId, 'sys_html_fields', 'HTML fields', 'a:1:{s:6:"system";a:4:{i:0;s:12:"POST.message";i:1;s:15:"REQUEST.message";i:2;s:12:"POST.CmtText";i:3;s:15:"REQUEST.CmtText";}}', 'text', '', '', '', 8),
-(@iCategoryId, 'sys_json_fields', 'JSON fields', '', 'text', '', '', '', 9),
-(@iCategoryId, 'sys_exceptions_fields', 'Exceptions fields', '', 'text', '', '', '', 10),
-(@iCategoryId, 'main_div_width', 'Width of the main container of the site', '998px', 'digit', '', '', '', 13),
-(@iCategoryId, 'sys_template_cache_image_enable', 'Enable cache for images (do not work for IE7)', '', 'checkbox', '', '', '', 15),
-(@iCategoryId, 'sys_template_cache_image_max_size', 'Max image size to be cached(in kb)', '5', 'digit', '', '', '', 16),
-(@iCategoryId, 'sys_site_logo', 'Site logo image ID', '0', 'digit', '', '', '', 17),
-(@iCategoryId, 'sys_site_logo_alt', 'Site logo ALT text', '0', 'text', '', '', '', 18),
-(@iCategoryId, 'sys_site_icon', 'Site icon image ID', '0', 'digit', '', '', '', 19),
-(@iCategoryId, 'sys_email_confirmation', 'Enable email confirmation routine', 'on', 'checkbox', '', '', '', 20),
-(@iCategoryId, 'sys_redirect_after_account_added', 'Redirect after account creation', 'page.php?i=create-persons-profile', 'digit', '', '', '', 21),
-(@iCategoryId, 'sys_tmp_version', 'Temporary Dolphin version ', '7.0.6', 'digit', '', '', '', 30);
+(@iCategoryId, 'sys_version', '', '8.0.0', 'digit', '', '', '', 2),
+
+(@iCategoryId, 'sys_html_fields', '', 'a:1:{s:6:"system";a:4:{i:0;s:12:"POST.message";i:1;s:15:"REQUEST.message";i:2;s:12:"POST.CmtText";i:3;s:15:"REQUEST.CmtText";}}', 'text', '', '', '', 3),
+(@iCategoryId, 'sys_json_fields', '', '', 'text', '', '', '', 4),
+(@iCategoryId, 'sys_exceptions_fields', '', '', 'text', '', '', '', 5),
+
+(@iCategoryId, 'sys_site_logo', '', '0', 'digit', '', '', '', 6),
+(@iCategoryId, 'sys_site_logo_alt', '_adm_dsg_txt_alt_text', '0', 'text', '', '', '', 7),
+(@iCategoryId, 'sys_site_icon', '', '0', 'digit', '', '', '', 8),
+(@iCategoryId, 'main_div_width', '', '998px', 'digit', '', '', '', 9),
+
+(@iCategoryId, 'sys_template_cache_image_enable', '', '', 'checkbox', '', '', '', 10),
+(@iCategoryId, 'sys_template_cache_image_max_size', '', '5', 'digit', '', '', '', 11),
+
+(@iCategoryId, 'sys_email_confirmation', '', 'on', 'checkbox', '', '', '', 12),
+(@iCategoryId, 'sys_redirect_after_account_added', '', 'page.php?i=create-persons-profile', 'digit', '', '', '', 13),
+
+(@iCategoryId, 'sys_editor_default', '', 'sys_tinymce', 'digit', '', '', '', 14),
+(@iCategoryId, 'sys_captcha_default', '', 'sys_recaptcha', 'digit', '', '', '', 15);
 
 
 --
--- CATEGORY: other
+-- CATEGORY (HIDDEN): Languages
 --
-INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'other', '_adm_stg_cpt_category_other', 0, 4);
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'languages', '_adm_stg_cpt_category_languages', 1, 2);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'member_online_time', 'Time period in minutes within which a member is considered to be online', '1', 'digit', '', '', '', 1),
-(@iCategoryId, 'enable_tiny_in_comments', 'Enable TinyMCE in comments', '', 'checkbox', '', '', '', 2),
-(@iCategoryId, 'sys_editor_default', 'Default HTML editor', 'sys_tinymce', 'digit', '', '', '', 3),
-(@iCategoryId, 'sys_captcha_default', 'Default CAPTCHA', 'sys_recaptcha', 'digit', '', '', '', 4),
-(@iCategoryId, 'sys_recaptcha_key_public', 'reCAPTCHA public key', '', 'digit', '', '', '', 5),
-(@iCategoryId, 'sys_recaptcha_key_private', 'reCAPTCHA private key', '', 'digit', '', '', '', 6),
-(@iCategoryId, 'sys_ftp_login', 'FTP server login', '', 'digit', '', '', '', 10),
-(@iCategoryId, 'sys_ftp_password', 'FTP server password', '', 'digit', '', '', '', 11),
-(@iCategoryId, 'sys_ftp_dir', 'Path to Dolphin on FTP server', '', 'digit', '', '', '', 12),
-(@iCategoryId, 'enable_cache_system', 'Enable caching system to store profiles information', 'on', 'checkbox', '', '', '', 18),
-(@iCategoryId, 'sys_db_cache_enable', 'Enable DB cache', '', 'checkbox', '', '', '', 19),
-(@iCategoryId, 'sys_db_cache_engine', 'DB cache engine (other than File option may require custom server setup)', 'File', 'select', 'File,EAccelerator,Memcache,APC,XCache', '', '', 20),
-(@iCategoryId, 'sys_cache_memcache_host', 'Memcached server host', '', 'digit', '', '', '', 21),
-(@iCategoryId, 'sys_cache_memcache_port', 'Memcached server port', '11211', 'digit', '', '', '', 22),
-(@iCategoryId, 'sys_pb_cache_enable', 'Enable page blocks cache', '', 'checkbox', '', '', '', 23),
-(@iCategoryId, 'sys_pb_cache_engine', 'Page blocks cache engine (other than File option may require custom server setup)', 'File', 'select', 'File,EAccelerator,Memcache,APC,XCache', '', '', 24),
-(@iCategoryId, 'sys_mm_cache_engine', 'Member menu cache engine (other than File option may require custom server setup)', 'File', 'select', 'File,EAccelerator,Memcache,APC,XCache', '', '', 25),
-(@iCategoryId, 'sys_page_cache_enable', 'Enable Page cache', '', 'checkbox', '', '', '', 26),
-(@iCategoryId, 'sys_page_cache_engine', 'Page cache engine (other than File option may require custom server setup)', 'File', 'select', 'File,EAccelerator,Memcache,APC,XCache', '', '', 27),
-(@iCategoryId, 'sys_oauth_key', 'BoonEx account key', '', 'digit', '', '', '', 28),
-(@iCategoryId, 'sys_oauth_secret', 'BoonEx account secret', '', 'digit', '', '', '', 29);
+(@iCategoryId, 'lang_default', '_adm_stg_cpt_option_lang_default', '', 'select', 'PHP:bx_import(''BxDolLanguages''); $aValues = BxDolLanguages::getInstance()->getLanguages(false, true); $aResult = array(); foreach($aValues as $sKey => $sValue) $aResult[] = array(\'key\' => $sKey, \'value\' => $sValue); return $aResult;', '', '', 1),
+
+(@iCategoryId, 'sys_calendar_starts_sunday', '_adm_stg_cpt_option_sys_calendar_starts_sunday', '', 'checkbox', '', '', '', 2),
+
+(@iCategoryId, 'sys_format_date', '_adm_stg_cpt_option_sys_format_date', 'D MMM YYYY', 'digit', '', '', '', 3),
+(@iCategoryId, 'sys_format_time', '_adm_stg_cpt_option_sys_format_time', 'HH:mm', 'digit', '', '', '', 4),
+(@iCategoryId, 'sys_format_datetime', '_adm_stg_cpt_option_sys_format_datetime', 'D MMM YYYY h:mm:ss a', 'digit', '', '', '', 5),
+(@iCategoryId, 'sys_format_timeago', '_adm_stg_cpt_option_sys_format_timeago', 432000, 'digit', '', '', '', 6);
 
 
 --
--- CATEGORY: emails
+-- CATEGORY (HIDDEN): Templates
 --
-INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'emails', '_adm_stg_cpt_category_emails', 0, 5);
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'templates', '_adm_stg_cpt_category_templates', 1, 3);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'msgs_per_start', 'Send emails from queue, it happens every cron execution (5m-1h)', '20', 'digit', '', '', '', 1);
+(@iCategoryId, 'template', '_adm_stg_cpt_option_template', '', 'select', 'PHP:$aValues = get_templates_array(); $aResult = array(); foreach($aValues as $sKey => $sValue) $aResult[] = array(\'key\' => $sKey, \'value\' => $sValue); return $aResult;', 'bx_import(\'BxDolModuleQuery\'); return (strlen($arg0) > 0 && BxDolModuleQuery::getInstance()->isEnabled($arg0)) ? true : false;', 'Template cannot be empty and must have a valid name.', 1),
+(@iCategoryId, 'enable_template', '_adm_stg_cpt_option_enable_template', 'on', 'checkbox', '', '', '', 2),
+
+(@iCategoryId, 'sys_template_page_width_min', '_adm_stg_cpt_option_sys_template_page_width_min', '774', 'digit', '', '', '', 3),
+(@iCategoryId, 'sys_template_page_width_max', '_adm_stg_cpt_option_sys_template_page_width_max', '1600', 'digit', '', '', '', 4);
 
 
 --
--- CATEGORY: memberships
+-- CATEGORY: Cache
 --
-INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'memberships', '_adm_stg_cpt_category_memberships', 0, 6);
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'cache', '_adm_stg_cpt_category_cache', 0, 4);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'enable_promotion_membership', 'Enable promotional membership', 'on', 'checkbox', '', '', '', 1),
-(@iCategoryId, 'expire_notification_days', 'Number of days before membership expiration to notify members ( -1 = after expiration )', '1', 'digit', '', '', '', 2),
-(@iCategoryId, 'expire_notify_once', 'Notify members about membership expiration only once (every day otherwise)', 'on', 'checkbox', '', '', '', 3),
-(@iCategoryId, 'promotion_membership_days', 'Number of days for promotional membership', '7', 'digit', '', '', '', 4);
+(@iCategoryId, 'sys_db_cache_enable', '_adm_stg_cpt_option_sys_db_cache_enable', '', 'checkbox', '', '', '', 1),
+(@iCategoryId, 'sys_db_cache_engine', '_adm_stg_cpt_option_sys_db_cache_engine', 'File', 'select', 'File,EAccelerator,Memcache,APC,XCache', '', '', 2),
+
+(@iCategoryId, 'sys_cache_memcache_host', '_adm_stg_cpt_option_sys_cache_memcache_host', '', 'digit', '', '', '', 3),
+(@iCategoryId, 'sys_cache_memcache_port', '_adm_stg_cpt_option_sys_cache_memcache_port', '11211', 'digit', '', '', '', 4),
+
+(@iCategoryId, 'sys_page_cache_enable', '_adm_stg_cpt_option_sys_page_cache_enable', '', 'checkbox', '', '', '', 5),
+(@iCategoryId, 'sys_page_cache_engine', '_adm_stg_cpt_option_sys_page_cache_engine', 'File', 'select', 'File,EAccelerator,Memcache,APC,XCache', '', '', 6),
+
+(@iCategoryId, 'sys_pb_cache_enable', '_adm_stg_cpt_option_sys_pb_cache_enable', '', 'checkbox', '', '', '', 7),
+(@iCategoryId, 'sys_pb_cache_engine', '_adm_stg_cpt_option_sys_pb_cache_engine', 'File', 'select', 'File,EAccelerator,Memcache,APC,XCache', '', '', 8),
+(@iCategoryId, 'sys_mm_cache_engine', '_adm_stg_cpt_option_sys_mm_cache_engine', 'File', 'select', 'File,EAccelerator,Memcache,APC,XCache', '', '', 9),
+
+(@iCategoryId, 'sys_template_cache_enable', '_adm_stg_cpt_option_sys_template_cache_enable', '', 'checkbox', '', '', '', 10),
+(@iCategoryId, 'sys_template_cache_engine', '_adm_stg_cpt_option_sys_template_cache_engine', 'FileHtml', 'select', 'FileHtml,EAccelerator,Memcache,APC,XCache', '', '', 11),
+(@iCategoryId, 'sys_template_cache_css_enable', '_adm_stg_cpt_option_sys_template_cache_css_enable', '', 'checkbox', '', '', '', 12),
+(@iCategoryId, 'sys_template_cache_js_enable', '_adm_stg_cpt_option_sys_template_cache_js_enable', '', 'checkbox', '', '', '', 13),
+(@iCategoryId, 'sys_template_cache_compress_enable', '_adm_stg_cpt_option_sys_template_cache_compress_enable', 'on', 'checkbox', '', '', '', 14);
 
 
 --
--- CATEGORY: site settings
+-- CATEGORY: Categories
 --
-INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'site_settings','_adm_stg_cpt_category_site_settings', 0, 8);
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'categories', '_adm_stg_cpt_category_categories', 0, 5);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'site_email', 'Site Email', 'xxx@gmail.com', 'digit', '', '', '', 2),
-(@iCategoryId, 'site_email_notify', 'Site Email Notify', 'xxx2@gmail.com', 'digit', '', '', '', 3),
-(@iCategoryId, 'site_email_bug_report', 'Site Email Bug Report', 'xxx3@gmail.com', 'digit', '', '', '', 4);
+(@iCategoryId, 'categ_perpage_browse', '_adm_stg_cpt_option_categ_perpage_browse', '30', 'digit', '', '', '', 1),
+(@iCategoryId, 'categ_show_columns', '_adm_stg_cpt_option_categ_show_columns', '5', 'digit', '', '', '', 2);
 
 
 --
--- CATEGORY: database pruning
+-- CATEGORY: General
 --
-INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'pruning', '_adm_stg_cpt_category_pruning', 0, 11);
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'general', '_adm_stg_cpt_category_general', 0, 6);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'db_clean_views', 'Clean old profile views ( days )', '180', 'digit', '', '', '', 3);
+(@iCategoryId, 'sys_ftp_login', '_adm_stg_cpt_option_sys_ftp_login', '', 'digit', '', '', '', 1),
+(@iCategoryId, 'sys_ftp_password', '_adm_stg_cpt_option_sys_ftp_password', '', 'digit', '', '', '', 2),
+(@iCategoryId, 'sys_ftp_dir', '_adm_stg_cpt_option_sys_ftp_dir', '', 'digit', '', '', '', 3),
+
+(@iCategoryId, 'sys_oauth_key', '_adm_stg_cpt_option_sys_oauth_key', '', 'digit', '', '', '', 4),
+(@iCategoryId, 'sys_oauth_secret', '_adm_stg_cpt_option_sys_oauth_secret', '', 'digit', '', '', '', 5),
+(@iCategoryId, 'boonexAffID', '_adm_stg_cpt_option_boonex_aff_id', '', 'digit', '', '', '', 6),
+
+(@iCategoryId, 'currency_code', '_adm_stg_cpt_option_currency_code', 'USD', 'select', 'USD,EURO', 'return strlen($arg0) > 0;', 'Cannot be empty.', 7),
+(@iCategoryId, 'currency_sign', '_adm_stg_cpt_option_currency_sign', '&#36;', 'digit', '', 'return strlen($arg0) > 0;', 'Cannot be empty.', 8),
+
+(@iCategoryId, 'enable_gd', '_adm_stg_cpt_option_enable_gd', 'on', 'checkbox', '', '', '', 9),
+(@iCategoryId, 'useLikeOperator', '_adm_stg_cpt_option_use_like_operator', 'on', 'checkbox', '', '', '', 10);
 
 
 --
--- CATEGORY: security
+-- CATEGORY: Massmailer
 --
-INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'security', '_adm_stg_cpt_category_security', 0, 14);
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'massmailer', '_adm_stg_cpt_category_massmailer', 0, 7);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'enable_member_store_ip', 'When a member login into dolphin that the IP address from that person will be saved into the database', 'on', 'checkbox', '', '', 1, ''),
-(@iCategoryId, 'ipBlacklistMode', 'IP Blacklist system mode (1 - total block, 2 - login block)', '2', 'digit', '', '', '', 2),
-(@iCategoryId, 'ipListGlobalType', 'IP List Type (1 - all allowed except listed, 2 - all blocked except listed, 0 - disabled)', '0', 'digit', '', '', '', 3),
-(@iCategoryId, 'sys_security_impact_threshold_log', 'Total security impact threshold to send report', '-1', 'digit', '', '', '', 4),
-(@iCategoryId, 'sys_security_impact_threshold_block', 'Total security impact threshold to send report and block aggressor', '-1', 'digit', '', '', '', 5),
-(@iCategoryId, 'sys_security_form_token_enable', 'Enable CSRF tocken in forms', 'on', 'checkbox', '', '', '', 6),
-(@iCategoryId, 'sys_security_form_token_lifetime', 'CSRF tocken lifetime in seconds(0 - do not track time)', '86400', 'digit', '', '', '', 7),
-(@iCategoryId, 'sys_dnsbl_enable', 'Enable DNS Block Lists', '', 'checkbox', '', '', '', 8),
-(@iCategoryId, 'sys_uridnsbl_enable', 'Enable URI DNS Block Lists', '', 'checkbox', '', '', '', 9),
-(@iCategoryId, 'sys_akismet_enable', 'Enable Akismet', '', 'checkbox', '', '', '', 10),
-(@iCategoryId, 'sys_akismet_api_key', 'Akismet API Key', '', 'digit', '', '', '', 11),
-(@iCategoryId, 'sys_antispam_block', 'Total block all spam content', '', 'checkbox', '', '', '', 12),
-(@iCategoryId, 'sys_antispam_report', 'Send report to admin if spam content discovered', 'on', 'checkbox', '', '', '', 13);
+(@iCategoryId, 'msgs_per_start', '_adm_stg_cpt_option_msgs_per_start', '20', 'digit', '', '', '', 1);
 
 
 --
--- CATEGORY: variable
+-- CATEGORY: Memberships
 --
-INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'variables', '_adm_stg_cpt_category_variables', 0, 15);
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'memberships', '_adm_stg_cpt_category_memberships', 0, 8);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'currency_code', 'Currency code (for checkout system)', 'USD', 'select', 'USD,EURO', 'return strlen($arg0) > 0;', 'Cannot be empty.', 1),
-(@iCategoryId, 'currency_sign', 'Currency sign (for display purposes only)', '&#36;', 'digit', '', 'return strlen($arg0) > 0;', 'Cannot be empty.', 2),
-(@iCategoryId, 'enable_gd', 'Use GD library for image processing', 'on', 'checkbox', '', '', '', 10),
-(@iCategoryId, 'sys_calendar_starts_sunday', 'Does Calender start on Sunday?', '', 'checkbox', '', '', '', 11),
-(@iCategoryId, 'license_code', 'Dolphin License Code', '', 'digit', '', '', '', 13),
-(@iCategoryId, 'boonexAffID', 'My BoonEx Affiliate ID', '', 'digit', '', '', '', 14),
-(@iCategoryId, 'useLikeOperator', 'Use operator LIKE for search (recommended for small content)', 'on', 'checkbox', '', '', '', 15);
+(@iCategoryId, 'expire_notification_days', '_adm_stg_cpt_option_expire_notification_days', '1', 'digit', '', '', '', 1),
+(@iCategoryId, 'expire_notify_once', '_adm_stg_cpt_option_expire_notify_once', 'on', 'checkbox', '', '', '', 2);
 
 
 --
--- CATEGORY: watermark
+-- CATEGORY: Permalinks
 --
-INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'watermarks', '_adm_stg_cpt_category_watermarks', 0, 16);
-SET @iCategoryId = LAST_INSERT_ID();
-
-INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'enable_watermark', 'Enable Watermark', '', 'checkbox', '', '', '', 1),
-(@iCategoryId, 'transparent1', 'Transparency for first image', '0', 'digit', '', '', '', 2),
-(@iCategoryId, 'Water_Mark', 'Water Mark', '', 'file', '', '', '', 3);
-
-
---
--- CATEGORY: tags
---
-INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'tags', '_adm_stg_cpt_category_tags', 0, 19);
-SET @iCategoryId = LAST_INSERT_ID();
-
-INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'tags_min_rating', 'Minimum rating of tag to show it', '2', 'digit', '', '', '', 1),
-(@iCategoryId, 'tags_non_parsable', 'Non-parsable tags (type all tags in lower case, delimit them by comma)', 'hi, hey, hello, all, i, i''m, i''d, am, for, in, to, a, the, on, it''s, is, my, of, are, from, i''m, me, you, and, we, not, will, at, where, there', 'text', '', '', '', 2),
-(@iCategoryId, 'tags_perpage_browse', '30', 'Number of tags to show on browse pages', 'digit', '', '', '', 3),
-(@iCategoryId, 'tags_show_limit', 'Number of tags to show limit', '50', 'digit', '', '', '', 4);
-
-
---
--- CATEGORY: permalinks
---
-INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'permalinks', '_adm_stg_cpt_category_permalinks', 0, 20);
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'permalinks', '_adm_stg_cpt_category_permalinks', 0, 9);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'permalinks_pages', 'Enable friendly permalinks for Pages', 'on', 'checkbox', '', '', '', 1),
-(@iCategoryId, 'permalinks_modules', 'Enable friendly permalinks for Modules', 'on', 'checkbox', '', '', '', 2);
+(@iCategoryId, 'permalinks_pages', '_adm_stg_cpt_option_permalinks_pages', 'on', 'checkbox', '', '', '', 1),
+(@iCategoryId, 'permalinks_modules', '_adm_stg_cpt_option_permalinks_modules', 'on', 'checkbox', '', '', '', 2);
+
 
 --
--- CATEGORY: categories
+-- CATEGORY: Pruning
 --
-INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'categories', '_adm_stg_cpt_category_categories', 0, 21);
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'pruning', '_adm_stg_cpt_category_pruning', 0, 10);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'categ_perpage_browse', 'Number of categories to show on browse pages', '30', 'digit', '', '', '', 1),
-(@iCategoryId, 'categ_show_limit', 'Number of categories to show limit', '50', 'digit', '', '', '', 2),
-(@iCategoryId, 'categ_show_columns', 'Number of columns to show categories', '5', 'digit', '', '', '', 3);
+(@iCategoryId, 'db_clean_members_visits', 'Delete stored members IPs older than (days)', '90', 'digit', '', '', '', 1),
+(@iCategoryId, 'db_clean_mem_levels', 'Delete membership levels expired for (days)', '30', 'digit', '', '', '', 2);
 
 
 --
--- CATEGORY: storage
+-- CATEGORY: Security
 --
-INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'storage', '_adm_stg_cpt_category_storage', 0, 22);
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'security', '_adm_stg_cpt_category_security', 0, 11);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'sys_storage_default', 'Default storage engine (other than Local may require custom/additional setup)', 'Local', 'select', 'Local,S3', '', '', 1),
-(@iCategoryId, 'sys_storage_s3_access_key', 'AWS Access Key', '', 'digit', '', '', '', 2),
-(@iCategoryId, 'sys_storage_s3_secret_key', 'AWS Secret Key', '', 'digit', '', '', '', 3),
-(@iCategoryId, 'sys_storage_s3_bucket', 'AWS Bucket', '', 'digit', '', '', '', 4),
-(@iCategoryId, 'sys_storage_s3_domain', 'AWS Custom domain (require custom DNS setup)', '', 'digit', '', '', '', 5);
+(@iCategoryId, 'enable_member_store_ip', '_adm_stg_cpt_option_enable_member_store_ip', 'on', 'checkbox', '', '', '', 1),
+(@iCategoryId, 'ipBlacklistMode', '_adm_stg_cpt_option_ip_blacklist_mode', '2', 'digit', '', '', '', 2),
+(@iCategoryId, 'ipListGlobalType', '_adm_stg_cpt_option_ip_list_global_type', '0', 'digit', '', '', '', 3),
+(@iCategoryId, 'sys_security_impact_threshold_log', '_adm_stg_cpt_option_sys_security_impact_threshold_log', '-1', 'digit', '', '', '', 4),
+(@iCategoryId, 'sys_security_impact_threshold_block', '_adm_stg_cpt_option_sys_security_impact_threshold_block', '-1', 'digit', '', '', '', 5),
+(@iCategoryId, 'sys_security_form_token_enable', '_adm_stg_cpt_option_sys_security_form_token_enable', 'on', 'checkbox', '', '', '', 6),
+(@iCategoryId, 'sys_security_form_token_lifetime', '_adm_stg_cpt_option_sys_security_form_token_lifetime', '86400', 'digit', '', '', '', 7),
+(@iCategoryId, 'sys_dnsbl_enable', '_adm_stg_cpt_option_sys_dnsbl_enable', '', 'checkbox', '', '', '', 8),
+(@iCategoryId, 'sys_uridnsbl_enable', '_adm_stg_cpt_option_sys_uridnsbl_enable', '', 'checkbox', '', '', '', 9),
+(@iCategoryId, 'sys_akismet_enable', '_adm_stg_cpt_option_sys_akismet_enable', '', 'checkbox', '', '', '', 10),
+(@iCategoryId, 'sys_akismet_api_key', '_adm_stg_cpt_option_sys_akismet_api_key', '', 'digit', '', '', '', 11),
+(@iCategoryId, 'sys_antispam_block', '_adm_stg_cpt_option_sys_antispam_block', '', 'checkbox', '', '', '', 12),
+(@iCategoryId, 'sys_antispam_report', '_adm_stg_cpt_option_sys_antispam_report', 'on', 'checkbox', '', '', '', 13),
+(@iCategoryId, 'sys_recaptcha_key_public', '_adm_stg_cpt_option_sys_recaptcha_key_public', '', 'digit', '', '', '', 14),
+(@iCategoryId, 'sys_recaptcha_key_private', '_adm_stg_cpt_option_sys_recaptcha_key_private', '', 'digit', '', '', '', 15);
 
 
 --
--- CATEGORY: languages
+-- CATEGORY: Site Settings
 --
-INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'languages', '_adm_stg_cpt_category_languages', 1, 23);
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'site_settings','_adm_stg_cpt_category_site_settings', 0, 12);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'lang_default', 'Default Language', '', 'select', 'PHP:bx_import(''BxDolLanguages''); $aValues = BxDolLanguages::getInstance()->getLanguages(false, true); $aResult = array(); foreach($aValues as $sKey => $sValue) $aResult[] = array(\'key\' => $sKey, \'value\' => $sValue); return $aResult;', '', '', 1),
-(@iCategoryId, 'lang_selector', 'Show Language Selector', 'on', 'checkbox', '', '', '', 2);
+(@iCategoryId, 'site_title', '_adm_stg_cpt_option_site_title', 'Community', 'digit', '', '', '', 1),
+(@iCategoryId, 'site_email', '_adm_stg_cpt_option_site_email', 'xxx@gmail.com', 'digit', '', '', '', 2),
+(@iCategoryId, 'site_email_notify', '_adm_stg_cpt_option_site_email_notify', 'xxx2@gmail.com', 'digit', '', '', '', 3),
+(@iCategoryId, 'site_email_bug_report', '_adm_stg_cpt_option_site_email_bug_report', 'xxx3@gmail.com', 'digit', '', '', '', 4);
 
 
 --
--- CATEGORY: templates
+-- CATEGORY: Storage
 --
-INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'templates', '_adm_stg_cpt_category_templates', 1, 13);
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'storage', '_adm_stg_cpt_category_storage', 0, 13);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'site_title', 'Site Name', 'Community', 'digit', '', '', '', 1),
-(@iCategoryId, 'template', 'Default Template', '', 'select', 'PHP:$aValues = get_templates_array(); $aResult = array(); foreach($aValues as $sKey => $sValue) $aResult[] = array(\'key\' => $sKey, \'value\' => $sValue); return $aResult;', 'bx_import(\'BxDolModuleQuery\'); return (strlen($arg0) > 0 && BxDolModuleQuery::getInstance()->isEnabled($arg0)) ? true : false;', 'Template cannot be empty and must have a valid name.', 2),
-(@iCategoryId, 'enable_template', 'Show Template Switcher', 'on', 'checkbox', '', '', '', 3),
-(@iCategoryId, 'sys_template_cache_enable', 'Enable cache for HTML files', '', 'checkbox', '', '', '', 4),
-(@iCategoryId, 'sys_template_cache_engine', 'Template cache engine (other than FileHtml option may require custom server setup)', 'FileHtml', 'select', 'FileHtml,EAccelerator,Memcache,APC,XCache', '', '', 5),
-(@iCategoryId, 'sys_template_cache_css_enable', 'Enable cache for CSS files', '', 'checkbox', '', '', '', 6),
-(@iCategoryId, 'sys_template_cache_js_enable', 'Enable cache for JS files', '', 'checkbox', '', '', '', 7),
-(@iCategoryId, 'sys_template_cache_compress_enable', 'Enable compression for JS/CSS files(cache should be enabled)', 'on', 'checkbox', '', '', '', 8),
-(@iCategoryId, 'sys_template_page_width_min', 'Min page width(in pixels)', '774', 'digit', '', '', '', 9),
-(@iCategoryId, 'sys_template_page_width_max', 'Max page width(in pixels)', '1600', 'digit', '', '', '', 10);
+(@iCategoryId, 'sys_storage_default', '_adm_stg_cpt_option_sys_storage_default', 'Local', 'select', 'Local,S3', '', '', 1),
+(@iCategoryId, 'sys_storage_s3_access_key', '_adm_stg_cpt_option_sys_storage_s3_access_key', '', 'digit', '', '', '', 2),
+(@iCategoryId, 'sys_storage_s3_secret_key', '_adm_stg_cpt_option_sys_storage_s3_secret_key', '', 'digit', '', '', '', 3),
+(@iCategoryId, 'sys_storage_s3_bucket', '_adm_stg_cpt_option_sys_storage_s3_bucket', '', 'digit', '', '', '', 4),
+(@iCategoryId, 'sys_storage_s3_domain', '_adm_stg_cpt_option_sys_storage_s3_domain', '', 'digit', '', '', '', 5);
+
 
 --
--- CATEGORY: date/time format
+-- CATEGORY: Tags
 --
-INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'date_time_format', '_adm_stg_cpt_category_datetime_format', 0, 25);
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'tags', '_adm_stg_cpt_category_tags', 0, 14);
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'sys_format_date', 'Date Format', 'D MMM YYYY', 'digit', '', '', '', 10),
-(@iCategoryId, 'sys_format_time', 'Time Format', 'HH:mm', 'digit', '', '', '', 12),
-(@iCategoryId, 'sys_format_datetime', 'Datetime Format', 'D MMM YYYY h:mm:ss a', 'digit', '', '', '', 14),
-(@iCategoryId, 'sys_format_timeago', 'Use \'time ago\' format for dates less than this number of seconds', 432000, 'digit', '', '', '', 20);
+(@iCategoryId, 'tags_non_parsable', '_adm_stg_cpt_option_tags_non_parsable', 'hi, hey, hello, all, i, i''m, i''d, am, for, in, to, a, the, on, it''s, is, my, of, are, from, i''m, me, you, and, we, not, will, at, where, there', 'text', '', '', '', 1),
+(@iCategoryId, 'tags_perpage_browse', '_adm_stg_cpt_option_tags_perpage_browse', '30', 'digit', '', '', '', 2),
+(@iCategoryId, 'tags_show_limit', '_adm_stg_cpt_option_tags_show_limit', '50', 'digit', '', '', '', 3);
 
 -- --------------------------------------------------------
 

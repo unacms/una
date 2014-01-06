@@ -33,24 +33,12 @@ class BxDolCronCmd extends BxDolCron {
 
     function clean_database()
     {
-        $db_clean_vkiss = (int) getParam("db_clean_vkiss");
-        $db_clean_profiles = (int) getParam("db_clean_profiles");
-        $db_clean_msg = (int) getParam("db_clean_msg");
         $db_clean_visits = (int) getParam("db_clean_members_visits");
-        $db_clean_banners_info = (int) getParam("db_clean_banners_info");
         $db_clean_mem_levels = (int) getParam("db_clean_mem_levels");
 
         //clear from `sys_acl_levels_members`
         if (db_res("DELETE FROM `sys_acl_levels_members` WHERE `DateExpires` < NOW() - INTERVAL $db_clean_mem_levels DAY"))
             db_res("OPTIMIZE TABLE `sys_acl_levels_members`");
-
-        //clear from `sys_banners_shows`
-        if (db_res("DELETE FROM `sys_banners_shows` WHERE `Date` < UNIX_TIMESTAMP( NOW() - INTERVAL $db_clean_banners_info DAY )"))
-            db_res("OPTIMIZE TABLE `sys_banners_shows`");
-
-        //clear from `sys_banners_clicks`
-        if (db_res("DELETE FROM `sys_banners_clicks` WHERE `Date` < UNIX_TIMESTAMP( NOW() - INTERVAL $db_clean_banners_info DAY )"))
-            db_res("OPTIMIZE TABLE `sys_banners_clicks`");
 
         // clear from `sys_messages`
         if (db_res("DELETE FROM `sys_messages` WHERE FIND_IN_SET('sender', `Trash`) AND FIND_IN_SET('recipient', `Trash`)"))
@@ -63,39 +51,6 @@ class BxDolCronCmd extends BxDolCron {
         // clear ban table
         if (db_res("DELETE FROM `sys_admin_ban_list` WHERE `DateTime` + INTERVAL `Time` SECOND < NOW()"))
             db_res("OPTIMIZE TABLE `sys_admin_ban_list`");
-
-        // profile_delete
-        if ( $db_clean_profiles > 0)
-        {
-            $res = db_res("SELECT `ID` FROM `Profiles` WHERE (`DateLastNav` < NOW() - INTERVAL $db_clean_profiles DAY) AND (`Couple` > `ID` OR `Couple` = 0)");
-            if ( $res )
-            {
-                $db_clean_profiles_num = mysql_num_rows($res);
-                while ( $arr = mysql_fetch_array($res) )
-                {
-                    profile_delete($arr['ID']);
-                }
-                db_res("OPTIMIZE TABLE `Profiles`");
-            }
-        }
-
-        if ( $db_clean_vkiss > 0 )
-        {
-            $res = db_res("DELETE FROM `sys_greetings` WHERE `When` < NOW() - INTERVAL $db_clean_vkiss DAY");
-            if ( $res ) {
-                $db_clean_vkiss_num = db_affected_rows();
-                db_res("OPTIMIZE TABLE `sys_greetings`");
-            }
-        }
-
-        if ( $db_clean_msg > 0 )
-        {
-            $res = db_res("DELETE FROM `sys_messages` WHERE `Date` < NOW() - INTERVAL $db_clean_msg DAY");
-            if ( $res ) {
-                $db_clean_msg_num = db_affected_rows();
-                db_res("OPTIMIZE TABLE `sys_messages`");
-            }
-        }
 
         //--- Clean sessions ---//
         bx_import('BxDolSession');

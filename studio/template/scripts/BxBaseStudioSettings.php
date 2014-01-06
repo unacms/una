@@ -14,19 +14,19 @@ bx_import('BxDolStudioSettings');
 bx_import('BxTemplStudioFormView');
 
 class BxBaseStudioSettings extends BxDolStudioSettings {
-    function BxBaseStudioSettings($sType = '', $sCategory = '') {
+    public function BxBaseStudioSettings($sType = '', $sCategory = '') {
         parent::BxDolStudioSettings($sType, $sCategory);
     }
-    function getPageCss() {
+    public function getPageCss() {
         return array_merge(parent::getPageCss(), array('forms.css'));
     }
-    function getPageJs() {
+    public function getPageJs() {
         return array_merge(parent::getPageJs(), array('settings.js'));
     }
-    function getPageJsObject() {
+    public function getPageJsObject() {
         return 'oBxDolStudioSettings';
     }
-    function getPageMenu($aMenu = array(), $aMarkers = array()) {
+    public function getPageMenu($aMenu = array(), $aMarkers = array()) {
         $aTypes = $aMenu = array();
         if($this->oDb->getTypes(array('type' => 'all'), $aTypes) > 0 ) {
             $aTypesGrouped = array();
@@ -46,7 +46,7 @@ class BxBaseStudioSettings extends BxDolStudioSettings {
 
         return parent::getPageMenu($aMenu);
     }
-    function getPageCode($sCategorySelected = '') {
+    public function getPageCode($sCategorySelected = '') {
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         $aCategories = array();
@@ -159,7 +159,7 @@ class BxBaseStudioSettings extends BxDolStudioSettings {
                 $aField = array(
                     'type' => 'text',
                     'name' => $aItem['name'],
-                    'caption' => $aItem['caption'],
+                    'caption' => _t($aItem['caption']),
                     'value' => $aItem['value'],
                     'db' => array (
                         'pass' => 'Xss',
@@ -170,7 +170,7 @@ class BxBaseStudioSettings extends BxDolStudioSettings {
                 $aField = array(
                     'type' => 'textarea',
                     'name' => $aItem['name'],
-                    'caption' => $aItem['caption'],
+                    'caption' => _t($aItem['caption']),
                     'value' => $aItem['value'],
                     'db' => array (
                         'pass' => 'XssHtml',
@@ -181,11 +181,11 @@ class BxBaseStudioSettings extends BxDolStudioSettings {
                 $aField = array(
                     'type' => 'checkbox',
                     'name' => $aItem['name'],
-                    'caption' => $aItem['caption'],
+                    'caption' => _t($aItem['caption']),
                     'value' => 'on',
                     'checked' => $aItem['value'] == 'on',
                     'db' => array (
-                        'pass' => 'Boolean',
+                        'pass' => 'Xss',
                     ),
                 );
                 break;
@@ -193,7 +193,7 @@ class BxBaseStudioSettings extends BxDolStudioSettings {
                 $aField = array(
                     'type' => 'checkbox_set',
                     'name' => $aItem['name'],
-                    'caption' => $aItem['caption'],
+                    'caption' => _t($aItem['caption']),
                     'value' => explode(',', $aItem['value']),
                     'db' => array (
                         'pass' => 'Xss',
@@ -211,7 +211,7 @@ class BxBaseStudioSettings extends BxDolStudioSettings {
                 $aField = array(
                     'type' => 'select',
                     'name' => $aItem['name'],
-                    'caption' => $aItem['caption'],
+                    'caption' => _t($aItem['caption']),
                     'value' => $aItem['value'],
                     'values' => array(),
                     'db' => array (
@@ -228,7 +228,7 @@ class BxBaseStudioSettings extends BxDolStudioSettings {
                 $aField = array(
                     'type' => 'file',
                     'name' => $aItem['name'],
-                    'caption' => $aItem['caption'],
+                    'caption' => _t($aItem['caption']),
                     'value' => $aItem['value'],
                     'db' => array (
                         'pass' => 'Xss'

@@ -5,7 +5,7 @@
     $aConf['iVersion'] = '7.0';
     $aConf['iPatch'] = '0'; // RC2
 
-    sys_tmp_version
+    sys_version
 */
 
 
