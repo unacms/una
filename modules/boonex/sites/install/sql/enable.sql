@@ -9,18 +9,18 @@ VALUES (@iTypeId, 'bx_sites', '_bx_sites', 1);
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
-('bx_sites_payment_trial_max_number', '0', @iCategId, 'Max number of allowed Trials (0 - unlimited)', 'digit', '', '', '', 1),
-('bx_sites_payment_trial_price', '5', @iCategId, 'Trial Price', 'digit', '', '', '', 2),
-('bx_sites_payment_trial_period', 'Day', @iCategId, 'Trial Period', 'select', '', '', 'Day,Week,SemiMonth,Month,Year', 3),
-('bx_sites_payment_trial_frequency', '1', @iCategId, 'Trial Frequency', 'digit', '', '', '', 4),
-('bx_sites_payment_regular_price', '69', @iCategId, 'Regular Price', 'digit', '', '', '', 5),
-('bx_sites_payment_regular_period', 'Day', @iCategId, 'Regular Period', 'select', '', '', 'Day,Week,SemiMonth,Month,Year', 6),
-('bx_sites_payment_regular_frequency', '1', @iCategId, 'Regular Frequency', 'digit', '', '', '', 7),
-('bx_sites_payment_email_business', 'uno@boonex.com', @iCategId, 'Business email', 'digit', '', '', '', 8),
-('bx_sites_payment_email_sandbox', 'vlnotna_business@gmail.com', @iCategId, 'Sandbox email', 'digit', '', '', '', 9),
-('bx_sites_payment_demo_mode', 'on', @iCategId, 'Demo mode', 'checkbox', '', '', '', 10),
-('bx_sites_payment_currency_code', 'USD', @iCategId, 'Currency code', 'select', '', '', 'AUD,CAD,EUR,GBP,USD,YEN', 11),
-('bx_sites_payment_currency_sign', '&#36;', @iCategId, 'Currency sign', 'select', '', '', '&#8364;,&#163;,&#36;,&#165;', 12);
+('bx_sites_payment_trial_max_number', '0', @iCategId, '_bx_sites_option_payment_trial_max_number', 'digit', '', '', '', 1),
+('bx_sites_payment_trial_price', '5', @iCategId, '_bx_sites_option_payment_trial_price', 'digit', '', '', '', 2),
+('bx_sites_payment_trial_period', 'Day', @iCategId, '_bx_sites_option_payment_trial_period', 'select', '', '', 'Day,Week,SemiMonth,Month,Year', 3),
+('bx_sites_payment_trial_frequency', '1', @iCategId, '_bx_sites_option_payment_trial_frequency', 'digit', '', '', '', 4),
+('bx_sites_payment_regular_price', '69', @iCategId, '_bx_sites_option_payment_regular_price', 'digit', '', '', '', 5),
+('bx_sites_payment_regular_period', 'Day', @iCategId, '_bx_sites_option_payment_regular_period', 'select', '', '', 'Day,Week,SemiMonth,Month,Year', 6),
+('bx_sites_payment_regular_frequency', '1', @iCategId, '_bx_sites_option_payment_regular_frequency', 'digit', '', '', '', 7),
+('bx_sites_payment_email_business', 'uno@boonex.com', @iCategId, '_bx_sites_option_payment_email_business', 'digit', '', '', '', 8),
+('bx_sites_payment_email_sandbox', 'vlnotna_business@gmail.com', @iCategId, '_bx_sites_option_payment_email_sandbox', 'digit', '', '', '', 9),
+('bx_sites_payment_demo_mode', 'on', @iCategId, '_bx_sites_option_payment_demo_mode', 'checkbox', '', '', '', 10),
+('bx_sites_payment_currency_code', 'USD', @iCategId, '_bx_sites_option_payment_currency_code', 'select', '', '', 'AUD,CAD,EUR,GBP,USD,YEN', 11),
+('bx_sites_payment_currency_sign', '&#36;', @iCategId, '_bx_sites_option_payment_currency_sign', 'select', '', '', '&#8364;,&#163;,&#36;,&#165;', 12);
 
 
 -- PAGES

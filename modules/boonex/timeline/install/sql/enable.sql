@@ -61,12 +61,12 @@ VALUES (@iTypeId, 'bx_timeline', '_bx_timeline', 1);
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
-('bx_timeline_enable_delete', 'on', @iCategId, 'Allow Timeline owner to remove events', 'checkbox', '', '', '', 1),
-('bx_timeline_events_per_page_profile', '10', @iCategId, 'Number of events are displayed on Profile page', 'digit', '', '', '', 2),
-('bx_timeline_events_per_page_account', '20', @iCategId, 'Number of events are displayed on Account page', 'digit', '', '', '', 3),
-('bx_timeline_rss_length', '5', @iCategId, 'The length of RSS feed', 'digit', '', '', '', 4),
-('bx_timeline_events_hide', '', @iCategId, 'Hide events from Timeline', 'list', '', '', 'PHP:return BxDolService::call(\'bx_timeline\', \'get_actions_checklist\');', 5),
-('bx_timeline_chars_display_max', '300', @iCategId, 'Max number of displayed character in text post', 'digit', '', '', '', 6);
+('bx_timeline_enable_delete', 'on', @iCategId, '_bx_timeline_option_enable_delete', 'checkbox', '', '', '', 1),
+('bx_timeline_events_per_page_profile', '10', @iCategId, '_bx_timeline_option_events_per_page_profile', 'digit', '', '', '', 2),
+('bx_timeline_events_per_page_account', '20', @iCategId, '_bx_timeline_option_events_per_page_account', 'digit', '', '', '', 3),
+('bx_timeline_rss_length', '5', @iCategId, '_bx_timeline_option_rss_length', 'digit', '', '', '', 4),
+('bx_timeline_events_hide', '', @iCategId, '_bx_timeline_option_events_hide', 'list', '', '', 'PHP:return BxDolService::call(\'bx_timeline\', \'get_actions_checklist\');', 5),
+('bx_timeline_chars_display_max', '300', @iCategId, '_bx_timeline_option_chars_display_max', 'digit', '', '', '', 6);
 
 
 -- UPLOADERS

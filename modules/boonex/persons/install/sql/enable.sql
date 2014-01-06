@@ -10,9 +10,9 @@ INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)
 VALUES (@iTypeId, 'bx_persons', '_bx_persons', 1);
 SET @iCategId = LAST_INSERT_ID();
 
-INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
-('bx_persons_autoapproval', 'on', @iCategId, 'Activate all persons after creation automatically', 'checkbox', '', '', '', 1),
-('bx_persons_default_acl_level', '2', @iCategId, 'Default member\'s level to assign after person\'s profile creation', 'select', 'PHP:bx_import(''BxDolAcl''); return BxDolAcl::getInstance()->getMemberships(false, true);', '', '', 2);
+INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
+('bx_persons_autoapproval', 'on', @iCategId, '_bx_persons_option_autoapproval', 'checkbox', '', '', '', 1),
+('bx_persons_default_acl_level', '2', @iCategId, '_bx_persons_option_default_acl_level', 'select', 'PHP:bx_import(''BxDolAcl''); return BxDolAcl::getInstance()->getMemberships(false, true);', '', '', 2);
 
 -- STORAGES & TRANSCODERS
 

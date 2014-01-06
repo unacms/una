@@ -3,6 +3,19 @@
 
 	<string name="_bx_sites"><![CDATA[Sites]]></string>
 
+	<string name="_bx_sites_option_payment_trial_max_number"><![CDATA[Max number of allowed Trials (0 - unlimited)]]></string>
+	<string name="_bx_sites_option_payment_trial_price"><![CDATA[Trial Price]]></string>
+	<string name="_bx_sites_option_payment_trial_period"><![CDATA[Trial Period]]></string>
+	<string name="_bx_sites_option_payment_trial_frequency"><![CDATA[Trial Frequency]]></string>
+	<string name="_bx_sites_option_payment_regular_price"><![CDATA[Regular Price]]></string>
+	<string name="_bx_sites_option_payment_regular_period"><![CDATA[Regular Period]]></string>
+	<string name="_bx_sites_option_payment_regular_frequency"><![CDATA[Regular Frequency]]></string>
+	<string name="_bx_sites_option_payment_email_business"><![CDATA[Business email]]></string>
+	<string name="_bx_sites_option_payment_email_sandbox"><![CDATA[Sandbox email]]></string>
+	<string name="_bx_sites_option_payment_demo_mode"><![CDATA[Demo mode]]></string>
+	<string name="_bx_sites_option_payment_currency_code"><![CDATA[Currency code]]></string>
+	<string name="_bx_sites_option_payment_currency_sign"><![CDATA[Currency sign]]></string>
+
 	<string name="_bx_sites_form_site"><![CDATA[Sites]]></string>
 	<string name="_bx_sites_form_site_display_add"><![CDATA[Add Site]]></string>
 	<string name="_bx_sites_form_site_display_edit"><![CDATA[Edit Site]]></string>

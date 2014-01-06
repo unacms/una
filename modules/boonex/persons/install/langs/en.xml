@@ -3,6 +3,9 @@
 
 	<string name="_bx_persons"><![CDATA[Persons]]></string>
 
+	<string name="_bx_persons_option_autoapproval"><![CDATA[Activate all persons after creation automatically]]></string>
+	<string name="_bx_persons_option_default_acl_level"><![CDATA[Default member's level to assign after person's profile creation]]></string>
+
 	<string name="_bx_persons_form_person"><![CDATA[Persons]]></string>
 	<string name="_bx_persons_form_person_display_add"><![CDATA[Add Person]]></string>
 	<string name="_bx_persons_form_person_display_edit"><![CDATA[Edit Person]]></string>

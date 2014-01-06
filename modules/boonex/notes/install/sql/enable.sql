@@ -11,8 +11,8 @@ VALUES (@iTypeId, 'bx_notes', '_bx_notes', 1);
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
-('bx_notes_autoapproval', 'on', @iCategId, 'Activate notes after creation automatically', 'checkbox', '', '', '', 1),
-('bx_notes_summary_chars', '700', @iCategId, 'Number of characters in auto-cropped note summary', 'digit', '', '', '', 2);
+('bx_notes_autoapproval', 'on', @iCategId, '_bx_notes_option_autoapproval', 'checkbox', '', '', '', 1),
+('bx_notes_summary_chars', '700', @iCategId, '_bx_notes_option_summary_chars', 'digit', '', '', '', 2);
 
 -- STORAGES & TRANSCODERS
 

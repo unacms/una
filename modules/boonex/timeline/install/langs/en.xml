@@ -3,6 +3,13 @@
 
 	<string name="_bx_timeline"><![CDATA[Timeline]]></string>
 
+	<string name="_bx_timeline_option_enable_delete"><![CDATA[Allow Timeline owner to remove items]]></string>
+	<string name="_bx_timeline_option_events_per_page_profile"><![CDATA[Number of events are displayed on Profile page]]></string>
+	<string name="_bx_timeline_option_events_per_page_account"><![CDATA[Number of events are displayed on Account page]]></string>
+	<string name="_bx_timeline_option_rss_length"><![CDATA[The length of RSS feed]]></string>
+	<string name="_bx_timeline_option_events_hide"><![CDATA[Hide events from Timeline]]></string>
+	<string name="_bx_timeline_option_chars_display_max"><![CDATA[Max number of displayed character in text post]]></string>
+
 	<string name="_bx_timeline_form_post"><![CDATA[Post]]></string>
 	<string name="_bx_timeline_form_post_display_add"><![CDATA[Write Post]]></string>
 	<string name="_bx_timeline_form_post_input_sys_owner_id"><![CDATA[Owner ID]]></string>
