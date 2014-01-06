@@ -132,7 +132,7 @@ class BxDolStudioToolsAudit extends BxDol
 
         $this->requirements();
 
-        if (defined('BX_DOL_VERSION'))
+        if (!defined('BX_DOL_INSTALL'))
             $this->siteSetup();
 
         $this->optimization();
@@ -209,7 +209,7 @@ class BxDolStudioToolsAudit extends BxDol
     {
         echo '<h1>' . _t('_sys_audit_header_requirements') . '</h1>';
         $this->requirementsPHP();
-        if (class_exists('BxDolDb'))
+        if (!defined('BX_DOL_INSTALL'))
             $this->requirementsMySQL();
         $this->requirementsWebServer();
         $this->requirementsOS();
@@ -333,12 +333,12 @@ class BxDolStudioToolsAudit extends BxDol
 
         $this->optimizationPhp();
 
-        if (class_exists('BxDolDb'))
+        if (!defined('BX_DOL_INSTALL'))
             $this->optimizationMySQL();
 
         $this->optimizationWebServer();
 
-        if (function_exists('getParam'))
+        if (!defined('BX_DOL_INSTALL'))
             $this->optimizationDolphin();
     }
 
@@ -576,7 +576,8 @@ class BxDolStudioToolsAudit extends BxDol
         error_reporting($this->iPhpErrorReporting);
     }
     
-    protected function getSection($sTitle, $sTitleAddon, $sContent) {
+    protected function getSection($sTitle, $sTitleAddon, $sContent) 
+    {
         $s = '<b>' . $sTitle . '</b>: ' . $sTitleAddon;
         $s .= '<ul>';
         $s .= $sContent;
@@ -584,7 +585,8 @@ class BxDolStudioToolsAudit extends BxDol
         return $s;
     }
 
-    protected function getBlock($sName, $sValue = '', $sMsg = '', $bWrapAsListItem = true) {
+    protected function getBlock($sName, $sValue = '', $sMsg = '', $bWrapAsListItem = true) 
+    {
         $s = $bWrapAsListItem ? '<li>'  : '';
         if ($sName !== '')
             $s .= "$sName ";

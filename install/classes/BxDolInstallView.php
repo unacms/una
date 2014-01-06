@@ -22,6 +22,7 @@ class BxDolInstallView
         'general.css',
         'icons.css',
         'colors.css',
+        'forms.css',
         'media-desktop.css',
         'media-tablet.css',
         'media-phone.css',
@@ -30,7 +31,9 @@ class BxDolInstallView
 
     protected $_aFilesJs = array (
         'plugins/jquery/jquery.js',
+        'plugins/jquery/jquery.ui.position.min.js',
         'inc/js/jquery.dolPopup.js',
+        'inc/js/jquery.webForms.js',
     );
 
     function __construct()

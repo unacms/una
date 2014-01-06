@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolParams');
-
 class BxDolDb extends BxDol implements iBxDolSingleton {
 
     var $error_checking = true;
@@ -22,22 +20,33 @@ class BxDolDb extends BxDol implements iBxDolSingleton {
     /**
      * set database parameters and connect to it
      */
-    protected function BxDolDb() {
+    protected function BxDolDb($aDbConf = false) {
 
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
         parent::BxDol();
 
-        $this->host = BX_DATABASE_HOST;
-        $this->port = BX_DATABASE_PORT;
-        $this->socket = BX_DATABASE_SOCK;
-        $this->dbname = BX_DATABASE_NAME;
-        $this->user = BX_DATABASE_USER;
-        $this->password = BX_DATABASE_PASS;
+        if (false === $aDbConf) {
+            $this->host = BX_DATABASE_HOST;
+            $this->port = BX_DATABASE_PORT;
+            $this->socket = BX_DATABASE_SOCK;
+            $this->dbname = BX_DATABASE_NAME;
+            $this->user = BX_DATABASE_USER;
+            $this->password = BX_DATABASE_PASS;
+        } else {
+            $this->host = $aDbConf['host'];
+            $this->port = $aDbConf['port'];
+            $this->socket = $aDbConf['sock'];
+            $this->dbname = $aDbConf['name'];
+            $this->user = $aDbConf['user'];
+            $this->password = $aDbConf['pwd'];
+            $this->error_checking = isset($aDbConf['error_checking']) ? $aDbConf['error_checking'] : true;
+        }
+
         $this->current_arr_type = MYSQL_ASSOC;
 
-        //    connect to db automatically
+        // connect to db automatically
         if (empty($GLOBALS['bx_db_link'])) {
             $this->connect();
             $GLOBALS['gl_db_cache'] = array();
@@ -45,7 +54,10 @@ class BxDolDb extends BxDol implements iBxDolSingleton {
             $this->link = $GLOBALS['bx_db_link'];
         }
 
-        $this->oParams = BxDolParams::getInstance($this);
+        if (false === $aDbConf) {
+            bx_import('BxDolParams');
+            $this->oParams = BxDolParams::getInstance($this);
+        }
     }
 
     /**
@@ -59,9 +71,18 @@ class BxDolDb extends BxDol implements iBxDolSingleton {
     /**
      * Get singleton instance of the class
      */
-    public static function getInstance() {
-        if(!isset($GLOBALS['bxDolClasses'][__CLASS__]))
-            $GLOBALS['bxDolClasses'][__CLASS__] = new BxDolDb();
+    public static function getInstance($aDbConf = false, &$sError = null) {
+        if (!isset($GLOBALS['bxDolClasses'][__CLASS__])) {
+            $o = new BxDolDb($aDbConf);
+            $sErrorMessage = $o->connect();
+            if ($sErrorMessage) {
+                if ($sError !== null)
+                    $sError = $sErrorMessage;
+                return null;
+            } else {
+                $GLOBALS['bxDolClasses'][__CLASS__] = $o;
+            }
+        }
 
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
@@ -77,20 +98,22 @@ class BxDolDb extends BxDol implements iBxDolSingleton {
 
         $this->link = @mysql_pconnect($full_host, $this->user, $this->password);
         if (!$this->link)
-            $this->error('Database connect failed', true);
+            return 'Database connect failed';
 
         if (!$this->select_db())
-            $this->error('Database select failed', true);
+            return 'Database select failed';
 
         mysql_query("SET NAMES 'utf8'", $this->link);
         mysql_query("SET sql_mode = ''", $this->link);
 
         $GLOBALS['bx_db_link'] = $this->link;
+
+        return '';
     }
 
     function select_db()
     {
-        return @mysql_select_db($this->dbname, $this->link) or $this->error('Cannot complete query (select_db)');
+        return @mysql_select_db($this->dbname, $this->link);
     }
 
     /**
@@ -256,13 +279,15 @@ class BxDolDb extends BxDol implements iBxDolSingleton {
 
         if (false === $res && !@mysql_ping($this->link)) { // if mysql connection is lost - reconnect and try again
             @mysql_close($this->link);
-            $this->connect();
+            $sErrorMessage = $this->connect();
+            if ($sErrorMessage)
+                $this->error($sErrorMessage, true);
             $res = mysql_query($query, $this->link);
         }
 
         if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->endQuery($res);
 
-        if (!$res)
+        if (!$res && $error_checking)
             $this->error('Database query error', false, $query);
         return $res;
     }
@@ -355,7 +380,8 @@ class BxDolDb extends BxDol implements iBxDolSingleton {
         return mysql_insert_id($this->link);
     }
 
-    function getErrorMessage () {
+    function getErrorMessage () 
+    {
         $s = mysql_error($this->link);
         if ($s)
             return $s;
@@ -368,7 +394,7 @@ class BxDolDb extends BxDol implements iBxDolSingleton {
         if ($this->error_checking || $isForceErrorChecking)
             $this->genMySQLErr ($text, $sSqlQuery);
         else
-            $this->log($text.': ' . $this->getErrorMessage());
+            $this->log($text . ': ' . $this->getErrorMessage());
     }
 
     function isParam($sName, $bCache = true) {
@@ -628,7 +654,7 @@ EOJ;
      * @return escaped string whcich is ready to pass to SQL query.
      */
     function escape ($s) {
-        return mysql_real_escape_string($s);
+        return mysql_real_escape_string($s, $this->link);
     }
 
     /**
@@ -647,13 +673,13 @@ EOJ;
         if (is_array($mixed)) {
             $s = '';
             foreach ($mixed as $v)
-                $s .= (is_numeric($v) ? $v : "'" . mysql_real_escape_string($v) . "'") . ',';
+                $s .= (is_numeric($v) ? $v : "'" . mysql_real_escape_string($v, $this->link) . "'") . ',';
             if ($s)
                 return substr($s, 0, -1);
             else
                 return 'NULL';
         }
-        return is_numeric($mixed) ? $mixed : ($mixed ? "'" . mysql_real_escape_string($mixed) . "'" : 'NULL');
+        return is_numeric($mixed) ? $mixed : ($mixed ? "'" . mysql_real_escape_string($mixed, $this->link) . "'" : 'NULL');
     }
 
     /**
@@ -694,7 +720,7 @@ EOJ;
             elseif (is_numeric($mixedArg))
                 $s = $mixedArg;
             else
-                $s = "'" . mysql_real_escape_string($mixedArg) . "'";
+                $s = "'" . mysql_real_escape_string($mixedArg, $this->link) . "'";
 
             $i = bx_mb_strpos($sQuery, '?', $iPos);
             $sQuery = bx_mb_substr_replace($sQuery, $s, $i, 1);
@@ -705,6 +731,51 @@ EOJ;
 
     function log ($s) {
         return file_put_contents(BX_DIRECTORY_PATH_ROOT . 'tmp/db.err.log', date('Y-m-d H:i:s') . "\t" . $s . "\n", FILE_APPEND);
+    }
+
+    function executeSQL($sPath, $aReplace = array (), $isBreakOnError = true) {
+
+        if(!file_exists($sPath) || !($rHandler = fopen($sPath, "r")))
+            return array ('query' => "fopen($sPath, 'r')", 'error' => 'file not found or permission denied');
+
+        $sQuery = "";
+        $sDelimiter = ';';
+        $aResult = array();
+        while(!feof($rHandler)) {
+            $sStr = trim(fgets($rHandler));
+
+            if(empty($sStr) || $sStr[0] == "" || $sStr[0] == "#" || ($sStr[0] == "-" && $sStr[1] == "-"))
+                continue;
+
+            //--- Change delimiter ---//
+            if(strpos($sStr, "DELIMITER //") !== false || strpos($sStr, "DELIMITER ;") !== false) {
+                $sDelimiter = trim(str_replace('DELIMITER', '', $sStr));
+                continue;
+            }
+
+            $sQuery .= $sStr;
+
+            //--- Check for multiline query ---//
+            if(substr($sStr, -strlen($sDelimiter)) != $sDelimiter)
+                continue;
+
+            //--- Execute query ---//
+            if ($aReplace)
+                $sQuery = str_replace($aReplace['from'], $aReplace['to'], $sQuery);
+            if($sDelimiter != ';')
+                $sQuery = str_replace($sDelimiter, "", $sQuery);
+            $rResult = $this->res(trim($sQuery), false);
+            if(!$rResult) {
+                $aResult[] = array('query' => $sQuery, 'error' => $this->getErrorMessage());
+                if ($isBreakOnError)
+                    break;
+            }
+
+            $sQuery = "";
+        }
+        fclose($rHandler);
+
+        return empty($aResult) ? true : $aResult;
     }
 }
 
