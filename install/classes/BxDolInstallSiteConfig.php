@@ -316,13 +316,15 @@ EOF;
         return array();
     }
 
-    public function processModules ($a) 
+    public function processModules ($a)
     {
         require_once(BX_INSTALL_PATH_HEADER);
+        bx_import('BxDolStudioInstallerUtils');
         bx_import('BxDolLanguages');
-        BxDolLanguages::getInstance();
+        BxDolLanguages::getInstance();        
         $oModulesTools = new BxDolInstallModulesTools();
 
+        $aActions = array ('install', 'enable');
         $aTypes = array (BX_DOL_MODULE_TYPE_LANGUAGE, BX_DOL_MODULE_TYPE_TEMPLATE);
         foreach ($aTypes as $sModuleType) {
             $aModules = $oModulesTools->getModules($sModuleType);
@@ -331,10 +333,11 @@ EOF;
                 if (empty($a[$sModuleType]) || $a[$sModuleType] != $sUri)
                     continue;
 
-                bx_import('BxDolStudioInstallerUtils');
-                $aResult = BxDolStudioInstallerUtils::getInstance()->perform($aConfig['home_dir'], 'install');
-                if ((!isset($aResult['result']) || !$aResult['result']) && !empty($aResult['message']))
-                    return array(BX_INSTALL_ERR_GENERAL => $aResult['message']);
+                foreach ($aActions as $sAction) {
+                    $aResult = BxDolStudioInstallerUtils::getInstance()->perform($aConfig['home_dir'], $sAction);
+                    if ((!isset($aResult['result']) || !$aResult['result']) && !empty($aResult['message']))
+                        return array(BX_INSTALL_ERR_GENERAL => $aResult['message']);
+                }
             }            
         } 
 

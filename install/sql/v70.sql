@@ -3503,25 +3503,3 @@ INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `capt
 (@iIdBuilderPermissions, 'system', '{url_studio}builder_permissions.php', '', 'wi-bld-permissions.png', '_adm_wgt_cpt_builder_permissions', '', '');
 INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 4);
 
--- --------------------------------------------------------
--- Auto installed modules.
--- --------------------------------------------------------
-
---
--- UNI Template
---
-SET @sName = 'bx_uni';
-
-INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
-(3, @sName, '', '', 'bx_uni@modules/boonex/basic/|std-pi.png');
-SET @iPageId = LAST_INSERT_ID();
-
-SET @iParentPageId = (SELECT `id` FROM `sys_std_pages` WHERE `name`='home');
-SET @iParentPageOrder = (SELECT MAX(`order`) FROM `sys_std_pages_widgets` WHERE `page_id`=@iParentPageId);
-INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
-(@iPageId, @sName, CONCAT('{url_studio}design.php?name=', @sName), '', 'bx_uni@modules/boonex/basic/|std-wi.png', '_bx_uni_wgt_cpt', '', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_actions";s:6:"params";a:0:{}s:5:"class";s:18:"TemplStudioDesigns";}');
-INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES
-(@iParentPageId, LAST_INSERT_ID(), @iParentPageOrder + 1);
-
-INSERT INTO `sys_modules` (`type`, `name`, `title`, `vendor`, `version`, `product_url`, `update_url`, `path`, `uri`, `class_prefix`, `db_prefix`, `lang_category`, `dependencies`, `date`, `enabled`) VALUES
-('template', 'bx_uni', 'UNI', 'BoonEx', '8.0.0', '', '', 'boonex/uni/', 'uni', 'BxUni', 'bx_uni_', 'BoonEx UNI', '', 0, 1);

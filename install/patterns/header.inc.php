@@ -45,7 +45,6 @@ define('BX_DOL_INT_MAX', 2147483647);
 define('BX_DOL_TRANSCODER_OBJ_ICON_APPLE', 'sys_icon_apple');
 define('BX_DOL_TRANSCODER_OBJ_ICON_FACEBOOK', 'sys_icon_facebook');
 define('BX_DOL_TRANSCODER_OBJ_ICON_FAVICON', 'sys_icon_favicon');
-define('BX_DOL_TRANSCODER_OBJ_CMTS_IMAGE_PREVIEW', 'sys_cmts_images_preview');
 
 //--- Module types ---//
 if (!defined('BX_DOL_MODULE_TYPE_MODULE')) {
