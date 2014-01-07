@@ -63,7 +63,7 @@ class BxContactModule extends BxDolModule
 		        	'SenderName' => bx_process_output($oForm->getCleanValue('name')),
 		        	'SenderEmail' => bx_process_output($oForm->getCleanValue('email')),
 		        	'MessageSubject' => bx_process_output($oForm->getCleanValue('subject')),
-		        	'MessageBody' => bx_process_output($oForm->getCleanValue('body'), BX_DATA_TEXT_MULTILINE),
+		        	'MessageBody' => bx_process_output(nl2br($oForm->getCleanValue('body')), BX_DATA_TEXT_MULTILINE),
 		        	'CustomFields' => $sCustomFields,
 		        );
 		        $aTemplateKeys = array_merge($aTemplateKeys, $aCustomFields);
