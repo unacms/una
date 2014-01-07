@@ -339,7 +339,7 @@ class BxBasePage extends BxDolPage {
         if ($isPrefixOnly)
             return $s;
         $s .= $this->_getPageCacheParams ();
-        $s .= md5(BX_DOL_VERSION . BX_DOL_BUILD . BX_DOL_URL_ROOT) . '.php';
+        $s .= bx_site_hash() . '.php';
         return $s;
     }
 

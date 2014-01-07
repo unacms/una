@@ -27,7 +27,7 @@ class BxDolParams extends BxDol {
         $this->_oDb = $oDb;
         $this->_oCache = new BxDolCacheFile(); // feel free to change to another cache system if you are sure that it is available
 
-        $this->_sCacheFile = 'sys_options_' . md5(BX_DOL_VERSION . BX_DOL_BUILD . BX_DOL_URL_ROOT) . '.php';
+        $this->_sCacheFile = 'sys_options_' . bx_site_hash('', true) . '.php';
 
         $this->_aParams = $this->_oCache->getData($this->_sCacheFile);
         if(empty($this->_aParams) && $this->_oDb != null)

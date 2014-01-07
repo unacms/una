@@ -1,4 +1,4 @@
-<?php defined('BX_DOL') or die('hack attempt');
+<?php defined('BX_DOL_INSTALL') or die('hack attempt');
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
@@ -318,7 +318,21 @@ EOF;
 
     public function processModules ($a) 
     {
-        return array(BX_INSTALL_ERR_GENERAL => 'TODO:<br />Language to install: ' . $a['language'] . '<br />Template to install: ' . $a['template']);
+        $oModulesTools = new BxDolInstallModulesTools();
+        $aModules = $oModulesTools->getModules();
+        require_once(BX_INSTALL_PATH_HEADER);
+        $aModules = array();
+        foreach ($aModules as $sKey) {
+            if (!isset($a[$sKey]))
+                continue;
+            $aModuleConfig = $oModulesTools->getModuleConfigByUri($a[$sKey], $aModules);
+            bx_import('BxDolStudioInstallerUtils');
+            $aResult = BxDolStudioInstallerUtils::getInstance()->perform($aModuleConfig['home_dir'], 'install');
+            if (!$aResult['result'] && !empty($aResult['message']))
+                return array(BX_INSTALL_ERR_GENERAL => $aResult['message']);
+        }
+            
+        return array();
     }
 
     protected function dbErrors2ErrorFields ($a) 

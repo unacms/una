@@ -12,7 +12,7 @@ defined('BX_DOL') or die('hack attempt');
  * @see BxDolStudioStore  -> checkoutCart and BxDolStudioOAuth -> authorize
  */
 function generateSid() {
-	return md5(BX_DOL_URL_ROOT . '_' . BX_DOL_VERSION . '.' . BX_DOL_BUILD);
+	return md5(BX_DOL_URL_ROOT . '_' . getParam('sys_version')); // TODO: maybe change to bx_site_hash() ?
 }
 
 function bx_array_insert_before($aInsert, $aSource, $sKey) {

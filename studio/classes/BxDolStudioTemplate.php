@@ -84,7 +84,7 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton {
         $sRet = '';
         switch( $sKey ) {
             case 'version':
-                $sRet = BX_DOL_VERSION;
+                $sRet = getParam('sys_version');
                 break;
             case 'page_charset':
                 $sRet = 'UTF-8';

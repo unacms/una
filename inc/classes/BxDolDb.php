@@ -1,4 +1,4 @@
-<?php defined('BX_DOL') or die('hack attempt');
+<?php defined('BX_DOL') or defined('BX_DOL_INSTALL') or die('hack attempt');
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
@@ -14,7 +14,6 @@ class BxDolDb extends BxDol implements iBxDolSingleton {
     var $host, $port, $socket, $dbname, $user, $password, $link;
     var $current_res, $current_arr_type;
 
-    var $oParams = null;
     var $oDbCacheObject = null;
 
     /**
@@ -53,11 +52,6 @@ class BxDolDb extends BxDol implements iBxDolSingleton {
         } else {
             $this->link = $GLOBALS['bx_db_link'];
         }
-
-        if (false === $aDbConf) {
-            bx_import('BxDolParams');
-            $this->oParams = BxDolParams::getInstance($this);
-        }
     }
 
     /**
@@ -66,6 +60,26 @@ class BxDolDb extends BxDol implements iBxDolSingleton {
     public function __clone() {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error('Clone is not allowed for the class: ' . get_class($this), E_USER_ERROR);
+    }
+
+    public function __get($sName)
+    {
+        if ('oParams' == $sName) {
+            bx_import('BxDolParams');
+            return BxDolParams::getInstance($this);
+        }
+
+        $aTrace = debug_backtrace();
+        trigger_error('Undefined property via __get(): ' . $sName . ' in ' . $aTrace[0]['file'] . ' on line ' . $aTrace[0]['line'], E_USER_NOTICE);
+
+        return null;
+    }
+
+    public function __isset($sName)
+    {
+        if ('oParams' == $sName)
+            return true;
+        return false;
     }
 
     /**
@@ -579,7 +593,7 @@ EOJ;
     }
 
     function genDbCacheKey ($sName) {
-        return 'db_' . $sName . '_' . md5(BX_DOL_VERSION . BX_DOL_BUILD . BX_DOL_URL_ROOT) . '.php';
+        return 'db_' . $sName . '_' . bx_site_hash() . '.php';
     }
 
     function fromCache ($sName, $sFunc) {

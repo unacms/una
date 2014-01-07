@@ -191,7 +191,7 @@ function getTemplateImage( $sFileName ) {
 }
 
 function getVersionComment() {
-    $aVer = explode( '.', BX_DOL_VERSION );
+    $aVer = explode('.', getParam('sys_version'));
 
     // version output made for debug possibilities.
     // randomizing made for security issues. do not change it...
@@ -199,13 +199,9 @@ function getVersionComment() {
     $aVerR[1] = rand( 0, 100 );
     $aVerR[2] = $aVer[1];
     $aVerR[3] = rand( 0, 100 );
-    $aVerR[4] = BX_DOL_BUILD;
+    $aVerR[4] = $aVer[2];
 
-    //remove leading zeros
-    while( $aVerR[4][0] === '0' )
-        $aVerR[4] = substr( $aVerR[4], 1 );
-
-    return '<!-- ' . implode( ' ', $aVerR ) . ' -->';
+    return '<!-- ' . implode(' ', $aVerR) . ' -->';
 }
 
 // ----------------------------------- site statistick functions --------------------------------------//

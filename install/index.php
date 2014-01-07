@@ -7,8 +7,8 @@
  * @{
  */
 
-define ('BX_DOL', 1);
-define ('BX_DOL_INSTALL', 1);
+define ('BX_DOL_INSTALL',  true);
+define ('BX_SKIP_INSTALL_CHECK', true);
 
 define ('BX_DOL_VER', '8.0.0');
 

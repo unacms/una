@@ -1806,7 +1806,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      * @return string the result of operation.
      */
     function _getCacheFileName($sType, $sAbsolutePath) {
-        $sResult = md5($sAbsolutePath . BX_DOL_VERSION . BX_DOL_BUILD . BX_DOL_URL_ROOT);
+        $sResult = bx_site_hash($sAbsolutePath);
         switch($sType) {
             case 'html':
                 $sResult = $this->_sCacheFilePrefix . bx_lang_name() . '_' . $this->_sCode .  '_' . $sResult;
