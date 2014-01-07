@@ -20,12 +20,12 @@
 	<string name="_bx_contact_form_contact_input_sys_do_submit"><![CDATA[Send]]></string>
 	<string name="_bx_contact_form_contact_input_do_submit"><![CDATA[Send]]></string>
 
-	<string name="_bx_contact_page_title_sys_contact"><![CDATA[Contact]]></string>
-	<string name="_bx_contact_page_title_contact"><![CDATA[Contact]]></string>
-	<string name="_bx_contact_page_block_title_form"><![CDATA[Contact]]></string>
+	<string name="_bx_contact_page_title_sys_contact"><![CDATA[Contact Us]]></string>
+	<string name="_bx_contact_page_title_contact"><![CDATA[Contact Us]]></string>
+	<string name="_bx_contact_page_block_title_form"><![CDATA[Contact Us]]></string>
 
-    <string name="_bx_contact_menu_item_title_system_contact"><![CDATA[Contact]]></string>
-    <string name="_bx_contact_menu_item_title_contact"><![CDATA[Contact]]></string>
+    <string name="_bx_contact_menu_item_title_system_contact"><![CDATA[Contact Us]]></string>
+    <string name="_bx_contact_menu_item_title_contact"><![CDATA[Contact Us]]></string>
 
 	<string name="_bx_contact_option_email"><![CDATA[Email address to receive messages (if empty, site's email will be used)]]></string>
 
