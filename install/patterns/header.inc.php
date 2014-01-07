@@ -95,14 +95,13 @@ if (defined('CHECK_DOLPHIN_REQUIREMENTS')) {
 
     $aErrors[] = (ini_get('register_globals') == 0) ? '' : '<font color="red">register_globals is On (warning, you should have this param in Off state, or your site will unsafe)</font>';
     $aErrors[] = (ini_get('safe_mode') == 0) ? '' : '<font color="red">safe_mode is On, disable it</font>';
-    //$aErrors[] = (ini_get('allow_url_fopen') == 0) ? 'Off (warning, better keep this parameter in On to able register Dolphin' : '';
-//    $aErrors[] = (version_compare(PHP_VERSION, '5.2.0', '<')) ? '<font color="red">PHP version too old, please update to PHP 5.2.0 at least</font>' : '';
+    $aErrors[] = (version_compare(PHP_VERSION, '5.2.0', '<')) ? '<font color="red">PHP version too old, please update to PHP 5.2.0 at least</font>' : '';
     $aErrors[] = (!extension_loaded( 'mbstring')) ? '<font color="red">mbstring extension not installed. <b>Warning!</b> Dolphin cannot work without <b>mbstring</b> extension.</font>' : '';
-/*
+
     if (version_compare(phpversion(), "5.2", ">") == 1) {
         $aErrors[] = (ini_get('allow_url_include') == 0) ? '' : '<font color="red">allow_url_include is On (warning, you should have this param in Off state, or your site will unsafe)</font>';
     };
-*/
+
     $aErrors = array_diff($aErrors, array('')); //delete empty
     if (count($aErrors)) {
         $sErrors = implode(" <br /> ", $aErrors);
@@ -165,8 +164,8 @@ mb_regex_encoding('UTF-8');
 
 // include files needed for basic functionality
 require_once(BX_DIRECTORY_PATH_CLASSES . "BxDol.php");
-require_once(BX_DIRECTORY_PATH_INC . "security.inc.php");
 require_once(BX_DIRECTORY_PATH_INC . "utils.inc.php");
+require_once(BX_DIRECTORY_PATH_INC . "security.inc.php");
 require_once(BX_DIRECTORY_PATH_INC . "db.inc.php");
 require_once(BX_DIRECTORY_PATH_INC . "profiles.inc.php");
 
