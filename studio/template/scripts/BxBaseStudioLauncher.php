@@ -31,7 +31,6 @@ class BxBaseStudioLauncher extends BxDolStudioLauncher {
         	'jquery.ui.mouse.min.js',
         	'jquery.ui.sortable.min.js',
         	'jquery.easing.js',
-        	'jquery.touch.js',
         	'jquery.cookie.js',
         	'launcher.js'
         );

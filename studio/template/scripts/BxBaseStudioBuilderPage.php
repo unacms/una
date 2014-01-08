@@ -60,7 +60,6 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
         	'jquery.ui.mouse.min.js',
         	'jquery.ui.sortable.min.js',
         	'jquery.easing.js',
-        	'jquery.touch.js',
             'jquery.form.js',
         	'functions.js',
         	'builder_page.js'
