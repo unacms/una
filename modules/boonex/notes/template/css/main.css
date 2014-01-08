@@ -17,6 +17,10 @@
     float:right;
 }
 
+.bx-notes-unit-summary p {
+    margin:0;
+}
+
 /* view page */
 .bx-notes-entity-share .bx-vote,
 .bx-notes-entity-share .bx-tl-share,
