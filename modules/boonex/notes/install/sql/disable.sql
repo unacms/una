@@ -11,6 +11,7 @@ DELETE FROM `sys_objects_storage` WHERE `object` = 'bx_notes_photos' OR `object`
 DELETE FROM `sys_storage_tokens` WHERE `object` = 'bx_notes_photos' OR `object` = 'bx_notes_photos_resized';
 
 DELETE FROM `sys_objects_transcoder_images` WHERE `object` = 'bx_notes_preview';
+DELETE FROM `sys_transcoder_images_filters` WHERE `transcoder_object` = 'bx_notes_preview';
 DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` = 'bx_notes_preview';
 -- TODO: delete resized photo files as well
 TRUNCATE TABLE `bx_notes_photos_resized`; 
