@@ -17,7 +17,7 @@ if (!file_exists("./inc/header.inc.php"))
     header("Pragma: no-cache");
 
     echo "It seems to be script is <b>not</b> installed.<br />\n";
-    if ( file_exists( "install/index.php" ) ) {
+    if ( file_exists( "install/index.php" ) ) {        
         echo "Please, wait. Redirecting you to installation form...<br />\n";
         echo "<script language=\"javascript\">location.href = 'install/index.php';</script>\n";
     }

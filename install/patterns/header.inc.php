@@ -45,12 +45,13 @@ define('BX_DOL_INT_MAX', 2147483647);
 define('BX_DOL_TRANSCODER_OBJ_ICON_APPLE', 'sys_icon_apple');
 define('BX_DOL_TRANSCODER_OBJ_ICON_FACEBOOK', 'sys_icon_facebook');
 define('BX_DOL_TRANSCODER_OBJ_ICON_FAVICON', 'sys_icon_favicon');
-define('BX_DOL_TRANSCODER_OBJ_CMTS_IMAGE_PREVIEW', 'sys_cmts_images_preview');
 
 //--- Module types ---//
-define('BX_DOL_MODULE_TYPE_MODULE', 'module');
-define('BX_DOL_MODULE_TYPE_LANGUAGE', 'language');
-define('BX_DOL_MODULE_TYPE_TEMPLATE', 'template');
+if (!defined('BX_DOL_MODULE_TYPE_MODULE')) {
+    define('BX_DOL_MODULE_TYPE_MODULE', 'module');
+    define('BX_DOL_MODULE_TYPE_LANGUAGE', 'language');
+    define('BX_DOL_MODULE_TYPE_TEMPLATE', 'template');
+}
 
 //--- Studio settings ---//
 define('BX_DOL_STUDIO_FOLDER', 'studio');
@@ -93,7 +94,6 @@ if (defined('CHECK_DOLPHIN_REQUIREMENTS')) {
 
     $aErrors[] = (ini_get('register_globals') == 0) ? '' : '<font color="red">register_globals is On (warning, you should have this param in Off state, or your site will unsafe)</font>';
     $aErrors[] = (ini_get('safe_mode') == 0) ? '' : '<font color="red">safe_mode is On, disable it</font>';
-    //$aErrors[] = (ini_get('allow_url_fopen') == 0) ? 'Off (warning, better keep this parameter in On to able register Dolphin' : '';
     $aErrors[] = (version_compare(PHP_VERSION, '5.2.0', '<')) ? '<font color="red">PHP version too old, please update to PHP 5.2.0 at least</font>' : '';
     $aErrors[] = (!extension_loaded( 'mbstring')) ? '<font color="red">mbstring extension not installed. <b>Warning!</b> Dolphin cannot work without <b>mbstring</b> extension.</font>' : '';
 
@@ -163,8 +163,8 @@ mb_regex_encoding('UTF-8');
 
 // include files needed for basic functionality
 require_once(BX_DIRECTORY_PATH_CLASSES . "BxDol.php");
-require_once(BX_DIRECTORY_PATH_INC . "security.inc.php");
 require_once(BX_DIRECTORY_PATH_INC . "utils.inc.php");
+require_once(BX_DIRECTORY_PATH_INC . "security.inc.php");
 require_once(BX_DIRECTORY_PATH_INC . "db.inc.php");
 require_once(BX_DIRECTORY_PATH_INC . "profiles.inc.php");
 

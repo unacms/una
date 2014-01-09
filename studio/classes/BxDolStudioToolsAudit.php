@@ -1,4 +1,4 @@
-<?php defined('BX_DOL') or die('hack attempt');
+<?php defined('BX_DOL') or defined('BX_DOL_INSTALL') or die('hack attempt');
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
@@ -311,7 +311,7 @@ class BxDolStudioToolsAudit extends BxDol
         else
             $sLatestDolphinVer = 'undefined';
        
-        $sDolphinVer = BX_DOL_VERSION . '.' . BX_DOL_BUILD;
+        $sDolphinVer = getParam('sys_version');
         $aMessage = array('type' => BX_DOL_AUDIT_OK);
         if (!version_compare($sDolphinVer, $sLatestDolphinVer, '>='))
             $aMessage = array('type' => BX_DOL_AUDIT_WARN, 'msg' => _t('_sys_audit_msg_version_is_outdated', $sLatestDolphinVer));

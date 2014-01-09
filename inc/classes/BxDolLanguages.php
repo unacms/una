@@ -288,8 +288,10 @@ class BxDolLanguages extends BxDol implements iBxDolSingleton {
     }    
 }
 
-function _t() {
-    return call_user_func_array(array(BxDolLanguages::getInstance(), '_t'), func_get_args());
+if (!function_exists('_t')) {
+    function _t() {
+        return call_user_func_array(array(BxDolLanguages::getInstance(), '_t'), func_get_args());
+    }
 }
 
 function _t_err() {

@@ -3827,12 +3827,4 @@ If you don't know how to do it by yourself you can submit <a target="_blank" hre
     <string name="_sys_inst_refresh"><![CDATA[Refresh]]></string>
     <string name="_sys_inst_continue"><![CDATA[Continue]]></string>
 
-    <!-- ********************** -->
-    <!-- Auto Installed Modules -->
-    <!-- ********************** -->
-
-    <!-- UNI Template -->
-    <string name="_bx_uni_wgt_cpt"><![CDATA[UNI]]></string>
-    <string name="_bx_uni_stg_cpt_type"><![CDATA[UNI]]></string>
-    <string name="_bx_uni_stg_cpt_category_system"><![CDATA[General]]></string>
 </resources>

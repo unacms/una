@@ -183,7 +183,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
         if(isset($this->_aConfig['compatible_with']) && is_array($this->_aConfig['compatible_with']))
             foreach($this->_aConfig['compatible_with'] as $iKey => $sVersion) {
                 $sVersion = '/^' . str_replace(array('.', 'x'), array('\.', '[0-9]+'), $sVersion) . '$/is';
-                $bCompatible = $bCompatible || (preg_match($sVersion, BX_DOL_VERSION . '.' . BX_DOL_BUILD) > 0);
+                $bCompatible = $bCompatible || (preg_match($sVersion, getParam('sys_version')) > 0);
             }
         if(!$bCompatible)
             return array(

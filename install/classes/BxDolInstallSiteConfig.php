@@ -1,4 +1,4 @@
-<?php defined('BX_DOL') or die('hack attempt');
+<?php defined('BX_DOL_INSTALL') or die('hack attempt');
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
@@ -178,7 +178,7 @@ class BxDolInstallSiteConfig
                 'func' => 'rowSectionOpen',
             ),
 
-            'language' => array(
+            BX_DOL_MODULE_TYPE_LANGUAGE => array(
                 'name' => _t('_sys_inst_conf_field_language'),
                 'desc' => _t('_sys_inst_conf_desc_language'),
                 'def' => isset($_COOKIE['lang']) ? $_COOKIE['lang'] : (isset($_GET['lang']) ? $_GET['lang'] : 'en'),
@@ -186,7 +186,7 @@ class BxDolInstallSiteConfig
                 'vals' => $this->getSelectValues(BX_DOL_MODULE_TYPE_LANGUAGE),
             ),
 
-            'template' => array(
+            BX_DOL_MODULE_TYPE_TEMPLATE => array(
                 'name' => _t('_sys_inst_conf_field_template'),
                 'desc' => _t('_sys_inst_conf_desc_template'),
                 'def' => 'uni',
@@ -316,9 +316,32 @@ EOF;
         return array();
     }
 
-    public function processModules ($a) 
+    public function processModules ($a)
     {
-        return array(BX_INSTALL_ERR_GENERAL => 'TODO:<br />Language to install: ' . $a['language'] . '<br />Template to install: ' . $a['template']);
+        require_once(BX_INSTALL_PATH_HEADER);
+        bx_import('BxDolStudioInstallerUtils');
+        bx_import('BxDolLanguages');
+        BxDolLanguages::getInstance();        
+        $oModulesTools = new BxDolInstallModulesTools();
+
+        $aActions = array ('install', 'enable');
+        $aTypes = array (BX_DOL_MODULE_TYPE_LANGUAGE, BX_DOL_MODULE_TYPE_TEMPLATE);
+        foreach ($aTypes as $sModuleType) {
+            $aModules = $oModulesTools->getModules($sModuleType);
+            foreach ($aModules as $aConfig) {
+                $sUri = $aConfig['home_uri'];
+                if (empty($a[$sModuleType]) || $a[$sModuleType] != $sUri)
+                    continue;
+
+                foreach ($aActions as $sAction) {
+                    $aResult = BxDolStudioInstallerUtils::getInstance()->perform($aConfig['home_dir'], $sAction);
+                    if ((!isset($aResult['result']) || !$aResult['result']) && !empty($aResult['message']))
+                        return array(BX_INSTALL_ERR_GENERAL => $aResult['message']);
+                }
+            }            
+        } 
+
+        return array();
     }
 
     protected function dbErrors2ErrorFields ($a) 
@@ -365,9 +388,10 @@ EOF;
     protected function getMarkersForPhp($a) 
     {
         $a = $this->getMarkers($a);
+        $aMarkers = array();
         foreach ($a as $sKey => $mixedVal)
-            $a['%' . strtoupper($sKey) . '%'] = bx_php_string_apos($mixedVal);
-        return $a;
+            $aMarkers['%' . strtoupper($sKey) . '%'] = bx_php_string_apos($mixedVal);
+        return $aMarkers;
     }
 
     protected function getFormFields($aErrorFields) 

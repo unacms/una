@@ -282,7 +282,7 @@ function Samples_Colors()
 {    
     $aBlocks = array ();
      
-    $aClasses = array ('bx-def-color-bg-page', 'bx-def-color-bg-block', 'bx-def-color-bg-box', 'bx-def-color-bg-sec', 'bx-def-color-bg-active', 'bx-def-color-bg-hl', 'bx-def-color-bg-hl-hover', 'bx-def-noise', 'bx-def-noise bx-def-color-bg-active');
+    $aClasses = array ('bx-def-color-bg-page', 'bx-def-color-bg-block', 'bx-def-color-bg-box', 'bx-def-color-bg-sec', 'bx-def-color-bg-active', 'bx-def-color-bg-hl', 'bx-def-color-bg-hl-hover');
     foreach ($aClasses as $sClass) {
         ob_start();
         ?>

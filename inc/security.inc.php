@@ -99,7 +99,7 @@ function bx_sys_security_get_fields ($sType) {
         return array();
     }
 
-    $sCacheFile = BX_DIRECTORY_PATH_CACHE . 'sys_options_' . md5(BX_DOL_VERSION . BX_DOL_BUILD . BX_DOL_URL_ROOT) . '.php';
+    $sCacheFile = BX_DIRECTORY_PATH_CACHE . 'sys_options_' . bx_site_hash() . '.php';
     if (!file_exists($sCacheFile)) {
         require_once( BX_DIRECTORY_PATH_INC . 'utils.inc.php' );
         require_once( BX_DIRECTORY_PATH_INC . 'db.inc.php' );
@@ -121,7 +121,8 @@ function bx_sys_security_get_fields ($sType) {
 }
 
 function bx_sys_security_get_impact_threshold () {
-    $sCacheFile = BX_DIRECTORY_PATH_CACHE . 'sys_options_' . md5(BX_DOL_VERSION . BX_DOL_BUILD . BX_DOL_URL_ROOT) . '.php';
+    // TODO: remake security to check in bx_process_input function only
+    $sCacheFile = BX_DIRECTORY_PATH_CACHE . 'sys_options_' . bx_site_hash('', true) . '.php';
     if (!file_exists($sCacheFile)) {
         require_once( BX_DIRECTORY_PATH_INC . 'utils.inc.php' );
         require_once( BX_DIRECTORY_PATH_INC . 'db.inc.php' );
