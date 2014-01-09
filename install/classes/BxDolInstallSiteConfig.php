@@ -262,6 +262,10 @@ EOF;
             if (!$this->check ($sKey, isset($a[$sKey]) ? $a[$sKey] : '', $r))
                 $aErrorFields[$sKey] = true;
         }
+
+        if (!empty($aErrorFields)) 
+            $aErrorFields[BX_INSTALL_ERR_GENERAL] = _t('_sys_inst_msg_form_error');
+
         return $aErrorFields;
     }
 

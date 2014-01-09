@@ -53,7 +53,7 @@ if ((-1 != $iImpactLog || -1 != $iImpactBlock) && !defined('BX_DOL_CRON_EXECUTE'
 
 
         $init->config['General']['HTML_Purifier_Path'] = BX_DIRECTORY_PATH_PLUGINS . 'htmlpurifier/HTMLPurifier.standalone.php';
-        $init->config['General']['HTML_Purifier_Cache'] = '../../htmlpurifier/standalone/HTMLPurifier/DefinitionCache/Serializer/';
+        $init->config['General']['HTML_Purifier_Cache'] = rtrim(BX_DIRECTORY_PATH_CACHE, '/');
 
         $ids = new IDS_Monitor($request, $init);
         $result = $ids->run();

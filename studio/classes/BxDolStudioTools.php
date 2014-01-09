@@ -33,7 +33,6 @@ class BxDolStudioTools extends BxDolIO
             'cache_public',
             'tmp',
 //            'plugins/ffmpeg/ffmpeg.exe',
-            'plugins/htmlpurifier/standalone/HTMLPurifier/DefinitionCache/Serializer',
         );
 
         $this->aPostInstallPermissions = array(

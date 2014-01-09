@@ -3812,6 +3812,7 @@ If you don't know how to do it by yourself you can submit <a target="_blank" hre
     <string name="_sys_inst_conf_desc_template"><![CDATA[Template to install by default.]]></string>
 
     <string name="_sys_inst_msg_permissions_wrong"><![CDATA[Some files or folders rights aren't correct, please set necessary permissions then click "Continue".]]></string>
+    <string name="_sys_inst_msg_form_error"><![CDATA[Please fix form errors.]]></string>
     <string name="_sys_inst_msg_db_err_connect"><![CDATA[Database connect failed]]></string>
     <string name="_sys_inst_msg_db_err_select"><![CDATA[Database select failed]]></string>
     <string name="_sys_inst_msg_file_read_failed"><![CDATA[File read failed: {0}]]></string>
