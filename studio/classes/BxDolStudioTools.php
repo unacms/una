@@ -29,6 +29,7 @@ class BxDolStudioTools extends BxDolIO
         parent::__construct();
 
         $this->aInstallPermissions = array(
+            'inc',
             'cache',
             'cache_public',
             'tmp',
