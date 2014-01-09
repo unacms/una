@@ -74,6 +74,9 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton {
 		    'jquery.ui.position.min.js',
             BX_DOL_URL_PLUGINS . 'spin.min.js',
 		));
+
+		bx_import('BxTemplStudioConfig');
+        $this->_oConfigTemplate = BxTemplStudioConfig::getInstance();
     }
 
     function parseSystemKey($sKey, $mixedKeyWrapperHtml = null) {
