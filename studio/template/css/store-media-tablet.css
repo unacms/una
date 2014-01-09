@@ -1,0 +1,5 @@
+@media (min-width:720px) and (max-width:1024px) {
+	div.bx-std-product { 
+		width: 50%;
+	}
+}
