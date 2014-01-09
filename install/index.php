@@ -23,7 +23,7 @@ define ('BX_INSTALL_DIR_PLUGINS', '../plugins/');
 define ('BX_INSTALL_DIR_TEMPLATES', './templates/');
 define ('BX_INSTALL_DIR_CLASSES', './classes/');
 
-define ('BX_INSTALL_PATH_HEADER', '../inc/header_test.inc.php');
+define ('BX_INSTALL_PATH_HEADER', '../inc/header.inc.php');
 
 if (!defined('BX_DOL_MODULE_TYPE_MODULE')) {
     define('BX_DOL_MODULE_TYPE_MODULE', 'module');
