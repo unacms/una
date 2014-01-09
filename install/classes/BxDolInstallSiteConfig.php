@@ -341,6 +341,9 @@ EOF;
             }            
         } 
 
+        bx_import('BxDolAccount');
+        bx_login(BxDolAccount::getInstance($a['admin_email'])->id());
+
         return array();
     }
 

@@ -89,11 +89,32 @@ class BxDolInstallController
 
     function actionFinish () 
     {
+        require_once(BX_INSTALL_PATH_HEADER);
+
         $this->_oView->pageStart();
 
-        $s = 'TODO: finish page';
+        $sPathToPhp = "/replace/it/with/path/to/php/binary";
+        $a = array(
+            '/usr/local/bin/php', 
+            '/usr/bin/php',
+            '/opt/local/bin/php',
+        );
+        foreach ($a as $sPath)
+            if (file_exists($sPath))
+                $sPathToPhp = $sPath;
 
-        $this->_oView->out('finish.php', compact('s'));
+        $this->_oView->out('finish.php', compact('sPathToPhp'));
+
+        $this->_oView->pageEnd($this->_getTitle());
+    }
+
+    function actionRemoveInstall () 
+    {
+        require_once(BX_INSTALL_PATH_HEADER);
+
+        $this->_oView->pageStart();
+
+        $this->_oView->out('remove_install.php', array());
 
         $this->_oView->pageEnd($this->_getTitle());
     }

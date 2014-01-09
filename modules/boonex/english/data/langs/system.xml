@@ -3816,8 +3816,13 @@ If you don't know how to do it by yourself you can submit <a target="_blank" hre
     <string name="_sys_inst_msg_db_err_select"><![CDATA[Database select failed]]></string>
     <string name="_sys_inst_msg_file_read_failed"><![CDATA[File read failed: {0}]]></string>
     <string name="_sys_inst_msg_file_write_failed"><![CDATA[File write failed: {0}]]></string>
+    <string name="_sys_inst_msg_finish"><![CDATA[But there are some additional manual steps are required:]]></string>
+    <string name="_sys_inst_msg_finish_cron_jobs"><![CDATA[Setup the following cron jobs command:]]></string>
+    <string name="_sys_inst_msg_finish_delete_install_folder"><![CDATA[Remove <b>/install/</b> folder from Dolphin root folder.]]></string>
+    <string name="_sys_inst_msg_finish_goto_studio"><![CDATA[<a href="{0}studio/">Go to Studio</a> to add additional modules and customize the site.]]></string>
+    <string name="_sys_inst_msg_remove_install"><![CDATA[Please, remove INSTALL directory from your server and reload this page to activate your site.<br />NOTE: Once you remove this page you can safely <a href="../studio/store.php">install modules in Studio.]]></string>
 
-	<string name="_sys_inst_finish"><![CDATA[Installation completed]]></string>
+	<string name="_sys_inst_finish"><![CDATA[Installation has been successfully completed]]></string>
 	<string name="_sys_inst_site_config"><![CDATA[Site configuration]]></string>
     <string name="_sys_inst_title"><![CDATA[Dolphin {0} Installation]]></string>
     <string name="_sys_inst_start_installation"><![CDATA[Start installation]]></string>

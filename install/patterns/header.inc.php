@@ -89,19 +89,16 @@ define('BX_DOL_SECRET', '%SECRET%');
 
 define('CHECK_DOLPHIN_REQUIREMENTS', 1);
 if (defined('CHECK_DOLPHIN_REQUIREMENTS')) {
-    //check requirements
     $aErrors = array();
-
     $aErrors[] = (ini_get('register_globals') == 0) ? '' : '<font color="red">register_globals is On (warning, you should have this param in Off state, or your site will unsafe)</font>';
     $aErrors[] = (ini_get('safe_mode') == 0) ? '' : '<font color="red">safe_mode is On, disable it</font>';
     $aErrors[] = (version_compare(PHP_VERSION, '5.2.0', '<')) ? '<font color="red">PHP version too old, please update to PHP 5.2.0 at least</font>' : '';
     $aErrors[] = (!extension_loaded( 'mbstring')) ? '<font color="red">mbstring extension not installed. <b>Warning!</b> Dolphin cannot work without <b>mbstring</b> extension.</font>' : '';
-
     if (version_compare(phpversion(), "5.2", ">") == 1) {
         $aErrors[] = (ini_get('allow_url_include') == 0) ? '' : '<font color="red">allow_url_include is On (warning, you should have this param in Off state, or your site will unsafe)</font>';
     };
 
-    $aErrors = array_diff($aErrors, array('')); //delete empty
+    $aErrors = array_diff($aErrors, array('')); // delete empty
     if (count($aErrors)) {
         $sErrors = implode(" <br /> ", $aErrors);
         echo <<<EOF
@@ -114,7 +111,7 @@ EOF;
     }
 }
 
-//check correct hostname
+// check correct hostname
 $aUrl = parse_url( BX_DOL_URL_ROOT );
 if (isset($_SERVER['HTTP_HOST']) and 0 != strcasecmp($_SERVER['HTTP_HOST'], $aUrl['host']) and 0 != strcasecmp($_SERVER['HTTP_HOST'], $aUrl['host'] . ':80')) {
     header( "Location:http://{$aUrl['host']}{$_SERVER['REQUEST_URI']}" );
@@ -123,45 +120,17 @@ if (isset($_SERVER['HTTP_HOST']) and 0 != strcasecmp($_SERVER['HTTP_HOST'], $aUr
 
 // check if install folder exists
 if (!defined ('BX_SKIP_INSTALL_CHECK') && file_exists(BX_DIRECTORY_PATH_ROOT . 'install')) {
-    $ret = <<<EOJ
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
-        <head>
-            <title>Dolphin Smart Community Builder Installed</title>
-            <link href="install/general.css" rel="stylesheet" type="text/css" />
-            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        </head>
-        <body>
-            <div id="main">
-            <div id="header">
-                <img src="install/images/boonex-logo.png" alt="" /></div>
-            <div id="content">
-                <div class="installed_pic">
-                    <img alt="Dolphin Installed" src="install/images/dolphin_installed.jpg" />
-            </div>
-
-            <div class="installed_text">
-                Please, remove INSTALL directory from your server and reload this page to activate your community site.
-            </div>
-            <div class="installed_text">
-                NOTE: Once you remove this page you can safely <a href="administration/modules.php">install modules via Admin Panel</a>.
-            </div>
-        </body>
-    </html>
-EOJ;
-    echo $ret;
-    exit();
+    header('Location:' . BX_DOL_URL_ROOT . 'install/index.php?action=remove_install');
+    exit;
 }
 
-// set some PHP options
+// set PHP options
 error_reporting(E_ALL);
-
 ini_set('magic_quotes_sybase', 0);
-
 mb_internal_encoding('UTF-8');
 mb_regex_encoding('UTF-8');
 
-// include files needed for basic functionality
+// include files necessary for basic functionality
 require_once(BX_DIRECTORY_PATH_CLASSES . "BxDol.php");
 require_once(BX_DIRECTORY_PATH_INC . "utils.inc.php");
 require_once(BX_DIRECTORY_PATH_INC . "security.inc.php");

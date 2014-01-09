@@ -60,3 +60,9 @@ html, body {
 .bx-install-site-config .bx-form-input-wrapper-submit button {
     display:inline-block;
 } 
+
+.bx-install-finish textarea {
+    display:block;
+    width:70%;
+    height:60px;
+}
