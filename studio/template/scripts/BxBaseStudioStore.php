@@ -20,7 +20,7 @@ class BxBaseStudioStore extends BxDolStudioStore {
     }
 
     function getPageCss() {
-        return array_merge(parent::getPageCss(), array('store.css'));
+        return array_merge(parent::getPageCss(), array('store.css', 'store-media-tablet.css', 'store-media-desktop.css'));
     }
 
     function getPageJs() {
@@ -91,8 +91,11 @@ class BxBaseStudioStore extends BxDolStudioStore {
 
         $sActions = "";
         foreach($aProducts as $aBlock) {
-            $sItems = $this->displayProducts($aBlock['items']);
-
+        	$sItems = $oTemplate->parseHtmlByName('str_products.html', array(
+	        	'list' => $this->displayProducts($aBlock['items']),
+	        	'paginate' => ''
+	        ));
+        
             $aTmplVars['bx_repeat:blocks'][] = array(
             	'caption' => $this->getBlockCaption($aBlock),
                 'items' => $sItems
@@ -497,7 +500,7 @@ class BxBaseStudioStore extends BxDolStudioStore {
         		'js_object' => $sJsObject,
         		'id' => $aItem['id'],
 	            'url' => $aItem['url'],
-	            'icon' => !empty($aItem['thumbnail']['medium']) ? $aItem['thumbnail']['medium'] : $oTemplate->getIconUrl('pi-str-dump.png'),
+	            'icon' => !empty($aItem['thumbnail']['big']) ? $aItem['thumbnail']['big'] : $oTemplate->getIconUrl('pi-str-dump.png'),
 	            'title' => $aItem['title'],
         		'bx_if:show_vendor_price' => array(
         			'condition' => !$bShoppingCart,
@@ -560,7 +563,7 @@ class BxBaseStudioStore extends BxDolStudioStore {
         		'js_object' => $sJsObject,
         		'id' => $aItem['id'],
 	            'url' => $aItem['url'],
-	            'icon' => !empty($aItem['thumbnail']['medium']) ? $aItem['thumbnail']['medium'] : $oTemplate->getIconUrl('pi-str-dump.png'),
+	            'icon' => !empty($aItem['thumbnail']['big']) ? $aItem['thumbnail']['big'] : $oTemplate->getIconUrl('pi-str-dump.png'),
 	            'title' => $aItem['title'],
 	            'vendor' => $aItem['author'],
         		'versions' => _t('_adm_str_txt_update_from_to', $aItem['file_version'], $aItem['file_version_to']),

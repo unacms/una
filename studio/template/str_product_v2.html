@@ -1,20 +1,20 @@
-<div class="bx-std-product" id="bx-std-product-__id__">
-    <div class="bx-stdp-icon">
+<div class="bx-std-product bx-def-widget-size-max-height bx-def-margin-bottom" id="bx-std-product-__id__">
+    <div class="bx-stdp-icon bx-def-widget-size bx-def-round-corners-widget">
         <a href="javascript:void(0)" onclick="javascript:__js_object__.info(__id__, this)">
-            <img src="__icon__" />
+            <img class="bx-def-widget-size" src="__icon__" />
         </a>
     </div>
-    <div class="bx-stdp-content">
-        <div class="bx-std-pc-title">
+    <div class="bx-stdp-content bx-def-widget-size-min-height bx-def-widget-size-left-indent bx-def-margin-right">
+        <div class="bx-std-pc-title bx-def-margin-sec-top bx-def-font-large">
             <a href="javascript:void(0)" onclick="javascript:__js_object__.info(__id__, this)">__title__</a>
         </div>
         <bx_if:show_vendor_price>
-        	<div class="bx-std-pc-vendor bx-def-color-ft-gray-l3">__vendor__ &bull; <span class="bx-std-pc-price">__price__ __discount__</span></div>
+        	<div class="bx-std-pc-vendor bx-def-margin-thd-top bx-def-font-small">__vendor__ &bull; <span class="bx-std-pc-price">__price__ __discount__</span></div>
         </bx_if:show_vendor_price>
         <bx_if:show_count_price>
-        	<div class="bx-std-pc-count bx-def-color-ft-gray-l3">__count__ <bx_text:_adm_str_txt_items_by /> <span class="bx-std-pc-price">__price__ __discount__</span></div>
+        	<div class="bx-std-pc-count bx-def-margin-thd-top bx-def-font-small">__count__ <bx_text:_adm_str_txt_items_by /> <span class="bx-std-pc-price">__price__ __discount__</span></div>
         </bx_if:show_count_price>
-        <div class="bx-std-pc-action">
+        <div class="bx-std-pc-action bx-def-margin-thd-top bx-clearfix">
         	<bx_if:show_purchase>
             	<input class="bx-btn bx-btn-small bx-std-pc-purchase" type="button" value="<bx_text:_adm_btn_purchase_submit />" onclick="javascript:__js_object__.addToCart('__vendor__', __id__, this)" />
             </bx_if:show_purchase>
