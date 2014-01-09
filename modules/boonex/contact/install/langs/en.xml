@@ -35,7 +35,7 @@
 	<string name="_bx_contact_et_contact_form_message_subject"><![CDATA[Contact form message.]]></string>
 	<string name="_bx_contact_et_contact_form_message_body"><![CDATA[<bx_include_auto:_email_header.html />
 <p><b>Dear Administrator</b>,</p>
-<p>You were contacted by <u>{SenderName}</u> with email <u>{SenderEmail}</u>:</p>
+<p>You were contacted by <u>{SenderName}</u> with email <u>{SenderEmail}</u></p>
 <hr />
 <p><b>{MessageSubject}</b></p>
 <p>{MessageBody}</p>
