@@ -3833,4 +3833,8 @@ If you don't know how to do it by yourself you can submit <a target="_blank" hre
     <string name="_sys_inst_refresh"><![CDATA[Refresh]]></string>
     <string name="_sys_inst_continue"><![CDATA[Continue]]></string>
 
+    <string name="_sys_inst_help_permissions"><![CDATA[Setting permissions help]]></string>
+    <string name="_sys_inst_help_site_config"><![CDATA[Creating database help]]></string>
+    <string name="_sys_inst_help_finish"><![CDATA[Help with cron jobs]]></string>
+
 </resources>

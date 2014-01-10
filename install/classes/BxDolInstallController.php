@@ -72,6 +72,8 @@ class BxDolInstallController
 
         $this->_oView->out('permissions.php', compact('sPermissionsStyles', 'sPermissionsTable', 'bPermissionsOk'));
 
+        $this->_oView->setToolbarItem('question', 'http://www.boonex.com/trac/dolphin/wiki/DetailedInstall#InstallScript-Step1-Permissions', _t('_sys_inst_help_permissions'), '_blank');
+
         $this->_oView->pageEnd($this->_getTitle());
     }
 
@@ -83,6 +85,8 @@ class BxDolInstallController
         $sForm = $oSiteConfig->getFormHtml();
 
         $this->_oView->out('site_config.php', compact('sForm'));
+
+        $this->_oView->setToolbarItem('question', 'http://www.boonex.com/trac/dolphin/wiki/DetailedInstall#Part2:CreateaDatabaseandaUser', _t('_sys_inst_help_site_config'), '_blank');
 
         $this->_oView->pageEnd($this->_getTitle());
     }
@@ -104,6 +108,8 @@ class BxDolInstallController
                 $sPathToPhp = $sPath;
 
         $this->_oView->out('finish.php', compact('sPathToPhp'));
+
+        $this->_oView->setToolbarItem('question', 'http://www.boonex.com/trac/dolphin/wiki/DetailedInstall#InstallScript-Step5-CronJobs', _t('_sys_inst_help_finish'), '_blank');
 
         $this->_oView->pageEnd($this->_getTitle());
     }
