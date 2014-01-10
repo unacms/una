@@ -467,10 +467,12 @@ function get_templates_array($bEnabledOnly = true, $bShortInfo = true) {
 	bx_import('BxDolDb');
 	$oDb = BxDolDb::getInstance();
 
-	if($bEnabledOnly)
-		return $oDb->getPairs("SELECT `uri`, `title` FROM `sys_modules` WHERE 1 AND `type`='" . BX_DOL_MODULE_TYPE_TEMPLATE . "'" . ($bEnabledOnly ? " AND `enabled`='1'" : ""), "uri", "title");
+	$sWhereAddon = $bEnabledOnly ? " AND `enabled`='1'" : "";
+	
+	if($bShortInfo)
+		return $oDb->getPairs("SELECT `uri`, `title` FROM `sys_modules` WHERE 1 AND `type`='" . BX_DOL_MODULE_TYPE_TEMPLATE . "'" . $sWhereAddon, "uri", "title");
 	else 
-		return $oDb->getAllWithKey("SELECT * FROM `sys_modules` WHERE 1 AND `type`='" . BX_DOL_MODULE_TYPE_TEMPLATE . "'" . ($bEnabledOnly ? " AND `enabled`='1'" : ""), "uri"); 
+		return $oDb->getAllWithKey("SELECT * FROM `sys_modules` WHERE 1 AND `type`='" . BX_DOL_MODULE_TYPE_TEMPLATE . "'" . $sWhereAddon, "uri"); 
 }
 
 /*

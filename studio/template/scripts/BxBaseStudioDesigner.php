@@ -67,7 +67,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner {
         $sResult = '';
 
         $sTemplate = getParam('template');
-        $aTemplates = get_templates_array(false, false);        
+        $aTemplates = get_templates_array(true, false);        
 
 	    $aTmplVarsTemplates = array ();
 	    foreach($aTemplates as $sUri => $aTemplate) {
