@@ -30,7 +30,7 @@ class BxDolStudioUtils extends BxDol {
     }
 
     public static function getModuleIcon($sName, $sType = 'menu') {
-        $aType2Prefix = array('menu' => 'mi', 'page' => 'pi');
+        $aType2Prefix = array('menu' => 'mi', 'page' => 'pi', 'store' => 'si');
 
         $oTemplate = BxDolStudioTemplate::getInstance();
         $sDefaultIcon = $oTemplate->getIconUrl($aType2Prefix[$sType] . '-mod-empty.png'); 

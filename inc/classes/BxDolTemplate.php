@@ -485,7 +485,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
         $this->_sCode = $oConfig->getUri();
         $this->_sSubPath = $oConfig->getDirectory();
 
-        if(!$bSetCookie)
+        if(!$bSetCookie || bx_get('preview'))
             return;
 
         $aUrl = parse_url(BX_DOL_URL_ROOT);

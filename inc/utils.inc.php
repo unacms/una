@@ -463,9 +463,14 @@ function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0
 /*
  * Getting an array with Templates' Names
  */
-function get_templates_array($bEnabledOnly = true) {
-    bx_import('BxDolDb');
-    return BxDolDb::getInstance()->getPairs("SELECT `uri`, `title` FROM `sys_modules` WHERE 1 AND `type`='" . BX_DOL_MODULE_TYPE_TEMPLATE . "'" . ($bEnabledOnly ? " AND `enabled`='1'" : ""), "uri", "title");
+function get_templates_array($bEnabledOnly = true, $bShortInfo = true) {
+	bx_import('BxDolDb');
+	$oDb = BxDolDb::getInstance();
+
+	if($bEnabledOnly)
+		return $oDb->getPairs("SELECT `uri`, `title` FROM `sys_modules` WHERE 1 AND `type`='" . BX_DOL_MODULE_TYPE_TEMPLATE . "'" . ($bEnabledOnly ? " AND `enabled`='1'" : ""), "uri", "title");
+	else 
+		return $oDb->getAllWithKey("SELECT * FROM `sys_modules` WHERE 1 AND `type`='" . BX_DOL_MODULE_TYPE_TEMPLATE . "'" . ($bEnabledOnly ? " AND `enabled`='1'" : ""), "uri"); 
 }
 
 /*

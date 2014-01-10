@@ -292,9 +292,9 @@ class BxBaseStudioStore extends BxDolStudioStore {
 
 		//--- Prepare modules.
         foreach($aProducts['modules'] as $aModule) {
-            $sIcon = $oTemplate->getIconUrl($aModule['name'] . '@modules/' . $aModule['dir'] . '|std-si.png');
+        	$sIcon = $oTemplate->getIconUrl($aModule['name'] . '@modules/' . $aModule['dir'] . '|std-si.png');
             if(empty($sIcon))
-                $sIcon = $oTemplate->getIconUrl('pi-str-dump.png');
+                $sIcon = $oTemplate->getIconUrl('si-mod-empty.png');
 
             $sModules .= $oTemplate->parseHtmlByName('str_product_v1.html', array(
             	'js_object' => $sJsObject,
@@ -319,7 +319,7 @@ class BxBaseStudioStore extends BxDolStudioStore {
         foreach($aProducts['updates'] as $aUpdate) {
             $sIcon = $oTemplate->getIconUrl($aUpdate['module_name'] . '@modules/' . $aUpdate['module_dir'] . '|std-si.png');
             if(empty($sIcon))
-                $sIcon = $oTemplate->getIconUrl('pi-str-dump.png');
+                $sIcon = $oTemplate->getIconUrl('si-mod-empty.png');
 
             $sUpdates .= $oTemplate->parseHtmlByName('str_update_v1.html', array(
             	'js_object' => $sJsObject,
@@ -500,7 +500,7 @@ class BxBaseStudioStore extends BxDolStudioStore {
         		'js_object' => $sJsObject,
         		'id' => $aItem['id'],
 	            'url' => $aItem['url'],
-	            'icon' => !empty($aItem['thumbnail']['big']) ? $aItem['thumbnail']['big'] : $oTemplate->getIconUrl('pi-str-dump.png'),
+	            'icon' => !empty($aItem['thumbnail']['big']) ? $aItem['thumbnail']['big'] : $oTemplate->getIconUrl('si-mod-empty.png'),
 	            'title' => $aItem['title'],
         		'bx_if:show_vendor_price' => array(
         			'condition' => !$bShoppingCart,
@@ -563,7 +563,7 @@ class BxBaseStudioStore extends BxDolStudioStore {
         		'js_object' => $sJsObject,
         		'id' => $aItem['id'],
 	            'url' => $aItem['url'],
-	            'icon' => !empty($aItem['thumbnail']['big']) ? $aItem['thumbnail']['big'] : $oTemplate->getIconUrl('pi-str-dump.png'),
+	            'icon' => !empty($aItem['thumbnail']['big']) ? $aItem['thumbnail']['big'] : $oTemplate->getIconUrl('si-mod-empty.png'),
 	            'title' => $aItem['title'],
 	            'vendor' => $aItem['author'],
         		'versions' => _t('_adm_str_txt_update_from_to', $aItem['file_version'], $aItem['file_version_to']),

@@ -113,8 +113,8 @@ class BxDolStudioPage extends BxDol {
         return BxDolStudioUtils::getModuleTitle($sName);
     }
 
-    protected function getModuleIcon($sName) {
-        return BxDolStudioUtils::getModuleIcon($sName);
+    protected function getModuleIcon($sName, $sType = 'menu') {
+        return BxDolStudioUtils::getModuleIcon($sName, $sType);
     }
     
     protected function getModules($bShowCustom = true, $bShowSystem = true) {
