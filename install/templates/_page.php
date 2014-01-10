@@ -31,7 +31,17 @@
             <div id="bx-toolbar-content" class="bx-clearfix">
                 <div id="bx-menu-toolbar-1-container"></div>
                 <div id="bx-logo-container"><a class="bx-def-font-contrasted"><?=$sTitle; ?></a></div>
-                <div id="bx-menu-toolbar-2-container"></div>
+                <div id="bx-menu-toolbar-2-container">
+                    <?php if (!empty($aToolbarItem)): ?>
+                    <ul class="bx-menu-toolbar bx-menu-object-sys_toolbar_member">
+                        <li class="bx-def-color-bg-hl-hover ">
+                            <a title="<?=$aToolbarItem['title']; ?>" href="<?=$aToolbarItem['link']; ?>" target="<?=$aToolbarItem['target']; ?>" onclick="" class="bx-def-margin-sec-left bx-def-font-contrasted">
+                                <i class="sys-icon <?=$aToolbarItem['icon']; ?> bx-def-margin-sec-leftright"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
     </div>

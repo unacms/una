@@ -16,6 +16,8 @@ class BxDolInstallView
     protected $_sPathCss = '../template/css/';
     protected $_sUrlJs = '../';
 
+    protected $_aToolbarItem = array();
+
     protected $_aFilesCss = array (
         'common.css',
         'default.less',
@@ -23,6 +25,7 @@ class BxDolInstallView
         'icons.css',
         'colors.css',
         'forms.css',
+        'menu.css',
         'media-desktop.css',
         'media-tablet.css',
         'media-phone.css',
@@ -53,11 +56,22 @@ class BxDolInstallView
 
     function pageEnd ($sTitle)
     {
+        $aToolbarItem = $this->_aToolbarItem;
         $sInlineCSS = $this->_getInlineCSS();
         $sFilesCSS = $this->_getFilesCSS();
         $sFilesJS = $this->_getFilesJS();
         $sCode = ob_get_clean();
         include($this->_sDirTemplates . '_page.php');
+    }
+
+    function setToolbarItem($sIcon, $sLink, $sTitle = '', $sTarget = '') 
+    {
+        $this->_aToolbarItem = array(
+            'icon' => $sIcon, 
+            'link' => $sLink, 
+            'title' => $sTitle,
+            'target' => $sTarget,
+        );
     }
 
     protected function _getFilesCSS()

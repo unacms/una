@@ -553,6 +553,8 @@ function clear_xss($val) {
 
         $oConfig = HTMLPurifier_Config::createDefault();
 
+        $oConfig->set('Cache.SerializerPath', rtrim(BX_DIRECTORY_PATH_CACHE, '/'));
+
         $oConfig->set('HTML.SafeObject', 'true');
         $oConfig->set('Output.FlashCompat', 'true');
         $oConfig->set('HTML.FlashAllowFullScreen', 'true');

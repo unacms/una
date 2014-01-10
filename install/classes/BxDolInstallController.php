@@ -72,6 +72,8 @@ class BxDolInstallController
 
         $this->_oView->out('permissions.php', compact('sPermissionsStyles', 'sPermissionsTable', 'bPermissionsOk'));
 
+        $this->_oView->setToolbarItem('question', 'http://www.boonex.com/trac/dolphin/wiki/DetailedInstall#InstallScript-Step1-Permissions', _t('_sys_inst_help_permissions'), '_blank');
+
         $this->_oView->pageEnd($this->_getTitle());
     }
 
@@ -84,16 +86,41 @@ class BxDolInstallController
 
         $this->_oView->out('site_config.php', compact('sForm'));
 
+        $this->_oView->setToolbarItem('question', 'http://www.boonex.com/trac/dolphin/wiki/DetailedInstall#Part2:CreateaDatabaseandaUser', _t('_sys_inst_help_site_config'), '_blank');
+
         $this->_oView->pageEnd($this->_getTitle());
     }
 
     function actionFinish () 
     {
+        require_once(BX_INSTALL_PATH_HEADER);
+
         $this->_oView->pageStart();
 
-        $s = 'TODO: finish page';
+        $sPathToPhp = "/replace/it/with/path/to/php/binary";
+        $a = array(
+            '/usr/local/bin/php', 
+            '/usr/bin/php',
+            '/opt/local/bin/php',
+        );
+        foreach ($a as $sPath)
+            if (file_exists($sPath))
+                $sPathToPhp = $sPath;
 
-        $this->_oView->out('finish.php', compact('s'));
+        $this->_oView->out('finish.php', compact('sPathToPhp'));
+
+        $this->_oView->setToolbarItem('question', 'http://www.boonex.com/trac/dolphin/wiki/DetailedInstall#InstallScript-Step5-CronJobs', _t('_sys_inst_help_finish'), '_blank');
+
+        $this->_oView->pageEnd($this->_getTitle());
+    }
+
+    function actionRemoveInstall () 
+    {
+        require_once(BX_INSTALL_PATH_HEADER);
+
+        $this->_oView->pageStart();
+
+        $this->_oView->out('remove_install.php', array());
 
         $this->_oView->pageEnd($this->_getTitle());
     }

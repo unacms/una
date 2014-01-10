@@ -515,12 +515,15 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject {
         $o->removeCropOptions ();
 
         if (isset($aParams['w']) && isset($aParams['h']))
-            $o->setSize ($aParams['w'], $aParams['h']);                
+            $o->setSize ($aParams['w'], $aParams['h']);
 
-        if (isset($aParams['square_resize']) && $aParams['square_resize'])
+        if (isset($aParams['crop_resize']) && $aParams['crop_resize']) {
+            $o->setAutoCrop (true);
+        } elseif (isset($aParams['square_resize']) && $aParams['square_resize']) {
             $o->setSquareResize (true);
-        else
+        } else {
             $o->setSquareResize (false);
+        }
 
         $this->_checkForceType ($o, $aParams);
 

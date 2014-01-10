@@ -34,6 +34,7 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
 
     var $w = 64, $h = 64; ///< size of destination image
     var $_isCrop = false;
+    var $_isAutoCrop = false;
     var $_cropX, $_cropY, $_cropW, $_cropH;
     var $_iForceOutputType = false; ///< force IMAGE_TYPE_PNG, IMAGE_TYPE_PNG, IMAGE_TYPE_GIF or false to keep the original format // TODO: check if this setting works when ImageMagick is used
     var $_iJpegQuality = 90; ///< jpeg quality
@@ -123,6 +124,7 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
 
     function removeCropOptions () {
         $this->_isCrop = false;
+        $this->_isAutoCrop = false;
     }
 
     function setCropOptions ($x, $y, $w, $h) {
@@ -133,6 +135,12 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
         $this->_cropH = $h;
     }
 
+    /**
+     * Crop image to destination size with filling whole area of destination size
+     */
+    function setAutoCrop ($b) {
+        $this->_isAutoCrop = $b;
+    }
 
     function setJpegOutput ($b) {
         $this->setOutputType($b ? IMAGE_TYPE_JPG : false);
@@ -239,8 +247,23 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
         $xd = $yd = 0;
         $xs = $ys = 0;
 
-        if ($this->_isCrop) {
+        if ($this->_isAutoCrop) {
+            $sourceRatio = (float) ($size[0] / $size[1]);
+            $destRatio = (float) ($this->w / $this->h);
+            if ( $sourceRatio > $destRatio )
+                $resizeRatio = (float) ($this->h / $size[1]);
+            else
+                $resizeRatio = (float) ($this->w / $size[0]);
+            $destW = (int) ($resizeRatio * $size[0]);
+            $destH = (int) ($resizeRatio * $size[1]);
 
+            if ($destW > $this->w)
+                $this->setCropOptions (floor(($size[0] - $this->w/$resizeRatio)/2.0), 0, floor($this->w/$resizeRatio), $size[1]);
+            elseif ($destH > $this->h)
+                $this->setCropOptions (0, floor(($size[1] - $this->h/$resizeRatio)/2.0), $size[0], floor($this->h/$resizeRatio));
+        }
+
+        if ($this->_isCrop) {
             $size[0] = $this->_cropW;
             $size[1] = $this->_cropH;
 
@@ -279,13 +302,9 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
             $sourceRatio = (float) ($size[0] / $size[1]);
             $destRatio = (float) ($this->w / $this->h);
             if ( $sourceRatio > $destRatio )
-            {
                 $resizeRatio = (float) ($this->w / $size[0]);
-            }
             else
-            {
                 $resizeRatio = (float) ($this->h / $size[1]);
-            }
             $destW = (int) ($resizeRatio * $size[0]);
             $destH = (int) ($resizeRatio * $size[1]);
 

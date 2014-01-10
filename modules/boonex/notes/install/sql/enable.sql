@@ -27,7 +27,7 @@ INSERT INTO `sys_objects_transcoder_images` (`object`, `storage_object`, `source
 ('bx_notes_preview', 'bx_notes_photos_resized', 'Storage', 'a:1:{s:6:"object";s:15:"bx_notes_photos";}', 'no', '1', '2592000', '0');
 
 INSERT INTO `sys_transcoder_images_filters` (`transcoder_object`, `filter`, `filter_params`, `order`) VALUES 
-('bx_notes_preview', 'Resize', 'a:4:{s:1:"w";s:3:"100";s:1:"h";s:3:"100";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0');
+('bx_notes_preview', 'Resize', 'a:4:{s:1:"w";s:3:"200";s:1:"h";s:3:"150";s:11:"crop_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0');
 
 
 -- PAGES

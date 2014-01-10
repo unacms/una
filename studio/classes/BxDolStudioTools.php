@@ -29,11 +29,11 @@ class BxDolStudioTools extends BxDolIO
         parent::__construct();
 
         $this->aInstallPermissions = array(
+            'inc',
             'cache',
             'cache_public',
             'tmp',
 //            'plugins/ffmpeg/ffmpeg.exe',
-            'plugins/htmlpurifier/standalone/HTMLPurifier/DefinitionCache/Serializer',
         );
 
         $this->aPostInstallPermissions = array(
