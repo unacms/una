@@ -7,6 +7,8 @@
  * @{
  */
 
+bx_import('BxTemplConfig');
+
 class BxBaseStudioConfig extends BxTemplConfig {
 
     function __construct() 
