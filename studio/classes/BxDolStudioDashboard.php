@@ -21,6 +21,23 @@ class BxDolStudioDashboard extends BxTemplStudioPage {
 
             $aResult = array('code' => 1, 'message' => _t('_adm_err_cannot_process_action'));
 	        switch($sAction) {
+	        	case 'check_update_script':
+	        		$aResult = array();
+
+	        		$sContent = bx_file_get_contents(BX_DOL_URL_ROOT . 'get_rss_feed.php?ID=boonex_version&member=0');
+	        		if(empty($sContent))
+	        			break;
+
+	        		bx_import('BxDolXmlParser');
+	        		$aContent = BxDolXmlParser::getInstance()->getTags($sContent, 'dolphin', 0);
+	        		if(empty($aContent) || !is_array($aContent) || empty($aContent['value']))
+	        			break;
+
+	        		$sVersionAvl = $aContent['value'];
+	        		$sVersionCur = BxDolDb::getInstance()->getParam('sys_version');
+	        		if(version_compare($sVersionCur, $sVersionAvl) == -1)
+			        	$aResult = array('version' => $sVersionAvl);
+			    	break;
 	        	/*
 	        	case 'action_name':
 			        $aResult = array();

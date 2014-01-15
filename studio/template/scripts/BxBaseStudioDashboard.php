@@ -29,14 +29,12 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard {
     }
 
     function getPageCode($bHidden = false) {
-        $oDb = BxDolDb::getInstance();
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         $aBlocks = $this->loadBlocks();
 
         $aTmplVars = array(
 			'js_object' => $this->getPageJsObject(),
-        	'version' => $oDb->getParam('sys_version'),
             'bx_repeat:blocks' => array()
         );
 
