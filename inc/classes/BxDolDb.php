@@ -750,7 +750,7 @@ EOJ;
     function executeSQL($sPath, $aReplace = array (), $isBreakOnError = true) {
 
         if(!file_exists($sPath) || !($rHandler = fopen($sPath, "r")))
-            return array ('query' => "fopen($sPath, 'r')", 'error' => 'file not found or permission denied');
+            return array(array ('query' => "fopen($sPath, 'r')", 'error' => 'file not found or permission denied'));
 
         $sQuery = "";
         $sDelimiter = ';';

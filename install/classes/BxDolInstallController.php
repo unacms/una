@@ -26,6 +26,10 @@ class BxDolInstallController
             $this->actionInitial ();
     }
    
+    function actionEmpty () 
+    {
+    }
+
     function actionAudit () 
     {
         $this->_oView->pageStart();

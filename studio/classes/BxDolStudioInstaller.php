@@ -834,7 +834,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
 
         if($bUseFtp) {
         	bx_import('BxDolFtp');
-			$oFile = new BxDolFtp($_SERVER['HTTP_HOST'], $this->oDb->getParam('sys_ftp_login'), $this->oDb->getParam('sys_ftp_password'), $this->oDb->getParam('sys_ftp_dir'));
+			$oFile = new BxDolFtp(isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost', $this->oDb->getParam('sys_ftp_login'), $this->oDb->getParam('sys_ftp_password'), $this->oDb->getParam('sys_ftp_dir'));
 
 			if(!$oFile->connect())
 				return null;

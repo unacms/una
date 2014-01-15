@@ -11,16 +11,31 @@ define('BX_INSTALL_ERR_GENERAL', 'general');
 
 class BxDolInstallSiteConfig
 {
-    protected $_sSqlDb = 'sql/v70.sql';
-    protected $_sSqlAddon = 'sql/addon.sql';
-
-    protected $_sPatternHeader = 'patterns/header.inc.php';
+    protected $_sSqlDb;
+    protected $_sSqlAddon;
+    protected $_sPatternHeader;
 
     protected $_aDbErrorMap;
     protected $_aConfig;
 
-    public function __construct()
+    protected $_sServerHttpHost;
+    protected $_sServerPhpSelf;
+    protected $_sServerDocumentRoot;
+
+    protected $_isAutologin;
+
+    public function __construct($sServerHttpHost = false, $sServerPhpSelf = false, $sServerDocumentRoot = false, $isAutologin = true)
     {
+        $this->_sServerHttpHost = false === $sServerHttpHost ? $_SERVER['HTTP_HOST'] : $sServerHttpHost;
+        $this->_sServerPhpSelf = false === $sServerPhpSelf ? $_SERVER['PHP_SELF'] : $sServerPhpSelf;
+        $this->_sServerDocumentRoot = false === $sServerDocumentRoot ? $_SERVER['DOCUMENT_ROOT'] : $sServerDocumentRoot;
+
+        $this->_isAutologin = $isAutologin;
+
+        $this->_sSqlDb = BX_INSTALL_DIR . 'sql/v70.sql';
+        $this->_sSqlAddon = BX_INSTALL_DIR . 'sql/addon.sql';
+        $this->_sPatternHeader = BX_INSTALL_DIR . 'patterns/header.inc.php';
+
         $this->_aDbErrorMap = array (
             'Database connect failed' => array ('fields' => array('db_host', 'db_user', 'db_password'), 'msg' => _t('_sys_inst_msg_db_err_connect')),
             'Database select failed' => array ('fields' => array('db_name'), 'msg' => _t('_sys_inst_msg_db_err_select')),
@@ -201,25 +216,45 @@ class BxDolInstallSiteConfig
         );
     }
 
-    public function getFormHtml() 
+    public function getAutoValues($aData = array()) 
     {
+        $aRet = array();
+        foreach($this->_aConfig as $sKey => $a) {
+            $sAutoMessage = '';
+            $aRet[$sKey] = $this->def ($aData, $sKey, $a, $sAutoMessage);
+        }
+        return $aRet;
+    }
+
+    public function getFormHtml($aData = false, $bRedirectOnSuccess = true, &$sOutputErrorMessage = null)
+    {
+        if (false === $aData)
+            $aData = $_POST;
+
         $aErrorFields = array();
-        if (isset($_POST['site_config'])) {
-            $aErrorFields = $this->processConfigData($this->processInputData($_POST));
+        if (isset($aData['site_config'])) {
+            $aErrorFields = $this->processConfigData($this->processInputData($aData));
             if (empty($aErrorFields)) {
-                $sHost = $_SERVER['HTTP_HOST'];
-                $sUri = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-                $sPage = 'index.php?action=finish';
-                header("Location: http://{$sHost}{$sUri}/{$sPage}");
-                exit;
+                if ($bRedirectOnSuccess) {
+                    $sHost = $this->_sServerHttpHost;
+                    $sUri = rtrim(dirname($this->_sServerPhpSelf), '/\\');
+                    $sPage = 'index.php?action=finish';
+                    header("Location: http://{$sHost}{$sUri}/{$sPage}");
+                    exit;
+                } else {
+                    return true;
+                }
             }
         }
 
         $sErrorMessage = '';
-        if (isset($aErrorFields[BX_INSTALL_ERR_GENERAL]) && $aErrorFields[BX_INSTALL_ERR_GENERAL])
+        if (isset($aErrorFields[BX_INSTALL_ERR_GENERAL]) && $aErrorFields[BX_INSTALL_ERR_GENERAL]) {
             $sErrorMessage = '<div class="bx-install-error-message bx-def-padding bx-def-margin-bottom">' . $aErrorFields[BX_INSTALL_ERR_GENERAL] . '</div>';
+            if (null !== $sOutputErrorMessage)
+                $sOutputErrorMessage = $aErrorFields[BX_INSTALL_ERR_GENERAL] . (empty($aErrorFields) ? '' : ' / Fields: ' . join(',', array_keys($aErrorFields)));
+        }
 
-        $sRows = $this->getFormFields($aErrorFields);
+        $sRows = $this->getFormFields($aErrorFields, $aData);
         $sSubmitTitle = _t('_Submit');
         return <<<EOF
             {$sErrorMessage}
@@ -346,7 +381,12 @@ EOF;
         } 
 
         bx_import('BxDolAccount');
-        bx_login(BxDolAccount::getInstance($a['admin_email'])->id());
+        $oAccount = BxDolAccount::getInstance($a['admin_email']);
+        if (!$oAccount)
+            return array(BX_INSTALL_ERR_GENERAL => _t('_sys_inst_msg_admin_account_not_found', $a['admin_email']));
+
+        if ($this->_isAutologin)
+            bx_login($oAccount->id());
 
         return array();
     }
@@ -354,7 +394,7 @@ EOF;
     protected function dbErrors2ErrorFields ($a) 
     {
         $s = '';
-        foreach ($a as $r) 
+        foreach ($a as $r)
             $s = $r['error'] . ': <br />' . $r['query'] . '<br />';
         return array(BX_INSTALL_ERR_GENERAL => $s);
     }
@@ -401,37 +441,37 @@ EOF;
         return $aMarkers;
     }
 
-    protected function getFormFields($aErrorFields) 
+    protected function getFormFields($aErrorFields, $aData) 
     {
         $s = '';
         foreach($this->_aConfig as $sKey => $a) {
             $sFunc = isset($a['func']) ? $a['func'] : 'rowInput';
-            $s .= $this->$sFunc($sKey, $a, isset($aErrorFields[$sKey]) ? $aErrorFields[$sKey] : false);
+            $s .= $this->$sFunc($aData, $sKey, $a, isset($aErrorFields[$sKey]) ? $aErrorFields[$sKey] : false);
         }
 
         return $s;
     }
-    
-    protected function rowInput ($sKey, $a, $isError = false) 
+
+    protected function rowInput ($aData, $sKey, $a, $isError = false) 
     {
         $sAutoMessage = '';
-        $sValue = bx_html_attribute($this->def ($sKey, $a, $sAutoMessage));
+        $sValue = bx_html_attribute($this->def ($aData, $sKey, $a, $sAutoMessage));
         $sInput = '<input type="text" name="' . $sKey. '" value="' . $sValue . '" class="bx-def-font-inputs bx-form-input-text" />';
-        return $this->rowWrapper ($sInput, $sAutoMessage, 'text', $sKey, $a, $isError);
+        return $this->rowWrapper ($aData, $sInput, $sAutoMessage, 'text', $sKey, $a, $isError);
     }
 
-    protected function rowSelect ($sKey, $a, $isError = false) 
+    protected function rowSelect ($aData, $sKey, $a, $isError = false) 
     {
         $sAutoMessage = '';
-        $sValue = bx_html_attribute($this->def ($sKey, $a, $sAutoMessage));
+        $sValue = bx_html_attribute($this->def ($aData, $sKey, $a, $sAutoMessage));
         $sValues = '';
         foreach ($a['vals'] as $sVal => $sTitle)
             $sValues .= '<option value="' . $sVal . '" ' . ($sVal == $sValue ? 'selected="selected"' : '') . '>' . $sTitle . '</option>';
         $sInput = '<select name="' . $sKey . '" class="bx-def-font-inputs bx-form-input-select">' . $sValues . '</select>';
-        return $this->rowWrapper ($sInput, $sAutoMessage, 'select', $sKey, $a, $isError);
+        return $this->rowWrapper ($aData, $sInput, $sAutoMessage, 'select', $sKey, $a, $isError);
     }
 
-    protected function rowWrapper ($sInput, $sAutoMessage, $sType, $sKey, $a, $isError = false)
+    protected function rowWrapper ($aData, $sInput, $sAutoMessage, $sType, $sKey, $a, $isError = false)
     {
         $sDesc = _t('_sys_inst_conf_desc', $sAutoMessage, $a['desc'], isset($a['ex']) ? $a['ex'] : _t('_sys_inst_conf_no_example'));
 
@@ -461,7 +501,7 @@ EOF;
 EOF;
     }
 
-    protected function rowSectionOpen ($sKey, $a) 
+    protected function rowSectionOpen ($aData, $sKey, $a) 
     {
         return <<<EOF
                     <div class="bx-form-section-wrapper bx-def-margin-top">
@@ -471,7 +511,7 @@ EOF;
 EOF;
     }
 
-    protected function rowSectionClose ($sKey, $a) 
+    protected function rowSectionClose ($aData, $sKey, $a) 
     {
         return <<<EOF
                             </div>
@@ -497,10 +537,10 @@ EOF;
         return mb_strlen($s) > $i && false !== strpos($s, '@') ? true : false;
     }
 
-    protected function def ($sKey, $a, &$sAutoMessage) 
+    protected function def ($aData, $sKey, $a, &$sAutoMessage) 
     {
-        if (isset($_POST[$sKey]))
-            return bx_process_pass($_POST[$sKey]);
+        if (isset($aData[$sKey]))
+            return bx_process_pass($aData[$sKey]);
         if (!empty($a['def_exp'])) {
             $s = $this->{$a['def_exp'][0]}($a['def_exp'][1]);
             if ($s) {
@@ -515,13 +555,13 @@ EOF;
 
     protected function defUrl ($foo) 
     {
-        $s = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
+        $s = "http://" . $this->_sServerHttpHost . $this->_sServerPhpSelf;
         return preg_replace("/install\/(index\.php$)/", '', $s);
     }
 
     protected function defPath ($foo) 
     {
-        $s = rtrim($_SERVER['DOCUMENT_ROOT'], '/') . $_SERVER['PHP_SELF'];
+        $s = rtrim($this->_sServerDocumentRoot, '/') . $this->_sServerPhpSelf;
         return preg_replace("/install\/(index\.php$)/", '', $s);
     }
 
