@@ -1,0 +1,6 @@
+{
+    "name": "BoonEx/Dolphin Tests",
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    }
+}

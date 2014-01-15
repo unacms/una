@@ -15,3 +15,6 @@ inc/header.inc.php
 Thumbs.db
 
 .*.swp
+
+# Exclude composer vendors folder
+tests/vendor
