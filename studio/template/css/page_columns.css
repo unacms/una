@@ -1,6 +1,4 @@
-body.bx-std-bg {
-	background-color: #ffffff;
-}
+/*--- Background ---*/
 div.bx-std-page-bg {
 	background-image: url(../images/bx-std-bg-columns.png);
 	background-repeat: repeat-y;
@@ -8,4 +6,30 @@ div.bx-std-page-bg {
 }
 div.bx-std-page-bg-empty {
     background-image: url(../images/bx-std-spacer.gif);
+}
+
+/*--- 2 columns ---*/
+div.bx-std-page-columns {
+	position: relative;
+	overflow: hidden;
+}
+div.bx-std-page-columns-cnt {
+	width: 200%;
+}
+div.bx-std-page-column-wrp {
+	position: relative;
+	float: right;
+	width: 50%;
+}
+div.bx-std-page-column {}
+div.bx-std-page-column-cnt {}
+div.bx-std-page-menu {
+	position: relative;
+	float: left;
+    width: 230px;
+}
+div.bx-std-page-content {
+	position: relative;
+	right: 100%;
+	margin-left: 230px;
 }

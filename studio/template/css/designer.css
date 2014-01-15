@@ -1,0 +1,18 @@
+/*--- Template Switcher ---*/
+div.bx-dsg-template {
+	position: relative;
+	width: 100%;
+}
+
+div.bx-dsg-icon {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	overflow: hidden;
+}
+div.bx-dsg-template-info {
+	overflow: hidden;
+}
+span.bx-dsg-template-version {
+	font-weight: bold;
+}

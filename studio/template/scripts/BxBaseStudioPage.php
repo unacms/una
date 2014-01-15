@@ -63,7 +63,7 @@ class BxBaseStudioPage extends BxDolStudioPage {
     }
 
     function getPageCss() {
-        $aCss = array('menu_top.css');
+        $aCss = array('page.css', 'menu_top.css');
         if((int)$this->aPage['index'] == 3)
             $aCss[] = 'page_columns.css';
 

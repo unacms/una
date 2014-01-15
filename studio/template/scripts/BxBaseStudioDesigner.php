@@ -36,9 +36,10 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner {
 
         $aMenu = array();
         $aMenuItems = array(
-            BX_DOL_STUDIO_DSG_TYPE_GENERAL, 
-            BX_DOL_STUDIO_DSG_TYPE_LOGO, 
-            BX_DOL_STUDIO_DSG_TYPE_ICON
+            BX_DOL_STUDIO_DSG_TYPE_GENERAL,
+            BX_DOL_STUDIO_DSG_TYPE_LOGO,
+            BX_DOL_STUDIO_DSG_TYPE_ICON,
+            BX_DOL_STUDIO_DSG_TYPE_SETTINGS
         );
         foreach($aMenuItems as $sMenuItem)
             $aMenu[] = array(
@@ -60,14 +61,44 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner {
     }
 
     protected function getGeneral() {
+    	$sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
-        
-        bx_import('BxTemplStudioSettings');
-        $oPage = new BxTemplStudioSettings(BX_DOL_STUDIO_STG_TYPE_SYSTEM, BX_DOL_STUDIO_STG_CATEGORY_TEMPLATES);
+
+        $sResult = '';
+
+        $sTemplate = getParam('template');
+        $aTemplates = get_templates_array(true, false);        
+
+	    $aTmplVarsTemplates = array ();
+	    foreach($aTemplates as $sUri => $aTemplate) {
+	        $aTmplVarsTemplates[] = array(
+	            'uri' => $sUri,
+	            'title' => htmlspecialchars_adv($aTemplate['title']),
+	            'version' => htmlspecialchars_adv($aTemplate['version']),
+	            'vendor' => htmlspecialchars_adv($aTemplate['vendor']),
+	        	'icon' => $this->getModuleIcon($aTemplate['name'], 'store'),
+	            'bx_if:default' => array (
+	                'condition' => $sUri == $sTemplate,
+	                'content' => array (),
+	            ),
+	            'bx_if:make_default' => array (
+	                'condition' => $sUri != $sTemplate,
+	                'content' => array(
+	            		'js_object' => $sJsObject,
+	                	'uri' => $sUri
+	            	),
+	            )
+	        );
+	    }
+
+	    $sContent  = $sResult ? MsgBox($sResult, 10) : '';
+	    $sContent .= $oTemplate->parseHtmlByName('templates.html', array(
+	        'bx_repeat:templates' => $aTmplVarsTemplates,
+	    ));
 
         $aTmplVars = array(
             'js_object' => $this->getPageJsObject(),
-        	'bx_repeat:blocks' => $oPage->getPageCode(),
+        	'bx_repeat:blocks' => $sContent,
         );
 
         return $oTemplate->parseHtmlByName('designer.html', $aTmplVars);
@@ -248,6 +279,20 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner {
                     'panel_bottom' => ''
                 )
             )
+        );
+
+        return $oTemplate->parseHtmlByName('designer.html', $aTmplVars);
+    }
+
+	protected function getSettings() {
+        $oTemplate = BxDolStudioTemplate::getInstance();
+        
+        bx_import('BxTemplStudioSettings');
+        $oPage = new BxTemplStudioSettings(BX_DOL_STUDIO_STG_TYPE_SYSTEM, BX_DOL_STUDIO_STG_CATEGORY_TEMPLATES);
+
+        $aTmplVars = array(
+            'js_object' => $this->getPageJsObject(),
+        	'bx_repeat:blocks' => $oPage->getPageCode(),
         );
 
         return $oTemplate->parseHtmlByName('designer.html', $aTmplVars);

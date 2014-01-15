@@ -1,0 +1,25 @@
+div.bx-dbd-block-content {
+	position: relative;
+}
+
+/*--- Versions block ---*/
+div.bx-dbd-virsion-image {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+div.bx-dbd-virsion-info {
+	position: relative;
+	min-height: 110px;
+	margin-left: 120px;
+}
+div.bx-dbd-vi-column {
+	position: relative;
+	float: left;
+	width: 50%;
+}
+div.bx-dbd-update-script span {
+	line-height: 26px;
+	line-height: 1.6rem;
+}
+/*--- Space Usage block ---*/

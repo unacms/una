@@ -96,7 +96,7 @@ class BxDolStudioDesign extends BxTemplStudioPage {
 
         $aResult = array('code' => 0, 'message' => _t('_adm_scs_operation_done'));
         if((int)$aTemplate['enabled'] == 0) {
-            $aResult['content'] = $oTemplate->parseHtmlByName('page_content.html', array(
+            $aResult['content'] = $oTemplate->parseHtmlByName('page_content_2_col.html', array(
                 'page_menu_code' => $this->getPageMenu(),
                 'page_main_code' => $this->getPageCode()
             ));

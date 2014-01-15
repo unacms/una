@@ -3415,6 +3415,10 @@ INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
 SET @iIdHome = LAST_INSERT_ID();
 
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
+(4, 'dashboard', '_adm_page_cpt_dashboard', '_adm_page_cpt_dashboard', 'pi-dashboard.png');
+SET @iIdDashboard = LAST_INSERT_ID();
+
+INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
 (3, 'settings', '_adm_page_cpt_settings', '_adm_page_cpt_settings', 'pi-settings.png');
 SET @iIdSettings = LAST_INSERT_ID();
 
@@ -3464,7 +3468,7 @@ INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `capt
 INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 2);
 
 INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
-(0, 'system', '{url_studio}dashboard.php', '', 'wi-dashboard.png', '_adm_wgt_cpt_dashboard', '435', '');
+(@iIdDashboard, 'system', '{url_studio}dashboard.php', '', 'wi-dashboard.png', '_adm_wgt_cpt_dashboard', '', '');
 INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 3);
 
 

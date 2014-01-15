@@ -14,6 +14,7 @@ bx_import('BxDolStudioDesignerQuery');
 define('BX_DOL_STUDIO_DSG_TYPE_GENERAL', 'general');
 define('BX_DOL_STUDIO_DSG_TYPE_LOGO', 'logo');
 define('BX_DOL_STUDIO_DSG_TYPE_ICON', 'icon');
+define('BX_DOL_STUDIO_DSG_TYPE_SETTINGS', 'settings');
 
 define('BX_DOL_STUDIO_DSG_TYPE_DEFAULT', 'general');
 
@@ -41,6 +42,12 @@ class BxDolStudioDesigner extends BxTemplStudioPage {
                         $aResult = array('code' => 2, 'message' => _t('_adm_dsg_err_remove_old_logo'));
 	                break;
 
+				case 'make_default':
+	                $aResult = array('code' => 0, 'message' => '');
+                    if(!$this->makeDefault())
+                        $aResult = array('code' => 2, 'message' => _t('_adm_dsg_err_make_default'));
+	                break;
+
 	            case 'get-page-by-type':
 	                $sValue = bx_process_input(bx_get('dsg_value'));
 	                if(empty($sValue))
@@ -55,6 +62,15 @@ class BxDolStudioDesigner extends BxTemplStudioPage {
             echo $oJson->encode($aResult);
             exit;
         }
+    }
+
+    function makeDefault() {
+    	$sValue = bx_get('dsg_value');
+    	if($sValue === false)
+    		return false;
+
+    	$sValue = bx_process_input($sValue);
+    	return $this->oDb->setParam('template', $sValue);
     }
 
     function submitLogo(&$oForm) {
