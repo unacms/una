@@ -94,32 +94,6 @@ div.bx-std-pcap-mp-right div.bx-std-pcap-action {
     float: right;
 }
 
-div.bx-std-page-columns {
-	position: relative;
-	overflow: hidden;
-}
-div.bx-std-page-columns-cnt {
-	width: 200%;
-}
-div.bx-std-page-column-wrp {
-	position: relative;
-	float: right;
-	width: 50%;
-}
-div.bx-std-page-column {}
-div.bx-std-page-column-cnt {}
-div.bx-std-page-menu {
-	position: relative;
-	float: left;
-    width: 230px;
-}
-div.bx-std-page-content {
-	position: relative;
-	right: 100%;
-	margin-left: 230px;
-}
-
-
 /**
  * Page Menu (Left Side)
  */
