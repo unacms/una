@@ -12,7 +12,7 @@ http://getcomposer.org/doc/00-intro.md#installation-nix
 
 2. Install dependences.
 
-Run:
+Run the following:
 ```
 composer.phar install
 ```
