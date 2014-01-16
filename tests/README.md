@@ -30,5 +30,5 @@ Run the following command from /tests/ folder after installation:
 ```
 or:
 ```bash
-/path/to/bin/php ./vendor/bin/phpunit 
+/path/to/bin/php ./vendor/bin/phpunit
 ```
