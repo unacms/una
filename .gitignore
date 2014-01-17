@@ -16,5 +16,7 @@ Thumbs.db
 
 .*.swp
 
-# Exclude composer vendors folder
+# Exclude tests files
+build.properties
 tests/vendor
+tests/composer.phar

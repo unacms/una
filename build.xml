@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Dolphin" basedir="." default="test">
+
+    <property file="${project.basedir}/build.properties" override="true" />
+
+    <if>
+        <not><isset property="composer" /></not>
+        <then><property name="composer" value="${project.basedir}/tests/composer.phar" override="yes" /></then>
+    </if> 
+
+    <if>
+        <not><isset property="php" /></not>
+        <then><property name="php" value="php" override="yes" /></then>
+    </if> 
+
+    <!-- ============================================  -->
+    <!-- Target: prepare                               -->
+    <!-- ============================================  -->
+    <target name="prepare">
+        <echo msg="Prepage: installing necessary components" />
+        <exec command="${composer} install" dir="${project.basedir}/tests" checkreturn="true" />
+    </target>
+
+    <!-- ============================================  -->
+    <!-- Target: install                               -->
+    <!-- ============================================  -->
+    <target name="install" depends="prepare">
+        <echo msg="Installing..." />
+        <exec command="${php} cmd.php" dir="${project.basedir}/install" checkreturn="true" />
+    </target>
+
+    <!-- ============================================  -->
+    <!-- (DEFAULT) Target: test                        -->
+    <!-- ============================================  -->
+    <target name="test">
+        <echo msg="Testing..." />
+        <exec command="${php} vendor/bin/phpunit" dir="${project.basedir}/tests" checkreturn="true" />
+    </target>
+
+    <!-- ============================================  -->
+    <!-- Target: dist                                  -->
+    <!-- ============================================  -->
+    <target name="dist">
+        <echo msg="TODO: Make distributive..." />
+    </target>
+
+    <!-- ============================================  -->
+    <!-- Target: clean                                 --> 
+    <!-- ============================================  -->
+    <target name="clean">
+        <echo msg="Cleaning..." />
+        <delete dir="${project.basedir}/tests/vendor" quiet="true" />
+        <delete includeemptydirs="true">
+            <fileset dir="${project.basedir}/cache">
+                <include name="**/*" />
+                <exclude name=".htaccess" />
+            </fileset>
+        </delete>
+        <delete includeemptydirs="true">
+            <fileset dir="${project.basedir}/cache_public">
+                <include name="**/*" />
+                <exclude name=".htaccess" />
+            </fileset>
+        </delete>
+        <delete includeemptydirs="true">
+            <fileset dir="${project.basedir}/tmp">
+                <include name="**/*" />
+                <exclude name=".htaccess" />
+            </fileset>
+        </delete>
+    </target>
+</project>
