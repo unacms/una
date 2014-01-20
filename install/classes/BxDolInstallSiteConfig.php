@@ -32,7 +32,7 @@ class BxDolInstallSiteConfig
 
         $this->_isAutologin = $isAutologin;
 
-        $this->_sSqlDb = BX_INSTALL_DIR . 'sql/v70.sql';
+        $this->_sSqlDb = BX_INSTALL_DIR . 'sql/system.sql';
         $this->_sSqlAddon = BX_INSTALL_DIR . 'sql/addon.sql';
         $this->_sPatternHeader = BX_INSTALL_DIR . 'patterns/header.inc.php';
 
