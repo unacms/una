@@ -15,7 +15,7 @@ define ('BX_DOL_VER', '8.0.0');
 define ('BX_INSTALL_DEFAULT_LANGUAGE', 'en');
 
 define ('BX_INSTALL_URL_ROOT', '../');
-define ('BX_INSTALL_URL_MODULES', '../modules/');
+define ('BX_INSTALL_URL_MODULES', BX_INSTALL_URL_ROOT . 'modules/');
 
 $aPathInfo = pathinfo(__FILE__);
 define ('BX_INSTALL_DIR', $aPathInfo['dirname'] . '/');
@@ -25,7 +25,7 @@ define ('BX_INSTALL_DIR_PLUGINS', BX_INSTALL_DIR_ROOT . 'plugins/');
 define ('BX_INSTALL_DIR_TEMPLATES', BX_INSTALL_DIR . 'templates/');
 define ('BX_INSTALL_DIR_CLASSES', BX_INSTALL_DIR . 'classes/');
 
-define ('BX_INSTALL_PATH_HEADER', '../inc/header.inc.php');
+define ('BX_INSTALL_PATH_HEADER', BX_INSTALL_DIR_ROOT . 'inc/header.inc.php');
 
 if (!defined('BX_DOL_MODULE_TYPE_MODULE')) {
     define('BX_DOL_MODULE_TYPE_MODULE', 'module');

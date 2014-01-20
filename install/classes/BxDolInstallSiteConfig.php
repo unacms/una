@@ -416,6 +416,7 @@ EOF;
         $aMarkers['admin_pwd_hash'] = encryptUserPwd($a['admin_password'], $aMarkers['admin_pwd_salt']);
         $aMarkers['current_timestamp'] = time();
         $aMarkers['version'] = BX_DOL_VER;
+        $aMarkers['time'] = time();
         $aMarkers['secret'] = genRndPwd(11);
 
         return $aMarkers;

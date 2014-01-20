@@ -1,11 +1,11 @@
 --
--- Database: v 7.0.6
+-- Database: v 8.0
 --
 
 -- --------------------------------------------------------
 
 SET NAMES 'utf8';
-DROP TABLE IF EXISTS `sys_categories`, `sys_keys`, `sys_objects_editor`, `sys_objects_captcha`, `sys_objects_social_sharing`, `sys_objects_categories`, `sys_objects_cmts`, `sys_cmts_images`, `sys_cmts_images_preview`, `sys_cmts_images2entries`, `sys_email_templates`, `sys_options`, `sys_options_cats`, `sys_ip_list`, `sys_ip_members_visits`, `sys_localization_categories`, `sys_localization_keys`, `sys_localization_languages`, `sys_localization_string_params`, `sys_localization_strings`, `sys_acl_actions`, `sys_acl_actions_track`, `sys_acl_matrix`, `sys_acl_level_prices`, `sys_acl_levels`, `sys_sessions`, `sys_acl_levels_members`, `sys_objects_search`, `sys_stat_site`, `sys_alerts`, `sys_alerts_handlers`, `sys_injections`, `sys_injections_admin`, `sys_modules`, `sys_modules_file_tracks`, `sys_permalinks`, `sys_objects_privacy`, `sys_privacy_defaults`, `sys_privacy_groups`, `sys_privacy_members`, `sys_tags`, `sys_objects_tag`, `sys_transactions`, `sys_objects_auths`, `sys_objects_vote`, `sys_objects_view`, `sys_cron_jobs`, `sys_dnsbl_rules`, `sys_dnsbl_block_log`, `sys_dnsbluri_zones`, `sys_menu_mobile`, `sys_menu_mobile_pages`, `sys_objects_storage`, `sys_objects_uploader`, `sys_storage_user_quotas`, `sys_storage_tokens`, `sys_storage_ghosts`, `sys_storage_mime_types`, `sys_objects_transcoder_images`, `sys_transcoder_images_files`, `sys_transcoder_images_filters`,`sys_accounts`,`sys_profiles`;
+DROP TABLE IF EXISTS `sys_categories`, `sys_keys`, `sys_objects_editor`, `sys_objects_captcha`, `sys_objects_social_sharing`, `sys_objects_categories`, `sys_objects_cmts`, `sys_cmts_images`, `sys_cmts_images_preview`, `sys_cmts_images2entries`, `sys_email_templates`, `sys_options`, sys_options_types, `sys_options_categories`, `sys_ip_list`, `sys_ip_members_visits`, `sys_localization_categories`, `sys_localization_keys`, `sys_localization_languages`, `sys_localization_string_params`, `sys_localization_strings`, `sys_acl_actions`, `sys_acl_actions_track`, `sys_acl_matrix`, `sys_acl_level_prices`, `sys_acl_levels`, `sys_sessions`, `sys_acl_levels_members`, `sys_objects_search`, `sys_stat_site`, `sys_alerts`, `sys_alerts_handlers`, `sys_injections`, `sys_injections_admin`, `sys_modules`, `sys_modules_file_tracks`, `sys_permalinks`, `sys_objects_privacy`, `sys_privacy_defaults`, `sys_privacy_groups`, `sys_tags`, `sys_objects_tag`, `sys_transactions`, `sys_objects_auths`, `sys_objects_vote`, `sys_objects_view`, `sys_cron_jobs`, `sys_dnsbl_rules`, `sys_menu_mobile`, `sys_menu_mobile_pages`, `sys_objects_storage`, `sys_objects_uploader`, `sys_storage_user_quotas`, `sys_storage_tokens`, `sys_storage_ghosts`, `sys_storage_mime_types`, `sys_objects_transcoder_images`, `sys_transcoder_images_files`, `sys_transcoder_images_filters`, `sys_accounts`, `sys_profiles`, `sys_antispam_block_log`, `sys_objects_form`, `sys_form_displays`, `sys_form_inputs`, `sys_form_display_inputs`, `sys_form_pre_lists`, `sys_form_pre_values`, `sys_menu_templates`, `sys_objects_menu`, `sys_menu_sets`, `sys_menu_items`, `sys_objects_grid`, `sys_grid_fields`, `sys_grid_actions`, `sys_objects_connection`, `sys_profiles_conn_subscriptions`, `sys_profiles_conn_friends`, `sys_objects_page`, `sys_pages_layouts`, `sys_pages_design_boxes`, `sys_pages_blocks`, `sys_images`, `sys_std_pages`, `sys_std_widgets`, `sys_std_pages_widgets`;
 ALTER DATABASE DEFAULT CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci';
 
 
@@ -245,24 +245,26 @@ SET @iCategoryId = LAST_INSERT_ID();
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryId, 'cmdDay', '', '10', 'digit', '', '', '', 1),
 (@iCategoryId, 'sys_version', '', '8.0.0', 'digit', '', '', '', 2),
+(@iCategoryId, 'sys_install_time', '', '0', 'digit', '', '', '', 3),
 
-(@iCategoryId, 'sys_html_fields', '', 'a:1:{s:6:"system";a:4:{i:0;s:12:"POST.message";i:1;s:15:"REQUEST.message";i:2;s:12:"POST.CmtText";i:3;s:15:"REQUEST.CmtText";}}', 'text', '', '', '', 3),
-(@iCategoryId, 'sys_json_fields', '', '', 'text', '', '', '', 4),
-(@iCategoryId, 'sys_exceptions_fields', '', '', 'text', '', '', '', 5),
+(@iCategoryId, 'sys_html_fields', '', 'a:1:{s:6:"system";a:4:{i:0;s:12:"POST.message";i:1;s:15:"REQUEST.message";i:2;s:12:"POST.CmtText";i:3;s:15:"REQUEST.CmtText";}}', 'text', '', '', '', 10),
+(@iCategoryId, 'sys_json_fields', '', '', 'text', '', '', '', 11),
+(@iCategoryId, 'sys_exceptions_fields', '', '', 'text', '', '', '', 12),
 
-(@iCategoryId, 'sys_site_logo', '', '0', 'digit', '', '', '', 6),
-(@iCategoryId, 'sys_site_logo_alt', '_adm_dsg_txt_alt_text', '0', 'text', '', '', '', 7),
-(@iCategoryId, 'sys_site_icon', '', '0', 'digit', '', '', '', 8),
-(@iCategoryId, 'main_div_width', '', '998px', 'digit', '', '', '', 9),
+(@iCategoryId, 'sys_site_logo', '', '0', 'digit', '', '', '', 20),
+(@iCategoryId, 'sys_site_logo_alt', '_adm_dsg_txt_alt_text', '0', 'text', '', '', '', 21),
+(@iCategoryId, 'sys_site_icon', '', '0', 'digit', '', '', '', 22),
+(@iCategoryId, 'main_div_width', '', '998px', 'digit', '', '', '', 25),
 
-(@iCategoryId, 'sys_template_cache_image_enable', '', '', 'checkbox', '', '', '', 10),
-(@iCategoryId, 'sys_template_cache_image_max_size', '', '5', 'digit', '', '', '', 11),
+(@iCategoryId, 'sys_template_cache_image_enable', '', '', 'checkbox', '', '', '', 30),
+(@iCategoryId, 'sys_template_cache_image_max_size', '', '5', 'digit', '', '', '', 31),
 
-(@iCategoryId, 'sys_email_confirmation', '', 'on', 'checkbox', '', '', '', 12),
-(@iCategoryId, 'sys_redirect_after_account_added', '', 'page.php?i=create-persons-profile', 'digit', '', '', '', 13),
+(@iCategoryId, 'sys_email_confirmation', '', 'on', 'checkbox', '', '', '', 40),
 
-(@iCategoryId, 'sys_editor_default', '', 'sys_tinymce', 'digit', '', '', '', 14),
-(@iCategoryId, 'sys_captcha_default', '', 'sys_recaptcha', 'digit', '', '', '', 15);
+(@iCategoryId, 'sys_redirect_after_account_added', '', 'page.php?i=create-persons-profile', 'digit', '', '', '', 50),
+
+(@iCategoryId, 'sys_editor_default', '', 'sys_tinymce', 'digit', '', '', '', 60),
+(@iCategoryId, 'sys_captcha_default', '', 'sys_recaptcha', 'digit', '', '', '', 61);
 
 
 --
