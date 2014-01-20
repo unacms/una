@@ -62,7 +62,7 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard {
     	return $oTemplate->parseHtmlByName('dbd_versions.html', array(
     		'domain' => $oDb->getParam('site_title'),
     		'version' => $oDb->getParam('sys_version'),
-    		'installed' => bx_time_js(time()-1000)
+    		'installed' => bx_time_js(getParam('sys_install_time')),
     	));
     }
 
