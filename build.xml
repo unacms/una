@@ -6,12 +6,24 @@
     <if>
         <not><isset property="composer" /></not>
         <then><property name="composer" value="${project.basedir}/tests/composer.phar" override="yes" /></then>
-    </if> 
-
+    </if>
     <if>
         <not><isset property="php" /></not>
         <then><property name="php" value="php" override="yes" /></then>
-    </if> 
+    </if>
+
+    <if>
+        <not><isset property="db_name" /></not>
+        <then><property name="db_name" value="test" override="yes" /></then>
+    </if>
+    <if>
+        <not><isset property="db_user" /></not>
+        <then><property name="db_user" value="root" override="yes" /></then>
+    </if>
+    <if>
+        <not><isset property="db_password" /></not>
+        <then><property name="db_password" value="" override="yes" /></then>
+    </if>
 
     <!-- ============================================  -->
     <!-- Target: prepare                               -->
@@ -26,7 +38,7 @@
     <!-- ============================================  -->
     <target name="install" depends="prepare">
         <echo msg="Installing..." />
-        <exec command="${php} cmd.php" dir="${project.basedir}/install" checkreturn="true" />
+        <exec command="${php} cmd.php --db_name=${db_name} --db_user=${db_user} --db_password=${db_password}" dir="${project.basedir}/install" checkreturn="true" />
     </target>
 
     <!-- ============================================  -->
