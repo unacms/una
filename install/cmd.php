@@ -110,7 +110,8 @@ class BxDolInstallCmd
 
         // include necessary files to perform install
         $_REQUEST['action'] = 'empty';
-        require_once($this->_sHeaderPath);
+        $aPathInfo = pathinfo(__FILE__);
+        require_once($aPathInfo['dirname'] . '/index.php');
     }
 
     public function checkRequirements()
