@@ -71,6 +71,8 @@ class BxDolInstallCmd
         $this->checkRequirements();
         $this->checkPermissions();
         $this->createSiteConfig();
+
+        $this->finish($this->_aReturnCodes['success']['code'], $this->_aReturnCodes['success']['msg']);
     }
 
     protected function getOptions()

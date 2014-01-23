@@ -60,6 +60,7 @@ class BxDolStudioToolsAudit extends BxDol
             'safe_mode' => array('op' => '=', 'val' => false, 'type' => 'bool'),
             'short_open_tag' => array('op' => '=', 'val' => true, 'type' => 'bool'),
             'disable_functions' => array('op' => '=', 'val' => ''),
+            'php module: mysql' => array('op' => 'module', 'val' => 'mysql'),
             'php module: curl' => array('op' => 'module', 'val' => 'curl'),
             'php module: gd' => array('op' => 'module', 'val' => 'gd'),
             'php module: mbstring' => array('op' => 'module', 'val' => 'mbstring'),
