@@ -6,7 +6,7 @@
  * @defgroup    DolphinCore Dolphin Core
  * @{
  */
-syntax error here!
+
 define('BX_DATA_TEXT', 1); ///< regular text data type
 define('BX_DATA_TEXT_MULTILINE', 2); ///< regular multiline text data type
 define('BX_DATA_INT', 3); ///< integer data type
