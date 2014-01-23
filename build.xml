@@ -81,4 +81,10 @@
             </fileset>
         </delete>
     </target>
+
+    <target name="clean_install" depends="clean">
+        <echo msg="Install cleaning..." />
+        <delete file="${project.basedir}/inc/header.inc.php" quiet="true" />
+    </target>
+
 </project>
