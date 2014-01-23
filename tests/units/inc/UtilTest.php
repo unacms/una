@@ -16,12 +16,12 @@ class UtilTest extends PHPUnit_Framework_TestCase
     public function providerForReturnBytes()
     {
         return array(
-            array('2k', 2048),
-            array('2K', 2048),
-            array('2 k', 2048),
-            array('2 K', 2048),
-            array('1m', 1048576),
-            array('1g', 1073741824),
+            array('2k', 20480),
+            array('2K', 20480),
+            array('2 k', 20480),
+            array('2 K', 20480),
+            array('1m', 10485760),
+            array('1g', 10737418240),
         );
     }
 }
