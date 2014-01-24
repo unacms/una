@@ -2,6 +2,8 @@
 <project name="Dolphin" basedir="." default="test">
 
     <property file="${project.basedir}/build.properties" override="true" />
+    <property name="build" value="0" override="yes" />
+
 
     <if>
         <not><isset property="composer" /></not>
@@ -11,6 +13,7 @@
         <not><isset property="php" /></not>
         <then><property name="php" value="php" override="yes" /></then>
     </if>
+
 
     <if>
         <not><isset property="db_name" /></not>
@@ -25,6 +28,43 @@
         <then><property name="db_password" value="" override="yes" /></then>
     </if>
 
+
+    <if>
+        <not><isset property="http_host" /></not>
+        <then><property name="http_host" value="localhost" override="yes" /></then>
+    </if>
+    <if>
+        <not><isset property="http_path" /></not>
+        <then><property name="http_path" value="/" override="yes" /></then>
+    </if>
+    <if>
+        <not><isset property="php_self" /></not>
+        <then><property name="php_self" value="${http_path}install/index.php" override="yes" /></then>
+    </if>
+    <if>
+        <and>
+            <not><isset property="doc_root" /></not>
+            <isset property="deploy_path" />
+        </and>
+        <then><property name="doc_root" value="${deploy_path}" override="yes" /></then>
+    </if>
+
+
+    <fileset dir="${project.basedir}" defaultexcludes="true" id="files_dist">
+        <include name="**/*" />
+        <exclude name="**/*.swp" />
+        <exclude name="inc/header*" />
+        <exclude name="build.xml" />
+        <exclude name="build.properties" />
+        <exclude name="storage/**/*" />
+        <exclude name="logs/**" />
+        <exclude name="samples/**" />
+        <exclude name="scripts/**" />
+        <exclude name="tests/**" />
+        <exclude name="packages/**" />
+        <exclude name="upgrade/**" />
+    </fileset>
+
     <!-- ============================================  -->
     <!-- Target: prepare                               -->
     <!-- ============================================  -->
@@ -36,9 +76,13 @@
     <!-- ============================================  -->
     <!-- Target: install                               -->
     <!-- ============================================  -->
-    <target name="install" depends="prepare">
+    <target name="install">
         <echo msg="Installing..." />
-        <exec command="${php} cmd.php --db_name=${db_name} --db_user=${db_user} --db_password=${db_password}" dir="${project.basedir}/install" checkreturn="true" />
+        <if>
+            <not><isset property="install_base_dir" /></not>
+            <then><property name="install_base_dir" value="${project.basedir}" /></then>
+        </if>
+        <exec command="${php} cmd.php --db_name=${db_name} --db_user=${db_user} --db_password=${db_password} --server_http_host=${http_host} --server_php_self=${php_self} --server_doc_root=${doc_root}" dir="${install_base_dir}/install" checkreturn="true" />
     </target>
 
     <!-- ============================================  -->
@@ -50,10 +94,42 @@
     </target>
 
     <!-- ============================================  -->
-    <!-- Target: dist                                  -->
+    <!-- Target: package                               -->
     <!-- ============================================  -->
-    <target name="dist">
-        <echo msg="TODO: Make distributive..." />
+    <target name="package" depends="clean">
+        <tstamp />
+        <property name="package_file" value="Dolphin-${DSTAMP}-${build}.zip" override="yes" />
+        <echo msg="Packaging..." />
+
+        <mkdir dir="${project.basedir}/packages" />
+        <delete file="${project.basedir}/packages/${package_file}" quiet="true" />        
+        <zip destfile="${project.basedir}/packages/${package_file}">
+            <fileset refid="files_dist" />
+        </zip>
+
+    </target>
+
+    <!-- ============================================  -->
+    <!-- Target: deploy                                  -->
+    <!-- ============================================  -->
+    <target name="deploy">
+        <property name="deploy_path" value="/var/www" override="yes" />
+        <echo msg="Deploying to '${deploy_path}' folder..." />
+
+        <delete failonerror="true">
+            <fileset dir="${deploy_path}">
+                <include name="**/*" />
+            </fileset>
+        </delete>
+
+        <copy todir="${deploy_path}">
+            <fileset refid="files_dist" />
+        </copy>
+
+        <phingcall target="install">
+            <property name="install_base_dir" value="${deploy_path}" />
+        </phingcall>
+
     </target>
 
     <!-- ============================================  -->
