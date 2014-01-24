@@ -99,10 +99,10 @@
     <target name="package" depends="clean">
         <tstamp />
         <property name="package_file" value="Dolphin-${DSTAMP}-${build}.zip" override="yes" />
-        <echo msg="Packaging..." />
+        <echo msg="Packaging ${package_file} file..." />
 
         <mkdir dir="${project.basedir}/packages" />
-        <delete file="${project.basedir}/packages/${package_file}" quiet="true" />        
+        <delete file="${project.basedir}/packages/${package_file}" quiet="true" />
         <zip destfile="${project.basedir}/packages/${package_file}">
             <fileset refid="files_dist" />
         </zip>
@@ -129,6 +129,8 @@
         <phingcall target="install">
             <property name="install_base_dir" value="${deploy_path}" />
         </phingcall>
+
+        <delete dir="${deploy_path}/install" failonerror="true" />
 
     </target>
 
