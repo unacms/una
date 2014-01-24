@@ -33,6 +33,7 @@ class BxDolStudioTools extends BxDolIO
             'cache',
             'cache_public',
             'tmp',
+            'storage',
 //            'plugins/ffmpeg/ffmpeg.exe',
         );
 
