@@ -22,7 +22,7 @@ class BxDolInstallCmd
         'requirements failed' => array ('code' => 2, 'msg' => 'Requirements aren\'t met.'),
         'permissions failed' => array ('code' => 3, 'msg' => 'Folders and/or files permissions aren\'t correct.'),
         'create config failed' => array ('code' => 4, 'msg' => 'Form data was not submitted.'),
-        'module failed' => array ('code' => 5, 'msg' => 'Additional module install failed.'),
+        'module failed' => array ('code' => 5, 'msg' => 'Additional module install failed. '),
     );
 
     public function __construct() 
@@ -167,7 +167,7 @@ class BxDolInstallCmd
             foreach ($this->_aAdditionalModules as $sModuleName) {
                 $sErrorMessage = $oSiteConfig->processModuleByName($sModuleName);
                 if ($sErrorMessage)
-                    $this->finish($this->_aReturnCodes['module failed']['code'], $this->_aReturnCodes['module failed']['msg']);
+                    $this->finish($this->_aReturnCodes['module failed']['code'], $this->_aReturnCodes['module failed']['msg'] . strip_tags($sErrorMessage));
             }
         }
     }

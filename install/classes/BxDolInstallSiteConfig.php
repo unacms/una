@@ -391,6 +391,7 @@ EOF;
     {
         if (!file_exists(BX_INSTALL_PATH_HEADER))
             return _t('_sys_inst_msg_script_isnt_installed');
+
         require_once(BX_INSTALL_PATH_HEADER);
         bx_import('BxDolStudioInstallerUtils');
         bx_import('BxDolLanguages');
@@ -405,7 +406,7 @@ EOF;
             foreach ($aActions as $sAction) {
                 $aResult = BxDolStudioInstallerUtils::getInstance()->perform($aConfig['home_dir'], $sAction);
                 if ((!isset($aResult['result']) || !$aResult['result']) && !empty($aResult['message']))
-                    return $aResult['message'];
+                    return _t('_sys_inst_msg_module_error', $aConfig['title'], $aResult['message']);
             }
         }
 
