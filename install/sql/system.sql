@@ -2,6 +2,8 @@
 -- Database: v 8.0
 --
 
+SET @sSysVersion = '8.0.0';
+
 -- --------------------------------------------------------
 
 SET NAMES 'utf8';
@@ -244,7 +246,7 @@ SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryId, 'cmdDay', '', '10', 'digit', '', '', '', 1),
-(@iCategoryId, 'sys_version', '', '8.0.0', 'digit', '', '', '', 2),
+(@iCategoryId, 'sys_version', '', @sSysVersion, 'digit', '', '', '', 2),
 (@iCategoryId, 'sys_install_time', '', '0', 'digit', '', '', '', 3),
 
 (@iCategoryId, 'sys_html_fields', '', 'a:1:{s:6:"system";a:4:{i:0;s:12:"POST.message";i:1;s:15:"REQUEST.message";i:2;s:12:"POST.CmtText";i:3;s:15:"REQUEST.CmtText";}}', 'text', '', '', '', 10),
@@ -944,7 +946,7 @@ CREATE TABLE `sys_modules` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 INSERT INTO `sys_modules` (`type`, `name`, `title`, `vendor`, `version`, `product_url`, `update_url`, `path`, `uri`, `class_prefix`, `db_prefix`, `lang_category`, `dependencies`, `date`, `enabled`) VALUES
-('module', 'system', 'System', 'BoonEx', '8.0.0', '', '', '', 'system', 'Bx', 'sys_', 'System', '', 0, 1);
+('module', 'system', 'System', 'BoonEx', @sSysVersion, '', '', '', 'system', 'Bx', 'sys_', 'System', '', 0, 1);
 
 
 CREATE TABLE `sys_modules_file_tracks` (

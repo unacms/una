@@ -15,12 +15,14 @@ class BxDolInstallCmd
     protected $_sHeaderPath;
     protected $_aSiteConfig;
     protected $_isQuiet = false;
+    protected $_aAdditionalModules = array();
     protected $_aReturnCodes = array(
         'success' => array ('code' => 0, 'msg' => 'Success.'),
         'already installed' => array ('code' => 0, 'msg' => 'Script is already installed. Can\'t perform install.'),
         'requirements failed' => array ('code' => 2, 'msg' => 'Requirements aren\'t met.'),
         'permissions failed' => array ('code' => 3, 'msg' => 'Folders and/or files permissions aren\'t correct.'),
         'create config failed' => array ('code' => 4, 'msg' => 'Form data was not submitted.'),
+        'module failed' => array ('code' => 5, 'msg' => 'Additional module install failed.'),
     );
 
     public function __construct() 
@@ -52,13 +54,16 @@ class BxDolInstallCmd
     {
         // set neccessary options
 
-        $a = getopt('hq', $this->getOptions());
+        $a = getopt('hqm:', $this->getOptions());
 
         if (isset($a['h']))
             $this->finish($this->_aReturnCodes['success']['code'], $this->getHelp());
 
         if (isset($a['q']))
             $this->_isQuiet = true;
+
+        if (isset($a['m']))
+            $this->_aAdditionalModules = explode(',', $a['m']);
 
         $this->_aSiteConfig = array_merge($this->_aSiteConfig, $a);
 
@@ -86,13 +91,21 @@ class BxDolInstallCmd
 
     protected function getHelp() 
     {
-        $s = '';
-        $s .= "Usage: php cmd.php [options]\n";
+        $s = "Usage: php cmd.php [options]\n";
+
         $s .= str_pad("\t -h", 35) . "Print this help\n";
         $s .= str_pad("\t -q", 35) . "Quiet\n";
+        $s .= str_pad("\t -m <module1,module2,...,moduleN>", 35) . "Install additional modules, by module name (ex:bx_notes)\n";
+
         foreach ($this->_aSiteConfig as $sKey => $sVal)
             if ('site_config' != $sKey)
                 $s .= str_pad("\t --{$sKey}=<value>", 35) . "Default value: {$sVal}\n";
+
+        $s .= "\n";
+        $s .= "Return codes:\n";
+        foreach ($this->_aReturnCodes as $r)
+            $s .= str_pad("\t {$r['code']}", 5) . "{$r['msg']}\n";
+
         return $s;
     }
 
@@ -148,6 +161,15 @@ class BxDolInstallCmd
 
         if (true !== $mixedResult)
             $this->finish($this->_aReturnCodes['create config failed']['code'], $sErrorMessage ? $sErrorMessage : $this->_aReturnCodes['create config failed']['msg']);
+
+        // install custom additional modules
+        if (!empty($this->_aAdditionalModules)) {
+            foreach ($this->_aAdditionalModules as $sModuleName) {
+                $sErrorMessage = $oSiteConfig->processModuleByName($sModuleName);
+                if ($sErrorMessage)
+                    $this->finish($this->_aReturnCodes['module failed']['code'], $this->_aReturnCodes['module failed']['msg']);
+            }
+        }
     }
 }
 

@@ -357,27 +357,13 @@ EOF;
 
     public function processModules ($a)
     {
-        require_once(BX_INSTALL_PATH_HEADER);
-        bx_import('BxDolStudioInstallerUtils');
-        bx_import('BxDolLanguages');
-        BxDolLanguages::getInstance();        
-        $oModulesTools = new BxDolInstallModulesTools();
-
-        $aActions = array ('install', 'enable');
         $aTypes = array (BX_DOL_MODULE_TYPE_LANGUAGE, BX_DOL_MODULE_TYPE_TEMPLATE);
         foreach ($aTypes as $sModuleType) {
-            $aModules = $oModulesTools->getModules($sModuleType);
-            foreach ($aModules as $aConfig) {
-                $sUri = $aConfig['home_uri'];
-                if (empty($a[$sModuleType]) || $a[$sModuleType] != $sUri)
-                    continue;
-
-                foreach ($aActions as $sAction) {
-                    $aResult = BxDolStudioInstallerUtils::getInstance()->perform($aConfig['home_dir'], $sAction);
-                    if ((!isset($aResult['result']) || !$aResult['result']) && !empty($aResult['message']))
-                        return array(BX_INSTALL_ERR_GENERAL => $aResult['message']);
-                }
-            }            
+            if (empty($a[$sModuleType]))
+                continue;
+            $sErrorMessage = $this->processModuleByUri ($a[$sModuleType], array ('install', 'enable'), $sModuleType);
+            if ($sErrorMessage)
+                return array(BX_INSTALL_ERR_GENERAL => $sErrorMessage);
         } 
 
         bx_import('BxDolAccount');
@@ -389,6 +375,41 @@ EOF;
             bx_login($oAccount->id());
 
         return array();
+    }
+
+    public function processModuleByUri ($sModuleUri, $aActions = array ('install', 'enable'), $sModuleType = null)
+    {
+        return $this->processModuleByField('home_uri', $sModuleUri, $aActions, $sModuleType);
+    }
+
+    public function processModuleByName ($sModuleName, $aActions = array ('install', 'enable'), $sModuleType = null)
+    {
+        return $this->processModuleByField('name', $sModuleName, $aActions, $sModuleType);
+    }
+
+    protected function processModuleByField ($sField, $sModuleUri, $aActions = array ('install', 'enable'), $sModuleType = null)
+    {
+        if (!file_exists(BX_INSTALL_PATH_HEADER))
+            return _t('_sys_inst_msg_script_isnt_installed');
+        require_once(BX_INSTALL_PATH_HEADER);
+        bx_import('BxDolStudioInstallerUtils');
+        bx_import('BxDolLanguages');
+        BxDolLanguages::getInstance();        
+        $oModulesTools = new BxDolInstallModulesTools();
+
+        $aModules = $oModulesTools->getModules($sModuleType);
+        foreach ($aModules as $aConfig) {
+            if ($sModuleUri != $aConfig[$sField])
+                continue;
+
+            foreach ($aActions as $sAction) {
+                $aResult = BxDolStudioInstallerUtils::getInstance()->perform($aConfig['home_dir'], $sAction);
+                if ((!isset($aResult['result']) || !$aResult['result']) && !empty($aResult['message']))
+                    return $aResult['message'];
+            }
+        }
+
+        return '';
     }
 
     protected function dbErrors2ErrorFields ($a) 
