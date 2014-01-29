@@ -81,11 +81,12 @@ bx_import('BxDolImageTranscoderQuery');
  * @endcode
  *
  */
-class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject {
-
+class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject 
+{
     protected $_aObject; ///< object properties
     protected $_oStorage; ///< storage object, transcoded images are stored here
     protected $_oDb; ///< database queries object
+    protected $_sRetinaSuffix = '@2x'; ///< handler suffix for retina image file
 
     /**
      * constructor
@@ -204,12 +205,20 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject {
      * Called automatically, upon original file deletetion.
      */
     public function onDeleteFileOrig($mixedHandler) {
-
+        // delete main file
         $iFileId = $this->_oDb->getFileIdByHandler($mixedHandler);
         if (!$iFileId)
             return false;
 
-        return $this->_oStorage->deleteFile($iFileId);
+        if (!$this->_oStorage->deleteFile($iFileId)) 
+            return false;
+
+        // delete retina file
+        $iFileId = $this->_oDb->getFileIdByHandler($mixedHandler . $this->_sRetinaSuffix);
+        if ($iFileId)
+            $this->_oStorage->deleteFile($iFileId);
+
+        return true;
     }
 
     /**
@@ -242,13 +251,15 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject {
     /**
      * Get transcoded image url. 
      * If transcoded image is ready then direct url to this image is returned. 
-     * If there is not transcoded data available special url is returned, upon opening this url - image is transcoed automatically and redirects to the ready transcoed image.
+     * If there is no transcoded data available, then special url is returned, upon opening this url image is transcoded automatically and redirects to the ready transcoed image.
      * @params $mixedHandler - image handler
      * @return image url, or false on error.
      */
     public function getImageUrl($mixedHandler) {
 
         if ($this->isImageReady($mixedHandler)) {
+
+            $mixedHandler = $this->processHandlerForRetinaDevice($mixedHandler);
 
             $iFileId = $this->_oDb->getFileIdByHandler($mixedHandler);
             if (!$iFileId)
@@ -264,7 +275,8 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject {
             return $this->_oStorage->getFileUrlById($iFileId);
         }
 
-        return BX_DOL_URL_ROOT . 'image_transcoder.php?o=' . $this->_aObject['object'] . '&h=' . $mixedHandler . '&t=' . time();
+        // TODO: reconsider adding timestamp in the url
+        return BX_DOL_URL_ROOT . 'image_transcoder.php?o=' . $this->_aObject['object'] . '&h=' . $mixedHandler . '&dpx=' . $this->getDevicePixelRatio() . '&t=' . time();
     }
 
     /**
@@ -293,7 +305,7 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject {
         $sTmpFile = $this->$sMethodStoreFile($mixedHandler);
         if (!$sTmpFile) 
             return false;
-        
+
         // appply filters to tmp file
         $this->initFilters ();
         foreach ($this->_aObject['filters'] as $aParams) {
@@ -334,6 +346,8 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject {
 
         }
 
+        $mixedHandler = $this->processHandlerForRetinaDevice($mixedHandler);
+
         // store transcoded file in the storage
         $sMethodIsPrivate = 'isPrivate_' . $this->_aObject['source_type'];
         $isPrivate = $this->$sMethodIsPrivate($mixedHandler);
@@ -367,9 +381,20 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject {
         return $iCount;
     }
 
+    public function getDevicePixelRatio () {
+        if (isset($_COOKIE['devicePixelRatio']) && (!isset($this->_aObject['source_params']['disable_retina']) || !$this->_aObject['source_params']['disable_retina'])) {
+            $iDevicePixelRatio = intval($_COOKIE['devicePixelRatio']);
+            if ($iDevicePixelRatio >= 2)
+                return 2;
+        }
+        return 1;
+    }
+
     // ---------------------------
 
-    protected function isImageReady_Folder ($mixedHandler, $isCheckOutdated = true) {
+    protected function isImageReady_Folder ($mixedHandlerOrig, $isCheckOutdated = true) {
+
+        $mixedHandler = $this->processHandlerForRetinaDevice($mixedHandlerOrig);
 
         $iFileId = $this->_oDb->getFileIdByHandler($mixedHandler);
         if (!$iFileId)
@@ -380,7 +405,7 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject {
             return false;
 
         if ($isCheckOutdated) { // warning, $isCheckOutdated is partially supported for Folder source type - file modification is not checked
-            if ($this->_aObject['ts'] > $aFile['modified'] || !$this->getFilePath_Folder($mixedHandler)) { // if we changed transcoder object params or original file is deleted
+            if ($this->_aObject['ts'] > $aFile['modified'] || !$this->getFilePath_Folder($mixedHandlerOrig)) { // if we changed transcoder object params or original file is deleted
                 // delete file, so it will be recreated next time
                 if ($this->_oStorage->deleteFile($aFile['id']))
                     return false;
@@ -390,7 +415,9 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject {
         return true;
     }
 
-    protected function isImageReady_Storage ($mixedHandler, $isCheckOutdated = true) {
+    protected function isImageReady_Storage ($mixedHandlerOrig, $isCheckOutdated = true) {
+
+        $mixedHandler = $this->processHandlerForRetinaDevice($mixedHandlerOrig);
 
         $iFileId = $this->_oDb->getFileIdByHandler($mixedHandler);
         if (!$iFileId)
@@ -403,7 +430,7 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject {
         if ($isCheckOutdated) {
             $oStorageOriginal = BxDolStorage::getObjectInstance($this->_aObject['source_params']['object']);
             if ($oStorageOriginal) {
-                $aFileOriginal = $oStorageOriginal->getFile($mixedHandler);
+                $aFileOriginal = $oStorageOriginal->getFile($mixedHandlerOrig);
                 if (!$aFileOriginal || $aFileOriginal['modified'] > $aFile['modified'] || $this->_aObject['ts'] > $aFile['modified']) { // if original file was changed OR we changed transcoder object params 
                     // delete file, so it will be recreated next time
                     if ($this->_oStorage->deleteFile($aFile['id']))
@@ -515,7 +542,7 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject {
         $o->removeCropOptions ();
 
         if (isset($aParams['w']) && isset($aParams['h']))
-            $o->setSize ($aParams['w'], $aParams['h']);
+            $o->setSize ($aParams['w'] * $this->getDevicePixelRatio(), $aParams['h'] * $this->getDevicePixelRatio());
 
         if (isset($aParams['crop_resize']) && $aParams['crop_resize']) {
             $o->setAutoCrop (true);
@@ -574,6 +601,17 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject {
         $this->_oDb->oParams->clearCache();
         $oCacheDb = $this->_oDb->getDbCacheObject();
         return $oCacheDb->removeAllByPrefix('db_');
+    }
+
+    public function getDevicePixelRatioHandlerSuffix () {
+        $iDevicePixelRatio = $this->getDevicePixelRatio ();
+        if ($iDevicePixelRatio >= 2)
+            return $this->_sRetinaSuffix;
+        return '';
+    }
+
+    protected function processHandlerForRetinaDevice ($mixedHandler) {
+        return '' . $mixedHandler . $this->getDevicePixelRatioHandlerSuffix ();
     }
 
     static protected function _registerHandlersArray ($mixed, $sFunc) {

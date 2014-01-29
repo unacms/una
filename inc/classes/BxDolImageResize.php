@@ -197,7 +197,7 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
         if (!imagefilter($src_im, IMG_FILTER_GRAYSCALE)) 
             return IMAGE_ERROR_GD_FILTER_ERROR;
 
-        $writeResult = $this->_writeImageGD ($src_im, $sDstImage);
+        $writeResult = $this->_writeImageGD ($src_im, $sDstImage, $size[2]);
 
         // free memory
         imagedestroy( $src_im );
@@ -352,7 +352,7 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
         if ( !$convertResult )
             return IMAGE_ERROR_GD_RESIZE_ERROR;
 
-        $writeResult = $this->_writeImageGD ($dst_im, $sDstImage);
+        $writeResult = $this->_writeImageGD ($dst_im, $sDstImage, $size[2]);
 
         // free memory
         if ( $dst_im != $src_im )
@@ -532,7 +532,7 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
         }
     }
 
-    function _writeImageGD ($src_im, $sDstImage) {
+    function _writeImageGD ($src_im, $sDstImage, $iSrcImageType) {
 
         $writeResult = false;
 
@@ -551,7 +551,7 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
                 break;
 
             default:
-                switch ( $size[2] ) {
+                switch ($iSrcImageType) {
                     case IMAGE_TYPE_GIF:
                         $writeResult = imagegif( $src_im, $sDstImage );
                         break;

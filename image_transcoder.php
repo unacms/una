@@ -1,9 +1,21 @@
 <?php
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
+
+if (isset($_GET['devicePixelRatio'])) {
+    $sDpr = $_GET['devicePixelRatio'];
+
+    if ('' . ceil(intval($sDpr)) !== $sDpr)
+        $sDpr = '1';
+
+    setcookie('devicePixelRatio', $sDpr, time()+60*60*24*365);
+    exit();
+}
 
 ob_start();
 
@@ -23,13 +35,16 @@ if (!$oTranscoder) {
 
 ob_end_clean();
 
-$sImageUrl = '';
 if (!$oTranscoder->isImageReady($sHandler) && !$oTranscoder->transcode ($sHandler)) {
     bx_transcoder_error_occured();
     exit;
 }
 
 $sImageUrl = $oTranscoder->getImageUrl($sHandler);
+if (!$sImageUrl) {
+    bx_transcoder_error_occured();
+    exit;
+}
 
 header('HTTP/1.1 301 Moved Permanently');
 header('Location: ' . $sImageUrl);
@@ -43,4 +58,6 @@ function bx_transcoder_error_occured($sMethod = 'displayPageNotFound') {
     $oTemplate = BxDolTemplate::getInstance();
     $oTemplate->$sMethod ();
 }
+
+/** @} */
 

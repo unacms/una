@@ -55,6 +55,17 @@
             $('#bx-toolbar').css({opacity: 0.9});
         });
 
+        (function(w) {
+            var dpr = (w.devicePixelRatio === undefined ? 1 : w.devicePixelRatio);
+            if (!!w.navigator.standalone) {
+                var r = new XMLHttpRequest();
+                r.open('GET', sUrlRoot + 'image_transcoder.php?devicePixelRatio=' + dpr, false);
+                r.send();
+            } else {
+                $.cookie('devicePixelRatio', dpr, {expires: 365, path: '/'});
+            }
+        })(window);
+
     </script>
     __extra_js__
 
