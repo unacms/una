@@ -1,7 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <phpunit bootstrap="bootstrap.php">
   <testsuites>
     <testsuite name="AllTests">
-      <directory>units</directory>
+      <directory>./units</directory>
     </testsuite>
   </testsuites>
+  <filter>
+    <whitelist processUncoveredFilesFromWhitelist="false">
+      <directory suffix=".php">./../inc/</directory>
+    </whitelist>
+  </filter>
+  <logging>
+    <log type="coverage-clover" target="../logs/clover.xml"/>
+    <log type="junit" target="./../logs/junit.xml" />
+  </logging>
 </phpunit>

@@ -1,4 +1,5 @@
 # Exclude system cache folders
+packages/*
 cache/*
 cache_public/*
 tmp/*
