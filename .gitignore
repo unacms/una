@@ -4,7 +4,7 @@ cache_public/*
 tmp/*
 
 # Exclude main config file
-inc/header.inc.php
+inc/header*
   
 # Exclude OS X folder attributes
 .DS_Store
