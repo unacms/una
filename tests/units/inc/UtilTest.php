@@ -1,11 +1,49 @@
 <?php
 
 /**
- * This test performs test install, it can do it only if script is not installed yet.
+ * Test util functions
  */
 class UtilTest extends PHPUnit_Framework_TestCase
 {
     /**
+     * @see clear_xss
+     */
+    public function testClearXssAdmin()
+    {
+        // if user is admin then "purify" is never called
+        $this->_testClearXss(1, 'never');
+    }
+
+    /**
+     * @see clear_xss
+     */
+    public function testClearXssNotAdmin()
+    {
+        // if user is not admin then "purify" is called once
+        $this->_testClearXss(0, 'once');
+    }
+
+    protected function _testClearXss($isAdmin, $sCalled)
+    {
+        // create mock object instance of HTMLPurifier class
+        require_once(BX_DIRECTORY_PATH_PLUGINS . 'htmlpurifier/HTMLPurifier.standalone.php');
+        $GLOBALS['oHtmlPurifier'] = $this->getMock('HTMLPurifier');
+
+        // set admin or not admin user
+        $GLOBALS['logged']['admin'] = $isAdmin;
+
+        // check if we have instance of correct class
+        $this->assertInstanceOf('HTMLPurifier', $GLOBALS['oHtmlPurifier']);
+
+        // we expect that 'purify' method should be called once(or never) when we call clear_xss function
+        $GLOBALS['oHtmlPurifier']->expects($this->$sCalled())->method('purify');
+
+        // call tested function
+        clear_xss('test');
+    }
+
+    /**
+     * @see return_bytes
      * @dataProvider providerForReturnBytes
      */
     public function testReturnBytes($sInput, $sOutput)

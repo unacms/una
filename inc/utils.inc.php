@@ -265,106 +265,6 @@ function process_html_output( $text, $maxwordlen = 100 ) {
 }
 
 /**
-*    Used to construct sturctured arrays in GET or POST data. Supports multidimensional arrays.
-*
-*    @param array    $Values    Specifies values and values names, that should be submitted. Can be multidimensional.
-*
-*    @return string    HTML code, which contains <input type="hidden"...> tags with names and values, specified in $Values array.
-*/
-function ConstructHiddenValues($Values) {
-    /**
-    *    Recursive function, processes multidimensional arrays
-    *
-    *    @param string $Name    Full name of array, including all subarrays' names
-    *
-    *    @param array $Value    Array of values, can be multidimensional
-    *
-    *    @return string    Properly consctructed <input type="hidden"...> tags
-    */
-    function ConstructHiddenSubValues($Name, $Value)     {
-        if (is_array($Value)) {
-            $Result = "";
-            foreach ($Value as $KeyName => $SubValue) {
-                $Result .= ConstructHiddenSubValues("{$Name}[{$KeyName}]", $SubValue);
-            }
-        } else
-            // Exit recurse
-            $Result = "<input type=\"hidden\" name=\"".htmlspecialchars($Name)."\" value=\"".htmlspecialchars($Value)."\" />\n";
-
-        return $Result;
-    }
-    /* End of ConstructHiddenSubValues function */
-
-    $Result = '';
-    if (is_array($Values)) {
-        foreach ($Values as $KeyName => $Value) {
-            $Result .= ConstructHiddenSubValues($KeyName, $Value);
-        }
-    }
-
-    return $Result;
-}
-
-/**
-*    Returns HTML/javascript code, which redirects to another URL with passing specified data (through specified method)
-*
-*    @param string    $ActionURL    destination URL
-*
-*    @param array    $Params    Parameters to be passed (through GET or POST)
-*
-*    @param string    $Method    Submit mode. Only two values are valid: 'get' and 'post'
-*
-*    @return mixed    Correspondent HTML/javascript code or false, if input data is wrong
-*/
-function RedirectCode($ActionURL, $Params = NULL, $Method = "get", $Title = 'Redirect') {
-    if ((strcasecmp(trim($Method), "get") && strcasecmp(trim($Method), "post")) || (trim($ActionURL) == ""))
-        return false;
-
-    ob_start();
-
-?>
-<html>
-    <head>
-        <title><?= $Title ?></title>
-    </head>
-    <body>
-        <form name="RedirectForm" action="<?= htmlspecialchars($ActionURL) ?>" method="<?= $Method ?>">
-
-<?= ConstructHiddenValues($Params) ?>
-
-        </form>
-        <script type="text/javascript">
-            <!--
-            document.forms['RedirectForm'].submit();
-            -->
-        </script>
-    </body>
-</html>
-<?
-
-    $Result = ob_get_contents();
-    ob_end_clean();
-
-    return $Result;
-}
-
-/**
-*    Redirects browser to another URL, passing parameters through POST or GET
-*    Actually just prints code, returned by RedirectCode (see RedirectCode)
-*/
-function Redirect($ActionURL, $Params = NULL, $Method = "get", $Title = 'Redirect') {
-    $RedirectCodeValue = RedirectCode($ActionURL, $Params, $Method, $Title);
-    if ($RedirectCodeValue !== false)
-        echo $RedirectCodeValue;
-}
-
-function isRWAccessible($sFileName) {
-    clearstatcache();
-    $perms = fileperms($sFileName);
-    return ( $perms & 0x0004 && $perms & 0x0002 ) ? true : false;
-}
-
-/**
  * Send email function
  *
  * @param $sRecipientEmail - Email where email should be send
@@ -570,87 +470,6 @@ function clear_xss($val) {
     }
 
     return $oHtmlPurifier->purify($val);
-}
-
-function _format_when ($iSec) {
-    $s = '';
-
-    if ($iSec>0) {
-        if ($iSec < 3600) {
-            $i = round($iSec/60);
-            $s .= (0 == $i || 1 == $i) ? _t('_1_minute_ago') : _t('_x_minute_ago', $i, 's');
-        } else if ($iSec < 86400) {
-            $i = round($iSec/60/60);
-            $s .= (0 == $i || 1 == $i) ? _t('_x_hour_ago', '1', '') : _t('_x_hour_ago', $i, 's');
-        } else {
-            $i = round($iSec/60/60/24);
-            if(0 == $i || 1 == $i)
-            	$s .= _t('_1_day_ago');
-            else if($i > 1 && $i <= 5)
-            	$s .= _t('_x_day_ago', $i, 's');
-            else {
-            	$iNow = time();
-            	$iNowDayOfYear = date('z', $iNow);
-
-            	$iDate = $iNow - $iSec; 
-            	$iDay = date('j', $iDate);
-            	$iMonth = date('n', $iDate);
-            	$iYear = date('Y', $iDate);
-
-            	$s .= trim(_t('_day_of_' . $iMonth . '_short', $iDay, ($i > $iNowDayOfYear ? $iYear : '')));
-            }
-        }
-    } else {
-        if ($iSec > -3600) {
-            $i = round($iSec/60);
-            $s .= (0 == $i || 1 == $i) ? _t('_in_1_minute') : _t('_in_x_minute', -$i, 's');
-        } else if ($iSec > -86400) {
-            $i = round($iSec/60/60);
-            $s .= (0 == $i || 1 == $i) ? _t('_in_x_hour', '1', '') : _t('_in_x_hour', -$i, 's');
-        } elseif ($iSec < -86400) {
-            $i = round($iSec/60/60/24);
-            $s .= (0 == $i || 1 == $i) ? _t('_in_1_day') : _t('_in_x_day', -$i, 's');
-        }
-    }
-    return $s;
-}
-
-function execSqlFile($sFileName) {
-    if (! $f = fopen($sFileName, "r"))
-        return false;
-
-    db_res( "SET NAMES 'utf8'" );
-
-    $s_sql = "";
-    while ( $s = fgets ( $f, 10240) ) {
-        $s = trim( $s ); //Utf with BOM only
-
-        if( !strlen( $s ) ) continue;
-        if ( mb_substr( $s, 0, 1 ) == '#'  ) continue; //pass comments
-        if ( mb_substr( $s, 0, 2 ) == '--' ) continue;
-
-        $s_sql .= $s;
-
-        if ( mb_substr( $s, -1 ) != ';' ) continue;
-
-        db_res( $s_sql );
-        $s_sql = "";
-    }
-
-    fclose($f);
-    return true;
-}
-
-function replace_full_uris( $text ) {
-    $text = preg_replace_callback( '/([\s\n\r]src\=")([^"]+)(")/', 'replace_full_uri', $text );
-    return $text;
-}
-
-function replace_full_uri( $matches ) {
-    if( substr( $matches[2], 0, 7 ) != 'http://' and substr( $matches[2], 0, 6 ) != 'ftp://' )
-        $matches[2] = BX_DOL_URL_ROOT . $matches[2];
-
-    return $matches[1] . $matches[2] . $matches[3];
 }
 
 //--------------------------------------- friendly permalinks --------------------------------------//
@@ -872,11 +691,6 @@ function bx_is_spam ($val, $isStripSlashes = BX_SLASHES_AUTO) {
     return false;
 }
 
-function getmicrotime() {
-    list($usec, $sec) = explode(" ", microtime());
-    return ((float)$usec + (float)$sec);
-}
-
 /**
 ** @description : function will create cache file with all SQL queries ;
 ** @return        :
@@ -905,17 +719,6 @@ function genSiteStatCache() {
 
     $oCache = BxDolDb::getInstance()->getDbCacheObject();
     return $oCache->setData (BxDolDb::getInstance()->genDbCacheKey('sys_stat_site'), $aResult);
-}
-
-/**
- * Function will cute the parameter from received string;
- * remove received parameter from 'GET' query ;
- *
- * @param        : $aExceptNames (string) - name of unnecessary parameter;
- * @return       : cleared string;
- */
-function getClearedParam( $sExceptParam, $sString ) {
-    return preg_replace( "/(&amp;|&){$sExceptParam}=([a-z0-9\_\-]{1,})/i",'', $sString);
 }
 
 /**
@@ -1114,66 +917,6 @@ function bx_file_get_contents($sFileUrl, $aParams = array(), $bChangeTimeout = f
     return $sResult;
 }
 
-/**
- * perform write log into 'tmp/log.txt' (for any debug development)
- *
- * @param $sNewLineText - New line debug text
-  */
-function writeLog($sNewLineText = 'test') {
-    $sFileName = BX_DIRECTORY_PATH_ROOT . 'tmp/log.txt';
-
-    if (is_writable($sFileName)) {
-        if (! $vHandle = fopen($sFileName, 'a')) {
-             echo "Unable to open ({$sFileName})";
-        }
-        if (fwrite($vHandle, $sNewLineText . "\r\n") === FALSE) {
-            echo "Unable write to ({$sFileName})";
-        }
-        fclose($vHandle);
-
-    } else {
-        echo "{$sFileName} is not writeable";
-    }
-}
-
-function getLinkSet ($sLinkString, $sUrlPrefix, $sDivider = ';,', $bUriConvert = false) {
-    $aSet = preg_split( '/['.$sDivider.']/', $sLinkString, 0, PREG_SPLIT_NO_EMPTY);
-    $sFinalSet = '';
-
-    foreach ($aSet as $sKey) {
-        $sLink =  $sUrlPrefix . urlencode($bUriConvert ? title2uri($sKey) : $sKey);
-        $sFinalSet .= '<a href="' . $sUrlPrefix . urlencode(title2uri($sKey)) . '">' . $sKey . '</a> ';
-    }
-
-    return trim($sFinalSet, ' ');
-}
-
-// TODO: move to files modules - it is used only there
-function getRelatedWords (&$aInfo) {
-    $sString = implode(' ', $aInfo);
-    $aRes = array_unique(explode(' ', $sString));
-    $sString = implode(' ', $aRes);
-    return addslashes($sString);
-}
-
-// TODO: move to sites module - it is used only there
-function getSiteInfo($sSourceUrl)
-{
-    $aResult = array();
-    $sContent = bx_file_get_contents($sSourceUrl);
-
-    if (strlen($sContent))
-    {
-        preg_match("/<title>(.*)<\/title>/", $sContent, $aMatch);
-        $aResult['title'] = $aMatch[1];
-
-        preg_match("/<meta.*name[='\" ]+description['\"].*content[='\" ]+(.*)['\"].*><\/meta>/", $sContent, $aMatch);
-        $aResult['description'] = $aMatch[1];
-    }
-
-    return $aResult;
-}
-
 // calculation ini_get('upload_max_filesize') in bytes as example
 function return_bytes($val) {
     $val = trim($val);
@@ -1219,19 +962,6 @@ function genRndSalt() {
 // Encrypt User Password
 function encryptUserPwd($sPwd, $sSalt) {
     return sha1(md5($sPwd) . $sSalt);
-}
-
-// Advanced stripslashes. Strips strings and arrays
-function stripslashes_adv($s) {
-    if (is_string($s))
-        return stripslashes($s);
-    elseif (is_array($s)) {
-        foreach ($s as $k => $v) {
-            $s[$k] = stripslashes($v);
-        }
-        return $s;
-    } else
-        return $s;
 }
 
 function bx_get ($sName) {
@@ -1432,19 +1162,7 @@ function bx_unicode_urldecode($s) {
 function bx_alert($sUnit, $sAction, $iObjectId, $iSender = false, $aExtras = array()) {
     $o = new BxDolAlerts($sUnit, $sAction, $iObjectId, $iSender, $aExtras);
     $o->alert();
-}
-
-function getSitesArray ($sLink) {
-
-    $aSites = $GLOBALS['MySQL']->fromCache ('sys_shared_sites', 'getAllWithKey', "SELECT `ID` as `id`, `URL` as `url`, `Icon` as `icon`, `Name` FROM `sys_shared_sites`", 'Name');
-
-    $sLink = htmlentities(($sLink));
-
-    foreach ($aSites as $sKey => $aValue)
-        $aSites[$sKey]['url'] .= $sLink;
-
-    return $aSites;
-}
+}   
 
 function bx_replace_markers($mixed, $aMarkers) {
     if (empty($aMarkers))
