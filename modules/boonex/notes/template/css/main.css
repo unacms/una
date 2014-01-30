@@ -15,6 +15,10 @@
 
 .bx-notes-unit-thumb {
     float:right;
+    max-height:150px;
+    max-height:9.4rem;
+    max-width:200px;
+    max-width:12.5rem;
 }
 
 .bx-notes-unit-summary p {
