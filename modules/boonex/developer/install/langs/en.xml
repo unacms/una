@@ -21,10 +21,8 @@
     <string name="_bx_dev_frm_txt_pre_lists_gl_values"><![CDATA[Values]]></string>
     <string name="_bx_dev_frm_txt_pre_lists_gl_use_for_sets"><![CDATA[Use For Sets]]></string>
     <string name="_bx_dev_frm_txt_pre_values_gl_lkey"><![CDATA[Title]]></string>
-    <string name="_bx_dev_frm_txt_pre_values_gl_lkey2"><![CDATA[Additional Title]]></string>
     <string name="_bx_dev_frm_btn_forms_gl_create"><![CDATA[Add New Form]]></string>
     <string name="_bx_dev_frm_btn_displays_gl_create"><![CDATA[Add New Display]]></string>
-    <string name="_bx_dev_frm_btn_fields_gl_visible"><![CDATA[Visibile For]]></string>
     <string name="_bx_dev_frm_btn_fields_create"><![CDATA[Add New Field]]></string>
     <string name="_bx_dev_frm_btn_pre_lists_create"><![CDATA[Add New List]]></string>
     <string name="_bx_dev_frm_btn_pre_values_create"><![CDATA[Add New Item]]></string>
@@ -156,19 +154,9 @@
     <string name="_bx_dev_frm_txt_prevalues_lkey2"><![CDATA[Title Additional]]></string>
     <string name="_bx_dev_frm_btn_sys_prevalues_add"><![CDATA[Add]]></string>
     <string name="_bx_dev_frm_btn_prevalues_add"><![CDATA[Add]]></string>
-    <string name="_bx_dev_frm_btn_prevalues_save"><![CDATA[Save]]></string>
     <string name="_bx_dev_frm_btn_sys_prevalues_cancel"><![CDATA[Cancel]]></string>
     <string name="_bx_dev_frm_btn_prevalues_cancel"><![CDATA[Cancel]]></string>
-    <string name="_bx_dev_frm_err_prevalues_create_forbidden"><![CDATA[This list is already used. It's impossible to add non-numeric, or less than 1, or more than {0} values in it.]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    
+    <string name="_bx_dev_frm_err_prevalues_create_forbidden"><![CDATA[This list is already used. It's impossible to add non-numeric, or less than 1, or more than {0} values in it.]]></string>    
 
     <!-- Navigation Builder -->
     <string name="_bx_dev_nav_txt_menus_gl_title"><![CDATA[System Name]]></string>
@@ -182,8 +170,6 @@
     <string name="_bx_dev_nav_txt_items_gl_icon"><![CDATA[Icon]]></string>
     <string name="_bx_dev_nav_txt_items_gl_title_system"><![CDATA[System Name]]></string>
     <string name="_bx_dev_nav_txt_items_gl_link"><![CDATA[URL]]></string>
-    <string name="_bx_dev_nav_txt_items_gl_link_menu"><![CDATA[Menu:]]></string>
-    <string name="_bx_dev_nav_txt_items_gl_link_custom"><![CDATA[Custom Action]]></string>
     <string name="_bx_dev_nav_txt_items_gl_module"><![CDATA[Module]]></string>
     <string name="_bx_dev_nav_txt_items_gl_visible"><![CDATA[Visibile For]]></string>
     <string name="_bx_dev_nav_btn_menus_gl_create"><![CDATA[Add New Menu]]></string>
@@ -193,7 +179,6 @@
     <string name="_bx_dev_nav_btn_items_gl_import"><![CDATA[Import Items]]></string>
     <string name="_bx_dev_nav_btn_items_gl_visible"><![CDATA[Visibile For]]></string>
     <string name="_bx_dev_nav_txt_select_module"><![CDATA[Select Module...]]></string>
-    <string name="_bx_dev_nav_txt_select_set"><![CDATA[Select Set...]]></string>
     <string name="_bx_dev_nav_txt_menus_create_popup"><![CDATA[Add New Menu]]></string>
     <string name="_bx_dev_nav_err_menus_create"><![CDATA[Cannot add menu]]></string>
     <string name="_bx_dev_nav_txt_menus_edit_popup"><![CDATA[Edit "{0}" Menu]]></string>
@@ -254,7 +239,6 @@
     <string name="_bx_dev_nav_txt_sets_deletable"><![CDATA[Deletable]]></string>
     <string name="_bx_dev_nav_btn_sys_sets_add"><![CDATA[Add]]></string>
     <string name="_bx_dev_nav_btn_sets_add"><![CDATA[Add]]></string>
-    <string name="_bx_dev_nav_btn_sets_save"><![CDATA[Save]]></string>
     <string name="_bx_dev_nav_btn_sys_sets_cancel"><![CDATA[Cancel]]></string>
     <string name="_bx_dev_nav_btn_sets_cancel"><![CDATA[Cancel]]></string>
     <string name="_bx_dev_nav_txt_items_create_popup"><![CDATA[Add New Item]]></string>
@@ -279,7 +263,6 @@
     <string name="_bx_dev_nav_err_items_title_system"><![CDATA[You need to enter a value here]]></string>
     <string name="_bx_dev_nav_txt_sys_items_title"><![CDATA[Title]]></string>
     <string name="_bx_dev_nav_txt_items_title"><![CDATA[Title]]></string>
-    <string name="_bx_dev_nav_err_items_title"><![CDATA[You need to enter a value here]]></string>
     <string name="_bx_dev_nav_txt_sys_items_link"><![CDATA[Link]]></string>
     <string name="_bx_dev_nav_txt_items_link"><![CDATA[Link]]></string>
     <string name="_bx_dev_nav_txt_sys_items_onclick"><![CDATA[OnClick]]></string>
@@ -358,7 +341,6 @@
     <string name="_bx_dev_bp_err_block_title"><![CDATA[You need to enter a value here]]></string>
     <string name="_bx_dev_bp_txt_sys_block_designbox_id"><![CDATA[Layout]]></string>
     <string name="_bx_dev_bp_txt_block_designbox_id"><![CDATA[Layout]]></string>
-    <string name="_bx_dev_bp_txt_block_designbox_id_select"><![CDATA[Select Layout...]]></string>
     <string name="_bx_dev_bp_err_block_designbox_id"><![CDATA[You need to select a layout]]></string>
     <string name="_bx_dev_bp_txt_sys_block_visible_for"><![CDATA[Visible For]]></string>
     <string name="_bx_dev_bp_txt_block_visible_for"><![CDATA[Visible For]]></string>
@@ -366,8 +348,6 @@
     <string name="_bx_dev_bp_txt_block_visible_for_selected"><![CDATA[Selected levels]]></string>
     <string name="_bx_dev_bp_txt_sys_block_visible_for_levels"><![CDATA[Select Levels]]></string>
     <string name="_bx_dev_bp_txt_block_visible_for_levels"><![CDATA[Select Levels]]></string>
-    <string name="_bx_dev_bp_txt_sys_block_content"><![CDATA[Content]]></string>
-    <string name="_bx_dev_bp_txt_block_content"><![CDATA[Content]]></string>
     <string name="_bx_dev_bp_txt_block_content_service"><![CDATA[Code]]></string>
     <string name="_bx_dev_bp_txt_sys_block_deletable"><![CDATA[Deletable]]></string>
     <string name="_bx_dev_bp_txt_block_deletable"><![CDATA[Deletable]]></string>
@@ -387,35 +367,9 @@
     <string name="_bx_dev_pgt_txt_manage_gl_title"><![CDATA[Module]]></string>
     <string name="_bx_dev_pgt_btn_manage_gl_recompile"><![CDATA[Recompile All]]></string>
     <string name="_bx_dev_pgt_btn_manage_gl_restore"><![CDATA[Restore All]]></string>
-    <string name="_bx_dev_pgt_txt_manage_recompile_title_sing"><![CDATA[Recompile %s languege for %s module.]]></string>
-    <string name="_bx_dev_pgt_txt_manage_restore_title_sing"><![CDATA[Restore %s languege for %s module.]]></string>
-    <string name="_bx_dev_pgt_txt_manage_recompile_title_plur"><![CDATA[Recompile %s languege for all modules.]]></string>
-    <string name="_bx_dev_pgt_txt_manage_restore_title_plur"><![CDATA[Restore %s languege for all modules.]]></string>
+    <string name="_bx_dev_pgt_txt_manage_recompile_title_sing"><![CDATA[Recompile %s language for %s module.]]></string>
+    <string name="_bx_dev_pgt_txt_manage_restore_title_sing"><![CDATA[Restore %s language for %s module.]]></string>
+    <string name="_bx_dev_pgt_txt_manage_recompile_title_plur"><![CDATA[Recompile %s language for all modules.]]></string>
+    <string name="_bx_dev_pgt_txt_manage_restore_title_plur"><![CDATA[Restore %s language for all modules.]]></string>
     <string name="_bx_dev_pgt_txt_manage_modules_all"><![CDATA[All]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
 </resources>

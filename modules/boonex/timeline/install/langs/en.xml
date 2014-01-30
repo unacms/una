@@ -33,7 +33,6 @@
 	<string name="_bx_timeline_form_attach_link_input_url_err"><![CDATA[Correct Link is essential. Please, fill in this field.]]></string>
 	<string name="_bx_timeline_form_attach_link_input_sys_do_submit"><![CDATA[Add]]></string>
 	<string name="_bx_timeline_form_attach_link_input_do_submit"><![CDATA[Add]]></string>
-	<string name="_bx_timeline_form_attach_link_input_sys_do_cancel"><![CDATA[Close]]></string>
 	<string name="_bx_timeline_form_attach_link_input_do_cancel"><![CDATA[Close]]></string>
 
 	<string name="_bx_timeline_acl_action_post"><![CDATA[Post]]></string>
@@ -59,14 +58,6 @@
     <string name="_bx_timeline_menu_item_view_other"><![CDATA[Posts by others]]></string>
     <string name="_bx_timeline_menu_item_get_rss"><![CDATA[RSS]]></string>
 
-	<string name="_bx_timeline_menu_title_post"><![CDATA[Post Item]]></string>
-    <string name="_bx_timeline_menu_set_title_post"><![CDATA[Post Item]]></string>
-    <string name="_bx_timeline_menu_item_title_system_post_text"><![CDATA[Post Text]]></string>
-    <string name="_bx_timeline_menu_item_title_post_text"><![CDATA[Write]]></string>
-    <string name="_bx_timeline_menu_item_title_system_post_link"><![CDATA[Post Link]]></string>
-    <string name="_bx_timeline_menu_item_title_post_link"><![CDATA[Share a link]]></string>
-    <string name="_bx_timeline_menu_item_title_system_post_photo"><![CDATA[Post Photo]]></string>
-    <string name="_bx_timeline_menu_item_title_post_photo"><![CDATA[Add a photo]]></string>
 
     <string name="_bx_timeline_menu_title_item_manage"><![CDATA[Manage Item]]></string>
     <string name="_bx_timeline_menu_set_title_item_manage"><![CDATA[Manage Item]]></string>
@@ -104,8 +95,6 @@
 	<string name="_bx_timeline_txt_shared"><![CDATA[Shared {0}'s {1}.]]></string>
 	<string name="_bx_timeline_txt_shared_by"><![CDATA[Shared by]]></string>
 	<string name="_bx_timeline_txt_err_cannot_share"><![CDATA[Cannot share. Please report.]]></string>
-	<string name="_bx_timeline_txt_msg_success_share"><![CDATA[]]></string>
+	<string name="_bx_timeline_txt_msg_success_share"><![CDATA[]]></string>	
 
-	<string name="_bx_timeline_txt_plus"><![CDATA[Plus]]></string>
-	
 </resources>

@@ -27,15 +27,36 @@ class BxDolCheckUnusedLangsCmd
     protected $_iLimit = 0;
     protected $_aOptionsSystem;
     protected $_aOptionsModule;
+    protected $_aAlwaysTrue;
 
     public function __construct() 
     {
+        $this->_aAlwaysTrue = array (
+            '/^_mma_/',
+            '/^_ps_group_/',
+            '/^_adm_txt_modules_/',
+            '/^_adm_ipbl_Type/',
+            '/^_week_/',
+
+            /* wall */
+            '/^_bx_timeline_alert_module_/',
+            '/^_bx_timeline_alert_action_/',
+
+            /* sites */
+            '/^_bx_sites_txt_status_/',
+            '/^_bx_sites_txt_payment_type_/',
+            '/^_bx_sites_paypal_duration_/',
+
+            /* developer */
+            '/^_bx_dev_pgt_txt_manage_/',
+        );
+
         $this->_aOptionsSystem = array (
             'dirs' => array (
                 '' => array ('*.php'),
                 'install/' => array('*.php', '*.sql'),
                 'studio/' => array('*.php', '*.html'),
-                'inc/' => array ('*.php'),
+                'inc/' => array ('*.php', '*.js'),
                 'modules/' => array('*.php', '*.html', '*.sql'),
                 'template/' => array('*.php', '*.html'),
             ),
@@ -46,9 +67,9 @@ class BxDolCheckUnusedLangsCmd
                 "modules/{module_dir}/" => array ('*.php'),
                 "modules/{module_dir}/install/sql/" => array('*.sql'),
                 "modules/{module_dir}/classes/" => array('*.php'),
-                "modules/{module_dir}/templates/" => array('*.php', '*.html'),
+                "modules/{module_dir}/js/" => array ('*.js'),
+                "modules/{module_dir}/template/" => array('*.php', '*.html'),
                 "modules/{module_dir}/inc/" => array ('*.php'),
-                "modules/{module_dir}/integrations/" => array ('*.php'),
             ),
         );
     }
@@ -108,10 +129,9 @@ class BxDolCheckUnusedLangsCmd
         }
 
         if (!$this->_bQuiet) {
-            $this->output('Found language strings: ');
-            $this->output('--------------');
+            $this->output('Found language strings:');
+            $this->output('-----------------------');
             empty($LANG_FOUND) ? $this->output('Empty') : $this->output($this->xmlExport($LANG_FOUND), false);
-            $this->output('--------------');
             $this->output('');
         }
 
@@ -121,10 +141,9 @@ class BxDolCheckUnusedLangsCmd
             file_put_contents($this->_sOutputFoundFile, $this->xmlExport($LANG_FOUND));
 
         if (!$this->_bQuiet) {
-            $this->output('Unused language strings: ');
-            $this->output('--------------');
+            $this->output('Unused language strings:');
+            $this->output('------------------------');
             empty($LANG_LOST) ? $this->output('Empty') : $this->output($this->xmlExport($LANG_LOST), false);
-            $this->output('--------------');
             $this->output('');
         }
 
@@ -147,7 +166,7 @@ class BxDolCheckUnusedLangsCmd
 
     protected function getHelp()
     {
-        $n = 20;
+        $n = 21;
         $s = "Usage: php check_unused_lang.php [options]\n";
 
         $s .= str_pad("\t -h", $n) . "Print this help\n";
@@ -170,35 +189,30 @@ class BxDolCheckUnusedLangsCmd
 
     protected function findLangKey($sKey, $aOptions)
     {
-        $aAlwaysTrue = array (
-            '/^_mma_/',
-            '/^_ps_group_/',
-            '/^_adm_txt_modules_/',
-            '/^_adm_ipbl_Type/',
-            '/^_week_/',
-
-            /* wall */
-            '/^_bx_timeline_alert_module_/',
-            '/^_bx_timeline_alert_action_/',
-
-            /* sites */
-            '/^_bx_sites_txt_status_/',
-        );
-        foreach ($aAlwaysTrue as $sReg)
+        foreach ($this->_aAlwaysTrue as $sReg)
             if (preg_match($sReg, $sKey))
                 return true;
 
         foreach ($aOptions['dirs'] as $sDir => $aExt) {
+
             $sDepth = $sDir ? '' : ' -depth 1 ';
+            if ($this->_sModule) {
+                $aDir = explode('/', $sDir);
+                $sDepth = !$sDir || $this->_sModule == ($aDir[(count($aDir) - 3)] . '/' . $aDir[(count($aDir) - 2)]) ? ' -depth 1 ' : '';
+            }
+         
             $sDir = BX_DIRECTORY_PATH_ROOT . $sDir;
+
             if (!file_exists($sDir))
                 continue;
+
             foreach ($aExt as $sExt) {
                 $sResults = `find $sDir $sDepth -name "$sExt" -exec grep "\<$sKey\>" {} \;`;
                 if ($sResults)
                     return true;
             }
         }
+
         return false;
     }
 

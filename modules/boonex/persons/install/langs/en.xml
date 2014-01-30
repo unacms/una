@@ -13,7 +13,6 @@
 	<string name="_bx_persons_form_person_display_delete"><![CDATA[Delete Person]]></string>
 	<string name="_bx_persons_form_person_display_view"><![CDATA[View Person]]></string>
 	<string name="_bx_persons_form_person_input_sys_do_submit"><![CDATA[Submit]]></string>
-	<string name="_bx_persons_form_person_input_do_submit"><![CDATA[Submit]]></string>
 	<string name="_bx_persons_form_person_input_sys_fullname"><![CDATA[Full Name]]></string>
 	<string name="_bx_persons_form_person_input_fullname"><![CDATA[Full Name]]></string>
 	<string name="_bx_persons_form_person_input_fullname_err"><![CDATA[This information is essential. Please, fill in this field.]]></string>
@@ -33,7 +32,6 @@
 	<string name="_bx_persons_form_person_input_delete_confirm"><![CDATA[I am sure I want to delete this profile]]></string>
 	<string name="_bx_persons_form_person_input_delete_confirm_info"><![CDATA[This action can not be undone.]]></string>
 	<string name="_bx_persons_form_person_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete your profile.]]></string>
-	<string name="_bx_persons_form_person_input_picture_btn_upload"><![CDATA[Choose Picture]]></string>
     <string name="_bx_persons_form_person_input_picture_txt_new"><![CDATA[New Picture]]></string>
     <string name="_bx_persons_form_person_input_picture_txt_discard"><![CDATA[Discard]]></string>
     <string name="_bx_persons_form_person_input_picture_txt_current"><![CDATA[Current Picture]]></string>
@@ -65,7 +63,6 @@
 	<string name="_bx_persons_page_block_title_profile_info"><![CDATA[Info]]></string>
 	<string name="_bx_persons_page_block_title_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_persons_page_block_title_profile_cover"><![CDATA[Profile Cover]]></string>
-	<string name="_bx_persons_page_block_title_profile_menu"><![CDATA[Menu]]></string>
 	<string name="_bx_persons_page_block_title_profile_actions"><![CDATA[Actions]]></string>
 	<string name="_bx_persons_page_block_title_latest_persons"><![CDATA[Recent Persons]]></string>
 
