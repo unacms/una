@@ -32,11 +32,20 @@ class BxDolCheckUnusedLangsCmd
     public function __construct() 
     {
         $this->_aAlwaysTrue = array (
+            '/^_are you sure\?$/',
             '/^_mma_/',
             '/^_ps_group_/',
             '/^_adm_txt_modules_/',
             '/^_adm_ipbl_Type/',
             '/^_week_/',
+            '/^_adm_txt_module_/',
+            '/^_adm_block_cpt_/',
+            '/^_adm_lmi_cpt_/',
+            '/^_adm_block_cpt_/',
+            '/^_adm_bp_cpt_type_/',
+            '/^_adm_form_txt_field_type_/',
+            '/^_adm_form_txt_field_checker_/',
+            '/^_sys_uploader_/',
 
             /* wall */
             '/^_bx_timeline_alert_module_/',
