@@ -1,11 +1,11 @@
 
 /* unit */
 
-.bx-notes-unit:first-child h2 {
+.bx-notes-unit:first-child h1 {
     padding-top:0;
 }
 
-.bx-notes-unit h2 {
+.bx-notes-unit h1 {
     margin:0;
 }
 
@@ -26,6 +26,10 @@
 }
 
 /* view page */
+.bx-notes-entity-content h1:first-child {
+    margin-top:0;
+}
+
 .bx-notes-entity-share .bx-vote,
 .bx-notes-entity-share .bx-tl-share,
 .bx-notes-entity-share .bx-social-sharing {
