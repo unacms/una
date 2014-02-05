@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="en" flag="gb" title="English">
-	<string name="_bx_smtp_administration"><![CDATA[SMTP Mailer Administration]]></string>
 	<string name="_bx_smtp"><![CDATA[SMTP Mailer]]></string>
 	<string name="_bx_smtp_tester"><![CDATA[SMTP Mailer Tester]]></string>
 	<string name="_bx_smtp_recipient"><![CDATA[Recipient]]></string>
