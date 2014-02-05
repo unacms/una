@@ -39,7 +39,7 @@ $aConfig = array(
 	 */
 	'install' => array(
 		'show_introduction' => 0,
-		'change_permissions' => 1,
+		'change_permissions' => 0,
 		'execute_sql' => 1,
 		'update_languages' => 1,
 		'recompile_main_menu' => 0,
@@ -132,11 +132,7 @@ $aConfig = array(
 	/**
 	 * Permissions Section
 	 */
-    'install_permissions' => array(
-        'writable' => array(
-            'data/logs/',
-        ),
-    ),
+    'install_permissions' => array(),
     'uninstall_permissions' => array(),
 
 	/**

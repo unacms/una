@@ -107,8 +107,9 @@ div.bx-std-pmen-item {
 	overflow: hidden;
 }
 div.bx-std-pmen-item-cnt {
-	padding-left: 66px;
+	padding-left: 66px;    
 }
+
 span.bx-std-pmen-item-counter {}
 span.bx-std-pmen-ic-num {}
 div.bx-std-pmen-item img {
@@ -121,6 +122,12 @@ div.bx-std-pmen-item img {
 div.bx-std-pmen-item i.sys-icon {
 	position: absolute;
     left: 20px;
+    width:32px;
+
+    color:white;
+    font-size:20px;
+    text-align:center;
+    text-shadow:none;
 }
 div.bx-menu-tab-active {
 	background-color: #f2f2f2;

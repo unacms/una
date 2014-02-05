@@ -7,7 +7,7 @@
 	<string name="_bx_smtp_subject"><![CDATA[Subject]]></string>
 	<string name="_bx_smtp_body"><![CDATA[Body]]></string>
 	<string name="_bx_smtp_is_html"><![CDATA[Is HTML?]]></string>
-	<string name="_bx_smtp_send_ok"><![CDATA[Mail has beed successfully sent]]></string>
+	<string name="_bx_smtp_send_ok"><![CDATA[Mail has been successfully sent]]></string>
 	<string name="_bx_smtp_send_fail"><![CDATA[Mail send failed]]></string>
 	<string name="_bx_smtp_help"><![CDATA[Help]]></string>
 	<string name="_bx_smtp_help_text"><![CDATA[
@@ -30,7 +30,7 @@
         <br />
         Alternatively, you can get above options from your desktop mail client, if you are going to use the same email address for sending mail from your site.
         
-        <hr />
+        <hr class="bx-def-hr" />
 
         If emails still go to spam folder, check the following:
         <ul>

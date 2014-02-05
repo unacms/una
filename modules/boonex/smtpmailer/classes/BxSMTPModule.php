@@ -1,23 +1,13 @@
 <?php
-/***************************************************************************
-*                            Dolphin Smart Community Builder
-*                              -------------------
-*     begin                : Mon Mar 23 2006
-*     copyright            : (C) 2007 BoonEx Group
-*     website              : http://www.boonex.com
-* This file is part of Dolphin - Smart Community Builder
-*
-* Dolphin is free software; you can redistribute it and/or modify it under
-* the terms of the GNU General Public License as published by the
-* Free Software Foundation; either version 2 of the
-* License, or  any later version.
-*
-* Dolphin is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU General Public License for more details.
-* You should have received a copy of the GNU General Public License along with Dolphin,
-* see license.txt file; if not, write to marketing@boonex.com
-***************************************************************************/
+/**
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ * 
+ * @defgroup    SMTPMailer SMTP Mailer
+ * @ingroup     DolphinModules
+ *
+ * @{
+ */
 
 bx_import('BxDolModule');
 bx_import('BxDolPaginate');
@@ -26,19 +16,20 @@ bx_import('BxDolAlerts');
 require_once (BX_DIRECTORY_PATH_PLUGINS . "phpmailer/class.phpmailer.php");
 require_once (BX_DIRECTORY_PATH_PLUGINS . "phpmailer/class.smtp.php");
 
-class BxSMTPModule extends BxDolModule {
-
-    function BxSMTPModule(&$aModule) {
-        parent::BxDolModule($aModule);
+class BxSMTPModule extends BxDolModule 
+{
+    function __construct(&$aModule) 
+    {
+        parent::__construct($aModule);
     }
 
-    function serviceSend ($sRecipientEmail, $sMailSubject, $sMailBody, $sMailHeader, $sMailParameters, $isHtml, $aRecipientInfo = array()) {
-
+    function serviceSend ($sRecipientEmail, $sMailSubject, $sMailBody, $sMailHeader, $sMailParameters, $isHtml, $aRecipientInfo = array()) 
+    {
         $iRet = true;
 
         if ($sRecipientEmail) {
 
-            $mail = new PHPMailer();
+            $mail = new PHPMailer(true);
             
             if ('on' == getParam('bx_smtp_on')) 
                 $mail->IsSMTP(); 
@@ -72,20 +63,20 @@ class BxSMTPModule extends BxDolModule {
             if ($sParamSender)
                 $mail->From = $sParamSender;
             else
-                $mail->From = $sSenderEmail;
+                $mail->From = getParam('site_email_notify');
             
             // get site name or some other name as sender's name
-            $mail->FromName   = getParam ('bx_smtp_from_name');
+            $mail->FromName = getParam ('bx_smtp_from_name');
             
-            $mail->Subject    = $sMailSubject;
+            $mail->Subject = $sMailSubject;
             if ($isHtml) {
-                $mail->Body       = $sMailBody;
-                $mail->AltBody    = $isHtml ? strip_tags($sMailBody) : $sMailBody; 
+                $mail->Body = $sMailBody;
+                $mail->AltBody = $isHtml ? strip_tags($sMailBody) : $sMailBody; 
             } else {
                 $mail->Body = $sMailBody;
             }
 
-            $mail->WordWrap   = 50; // set word wrap
+            $mail->WordWrap = 50; // set word wrap
 
             $mail->AddAddress($sRecipientEmail); 
                 
@@ -105,14 +96,15 @@ class BxSMTPModule extends BxDolModule {
 
             $mail->IsHTML($isHtml ? true : false); 
 
-            $iRet = $mail->Send();
-            if (!$iRet)
-                $this->log("Mailer Error ($sRecipientEmail): " . $mail->ErrorInfo);
-
+            try {
+                $mail->Send();
+            } catch (phpmailerException $e) {
+                $iRet = false;
+                $this->log("Mailer Error ($sRecipientEmail): " . $e->getMessage());
+            }
         }
 
         //--- create system event [begin]
-        bx_import('BxDolAlerts');
         $aAlertData = array(
             'email'     => $sRecipientEmail,
             'subject'   => $sMailSubject,
@@ -121,72 +113,21 @@ class BxSMTPModule extends BxDolModule {
             'params'    => $sMailParameters,
             'html'      => $isHtml,
         );
-
-        $oZ = new BxDolAlerts('profile', 'send_mail', $aRecipientInfo ? $aRecipientInfo['ID'] : 0, '', $aAlertData);
-        $oZ -> alert();
+        bx_alert('profile', 'send_mail', $aRecipientInfo ? $aRecipientInfo['ID'] : 0, '', $aAlertData);
         //--- create system event [ end ]
 
         return $iRet;
     }
 
-    function actionAdministration () {
-
-        if (!$this->isAdmin()) {
-            $this->_oTemplate->displayAccessDenied ();
-            return;
-        }
-
-        $this->_oTemplate->pageStart();
-
-	    $iId = $this->_oDb->getSettingsCategory();
-	    if(empty($iId)) {
-            echo MsgBox(_t('_sys_request_page_not_found_cpt'));
-            $this->_oTemplate->pageCodeAdmin (_t('_bx_smtp_administration'));
-            return;
-        }
-
-        bx_import('BxDolAdminSettings');
-
-        $mixedResult = '';
-        if(isset($_POST['save']) && isset($_POST['cat'])) {
-	        $oSettings = new BxDolAdminSettings($iId);
-            $mixedResult = $oSettings->saveChanges($_POST);
-        }
-
-        $oSettings = new BxDolAdminSettings($iId);
-        $sResult = $oSettings->getForm();
-        	       
-        if($mixedResult !== true && !empty($mixedResult))
-            $sResult = $mixedResult . $sResult;
-
-        $aVars = array (
-            'content' => $sResult,
-        );
-        echo $this->_oTemplate->adminBlock ($this->_oTemplate->parseHtmlByName('default_padding', $aVars), _t('_bx_smtp_administration')); 
-
-        $aVars = array (
-            'content' => _t('_bx_smtp_help_text')
-        );
-        echo $this->_oTemplate->adminBlock ($this->_oTemplate->parseHtmlByName('default_padding', $aVars), _t('_bx_smtp_help')); 
-
-        $aVars = array (
-            'content' => $this->formTester(),
-        );
-        echo $this->_oTemplate->adminBlock ($this->_oTemplate->parseHtmlByName('default_padding', $aVars), _t('_bx_smtp_tester')); 
-
-        $this->_oTemplate->addCssAdmin ('forms_adv.css');
-        $this->_oTemplate->pageCodeAdmin (_t('_bx_smtp_administration'));
-    }
-
-    function formTester() {
-
+    function formTester() 
+    {
         $sMsg  = '';
-        if ($_POST['tester_submit']) {
+        if (isset($_POST['tester_submit']) && $_POST['tester_submit']) {
             
-            $sRecipient = process_pass_data($_POST['recipient']);
-            $sSubj = process_pass_data($_POST['subject']);
-            $sBody = process_pass_data($_POST['body']);
-            $isHTML = $_POST['html'] == 'on' ? true : false;
+            $sRecipient = bx_process_pass(bx_get('recipient'));
+            $sSubj = bx_process_pass(bx_get('subject'));
+            $sBody = bx_process_pass(bx_get('body'));
+            $isHTML = bx_get('html') == 'on' ? true : false;
     
             if (sendMail($sRecipient, $sSubj, $sBody, 0, array(), BX_EMAIL_SYSTEM, $isHTML ? 'html' : ''))
                 $sMsg = MsgBox(_t('_bx_smtp_send_ok'));
@@ -196,14 +137,9 @@ class BxSMTPModule extends BxDolModule {
 
         $aForm = array(
             'form_attrs' => array(
-                'action' => BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'administration/',
                 'method'   => 'post',
             ),
             'inputs' => array (
-                'header' => array(
-                    'type' => 'block_header',
-                    'caption' => _t('_bx_smtp_tester'),
-                ),
                 'recipient' => array(
                     'type' => 'text',
                     'name' => 'recipient',
@@ -241,18 +177,15 @@ class BxSMTPModule extends BxDolModule {
         return $sMsg . $oForm->getCode();
     }
 
-    function isAdmin () {
-        return $GLOBALS['logged']['admin'] ? true : false;
-    }
-
     function log ($s)
     {
-        $fn = BX_DIRECTORY_PATH_MODULES . "boonex/smtpmailer/data/logs/log.log";
+        $fn = BX_DIRECTORY_PATH_TMP . "smtp_mailer.log";
         $f = @fopen ($fn, 'a');
-        if (!$f) return;
+        if (!$f) 
+            return;
         fwrite ($f, date(DATE_RFC822) . "\t" . $s . "\n");
         fclose ($f);
     }
 }
 
-?>
+/** @} */
