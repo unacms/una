@@ -534,6 +534,7 @@
 	<string name="_adm_dbd_txt_media_size"><![CDATA[User media files: ]]></string>
 	<string name="_adm_dbd_txt_space_size"><![CDATA[Total space used: ]]></string>
 	<string name="_adm_dbd_txt_version"><![CDATA[Version:]]></string>
+    <string name="_adm_dsn_cnf_uninstall"><![CDATA[<h3>Uninstall "{0}" template?</h3><p>Uninstalling "{0}" template will also delete all of its data. Do you want to continue?</p>]]></string>
 	<string name="_adm_dsg_btn_make_default"><![CDATA[Make Default]]></string>
 	<string name="_adm_dsg_dsc_alt_text"><![CDATA[Serves as "ALT" text for logo image. Used as a logo when no logo image is uploaded.]]></string>
 	<string name="_adm_dsg_err_cannot_process_action"><![CDATA[Cannot process action. It does not have an associated handler.]]></string>
@@ -784,6 +785,7 @@
 	<string name="_adm_ipbl_Type1_desc"><![CDATA[IP List Type is 1 : All IPs allowed except listed]]></string>
 	<string name="_adm_ipbl_Type2_desc"><![CDATA[IP List Type is 2 : All IPs blocked except listed]]></string>
 	<string name="_adm_ipbl_sample"><![CDATA[sample]]></string>
+    <string name="_adm_lang_cnf_uninstall"><![CDATA[<h3>Uninstall "{0}" language?</h3><p>Uninstalling "{0}" language will also delete all of its data. Do you want to continue?</p>]]></string>
 	<string name="_adm_lmi_cpt_actions"><![CDATA[Actions]]></string>
 	<string name="_adm_lmi_cpt_checkout"><![CDATA[Checkout {checkout_counter}]]></string>
 	<string name="_adm_lmi_cpt_displays"><![CDATA[Displays]]></string>
@@ -808,6 +810,7 @@
 	<string name="_adm_lmi_cpt_updates"><![CDATA[Updates]]></string>
 	<string name="_adm_mobile_page_homepage"><![CDATA[Homepage]]></string>
 	<string name="_adm_mobile_page_profile"><![CDATA[Profile]]></string>
+    <string name="_adm_mod_cnf_uninstall"><![CDATA[<h3>Uninstall "{0}" module?</h3><p>Uninstalling "{0}" module will also delete all of its data. Do you want to continue?</p>]]></string>
 	<string name="_adm_mod_err_cannot_process_action"><![CDATA[Cannot process action. It does not have an associated handler.]]></string>
 	<string name="_adm_mod_err_process_operation_failed"><![CDATA[Cannot {0} module from "{1}" directory]]></string>
 	<string name="_adm_msg_modules_success_added_to_cart"><![CDATA[The product was successfully added to shopping cart.]]></string>
