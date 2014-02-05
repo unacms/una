@@ -47,6 +47,7 @@ class BxDolCheckUnusedLangsCmd
             '/^_adm_form_txt_field_checker_/',
             '/^_sys_uploader_/',
             '/^_adm_[A-Za-z0-9_-]+_cnf_/',
+            '/^_sys_request_[A-Za-z0-9_-]+_not_found_(cpt|cnt)/',
 
             /* wall */
             '/^_bx_timeline_alert_module_/',

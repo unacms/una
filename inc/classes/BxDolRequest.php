@@ -132,6 +132,7 @@ class BxDolRequest extends BxDol {
         header('Status: 404 Not Found');
         header('HTTP/1.0 404 Not Found');
 
+        require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
         bx_import('BxDolTemplate');
         bx_import('BxDolLanguages');
         $oTemplate = BxDolTemplate::getInstance();
