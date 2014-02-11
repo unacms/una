@@ -43,6 +43,7 @@ class BxNotesSearchResult extends BxTemplSearchResult {
 
     function __construct($sMode = '', $aParams) {
 
+        $this->sUnitTemplate = 'unit_gallery.html';
         $oProfileAuthor = null;
         $oModuleMain = $this->getMain();
 
@@ -118,7 +119,7 @@ class BxNotesSearchResult extends BxTemplSearchResult {
 
     function displayResultBlock () {
         $s = parent::displayResultBlock ();
-        $s = '<div class="bx-notes-wrapper">' . $s . '</div>';
+        $s = '<div class="bx-notes-wrapper ' . ('unit_gallery.html' == $this->sUnitTemplate ? 'bx-def-margin-neg bx-clearfix' : '') . '">' . $s . '</div>';
         return $s;
     }
 

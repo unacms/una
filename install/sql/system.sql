@@ -256,7 +256,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_site_logo', '', '0', 'digit', '', '', '', 20),
 (@iCategoryId, 'sys_site_logo_alt', '_adm_dsg_txt_alt_text', '0', 'text', '', '', '', 21),
 (@iCategoryId, 'sys_site_icon', '', '0', 'digit', '', '', '', 22),
-(@iCategoryId, 'main_div_width', '', '998px', 'digit', '', '', '', 25),
+(@iCategoryId, 'main_div_width', '', '1000px', 'digit', '', '', '', 25),
 
 (@iCategoryId, 'sys_template_cache_image_enable', '', '', 'checkbox', '', '', '', 30),
 (@iCategoryId, 'sys_template_cache_image_max_size', '', '5', 'digit', '', '', '', 31),

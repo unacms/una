@@ -66,6 +66,8 @@ class BxNotesTemplate extends BxDolModuleTemplate {
             $sSummary = htmlspecialchars_adv($sSummary) . $sLinkMore;
         }
 
+        $sSummaryPlain = BxTemplFunctions::getInstance()->getStringWithLimitedLength(strip_tags($sSummary), 380);
+
         // generate html
         $aVars = array (
             'id' => $aData['id'],            
@@ -79,7 +81,16 @@ class BxNotesTemplate extends BxDolModuleTemplate {
                 'condition' => $sPhotoThumb,
                 'content' => array (
                     'title' => bx_process_output($aData['title']),
-                    'thumb_url' => $sPhotoThumb ? $sPhotoThumb : '',
+                    'summary_attr' => bx_html_attribute($sSummaryPlain),
+                    'content_url' => $sUrl,
+                    'thumb_url' => $sPhotoThumb ? $sPhotoThumb : '',                    
+                ),
+            ),
+            'bx_if:no_thumb' => array (
+                'condition' => !$sPhotoThumb,
+                'content' => array (
+                    'content_url' => $sUrl,
+                    'summary_plain' => $sSummaryPlain,
                 ),
             ),
         );

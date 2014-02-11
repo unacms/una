@@ -14,7 +14,7 @@ class BxBaseConfig extends BxDol implements iBxDolSingleton {
         'iTagsMaxFontSize' => 30, // maximal font size of tag
         'bAllowUnicodeInPreg' => false, // allow unicode in regular expressions
         'aLessConfig' => array (
-            'bx-page-width' => '998px',
+            'bx-page-width' => '1000px',
 
 			'bx-margin' => '20px',
 			'bx-margin-sec' => '10px',
