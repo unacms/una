@@ -66,7 +66,7 @@ class BxNotesTemplate extends BxDolModuleTemplate {
             $sSummary = htmlspecialchars_adv($sSummary) . $sLinkMore;
         }
 
-        $sSummaryPlain = BxTemplFunctions::getInstance()->getStringWithLimitedLength(strip_tags($sSummary), 380);
+        $sSummaryPlain = BxTemplFunctions::getInstance()->getStringWithLimitedLength(strip_tags($sSummary), 280);
 
         // generate html
         $aVars = array (

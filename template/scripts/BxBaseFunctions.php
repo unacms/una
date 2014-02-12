@@ -564,7 +564,7 @@ EOF;
                 if (isset($mixedMenu['template']) && isset($mixedMenu['menu_items']))
                     $aMenu = $mixedMenu;
                 else
-                    $aMenu = array ('template' => 'menu_horizontal.html', 'menu_items' => $mixedMenu);
+                    $aMenu = array ('template' => 'menu_vertical.html', 'menu_items' => $mixedMenu);
                 bx_import('BxTemplMenu');
                 $oMenu = new BxTemplMenu($aMenu, $this->_oTemplate);
                 $sMenu = $oMenu->getCode ();

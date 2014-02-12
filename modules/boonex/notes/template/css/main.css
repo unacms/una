@@ -17,10 +17,6 @@
 .bx-notes-unit-thumb {
     display:block;
     float:right;
-    height:200px;
-    height:12.5rem;
-    width:300px;
-    width:18.75rem;
     overflow:hidden;
 }
 
@@ -39,20 +35,18 @@
 }
 
 .bx-notes-unit-gallery {
-    height:288px;
-    height:18rem;
-    width:300px;
-    width:18.75rem;
     float:left;
 }
 
 .bx-notes-unit-gallery .bx-notes-unit-no-thumb,
 .bx-notes-unit-gallery .bx-notes-unit-thumb {
     float:none;
+    line-height:1.25em;
 }
 
 .bx-notes-unit-gallery h2 {
-    max-height:2.5em; 
+    line-height:1.25em;
+    max-height:3.75em; 
     overflow:hidden; 
 }
 

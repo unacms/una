@@ -5,6 +5,8 @@
 
 	<string name="_bx_notes_option_autoapproval"><![CDATA[Activate notes after creation automatically]]></string>
 	<string name="_bx_notes_option_summary_chars"><![CDATA[Number of characters in auto-cropped note summary]]></string>
+	<string name="_bx_notes_option_per_page_browse"><![CDATA[Number of items per page]]></string>
+	<string name="_bx_notes_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
 
 	<string name="_bx_notes_form_note"><![CDATA[Notes]]></string>
 	<string name="_bx_notes_form_note_display_add"><![CDATA[Add Note]]></string>

@@ -13,18 +13,19 @@ body, td, pre {
 h1 {
     font-size:24px;
     font-size:2.4rem;
+    font-weight:500;
 }
 
 h2 {
     font-size:18px;
     font-size:1.6rem;
-    font-weight:normal;
+    font-weight:500;
 }
 
 h3 {
     font-size:16px;
     font-size:1.2rem;
-    font-weight:normal;
+    font-weight:500;
 }
 
 blockquote {

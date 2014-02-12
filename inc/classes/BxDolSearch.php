@@ -6,6 +6,8 @@
  */
 defined('BX_DOL') or die('hack attempt');
 
+define('BX_DOL_SEARCH_RESULTS_PER_PAGE_DEFAULT', 10);
+
 /**
  * Search class for different content.
  *
@@ -645,7 +647,7 @@ class BxDolSearchResult {
     function setPaginate () {
         $this->aCurrent['paginate']['perPage'] = (isset($_GET['per_page']) && (int)$_GET['per_page'] != 0) ? (int)$_GET['per_page'] : $this->aCurrent['paginate']['perPage'];
         if (empty($this->aCurrent['paginate']['perPage']))
-            $this->aCurrent['paginate']['perPage'] = 10;
+            $this->aCurrent['paginate']['perPage'] = BX_DOL_SEARCH_RESULTS_PER_PAGE_DEFAULT;
 
         $this->aCurrent['paginate']['start'] = isset($this->aCurrent['paginate']['forceStart'])
             ? (int)$this->aCurrent['paginate']['forceStart']

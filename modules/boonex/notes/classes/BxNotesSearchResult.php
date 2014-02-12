@@ -11,40 +11,48 @@
 
 bx_import('BxTemplSearchResult');
 
-class BxNotesSearchResult extends BxTemplSearchResult {
+class BxNotesSearchResult extends BxTemplSearchResult 
+{
+    protected $aUnitViews = array('extended' => 'unit.html', 'gallery' => 'unit_gallery.html');
+    protected $sUnitViewDefault = 'gallery';
+    protected $sUnitViewParamName = 'unit_view';
 
-    var $aCurrent = array(
-        'name' => 'bx_notes',
-        'title' => '_bx_notes_page_title_browse',
-        'table' => 'bx_notes_posts',
-        'ownFields' => array('id', 'title', 'text', 'summary', 'thumb', 'author', 'added'),
-        'searchFields' => array('title', 'text'),
-        'restriction' => array(
-            'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
-        ),
-        'paginate' => array('perPage' => 8, 'start' => 0),
-        'sorting' => 'last',
-        'rss' => array(
-            'title' => '',
-            'link' => '',
-            'image' => '',
-            'profile' => 0,
-            'fields' => array (
-                'Guid' => 'link',
-                'Link' => 'link',
-                'Title' => 'title',
-                'DateTimeUTS' => 'added',
-                'Desc' => 'text',
+    function __construct($sMode = '', $aParams = array()) 
+    {
+        $this->aCurrent = array(
+            'name' => 'bx_notes',
+            'title' => '_bx_notes_page_title_browse',
+            'table' => 'bx_notes_posts',
+            'ownFields' => array('id', 'title', 'text', 'summary', 'thumb', 'author', 'added'),
+            'searchFields' => array('title', 'text'),
+            'restriction' => array(
+                'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
             ),
-        ),
-        'ident' => 'id'
-    );
+            'paginate' => array('perPage' => getParam('bx_notes_per_page_browse'), 'start' => 0),
+            'sorting' => 'last',
+            'rss' => array(
+                'title' => '',
+                'link' => '',
+                'image' => '',
+                'profile' => 0,
+                'fields' => array (
+                    'Guid' => 'link',
+                    'Link' => 'link',
+                    'Title' => 'title',
+                    'DateTimeUTS' => 'added',
+                    'Desc' => 'text',
+                ),
+            ),
+            'ident' => 'id',
+        );
 
+        $this->aGetParams = array($this->sUnitViewParamName);
+        $this->sUnitTemplate = $this->aUnitViews[$this->sUnitViewDefault];
+        if (isset($this->aUnitViews[bx_get($this->sUnitViewParamName)]))
+            $this->sUnitTemplate = $this->aUnitViews[bx_get($this->sUnitViewParamName)];
 
-    function __construct($sMode = '', $aParams) {
-
-        $this->sUnitTemplate = 'unit_gallery.html';
         $oProfileAuthor = null;
+
         $oModuleMain = $this->getMain();
 
         switch ($sMode) {
@@ -105,10 +113,10 @@ class BxNotesSearchResult extends BxTemplSearchResult {
 
         // set rss links if required
         if (isset($this->aCurrent['rss']))
-            $this->aCurrent['rss']['link'] = BX_DOL_URL_ROOT . $this->sBrowseUrl;
+            $this->aCurrent['rss']['link'] = $this->sBrowseUrl;
 
         if (bx_get('rss'))
-            $this->aCurrent['paginate']['perPage'] = 10;//$oModuleMain->_oDb->getParam('bx_groups_max_rss_num');
+            $this->aCurrent['paginate']['perPage'] = getParam('bx_notes_rss_num');
 
         $this->sFilterName = 'bx_notes_filter';
 
@@ -117,13 +125,33 @@ class BxNotesSearchResult extends BxTemplSearchResult {
         parent::__construct();
     }
 
-    function displayResultBlock () {
+    function getMain() 
+    {
+        return BxDolModule::getInstance($this->aCurrent['name']);
+    }
+
+    function displayResultBlock () 
+    {
         $s = parent::displayResultBlock ();
         $s = '<div class="bx-notes-wrapper ' . ('unit_gallery.html' == $this->sUnitTemplate ? 'bx-def-margin-neg bx-clearfix' : '') . '">' . $s . '</div>';
         return $s;
     }
 
-    function getAlterOrder() {
+    function getDesignBoxMenu () 
+    {
+        $aMenu = parent::getDesignBoxMenu ();
+
+        return array_merge(
+            array(
+                array('name' => 'gallery', 'title' => _t('_sys_menu_title_gallery'), 'link' => $this->getCurrentUrl(array($this->sUnitViewParamName => 'gallery')), 'icon' => 'th'),
+                array('name' => 'extended', 'title' => _t('_sys_menu_title_extended'), 'link' => $this->getCurrentUrl(array($this->sUnitViewParamName => 'extended')), 'icon' => 'list'),
+            ),
+            $aMenu
+        );
+    }
+
+    function getAlterOrder() 
+    {
         if ($this->aCurrent['sorting'] == 'last') {
             $aSql = array();
             $aSql['order'] = " ORDER BY `bx_notes_posts`.`added` DESC";
@@ -132,16 +160,14 @@ class BxNotesSearchResult extends BxTemplSearchResult {
         return array();
     }
 
-    function getMain() {
-        return BxDolModule::getInstance($this->aCurrent['name']);
-    }
-
-    function getRssUnitLink (&$a) {
+    function getRssUnitLink (&$a) 
+    {
         bx_import('BxDolPermalinks');
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=view-note&id=' . $a['id']);
     }
 
-    function _getPseud () {
+    function _getPseud () 
+    {
         return array(
             'id' => 'id',
             'title' => 'title',

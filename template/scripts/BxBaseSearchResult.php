@@ -10,18 +10,22 @@
 // TODO: clean it more carefully !
 
 bx_import('BxDolSearch');
-class BxBaseSearchResult extends BxDolSearchResult {
-
+class BxBaseSearchResult extends BxDolSearchResult 
+{
     public $isError;
 
-    protected $sBrowseUrl;
-    protected $sUnitTemplate = 'unit.html';
-    protected $sFilterName;
+    protected $sBrowseUrl; ///< currect browse url, used for paginate and other links in browsing
 
-    protected $iDesignBoxTemplate = BX_DB_PADDING_DEF;
+    protected $sUnitTemplate = 'unit.html'; ///< common template to try to use for displaying one item
+
+    protected $aGetParams = array(); ///< get params to keep in paginate and other browsing links
+
+    protected $iDesignBoxTemplate = BX_DB_PADDING_DEF; ///< design box ID to warp result in
+
     protected $aConstants;
 
-    function __construct($oFunctions = false) {
+    function __construct($oFunctions = false) 
+    {
         parent::__construct();
 
         if ($oFunctions) {
@@ -32,22 +36,13 @@ class BxBaseSearchResult extends BxDolSearchResult {
         }
     }
 
-    function getMain() {
+    function getMain() 
+    {
         // override this to return main module class
     }
 
-    function getCurrentUrl ($sType, $iId, $sUri, $aOwner = '') {
-        $sLink = $this->aConstants['linksTempl'][$sType];
-        $sLink = str_replace('{id}', $iId, $sLink);
-        $sLink = str_replace('{uri}', $sUri, $sLink);
-        if (is_array($aOwner) && !empty($aOwner)) {
-            $sLink = str_replace('{ownerName}', $aOwner['ownerName'], $sLink); // TODO: urlencode
-            $sLink = str_replace('{ownerId}', $aOwner['ownerId'], $sLink);
-        }
-        return BX_DOL_URL_ROOT . $sLink;
-    }
-
-    function displayResultBlock () {
+    function displayResultBlock () 
+    {
         $sCode = '';
         $aData = $this->getSearchData();
         if ($this->aCurrent['paginate']['num'] > 0) {
@@ -55,41 +50,46 @@ class BxBaseSearchResult extends BxDolSearchResult {
             foreach ($aData as $aValue) {
                 $sCode .= $this->displaySearchUnit($aValue);
             }
-            $sCode = '<div class="bx-search-result-block">' . $sCode . '<div class="bx-clear"></div></div>';
+            $sCode = '<div class="bx-search-result-block bx-clearfix">' . $sCode . '</div>';
 
         }
         return $sCode;
     }
 
-    function displaySearchBox ($sCode, $sPaginate = '') {
-        $aMenu = false;
-        if (isset($this->aCurrent['rss']) && $this->aCurrent['rss']['link'])
-            $aMenu = array(array('name' => 'rss', 'title' => _t('_sys_menu_title_rss'), 'link' => $this->aCurrent['rss']['link'] . (false === strpos($this->aCurrent['rss']['link'], '?') ? '?' : '&') . 'rss=1', 'icon' => 'rss'));
-
+    function displaySearchBox ($sCode, $sPaginate = '') 
+    {
         $sTitle = _t($this->aCurrent['title']);
 
-        $sCode = $this->oFunctions->designBoxContent($sTitle, $sCode . $sPaginate, $this->iDesignBoxTemplate, $aMenu);
+        $sCode = $this->oFunctions->designBoxContent($sTitle, $sCode . $sPaginate, $this->iDesignBoxTemplate, $this->getDesignBoxMenu());
 
         if (!isset($_GET['searchMode']))
-            $sCode = '<div id="page_block_'.$this->id.'">'.$sCode.'<div class="clear_both"></div></div>';
+            $sCode = '<div id="page_block_' . $this->id . '" class="bx-clearfix">' . $sCode . '</div>';
+
         return $sCode;
     }
 
-    function displaySearchUnit ($aData) {
+    function displaySearchUnit ($aData) 
+    {
         $oMain = $this->getMain();
         return $oMain->_oTemplate->unit($aData, $this->bProcessPrivateContent, $this->sUnitTemplate);
     }
 
-    function _transformData ($aUnit, $sTempl, $sCssHeader = '') {
-        foreach ($aUnit as $sKey => $sValue)
-            $sTempl = str_replace('{'.$sKey.'}', $sValue, $sTempl);
+    function getDesignBoxMenu () 
+    {
+        if (!isset($this->aCurrent['rss']) || !$this->aCurrent['rss']['link']) 
+            return false;
 
-        $sCssHeader = strlen($sCssHeader) > 0 ?  $sCssHeader : 'text_Unit';
-        $sTempl =  str_replace('{unitClass}', $sCssHeader, $sTempl);
-        return $sTempl;
+        bx_import('BxDolPermalinks');
+        $oPermalinks = BxDolPermalinks::getInstance();
+        $sLink = BX_DOL_URL_ROOT . bx_append_url_params($oPermalinks->permalink($this->aCurrent['rss']['link']), 'rss=1');
+
+        return array(
+            array('name' => 'rss', 'title' => _t('_sys_menu_title_rss'), 'link' => $sLink, 'icon' => 'rss')
+        );
     }
 
-    function showAdminActionsPanel($sWrapperId, $aButtons, $sCheckboxName = 'entry', $bSelectAll = true, $bSelectAllChecked = false, $sCustomHtml = '') {
+    function showAdminActionsPanel($sWrapperId, $aButtons, $sCheckboxName = 'entry', $bSelectAll = true, $bSelectAllChecked = false, $sCustomHtml = '') 
+    {
         $aBtns = array();
         foreach ($aButtons as $k => $v) {
             if(is_array($v)) {
@@ -123,8 +123,8 @@ class BxBaseSearchResult extends BxDolSearchResult {
         return BxDolTemplate::getInstance()->parseHtmlByName('adminActionsPanel.html', $aUnit, array('{','}'));
     }
 
-    function showAdminFilterPanel($sFilterValue, $sInputId = 'filter_input_id', $sCheckboxId = 'filter_checkbox_id', $sFilterName = 'filter', $sOnApply = '') {
-
+    function showAdminFilterPanel($sFilterValue, $sInputId = 'filter_input_id', $sCheckboxId = 'filter_checkbox_id', $sFilterName = 'filter', $sOnApply = '') 
+    {
         $sFilter = _t('_sys_admin_filter');
         $sApply = _t('_sys_admin_apply');
 
@@ -184,31 +184,55 @@ EOF;
         $oMain = $this->getMain();
         $oConfig = $oMain->_oConfig;
 
-        bx_import('BxDolPermalinks');
-        $oPermalinks = BxDolPermalinks::getInstance();
-        $sUrlStart = BX_DOL_URL_ROOT . $oPermalinks->permalink($this->sBrowseUrl);
-        $sUrlStart .= (false === strpos($sUrlStart, '?') ? '?' : '&');
+        $sUrlStart = $this->getCurrentUrl(array(), false);
 
         bx_import('BxTemplPaginate');
         $oPaginate = new BxTemplPaginate(array(
-            'page_url' => $sUrlStart . 'start={start}&per_page={per_page}' . (false !== bx_get($this->sFilterName) ? '&' . $this->sFilterName . '=' . bx_get($this->sFilterName) : ''),
+            'page_url' => $sUrlStart,
             'num' => $this->aCurrent['paginate']['num'],
             'per_page' => $this->aCurrent['paginate']['perPage'],
             'start' => $this->aCurrent['paginate']['start'],
         ));
 
-        return '<div class="clear_both"></div>'.$oPaginate->getPaginate();
+        return $oPaginate->getPaginate();
     }
 
-    function showPaginationAjax($sBlockId) {
-        $oMain = $this->getMain();
-        $oConfig = $oMain->_oConfig;
-        
+    /**
+     * Get current browse URL with current page and additional params
+     * @param $aAdditionalParams set custom additional params as key value pair
+     * @param $bReplacePagesParams replace paginate params with current values or leave markers for use in paginate class
+     * @return ready to use URL string with BX_DOL_URL_ROOT added in the beginning
+     */
+    protected function getCurrentUrl($aAdditionalParams = array(), $bReplacePagesParams = true) 
+    {
         bx_import('BxDolPermalinks');
         $oPermalinks = BxDolPermalinks::getInstance();
-        $sUrlStart = BX_DOL_URL_ROOT . $oPermalinks->permalink($this->sBrowseUrl);
-        $sUrlStart .= (false === strpos($sUrlStart, '?') ? '?' : '&');
 
+        // base url
+        $sUrlStart = BX_DOL_URL_ROOT . $oPermalinks->permalink($this->sBrowseUrl);
+
+        // add pages params
+        $sUrlStart = bx_append_url_params($sUrlStart, array (
+            'start' => $bReplacePagesParams ? (int)$this->aCurrent['paginate']['start'] : '{start}',
+            'per_page' => $bReplacePagesParams ? (int)$this->aCurrent['paginate']['perPage'] : '{per_page}',
+        ));
+
+        // add additional params
+        foreach ($this->aGetParams as $sGetParam) {
+            $sValue = false;
+            if (isset($aAdditionalParams[$sGetParam]))
+                $sValue = $aAdditionalParams[$sGetParam];
+            elseif (false !== bx_get($sGetParam))
+                $sValue = bx_get($sGetParam);
+            if (false !== $sValue)
+                $sUrlStart = bx_append_url_params($sUrlStart, $sGetParam . '=' . rawurlencode($sValue));
+        }
+
+        return $sUrlStart;
+    }
+    
+    function showPaginationAjax($sBlockId) 
+    {
         bx_import('BxTemplPaginate');
         $oPaginate = new BxTemplPaginate(array(
             'page_url' => 'javascript:void(0);',
@@ -220,44 +244,17 @@ EOF;
         return $oPaginate->getSimplePaginate(false, -1, -1, false);
     }
 
-    function getLinkAddByPrams ($aExclude = array()) {
-        $aExclude[] = '_r';
-        $aExclude[] = 'pageBlock';
-        $aExclude[] = 'searchMode';
-        $aExclude[] = 'section';
-        $aExclude[] = 'keyword';
-        $aLinks = array();
-        $aCurrParams = array();
-        $aParams = array();
-
-        foreach ($this->aCurrent['restriction'] as $sKey => $aValue) {
-            if (isset($aValue['paramName'])) {
-                if (is_array($aValue['value']))
-                    $aCurrParams[$aValue['paramName']] = $aValue['value'];
-                elseif (mb_strlen($aValue['value']) > 0)
-                    $aCurrParams[$aValue['paramName']] = $aValue['value'];
-            }
-        }
-
-        // add get params
-        $aExclude = array_merge($aExclude, array('page', 'per_page'));
-        $aParams = array_merge($_GET, $aCurrParams);
-        $aLinks['params'] = bx_encode_url_params ($_GET, $aExclude);
-
-        //paginate
-        $aLinks['paginate'] = '&start={start}';
-        $aLinks['paginate'] .= '&per_page={per_page}';
-        return $aLinks;
-    }
-
-    function clearFilters ($aPassParams = array(), $aPassJoins = array()) {
+    function clearFilters ($aPassParams = array(), $aPassJoins = array()) 
+    {
         //clear sorting
         $this->aCurrent['sorting'] = 'last';
+
         //clear restrictions
         foreach ($this->aCurrent['restriction'] as $sKey => $aValue) {
             if (!in_array($sKey, $aPassParams))
                 $this->aCurrent['restriction'][$sKey]['value'] = '';
         }
+
         //clear unnecessary joins (remains only profile join)
         $aPassJoins[] = 'profile';
         $aTemp = array();
@@ -268,7 +265,8 @@ EOF;
         $this->aCurrent['join'] = $aTemp;
     }
 
-    function fillFilters ($aParams) {
+    function fillFilters ($aParams) 
+    {
         // transform all given values to fields values
         if (is_array($aParams)) {
             foreach ($aParams as $sKey => $mixedValue) {
@@ -278,111 +276,11 @@ EOF;
         }
     }
 
-    function getTopMenu ($aExclude = array()) {
-
-    }
-
-    function getBottomMenu ($sAllLinkType = 'browseAll', $iId = 0, $sUri = '', $aExclude = array()) {
-        if (strpos($sAllLinkType, 'http') === false) {
-            if (isset($this->aConstants['linksTempl'][$sAllLinkType]))
-                $sAllUrl = $this->getCurrentUrl($sAllLinkType, $iId, $sUri);
-            else
-                $sAllUrl = $this->getCurrentUrl('browseAll', 0, '');
-        }
-        else
-            $sAllUrl = $sAllLinkType;
-        $sModeName = $this->aCurrent['name'] . '_mode';
-        $sMode = isset($_GET[$sModeName]) ? '&' . $sModeName . '=' . rawurlencode($_GET[$sModeName]) : $sModeName . '=' . $this->aCurrent['sorting'];
-        $aLinkAddon = $this->getLinkAddByPrams($aExclude);
-        $sLink = bx_html_attribute($_SERVER['PHP_SELF']);
-        bx_import('BxDolPaginate');
-        $oPaginate = new BxDolPaginate(array(
-            'page_url' => $this->getCurrentUrl($sAllUrl, 0, ''),
-            'num' => $this->aCurrent['paginate']['num'],
-            'per_page' => $this->aCurrent['paginate']['perPage'],
-            'start' => $this->aCurrent['paginate']['start'],
-        ));
-        return $oPaginate->getSimplePaginate($sAllUrl);
-    }
-
-    function getBrowseBlock ($aParams, $aCustom = array(), $sMainUrl = '', $bClearJoins = true) {
-        $aJoins = $bClearJoins ? array('albumsObjects', 'albums') : array_keys($this->aCurrent['join']);
-        $this->clearFilters(array('activeStatus', 'albumType', 'album_status', 'ownerStatus'), $aJoins);
-        $this->addCustomParts();
-        $aCustomTmpl = array(
-            'enable_center' => true,
-            'unit_css_class' => ' > div:not(.clear_both)',
-            'start' => 0,
-            'per_page' => 10,
-            'sorting' => 'last',
-            'simple_paginate' => true,
-            'dynamic_paginate' => true,
-            'menu_top' => false,
-            'menu_bottom' => true,
-            'menu_bottom_type' => 'browseAll',
-            'menu_bottom_param'=> ''
-        );
-        $aCustom = array_merge($aCustomTmpl, $aCustom);
-        $this->aCurrent['paginate']['perPage'] = (int)$aCustom['per_page'];
-        $this->aCurrent['paginate']['start'] = (int)$aCustom['start'] > 0 ? $aCustom['start'] : 0;
-        $this->aCurrent['sorting'] = $aCustom['sorting'];
-        foreach ($aParams as $sKey => $mixedValues) {
-            if (isset($this->aCurrent['restriction'][$sKey]))
-                $this->aCurrent['restriction'][$sKey]['value'] = $mixedValues;
-        }
-        $aList = $this->getSearchData();
-        $bWrap = true;
-        if ($this->aCurrent['paginate']['num'] > 0) {
-            $bWrap = false;
-            foreach ($aList as $aData)
-                $sCode .= $this->displaySearchUnit($aData);
-            if ($aCustom['enable_center'])
-                $sCode = $GLOBALS['oFunctions']->centerContent($sCode, $aCustom['unit_css_class']);
-            if (mb_strlen($aCustom['wrapper_class']) > 0)
-                $sCode = '<div class="' . $aCustom['wrapper_class'] . '">' . $sCode . '</div>';
-            if ($aCustom['dynamic_paginate']) {
-                $aExclude = array($this->aCurrent['name'] . '_mode', 'r');
-                $aLinkAddon = $this->getLinkAddByPrams($aExclude);
-                $sOnChange = 'return !loadDynamicBlock({id}, \'' . $sMainUrl . $aLinkAddon['params'] . $aLinkAddon['paginate'] . '\');';
-            }
-        }
-        $aMenuTop = $aCustom['menu_top'] ? $this->getTopMenu($aExclude): array();
-        $sMenuBottom = $aCustom['menu_bottom'] ? $this->getBottomMenu($aCustom['menu_bottom_type'], 0, $this->aCurrent['restriction'][$aCustom['menu_bottom_param']]['value']): array();
-        return array('code' => $sCode, 'menu_top'=> $aMenuTop, 'menu_bottom' => $sMenuBottom, 'wrapper' => $bWrap);
-    }
-
-    function serviceGetBrowseBlock ($aParams, $sMainUrl = '', $aCustom = array()) {
-        $aCode = $this->getBrowseBlock($aParams, $aCustom, $sMainUrl);
-        return $aCode['code'] . $aCode['menu_bottom'];
-    }
-
-    /*
-     * Get number of all elements under specified search criterias
-     * @param array $aFilter - search criteria like 'restriction key'=>'rest. value'
-     * @param array $aJoin - list of joins elements from $this->aCurrent['join'] field which shouldn't be cleared,
-       if empty then all current joins will be left
-     * @return integer number of found elements
-     */
-    function serviceGetAllCount ($aFilter, $aJoin = array()) {
-        if (is_array($aFilter)) {
-            // collect all current joins, but clear almost all search values
-            if (!is_array($aJoin) || empty($aJoin))
-                $aCurrJoins = array_keys($this->aCurrent['join']);
-            else
-                $aCurrJoins = $aJoin;
-            $this->clearFilters(array('activeStatus'), $aCurrJoins);
-            foreach ($aFilter as $sKey => $mixedValue) {
-                if (isset($this->aCurrent['restriction'][$sKey]))
-                    $this->aCurrent['restriction'][$sKey]['value'] = $mixedValue;
-            }
-            return $this->getCount();
-        }
-    }
-
     /**
-     * Set design box template id to use to wrap search results to
+     * Set design box template id to use to wrap search results in
      */
-    function setDesignBoxTemplateId ($i) {
+    function setDesignBoxTemplateId ($i) 
+    {
         $this->iDesignBoxTemplate = $i;
     }
 }

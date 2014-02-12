@@ -17,6 +17,7 @@ bx_import('BxDolPaginate');
 class BxBaseMenu extends BxDolMenu {
 
     protected $_oTemplate;
+    protected $_aOptionalParams = array('target' => '', 'onclick' => '');
 
     public function __construct ($aObject, $oTemplate) {
         parent::__construct ($aObject);
@@ -95,6 +96,10 @@ class BxBaseMenu extends BxDolMenu {
 
             $a['addon'] = $this->_getMenuAddon($a);
             
+            foreach ($this->_aOptionalParams as $sName => $sDefaultValue)
+                if (!isset($a[$sName]))
+                    $a[$sName] = $sDefaultValue;
+
             $aRet[] = $a;
         }
 

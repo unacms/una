@@ -12,7 +12,9 @@ SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
 ('bx_notes_autoapproval', 'on', @iCategId, '_bx_notes_option_autoapproval', 'checkbox', '', '', '', 1),
-('bx_notes_summary_chars', '700', @iCategId, '_bx_notes_option_summary_chars', 'digit', '', '', '', 2);
+('bx_notes_summary_chars', '700', @iCategId, '_bx_notes_option_summary_chars', 'digit', '', '', '', 2),
+('bx_notes_per_page_browse', '12', @iCategId, '_bx_notes_option_per_page_browse', 'digit', '', '', '', 10),
+('bx_notes_rss_num', '10', @iCategId, '_bx_notes_option_rss_num', 'digit', '', '', '', 20);
 
 -- STORAGES & TRANSCODERS
 
