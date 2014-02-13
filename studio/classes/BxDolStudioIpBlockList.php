@@ -110,7 +110,7 @@ EOF;
         $sType2C = _t('_adm_ipbl_Type2_desc');
         $sTitle = '';
 
-        $iIpListType = (int)getParam('ipListGlobalType');
+        $iIpListType = (int)getParam('bx_antispam_ip_list_type');
         switch ($iIpListType) {
             case 1:
                 $sTitle = '<h2>'.$sType1C.'</h2>';

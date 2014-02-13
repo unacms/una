@@ -1103,8 +1103,6 @@
 	<string name="_adm_stg_cpt_option_enable_template"><![CDATA[Show Template Switcher]]></string>
 	<string name="_adm_stg_cpt_option_expire_notification_days"><![CDATA[Number of days before membership expiration to notify members ( -1 = after expiration )]]></string>
 	<string name="_adm_stg_cpt_option_expire_notify_once"><![CDATA[Notify members about membership expiration only once (every day otherwise)]]></string>
-	<string name="_adm_stg_cpt_option_ip_blacklist_mode"><![CDATA[IP Blacklist system mode (1 - total block, 2 - login block)]]></string>
-	<string name="_adm_stg_cpt_option_ip_list_global_type"><![CDATA[IP List Type (1 - all allowed except listed, 2 - all blocked except listed, 0 - disabled)]]></string>
 	<string name="_adm_stg_cpt_option_lang_default"><![CDATA[Default Language]]></string>
 	<string name="_adm_stg_cpt_option_msgs_per_start"><![CDATA[Send emails from queue, it happens every cron execution (5m-1h)]]></string>
 	<string name="_adm_stg_cpt_option_permalinks_modules"><![CDATA[Enable friendly permalinks for Modules]]></string>
@@ -1113,16 +1111,11 @@
 	<string name="_adm_stg_cpt_option_site_email_bug_report"><![CDATA[Site Email Bug Report]]></string>
 	<string name="_adm_stg_cpt_option_site_email_notify"><![CDATA[Site Email Notify]]></string>
 	<string name="_adm_stg_cpt_option_site_title"><![CDATA[Site Title]]></string>
-	<string name="_adm_stg_cpt_option_sys_akismet_api_key"><![CDATA[Akismet API Key]]></string>
-	<string name="_adm_stg_cpt_option_sys_akismet_enable"><![CDATA[Enable Akismet]]></string>
-	<string name="_adm_stg_cpt_option_sys_antispam_block"><![CDATA[Total block all spam content]]></string>
-	<string name="_adm_stg_cpt_option_sys_antispam_report"><![CDATA[Send report to admin if spam content discovered]]></string>
 	<string name="_adm_stg_cpt_option_sys_cache_memcache_host"><![CDATA[Memcached server host]]></string>
 	<string name="_adm_stg_cpt_option_sys_cache_memcache_port"><![CDATA[Memcached server port]]></string>
 	<string name="_adm_stg_cpt_option_sys_calendar_starts_sunday"><![CDATA[Does Calender start on Sunday?]]></string>
 	<string name="_adm_stg_cpt_option_sys_db_cache_enable"><![CDATA[Enable DB cache]]></string>
 	<string name="_adm_stg_cpt_option_sys_db_cache_engine"><![CDATA[DB cache engine (other than File option may require custom server setup)]]></string>
-	<string name="_adm_stg_cpt_option_sys_dnsbl_enable"><![CDATA[Enable DNS Block Lists]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_date"><![CDATA[Date Format]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_datetime"><![CDATA[Datetime Format]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_time"><![CDATA[Time Format]]></string>
@@ -1155,7 +1148,6 @@
 	<string name="_adm_stg_cpt_option_sys_template_cache_js_enable"><![CDATA[Enable cache for JS files]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_page_width_max"><![CDATA[Max page width(in pixels)]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_page_width_min"><![CDATA[Min page width(in pixels)]]></string>
-	<string name="_adm_stg_cpt_option_sys_uridnsbl_enable"><![CDATA[Enable URI DNS Block Lists]]></string>
 	<string name="_adm_stg_cpt_option_tags_non_parsable"><![CDATA[Non-parsable tags (type all tags in lower case, delimit them by comma)]]></string>
 	<string name="_adm_stg_cpt_option_tags_perpage_browse"><![CDATA[Number of tags to show on browse pages]]></string>
 	<string name="_adm_stg_cpt_option_tags_show_limit"><![CDATA[Number of tags to show limit]]></string>

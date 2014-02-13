@@ -868,7 +868,10 @@ class BxDolCmts extends BxDol
     }
 
     protected function _isSpam($s) {
-        return bx_is_spam($s);
+        // TODO: insert alert here, so other modules can be used instead of default one
+        if (!BxDolRequest::serviceExists('bx_antispam', 'is_spam'))
+            return false;
+        return BxDolService::call('bx_antispam', 'is_spam', array($s));
     }
 
 	/**

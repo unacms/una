@@ -1,41 +1,43 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ * 
+ * @defgroup    Antispam Antispam
+ * @ingroup     DolphinModules
+ *
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
-
 
 /**
  * Spam detection based on URIs in the message
  */
-class BxDolDNSURIBlacklists extends BxDol
+class BxAntispamDNSURIBlacklists extends BxDol
 {
-    var $aZonesUrls = array (
+    protected $aZonesUrls = array (
         2 => "http://www.surbl.org/tld/two-level-tlds",
         3 => "http://www.surbl.org/tld/three-level-tlds",
     );
 
-    var $oDb;
+    protected $oDb;
 
     /**
      * Constructor
      */
-    public function BxDolDNSURIBlacklists()
+    public function __construct()
     {
-        parent::BxDol();
+        parent::__construct();
         $this->aZonesUrls = array ( // for some reason original urls are restricted to fetch, so copies are created locally
-            2 => BX_DIRECTORY_PATH_ROOT . "two-level-tlds",
-            3 => BX_DIRECTORY_PATH_ROOT . "three-level-tlds",
+            2 => BX_DIRECTORY_PATH_MODULES . "boonex/antispam/data/two-level-tlds",
+            3 => BX_DIRECTORY_PATH_MODULES . "boonex/antispam/data/three-level-tlds",
         );
 
-        $this->oDb = BxDolDb::getInstance();
+        $this->oDb = &$GLOBALS['MySQL'];
         $this->initZones();
     }
 
-    public function isSpam ($s) {
-
+    public function isSpam ($s)
+    {
         $aURIs = $this->parseUrls ($s);
         if (!$aURIs)
             return false;
@@ -53,8 +55,8 @@ class BxDolDNSURIBlacklists extends BxDol
         return false;
     }
 
-    public function parseUrls (&$s) {
-
+    public function parseUrls (&$s)
+    {
         $aMatches = array ();
         if (!preg_match_all("!(https?|ftp|gopher|telnet|file|notes|ms-help):[/\\\\]+([\w\d\.]*)!", $s, $aMatches))
             return false;
@@ -72,8 +74,8 @@ class BxDolDNSURIBlacklists extends BxDol
         return $aUrlsUniq;
     }
 
-    public function validateUrls ($aUrlsUniq) {
-
+    public function validateUrls ($aUrlsUniq)
+    {
         $aUrls = array ();
         foreach ($aUrlsUniq as $sUrl) {
 
@@ -124,20 +126,22 @@ class BxDolDNSURIBlacklists extends BxDol
         return array_values($aUrlsUniq);
     }
 
-    public function onPositiveDetection ($sExtraData = '') {
+    public function onPositiveDetection ($sExtraData = '')
+    {
         $o = bx_instance('BxDolDNSBlacklists');
-        $o->onPositiveDetection (getVisitorIP(), $sExtraData, 'dnsbluri');
+        $o->onPositiveDetection (getVisitorIP(false), $sExtraData, 'dnsbluri');
     }
 
     /*************** private function ***************/
 
-    private function isDbZoneMatch ($iLevel, $sZone) {
+    private function isDbZoneMatch ($iLevel, $sZone) 
+    {
         $sQuery = $this->oDb->prepare("SELECT `level` FROM `sys_dnsbluri_zones` WHERE `level` = ? AND `zone` = ? LIMIT 1", $iLevel, $sZone);
         return $this->oDb->getOne($sQuery) ? true : false;
     }
 
-    private function initZones() {
-
+    private function initZones()
+    {
         if (0 == $this->oDb->getOne("SELECT COUNT(*) FROM `sys_dnsbluri_zones`")) {
 
             $this->oDb->query("TRUNCATE TABLE `sys_dnsbluri_zones`");
@@ -163,3 +167,4 @@ class BxDolDNSURIBlacklists extends BxDol
 
 }
 
+/** @} */

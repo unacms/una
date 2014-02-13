@@ -1,25 +1,25 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ * 
+ * @defgroup    Antispam Antispam
+ * @ingroup     DolphinModules
+ *
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 /**
- * Spam detection based on the message content and logged in user
+ * Spam detection based on the message content and logged in user info - http://akismet.com
  */
-class BxDolAkismet extends BxDol
+class BxAntispamAkismet extends BxDol
 {
-    var $oAkismet = null;
+    protected $oAkismet = null;
 
-    /**
-     * Constructor
-     */
-    public function BxDolAkismet($iProfileID = 0)
+    public function __construct($iProfileID = 0)
     {
-        parent::BxDol();
-        $sKey = getParam('sys_akismet_api_key');
+        parent::__construct();
+        $sKey = getParam('bx_antispam_akismet_api_key');
         if ($sKey) {
             require_once (BX_DIRECTORY_PATH_PLUGINS . 'akismet/Akismet.class.php');
             $this->oAkismet = new Akismet(BX_DOL_URL_ROOT, $sKey);
@@ -32,8 +32,8 @@ class BxDolAkismet extends BxDol
         }
     }
 
-    public function isSpam ($s, $sPermalink = false) {
-
+    public function isSpam ($s, $sPermalink = false)
+    {
         if (!$this->oAkismet)
             return false;
 
@@ -44,9 +44,11 @@ class BxDolAkismet extends BxDol
         return $this->oAkismet->isCommentSpam();
     }
 
-    public function onPositiveDetection ($sExtraData = '') {
+    public function onPositiveDetection ($sExtraData = '')
+    {
         $o = bx_instance('BxDolDNSBlacklists');
         $o->onPositiveDetection (getVisitorIP(), $sExtraData, 'akismet');
     }
 }
 
+/** @} */

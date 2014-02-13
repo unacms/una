@@ -1,10 +1,13 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ * 
+ * @defgroup    Antispam Antispam
+ * @ingroup     DolphinModules
+ *
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 define('BX_DOL_DNSBL_NEGATIVE', 0);   // negative
 define('BX_DOL_DNSBL_POSITIVE', 1);   // positive match
@@ -27,28 +30,26 @@ define('BX_DOL_DNSBL_CHAIN_URIDNS', "uridns");
  *
  * Example of usage:
  *
- * \code
  *  if (DNSBL_POSITIVE == $o->dnsbl_lookup_ip(DNSBL_CHAIN_SPAMMERS, $sCurIP) && DNSBL_POSITIVE != $o->dnsbl_lookup_ip(DNSBL_CHAIN_WHITELIST, $sCurIP))
  *  {
  *    // positive detection - block this ip
  *  }
  *  // continue script execution
- * \endcode
+ *
  *
  *  There is more handy function available:
  *  @see bx_is_ip_dns_blacklisted
  */
-class BxDolDNSBlacklists extends BxDol
+class BxAntispamDNSBlacklists extends BxDol
 {
-
     private $aChains = array ();
 
     /**
      * Constructor
      */
-    public function BxDolDNSBlacklists()
+    public function __construct()
     {
-        parent::BxDol();
+        parent::__construct();
         $this->initChains();
     }
 
@@ -56,7 +57,7 @@ class BxDolDNSBlacklists extends BxDol
     {
         $lookupkey = $this->ipreverse($sIp);
         if (false === $lookupkey)
-            return BX_DOL_DNSBL_FAILURE;    // unable to prepare lookup string from address
+            return BX_DOL_DNSBL_FAILURE;	// unable to prepare lookup string from address
 
         if (is_array($mixedChain))
             $aChain = $mixedChain;
@@ -77,7 +78,8 @@ class BxDolDNSBlacklists extends BxDol
         return $this->dnsbl_lookup($aChain, $sUri, $querymode);
     }
 
-    public function onPositiveDetection ($sIP, $sExtraData = '', $sType = 'dnsbl') {
+    public function onPositiveDetection ($sIP, $sExtraData = '', $sType = 'dnsbl')
+    {
         $iIP = sprintf("%u", ip2long($sIP));
         $iMemberId = getLoggedId();
         $oDb = BxDolDb::getInstance();
@@ -85,7 +87,8 @@ class BxDolDNSBlacklists extends BxDol
         return $oDb->query($sQuery);
     }
 
-    public function clearCache () {
+    public function clearCache () 
+    {
         $oDb = BxDolDb::getInstance();
         $oDb->cleanCache('sys_dnsbl_'.BX_DOL_DNSBL_CHAIN_SPAMMERS);
         $oDb->cleanCache('sys_dnsbl_'.BX_DOL_DNSBL_CHAIN_WHITELIST);
@@ -104,21 +107,22 @@ class BxDolDNSBlacklists extends BxDol
 
         if (($querymode!=BX_DOL_DNSBL_ANYPOSTV_RETFIRST) && ($querymode!=BX_DOL_DNSBL_ANYPOSTV_RETEVERY)
              && ($querymode!=BX_DOL_DNSBL_ALLPOSTV_RETEVERY))
-             return BX_DOL_DNSBL_FAILURE;    // invalid querymode
+             return BX_DOL_DNSBL_FAILURE;	// invalid querymode
 
-        foreach ($servers as $r)
-        {
+        foreach ($servers as $r) {
             $resultaddr = gethostbyname ($key . "." . $r['zonedomain']);
 
-            if ($resultaddr && $resultaddr != $key . "." . $r['zonedomain'])
-            {
+            if ($resultaddr && $resultaddr != $key . "." . $r['zonedomain']) {
                 // we got some result from the DNS query, not NXDOMAIN. should we consider 'positive'?
-                $postvresp = $r['postvresp'];    // check positive match criteria
-                if (BX_DOL_DNSBL_MATCH_ANY == $postvresp || $resultaddr == $postvresp)
-                {
+                $postvresp = $r['postvresp'];	// check positive match criteria
+                if (
+                    BX_DOL_DNSBL_MATCH_ANY == $postvresp || 
+                    (preg_match("/^\d+\.\d+\.\d+\.\d+$/", $postvresp) && $resultaddr == $postvresp) ||
+                    (is_numeric($postvresp) && (ip2long($resultaddr) & $postvresp))
+                ) {
                     $numpositive++;
                     if ($querymode == BX_DOL_DNSBL_ANYPOSTV_RETFIRST)
-                        return BX_DOL_DNSBL_POSITIVE;    // found one positive, returning single
+                        return BX_DOL_DNSBL_POSITIVE;	// found one positive, returning single
                 }
             }
         }
@@ -139,7 +143,8 @@ class BxDolDNSBlacklists extends BxDol
         return "{$m[4]}.{$m[3]}.{$m[2]}.{$m[1]}";
     }
 
-    private function initChains() {
+    private function initChains() 
+    {
 
         $oDb = BxDolDb::getInstance();
 
@@ -148,15 +153,11 @@ class BxDolDNSBlacklists extends BxDol
             $GLOBALS['bx_dol_dnsbl_'.BX_DOL_DNSBL_CHAIN_SPAMMERS] = $GLOBALS['MySQL']->fromCache('sys_dnsbl_'.BX_DOL_DNSBL_CHAIN_SPAMMERS, 'getAll', $sQuery);
         }
 
-        if (!isset($GLOBALS['bx_dol_dnsbl_'.BX_DOL_DNSBL_CHAIN_WHITELIST])) {
-            $sQuery = $oDb->prepare("SELECT `zonedomain`, `postvresp` FROM `sys_dnsbl_rules` WHERE `chain` = ? AND `active` = 1", BX_DOL_DNSBL_CHAIN_WHITELIST);
-            $GLOBALS['bx_dol_dnsbl_'.BX_DOL_DNSBL_CHAIN_WHITELIST] = $GLOBALS['MySQL']->fromCache('sys_dnsbl_'.BX_DOL_DNSBL_CHAIN_WHITELIST, 'getAll', $sQuery);
-        }
+        if (!isset($GLOBALS['bx_dol_dnsbl_'.BX_DOL_DNSBL_CHAIN_WHITELIST]))
+            $GLOBALS['bx_dol_dnsbl_'.BX_DOL_DNSBL_CHAIN_WHITELIST] = $GLOBALS['MySQL']->fromCache('sys_dnsbl_'.BX_DOL_DNSBL_CHAIN_WHITELIST, 'getAll', "SELECT `zonedomain`, `postvresp` FROM `sys_dnsbl_rules` WHERE `chain` = '".BX_DOL_DNSBL_CHAIN_WHITELIST."' AND `active` = 1");
 
-        if (!isset($GLOBALS['bx_dol_dnsbl_'.BX_DOL_DNSBL_CHAIN_URIDNS])) {
-            $sQuery = $oDb->prepare("SELECT `zonedomain`, `postvresp` FROM `sys_dnsbl_rules` WHERE `chain` = ? AND `active` = 1", BX_DOL_DNSBL_CHAIN_URIDNS);
-            $GLOBALS['bx_dol_dnsbl_'.BX_DOL_DNSBL_CHAIN_URIDNS] = $GLOBALS['MySQL']->fromCache('sys_dnsbl_'.BX_DOL_DNSBL_CHAIN_URIDNS, 'getAll', $sQuery);
-        }
+        if (!isset($GLOBALS['bx_dol_dnsbl_'.BX_DOL_DNSBL_CHAIN_URIDNS]))
+            $GLOBALS['bx_dol_dnsbl_'.BX_DOL_DNSBL_CHAIN_URIDNS] = $GLOBALS['MySQL']->fromCache('sys_dnsbl_'.BX_DOL_DNSBL_CHAIN_URIDNS, 'getAll', "SELECT `zonedomain`, `postvresp` FROM `sys_dnsbl_rules` WHERE `chain` = '".BX_DOL_DNSBL_CHAIN_URIDNS."' AND `active` = 1");
 
         $this->aChains[BX_DOL_DNSBL_CHAIN_SPAMMERS] = &$GLOBALS['bx_dol_dnsbl_'.BX_DOL_DNSBL_CHAIN_SPAMMERS];
         $this->aChains[BX_DOL_DNSBL_CHAIN_WHITELIST] = &$GLOBALS['bx_dol_dnsbl_'.BX_DOL_DNSBL_CHAIN_WHITELIST];
@@ -166,3 +167,4 @@ class BxDolDNSBlacklists extends BxDol
 
 }
 
+/** @} */

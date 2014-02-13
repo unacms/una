@@ -411,18 +411,10 @@ SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryId, 'enable_member_store_ip', '_adm_stg_cpt_option_enable_member_store_ip', 'on', 'checkbox', '', '', '', 1),
-(@iCategoryId, 'ipBlacklistMode', '_adm_stg_cpt_option_ip_blacklist_mode', '2', 'digit', '', '', '', 2),
-(@iCategoryId, 'ipListGlobalType', '_adm_stg_cpt_option_ip_list_global_type', '0', 'digit', '', '', '', 3),
 (@iCategoryId, 'sys_security_impact_threshold_log', '_adm_stg_cpt_option_sys_security_impact_threshold_log', '-1', 'digit', '', '', '', 4),
 (@iCategoryId, 'sys_security_impact_threshold_block', '_adm_stg_cpt_option_sys_security_impact_threshold_block', '-1', 'digit', '', '', '', 5),
 (@iCategoryId, 'sys_security_form_token_enable', '_adm_stg_cpt_option_sys_security_form_token_enable', 'on', 'checkbox', '', '', '', 6),
 (@iCategoryId, 'sys_security_form_token_lifetime', '_adm_stg_cpt_option_sys_security_form_token_lifetime', '86400', 'digit', '', '', '', 7),
-(@iCategoryId, 'sys_dnsbl_enable', '_adm_stg_cpt_option_sys_dnsbl_enable', '', 'checkbox', '', '', '', 8),
-(@iCategoryId, 'sys_uridnsbl_enable', '_adm_stg_cpt_option_sys_uridnsbl_enable', '', 'checkbox', '', '', '', 9),
-(@iCategoryId, 'sys_akismet_enable', '_adm_stg_cpt_option_sys_akismet_enable', '', 'checkbox', '', '', '', 10),
-(@iCategoryId, 'sys_akismet_api_key', '_adm_stg_cpt_option_sys_akismet_api_key', '', 'digit', '', '', '', 11),
-(@iCategoryId, 'sys_antispam_block', '_adm_stg_cpt_option_sys_antispam_block', '', 'checkbox', '', '', '', 12),
-(@iCategoryId, 'sys_antispam_report', '_adm_stg_cpt_option_sys_antispam_report', 'on', 'checkbox', '', '', '', 13),
 (@iCategoryId, 'sys_recaptcha_key_public', '_adm_stg_cpt_option_sys_recaptcha_key_public', '', 'digit', '', '', '', 14),
 (@iCategoryId, 'sys_recaptcha_key_private', '_adm_stg_cpt_option_sys_recaptcha_key_private', '', 'digit', '', '', '', 15);
 

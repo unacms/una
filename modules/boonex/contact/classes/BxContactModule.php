@@ -22,7 +22,7 @@ class BxContactModule extends BxDolModule
 
         $this->_oConfig->init($this->_oDb);
     }
-
+    
 	/**
      * SERVICE METHODS
      */
@@ -89,6 +89,15 @@ class BxContactModule extends BxDolModule
 	    	'content' => $sResult . $oForm->getCode()
 	    );
 	}
+
+	public function serviceGetContactPageUrl()
+    {
+		//if (true !== $this->isAllowedContact())
+        //    return false;
+
+        bx_import('BxDolPermalinks');
+        return BxDolPermalinks::getInstance()->permalink('page.php?i=contact');
+    }
 
     /*
      * COMMON METHODS

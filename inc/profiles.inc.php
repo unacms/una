@@ -39,6 +39,8 @@ if (!function_exists("isAdmin")) {
      * It checks if account is admin.
      */
     function isAdmin($iId = 0) {
+        if (!$iId && isset($GLOBALS['logged']['admin']) && $GLOBALS['logged']['admin']) // easier check for currently logged in user
+            return true;
         return isRole(BX_DOL_ROLE_ADMIN, $iId);
     }
 }
@@ -205,11 +207,9 @@ function bx_check_login($iID, $sPassword, $iRole = BX_DOL_ROLE_MEMBER) {
     if (isAdmin($aAccountInfo['id']))
         return '';
 
-    // If IP is banned
-    if ((2 == getParam('ipBlacklistMode') && bx_is_ip_blocked()) || ('on' == getParam('sys_dnsbl_enable') && bx_is_ip_dns_blacklisted('', 'login'))) {
-        bx_import('BxDolLanguages');
-        return _t('_Sorry, your IP been banned');
-    }
+    // Check if IP is banned
+    if (BxDolRequest::serviceExists('bx_antispam', 'check_login') && ($sErrorMsg = BxDolService::call('bx_antispam', 'check_login')))
+        return $sErrorMsg;
 
     // If account is banned
     if (isLoggedBanned($aAccountInfo['id'])) {

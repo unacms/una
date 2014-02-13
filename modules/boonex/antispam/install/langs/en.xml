@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+
+	<string name="_bx_antispam"><![CDATA[Antispam]]></string>
+    <string name="_bx_antispam_adm_stg_cpt_type"><![CDATA[Antispam]]></string>
+    <string name="_bx_antispam_adm_stg_cpt_category_general"><![CDATA[General]]></string>
+    <string name="_bx_antispam_help"><![CDATA[Help]]></string>
+    <string name="_bx_antispam_help_text"><![CDATA[TODO: help text here]]></string>
+    <string name="_bx_antispam_ip_blocked"><![CDATA[IP address is blocked. {0}]]></string>
+    <string name="_bx_antispam_spam_detected"><![CDATA[Spam detected. {0}]]></string>
+    <string name="_bx_antispam_submit_false_positive_report"><![CDATA[If you believe that this is a mistake, please submit a false positive report here: {0}]]></string>
+
+	<string name="_bx_antispam_option_block"><![CDATA[Total block all spam content]]></string>
+	<string name="_bx_antispam_option_report"><![CDATA[Send report to admin if spam content discovered]]></string>
+	<string name="_bx_antispam_option_ip_list_type"><![CDATA[IP List Type (1 - all allowed except listed, 2 - all blocked except listed, 0 - disabled)]]></string>
+	<string name="_bx_antispam_option_dnsbl_enable"><![CDATA[Enable DNS Block Lists]]></string>
+	<string name="_bx_antispam_option_dnsbl_behaviour"><![CDATA[User join behaviour if listed in DNS Block Lists]]></string>
+	<string name="_bx_antispam_option_uridnsbl_enable"><![CDATA[Enable URI DNS Block Lists]]></string>
+	<string name="_bx_antispam_option_akismet_enable"><![CDATA[Enable Akismet]]></string>
+	<string name="_bx_antispam_option_akismet_api_key"><![CDATA[Akismet API Key]]></string>
+	<string name="_bx_antispam_option_stopforumspam_enable"><![CDATA[Enable "Stop Forum Spam"]]></string>
+	<string name="_bx_antispam_option_stopforumspam_api_key"><![CDATA["Stop Forum Spam" API Key]]></string>
+
+</resources>
+

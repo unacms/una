@@ -291,7 +291,7 @@ class BxDolDb extends BxDol implements iBxDolSingleton {
         else
             $this->error_message = '';
 
-        if (false === $res && !@mysql_ping($this->link)) { // if mysql connection is lost - reconnect and try again
+        if (!$res && !@mysql_ping($this->link)) { // if mysql connection is lost - reconnect and try again
             @mysql_close($this->link);
             $sErrorMessage = $this->connect();
             if ($sErrorMessage)

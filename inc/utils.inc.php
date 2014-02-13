@@ -399,15 +399,14 @@ function extFileExists( $sFileSrc ) {
 
 function getVisitorIP() {
     $ip = "0.0.0.0";
-    if( ( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) && ( !empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) ) {
+    if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && !empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
         $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-    } elseif( ( isset( $_SERVER['HTTP_CLIENT_IP'])) && (!empty($_SERVER['HTTP_CLIENT_IP'] ) ) ) {
+    } elseif (isset( $_SERVER['HTTP_CLIENT_IP']) && !empty($_SERVER['HTTP_CLIENT_IP'])) {
         $ip = explode(".",$_SERVER['HTTP_CLIENT_IP']);
         $ip = $ip[3].".".$ip[2].".".$ip[1].".".$ip[0];
-    } elseif((!isset( $_SERVER['HTTP_X_FORWARDED_FOR'])) || (empty($_SERVER['HTTP_X_FORWARDED_FOR']))) {
-        if ((!isset( $_SERVER['HTTP_CLIENT_IP'])) && (empty($_SERVER['HTTP_CLIENT_IP']))) {
+    } elseif (!isset( $_SERVER['HTTP_X_FORWARDED_FOR']) || empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        if (!isset( $_SERVER['HTTP_CLIENT_IP']) && empty($_SERVER['HTTP_CLIENT_IP']) && isset($_SERVER['REMOTE_ADDR']))
             $ip = $_SERVER['REMOTE_ADDR'];
-        }
     }
     return $ip;
 }
@@ -535,160 +534,6 @@ function bx_mb_substr_replace($s, $sReplace, $iPosStart, $iLength) {
 
 function bx_mb_strpos ($s, $sReplacement, $iStart = 0) {
     return mb_strpos($s, $sReplacement, $iStart);
-}
-
-/**
- * Block user IP
- *
- * @param $sIP mixed
- * @param $iExpirationInSec integer
- * @param $sComment string
- * @return void
- */
-function bx_block_ip($mixedIP, $iExpirationInSec = 86400, $sComment = '') {
-
-    if (preg_match('/^[0-9]+$/', $mixedIP))
-        $iIP = $mixedIP;
-    else
-        $iIP = sprintf("%u", ip2long($sIP));
-
-    $iExpirationInSec = time() + (int)$iExpirationInSec;
-
-    $oDb = BxDolDb::getInstance();
-    $sQuery = $oDb->prepare("SELECT ID FROM `sys_ip_list` WHERE `From` = ? AND `To` = ? LIMIT 1", $iIP, $iIP);
-    if (!$oDb->getOne($sQuery)) {
-        $sQuery = $oDb->prepare("INSERT INTO `sys_ip_list` SET `From` = ?, `To` = ?, `Type` = 'deny', `LastDT` = ?, `Desc` = ?", $iIP, $iIP, $iExpirationInSec, $sComment);
-        return $oDb->res($sQuery);
-    }
-    return false;
-}
-
-function bx_is_ip_dns_blacklisted($sCurIP = '', $sType = '') {
-
-    if (defined('BX_DOL_CRON_EXECUTE'))
-        return false;
-
-    if (!$sCurIP)
-        $sCurIP = getVisitorIP();
-
-    if (bx_is_ip_whitelisted($sCurIP))
-        return false;
-
-    $o = bx_instance('BxDolDNSBlacklists');
-    if (BX_DOL_DNSBL_POSITIVE == $o->dnsbl_lookup_ip(BX_DOL_DNSBL_CHAIN_SPAMMERS, $sCurIP) && BX_DOL_DNSBL_POSITIVE != $o->dnsbl_lookup_ip(BX_DOL_DNSBL_CHAIN_WHITELIST, $sCurIP))
-    {
-        $o->onPositiveDetection ($sCurIP, $sType);
-        return true;
-    }
-
-    return false;
-}
-
-function bx_is_ip_whitelisted($sCurIP = '') {
-
-    if (defined('BX_DOL_CRON_EXECUTE'))
-        return true;
-
-    $iIPGlobalType = (int)getParam('ipListGlobalType');
-    if ($iIPGlobalType != 1 && $iIPGlobalType != 2) // 0 - disabled
-        return false;
-
-    if (!$sCurIP)
-        $sCurIP = getVisitorIP();
-    $iCurIP = sprintf("%u", ip2long($sCurIP));
-    $iCurrTume = time();
-
-    return db_value("SELECT `ID` FROM `sys_ip_list` WHERE `Type` = 'allow' AND `LastDT` > $iCurrTume AND `From` <= '$iCurIP' AND `To` >= '$iCurIP' LIMIT 1") ? true : false;
-}
-
-function bx_is_ip_blocked($sCurIP = '') {
-
-    if (defined('BX_DOL_CRON_EXECUTE'))
-        return false;
-
-    $iIPGlobalType = (int)getParam('ipListGlobalType');
-    if ($iIPGlobalType != 1 && $iIPGlobalType != 2) // 0 - disabled
-        return false;
-
-    if (!$sCurIP)
-        $sCurIP = getVisitorIP();
-    $iCurIP = sprintf("%u", ip2long($sCurIP));
-    $iCurrTume = time();
-
-    if (bx_is_ip_whitelisted($sCurIP))
-        return false;
-
-    $isBlocked = db_value("SELECT `ID` FROM `sys_ip_list` WHERE `Type` = 'deny' AND `LastDT` > $iCurrTume AND `From` <= '$iCurIP' AND `To` >= '$iCurIP' LIMIT 1");
-    if ($isBlocked)
-        return true;
-
-    // 1 - all allowed except listed
-    // 2 - all blocked except listed
-    return $iIPGlobalType == 2 ? true : false;
-}
-
-/**
- *  spam checking function
- *  @param $s content to check for spam
- *  @param $isStripSlashes slashes parameter:
- *          BX_SLASHES_AUTO - automatically detect magic_quotes_gpc setting
- *          BX_SLASHES_NO_ACTION - do not perform any action with slashes
- *  @return true if spam detected
- */
-function bx_is_spam ($val, $isStripSlashes = BX_SLASHES_AUTO) {
-
-    if (defined('BX_DOL_CRON_EXECUTE'))
-        return false;
-
-    if (isAdmin())
-        return false;
-
-    if (bx_is_ip_whitelisted())
-        return false;
-
-    if (get_magic_quotes_gpc() && $isStripSlashes == BX_SLASHES_AUTO)
-        $val = stripslashes($val);
-
-    $bRet = false;
-    if ('on' == getParam('sys_uridnsbl_enable')) {
-        $oBxDolDNSURIBlacklists = bx_instance('BxDolDNSURIBlacklists');
-        if ($oBxDolDNSURIBlacklists->isSpam($val)) {
-            $oBxDolDNSURIBlacklists->onPositiveDetection($val);
-            $bRet = true;
-        }
-    }
-
-    if ('on' == getParam('sys_akismet_enable')) {
-        $oBxDolAkismet = bx_instance('BxDolAkismet');
-        if ($oBxDolAkismet->isSpam($val)) {
-            $oBxDolAkismet->onPositiveDetection($val);
-            $bRet = true;
-        }
-    }
-
-    if ($bRet && 'on' == getParam('sys_antispam_report')) {
-
-        $iProfileId = getLoggedId();
-        $aPlus = array(
-            'SpammerUrl' => getProfileLink($iProfileId),
-            'SpammerNickName' => getNickName($iProfileId),
-            'Page' => htmlspecialchars_adv($_SERVER['PHP_SELF']),
-            'Get' => print_r($_GET, true),
-            'SpamContent' => htmlspecialchars_adv($val),
-        );
-
-        bx_import('BxDolEmailTemplates');
-        $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_SpamReportAuto', $aPlus);
-        if (!$aTemplate)
-            trigger_error('Email template or translation missing: t_SpamReportAuto', E_USER_ERROR);
-
-        sendMail(getParam('site_email'), $aTemplate['Subject'], $aTemplate['Body']);
-    }
-
-    if ($bRet && 'on' == getParam('sys_antispam_block'))
-        return true;
-
-    return false;
 }
 
 /**
