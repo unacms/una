@@ -8,6 +8,7 @@
   <filter>
     <whitelist processUncoveredFilesFromWhitelist="false">
       <directory suffix=".php">./../inc/</directory>
+      <directory suffix=".php">./../modules/boonex/antispam/classes/</directory>
     </whitelist>
   </filter>
   <logging>
