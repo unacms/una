@@ -136,15 +136,15 @@ class BxAntispamDNSURIBlacklists extends BxDol
 
     private function isDbZoneMatch ($iLevel, $sZone) 
     {
-        $sQuery = $this->oDb->prepare("SELECT `level` FROM `sys_dnsbluri_zones` WHERE `level` = ? AND `zone` = ? LIMIT 1", $iLevel, $sZone);
+        $sQuery = $this->oDb->prepare("SELECT `level` FROM `bx_antispam_dnsbluri_zones` WHERE `level` = ? AND `zone` = ? LIMIT 1", $iLevel, $sZone);
         return $this->oDb->getOne($sQuery) ? true : false;
     }
 
     private function initZones()
     {
-        if (0 == $this->oDb->getOne("SELECT COUNT(*) FROM `sys_dnsbluri_zones`")) {
+        if (0 == $this->oDb->getOne("SELECT COUNT(*) FROM `bx_antispam_dnsbluri_zones`")) {
 
-            $this->oDb->query("TRUNCATE TABLE `sys_dnsbluri_zones`");
+            $this->oDb->query("TRUNCATE TABLE `bx_antispam_dnsbluri_zones`");
 
             foreach ($this->aZonesUrls as $iLevel => $sUrl) {
                 $f = fopen ($sUrl, 'r');
@@ -154,7 +154,7 @@ class BxAntispamDNSURIBlacklists extends BxDol
                     $sZone = fgets($f);
                     $sZone = trim($sZone);
                     if ($sZone) {
-                        $sQuery = $this->oDb->prepare("INSERT INTO `sys_dnsbluri_zones` SET `level` = ?, `zone` = ?", $iLevel, $sZone);
+                        $sQuery = $this->oDb->prepare("INSERT INTO `bx_antispam_dnsbluri_zones` SET `level` = ?, `zone` = ?", $iLevel, $sZone);
                         $this->oDb->query($sQuery);
                     }
                 }

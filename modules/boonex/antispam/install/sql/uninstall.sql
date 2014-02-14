@@ -1,4 +1,6 @@
 
+DROP TABLE IF EXISTS `bx_antispam_ip_table`, `bx_antispam_dnsbl_rules`, `bx_antispam_dnsbluri_zones`, `bx_antispam_block_log`;
+
 -- Studio page and widget
 
 DELETE FROM `tp`, `tw`, `tpw`

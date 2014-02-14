@@ -36,10 +36,8 @@ class BxAntispamIP extends BxDol
 
         if (!$sCurIP)
             $sCurIP = getVisitorIP();
-        $iCurIP = sprintf("%u", ip2long($sCurIP));
-        $iCurrTime = time();
 
-        return db_value("SELECT `ID` FROM `sys_ip_list` WHERE `Type` = 'allow' AND `LastDT` > $iCurrTime AND `From` <= '$iCurIP' AND `To` >= '$iCurIP' LIMIT 1") ? true : false;
+        return $this->_isIpListed('allow', $sCurIP);
     }
 
     /**
@@ -59,14 +57,11 @@ class BxAntispamIP extends BxDol
 
         if (!$sCurIP)
             $sCurIP = getVisitorIP();
-        $iCurIP = sprintf("%u", ip2long($sCurIP));
-        $iCurrTime = time();
 
         if ($this->isIpWhitelisted($sCurIP))
             return false;
 
-        $isBlocked = db_value("SELECT `ID` FROM `sys_ip_list` WHERE `Type` = 'deny' AND `LastDT` > $iCurrTime AND `From` <= '$iCurIP' AND `To` >= '$iCurIP' LIMIT 1");
-        if ($isBlocked)
+        if ($this->_isIpListed('deny', $sCurIP))
             return true;
 
         // 1 - all allowed except listed
@@ -93,12 +88,38 @@ class BxAntispamIP extends BxDol
         $iExpirationInSec = time() + (int)$iExpirationInSec;
 
         $oDb = BxDolDb::getInstance();
-        $sQuery = $oDb->prepare("SELECT ID FROM `sys_ip_list` WHERE `From` = ? AND `To` = ? LIMIT 1", $iIP, $iIP);
+        $sQuery = $oDb->prepare("SELECT ID FROM `bx_antispam_ip_table` WHERE `From` = ? AND `To` = ? LIMIT 1", $iIP, $iIP);
         if (!$oDb->getOne($sQuery)) {
-            $sQuery = $oDb->prepare("INSERT INTO `sys_ip_list` SET `From` = ?, `To` = ?, `Type` = 'deny', `LastDT` = ?, `Desc` = ?", $iIP, $iIP, $iExpirationInSec, $sComment);
+            $sQuery = $oDb->prepare("INSERT INTO `bx_antispam_ip_table` SET `From` = ?, `To` = ?, `Type` = 'deny', `LastDT` = ?, `Desc` = ?", $iIP, $iIP, $iExpirationInSec, $sComment);
             return $oDb->res($sQuery);
         }
         return false;
+    }
+
+    /**
+     * Clean up expired entries
+     * TODO: add to cron
+     */
+    public function pruning () 
+    {
+        $oDb = BxDolDb::getInstance();
+        $sQuery = $oDb->prepare("DELETE FROM `bx_antispam_ip_table` WHERE `LastDT` <= ?", time());
+        $iAffectedRows = $oDb->query($sQuery);
+
+        if ($iAffectedRows) {
+            db_res("OPTIMIZE TABLE `bx_antispam_ip_table`");
+            return $iAffectedRows;
+        }
+
+        return 0;
+    }
+
+    protected function _isIpListed($sType, $sIp) 
+    {
+        $iIp = sprintf("%u", ip2long($sIp));
+        $oDb = BxDolDb::getInstance();
+        $sQuery = $oDb->prepare("SELECT `ID` FROM `bx_antispam_ip_table` WHERE `Type` = ? AND `LastDT` > ? AND `From` <= ? AND `To` >= ? LIMIT 1", $sType, time(), $iIp, $iIp);
+        return $oDb->getOne($sQuery) ? true : false;
     }
 }
 
