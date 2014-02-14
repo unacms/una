@@ -9,6 +9,24 @@
     <string name="_bx_antispam_ip_blocked"><![CDATA[IP address is blocked. {0}]]></string>
     <string name="_bx_antispam_spam_detected"><![CDATA[Spam detected. {0}]]></string>
     <string name="_bx_antispam_submit_false_positive_report"><![CDATA[If you believe that this is a mistake, please submit a false positive report here: {0}]]></string>
+	<string name="_bx_antispam_ip_allow"><![CDATA[Allow]]></string>
+	<string name="_bx_antispam_ip_deny"><![CDATA[Deny]]></string>
+
+	<string name="_bx_antispam_page_title_sys_ip_table"><![CDATA[IP table]]></string>
+	<string name="_bx_antispam_page_title_ip_table"><![CDATA[IP table]]></string>
+
+	<string name="_bx_antispam_page_block_title_ip_table"><![CDATA[IP table]]></string>
+
+	<string name="_bx_antispam_grid_field_select"><![CDATA[Select]]></string>
+	<string name="_bx_antispam_grid_field_ip_from"><![CDATA[IP from]]></string>
+	<string name="_bx_antispam_grid_field_ip_to"><![CDATA[IP to]]></string>
+	<string name="_bx_antispam_grid_title_action"><![CDATA[Action]]></string>
+	<string name="_bx_antispam_grid_title_expiration"><![CDATA[Expiration]]></string>
+	<string name="_bx_antispam_grid_title_note"><![CDATA[Note]]></string>
+	<string name="_bx_antispam_grid_title_actions"><![CDATA[Actions]]></string>
+
+	<string name="_bx_antispam_grid_action_delete"><![CDATA[Delete]]></string>
+	<string name="_bx_antispam_grid_action_add"><![CDATA[Add]]></string>
 
 	<string name="_bx_antispam_option_block"><![CDATA[Total block all spam content]]></string>
 	<string name="_bx_antispam_option_report"><![CDATA[Send report to admin if spam content discovered]]></string>

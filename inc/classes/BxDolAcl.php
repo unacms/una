@@ -133,17 +133,22 @@ class BxDolAcl extends BxDol implements iBxDolSingleton {
     /**
      * Check if member has one of the provided membership levels
      * @param $iPermissions - integer value to check permissions for, every bit is matched with some membership id
-     * @param $iProfileId - profile if to check, if it isn't provided or is false then currently loggen in profile is used.
+     * @param $iProfileId - profile to check, if it isn't provided or is false then currently logged in profile is used.
      * @return true if member has privided membership levels, or false if member hasn't.
      */
     public function isMemberLevelInSet($iPermissions, $iProfileId = false) {
         if (!$iPermissions)
             return false;
+
+        if (false === $iProfileId && ($iPermissions&(pow(2, MEMBERSHIP_ID_ADMINISTRATOR - 1))) && isAdmin())
+            return true;
+
         if (false === $iProfileId) {
             bx_import('BxDolProfile');
             $oProfile = BxDolProfile::getInstance();
             $iProfileId = $oProfile ? $oProfile->id() : 0;
         }
+
         $aACL = $this->getMemberMembershipInfo($iProfileId);
         return ($iPermissions & pow(2, $aACL['id'] - 1));
     }

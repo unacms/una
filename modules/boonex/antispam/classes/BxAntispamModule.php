@@ -20,6 +20,13 @@ class BxAntispamModule extends BxDolModule
         parent::__construct($aModule);
     }
 
+    function serviceIpTable () 
+    {
+        bx_import('BxDolGrid');
+        $oGrid = BxDolGrid::getObjectInstance('bx_antispam_grid_ip_table'); // it automatically creates instance of default or custom class by object name
+        return $oGrid ? $oGrid->getCode() : '';
+    }
+
     /**
      * Check text for spam.
      * First it check if IP is whitelisted(or under cron execution or user is admin) - for whitelisted IPs check for spam isn't performed,

@@ -378,6 +378,8 @@ BxDolGrid.prototype._onDataReloaded = function (isSkipSearchInput) {
 
     jQuery('#' + this._sIdTable + ' tbody tr:odd').addClass('bx-def-color-bg-hl');
     
+    jQuery('#' + this._sIdTable).bxTime();
+
     if (this._oOptions.sorting)
         this.orderable();
 
