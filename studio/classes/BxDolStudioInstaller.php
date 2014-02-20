@@ -451,7 +451,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
 
         $sMessage = '';
         foreach($this->_aConfig[$sOperationName] as $sAction => $iEnabled) {
-            $sMethod = 'action' . str_replace (' ', '', ucwords(str_replace ('_', ' ', $sAction)));
+            $sMethod = 'action' . bx_gen_method_name($sAction);
             if($iEnabled == 0 || !method_exists($this, $sMethod))
                 continue;
 

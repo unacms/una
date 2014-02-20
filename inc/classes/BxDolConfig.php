@@ -110,7 +110,7 @@ class BxDolConfig extends BxDol implements iBxDolSingleton {
     }
 
     private function getVarName($sVar) {
-        return 'a' . str_replace(' ', '', ucwords(str_replace('_', ' ', $sVar)));
+        return 'a' . bx_gen_method_name($sVar);
     }
 
     private function getDefineName() {

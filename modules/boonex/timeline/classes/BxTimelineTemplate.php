@@ -827,7 +827,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 		$mixedResult = array();
         $aHandler = $this->_oConfig->getHandlers($sHandler);
         if(empty($aHandler['module_uri']) && empty($aHandler['module_class']) && empty($aHandler['module_method'])) {
-            $sMethod = 'display' . str_replace(' ', '', ucwords(str_replace('_', ' ', $aHandler['alert_unit'] . '_' . $aHandler['alert_action'])));
+            $sMethod = 'display' . bx_gen_method_name($aHandler['alert_unit'] . '_' . $aHandler['alert_action']);
             if(!method_exists($this, $sMethod))
                 return '';
 

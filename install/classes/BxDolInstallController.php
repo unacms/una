@@ -19,7 +19,7 @@ class BxDolInstallController
 
     function run ($sAction = '') 
     {
-        $sMethod = 'action' . str_replace(' ', '', ucwords(str_replace('_', ' ', $sAction)));
+        $sMethod = 'action' . bx_gen_method_name($sAction);
         if ($sAction && method_exists($this, $sMethod))
             $this->$sMethod ();
         else

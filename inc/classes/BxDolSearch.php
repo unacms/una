@@ -204,7 +204,8 @@ class BxDolSearch extends BxDol {
  *
  */
 
-class BxDolSearchResult {
+class BxDolSearchResult implements iBxDolReplaceable
+{
     var $aCurrent;
     var $aPseud;
     var $id;

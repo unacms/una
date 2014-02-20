@@ -26,7 +26,7 @@ class BxDolStudioUtils extends BxDol {
     }
 
     public static function getClassName($sValue) {
-        return str_replace(' ', '', ucwords(str_replace('_', ' ', $sValue)));
+        return bx_gen_method_name($sValue);
     }
 
     public static function getModuleIcon($sName, $sType = 'menu') {

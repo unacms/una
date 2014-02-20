@@ -1033,8 +1033,8 @@ function bx_site_hash($sSalt = '', $isSkipVersion = false) {
  * @param string where words are separated with underscore
  * @return string where every word begins with capital letter
  */
-function bx_gen_method_name ($s) {
-    return str_replace(' ', '', ucwords(str_replace('_' , ' ', $s)));
+function bx_gen_method_name ($s, $sWordsDelimiter = '_') {
+    return str_replace(' ', '', ucwords(str_replace($sWordsDelimiter, ' ', $s)));
 }
 
 /** @} */ 

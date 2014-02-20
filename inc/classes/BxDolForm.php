@@ -716,7 +716,8 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  * @endcode
  *
  */
-class BxDolForm extends BxDol {
+class BxDolForm extends BxDol implements iBxDolReplaceable
+{
 
     static $TYPES_CHECKBOX = array('checkbox' => 1, 'switcher' => 1);
     static $TYPES_TEXT = array('text' => 1, 'textarea' => 1);

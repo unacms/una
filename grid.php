@@ -23,7 +23,7 @@ if (!$oGrid) {
     exit;
 }
 
-$sAction = 'performAction' . str_replace(' ', '', ucwords(str_replace('_' , ' ', bx_process_input(bx_get('a')))));
+$sAction = 'performAction' . bx_gen_method_name(bx_process_input(bx_get('a')));
 if (method_exists($oGrid, $sAction)) {
     $oGrid->$sAction();
 } 

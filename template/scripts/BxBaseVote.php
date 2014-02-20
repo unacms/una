@@ -30,7 +30,7 @@ class BxBaseVote extends BxDolVote
     {
         parent::__construct($sSystem, $iId, $iInit);
 
-		$this->_sJsObjName = 'oVote' . str_replace(' ', '', ucwords(str_replace(array('_' , '-'), array(' ', ' '), $sSystem))) . $iId;
+		$this->_sJsObjName = 'oVote' . bx_gen_method_name($sSystem, array('_' , '-')) . $iId;
         $this->_sStylePrefix = 'bx-vote';
 
         $sHtmlId = str_replace(array('_' , ' '), array('-', '-'), $sSystem) . '-' . $iId;

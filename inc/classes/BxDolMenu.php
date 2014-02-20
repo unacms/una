@@ -85,8 +85,8 @@ bx_import('BxDolPermalinks');
  * menu objects are integrated into pages - there is special 'menu' page block type for it.
  * 
  */
-class BxDolMenu extends BxDol implements iBxDolFactoryObject {
-
+class BxDolMenu extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
+{
     protected static $SEL_MODULE = '';
     protected static $SEL_NAME = '';
 

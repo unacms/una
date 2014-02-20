@@ -22,7 +22,7 @@ class BxBaseCmts extends BxDolCmts {
         if(empty($sSystem))
             return;
 
-        $this->_sJsObjName = 'oCmts' . str_replace(' ', '', ucwords(str_replace(array('_' , '-'), array(' ', ' '), $sSystem))) . $iId;
+        $this->_sJsObjName = 'oCmts' . bx_gen_method_name($sSystem, array('_' , '-')) . $iId;
         $this->_sStylePrefix = isset($this->_aSystem['root_style_prefix']) ? $this->_aSystem['root_style_prefix'] : 'cmt';
 
         BxDolTemplate::getInstance()->addJsTranslation('_sys_txt_cmt_loading');

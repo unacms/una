@@ -281,7 +281,7 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
     	if(substr($s, 0, 1) != '@')
     		return false;
 
-		return str_replace(' ', '', ucwords(str_replace('_', ' ', str_replace('@', 'check_', $s))));
+		return bx_gen_method_name(str_replace('@', 'check_', $s));
     }
 
     /**

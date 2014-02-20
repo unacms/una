@@ -38,6 +38,13 @@ interface iBxDolFactoryObject {
 }
 
 /**
+ * Replacable interface, class has an ability to replace markers somewhere
+ */
+interface iBxDolReplaceable {
+    public function addMarkers ($a);
+}
+
+/**
  * Profile interface, class must implement basic profile methods to be compliant with Profile interface
  */
 interface iBxDolProfile {

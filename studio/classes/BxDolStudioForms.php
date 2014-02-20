@@ -63,7 +63,7 @@ class BxDolStudioForms extends BxTemplStudioPage {
     }
 
     protected function getClassName($sValue) {
-        return str_replace(' ', '', ucwords(str_replace('_', ' ', $sValue)));
+        return bx_gen_method_name($sValue);
     }
 }
 /** @} */

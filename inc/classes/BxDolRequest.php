@@ -29,8 +29,8 @@ class BxDolRequest extends BxDol {
         }
     }
     public static function processAsAction($aModule, &$aRequest, $sClass = "Module") {
-        $sAction = empty($aRequest) || (isset($aRequest[0]) && empty($aRequest[0])) ? 'Home' : array_shift($aRequest);
-        $sMethod = 'action' . str_replace(' ', '', ucwords(str_replace('_', ' ', $sAction)));
+        $sAction = empty($aRequest) || (isset($aRequest[0]) && empty($aRequest[0])) ? 'Home' : array_shift($aRequest);                              
+        $sMethod = 'action' . bx_gen_method_name($sAction);
 
         if(isset($GLOBALS['bx_profiler']))
             $GLOBALS['bx_profiler']->beginModule('action', ($sPrHash = uniqid(rand())), $aModule, $sClass, $sMethod);
@@ -45,8 +45,7 @@ class BxDolRequest extends BxDol {
     public static function processAsService($aModule, $sMethod, $aParams, $sClass = "Module") {
         if (isset($aModule['name']) && 'system' == $aModule['name'] && 'Module' == $sClass) 
             $sClass = 'BaseServices';
-
-        $sMethod = 'service' . str_replace(' ', '', ucwords(str_replace('_', ' ', $sMethod)));
+        $sMethod = 'service' . bx_gen_method_name($sMethod);
 
         if(isset($GLOBALS['bx_profiler']))
             $GLOBALS['bx_profiler']->beginModule('service', ($sPrHash = uniqid(rand())), $aModule, $sClass, $sMethod);
@@ -125,7 +124,7 @@ class BxDolRequest extends BxDol {
         if(($oModule = BxDolRequest::_require($aModule, $sClass)) === false)
             return false;
 
-        $sMethod = $sMethodType . str_replace(' ', '', ucwords(str_replace('_', ' ', $sMethodName)));
+        $sMethod = $sMethodType . bx_gen_method_name($sMethodName);
         return method_exists($oModule, $sMethod);
     }
     protected static function _error($sType, $sParam1 = '', $sParam2 = '') {

@@ -129,7 +129,7 @@ define('BX_CMT_RATE_VALUE_MINUS', -1);
  *      - $aExtra['rate'] - comment rate 1 or -1
  *
  */
-class BxDolCmts extends BxDol
+class BxDolCmts extends BxDol implements iBxDolReplaceable
 {
 	protected $_oQuery = null;
 

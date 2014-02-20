@@ -507,7 +507,7 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject {
     }
 
     protected function _genMethodName ($s) {
-        return str_replace(' ', '', ucwords(str_replace('_' , ' ', $s)));
+        return bx_gen_method_name($s);
     }
 
     protected function _isVisibleGrid ($a) {
