@@ -101,7 +101,7 @@ class BxAntispamGridIpTable extends BxTemplGrid
             }
 
             if ($iRecentId)
-                $aRes = array('grid' => $this->getCode(true), 'blink' => $iRecentId); // if record is successfully added, reload grid and highlight added row
+                $aRes = array('grid' => $this->getCode(false), 'blink' => $iRecentId); // if record is successfully added, reload grid and highlight added row
             else
                 $aRes = array('msg' => _t('_sys_txt_error_occured')); // if record adding failed, display error message
 
