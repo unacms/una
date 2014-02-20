@@ -199,7 +199,7 @@ function bx_process_output ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams 
     case BX_DATA_DATE_TS:
         return empty($mixedData) ? '' : date("Y-m-d", $mixedData);
     case BX_DATA_DATETIME_TS:
-        return empty($mixedData) ? '' : date("Y-m-d H:i:s", $mixedData);
+        return empty($mixedData) ? '' : date("Y-m-d H:i", $mixedData);
 
     case BX_DATA_HTML:
         return $mixedData;
@@ -1026,6 +1026,15 @@ function bx_replace_markers($mixed, $aMarkers) {
 
 function bx_site_hash($sSalt = '', $isSkipVersion = false) {
     return md5($sSalt . ($isSkipVersion ? '' : getParam('sys_version')) . BX_DOL_SECRET . BX_DOL_URL_ROOT);
+}
+
+/**
+ * Transform string to method name string, for example it changes 'some_method' string to 'SomeMethod' string
+ * @param string where words are separated with underscore
+ * @return string where every word begins with capital letter
+ */
+function bx_gen_method_name ($s) {
+    return str_replace(' ', '', ucwords(str_replace('_' , ' ', $s)));
 }
 
 /** @} */ 

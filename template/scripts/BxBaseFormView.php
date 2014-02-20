@@ -105,6 +105,7 @@ class BxBaseFormView extends BxDolForm {
     function getCode($bDynamicMode = false) {
         $this->_bDynamicMode = $bDynamicMode;
         $this->addCssJs ();
+        $this->aFormAttrs = $this->_replaceMarkers($this->aFormAttrs);
         return ($this->sCode = $this->genForm());
     }
 

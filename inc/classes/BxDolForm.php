@@ -722,6 +722,8 @@ class BxDolForm extends BxDol {
     static $TYPES_TEXT = array('text' => 1, 'textarea' => 1);
     static $TYPES_FILE = array('file' => 1);
 
+    protected $_aMarkers = array ();
+
     var $oTemplate;
 
     var $_isValid = true;
@@ -731,7 +733,7 @@ class BxDolForm extends BxDol {
     var $aFormAttrs;
     var $aTableAttrs;
     var $aInputs;
-    var $aParams;    
+    var $aParams;
 
     var $id; ///< Form element id    
 
@@ -891,6 +893,10 @@ class BxDolForm extends BxDol {
         return BxDolForm::getSubmittedValue($this->aParams['db']['submit_name'], $this->aFormAttrs['method'], $this->_aSpecificValues) ? true : false;
     }
 
+    function getId () {
+        return $this->id;
+    }
+
     function setId ($sId) {
     	$this->id = $sId;
     	$this->aFormAttrs['id'] = $sId;
@@ -1033,7 +1039,28 @@ class BxDolForm extends BxDol {
     }
 
     protected function _genMethodName ($s) {
-        return str_replace(' ', '', ucwords(str_replace('_' , ' ', $s)));
+        return bx_gen_method_name($s);
+    }
+
+    /**
+     * Add replace markers. Curently markers are replaced in action, form_attrs fields.
+     * @param $a array of markers as key => value
+     * @return true on success or false on error
+     */
+    public function addMarkers ($a) {
+        if (empty($a) || !is_array($a))
+            return false;
+        $this->_aMarkers = array_merge ($this->_aMarkers, $a);
+        return true;
+    }
+
+    /**
+     * Replace provided markers in form array
+     * @param $a form description array
+     * @return array where markes are replaced with real values
+     */ 
+    protected function _replaceMarkers ($a) {
+        return bx_replace_markers($a, $this->_aMarkers);
     }
 }
 
@@ -1101,7 +1128,7 @@ class BxDolFormChecker {
                 continue;
             }
 
-            $sCheckFunction = array($oChecker, 'check'.ucfirst($a['checker']['func']));
+            $sCheckFunction = array($oChecker, 'check' . bx_gen_method_name($a['checker']['func']));
 
             if (is_callable($sCheckFunction))
                 $bool = call_user_func_array ($sCheckFunction, !empty($a['checker']['params']) ? array_merge(array($val), $a['checker']['params']) : array ($val));

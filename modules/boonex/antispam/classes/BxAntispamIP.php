@@ -97,6 +97,19 @@ class BxAntispamIP extends BxDol
     }
 
     /**
+     * Get IP table direcitve by ID
+     *
+     * @param $sId 
+     * @return array with IP table directive data
+     */
+    public function getIpTableDirective($iId)
+    {
+        $oDb = BxDolDb::getInstance();
+        $sQuery = $oDb->prepare("SELECT * FROM `bx_antispam_ip_table` WHERE `ID` = ? LIMIT 1", $iId);
+        return $oDb->getRow($sQuery);
+    }
+
+    /**
      * Clean up expired entries
      * TODO: add to cron
      */

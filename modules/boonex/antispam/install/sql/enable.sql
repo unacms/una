@@ -39,12 +39,12 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 ('bx_antispam_grid_ip_table', 'Sql', 'SELECT `ID`, `From`, `To`, `Type`, `LastDT`, `Desc` FROM `bx_antispam_ip_table`', 'bx_antispam_ip_table', 'ID', '', '', 10, NULL, 'start', '', 'From,To,Desc', 'auto', 'From,To,Type,LastDT,Desc', 64, 'BxAntispamGridIpTable', 'modules/boonex/antispam/classes/BxAntispamGridIpTable.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `order`) VALUES
-('bx_antispam_grid_ip_table', 'checkbox', '_bx_antispam_grid_field_select', '2%', '', 1),
-('bx_antispam_grid_ip_table', 'From', '_bx_antispam_grid_field_ip_from', '15%', '', 2),
-('bx_antispam_grid_ip_table', 'To', '_bx_antispam_grid_field_ip_to', '15%', '', 3),
-('bx_antispam_grid_ip_table', 'Type', '_bx_antispam_grid_title_action', '15%', '', 4),
-('bx_antispam_grid_ip_table', 'LastDT', '_bx_antispam_grid_title_expiration', '15%', '', 5),
-('bx_antispam_grid_ip_table', 'Desc', '_bx_antispam_grid_title_note', '26%', '', 6),
+('bx_antispam_grid_ip_table', 'checkbox', '_bx_antispam_grid_title_select', '2%', '', 1),
+('bx_antispam_grid_ip_table', 'From', '_bx_antispam_field_ip_from', '15%', '', 2),
+('bx_antispam_grid_ip_table', 'To', '_bx_antispam_field_ip_to', '15%', '', 3),
+('bx_antispam_grid_ip_table', 'Type', '_bx_antispam_field_action', '15%', '', 4),
+('bx_antispam_grid_ip_table', 'LastDT', '_bx_antispam_field_expiration', '15%', '', 5),
+('bx_antispam_grid_ip_table', 'Desc', '_bx_antispam_field_note', '26%', '', 6),
 ('bx_antispam_grid_ip_table', 'actions', '_bx_antispam_grid_title_actions', '12%', '', 7);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
@@ -52,4 +52,54 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 ('bx_antispam_grid_ip_table', 'single', 'edit', '', 'pencil', 0, 1),
 ('bx_antispam_grid_ip_table', 'single', 'delete', '', 'remove',  1, 2),
 ('bx_antispam_grid_ip_table', 'independent', 'add', '_bx_antispam_grid_action_add', '', 0, 1);
+
+-- data list: ip table actions
+
+INSERT INTO `sys_form_pre_lists`(`module`, `key`, `title`, `use_for_sets`) VALUES 
+('bx_antispam', 'bx_antispam_ip_table_actions', '_bx_antispam_data_list_ip_table_actions', 0);
+
+INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `LKey`, `LKey2`, `Order`) VALUES 
+('bx_antispam_ip_table_actions', 'allow', '_bx_antispam_ip_allow', '', 0),
+('bx_antispam_ip_table_actions', 'deny', '_bx_antispam_ip_deny', '', 0);
+
+-- form: IP table add/edit
+
+INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
+('bx_antispam_ip_table_form', 'bx_antispam', '_bx_antispam_form_ip_table', 'grid.php?o={grid_object}&a={grid_action}', '', 'bx_antispam_ip_table', 'ID', '', '', 'bx_antispam_ip_table_submit', '', 0, 1, '', '');
+
+INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`, `title`) VALUES 
+('bx_antispam_ip_table_form', 'bx_antispam_ip_table_form_add', 'bx_antispam', 0, '_bx_antispam_form_ip_table_add'),
+('bx_antispam_ip_table_form', 'bx_antispam_ip_table_form_edit', 'bx_antispam', 0, '_bx_antispam_form_ip_table_edit');
+
+INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
+('bx_antispam_ip_table_form', 'bx_antispam', 'ID', '', '', 0, 'hidden', '_bx_antispam_field_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
+('bx_antispam_ip_table_form', 'bx_antispam', 'From', '', '', 0, 'text', '_bx_antispam_field_ip_from', '_bx_antispam_field_ip_from', '', 1, 0, 0, '', '', '', 'preg', 'a:1:{s:4:\"preg\";s:20:\"#\d+\.\d+\.\d+\.\d+#\";}', '_bx_antispam_field_ip_err_msg', 'Xss', '', 1, 0),
+('bx_antispam_ip_table_form', 'bx_antispam', 'To', '', '', 0, 'text', '_bx_antispam_field_ip_to', '_bx_antispam_field_ip_to', '', 1, 0, 0, '', '', '', 'preg', 'a:1:{s:4:\"preg\";s:20:\"#\d+\.\d+\.\d+\.\d+#\";}', '_bx_antispam_field_ip_err_msg', 'Xss', '', 1, 0),
+('bx_antispam_ip_table_form', 'bx_antispam', 'Type', 'allow', '#!bx_antispam_ip_table_actions', 0, 'select', '_bx_antispam_field_action', '_bx_antispam_field_action', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
+('bx_antispam_ip_table_form', 'bx_antispam', 'LastDT', '', '', 0, 'datetime', '_bx_antispam_field_expiration', '_bx_antispam_field_expiration', '', 1, 0, 0, '', '', '', 'date_time', '', '_bx_antispam_field_expiration_err_msg', 'DateTime', '', 1, 0),
+('bx_antispam_ip_table_form', 'bx_antispam', 'Desc', '', '', 0, 'text', '_bx_antispam_field_note', '_bx_antispam_field_note', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
+('bx_antispam_ip_table_form', 'bx_antispam', 'bx_antispam_ip_table_submit', '_sys_submit', '', 0, 'submit', '_sys_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_antispam_ip_table_form', 'bx_antispam', 'close', '_sys_close', '', 0, 'reset', '_sys_close', '', '', 0, 0, 0, 'a:2:{s:7:\"onclick\";s:46:\"$(\'.bx-popup-applied:visible\').dolPopupHide();\";s:5:\"class\";s:22:\"bx-def-margin-sec-left\";}', '', '', '', '', '', '', '', 1, 0),
+('bx_antispam_ip_table_form', 'bx_antispam', 'buttons', '', 'bx_antispam_ip_table_submit,close', 0, 'input_set', '_bx_antispam_form_buttons', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
+
+INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
+('bx_antispam_ip_table_form_add', 'ID', 2147483647, 0, 0),
+('bx_antispam_ip_table_form_add', 'From', 2147483647, 1, 1),
+('bx_antispam_ip_table_form_add', 'To', 2147483647, 1, 2),
+('bx_antispam_ip_table_form_add', 'Type', 2147483647, 1, 3),
+('bx_antispam_ip_table_form_add', 'LastDT', 2147483647, 1, 4),
+('bx_antispam_ip_table_form_add', 'Desc', 2147483647, 1, 5),
+('bx_antispam_ip_table_form_add', 'bx_antispam_ip_table_submit', 2147483647, 1, 6),
+('bx_antispam_ip_table_form_add', 'close', 2147483647, 1, 7),
+('bx_antispam_ip_table_form_add', 'buttons', 2147483647, 1, 8),
+('bx_antispam_ip_table_form_edit', 'ID', 2147483647, 1, 0),
+('bx_antispam_ip_table_form_edit', 'From', 2147483647, 1, 1),
+('bx_antispam_ip_table_form_edit', 'To', 2147483647, 1, 2),
+('bx_antispam_ip_table_form_edit', 'Type', 2147483647, 1, 3),
+('bx_antispam_ip_table_form_edit', 'LastDT', 2147483647, 1, 4),
+('bx_antispam_ip_table_form_edit', 'Desc', 2147483647, 1, 5),
+('bx_antispam_ip_table_form_edit', 'bx_antispam_ip_table_submit', 2147483647, 1, 6),
+('bx_antispam_ip_table_form_edit', 'close', 2147483647, 1, 7),
+('bx_antispam_ip_table_form_edit', 'buttons', 2147483647, 1, 8);
+
 

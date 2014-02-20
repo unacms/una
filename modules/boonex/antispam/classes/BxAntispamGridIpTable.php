@@ -38,96 +38,72 @@ class BxAntispamGridIpTable extends BxTemplGrid
      */
     public function performActionAdd() 
     {
-        $sAction = 'add';
+        $this->_performAction('add', 'bx_antispam_ip_table_form_add');
+    }
 
-        $aForm = array(
-            'form_attrs' => array(
-                'id' => 'sample-add-form',    
-                'action' => 'grid.php?o=' . $this->_sObject . '&a=' . $sAction, // grid.php is usiversal actions handler file, we need to pass object and action names to it at least
-                'method' => 'post',
-            ),
-            'params' => array (
-                'db' => array(
-                    'table' => 'sample_grid_data', 
-                    'key' => 'ID', 
-                    'submit_name' => 'do_submit',
-                ),
-            ),
-            'inputs' => array(
-                'NickName' => array(
-                    'type' => 'text',
-                    'name' => 'NickName',
-                    'caption' => _t('Username'),
-                    'required' => true,
-                    'checker' => array(
-                        'func' => 'length',
-                        'params' => array(1, 150),
-                        'error' => _t( 'Username is required' )
-                    ),                    
-                    'db' => array (
-                        'pass' => 'Xss',  
-                    ),
-                ),
-                'Email' => array(
-                    'type' => 'text',
-                    'name' => 'Email',
-                    'caption' => _t('Email'),
-                    'required' => true,
-                    'checker' => array(
-                        'func' => 'email',
-                        'error' => _t( '_Incorrect Email' )
-                    ),
-                    'db' => array (
-                        'pass' => 'Xss',  
-                    ),
-                ),
-                'City' => array(
-                    'type' => 'text',
-                    'name' => 'City',
-                    'caption' => _t('City'),
-                    'required' => true,
-                    'checker' => array(
-                        'func' => 'length',
-                        'params' => array(1, 150),
-                        'error' => _t( 'City is required' )
-                    ),
-                    'db' => array (
-                        'pass' => 'Xss',  
-                    ),
-                ),
+    /**
+     * 'edit' action handler
+     */
+    public function performActionEdit() 
+    {
+        $iId = 0;
+        $aIds = bx_get('ids');
+        if ($aIds && is_array($aIds))
+            $iId = (int)array_pop($aIds);
+        if (!$iId)
+            $iId = (int)bx_get('ID');
 
-                'submit' => array(
-                    'type' => 'input_set',
-                    0 => array (
-                        'type' => 'submit',
-                        'name' => 'do_submit',
-                        'value' => _t('_Submit'),
-                    ),
-                    1 => array (
-                        'type' => 'reset',
-                        'name' => 'close',
-                        'value' => _t('Close'),
-                        'attrs' => array(
-                            'onclick' => "$('.dolPopup:visible').dolPopupHide()",
-                            'class' => 'bx-def-margin-sec-left',
-                        ),
-                    ),
-                ),
+        if (!$iId) {
+            $this->_echoResultJson(array('msg' => _t('_sys_txt_error_occured')), true);
+            exit;
+        }
 
-            ),
-        );
+        $this->_performAction('edit', 'bx_antispam_ip_table_form_edit', $iId);
+    }
 
-        bx_import('BxTemplFormView');
-        $oForm = new BxTemplFormView($aForm);
-        $oForm->initChecker();
+    protected function _performAction($sAction, $sDisplay, $iId = 0)
+    {
+        bx_import('BxDolForm');
+        $oForm = BxDolForm::getObjectInstance('bx_antispam_ip_table_form', $sDisplay); // get form instance for specified form object and display
+        if (!$oForm) {
+            $this->_echoResultJson(array('msg' => _t('_sys_txt_error_occured')), true);
+            exit;
+        }
 
-        if ($oForm->isSubmittedAndValid()) { // if form is submitted and all fields are valid
+        $oForm->addMarkers(array(
+            'grid_object' => $this->_sObject,
+            'grid_action' => $sAction,
+        ));
 
-            $iNewId = $oForm->insert (array(), true); // insert record to database
-            if ($iNewId)
-                $aRes = array('grid' => $this->getCode(true), 'blink' => $iNewId); // if record is successfully added, reload grid and highlight added row
+        $aIpTableDirective = array();
+        if ($iId) {
+            bx_import('BxDolModule');
+            $oModule = BxDolModule::getInstance('bx_antispam');
+            $oAntispamIp = bx_instance('BxAntispamIP', array(), $oModule->_aModule);
+            $aIpTableDirective = $oAntispamIp->getIpTableDirective($iId);
+            $aIpTableDirective['From'] = long2ip($aIpTableDirective['From']);
+            $aIpTableDirective['To'] = long2ip($aIpTableDirective['To']);
+        }
+        $oForm->initChecker($aIpTableDirective);
+
+        if ($oForm->isSubmittedAndValid()) { // if form is submitted and all fields are valid            
+
+            $aCustomValues = array(
+                'From' => sprintf("%u", ip2long($oForm->getCleanValue('From'))),
+                'To' => sprintf("%u", ip2long($oForm->getCleanValue('To'))),
+            );
+
+            if ($iId) {
+                if ($oForm->update ($iId, $aCustomValues)) // update record
+                    $iRecentId = $iId;
+            } else {
+                $iRecentId = $oForm->insert ($aCustomValues, true); // insert new record
+            }
+
+            if ($iRecentId)
+                $aRes = array('grid' => $this->getCode(true), 'blink' => $iRecentId); // if record is successfully added, reload grid and highlight added row
             else
-                $aRes = array('msg' => "Error occured"); // if record adding failed, display error message
+                $aRes = array('msg' => _t('_sys_txt_error_occured')); // if record adding failed, display error message
 
             $this->_echoResultJson($aRes, true);
 
@@ -135,17 +111,16 @@ class BxAntispamGridIpTable extends BxTemplGrid
 
             bx_import('BxTemplFunctions');
             // we need to use 'transBox' function to properly display 'popup'
-            $s = BxTemplFunctions::getInstance()->transBox('', '
-                <div class="bx-def-padding-top bx-def-padding-left bx-def-padding-right bx-def-color-bg-block" style="width:300px;">' . $oForm->getCode() . '</div>
+            $s = BxTemplFunctions::getInstance()->popupBox($oForm->getId() . '_form', _t('_bx_antispam_form_ip_table_add'), $oForm->getCode() . '
                 <script>
                     $(document).ready(function () {
-                        $("#sample-add-form").ajaxForm({ 
+                        $("#' . $oForm->getId() . '").ajaxForm({ 
                             dataType: "json",
                             beforeSubmit: function (formData, jqForm, options) {
-                                bx_loading($("#' . $aForm['form_attrs']['id'] . '"), true);
+                                bx_loading($("#' . $oForm->getId() . '"), true);
                             },
                             success: function (data) {
-                                $(".dolPopup:visible").dolPopupHide();
+                                $(".bx-popup-applied:visible").dolPopupHide();
                                 glGrids.' . $this->_sObject . '.processJson(data, "' . $sAction . '");
                             }
                         });
