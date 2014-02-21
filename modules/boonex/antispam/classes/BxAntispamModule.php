@@ -22,9 +22,12 @@ class BxAntispamModule extends BxDolModule
 
     function serviceIpTable () 
     {
-        bx_import('BxDolGrid');
-        $oGrid = BxDolGrid::getObjectInstance('bx_antispam_grid_ip_table'); // it automatically creates instance of default or custom class by object name
-        return $oGrid ? $oGrid->getCode() : '';
+        return $this->_grid('bx_antispam_grid_ip_table');
+    }
+
+    function serviceDnsblList () 
+    {
+        return $this->_grid('bx_antispam_grid_dnsbl');
     }
 
     /**
@@ -235,6 +238,13 @@ class BxAntispamModule extends BxDolModule
         if (BxDolRequest::serviceExists('bx_contact', 'get_contact_page_url') && ($sUrl = BxDolService::call('bx_contact', 'get_contact_page_url')))
             return _t('_bx_antispam_submit_false_positive_report', $sUrl);
         return '';
+    }
+
+    protected function _grid ($sObjectGrid) 
+    {
+        bx_import('BxDolGrid');
+        $oGrid = BxDolGrid::getObjectInstance($sObjectGrid);
+        return $oGrid ? $oGrid->getCode() : '';
     }
 }
 

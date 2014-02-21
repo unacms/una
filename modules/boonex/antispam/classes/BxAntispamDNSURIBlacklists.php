@@ -32,7 +32,7 @@ class BxAntispamDNSURIBlacklists extends BxDol
             3 => BX_DIRECTORY_PATH_MODULES . "boonex/antispam/data/three-level-tlds",
         );
 
-        $this->oDb = &$GLOBALS['MySQL'];
+        $this->oDb = BxDolDb::getInstance();;
         $this->initZones();
     }
 
@@ -46,7 +46,9 @@ class BxAntispamDNSURIBlacklists extends BxDol
         if (!$aURIs)
             return false;
 
-        $o = bx_instance('BxDolDNSBlacklists');
+        bx_import('BxDolModule');
+        $oModule = BxDolModule::getInstance('bx_antispam');
+        $o = bx_instance('BxAntispamDNSBlacklists', array(), $oModule->_aModule);
         foreach ($aURIs as $sURI) {
             if (BX_DOL_DNSBL_POSITIVE == $o->dnsbl_lookup_uri ($sURI))
                 return true;
@@ -58,7 +60,7 @@ class BxAntispamDNSURIBlacklists extends BxDol
     public function parseUrls (&$s)
     {
         $aMatches = array ();
-        if (!preg_match_all("!(https?|ftp|gopher|telnet|file|notes|ms-help):[/\\\\]+([\w\d\.]*)!", $s, $aMatches))
+        if (!preg_match_all("!(https?|ftp|gopher|telnet|file|notes|ms-help):[/\\\\]+([\w\d\.-]*)!", $s, $aMatches))
             return false;
 
         if (!$aMatches || !isset($aMatches[2]) || !$aMatches[2])
@@ -128,7 +130,10 @@ class BxAntispamDNSURIBlacklists extends BxDol
 
     public function onPositiveDetection ($sExtraData = '')
     {
-        $o = bx_instance('BxDolDNSBlacklists');
+        bx_import('BxDolModule');
+        $oModule = BxDolModule::getInstance('bx_antispam');
+        $o = bx_instance('BxAntispamDNSBlacklists', array(), $oModule->_aModule);
+
         $o->onPositiveDetection (getVisitorIP(false), $sExtraData, 'dnsbluri');
     }
 

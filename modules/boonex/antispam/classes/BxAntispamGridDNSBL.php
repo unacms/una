@@ -9,11 +9,9 @@
  * @{
  */
 
-require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
-
 bx_import('BxTemplGrid');
 
-class BxAntispamGridIpTable extends BxTemplGrid 
+class BxAntispamGridDNSBL extends BxTemplGrid 
 {
     public function __construct ($aOptions, $oTemplate = false) 
     {
@@ -26,42 +24,35 @@ class BxAntispamGridIpTable extends BxTemplGrid
     protected function _addJsCss() 
     {
         parent::_addJsCss();
-        $this->_oTemplate->addJs('jquery.form.js');
-
-        bx_import('BxTemplFormView');
-        $oForm = new BxTemplFormView(array());
-        $oForm->addCssJs();
     }
 
     /**
-     * 'add' action handler
+     * 'help' action handler
      */
-    public function performActionAdd() 
+    public function performActionHelp()
     {
-        $this->_performAction('add', 'bx_antispam_ip_table_form_add');
+        bx_import('BxTemplFunctions');
+
+        $s = BxTemplFunctions::getInstance()->popupBox(
+            'bx_antispam_poppup_help', 
+            _t('_bx_antispam_popup_help'), 
+            _t('_bx_antispam_help_dnsbl')
+        );
+
+        $this->_echoResultJson(array('popup' => array('html' => $s)), true);
     }
 
     /**
-     * 'edit' action handler
+     * 'log' action handler
      */
-    public function performActionEdit() 
+    public function performActionLog()
     {
-        $iId = 0;
-        $aIds = bx_get('ids');
-        if ($aIds && is_array($aIds))
-            $iId = (int)array_pop($aIds);
-        if (!$iId)
-            $iId = (int)bx_get('ID');
-
-        if (!$iId) {
-            $this->_echoResultJson(array('msg' => _t('_sys_txt_error_occured')), true);
-            exit;
-        }
-
-        $this->_performAction('edit', 'bx_antispam_ip_table_form_edit', $iId);
     }
 
-    protected function _performAction($sAction, $sDisplay, $iId = 0)
+    /**
+     * 'recheck' action handler
+     */
+    public function performActionRecheck() 
     {
         bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance('bx_antispam_ip_table_form', $sDisplay); // get form instance for specified form object and display
@@ -132,23 +123,27 @@ class BxAntispamGridIpTable extends BxTemplGrid
     }
 
 
-    protected function _getCellType ($mixedValue, $sKey, $aField, $aRow) 
+    protected function _getCellChain ($mixedValue, $sKey, $aField, $aRow) 
     {
-        return parent::_getCellDefault ('allow' == $mixedValue ? _t('_bx_antispam_ip_allow') : _t('_bx_antispam_ip_deny'), $sKey, $aField, $aRow);
-    }
-    protected function _getCellLastDT ($mixedValue, $sKey, $aField, $aRow) 
-    {
-        return parent::_getCellDefault (bx_time_js($mixedValue, BX_FORMAT_DATE), $sKey, $aField, $aRow);
-    }
-
-    protected function _getCellFrom ($mixedValue, $sKey, $aField, $aRow) 
-    {
-        return parent::_getCellDefault (long2ip($mixedValue), $sKey, $aField, $aRow);
+        $s = _t('_undefined');
+        switch ($mixedValue) {
+            case 'whitelist':
+            case 'spammers':
+            case 'uridns':
+                $s = _t('_bx_antispam_chain_' . $mixedValue);
+        }
+        return parent::_getCellDefault ($s, $sKey, $aField, $aRow);
     }
 
-    protected function _getCellTo ($mixedValue, $sKey, $aField, $aRow) 
+    protected function _getCellComment ($mixedValue, $sKey, $aField, $aRow) 
     {
-        return parent::_getCellDefault (long2ip($mixedValue), $sKey, $aField, $aRow);
+        $sCountry = '';
+        $aMatches = array();
+        if (preg_match('/^(\w{2})\.countries\.nerd\.dk\.$/', $aRow['zonedomain'], $aMatches) && isset($aMatches[1])) {
+            $sCountry = $aMatches[1];
+        }
+
+        return parent::_getCellDefault (_t($mixedValue, $sCountry), $sKey, $aField, $aRow);
     }
 
 }

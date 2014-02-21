@@ -145,19 +145,18 @@ class BxAntispamDNSBlacklists extends BxDol
 
     private function initChains() 
     {
-
         $oDb = BxDolDb::getInstance();
 
         if (!isset($GLOBALS['bx_dol_dnsbl_'.BX_DOL_DNSBL_CHAIN_SPAMMERS])) {
             $sQuery = $oDb->prepare("SELECT `zonedomain`, `postvresp` FROM `bx_antispam_dnsbl_rules` WHERE `chain` = ? AND `active` = 1", BX_DOL_DNSBL_CHAIN_SPAMMERS);
-            $GLOBALS['bx_dol_dnsbl_'.BX_DOL_DNSBL_CHAIN_SPAMMERS] = $GLOBALS['MySQL']->fromCache('sys_dnsbl_'.BX_DOL_DNSBL_CHAIN_SPAMMERS, 'getAll', $sQuery);
+            $GLOBALS['bx_dol_dnsbl_'.BX_DOL_DNSBL_CHAIN_SPAMMERS] = $oDb->fromCache('sys_dnsbl_'.BX_DOL_DNSBL_CHAIN_SPAMMERS, 'getAll', $sQuery);
         }
 
         if (!isset($GLOBALS['bx_dol_dnsbl_'.BX_DOL_DNSBL_CHAIN_WHITELIST]))
-            $GLOBALS['bx_dol_dnsbl_'.BX_DOL_DNSBL_CHAIN_WHITELIST] = $GLOBALS['MySQL']->fromCache('sys_dnsbl_'.BX_DOL_DNSBL_CHAIN_WHITELIST, 'getAll', "SELECT `zonedomain`, `postvresp` FROM `bx_antispam_dnsbl_rules` WHERE `chain` = '".BX_DOL_DNSBL_CHAIN_WHITELIST."' AND `active` = 1");
+            $GLOBALS['bx_dol_dnsbl_'.BX_DOL_DNSBL_CHAIN_WHITELIST] = $oDb->fromCache('sys_dnsbl_'.BX_DOL_DNSBL_CHAIN_WHITELIST, 'getAll', "SELECT `zonedomain`, `postvresp` FROM `bx_antispam_dnsbl_rules` WHERE `chain` = '".BX_DOL_DNSBL_CHAIN_WHITELIST."' AND `active` = 1");
 
         if (!isset($GLOBALS['bx_dol_dnsbl_'.BX_DOL_DNSBL_CHAIN_URIDNS]))
-            $GLOBALS['bx_dol_dnsbl_'.BX_DOL_DNSBL_CHAIN_URIDNS] = $GLOBALS['MySQL']->fromCache('sys_dnsbl_'.BX_DOL_DNSBL_CHAIN_URIDNS, 'getAll', "SELECT `zonedomain`, `postvresp` FROM `bx_antispam_dnsbl_rules` WHERE `chain` = '".BX_DOL_DNSBL_CHAIN_URIDNS."' AND `active` = 1");
+            $GLOBALS['bx_dol_dnsbl_'.BX_DOL_DNSBL_CHAIN_URIDNS] = $oDb->fromCache('sys_dnsbl_'.BX_DOL_DNSBL_CHAIN_URIDNS, 'getAll', "SELECT `zonedomain`, `postvresp` FROM `bx_antispam_dnsbl_rules` WHERE `chain` = '".BX_DOL_DNSBL_CHAIN_URIDNS."' AND `active` = 1");
 
         $this->aChains[BX_DOL_DNSBL_CHAIN_SPAMMERS] = &$GLOBALS['bx_dol_dnsbl_'.BX_DOL_DNSBL_CHAIN_SPAMMERS];
         $this->aChains[BX_DOL_DNSBL_CHAIN_WHITELIST] = &$GLOBALS['bx_dol_dnsbl_'.BX_DOL_DNSBL_CHAIN_WHITELIST];

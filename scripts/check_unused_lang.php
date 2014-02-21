@@ -49,17 +49,20 @@ class BxDolCheckUnusedLangsCmd
             '/^_adm_[A-Za-z0-9_-]+_cnf_/',
             '/^_sys_request_[A-Za-z0-9_-]+_not_found_(cpt|cnt)/',
 
-            /* wall */
+            // timeline
             '/^_bx_timeline_alert_module_/',
             '/^_bx_timeline_alert_action_/',
 
-            /* sites */
+            // sites 
             '/^_bx_sites_txt_status_/',
             '/^_bx_sites_txt_payment_type_/',
             '/^_bx_sites_paypal_duration_/',
 
-            /* developer */
+            // developer 
             '/^_bx_dev_pgt_txt_manage_/',
+
+            // antispam
+            '/^_bx_antispam_chain_/',
         );
 
         $this->_aOptionsSystem = array (

@@ -25,12 +25,12 @@ CREATE TABLE `bx_antispam_dnsbl_rules` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
-INSERT INTO `bx_antispam_dnsbl_rules` (`id`, `chain`, `zonedomain`, `postvresp`, `url`, `recheck`, `comment`, `added`, `active`) VALUES
-(1, 'whitelist', 'au.countries.nerd.dk.', '127.0.0.2', 'http://countries.nerd.dk/', '', 'Country based zone, any ip from Australia is whitelisted', 1287642420, 0),
-(2, 'spammers', 'sbl.spamhaus.org.', 'any', 'http://www.spamhaus.org/sbl/', 'http://www.spamhaus.org/query/bl?ip=%s', 'Any non-failure result from sbl.spamhaus.org is a positive match', 1287642420, 1),
-(3, 'spammers', 'zomgbl.spameatingmonkey.net.', 'any', 'http://spameatingmonkey.com/index.html', '', 'This zone is guaranteed to block 100% of all IPs because it lists everything (0.0.0.0/0). This list should never be used in production but exists to verify overall functionality of the blacklist servers.', 1287642420, 0),
-(4, 'spammers', 'cn.countries.nerd.dk.', '127.0.0.2', 'http://countries.nerd.dk/', '', 'Country based zone, any ip from China is blocked', 1287642420, 0),
-(5, 'uridns', 'multi.surbl.org.', 'any', 'http://www.surbl.org/', 'http://george.surbl.org/lookup.html', 'SURBLs are lists of web sites that have appeared in unsolicited messages. Unlike most lists, SURBLs are not lists of message senders.', 1287642420, 1);
+INSERT INTO `bx_antispam_dnsbl_rules` (`chain`, `zonedomain`, `postvresp`, `url`, `recheck`, `comment`, `added`, `active`) VALUES
+('whitelist', 'au.countries.nerd.dk.', '127.0.0.2', 'http://countries.nerd.dk/', '', '_bx_antispam_rule_note_country', 1287642420, 0),
+('spammers', 'cn.countries.nerd.dk.', '127.0.0.2', 'http://countries.nerd.dk/', '', '_bx_antispam_rule_note_country', 1287642420, 0),
+('spammers', 'sbl.spamhaus.org.', 'any', 'http://www.spamhaus.org/sbl/', 'http://www.spamhaus.org/query/bl?ip=%s', '_bx_antispam_rule_note_spamhaus_org', 1287642420, 1),
+('spammers', 'zomgbl.spameatingmonkey.net.', 'any', 'http://spameatingmonkey.com/index.html', '', '_bx_antispam_rule_note_zomgbl_spameatingmonkey_net', 1287642420, 0),
+('uridns', 'multi.surbl.org.', 'any', 'http://www.surbl.org/', 'http://george.surbl.org/lookup.html', '_bx_antispam_rule_note_surbl_org', 1287642420, 1);
 
 CREATE TABLE `bx_antispam_dnsbluri_zones` (
   `level` tinyint(4) NOT NULL,

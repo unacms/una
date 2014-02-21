@@ -25,6 +25,14 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'bx_antispam_stopforumspam_enable', '_bx_antispam_option_stopforumspam_enable', 'on', 'checkbox', '', '', '', 60),
 (@iCategoryId, 'bx_antispam_stopforumspam_api_key', '_bx_antispam_option_stopforumspam_api_key', '', 'digit', '', '', '', 61);
 
+-- page: DNSBL list
+
+INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_antispam_dnsbl', 'antispam-dnsbl-list', '_bx_antispam_page_title_sys_dnsbl_list', '_bx_antispam_page_title_dnsbl_list', 'bx_antispam', 5, 64, 1, 'page.php?i=antispam-dnsbl-list', '', '', '', 0, 1, 0, 'BxAntispamPage', 'modules/boonex/antispam/classes/BxAntispamPage.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_antispam_dnsbl', 1, 'bx_antispam', '_bx_antispam_page_block_title_dnsbl_list', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_antispam\";s:6:\"method\";s:10:\"dnsbl_list\";}', 0, 1, 1, 1);
+
 -- page: ip table
 
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -33,19 +41,34 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('bx_antispam_ip_table', 1, 'bx_antispam', '_bx_antispam_page_block_title_ip_table', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_antispam\";s:6:\"method\";s:8:\"ip_table\";}', 0, 1, 1, 1);
 
+-- grid: DNSBL
+
+INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
+('bx_antispam_grid_dnsbl', 'Sql', 'SELECT `id`, `chain`, `zonedomain`, `postvresp`, `url`, `recheck`, `comment`, `added`, `active` FROM `bx_antispam_dnsbl_rules`', 'bx_antispam_dnsbl_rules', 'id', 'added', 'active', '', 16, NULL, 'start', '', 'chain,zonedomain,url,recheck', 'comment', 'auto', 'chain', 'comment', 64, 'BxAntispamGridDNSBL', 'modules/boonex/antispam/classes/BxAntispamGridDNSBL.php');
+
+INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
+('bx_antispam_grid_dnsbl', 'switcher', '_sys_active', '10%', 0, 0, '', 1),
+('bx_antispam_grid_dnsbl', 'chain', '_bx_antispam_field_chain', '15%', 0, 0, '', 2),
+('bx_antispam_grid_dnsbl', 'comment', '_bx_antispam_field_note', '75%', 0, 0, '', 3);
+
+INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
+('bx_antispam_grid_dnsbl', 'independent', 'log', '_bx_antispam_grid_action_log', '', 0, 1),
+('bx_antispam_grid_dnsbl', 'independent', 'recheck', '_bx_antispam_grid_action_recheck', '', 0, 2),
+('bx_antispam_grid_dnsbl', 'independent', 'help', '_bx_antispam_grid_action_help', '', 0, 3);
+
 -- grid: ip table
 
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_mode`, `sorting_fields`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
 ('bx_antispam_grid_ip_table', 'Sql', 'SELECT `ID`, `From`, `To`, `Type`, `LastDT`, `Desc` FROM `bx_antispam_ip_table`', 'bx_antispam_ip_table', 'ID', '', '', 10, NULL, 'start', '', 'From,To,Desc', 'auto', 'From,To,Type,LastDT,Desc', 64, 'BxAntispamGridIpTable', 'modules/boonex/antispam/classes/BxAntispamGridIpTable.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `order`) VALUES
-('bx_antispam_grid_ip_table', 'checkbox', '_bx_antispam_grid_title_select', '2%', '', 1),
+('bx_antispam_grid_ip_table', 'checkbox', '_sys_select', '2%', '', 1),
 ('bx_antispam_grid_ip_table', 'From', '_bx_antispam_field_ip_from', '15%', '', 2),
 ('bx_antispam_grid_ip_table', 'To', '_bx_antispam_field_ip_to', '15%', '', 3),
 ('bx_antispam_grid_ip_table', 'Type', '_bx_antispam_field_action', '15%', '', 4),
 ('bx_antispam_grid_ip_table', 'LastDT', '_bx_antispam_field_expiration', '15%', '', 5),
 ('bx_antispam_grid_ip_table', 'Desc', '_bx_antispam_field_note', '26%', '', 6),
-('bx_antispam_grid_ip_table', 'actions', '_bx_antispam_grid_title_actions', '12%', '', 7);
+('bx_antispam_grid_ip_table', 'actions', '_sys_actions', '12%', '', 7);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
 ('bx_antispam_grid_ip_table', 'bulk', 'delete', '_bx_antispam_grid_action_delete', '', 1, 1),
