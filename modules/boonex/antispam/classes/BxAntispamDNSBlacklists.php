@@ -87,6 +87,23 @@ class BxAntispamDNSBlacklists extends BxDol
         return $oDb->query($sQuery);
     }
 
+    public function getRules ($aChains)
+    {
+        $oDb = BxDolDb::getInstance();
+        $sChains = $oDb->implode_escape($aChains);
+        $a = $oDb->getAll("SELECT * FROM `bx_antispam_dnsbl_rules` WHERE `chain` IN($sChains) ORDER BY `chain`, `added`");
+        foreach ($a as $k => $r) {
+            $a[$k]['chain_title'] = _t('_bx_antispam_chain_' . $a[$k]['chain']);
+        }
+        return $a;
+    }
+
+    public function getRule ($iId)
+    {
+        $oDb = BxDolDb::getInstance();
+        return $oDb->getAll("SELECT `zonedomain`, `postvresp` FROM `bx_antispam_dnsbl_rules` WHERE `id` = '" . (int)$iId . "' AND `active` = 1");
+    }
+
     public function clearCache () 
     {
         $oDb = BxDolDb::getInstance();

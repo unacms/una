@@ -63,5 +63,7 @@
 .column-width (@width) {
     @rem-w: (unit(@width) / @base-font-size-px);
     -webkit-column-width: ~"@{rem-w}rem";
+    -moz-column-width: ~"@{rem-w}rem";
+    -ms-column-width: ~"@{rem-w}rem";
     column-width: ~"@{rem-w}rem";
 }

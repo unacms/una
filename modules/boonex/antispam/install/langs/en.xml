@@ -25,8 +25,11 @@ This antispam method scan submitted content for the URLs and check them if any o
 	<string name="_bx_antispam_rule_note_spamhaus_org"><![CDATA[Detect spammer IPs from sbl.spamhaus.org]]></string>
 	<string name="_bx_antispam_rule_note_zomgbl_spameatingmonkey_net"><![CDATA[Everything is blacklisted, use only if something is whitelisted]]></string>
 	<string name="_bx_antispam_rule_note_surbl_org"><![CDATA[Detect spammer URLs from SURBLs (lists of web sites that have appeared in unsolicited messages)]]></string>
+	<string name="_bx_antispam_dnsbl"><![CDATA[DNSBL]]></string>
+	<string name="_bx_antispam_uri_dnsbl"><![CDATA[URI DNSBL]]></string>
 
 	<string name="_bx_antispam_popup_help"><![CDATA[DNSBL help]]></string>
+	<string name="_bx_antispam_popup_dnsbl_recheck"><![CDATA[Recheck IP/URL in DNSBL/URIDNSBL]]></string>
 
 	<string name="_bx_antispam_page_title_sys_ip_table"><![CDATA[IP table]]></string>
 	<string name="_bx_antispam_page_title_ip_table"><![CDATA[IP table]]></string>
@@ -49,6 +52,8 @@ This antispam method scan submitted content for the URLs and check them if any o
 	<string name="_bx_antispam_field_expiration"><![CDATA[Expiration]]></string>
 	<string name="_bx_antispam_field_note"><![CDATA[Note]]></string>
 	<string name="_bx_antispam_field_chain"><![CDATA[Rule]]></string>
+	<string name="_bx_antispam_field_ip_url"><![CDATA[IP for DNSBL or URL for URI DNSBL]]></string>
+	<string name="_bx_antispam_field_dnsbl_uridnsbl"><![CDATA[Check in]]></string>
 
     <string name="_bx_antispam_form_ip_table"><![CDATA[IP table directive]]></string>
     <string name="_bx_antispam_form_ip_table_add"><![CDATA[Add IP table directive]]></string>

@@ -24,6 +24,10 @@ class BxAntispamGridDNSBL extends BxTemplGrid
     protected function _addJsCss() 
     {
         parent::_addJsCss();
+
+        bx_import('BxTemplFormView');
+        $oForm = new BxTemplFormView(array());
+        $oForm->addCssJs();
     }
 
     /**
@@ -52,87 +56,125 @@ class BxAntispamGridDNSBL extends BxTemplGrid
     /**
      * 'recheck' action handler
      */
+    public function performActionRecheckItem() 
+    {
+        bx_import('BxDolModule');
+        $oModule = BxDolModule::getInstance('bx_antispam');
+        $o = bx_instance('BxAntispamDNSBlacklists', array(), $oModule->_aModule);
+
+        $aChain = $o->getRule((int)bx_get('id'));
+
+        $iRet = BX_DOL_DNSBL_FAILURE;
+        if ($aChain) {
+            if (bx_get('chain') == 'dnsbl') {
+                $iRet = $o->dnsbl_lookup_ip($aChain, bx_process_input(bx_get('test')));
+            } elseif (bx_get('chain') == 'uridnsbl') {
+                $sUrl = preg_replace('/^\w+:\/\//', '', bx_process_input(bx_get('test')));
+                $sUrl = preg_replace('/^www\./', '', $sUrl);
+                $oBxDolDNSURIBlacklists = bx_instance('BxAntispamDNSURIBlacklists', array(), $oModule->_aModule);
+                $aUrls = $oBxDolDNSURIBlacklists->validateUrls(array($sUrl));
+                if ($aUrls)
+                    $iRet = $o->dnsbl_lookup_uri($aUrls[0], $aChain);
+            }
+        }
+
+        $s = '';
+        switch ($iRet) {
+            case BX_DOL_DNSBL_POSITIVE:
+                $s = 'LISTED';
+                break;
+            case BX_DOL_DNSBL_NEGATIVE:
+                $s = 'NOT LISTED';
+                break;
+            default:
+            case BX_DOL_DNSBL_FAILURE:
+                $s = 'FAIL';
+        }
+
+        echo $s;
+        exit;
+    }
+
+    /**
+     * 'recheck' action handler
+     */
     public function performActionRecheck() 
     {
-        bx_import('BxDolForm');
-        $oForm = BxDolForm::getObjectInstance('bx_antispam_ip_table_form', $sDisplay); // get form instance for specified form object and display
+        bx_import('BxDolModule');
+        $oModule = BxDolModule::getInstance('bx_antispam');
+        $oDNSBlacklists = bx_instance('BxAntispamDNSBlacklists', array(), $oModule->_aModule);
+
+        $aForm = array(
+            'form_attrs' => array(
+                'id' => 'bx_antispam_form_dnsbl_recheck',
+                'action' => BX_DOL_URL_ROOT . 'grid.php?o=bx_antispam_grid_dnsbl&a=recheck',
+                'onsubmit' => "return bx_antispam_recheck($('#bx_antispam_ip_url').val(), $('[name=dnsbl_uridnsbl]:checked').val());",
+                'method' => 'post',
+            ),
+            'params' => array (
+                'db' => array(
+                    'submit_name' => 'do_submit',
+                ),
+            ),
+            'inputs' => array(
+
+                'ip_url' => array(
+                    'type' => 'text',
+                    'name' => 'ip_url',
+                    'value' => getVisitorIP(),
+                    'caption' => _t('_bx_antispam_field_ip_url'),            
+                    'attrs' => array('id' => 'bx_antispam_ip_url'),
+                ),
+
+                'dnsbl_uridnsbl' => array(
+                    'type' => 'radio_set',
+                    'name' => 'dnsbl_uridnsbl',
+                    'caption' => _t('_bx_antispam_field_dnsbl_uridnsbl'),
+                    'values' => array ('dnsbl' => _t('_bx_antispam_dnsbl'), 'uridnsbl' => _t('_bx_antispam_uri_dnsbl')),
+                    'value' => 'dnsbl',
+                ),
+
+                'submit' => array(
+                    'type' => 'input_set',
+                    0 => array (
+                        'type' => 'submit',
+                        'name' => 'do_submit',
+                        'value' => _t('_sys_submit'),
+                    ),
+                    1 => array (
+                        'type' => 'reset',
+                        'name' => 'close',
+                        'value' => _t('_sys_close'),
+                        'attrs' => array('class' => 'bx-def-margin-sec-left', 'onclick' => '$(\'.bx-popup-applied:visible\').dolPopupHide();'),
+                    ),
+                ),
+
+            ),
+        );
+
+        bx_import('BxTemplFormView');
+        $oForm = new BxTemplFormView($aForm);
         if (!$oForm) {
             $this->_echoResultJson(array('msg' => _t('_sys_txt_error_occured')), true);
             exit;
         }
 
-        $oForm->addMarkers(array(
-            'grid_object' => $this->_sObject,
-            'grid_action' => $sAction,
+        $s = $oModule->_oTemplate->parseHtmlByName('recheck.html', array (
+            'form' => $oForm->getCode(),
+            'url_recheck_item' => BX_DOL_URL_ROOT . 'grid.php?o=bx_antispam_grid_dnsbl&a=recheck_item',
+            'bx_repeat:items' => $oDNSBlacklists->getRules(array(BX_DOL_DNSBL_CHAIN_SPAMMERS, BX_DOL_DNSBL_CHAIN_WHITELIST, BX_DOL_DNSBL_CHAIN_URIDNS)),
         ));
 
-        $aIpTableDirective = array();
-        if ($iId) {
-            bx_import('BxDolModule');
-            $oModule = BxDolModule::getInstance('bx_antispam');
-            $oAntispamIp = bx_instance('BxAntispamIP', array(), $oModule->_aModule);
-            $aIpTableDirective = $oAntispamIp->getIpTableDirective($iId);
-            $aIpTableDirective['From'] = long2ip($aIpTableDirective['From']);
-            $aIpTableDirective['To'] = long2ip($aIpTableDirective['To']);
-        }
-        $oForm->initChecker($aIpTableDirective);
+        bx_import('BxTemplFunctions');
+        $s = BxTemplFunctions::getInstance()->popupBox($oForm->getId() . '_form', _t('_bx_antispam_popup_dnsbl_recheck'), $s);
 
-        if ($oForm->isSubmittedAndValid()) { // if form is submitted and all fields are valid            
-
-            $aCustomValues = array(
-                'From' => sprintf("%u", ip2long($oForm->getCleanValue('From'))),
-                'To' => sprintf("%u", ip2long($oForm->getCleanValue('To'))),
-            );
-
-            if ($iId) {
-                if ($oForm->update ($iId, $aCustomValues)) // update record
-                    $iRecentId = $iId;
-            } else {
-                $iRecentId = $oForm->insert ($aCustomValues, true); // insert new record
-            }
-
-            if ($iRecentId)
-                $aRes = array('grid' => $this->getCode(false), 'blink' => $iRecentId); // if record is successfully added, reload grid and highlight added row
-            else
-                $aRes = array('msg' => _t('_sys_txt_error_occured')); // if record adding failed, display error message
-
-            $this->_echoResultJson($aRes, true);
-
-        } else { // if form is not submitted or some fields are invalid, display popup with form
-
-            bx_import('BxTemplFunctions');
-            $s = BxTemplFunctions::getInstance()->popupBox($oForm->getId() . '_form', _t('_bx_antispam_form_ip_table_add'), $oForm->getCode() . '
-                <script>
-                    $(document).ready(function () {
-                        $("#' . $oForm->getId() . '").ajaxForm({ 
-                            dataType: "json",
-                            beforeSubmit: function (formData, jqForm, options) {
-                                bx_loading($("#' . $oForm->getId() . '"), true);
-                            },
-                            success: function (data) {
-                                $(".bx-popup-applied:visible").dolPopupHide();
-                                glGrids.' . $this->_sObject . '.processJson(data, "' . $sAction . '");
-                            }
-                        });
-                    });
-                </script>');
-
-            $this->_echoResultJson(array('popup' => array('html' => $s, 'options' => array('closeOnOuterClick' => false))), true);
-
-        }
+        $this->_echoResultJson(array('popup' => array('html' => $s, 'options' => array('closeOnOuterClick' => false))), true);
     }
 
 
     protected function _getCellChain ($mixedValue, $sKey, $aField, $aRow) 
     {
-        $s = _t('_undefined');
-        switch ($mixedValue) {
-            case 'whitelist':
-            case 'spammers':
-            case 'uridns':
-                $s = _t('_bx_antispam_chain_' . $mixedValue);
-        }
-        return parent::_getCellDefault ($s, $sKey, $aField, $aRow);
+        return parent::_getCellDefault (_t('_bx_antispam_chain_' . $mixedValue), $sKey, $aField, $aRow);
     }
 
     protected function _getCellComment ($mixedValue, $sKey, $aField, $aRow) 

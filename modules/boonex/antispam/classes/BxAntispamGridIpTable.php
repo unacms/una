@@ -26,6 +26,7 @@ class BxAntispamGridIpTable extends BxTemplGrid
     protected function _addJsCss() 
     {
         parent::_addJsCss();
+
         $this->_oTemplate->addJs('jquery.form.js');
 
         bx_import('BxTemplFormView');
