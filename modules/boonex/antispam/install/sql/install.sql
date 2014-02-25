@@ -44,6 +44,7 @@ CREATE TABLE `bx_antispam_block_log` (
   `type` varchar(32) NOT NULL,
   `extra` text NOT NULL,
   `added` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
   KEY `ip` (`ip`),
   KEY `member_id` (`member_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
