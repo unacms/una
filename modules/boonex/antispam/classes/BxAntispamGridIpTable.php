@@ -87,7 +87,7 @@ class BxAntispamGridIpTable extends BxTemplGrid
         }
         $oForm->initChecker($aIpTableDirective);
 
-        if ($oForm->isSubmittedAndValid()) { // if form is submitted and all fields are valid            
+        if ($oForm->isSubmittedAndValid()) { // if form is submitted and all fields are valid
 
             $aCustomValues = array(
                 'From' => sprintf("%u", ip2long($oForm->getCleanValue('From'))),

@@ -24,9 +24,10 @@ This antispam method scan submitted content for the URLs and check them if any o
 	<string name="_bx_antispam_chain_spammers"><![CDATA[IP blacklist]]></string>
 	<string name="_bx_antispam_chain_uridns"><![CDATA[Spam text]]></string>
 	<string name="_bx_antispam_rule_note_country"><![CDATA[Country: {0}]]></string>
-	<string name="_bx_antispam_rule_note_spamhaus_org"><![CDATA[Detect spammer IPs from sbl.spamhaus.org]]></string>
-	<string name="_bx_antispam_rule_note_zomgbl_spameatingmonkey_net"><![CDATA[Everything is blacklisted, use only if something is whitelisted]]></string>
+	<string name="_bx_antispam_rule_note_spamhaus_org"><![CDATA[Detect spammer IPs]]></string>
+	<string name="_bx_antispam_rule_note_zomgbl_spameatingmonkey_net"><![CDATA[Everything is blacklisted, <u>use it only if something is whitelisted!</u>]]></string>
 	<string name="_bx_antispam_rule_note_surbl_org"><![CDATA[Detect spammer URLs from SURBLs (lists of web sites that have appeared in unsolicited messages)]]></string>
+	<string name="_bx_antispam_rule_note_opm_tornevall_org"><![CDATA[Detect anonymous/elite proxies and abuse IPs]]></string>
 	<string name="_bx_antispam_dnsbl"><![CDATA[DNSBL]]></string>
 	<string name="_bx_antispam_uri_dnsbl"><![CDATA[URI DNSBL]]></string>
 	<string name="_bx_antispam_type_dnsbl"><![CDATA[DNSBL]]></string>
@@ -36,6 +37,7 @@ This antispam method scan submitted content for the URLs and check them if any o
 
 	<string name="_bx_antispam_popup_help"><![CDATA[DNSBL help]]></string>
 	<string name="_bx_antispam_popup_dnsbl_recheck"><![CDATA[Recheck IP/URL in DNSBL/URIDNSBL]]></string>
+	<string name="_bx_antispam_popup_dnsbl_add"><![CDATA[Add country based rule]]></string>
 	<string name="_bx_antispam_popup_block_log"><![CDATA[Block log]]></string>
 
 	<string name="_bx_antispam_page_title_sys_ip_table"><![CDATA[IP table]]></string>
@@ -65,6 +67,8 @@ This antispam method scan submitted content for the URLs and check them if any o
 	<string name="_bx_antispam_field_member_id"><![CDATA[Member]]></string>
 	<string name="_bx_antispam_field_type"><![CDATA[Type]]></string>
 	<string name="_bx_antispam_field_when"><![CDATA[When]]></string>
+	<string name="_bx_antispam_field_country"><![CDATA[Country]]></string>
+	<string name="_bx_antispam_field_zonedomain"><![CDATA[ZONE domain]]></string>
 
     <string name="_bx_antispam_form_ip_table"><![CDATA[IP table directive]]></string>
     <string name="_bx_antispam_form_ip_table_add"><![CDATA[Add IP table directive]]></string>

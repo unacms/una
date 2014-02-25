@@ -25,6 +25,8 @@ class BxAntispamGridDNSBL extends BxTemplGrid
     {
         parent::_addJsCss();
 
+        $this->_oTemplate->addJs('jquery.form.js');
+
         bx_import('BxTemplFormView');
         $oForm = new BxTemplFormView(array());
         $oForm->addCssJs();
@@ -170,10 +172,6 @@ class BxAntispamGridDNSBL extends BxTemplGrid
 
         bx_import('BxTemplFormView');
         $oForm = new BxTemplFormView($aForm);
-        if (!$oForm) {
-            $this->_echoResultJson(array('msg' => _t('_sys_txt_error_occured')), true);
-            exit;
-        }
 
         $s = $oModule->_oTemplate->parseHtmlByName('recheck.html', array (
             'form' => $oForm->getCode(),
@@ -187,10 +185,121 @@ class BxAntispamGridDNSBL extends BxTemplGrid
         $this->_echoResultJson(array('popup' => array('html' => $s, 'options' => array('closeOnOuterClick' => false))), true);
     }
 
+    /**
+     * 'recheck' action handler
+     */
+    public function performActionAdd() 
+    {
+        bx_import('BxTemplFormView');
+
+        $aForm = array(
+            'form_attrs' => array(
+                'id' => 'bx_antispam_form_dnsbl_add',
+                'action' => BX_DOL_URL_ROOT . 'grid.php?o=bx_antispam_grid_dnsbl&a=add',
+                'method' => 'post',
+            ),
+            'params' => array (
+                'db' => array(
+                    'table' => 'bx_antispam_dnsbl_rules',
+                    'key' => 'id',
+                    'submit_name' => 'do_submit',
+                ),
+            ),
+            'inputs' => array(
+
+                'country' => array(
+                    'type' => 'select',
+                    'name' => 'country',
+                    'caption' => _t('_bx_antispam_field_country'),
+                    'values' => BxDolForm::getDataItems('Country'),
+                ),
+
+                'chain' => array(
+                    'type' => 'radio_set',
+                    'name' => 'chain',
+                    'caption' => _t('_bx_antispam_field_action'),
+                    'values' => array ('spammers' => _t('_bx_antispam_chain_spammers'), 'whitelist' => _t('_bx_antispam_chain_whitelist')),
+                    'value' => 'spammers',
+                ),
+
+                'submit' => array(
+                    'type' => 'input_set',
+                    0 => array (
+                        'type' => 'submit',
+                        'name' => 'do_submit',
+                        'value' => _t('_sys_submit'),
+                    ),
+                    1 => array (
+                        'type' => 'reset',
+                        'name' => 'close',
+                        'value' => _t('_sys_close'),
+                        'attrs' => array('class' => 'bx-def-margin-sec-left', 'onclick' => '$(\'.bx-popup-applied:visible\').dolPopupHide();'),
+                    ),
+                ),
+
+            ),
+        );
+
+        $oForm = new BxTemplFormView($aForm);
+        $oForm->initChecker();
+
+        if ($oForm->isSubmittedAndValid()) { // if form is submitted and all fields are valid
+
+            $aCustomValues = array(
+                'chain' => $oForm->getCleanValue('chain'),
+                'zonedomain' => sprintf("%s.countries.nerd.dk.", strtolower($oForm->getCleanValue('country'))),
+                'postvresp' => '127.0.0.2',
+                'url' => 'http://countries.nerd.dk/',
+                'comment' => '_bx_antispam_rule_note_country',
+                'added' => time(),
+                'active' => 1,
+                
+            );
+
+            $iRecentId = $oForm->insert ($aCustomValues, true); // insert new record
+
+            if ($iRecentId)
+                $aRes = array('grid' => $this->getCode(false), 'blink' => $iRecentId); // if record is successfully added, reload grid and highlight added row
+            else
+                $aRes = array('msg' => _t('_sys_txt_error_occured')); // if record adding failed, display error message
+
+            $this->_echoResultJson($aRes, true);
+
+        } else { // if form is not submitted or some fields are invalid, display popup with form
+
+            bx_import('BxTemplFunctions');
+            $s = BxTemplFunctions::getInstance()->popupBox($oForm->getId() . '_form', _t('_bx_antispam_popup_dnsbl_add'), $oForm->getCode() . '
+                <script>
+                    $(document).ready(function () {
+                        $("#' . $oForm->getId() . '").ajaxForm({ 
+                            dataType: "json",
+                            beforeSubmit: function (formData, jqForm, options) {
+                                bx_loading($("#' . $oForm->getId() . '"), true);
+                            },
+                            success: function (data) {
+                                $(".bx-popup-applied:visible").dolPopupHide();
+                                glGrids.' . $this->_sObject . '.processJson(data, "add");
+                            }
+                        });
+                    });
+                </script>');
+
+            $this->_echoResultJson(array('popup' => array('html' => $s, 'options' => array('closeOnOuterClick' => false))), true);
+
+        }
+    }
 
     protected function _getCellChain ($mixedValue, $sKey, $aField, $aRow) 
     {
         return parent::_getCellDefault (_t('_bx_antispam_chain_' . $mixedValue), $sKey, $aField, $aRow);
+    }
+
+    protected function _getCellZonedomain ($mixedValue, $sKey, $aField, $aRow) 
+    {
+        $s = $mixedValue;
+        if ($aRow['url'])
+            $s = '<a target="_blank" href="' . $aRow['url'] . '">' . $mixedValue . '</a>';
+        return parent::_getCellDefault ($s, $sKey, $aField, $aRow);
     }
 
     protected function _getCellComment ($mixedValue, $sKey, $aField, $aRow) 
@@ -202,6 +311,16 @@ class BxAntispamGridDNSBL extends BxTemplGrid
         }
 
         return parent::_getCellDefault (_t($mixedValue, $sCountry), $sKey, $aField, $aRow);
+    }
+
+    protected function _getCellActions ($mixedValue, $sKey, $aField, $aRow) 
+    {
+        if (preg_match('/^(\w{2})\.countries\.nerd\.dk\.$/', $aRow['zonedomain'], $aMatches)) {
+            $aRow['active'] = 1;
+            return parent::_getCellActions ($mixedValue, $sKey, $aField, $aRow);
+        }
+        
+        return parent::_getCellDefault ('', $sKey, $aField, $aRow);
     }
 
 }
