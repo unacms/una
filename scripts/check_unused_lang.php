@@ -63,6 +63,7 @@ class BxDolCheckUnusedLangsCmd
 
             // antispam
             '/^_bx_antispam_chain_/',
+            '/^_bx_antispam_type_/',
         );
 
         $this->_aOptionsSystem = array (

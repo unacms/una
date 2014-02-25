@@ -137,6 +137,7 @@ class BxAntispamGridIpTable extends BxTemplGrid
     {
         return parent::_getCellDefault ('allow' == $mixedValue ? _t('_bx_antispam_ip_allow') : _t('_bx_antispam_ip_deny'), $sKey, $aField, $aRow);
     }
+
     protected function _getCellLastDT ($mixedValue, $sKey, $aField, $aRow) 
     {
         return parent::_getCellDefault (bx_time_js($mixedValue, BX_FORMAT_DATE), $sKey, $aField, $aRow);

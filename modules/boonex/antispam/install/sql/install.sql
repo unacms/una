@@ -38,6 +38,7 @@ CREATE TABLE `bx_antispam_dnsbluri_zones` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `bx_antispam_block_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `ip` int(10) unsigned NOT NULL,
   `member_id` int(10) unsigned NOT NULL,
   `type` varchar(32) NOT NULL,

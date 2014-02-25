@@ -51,6 +51,22 @@ class BxAntispamGridDNSBL extends BxTemplGrid
      */
     public function performActionLog()
     {
+        bx_import('BxDolGrid');
+        $oGrid = BxDolGrid::getObjectInstance('bx_antispam_grid_block_log');
+        if (!$oGrid) {
+            $this->_echoResultJson(array('msg' => _t('_sys_txt_error_occured')), true);
+            exit;
+        }
+
+        bx_import('BxTemplFunctions');
+        $s = BxTemplFunctions::getInstance()->popupBox(
+            'bx_antispam_popup_block_log',
+            _t('_bx_antispam_popup_block_log'), 
+            $oGrid->getCode() . '<button class="bx-btn" style="float:none;" onclick ="$(\'.bx-popup-applied:visible\').dolPopupHide();">' . _t('_sys_close') . '</button>'
+        );
+
+        $this->_echoResultJson(array('popup' => array('html' => $s)), true);
+
     }
 
     /**

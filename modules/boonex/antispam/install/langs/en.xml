@@ -12,6 +12,8 @@ This functionality allows to block by IP address if it exists in one of availabl
 <br /><br />
 A URI DNSBL is a DNSBL that lists the domain names and IP addresses which are found in the "clickable" links contained in the body of spams, but generally not found inside legitimate messages.
 This antispam method scan submitted content for the URLs and check them if any of them is a link to spam site. If such URL detected in the text then content is not submitted.
+<br /><br />
+<button class="bx-btn" style="float:none;" onclick ="$('.bx-popup-applied:visible').dolPopupHide();">Close</button>
 ]]></string>
     <string name="_bx_antispam_ip_blocked"><![CDATA[IP address is blocked. {0}]]></string>
     <string name="_bx_antispam_spam_detected"><![CDATA[Spam detected. {0}]]></string>
@@ -27,9 +29,14 @@ This antispam method scan submitted content for the URLs and check them if any o
 	<string name="_bx_antispam_rule_note_surbl_org"><![CDATA[Detect spammer URLs from SURBLs (lists of web sites that have appeared in unsolicited messages)]]></string>
 	<string name="_bx_antispam_dnsbl"><![CDATA[DNSBL]]></string>
 	<string name="_bx_antispam_uri_dnsbl"><![CDATA[URI DNSBL]]></string>
+	<string name="_bx_antispam_type_dnsbl"><![CDATA[DNSBL]]></string>
+	<string name="_bx_antispam_type_dnsbluri"><![CDATA[URI DNSBL]]></string>
+	<string name="_bx_antispam_type_akismet"><![CDATA[Akismet]]></string>
+	<string name="_bx_antispam_type_stopforumspam"><![CDATA[StopForumSpam]]></string>
 
 	<string name="_bx_antispam_popup_help"><![CDATA[DNSBL help]]></string>
 	<string name="_bx_antispam_popup_dnsbl_recheck"><![CDATA[Recheck IP/URL in DNSBL/URIDNSBL]]></string>
+	<string name="_bx_antispam_popup_block_log"><![CDATA[Block log]]></string>
 
 	<string name="_bx_antispam_page_title_sys_ip_table"><![CDATA[IP table]]></string>
 	<string name="_bx_antispam_page_title_ip_table"><![CDATA[IP table]]></string>
@@ -46,6 +53,7 @@ This antispam method scan submitted content for the URLs and check them if any o
 	<string name="_bx_antispam_grid_action_help"><![CDATA[Help]]></string>
 
 	<string name="_bx_antispam_field_id"><![CDATA[ID]]></string>
+	<string name="_bx_antispam_field_ip"><![CDATA[IP]]></string>
 	<string name="_bx_antispam_field_ip_from"><![CDATA[IP from]]></string>
 	<string name="_bx_antispam_field_ip_to"><![CDATA[IP to]]></string>
 	<string name="_bx_antispam_field_action"><![CDATA[Action]]></string>
@@ -54,6 +62,9 @@ This antispam method scan submitted content for the URLs and check them if any o
 	<string name="_bx_antispam_field_chain"><![CDATA[Rule]]></string>
 	<string name="_bx_antispam_field_ip_url"><![CDATA[IP for DNSBL or URL for URI DNSBL]]></string>
 	<string name="_bx_antispam_field_dnsbl_uridnsbl"><![CDATA[Check in]]></string>
+	<string name="_bx_antispam_field_member_id"><![CDATA[Member]]></string>
+	<string name="_bx_antispam_field_type"><![CDATA[Type]]></string>
+	<string name="_bx_antispam_field_when"><![CDATA[When]]></string>
 
     <string name="_bx_antispam_form_ip_table"><![CDATA[IP table directive]]></string>
     <string name="_bx_antispam_form_ip_table_add"><![CDATA[Add IP table directive]]></string>

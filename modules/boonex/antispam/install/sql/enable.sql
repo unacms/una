@@ -76,6 +76,18 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 ('bx_antispam_grid_ip_table', 'single', 'delete', '', 'remove',  1, 2),
 ('bx_antispam_grid_ip_table', 'independent', 'add', '_bx_antispam_grid_action_add', '', 0, 1);
 
+-- grid: block log
+
+INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
+('bx_antispam_grid_block_log', 'Sql', 'SELECT `id`, `ip`, `member_id`, `type`, `extra`, `added` FROM `bx_antispam_block_log`', 'bx_antispam_block_log', 'id', 'id', '', '', 8, NULL, 'start', '', 'type,extra', '', 'auto', 'ip,member_id,type,extra,added', '', 64, 'BxAntispamGridBlockLog', 'modules/boonex/antispam/classes/BxAntispamGridBlockLog.php');
+
+INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
+('bx_antispam_grid_block_log', 'ip', '_bx_antispam_field_ip', '20%', 0, 0, '', 1),
+('bx_antispam_grid_block_log', 'member_id', '_bx_antispam_field_member_id', '20%', 0, 0, '', 2),
+('bx_antispam_grid_block_log', 'type', '_bx_antispam_field_type', '15%', 0, 0, '', 3),
+('bx_antispam_grid_block_log', 'extra', '_bx_antispam_field_note', '15%', 0, 8, '', 4),
+('bx_antispam_grid_block_log', 'added', '_bx_antispam_field_when', '30%', 0, 0, '', 5);
+
 -- data list: ip table actions
 
 INSERT INTO `sys_form_pre_lists`(`module`, `key`, `title`, `use_for_sets`) VALUES 
