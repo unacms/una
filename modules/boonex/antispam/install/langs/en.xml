@@ -2,8 +2,6 @@
 <resources name="en" flag="gb" title="English">
 
 	<string name="_bx_antispam"><![CDATA[Antispam]]></string>
-    <string name="_bx_antispam_adm_stg_cpt_type"><![CDATA[Antispam]]></string>
-    <string name="_bx_antispam_adm_stg_cpt_category_general"><![CDATA[General]]></string>
     <string name="_bx_antispam_help"><![CDATA[Help]]></string>
     <string name="_bx_antispam_help_text"><![CDATA[TODO: help text here]]></string>
     <string name="_bx_antispam_help_dnsbl"><![CDATA[
@@ -81,6 +79,13 @@ This antispam method scan submitted content for the URLs and check them if any o
     <string name="_bx_antispam_field_expiration_err_msg"><![CDATA[Please enter correct date time value]]></string>
 
     <string name="_bx_antispam_data_list_ip_table_actions"><![CDATA[IP table actions]]></string>
+
+    <string name="_bx_antispam_adm_stg_cpt_type"><![CDATA[Antispam]]></string>
+    <string name="_bx_antispam_adm_stg_cpt_category_general"><![CDATA[General]]></string>
+    <string name="_bx_antispam_adm_stg_cpt_category_ip_table"><![CDATA[IP table]]></string>
+    <string name="_bx_antispam_adm_stg_cpt_category_dnsbl"><![CDATA[DNSBL]]></string>
+    <string name="_bx_antispam_adm_stg_cpt_category_akismet"><![CDATA[Akismet]]></string>
+    <string name="_bx_antispam_adm_stg_cpt_category_stopforumspam"><![CDATA[StopForumSpam]]></string>
 
 	<string name="_bx_antispam_option_block"><![CDATA[Total block all spam content]]></string>
 	<string name="_bx_antispam_option_report"><![CDATA[Send report to admin if spam content discovered]]></string>
