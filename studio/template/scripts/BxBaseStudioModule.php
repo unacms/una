@@ -57,7 +57,7 @@ class BxBaseStudioModule extends BxDolStudioModule {
             $aMenu[] = array(
                 'name' => $aItem['name'],
                 'icon' => $aItem['icon'],
-            	'link' => BX_DOL_URL_STUDIO . 'module.php?name=' . $this->sModule . '&page=' . $aItem['name'],
+            	'link' => isset($aItem['link'])  ? $aItem['link'] : BX_DOL_URL_STUDIO . 'module.php?name=' . $this->sModule . '&page=' . $aItem['name'],
             	'title' => _t($aItem['title']),
             	'selected' => $aItem['name'] == $this->sPage
             );

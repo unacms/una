@@ -44,7 +44,7 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 -- grid: DNSBL
 
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
-('bx_antispam_grid_dnsbl', 'Sql', 'SELECT `id`, `chain`, `zonedomain`, `postvresp`, `url`, `recheck`, `comment`, `added`, `active` FROM `bx_antispam_dnsbl_rules`', 'bx_antispam_dnsbl_rules', 'id', 'added', 'active', '', 16, NULL, 'start', '', 'chain,zonedomain,url,recheck', 'comment', 'auto', 'chain', 'comment', 64, 'BxAntispamGridDNSBL', 'modules/boonex/antispam/classes/BxAntispamGridDNSBL.php');
+('bx_antispam_grid_dnsbl', 'Sql', 'SELECT `id`, `chain`, `zonedomain`, `postvresp`, `url`, `recheck`, `comment`, `added`, `active` FROM `bx_antispam_dnsbl_rules`', 'bx_antispam_dnsbl_rules', 'id', 'added', 'active', '', 16, NULL, 'start', '', 'chain,zonedomain,url,recheck', 'comment', 'auto', 'chain,zonedomain', 'comment', 64, 'BxAntispamGridDNSBL', 'modules/boonex/antispam/classes/BxAntispamGridDNSBL.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_antispam_grid_dnsbl', 'switcher', '_sys_active', '10%', 0, 0, '', 1),

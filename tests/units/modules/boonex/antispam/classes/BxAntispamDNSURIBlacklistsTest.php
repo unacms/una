@@ -5,24 +5,27 @@
  */
 class BxAntispamDNSURIBlacklistsTest extends BxDolTestCase
 {
+    protected $_oDNSBlacklists;
     protected $_oDNSURIBlacklists;
-    
 
     protected function setUp()
     {
         bx_import('BxDolModule');
         $oModule = BxDolModule::getInstance('bx_antispam');
 
+        $this->_oDNSBlacklists = bx_instance('BxAntispamDNSBlacklists', array(), $oModule->_aModule);
         $this->_oDNSURIBlacklists = bx_instance('BxAntispamDNSURIBlacklists', array(), $oModule->_aModule);
     }
 
     protected function tearDown()
     {
+        unset($this->_oDNSBlacklists);
         unset($this->_oDNSURIBlacklists);
     }
 
     public function providerForIsSpam()
     {
+        // it is assumed that multi.surbl.org. rule is enabled
         return array(
             array("some text without urls", false), // no spam detection in text without urls
             array("Hello. \nDolphin lives on http://www.boonex.com site", false), // no spam for good urls
@@ -41,8 +44,19 @@ class BxAntispamDNSURIBlacklistsTest extends BxDolTestCase
      */
     public function testIsSpam($sText, $bRes)
     {
-        // check result boolean value
-        $this->assertEquals($bRes, $this->_oDNSURIBlacklists->isSpam($sText));
+        if (!$this->isSurbl())
+            $this->markTestSkipped('multi.surbl.org is not enabled.');
+        else        
+            $this->assertEquals($bRes, $this->_oDNSURIBlacklists->isSpam($sText));
+    }
+
+    protected function isSurbl() 
+    {
+        $aRules = $this->_oDNSBlacklists->getRules(array(BX_DOL_DNSBL_CHAIN_URIDNS));
+        foreach ($aRules as $aRule)
+            if ('multi.surbl.org.' == $aRule['zonedomain'])
+                return true;
+        return false;
     }
 }
 

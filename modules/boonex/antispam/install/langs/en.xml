@@ -20,6 +20,8 @@ This antispam method scan submitted content for the URLs and check them if any o
     <string name="_bx_antispam_submit_false_positive_report"><![CDATA[If you believe that this is a mistake, please submit a false positive report here: {0}]]></string>
 	<string name="_bx_antispam_ip_allow"><![CDATA[Allow]]></string>
 	<string name="_bx_antispam_ip_deny"><![CDATA[Deny]]></string>
+	<string name="_bx_antispam_ip_table"><![CDATA[IP table]]></string>
+	<string name="_bx_antispam_dnsbl_list"><![CDATA[DNSBL list]]></string>
 	<string name="_bx_antispam_chain_whitelist"><![CDATA[IP whitelist]]></string>
 	<string name="_bx_antispam_chain_spammers"><![CDATA[IP blacklist]]></string>
 	<string name="_bx_antispam_chain_uridns"><![CDATA[Spam text]]></string>
@@ -27,7 +29,7 @@ This antispam method scan submitted content for the URLs and check them if any o
 	<string name="_bx_antispam_rule_note_spamhaus_org"><![CDATA[Detect spammer IPs]]></string>
 	<string name="_bx_antispam_rule_note_zomgbl_spameatingmonkey_net"><![CDATA[Everything is blacklisted, <u>use it only if something is whitelisted!</u>]]></string>
 	<string name="_bx_antispam_rule_note_surbl_org"><![CDATA[Detect spammer URLs from SURBLs (lists of web sites that have appeared in unsolicited messages)]]></string>
-	<string name="_bx_antispam_rule_note_opm_tornevall_org"><![CDATA[Detect anonymous/elite proxies and abuse IPs]]></string>
+	<string name="_bx_antispam_rule_note_dnsbl_tornevall_org"><![CDATA[Detect anonymous/elite proxies and abuse IPs]]></string>
 	<string name="_bx_antispam_dnsbl"><![CDATA[DNSBL]]></string>
 	<string name="_bx_antispam_uri_dnsbl"><![CDATA[URI DNSBL]]></string>
 	<string name="_bx_antispam_type_dnsbl"><![CDATA[DNSBL]]></string>

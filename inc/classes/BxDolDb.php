@@ -734,7 +734,7 @@ EOJ;
             elseif (is_numeric($mixedArg))
                 $s = $mixedArg;
             else
-                $s = "'" . mysql_real_escape_string($mixedArg, $this->link) . "'";
+                $s = "'" . mysql_real_escape_string($mixedArg) . "'";
 
             $i = bx_mb_strpos($sQuery, '?', $iPos);
             $sQuery = bx_mb_substr_replace($sQuery, $s, $i, 1);
