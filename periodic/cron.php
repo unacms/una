@@ -134,7 +134,7 @@ function runJob($aJob)
     }
 }
 
-$oDb = new BxDolDb();
+$oDb = BxDolDb::getInstance();
 $aJobs = $oDb->fromCache('sys_cron_jobs', 'getAll', 'SELECT * FROM `sys_cron_jobs`');
 
 $aDate = getdate(time());

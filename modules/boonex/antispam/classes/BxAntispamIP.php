@@ -111,7 +111,7 @@ class BxAntispamIP extends BxDol
 
     /**
      * Clean up expired entries
-     * TODO: add to cron
+     * @return number of affected rows
      */
     public function pruning () 
     {

@@ -198,3 +198,8 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `Body`) VALUES
 ('bx_antispam', '_bx_antispam_spam_report_name', 'bx_antispam_spam_report', '_bx_antispam_spam_report_subject', '_bx_antispam_spam_report_body');
 
+-- cron
+
+INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `eval`) VALUES
+('bx_antispam_pruning', '0 0 * * *', 'BxAntispamCronPruning', 'modules/boonex/antispam/classes/BxAntispamCronPruning.php', '');
+

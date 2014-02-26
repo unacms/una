@@ -222,6 +222,15 @@ class BxAntispamModule extends BxDolModule
         return $o->blockIp($mixedIP, $iExpirationInSec, $sComment);
     }
 
+    /**
+     * @see BxAntispamIP::pruning
+     */
+    function servicePruning()
+    {
+        $o = bx_instance('BxAntispamIP', array(), $this->_aModule);
+        return $o->pruning();
+    }
+
     protected function getErrorMessageIpBlocked () 
     {
         bx_import('BxDolLanguages');

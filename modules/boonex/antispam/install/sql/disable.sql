@@ -37,3 +37,7 @@ DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandler;
 
 DELETE FROM `sys_email_templates` WHERE `Module` = 'bx_antispam';
 
+-- cron
+
+DELETE FROM `sys_cron_jobs` WHERE `name` LIKE 'bx_antispam%';
+

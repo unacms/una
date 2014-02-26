@@ -1167,8 +1167,7 @@ CREATE TABLE `sys_cron_jobs` (
 
 INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `eval`) VALUES
 ('cmd', '0 0 * * *', 'BxDolCronCmd', 'inc/classes/BxDolCronCmd.php', ''),
-('notifies', '*/10 * * * *', 'BxDolCronNotifies', 'inc/classes/BxDolCronNotifies.php', ''),
-('video_comments', '* * * * *', 'BxDolCronVideoComments', 'flash/modules/video_comments/inc/classes/BxDolCronVideoComments.php', '');
+('notifies', '*/10 * * * *', 'BxDolCronNotifies', 'inc/classes/BxDolCronNotifies.php', '');
 
 -- --------------------------------------------------------
 
