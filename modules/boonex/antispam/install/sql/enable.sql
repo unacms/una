@@ -189,5 +189,6 @@ INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `eval`) VALUES
 SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
-('account', 'check_login', @iHandler);
+('account', 'check_login', @iHandler),
+('account', 'check_join', @iHandler);
 

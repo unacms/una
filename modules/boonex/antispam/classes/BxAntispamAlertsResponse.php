@@ -23,7 +23,8 @@ class BxAntispamAlertsResponse extends BxDolAlertsResponse
             case 'check_login':
                 $oAlert->aExtras['error_msg'] = BxDolService::call('bx_antispam', 'check_login');
                 break;
-            case ''; // TODO: check join
+            case 'check_join'; 
+                $oAlert->aExtras['error_msg'] = BxDolService::call('bx_antispam', 'check_join', array($oAlert->aExtras['email'], &$oAlert->aExtras['approve']));
                 break;
         }
         

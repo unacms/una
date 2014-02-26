@@ -67,7 +67,7 @@ class BxBaseAccountForms extends BxDolProfileForms {
 
         // approve profile if auto-approval is enabled and profile status is 'pending'
         $sStatus = $oProfile->getStatus();
-        $isAutoApprove = true; // TODO: add setting option to auto-approve added data automatically
+        $isAutoApprove = $oForm->isSetPendingApproval() ? false : true; // TODO: add setting option to auto-approve added data automatically
         if ($sStatus == BX_PROFILE_STATUS_PENDING && $isAutoApprove)
             $oProfile->approve(BX_PROFILE_ACTION_AUTO);
 

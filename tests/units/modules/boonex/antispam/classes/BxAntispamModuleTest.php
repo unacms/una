@@ -101,20 +101,20 @@ class BxAntispamModuleTest extends BxDolTestCase
     {
         $any = $this->anything();
         return array(
-            array(true, $any, $any, $any, $any, false), // join is NOT allowed for blocked IPs
-            array(false, '', $any, $any, false, true), // join is allowed if IP isn't blocked, DNSBL checking disabled, not listed in StopForumSpam
-            array(false, 'on', 'approval', false, false, true), // join is allowed if IP isn't blocked and DNSBL enabled in "approval" mode, but not listed
-            array(false, 'on', 'block', false, false, true), // join is allowed if IP isn't blocked and DNSBL enabled in "block", but not listed
-            array(false, 'on', 'approval', true, false, true), // join is allowed if IP isn't blocked and DNSBL enabled in "approval" and IP listed
-            array(false, 'on', 'block', true, $any, false), // join is NOT allowed if IP isn't blocked and DNSBL enabled in "block" and IP listed
-            array(false, '', $any, $any, true, false), // join is NOT allowed if IP isn't blocked but listed in StopForumSpam
+            array(true, $any, $any, $any, $any, false, false), // join is NOT allowed for blocked IPs
+            array(false, '', $any, $any, false, false, true), // join is allowed if IP isn't blocked, DNSBL checking disabled, not listed in StopForumSpam
+            array(false, 'on', 'approval', false, false, false, true), // join is allowed if IP isn't blocked and DNSBL enabled in "approval" mode, but not listed
+            array(false, 'on', 'block', false, false, false, true), // join is allowed if IP isn't blocked and DNSBL enabled in "block", but not listed
+            array(false, 'on', 'approval', true, false, true, true), // join is allowed if IP isn't blocked and DNSBL enabled in "approval" and IP listed
+            array(false, 'on', 'block', true, $any, false, false), // join is NOT allowed if IP isn't blocked and DNSBL enabled in "block" and IP listed
+            array(false, '', $any, $any, true, false, false), // join is NOT allowed if IP isn't blocked but listed in StopForumSpam
         );
     }
 
     /**
      * @dataProvider providerForServiceCheckJoin
      */
-    public function testServiceCheckJoin($bIpBlocked, $sDnsblEnable, $sDnsblBehaviour, $bDnsblIpBlacklisted, $bStopForumSpamSpammer, $bResultEmptyString)
+    public function testServiceCheckJoin($bIpBlocked, $sDnsblEnable, $sDnsblBehaviour, $bDnsblIpBlacklisted, $bStopForumSpamSpammer, $bResultSetApprove, $bResultEmptyString)
     {
         // set different options
         $this->_oModule->_oConfig->setAntispamOption('dnsbl_enable', $sDnsblEnable);
@@ -149,7 +149,9 @@ class BxAntispamModuleTest extends BxDolTestCase
         }
 
         // empty string - no spam detected
-        $this->assertTrue($bResultEmptyString == ('' == $this->_oModule->serviceCheckJoin($this->_sSampleEmail, $this->_sSampleIP)));
+        $bSetApprove = false;
+        $this->assertTrue($bResultEmptyString == ('' == $this->_oModule->serviceCheckJoin($this->_sSampleEmail, $bSetApprove, $this->_sSampleIP)));
+        $this->assertTrue($bResultSetApprove == $bSetApprove);
     }
 
     public function providerForServiceCheckLogin()

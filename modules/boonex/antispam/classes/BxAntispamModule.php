@@ -137,12 +137,10 @@ class BxAntispamModule extends BxDolModule
      * then it checks in DNS black lists (@see serviceIsIpDnsBlacklisted),
      * then it checks in StopForumSpam service (@see BxAntispamStopForumSpam).
      *
-     * TODO: if dnsbl_behaviour == approval, inform caller to set account to approval status on positive detection
-     *
      * @param $sCurIP IP to check, or empty for current IP
      * @return empty string - if join should be allowed, error message - if join should be blocked
      */
-    function serviceCheckJoin ($sEmail, $sIp = '') 
+    function serviceCheckJoin ($sEmail, &$bApproval, $sIp = '') 
     {
         $bJoinBlock = ('block' == $this->_oConfig->getAntispamOption('dnsbl_behaviour_join'));
         $bApproval = false;
@@ -168,8 +166,6 @@ class BxAntispamModule extends BxDolModule
             if ($oStopForumSpam->isSpammer(array('email' => $sEmail, 'ip' => $sIp), $sNote))
                 $sErrorMsg = $this->getErrorMessageSpam();
         }
-
-        bx_alert('bx_antispam', 'check_join', bx_get_logged_profile_id(), 0, array('email' => $sEmail, 'ip' => $sIp, 'error_msg' => &$sErrorMsg));
 
         return $sErrorMsg;
     }

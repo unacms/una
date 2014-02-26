@@ -30,7 +30,7 @@ class BxBaseFormLogin extends BxTemplFormView
             return false;
 
         $sErrorString = bx_check_password($this->getCleanValue('ID'), $this->getCleanValue('Password'), $this->getRole());
-        $this->_setLoginError ($sErrorString);
+        $this->_setCustomError ($sErrorString);
         return $sErrorString ? false : true;
     }    
 
@@ -58,7 +58,7 @@ class BxBaseFormLogin extends BxTemplFormView
         return isset($this->aInputs['ID']['error']) ? $this->aInputs['ID']['error'] : '';
     }
 
-    protected function _setLoginError ($s) 
+    protected function _setCustomError ($s) 
     {
         $this->aInputs['ID']['error'] = $s;
     }

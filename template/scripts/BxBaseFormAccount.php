@@ -10,19 +10,21 @@
 bx_import('BxTemplFormView');
 
 
-class BxFormAccountCheckerHelper extends BxDolFormCheckerHelper {
-
+class BxFormAccountCheckerHelper extends BxDolFormCheckerHelper 
+{
     /**
      * Password confirmation check.
      */
-    function checkPasswordConfirm ($s) {
+    function checkPasswordConfirm ($s) 
+    {
         return $s == bx_process_input(bx_get(BxTemplFormAccount::$FIELD_PASSWORD));
     }
 
     /**
      * Password confirmation check.
      */
-    function checkPasswordCurrent ($s) {
+    function checkPasswordCurrent ($s) 
+    {
 
         bx_import('BxDolAccount');
         $oAccount = BxDolAccount::getInstance();
@@ -37,7 +39,8 @@ class BxFormAccountCheckerHelper extends BxDolFormCheckerHelper {
     /**
      * Check if email is uniq.
      */
-    function checkEmailUniq ($s) {
+    function checkEmailUniq ($s) 
+    {
         if (!$this->checkEmail($s))
             return false;
 
@@ -60,18 +63,40 @@ class BxFormAccountCheckerHelper extends BxDolFormCheckerHelper {
 /**
  * Create/Edit Account Form.
  */
-class BxBaseFormAccount extends BxTemplFormView {
-
+class BxBaseFormAccount extends BxTemplFormView 
+{
     static $FIELD_PASSWORD = 'password';
     static $FIELD_SALT = 'salt';
     static $FIELD_ADDED = 'added';
     static $FIELD_CHANGED = 'changed';
 
-    public function __construct($aInfo, $oTemplate) {
+    protected $_bSetPendingApproval = false;
+
+    public function __construct($aInfo, $oTemplate) 
+    {
         parent::__construct($aInfo, $oTemplate);
     }
 
-    public function insert ($aValsToAdd = array(), $isIgnore = false) {
+    function isValid () 
+    {
+        if (!parent::isValid ())
+            return false;
+
+        $sErrorMsg = '';
+        bx_alert('account', 'check_join', 0, false, array('error_msg' => &$sErrorMsg, 'email' => $this->getCleanValue('email'), 'approve' => &$this->_bSetPendingApproval));
+        if ($sErrorMsg)
+            $this->_setCustomError ($sErrorMsg);
+
+        return $sErrorMsg ? false : true;
+    }    
+
+    public function isSetPendingApproval()
+    {
+        return $this->_bSetPendingApproval;
+    }
+
+    public function insert ($aValsToAdd = array(), $isIgnore = false) 
+    {
         $sPwd = $this->getCleanValue(self::$FIELD_PASSWORD);
         $sSalt = genRndSalt();
         $sPasswordHash = encryptUserPwd($sPwd, $sSalt);
@@ -85,7 +110,8 @@ class BxBaseFormAccount extends BxTemplFormView {
         return parent::insert ($aValsToAdd, $isIgnore);
     }
 
-    function update ($val, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null) {    
+    function update ($val, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null) 
+    {
         $sPwd = $this->getCleanValue(self::$FIELD_PASSWORD);
         if ($sPwd) {
             $sSalt = genRndSalt();
@@ -98,6 +124,11 @@ class BxBaseFormAccount extends BxTemplFormView {
             $sPwd ? array (self::$FIELD_PASSWORD => $sPasswordHash, self::$FIELD_SALT => $sSalt) : array()
         );
         return parent::update ($val, $aValsToAdd, $aTrackTextFieldsChanges);
+    }
+
+    protected function _setCustomError ($s)
+    {
+        $this->aInputs['do_submit']['error'] = $s;
     }
 }
 
