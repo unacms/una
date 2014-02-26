@@ -125,10 +125,8 @@ class BxAntispamModule extends BxDolModule
         if (!$sErrorMsg && $this->serviceIsIpBlocked($sIp))
             $sErrorMsg = $this->getErrorMessageIpBlocked();
 
-        if (!$sErrorMsg && 'on' == $this->_oConfig->getAntispamOption('dnsbl_enable') && 'block' == $this->_oConfig->getAntispamOption('dnsbl_behaviour') && $this->serviceIsIpDnsBlacklisted($sIp, $sType))
+        if (!$sErrorMsg && 'on' == $this->_oConfig->getAntispamOption('dnsbl_enable') && $this->serviceIsIpDnsBlacklisted($sIp, $sType) && 'block' == $this->_oConfig->getAntispamOption('dnsbl_behaviour_login'))
             $sErrorMsg = $this->getErrorMessageSpam();
-        
-        bx_alert('bx_antispam', 'check_login', bx_get_logged_profile_id(), 0, array('ip' => $sIp, 'error_msg' => &$sErrorMsg));
 
         return $sErrorMsg;
     }
@@ -147,6 +145,7 @@ class BxAntispamModule extends BxDolModule
      */
     function serviceCheckJoin ($sEmail, $sIp = '') 
     {
+        $bApproval = false;
         $sErrorMsg = '';
         $sType = 'join';
 
@@ -156,8 +155,12 @@ class BxAntispamModule extends BxDolModule
         if (!$sErrorMsg && $this->serviceIsIpBlocked($sIp))
             $sErrorMsg = $this->getErrorMessageIpBlocked();
 
-        if (!$sErrorMsg && 'on' == $this->_oConfig->getAntispamOption('dnsbl_enable') && 'block' == $this->_oConfig->getAntispamOption('dnsbl_behaviour') && $this->serviceIsIpDnsBlacklisted($sIp, $sType))
-            $sErrorMsg = $this->getErrorMessageSpam();
+        if (!$sErrorMsg && 'on' == $this->_oConfig->getAntispamOption('dnsbl_enable') && $this->serviceIsIpDnsBlacklisted($sIp, $sType)) {
+            if ('approval' == $this->_oConfig->getAntispamOption('dnsbl_behaviour_join'))
+                $bApproval = true;
+            else
+                $sErrorMsg = $this->getErrorMessageSpam();
+        }
 
         
         if (!$sErrorMsg) {

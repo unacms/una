@@ -294,19 +294,7 @@ function bx_menu_popup_inline (jSel, e, options) {
 }
 
 function validateLoginForm(eForm) {
-    if (!eForm)
-        return false;
-
-    $(eForm).ajaxSubmit({
-        success: function(sResponce) {
-            if(sResponce == 'OK')
-                eForm.submit();
-            else
-                alert(sResponce);
-        }
-    });
-
-    return false;
+    return true;
 }
 
 /**

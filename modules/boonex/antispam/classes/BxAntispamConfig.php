@@ -21,7 +21,8 @@ class BxAntispamConfig extends BxDolModuleConfig
         'antispam_report' => 'bx_antispam_report',
         'dnsbl_enable' => 'bx_antispam_dnsbl_enable',
         'uridnsbl_enable' => 'bx_antispam_uridnsbl_enable',
-        'dnsbl_behaviour' => 'bx_antispam_dnsbl_behaviour',
+        'dnsbl_behaviour_login' => 'bx_antispam_dnsbl_behaviour_login',
+        'dnsbl_behaviour_join' => 'bx_antispam_dnsbl_behaviour_join',
         'akismet_enable' => 'bx_antispam_akismet_enable',
     );
     /**
@@ -32,7 +33,8 @@ class BxAntispamConfig extends BxDolModuleConfig
         'antispam_report' => '',
         'dnsbl_enable' => '',
         'uridnsbl_enable' => '',
-        'dnsbl_behaviour' => 'approval',
+        'dnsbl_behaviour_login' => 'block',
+        'dnsbl_behaviour_join' => 'approval',
         'akismet_enable' => '',
     );
 

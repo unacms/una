@@ -133,13 +133,14 @@ mb_regex_encoding('UTF-8');
 // include files necessary for basic functionality
 require_once(BX_DIRECTORY_PATH_CLASSES . "BxDol.php");
 require_once(BX_DIRECTORY_PATH_INC . "utils.inc.php");
-require_once(BX_DIRECTORY_PATH_INC . "security.inc.php");
-require_once(BX_DIRECTORY_PATH_INC . "db.inc.php");
-require_once(BX_DIRECTORY_PATH_INC . "profiles.inc.php");
 
 bx_import('BxDolConfig');
 bx_import('BxDolService');
 bx_import('BxDolAlerts');
+
+require_once(BX_DIRECTORY_PATH_INC . "security.inc.php");
+require_once(BX_DIRECTORY_PATH_INC . "db.inc.php");
+require_once(BX_DIRECTORY_PATH_INC . "profiles.inc.php");
 
 $o = new BxDolAlerts('system', 'begin', 0);
 $o->alert();

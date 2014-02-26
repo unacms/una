@@ -170,7 +170,22 @@ function bx_check_password($sLogin, $sPassword, $iRole = BX_DOL_ROLE_MEMBER) {
 
     $sPassCheck = encryptUserPwd($sPassword, $aAccountInfo['salt']);
 
-    return bx_check_login($aAccountInfo['id'], $sPassCheck, $iRole);
+    if ($sErrorMsg = bx_check_login($aAccountInfo['id'], $sPassCheck, $iRole))
+        return $sErrorMsg;
+
+    // Admin can always login even if his ip is blocked
+    if (isAdmin($aAccountInfo['id']))
+        return '';
+
+    // If account is banned
+    if (isLoggedBanned($aAccountInfo['id'])) {
+        bx_import('BxDolLanguages');
+        return _t('_member_banned');
+    }
+
+    $sErrorMsg = '';
+    bx_alert('account', 'check_login',  $aAccountInfo['id'], false, array('error_msg' => &$sErrorMsg));
+    return $sErrorMsg;
 }
 
 
@@ -201,20 +216,6 @@ function bx_check_login($iID, $sPassword, $iRole = BX_DOL_ROLE_MEMBER) {
     if (!((int)$aAccountInfo['role'] & $iRole)) {
         bx_import('BxDolLanguages');
         return _t("_sys_txt_login_invalid_role");
-    }
-
-    // Admin can always login even if his ip is blocked
-    if (isAdmin($aAccountInfo['id']))
-        return '';
-
-    // Check if IP is banned
-    if (BxDolRequest::serviceExists('bx_antispam', 'check_login') && ($sErrorMsg = BxDolService::call('bx_antispam', 'check_login')))
-        return $sErrorMsg;
-
-    // If account is banned
-    if (isLoggedBanned($aAccountInfo['id'])) {
-        bx_import('BxDolLanguages');
-        return _t('_member_banned');
     }
 
     return '';

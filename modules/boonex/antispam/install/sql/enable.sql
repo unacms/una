@@ -32,9 +32,10 @@ VALUES (@iTypeId, 'bx_antispam_dnsbl', '_bx_antispam_adm_stg_cpt_category_dnsbl'
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'bx_antispam_dnsbl_enable', '_bx_antispam_option_dnsbl_enable', '', 'checkbox', '', '', '', 10),
-(@iCategoryId, 'bx_antispam_dnsbl_behaviour', '_bx_antispam_option_dnsbl_behaviour', 'approval', 'select', 'block,approval', '', '', 20),
-(@iCategoryId, 'bx_antispam_uridnsbl_enable', '_bx_antispam_option_uridnsbl_enable', '', 'checkbox', '', '', '', 30);
+(@iCategoryId, 'bx_antispam_dnsbl_enable', '_bx_antispam_option_dnsbl_enable', 'on', 'checkbox', '', '', '', 10),
+(@iCategoryId, 'bx_antispam_dnsbl_behaviour_login', '_bx_antispam_option_dnsbl_behaviour_login', 'block', 'select', 'block,log', '', '', 20),
+(@iCategoryId, 'bx_antispam_dnsbl_behaviour_join', '_bx_antispam_option_dnsbl_behaviour_join', 'approval', 'select', 'block,approval', '', '', 30),
+(@iCategoryId, 'bx_antispam_uridnsbl_enable', '_bx_antispam_option_uridnsbl_enable', 'on', 'checkbox', '', '', '', 40);
 
 
 
@@ -181,4 +182,12 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_antispam_ip_table_form_edit', 'close', 2147483647, 1, 7),
 ('bx_antispam_ip_table_form_edit', 'buttons', 2147483647, 1, 8);
 
+-- alerts
+
+INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `eval`) VALUES 
+('bx_antispam', 'BxAntispamAlertsResponse', 'modules/boonex/antispam/classes/BxAntispamAlertsResponse.php', '');
+SET @iHandler := LAST_INSERT_ID();
+
+INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
+('account', 'check_login', @iHandler);
 

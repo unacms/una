@@ -409,12 +409,10 @@ EOS;
         if (empty($sErrorIcon)) $sErrorIcon = '';
 
         $sValueCode = '
-                    <div class="bx-form-value' . $sClassAdd . $sClassOneLineValue . '">
-                        <div class="bx-clear"></div>
+                    <div class="bx-form-value bx-clearfix' . $sClassAdd . $sClassOneLineValue . '">
                         ' . $sInputCode . '
                         ' . ($isOneLine ? '' : $sInfoIcon . $sErrorIcon) . '
                         ' . $sInputCodeExtra . '
-                        <div class="bx-clear"></div>
                     </div>';
     
         if ($isOneLine)

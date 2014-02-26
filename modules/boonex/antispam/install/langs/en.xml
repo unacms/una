@@ -95,7 +95,8 @@ This antispam method scan submitted content for the URLs and check them if any o
 	<string name="_bx_antispam_option_report"><![CDATA[Send report to admin if spam content discovered]]></string>
 	<string name="_bx_antispam_option_ip_list_type"><![CDATA[IP table type (1 - all allowed except listed, 2 - all blocked except listed, 0 - disabled)]]></string>
 	<string name="_bx_antispam_option_dnsbl_enable"><![CDATA[Enable DNS Block Lists]]></string>
-	<string name="_bx_antispam_option_dnsbl_behaviour"><![CDATA[User join behaviour if listed in DNS Block Lists]]></string>
+	<string name="_bx_antispam_option_dnsbl_behaviour_login"><![CDATA[User login behaviour if listed in DNS Block Lists]]></string>
+	<string name="_bx_antispam_option_dnsbl_behaviour_join"><![CDATA[User join behaviour if listed in DNS Block Lists]]></string>
 	<string name="_bx_antispam_option_uridnsbl_enable"><![CDATA[Enable URI DNS Block Lists]]></string>
 	<string name="_bx_antispam_option_akismet_enable"><![CDATA[Enable Akismet]]></string>
 	<string name="_bx_antispam_option_akismet_api_key"><![CDATA[Akismet API Key]]></string>

@@ -96,7 +96,7 @@ class BxContactModule extends BxDolModule
         //    return false;
 
         bx_import('BxDolPermalinks');
-        return BxDolPermalinks::getInstance()->permalink('page.php?i=contact');
+        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=contact');
     }
 
     /*

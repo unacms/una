@@ -27,3 +27,8 @@ DELETE FROM `sys_form_inputs` WHERE `object`='bx_antispam_ip_table_form';
 DELETE FROM `sys_form_display_inputs` WHERE `display_name`='bx_antispam_ip_table_form_add';
 DELETE FROM `sys_form_display_inputs` WHERE `display_name`='bx_antispam_ip_table_form_edit';
 
+-- alerts
+
+SET @iHandler := (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = 'bx_antispam' LIMIT 1);
+DELETE FROM `sys_alerts` WHERE `handler_id` = @iHandler;
+DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandler;

@@ -24,6 +24,13 @@ class BxAntispamGridBlockLog extends BxTemplGrid
     {
         return parent::_getCellDefault (long2ip($mixedValue), $sKey, $aField, $aRow);
     }
+    protected function _getCellMemberId ($mixedValue, $sKey, $aField, $aRow) 
+    {
+        $s = '<span class="bx-def-font-grayed">' . _t('_undefined') . '</span>';
+        if ($mixedValue)
+            $s = $mixedValue; // TODO: link to profile
+        return parent::_getCellDefault ($s, $sKey, $aField, $aRow);
+    }
     protected function _getCellType ($mixedValue, $sKey, $aField, $aRow) 
     {
         return parent::_getCellDefault (_t('_bx_antispam_type_' . $mixedValue), $sKey, $aField, $aRow);
