@@ -118,7 +118,7 @@ class BxAntispamModuleTest extends BxDolTestCase
     {
         // set different options
         $this->_oModule->_oConfig->setAntispamOption('dnsbl_enable', $sDnsblEnable);
-        $this->_oModule->_oConfig->setAntispamOption('dnsbl_behaviour', $sDnsblBehaviour);
+        $this->_oModule->_oConfig->setAntispamOption('dnsbl_behaviour_join', $sDnsblBehaviour);
 
         // first IP address block checking is called
         $this->_oMockIP->expects($this->once())->method('isIpBlocked')
@@ -132,9 +132,9 @@ class BxAntispamModuleTest extends BxDolTestCase
 
         } elseif (!$bIpBlocked) { // if ip is NOT blocked - perform further checks
 
-            if ('on' != $sDnsblEnable || 'block' != $sDnsblBehaviour) { // DNSBL shouldn't be called if it isn't enabled or set in 'approval' mode
+            if ('on' != $sDnsblEnable) { // DNSBL shouldn't be called if it isn't enabled 
                 $this->_oMockDNSBlacklists->expects($this->never())->method('dnsbl_lookup_ip');
-            } elseif ('on' == $sDnsblEnable && 'block' == $sDnsblBehaviour) {
+            } elseif ('on' == $sDnsblEnable) {
                 $this->_oMockDNSBlacklists->expects($this->at(0))->method('dnsbl_lookup_ip')
                     ->with($this->equalTo(BX_DOL_DNSBL_CHAIN_SPAMMERS), $this->equalTo($this->_sSampleIP))
                     ->will($this->returnValue($bDnsblIpBlacklisted ? BX_DOL_DNSBL_POSITIVE : BX_DOL_DNSBL_NEGATIVE));
@@ -154,12 +154,13 @@ class BxAntispamModuleTest extends BxDolTestCase
 
     public function providerForServiceCheckLogin()
     {
+        $any = $this->anything();
         return array(
-            array(true, false, 'approval', false, false),
-            array(false, false, 'approval', false, true),
-            array(false, true, 'approval', false, true),
+            array(true, $any, $any, $any, false),
+            array(false, false, $any, $any, true),
+            array(false, true, 'log', false, true), 
             array(false, true, 'block', false, true),
-            array(false, true, 'approval', true, true),
+            array(false, true, 'log', true, true), 
             array(false, true, 'block', true, false),
         );
     }
@@ -171,17 +172,17 @@ class BxAntispamModuleTest extends BxDolTestCase
     {
         // set different options
         $this->_oModule->_oConfig->setAntispamOption('dnsbl_enable', $sDnsblEnable);
-        $this->_oModule->_oConfig->setAntispamOption('dnsbl_behaviour', $sDnsblBehaviour);
+        $this->_oModule->_oConfig->setAntispamOption('dnsbl_behaviour_login', $sDnsblBehaviour);
 
         // first IP address block checking is called
         $this->_oMockIP->expects($this->once())->method('isIpBlocked')
             ->will($this->returnValue($bIpBlocked));
 
-        if ($bIpBlocked || 'on' != $sDnsblEnable || 'block' != $sDnsblBehaviour) { // if ip is blocked, or DNSBL isn't enabled, or set in 'approval' mode - DNSBL checking shouldn't be called
+        if ($bIpBlocked || 'on' != $sDnsblEnable) { // if ip is blocked, or DNSBL isn't enabled - DNSBL checking shouldn't be called
 
             $this->_oMockDNSBlacklists->expects($this->never())->method('dnsbl_lookup_ip');
 
-        } elseif (!$bIpBlocked && 'on' == $sDnsblEnable && 'block' == $sDnsblBehaviour) { // call DNSBL checking only if enabled, and set in 'block' mode, and IP isn;t already blocked
+        } elseif (!$bIpBlocked && 'on' == $sDnsblEnable) { // call DNSBL checking only if enabled and IP isn't already blocked
 
             $this->_oMockDNSBlacklists->expects($this->at(0))->method('dnsbl_lookup_ip')
                 ->with($this->equalTo(BX_DOL_DNSBL_CHAIN_SPAMMERS), $this->_sSampleIP)
