@@ -110,14 +110,14 @@ class BxAntispamModule extends BxDolModule
      * First it checks if IP is directly blocked (@see serviceIsIpBlocked), 
      * then it checks in DNS black lists (@see serviceIsIpDnsBlacklisted).
      *
-     * @param $sCurIP IP to check, or empty for current IP
-     * @param $sType [optional] place where checking is performed, for example 'join', 'login'
+     * @param $sIp IP to check, or empty for current IP
      * @return empty string - if join should be allowed, error message - if join should be blocked
      */
     function serviceCheckLogin ($sIp = '')
     {
+        $bLoginBlock = ('block' == $this->_oConfig->getAntispamOption('dnsbl_behaviour_login'));
         $sErrorMsg = '';
-        $sType = 'login';
+        $sNote = $bLoginBlock ? 'login block' : 'login log';
 
         if (!$sIp)
             $sIp = getVisitorIP();
@@ -125,7 +125,7 @@ class BxAntispamModule extends BxDolModule
         if (!$sErrorMsg && $this->serviceIsIpBlocked($sIp))
             $sErrorMsg = $this->getErrorMessageIpBlocked();
 
-        if (!$sErrorMsg && 'on' == $this->_oConfig->getAntispamOption('dnsbl_enable') && $this->serviceIsIpDnsBlacklisted($sIp, $sType) && 'block' == $this->_oConfig->getAntispamOption('dnsbl_behaviour_login'))
+        if (!$sErrorMsg && 'on' == $this->_oConfig->getAntispamOption('dnsbl_enable') && $this->serviceIsIpDnsBlacklisted($sIp, $sNote) && $bLoginBlock)
             $sErrorMsg = $this->getErrorMessageSpam();
 
         return $sErrorMsg;
@@ -140,14 +140,14 @@ class BxAntispamModule extends BxDolModule
      * TODO: if dnsbl_behaviour == approval, inform caller to set account to approval status on positive detection
      *
      * @param $sCurIP IP to check, or empty for current IP
-     * @param $sType [optional] place where checking is performed, for example 'join', 'login'
      * @return empty string - if join should be allowed, error message - if join should be blocked
      */
     function serviceCheckJoin ($sEmail, $sIp = '') 
     {
+        $bJoinBlock = ('block' == $this->_oConfig->getAntispamOption('dnsbl_behaviour_join'));
         $bApproval = false;
         $sErrorMsg = '';
-        $sType = 'join';
+        $sNote = $bJoinBlock ? 'join block' : 'join approval';
 
         if (!$sIp)
             $sIp = getVisitorIP();
@@ -155,7 +155,7 @@ class BxAntispamModule extends BxDolModule
         if (!$sErrorMsg && $this->serviceIsIpBlocked($sIp))
             $sErrorMsg = $this->getErrorMessageIpBlocked();
 
-        if (!$sErrorMsg && 'on' == $this->_oConfig->getAntispamOption('dnsbl_enable') && $this->serviceIsIpDnsBlacklisted($sIp, $sType)) {
+        if (!$sErrorMsg && 'on' == $this->_oConfig->getAntispamOption('dnsbl_enable') && $this->serviceIsIpDnsBlacklisted($sIp, $sNote)) {
             if ('approval' == $this->_oConfig->getAntispamOption('dnsbl_behaviour_join'))
                 $bApproval = true;
             else
@@ -165,7 +165,7 @@ class BxAntispamModule extends BxDolModule
         
         if (!$sErrorMsg) {
             $oStopForumSpam = bx_instance('BxAntispamStopForumSpam', array(), $this->_aModule);
-            if ($oStopForumSpam->isSpammer(array('email' => $sEmail, 'ip' => $sIp), $sType))
+            if ($oStopForumSpam->isSpammer(array('email' => $sEmail, 'ip' => $sIp), $sNote))
                 $sErrorMsg = $this->getErrorMessageSpam();
         }
 
@@ -178,10 +178,10 @@ class BxAntispamModule extends BxDolModule
      * Check if IP is blacklisted in some DNS chain (@see BxAntispamDNSBlacklists).
      *
      * @param $sCurIP IP to check, or empty for current IP
-     * @param $sType [optional] place where checking is performed, for example 'join', 'login'
+     * @param $sNote [optional] place where checking is performed, for example 'join', 'login'
      * @return true if IP blacklisted and not whiteloisted, or false if under cron execution or if IP isn't blacklisted
      */
-    function serviceIsIpDnsBlacklisted($sCurIP = '', $sType = '')
+    function serviceIsIpDnsBlacklisted($sCurIP = '', $sNote = '')
     {
         if (defined('BX_DOL_CRON_EXECUTE'))
             return false;
@@ -195,7 +195,7 @@ class BxAntispamModule extends BxDolModule
         $o = bx_instance('BxAntispamDNSBlacklists', array(), $this->_aModule);
 
         if (BX_DOL_DNSBL_POSITIVE == $o->dnsbl_lookup_ip(BX_DOL_DNSBL_CHAIN_SPAMMERS, $sCurIP) && BX_DOL_DNSBL_POSITIVE != $o->dnsbl_lookup_ip(BX_DOL_DNSBL_CHAIN_WHITELIST, $sCurIP)) {
-            $o->onPositiveDetection ($sCurIP, $sType);
+            $o->onPositiveDetection ($sCurIP, $sNote);
             return true;
         }
 
@@ -203,7 +203,7 @@ class BxAntispamModule extends BxDolModule
     }
 
     /**
-     * BxAntispamIP::isIpWhitelisted
+     * @see BxAntispamIP::isIpWhitelisted
      */
     function serviceIsIpWhitelisted($sIp = '')
     {
