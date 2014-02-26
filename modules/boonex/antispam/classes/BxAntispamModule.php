@@ -9,8 +9,6 @@
  * @{
  */
 
-// TODO: add checking on join form
-
 bx_import('BxDolModule');
 
 class BxAntispamModule extends BxDolModule 
@@ -77,23 +75,22 @@ class BxAntispamModule extends BxDolModule
             }
         }
 
-        bx_alert('bx_antispam', 'is_spam', bx_get_logged_profile_id(), 0, array('content' => $sContent, 'ip' => $sIp, 'result' => &$ret));
-
         if ($bRet && 'on' == $this->_oConfig->getAntispamOption('antispam_report')) {
 
-            $iProfileId = getLoggedId();
+            $oProfile = BxDolProfile::getInstance();
             $aPlus = array(
-                'SpammerUrl' => getProfileLink($iProfileId),
-                'SpammerNickName' => getNickName($iProfileId),
+                'SpammerUrl' => $oProfile->getUrl(),
+                'SpammerNickName' => $oProfile->getDisplayName(),
                 'Page' => htmlspecialchars_adv($_SERVER['PHP_SELF']),
                 'Get' => print_r($_GET, true),
+                'Post' => print_r($_POST, true),
                 'SpamContent' => htmlspecialchars_adv($sContent),
             );
 
             bx_import('BxDolEmailTemplates');
-            $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_SpamReportAuto', $aPlus);
+            $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('bx_antispam_spam_report', $aPlus);
             if (!$aTemplate)
-                trigger_error('Email template or translation missing: t_SpamReportAuto', E_USER_ERROR);
+                trigger_error('Email template or translation missing: bx_antispam_spam_report', E_USER_ERROR);
 
             sendMail(getParam('site_email'), $aTemplate['Subject'], $aTemplate['Body']);
         }

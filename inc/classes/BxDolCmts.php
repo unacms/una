@@ -867,13 +867,6 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         return $this->_oQuery->updateTriggerTable($iId, $iCount);
     }
 
-    protected function _isSpam($s) {
-        // TODO: insert alert here, so other modules can be used instead of default one
-        if (!BxDolRequest::serviceExists('bx_antispam', 'is_spam'))
-            return false;
-        return BxDolService::call('bx_antispam', 'is_spam', array($s));
-    }
-
 	/**
      * Replace provided markers in a string
      * @param $mixed string or array to replace markers in

@@ -1151,8 +1151,7 @@ class BxDolFormChecker {
         }
 
         // check for spam
-        // TODO: remake for bx_antispam module
-        if (!$iErrors && ('on' == getParam('bx_antispam_uridnsbl_enable') || 'on' == getParam('bx_antispam_akismet_enable'))) {
+        if (!$iErrors) {
 
             foreach ($aInputs as $k => $a) {
 
@@ -1164,11 +1163,15 @@ class BxDolFormChecker {
                 if (!$val)
                     continue;
 
-                if ($oChecker->checkNoSpam($val))
+                if (!$oChecker->checkIsSpam($val))
                     continue;
 
                 ++$iErrors;
-                $aInputs[$k]['error'] = _t('_sys_spam_detected', BX_DOL_URL_ROOT . 'contact.php'); // TODO: remake to use contact module (see example in bx_antispam module)
+
+                $sErr = _t('_sys_spam_detected');
+                if (BxDolRequest::serviceExists('bx_contact', 'get_contact_page_url') && ($sUrl = BxDolService::call('bx_contact', 'get_contact_page_url')))
+                    $sErr = _t('_sys_spam_detected_contact', $sUrl);
+                $aInputs[$k]['error'] = $sErr;
             }
         }
 
@@ -1327,11 +1330,10 @@ class BxDolFormCheckerHelper {
             return true;
         return $oCaptcha->check ();
     }
-    function checkNoSpam($val) {
-        // TODO: insert alert here, so other modules can be used instead of default one
-        if (!BxDolRequest::serviceExists('bx_antispam', 'is_spam'))
-            return true;
-        return !BxDolService::call('bx_antispam', 'is_spam', array($val));
+    function checkIsSpam($val) {
+        $bSpam = false;
+        bx_alert('system', 'check_spam', 0, getLoggedId(), array('is_spam' => &$bSpam, 'content' => $val, 'where' => 'form'));
+        return $bSpam;
     }
 
     // pass functions, prepare values to insert to database

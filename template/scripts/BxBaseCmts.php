@@ -486,11 +486,7 @@ class BxBaseCmts extends BxDolCmts {
         if($oForm->isSubmittedAndValid()) {
         	$iCmtAuthorId = $this->_getAuthorId();
         	$iCmtParentId = $oForm->getCleanValue('cmt_parent_id');
-
         	$sCmtText = $oForm->getCleanValue('cmt_text');
-	        if($this->_isSpam($sCmtText))
-	            return array('msg' => _t('_sys_spam_detected', BX_DOL_URL_ROOT . 'contact.php'));
-
 			$sCmtText = $this->_prepareTextForSave ($sCmtText);
 			$oForm->setSubmittedValue('cmt_text', $sCmtText, $oForm->aFormAttrs['method']);
 
@@ -556,9 +552,6 @@ class BxBaseCmts extends BxDolCmts {
 		$oForm->initChecker($aCmt);
 		if($oForm->isSubmittedAndValid()) {
 			$sCmtText = $oForm->getCleanValue('cmt_text');
-	        if($this->_isSpam($sCmtText))
-	            return array('msg' => _t('_sys_spam_detected', BX_DOL_URL_ROOT . 'contact.php'));
-
 			$sCmtText = $this->_prepareTextForSave ($sCmtText);
 			$oForm->setSubmittedValue('cmt_text', $sCmtText, $oForm->aFormAttrs['method']);
 

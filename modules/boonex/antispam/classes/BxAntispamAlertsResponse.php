@@ -16,18 +16,26 @@ class BxAntispamAlertsResponse extends BxDolAlertsResponse
 {
     public function response($oAlert) 
     {
-        if ('account' != $oAlert->sUnit)
-            return;
+        if ('account' == $oAlert->sUnit) {
 
-        switch ($oAlert->sAction) {
-            case 'check_login':
-                $oAlert->aExtras['error_msg'] = BxDolService::call('bx_antispam', 'check_login');
-                break;
-            case 'check_join'; 
-                $oAlert->aExtras['error_msg'] = BxDolService::call('bx_antispam', 'check_join', array($oAlert->aExtras['email'], &$oAlert->aExtras['approve']));
-                break;
+            switch ($oAlert->sAction) {
+                case 'check_login':
+                    $oAlert->aExtras['error_msg'] = BxDolService::call('bx_antispam', 'check_login');
+                    break;
+                case 'check_join'; 
+                    $oAlert->aExtras['error_msg'] = BxDolService::call('bx_antispam', 'check_join', array($oAlert->aExtras['email'], &$oAlert->aExtras['approve']));
+                    break;
+            }
+
+        } elseif ('system' == $oAlert->sUnit) {
+
+            switch ($oAlert->sAction) {
+                case 'check_spam':
+                    $oAlert->aExtras['is_spam'] = BxDolService::call('bx_antispam', 'is_spam', array($oAlert->aExtras['content']));
+                    break;
+            }
+
         }
-        
     }
 }
 

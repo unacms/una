@@ -139,7 +139,8 @@ class BxDolEmailTemplates extends BxDol implements iBxDolSingleton {
      */
     function parseTemplate($sTemplateName, $aTemplateKeys, $iAccountId = 0, $iProfileId = 0) {
         $aTemplate = $this->getTemplate($sTemplateName, $iAccountId);
-
+        if (!$aTemplate)
+            return false;
         return array(
            'Subject' => $this->parseContent($aTemplate['Subject'], $aTemplateKeys, $iAccountId, $iProfileId),
            'Body' => $this->parseContent($aTemplate['Body'], $aTemplateKeys, $iAccountId, $iProfileId)

@@ -190,5 +190,11 @@ SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('account', 'check_login', @iHandler),
-('account', 'check_join', @iHandler);
+('account', 'check_join', @iHandler),
+('system', 'check_spam', @iHandler);
+
+-- email templates
+
+INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `Body`) VALUES
+('bx_antispam', '_bx_antispam_spam_report_name', 'bx_antispam_spam_report', '_bx_antispam_spam_report_subject', '_bx_antispam_spam_report_body');
 
