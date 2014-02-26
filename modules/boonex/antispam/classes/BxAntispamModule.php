@@ -30,6 +30,11 @@ class BxAntispamModule extends BxDolModule
         return $this->_grid('bx_antispam_grid_dnsbl');
     }
 
+    function serviceBlockLog () 
+    {
+        return $this->_grid('bx_antispam_grid_block_log');
+    }
+
     /**
      * Check text for spam.
      * First it check if IP is whitelisted(or under cron execution or user is admin) - for whitelisted IPs check for spam isn't performed,

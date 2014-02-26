@@ -20,6 +20,7 @@ This antispam method scan submitted content for the URLs and check them if any o
 	<string name="_bx_antispam_ip_deny"><![CDATA[Deny]]></string>
 	<string name="_bx_antispam_ip_table"><![CDATA[IP table]]></string>
 	<string name="_bx_antispam_dnsbl_list"><![CDATA[DNSBL list]]></string>
+	<string name="_bx_antispam_block_log"><![CDATA[Block log]]></string>
 	<string name="_bx_antispam_chain_whitelist"><![CDATA[IP whitelist]]></string>
 	<string name="_bx_antispam_chain_spammers"><![CDATA[IP blacklist]]></string>
 	<string name="_bx_antispam_chain_uridns"><![CDATA[Spam text]]></string>
@@ -44,9 +45,12 @@ This antispam method scan submitted content for the URLs and check them if any o
 	<string name="_bx_antispam_page_title_ip_table"><![CDATA[IP table]]></string>
 	<string name="_bx_antispam_page_title_sys_dnsbl_list"><![CDATA[DNSBL list]]></string>
 	<string name="_bx_antispam_page_title_dnsbl_list"><![CDATA[DNSBL list]]></string>
+	<string name="_bx_antispam_page_title_sys_block_log"><![CDATA[Block log]]></string>
+	<string name="_bx_antispam_page_title_block_log"><![CDATA[Block log]]></string>
 
 	<string name="_bx_antispam_page_block_title_ip_table"><![CDATA[IP table]]></string>
 	<string name="_bx_antispam_page_block_title_dnsbl_list"><![CDATA[DNSBL list]]></string>
+	<string name="_bx_antispam_page_block_title_block_log"><![CDATA[Block log]]></string>
 
 	<string name="_bx_antispam_grid_action_delete"><![CDATA[Delete]]></string>
 	<string name="_bx_antispam_grid_action_add"><![CDATA[Add]]></string>

@@ -73,6 +73,14 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('bx_antispam_ip_table', 1, 'bx_antispam', '_bx_antispam_page_block_title_ip_table', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_antispam\";s:6:\"method\";s:8:\"ip_table\";}', 0, 1, 1, 1);
 
+-- page: block log
+
+INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_antispam_block_log', 'antispam-block-log', '_bx_antispam_page_title_sys_block_log', '_bx_antispam_page_title_block_log', 'bx_antispam', 5, 64, 1, 'page.php?i=antispam-block-log', '', '', '', 0, 1, 0, 'BxAntispamPage', 'modules/boonex/antispam/classes/BxAntispamPage.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_antispam_block_log', 1, 'bx_antispam', '_bx_antispam_page_block_title_block_log', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_antispam\";s:6:\"method\";s:9:\"block_log\";}', 0, 1, 1, 1);
+
 -- grid: DNSBL
 
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
