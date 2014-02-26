@@ -1,5 +1,5 @@
 <div class="bx-std-login-form bx-def-padding-sec">
-    <form class="bx-std-login-form" action="__action_url__" method="post" onsubmit="validateLoginForm(this); return false;">        
+    <form class="bx-std-login-form" action="__action_url__" method="post" onsubmit="return validateLoginForm(this);">
         <input type="hidden" name="role" value="__role__" />
         <input type="hidden" name="csrf_token" value="__csrf_token__" />
         <input type="hidden" name="relocate" value="__relocate_url__" />
