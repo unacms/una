@@ -250,6 +250,7 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject {
 
     protected $_sObject;
     protected $_aOptions;
+    protected $_sDefaultSortingOrder = 'ASC';
 
     /**
      * Constructor
@@ -472,11 +473,11 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject {
         } elseif (!empty($this->_aOptions['field_order'])) { // order by "order" field
 
             if (false == strpos($this->_aOptions['field_order'], ',')) {
-                $sOrderClause = " ORDER BY `" . $this->_aOptions['field_order'] . "` ASC";
+                $sOrderClause = " ORDER BY `" . $this->_aOptions['field_order'] . "` " . $this->_sDefaultSortingOrder;
             } else {
                 $a = explode(',', $this->_aOptions['field_order']);                
                 foreach ($a as $sField)
-                    $sOrderClause .= "`" . trim($sField) . "` ASC, ";
+                    $sOrderClause .= "`" . trim($sField) . "` " . $this->_sDefaultSortingOrder . ", ";
                 if ($sOrderClause)
                     $sOrderClause = " ORDER BY " . trim($sOrderClause, ', ');
             }

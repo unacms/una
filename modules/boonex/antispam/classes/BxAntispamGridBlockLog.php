@@ -19,6 +19,7 @@ class BxAntispamGridBlockLog extends BxTemplGrid
     public function __construct ($aOptions, $oTemplate = false) 
     {
         parent::__construct ($aOptions, $oTemplate);
+        $this->_sDefaultSortingOrder = 'DESC';
     }
 
     protected function _getCellIp ($mixedValue, $sKey, $aField, $aRow) 

@@ -3,7 +3,15 @@
 
 	<string name="_bx_antispam"><![CDATA[Antispam]]></string>
     <string name="_bx_antispam_help"><![CDATA[Help]]></string>
-    <string name="_bx_antispam_help_text"><![CDATA[TODO: help text here]]></string>
+    <string name="_bx_antispam_help_text"><![CDATA[This module allows to limit spam on the site, there are different build-in tools for this:
+<ul>
+    <li><b>IP table</b> - manual IP blocking/whitelisting</li>
+    <li><b>DNSBL</b> - automatic blocking by IP from different block lists</li>
+    <li><b>URI DNSBL</b> - automatic blocking of spam content by spam URLs in the text</li>
+    <li><b>Akismet</b> - automatic spam content blocking using <a target="_blank" href="http://akismet.com">Akismet service</a></li>
+    <li><b>StopForumSpam</b> - automatic spam content blocking using <a target="_blank" href="http://www.stopforumspam.com">StopForumSpam service</a></li>
+</ul>
+]]></string>
     <string name="_bx_antispam_help_dnsbl"><![CDATA[
 DNSBL - <a href="http://en.wikipedia.org/wiki/DNSBL">Domain Name Service Block Lists</a>.
 This functionality allows to block by IP address if it exists in one of available blocklists.
