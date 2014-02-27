@@ -12,7 +12,7 @@
 bx_import('BxDolModuleDb');
 
 /*
- * Notes module database queries
+ * Module database queries
  */
 class BxNotesDb extends BxDolModuleDb {
 

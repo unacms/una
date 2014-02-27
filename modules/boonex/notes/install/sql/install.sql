@@ -98,7 +98,7 @@ CREATE TABLE `bx_notes_views_track` (
 
 -- FORMS
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_notes', 'bx_notes', '_bx_notes_form_note', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_notes_posts', 'id', '', '', 'do_submit', '', 0, 1, 'BxNotesFormNote', 'modules/boonex/notes/classes/BxNotesFormNote.php');
+('bx_notes', 'bx_notes', '_bx_notes_form_note', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_notes_posts', 'id', '', '', 'do_submit', '', 0, 1, 'BxNotesFormEntry', 'modules/boonex/notes/classes/BxNotesFormEntry.php');
 
 INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`, `title`) VALUES 
 ('bx_notes', 'bx_notes_note_add', 'bx_notes', 0, '_bx_notes_form_note_display_add'),

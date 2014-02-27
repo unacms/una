@@ -60,8 +60,8 @@ class BxNotesModule extends BxDolModule {
     }
 
     public function serviceEntityCreate () {
-        bx_import('NoteForms', $this->_aModule);
-        $oProfileForms = new BxNotesNoteForms($this);
+        bx_import('FormsEntryHelper', $this->_aModule);
+        $oProfileForms = new BxNotesFormsEntryHelper($this);
         return $oProfileForms->addDataForm();
     }
 
@@ -73,8 +73,8 @@ class BxNotesModule extends BxDolModule {
             $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
         if (!$iContentId)
             return false;
-        bx_import('NoteForms', $this->_aModule);
-        $oProfileForms = new BxNotesNoteForms($this);
+        bx_import('FormsEntryHelper', $this->_aModule);
+        $oProfileForms = new BxNotesFormsEntryHelper($this);
         return $oProfileForms->editDataForm((int)$iContentId);
     }
 
@@ -86,8 +86,8 @@ class BxNotesModule extends BxDolModule {
             $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
         if (!$iContentId)
             return false;
-        bx_import('NoteForms', $this->_aModule);
-        $oProfileForms = new BxNotesNoteForms($this);
+        bx_import('FormsEntryHelper', $this->_aModule);
+        $oProfileForms = new BxNotesFormsEntryHelper($this);
         return $oProfileForms->deleteDataForm((int)$iContentId);
     }
 
@@ -100,8 +100,8 @@ class BxNotesModule extends BxDolModule {
         if (!$iContentId)
             return false;
 
-        bx_import('NoteForms', $this->_aModule);
-        $oProfileForms = new BxNotesNoteForms($this);
+        bx_import('FormsEntryHelper', $this->_aModule);
+        $oProfileForms = new BxNotesFormsEntryHelper($this);
         return $oProfileForms->viewDataEntry((int)$iContentId);
     }
 
@@ -110,8 +110,8 @@ class BxNotesModule extends BxDolModule {
             $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
         if (!$iContentId)
             return false;
-        bx_import('NoteForms', $this->_aModule);
-        $oProfileForms = new BxNotesNoteForms($this);
+        bx_import('FormsEntryHelper', $this->_aModule);
+        $oProfileForms = new BxNotesFormsEntryHelper($this);
         return $oProfileForms->viewDataForm((int)$iContentId);
     }
 

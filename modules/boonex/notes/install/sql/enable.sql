@@ -132,7 +132,6 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_notes_view', 'bx_notes', '_bx_notes_menu_set_title_view_note', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_notes_view', 'bx_notes', 'view-note', '_bx_notes_menu_item_title_system_view_note', '_bx_notes_menu_item_title_view_note', 'page.php?i=view-note&id={content_id}', '', '', 'eye', '', 0, 1, 0, 0),
 ('bx_notes_view', 'bx_notes', 'edit-note', '_bx_notes_menu_item_title_system_edit_note', '_bx_notes_menu_item_title_edit_note', 'page.php?i=edit-note&id={content_id}', '', '', 'pencil', '', 0, 1, 0, 1),
 ('bx_notes_view', 'bx_notes', 'delete-note', '_bx_notes_menu_item_title_system_delete_note', '_bx_notes_menu_item_title_delete_note', 'page.php?i=delete-note&id={content_id}', '', '', 'remove', '', 0, 1, 0, 2);
 
@@ -140,7 +139,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 -- Dumping data for 'bx_notes_my' menu
 --
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_notes_my', '_bx_notes_menu_title_notes_my', 'bx_notes_my', 'bx_notes', 9, 0, 1, 'BxNotesMenuMy', 'modules/boonex/notes/classes/BxNotesMenuMy.php');
+('bx_notes_my', '_bx_notes_menu_title_notes_my', 'bx_notes_my', 'bx_notes', 9, 0, 1, 'BxNotesMenu', 'modules/boonex/notes/classes/BxNotesMenu.php');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_notes_my', 'bx_notes', '_bx_notes_menu_set_title_notes_my', 0);

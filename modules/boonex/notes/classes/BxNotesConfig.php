@@ -13,6 +13,38 @@ bx_import('BxDolModuleConfig');
 
 class BxNotesConfig extends BxDolModuleConfig {
 
+    public $CNF = array (
+        'FIELD_ID' => 'id',
+        'FIELD_AUTHOR' => 'author',
+        'FIELD_ADDED' => 'added',
+        'FIELD_CHANGED' => 'changed',
+        'FIELD_TITLE' => 'title',
+        'FIELD_TEXT' => 'text',
+        'FIELD_TEXT_ID' => 'note-text',
+        'FIELD_SUMMARY' => 'summary',
+        'FIELD_SUMMARY_ID' => 'note-summary',
+        'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
+        'FIELD_PHOTO' => 'pictures',
+        'FIELD_THUMB' => 'thumb',
+
+        'OBJECT_STORAGE' => 'bx_notes_photos',
+        'OBJECT_IMAGES_TRANSCODER_PREVIEW' => 'bx_notes_preview',
+        'OBJECT_VIEWS' => 'bx_notes',
+        'OBJECT_VOTES' => 'bx_notes',
+        'OBJECT_COMMENTS' => 'bx_notes',
+        'OBJECT_PRIVACY_VIEW' => 'bx_notes_allow_view_to',
+
+        'MENU_ITEM_TO_METHOD' => array (
+            'bx_notes_my' => array (
+                'create-note' => 'isAllowedAdd',
+            ),
+            'bx_notes_view' => array (
+                'edit-note' => 'isAllowedEdit',
+                'delete-note' => 'isAllowedDelete',
+            ),
+        ),
+    );
+
     public static $FIELD_ID = 'id';
     public static $FIELD_AUTHOR = 'author';
     public static $FIELD_ADDED = 'added';

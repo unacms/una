@@ -16,7 +16,7 @@ bx_import('BxDolForm');
 /**
  * Note forms functions
  */
-class BxNotesNoteForms extends BxDolProfileForms {
+class BxNotesFormsEntryHelper extends BxDolProfileForms {
 
     protected $_oModule;
 

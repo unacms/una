@@ -567,20 +567,33 @@ function genSiteStatCache() {
 }
 
 /**
- * import class file, it detect class path by its prefix or module array
+ * Import class file, it automatically detects class path by its prefix or module array/name
  *
- * @param $sClassName - full class name or class postfix in a case of module class
- * @param $aModule - module array or true to get module array from global variable
+ * @param $sClassName - full class name or class postfix(withoit prefix) in the case of module class
+ * @param $mixedModule - module array or module name in the case of module class
  */
-function bx_import($sClassName, $aModule = array()) {
+function bx_import($sClassName, $mixedModule = array()) {
     if (class_exists($sClassName))
         return;
 
+    $aModule = false;
+    if ($mixedModule) {
+        if (is_array($mixedModule)) {
+            $aModule = $mixedModule;
+        } elseif (is_string($mixedModule)) {
+            bx_import('BxDolModule');
+            $o = BxDolModule::getInstance($mixedModule);
+            $aModule = $o->_aModule;
+        } elseif (is_bool($mixedModule) && true === $mixedModule) {
+            $aModule = $GLOABLS['aModule'];
+        }
+    }
+
     if ($aModule) {
-        $a = (true === $aModule) ? $GLOABLS['aModule'] : $aModule;
-        if (class_exists($a['class_prefix'] . $sClassName))
+        if (class_exists($aModule['class_prefix'] . $sClassName))
             return;
-        require_once (BX_DIRECTORY_PATH_MODULES . $a['path'] . 'classes/' . $a['class_prefix'] . $sClassName . '.php');
+        require_once (BX_DIRECTORY_PATH_MODULES . $aModule['path'] . 'classes/' . $aModule['class_prefix'] . $sClassName . '.php');
+        return;
     }
 
     if (0 == strncmp($sClassName, 'BxDol', 5)) {
@@ -609,13 +622,12 @@ function bx_import($sClassName, $aModule = array()) {
             $sPath = BX_DIRECTORY_PATH_MODULES . BxDolTemplate::getInstance()->getPath() . 'data/template/system/scripts/' . $sClassName . '.php';
         }
 
-        if(file_exists($sPath)) {
+        if (file_exists($sPath)) {
             require_once($sPath);
             return;
         }
 
-        echo "<b>Fatal error:</b> Class (" . $sClassName . ") not found.";
-        exit;
+        trigger_error ("bx_import fatal error: class (" . $sClassName . ") wasn't found", E_USER_ERROR);
     }
 }
 
