@@ -20,12 +20,23 @@ class BxAntispamModule extends BxDolModule
 
     public function serviceIpTable () 
     {
-        return $this->_grid('bx_antispam_grid_ip_table');
+        $o = bx_instance('BxAntispamIP', array(), $this->_aModule);
+        $s = _t('_bx_antispam_ip_table_status', mb_strtolower($o->getIpTableConfigTitle((int)getParam('bx_antispam_ip_list_type'))));
+        $s .= $this->_grid('bx_antispam_grid_ip_table');
+        return $s;
     }
 
     public function serviceDnsblList () 
     {
-        return $this->_grid('bx_antispam_grid_dnsbl');
+        bx_import('BxTemplFunctions');
+        $s = _t('_bx_antispam_dnsbl_status', 
+             BxTemplFunctions::getInstance()->statusOnOff($this->_oConfig->getAntispamOption('dnsbl_enable')),
+             BxTemplFunctions::getInstance()->statusOnOff($this->_oConfig->getAntispamOption('uridnsbl_enable')),
+             mb_strtolower(_t('_bx_antispam_dnsbl_behaviour_login_' . $this->_oConfig->getAntispamOption('dnsbl_behaviour_login'))),
+             mb_strtolower(_t('_bx_antispam_dnsbl_behaviour_join_' . $this->_oConfig->getAntispamOption('dnsbl_behaviour_join')))
+        );
+        $s .= $this->_grid('bx_antispam_grid_dnsbl');
+        return $s;
     }
 
     public function serviceBlockLog () 

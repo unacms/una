@@ -689,6 +689,11 @@ EOF;
         return '<time datetime="' . $sDateUTC . '" data-bx-format="' . getParam($sFormatIdentifier) . '" data-bx-autoformat="' . ($bForceFormat ? 0 : getParam('sys_format_timeago')) . '">' . $sDateUTC . '</time>';
     }
 
+    function statusOnOff ($mixed) {
+        if ($mixed)
+            return '<i class="sys-icon circle col-green1"></i> ' . _t('_sys_on');
+        return '<i class="sys-icon circle col-red2"></i> ' . _t('_sys_off');
+    }
 }
 
 /** @} */

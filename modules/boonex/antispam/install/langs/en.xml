@@ -21,6 +21,15 @@ This antispam method scan submitted content for the URLs and check them if any o
 <br /><br />
 <button class="bx-btn" style="float:none;" onclick ="$('.bx-popup-applied:visible').dolPopupHide();">Close</button>
 ]]></string>
+    <string name="_bx_antispam_dnsbl_status"><![CDATA[
+<table style="width:100%;"><tr>
+    <td>DNSBL: {0}</td>
+    <td>URI DNSBL: {1}</td>
+    <td>Login behavior: {2}</td>
+    <td>Join behavior: {3}</td>
+</tr></table>
+]]></string>
+    <string name="_bx_antispam_ip_table_status"><![CDATA[IP table mode: {0}]]></string>
     <string name="_bx_antispam_ip_blocked"><![CDATA[IP address is blocked. {0}]]></string>
     <string name="_bx_antispam_spam_detected"><![CDATA[Spam detected. {0}]]></string>
     <string name="_bx_antispam_submit_false_positive_report"><![CDATA[If you believe that this is a mistake, please submit a false positive report here: {0}]]></string>
@@ -108,7 +117,7 @@ This antispam method scan submitted content for the URLs and check them if any o
 
 	<string name="_bx_antispam_option_block"><![CDATA[Total block all spam content]]></string>
 	<string name="_bx_antispam_option_report"><![CDATA[Send report to admin if spam content discovered]]></string>
-	<string name="_bx_antispam_option_ip_list_type"><![CDATA[IP table type]]></string>
+	<string name="_bx_antispam_option_ip_list_type"><![CDATA[IP table mode]]></string>
 	<string name="_bx_antispam_option_dnsbl_enable"><![CDATA[Enable DNS Block Lists]]></string>
 	<string name="_bx_antispam_option_dnsbl_behaviour_login"><![CDATA[User login behaviour if listed in DNS Block Lists]]></string>
 	<string name="_bx_antispam_option_dnsbl_behaviour_join"><![CDATA[User join behaviour if listed in DNS Block Lists]]></string>

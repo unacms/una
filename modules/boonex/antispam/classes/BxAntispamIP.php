@@ -18,9 +18,16 @@ define('BX_ANTISPAM_IP_TABLE_ALL_BLOCKED_EXCEPT_LISTED', 2);
  */
 class BxAntispamIP extends BxDol
 {
+    protected $_aIpTableConfigMap;
+
     public function __construct()
     {
         parent::__construct();
+        $this->_aIpTableConfigMap = array (
+            0 => _t('_bx_antispam_ip_table_disabled'),
+            1 => _t('_bx_antispam_ip_table_all_allowed_except_listed'),
+            2 => _t('_bx_antispam_ip_table_all_blocked_except_listed'),
+        );
     }
 
     /**
@@ -111,16 +118,14 @@ class BxAntispamIP extends BxDol
         return $oDb->getRow($sQuery);
     }
 
-    /**
-     * Get IP table config values
-     */
     public function getIpTableConfigValues () 
     {
-        return array (
-            0 => _t('_bx_antispam_ip_table_disabled'),
-            1 => _t('_bx_antispam_ip_table_all_allowed_except_listed'),
-            2 => _t('_bx_antispam_ip_table_all_blocked_except_listed'),
-        );
+        return $this->_aIpTableConfigMap;
+    }
+
+    public function getIpTableConfigTitle ($i) 
+    {
+        return $this->_aIpTableConfigMap[$i];
     }
 
     /**
