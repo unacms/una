@@ -112,6 +112,14 @@ class BxAntispamDNSBlacklists extends BxDol
         $oDb->cleanCache('sys_dnsbl_'.BX_DOL_DNSBL_CHAIN_WHITELIST);
     }
 
+    public function getDNSBLConfigValues ()
+    {
+        return array (
+            'block' => _t('_bx_antispam_dnsbl_behaviour_login_block'),
+            'log' => _t('_bx_antispam_dnsbl_behaviour_login_log'),
+        );
+    }
+
     /*************** private function ***************/
 
     private function dnsbl_lookup(&$zones, $key, $querymode)

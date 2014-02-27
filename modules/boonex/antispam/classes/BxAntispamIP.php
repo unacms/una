@@ -9,6 +9,10 @@
  * @{
  */
 
+define('BX_ANTISPAM_IP_TABLE_DISABLED', 0);
+define('BX_ANTISPAM_IP_TABLE_ALL_ALLOWED_EXCEPT_LISTED', 1);
+define('BX_ANTISPAM_IP_TABLE_ALL_BLOCKED_EXCEPT_LISTED', 2);
+
 /**
  * Blocking/whitelisting by IP using local database
  */
@@ -31,7 +35,7 @@ class BxAntispamIP extends BxDol
             return true;
 
         $iIPGlobalType = (int)getParam('bx_antispam_ip_list_type');
-        if ($iIPGlobalType != 1 && $iIPGlobalType != 2) // 0 - disabled
+        if (BX_ANTISPAM_IP_TABLE_DISABLED == $iIPGlobalType)
             return false;
 
         if (!$sCurIP)
@@ -52,7 +56,7 @@ class BxAntispamIP extends BxDol
             return false;
 
         $iIPGlobalType = (int)getParam('bx_antispam_ip_list_type');
-        if ($iIPGlobalType != 1 && $iIPGlobalType != 2) // 0 - disabled
+        if (BX_ANTISPAM_IP_TABLE_DISABLED == $iIPGlobalType)
             return false;
 
         if (!$sCurIP)
@@ -64,9 +68,7 @@ class BxAntispamIP extends BxDol
         if ($this->_isIpListed('deny', $sCurIP))
             return true;
 
-        // 1 - all allowed except listed
-        // 2 - all blocked except listed
-        return $iIPGlobalType == 2 ? true : false;
+        return BX_ANTISPAM_IP_TABLE_ALL_BLOCKED_EXCEPT_LISTED == $iIPGlobalType ? true : false;
     }
 
 
@@ -107,6 +109,18 @@ class BxAntispamIP extends BxDol
         $oDb = BxDolDb::getInstance();
         $sQuery = $oDb->prepare("SELECT * FROM `bx_antispam_ip_table` WHERE `ID` = ? LIMIT 1", $iId);
         return $oDb->getRow($sQuery);
+    }
+
+    /**
+     * Get IP table config values
+     */
+    public function getIpTableConfigValues () 
+    {
+        return array (
+            0 => _t('_bx_antispam_ip_table_disabled'),
+            1 => _t('_bx_antispam_ip_table_all_allowed_except_listed'),
+            2 => _t('_bx_antispam_ip_table_all_blocked_except_listed'),
+        );
     }
 
     /**

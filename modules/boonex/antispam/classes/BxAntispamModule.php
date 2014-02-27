@@ -13,22 +13,22 @@ bx_import('BxDolModule');
 
 class BxAntispamModule extends BxDolModule 
 {
-    function __construct(&$aModule) 
+    public function __construct(&$aModule) 
     {
         parent::__construct($aModule);
     }
 
-    function serviceIpTable () 
+    public function serviceIpTable () 
     {
         return $this->_grid('bx_antispam_grid_ip_table');
     }
 
-    function serviceDnsblList () 
+    public function serviceDnsblList () 
     {
         return $this->_grid('bx_antispam_grid_dnsbl');
     }
 
-    function serviceBlockLog () 
+    public function serviceBlockLog () 
     {
         return $this->_grid('bx_antispam_grid_block_log');
     }
@@ -47,7 +47,7 @@ class BxAntispamModule extends BxDolModule
      *          BX_SLASHES_NO_ACTION - do not perform any action with slashes
      * @return true if spam detected and content shouln't be recorded, false if content should be processed as usual.
      */
-    function serviceIsSpam ($sContent, $sIp = '', $isStripSlashes = BX_SLASHES_AUTO) 
+    public function serviceIsSpam ($sContent, $sIp = '', $isStripSlashes = BX_SLASHES_AUTO) 
     {
         if (defined('BX_DOL_CRON_EXECUTE') || isAdmin())
             return false;
@@ -110,7 +110,7 @@ class BxAntispamModule extends BxDolModule
      * @param $sIp IP to check, or empty for current IP
      * @return empty string - if join should be allowed, error message - if join should be blocked
      */
-    function serviceCheckLogin ($sIp = '')
+    public function serviceCheckLogin ($sIp = '')
     {
         $bLoginBlock = ('block' == $this->_oConfig->getAntispamOption('dnsbl_behaviour_login'));
         $sErrorMsg = '';
@@ -137,7 +137,7 @@ class BxAntispamModule extends BxDolModule
      * @param $sCurIP IP to check, or empty for current IP
      * @return empty string - if join should be allowed, error message - if join should be blocked
      */
-    function serviceCheckJoin ($sEmail, &$bApproval, $sIp = '') 
+    public function serviceCheckJoin ($sEmail, &$bApproval, $sIp = '') 
     {
         $bJoinBlock = ('block' == $this->_oConfig->getAntispamOption('dnsbl_behaviour_join'));
         $bApproval = false;
@@ -174,7 +174,7 @@ class BxAntispamModule extends BxDolModule
      * @param $sNote [optional] place where checking is performed, for example 'join', 'login'
      * @return true if IP blacklisted and not whiteloisted, or false if under cron execution or if IP isn't blacklisted
      */
-    function serviceIsIpDnsBlacklisted($sCurIP = '', $sNote = '')
+    public function serviceIsIpDnsBlacklisted($sCurIP = '', $sNote = '')
     {
         if (defined('BX_DOL_CRON_EXECUTE'))
             return false;
@@ -198,7 +198,7 @@ class BxAntispamModule extends BxDolModule
     /**
      * @see BxAntispamIP::isIpWhitelisted
      */
-    function serviceIsIpWhitelisted($sIp = '')
+    public function serviceIsIpWhitelisted($sIp = '')
     {
         $o = bx_instance('BxAntispamIP', array(), $this->_aModule);
         return $o->isIpWhitelisted($sIp);
@@ -207,7 +207,7 @@ class BxAntispamModule extends BxDolModule
     /**
      * @see BxAntispamIP::isIpBlocked
      */
-    function serviceIsIpBlocked($sIp = '')
+    public function serviceIsIpBlocked($sIp = '')
     {
         $o = bx_instance('BxAntispamIP', array(), $this->_aModule);
         return $o->isIpBlocked($sIp);
@@ -216,7 +216,7 @@ class BxAntispamModule extends BxDolModule
     /**
      * @see BxAntispamIP::blockIp
      */
-    function serviceBlockIp($mixedIP, $iExpirationInSec = 86400, $sComment = '')
+    public function serviceBlockIp($mixedIP, $iExpirationInSec = 86400, $sComment = '')
     {
         $o = bx_instance('BxAntispamIP', array(), $this->_aModule);
         return $o->blockIp($mixedIP, $iExpirationInSec, $sComment);
@@ -225,10 +225,28 @@ class BxAntispamModule extends BxDolModule
     /**
      * @see BxAntispamIP::pruning
      */
-    function servicePruning()
+    public function servicePruning()
     {
         $o = bx_instance('BxAntispamIP', array(), $this->_aModule);
         return $o->pruning();
+    }
+
+    /**
+     * @see BxAntispamIP::pruning
+     */
+    public function serviceConfigValues($s)
+    {
+        switch ($s) {
+            case 'ip_table':
+                $o = bx_instance('BxAntispamIP', array(), $this->_aModule);
+                return $o->getIpTableConfigValues();
+            case 'dnsbl_login':
+                $o = bx_instance('BxAntispamDNSBlacklists', array(), $this->_aModule);
+                return $o->getDNSBLConfigValues();
+            case 'dnsbl_join';
+                $o = bx_instance('BxAntispamDNSURIBlacklists', array(), $this->_aModule);
+                return $o->getURIDNSBLConfigValues();
+        }
     }
 
     protected function getErrorMessageIpBlocked () 

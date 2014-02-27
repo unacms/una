@@ -107,7 +107,10 @@ class BxDolStudioSettings extends BxTemplStudioPage {
                 $mixedValue = 0;
                 break;
             case 'select':
-                $aValues = explode(",", $aOption['extra']);
+                if (BxDolService::isSerializedService($aOption['extra']))
+                    $aValues = BxDolService::callSerialized($aOption['extra']);
+                else
+                    $aValues = explode(',', $aOption['extra']);
                 $mixedValue = $aValues[0];
                 break;
             case 'text':

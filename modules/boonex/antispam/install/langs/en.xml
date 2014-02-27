@@ -35,6 +35,13 @@ This antispam method scan submitted content for the URLs and check them if any o
 	<string name="_bx_antispam_type_dnsbluri"><![CDATA[URI DNSBL]]></string>
 	<string name="_bx_antispam_type_akismet"><![CDATA[Akismet]]></string>
 	<string name="_bx_antispam_type_stopforumspam"><![CDATA[StopForumSpam]]></string>
+	<string name="_bx_antispam_ip_table_disabled"><![CDATA[Disabled]]></string>
+	<string name="_bx_antispam_ip_table_all_allowed_except_listed"><![CDATA[All allowed except listed]]></string>
+	<string name="_bx_antispam_ip_table_all_blocked_except_listed"><![CDATA[All blocked except listed]]></string>
+	<string name="_bx_antispam_dnsbl_behaviour_login_block"><![CDATA[Block]]></string>
+	<string name="_bx_antispam_dnsbl_behaviour_login_log"><![CDATA[Log]]></string>
+	<string name="_bx_antispam_dnsbl_behaviour_join_block"><![CDATA[Block]]></string>
+	<string name="_bx_antispam_dnsbl_behaviour_join_approval"><![CDATA[Approval]]></string>
 
 	<string name="_bx_antispam_popup_help"><![CDATA[DNSBL help]]></string>
 	<string name="_bx_antispam_popup_dnsbl_recheck"><![CDATA[Recheck IP/URL in DNSBL/URIDNSBL]]></string>
@@ -93,7 +100,7 @@ This antispam method scan submitted content for the URLs and check them if any o
 
 	<string name="_bx_antispam_option_block"><![CDATA[Total block all spam content]]></string>
 	<string name="_bx_antispam_option_report"><![CDATA[Send report to admin if spam content discovered]]></string>
-	<string name="_bx_antispam_option_ip_list_type"><![CDATA[IP table type (1 - all allowed except listed, 2 - all blocked except listed, 0 - disabled)]]></string>
+	<string name="_bx_antispam_option_ip_list_type"><![CDATA[IP table type]]></string>
 	<string name="_bx_antispam_option_dnsbl_enable"><![CDATA[Enable DNS Block Lists]]></string>
 	<string name="_bx_antispam_option_dnsbl_behaviour_login"><![CDATA[User login behaviour if listed in DNS Block Lists]]></string>
 	<string name="_bx_antispam_option_dnsbl_behaviour_join"><![CDATA[User join behaviour if listed in DNS Block Lists]]></string>

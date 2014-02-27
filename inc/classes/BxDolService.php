@@ -29,13 +29,15 @@ bx_import('BxDolRequest');
  * no alerts available
  *
  */
-class BxDolService extends BxDol {
-
-    function BxDolService () {
+class BxDolService extends BxDol 
+{
+    function BxDolService () 
+    {
         parent::BxDol();
     }
 
-    public static function call($mixed, $sMethod, $aParams = array(), $sClass = 'Module') {
+    public static function call($mixed, $sMethod, $aParams = array(), $sClass = 'Module') 
+    {
         bx_import('BxDolModuleQuery');
         $oDb = BxDolModuleQuery::getInstance();
 
@@ -46,6 +48,23 @@ class BxDolService extends BxDol {
             $aModule = $oDb->getModuleById($mixed);
 
         return empty($aModule) ? '' : BxDolRequest::processAsService($aModule, $sMethod, $aParams, $sClass);
+    }
+
+    public static function callSerialized($s, $aMarkers = array(), $sReplaceIn = 'params') 
+    {
+        $a = @unserialize($s);
+        if (false === $a || !is_array($a))
+            return '';
+
+        if (isset($a[$sReplaceIn]))
+            $a[$sReplaceIn] = bx_replace_markers($a[$sReplaceIn], $aMarkers);
+
+        return self::call($a['module'], $a['method'], isset($a['params']) ? $a['params'] : array(), isset($a['class']) ? $a['class'] : 'Module');
+    }
+
+    public static function isSerializedService($s) 
+    {
+        return preg_match('/^a:[\d+]:\{/', $s);
     }
 }
 

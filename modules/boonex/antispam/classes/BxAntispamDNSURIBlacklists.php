@@ -137,6 +137,14 @@ class BxAntispamDNSURIBlacklists extends BxDol
         $o->onPositiveDetection (getVisitorIP(false), $sExtraData, 'dnsbluri');
     }
 
+    public function getURIDNSBLConfigValues ()
+    {
+        return array (
+            'block' => _t('_bx_antispam_dnsbl_behaviour_join_block'),
+            'approval' => _t('_bx_antispam_dnsbl_behaviour_join_approval'),
+        );
+    }
+
     /*************** private function ***************/
 
     private function isDbZoneMatch ($iLevel, $sZone) 

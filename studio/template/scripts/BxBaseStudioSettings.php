@@ -200,7 +200,9 @@ class BxBaseStudioSettings extends BxDolStudioSettings {
                     ),
                 );
 
-                if(substr($aItem['extra'], 0, 4) == 'PHP:')
+                if (BxDolService::isSerializedService($aItem['extra']))
+                    $aField['values'] = BxDolService::callSerialized($aItem['extra']);
+                elseif (substr($aItem['extra'], 0, 4) == 'PHP:') // TODO: get rid of PHP: values and replace it with serialized string
                     $aField['values'] = eval(substr($aItem['extra'], 4));
                 else
                     foreach(explode(',', $aItem['extra']) as $sValue)
@@ -218,7 +220,10 @@ class BxBaseStudioSettings extends BxDolStudioSettings {
                         'pass' => 'Xss',
                     ),
                 );
-                if(substr($aItem['extra'], 0, 4) == 'PHP:')
+
+                if (BxDolService::isSerializedService($aItem['extra']))
+                    $aField['values'] = BxDolService::callSerialized($aItem['extra']);
+                elseif (substr($aItem['extra'], 0, 4) == 'PHP:') // TODO: get rid of PHP: values and replace it with serialized string
                     $aField['values'] = eval(substr($aItem['extra'], 4));
                 else
                     foreach(explode(',', $aItem['extra']) as $sValue)

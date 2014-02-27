@@ -266,10 +266,7 @@ class BxBasePage extends BxDolPage {
      * @return string
      */
     protected function _getBlockService ($aBlock) {
-        $a = @unserialize($aBlock['content']);
-        if (false === $a || !is_array($a))
-            return '';
-        return BxDolService::call($a['module'], $a['method'], isset($a['params']) ? $this->_replaceMarkers($a['params']) : array(), isset($a['class']) ? $a['class'] : 'Module');
+        return BxDolService::callSerialized($aBlock['content'], $this->_aMarkers);
     }
 
     /**
