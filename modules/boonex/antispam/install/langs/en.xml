@@ -75,7 +75,7 @@ This antispam method scan submitted content for the URLs and check them if any o
 	<string name="_bx_antispam_field_chain"><![CDATA[Rule]]></string>
 	<string name="_bx_antispam_field_ip_url"><![CDATA[IP for DNSBL or URL for URI DNSBL]]></string>
 	<string name="_bx_antispam_field_dnsbl_uridnsbl"><![CDATA[Check in]]></string>
-	<string name="_bx_antispam_field_member_id"><![CDATA[Member]]></string>
+	<string name="_bx_antispam_field_profile_id"><![CDATA[Profile]]></string>
 	<string name="_bx_antispam_field_type"><![CDATA[Type]]></string>
 	<string name="_bx_antispam_field_when"><![CDATA[When]]></string>
 	<string name="_bx_antispam_field_country"><![CDATA[Country]]></string>

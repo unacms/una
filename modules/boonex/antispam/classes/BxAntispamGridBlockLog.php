@@ -11,6 +11,7 @@
 
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
+bx_import('BxDolProfile');
 bx_import('BxTemplGrid');
 
 class BxAntispamGridBlockLog extends BxTemplGrid 
@@ -24,11 +25,12 @@ class BxAntispamGridBlockLog extends BxTemplGrid
     {
         return parent::_getCellDefault (long2ip($mixedValue), $sKey, $aField, $aRow);
     }
-    protected function _getCellMemberId ($mixedValue, $sKey, $aField, $aRow) 
+    protected function _getCellProfileId ($mixedValue, $sKey, $aField, $aRow) 
     {
         $s = '<span class="bx-def-font-grayed">' . _t('_undefined') . '</span>';
-        if ($mixedValue)
-            $s = $mixedValue; // TODO: link to profile
+        if ($mixedValue && ($oProfile = BxDolProfile::getInstance((int)$mixedValue)))
+            $s = '<a href="' . $oProfile->getUrl() . '">' . $oProfile->getDisplayName() . '</span>';
+
         return parent::_getCellDefault ($s, $sKey, $aField, $aRow);
     }
     protected function _getCellType ($mixedValue, $sKey, $aField, $aRow) 

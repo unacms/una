@@ -81,9 +81,8 @@ class BxAntispamDNSBlacklists extends BxDol
     public function onPositiveDetection ($sIP, $sNote = '', $sType = 'dnsbl')
     {
         $iIP = sprintf("%u", ip2long($sIP));
-        $iMemberId = getLoggedId();
         $oDb = BxDolDb::getInstance();
-        $sQuery = $oDb->prepare("INSERT INTO `bx_antispam_block_log` SET `ip` = ?, `member_id` = ?, `type` = ?, `extra` = ?, `added` = ?", $iIP, $iMemberId, $sType, $sNote, time());
+        $sQuery = $oDb->prepare("INSERT INTO `bx_antispam_block_log` SET `ip` = ?, `profile_id` = ?, `type` = ?, `extra` = ?, `added` = ?", $iIP, bx_get_logged_profile_id(), $sType, $sNote, time());
         return $oDb->query($sQuery);
     }
 
