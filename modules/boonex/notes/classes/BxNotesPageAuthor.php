@@ -14,14 +14,15 @@ bx_import('BxDolMenu');
 bx_import('BxDolProfile');
 
 /**
- * Profile's notes page.
+ * Profile's entries page.
  */
-class BxNotesPageAuthor extends BxTemplPage {
-
+class BxNotesPageAuthor extends BxTemplPage 
+{
     protected $_aProfileInfo;
     protected $_oProfile;
 
-    public function __construct($aObject, $oTemplate = false) {
+    public function __construct($aObject, $oTemplate = false) 
+    {
         parent::__construct($aObject, $oTemplate);
 
         // get profile info
@@ -34,20 +35,16 @@ class BxNotesPageAuthor extends BxTemplPage {
         if (!$this->_aProfileInfo || !$this->_oProfile)
             return;
 
-        // select view profile submenu 
+        // select view profile submenu
         $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
-        $oMenuSubmenu->setObjectSubmenu('bx_persons_view_submenu', array (
-            'title' => $this->_oProfile->getDisplayName(),
-            'link' => $this->_oProfile->getUrl(),
-            'icon' => $this->_oProfile->getIcon(),
-        ));
-/*
-        // set actions menu
-        if (bx_get_logged_profile_id() == $iProfileId) {
-            $oMenuAction = BxDolMenu::getObjectInstance('sys_site_action');
-            $oMenuAction->setActionsMenu('bx_notes_my');
+        if ($oMenuSubmenu) {
+            $oMenuSubmenu->setObjectSubmenu('bx_persons_view_submenu', array (
+                'title' => $this->_oProfile->getDisplayName(),
+                'link' => $this->_oProfile->getUrl(),
+                'icon' => $this->_oProfile->getIcon(),
+            ));
         }
-*/
+
         // add replaceable markers
         $this->addMarkers($this->_aProfileInfo); // every profile field can be used as marker
         $this->addMarkers(array('profile_id' => $this->_oProfile->id())); // profile id field is also suported

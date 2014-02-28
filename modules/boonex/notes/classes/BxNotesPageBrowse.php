@@ -9,20 +9,26 @@
  * @{
  */
 
+bx_import('BxDolModule');
 bx_import('BxTemplPage');
 
 /**
- * Browse notes pages.
+ * Browse entries pages.
  */
-class BxNotesPageBrowse extends BxTemplPage {    
-    
-    public function __construct($aObject, $oTemplate = false) {
+class BxNotesPageBrowse extends BxTemplPage 
+{   
+    protected static $MODULE = 'bx_notes';
+ 
+    public function __construct($aObject, $oTemplate = false) 
+    {
         parent::__construct($aObject, $oTemplate);
 
-        // select notes submenu
+        $oModule = BxDolModule::getInstance(self::$MODULE);
+
+        // select module submenu
         bx_import('BxDolMenu');
         $oMenuSumbemu = BxDolMenu::getObjectInstance('sys_site_submenu');
-        $oMenuSumbemu->setObjectSubmenu('bx_notes_submenu');
+        $oMenuSumbemu->setObjectSubmenu($oModule->_oConfig->CNF['OBJECT_MENU_SUBMENU']);
     }
 
 }

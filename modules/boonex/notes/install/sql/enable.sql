@@ -11,8 +11,8 @@ VALUES (@iTypeId, 'bx_notes', '_bx_notes', 1);
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
-('bx_notes_autoapproval', 'on', @iCategId, '_bx_notes_option_autoapproval', 'checkbox', '', '', '', 1),
-('bx_notes_summary_chars', '700', @iCategId, '_bx_notes_option_summary_chars', 'digit', '', '', '', 2),
+('bx_notes_summary_chars', '700', @iCategId, '_bx_notes_option_summary_chars', 'digit', '', '', '', 1),
+('bx_notes_plain_summary_chars', '280', @iCategId, '_bx_notes_option_plain_summary_chars', 'digit', '', '', '', 2),
 ('bx_notes_per_page_browse', '12', @iCategId, '_bx_notes_option_per_page_browse', 'digit', '', '', '', 10),
 ('bx_notes_rss_num', '10', @iCategId, '_bx_notes_option_rss_num', 'digit', '', '', '', 20);
 
@@ -47,7 +47,7 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 -- Dumping data for 'bx_notes_edit_note' page
 --
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_notes_edit_note', '_bx_notes_page_title_sys_edit_note', '_bx_notes_page_title_edit_note', 'bx_notes', 5, 2147483647, 1, 'edit-note', '', '', '', '', 0, 1, 0, 'BxNotesPageNote', 'modules/boonex/notes/classes/BxNotesPageNote.php');
+('bx_notes_edit_note', '_bx_notes_page_title_sys_edit_note', '_bx_notes_page_title_edit_note', 'bx_notes', 5, 2147483647, 1, 'edit-note', '', '', '', '', 0, 1, 0, 'BxNotesPageEntry', 'modules/boonex/notes/classes/BxNotesPageEntry.php');
 
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
 ('bx_notes_edit_note', 1, 'bx_notes', '_bx_notes_page_block_title_edit_note', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_notes";s:6:"method";s:11:"entity_edit";}', 0, 0, 0);
@@ -56,7 +56,7 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 -- Dumping data for 'bx_notes_delete_note' page
 --
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_notes_delete_note', '_bx_notes_page_title_sys_delete_note', '_bx_notes_page_title_delete_note', 'bx_notes', 5, 2147483647, 1, 'delete-note', '', '', '', '', 0, 1, 0, 'BxNotesPageNote', 'modules/boonex/notes/classes/BxNotesPageNote.php');
+('bx_notes_delete_note', '_bx_notes_page_title_sys_delete_note', '_bx_notes_page_title_delete_note', 'bx_notes', 5, 2147483647, 1, 'delete-note', '', '', '', '', 0, 1, 0, 'BxNotesPageEntry', 'modules/boonex/notes/classes/BxNotesPageEntry.php');
 
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
 ('bx_notes_delete_note', 1, 'bx_notes', '_bx_notes_page_block_title_delete_note', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_notes";s:6:"method";s:13:"entity_delete";}', 0, 0, 0);
@@ -65,7 +65,7 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 -- Dumping data for 'bx_notes_view_note' page
 --
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_notes_view_note', '_bx_notes_page_title_sys_view_note', '_bx_notes_page_title_view_note', 'bx_notes', 11, 2147483647, 1, 'view-note', '', '', '', '', 0, 1, 0, 'BxNotesPageNote', 'modules/boonex/notes/classes/BxNotesPageNote.php');
+('bx_notes_view_note', '_bx_notes_page_title_sys_view_note', '_bx_notes_page_title_view_note', 'bx_notes', 11, 2147483647, 1, 'view-note', '', '', '', '', 0, 1, 0, 'BxNotesPageEntry', 'modules/boonex/notes/classes/BxNotesPageEntry.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_notes_view_note', 2, 'bx_notes', '_bx_notes_page_block_title_note_author', 0, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_notes\";s:6:\"method\";s:13:\"entity_author\";}', 0, 0, 0),
@@ -78,7 +78,7 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 -- Dumping data for 'bx_notes_view_note_comments' page
 -- 
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_notes_view_note_comments', '_bx_notes_page_title_sys_view_note_comments', '_bx_notes_page_title_view_note_comments', 'bx_notes', 5, 2147483647, 1, 'view-note-comments', '', '', '', '', 0, 1, 0, 'BxNotesPageNote', 'modules/boonex/notes/classes/BxNotesPageNote.php');
+('bx_notes_view_note_comments', '_bx_notes_page_title_sys_view_note_comments', '_bx_notes_page_title_view_note_comments', 'bx_notes', 5, 2147483647, 1, 'view-note-comments', '', '', '', '', 0, 1, 0, 'BxNotesPageEntry', 'modules/boonex/notes/classes/BxNotesPageEntry.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_notes_view_note_comments', 1, 'bx_notes', '_bx_notes_page_block_title_note_comments', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_notes\";s:6:\"method\";s:15:\"entity_comments\";}', 0, 0, 1);

@@ -3,8 +3,8 @@
 
 	<string name="_bx_notes"><![CDATA[Notes]]></string>
 
-	<string name="_bx_notes_option_autoapproval"><![CDATA[Activate notes after creation automatically]]></string>
 	<string name="_bx_notes_option_summary_chars"><![CDATA[Number of characters in auto-cropped note summary]]></string>
+	<string name="_bx_notes_option_plain_summary_chars"><![CDATA[Number of characters in plain note description when note hasn't thumb]]></string>
 	<string name="_bx_notes_option_per_page_browse"><![CDATA[Number of items per page]]></string>
 	<string name="_bx_notes_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
 
@@ -104,12 +104,10 @@
     <string name="_bx_notes_menu_title_notes_my"><![CDATA[My Notes Action Menu]]></string>
     <string name="_bx_notes_menu_set_title_notes_my"><![CDATA[My Notes Menu]]></string>
 
-	<string name="_bx_notes_txt_error_note_creation"><![CDATA[Note creation failed]]></string>
-	<string name="_bx_notes_txt_error_note_update"><![CDATA[Note update failed]]></string>
-	<string name="_bx_notes_txt_error_note_delete"><![CDATA[Note delete failed]]></string>
-	<string name="_bx_notes_txt_error_note_is_not_defined"><![CDATA[Note isn't defined]]></string>
-    <string name="_bx_notes_txt_status_pending"><![CDATA[This note is pending approval, please wait until it is activated.]]></string>
-    <string name="_bx_notes_txt_read_more"><![CDATA[Continue reading "{0}"]]></string>
+	<string name="_bx_notes_txt_error_entry_creation"><![CDATA[Note creation failed]]></string>
+	<string name="_bx_notes_txt_error_entry_update"><![CDATA[Note update failed]]></string>
+	<string name="_bx_notes_txt_error_entry_delete"><![CDATA[Note delete failed]]></string>
+	<string name="_bx_notes_txt_error_entry_is_not_defined"><![CDATA[Note isn't defined]]></string>    
     <string name="_bx_notes_txt_sample_single"><![CDATA[note]]></string>
 
 </resources>

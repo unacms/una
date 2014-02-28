@@ -13,7 +13,7 @@ bx_import('BxTemplMenu');
 bx_import('Menu', 'bx_notes');
 
 /**
- * 'View Entry' menu.
+ * View entry menu
  */
 class BxNotesMenuView extends BxNotesMenu
 {

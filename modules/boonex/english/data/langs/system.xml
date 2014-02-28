@@ -1798,6 +1798,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_ps_group_title_me_only"><![CDATA[Me only]]></string>
 	<string name="_sys_ps_group_title_members"><![CDATA[Members]]></string>
 	<string name="_sys_ps_group_title_public"><![CDATA[Public]]></string>
+    <string name="_sys_read_more"><![CDATA[Continue reading "{0}"]]></string>
 	<string name="_sys_request_module_not_found_cpt"><![CDATA[Module was not found]]></string>
 	<string name="_sys_request_module_not_found_cnt"><![CDATA[Module({0}) was not found]]></string>
 	<string name="_sys_request_page_not_found_cpt"><![CDATA[Page was not found]]></string>
