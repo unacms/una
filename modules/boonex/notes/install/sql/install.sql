@@ -98,22 +98,22 @@ CREATE TABLE `bx_notes_views_track` (
 
 -- FORMS
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_notes', 'bx_notes', '_bx_notes_form_note', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_notes_posts', 'id', '', '', 'do_submit', '', 0, 1, 'BxNotesFormEntry', 'modules/boonex/notes/classes/BxNotesFormEntry.php');
+('bx_notes', 'bx_notes', '_bx_notes_form_entry', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_notes_posts', 'id', '', '', 'do_submit', '', 0, 1, 'BxNotesFormEntry', 'modules/boonex/notes/classes/BxNotesFormEntry.php');
 
 INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`, `title`) VALUES 
-('bx_notes', 'bx_notes_note_add', 'bx_notes', 0, '_bx_notes_form_note_display_add'),
-('bx_notes', 'bx_notes_note_edit', 'bx_notes', 0, '_bx_notes_form_note_display_edit'),
-('bx_notes', 'bx_notes_note_delete', 'bx_notes', 0, '_bx_notes_form_note_display_delete'),
-('bx_notes', 'bx_notes_note_view', 'bx_notes', 1, '_bx_notes_form_note_display_view');
+('bx_notes', 'bx_notes_note_add', 'bx_notes', 0, '_bx_notes_form_entry_display_add'),
+('bx_notes', 'bx_notes_note_edit', 'bx_notes', 0, '_bx_notes_form_entry_display_edit'),
+('bx_notes', 'bx_notes_note_delete', 'bx_notes', 0, '_bx_notes_form_entry_display_delete'),
+('bx_notes', 'bx_notes_note_view', 'bx_notes', 1, '_bx_notes_form_entry_display_view');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
-('bx_notes', 'bx_notes', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_notes_form_note_input_sys_delete_confirm', '_bx_notes_form_note_input_delete_confirm', '_bx_notes_form_note_input_delete_confirm_info', 1, 0, 0, '', '', '', 'Avail', '', '_bx_notes_form_note_input_delete_confirm_error', '', '', 1, 0),
-('bx_notes', 'bx_notes', 'do_submit', '_bx_notes_form_note_input_do_submit', '', 0, 'submit', '_bx_notes_form_note_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_notes', 'bx_notes', 'title', '', '', 0, 'text', '_bx_notes_form_note_input_sys_title', '_bx_notes_form_note_input_title', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_notes_form_note_input_title_err', 'Xss', '', 1, 0),
-('bx_notes', 'bx_notes', 'text', '', '', 0, 'textarea', '_bx_notes_form_note_input_sys_text', '_bx_notes_form_note_input_text', '', 1, 0, 2, '', '', '', 'Avail', '', '_bx_notes_form_note_input_text_err', 'XssHtml', '', 1, 0),
-('bx_notes', 'bx_notes', 'summary', '', '', 0, 'textarea', '_bx_notes_form_note_input_sys_summary', '_bx_notes_form_note_input_summary', '_bx_notes_form_note_input_summary_info', 0, 0, 3, '', '', '', '', '', '', 'XssHtml', '', 1, 0),
-('bx_notes', 'bx_notes', 'pictures', '', '', 0, 'files', '_bx_notes_form_note_input_sys_pictures', '_bx_notes_form_note_input_pictures', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_notes', 'bx_notes', 'allow_view_to', '', '', 0, 'custom', '_bx_notes_form_note_input_sys_allow_view_to', '_bx_notes_form_note_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
+('bx_notes', 'bx_notes', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_notes_form_entry_input_sys_delete_confirm', '_bx_notes_form_entry_input_delete_confirm', '_bx_notes_form_entry_input_delete_confirm_info', 1, 0, 0, '', '', '', 'Avail', '', '_bx_notes_form_entry_input_delete_confirm_error', '', '', 1, 0),
+('bx_notes', 'bx_notes', 'do_submit', '_bx_notes_form_entry_input_do_submit', '', 0, 'submit', '_bx_notes_form_entry_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_notes', 'bx_notes', 'title', '', '', 0, 'text', '_bx_notes_form_entry_input_sys_title', '_bx_notes_form_entry_input_title', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_notes_form_entry_input_title_err', 'Xss', '', 1, 0),
+('bx_notes', 'bx_notes', 'text', '', '', 0, 'textarea', '_bx_notes_form_entry_input_sys_text', '_bx_notes_form_entry_input_text', '', 1, 0, 2, '', '', '', 'Avail', '', '_bx_notes_form_entry_input_text_err', 'XssHtml', '', 1, 0),
+('bx_notes', 'bx_notes', 'summary', '', '', 0, 'textarea', '_bx_notes_form_entry_input_sys_summary', '_bx_notes_form_entry_input_summary', '_bx_notes_form_entry_input_summary_info', 0, 0, 3, '', '', '', '', '', '', 'XssHtml', '', 1, 0),
+('bx_notes', 'bx_notes', 'pictures', '', '', 0, 'files', '_bx_notes_form_entry_input_sys_pictures', '_bx_notes_form_entry_input_pictures', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_notes', 'bx_notes', 'allow_view_to', '', '', 0, 'custom', '_bx_notes_form_entry_input_sys_allow_view_to', '_bx_notes_form_entry_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
 
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
 ('bx_notes_note_add', 'delete_confirm', 2147483647, 0, 1),
