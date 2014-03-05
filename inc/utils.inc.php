@@ -1049,5 +1049,16 @@ function bx_gen_method_name ($s, $sWordsDelimiter = '_') {
     return str_replace(' ', '', ucwords(str_replace($sWordsDelimiter, ' ', $s)));
 }
 
+/**
+ * Trigger user error
+ * @param $sMsg message to display
+ * @param $iNumLevelsBack add additional debug backtracing N levels back
+ */
+function bx_trigger_error ($sMsg, $iNumLevelsBack = 0) {
+    $a = debug_backtrace();
+    $sMsgAdd = "<br />\n related code in <b>{$a[$iNumLevelsBack]['file']}</b> on line <b>{$a[$iNumLevelsBack]['line']}</b> <br />\n";
+    trigger_error ($sMsg . $sMsgAdd, E_USER_ERROR);
+}
+
 /** @} */ 
 

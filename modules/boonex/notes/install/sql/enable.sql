@@ -189,15 +189,15 @@ INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `defau
 -- ACL
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('bx_notes', 'create note', NULL, '_bx_notes_acl_action_create_entry', '', 1, 1);
+('bx_notes', 'create entry', NULL, '_bx_notes_acl_action_create_entry', '', 1, 1);
 SET @iIdActionNoteCreate = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('bx_notes', 'delete note', NULL, '_bx_notes_acl_action_delete_entry', '', 1, 1);
+('bx_notes', 'delete entry', NULL, '_bx_notes_acl_action_delete_entry', '', 1, 1);
 SET @iIdActionNoteDelete = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('bx_notes', 'view note', NULL, '_bx_notes_acl_action_view_entry', '', 1, 1);
+('bx_notes', 'view entry', NULL, '_bx_notes_acl_action_view_entry', '', 1, 1);
 SET @iIdActionNoteView = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
@@ -205,7 +205,7 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 SET @iIdActionSetThumb = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('bx_notes', 'edit any note', NULL, '_bx_notes_acl_action_edit_any_entry', '', 1, 1);
+('bx_notes', 'edit any entry', NULL, '_bx_notes_acl_action_edit_any_entry', '', 1, 1);
 SET @iIdActionNoteEditAny = LAST_INSERT_ID();
 
 

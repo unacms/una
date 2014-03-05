@@ -357,7 +357,7 @@ class BxNotesModule extends BxDolModule
     function _checkModeratorAccess ($isPerformAction = false) 
     {
         // check moderator ACL
-        $aCheck = checkActionModule($this->_iProfileId, 'edit any note', $this->getName(), $isPerformAction); 
+        $aCheck = checkActionModule($this->_iProfileId, 'edit any entry', $this->getName(), $isPerformAction); 
         return $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED;
     }
 
@@ -373,7 +373,7 @@ class BxNotesModule extends BxDolModule
             return CHECK_ACTION_RESULT_ALLOWED;
 
         // check ACL
-        $aCheck = checkActionModule($this->_iProfileId, 'view note', $this->getName(), $isPerformAction);
+        $aCheck = checkActionModule($this->_iProfileId, 'view entry', $this->getName(), $isPerformAction);
         if ($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
             return $aCheck[CHECK_ACTION_MESSAGE];
 
@@ -400,7 +400,7 @@ class BxNotesModule extends BxDolModule
     function isAllowedAdd ($isPerformAction = false) 
     {
         // check ACL
-        $aCheck = checkActionModule($this->_iProfileId, 'create note', $this->getName(), $isPerformAction);
+        $aCheck = checkActionModule($this->_iProfileId, 'create entry', $this->getName(), $isPerformAction);
         if ($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
             return $aCheck[CHECK_ACTION_MESSAGE];
         return CHECK_ACTION_RESULT_ALLOWED;
@@ -427,7 +427,7 @@ class BxNotesModule extends BxDolModule
             return CHECK_ACTION_RESULT_ALLOWED;
 
         // check ACL
-        $aCheck = checkActionModule($this->_iProfileId, 'delete note', $this->getName(), $isPerformAction);
+        $aCheck = checkActionModule($this->_iProfileId, 'delete entry', $this->getName(), $isPerformAction);
         if ($aDataEntry[$this->_oConfig->CNF['FIELD_AUTHOR']] == $this->_iProfileId && $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED)
             return CHECK_ACTION_RESULT_ALLOWED;
 

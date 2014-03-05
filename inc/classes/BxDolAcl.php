@@ -220,7 +220,7 @@ class BxDolAcl extends BxDol implements iBxDolSingleton {
 
     	$aAction = $this->oDb->getAction($aMembership['id'], $iActionId);
     	if (!$aAction)
-            trigger_error ('Unknown action ID: ' . $iActionId, E_USER_ERROR);
+            bx_trigger_error('Unknown action ID: ' . $iActionId, 2);
 
     	$aResult[CHECK_ACTION_PARAMETER] = $aAction['additional_param_value'];
     	$aLangFileParams[CHECK_ACTION_LANG_FILE_ACTION] = !empty($aAction['title']) ? _t($aAction['title']) : $aAction['name'];
