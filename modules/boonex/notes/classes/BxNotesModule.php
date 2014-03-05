@@ -15,26 +15,42 @@ bx_import ('BxDolAcl');
 /**
  * Notes module
  */
-class BxNotesModule extends BxDolModule {
-
+class BxNotesModule extends BxDolModule 
+{
     protected $_iProfileId;
 
-    function __construct(&$aModule) {
+    function __construct(&$aModule) 
+    {
         parent::__construct($aModule);
         $this->_iProfileId = bx_get_logged_profile_id();
     }
 
     // ====== SERVICE METHODS
 
-    public function serviceBrowsePublic () {
+    /**
+     * Display pablic entries
+     * @return HTML string
+     */
+    public function serviceBrowsePublic () 
+    {
         return $this->_serviceBrowse ('public');
     }
 
-    public function serviceBrowseFeatured () {
+    /**
+     * Display featured entries
+     * @return HTML string
+     */
+    public function serviceBrowseFeatured () 
+    {
         return $this->_serviceBrowse ('public');
     }
 
-    public function serviceBrowseAuthor ($iProfileId = 0) {
+    /**
+     * Display entries of the author
+     * @return HTML string
+     */
+    public function serviceBrowseAuthor ($iProfileId = 0) 
+    {
         if (!$iProfileId)
             $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
         if (!$iProfileId)
@@ -42,80 +58,57 @@ class BxNotesModule extends BxDolModule {
         return $this->_serviceBrowse ('author', array('author' => $iProfileId));
     }
 
-    public function _serviceBrowse ($sMode, $aParams = false) {
-
-        $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
-        bx_import('SearchResult', $this->_aModule);
-        $o = new $sClass($sMode, $aParams);
-        
-        $o->setDisplayEmptyMsg(true);
-
-        if ($o->isError)
-            return false;
-
-        if ($s = $o->processing())
-            return $s;
-        else
-            return false;
-    }
-
-    public function serviceEntityCreate () {
+    /**
+     * Add entry form
+     * @return HTML string
+     */
+    public function serviceEntityCreate () 
+    {
         bx_import('FormsEntryHelper', $this->_aModule);
-        $oProfileForms = new BxNotesFormsEntryHelper($this);
-        return $oProfileForms->addDataForm();
+        $sClass = $this->_aModule['class_prefix'] . 'FormsEntryHelper';
+        $oFormsHelper = new $sClass($this);
+        return $oFormsHelper->addDataForm();
     }
 
     /**
-     * @return edit note form string
+     * Edit entry form
+     * @return HTML string
      */
-    public function serviceEntityEdit ($iContentId = 0) {
-        if (!$iContentId)
-            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        if (!$iContentId)
-            return false;
-        bx_import('FormsEntryHelper', $this->_aModule);
-        $oProfileForms = new BxNotesFormsEntryHelper($this);
-        return $oProfileForms->editDataForm((int)$iContentId);
+    public function serviceEntityEdit ($iContentId = 0) 
+    {
+        return $this->_serviceEntityForm ('editDataForm', $iContentId);
     }
 
     /**
-     * @return delete note form string
+     * Delete entry form
+     * @return HTML string
      */
-    public function serviceEntityDelete ($iContentId = 0) {
-        if (!$iContentId)
-            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        if (!$iContentId)
-            return false;
-        bx_import('FormsEntryHelper', $this->_aModule);
-        $oProfileForms = new BxNotesFormsEntryHelper($this);
-        return $oProfileForms->deleteDataForm((int)$iContentId);
+    public function serviceEntityDelete ($iContentId = 0) 
+    {
+        return $this->_serviceEntityForm ('deleteDataForm', $iContentId);
     }
 
     /**
-     * A note's text with some additional controls, like menu
+     * Entry text with some additional controls
      */
-    public function serviceEntityTextBlock ($iContentId = 0) {
-        if (!$iContentId)
-            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        if (!$iContentId)
-            return false;
-
-        bx_import('FormsEntryHelper', $this->_aModule);
-        $oProfileForms = new BxNotesFormsEntryHelper($this);
-        return $oProfileForms->viewDataEntry((int)$iContentId);
+    public function serviceEntityTextBlock ($iContentId = 0) 
+    {
+        return $this->_serviceEntityForm ('viewDataEntry', $iContentId);
     }
 
-    public function serviceEntityInfo ($iContentId = 0) {
-        if (!$iContentId)
-            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        if (!$iContentId)
-            return false;
-        bx_import('FormsEntryHelper', $this->_aModule);
-        $oProfileForms = new BxNotesFormsEntryHelper($this);
-        return $oProfileForms->viewDataForm((int)$iContentId);
+    /**
+     * Additional entry info
+     */
+    public function serviceEntityInfo ($iContentId = 0) 
+    {
+        return $this->_serviceEntityForm ('viewDataForm', $iContentId);
     }
 
-    public function serviceEntitySocialSharing ($iContentId = 0) {
+    /**
+     * Entry social sharing block
+     */
+    public function serviceEntitySocialSharing ($iContentId = 0) 
+    {
         if (!$iContentId)
             $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
         if (!$iContentId)
@@ -127,7 +120,7 @@ class BxNotesModule extends BxDolModule {
         $CNF = &$this->_oConfig->CNF;
 
         bx_import('BxDolPermalinks');
-        $sUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=view-note&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+        $sUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
 
         $aCustomParams = false;
         if ($aContentInfo[$CNF['FIELD_THUMB']]) {
@@ -150,10 +143,10 @@ class BxNotesModule extends BxDolModule {
 
         $sShare = '';
         if (BxDolRequest::serviceExists('bx_timeline', 'get_share_element_block'))
-        	$sShare = BxDolService::call('bx_timeline', 'get_share_element_block', array(bx_get_logged_profile_id(), 'bx_notes', 'added', $aContentInfo[$CNF['FIELD_ID']], array('show_do_share_as_button' => true)));
+        	$sShare = BxDolService::call('bx_timeline', 'get_share_element_block', array(bx_get_logged_profile_id(), $this->_aModule['name'], 'added', $aContentInfo[$CNF['FIELD_ID']], array('show_do_share_as_button' => true)));
 
         bx_import('BxTemplSocialSharing');
-		$sSocial = BxTemplSocialSharing::getInstance()->getCode($iContentId, 'bx_notes', BX_DOL_URL_ROOT . $sUrl, $aContentInfo[$CNF['FIELD_TITLE']], $aCustomParams);
+		$sSocial = BxTemplSocialSharing::getInstance()->getCode($iContentId, $this->_aModule['name'], BX_DOL_URL_ROOT . $sUrl, $aContentInfo[$CNF['FIELD_TITLE']], $aCustomParams);
 
         return $this->_oTemplate->parseHtmlByName('entry-share.html', array(
         	'vote' => $sVotes,
@@ -163,7 +156,11 @@ class BxNotesModule extends BxDolModule {
 		//TODO: Rebuild using menus engine when it will be ready for such elements like Vote, Share, etc.
     }
 
-    public function serviceEntityComments ($iContentId = 0) {
+    /**
+     * Entry comments
+     */
+    public function serviceEntityComments ($iContentId = 0) 
+    {
         if (!$iContentId)
             $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
         if (!$iContentId)
@@ -173,11 +170,14 @@ class BxNotesModule extends BxDolModule {
 		$oCmts = BxDolCmts::getObjectInstance($this->_oConfig->CNF['OBJECT_COMMENTS'], $iContentId);
 		if(!$oCmts->isEnabled())
 			return false;
-
         return $oCmts->getCommentsBlock(0, 0, false);
     }
 
-    public function serviceEntityAuthor ($iContentId = 0) {
+    /**
+     * Entry author block
+     */
+    public function serviceEntityAuthor ($iContentId = 0) 
+    {
         if (!$iContentId)
             $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
         if (!$iContentId)
@@ -194,7 +194,11 @@ class BxNotesModule extends BxDolModule {
         return $this->_oTemplate->entryAuthor ($aContentInfo, $oProfile);
     }
 
-    public function serviceEntityActions ($iContentId = 0) {
+    /**
+     * Entry actions block
+     */
+    public function serviceEntityActions ($iContentId = 0) 
+    {
         if (!$iContentId)
             $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
         if (!$iContentId)
@@ -205,7 +209,11 @@ class BxNotesModule extends BxDolModule {
         return $oMenu ? $oMenu->getCode() : false;
     }
 
-    public function serviceMyEntriesActions ($iProfileId = 0) {
+    /**
+     * My entries actions block
+     */
+    public function serviceMyEntriesActions ($iProfileId = 0) 
+    {
         if (!$iProfileId)
             $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
         if (!$iProfileId || $iProfileId != $this->_iProfileId)
@@ -216,6 +224,9 @@ class BxNotesModule extends BxDolModule {
         return $oMenu ? $oMenu->getCode() : false;
     }
 
+    /**
+     * Data for Timeline
+     */
 	public function serviceGetTimelineData()
     {
         return array(
@@ -232,6 +243,9 @@ class BxNotesModule extends BxDolModule {
         );
     }
 
+    /**
+     * Entry post for Timeline
+     */
     public function serviceGetTimelinePost($aEvent)
     {
     	$aContentInfo = $this->_oDb->getContentInfoById($aEvent['object_id']);
@@ -241,7 +255,7 @@ class BxNotesModule extends BxDolModule {
         $CNF = &$this->_oConfig->CNF;
 
     	bx_import('BxDolPermalinks');
-		$sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=view-note&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+		$sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
 
 		//--- Image(s)
 	    $sImage = '';
@@ -299,22 +313,9 @@ class BxNotesModule extends BxDolModule {
 
     // ====== ACTION METHODS
 
-    function actionBrowse ($sMode = '') {
-
+    function actionBrowse ($sMode = '') 
+    {
         $sMode = bx_process_input($sMode);
-
-/*
-        if ('user' == $sMode || 'my' == $sMode) {
-            $aProfile = getProfileInfo ($this->_iProfileId);
-            if (0 == strcasecmp($sValue, $aProfile['NickName']) || 'my' == $sMode) {
-                $this->_browseMy ($aProfile);
-                return;
-            }
-        }
-
-        if ('tag' == $sMode || 'category' == $sMode)
-            $sValue = uri2title($sValue);
-*/
 
         if (CHECK_ACTION_RESULT_ALLOWED !== $this->isAllowedBrowse()) {
             $this->_oTemplate->displayAccessDenied ();
@@ -353,8 +354,9 @@ class BxNotesModule extends BxDolModule {
 
     // ====== PERMISSION METHODS
 
-    function _checkModeratorAccess ($isPerformAction = false) {
-        // check moderator ACnoteL
+    function _checkModeratorAccess ($isPerformAction = false) 
+    {
+        // check moderator ACL
         $aCheck = checkActionModule($this->_iProfileId, 'edit any note', $this->getName(), $isPerformAction); 
         return $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED;
     }
@@ -362,8 +364,8 @@ class BxNotesModule extends BxDolModule {
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make "true === " checking.
      */
-    function isAllowedView ($aDataEntry, $isPerformAction = false) {
-
+    function isAllowedView ($aDataEntry, $isPerformAction = false) 
+    {
         $CNF = &$this->_oConfig->CNF;
 
         // moderator and owner always have access
@@ -387,14 +389,16 @@ class BxNotesModule extends BxDolModule {
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make "true === " checking.
      */
-    function isAllowedBrowse () {
+    function isAllowedBrowse () 
+    {
         return CHECK_ACTION_RESULT_ALLOWED;
     }
 
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. 
      */
-    function isAllowedAdd ($isPerformAction = false) {
+    function isAllowedAdd ($isPerformAction = false) 
+    {
         // check ACL
         $aCheck = checkActionModule($this->_iProfileId, 'create note', $this->getName(), $isPerformAction);
         if ($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
@@ -405,7 +409,8 @@ class BxNotesModule extends BxDolModule {
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. 
      */
-    function isAllowedEdit ($aDataEntry, $isPerformAction = false) {
+    function isAllowedEdit ($aDataEntry, $isPerformAction = false) 
+    {
         // moderator and owner always have access
         if ($aDataEntry[$this->_oConfig->CNF['FIELD_AUTHOR']] == $this->_iProfileId || $this->_checkModeratorAccess($isPerformAction))
             return CHECK_ACTION_RESULT_ALLOWED;
@@ -415,7 +420,8 @@ class BxNotesModule extends BxDolModule {
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. 
      */
-    function isAllowedDelete (&$aDataEntry, $isPerformAction = false) {
+    function isAllowedDelete (&$aDataEntry, $isPerformAction = false) 
+    {
         // moderator always has access
         if ($this->_checkModeratorAccess($isPerformAction))
             return CHECK_ACTION_RESULT_ALLOWED;
@@ -431,7 +437,8 @@ class BxNotesModule extends BxDolModule {
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. 
      */
-    function isAllowedSetThumb () {
+    function isAllowedSetThumb () 
+    {
         // check ACL
         $aCheck = checkActionModule($this->_iProfileId, 'set thumb', $this->getName(), false);
         if ($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
@@ -439,6 +446,36 @@ class BxNotesModule extends BxDolModule {
         return CHECK_ACTION_RESULT_ALLOWED;
     }
 
+
+    protected function _serviceBrowse ($sMode, $aParams = false) 
+    {
+        $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
+        bx_import('SearchResult', $this->_aModule);
+        $o = new $sClass($sMode, $aParams);
+        
+        $o->setDisplayEmptyMsg(true);
+
+        if ($o->isError)
+            return false;
+
+        if ($s = $o->processing())
+            return $s;
+        else
+            return false;
+    }
+
+    public function _serviceEntityForm ($sFormMethod, $iContentId = 0) 
+    {
+        if (!$iContentId)
+            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if (!$iContentId)
+            return false;
+
+        bx_import('FormsEntryHelper', $this->_aModule);
+        $sClass = $this->_aModule['class_prefix'] . 'FormsEntryHelper';
+        $oFormsHelper = new $sClass($this);
+        return $oFormsHelper->$sFormMethod((int)$iContentId);
+    }
 }
 
 /** @} */ 

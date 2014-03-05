@@ -13,6 +13,7 @@ bx_import('BxTemplSearchResult');
 
 class BxNotesSearchResult extends BxTemplSearchResult 
 {
+    protected $oModule;
     protected $aUnitViews = array('extended' => 'unit.html', 'gallery' => 'unit_gallery.html');
     protected $sUnitViewDefault = 'gallery';
     protected $sUnitViewParamName = 'unit_view';
@@ -53,8 +54,8 @@ class BxNotesSearchResult extends BxTemplSearchResult
 
         $oProfileAuthor = null;
 
-        $oModuleMain = $this->getMain();
-        $CNF = &$oModuleMain->_oConfig->CNF;
+        $this->oModule = $this->getMain();
+        $CNF = &$this->oModule->_oConfig->CNF;
 
         switch ($sMode) {
 
@@ -77,13 +78,13 @@ class BxNotesSearchResult extends BxTemplSearchResult
 
                 $this->aCurrent['restriction']['author']['value'] = $oProfileAuthor->id();
 
-                $this->sBrowseUrl = 'page.php?i=notes-author&profile_id={profile_id}';
+                $this->sBrowseUrl = 'page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id={profile_id}';
                 $this->aCurrent['title'] = _t('_bx_notes_page_title_browse_by_author');               
                 break;
             
             case 'public':
             case '':
-                $this->sBrowseUrl = 'page.php?i=notes-home';
+                $this->sBrowseUrl = 'page.php?i=' . $CNF['URI_HOME'];
                 $this->aCurrent['title'] = _t('_bx_notes_page_title_browse_recent');
                 break;
 
@@ -121,7 +122,7 @@ class BxNotesSearchResult extends BxTemplSearchResult
 
         $this->sFilterName = 'bx_notes_filter';
 
-        // $this->aCurrent['paginate']['perPage'] = $oModuleMain->_oDb->getParam('bx_groups_perpage_browse'); // TODO:
+        // $this->aCurrent['paginate']['perPage'] = $this->oModule->_oDb->getParam('bx_groups_perpage_browse'); // TODO:
 
         parent::__construct();
     }
@@ -163,8 +164,10 @@ class BxNotesSearchResult extends BxTemplSearchResult
 
     function getRssUnitLink (&$a) 
     {
+        $CNF = &$this->oModule->_oConfig->CNF;
+
         bx_import('BxDolPermalinks');
-        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=view-note&id=' . $a['id']);
+        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $a[$CNF['FIELD_ID']]);
     }
 
     function _getPseud () 

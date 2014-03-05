@@ -29,6 +29,7 @@ class BxNotesConfig extends BxDolModuleConfig
 
         'URI_VIEW_ENTRY' => 'view-note',
         'URI_HOME' => 'notes-home',
+        'URI_AUTHOR_ENTRIES' => 'notes-author',
 
         'PARAM_CHARS_SUMMARY' => 'bx_notes_summary_chars',
         'PARAM_CHARS_SUMMARY_PLAIN' => 'bx_notes_plain_summary_chars',
