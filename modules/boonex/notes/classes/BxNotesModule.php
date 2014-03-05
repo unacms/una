@@ -124,14 +124,16 @@ class BxNotesModule extends BxDolModule {
         if (!$aContentInfo)
             return false;
 
+        $CNF = &$this->_oConfig->CNF;
+
         bx_import('BxDolPermalinks');
-        $sUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=view-note&id=' . $aContentInfo['id']);
+        $sUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=view-note&id=' . $aContentInfo[$CNF['FIELD_ID']]);
 
         $aCustomParams = false;
-        if ($aContentInfo[BxNotesConfig::$FIELD_THUMB]) {
+        if ($aContentInfo[$CNF['FIELD_THUMB']]) {
             bx_import('BxDolStorage');
-            $oStorage = BxDolStorage::getObjectInstance(BxNotesConfig::$OBJECT_STORAGE);
-            if ($oStorage && ($sImgUrl = $oStorage->getFileUrlById($aContentInfo[BxNotesConfig::$FIELD_THUMB]))) {
+            $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
+            if ($oStorage && ($sImgUrl = $oStorage->getFileUrlById($aContentInfo[$CNF['FIELD_THUMB']]))) {
                 $aCustomParams = array (
                     'img_url' => $sImgUrl,
                     'img_url_encoded' => rawurlencode($sImgUrl),
@@ -142,16 +144,16 @@ class BxNotesModule extends BxDolModule {
         //TODO: Rebuild using menus engine when it will be ready for such elements like Vote, Share, etc.
         $sVotes = '';
         bx_import('BxDolVote');
-        $oVotes = BxDolVote::getObjectInstance(BxNotesConfig::$OBJECT_VOTES, $aContentInfo[BxNotesConfig::$FIELD_ID]);
+        $oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $aContentInfo[$CNF['FIELD_ID']]);
         if ($oVotes)
             $sVotes = $oVotes->getElementBlock(array('show_do_vote_as_button' => true)); 
 
         $sShare = '';
-        if(BxDolRequest::serviceExists('bx_timeline', 'get_share_element_block'))
-        	$sShare = BxDolService::call('bx_timeline', 'get_share_element_block', array(bx_get_logged_profile_id(), 'bx_notes', 'added', $aContentInfo[BxNotesConfig::$FIELD_ID], array('show_do_share_as_button' => true)));
+        if (BxDolRequest::serviceExists('bx_timeline', 'get_share_element_block'))
+        	$sShare = BxDolService::call('bx_timeline', 'get_share_element_block', array(bx_get_logged_profile_id(), 'bx_notes', 'added', $aContentInfo[$CNF['FIELD_ID']], array('show_do_share_as_button' => true)));
 
         bx_import('BxTemplSocialSharing');
-		$sSocial = BxTemplSocialSharing::getInstance()->getCode($iContentId, 'bx_notes', BX_DOL_URL_ROOT . $sUrl, $aContentInfo['title'], $aCustomParams);
+		$sSocial = BxTemplSocialSharing::getInstance()->getCode($iContentId, 'bx_notes', BX_DOL_URL_ROOT . $sUrl, $aContentInfo[$CNF['FIELD_TITLE']], $aCustomParams);
 
         return $this->_oTemplate->parseHtmlByName('entry-share.html', array(
         	'vote' => $sVotes,
@@ -168,7 +170,7 @@ class BxNotesModule extends BxDolModule {
             return false;
 
 		bx_import('BxDolCmts');
-		$oCmts = BxDolCmts::getObjectInstance(BxNotesConfig::$OBJECT_COMMENTS, $iContentId);
+		$oCmts = BxDolCmts::getObjectInstance($this->_oConfig->CNF['OBJECT_COMMENTS'], $iContentId);
 		if(!$oCmts->isEnabled())
 			return false;
 
@@ -183,7 +185,8 @@ class BxNotesModule extends BxDolModule {
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
         if (!$aContentInfo)
             return false;
-        $oProfile = BxDolProfile::getInstance($aContentInfo[BxNotesConfig::$FIELD_AUTHOR]);
+
+        $oProfile = BxDolProfile::getInstance($aContentInfo[$this->_oConfig->CNF['FIELD_AUTHOR']]);
         if (!$oProfile) {
             bx_import('BxDolProfileUndefined');
             $oProfile = BxDolProfileUndefined::getInstance();
@@ -198,7 +201,7 @@ class BxNotesModule extends BxDolModule {
             return false;
 
         bx_import('BxTemplMenu');
-        $oMenu = BxTemplMenu::getObjectInstance('bx_notes_view');
+        $oMenu = BxTemplMenu::getObjectInstance($this->_oConfig->CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY']);
         return $oMenu ? $oMenu->getCode() : false;
     }
 
@@ -209,7 +212,7 @@ class BxNotesModule extends BxDolModule {
             return false;
 
         bx_import('BxTemplMenu');
-        $oMenu = BxTemplMenu::getObjectInstance('bx_notes_my');
+        $oMenu = BxTemplMenu::getObjectInstance($this->_oConfig->CNF['OBJECT_MENU_ACTIONS_MY_ENTRIES']);
         return $oMenu ? $oMenu->getCode() : false;
     }
 
@@ -235,49 +238,51 @@ class BxNotesModule extends BxDolModule {
     	if(empty($aContentInfo) || !is_array($aContentInfo))
     		return '';
 
+        $CNF = &$this->_oConfig->CNF;
+
     	bx_import('BxDolPermalinks');
-		$sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=view-note&id=' . $aContentInfo[BxNotesConfig::$FIELD_ID]);
+		$sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=view-note&id=' . $aContentInfo[$CNF['FIELD_ID']]);
 
 		//--- Image(s)
 	    $sImage = '';
-        if($aContentInfo[BxNotesConfig::$FIELD_THUMB]) {
+        if($aContentInfo[$CNF['FIELD_THUMB']]) {
         	bx_import('BxDolStorage');
-			$oStorage = BxDolStorage::getObjectInstance(BxNotesConfig::$OBJECT_STORAGE);
+			$oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
             if($oStorage)
-				$sImage = $oStorage->getFileUrlById($aContentInfo[BxNotesConfig::$FIELD_THUMB]);
+				$sImage = $oStorage->getFileUrlById($aContentInfo[$CNF['FIELD_THUMB']]);
         }
 
         //--- Votes
         bx_import('BxDolVote');
-        $oVotes = BxDolVote::getObjectInstance(BxNotesConfig::$OBJECT_VOTES, $aEvent['object_id']);
+        $oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $aEvent['object_id']);
 
         $aVotes = array(); 
 		if ($oVotes && $oVotes->isEnabled())
 			$aVotes = array(
-				'system' => BxNotesConfig::$OBJECT_VOTES,
-				'object_id' => $aContentInfo[BxNotesConfig::$FIELD_ID],
+				'system' => $CNF['OBJECT_VOTES'],
+				'object_id' => $aContentInfo[$CNF['FIELD_ID']],
 				'count' => $aContentInfo['votes']
 			);
 
         //--- Comments
         bx_import('BxDolCmts');
-        $oCmts = BxDolCmts::getObjectInstance(BxNotesConfig::$OBJECT_COMMENTS, $aEvent['object_id']);
+        $oCmts = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $aEvent['object_id']);
 
         $aComments = array(); 
 		if($oCmts->isEnabled())
 			$aComments = array(
-				'system' => BxNotesConfig::$OBJECT_COMMENTS,
-				'object_id' => $aContentInfo[BxNotesConfig::$FIELD_ID],
+				'system' => $CNF['OBJECT_COMMENTS'],
+				'object_id' => $aContentInfo[$CNF['FIELD_ID']],
 				'count' => $aContentInfo['comments']
 			);
 
     	return array(
-    		'owner_id' => $aContentInfo[BxNotesConfig::$FIELD_AUTHOR],
+    		'owner_id' => $aContentInfo[$CNF['FIELD_AUTHOR']],
     		'content' => array(
     			'sample' => _t('_bx_notes_txt_sample_single'),
     			'url' => $sUrl,
-    			'title' => $aContentInfo[BxNotesConfig::$FIELD_TITLE],
-    			'text' => $aContentInfo[BxNotesConfig::$FIELD_TEXT],
+    			'title' => $aContentInfo[$CNF['FIELD_TITLE']],
+    			'text' => $aContentInfo[$CNF['FIELD_TEXT']],
     			'images' => array(
     				array(
     					'url' => $sUrl,
@@ -359,8 +364,10 @@ class BxNotesModule extends BxDolModule {
      */
     function isAllowedView ($aDataEntry, $isPerformAction = false) {
 
+        $CNF = &$this->_oConfig->CNF;
+
         // moderator and owner always have access
-        if ($aDataEntry[BxNotesConfig::$FIELD_AUTHOR] == $this->_iProfileId || $this->_checkModeratorAccess($isPerformAction))
+        if ($aDataEntry[$CNF['FIELD_AUTHOR']] == $this->_iProfileId || $this->_checkModeratorAccess($isPerformAction))
             return CHECK_ACTION_RESULT_ALLOWED;
 
         // check ACL
@@ -370,8 +377,8 @@ class BxNotesModule extends BxDolModule {
 
         // check privacy 
     	bx_import('BxDolPrivacy');
-    	$oPrivacy = BxDolPrivacy::getObjectInstance(BxNotesConfig::$OBJECT_PRIVACY_VIEW);
-		if ($oPrivacy && !$oPrivacy->check($aDataEntry[BxNotesConfig::$FIELD_ID]))
+    	$oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
+		if ($oPrivacy && !$oPrivacy->check($aDataEntry[$CNF['FIELD_ID']]))
             return _t('_sys_access_denied_to_private_content');
 
         return CHECK_ACTION_RESULT_ALLOWED;
@@ -400,7 +407,7 @@ class BxNotesModule extends BxDolModule {
      */
     function isAllowedEdit ($aDataEntry, $isPerformAction = false) {
         // moderator and owner always have access
-        if ($aDataEntry[BxNotesConfig::$FIELD_AUTHOR] == $this->_iProfileId || $this->_checkModeratorAccess($isPerformAction))
+        if ($aDataEntry[$this->_oConfig->CNF['FIELD_AUTHOR']] == $this->_iProfileId || $this->_checkModeratorAccess($isPerformAction))
             return CHECK_ACTION_RESULT_ALLOWED;
         return _t('_sys_txt_access_denied');
     }
@@ -415,7 +422,7 @@ class BxNotesModule extends BxDolModule {
 
         // check ACL
         $aCheck = checkActionModule($this->_iProfileId, 'delete note', $this->getName(), $isPerformAction);
-        if ($aDataEntry[BxNotesConfig::$FIELD_AUTHOR] == $this->_iProfileId && $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED)
+        if ($aDataEntry[$this->_oConfig->CNF['FIELD_AUTHOR']] == $this->_iProfileId && $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED)
             return CHECK_ACTION_RESULT_ALLOWED;
 
         return _t('_sys_txt_access_denied');

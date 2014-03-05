@@ -25,7 +25,7 @@ class BxNotesMenuView extends BxNotesMenu
 
         $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
         if ($this->_aContentInfo)
-            $this->addMarkers(array('content_id' => $this->_aContentInfo['id']));
+            $this->addMarkers(array('content_id' => (int)$iContentId));
     }
 }
 

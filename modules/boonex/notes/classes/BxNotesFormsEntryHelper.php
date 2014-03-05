@@ -100,7 +100,7 @@ class BxNotesFormsEntryHelper extends BxDolProfileForms
 
         // update data in the DB
         $aTrackTextFieldsChanges = null;
-        if (!$oForm->update ($aContentInfo['id'], array(), $aTrackTextFieldsChanges)) {
+        if (!$oForm->update ($aContentInfo[$CNF['FIELD_ID']], array(), $aTrackTextFieldsChanges)) {
             if (!$oForm->isValid())
                 return $oForm->getCode();
             else
@@ -117,10 +117,10 @@ class BxNotesFormsEntryHelper extends BxDolProfileForms
         // create an alert
         //TODO: Pass a valid entry privacy view group.
         bx_import('BxDolPrivacy');
-        bx_alert($this->_oModule->getName(), 'edited', $aContentInfo['id'], false, array('privacy_view' => BX_DOL_PG_MEMBERS)); 
+        bx_alert($this->_oModule->getName(), 'edited', $aContentInfo[$CNF['FIELD_ID']], false, array('privacy_view' => BX_DOL_PG_MEMBERS)); 
 
         // redirect 
-        $this->_redirectAndExit('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo['id']);
+        $this->_redirectAndExit('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
     }
 
 
@@ -153,7 +153,7 @@ class BxNotesFormsEntryHelper extends BxDolProfileForms
         if (!$oForm->isSubmittedAndValid())
             return $oForm->getCode();
 
-        if (!$oForm->delete ($aContentInfo['id'])) {
+        if (!$oForm->delete ($aContentInfo[$CNF['FIELD_ID']])) {
             if (!$oForm->isValid())
                 return $oForm->getCode();
             else
@@ -164,7 +164,7 @@ class BxNotesFormsEntryHelper extends BxDolProfileForms
         $this->_oModule->isAllowedDelete($aContentInfo, true);
 
         // create an alert
-        bx_alert($this->_oModule->getName(), 'deleted', $aContentInfo['id']);
+        bx_alert($this->_oModule->getName(), 'deleted', $aContentInfo[$CNF['FIELD_ID']]);
 
         // redirect 
         $this->_redirectAndExit('page.php?i=' . $CNF['URI_HOME']);
