@@ -9,17 +9,14 @@
  * @{
  */
 
-bx_import('BxTemplSearchResult');
+bx_import('BxBaseModTextSearchResult');
 
-class BxNotesSearchResult extends BxTemplSearchResult 
+class BxNotesSearchResult extends BxBaseModTextSearchResult 
 {
-    protected $oModule;
-    protected $aUnitViews = array('extended' => 'unit.html', 'gallery' => 'unit_gallery.html');
-    protected $sUnitViewDefault = 'gallery';
-    protected $sUnitViewParamName = 'unit_view';
-
     function __construct($sMode = '', $aParams = array()) 
     {
+        parent::__construct($sMode, $aParams);
+
         $this->aCurrent = array(
             'name' => 'bx_notes',
             'title' => '_bx_notes_page_title_browse',
@@ -48,14 +45,9 @@ class BxNotesSearchResult extends BxTemplSearchResult
         );
 
         $this->sFilterName = 'bx_notes_filter';
-        $this->aGetParams = array($this->sUnitViewParamName);
-        $this->sUnitTemplate = $this->aUnitViews[$this->sUnitViewDefault];
-        if (isset($this->aUnitViews[bx_get($this->sUnitViewParamName)]))
-            $this->sUnitTemplate = $this->aUnitViews[bx_get($this->sUnitViewParamName)];
 
         $oProfileAuthor = null;
 
-        $this->oModule = $this->getMain();
         $CNF = &$this->oModule->_oConfig->CNF;
 
         switch ($sMode) {
@@ -116,13 +108,6 @@ class BxNotesSearchResult extends BxTemplSearchResult
             $this->aCurrent['join'] = array_merge($this->aCurrent['join'], $a['join']);
 
         $this->setProcessPrivateContent(false);
-
-        parent::__construct();
-    }
-
-    function getMain() 
-    {
-        return BxDolModule::getInstance($this->aCurrent['name']);
     }
 
     function displayResultBlock () 
@@ -130,19 +115,6 @@ class BxNotesSearchResult extends BxTemplSearchResult
         $s = parent::displayResultBlock ();
         $s = '<div class="bx-notes-wrapper ' . ('unit_gallery.html' == $this->sUnitTemplate ? 'bx-def-margin-neg bx-clearfix' : '') . '">' . $s . '</div>';
         return $s;
-    }
-
-    function getDesignBoxMenu () 
-    {
-        $aMenu = parent::getDesignBoxMenu ();
-
-        return array_merge(
-            array(
-                array('name' => 'gallery', 'title' => _t('_sys_menu_title_gallery'), 'link' => $this->getCurrentUrl(array($this->sUnitViewParamName => 'gallery')), 'icon' => 'th'),
-                array('name' => 'extended', 'title' => _t('_sys_menu_title_extended'), 'link' => $this->getCurrentUrl(array($this->sUnitViewParamName => 'extended')), 'icon' => 'list'),
-            ),
-            $aMenu
-        );
     }
 
     function getAlterOrder() 
@@ -153,45 +125,6 @@ class BxNotesSearchResult extends BxTemplSearchResult
             return $aSql;
         }
         return array();
-    }
-
-    function getRssUnitLink (&$a) 
-    {
-        $CNF = &$this->oModule->_oConfig->CNF;
-
-        bx_import('BxDolPermalinks');
-        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $a[$CNF['FIELD_ID']]);
-    }
-
-    function getRssPageUrl () 
-    {
-        if (false === parent::getRssPageUrl())
-            return false;
-
-        bx_import('BxDolPermalinks');
-        $oPermalinks = BxDolPermalinks::getInstance();
-        return BX_DOL_URL_ROOT . $oPermalinks->permalink($this->aCurrent['rss']['link']);
-    }
-
-    function rss () 
-    {        
-        if (!isset($this->aCurrent['rss']))
-            return '';
-
-        $this->aCurrent['paginate']['perPage'] = getParam('bx_notes_rss_num');
-        return parent::rss();
-    }
-
-    function _getPseud () 
-    {
-        return array(
-            'id' => 'id',
-            'title' => 'title',
-            'text' => 'text',
-            'added' => 'added',
-            'author' => 'author',
-            'photo' => 'photo',
-        );
     }
 }
 

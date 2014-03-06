@@ -3,22 +3,28 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  * 
- * @defgroup    Notes Notes
+ * @defgroup    BaseText Base classes for text modules
  * @ingroup     DolphinModules
  *
  * @{
  */
 
-bx_import('BxBaseModTextDb');
+bx_import('BxDolModuleDb');
 
 /*
  * Module database queries
  */
-class BxNotesDb extends BxBaseModTextDb 
+class BxBaseModTextDb extends BxDolModuleDb
 {
     function __construct(&$oConfig) 
     {
         parent::__construct($oConfig);
+    }
+
+    function getContentInfoById ($iContentId) 
+    {
+        $sQuery = $this->prepare ("SELECT `c`.* FROM `" . $this->_sPrefix . "posts` AS `c` WHERE `c`.`id` = ?", $iContentId);
+        return $this->getRow($sQuery);
     }
 }
 

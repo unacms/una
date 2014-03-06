@@ -605,11 +605,19 @@ function bx_import($sClassName, $mixedModule = array()) {
     }
 
     if (0 == strncmp($sClassName, 'BxBase', 6)) {
-    	if(0 == strncmp($sClassName, 'BxBaseStudio', 12))
+    	if (0 == strncmp($sClassName, 'BxBaseMod', 9)) {
+            $aMatches = array();
+            if (preg_match('/BxBaseMod([A-Z][a-z]+)/', $sClassName, $aMatches)) {
+                require_once(BX_DIRECTORY_PATH_MODULES . 'base/' . strtolower($aMatches[1]) . '/classes/' . $sClassName . '.php');
+                return;
+            }
+    	} if (0 == strncmp($sClassName, 'BxBaseStudio', 12)) {
             require_once(BX_DOL_DIR_STUDIO_BASE . 'scripts/' . $sClassName . '.php');
-        else
+            return;
+        } else {
             require_once(BX_DIRECTORY_PATH_BASE . 'scripts/' . $sClassName . '.php');
-        return;
+            return;
+        }
     }
 
     if (0 == strncmp($sClassName, 'BxTempl', 7) && !class_exists($sClassName)) {

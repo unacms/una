@@ -3,23 +3,22 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  * 
- * @defgroup    Notes Notes
+ * @defgroup    BaseText Base classes for text modules
  * @ingroup     DolphinModules
  *
  * @{
  */
 
-bx_import ('BxBaseModTextModule');
+bx_import('BxDolModuleConfig');
 
-/**
- * Notes module
- */
-class BxNotesModule extends BxBaseModTextModule 
+class BxBaseModTextConfig extends BxDolModuleConfig 
 {
-    function __construct(&$aModule) 
+    public $CNF;
+
+    function __construct($aModule) 
     {
         parent::__construct($aModule);
     }
 }
 
-/** @} */
+/** @} */ 
