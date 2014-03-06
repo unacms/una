@@ -25,6 +25,36 @@ class BxNotesModule extends BxDolModule
         $this->_iProfileId = bx_get_logged_profile_id();
     }
 
+    // ====== ACTIONS METHODS
+
+    public function actionRss ($sMode = '', $sExtra = '') 
+    {
+        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->checkAllowedBrowse())) {
+            $this->_oTemplate->displayAccessDenied ();
+            exit;
+        }
+
+        $aParams = array ();
+        $sMode = bx_process_input($sMode);
+        switch ($sMode) {
+            case 'author':
+                $aParams = array('author' => (int)$sExtra);
+                break;
+        }
+
+        bx_import ('SearchResult', $this->_aModule);
+        $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
+        $o = new $sClass($sMode, $aParams);
+
+        if ($o->isError) {
+            $this->_oTemplate->displayPageNotFound ();
+            exit;
+        }
+
+        $o->outputRSS();
+        exit;
+    }
+
     // ====== SERVICE METHODS
 
     /**
@@ -293,7 +323,7 @@ class BxNotesModule extends BxDolModule
     	return array(
     		'owner_id' => $aContentInfo[$CNF['FIELD_AUTHOR']],
     		'content' => array(
-    			'sample' => _t('_bx_notes_txt_sample_single'),
+    			'sample' => _t($CNF['T']['txt_sample_single']),
     			'url' => $sUrl,
     			'title' => $aContentInfo[$CNF['FIELD_TITLE']],
     			'text' => $aContentInfo[$CNF['FIELD_TEXT']],
@@ -309,47 +339,6 @@ class BxNotesModule extends BxDolModule
     		'title' => '', //may be empty.
     		'description' => '' //may be empty. 
     	);
-    }
-
-    // ====== ACTION METHODS
-
-    public function actionBrowse ($sMode = '') 
-    {
-        $sMode = bx_process_input($sMode);
-
-        if (CHECK_ACTION_RESULT_ALLOWED !== $this->checkAllowedBrowse()) {
-            $this->_oTemplate->displayAccessDenied ();
-            return;
-        }
-
-        bx_import ('SearchResult', $this->_aModule);
-        $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
-        $o = new $sClass($sMode);
-
-        if ($o->isError) {
-            $this->_oTemplate->displayPageNotFound ();
-            return;
-        }
-
-        if (bx_get('rss')) {
-            echo $o->rss();
-            exit;
-        }
-
-        if (!($s = $o->processing())) {
-            $this->_oTemplate->displayNoData ();
-            return;
-        }
-
-        // TODO: remake to use "pages"
-
-        $this->_oTemplate->addCss ('main.css'); 
-
-        $oTemplate = BxDolTemplate::getInstance();
-        $oTemplate->setPageHeader ($o->aCurrent['title']);
-        $oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);
-        $oTemplate->setPageContent ('page_main_code', $s);
-        $oTemplate->getPageCode();
     }
 
     // ====== PERMISSION METHODS
@@ -450,6 +439,9 @@ class BxNotesModule extends BxDolModule
 
     protected function _serviceBrowse ($sMode, $aParams = false) 
     {
+        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->checkAllowedBrowse()))
+            return MsgBox($sMsg);
+
         $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
         bx_import('SearchResult', $this->_aModule);
         $o = new $sClass($sMode, $aParams);
@@ -457,12 +449,12 @@ class BxNotesModule extends BxDolModule
         $o->setDisplayEmptyMsg(true);
 
         if ($o->isError)
-            return false;
+            return '';
 
         if ($s = $o->processing())
             return $s;
         else
-            return false;
+            return '';
     }
 
     protected function _serviceEntityForm ($sFormMethod, $iContentId = 0) 

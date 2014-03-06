@@ -184,12 +184,12 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     /**
      * Constructor
      */
-    function BxDolTemplate($sRootPath = BX_DIRECTORY_PATH_ROOT, $sRootUrl = BX_DOL_URL_ROOT) {
+    protected function __construct($sRootPath = BX_DIRECTORY_PATH_ROOT, $sRootUrl = BX_DOL_URL_ROOT) {
 
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
-        parent::BxDol();
+        parent::__construct();
 
         $this->_sPrefix = 'BxDolTemplate';
 
@@ -1922,10 +1922,11 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     }
     function displayMsg ($s, $bTranslate = false) {
         $sTitle = $bTranslate ? _t($s) : $s;
-        $this->setPageNameIndex (BX_PAGE_DEFAULT);
-        $this->setPageHeader ($sTitle);
-        $this->setPageContent ('page_main_code', DesignBoxContent($sTitle, MsgBox($sTitle), BX_DB_PADDING_DEF));
-        $this->getPageCode();
+        $oTemplate = BxDolTemplate::getInstance();
+        $oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);
+        $oTemplate->setPageHeader ($sTitle);
+        $oTemplate->setPageContent ('page_main_code', DesignBoxContent($sTitle, MsgBox($sTitle), BX_DB_PADDING_DEF));
+        $oTemplate->getPageCode();
         exit;
     }
 

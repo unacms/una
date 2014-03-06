@@ -76,16 +76,22 @@ class BxBaseSearchResult extends BxDolSearchResult
 
     function getDesignBoxMenu () 
     {
+        if (false === ($sLink = $this->getRssPageUrl ()))
+            return false;
+
+        return array(
+            array('name' => 'rss', 'title' => _t('_sys_menu_title_rss'), 'link' => $sLink, 'icon' => 'rss')
+        );
+    }
+
+    function getRssPageUrl () 
+    {
         if (!isset($this->aCurrent['rss']) || !$this->aCurrent['rss']['link']) 
             return false;
 
         bx_import('BxDolPermalinks');
         $oPermalinks = BxDolPermalinks::getInstance();
-        $sLink = BX_DOL_URL_ROOT . bx_append_url_params($oPermalinks->permalink($this->aCurrent['rss']['link']), 'rss=1');
-
-        return array(
-            array('name' => 'rss', 'title' => _t('_sys_menu_title_rss'), 'link' => $sLink, 'icon' => 'rss')
-        );
+        return BX_DOL_URL_ROOT . bx_append_url_params($oPermalinks->permalink($this->aCurrent['rss']['link']), 'rss=1');
     }
 
     function showAdminActionsPanel($sWrapperId, $aButtons, $sCheckboxName = 'entry', $bSelectAll = true, $bSelectAllChecked = false, $sCustomHtml = '') 

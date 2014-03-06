@@ -48,7 +48,7 @@ class BxPersonsProfileForms extends BxDolProfileForms {
             if (!$oForm->isValid())
                 return $oForm->getCode();
             else
-                return MsgBox(_t('_bx_persons_txt_error_profile_creation'));
+                return MsgBox(_t('_sys_txt_error_entry_creation'));
         }
 
         // add account and content association
@@ -81,7 +81,7 @@ class BxPersonsProfileForms extends BxDolProfileForms {
         // get content data and profile info
         list ($oProfile, $aProfileInfo, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         if (!$aContentInfo)
-            return MsgBox(_t('_bx_persons_txt_error_profile_is_not_defined')); 
+            return MsgBox(_t('_sys_txt_error_entry_is_not_defined')); 
 
         // check access
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->isAllowedEdit($aContentInfo)))
@@ -107,7 +107,7 @@ class BxPersonsProfileForms extends BxDolProfileForms {
             if (!$oForm->isValid())
                 return $oForm->getCode();
             else
-                return MsgBox(_t('_bx_persons_txt_error_profile_update')); 
+                return MsgBox(_t('_sys_txt_error_entry_update')); 
         }
 
         // change profile to 'pending' only if profile is 'active'
@@ -129,7 +129,7 @@ class BxPersonsProfileForms extends BxDolProfileForms {
         // get content data and profile info
         list ($oProfile, $aProfileInfo, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         if (!$aContentInfo)
-            return MsgBox(_t('_bx_persons_txt_error_profile_is_not_defined')); 
+            return MsgBox(_t('_sys_txt_error_entry_is_not_defined')); 
 
         // check access
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->isAllowedDelete($aContentInfo)))
@@ -147,11 +147,11 @@ class BxPersonsProfileForms extends BxDolProfileForms {
 
         // delete avatar & avatar
         if (!$oForm->delete ($aContentInfo['id'], $aContentInfo))
-            return MsgBox(_t('_bx_persons_txt_error_profile_delete')); 
+            return MsgBox(_t('_sys_txt_error_entry_delete')); 
 
         // delete profile
         if (!$oProfile->delete($aContentInfo['profile_id']))
-            return MsgBox(_t('_bx_persons_txt_error_profile_delete')); 
+            return MsgBox(_t('_sys_txt_error_entry_delete')); 
 
         // perform action
         $this->_oModule->isAllowedDelete($aContentInfo, true);
@@ -168,7 +168,7 @@ class BxPersonsProfileForms extends BxDolProfileForms {
         // get content data and profile info
         list ($oProfile, $aProfileInfo, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         if (!$aContentInfo)
-            return MsgBox(_t('_bx_persons_txt_error_profile_is_not_defined')); 
+            return MsgBox(_t('_sys_txt_error_entry_is_not_defined')); 
 
         // check access
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->isAllowedView($aContentInfo)))

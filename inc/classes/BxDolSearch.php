@@ -289,7 +289,7 @@ class BxDolSearchResult implements iBxDolReplaceable
     }
 
     /**
-     * Get array for rss output
+     * Get XML string for rss output
      */
     function rss () {
         if (!isset($this->aCurrent['rss']['fields']) || !isset($this->aCurrent['rss']['link']))
@@ -298,9 +298,8 @@ class BxDolSearchResult implements iBxDolReplaceable
         $aData = $this->getSearchData();
         $f = &$this->aCurrent['rss']['fields'];
         if ($aData) {
-            foreach ($aData as $k => $a) {
+            foreach ($aData as $k => $a)
                 $aData[$k][$f['Link']] = $this->getRssUnitLink ($a);
-            }
         }
 
         bx_import('BxDolRssFactory');
@@ -314,6 +313,14 @@ class BxDolSearchResult implements iBxDolReplaceable
             isset($this->aCurrent['rss']['image']) ? $this->aCurrent['rss']['image'] : '',
             isset($this->aCurrent['rss']['profile']) ? $this->aCurrent['rss']['profile'] : 0
         );
+    }
+
+    /**
+     * Output RSS XML with XML header
+     */
+    function outputRSS () {
+        header('Content-Type: text/xml; charset=UTF-8');
+        echo $this->rss();
     }
 
     /**

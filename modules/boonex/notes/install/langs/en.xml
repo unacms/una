@@ -103,10 +103,6 @@
     <string name="_bx_notes_menu_title_entries_my"><![CDATA[My Notes Action Menu]]></string>
     <string name="_bx_notes_menu_set_title_entries_my"><![CDATA[My Notes Menu]]></string>
 
-	<string name="_bx_notes_txt_error_entry_creation"><![CDATA[Note creation failed]]></string>
-	<string name="_bx_notes_txt_error_entry_update"><![CDATA[Note update failed]]></string>
-	<string name="_bx_notes_txt_error_entry_delete"><![CDATA[Note delete failed]]></string>
-	<string name="_bx_notes_txt_error_entry_is_not_defined"><![CDATA[Note isn't defined]]></string>    
     <string name="_bx_notes_txt_sample_single"><![CDATA[note]]></string>
 
 </resources>

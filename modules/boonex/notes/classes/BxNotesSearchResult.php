@@ -47,6 +47,7 @@ class BxNotesSearchResult extends BxTemplSearchResult
             'ident' => 'id',
         );
 
+        $this->sFilterName = 'bx_notes_filter';
         $this->aGetParams = array($this->sUnitViewParamName);
         $this->sUnitTemplate = $this->aUnitViews[$this->sUnitViewDefault];
         if (isset($this->aUnitViews[bx_get($this->sUnitViewParamName)]))
@@ -65,7 +66,7 @@ class BxNotesSearchResult extends BxTemplSearchResult
 
                 $this->sBrowseUrl = "search/?q=" . $sValue;
                 $this->aCurrent['title'] = _t('_bx_notes_page_title_search_results', $sValue);
-                unset($this->aCurrent['rss']);
+                unset($this->aCurrent['rss']); // no RSS for search results
                 break;
 
             case 'author':
@@ -79,16 +80,19 @@ class BxNotesSearchResult extends BxTemplSearchResult
                 $this->aCurrent['restriction']['author']['value'] = $oProfileAuthor->id();
 
                 $this->sBrowseUrl = 'page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id={profile_id}';
-                $this->aCurrent['title'] = _t('_bx_notes_page_title_browse_by_author');               
+                $this->aCurrent['title'] = _t('_bx_notes_page_title_browse_by_author');
+                $this->aCurrent['rss']['link'] = 'modules/?r=notes/rss/' . $sMode . '/' . $oProfileAuthor->id();
                 break;
             
             case 'public':
             case '':
                 $this->sBrowseUrl = 'page.php?i=' . $CNF['URI_HOME'];
                 $this->aCurrent['title'] = _t('_bx_notes_page_title_browse_recent');
+                $this->aCurrent['rss']['link'] = 'modules/?r=notes/rss/' . $sMode;
                 break;
 
             default:
+                $sMode = '';
                 $this->isError = true;
         }
 
@@ -112,17 +116,6 @@ class BxNotesSearchResult extends BxTemplSearchResult
             $this->aCurrent['join'] = array_merge($this->aCurrent['join'], $a['join']);
 
         $this->setProcessPrivateContent(false);
-
-        // set rss links if required
-        if (isset($this->aCurrent['rss']))
-            $this->aCurrent['rss']['link'] = $this->sBrowseUrl;
-
-        if (bx_get('rss'))
-            $this->aCurrent['paginate']['perPage'] = getParam('bx_notes_rss_num');
-
-        $this->sFilterName = 'bx_notes_filter';
-
-        // $this->aCurrent['paginate']['perPage'] = $this->oModule->_oDb->getParam('bx_groups_perpage_browse'); // TODO:
 
         parent::__construct();
     }
@@ -168,6 +161,25 @@ class BxNotesSearchResult extends BxTemplSearchResult
 
         bx_import('BxDolPermalinks');
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $a[$CNF['FIELD_ID']]);
+    }
+
+    function getRssPageUrl () 
+    {
+        if (false === parent::getRssPageUrl())
+            return false;
+
+        bx_import('BxDolPermalinks');
+        $oPermalinks = BxDolPermalinks::getInstance();
+        return BX_DOL_URL_ROOT . $oPermalinks->permalink($this->aCurrent['rss']['link']);
+    }
+
+    function rss () 
+    {        
+        if (!isset($this->aCurrent['rss']))
+            return '';
+
+        $this->aCurrent['paginate']['perPage'] = getParam('bx_notes_rss_num');
+        return parent::rss();
     }
 
     function _getPseud () 

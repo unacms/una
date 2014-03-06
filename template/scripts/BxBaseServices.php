@@ -42,6 +42,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService {
     public function _serviceProfileFunc ($sFunc, $iContentId) {
         if (!$iContentId)
             return false;
+        bx_import('BxDolAccount');
         if (!($oAccount = BxDolAccount::getInstance($iContentId)))
             return false;        
         return $oAccount->$sFunc();

@@ -20,7 +20,7 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
-        parent::BxDolTemplate();
+        parent::__construct();
 
         $this->_sRootPath = BX_DOL_DIR_STUDIO;
         $this->_sRootUrl = BX_DOL_URL_STUDIO;

@@ -97,11 +97,6 @@
     <string name="_bx_persons_menu_item_title_system_more_actions"><![CDATA[More Actions]]></string>
     <string name="_bx_persons_menu_item_title_more_actions"><![CDATA[]]></string>
 
-	<string name="_bx_persons_txt_error_profile_creation"><![CDATA[Profile creation failed]]></string>
-	<string name="_bx_persons_txt_error_profile_update"><![CDATA[Profile update failed]]></string>
-	<string name="_bx_persons_txt_error_profile_delete"><![CDATA[Profile delete failed]]></string>
-	<string name="_bx_persons_txt_error_profile_is_not_defined"><![CDATA[Profile isn't defined]]></string>
-
     <string name="_bx_persons_txt_account_pending"><![CDATA[This profile is pending approval, please wait until it is activated.]]></string>
     <string name="_bx_persons_txt_account_suspended"><![CDATA[This profile is suspended.]]></string>
     <string name="_bx_persons_txt_friend_pending_initiator"><![CDATA[Your friend request to this profile is awaiting confirmation.]]></string>

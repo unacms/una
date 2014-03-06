@@ -54,16 +54,18 @@ class BxNotesFormsEntryHelper extends BxDolProfileForms
             if (!$oForm->isValid())
                 return $oForm->getCode();
             else
-                return MsgBox(_t('_bx_notes_txt_error_entry_creation'));
+                return MsgBox(_t('_sys_txt_error_entry_creation'));
         }
+
+        if (!($aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId)))
+            return MsgBox(_t('_sys_txt_error_occured'));
 
         // perform action 
         $this->_oModule->checkAllowedAdd(true);
 
         // alert
-        //TODO: Pass a valid entry privacy view group.
         bx_import('BxDolPrivacy');
-        bx_alert($this->_oModule->getName(), 'added', $iContentId, false, array('privacy_view' => BX_DOL_PG_ALL));
+        bx_alert($this->_oModule->getName(), 'added', $iContentId, false, array('privacy_view' => $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]));
 
         // redirect 
         $this->_redirectAndExit('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId);
@@ -82,7 +84,7 @@ class BxNotesFormsEntryHelper extends BxDolProfileForms
         // get content data and profile info
         list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         if (!$aContentInfo)
-            return MsgBox(_t('_bx_notes_txt_error_entry_is_not_defined')); 
+            return MsgBox(_t('_sys_txt_error_entry_is_not_defined')); 
 
         // check access
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedEdit($aContentInfo)))
@@ -104,8 +106,11 @@ class BxNotesFormsEntryHelper extends BxDolProfileForms
             if (!$oForm->isValid())
                 return $oForm->getCode();
             else
-                return MsgBox(_t('_bx_notes_txt_error_entry_update')); 
+                return MsgBox(_t('_sys_txt_error_entry_update')); 
         }
+
+        if (!($aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId)))
+            return MsgBox(_t('_sys_txt_error_occured'));
 
         // change profile to 'pending' only if profile is 'active'
         if ($oProfile->isActive() && !empty($aTrackTextFieldsChanges['changed_fields']))
@@ -115,9 +120,8 @@ class BxNotesFormsEntryHelper extends BxDolProfileForms
         $this->_oModule->checkAllowedEdit($aContentInfo, true);
 
         // create an alert
-        //TODO: Pass a valid entry privacy view group.
         bx_import('BxDolPrivacy');
-        bx_alert($this->_oModule->getName(), 'edited', $aContentInfo[$CNF['FIELD_ID']], false, array('privacy_view' => BX_DOL_PG_MEMBERS)); 
+        bx_alert($this->_oModule->getName(), 'edited', $aContentInfo[$CNF['FIELD_ID']], false, array('privacy_view' => $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']])); 
 
         // redirect 
         $this->_redirectAndExit('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
@@ -137,7 +141,7 @@ class BxNotesFormsEntryHelper extends BxDolProfileForms
         // get content data and profile info
         list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         if (!$aContentInfo)
-            return MsgBox(_t('_bx_notes_txt_error_entry_is_not_defined')); 
+            return MsgBox(_t('_sys_txt_error_entry_is_not_defined')); 
 
         // check access
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedDelete($aContentInfo)))
@@ -157,7 +161,7 @@ class BxNotesFormsEntryHelper extends BxDolProfileForms
             if (!$oForm->isValid())
                 return $oForm->getCode();
             else
-                return MsgBox(_t('_bx_notes_txt_error_entry_delete'));
+                return MsgBox(_t('_sys_txt_error_entry_delete'));
         }
 
         // perform action
@@ -181,7 +185,7 @@ class BxNotesFormsEntryHelper extends BxDolProfileForms
         // get content data and profile info
         list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         if (!$aContentInfo)
-            return MsgBox(_t('_bx_notes_txt_error_entry_is_not_defined')); 
+            return MsgBox(_t('_sys_txt_error_entry_is_not_defined')); 
 
         // check access
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedView($aContentInfo)))
@@ -210,7 +214,7 @@ class BxNotesFormsEntryHelper extends BxDolProfileForms
         // get content data and profile info
         list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         if (!$aContentInfo)
-            return MsgBox(_t('_bx_notes_txt_error_entry_is_not_defined')); 
+            return MsgBox(_t('_sys_txt_error_entry_is_not_defined')); 
 
         // check access
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedView($aContentInfo)))
@@ -227,7 +231,7 @@ class BxNotesFormsEntryHelper extends BxDolProfileForms
         // get content data and profile info
         list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         if (!$aContentInfo)
-            return MsgBox(_t('_bx_notes_txt_error_entry_is_not_defined')); 
+            return MsgBox(_t('_sys_txt_error_entry_is_not_defined')); 
 
         // check access
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedView($aContentInfo)))
@@ -249,7 +253,7 @@ class BxNotesFormsEntryHelper extends BxDolProfileForms
         
         $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
         if (!$aContentInfo)
-            return array (false, false, false);
+            return array (false, false);
 
         $oProfile = BxDolProfile::getInstance($aContentInfo[$CNF['FIELD_AUTHOR']]);
         if (!$oProfile) {
