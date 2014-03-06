@@ -313,11 +313,11 @@ class BxNotesModule extends BxDolModule
 
     // ====== ACTION METHODS
 
-    function actionBrowse ($sMode = '') 
+    public function actionBrowse ($sMode = '') 
     {
         $sMode = bx_process_input($sMode);
 
-        if (CHECK_ACTION_RESULT_ALLOWED !== $this->isAllowedBrowse()) {
+        if (CHECK_ACTION_RESULT_ALLOWED !== $this->checkAllowedBrowse()) {
             $this->_oTemplate->displayAccessDenied ();
             return;
         }
@@ -354,22 +354,15 @@ class BxNotesModule extends BxDolModule
 
     // ====== PERMISSION METHODS
 
-    function _checkModeratorAccess ($isPerformAction = false) 
-    {
-        // check moderator ACL
-        $aCheck = checkActionModule($this->_iProfileId, 'edit any entry', $this->getName(), $isPerformAction); 
-        return $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED;
-    }
-
     /**
-     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make "true === " checking.
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
      */
-    function isAllowedView ($aDataEntry, $isPerformAction = false) 
+    public function checkAllowedView ($aDataEntry, $isPerformAction = false) 
     {
         $CNF = &$this->_oConfig->CNF;
 
         // moderator and owner always have access
-        if ($aDataEntry[$CNF['FIELD_AUTHOR']] == $this->_iProfileId || $this->_checkModeratorAccess($isPerformAction))
+        if ($aDataEntry[$CNF['FIELD_AUTHOR']] == $this->_iProfileId || $this->_isModerator($isPerformAction))
             return CHECK_ACTION_RESULT_ALLOWED;
 
         // check ACL
@@ -387,17 +380,17 @@ class BxNotesModule extends BxDolModule
     }
 
     /**
-     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make "true === " checking.
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
      */
-    function isAllowedBrowse () 
+    public function checkAllowedBrowse () 
     {
         return CHECK_ACTION_RESULT_ALLOWED;
     }
 
     /**
-     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. 
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
      */
-    function isAllowedAdd ($isPerformAction = false) 
+    public function checkAllowedAdd ($isPerformAction = false) 
     {
         // check ACL
         $aCheck = checkActionModule($this->_iProfileId, 'create entry', $this->getName(), $isPerformAction);
@@ -407,23 +400,23 @@ class BxNotesModule extends BxDolModule
     }
 
     /**
-     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. 
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
      */
-    function isAllowedEdit ($aDataEntry, $isPerformAction = false) 
+    public function checkAllowedEdit ($aDataEntry, $isPerformAction = false) 
     {
         // moderator and owner always have access
-        if ($aDataEntry[$this->_oConfig->CNF['FIELD_AUTHOR']] == $this->_iProfileId || $this->_checkModeratorAccess($isPerformAction))
+        if ($aDataEntry[$this->_oConfig->CNF['FIELD_AUTHOR']] == $this->_iProfileId || $this->_isModerator($isPerformAction))
             return CHECK_ACTION_RESULT_ALLOWED;
         return _t('_sys_txt_access_denied');
     }
 
     /**
-     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. 
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
      */
-    function isAllowedDelete (&$aDataEntry, $isPerformAction = false) 
+    public function checkAllowedDelete (&$aDataEntry, $isPerformAction = false) 
     {
         // moderator always has access
-        if ($this->_checkModeratorAccess($isPerformAction))
+        if ($this->_isModerator($isPerformAction))
             return CHECK_ACTION_RESULT_ALLOWED;
 
         // check ACL
@@ -435,9 +428,9 @@ class BxNotesModule extends BxDolModule
     }
 
     /**
-     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. 
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
      */
-    function isAllowedSetThumb () 
+    public function checkAllowedSetThumb () 
     {
         // check ACL
         $aCheck = checkActionModule($this->_iProfileId, 'set thumb', $this->getName(), false);
@@ -446,6 +439,14 @@ class BxNotesModule extends BxDolModule
         return CHECK_ACTION_RESULT_ALLOWED;
     }
 
+    // ====== PROTECTED METHODS
+
+    protected function _isModerator ($isPerformAction = false) 
+    {
+        // check moderator ACL
+        $aCheck = checkActionModule($this->_iProfileId, 'edit any entry', $this->getName(), $isPerformAction); 
+        return $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED;
+    }
 
     protected function _serviceBrowse ($sMode, $aParams = false) 
     {
@@ -464,7 +465,7 @@ class BxNotesModule extends BxDolModule
             return false;
     }
 
-    public function _serviceEntityForm ($sFormMethod, $iContentId = 0) 
+    protected function _serviceEntityForm ($sFormMethod, $iContentId = 0) 
     {
         if (!$iContentId)
             $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);

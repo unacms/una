@@ -52,11 +52,11 @@ class BxNotesPageEntry extends BxTemplPage
             exit;
         }
 
-        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->isAllowedView($this->_aContentInfo))) {
+        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedView($this->_aContentInfo))) {
 			$this->_oTemplate->displayAccessDenied($sMsg);
             exit;
         }
-        $this->_oModule->isAllowedView($this->_aContentInfo, true);
+        $this->_oModule->checkAllowedView($this->_aContentInfo, true);
 
         return parent::getCode ();
     }

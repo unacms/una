@@ -33,7 +33,7 @@ class BxNotesTemplate extends BxDolModuleTemplate
         $oModule = BxDolModule::getInstance(self::$MODULE);
         $CNF = &$oModule->_oConfig->CNF;
 
-        if ($isCheckPrivateContent && CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $oModule->isAllowedView($aData))) {
+        if ($isCheckPrivateContent && CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $oModule->checkAllowedView($aData))) {
             $aVars = array (
                 'summary' => $sMsg,
             );

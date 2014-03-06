@@ -76,7 +76,7 @@ class BxNotesFormEntry extends BxTemplFormView
                 'summary_id' => $CNF['FIELD_SUMMARY_ID'],
                 'thumb_id' => $aContentInfo[$CNF['FIELD_THUMB']],
                 'bx_if:set_thumb' => array (
-                    'condition' => CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->isAllowedSetThumb(),
+                    'condition' => CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedSetThumb(),
                     'content' => array (
                         'name_thumb' => $CNF['FIELD_THUMB'],
                     ),
@@ -96,7 +96,7 @@ class BxNotesFormEntry extends BxTemplFormView
         $aValsToAdd[$CNF['FIELD_ADDED']] = time();
         $aValsToAdd[$CNF['FIELD_CHANGED']] = time();
 
-        if (CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->isAllowedSetThumb()) {
+        if (CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedSetThumb()) {
             $aThumb = isset($_POST[$CNF['FIELD_THUMB']]) ? bx_process_input ($_POST[$CNF['FIELD_THUMB']], BX_DATA_INT) : false;
             $aValsToAdd[$CNF['FIELD_THUMB']] = 0;
             if (!empty($aThumb) && is_array($aThumb) && ($iFileThumb = array_pop($aThumb)))
@@ -114,7 +114,7 @@ class BxNotesFormEntry extends BxTemplFormView
 
         $aValsToAdd[$CNF['FIELD_CHANGED']] = time();
 
-        if (CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->isAllowedSetThumb()) {
+        if (CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedSetThumb()) {
             $aThumb = bx_process_input ($_POST[$CNF['FIELD_THUMB']], BX_DATA_INT);
             $aValsToAdd[$CNF['FIELD_THUMB']] = 0;
             if (!empty($aThumb) && is_array($aThumb) && ($iFileThumb = array_pop($aThumb)))

@@ -34,7 +34,7 @@ class BxNotesFormsEntryHelper extends BxDolProfileForms
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         // check access
-        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->isAllowedAdd()))
+        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedAdd()))
             return MsgBox($sMsg);
 
         // check and display form
@@ -58,7 +58,7 @@ class BxNotesFormsEntryHelper extends BxDolProfileForms
         }
 
         // perform action 
-        $this->_oModule->isAllowedAdd(true);
+        $this->_oModule->checkAllowedAdd(true);
 
         // alert
         //TODO: Pass a valid entry privacy view group.
@@ -85,7 +85,7 @@ class BxNotesFormsEntryHelper extends BxDolProfileForms
             return MsgBox(_t('_bx_notes_txt_error_entry_is_not_defined')); 
 
         // check access
-        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->isAllowedEdit($aContentInfo)))
+        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedEdit($aContentInfo)))
             return MsgBox($sMsg);
         
         // check and display form 
@@ -112,7 +112,7 @@ class BxNotesFormsEntryHelper extends BxDolProfileForms
             $oProfile->disapprove(BX_PROFILE_ACTION_AUTO);
 
         // perform action
-        $this->_oModule->isAllowedEdit($aContentInfo, true);
+        $this->_oModule->checkAllowedEdit($aContentInfo, true);
 
         // create an alert
         //TODO: Pass a valid entry privacy view group.
@@ -140,7 +140,7 @@ class BxNotesFormsEntryHelper extends BxDolProfileForms
             return MsgBox(_t('_bx_notes_txt_error_entry_is_not_defined')); 
 
         // check access
-        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->isAllowedDelete($aContentInfo)))
+        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedDelete($aContentInfo)))
             return MsgBox($sMsg);
         
         // check and display form 
@@ -161,7 +161,7 @@ class BxNotesFormsEntryHelper extends BxDolProfileForms
         }
 
         // perform action
-        $this->_oModule->isAllowedDelete($aContentInfo, true);
+        $this->_oModule->checkAllowedDelete($aContentInfo, true);
 
         // create an alert
         bx_alert($this->_oModule->getName(), 'deleted', $aContentInfo[$CNF['FIELD_ID']]);
@@ -184,7 +184,7 @@ class BxNotesFormsEntryHelper extends BxDolProfileForms
             return MsgBox(_t('_bx_notes_txt_error_entry_is_not_defined')); 
 
         // check access
-        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->isAllowedView($aContentInfo)))
+        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedView($aContentInfo)))
             return MsgBox($sMsg);
         
         // get form 
@@ -193,7 +193,7 @@ class BxNotesFormsEntryHelper extends BxDolProfileForms
             return MsgBox(_t('_sys_txt_error_occured'));
 
         // perform action
-        $this->_oModule->isAllowedView($aContentInfo);
+        $this->_oModule->checkAllowedView($aContentInfo);
 
         // display profile
         $oForm->initChecker($aContentInfo);
@@ -213,7 +213,7 @@ class BxNotesFormsEntryHelper extends BxDolProfileForms
             return MsgBox(_t('_bx_notes_txt_error_entry_is_not_defined')); 
 
         // check access
-        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->isAllowedView($aContentInfo)))
+        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedView($aContentInfo)))
             return MsgBox($sMsg);
 
         return $aContentInfo[$CNF['FIELD_TEXT']];
@@ -230,7 +230,7 @@ class BxNotesFormsEntryHelper extends BxDolProfileForms
             return MsgBox(_t('_bx_notes_txt_error_entry_is_not_defined')); 
 
         // check access
-        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->isAllowedView($aContentInfo)))
+        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedView($aContentInfo)))
             return MsgBox($sMsg);
 
         return $this->_oModule->_oTemplate->entryText($aContentInfo);

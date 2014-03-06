@@ -53,11 +53,11 @@ class BxNotesConfig extends BxDolModuleConfig
 
         'MENU_ITEM_TO_METHOD' => array (
             'bx_notes_my' => array (
-                'create-note' => 'isAllowedAdd',
+                'create-note' => 'checkAllowedAdd',
             ),
             'bx_notes_view' => array (
-                'edit-note' => 'isAllowedEdit',
-                'delete-note' => 'isAllowedDelete',
+                'edit-note' => 'checkAllowedEdit',
+                'delete-note' => 'checkAllowedDelete',
             ),
         ),
     );
