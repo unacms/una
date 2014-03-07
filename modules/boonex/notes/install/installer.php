@@ -12,15 +12,17 @@
 bx_import('BxDolStudioInstaller');
 bx_import('BxDolImageTranscoder');
 
-class BxNotesInstaller extends BxDolStudioInstaller {
-
+class BxNotesInstaller extends BxDolStudioInstaller 
+{
     protected $_aTranscoders = array ('bx_notes_preview');
 
-    function __construct($aConfig) {
+    function __construct($aConfig) 
+    {
         parent::__construct($aConfig);
     }
 
-    function enable($aParams) {
+    function enable($aParams) 
+    {
         $aResult = parent::enable($aParams);
 
         if ($aResult['result']) // register it only in case of successful enable
@@ -29,8 +31,8 @@ class BxNotesInstaller extends BxDolStudioInstaller {
         return $aResult;
     }
 
-    function disable($aParams) {
-        
+    function disable($aParams) 
+    {    
         BxDolImageTranscoder::unregisterHandlersArray($this->_aTranscoders);
 
         $aResult = parent::disable($aParams);
@@ -41,15 +43,14 @@ class BxNotesInstaller extends BxDolStudioInstaller {
         return $aResult;
     }
 
-    function install($aParams, $bEnable = false) {
-
+    function install($aParams, $bEnable = false) 
+    {
         return parent::install($aParams, $bEnable);
     }
 
-    function uninstall($aParams, $bDisable = false) {
-
+    function uninstall($aParams, $bDisable = false) 
+    {
         // -- TODO: delete photo files before deleting files tables
-
         return parent::uninstall($aParams, $bDisable);
     }
 }
