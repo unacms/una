@@ -51,10 +51,10 @@ class BxNotesConfig extends BxBaseModTextConfig
             'OBJECT_COMMENTS' => 'bx_notes',
             'OBJECT_PRIVACY_VIEW' => 'bx_notes_allow_view_to',
             'OBJECT_FORM_ENTRY' => 'bx_notes',
-            'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_notes_note_view',
-            'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_notes_note_add',
-            'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => 'bx_notes_note_edit',
-            'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_notes_note_delete',
+            'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_notes_entry_view',
+            'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_notes_entry_add',
+            'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => 'bx_notes_entry_edit',
+            'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_notes_entry_delete',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_notes_view', // actions menu on view entry page
             'OBJECT_MENU_ACTIONS_MY_ENTRIES' => 'bx_notes_my', // actions menu on my entries page
             'OBJECT_MENU_SUBMENU' => 'bx_notes_submenu', // main module submenu

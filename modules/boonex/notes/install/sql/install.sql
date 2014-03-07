@@ -101,10 +101,10 @@ INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attr
 ('bx_notes', 'bx_notes', '_bx_notes_form_entry', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_notes_posts', 'id', '', '', 'do_submit', '', 0, 1, 'BxNotesFormEntry', 'modules/boonex/notes/classes/BxNotesFormEntry.php');
 
 INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`, `title`) VALUES 
-('bx_notes', 'bx_notes_note_add', 'bx_notes', 0, '_bx_notes_form_entry_display_add'),
-('bx_notes', 'bx_notes_note_edit', 'bx_notes', 0, '_bx_notes_form_entry_display_edit'),
-('bx_notes', 'bx_notes_note_delete', 'bx_notes', 0, '_bx_notes_form_entry_display_delete'),
-('bx_notes', 'bx_notes_note_view', 'bx_notes', 1, '_bx_notes_form_entry_display_view');
+('bx_notes', 'bx_notes_entry_add', 'bx_notes', 0, '_bx_notes_form_entry_display_add'),
+('bx_notes', 'bx_notes_entry_edit', 'bx_notes', 0, '_bx_notes_form_entry_display_edit'),
+('bx_notes', 'bx_notes_entry_delete', 'bx_notes', 0, '_bx_notes_form_entry_display_delete'),
+('bx_notes', 'bx_notes_entry_view', 'bx_notes', 1, '_bx_notes_form_entry_display_view');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
 ('bx_notes', 'bx_notes', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_notes_form_entry_input_sys_delete_confirm', '_bx_notes_form_entry_input_delete_confirm', '_bx_notes_form_entry_input_delete_confirm_info', 1, 0, 0, '', '', '', 'Avail', '', '_bx_notes_form_entry_input_delete_confirm_error', '', '', 1, 0),
@@ -116,37 +116,37 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_notes', 'bx_notes', 'allow_view_to', '', '', 0, 'custom', '_bx_notes_form_entry_input_sys_allow_view_to', '_bx_notes_form_entry_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
 
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
-('bx_notes_note_add', 'delete_confirm', 2147483647, 0, 1),
-('bx_notes_note_add', 'title', 2147483647, 1, 2),
-('bx_notes_note_add', 'text', 2147483647, 1, 3),
-('bx_notes_note_add', 'pictures', 2147483647, 1, 4),
-('bx_notes_note_add', 'summary', 2147483647, 1, 5),
-('bx_notes_note_add', 'allow_view_to', 2147483647, 1, 6),
-('bx_notes_note_add', 'do_submit', 2147483647, 1, 7),
+('bx_notes_entry_add', 'delete_confirm', 2147483647, 0, 1),
+('bx_notes_entry_add', 'title', 2147483647, 1, 2),
+('bx_notes_entry_add', 'text', 2147483647, 1, 3),
+('bx_notes_entry_add', 'pictures', 2147483647, 1, 4),
+('bx_notes_entry_add', 'summary', 2147483647, 1, 5),
+('bx_notes_entry_add', 'allow_view_to', 2147483647, 1, 6),
+('bx_notes_entry_add', 'do_submit', 2147483647, 1, 7),
 
-('bx_notes_note_edit', 'delete_confirm', 2147483647, 0, 1),
-('bx_notes_note_edit', 'title', 2147483647, 1, 2),
-('bx_notes_note_edit', 'text', 2147483647, 1, 3),
-('bx_notes_note_edit', 'pictures', 2147483647, 1, 4),
-('bx_notes_note_edit', 'summary', 2147483647, 1, 5),
-('bx_notes_note_edit', 'allow_view_to', 2147483647, 1, 6),
-('bx_notes_note_edit', 'do_submit', 2147483647, 1, 7),
+('bx_notes_entry_edit', 'delete_confirm', 2147483647, 0, 1),
+('bx_notes_entry_edit', 'title', 2147483647, 1, 2),
+('bx_notes_entry_edit', 'text', 2147483647, 1, 3),
+('bx_notes_entry_edit', 'pictures', 2147483647, 1, 4),
+('bx_notes_entry_edit', 'summary', 2147483647, 1, 5),
+('bx_notes_entry_edit', 'allow_view_to', 2147483647, 1, 6),
+('bx_notes_entry_edit', 'do_submit', 2147483647, 1, 7),
 
-('bx_notes_note_view', 'delete_confirm', 2147483647, 0, 0),
-('bx_notes_note_view', 'allow_view_to', 2147483647, 0, 0),
-('bx_notes_note_view', 'do_submit', 2147483647, 0, 0),
-('bx_notes_note_view', 'summary', 2147483647, 0, 0),
-('bx_notes_note_view', 'text', 2147483647, 0, 0),
-('bx_notes_note_view', 'title', 2147483647, 0, 0),
-('bx_notes_note_view', 'pictures', 2147483647, 0, 0),
+('bx_notes_entry_view', 'delete_confirm', 2147483647, 0, 0),
+('bx_notes_entry_view', 'allow_view_to', 2147483647, 0, 0),
+('bx_notes_entry_view', 'do_submit', 2147483647, 0, 0),
+('bx_notes_entry_view', 'summary', 2147483647, 0, 0),
+('bx_notes_entry_view', 'text', 2147483647, 0, 0),
+('bx_notes_entry_view', 'title', 2147483647, 0, 0),
+('bx_notes_entry_view', 'pictures', 2147483647, 0, 0),
 
-('bx_notes_note_delete', 'delete_confirm', 2147483647, 1, 1),
-('bx_notes_note_delete', 'do_submit', 2147483647, 1, 2),
-('bx_notes_note_delete', 'allow_view_to', 2147483647, 0, 0),
-('bx_notes_note_delete', 'pictures', 2147483647, 0, 0),
-('bx_notes_note_delete', 'summary', 2147483647, 0, 0),
-('bx_notes_note_delete', 'text', 2147483647, 0, 0),
-('bx_notes_note_delete', 'title', 2147483647, 0, 0);
+('bx_notes_entry_delete', 'delete_confirm', 2147483647, 1, 1),
+('bx_notes_entry_delete', 'do_submit', 2147483647, 1, 2),
+('bx_notes_entry_delete', 'allow_view_to', 2147483647, 0, 0),
+('bx_notes_entry_delete', 'pictures', 2147483647, 0, 0),
+('bx_notes_entry_delete', 'summary', 2147483647, 0, 0),
+('bx_notes_entry_delete', 'text', 2147483647, 0, 0),
+('bx_notes_entry_delete', 'title', 2147483647, 0, 0);
 
 
 -- STUDIO PAGE & WIDGET

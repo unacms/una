@@ -18,7 +18,7 @@ TRUNCATE TABLE `bx_notes_photos_resized`;
 
 -- PAGES
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_notes';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_notes' OR `object` IN('bx_notes_create_note', 'bx_notes_edit_note', 'bx_notes_view_note', 'bx_notes_view_note_comments', 'bx_notes_home', 'bx_notes_featured', 'bx_notes_author');
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_notes' OR `object` IN('bx_notes_create_entry', 'bx_notes_edit_entry', 'bx_notes_delete_entry', 'bx_notes_view_entry', 'bx_notes_view_entry_comments', 'bx_notes_home', 'bx_notes_featured', 'bx_notes_author');
 
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_notes';
