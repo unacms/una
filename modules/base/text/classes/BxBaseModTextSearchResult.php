@@ -26,7 +26,6 @@ class BxBaseModTextSearchResult extends BxTemplSearchResult
         $this->sUnitTemplate = $this->aUnitViews[$this->sUnitViewDefault];
         if (isset($this->aUnitViews[bx_get($this->sUnitViewParamName)]))
             $this->sUnitTemplate = $this->aUnitViews[bx_get($this->sUnitViewParamName)];
-        $this->oModule = $this->getMain();
     }
 
     function getMain() 

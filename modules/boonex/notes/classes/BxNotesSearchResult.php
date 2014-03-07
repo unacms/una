@@ -45,6 +45,7 @@ class BxNotesSearchResult extends BxBaseModTextSearchResult
         );
 
         $this->sFilterName = 'bx_notes_filter';
+        $this->oModule = $this->getMain();
 
         $oProfileAuthor = null;
 
