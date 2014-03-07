@@ -145,6 +145,7 @@ class BxBaseEditorTinyMCE extends BxDolEditor {
 
             $sScript = "<script>
                 if ('undefined' == typeof(jQuery(document).tinymce)) {
+                    $.getScript('" . bx_js_string(BX_DOL_URL_BASE . 'inc/js/editor.tinymce.js', BX_ESCAPE_STR_APOS) . "');
                     $.getScript('" . bx_js_string(BX_DOL_URL_PLUGINS . 'tiny_mce/jquery.tinymce.js', BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
                         $sInitEditor
                     });
@@ -175,7 +176,7 @@ class BxBaseEditorTinyMCE extends BxDolEditor {
             return '';
         if ($this->_bJsCssAdded)
             return '';
-        $this->_oTemplate->addJs(BX_DOL_URL_PLUGINS . 'tiny_mce/jquery.tinymce.js');
+        $this->_oTemplate->addJs(array('editor.tinymce.js', BX_DOL_URL_PLUGINS . 'tiny_mce/jquery.tinymce.js'));
         $this->_bJsCssAdded = true;
         return '';
     }
