@@ -1,5 +1,5 @@
 
--- TABLE: NOTES
+-- TABLE: entries
 
 CREATE TABLE IF NOT EXISTS `bx_notes_posts` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `bx_notes_posts` (
   PRIMARY KEY (`id`)
 );
 
--- TABLE: STORAGES & TRANSCODERS
+-- TABLE: storages & transcoders
 
 CREATE TABLE IF NOT EXISTS `bx_notes_photos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -52,7 +52,8 @@ CREATE TABLE IF NOT EXISTS `bx_notes_photos_resized` (
   UNIQUE KEY `remote_id` (`remote_id`)
 );
 
--- TABLE: COMMENTS
+-- TABLE: comments
+
 CREATE TABLE IF NOT EXISTS `bx_notes_cmts` (
   `cmt_id` int(11) NOT NULL AUTO_INCREMENT,
   `cmt_parent_id` int(11) NOT NULL DEFAULT '0',
@@ -70,7 +71,8 @@ CREATE TABLE IF NOT EXISTS `bx_notes_cmts` (
   KEY `cmt_object_id` (`cmt_object_id`,`cmt_parent_id`)
 );
 
--- TABLE: VOTES
+-- TABLE: votes
+
 CREATE TABLE IF NOT EXISTS `bx_notes_votes` (
   `object_id` int(11) NOT NULL default '0',
   `count` int(11) NOT NULL default '0',
@@ -87,7 +89,8 @@ CREATE TABLE IF NOT EXISTS `bx_notes_votes_track` (
   KEY `vote` (`object_id`, `author_nip`)
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;
 
--- TABLE: VIEWS
+-- TABLE: views
+
 CREATE TABLE `bx_notes_views_track` (
   `object_id` int(11) NOT NULL default '0',
   `viewer_id` int(11) NOT NULL default '0',
@@ -97,6 +100,7 @@ CREATE TABLE `bx_notes_views_track` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- FORMS
+
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_notes', 'bx_notes', '_bx_notes_form_entry', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_notes_posts', 'id', '', '', 'do_submit', '', 0, 1, 'BxNotesFormEntry', 'modules/boonex/notes/classes/BxNotesFormEntry.php');
 
@@ -148,8 +152,7 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_notes_entry_delete', 'text', 2147483647, 0, 0),
 ('bx_notes_entry_delete', 'title', 2147483647, 0, 0);
 
-
--- STUDIO PAGE & WIDGET
+-- STUDIO: page & widget
 
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
 (3, 'bx_notes', '_bx_notes', '_bx_notes', 'bx_notes@modules/boonex/notes/|std-pi.png');

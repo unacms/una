@@ -48,6 +48,8 @@ class BxNotesInstaller extends BxDolStudioInstaller {
 
     function uninstall($aParams, $bDisable = false) {
 
+        // -- TODO: delete photo files before deleting files tables
+
         return parent::uninstall($aParams, $bDisable);
     }
 }
