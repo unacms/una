@@ -1,10 +1,11 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 define('BX_DOL_SEARCH_RESULTS_PER_PAGE_DEFAULT', 10);
 
@@ -14,13 +15,13 @@ define('BX_DOL_SEARCH_RESULTS_PER_PAGE_DEFAULT', 10);
  * Allows present content in main search area for all modules.
  *
  * To add taking part content from your module to search area you need add a record to `sys_objects_search` table:
- * \code
- * ID - autoincremented id for internal usage
- * ObjectName - your unique module name, with vendor prefix, lowercase and spaces are underscored
- * Title - language key for module's choicer in global search form
- * ClassName - class name which is responsible for search process ad showing result for found results
- * ClassPath - file where your ClassName is stored (if class is stored in template folder then you can use key {tmpl})
- * \endcode
+ * @code
+ *   ID - autoincremented id for internal usage
+ *   ObjectName - your unique module name, with vendor prefix, lowercase and spaces are underscored
+ *   Title - language key for module's choicer in global search form
+ *   ClassName - class name which is responsible for search process ad showing result for found results
+ *   ClassPath - file where your ClassName is stored (if class is stored in template folder then you can use key {tmpl})
+ * @endcode
  *
  * For using this class you should have unit of BxDolSearchResult class (see description below) with method processing which is responsible for processing of search request.
  *
@@ -33,17 +34,18 @@ define('BX_DOL_SEARCH_RESULTS_PER_PAGE_DEFAULT', 10);
  * no alerts available
  *
  */
-class BxDolSearch extends BxDol {
-    var $aClasses = array(); ///< array of all search classes
-    var $aChoice  = array(); ///< array of current search classes which were choosen in search area
+class BxDolSearch extends BxDol 
+{
+    protected $aClasses = array(); ///< array of all search classes
+    protected $aChoice  = array(); ///< array of current search classes which were choosen in search area
 
     /**
      * Constructor
      * @param array $aChoice - array of choosen classes (will take a part only existing in `sys_objects_search` table)
      */
-
-    function BxDolSearch ($aChoice = '') {
-        parent::BxDol();
+    function __construct ($aChoice = '') 
+    {
+        parent::__construct();
 
         $this->aClasses = BxDolDb::getInstance()->fromCache('sys_objects_search', 'getAllWithKey',
            'SELECT `ID` as `id`,
@@ -67,7 +69,8 @@ class BxDolSearch extends BxDol {
     /**
      * create units for all classes and calling their processing methods
      */
-    function response () {
+    function response () 
+    {
         $sCode = '';
         foreach ($this->aChoice as $sKey => $aValue) {
             if (!class_exists($aValue['class'])) {
@@ -81,7 +84,8 @@ class BxDolSearch extends BxDol {
         return $sCode;
     }
 
-    function getEmptyResult () {
+    function getEmptyResult () 
+    {
         $sKey = _t('_Empty');
         return DesignBoxContent($sKey, MsgBox($sKey), 1);
     }
@@ -98,7 +102,7 @@ class BxDolSearch extends BxDol {
  * 1. Extends your own search class from this one (or from BxBaseSearchResult or BxBaseSearchResultSharedMedia classes)
  * 2. Set necessary fields of class (using as example BxFilesSearch):
  *
- * \code
+ * @code
  *
  *  // main field of search class
  *  $this->aCurrent = array(
@@ -185,16 +189,7 @@ class BxDolSearch extends BxDol {
  *  // unique identificator from `sys_objects_search` table
  *  var $id;
  *
- *  // indicator of rate connection
- *  var $iRate
- *
- *  // rate object field
- *  var $oRate;
- *
- *  // indicator of connection parts in display search data (for function addCustomParts)
- *  var $bCustomParts;
- *
- * \endcode
+ * @endcode
  *
  * Memberships/ACL:
  * Doesn't depend on user's membership.
@@ -206,26 +201,22 @@ class BxDolSearch extends BxDol {
 
 class BxDolSearchResult implements iBxDolReplaceable
 {
-    var $aCurrent;
-    var $aPseud;
-    var $id;
+    public $aCurrent; ///< search results configuration
 
-    var $iRate = 1;
-    var $oRate = null;
+    protected $aPseud; ///< array of fields renamings
+    protected $id; ///< unique identificator from `sys_objects_search` table
+    protected $bDisplayEmptyMsg = false; ///< display empty message instead of nothing, when no results
+    protected $sDisplayEmptyMsgKey = ''; ///< custom empty message language key, instead of default "empty" message
+    protected $bProcessPrivateContent = true; ///< check each item for privacy, if view isn't allowed then display private view instead
 
-    var $bCustomParts = false;
-    var $bDisplayEmptyMsg = false;
-    var $sDisplayEmptyMsgKey = '';
-
-    var $bProcessPrivateContent = true;
-
-    protected $_aMarkers = array ();
+    protected $_aMarkers = array (); ///< markers to replace somewhere, usually title and browse url (defined in custom class)
 
     /**
      * constructor
      * filling identificator field
      */
-    function BxDolSearchResult () {
+    function __construct () 
+    {
         if (isset($this->aPseud['id']))
             $this->aCurrent['ident'] = $this->aPseud['id'];
     }
@@ -235,7 +226,8 @@ class BxDolSearchResult implements iBxDolReplaceable
      * @param $b - boolan value to enable or disable 'empty' message
      * @param $sLangKey [optional] - custom 'empty' message
      */
-    public function setDisplayEmptyMsg($b, $sLangKey = '') {
+    public function setDisplayEmptyMsg($b, $sLangKey = '') 
+    {
         $this->bDisplayEmptyMsg = $b;
         if ($sLangKey)
            $this->sDisplayEmptyMsgKey = $sLangKey;
@@ -245,7 +237,8 @@ class BxDolSearchResult implements iBxDolReplaceable
      * Perform privacy checking for every unit
      * @param $b - boolan value to enable or disable privacy checking
      */
-    public function setProcessPrivateContent ($b) {
+    public function setProcessPrivateContent ($b) 
+    {
         $this->bProcessPrivateContent = $b;
     }
 
@@ -253,7 +246,8 @@ class BxDolSearchResult implements iBxDolReplaceable
      * Get html box of search results (usually used in grlobal search)
      * @return html code
      */
-    function processing () {
+    function processing () 
+    {
         $sCode = $this->displayResultBlock();
         if ($this->aCurrent['paginate']['num'] > 0) {
             $sPaginate = $this->showPagination();
@@ -269,7 +263,8 @@ class BxDolSearchResult implements iBxDolReplaceable
      * Get html output of search result
      * @return html code
      */
-    function displayResultBlock () {
+    function displayResultBlock () 
+    {
         $aData = $this->getSearchData();
         if (count($aData) > 0) {
             $sCode .= $this->addCustomParts();
@@ -284,14 +279,16 @@ class BxDolSearchResult implements iBxDolReplaceable
      * Add different code before html output (usually redeclared)
      * no return result
      */
-    function addCustomParts () {
+    function addCustomParts () 
+    {
 
     }
 
     /**
      * Get XML string for rss output
      */
-    function rss () {
+    function rss () 
+    {
         if (!isset($this->aCurrent['rss']['fields']) || !isset($this->aCurrent['rss']['link']))
             return '';
 
@@ -318,7 +315,8 @@ class BxDolSearchResult implements iBxDolReplaceable
     /**
      * Output RSS XML with XML header
      */
-    function outputRSS () {
+    function outputRSS () 
+    {
         header('Content-Type: text/xml; charset=UTF-8');
         echo $this->rss();
     }
@@ -326,7 +324,8 @@ class BxDolSearchResult implements iBxDolReplaceable
     /**
      * Return rss unit link (redeclared)
      */
-    function getRssUnitLink (&$a) {
+    function getRssUnitLink (&$a) 
+    {
         // override this functions to return permalink to rss unit
     }
 
@@ -338,7 +337,8 @@ class BxDolSearchResult implements iBxDolReplaceable
      * @param boolean $bRenameMode indicator for renaming and unsetting fields from field of class $this->aPseud
      * return $sqlUnit sql code and unsetting elements from aPseud field
      */
-    function setFieldUnit ($sFieldName, $sTableName, $sOperator = '', $bRenameMode = true) {
+    function setFieldUnit ($sFieldName, $sTableName, $sOperator = '', $bRenameMode = true) 
+    {
         if (strlen($sOperator) > 0) {
             $sqlUnit  = "$sOperator(`$sTableName`.`$sFieldName`)";
         }
@@ -360,7 +360,8 @@ class BxDolSearchResult implements iBxDolReplaceable
      * @param array $aData array of every search unit
      * return html code
      */
-    function displaySearchUnit ($aData) {
+    function displaySearchUnit ($aData)     
+    {
 
     }
 
@@ -370,14 +371,16 @@ class BxDolSearchResult implements iBxDolReplaceable
      * $param $sPaginate html code of paginate
      * return html code
      */
-    function displaySearchBox ($sCode, $sPaginate = '') {
+    function displaySearchBox ($sCode, $sPaginate = '') 
+    {
 
     }
 
     /**
      * Get html code of pagination
      */
-    function showPagination ($bAdmin = false, $bChangePage = true, $bPageReload = true) {
+    function showPagination ($bAdmin = false, $bChangePage = true, $bPageReload = true) 
+    {
 
     }
 
@@ -385,7 +388,8 @@ class BxDolSearchResult implements iBxDolReplaceable
      * Get array of data with search results
      * return array with data
      */
-    function getSearchData () {
+    function getSearchData () 
+    {
         $this->aPseud = $this->_getPseud();
         $this->setConditionParams();
         if ($this->aCurrent['paginate']['num'] > 0) {
@@ -399,7 +403,8 @@ class BxDolSearchResult implements iBxDolReplaceable
      * @param boolean #bREnameMode indicator of renmaing fields
      * return array with joinFields, ownFields, groupBy and join elements
      */
-    function getJoins ($bRenameMode = true) {
+    function getJoins ($bRenameMode = true) 
+    {
         $aSql = array();
         // joinFields & join
         if (isset($this->aCurrent['join']) && is_array($this->aCurrent['join'])) {
@@ -428,13 +433,14 @@ class BxDolSearchResult implements iBxDolReplaceable
      * @param $aParams addon param
      * return $aData multivariate array
      */
-    function getSearchDataByParams ($aParams = '') {
+    function getSearchDataByParams ($aParams = '') 
+    {
         $aSql = array('ownFields'=>'', 'joinFields'=>'', 'order'=>'');
 
         // searchFields
-        foreach ($this->aCurrent['ownFields'] as $sValue) {
+        foreach ($this->aCurrent['ownFields'] as $sValue)
             $aSql['ownFields'] .= $this->setFieldUnit($sValue, $this->aCurrent['table']);
-        }
+
         // joinFields & join
         $aJoins = $this->getJoins();
         if (!empty($aJoins)) {
@@ -445,6 +451,7 @@ class BxDolSearchResult implements iBxDolReplaceable
         }
         else
             $aSql['ownFields'] = trim($aSql['ownFields'], ', ');
+
         // from
         $aSql['from'] = " FROM `{$this->aCurrent['table']}`";
 
@@ -460,13 +467,6 @@ class BxDolSearchResult implements iBxDolReplaceable
         $aSort = $this->getSorting($this->aCurrent['sorting']);
         foreach ($aSort as $sKey => $sValue)
             $aSql[$sKey] .= $sValue;
-
-        // rate part
-        $aRate = $this->getRatePart();
-        if (is_array($aRate)) {
-            foreach ($aRate as $sKey => $sValue)
-               $aSql[$sKey] .= $sValue;
-        }
 
         // execution
         $sqlQuery = "SELECT " . $aSql['ownFields'];
@@ -499,7 +499,8 @@ class BxDolSearchResult implements iBxDolReplaceable
     /**
      * Set class fields condition params and paginate array
      */
-    function setConditionParams() {
+    function setConditionParams() 
+    {
         $aWhere = array();
         $aWhere[] = '1';
 
@@ -536,7 +537,8 @@ class BxDolSearchResult implements iBxDolReplaceable
      * Check number of records on current page
      * return number of records on current page + 1
      */
-    function getNum () {
+    function getNum () 
+    {
         $aJoins = $this->getJoins(false);
         $sqlQuery =  "SELECT * FROM `{$this->aCurrent['table']}` " . (isset($aJoins['join']) ? $aJoins['join'] : '' ). $this->getRestriction() . (isset($aJoins['groupBy']) ? $aJoins['groupBy'] : '') . ' ' . $this->getLimit(true);
         return count(BxDolDb::getInstance()->getAll($sqlQuery));
@@ -546,7 +548,8 @@ class BxDolSearchResult implements iBxDolReplaceable
      * Check restriction params and make condition part of query
      * return $sqlWhere sql code of query for WHERE part
      */
-    function getRestriction () {
+    function getRestriction () 
+    {
         $oDb = BxDolDb::getInstance();
         $sqlWhere = '';
         if (isset($this->aCurrent['restriction'])) {
@@ -586,7 +589,8 @@ class BxDolSearchResult implements iBxDolReplaceable
      * Get limit part of query
      * return $sqlFrom code for limit part pf query
      */
-    function getLimit ($isAddPlusOne = false) {
+    function getLimit ($isAddPlusOne = false) 
+    {
         if (!isset($this->aCurrent['paginate']))
             return;
 
@@ -599,7 +603,8 @@ class BxDolSearchResult implements iBxDolReplaceable
     /**
      * Set sorting field of class
      */
-    function setSorting () {
+    function setSorting () 
+    {
         $this->aCurrent['sorting'] = isset($_GET[$this->aCurrent['name'] . '_mode']) ? $_GET[$this->aCurrent['name'] . '_mode'] : $this->aCurrent['sorting'];
     }
 
@@ -608,7 +613,8 @@ class BxDolSearchResult implements iBxDolReplaceable
      * @param string $sSortType sorting type
      * return array with sql elements order and ownFields
      */
-    function getSorting ($sSortType = 'last') {
+    function getSorting ($sSortType = 'last') 
+    {
         $aOverride = $this->getAlterOrder();
         if (is_array($aOverride) && !empty($aOverride))
             return $aOverride;
@@ -618,18 +624,11 @@ class BxDolSearchResult implements iBxDolReplaceable
            case 'rand':
                 $aSql['order'] = "ORDER BY RAND()";
                 break;
-           case 'top':
-                $sHow = "DESC";
-                $aSql['order'] = "ORDER BY `Rate` $sHow, `RateCount` $sHow, `date` $sHow";
-                break;
            case 'score':
                 if (is_array($this->aCurrent['restriction']['keyword'])) {
                   $aSql['order'] = "ORDER BY `score` DESC";
                   $aSql['ownFields'] .= $this->getSearchFieldsCond($this->aCurrent['searchFields'], $this->aCurrent['restriction']['keyword']['value'], 'score'). ', ';
                 }
-                break;
-           case 'voteTime':
-                $aSql['order'] = "ORDER BY `voteTime` DESC";
                 break;
            case 'none':
                 $aSql['order'] = "";
@@ -644,7 +643,8 @@ class BxDolSearchResult implements iBxDolReplaceable
      * Return own varaint for sorting (redeclare if necessary)
      * return array of sql elements
      */
-    function getAlterOrder () {
+    function getAlterOrder () 
+    {
         return array();
     }
 
@@ -652,7 +652,8 @@ class BxDolSearchResult implements iBxDolReplaceable
      * Set paginate fields of class according GET params 'start' and 'per_page'
      * forcePage is need for setting most important number of current page
      */
-    function setPaginate () {
+    function setPaginate () 
+    {
         $this->aCurrent['paginate']['perPage'] = (isset($_GET['per_page']) && (int)$_GET['per_page'] != 0) ? (int)$_GET['per_page'] : $this->aCurrent['paginate']['perPage'];
         if (empty($this->aCurrent['paginate']['perPage']))
             $this->aCurrent['paginate']['perPage'] = BX_DOL_SEARCH_RESULTS_PER_PAGE_DEFAULT;
@@ -672,7 +673,8 @@ class BxDolSearchResult implements iBxDolReplaceable
      * @param string sPseud for setting new name for generated set of fields in query
      * return sql code of WHERE part in query
      */
-    function getSearchFieldsCond ($aFields, $sKeyword, $sPseud = '') {
+    function getSearchFieldsCond ($aFields, $sKeyword, $sPseud = '') 
+    {
         if (!$sKeyword)
             return;
 
@@ -714,26 +716,19 @@ class BxDolSearchResult implements iBxDolReplaceable
      * @param $aValues array of values
      * return sql code for field with operator IN (NOT IN)
      */
-    function getMultiValues ($aValues) {
+    function getMultiValues ($aValues) 
+    {
         $oDb = BxDolDb::getInstance();
         return $oDb->implode_escape($aValues);
     }
 
-    /**
-     * Generate rate object if it wasn't created yet
-     */
-    function getRatePart () {
-        if ($this->iRate == 1) {
-            bx_import('BxTemplVote');
-           $this->oRate = new BxTemplVote($this->aCurrent['name'], 0, 0);
-        }
-    }
 
     /**
      * System method for filling aPseud array.
      * Fill field aPseud for current class (if you will use own getSearchUnit methods then not necessary to redeclare).
      */
-    function _getPseud () {
+    function _getPseud () 
+    {
 
     }
 
@@ -742,7 +737,8 @@ class BxDolSearchResult implements iBxDolReplaceable
      * @param $a array of markers as key => value
      * @return true on success or false on error
      */
-    public function addMarkers ($a) {
+    public function addMarkers ($a) 
+    {
         if (empty($a) || !is_array($a))
             return false;
         $this->_aMarkers = array_merge ($this->_aMarkers, $a);
@@ -754,8 +750,10 @@ class BxDolSearchResult implements iBxDolReplaceable
      * @param $mixed string or array to replace markers in
      * @return string where all occured markers are replaced
      */ 
-    protected function _replaceMarkers ($mixed) {
+    protected function _replaceMarkers ($mixed) 
+    {
         return bx_replace_markers($mixed, $this->_aMarkers);
     }
 }
 
+/** @} */

@@ -7,8 +7,6 @@
  * @{
  */
 
-// TODO: clean it more carefully !
-
 bx_import('BxDolSearch');
 class BxBaseSearchResult extends BxDolSearchResult 
 {
