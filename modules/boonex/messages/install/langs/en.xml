@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+
+	<string name="_bx_msg"><![CDATA[Messages]]></string>
+
+	<string name="_bx_msg_option_per_page_browse"><![CDATA[Number of items per page]]></string>
+
+	<string name="_bx_msg_form_entry"><![CDATA[Messages]]></string>
+	<string name="_bx_msg_form_entry_display_add"><![CDATA[Add message]]></string>
+	<string name="_bx_msg_form_entry_display_delete"><![CDATA[Delete message]]></string>
+	<string name="_bx_msg_form_entry_display_view"><![CDATA[View message]]></string>
+	<string name="_bx_msg_form_entry_input_sys_do_submit"><![CDATA[Submit]]></string>
+	<string name="_bx_msg_form_entry_input_do_submit"><![CDATA[Submit]]></string>
+	<string name="_bx_msg_form_entry_input_sys_text"><![CDATA[Text]]></string>
+	<string name="_bx_msg_form_entry_input_text"><![CDATA[Text]]></string>
+	<string name="_bx_msg_form_entry_input_text_err"><![CDATA[Text field can't be empty]]></string>
+	<string name="_bx_msg_form_entry_input_sys_delete_confirm"><![CDATA[Delete confirmation]]></string>
+	<string name="_bx_msg_form_entry_input_delete_confirm"><![CDATA[I am sure I want to delete this message]]></string>
+	<string name="_bx_msg_form_entry_input_delete_confirm_info"><![CDATA[This action can not be undone]]></string>
+	<string name="_bx_msg_form_entry_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete the message]]></string>
+	<string name="_bx_msg_form_entry_input_sys_pictures"><![CDATA[Pictures]]></string>
+	<string name="_bx_msg_form_entry_input_pictures"><![CDATA[Pictures]]></string>
+    <string name="_bx_msg_form_entry_input_picture_txt_delete"><![CDATA[Delete]]></string>
+    <string name="_bx_msg_form_entry_input_picture_txt_insert"><![CDATA[Insert to Post]]></string>
+    <string name="_bx_msg_form_entry_input_picture_txt_pic_url"><![CDATA[Picture URL:]]></string>
+    <string name="_bx_msg_form_entry_input_recipients"><![CDATA[Recipients]]></string>
+    <string name="_bx_msg_form_entry_input_sys_recipients"><![CDATA[Recipients]]></string>
+    <string name="_bx_msg_form_entry_input_recipients_err"><![CDATA[Recipients is mandatory]]></string>
+
+	<string name="_bx_msg_acl_action_create_entry"><![CDATA[Compose message]]></string>
+	<string name="_bx_msg_acl_action_delete_entry"><![CDATA[Delete message]]></string>
+	<string name="_bx_msg_acl_action_view_entry"><![CDATA[View message]]></string>
+
+	<string name="_bx_msg_page_title_sys_create_entry"><![CDATA[Compose message]]></string>
+	<string name="_bx_msg_page_title_create_entry"><![CDATA[Compose message]]></string>
+	<string name="_bx_msg_page_block_title_create_entry"><![CDATA[Compose message]]></string>
+    <string name="_bx_msg_page_title_sys_delete_entry"><![CDATA[Delete message]]></string>
+    <string name="_bx_msg_page_title_delete_entry"><![CDATA[Delete message]]></string>
+    <string name="_bx_msg_page_block_title_delete_entry"><![CDATA[Delete message]]></string>
+	<string name="_bx_msg_page_title_sys_view_entry"><![CDATA[View message]]></string>
+	<string name="_bx_msg_page_title_view_entry"><![CDATA[{title}]]></string>
+	<string name="_bx_msg_page_block_title_entry_text"><![CDATA[Message text]]></string>
+	<string name="_bx_msg_page_title_browse"><![CDATA[Messages]]></string>
+	<string name="_bx_msg_page_title_search_results"><![CDATA[Messages matching "{0}"]]></string>
+	<string name="_bx_msg_page_title_browse_by_author"><![CDATA[Messages of {display_name}]]></string>
+    <string name="_bx_msg_page_title_browse_recent"><![CDATA[Recent messages]]></string>
+    <string name="_bx_msg_page_block_title_recent_entries"><![CDATA[Recent messages]]></string>
+    <string name="_bx_msg_page_block_title_entry_author"><![CDATA[Author]]></string>
+    <string name="_bx_msg_page_block_title_entry_actions"><![CDATA[Actions]]></string>
+    <string name="_bx_msg_page_block_title_entry_comments"><![CDATA[Comments]]></string>
+    <string name="_bx_msg_page_title_sys_entries_of_author"><![CDATA[Messages of author]]></string>
+    <string name="_bx_msg_page_title_entries_of_author"><![CDATA[Messages of {display_name}]]></string>
+    <string name="_bx_msg_page_block_title_entries_of_author"><![CDATA[Messages of author]]></string>   
+    <string name="_bx_msg_page_block_title_entries_actions"><![CDATA[Messages actions]]></string>
+
+    <string name="_bx_msg_menu_set_title_view_entry"><![CDATA[View message]]></string>
+    <string name="_bx_msg_menu_title_view_entry"><![CDATA[View message]]></string>
+    <string name="_bx_msg_menu_title_submenu"><![CDATA[Messages Submenu]]></string>
+    <string name="_bx_msg_menu_set_title_submenu"><![CDATA[Messages Submenu]]></string>
+    <string name="_bx_msg_menu_item_title_system_delete_entry"><![CDATA[Delete message]]></string>
+    <string name="_bx_msg_menu_item_title_delete_entry"><![CDATA[Delete message]]></string>
+    <string name="_bx_msg_menu_item_title_system_entries_inbox"><![CDATA[Inbox]]></string>
+    <string name="_bx_msg_menu_item_title_entries_inbox"><![CDATA[Inbox]]></string>
+    <string name="_bx_msg_menu_item_title_system_entries_sent"><![CDATA[Sent]]></string>
+    <string name="_bx_msg_menu_item_title_entries_sent"><![CDATA[Sent]]></string>
+    <string name="_bx_msg_menu_title_entries_my"><![CDATA[My messages action menu]]></string>
+    <string name="_bx_msg_menu_set_title_entries_my"><![CDATA[My messages menu]]></string>
+
+    <string name="_bx_msg_txt_sample_single"><![CDATA[message]]></string>
+
+</resources>

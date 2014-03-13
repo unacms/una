@@ -19,7 +19,7 @@ $aConfig = array(
     'title' => 'Persons',
     'note' => 'Basic person profiles functionality.',
     'version' => '1.0.6',
-    'vendor' => 'Boonex',
+    'vendor' => 'BoonEx',
     'product_url' => 'http://www.boonex.com/products/{uri}',
     'update_url' => 'http://www.boonex.com/products/{uri}',
 

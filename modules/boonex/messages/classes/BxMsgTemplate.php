@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  * 
- * @defgroup    Notes Notes
+ * @defgroup    Messages Messages
  * @ingroup     DolphinModules
  *
  * @{
@@ -14,14 +14,14 @@ bx_import('BxBaseModTextTemplate');
 /*
  * Module representation.
  */
-class BxNotesTemplate extends BxBaseModTextTemplate 
+class BxMsgTemplate extends BxBaseModTextTemplate 
 {
     /**
      * Constructor
      */
     function __construct(&$oConfig, &$oDb) 
     {
-        self::$MODULE = 'bx_notes';
+        self::$MODULE = 'bx_messages';
         parent::__construct($oConfig, $oDb);
     }
 }

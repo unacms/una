@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  * 
- * @defgroup    Notes Notes
+ * @defgroup    Messages Messages
  * @ingroup     DolphinModules
  *
  * @{
@@ -15,10 +15,10 @@ $aConfig = array(
      * Main Section.
      */
     'type' => BX_DOL_MODULE_TYPE_MODULE,
-    'name' => 'bx_notes',
-    'title' => 'Notes',
-    'note' => 'Basic blogging module.',
-    'version' => '1.0.6',
+    'name' => 'bx_messages',
+    'title' => 'Messages',
+    'note' => 'Messaging module.',
+    'version' => '1.0.0',
     'vendor' => 'BoonEx',
     'product_url' => 'http://www.boonex.com/products/{uri}',
     'update_url' => 'http://www.boonex.com/products/{uri}',
@@ -30,11 +30,11 @@ $aConfig = array(
     /**
      * 'home_dir' and 'home_uri' - should be unique. Don't use spaces in 'home_uri' and the other special chars.
      */
-    'home_dir' => 'boonex/notes/',
-    'home_uri' => 'notes',
+    'home_dir' => 'boonex/messages/',
+    'home_uri' => 'messages',
 
-    'db_prefix' => 'bx_notes_',
-    'class_prefix' => 'BxNotes',
+    'db_prefix' => 'bx_messages_',
+    'class_prefix' => 'BxMsg',
 
     /**
      * Installation/Uninstallation Section.
@@ -73,7 +73,7 @@ $aConfig = array(
     /**
      * Category for language keys.
      */
-    'language_category' => 'Notes',
+    'language_category' => 'Messages',
 
     /**
      * Permissions Section
