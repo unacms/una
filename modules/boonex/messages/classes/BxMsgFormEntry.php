@@ -27,11 +27,39 @@ class BxMsgFormEntry extends BxBaseModTextFormEntry
         BxDolTemplate::getInstance()->addJs($aJs);
     }
 
+    public function insert ($aValsToAdd = array(), $isIgnore = false) 
+    {
+        $iContentId = parent::insert ($aValsToAdd, $isIgnore);
+        if (!$iContentId)
+            return 0;
+
+        bx_import('BxDolProfile');
+
+        // for author place conversation to "sent" folder
+        $this->_oModule->_oDb->conversationToFolder($iContentId, BX_MSG_FOLDER_SENT, bx_get_logged_profile_id(), 0);
+
+        // check for spam
+        $bSpam = false;
+        bx_alert('system', 'check_spam', 0, getLoggedId(), array('is_spam' => &$bSpam, 'content' => $this->getCleanValue('text'), 'where' => 'messages'));
+        $iFolder = $bSpam ? BX_MSG_FOLDER_SPAM : BX_MSG_FOLDER_INBOX;
+
+        // for all collaborators to "inbox" or "spam"
+        $aRecipients = array_unique($this->getCleanValue('recipients'), SORT_NUMERIC);
+        foreach ($aRecipients as $iProfile) {
+            $oProfile = BxDolProfile::getInstance($iProfile);
+            if ($oProfile)
+                $this->_oModule->_oDb->conversationToFolder($iContentId, $iFolder, $oProfile->id());
+        }
+
+        return $iContentId;
+    }
+
     protected function genCustomInputRecipients ($aInput) {
         $sVals = '';
         if (!empty($aInput['value']) && is_array($aInput['value'])) {
-            foreach ($aInput['value'] as $sVal)
-               $sVals .= '<span class="bx-def-color-bg-hl bx-def-round-corners">' . $sVal . '<input type="hidden" name="' . $aInput['name'] . '[]" value="' . $sVal . '" /></span>';
+            foreach ($aInput['value'] as $sVal) {
+               $sVals .= '<span class="bx-def-color-bg-hl bx-def-round-corners">' . BxDolProfile::getInstance($sVal)->getDisplayName() . '<input type="hidden" name="' . $aInput['name'] . '[]" value="' . $sVal . '" /></span>';
+            }
             $sVals = trim($sVals, ',');
         }
         $sId = $aInput['name'] . time();

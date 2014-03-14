@@ -65,7 +65,8 @@ class BxBaseModTextFormsEntryHelper extends BxDolProfileForms
 
         // alert
         bx_import('BxDolPrivacy');
-        bx_alert($this->_oModule->getName(), 'added', $iContentId, false, array('privacy_view' => $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]));
+        $aParams = isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) ? array('privacy_view' => $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) : array();
+        bx_alert($this->_oModule->getName(), 'added', $iContentId, false, $aParams);
 
         // redirect 
         $this->_redirectAndExit('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId);

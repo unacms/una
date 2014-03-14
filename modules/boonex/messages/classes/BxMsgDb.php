@@ -16,9 +16,15 @@ bx_import('BxBaseModTextDb');
  */
 class BxMsgDb extends BxBaseModTextDb 
 {
-    function __construct(&$oConfig) 
+    public function __construct(&$oConfig) 
     {
         parent::__construct($oConfig);
+    }
+
+    public function conversationToFolder($iConversationId, $iFolderId, $iProfileCollaborator, $iReadCommentsNum = -1) 
+    {
+        $sQuery = $this->prepare("INSERT INTO `" . $this->getPrefix() . "conv2folder` SET `conv_id` = ?, `folder_id` = ?, `collaborator` = ?, `read_comments` = ?", $iConversationId, $iFolderId, $iProfileCollaborator, $iReadCommentsNum);
+        return $this->query($sQuery);
     }
 }
 

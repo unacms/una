@@ -19,6 +19,9 @@ class BxNotesConfig extends BxBaseModTextConfig
 
         $this->CNF = array (
 
+            // database tables
+            'TABLE_ENTRIES' => $aModule['db_prefix'] . 'posts',
+
             // database fields
             'FIELD_ID' => 'id',
             'FIELD_AUTHOR' => 'author',

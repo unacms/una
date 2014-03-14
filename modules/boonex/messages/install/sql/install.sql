@@ -1,7 +1,7 @@
 
 -- TABLE: entries
 
-CREATE TABLE IF NOT EXISTS `bx_messages_msg` (
+CREATE TABLE IF NOT EXISTS `bx_messages_conversations` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `author` int(10) unsigned NOT NULL,
   `added` int(11) NOT NULL,
@@ -12,33 +12,31 @@ CREATE TABLE IF NOT EXISTS `bx_messages_msg` (
   PRIMARY KEY (`id`)
 );
 
-CREATE TABLE IF NOT EXISTS `bx_messages_conversations` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `msg_id` int(10) unsigned DEFAULT NULL,
-  `collaborators` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  KEY `msg_id` (`msg_id`),
-  KEY `collaborators` (`collaborators`)
-);
-
-CREATE TABLE IF NOT EXISTS `bx_messages_folders` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `author` int(10) unsigned NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  KEY `author` (`author`)
-);
-
 CREATE TABLE IF NOT EXISTS `bx_messages_conv2folder` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `conv_id` int(10) unsigned NOT NULL,
   `folder_id` int(10) unsigned NOT NULL,
   `collaborator` int(10) unsigned NOT NULL,
-  `read` tinyint(4) NOT NULL DEFAULT '0',
+  `read_comments` int(11) NOT NULL default '-1',
   PRIMARY KEY (`id`),
-  KEY `collaborator_folder` (`collaborator`,`folder_id`),
+  UNIQUE KEY `collaborator_folder_conv` (`collaborator`,`folder_id`, `conv_id`),
   KEY `conv_id` (`conv_id`)
 );
+
+CREATE TABLE IF NOT EXISTS `bx_messages_folders` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `author` int(10) unsigned NOT NULL,
+  `name` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `author` (`author`)
+);
+
+INSERT INTO `bx_messages_folders` (`id`, `author`, `name`) VALUES
+(1, 0, '_bx_msg_folder_inbox'),
+(2, 0, '_bx_msg_folder_sent'),
+(3, 0, '_bx_msg_folder_drafts'),
+(4, 0, '_bx_msg_folder_spam'),
+(5, 0, '_bx_msg_folder_trash');
 
 -- TABLE: storages & transcoders
 
@@ -101,12 +99,12 @@ CREATE TABLE `bx_messages_views_track` (
   `viewer_nip` int(11) unsigned NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
   KEY `id` (`object_id`,`viewer_id`,`viewer_nip`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 -- FORMS
 
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_messages', 'bx_messages', '_bx_msg_form_entry', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_messages_msg', 'id', '', '', 'do_submit', '', 0, 1, 'BxMsgFormEntry', 'modules/boonex/messages/classes/BxMsgFormEntry.php');
+('bx_messages', 'bx_messages', '_bx_msg_form_entry', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_messages_conversations', 'id', '', '', 'do_submit', '', 0, 1, 'BxMsgFormEntry', 'modules/boonex/messages/classes/BxMsgFormEntry.php');
 
 INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`, `title`) VALUES 
 ('bx_messages', 'bx_messages_entry_add', 'bx_messages', 0, '_bx_msg_form_entry_display_add'),
@@ -117,7 +115,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_messages', 'bx_messages', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_msg_form_entry_input_sys_delete_confirm', '_bx_msg_form_entry_input_delete_confirm', '_bx_msg_form_entry_input_delete_confirm_info', 1, 0, 0, '', '', '', 'Avail', '', '_bx_msg_form_entry_input_delete_confirm_error', '', '', 1, 0),
 ('bx_messages', 'bx_messages', 'do_submit', '_bx_msg_form_entry_input_do_submit', '', 0, 'submit', '_bx_msg_form_entry_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_messages', 'bx_messages', 'text', '', '', 0, 'textarea', '_bx_msg_form_entry_input_sys_text', '_bx_msg_form_entry_input_text', '', 1, 0, 2, '', '', '', 'Avail', '', '_bx_msg_form_entry_input_text_err', 'XssHtml', '', 1, 0),
-('bx_messages', 'bx_messages', 'recipients', '', '', 0, 'custom', '_bx_msg_form_entry_input_sys_recipients', '_bx_msg_form_entry_input_recipients', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_msg_form_entry_input_recipients_err', 'Xss', '', 1, 0),
+('bx_messages', 'bx_messages', 'recipients', '', '', 0, 'custom', '_bx_msg_form_entry_input_sys_recipients', '_bx_msg_form_entry_input_recipients', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_msg_form_entry_input_recipients_err', '', '', 1, 0),
 ('bx_messages', 'bx_messages', 'pictures', '', '', 0, 'files', '_bx_msg_form_entry_input_sys_pictures', '_bx_msg_form_entry_input_pictures', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
 
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES

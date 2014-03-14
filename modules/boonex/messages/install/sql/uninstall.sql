@@ -1,7 +1,7 @@
 
 -- TABLE: entries
 
-DROP TABLE IF EXISTS `bx_messages_msg`, `bx_messages_conversations`, `bx_messages_folders`, `bx_messages_conv2folder`;
+DROP TABLE IF EXISTS `bx_messages_conversations`, `bx_messages_conv2folder`, `bx_messages_folders`;
 
 -- TABLE: storages & transcoders
 

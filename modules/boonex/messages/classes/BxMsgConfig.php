@@ -19,6 +19,9 @@ class BxMsgConfig extends BxBaseModTextConfig
 
         $this->CNF = array (
 
+            // database tables
+            'TABLE_ENTRIES' => $aModule['db_prefix'] . 'conversations',
+
             // database fields
             'FIELD_ID' => 'id',
             'FIELD_AUTHOR' => 'author',

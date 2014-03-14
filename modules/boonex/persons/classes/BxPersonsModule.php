@@ -30,6 +30,14 @@ class BxPersonsModule extends BxDolModule implements iBxDolProfileService {
 
     // ====== SERVICE METHODS
 
+    public function serviceProfilesSearch ($sTerm, $iLimit) {
+        $aRet = array();
+        $a = $this->_oDb->searchByTerm($sTerm, $iLimit);
+        foreach ($a as $r)
+            $aRet[] = array ('label' => $this->serviceProfileName($r['content_id']), 'value' => $r['profile_id']);
+        return $aRet;
+    }
+
     public function serviceProfileUnit ($iContentId) {
         return $this->_serviceTemplateFunc('unit', $iContentId);
     }

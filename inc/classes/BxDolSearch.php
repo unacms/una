@@ -396,6 +396,7 @@ class BxDolSearchResult implements iBxDolReplaceable
             $aData = $this->getSearchDataByParams();
             return $aData;
         }
+        return array();
     }
 
     /**

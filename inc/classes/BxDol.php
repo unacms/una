@@ -68,6 +68,7 @@ interface iBxDolProfileService {
     public function serviceProfileIcon ($iContentId);
     public function serviceProfileName ($iContentId);
     public function serviceProfileUrl ($iContentId);
+    public function serviceProfilesSearch ($sTerm, $iLimit);
 }
 
 /** @} */

@@ -68,4 +68,10 @@
 
     <string name="_bx_msg_txt_sample_single"><![CDATA[message]]></string>
 
+    <string name="_bx_msg_folder_inbox"><![CDATA[Inbox]]></string>
+    <string name="_bx_msg_folder_sent"><![CDATA[Sent]]></string>
+    <string name="_bx_msg_folder_drafts"><![CDATA[Drafts]]></string>
+    <string name="_bx_msg_folder_spam"><![CDATA[Spam]]></string>
+    <string name="_bx_msg_folder_trash"><![CDATA[Trash]]></string>
+
 </resources>

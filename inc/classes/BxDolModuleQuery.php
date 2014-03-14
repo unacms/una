@@ -102,6 +102,8 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton {
             $sWhereClause .= $this->prepare(" AND `enabled`=?", (int)$aParams['active']);
         }
 
+        $sOrderByClause = " ORDER BY " . (isset($aParams['order_by']) ? $aParams['order_by'] : '`title`');
+
         $sSql = "SELECT 
             	`id`,
             	`type`,
@@ -119,8 +121,8 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton {
             	`date`, 
             	`enabled` 
         	FROM `sys_modules` 
-        	WHERE 1" . $sWhereClause . " 
-        	ORDER BY `title`";
+        	WHERE 1 " . $sWhereClause . 
+            $sOrderByClause;
         return $this->fromMemory('sys_modules' . $sPostfix, 'getAll', $sSql);
     }
 

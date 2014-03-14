@@ -10,14 +10,69 @@
 /**
  * System service for profiles handling functionality.
  */
-class BxBaseServiceProfiles extends BxDol {
-
-    public function __construct() {
+class BxBaseServiceProfiles extends BxDol 
+{
+    public function __construct() 
+    {
         parent::__construct();
     }
 
-    public function serviceProfilesList ($iAccountId = 0) {
+    public function serviceGetProfilesModules () 
+    {
+        if (getParam('sys_db_cache_enable')) { // get list of profiles  modules from db cache, cache is invalidated when new module is installed
 
+            $oCache = $this->getDbCacheObject ();
+
+            $sKey = $this->genDbCacheKey('profiles_modules_array');
+            $sKeyTs = $this->genDbCacheKey('profiles_modules_ts');
+
+            $mixedRetTs = $oCache->getData($sKeyTs);
+            $mixedRet = $oCache->getData($sKey);
+
+            $iNewestModuleTs = $this->_getLatestModuleTimestamp ();
+
+            if ($mixedRetTs != null && $mixedRet !== null && $mixedRetTs == $iNewestModuleTs) {
+
+                $aModulesArray = $mixedRet;
+
+            } else {
+
+                $aModulesArray = $this->_getProfilesModules ();
+
+                $oCache->setData($sKey, $aModulesArray);
+                $oCache->setData($sKeyTs, $iNewestModuleTs);
+            }
+
+        } else {
+
+            $aModulesArray = $this->_getProfilesModules ();
+
+        }
+
+        return $aModulesArray;
+    }
+
+    public function serviceProfilesSearch ($sTerm, $iLimit = 20) 
+    {
+        // get list of "profiles" modules
+        $aModules = $this->serviceGetProfilesModules();
+
+        // search in each module
+        $a = array();
+        foreach ($aModules as $aModule)
+            $a = array_merge($a, BxDolService::call($aModule['name'], 'profiles_search', array($sTerm, 10)));
+
+        // sort result
+        usort($a, function($r1, $r2) {
+            return strcmp($r1['label'], $r2['label']);
+        });
+
+        // return as array
+        return array_slice($a, 0, $iLimit);
+    }
+
+    public function serviceProfilesList ($iAccountId = 0) 
+    {
         bx_import('BxDolProfileQuery');
         $oProfilesQuery = BxDolProfileQuery::getInstance();
 
@@ -34,10 +89,10 @@ class BxBaseServiceProfiles extends BxDol {
             $s = MsgBox(_t('_sys_txt_empty'));
 
         return $s . '<div class="bx-clear"></div>';
-
     }
 
-    public function serviceAccountProfileSwitcher ($iAccountId = false) {
+    public function serviceAccountProfileSwitcher ($iAccountId = false) 
+    {
         bx_import('BxDolProfileQuery');
         $oProfilesQuery = BxDolProfileQuery::getInstance();
 
@@ -72,6 +127,30 @@ class BxBaseServiceProfiles extends BxDol {
         $oTemplate = BxDolTemplate::getInstance();
         $oTemplate->addCss('account.css');
         return $oTemplate->parseHtmlByName('profile_switch_row.html', $aVars);
+    }
+
+    protected function _getLatestModuleTimestamp () 
+    {
+        $aRet = array();
+        bx_import('BxDolModuleQuery');
+        $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules', 'active' => 1, 'order_by' => '`date` ASC'));
+        if (empty($aModules))
+            return 0;
+        $aModuleNewest = array_pop($aModules);
+        return $aModuleNewest['date'];
+    }
+
+    protected function _getProfilesModules () 
+    {
+        $aRet = array();
+        bx_import('BxDolModuleQuery');
+        $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules', 'active' => 1));
+        foreach ($aModules as $aModule) {
+            $oModule = BxDolModule::getInstance($aModule['name']);
+            if ($oModule instanceof iBxDolProfileService)
+                $aRet[] = $aModule;
+        }
+        return $aRet;
     }
 
 }

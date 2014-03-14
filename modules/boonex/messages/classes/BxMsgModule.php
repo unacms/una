@@ -11,6 +11,12 @@
 
 bx_import ('BxBaseModTextModule');
 
+define('BX_MSG_FOLDER_INBOX', 1);
+define('BX_MSG_FOLDER_SENT', 2);
+define('BX_MSG_FOLDER_DRAFTS', 3);
+define('BX_MSG_FOLDER_SPAM', 4);
+define('BX_MSG_FOLDER_TRASH', 5);
+
 /**
  * Messages module
  */
@@ -24,13 +30,9 @@ class BxMsgModule extends BxBaseModTextModule
     public function actionAjaxGetRecipients () 
     {
         $sTerm = bx_get('term');
-        
-        $a = array (
-            array ('label' => 'aaa', 'value' => 1),
-            array ('label' => 'bbb', 'value' => 2),
-            array ('label' => 'ccc', 'value' => 3),
-        );
 
+        $a = BxDolService::call('system', 'profiles_search', array($sTerm), 'TemplServiceProfiles');
+        
         header('Content-Type:text/javascript');
         echo(json_encode($a));
     }

@@ -55,6 +55,7 @@
 }
 
 /* view page */
+.bx-notes-entity-content p:first-child,
 .bx-notes-entity-content h1:first-child {
     margin-top:0;
 }

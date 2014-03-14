@@ -110,7 +110,7 @@ class BxBaseModTextTemplate extends BxDolModuleTemplate
         $CNF = &$oModule->_oConfig->CNF;
 
         $aVars = $aData;
-        $aVars['entry_title'] = $aData[$CNF['FIELD_TITLE']];
+        $aVars['entry_title'] = isset($aData[$CNF['FIELD_TITLE']]) ? $aData[$CNF['FIELD_TITLE']] : '';
         $aVars['entry_text'] = $aData[$CNF['FIELD_TEXT']];
 
         return $this->parseHtmlByName($sTemplateName, $aVars);

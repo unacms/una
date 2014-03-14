@@ -16,14 +16,17 @@ bx_import('BxDolModuleDb');
  */
 class BxBaseModTextDb extends BxDolModuleDb
 {
+    protected $_oConfig;
+
     function __construct(&$oConfig) 
     {
         parent::__construct($oConfig);
+        $this->_oConfig = $oConfig;
     }
 
     function getContentInfoById ($iContentId) 
     {
-        $sQuery = $this->prepare ("SELECT `c`.* FROM `" . $this->_sPrefix . "posts` AS `c` WHERE `c`.`id` = ?", $iContentId);
+        $sQuery = $this->prepare ("SELECT `c`.* FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` WHERE `c`.`id` = ?", $iContentId);
         return $this->getRow($sQuery);
     }
 }
