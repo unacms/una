@@ -81,7 +81,7 @@ class BxDolModuleTemplate extends BxDolTemplate {
     }
 
     function pageEnd ($isGetContent = true) {
-        if (1 == $this->_bObStarted)  {            
+        if (1 == $this->_bObStarted)  {
             $sRet = '';
             if ($isGetContent)
                 $sRet = ob_get_clean();

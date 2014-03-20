@@ -40,7 +40,9 @@ class BxBaseGrid extends BxDolGrid {
         ));
     }
 
-    public function performActionReorder() {        
+    public function performActionReorder() {
+        $this->_replaceMarkers ();
+
         $aOrder = bx_get($this->_sObject . '_row');
         $iOrder = 0;
         foreach ($aOrder as $mixedId)
@@ -50,6 +52,7 @@ class BxBaseGrid extends BxDolGrid {
     }
 
     public function performActionDelete() {            
+        $this->_replaceMarkers ();
 
         $iAffected = 0;
         $aIds = bx_get('ids');
@@ -70,6 +73,7 @@ class BxBaseGrid extends BxDolGrid {
     }
 
     public function performActionEnable() {
+        $this->_replaceMarkers ();
 
         $iAffected = 0;
         $aIds = bx_get('ids');
@@ -90,6 +94,7 @@ class BxBaseGrid extends BxDolGrid {
     }
 
     public function getCode ($isDisplayHeader = true) {
+        $this->_replaceMarkers ();
 
         if ($isDisplayHeader && empty($this->_aOptions['paginate_url'])) {
             // reset page query params if grid is just initialized and it uses AJAX paginate

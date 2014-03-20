@@ -1,4 +1,9 @@
 
+
+.bx-msg-collaborator {
+    float:right;
+}
+
 /* unit */
 
 .bx-notes-unit:first-child h1 {

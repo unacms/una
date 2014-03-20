@@ -51,24 +51,24 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 
 -- PAGE: view entry
 
-INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_messages_view_entry', '_bx_msg_page_title_sys_view_entry', '_bx_msg_page_title_view_entry', 'bx_messages', 11, 2147483647, 1, 'view-message', '', '', '', '', 0, 1, 0, 'BxMsgPageEntry', 'modules/boonex/messages/classes/BxMsgPageEntry.php');
-
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_messages_view_entry', 2, 'bx_messages', '_bx_msg_page_block_title_entry_author', 0, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_messages\";s:6:\"method\";s:13:\"entity_author\";}', 0, 0, 0),
-('bx_messages_view_entry', 3, 'bx_messages', '_bx_msg_page_block_title_entry_actions', 0, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_messages\";s:6:\"method\";s:14:\"entity_actions\";}', 0, 0, 0),
-('bx_messages_view_entry', 1, 'bx_messages', '_bx_msg_page_block_title_entry_text', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_messages\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 0),
-('bx_messages_view_entry', 1, 'bx_messages', '_bx_msg_page_block_title_entry_comments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_messages\";s:6:\"method\";s:15:\"entity_comments\";}', 0, 0, 2);
-
-
--- PAGE: entries of author
-
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_messages_author', 'messages', '_bx_msg_page_title_sys_entries_of_author', '_bx_msg_page_title_entries_of_author', 'bx_messages', 5, 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxMsgPageAuthor', 'modules/boonex/messages/classes/BxMsgPageAuthor.php');
+('bx_messages_view_entry', 'view-message', '_bx_msg_page_title_sys_view_entry', '_bx_msg_page_title_view_entry', 'bx_messages', 11, 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxMsgPageEntry', 'modules/boonex/messages/classes/BxMsgPageEntry.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_messages_view_entry', 1, 'bx_messages', '_bx_msg_page_block_title_entry_actions', 0, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_messages\";s:6:\"method\";s:14:\"entity_actions\";}', 0, 0, 1, 0),
+('bx_messages_view_entry', 2, 'bx_messages', '_bx_msg_page_block_title_entry_author', 0, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_messages\";s:6:\"method\";s:13:\"entity_author\";}', 0, 0, 1, 0),
+('bx_messages_view_entry', 3, 'bx_messages', '_bx_msg_page_block_title_entry_collaborators', 0, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_messages\";s:6:\"method\";s:20:\"entity_collaborators\";}', 0, 0, 1, 0),
+('bx_messages_view_entry', 1, 'bx_messages', '_bx_msg_page_block_title_entry_text', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_messages\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 1),
+('bx_messages_view_entry', 1, 'bx_messages', '_bx_msg_page_block_title_entry_comments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_messages\";s:6:\"method\";s:15:\"entity_comments\";}', 0, 0, 1, 2);
+
+
+-- PAGE: module home
+
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_messages_home', '_bx_msg_page_title_sys_folder', '_bx_msg_page_title_folder', 'bx_messages', 5, 2147483647, 1, 'messages-folder', 'modules/?r=messages/folder/1', '', '', '', 0, 1, 0, 'BxMsgPageBrowse', 'modules/boonex/messages/classes/BxMsgPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_messages_author', 1, 'bx_messages', '_bx_msg_page_block_title_entries_actions', 0, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_messages\";s:6:\"method\";s:18:\"my_entries_actions\";}', 0, 0, 0),
-('bx_messages_author', 1, 'bx_messages', '_bx_msg_page_block_title_entries_of_author', 0, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_messages\";s:6:\"method\";s:13:\"browse_author\";}', 0, 0, 1);
+('bx_messages_home', 1, 'bx_messages', '_bx_msg_page_block_title_folder', 0, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_messages\";s:6:\"method\";s:4:\"home\";}', 0, 1, 0);
 
 
 -- MENU: actions menu for view entry 
@@ -106,6 +106,23 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_messages_submenu', 'bx_messages', 'messages-inbox', '_bx_msg_menu_item_title_system_entries_inbox', '_bx_msg_menu_item_title_entries_inbox', 'page.php?i=messages-inbox', '', '', '', '', 2147483647, 1, 1, 1),
 ('bx_messages_submenu', 'bx_messages', 'messages-sent', '_bx_msg_menu_item_title_system_entries_sent', '_bx_msg_menu_item_title_entries_sent', 'page.php?i=messages-sent', '', '', '', '', 2147483647, 1, 1, 2);
+
+
+-- GRID
+
+INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_mode`, `sorting_fields`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
+('bx_messages', 'Sql', 'SELECT `c`.`id`, `c`.`author`, `c`.`text`, `c`.`comments`, `f`.`read_comments` FROM `bx_messages_conversations` AS `c` INNER JOIN `bx_messages_conv2folder` AS `f` ON (`c`.`id` = `f`.`conv_id` AND `f`.`folder_id` = {folder_id} AND `f`.`collaborator` = {profile_id})', 'bx_messages_conversations', 'id', '', '', 10, NULL, 'start', '', 'text', 'auto', '', 64, 'BxMsgGrid', 'modules/boonex/messages/classes/BxMsgGrid.php');
+
+INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `order`) VALUES
+('bx_messages', 'checkbox', '_sys_select', '2%', '', 1),
+('bx_messages', 'author', '_bx_msg_field_author', '5%', '', 2),
+('bx_messages', 'preview', '_bx_msg_field_preview', '70%', '', 3),
+('bx_messages', 'collaborators', '_bx_msg_field_collaborators', '20%', '', 4),
+('bx_messages', 'unread_comments', '_bx_msg_field_unread_comments', '3%', '', 5);
+
+INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
+('bx_messages', 'bulk', 'delete', '_bx_msg_grid_action_delete', '', 1, 1),
+('bx_messages', 'independent', 'add', '_bx_msg_grid_action_compose', '', 0, 1);
 
 
 -- ACL
@@ -158,7 +175,7 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
 -- COMMENTS
 INSERT INTO `sys_objects_cmts` (`Name`, `Table`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Nl2br`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `BaseUrl`, `ObjectVote`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldTitle`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES
-('bx_messages', 'bx_messages_cmts', 1, 5000, 1000, 1, 5, 3, 'tail', 1, 'bottom', 1, 1, 0, -3, 1, 'cmt', 'page/view-message&id={object_id}', '', 'bx_messages_conversations', 'id', '', 'comments', '', '');
+('bx_messages', 'bx_messages_cmts', 1, 5000, 1000, 1, 5, 3, 'tail', 1, 'bottom', 1, 1, 0, -3, 1, 'cmt', 'page/view-message&id={object_id}', '', 'bx_messages_conversations', 'id', '', 'comments', 'BxMsgCmts', 'modules/boonex/messages/classes/BxMsgCmts.php');
 
 -- VIEWS
 INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_count`, `class_name`, `class_file`) VALUES 

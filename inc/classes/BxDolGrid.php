@@ -246,7 +246,9 @@
  * 
  */
 
-class BxDolGrid extends BxDol implements iBxDolFactoryObject {
+class BxDolGrid extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable {
+
+    protected $_aMarkers = array ();
 
     protected $_sObject;
     protected $_aOptions;
@@ -298,6 +300,27 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject {
 
     public function getObject() {
         return $this->_sObject;
+    }
+
+    /**
+     * Add replace markers. Curently markers are replaced in 'source' field
+     * @param $a array of markers as key => value
+     * @return true on success or false on error
+     */
+    public function addMarkers ($a) {
+        if (empty($a) || !is_array($a))
+            return false;
+        $this->_aMarkers = array_merge ($this->_aMarkers, $a);
+        return true;
+    }
+
+    /**
+     * Replace provided markers in form array
+     * @param $a form description array
+     * @return array where markes are replaced with real values
+     */ 
+    protected function _replaceMarkers () {
+        $this->_aOptions['source'] = bx_replace_markers($this->_aOptions['source'], $this->_aMarkers);
     }
 
     protected function _getData ($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage) {

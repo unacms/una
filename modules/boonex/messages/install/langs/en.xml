@@ -52,6 +52,10 @@
     <string name="_bx_msg_page_title_entries_of_author"><![CDATA[Messages of {display_name}]]></string>
     <string name="_bx_msg_page_block_title_entries_of_author"><![CDATA[Messages of author]]></string>   
     <string name="_bx_msg_page_block_title_entries_actions"><![CDATA[Messages actions]]></string>
+    <string name="_bx_msg_page_block_title_entry_collaborators"><![CDATA[Collaborators]]></string>
+    <string name="_bx_msg_page_title_sys_folder"><![CDATA[Messages in folder]]></string>
+    <string name="_bx_msg_page_title_folder"><![CDATA[Folder: {folder}]]></string>
+    <string name="_bx_msg_page_block_title_folder"><![CDATA[Folder: {folder}]]></string>
 
     <string name="_bx_msg_menu_set_title_view_entry"><![CDATA[View message]]></string>
     <string name="_bx_msg_menu_title_view_entry"><![CDATA[View message]]></string>
@@ -73,5 +77,15 @@
     <string name="_bx_msg_folder_drafts"><![CDATA[Drafts]]></string>
     <string name="_bx_msg_folder_spam"><![CDATA[Spam]]></string>
     <string name="_bx_msg_folder_trash"><![CDATA[Trash]]></string>
+
+    <string name="_bx_msg_field_author"><![CDATA[Author]]></string>
+    <string name="_bx_msg_field_preview"><![CDATA[Preview]]></string>
+    <string name="_bx_msg_field_collaborators"><![CDATA[Collaborators]]></string>
+    <string name="_bx_msg_field_unread_comments"><![CDATA[Unread]]></string>
+
+    <string name="_bx_msg_grid_action_delete"><![CDATA[Delete]]></string>
+    <string name="_bx_msg_grid_action_compose"><![CDATA[Compose]]></string>
+
+    <string name="_bx_msg_unread_messages"><![CDATA[{0} unread messages]]></string>
 
 </resources>

@@ -18,12 +18,17 @@ TRUNCATE TABLE `bx_messages_photos_resized`;
 
 -- PAGES
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_messages';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_messages' OR `object` IN('bx_messages_create_entry', 'bx_messages_delete_entry', 'bx_messages_view_entry', 'bx_messages_author');
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_messages' OR `object` IN('bx_messages_create_entry', 'bx_messages_delete_entry', 'bx_messages_view_entry', 'bx_messages_home');
 
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_messages';
 DELETE FROM `sys_menu_sets` WHERE `module` = 'bx_messages';
 DELETE FROM `sys_menu_items` WHERE `module` = 'bx_messages' OR `set_name` IN('bx_messages_view', 'bx_messages_submenu', 'bx_messages_my');
+
+-- GRID
+DELETE FROM `sys_objects_grid` WHERE `object` LIKE 'bx_messages%';
+DELETE FROM `sys_grid_fields` WHERE `object` LIKE 'bx_messages%';
+DELETE FROM `sys_grid_actions` WHERE `object` LIKE 'bx_messages%';
 
 -- ACL
 DELETE `sys_acl_actions`, `sys_acl_matrix` FROM `sys_acl_actions`, `sys_acl_matrix` WHERE `sys_acl_matrix`.`IDAction` = `sys_acl_actions`.`ID` AND `sys_acl_actions`.`Module` = 'bx_messages';

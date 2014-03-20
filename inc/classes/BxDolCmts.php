@@ -331,9 +331,6 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 
     public function init ($iId)
     {
-        if (!$this->isEnabled()) 
-        	return;
-
         if (empty($this->iId) && $iId)
             $this->setId($iId);
 

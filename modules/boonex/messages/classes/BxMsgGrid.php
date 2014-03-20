@@ -9,18 +9,14 @@
  * @{
  */
 
-bx_import('BxBaseModTextPageAuthor');
+bx_import('BxTemplGrid');
 
-/**
- * Profile's entries page.
- */
-class BxMsgPageAuthor extends BxBaseModTextPageAuthor 
+class BxMsgGrid extends BxTemplGrid 
 {
-    public function __construct($aObject, $oTemplate = false) 
+    public function __construct ($aOptions, $oTemplate = false) 
     {
-        parent::__construct($aObject, $oTemplate);
+        parent::__construct ($aOptions, $oTemplate);
     }
-
 }
 
 /** @} */

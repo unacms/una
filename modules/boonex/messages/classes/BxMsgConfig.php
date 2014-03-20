@@ -35,6 +35,7 @@ class BxMsgConfig extends BxBaseModTextConfig
             'FIELD_ALLOW_VIEW_TO' => '',
             'FIELD_PHOTO' => 'pictures',
             'FIELD_THUMB' => '',
+            'FIELD_COMMENTS' => 'comments',
 
             // page URIs
             'URI_VIEW_ENTRY' => 'view-message',

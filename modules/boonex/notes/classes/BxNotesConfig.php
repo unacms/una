@@ -35,6 +35,7 @@ class BxNotesConfig extends BxBaseModTextConfig
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_PHOTO' => 'pictures',
             'FIELD_THUMB' => 'thumb',
+            'FIELD_COMMENTS' => 'comments',
 
             // page URIs
             'URI_VIEW_ENTRY' => 'view-note',
