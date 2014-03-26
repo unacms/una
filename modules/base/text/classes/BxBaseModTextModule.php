@@ -198,7 +198,7 @@ class BxBaseModTextModule extends BxDolModule
 
 		bx_import('BxDolCmts');
 		$oCmts = BxDolCmts::getObjectInstance($this->_oConfig->CNF['OBJECT_COMMENTS'], $iContentId);
-		if(!$oCmts->isEnabled())
+		if (!$oCmts || !$oCmts->isEnabled())
 			return false;
         return $oCmts->getCommentsBlock(0, 0, false);
     }
@@ -216,12 +216,7 @@ class BxBaseModTextModule extends BxDolModule
         if (!$aContentInfo)
             return false;
 
-        $oProfile = BxDolProfile::getInstance($aContentInfo[$this->_oConfig->CNF['FIELD_AUTHOR']]);
-        if (!$oProfile) {
-            bx_import('BxDolProfileUndefined');
-            $oProfile = BxDolProfileUndefined::getInstance();
-        }
-        return $this->_oTemplate->entryAuthor ($aContentInfo, $oProfile);
+        return $this->_oTemplate->entryAuthor ($aContentInfo);
     }
 
     /**
@@ -313,7 +308,7 @@ class BxBaseModTextModule extends BxDolModule
         $oCmts = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $aEvent['object_id']);
 
         $aComments = array(); 
-		if($oCmts->isEnabled())
+		if($oCmts && $oCmts->isEnabled())
 			$aComments = array(
 				'system' => $CNF['OBJECT_COMMENTS'],
 				'object_id' => $aContentInfo[$CNF['FIELD_ID']],

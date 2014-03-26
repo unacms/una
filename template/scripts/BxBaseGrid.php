@@ -481,7 +481,7 @@ class BxBaseGrid extends BxDolGrid {
             return '';
         $sRet = '';
         foreach ($this->_aOptions[$sActionsType] as $sKey => $a) 
-{
+        {
             $sFunc = '_getAction' . $this->_genMethodName($sKey);
             if (!method_exists($this, $sFunc))
                 $sFunc = empty($a) ? '_getActionDivider' : '_getActionDefault';

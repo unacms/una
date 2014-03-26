@@ -9,7 +9,10 @@ CREATE TABLE IF NOT EXISTS `bx_messages_conversations` (
   `text` text NOT NULL,
   `views` int(11) NOT NULL default '0',
   `comments` int(11) NOT NULL default '0',
-  PRIMARY KEY (`id`)
+  `last_reply_timestamp` int(11) NOT NULL,
+  `last_reply_profile_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `last_reply_timestamp` (`last_reply_timestamp`)
 );
 
 CREATE TABLE IF NOT EXISTS `bx_messages_conv2folder` (

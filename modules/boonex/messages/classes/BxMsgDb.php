@@ -39,6 +39,11 @@ class BxMsgDb extends BxBaseModTextDb
         return $this->query($sQuery);
     }
 
+    public function updateLastCommentTimeProfile($iConversationId, $iProfileId, $iTimestamp)
+    {
+        $sQuery = $this->prepare("UPDATE `" . $this->getPrefix() . "conversations` SET `last_reply_profile_id` = ?, `last_reply_timestamp` = ? WHERE `id` = ?", $iProfileId, $iTimestamp, $iConversationId);
+        return $this->query($sQuery);
+    }
 }
 
 /** @} */ 

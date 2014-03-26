@@ -23,7 +23,7 @@ DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_messages' OR `object` IN('bx
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_messages';
 DELETE FROM `sys_menu_sets` WHERE `module` = 'bx_messages';
-DELETE FROM `sys_menu_items` WHERE `module` = 'bx_messages' OR `set_name` IN('bx_messages_view', 'bx_messages_submenu', 'bx_messages_my');
+DELETE FROM `sys_menu_items` WHERE `module` = 'bx_messages' OR `set_name` IN('bx_messages_view', 'bx_messages_submenu', 'bx_messages_my', 'bx_messages_menu_folders_more');
 
 -- GRID
 DELETE FROM `sys_objects_grid` WHERE `object` LIKE 'bx_messages%';
@@ -40,3 +40,7 @@ DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_messages';
 -- VIEWS
 DELETE FROM `sys_objects_view` WHERE `Name` = 'bx_messages';
 
+-- ALERTS
+SET @iHandler := (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = 'bx_messages' LIMIT 1);
+DELETE FROM `sys_alerts` WHERE `handler_id` = @iHandler;
+DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandler;

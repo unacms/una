@@ -41,6 +41,7 @@ class BxNotesConfig extends BxBaseModTextConfig
             'URI_VIEW_ENTRY' => 'view-note',
             'URI_HOME' => 'notes-home',
             'URI_AUTHOR_ENTRIES' => 'notes-author',
+            'URI_ADD_ENTRY' => 'create-note',
 
             // some params
             'PARAM_CHARS_SUMMARY' => 'bx_notes_summary_chars',

@@ -29,6 +29,8 @@ class BxMsgFormEntry extends BxBaseModTextFormEntry
 
     public function insert ($aValsToAdd = array(), $isIgnore = false) 
     {
+        $aValsToAdd['last_reply_timestamp'] = time();
+        $aValsToAdd['last_reply_profile_id'] = bx_get_logged_profile_id();
         $iContentId = parent::insert ($aValsToAdd, $isIgnore);
         if (!$iContentId)
             return 0;

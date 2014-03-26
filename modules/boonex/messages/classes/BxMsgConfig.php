@@ -41,6 +41,7 @@ class BxMsgConfig extends BxBaseModTextConfig
             'URI_VIEW_ENTRY' => 'view-message',
             'URI_HOME' => 'messages',
             'URI_AUTHOR_ENTRIES' => 'messages',
+            'URI_ADD_ENTRY' => 'compose-message',
 
             // some params
             'PARAM_CHARS_SUMMARY' => '',

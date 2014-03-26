@@ -1914,7 +1914,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     }
     function displayErrorOccured ($sMsg = '') {
         header("HTTP/1.0 500 Internal Server Error");
-        $this->displayMsg($sMsg ? $sMsg : _t('_Error Occured'));
+        $this->displayMsg($sMsg ? $sMsg : _t('_error occured'));
     }
     function displayPageNotFound ($sMsg = '') {
         header("HTTP/1.0 404 Not Found");

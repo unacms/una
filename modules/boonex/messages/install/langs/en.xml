@@ -61,14 +61,26 @@
     <string name="_bx_msg_menu_title_view_entry"><![CDATA[View message]]></string>
     <string name="_bx_msg_menu_title_submenu"><![CDATA[Messages Submenu]]></string>
     <string name="_bx_msg_menu_set_title_submenu"><![CDATA[Messages Submenu]]></string>
-    <string name="_bx_msg_menu_item_title_system_delete_entry"><![CDATA[Delete message]]></string>
-    <string name="_bx_msg_menu_item_title_delete_entry"><![CDATA[Delete message]]></string>
-    <string name="_bx_msg_menu_item_title_system_entries_inbox"><![CDATA[Inbox]]></string>
-    <string name="_bx_msg_menu_item_title_entries_inbox"><![CDATA[Inbox]]></string>
-    <string name="_bx_msg_menu_item_title_system_entries_sent"><![CDATA[Sent]]></string>
-    <string name="_bx_msg_menu_item_title_entries_sent"><![CDATA[Sent]]></string>
     <string name="_bx_msg_menu_title_entries_my"><![CDATA[My messages action menu]]></string>
     <string name="_bx_msg_menu_set_title_entries_my"><![CDATA[My messages menu]]></string>
+    <string name="_bx_msg_menu_title_folders_more"><![CDATA[More folders]]></string>
+    <string name="_bx_msg_menu_set_title_submenu"><![CDATA[More folders]]></string>
+
+
+    <string name="_bx_msg_menu_item_title_system_delete_entry"><![CDATA[Delete message]]></string>
+    <string name="_bx_msg_menu_item_title_delete_entry"><![CDATA[Delete message]]></string>
+    <string name="_bx_msg_menu_item_title_system_folder_inbox"><![CDATA[Inbox]]></string>
+    <string name="_bx_msg_menu_item_title_folder_inbox"><![CDATA[Inbox]]></string>
+    <string name="_bx_msg_menu_item_title_system_folder_sent"><![CDATA[Sent]]></string>
+    <string name="_bx_msg_menu_item_title_folder_sent"><![CDATA[Sent]]></string>
+    <string name="_bx_msg_menu_item_title_system_folder_drafts"><![CDATA[Drafts]]></string>
+    <string name="_bx_msg_menu_item_title_folder_drafts"><![CDATA[Drafts]]></string>
+    <string name="_bx_msg_menu_item_title_system_folder_spam"><![CDATA[Spam]]></string>
+    <string name="_bx_msg_menu_item_title_folder_spam"><![CDATA[Spam]]></string>
+    <string name="_bx_msg_menu_item_title_system_folder_trash"><![CDATA[Trash]]></string>
+    <string name="_bx_msg_menu_item_title_folder_trash"><![CDATA[Trash]]></string>
+    <string name="_bx_msg_menu_item_title_system_folder_more"><![CDATA[More]]></string>
+    <string name="_bx_msg_menu_item_title_folder_more"><![CDATA[More]]></string>
 
     <string name="_bx_msg_txt_sample_single"><![CDATA[message]]></string>
 
@@ -78,14 +90,19 @@
     <string name="_bx_msg_folder_spam"><![CDATA[Spam]]></string>
     <string name="_bx_msg_folder_trash"><![CDATA[Trash]]></string>
 
-    <string name="_bx_msg_field_author"><![CDATA[Author]]></string>
+    <string name="_bx_msg_field_comments"><![CDATA[Messages]]></string>
+    <string name="_bx_msg_field_updated"><![CDATA[Updated]]></string>
     <string name="_bx_msg_field_preview"><![CDATA[Preview]]></string>
     <string name="_bx_msg_field_collaborators"><![CDATA[Collaborators]]></string>
-    <string name="_bx_msg_field_unread_comments"><![CDATA[Unread]]></string>
 
     <string name="_bx_msg_grid_action_delete"><![CDATA[Delete]]></string>
     <string name="_bx_msg_grid_action_compose"><![CDATA[Compose]]></string>
 
     <string name="_bx_msg_unread_messages"><![CDATA[{0} unread messages]]></string>
+    <string name="_bx_msg_last_replier"><![CDATA[last replier, {0}]]></string>
+    <string name="_bx_msg_more"><![CDATA[{0} more]]></string>
+
+    <string name="_bx_msg_author_desc"><![CDATA[{0} (updated {1})]]></string>
+    <string name="_bx_msg_x_new_messages"><![CDATA[<b>{0} ({1} new)</b>]]></string>
 
 </resources>

@@ -27,24 +27,58 @@ class BxMsgModule extends BxBaseModTextModule
         parent::__construct($aModule);
     }
 
+    public function sortCollaborators ($aCollaborators, $iProfileIdLastComment, $iProfileIdAuthor, $iProfileIdCurrent = 0) 
+    {
+        if (!$iProfileIdCurrent)
+            $iProfileIdCurrent = bx_get_logged_profile_id();
+
+        $aMoveUp = array($iProfileIdCurrent, $iProfileIdLastComment, $iProfileIdAuthor);
+
+        asort($aCollaborators, SORT_NUMERIC);
+
+        foreach ($aMoveUp as $iProfileId) {
+            if (!isset($aCollaborators[$iProfileId]))
+                continue;
+
+            $a = array($iProfileId => $aCollaborators[$iProfileId]);
+            unset($aCollaborators[$iProfileId]);
+            $aCollaborators = $a + $aCollaborators;
+        }
+
+        return $aCollaborators;
+    }
+
+    public function setModuleSubmenu () 
+    {
+        bx_import('BxDolMenu');
+        $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
+        if ($oMenuSubmenu) 
+            $oMenuSubmenu->setObjectSubmenu($this->_oConfig->CNF['OBJECT_MENU_SUBMENU'], array (
+                'title' => 'Messages',
+                'link' => 'javascript:void(0);',
+                'icon' => '',
+            ));
+    }
+
     /**
      * Display messages in folder
      */
     public function actionFolder ($iFolderId) 
     {
+        $this->setModuleSubmenu ();
+
         bx_import('BxDolGrid');
         $oGrid = BxDolGrid::getObjectInstance('bx_messages');
+        if (!$oGrid){
+            $this->_oTemplate->displayErrorOccured();
+            exit;
+        }
 
         // TODO: incorporate markers into custom class, so replace will work in search and so on
         $oGrid->addMarkers(array(
             'folder_id' => (int)$iFolderId,
             'profile_id' => bx_get_logged_profile_id(),
         ));
-
-        if (!$oGrid) {
-            $this->_oTemplate->displayPageNotFound();
-            exit;
-        }
 
         // TODO: refactor below
         $oTemplate = BxDolTemplate::getInstance();
@@ -68,6 +102,26 @@ class BxMsgModule extends BxBaseModTextModule
     }
 
     /**
+     * Update last comment time and author
+     */
+    public function serviceTriggerCommentPost ($iContentId, $iProfileId, $iTimestamp = 0) 
+    {
+        if (!(int)$iContentId)
+            return false;
+        $aContentInfo = $this->_oDb->getContentInfoById((int)$iContentId);
+        if (!$aContentInfo)
+            return false;
+   
+        if (!$iTimestamp)
+            $iTimestamp = time();
+
+        if ($iProfileId == bx_get_logged_profile_id())
+            $this->_oDb->updateReadComments($iProfileId, $aContentInfo[$this->_oConfig->CNF['FIELD_ID']], $aContentInfo[$this->_oConfig->CNF['FIELD_COMMENTS']]);
+
+        return $this->_oDb->updateLastCommentTimeProfile((int)$iContentId, (int)$iProfileId, $iTimestamp);
+    }
+
+    /**
      * Entry collaborators block
      */
     public function serviceEntityCollaborators ($iContentId = 0) 
@@ -79,11 +133,8 @@ class BxMsgModule extends BxBaseModTextModule
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
         if (!$aContentInfo)
             return false;
-
-        $aCollaborators = $this->_oDb->getCollaborators($iContentId);
-        //unset($aCollaborators[$aContentInfo[$this->_oConfig->CNF['FIELD_AUTHOR']]]);
-    
-        return $this->_oTemplate->entryCollaborators ($aContentInfo, $aCollaborators);
+   
+        return $this->_oTemplate->entryCollaborators ($aContentInfo, 5, 'right');
     }
 
     /**

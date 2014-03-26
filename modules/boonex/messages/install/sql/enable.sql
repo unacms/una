@@ -104,21 +104,35 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_messages_submenu', 'bx_messages', '_bx_msg_menu_set_title_submenu', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_messages_submenu', 'bx_messages', 'messages-inbox', '_bx_msg_menu_item_title_system_entries_inbox', '_bx_msg_menu_item_title_entries_inbox', 'page.php?i=messages-inbox', '', '', '', '', 2147483647, 1, 1, 1),
-('bx_messages_submenu', 'bx_messages', 'messages-sent', '_bx_msg_menu_item_title_system_entries_sent', '_bx_msg_menu_item_title_entries_sent', 'page.php?i=messages-sent', '', '', '', '', 2147483647, 1, 1, 2);
+('bx_messages_submenu', 'bx_messages', 'messages-folder-inbox', '_bx_msg_menu_item_title_system_folder_inbox', '_bx_msg_menu_item_title_folder_inbox', 'modules/?r=messages/folder/1', '', '', '', '', 2147483647, 1, 1, 1),
+('bx_messages_submenu', 'bx_messages', 'messages-folder-sent', '_bx_msg_menu_item_title_system_folder_sent', '_bx_msg_menu_item_title_folder_sent', 'modules/?r=messages/folder/2', '', '', '', '', 2147483647, 1, 1, 2),
+('bx_messages_submenu', 'bx_messages', 'messages-folder-more', '_bx_msg_menu_item_title_system_folder_more', '_bx_msg_menu_item_title_folder_more', 'javascript:void(0);', 'bx_menu_popup(''bx_messages_menu_folders_more'', this);', '', '', '', 2147483647, 1, 1, 3);
+
+-- MENU: more folders
+
+INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
+('bx_messages_menu_folders_more', '_bx_msg_menu_title_folders_more', 'bx_messages_menu_folders_more', 'bx_messages', 4, 0, 1, '', '');
+
+INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
+('bx_messages_menu_folders_more', 'bx_messages', '_bx_msg_menu_set_title_folders_more', 0);
+
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('bx_messages_menu_folders_more', 'bx_messages', 'messages-drafts', '_bx_msg_menu_item_title_system_folder_drafts', '_bx_msg_menu_item_title_folder_drafts', 'modules/?r=messages/folder/3', '', '', '', '', 2147483647, 1, 1, 1),
+('bx_messages_menu_folders_more', 'bx_messages', 'messages-spam', '_bx_msg_menu_item_title_system_folder_spam', '_bx_msg_menu_item_title_folder_spam', 'modules/?r=messages/folder/4', '', '', '', '', 2147483647, 1, 1, 2),
+('bx_messages_menu_folders_more', 'bx_messages', 'messages-trash', '_bx_msg_menu_item_title_system_folder_trash', '_bx_msg_menu_item_title_folder_trash', 'modules/?r=messages/folder/5', '', '', '', '', 2147483647, 1, 1, 3);
 
 
 -- GRID
 
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_mode`, `sorting_fields`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
-('bx_messages', 'Sql', 'SELECT `c`.`id`, `c`.`author`, `c`.`text`, `c`.`comments`, `f`.`read_comments` FROM `bx_messages_conversations` AS `c` INNER JOIN `bx_messages_conv2folder` AS `f` ON (`c`.`id` = `f`.`conv_id` AND `f`.`folder_id` = {folder_id} AND `f`.`collaborator` = {profile_id})', 'bx_messages_conversations', 'id', '', '', 10, NULL, 'start', '', 'text', 'auto', '', 64, 'BxMsgGrid', 'modules/boonex/messages/classes/BxMsgGrid.php');
+('bx_messages', 'Sql', 'SELECT `c`.`id`, `c`.`author`, `c`.`text`, `c`.`added`, `c`.`comments`, `f`.`read_comments`, `last_reply_timestamp`, `last_reply_profile_id` FROM `bx_messages_conversations` AS `c` INNER JOIN `bx_messages_conv2folder` AS `f` ON (`c`.`id` = `f`.`conv_id` AND `f`.`folder_id` = {folder_id} AND `f`.`collaborator` = {profile_id})', 'bx_messages_conversations', 'id', 'last_reply_timestamp', '', 10, NULL, 'start', '', 'text', 'auto', 'comments,last_reply_timestamp', 64, 'BxMsgGrid', 'modules/boonex/messages/classes/BxMsgGrid.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `order`) VALUES
 ('bx_messages', 'checkbox', '_sys_select', '2%', '', 1),
-('bx_messages', 'author', '_bx_msg_field_author', '5%', '', 2),
-('bx_messages', 'preview', '_bx_msg_field_preview', '70%', '', 3),
-('bx_messages', 'collaborators', '_bx_msg_field_collaborators', '20%', '', 4),
-('bx_messages', 'unread_comments', '_bx_msg_field_unread_comments', '3%', '', 5);
+('bx_messages', 'collaborators', '_bx_msg_field_collaborators', '25%', '', 2),
+('bx_messages', 'preview', '_bx_msg_field_preview', '50%', '', 3),
+('bx_messages', 'comments', '_bx_msg_field_comments', '10%', '', 4),
+('bx_messages', 'last_reply_timestamp', '_bx_msg_field_updated', '13%', '', 5);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
 ('bx_messages', 'bulk', 'delete', '_bx_msg_grid_action_delete', '', 1, 1),
@@ -180,4 +194,14 @@ INSERT INTO `sys_objects_cmts` (`Name`, `Table`, `CharsPostMin`, `CharsPostMax`,
 -- VIEWS
 INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
 ('bx_messages', 'bx_messages_views_track', '86400', '1', 'bx_messages_conversations', 'id', 'views', '', '');
+
+-- ALERTS
+
+INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `eval`) VALUES 
+('bx_messages', 'BxMsgAlertsResponse', 'modules/boonex/messages/classes/BxMsgAlertsResponse.php', '');
+SET @iHandler := LAST_INSERT_ID();
+
+INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
+('bx_messages', 'commentPost', @iHandler),
+('bx_messages', 'commentRemoved', @iHandler);
 

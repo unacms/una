@@ -16,7 +16,7 @@ bx_import('BxDolModuleTemplate');
  */
 class BxBaseModTextTemplate extends BxDolModuleTemplate 
 {
-    protected static $MODULE;
+    protected $MODULE;
 
     /**
      * Constructor
@@ -30,7 +30,7 @@ class BxBaseModTextTemplate extends BxDolModuleTemplate
 
     function unit ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html') 
     {
-        $oModule = BxDolModule::getInstance(self::$MODULE);
+        $oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$oModule->_oConfig->CNF;
 
         if ($isCheckPrivateContent && CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $oModule->checkAllowedView($aData))) {
@@ -106,7 +106,7 @@ class BxBaseModTextTemplate extends BxDolModuleTemplate
 
     function entryText ($aData, $sTemplateName = 'entry-text.html') 
     {
-        $oModule = BxDolModule::getInstance(self::$MODULE);
+        $oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$oModule->_oConfig->CNF;
 
         $aVars = $aData;
@@ -116,23 +116,33 @@ class BxBaseModTextTemplate extends BxDolModuleTemplate
         return $this->parseHtmlByName($sTemplateName, $aVars);
     }
 
-    function entryAuthor ($aData, $oProfile, $sTemplateName = 'author.html') 
+    function entryAuthor ($aData, $sTemplateName = 'author.html') 
     {
+        $oModule = BxDolModule::getInstance($this->MODULE);
+        $CNF = &$oModule->_oConfig->CNF;
+
+        $oProfile = BxDolProfile::getInstance($aData[$CNF['FIELD_AUTHOR']]);
+        if (!$oProfile) {
+            bx_import('BxDolProfileUndefined');
+            $oProfile = BxDolProfileUndefined::getInstance();
+        }
         if (!$oProfile)
             return '';
-
-        $oModule = BxDolModule::getInstance(self::$MODULE);
-        $CNF = &$oModule->_oConfig->CNF;
 
         $aVars = array (
             'author_url' => $oProfile->getUrl(),
             'author_thumb_url' => $oProfile->getThumb(),
             'author_title' => $oProfile->getDisplayName(),
-            'entry_posting_date' =>  bx_time_js($aData[$CNF['FIELD_ADDED']], BX_FORMAT_DATE),
+            'author_desc' => $this->getAuthorDesc($aData),
         );
         return $this->parseHtmlByName($sTemplateName, $aVars);
     }
 
+    function getAuthorDesc ($aData) 
+    {
+        $oModule = BxDolModule::getInstance($this->MODULE);
+        return bx_time_js($aData[$oModule->_oConfig->CNF['FIELD_ADDED']], BX_FORMAT_DATE);
+    }
 }
 
 /** @} */ 

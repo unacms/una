@@ -21,6 +21,7 @@ class BxMsgCmts extends BxTemplCmts
         if (!parent::isEnabled ())
             return false;
 
+        bx_import('BxDolModule');
         $oModule = BxDolModule::getInstance('bx_messages');
         if (!($aContentInfo = $oModule->_oDb->getContentInfoById((int)$this->getId())))
             return false;
@@ -30,6 +31,19 @@ class BxMsgCmts extends BxTemplCmts
             return false;
 
         return true;
+    }
+
+    public function isRemoveAllowed ($aCmt, $isPerformAction = false)
+    {
+    	if (isAdmin())
+    		return true;
+
+        return false;
+    }
+
+    public function msgErrRemoveAllowed ()
+    {
+        return _t('_sys_txt_access_denied');
     }
 }
 

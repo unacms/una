@@ -2,6 +2,7 @@
 
 .bx-msg-collaborator {
     float:right;
+    white-space:nowrap;
 }
 
 /* unit */

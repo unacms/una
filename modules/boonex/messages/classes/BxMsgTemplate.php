@@ -21,39 +21,94 @@ class BxMsgTemplate extends BxBaseModTextTemplate
      */
     function __construct(&$oConfig, &$oDb) 
     {
-        self::$MODULE = 'bx_messages';
+        $this->MODULE = 'bx_messages';
         parent::__construct($oConfig, $oDb);
     }
 
-    public function entryCollaborators ($aContentInfo, $aCollaborators)
+    public function entryCollaborators ($aContentInfo, $iMaxVisible = 2, $sFloat = 'left')
     {
-        $oModule = BxDolModule::getInstance(self::$MODULE);
+        $oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$oModule->_oConfig->CNF;
 
         bx_import('BxDolProfile');
     
+        $aCollaborators = $this->_oDb->getCollaborators($aContentInfo[$CNF['FIELD_ID']]);
+        //unset($aCollaborators[$aContentInfo[$CNF['FIELD_AUTHOR']]]);
+
+        // sort collaborators: first - current user, second - last replier, third - author, all others sorted by max number of posts
+        $aCollaborators = $oModule->sortCollaborators($aCollaborators, $aContentInfo['last_reply_profile_id'], $aContentInfo[$CNF['FIELD_AUTHOR']]);
+        $iCollaboratorsNum = count($aCollaborators);
+
+        // prepare template variables
+        $aVarsPopup = array (
+            'bx_repeat:collaborators' => array(),
+            'bx_if:collaborators_more' => array(
+                'condition' => false,
+                'content' => array(),
+            ),
+        );
         $aVars = array (
             'bx_repeat:collaborators' => array(),
+            'bx_if:collaborators_more' => array(
+                'condition' => $iCollaboratorsNum > $iMaxVisible,
+                'content' => array(
+                    'popup' => '',
+                    'title_more' => _t('_bx_msg_more', $iCollaboratorsNum - $iMaxVisible),
+                    'float' => $sFloat,
+                    'id' => $this->MODULE . '-popup-' . $aContentInfo[$CNF['FIELD_ID']],
+                ),
+            ),
         );
+        $i = 0;
         foreach ($aCollaborators as $iProfileId => $iReadComments) {
             $oProfile = BxDolProfile::getInstance($iProfileId);
             if (!$oProfile)
                 continue;
-            $aVars['bx_repeat:collaborators'][] = array (
+
+            $aCollaborator = array (
+                'id' => $oProfile->id(),
                 'url' => $oProfile->getUrl(),
                 'thumb_url' => $oProfile->getThumb(),
                 'title' => $oProfile->getDisplayName(),
-                'unread_messages_title_attr' =>  bx_html_attribute( _t('_bx_msg_unread_messages', $aContentInfo['comments'] - $iReadComments)),
-                'bx_if:unread_messages' => array (
-                    'condition' => ($aContentInfo['comments'] - $iReadComments) > 0,
+                'title_attr' =>  $oProfile->getDisplayName(),
+                'float' => $sFloat,
+                'bx_if:last_replier' => array (
+                    'condition' => ($aContentInfo['last_reply_profile_id'] == $iProfileId),
                     'content' => array (
-                        'unread_messages' =>  $aContentInfo['comments'] - $iReadComments,
+                        'id' => $oProfile->id(),
+                    ),
+                ),
+                'bx_if:author'  => array (
+                    'condition' => $aContentInfo[$CNF['FIELD_AUTHOR']] == $iProfileId,
+                    'content' => array (
+                        'id' => $oProfile->id(),
                     ),
                 ),
             );
+
+            if ($i < $iMaxVisible)
+                $aVars['bx_repeat:collaborators'][] = $aCollaborator;
+            if ($i >= $iMaxVisible)
+                $aVarsPopup['bx_repeat:collaborators'][] = $aCollaborator;
+
+            ++$i;
+        }
+
+        if ($aVarsPopup['bx_repeat:collaborators']) {
+            bx_import('BxTemplFunctions');
+            $aVars['bx_if:collaborators_more']['content']['popup'] = BxTemplFunctions::getInstance()->transBox('', '<div class="bx-def-padding">' . $this->parseHtmlByName('collaborators.html', $aVarsPopup) . '</div>');
         }
 
         return $this->parseHtmlByName('collaborators.html', $aVars);
+    }
+
+    function getAuthorDesc ($aData) 
+    {
+        $oModule = BxDolModule::getInstance($this->MODULE);
+        if ($aData['last_reply_timestamp'] == $aData[$oModule->_oConfig->CNF['FIELD_ADDED']])
+            return bx_time_js($aData[$oModule->_oConfig->CNF['FIELD_ADDED']], BX_FORMAT_DATE);
+        
+        return _t('_bx_msg_author_desc', bx_time_js($aData[$oModule->_oConfig->CNF['FIELD_ADDED']], BX_FORMAT_DATE), bx_time_js($aData['last_reply_timestamp'], BX_FORMAT_DATE));
     }
 }
 

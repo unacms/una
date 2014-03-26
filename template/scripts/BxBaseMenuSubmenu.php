@@ -48,10 +48,13 @@ class BxBaseMenuSubmenu extends BxTemplMenu
         if (!$this->_sObjectSubmenu && $aMenuItemSelected['submenu_object'])
             $this->_sObjectSubmenu = $aMenuItemSelected['submenu_object'];
 
+        bx_import('BxDolPermalinks');
+        $oPermalinks = BxDolPermalinks::getInstance();
+
         $aVars = array (
             'object' => $this->_sObject,
             'title' => $aMenuItemSelected['title'],
-            'link' => $aMenuItemSelected['link'],
+            'link' => $oPermalinks->permalink($aMenuItemSelected['link']),
             'icon' => $aMenuItemSelected['icon'],
         );
 

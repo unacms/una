@@ -21,7 +21,7 @@ class BxNotesTemplate extends BxBaseModTextTemplate
      */
     function __construct(&$oConfig, &$oDb) 
     {
-        self::$MODULE = 'bx_notes';
+        $this->MODULE = 'bx_notes';
         parent::__construct($oConfig, $oDb);
     }
 }
