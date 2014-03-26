@@ -65,12 +65,20 @@ class BxMsgTemplate extends BxBaseModTextTemplate
             if (!$oProfile)
                 continue;
 
+            $sInfo = '';
+            if ($aContentInfo[$CNF['FIELD_AUTHOR']] == $iProfileId)
+                $sInfo = _t('_bx_msg_collaborator_author');
+            if ($aContentInfo['last_reply_profile_id'] == $iProfileId)
+                $sInfo .= ', ' . _t('_bx_msg_collaborator_last_replier');
+            $sInfo = trim($sInfo, ', ');
+            $sInfo = $sInfo ? _t('_bx_msg_collaborator_info', $oProfile->getDisplayName(), $sInfo) : $oProfile->getDisplayName();
+
             $aCollaborator = array (
                 'id' => $oProfile->id(),
                 'url' => $oProfile->getUrl(),
                 'thumb_url' => $oProfile->getThumb(),
                 'title' => $oProfile->getDisplayName(),
-                'title_attr' =>  $oProfile->getDisplayName(),
+                'title_attr' =>  bx_html_attribute($sInfo),
                 'float' => $sFloat,
                 'bx_if:last_replier' => array (
                     'condition' => ($aContentInfo['last_reply_profile_id'] == $iProfileId),

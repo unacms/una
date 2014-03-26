@@ -27,6 +27,12 @@ class BxMsgDb extends BxBaseModTextDb
         return $this->query($sQuery);
     }
 
+    public function getFolder($iFolderId)
+    {
+        $sQuery = $this->prepare("SELECT `id`, `author`, `name` FROM `" . $this->getPrefix() . "folders` WHERE `id` = ?", $iFolderId);
+        return $this->getRow($sQuery);
+    }
+
     public function getCollaborators($iConversationId)
     {
         $sQuery = $this->prepare("SELECT `collaborator`, `read_comments` FROM `" . $this->getPrefix() . "conv2folder` WHERE `conv_id` = ?", $iConversationId);

@@ -37,16 +37,13 @@ class BxMsgFormEntry extends BxBaseModTextFormEntry
 
         bx_import('BxDolProfile');
 
-        // for author place conversation to "sent" folder
-        $this->_oModule->_oDb->conversationToFolder($iContentId, BX_MSG_FOLDER_SENT, bx_get_logged_profile_id(), 0);
-
         // check for spam
         $bSpam = false;
         bx_alert('system', 'check_spam', 0, getLoggedId(), array('is_spam' => &$bSpam, 'content' => $this->getCleanValue('text'), 'where' => 'messages'));
-        $iFolder = $bSpam ? BX_MSG_FOLDER_SPAM : BX_MSG_FOLDER_INBOX;
+        $iFolder = $bSpam ? BX_MSG_FOLDER_SPAM : BX_MSG_FOLDER_PRIMARY;
 
-        // for all collaborators to "inbox" or "spam"
-        $aRecipients = array_unique($this->getCleanValue('recipients'), SORT_NUMERIC);
+        // place conversation to "primary" (or "spam" - in case of spam) folder 
+        $aRecipients = array_unique(array_merge($this->getCleanValue('recipients'), array(bx_get_logged_profile_id())), SORT_NUMERIC);
         foreach ($aRecipients as $iProfile) {
             $oProfile = BxDolProfile::getInstance($iProfile);
             if ($oProfile)

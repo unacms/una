@@ -11,11 +11,10 @@
 
 bx_import ('BxBaseModTextModule');
 
-define('BX_MSG_FOLDER_INBOX', 1);
-define('BX_MSG_FOLDER_SENT', 2);
-define('BX_MSG_FOLDER_DRAFTS', 3);
-define('BX_MSG_FOLDER_SPAM', 4);
-define('BX_MSG_FOLDER_TRASH', 5);
+define('BX_MSG_FOLDER_PRIMARY', 1);
+define('BX_MSG_FOLDER_DRAFTS', 2);
+define('BX_MSG_FOLDER_SPAM', 3);
+define('BX_MSG_FOLDER_TRASH', 4);
 
 /**
  * Messages module
@@ -74,6 +73,12 @@ class BxMsgModule extends BxBaseModTextModule
             exit;
         }
 
+        $aFolder = $this->_oDb->getFolder((int)$iFolderId);
+        if (!$aFolder) {
+            $this->_oTemplate->displayPageNotFound();
+            exit;
+        }
+
         // TODO: incorporate markers into custom class, so replace will work in search and so on
         $oGrid->addMarkers(array(
             'folder_id' => (int)$iFolderId,
@@ -83,6 +88,7 @@ class BxMsgModule extends BxBaseModTextModule
         // TODO: refactor below
         $oTemplate = BxDolTemplate::getInstance();
         $oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);
+        $oTemplate->setPageHeader (str_replace('{folder}', _t($aFolder['name']), _t('_bx_msg_page_title_folder')));
         $oTemplate->setPageContent ('page_main_code', $oGrid->getCode());
         $oTemplate->getPageCode();
 

@@ -38,8 +38,12 @@ class BxBaseModTextPageEntry extends BxTemplPage
         if ($iContentId)
             $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
 
-        if ($this->_aContentInfo)
+        if ($this->_aContentInfo) {
             $this->addMarkers($this->_aContentInfo); // every field can be used as marker
+            $this->addMarkers(array(
+                'title' => strmaxtextlen($this->_aContentInfo[$CNF['FIELD_TEXT']], 20, '...'),
+            ));
+        }
 
 		bx_import('BxDolView');
 		BxDolView::getObjectInstance($CNF['OBJECT_VIEWS'], $iContentId)->doView();

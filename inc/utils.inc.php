@@ -59,12 +59,12 @@ function strmaxwordlen($input, $len = 100) {
 /*
  * functions for limiting maximal text length
  */
-function strmaxtextlen($sInput, $iMaxLen = 60) {
+function strmaxtextlen($sInput, $iMaxLen = 60, $sEllipsisSign = '&#8230;') {
     $sTail = '';
     $s = trim(strip_tags($sInput));
     if (mb_strlen($s) > $iMaxLen) {
         $s = mb_substr($s, 0, $iMaxLen);
-        $sTail = '&#8230;';
+        $sTail = $sEllipsisSign;
     }
     return htmlspecialchars_adv($s) . $sTail;
 }

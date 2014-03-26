@@ -104,9 +104,8 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_messages_submenu', 'bx_messages', '_bx_msg_menu_set_title_submenu', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_messages_submenu', 'bx_messages', 'messages-folder-inbox', '_bx_msg_menu_item_title_system_folder_inbox', '_bx_msg_menu_item_title_folder_inbox', 'modules/?r=messages/folder/1', '', '', '', '', 2147483647, 1, 1, 1),
-('bx_messages_submenu', 'bx_messages', 'messages-folder-sent', '_bx_msg_menu_item_title_system_folder_sent', '_bx_msg_menu_item_title_folder_sent', 'modules/?r=messages/folder/2', '', '', '', '', 2147483647, 1, 1, 2),
-('bx_messages_submenu', 'bx_messages', 'messages-folder-more', '_bx_msg_menu_item_title_system_folder_more', '_bx_msg_menu_item_title_folder_more', 'javascript:void(0);', 'bx_menu_popup(''bx_messages_menu_folders_more'', this);', '', '', '', 2147483647, 1, 1, 3);
+('bx_messages_submenu', 'bx_messages', 'messages-folder-primary', '_bx_msg_menu_item_title_system_folder_primary', '_bx_msg_menu_item_title_folder_primary', 'modules/?r=messages/folder/1', '', '', '', '', 2147483647, 1, 1, 1),
+('bx_messages_submenu', 'bx_messages', 'messages-folder-more', '_bx_msg_menu_item_title_system_folder_more', '_bx_msg_menu_item_title_folder_more', 'javascript:void(0);', 'bx_menu_popup(''bx_messages_menu_folders_more'', this);', '', '', '', 2147483647, 1, 1, 2);
 
 -- MENU: more folders
 
@@ -117,9 +116,9 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_messages_menu_folders_more', 'bx_messages', '_bx_msg_menu_set_title_folders_more', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_messages_menu_folders_more', 'bx_messages', 'messages-drafts', '_bx_msg_menu_item_title_system_folder_drafts', '_bx_msg_menu_item_title_folder_drafts', 'modules/?r=messages/folder/3', '', '', '', '', 2147483647, 1, 1, 1),
-('bx_messages_menu_folders_more', 'bx_messages', 'messages-spam', '_bx_msg_menu_item_title_system_folder_spam', '_bx_msg_menu_item_title_folder_spam', 'modules/?r=messages/folder/4', '', '', '', '', 2147483647, 1, 1, 2),
-('bx_messages_menu_folders_more', 'bx_messages', 'messages-trash', '_bx_msg_menu_item_title_system_folder_trash', '_bx_msg_menu_item_title_folder_trash', 'modules/?r=messages/folder/5', '', '', '', '', 2147483647, 1, 1, 3);
+('bx_messages_menu_folders_more', 'bx_messages', 'messages-drafts', '_bx_msg_menu_item_title_system_folder_drafts', '_bx_msg_menu_item_title_folder_drafts', 'modules/?r=messages/folder/2', '', '', '', '', 2147483647, 1, 1, 1),
+('bx_messages_menu_folders_more', 'bx_messages', 'messages-spam', '_bx_msg_menu_item_title_system_folder_spam', '_bx_msg_menu_item_title_folder_spam', 'modules/?r=messages/folder/3', '', '', '', '', 2147483647, 1, 1, 2),
+('bx_messages_menu_folders_more', 'bx_messages', 'messages-trash', '_bx_msg_menu_item_title_system_folder_trash', '_bx_msg_menu_item_title_folder_trash', 'modules/?r=messages/folder/4', '', '', '', '', 2147483647, 1, 1, 3);
 
 
 -- GRID
