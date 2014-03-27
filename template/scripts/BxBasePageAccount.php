@@ -59,7 +59,7 @@ class BxBasePageAccount extends BxTemplPage {
             } 
 
             if ($oInformer)
-                $oInformer->add('sys-account-profile-context-change-result', $sInformerMsg ? $sInformerMsg : _t('_Error occured'), $sInformerMsg ? BX_INFORMER_INFO : BX_INFORMER_ERROR);
+                $oInformer->add('sys-account-profile-context-change-result', $sInformerMsg ? $sInformerMsg : _t('_error occured'), $sInformerMsg ? BX_INFORMER_INFO : BX_INFORMER_ERROR);
         }
 
     }

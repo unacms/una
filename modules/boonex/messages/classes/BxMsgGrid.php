@@ -20,10 +20,17 @@ class BxMsgGrid extends BxTemplGrid
         self::$MODULE = 'bx_messages';
         parent::__construct ($aOptions, $oTemplate);
         $this->_sDefaultSortingOrder = 'DESC';
+
+        if ($iFolderId = (int)bx_get('folder_id'))
+            $this->addMarkers(array(
+                'folder_id' => $iFolderId,
+                'profile_id' => bx_get_logged_profile_id(),
+            ));
     }
 
     public function performActionCompose() 
     {
+        bx_import('BxDolModule');
         $oModule = BxDolModule::getInstance(self::$MODULE);
         $CNF = &$oModule->_oConfig->CNF;
 
@@ -35,6 +42,7 @@ class BxMsgGrid extends BxTemplGrid
 
     protected function _getActionAdd ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array()) 
     {
+        bx_import('BxDolModule');
         $oModule = BxDolModule::getInstance(self::$MODULE);
         $CNF = &$oModule->_oConfig->CNF;
 
@@ -49,6 +57,7 @@ class BxMsgGrid extends BxTemplGrid
 
     protected function _getCellPreview ($mixedValue, $sKey, $aField, $aRow) 
     {
+        bx_import('BxDolModule');
         $oModule = BxDolModule::getInstance(self::$MODULE);
         $CNF = &$oModule->_oConfig->CNF;
 
@@ -72,6 +81,7 @@ class BxMsgGrid extends BxTemplGrid
 
     protected function _getCellCollaborators ($mixedValue, $sKey, $aField, $aRow)
     {
+        bx_import('BxDolModule');
         $oModule = BxDolModule::getInstance(self::$MODULE);
         $s = $oModule->_oTemplate->entryCollaborators ($aRow);
         return parent::_getCellDefault ($s, $sKey, $aField, $aRow);

@@ -168,25 +168,17 @@ class BxBaseGrid extends BxDolGrid {
         }
 
         $sPopupOptions = '{}';
-        if (!empty($this->_aPopupOptions) && is_array($this->_aPopupOptions)) {
-            require_once(BX_DIRECTORY_PATH_PLUGINS . 'Services_JSON.php');
-            $oParser = new Services_JSON();
-            $sPopupOptions = $oParser->encode($this->_aPopupOptions);
-        }
+        if (!empty($this->_aPopupOptions) && is_array($this->_aPopupOptions))
+            $sPopupOptions = json_encode($this->_aPopupOptions);
 
+        $aQueryAppend = array_merge(is_array($this->_aQueryAppend) ? $this->_aQueryAppend : array(), is_array($this->_aMarkers) ? $this->_aMarkers : array());
         $sQueryAppend = '{}';
-        if (!empty($this->_aQueryAppend) && is_array($this->_aQueryAppend)) {
-            require_once(BX_DIRECTORY_PATH_PLUGINS . 'Services_JSON.php');
-            $oParser = new Services_JSON();
-            $sQueryAppend = $oParser->encode($this->_aQueryAppend);
-        }
+        if (!empty($aQueryAppend) && is_array($aQueryAppend))
+            $sQueryAppend = json_encode($aQueryAppend);
 
         $sConfirmMessages = '{}';
-        if (!empty($this->_aConfirmMessages) && is_array($this->_aConfirmMessages)) {
-            require_once(BX_DIRECTORY_PATH_PLUGINS . 'Services_JSON.php');
-            $oParser = new Services_JSON();
-            $sConfirmMessages = $oParser->encode($this->_aConfirmMessages);
-        }
+        if (!empty($this->_aConfirmMessages) && is_array($this->_aConfirmMessages))
+            $sConfirmMessages = json_encode($this->_aConfirmMessages);
 
         $aVars = array (
             'object' => $this->_sObject,
@@ -600,12 +592,9 @@ class BxBaseGrid extends BxDolGrid {
 
     protected function _echoResultJson($a, $isAutoWrapForFormFileSubmit = false) {
 
-        header('Content-type: text/html; charset=utf-8');    
+        header('Content-type: text/html; charset=utf-8');
 
-        require_once(BX_DIRECTORY_PATH_PLUGINS . 'Services_JSON.php');
-
-        $oParser = new Services_JSON();
-        $s = $oParser->encode($a);
+        $s = json_encode($a);
         if ($isAutoWrapForFormFileSubmit && !empty($_FILES)) 
             $s = '<textarea>' . $s . '</textarea>'; // http://jquery.malsup.com/form/#file-upload
         echo $s;
