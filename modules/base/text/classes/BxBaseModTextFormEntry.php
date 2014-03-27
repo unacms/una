@@ -145,13 +145,16 @@ class BxBaseModTextFormEntry extends BxTemplFormView
         // delete db record
 
         bx_import('BxDolView');
-		BxDolView::getObjectInstance($CNF['OBJECT_VIEWS'], $iContentId)->onObjectDelete();
+		$o = BxDolView::getObjectInstance($CNF['OBJECT_VIEWS'], $iContentId);
+        if ($o) $o->onObjectDelete();
 
 		bx_import('BxDolVote');
-		BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $iContentId)->onObjectDelete();
+		$o = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $iContentId);
+        if ($o) $o->onObjectDelete();
 
 		bx_import('BxDolCmts');
-		BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $iContentId)->onObjectDelete();
+		$o = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $iContentId);
+        if ($o) $o->onObjectDelete();
 
         return parent::delete($iContentId);
     }

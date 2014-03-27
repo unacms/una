@@ -9,6 +9,8 @@
  * @{
  */
 
+require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
+
 bx_import('BxTemplGrid');
 
 class BxMsgGrid extends BxTemplGrid 
@@ -95,6 +97,14 @@ class BxMsgGrid extends BxTemplGrid
             $mixedValue = 1 + $mixedValue;
 
         return parent::_getCellDefault ($mixedValue, $sKey, $aField, $aRow);
+    }
+
+    protected function _delete ($mixedId) 
+    {
+        bx_import('BxDolModule');
+        $oModule = BxDolModule::getInstance(self::$MODULE);
+
+        return $oModule->_oDb->moveMessage((int)$mixedId, bx_get_logged_profile_id(), BX_MSG_FOLDER_TRASH);
     }
 }
 

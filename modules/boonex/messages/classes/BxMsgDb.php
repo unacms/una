@@ -50,6 +50,36 @@ class BxMsgDb extends BxBaseModTextDb
         $sQuery = $this->prepare("UPDATE `" . $this->getPrefix() . "conversations` SET `last_reply_profile_id` = ?, `last_reply_timestamp` = ? WHERE `id` = ?", $iProfileId, $iTimestamp, $iConversationId);
         return $this->query($sQuery);
     }
+
+    public function moveMessage($iConversationId, $iProfileId, $iFolderId)
+    {
+        $sQuery = $this->prepare("SELECT `folder_id` FROM `" . $this->getPrefix() . "conv2folder` WHERE `conv_id` = ? AND `collaborator` = ?", $iConversationId, $iProfileId);
+        $iFolderIdOld = $this->getOne($sQuery);
+        if (BX_MSG_FOLDER_TRASH == $iFolderIdOld) // if message is already in trash folder - delete it
+            return $this->deleteMessage($iConversationId, $iProfileId);
+
+        $sQuery = $this->prepare("UPDATE `" . $this->getPrefix() . "conv2folder` SET `folder_id` = ? WHERE `conv_id` = ? AND `collaborator` = ?", $iFolderId, $iConversationId, $iProfileId);
+        return $this->query($sQuery);
+    }
+
+    public function deleteMessage($iConversationId, $iProfileId)
+    {
+        // delete message
+        $sQuery = $this->prepare("DELETE FROM `" . $this->getPrefix() . "conv2folder` WHERE `conv_id` = ? AND `collaborator` = ?", $iConversationId, $iProfileId);
+        if (!$this->query($sQuery))
+            return false;
+
+        // delete whole conversation if there is no refencences to the conversation in conv2folder table
+        $sQuery = $this->prepare("SELECT `id` FROM `" . $this->getPrefix() . "conv2folder` WHERE `conv_id` = ?", $iConversationId);
+        if (!$this->getOne($sQuery)) {
+            $CNF = &$this->_oConfig->CNF;
+            bx_import('BxDolForm');
+            $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD']);
+            return $oForm->delete((int)$iConversationId);
+        }
+
+        return true;
+    }
 }
 
 /** @} */ 
