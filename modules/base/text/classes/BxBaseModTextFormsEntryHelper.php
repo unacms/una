@@ -172,7 +172,8 @@ class BxBaseModTextFormsEntryHelper extends BxDolProfileForms
         bx_alert($this->_oModule->getName(), 'deleted', $aContentInfo[$CNF['FIELD_ID']]);
 
         // redirect 
-        $this->_redirectAndExit('page.php?i=' . $CNF['URI_HOME']);
+        bx_import('BxDolPermalinks');
+        $this->_redirectAndExit(BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']));
     }
 
 

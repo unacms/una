@@ -53,10 +53,42 @@ class BxMsgModule extends BxBaseModTextModule
         $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
         if ($oMenuSubmenu) 
             $oMenuSubmenu->setObjectSubmenu($this->_oConfig->CNF['OBJECT_MENU_SUBMENU'], array (
-                'title' => 'Messages',
+                'title' => _t('_bx_msg'),
                 'link' => 'javascript:void(0);',
                 'icon' => '',
             ));
+    }
+
+    /**
+     * Delete message for current user by content id
+     * @return error message on error, or empty message on success
+     */
+    public function deleteMessage ($iContentId) 
+    {
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if (!$aContentInfo)
+            return _t('_sys_request_page_not_found_cpt');
+
+        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->checkAllowedDelete($aContentInfo)))
+            return $sMsg;
+
+        if (!$this->_oDb->moveMessage((int)$iContentId, bx_get_logged_profile_id(), BX_MSG_FOLDER_TRASH))
+            return _t('_error occured');
+
+        return '';
+    }
+
+    public function actionDelete($iContentId) 
+    {
+        header('Content-Type:text/plain; charset=utf-8');
+
+        if ($s = $this->deleteMessage ($iContentId)) {
+            echo $s;
+            exit;
+        }
+
+        echo BX_DOL_URL_ROOT . $this->_oConfig->CNF['URL_HOME'];
+        exit;
     }
 
     /**

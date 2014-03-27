@@ -79,7 +79,8 @@ class BxNotesSearchResult extends BxBaseModTextSearchResult
             
             case 'public':
             case '':
-                $this->sBrowseUrl = 'page.php?i=' . $CNF['URI_HOME'];
+                bx_import('BxDolPermalinks');
+                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']);
                 $this->aCurrent['title'] = _t('_bx_notes_page_title_browse_recent');
                 $this->aCurrent['rss']['link'] = 'modules/?r=notes/rss/' . $sMode;
                 break;

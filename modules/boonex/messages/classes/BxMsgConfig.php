@@ -39,9 +39,10 @@ class BxMsgConfig extends BxBaseModTextConfig
 
             // page URIs
             'URI_VIEW_ENTRY' => 'view-message',
-            'URI_HOME' => 'messages',
             'URI_AUTHOR_ENTRIES' => 'messages',
             'URI_ADD_ENTRY' => 'compose-message',
+
+            'URL_HOME' => 'modules/?r=messages/folder/1',
 
             // some params
             'PARAM_CHARS_SUMMARY' => '',
@@ -68,9 +69,6 @@ class BxMsgConfig extends BxBaseModTextConfig
 
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (
-                'bx_messages_my' => array (
-                    'compose-message' => 'checkAllowedAdd',
-                ),
                 'bx_messages_view' => array (
                     'delete-message' => 'checkAllowedDelete',
                 ),

@@ -17,13 +17,13 @@ bx_import('BxTemplPage');
  */
 class BxBaseModTextPageBrowse extends BxTemplPage 
 {   
-    protected static $MODULE;
+    protected $MODULE;
  
     public function __construct($aObject, $oTemplate = false) 
     {
         parent::__construct($aObject, $oTemplate);
 
-        $oModule = BxDolModule::getInstance(self::$MODULE);
+        $oModule = BxDolModule::getInstance($this->MODULE);
 
         // select module submenu
         bx_import('BxDolMenu');

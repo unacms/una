@@ -18,7 +18,7 @@ bx_import('BxDolMenu');
  */
 class BxBaseModTextPageEntry extends BxTemplPage 
 {    
-    protected static $MODULE;
+    protected $MODULE;
 
     protected $_oModule;
     protected $_aContentInfo = false;
@@ -27,7 +27,7 @@ class BxBaseModTextPageEntry extends BxTemplPage
     {
         parent::__construct($aObject, $oTemplate);
 
-        $this->_oModule = BxDolModule::getInstance(self::$MODULE);
+        $this->_oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         // select view entry submenu

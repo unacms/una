@@ -16,7 +16,7 @@ bx_import('BxTemplFormView');
  */
 class BxBaseModTextFormEntry extends BxTemplFormView 
 {
-    protected static $MODULE;
+    protected $MODULE;
 
     protected $_oModule;
 
@@ -24,7 +24,7 @@ class BxBaseModTextFormEntry extends BxTemplFormView
     {
         parent::__construct($aInfo, $oTemplate);
         
-        $this->_oModule = BxDolModule::getInstance(self::$MODULE);
+        $this->_oModule = BxDolModule::getInstance($this->MODULE);
 
         $CNF = &$this->_oModule->_oConfig->CNF;
 

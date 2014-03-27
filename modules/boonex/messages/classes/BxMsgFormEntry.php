@@ -18,7 +18,7 @@ class BxMsgFormEntry extends BxBaseModTextFormEntry
 {
     public function __construct($aInfo, $oTemplate = false) 
     {
-        self::$MODULE = 'bx_messages';
+        $this->MODULE = 'bx_messages';
         parent::__construct($aInfo, $oTemplate);
 
         $aJs = array (

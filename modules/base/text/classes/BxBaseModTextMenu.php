@@ -16,7 +16,7 @@ bx_import('BxTemplMenu');
  */
 class BxBaseModTextMenu extends BxTemplMenu 
 {
-    protected static $MODULE;
+    protected $MODULE;
 
     protected $_oModule;
     protected $_aContentInfo;
@@ -26,7 +26,7 @@ class BxBaseModTextMenu extends BxTemplMenu
         parent::__construct($aObject, $oTemplate);
 
         bx_import('BxDolModule');
-        $this->_oModule = BxDolModule::getInstance(self::$MODULE);
+        $this->_oModule = BxDolModule::getInstance($this->MODULE);
     }
 
     /**

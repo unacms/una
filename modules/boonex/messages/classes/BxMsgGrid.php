@@ -15,11 +15,11 @@ bx_import('BxTemplGrid');
 
 class BxMsgGrid extends BxTemplGrid 
 {
-    protected static $MODULE;
+    protected $MODULE;
 
     public function __construct ($aOptions, $oTemplate = false) 
     {
-        self::$MODULE = 'bx_messages';
+        $this->MODULE = 'bx_messages';
         parent::__construct ($aOptions, $oTemplate);
         $this->_sDefaultSortingOrder = 'DESC';
 
@@ -33,7 +33,7 @@ class BxMsgGrid extends BxTemplGrid
     public function performActionCompose() 
     {
         bx_import('BxDolModule');
-        $oModule = BxDolModule::getInstance(self::$MODULE);
+        $oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$oModule->_oConfig->CNF;
 
         bx_import('BxDolPermalinks');
@@ -45,7 +45,7 @@ class BxMsgGrid extends BxTemplGrid
     protected function _getActionAdd ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array()) 
     {
         bx_import('BxDolModule');
-        $oModule = BxDolModule::getInstance(self::$MODULE);
+        $oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$oModule->_oConfig->CNF;
 
         bx_import('BxDolPermalinks');
@@ -60,7 +60,7 @@ class BxMsgGrid extends BxTemplGrid
     protected function _getCellPreview ($mixedValue, $sKey, $aField, $aRow) 
     {
         bx_import('BxDolModule');
-        $oModule = BxDolModule::getInstance(self::$MODULE);
+        $oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$oModule->_oConfig->CNF;
 
         bx_import('BxDolPermalinks');
@@ -84,7 +84,7 @@ class BxMsgGrid extends BxTemplGrid
     protected function _getCellCollaborators ($mixedValue, $sKey, $aField, $aRow)
     {
         bx_import('BxDolModule');
-        $oModule = BxDolModule::getInstance(self::$MODULE);
+        $oModule = BxDolModule::getInstance($this->MODULE);
         $s = $oModule->_oTemplate->entryCollaborators ($aRow);
         return parent::_getCellDefault ($s, $sKey, $aField, $aRow);
     }
@@ -102,8 +102,11 @@ class BxMsgGrid extends BxTemplGrid
     protected function _delete ($mixedId) 
     {
         bx_import('BxDolModule');
-        $oModule = BxDolModule::getInstance(self::$MODULE);
+        $oModule = BxDolModule::getInstance($this->MODULE);
 
+        if ($sErrorMsg = $oModule->deleteMessage ($mixedId))
+            return false;
+    
         return $oModule->_oDb->moveMessage((int)$mixedId, bx_get_logged_profile_id(), BX_MSG_FOLDER_TRASH);
     }
 }

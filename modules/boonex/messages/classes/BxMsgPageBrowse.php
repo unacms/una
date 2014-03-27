@@ -18,7 +18,7 @@ class BxMsgPageBrowse extends BxBaseModTextPageBrowse
 {    
     public function __construct($aObject, $oTemplate = false) 
     {
-        self::$MODULE = 'bx_messages';
+        $this->MODULE = 'bx_messages';
         parent::__construct($aObject, $oTemplate);
     }
 }

@@ -18,7 +18,7 @@ class BxNotesFormEntry extends BxBaseModTextFormEntry
 {
     public function __construct($aInfo, $oTemplate = false) 
     {
-        self::$MODULE = 'bx_notes';
+        $this->MODULE = 'bx_notes';
         parent::__construct($aInfo, $oTemplate);
     }
 }

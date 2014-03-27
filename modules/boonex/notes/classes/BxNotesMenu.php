@@ -18,7 +18,7 @@ class BxNotesMenu extends BxBaseModTextMenu
 {
     public function __construct($aObject, $oTemplate = false) 
     {
-        self::$MODULE = 'bx_notes';
+        $this->MODULE = 'bx_notes';
         parent::__construct($aObject, $oTemplate);
     }
 }

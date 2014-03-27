@@ -9,13 +9,12 @@
  * @{
  */
 
-bx_import('BxTemplMenu');
-bx_import('Menu', 'bx_notes');
+bx_import('BxBaseModTextMenu');
 
 /**
  * View entry menu
  */
-class BxBaseModTextMenuView extends BxNotesMenu
+class BxBaseModTextMenuView extends BxBaseModTextMenu
 {
     public function __construct($aObject, $oTemplate = false) 
     {

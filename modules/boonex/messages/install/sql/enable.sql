@@ -40,15 +40,6 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 ('bx_messages_create_entry', 1, 'bx_messages', '_bx_msg_page_block_title_create_entry', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_messages";s:6:"method";s:13:"entity_create";}', 0, 1, 1);
 
 
--- PAGE: delete entry
-
-INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_messages_delete_entry', '_bx_msg_page_title_sys_delete_entry', '_bx_msg_page_title_delete_entry', 'bx_messages', 5, 2147483647, 1, 'delete-message', '', '', '', '', 0, 1, 0, 'BxMsgPageEntry', 'modules/boonex/messages/classes/BxMsgPageEntry.php');
-
-INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
-('bx_messages_delete_entry', 1, 'bx_messages', '_bx_msg_page_block_title_delete_entry', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_messages";s:6:"method";s:13:"entity_delete";}', 0, 0, 0);
-
-
 -- PAGE: view entry
 
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -80,19 +71,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_messages_view', 'bx_messages', '_bx_msg_menu_set_title_view_entry', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_messages_view', 'bx_messages', 'delete-message', '_bx_msg_menu_item_title_system_delete_entry', '_bx_msg_menu_item_title_delete_entry', 'page.php?i=delete-message&id={content_id}', '', '', 'remove', '', 0, 1, 0, 2);
-
-
--- MENU: actions menu for my entries
-
-INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_messages_my', '_bx_msg_menu_title_entries_my', 'bx_messages_my', 'bx_messages', 9, 0, 1, 'BxMsgMenu', 'modules/boonex/messages/classes/BxMsgMenu.php');
-
-INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
-('bx_messages_my', 'bx_messages', '_bx_msg_menu_set_title_entries_my', 0);
-
-INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_messages_my', 'bx_messages', 'compose-message', '_bx_msg_menu_item_title_system_create_entry', '_bx_msg_menu_item_title_create_entry', 'page.php?i=compose-message', '', '', 'plus', '', 0, 1, 0, 0);
+('bx_messages_view', 'bx_messages', 'delete-message', '_bx_msg_menu_item_title_system_delete_entry', '_bx_msg_menu_item_title_delete_entry', 'javascript:void(0);', 'bx_msg_delete(this, \'{content_id}\')', '', 'remove', '', 0, 1, 0, 2);
 
 
 -- MENU: module sub-menu
@@ -106,6 +85,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_messages_submenu', 'bx_messages', 'messages-folder-primary', '_bx_msg_menu_item_title_system_folder_primary', '_bx_msg_menu_item_title_folder_primary', 'modules/?r=messages/folder/1', '', '', '', '', 2147483647, 1, 1, 1),
 ('bx_messages_submenu', 'bx_messages', 'messages-folder-more', '_bx_msg_menu_item_title_system_folder_more', '_bx_msg_menu_item_title_folder_more', 'javascript:void(0);', 'bx_menu_popup(''bx_messages_menu_folders_more'', this);', '', '', '', 2147483647, 1, 1, 2);
+
 
 -- MENU: more folders
 
