@@ -157,6 +157,9 @@ class BxBaseModTextTemplate extends BxDolModuleTemplate
         $oTranscoder = BxDolImageTranscoder::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);
 
         $aGhostFiles = $oStorage->getGhosts (bx_get_logged_profile_id(), $aData[$CNF['FIELD_ID']]);
+        if (!$aGhostFiles)
+            return false;
+
         foreach ($aGhostFiles as $k => $a) {
 
             $isImage = $oTranscoder && (0 == strncmp('image/', $a['mime_type'], 6)); // preview for images only and transcoder object for preview must be defined

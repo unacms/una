@@ -21,7 +21,7 @@ SET @iTotalResizedSize = (SELECT SUM(`size`) FROM `bx_messages_photos_resized`);
 SET @iTotalResizedNum = (SELECT COUNT(*) FROM `bx_messages_photos_resized`);
 
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
-('bx_messages_files', 'Local', '', 360, 2592000, 3, 'bx_messages_files', 'allow-deny', 'jpg,jpeg,jpe,gif,png,txt,csv', '', 0, @iTotalFilesSize, 0, @iTotalFilesNum, 0, 0),
+('bx_messages_files', 'Local', '', 360, 2592000, 3, 'bx_messages_files', 'deny-allow', '', 'action,apk,app,bat,bin,cmd,com,command,cpl,csh,exe,gadget,inf,ins,inx,ipa,isu,job,jse,ksh,lnk,msc,msi,msp,mst,osx,out,paf,pif,prg,ps1,reg,rgs,run,sct,shb,shs,u3p,vb,vbe,vbs,vbscript,workflow,ws,wsf', 0, @iTotalFilesSize, 0, @iTotalFilesNum, 0, 0),
 ('bx_messages_photos_resized', 'Local', '', 360, 2592000, 3, 'bx_messages_photos_resized', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, @iTotalResizedSize, 0, @iTotalResizedNum, 0, 0);
 
 INSERT INTO `sys_objects_transcoder_images` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`) VALUES 
@@ -50,7 +50,7 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 ('bx_messages_view_entry', 3, 'bx_messages', '_bx_msg_page_block_title_entry_collaborators', 0, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_messages\";s:6:\"method\";s:20:\"entity_collaborators\";}', 0, 0, 1, 0),
 ('bx_messages_view_entry', 1, 'bx_messages', '_bx_msg_page_block_title_entry_actions', 0, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_messages\";s:6:\"method\";s:14:\"entity_actions\";}', 0, 0, 1, 0),
 ('bx_messages_view_entry', 1, 'bx_messages', '_bx_msg_page_block_title_entry_text', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_messages\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 1),
-('bx_messages_view_entry', 1, 'bx_messages', '_bx_msg_page_block_title_entry_attachments', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_messages\";s:6:\"method\";s:18:\"entity_attachments\";}', 0, 0, 1, 2),
+('bx_messages_view_entry', 1, 'bx_messages', '_bx_msg_page_block_title_entry_attachments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_messages\";s:6:\"method\";s:18:\"entity_attachments\";}', 0, 0, 1, 2),
 ('bx_messages_view_entry', 1, 'bx_messages', '_bx_msg_page_block_title_entry_comments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_messages\";s:6:\"method\";s:15:\"entity_comments\";}', 0, 0, 1, 3);
 
 
