@@ -192,7 +192,7 @@ class BxBaseModTextFormEntry extends BxTemplFormView
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         if (!$iFileId)
-            return true;        
+            return true;
 
         bx_import('BxDolStorage');
         if (!($oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE'])))

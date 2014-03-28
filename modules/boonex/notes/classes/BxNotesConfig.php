@@ -50,7 +50,7 @@ class BxNotesConfig extends BxBaseModTextConfig
             'PARAM_NUM_RSS' => 'bx_notes_rss_num',
 
             // objects
-            'OBJECT_STORAGE' => 'bx_notes_photos',
+            'OBJECT_STORAGE' => 'bx_notes_files',
             'OBJECT_IMAGES_TRANSCODER_PREVIEW' => 'bx_notes_preview',
             'OBJECT_VIEWS' => 'bx_notes',
             'OBJECT_VOTES' => 'bx_notes',

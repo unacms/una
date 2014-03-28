@@ -5,8 +5,7 @@ DROP TABLE IF EXISTS `bx_notes_posts`;
 
 -- TABLE: storages & transcoders
 
-DROP TABLE IF EXISTS `bx_notes_photos`; 
-DROP TABLE IF EXISTS `bx_notes_photos_resized`;
+DROP TABLE IF EXISTS `bx_notes_files`, `bx_notes_photos_resized`;
 
 -- TABLE: comments
 

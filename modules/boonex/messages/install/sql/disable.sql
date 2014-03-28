@@ -7,8 +7,8 @@ DELETE FROM `sys_options_categories` WHERE `type_id` = @iTypeId;
 DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 
 -- STORAGES & TRANSCODERS
-DELETE FROM `sys_objects_storage` WHERE `object` = 'bx_messages_photos' OR `object` = 'bx_messages_photos_resized';
-DELETE FROM `sys_storage_tokens` WHERE `object` = 'bx_messages_photos' OR `object` = 'bx_messages_photos_resized';
+DELETE FROM `sys_objects_storage` WHERE `object` = 'bx_messages_files' OR `object` = 'bx_messages_photos_resized';
+DELETE FROM `sys_storage_tokens` WHERE `object` = 'bx_messages_files' OR `object` = 'bx_messages_photos_resized';
 
 DELETE FROM `sys_objects_transcoder_images` WHERE `object` = 'bx_messages_preview';
 DELETE FROM `sys_transcoder_images_filters` WHERE `transcoder_object` = 'bx_messages_preview';

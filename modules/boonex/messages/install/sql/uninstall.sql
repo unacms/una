@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS `bx_messages_conversations`, `bx_messages_conv2folder`, `bx
 
 -- TABLE: storages & transcoders
 
-DROP TABLE IF EXISTS `bx_messages_photos`, `bx_messages_photos_resized`;
+DROP TABLE IF EXISTS `bx_messages_files`, `bx_messages_photos_resized`;
 
 -- TABLE: comments
 

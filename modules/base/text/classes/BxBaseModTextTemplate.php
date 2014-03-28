@@ -138,10 +138,58 @@ class BxBaseModTextTemplate extends BxDolModuleTemplate
         return $this->parseHtmlByName($sTemplateName, $aVars);
     }
 
-    function getAuthorDesc ($aData) 
+    function getAuthorDesc ($aData)
     {
         $oModule = BxDolModule::getInstance($this->MODULE);
         return bx_time_js($aData[$oModule->_oConfig->CNF['FIELD_ADDED']], BX_FORMAT_DATE);
+    }
+
+    function entryAttachments ($aData)
+    {
+        $oModule = BxDolModule::getInstance($this->MODULE);
+        $CNF = &$oModule->_oConfig->CNF;
+
+        bx_import('BxTemplFunctions');
+        bx_import('BxDolStorage');
+        bx_import('BxDolImageTranscoder');
+
+        $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
+        $oTranscoder = BxDolImageTranscoder::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);
+
+        $aGhostFiles = $oStorage->getGhosts (bx_get_logged_profile_id(), $aData[$CNF['FIELD_ID']]);
+        foreach ($aGhostFiles as $k => $a) {
+
+            $isImage = $oTranscoder && (0 == strncmp('image/', $a['mime_type'], 6)); // preview for images only and transcoder object for preview must be defined
+            $sUrlOriginal = $oStorage->getFileUrlById($a['id']);
+            $sImgPopupId = 'bx-messages-atachment-popup-' . $a['id'];
+  
+            // images are displayed with preview and popup upon clicking
+            $aGhostFiles[$k]['bx_if:image'] = array (
+                'condition' => $isImage,
+                'content' => array (
+                    'url_original' => $sUrlOriginal,
+                    'attr_file_name' => bx_html_attribute($a['file_name']),
+                    'popup_id' => $sImgPopupId,
+                    'url_preview' => $oTranscoder->getImageUrl($a['id']),
+                    'popup' =>  BxTemplFunctions::getInstance()->transBox($sImgPopupId, '<img src="' . $sUrlOriginal . '" />', true, true),
+                ),
+            );
+
+            // non-images are displayed as text links to original file
+            $aGhostFiles[$k]['bx_if:not_image'] = array (
+                'condition' => !$isImage,
+                'content' => array (
+                    'url_original' => $sUrlOriginal,
+                    'attr_file_name' => bx_html_attribute($a['file_name']),
+                    'file_name' => bx_process_output($a['file_name']),
+                ),
+            );
+        }
+
+        $aVars = array(
+            'bx_repeat:attachments' => $aGhostFiles,
+        );
+        return $this->parseHtmlByName('attachments.html', $aVars);
     }
 }
 

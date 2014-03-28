@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `bx_notes_posts` (
 
 -- TABLE: storages & transcoders
 
-CREATE TABLE IF NOT EXISTS `bx_notes_photos` (
+CREATE TABLE IF NOT EXISTS `bx_notes_files` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(10) unsigned NOT NULL,
   `remote_id` varchar(255) NOT NULL,

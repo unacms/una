@@ -42,7 +42,7 @@ INSERT INTO `bx_messages_folders` (`id`, `author`, `name`) VALUES
 
 -- TABLE: storages & transcoders
 
-CREATE TABLE IF NOT EXISTS `bx_messages_photos` (
+CREATE TABLE IF NOT EXISTS `bx_messages_files` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(10) unsigned NOT NULL,
   `remote_id` varchar(255) NOT NULL,

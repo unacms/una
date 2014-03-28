@@ -39,6 +39,7 @@
     <string name="_bx_msg_page_block_title_delete_entry"><![CDATA[Delete message]]></string>
 	<string name="_bx_msg_page_title_sys_view_entry"><![CDATA[View message]]></string>
 	<string name="_bx_msg_page_title_view_entry"><![CDATA[{title}]]></string>
+	<string name="_bx_msg_page_block_title_entry_attachments"><![CDATA[Attachments]]></string>
 	<string name="_bx_msg_page_block_title_entry_text"><![CDATA[Message text]]></string>
     <string name="_bx_msg_page_block_title_entry_author"><![CDATA[Author]]></string>
     <string name="_bx_msg_page_block_title_entry_actions"><![CDATA[Actions]]></string>

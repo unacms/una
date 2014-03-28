@@ -50,7 +50,7 @@ class BxMsgConfig extends BxBaseModTextConfig
             'PARAM_NUM_RSS' => '',
 
             // objects
-            'OBJECT_STORAGE' => 'bx_messages_photos',
+            'OBJECT_STORAGE' => 'bx_messages_files',
             'OBJECT_IMAGES_TRANSCODER_PREVIEW' => 'bx_messages_preview',
             'OBJECT_VIEWS' => 'bx_messages',
             'OBJECT_VOTES' => '',

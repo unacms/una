@@ -286,6 +286,54 @@
         });
     };
 
+
+    $.fn.dolPopupImage = function(sUrl) { 
+
+        return this.each(function() {
+
+            var ePopup = $(this);
+            var k = .95,
+                w = $(window).width(),
+                h = $(window).height(),
+                eImg = new Image();
+
+            if (!ePopup.find('img').size())
+                return;
+
+            eImg.src = sUrl;
+
+            $(eImg).on('load', function () {
+
+                // fit image into the browser window
+                if ((w * k - eImg.width) < (h * k - eImg.height)) {
+                    ePopup.find('img').css({
+                        width: '' + (eImg.width > w * k ? parseInt(w * k) : eImg.width) + 'px',
+                        height: 'auto'
+                    });
+                } else {
+                    ePopup.find('img').css({
+                        width: 'auto',
+                        height: '' + (eImg.height > h * k ? parseInt(h * k) : eImg.height) + 'px',
+                    });
+                }
+
+                // show popup
+                ePopup.dolPopup();
+
+                // hide popup upon clicking/tapping on the image
+                var fCallback = function (e) {
+                    e.stopPropagation();
+                    ePopup.dolPopupHide();
+                };
+                ePopup.find('img').on({
+                    click: fCallback,
+                    touchend: fCallback
+                });
+
+            });
+        });
+    };
+
     $.fn._dolPopupSetPosition = function(options) {
 
         var o = $.extend({}, $.fn.dolPopupDefaultOptions, options);
