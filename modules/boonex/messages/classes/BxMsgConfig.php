@@ -33,7 +33,7 @@ class BxMsgConfig extends BxBaseModTextConfig
             'FIELD_SUMMARY' => '',
             'FIELD_SUMMARY_ID' => '',
             'FIELD_ALLOW_VIEW_TO' => '',
-            'FIELD_PHOTO' => 'pictures',
+            'FIELD_PHOTO' => 'attachments',
             'FIELD_THUMB' => '',
             'FIELD_COMMENTS' => 'comments',
 
@@ -71,6 +71,7 @@ class BxMsgConfig extends BxBaseModTextConfig
             'MENU_ITEM_TO_METHOD' => array (
                 'bx_messages_view' => array (
                     'delete-message' => 'checkAllowedDelete',
+                    'mark-unread-message' => 'checkAllowedView',
                 ),
             ),
 

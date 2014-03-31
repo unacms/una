@@ -118,24 +118,24 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_messages', 'bx_messages', 'do_submit', '_bx_msg_form_entry_input_do_submit', '', 0, 'submit', '_bx_msg_form_entry_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_messages', 'bx_messages', 'text', '', '', 0, 'textarea', '_bx_msg_form_entry_input_sys_text', '_bx_msg_form_entry_input_text', '', 1, 0, 2, '', '', '', 'Avail', '', '_bx_msg_form_entry_input_text_err', 'XssHtml', '', 1, 0),
 ('bx_messages', 'bx_messages', 'recipients', '', '', 0, 'custom', '_bx_msg_form_entry_input_sys_recipients', '_bx_msg_form_entry_input_recipients', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_msg_form_entry_input_recipients_err', '', '', 1, 0),
-('bx_messages', 'bx_messages', 'pictures', '', '', 0, 'files', '_bx_msg_form_entry_input_sys_pictures', '_bx_msg_form_entry_input_pictures', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
+('bx_messages', 'bx_messages', 'attachments', '', '', 0, 'files', '_bx_msg_form_entry_input_sys_attachments', '_bx_msg_form_entry_input_attachments', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
 
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
 ('bx_messages_entry_add', 'delete_confirm', 2147483647, 0, 0),
 ('bx_messages_entry_add', 'recipients', 2147483647, 1, 1),
 ('bx_messages_entry_add', 'text', 2147483647, 1, 2),
-('bx_messages_entry_add', 'pictures', 2147483647, 1, 3),
+('bx_messages_entry_add', 'attachments', 2147483647, 1, 3),
 ('bx_messages_entry_add', 'do_submit', 2147483647, 1, 4),
 
 ('bx_messages_entry_view', 'delete_confirm', 2147483647, 0, 0),
 ('bx_messages_entry_view', 'do_submit', 2147483647, 0, 0),
 ('bx_messages_entry_view', 'recipients', 2147483647, 0, 0),
 ('bx_messages_entry_view', 'text', 2147483647, 0, 0),
-('bx_messages_entry_view', 'pictures', 2147483647, 0, 0),
+('bx_messages_entry_view', 'attachments', 2147483647, 0, 0),
 
 ('bx_messages_entry_delete', 'delete_confirm', 2147483647, 1, 1),
 ('bx_messages_entry_delete', 'do_submit', 2147483647, 1, 2),
-('bx_messages_entry_delete', 'pictures', 2147483647, 0, 0),
+('bx_messages_entry_delete', 'attachments', 2147483647, 0, 0),
 ('bx_messages_entry_delete', 'recipients', 2147483647, 0, 0),
 ('bx_messages_entry_delete', 'text', 2147483647, 0, 0);
 

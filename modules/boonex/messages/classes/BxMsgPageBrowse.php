@@ -20,6 +20,7 @@ class BxMsgPageBrowse extends BxBaseModTextPageBrowse
     {
         $this->MODULE = 'bx_messages';
         parent::__construct($aObject, $oTemplate);
+        $this->_oModule->setModuleSubmenu ();
     }
 }
 

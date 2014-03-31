@@ -34,7 +34,7 @@ INSERT INTO `sys_transcoder_images_filters` (`transcoder_object`, `filter`, `fil
 -- PAGE: create entry
 
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_messages_create_entry', '_bx_msg_page_title_sys_create_entry', '_bx_msg_page_title_create_entry', 'bx_messages', 5, 2147483647, 1, 'compose-message', 'page.php?i=compose-message', '', '', '', 0, 1, 0, '', '');
+('bx_messages_create_entry', '_bx_msg_page_title_sys_create_entry', '_bx_msg_page_title_create_entry', 'bx_messages', 5, 2147483647, 1, 'compose-message', 'page.php?i=compose-message', '', '', '', 0, 1, 0, 'BxMsgPageBrowse', 'modules/boonex/messages/classes/BxMsgPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
 ('bx_messages_create_entry', 1, 'bx_messages', '_bx_msg_page_block_title_create_entry', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_messages";s:6:"method";s:13:"entity_create";}', 0, 1, 1);
@@ -72,7 +72,8 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_messages_view', 'bx_messages', '_bx_msg_menu_set_title_view_entry', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_messages_view', 'bx_messages', 'delete-message', '_bx_msg_menu_item_title_system_delete_entry', '_bx_msg_menu_item_title_delete_entry', 'javascript:void(0);', 'bx_msg_delete(this, \'{content_id}\')', '', 'remove', '', 0, 1, 0, 2);
+('bx_messages_view', 'bx_messages', 'delete-message', '_bx_msg_menu_item_title_system_delete_entry', '_bx_msg_menu_item_title_delete_entry', 'javascript:void(0);', 'bx_msg_delete(this, \'{content_id}\')', '', 'remove', '', 0, 1, 0, 1),
+('bx_messages_view', 'bx_messages', 'mark-unread-message', '_bx_msg_menu_item_title_system_mark_unread_entry', '_bx_msg_menu_item_title_mark_unread_entry', 'javascript:void(0);', 'bx_msg_mark_unread(this, \'{content_id}\')', '', 'remove', '', 0, 1, 0, 2);
 
 
 -- MENU: module sub-menu
@@ -110,8 +111,8 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `order`) VALUES
 ('bx_messages', 'checkbox', '_sys_select', '2%', '', 1),
 ('bx_messages', 'collaborators', '_bx_msg_field_collaborators', '25%', '', 2),
-('bx_messages', 'preview', '_bx_msg_field_preview', '50%', '', 3),
-('bx_messages', 'comments', '_bx_msg_field_comments', '10%', '', 4),
+('bx_messages', 'preview', '_bx_msg_field_preview', '48%', '', 3),
+('bx_messages', 'comments', '_bx_msg_field_comments', '12%', '', 4),
 ('bx_messages', 'last_reply_timestamp', '_bx_msg_field_updated', '13%', '', 5);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES

@@ -47,16 +47,50 @@ class BxMsgModule extends BxBaseModTextModule
         return $aCollaborators;
     }
 
-    public function setModuleSubmenu () 
+    public function setModuleSubmenu ($iCurrentFolderId = 0) 
     {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aMapFolderId2MenuName = array (
+            BX_MSG_FOLDER_PRIMARY => 'messages-folder-primary',
+            BX_MSG_FOLDER_DRAFTS => 'messages-drafts',
+            BX_MSG_FOLDER_SPAM => 'messages-spam',
+            BX_MSG_FOLDER_TRASH => 'messages-trash',
+        );
+
         bx_import('BxDolMenu');
         $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
-        if ($oMenuSubmenu) 
-            $oMenuSubmenu->setObjectSubmenu($this->_oConfig->CNF['OBJECT_MENU_SUBMENU'], array (
-                'title' => _t('_bx_msg'),
-                'link' => 'javascript:void(0);',
-                'icon' => '',
-            ));
+        if (!$oMenuSubmenu) 
+            return;
+
+        $oMenuSubmenu->setObjectSubmenu($CNF['OBJECT_MENU_SUBMENU'], array (
+            'title' => _t('_bx_msg'),
+            'link' => BX_DOL_URL_ROOT . $CNF['URL_HOME'],
+            'icon' => '',
+        ));
+
+        $oMenuModule = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SUBMENU']);
+        if ($oMenuModule && isset($aMapFolderId2MenuName[$iCurrentFolderId]))
+            $oMenuModule->setSelected('bx_messages', $aMapFolderId2MenuName[$iCurrentFolderId]);
+    }
+
+    /**
+     * Mark message as unread for the current user
+     * @return error message on error, or empty message on success
+     */
+    public function markUnread ($iContentId) 
+    {
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if (!$aContentInfo)
+            return _t('_sys_request_page_not_found_cpt');
+
+        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->checkAllowedView($aContentInfo)))
+            return $sMsg;
+
+        if (!$this->_oDb->updateReadComments(bx_get_logged_profile_id(), (int)$iContentId, -1))
+            return _t('_error occured');
+
+        return '';
     }
 
     /**
@@ -78,6 +112,19 @@ class BxMsgModule extends BxBaseModTextModule
         return '';
     }
 
+    public function actionMarkUnread($iContentId) 
+    {
+        header('Content-Type:text/plain; charset=utf-8');
+
+        if ($s = $this->markUnread ($iContentId)) {
+            echo $s;
+            exit;
+        }
+
+        echo BX_DOL_URL_ROOT . $this->_oConfig->CNF['URL_HOME'];
+        exit;
+    }
+
     public function actionDelete($iContentId) 
     {
         header('Content-Type:text/plain; charset=utf-8');
@@ -96,8 +143,6 @@ class BxMsgModule extends BxBaseModTextModule
      */
     public function actionFolder ($iFolderId) 
     {
-        $this->setModuleSubmenu ();
-
         bx_import('BxDolGrid');
         $oGrid = BxDolGrid::getObjectInstance('bx_messages');
         if (!$oGrid){
@@ -110,6 +155,8 @@ class BxMsgModule extends BxBaseModTextModule
             $this->_oTemplate->displayPageNotFound();
             exit;
         }
+
+        $this->setModuleSubmenu ((int)$iFolderId);
 
         // TODO: incorporate markers into custom class, so replace will work in search and so on
         $oGrid->addMarkers(array(

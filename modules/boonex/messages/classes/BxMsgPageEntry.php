@@ -25,7 +25,8 @@ class BxMsgPageEntry extends BxBaseModTextPageEntry
 
         $this->_oModule->_oDb->updateReadComments(bx_get_logged_profile_id(), $this->_aContentInfo[$CNF['FIELD_ID']], $this->_aContentInfo[$CNF['FIELD_COMMENTS']]);
 
-        $this->_oModule->setModuleSubmenu ();
+        $iFolder = $this->_oModule->_oDb->getConversationFolder($this->_aContentInfo[$CNF['FIELD_ID']], bx_get_logged_profile_id());
+        $this->_oModule->setModuleSubmenu ($iFolder);
 
         $this->_oModule->_oTemplate->addJs('main.js');
     }

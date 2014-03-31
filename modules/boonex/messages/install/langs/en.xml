@@ -18,11 +18,11 @@
 	<string name="_bx_msg_form_entry_input_delete_confirm"><![CDATA[I am sure I want to delete this message]]></string>
 	<string name="_bx_msg_form_entry_input_delete_confirm_info"><![CDATA[This action can not be undone]]></string>
 	<string name="_bx_msg_form_entry_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete the message]]></string>
-	<string name="_bx_msg_form_entry_input_sys_pictures"><![CDATA[Pictures]]></string>
-	<string name="_bx_msg_form_entry_input_pictures"><![CDATA[Pictures]]></string>
+	<string name="_bx_msg_form_entry_input_sys_attachments"><![CDATA[Attachments]]></string>
+	<string name="_bx_msg_form_entry_input_attachments"><![CDATA[Attachments]]></string>
     <string name="_bx_msg_form_entry_input_picture_txt_delete"><![CDATA[Delete]]></string>
     <string name="_bx_msg_form_entry_input_picture_txt_insert"><![CDATA[Insert to Post]]></string>
-    <string name="_bx_msg_form_entry_input_picture_txt_pic_url"><![CDATA[Picture URL:]]></string>
+    <string name="_bx_msg_form_entry_input_picture_txt_pic_url"><![CDATA[Attachment URL:]]></string>
     <string name="_bx_msg_form_entry_input_recipients"><![CDATA[Recipients]]></string>
     <string name="_bx_msg_form_entry_input_sys_recipients"><![CDATA[Recipients]]></string>
     <string name="_bx_msg_form_entry_input_recipients_err"><![CDATA[Recipients is mandatory]]></string>
@@ -59,6 +59,8 @@
     <string name="_bx_msg_menu_set_title_submenu"><![CDATA[More folders]]></string>
 
 
+    <string name="_bx_msg_menu_item_title_system_mark_unread_entry"><![CDATA[Mark as unread]]></string>
+    <string name="_bx_msg_menu_item_title_mark_unread_entry"><![CDATA[Mark as unread]]></string>
     <string name="_bx_msg_menu_item_title_system_delete_entry"><![CDATA[Delete message]]></string>
     <string name="_bx_msg_menu_item_title_delete_entry"><![CDATA[Delete message]]></string>
     <string name="_bx_msg_menu_item_title_system_folder_primary"><![CDATA[Primary]]></string>
