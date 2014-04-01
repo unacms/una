@@ -40,9 +40,9 @@ class BxMsgFormEntry extends BxBaseModTextFormEntry
         // check for spam
         $bSpam = false;
         bx_alert('system', 'check_spam', 0, getLoggedId(), array('is_spam' => &$bSpam, 'content' => $this->getCleanValue('text'), 'where' => 'messages'));
-        $iFolder = $bSpam ? BX_MSG_FOLDER_SPAM : BX_MSG_FOLDER_PRIMARY;
+        $iFolder = $bSpam ? BX_MSG_FOLDER_SPAM : BX_MSG_FOLDER_TALKS;
 
-        // place conversation to "primary" (or "spam" - in case of spam) folder 
+        // place conversation to "talks" (or "spam" - in case of spam) folder 
         $aRecipients = array_unique(array_merge($this->getCleanValue('recipients'), array(bx_get_logged_profile_id())), SORT_NUMERIC);
         foreach ($aRecipients as $iProfile) {
             $oProfile = BxDolProfile::getInstance($iProfile);

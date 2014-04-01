@@ -44,7 +44,7 @@
     <string name="_bx_msg_page_block_title_entry_author"><![CDATA[Author]]></string>
     <string name="_bx_msg_page_block_title_entry_actions"><![CDATA[Actions]]></string>
     <string name="_bx_msg_page_block_title_entry_comments"><![CDATA[Comments]]></string>
-    <string name="_bx_msg_page_block_title_entry_collaborators"><![CDATA[Collaborators]]></string>
+    <string name="_bx_msg_page_block_title_entry_collaborators"><![CDATA[Participants]]></string>
     <string name="_bx_msg_page_title_sys_folder"><![CDATA[Messages in folder]]></string>
     <string name="_bx_msg_page_title_folder"><![CDATA[Folder: {folder}]]></string>
     <string name="_bx_msg_page_block_title_folder"><![CDATA[Folder: {folder}]]></string>
@@ -63,8 +63,8 @@
     <string name="_bx_msg_menu_item_title_mark_unread_entry"><![CDATA[Mark as unread]]></string>
     <string name="_bx_msg_menu_item_title_system_delete_entry"><![CDATA[Delete message]]></string>
     <string name="_bx_msg_menu_item_title_delete_entry"><![CDATA[Delete message]]></string>
-    <string name="_bx_msg_menu_item_title_system_folder_primary"><![CDATA[Primary]]></string>
-    <string name="_bx_msg_menu_item_title_folder_primary"><![CDATA[Primary]]></string>
+    <string name="_bx_msg_menu_item_title_system_folder_talks"><![CDATA[Talks]]></string>
+    <string name="_bx_msg_menu_item_title_folder_talks"><![CDATA[Talks]]></string>
     <string name="_bx_msg_menu_item_title_system_folder_drafts"><![CDATA[Drafts]]></string>
     <string name="_bx_msg_menu_item_title_folder_drafts"><![CDATA[Drafts]]></string>
     <string name="_bx_msg_menu_item_title_system_folder_spam"><![CDATA[Spam]]></string>
@@ -76,7 +76,7 @@
 
     <string name="_bx_msg_txt_sample_single"><![CDATA[message]]></string>
 
-    <string name="_bx_msg_folder_primary"><![CDATA[Primary]]></string>
+    <string name="_bx_msg_folder_talks"><![CDATA[Talks]]></string>
     <string name="_bx_msg_folder_drafts"><![CDATA[Drafts]]></string>
     <string name="_bx_msg_folder_spam"><![CDATA[Spam]]></string>
     <string name="_bx_msg_folder_trash"><![CDATA[Trash]]></string>
@@ -84,7 +84,7 @@
     <string name="_bx_msg_field_comments"><![CDATA[Messages]]></string>
     <string name="_bx_msg_field_updated"><![CDATA[Updated]]></string>
     <string name="_bx_msg_field_preview"><![CDATA[Preview]]></string>
-    <string name="_bx_msg_field_collaborators"><![CDATA[Collaborators]]></string>
+    <string name="_bx_msg_field_collaborators"><![CDATA[Participants]]></string>
 
     <string name="_bx_msg_grid_action_delete"><![CDATA[Delete]]></string>
     <string name="_bx_msg_grid_action_compose"><![CDATA[Compose]]></string>

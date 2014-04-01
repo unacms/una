@@ -85,7 +85,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_messages_submenu', 'bx_messages', '_bx_msg_menu_set_title_submenu', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_messages_submenu', 'bx_messages', 'messages-folder-primary', '_bx_msg_menu_item_title_system_folder_primary', '_bx_msg_menu_item_title_folder_primary', 'modules/?r=messages/folder/1', '', '', '', '', 2147483647, 1, 1, 1),
+('bx_messages_submenu', 'bx_messages', 'messages-folder-talks', '_bx_msg_menu_item_title_system_folder_talks', '_bx_msg_menu_item_title_folder_talks', 'modules/?r=messages/folder/1', '', '', '', '', 2147483647, 1, 1, 1),
 ('bx_messages_submenu', 'bx_messages', 'messages-folder-more', '_bx_msg_menu_item_title_system_folder_more', '_bx_msg_menu_item_title_folder_more', 'javascript:void(0);', 'bx_menu_popup(''bx_messages_menu_folders_more'', this);', '', '', '', 2147483647, 1, 1, 2);
 
 

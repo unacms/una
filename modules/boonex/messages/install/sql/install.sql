@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `bx_messages_folders` (
 );
 
 INSERT INTO `bx_messages_folders` (`id`, `author`, `name`) VALUES
-(1, 0, '_bx_msg_folder_primary'),
+(1, 0, '_bx_msg_folder_talks'),
 (2, 0, '_bx_msg_folder_drafts'),
 (3, 0, '_bx_msg_folder_spam'),
 (4, 0, '_bx_msg_folder_trash');

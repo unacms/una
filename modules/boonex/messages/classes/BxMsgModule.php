@@ -11,7 +11,7 @@
 
 bx_import ('BxBaseModTextModule');
 
-define('BX_MSG_FOLDER_PRIMARY', 1);
+define('BX_MSG_FOLDER_TALKS', 1);
 define('BX_MSG_FOLDER_DRAFTS', 2);
 define('BX_MSG_FOLDER_SPAM', 3);
 define('BX_MSG_FOLDER_TRASH', 4);
@@ -52,7 +52,7 @@ class BxMsgModule extends BxBaseModTextModule
         $CNF = &$this->_oConfig->CNF;
 
         $aMapFolderId2MenuName = array (
-            BX_MSG_FOLDER_PRIMARY => 'messages-folder-primary',
+            BX_MSG_FOLDER_TALKS => 'messages-folder-talks',
             BX_MSG_FOLDER_DRAFTS => 'messages-drafts',
             BX_MSG_FOLDER_SPAM => 'messages-spam',
             BX_MSG_FOLDER_TRASH => 'messages-trash',
