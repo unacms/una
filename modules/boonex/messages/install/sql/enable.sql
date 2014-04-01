@@ -43,15 +43,15 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 -- PAGE: view entry
 
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_messages_view_entry', 'view-message', '_bx_msg_page_title_sys_view_entry', '_bx_msg_page_title_view_entry', 'bx_messages', 11, 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxMsgPageEntry', 'modules/boonex/messages/classes/BxMsgPageEntry.php');
+('bx_messages_view_entry', 'view-message', '_bx_msg_page_title_sys_view_entry', '_bx_msg_page_title_view_entry', 'bx_messages', 10, 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxMsgPageEntry', 'modules/boonex/messages/classes/BxMsgPageEntry.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_messages_view_entry', 2, 'bx_messages', '_bx_msg_page_block_title_entry_author', 0, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_messages\";s:6:\"method\";s:13:\"entity_author\";}', 0, 0, 1, 0),
+('bx_messages_view_entry', 4, 'bx_messages', '_bx_msg_page_block_title_entry_text', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_messages\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 0),
 ('bx_messages_view_entry', 3, 'bx_messages', '_bx_msg_page_block_title_entry_collaborators', 0, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_messages\";s:6:\"method\";s:20:\"entity_collaborators\";}', 0, 0, 1, 0),
 ('bx_messages_view_entry', 1, 'bx_messages', '_bx_msg_page_block_title_entry_actions', 0, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_messages\";s:6:\"method\";s:14:\"entity_actions\";}', 0, 0, 1, 0),
-('bx_messages_view_entry', 1, 'bx_messages', '_bx_msg_page_block_title_entry_text', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_messages\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 1),
-('bx_messages_view_entry', 1, 'bx_messages', '_bx_msg_page_block_title_entry_attachments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_messages\";s:6:\"method\";s:18:\"entity_attachments\";}', 0, 0, 1, 2),
-('bx_messages_view_entry', 1, 'bx_messages', '_bx_msg_page_block_title_entry_comments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_messages\";s:6:\"method\";s:15:\"entity_comments\";}', 0, 0, 1, 3);
+('bx_messages_view_entry', 2, 'bx_messages', '_bx_msg_page_block_title_entry_author', 0, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_messages\";s:6:\"method\";s:13:\"entity_author\";}', 0, 0, 1, 0),
+('bx_messages_view_entry', 4, 'bx_messages', '_bx_msg_page_block_title_entry_attachments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_messages\";s:6:\"method\";s:18:\"entity_attachments\";}', 0, 0, 1, 1),
+('bx_messages_view_entry', 4, 'bx_messages', '_bx_msg_page_block_title_entry_comments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_messages\";s:6:\"method\";s:15:\"entity_comments\";}', 0, 0, 1, 2);
 
 
 -- PAGE: module home
