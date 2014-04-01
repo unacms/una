@@ -1,8 +1,8 @@
 
 <div class="bx-persons-cover">
-    <a class="bx-persons-cover-image bx-def-round-corners bx-def-border" href="__cover_href__" onclick="$('#bx-persons-popup-cover').dolPopupImage('__cover_url__')" style="background-image:url(__cover_url__)">&nbsp;</a>
+    <a class="bx-persons-cover-image bx-def-round-corners bx-def-border" href="__cover_href__" onclick="$('#bx-persons-popup-cover').dolPopupImage('__cover_url__', this)" style="background-image:url(__cover_url__)">&nbsp;</a>
     <div class="bx-persons-cover-info bx-def-unit bx-def-padding">
-        <a href="__picture_href__" onclick="$('#bx-persons-popup-picture').dolPopupImage('__picture_url__')"><img class="bx-def-margin-right bx-def-ava bx-def-ava-size" src="__picture_avatar_url__" /></a>
+        <a href="__picture_href__" onclick="$('#bx-persons-popup-picture').dolPopupImage('__picture_url__', $(this).parent())"><img class="bx-def-margin-right bx-def-ava bx-def-ava-size" src="__picture_avatar_url__" /></a>
         <h1 class="bx-def-unit-info bx-def-margin-sec-bottom bx-def-margin-sec-top bx-def-font-contrasted">__title__</h1>
     </div>
 </div>

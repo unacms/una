@@ -287,7 +287,7 @@
     };
 
 
-    $.fn.dolPopupImage = function(sUrl) { 
+    $.fn.dolPopupImage = function(sUrl, sLoadingElement) { 
 
         return this.each(function() {
 
@@ -302,7 +302,13 @@
 
             eImg.src = sUrl;
 
+            if ('undefined' != typeof(sLoadingElement))
+                bx_loading (sLoadingElement, true);
+
             $(eImg).on('load', function () {
+
+                if ('undefined' != typeof(sLoadingElement))
+                    bx_loading (sLoadingElement, false);
 
                 // fit image into the browser window
                 if ((w * k - eImg.width) < (h * k - eImg.height)) {
@@ -313,7 +319,7 @@
                 } else {
                     ePopup.find('img').css({
                         width: 'auto',
-                        height: '' + (eImg.height > h * k ? parseInt(h * k) : eImg.height) + 'px',
+                        height: '' + (eImg.height > h * k ? parseInt(h * k) : eImg.height) + 'px'
                     });
                 }
 
