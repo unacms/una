@@ -436,7 +436,9 @@ h3,
     text-overflow:ellipsis;
     overflow:hidden;
 }
+.bx-def-unit-alert-middle,
 .bx-def-unit-alert {
+    display:block;
     position:absolute;
     right:0;
     bottom:0;
@@ -448,6 +450,14 @@ h3,
     .font-size(@bx-font-size-small);
     text-align:center;
     color:white;
+}
+.bx-def-unit-alert-middle {
+    .min-width(@bx-font-size-middle + 2);
+    .height(@bx-font-size-middle + 2);
+    .line-height(@bx-font-size-middle + 3);
+    .radius(@bx-font-size-middle);
+    .font-size(@bx-font-size-middle);
+    .padding(3px);
 }
 
 .bx-def-gal-img-column {

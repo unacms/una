@@ -2763,7 +2763,9 @@ INSERT INTO `sys_menu_templates` (`id`, `template`, `title`) VALUES
 (8, 'menu_main_submenu.html', '_sys_menu_template_title_main_submenu'),
 (9, 'menu_buttons_hor.html', '_sys_menu_template_title_buttons_hor'),
 (10, 'menu_inline.html', '_sys_menu_template_title_inline'),
-(11, 'menu_interactive_vertical.html', '_sys_menu_template_title_interactive_vertical');
+(11, 'menu_interactive_vertical.html', '_sys_menu_template_title_interactive_vertical'),
+(12, 'menu_account_popup.html', '_sys_menu_template_title_account_popup'),
+(13, 'menu_account_notifications.html', '_sys_menu_template_title_account_notifications');
 
 CREATE TABLE IF NOT EXISTS `sys_objects_menu` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -2787,12 +2789,14 @@ INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `templa
 ('sys_footer', '_sys_menu_title_footer', 'sys_footer', 'system', 2, 0, 1, '', ''),
 ('sys_toolbar_site', '_sys_menu_title_toolbar_site', 'sys_toolbar_site', 'system', 5, 0, 1, '', ''),
 ('sys_toolbar_member', '_sys_menu_title_toolbar_member', 'sys_toolbar_member', 'system', 5, 0, 1, 'BxTemplMenuToolbar', ''),
-('sys_account', '_sys_menu_title_account', 'sys_account_links', 'system', 4, 0, 1, '', ''),
+('sys_account', '_sys_menu_title_account', 'sys_account_links', 'system', 3, 0, 1, '', ''),
 ('sys_add_content', '_sys_menu_title_add_content', 'sys_add_content_links', 'system', 4, 0, 1, '', ''),
 ('sys_account_settings', '_sys_menu_title_account_settings', 'sys_account_settings', 'system', 6, 0, 1, '', ''),
 ('sys_profiles_create', '_sys_menu_title_profiles_create', 'sys_profiles_create', 'system', 4, 0, 1, '', ''),
 ('sys_cmts_item_manage', '_sys_menu_title_cmts_item_manage', 'sys_cmts_item_manage', 'system', 6, 0, 1, 'BxTemplCmtsMenu', ''),
-('sys_cmts_item_actions', '_sys_menu_title_cmts_item_actions', 'sys_cmts_item_actions', 'system', 10, 0, 1, 'BxTemplCmtsMenu', '');
+('sys_cmts_item_actions', '_sys_menu_title_cmts_item_actions', 'sys_cmts_item_actions', 'system', 10, 0, 1, 'BxTemplCmtsMenu', ''),
+('sys_account_popup', '_sys_menu_title_account_popup', '', 'system', 12, 0, 1, 'BxTemplMenuAccountPopup', ''),
+('sys_account_notifications', '_sys_menu_title_account_notifications', 'sys_account_notifications', 'system', 13, 0, 1, 'BxTemplMenuAccountNotifications', '');
 
 CREATE TABLE IF NOT EXISTS `sys_menu_sets` (
   `set_name` varchar(32) NOT NULL,
@@ -2808,6 +2812,7 @@ INSERT INTO `sys_menu_sets` (`set_name`, `module`, `title`, `deletable`) VALUES
 ('sys_toolbar_site', 'system', '_sys_menu_set_title_toolbar_site', 0),
 ('sys_toolbar_member', 'system', '_sys_menu_set_title_toolbar_member', 0),
 ('sys_account_links', 'system', '_sys_menu_set_title_account', 0),
+('sys_account_notifications', 'system', '_sys_menu_set_title_account_notifications', 0),
 ('sys_add_content_links', 'system', '_sys_menu_set_title_add_content', 0),
 ('sys_account_settings', 'system', '_sys_menu_set_title_account_settings', 0),
 ('sys_profiles_create', 'system', '_sys_menu_set_title_profile_create_links', 0),
@@ -2849,12 +2854,13 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 
 -- member toolbar menu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
-('sys_toolbar_member', 'system', 'account', '_sys_menu_item_title_system_account_menu', '_sys_menu_item_title_account_menu', 'javascript:void(0);', 'bx_menu_popup(''sys_account'', this);', '', 'user', 'sys_account', 510, 1, 0, 1),
+('sys_toolbar_member', 'system', 'account', '_sys_menu_item_title_system_account_menu', '_sys_menu_item_title_account_menu', 'javascript:void(0);', 'bx_menu_popup(''sys_account_popup'', this);', '', 'user', 'sys_account_popup', 510, 1, 0, 1),
 ('sys_toolbar_member', 'system', 'login', '_sys_menu_item_title_system_login', '', 'page.php?i=login', '', '', 'user', '', 1, 1, 0, 2);
 
 -- add content menu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
-('sys_account_links', 'system', 'account', '_sys_menu_item_title_system_account', '_sys_menu_item_title_account', 'member.php', '', '', '', '', 2147483646, 1, 1, 1),
+('sys_account_links', 'system', 'account', '_sys_menu_item_title_system_profile', '_sys_menu_item_title_profile', '{member_url}', '', '', '', '', 2147483646, 1, 1, 1),
+('sys_account_links', 'system', 'account', '_sys_menu_item_title_system_account_settings', '_sys_menu_item_title_account_settings', 'member.php', '', '', '', '', 2147483646, 1, 1, 2),
 ('sys_account_links', 'system', 'logout', '_sys_menu_item_title_system_logout', '_sys_menu_item_title_logout', 'logout.php', '', '', '', '', 2147483646, 1, 1, 3);
 
 -- account settings menu

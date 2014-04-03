@@ -94,8 +94,12 @@ class BxBaseMenu extends BxDolMenu {
                 'content' => array('title' => $a['title']), 
             );
 
-            $a['addon'] = $this->_getMenuAddon($a);
-            
+            $mixedAddon = $this->_getMenuAddon($a);
+            $a['bx_if:addon'] = array (
+                'condition' => (bool)$mixedAddon,
+                'content' => array('addon' => $mixedAddon), 
+            );
+
             foreach ($this->_aOptionalParams as $sName => $sDefaultValue)
                 if (!isset($a[$sName]))
                     $a[$sName] = $sDefaultValue;

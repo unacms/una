@@ -62,7 +62,7 @@ if (isset($_POST['ID'])) { // login form is submitted
 bx_require_authentication();
 
 bx_import('BxDolPermalinks');
-header('Location: ' . BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=account-settings-info'));
+header('Location: ' . BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=account-profile-switcher'));
 
 /** @} */
 

@@ -116,6 +116,14 @@ class BxDolProfile extends BxDol implements iBxDolProfile {
     }
 
     /**
+     * Get content id associated with the profile
+     */
+    public function getContentId() {
+        $aInfo = $this->getInfo();
+        return $aInfo['content_id'];
+    }
+
+    /**
      * Check if profile status is active
      */
     public function isActive($iProfileId = false) {
