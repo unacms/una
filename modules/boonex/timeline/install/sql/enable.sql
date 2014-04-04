@@ -2,7 +2,7 @@
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_timeline_view', '_bx_timeline_page_title_sys_view', '_bx_timeline_page_title_view', 'bx_timeline', 5, 2147483647, 1, 'timeline-view', 'page.php?i=timeline-view', '', '', '', 0, 1, 0, '', ''),
 ('bx_timeline_item', '_bx_timeline_page_title_sys_item', '_bx_timeline_page_title_item', 'bx_timeline', 5, 2147483647, 1, 'timeline-item', 'page.php?i=timeline-item', '', '', '', 0, 1, 0, '', ''),
-('bx_timeline_account', '_bx_timeline_page_title_sys_account', '_bx_timeline_page_title_account', 'bx_timeline', 1, 2147483647, 1, 'timeline-account', 'page.php?i=timeline-account', '', '', '', 0, 1, 0, '', '');
+
 
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
 ('bx_timeline_view', 1, 'bx_timeline', '_bx_timeline_page_block_title_post', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:14:"get_block_post";}', 0, 0, 1),
@@ -10,15 +10,16 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 
 ('bx_timeline_item', 1, 'bx_timeline', '_bx_timeline_page_block_title_item', 0, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:14:"get_block_item";}', 0, 1, 1),
 
-('bx_timeline_account', 1, 'bx_timeline', '_sys_page_block_title_account_settings_menu', 13, 2147483647, 'menu', 'sys_account_settings', 1, 1, 1),
-('bx_timeline_account', 2, 'bx_timeline', '_bx_timeline_page_block_title_view_account', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:22:"get_block_view_account";}', 0, 1, 1);
-
 SET @iPBCellProfile = 4;
 SET @iPBOrderProfile = (SELECT MAX(`order`) FROM `sys_pages_blocks` WHERE `object`='bx_persons_view_profile' AND `cell_id` = @iPBCellProfile LIMIT 1);
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
 ('bx_persons_view_profile', @iPBCellProfile, 'bx_timeline', '_bx_timeline_page_block_title_post_profile', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:22:"get_block_post_profile";}', 0, 0, IFNULL(@iPBOrderProfile, 0) + 1),
 ('bx_persons_view_profile', @iPBCellProfile, 'bx_timeline', '_bx_timeline_page_block_title_view_profile', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:22:"get_block_view_profile";}', 0, 1, IFNULL(@iPBOrderProfile, 0) + 2);
 
+SET @iPBCellDashboard = 1;
+SET @iPBOrderDashboard = (SELECT MAX(`order`) FROM `sys_pages_blocks` WHERE `object` = 'bx_persons_view_profile' AND `cell_id` = @iPBCellProfile LIMIT 1);
+INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
+('sys_dashboard', @iPBCellDashboard, 'bx_timeline', '_bx_timeline_page_block_title_view_account', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:22:"get_block_view_account";}', 0, 1, IFNULL(@iPBOrderDashboard, 0) + 1);
 
 -- MENUS
 
@@ -43,11 +44,6 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_timeline_menu_item_actions', 'bx_timeline', 'item-comment', '_bx_timeline_menu_item_title_system_item_comment', '_bx_timeline_menu_item_title_item_comment', 'javascript:void(0)', 'javascript:{comment_onclick}', '_self', 'comment', 'a:3:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:27:"get_menu_item_addon_comment";s:6:"params";a:2:{i:0;s:16:"{comment_system}";i:1;s:16:"{comment_object}";}}', '', 2147483647, 1, 0, 1),
 ('bx_timeline_menu_item_actions', 'bx_timeline', 'item-vote', '_bx_timeline_menu_item_title_system_item_vote', '_bx_timeline_menu_item_title_item_vote', 'javascript:void(0)', 'javascript:{vote_onclick}', '_self', 'plus', 'a:3:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:24:"get_menu_item_addon_vote";s:6:"params";a:2:{i:0;s:13:"{vote_system}";i:1;s:13:"{vote_object}";}}', '', 2147483647, 1, 0, 2),
 ('bx_timeline_menu_item_actions', 'bx_timeline', 'item-share', '_bx_timeline_menu_item_title_system_item_share', '_bx_timeline_menu_item_title_item_share', 'javascript:void(0)', 'javascript:{share_onclick}', '_self', 'share', 'a:3:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:25:"get_menu_item_addon_share";s:6:"params";a:3:{i:0;s:12:"{share_type}";i:1;s:14:"{share_action}";i:2;s:14:"{share_object}";}}', '', 2147483647, 1, 0, 3);
-
--- MENU: Account Settings
-SET @iMIOrder = (SELECT MAX(`order`) FROM `sys_menu_items` WHERE `set_name`='sys_account_settings' LIMIT 1);
-INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
-('sys_account_settings', 'bx_timeline', 'account-settings-timeline', '_bx_timeline_menu_item_title_system_timeline', '_bx_timeline_menu_item_title_timeline', 'page.php?i=timeline-account', '', '', 'clock-o', '', 2147483646, 1, 1, @iMIOrder + 1);
 
 
 -- SETTINGS

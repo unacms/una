@@ -2857,11 +2857,12 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 ('sys_toolbar_member', 'system', 'account', '_sys_menu_item_title_system_account_menu', '_sys_menu_item_title_account_menu', 'javascript:void(0);', 'bx_menu_popup(''sys_account_popup'', this);', '', 'user', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:21:"profile_notifications";s:5:"class";s:20:"TemplServiceProfiles";}', 'sys_account_popup', 510, 1, 0, 1),
 ('sys_toolbar_member', 'system', 'login', '_sys_menu_item_title_system_login', '', 'page.php?i=login', '', '', 'user', '', '', 1, 1, 0, 2);
 
--- add content menu
+-- simple menu in account popup
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
-('sys_account_links', 'system', 'account', '_sys_menu_item_title_system_profile', '_sys_menu_item_title_profile', '{member_url}', '', '', '', '', 2147483646, 1, 1, 1),
-('sys_account_links', 'system', 'account', '_sys_menu_item_title_system_account_settings', '_sys_menu_item_title_account_settings', 'member.php', '', '', '', '', 2147483646, 1, 1, 2),
-('sys_account_links', 'system', 'logout', '_sys_menu_item_title_system_logout', '_sys_menu_item_title_logout', 'logout.php', '', '', '', '', 2147483646, 1, 1, 3);
+('sys_account_links', 'system', 'dashboard', '_sys_menu_item_title_system_dashboard', '_sys_menu_item_title_dashboard', 'page.php?i=dashboard', '', '', '', '', 2147483646, 1, 1, 1),
+('sys_account_links', 'system', 'profile', '_sys_menu_item_title_system_profile', '_sys_menu_item_title_profile', '{member_url}', '', '', '', '', 2147483646, 1, 1, 2),
+('sys_account_links', 'system', 'account-settings', '_sys_menu_item_title_system_account_settings', '_sys_menu_item_title_account_settings', 'member.php', '', '', '', '', 2147483646, 1, 1, 3),
+('sys_account_links', 'system', 'logout', '_sys_menu_item_title_system_logout', '_sys_menu_item_title_logout', 'logout.php', '', '', '', '', 2147483646, 1, 1, 4);
 
 -- account settings menu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
@@ -3182,6 +3183,7 @@ CREATE TABLE IF NOT EXISTS `sys_objects_page` (
 INSERT INTO `sys_objects_page` (`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES
 ('sys_home', 'home', '_sys_page_title_system_home', '_sys_page_title_home', 'system', 5, 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxTemplPageHome', ''),
 ('sys_about', 'about', '_sys_page_title_system_about', '_sys_page_title_about', 'system', 5, 2147483647, 1, 'page.php?i=about', '', '', '', 0, 1, 0, '', ''),
+('sys_dashboard', 'dashboard', '_sys_page_title_system_dashboard', '_sys_page_title_dashboard', 'system', 5, 2147483647, 1, 'page.php?i=dashboard', '', '', '', 0, 1, 0, '', ''),
 ('sys_create_account', 'create-account', '_sys_page_title_system_create_account', '_sys_page_title_create_account', 'system', 5, 2147483647, 1, 'page.php?i=create-account', '', '', '', 0, 1, 0, '', ''),
 ('sys_login', 'login', '_sys_page_title_system_login', '_sys_page_title_login', 'system', 5, 2147483647, 1, 'page.php?i=login', '', '', '', 0, 1, 0, '', ''),
 ('sys_forgot_password', 'forgot-password', '_sys_page_title_system_forgot_password', '_sys_page_title_forgot_password', 'system', 5, 2147483647, 1, 'page.php?i=forgot-password', '', '', '', 0, 1, 0, '', ''),
