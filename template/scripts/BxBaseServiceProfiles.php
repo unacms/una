@@ -17,6 +17,24 @@ class BxBaseServiceProfiles extends BxDol
         parent::__construct();
     }
 
+    public function serviceProfileNotifications ($iProfileId = 0) 
+    {
+        if (!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+
+        bx_import('BxDolMenu');
+        $oMenu = BxDolMenu::getObjectInstance('sys_account_notifications');
+
+        $iNum = 0;
+        $aMenuItems = $oMenu->getMenuItems ();
+        foreach ($aMenuItems as $r) {
+            if (isset($r['bx_if:addon']) && $r['bx_if:addon']['condition'])
+                $iNum += $r['bx_if:addon']['content']['addon'];
+        }
+
+        return $iNum;
+    }
+
     public function serviceGetProfilesModules () 
     {
         if (getParam('sys_db_cache_enable')) { // get list of profiles  modules from db cache, cache is invalidated when new module is installed

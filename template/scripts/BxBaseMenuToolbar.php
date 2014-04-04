@@ -20,8 +20,8 @@ class BxBaseMenuToolbar extends BxTemplMenu
         parent::__construct ($aObject, $oTemplate);
     }
 
-    protected function _getMenuItems () {
-        $a = parent::_getMenuItems ();
+    public function getMenuItems () {
+        $a = parent::getMenuItems ();
 
         if (!isLogged())
             return $a;

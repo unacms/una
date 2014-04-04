@@ -73,6 +73,8 @@
     <string name="_bx_msg_menu_item_title_folder_trash"><![CDATA[Trash]]></string>
     <string name="_bx_msg_menu_item_title_system_folder_more"><![CDATA[More]]></string>
     <string name="_bx_msg_menu_item_title_folder_more"><![CDATA[More]]></string>
+    <string name="_bx_msg_menu_item_title_system_messages"><![CDATA[Messages]]></string>
+    <string name="_bx_msg_menu_item_title_messages"><![CDATA[Messages]]></string>
 
     <string name="_bx_msg_txt_sample_single"><![CDATA[message]]></string>
 

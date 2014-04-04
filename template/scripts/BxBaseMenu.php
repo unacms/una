@@ -51,7 +51,7 @@ class BxBaseMenu extends BxDolMenu {
     protected function _getTemplateVars () {
         return array (
             'object' => $this->_sObject,
-            'bx_repeat:menu_items' => $this->_getMenuItems (),
+            'bx_repeat:menu_items' => $this->getMenuItems (),
         );
     }
 
@@ -59,7 +59,7 @@ class BxBaseMenu extends BxDolMenu {
      * Get menu items array, which are ready to pass to template.
      * @return array
      */
-    protected function _getMenuItems () {
+    public function getMenuItems () {
         $aRet = array();
         if (!isset($this->_aObject['menu_items']))
             $this->_aObject['menu_items'] = $this->_oQuery->getMenuItems();

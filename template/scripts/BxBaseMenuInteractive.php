@@ -44,7 +44,7 @@ class BxBaseMenuInteractive extends BxTemplMenu {
      * Get menu items array, which are ready to pass to template.
      * @return array
      */
-    protected function _getMenuItems () {
+    public function getMenuItems () {
         $aRet = array();
         if (!isset($this->_aObject['menu_items']))
             $this->_aObject['menu_items'] = $this->_oQuery->getMenuItems();

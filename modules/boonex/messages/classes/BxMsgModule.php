@@ -189,6 +189,17 @@ class BxMsgModule extends BxBaseModTextModule
     /**
      * Update last comment time and author
      */
+    public function serviceGetUnreadMessagesNum ($iProfileId = 0) 
+    {
+        if (!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+
+        return $this->_oDb->getUnreadMessagesNum((int)$iProfileId);
+    }
+
+    /**
+     * Update last comment time and author
+     */
     public function serviceTriggerCommentPost ($iContentId, $iProfileId, $iTimestamp = 0) 
     {
         if (!(int)$iContentId)

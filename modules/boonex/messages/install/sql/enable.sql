@@ -103,6 +103,12 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_messages_menu_folders_more', 'bx_messages', 'messages-trash', '_bx_msg_menu_item_title_system_folder_trash', '_bx_msg_menu_item_title_folder_trash', 'modules/?r=messages/folder/4', '', '', '', '', 2147483647, 1, 1, 3);
 
 
+-- MENU: notifications
+
+INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
+('sys_account_notifications', 'bx_messages', 'notifications-messages', '_bx_msg_menu_item_title_system_messages', '_bx_msg_menu_item_title_messages', 'modules/?r=messages/folder/1', '', '', 'envelope col-red1', 'a:2:{s:6:"module";s:11:"bx_messages";s:6:"method";s:23:"get_unread_messages_num";}', '', 2147483646, 1, 0, 2);
+
+
 -- GRID
 
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_mode`, `sorting_fields`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES

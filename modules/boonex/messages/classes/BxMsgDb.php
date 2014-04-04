@@ -86,6 +86,15 @@ class BxMsgDb extends BxBaseModTextDb
 
         return true;
     }
+
+    public function getUnreadMessagesNum ($iProfileId)
+    {
+        $sQuery = $this->prepare("SELECT SUM(`c`.`comments` - `f`.`read_comments`) 
+            FROM `" . $this->getPrefix() . "conv2folder` as `f` 
+            INNER JOIN `" . $this->getPrefix() . "conversations` AS `c` ON (`c`.`id` = `f`.`conv_id`)
+            WHERE `f`.`collaborator` = ? AND `f`.`folder_id` =1", $iProfileId);
+        return $this->getOne($sQuery);
+    }
 }
 
 /** @} */ 
