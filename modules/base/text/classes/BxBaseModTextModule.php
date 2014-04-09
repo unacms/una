@@ -300,7 +300,7 @@ class BxBaseModTextModule extends BxDolModule
 
 		//--- Image(s)
 	    $sImage = '';
-        if($aContentInfo[$CNF['FIELD_THUMB']]) {
+        if (isset($aContentInfo[$CNF['FIELD_THUMB']]) && $aContentInfo[$CNF['FIELD_THUMB']]) {
         	bx_import('BxDolStorage');
 			$oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
             if($oStorage)
