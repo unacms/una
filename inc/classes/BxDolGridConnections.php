@@ -24,12 +24,12 @@ class BxDolGridConnections extends BxTemplGrid
         parent::__construct ($aOptions, $oTemplate);
         $this->_sDefaultSortingOrder = 'DESC';
 
-        $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        if (!$iContentId) 
+        $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+        if (!$iProfileId) 
             return;
 
         bx_import('BxDolProfile');
-        $oProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->_sContentModule);
+        $oProfile = BxDolProfile::getInstance($iProfileId);
         if (!$oProfile)
             return;
 
@@ -44,7 +44,7 @@ class BxDolGridConnections extends BxTemplGrid
         $aSQLParts = $oConnection->getConnectedInitiatorsAsSQLParts('p', 'id', $oProfile->id(), $this->_bOwner ? false : true);
 
         $this->addMarkers(array(
-            'id' => $iContentId,
+            'profile_id' => $oProfile->id(),
             'join_connections' => $aSQLParts['join'],
             'content_module' => $this->_sContentModule,
         ));

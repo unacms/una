@@ -36,13 +36,20 @@ class BxPersonsPageProfile extends BxTemplPage {
         $aInformers = array ();
 
         // get profile info
+        $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
         $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        if ($iContentId) {
+
+        if ($iProfileId)
+            $this->_oProfile = BxDolProfile::getInstance($iProfileId);
+
+        if (!$this->_oProfile && $iContentId)
+            $this->_oProfile = BxDolProfile::getInstanceByContentAndType($iContentId, 'bx_persons');
+
+        if ($this->_oProfile) {
+            $this->_aProfileInfo = $this->_oProfile->getInfo();
             $oModuleMain = BxDolModule::getInstance('bx_persons');
-            $this->_aContentInfo = $oModuleMain->_oDb->getContentInfoById($iContentId);
+            $this->_aContentInfo = $oModuleMain->_oDb->getContentInfoById($this->_aProfileInfo['content_id']);
             $this->_oProfileAuthor = $this->_aContentInfo ? BxDolProfile::getInstance($this->_aContentInfo[BxPersonsConfig::$FIELD_AUTHOR]) : false;
-            $this->_oProfile = $this->_oProfileAuthor ? BxDolProfile::getInstanceByContentTypeAccount($iContentId, 'bx_persons', $this->_oProfileAuthor->getAccountId()) : false;
-            $this->_aProfileInfo = $this->_oProfile ? $this->_oProfile->getInfo() : array();
         }
 
         if (!$this->_aContentInfo || !$this->_oProfile)
