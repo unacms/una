@@ -336,7 +336,7 @@ class BxBaseModTextModule extends BxDolModule
     		'content' => array(
     			'sample' => _t($CNF['T']['txt_sample_single']),
     			'url' => $sUrl,
-    			'title' => $aContentInfo[$CNF['FIELD_TITLE']],
+    			'title' => isset($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : strmaxtextlen($this->_aContentInfo[$CNF['FIELD_TEXT']], 20, '...'),
     			'text' => $aContentInfo[$CNF['FIELD_TEXT']],
     			'images' => array(
     				array(
