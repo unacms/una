@@ -25,7 +25,7 @@ DELETE FROM `sys_objects_uploader` WHERE `object` IN('bx_persons_avatar', 'bx_pe
 -- PAGES
 
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_persons';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_persons' OR `object` IN('bx_persons_create_profile', 'bx_persons_delete_profile', 'bx_persons_edit_profile', 'bx_persons_edit_profile_cover', 'bx_persons_view_profile', 'bx_persons_profile_info');
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_persons' OR `object` IN('bx_persons_create_profile', 'bx_persons_delete_profile', 'bx_persons_edit_profile', 'bx_persons_edit_profile_cover', 'bx_persons_view_profile', 'bx_persons_profile_info', 'bx_persons_profile_friends');
 
 -- MENU
 

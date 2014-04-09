@@ -53,6 +53,8 @@
 	<string name="_bx_persons_page_title_sys_view_profile"><![CDATA[View Person's Profile]]></string>
 	<string name="_bx_persons_page_title_view_profile"><![CDATA[{display_name}]]></string>
 	<string name="_bx_persons_page_title_browse_recent"><![CDATA[Persons]]></string>
+	<string name="_bx_persons_page_title_sys_profile_friends"><![CDATA[Friends]]></string>
+	<string name="_bx_persons_page_title_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_persons_page_title_sys_profile_info"><![CDATA[Profile Info]]></string>
 	<string name="_bx_persons_page_title_profile_info"><![CDATA[Info about {display_name}]]></string>
 
@@ -80,6 +82,8 @@
     <string name="_bx_persons_menu_item_title_persons_profile"><![CDATA[Person]]></string>
     <string name="_bx_persons_menu_item_title_system_create_person"><![CDATA[Create Person]]></string>
     <string name="_bx_persons_menu_item_title_create_person"><![CDATA[Create Person]]></string>
+    <string name="_bx_persons_menu_item_title_system_view_person_friends"><![CDATA[Friends]]></string>
+    <string name="_bx_persons_menu_item_title_view_person_friends"><![CDATA[Friends]]></string>
     <string name="_bx_persons_menu_item_title_system_view_person_info"><![CDATA[Info]]></string>
     <string name="_bx_persons_menu_item_title_view_person_info"><![CDATA[Info]]></string>
     <string name="_bx_persons_menu_item_title_system_befriend"><![CDATA[Add friend]]></string>
@@ -96,6 +100,8 @@
     <string name="_bx_persons_menu_item_title_unsubscribe"><![CDATA[Unsubscribe]]></string>
     <string name="_bx_persons_menu_item_title_system_more_actions"><![CDATA[More Actions]]></string>
     <string name="_bx_persons_menu_item_title_more_actions"><![CDATA[]]></string>
+    <string name="_bx_persons_menu_item_title_system_friend_requests"><![CDATA[Friend requests]]></string>
+    <string name="_bx_persons_menu_item_title_friend_requests"><![CDATA[Friend requests]]></string>
 
     <string name="_bx_persons_txt_account_pending"><![CDATA[This profile is pending approval, please wait until it is activated.]]></string>
     <string name="_bx_persons_txt_account_suspended"><![CDATA[This profile is suspended.]]></string>

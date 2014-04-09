@@ -2911,6 +2911,8 @@ CREATE TABLE IF NOT EXISTS `sys_objects_grid` (
   UNIQUE KEY `object` (`object`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
+-- GRIDS: studio
+
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `override_class_name`, `override_class_file`) VALUES
 ('sys_studio_lang_keys', 'Sql', 'SELECT `tlk`.`ID` AS `id`, `tlk`.`Key` AS `key`, `tlc`.`Name` AS `module`, `tls`.`String` AS `string` FROM `sys_localization_keys` AS `tlk` LEFT JOIN `sys_localization_categories` AS `tlc` ON `tlk`.`IDCategory`=`tlc`.`ID` LEFT JOIN `sys_localization_strings` AS `tls` ON `tlk`.`ID`=`tls`.`IDKey` WHERE `tls`.`IDLanguage`=\'%d\'', 'sys_localization_keys', 'id', '', '', '', 20, NULL, 'start', '', 'key,string', '', 'like', 'key,module,string', '', 'BxTemplStudioPolyglotKeys', ''),
 ('sys_studio_lang_etemplates', 'Sql', 'SELECT * FROM `sys_email_templates` WHERE 1 ', 'sys_email_templates', 'ID', '', '', '', 20, NULL, 'start', '', 'Module', 'NameSystem,Subject,Body', 'auto', 'Module', 'NameSystem', 'BxTemplStudioPolyglotEtemplates', ''),
@@ -3060,6 +3062,19 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 ('sys_studio_forms_pre_values', 'independent', 'add', '_adm_form_btn_pre_values_create', '', 0, 1),
 ('sys_studio_forms_pre_values', 'single', 'edit', '', 'pencil', 0, 1),
 ('sys_studio_forms_pre_values', 'single', 'delete', '', 'remove', 1, 2);
+
+-- GRID: connections
+
+INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_mode`, `sorting_fields`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
+('sys_grid_connections', 'Sql', 'SELECT `p`.`id`, `added`, `mutual` FROM `sys_profiles` AS `p` {join_connections}', 'sys_profiles', 'id', 'added', '', 10, NULL, 'start', '', 'fullname', 'auto', '', 2147483647, 'BxDolGridConnections', '');
+
+INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `order`) VALUES
+('sys_grid_connections', 'name', '_sys_name', '70%', '', 1),
+('sys_grid_connections', 'actions', '', '30%', '', 2);
+
+INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
+('sys_grid_connections', 'single', 'accept', '_sys_accept', '', 0, 1),
+('sys_grid_connections', 'single', 'delete', '', 'remove', 1, 2);
 
 
 -- --------------------------------------------------------
