@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+
+	<string name="_bx_cnv"><![CDATA[Convos]]></string>
+
+	<string name="_bx_cnv_option_per_page_browse"><![CDATA[Number of items per page]]></string>
+
+	<string name="_bx_cnv_form_entry"><![CDATA[Convos]]></string>
+	<string name="_bx_cnv_form_entry_display_add"><![CDATA[Add convo]]></string>
+	<string name="_bx_cnv_form_entry_display_delete"><![CDATA[Delete convo]]></string>
+	<string name="_bx_cnv_form_entry_display_view"><![CDATA[View convo]]></string>
+	<string name="_bx_cnv_form_entry_input_sys_do_submit"><![CDATA[Submit]]></string>
+	<string name="_bx_cnv_form_entry_input_do_submit"><![CDATA[Submit]]></string>
+	<string name="_bx_cnv_form_entry_input_sys_text"><![CDATA[Text]]></string>
+	<string name="_bx_cnv_form_entry_input_text"><![CDATA[Text]]></string>
+	<string name="_bx_cnv_form_entry_input_text_err"><![CDATA[Text field can't be empty]]></string>
+	<string name="_bx_cnv_form_entry_input_sys_delete_confirm"><![CDATA[Delete confirmation]]></string>
+	<string name="_bx_cnv_form_entry_input_delete_confirm"><![CDATA[I am sure I want to delete this conversation]]></string>
+	<string name="_bx_cnv_form_entry_input_delete_confirm_info"><![CDATA[This action can not be undone]]></string>
+	<string name="_bx_cnv_form_entry_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete the conversation]]></string>
+	<string name="_bx_cnv_form_entry_input_sys_attachments"><![CDATA[Attachments]]></string>
+	<string name="_bx_cnv_form_entry_input_attachments"><![CDATA[Attachments]]></string>
+    <string name="_bx_cnv_form_entry_input_recipients"><![CDATA[Recipients]]></string>
+    <string name="_bx_cnv_form_entry_input_sys_recipients"><![CDATA[Recipients]]></string>
+    <string name="_bx_cnv_form_entry_input_recipients_err"><![CDATA[Recipients is mandatory]]></string>
+
+	<string name="_bx_cnv_acl_action_create_entry"><![CDATA[Start conversation]]></string>
+	<string name="_bx_cnv_acl_action_delete_entry"><![CDATA[Delete convo]]></string>
+	<string name="_bx_cnv_acl_action_view_entry"><![CDATA[View convo]]></string>
+
+	<string name="_bx_cnv_page_title_sys_create_entry"><![CDATA[Start conversation]]></string>
+	<string name="_bx_cnv_page_title_create_entry"><![CDATA[Start conversation]]></string>
+	<string name="_bx_cnv_page_block_title_create_entry"><![CDATA[Start conversation]]></string>
+	<string name="_bx_cnv_page_title_sys_view_entry"><![CDATA[View converstion]]></string>
+	<string name="_bx_cnv_page_title_view_entry"><![CDATA[{title}]]></string>
+	<string name="_bx_cnv_page_block_title_entry_attachments"><![CDATA[Attachments]]></string>
+	<string name="_bx_cnv_page_block_title_entry_text"><![CDATA[Text]]></string>
+    <string name="_bx_cnv_page_block_title_entry_author"><![CDATA[Author]]></string>
+    <string name="_bx_cnv_page_block_title_entry_actions"><![CDATA[Actions]]></string>
+    <string name="_bx_cnv_page_block_title_entry_comments"><![CDATA[Comments]]></string>
+    <string name="_bx_cnv_page_block_title_entry_collaborators"><![CDATA[Participants]]></string>
+    <string name="_bx_cnv_page_title_sys_folder"><![CDATA[Convos in folder]]></string>
+    <string name="_bx_cnv_page_title_folder"><![CDATA[Folder: {folder}]]></string>
+    <string name="_bx_cnv_page_block_title_folder"><![CDATA[Folder: {folder}]]></string>
+
+    <string name="_bx_cnv_menu_set_title_view_entry"><![CDATA[View convo]]></string>
+    <string name="_bx_cnv_menu_title_view_entry"><![CDATA[View convo]]></string>
+    <string name="_bx_cnv_menu_title_submenu"><![CDATA[Convos Submenu]]></string>
+    <string name="_bx_cnv_menu_set_title_submenu"><![CDATA[Convos Submenu]]></string>
+    <string name="_bx_cnv_menu_title_folders_more"><![CDATA[Convos folders]]></string>
+    <string name="_bx_cnv_menu_set_title_submenu"><![CDATA[Convos folders]]></string>
+    <string name="_bx_cnv_menu_set_title_folders_more"><![CDATA[More folders]]></string>
+
+
+    <string name="_bx_cnv_menu_item_title_system_mark_unread_entry"><![CDATA[Mark as unread]]></string>
+    <string name="_bx_cnv_menu_item_title_mark_unread_entry"><![CDATA[Mark as unread]]></string>
+    <string name="_bx_cnv_menu_item_title_system_delete_entry"><![CDATA[Delete convo]]></string>
+    <string name="_bx_cnv_menu_item_title_delete_entry"><![CDATA[Delete convo]]></string>
+    <string name="_bx_cnv_menu_item_title_system_folder_inbox"><![CDATA[Inbox]]></string>
+    <string name="_bx_cnv_menu_item_title_folder_inbox"><![CDATA[Inbox]]></string>
+    <string name="_bx_cnv_menu_item_title_system_folder_drafts"><![CDATA[Drafts]]></string>
+    <string name="_bx_cnv_menu_item_title_folder_drafts"><![CDATA[Drafts]]></string>
+    <string name="_bx_cnv_menu_item_title_system_folder_spam"><![CDATA[Spam]]></string>
+    <string name="_bx_cnv_menu_item_title_folder_spam"><![CDATA[Spam]]></string>
+    <string name="_bx_cnv_menu_item_title_system_folder_trash"><![CDATA[Trash]]></string>
+    <string name="_bx_cnv_menu_item_title_folder_trash"><![CDATA[Trash]]></string>
+    <string name="_bx_cnv_menu_item_title_system_folder_more"><![CDATA[More]]></string>
+    <string name="_bx_cnv_menu_item_title_folder_more"><![CDATA[More]]></string>
+    <string name="_bx_cnv_menu_item_title_system_convos"><![CDATA[Convos]]></string>
+    <string name="_bx_cnv_menu_item_title_convos"><![CDATA[Convos]]></string>
+
+    <string name="_bx_cnv_txt_sample_single"><![CDATA[convo]]></string>
+
+    <string name="_bx_cnv_folder_inbox"><![CDATA[Inbox]]></string>
+    <string name="_bx_cnv_folder_drafts"><![CDATA[Drafts]]></string>
+    <string name="_bx_cnv_folder_spam"><![CDATA[Spam]]></string>
+    <string name="_bx_cnv_folder_trash"><![CDATA[Trash]]></string>
+
+    <string name="_bx_cnv_field_comments"><![CDATA[Messages]]></string>
+    <string name="_bx_cnv_field_updated"><![CDATA[Updated]]></string>
+    <string name="_bx_cnv_field_preview"><![CDATA[Preview]]></string>
+    <string name="_bx_cnv_field_collaborators"><![CDATA[Participants]]></string>
+
+    <string name="_bx_cnv_grid_action_delete"><![CDATA[Delete]]></string>
+    <string name="_bx_cnv_grid_action_compose"><![CDATA[Start new convo]]></string>
+
+    <string name="_bx_cnv_collaborator_info"><![CDATA[{0} ({1})]]></string>
+    <string name="_bx_cnv_collaborator_author"><![CDATA[author]]></string>
+    <string name="_bx_cnv_collaborator_last_replier"><![CDATA[last replier]]></string>
+    <string name="_bx_cnv_more"><![CDATA[{0} more]]></string>
+
+    <string name="_bx_cnv_author_desc"><![CDATA[{0} (updated {1})]]></string>
+    <string name="_bx_cnv_x_new_messages"><![CDATA[<b>{0} ({1} new)</b>]]></string>
+
+</resources>

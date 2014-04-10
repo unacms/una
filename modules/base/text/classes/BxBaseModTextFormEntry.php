@@ -211,7 +211,7 @@ class BxBaseModTextFormEntry extends BxTemplFormView
         if (!isset($this->aParams['view_mode']) || !$this->aParams['view_mode']) {
             if (self::$_isCssJsAdded)
                 return;
-            $this->_oModule->_oTemplate->addJs('forms.js');
+            $this->_oModule->_oTemplate->addJs('modules/base/text/js/|forms.js');
             $this->_oModule->_oTemplate->addCss('forms.css');
         }
 

@@ -127,8 +127,8 @@ class BxDolAlerts extends BxDol {
 
 class BxDolAlertsResponse extends BxDol
 {
-    public function BxDolAlertsResponse() {
-        parent::BxDol();
+    public function __construct() {
+        parent::__construct();
     }
 
     public function response($oAlert) {

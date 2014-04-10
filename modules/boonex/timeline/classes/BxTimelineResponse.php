@@ -21,7 +21,7 @@ class BxTimelineResponse extends BxDolAlertsResponse
      */
     public function __construct($oModule)
     {
-        parent::BxDolAlertsResponse();
+        parent::__construct();
 
         $this->_oModule = $oModule;
     }

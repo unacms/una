@@ -1,25 +1,3 @@
 
-<div class="bx-notes-unit bx-notes-unit-gallery bx-def-gal-unit-size bx-def-margin">
-
-    <bx_if:thumb>
-        <a href="__content_url__"><img class="bx-notes-unit-thumb bx-def-gal-img-size bx-def-round-corners bx-def-color-bg-sec bx-def-font-middle" alt="__summary_attr__" src="__thumb_url__" /></a>
-    </bx_if:thumb>
-
-    <bx_if:no_thumb>
-        <div class="bx-def-gal-img-column">
-            <div class="bx-notes-unit-no-thumb bx-def-gal-img-size bx-def-round-corners bx-def-color-bg-sec bx-def-font-middle bx-def-font-grayed bx-def-padding bx-def-box-sizing">__summary_plain__</div>
-        </div>
-    </bx_if:no_thumb>
-
-    <div class="bx-def-gal-unit-column">
-        <h2 class="bx-def-margin-sec-topbottom"><a href="__content_url__">__title__</a></h2>
-    </div>
-
-    <div class="bx-notes-unit-info">
-        <span class="bx-def-font-grayed">__entry_posting_date__</span>
-        <span class="bx-notes-unit-info-div bx-def-font-grayed">&#183;</span>
-        <a href="__author_url__">__author__</a>
-    </div>
-
-</div>
+<bx_include_base:../modules/base/text/template/unit_gallery.html />
 

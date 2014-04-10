@@ -156,7 +156,7 @@ class BxBaseModTextTemplate extends BxDolModuleTemplate
         $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
         $oTranscoder = BxDolImageTranscoder::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);
 
-        $aGhostFiles = $oStorage->getGhosts (bx_get_logged_profile_id(), $aData[$CNF['FIELD_ID']]);
+        $aGhostFiles = $oStorage->getGhosts ($aData[$CNF['FIELD_AUTHOR']], $aData[$CNF['FIELD_ID']]);
         if (!$aGhostFiles)
             return false;
 
