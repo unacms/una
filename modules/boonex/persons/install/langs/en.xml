@@ -100,8 +100,8 @@
     <string name="_bx_persons_menu_item_title_unsubscribe"><![CDATA[Unsubscribe]]></string>
     <string name="_bx_persons_menu_item_title_system_more_actions"><![CDATA[More Actions]]></string>
     <string name="_bx_persons_menu_item_title_more_actions"><![CDATA[]]></string>
-    <string name="_bx_persons_menu_item_title_system_friend_requests"><![CDATA[Friend requests]]></string>
-    <string name="_bx_persons_menu_item_title_friend_requests"><![CDATA[Friend requests]]></string>
+    <string name="_bx_persons_menu_item_title_system_friends"><![CDATA[Friends]]></string>
+    <string name="_bx_persons_menu_item_title_friends"><![CDATA[Friends]]></string>
 
     <string name="_bx_persons_txt_account_pending"><![CDATA[This profile is pending approval, please wait until it is activated.]]></string>
     <string name="_bx_persons_txt_account_suspended"><![CDATA[This profile is suspended.]]></string>
