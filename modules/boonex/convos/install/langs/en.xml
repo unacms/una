@@ -37,7 +37,7 @@
 	<string name="_bx_cnv_page_block_title_entry_text"><![CDATA[Text]]></string>
     <string name="_bx_cnv_page_block_title_entry_author"><![CDATA[Author]]></string>
     <string name="_bx_cnv_page_block_title_entry_actions"><![CDATA[Actions]]></string>
-    <string name="_bx_cnv_page_block_title_entry_comments"><![CDATA[Comments]]></string>
+    <string name="_bx_cnv_page_block_title_entry_comments"><![CDATA[Replies ({0})]]></string>
     <string name="_bx_cnv_page_block_title_entry_collaborators"><![CDATA[Participants]]></string>
     <string name="_bx_cnv_page_title_sys_folder"><![CDATA[Convos in folder]]></string>
     <string name="_bx_cnv_page_title_folder"><![CDATA[Folder: {folder}]]></string>
@@ -82,7 +82,7 @@
     <string name="_bx_cnv_field_collaborators"><![CDATA[Participants]]></string>
 
     <string name="_bx_cnv_grid_action_delete"><![CDATA[Delete]]></string>
-    <string name="_bx_cnv_grid_action_compose"><![CDATA[Start new convo]]></string>
+    <string name="_bx_cnv_grid_action_compose"><![CDATA[Compose]]></string>
 
     <string name="_bx_cnv_collaborator_info"><![CDATA[{0} ({1})]]></string>
     <string name="_bx_cnv_collaborator_author"><![CDATA[author]]></string>

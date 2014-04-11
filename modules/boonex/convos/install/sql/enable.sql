@@ -112,7 +112,7 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 -- GRID
 
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_mode`, `sorting_fields`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
-('bx_convos', 'Sql', 'SELECT `c`.`id`, `c`.`author`, `c`.`text`, `c`.`added`, `c`.`comments`, `f`.`read_comments`, `last_reply_timestamp`, `last_reply_profile_id` FROM `bx_convos_conversations` AS `c` INNER JOIN `bx_convos_conv2folder` AS `f` ON (`c`.`id` = `f`.`conv_id` AND `f`.`folder_id` = {folder_id} AND `f`.`collaborator` = {profile_id})', 'bx_convos_conversations', 'id', 'last_reply_timestamp', '', 10, NULL, 'start', '', 'text', 'auto', 'comments,last_reply_timestamp', 64, 'BxCnvGrid', 'modules/boonex/convos/classes/BxCnvGrid.php');
+('bx_convos', 'Sql', 'SELECT `c`.`id`, `c`.`author`, `c`.`text`, `c`.`added`, `c`.`comments`, `f`.`read_comments`, `last_reply_timestamp`, `last_reply_profile_id` FROM `bx_convos_conversations` AS `c` INNER JOIN `bx_convos_conv2folder` AS `f` ON (`c`.`id` = `f`.`conv_id` AND `f`.`folder_id` = {folder_id} AND `f`.`collaborator` = {profile_id})', 'bx_convos_conversations', 'id', 'last_reply_timestamp', '', 10, NULL, 'start', '', 'text', 'auto', 'comments,last_reply_timestamp', 2147483646, 'BxCnvGrid', 'modules/boonex/convos/classes/BxCnvGrid.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `order`) VALUES
 ('bx_convos', 'checkbox', '_sys_select', '2%', '', 1),

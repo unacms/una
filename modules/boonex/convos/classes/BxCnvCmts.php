@@ -45,6 +45,31 @@ class BxCnvCmts extends BxTemplCmts
     {
         return _t('_sys_txt_access_denied');
     }
+
+    public function isEditAllowed ($aCmt, $isPerformAction = false)
+    {
+        return $this->isRemoveAllowed ($aCmt, $isPerformAction);
+    }
+
+    public function msgErrEditAllowed ()
+    {
+        return $this->msgErrRemoveAllowed ();
+    }
+
+    protected function _getFormObject($sAction, $iId)
+    {
+        $oForm = parent::_getFormObject($sAction, $iId);
+        $oForm->aInputs['cmt_submit']['value'] = _t('_sys_send');
+        return $oForm;
+    }
+
+    function getCommentsBlock($iParentId = 0, $iVParentId = 0, $bInDesignbox = true)
+    {
+        $mixedBlock = parent::getCommentsBlock($iParentId, $iVParentId, $bInDesignbox);
+        if (is_array($mixedBlock) && isset($mixedBlock['title']))
+            $mixedBlock['title'] = _t('_bx_cnv_page_block_title_entry_comments', $this->getCommentsCount());
+        return $mixedBlock;
+    }
 }
 
 /** @} */
