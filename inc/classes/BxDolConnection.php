@@ -263,6 +263,17 @@ class BxDolConnection extends BxDol implements iBxDolFactoryObject {
     }
 
     /**
+     * Get common content IDs between two initiators
+     * @param $iInitiator1 one initiator
+     * @param $iInitiator2 second initiator 
+     * @param $isMutual get mutual connections only
+     * @return array of available connections
+     */    
+    public function getCommonContent ($iInitiator1, $iInitiator2, $isMutual = false, $iStart = 0, $iLimit = BX_CONNECTIONS_LIST_LIMIT, $iOrder = BX_CONNECTIONS_ORDER_NONE) {
+        return $this->_oQuery->getCommonContent($iInitiator1, $iInitiator2, $isMutual, $iStart, $iLimit, $iOrder);
+    }
+
+    /**
      * Get connected content IDs
      * @param $iInitiator initiator of the connection
      * @param $isMutual get mutual connections only
@@ -290,6 +301,18 @@ class BxDolConnection extends BxDol implements iBxDolFactoryObject {
      * @param $isMutual get mutual connections only
      * @return array of SQL string parts, for now 'join' part only is returned
      */
+    public function getCommonContentAsSQLParts ($sContentTable, $sContentField, $iInitiator1, $iInitiator2, $isMutual = false) {
+        return $this->_oQuery->getCommonContentSQLParts($sContentTable, $sContentField, $iInitiator1, $iInitiator2, $isMutual);
+    }
+
+    /**
+     * Get necessary parts of SQL query to use connections in other queries
+     * @param $sContentTable content table or alias
+     * @param $sContentField content table field or field alias
+     * @param $iInitiator initiator of the connection
+     * @param $isMutual get mutual connections only
+     * @return array of SQL string parts, for now 'join' part only is returned
+     */
     public function getConnectedContentAsSQLParts ($sContentTable, $sContentField, $iInitiator, $isMutual = false) {
         return $this->_oQuery->getConnectedContentSQLParts($sContentTable, $sContentField, $iInitiator, $isMutual);
     }
@@ -304,6 +327,66 @@ class BxDolConnection extends BxDol implements iBxDolFactoryObject {
      */
     public function getConnectedInitiatorsAsSQLParts ($sContentTable, $sContentField, $iContent, $isMutual = false) {
         return $this->_oQuery->getConnectedInitiatorsSQLParts($sContentTable, $sContentField, $iContent, $isMutual);
+    }
+
+    /**
+     * Get necessary condition array to use connections in search classes
+     * @param $sContentField content table field name
+     * @param $iInitiator initiator of the connection
+     * @param $iMutual get mutual connections only
+     * @return array of conditions, for now with 'restriction' and 'join' parts
+     */
+    public function getCommonContentAsCondition ($sContentField, $iInitiator1, $iInitiator2, $iMutual = false) {
+        return array(
+
+            'restriction' => array (
+                'connections_' . $this->_sObject => array(
+                    'value' => $iInitiator1,
+                    'field' => 'initiator',
+                    'operator' => '=',
+                    'table' => 'c',
+                ),
+                'connections_mutual_' . $this->_sObject => array(
+                    'value' => $iMutual,
+                    'field' => 'mutual',
+                    'operator' => '=',
+                    'table' => 'c',
+                ),
+                'connections2_' . $this->_sObject => array(
+                    'value' => $iInitiator2,
+                    'field' => 'initiator',
+                    'operator' => '=',
+                    'table' => 'c2',
+                ),
+                'connections2_mutual_' . $this->_sObject => array(
+                    'value' => $iMutual,
+                    'field' => 'mutual',
+                    'operator' => '=',
+                    'table' => 'c2',
+                ),
+            ),
+
+            'join' => array (
+                'connections_' . $this->_sObject => array(
+                    'type' => 'INNER',
+                    'table' => $this->_aObject['table'],
+                    'table_alias' => 'c',
+                    'mainField' => $sContentField,
+                    'onField' => 'content',
+                    'joinFields' => array(),
+                ),
+                'connections2_' . $this->_sObject => array(
+                    'type' => 'INNER',
+                    'table' => $this->_aObject['table'],
+                    'table_alias' => 'c2',
+                    'mainTable' => 'c',
+                    'mainField' => 'content',
+                    'onField' => 'content',
+                    'joinFields' => array(),
+                ),
+            ),
+
+        );
     }
 
     /**

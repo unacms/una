@@ -75,18 +75,28 @@ function PageCompMainCode() {
         $iProfileId = $oDb->getOne($sQueryPrepared);
     }
 
+    $iProfileId2 = bx_get('id2');
+    if (!$iProfileId2) {
+        $sQueryOrig = "SELECT `id` FROM `sys_profiles` WHERE `type` = ? AND `status` = 'active' AND `id` != ? ORDER BY RAND() LIMIT 1";
+        $sQueryPrepared = $oDb->prepare($sQueryOrig, $sType, $iProfileId);
+        $iProfileId2 = $oDb->getOne($sQueryPrepared);
+    }
+
     bx_import('BxDolConnection');
     $oConnection = BxDolConnection::getObjectInstance($sObject);
     if (!$oConnection)
         die ("'$sObject' object is not defined.");
 
-    echo "<h1>Profile: $iProfileId</h1>";
+    echo "<h1>Profile: $iProfileId / another one: $iProfileId2 </h1>";
     echo '<hr class="bx-def-hr" />';
 
     switch($sMethod) {
 
         default:
         case 'array':
+
+            echo "<h2>Common Content (like mutual Friends between two initiators)</h2>";
+            echoDbg($oConnection->getCommonContent($iProfileId, $iProfileId2, 1));
 
             echo "<h2>Mutual Content (like Friends)</h2>";
             echoDbg($oConnection->getConnectedContent($iProfileId, 1));
@@ -119,6 +129,9 @@ function PageCompMainCode() {
                     echo "{$r['id']} - {$r['fullname']} <br />\n";
             };
 
+            echo "<h2>Common Content (like mutual Friends between two initiators)</h2>";
+            $f($oConnection->getCommonContentAsSQLParts('p', 'id', $iProfileId, $iProfileId2, 1));
+
             echo "<h2>Mutual Content (like Friends)</h2>";
             $f($oConnection->getConnectedContentAsSQLParts('p', 'id', $iProfileId, 1));
 
@@ -138,6 +151,9 @@ function PageCompMainCode() {
 
         break;
         case 'search-results':
+
+            echo "<h2>Common Content (like mutual Friends between two initiators)</h2>";
+            echo BxDolService::call('bx_persons', 'browse_connections', array($iProfileId, 'sys_profiles_friends', 'common', 1, BX_DB_CONTENT_ONLY, $iProfileId2));
 
             echo "<h2>Mutual Content (like Friends)</h2>";
             echo BxDolService::call('bx_persons', 'browse_connections', array($iProfileId, 'sys_profiles_friends', 'content', 1, BX_DB_CONTENT_ONLY));

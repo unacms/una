@@ -86,14 +86,15 @@ class BxPersonsModule extends BxDolModule implements iBxDolProfileService {
         return $this->_serviceBrowse ('recent');
     }
 
-    public function serviceBrowseConnections ($iProfileId, $sObjectConnections = 'sys_profiles_friends', $sConnectionsType = 'content', $iMutual = false, $iDesignBox = BX_DB_PADDING_DEF) {
+    public function serviceBrowseConnections ($iProfileId, $sObjectConnections = 'sys_profiles_friends', $sConnectionsType = 'content', $iMutual = false, $iDesignBox = BX_DB_PADDING_DEF, $iProfileId2 = 0) {
         return $this->_serviceBrowse (
             'connections', 
             array(
                 'object' => $sObjectConnections,
                 'type' => $sConnectionsType,
                 'mutual' => $iMutual,
-                'profile' => (int)$iProfileId),  
+                'profile' => (int)$iProfileId,  
+                'profile2' => (int)$iProfileId2),
             $iDesignBox
         );
     }

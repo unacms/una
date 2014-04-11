@@ -35,51 +35,81 @@ class BxDolConnectionQuery extends BxDolDb {
         return $aObject;
     }
 
-    public function getConnectedContentSQLParts ($sContentTable, $sContentField, $iInitiator, $isMutual = false) {
-        $sWhere = $this->prepare(" AND `" . $this->_sTable . "`.`initiator` = ?", $iInitiator);
-        if (false !== $isMutual)
-            $sWhere .= $this->prepare(" AND `mutual` = ?", $isMutual);
+    public function getCommonContentSQLParts ($sContentTable, $sContentField, $iInitiator1, $iInitiator2, $isMutual = false) {
+        $sWhereJoin1 = $this->prepare(" AND `c`.`initiator` = ?", $iInitiator1);
+        $sWhereJoin2 = $this->prepare(" AND `c2`.`initiator` = ?", $iInitiator2);
+        if (false !== $isMutual) {
+            $sWhereJoin1 .= $this->prepare(" AND `c`.`mutual` = ?", $isMutual);
+            $sWhereJoin2 .= $this->prepare(" AND `c2`.`mutual` = ?", $isMutual);
+        }
         return array(
-            'join' => "INNER JOIN `{$this->_sTable}` ON (`{$this->_sTable}`.`content` = `$sContentTable`.`$sContentField` $sWhere)",
+            'join' => "
+                INNER JOIN `{$this->_sTable}` AS `c` ON (`c`.`content` = `$sContentTable`.`$sContentField` $sWhereJoin1)
+                INNER JOIN `{$this->_sTable}` AS `c2` ON (`c2`.`content` = `c`.`content` $sWhereJoin2)",
+        );
+    }
+
+    public function getConnectedContentSQLParts ($sContentTable, $sContentField, $iInitiator, $isMutual = false) {
+        $sWhere = $this->prepare(" AND `c`.`initiator` = ?", $iInitiator);
+        if (false !== $isMutual)
+            $sWhere .= $this->prepare(" AND `c`.`mutual` = ?", $isMutual);
+        return array(
+            'join' => "INNER JOIN `{$this->_sTable}` AS `c` ON (`c`.`content` = `$sContentTable`.`$sContentField` $sWhere)",
         );
     }
 
     public function getConnectedInitiatorsSQLParts ($sContentTable, $sContentField, $iInitiator, $isMutual = false) {
-        $sWhere = $this->prepare(" AND `" . $this->_sTable . "`.`content` = ?", $iInitiator);
+        $sWhere = $this->prepare(" AND `c`.`content` = ?", $iInitiator);
         if (false !== $isMutual)
-            $sWhere .= $this->prepare(" AND `mutual` = ?", $isMutual);
+            $sWhere .= $this->prepare(" AND `c`.`mutual` = ?", $isMutual);
         return array(
-            'join' => "INNER JOIN `{$this->_sTable}` ON (`{$this->_sTable}`.`initiator` = `$sContentTable`.`$sContentField` $sWhere)",
+            'join' => "INNER JOIN `{$this->_sTable}` AS `c` ON (`c`.`initiator` = `$sContentTable`.`$sContentField` $sWhere)",
         );
     }
 
+    public function getCommonContent($iInitiator1, $iInitiator2, $isMutual, $iStart, $iLimit, $iOrder) {        
+        $sWhereJoin = (false !== $isMutual) ? $this->prepare(" AND `c2`.`mutual` = ?", $isMutual) : '';
+        $sJoin = $this->prepare("INNER JOIN `" . $this->_sTable . "` AS `c2` ON (`c2`.`initiator` = ? AND `c`.`content` = `c2`.`content` $sWhereJoin)", $iInitiator2);
+
+        $sWhere = $this->prepare(" AND `c`.`initiator` = ?", $iInitiator1);
+        $sQuery = $this->_getConnectionsQuery($sWhere, $sJoin, '`c`.`content`', $isMutual, $iStart, $iLimit, $iOrder);
+
+        return $this->getColumn($sQuery);
+    }
+
     public function getConnectedContent ($iInitiator, $isMutual = false, $iStart = 0, $iLimit = BX_CONNECTIONS_LIST_LIMIT, $iOrder = BX_CONNECTIONS_ORDER_NONE) {
-        $sWhere = $this->prepare(" AND `initiator` = ?", $iInitiator);
-        $sQuery = $this->_getConnectionsQuery($sWhere, '`content`', $isMutual, $iStart, $iLimit, $iOrder);
+        $sWhere = $this->prepare(" AND `c`.`initiator` = ?", $iInitiator);
+        $sQuery = $this->_getConnectionsQuery($sWhere, '', '`c`.`content`', $isMutual, $iStart, $iLimit, $iOrder);
         return $this->getColumn($sQuery);
     }
 
     public function getConnectedInitiators ($iContent, $isMutual = false, $iStart = 0, $iLimit = BX_CONNECTIONS_LIST_LIMIT, $iOrder = BX_CONNECTIONS_ORDER_NONE) {
-        $sWhere = $this->prepare(" AND `content` = ?", $iContent);
-        $sQuery = $this->_getConnectionsQuery($sWhere, '`initiator`', $isMutual, $iStart, $iLimit, $iOrder);
+        $sWhere = $this->prepare(" AND `c`.`content` = ?", $iContent);
+        $sQuery = $this->_getConnectionsQuery($sWhere, '', '`c`.`initiator`', $isMutual, $iStart, $iLimit, $iOrder);
         return $this->getColumn($sQuery);
     }
 
-    protected function _getConnectionsQuery ($sWhere, $sFields = '*', $isMutual = false, $iStart = 0, $iLimit = BX_CONNECTIONS_LIST_LIMIT, $iOrder = BX_CONNECTIONS_ORDER_NONE) {
+    protected function _getConnectionsQuery ($sWhere, $sJoin = '', $sFields = '*', $isMutual = false, $iStart = 0, $iLimit = BX_CONNECTIONS_LIST_LIMIT, $iOrder = BX_CONNECTIONS_ORDER_NONE) {
+        $sOrder = $this->_getOrderClause($iOrder);
+
+        $sWhere .= (false !== $isMutual) ? $this->prepare(" AND `c`.`mutual` = ?", $isMutual) : '';
+
+        return $this->prepare("SELECT $sFields FROM `" . $this->_sTable . "` AS `c` $sJoin WHERE 1 $sWhere $sOrder LIMIT ?, ?", $iStart, $iLimit);
+    }
+
+    protected function _getOrderClause ($iOrder = BX_CONNECTIONS_ORDER_NONE, $sTable = '') {
+        if ($sTable)
+            $sTable .= '.';
         $sOrder = '';
         switch ($iOrder) {
         case BX_CONNECTIONS_ORDER_ADDED_ASC: 
-            $sOrder = 'ORDER BY `added` ASC';
+            $sOrder = "ORDER BY {$sTable}`added` ASC";
             break;
         case BX_CONNECTIONS_ORDER_ADDED_DESC: 
-            $sOrder = 'ORDER BY `added` DESC';
+            $sOrder = "ORDER BY {$sTable}`added` DESC";
             break;
         }
-
-        if (false !== $isMutual)
-            $sWhere .= $this->prepare(" AND `mutual` = ?", $isMutual);
-
-        return $this->prepare("SELECT $sFields FROM `" . $this->_sTable . "` WHERE 1 $sWhere $sOrder LIMIT ?, ?", $iStart, $iLimit);
+        return $sOrder;
     }
 
     public function getConnection ($iInitiator, $iContent) {

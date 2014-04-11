@@ -411,16 +411,19 @@ class BxDolSearchResult implements iBxDolReplaceable
         if (isset($this->aCurrent['join']) && is_array($this->aCurrent['join'])) {
             $aSql = array('join'=>'', 'ownFields'=>'', 'joinFields'=>'', 'groupBy'=>'');
             foreach ($this->aCurrent['join'] as $sKey => $aValue) {
+                $sAlias = isset($aValue['table_alias']) ? $aValue['table_alias'] : $aValue['table'];
+                $sTableAlias = isset($aValue['table_alias']) ? " AS {$aValue['table_alias']} " : '';
+
                 if (is_array($aValue['joinFields'])) {
                     foreach ($aValue['joinFields'] as $sValue) {
-                        $aSql['joinFields'] .= $this->setFieldUnit($sValue, $aValue['table'], isset($aValue['operator']) ? $aValue['operator'] : null, $bRenameMode);
+                        $aSql['joinFields'] .= $this->setFieldUnit($sValue, $sAlias, isset($aValue['operator']) ? $aValue['operator'] : null, $bRenameMode);
                     }
                 }
                 // group by
                 if (isset($aValue['groupTable']))
                     $aSql['groupBy'] =  "GROUP BY `{$aValue['groupTable']}`.`{$aValue['groupField']}`, ";
                 $sOn = isset($aValue['mainTable']) ? $aValue['mainTable'] : $this->aCurrent['table'];
-                $aSql['join'] .= " {$aValue['type']} JOIN `{$aValue['table']}` ON `{$aValue['table']}`.`{$aValue['onField']}`=`$sOn`.`{$aValue['mainField']}`";
+                $aSql['join'] .= " {$aValue['type']} JOIN `{$aValue['table']}` $sTableAlias ON `{$sAlias}`.`{$aValue['onField']}`=`$sOn`.`{$aValue['mainField']}`";
                 $aSql['ownFields'] .= $this->setFieldUnit($aValue['mainField'], $sOn, '', $bRenameMode);
             }
             $aSql['joinFields'] = trim($aSql['joinFields'], ', ');

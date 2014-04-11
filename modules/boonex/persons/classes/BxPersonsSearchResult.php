@@ -68,7 +68,10 @@ class BxPersonsSearchResult extends BxTemplSearchResult {
                     if (isset($aParams['type']) && $aParams['type'] == 'initiators')
                         $sMethod = 'getConnectedInitiatorsAsCondition';
 
-                    $a = $oConnection->$sMethod('id', (int)$aParams['profile'], isset($aParams['mutual']) ? $aParams['mutual'] : false);
+                    if (isset($aParams['type']) && $aParams['type'] == 'common')
+                        $a = $oConnection->getCommonContentAsCondition('id', (int)$aParams['profile'], (int)$aParams['profile2'], isset($aParams['mutual']) ? $aParams['mutual'] : false);
+                    else
+                        $a = $oConnection->$sMethod('id', (int)$aParams['profile'], isset($aParams['mutual']) ? $aParams['mutual'] : false);
                     $this->aCurrent['restriction'] = array_merge($this->aCurrent['restriction'], $a['restriction']);
                     $this->aCurrent['join'] = array_merge($this->aCurrent['join'], $a['join']);
 
