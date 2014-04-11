@@ -65,6 +65,11 @@
             if (!$el.attr('id'))
                 return false;
 
+            if ($el.is(":visible")) { // if popup is shown - hide it
+                $el.dolPopupHide();
+                return true;
+            } 
+
             // default style for correct positioning
             $el.css({
                 display: 'block',
