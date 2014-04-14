@@ -5,7 +5,7 @@
  * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
  */
 
-ob_start();
+//ob_start();
 
 require_once('./inc/header.inc.php');
 
@@ -30,7 +30,7 @@ if (!$sRemoteId) {
     exit;
 }
 
-ob_end_clean();
+//ob_end_clean();
 
 if (!$oStorage->download($sRemoteId, $sToken)) {
     $iError = $oStorage->getErrorCode();

@@ -1,28 +1,23 @@
-<?
-/***************************************************************************
-*                            Dolphin Smart Community Builder
-*                              -------------------
-*     begin                : Mon Mar 23 2006
-*     copyright            : (C) 2007 BoonEx Group
-*     website              : http://www.boonex.com
-* This file is part of Dolphin - Smart Community Builder
-*
-* Dolphin is free software; you can redistribute it and/or modify it under
-* the terms of the GNU General Public License as published by the
-* Free Software Foundation; either version 2 of the
-* License, or  any later version.
-*
-* Dolphin is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU General Public License for more details.
-* You should have received a copy of the GNU General Public License along with Dolphin,
-* see license.txt file; if not, write to marketing@boonex.com
-***************************************************************************/
+<?php defined('BX_DOL') or die('hack attempt');
+/**
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    Profiler Profiler
+ * @ingroup     DolphinModules
+ *
+ * @{
+ */
 
+define ('BX_PROFILER', true);
 define ('BX_PROFILER_DISPLAY', 1);
 
-require_once(BX_DIRECTORY_PATH_MODULES . 'boonex/profiler/install/config.php');
 
+require_once(BX_DIRECTORY_PATH_PLUGINS . 'php-error/php_error.php');
+\php_error\reportErrors();
+
+
+require_once(BX_DIRECTORY_PATH_MODULES . 'boonex/profiler/install/config.php');
 $GLOBALS['bx_profiler_module'] = array (
     'title' => $aConfig['title'],
     'vendor' => $aConfig['vendor'],
@@ -32,8 +27,10 @@ $GLOBALS['bx_profiler_module'] = array (
     'db_prefix' => $aConfig['db_prefix'],
 );
 
+bx_import('BxDolStudioTemplate');
 bx_import('Template', $GLOBALS['bx_profiler_module']);
 bx_import('Config', $GLOBALS['bx_profiler_module']);
+
 
 class BxProfiler {
 
@@ -57,16 +54,14 @@ class BxProfiler {
     var $_sLogMaxArgLength = 64;
     var $_sLogFilename = 64;
 
-    /**
-     * constructor
-     */
     function BxProfiler($iTimeStart) {
 
         $this->oConfig = new BxProfilerConfig ($GLOBALS['bx_profiler_module']);
         $this->oTemplate = new BxProfilerTemplate ($this->oConfig);
+        $this->oTemplateAdmin = BxDolStudioTemplate::getInstance();
 
         $aCss = array (
-            BX_DOL_URL_MODULES.'boonex/profiler/templates/base/css/profiler.css',
+            BX_DOL_URL_MODULES.'boonex/profiler/template/css/profiler.css',
             BX_DOL_URL_PLUGINS.'jush/jush.css',
         );
         $aJs = array (
@@ -76,12 +71,12 @@ class BxProfiler {
         );
 
         foreach ($aCss as $sCssUrl) {
-            $this->oTemplate->addCss ($sCssUrl);
-            $this->oTemplate->addCssAdmin ($sCssUrl);
+            $this->oTemplate->addCss($sCssUrl);
+            $this->oTemplateAdmin->addCss($sCssUrl);
         }
         foreach ($aJs as $sJsUrl) {
             $this->oTemplate->addJs($sJsUrl);
-            $this->oTemplate->addJsAdmin($sJsUrl);
+            $this->oTemplateAdmin->addJs($sJsUrl);
         }
 
         if (getParam ('bx_profiler_long_sql_queries_log'))
@@ -94,9 +89,7 @@ class BxProfiler {
         $this->_iTimeStart = $iTimeStart;
     }
 
-    /**
-     * output profiler info
-     */
+    // output profiler debug panel
     function output () {
 
         $iPageTIme = $this->_getCurrentDelay ();
@@ -114,13 +107,17 @@ class BxProfiler {
         default:
             return;
         }
-        echo $this->_plankMain ();
-        echo $this->_plankMenus ();
-        echo $this->_plankTemplates ();
-        echo $this->_plankInjections ();
-        echo $this->_plankPagesBlocks ();
-        echo $this->_plankSql ();
-        echo $this->_plankModules ();
+
+        $sContentType = $this->_getHeaderContentType();
+        if ('text/html' == $sContentType) {
+            echo $this->_plankMain ();
+            echo $this->_plankMenus ();
+            echo $this->_plankTemplates ();
+            echo $this->_plankInjections ();
+            echo $this->_plankPagesBlocks ();
+            echo $this->_plankSql ();
+            echo $this->_plankModules ();
+        }
     }
 
     function _logBegin ($s) {
@@ -135,7 +132,7 @@ class BxProfiler {
     }
 
     function _appendToLog ($s) {
-        $f = fopen ( BX_DIRECTORY_PATH_MODULES . $GLOBALS['bx_profiler_module']['path'] . 'log/profiler.log', 'a');
+        $f = fopen ( BX_DIRECTORY_PATH_ROOT . 'logs/bx_profiler.log', 'a');
         if (!$f)
             return;
         fwrite($f, $s);
@@ -182,7 +179,7 @@ class BxProfiler {
         ++$this->_aModulesLevel;
         $this->_aModulesNames[$aModule['title']] = isset($this->_aModulesNames[$aModule['title']]) ? $this->_aModulesNames[$aModule['title']] + 1 : 1;
         $this->_aModules[$sHash] = array (
-            'name' => str_repeat('&#160;&#160;', $this->_aModulesLevel-1) . $aModule['title'],
+            'name' => str_repeat("--", $this->_aModulesLevel-1) . $aModule['title'],
             'type' => $sType,
             'class/file' => $sClassFile,
             'method' => $sMethod,
@@ -242,7 +239,7 @@ class BxProfiler {
     }
 
     function endPage (&$sContent) {
-        if (!$this->_sPageIndex)
+        if (!$this->_sPageIndex || !isset($this->_aPages[$this->_sPageIndex]['begin']))
             return;
         $iTime = $this->_calcTime ($this->_aPages[$this->_sPageIndex]['begin']);
         unset ($this->_aPages[$this->_sPageIndex]['begin']);
@@ -597,12 +594,23 @@ class BxProfiler {
         }
         return $s;
     }
+
+    function _getHeaderContentType() {
+        $aHeaders = headers_list();
+        foreach ($aHeaders as $s) {
+            $a = explode(':', $s);
+            if (isset($a[0]) && isset($a[1]) && 'content-type' == strtolower(trim($a[0]))) {
+                $aa = explode(';', $a[1]);
+                return strtolower(trim($aa[0]));
+            }
+        }
+        
+        return false;
+    }
 }
 
-if (BX_PROFILER) {
-    $GLOBALS['bx_profiler'] = new BxProfiler($GLOBALS['bx_profiler_start']);
-    if (!$GLOBALS['bx_profiler']->_isProfilerDisabled())
-        register_shutdown_function (array ($GLOBALS['bx_profiler'], 'output'));
-}
+$GLOBALS['bx_profiler'] = new BxProfiler(BX_DOL_START);
+if (!$GLOBALS['bx_profiler']->_isProfilerDisabled())
+    register_shutdown_function (array ($GLOBALS['bx_profiler'], 'output'));
 
-?>
+/** @} */

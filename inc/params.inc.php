@@ -6,7 +6,3 @@
  */
 defined('BX_DOL') or die('hack attempt');
 
-if (defined('BX_PROFILER') && BX_PROFILER) 
-    require_once(BX_DIRECTORY_PATH_MODULES . 'boonex/profiler/classes/BxProfiler.php');
-
-

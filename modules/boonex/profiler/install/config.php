@@ -39,7 +39,7 @@ $aConfig = array(
      */
     'install' => array(
         'show_introduction' => 0,
-        'change_permissions' => 1,
+        'change_permissions' => 0,
         'execute_sql' => 1,
         'update_languages' => 1,
         'recompile_main_menu' => 0,
@@ -57,11 +57,11 @@ $aConfig = array(
         'recompile_permalinks' => 0,
         'recompile_alerts' => 0,
         'clear_db_cache' => 0,
-        'show_conclusion' => 1,
+        'show_conclusion' => 0,
     ),
     'uninstall' => array (
         'show_introduction' => 0,
-        'change_permissions' => 1,
+        'change_permissions' => 0,
         'execute_sql' => 1,
         'update_languages' => 1,
         'recompile_main_menu' => 0,
@@ -79,7 +79,7 @@ $aConfig = array(
         'recompile_permalinks' => 0,
         'recompile_alerts' => 0,
         'clear_db_cache' => 0,
-        'show_conclusion' => 1,
+        'show_conclusion' => 0,
     ),
     'enable' => array(
         'execute_sql' => 1,
@@ -132,11 +132,7 @@ $aConfig = array(
     /**
      * Permissions Section
      */
-    'install_permissions' => array(
-        'writable' => array(
-            'log/'
-        ),
-    ),
+    'install_permissions' => array(),
     'uninstall_permissions' => array(),
 
     /**
@@ -153,4 +149,3 @@ $aConfig = array(
 );
 
 /** @} */
-

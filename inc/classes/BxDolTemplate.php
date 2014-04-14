@@ -1284,7 +1284,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     	if(is_array($mixed) && isset($mixed['url']) && isset($mixed['path'])) {
     		$sPathFile = realpath($mixed['path']);
     		$aInfoFile = pathinfo($sPathFile);
-    		if($aInfoFile['extension'] != 'less')
+    		if (!isset($aInfoFile['extension']) || $aInfoFile['extension'] != 'less')
     			return $mixed;
 
 			$sPathRoot = realpath(BX_DIRECTORY_PATH_ROOT);

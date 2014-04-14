@@ -35,4 +35,3 @@ class BxProfilerInstaller extends BxDolStudioInstaller {
 }
 
 /** @} */
-

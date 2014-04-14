@@ -37,3 +37,13 @@ INSERT INTO `sys_options` (`category_id`, `name`, `value`, `caption`, `type`, `e
 (@iCategoryId, 'bx_profiler_long_page_log', 'on', 'Log long page opens', 'checkbox', '', '', '', 1),
 (@iCategoryId, 'bx_profiler_long_page_time', '5', 'Time in seconds of long page open', 'digit', '', '', '', 2),
 (@iCategoryId, 'bx_profiler_long_page_debug', '', 'Log additionad debug info with each long page open', 'checkbox', '', '', '', 3);
+
+-- ALERTS
+
+INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `eval`) VALUES 
+('bx_profiler', 'BxProfilerAlertsResponse', 'modules/boonex/profiler/classes/BxProfilerAlertsResponse.php', '');
+SET @iHandler := LAST_INSERT_ID();
+
+INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
+('system', 'begin', @iHandler);
+
