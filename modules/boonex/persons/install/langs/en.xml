@@ -110,4 +110,8 @@
 
     <string name="_bx_persons_txt_change_image"><![CDATA[Change Picure]]></string>
     <string name="_bx_persons_txt_no_picture_uploaded"><![CDATA[No picture uploaded]]></string>
+    <string name="_bx_persons_txt_n_friends"><![CDATA[{0} friends]]></string>
+    <string name="_bx_persons_txt_n_mutual_friends"><![CDATA[{0} mutual friends]]></string>
+    <string name="_bx_persons_txt_one_mutual_friend"><![CDATA[<a href="{0}">{1}</a> mutual friend]]></string>
+
 </resources>

@@ -3065,17 +3065,18 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 
 -- GRID: connections
 
-INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_mode`, `sorting_fields`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
-('sys_grid_connections', 'Sql', 'SELECT `p`.`id`, `added`, `mutual` FROM `sys_profiles` AS `p` {join_connections}', 'sys_profiles', 'id', 'added', '', 10, NULL, 'start', '', '', 'auto', '', 2147483647, 'BxDolGridConnections', '');
+INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
+('sys_grid_connections', 'Sql', 'SELECT `p`.`id`, `c`.`added`, `c`.`mutual` FROM `sys_profiles` AS `p` INNER JOIN `sys_accounts` AS `a` ON (`a`.`id` = `p`.`account_id`) {join_connections}', 'sys_profiles', 'id', 'c`.`added', '', '', 10, NULL, 'start', '', 'name,email', '', 'auto', '', '', 2147483647, 'BxDolGridConnections', '');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `order`) VALUES
-('sys_grid_connections', 'name', '_sys_name', '70%', '', 1),
-('sys_grid_connections', 'actions', '', '30%', '', 2);
+('sys_grid_connections', 'name', '_sys_name', '40%', '', 1),
+('sys_grid_connections', 'info', '', '30%', '', 2),
+('sys_grid_connections', 'actions', '', '30%', '', 3);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
 ('sys_grid_connections', 'single', 'accept', '_sys_accept', '', 0, 1),
-('sys_grid_connections', 'single', 'delete', '', 'remove', 1, 2);
-
+('sys_grid_connections', 'single', 'delete', '', 'remove', 1, 2),
+('sys_grid_connections', 'single', 'add_friend', '_sys_add_friend', 'plus', 0, 3);
 
 -- --------------------------------------------------------
 

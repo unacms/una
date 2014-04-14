@@ -59,10 +59,6 @@ class BxDolGridConnections extends BxTemplGrid
         $aIds = bx_get('ids');
         if ($aIds && is_array($aIds))
             $iId = (int)array_pop($aIds);
-/*
-        if (!$iId)
-            $iId = (int)bx_get('ID');
-*/
 
         if (!$iId) {
             $this->_echoResultJson(array('msg' => _t('_sys_txt_error_occured')), true);
@@ -77,6 +73,14 @@ class BxDolGridConnections extends BxTemplGrid
             $this->_echoResultJson(array('msg' => $a['msg']), true);
         else
             $this->_echoResultJson(array('grid' => $this->getCode(false), 'blink' => $iId), true);
+    }
+
+    /**
+     * 'add friend' action handler
+     */
+    public function performActionAddFriend() 
+    {
+        return $this->performActionAccept();
     }
 
     protected function _delete ($mixedId) {
@@ -101,6 +105,36 @@ class BxDolGridConnections extends BxTemplGrid
         return parent::_getCellDefault ($oProfile->getUnit(), $sKey, $aField, $aRow);
     }
 
+    protected function _getCellInfo ($mixedValue, $sKey, $aField, $aRow)
+    {
+        $s = '';
+        bx_import('BxDolConnection');
+        $oConn = BxDolConnection::getObjectInstance($this->_sObjectConnections);
+
+        // for friend requests display mutual friends
+        if ($this->_bOwner && !$aRow['mutual']) {
+            $a = $oConn->getCommonContent($aRow['id'], bx_get_logged_profile_id(), true);
+            $i = count($a);
+            if (1 == $i) {
+                $iProfileId = array_pop($a);
+                bx_import('BxDolProfile');
+                $oProfile = BxDolProfile::getInstance($iProfileId);
+                $s = _t('_bx_persons_txt_one_mutual_friend', $oProfile->getUrl(), $oProfile->getDisplayName());
+            } elseif ($i) {
+                $s = _t('_bx_persons_txt_n_mutual_friends', $i);
+            }
+        }
+
+        // display friends number if no other info is available
+        if (!$s) {
+            $a = $oConn->getConnectedContent($aRow['id'], true);
+            $i = count($a);
+            $s = _t('_bx_persons_txt_n_friends', $i);
+        }
+
+        return parent::_getCellDefault ($s, $sKey, $aField, $aRow);
+    }
+
     protected function _getActionDelete ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
         if (!$this->_bOwner)
@@ -111,6 +145,19 @@ class BxDolGridConnections extends BxTemplGrid
     protected function _getActionAccept ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
         if (!$this->_bOwner || $aRow['mutual'])
+            return '';
+
+        return parent::_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+    }
+
+    protected function _getActionAddFriend ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
+        if ($this->_bOwner || $aRow['id'] == bx_get_logged_profile_id())
+            return '';
+
+        bx_import('BxDolConnection');
+        $oConn = BxDolConnection::getObjectInstance($this->_sObjectConnections);
+        if ($oConn->isConnected($aRow['id'], bx_get_logged_profile_id()) || $oConn->isConnected(bx_get_logged_profile_id(), $aRow['id']))
             return '';
 
         return parent::_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);

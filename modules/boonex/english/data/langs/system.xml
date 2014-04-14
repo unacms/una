@@ -1356,6 +1356,7 @@
 	<string name="_sys_acl_action_unauthenticated"><![CDATA[Not logged in users can't <b>{1}</b>.]]></string>
 	<string name="_sys_acl_action_unconfirmed"><![CDATA[You didn't confirm your profile. Please check your email with profile activation link. Unconfirmed members can't <b>{1}</b>.]]></string>
 	<string name="_sys_acl_action_vote"><![CDATA[Vote]]></string>
+	<string name="_sys_add_friend"><![CDATA[Add friend]]></string>
 	<string name="_sys_adm_installed"><![CDATA[Installed]]></string>
 	<string name="_sys_admin_apply"><![CDATA[Apply]]></string>
 	<string name="_sys_admin_filter"><![CDATA[Filter:]]></string>
