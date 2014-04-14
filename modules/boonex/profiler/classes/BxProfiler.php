@@ -13,10 +13,6 @@ define ('BX_PROFILER', true);
 define ('BX_PROFILER_DISPLAY', 1);
 
 
-require_once(BX_DIRECTORY_PATH_PLUGINS . 'php-error/php_error.php');
-\php_error\reportErrors();
-
-
 require_once(BX_DIRECTORY_PATH_MODULES . 'boonex/profiler/install/config.php');
 $GLOBALS['bx_profiler_module'] = array (
     'title' => $aConfig['title'],
