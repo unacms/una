@@ -192,7 +192,7 @@ class BxCnvModule extends BxBaseModTextModule
         if (!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
 
-        $a = $this->_oDb->getMessagesPreviews($iProfileId);
+        $a = $this->_oDb->getMessagesPreviews($iProfileId, 0, (int)getParam('bx_convos_preview_messages_num'));
 
         return $this->_oTemplate->getMessagesPreviews($a);
     }

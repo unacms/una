@@ -3,7 +3,7 @@
 
 	<string name="_bx_cnv"><![CDATA[Convos]]></string>
 
-	<string name="_bx_cnv_option_per_page_browse"><![CDATA[Number of items per page]]></string>
+	<string name="_bx_cnv_option_preview_messages_num"><![CDATA[Number of preview messages]]></string>
 
 	<string name="_bx_cnv_form_entry"><![CDATA[Convos]]></string>
 	<string name="_bx_cnv_form_entry_display_add"><![CDATA[Add convo]]></string>

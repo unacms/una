@@ -11,7 +11,7 @@ VALUES (@iTypeId, 'bx_convos', '_bx_cnv', 1);
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
-('bx_convos_per_page_browse', '12', @iCategId, '_bx_cnv_option_per_page_browse', 'digit', '', '', '', 1);
+('bx_convos_preview_messages_num', '3', @iCategId, '_bx_cnv_option_preview_messages_num', 'digit', '', '', '', 1);
 
 -- STORAGES & TRANSCODERS
 
