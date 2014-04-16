@@ -17,6 +17,31 @@ class BxBaseServiceProfiles extends BxDol
         parent::__construct();
     }
 
+    public function serviceProfileStats ($iProfileId = 0) 
+    {
+        if (!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+
+        bx_import('BxDolMenu');
+        $oMenu = BxDolMenu::getObjectInstance('sys_profile_stats');
+
+        bx_import('BxDolProfile');
+        $oProfile = BxDolProfile::getInstance($iProfileId);
+ 
+        $aVars = array(
+            'profile_id' => $oProfile->id(),
+            'profile_url' => $oProfile->getUrl(),
+            'profile_edit_url' => $oProfile->getEditUrl(),
+            'profile_title' => $oProfile->getDisplayName(),
+            'profile_title_attr' => bx_html_attribute($oProfile->getDisplayName()),
+            'profile_ava_url' => $oProfile->getAvatar(),
+            'menu' => $oMenu->getCode(),
+        );
+
+        $oTemplate = BxDolTemplate::getInstance();
+        return $oTemplate->parseHtmlByName('profile_stats.html', $aVars);
+    }
+
     public function serviceProfileNotifications ($iProfileId = 0) 
     {
         if (!$iProfileId)

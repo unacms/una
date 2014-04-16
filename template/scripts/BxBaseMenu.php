@@ -76,6 +76,11 @@ class BxBaseMenu extends BxDolMenu {
 
             $a = $this->_replaceMarkers($a);
 
+            $mixedAddon = $this->_getMenuAddon($a);
+            $this->addMarkers(array('addon' => $mixedAddon));
+
+            $a = $this->_replaceMarkers($a);
+
             list ($sIcon, $sIconUrl) = $this->_getMenuIcon($a);
 
             $a['class_add'] = $this->_isSelected($a) ? 'bx-menu-tab-active' : '';
@@ -94,7 +99,6 @@ class BxBaseMenu extends BxDolMenu {
                 'content' => array('title' => $a['title']), 
             );
 
-            $mixedAddon = $this->_getMenuAddon($a);
             $a['bx_if:addon'] = array (
                 'condition' => (bool)$mixedAddon,
                 'content' => array('addon' => $mixedAddon), 

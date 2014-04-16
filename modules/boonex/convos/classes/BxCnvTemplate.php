@@ -157,11 +157,13 @@ class BxCnvTemplate extends BxBaseModTextTemplate
                 'author_id' => $oProfileAuthor->id(),
                 'author_url' => $oProfileAuthor->getUrl(),
                 'author_title' => $oProfileAuthor->getDisplayName(),
+                'author_title_attr' => bx_html_attribute($oProfileAuthor->getDisplayName()),
                 'author_thumb_url' => $oProfileAuthor->getThumb(),
 
                 'last_replier_id' => $oProfileLast->id(),
                 'last_replier_url' => $oProfileLast->getUrl(),
                 'last_replier_title' => $oProfileLast->getDisplayName(),
+                'last_replier_title_attr' => bx_html_attribute($oProfileLast->getDisplayName()),
                 'last_replier_thumb_url' => $oProfileLast->getThumb(),
             );
         }

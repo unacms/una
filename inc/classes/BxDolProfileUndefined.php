@@ -102,6 +102,13 @@ class BxDolProfileUndefined extends BxDol implements iBxDolSingleton, iBxDolProf
     }
 
     /**
+     * Get profile edit url
+     */
+    public function getEditUrl() {
+        return '';
+    }
+
+    /**
      * Check if profile is active
      */
     public function isActive() {

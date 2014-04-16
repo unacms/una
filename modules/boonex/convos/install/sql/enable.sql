@@ -114,6 +114,12 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 ('sys_account_notifications', 'bx_convos', 'notifications-convos', '_bx_cnv_menu_item_title_system_convos', '_bx_cnv_menu_item_title_convos', 'modules/?r=convos/folder/1', '', '', 'envelope col-red1', 'a:2:{s:6:"module";s:9:"bx_convos";s:6:"method";s:23:"get_unread_messages_num";}', '', 2147483646, 1, 0, 2);
 
 
+-- MENU: profile stats
+
+INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
+('sys_profile_stats', 'bx_convos', 'profile-stats-unread-messages', '_bx_cnv_menu_item_title_system_unread_messages', '_bx_cnv_menu_item_title_unread_messages', 'modules/?r=convos/folder/1', '', '', 'envelope col-red1', 'a:2:{s:6:"module";s:9:"bx_convos";s:6:"method";s:23:"get_unread_messages_num";}', '', 2147483646, 1, 0, 2);
+
+
 -- GRID
 
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_mode`, `sorting_fields`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES

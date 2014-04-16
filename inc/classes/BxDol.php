@@ -55,6 +55,7 @@ interface iBxDolProfile {
     public function getAvatar();
     public function getThumb();
     public function getIcon();
+    public function getEditUrl();
     public function isActive();
 }
 
@@ -68,6 +69,7 @@ interface iBxDolProfileService {
     public function serviceProfileIcon ($iContentId);
     public function serviceProfileName ($iContentId);
     public function serviceProfileUrl ($iContentId);
+    public function serviceProfileEditUrl ($iContentId);
     public function serviceProfilesSearch ($sTerm, $iLimit);
 }
 

@@ -27,6 +27,11 @@ class BxBaseServices extends BxDol implements iBxDolProfileService {
         return $this->_serviceProfileFunc('getAvatar', $iContentId);
     }
 
+    public function serviceProfileEditUrl ($iContentId) {
+        bx_import('BxDolPermalinks');
+        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=account-settings-info');
+    }
+
     public function serviceProfileThumb ($iContentId) {
         return $this->_serviceProfileFunc('getThumb', $iContentId);
     }

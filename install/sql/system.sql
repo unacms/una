@@ -2796,7 +2796,8 @@ INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `templa
 ('sys_cmts_item_manage', '_sys_menu_title_cmts_item_manage', 'sys_cmts_item_manage', 'system', 6, 0, 1, 'BxTemplCmtsMenu', ''),
 ('sys_cmts_item_actions', '_sys_menu_title_cmts_item_actions', 'sys_cmts_item_actions', 'system', 10, 0, 1, 'BxTemplCmtsMenu', ''),
 ('sys_account_popup', '_sys_menu_title_account_popup', '', 'system', 12, 0, 1, 'BxTemplMenuAccountPopup', ''),
-('sys_account_notifications', '_sys_menu_title_account_notifications', 'sys_account_notifications', 'system', 13, 0, 1, 'BxTemplMenuAccountNotifications', '');
+('sys_account_notifications', '_sys_menu_title_account_notifications', 'sys_account_notifications', 'system', 13, 0, 1, 'BxTemplMenuAccountNotifications', ''),
+('sys_profile_stats', '_sys_menu_title_profile_stats', 'sys_profile_stats', 'system', 6, 0, 1, 'BxTemplMenuProfileStats', '');
 
 CREATE TABLE IF NOT EXISTS `sys_menu_sets` (
   `set_name` varchar(32) NOT NULL,
@@ -2816,6 +2817,7 @@ INSERT INTO `sys_menu_sets` (`set_name`, `module`, `title`, `deletable`) VALUES
 ('sys_add_content_links', 'system', '_sys_menu_set_title_add_content', 0),
 ('sys_account_settings', 'system', '_sys_menu_set_title_account_settings', 0),
 ('sys_profiles_create', 'system', '_sys_menu_set_title_profile_create_links', 0),
+('sys_profile_stats', 'system', '_sys_menu_set_title_profile_stats', 0),
 ('sys_cmts_item_manage', 'system', '_sys_menu_set_title_cmts_item_manage', 0),
 ('sys_cmts_item_actions', 'system', '_sys_menu_set_title_cmts_item_actions', 0);
 
@@ -3289,6 +3291,8 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 ('sys_home', 1, 'system', '_sys_page_block_title_login', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:10:"login_form";s:6:"params";a:1:{i:0;s:12:"no_join_text";}s:5:"class";s:17:"TemplServiceLogin";}', 0, 1, 1),
 
 ('sys_about', 1, 'system', '_sys_page_block_title_about', 11, 2147483647, 'lang', '_sys_page_lang_block_about', 0, 1, 1),
+
+('sys_dashboard', 2, 'system', '_sys_page_block_title_profile_stats', 13, 2147483646, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:13:"profile_stats";s:6:"params";a:0:{}s:5:"class";s:20:"TemplServiceProfiles";}', 0, 1, 0),
 
 ('sys_create_account', 1, 'system', '_sys_page_block_title_create_account', 11, 2147483647, 'service', 'a:4:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:19:\"create_account_form\";s:6:\"params\";a:0:{}s:5:\"class\";s:19:\"TemplServiceAccount\";}', 0, 1, 1),
 

@@ -204,6 +204,14 @@ class BxDolProfile extends BxDol implements iBxDolProfile {
     }
 
     /**
+     * get profile edit page url
+     */
+    public function getEditUrl($iProfileId = 0) {
+        $aInfo = $this->getInfo($iProfileId);
+        return BxDolService::call($aInfo['type'], 'profile_edit_url', array($aInfo['content_id']));
+    }
+
+    /**
      * Delete profile.
      * @param $ID - optional profile id to delete
      * @param $bForceDelete - force deletetion is case of account profile deletion

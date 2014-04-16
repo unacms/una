@@ -46,6 +46,11 @@ class BxPersonsModule extends BxDolModule implements iBxDolProfileService {
         return $this->_serviceTemplateFunc('urlAvatar', $iContentId);
     }
 
+    public function serviceProfileEditUrl ($iContentId) {
+        bx_import('BxDolPermalinks');
+        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=edit-persons-profile&id=' . $iContentId);
+    }
+
     public function serviceProfileThumb ($iContentId) {
         return $this->_serviceTemplateFunc('thumb', $iContentId);
     }
