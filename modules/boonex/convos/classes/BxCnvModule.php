@@ -143,6 +143,7 @@ class BxCnvModule extends BxBaseModTextModule
      */
     public function actionFolder ($iFolderId) 
     {
+        // TODO: add to page builder
         bx_import('BxDolGrid');
         $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->CNF['OBJECT_GRID']);
         if (!$oGrid){
@@ -186,6 +187,16 @@ class BxCnvModule extends BxBaseModTextModule
         echo(json_encode($a));
     }
 
+    public function serviceMessagesPreviews ($iProfileId = 0)
+    {
+        if (!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+
+        $a = $this->_oDb->getMessagesPreviews($iProfileId);
+
+        return $this->_oTemplate->getMessagesPreviews($a);
+    }
+
     /**
      * Get number of unread messages for spme profile
      * @param $iProfileId - profile to get unread messages for, if omitted then currently logged is profile is used
@@ -202,7 +213,7 @@ class BxCnvModule extends BxBaseModTextModule
     /**
      * Update last comment time and author
      */
-    public function serviceTriggerCommentPost ($iContentId, $iProfileId, $iTimestamp = 0) 
+    public function serviceTriggerCommentPost ($iContentId, $iProfileId, $iCommentId, $iTimestamp = 0) 
     {
         if (!(int)$iContentId)
             return false;
@@ -216,7 +227,7 @@ class BxCnvModule extends BxBaseModTextModule
         if ($iProfileId == bx_get_logged_profile_id())
             $this->_oDb->updateReadComments($iProfileId, $aContentInfo[$this->_oConfig->CNF['FIELD_ID']], $aContentInfo[$this->_oConfig->CNF['FIELD_COMMENTS']]);
 
-        return $this->_oDb->updateLastCommentTimeProfile((int)$iContentId, (int)$iProfileId, $iTimestamp);
+        return $this->_oDb->updateLastCommentTimeProfile((int)$iContentId, (int)$iProfileId, (int)$iCommentId, $iTimestamp);
     }
 
     /**

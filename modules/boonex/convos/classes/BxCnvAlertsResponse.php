@@ -28,7 +28,7 @@ class BxCnvAlertsResponse extends BxDolAlertsResponse
 
             switch ($oAlert->sAction) {
                 case 'commentPost':
-                    BxDolService::call($this->MODULE, 'trigger_comment_post', array($oAlert->iObject, $oAlert->iSender));
+                    BxDolService::call($this->MODULE, 'trigger_comment_post', array($oAlert->iObject, $oAlert->aExtras['comment_author_id'], $oAlert->aExtras['comment_id']));
                     break;
             }
 

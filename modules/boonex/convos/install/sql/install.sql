@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS `bx_convos_conversations` (
   `comments` int(11) NOT NULL default '0',
   `last_reply_timestamp` int(11) NOT NULL,
   `last_reply_profile_id` int(10) unsigned NOT NULL,
+  `last_reply_comment_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `last_reply_timestamp` (`last_reply_timestamp`)
 );

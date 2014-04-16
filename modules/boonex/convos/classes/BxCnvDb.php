@@ -51,9 +51,9 @@ class BxCnvDb extends BxBaseModTextDb
         return $this->query($sQuery);
     }
 
-    public function updateLastCommentTimeProfile($iConversationId, $iProfileId, $iTimestamp)
+    public function updateLastCommentTimeProfile($iConversationId, $iProfileId, $iCommentId, $iTimestamp)
     {
-        $sQuery = $this->prepare("UPDATE `" . $this->getPrefix() . "conversations` SET `last_reply_profile_id` = ?, `last_reply_timestamp` = ? WHERE `id` = ?", $iProfileId, $iTimestamp, $iConversationId);
+        $sQuery = $this->prepare("UPDATE `" . $this->getPrefix() . "conversations` SET `last_reply_profile_id` = ?, `last_reply_timestamp` = ?, `last_reply_comment_id` = ? WHERE `id` = ?", $iProfileId, $iTimestamp, $iCommentId, $iConversationId);
         return $this->query($sQuery);
     }
 
@@ -87,13 +87,25 @@ class BxCnvDb extends BxBaseModTextDb
         return true;
     }
 
-    public function getUnreadMessagesNum ($iProfileId)
+    public function getUnreadMessagesNum ($iProfileId, $iFolderId = BX_CNV_FOLDER_INBOX)
     {
         $sQuery = $this->prepare("SELECT SUM(`c`.`comments` - `f`.`read_comments`) 
             FROM `" . $this->getPrefix() . "conv2folder` as `f` 
             INNER JOIN `" . $this->getPrefix() . "conversations` AS `c` ON (`c`.`id` = `f`.`conv_id`)
-            WHERE `f`.`collaborator` = ? AND `f`.`folder_id` =1", $iProfileId);
+            WHERE `f`.`collaborator` = ? AND `f`.`folder_id` = ?", $iProfileId, $iFolderId);
         return $this->getOne($sQuery);
+    }
+
+    public function getMessagesPreviews ($iProfileId, $iStart = 0, $iLimit = 4, $iFolderId = BX_CNV_FOLDER_INBOX)
+    {
+        $sQuery = $this->prepare("SELECT `c`.`id`, `c`.`text`, `c`.`author`, `cmts`.`cmt_text`, `c`.`last_reply_profile_id`, `c`.`comments`, (`c`.`comments` - `f`.`read_comments`) AS `unread_messages`, `last_reply_timestamp`
+            FROM `" . $this->getPrefix() . "conv2folder` as `f` 
+            INNER JOIN `" . $this->getPrefix() . "conversations` AS `c` ON (`c`.`id` = `f`.`conv_id`)
+            LEFT JOIN `" . $this->getPrefix() . "cmts` AS `cmts` ON (`cmts`.`cmt_id` = `c`.`last_reply_comment_id`)
+            WHERE `f`.`collaborator` = ? AND `f`.`folder_id` = ?
+            ORDER BY `c`.`last_reply_timestamp` DESC
+            LIMIT ?, ?", $iProfileId, $iFolderId, $iStart, $iLimit);
+        return $this->getAll($sQuery);
     }
 }
 

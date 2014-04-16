@@ -42,6 +42,7 @@
     <string name="_bx_cnv_page_title_sys_folder"><![CDATA[Convos in folder]]></string>
     <string name="_bx_cnv_page_title_folder"><![CDATA[Folder: {folder}]]></string>
     <string name="_bx_cnv_page_block_title_folder"><![CDATA[Folder: {folder}]]></string>
+    <string name="_bx_cnv_page_block_title_convos"><![CDATA[Convos]]></string>
 
     <string name="_bx_cnv_menu_set_title_view_entry"><![CDATA[View convo]]></string>
     <string name="_bx_cnv_menu_title_view_entry"><![CDATA[View convo]]></string>
@@ -91,5 +92,10 @@
 
     <string name="_bx_cnv_author_desc"><![CDATA[{0} (updated {1})]]></string>
     <string name="_bx_cnv_x_new_messages"><![CDATA[<b>{0} ({1} new)</b>]]></string>
+
+    <string name="_bx_cnv_x_messages"><![CDATA[{0} messages]]></string>
+    <string name="_bx_cnv_x_messages_x_new"><![CDATA[{0} messages <b>{1} new</b>]]></string>
+
+    <string name="_bx_cnv_see_all"><![CDATA[See all convos...]]></string>
 
 </resources>

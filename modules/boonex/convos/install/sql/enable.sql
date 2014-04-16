@@ -30,6 +30,11 @@ INSERT INTO `sys_objects_transcoder_images` (`object`, `storage_object`, `source
 INSERT INTO `sys_transcoder_images_filters` (`transcoder_object`, `filter`, `filter_params`, `order`) VALUES 
 ('bx_convos_preview', 'Resize', 'a:4:{s:1:"w";s:3:"300";s:1:"h";s:3:"200";s:11:"crop_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0');
 
+-- PAGE: dash
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('sys_dashboard', 3, 'bx_convos', '_bx_cnv_page_block_title_convos', 11, 2147483646, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_convos\";s:6:\"method\";s:17:\"messages_previews\";}', 0, 1, 1, 0);
+
 
 -- PAGE: create entry
 
