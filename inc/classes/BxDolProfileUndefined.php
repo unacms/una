@@ -84,21 +84,21 @@ class BxDolProfileUndefined extends BxDol implements iBxDolSingleton, iBxDolProf
      * Get profile avatar
      */
     public function getAvatar() {
-        return '';
+        return BxDolTemplate::getInstance()->getImageUrl('account-avatar.png');
     }
 
     /**
      * Get profile thumb
      */
     public function getThumb() {
-        return '';
+        return BxDolTemplate::getInstance()->getImageUrl('account-thumb.png');
     }
 
     /**
      * Get profile icon
      */
     public function getIcon() {
-        return '';
+        return BxDolTemplate::getInstance()->getImageUrl('account-icon.png');
     }
 
     /**

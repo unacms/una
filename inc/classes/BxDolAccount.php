@@ -171,21 +171,21 @@ class BxDolAccount extends BxDol {
      * Get avatar picture url
      */
     public function getAvatar($iAccountId = false) {
-        return '';
+        return BxDolTemplate::getInstance()->getImageUrl('account-avatar.png');
     }
 
     /**
      * Get thumb picture url
      */
     public function getThumb($iAccountId = false) {
-        return '';
+        return BxDolTemplate::getInstance()->getImageUrl('account-thumb.png');
     }
 
     /**
      * Get icon picture url
      */
     public function getIcon($iAccountId = false) {
-        return '';
+        return BxDolTemplate::getInstance()->getImageUrl('account-icon.png');
     }
 
     /**
