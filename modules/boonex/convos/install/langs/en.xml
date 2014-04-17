@@ -94,10 +94,10 @@
 
     <string name="_bx_cnv_author_desc"><![CDATA[{0} (updated {1})]]></string>
     <string name="_bx_cnv_x_new_messages"><![CDATA[<b>{0} ({1} new)</b>]]></string>
+    <string name="_bx_cnv_x_date_by_x_replier"><![CDATA[{0} by {1}]]></string>
 
-    <string name="_bx_cnv_x_messages"><![CDATA[{0} messages]]></string>
-    <string name="_bx_cnv_x_messages_x_new"><![CDATA[{0} messages <b>{1} new</b>]]></string>
-
+    <string name="_bx_cnv_read_by_all"><![CDATA[Read by all]]></string>
     <string name="_bx_cnv_see_all"><![CDATA[See all convos...]]></string>
+    <string name="_bx_cnv_you_are_last_replier"><![CDATA[You are last replier]]></string>
 
 </resources>

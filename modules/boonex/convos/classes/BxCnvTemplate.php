@@ -133,6 +133,15 @@ class BxCnvTemplate extends BxBaseModTextTemplate
         );
         foreach ($a as $r) {
 
+            $bReadByAll = true;
+            $aCollaborators = $oModule->_oDb->getCollaborators($r['id']);
+            foreach ($aCollaborators as $iReadComments) {
+                if ($r['comments'] - $iReadComments) {
+                    $bReadByAll = false;
+                    break;
+                }
+            }
+
             $oProfileAuthor = BxDolProfile::getInstance($r['author']);
             if (!$oProfileAuthor)
                 $oProfileAuthor = BxDolProfileUndefined::getInstance();
@@ -141,18 +150,32 @@ class BxCnvTemplate extends BxBaseModTextTemplate
             if (!$oProfileLast)
                 $oProfileLast = BxDolProfileUndefined::getInstance();
 
-            $sText = strmaxtextlen($r['text'], 40);
-            $sTextCmt = strmaxtextlen($r['cmt_text'], 40);
+            $sText = strmaxtextlen($r['text'], 90);
+            $sTextCmt = strmaxtextlen($r['cmt_text'], 50);
 
             $aVars['bx_repeat:messages'][] = array (
                 'id' => $r['id'],
                 'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $oModule->_oConfig->CNF['URI_VIEW_ENTRY'] . '&id=' . $r['id']),
                 'text' => $sText ? $sText : $oProfileAuthor->getDisplayName(),
-                'cmt_text' => $sTextCmt ? $sTextCmt : $oProfileLast->getDisplayName(),
+                'cmt_text' => $sTextCmt,
                 'unread_messages' => $r['unread_messages'],
-                'last_reply_time' => bx_time_js($r['last_reply_timestamp'], BX_FORMAT_DATE),
+                'last_reply_time_and_replier' => _t('_bx_cnv_x_date_by_x_replier', bx_time_js($r['last_reply_timestamp'], BX_FORMAT_DATE), $oProfileLast->getDisplayName()),
                 'font_weight' => $r['unread_messages'] > 0 ? 'bold' : 'normal',
-                'desc' => $r['comments'] > 1 ? ($r['unread_messages'] > 0 ? _t('_bx_cnv_x_messages_x_new', $r['comments'] + 1, $r['unread_messages']) : _t('_bx_cnv_x_messages', $r['comments'] + 1)) : '',
+
+                'bx_if:unread_messages' => array (
+                    'condition' => $r['unread_messages'] > 0,
+                    'content' => array (
+                        'unread_messages' => $r['unread_messages'],
+                    ),
+                ),
+                'bx_if:viewer_is_last_replier' => array (
+                    'condition' => !$bReadByAll && $oProfileLast->id() == bx_get_logged_profile_id(),
+                    'content' => array (),
+                ),
+                'bx_if:is_read_by_all' => array (
+                    'condition' => $bReadByAll,
+                    'content' => array (),
+                ),
 
                 'author_id' => $oProfileAuthor->id(),
                 'author_url' => $oProfileAuthor->getUrl(),

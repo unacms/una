@@ -1,11 +1,17 @@
 
 <bx_repeat:messages>
-    <div class="bx-def-font-h3 bx-def-margin-top-auto"><a href="__url__" style="font-weight:__font_weight__;">__text__</a></div>
-    <div class="bx-def-margin-thd-top bx-def-font-middle bx-def-font-grayed">__desc__</div>
+
+<div class="bx-cnv-preview bx-def-margin-top-auto">
+    <div class="bx-cnv-title bx-def-font-h3"><a href="__url__" style="font-weight:__font_weight__;">__text__</a></div>
+    <bx_if:unread_messages><div class="bx-def-unit-alert-middle bg-col-blue2-dark">__unread_messages__</div></bx_if:unread_messages>
+    <bx_if:viewer_is_last_replier><div class="bx-def-unit-alert-middle"><i title="<bx_text_attribute:_bx_cnv_you_are_last_replier />" class="sys-icon reply bx-def-font-grayed"></i></div></bx_if:viewer_is_last_replier>
+    <bx_if:is_read_by_all><div class="bx-def-unit-alert-middle"><i title="<bx_text_attribute:_bx_cnv_read_by_all />" class="sys-icon check bx-def-font-grayed"></i></div></bx_if:is_read_by_all>
+
     <div class="bx-def-unit bx-def-margin-thd-top">
-        <a href="__last_replier_url__" title="__last_replier_title_attr__"><img class="bx-def-icon bx-def-icon-size" src="__last_replier_thumb_url__" /></a><div class="bx-def-unit-info bx-def-thumb-size-max-height bx-def-padding-sec-left"><div class="bx-def-font-middle" style="line-height:0.9em;">__cmt_text__</div><div class="bx-def-font-grayed bx-def-font-small">__last_reply_time__</div>
-        </div>
+        <a href="__last_replier_url__" title="__last_replier_title_attr__"><img class="bx-def-icon bx-def-icon-size" src="__last_replier_thumb_url__" /></a><div class="bx-def-unit-info bx-def-thumb-size-max-height bx-def-padding-sec-left bx-def-font-middle">__cmt_text__<div class="bx-def-font-grayed bx-def-font-small">__last_reply_time_and_replier__</div></div>
     </div>
+</div>
+
 </bx_repeat:messages>
 
 <div class="bx-def-margin-top"><b><a href="__see_all_url__"><bx_text:_bx_cnv_see_all /></a></b></div>
