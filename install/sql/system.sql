@@ -2791,7 +2791,8 @@ INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `templa
 ('sys_toolbar_member', '_sys_menu_title_toolbar_member', 'sys_toolbar_member', 'system', 5, 0, 1, 'BxTemplMenuToolbar', ''),
 ('sys_account', '_sys_menu_title_account', 'sys_account_links', 'system', 3, 0, 1, '', ''),
 ('sys_add_content', '_sys_menu_title_add_content', 'sys_add_content_links', 'system', 4, 0, 1, '', ''),
-('sys_account_settings', '_sys_menu_title_account_settings', 'sys_account_settings', 'system', 6, 0, 1, '', ''),
+('sys_account_settings_submenu', '_sys_menu_title_account_settings', 'sys_account_settings', 'system', 8, 0, 1, '', ''),
+('sys_account_settings_more', '_sys_menu_title_account_settings_more', 'sys_account_settings_more', 'system', 4, 0, 1, '', ''),
 ('sys_profiles_create', '_sys_menu_title_profiles_create', 'sys_profiles_create', 'system', 4, 0, 1, '', ''),
 ('sys_cmts_item_manage', '_sys_menu_title_cmts_item_manage', 'sys_cmts_item_manage', 'system', 6, 0, 1, 'BxTemplCmtsMenu', ''),
 ('sys_cmts_item_actions', '_sys_menu_title_cmts_item_actions', 'sys_cmts_item_actions', 'system', 10, 0, 1, 'BxTemplCmtsMenu', ''),
@@ -2816,6 +2817,7 @@ INSERT INTO `sys_menu_sets` (`set_name`, `module`, `title`, `deletable`) VALUES
 ('sys_account_notifications', 'system', '_sys_menu_set_title_account_notifications', 0),
 ('sys_add_content_links', 'system', '_sys_menu_set_title_add_content', 0),
 ('sys_account_settings', 'system', '_sys_menu_set_title_account_settings', 0),
+('sys_account_settings_more', 'system', '_sys_menu_set_title_account_settings_more', 0),
 ('sys_profiles_create', 'system', '_sys_menu_set_title_profile_create_links', 0),
 ('sys_profile_stats', 'system', '_sys_menu_set_title_profile_stats', 0),
 ('sys_cmts_item_manage', 'system', '_sys_menu_set_title_cmts_item_manage', 0),
@@ -2868,11 +2870,15 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 
 -- account settings menu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
-('sys_account_settings', 'system', 'account-settings-profile-context', '_sys_menu_item_title_system_account_profile_context', '_sys_menu_item_title_account_profile_context', 'page.php?i=account-profile-switcher#top', '', '', 'user', '', 2147483646, 1, 1, 1),
-('sys_account_settings', 'system', 'account-settings-info', '_sys_menu_item_title_system_account_settings_info', '_sys_menu_item_title_account_settings_info', 'page.php?i=account-settings-info#top', '', '', 'info-circle', '', 2147483646, 1, 1, 2),
-('sys_account_settings', 'system', 'account-settings-email', '_sys_menu_item_title_system_account_settings_email', '_sys_menu_item_title_account_settings_email', 'page.php?i=account-settings-email#top', '', '', 'envelope', '', 2147483646, 1, 1, 3),
-('sys_account_settings', 'system', 'account-settings-password', '_sys_menu_item_title_system_account_settings_pwd', '_sys_menu_item_title_account_settings_pwd', 'page.php?i=account-settings-password#top', '', '', 'key', '', 2147483646, 1, 1, 4),
-('sys_account_settings', 'system', 'account-settings-delete', '_sys_menu_item_title_system_account_settings_delete', '_sys_menu_item_title_account_settings_delete', 'page.php?i=account-settings-delete#top', '', '', 'remove', '', 2147483646, 1, 1, 5);
+('sys_account_settings', 'system', 'account-settings-profile-context', '_sys_menu_item_title_system_account_profile_context', '_sys_menu_item_title_account_profile_context', 'page.php?i=account-profile-switcher', '', '', 'user', '', 2147483646, 1, 1, 1),
+('sys_account_settings', 'system', 'account-settings-info', '_sys_menu_item_title_system_account_settings_info', '_sys_menu_item_title_account_settings_info', 'page.php?i=account-settings-info', '', '', 'info-circle', '', 2147483646, 1, 1, 2),
+('sys_account_settings', 'system', 'account-settings-email', '_sys_menu_item_title_system_account_settings_email', '_sys_menu_item_title_account_settings_email', 'page.php?i=account-settings-email', '', '', 'envelope', '', 2147483646, 1, 1, 3),
+('sys_account_settings', 'system', 'account-settings-password', '_sys_menu_item_title_system_account_settings_pwd', '_sys_menu_item_title_account_settings_pwd', 'page.php?i=account-settings-password', '', '', 'key', '', 2147483646, 1, 1, 4),
+('sys_account_settings', 'system', 'account-settings-more', '_sys_menu_item_title_system_more', '_sys_menu_item_title_more', 'javascript:void(0);', 'bx_menu_popup(''sys_account_settings_more'', this);', '', '', '', 2147483647, 1, 1, 5);
+
+-- account settings menu more
+INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
+('sys_account_settings_more', 'system', 'account-settings-delete', '_sys_menu_item_title_system_account_settings_delete', '_sys_menu_item_title_account_settings_delete', 'page.php?i=account-settings-delete', '', '', 'remove', '', 2147483646, 1, 1, 1);
 
 -- comment manage menu
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
@@ -3206,11 +3212,11 @@ INSERT INTO `sys_objects_page` (`object`, `uri`, `title_system`, `title`, `modul
 ('sys_login', 'login', '_sys_page_title_system_login', '_sys_page_title_login', 'system', 5, 2147483647, 1, 'page.php?i=login', '', '', '', 0, 1, 0, '', ''),
 ('sys_forgot_password', 'forgot-password', '_sys_page_title_system_forgot_password', '_sys_page_title_forgot_password', 'system', 5, 2147483647, 1, 'page.php?i=forgot-password', '', '', '', 0, 1, 0, '', ''),
 ('sys_confirm_email', 'confirm-email', '_sys_page_title_system_confirm_email', '_sys_page_title_confirm_email', 'system', 5, 2147483647, 1, 'page.php?i=confirm-email', '', '', '', 0, 1, 0, '', ''),
-('sys_account_settings_email', 'account-settings-email', '_sys_page_title_system_account_settings_email', '_sys_page_title_account_settings_email', 'system', 1, 2147483647, 1, 'member.php', '', '', '', 0, 1, 0, 'BxTemplPageAccount', ''),
-('sys_account_settings_pwd', 'account-settings-password', '_sys_page_title_system_account_settings_pwd', '_sys_page_title_account_settings_pwd', 'system', 1, 2147483647, 1, 'page.php?i=account-settings-pwd', '', '', '', 0, 1, 0, 'BxTemplPageAccount', ''),
-('sys_account_settings_info', 'account-settings-info', '_sys_page_title_system_account_settings_info', '_sys_page_title_account_settings_info', 'system', 1, 2147483647, 1, 'page.php?i=account-settings-info', '', '', '', 0, 1, 0, 'BxTemplPageAccount', ''),
-('sys_account_settings_delete', 'account-settings-delete', '_sys_page_title_system_account_settings_delete', '_sys_page_title_account_settings_delete', 'system', 1, 2147483647, 1, 'page.php?i=account-settings-delete', '', '', '', 0, 1, 0, 'BxTemplPageAccount', ''),
-('sys_account_profile_switcher', 'account-profile-switcher', '_sys_page_title_system_account_profile_switcher', '_sys_page_title_account_profile_switcher', 'system', 1, 2147483647, 1, 'page.php?i=account-profile-switcher', '', '', '', 0, 1, 0, 'BxTemplPageAccount', ''),
+('sys_account_settings_email', 'account-settings-email', '_sys_page_title_system_account_settings_email', '_sys_page_title_account_settings_email', 'system', 5, 2147483647, 1, 'member.php', '', '', '', 0, 1, 0, 'BxTemplPageAccount', ''),
+('sys_account_settings_pwd', 'account-settings-password', '_sys_page_title_system_account_settings_pwd', '_sys_page_title_account_settings_pwd', 'system', 5, 2147483647, 1, 'page.php?i=account-settings-pwd', '', '', '', 0, 1, 0, 'BxTemplPageAccount', ''),
+('sys_account_settings_info', 'account-settings-info', '_sys_page_title_system_account_settings_info', '_sys_page_title_account_settings_info', 'system', 5, 2147483647, 1, 'page.php?i=account-settings-info', '', '', '', 0, 1, 0, 'BxTemplPageAccount', ''),
+('sys_account_settings_delete', 'account-settings-delete', '_sys_page_title_system_account_settings_delete', '_sys_page_title_account_settings_delete', 'system', 5, 2147483647, 1, 'page.php?i=account-settings-delete', '', '', '', 0, 1, 0, 'BxTemplPageAccount', ''),
+('sys_account_profile_switcher', 'account-profile-switcher', '_sys_page_title_system_account_profile_switcher', '_sys_page_title_account_profile_switcher', 'system', 5, 2147483647, 1, 'page.php?i=account-profile-switcher', '', '', '', 0, 1, 0, 'BxTemplPageAccount', ''),
 ('sys_unsubscribe_notifications', 'unsubscribe-notifications', '_sys_page_title_system_unsubscribe_notifications', '_sys_page_title_unsubscribe_notifications', 'system', 5, 2147483647, 1, 'page.php?i=unsubscribe-notifications', '', '', '', 0, 1, 0, '', ''),
 ('sys_unsubscribe_news', 'unsubscribe-news', '_sys_page_title_system_unsubscribe_news', '_sys_page_title_unsubscribe_news', 'system', 5, 2147483647, 1, 'page.php?i=unsubscribe-news', '', '', '', 0, 1, 0, '', '');
 
@@ -3302,20 +3308,15 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 
 ('sys_confirm_email', 1, 'system', '_sys_page_block_title_confirm_email', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:18:"email_confirmation";s:6:"params";a:0:{}s:5:"class";s:19:"TemplServiceAccount";}', 0, 1, 1),
 
-('sys_account_settings_email', 2, 'system', '_sys_page_block_title_account_settings_email', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:22:"account_settings_email";s:6:"params";a:0:{}s:5:"class";s:19:"TemplServiceAccount";}', 0, 1, 1),
-('sys_account_settings_email', 1, 'system', '_sys_page_block_title_account_settings_menu', 13, 2147483647, 'menu', 'sys_account_settings', 0, 1, 1),
+('sys_account_settings_email', 1, 'system', '_sys_page_block_title_account_settings_email', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:22:"account_settings_email";s:6:"params";a:0:{}s:5:"class";s:19:"TemplServiceAccount";}', 0, 1, 1),
 
-('sys_account_settings_pwd', 2, 'system', '_sys_page_block_title_account_settings_pwd', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:25:"account_settings_password";s:6:"params";a:0:{}s:5:"class";s:19:"TemplServiceAccount";}', 0, 1, 1),
-('sys_account_settings_pwd', 1, 'system', '_sys_page_block_title_account_settings_menu', 13, 2147483647, 'menu', 'sys_account_settings', 0, 1, 1),
+('sys_account_settings_pwd', 1, 'system', '_sys_page_block_title_account_settings_pwd', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:25:"account_settings_password";s:6:"params";a:0:{}s:5:"class";s:19:"TemplServiceAccount";}', 0, 1, 1),
 
-('sys_account_settings_info', 2, 'system', '_sys_page_block_title_account_settings_info', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:21:"account_settings_info";s:6:"params";a:0:{}s:5:"class";s:19:"TemplServiceAccount";}', 0, 1, 1),
-('sys_account_settings_info', 1, 'system', '_sys_page_block_title_account_settings_menu', 13, 2147483647, 'menu', 'sys_account_settings', 0, 1, 1),
+('sys_account_settings_info', 1, 'system', '_sys_page_block_title_account_settings_info', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:21:"account_settings_info";s:6:"params";a:0:{}s:5:"class";s:19:"TemplServiceAccount";}', 0, 1, 1),
 
-('sys_account_settings_delete', 2, 'system', '_sys_page_block_title_account_settings_delete', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:28:"account_settings_del_account";s:6:"params";a:0:{}s:5:"class";s:19:"TemplServiceAccount";}', 0, 1, 1),
-('sys_account_settings_delete', 1, 'system', '_sys_page_block_title_account_settings_menu', 13, 2147483647, 'menu', 'sys_account_settings', 0, 1, 1),
+('sys_account_settings_delete', 1, 'system', '_sys_page_block_title_account_settings_delete', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:28:"account_settings_del_account";s:6:"params";a:0:{}s:5:"class";s:19:"TemplServiceAccount";}', 0, 1, 1),
 
-('sys_account_profile_switcher', 1, 'system', '_sys_page_block_title_account_settings_menu', 13, 2147483647, 'menu', 'sys_account_settings', 1, 1, 1),
-('sys_account_profile_switcher', 2, 'system', '_sys_page_block_title_account_profile_switcher', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:24:"account_profile_switcher";s:6:"params";a:0:{}s:5:"class";s:20:"TemplServiceProfiles";}', 0, 1, 1),
+('sys_account_profile_switcher', 1, 'system', '_sys_page_block_title_account_profile_switcher', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:24:"account_profile_switcher";s:6:"params";a:0:{}s:5:"class";s:20:"TemplServiceProfiles";}', 0, 1, 1),
 
 ('sys_unsubscribe_notifications', 1, 'system', '_sys_page_block_title_unsubscribe_notifications', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:25:"unsubscribe_notifications";s:6:"params";a:0:{}s:5:"class";s:19:"TemplServiceAccount";}', 0, 1, 1),
 

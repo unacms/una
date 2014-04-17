@@ -1511,7 +1511,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_account_input_email_error"><![CDATA[Email is not valid]]></string>
 	<string name="_sys_form_account_input_email_uniq_error"><![CDATA[This email address is already registered. Please, use <a href="{0}">Forgot password</a> to restore access to your account.]]></string>
 	<string name="_sys_form_account_input_email_uniq_error_loggedin"><![CDATA[This email is already used by someone.]]></string>
-	<string name="_sys_form_account_input_name"><![CDATA[Name]]></string>
+	<string name="_sys_form_account_input_name"><![CDATA[Account Name]]></string>
 	<string name="_sys_form_account_input_name_error"><![CDATA[This is a required field.]]></string>
 	<string name="_sys_form_account_input_password"><![CDATA[New Password]]></string>
 	<string name="_sys_form_account_input_password_confirm"><![CDATA[Confirm New Password]]></string>
@@ -1564,7 +1564,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_login_input_caption_system_do_submit"><![CDATA[Submit]]></string>
 	<string name="_sys_form_login_input_caption_system_email"><![CDATA[Email]]></string>
 	<string name="_sys_form_login_input_caption_system_id"><![CDATA[ID]]></string>
-	<string name="_sys_form_login_input_caption_system_name"><![CDATA[Name]]></string>
+	<string name="_sys_form_login_input_caption_system_name"><![CDATA[Account Name]]></string>
 	<string name="_sys_form_login_input_caption_system_password"><![CDATA[Password]]></string>
 	<string name="_sys_form_login_input_caption_system_password_confirm"><![CDATA[Confirm Password]]></string>
 	<string name="_sys_form_login_input_caption_system_password_current"><![CDATA[Current Password]]></string>
@@ -1680,12 +1680,12 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_loading"><![CDATA[Loading...]]></string>
 	<string name="_sys_menu_item_title_about"><![CDATA[About]]></string>
 	<string name="_sys_menu_item_title_account_menu"><![CDATA[{member_display_name}]]></string>
-	<string name="_sys_menu_item_title_account_profile_context"><![CDATA[Switch Profile]]></string>
+	<string name="_sys_menu_item_title_account_profile_context"><![CDATA[Profiles]]></string>
 	<string name="_sys_menu_item_title_account_settings"><![CDATA[Settings]]></string>
-	<string name="_sys_menu_item_title_account_settings_delete"><![CDATA[Delete Account]]></string>
-	<string name="_sys_menu_item_title_account_settings_email"><![CDATA[Email Settings]]></string>
-	<string name="_sys_menu_item_title_account_settings_info"><![CDATA[Edit Account]]></string>
-	<string name="_sys_menu_item_title_account_settings_pwd"><![CDATA[Change Password]]></string>
+	<string name="_sys_menu_item_title_account_settings_delete"><![CDATA[Delete]]></string>
+	<string name="_sys_menu_item_title_account_settings_email"><![CDATA[Email]]></string>
+	<string name="_sys_menu_item_title_account_settings_info"><![CDATA[Account]]></string>
+	<string name="_sys_menu_item_title_account_settings_pwd"><![CDATA[Password]]></string>
 	<string name="_sys_menu_item_title_cmts_item_delete"><![CDATA[Delete]]></string>
 	<string name="_sys_menu_item_title_cmts_item_edit"><![CDATA[Edit]]></string>
 	<string name="_sys_menu_item_title_cmts_item_reply"><![CDATA[]]></string>
@@ -1693,15 +1693,16 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_item_title_dashboard"><![CDATA[Dash]]></string>
 	<string name="_sys_menu_item_title_home"><![CDATA[Home]]></string>
 	<string name="_sys_menu_item_title_logout"><![CDATA[Sign out]]></string>
+	<string name="_sys_menu_item_title_more"><![CDATA[More]]></string>
 	<string name="_sys_menu_item_title_profile"><![CDATA[Profile]]></string>
 	<string name="_sys_menu_item_title_system_about"><![CDATA[About]]></string>
 	<string name="_sys_menu_item_title_system_account_menu"><![CDATA[Account]]></string>
-	<string name="_sys_menu_item_title_system_account_profile_context"><![CDATA[Switch Profile]]></string>
+	<string name="_sys_menu_item_title_system_account_profile_context"><![CDATA[Profiles]]></string>
 	<string name="_sys_menu_item_title_system_account_settings"><![CDATA[Settings]]></string>
-	<string name="_sys_menu_item_title_system_account_settings_delete"><![CDATA[Delete Account]]></string>
-	<string name="_sys_menu_item_title_system_account_settings_email"><![CDATA[Email Settings]]></string>
-	<string name="_sys_menu_item_title_system_account_settings_info"><![CDATA[Edit Account]]></string>
-	<string name="_sys_menu_item_title_system_account_settings_pwd"><![CDATA[Change Password]]></string>
+	<string name="_sys_menu_item_title_system_account_settings_delete"><![CDATA[Delete]]></string>
+	<string name="_sys_menu_item_title_system_account_settings_email"><![CDATA[Email]]></string>
+	<string name="_sys_menu_item_title_system_account_settings_info"><![CDATA[Account]]></string>
+	<string name="_sys_menu_item_title_system_account_settings_pwd"><![CDATA[Password]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_delete"><![CDATA[Delete]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_edit"><![CDATA[Edit]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_reply"><![CDATA[Reply]]></string>
@@ -1711,9 +1712,11 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_item_title_system_login"><![CDATA[Sign in]]></string>
 	<string name="_sys_menu_item_title_system_logout"><![CDATA[Sign out]]></string>
 	<string name="_sys_menu_item_title_system_main_menu"><![CDATA[Main Menu]]></string>
+	<string name="_sys_menu_item_title_system_more"><![CDATA[More]]></string>
 	<string name="_sys_menu_item_title_system_profile"><![CDATA[Profile]]></string>
 	<string name="_sys_menu_set_title_account"><![CDATA[Account]]></string>
 	<string name="_sys_menu_set_title_account_settings"><![CDATA[Account Settings]]></string>
+	<string name="_sys_menu_set_title_account_settings_more"><![CDATA[Account Settings More]]></string>
 	<string name="_sys_menu_set_title_account_notifications"><![CDATA[Notifications]]></string>
 	<string name="_sys_menu_set_title_add_content"><![CDATA[Add Content]]></string>
 	<string name="_sys_menu_set_title_cmts_item_actions"><![CDATA[Comment Actions]]></string>
@@ -1738,6 +1741,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_template_title_account_popup"><![CDATA[Account popup]]></string>
 	<string name="_sys_menu_title_account"><![CDATA[Account Menu]]></string>
 	<string name="_sys_menu_title_account_settings"><![CDATA[Account Settings Menu]]></string>
+	<string name="_sys_menu_title_account_settings_more"><![CDATA[Account Settings More Menu]]></string>
 	<string name="_sys_menu_title_add_content"><![CDATA[Add Content Menu]]></string>
 	<string name="_sys_menu_title_cmts_item_actions"><![CDATA[Comment Actions]]></string>
 	<string name="_sys_menu_title_cmts_item_manage"><![CDATA[Manage Comment]]></string>

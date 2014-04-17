@@ -33,6 +33,18 @@ class BxBasePageAccount extends BxTemplPage {
             'profile_content_id' => $aProfileInfo ? $aProfileInfo['content_id'] : 0,
         ));
 
+        // set settings submenu
+        bx_import('BxDolMenu');
+        $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
+        if ($oMenuSubmenu) {
+            $oMenuSubmenu->setObjectSubmenu('sys_account_settings_submenu', array (
+                'title' => _t('_sys_menu_item_title_account_settings'),
+                'link' => BX_DOL_URL_ROOT . 'member.php',
+                'icon' => '',
+            ));
+        }
+
+
         // display message if profile isn't active
         if ($oProfile) {
             $sStatus = $oProfile->getStatus();

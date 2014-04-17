@@ -72,6 +72,11 @@ class BxPersonsProfileForms extends BxDolProfileForms {
         // alert
         bx_alert($this->_oModule->getName(), 'added', $iContentId);
 
+        // switch context to the created profile
+        bx_import('BxDolAccount');
+        $oAccount = BxDolAccount::getInstance();
+        $oAccount->updateProfileContext($iProfileId);
+
         // redirect 
         $this->_redirectAndExit('page.php?i=view-persons-profile&id=' . $iContentId);
     }
