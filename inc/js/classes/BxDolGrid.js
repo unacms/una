@@ -387,4 +387,8 @@ BxDolGrid.prototype._onDataReloaded = function (isSkipSearchInput) {
         this.sortable();
 
     this._bindActions(isSkipSearchInput);
+
+    this.onDataReloaded(isSkipSearchInput);
 }
+
+BxDolGrid.prototype.onDataReloaded = function (isSkipSearchInput) {}

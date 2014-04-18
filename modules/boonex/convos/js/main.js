@@ -47,6 +47,11 @@ $(document).ready(function () {
     $(window).resize(function() {
         f();
     });
+
+    BxDolGrid.prototype.onDataReloaded = function (isSkipSearchInput) {
+        f();
+    };
+
     f();
 });
 
