@@ -57,6 +57,12 @@ class BxCnvGrid extends BxTemplGrid
         return parent::_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
+    protected function _getCellHeaderWrapper ($sKey, $aField, $sHeader, $sAttr) 
+    {
+        $sHeader = '<span>' . $sHeader . '</span>';
+        return parent::_getCellHeaderWrapper ($sKey, $aField, $sHeader, $sAttr);
+    }
+
     protected function _getCellPreview ($mixedValue, $sKey, $aField, $aRow) 
     {
         return parent::_getCellDefault ('', $sKey, $aField, $aRow);

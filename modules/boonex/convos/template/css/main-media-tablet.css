@@ -5,4 +5,8 @@
     display:inline-block;
 }
 
+.bx-grid-header-collaborators span {
+    display:inline;
+}
+
 } /* @media end */

@@ -269,20 +269,24 @@ class BxBaseGrid extends BxDolGrid {
 
         $sAttr = $this->_convertAttrs(
             $aField, 'attr_head',
-            'bx-def-padding-sec-bottom bx-def-padding-sec-top', // add default classes
+            'bx-def-padding-sec-bottom bx-def-padding-sec-top bx-grid-header-' . $sKey, // add default classes
             isset($aField['width']) ? 'width:' . $aField['width'] : false // add default styles
         );
 
-        return '<th ' . $sAttr . '>' . $sHeader . '</th>';
+        return $this->_getCellHeaderWrapper ($sKey, $aField, $sHeader, $sAttr);
     }
 
     protected function _getCellHeaderCheckbox ($sKey, $aField) {
         $sAttr = $this->_convertAttrs(
             $aField, 'attr_head',
-            'bx-def-padding-sec-bottom bx-def-padding-sec-top', // add default classes
+            'bx-def-padding-sec-bottom bx-def-padding-sec-top bx-grid-header-' . $sKey, // add default classes
             isset($aField['width']) ? 'width:' . $aField['width'] : false // add default styles
         );
-        return '<th ' . $sAttr . '> <input type="checkbox" id="'. $this->_sObject . '_check_all" name="'. $this->_sObject . '_check_all" onclick="$(\'input[name='. $this->_sObject . '_check]:not([disabled])\').attr(\'checked\', this.checked)" /> </th>';
+        return $this->_getCellHeaderWrapper ($sKey, $aField, ' <input type="checkbox" id="'. $this->_sObject . '_check_all" name="'. $this->_sObject . '_check_all" onclick="$(\'input[name='. $this->_sObject . '_check]:not([disabled])\').attr(\'checked\', this.checked)" /> ', $sAttr);
+    }
+
+    protected function _getCellHeaderWrapper ($sKey, $aField, $sHeader, $sAttr) {
+        return '<th ' . $sAttr . '>' . $sHeader . '</th>';
     }
 
     /**
