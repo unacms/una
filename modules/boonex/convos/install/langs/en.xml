@@ -79,8 +79,7 @@
     <string name="_bx_cnv_folder_spam"><![CDATA[Spam]]></string>
     <string name="_bx_cnv_folder_trash"><![CDATA[Trash]]></string>
 
-    <string name="_bx_cnv_field_comments"><![CDATA[Messages]]></string>
-    <string name="_bx_cnv_field_updated"><![CDATA[Updated]]></string>
+    <string name="_bx_cnv_field_comments"><![CDATA[#]]></string>
     <string name="_bx_cnv_field_preview"><![CDATA[Preview]]></string>
     <string name="_bx_cnv_field_collaborators"><![CDATA[Participants]]></string>
 
@@ -93,7 +92,6 @@
     <string name="_bx_cnv_more"><![CDATA[{0} more]]></string>
 
     <string name="_bx_cnv_author_desc"><![CDATA[{0} (updated {1})]]></string>
-    <string name="_bx_cnv_x_new_messages"><![CDATA[<b>{0} ({1} new)</b>]]></string>
     <string name="_bx_cnv_x_date_by_x_replier"><![CDATA[{0} by {1}]]></string>
 
     <string name="_bx_cnv_read_by_all"><![CDATA[Read by all]]></string>

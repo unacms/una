@@ -41,6 +41,7 @@ class BxCnvTemplate extends BxBaseModTextTemplate
 
         // prepare template variables
         $aVarsPopup = array (
+            'float' => 'none',
             'bx_repeat:collaborators' => array(),
             'bx_if:collaborators_more' => array(
                 'condition' => false,
@@ -48,6 +49,7 @@ class BxCnvTemplate extends BxBaseModTextTemplate
             ),
         );
         $aVars = array (
+            'float' => $sFloat,
             'bx_repeat:collaborators' => array(),
             'bx_if:collaborators_more' => array(
                 'condition' => $iCollaboratorsNum > $iMaxVisible,
@@ -119,6 +121,51 @@ class BxCnvTemplate extends BxBaseModTextTemplate
         return _t('_bx_cnv_author_desc', bx_time_js($aData[$oModule->_oConfig->CNF['FIELD_ADDED']], BX_FORMAT_DATE), bx_time_js($aData['last_reply_timestamp'], BX_FORMAT_DATE));
     }
 
+    function getMessageLabel ($r, $oProfileLast = null)
+    {
+        $oModule = BxDolModule::getInstance($this->MODULE);
+
+        if (!$oProfileLast) {
+            $oProfileLast = BxDolProfile::getInstance($r['last_reply_profile_id']);
+            if (!$oProfileLast)
+                $oProfileLast = BxDolProfileUndefined::getInstance();
+        }
+
+        if (!isset($r['unread_messages']))
+            $r['unread_messages'] = $r['comments'] - $r['read_comments'];
+
+        $bReadByAll = true;
+        $aCollaborators = $oModule->_oDb->getCollaborators($r['id']);
+        foreach ($aCollaborators as $iReadComments) {
+            if ($r['comments'] - $iReadComments) {
+                $bReadByAll = false;
+                break;
+            }
+        }
+
+        if (!isset($r['unread_messages']))
+            $r['unread_messages'] = $r['comments'] - $r['read_comments'];
+
+        $aVars = array (
+            'bx_if:unread_messages' => array (
+                'condition' => $r['unread_messages'] > 0,
+                'content' => array (
+                    'unread_messages' => $r['unread_messages'],
+                ),
+            ),
+            'bx_if:viewer_is_last_replier' => array (
+                'condition' => !$bReadByAll && $oProfileLast->id() == bx_get_logged_profile_id(),
+                'content' => array (),
+            ),
+            'bx_if:is_read_by_all' => array (
+                'condition' => $bReadByAll,
+                'content' => array (),
+            ),
+        );
+
+        return $this->parseHtmlByName('message_label.html', $aVars);
+    }
+
     function getMessagesPreviews ($a)
     {
         bx_import('BxDolProfile');
@@ -132,15 +179,6 @@ class BxCnvTemplate extends BxBaseModTextTemplate
             'bx_repeat:messages' => array(),
         );
         foreach ($a as $r) {
-
-            $bReadByAll = true;
-            $aCollaborators = $oModule->_oDb->getCollaborators($r['id']);
-            foreach ($aCollaborators as $iReadComments) {
-                if ($r['comments'] - $iReadComments) {
-                    $bReadByAll = false;
-                    break;
-                }
-            }
 
             $oProfileAuthor = BxDolProfile::getInstance($r['author']);
             if (!$oProfileAuthor)
@@ -161,21 +199,7 @@ class BxCnvTemplate extends BxBaseModTextTemplate
                 'unread_messages' => $r['unread_messages'],
                 'last_reply_time_and_replier' => _t('_bx_cnv_x_date_by_x_replier', bx_time_js($r['last_reply_timestamp'], BX_FORMAT_DATE), $oProfileLast->getDisplayName()),
                 'font_weight' => $r['unread_messages'] > 0 ? 'bold' : 'normal',
-
-                'bx_if:unread_messages' => array (
-                    'condition' => $r['unread_messages'] > 0,
-                    'content' => array (
-                        'unread_messages' => $r['unread_messages'],
-                    ),
-                ),
-                'bx_if:viewer_is_last_replier' => array (
-                    'condition' => !$bReadByAll && $oProfileLast->id() == bx_get_logged_profile_id(),
-                    'content' => array (),
-                ),
-                'bx_if:is_read_by_all' => array (
-                    'condition' => $bReadByAll,
-                    'content' => array (),
-                ),
+                'label' => $this->getMessageLabel($r, $oProfileLast),
 
                 'author_id' => $oProfileAuthor->id(),
                 'author_url' => $oProfileAuthor->getUrl(),
@@ -192,6 +216,32 @@ class BxCnvTemplate extends BxBaseModTextTemplate
         }
         return $this->parseHtmlByName('messages_previews.html', $aVars);
     } 
+
+    function entryMessagePreviewInGrid ($r)
+    {
+        $oProfileLast = BxDolProfile::getInstance($r['last_reply_profile_id']);
+        if (!$oProfileLast)
+            $oProfileLast = BxDolProfileUndefined::getInstance();
+
+        $sText = strmaxtextlen($r['text'], 100);
+        $sTextCmt = strmaxtextlen($r['cmt_text'], 100);
+
+        if (!isset($r['unread_messages']))
+            $r['unread_messages'] = $r['comments'] - $r['read_comments'];
+
+        $aVars = array (
+            'text' => $sText,
+            'cmt_text' => $sTextCmt,
+            'last_reply_time_and_replier' => _t('_bx_cnv_x_date_by_x_replier', bx_time_js($r['last_reply_timestamp'], BX_FORMAT_DATE), $oProfileLast->getDisplayName()),
+            'bx_if:unread_messages' => array (
+                'condition' => $r['unread_messages'] > 0,
+                'content' => array (),
+            ),
+        );
+        $aVars['bx_if:unread_messages2'] = $aVars['bx_if:unread_messages'];
+        return $this->parseHtmlByName('message_preview_in_grid.html', $aVars);
+    }
+    
 }
 
 /** @} */ 

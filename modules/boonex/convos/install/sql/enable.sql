@@ -128,9 +128,8 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `order`) VALUES
 ('bx_convos', 'checkbox', '_sys_select', '2%', '', 1),
 ('bx_convos', 'collaborators', '_bx_cnv_field_collaborators', '25%', '', 2),
-('bx_convos', 'preview', '_bx_cnv_field_preview', '48%', '', 3),
-('bx_convos', 'comments', '_bx_cnv_field_comments', '12%', '', 4),
-('bx_convos', 'last_reply_timestamp', '_bx_cnv_field_updated', '13%', '', 5);
+('bx_convos', 'last_reply_timestamp', '_bx_cnv_field_preview', '68%', '', 3),
+('bx_convos', 'comments', '_bx_cnv_field_comments', '5%', '', 4);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
 ('bx_convos', 'bulk', 'delete', '_bx_cnv_grid_action_delete', '', 1, 1),
