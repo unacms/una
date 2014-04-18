@@ -102,6 +102,7 @@ class BxCnvGrid extends BxTemplGrid
         bx_import('BxDolModule');
         $oModule = BxDolModule::getInstance($this->MODULE);
         $oModule->_oTemplate->addJs('main.js');
+        $oModule->_oTemplate->addCss(array('main-media-tablet.css', 'main-media-desktop.css'));
     }
 }
 

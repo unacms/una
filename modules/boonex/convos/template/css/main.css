@@ -10,9 +10,13 @@
 }
 
 .bx-cnv-collaborator {
+    white-space:nowrap;
+    display:none;
+}
+
+.bx-cnv-collaborator-author {
     display:inline;
     display:inline-block;
-    white-space:nowrap;
 }
 
 .bx-cnv-preview {

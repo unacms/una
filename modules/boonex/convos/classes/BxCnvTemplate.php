@@ -82,6 +82,7 @@ class BxCnvTemplate extends BxBaseModTextTemplate
                 'title' => $oProfile->getDisplayName(),
                 'title_attr' =>  bx_html_attribute($sInfo),
                 'float' => $sFloat,
+                'class' => $aContentInfo[$CNF['FIELD_AUTHOR']] == $iProfileId ? 'bx-cnv-collaborator-author' : '',
                 'bx_if:last_replier' => array (
                     'condition' => ($aContentInfo['last_reply_profile_id'] == $iProfileId),
                     'content' => array (
@@ -219,6 +220,8 @@ class BxCnvTemplate extends BxBaseModTextTemplate
 
     function entryMessagePreviewInGrid ($r)
     {
+        $oModule = BxDolModule::getInstance($this->MODULE);
+
         $oProfileLast = BxDolProfile::getInstance($r['last_reply_profile_id']);
         if (!$oProfileLast)
             $oProfileLast = BxDolProfileUndefined::getInstance();
@@ -230,6 +233,7 @@ class BxCnvTemplate extends BxBaseModTextTemplate
             $r['unread_messages'] = $r['comments'] - $r['read_comments'];
 
         $aVars = array (
+            'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $oModule->_oConfig->CNF['URI_VIEW_ENTRY'] . '&id=' . $r['id']),
             'text' => $sText,
             'cmt_text' => $sTextCmt,
             'last_reply_time_and_replier' => _t('_bx_cnv_x_date_by_x_replier', bx_time_js($r['last_reply_timestamp'], BX_FORMAT_DATE), $oProfileLast->getDisplayName()),
