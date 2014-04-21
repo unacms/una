@@ -74,7 +74,7 @@ class BxBaseModTextFormEntry extends BxTemplFormView
                 'content_id' => $this->aInputs[$CNF['FIELD_PHOTO']]['content_id'],
                 'editor_id' => $CNF['FIELD_TEXT_ID'],
                 'summary_id' => $CNF['FIELD_SUMMARY_ID'],
-                'thumb_id' => $aContentInfo[$CNF['FIELD_THUMB']],
+                'thumb_id' => isset($aContentInfo[$CNF['FIELD_THUMB']]) ? $aContentInfo[$CNF['FIELD_THUMB']] : 0,
                 'bx_if:set_thumb' => array (
                     'condition' => CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedSetThumb(),
                     'content' => array (
@@ -93,8 +93,10 @@ class BxBaseModTextFormEntry extends BxTemplFormView
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         $aValsToAdd[$CNF['FIELD_AUTHOR']] = bx_get_logged_profile_id ();
-        $aValsToAdd[$CNF['FIELD_ADDED']] = time();
-        $aValsToAdd[$CNF['FIELD_CHANGED']] = time();
+        if (isset($CNF['FIELD_ADDED']))
+            $aValsToAdd[$CNF['FIELD_ADDED']] = time();
+        if (isset($CNF['FIELD_CHANGED']))
+            $aValsToAdd[$CNF['FIELD_CHANGED']] = time();
 
         if (CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedSetThumb()) {
             $aThumb = isset($_POST[$CNF['FIELD_THUMB']]) ? bx_process_input ($_POST[$CNF['FIELD_THUMB']], BX_DATA_INT) : false;
@@ -112,7 +114,8 @@ class BxBaseModTextFormEntry extends BxTemplFormView
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $aValsToAdd[$CNF['FIELD_CHANGED']] = time();
+        if (isset($CNF['FIELD_CHANGED']))
+            $aValsToAdd[$CNF['FIELD_CHANGED']] = time();
 
         if (CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedSetThumb()) {
             $aThumb = bx_process_input ($_POST[$CNF['FIELD_THUMB']], BX_DATA_INT);

@@ -1,10 +1,6 @@
 
 @import url(../../../../base/text/template/css/main.css);
 
-.bx-grid-header-collaborators span {
-    display:none;
-}
-
 .bx-cnv-collaborators {
     white-space:nowrap;
 }
@@ -13,8 +9,8 @@
     margin-right:0px;
 }
 
-.bx-cnv-collaborator {
-    white-space:nowrap;
+.bx-cnv-collaborator,
+.bx-grid-header-collaborators span {
     display:none;
 }
 

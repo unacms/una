@@ -117,6 +117,9 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
 ('bx_convos', 'bx_convos', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_cnv_form_entry_input_sys_delete_confirm', '_bx_cnv_form_entry_input_delete_confirm', '_bx_cnv_form_entry_input_delete_confirm_info', 1, 0, 0, '', '', '', 'Avail', '', '_bx_cnv_form_entry_input_delete_confirm_error', '', '', 1, 0),
 ('bx_convos', 'bx_convos', 'do_submit', '_bx_cnv_form_entry_input_do_submit', '', 0, 'submit', '_bx_cnv_form_entry_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_convos', 'bx_convos', 'submit_text', '', '', 0, 'custom', '_bx_cnv_form_entry_input_sys_submit_text', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_convos', 'bx_convos', 'submit_block', '', 'do_submit,submit_text', 0, 'input_set', '_bx_cnv_form_entry_input_sys_submit_block', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_convos', 'bx_convos', 'draft_id', '0', '', 0, 'hidden', '_bx_cnv_form_entry_input_sys_draft_id', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_convos', 'bx_convos', 'text', '', '', 0, 'textarea', '_bx_cnv_form_entry_input_sys_text', '_bx_cnv_form_entry_input_text', '', 1, 0, 2, '', '', '', 'Avail', '', '_bx_cnv_form_entry_input_text_err', 'XssHtml', '', 1, 0),
 ('bx_convos', 'bx_convos', 'recipients', '', '', 0, 'custom', '_bx_cnv_form_entry_input_sys_recipients', '_bx_cnv_form_entry_input_recipients', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_cnv_form_entry_input_recipients_err', '', '', 1, 0),
 ('bx_convos', 'bx_convos', 'attachments', '', '', 0, 'files', '_bx_cnv_form_entry_input_sys_attachments', '_bx_cnv_form_entry_input_attachments', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
@@ -126,7 +129,10 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_convos_entry_add', 'recipients', 2147483647, 1, 1),
 ('bx_convos_entry_add', 'text', 2147483647, 1, 2),
 ('bx_convos_entry_add', 'attachments', 2147483647, 1, 3),
-('bx_convos_entry_add', 'do_submit', 2147483647, 1, 4),
+('bx_convos_entry_add', 'submit_block', 2147483647, 1, 4),
+('bx_convos_entry_add', 'do_submit', 2147483647, 1, 5),
+('bx_convos_entry_add', 'submit_text', 2147483647, 1, 6),
+('bx_convos_entry_add', 'draft_id', 2147483647, 1, 7),
 
 ('bx_convos_entry_view', 'delete_confirm', 2147483647, 0, 0),
 ('bx_convos_entry_view', 'do_submit', 2147483647, 0, 0),

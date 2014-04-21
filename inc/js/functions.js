@@ -340,7 +340,7 @@ function bx_time(sLang, isAutoupdate, sRootSel) {
     if ($('time.bx-time-autoupdate').size()) {
         setTimeout(function () {
             bx_time(sLang, true);
-        }, 30000);
+        }, 20000);
     }
 }
 

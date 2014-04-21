@@ -23,6 +23,9 @@
     <string name="_bx_cnv_form_entry_input_recipients"><![CDATA[Recipients]]></string>
     <string name="_bx_cnv_form_entry_input_sys_recipients"><![CDATA[Recipients]]></string>
     <string name="_bx_cnv_form_entry_input_recipients_err"><![CDATA[Recipients is mandatory]]></string>
+    <string name="_bx_cnv_form_entry_input_recipients_placeholder"><![CDATA[Type name here...]]></string>
+    <string name="_bx_cnv_form_entry_input_sys_submit_text"><![CDATA[Draft status]]></string>
+    <string name="_bx_cnv_form_entry_input_sys_submit_block"><![CDATA[Submit block]]></string>
 
 	<string name="_bx_cnv_acl_action_create_entry"><![CDATA[Start conversation]]></string>
 	<string name="_bx_cnv_acl_action_delete_entry"><![CDATA[Delete convo]]></string>
@@ -97,5 +100,8 @@
     <string name="_bx_cnv_read_by_all"><![CDATA[Read by all]]></string>
     <string name="_bx_cnv_see_all"><![CDATA[See all convos...]]></string>
     <string name="_bx_cnv_you_are_last_replier"><![CDATA[You are last replier]]></string>
+
+    <string name="_bx_cnv_draft_saving_error"><![CDATA[Draft saving error!]]></string>
+    <string name="_bx_cnv_draft_saved_success"><![CDATA[Draft saved.]]></string>
 
 </resources>
