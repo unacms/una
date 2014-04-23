@@ -67,6 +67,9 @@
 .bx-def-margin-sec {
     .margin(@bx-margin-sec);
 }
+.bx-def-margin-sec-neg {
+    .margin(-@bx-margin-sec);
+}
 .bx-def-margin-sec-rightbottomleft {
     .margin-right(@bx-margin-sec);
     .margin-bottom(@bx-margin-sec);
@@ -460,7 +463,7 @@ h3,
 .bx-def-unit-alert-middle {
     .min-width(@bx-font-size-middle + 2);
     .height(@bx-font-size-middle + 2);
-    .line-height(@bx-font-size-middle + 3);
+    .line-height(@bx-font-size-middle + 1);
     .radius(@bx-font-size-middle);
     .font-size(@bx-font-size-middle);
     .padding(3px);

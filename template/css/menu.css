@@ -82,8 +82,11 @@ ul.bx-menu-ver {
 .bx-menu-ver li img,
 .bx-menu-ver li .sys-icon {
     width:20px;
+    width:1.25rem;
     height:20px;
+    height:1.25rem;
     margin-right:2px;
+    margin-right:0.125rem;
     text-align:center;
 }
 
@@ -94,13 +97,18 @@ ul.bx-menu-ver {
 
 .bx-menu-ver li .sys-icon {
     font-size:20px;
+    font-size:1.25rem;
 }
 
 .bx-menu-notif li .sys-icon {
     font-size:24px;
+    font-size:1.5rem;
     width:24px;
+    width:1.5rem;
     height:24px;
+    height:1.5rem;
     margin-right:5px;
+    margin-right:0.3rem;
 }
 
 .bx-menu-ver .bx-def-hr {
@@ -109,7 +117,9 @@ ul.bx-menu-ver {
 
 .bx-menu-verlit li img {
     width:24px;
+    width:1.5rem;
     height:24px;
+    height:1.5rem;
     background-position:center center;
     background-repeat:no-repeat;
     vertical-align:middle;
@@ -187,13 +197,6 @@ ul.bx-menu-main {
 
 /* --------------- toolbar menu */
 
-#bx-popup-ajax-wrapper-sys_site .bx-popup-content-indent {
-    padding:12px;
-    padding:0.75rem;
-    width:134px;
-    width:8.375rem;
-}
-
 #bx-menu-toolbar-1-container .bx-menu-toolbar {
     float:left;
 }
@@ -258,6 +261,11 @@ ul.bx-menu-toolbar li .sys-icon {
 
 /* --------------- floating blocks menu */
 
+.bx-popup-content .bx-menu-floating-blocks {
+    width:128px;
+    width:8rem;
+}
+
 ul.bx-menu-floating-blocks {
     padding:0;
     margin:0;
@@ -272,7 +280,9 @@ ul.bx-menu-floating-blocks {
     vertical-align:top;    
 
     width:64px;
+    width:4rem;
     height:64px;
+    height:4rem;
 }
 
 .bx-menu-floating-blocks li:hover {
@@ -297,9 +307,11 @@ ul.bx-menu-floating-blocks {
 .bx-menu-floating-blocks li .sys-icon {
     display:block;
     width:32px;
+    width:2rem;
     height:32px;
+    height:2rem;
     margin:8px 16px 3px 16px;
-
+    margin:0.5rem 1rem 0.2rem 1rem;
 }
 
 .bx-menu-floating-blocks li img {
@@ -309,9 +321,11 @@ ul.bx-menu-floating-blocks {
 
 .bx-menu-floating-blocks li .sys-icon {
     line-height:32px;
+    line-height:2rem;
     text-align:center;
     vertical-align:bottom;
     font-size:32px;
+    font-size:2rem;
 }
 
 .bx-menu-floating-blocks-title {
@@ -407,4 +421,9 @@ ul.bx-menu-btns-hor li {
     display:inline-block;
 }
 
+/* --------------- account popup menu */
+
+.bx-popup-content .bx-menu-account-popup {
+    min-width:17em;
+}
 
