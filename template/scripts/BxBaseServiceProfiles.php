@@ -148,8 +148,8 @@ class BxBaseServiceProfiles extends BxDol
             'bx_repeat:row' => array(),
         );
         foreach ($aProfiles as $aProfile) {
-            //if ($aProfile['type'] == 'system')
-            //    continue;
+            if ($aProfile['type'] == 'system') // skip system account profile
+                continue;
             $aVars['bx_repeat:row'][] = array (
                 'bx_if:active' => array (
                     'condition' => $iLoggedPofileId == $aProfile['id'],
