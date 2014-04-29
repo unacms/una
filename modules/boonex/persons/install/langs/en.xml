@@ -106,11 +106,4 @@
 
     <string name="_bx_persons_txt_account_pending"><![CDATA[This profile is pending approval, please wait until it is activated.]]></string>
     <string name="_bx_persons_txt_account_suspended"><![CDATA[This profile is suspended.]]></string>
-    <string name="_bx_persons_txt_friend_pending_initiator"><![CDATA[Your friend request to this profile is awaiting confirmation.]]></string>
-    <string name="_bx_persons_txt_friend_pending_content"><![CDATA[You have pending friend request from this profile - <a href="javascript:void(0);" onclick="bx_conn_action('sys_profiles_friends', 'add', '{profile_id}')">Accept</a> or <a href="javascript:void(0);" onclick="bx_conn_action('sys_profiles_friends', 'reject', '{profile_id}')">Reject</a>?]]></string>
-
-    <string name="_bx_persons_txt_n_friends"><![CDATA[{0} friends]]></string>
-    <string name="_bx_persons_txt_n_mutual_friends"><![CDATA[{0} mutual friends]]></string>
-    <string name="_bx_persons_txt_one_mutual_friend"><![CDATA[<a href="{0}">{1}</a> mutual friend]]></string>
-
 </resources>
