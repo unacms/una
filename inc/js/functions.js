@@ -246,22 +246,21 @@ function bx_loading (elem, b) {
 
 
 /**
- * js version on BxBaseFunction::centerContent function
+ * Center content with floating blocks.
  * sSel - jQuery selector of content to be centered
  * sBlockSel - jquery selector of blocks
  */
 function bx_center_content (sSel, sBlockStyle) {
     var sId = 'id' + (new Date()).getTime();
     $(sSel).wrap('<div id="'+sId+'"></div>');
-    //$(document).ready(function() {
-            var eCenter = $('#' + sId);
-            var iAll = $('#' + sId + ' ' + sBlockStyle).size();
-            var iWidthUnit = $('#' + sId + ' ' + sBlockStyle + ':first').outerWidth({"margin":true});            
-            var iWidthContainer = eCenter.innerWidth();           
-            var iPerRow = parseInt(iWidthContainer/iWidthUnit);
-            var iLeft = (iWidthContainer - (iAll > iPerRow ? iPerRow * iWidthUnit : iAll * iWidthUnit)) / 2;
-            eCenter.css("padding-left", iLeft);
-    //});
+
+    var eCenter = $('#' + sId);
+    var iAll = $('#' + sId + ' ' + sBlockStyle).size();
+    var iWidthUnit = $('#' + sId + ' ' + sBlockStyle + ':first').outerWidth(true);
+    var iWidthContainer = eCenter.innerWidth();           
+    var iPerRow = parseInt(iWidthContainer/iWidthUnit);
+    var iLeft = (iWidthContainer - (iAll > iPerRow ? iPerRow * iWidthUnit : iAll * iWidthUnit)) / 2;
+    eCenter.css("padding-left", iLeft);
 }
 
 /**

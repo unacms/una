@@ -22,6 +22,8 @@ class BxBaseSearchResult extends BxDolSearchResult
 
     protected $aConstants;
 
+    protected $sCenterContentUnitSelector = false;
+
     function __construct($oFunctions = false) 
     {
         parent::__construct();
@@ -44,12 +46,23 @@ class BxBaseSearchResult extends BxDolSearchResult
         $sCode = '';
         $aData = $this->getSearchData();
         if ($this->aCurrent['paginate']['num'] > 0) {
-            $sCode .= $this->addCustomParts();
-            foreach ($aData as $aValue) {
-                $sCode .= $this->displaySearchUnit($aValue);
-            }
-            $sCode = '<div class="bx-search-result-block bx-clearfix">' . $sCode . '</div>';
 
+            $sCode .= $this->addCustomParts();
+
+            foreach ($aData as $aValue)
+                $sCode .= $this->displaySearchUnit($aValue);
+
+            $sSearchResultBlockId = 'bx-search-result-block-' . rand(0, PHP_INT_MAX);
+            $sCode = '<div id="' . $sSearchResultBlockId . '" class="bx-search-result-block bx-clearfix">' . $sCode . '</div>';
+
+            if ($this->sCenterContentUnitSelector) {
+                $sCode .= "
+                    <script>
+                        $(document).ready(function() {
+                            bx_center_content('#{$sSearchResultBlockId}', '{$this->sCenterContentUnitSelector}');
+                        });
+                    </script>";
+            }
         }
         return $sCode;
     }

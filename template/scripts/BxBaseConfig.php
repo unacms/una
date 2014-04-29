@@ -33,7 +33,7 @@ class BxBaseConfig extends BxDol implements iBxDolSingleton {
             'bx-size-gallery-img-width' => '300px',
             'bx-size-gallery-img-height' => '200px',
             'bx-size-gallery-unit-width' => '300px',
-            'bx-size-gallery-unit-height' => '300px',
+            'bx-size-gallery-unit-height' => '320px',
 
 			'bx-color-page' => '#fff',
 			'bx-color-block' => '#fff',

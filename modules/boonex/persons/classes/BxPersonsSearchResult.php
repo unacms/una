@@ -13,7 +13,6 @@ bx_import('BxBaseModProfileSearchResult');
 
 class BxPersonsSearchResult extends BxBaseModProfileSearchResult 
 {
-
     function __construct($sMode = '', $aParams = false) 
     {
         parent::__construct($sMode, $aParams);
@@ -118,7 +117,8 @@ class BxPersonsSearchResult extends BxBaseModProfileSearchResult
         parent::__construct();
     }
 
-    function getAlterOrder() {
+    function getAlterOrder() 
+    {
         switch ($this->aCurrent['sorting']) {
         case 'none':
             return array();
@@ -130,17 +130,8 @@ class BxPersonsSearchResult extends BxBaseModProfileSearchResult
         }
     }
 
-    function displayResultBlock () {        
-        $s = parent::displayResultBlock ();
-        if ($s) {
-            BxDolTemplate::getInstance()->addDynamicLocation($this->oModule->_oConfig->getHomePath(), $this->oModule->_oConfig->getHomeUrl());
-            bx_import('BxTemplFunctions');
-            return BxTemplFunctions::getInstance()->centerContent ($s, '.bx-persons-unit');
-        }
-        return '';
-    }
-
-    function _getPseud () {
+    function _getPseud () 
+    {
         return array(
             'id' => 'id',
             'fullname' => 'fullname',

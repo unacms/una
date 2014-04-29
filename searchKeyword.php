@@ -48,7 +48,6 @@ function getSearchForm () {
             require_once($sPath);
         }
         $oClass = new $aValue['class']();
-        $oClass->addCustomParts();
     }
 
     if (isset($_GET['type'])) {

@@ -352,29 +352,6 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton {
         return $sActionsList;
     }
 
-    /**
-     * alternative to GenFormWrap
-     * easy to use but javascript based
-     * $s - content to be centered
-     * $sBlockStyle - block's style, jquery selector
-     *
-     * see also bx_center_content javascript function, if you need to call this function from javascript
-     */
-    function centerContent ($s, $sBlockStyle, $isClearBoth = true) {
-        $sId = 'id' . time() . rand();
-        return  '<div id="'.$sId.'">' . $s . ($isClearBoth ? '<div class="clear_both"></div>' : '') . '</div><script>
-            $(document).ready(function() {
-                var eCenter = $("#'.$sId.'");
-                var iAll = $("#'.$sId.' '.$sBlockStyle.'").size();
-                var iWidthUnit = $("#'.$sId.' '.$sBlockStyle.':first").outerWidth({"margin":true});
-                var iWidthContainer = eCenter.width();
-                var iPerRow = parseInt(iWidthContainer/iWidthUnit);
-                var iLeft = (iWidthContainer - (iAll > iPerRow ? iPerRow * iWidthUnit : iAll * iWidthUnit)) / 2;
-                eCenter.css("padding-left", iLeft);
-            });
-        </script>';
-    }
-
     function genNotifyMessage($sMessage, $sDirection = 'left', $isButton = false, $sScript = '') {
         $sDirStyle = ($sDirection == 'left') ? '' : 'notify_message_none';
         switch ($sDirection) {

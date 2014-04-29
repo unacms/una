@@ -16,6 +16,7 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
     function __construct($sMode = '', $aParams = array()) 
     {
         parent::__construct($sMode, $aParams);
+        $this->sCenterContentUnitSelector = '.bx-base-pofile-unit';
     }
 }
 
