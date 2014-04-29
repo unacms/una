@@ -14,25 +14,8 @@ require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
 check_logged();
 
-bx_import('BxDolLanguages');
-bx_import('BxDolRequest');
+bx_import('BxBaseModProfileRequest');
 
-class BxPersonsRequest extends BxDolRequest {
-
-    function __construct() {
-        parent::__construct();
-    }
-
-    static function processAsAction($aModule, &$aRequest, $sClass = "Module") {
-
-        $sClassRequire = $aModule['class_prefix'] . $sClass;
-        $oModule = BxDolRequest::_require($aModule, $sClassRequire);
-        $aVars = array ('BaseUri' => $oModule->_oConfig->getBaseUri());
-
-        return BxDolRequest::processAsAction($aModule, $aRequest, $sClass);
-    }
-}
-
-BxPersonsRequest::processAsAction($GLOBALS['aModule'], $GLOBALS['aRequest']);
+BxBaseModProfileRequest::processAsAction($GLOBALS['aModule'], $GLOBALS['aRequest']);
 
 /** @} */ 
