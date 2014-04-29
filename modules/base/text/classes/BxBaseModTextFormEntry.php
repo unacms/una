@@ -9,22 +9,16 @@
  * @{
  */
 
-bx_import('BxTemplFormView');
+bx_import('BxBaseModGeneralFormEntry');
 
 /**
  * Create/Edit entry form
  */
-class BxBaseModTextFormEntry extends BxTemplFormView 
+class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
 {
-    protected $MODULE;
-
-    protected $_oModule;
-
     public function __construct($aInfo, $oTemplate = false) 
     {
         parent::__construct($aInfo, $oTemplate);
-        
-        $this->_oModule = BxDolModule::getInstance($this->MODULE);
 
         $CNF = &$this->_oModule->_oConfig->CNF;
 
@@ -92,12 +86,6 @@ class BxBaseModTextFormEntry extends BxTemplFormView
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $aValsToAdd[$CNF['FIELD_AUTHOR']] = bx_get_logged_profile_id ();
-        if (isset($CNF['FIELD_ADDED']))
-            $aValsToAdd[$CNF['FIELD_ADDED']] = time();
-        if (isset($CNF['FIELD_CHANGED']))
-            $aValsToAdd[$CNF['FIELD_CHANGED']] = time();
-
         if (CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedSetThumb()) {
             $aThumb = isset($_POST[$CNF['FIELD_THUMB']]) ? bx_process_input ($_POST[$CNF['FIELD_THUMB']], BX_DATA_INT) : false;
             $aValsToAdd[$CNF['FIELD_THUMB']] = 0;
@@ -114,9 +102,6 @@ class BxBaseModTextFormEntry extends BxTemplFormView
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if (isset($CNF['FIELD_CHANGED']))
-            $aValsToAdd[$CNF['FIELD_CHANGED']] = time();
-
         if (CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedSetThumb()) {
             $aThumb = bx_process_input ($_POST[$CNF['FIELD_THUMB']], BX_DATA_INT);
             $aValsToAdd[$CNF['FIELD_THUMB']] = 0;
@@ -129,7 +114,7 @@ class BxBaseModTextFormEntry extends BxTemplFormView
         return $iRet;
     }
 
-    function delete ($iContentId) 
+    function delete ($iContentId, $aContentInfo = array()) 
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
@@ -145,7 +130,7 @@ class BxBaseModTextFormEntry extends BxTemplFormView
             foreach ($aGhostFiles as $aFile)
                 $this->_deleteFile($aFile['id']);
 
-        // delete db record
+        // delete associated objects data
 
         bx_import('BxDolView');
 		$o = BxDolView::getObjectInstance($CNF['OBJECT_VIEWS'], $iContentId);
@@ -158,6 +143,8 @@ class BxBaseModTextFormEntry extends BxTemplFormView
 		bx_import('BxDolCmts');
 		$o = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $iContentId);
         if ($o) $o->onObjectDelete();
+
+        // delete db record
 
         return parent::delete($iContentId);
     }

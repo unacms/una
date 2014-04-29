@@ -9,25 +9,19 @@
  * @{
  */
 
-bx_import('BxTemplPage');
+bx_import('BxBaseModGeneralPageEntry');
 bx_import('BxDolModule');
 bx_import('BxDolMenu');
 
 /**
  * Entry create/edit pages
  */
-class BxBaseModTextPageEntry extends BxTemplPage 
+class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry 
 {    
-    protected $MODULE;
-
-    protected $_oModule;
-    protected $_aContentInfo = false;
-
     public function __construct($aObject, $oTemplate = false) 
     {
         parent::__construct($aObject, $oTemplate);
 
-        $this->_oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         // select view entry submenu
@@ -44,30 +38,6 @@ class BxBaseModTextPageEntry extends BxTemplPage
                 'title' => strmaxtextlen($this->_aContentInfo[$CNF['FIELD_TEXT']], 20, '...'),
             ));
         }
-
-		bx_import('BxDolView');
-		BxDolView::getObjectInstance($CNF['OBJECT_VIEWS'], $iContentId)->doView();
-    }
-
-    public function getCode () 
-    {
-        if (!$this->_aContentInfo) { // if entry is not found - display standard "404 page not found" page
-            $this->_oTemplate->displayPageNotFound();
-            exit;
-        }
-
-        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedView($this->_aContentInfo))) {
-			$this->_oTemplate->displayAccessDenied($sMsg);
-            exit;
-        }
-        $this->_oModule->checkAllowedView($this->_aContentInfo, true);
-
-        return parent::getCode ();
-    }
-
-    protected function _getPageCacheParams () 
-    {
-        return $this->_aContentInfo[$this->_oModule->_oConfig->CNF['FIELD_ID']]; // cache is different for every entry
     }
 }
 

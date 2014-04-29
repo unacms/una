@@ -18,10 +18,6 @@ DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_perso
 -- TODO: delete resized picture files as well
 TRUNCATE TABLE `bx_persons_pictures_resized`; 
 
--- UPLOADERS
-
-DELETE FROM `sys_objects_uploader` WHERE `object` IN('bx_persons_avatar', 'bx_persons_cover');
-
 -- PAGES
 
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_persons';

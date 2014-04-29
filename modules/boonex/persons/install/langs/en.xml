@@ -32,10 +32,6 @@
 	<string name="_bx_persons_form_person_input_delete_confirm"><![CDATA[I am sure I want to delete this profile]]></string>
 	<string name="_bx_persons_form_person_input_delete_confirm_info"><![CDATA[This action can not be undone.]]></string>
 	<string name="_bx_persons_form_person_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete your profile.]]></string>
-    <string name="_bx_persons_form_person_input_picture_txt_new"><![CDATA[New Picture]]></string>
-    <string name="_bx_persons_form_person_input_picture_txt_discard"><![CDATA[Discard]]></string>
-    <string name="_bx_persons_form_person_input_picture_txt_current"><![CDATA[Current Picture]]></string>
-    <string name="_bx_persons_form_person_input_picture_txt_delete"><![CDATA[Delete]]></string>
 
 	<string name="_bx_persons_acl_action_create_profile"><![CDATA[Create Person's Profile]]></string>
 	<string name="_bx_persons_acl_action_delete_profile"><![CDATA[Delete Person's Profile]]></string>
@@ -52,7 +48,10 @@
 	<string name="_bx_persons_page_title_delete_profile"><![CDATA[Delete Profile]]></string>
 	<string name="_bx_persons_page_title_sys_view_profile"><![CDATA[View Person's Profile]]></string>
 	<string name="_bx_persons_page_title_view_profile"><![CDATA[{display_name}]]></string>
+	<string name="_bx_persons_page_title_browse"><![CDATA[Persons]]></string>
 	<string name="_bx_persons_page_title_browse_recent"><![CDATA[Persons]]></string>
+	<string name="_bx_persons_page_title_browse_connections"><![CDATA[{0} connections]]></string>
+	<string name="_bx_persons_page_title_browse_connections_mutual"><![CDATA[{0} and {1} mutual connections]]></string>
 	<string name="_bx_persons_page_title_sys_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_persons_page_title_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_persons_page_title_sys_profile_info"><![CDATA[Profile Info]]></string>
@@ -110,8 +109,6 @@
     <string name="_bx_persons_txt_friend_pending_initiator"><![CDATA[Your friend request to this profile is awaiting confirmation.]]></string>
     <string name="_bx_persons_txt_friend_pending_content"><![CDATA[You have pending friend request from this profile - <a href="javascript:void(0);" onclick="bx_conn_action('sys_profiles_friends', 'add', '{profile_id}')">Accept</a> or <a href="javascript:void(0);" onclick="bx_conn_action('sys_profiles_friends', 'reject', '{profile_id}')">Reject</a>?]]></string>
 
-    <string name="_bx_persons_txt_change_image"><![CDATA[Change Picure]]></string>
-    <string name="_bx_persons_txt_no_picture_uploaded"><![CDATA[No picture uploaded]]></string>
     <string name="_bx_persons_txt_n_friends"><![CDATA[{0} friends]]></string>
     <string name="_bx_persons_txt_n_mutual_friends"><![CDATA[{0} mutual friends]]></string>
     <string name="_bx_persons_txt_one_mutual_friend"><![CDATA[<a href="{0}">{1}</a> mutual friend]]></string>

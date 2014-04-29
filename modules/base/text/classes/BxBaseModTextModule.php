@@ -9,50 +9,17 @@
  * @{
  */
 
-bx_import ('BxDolModule');
+bx_import ('BxBaseModGeneralModule');
 bx_import ('BxDolAcl');
 
 /**
  * Base module class for text based modules
  */
-class BxBaseModTextModule extends BxDolModule
+class BxBaseModTextModule extends BxBaseModGeneralModule
 {
-    protected $_iProfileId;
-
     function __construct(&$aModule) 
     {
         parent::__construct($aModule);
-        $this->_iProfileId = bx_get_logged_profile_id();
-    }
-
-    // ====== ACTIONS METHODS
-
-    public function actionRss ($sMode = '', $sExtra = '') 
-    {
-        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->checkAllowedBrowse())) {
-            $this->_oTemplate->displayAccessDenied ();
-            exit;
-        }
-
-        $aParams = array ();
-        $sMode = bx_process_input($sMode);
-        switch ($sMode) {
-            case 'author':
-                $aParams = array('author' => (int)$sExtra);
-                break;
-        }
-
-        bx_import ('SearchResult', $this->_aModule);
-        $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
-        $o = new $sClass($sMode, $aParams);
-
-        if ($o->isError) {
-            $this->_oTemplate->displayPageNotFound ();
-            exit;
-        }
-
-        $o->outputRSS();
-        exit;
     }
 
     // ====== SERVICE METHODS
@@ -63,7 +30,7 @@ class BxBaseModTextModule extends BxDolModule
      */
     public function serviceBrowsePublic () 
     {
-        return $this->_serviceBrowse ('public');
+        return $this->_serviceBrowse ('public', false, BX_DB_PADDING_DEF, true);
     }
 
     /**
@@ -72,7 +39,7 @@ class BxBaseModTextModule extends BxDolModule
      */
     public function serviceBrowseFeatured () 
     {
-        return $this->_serviceBrowse ('public');
+        return $this->_serviceBrowse ('public', false, BX_DB_PADDING_DEF, true);
     }
 
     /**
@@ -85,53 +52,7 @@ class BxBaseModTextModule extends BxDolModule
             $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
         if (!$iProfileId)
             return '';
-        return $this->_serviceBrowse ('author', array('author' => $iProfileId));
-    }
-
-    /**
-     * Add entry form
-     * @return HTML string
-     */
-    public function serviceEntityCreate () 
-    {
-        bx_import('FormsEntryHelper', $this->_aModule);
-        $sClass = $this->_aModule['class_prefix'] . 'FormsEntryHelper';
-        $oFormsHelper = new $sClass($this);
-        return $oFormsHelper->addDataForm();
-    }
-
-    /**
-     * Edit entry form
-     * @return HTML string
-     */
-    public function serviceEntityEdit ($iContentId = 0) 
-    {
-        return $this->_serviceEntityForm ('editDataForm', $iContentId);
-    }
-
-    /**
-     * Delete entry form
-     * @return HTML string
-     */
-    public function serviceEntityDelete ($iContentId = 0) 
-    {
-        return $this->_serviceEntityForm ('deleteDataForm', $iContentId);
-    }
-
-    /**
-     * Entry text with some additional controls
-     */
-    public function serviceEntityTextBlock ($iContentId = 0) 
-    {
-        return $this->_serviceEntityForm ('viewDataEntry', $iContentId);
-    }
-
-    /**
-     * Additional entry info
-     */
-    public function serviceEntityInfo ($iContentId = 0) 
-    {
-        return $this->_serviceEntityForm ('viewDataForm', $iContentId);
+        return $this->_serviceBrowse ('author', array('author' => $iProfileId), BX_DB_PADDING_DEF, true);
     }
 
     /**
@@ -187,6 +108,14 @@ class BxBaseModTextModule extends BxDolModule
     }
 
     /**
+     * Entry text with some additional controls
+     */
+    public function serviceEntityTextBlock ($iContentId = 0) 
+    {
+        return $this->_serviceEntityForm ('viewDataEntry', $iContentId);
+    }
+
+    /**
      * Entry comments
      */
     public function serviceEntityComments ($iContentId = 0) 
@@ -208,30 +137,7 @@ class BxBaseModTextModule extends BxDolModule
      */
     public function serviceEntityAuthor ($iContentId = 0) 
     {
-        if (!$iContentId)
-            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        if (!$iContentId)
-            return false;
-        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-        if (!$aContentInfo)
-            return false;
-
-        return $this->_oTemplate->entryAuthor ($aContentInfo);
-    }
-
-    /**
-     * Entry actions block
-     */
-    public function serviceEntityActions ($iContentId = 0) 
-    {
-        if (!$iContentId)
-            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        if (!$iContentId)
-            return false;
-
-        bx_import('BxTemplMenu');
-        $oMenu = BxTemplMenu::getObjectInstance($this->_oConfig->CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY']);
-        return $oMenu ? $oMenu->getCode() : false;
+        return $this->_serviceTemplateFunc ('entryAuthor', $iContentId);
     }
 
     /**
@@ -239,15 +145,7 @@ class BxBaseModTextModule extends BxDolModule
      */
     public function serviceEntityAttachments ($iContentId = 0)
     {
-        if (!$iContentId)
-            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        if (!$iContentId)
-            return false;
-        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-        if (!$aContentInfo)
-            return false;
-
-        return $this->_oTemplate->entryAttachments ($aContentInfo);
+        return $this->_serviceTemplateFunc ('entryAttachments', $iContentId);
     }
 
     /**
@@ -357,79 +255,6 @@ class BxBaseModTextModule extends BxDolModule
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
      */
-    public function checkAllowedView ($aDataEntry, $isPerformAction = false) 
-    {
-        $CNF = &$this->_oConfig->CNF;
-
-        // moderator and owner always have access
-        if ($aDataEntry[$CNF['FIELD_AUTHOR']] == $this->_iProfileId || $this->_isModerator($isPerformAction))
-            return CHECK_ACTION_RESULT_ALLOWED;
-
-        // check ACL
-        $aCheck = checkActionModule($this->_iProfileId, 'view entry', $this->getName(), $isPerformAction);
-        if ($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
-            return $aCheck[CHECK_ACTION_MESSAGE];
-
-        // check privacy 
-    	bx_import('BxDolPrivacy');
-    	$oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
-		if ($oPrivacy && !$oPrivacy->check($aDataEntry[$CNF['FIELD_ID']]))
-            return _t('_sys_access_denied_to_private_content');
-
-        return CHECK_ACTION_RESULT_ALLOWED;
-    }
-
-    /**
-     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
-     */
-    public function checkAllowedBrowse () 
-    {
-        return CHECK_ACTION_RESULT_ALLOWED;
-    }
-
-    /**
-     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
-     */
-    public function checkAllowedAdd ($isPerformAction = false) 
-    {
-        // check ACL
-        $aCheck = checkActionModule($this->_iProfileId, 'create entry', $this->getName(), $isPerformAction);
-        if ($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
-            return $aCheck[CHECK_ACTION_MESSAGE];
-        return CHECK_ACTION_RESULT_ALLOWED;
-    }
-
-    /**
-     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
-     */
-    public function checkAllowedEdit ($aDataEntry, $isPerformAction = false) 
-    {
-        // moderator and owner always have access
-        if ($aDataEntry[$this->_oConfig->CNF['FIELD_AUTHOR']] == $this->_iProfileId || $this->_isModerator($isPerformAction))
-            return CHECK_ACTION_RESULT_ALLOWED;
-        return _t('_sys_txt_access_denied');
-    }
-
-    /**
-     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
-     */
-    public function checkAllowedDelete (&$aDataEntry, $isPerformAction = false) 
-    {
-        // moderator always has access
-        if ($this->_isModerator($isPerformAction))
-            return CHECK_ACTION_RESULT_ALLOWED;
-
-        // check ACL
-        $aCheck = checkActionModule($this->_iProfileId, 'delete entry', $this->getName(), $isPerformAction);
-        if ($aDataEntry[$this->_oConfig->CNF['FIELD_AUTHOR']] == $this->_iProfileId && $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED)
-            return CHECK_ACTION_RESULT_ALLOWED;
-
-        return _t('_sys_txt_access_denied');
-    }
-
-    /**
-     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
-     */
     public function checkAllowedSetThumb () 
     {
         // check ACL
@@ -441,44 +266,17 @@ class BxBaseModTextModule extends BxDolModule
 
     // ====== PROTECTED METHODS
 
-    protected function _isModerator ($isPerformAction = false) 
+    protected function _buildRssParams($sMode, $aArgs) 
     {
-        // check moderator ACL
-        $aCheck = checkActionModule($this->_iProfileId, 'edit any entry', $this->getName(), $isPerformAction); 
-        return $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED;
-    }
+        $aParams = array ();
+        $sMode = bx_process_input($sMode);
+        switch ($sMode) {
+            case 'author':
+                $aParams = array('author' => isset($aArgs[0]) ? (int)$aArgs[0] : '');
+                break;
+        }
 
-    protected function _serviceBrowse ($sMode, $aParams = false) 
-    {
-        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->checkAllowedBrowse()))
-            return MsgBox($sMsg);
-
-        $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
-        bx_import('SearchResult', $this->_aModule);
-        $o = new $sClass($sMode, $aParams);
-        
-        $o->setDisplayEmptyMsg(true);
-
-        if ($o->isError)
-            return '';
-
-        if ($s = $o->processing())
-            return $s;
-        else
-            return '';
-    }
-
-    protected function _serviceEntityForm ($sFormMethod, $iContentId = 0) 
-    {
-        if (!$iContentId)
-            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        if (!$iContentId)
-            return false;
-
-        bx_import('FormsEntryHelper', $this->_aModule);
-        $sClass = $this->_aModule['class_prefix'] . 'FormsEntryHelper';
-        $oFormsHelper = new $sClass($this);
-        return $oFormsHelper->$sFormMethod((int)$iContentId);
+        return $aParams;
     }
 }
 

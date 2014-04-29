@@ -3,61 +3,67 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    Persons Persons
+ * @defgroup    BaseProfile Base classes for profile modules
  * @ingroup     DolphinModules
  *
  * @{
  */
 
-bx_import('BxTemplFormView');
-bx_import('BxDolProfile');
-bx_import('BxDolStorage');
-bx_import('BxDolImageTranscoder');
+bx_import('BxBaseModGeneralFormEntry');
 
 /**
- * Create/Edit Person Form.
+ * Create/edit profile form.
  */
-class BxPersonsFormPerson extends BxTemplFormView {
+class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry 
+{
+    protected $_iAccountProfileId = 0;
+    protected $_aImageFields = array ();
 
-    protected $_oModule;
-    protected $_iAccountProfileId;
-    protected $_aImageFields;
-
-    public function __construct($aInfo, $oTemplate = false) {                
+    public function __construct($aInfo, $oTemplate = false) 
+    {
         parent::__construct($aInfo, $oTemplate);
 
-        $this->_aImageFields = array (
-            BxPersonsConfig::$FIELD_PICTURE => array (
-                'storage_object' => BxPersonsConfig::$OBJECT_STORAGE,
-                'images_transcoder' => BxPersonsConfig::$OBJECT_IMAGES_TRANSCODER_THUMB,
-                'field_preview' => BxPersonsConfig::$FIELD_PICTURE_PREVIEW,
-            ),
-            BxPersonsConfig::$FIELD_COVER => array (
-                'storage_object' => BxPersonsConfig::$OBJECT_STORAGE_COVER,
-                'images_transcoder' => BxPersonsConfig::$OBJECT_IMAGES_TRANSCODER_COVER_THUMB,
-                'field_preview' => BxPersonsConfig::$FIELD_COVER_PREVIEW,
-            ),
-        );
-        $this->_aImageFields[BxPersonsConfig::$FIELD_PICTURE_PREVIEW] = $this->_aImageFields[BxPersonsConfig::$FIELD_PICTURE];
-        $this->_aImageFields[BxPersonsConfig::$FIELD_COVER_PREVIEW] = $this->_aImageFields[BxPersonsConfig::$FIELD_COVER];
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if (!empty($CNF['FIELD_PICTURE'])) {
+            $this->_aImageFields[$CNF['FIELD_PICTURE']] = array (
+                'storage_object' => $CNF['OBJECT_STORAGE'],
+                'images_transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_THUMB'],
+                'field_preview' => $CNF['FIELD_PICTURE_PREVIEW'],
+            );
+        }
+
+        if (!empty($CNF['FIELD_COVER'])) {
+            $this->_aImageFields[$CNF['FIELD_COVER']] = array (
+                'storage_object' => $CNF['OBJECT_STORAGE_COVER'],
+                'images_transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_COVER_THUMB'],
+                'field_preview' => $CNF['FIELD_COVER_PREVIEW'],
+            );
+        }
+
+        if (!empty($CNF['FIELD_PICTURE_PREVIEW']))
+            $this->_aImageFields[$CNF['FIELD_PICTURE_PREVIEW']] = $this->_aImageFields[$CNF['FIELD_PICTURE']];
+
+        if (!empty($CNF['FIELD_COVER_PREVIEW']))
+            $this->_aImageFields[$CNF['FIELD_COVER_PREVIEW']] = $this->_aImageFields[$CNF['FIELD_COVER']];
 
         $oAccountProfile = BxDolProfile::getInstanceAccountProfile();
         if ($oAccountProfile)
             $this->_iAccountProfileId = $oAccountProfile->id();
-
-        $this->_oModule = BxDolModule::getInstance('bx_persons');
     }
 
-    function initChecker ($aValues = array (), $aSpecificValues = array())  {
-
+    function initChecker ($aValues = array (), $aSpecificValues = array())
+    {
         parent::initChecker($aValues, $aSpecificValues);
+
+        $CNF = &$this->_oModule->_oConfig->CNF;
 
         foreach ($this->_aImageFields as $sField => $aVals) {
             if (!isset($this->aInputs[$sField]))
                 continue;
 
-            if ($aValues && !empty($aValues['id'])) 
-                $this->aInputs[$sField]['content_id'] = $aValues['id'];
+            if ($aValues && !empty($aValues[$CNF['FIELD_ID']])) 
+                $this->aInputs[$sField]['content_id'] = $aValues[$CNF['FIELD_ID']];
 
             $sErrorString = '';
             $this->aInputs[$sField]['file_id'] = $this->_processFile ($sField, isset($aValues[$sField]) ? $aValues[$sField] : 0, $sErrorString);
@@ -87,39 +93,41 @@ class BxPersonsFormPerson extends BxTemplFormView {
         }
     }
 
-    public function insert ($aValsToAdd = array(), $isIgnore = false) {
-        $aValsToAdd = array_merge($aValsToAdd, array (
-            BxPersonsConfig::$FIELD_AUTHOR => $this->_iAccountProfileId,
-            BxPersonsConfig::$FIELD_ADDED => time(),
-            BxPersonsConfig::$FIELD_CHANGED => time(),
-        ));
+    public function insert ($aValsToAdd = array(), $isIgnore = false) 
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
         
-        if (isset($this->aInputs[BxPersonsConfig::$FIELD_PICTURE])) {
+        if (!empty($this->aInputs[$CNF['FIELD_PICTURE']])) {
             $aValsToAdd = array_merge($aValsToAdd, array (
-                BxPersonsConfig::$FIELD_PICTURE => $this->aInputs[BxPersonsConfig::$FIELD_PICTURE]['file_id'],
+                $CNF['FIELD_PICTURE'] => $this->aInputs[$CNF['FIELD_PICTURE']]['file_id'],
             ));
         }
 
-        if (isset($this->aInputs[BxPersonsConfig::$FIELD_COVER])) {
+        if (!empty($this->aInputs[$CNF['FIELD_COVER']])) {
             $aValsToAdd = array_merge($aValsToAdd, array (
-                BxPersonsConfig::$FIELD_COVER => $this->aInputs[BxPersonsConfig::$FIELD_COVER]['file_id'],
+                $CNF['FIELD_COVER'] => $this->aInputs[$CNF['FIELD_COVER']]['file_id'],
             ));
         }
 
         return parent::insert ($aValsToAdd, $isIgnore);
     }
 
-    function update ($iContentId, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null) {        
-        $aValsToAdd[BxPersonsConfig::$FIELD_CHANGED] = time();
-        if (isset($this->aInputs[BxPersonsConfig::$FIELD_COVER]))
-            $aValsToAdd[BxPersonsConfig::$FIELD_COVER] = $this->aInputs[BxPersonsConfig::$FIELD_COVER]['file_id'];
-        if (isset($this->aInputs[BxPersonsConfig::$FIELD_PICTURE]))
-            $aValsToAdd[BxPersonsConfig::$FIELD_PICTURE] = $this->aInputs[BxPersonsConfig::$FIELD_PICTURE]['file_id'];
+    function update ($iContentId, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null) 
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if (!empty($this->aInputs[$CNF['FIELD_COVER']]))
+            $aValsToAdd[$CNF['FIELD_COVER']] = $this->aInputs[$CNF['FIELD_COVER']]['file_id'];
+
+        if (!empty($this->aInputs[$CNF['FIELD_PICTURE']]))
+            $aValsToAdd[$CNF['FIELD_PICTURE']] = $this->aInputs[$CNF['FIELD_PICTURE']]['file_id'];
 
         return parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
     }
 
-    function delete ($iContentId, $aContentInfo = array()) {
+    function delete ($iContentId, $aContentInfo = array()) 
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
 
         foreach ($this->_aImageFields as $sField => $aVals) {
             if (isset($aContentInfo[$sField]) && $aContentInfo[$sField])
@@ -127,12 +135,13 @@ class BxPersonsFormPerson extends BxTemplFormView {
         }
 
         bx_import('BxDolView');
-		BxDolView::getObjectInstance(BxPersonsConfig::$OBJECT_VIEWS, $iContentId)->onObjectDelete();
+		BxDolView::getObjectInstance($CNF['OBJECT_VIEWS'], $iContentId)->onObjectDelete();
 
         return parent::delete($iContentId);
     }
 
-    function _processFile ($sField, $iFileIdOld, &$sErrorString) {
+    function _processFile ($sField, $iFileIdOld, &$sErrorString) 
+    {
         if (empty($_FILES[$sField]['tmp_name']))
             return $iFileIdOld;
 
@@ -152,8 +161,8 @@ class BxPersonsFormPerson extends BxTemplFormView {
         return $iFileId;
     }
 
-    function _deleteFile ($iFileId, $sStorageObject) {
-
+    function _deleteFile ($iFileId, $sStorageObject) 
+    {
         if (!$iFileId)
             return true;
 
@@ -165,19 +174,6 @@ class BxPersonsFormPerson extends BxTemplFormView {
 
         return $oStorage->deleteFile($iFileId, $this->_iAccountProfileId);
     }
-
-
-    function addCssJs () {
-
-        if (!isset($this->aParams['view_mode']) || !$this->aParams['view_mode']) {
-            if (self::$_isCssJsAdded)
-                return;
-            $this->_oModule->_oTemplate->addJs('forms.js');
-        }
-
-        return parent::addCssJs ();
-    }
-
 
 }
 

@@ -9,35 +9,101 @@
  * @{
  */
 
-bx_import('BxDolModuleConfig');
+bx_import('BxBaseModProfileConfig');
 
-class BxPersonsConfig extends BxDolModuleConfig {
-
-    public static $FIELD_ID = 'id';
-    public static $FIELD_AUTHOR = 'author';
-    public static $FIELD_ADDED = 'added';
-    public static $FIELD_CHANGED = 'changed';
-    public static $FIELD_NAME = 'fullname';
-    public static $FIELD_PICTURE = 'picture';
-    public static $FIELD_PICTURE_PREVIEW = 'picture_preview';
-    public static $FIELD_COVER = 'cover';
-    public static $FIELD_COVER_PREVIEW = 'cover_preview';
-
-    public static $OBJECT_STORAGE = 'bx_persons_pictures';
-    public static $OBJECT_STORAGE_COVER = 'bx_persons_pictures';
-    public static $OBJECT_IMAGES_TRANSCODER_THUMB = 'bx_persons_thumb';
-    public static $OBJECT_IMAGES_TRANSCODER_ICON = 'bx_persons_icon';
-    public static $OBJECT_IMAGES_TRANSCODER_AVATAR = 'bx_persons_avatar';
-    public static $OBJECT_IMAGES_TRANSCODER_PICTURE = 'bx_persons_picture';
-    public static $OBJECT_IMAGES_TRANSCODER_COVER = 'bx_persons_cover';
-    public static $OBJECT_IMAGES_TRANSCODER_COVER_THUMB = 'bx_persons_cover_thumb';
-	public static $OBJECT_VIEWS = 'bx_persons';
-
-    /**
-     * Constructor
-     */
-    function __construct($aModule) {
+class BxPersonsConfig extends BxBaseModProfileConfig 
+{
+    function __construct($aModule) 
+    {
         parent::__construct($aModule);
+
+        $aMenuItems2Methods = array (
+            'view-persons-profile' => 'checkAllowedView',
+            'edit-persons-profile' => 'checkAllowedEdit',
+            'delete-persons-profile' => 'checkAllowedDelete',
+            'profile-friend-add' => 'checkAllowedFriendAdd',
+            'profile-friend-remove' => 'checkAllowedFriendRemove',
+            'profile-subscribe-add' => 'checkAllowedSubscribeAdd',
+            'profile-subscribe-remove' => 'checkAllowedSubscribeRemove',
+            'profile-actions-more' => 'checkAllowedViewMoreMenu',
+        );
+
+        $this->CNF = array (
+
+            // database tables
+            'TABLE_ENTRIES' => $aModule['db_prefix'] . 'data',
+
+            // database fields
+            'FIELD_ID' => 'id',
+            'FIELD_AUTHOR' => 'author',
+            'FIELD_ADDED' => 'added',
+            'FIELD_CHANGED' => 'changed',
+            'FIELD_NAME' => 'fullname',
+            'FIELD_PICTURE' => 'picture',
+            'FIELD_PICTURE_PREVIEW' => 'picture_preview',
+            'FIELD_COVER' => 'cover',
+            'FIELD_COVER_PREVIEW' => 'cover_preview',
+
+            // page URIs
+            'URI_VIEW_ENTRY' => 'view-persons-profile',
+            'URI_EDIT_ENTRY' => 'edit-persons-profile',
+            'URI_EDIT_COVER' => 'edit-persons-cover',
+
+            'URL_HOME' => 'member.php',
+
+            // some params
+            'PARAM_AUTOAPPROVAL' => 'bx_persons_autoapproval',
+            'PARAM_DEFAULT_ACL_LEVEL' => 'bx_persons_default_acl_level',
+            'PARAM_NUM_RSS' => '', // TODO:
+
+            // objects
+            'OBJECT_STORAGE' => 'bx_persons_pictures',
+            'OBJECT_STORAGE_COVER' => 'bx_persons_pictures',
+            'OBJECT_IMAGES_TRANSCODER_THUMB' => 'bx_persons_thumb',
+            'OBJECT_IMAGES_TRANSCODER_ICON' => 'bx_persons_icon',
+            'OBJECT_IMAGES_TRANSCODER_AVATAR' => 'bx_persons_avatar',
+            'OBJECT_IMAGES_TRANSCODER_PICTURE' => 'bx_persons_picture',
+            'OBJECT_IMAGES_TRANSCODER_COVER' => 'bx_persons_cover',
+            'OBJECT_IMAGES_TRANSCODER_COVER_THUMB' => 'bx_persons_cover_thumb',
+            'OBJECT_VIEWS' => 'bx_persons',
+            'OBJECT_FORM_ENTRY' => 'bx_person',
+            'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_person_view',
+            'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_person_add',
+            'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => 'bx_person_edit',
+            'OBJECT_FORM_ENTRY_DISPLAY_EDIT_COVER' => 'bx_person_edit_cover',
+            'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_person_delete',
+            'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_persons_view_actions', // actions menu on view entry page
+            'OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE' => 'bx_persons_view_actions_more', // actions menu on view entry page for "more" popup
+            'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_persons_view_submenu',  // view entry submenu
+
+            // menu items which visibility depends on custom visibility checking
+            'MENU_ITEM_TO_METHOD' => array (
+                'bx_persons_view_actions' => $aMenuItems2Methods,
+                'bx_persons_view_actions_more' => $aMenuItems2Methods,
+            ),
+
+            // informer messages
+            'INFORMERS' => array (
+                'status' => array (
+                    'name' => 'bx-persons-status-not-active',
+                    'map' => array (
+                        BX_PROFILE_STATUS_PENDING => '_bx_persons_txt_account_pending',
+                        BX_PROFILE_STATUS_SUSPENDED => '_bx_persons_txt_account_suspended',
+                    ),
+                ),
+            ),
+
+            // some language keys
+            'T' => array (
+                'menu_item_title_befriend_sent' => '_bx_persons_menu_item_title_befriend_sent', 
+                'menu_item_title_unfriend_cancel_request' => '_bx_persons_menu_item_title_unfriend_cancel_request',
+                'menu_item_title_befriend_confirm' => '_bx_persons_menu_item_title_befriend_confirm',
+                'menu_item_title_unfriend_reject_request' => '_bx_persons_menu_item_title_unfriend_reject_request',
+                'menu_item_title_befriend' => '_bx_persons_menu_item_title_befriend',
+                'menu_item_title_unfriend' => '_bx_persons_menu_item_title_unfriend',
+            ),
+
+        );
     }
 
 }

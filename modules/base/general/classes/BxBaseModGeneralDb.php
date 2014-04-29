@@ -3,22 +3,25 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  * 
- * @defgroup    Persons Persons
+ * @defgroup    BaseGeneral Base classes for modules
  * @ingroup     DolphinModules
  *
  * @{
  */
 
-bx_import('BxBaseModProfileDb');
+bx_import('BxDolModuleDb');
 
 /*
- * Persons module database queries
+ * Module database queries
  */
-class BxPersonsDb extends BxBaseModProfileDb 
+class BxBaseModGeneralDb extends BxDolModuleDb
 {
+    protected $_oConfig;
+
     public function __construct(&$oConfig) 
     {
         parent::__construct($oConfig);
+        $this->_oConfig = $oConfig;
     }
 }
 

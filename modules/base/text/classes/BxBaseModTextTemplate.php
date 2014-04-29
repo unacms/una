@@ -9,23 +9,16 @@
  * @{
  */
 
-bx_import('BxDolModuleTemplate');
+bx_import('BxBaseModGeneralTemplate');
 
 /**
  * Module representation.
  */
-class BxBaseModTextTemplate extends BxDolModuleTemplate 
+class BxBaseModTextTemplate extends BxBaseModGeneralTemplate 
 {
-    protected $MODULE;
-
-    /**
-     * Constructor
-     */
     function __construct(&$oConfig, &$oDb) 
     {
         parent::__construct($oConfig, $oDb);
-
-        $this->addCss ('main.css');
     }
 
     function unit ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html') 

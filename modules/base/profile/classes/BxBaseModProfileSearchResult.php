@@ -2,21 +2,22 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    BaseText Base classes for text modules
  * @ingroup     DolphinModules
  *
  * @{
  */
 
-bx_import('BxBaseModGeneralConfig');
+bx_import('BxBaseModGeneralSearchResult');
 
-class BxBaseModTextConfig extends BxBaseModGeneralConfig 
+class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult 
 {
-    function __construct($aModule) 
+    function __construct($sMode = '', $aParams = array()) 
     {
-        parent::__construct($aModule);
+        parent::__construct($sMode, $aParams);
     }
 }
 
-/** @} */ 
+/** @} */
+

@@ -3,26 +3,25 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    BaseText Base classes for text modules
+ * @defgroup    Persons Persons
  * @ingroup     DolphinModules
  *
  * @{
  */
 
-bx_import('BxBaseModGeneralMenuView');
+bx_import('BxBaseModProfileMenuView');
 
 /**
- * General class for module menu.
+ * 'View person' menu.
  */
-class BxBaseModTextMenu extends BxBaseModGeneralMenuView 
+class BxPersonsMenuView extends BxBaseModProfileMenuView 
 {
-    protected $_aContentInfo;
 
     public function __construct($aObject, $oTemplate = false) 
     {
+        $this->MODULE = 'bx_persons';
         parent::__construct($aObject, $oTemplate);
     }
-
 }
 
 /** @} */

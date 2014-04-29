@@ -9,77 +9,94 @@
  * @{
  */
 
-bx_import('BxTemplSearchResult');
+bx_import('BxBaseModProfileSearchResult');
 
-class BxPersonsSearchResult extends BxTemplSearchResult {
+class BxPersonsSearchResult extends BxBaseModProfileSearchResult 
+{
 
-    var $aCurrent = array(
-        'name' => 'bx_persons',
-        'title' => '_bx_persons_page_title_browse',
-        'table' => 'sys_profiles',
-        'ownFields' => array(),
-        'searchFields' => array('fullname'),
-        'restriction' => array(
-            'perofileStatus' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
-            'perofileType' => array('value' => 'bx_persons', 'field' => 'type', 'operator' => '='),
-            'owner' => array('value' => '', 'field' => 'author', 'operator' => '=', 'table' => 'bx_persons_data'),
-        ),
-        'join' => array (
-            'profile' => array(
-                'type' => 'INNER',
-                'table' => 'bx_persons_data',
-                'mainField' => 'content_id',
-                'onField' => 'id',
-                'joinFields' => array('id', 'fullname', 'picture', 'added'),
+    function __construct($sMode = '', $aParams = false) 
+    {
+        parent::__construct($sMode, $aParams);
+
+        $this->aCurrent =  array(
+            'name' => 'bx_persons',
+            'title' => _t('_bx_persons_page_title_browse'),
+            'table' => 'sys_profiles',
+            'ownFields' => array(),
+            'searchFields' => array('fullname'),
+            'restriction' => array(
+                'perofileStatus' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
+                'perofileType' => array('value' => 'bx_persons', 'field' => 'type', 'operator' => '='),
+                'owner' => array('value' => '', 'field' => 'author', 'operator' => '=', 'table' => 'bx_persons_data'),
             ),
-        ),
-        'paginate' => array('perPage' => 20, 'start' => 0),
-        'sorting' => 'none',
-        'rss' => array(
-            'title' => '',
-            'link' => '',
-            'image' => '',
-            'profile' => 0,
-            'fields' => array (
-                'Guid' => 'link',
-                'Link' => 'link',
-                'Title' => 'fullname',
-                'DateTimeUTS' => 'added',
-                'Desc' => 'fullname',
-                'Picture' => 'picture',
+            'join' => array (
+                'profile' => array(
+                    'type' => 'INNER',
+                    'table' => 'bx_persons_data',
+                    'mainField' => 'content_id',
+                    'onField' => 'id',
+                    'joinFields' => array('id', 'fullname', 'picture', 'added'),
+                ),
             ),
-        ),
-        'ident' => 'id'
-    );
+            'paginate' => array('perPage' => 20, 'start' => 0),
+            'sorting' => 'none',
+            'rss' => array(
+                'title' => '',
+                'link' => '',
+                'image' => '',
+                'profile' => 0,
+                'fields' => array (
+                    'Guid' => 'link',
+                    'Link' => 'link',
+                    'Title' => 'fullname',
+                    'DateTimeUTS' => 'added',
+                    'Desc' => 'fullname',
+                    'Picture' => 'picture',
+                ),
+            ),
+            'ident' => 'id'
+        );
 
-    function __construct($sMode = '', $mixedParams = false) {
-
-        $oModuleMain = $this->getMain();
+        $this->sFilterName = 'bx_persons_filter';
+        $this->oModule = $this->getMain();
 
         switch ($sMode) {
 
             case 'connections':
-                $aParams = $mixedParams;
                 bx_import('BxDolConnection');
                 $oConnection = isset($aParams['object']) ? BxDolConnection::getObjectInstance($aParams['object']) : false;
                 if ($oConnection && isset($aParams['profile']) && (int)$aParams['profile']) {
+
+                    $oProfile = BxDolProfile::getInstance($aParams['profile']);
 
                     $sMethod = 'getConnectedContentAsCondition';
                     if (isset($aParams['type']) && $aParams['type'] == 'initiators')
                         $sMethod = 'getConnectedInitiatorsAsCondition';
 
-                    if (isset($aParams['type']) && $aParams['type'] == 'common')
+                    if (isset($aParams['type']) && $aParams['type'] == 'common') {
+
                         $a = $oConnection->getCommonContentAsCondition('id', (int)$aParams['profile'], (int)$aParams['profile2'], isset($aParams['mutual']) ? $aParams['mutual'] : false);
-                    else
+                        $oProfile2 = BxDolProfile::getInstance($aParams['profile2']);
+                        if ($oProfile && $oProfile2)
+                            $this->aCurrent['title'] = _t('_bx_persons_page_title_browse_connections_mutual', $oProfile->getDisplayName(), $oProfile2->getDisplayName());
+
+                    } else {
+
                         $a = $oConnection->$sMethod('id', (int)$aParams['profile'], isset($aParams['mutual']) ? $aParams['mutual'] : false);
+                        if ($oProfile)
+                            $this->aCurrent['title'] = _t('_bx_persons_page_title_browse_connections', $oProfile->getDisplayName());
+
+                    }
+
                     $this->aCurrent['restriction'] = array_merge($this->aCurrent['restriction'], $a['restriction']);
                     $this->aCurrent['join'] = array_merge($this->aCurrent['join'], $a['join']);
+                    $this->aCurrent['rss']['link'] = 'modules/?r=persons/rss/' . $sMode . '/' . $aParams['object'] . '/' . $aParams['type'] . '/' . (int)$aParams['profile'] . '/' . (int)$aParams['profile2'] . '/' . (int)$aParams['mutual'];
 
                 }
                 break;
 
             case 'search':
-                $sValue = $mixedParams;
+                $sValue = isset($aParams['q']) ? $aParams['q'] : false;
                 if ($sValue)
                     $this->aCurrent['restriction']['keyword'] = array('value' => $sValue,'field' => '','operator' => 'against');
 
@@ -88,45 +105,15 @@ class BxPersonsSearchResult extends BxTemplSearchResult {
                 unset($this->aCurrent['rss']);
                 break;
 
-            case 'user':
-                $iProfileId = (int)$mixedParams;
-                $aContentInfo = $oModuleMain->_oDb->getContentInfoById($iContentId);
-                if (!$aContentInfo)
-                    $this->isError = true;
-                else
-                    $this->aCurrent['restriction']['owner']['value'] = $iProfileId;
-
-                $this->sBrowseUrl = "browse/user/$iProfileId";
-                $this->aCurrent['title'] = _t('_bx_persons_page_title_browse_by_author', $aContentInfo['fullname']); // TODO: owner name here
-                if (bx_get('rss')) {
-                    $aData = getProfileInfo($iProfileId);
-                    if ($aData['Avatar']) {
-                        if (!$aImage['no_image'])
-                            $this->aCurrent['rss']['image'] = $aImage['file'];
-                    }
-                }
-                break;
-            
             case 'recent':
             case '':
-                $this->sBrowseUrl = 'browse/recent';
+                $this->aCurrent['rss']['link'] = 'modules/?r=persons/rss/' . $sMode;
                 $this->aCurrent['title'] = _t('_bx_persons_page_title_browse_recent');
                 break;
 
             default:
                 $this->isError = true;
         }
-
-        // $this->aCurrent['paginate']['perPage'] = $oModuleMain->_oDb->getParam('bx_groups_perpage_browse'); // TODO:
-
-        if (isset($this->aCurrent['rss']))
-            $this->aCurrent['rss']['link'] = BX_DOL_URL_ROOT . $oModuleMain->_oConfig->getBaseUri() . $this->sBrowseUrl;
-
-        if (bx_get('rss')) {
-            $this->aCurrent['paginate']['perPage'] = 10;//$oModuleMain->_oDb->getParam('bx_groups_max_rss_num');
-        }
-
-        $this->sFilterName = 'bx_persons_filter';
 
         parent::__construct();
     }
@@ -146,21 +133,11 @@ class BxPersonsSearchResult extends BxTemplSearchResult {
     function displayResultBlock () {        
         $s = parent::displayResultBlock ();
         if ($s) {
-            $oModuleMain = $this->getMain();
-            BxDolTemplate::getInstance()->addDynamicLocation($oModuleMain->_oConfig->getHomePath(), $oModuleMain->_oConfig->getHomeUrl());
+            BxDolTemplate::getInstance()->addDynamicLocation($this->oModule->_oConfig->getHomePath(), $this->oModule->_oConfig->getHomeUrl());
             bx_import('BxTemplFunctions');
             return BxTemplFunctions::getInstance()->centerContent ($s, '.bx-persons-unit');
         }
         return '';
-    }
-
-    function getMain() {
-        return BxDolModule::getInstance($this->aCurrent['name']);
-    }
-
-    function getRssUnitLink (&$a) {
-        bx_import('BxDolPermalinks');
-        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=view-persons-profile&id=' . $a['id']);
     }
 
     function _getPseud () {

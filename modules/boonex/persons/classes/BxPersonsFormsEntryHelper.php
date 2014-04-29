@@ -2,24 +2,24 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Persons Persons
  * @ingroup     DolphinModules
  *
  * @{
  */
 
-bx_import ('BxBaseModProfileModule');
+bx_import('BxBaseModProfileFormsEntryHelper');
 
 /**
- * Person profiles module.
+ * Person profile forms functions
  */
-class BxPersonsModule extends BxBaseModProfileModule
+class BxPersonsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper 
 {
-    function __construct(&$aModule) 
+    public function __construct($oModule) 
     {
-        parent::__construct($aModule);
+        parent::__construct($oModule);
     }
 }
 
-/** @} */ 
+/** @} */

@@ -57,7 +57,7 @@ CREATE TABLE `bx_persons_views_track` (
 
 -- FORMS
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_person', 'bx_persons', '_bx_persons_form_person', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_persons_data', 'id', '', '', 'do_submit', '', 0, 1, 'BxPersonsFormPerson', 'modules/boonex/persons/classes/BxPersonsFormPerson.php');
+('bx_person', 'bx_persons', '_bx_persons_form_person', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_persons_data', 'id', '', '', 'do_submit', '', 0, 1, 'BxPersonsFormEntry', 'modules/boonex/persons/classes/BxPersonsFormEntry.php');
 
 INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`, `title`) VALUES 
 ('bx_person', 'bx_person_add', 'bx_persons', 0, '_bx_persons_form_person_display_add'),

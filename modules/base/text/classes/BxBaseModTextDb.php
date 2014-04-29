@@ -9,22 +9,19 @@
  * @{
  */
 
-bx_import('BxDolModuleDb');
+bx_import('BxBaseModGeneralDb');
 
 /*
  * Module database queries
  */
-class BxBaseModTextDb extends BxDolModuleDb
+class BxBaseModTextDb extends BxBaseModGeneralDb
 {
-    protected $_oConfig;
-
-    function __construct(&$oConfig) 
+    public function __construct(&$oConfig) 
     {
         parent::__construct($oConfig);
-        $this->_oConfig = $oConfig;
     }
 
-    function getContentInfoById ($iContentId) 
+    public function getContentInfoById ($iContentId) 
     {
         $sQuery = $this->prepare ("SELECT `c`.* FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` WHERE `c`.`id` = ?", $iContentId);
         return $this->getRow($sQuery);
