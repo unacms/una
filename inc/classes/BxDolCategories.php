@@ -34,7 +34,7 @@ class BxDolCategories extends BxDolTags {
 
     function getGroupChooser ($sType, $iOwnerId = 0, $bForm = false, $sCustomValues = '') {
         $a = $this->getCategoriesList ($sType, $iOwnerId, $bForm);
-        $a = array('' => _t('_Please_Select_')) + (is_array($a) ? $a : array());
+        $a = array('' => _t('_sys_please_select')) + (is_array($a) ? $a : array());
 
         $aCustomValues = $this->explodeTags($sCustomValues);
         foreach($aCustomValues as $iIndex => $sValue)
