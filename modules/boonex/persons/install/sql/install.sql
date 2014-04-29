@@ -57,24 +57,24 @@ CREATE TABLE `bx_persons_views_track` (
 
 -- FORMS
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_person', 'bx_persons', '_bx_persons_form_person', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_persons_data', 'id', '', '', 'do_submit', '', 0, 1, 'BxPersonsFormEntry', 'modules/boonex/persons/classes/BxPersonsFormEntry.php');
+('bx_person', 'bx_persons', '_bx_persons_form_profile', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_persons_data', 'id', '', '', 'do_submit', '', 0, 1, 'BxPersonsFormEntry', 'modules/boonex/persons/classes/BxPersonsFormEntry.php');
 
 INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`, `title`) VALUES 
-('bx_person', 'bx_person_add', 'bx_persons', 0, '_bx_persons_form_person_display_add'),
-('bx_person', 'bx_person_delete', 'bx_persons', 0, '_bx_persons_form_person_display_delete'),
-('bx_person', 'bx_person_edit', 'bx_persons', 0, '_bx_persons_form_person_display_edit'),
-('bx_person', 'bx_person_edit_cover', 'bx_persons', 0, '_bx_persons_form_person_display_edit_cover'),
-('bx_person', 'bx_person_view', 'bx_persons', 1, '_bx_persons_form_person_display_view');
+('bx_person', 'bx_person_add', 'bx_persons', 0, '_bx_persons_form_profile_display_add'),
+('bx_person', 'bx_person_delete', 'bx_persons', 0, '_bx_persons_form_profile_display_delete'),
+('bx_person', 'bx_person_edit', 'bx_persons', 0, '_bx_persons_form_profile_display_edit'),
+('bx_person', 'bx_person_edit_cover', 'bx_persons', 0, '_bx_persons_form_profile_display_edit_cover'),
+('bx_person', 'bx_person_view', 'bx_persons', 1, '_bx_persons_form_profile_display_view');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
-('bx_person', 'bx_persons', 'cover', '', '', 0, 'file', '_bx_persons_form_person_input_sys_cover', '_bx_persons_form_person_input_cover', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
-('bx_person', 'bx_persons', 'cover_preview', '', '', 0, 'custom', '_bx_persons_form_person_input_sys_cover_preview', '_bx_persons_form_person_input_cover_preview', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_person', 'bx_persons', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_persons_form_person_input_sys_delete_confirm', '_bx_persons_form_person_input_delete_confirm', '_bx_persons_form_person_input_delete_confirm_info', 1, 0, 0, '', '', '', 'Avail', '', '_bx_persons_form_person_input_delete_confirm_error', '', '', 1, 0),
-('bx_person', 'bx_persons', 'do_submit', '_sys_form_account_input_submit', '', 0, 'submit', '_bx_persons_form_person_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_person', 'bx_persons', 'fullname', '', '', 0, 'text', '_bx_persons_form_person_input_sys_fullname', '_bx_persons_form_person_input_fullname', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_persons_form_person_input_fullname_err', 'Xss', '', 1, 0),
-('bx_person', 'bx_persons', 'picture', '', '', 0, 'file', '_bx_persons_form_person_input_sys_picture', '_bx_persons_form_person_input_picture', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_persons_form_person_input_picture_err', 'Int', '', 1, 0),
-('bx_person', 'bx_persons', 'picture_preview', '', '', 0, 'custom', '_bx_persons_form_person_input_sys_picture_preview', '_bx_persons_form_person_input_picture_preview', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_person', 'bx_persons', 'sex', 1, '#!Sex', 0, 'radio_set', '_bx_persons_form_person_input_sys_sex', '_bx_persons_form_person_input_sex', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_persons_form_person_input_sex_err', 'Xss', '', 1, 1);
+('bx_person', 'bx_persons', 'cover', '', '', 0, 'file', '_bx_persons_form_profile_input_sys_cover', '_bx_persons_form_profile_input_cover', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
+('bx_person', 'bx_persons', 'cover_preview', '', '', 0, 'custom', '_bx_persons_form_profile_input_sys_cover_preview', '_bx_persons_form_profile_input_cover_preview', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_person', 'bx_persons', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_persons_form_profile_input_sys_delete_confirm', '_bx_persons_form_profile_input_delete_confirm', '_bx_persons_form_profile_input_delete_confirm_info', 1, 0, 0, '', '', '', 'Avail', '', '_bx_persons_form_profile_input_delete_confirm_error', '', '', 1, 0),
+('bx_person', 'bx_persons', 'do_submit', '_sys_form_account_input_submit', '', 0, 'submit', '_bx_persons_form_profile_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_person', 'bx_persons', 'fullname', '', '', 0, 'text', '_bx_persons_form_profile_input_sys_fullname', '_bx_persons_form_profile_input_fullname', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_persons_form_profile_input_fullname_err', 'Xss', '', 1, 0),
+('bx_person', 'bx_persons', 'picture', '', '', 0, 'file', '_bx_persons_form_profile_input_sys_picture', '_bx_persons_form_profile_input_picture', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_persons_form_profile_input_picture_err', 'Int', '', 1, 0),
+('bx_person', 'bx_persons', 'picture_preview', '', '', 0, 'custom', '_bx_persons_form_profile_input_sys_picture_preview', '_bx_persons_form_profile_input_picture_preview', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_person', 'bx_persons', 'sex', 1, '#!Sex', 0, 'radio_set', '_bx_persons_form_profile_input_sys_sex', '_bx_persons_form_profile_input_sex', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_persons_form_profile_input_sex_err', 'Xss', '', 1, 1);
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
 ('bx_person_add', 'cover_preview', 2147483647, 0, 1),

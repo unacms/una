@@ -23,7 +23,7 @@ class BxBaseModProfileDb extends BxBaseModGeneralDb
 
     public function getContentInfoById ($iContentId) 
     {
-        $sQuery = $this->prepare ("SELECT `c`.*, `p`.`account_id`, `p`.`id` AS `profile_id`, `p`.`status` AS `profile_status` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` INNER JOIN `sys_profiles` AS `p` ON (`p`.`content_id` = `c`.`id` AND `p`.`type` = 'bx_persons') WHERE `c`.`id` = ?", $iContentId);
+        $sQuery = $this->prepare ("SELECT `c`.*, `p`.`account_id`, `p`.`id` AS `profile_id`, `p`.`status` AS `profile_status` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` INNER JOIN `sys_profiles` AS `p` ON (`p`.`content_id` = `c`.`id` AND `p`.`type` = ?) WHERE `c`.`id` = ?", $this->_oConfig->getName(), $iContentId);
         return $this->getRow($sQuery);
     }
 
@@ -35,7 +35,7 @@ class BxBaseModProfileDb extends BxBaseModGeneralDb
 
     public function searchByTerm($sTerm, $iLimit) 
     {
-        $sQuery = $this->prepare("SELECT `c`.`id` AS `content_id`, `p`.`account_id`, `p`.`id` AS `profile_id`, `p`.`status` AS `profile_status` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` INNER JOIN `sys_profiles` AS `p` ON (`p`.`content_id` = `c`.`id` AND `p`.`type` = 'bx_persons') WHERE `p`.`status` = ? AND `c`.`fullname` LIKE ? ORDER BY `added` DESC LIMIT ?", BX_PROFILE_STATUS_ACTIVE, '%' . $sTerm . '%', (int)$iLimit);
+        $sQuery = $this->prepare("SELECT `c`.`id` AS `content_id`, `p`.`account_id`, `p`.`id` AS `profile_id`, `p`.`status` AS `profile_status` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` INNER JOIN `sys_profiles` AS `p` ON (`p`.`content_id` = `c`.`id` AND `p`.`type` = ?) WHERE `p`.`status` = ? AND `c`.`fullname` LIKE ? ORDER BY `added` DESC LIMIT ?", $this->_oConfig->getName(), BX_PROFILE_STATUS_ACTIVE, '%' . $sTerm . '%', (int)$iLimit);
         return $this->getAll($sQuery);
     }
 }
