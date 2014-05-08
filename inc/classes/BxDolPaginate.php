@@ -289,7 +289,7 @@ abstract class BxDolPaginate extends BxDol {
             'paginate_class' => $this->_sPaginateClass,
         );
 
-        $this->_addCssJs();
+        $this->addCssJs();
         return $this->_oTemplate->parseHtmlByName('paginate.html', $aVariables);
     }
 
@@ -313,6 +313,14 @@ abstract class BxDolPaginate extends BxDol {
         return $this->getPaginate($iStart, $iNum, $iPerPage);
     }
 
+    public function addCssJs () {
+        if (self::$_isCssAdded)
+            return false;
+        $this->_oTemplate->addCss('paginate.css');
+        self::$_isCssAdded = true;
+        return true;
+    }
+
     protected function _getReplacement() {
         return array(
             'start' => $this->_iStart,
@@ -326,14 +334,6 @@ abstract class BxDolPaginate extends BxDol {
 
     protected function _getPageChangeOnClick($aReplacement) {
         return !empty($this->_sOnChangePage) ? 'onclick="javascript:' . $this->_oTemplate->parseHtmlByContent($this->_sOnChangePage, $aReplacement, array('{', '}')) . '; return false;"' : '';
-    }
-
-    protected function _addCssJs () {
-        if (self::$_isCssAdded)
-            return false;
-        $this->_oTemplate->addCss('paginate.css');
-        self::$_isCssAdded = true;
-        return true;
     }
 
 }

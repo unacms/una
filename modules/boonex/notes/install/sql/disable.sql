@@ -33,10 +33,14 @@ DELETE `sys_acl_actions`, `sys_acl_matrix` FROM `sys_acl_actions`, `sys_acl_matr
 DELETE FROM `sys_acl_actions` WHERE `Module` = 'bx_notes';
 
 -- COMMENTS
-DELETE FROM `sys_objects_cmts` WHERE `Name`='bx_notes';
+DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_notes';
 
 -- VOTES
-DELETE FROM `sys_objects_vote` WHERE `Name`='bx_notes';
+DELETE FROM `sys_objects_vote` WHERE `Name` = 'bx_notes';
 
 -- VIEWS
-DELETE FROM `sys_objects_view` WHERE `Name`='bx_notes';
+DELETE FROM `sys_objects_view` WHERE `Name` = 'bx_notes';
+
+-- SEARCH
+DELETE FROM `sys_objects_search` WHERE `ObjectName` = 'bx_notes';
+

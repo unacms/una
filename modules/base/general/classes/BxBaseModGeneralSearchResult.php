@@ -22,6 +22,7 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
 
     function getMain() 
     {
+        bx_import('BxDolModule');
         return BxDolModule::getInstance($this->aCurrent['name']);
     }
 

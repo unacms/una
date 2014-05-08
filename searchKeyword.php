@@ -6,11 +6,12 @@
  */
 
 require_once('./inc/header.inc.php');
-require_once(BX_DIRECTORY_PATH_INC . "languages.inc.php");
 require_once(BX_DIRECTORY_PATH_INC . "params.inc.php");
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
 bx_import('BxDolSearch');
+bx_import('BxDolTemplate');
+
 $oZ = new BxDolSearch();
 
 $sCode = '';
@@ -20,18 +21,22 @@ if (bx_get('keyword')) {
         $sCode = $oZ->getEmptyResult();
 }
 
+$sSearchArea = '<div id="searchArea" class="bx-def-margin-top">'.$sCode.'</div>';
+
+/*
 bx_import('BxTemplMenu');
 $aVars = array();
 BxTemplMenu::getInstance()->setCustomSubActions($aVars, '');
+*/
 
 $oTemplate = BxDolTemplate::getInstance();
 $oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);
 $oTemplate->setPageHeader (_t("_Search"));
-$oTemplate->setPageContent ('page_main_code', getExtraJs() . getSearchForm() . $sCode);
+$oTemplate->setPageContent ('page_main_code', getExtraJs() . getSearchForm($oTemplate) . $sSearchArea);
+$oTemplate->getPageCode();
 
-PageCode();
-
-function getSearchForm () {
+function getSearchForm ($oTemplate) 
+{
     $aList = BxDolDb::getInstance()->fromCache('sys_objects_search', 'getAllWithKey',
            'SELECT `ID` as `id`,
                    `Title` as `title`,
@@ -44,7 +49,7 @@ function getSearchForm () {
     foreach ($aList as $sKey => $aValue) {
         $aValues[$sKey] = _t($aValue['title']);
         if (!class_exists($aValue['class'])) {
-            $sPath = BX_DIRECTORY_PATH_ROOT . str_replace('{tmpl}', $GLOBALS['tmpl'], $aValue['file']);
+            $sPath = BX_DIRECTORY_PATH_ROOT . str_replace('{tmpl}', $oTemplate->getCode(), $aValue['file']);
             require_once($sPath);
         }
         $oClass = new $aValue['class']();
@@ -88,7 +93,11 @@ function getSearchForm () {
     $oForm = new BxTemplFormView($aForm);
     $sFormVal = $oForm->getCode();
 
-    return DesignBoxContent(_t( "_Search" ), $sFormVal, 1);
+    bx_import('BxTemplPaginate');
+    $o = new BxTemplPaginate(array());
+    $o->addCssJs();
+
+    return DesignBoxContent(_t( "_Search" ), $sFormVal, BX_DB_PADDING_DEF);
 }
 
 function getExtraJs() {
@@ -96,19 +105,16 @@ function getExtraJs() {
 ?>
 <script language="javascript">
     $(document).ready( function() {
-         $('#searchForm').bind( 'submit', function() {
-                bx_loading('searchForm', true);
-                 var sQuery = $('input', '#searchForm').serialize();
-                 $.post('searchKeywordContent.php', sQuery, function(data) {
-                         $('#searchArea').html(data);
-                         bx_loading('searchForm', false);
-                    }
-                );
+        $('#searchForm').bind( 'submit', function() {
+            bx_loading('searchForm', true);
+            var sQuery = $('input', '#searchForm').serialize();
+            $.post('searchKeywordContent.php', sQuery, function(data) {
+                $('#searchArea').html(data).bxTime();                
+                bx_loading('searchForm', false);
+            });
             return false;
-          }
-         );
-      }
-    );
+        });
+    });
 </script>
 <?php
     return ob_get_clean();

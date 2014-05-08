@@ -30,6 +30,8 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
     function getDesignBoxMenu () 
     {
         $aMenu = parent::getDesignBoxMenu ();
+        if (!$aMenu)
+            return false;
 
         return array_merge(
             array(

@@ -6,18 +6,15 @@
  */
 
 require_once('./inc/header.inc.php');
-require_once(BX_DIRECTORY_PATH_INC . "languages.inc.php");
 require_once(BX_DIRECTORY_PATH_INC . "params.inc.php");
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
-$bAjaxMode = ( isset( $_SERVER['HTTP_X_REQUESTED_WITH'] ) and $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' ) ? true : false;
-$aChoice = bx_get('section');
-
 bx_import('BxDolSearch');
-$oZ = new BxDolSearch($aChoice);
-$sCode = $oZ->response();
-if ($sCode)
-    echo $sCode;
-else
-    echo $oZ->getEmptyResult();
 
+$o = new BxDolSearch(bx_get('section'));
+$s = $o->response();
+if (!$s)
+    $s = $o->getEmptyResult();
+
+header('Content-type: text/html; charset=utf-8');
+echo $s;

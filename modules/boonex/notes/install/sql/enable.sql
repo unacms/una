@@ -265,3 +265,8 @@ INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`
 -- VIEWS
 INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
 ('bx_notes', 'bx_notes_views_track', '86400', '1', 'bx_notes_posts', 'id', 'views', '', '');
+
+-- SEARCH
+INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `ClassName`, `ClassPath`) VALUES
+('bx_notes', '_bx_notes', 'BxNotesSearchResult', 'modules/boonex/notes/classes/BxNotesSearchResult.php');
+

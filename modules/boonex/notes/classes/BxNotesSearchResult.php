@@ -19,7 +19,7 @@ class BxNotesSearchResult extends BxBaseModTextSearchResult
 
         $this->aCurrent = array(
             'name' => 'bx_notes',
-            'title' => '_bx_notes_page_title_browse',
+            'title' => _t('_bx_notes_page_title_browse'),
             'table' => 'bx_notes_posts',
             'ownFields' => array('id', 'title', 'text', 'summary', 'thumb', 'author', 'added'),
             'searchFields' => array('title', 'text'),
@@ -78,11 +78,16 @@ class BxNotesSearchResult extends BxBaseModTextSearchResult
                 break;
             
             case 'public':
-            case '':
                 bx_import('BxDolPermalinks');
                 $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']);
                 $this->aCurrent['title'] = _t('_bx_notes_page_title_browse_recent');
                 $this->aCurrent['rss']['link'] = 'modules/?r=notes/rss/' . $sMode;
+                break;
+
+            case '': // search results
+                $this->sBrowseUrl = '';
+                $this->aCurrent['title'] = _t('_bx_notes');
+                unset($this->aCurrent['rss']);
                 break;
 
             default:

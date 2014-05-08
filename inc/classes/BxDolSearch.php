@@ -71,6 +71,7 @@ class BxDolSearch extends BxDol
      */
     function response () 
     {
+        bx_import('BxDolTemplate');
         $sCode = '';
         foreach ($this->aChoice as $sKey => $aValue) {
             if (!class_exists($aValue['class'])) {
@@ -78,7 +79,7 @@ class BxDolSearch extends BxDol
                 require_once(BX_DIRECTORY_PATH_ROOT . $sClassPath);
             }
             $oEx = new $aValue['class']();
-            $oEx->id = $aValue['id'];
+            $oEx->setId($aValue['id']);
             $sCode .= $oEx->processing();
         }
         return $sCode;
@@ -219,6 +220,16 @@ class BxDolSearchResult implements iBxDolReplaceable
     {
         if (isset($this->aPseud['id']))
             $this->aCurrent['ident'] = $this->aPseud['id'];
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setId($sId)
+    {
+        $this->id = $sId;
     }
 
     /**
