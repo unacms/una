@@ -41,7 +41,7 @@ CREATE TABLE `sys_keys` (
 
 CREATE TABLE `sys_objects_editor` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `object` varchar(32) NOT NULL,
+  `object` varchar(64) NOT NULL,
   `title` varchar(255) NOT NULL,
   `skin` varchar(255) NOT NULL,
   `override_class_name` varchar(255) NOT NULL,
@@ -61,7 +61,7 @@ INSERT INTO `sys_objects_editor` (`object`, `title`, `skin`, `override_class_nam
 
 CREATE TABLE IF NOT EXISTS `sys_objects_social_sharing` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `object` varchar(32) NOT NULL,
+  `object` varchar(64) NOT NULL,
   `type` enum('html','service') NOT NULL,
   `content` text NOT NULL,
   `order` int(11) NOT NULL,
@@ -82,7 +82,7 @@ INSERT INTO `sys_objects_social_sharing` (`object`, `type`, `content`, `order`, 
 
 CREATE TABLE `sys_objects_captcha` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `object` varchar(32) NOT NULL,
+  `object` varchar(64) NOT NULL,
   `title` varchar(255) NOT NULL,
   `override_class_name` varchar(255) NOT NULL,
   `override_class_file` varchar(255) NOT NULL,
@@ -129,7 +129,7 @@ CREATE TABLE `sys_objects_categories` (
 
 CREATE TABLE `sys_objects_cmts` (
   `ID` int(10) unsigned NOT NULL auto_increment,
-  `Name` varchar(50) NOT NULL,
+  `Name` varchar(64) NOT NULL,
   `Table` varchar(50) NOT NULL,
   `CharsPostMin` int(10) NOT NULL,
   `CharsPostMax` int(10) NOT NULL,
@@ -147,7 +147,7 @@ CREATE TABLE `sys_objects_cmts` (
   `IsOn` smallint(1) NOT NULL,
   `RootStylePrefix` varchar(16) NOT NULL default 'cmt',
   `BaseUrl` varchar(256) NOT NULL,
-  `ObjectVote` varchar(32) NOT NULL,
+  `ObjectVote` varchar(64) NOT NULL,
   `TriggerTable` varchar(32) NOT NULL,
   `TriggerFieldId` varchar(32) NOT NULL,
   `TriggerFieldTitle` varchar(32) NOT NULL,
@@ -799,7 +799,7 @@ CREATE TABLE `sys_stat_site` (
 
 CREATE TABLE `sys_objects_search` (
   `ID` int(10) unsigned NOT NULL auto_increment,
-  `ObjectName` varchar(50) NOT NULL  default '',
+  `ObjectName` varchar(64) NOT NULL  default '',
   `Title` varchar(50) NOT NULL default '',
   `ClassName` varchar(50) NOT NULL  default '',
   `ClassPath` varchar(100) NOT NULL  default '',
@@ -1087,7 +1087,7 @@ CREATE TABLE `sys_alerts` (
 
 CREATE TABLE `sys_objects_view` (
   `id` int(11) NOT NULL auto_increment,
-  `name` varchar(32) NOT NULL,
+  `name` varchar(64) NOT NULL,
   `table_track` varchar(32) NOT NULL,
   `period` int(11) NOT NULL default '86400',
   `is_on` tinyint(4) NOT NULL default '1',
@@ -1213,7 +1213,7 @@ INSERT INTO `sys_menu_mobile` (`type`, `page`, `title`, `icon`, `action`, `actio
 
 CREATE TABLE IF NOT EXISTS `sys_objects_storage` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `object` varchar(32) NOT NULL,
+  `object` varchar(64) NOT NULL,
   `engine` varchar(32) NOT NULL,
   `params` text NOT NULL,
   `token_life` int(11) NOT NULL,
@@ -1248,7 +1248,7 @@ CREATE TABLE IF NOT EXISTS `sys_storage_user_quotas` (
 
 CREATE TABLE IF NOT EXISTS `sys_storage_tokens` (
   `id` int(11) NOT NULL,
-  `object` varchar(32) NOT NULL,
+  `object` varchar(64) NOT NULL,
   `hash` varchar(32) NOT NULL,
   `created` int(10) unsigned NOT NULL,
   UNIQUE KEY `id` (`id`,`object`,`hash`),
@@ -1258,7 +1258,7 @@ CREATE TABLE IF NOT EXISTS `sys_storage_tokens` (
 CREATE TABLE IF NOT EXISTS `sys_storage_ghosts` (
   `id` int(11) NOT NULL,
   `profile_id` int(10) unsigned NOT NULL,
-  `object` varchar(32) NOT NULL,
+  `object` varchar(64) NOT NULL,
   `content_id` int(11) NOT NULL,
   `created` int(10) unsigned NOT NULL,
   UNIQUE KEY `id` (`id`,`object`),
@@ -2179,7 +2179,7 @@ INSERT INTO `sys_storage_mime_types` (`ext`, `mime_type`, `icon`) VALUES
 
 CREATE TABLE IF NOT EXISTS `sys_objects_uploader` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `object` varchar(32) NOT NULL,
+  `object` varchar(64) NOT NULL,
   `active` tinyint(4) NOT NULL,
   `override_class_name` varchar(255) NOT NULL,
   `override_class_file` varchar(255) NOT NULL,
@@ -2198,7 +2198,7 @@ INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `
 
 CREATE TABLE IF NOT EXISTS `sys_objects_form` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `object` varchar(32) NOT NULL,
+  `object` varchar(64) NOT NULL,
   `module` varchar(32) NOT NULL,
   `title` varchar(255) NOT NULL,
   `action` varchar(255) NOT NULL,
@@ -2227,9 +2227,9 @@ INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_att
 
 CREATE TABLE IF NOT EXISTS `sys_form_displays` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `display_name` varchar(32) NOT NULL,
+  `display_name` varchar(64) NOT NULL,
   `module` varchar(32) NOT NULL,
-  `object` varchar(32) NOT NULL,
+  `object` varchar(64) NOT NULL,
   `title` varchar(255) NOT NULL,
   `view_mode` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
@@ -2253,7 +2253,7 @@ INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `v
 
 CREATE TABLE IF NOT EXISTS `sys_form_inputs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `object` varchar(32) NOT NULL,
+  `object` varchar(64) NOT NULL,
   `module` varchar(32) NOT NULL,
   `name` varchar(255) NOT NULL,
   `value` varchar(255) NOT NULL,
@@ -2326,7 +2326,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 
 CREATE TABLE IF NOT EXISTS `sys_form_display_inputs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `display_name` varchar(32) NOT NULL,
+  `display_name` varchar(64) NOT NULL,
   `input_name` varchar(32) NOT NULL,
   `visible_for_levels` int(11) NOT NULL DEFAULT '2147483647',
   `active` tinyint(4) NOT NULL DEFAULT '0',
@@ -2769,9 +2769,9 @@ INSERT INTO `sys_menu_templates` (`id`, `template`, `title`) VALUES
 
 CREATE TABLE IF NOT EXISTS `sys_objects_menu` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `object` varchar(32) NOT NULL,
+  `object` varchar(64) NOT NULL,
   `title` varchar(255) NOT NULL,
-  `set_name` varchar(32) NOT NULL,
+  `set_name` varchar(64) NOT NULL,
   `module` varchar(32) NOT NULL,
   `template_id` int(11) NOT NULL,
   `deletable` tinyint(4) NOT NULL DEFAULT '1',
@@ -2802,7 +2802,7 @@ INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `templa
 ('sys_profile_stats', '_sys_menu_title_profile_stats', 'sys_profile_stats', 'system', 6, 0, 1, 'BxTemplMenuProfileStats', '');
 
 CREATE TABLE IF NOT EXISTS `sys_menu_sets` (
-  `set_name` varchar(32) NOT NULL,
+  `set_name` varchar(64) NOT NULL,
   `module` varchar(32) NOT NULL,
   `title` varchar(255) NOT NULL,
   `deletable` tinyint(4) NOT NULL DEFAULT '1',
@@ -2827,7 +2827,7 @@ INSERT INTO `sys_menu_sets` (`set_name`, `module`, `title`, `deletable`) VALUES
 
 CREATE TABLE IF NOT EXISTS `sys_menu_items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `set_name` varchar(32) NOT NULL,
+  `set_name` varchar(64) NOT NULL,
   `module` varchar(32) NOT NULL,
   `name` varchar(255) NOT NULL,
   `title_system` varchar(255) NOT NULL,
@@ -2837,7 +2837,7 @@ CREATE TABLE IF NOT EXISTS `sys_menu_items` (
   `target` varchar(255) NOT NULL,
   `icon` varchar(255) NOT NULL,
   `addon` text NOT NULL,
-  `submenu_object` varchar(32) NOT NULL,
+  `submenu_object` varchar(64) NOT NULL,
   `visible_for_levels` int(11) NOT NULL DEFAULT '2147483647',
   `active` tinyint(4) NOT NULL DEFAULT '1',
   `copyable` tinyint(4) NOT NULL DEFAULT '1',
@@ -2897,7 +2897,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 
 CREATE TABLE IF NOT EXISTS `sys_objects_grid` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `object` varchar(32) NOT NULL,
+  `object` varchar(64) NOT NULL,
   `source_type` enum('Array','Sql') NOT NULL,
   `source` text NOT NULL,
   `table` varchar(255) NOT NULL,
@@ -2939,7 +2939,7 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 ('sys_studio_forms_pre_values', 'Sql', 'SELECT * FROM `sys_form_pre_values` WHERE 1 ', 'sys_form_pre_values', 'id', 'Order', '', '', 1000, NULL, 'start', '', 'Key,Value', 'LKey,LKey2', 'auto', '', '', 'BxTemplStudioFormsPreValues', '');
 
 CREATE TABLE IF NOT EXISTS `sys_grid_fields` (
-  `object` varchar(32) NOT NULL,
+  `object` varchar(64) NOT NULL,
   `name` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
   `width` varchar(16) NOT NULL,
@@ -3026,7 +3026,7 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 
 
 CREATE TABLE IF NOT EXISTS `sys_grid_actions` (
-  `object` varchar(32) NOT NULL,
+  `object` varchar(64) NOT NULL,
   `type` enum('bulk','single','independent') NOT NULL,
   `name` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
@@ -3093,7 +3093,7 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 
 CREATE TABLE IF NOT EXISTS `sys_objects_connection` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `object` varchar(32) NOT NULL,
+  `object` varchar(64) NOT NULL,
   `table` varchar(255) NOT NULL,
   `type` enum('one-way','mutual') NOT NULL,
   `override_class_name` varchar(255) NOT NULL,
@@ -3134,8 +3134,8 @@ CREATE TABLE IF NOT EXISTS `sys_profiles_conn_friends` (
 
 CREATE TABLE IF NOT EXISTS `sys_objects_transcoder_images` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `object` varchar(32) NOT NULL,
-  `storage_object` varchar(32) NOT NULL,
+  `object` varchar(64) NOT NULL,
+  `storage_object` varchar(64) NOT NULL,
   `source_type` enum('Folder','Storage') NOT NULL,
   `source_params` text NOT NULL,
   `private` enum('auto','yes','no') NOT NULL,
@@ -3154,7 +3154,7 @@ INSERT INTO `sys_objects_transcoder_images` (`object`, `storage_object`, `source
 
 
 CREATE TABLE IF NOT EXISTS `sys_transcoder_images_files` (
-  `transcoder_object` varchar(32) NOT NULL,
+  `transcoder_object` varchar(64) NOT NULL,
   `file_id` int(11) NOT NULL,
   `handler` varchar(255) NOT NULL,
   `atime` int(11) NOT NULL,
@@ -3166,10 +3166,11 @@ CREATE TABLE IF NOT EXISTS `sys_transcoder_images_files` (
 
 
 CREATE TABLE IF NOT EXISTS `sys_transcoder_images_filters` (
-  `transcoder_object` varchar(32) NOT NULL,
+  `transcoder_object` varchar(64) NOT NULL,
   `filter` varchar(32) NOT NULL,
   `filter_params` text NOT NULL,
-  `order` int(11) NOT NULL DEFAULT '0'
+  `order` int(11) NOT NULL DEFAULT '0',
+  KEY `transcoder_object` (`transcoder_object`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `sys_transcoder_images_filters` (`transcoder_object`, `filter`, `filter_params`, `order`) VALUES 
@@ -3184,7 +3185,7 @@ INSERT INTO `sys_transcoder_images_filters` (`transcoder_object`, `filter`, `fil
 
 CREATE TABLE IF NOT EXISTS `sys_objects_page` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `object` varchar(32) NOT NULL,
+  `object` varchar(64) NOT NULL,
   `uri` varchar(255) NOT NULL,
   `title_system` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
@@ -3225,7 +3226,7 @@ INSERT INTO `sys_objects_page` (`object`, `uri`, `title_system`, `title`, `modul
 
 CREATE TABLE IF NOT EXISTS `sys_pages_layouts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) NOT NULL,
+  `name` varchar(64) NOT NULL,
   `icon` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
   `template` varchar(255) NOT NULL,
@@ -3268,7 +3269,7 @@ INSERT INTO `sys_pages_design_boxes` (`id`, `title`, `template`, `order`) VALUES
 
 CREATE TABLE IF NOT EXISTS `sys_pages_blocks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `object` varchar(32) NOT NULL,
+  `object` varchar(64) NOT NULL,
   `cell_id` int(11) NOT NULL DEFAULT '1',
   `module` varchar(32) NOT NULL,
   `title` varchar(255) NOT NULL,
