@@ -1718,6 +1718,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_set_title_account_settings_more"><![CDATA[Account Settings More]]></string>
 	<string name="_sys_menu_set_title_account_notifications"><![CDATA[Notifications]]></string>
 	<string name="_sys_menu_set_title_add_content"><![CDATA[Add Content]]></string>
+	<string name="_sys_menu_set_title_add_profile"><![CDATA[Add Profile]]></string>
 	<string name="_sys_menu_set_title_cmts_item_actions"><![CDATA[Comment Actions]]></string>
 	<string name="_sys_menu_set_title_cmts_item_manage"><![CDATA[Manage Comment]]></string>
 	<string name="_sys_menu_set_title_footer"><![CDATA[Footer]]></string>
@@ -1742,6 +1743,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_title_account_settings"><![CDATA[Account Settings Menu]]></string>
 	<string name="_sys_menu_title_account_settings_more"><![CDATA[Account Settings More Menu]]></string>
 	<string name="_sys_menu_title_add_content"><![CDATA[Add Content Menu]]></string>
+	<string name="_sys_menu_title_add_profile"><![CDATA[Add Profile Menu]]></string>
 	<string name="_sys_menu_title_cmts_item_actions"><![CDATA[Comment Actions]]></string>
 	<string name="_sys_menu_title_cmts_item_manage"><![CDATA[Manage Comment]]></string>
 	<string name="_sys_menu_title_extended"><![CDATA[Extended view]]></string>

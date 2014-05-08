@@ -169,7 +169,11 @@ class BxBaseServiceProfiles extends BxDol
         bx_import('BxDolTemplate');
         $oTemplate = BxDolTemplate::getInstance();
         $oTemplate->addCss('account.css');
-        return $oTemplate->parseHtmlByName('profile_switch_row.html', $aVars);
+
+        return array(
+            'content' => $oTemplate->parseHtmlByName('profile_switch_row.html', $aVars), 
+            'menu' => 'sys_add_profile',
+        );
     }
 
     protected function _getLatestModuleTimestamp () 

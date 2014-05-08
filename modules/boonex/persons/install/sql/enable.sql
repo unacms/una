@@ -121,9 +121,9 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 --INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
 --('sys_profiles_create', 'bx_persons', 'create-person-profile', '_bx_persons_menu_item_title_system_profile_type', '_bx_persons_menu_item_title_profile_type', 'page.php?i=create-persons-profile', '', '', 'user', '', 2147483647, 1, 1, IFNULL(@iCreateProfileMenuOrder, 0) + 1);
 
-SET @iAddMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_add_content_links' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
+SET @iAddMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_add_profile_links' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_add_content_links', 'bx_persons', 'create-persons-profile', '_bx_persons_menu_item_title_system_create_profile', '_bx_persons_menu_item_title_create_profile', 'page.php?i=create-persons-profile', '', '', '', '', 2147483647, 1, 1, IFNULL(@iAddMenuOrder, 0) + 1);
+('sys_add_profile_links', 'bx_persons', 'create-persons-profile', '_bx_persons_menu_item_title_system_create_profile', '_bx_persons_menu_item_title_create_profile', 'page.php?i=create-persons-profile', '', '', 'user', '', 2147483647, 1, 1, IFNULL(@iAddMenuOrder, 0) + 1);
 
 
 --

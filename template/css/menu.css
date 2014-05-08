@@ -70,6 +70,9 @@ ul.bx-menu-ver {
 .bx-menu-notif li img,
 .bx-menu-notif li .sys-icon,
 .bx-menu-notif li span,
+.bx-menu-verlit li img,
+.bx-menu-verlit li .sys-icon,
+.bx-menu-verlit li span,
 .bx-menu-ver li img,
 .bx-menu-ver li .sys-icon,
 .bx-menu-ver li span {
@@ -79,6 +82,8 @@ ul.bx-menu-ver {
 
 .bx-menu-notif li img,
 .bx-menu-notif li .sys-icon,
+.bx-menu-verlit li img,
+.bx-menu-verlit li .sys-icon,
 .bx-menu-ver li img,
 .bx-menu-ver li .sys-icon {
     width:20px;
