@@ -9,13 +9,13 @@
  * @{
  */
 
-bx_import('BxBaseModProfilePageEntry');
+bx_import('BxBaseModProfilePageBrowse');
 
 /**
- * Profile create/edit/delete pages.
+ * Browse entries pages.
  */
-class BxPersonsPageEntry extends BxBaseModProfilePageEntry 
-{
+class BxPersonsPageBrowse extends BxBaseModProfilePageBrowse 
+{    
     public function __construct($aObject, $oTemplate = false) 
     {
         $this->MODULE = 'bx_persons';
