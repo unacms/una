@@ -3,22 +3,21 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    Organizations Organizations
+ * @defgroup    BaseText Base classes for text modules
  * @ingroup     DolphinModules
  *
  * @{
  */
 
-bx_import('BxBaseModProfilePageEntry');
+bx_import('BxBaseModGeneralPageBrowse');
 
 /**
- * Profile create/edit/delete pages.
+ * Browse entries pages.
  */
-class BxOrgsPageEntry extends BxBaseModProfilePageEntry 
-{
+class BxBaseModProfilePageBrowse extends BxBaseModGeneralPageBrowse 
+{   
     public function __construct($aObject, $oTemplate = false) 
     {
-        $this->MODULE = 'bx_organizations';
         parent::__construct($aObject, $oTemplate);
     }
 }

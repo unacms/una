@@ -9,30 +9,17 @@
  * @{
  */
 
-bx_import('BxDolModule');
-bx_import('BxTemplPage');
+bx_import('BxBaseModGeneralPageBrowse');
 
 /**
  * Browse entries pages.
  */
-class BxBaseModTextPageBrowse extends BxTemplPage 
-{   
-    protected $MODULE;
-
-    protected $_oModule;
- 
-    public function __construct($aObject, $oTemplate = false) 
+class BxBaseModTextPageBrowse extends BxBaseModGeneralPageBrowse 
+{    
+    public function __construct($aObject, $oTemplate = false)
     {
         parent::__construct($aObject, $oTemplate);
-
-        $this->_oModule = BxDolModule::getInstance($this->MODULE);
-
-        // select module submenu
-        bx_import('BxDolMenu');
-        $oMenuSumbemu = BxDolMenu::getObjectInstance('sys_site_submenu');
-        $oMenuSumbemu->setObjectSubmenu($this->_oModule->_oConfig->CNF['OBJECT_MENU_SUBMENU']);
     }
-
 }
 
 /** @} */
