@@ -30,8 +30,6 @@ class BxNotesConfig extends BxBaseModTextConfig
             'FIELD_TITLE' => 'title',
             'FIELD_TEXT' => 'text',
             'FIELD_TEXT_ID' => 'note-text',
-            'FIELD_SUMMARY' => 'summary',
-            'FIELD_SUMMARY_ID' => 'note-summary',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_PHOTO' => 'pictures',
             'FIELD_THUMB' => 'thumb',

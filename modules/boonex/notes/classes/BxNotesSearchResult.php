@@ -21,7 +21,7 @@ class BxNotesSearchResult extends BxBaseModTextSearchResult
             'name' => 'bx_notes',
             'title' => _t('_bx_notes_page_title_browse'),
             'table' => 'bx_notes_posts',
-            'ownFields' => array('id', 'title', 'text', 'summary', 'thumb', 'author', 'added'),
+            'ownFields' => array('id', 'title', 'text', 'thumb', 'author', 'added'),
             'searchFields' => array('title', 'text'),
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),

@@ -21,9 +21,6 @@
 	<string name="_bx_notes_form_entry_input_sys_text"><![CDATA[Text]]></string>
 	<string name="_bx_notes_form_entry_input_text"><![CDATA[Text]]></string>
 	<string name="_bx_notes_form_entry_input_text_err"><![CDATA[Text field can't be empty]]></string>
-	<string name="_bx_notes_form_entry_input_sys_summary"><![CDATA[Summary]]></string>
-	<string name="_bx_notes_form_entry_input_summary"><![CDATA[Summary]]></string>
-	<string name="_bx_notes_form_entry_input_summary_info"><![CDATA[Summary is automatically generated if left blank]]></string>
 	<string name="_bx_notes_form_entry_input_sys_delete_confirm"><![CDATA[Delete confirmation]]></string>
 	<string name="_bx_notes_form_entry_input_delete_confirm"><![CDATA[I am sure I want to delete this note]]></string>
 	<string name="_bx_notes_form_entry_input_delete_confirm_info"><![CDATA[This action can not be undone]]></string>

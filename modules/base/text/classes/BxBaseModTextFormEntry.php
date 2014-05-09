@@ -29,13 +29,6 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
             );            
         }
 
-        if (isset($this->aInputs[$CNF['FIELD_SUMMARY']])) {
-            $this->aInputs[$CNF['FIELD_SUMMARY']]['attrs'] = array_merge (
-                array ('id' => $CNF['FIELD_SUMMARY_ID']),
-                is_array($this->aInputs[$CNF['FIELD_SUMMARY']]['attrs']) ? $this->aInputs[$CNF['FIELD_SUMMARY']]['attrs'] : array ()
-            );            
-        }
-
         if (isset($this->aInputs[$CNF['FIELD_PHOTO']])) {
             $this->aInputs[$CNF['FIELD_PHOTO']]['storage_object'] = $CNF['OBJECT_STORAGE'];
             $this->aInputs[$CNF['FIELD_PHOTO']]['uploaders'] = array('sys_simple', 'sys_html5');
@@ -67,7 +60,6 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
                 'name' => $this->aInputs[$CNF['FIELD_PHOTO']]['name'],
                 'content_id' => $this->aInputs[$CNF['FIELD_PHOTO']]['content_id'],
                 'editor_id' => $CNF['FIELD_TEXT_ID'],
-                'summary_id' => $CNF['FIELD_SUMMARY_ID'],
                 'thumb_id' => isset($aContentInfo[$CNF['FIELD_THUMB']]) ? $aContentInfo[$CNF['FIELD_THUMB']] : 0,
                 'bx_if:set_thumb' => array (
                     'condition' => CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedSetThumb(),

@@ -53,18 +53,9 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             $oProfile = BxDolProfileUndefined::getInstance();
         }
 
-        $sSummary = $aData[$CNF['FIELD_SUMMARY']];
-        if (!$sSummary) {
-			$iLimitChars = (int)getParam($CNF['PARAM_CHARS_SUMMARY']);
-			$sSummary = trim(strip_tags($aData[$CNF['FIELD_TEXT']]));
-            $sLinkMore = '';
-            if (mb_strlen($sSummary) > $iLimitChars) {
-                $sSummary = mb_substr($sSummary, 0, $iLimitChars);
-                $sLinkMore = ' <a title="' . bx_html_attribute(_t('_sys_read_more', $aData[$CNF['FIELD_TITLE']])) . '" href="' . $sUrl . '"><i class="sys-icon ellipsis-horizontal"></i></a>';
-            }
-            $sSummary = htmlspecialchars_adv($sSummary) . $sLinkMore;
-        }
-
+        // get summary
+        $sLinkMore = ' <a title="' . bx_html_attribute(_t('_sys_read_more', $aData[$CNF['FIELD_TITLE']])) . '" href="' . $sUrl . '"><i class="sys-icon ellipsis-horizontal"></i></a>';
+        $sSummary = strmaxtextlen($aData[$CNF['FIELD_TEXT']], (int)getParam($CNF['PARAM_CHARS_SUMMARY']), $sLinkMore);
         $sSummaryPlain = BxTemplFunctions::getInstance()->getStringWithLimitedLength(strip_tags($sSummary), (int)getParam($CNF['PARAM_CHARS_SUMMARY_PLAIN']));
 
         // generate html

@@ -9,9 +9,9 @@ function bx_base_text_select_thumb(eCheckbox) {
     });
 }
 
-function bx_base_text_delete_ghost (iFileId, sFileUrl, sFileIcon, sEditorId, sSummaryId, oUploaderInstance) {
+function bx_base_text_delete_ghost (iFileId, sFileUrl, sFileIcon, aEditors, oUploaderInstance) {
     bx_editor_remove_img (
-        [sEditorId, sSummaryId], 
+        aEditors,
         ['img[src="' + sFileIcon + '"]', 'img[src="' + sFileUrl + '"]', '.bx-base-text-img-' + iFileId, '.bx-base-text-icon-' + iFileId]
     );
     oUploaderInstance.deleteGhost(iFileId);

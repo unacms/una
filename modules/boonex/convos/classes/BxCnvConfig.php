@@ -30,8 +30,6 @@ class BxCnvConfig extends BxBaseModTextConfig
             'FIELD_TITLE' => '',
             'FIELD_TEXT' => 'text',
             'FIELD_TEXT_ID' => 'convo-text',
-            'FIELD_SUMMARY' => '',
-            'FIELD_SUMMARY_ID' => '',
             'FIELD_ALLOW_VIEW_TO' => '',
             'FIELD_PHOTO' => 'attachments',
             'FIELD_THUMB' => '',
