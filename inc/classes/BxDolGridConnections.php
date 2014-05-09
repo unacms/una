@@ -119,9 +119,9 @@ class BxDolGridConnections extends BxTemplGrid
                 $iProfileId = array_pop($a);
                 bx_import('BxDolProfile');
                 $oProfile = BxDolProfile::getInstance($iProfileId);
-                $s = _t('_bx_persons_txt_one_mutual_friend', $oProfile->getUrl(), $oProfile->getDisplayName());
+                $s = _t('_sys_txt_one_mutual_friend', $oProfile->getUrl(), $oProfile->getDisplayName());
             } elseif ($i) {
-                $s = _t('_bx_persons_txt_n_mutual_friends', $i);
+                $s = _t('_sys_txt_n_mutual_friends', $i);
             }
         }
 
@@ -129,7 +129,7 @@ class BxDolGridConnections extends BxTemplGrid
         if (!$s) {
             $a = $oConn->getConnectedContent($aRow['id'], true);
             $i = count($a);
-            $s = _t('_bx_persons_txt_n_friends', $i);
+            $s = _t('_sys_txt_n_friends', $i);
         }
 
         return parent::_getCellDefault ($s, $sKey, $aField, $aRow);
