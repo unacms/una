@@ -19,6 +19,29 @@ class BxBaseMenuAccountNotifications extends BxTemplMenu
     {
         parent::__construct ($aObject, $oTemplate);
     }
+
+    /**
+     * Check if menu items is visible with extended checking for friends notifications
+     * @param $a menu item array
+     * @return boolean
+     */ 
+    protected function _isVisible ($a) 
+    {
+        // default visible settings
+        bx_import('BxDolAcl');
+        if (!BxDolAcl::getInstance()->isMemberLevelInSet($a['visible_for_levels']))
+            return false;
+
+        // show only friends for currently active profile for friend request notification
+        if ('notifications-friend-requests' == $a['name']) {
+            $oProfile = BxDolProfile::getInstance();
+            $aInfo = $oProfile->getInfo();
+            if ($a['module'] != $aInfo['type'])
+                return false;
+        }
+
+        return true;
+    }
 }
 
 /** @} */
