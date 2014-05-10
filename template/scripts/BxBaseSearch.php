@@ -75,6 +75,7 @@ class BxBaseSearch extends BxDolSearch
             unset($aForm['inputs']['section']);
             unset($aForm['inputs']['search']);
             unset($aForm['inputs']['keyword']['caption']);
+            $aForm['inputs']['keyword']['attrs']['placeholder'] = _t('_sys_search_placeholder');
             $aForm['inputs']['keyword']['attrs']['onkeypress'] = "return bx_search_on_type($sJsParams);";
             $aForm['inputs']['keyword']['attrs']['onpaste'] = $aForm['inputs']['keyword']['attrs']['onkeypress'];
             $aForm['inputs']['keyword']['attrs']['oninput'] = $aForm['inputs']['keyword']['attrs']['onkeypress'];
