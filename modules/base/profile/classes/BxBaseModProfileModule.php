@@ -119,6 +119,8 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
 
         // get connections array
         $a = $oConnection->getConnectionsAsArray ($sConnectionsType, $iProfileId, $iProfileId2, $iMutual, (int)bx_get('start'), $iLimit + 1, BX_CONNECTIONS_ORDER_ADDED_DESC);
+        if (!$a)
+            return '';
 
         // get paginate object
         bx_import('BxTemplPaginate');
@@ -176,7 +178,10 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
             return false;
         
         bx_import('BxDolConnection');
-        return $this->serviceBrowseConnectionsQuick ($aContentInfo['profile_id'], 'sys_profiles_friends', BX_CONNECTIONS_CONTENT_TYPE_CONTENT, TRUE);
+        $s = $this->serviceBrowseConnectionsQuick ($aContentInfo['profile_id'], 'sys_profiles_friends', BX_CONNECTIONS_CONTENT_TYPE_CONTENT, true);
+        if (!$s)
+            return MsgBox(_t('_sys_txt_empty'));
+        return $s;
     }
 
     // ====== PERMISSION METHODS
