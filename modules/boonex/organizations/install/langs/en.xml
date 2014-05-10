@@ -151,4 +151,6 @@
     <string name="_bx_orgs_cat_Travel"><![CDATA[Travel]]></string>
     <string name="_bx_orgs_cat_University"><![CDATA[University]]></string>
     <string name="_bx_orgs_cat_Other"><![CDATA[Other]]></string>
+
+    <string name="_bx_orgs_txt_sample_single"><![CDATA[organization]]></string>
 </resources>

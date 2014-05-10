@@ -40,6 +40,8 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             'thumb_url' => $this->thumb ($aData),
             'content_url' => $sUrl,
             'title' => $aData[$CNF['FIELD_NAME']],
+            'module_name' => _t($CNF['T']['txt_sample_single']),
+            'ts' => $aData[$CNF['FIELD_ADDED']],
         );
 
         return $this->parseHtmlByName($sTemplateName, $aVars);

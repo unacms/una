@@ -43,7 +43,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'FIELD_PICTURE_PREVIEW' => 'picture_preview',
             'FIELD_COVER' => 'cover',
             'FIELD_COVER_PREVIEW' => 'cover_preview',
-            'FIELDS_QUICK_SEARCH' => array('fullname', 'id'),
+            'FIELDS_QUICK_SEARCH' => array('fullname'),
 
             // page URIs
             'URI_VIEW_ENTRY' => 'view-persons-profile',
@@ -98,6 +98,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
 
             // some language keys
             'T' => array (
+                'txt_sample_single' => '_bx_persons_txt_sample_single',
                 'menu_item_title_befriend_sent' => '_bx_persons_menu_item_title_befriend_sent', 
                 'menu_item_title_unfriend_cancel_request' => '_bx_persons_menu_item_title_unfriend_cancel_request',
                 'menu_item_title_befriend_confirm' => '_bx_persons_menu_item_title_befriend_confirm',

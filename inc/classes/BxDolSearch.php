@@ -40,7 +40,7 @@ class BxDolSearch extends BxDol
     protected $aClasses = array(); ///< array of all search classes
     protected $aChoice  = array(); ///< array of current search classes which were choosen in search area
 
-    protected $_bQuickSearch = false;
+    protected $_bLiveSearch = false;
 
     /**
      * Constructor
@@ -83,7 +83,7 @@ class BxDolSearch extends BxDol
             }
             $oEx = new $aValue['class']();
             $oEx->setId($aValue['id']);
-            $oEx->setQuickSearch($this->_bQuickSearch);
+            $oEx->setLiveSearch($this->_bLiveSearch);
             $sCode .= $oEx->processing();
         }
         return $sCode;
@@ -103,9 +103,9 @@ class BxDolSearch extends BxDol
         return $a;
     }
 
-    public function setQuickSearch($bQuickSearch)
+    public function setLiveSearch($bLiveSearch)
     {
-        $this->_bQuickSearch = $bQuickSearch;
+        $this->_bLiveSearch = $bLiveSearch;
     }
 }
 
@@ -227,7 +227,7 @@ class BxDolSearchResult implements iBxDolReplaceable
     protected $bProcessPrivateContent = true; ///< check each item for privacy, if view isn't allowed then display private view instead
     protected $bForceAjaxPaginate = false; ///< force ajax paginate
 
-    protected $_bQuickSearch = false;
+    protected $_bLiveSearch = false;
 
     protected $_aMarkers = array (); ///< markers to replace somewhere, usually title and browse url (defined in custom class)
 
@@ -256,9 +256,9 @@ class BxDolSearchResult implements iBxDolReplaceable
         $this->bForceAjaxPaginate = $b;
     }
 
-    public function setQuickSearch($bQuickSearch)
+    public function setLiveSearch($bLiveSearch)
     {
-        $this->_bQuickSearch = $bQuickSearch;
+        $this->_bLiveSearch = $bLiveSearch;
     }
 
     /**

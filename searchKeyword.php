@@ -13,7 +13,7 @@ bx_import('BxTemplSearch');
 bx_import('BxDolTemplate');
 
 $o = new BxDolSearch();
-$o->setQuickSearch(bx_get('quick_search') ? 1 : 0);
+$o->setLiveSearch(bx_get('live_search') ? 1 : 0);
 
 $sCode = '';
 if (bx_get('keyword')) {
@@ -23,7 +23,7 @@ if (bx_get('keyword')) {
 }
 
 $oSearch = new BxTemplSearch();
-$oSearch->setQuickSearch(false);
+$oSearch->setLiveSearch(false);
 
 $oTemplate = BxDolTemplate::getInstance();
 $oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);

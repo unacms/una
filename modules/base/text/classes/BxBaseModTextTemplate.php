@@ -67,6 +67,8 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             'author' => $oProfile->getDisplayName(),
             'author_url' => $oProfile->getUrl(),
             'entry_posting_date' => bx_time_js($aData[$CNF['FIELD_ADDED']], BX_FORMAT_DATE),
+            'module_name' => _t($CNF['T']['txt_sample_single']),
+            'ts' => $aData[$CNF['FIELD_ADDED']],
             'bx_if:thumb' => array (
                 'condition' => $sPhotoThumb,
                 'content' => array (

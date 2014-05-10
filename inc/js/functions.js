@@ -427,16 +427,32 @@ function bx_append_url_params (sUrl, mixedParams) {
     return sUrl + sParams;
 }
 
-function bx_search (sFormSel, sResultsContSel, sLoadingContSel) {
+function bx_search_on_type (n, sFormSel, sResultsContSel, sLoadingContSel, bSortResults) {
+    bx_search (n, sFormSel, sResultsContSel, sLoadingContSel, bSortResults);
+    return true;
+}
+
+function bx_search (n, sFormSel, sResultsContSel, sLoadingContSel, bSortResults) {
     if ('undefined' == typeof(sLoadingContSel))
         sLoadingContSel = sResultsContSel;
-    
+    if ('undefined' == typeof(bSortResults))
+        bSortResults = false;
+
     var sQuery = $('input', sFormSel).serialize();
 
     bx_loading($(sLoadingContSel), true);
     $.post(sUrlRoot + 'searchKeywordContent.php', sQuery, function(data) {
-        $(sResultsContSel).html(data).bxTime();
         bx_loading($(sLoadingContSel), false);
+        if (bSortResults) {
+            var aSortedUnits = $(data).find(".bx-def-unit-live-search").toArray().sort(function (a, b) {
+                return b.getAttribute('data-ts') - a.getAttribute('data-ts');
+            });
+            data = '';
+            $.each(aSortedUnits.slice(0, n), function (i, e) {
+                data += e.outerHTML;
+            });
+        } 
+        $(sResultsContSel).html(data).bxTime();
     });
 
     return false;

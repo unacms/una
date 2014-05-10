@@ -16,7 +16,7 @@ class BxBaseSearchResult extends BxDolSearchResult
     protected $sBrowseUrl; ///< currect browse url, used for paginate and other links in browsing
 
     protected $sUnitTemplate = 'unit.html'; ///< common template to try to use for displaying one item
-    protected $sUnitTemplateQuickSearch = 'unit_quick_search.html'; ///< common template to try to use for displaying quick search results
+    protected $sUnitTemplateLiveSearch = 'unit_live_search.html'; ///< common template to try to use for displaying live search results
 
     protected $aGetParams = array(); ///< get params to keep in paginate and other browsing links
 
@@ -57,7 +57,7 @@ class BxBaseSearchResult extends BxDolSearchResult
             $sSearchResultBlockId = 'bx-search-result-block-' . rand(0, PHP_INT_MAX);
             $sCode = '<div id="' . $sSearchResultBlockId . '" class="bx-search-result-block bx-clearfix">' . $sCode . '</div>';
 
-            if ($this->sCenterContentUnitSelector) {
+            if (!$this->_bLiveSearch && $this->sCenterContentUnitSelector) {
                 $sCode .= "
                     <script>
                         $(document).ready(function() {
@@ -84,7 +84,7 @@ class BxBaseSearchResult extends BxDolSearchResult
     function displaySearchUnit ($aData) 
     {
         $oMain = $this->getMain();
-        return $oMain->_oTemplate->unit($aData, $this->bProcessPrivateContent, $this->_bQuickSearch ? $this->sUnitTemplateQuickSearch : $this->sUnitTemplate);
+        return $oMain->_oTemplate->unit($aData, $this->bProcessPrivateContent, $this->_bLiveSearch ? $this->sUnitTemplateLiveSearch : $this->sUnitTemplate);
     }
 
     function getDesignBoxMenu () 

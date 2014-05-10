@@ -27,7 +27,7 @@ class BxBaseMenuSite extends BxTemplMenu
     {
         bx_import('BxTemplSearch');
         $oSearch = new BxTemplSearch();
-        $oSearch->setQuickSearch(true);
+        $oSearch->setLiveSearch(true);
 
         $aVars = array (
             'menu' => parent::getCode (),

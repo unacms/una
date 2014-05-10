@@ -115,4 +115,6 @@
 
     <string name="_bx_persons_txt_account_pending"><![CDATA[This profile is pending approval, please wait until it is activated.]]></string>
     <string name="_bx_persons_txt_account_suspended"><![CDATA[This profile is suspended.]]></string>
+
+    <string name="_bx_persons_txt_sample_single"><![CDATA[person]]></string>
 </resources>

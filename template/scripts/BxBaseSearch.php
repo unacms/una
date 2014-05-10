@@ -16,7 +16,7 @@ class BxBaseSearch extends BxDolSearch
     protected $_oTemplate;
     protected $_sIdForm = 'sys_search_form';
     protected $_sIdResults = 'sys_search_results';
-    protected $_sSuffixQuickSearch = '_quick';
+    protected $_sSuffixLiveSearch = '_quick';
 
     public function __construct($aChoice, $oTemplate)
     {
@@ -33,22 +33,23 @@ class BxBaseSearch extends BxDolSearch
         $aValues = $this->getKeyTitlesPairs ();        
         $aValue = isset($_GET['type']) ? bx_process_input($_GET['type']) : array_keys($aValues);
 
-        $sIdForm = $this->_sIdForm . ($this->_bQuickSearch ? $this->_sSuffixQuickSearch : '');
-        $sIdResults = $this->_sIdResults . ($this->_bQuickSearch ? $this->_sSuffixQuickSearch : '');
-        $sIdLoadingContainer = $this->_bQuickSearch ? $sIdResults : $sIdForm;
+        $sIdForm = $this->_sIdForm . ($this->_bLiveSearch ? $this->_sSuffixLiveSearch : '');
+        $sIdResults = $this->_sIdResults . ($this->_bLiveSearch ? $this->_sSuffixLiveSearch : '');
+        $sIdLoadingContainer = $this->_bLiveSearch ? $sIdResults : $sIdForm;
+        $sJsParams = "5, '#{$sIdForm}', '#{$sIdResults}', '#{$sIdLoadingContainer}', '{$this->_bLiveSearch}'";
 
         $aForm = array(
             'form_attrs' => array(
                'id' => $sIdForm,
                'action' => '',
                'method' => 'post',
-               'onsubmit' => "return bx_search('#{$sIdForm}', '#{$sIdResults}', '#{$sIdLoadingContainer}');",
+               'onsubmit' => "return bx_search($sJsParams);",
             ),
             'inputs' => array(
-                'quick_search' => array(
+                'live_search' => array(
                     'type' => 'hidden',
-                    'name' => 'quick_search',
-                    'value' => $this->_bQuickSearch ? 1 : 0,
+                    'name' => 'live_search',
+                    'value' => $this->_bLiveSearch ? 1 : 0,
                 ),
                 'section' => array(
                     'type' => 'checkbox_set',
@@ -70,17 +71,20 @@ class BxBaseSearch extends BxDolSearch
             )
         );
 
-        if ($this->_bQuickSearch) {
+        if ($this->_bLiveSearch) {
             unset($aForm['inputs']['section']);
             unset($aForm['inputs']['search']);
             unset($aForm['inputs']['keyword']['caption']);
+            $aForm['inputs']['keyword']['attrs']['onkeypress'] = "return bx_search_on_type($sJsParams);";
+            $aForm['inputs']['keyword']['attrs']['onpaste'] = $aForm['inputs']['keyword']['attrs']['onkeypress'];
+            $aForm['inputs']['keyword']['attrs']['oninput'] = $aForm['inputs']['keyword']['attrs']['onkeypress'];
         }
 
         bx_import('BxTemplFormView');
         $oForm = new BxTemplFormView($aForm);
         $sForm = $oForm->getCode();
 
-        if (!$this->_bQuickSearch) {
+        if (!$this->_bLiveSearch) {
             bx_import('BxTemplPaginate');
             $o = new BxTemplPaginate(array());
             $o->addCssJs();
@@ -91,7 +95,7 @@ class BxBaseSearch extends BxDolSearch
 
     public function getResultsContainer($sCode = '')
     {
-        $sIdResults = $this->_sIdResults . ($this->_bQuickSearch ? $this->_sSuffixQuickSearch : '');
+        $sIdResults = $this->_sIdResults . ($this->_bLiveSearch ? $this->_sSuffixLiveSearch : '');
         return '<div id="' . $sIdResults . '" class="bx-def-margin-top">' . $sCode . '</div>';
     }
 }
