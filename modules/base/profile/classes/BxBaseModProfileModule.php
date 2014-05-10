@@ -103,6 +103,48 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         );
     }
 
+    public function serviceBrowseConnectionsQuick ($iProfileId, $sObjectConnections = 'sys_profiles_friends', $sConnectionsType = 'content', $iMutual = false, $iProfileId2 = 0)
+    {
+        // get connections object
+        bx_import('BxDolConnection');
+        $oConnection = BxDolConnection::getObjectInstance($sObjectConnections);
+        if (!$oConnection)
+            return '';
+
+        // set some vars
+        $iLimit = empty($this->_oConfig->CNF['PARAM_NUM_CONNECTIONS_QUICK']) ? 4 : getParam($this->_oConfig->CNF['PARAM_NUM_CONNECTIONS_QUICK']);
+        if (!$iLimit)
+            $iLimit = 4;
+        $iStart = (int)bx_get('start');
+
+        // get connections array
+        $a = $oConnection->getConnectionsAsArray ($sConnectionsType, $iProfileId, $iProfileId2, $iMutual, (int)bx_get('start'), $iLimit + 1, BX_CONNECTIONS_ORDER_ADDED_DESC);
+
+        // get paginate object
+        bx_import('BxTemplPaginate');
+        $oPaginate = new BxTemplPaginate(array(
+            'on_change_page' => "return !loadDynamicBlockAutoPaginate(this, '{start}', '{per_page}');",
+            'num' => count($a),
+            'per_page' => $iLimit,
+            'start' => $iStart,
+        ));
+
+        // remove last item from connection array, because we've got one more item for pagination calculations only
+        if (count($a) > $iLimit)
+            array_pop($a);
+
+        // get profiles HTML
+        bx_import('BxDolProfile');
+        $s = '';
+        foreach ($a as $iProfileId) {
+            $o = BxDolProfile::getInstance($iProfileId);
+            $s .= $o->getUnit();
+        }
+
+        // return profiles + paginate
+        return $s . (!$iStart && $oPaginate->getNum() <= $iLimit ?  '' : $oPaginate->getSimplePaginate());
+    } 
+
     public function serviceEntityEditCover ($iContentId = 0) 
     {
         return $this->_serviceEntityForm ('editDataForm', $iContentId, $this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT_COVER']);
@@ -133,7 +175,8 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         if (!$aContentInfo)
             return false;
         
-        return 'TODO: friends here';
+        bx_import('BxDolConnection');
+        return $this->serviceBrowseConnectionsQuick ($aContentInfo['profile_id'], 'sys_profiles_friends', BX_CONNECTIONS_CONTENT_TYPE_CONTENT, TRUE);
     }
 
     // ====== PERMISSION METHODS

@@ -63,35 +63,16 @@ class BxPersonsSearchResult extends BxBaseModProfileSearchResult
         switch ($sMode) {
 
             case 'connections':
-                bx_import('BxDolConnection');
-                $oConnection = isset($aParams['object']) ? BxDolConnection::getObjectInstance($aParams['object']) : false;
-                if ($oConnection && isset($aParams['profile']) && (int)$aParams['profile']) {
-
+                if ($this->_setConnectionsConditions($aParams)) {
                     $oProfile = BxDolProfile::getInstance($aParams['profile']);
+                    $oProfile2 = isset($aParams['profile2']) ? BxDolProfile::getInstance($aParams['profile2']) : null;
 
-                    $sMethod = 'getConnectedContentAsCondition';
-                    if (isset($aParams['type']) && $aParams['type'] == 'initiators')
-                        $sMethod = 'getConnectedInitiatorsAsCondition';
+                    if (isset($aParams['type']) && $aParams['type'] == 'common' && $oProfile && $oProfile2)
+                        $this->aCurrent['title'] = _t('_bx_persons_page_title_browse_connections_mutual', $oProfile->getDisplayName(), $oProfile2->getDisplayName());
+                    elseif ((!isset($aParams['type']) || $aParams['type'] != 'common') && $oProfile)
+                        $this->aCurrent['title'] = _t('_bx_persons_page_title_browse_connections', $oProfile->getDisplayName());
 
-                    if (isset($aParams['type']) && $aParams['type'] == 'common') {
-
-                        $a = $oConnection->getCommonContentAsCondition('id', (int)$aParams['profile'], (int)$aParams['profile2'], isset($aParams['mutual']) ? $aParams['mutual'] : false);
-                        $oProfile2 = BxDolProfile::getInstance($aParams['profile2']);
-                        if ($oProfile && $oProfile2)
-                            $this->aCurrent['title'] = _t('_bx_persons_page_title_browse_connections_mutual', $oProfile->getDisplayName(), $oProfile2->getDisplayName());
-
-                    } else {
-
-                        $a = $oConnection->$sMethod('id', (int)$aParams['profile'], isset($aParams['mutual']) ? $aParams['mutual'] : false);
-                        if ($oProfile)
-                            $this->aCurrent['title'] = _t('_bx_persons_page_title_browse_connections', $oProfile->getDisplayName());
-
-                    }
-
-                    $this->aCurrent['restriction'] = array_merge($this->aCurrent['restriction'], $a['restriction']);
-                    $this->aCurrent['join'] = array_merge($this->aCurrent['join'], $a['join']);
                     $this->aCurrent['rss']['link'] = 'modules/?r=persons/rss/' . $sMode . '/' . $aParams['object'] . '/' . $aParams['type'] . '/' . (int)$aParams['profile'] . '/' . (int)$aParams['profile2'] . '/' . (int)$aParams['mutual'];
-
                 }
                 break;
 

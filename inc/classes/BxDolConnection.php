@@ -43,6 +43,21 @@ define('BX_CONNECTIONS_TYPE_ONE_WAY', 'one-way');
 define('BX_CONNECTIONS_TYPE_MUTUAL', 'mutual');
 
 
+/**
+ * Connections content type: content
+ */
+define('BX_CONNECTIONS_CONTENT_TYPE_CONTENT', 'content');
+
+/**
+ * Connections content type: initiators
+ */
+define('BX_CONNECTIONS_CONTENT_TYPE_INITIATORS', 'initiators');
+
+/**
+ * Connections content type: common
+ */
+define('BX_CONNECTIONS_CONTENT_TYPE_COMMON', 'common');
+
 /** 
  * @page objects 
  * @section connection Connection
@@ -263,6 +278,27 @@ class BxDolConnection extends BxDol implements iBxDolFactoryObject {
     }
 
     /**
+     * Compound function, which calls getCommonContent, getConnectedContent or getConnectedInitiators depending on $sContentType
+     * @param $sContentType content type to get BX_CONNECTIONS_CONTENT_TYPE_CONTENT, BX_CONNECTIONS_CONTENT_TYPE_INITIATORS or BX_CONNECTIONS_CONTENT_TYPE_COMMON
+     * @param $iId1 one content or initiator
+     * @param $iId2 second content or initiator only in case of BX_CONNECTIONS_CONTENT_TYPE_COMMON content type
+     * @param $isMutual get mutual connections only
+     * @return array of available connections
+     */    
+    public function getConnectionsAsArray ($sContentType, $iId1, $iId2, $isMutual = false, $iStart = 0, $iLimit = BX_CONNECTIONS_LIST_LIMIT, $iOrder = BX_CONNECTIONS_ORDER_NONE)
+    {
+        if (BX_CONNECTIONS_CONTENT_TYPE_COMMON == $sContentType)
+            return $this->getCommonContent($iId1, $iId2, $isMutual, $iStart, $iLimit, $iOrder);
+
+        if (BX_CONNECTIONS_CONTENT_TYPE_INITIATORS == $sContentType)
+            $sMethod = 'getConnectedInitiators';
+        else
+            $sMethod = 'getConnectedContent';
+
+        return $this->$sMethod($iId1, $isMutual, $iStart, $iLimit, $iOrder);
+    }
+
+    /**
      * Get common content IDs between two initiators
      * @param $iInitiator1 one initiator
      * @param $iInitiator2 second initiator 
@@ -291,6 +327,23 @@ class BxDolConnection extends BxDol implements iBxDolFactoryObject {
      */    
     public function getConnectedInitiators ($iContent, $isMutual = false, $iStart = 0, $iLimit = BX_CONNECTIONS_LIST_LIMIT, $iOrder = BX_CONNECTIONS_ORDER_NONE) {
         return $this->_oQuery->getConnectedInitiators($iContent, $isMutual, $iStart, $iLimit, $iOrder);
+    }
+
+    /**
+     * Similar to getConnectionsAsArray, but for getCommonContentAsSQLParts, getConnectedContentAsSQLParts or getConnectedInitiatorsAsSQLParts methods
+     * @see getConnectionsAsArray
+     */    
+    public function getConnectionsAsSQLParts ($sContentType, $sContentTable, $sContentField, $iId1, $iId2, $isMutual = false, $iStart = 0, $iLimit = BX_CONNECTIONS_LIST_LIMIT, $iOrder = BX_CONNECTIONS_ORDER_NONE)
+    {
+        if (BX_CONNECTIONS_CONTENT_TYPE_COMMON == $sContentType)
+            return $this->getCommonContentAsSQLParts($sContentTable, $sContentField, $iId1, $iId2, $isMutual);
+
+        if (BX_CONNECTIONS_CONTENT_TYPE_INITIATORS == $sContentType)
+            $sMethod = 'getConnectedInitiatorsAsSQLParts';
+        else
+            $sMethod = 'getConnectedContentAsSQLParts';
+
+        return $this->$sMethod($sContentTable, $sContentField, $iId1, $isMutual);
     }
 
     /**
@@ -327,6 +380,23 @@ class BxDolConnection extends BxDol implements iBxDolFactoryObject {
      */
     public function getConnectedInitiatorsAsSQLParts ($sContentTable, $sContentField, $iContent, $isMutual = false) {
         return $this->_oQuery->getConnectedInitiatorsSQLParts($sContentTable, $sContentField, $iContent, $isMutual);
+    }
+
+    /**
+     * Similar to getConnectionsAsArray, but for getCommonContentAsCondition, getConnectedContentAsCondition or getConnectedInitiatorsAsCondition methods
+     * @see getConnectionsAsArray
+     */    
+    public function getConnectionsAsCondition ($sContentType, $sContentField, $iId1, $iId2, $isMutual = false)
+    {
+        if (BX_CONNECTIONS_CONTENT_TYPE_COMMON == $sContentType)
+            return $this->getCommonContentAsCondition($sContentField, $iId1, $iId2, $isMutual);
+
+        if (BX_CONNECTIONS_CONTENT_TYPE_INITIATORS == $sContentType)
+            $sMethod = 'getConnectedInitiatorsAsCondition';
+        else
+            $sMethod = 'getConnectedContentAsCondition';
+
+        return $this->$sMethod($sContentField, $iId1, $isMutual);
     }
 
     /**
