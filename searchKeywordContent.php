@@ -13,6 +13,7 @@ bx_import('BxDolLanguages');
 bx_import('BxDolSearch');
 
 $o = new BxDolSearch(bx_get('section'));
+$o->setQuickSearch(bx_get('quick_search') ? 1 : 0);
 $s = $o->response();
 if (!$s)
     $s = $o->getEmptyResult();

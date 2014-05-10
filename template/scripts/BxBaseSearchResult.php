@@ -16,6 +16,7 @@ class BxBaseSearchResult extends BxDolSearchResult
     protected $sBrowseUrl; ///< currect browse url, used for paginate and other links in browsing
 
     protected $sUnitTemplate = 'unit.html'; ///< common template to try to use for displaying one item
+    protected $sUnitTemplateQuickSearch = 'unit_quick_search.html'; ///< common template to try to use for displaying quick search results
 
     protected $aGetParams = array(); ///< get params to keep in paginate and other browsing links
 
@@ -83,7 +84,7 @@ class BxBaseSearchResult extends BxDolSearchResult
     function displaySearchUnit ($aData) 
     {
         $oMain = $this->getMain();
-        return $oMain->_oTemplate->unit($aData, $this->bProcessPrivateContent, $this->sUnitTemplate);
+        return $oMain->_oTemplate->unit($aData, $this->bProcessPrivateContent, $this->_bQuickSearch ? $this->sUnitTemplateQuickSearch : $this->sUnitTemplate);
     }
 
     function getDesignBoxMenu () 

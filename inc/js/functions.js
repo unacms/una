@@ -426,3 +426,19 @@ function bx_append_url_params (sUrl, mixedParams) {
 
     return sUrl + sParams;
 }
+
+function bx_search (sFormSel, sResultsContSel, sLoadingContSel) {
+    if ('undefined' == typeof(sLoadingContSel))
+        sLoadingContSel = sResultsContSel;
+    
+    var sQuery = $('input', sFormSel).serialize();
+
+    bx_loading($(sLoadingContSel), true);
+    $.post(sUrlRoot + 'searchKeywordContent.php', sQuery, function(data) {
+        $(sResultsContSel).html(data).bxTime();
+        bx_loading($(sLoadingContSel), false);
+    });
+
+    return false;
+}
+

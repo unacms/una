@@ -267,8 +267,8 @@ ul.bx-menu-toolbar li .sys-icon {
 /* --------------- floating blocks menu */
 
 .bx-popup-content .bx-menu-floating-blocks {
-    width:128px;
-    width:8rem;
+    width:256px;
+    width:16rem;
 }
 
 ul.bx-menu-floating-blocks {

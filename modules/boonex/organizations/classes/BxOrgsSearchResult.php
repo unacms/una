@@ -21,6 +21,7 @@ class BxOrgsSearchResult extends BxBaseModProfileSearchResult
             'name' => 'bx_organizations',
             'title' => _t('_bx_orgs_page_title_browse'),
             'table' => 'sys_profiles',
+            'tableSearch' => 'bx_organizations_data',
             'ownFields' => array(),
             'searchFields' => array('org_name'),
             'restriction' => array(

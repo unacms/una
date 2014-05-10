@@ -54,6 +54,7 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton {
     }
 
     /**
+    * TODO: remove (along with related code), the only use is in genObjectsActions method which is for removal as well
     * Function will generate object's action link ;
     *
     * @param          : $aObjectParamaters (array) contain special markers ;
@@ -226,6 +227,7 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton {
     }
 
     /**
+     * // TODO: remove, along with all related code
      * @description : function will generate object's action lists;
      * @param :  $aKeys (array)  - array with all nedded keys;
      * @param :  $sActionsType (string) - type of actions;
@@ -661,12 +663,14 @@ EOF;
      *     @see BX_FORMAT_DATE_TIME
      * @param $bForceFormat force provided format and don't use "from now" time autoformat.
      */
-    function timeForJs ($iUnixTimestamp, $sFormatIdentifier = BX_FORMAT_DATE, $bForceFormat = false) {
+    function timeForJs ($iUnixTimestamp, $sFormatIdentifier = BX_FORMAT_DATE, $bForceFormat = false)
+    {
         $sDateUTC = bx_time_utc ($iUnixTimestamp);
         return '<time datetime="' . $sDateUTC . '" data-bx-format="' . getParam($sFormatIdentifier) . '" data-bx-autoformat="' . ($bForceFormat ? 0 : getParam('sys_format_timeago')) . '">' . $sDateUTC . '</time>';
     }
 
-    function statusOnOff ($mixed) {
+    function statusOnOff ($mixed) 
+    {
         if ($mixed)
             return '<i class="sys-icon circle col-green1"></i> ' . _t('_sys_on');
         return '<i class="sys-icon circle col-red2"></i> ' . _t('_sys_off');

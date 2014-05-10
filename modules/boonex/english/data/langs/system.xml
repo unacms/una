@@ -1829,6 +1829,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_search_main_title"><![CDATA[Search Home]]></string>
 	<string name="_sys_select"><![CDATA[Select]]></string>
 	<string name="_sys_send"><![CDATA[Send]]></string>
+    <string name="_sys_search_placeholder"><![CDATA[Search...]]></string>
 	<string name="_sys_spam_detected"><![CDATA[Sorry, it looks like you are trying to submit spam]]></string>
 	<string name="_sys_spam_detected_contact"><![CDATA[Sorry, it looks like you are trying to submit spam, if you believe that it is not spam please submit false positive report here: {0}]]></string>
 	<string name="_sys_splash_btn_start"><![CDATA[Start]]></string>

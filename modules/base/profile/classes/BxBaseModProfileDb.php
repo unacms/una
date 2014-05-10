@@ -35,8 +35,17 @@ class BxBaseModProfileDb extends BxBaseModGeneralDb
 
     public function searchByTerm($sTerm, $iLimit) 
     {
-        $sQuery = $this->prepare("SELECT `c`.`id` AS `content_id`, `p`.`account_id`, `p`.`id` AS `profile_id`, `p`.`status` AS `profile_status` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` INNER JOIN `sys_profiles` AS `p` ON (`p`.`content_id` = `c`.`id` AND `p`.`type` = ?) WHERE `p`.`status` = ? AND `c`.`fullname` LIKE ? ORDER BY `added` DESC LIMIT ?", $this->_oConfig->getName(), BX_PROFILE_STATUS_ACTIVE, '%' . $sTerm . '%', (int)$iLimit);
-        return $this->getAll($sQuery);
+        if (!$this->_oConfig->CNF['FIELDS_QUICK_SEARCH'])
+            return array();
+
+        $sWhere = '';
+        foreach ($this->_oConfig->CNF['FIELDS_QUICK_SEARCH'] as $sField)
+            $sWhere .= $this->prepare(" OR `c`.`$sField` LIKE ? ", '%' . $sTerm . '%');
+
+        $sOrderBy = $this->prepare(" ORDER BY `added` DESC LIMIT ?", (int)$iLimit);
+
+        $sQuery = $this->prepare("SELECT `c`.`id` AS `content_id`, `p`.`account_id`, `p`.`id` AS `profile_id`, `p`.`status` AS `profile_status` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` INNER JOIN `sys_profiles` AS `p` ON (`p`.`content_id` = `c`.`id` AND `p`.`type` = ?) WHERE `p`.`status` = ?", $this->_oConfig->getName(), BX_PROFILE_STATUS_ACTIVE);
+        return $this->getAll($sQuery . " AND (0 $sWhere) " . $sOrderBy);
     }
 }
 

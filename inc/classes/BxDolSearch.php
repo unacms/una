@@ -40,11 +40,13 @@ class BxDolSearch extends BxDol
     protected $aClasses = array(); ///< array of all search classes
     protected $aChoice  = array(); ///< array of current search classes which were choosen in search area
 
+    protected $_bQuickSearch = false;
+
     /**
      * Constructor
      * @param array $aChoice - array of choosen classes (will take a part only existing in `sys_objects_search` table)
      */
-    function __construct ($aChoice = '') 
+    public function __construct ($aChoice = '') 
     {
         parent::__construct();
 
@@ -70,7 +72,7 @@ class BxDolSearch extends BxDol
     /**
      * create units for all classes and calling their processing methods
      */
-    function response () 
+    public function response () 
     {
         bx_import('BxDolTemplate');
         $sCode = '';
@@ -81,17 +83,30 @@ class BxDolSearch extends BxDol
             }
             $oEx = new $aValue['class']();
             $oEx->setId($aValue['id']);
+            $oEx->setQuickSearch($this->_bQuickSearch);
             $sCode .= $oEx->processing();
         }
         return $sCode;
     }
 
-    function getEmptyResult () 
+    public function getEmptyResult () 
     {
         $sKey = _t('_Empty');
         return DesignBoxContent($sKey, MsgBox($sKey), 1);
     }
 
+    protected function getKeyTitlesPairs ()
+    {
+        $a = array();
+        foreach ($this->aChoice as $sKey => $r)
+            $a[$sKey] = _t($r['title']);
+        return $a;
+    }
+
+    public function setQuickSearch($bQuickSearch)
+    {
+        $this->_bQuickSearch = $bQuickSearch;
+    }
 }
 
 /*
@@ -212,6 +227,8 @@ class BxDolSearchResult implements iBxDolReplaceable
     protected $bProcessPrivateContent = true; ///< check each item for privacy, if view isn't allowed then display private view instead
     protected $bForceAjaxPaginate = false; ///< force ajax paginate
 
+    protected $_bQuickSearch = false;
+
     protected $_aMarkers = array (); ///< markers to replace somewhere, usually title and browse url (defined in custom class)
 
     /**
@@ -237,6 +254,11 @@ class BxDolSearchResult implements iBxDolReplaceable
     public function setAjaxPaginate($b = true)
     {
         $this->bForceAjaxPaginate = $b;
+    }
+
+    public function setQuickSearch($bQuickSearch)
+    {
+        $this->_bQuickSearch = $bQuickSearch;
     }
 
     /**
@@ -700,6 +722,8 @@ class BxDolSearchResult implements iBxDolReplaceable
         if (!$sKeyword)
             return;
 
+        $sTable = empty($this->aCurrent['tableSearch']) ? $this->aCurrent['table'] : $this->aCurrent['tableSearch'];
+
         $oDb = BxDolDb::getInstance();
 
         $bLike = getParam('useLikeOperator');
@@ -718,12 +742,13 @@ class BxDolSearchResult implements iBxDolReplaceable
                   'word' => '%' . preg_replace('/\s+/', '%', $sKeyword) . '%'
             );
         }
+
         $sqlWhere = " {$aSql['function']}(";
         if (is_array($aFields)) {
             foreach ($aFields as $sValue)
-                $sqlWhere .= "`{$this->aCurrent['table']}`.`$sValue`, ";
+                $sqlWhere .= "`{$sTable}`.`$sValue`, ";
         } else {
-                $sqlWhere .= "`{$this->aCurrent['table']}`.`$aFields`";
+                $sqlWhere .= "`{$sTable}`.`$aFields`";
         }
         $sqlWhere = trim($sqlWhere, ', ') . ") {$aSql['operator']} ('{$aSql['word']}')";
 

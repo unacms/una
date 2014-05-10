@@ -710,7 +710,7 @@ function bx_html_attribute ($mixedInput, $iQuoteType = BX_ESCAPE_STR_AUTO) {
     if (BX_ESCAPE_STR_APOS == $iQuoteType)
         $aUnits["'"] = "\\'";
     elseif (BX_ESCAPE_STR_QUOTE == $iQuoteType)
-        $aUnits['"'] = '\\"';
+        $aUnits['"'] = '&quot;';
     else
         $aUnits = array("\"" => "&quot;", "'" => "&apos;");
 

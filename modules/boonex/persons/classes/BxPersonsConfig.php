@@ -43,6 +43,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'FIELD_PICTURE_PREVIEW' => 'picture_preview',
             'FIELD_COVER' => 'cover',
             'FIELD_COVER_PREVIEW' => 'cover_preview',
+            'FIELDS_QUICK_SEARCH' => array('fullname', 'id'),
 
             // page URIs
             'URI_VIEW_ENTRY' => 'view-persons-profile',

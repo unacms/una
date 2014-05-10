@@ -2783,7 +2783,7 @@ CREATE TABLE IF NOT EXISTS `sys_objects_menu` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
-('sys_site', '_sys_menu_title_main', 'sys_site', 'system', 7, 0, 1, '', ''),
+('sys_site', '_sys_menu_title_main', 'sys_site', 'system', 7, 0, 1, 'BxTemplMenuSite', ''),
 ('sys_site_submenu', '_sys_menu_title_submenu', 'sys_site', 'system', 1, 0, 1, 'BxTemplMenuSubmenu', ''),
 ('sys_site_submenu_main', '_sys_menu_title_submenu_main', 'sys_site', 'system', 8, 0, 1, '', ''),
 ('sys_footer', '_sys_menu_title_footer', 'sys_footer', 'system', 2, 0, 1, '', ''),
