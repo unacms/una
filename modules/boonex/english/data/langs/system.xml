@@ -1685,6 +1685,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_item_title_account_settings_email"><![CDATA[Email]]></string>
 	<string name="_sys_menu_item_title_account_settings_info"><![CDATA[Account]]></string>
 	<string name="_sys_menu_item_title_account_settings_pwd"><![CDATA[Password]]></string>
+	<string name="_sys_menu_item_title_add_content"><![CDATA[Add...]]></string>
 	<string name="_sys_menu_item_title_cmts_item_delete"><![CDATA[Delete]]></string>
 	<string name="_sys_menu_item_title_cmts_item_edit"><![CDATA[Edit]]></string>
 	<string name="_sys_menu_item_title_cmts_item_reply"><![CDATA[]]></string>
@@ -1702,6 +1703,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_item_title_system_account_settings_email"><![CDATA[Email]]></string>
 	<string name="_sys_menu_item_title_system_account_settings_info"><![CDATA[Account]]></string>
 	<string name="_sys_menu_item_title_system_account_settings_pwd"><![CDATA[Password]]></string>
+	<string name="_sys_menu_item_title_system_add_content"><![CDATA[Add Content]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_delete"><![CDATA[Delete]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_edit"><![CDATA[Edit]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_reply"><![CDATA[Reply]]></string>
@@ -1729,6 +1731,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_set_title_toolbar_site"><![CDATA[Toolbar Site]]></string>
 	<string name="_sys_menu_template_title_buttons_hor"><![CDATA[Horizontal Buttons]]></string>
 	<string name="_sys_menu_template_title_floating_blocks"><![CDATA[Floating Blocks]]></string>
+	<string name="_sys_menu_template_title_floating_blocks_big"><![CDATA[Floating Blocks Big]]></string>
 	<string name="_sys_menu_template_title_footer"><![CDATA[Footer Links]]></string>
 	<string name="_sys_menu_template_title_hor"><![CDATA[Horizontal Links]]></string>
 	<string name="_sys_menu_template_title_inline"><![CDATA[Inline]]></string>
@@ -1774,6 +1777,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_page_block_title_account_settings_info"><![CDATA[Edit Account]]></string>
 	<string name="_sys_page_block_title_account_settings_menu"><![CDATA[Account Settings]]></string>
 	<string name="_sys_page_block_title_account_settings_pwd"><![CDATA[Change Password]]></string>
+	<string name="_sys_page_block_title_add_content"><![CDATA[Add Content]]></string>
 	<string name="_sys_page_block_title_confirm_email"><![CDATA[Email Confirmation]]></string>
 	<string name="_sys_page_block_title_create_account"><![CDATA[Create Account]]></string>
 	<string name="_sys_page_block_title_dashboard"><![CDATA[Dashboard]]></string>
@@ -1789,6 +1793,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_page_title_account_settings_email"><![CDATA[Email Settings]]></string>
 	<string name="_sys_page_title_account_settings_info"><![CDATA[Edit Account]]></string>
 	<string name="_sys_page_title_account_settings_pwd"><![CDATA[Change Password]]></string>
+	<string name="_sys_page_title_add_content"><![CDATA[Add Content]]></string>
 	<string name="_sys_page_title_confirm_email"><![CDATA[Email Confirmation]]></string>
 	<string name="_sys_page_title_create_account"><![CDATA[Create Account]]></string>
 	<string name="_sys_page_title_dashboard"><![CDATA[Dashboard]]></string>
@@ -1801,6 +1806,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_page_title_system_account_settings_email"><![CDATA[Email Settings]]></string>
 	<string name="_sys_page_title_system_account_settings_info"><![CDATA[Edit Account]]></string>
 	<string name="_sys_page_title_system_account_settings_pwd"><![CDATA[Change Password]]></string>
+	<string name="_sys_page_title_system_add_content"><![CDATA[Add Content]]></string>
 	<string name="_sys_page_title_system_confirm_email"><![CDATA[Email Confirmation]]></string>
 	<string name="_sys_page_title_system_create_account"><![CDATA[Create Account]]></string>
 	<string name="_sys_page_title_system_dashboard"><![CDATA[Dashboard]]></string>

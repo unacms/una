@@ -2765,7 +2765,8 @@ INSERT INTO `sys_menu_templates` (`id`, `template`, `title`) VALUES
 (10, 'menu_inline.html', '_sys_menu_template_title_inline'),
 (11, 'menu_interactive_vertical.html', '_sys_menu_template_title_interactive_vertical'),
 (12, 'menu_account_popup.html', '_sys_menu_template_title_account_popup'),
-(13, 'menu_account_notifications.html', '_sys_menu_template_title_account_notifications');
+(13, 'menu_account_notifications.html', '_sys_menu_template_title_account_notifications'),
+(14, 'menu_floating_blocks_big.html', '_sys_menu_template_title_floating_blocks_big');
 
 CREATE TABLE IF NOT EXISTS `sys_objects_menu` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -2789,8 +2790,8 @@ INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `templa
 ('sys_footer', '_sys_menu_title_footer', 'sys_footer', 'system', 2, 0, 1, '', ''),
 ('sys_toolbar_site', '_sys_menu_title_toolbar_site', 'sys_toolbar_site', 'system', 5, 0, 1, '', ''),
 ('sys_toolbar_member', '_sys_menu_title_toolbar_member', 'sys_toolbar_member', 'system', 5, 0, 1, 'BxTemplMenuToolbar', ''),
-('sys_account', '_sys_menu_title_account', 'sys_account_links', 'system', 3, 0, 1, '', ''),
-('sys_add_content', '_sys_menu_title_add_content', 'sys_add_content_links', 'system', 4, 0, 1, '', ''),
+('sys_account', '_sys_menu_title_account', 'sys_account_links', 'system', 7, 0, 1, '', ''),
+('sys_add_content', '_sys_menu_title_add_content', 'sys_add_content_links', 'system', 14, 0, 1, '', ''),
 ('sys_add_profile', '_sys_menu_title_add_profile', 'sys_add_profile_links', 'system', 4, 0, 1, '', ''),
 ('sys_account_settings_submenu', '_sys_menu_title_account_settings', 'sys_account_settings', 'system', 8, 0, 1, '', ''),
 ('sys_account_settings_more', '_sys_menu_title_account_settings_more', 'sys_account_settings_more', 'system', 4, 0, 1, '', ''),
@@ -2865,10 +2866,11 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 
 -- simple menu in account popup
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
-('sys_account_links', 'system', 'dashboard', '_sys_menu_item_title_system_dashboard', '_sys_menu_item_title_dashboard', 'page.php?i=dashboard', '', '', '', '', 2147483646, 1, 1, 1),
-('sys_account_links', 'system', 'profile', '_sys_menu_item_title_system_profile', '_sys_menu_item_title_profile', '{member_url}', '', '', '', '', 2147483646, 1, 1, 2),
-('sys_account_links', 'system', 'account-settings', '_sys_menu_item_title_system_account_settings', '_sys_menu_item_title_account_settings', 'member.php', '', '', '', '', 2147483646, 1, 1, 3),
-('sys_account_links', 'system', 'logout', '_sys_menu_item_title_system_logout', '_sys_menu_item_title_logout', 'logout.php', '', '', '', '', 2147483646, 1, 1, 4);
+('sys_account_links', 'system', 'dashboard', '_sys_menu_item_title_system_dashboard', '_sys_menu_item_title_dashboard', 'page.php?i=dashboard', '', '', 'dashboard', '', 2147483646, 1, 1, 1),
+('sys_account_links', 'system', 'profile', '_sys_menu_item_title_system_profile', '_sys_menu_item_title_profile', '{member_url}', '', '', 'user', '', 2147483646, 1, 1, 2),
+('sys_account_links', 'system', 'account-settings', '_sys_menu_item_title_system_account_settings', '_sys_menu_item_title_account_settings', 'member.php', '', '', 'cog', '', 2147483646, 1, 1, 3),
+('sys_account_links', 'system', 'add-content', '_sys_menu_item_title_system_add_content', '_sys_menu_item_title_add_content', 'page.php?i=add-content', '', '', 'plus', '', 2147483646, 1, 1, 4),
+('sys_account_links', 'system', 'logout', '_sys_menu_item_title_system_logout', '_sys_menu_item_title_logout', 'logout.php', '', '', 'sign-out', '', 2147483646, 1, 1, 5);
 
 -- account settings menu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
@@ -3221,7 +3223,9 @@ INSERT INTO `sys_objects_page` (`object`, `uri`, `title_system`, `title`, `modul
 ('sys_account_settings_delete', 'account-settings-delete', '_sys_page_title_system_account_settings_delete', '_sys_page_title_account_settings_delete', 'system', 5, 2147483647, 1, 'page.php?i=account-settings-delete', '', '', '', 0, 1, 0, 'BxTemplPageAccount', ''),
 ('sys_account_profile_switcher', 'account-profile-switcher', '_sys_page_title_system_account_profile_switcher', '_sys_page_title_account_profile_switcher', 'system', 5, 2147483647, 1, 'page.php?i=account-profile-switcher', '', '', '', 0, 1, 0, 'BxTemplPageAccount', ''),
 ('sys_unsubscribe_notifications', 'unsubscribe-notifications', '_sys_page_title_system_unsubscribe_notifications', '_sys_page_title_unsubscribe_notifications', 'system', 5, 2147483647, 1, 'page.php?i=unsubscribe-notifications', '', '', '', 0, 1, 0, '', ''),
-('sys_unsubscribe_news', 'unsubscribe-news', '_sys_page_title_system_unsubscribe_news', '_sys_page_title_unsubscribe_news', 'system', 5, 2147483647, 1, 'page.php?i=unsubscribe-news', '', '', '', 0, 1, 0, '', '');
+('sys_unsubscribe_news', 'unsubscribe-news', '_sys_page_title_system_unsubscribe_news', '_sys_page_title_unsubscribe_news', 'system', 5, 2147483647, 1, 'page.php?i=unsubscribe-news', '', '', '', 0, 1, 0, '', ''),
+('sys_add_content', 'add-content', '_sys_page_title_system_add_content', '_sys_page_title_add_content', 'system', 5, 2147483647, 1, 'page.php?i=add-content', '', '', '', 0, 1, 0, '', '');
+
 
 
 CREATE TABLE IF NOT EXISTS `sys_pages_layouts` (
@@ -3325,6 +3329,7 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 
 ('sys_unsubscribe_news', 1, 'system', '_sys_page_block_title_unsubscribe_news', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:16:"unsubscribe_news";s:6:"params";a:0:{}s:5:"class";s:19:"TemplServiceAccount";}', 0, 1, 1);
 
+('sys_add_content', 1, 'system', '_sys_page_block_title_add_content', 11, 2147483647, 'menu', 'sys_add_content', 0, 1, 1);
 
 -- --------------------------------------------------------
 

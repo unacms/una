@@ -270,13 +270,18 @@ ul.bx-menu-toolbar li .sys-icon {
     width:256px;
     width:16rem;
 }
+.bx-popup-content .bx-menu-account-popup .bx-menu-floating-blocks {
+    width:auto;
+}
 
+ul.bx-menu-floating-blocks-big,
 ul.bx-menu-floating-blocks {
     padding:0;
     margin:0;
     list-style:none;    
 }
 
+.bx-menu-floating-blocks-big li,
 .bx-menu-floating-blocks li {
     display: inline-block;
     /* For IE 7 */
@@ -289,21 +294,32 @@ ul.bx-menu-floating-blocks {
     height:64px;
     height:4rem;
 }
+.bx-menu-floating-blocks-big li {
+    width:256px;
+    width:16rem;
+    height:256px;
+    height:16rem;
+}
 
+.bx-menu-floating-blocks-big li:hover,
 .bx-menu-floating-blocks li:hover {
     opacity:0.8;
 }
 
+.bx-menu-floating-blocks-big li:active,
+.bx-menu-floating-blocks-big li.bx-menu-tab-active,
 .bx-menu-floating-blocks li:active,
 .bx-menu-floating-blocks li.bx-menu-tab-active {
     opacity:1.0;
 }
 
+.bx-menu-floating-blocks-big li a,
 .bx-menu-floating-blocks li a {
     display:block;
     text-decoration:none;
 }
 
+.bx-menu-floating-blocks-big li.bx-menu-tab-active a,
 .bx-menu-floating-blocks li.bx-menu-tab-active a {
     color:#000;
 }
@@ -318,23 +334,44 @@ ul.bx-menu-floating-blocks {
     margin:8px 16px 3px 16px;
     margin:0.5rem 1rem 0.2rem 1rem;
 }
+.bx-menu-floating-blocks-big li img,
+.bx-menu-floating-blocks-big li .sys-icon {
+    display:block;
+    width:192px;
+    width:12rem;
+    height:192px;
+    height:12rem;
+    margin:16px 32px 8px 32px;
+    margin:1rem 2rem 0.5rem 2rem;
+}
 
+.bx-menu-floating-blocks-big li img,
 .bx-menu-floating-blocks li img {
     background-position:center center;
     background-repeat:no-repeat;
 }
 
+.bx-menu-floating-blocks-big li .sys-icon,
 .bx-menu-floating-blocks li .sys-icon {
-    line-height:32px;
-    line-height:2rem;
     text-align:center;
     vertical-align:bottom;
+    line-height:32px;
+    line-height:2rem;
     font-size:32px;
     font-size:2rem;
 }
+.bx-menu-floating-blocks-big li .sys-icon {
+    line-height:192px;
+    line-height:12rem;
+    font-size:192px;
+    font-size:12rem;
+}
 
-.bx-menu-floating-blocks-title {
+.bx-menu-floating-blocks-big li .bx-menu-floating-blocks-title,
+.bx-menu-floating-blocks li .bx-menu-floating-blocks-title {
     text-align:center;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
 
 /* --------------- action menu */
