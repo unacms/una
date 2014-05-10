@@ -9,6 +9,7 @@ require_once('./inc/header.inc.php');
 require_once(BX_DIRECTORY_PATH_INC . "params.inc.php");
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
+bx_import('BxDolLanguages');
 bx_import('BxDolSearch');
 
 $o = new BxDolSearch(bx_get('section'));

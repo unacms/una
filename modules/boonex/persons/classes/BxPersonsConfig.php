@@ -49,7 +49,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'URI_EDIT_ENTRY' => 'edit-persons-profile',
             'URI_EDIT_COVER' => 'edit-persons-cover',
 
-            'URL_HOME' => 'member.php',
+            'URL_HOME' => 'page.php?i=persons-home',
 
             // some params
             'PARAM_AUTOAPPROVAL' => 'bx_persons_autoapproval',

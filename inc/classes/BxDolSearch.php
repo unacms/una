@@ -8,6 +8,7 @@
  */
 
 define('BX_DOL_SEARCH_RESULTS_PER_PAGE_DEFAULT', 10);
+define('BX_DOL_SEARCH_KEYWORD_PAGE', 'site-search-page');
 
 /**
  * Search class for different content.
@@ -205,10 +206,11 @@ class BxDolSearchResult implements iBxDolReplaceable
     public $aCurrent; ///< search results configuration
 
     protected $aPseud; ///< array of fields renamings
-    protected $id; ///< unique identificator from `sys_objects_search` table
+    protected $id; ///< unique identificator of block on mixed search results page
     protected $bDisplayEmptyMsg = false; ///< display empty message instead of nothing, when no results
     protected $sDisplayEmptyMsgKey = ''; ///< custom empty message language key, instead of default "empty" message
     protected $bProcessPrivateContent = true; ///< check each item for privacy, if view isn't allowed then display private view instead
+    protected $bForceAjaxPaginate = false; ///< force ajax paginate
 
     protected $_aMarkers = array (); ///< markers to replace somewhere, usually title and browse url (defined in custom class)
 
@@ -230,6 +232,11 @@ class BxDolSearchResult implements iBxDolReplaceable
     public function setId($sId)
     {
         $this->id = $sId;
+    }
+
+    public function setAjaxPaginate($b = true)
+    {
+        $this->bForceAjaxPaginate = $b;
     }
 
     /**

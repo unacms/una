@@ -49,7 +49,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'URI_EDIT_ENTRY' => 'edit-organization-profile',
             'URI_EDIT_COVER' => 'edit-organization-cover',
 
-            'URL_HOME' => 'member.php',
+            'URL_HOME' => 'page.php?i=organizations-home',
 
             // some params
             'PARAM_AUTOAPPROVAL' => 'bx_organizations_autoapproval',

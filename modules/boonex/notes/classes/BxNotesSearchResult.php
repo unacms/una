@@ -53,15 +53,6 @@ class BxNotesSearchResult extends BxBaseModTextSearchResult
 
         switch ($sMode) {
 
-            case 'search':
-                if ($sValue)
-                    $this->aCurrent['restriction']['keyword'] = array('value' => $sValue,'field' => '','operator' => 'against');
-
-                $this->sBrowseUrl = "search/?q=" . $sValue;
-                $this->aCurrent['title'] = _t('_bx_notes_page_title_search_results', $sValue);
-                unset($this->aCurrent['rss']); // no RSS for search results
-                break;
-
             case 'author':
                 bx_import('BxDolProfile');                
                 $oProfileAuthor = BxDolProfile::getInstance((int)$aParams['author']);
@@ -85,8 +76,9 @@ class BxNotesSearchResult extends BxBaseModTextSearchResult
                 break;
 
             case '': // search results
-                $this->sBrowseUrl = '';
+                $this->sBrowseUrl = BX_DOL_SEARCH_KEYWORD_PAGE;
                 $this->aCurrent['title'] = _t('_bx_notes');
+                $this->aCurrent['paginate']['perPage'] = 3;
                 unset($this->aCurrent['rss']);
                 break;
 

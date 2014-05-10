@@ -34,4 +34,7 @@ DELETE `sys_acl_actions`, `sys_acl_matrix` FROM `sys_acl_actions`, `sys_acl_matr
 DELETE FROM `sys_acl_actions` WHERE `Module` = 'bx_persons';
 
 -- VIEWS
-DELETE FROM `sys_objects_view` WHERE `Name`='bx_persons';
+DELETE FROM `sys_objects_view` WHERE `Name` = 'bx_persons';
+
+-- SEARCH
+DELETE FROM `sys_objects_search` WHERE `ObjectName` = 'bx_persons';

@@ -174,7 +174,7 @@ class BxBaseModGeneralModule extends BxDolModule
 
     // ====== PROTECTED METHODS
 
-    protected function _serviceBrowse ($sMode, $aParams = false, $iDesignBox = BX_DB_PADDING_DEF, $bDisplayEmptyMsg = false) 
+    protected function _serviceBrowse ($sMode, $aParams = false, $iDesignBox = BX_DB_PADDING_DEF, $bDisplayEmptyMsg = false, $bAjaxPaginate = true) 
     {
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->checkAllowedBrowse()))
             return MsgBox($sMsg);
@@ -182,9 +182,10 @@ class BxBaseModGeneralModule extends BxDolModule
         bx_import('SearchResult', $this->_aModule);
         $sClass = $this->_aModule['class_prefix'] . 'SearchResult';        
         $o = new $sClass($sMode, $aParams);
-        
+                
         $o->setDesignBoxTemplateId($iDesignBox);
         $o->setDisplayEmptyMsg($bDisplayEmptyMsg);
+        $o->setAjaxPaginate($bAjaxPaginate);
 
         if ($o->isError)
             return '';

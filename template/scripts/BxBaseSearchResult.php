@@ -8,6 +8,7 @@
  */
 
 bx_import('BxDolSearch');
+
 class BxBaseSearchResult extends BxDolSearchResult 
 {
     public $isError;
@@ -73,8 +74,8 @@ class BxBaseSearchResult extends BxDolSearchResult
 
         $sCode = $this->oFunctions->designBoxContent($sTitle, $sCode . $sPaginate, $this->iDesignBoxTemplate, $this->getDesignBoxMenu());
 
-        if (!isset($_GET['searchMode']))
-            $sCode = '<div id="page_block_' . $this->id . '" class="bx-clearfix">' . $sCode . '</div>';
+        if ($this->id)
+            $sCode = '<div class="bx-page-block-container bx-clearfix" id="bx-page-block-' . $this->id . '">' . $sCode . '</div>';
 
         return $sCode;
     }
@@ -201,17 +202,19 @@ EOF;
         $oMain = $this->getMain();
         $oConfig = $oMain->_oConfig;
 
-        $sUrlStart = $this->getCurrentUrl(array(), false);
+        $sPageUrl = $this->getCurrentUrl(array(), false);
+        $sOnClick = $this->getCurrentOnclick(array(), false);
 
         bx_import('BxTemplPaginate');
         $oPaginate = new BxTemplPaginate(array(
-            'page_url' => $sUrlStart,
+            'page_url' => $sPageUrl,
+            'on_change_page' => $sOnClick,
             'num' => $this->aCurrent['paginate']['num'],
             'per_page' => $this->aCurrent['paginate']['perPage'],
             'start' => $this->aCurrent['paginate']['start'],
         ));
 
-        return $oPaginate->getPaginate();
+        return $sOnClick ? $oPaginate->getSimplePaginate() : $oPaginate->getPaginate();
     }
 
     /**
@@ -222,19 +225,54 @@ EOF;
      */
     protected function getCurrentUrl($aAdditionalParams = array(), $bReplacePagesParams = true) 
     {
+        if (BX_DOL_SEARCH_KEYWORD_PAGE === $this->sBrowseUrl || $this->bForceAjaxPaginate)
+            return 'javascript:void(0);';
+
         bx_import('BxDolPermalinks');
         $oPermalinks = BxDolPermalinks::getInstance();
 
-        // base url
         $sUrlStart = BX_DOL_URL_ROOT . $oPermalinks->permalink($this->sBrowseUrl);
 
+        return $this->addAdditionalUrlParams($sUrlStart, $bReplacePagesParams);
+    }
+
+    /**
+     * Get current browse URL with current page and additional params
+     * @param $aAdditionalParams set custom additional params as key value pair
+     * @param $bReplacePagesParams replace paginate params with current values or leave markers for use in paginate class
+     * @return ready to use URL string with BX_DOL_URL_ROOT added in the beginning
+     */
+    protected function getCurrentOnclick($aAdditionalParams = array(), $bReplacePagesParams = true) 
+    {
+        if (BX_DOL_SEARCH_KEYWORD_PAGE !== $this->sBrowseUrl && !$this->bForceAjaxPaginate)
+            return '';
+
+        if (BX_DOL_SEARCH_KEYWORD_PAGE === $this->sBrowseUrl) {
+
+            $sLoadDynamicUrl = BX_DOL_URL_ROOT . 'searchKeywordContent.php?searchMode=ajax&section[]=' . $this->aCurrent['name'];
+            $sLoadDynamicUrl = $this->addAdditionalUrlParams($sLoadDynamicUrl, $bReplacePagesParams);
+
+            $sKeyword = bx_get('keyword');
+            if ($sKeyword !== false && mb_strlen($sKeyword) > 0)
+                $sLoadDynamicUrl = bx_append_url_params($sLoadDynamicUrl, 'keyword=' . rawurlencode($sKeyword));
+
+            return "return !loadDynamicBlockAuto(this, '{$sLoadDynamicUrl}');";
+
+        } else {
+
+            return "return !loadDynamicBlockAutoPaginate(this, '{start}', '{per_page}');";
+
+        }
+    }
+
+    protected function addAdditionalUrlParams($sUrl, $bReplacePagesParams) 
+    {
         // add pages params
-        $sUrlStart = bx_append_url_params($sUrlStart, array (
+        $sUrl = bx_append_url_params($sUrl, array (
             'start' => $bReplacePagesParams ? (int)$this->aCurrent['paginate']['start'] : '{start}',
             'per_page' => $bReplacePagesParams ? (int)$this->aCurrent['paginate']['perPage'] : '{per_page}',
         ));
 
-        // add additional params
         foreach ($this->aGetParams as $sGetParam) {
             $sValue = false;
             if (isset($aAdditionalParams[$sGetParam]))
@@ -242,23 +280,10 @@ EOF;
             elseif (false !== bx_get($sGetParam))
                 $sValue = bx_get($sGetParam);
             if (false !== $sValue)
-                $sUrlStart = bx_append_url_params($sUrlStart, $sGetParam . '=' . rawurlencode($sValue));
+                $sUrl = bx_append_url_params($sUrl, $sGetParam . '=' . rawurlencode($sValue));
         }
 
-        return $sUrlStart;
-    }
-    
-    function showPaginationAjax($sBlockId) 
-    {
-        bx_import('BxTemplPaginate');
-        $oPaginate = new BxTemplPaginate(array(
-            'page_url' => 'javascript:void(0);',
-            'num' => $this->aCurrent['paginate']['num'],
-            'per_page' => $this->aCurrent['paginate']['perPage'],
-            'start' => $this->aCurrent['paginate']['start'],
-        ));
-
-        return $oPaginate->getSimplePaginate(false, -1, -1, false);
+        return $sUrl;
     }
 
     function clearFilters ($aPassParams = array(), $aPassJoins = array()) 

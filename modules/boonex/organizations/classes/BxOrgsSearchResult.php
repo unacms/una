@@ -94,20 +94,17 @@ class BxOrgsSearchResult extends BxBaseModProfileSearchResult
                 }
                 break;
 
-            case 'search':
-                $sValue = isset($aParams['q']) ? $aParams['q'] : false;
-                if ($sValue)
-                    $this->aCurrent['restriction']['keyword'] = array('value' => $sValue,'field' => '','operator' => 'against');
-
-                $this->sBrowseUrl = "search/?q=" . $sValue;
-                $this->aCurrent['title'] = _t('_bx_orgs_page_title_search_results', $sValue);
-                unset($this->aCurrent['rss']);
-                break;
-
             case 'recent':
-            case '':
                 $this->aCurrent['rss']['link'] = 'modules/?r=orgs/rss/' . $sMode;
                 $this->aCurrent['title'] = _t('_bx_orgs_page_title_browse_recent');
+                $this->sBrowseUrl = 'page.php?i=organizations-home';
+                break;
+
+            case '': // search results
+                $this->sBrowseUrl = BX_DOL_SEARCH_KEYWORD_PAGE;
+                $this->aCurrent['title'] = _t('_bx_orgs');
+                $this->aCurrent['paginate']['perPage'] = 5;
+                unset($this->aCurrent['rss']);
                 break;
 
             default:

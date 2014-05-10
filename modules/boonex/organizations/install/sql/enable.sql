@@ -259,3 +259,7 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 -- VIEWS
 INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
 ('bx_organizations', 'bx_organizations_views_track', '86400', '1', 'bx_organizations_data', 'id', 'views', '', '');
+
+-- SEARCH
+INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `ClassName`, `ClassPath`) VALUES
+('bx_organizations', '_bx_orgs', 'BxOrgsSearchResult', 'modules/boonex/organizations/classes/BxOrgsSearchResult.php');

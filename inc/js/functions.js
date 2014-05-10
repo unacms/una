@@ -63,16 +63,28 @@ function getHtmlData( elem, url, callback, method , confirmation)
     }
 }
 
+function loadDynamicBlockAutoPaginate (e, iStart, iPerPage) {
+
+    sUrl = location.href;
+
+    sUrl = sUrl.replace(/start=\d+/, '').replace(/per_page=\d+/, '').replace(/[&\?]+$/, '');
+    sUrl = bx_append_url_params(sUrl, 'start=' + parseInt(iStart) + '&per_page=' + parseInt(iPerPage));
+
+    return loadDynamicBlockAuto(e, sUrl);
+}
+
 /**
  * This function reloads page block automatically, 
  * just provide any element inside the block and this function will reload the block.
  * @param e - element inside the block
  * @return true on success, or false on error - particularly, if block isn't found
  */
-function loadDynamicBlockAuto(e) {
-    var sUrl = location.href;
+function loadDynamicBlockAuto(e, sUrl) {
     var sId = $(e).parents('.bx-page-block-container:first').attr('id');
-    
+
+    if ('undefined' == typeof(sUrl))
+        sUrl = location.href;
+
     if (!sId || !sId.length)
         return false;
 
