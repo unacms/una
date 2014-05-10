@@ -102,7 +102,7 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
         }
 
         if ($iRet = parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges)) 
-            $this->_processFiles ($this->getCleanValue($CNF['FIELD_PHOTO']), $iContentId, false);
+            $this->_processFiles ($this->getCleanValue($CNF['FIELD_PHOTO']), $iContentId, true);
         return $iRet;
     }
 
