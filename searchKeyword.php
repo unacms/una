@@ -18,7 +18,7 @@ $o->setLiveSearch(bx_get('live_search') ? 1 : 0);
 $sCode = '';
 if (bx_get('keyword')) {
     $sCode = $o->response();
-    if (mb_strlen($sCode) == 0)
+    if (!$sCode)
         $sCode = $o->getEmptyResult();
 }
 

@@ -41,9 +41,11 @@ class BxBaseSearch extends BxDolSearch
         $aForm = array(
             'form_attrs' => array(
                'id' => $sIdForm,
-               'action' => '',
-               'method' => 'post',
-               'onsubmit' => "return bx_search($sJsParams);",
+               'action' => BX_DOL_URL_ROOT . 'searchKeyword.php',
+               'method' => 'post',               
+            ),
+            'csrf' => array(
+                'disable' => true,
             ),
             'inputs' => array(
                 'live_search' => array(
@@ -62,6 +64,7 @@ class BxBaseSearch extends BxDolSearch
                     'type' => 'text',
                     'name' => 'keyword',
                     'caption' => _t('_Keyword'),
+                    'value' => bx_get('keyword') ? bx_process_input(bx_get('keyword')) : '',
                 ),
                 'search' => array(
                     'type' => 'submit',
@@ -76,9 +79,8 @@ class BxBaseSearch extends BxDolSearch
             unset($aForm['inputs']['search']);
             unset($aForm['inputs']['keyword']['caption']);
             $aForm['inputs']['keyword']['attrs']['placeholder'] = _t('_sys_search_placeholder');
-            $aForm['inputs']['keyword']['attrs']['onkeypress'] = "return bx_search_on_type($sJsParams);";
+            $aForm['inputs']['keyword']['attrs']['onkeypress'] = "return bx_search_on_type(event, $sJsParams);";
             $aForm['inputs']['keyword']['attrs']['onpaste'] = $aForm['inputs']['keyword']['attrs']['onkeypress'];
-            $aForm['inputs']['keyword']['attrs']['oninput'] = $aForm['inputs']['keyword']['attrs']['onkeypress'];
         }
 
         bx_import('BxTemplFormView');

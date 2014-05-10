@@ -427,8 +427,20 @@ function bx_append_url_params (sUrl, mixedParams) {
     return sUrl + sParams;
 }
 
-function bx_search_on_type (n, sFormSel, sResultsContSel, sLoadingContSel, bSortResults) {
-    bx_search (n, sFormSel, sResultsContSel, sLoadingContSel, bSortResults);
+function bx_search_on_type (e, n, sFormSel, sResultsContSel, sLoadingContSel, bSortResults) {
+    if ('undefined' != typeof(e) && 13 == e.keyCode) {
+        $(sFormSel).find('input[name=live_search]').val(0);
+        $(sFormSel).submit();
+        return false;
+    }
+
+    if ('undefined' != typeof(glBxSearchTimeoutHandler) && glBxSearchTimeoutHandler)
+        clearTimeout(glBxSearchTimeoutHandler);
+
+    glBxSearchTimeoutHandler = setTimeout(function () {
+        bx_search (n, sFormSel, sResultsContSel, sLoadingContSel, bSortResults);
+    }, 500);
+
     return true;
 }
 
