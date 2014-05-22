@@ -16,6 +16,7 @@ class BxCnvInstaller extends BxBaseModTextInstaller
     function __construct($aConfig) 
     {
         parent::__construct($aConfig);
+        $this->_bUpdateTimeline = false;
     }
 
     function uninstall($aParams, $bDisable = false) 
