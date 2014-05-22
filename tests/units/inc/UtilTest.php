@@ -62,4 +62,44 @@ class UtilTest extends PHPUnit_Framework_TestCase
             array('1g', 1073741824),
         );
     }
+
+    /**
+     * @see title2uri
+     * @dataProvider providerForTitleToUri
+     */
+    function testTitleToUri($sIn, $sOut)
+    {
+    	$this->assertEquals(title2uri($sIn), $sOut);
+    }
+	public function providerForTitleToUri()
+    {
+        return array(
+            array('test', 'test'),
+            array('test & test', 'test [and] test'),
+            array('test + test', 'test [plus] test'),
+            array('"test"', '[quote]test[quote]'),
+            array('/test/', '[slash]test[slash]'),
+            array('\\test\\', '[backslash]test[backslash]'),
+        );
+    }
+
+	/**
+     * @see uri2title
+     * @dataProvider providerForUriToTitle
+     */
+    function testUriToTitle($sIn, $sOut)
+    {
+    	$this->assertEquals(uri2title($sIn), $sOut);
+    }
+	public function providerForUriToTitle()
+    {
+        return array(
+            array('test', 'test'),
+            array('test [and] test', 'test & test'),
+            array('test [plus] test', 'test + test'),
+            array('[quote]test[quote]', '"test"'),
+            array('[slash]test[slash]', '/test/'),
+            array('[backslash]test[backslash]', '\\test\\'),
+        );
+    }
 }

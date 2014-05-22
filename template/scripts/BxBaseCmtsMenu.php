@@ -36,12 +36,14 @@ class BxBaseCmtsMenu extends BxTemplMenu
 		if($oVote !== false)
 			$sVotesOnclick = $oVote->getJsClick();
 
+		$sJsObject = $oCmts->getJsObjectName();
 		$this->addMarkers(array(
+			'js_object' => $sJsObject,
 			'cmt_system' => $this->_oCmts->getSystemName(),
 			'cmt_id' => $this->_oCmts->getId(),
 			'content_id' => $iCmtId,
 			'vote_onclick' => $sVotesOnclick,
-			'rate_onclick' => $oCmts->getJsObjectName() . '.toggleReply(this, ' . $iCmtId . ')',
+			'reply_onclick' => $sJsObject . '.toggleReply(this, ' . $iCmtId . ')'
     	));
     }
 

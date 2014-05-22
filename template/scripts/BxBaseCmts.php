@@ -418,16 +418,30 @@ class BxBaseCmts extends BxDolCmts {
 			$sMenuManage = BxTemplFunctions::getInstance()->transBox($this->_sSystem . '-manage-' . $aCmt['cmt_id'], $sMenuManage, true);
 		}
 
+		$sAgo = bx_time_js($aCmt['cmt_time']);
+		$bObjectTitle = !empty($this->_aSystem['trigger_field_title']);
         return $oTemplate->parseHtmlByName('comment_actions.html', array(
         	'id' => $aCmt['cmt_id'],
         	'js_object' => $this->_sJsObjName,
         	'style_prefix' => $this->_sStylePrefix,
-        	'view_link' => bx_append_url_params($this->_sViewUrl, array(
-        		'sys' => $this->_sSystem,
-        		'id' => $this->_iId,
-        		'cmt_id' => $aCmt['cmt_id']
-        	)),
-        	'ago' => bx_time_js($aCmt['cmt_time']),
+        	'bx_if:show_ago_link' => array(
+        		'condition' => $bObjectTitle,
+        		'content' => array(
+        			'style_prefix' => $this->_sStylePrefix,
+        			'view_link' => bx_append_url_params($this->_sViewUrl, array(
+		        		'sys' => $this->_sSystem,
+		        		'id' => $this->_iId,
+		        		'cmt_id' => $aCmt['cmt_id']
+		        	)),
+		        	'ago' => $sAgo
+        		)
+        	),
+        	'bx_if:show_ago_text' => array(
+        		'condition' => !$bObjectTitle,
+        		'content' => array(
+        			'ago' => $sAgo
+        		)
+        	),
         	'menu_actions' => $sMenuActions,
 /*
         	'bx_if:hide_rate_count' => array(
