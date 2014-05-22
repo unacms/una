@@ -249,7 +249,6 @@ class BxDolProfile extends BxDol implements iBxDolProfile {
         // delete associated content 
         // TODO: remake deletion of associated content
         $this->_oQuery->res("DELETE FROM `sys_acl_levels_members` WHERE `IDMember` = {$ID}");
-        $this->_oQuery->res("DELETE FROM `sys_tags` WHERE `ObjID` = {$ID} AND `Type` = 'profile'");
 
         // delete profile
         if (!$this->_oQuery->delete($ID))

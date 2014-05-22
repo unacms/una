@@ -7,22 +7,8 @@ SET @sSysVersion = '8.0.0';
 -- --------------------------------------------------------
 
 SET NAMES 'utf8';
-DROP TABLE IF EXISTS `sys_categories`, `sys_keys`, `sys_objects_editor`, `sys_objects_captcha`, `sys_objects_social_sharing`, `sys_objects_categories`, `sys_objects_cmts`, `sys_cmts_images`, `sys_cmts_images_preview`, `sys_cmts_images2entries`, `sys_email_templates`, `sys_options`, sys_options_types, `sys_options_categories`, `sys_ip_members_visits`, `sys_localization_categories`, `sys_localization_keys`, `sys_localization_languages`, `sys_localization_string_params`, `sys_localization_strings`, `sys_acl_actions`, `sys_acl_actions_track`, `sys_acl_matrix`, `sys_acl_level_prices`, `sys_acl_levels`, `sys_sessions`, `sys_acl_levels_members`, `sys_objects_search`, `sys_stat_site`, `sys_alerts`, `sys_alerts_handlers`, `sys_injections`, `sys_injections_admin`, `sys_modules`, `sys_modules_file_tracks`, `sys_permalinks`, `sys_objects_privacy`, `sys_privacy_defaults`, `sys_privacy_groups`, `sys_tags`, `sys_objects_tag`, `sys_transactions`, `sys_objects_auths`, `sys_objects_vote`, `sys_objects_view`, `sys_cron_jobs`, `sys_menu_mobile`, `sys_menu_mobile_pages`, `sys_objects_storage`, `sys_objects_uploader`, `sys_storage_user_quotas`, `sys_storage_tokens`, `sys_storage_ghosts`, `sys_storage_mime_types`, `sys_objects_transcoder_images`, `sys_transcoder_images_files`, `sys_transcoder_images_filters`, `sys_accounts`, `sys_profiles`, `sys_objects_form`, `sys_form_displays`, `sys_form_inputs`, `sys_form_display_inputs`, `sys_form_pre_lists`, `sys_form_pre_values`, `sys_menu_templates`, `sys_objects_menu`, `sys_menu_sets`, `sys_menu_items`, `sys_objects_grid`, `sys_grid_fields`, `sys_grid_actions`, `sys_objects_connection`, `sys_profiles_conn_subscriptions`, `sys_profiles_conn_friends`, `sys_objects_page`, `sys_pages_layouts`, `sys_pages_design_boxes`, `sys_pages_blocks`, `sys_images`, `sys_std_pages`, `sys_std_widgets`, `sys_std_pages_widgets`;
+DROP TABLE IF EXISTS `sys_keys`, `sys_objects_editor`, `sys_objects_captcha`, `sys_objects_social_sharing`, `sys_objects_cmts`, `sys_cmts_images`, `sys_cmts_images_preview`, `sys_cmts_images2entries`, `sys_email_templates`, `sys_options`, sys_options_types, `sys_options_categories`, `sys_localization_categories`, `sys_localization_keys`, `sys_localization_languages`, `sys_localization_strings`, `sys_acl_actions`, `sys_acl_actions_track`, `sys_acl_matrix`, `sys_acl_levels`, `sys_sessions`, `sys_acl_levels_members`, `sys_objects_search`, `sys_stat_site`, `sys_alerts`, `sys_alerts_handlers`, `sys_injections`, `sys_injections_admin`, `sys_modules`, `sys_modules_file_tracks`, `sys_permalinks`, `sys_objects_privacy`, `sys_privacy_defaults`, `sys_privacy_groups`, `sys_objects_auths`, `sys_objects_vote`, `sys_objects_view`, `sys_cron_jobs`, `sys_objects_storage`, `sys_objects_uploader`, `sys_storage_user_quotas`, `sys_storage_tokens`, `sys_storage_ghosts`, `sys_storage_mime_types`, `sys_objects_transcoder_images`, `sys_transcoder_images_files`, `sys_transcoder_images_filters`, `sys_accounts`, `sys_profiles`, `sys_objects_form`, `sys_form_displays`, `sys_form_inputs`, `sys_form_display_inputs`, `sys_form_pre_lists`, `sys_form_pre_values`, `sys_menu_templates`, `sys_objects_menu`, `sys_menu_sets`, `sys_menu_items`, `sys_objects_grid`, `sys_grid_fields`, `sys_grid_actions`, `sys_objects_connection`, `sys_profiles_conn_subscriptions`, `sys_profiles_conn_friends`, `sys_objects_page`, `sys_pages_layouts`, `sys_pages_design_boxes`, `sys_pages_blocks`, `sys_images`, `sys_std_pages`, `sys_std_widgets`, `sys_std_pages_widgets`;
 ALTER DATABASE DEFAULT CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci';
-
-
--- --------------------------------------------------------
-
-
-CREATE TABLE `sys_categories` (
-  `Category` varchar(32) NOT NULL default '',
-  `ID` int(10) unsigned NOT NULL default '0',
-  `Type` varchar(20) NOT NULL default 'photo',
-  `Owner` int(10) unsigned NOT NULL,
-  `Status` enum('active', 'passive') NOT NULL default 'active',
-  `Date` timestamp NOT NULL default CURRENT_TIMESTAMP,
-  PRIMARY KEY  (`Category`, `ID`, `Type`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 -- --------------------------------------------------------
@@ -103,23 +89,6 @@ CREATE TABLE `sys_objects_auths` (
   PRIMARY KEY  (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
-
--- --------------------------------------------------------
-
---
--- Table structure for table `sys_objects_categories`
---
-
-CREATE TABLE `sys_objects_categories` (
-  `ID` int(10) unsigned NOT NULL auto_increment,
-  `ObjectName` varchar(50) NOT NULL,
-  `Query` text  NOT NULL,
-  `PermalinkParam` varchar(50) NOT NULL default '',
-  `EnabledPermalink` varchar(100) NOT NULL default '',
-  `DisabledPermalink` varchar(100) NOT NULL default '',
-  `LangKey` varchar(100) NOT NULL default '',
-  PRIMARY KEY (`ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -278,8 +247,6 @@ SET @iCategoryId = LAST_INSERT_ID();
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryId, 'lang_default', '_adm_stg_cpt_option_lang_default', '', 'select', 'PHP:bx_import(''BxDolLanguages''); $aValues = BxDolLanguages::getInstance()->getLanguages(false, true); $aResult = array(); foreach($aValues as $sKey => $sValue) $aResult[] = array(\'key\' => $sKey, \'value\' => $sValue); return $aResult;', '', '', 1),
 
-(@iCategoryId, 'sys_calendar_starts_sunday', '_adm_stg_cpt_option_sys_calendar_starts_sunday', '', 'checkbox', '', '', '', 2),
-
 (@iCategoryId, 'sys_format_date', '_adm_stg_cpt_option_sys_format_date', 'D MMM YYYY', 'digit', '', '', '', 3),
 (@iCategoryId, 'sys_format_time', '_adm_stg_cpt_option_sys_format_time', 'HH:mm', 'digit', '', '', '', 4),
 (@iCategoryId, 'sys_format_datetime', '_adm_stg_cpt_option_sys_format_datetime', 'D MMM YYYY h:mm:ss a', 'digit', '', '', '', 5),
@@ -325,17 +292,6 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_template_cache_css_enable', '_adm_stg_cpt_option_sys_template_cache_css_enable', '', 'checkbox', '', '', '', 12),
 (@iCategoryId, 'sys_template_cache_js_enable', '_adm_stg_cpt_option_sys_template_cache_js_enable', '', 'checkbox', '', '', '', 13),
 (@iCategoryId, 'sys_template_cache_compress_enable', '_adm_stg_cpt_option_sys_template_cache_compress_enable', 'on', 'checkbox', '', '', '', 14);
-
-
---
--- CATEGORY: Categories
---
-INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'categories', '_adm_stg_cpt_category_categories', 0, 5);
-SET @iCategoryId = LAST_INSERT_ID();
-
-INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'categ_perpage_browse', '_adm_stg_cpt_option_categ_perpage_browse', '30', 'digit', '', '', '', 1),
-(@iCategoryId, 'categ_show_columns', '_adm_stg_cpt_option_categ_show_columns', '5', 'digit', '', '', '', 2);
 
 
 --
@@ -399,7 +355,6 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `or
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'db_clean_members_visits', 'Delete stored members IPs older than (days)', '90', 'digit', '', '', '', 1),
 (@iCategoryId, 'db_clean_mem_levels', 'Delete membership levels expired for (days)', '30', 'digit', '', '', '', 2);
 
 
@@ -410,7 +365,6 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `or
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'enable_member_store_ip', '_adm_stg_cpt_option_enable_member_store_ip', 'on', 'checkbox', '', '', '', 1),
 (@iCategoryId, 'sys_security_impact_threshold_log', '_adm_stg_cpt_option_sys_security_impact_threshold_log', '-1', 'digit', '', '', '', 4),
 (@iCategoryId, 'sys_security_impact_threshold_block', '_adm_stg_cpt_option_sys_security_impact_threshold_block', '-1', 'digit', '', '', '', 5),
 (@iCategoryId, 'sys_security_form_token_enable', '_adm_stg_cpt_option_sys_security_form_token_enable', 'on', 'checkbox', '', '', '', 6),
@@ -446,39 +400,8 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_storage_s3_domain', '_adm_stg_cpt_option_sys_storage_s3_domain', '', 'digit', '', '', '', 5);
 
 
---
--- CATEGORY: Tags
---
-INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'tags', '_adm_stg_cpt_category_tags', 0, 14);
-SET @iCategoryId = LAST_INSERT_ID();
-
-INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'tags_non_parsable', '_adm_stg_cpt_option_tags_non_parsable', 'hi, hey, hello, all, i, i''m, i''d, am, for, in, to, a, the, on, it''s, is, my, of, are, from, i''m, me, you, and, we, not, will, at, where, there', 'text', '', '', '', 1),
-(@iCategoryId, 'tags_perpage_browse', '_adm_stg_cpt_option_tags_perpage_browse', '30', 'digit', '', '', '', 2),
-(@iCategoryId, 'tags_show_limit', '_adm_stg_cpt_option_tags_show_limit', '50', 'digit', '', '', '', 3);
-
-
 -- --------------------------------------------------------
 
-
---
--- Table structure for table `sys_ip_members_visits`
---
-
-CREATE TABLE `sys_ip_members_visits` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `MemberID` int(10) unsigned NOT NULL,
-  `From` int(10) unsigned NOT NULL,
-  `DateTime` datetime NOT NULL,
-  PRIMARY KEY (`ID`),
-  KEY `From` (`From`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `sys_localization_categories`
---
 
 CREATE TABLE `sys_localization_categories` (
   `ID` int(6) unsigned NOT NULL auto_increment,
@@ -487,19 +410,9 @@ CREATE TABLE `sys_localization_categories` (
   UNIQUE KEY `Name` (`Name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `sys_localization_categories`
---
-
 INSERT INTO `sys_localization_categories` VALUES
 (1, 'System'),
 (2, 'Custom');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `sys_localization_keys`
---
 
 CREATE TABLE `sys_localization_keys` (
   `ID` int(10) unsigned NOT NULL auto_increment,
@@ -510,12 +423,6 @@ CREATE TABLE `sys_localization_keys` (
   FULLTEXT KEY `KeyFilter` (`Key`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `sys_localization_languages`
---
-
 CREATE TABLE `sys_localization_languages` (
   `ID` int(10) unsigned NOT NULL auto_increment,
   `Name` varchar(5) NOT NULL default '',
@@ -525,26 +432,6 @@ CREATE TABLE `sys_localization_languages` (
   PRIMARY KEY  (`ID`),
   UNIQUE KEY `Name` (`Name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `sys_localization_string_params`
---
-
-CREATE TABLE `sys_localization_string_params` (
-  `IDKey` int(10) unsigned NOT NULL default '0',
-  `IDParam` tinyint(3) unsigned NOT NULL default '0',
-  `Description` varchar(255) NOT NULL default '',
-  PRIMARY KEY  (`IDKey`,`IDParam`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `sys_localization_strings`
---
 
 CREATE TABLE `sys_localization_strings` (
   `IDKey` int(10) unsigned NOT NULL default '0',
@@ -662,19 +549,6 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iModerator, 13),
 (@iAdministrator, 13),
 (@iPremium, 13);
-
-
-
-CREATE TABLE `sys_acl_level_prices` (
-  `id` int(11) NOT NULL auto_increment,
-  `IDLevel` int(10) unsigned NOT NULL DEFAULT '0',
-  `Days` int(10) unsigned NOT NULL default '1',
-  `Price` float unsigned NOT NULL default '1',
-  `Order` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `type` (`IDLevel`,`Days`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
 
 
 CREATE TABLE `sys_acl_levels` (
@@ -806,65 +680,6 @@ CREATE TABLE `sys_objects_search` (
   PRIMARY KEY  (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
 
-
--- --------------------------------------------------------
-
---
--- Table structure for table `sys_tags`
---
-
-CREATE TABLE `sys_tags` (
-  `Tag` varchar(32) NOT NULL default '',
-  `ObjID` int(10) unsigned NOT NULL default '0',
-  `Type` varchar(20) NOT NULL default 'profile',
-  `Date` timestamp NOT NULL default CURRENT_TIMESTAMP,
-  PRIMARY KEY  (`Tag`,`ObjID`,`Type`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `sys_tags`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `sys_objects_tag`
---
-
-CREATE TABLE `sys_objects_tag` (
-  `ID` int(10) unsigned NOT NULL auto_increment,
-  `ObjectName` varchar(50) NOT NULL,
-  `Query` text NOT NULL,
-  `PermalinkParam` varchar(50) NOT NULL default '',
-  `EnabledPermalink` varchar(100) NOT NULL default '',
-  `DisabledPermalink` varchar(100) NOT NULL default '',
-  `LangKey` varchar(100) NOT NULL default '',
-  PRIMARY KEY  (`ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `sys_transactions`
---
-
-CREATE TABLE `sys_transactions` (
-  `ID` bigint(20) unsigned NOT NULL auto_increment,
-  `IDMember` int(10) unsigned NOT NULL default '0',
-  `IDProvider` smallint(6) unsigned NOT NULL default '0',
-  `gtwTransactionID` varchar(32) NOT NULL default '',
-  `Date` datetime NOT NULL default '0000-00-00 00:00:00',
-  `Amount` float unsigned NOT NULL default '0',
-  `Currency` varchar(3) NOT NULL default 'USD',
-  `Status` enum('pending','approved','declined') NOT NULL default 'pending',
-  `Data` text NOT NULL,
-  `Description` tinytext,
-  `Note` tinytext,
-  PRIMARY KEY  (`ID`),
-  KEY `IDMember` (`IDMember`),
-  KEY `IDProvider` (`IDProvider`),
-  KEY `gtwTransactionID` (`gtwTransactionID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -1168,46 +983,6 @@ CREATE TABLE `sys_cron_jobs` (
 INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `eval`) VALUES
 ('cmd', '0 0 * * *', 'BxDolCronCmd', 'inc/classes/BxDolCronCmd.php', ''),
 ('notifies', '*/10 * * * *', 'BxDolCronNotifies', 'inc/classes/BxDolCronNotifies.php', '');
-
--- --------------------------------------------------------
-
-CREATE TABLE IF NOT EXISTS `sys_menu_mobile_pages` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `page` varchar(32) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `order` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `page` (`page`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
-INSERT INTO `sys_menu_mobile_pages` (`id`, `page`, `title`, `order`) VALUES
-(1, 'homepage', '_adm_mobile_page_homepage', 1),
-(2, 'profile', '_adm_mobile_page_profile', 2);
-
-CREATE TABLE IF NOT EXISTS `sys_menu_mobile` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `type` varchar(32) NOT NULL,
-  `page` varchar(32) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `icon` varchar(255) NOT NULL,
-  `action` int(11) NOT NULL,
-  `action_data` varchar(255) NOT NULL,
-  `eval_bubble` text NOT NULL,
-  `eval_hidden` text NOT NULL,
-  `order` int(11) NOT NULL,
-  `active` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
-INSERT INTO `sys_menu_mobile` (`type`, `page`, `title`, `icon`, `action`, `action_data`, `eval_bubble`, `eval_hidden`, `order`, `active`) VALUES
-('system', 'homepage', '_sys_mobile_status', 'home_status.png', 1, '', '', '', 1, 1),
-('system', 'homepage', '_sys_mobile_mail', 'home_messages.png', 3, '', 'return getNewLettersNum({member_id});', '', 2, 1),
-('system', 'homepage', '_sys_mobile_friends', 'home_friends.png', 4, '', 'return getFriendRequests({member_id});', '', 3, 1),
-('system', 'homepage', '_sys_mobile_info', 'home_info.png', 5, '', '', '', 4, 1),
-('system', 'homepage', '_sys_mobile_search', 'home_search.png', 6, '', '', '', 5, 1),
-('system', 'profile', '_sys_mobile_profile_info', '', 5, '', '', '', 1, 1),
-('system', 'profile', '_sys_mobile_profile_contact', '', 3, '', '', '', 2, 1),
-('system', 'profile', '_sys_mobile_profile_friends', '', 4, '', 'return getFriendNumber(''{profile_id}'');', '', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -3424,11 +3199,6 @@ SET @iIdBuilderForms = LAST_INSERT_ID();
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
 (3, 'builder_permissions', '_adm_page_cpt_builder_permissions', '_adm_page_cpt_builder_permissions', 'pi-builder-permissions.png');
 SET @iIdBuilderPermissions = LAST_INSERT_ID();
-
-INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
-(3, 'builder_mobile', '_adm_page_cpt_builder_mobile', '_adm_page_cpt_builder_mobile', 'pi-builder-mobile.png');
-SET @iIdBuilderMobile = LAST_INSERT_ID();
-
 
 --
 -- Dumping data for table `sys_std_widgets` and `sys_std_pages_widgets`

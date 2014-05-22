@@ -129,14 +129,8 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
             'recompile_member_actions' => array(
                 'title' => _t('_adm_txt_modules_recompile_member_actions'),
             ),
-            'recompile_tags' =>  array(
-                'title' => _t('_adm_txt_modules_recompile_tags'),
-            ),
             'recompile_votes' => array(
                 'title' => _t('_adm_txt_modules_recompile_votes'),
-            ),
-            'recompile_categories' =>  array(
-                'title' => _t('_adm_txt_modules_recompile_categories'),
             ),
             'recompile_search' => array(
                 'title' => _t('_adm_txt_modules_recompile_search'),
@@ -767,16 +761,8 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
         $bResult = $this->oDb->cleanCache('sys_objects_actions');
         return $bResult ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
-    function actionRecompileTags($sOperation) {
-        $bResult = $this->oDb->cleanCache('sys_objects_tag');
-        return $bResult ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
-    }
     function actionRecompileVotes($sOperation) {
         $bResult = $this->oDb->cleanCache('sys_objects_vote');
-        return $bResult ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
-    }
-    function actionRecompileCategories($sOperation) {
-        $bResult = $this->oDb->cleanCache('sys_objects_categories');
         return $bResult ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
     function actionRecompileInjections($sOperation) {

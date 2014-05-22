@@ -33,7 +33,6 @@ class BxDolCronCmd extends BxDolCron {
 
     function clean_database()
     {
-        $db_clean_visits = (int) getParam("db_clean_members_visits");
         $db_clean_mem_levels = (int) getParam("db_clean_mem_levels");
 
         //clear from `sys_acl_levels_members`
@@ -43,10 +42,6 @@ class BxDolCronCmd extends BxDolCron {
         // clear from `sys_messages`
         if (db_res("DELETE FROM `sys_messages` WHERE FIND_IN_SET('sender', `Trash`) AND FIND_IN_SET('recipient', `Trash`)"))
             db_res("OPTIMIZE TABLE `sys_messages`");
-
-        //clear from `sys_ip_members_visits`
-        if (db_res("DELETE FROM `sys_ip_members_visits` WHERE `DateTime` < NOW() - INTERVAL $db_clean_visits DAY"))
-            db_res("OPTIMIZE TABLE `sys_ip_members_visits`");
 
         // clear ban table
         if (db_res("DELETE FROM `sys_admin_ban_list` WHERE `DateTime` + INTERVAL `Time` SECOND < NOW()"))

@@ -263,15 +263,6 @@ class BxDolLanguagesQuery extends BxDolDb implements iBxDolSingleton {
 
         return (int)$this->getOne("SELECT FOUND_ROWS()");
     }
-    /*
-     * The method is not used anywhere right now. 
-     */
-    function getStringParams($iKeyId) {
-        $iKeyId = (int)$iKeyId;
-        $sSql = $this->prepare("SELECT `IDParam`, `Description` FROM `sys_localization_string_params` WHERE `IDKey`=? ORDER BY `IDParam`", $iKeyId);
-
-        return $this->getPairs($sSql, 'IDParam', 'Description');
-    }
 }
 
 /** @} */
