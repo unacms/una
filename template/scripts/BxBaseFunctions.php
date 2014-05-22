@@ -9,42 +9,39 @@
 
 bx_import('BxDolTemplate');
 
-class BxBaseFunctions extends BxDol implements iBxDolSingleton {
-
-    protected $_aSpecialKeys;
+class BxBaseFunctions extends BxDol implements iBxDolSingleton 
+{
     protected $_oTemplate;
 
-    function BxBaseFunctions($oTemplate) {
-
+    protected function __construct($oTemplate) 
+    {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
-        parent::BxDol();        
+        parent::__construct();
 
-        if ($oTemplate)
-            $this->_oTemplate = $oTemplate;
-        else
-            $this->_oTemplate = BxDolTemplate::getInstance();
-
-        $this->_aSpecialKeys = array('rate' => '', 'rate_cnt' => '');
+        $this->_oTemplate = $oTemplate ? $oTemplate : BxDolTemplate::getInstance();
     }
 
     /**
      * Prevent cloning the instance
      */
-    public function __clone() {
+    public function __clone() 
+    {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error('Clone is not allowed for the class: ' . get_class($this), E_USER_ERROR);
     }
 
-    public static function getInstance() {
+    public static function getInstance() 
+    {
         if(!isset($GLOBALS['bxDolClasses']['BxTemplFunctions']))
             $GLOBALS['bxDolClasses']['BxTemplFunctions'] = new BxTemplFunctions();
 
         return $GLOBALS['bxDolClasses']['BxTemplFunctions'];
     }
 
-    function TemplPageAddComponent($sKey) {
+    function TemplPageAddComponent($sKey) 
+    {
         switch( $sKey ) {
             case 'something':
                 return false; // return here additional components
@@ -53,108 +50,8 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton {
         }
     }
 
-    /**
-    * TODO: remove (along with related code), the only use is in genObjectsActions method which is for removal as well
-    * Function will generate object's action link ;
-    *
-    * @param          : $aObjectParamaters (array) contain special markers ;
-    * @param          : $aRow (array) links's info ;
-    * @param          : $sCssClass (string) additional css style ;
-    * @return         : Html presentation data ;
-    */
-    function genActionLink( &$aObjectParamaters, $aRow, $sCssClass = null ) {
-        // ** init some needed variables ;
-        $sOutputHtml = null;
-
-        $aUsedTemplate = array (
-            'action' => 'action_link.html'
-        );
-
-        // find and replace all special markers ;
-        foreach( $aRow AS $sKeyName => $sKeyValue ) {
-            if ( $sKeyName == 'Caption' ) {
-                $aRow[$sKeyName] =  $this -> markerReplace($aObjectParamaters, $sKeyValue, $aRow['Eval'], true);
-            } else {
-                $aRow[$sKeyName] =  $this -> markerReplace($aObjectParamaters, $sKeyValue, $aRow['Eval']);
-            }
-        }
-
-        $sKeyValue = trim($sKeyValue, '{}');
-
-        if ( array_key_exists($sKeyValue, $this->_aSpecialKeys) ) {
-            return $aRow['Eval'];
-        } else {
-            $sSiteUrl = (preg_match("/^(http|https|ftp|mailto)/", $aRow['Url'])) ? '' : BX_DOL_URL_ROOT;
-            // build the link components ;
-            //$sLinkSrc = (!$aRow['Script']) ? $aRow['Url'] : 'javascript:void(0)';
-
-            $sScriptAction = ( $aRow['Script'] ) ? ' onclick="' . $aRow['Script'] . '"' : '';
-            $sScriptAction = ($sScriptAction=='' && $aRow['Url']!='') ? " onclick=\"window.open ('{$sSiteUrl}{$aRow['Url']}','_self');\" " : $sScriptAction;
-
-            $sIcon = getTemplateIcon($aRow['Icon']);
-
-            if ( $aRow['Caption'] and ($aRow['Url'] or $aRow['Script'] ) ) {
-
-                $sCssClass = ( $sCssClass ) ? 'class="' . $sCssClass . '"' :  null;
-
-                $aTemplateKeys = array (
-                    'action_img_alt'    => $aRow['Caption'],
-                    'action_img_src'    => $sIcon,
-                    'action_caption'    => $aRow['Caption'],
-                    'extended_css'        => $sCssClass,
-                    'extended_action'    => $sScriptAction,
-                );
-                
-                $sOutputHtml .= $this->_oTemplate->parseHtmlByName( $aUsedTemplate['action'], $aTemplateKeys );
-            }
-        }
-
-        return $sOutputHtml;
-    }
-
-    /**
-     * Function will parse and replace all special markers ;
-     *
-     * @param $aMemberSettings (array) : all available member's information
-     * @param $sTransformText (text) : string that will to parse
-     * @param $bTranslate (boolean) : if isset this param - script will try to translate it used dolphin language file
-     * @return (string) : parsed string
-    */
-    function markerReplace( &$aMemberSettings, $sTransformText, $sExecuteCode = null, $bTranslate = false ) {
-        $aMatches = array();
-        preg_match_all( "/([a-z0-9\-\_ ]{1,})|({([^\}]+)\})/i", $sTransformText, $aMatches );
-        if ( is_array($aMatches) and !empty($aMatches) ) {
-            // replace all founded markers ;
-            foreach( $aMatches[3] as $iMarker => $sMarkerValue ) {
-                if ( is_array($aMemberSettings) and array_key_exists($sMarkerValue, $aMemberSettings) and !array_key_exists($sMarkerValue, $this->_aSpecialKeys) ){
-                    $sTransformText = str_replace( '{' . $sMarkerValue . '}', $aMemberSettings[$sMarkerValue],  $sTransformText);
-                } else if ( $sMarkerValue == 'evalResult' and $sExecuteCode ) {
-                    //find all special markers into Execute code ;
-                    $sExecuteCode = $this -> markerReplace( $aMemberSettings, $sExecuteCode );
-                    $sTransformText =  str_replace( '{' . $sMarkerValue . '}', eval( $sExecuteCode ),  $sTransformText);
-                } else {
-                    //  if isset into special keys ;
-                    if ( array_key_exists($sMarkerValue, $this->_aSpecialKeys) ) {
-                        return $aMemberSettings[$sMarkerValue];
-                    } else {
-                        // undefined keys
-                        switch ($sMarkerValue) {
-                        }
-                    }
-                }
-            }
-
-            // try to translate item ;
-            if ( $bTranslate ) {
-                foreach( $aMatches[1] as $iMarker => $sMarkerValue ) if ( $sMarkerValue )
-                    $sTransformText = str_replace( $sMarkerValue , _t( trim($sMarkerValue) ),  $sTransformText);
-            }
-        }
-
-        return $sTransformText;
-    }
-
-    function msgBox($sText, $iTimer = 0, $sOnClose = "") {    	
+    function msgBox($sText, $iTimer = 0, $sOnClose = "") 
+    {
         $iId = time() . mt_rand(1, 1000);
 
         return $this->_oTemplate->parseHtmlByName('messageBox.html', array(
@@ -171,7 +68,8 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton {
         ));
     }
 
-    function loadingBox($sName) {
+    function loadingBox($sName) 
+    {
         return $this->_oTemplate->parseHtmlByName('loading.html', array(
             'name' => $sName,
         ));
@@ -185,7 +83,8 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton {
      * @param string $sContent - content of the box
      * @return HTML string
      */
-    function popupBox($sName, $sTitle, $sContent, $isHiddenByDefault = false) {
+    function popupBox($sName, $sTitle, $sContent, $isHiddenByDefault = false) 
+    {
         $iId = !empty($sName) ? $sName : time();
 
         return $this->_oTemplate->parseHtmlByName('popup_box.html', array(
@@ -203,7 +102,8 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton {
      * @param string $sContent - content of the box
      * @return HTML string
      */
-    function transBox($sName, $sContent, $isHiddenByDefault = false, $isPlaceInCenter = false) {
+    function transBox($sName, $sContent, $isHiddenByDefault = false, $isPlaceInCenter = false) 
+    {
     	$iId = !empty($sName) ? $sName : time();
 
         return
@@ -216,163 +116,20 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton {
             ($isPlaceInCenter ? '</div>' : '');
     }
 
-    function getTemplateIcon($sName) {            
+    function getTemplateIcon($sName) 
+    {
         $sUrl = $this->_oTemplate->getIconUrl($sName);
         return !empty($sUrl) ? $sUrl : $this->_oTemplate->getIconUrl('spacer.gif');
     }
 
-    function getTemplateImage($sName) {
+    function getTemplateImage($sName) 
+    {
         $sUrl = $this->_oTemplate->getImageUrl($sName);
         return !empty($sUrl) ? $sUrl : $this->_oTemplate->getImageUrl('spacer.gif');
     }
 
-    /**
-     * // TODO: remove, along with all related code
-     * @description : function will generate object's action lists;
-     * @param :  $aKeys (array)  - array with all nedded keys;
-     * @param :  $sActionsType (string) - type of actions;
-     * @param :  $iDivider (integer) - number of column;
-     * @return:  HTML presentation data;
-    */
-    function genObjectsActions( &$aKeys,  $sActionsType, $bSubMenuMode = false ) {
-            
-        // ** init some needed variables ;
-        $sActionsList     = null;
-        $sResponceBlock = null;
-
-        $aUsedTemplate    = array (
-            'actions'     => 'member_actions_list.html',
-            'ajaxy_popup' => 'ajaxy_popup_result.html',
-        );
-
-        // read data from cache file ;
-        $oCache = BxDolDb::getInstance()->getDbCacheObject();
-        $aActions = $oCache->getData(BxDolDb::getInstance()->genDbCacheKey('sys_objects_actions'));
-
-        // if cache file empty - will read from db ;
-        if (null === $aActions || empty($aActions[$sActionsType]) ) {
-
-            $sQuery  =     "
-                SELECT
-                    `Caption`, `Icon`, `Url`, `Script`, `Eval`, `bDisplayInSubMenuHeader`
-                FROM
-                    `sys_objects_actions`
-                WHERE
-                    `Type` = '{$sActionsType}'
-                ORDER BY
-                    `Order`
-            ";
-
-            $rResult = db_res($sQuery);
-            while ( $aRow = mysql_fetch_assoc($rResult) ) {
-                $aActions[$sActionsType][] = $aRow;
-            }
-
-            // write data into cache file ;
-            if ( is_array($aActions[$sActionsType]) and !empty($aActions[$sActionsType]) ) {
-                $oCache->setData (BxDolDb::getInstance()->genDbCacheKey('sys_objects_actions'), $aActions);
-            }
-        }
-
-        // ** generate actions block ;
-
-        // contain all systems actions that will procces by self function ;
-        $aCustomActions = array();
-        if ( is_array($aActions[$sActionsType]) and !empty($aActions[$sActionsType]) ) {
-
-            // need for table's divider ;
-            $iDivider = $iIndex = 0;
-            foreach( $aActions[$sActionsType] as  $aRow ) {
-                if ($bSubMenuMode && $aRow['bDisplayInSubMenuHeader']==0) continue;
-
-                $sOpenTag = $sCloseTag = null;
-
-                // generate action's link ;
-                $sActionLink = $this -> genActionLink( $aKeys, $aRow, 'menuLink') ;
-
-                if ( $sActionLink ) {
-                    $iDivider = $iIndex % 2;
-
-                    if ( !$iDivider ) {
-                        $sOpenTag = '<tr>';
-                    }
-
-                    if ( $iDivider ) {
-                        $sCloseTag = '</tr>';
-                    }
-
-                    $aActionsItem[] = array (
-                        'open_tag'    => $sOpenTag,
-                        'action_link' => $sActionLink,
-                        'close_tag'   => $sCloseTag,
-                    );
-
-                    $iIndex++;
-                }
-
-                // it's system action ;
-                if ( !$aRow['Url'] && !$aRow['Script'] ) {
-                    $aCustomActions[] =  array (
-                        'caption'   => $aRow['Caption'],
-                        'code'      => $aRow['Eval'],
-                    );
-                }
-            }
-        }
-
-        if ($iIndex % 2 == 1) { //fix for ODD menu elements count
-            $aActionsItem[] = array (
-                'open_tag'    => '',
-                'action_link' => '',
-                'close_tag'   => ''
-            );
-        }
-
-        if ( !empty($aActionsItem) ) {
-
-            // check what response window use ;
-            // is there any value to having this template even if the ID is empty?
-            if ( !empty($aKeys['ID']) ) {
-                $sResponceBlock = $this->_oTemplate->parseHtmlByName( $aUsedTemplate['ajaxy_popup'], array('object_id' => $aKeys['ID']) );
-            }
-
-            $aTemplateKeys = array (
-                'bx_repeat:actions' => $aActionsItem,
-                'responce_block'    => $sResponceBlock,
-            );
-
-            $sActionsList = $this->_oTemplate->parseHtmlByName( $aUsedTemplate['actions'], $aTemplateKeys );
-        }
-
-        //procces all the custom actions ;
-        if ($aCustomActions) {
-            foreach($aCustomActions as $iIndex => $sValue ) {
-                $sActionsList .= eval( $this -> markerReplace($aKeys, $aCustomActions[$iIndex]['code']) );
-            }
-        }
-
-        return $sActionsList;
-    }
-
-    function genNotifyMessage($sMessage, $sDirection = 'left', $isButton = false, $sScript = '') {
-        $sDirStyle = ($sDirection == 'left') ? '' : 'notify_message_none';
-        switch ($sDirection) {
-            case 'none': break;
-            case 'left': break;
-        }
-
-        $sPossibleID = ($isButton) ? ' id="isButton" ' : '';
-        $sOnClick = $sScript ? ' onclick="' . $sScript . '"' : '';
-
-        return <<<EOF
-<div class="notify_message {$sDirStyle}" {$sPossibleID} {$sOnClick}>
-    <table class="notify" cellpadding=0 cellspacing=0><tr><td>{$sMessage}</td></tr></table>
-    <div class="notify_wrapper_close"> </div>
-</div>
-EOF;
-    }
-
-    function sysIcon ($sIcon, $sName, $sUrl = '', $iWidth = 0) {
+    function sysIcon ($sIcon, $sName, $sUrl = '', $iWidth = 0) 
+    {
         return '<div class="sys_icon">' . ($sUrl ? '<a title="'.$sName.'" href="'.$sUrl.'">' : '') . '<img alt="'.$sName.'" src="'.$sIcon.'" '.($iWidth ? 'width='.$iWidth : '').' />' . ($sUrl ? '</a>' : '') . '</div>';
     }
 
@@ -383,9 +140,8 @@ EOF;
      * @param $iRssNum - numbr of rss items to disolay
      * @param $iMemberId - optional member id
      */
-    function getRssHolder ($mixedRssId, $iRssNum, $iMemberId = 0) {
-
-
+    function getRssHolder ($mixedRssId, $iRssNum, $iMemberId = 0) 
+    {
         if (!isset($GLOBALS['gbBxSysIsRssInitialized']) || !$GLOBALS['gbBxSysIsRssInitialized']) {
 
             $this->_oTemplate->addCss(array(
@@ -415,11 +171,14 @@ EOF;
     }
     
     /**
+     * TODO: remake for new system
+     *
      * Function will generate list of installed languages list;
      *
      * @return : Html presentation data;
      */
-    function getLangSwitcher() {
+    function getLangSwitcher() 
+    {
         bx_import('BxDolLanguagesQuery');
         $aLangs = BxDolLanguagesQuery::getInstance()->getLanguages();
         if(count($aLangs) < 2)
@@ -453,7 +212,8 @@ EOF;
 	/**
      * functions for limiting maximal string length 
      */
-    function getStringWithLimitedLength($sString, $iWidth = 45, $isPopupOnOverflow = false, $bReturnString = true) {
+    function getStringWithLimitedLength($sString, $iWidth = 45, $isPopupOnOverflow = false, $bReturnString = true) 
+    {
         if (empty($sString) || mb_strlen($sString, 'UTF-8') <= $iWidth)
             return $bReturnString ? $sString : array($sString);
 
@@ -511,7 +271,8 @@ EOF;
      * @see BX_DB_PADDING_DEF
      * @see BX_DB_PADDING_NO_CAPTION
      */
-    function designBoxContent ($sTitle, $sContent, $iTemplateNum = BX_DB_DEF, $mixedMenu = false) {
+    function designBoxContent ($sTitle, $sContent, $iTemplateNum = BX_DB_DEF, $mixedMenu = false) 
+    {
         return $this->_oTemplate->parseHtmlByName('designbox_' . (int)$iTemplateNum . '.html', array(
             'title' => $sTitle,            
             'designbox_content' => $sContent,
@@ -520,8 +281,8 @@ EOF;
         ));
     }
 
-    function designBoxMenu ($mixedMenu, $aButtons = array ()) {
-
+    function designBoxMenu ($mixedMenu, $aButtons = array ()) 
+    {
         $sCode = '';
         $aButtonMenu = false;
         if ($mixedMenu) {
@@ -588,7 +349,8 @@ EOF;
      * Get logo HTML.
      * @return string
      */
-    function getMainLogo() {
+    function getMainLogo() 
+    {
         bx_import('BxDolConfig');
 
         $sAlt = getParam('sys_site_logo_alt') ? getParam('sys_site_logo_alt') : getParam('site_title');
