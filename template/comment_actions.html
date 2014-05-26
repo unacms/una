@@ -1,6 +1,9 @@
 <div class="__style_prefix__-actions bx-def-margin-sec-top bx-clearfix">
 	<div class="__style_prefix__-ago bx-def-margin-right">
-		<a class="__style_prefix__-ago" href="__view_link__" rel="nofollow">__ago__</a>
+		<bx_if:show_ago_link>
+			<a class="__style_prefix__-ago" href="__view_link__" rel="nofollow">__ago__</a>
+		</bx_if:show_ago_link>
+		<bx_if:show_ago_text>__ago__</bx_if:show_ago_text>
 	</div>
 	__menu_actions__
 </div>
