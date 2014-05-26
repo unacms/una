@@ -164,7 +164,10 @@ class BxBaseServiceProfiles extends BxDol
         }
 
         if (!$aVars['bx_repeat:row']) 
-            return MsgBox(_t('_sys_txt_empty'));
+            return array(
+                'content' => MsgBox(_t('_sys_txt_empty')),
+                'menu' => 'sys_add_profile',
+            );
 
         bx_import('BxDolTemplate');
         $oTemplate = BxDolTemplate::getInstance();

@@ -250,7 +250,6 @@
 	<string name="_Subject"><![CDATA[Subject]]></string>
 	<string name="_Successfully uploaded"><![CDATA[Successfully uploaded!]]></string>
 	<string name="_Suspend account"><![CDATA[Suspend account]]></string>
-	<string name="_sys_tags_note"><![CDATA[Enter a few words delimited by commas]]></string>
 	<string name="_Text"><![CDATA[Text]]></string>
 	<string name="_Terms_of_use"><![CDATA[Terms]]></string>
 	<string name="_Tell a friend"><![CDATA[Invite a friend]]></string>
@@ -870,13 +869,6 @@ We may update our Privacy Statement from time to time so please visit this page 
 	<string name="_please_select"><![CDATA[please select]]></string>
 	<string name="_Please_Select_"><![CDATA[Please Select...]]></string>
 	<string name="_associated_image"><![CDATA[associated image]]></string>
-	<string name="_add_category"><![CDATA[add category]]></string>
-	<string name="_edit_category"><![CDATA[edit category]]></string>
-	<string name="_characters_left"><![CDATA[characters left]]></string>
-	<string name="_category_deleted"><![CDATA[category deleted]]></string>
-	<string name="_category_delete_failed"><![CDATA[failed to delete the category]]></string>
-	<string name="_category_successfully_added"><![CDATA[category successfully added]]></string>
-	<string name="_failed_to_add_category"><![CDATA[failed to add category]]></string>
 	<string name="_changes_successfully_applied"><![CDATA[changes successfully applied]]></string>
 	<string name="_comment_added_successfully"><![CDATA[comment added successfully]]></string>
 	<string name="_failed_to_add_comment"><![CDATA[failed to add comment]]></string>
@@ -888,7 +880,6 @@ We may update our Privacy Statement from time to time so please visit this page 
 	<string name="_UPLOAD_MEDIA"><![CDATA[UPLOAD MEDIA]]></string>
 	<string name="_MEDIA_GALLERY_H"><![CDATA[profile media gallery]]></string>
 	<string name="_Showing results:"><![CDATA[Showing results: <b>{0}</b> - <b>{1}</b> of <b>{2}</b>]]></string>
-	<string name="_Category"><![CDATA[Category]]></string>
 	<string name="_Created"><![CDATA[Founded]]></string>
 	<string name="_Members count"><![CDATA[Members]]></string>
 	<string name="_View all members"><![CDATA[View all members]]></string>
@@ -912,7 +903,6 @@ We may update our Privacy Statement from time to time so please visit this page 
 	<string name="_Choose"><![CDATA[Choose]]></string>
 	<string name="_Open join"><![CDATA[Open join]]></string>
 	<string name="_Name is required"><![CDATA[Name is required]]></string>
-	<string name="_Category is required"><![CDATA[Category is required]]></string>
 	<string name="_Country is required"><![CDATA[Country is required]]></string>
 	<string name="_City is required"><![CDATA[City is required]]></string>
 	<string name="_About is required"><![CDATA[Group title is required]]></string>
@@ -952,7 +942,6 @@ We may update our Privacy Statement from time to time so please visit this page 
 	<string name="_Next page"><![CDATA[Next page]]></string>
 	<string name="_Previous page"><![CDATA[Previous page]]></string>
 	<string name="_By Author"><![CDATA[Author: <b><a href="{0}">{0}</a></b>]]></string>
-	<string name="_in Category"><![CDATA[<img src="{0}" alt="" /><a href="{1}">{2}</a>]]></string>
 	<string name="_comments N"><![CDATA[<img src="{0}" />{1} comments]]></string>
 	<string name="_Videos"><![CDATA[Videos]]></string>
 	<string name="_N times"><![CDATA[{0} time(s)]]></string>
@@ -965,7 +954,6 @@ We may update our Privacy Statement from time to time so please visit this page 
 	<string name="_Blocked Me"><![CDATA[Blocked Me]]></string>
 	<string name="_My Videos"><![CDATA[My Videos]]></string>
 	<string name="_My Friends"><![CDATA[My Friends]]></string>
-	<string name="_Add Category"><![CDATA[Add Category]]></string>
 	<string name="_New Post"><![CDATA[New Post]]></string>
 	<string name="_Add Post"><![CDATA[Add Post]]></string>
 	<string name="_Send Message"><![CDATA[Send Message]]></string>
@@ -1043,7 +1031,6 @@ We may update our Privacy Statement from time to time so please visit this page 
 	<string name="_This Week"><![CDATA[This Week]]></string>
 	<string name="_This Month"><![CDATA[This Month]]></string>
 	<string name="_This Year"><![CDATA[This Year]]></string>
-	<string name="_No tags found here"><![CDATA[No tags found here]]></string>
 	<string name="_New Today"><![CDATA[New Today]]></string>
 	<string name="_Count"><![CDATA[Count]]></string>
 	<string name="_Site Stats"><![CDATA[Site Stats]]></string>
@@ -1066,31 +1053,9 @@ When uploading the material, you provide {0} and its members with the right to u
 - Media files containing children's porno.
 - Media containing naked views of you or your children.
 If you do not agree with these stipulations, you may not upload any media files.]]></string>
-	<string name="_Tags"><![CDATA[Tags]]></string>
-	<string name="_Tags_caption"><![CDATA[Tags]]></string>
-	<string name="_Tags_desc"><![CDATA[Enter a few words delimited by commas or semicolon]]></string>
-	<string name="_Tags_err_msg"><![CDATA[You must enter your Tags]]></string>
-	<string name="_tags_err_keyword"><![CDATA[Please specify keyword from 1 to 100 characters]]></string>
-	<string name="_tags_home"><![CDATA[Tags Home]]></string>
-	<string name="_all_tags"><![CDATA[All Tags]]></string>
-	<string name="_popular_tags"><![CDATA[Popular Tags]]></string>
-	<string name="_tags_calendar"><![CDATA[Calendar]]></string>
-	<string name="_tags_search"><![CDATA[Search]]></string>
-	<string name="_tags_recent"><![CDATA[Recently Added Tags]]></string>
-	<string name="_tags_not_found"><![CDATA[Tags Not Found]]></string>
-	<string name="_tags_empty"><![CDATA[Empty]]></string>
-	<string name="_tags_by_day"><![CDATA[Tags By Day: ]]></string>
-	<string name="_tags_search_form"><![CDATA[Search Form]]></string>
-	<string name="_tags_founded_tags"><![CDATA[Search Results]]></string>
-	<string name="_tags_single"><![CDATA[Tag]]></string>
-	<string name="_tags_plural"><![CDATA[Tags]]></string>
-	<string name="_tags_date"><![CDATA[Empty]]></string>
-	<string name="_tags_caption_keyword"><![CDATA[Keyword]]></string>
-	<string name="_tags_caption_module"><![CDATA[Module]]></string>
 	<string name="_Member Friends"><![CDATA[Member Friends]]></string>
 	<string name="_Select"><![CDATA[Select]]></string>
 	<string name="_Join Now Top"><![CDATA[Join Now]]></string>
-	<string name="_Tag"><![CDATA[Tag]]></string>
 	<string name="_Sorry, no members found"><![CDATA[Sorry, no members found]]></string>
 	<string name="_PWD_INVALID3"><![CDATA[Password confirmation failed]]></string>
 	<string name="_Change Password"><![CDATA[Change Password]]></string>
@@ -1099,9 +1064,6 @@ If you do not agree with these stipulations, you may not upload any media files.
 	<string name="_Admin Panel"><![CDATA[Admin Panel]]></string>
 	<string name="_File upload error"><![CDATA[File upload error]]></string>
 	<string name="_send greetings"><![CDATA[send greetings]]></string>
-	<string name="_Category Caption"><![CDATA[Category Caption]]></string>
-	<string name="_Category Deleted Successfully"><![CDATA[Category Deleted Successfully]]></string>
-	<string name="_Category are not deleted"><![CDATA[Category not deleted]]></string>
 	<string name="_affiliate_system_was_disabled"><![CDATA[Affiliate system was disabled]]></string>
 	<string name="_DescriptionMedia"><![CDATA[Description]]></string>
 	<string name="_Mutual Friends"><![CDATA[Mutual Friends]]></string>
@@ -1110,7 +1072,6 @@ If you do not agree with these stipulations, you may not upload any media files.
 	<string name="_Unsubscribe"><![CDATA[Unsubscribe]]></string>
 	<string name="_not_active_story"><![CDATA[Inactive Story]]></string>
 	<string name="_Profile Videos"><![CDATA[Profile Videos]]></string>
-	<string name="_Uncategorized"><![CDATA[Uncategorized]]></string>
 	<string name="_PROFILE_CONFIRM"><![CDATA[Congratulations! Your e-mail confirmation succeeded and your profile has been activated!<br />
 Please click "Continue" below to navigate to the home page of the site.]]></string>
 	<string name="_First Person"><![CDATA[First Person]]></string>
@@ -1175,10 +1136,8 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_Can not delete comments with replies"><![CDATA[Cannot delete comments with replies]]></string>
 	<string name="_Access denied"><![CDATA[Access denied]]></string>
 	<string name="_Save"><![CDATA[Save]]></string>
-	<string name="_Search by Tag"><![CDATA[Search by Tag]]></string>
 	<string name="_Approve"><![CDATA[Approve]]></string>
 	<string name="_Disapprove"><![CDATA[Disapprove]]></string>
-	<string name="_Select Category"><![CDATA[Select Category]]></string>
 	<string name="_Print As"><![CDATA[Print As]]></string>
 	<string name="_Hide N replies"><![CDATA[<span>{0}</span> replies]]></string>
 	<string name="_Counter"><![CDATA[Counter]]></string>
@@ -1189,7 +1148,6 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_Write new Message"><![CDATA[Send once more]]></string>
 	<string name="_FieldCaption_Membership_Edit"><![CDATA[Membership level]]></string>
 	<string name="_FieldDesc_Membership_Edit"><![CDATA[Member membership level]]></string>
-	<string name="_FieldCaption_Tags_View"><![CDATA[Tags]]></string>
 	<string name="_use Orca private forums"><![CDATA[use Orca private forums]]></string>
 	<string name="_use Orca public forums"><![CDATA[use Orca public forums]]></string>
 	<string name="_vote"><![CDATA[vote]]></string>
@@ -1227,7 +1185,6 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_day_of_12"><![CDATA[{0} December, {1}]]></string>
 	<string name="_day_of_12_short"><![CDATA[{0} Dec {1}]]></string>
 	<string name="_Clear"><![CDATA[Clear]]></string>
-	<string name="_SubCategory is required"><![CDATA[SubCategory is required]]></string>
 	<string name="_Send eCard"><![CDATA[Send eCard]]></string>
 	<string name="_send eCards"><![CDATA[send eCards]]></string>
 	<string name="_Total"><![CDATA[Total]]></string>
@@ -1251,8 +1208,6 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_Existed_RSS"><![CDATA[Existing RSS]]></string>
 	<string name="_Favorited"><![CDATA[Favorited]]></string>
 	<string name="_Click here"><![CDATA[Click here]]></string>
-	<string name="_Profile tags"><![CDATA[Profile tags]]></string>
-	<string name="_Profiles tags"><![CDATA[Profiles tags]]></string>
 	<string name="_First page"><![CDATA[First page]]></string>
 	<string name="_Last page"><![CDATA[Last page]]></string>
 	<string name="_People"><![CDATA[People]]></string>
@@ -1360,8 +1315,6 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_td_content"><![CDATA[Content]]></string>
 	<string name="_td_snippet"><![CDATA[Snippet]]></string>
 	<string name="_td_date"><![CDATA[Date]]></string>
-	<string name="_td_tags"><![CDATA[Tags]]></string>
-	<string name="_td_categories"><![CDATA[Categories]]></string>
 	<string name="_td_post"><![CDATA[Post]]></string>
 	<string name="_td_edit"><![CDATA[Update]]></string>
 	<string name="_td_allow_comment"><![CDATA[Allow comment on my feedback]]></string>
@@ -1382,7 +1335,6 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_sys_breadcrumb_login"><![CDATA[Login]]></string>
 	<string name="_sys_breadcrumb_logout"><![CDATA[Logout]]></string>
 	<string name="_sys_breadcrumb_guest"><![CDATA[Guest]]></string>
-	<string name="_sys_err_categories"><![CDATA[please specify at least one category]]></string>
 	<string name="_Welcome_to_the_community"><![CDATA[Welcome to the community!]]></string>
 	<string name="_Empty"><![CDATA[Empty]]></string>
 	<string name="_By Sex"><![CDATA[By Sex]]></string>
@@ -1404,7 +1356,6 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_Featured"><![CDATA[Featured]]></string>
 	<string name="_Top Rated"><![CDATA[Top Rated]]></string>
 	<string name="_Birthdays"><![CDATA[Birthdays]]></string>
-	<string name="_People_Calendar"><![CDATA[Calendar]]></string>
 	<string name="_World_Map"><![CDATA[World Map]]></string>
 	<string name="_Spy"><![CDATA[Spy]]></string>
 	<string name="_All_Users"><![CDATA[All Users]]></string>
@@ -1415,17 +1366,12 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_All_Sites"><![CDATA[All Sites]]></string>
 	<string name="_Admin_Links"><![CDATA[Admin Links]]></string>
 	<string name="_Profile_Sites"><![CDATA[Profile Sites]]></string>
-	<string name="_Sites_Categories"><![CDATA[Categories]]></string>
-	<string name="_Sites_Calendar"><![CDATA[Calendar]]></string>
 	<string name="_Advice"><![CDATA[Advice]]></string>
 	<string name="_Cards"><![CDATA[Cards]]></string>
 	<string name="_All_Cards"><![CDATA[All Cards]]></string>
-	<string name="_Cards_Categories"><![CDATA[Categories]]></string>
-	<string name="_Cards_Calendar"><![CDATA[Calendar]]></string>
 	<string name="_Sites_Home"><![CDATA[Sites Home]]></string>
 	<string name="_Cards_Home"><![CDATA[Cards Home]]></string>
 	<string name="_Search_Home"><![CDATA[Search Home]]></string>
-	<string name="_Tags_Home"><![CDATA[Tags Home]]></string>
 	<string name="_Static"><![CDATA[Static]]></string>
 	<string name="_Bottom"><![CDATA[Bottom]]></string>
 	<string name="_Saved"><![CDATA[Saved]]></string>
@@ -1572,7 +1518,6 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<!-- Settings: Languages -->
 	<string name="_adm_stg_cpt_category_languages"><![CDATA[Languages]]></string>
 	<string name="_adm_stg_cpt_option_lang_default"><![CDATA[Default Language]]></string>
-	<string name="_adm_stg_cpt_option_sys_calendar_starts_sunday"><![CDATA[Does Calender start on Sunday?]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_date"><![CDATA[Date Format]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_time"><![CDATA[Time Format]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_datetime"><![CDATA[Datetime Format]]></string>
@@ -1601,11 +1546,6 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_adm_stg_cpt_option_sys_template_cache_css_enable"><![CDATA[Enable cache for CSS files]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_cache_js_enable"><![CDATA[Enable cache for JS files]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_cache_compress_enable"><![CDATA[Enable compression for JS/CSS files(cache should be enabled)]]></string>
-
-	<!-- Settings: Categories -->
-	<string name="_adm_stg_cpt_category_categories"><![CDATA[Categories]]></string>
-	<string name="_adm_stg_cpt_option_categ_perpage_browse"><![CDATA[Number of categories to show on browse pages]]></string>
-	<string name="_adm_stg_cpt_option_categ_show_columns"><![CDATA[Number of columns to show categories]]></string>
 
 	<!-- Settings: General -->
 	<string name="_adm_stg_cpt_category_general"><![CDATA[General]]></string>
@@ -1637,12 +1577,10 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 
 	<!-- Settings: Pruning -->
 	<string name="_adm_stg_cpt_category_pruning"><![CDATA[Pruning]]></string>
-	<string name="_adm_stg_cpt_option_db_clean_members_visits"><![CDATA[Delete stored members IPs older than (days)]]></string>
 	<string name="_adm_stg_cpt_option_db_clean_mem_levels"><![CDATA[Delete membership levels expired for (days)]]></string>
 
 	<!-- Settings: Security -->
 	<string name="_adm_stg_cpt_category_security"><![CDATA[Security]]></string>
-	<string name="_adm_stg_cpt_option_enable_member_store_ip"><![CDATA[When a member login into dolphin that the IP address from that person will be saved into the database]]></string>
 	<string name="_adm_stg_cpt_option_ip_blacklist_mode"><![CDATA[IP Blacklist system mode (1 - total block, 2 - login block)]]></string>
 	<string name="_adm_stg_cpt_option_ip_list_global_type"><![CDATA[IP List Type (1 - all allowed except listed, 2 - all blocked except listed, 0 - disabled)]]></string>
 	<string name="_adm_stg_cpt_option_sys_security_impact_threshold_log"><![CDATA[Total security impact threshold to send report]]></string>
@@ -1672,12 +1610,6 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_adm_stg_cpt_option_sys_storage_s3_secret_key"><![CDATA[AWS Secret Key]]></string>
 	<string name="_adm_stg_cpt_option_sys_storage_s3_bucket"><![CDATA[AWS Bucket]]></string>
 	<string name="_adm_stg_cpt_option_sys_storage_s3_domain"><![CDATA[AWS Custom domain (require custom DNS setup)]]></string>
-
-	<!-- Settings: Tags -->
-	<string name="_adm_stg_cpt_category_tags"><![CDATA[Tags]]></string>
-	<string name="_adm_stg_cpt_option_tags_non_parsable"><![CDATA[Non-parsable tags (type all tags in lower case, delimit them by comma)]]></string>
-	<string name="_adm_stg_cpt_option_tags_perpage_browse"><![CDATA[Number of tags to show on browse pages]]></string>
-	<string name="_adm_stg_cpt_option_tags_show_limit"><![CDATA[Number of tags to show limit]]></string>
 
 	<string name="_adm_stg_err_save"><![CDATA[Cannot save settings]]></string>
 	<string name="_adm_stg_scs_save"><![CDATA[Settings were successfully saved]]></string>
@@ -2516,9 +2448,7 @@ Without doing that you won't be submitted to our database.</p>
 	<string name="_adm_txt_modules_recompile_profile_fields"><![CDATA[Recompiling profile fields:]]></string>
 	<string name="_adm_txt_modules_recompile_comments"><![CDATA[Recompiling comments:]]></string>
 	<string name="_adm_txt_modules_recompile_member_actions"><![CDATA[Recompiling member actions:]]></string>
-	<string name="_adm_txt_modules_recompile_tags"><![CDATA[Recompiling tags:]]></string>
 	<string name="_adm_txt_modules_recompile_votes"><![CDATA[Recompiling votes:]]></string>
-	<string name="_adm_txt_modules_recompile_categories"><![CDATA[Recompiling categories:]]></string>
 	<string name="_adm_txt_modules_recompile_search"><![CDATA[Recompiling search:]]></string>
 	<string name="_adm_txt_modules_recompile_browse"><![CDATA[Recompiling browse:]]></string>
 	<string name="_adm_txt_modules_recompile_injections"><![CDATA[Recompiling injections:]]></string>
@@ -2627,8 +2557,6 @@ Without doing that you won't be submitted to our database.</p>
 	<string name="_adm_btn_mp_confirm"><![CDATA[Confirm Email]]></string>
 	<string name="_adm_btn_mp_qlinks"><![CDATA[Quick Links]]></string>
 	<string name="_adm_btn_mp_browse"><![CDATA[Browse]]></string>
-	<string name="_adm_btn_mp_calendar"><![CDATA[Calendar]]></string>
-	<string name="_adm_btn_mp_tags"><![CDATA[Tags]]></string>
 	<string name="_adm_btn_mp_search"><![CDATA[Search]]></string>
 	<string name="_adm_btn_mp_simple"><![CDATA[Simple]]></string>
 	<string name="_adm_btn_mp_extended"><![CDATA[Extended]]></string>
@@ -3031,39 +2959,6 @@ Without doing that you won't be submitted to our database.</p>
 	<string name="_sys_btn_fans_remove"><![CDATA[Remove]]></string>
 	<string name="_sys_btn_fans_add_to_admins"><![CDATA[Add To Admins]]></string>
 	<string name="_sys_btn_fans_move_admins_to_fans"><![CDATA[Demote Admins]]></string>
-	<string name="_Categories"><![CDATA[Categories]]></string>
-	<string name="_categ_all"><![CDATA[All Categories]]></string>
-	<string name="_categ_common"><![CDATA[Common Categories]]></string>
-	<string name="_categ_users"><![CDATA[User Categories]]></string>
-	<string name="_categ_calendar"><![CDATA[Calendar]]></string>
-	<string name="_categ_search"><![CDATA[Search]]></string>
-	<string name="_categ_caption_all"><![CDATA[All Categories]]></string>
-	<string name="_categ_order_order_by"><![CDATA[Order by: ]]></string>
-	<string name="_categ_caption_common"><![CDATA[Common Categories]]></string>
-	<string name="_categ_caption_users"><![CDATA[User Categories]]></string>
-	<string name="_categ_caption_calendar"><![CDATA[Calendar]]></string>
-	<string name="_categ_caption_day"><![CDATA[Empty]]></string>
-	<string name="_categ_by_day"><![CDATA[Categories By Day: ]]></string>
-	<string name="_categ_caption_search_form"><![CDATA[Search Form]]></string>
-	<string name="_categ_caption_founded"><![CDATA[Search Results]]></string>
-	<string name="_categ_caption_keyword"><![CDATA[Keyword]]></string>
-	<string name="_categ_single"><![CDATA[Category]]></string>
-	<string name="_categ_plural"><![CDATA[Categories]]></string>
-	<string name="_categ_btn_delete"><![CDATA[Delete]]></string>
-	<string name="_categ_btn_disable"><![CDATA[Disable]]></string>
-	<string name="_categ_btn_activate"><![CDATA[Activate]]></string>
-	<string name="_categ_order_none"><![CDATA[None]]></string>
-	<string name="_categ_order_popular"><![CDATA[Popular]]></string>
-	<string name="_categ_order_recent"><![CDATA[Recent]]></string>
-	<string name="_categ_err_keyword"><![CDATA[Please specify keyword from 1 to 100 characters]]></string>
-	<string name="_categ_admin_pending"><![CDATA[Pending Approval]]></string>
-	<string name="_categ_admin_settings"><![CDATA[Settings]]></string>
-	<string name="_categ_modules"><![CDATA[Modules]]></string>
-	<string name="_categ_form_name"><![CDATA[Name]]></string>
-	<string name="_categ_form_add"><![CDATA[Add Category]]></string>
-	<string name="_categ_form_field_name_err"><![CDATA[Please specify name from 3 to 100 characters]]></string>
-	<string name="_categ_form_type"><![CDATA[Type]]></string>
-	<string name="_categ_exist_err"><![CDATA[Category named '%s' already exists]]></string>
 	<string name="_FieldError_City_Mandatory"><![CDATA[You must specify your city]]></string>
 	<string name="_FieldError_Country_Mandatory"><![CDATA[You must specify your country]]></string>
 	<string name="_FieldError_zip_Mandatory"><![CDATA[You must specify your ZIP code]]></string>

@@ -143,8 +143,6 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *      - XssHtml - this text cam have HTML tags, so perform XSS vulnerabilies cleaning before saving to database.
  *      - All - do not perform any conversion and pass text as it is, be careful with this, use it only when no other function can be used, and make all necessary security checking by yourself.
  *      - Preg - perform regular expression on the text before saving data to database, regular expression can be provided in db_params field.
- *      - Tags - tags are validated and correctly joined using delimiter symbol.
- *      - Categories - categories are validated and correctly joined using delimiter symbol.
  *      - Boolean - this is used for checkboxes with 'on' value which need to be converted into boolean value.
  *      - Set - convert set of values into bit integer before saving to database, and restore bit integer into array of values upon restoration from database, it can be used for select_multiple and checkbox_set field types. 
  *      Please note that values for this field must be 1,2,4,8,... (values of power of 2); the max number of values are 31 for 32bit hardware and 63 for 64bit hardware.
@@ -196,7 +194,7 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *          Can be used here: Length, Preg, Avail, Email 
  *          Make no sense to use it here: Date, DateTime, Captcha
  *      - db_pass
- *          Can be used here: Int, Float, Xss, All, Preg, Tags, Categories 
+ *          Can be used here: Int, Float, Xss, All, Preg
  *          Make no sense to use it here: Date, DateTime, XssHtml, Boolean, Set
  * 
  * password - password input field. It is displayed as HTML input element with invisible input.
@@ -211,7 +209,7 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *          Make no sense to use it here: Date, DateTime, Captcha, Email.
  *      - db_pass
  *          Can be used here: Xss, All. 
- *          Make no sense to use it here: Int, Float, Date, DateTime, XssHtml, Boolean, Set, Preg, Tags, Categories.
+ *          Make no sense to use it here: Int, Float, Date, DateTime, XssHtml, Boolean, Set, Preg.
  * 
  * textarea - multiline input field. It can be displayed as regular textarea field or as visual HTML editor.
  *      Parameters:
@@ -228,7 +226,7 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *          Can be used here: Length, Preg, Avail 
  *          Make no sense to use it here: Email, Date, DateTime, Captcha
  *      - db_pass
- *          Can be used here: Int, Float, Xss, XssHtml, All, Preg, Tags, Categories 
+ *          Can be used here: Int, Float, Xss, XssHtml, All, Preg
  *          Make no sense to use it here: Date, DateTime, Boolean, Set
  * 
  * number - number input field. It is displayed as HTL text input, but with limited width. Also some browsers can add additional controls to this field.
@@ -243,7 +241,7 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *          Make no sense to use it here: Email, Date, DateTime, Captcha
  *      - db_pass
  *          Can be used here: Int, Float 
- *          Make no sense to use it here: Xss, XssHtml, All, Preg, Tags, Categories, Date, DateTime, Boolean, Set
+ *          Make no sense to use it here: Xss, XssHtml, All, Preg, Date, DateTime, Boolean, Set
  *  
  * select - select one from all available values. It is displayed as HTML combo-box.
  *      Parameters:
@@ -257,7 +255,7 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *          Make no sense to use it here: Email, Date, DateTime, Captcha
  *      - db_pass
  *          Can be used here: Int, Float, Xss, All, Preg 
- *          Make no sense to use it here: Date, DateTime, Tags, Categories, XssHtml, Boolean, Set
+ *          Make no sense to use it here: Date, DateTime, XssHtml, Boolean, Set
  *  
  * select_multiple - select one, multiple or all items from all available values. It is displayed as HTML multiple selection input.
  *      Parameters:
@@ -271,7 +269,7 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *          Make no sense to use it here: Email, Date, DateTime, Captcha
  *      - db_pass
  *          Can be used here: Int 
- *          Make no sense to use it here: Float, Xss, All, Preg, Date, DateTime, Tags, Categories, XssHtml, Boolean, Set
+ *          Make no sense to use it here: Float, Xss, All, Preg, Date, DateTime, XssHtml, Boolean, Set
  * 
  * switcher - on/off switcher. It is displayed as custom HTML element with own styles, but on background it works as regular HTML checkbox element. 
  *      Parameters:
@@ -285,7 +283,7 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *          Make no sense to use it here: Email, Date, DateTime, Captcha
  *      - db_pass
  *          Can be used here: Int, Float, Xss, All, Preg, Boolean 
- *          Make no sense to use it here: Date, DateTime, Tags, Categories, XssHtml, Set
+ *          Make no sense to use it here: Date, DateTime, XssHtml, Set
  * 
  * checkbox - one checkbox. Displayed as HTML checkbox input element.
  *      Parameters:
@@ -299,7 +297,7 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *          Make no sense to use it here: Email, Date, DateTime, Captcha
  *      - db_pass
  *          Can be used here: Int, Float, Xss, All, Preg, Boolean 
- *          Make no sense to use it here: Date, DateTime, Tags, Categories, XssHtml, Set
+ *          Make no sense to use it here: Date, DateTime, XssHtml, Set
  * 
  * checkbox_set - set of checkboxes. It is displayed as set of checkboxes. It is displayed in one row if number of items is equal or less than 3 or every item is displayed on new line if there is more than 3 items in the set.
  *      Parameters:
@@ -313,7 +311,7 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *          Make no sense to use it here: Email, Date, DateTime, Captcha
  *      - db_pass
  *          Can be used here: Int 
- *          Make no sense to use it here: Float, Xss, All, Preg, Date, DateTime, Tags, Categories, XssHtml, Boolean, Set
+ *          Make no sense to use it here: Float, Xss, All, Preg, Date, DateTime, XssHtml, Boolean, Set
  *  
  * radio_set - set of radio buttons. It is displayed as set of radio buttons. It is displayed in one row if number of items is equal or less than 3 or every item is displayed on new line if there is more than 3 items in the set.
  *      Parameters:
@@ -327,7 +325,7 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *          Make no sense to use it here: Email, Date, DateTime, Captcha
  *      - db_pass
  *          Can be used here: Int, Float, Xss, All, Preg 
- *          Make no sense to use it here: Date, DateTime, Tags, Categories, XssHtml, Boolean, Set
+ *          Make no sense to use it here: Date, DateTime, XssHtml, Boolean, Set
  * 
  * slider - select some numeric value within the range using slider control. It is displayed as jQuery UI HTML control, but on background it works as regular HTML text input element.
  *      Parameters:
@@ -345,7 +343,7 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *          Make no sense to use it here: Preg, Email, Date, DateTime, Captcha
  *      - db_pass
  *          Can be used here: Int, Float 
- *          Make no sense to use it here: Xss, XssHtml, All, Preg, Tags, Categories, Date, DateTime, Boolean, Set
+ *          Make no sense to use it here: Xss, XssHtml, All, Preg, Date, DateTime, Boolean, Set
  * 
  * doublerange - select range values within the range using slider control.
  *      Parameters:
@@ -363,7 +361,7 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *          Make no sense to use it here: Preg, Email, Date, DateTime, Captcha
  *      - db_pass
  *          Can be used here: Xss, All, Preg 
- *          Make no sense to use it here: Int, Float, XssHtml, Tags, Categories, Date, DateTime, Boolean, Set
+ *          Make no sense to use it here: Int, Float, XssHtml, Date, DateTime, Boolean, Set
  * 
  * datepicker - date selection control. It is displayed as HTML text input control, when clicking on this input then popup with date selector control is appeared.
  *      Parameters:
@@ -377,7 +375,7 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *          Make no sense to use it here: Length, Preg, Avail, Email, DateTime, Captcha
  *      - db_pass
  *          Can be used here: Date 
- *          Make no sense to use it here: Int, Float, Xss, All, Preg, Tags, Categories, DateTime, XssHtml, Boolean, Set
+ *          Make no sense to use it here: Int, Float, Xss, All, Preg, DateTime, XssHtml, Boolean, Set
  * 
  * datetime - date/time selection control.
  *      Parameters:
@@ -391,7 +389,7 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *          Make no sense to use it here: Length, Preg, Avail, Email, Date, Captcha
  *      - db_pass
  *          Can be used here: DateTime 
- *          Make no sense to use it here: Int, Float, Xss, All, Preg, Tags, Categories, Date, XssHtml, Boolean, Set
+ *          Make no sense to use it here: Int, Float, Xss, All, Preg, Date, XssHtml, Boolean, Set
  * 
  * captcha - image captcha. Displayed as image with some text along with HTML text input for entering displayed on the image text.
  *      Parameters:
@@ -405,7 +403,7 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *          Make no sense to use it here: Length, Preg, Avail, Email, Date, DateTime
  *      - db_pass
  *          Can be used here: Xss, All, Preg 
- *          Make no sense to use it here: Int, Float, Tags, Categories, Date, DateTime, XssHtml, Boolean, Set
+ *          Make no sense to use it here: Int, Float, Date, DateTime, XssHtml, Boolean, Set
  *  
  * hidden - hidden input field. Displayed as hidden HTML input.
  *      Parameters:
@@ -418,7 +416,7 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *          Can be used here: Length, Preg, Avail, Email, Date, DateTime 
  *          Make no sense to use it here: Captcha
  *      - db_pass
- *          Can be used here: Int, Float, Xss, All, Preg, Tags, Categories, Date, DateTime, XssHtml, Boolean 
+ *          Can be used here: Int, Float, Xss, All, Preg, Date, DateTime, XssHtml, Boolean 
  *          Make no sense to use it here: Set
  * 
  * file - file upload input. Displayed as file upload HTML input.
@@ -1436,34 +1434,6 @@ class BxDolFormCheckerHelper {
             return $m[1];
         }
         return '';
-    }
-    function passTags ($s) {
-        if (is_array($s)) {
-            $a = array ();
-            foreach ($s as $k => $v) {
-                $a[$k] = $this->_passTags ($v);
-            }
-            return $a;
-        }
-        return $this->_passTags($s);
-    }
-    function _passTags ($s) {
-        require_once(BX_DIRECTORY_PATH_INC . 'tags.inc.php');
-        $sTags = $this->passXss ($s);
-        $aTags = explodeTags($sTags);
-        return implode(",", $aTags);
-    }
-    function passCategories ($aa) {
-        if (is_array($aa)) {
-            $a = array ();
-            foreach ($aa as $k => $v)
-                if ($v)
-                    $a[$k] = $this->passXss ($v);
-        } else {
-            $a = $this->passXss ($aa);
-        }
-        return is_array($a) ? implode(CATEGORIES_DIVIDER, $a) : $a;
-
     }
     function passBoolean ($s) {
         if (is_array($s)) {

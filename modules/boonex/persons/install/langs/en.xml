@@ -5,6 +5,8 @@
 
 	<string name="_bx_persons_option_autoapproval"><![CDATA[Activate all persons after creation automatically]]></string>
 	<string name="_bx_persons_option_default_acl_level"><![CDATA[Default member's level to assign after person's profile creation]]></string>
+	<string name="_bx_persons_option_num_connections_quick"><![CDATA[Number of items in friends block]]></string>
+	<string name="_bx_persons_option_num_rss"><![CDATA[Number of items in RSS feed]]></string>
 
 	<string name="_bx_persons_form_profile"><![CDATA[Persons]]></string>
 	<string name="_bx_persons_form_profile_display_add"><![CDATA[Add Person]]></string>

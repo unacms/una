@@ -49,9 +49,7 @@ $aConfig = array(
         'recompile_profile_fields' => 0,
         'recompile_comments' => 0,
         'recompile_member_actions' => 0,
-        'recompile_tags' => 0,
         'recompile_votes' => 0,
-        'recompile_categories' => 0,
         'recompile_search' => 0,
         'recompile_injections' => 0,
         'recompile_permalinks' => 0,
@@ -71,9 +69,7 @@ $aConfig = array(
         'recompile_profile_fields' => 0,
         'recompile_comments' => 0,
         'recompile_member_actions' => 0,
-        'recompile_tags' => 0,
         'recompile_votes' => 0,
-        'recompile_categories' => 0,
         'recompile_search' => 0,
         'recompile_injections' => 0,
         'recompile_permalinks' => 0,
@@ -91,9 +87,7 @@ $aConfig = array(
         'recompile_profile_fields' => 0,
         'recompile_comments' => 0,
         'recompile_member_actions' => 0,
-        'recompile_tags' => 0,
         'recompile_votes' => 0,
-        'recompile_categories' => 0,
         'recompile_injections' => 0,
         'recompile_permalinks' => 0,
         'recompile_alerts' => 0,
@@ -109,9 +103,7 @@ $aConfig = array(
         'recompile_profile_fields' => 0,
         'recompile_comments' => 0,
         'recompile_member_actions' => 0,
-        'recompile_tags' => 0,
         'recompile_votes' => 0,
-        'recompile_categories' => 0,
         'recompile_injections' => 0,
         'recompile_permalinks' => 0,
         'recompile_alerts' => 0,
@@ -128,12 +120,6 @@ $aConfig = array(
      * Category for language keys.
      */
     'language_category' => 'Boonex Profiler',
-
-    /**
-     * Permissions Section
-     */
-    'install_permissions' => array(),
-    'uninstall_permissions' => array(),
 
     /**
      * Introduction and Conclusion Section.

@@ -14,11 +14,11 @@ bx_import('BxBaseFunctions');
 
 class BxBaseStudioFunctions extends BxBaseFunctions implements iBxDolSingleton {
 
-    function BxBaseStudioFunctions($oTemplate = false) {
+    function __construct($oTemplate = false) {
     	if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
-        parent::BxBaseFunctions($oTemplate ? $oTemplate : BxDolStudioTemplate::getInstance());
+        parent::__construct($oTemplate ? $oTemplate : BxDolStudioTemplate::getInstance());
     }
 
     public static function getInstance() {

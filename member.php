@@ -37,12 +37,6 @@ if (isset($_POST['ID'])) { // login form is submitted
         $oAccount = BxDolAccount::getInstance($oForm->getCleanValue('ID'));
         $aAccount = bx_login($oAccount->id(), ($oForm->getCleanValue('rememberMe') ? true : false));
 
-        // Storing IP Address // TODO: move somewhere
-        if (getParam('enable_member_store_ip') == 'on') {
-            $iCurLongIP = sprintf("%u", ip2long(getVisitorIP()));
-            db_res("INSERT INTO `sys_ip_members_visits` SET `MemberID` = '{$aAccount['id']}', `From`='{$iCurLongIP}', `DateTime`=NOW()");
-        }
-
         $sUrlRelocate = $oForm->getCleanValue('relocate');
         if (!$sUrlRelocate || BX_DOL_URL_ROOT == $sUrlRelocate || basename($sUrlRelocate) == 'join.php' || 0 != strncmp($sUrlRelocate, BX_DOL_URL_ROOT, strlen(BX_DOL_URL_ROOT)))
             $sUrlRelocate = BX_DOL_ROLE_ADMIN == $oForm->getRole() ? BX_DOL_URL_STUDIO . 'launcher.php' : BX_DOL_URL_ROOT . 'member.php';

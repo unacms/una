@@ -13,8 +13,8 @@ bx_import('BxDolEditor');
  * TinyMCE editor representation.
  * @see BxDolEditor
  */
-class BxBaseEditorTinyMCE extends BxDolEditor {
-
+class BxBaseEditorTinyMCE extends BxDolEditor 
+{
     /**
      * Common initialization params
      */
@@ -22,13 +22,10 @@ class BxBaseEditorTinyMCE extends BxDolEditor {
                     jQuery('{bx_var_selector}').tinymce({
                         {bx_var_custom_init}
                         document_base_url: '{bx_url_root}',
-                        script_url: '{bx_var_plugins_path}tiny_mce/tiny_mce_gzip.php',
                         skin: '{bx_var_skin}',
                         language: '{bx_var_lang}',
                         content_css: '{bx_var_css_path}',
-                        gecko_spellcheck: true,
-                        entity_encoding: 'raw',
-                        verify_html: false            
+                        entity_encoding: 'raw'
                     });
     ";
 
@@ -36,66 +33,54 @@ class BxBaseEditorTinyMCE extends BxDolEditor {
      * Standard view initialization params
      */
     protected static $CONF_STANDARD = "
-                        plugins: 'autolink,autosave,lists,inlinepopups,media,paste,fullscreen',
+                        plugins: 'autolink,autosave,lists,media,paste,fullscreen,hr,link,image,code',
                         width: '100%',
                         height: '270',
-                        theme: 'advanced',
-                        theme_advanced_buttons1: 'bold,italic,underline,removeformat,|,bullist,numlist,|,justifyleft,justifycenter,justifyright,|,undo,redo,|,blockquote,formatselect',
-                        theme_advanced_buttons2: 'hr,link,unlink,image,media,|,fullscreen,cleanup,pastetext,code',
-                        theme_advanced_buttons3: '',
-                        theme_advanced_toolbar_location: 'top',
-                        theme_advanced_toolbar_align: 'left',
-                        theme_advanced_statusbar_location: 'bottom',
-                        theme_advanced_resizing: true,
-                        theme_advanced_resize_horizontal: false,
-                        theme_advanced_resizing_use_cookie: true,
-                        theme_advanced_path: false,
+                        theme: 'modern',
+                        toolbar: 'bold italic underline removeformat | bullist numlist | alignleft aligncenter alignright | undo redo  pastetext | blockquote hr link unlink image media | fullscreen code',
+                        statusbar: true,
+                        resize: true,
     ";
 
     /**
      * Minimal view initialization params
      */
     protected static $CONF_MINI = "
-                        plugins: 'autolink,autosave,lists,inlinepopups,paste,fullscreen',
+                        menubar: false,
+                        plugins: 'autolink,lists,paste,link,image',
                         width: '100%',
                         height: '150',
-                        theme: 'advanced',
-                        theme_advanced_buttons1: 'bold,italic,underline,removeformat,|,bullist,numlist,|,justifyleft,justifycenter,justifyright,|,blockquote,|,link,unlink,image',
-                        theme_advanced_buttons2: '',
-                        theme_advanced_buttons3: '',
-                        theme_advanced_toolbar_location: 'top',
-                        theme_advanced_toolbar_align: 'left',
-                        theme_advanced_statusbar_location: 'none',
+                        theme: 'modern',
+                        toolbar: 'bold italic underline removeformat | bullist numlist | alignleft aligncenter alignright | blockquote | link unlink image',
+                        statusbar: false,
     ";
 
     /**
      * Full view initialization params
      */
     protected static $CONF_FULL = "
-                        plugins: 'autolink,autosave,lists,table,inlinepopups,media,searchreplace,print,paste,fullscreen',
+                        plugins: 'autolink,autosave,lists,table,media,searchreplace,print,paste,fullscreen,hr,link,image,anchor,code,autoresize',
                         width: '100%',
                         height: '320',
-                        theme: 'advanced',
-                        theme_advanced_buttons1: 'bold,italic,underline,removeformat,|,sub,sup,|,bullist,numlist,|,justifyleft,justifycenter,justifyright,justifyfull,|,undo,redo,|,outdent,indent,blockquote,formatselect,|,hr,link,unlink,image,media',
-                        theme_advanced_buttons2: 'anchor,|,tablecontrols,|,visualaid,|,search,replace,|,print,|,fullscreen,cleanup,pastetext,code',
-                        theme_advanced_buttons3: '',
-                        theme_advanced_toolbar_location: 'top',
-                        theme_advanced_toolbar_align: 'left',
-                        theme_advanced_statusbar_location: 'bottom',
-                        theme_advanced_resizing: true,
-                        theme_advanced_resize_horizontal: false,
-                        theme_advanced_resizing_use_cookie: true,
+                        theme: 'modern',
+                        toolbar: [
+                            'bold italic underline removeformat | subscript superscript | bullist numlist | alignleft aligncenter alignright alignjustify | undo redo pastetext | blockquote hr link unlink image media',
+                            'outdent indent | anchor | searchreplace | print | fullscreen code'
+                        ],
+                        statusbar: true,
+                        resize: true,
     ";
 
     /**
      * Available editor languages
      */
-    protected static $CONF_LANGS = array('ar' => 1, 'be' => 1, 'bg' => 1, 'ca' => 1, 'cn' => 1, 'cs' => 1, 'cy' => 1, 'da' => 1, 'de' => 1, 'el' => 1, 'en' => 1, 'es' => 1, 'et' => 1, 'eu' => 1, 'fa' => 1, 'fi' => 1, 'fr' => 1, 'gl' => 1, 'he' => 1, 'hu' => 1, 'id' => 1, 'it' => 1, 'ja' => 1, 'km' => 1, 'ko' => 1, 'lt' => 1, 'lv' => 1, 'mk' => 1, 'nb' => 1, 'nl' => 1, 'no' => 1, 'pl' => 1, 'pt' => 1, 'ro' => 1, 'ru' => 1, 'sk' => 1, 'sl' => 1, 'sq' => 1, 'sv' => 1, 'tr' => 1, 'uk' => 1, 'zh' => 1);
+    protected static $CONF_LANGS = array('ar' => 1, 'ar_SA' => 1, 'az' => 1, 'be' => 1, 'bg_BG' => 1, 'bn_BD' => 1, 'bs' => 1, 'ca' => 1, 'cs' => 1, 'cy' => 1, 'da' => 1, 'de' => 1, 'de_AT' => 1, 'dv' => 1, 'el' => 1, 'en_CA' => 1, 'en_GB' => 1, 'es' => 1, 'et' => 1, 'eu' => 1, 'fa' => 1, 'fi' => 1, 'fo' => 1, 'fr_FR' => 1, 'gd' => 1, 'gl' => 1, 'he_IL' => 1, 'hr' => 1, 'hu_HU' => 1, 'hy' => 1, 'id' => 1, 'is_IS' => 1, 'it' => 1, 'ja' => 1, 'ka_GE' => 1, 'kk' => 1, 'km_KH' => 1, 'ko_KR' => 1, 'lb' => 1, 'lt' => 1, 'lv' => 1, 'ml' => 1, 'ml_IN' => 1, 'mn_MN' => 1, 'nb_NO' => 1, 'nl' => 1, 'pl' => 1, 'pt_BR' => 1, 'pt_PT' => 1, 'ro' => 1, 'ru' => 1, 'si_LK' => 1, 'sk' => 1, 'sl_SI' => 1, 'sr' => 1, 'sv_SE' => 1, 'ta' => 1, 'ta_IN' => 1, 'tg' => 1, 'th_TH' => 1, 'tr_TR' => 1, 'tt' => 1, 'ug' => 1, 'uk' => 1, 'uk_UA' => 1, 'vi' => 1, 'vi_VN' => 1, 'zh_CN' => 1, 'zh_TW' => 1);
 
     protected $_oTemplate;
     protected $_bJsCssAdded = false;
 
-    public function __construct ($aObject, $oTemplate) {
+    public function __construct ($aObject, $oTemplate) 
+    {
         parent::__construct ($aObject);
 
         if ($oTemplate)
@@ -110,8 +95,8 @@ class BxBaseEditorTinyMCE extends BxDolEditor {
      * @param $iViewMode - editor view mode: BX_EDITOR_STANDARD, BX_EDITOR_MINI, BX_EDITOR_FULL
      * @param $bDynamicMode - is AJAX mode or not, the HTML with editor area is loaded dynamically.
      */
-    public function attachEditor ($sSelector, $iViewMode = BX_EDITOR_STANDARD, $bDynamicMode = false) {
-
+    public function attachEditor ($sSelector, $iViewMode = BX_EDITOR_STANDARD, $bDynamicMode = false) 
+    {
         // set visual mode
         switch ($iViewMode) {
             case BX_EDITOR_MINI:
@@ -146,8 +131,10 @@ class BxBaseEditorTinyMCE extends BxDolEditor {
             $sScript = "<script>
                 if ('undefined' == typeof(jQuery(document).tinymce)) {
                     $.getScript('" . bx_js_string(BX_DOL_URL_BASE . 'inc/js/editor.tinymce.js', BX_ESCAPE_STR_APOS) . "');
-                    $.getScript('" . bx_js_string(BX_DOL_URL_PLUGINS . 'tiny_mce/jquery.tinymce.js', BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
-                        $sInitEditor
+                    $.getScript('" . bx_js_string(BX_DOL_URL_BASE . 'inc/js/tinymce.js', BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
+                        $.getScript('" . bx_js_string(BX_DOL_URL_PLUGINS . 'tinymce/jquery.tinymce.min.js', BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
+                            $sInitEditor
+                        });
                     });
                 } else {
                     $sInitEditor
@@ -171,12 +158,13 @@ class BxBaseEditorTinyMCE extends BxDolEditor {
     /**
      * Add css/js files which are needed for editor display and functionality.
      */
-    protected function _addJsCss($bDynamicMode = false, $sInitEditor = '') {
+    protected function _addJsCss($bDynamicMode = false, $sInitEditor = '') 
+    {
         if ($bDynamicMode)
             return '';
         if ($this->_bJsCssAdded)
             return '';
-        $this->_oTemplate->addJs(array('editor.tinymce.js', BX_DOL_URL_PLUGINS . 'tiny_mce/jquery.tinymce.js'));
+        $this->_oTemplate->addJs(array(BX_DOL_URL_PLUGINS . 'tinymce/tinymce.min.js', BX_DOL_URL_PLUGINS . 'tinymce/jquery.tinymce.min.js', 'editor.tinymce.js'));
         $this->_bJsCssAdded = true;
         return '';
     }

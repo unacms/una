@@ -76,12 +76,6 @@ $aConfig = array(
     'language_category' => 'Sites',
 
     /**
-     * Permissions Section
-     */
-    'install_permissions' => array(),
-    'uninstall_permissions' => array(),
-
-    /**
      * Introduction and Conclusion Section.
      */
     'install_info' => array(
