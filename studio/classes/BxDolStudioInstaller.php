@@ -613,43 +613,10 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
                 break;
         }
 
-        $sPath = $this->_sHomePath . 'install/sql/' . $sOperation . '.sql';
-        if(!file_exists($sPath) || !($rHandler = fopen($sPath, "r")))
-            return BX_DOL_STUDIO_INSTALLER_FAILED;
+        bx_import('BxDolDb');
+        $mixedResult = BxDolDb::getInstance()->executeSQL($this->_sHomePath . 'install/sql/' . $sOperation . '.sql');
 
-        $sQuery = "";
-        $sDelimiter = ';';
-        $aResult = array();
-        while(!feof($rHandler)) {
-            $sStr = trim(fgets($rHandler));
-
-            if(empty($sStr) || $sStr[0] == "" || $sStr[0] == "#" || ($sStr[0] == "-" && $sStr[1] == "-"))
-                continue;
-
-            //--- Change delimiter ---//
-            if(strpos($sStr, "DELIMITER //") !== false || strpos($sStr, "DELIMITER ;") !== false) {
-                $sDelimiter = trim(str_replace('DELIMITER', '', $sStr));
-                continue;
-            }
-
-            $sQuery .= $sStr;
-
-            //--- Check for multiline query ---//
-            if(substr($sStr, -strlen($sDelimiter)) != $sDelimiter)
-                continue;
-
-            //--- Execute query ---//
-            if($sDelimiter != ';')
-                $sQuery = str_replace($sDelimiter, "", $sQuery);
-            $rResult = db_res(trim($sQuery), false);
-            if(!$rResult)
-                $aResult[] = array('query' => $sQuery, 'error' => BxDolDb::getInstance()->getErrorMessage());
-
-            $sQuery = "";
-        }
-        fclose($rHandler);
-
-        return empty($aResult) ? BX_DOL_STUDIO_INSTALLER_SUCCESS : array('code' => BX_DOL_STUDIO_INSTALLER_FAILED, 'content' => $aResult);
+        return $mixedResult === true ? BX_DOL_STUDIO_INSTALLER_SUCCESS : array('code' => BX_DOL_STUDIO_INSTALLER_FAILED, 'content' => $mixedResult);
     }
     function actionExecuteSqlFailed($mixedResult) {
         $sResult = '<br />' . _t('_adm_err_modules_wrong_mysql_query') . '<br />';
