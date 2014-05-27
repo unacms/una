@@ -545,23 +545,30 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
         if(!isset($this->_aConfig[$sOperation . '_permissions']) || !is_array($this->_aConfig[$sOperation . '_permissions']))
             return BX_DOL_STUDIO_INSTALLER_FAILED;
 
+		$aChangeItems = array();
+		$aPermissions = $this->_aConfig[$sOperation . '_permissions'];
+		foreach($aPermissions as $sPermissions => $aFiles) {
+			$sCheckFunction = 'is' . ucfirst($sPermissions);
+			foreach($aFiles as $sFile) {
+				$sPath = bx_ltrim_str($this->_sModulePath . $sFile, BX_DIRECTORY_PATH_ROOT);
+				if(BxDolInstallerUtils::$sCheckFunction($sPath))
+					continue;
+
+				$aChangeItems[] = array('file' => $sFile, 'path' => $sPath, 'permissions' => $sPermissions);
+            }
+        }
+
+		if(empty($aChangeItems))
+			return BX_DOL_STUDIO_INSTALLER_SUCCESS;
+
         $oFile = $this->_getFileManager();
         if(empty($oFile))
         	return array('code' => BX_DOL_STUDIO_INSTALLER_FAILED);
 
-        $aResult = array();
-        $aPermissions = $this->_aConfig[$sOperation . '_permissions'];
-        foreach($aPermissions as $sPermissions => $aFiles) {
-        	$sCheckFunction = 'is' . ucfirst($sPermissions);
-            foreach($aFiles as $sFile) {
-            	$sPath = bx_ltrim_str($this->_sModulePath . $sFile, BX_DIRECTORY_PATH_ROOT);
-            	if(BxDolInstallerUtils::$sCheckFunction($sPath))
-            		continue;
-
-            	if(!$oFile->setPermissions($sPath, $sPermissions))
-                    $aResult[] = array('path' => $this->_sModulePath . $sFile, 'permissions' => $sPermissions);
-            }
-        }
+		$aResult = array();
+        foreach($aChangeItems as $aChangeItem)
+			if(!$oFile->setPermissions($aChangeItem['path'], $aChangeItem['permissions']))
+				$aResult[] = array('path' => $this->_sModulePath . $aChangeItem['file'], 'permissions' => $aChangeItem['permissions']);
 
         return empty($aResult) ? BX_DOL_STUDIO_INSTALLER_SUCCESS : array('code' => BX_DOL_STUDIO_INSTALLER_FAILED, 'content' => $aResult);
     }
