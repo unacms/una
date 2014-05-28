@@ -10,7 +10,7 @@
 bx_import('BxBaseCmtsServices');
 
 /**
- * @see BxBaseServices
+ * @see BxBaseCmtsServices
  */
 class BxTemplCmtsServices extends BxBaseCmtsServices {
     public function __construct() {

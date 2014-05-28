@@ -202,8 +202,6 @@ class BxBaseStudioSettings extends BxDolStudioSettings {
 
                 if (BxDolService::isSerializedService($aItem['extra']))
                     $aField['values'] = BxDolService::callSerialized($aItem['extra']);
-                elseif (substr($aItem['extra'], 0, 4) == 'PHP:') // TODO: get rid of PHP: values and replace it with serialized string
-                    $aField['values'] = eval(substr($aItem['extra'], 4));
                 else
                     foreach(explode(',', $aItem['extra']) as $sValue)
                         $aField['values'][$sValue] = $sValue;
@@ -223,8 +221,6 @@ class BxBaseStudioSettings extends BxDolStudioSettings {
 
                 if (BxDolService::isSerializedService($aItem['extra']))
                     $aField['values'] = BxDolService::callSerialized($aItem['extra']);
-                elseif (substr($aItem['extra'], 0, 4) == 'PHP:') // TODO: get rid of PHP: values and replace it with serialized string
-                    $aField['values'] = eval(substr($aItem['extra'], 4));
                 else
                     foreach(explode(',', $aItem['extra']) as $sValue)
                         $aField['values'][] = array('key' => $sValue, 'value' => $sValue);

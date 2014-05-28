@@ -245,7 +245,7 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `or
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'lang_default', '_adm_stg_cpt_option_lang_default', '', 'select', 'PHP:bx_import(''BxDolLanguages''); $aValues = BxDolLanguages::getInstance()->getLanguages(false, true); $aResult = array(); foreach($aValues as $sKey => $sValue) $aResult[] = array(\'key\' => $sKey, \'value\' => $sValue); return $aResult;', '', '', 1),
+(@iCategoryId, 'lang_default', '_adm_stg_cpt_option_lang_default', '', 'select', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:13:"get_languages";s:6:"params";a:2:{i:0;b:0;i:1;b:1;}s:5:"class";s:22:"TemplLanguagesServices";}', '', '', 1),
 
 (@iCategoryId, 'sys_format_date', '_adm_stg_cpt_option_sys_format_date', 'D MMM YYYY', 'digit', '', '', '', 3),
 (@iCategoryId, 'sys_format_time', '_adm_stg_cpt_option_sys_format_time', 'HH:mm', 'digit', '', '', '', 4),
@@ -260,7 +260,7 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `or
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'template', '_adm_stg_cpt_option_template', '', 'select', 'PHP:$aValues = get_templates_array(); $aResult = array(); foreach($aValues as $sKey => $sValue) $aResult[] = array(\'key\' => $sKey, \'value\' => $sValue); return $aResult;', 'bx_import(\'BxDolModuleQuery\'); return (strlen($arg0) > 0 && BxDolModuleQuery::getInstance()->isEnabled($arg0)) ? true : false;', 'Template cannot be empty and must have a valid name.', 1),
+(@iCategoryId, 'template', '_adm_stg_cpt_option_template', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:13:"get_templates";s:5:"class";s:21:"TemplTemplateServices";}', 'bx_import(\'BxDolModuleQuery\'); return (strlen($arg0) > 0 && BxDolModuleQuery::getInstance()->isEnabled($arg0)) ? true : false;', 'Template cannot be empty and must have a valid name.', 1),
 (@iCategoryId, 'enable_template', '_adm_stg_cpt_option_enable_template', 'on', 'checkbox', '', '', '', 2),
 
 (@iCategoryId, 'sys_template_page_width_min', '_adm_stg_cpt_option_sys_template_page_width_min', '774', 'digit', '', '', '', 3),

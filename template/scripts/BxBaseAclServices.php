@@ -7,14 +7,18 @@
  * @{
  */
 
-bx_import('BxBaseImageServices');
-
 /**
- * @see BxBaseImageServices
+ * System services related to ACL.
  */
-class BxTemplImageServices extends BxBaseImageServices {
+class BxBaseAclServices extends BxDol {
     public function __construct() {
         parent::__construct();
+    }
+
+	public function serviceGetMemberships($bPurchasableOnly = false, $bActiveOnly = false, $isTranslate = true)
+    {
+    	bx_import('BxDolAcl');
+    	return BxDolAcl::getInstance()->getMemberships($bPurchasableOnly, $bActiveOnly, $isTranslate);
     }
 }
 

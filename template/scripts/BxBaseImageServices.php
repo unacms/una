@@ -8,7 +8,7 @@
  */
 
 /**
- * System services related to Comments.
+ * System services related to Images' Processing.
  */
 class BxBaseImageServices extends BxDol {
     public function __construct()
