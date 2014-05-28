@@ -109,10 +109,8 @@ class BxDolStorageLocal extends BxDolStorage {
 
         $sFileLocation = $this->getObjectBaseDir($isPrivate) . $sFilePath;
 
-        if (!file_exists($sFileLocation)) {
-            $this->setErrorCode(BX_DOL_STORAGE_ERR_FILE_NOT_FOUND);
-            return false;
-        }
+        if (!file_exists($sFileLocation))
+            return true;
 
         if (!unlink($sFileLocation)) {
             $this->setErrorCode(BX_DOL_STORAGE_ERR_UNLINK);

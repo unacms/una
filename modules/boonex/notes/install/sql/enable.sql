@@ -16,24 +16,6 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_notes_per_page_browse', '12', @iCategId, '_bx_notes_option_per_page_browse', 'digit', '', '', '', 10),
 ('bx_notes_rss_num', '10', @iCategId, '_bx_notes_option_rss_num', 'digit', '', '', '', 20);
 
--- STORAGES & TRANSCODERS
-
-SET @iTotalFilesSize = (SELECT SUM(`size`) FROM `bx_notes_files`);
-SET @iTotalFilesNum = (SELECT COUNT(*) FROM `bx_notes_files`);
-SET @iTotalResizedSize = (SELECT SUM(`size`) FROM `bx_notes_photos_resized`);
-SET @iTotalResizedNum = (SELECT COUNT(*) FROM `bx_notes_photos_resized`);
-
-INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
-('bx_notes_files', 'Local', '', 360, 2592000, 3, 'bx_notes_files', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, @iTotalFilesSize, 0, @iTotalFilesNum, 0, 0),
-('bx_notes_photos_resized', 'Local', '', 360, 2592000, 3, 'bx_notes_photos_resized', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, @iTotalResizedSize, 0, @iTotalResizedNum, 0, 0);
-
-INSERT INTO `sys_objects_transcoder_images` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`) VALUES 
-('bx_notes_preview', 'bx_notes_photos_resized', 'Storage', 'a:1:{s:6:"object";s:14:"bx_notes_files";}', 'no', '1', '2592000', '0');
-
-INSERT INTO `sys_transcoder_images_filters` (`transcoder_object`, `filter`, `filter_params`, `order`) VALUES 
-('bx_notes_preview', 'Resize', 'a:4:{s:1:"w";s:3:"300";s:1:"h";s:3:"200";s:11:"crop_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0');
-
-
 -- PAGE: create entry
 
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 

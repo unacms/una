@@ -10,13 +10,15 @@
  */
 
 bx_import('BxDolStudioInstaller');
+bx_import('BxDolStorage');
 bx_import('BxDolImageTranscoder');
 bx_import('BxDolService');
 
 class BxBaseModGeneralInstaller extends BxDolStudioInstaller 
 {
-    protected $_aTranscoders = array ();
-    protected $_bUpdateTimeline = false;
+    protected $_aStorages = array (); // storage objects to automatically delete files from upon module uninstallation, don't add storage objects used in image transcoder objects
+    protected $_aTranscoders = array (); // image transcoder objects to automatically register/unregister necessary alerts for
+    protected $_bUpdateTimeline = false; // set to true to automatically register handlers for timeline module
 
     function __construct($aConfig) 
     {
@@ -44,6 +46,7 @@ class BxBaseModGeneralInstaller extends BxDolStudioInstaller
             BxDolService::call('timeline', 'delete_handlers', array($this->_aConfig['home_uri']));
 
         BxDolImageTranscoder::unregisterHandlersArray($this->_aTranscoders);
+        BxDolImageTranscoder::cleanupObjectsArray($this->_aTranscoders);
 
         $aResult = parent::disable($aParams);
 
@@ -60,6 +63,27 @@ class BxBaseModGeneralInstaller extends BxDolStudioInstaller
 
     function uninstall($aParams, $bDisable = false) 
     {
+        bx_import('BxDolInstallerUtils');
+        if (BxDolInstallerUtils::isModulePendingUninstall($this->_aConfig['home_uri']))
+        	return array(
+                'message' => _t('_adm_err_modules_pending_uninstall_already'),
+                'result' => false,
+            );
+
+        $bSetModulePendingUninstall = false;
+        foreach ($this->_aStorages as $s) {
+            if (($o = BxDolStorage::getObjectInstance($s)) && $o->queueFilesForDeletionFromObject())
+                $bSetModulePendingUninstall = true;
+        }
+
+        if ($bSetModulePendingUninstall) {
+            BxDolInstallerUtils::setModulePendingUninstall($this->_aConfig['home_uri']);
+        	return array(
+                'message' => _t('_adm_err_modules_pending_uninstall'),
+                'result' => false,
+            );
+        }
+
         return parent::uninstall($aParams, $bDisable);
     }
 }

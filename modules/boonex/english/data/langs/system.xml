@@ -562,6 +562,8 @@
 	<string name="_adm_err_modules_module_not_found"><![CDATA[Module not found]]></string>
 	<string name="_adm_err_modules_module_not_installed"><![CDATA[Module not installed]]></string>
 	<string name="_adm_err_modules_module_was_modified"><![CDATA[Module was modified]]></string>
+	<string name="_adm_err_modules_pending_uninstall"><![CDATA[Module uninstall was postponed. Module will be uninstalled automatically after all its files are deleted.]]></string>
+	<string name="_adm_err_modules_pending_uninstall_already"><![CDATA[Module is pending uninstall already.]]></string>
 	<string name="_adm_err_modules_process_action_failed"><![CDATA[An error occured. Contact with module's vendor]]></string>
 	<string name="_adm_err_modules_wrong_dependency_disable"><![CDATA[Failed to disable. The module has the following dependent modules. You need to disable them first.]]></string>
 	<string name="_adm_err_modules_wrong_dependency_install"><![CDATA[The following modules should be installed first:]]></string>

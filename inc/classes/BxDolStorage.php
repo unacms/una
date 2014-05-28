@@ -55,6 +55,8 @@ define('BX_DOL_STORAGE_DEFAULT_MIME_TYPE', 'octet/stream'); ///< default mime ty
 
 define('BX_DOL_STORAGE_DEFAULT_ICON', 'mime-type-any.png'); ///< default icon if no other icon can be determined by file extension
 
+define('BX_DOL_STORAGE_QUEUED_DELETIONS_PER_RUN', 200); ///< max number of file deletions per one cron run, @see BxDolStorage::pruneDeletions
+
 bx_import('BxDolStorageQuery');
 
 /** 
@@ -252,6 +254,32 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
             $iDeleted += $oDb->prune();
         }
         return $iDeleted;
+    }
+
+    /**
+     * Delete files queued for deletions
+     * It is alutomatically called upin cron execution, usually one time per minute.
+     * Max number of deletetion per time is defined in @see BX_DOL_STORAGE_QUEUED_DELETIONS_PER_RUN
+     * @return number of deleted records
+     */
+    public static function pruneDeletions() {
+        $iDeleted = 0;
+        $a = BxDolStorageQuery::getQueuedFilesForDeletion(BX_DOL_STORAGE_QUEUED_DELETIONS_PER_RUN);
+        foreach ($a as $r) {
+            $o = BxDolStorage::getObjectInstance($r['object']);
+            $iDeleted += ($o && $o->deleteFile($r['file_id']) ? 1 : 0);
+        }
+
+        return $iDeleted;
+    }
+
+    /**
+     * Check if module has any files pending for deletion, it is supposed that all module storage object names are prefixed with module name
+     * @param $sPrefix - usually module name
+     * @return number of files pending for deletion which were found by prefix
+     */
+    public static function isQueuedFilesForDeletion ($sPrefix) {
+        return BxDolStorageQuery::isQueuedFilesForDeletion($sPrefix);
     }
 
     /**
@@ -521,6 +549,39 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
         }
 
         return true;
+    }
+
+    /**
+     * Queue file(s) for deletion. File(s) will be deleted later upon cron call (usually every minute).
+     * @param $mixedFileId file id or array of file ids.
+     * @return number of queued files
+     */
+    public function queueFilesForDeletion($mixedFileId) {
+        if (!is_array($mixedFileId))
+            $mixedFileId = array ($mixedFileId);
+        bx_import('BxDolForm');
+        $oChecker = new BxDolFormCheckerHelper();
+        return $this->_oDb->queueFilesForDeletion (array_unique($oChecker->passInt($mixedFileId)));
+    }
+
+    /**
+     * Queue file(s) for deletion by getting neccesary files from ghosts table by profile id and content id 
+     * @param $iProfileId profile id associated with files
+     * @param $iContentId content id associated with files, or false if to check by profile id only
+     * @return number of queued files
+     */
+    public function queueFilesForDeletionFromGhosts($iProfileId, $iContentId = false) {
+        $aFiles = $this->getGhosts ($iProfileId, $iContentId);
+        return $this->queueFiles($aFiles);
+    }
+
+    /**
+     * Queue file(s) for deletion of the whole storage object
+     * @return number of queued files
+     */
+    public function queueFilesForDeletionFromObject() {
+        $aFiles = $this->getFiles (false);
+        return $this->queueFiles($aFiles);
     }
 
     /**
@@ -923,6 +984,16 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
         return in_array ($sExt, $this->_aObject[$sExtMode]);
     }
 
+    protected function queueFiles($aFiles) {
+        if (!$aFiles)
+            return 0;
+
+        $a = array();
+        foreach ($aFiles as $aFile)
+            $a[] = $aFile['id'];
+
+        return $this->queueFilesForDeletion($a);
+    }
 }
 
 

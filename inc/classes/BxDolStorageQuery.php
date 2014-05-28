@@ -133,10 +133,16 @@ class BxDolStorageQuery extends BxDolDb {
 
     public function deleteFile($iFileId) {
 
+        // delete queued record for the file
+        $sQuery = $this->prepare("DELETE FROM `sys_storage_deletions` WHERE `object` = ? AND `file_id` = ?", $this->_aObject['object'], $iFileId);
+        $this->query($sQuery);
+
+        // delete file record
         $sQuery = $this->prepare("DELETE FROM " . $this->_sTableFiles . " WHERE `id` = ?", $iFileId);
         if (!$this->query($sQuery))
             return false;
 
+        // delete any file traces in ghosts table
         $sQuery = $this->prepare("DELETE FROM `sys_storage_ghosts` WHERE `object` = ? AND `id` = ?", $this->_aObject['object'], $iFileId);
         $this->query($sQuery);
 
@@ -220,7 +226,7 @@ class BxDolStorageQuery extends BxDolDb {
                 $sJoin .= $this->prepare(" AND `g`.`content_id` = ?", $iContentId);
             $sJoin .= ')';
         }
-        $sQuery = "SELECT `f`.* FROM " . $this->_sTableFiles . " AS `f` " . $sJoin . $this->prepare("WHERE `f`.`profile_id` = ?", $iProfileId);
+        $sQuery = "SELECT `f`.* FROM " . $this->_sTableFiles . " AS `f` " . $sJoin . (false === $iProfileId ? '' : $this->prepare("WHERE `f`.`profile_id` = ?", $iProfileId));
         return $this->getAll($sQuery);
     }
 
@@ -231,6 +237,28 @@ class BxDolStorageQuery extends BxDolDb {
         if ($iCount)
             $this->query("OPTIMIZE TABLE `sys_storage_tokens`");
         return $iCount;
+    }
+
+    public function queueFilesForDeletion ($a) {
+        $iTime = time();
+        $iAdded = 0;
+        foreach ($a as $iFileId) {
+            $sQuery = $this->prepare("INSERT IGNORE INTO `sys_storage_deletions` SET `object` = ?, `file_id` = ?, `requested` = ?", $this->_aObject['object'], (int)$iFileId, $iTime);
+            $iAdded += ($this->query($sQuery) ? 1 : 0);
+        }
+        return $iAdded;
+    }
+
+    public static function getQueuedFilesForDeletion ($iLimit = 1000) {
+        $oDb = BxDolDb::getInstance();
+        $sQuery = $oDb->prepare("SELECT `object`, `file_id` FROM `sys_storage_deletions` ORDER BY `requested` ASC LIMIT ?", $iLimit);
+        return $oDb->getAll($sQuery);
+    }
+
+    public static function isQueuedFilesForDeletion ($sPrefix) {
+        $oDb = BxDolDb::getInstance();
+        $sQuery = $oDb->prepare("SELECT COUNT(*) FROM `sys_storage_deletions` WHERE `object` LIKE ?", $sPrefix . '%');
+        return $oDb->getOne($sQuery);
     }
 }
 

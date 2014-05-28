@@ -69,22 +69,6 @@ function isRole($iRole, $iId = 0) {
     return true;
 }
 
-function isLoggedBanned($iCurUserID = 0) {
-    $iCCurUserID = ($iCurUserID>0) ? $iCurUserID : (int)$_COOKIE['memberID'];
-    if ($iCCurUserID) {
-        $CheckSQL = "
-            SELECT *
-            FROM `sys_admin_ban_list`
-            WHERE `ProfID`='{$iCCurUserID}'
-        ";
-        db_res($CheckSQL);
-        if (db_affected_rows()>0) {
-            return true;
-        }
-    }
-    return false;
-}
-
 function bx_login($iId, $bRememberMe = false) {
     bx_import('BxDolAccountQuery');
     $oAccountQuery = BxDolAccountQuery::getInstance();
@@ -173,15 +157,9 @@ function bx_check_password($sLogin, $sPassword, $iRole = BX_DOL_ROLE_MEMBER) {
     if ($sErrorMsg = bx_check_login($aAccountInfo['id'], $sPassCheck, $iRole))
         return $sErrorMsg;
 
-    // Admin can always login even if his ip is blocked
+    // Admin can always login even if he is blocked/banned/suspended/etc
     if (isAdmin($aAccountInfo['id']))
         return '';
-
-    // If account is banned
-    if (isLoggedBanned($aAccountInfo['id'])) {
-        bx_import('BxDolLanguages');
-        return _t('_member_banned');
-    }
 
     $sErrorMsg = '';
     bx_alert('account', 'check_login',  $aAccountInfo['id'], false, array('error_msg' => &$sErrorMsg));

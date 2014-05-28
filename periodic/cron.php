@@ -14,6 +14,7 @@ require_once(BX_DIRECTORY_PATH_INC . 'utils.inc.php');
 require_once(BX_DIRECTORY_PATH_INC . 'profiles.inc.php' );
 
 bx_import('BxDolDb');
+bx_import('BxDolLanguages');
 
 function getRange($iLow, $iHigh, $iStep)
 {

@@ -1,24 +1,16 @@
 
--- TABLE: entries
+-- TABLES
 
-DROP TABLE IF EXISTS `bx_notes_posts`;
+DROP TABLE IF EXISTS `bx_notes_posts`, `bx_notes_files`, `bx_notes_photos_resized`, `bx_notes_cmts`, `bx_notes_votes`, `bx_notes_votes_track`, `bx_notes_views_track`;
 
--- TABLE: storages & transcoders
+-- STORAGES & TRANSCODERS
 
-DROP TABLE IF EXISTS `bx_notes_files`, `bx_notes_photos_resized`;
+DELETE FROM `sys_objects_storage` WHERE `object` = 'bx_notes_files' OR `object` = 'bx_notes_photos_resized';
+DELETE FROM `sys_storage_tokens` WHERE `object` = 'bx_notes_files' OR `object` = 'bx_notes_photos_resized';
 
--- TABLE: comments
-
-DROP TABLE IF EXISTS `bx_notes_cmts`;
-
--- TABLE: votes
-
-DROP TABLE IF EXISTS `bx_notes_votes`;
-DROP TABLE IF EXISTS `bx_notes_votes_track`;
-
--- TABLE: views
-
-DROP TABLE IF EXISTS `bx_notes_views_track`;
+DELETE FROM `sys_objects_transcoder_images` WHERE `object` = 'bx_notes_preview';
+DELETE FROM `sys_transcoder_images_filters` WHERE `transcoder_object` = 'bx_notes_preview';
+DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` = 'bx_notes_preview';
 
 -- FORMS
 

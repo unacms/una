@@ -36,15 +36,15 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton {
     }
 
     function getModuleById($iId) {
-        $sSql = $this->prepare("SELECT `id`, `name`, `title`, `vendor`, `version`, `product_url`, `update_url`, `path`, `uri`, `class_prefix`, `db_prefix`, `lang_category`, `date`, `enabled` FROM `sys_modules` WHERE `id`=? LIMIT 1", $iId);
+        $sSql = $this->prepare("SELECT * FROM `sys_modules` WHERE `id`=? LIMIT 1", $iId);
         return $this->fromMemory('sys_modules_' . $iId, 'getRow', $sSql);
     }
     function getModuleByName($sName) {
-        $sSql = $this->prepare("SELECT `id`, `name`, `title`, `vendor`, `version`, `product_url`, `update_url`, `path`, `uri`, `class_prefix`, `db_prefix`, `lang_category`, `date`, `enabled` FROM `sys_modules` WHERE `name`=? LIMIT 1", $sName);
+        $sSql = $this->prepare("SELECT * FROM `sys_modules` WHERE `name`=? LIMIT 1", $sName);
         return $this->fromMemory('sys_modules_' . $sName, 'getRow', $sSql);
     }
     function getModuleByUri($sUri) {
-        $sSql = $this->prepare("SELECT `id`, `name`, `title`, `vendor`, `version`, `product_url`, `update_url`, `path`, `uri`, `class_prefix`, `db_prefix`, `lang_category`, `date`, `enabled` FROM `sys_modules` WHERE `uri`=? LIMIT 1", $sUri);
+        $sSql = $this->prepare("SELECT * FROM `sys_modules` WHERE `uri`=? LIMIT 1", $sUri);
         return $this->fromMemory('sys_modules_' . $sUri, 'getRow', $sSql);
     }
     function enableModuleByUri($sUri) {
@@ -54,6 +54,10 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton {
     function disableModuleByUri($sUri) {
         $sSql = $this->prepare("UPDATE `sys_modules` SET `enabled`='0' WHERE `uri`=? LIMIT 1", $sUri);
         return (int)$this->query($sSql) > 0;
+    }
+    function setModulePendingUninstall($sUri) {
+        $sSql = $this->prepare("UPDATE `sys_modules` SET `pending_uninstall` = 1 WHERE `uri` = ? LIMIT 1", $sUri);
+        return $this->query($sSql);
     }
     function isModule($sUri) {
         $sSql = $this->prepare("SELECT `id` FROM `sys_modules` WHERE `uri`=? LIMIT 1", $sUri);
@@ -76,7 +80,7 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton {
         return (int)$this->getOne($sSql) > 0;
     }
     function getModules() {
-        $sSql = "SELECT `id`, `type`, `name`, `title`, `vendor`, `version`, `product_url`, `update_url`, `path`, `uri`, `class_prefix`, `db_prefix`, `lang_category`, `date`, `enabled` FROM `sys_modules` ORDER BY `title`";
+        $sSql = "SELECT * FROM `sys_modules` ORDER BY `title`";
         return $this->fromMemory('sys_modules', 'getAll', $sSql);
     }
     function getModulesBy($aParams = array()) {

@@ -154,7 +154,7 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
      * @param $mixed array of transcoders objects, or just one object 
      */
     static public function registerHandlersArray ($mixed) {
-        self::_registerHandlersArray ($mixed, 'registerHandlers');
+        self::_callFuncForObjectsArray ($mixed, 'registerHandlers');
     }
 
     /**
@@ -163,7 +163,16 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
      * @param $mixed array of transcoders objects, or just one object 
      */
     static public function unregisterHandlersArray ($mixed) {
-        self::_registerHandlersArray ($mixed, 'unregisterHandlers');
+        self::_callFuncForObjectsArray ($mixed, 'unregisterHandlers');
+    }
+
+    /**
+     * Cleanup (queue for deletion all resized files)
+     * It can be called upon module disbale event.
+     * @param $mixed array of transcoders objects, or just one object 
+     */
+    static public function cleanupObjectsArray ($mixed) {
+        self::_callFuncForObjectsArray ($mixed, 'cleanup');
     }
 
     /**
@@ -239,6 +248,13 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
         if (!$this->_oDb->unregisterHandlers ())
             return false;
         return $this->clearCacheDB();
+    }
+
+    /**
+     * Delete (queue for deletion) all resized files for the current object
+     */
+    public function cleanup () {
+        return $this->_oStorage->queueFilesForDeletionFromObject();
     }
 
     /**
@@ -614,7 +630,7 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
         return '' . $mixedHandler . $this->getDevicePixelRatioHandlerSuffix ();
     }
 
-    static protected function _registerHandlersArray ($mixed, $sFunc) {
+    static protected function _callFuncForObjectsArray ($mixed, $sFunc) {
         if (!is_array($mixed))
             $mixed = array($mixed);
         foreach ($mixed as $sObject) {

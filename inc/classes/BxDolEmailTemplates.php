@@ -178,6 +178,7 @@ class BxDolEmailTemplates extends BxDol implements iBxDolSingleton {
         if (is_array($aKeys))
             $aResultKeys = array_merge($aResultKeys, $aKeys);
 
+        bx_import('BxDolTemplate');
         return BxDolTemplate::getInstance()->parseHtmlByContent($sContent, $aResultKeys, array('{', '}'));
     }
 }
