@@ -33,6 +33,16 @@ class BxDevFunctions {
         $aInputs['object']['type'] = 'select';
         $aInputs['object']['values'] = array_merge(array('' => _t('_bx_dev_frm_txt_select_object')), $aInputs['object']['values']);
         $aInputs['object']['value'] = $aParams['object'];
+
+        $sTrlTypePostfix = '_translatable';
+        $sTrlCheckFuncPostfix = 'Translatable';
+        foreach($aInputs as $sName => $aInput)
+        	if(isset($aInput['type']) && stripos($aInput['type'], $sTrlTypePostfix) !== false) {
+        		$aInputs[$sName]['type'] = str_ireplace($sTrlTypePostfix, '', $aInput['type']);
+
+        		if(isset($aInput['checker']['func']) && stripos($aInput['checker']['func'], $sTrlCheckFuncPostfix) !== false)
+        			$aInputs[$sName]['checker']['func'] = str_ireplace($sTrlCheckFuncPostfix, '', $aInput['checker']['func']);
+        	}
     }
 
     public static function serializeString($sValue) {
