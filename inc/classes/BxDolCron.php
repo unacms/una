@@ -29,7 +29,7 @@ defined('BX_DOL') or die('hack attempt');
  *
  *  class - class name which will run
  *  file - path to class file
- *  eval - source code which will run
+ *  service_call - serialized service call which will be run
  *
  * The time numbers can be given as a comma separated list of simple numbers,
  * ranges("2-5" is the same as "2,3,4,5"). A single "*" can be used in a field to indicate all

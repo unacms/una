@@ -972,7 +972,7 @@ CREATE TABLE `sys_cron_jobs` (
   `time` varchar(128) NOT NULL default '*',
   `class` varchar(128) NOT NULL default '',
   `file` varchar(255) NOT NULL default '',
-  `eval` text NOT NULL default '', 
+  `service_call` text NOT NULL default '', 
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
@@ -980,7 +980,7 @@ CREATE TABLE `sys_cron_jobs` (
 -- Dumping data for table `sys_cron_jobs`
 --
 
-INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `eval`) VALUES
+INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VALUES
 ('cmd', '0 0 * * *', 'BxDolCronCmd', 'inc/classes/BxDolCronCmd.php', ''),
 ('notifies', '*/10 * * * *', 'BxDolCronNotifies', 'inc/classes/BxDolCronNotifies.php', '');
 
