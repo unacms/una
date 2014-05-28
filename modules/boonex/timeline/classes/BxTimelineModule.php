@@ -314,13 +314,6 @@ class BxTimelineModule extends BxDolModule
         return $aResults;
     }
 
-	public function serviceResponse($oAlert)
-    {
-    	bx_import('Response', $this->_aModule);
-        $oResponse = new BxTimelineResponse($this);
-        $oResponse->response($oAlert);
-    }
-
     /*
 	 * Get Post block for a separate page. 
 	 */

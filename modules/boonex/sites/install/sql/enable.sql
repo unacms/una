@@ -132,8 +132,8 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 ('bx_sites_overview', 'independent', 'suspended', '_bx_sites_grid_overview_btn_suspended', '', 0, 5);
 
 -- ALERTS
-INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `eval`) VALUES 
-('bx_sites', '', '', 'BxDolService::call(''bx_sites'', ''response'', array($this));');
+INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALUES 
+('bx_sites', 'BxSitesResponse', 'modules/boonex/sites/classes/BxSitesResponse.php', '');
 SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES

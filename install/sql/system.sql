@@ -880,7 +880,7 @@ CREATE TABLE `sys_alerts_handlers` (
   `name` varchar(128) NOT NULL default '',
   `class` varchar(128) NOT NULL default '',
   `file` varchar(255) NOT NULL default '',
-  `eval` text NOT NULL default '', 
+  `service_call` text NOT NULL default '', 
   PRIMARY KEY  (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;

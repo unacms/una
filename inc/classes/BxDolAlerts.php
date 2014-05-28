@@ -95,8 +95,15 @@ class BxDolAlerts extends BxDol {
 
                     $oHandler = new $aHandler['class']();
                     $oHandler->response($this);
-                } else if (!empty($aHandler['eval'])) {
-                    eval($aHandler['eval']);
+                } 
+                else if(!empty($aHandler['service_call']) && BxDolService::isSerializedService($aHandler['service_call'])) {
+                	$aService = unserialize($aHandler['service_call']);
+
+                	$aParams = array($this);
+                	if(isset($aService['params']) && is_array($aService['params']))
+                		$aParams = array_merge($aParams, $aService['params']);
+
+					BxDolService::call($aService['module'], $aService['method'], $aParams, isset($aService['class']) ? $aService['class'] : 'Module');
                 }
             }
     }
@@ -114,9 +121,9 @@ class BxDolAlerts extends BxDol {
         foreach ($aAlerts as $aAlert)
             $aResult['alerts'][$aAlert['unit']][$aAlert['action']][] = $aAlert['handler_id'];
 
-        $aHandlers = $oDb->getAll("SELECT `id`, `class`, `file`, `eval` FROM `sys_alerts_handlers` ORDER BY `id` ASC");
+        $aHandlers = $oDb->getAll("SELECT `id`, `class`, `file`, `service_call` FROM `sys_alerts_handlers` ORDER BY `id` ASC");
         foreach ($aHandlers as $aHandler)
-            $aResult['handlers'][$aHandler['id']] = array('class' => $aHandler['class'], 'file' => $aHandler['file'], 'eval' => $aHandler['eval']);
+            $aResult['handlers'][$aHandler['id']] = array('class' => $aHandler['class'], 'file' => $aHandler['file'], 'service_call' => $aHandler['service_call']);
 
         $oCache = $oDb->getDbCacheObject();
         $oCache->setData ($oDb->genDbCacheKey('sys_alerts'), $aResult);

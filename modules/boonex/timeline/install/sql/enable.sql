@@ -135,8 +135,8 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
 
 -- ALERTS
-INSERT INTO `sys_alerts_handlers`(`name`, `class`, `file`, `eval`) VALUES 
-('bx_timeline', '', '', 'BxDolService::call(\'bx_timeline\', \'response\', array($this));');
+INSERT INTO `sys_alerts_handlers`(`name`, `class`, `file`, `service_call`) VALUES 
+('bx_timeline', 'BxTimelineResponse', 'modules/boonex/timeline/classes/BxTimelineResponse.php', '');
 
 
 -- COMMENTS

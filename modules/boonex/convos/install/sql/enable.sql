@@ -194,7 +194,7 @@ INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigg
 
 -- ALERTS
 
-INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `eval`) VALUES 
+INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALUES 
 ('bx_convos', 'BxCnvAlertsResponse', 'modules/boonex/convos/classes/BxCnvAlertsResponse.php', '');
 SET @iHandler := LAST_INSERT_ID();
 
