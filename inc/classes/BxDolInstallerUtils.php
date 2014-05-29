@@ -48,10 +48,10 @@ class BxDolInstallerUtils extends BxDolIO
     /**
      * Set module for delayed uninstall 
      */
-    static public function setModulePendingUninstall($sUri)
+    static public function setModulePendingUninstall($sUri, $bPendingUninstall = true)
     {
         bx_import('BxDolModuleQuery');
-        return BxDolModuleQuery::getInstance()->setModulePendingUninstall($sUri);
+        return BxDolModuleQuery::getInstance()->setModulePendingUninstall($sUri, $bPendingUninstall);
     }
 
     /**
@@ -75,8 +75,18 @@ class BxDolInstallerUtils extends BxDolIO
             if (!$aModule['pending_uninstall'] || BxDolStorage::isQueuedFilesForDeletion($aModule['name']))
                 continue;
 
+            self::setModulePendingUninstall($aModule['uri'], false);
+
             bx_import('BxDolStudioInstallerUtils');
-            BxDolStudioInstallerUtils::getInstance()->perform($aModule['home_dir'], 'uninstall');
+            $aResult = BxDolStudioInstallerUtils::getInstance()->perform($aModule['path'], 'uninstall');
+
+            if ($aResult['code'] > 0) {
+                // TODO: send error message
+                echo "{$aModule['name']} uninstall failed: {$aResult['message']}\n";
+            } else {
+                // TODO: send success message
+                echo "Module {$aModule['name']} successfully uninstalled\n";
+            }
         }
     }
 

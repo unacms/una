@@ -55,8 +55,8 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton {
         $sSql = $this->prepare("UPDATE `sys_modules` SET `enabled`='0' WHERE `uri`=? LIMIT 1", $sUri);
         return (int)$this->query($sSql) > 0;
     }
-    function setModulePendingUninstall($sUri) {
-        $sSql = $this->prepare("UPDATE `sys_modules` SET `pending_uninstall` = 1 WHERE `uri` = ? LIMIT 1", $sUri);
+    function setModulePendingUninstall($sUri, $bPendingUninstall) {
+        $sSql = $this->prepare("UPDATE `sys_modules` SET `pending_uninstall` = ? WHERE `uri` = ? LIMIT 1", $bPendingUninstall ? 1 : 0, $sUri);
         return $this->query($sSql);
     }
     function isModule($sUri) {
