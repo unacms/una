@@ -72,21 +72,33 @@ class BxDolInstallerUtils extends BxDolIO
         bx_import('BxDolModuleQuery');
         $a = BxDolModuleQuery::getInstance()->getModules();
         foreach ($a as $aModule) {
+
+            // after we make sure that all pending for deletion files are deleted
             if (!$aModule['pending_uninstall'] || BxDolStorage::isQueuedFilesForDeletion($aModule['name']))
                 continue;
 
+            // remove pending uninstall flag
             self::setModulePendingUninstall($aModule['uri'], false);
 
+            // perform uninstallation
             bx_import('BxDolStudioInstallerUtils');
             $aResult = BxDolStudioInstallerUtils::getInstance()->perform($aModule['path'], 'uninstall');
 
+            // send email nofitication
+            $aTemplateKeys = array(
+                'Module' => $aModule['title'],
+                'Result' => _t('_Success'),
+                'Message' => '',
+            );
+
             if ($aResult['code'] > 0) {
-                // TODO: send error message
-                echo "{$aModule['name']} uninstall failed: {$aResult['message']}\n";
-            } else {
-                // TODO: send success message
-                echo "Module {$aModule['name']} successfully uninstalled\n";
+                $aTemplateKeys['Result'] = _t('_Failed');
+                $aTemplateKeys['Message'] = $aResult['message'];
             }
+
+            bx_import('BxDolEmailTemplates');
+            $aMessage = BxDolEmailTemplates::getInstance()->parseTemplate('t_DelayedModuleUninstall', $aTemplateKeys);
+            sendMail (getParam('site_email'), $aMessage['Subject'], $aMessage['Body'], 0, array(), BX_EMAIL_SYSTEM);
         }
     }
 

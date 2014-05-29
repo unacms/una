@@ -150,7 +150,8 @@ INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `B
 ('system', '_sys_et_txt_name_system_password_reset', 't_PasswordReset', '_sys_et_txt_subject_password_reset', '_sys_et_txt_body_password_reset'),
 ('system', '_sys_et_txt_name_system_mem_expiration', 't_MemExpiration', '_sys_et_txt_subject_mem_expiration', '_sys_et_txt_body_mem_expiration'),
 ('system', '_sys_et_txt_name_system_mem_changed', 't_MemChanged', '_sys_et_txt_subject_mem_changed', '_sys_et_txt_body_mem_changed'),
-('system', '_sys_et_txt_name_system_comment_replied', 't_CommentReplied', '_sys_et_txt_subject_comment_replied', '_sys_et_txt_body_comment_replied');
+('system', '_sys_et_txt_name_system_comment_replied', 't_CommentReplied', '_sys_et_txt_subject_comment_replied', '_sys_et_txt_body_comment_replied'),
+('system', '_sys_et_txt_name_system_delayed_module_uninstall', 't_DelayedModuleUninstall', '_sys_et_txt_subject_delayed_module_uninstall', '_sys_et_txt_body_delayed_module_uninstall');
 
 -- --------------------------------------------------------
 
