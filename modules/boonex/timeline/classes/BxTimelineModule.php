@@ -469,6 +469,12 @@ class BxTimelineModule extends BxDolModule
 		return $this->serviceGetShareCounter($sType, $sAction, $iObjectId);
     }
 
+    public function serviceGetSettingsCheckerHelper()
+    {
+    	bx_import('FormCheckerHelper', $this->_aModule);
+    	return 'BxTimelineFormCheckerHelper';
+    }
+
     /*
      * COMMON METHODS 
      */

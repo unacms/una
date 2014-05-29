@@ -17,7 +17,7 @@ class BxDolStudioForm extends BxBaseFormView {
     function BxDolStudioForm($aInfo, $oTemplate) {
         parent::BxBaseFormView($aInfo, $oTemplate !== false ? $oTemplate : BxDolStudioTemplate::getInstance());
 
-        $this->_sCheckerHelper = isset($this->aParams['checker_helper']) ? $this->aParams['checker_helper'] : 'BxDolStudioCheckerHelper';
+        $this->_sCheckerHelper = isset($this->aParams['checker_helper']) ? $this->aParams['checker_helper'] : 'BxDolStudioFormCheckerHelper';
     }
 
     function initChecker($aValues = array (), $aSpecificValues = array())  {
@@ -139,7 +139,7 @@ class BxDolStudioForm extends BxBaseFormView {
     }
 }
 
-class BxDolStudioCheckerHelper extends BxDolFormCheckerHelper {
+class BxDolStudioFormCheckerHelper extends BxDolFormCheckerHelper {
     function checkAvailTranslatable($sVal, $aName, $sMethod = BX_DOL_STUDIO_METHOD_DEFAULT, $bAll = true) {
         if(empty($sMethod) || empty($aName))
             return false;
@@ -178,6 +178,12 @@ class BxDolStudioCheckerHelper extends BxDolFormCheckerHelper {
         }
 
         return $bAll ? true : false;
+    }
+
+    function checkTemplate($sVal)
+    {
+    	bx_import('BxDolModuleQuery'); 
+    	return strlen($sVal) > 0 && BxDolModuleQuery::getInstance()->isEnabled($sVal);
     }
 }
 /** @} */

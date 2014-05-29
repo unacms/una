@@ -67,17 +67,31 @@ class BxDolStudioSettings extends BxTemplStudioPage {
 
         foreach ($aCategories as $sCategory) {
             $aOptions = array();
-            $iOptions = $this->oDb->getOptions(array('type' => 'by_category_name', 'value' => $sCategory), $aOptions);
+            $iOptions = $this->oDb->getOptions(array('type' => 'by_category_name_full', 'value' => $sCategory), $aOptions);
 
             $aData = array();
             foreach($aOptions as $aOption) {
                 $aData[$aOption['name']] = $oForm->getCleanValue($aOption['name']);
 
                 if(!empty($aOption['check'])) {
-                    $oFunction = create_function('$arg0', $aOption['check']);
-                    if(!$oFunction($aData[$aOption['name']])) {
+                	$sCheckerHelper = '';
+                	if(!empty($aOption['type_name']) && BxDolRequest::serviceExists($aOption['type_name'], 'get_settings_checker_helper'))
+                		$sCheckerHelper = BxDolService::call($aOption['type_name'], 'get_settings_checker_helper');
+
+                	if($sCheckerHelper == '') {
+                		bx_import('BxDolStudioForm');
+                		$sCheckerHelper = 'BxDolStudioFormCheckerHelper';
+                	}
+
+                	$oChecker = new $sCheckerHelper();
+                	$aCheckFunction = array($oChecker, 'check' . bx_gen_method_name($aOption['check']));
+                	$aCheckFunctionParams = array($aData[$aOption['name']]);
+                	if(!empty($aOption['check_params']))
+                		$aCheckFunctionParams = array_merge($aCheckFunctionParams, unserialize($aOption['check_params']));
+
+                	if(is_callable($aCheckFunction) && !call_user_func_array($aCheckFunction, $aCheckFunctionParams)) {
                         $this->sCategory = $sCategory;
-                        return $this->getJsResult("'" . $aOption['title'] .  "' " . $aOption['check_error'], false);
+                        return $this->getJsResult(_t('_adm_stg_err_save_error_message', _t($aOption['caption']), _t($aOption['check_error'])), false);
                     }
                 }
 

@@ -1087,7 +1087,9 @@
 	<string name="_adm_stg_cpt_category_templates"><![CDATA[Templates]]></string>
 	<string name="_adm_stg_cpt_option_boonex_aff_id"><![CDATA[My BoonEx Affiliate ID]]></string>
 	<string name="_adm_stg_cpt_option_currency_code"><![CDATA[Currency code (for checkout system)]]></string>
+	<string name="_adm_stg_err_option_currency_code"><![CDATA[Cannot be empty.]]></string>
 	<string name="_adm_stg_cpt_option_currency_sign"><![CDATA[Currency sign (for display purposes only)]]></string>
+	<string name="_adm_stg_err_option_currency_sign"><![CDATA[Cannot be empty.]]></string>
 	<string name="_adm_stg_cpt_option_enable_gd"><![CDATA[Use GD library for image processing]]></string>
 	<string name="_adm_stg_cpt_option_enable_template"><![CDATA[Show Template Switcher]]></string>
 	<string name="_adm_stg_cpt_option_expire_notification_days"><![CDATA[Number of days before membership expiration to notify members ( -1 = after expiration )]]></string>
@@ -1137,9 +1139,11 @@
 	<string name="_adm_stg_cpt_option_sys_template_page_width_max"><![CDATA[Max page width(in pixels)]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_page_width_min"><![CDATA[Min page width(in pixels)]]></string>
 	<string name="_adm_stg_cpt_option_template"><![CDATA[Default Template]]></string>
+	<string name="_adm_stg_err_option_template"><![CDATA[Template cannot be empty and must have a valid name.]]></string>
 	<string name="_adm_stg_cpt_option_use_like_operator"><![CDATA[Use operator LIKE for search (recommended for small content)]]></string>
 	<string name="_adm_stg_cpt_type_system"><![CDATA[System]]></string>
 	<string name="_adm_stg_scs_save"><![CDATA[Settings were successfully saved]]></string>
+	<string name="_adm_stg_err_save_error_message"><![CDATA[Error in '{0}': {1}]]></string>
 	<string name="_adm_str_cpt_files_file"><![CDATA[File]]></string>
 	<string name="_adm_str_cpt_files_version"><![CDATA[Version]]></string>
 	<string name="_adm_str_err_cannot_connect_to_ftp"><![CDATA[Cannot connect to FTP server. Please check FTP access details in Settings -> Other.]]></string>

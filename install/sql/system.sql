@@ -165,7 +165,8 @@ CREATE TABLE `sys_options` (
   `value` mediumtext NOT NULL,
   `type` enum('digit','text','checkbox','select','combobox','file','list') NOT NULL default 'digit',
   `extra` text NOT NULL default '',
-  `check` text NOT NULL,
+  `check` varchar(32) NOT NULL,
+  `check_params` text NOT NULL,
   `check_error` varchar(255) NOT NULL default '',
   `order` int(11) default '0',
   PRIMARY KEY (`id`),
@@ -260,7 +261,7 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `or
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'template', '_adm_stg_cpt_option_template', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:13:"get_templates";s:5:"class";s:21:"TemplTemplateServices";}', 'bx_import(\'BxDolModuleQuery\'); return (strlen($arg0) > 0 && BxDolModuleQuery::getInstance()->isEnabled($arg0)) ? true : false;', 'Template cannot be empty and must have a valid name.', 1),
+(@iCategoryId, 'template', '_adm_stg_cpt_option_template', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:13:"get_templates";s:5:"class";s:21:"TemplTemplateServices";}', 'Template', '_adm_stg_err_option_template', 1),
 (@iCategoryId, 'enable_template', '_adm_stg_cpt_option_enable_template', 'on', 'checkbox', '', '', '', 2),
 
 (@iCategoryId, 'sys_template_page_width_min', '_adm_stg_cpt_option_sys_template_page_width_min', '774', 'digit', '', '', '', 3),
@@ -309,8 +310,8 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_oauth_secret', '_adm_stg_cpt_option_sys_oauth_secret', '', 'digit', '', '', '', 5),
 (@iCategoryId, 'boonexAffID', '_adm_stg_cpt_option_boonex_aff_id', '', 'digit', '', '', '', 6),
 
-(@iCategoryId, 'currency_code', '_adm_stg_cpt_option_currency_code', 'USD', 'select', 'USD,EURO', 'return strlen($arg0) > 0;', 'Cannot be empty.', 7),
-(@iCategoryId, 'currency_sign', '_adm_stg_cpt_option_currency_sign', '&#36;', 'digit', '', 'return strlen($arg0) > 0;', 'Cannot be empty.', 8),
+(@iCategoryId, 'currency_code', '_adm_stg_cpt_option_currency_code', 'USD', 'select', 'USD,EURO', 'Avail', '_adm_stg_err_option_currency_code', 7),
+(@iCategoryId, 'currency_sign', '_adm_stg_cpt_option_currency_sign', '&#36;', 'digit', '', 'Avail', '_adm_stg_err_option_currency_sign', 8),
 
 (@iCategoryId, 'enable_gd', '_adm_stg_cpt_option_enable_gd', 'on', 'checkbox', '', '', '', 9),
 (@iCategoryId, 'useLikeOperator', '_adm_stg_cpt_option_use_like_operator', 'on', 'checkbox', '', '', '', 10);
