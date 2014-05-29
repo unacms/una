@@ -141,8 +141,10 @@ class BxDolStorageLocal extends BxDolStorage {
         foreach ($aDirs as $sPart)
         {
             $sDir .= $sPart.'/';
-            if (!is_dir($sDir) && strlen($sDir) > 0 && !file_exists($sDir))
-                mkdir($sDir, $sRights);
+            if (!is_dir($sDir) && strlen($sDir) > 0 && !file_exists($sDir)) {
+                mkdir($sDir);
+                chmod($sDir, $sRights);
+            }
         }
     }
 }

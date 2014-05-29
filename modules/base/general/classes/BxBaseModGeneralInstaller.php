@@ -11,10 +11,12 @@
 
 bx_import('BxDolStudioInstaller');
 bx_import('BxDolImageTranscoder');
+bx_import('BxDolService');
 
 class BxBaseModGeneralInstaller extends BxDolStudioInstaller 
 {
     protected $_aTranscoders = array ();
+    protected $_bUpdateTimeline = false;
 
     function __construct($aConfig) 
     {
@@ -25,19 +27,27 @@ class BxBaseModGeneralInstaller extends BxDolStudioInstaller
     {
         $aResult = parent::enable($aParams);
 
-        if ($aResult['result']) // register it only in case of successful enable
-            BxDolImageTranscoder::registerHandlersArray($this->_aTranscoders);
+        if (!$aResult['result']) // proces further only in case of successful enable
+            return $aResult;
+
+        BxDolImageTranscoder::registerHandlersArray($this->_aTranscoders);
+
+        if ($this->_bUpdateTimeline && BxDolRequest::serviceExists('timeline', 'add_handlers'))
+            BxDolService::call('timeline', 'add_handlers', array($this->_aConfig['home_uri']));
 
         return $aResult;
     }
 
     function disable($aParams) 
     {    
+        if ($this->_bUpdateTimeline && BxDolRequest::serviceExists('timeline', 'delete_handlers'))
+            BxDolService::call('timeline', 'delete_handlers', array($this->_aConfig['home_uri']));
+
         BxDolImageTranscoder::unregisterHandlersArray($this->_aTranscoders);
 
         $aResult = parent::disable($aParams);
 
-        if (!$aResult['result']) // we need to register it back if disable failed
+        if (!$aResult['result']) // we need to register it back if disabling failed
             BxDolImageTranscoder::registerHandlersArray($this->_aTranscoders);
 
         return $aResult;
