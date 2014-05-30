@@ -67,6 +67,22 @@ class BxDevFunctions {
 
         return var_export($aValue, true);        
     }
+
+    /**
+     * Add slashes before "'" and "\" characters that the value containing them can be used in export feature.
+     *
+     * @param string $sString - the input string to add slashes
+     * @param boolean $bDoubleEscape - whether the string needs to be two more escaped or not
+     * @return string the slashed string
+     */
+    public static function dbAddSlashes($sString = '', $bDoubleEscape = false) {
+        if ($bDoubleEscape)
+            $sString = str_replace('\\', '\\\\\\\\', $sString);
+        else
+            $sString = str_replace('\\', '\\\\', $sString);
+
+        return str_replace('\'', '\\\'', $sString);
+    }
 }
 
 /** @} */
