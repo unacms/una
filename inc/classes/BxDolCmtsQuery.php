@@ -271,7 +271,7 @@ class BxDolCmtsQuery extends BxDolDb
             $aFiles = $this->convertImagesArray($this->getImages($iSystemId, false));
 
         // delete files
-        $this->deleteImages($iSystemId);
+        $this->deleteImages($iSystemId, false);
 
         // delete comments
         $sQuery = $this->prepare("TRUNCATE TABLE {$this->_sTable}");
