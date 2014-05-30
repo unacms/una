@@ -48,6 +48,7 @@ class BxBaseStudioGrid extends BxDolStudioGrid {
 
         return $oForm->genRow($aInputModules);
     }
+
 	protected function _getItem($sDbMethod = '')
     {
     	$aIds = bx_get('ids');
@@ -64,7 +65,7 @@ class BxBaseStudioGrid extends BxDolStudioGrid {
         $aItem = array();
         $this->oDb->$sDbMethod(array('type' => 'by_id', 'value' => $iId), $aItem, false);
         if(!is_array($aItem) || empty($aItem))
-        	return false; 
+        	return false;
 
         return $aItem;
     }

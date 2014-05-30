@@ -7,6 +7,7 @@
  * @{
  */
 
+bx_import('BxDolObject');
 bx_import('BxDolVoteQuery');
 
 define('BX_DOL_VOTE_OLD_VOTES', 365 * 86400); ///< votes older than this number of seconds will be deleted automatically
@@ -85,32 +86,15 @@ define('BX_DOL_VOTE_USAGE_DEFAULT', BX_DOL_VOTE_USAGE_BLOCK);
  *
  */
 
-class BxDolVote extends BxDol
+class BxDolVote extends BxDolObject
 {
-    protected $_iId = 0;    ///< item id to be rated
-    protected $_sSystem = ''; ///< current rating system name
-    protected $_aSystem = array(); ///< current rating system array
-
-    protected $_oQuery = null;
-
-    protected function __construct($sSystem, $iId, $iInit = 1)
+    public function __construct($sSystem, $iId, $iInit = 1)
     {
-        parent::__construct();
-
-        $this->_aSystems = $this->getSystems();
-        if(!isset($this->_aSystems[$sSystem]))
-			return;
-
-        $this->_sSystem = $sSystem;
-		$this->_aSystem = $this->_aSystems[$sSystem];
-
-		if(!$this->isEnabled()) 
+        parent::__construct($sSystem, $iId, $iInit);
+        if(empty($this->_sSystem))
 			return;
 
         $this->_oQuery = new BxDolVoteQuery($this);
-
-        if($iInit)
-			$this->init($iId);
     }
 
 	/**
@@ -191,43 +175,6 @@ class BxDolVote extends BxDol
         return $iResult;
     }
 
-    public function init($iId)
-    {
-    	if(!$this->isEnabled()) 
-        	return;
-
-        if(empty($this->_iId) && $iId)
-			$this->setId($iId);
-    }
-
-    /**
-     * Settings functions
-     */
-	public function getSystemId()
-    {
-        return $this->_aSystem['id'];
-    }
-
-    public function getSystemName()
-    {
-        return $this->_sSystem;
-    }
-
-	public function getSystemInfo()
-    {
-        return $this->_aSystem;
-    }
-
-	public function getId()
-    {
-        return $this->_iId;
-    }
-
-    public function isEnabled()
-    {
-        return (int)$this->_aSystem['is_on'] == 1;
-    }
-
 	public function isUndo()
     {
         return (int)$this->_aSystem['is_undo'] == 1;
@@ -251,15 +198,6 @@ class BxDolVote extends BxDol
     {
         return (int)$this->_aSystem['max_value'];
     }
-
-    public function setId($iId)
-    {
-        if($iId == $this->getId())
-        	return;
-
-        $this->_iId = $iId;
-    }
-
 
 	/**
      * Interface functions for outer usage

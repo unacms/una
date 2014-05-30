@@ -28,132 +28,7 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus {
     public function performActionAdd() {
         $sAction = 'add';
 
-        $aForm = array(
-            'form_attrs' => array(
-                'id' => 'adm-nav-menu-create',
-                'action' => BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction,
-                'method' => BX_DOL_STUDIO_METHOD_DEFAULT
-            ),
-            'params' => array (
-                'db' => array(
-                    'table' => 'sys_objects_menu',
-                    'key' => 'id',
-                    'uri' => '',
-                    'uri_title' => '',
-                    'submit_name' => 'do_submit'
-                )
-            ),
-            'inputs' => array (
-                'title' => array(
-                    'type' => 'text_translatable',
-                    'name' => 'title',
-                    'caption' => _t('_adm_nav_txt_menus_title'),
-                    'info' => _t('_adm_nav_dsc_menus_title'),
-                    'value' => '_adm_nav_txt_menu',
-                    'required' => '1',
-                    'db' => array (
-                        'pass' => 'Xss',
-                    ),
-                    'checker' => array (
-                        'func' => 'LengthTranslatable',
-                        'params' => array(3, 100, 'title'),
-                        'error' => _t('_adm_nav_err_menus_title'),
-                    ),
-                ),
-                'set_name' => array(
-                    'type' => 'select',
-                    'name' => 'set_name',
-                    'caption' => _t('_adm_nav_txt_menus_set_name'),
-                    'info' => _t('_adm_nav_dsc_menus_set_name'),
-                    'value' => '',
-                    'values' => array(
-                        array('key' => '', 'value' => _t('_adm_nav_txt_menus_set_name_select')),
-                        array('key' => $this->sCreateNew, 'value' => _t('_adm_nav_txt_menus_set_name_new'))
-                    ),
-                	'required' => '1',
-                    'attrs' => array(
-                        'id' => 'bx-form-field-set-name',
-                        'onchange' => $this->getJsObject() . ".onSelectSet(this)"
-                    ),
-                    'db' => array (
-                        'pass' => 'Xss',
-                    ),
-                    'checker' => array (
-                        'func' => 'avail',
-                        'params' => array(),
-                        'error' => _t('_adm_nav_err_menus_set_name'),
-                    ),
-                ),
-                'set_title' => array(
-                    'type' => 'text',
-                    'name' => 'set_title',
-                    'caption' => _t('_adm_nav_txt_menus_set_title'),
-                    'info' => _t('_adm_nav_dsc_menus_set_title'),
-                    'value' => '',
-                    'required' => '1',
-                    'tr_attrs' => array(
-                        'style' => 'display:none'
-                    ),
-                    'db' => array (
-                        'pass' => 'Xss',
-                    ),
-                    'checker' => array (
-                        'func' => 'Avail',
-                        'params' => array(),
-                        'error' => _t('_adm_nav_err_menus_set_title'),
-                    ),
-                ),
-                'template_id' => array(
-                    'type' => 'select',
-                    'name' => 'template_id',
-                    'caption' => _t('_adm_nav_txt_menus_style'),
-                    'info' => _t('_adm_nav_dsc_menus_style'),
-                    'value' => '',
-                    'values' => array(
-                        array('key' => '', 'value' => _t('_adm_nav_txt_menus_style_select'))
-                    ),
-                	'required' => '1',
-                    'db' => array (
-                        'pass' => 'Xss',
-                    ),
-                    'checker' => array (
-                        'func' => 'avail',
-                        'params' => array(),
-                        'error' => _t('_adm_nav_err_menus_style'),
-                    ),
-                ),
-                'controls' => array(
-                    'name' => 'controls', 
-                    'type' => 'input_set',
-                    array(
-                        'type' => 'submit',
-                        'name' => 'do_submit',
-                        'value' => _t('_adm_nav_btn_menus_add'),
-                    ),
-                    array (
-                        'type' => 'reset',
-                        'name' => 'close',
-                        'value' => _t('_adm_nav_btn_menus_cancel'),
-                        'attrs' => array(
-                            'onclick' => "$('.bx-popup-applied:visible').dolPopupHide()",
-                            'class' => 'bx-def-margin-sec-left',
-                        ),
-                    )
-                )
-            )
-        );
-
-        $aSets = array();
-        $this->oDb->getSets(array('type' => 'all'), $aSets, false);
-        foreach($aSets as $sSet)
-            $aForm['inputs']['set_name']['values'][] = array('key' => $sSet['name'], 'value' => _t($sSet['title']));
-
-        $aTemplates = array();
-        $this->oDb->getTemplates(array('type' => 'all'), $aTemplates, false);
-        foreach($aTemplates as $aTemplate)
-            $aForm['inputs']['template_id']['values'][] = array('key' => $aTemplate['id'], 'value' => _t($aTemplate['title']));
-
-        $oForm = new BxTemplStudioFormView($aForm);
+        $oForm = $this->_getFormObject($sAction);
         if($oForm->isSubmitted() && isset($oForm->aInputs['set_name']))
             $this->updateSetFields($oForm);
 
@@ -163,7 +38,7 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus {
             $oLanguage = BxDolStudioLanguagesUtils::getInstance();
             $sLanguage = $oLanguage->getCurrentLangName(false);
 
-            $sObject = BxDolForm::getSubmittedValue('title-' . $sLanguage, $aForm['form_attrs']['method']);
+            $sObject = BxDolForm::getSubmittedValue('title-' . $sLanguage, $oForm->aFormAttrs['method']);
             $sObject = uriGenerate($sObject, 'sys_objects_menu', 'object', 'object');
 
             //--- New Set Creation 
@@ -191,7 +66,7 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus {
         else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-nav-menu-create-popup', _t('_adm_nav_txt_menus_create_popup'), $this->_oTemplate->parseHtmlByName('nav_add_menu.html', array(
-                'form_id' => $aForm['form_attrs']['id'],
+                'form_id' => $oForm->aFormAttrs['id'],
                 'form' => $oForm->getCode(true),
                 'object' => $this->_sObject,
                 'action' => $sAction
@@ -204,160 +79,13 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus {
     public function performActionEdit() {
         $sAction = 'edit';
 
-        $aIds = bx_get('ids');
-        if(!$aIds || !is_array($aIds)) {
-            $iId = (int)bx_get('id');
-            if(!$iId) {
-                $this->_echoResultJson(array());
-                exit;
-            }
-
-            $aIds = array($iId);
-        }
-
-        $iId = $aIds[0];
-
-        $aMenu = array();
-        $iMenu = $this->oDb->getMenus(array('type' => 'by_id', 'value' => $iId), $aMenu);
-        if($iMenu != 1 || empty($aMenu)){
+    	$aMenu = $this->_getItem('getMenus');
+        if($aMenu === false) {
             $this->_echoResultJson(array());
             exit;
         }
 
-        $aForm = array(
-            'form_attrs' => array(
-                'id' => 'adm-nav-menu-edit',
-                'action' => BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction,
-                'method' => BX_DOL_STUDIO_METHOD_DEFAULT
-            ),
-            'params' => array (
-                'db' => array(
-                    'table' => 'sys_objects_menu',
-                    'key' => 'id',
-                    'uri' => '',
-                    'uri_title' => '',
-                    'submit_name' => 'do_submit'
-                ),
-            ),
-            'inputs' => array (
-            	'id' => array(
-                    'type' => 'hidden',
-                    'name' => 'id',
-                    'value' => $iId,
-                    'db' => array (
-                        'pass' => 'Int',
-                    ),
-                ),
-                'title' => array(
-                    'type' => 'text_translatable',
-                    'name' => 'title',
-                    'caption' => _t('_adm_nav_txt_menus_title'),
-                    'info' => _t('_adm_nav_dsc_menus_title'),
-                    'value' => $aMenu['title'],
-                    'required' => '1',
-                    'db' => array (
-                        'pass' => 'Xss',
-                    ),
-                    'checker' => array (
-                        'func' => 'LengthTranslatable',
-                        'params' => array(3, 100, 'title'),
-                        'error' => _t('_adm_nav_err_menus_title'),
-                    ),
-                ),
-                'set_name' => array(
-                    'type' => 'select',
-                    'name' => 'set_name',
-                    'caption' => _t('_adm_nav_txt_menus_set_name'),
-                    'info' => _t('_adm_nav_dsc_menus_set_name'),
-                    'value' => $aMenu['set_name'],
-                    'values' => array(
-                        array('key' => '', 'value' => _t('_adm_nav_txt_menus_set_name_select')),
-                        array('key' => $this->sCreateNew, 'value' => _t('_adm_nav_txt_menus_set_name_new'))
-                    ),
-                	'required' => '1',
-                    'attrs' => array(
-                        'id' => 'bx-form-field-set-name',
-                        'onchange' => $this->getJsObject() . ".onSelectSet(this)"
-                    ),
-                    'db' => array (
-                        'pass' => 'Xss',
-                    ),
-                    'checker' => array (
-                        'func' => 'avail',
-                        'params' => array(),
-                        'error' => _t('_adm_nav_err_menus_set_name'),
-                    ),
-                ),
-                'set_title' => array(
-                    'type' => 'text',
-                    'name' => 'set_title',
-                    'caption' => _t('_adm_nav_txt_menus_set_title'),
-                    'info' => _t('_adm_nav_dsc_menus_set_title'),
-                    'value' => '',
-                    'required' => '1',
-                    'tr_attrs' => array(
-                        'style' => 'display:none'
-                    ),
-                    'db' => array (
-                        'pass' => 'Xss',
-                    ),
-                    'checker' => array (
-                        'func' => 'UniqueSet',
-                        'params' => array(),
-                        'error' => _t('_adm_nav_err_menus_set_title'),
-                    ),
-                ),
-                'template_id' => array(
-                    'type' => 'select',
-                    'name' => 'template_id',
-                    'caption' => _t('_adm_nav_txt_menus_style'),
-                    'info' => _t('_adm_nav_dsc_menus_style'),
-                    'value' => $aMenu['template_id'],
-                    'values' => array(
-                        array('key' => '', 'value' => _t('_adm_nav_txt_menus_style_select'))
-                    ),
-                	'required' => '1',
-                    'db' => array (
-                        'pass' => 'Xss',
-                    ),
-                    'checker' => array (
-                        'func' => 'avail',
-                        'params' => array(),
-                        'error' => _t('_adm_nav_err_menus_style'),
-                    ),
-                ),
-                'controls' => array(
-                    'name' => 'controls', 
-                    'type' => 'input_set',
-                    array(
-                        'type' => 'submit',
-                        'name' => 'do_submit',
-                        'value' => _t('_adm_nav_btn_menus_save'),
-                    ),
-                    array (
-                        'type' => 'reset',
-                        'name' => 'close',
-                        'value' => _t('_adm_nav_btn_menus_cancel'),
-                        'attrs' => array(
-                            'onclick' => "$('.bx-popup-applied:visible').dolPopupHide()",
-                            'class' => 'bx-def-margin-sec-left',
-                        ),
-                    )
-                )
-            )
-        );
-
-        $aSets = array();
-        $this->oDb->getSets(array('type' => 'all'), $aSets, false);
-        foreach($aSets as $sSet)
-            $aForm['inputs']['set_name']['values'][] = array('key' => $sSet['name'], 'value' => _t($sSet['title']));
-
-        $aTemplates = array();
-        $this->oDb->getTemplates(array('type' => 'all'), $aTemplates, false);
-        foreach($aTemplates as $aTemplate)
-            $aForm['inputs']['template_id']['values'][] = array('key' => $aTemplate['id'], 'value' => _t($aTemplate['title']));
-
-        $oForm = new BxTemplStudioFormView($aForm);
+        $oForm = $this->_getFormObject($sAction, $aMenu);
         if($oForm->isSubmitted() && isset($oForm->aInputs['set_name']))
             $this->updateSetFields($oForm);
 
@@ -378,8 +106,8 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus {
             }
             unset($oForm->aInputs['set_title']);
 
-            if($oForm->update($iId) !== false)
-                $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
+            if($oForm->update($aMenu['id']) !== false)
+                $aRes = array('grid' => $this->getCode(false), 'blink' => $aMenu['id']);
             else
                 $aRes = array('msg' => _t('_adm_nav_err_menus_edit'));
 
@@ -388,7 +116,7 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus {
         else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-nav-menu-edit-popup', _t('_adm_nav_txt_menus_edit_popup', _t($aMenu['title'])), $this->_oTemplate->parseHtmlByName('nav_add_menu.html', array(
-                'form_id' => $aForm['form_attrs']['id'],
+                'form_id' => $oForm->aFormAttrs['id'],
                 'form' => $oForm->getCode(true),
                 'object' => $this->_sObject,
                 'action' => $sAction
@@ -496,6 +224,158 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus {
         parent::_getFilterControls();
 
         return  $this->getModulesSelectAll('getMenus') . $this->getSearchInput();
+    }
+
+	protected function _getFormObject($sAction, $aMenu = array())
+    {
+    	$aForm = array(
+            'form_attrs' => array(
+                'id' => 'adm-nav-menu-',
+                'action' => BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction,
+                'method' => BX_DOL_STUDIO_METHOD_DEFAULT
+            ),
+            'params' => array (
+                'db' => array(
+                    'table' => 'sys_objects_menu',
+                    'key' => 'id',
+                    'uri' => '',
+                    'uri_title' => '',
+                    'submit_name' => 'do_submit'
+                ),
+            ),
+            'inputs' => array (
+            	'id' => array(
+                    'type' => 'hidden',
+                    'name' => 'id',
+                    'value' => isset($aMenu['id']) ? (int)$aMenu['id'] : 0,
+                    'db' => array (
+                        'pass' => 'Int',
+                    ),
+                ),
+                'title' => array(
+                    'type' => 'text_translatable',
+                    'name' => 'title',
+                    'caption' => _t('_adm_nav_txt_menus_title'),
+                    'info' => _t('_adm_nav_dsc_menus_title'),
+                    'value' => isset($aMenu['title']) ? $aMenu['title'] : '_adm_nav_txt_menu',
+                    'required' => '1',
+                    'db' => array (
+                        'pass' => 'Xss',
+                    ),
+                    'checker' => array (
+                        'func' => 'LengthTranslatable',
+                        'params' => array(3, 100, 'title'),
+                        'error' => _t('_adm_nav_err_menus_title'),
+                    ),
+                ),
+                'set_name' => array(
+                    'type' => 'select',
+                    'name' => 'set_name',
+                    'caption' => _t('_adm_nav_txt_menus_set_name'),
+                    'info' => _t('_adm_nav_dsc_menus_set_name'),
+                    'value' => isset($aMenu['set_name']) ? $aMenu['set_name'] : '',
+                    'values' => array(
+                        array('key' => '', 'value' => _t('_adm_nav_txt_menus_set_name_select')),
+                        array('key' => $this->sCreateNew, 'value' => _t('_adm_nav_txt_menus_set_name_new'))
+                    ),
+                	'required' => '1',
+                    'attrs' => array(
+                        'id' => 'bx-form-field-set-name',
+                        'onchange' => $this->getJsObject() . ".onSelectSet(this)"
+                    ),
+                    'db' => array (
+                        'pass' => 'Xss',
+                    ),
+                    'checker' => array (
+                        'func' => 'avail',
+                        'params' => array(),
+                        'error' => _t('_adm_nav_err_menus_set_name'),
+                    ),
+                ),
+                'set_title' => array(
+                    'type' => 'text',
+                    'name' => 'set_title',
+                    'caption' => _t('_adm_nav_txt_menus_set_title'),
+                    'info' => _t('_adm_nav_dsc_menus_set_title'),
+                    'value' => '',
+                    'required' => '1',
+                    'tr_attrs' => array(
+                        'style' => 'display:none'
+                    ),
+                    'db' => array (
+                        'pass' => 'Xss',
+                    ),
+                    'checker' => array (
+                        'func' => 'Avail',
+                        'params' => array(),
+                        'error' => _t('_adm_nav_err_menus_set_title'),
+                    ),
+                ),
+                'template_id' => array(
+                    'type' => 'select',
+                    'name' => 'template_id',
+                    'caption' => _t('_adm_nav_txt_menus_style'),
+                    'info' => _t('_adm_nav_dsc_menus_style'),
+                    'value' => isset($aMenu['template_id']) ? $aMenu['template_id'] : '',
+                    'values' => array(
+                        array('key' => '', 'value' => _t('_adm_nav_txt_menus_style_select'))
+                    ),
+                	'required' => '1',
+                    'db' => array (
+                        'pass' => 'Xss',
+                    ),
+                    'checker' => array (
+                        'func' => 'avail',
+                        'params' => array(),
+                        'error' => _t('_adm_nav_err_menus_style'),
+                    ),
+                ),
+                'controls' => array(
+                    'name' => 'controls', 
+                    'type' => 'input_set',
+                    array(
+                        'type' => 'submit',
+                        'name' => 'do_submit',
+                        'value' => _t('_adm_nav_btn_menus_add'),
+                    ),
+                    array (
+                        'type' => 'reset',
+                        'name' => 'close',
+                        'value' => _t('_adm_nav_btn_menus_cancel'),
+                        'attrs' => array(
+                            'onclick' => "$('.bx-popup-applied:visible').dolPopupHide()",
+                            'class' => 'bx-def-margin-sec-left',
+                        ),
+                    )
+                )
+            )
+        );
+
+        $aSets = array();
+        $this->oDb->getSets(array('type' => 'all'), $aSets, false);
+        foreach($aSets as $sSet)
+            $aForm['inputs']['set_name']['values'][] = array('key' => $sSet['name'], 'value' => _t($sSet['title']));
+
+        $aTemplates = array();
+        $this->oDb->getTemplates(array('type' => 'all'), $aTemplates, false);
+        foreach($aTemplates as $aTemplate)
+            $aForm['inputs']['template_id']['values'][] = array('key' => $aTemplate['id'], 'value' => _t($aTemplate['title']));
+
+        switch($sAction){
+        	case 'add':
+        		unset($aForm['inputs']['id']);
+
+        		$aForm['form_attrs']['id'] .= 'create';
+        		break;
+        		
+        	case 'edit':
+        		$aForm['form_attrs']['id'] .= 'edit';
+        		$aForm['inputs']['set_title']['checker']['func'] = 'UniqueSet';
+        		$aForm['inputs']['controls'][0]['value'] = _t('_adm_nav_btn_menus_save');
+        		break;
+        }
+
+        return new BxTemplStudioFormView($aForm);
     }
 
     protected function updateSetFields(&$oForm) {

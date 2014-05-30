@@ -29,175 +29,11 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels {
     public function performActionAdd() {
         $sAction = 'add';
 
-        $aForm = array(
-            'form_attrs' => array(
-                'id' => 'adm-prm-level-create',
-                'action' => BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction,
-                'method' => BX_DOL_STUDIO_METHOD_DEFAULT,
-                'enctype' => 'multipart/form-data',
-            ),
-            'params' => array (
-                'db' => array(
-                    'table' => 'sys_acl_levels',
-                    'key' => 'ID',
-                    'uri' => '',
-                    'uri_title' => '',
-                    'submit_name' => 'do_submit'
-                ),
-            ),
-            'inputs' => array (            
-                'Active' => array(
-                    'type' => 'hidden',
-                    'name' => 'Active',
-                    'value' => 'yes',
-                    'db' => array (
-                        'pass' => 'Xss',
-                    ),
-                ),
-                'Purchasable' => array(
-                    'type' => 'hidden',
-                    'name' => 'Purchasable',
-                    'value' => 'no',
-                    'db' => array (
-                        'pass' => 'Xss',
-                    ),
-                ),
-                'Removable' => array(
-                    'type' => 'hidden',
-                    'name' => 'Removable',
-                    'value' => 'yes',
-                    'db' => array (
-                        'pass' => 'Xss',
-                    ),
-                ),
-                'Name' => array(
-                    'type' => 'text_translatable',
-                    'name' => 'Name',
-                    'caption' => _t('_adm_prm_txt_level_name'),
-                    'info' => _t('_adm_prm_dsc_level_name'),
-                    'value' => '_adm_prm_txt_level',
-                    'required' => '1',
-                    'db' => array (
-                        'pass' => 'Xss',
-                    ),
-                    'checker' => array (
-                        'func' => 'LengthTranslatable',
-                        'params' => array(3, 100, 'Name'),
-                        'error' => _t('_adm_prm_err_level_name'),
-                    ),
-                ),
-                'Description' => array(
-                    'type' => 'textarea_translatable',
-                    'name' => 'Description',
-                    'caption' => _t('_adm_prm_txt_level_description'),
-                    'info' => _t('_adm_prm_dsc_level_description'),
-                    'value' => '_adm_prm_txt_level',
-                    'db' => array (
-                        'pass' => 'XssHtml',
-                    )
-                ),
-                'QuotaSize' => array(
-                    'type' => 'text',
-                    'name' => 'QuotaSize',
-                    'caption' => _t('_adm_prm_txt_level_quota_size'),
-                    'info' => _t('_adm_prm_dsc_level_quota_size'),
-                    'value' => '0',
-                	'required' => '1',
-                    'db' => array (
-                        'pass' => 'Float',
-                    ),
-                    'checker' => array (
-                        'func' => 'preg',
-                        'params' => array('/^[0-9\.]+$/'),
-                        'error' => _t('_adm_prm_err_level_quota_size'),
-                    ),
-                ),
-                'QuotaMaxFileSize' => array(
-                    'type' => 'text',
-                    'name' => 'QuotaMaxFileSize',
-                    'caption' => _t('_adm_prm_txt_level_quota_max_file_size'),
-                    'info' => _t('_adm_prm_dsc_level_quota_max_file_size'),
-                    'value' => '',
-                	'required' => '1',
-                    'db' => array (
-                        'pass' => 'Float',
-                    ),
-                    'checker' => array (
-                        'func' => 'preg',
-                        'params' => array('/^[0-9\.]+$/'),
-                        'error' => _t('_adm_prm_err_level_quota_max_file_size'),
-                    ),
-                ),
-                'QuotaNumber' => array(
-                    'type' => 'text',
-                    'name' => 'QuotaNumber',
-                    'caption' => _t('_adm_prm_txt_level_quota_number'),
-                    'info' => _t('_adm_prm_dsc_level_quota_number'),
-                    'value' => '0',
-                	'required' => '1',
-                    'db' => array (
-                        'pass' => 'Int',
-                    ),
-                    'checker' => array (
-                        'func' => 'preg',
-                        'params' => array('/^[0-9]+$/'),
-                        'error' => _t('_adm_prm_err_level_quota_number'),
-                    ),
-                ),
-                'Icon' => array(
-                    'type' => 'text',
-                    'name' => 'Icon',
-                    'caption' => _t('_adm_prm_txt_level_icon'),
-                    'info' => _t('_adm_prm_dsc_level_icon'),
-                    'value' => '',
-                    'required' => '0',
-                    'db' => array (
-                        'pass' => 'Xss',
-                    ),
-                    'checker' => array (
-                        'func' => '',
-                        'params' => array(),
-                        'error' => _t('_adm_prm_err_level_icon'),
-                    ),
-                ),
-                'Icon_image' => array(
-                    'type' => 'file',
-                    'name' => 'Icon_image',
-                    'caption' => _t('_adm_prm_txt_level_icon_image'),
-                	'info' => _t('_adm_prm_dsc_level_icon_image'),
-                    'value' => '',
-                    'checker' => array (
-                        'func' => '',
-                        'params' => '',
-                        'error' => _t('_adm_prm_err_level_icon_image'),
-                    ),
-                ),
-                'controls' => array(
-                    'name' => 'controls', 
-                    'type' => 'input_set',
-                    array(
-                        'type' => 'submit',
-                        'name' => 'do_submit',
-                        'value' => _t('_adm_prm_btn_level_add'),
-                    ),
-                    array (
-                        'type' => 'reset',
-                        'name' => 'close',
-                        'value' => _t('_adm_prm_btn_level_cancel'),
-                        'attrs' => array(
-                            'onclick' => "$('.bx-popup-applied:visible').dolPopupHide()",
-                            'class' => 'bx-def-margin-sec-left',
-                        ),
-                    )
-                )
-            )
-        );
-
-        $oForm = new BxTemplStudioFormView($aForm);
+        $oForm = $this->_getFormObject($sAction);
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
-            if(($iId = $this->getAvailableId()) === false) {
+            if(($iId = $this->_getAvailableId()) === false) {
                 $this->_echoResultJson(array('msg' => _t('_adm_prm_err_level_id')), true);
                 return;
             }
@@ -222,13 +58,13 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels {
 			if(empty($mixedIcon))
 				$mixedIcon = 'acl-unconfirmed.png';
 
-			BxDolForm::setSubmittedValue('Icon', $mixedIcon, $aForm['form_attrs']['method']);
+			BxDolForm::setSubmittedValue('Icon', $mixedIcon, $oForm->aFormAttrs['method']);
 
             $fQuotaSize = round($oForm->getCleanValue('QuotaSize'), 1);
-            BxDolForm::setSubmittedValue('QuotaSize', self::$iBinMB * $fQuotaSize, $aForm['form_attrs']['method']);
+            BxDolForm::setSubmittedValue('QuotaSize', self::$iBinMB * $fQuotaSize, $oForm->aFormAttrs['method']);
 
             $fQuotaMaxFileSize = round($oForm->getCleanValue('QuotaMaxFileSize'), 1);
-            BxDolForm::setSubmittedValue('QuotaMaxFileSize', self::$iBinMB * $fQuotaMaxFileSize, $aForm['form_attrs']['method']);
+            BxDolForm::setSubmittedValue('QuotaMaxFileSize', self::$iBinMB * $fQuotaMaxFileSize, $oForm->aFormAttrs['method']);
 
             $iId = (int)$oForm->insert(array('ID' => $iId, 'Icon' => $mixedIcon, 'Order' => $this->oDb->getLevelOrderMax() + 1));
             if($iId != 0)
@@ -241,7 +77,7 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels {
         else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-prm-level-create-popup', _t('_adm_prm_txt_level_create_popup'), $this->_oTemplate->parseHtmlByName('prm_add_level.html', array(
-                'form_id' => $aForm['form_attrs']['id'],
+                'form_id' => $oForm->aFormAttrs['id'],
                 'form' => $oForm->getCode(true),
                 'object' => $this->_sObject,
                 'action' => $sAction
@@ -274,162 +110,7 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels {
             exit;
         }
 
-        $aForm = array(
-            'form_attrs' => array(
-                'id' => 'adm-prm-level-edit',
-                'action' => BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction,
-                'method' => 'post',
-                'enctype' => 'multipart/form-data',
-            ),
-            'params' => array (
-                'db' => array(
-                    'table' => 'sys_acl_levels',
-                    'key' => 'ID',
-                    'uri' => '',
-                    'uri_title' => '',
-                    'submit_name' => 'do_submit'
-                ),
-            ),
-            'inputs' => array (
-            	'id' => array(
-                    'type' => 'hidden',
-                    'name' => 'id',
-                    'value' => $iId,
-                    'db' => array (
-                        'pass' => 'Int',
-                    ),
-                ),
-                'Description' => array(
-                    'type' => 'textarea_translatable',
-                    'name' => 'Description',
-                    'caption' => _t('_adm_prm_txt_level_description'),
-                	'info' => _t('_adm_prm_dsc_level_description'),
-                    'value' => $aLevel['description'],
-                    'db' => array (
-                        'pass' => 'XssHtml',
-                    ),
-                ),
-                'QuotaSize' => array(
-                    'type' => 'text',
-                    'name' => 'QuotaSize',
-                    'caption' => _t('_adm_prm_txt_level_quota_size'),
-                	'info' => _t('_adm_prm_dsc_level_quota_size'),
-                    'value' => round($aLevel['quota_size'] / self::$iBinMB, 1),
-                	'required' => '1',
-                    'db' => array (
-                        'pass' => 'Float',
-                    ),
-                    'checker' => array (
-                        'func' => 'preg',
-                        'params' => array('/^[0-9\.]+$/'),
-                        'error' => _t('_adm_prm_err_level_quota_size'),
-                    ),
-                ),
-                'QuotaMaxFileSize' => array(
-                    'type' => 'text',
-                    'name' => 'QuotaMaxFileSize',
-                    'caption' => _t('_adm_prm_txt_level_quota_max_file_size'),
-                	'info' => _t('_adm_prm_dsc_level_quota_max_file_size'),
-                    'value' => round($aLevel['quota_max_file_size'] / self::$iBinMB, 1),
-                	'required' => '1',
-                    'db' => array (
-                        'pass' => 'Float',
-                    ),
-                    'checker' => array (
-                        'func' => 'preg',
-                        'params' => array('/^[0-9\.]+$/'),
-                        'error' => _t('_adm_prm_err_level_quota_max_file_size'),
-                    ),
-                ),
-                'QuotaNumber' => array(
-                    'type' => 'text',
-                    'name' => 'QuotaNumber',
-                    'caption' => _t('_adm_prm_txt_level_quota_number'),
-                    'info' => _t('_adm_prm_dsc_level_quota_number'),
-                    'value' => $aLevel['quota_number'],
-                	'required' => '1',
-                    'db' => array (
-                        'pass' => 'Int',
-                    ),
-                    'checker' => array (
-                        'func' => 'preg',
-                        'params' => array('/^[0-9]+$/'),
-                        'error' => _t('_adm_prm_err_level_quota_number'),
-                    ),
-                ),
-                'Icon' => array(
-                    'type' => 'text',
-                    'name' => 'Icon',
-                    'caption' => _t('_adm_prm_txt_level_icon'),
-                    'info' => _t('_adm_prm_dsc_level_icon'),
-                    'value' => '',
-                    'required' => '0',
-                    'db' => array (
-                        'pass' => 'Xss',
-                    ),
-                    'checker' => array (
-                        'func' => '',
-                        'params' => array(),
-                        'error' => _t('_adm_prm_err_level_icon'),
-                    ),
-                ),
-                'Icon_image' => array(
-                    'type' => 'file',
-                    'name' => 'Icon_image',
-                    'caption' => _t('_adm_prm_txt_level_icon_image_new'),
-                	'info' => _t('_adm_prm_dsc_level_icon_image'),
-                    'value' => '',
-                    'checker' => array (
-                        'func' => '',
-                        'params' => '',
-                        'error' => _t('_adm_prm_err_level_icon_image'),
-                    ),
-                ),
-                'Icon_preview' => array(
-                    'type' => 'custom',
-                    'name' => 'Icon_preview',
-                	'caption' => _t('_adm_prm_txt_level_icon_image_old'),
-                    'content' => ''
-                ),
-                'controls' => array(
-                    'name' => 'controls', 
-                    'type' => 'input_set',
-                    array(
-                        'type' => 'submit',
-                        'name' => 'do_submit',
-                        'value' => _t('_adm_prm_btn_level_save'),
-                    ),
-                    array (
-                        'type' => 'reset',
-                        'name' => 'close',
-                        'value' => _t('_adm_prm_btn_level_cancel'),
-                        'attrs' => array(
-                            'onclick' => "$('.bx-popup-applied:visible').dolPopupHide()",
-                            'class' => 'bx-def-margin-sec-left',
-                        ),
-                    )
-                )
-            )
-        );
-
-        $sIconImage = $sIconFont = "";
-        if(!empty($aLevel['icon'])) {
-            if(is_numeric($aLevel['icon']) && (int)$aLevel['icon'] != 0) {
-                bx_import('BxDolStorage');
-                $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
-
-                $sIconImage = $oStorage->getFileUrlById((int)$aLevel['icon']);
-            }
-            else {
-                $sIconFont = $aLevel['icon'];
-                $aForm['inputs']['Icon']['value'] = $sIconFont;
-            }
-        }
-
-        $aForm['inputs']['Icon_preview']['content'] = $this->_getIconPreview($aLevel['id'], $sIconImage, $sIconFont);
-
-        bx_import('BxTemplStudioFormView');
-        $oForm = new BxTemplStudioFormView($aForm);
+        $oForm = $this->_getFormObject($sAction, $aLevel);
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
@@ -463,13 +144,13 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels {
         	else if($bIconImageCur && !$bIconFont)
         		$sIcon = $aLevel['icon'];
 
-			BxDolForm::setSubmittedValue('Icon', $sIcon, $aForm['form_attrs']['method']);
+			BxDolForm::setSubmittedValue('Icon', $sIcon, $oForm->aFormAttrs['method']);
 
             $fQuotaSize = round($oForm->getCleanValue('QuotaSize'), 1);
-            BxDolForm::setSubmittedValue('QuotaSize', self::$iBinMB * $fQuotaSize, $aForm['form_attrs']['method']);
+            BxDolForm::setSubmittedValue('QuotaSize', self::$iBinMB * $fQuotaSize, $oForm->aFormAttrs['method']);
 
             $fQuotaMaxFileSize = round($oForm->getCleanValue('QuotaMaxFileSize'), 1);
-            BxDolForm::setSubmittedValue('QuotaMaxFileSize', self::$iBinMB * $fQuotaMaxFileSize, $aForm['form_attrs']['method']);
+            BxDolForm::setSubmittedValue('QuotaMaxFileSize', self::$iBinMB * $fQuotaMaxFileSize, $oForm->aFormAttrs['method']);
 
             if($oForm->update($iId) !== false)
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
@@ -481,7 +162,7 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels {
         else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-prm-level-edit-popup', _t('_adm_prm_txt_level_edit_popup', _t($aLevel['name'])), $this->_oTemplate->parseHtmlByName('prm_add_level.html', array(
-                'form_id' => $aForm['form_attrs']['id'],
+                'form_id' => $oForm->aFormAttrs['id'],
                 'form' => $oForm->getCode(true),
                 'object' => $this->_sObject,
                 'action' => $sAction
@@ -635,7 +316,226 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels {
         ));
     }
 
-    protected function getAvailableId() {
+	protected function _getFormObject($sAction, $aLevel = array())
+    {
+		$aForm = array(
+            'form_attrs' => array(
+                'id' => 'adm-prm-level-create',
+                'action' => BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction,
+                'method' => BX_DOL_STUDIO_METHOD_DEFAULT,
+                'enctype' => 'multipart/form-data',
+            ),
+            'params' => array (
+                'db' => array(
+                    'table' => 'sys_acl_levels',
+                    'key' => 'ID',
+                    'uri' => '',
+                    'uri_title' => '',
+                    'submit_name' => 'do_submit'
+                ),
+            ),
+            'inputs' => array (
+            	'id' => array(
+                    'type' => 'hidden',
+                    'name' => 'id',
+                    'value' => isset($aLevel['id']) ? (int)$aLevel['id'] : 0,
+                    'db' => array (
+                        'pass' => 'Int',
+                    ),
+                ),
+                'Active' => array(
+                    'type' => 'hidden',
+                    'name' => 'Active',
+                    'value' => 'yes',
+                    'db' => array (
+                        'pass' => 'Xss',
+                    ),
+                ),
+                'Purchasable' => array(
+                    'type' => 'hidden',
+                    'name' => 'Purchasable',
+                    'value' => 'no',
+                    'db' => array (
+                        'pass' => 'Xss',
+                    ),
+                ),
+                'Removable' => array(
+                    'type' => 'hidden',
+                    'name' => 'Removable',
+                    'value' => 'yes',
+                    'db' => array (
+                        'pass' => 'Xss',
+                    ),
+                ),
+                'Name' => array(
+                    'type' => 'text_translatable',
+                    'name' => 'Name',
+                    'caption' => _t('_adm_prm_txt_level_name'),
+                    'info' => _t('_adm_prm_dsc_level_name'),
+                    'value' => '_adm_prm_txt_level',
+                    'required' => '1',
+                    'db' => array (
+                        'pass' => 'Xss',
+                    ),
+                    'checker' => array (
+                        'func' => 'LengthTranslatable',
+                        'params' => array(3, 100, 'Name'),
+                        'error' => _t('_adm_prm_err_level_name'),
+                    ),
+                ),
+                'Description' => array(
+                    'type' => 'textarea_translatable',
+                    'name' => 'Description',
+                    'caption' => _t('_adm_prm_txt_level_description'),
+                    'info' => _t('_adm_prm_dsc_level_description'),
+                    'value' => isset($aLevel['description']) ? $aLevel['description'] : '_adm_prm_txt_level',
+                    'db' => array (
+                        'pass' => 'XssHtml',
+                    )
+                ),
+                'QuotaSize' => array(
+                    'type' => 'text',
+                    'name' => 'QuotaSize',
+                    'caption' => _t('_adm_prm_txt_level_quota_size'),
+                    'info' => _t('_adm_prm_dsc_level_quota_size'),
+                    'value' => isset($aLevel['quota_size']) ? round($aLevel['quota_size'] / self::$iBinMB, 1) : '0',
+                	'required' => '1',
+                    'db' => array (
+                        'pass' => 'Float',
+                    ),
+                    'checker' => array (
+                        'func' => 'preg',
+                        'params' => array('/^[0-9\.]+$/'),
+                        'error' => _t('_adm_prm_err_level_quota_size'),
+                    ),
+                ),
+                'QuotaMaxFileSize' => array(
+                    'type' => 'text',
+                    'name' => 'QuotaMaxFileSize',
+                    'caption' => _t('_adm_prm_txt_level_quota_max_file_size'),
+                    'info' => _t('_adm_prm_dsc_level_quota_max_file_size'),
+                    'value' => isset($aLevel['quota_max_file_size']) ? round($aLevel['quota_max_file_size'] / self::$iBinMB, 1) : '',
+                	'required' => '1',
+                    'db' => array (
+                        'pass' => 'Float',
+                    ),
+                    'checker' => array (
+                        'func' => 'preg',
+                        'params' => array('/^[0-9\.]+$/'),
+                        'error' => _t('_adm_prm_err_level_quota_max_file_size'),
+                    ),
+                ),
+                'QuotaNumber' => array(
+                    'type' => 'text',
+                    'name' => 'QuotaNumber',
+                    'caption' => _t('_adm_prm_txt_level_quota_number'),
+                    'info' => _t('_adm_prm_dsc_level_quota_number'),
+                    'value' => isset($aLevel['quota_number']) ? (int)$aLevel['quota_number'] : '0',
+                	'required' => '1',
+                    'db' => array (
+                        'pass' => 'Int',
+                    ),
+                    'checker' => array (
+                        'func' => 'preg',
+                        'params' => array('/^[0-9]+$/'),
+                        'error' => _t('_adm_prm_err_level_quota_number'),
+                    ),
+                ),
+                'Icon' => array(
+                    'type' => 'text',
+                    'name' => 'Icon',
+                    'caption' => _t('_adm_prm_txt_level_icon'),
+                    'info' => _t('_adm_prm_dsc_level_icon'),
+                    'value' => '',
+                    'required' => '0',
+                    'db' => array (
+                        'pass' => 'Xss',
+                    ),
+                    'checker' => array (
+                        'func' => '',
+                        'params' => array(),
+                        'error' => _t('_adm_prm_err_level_icon'),
+                    ),
+                ),
+                'Icon_image' => array(
+                    'type' => 'file',
+                    'name' => 'Icon_image',
+                    'caption' => _t('_adm_prm_txt_level_icon_image'),
+                	'info' => _t('_adm_prm_dsc_level_icon_image'),
+                    'value' => '',
+                    'checker' => array (
+                        'func' => '',
+                        'params' => '',
+                        'error' => _t('_adm_prm_err_level_icon_image'),
+                    ),
+                ),
+                'Icon_preview' => array(
+                    'type' => 'custom',
+                    'name' => 'Icon_preview',
+                	'caption' => _t('_adm_prm_txt_level_icon_image_old'),
+                    'content' => ''
+                ),
+                'controls' => array(
+                    'name' => 'controls', 
+                    'type' => 'input_set',
+                    array(
+                        'type' => 'submit',
+                        'name' => 'do_submit',
+                        'value' => _t('_adm_prm_btn_level_add'),
+                    ),
+                    array (
+                        'type' => 'reset',
+                        'name' => 'close',
+                        'value' => _t('_adm_prm_btn_level_cancel'),
+                        'attrs' => array(
+                            'onclick' => "$('.bx-popup-applied:visible').dolPopupHide()",
+                            'class' => 'bx-def-margin-sec-left',
+                        ),
+                    )
+                )
+            )
+        );
+
+        switch($sAction) {
+			case 'add':				
+				unset($aForm['inputs']['id']);
+				unset($aForm['inputs']['Icon_preview']);
+
+				$aForm['form_attrs']['id'] .= 'create';
+				break;
+
+			case 'edit':
+				unset($aForm['inputs']['Active']);
+				unset($aForm['inputs']['Purchasable']);
+				unset($aForm['inputs']['Removable']);
+				unset($aForm['inputs']['Name']);
+
+				$aForm['form_attrs']['id'] .= 'edit';
+				$aForm['inputs']['Icon_image']['caption'] = _t('_adm_prm_txt_level_icon_image_new');
+				$aForm['inputs']['controls'][0]['value'] = _t('_adm_prm_btn_level_save');
+
+				$sIconImage = $sIconFont = "";
+		        if(!empty($aLevel['icon'])) {
+		            if(is_numeric($aLevel['icon']) && (int)$aLevel['icon'] != 0) {
+		                bx_import('BxDolStorage');
+		                $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
+
+		                $sIconImage = $oStorage->getFileUrlById((int)$aLevel['icon']);
+		            }
+		            else {
+		                $sIconFont = $aLevel['icon'];
+		                $aForm['inputs']['Icon']['value'] = $sIconFont;
+		            }
+		        }
+
+		        $aForm['inputs']['Icon_preview']['content'] = $this->_getIconPreview($aLevel['id'], $sIconImage, $sIconFont);
+				break;
+        }
+
+        return new BxTemplStudioFormView($aForm);
+    }
+
+    protected function _getAvailableId() {
         $aLevels = array();
         $this->oDb->getLevels(array('type' =>'all_order_id'), $aLevels, false);
 

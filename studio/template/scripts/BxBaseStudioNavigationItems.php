@@ -43,170 +43,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
     public function performActionAdd() {
         $sAction = 'add';
 
-        $aForm = array(
-            'form_attrs' => array(
-                'id' => 'adm-nav-item-create',
-                'action' => BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&set=' . $this->sSet,
-                'method' => BX_DOL_STUDIO_METHOD_DEFAULT,
-        		'enctype' => 'multipart/form-data',
-            ),
-            'params' => array (
-                'db' => array(
-                    'table' => 'sys_menu_items',
-                    'key' => 'id',
-                    'uri' => '',
-                    'uri_title' => '',
-                    'submit_name' => 'do_submit'
-                ),
-            ),
-            'inputs' => array (
-                'set_name' => array(
-                    'type' => 'hidden',
-                    'name' => 'set_name',
-                    'value' => $this->sSet,
-                    'db' => array (
-                        'pass' => 'Xss',
-                    ),
-                ),
-                'onclick' => array(
-                    'type' => 'hidden',
-                    'name' => 'onclick',
-                    'value' => '',
-                    'db' => array (
-                        'pass' => 'Xss',
-                    ),
-                ),
-                'title_system' => array(
-                    'type' => 'text_translatable',
-                    'name' => 'title_system',
-                    'caption' => _t('_adm_nav_txt_items_title_system'),
-                    'info' => _t('_adm_nav_dsc_items_title_system'),
-                    'value' => '_adm_nav_txt_item',
-                    'required' => '1',
-                    'db' => array (
-                        'pass' => 'Xss',
-                    ),
-                    'checker' => array (
-                        'func' => 'LengthTranslatable',
-                        'params' => array(3, 100, 'title_system'),
-                        'error' => _t('_adm_nav_err_items_title_system'),
-                    ),
-                ),
-                'title' => array(
-                    'type' => 'text_translatable',
-                    'name' => 'title',
-                    'caption' => _t('_adm_nav_txt_items_title'),
-                    'info' => _t('_adm_nav_dsc_items_title'),
-                    'value' => '_adm_nav_txt_item',
-                    'required' => '0',
-                    'db' => array (
-                        'pass' => 'Xss',
-                    ),
-                ),
-                'submenu_object' => array(
-                    'type' => 'select',
-                    'name' => 'submenu_object',
-                    'caption' => _t('_adm_nav_txt_items_submenu'),
-                    'info' => _t('_adm_nav_dsc_items_submenu'),
-                    'value' => '',
-                    'values' => array(),
-                	'required' => '0',
-                    'attrs' => array(
-                        'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeSubmenu(this)'
-                    ),
-                    'db' => array (
-                        'pass' => 'Xss',
-                    ),
-                ),
-                'link' => array(
-                    'type' => 'text',
-                    'name' => 'link',
-                    'caption' => _t('_adm_nav_txt_items_link'),
-                    'info' => _t('_adm_nav_dsc_items_link'),
-                    'value' => '',
-                    'required' => '0',
-                    'db' => array (
-                        'pass' => 'Xss',
-                    ),
-                    'checker' => array (
-                        'func' => '',
-                        'params' => array(),
-                        'error' => _t('_adm_nav_err_items_link'),
-                    ),
-                ),
-                'target' => array(
-                    'type' => 'select',
-                    'name' => 'target',
-                    'caption' => _t('_adm_nav_txt_items_target'),
-                    'info' => _t('_adm_nav_dsc_items_target'),
-                    'value' => '_self',
-                    'values' => array(
-                        array('key' => '', 'value' => _t('_adm_nav_txt_items_target_self')),
-                        array('key' => '_blank', 'value' => _t('_adm_nav_txt_items_target_blank'))
-                    ),
-                	'required' => '0',
-                    'db' => array (
-                        'pass' => 'Xss',
-                    )
-                ), 
-                'icon' => array(
-                    'type' => 'text',
-                    'name' => 'icon',
-                    'caption' => _t('_adm_nav_txt_items_icon'),
-                    'info' => _t('_adm_nav_dsc_items_icon'),
-                    'value' => '',
-                    'required' => '0',
-                    'db' => array (
-                        'pass' => 'Xss',
-                    ),
-                    'checker' => array (
-                        'func' => '',
-                        'params' => array(),
-                        'error' => _t('_adm_nav_err_items_icon'),
-                    ),
-                ),
-                'icon_image' => array(
-                    'type' => 'file',
-                    'name' => 'icon_image',
-                    'caption' => _t('_adm_nav_txt_items_icon_image'),
-                	'info' => _t('_adm_nav_dsc_items_icon_image'),
-                    'value' => '',
-                    'checker' => array (
-                        'func' => '',
-                        'params' => '',
-                        'error' => _t('_adm_nav_err_items_icon_image'),
-                    ),
-                ),
-                'controls' => array(
-                    'name' => 'controls', 
-                    'type' => 'input_set',
-                    array(
-                        'type' => 'submit',
-                        'name' => 'do_submit',
-                        'value' => _t('_adm_nav_btn_items_add'),
-                    ),
-                    array (
-                        'type' => 'reset',
-                        'name' => 'close',
-                        'value' => _t('_adm_nav_btn_items_cancel'),
-                        'attrs' => array(
-                            'onclick' => "$('.bx-popup-applied:visible').dolPopupHide()",
-                            'class' => 'bx-def-margin-sec-left',
-                        ),
-                    )
-                )
-            )
-        );
-
-        $aMenus = array();
-        $this->oDb->getMenus(array('type' => 'all'), $aMenus, false);
-        foreach($aMenus as $aMenu)
-            $aForm['inputs']['submenu_object']['values'][$aMenu['object']] = _t($aMenu['title']);
-
-        asort($aForm['inputs']['submenu_object']['values']);
-        $aForm['inputs']['submenu_object']['values'] = array_merge(array('' => _t('_adm_nav_txt_items_submenu_empty')), $aForm['inputs']['submenu_object']['values']);
-
-        $oForm = new BxTemplStudioFormView($aForm);
+        $oForm = $this->_getFormObject($sAction);
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
@@ -221,7 +58,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
                 }
 
                 $oStorage->afterUploadCleanup($mixedIcon, 0);
-                BxDolForm::setSubmittedValue('icon', $mixedIcon, $aForm['form_attrs']['method']);
+                BxDolForm::setSubmittedValue('icon', $mixedIcon, $oForm->aFormAttrs['method']);
             }		
 
             bx_import('BxDolPermalinks');
@@ -229,22 +66,22 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
 
             $sLink = $oForm->getCleanValue('link');
             $sLink = $oPermalinks->unpermalink($sLink);
-            BxDolForm::setSubmittedValue('link', $sLink, $aForm['form_attrs']['method']);
+            BxDolForm::setSubmittedValue('link', $sLink, $oForm->aFormAttrs['method']);
 
             $sName = $oPermalinks->getPageNameFromLink($sLink);
             if($sName == '') {
                 bx_import('BxDolStudioLanguagesUtils');
                 $sLanguage = BxDolStudioLanguagesUtils::getInstance()->getCurrentLangName(false);
 
-                $sName = BxDolForm::getSubmittedValue('title_system-' . $sLanguage, $aForm['form_attrs']['method']);
+                $sName = BxDolForm::getSubmittedValue('title_system-' . $sLanguage, $oForm->aFormAttrs['method']);
                 $sName = uriGenerate($sName, 'sys_menu_items', 'name', 'item');
             }
 
             $sSubmenu = $oForm->getCleanValue('submenu_object');
             if(!empty($sSubmenu)) {
-                BxDolForm::setSubmittedValue('link', 'javascript:void(0)', $aForm['form_attrs']['method']);
-                BxDolForm::setSubmittedValue('target', '', $aForm['form_attrs']['method']);
-                BxDolForm::setSubmittedValue('onclick', 'bx_menu_popup(\'' . $sSubmenu . '\', this);', $aForm['form_attrs']['method']);
+                BxDolForm::setSubmittedValue('link', 'javascript:void(0)', $oForm->aFormAttrs['method']);
+                BxDolForm::setSubmittedValue('target', '', $oForm->aFormAttrs['method']);
+                BxDolForm::setSubmittedValue('onclick', 'bx_menu_popup(\'' . $sSubmenu . '\', this);', $oForm->aFormAttrs['method']);
             }
 
             $iId = (int)$oForm->insert(array('module' => BX_DOL_STUDIO_MODULE_CUSTOM, 'name' => $sName, 'active' => 1, 'order' => $this->oDb->getItemOrderMax($this->sSet) + 1));
@@ -258,7 +95,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
         else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-nav-item-create-popup', _t('_adm_nav_txt_items_create_popup'), $this->_oTemplate->parseHtmlByName('nav_add_item.html', array(
-                'form_id' => $aForm['form_attrs']['id'],
+                'form_id' => $oForm->aFormAttrs['id'],
                 'form' => $oForm->getCode(true),
                 'object' => $this->_sObject,
                 'action' => $sAction
@@ -271,225 +108,13 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
     public function performActionEdit($bUpdateGrid = false) {
         $sAction = 'edit';
 
-        $aIds = bx_get('ids');
-        if(!$aIds || !is_array($aIds)) {
-            $iId = (int)bx_get('id');
-            if(!$iId) {
-                $this->_echoResultJson(array());
-                exit;
-            }
-
-            $aIds = array($iId);
-        }
-
-        $iId = $aIds[0];
-
-        $aItem = array();
-        $iItem = $this->oDb->getItems(array('type' => 'by_id', 'value' => $iId), $aItem);
-        if($iItem != 1 || empty($aItem)){
+    	$aItem = $this->_getItem('getItems');
+        if($aItem === false) {
             $this->_echoResultJson(array());
             exit;
         }
 
-        $sSubmenu = "";
-
-        $aForm = array(
-            'form_attrs' => array(
-                'id' => 'adm-nav-item-create',
-                'action' => BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&set=' . $this->sSet,
-                'method' => BX_DOL_STUDIO_METHOD_DEFAULT,
-        		'enctype' => 'multipart/form-data',
-            ),
-            'params' => array (
-                'db' => array(
-                    'table' => 'sys_menu_items',
-                    'key' => 'id',
-                    'uri' => '',
-                    'uri_title' => '',
-                    'submit_name' => 'do_submit'
-                ),
-            ),
-            'inputs' => array (
-            	'id' => array(
-                    'type' => 'hidden',
-                    'name' => 'id',
-                    'value' => $iId,
-                    'db' => array (
-                        'pass' => 'Int',
-                    ),
-                ),
-                'onclick' => array(
-                    'type' => 'hidden',
-                    'name' => 'onclick',
-                    'value' => $aItem['onclick'],
-                    'db' => array (
-                        'pass' => 'Xss',
-                    ),
-                ),
-                'title_system' => array(
-                    'type' => 'text_translatable',
-                    'name' => 'title_system',
-                    'caption' => _t('_adm_nav_txt_items_title_system'),
-                    'info' => _t('_adm_nav_dsc_items_title_system'),
-                    'value' => $aItem['title_system'],
-                    'required' => '1',
-                    'db' => array (
-                        'pass' => 'Xss',
-                    ),
-                    'checker' => array (
-                        'func' => 'LengthTranslatable',
-                        'params' => array(3, 100, 'title_system'),
-                        'error' => _t('_adm_nav_err_items_title_system'),
-                    ),
-                ),
-                'title' => array(
-                    'type' => 'text_translatable',
-                    'name' => 'title',
-                    'caption' => _t('_adm_nav_txt_items_title'),
-                    'info' => _t('_adm_nav_dsc_items_title'),
-                    'value' => $aItem['title'],
-                    'required' => '0',
-                    'db' => array (
-                        'pass' => 'Xss',
-                    )
-                ),
-                'submenu_object' => array(
-                    'type' => 'select',
-                    'name' => 'submenu_object',
-                    'caption' => _t('_adm_nav_txt_items_submenu'),
-                    'info' => _t('_adm_nav_dsc_items_submenu'),
-                    'value' => $aItem['submenu_object'],
-                    'values' => array(),
-                	'required' => '0',
-                    'attrs' => array(
-                        'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeSubmenu(this)'
-                    ),
-                    'db' => array (
-                        'pass' => 'Xss',
-                    ),
-                ),
-                'link' => array(
-                    'type' => 'text',
-                    'name' => 'link',
-                    'caption' => _t('_adm_nav_txt_items_link'),
-                    'info' => _t('_adm_nav_dsc_items_link'),
-                    'value' => $aItem['link'],
-                    'required' => '0',
-                    'db' => array (
-                        'pass' => 'Xss',
-                    ),
-                    'checker' => array (
-                        'func' => '',
-                        'params' => array(),
-                        'error' => _t('_adm_nav_err_items_link'),
-                    ),
-                ),
-                'target' => array(
-                    'type' => 'select',
-                    'name' => 'target',
-                    'caption' => _t('_adm_nav_txt_items_target'),
-                    'info' => _t('_adm_nav_dsc_items_target'),
-                    'value' => $aItem['target'],
-                    'values' => array(
-                        array('key' => '', 'value' => _t('_adm_nav_txt_items_target_self')),
-                        array('key' => '_blank', 'value' => _t('_adm_nav_txt_items_target_blank'))
-                    ),
-                	'required' => '0',
-                    'db' => array (
-                        'pass' => 'Xss',
-                    )
-                ),
-                'icon' => array(
-                    'type' => 'text',
-                    'name' => 'icon',
-                    'caption' => _t('_adm_nav_txt_items_icon'),
-                    'info' => _t('_adm_nav_dsc_items_icon'),
-                    'value' => '',
-                    'required' => '0',
-                    'db' => array (
-                        'pass' => 'Xss',
-                    ),
-                    'checker' => array (
-                        'func' => '',
-                        'params' => array(),
-                        'error' => _t('_adm_nav_err_items_icon'),
-                    ),
-                ),
-                'icon_image' => array(
-                    'type' => 'file',
-                    'name' => 'icon_image',
-                    'caption' => _t('_adm_nav_txt_items_icon_image_new'),
-                	'info' => _t('_adm_nav_dsc_items_icon_image'),
-                    'value' => '',
-                    'checker' => array (
-                        'func' => '',
-                        'params' => '',
-                        'error' => _t('_adm_nav_err_items_icon_image'),
-                    ),
-                ),
-                'icon_preview' => array(
-                    'type' => 'custom',
-                    'name' => 'icon_preview',
-                	'caption' => _t('_adm_nav_txt_items_icon_image_old'),
-                    'content' => ''
-                ),
-                'controls' => array(
-                    'name' => 'controls', 
-                    'type' => 'input_set',
-                    array(
-                        'type' => 'submit',
-                        'name' => 'do_submit',
-                        'value' => _t('_adm_nav_btn_items_save'),
-                    ),
-                    array (
-                        'type' => 'reset',
-                        'name' => 'close',
-                        'value' => _t('_adm_nav_btn_items_cancel'),
-                        'attrs' => array(
-                            'onclick' => "$('.bx-popup-applied:visible').dolPopupHide()",
-                            'class' => 'bx-def-margin-sec-left',
-                        ),
-                    )
-                )
-            )
-        );
-
-        $aMenus = array();
-        $this->oDb->getMenus(array('type' => 'all'), $aMenus, false);
-        foreach($aMenus as $aMenu)
-            $aForm['inputs']['submenu_object']['values'][$aMenu['object']] = _t($aMenu['title']);
-
-        asort($aForm['inputs']['submenu_object']['values']);
-        $aForm['inputs']['submenu_object']['values'] = array_merge(array('' => _t('_adm_nav_txt_items_submenu_empty')), $aForm['inputs']['submenu_object']['values']);
-
-        if(($bSubmenu = !empty($aItem['submenu_object'])) === true) {
-            $aForm['inputs']['link']['tr_attrs']['style'] = 'display:none;';
-            $aForm['inputs']['target']['tr_attrs']['style'] = 'display:none;';
-        }
-
-        if(!$bSubmenu && ($aItem['onclick'] != "" || !in_array($aItem['target'], array('', '_blank')))) {
-            $aForm['inputs']['submenu_object']['tr_attrs']['style'] = 'display:none;';
-            $aForm['inputs']['link']['tr_attrs']['style'] = 'display:none;';
-            $aForm['inputs']['target']['tr_attrs']['style'] = 'display:none;';
-        }
-
-        $sIconImage = $sIconFont = "";
-        if(!empty($aItem['icon'])) {
-            if(is_numeric($aItem['icon']) && (int)$aItem['icon'] != 0) {
-                bx_import('BxDolStorage');
-                $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
-
-                $sIconImage = $oStorage->getFileUrlById((int)$aItem['icon']);
-            }
-            else {
-                $sIconFont = $aItem['icon'];
-                $aForm['inputs']['icon']['value'] = $sIconFont;
-            }
-        }
-
-        $aForm['inputs']['icon_preview']['content'] = $this->_getIconPreview($aItem['id'], $sIconImage, $sIconFont);
-
-        $oForm = new BxTemplStudioFormView($aForm);
+        $oForm = $this->_getFormObject($sAction, $aItem);
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
@@ -523,31 +148,31 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
         	else if($bIconImageCur && !$bIconFont)
         		$sIcon = $aItem['icon'];
 
-			BxDolForm::setSubmittedValue('icon', $sIcon, $aForm['form_attrs']['method']);
+			BxDolForm::setSubmittedValue('icon', $sIcon, $oForm->aFormAttrs['method']);
 
 			bx_import('BxDolPermalinks');
             $sLink = $oForm->getCleanValue('link');
             $sLink = BxDolPermalinks::getInstance()->unpermalink($sLink);
-            BxDolForm::setSubmittedValue('link', $sLink, $aForm['form_attrs']['method']);
+            BxDolForm::setSubmittedValue('link', $sLink, $oForm->aFormAttrs['method']);
 
             $sSubmenu = $oForm->getCleanValue('submenu_object');
             if(!empty($sSubmenu)) {
-                BxDolForm::setSubmittedValue('link', 'javascript:void(0)', $aForm['form_attrs']['method']);
-                BxDolForm::setSubmittedValue('target', '', $aForm['form_attrs']['method']);
-                BxDolForm::setSubmittedValue('onclick', 'bx_menu_popup(\'' . $sSubmenu . '\', this);', $aForm['form_attrs']['method']);
+                BxDolForm::setSubmittedValue('link', 'javascript:void(0)', $oForm->aFormAttrs['method']);
+                BxDolForm::setSubmittedValue('target', '', $oForm->aFormAttrs['method']);
+                BxDolForm::setSubmittedValue('onclick', 'bx_menu_popup(\'' . $sSubmenu . '\', this);', $oForm->aFormAttrs['method']);
             }
             else {
                 $sOnClick = $oForm->getCleanValue('onclick');
                 if(mb_substr($sOnClick, 0, 13) == 'bx_menu_popup')
-                    BxDolForm::setSubmittedValue('onclick', '', $aForm['form_attrs']['method']);
+                    BxDolForm::setSubmittedValue('onclick', '', $oForm->aFormAttrs['method']);
             }
 
             $sTarget = $oForm->getCleanValue('target');
             if($sTarget === false && !in_array($aItem['target'], array('', '_blank'))) 
                 unset($oForm->aInputs['target']);
 
-            if($oForm->update($iId) !== false)
-                $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
+            if($oForm->update($aItem['id']) !== false)
+                $aRes = array('grid' => $this->getCode(false), 'blink' => $aItem['id']);
             else
                 $aRes = array('msg' => _t('_adm_nav_err_items_edit'));
 
@@ -557,7 +182,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
             $sTitle = _t($aItem['title']);
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-nav-item-edit-popup', _t('_adm_nav_txt_items_edit_popup', ($sTitle != "" ? '"' . $sTitle . '"' : '')), $this->_oTemplate->parseHtmlByName('nav_add_item.html', array(
-                'form_id' => $aForm['form_attrs']['id'],
+                'form_id' => $oForm->aFormAttrs['id'],
                 'form' => $oForm->getCode(true),
                 'object' => $this->_sObject,
                 'action' => $sAction
@@ -565,7 +190,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
 
             $aRes = array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false)));
             if($bUpdateGrid)
-                $aRes = array_merge($aRes, array('grid' => $this->getCode(false), 'blink' => $iId));
+                $aRes = array_merge($aRes, array('grid' => $this->getCode(false), 'blink' => $aItem['id']));
 
             $this->_echoResultJson($aRes, true);
         }
@@ -594,22 +219,8 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
     public function performActionShowTo() {
         $sAction = 'show_to';
 
-        $aIds = bx_get('ids');
-        if(!$aIds || !is_array($aIds)) {
-            $iId = (int)bx_get('id');
-            if(!$iId) {
-                $this->_echoResultJson(array());
-                exit;
-            }
-
-            $aIds = array($iId);
-        }
-
-        $iId = $aIds[0];
-
-        $aItem = array();
-        $iItem = $this->oDb->getItems(array('type' => 'by_id', 'value' => $iId), $aItem);
-        if($iItem != 1 || empty($aItem)){
+	    $aItem = $this->_getItem('getItems');
+        if($aItem === false) {
             $this->_echoResultJson(array());
             exit;
         }
@@ -633,7 +244,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
             	'id' => array(
                     'type' => 'hidden',
                     'name' => 'id',
-                    'value' => $iId,
+                    'value' => $aItem['id'],
                     'db' => array (
                         'pass' => 'Int',
                     ),
@@ -698,8 +309,8 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
-            if($oForm->updateWithVisibility($iId) !== false)
-                $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
+            if($oForm->updateWithVisibility($aItem['id']) !== false)
+                $aRes = array('grid' => $this->getCode(false), 'blink' => $aItem['id']);
             else
                 $aRes = array('msg' => _t('_adm_nav_err_items_show_to'));
 
@@ -911,6 +522,232 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
 
         return $sContent;
     }
+
+	protected function _getFormObject($sAction, $aItem = array())
+	{
+		$aForm = array(
+            'form_attrs' => array(
+                'id' => 'adm-nav-item-',
+                'action' => BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&set=' . $this->sSet,
+                'method' => BX_DOL_STUDIO_METHOD_DEFAULT,
+        		'enctype' => 'multipart/form-data',
+            ),
+            'params' => array (
+                'db' => array(
+                    'table' => 'sys_menu_items',
+                    'key' => 'id',
+                    'uri' => '',
+                    'uri_title' => '',
+                    'submit_name' => 'do_submit'
+                ),
+            ),
+            'inputs' => array (
+				'id' => array(
+	            	'type' => 'hidden',
+	                'name' => 'id',
+	                'value' => isset($aItem['id']) ? (int)$aItem['id'] : 0,
+	                'db' => array (
+	                	'pass' => 'Int',
+	                ),
+				),
+				'set_name' => array(
+	            	'type' => 'hidden',
+	                'name' => 'set_name',
+	                'value' => $this->sSet,
+	                'db' => array (
+	                	'pass' => 'Xss',
+					),
+				),
+	            'onclick' => array(
+	            	'type' => 'hidden',
+	                'name' => 'onclick',
+	                'value' => isset($aItem['onclick']) ? $aItem['onclick'] : '',
+	                'db' => array (
+	                	'pass' => 'Xss',
+	                ),
+				),
+				'title_system' => array(
+	            	'type' => 'text_translatable',
+	                'name' => 'title_system',
+	                'caption' => _t('_adm_nav_txt_items_title_system'),
+	                'info' => _t('_adm_nav_dsc_items_title_system'),
+	                'value' => isset($aItem['title_system']) ? $aItem['title_system'] : '_adm_nav_txt_item',
+	                'required' => '1',
+	                'db' => array (
+	                	'pass' => 'Xss',
+					),
+	                'checker' => array (
+	                	'func' => 'LengthTranslatable',
+	                    'params' => array(3, 100, 'title_system'),
+	                    'error' => _t('_adm_nav_err_items_title_system'),
+					),
+				),
+	            'title' => array(
+	            	'type' => 'text_translatable',
+	                'name' => 'title',
+	                'caption' => _t('_adm_nav_txt_items_title'),
+	                'info' => _t('_adm_nav_dsc_items_title'),
+	                'value' => isset($aItem['title']) ? $aItem['title'] : '_adm_nav_txt_item',
+	                'required' => '0',
+	                'db' => array (
+	                	'pass' => 'Xss',
+	                ),
+				),
+	            'submenu_object' => array(
+	            	'type' => 'select',
+	                'name' => 'submenu_object',
+	                'caption' => _t('_adm_nav_txt_items_submenu'),
+	                'info' => _t('_adm_nav_dsc_items_submenu'),
+	                'value' => isset($aItem['submenu_object']) ? $aItem['submenu_object'] : '',
+	                'values' => array(),
+	                'required' => '0',
+	                'attrs' => array(
+	                	'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeSubmenu(this)'
+	                ),
+	                'db' => array (
+	                	'pass' => 'Xss',
+	                ),
+				),
+	            'link' => array(
+	            	'type' => 'text',
+	                'name' => 'link',
+	                'caption' => _t('_adm_nav_txt_items_link'),
+	                'info' => _t('_adm_nav_dsc_items_link'),
+	                'value' => isset($aItem['link']) ? $aItem['link'] : '',
+	                'required' => '0',
+	                'db' => array (
+	                	'pass' => 'Xss',
+	                ),
+	                'checker' => array (
+	                	'func' => '',
+	                    'params' => array(),
+	                    'error' => _t('_adm_nav_err_items_link'),
+	                ),
+				),
+	            'target' => array(
+	            	'type' => 'select',
+	                'name' => 'target',
+	                'caption' => _t('_adm_nav_txt_items_target'),
+	                'info' => _t('_adm_nav_dsc_items_target'),
+	                'value' => isset($aItem['target']) ? $aItem['target'] : '_self',
+	                'values' => array(
+	                	array('key' => '', 'value' => _t('_adm_nav_txt_items_target_self')),
+	                    array('key' => '_blank', 'value' => _t('_adm_nav_txt_items_target_blank'))
+	                ),
+	                'required' => '0',
+	                'db' => array (
+	                	'pass' => 'Xss',
+	                )
+				), 
+	            'icon' => array(
+	            	'type' => 'text',
+	                'name' => 'icon',
+	                'caption' => _t('_adm_nav_txt_items_icon'),
+	                'info' => _t('_adm_nav_dsc_items_icon'),
+	                'value' => '',
+	                'required' => '0',
+	                'db' => array (
+	                	'pass' => 'Xss',
+	                ),
+	                'checker' => array (
+	                	'func' => '',
+	                    'params' => array(),
+	                    'error' => _t('_adm_nav_err_items_icon'),
+	                ),
+				),
+	            'icon_image' => array(
+	            	'type' => 'file',
+	                'name' => 'icon_image',
+	                'caption' => _t('_adm_nav_txt_items_icon_image'),
+	                'info' => _t('_adm_nav_dsc_items_icon_image'),
+	                'value' => '',
+	                'checker' => array (
+	                	'func' => '',
+	                    'params' => '',
+	                    'error' => _t('_adm_nav_err_items_icon_image'),
+	                ),
+				),
+				'icon_preview' => array(
+					'type' => 'custom',
+	                'name' => 'icon_preview',
+	                'caption' => _t('_adm_nav_txt_items_icon_image_old'),
+	                'content' => ''
+				),
+	            'controls' => array(
+	            	'name' => 'controls', 
+	                'type' => 'input_set',
+	                array(
+	                	'type' => 'submit',
+	                    'name' => 'do_submit',
+	                    'value' => _t('_adm_nav_btn_items_add'),
+					),
+	                array (
+	                	'type' => 'reset',
+	                    'name' => 'close',
+	                    'value' => _t('_adm_nav_btn_items_cancel'),
+	                    'attrs' => array(
+	                    	'onclick' => "$('.bx-popup-applied:visible').dolPopupHide()",
+	                        'class' => 'bx-def-margin-sec-left',
+	                    ),
+					)
+				)
+			)
+		);
+
+		$aMenus = array();
+        $this->oDb->getMenus(array('type' => 'all'), $aMenus, false);
+        foreach($aMenus as $aMenu)
+            $aForm['inputs']['submenu_object']['values'][$aMenu['object']] = _t($aMenu['title']);
+
+        asort($aForm['inputs']['submenu_object']['values']);
+        $aForm['inputs']['submenu_object']['values'] = array_merge(array('' => _t('_adm_nav_txt_items_submenu_empty')), $aForm['inputs']['submenu_object']['values']);
+
+		switch($sAction) {
+			case 'add':				
+				unset($aForm['inputs']['id']);
+				unset($aForm['inputs']['icon_preview']);
+
+				$aForm['form_attrs']['id'] .= 'create';
+				break;
+
+			case 'edit':
+				unset($aForm['inputs']['set_name']);
+
+				$aForm['form_attrs']['id'] .= 'edit';
+				$aForm['inputs']['icon_image']['caption'] = _t('_adm_nav_txt_items_icon_image_new');
+				$aForm['inputs']['controls'][0]['value'] = _t('_adm_nav_btn_items_save');
+				
+				if(($bSubmenu = !empty($aItem['submenu_object'])) === true) {
+		            $aForm['inputs']['link']['tr_attrs']['style'] = 'display:none;';
+		            $aForm['inputs']['target']['tr_attrs']['style'] = 'display:none;';
+		        }
+		
+		        if(!$bSubmenu && ($aItem['onclick'] != "" || !in_array($aItem['target'], array('', '_blank')))) {
+		            $aForm['inputs']['submenu_object']['tr_attrs']['style'] = 'display:none;';
+		            $aForm['inputs']['link']['tr_attrs']['style'] = 'display:none;';
+		            $aForm['inputs']['target']['tr_attrs']['style'] = 'display:none;';
+		        }
+		
+		        $sIconImage = $sIconFont = "";
+		        if(!empty($aItem['icon'])) {
+		            if(is_numeric($aItem['icon']) && (int)$aItem['icon'] != 0) {
+		                bx_import('BxDolStorage');
+		                $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
+		
+		                $sIconImage = $oStorage->getFileUrlById((int)$aItem['icon']);
+		            }
+		            else {
+		                $sIconFont = $aItem['icon'];
+		                $aForm['inputs']['icon']['value'] = $sIconFont;
+		            }
+		        }
+		
+		        $aForm['inputs']['icon_preview']['content'] = $this->_getIconPreview($aItem['id'], $sIconImage, $sIconFont);
+				break;
+		}
+
+		return  new BxTemplStudioFormView($aForm);
+	}
 
     protected function _getIconPreview($iId, $sIconImage = '', $sIconFont = '') {
     	$bIconImage = !empty($sIconImage);
