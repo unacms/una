@@ -1,19 +1,16 @@
 
--- TABLE: entries
+-- TABLES: entries
 
-DROP TABLE IF EXISTS `bx_convos_conversations`, `bx_convos_conv2folder`, `bx_convos_folders`;
+DROP TABLE IF EXISTS `bx_convos_conversations`, `bx_convos_conv2folder`, `bx_convos_folders`, `bx_convos_files`, `bx_convos_photos_resized`, `bx_convos_cmts`, `bx_convos_views_track`;
 
--- TABLE: storages & transcoders
+-- STORAGES & TRANSCODERS
 
-DROP TABLE IF EXISTS `bx_convos_files`, `bx_convos_photos_resized`;
+DELETE FROM `sys_objects_storage` WHERE `object` = 'bx_convos_files' OR `object` = 'bx_convos_photos_resized';
+DELETE FROM `sys_storage_tokens` WHERE `object` = 'bx_convos_files' OR `object` = 'bx_convos_photos_resized';
 
--- TABLE: comments
-
-DROP TABLE IF EXISTS `bx_convos_cmts`;
-
--- TABLE: views
-
-DROP TABLE IF EXISTS `bx_convos_views_track`;
+DELETE FROM `sys_objects_transcoder_images` WHERE `object` = 'bx_convos_preview';
+DELETE FROM `sys_transcoder_images_filters` WHERE `transcoder_object` = 'bx_convos_preview';
+DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` = 'bx_convos_preview';
 
 -- FORMS
 

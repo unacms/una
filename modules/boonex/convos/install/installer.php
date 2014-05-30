@@ -16,13 +16,9 @@ class BxCnvInstaller extends BxBaseModTextInstaller
     function __construct($aConfig) 
     {
         parent::__construct($aConfig);
+        $this->_aTranscoders = array ('bx_convos_preview');
+        $this->_aStorages = array ('bx_convos_files');
         $this->_bUpdateTimeline = false;
-    }
-
-    function uninstall($aParams, $bDisable = false) 
-    {
-        // TODO: delete photo files before deleting files tables
-        return parent::uninstall($aParams, $bDisable);
     }
 }
 

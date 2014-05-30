@@ -9,12 +9,14 @@
  * @{
  */
 
-bx_import('BxDolStudioInstaller');
+bx_import('BxBaseModGeneralInstaller');
 
-class BxTimelineInstaller extends BxDolStudioInstaller
+class BxTimelineInstaller extends BxBaseModGeneralInstaller
 {
 	function __construct($aConfig) {
         parent::__construct($aConfig);
+        $this->_aTranscoders = array ('bx_timeline_photos_preview', 'bx_timeline_photos_view');
+        $this->_aStorages = array ('bx_timeline_photos');
     }
 
     function enable($aParams)

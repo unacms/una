@@ -7,7 +7,7 @@ SET @sSysVersion = '8.0.0';
 -- --------------------------------------------------------
 
 SET NAMES 'utf8';
-DROP TABLE IF EXISTS `sys_keys`, `sys_objects_editor`, `sys_objects_captcha`, `sys_objects_social_sharing`, `sys_objects_cmts`, `sys_cmts_images`, `sys_cmts_images_preview`, `sys_cmts_images2entries`, `sys_email_templates`, `sys_options`, sys_options_types, `sys_options_categories`, `sys_localization_categories`, `sys_localization_keys`, `sys_localization_languages`, `sys_localization_strings`, `sys_acl_actions`, `sys_acl_actions_track`, `sys_acl_matrix`, `sys_acl_levels`, `sys_sessions`, `sys_acl_levels_members`, `sys_objects_search`, `sys_stat_site`, `sys_alerts`, `sys_alerts_handlers`, `sys_injections`, `sys_injections_admin`, `sys_modules`, `sys_modules_file_tracks`, `sys_permalinks`, `sys_objects_privacy`, `sys_privacy_defaults`, `sys_privacy_groups`, `sys_objects_auths`, `sys_objects_vote`, `sys_objects_view`, `sys_cron_jobs`, `sys_objects_storage`, `sys_objects_uploader`, `sys_storage_user_quotas`, `sys_storage_tokens`, `sys_storage_ghosts`, `sys_storage_mime_types`, `sys_objects_transcoder_images`, `sys_transcoder_images_files`, `sys_transcoder_images_filters`, `sys_accounts`, `sys_profiles`, `sys_objects_form`, `sys_form_displays`, `sys_form_inputs`, `sys_form_display_inputs`, `sys_form_pre_lists`, `sys_form_pre_values`, `sys_menu_templates`, `sys_objects_menu`, `sys_menu_sets`, `sys_menu_items`, `sys_objects_grid`, `sys_grid_fields`, `sys_grid_actions`, `sys_objects_connection`, `sys_profiles_conn_subscriptions`, `sys_profiles_conn_friends`, `sys_objects_page`, `sys_pages_layouts`, `sys_pages_design_boxes`, `sys_pages_blocks`, `sys_images`, `sys_std_pages`, `sys_std_widgets`, `sys_std_pages_widgets`;
+DROP TABLE IF EXISTS `sys_keys`, `sys_objects_editor`, `sys_objects_captcha`, `sys_objects_social_sharing`, `sys_objects_cmts`, `sys_cmts_images`, `sys_cmts_images_preview`, `sys_cmts_images2entries`, `sys_email_templates`, `sys_options`, sys_options_types, `sys_options_categories`, `sys_localization_categories`, `sys_localization_keys`, `sys_localization_languages`, `sys_localization_strings`, `sys_acl_actions`, `sys_acl_actions_track`, `sys_acl_matrix`, `sys_acl_levels`, `sys_sessions`, `sys_acl_levels_members`, `sys_objects_search`, `sys_stat_site`, `sys_alerts`, `sys_alerts_handlers`, `sys_injections`, `sys_injections_admin`, `sys_modules`, `sys_modules_file_tracks`, `sys_permalinks`, `sys_objects_privacy`, `sys_privacy_defaults`, `sys_privacy_groups`, `sys_objects_auths`, `sys_objects_vote`, `sys_objects_view`, `sys_cron_jobs`, `sys_objects_storage`, `sys_objects_uploader`, `sys_storage_user_quotas`, `sys_storage_tokens`, `sys_storage_ghosts`, `sys_storage_deletions`, `sys_storage_mime_types`, `sys_objects_transcoder_images`, `sys_transcoder_images_files`, `sys_transcoder_images_filters`, `sys_accounts`, `sys_profiles`, `sys_objects_form`, `sys_form_displays`, `sys_form_inputs`, `sys_form_display_inputs`, `sys_form_pre_lists`, `sys_form_pre_values`, `sys_menu_templates`, `sys_objects_menu`, `sys_menu_sets`, `sys_menu_items`, `sys_objects_grid`, `sys_grid_fields`, `sys_grid_actions`, `sys_objects_connection`, `sys_profiles_conn_subscriptions`, `sys_profiles_conn_friends`, `sys_objects_page`, `sys_pages_layouts`, `sys_pages_design_boxes`, `sys_pages_blocks`, `sys_images`, `sys_std_pages`, `sys_std_widgets`, `sys_std_pages_widgets`;
 ALTER DATABASE DEFAULT CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci';
 
 
@@ -150,7 +150,8 @@ INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `B
 ('system', '_sys_et_txt_name_system_password_reset', 't_PasswordReset', '_sys_et_txt_subject_password_reset', '_sys_et_txt_body_password_reset'),
 ('system', '_sys_et_txt_name_system_mem_expiration', 't_MemExpiration', '_sys_et_txt_subject_mem_expiration', '_sys_et_txt_body_mem_expiration'),
 ('system', '_sys_et_txt_name_system_mem_changed', 't_MemChanged', '_sys_et_txt_subject_mem_changed', '_sys_et_txt_body_mem_changed'),
-('system', '_sys_et_txt_name_system_comment_replied', 't_CommentReplied', '_sys_et_txt_subject_comment_replied', '_sys_et_txt_body_comment_replied');
+('system', '_sys_et_txt_name_system_comment_replied', 't_CommentReplied', '_sys_et_txt_subject_comment_replied', '_sys_et_txt_body_comment_replied'),
+('system', '_sys_et_txt_name_system_delayed_module_uninstall', 't_DelayedModuleUninstall', '_sys_et_txt_subject_delayed_module_uninstall', '_sys_et_txt_body_delayed_module_uninstall');
 
 -- --------------------------------------------------------
 
@@ -728,6 +729,7 @@ CREATE TABLE `sys_modules` (
   `dependencies` varchar(255) NOT NULL default '',
   `date` int(11) unsigned NOT NULL default '0',
   `enabled` tinyint(1) NOT NULL default '0',
+  `pending_uninstall` tinyint(4) NOT NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `path` (`path`),
@@ -959,13 +961,7 @@ INSERT INTO `sys_privacy_groups`(`id`, `title`, `check`, `active`, `visible`) VA
 ('4', '_sys_ps_group_title_members', '@members', 0, 0),
 ('5', '_sys_ps_group_title_friends', '@friends', 1, 1);
 
-
 -- --------------------------------------------------------
-
-
---
--- Table structure for table `sys_cron_jobs`
---
 
 CREATE TABLE `sys_cron_jobs` (
   `id` int(11) unsigned NOT NULL auto_increment,
@@ -977,13 +973,10 @@ CREATE TABLE `sys_cron_jobs` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `sys_cron_jobs`
---
-
 INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VALUES
 ('cmd', '0 0 * * *', 'BxDolCronCmd', 'inc/classes/BxDolCronCmd.php', ''),
-('notifies', '*/10 * * * *', 'BxDolCronNotifies', 'inc/classes/BxDolCronNotifies.php', '');
+('notifies', '*/10 * * * *', 'BxDolCronNotifies', 'inc/classes/BxDolCronNotifies.php', ''),
+('sys_storage', '* * * * *', 'BxDolCronStorage', 'inc/classes/BxDolCronStorage.php', '');
 
 -- --------------------------------------------------------
 
@@ -1042,10 +1035,20 @@ CREATE TABLE IF NOT EXISTS `sys_storage_ghosts` (
   KEY `profile_object_content` (`profile_id`,`object`,`content_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+CREATE TABLE IF NOT EXISTS `sys_storage_deletions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `object` varchar(64) NOT NULL,
+  `file_id` int(11) NOT NULL,
+  `requested` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `object_file_id` (`object`,`file_id`),
+  KEY `requested` (`requested`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
 CREATE TABLE IF NOT EXISTS `sys_storage_mime_types` (
   `ext` varchar(32) NOT NULL,
   `mime_type` varchar(128) NOT NULL,
-  `icon` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `icon` varchar(255) NOT NULL,
   PRIMARY KEY (`ext`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 

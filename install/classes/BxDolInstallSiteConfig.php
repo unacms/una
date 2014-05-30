@@ -405,7 +405,7 @@ EOF;
 
             foreach ($aActions as $sAction) {
                 $aResult = BxDolStudioInstallerUtils::getInstance()->perform($aConfig['home_dir'], $sAction);
-                if ((!isset($aResult['result']) || !$aResult['result']) && !empty($aResult['message']))
+                if ((!isset($aResult['code']) || $aResult['code']) && !empty($aResult['message']))
                     return _t('_sys_inst_msg_module_error', $aConfig['title'], $aResult['message']);
             }
         }

@@ -16,7 +16,7 @@ class BxDolInstallerUtils extends BxDolIO
         parent::__construct();
     }
 
-    function isXsltEnabled()
+    static public function isXsltEnabled()
     {
         if (((int)phpversion()) >= 5) {
             if (class_exists ('DOMDocument') && class_exists ('XsltProcessor'))
@@ -30,7 +30,7 @@ class BxDolInstallerUtils extends BxDolIO
         return false;
     }
 
-    function isAllowUrlInclude()
+    static public function isAllowUrlInclude()
     {
         if (version_compare(phpversion(), "5.2", ">") == 1) {
             $sAllowUrlInclude = ini_get('allow_url_include');
@@ -39,12 +39,68 @@ class BxDolInstallerUtils extends BxDolIO
         return false;
     }
 
-    function isModuleInstalled($sUri)
+    static public function isModuleInstalled($sUri)
     {
         bx_import('BxDolModuleQuery');
         return BxDolModuleQuery::getInstance()->isModule($sUri);
     }
 
+    /**
+     * Set module for delayed uninstall 
+     */
+    static public function setModulePendingUninstall($sUri, $bPendingUninstall = true)
+    {
+        bx_import('BxDolModuleQuery');
+        return BxDolModuleQuery::getInstance()->setModulePendingUninstall($sUri, $bPendingUninstall);
+    }
+
+    /**
+     * Check if module is pending for uninstall
+     */
+    static public function isModulePendingUninstall($sUri)
+    {
+        bx_import('BxDolModuleQuery');
+        $a = BxDolModuleQuery::getInstance()->getModuleByUri($sUri);
+        return $a['pending_uninstall'];
+    }
+
+    /**
+     * Check all pending for uninstallation modules and uninstall them if no pending for deletion files are found
+     */
+    static public function checkModulesPendingUninstall()
+    {
+        bx_import('BxDolModuleQuery');
+        $a = BxDolModuleQuery::getInstance()->getModules();
+        foreach ($a as $aModule) {
+
+            // after we make sure that all pending for deletion files are deleted
+            if (!$aModule['pending_uninstall'] || BxDolStorage::isQueuedFilesForDeletion($aModule['name']))
+                continue;
+
+            // remove pending uninstall flag
+            self::setModulePendingUninstall($aModule['uri'], false);
+
+            // perform uninstallation
+            bx_import('BxDolStudioInstallerUtils');
+            $aResult = BxDolStudioInstallerUtils::getInstance()->perform($aModule['path'], 'uninstall');
+
+            // send email nofitication
+            $aTemplateKeys = array(
+                'Module' => $aModule['title'],
+                'Result' => _t('_Success'),
+                'Message' => '',
+            );
+
+            if ($aResult['code'] > 0) {
+                $aTemplateKeys['Result'] = _t('_Failed');
+                $aTemplateKeys['Message'] = $aResult['message'];
+            }
+
+            bx_import('BxDolEmailTemplates');
+            $aMessage = BxDolEmailTemplates::getInstance()->parseTemplate('t_DelayedModuleUninstall', $aTemplateKeys);
+            sendMail (getParam('site_email'), $aMessage['Subject'], $aMessage['Body'], 0, array(), BX_EMAIL_SYSTEM);
+        }
+    }
 
     function addHtmlFields ($a)
     {

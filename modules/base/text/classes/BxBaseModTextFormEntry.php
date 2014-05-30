@@ -95,7 +95,7 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         if (CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedSetThumb()) {
-            $aThumb = bx_process_input ($_POST[$CNF['FIELD_THUMB']], BX_DATA_INT);
+            $aThumb = bx_process_input (bx_get($CNF['FIELD_THUMB']), BX_DATA_INT);
             $aValsToAdd[$CNF['FIELD_THUMB']] = 0;
             if (!empty($aThumb) && is_array($aThumb) && ($iFileThumb = array_pop($aThumb)))
                 $aValsToAdd[$CNF['FIELD_THUMB']] = $iFileThumb;
@@ -114,13 +114,8 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
 
         bx_import('BxDolStorage');
         $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
-        if (!$oStorage)
-            return false;
-
-        $aGhostFiles = $oStorage->getGhosts (bx_get_logged_profile_id(), $iContentId);
-        if ($aGhostFiles)
-            foreach ($aGhostFiles as $aFile)
-                $this->_deleteFile($aFile['id']);
+        if ($oStorage)
+            $oStorage->queueFilesForDeletionFromGhosts($aContentInfo[$CNF['FIELD_AUTHOR']], $iContentId);
 
         // delete associated objects data
 

@@ -6,16 +6,6 @@ DELETE FROM `sys_options` WHERE `category_id` = @iCategId;
 DELETE FROM `sys_options_categories` WHERE `type_id` = @iTypeId;
 DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 
--- STORAGES & TRANSCODERS
-DELETE FROM `sys_objects_storage` WHERE `object` = 'bx_convos_files' OR `object` = 'bx_convos_photos_resized';
-DELETE FROM `sys_storage_tokens` WHERE `object` = 'bx_convos_files' OR `object` = 'bx_convos_photos_resized';
-
-DELETE FROM `sys_objects_transcoder_images` WHERE `object` = 'bx_convos_preview';
-DELETE FROM `sys_transcoder_images_filters` WHERE `transcoder_object` = 'bx_convos_preview';
-DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` = 'bx_convos_preview';
--- TODO: delete resized photo files as well
-TRUNCATE TABLE `bx_convos_photos_resized`; 
-
 -- PAGES
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_convos';
 DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_convos' OR `object` IN('bx_convos_create_entry', 'bx_convos_view_entry', 'bx_convos_home');

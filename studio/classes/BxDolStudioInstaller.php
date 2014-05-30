@@ -440,8 +440,8 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
         );
     }
     function _perform($sOperationName) {
-        if(!defined('BX_SKIP_INSTALL_CHECK') && !$GLOBALS['logged']['admin'])
-            return array('message' => '', 'result' => false);
+        if(!defined('BX_SKIP_INSTALL_CHECK') && !defined('BX_DOL_CRON_EXECUTE') && !$GLOBALS['logged']['admin'])
+            return array('message' => '_adm_mod_err_only_admin_can_perform_operations_with_modules', 'result' => false);
 
         $sMessage = '';
         foreach($this->_aConfig[$sOperationName] as $sAction => $iEnabled) {

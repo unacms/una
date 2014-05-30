@@ -16,6 +16,14 @@ DROP TABLE IF EXISTS `bx_timeline_comments`;
 DROP TABLE IF EXISTS `bx_timeline_votes`;
 DROP TABLE IF EXISTS `bx_timeline_votes_track`;
 
+
+-- STORAGES, TRANSCODERS, UPLOADERS
+DELETE FROM `sys_objects_uploader` WHERE `object` = 'bx_timeline_simple';
+DELETE FROM `sys_objects_storage` WHERE `object` IN ('bx_timeline_photos', 'bx_timeline_photos_preview', 'bx_timeline_photos_view');
+DELETE FROM `sys_objects_transcoder_images` WHERE `object` IN ('bx_timeline_photos_preview', 'bx_timeline_photos_view');
+DELETE FROM `sys_transcoder_images_filters` WHERE `transcoder_object` IN ('bx_timeline_photos_preview', 'bx_timeline_photos_view');
+
+
 -- Forms All
 DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN  (SELECT `display_name` FROM `sys_form_displays` WHERE `module` = @sName);
 DELETE FROM `sys_form_inputs` WHERE `module` = @sName;

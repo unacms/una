@@ -562,6 +562,8 @@
 	<string name="_adm_err_modules_module_not_found"><![CDATA[Module not found]]></string>
 	<string name="_adm_err_modules_module_not_installed"><![CDATA[Module not installed]]></string>
 	<string name="_adm_err_modules_module_was_modified"><![CDATA[Module was modified]]></string>
+	<string name="_adm_err_modules_pending_uninstall"><![CDATA[Module uninstall was postponed. Module will be uninstalled automatically after all its files are deleted.]]></string>
+	<string name="_adm_err_modules_pending_uninstall_already"><![CDATA[Module is pending uninstall already.]]></string>
 	<string name="_adm_err_modules_process_action_failed"><![CDATA[An error occured. Contact with module's vendor]]></string>
 	<string name="_adm_err_modules_wrong_dependency_disable"><![CDATA[Failed to disable. The module has the following dependent modules. You need to disable them first.]]></string>
 	<string name="_adm_err_modules_wrong_dependency_install"><![CDATA[The following modules should be installed first:]]></string>
@@ -806,6 +808,7 @@
 	<string name="_adm_mobile_page_profile"><![CDATA[Profile]]></string>
     <string name="_adm_mod_cnf_uninstall"><![CDATA[<h3>Uninstall "{0}" module?</h3><p>Uninstalling "{0}" module will also delete all of its data. Do you want to continue?</p>]]></string>
 	<string name="_adm_mod_err_cannot_process_action"><![CDATA[Cannot process action. It does not have an associated handler.]]></string>
+    <string name="_adm_mod_err_only_admin_can_perform_operations_with_modules"><![CDATA[Only admin can perform operations with modules]]></string>
 	<string name="_adm_mod_err_process_operation_failed"><![CDATA[Cannot {0} module from "{1}" directory]]></string>
 	<string name="_adm_msg_modules_success_added_to_cart"><![CDATA[The product was successfully added to shopping cart.]]></string>
 	<string name="_adm_msg_modules_success_checkouted"><![CDATA[The payment was successfully accepted and should be processed automatically in a few minutes. Then the purchased product(s) will be available in Store -> Purchases.<br />Note. If it doesn't happen for some reason, you need to contact with product's vendor and provide him with your payment's details. He'll be able to process payment manually if the payment was received.]]></string>
@@ -1433,6 +1436,11 @@ If it is not enabled then please consider implement this optimization, since it 
 <p><a href="{conf_link}">{conf_link}</a></p>
 <p>Thank you.</p>
 <bx_include_auto:_email_footer.html />]]></string>
+	<string name="_sys_et_txt_body_delayed_module_uninstall"><![CDATA[<bx_include_auto:_email_header.html />
+<p>Module: <b>{Module}</b></p>
+<p>Uninstaltion result: {Result}</p>
+<p>{Message}</p>
+<bx_include_auto:_email_footer.html />]]></string>
 	<string name="_sys_et_txt_body_forgot"><![CDATA[<bx_include_auto:_email_header.html />
 <p>Hello!</p>
 <p>Please, follow the link below to reset your password:</p>
@@ -1458,6 +1466,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_et_txt_name_system_admin_email"><![CDATA[Message sending from the Admin Panel]]></string>
 	<string name="_sys_et_txt_name_system_comment_replied"><![CDATA[The letter is sent to members whose comment was replied]]></string>
 	<string name="_sys_et_txt_name_system_confirmation"><![CDATA[Profile e-mail confirmation message]]></string>
+	<string name="_sys_et_txt_name_system_delayed_module_uninstall"><![CDATA[Delayed module uninstall notification]]></string>
 	<string name="_sys_et_txt_name_system_forgot"><![CDATA[Reset password message]]></string>
 	<string name="_sys_et_txt_name_system_mem_changed"><![CDATA[The letter is sent to members whose membership level was changed]]></string>
 	<string name="_sys_et_txt_name_system_mem_expiration"><![CDATA[Membership expiration letter sent to members whose membership level expires]]></string>
@@ -1466,6 +1475,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_et_txt_subject_admin_email"><![CDATA[Message from <SiteName> Admin: <MessageSubject>]]></string>
 	<string name="_sys_et_txt_subject_comment_replied"><![CDATA[Your comment was replied]]></string>
 	<string name="_sys_et_txt_subject_confirmation"><![CDATA[Confirm Your Email (ACTION REQUIRED)]]></string>
+	<string name="_sys_et_txt_subject_delayed_module_uninstall"><![CDATA[Delayed {Module} module uninstall: {Result}]]></string>
 	<string name="_sys_et_txt_subject_forgot"><![CDATA[Reset Your Password]]></string>
 	<string name="_sys_et_txt_subject_mem_changed"><![CDATA[Your membership level was changed]]></string>
 	<string name="_sys_et_txt_subject_mem_expiration"><![CDATA[Your membership is about to expire]]></string>

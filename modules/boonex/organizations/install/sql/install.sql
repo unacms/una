@@ -55,7 +55,30 @@ CREATE TABLE `bx_organizations_views_track` (
   KEY `id` (`object_id`,`viewer_id`,`viewer_nip`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- STORAGES & TRANSCODERS
+
+INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
+('bx_organizations_pics', 'Local', '', 360, 2592000, 3, 'bx_organizations_pics', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
+('bx_organizations_pics_resized', 'Local', '', 360, 2592000, 3, 'bx_organizations_pics_resized', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0);
+
+INSERT INTO `sys_objects_transcoder_images` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`) VALUES 
+('bx_organizations_icon', 'bx_organizations_pics_resized', 'Storage', 'a:1:{s:6:"object";s:21:"bx_organizations_pics";}', 'no', '1', '2592000', '0'),
+('bx_organizations_thumb', 'bx_organizations_pics_resized', 'Storage', 'a:1:{s:6:"object";s:21:"bx_organizations_pics";}', 'no', '1', '2592000', '0'),
+('bx_organizations_avatar', 'bx_organizations_pics_resized', 'Storage', 'a:1:{s:6:"object";s:21:"bx_organizations_pics";}', 'no', '1', '2592000', '0'),
+('bx_organizations_picture', 'bx_organizations_pics_resized', 'Storage', 'a:1:{s:6:"object";s:21:"bx_organizations_pics";}', 'no', '1', '2592000', '0'),
+('bx_organizations_cover', 'bx_organizations_pics_resized', 'Storage', 'a:1:{s:6:"object";s:21:"bx_organizations_pics";}', 'no', '1', '2592000', '0'),
+('bx_organizations_cover_thumb', 'bx_organizations_pics_resized', 'Storage', 'a:1:{s:6:"object";s:21:"bx_organizations_pics";}', 'no', '1', '2592000', '0');
+
+INSERT INTO `sys_transcoder_images_filters` (`transcoder_object`, `filter`, `filter_params`, `order`) VALUES 
+('bx_organizations_icon', 'Resize', 'a:4:{s:1:"w";s:2:"32";s:1:"h";s:2:"32";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0'),
+('bx_organizations_thumb', 'Resize', 'a:4:{s:1:"w";s:2:"48";s:1:"h";s:2:"48";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0'),
+('bx_organizations_avatar', 'Resize', 'a:4:{s:1:"w";s:2:"96";s:1:"h";s:2:"96";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0'),
+('bx_organizations_picture', 'Resize', 'a:4:{s:1:"w";s:4:"1024";s:1:"h";s:4:"1024";s:13:"square_resize";s:1:"0";s:10:"force_type";s:3:"jpg";}', '0'),
+('bx_organizations_cover', 'Resize', 'a:4:{s:1:"w";s:4:"1024";s:1:"h";s:4:"1024";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0'),
+('bx_organizations_cover_thumb', 'Resize', 'a:4:{s:1:"w";s:2:"48";s:1:"h";s:2:"48";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0');
+
 -- FORMS
+
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_organization', 'bx_organizations', '_bx_orgs_form_profile', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_organizations_data', 'id', '', '', 'do_submit', '', 0, 1, 'BxOrgsFormEntry', 'modules/boonex/organizations/classes/BxOrgsFormEntry.php');
 

@@ -6,16 +6,6 @@ DELETE FROM `sys_options` WHERE `category_id` = @iCategId;
 DELETE FROM `sys_options_categories` WHERE `type_id` = @iTypeId;
 DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 
--- STORAGES & TRANSCODERS
-DELETE FROM `sys_objects_storage` WHERE `object` = 'bx_notes_files' OR `object` = 'bx_notes_photos_resized';
-DELETE FROM `sys_storage_tokens` WHERE `object` = 'bx_notes_files' OR `object` = 'bx_notes_photos_resized';
-
-DELETE FROM `sys_objects_transcoder_images` WHERE `object` = 'bx_notes_preview';
-DELETE FROM `sys_transcoder_images_filters` WHERE `transcoder_object` = 'bx_notes_preview';
-DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` = 'bx_notes_preview';
--- TODO: delete resized photo files as well
-TRUNCATE TABLE `bx_notes_photos_resized`; 
-
 -- PAGES
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_notes';
 DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_notes' OR `object` IN('bx_notes_create_entry', 'bx_notes_edit_entry', 'bx_notes_delete_entry', 'bx_notes_view_entry', 'bx_notes_view_entry_comments', 'bx_notes_home', 'bx_notes_featured', 'bx_notes_author');
