@@ -10,7 +10,8 @@
 /**
  * System services related to Images' Processing.
  */
-class BxBaseImageServices extends BxDol {
+class BxBaseImageServices extends BxDol 
+{
     public function __construct()
     {
         parent::__construct();

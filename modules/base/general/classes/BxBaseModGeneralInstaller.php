@@ -63,6 +63,7 @@ class BxBaseModGeneralInstaller extends BxDolStudioInstaller
 
     function uninstall($aParams, $bDisable = false) 
     {
+        // check if module is already waiting while files are deleting
         bx_import('BxDolInstallerUtils');
         if (BxDolInstallerUtils::isModulePendingUninstall($this->_aConfig['home_uri']))
         	return array(
@@ -70,12 +71,21 @@ class BxBaseModGeneralInstaller extends BxDolStudioInstaller
                 'result' => false,
             );
 
+        // queue for deletion storage files
         $bSetModulePendingUninstall = false;
         foreach ($this->_aStorages as $s) {
             if (($o = BxDolStorage::getObjectInstance($s)) && $o->queueFilesForDeletionFromObject())
                 $bSetModulePendingUninstall = true;
         }
 
+        // delete comments and queue for deletion comments attachments
+        bx_import('BxDolCmts');
+        $iFiles = 0;
+        BxDolCmts::onModuleUninstall ($this->_aConfig['name'], $iFiles);
+        if ($iFiles)
+            $bSetModulePendingUninstall = true;
+
+        // if some files were added to the queue, set module as pending uninstall
         if ($bSetModulePendingUninstall) {
             BxDolInstallerUtils::setModulePendingUninstall($this->_aConfig['home_uri']);
         	return array(

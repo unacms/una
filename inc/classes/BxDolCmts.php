@@ -360,6 +360,11 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         return $this->_sSystem;
     }
 
+    public function getStorageObjectName()
+    {
+        return $this->_sStorageObject;
+    }
+
 	public function getSystemInfo()
     {
         return $this->_aSystem;
@@ -463,6 +468,11 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
     /** 
      * Database functions
      */
+	public function getQueryObject ()
+    {
+        return $this->_oQuery;
+    }
+
 	public function getCommentsTableName ()
     {
         return $this->_oQuery->getTableName ();
@@ -490,15 +500,63 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 
     public function onObjectDelete ($iObjectId = 0)
     {
-        return $this->_oQuery->deleteObjectComments ($iObjectId ? $iObjectId : $this->getId());
+        // delete comments
+        $aFiles = array();
+        $this->_oQuery->deleteObjectComments ($iObjectId ? $iObjectId : $this->getId(), $aFiles);
+
+        // delete files
+        if ($aFiles) {
+            bx_import('BxDolStorage');
+            $oStorage = BxDolStorage::getObjectInstance($this->getStorageObjectName());
+            if ($oStorage)
+                $oStorage->queueFilesForDeletion($aFiles);
+        }
     }
 
-    public function onAuthorDelete ($iAuthorId)
+    public static function onAuthorDelete ($iAuthorId)
     {
-    	foreach($this->_aSystems as $sSystem => $aSystem) {
-            $oQuery = new BxDolCmtsQuery($aSystem);
-            $oQuery->deleteAuthorComments($iAuthorId);
+        bx_import('BxDolStorage');
+        $aSystems = self::getSystems();
+    	foreach($aSystems as $sSystem => $aSystem) {
+            $o = self::getObjectInstance($sSystem, 0);
+            $oQuery = $o->getQueryObject();            
+
+            // delete comments
+            $aFiles = array ();
+            $oQuery->deleteAuthorComments($iAuthorId, $aFiles);
+            
+            // delete files
+            $oStorage = BxDolStorage::getObjectInstance($o->getStorageObjectName());
+            if ($oStorage)
+                $oStorage->queueFilesForDeletion($aFiles);
         }
+        return true;
+    }
+
+    public static function onModuleUninstall ($sModuleName, &$iFiles = null)
+    {        
+        bx_import('BxDolStorage');
+        $aSystems = self::getSystems();
+    	foreach($aSystems as $sSystem => $aSystem) {
+            if (0 != strncasecmp($sModuleName, $sSystem, strlen($sModuleName)))
+                continue;
+
+            $o = self::getObjectInstance($sSystem);
+            $oQuery = $o->getQueryObject();
+
+            // delete comments            
+            $aFiles = array ();
+            $oQuery->deleteAll($aSystem['system_id'], $aFiles);
+
+            // delete files
+            $oStorage = BxDolStorage::getObjectInstance($o->getStorageObjectName());
+            if ($oStorage && $aFiles)
+                $oStorage->queueFilesForDeletion($aFiles);
+
+            if (null !== $iFiles)
+                $iFiles += count($aFiles);
+        }
+
         return true;
     }
 
