@@ -541,7 +541,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
             if (0 != strncasecmp($sModuleName, $sSystem, strlen($sModuleName)))
                 continue;
 
-            $o = self::getObjectInstance($sSystem);
+            $o = self::getObjectInstance($sSystem, 0);
             $oQuery = $o->getQueryObject();
 
             // delete comments            

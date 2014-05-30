@@ -268,7 +268,7 @@ class BxDolCmtsQuery extends BxDolDb
     {
         // get files
         if (null !== $aFiles)
-            $aFiles = $this->convertImagesArray($oQuery->getImages($iSystemId));
+            $aFiles = $this->convertImagesArray($this->getImages($iSystemId, false));
 
         // delete files
         $this->deleteImages($iSystemId);
