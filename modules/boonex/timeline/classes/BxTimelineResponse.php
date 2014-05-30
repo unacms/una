@@ -19,11 +19,12 @@ class BxTimelineResponse extends BxDolAlertsResponse
      * Constructor
      * @param BxTimelineModule $oModule - an instance of current module
      */
-    public function __construct($oModule)
+    public function __construct()
     {
         parent::__construct();
 
-        $this->_oModule = $oModule;
+        bx_import('BxDolModule');
+        $this->_oModule = BxDolModule::getInstance('bx_timeline');
     }
 
     /**

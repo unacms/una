@@ -159,34 +159,6 @@ class BxSitesModule extends BxDolModule
         );
     }
 
-    public function serviceResponse($oAlert)
-    {
-    	if($oAlert->sUnit != 'account' || !in_array($oAlert->sAction, array('login')))
-    		return;
-
-		bx_import('BxDolSession');
-		$sDomain = BxDolSession::getInstance()->getUnsetValue('bx_sites_domain');
-		if($sDomain === false)
-			return;
-
-		$iAccountId = $this->_oDb->insertAccount(array(
-			'owner_id' => $oAlert->iObject,
-			'domain' => $sDomain,
-			'created' => time(),
-			'status' => BX_SITES_ACCOUNT_STATUS_UNCONFIRMED
-		));
-
-		if(!$iAccountId)
-			return;
-
-		$oAccount = $this->getObject('Account');
-		$oAccount->onAccountCreated($iAccountId);
-
-		$sUrl = $this->startSubscription($iAccountId);
-		header('Location: ' . $sUrl);
-		exit;
-    }
-
     // ====== ACTION METHODS
 	public function actionIpn()
 	{

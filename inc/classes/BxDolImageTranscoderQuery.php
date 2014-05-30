@@ -73,12 +73,12 @@ class BxDolImageTranscoderQuery extends BxDolDb {
 
     public function registerHandlers () {
 
-        if (!$this->registerHandler ('getAlertHandlerNameLocal', 'onAlertResponseFileDeleteLocal', $this->_aObject['object'], $this->_aObject['storage_object']))
+        if (!$this->registerHandler ('getAlertHandlerNameLocal', 'alert_response_file_delete_local', $this->_aObject['object'], $this->_aObject['storage_object']))
             return false;
 
         // add handler for original storage engine
         if ('Storage' == $this->_aObject['source_type']) // if original storage is "Storage", not "Folder"
-            if (!$this->registerHandler ('getAlertHandlerNameOrig', 'onAlertResponseFileDeleteOrig', $this->_aObject['object'], $this->_aObject['source_params']['object']))
+            if (!$this->registerHandler ('getAlertHandlerNameOrig', 'alert_response_file_delete_orig', $this->_aObject['object'], $this->_aObject['source_params']['object']))
                 return false;
 
         return true;
@@ -97,15 +97,20 @@ class BxDolImageTranscoderQuery extends BxDolDb {
         return true;
     }    
 
-    protected function registerHandler ($sHandlerNameFunc, $sEvalFunc, $sObject, $sUnit) {
+    protected function registerHandler ($sHandlerNameFunc, $sServiceFunc, $sObject, $sUnit) {
 
         $sHandlerName = $this->$sHandlerNameFunc ();
         $iHandlerId = $this->getAlertHandlerId ($sHandlerName);
         if ($iHandlerId) // if handler already exists, do nothing
             return true;
 
-        $sEval = 'bx_import("BxDolImageTranscoder"); BxDolImageTranscoder::' . $sEvalFunc . '("' . $sObject . '", $this);';
-        $sQuery = $this->prepare("INSERT INTO `sys_alerts_handlers` SET `name` = ?, `eval` = ?", $sHandlerName, $sEval);
+        $sServiceCall = serialize(array(
+        	'module' => 'system',
+        	'method' => $sServiceFunc,
+        	'params' => array($sObject),
+        	'class' => 'TemplImageServices'
+        ));
+        $sQuery = $this->prepare("INSERT INTO `sys_alerts_handlers` SET `name` = ?, `service_call` = ?", $sHandlerName, $sServiceCall);
         if (!$this->query($sQuery))
             return false;
         $iHandlerId = $this->lastId();

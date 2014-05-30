@@ -7,12 +7,12 @@
  * @{
  */
 
-bx_import('BxBaseCmtsServices');
+bx_import('BxBaseLanguagesServices');
 
 /**
- * @see BxBaseCmtsServices
+ * @see BxBaseLanguagesServices
  */
-class BxTemplCmtsServices extends BxBaseCmtsServices {
+class BxTemplLanguagesServices extends BxBaseLanguagesServices {
     public function __construct() {
         parent::__construct();
     }

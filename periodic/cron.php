@@ -129,10 +129,8 @@ function runJob($aJob)
         $oHandler = new $aJob['class']();
         $oHandler->processing();
     }
-    else if(!empty($aJob['eval'])) {
-        bx_import('BxDolService');
-        eval($aJob['eval']);
-    }
+    else if(!empty($aJob['service_call']) && BxDolService::isSerializedService($aJob['service_call']))
+		BxDolService::callSerialized($aJob['service_call']);
 }
 
 $oDb = BxDolDb::getInstance();

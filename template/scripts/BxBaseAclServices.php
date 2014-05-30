@@ -7,14 +7,18 @@
  * @{
  */
 
-bx_import('BxBaseCmtsServices');
-
 /**
- * @see BxBaseCmtsServices
+ * System services related to ACL.
  */
-class BxTemplCmtsServices extends BxBaseCmtsServices {
+class BxBaseAclServices extends BxDol {
     public function __construct() {
         parent::__construct();
+    }
+
+	public function serviceGetMemberships($bPurchasableOnly = false, $bActiveOnly = false, $isTranslate = true)
+    {
+    	bx_import('BxDolAcl');
+    	return BxDolAcl::getInstance()->getMemberships($bPurchasableOnly, $bActiveOnly, $isTranslate);
     }
 }
 

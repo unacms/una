@@ -40,7 +40,7 @@ INSERT INTO `sys_options` (`category_id`, `name`, `value`, `caption`, `type`, `e
 
 -- ALERTS
 
-INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `eval`) VALUES 
+INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALUES 
 ('bx_profiler', 'BxProfilerAlertsResponse', 'modules/boonex/profiler/classes/BxProfilerAlertsResponse.php', '');
 SET @iHandler := LAST_INSERT_ID();
 

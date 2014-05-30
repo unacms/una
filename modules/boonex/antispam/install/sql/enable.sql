@@ -184,7 +184,7 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 
 -- alerts
 
-INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `eval`) VALUES 
+INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALUES 
 ('bx_antispam', 'BxAntispamAlertsResponse', 'modules/boonex/antispam/classes/BxAntispamAlertsResponse.php', '');
 SET @iHandler := LAST_INSERT_ID();
 
@@ -200,6 +200,6 @@ INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `B
 
 -- cron
 
-INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `eval`) VALUES
+INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VALUES
 ('bx_antispam_pruning', '0 0 * * *', 'BxAntispamCronPruning', 'modules/boonex/antispam/classes/BxAntispamCronPruning.php', '');
 

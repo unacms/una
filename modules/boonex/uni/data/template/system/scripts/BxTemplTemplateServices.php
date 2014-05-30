@@ -7,12 +7,12 @@
  * @{
  */
 
-bx_import('BxBaseCmtsServices');
+bx_import('BxBaseTemplateServices');
 
 /**
- * @see BxBaseCmtsServices
+ * @see BxBaseTemplateServices
  */
-class BxTemplCmtsServices extends BxBaseCmtsServices {
+class BxTemplTemplateServices extends BxBaseTemplateServices {
     public function __construct() {
         parent::__construct();
     }

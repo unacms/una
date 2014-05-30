@@ -127,6 +127,11 @@ class BxDolStudioSettingsQuery extends BxDolStudioPageQuery {
                 $sJoinClause .= "LEFT JOIN `sys_options_categories` AS `tc` ON `to`.`category_id`=`tc`.`id` ";
                 $sWhereClause .= $this->prepare("AND `tc`.`name`=?", $aParams['value']);
                 break;
+			case 'by_category_name_full':
+				$sSelectClause .= ", `tc`.`name` AS `category_name`, `tt`.`name` AS `type_name`";
+				$sJoinClause .= "LEFT JOIN `sys_options_categories` AS `tc` ON `to`.`category_id`=`tc`.`id` LEFT JOIN `sys_options_types` AS `tt` ON `tc`.`type_id`=`tt`.`id` ";
+                $sWhereClause .= $this->prepare("AND `tc`.`name`=?", $aParams['value']);
+                break;
         }
 
         $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . " 
@@ -138,8 +143,9 @@ class BxDolStudioSettingsQuery extends BxDolStudioPageQuery {
                 `to`.`type` AS `type`,
                 `to`.`extra` AS `extra`,
                 `to`.`check` AS `check`,
+                `to`.`check_params` AS `check_params`,
                 `to`.`check_error` AS `check_error`,
-                `to`.`order` AS `order` " . $sSelectClause . "
+                `to`.`order` AS `order`" . $sSelectClause . "
             FROM `sys_options` AS `to` " . $sJoinClause . "
             WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
         $aItems = call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);

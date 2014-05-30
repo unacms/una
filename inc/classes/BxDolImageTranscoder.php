@@ -178,7 +178,7 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
     /**
      * Called automatically, upon local(transcoded) file deletetion.
      */
-    static public function onAlertResponseFileDeleteLocal ($sObject, $oAlert) {
+    static public function onAlertResponseFileDeleteLocal ($oAlert, $sObject) {
         $oTranscoder = BxDolImageTranscoder::getObjectInstance($sObject);
         if (!$oTranscoder)
             return;
@@ -192,7 +192,7 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
     /**
      * Called automatically, upon original file deletetion.
      */
-    static public function onAlertResponseFileDeleteOrig ($sObject, $oAlert) {
+    static public function onAlertResponseFileDeleteOrig ($oAlert, $sObject) {
         $oTranscoder = BxDolImageTranscoder::getObjectInstance($sObject);
         if (!$oTranscoder)
             return;

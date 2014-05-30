@@ -7,7 +7,7 @@ SET @sSysVersion = '8.0.0';
 -- --------------------------------------------------------
 
 SET NAMES 'utf8';
-DROP TABLE IF EXISTS `sys_keys`, `sys_objects_editor`, `sys_objects_captcha`, `sys_objects_social_sharing`, `sys_objects_cmts`, `sys_cmts_images`, `sys_cmts_images_preview`, `sys_cmts_images2entries`, `sys_email_templates`, `sys_options`, sys_options_types, `sys_options_categories`, `sys_localization_categories`, `sys_localization_keys`, `sys_localization_languages`, `sys_localization_strings`, `sys_acl_actions`, `sys_acl_actions_track`, `sys_acl_matrix`, `sys_acl_levels`, `sys_sessions`, `sys_acl_levels_members`, `sys_objects_search`, `sys_stat_site`, `sys_alerts`, `sys_alerts_handlers`, `sys_injections`, `sys_injections_admin`, `sys_modules`, `sys_modules_file_tracks`, `sys_permalinks`, `sys_objects_privacy`, `sys_privacy_defaults`, `sys_privacy_groups`, `sys_objects_auths`, `sys_objects_vote`, `sys_objects_view`, `sys_cron_jobs`, `sys_objects_storage`, `sys_objects_uploader`, `sys_storage_user_quotas`, `sys_storage_tokens`, `sys_storage_ghosts`, `sys_storage_deletions`, `sys_storage_mime_types`, `sys_objects_transcoder_images`, `sys_transcoder_images_files`, `sys_transcoder_images_filters`, `sys_accounts`, `sys_profiles`, `sys_objects_form`, `sys_form_displays`, `sys_form_inputs`, `sys_form_display_inputs`, `sys_form_pre_lists`, `sys_form_pre_values`, `sys_menu_templates`, `sys_objects_menu`, `sys_menu_sets`, `sys_menu_items`, `sys_objects_grid`, `sys_grid_fields`, `sys_grid_actions`, `sys_objects_connection`, `sys_profiles_conn_subscriptions`, `sys_profiles_conn_friends`, `sys_objects_page`, `sys_pages_layouts`, `sys_pages_design_boxes`, `sys_pages_blocks`, `sys_images`, `sys_std_pages`, `sys_std_widgets`, `sys_std_pages_widgets`;
+DROP TABLE IF EXISTS `sys_keys`, `sys_objects_editor`, `sys_objects_captcha`, `sys_objects_social_sharing`, `sys_objects_cmts`, `sys_cmts_images`, `sys_cmts_images_preview`, `sys_cmts_images2entries`, `sys_email_templates`, `sys_options`, sys_options_types, `sys_options_categories`, `sys_localization_categories`, `sys_localization_keys`, `sys_localization_languages`, `sys_localization_strings`, `sys_acl_actions`, `sys_acl_actions_track`, `sys_acl_matrix`, `sys_acl_levels`, `sys_sessions`, `sys_acl_levels_members`, `sys_objects_search`, `sys_stat_site`, `sys_alerts`, `sys_alerts_handlers`, `sys_injections`, `sys_injections_admin`, `sys_modules`, `sys_modules_file_tracks`, `sys_permalinks`, `sys_objects_privacy`, `sys_privacy_defaults`, `sys_privacy_groups`, `sys_objects_auths`, `sys_objects_vote`, `sys_objects_view`, `sys_cron_jobs`, `sys_objects_storage`, `sys_objects_uploader`, `sys_storage_user_quotas`, `sys_storage_tokens`, `sys_storage_ghosts`, `sys_storage_mime_types`, `sys_objects_transcoder_images`, `sys_transcoder_images_files`, `sys_transcoder_images_filters`, `sys_accounts`, `sys_profiles`, `sys_objects_form`, `sys_form_displays`, `sys_form_inputs`, `sys_form_display_inputs`, `sys_form_pre_lists`, `sys_form_pre_values`, `sys_menu_templates`, `sys_objects_menu`, `sys_menu_sets`, `sys_menu_items`, `sys_objects_grid`, `sys_grid_fields`, `sys_grid_actions`, `sys_objects_connection`, `sys_profiles_conn_subscriptions`, `sys_profiles_conn_friends`, `sys_objects_page`, `sys_pages_layouts`, `sys_pages_design_boxes`, `sys_pages_blocks`, `sys_images`, `sys_std_pages`, `sys_std_widgets`, `sys_std_pages_widgets`;
 ALTER DATABASE DEFAULT CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci';
 
 
@@ -150,8 +150,7 @@ INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `B
 ('system', '_sys_et_txt_name_system_password_reset', 't_PasswordReset', '_sys_et_txt_subject_password_reset', '_sys_et_txt_body_password_reset'),
 ('system', '_sys_et_txt_name_system_mem_expiration', 't_MemExpiration', '_sys_et_txt_subject_mem_expiration', '_sys_et_txt_body_mem_expiration'),
 ('system', '_sys_et_txt_name_system_mem_changed', 't_MemChanged', '_sys_et_txt_subject_mem_changed', '_sys_et_txt_body_mem_changed'),
-('system', '_sys_et_txt_name_system_comment_replied', 't_CommentReplied', '_sys_et_txt_subject_comment_replied', '_sys_et_txt_body_comment_replied'),
-('system', '_sys_et_txt_name_system_delayed_module_uninstall', 't_DelayedModuleUninstall', '_sys_et_txt_subject_delayed_module_uninstall', '_sys_et_txt_body_delayed_module_uninstall');
+('system', '_sys_et_txt_name_system_comment_replied', 't_CommentReplied', '_sys_et_txt_subject_comment_replied', '_sys_et_txt_body_comment_replied');
 
 -- --------------------------------------------------------
 
@@ -166,7 +165,8 @@ CREATE TABLE `sys_options` (
   `value` mediumtext NOT NULL,
   `type` enum('digit','text','checkbox','select','combobox','file','list') NOT NULL default 'digit',
   `extra` text NOT NULL default '',
-  `check` text NOT NULL,
+  `check` varchar(32) NOT NULL,
+  `check_params` text NOT NULL,
   `check_error` varchar(255) NOT NULL default '',
   `order` int(11) default '0',
   PRIMARY KEY (`id`),
@@ -246,7 +246,7 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `or
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'lang_default', '_adm_stg_cpt_option_lang_default', '', 'select', 'PHP:bx_import(''BxDolLanguages''); $aValues = BxDolLanguages::getInstance()->getLanguages(false, true); $aResult = array(); foreach($aValues as $sKey => $sValue) $aResult[] = array(\'key\' => $sKey, \'value\' => $sValue); return $aResult;', '', '', 1),
+(@iCategoryId, 'lang_default', '_adm_stg_cpt_option_lang_default', '', 'select', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:13:"get_languages";s:6:"params";a:2:{i:0;b:0;i:1;b:1;}s:5:"class";s:22:"TemplLanguagesServices";}', '', '', 1),
 
 (@iCategoryId, 'sys_format_date', '_adm_stg_cpt_option_sys_format_date', 'D MMM YYYY', 'digit', '', '', '', 3),
 (@iCategoryId, 'sys_format_time', '_adm_stg_cpt_option_sys_format_time', 'HH:mm', 'digit', '', '', '', 4),
@@ -261,7 +261,7 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `or
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'template', '_adm_stg_cpt_option_template', '', 'select', 'PHP:$aValues = get_templates_array(); $aResult = array(); foreach($aValues as $sKey => $sValue) $aResult[] = array(\'key\' => $sKey, \'value\' => $sValue); return $aResult;', 'bx_import(\'BxDolModuleQuery\'); return (strlen($arg0) > 0 && BxDolModuleQuery::getInstance()->isEnabled($arg0)) ? true : false;', 'Template cannot be empty and must have a valid name.', 1),
+(@iCategoryId, 'template', '_adm_stg_cpt_option_template', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:13:"get_templates";s:5:"class";s:21:"TemplTemplateServices";}', 'Template', '_adm_stg_err_option_template', 1),
 (@iCategoryId, 'enable_template', '_adm_stg_cpt_option_enable_template', 'on', 'checkbox', '', '', '', 2),
 
 (@iCategoryId, 'sys_template_page_width_min', '_adm_stg_cpt_option_sys_template_page_width_min', '774', 'digit', '', '', '', 3),
@@ -310,8 +310,8 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_oauth_secret', '_adm_stg_cpt_option_sys_oauth_secret', '', 'digit', '', '', '', 5),
 (@iCategoryId, 'boonexAffID', '_adm_stg_cpt_option_boonex_aff_id', '', 'digit', '', '', '', 6),
 
-(@iCategoryId, 'currency_code', '_adm_stg_cpt_option_currency_code', 'USD', 'select', 'USD,EURO', 'return strlen($arg0) > 0;', 'Cannot be empty.', 7),
-(@iCategoryId, 'currency_sign', '_adm_stg_cpt_option_currency_sign', '&#36;', 'digit', '', 'return strlen($arg0) > 0;', 'Cannot be empty.', 8),
+(@iCategoryId, 'currency_code', '_adm_stg_cpt_option_currency_code', 'USD', 'select', 'USD,EURO', 'Avail', '_adm_stg_err_option_currency_code', 7),
+(@iCategoryId, 'currency_sign', '_adm_stg_cpt_option_currency_sign', '&#36;', 'digit', '', 'Avail', '_adm_stg_err_option_currency_sign', 8),
 
 (@iCategoryId, 'enable_gd', '_adm_stg_cpt_option_enable_gd', 'on', 'checkbox', '', '', '', 9),
 (@iCategoryId, 'useLikeOperator', '_adm_stg_cpt_option_use_like_operator', 'on', 'checkbox', '', '', '', 10);
@@ -728,7 +728,6 @@ CREATE TABLE `sys_modules` (
   `dependencies` varchar(255) NOT NULL default '',
   `date` int(11) unsigned NOT NULL default '0',
   `enabled` tinyint(1) NOT NULL default '0',
-  `pending_uninstall` tinyint(4) NOT NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `path` (`path`),
@@ -882,7 +881,7 @@ CREATE TABLE `sys_alerts_handlers` (
   `name` varchar(128) NOT NULL default '',
   `class` varchar(128) NOT NULL default '',
   `file` varchar(255) NOT NULL default '',
-  `eval` text NOT NULL default '', 
+  `service_call` text NOT NULL default '', 
   PRIMARY KEY  (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
@@ -963,20 +962,28 @@ INSERT INTO `sys_privacy_groups`(`id`, `title`, `check`, `active`, `visible`) VA
 
 -- --------------------------------------------------------
 
+
+--
+-- Table structure for table `sys_cron_jobs`
+--
+
 CREATE TABLE `sys_cron_jobs` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `name` varchar(128) NOT NULL default '',
   `time` varchar(128) NOT NULL default '*',
   `class` varchar(128) NOT NULL default '',
   `file` varchar(255) NOT NULL default '',
-  `eval` text NOT NULL default '', 
+  `service_call` text NOT NULL default '', 
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
-INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `eval`) VALUES
+--
+-- Dumping data for table `sys_cron_jobs`
+--
+
+INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VALUES
 ('cmd', '0 0 * * *', 'BxDolCronCmd', 'inc/classes/BxDolCronCmd.php', ''),
-('notifies', '*/10 * * * *', 'BxDolCronNotifies', 'inc/classes/BxDolCronNotifies.php', ''),
-('sys_storage', '* * * * *', 'BxDolCronStorage', 'inc/classes/BxDolCronStorage.php', '');
+('notifies', '*/10 * * * *', 'BxDolCronNotifies', 'inc/classes/BxDolCronNotifies.php', '');
 
 -- --------------------------------------------------------
 
@@ -1035,20 +1042,10 @@ CREATE TABLE IF NOT EXISTS `sys_storage_ghosts` (
   KEY `profile_object_content` (`profile_id`,`object`,`content_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `sys_storage_deletions` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `object` varchar(64) NOT NULL,
-  `file_id` int(11) NOT NULL,
-  `requested` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `object_file_id` (`object`,`file_id`),
-  KEY `requested` (`requested`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
 CREATE TABLE IF NOT EXISTS `sys_storage_mime_types` (
   `ext` varchar(32) NOT NULL,
   `mime_type` varchar(128) NOT NULL,
-  `icon` varchar(255) NOT NULL,
+  `icon` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`ext`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 

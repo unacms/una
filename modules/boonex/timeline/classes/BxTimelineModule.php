@@ -314,13 +314,6 @@ class BxTimelineModule extends BxDolModule
         return $aResults;
     }
 
-	public function serviceResponse($oAlert)
-    {
-    	bx_import('Response', $this->_aModule);
-        $oResponse = new BxTimelineResponse($this);
-        $oResponse->response($oAlert);
-    }
-
     /*
 	 * Get Post block for a separate page. 
 	 */
@@ -474,6 +467,12 @@ class BxTimelineModule extends BxDolModule
     		return '';
 
 		return $this->serviceGetShareCounter($sType, $sAction, $iObjectId);
+    }
+
+    public function serviceGetSettingsCheckerHelper()
+    {
+    	bx_import('FormCheckerHelper', $this->_aModule);
+    	return 'BxTimelineFormCheckerHelper';
     }
 
     /*

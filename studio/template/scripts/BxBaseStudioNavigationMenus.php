@@ -465,15 +465,17 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus {
     }
 
     protected function _getCellItems ($mixedValue, $sKey, $aField, $aRow) {
-        $aSets = array();
-        $this->oDb->getSets(array('type' => 'by_name', 'value' => $aRow['set_name']), $aSets, false);
+    	if(!empty($aRow['set_name'])) {
+	        $aSets = array();
+	        $this->oDb->getSets(array('type' => 'by_name', 'value' => $aRow['set_name']), $aSets, false);
 
-        $mixedValue = $this->_oTemplate->parseHtmlByName('bx_a.html', array(
-            'href' => sprintf($this->sUrlViewItems, $aRow['module'], $aRow['set_name']),
-            'title' => _t('_adm_nav_txt_manage_items'),
-        	'bx_repeat:attrs' => array(),
-            'content' => _t('_adm_nav_txt_n_items', $aSets['items_count'])
-        ));
+	        $mixedValue = $this->_oTemplate->parseHtmlByName('bx_a.html', array(
+	            'href' => sprintf($this->sUrlViewItems, $aRow['module'], $aRow['set_name']),
+	            'title' => _t('_adm_nav_txt_manage_items'),
+	        	'bx_repeat:attrs' => array(),
+	            'content' => _t('_adm_nav_txt_n_items', $aSets['items_count'])
+	        ));
+    	}
 
         return parent::_getCellDefault ($mixedValue, $sKey, $aField, $aRow);
     }
