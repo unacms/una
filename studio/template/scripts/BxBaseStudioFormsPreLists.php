@@ -131,22 +131,8 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists {
     public function performActionEdit() {
         $sAction = 'edit';
 
-        $aIds = bx_get('ids');
-        if(!$aIds || !is_array($aIds)) {
-            $iId = (int)bx_get('id');
-            if(!$iId) {
-                $this->_echoResultJson(array());
-                exit;
-            }
-
-            $aIds = array($iId);
-        }
-
-        $iId = $aIds[0];
-
-        $aList = array();
-        $this->oDb->getLists(array('type' => 'by_id', 'value' => $iId), $aList, false);
-        if(!is_array($aList) || empty($aList)){
+        $aList = $this->_getItem('getLists');
+        if($aList === false) {
             $this->_echoResultJson(array());
             exit;
         }
@@ -170,7 +156,7 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists {
             	'id' => array(
                     'type' => 'hidden',
                     'name' => 'id',
-                    'value' => $iId,
+                    'value' => $aList['id'],
                     'db' => array (
                         'pass' => 'Int',
                     ),
@@ -216,8 +202,8 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists {
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
-            if($oForm->update($iId) !== false)
-                $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
+            if($oForm->update($aList['id']) !== false)
+                $aRes = array('grid' => $this->getCode(false), 'blink' => $aList['id']);
             else
                 $aRes = array('msg' => _t('_adm_form_err_pre_lists_edit'));
 

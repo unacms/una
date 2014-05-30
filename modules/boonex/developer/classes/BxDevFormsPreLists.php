@@ -58,22 +58,8 @@ class BxDevFormsPreLists extends BxTemplStudioFormsPreLists {
     public function performActionEdit() {
         $sAction = 'edit';
 
-        $aIds = bx_get('ids');
-        if(!$aIds || !is_array($aIds)) {
-            $iId = (int)bx_get('id');
-            if(!$iId) {
-                $this->_echoResultJson(array());
-                exit;
-            }
-
-            $aIds = array($iId);
-        }
-
-        $iId = $aIds[0];
-
-        $aList = array();
-        $this->oDb->getLists(array('type' => 'by_id', 'value' => $iId), $aList, false);
-        if(!is_array($aList) || empty($aList)){
+    	$aList = $this->_getItem('getLists');
+        if($aList === false) {
             $this->_echoResultJson(array());
             exit;
         }
@@ -86,8 +72,8 @@ class BxDevFormsPreLists extends BxTemplStudioFormsPreLists {
 
         $oForm->initChecker($aList);
         if($oForm->isSubmittedAndValid()) {
-            if($oForm->update($iId) !== false)
-                $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
+            if($oForm->update($aList['id']) !== false)
+                $aRes = array('grid' => $this->getCode(false), 'blink' => $aList['id']);
             else
                 $aRes = array('msg' => _t('_bx_dev_frm_err_prelists_edit'));
 
@@ -95,7 +81,7 @@ class BxDevFormsPreLists extends BxTemplStudioFormsPreLists {
         }
         else {
             bx_import('BxTemplStudioFunctions');
-            $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-frm-prelist-edit-popup', _t('_bx_dev_frm_txt_prelists_edit_popup'), $this->oModule->_oTemplate->parseHtmlByName('form_add_list.html', array(
+            $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-frm-prelist-edit-popup', _t('_bx_dev_frm_txt_prelists_edit_popup', _t($aList['title'])), $this->oModule->_oTemplate->parseHtmlByName('form_add_list.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
                 'form' => $oForm->getCode(true),
                 'object' => $this->_sObject,

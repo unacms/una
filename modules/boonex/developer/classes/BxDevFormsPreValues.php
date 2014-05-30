@@ -69,22 +69,8 @@ class BxDevFormsPreValues extends BxTemplStudioFormsPreValues {
     public function performActionEdit() {
         $sAction = 'edit';
 
-        $aIds = bx_get('ids');
-        if(!$aIds || !is_array($aIds)) {
-            $iId = (int)bx_get('id');
-            if(!$iId) {
-                $this->_echoResultJson(array());
-                exit;
-            }
-
-            $aIds = array($iId);
-        }
-
-        $iId = $aIds[0];
-
-        $aValue = array();
-        $this->oDb->getValues(array('type' => 'by_id', 'value' => $iId), $aValue, false);
-        if(!is_array($aValue) || empty($aValue)){
+    	$aValue = $this->_getItem('getValues');
+        if($aValue === false) {
             $this->_echoResultJson(array());
             exit;
         }
@@ -97,9 +83,9 @@ class BxDevFormsPreValues extends BxTemplStudioFormsPreValues {
 
         $oForm->initChecker($aValue);
         if($oForm->isSubmittedAndValid()) {
-            if($oForm->update($iId) !== false) {
+            if($oForm->update($aValue['id']) !== false) {
                 $this->onSave($oForm);
-                $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
+                $aRes = array('grid' => $this->getCode(false), 'blink' => $aValue['id']);
             }
             else
                 $aRes = array('msg' => _t('_bx_dev_frm_err_prevalues_edit'));

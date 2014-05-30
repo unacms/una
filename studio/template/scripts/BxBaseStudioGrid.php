@@ -19,5 +19,26 @@ class BxBaseStudioGrid extends BxDolStudioGrid {
     function getJsObject() {
         return '';
     }
+
+	protected function _getItem($sDbMethod = '')
+    {
+    	$aIds = bx_get('ids');
+        if(!$aIds || !is_array($aIds)) {
+            $iId = (int)bx_get('id');
+            if(!$iId) 
+            	return false;
+
+            $aIds = array($iId);
+        }
+
+        $iId = $aIds[0];
+
+        $aItem = array();
+        $this->oDb->$sDbMethod(array('type' => 'by_id', 'value' => $iId), $aItem, false);
+        if(!is_array($aItem) || empty($aItem))
+        	return false; 
+
+        return $aItem;
+    }
 }
 /** @} */

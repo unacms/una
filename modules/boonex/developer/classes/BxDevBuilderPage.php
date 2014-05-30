@@ -32,53 +32,8 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage {
     }
 
     function getBlockPanelTop($aParams = array()) {
-        $sJsObject = $this->getPageJsObject();
-
-        $oForm = new BxTemplStudioFormView(array());
-
-        $aInputPages = array(
-            'type' => 'select',
-            'name' => 'page',
-            'attrs' => array(
-            	'onChange' => 'javascript:' . $this->getPageJsObject() . '.onChangePage(this)'
-            ),
-            'value' => $this->sPage,
-            'values' => array(
-                array('key' => '', 'value' => _t('_adm_bp_txt_select_page'))
-            )
-        );
-
-        $aPages = $aCounter = array();
-        $this->oDb->getPages(array('type' => 'by_module', 'value' => $this->sType), $aPages, false);
-        $this->oDb->getBlocks(array('type' => 'counter_by_pages'), $aCounter, false);
-        foreach($aPages as $aPage)
-            $aInputPages['values'][] = array('key' => $aPage['object'], 'value' => _t($aPage['title_system']) . " (" . (isset($aCounter[$aPage['object']]) ? $aCounter[$aPage['object']] : "0") . ")");
-
-        bx_import('BxDolPermalinks');
-        $oPermalinks = BxDolPermalinks::getInstance();
-
-        $aTmplVarsActions = array();
-        if(($this->sPage != '' && !empty($this->aPageRebuild)) !== false)
-            $aTmplVarsActions = array(
-                'js_object' => $sJsObject,
-        		'url_view' => BX_DOL_URL_ROOT . $oPermalinks->permalink($this->aPageRebuild['url']),
-                'action_page_export' => $this->sActionPageExport,
-            	'action_page_edit' => $this->sActionPageEdit,
-                'action_block_create' => $this->sActionBlockCreate,
-            );
-
-        $aTmplVars = array(
-        	'js_object' => $this->getPageJsObject(),
-            'selector' => $oForm->genRow($aInputPages),
-        	'action_page_create' => $this->sActionPageCreate,
-            'bx_if:show_actions' => array(
-                'condition' => $this->sPage != '',
-                'content' => $aTmplVarsActions
-            )
-        );
-
-        return BxBaseStudioPage::getBlockPanelTop(
-            array('panel_top' => $this->oModule->_oTemplate->parseHtmlByName('bp_block_panel_top.html', $aTmplVars))
+         return BxBaseStudioPage::getBlockPanelTop(
+            array('panel_top' => $this->oModule->_oTemplate->parseHtmlByName('bp_block_panel_top.html', $this->_getTmplVarsBlockPanelTop()))
         );
     }
 
@@ -434,6 +389,22 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage {
             $sValue = BxDevFunctions::serializeString($sValue);
             BxDolForm::setSubmittedValue('content', $sValue, $oForm->aFormAttrs['method']);
         }
+    }
+
+	protected function _getTmplVarsBlockPanelTopActions()
+    {
+    	$sJsObject = $this->getPageJsObject();
+
+    	bx_import('BxDolPermalinks');
+        $oPermalinks = BxDolPermalinks::getInstance();
+
+    	return array(
+			'js_object' => $sJsObject,
+        	'url_view' => BX_DOL_URL_ROOT . $oPermalinks->permalink($this->aPageRebuild['url']),
+            'action_page_export' => $this->sActionPageExport,
+            'action_page_edit' => $this->sActionPageEdit,
+            'action_block_create' => $this->sActionBlockCreate,
+		);
     }
 }
 /** @} */

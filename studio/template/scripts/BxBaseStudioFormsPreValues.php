@@ -152,22 +152,8 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues {
     public function performActionEdit() {
         $sAction = 'edit';
 
-        $aIds = bx_get('ids');
-        if(!$aIds || !is_array($aIds)) {
-            $iId = (int)bx_get('id');
-            if(!$iId) {
-                $this->_echoResultJson(array());
-                exit;
-            }
-
-            $aIds = array($iId);
-        }
-
-        $iId = $aIds[0];
-
-        $aValue = array();
-        $this->oDb->getValues(array('type' => 'by_id', 'value' => $iId), $aValue, false);
-        if(!is_array($aValue) || empty($aValue)){
+	    $aValue = $this->_getItem('getValues');
+        if($aValue === false) {
             $this->_echoResultJson(array());
             exit;
         }
@@ -195,7 +181,7 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues {
             	'id' => array(
                     'type' => 'hidden',
                     'name' => 'id',
-                    'value' => $iId,
+                    'value' => $aValue['id'],
                     'db' => array (
                         'pass' => 'Int',
                     ),
@@ -270,8 +256,8 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues {
                 }
             }
 
-            if($oForm->update($iId, $aAdd) !== false)
-                $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
+            if($oForm->update($aValue['id'], $aAdd) !== false)
+                $aRes = array('grid' => $this->getCode(false), 'blink' => $aValue['id']);
             else
                 $aRes = array('msg' => _t('_adm_form_err_pre_values_edit'));
 
