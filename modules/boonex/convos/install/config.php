@@ -37,6 +37,11 @@ $aConfig = array(
     'class_prefix' => 'BxCnv',
 
     /**
+     * Category for language keys.
+     */
+    'language_category' => 'Convos',
+
+    /**
      * Installation/Uninstallation Section.
      */
     'install' => array(
@@ -67,31 +72,7 @@ $aConfig = array(
     /**
      * Dependencies Section
      */
-    'dependencies' => array(
-    ),
-
-    /**
-     * Category for language keys.
-     */
-    'language_category' => 'Convos',
-
-    /**
-     * Permissions Section
-     */
-    'install_permissions' => array(),
-    'uninstall_permissions' => array(),
-
-    /**
-     * Introduction and Conclusion Section.
-     */
-    'install_info' => array(
-        'introduction' => '',
-        'conclusion' => ''
-    ),
-    'uninstall_info' => array(
-        'introduction' => '',
-        'conclusion' => ''
-    )
+    'dependencies' => array(),
 );
 
 /** @} */ 

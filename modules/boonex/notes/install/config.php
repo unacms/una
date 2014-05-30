@@ -37,6 +37,11 @@ $aConfig = array(
     'class_prefix' => 'BxNotes',
 
     /**
+     * Category for language keys.
+     */
+    'language_category' => 'Notes',
+
+    /**
      * Installation/Uninstallation Section.
      */
     'install' => array(
@@ -67,31 +72,8 @@ $aConfig = array(
     /**
      * Dependencies Section
      */
-    'dependencies' => array(
-    ),
+    'dependencies' => array(),
 
-    /**
-     * Category for language keys.
-     */
-    'language_category' => 'Notes',
-
-    /**
-     * Permissions Section
-     */
-    'install_permissions' => array(),
-    'uninstall_permissions' => array(),
-
-    /**
-     * Introduction and Conclusion Section.
-     */
-    'install_info' => array(
-        'introduction' => '',
-        'conclusion' => ''
-    ),
-    'uninstall_info' => array(
-        'introduction' => '',
-        'conclusion' => ''
-    )
 );
 
 /** @} */ 
