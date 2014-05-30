@@ -19,6 +19,18 @@ DELETE FROM `sys_form_displays` WHERE `module` = 'bx_notes';
 DELETE FROM `sys_form_inputs` WHERE `module` = 'bx_notes';
 DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN ('bx_notes_entry_add', 'bx_notes_entry_edit', 'bx_notes_entry_view', 'bx_notes_entry_delete');
 
+-- COMMENTS
+
+DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_notes';
+
+-- VOTES
+
+DELETE FROM `sys_objects_vote` WHERE `Name` = 'bx_notes';
+
+-- VIEWS
+
+DELETE FROM `sys_objects_view` WHERE `Name` = 'bx_notes';
+
 -- STUDIO: page & widget
 
 DELETE FROM `tp`, `tw`, `tpw`

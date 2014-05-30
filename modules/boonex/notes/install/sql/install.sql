@@ -158,6 +158,21 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_notes_entry_delete', 'text', 2147483647, 0, 0),
 ('bx_notes_entry_delete', 'title', 2147483647, 0, 0);
 
+-- COMMENTS
+
+INSERT INTO `sys_objects_cmts` (`Name`, `Table`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Nl2br`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `BaseUrl`, `ObjectVote`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldTitle`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES
+('bx_notes', 'bx_notes_cmts', 1, 5000, 1000, 1, 5, 3, 'tail', 1, 'bottom', 1, 1, 0, -3, 1, 'cmt', 'page/view-note&id={object_id}', '', 'bx_notes_posts', 'id', 'title', 'comments', '', '');
+
+-- VOTES
+
+INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
+('bx_notes', 'bx_notes_votes', 'bx_notes_votes_track', '604800', '1', '1', '1', '1', 'bx_notes_posts', 'id', 'rate', 'votes', '', '');
+
+-- VIEWS
+
+INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_notes', 'bx_notes_views_track', '86400', '1', 'bx_notes_posts', 'id', 'views', '', '');
+
 -- STUDIO: page & widget
 
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
