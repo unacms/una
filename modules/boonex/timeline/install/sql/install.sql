@@ -157,6 +157,24 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_votes_track` (
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;
 
 
+-- STORAGES, TRANSCODERS, UPLOADERS
+INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
+('bx_timeline_simple', 1, 'BxTimelineUploaderSimple', 'modules/boonex/timeline/classes/BxTimelineUploaderSimple.php');
+
+INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
+('bx_timeline_photos', 'Local', '', 360, 2592000, 3, 'bx_timeline_photos', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
+('bx_timeline_photos_preview', 'Local', '', 360, 2592000, 3, 'bx_timeline_photos_preview', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
+('bx_timeline_photos_view', 'Local', '', 360, 2592000, 3, 'bx_timeline_photos_view', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0);
+
+INSERT INTO `sys_objects_transcoder_images` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`) VALUES
+('bx_timeline_photos_preview', 'bx_timeline_photos_preview', 'Storage', 'a:1:{s:6:"object";s:18:"bx_timeline_photos";}', 'no', '1', '2592000', '0'),
+('bx_timeline_photos_view', 'bx_timeline_photos_view', 'Storage', 'a:1:{s:6:"object";s:18:"bx_timeline_photos";}', 'no', '1', '2592000', '0');
+
+INSERT INTO `sys_transcoder_images_filters` (`transcoder_object`, `filter`, `filter_params`, `order`) VALUES
+('bx_timeline_photos_preview', 'Resize', 'a:4:{s:1:"w";s:3:"100";s:1:"h";s:3:"100";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0'),
+('bx_timeline_photos_view', 'Resize', 'a:4:{s:1:"w";s:3:"318";s:1:"h";s:3:"318";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0');
+
+
 -- Forms -> Post
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
 ('mod_tml_post', @sName, '_bx_timeline_form_post', '', '', 'do_submit', 'bx_timeline_events', 'id', '', '', '', 0, 1, '', '');
