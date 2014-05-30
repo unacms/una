@@ -200,6 +200,6 @@ INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `B
 
 -- cron
 
-INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `eval`) VALUES
+INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VALUES
 ('bx_antispam_pruning', '0 0 * * *', 'BxAntispamCronPruning', 'modules/boonex/antispam/classes/BxAntispamCronPruning.php', '');
 
