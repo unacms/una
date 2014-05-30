@@ -7,17 +7,6 @@ DELETE FROM `sys_options` WHERE `category_id` = @iCategId;
 DELETE FROM `sys_options_categories` WHERE `type_id` = @iTypeId;
 DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 
--- STORAGES & TRANSCODERS
-
-DELETE FROM `sys_objects_storage` WHERE `object` IN('bx_organizations_pics', 'bx_organizations_pics_resized');
-DELETE FROM `sys_storage_tokens` WHERE `object` IN('bx_organizations_pics', 'bx_organizations_pics_resized');
-
-DELETE FROM `sys_objects_transcoder_images` WHERE `object` IN('bx_organizations_icon', 'bx_organizations_thumb', 'bx_organizations_avatar', 'bx_organizations_picture', 'bx_organizations_cover', 'bx_organizations_cover_thumb');
-DELETE FROM `sys_transcoder_images_filters` WHERE `transcoder_object` IN('bx_organizations_icon', 'bx_organizations_thumb', 'bx_organizations_avatar', 'bx_organizations_picture', 'bx_organizations_cover', 'bx_organizations_cover_thumb');
-DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_organizations_icon', 'bx_organizations_thumb', 'bx_organizations_avatar', 'bx_organizations_picture', 'bx_organizations_cover', 'bx_organizations_cover_thumb');
--- TODO: delete resized picture files as well
-TRUNCATE TABLE `bx_organizations_pics_resized`; 
-
 -- PAGES
 
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_organizations';

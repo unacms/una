@@ -9,16 +9,15 @@
  * @{
  */
 
-bx_import('BxDolStudioInstaller');
-bx_import('BxDolImageTranscoder');
+bx_import('BxBaseModProfileInstaller');
 
-class BxPersonsInstaller extends BxDolStudioInstaller 
+class BxPersonsInstaller extends BxBaseModProfileInstaller 
 {
-    protected $_aTranscoders = array ('bx_persons_thumb', 'bx_persons_avatar');
-
     function __construct($aConfig) 
     {
         parent::__construct($aConfig);
+        $this->_aTranscoders = array ('bx_persons_icon', 'bx_persons_thumb', 'bx_persons_avatar', 'bx_persons_picture', 'bx_persons_cover', 'bx_persons_cover_thumb');
+        $this->_aStorages = array ('bx_persons_pictures');
     }
 }
 

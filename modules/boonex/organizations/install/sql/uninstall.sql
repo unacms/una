@@ -1,18 +1,20 @@
 
--- TABLE: PROFILES 
+-- TABLES
 
-DROP TABLE IF EXISTS `bx_organizations_data`;
+DROP TABLE IF EXISTS `bx_organizations_data`, `bx_organizations_pics`, `bx_organizations_pics_resized`, `bx_organizations_views_track`;
+
+-- PROFILES
+
 DELETE FROM sys_profiles WHERE `type` = 'bx_organizations';
 
--- TABLE: STORAGES & TRANSCODERS
+-- STORAGES & TRANSCODERS
 
--- TODO: delete picture files as well
-DROP TABLE IF EXISTS `bx_organizations_pics`; 
-DROP TABLE IF EXISTS `bx_organizations_pics_resized`;
+DELETE FROM `sys_objects_storage` WHERE `object` IN('bx_organizations_pics', 'bx_organizations_pics_resized');
+DELETE FROM `sys_storage_tokens` WHERE `object` IN('bx_organizations_pics', 'bx_organizations_pics_resized');
 
--- TABLE: VIEWS
-
-DROP TABLE IF EXISTS `bx_organizations_views_track`;
+DELETE FROM `sys_objects_transcoder_images` WHERE `object` IN('bx_organizations_icon', 'bx_organizations_thumb', 'bx_organizations_avatar', 'bx_organizations_picture', 'bx_organizations_cover', 'bx_organizations_cover_thumb');
+DELETE FROM `sys_transcoder_images_filters` WHERE `transcoder_object` IN('bx_organizations_icon', 'bx_organizations_thumb', 'bx_organizations_avatar', 'bx_organizations_picture', 'bx_organizations_cover', 'bx_organizations_cover_thumb');
+DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_organizations_icon', 'bx_organizations_thumb', 'bx_organizations_avatar', 'bx_organizations_picture', 'bx_organizations_cover', 'bx_organizations_cover_thumb');
 
 -- FORMS
 
