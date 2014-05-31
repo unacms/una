@@ -220,10 +220,6 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_version', '', @sSysVersion, 'digit', '', '', '', 2),
 (@iCategoryId, 'sys_install_time', '', '0', 'digit', '', '', '', 3),
 
-(@iCategoryId, 'sys_html_fields', '', 'a:1:{s:6:"system";a:4:{i:0;s:12:"POST.message";i:1;s:15:"REQUEST.message";i:2;s:12:"POST.CmtText";i:3;s:15:"REQUEST.CmtText";}}', 'text', '', '', '', 10),
-(@iCategoryId, 'sys_json_fields', '', '', 'text', '', '', '', 11),
-(@iCategoryId, 'sys_exceptions_fields', '', '', 'text', '', '', '', 12),
-
 (@iCategoryId, 'sys_site_logo', '', '0', 'digit', '', '', '', 20),
 (@iCategoryId, 'sys_site_logo_alt', '_adm_dsg_txt_alt_text', '0', 'text', '', '', '', 21),
 (@iCategoryId, 'sys_site_icon', '', '0', 'digit', '', '', '', 22),
@@ -367,8 +363,6 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `or
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'sys_security_impact_threshold_log', '_adm_stg_cpt_option_sys_security_impact_threshold_log', '-1', 'digit', '', '', '', 4),
-(@iCategoryId, 'sys_security_impact_threshold_block', '_adm_stg_cpt_option_sys_security_impact_threshold_block', '-1', 'digit', '', '', '', 5),
 (@iCategoryId, 'sys_security_form_token_enable', '_adm_stg_cpt_option_sys_security_form_token_enable', 'on', 'checkbox', '', '', '', 6),
 (@iCategoryId, 'sys_security_form_token_lifetime', '_adm_stg_cpt_option_sys_security_form_token_lifetime', '86400', 'digit', '', '', '', 7),
 (@iCategoryId, 'sys_recaptcha_key_public', '_adm_stg_cpt_option_sys_recaptcha_key_public', '', 'digit', '', '', '', 14),
