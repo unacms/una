@@ -455,14 +455,36 @@ CREATE TABLE `sys_acl_actions` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('system', 'vote', NULL, '_sys_acl_action_vote', '', 0, 0),
-('system', 'comments post', NULL, '_sys_acl_action_comments_post', '', 0, 1),
-('system', 'comments edit own', NULL, '_sys_acl_action_comments_edit_own', '', 0, 1),
-('system', 'comments remove own', NULL, '_sys_acl_action_comments_remove_own', '', 0, 1),
-('system', 'comments edit all', NULL, '_sys_acl_action_comments_edit_all', '', 0, 1),
-('system', 'comments remove all', NULL, '_sys_acl_action_comments_remove_all', '', 0, 1),
-('system', 'create account', NULL, '_sys_acl_action_create_account', '_sys_acl_action_create_account_desc', 0, 2147483646),
+('system', 'vote', NULL, '_sys_acl_action_vote', '', 0, 0);
+SET @iIdActionVote = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('system', 'comments post', NULL, '_sys_acl_action_comments_post', '', 0, 1);
+SET @iIdActionCmtPost = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('system', 'comments edit own', NULL, '_sys_acl_action_comments_edit_own', '', 0, 1);
+SET @iIdActionCmtEditOwn = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('system', 'comments remove own', NULL, '_sys_acl_action_comments_remove_own', '', 0, 1);
+SET @iIdActionCmtRemoveOwn = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('system', 'comments edit all', NULL, '_sys_acl_action_comments_edit_all', '', 0, 1);
+SET @iIdActionCmtEditAll = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('system', 'comments remove all', NULL, '_sys_acl_action_comments_remove_all', '', 0, 1);
+SET @iIdActionCmtRemoveAll = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('system', 'create account', NULL, '_sys_acl_action_create_account', '_sys_acl_action_create_account_desc', 0, 2147483646);
+SET @iIdActionAccountCreate = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('system', 'delete account', NULL, '_sys_acl_action_delete_account', '_sys_acl_action_delete_account_desc', 0, 2147483646);
+SET @iIdActionAccountDelete = LAST_INSERT_ID();
 
 
 CREATE TABLE `sys_acl_actions_track` (
@@ -498,53 +520,47 @@ SET @iPremium = 8;
 INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
 -- vote 
-(@iStandard, 3),
-(@iModerator, 3),
-(@iAdministrator, 3),
-(@iPremium, 3),
+(@iStandard, @iIdActionVote),
+(@iModerator, @iIdActionVote),
+(@iAdministrator, @iIdActionVote),
+(@iPremium, @iIdActionVote),
 
--- commets post
-(@iStandard, 6),
-(@iModerator, 6),
-(@iAdministrator, 6),
-(@iPremium, 6),
+-- comments post
+(@iStandard, @iIdActionCmtPost),
+(@iModerator, @iIdActionCmtPost),
+(@iAdministrator, @iIdActionCmtPost),
+(@iPremium, @iIdActionCmtPost),
 
--- commets vote
-(@iStandard, 7),
-(@iModerator, 7),
-(@iAdministrator, 7),
-(@iPremium, 7),
+-- comments edit own
+(@iStandard, @iIdActionCmtEditOwn),
+(@iModerator, @iIdActionCmtEditOwn),
+(@iAdministrator, @iIdActionCmtEditOwn),
+(@iPremium, @iIdActionCmtEditOwn),
 
--- commets edit own
-(@iStandard, 8),
-(@iModerator, 8),
-(@iAdministrator, 8),
-(@iPremium, 8),
+-- comments remove own
+(@iStandard, @iIdActionCmtRemoveOwn),
+(@iModerator, @iIdActionCmtRemoveOwn),
+(@iAdministrator, @iIdActionCmtRemoveOwn),
+(@iPremium, @iIdActionCmtRemoveOwn),
 
--- commets remove own
-(@iStandard, 9),
-(@iModerator, 9),
-(@iAdministrator, 9),
-(@iPremium, 9),
+-- comments edit all
+(@iModerator, @iIdActionCmtEditAll),
+(@iAdministrator, @iIdActionCmtEditAll),
 
--- commets edit all
-(@iModerator, 10),
-(@iAdministrator, 10),
-
--- commets remove all
-(@iModerator, 11),
-(@iAdministrator, 11),
+-- comments remove all
+(@iModerator, @iIdActionCmtRemoveAll),
+(@iAdministrator, @iIdActionCmtRemoveAll),
 
 -- account create
-(@iUnauthenticated, 12),
+(@iUnauthenticated, @iIdActionAccountCreate),
 
 -- account delete
-(@iStandard, 13),
-(@iUnconfirmed, 13),
-(@iPending, 13),
-(@iModerator, 13),
-(@iAdministrator, 13),
-(@iPremium, 13);
+(@iStandard, @iIdActionAccountDelete),
+(@iUnconfirmed, @iIdActionAccountDelete),
+(@iPending, @iIdActionAccountDelete),
+(@iModerator, @iIdActionAccountDelete),
+(@iAdministrator, @iIdActionAccountDelete),
+(@iPremium, @iIdActionAccountDelete);
 
 
 CREATE TABLE `sys_acl_levels` (
