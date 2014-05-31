@@ -454,15 +454,15 @@ CREATE TABLE `sys_acl_actions` (
   FULLTEXT KEY `ModuleAndName` (`Module`, `Name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
-INSERT INTO `sys_acl_actions` (`ID`, `Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-(3, 'system', 'vote', NULL, '_sys_acl_action_vote', '', 0, 0),
-(6, 'system', 'comments post', NULL, '_sys_acl_action_comments_post', '', 0, 1),
-(8, 'system', 'comments edit own', NULL, '_sys_acl_action_comments_edit_own', '', 0, 1),
-(9, 'system', 'comments remove own', NULL, '_sys_acl_action_comments_remove_own', '', 0, 1),
-(10, 'system', 'comments edit all', NULL, '_sys_acl_action_comments_edit_all', '', 0, 1),
-(11, 'system', 'comments remove all', NULL, '_sys_acl_action_comments_remove_all', '', 0, 1),
-(12, 'system', 'create account', NULL, '_sys_acl_action_create_account', '_sys_acl_action_create_account_desc', 0, 2147483646),
-(13, 'system', 'delete account', NULL, '_sys_acl_action_delete_account', '_sys_acl_action_delete_account_desc', 0, 2147483646);
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('system', 'vote', NULL, '_sys_acl_action_vote', '', 0, 0),
+('system', 'comments post', NULL, '_sys_acl_action_comments_post', '', 0, 1),
+('system', 'comments edit own', NULL, '_sys_acl_action_comments_edit_own', '', 0, 1),
+('system', 'comments remove own', NULL, '_sys_acl_action_comments_remove_own', '', 0, 1),
+('system', 'comments edit all', NULL, '_sys_acl_action_comments_edit_all', '', 0, 1),
+('system', 'comments remove all', NULL, '_sys_acl_action_comments_remove_all', '', 0, 1),
+('system', 'create account', NULL, '_sys_acl_action_create_account', '_sys_acl_action_create_account_desc', 0, 2147483646),
+('system', 'delete account', NULL, '_sys_acl_action_delete_account', '_sys_acl_action_delete_account_desc', 0, 2147483646);
 
 
 CREATE TABLE `sys_acl_actions_track` (

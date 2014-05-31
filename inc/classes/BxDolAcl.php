@@ -38,18 +38,6 @@ define('CHECK_ACTION_LANG_FILE_BEFORE', 6);
 define('CHECK_ACTION_LANG_FILE_SITE_EMAIL',	7);
 
 /**
- * Action ID's
- */
-define('ACTION_ID_VOTE', 3);
-define('ACTION_ID_COMMENTS_POST', 6);
-define('ACTION_ID_COMMENTS_EDIT_OWN', 8);
-define('ACTION_ID_COMMENTS_REMOVE_OWN', 9);
-define('ACTION_ID_COMMENTS_EDIT_ALL', 10);
-define('ACTION_ID_COMMENTS_REMOVE_ALL', 11);
-define('ACTION_ID_CREATE_ACCOUNT', 12);
-define('ACTION_ID_DELETE_ACCOUNT', 13);
-
-/**
  * Standard membership ID's
  */
 define('MEMBERSHIP_ID_NON_MEMBER', 1);

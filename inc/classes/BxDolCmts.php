@@ -95,10 +95,10 @@ define('BX_CMT_RATE_VALUE_MINUS', -1);
  *
  *
  * @section acl Memberships/ACL:
- * - comments post - ACTION_ID_COMMENTS_POST
- * - comments vote - ACTION_ID_COMMENTS_VOTE
- * - comments edit own - ACTION_ID_COMMENTS_EDIT_OWN
- * - comments remove own - ACTION_ID_COMMENTS_REMOVE_OWN
+ * - comments post
+ * - comments edit own
+ * - comments remove own 
+ * - comments edit all
  *
  *
  *
@@ -309,7 +309,8 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 	/**
      * it is called on cron every day or similar period to clean old comment votes
      */
-    public static function maintenance() {        
+    public static function maintenance() 
+    {
         $iResult = 0;
         $oDb = BxDolDb::getInstance();
 
@@ -458,7 +459,8 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
      * @param $a array of markers as key => value
      * @return true on success or false on error
      */
-    public function addMarkers ($a) {
+    public function addMarkers ($a) 
+    {
         if (empty($a) || !is_array($a))
             return false;
         $this->_aMarkers = array_merge ($this->_aMarkers, $a);
@@ -563,18 +565,18 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
     /** 
      * Permissions functions
      */
-    public function checkAction ($iAction, $isPerformAction = false)
+    public function checkAction ($sAction, $isPerformAction = false)
     {
         $iId = $this->_getAuthorId();
-        $check_res = checkAction($iId, $iAction, $isPerformAction);
-        return $check_res[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED;
+        $a = checkActionModule($iId, $sAction, 'system', $isPerformAction);
+        return $a[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED;
     }
 
-    public function checkActionErrorMsg ($iAction)
+    public function checkActionErrorMsg ($sAction)
     {
         $iId = $this->_getAuthorId();
-        $check_res = checkAction($iId, $iAction);
-        return $check_res[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $check_res[CHECK_ACTION_MESSAGE] : '';
+        $a = checkActionModule($iId, $sAction, 'system');
+        return $a[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $a[CHECK_ACTION_MESSAGE] : '';
     }
 
     public function isVoteAllowed ($aCmt, $isPerformAction = false)
@@ -596,19 +598,14 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         return $oVote->isAllowedVote($isPerformAction); 
     }
 
-    public function msgErrVoteAllowed ()
-    { 
-        return $this->checkActionErrorMsg(ACTION_ID_VOTE);
-    }
-
     public function isPostReplyAllowed ($isPerformAction = false)
     {
-        return $this->checkAction (ACTION_ID_COMMENTS_POST, $isPerformAction);
+        return $this->checkAction ('comments post', $isPerformAction);
     }
 
     public function msgErrPostReplyAllowed ()
     {
-        return $this->checkActionErrorMsg(ACTION_ID_COMMENTS_POST);
+        return $this->checkActionErrorMsg('comments post');
     }
 
     public function isEditAllowed ($aCmt, $isPerformAction = false)
@@ -616,15 +613,15 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
     	if(isAdmin())
     		return true;
 
-		if($aCmt['cmt_author_id'] == $this->_getAuthorId() && $this->checkAction (ACTION_ID_COMMENTS_EDIT_OWN, $isPerformAction))
+		if($aCmt['cmt_author_id'] == $this->_getAuthorId() && $this->checkAction ('comments edit own', $isPerformAction))
 			return true;
 
-        return $this->checkAction(ACTION_ID_COMMENTS_EDIT_ALL, $isPerformAction);
+        return $this->checkAction('comments edit all', $isPerformAction);
     }
 
     public function msgErrEditAllowed ()
     {
-        return $this->checkActionErrorMsg (ACTION_ID_COMMENTS_EDIT_OWN);
+        return $this->checkActionErrorMsg ('comments edit own');
     }
 
     public function isRemoveAllowed ($aCmt, $isPerformAction = false)
@@ -632,23 +629,24 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
     	if(isAdmin())
     		return true;
 
-		if($aCmt['cmt_author_id'] == $this->_getAuthorId() && $this->checkAction (ACTION_ID_COMMENTS_REMOVE_OWN, $isPerformAction))
+		if($aCmt['cmt_author_id'] == $this->_getAuthorId() && $this->checkAction ('comments remove own', $isPerformAction))
 			return true;
 
-        return $this->checkAction (ACTION_ID_COMMENTS_REMOVE_ALL, $isPerformAction);
+        return $this->checkAction ('comments remove all', $isPerformAction);
     }
 
     public function msgErrRemoveAllowed ()
     {
-        return $this->checkActionErrorMsg(ACTION_ID_COMMENTS_REMOVE_OWN);
+        return $this->checkActionErrorMsg('comments remove own');
     }
 
     /**
      * Actions functions
      */
-    public function actionGetFormPost () {
+    public function actionGetFormPost () 
+    {
         if (!$this->isEnabled())
-           return '';
+            return '';
 
         $iCmtParentId= isset($_REQUEST['CmtParent']) ? bx_process_input($_REQUEST['CmtParent'], BX_DATA_INT) : 0;
         $sCmtBrowse = isset($_REQUEST['CmtBrowse']) ? bx_process_input($_REQUEST['CmtBrowse'], BX_DATA_TEXT) : '';
@@ -668,9 +666,10 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         $this->_echoResultJson($this->getFormEdit($iCmtId));
     }
 
-    public function actionGetCmt () {
+    public function actionGetCmt () 
+    {
         if (!$this->isEnabled())
-           return '';
+            return '';
 
         $iCmtId = bx_process_input($_REQUEST['Cmt'], BX_DATA_INT);
         $sCmtBrowse = isset($_REQUEST['CmtBrowse']) ? bx_process_input($_REQUEST['CmtBrowse'], BX_DATA_TEXT) : '';
@@ -684,9 +683,10 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         ));
     }
 
-    public function actionGetCmts () {
+    public function actionGetCmts () 
+    {
         if (!$this->isEnabled())
-           return '';
+            return '';
 
         $iCmtVParentId = bx_process_input($_REQUEST['CmtParent'], BX_DATA_INT);
         $iCmtStart = isset($_REQUEST['CmtStart']) ? bx_process_input($_REQUEST['CmtStart'], BX_DATA_INT) : -1;
@@ -927,7 +927,8 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
      * @param $mixed string or array to replace markers in
      * @return string where all occured markers are replaced
      */ 
-    protected function _replaceMarkers ($mixed) {
+    protected function _replaceMarkers ($mixed) 
+    {
         return bx_replace_markers($mixed, $this->_aMarkers);
     }
 

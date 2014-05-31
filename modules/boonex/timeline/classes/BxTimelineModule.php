@@ -655,6 +655,8 @@ class BxTimelineModule extends BxDolModule
     }
 
     //--- Check permissions methods ---//
+
+    // TODO: this function is incorrect ,$iAction is never defined, also it looks like it is not used anywhere: rewrite it or delete
     public function checkActionErrorMsg ($iAction)
     {
         $iId = $this->_getAuthorId();

@@ -71,7 +71,7 @@ define('BX_DOL_VOTE_USAGE_DEFAULT', BX_DOL_VOTE_USAGE_BLOCK);
  *
  *
  * @section acl Memberships/ACL:
- * vote - ACTION_ID_VOTE
+ * - vote
  *
  *
  *
@@ -294,18 +294,18 @@ class BxDolVote extends BxDolObject
     /** 
      * Permissions functions
      */
-	public function checkAction ($iAction, $isPerformAction = false)
+	public function checkAction ($sAction, $isPerformAction = false)
     {
         $iId = $this->_getAuthorId();
-        $check_res = checkAction($iId, $iAction, $isPerformAction);
-        return $check_res[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED;
+        $a = checkActionModule($iId, $sAction, 'system', $isPerformAction);
+        return $a[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED;
     }
 
-    public function checkActionErrorMsg ($iAction)
+    public function checkActionErrorMsg ($sAction)
     {
         $iId = $this->_getAuthorId();
-        $check_res = checkAction($iId, $iAction);
-        return $check_res[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $check_res[CHECK_ACTION_MESSAGE] : '';
+        $a = checkActionModule($iId, $sAction, 'system');
+        return $a[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $a[CHECK_ACTION_MESSAGE] : '';
     }
 
 	public function isAllowedVote($isPerformAction = false)
@@ -313,12 +313,12 @@ class BxDolVote extends BxDolObject
     	if(isAdmin())
     		return true;
 
-        return $this->checkAction(ACTION_ID_VOTE, $isPerformAction); 
+        return $this->checkAction('vote', $isPerformAction); 
     }
 
     public function msgErrAllowedVote()
     { 
-        return $this->checkActionErrorMsg(ACTION_ID_VOTE);
+        return $this->checkActionErrorMsg('vote');
     }
 
     function onObjectDelete($iObjectId = 0)
