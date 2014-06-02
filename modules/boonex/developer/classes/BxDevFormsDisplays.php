@@ -40,18 +40,7 @@ class BxDevFormsDisplays extends BxTemplStudioFormsDisplays {
 
         bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance('mod_dev_forms_display', 'mod_dev_forms_display_add');
-        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&object=' . $this->sObject;
-        $oForm->aInputs['module']['values'] = array_merge(array('' => _t('_bx_dev_frm_txt_select_module')), BxDolStudioUtils::getModules());
-        $oForm->aInputs['module']['value'] = $this->sModule;
-
-        $aForms = array();
-        $this->oDb->getForms(array('type' => 'by_module', 'value' => $this->sModule), $aForms, false);
-        foreach($aForms as $aForm)
-            $oForm->aInputs['object']['values'][$aForm['object']] = _t($aForm['title']);
-
-        asort($oForm->aInputs['object']['values']);
-        $oForm->aInputs['object']['values'] = array_merge(array('' => _t('_bx_dev_frm_txt_select_object')), $oForm->aInputs['object']['values']);
-        $oForm->aInputs['object']['value'] = $this->sObject;
+        $this->_fillDisplayForm($oForm, $sAction);
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
@@ -103,18 +92,8 @@ class BxDevFormsDisplays extends BxTemplStudioFormsDisplays {
 
         bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance('mod_dev_forms_display', 'mod_dev_forms_display_edit');
-        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&object=' . $this->sObject;
-        $oForm->aInputs['module']['values'] = array_merge(array('' => _t('_bx_dev_frm_txt_select_module')), BxDolStudioUtils::getModules());
-        $oForm->aInputs['module']['value'] = $this->sModule;
 
-        $aForms = array();
-        $this->oDb->getForms(array('type' => 'by_module', 'value' => $this->sModule), $aForms, false);
-        foreach($aForms as $aForm)
-            $oForm->aInputs['object']['values'][$aForm['object']] = _t($aForm['title']);
-
-        asort($oForm->aInputs['object']['values']);
-        $oForm->aInputs['object']['values'] = array_merge(array('' => _t('_bx_dev_frm_txt_select_object')), $oForm->aInputs['object']['values']);
-        $oForm->aInputs['object']['value'] = $this->sObject;
+        $this->_fillDisplayForm($oForm, $sAction);
         $oForm->aInputs['controls'][0]['value'] = _t('_bx_dev_frm_btn_displays_save');
 
         $oForm->initChecker($aDisplay);
@@ -145,5 +124,21 @@ class BxDevFormsDisplays extends BxTemplStudioFormsDisplays {
 
         return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);        
     }
+
+    protected function _fillDisplayForm(&$oForm, $sAction)
+    {
+    	$oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&object=' . $this->sObject;
+        $oForm->aInputs['module']['values'] = array_merge(array('' => _t('_bx_dev_frm_txt_select_module')), BxDolStudioUtils::getModules());
+        $oForm->aInputs['module']['value'] = $this->sModule;
+
+        $aForms = array();
+        $this->oDb->getForms(array('type' => 'by_module', 'value' => $this->sModule), $aForms, false);
+        foreach($aForms as $aForm)
+            $oForm->aInputs['object']['values'][$aForm['object']] = _t($aForm['title']);
+
+        asort($oForm->aInputs['object']['values']);
+        $oForm->aInputs['object']['values'] = array_merge(array('' => _t('_bx_dev_frm_txt_select_object')), $oForm->aInputs['object']['values']);
+        $oForm->aInputs['object']['value'] = $this->sObject;
+    } 
 }
 /** @} */
