@@ -44,46 +44,15 @@ class BxSitesGridOverview extends BxTemplGrid {
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&_r=' . time(); 
 		$oForm->aParams['db']['submit_name'] = 'do_confirm';
 
-        $iAccountId = (int)bx_get('account');
-        if($iAccountId !== false)
-			$oForm->aInputs['id']['value'] = $iAccountId;
-
-		$oForm->aInputs['info']['content'] = _t('_bx_sites_form_site_input_info_unconfirmed');
-
 		$oPermalinks = BxDolPermalinks::getInstance();
-		$sUrl = BX_DOL_URL_ROOT . $oPermalinks->permalink('page.php?i=site-delete&id=' . $iAccountId);
+		$sUrl = BX_DOL_URL_ROOT . $oPermalinks->permalink('page.php?i=site-delete&id=' . (int)bx_get('account'));
 		foreach($oForm->aInputs['confirm_block'] as $iKey => $aInput)
 			if(is_int($iKey) && !empty($aInput) && $aInput['name'] == 'do_delete')
 				$oForm->aInputs['confirm_block'][$iKey]['attrs']['onclick'] = 'javascript:window.open(\'' . $sUrl . '\',\'_self\');';
 
-		$oForm->initChecker();
-        if(!$oForm->isSubmittedAndValid()) {
-	    	bx_import('BxTemplFunctions');
-			$sContent = BxTemplFunctions::getInstance()->popupBox('bx-sites-site-unconfirmed-popup', _t('_bx_sites_grid_overview_popup_unconfirmed'), $this->_oModule->_oTemplate->parseHtmlByName('block_unconfirmed.html', array(
-				'form_id' => $oForm->aFormAttrs['id'],
-				'form' => $oForm->getCode(true),
-				'object' => $this->_sObject,
-				'action' => $sAction
-			)));
-
-			$this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
-			return;
-		}
-
-		$iAccount = $oForm->getCleanValue('id');
-		$aAccount = $this->_oModule->_oDb->getAccount(array('type' => 'id', 'value' => $iAccount));
-		if(empty($aAccount) || !is_array($aAccount)) {
-			$this->_echoResultJson(array('msg' => _t('_bx_sites_txt_err_site_is_not_defined')), true);
-			return;
-		}
-
-		$sUrl = $this->_oModule->startSubscription($iAccount);
-		if(empty($sUrl)) {
-			$this->_echoResultJson(array('msg' => _t('_bx_sites_txt_err_cannot_perform')), true);
-			return;
-		}
-
-		$this->_echoResultJson(array('eval' => 'window.open(\'' . $sUrl . '\', \'_self\');', 'popup_not_hide' => 1), true);
+        $aAccount = $this->_performAction($oForm, $sAction);
+		if(!empty($aAccount) && is_array($aAccount))
+			$this->_startSubscription($aAccount);
     }
 
 	public function performActionPending()
@@ -98,26 +67,7 @@ class BxSitesGridOverview extends BxTemplGrid {
 
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&_r=' . time(); 
 
-        $iAccountId = (int)bx_get('account');
-        if($iAccountId !== false)
-			$oForm->aInputs['id']['value'] = $iAccountId;
-
-		$oForm->aInputs['info']['content'] = _t('_bx_sites_form_site_input_info_pending');
-
-		$oForm->initChecker();
-        if(!$oForm->isSubmittedAndValid()) {
-	    	bx_import('BxTemplFunctions');
-			$sContent = BxTemplFunctions::getInstance()->popupBox('bx-sites-site-pending-popup', _t('_bx_sites_grid_overview_popup_pending'), $this->_oModule->_oTemplate->parseHtmlByName('block_pending.html', array(
-				'form_id' => $oForm->aFormAttrs['id'],
-				'form' => $oForm->getCode(true),
-				'object' => $this->_sObject,
-				'action' => $sAction
-			)));
-
-			$this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
-			return;
-		}
-
+        $this->_performAction($oForm, $sAction, false);
 		//Note: Place onSubmit code here if it's needed. 
     }
 
@@ -136,32 +86,9 @@ class BxSitesGridOverview extends BxTemplGrid {
         $oForm->aFormAttrs['onsubmit'] = 'return ' . $this->_oModule->_oConfig->getJsObject() . '.onCancelSubscription(this);'; 
 		$oForm->aParams['db']['submit_name'] = 'do_cancel';
 
-        $iAccountId = (int)bx_get('account');
-        if($iAccountId !== false)
-			$oForm->aInputs['id']['value'] = $iAccountId;
-
-		$oForm->aInputs['info']['content'] = _t('_bx_sites_form_site_input_info_active');
-
-		$oForm->initChecker();
-        if(!$oForm->isSubmittedAndValid()) {
-	    	bx_import('BxTemplFunctions');
-			$sContent = BxTemplFunctions::getInstance()->popupBox('bx-sites-site-active-popup', _t('_bx_sites_grid_overview_popup_active'), $this->_oModule->_oTemplate->parseHtmlByName('block_active.html', array(
-				'form_id' => $oForm->aFormAttrs['id'],
-				'form' => $oForm->getCode(true),
-				'object' => $this->_sObject,
-				'action' => $sAction
-			)));
-
-			$this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+		$aAccount = $this->_performAction($oForm, $sAction);
+		if(empty($aAccount) || !is_array($aAccount))
 			return;
-		} 
-
-		$iAccount = $oForm->getCleanValue('id');
-		$aAccount = $this->_oModule->_oDb->getAccount(array('type' => 'id', 'value' => $iAccount));
-		if(empty($aAccount) || !is_array($aAccount)) {
-			$this->_echoResultJson(array('msg' => _t('_bx_sites_txt_err_site_is_not_defined')), true);
-			return;
-		}
 
 		$bResult = $this->_oModule->cancelSubscription($aAccount['pd_profile_id']);
 		if(!$bResult) {
@@ -190,40 +117,9 @@ class BxSitesGridOverview extends BxTemplGrid {
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&_r=' . time(); 
 		$oForm->aParams['db']['submit_name'] = 'do_reactivate';
 
-        $iAccountId = (int)bx_get('account');
-        if($iAccountId !== false)
-			$oForm->aInputs['id']['value'] = $iAccountId;
-
-		$oForm->aInputs['info']['content'] = _t('_bx_sites_form_site_input_info_canceled');
-
-		$oForm->initChecker();
-        if(!$oForm->isSubmittedAndValid()) {
-	    	bx_import('BxTemplFunctions');
-			$sContent = BxTemplFunctions::getInstance()->popupBox('bx-sites-site-canceled-popup', _t('_bx_sites_grid_overview_popup_canceled'), $this->_oModule->_oTemplate->parseHtmlByName('block_canceled.html', array(
-				'form_id' => $oForm->aFormAttrs['id'],
-				'form' => $oForm->getCode(true),
-				'object' => $this->_sObject,
-				'action' => $sAction
-			)));
-
-			$this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
-			return;
-		} 
-
-    	$iAccount = $oForm->getCleanValue('id');
-		$aAccount = $this->_oModule->_oDb->getAccount(array('type' => 'id', 'value' => $iAccount));
-		if(empty($aAccount) || !is_array($aAccount)) {
-			$this->_echoResultJson(array('msg' => _t('_bx_sites_txt_err_site_is_not_defined')), true);
-			return;
-		}
-
-		$sUrl = $this->_oModule->startSubscription($iAccount);
-	    if(empty($sUrl)) {
-			$this->_echoResultJson(array('msg' => _t('_bx_sites_txt_err_cannot_perform')), true);
-			return;
-		}
-
-		$this->_echoResultJson(array('eval' => 'window.open(\'' . $sUrl . '\', \'_self\');', 'popup_not_hide' => 1), true);
+		$aAccount = $this->_performAction($oForm, $sAction);
+		if(!empty($aAccount) && is_array($aAccount))
+			$this->_startSubscription($aAccount);
     }
 
 	public function performActionSuspended()
@@ -238,26 +134,7 @@ class BxSitesGridOverview extends BxTemplGrid {
 
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&_r=' . time(); 
 
-        $iAccountId = (int)bx_get('account');
-        if($iAccountId !== false)
-			$oForm->aInputs['id']['value'] = $iAccountId;
-
-		$oForm->aInputs['info']['content'] = _t('_bx_sites_form_site_input_info_suspended');
-
-		$oForm->initChecker();
-        if(!$oForm->isSubmittedAndValid()) {
-	    	bx_import('BxTemplFunctions');
-			$sContent = BxTemplFunctions::getInstance()->popupBox('bx-sites-site-suspended-popup', _t('_bx_sites_grid_overview_popup_suspended'), $this->_oModule->_oTemplate->parseHtmlByName('block_suspended.html', array(
-				'form_id' => $oForm->aFormAttrs['id'],
-				'form' => $oForm->getCode(true),
-				'object' => $this->_sObject,
-				'action' => $sAction
-			)));
-
-			$this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
-			return;
-		}
-
+        $this->_performAction($oForm, $sAction, false);
 		//Note: Place onSubmit code here if it's needed. 
     }
 
@@ -371,6 +248,52 @@ class BxSitesGridOverview extends BxTemplGrid {
 
 	protected function _getActionSuspended($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array()) {
 		return '';
+    }
+
+	protected function _performAction(&$oForm, $sAction, $bReturnAccount = true)
+    {
+    	$iAccountId = (int)bx_get('account');
+        if($iAccountId !== false)
+			$oForm->aInputs['id']['value'] = $iAccountId;
+
+		$oForm->aInputs['info']['content'] = _t('_bx_sites_form_site_input_info_' . $sAction);
+
+    	$oForm->initChecker();
+        if(!$oForm->isSubmittedAndValid()) {
+	    	bx_import('BxTemplFunctions');
+			$sContent = BxTemplFunctions::getInstance()->popupBox('bx-sites-site-' . $sAction . '-popup', _t('_bx_sites_grid_overview_popup_' . $sAction), $this->_oModule->_oTemplate->parseHtmlByName('block_' . $sAction . '.html', array(
+				'form_id' => $oForm->aFormAttrs['id'],
+				'form' => $oForm->getCode(true),
+				'object' => $this->_sObject,
+				'action' => $sAction
+			)));
+
+			$this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+			return;
+		}
+
+		if(!$bReturnAccount)
+			return;
+
+		$iAccount = $oForm->getCleanValue('id');
+		$aAccount = $this->_oModule->_oDb->getAccount(array('type' => 'id', 'value' => $iAccount));
+		if(empty($aAccount) || !is_array($aAccount)) {
+			$this->_echoResultJson(array('msg' => _t('_bx_sites_txt_err_site_is_not_defined')), true);
+			return;
+		}
+
+		return $aAccount;
+    }
+
+    protected function _startSubscription($aAccount)
+    {
+    	$sUrl = $this->_oModule->startSubscription($aAccount['id']);
+		if(empty($sUrl)) {
+			$this->_echoResultJson(array('msg' => _t('_bx_sites_txt_err_cannot_perform')), true);
+			return;
+		}
+
+		$this->_echoResultJson(array('eval' => 'window.open(\'' . $sUrl . '\', \'_self\');', 'popup_not_hide' => 1), true);
     }
 }
 /** @} */
