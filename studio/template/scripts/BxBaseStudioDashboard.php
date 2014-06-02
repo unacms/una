@@ -46,7 +46,9 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard {
 
             $aTmplVars['bx_repeat:blocks'][] = array(
             	'caption' => $this->getBlockCaption($aBlock),
-                'items' => $this->$sMethod($sName, $aBlock)
+            	'panel_top' => '',
+                'items' => $this->$sMethod($sName, $aBlock),
+            	'panel_bottom' => '',
             );
         }
 

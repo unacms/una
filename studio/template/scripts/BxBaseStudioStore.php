@@ -98,7 +98,9 @@ class BxBaseStudioStore extends BxDolStudioStore {
         
             $aTmplVars['bx_repeat:blocks'][] = array(
             	'caption' => $this->getBlockCaption($aBlock),
-                'items' => $sItems
+            	'panel_top' => '',
+                'items' => $sItems,
+            	'panel_bottom' => ''
             );
         }
 
@@ -137,7 +139,9 @@ class BxBaseStudioStore extends BxDolStudioStore {
             'bx_repeat:blocks' => array(
                 array(
                 	'caption' => $this->getBlockCaption(array('caption' => _t('_adm_block_cpt_featured'), 'actions' => array())),
-                    'items' => $sContent
+                	'panel_top' => '',
+                    'items' => $sContent,
+                	'panel_bottom' => ''
                 )
             )
         ));
@@ -187,7 +191,9 @@ class BxBaseStudioStore extends BxDolStudioStore {
             'bx_repeat:blocks' => array(
                 array(
                 	'caption' => $this->getBlockCaption(array('caption' => _t('_adm_block_cpt_' . $sTag), 'actions' => array())),
-                    'items' => $sContent
+                	'panel_top' => '',
+                    'items' => $sContent,
+                	'panel_bottom' => ''
                 )
             )
         ));
@@ -204,7 +210,9 @@ class BxBaseStudioStore extends BxDolStudioStore {
             'bx_repeat:blocks' => array(
                 array(
                 	'caption' => $this->getBlockCaption(array('caption' => _t('_adm_block_cpt_purchases'), 'actions' => array())),
-                    'items' => $this->displayProducts($aProducts)
+                	'panel_top' => '',
+                    'items' => $this->displayProducts($aProducts),
+                	'panel_bottom' => ''
                 )
             )
         );
@@ -223,7 +231,9 @@ class BxBaseStudioStore extends BxDolStudioStore {
             'bx_repeat:blocks' => array(
                 array(
                 	'caption' => $this->getBlockCaption(array('caption' => _t('_adm_block_cpt_updates'), 'actions' => array())),
-                    'items' => $this->displayUpdates($aUpdates)
+                	'panel_top' => '',
+                    'items' => $this->displayUpdates($aUpdates),
+                	'panel_bottom' => '',
                 )
             )
         );
@@ -270,7 +280,9 @@ class BxBaseStudioStore extends BxDolStudioStore {
 
         	$aTmplVarsBlocks[] = array(
 				'caption' => $this->getBlockCaption(array('caption' => _t('_adm_block_cpt_checkout_by_vendor_csign', $sName, $sCurrency, $fTotal), 'actions' => $aActions)),
-                'items' => $this->displayProducts($aInfo['products'], array('is_shopping_cart' => true, 'counts' => $aInfo['counts']))
+        		'panel_top' => '',
+                'items' => $this->displayProducts($aInfo['products'], array('is_shopping_cart' => true, 'counts' => $aInfo['counts'])),
+        		'panel_bottom' => ''
 			);
         }
 
@@ -337,7 +349,9 @@ class BxBaseStudioStore extends BxDolStudioStore {
             'bx_repeat:blocks' => array(
                 array(
                 	'caption' => $this->getBlockCaption(array('caption' => _t('_adm_block_cpt_downloaded_modules'), 'actions' => array())),
-                    'items' => $sModules
+                	'panel_top' => '',
+                    'items' => $sModules,
+                	'panel_bottom' => ''
                 )
             )
         );
@@ -345,7 +359,9 @@ class BxBaseStudioStore extends BxDolStudioStore {
         if(!empty($sUpdates))
         	$aTmplVars['bx_repeat:blocks'][] = array(
 				'caption' => $this->getBlockCaption(array('caption' => _t('_adm_block_cpt_downloaded_updates'), 'actions' => array())),
-				'items' => $sUpdates
+        		'panel_top' => '',
+				'items' => $sUpdates,
+        		'panel_bottom' => ''
 			);
 
         return $oTemplate->parseHtmlByName('store.html', $aTmplVars);

@@ -379,7 +379,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      * @return int $i name index
      */
     function getPageNameIndex() {
-        return (int)$this->aPage['name_index'];
+    	return isset($this->aPage['name_index']) ? (int)$this->aPage['name_index'] : 0;
     }
 
     /**
@@ -442,7 +442,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      * @param int $iIndex optional page index, default is index which was set before with @see setPageNameIndex function, or 0
      */
     function setPageContent($sVar, $sContent, $iIndex = false) {
-        $i = false !== $iIndex ? $iIndex : (isset($this->aPage['name_index']) ? $this->aPage['name_index'] : 0);
+        $i = false !== $iIndex ? $iIndex : $this->getPageNameIndex();
         $this->aPageContent[$i][$sVar] = $sContent;
     }
 
@@ -453,7 +453,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      * @return string page content for some variable or for the whole page.
      */
     function getPageContent($sVar = false, $iIndex = false) {
-        $i = false !== $iIndex ? $iIndex : (isset($this->aPage['name_index']) ? $this->aPage['name_index'] : 0);
+        $i = false !== $iIndex ? $iIndex : $this->getPageNameIndex();
         return false !== $sVar ? $this->aPageContent[$i][$sVar] : $this->aPageContent[$i];
     }
 
@@ -881,7 +881,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      * @param string $sKey key
      * @return string value associated with the key.
      */
-    function parseSystemKey($sKey, $mixedKeyWrapperHtml = null) {
+    function parseSystemKey($sKey, $mixedKeyWrapperHtml = null, $bProcessInjection = true) {
         global $logged;
 
         $aKeyWrappers = $this->_getKeyWrappers($mixedKeyWrapperHtml);
@@ -968,9 +968,11 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
             default:
                 bx_import('BxTemplFunctions');
                 $sRet = ($sTemplAdd = BxTemplFunctions::getInstance()->TemplPageAddComponent($sKey)) !== false ? $sTemplAdd : $aKeyWrappers['left'] . $sKey . $aKeyWrappers['right'];
-            }
+		}
 
-        $sRet = $this->processInjection(isset($this->aPage['name_index']) ? (int)$this->aPage['name_index'] : 0, $sKey, $sRet);
+		if($bProcessInjection)
+        	$sRet = $this->processInjection($this->getPageNameIndex(), $sKey, $sRet);
+
         return $sRet;
     }
     /**
