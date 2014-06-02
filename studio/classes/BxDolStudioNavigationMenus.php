@@ -8,11 +8,11 @@
  */
 defined('BX_DOL') or die('hack attempt');
 
-bx_import('BxTemplStudioGrid');
+bx_import('BxTemplStudioGridNavigation');
 bx_import('BxDolStudioTemplate');
 bx_import('BxDolStudioNavigationQuery');
 
-class BxDolStudioNavigationMenus extends BxTemplStudioGrid {
+class BxDolStudioNavigationMenus extends BxTemplStudioGridNavigation {
     public function __construct ($aOptions, $oTemplate = false) {
         parent::__construct ($aOptions, $oTemplate);
 

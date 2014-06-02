@@ -247,11 +247,7 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields {
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
-            $iVisibleFor = BxDolStudioUtils::getVisibilityValue($oForm->getCleanValue('visible_for'), $oForm->getCleanValue('visible_for_levels'));
-            BxDolForm::setSubmittedValue('visible_for_levels', $iVisibleFor, $aForm['form_attrs']['method']);
-            unset($oForm->aInputs['visible_for']);
-
-            if($oForm->update($iId) !== false)
+            if($oForm->updateWithVisibility($iId) !== false)
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
             else
                 $aRes = array('msg' => _t('_adm_form_err_field_show_to'));
@@ -411,31 +407,10 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields {
     protected function _getFilterControls () {
         parent::_getFilterControls();
 
-        $sContent = "";
+        $sContent = $this->getModulesSelectOne('getInputs') . $this->getDisplaysSelector($this->sModule);
 
         bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
-
-        $aInputModules = array(
-            'type' => 'select',
-            'name' => 'module',
-            'attrs' => array(
-                'id' => 'bx-grid-module-' . $this->_sObject,
-            	'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeModule()'
-            ),
-            'value' => $this->sModule,
-            'values' => $this->getModules()
-        );
-
-        $aCounter = array();
-        $this->oDb->getInputs(array('type' => 'counter_by_modules'), $aCounter, false);
-        foreach($aInputModules['values'] as $sKey => $sValue)
-                $aInputModules['values'][$sKey] = $aInputModules['values'][$sKey] . " (" . (isset($aCounter[$sKey]) ? $aCounter[$sKey] : "0") . ")";
-
-        $aInputModules['values'] = array_merge(array('' => _t('_adm_form_txt_select_module')), $aInputModules['values']);
-
-        $sContent .= $oForm->genRow($aInputModules);
-        $sContent .= $this->getDisplaysSelector($this->sModule);
 
         $aInputSearch = array(
             'type' => 'text',

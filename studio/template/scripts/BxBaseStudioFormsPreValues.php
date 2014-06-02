@@ -394,31 +394,10 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues {
     protected function _getFilterControls () {
         parent::_getFilterControls();
 
-        $sContent = "";
+        $sContent = $this->getModulesSelectOne('getValues') . $this->getListsSelector($this->sModule);
 
         bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
-
-        $aInputModules = array(
-            'type' => 'select',
-            'name' => 'module',
-            'attrs' => array(
-                'id' => 'bx-grid-module-' . $this->_sObject,
-            	'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeModule()'
-            ),
-            'value' => $this->sModule,
-            'values' => $this->getModules()
-        );
-
-        $aCounter = array();
-        $this->oDb->getValues(array('type' => 'counter_by_modules'), $aCounter, false);
-        foreach($aInputModules['values'] as $sKey => $sValue)
-                $aInputModules['values'][$sKey] = $aInputModules['values'][$sKey] . " (" . (isset($aCounter[$sKey]) ? $aCounter[$sKey] : "0") . ")";
-
-        $aInputModules['values'] = array_merge(array('' => _t('_adm_form_txt_select_module')), $aInputModules['values']);
-
-        $sContent .= $oForm->genRow($aInputModules);
-        $sContent .= $this->getListsSelector($this->sModule);
 
         $aInputSearch = array(
             'type' => 'text',

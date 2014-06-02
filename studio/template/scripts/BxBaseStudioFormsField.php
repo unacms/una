@@ -114,44 +114,7 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField {
             $sName = $this->getFieldName($sInputObject, $sCaption);
             BxDolForm::setSubmittedValue('name', $sName, $oForm->aFormAttrs['method']);
 
-            //--- Process field values.
-            if(isset($oForm->aInputs['values'])) {
-                $sValues = $oForm->getCleanValue('values');
-                if(is_string($sValues) && strpos($sValues, BX_DATA_LISTS_KEY_PREFIX) === false)
-                    BxDolForm::setSubmittedValue('values', serialize(explode("\n", $sValues)), $oForm->aFormAttrs['method']);
-            }
-
-            //--- Process field 'html' flag.
-            if(isset($oForm->aInputs['html'])) {
-                $iHtml = (int)$oForm->getCleanValue('html');
-                BxDolForm::setSubmittedValue('db_pass', $iHtml == 0 ? 'Xss' : 'XssHtml', $oForm->aFormAttrs['method']);
-            }
-
-            //--- Process field checker.
-            $aCheckerParams = array();
-            if(isset($oForm->aInputs['checker_params_length_min'], $oForm->aInputs['checker_params_length_max'])) {
-                $aCheckerParams['min'] = $oForm->getCleanValue('checker_params_length_min');
-                $aCheckerParams['max'] = $oForm->getCleanValue('checker_params_length_max');
-            }
-            if(isset($oForm->aInputs['checker_params_preg']))
-                $aCheckerParams['preg'] = $oForm->getCleanValue('checker_params_preg');
-
-            unset($oForm->aInputs['checker_params_length_min'], $oForm->aInputs['checker_params_length_max'], $oForm->aInputs['checker_params_preg']);
-            BxDolForm::setSubmittedValue('checker_params', !empty($aCheckerParams) ? serialize($aCheckerParams) : '', $oForm->aFormAttrs['method']);
-
-            //--- Process field attrs.
-            $aAttrs = array();
-            if(isset($oForm->aInputs['attrs_min'], $oForm->aInputs['attrs_max'], $oForm->aInputs['attrs_step'])) {
-                $aAttrs['min'] = $oForm->getCleanValue('attrs_min');
-                $aAttrs['max'] = $oForm->getCleanValue('attrs_max');
-                $aAttrs['step'] = $oForm->getCleanValue('attrs_step');
-            }
-            else if(isset($oForm->aInputs['attrs_src']))
-                $aAttrs['src'] = $oForm->getCleanValue('attrs_src');
-
-            unset($oForm->aInputs['attrs_min'], $oForm->aInputs['attrs_max'], $oForm->aInputs['attrs_step'], $oForm->aInputs['attrs_src']);
-            BxDolForm::setSubmittedValue('attrs', serialize($aAttrs), $oForm->aFormAttrs['method']);
-
+            $this->onSubmitField($oForm);
             if(($iId = $oForm->insert()) === false) 
                 return false;
 
@@ -179,44 +142,7 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField {
             $sInputObject = $oForm->getCleanValue('object');
             $sInputName = $oForm->getCleanValue('name');
 
-            //--- Process field values.
-            if(isset($oForm->aInputs['values']['db'])) {
-                $sValues = $oForm->getCleanValue('values');
-                if(is_string($sValues) && strpos($sValues, BX_DATA_LISTS_KEY_PREFIX) === false)
-                    BxDolForm::setSubmittedValue('values', serialize(explode("\n", $sValues)), $oForm->aFormAttrs['method']);
-            }
-
-            //--- Process field 'html' flag.
-            if(isset($oForm->aInputs['html'])) {
-                $iHtml = (int)$oForm->getCleanValue('html');
-                BxDolForm::setSubmittedValue('db_pass', $iHtml == 0 ? 'Xss' : 'XssHtml', $oForm->aFormAttrs['method']);
-            }
-
-            //--- Process field checker,
-            $aCheckerParams = array();
-            if(isset($oForm->aInputs['checker_params_length_min'], $oForm->aInputs['checker_params_length_max'])) {
-                $aCheckerParams['min'] = $oForm->getCleanValue('checker_params_length_min');
-                $aCheckerParams['max'] = $oForm->getCleanValue('checker_params_length_max');
-            }
-            if(isset($oForm->aInputs['checker_params_preg']))
-                $aCheckerParams['preg'] = $oForm->getCleanValue('checker_params_preg');
-
-            unset($oForm->aInputs['checker_params_length_min'], $oForm->aInputs['checker_params_length_max'], $oForm->aInputs['checker_params_preg']);
-            BxDolForm::setSubmittedValue('checker_params', !empty($aCheckerParams) ? serialize($aCheckerParams) : '', $oForm->aFormAttrs['method']);
-
-            //--- Process field attrs
-            $aAttrs = array();
-            if(isset($oForm->aInputs['attrs_min'], $oForm->aInputs['attrs_max'], $oForm->aInputs['attrs_step'])) {
-                $aAttrs['min'] = $oForm->getCleanValue('attrs_min');
-                $aAttrs['max'] = $oForm->getCleanValue('attrs_max');
-                $aAttrs['step'] = $oForm->getCleanValue('attrs_step');
-            }
-            else if(isset($oForm->aInputs['attrs_src']))
-                $aAttrs['src'] = $oForm->getCleanValue('attrs_src');
-
-            unset($oForm->aInputs['attrs_min'], $oForm->aInputs['attrs_max'], $oForm->aInputs['attrs_step'], $oForm->aInputs['attrs_src']);
-            BxDolForm::setSubmittedValue('attrs', serialize($aAttrs), $oForm->aFormAttrs['method']);
-
+            $this->onSubmitField($oForm);
             if($oForm->update((int)$this->aField['id']) === false) 
                 return false;
 
@@ -615,6 +541,47 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField {
                 break;
 
         return $sPrefix . $iIndex;
+    }
+
+	protected function onSubmitField(&$oForm)
+    {
+		//--- Process field values.
+		if(isset($oForm->aInputs['values']['db'])) {
+			$sValues = $oForm->getCleanValue('values');
+		    if(is_string($sValues) && strpos($sValues, BX_DATA_LISTS_KEY_PREFIX) === false)
+		    	BxDolForm::setSubmittedValue('values', serialize(explode("\n", $sValues)), $oForm->aFormAttrs['method']);
+		}
+		
+		//--- Process field 'html' flag.
+		if(isset($oForm->aInputs['html'])) {
+			$iHtml = (int)$oForm->getCleanValue('html');
+			BxDolForm::setSubmittedValue('db_pass', $iHtml == 0 ? 'Xss' : 'XssHtml', $oForm->aFormAttrs['method']);
+		}
+		
+		//--- Process field checker.
+		$aCheckerParams = array();
+		if(isset($oForm->aInputs['checker_params_length_min'], $oForm->aInputs['checker_params_length_max'])) {
+			$aCheckerParams['min'] = $oForm->getCleanValue('checker_params_length_min');
+			$aCheckerParams['max'] = $oForm->getCleanValue('checker_params_length_max');
+		}
+		if(isset($oForm->aInputs['checker_params_preg']))
+			$aCheckerParams['preg'] = $oForm->getCleanValue('checker_params_preg');
+		
+		unset($oForm->aInputs['checker_params_length_min'], $oForm->aInputs['checker_params_length_max'], $oForm->aInputs['checker_params_preg']);
+		BxDolForm::setSubmittedValue('checker_params', !empty($aCheckerParams) ? serialize($aCheckerParams) : '', $oForm->aFormAttrs['method']);
+		
+		//--- Process field attrs.
+		$aAttrs = array();
+		if(isset($oForm->aInputs['attrs_min'], $oForm->aInputs['attrs_max'], $oForm->aInputs['attrs_step'])) {
+			$aAttrs['min'] = $oForm->getCleanValue('attrs_min');
+			$aAttrs['max'] = $oForm->getCleanValue('attrs_max');
+			$aAttrs['step'] = $oForm->getCleanValue('attrs_step');
+		}
+		else if(isset($oForm->aInputs['attrs_src']))
+			$aAttrs['src'] = $oForm->getCleanValue('attrs_src');
+		
+		unset($oForm->aInputs['attrs_min'], $oForm->aInputs['attrs_max'], $oForm->aInputs['attrs_step'], $oForm->aInputs['attrs_src']);
+		BxDolForm::setSubmittedValue('attrs', serialize($aAttrs), $oForm->aFormAttrs['method']);
     }
 }
 

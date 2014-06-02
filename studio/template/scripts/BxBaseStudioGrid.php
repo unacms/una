@@ -20,6 +20,34 @@ class BxBaseStudioGrid extends BxDolStudioGrid {
         return '';
     }
 
+    public function getModulesSelectOne($sGetItemsMethod, $bShowCustom = true, $bShowSystem = true)
+    {
+    	if(empty($sGetItemsMethod))
+    		return '';
+
+    	bx_import('BxTemplStudioFormView');
+        $oForm = new BxTemplStudioFormView(array());
+
+        $aInputModules = array(
+            'type' => 'select',
+            'name' => 'module',
+            'attrs' => array(
+                'id' => 'bx-grid-module-' . $this->_sObject,
+            	'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeModule()'
+            ),
+            'value' => $this->sModule,
+            'values' => $this->getModules($bShowCustom, $bShowSystem)
+        );
+
+        $aCounter = array();
+        $this->oDb->$sGetItemsMethod(array('type' => 'counter_by_modules'), $aCounter, false);
+        foreach($aInputModules['values'] as $sKey => $sValue)
+                $aInputModules['values'][$sKey] = $aInputModules['values'][$sKey] . " (" . (isset($aCounter[$sKey]) ? $aCounter[$sKey] : "0") . ")";
+
+        $aInputModules['values'] = array_merge(array('' => _t('_adm_txt_select_module')), $aInputModules['values']);
+
+        return $oForm->genRow($aInputModules);
+    }
 	protected function _getItem($sDbMethod = '')
     {
     	$aIds = bx_get('ids');

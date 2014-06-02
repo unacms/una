@@ -49,6 +49,15 @@ class BxDolStudioForm extends BxBaseFormView {
         return $mixedResult;
     }
 
+    function updateWithVisibility($iId)
+    {
+		$iVisibleFor = BxDolStudioUtils::getVisibilityValue($this->getCleanValue('visible_for'), $this->getCleanValue('visible_for_levels'));
+		BxDolForm::setSubmittedValue('visible_for_levels', $iVisibleFor, $this->aFormAttrs['method']);
+		unset($this->aInputs['visible_for']);
+
+		return $this->update($iId);
+    }
+
     function processImageUploaderSave($sName, $iId = 0) {
         if($this->aInputs[$sName]['type'] != 'image_uploader')
             return $iId;

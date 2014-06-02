@@ -113,8 +113,6 @@ class BxBaseStudioNavigationImport extends BxDolStudioNavigationImport {
     protected function _getFilterControls () {
         parent::_getFilterControls();
 
-        $sContent = "";
-
         bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
 
@@ -138,39 +136,7 @@ class BxBaseStudioNavigationImport extends BxDolStudioNavigationImport {
         asort($aInputSets['values']);
         $aInputSets['values'] = array_merge(array('' => _t('_adm_nav_txt_select_set')), $aInputSets['values']);
 
-        $sContent .= $oForm->genRow($aInputSets);
-
-        $aInputModules = array(
-            'type' => 'select',
-            'name' => 'module',
-            'attrs' => array(
-                'id' => 'bx-grid-module-' . $this->_sObject,
-            	'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeFilter()'
-            ),
-            'value' => '',
-            'values' => $this->getModules()
-        );
-
-        $aCounter = array();
-        $this->oDb->getItems(array('type' => 'counter_by_modules'), $aCounter, false);
-        foreach($aInputModules['values'] as $sKey => $sValue)
-                $aInputModules['values'][$sKey] = $aInputModules['values'][$sKey] . " (" . (isset($aCounter[$sKey]) ? $aCounter[$sKey] : "0") . ")";
-
-        $aInputModules['values'] = array_merge(array('' => _t('_adm_nav_txt_all_modules')), $aInputModules['values']);
-
-        $sContent .= $oForm->genRow($aInputModules);
-
-        $aInputSearch = array(
-            'type' => 'text',
-            'name' => 'keyword',
-            'attrs' => array(
-                'id' => 'bx-grid-search-' . $this->_sObject,
-                'onKeyup' => 'javascript:$(this).off(\'keyup\'); ' . $this->getJsObject() . '.onChangeFilter()' 
-            )
-        );
-        $sContent .= $oForm->genRow($aInputSearch);
-
-        return  $sContent;
+        return $oForm->genRow($aInputSets) . $this->getModulesSelectAll('getItems') . $this->getSearchInput();
     }
 }
 /** @} */

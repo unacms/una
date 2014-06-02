@@ -2583,6 +2583,7 @@ Without doing that you won't be submitted to our database.</p>
 	<string name="_adm_btn_login_submit"><![CDATA[Enter Studio]]></string>
 	<string name="_adm_txt_forgot_password"><![CDATA[Forgot password?]]></string>
 	<string name="_adm_txt_remember_me"><![CDATA[Remember me]]></string>
+	<string name="_adm_txt_select_module"><![CDATA[Select Module...]]></string>
 	<string name="_adm_txt_settings_logo_header"><![CDATA[Upload]]></string>
 	<string name="_adm_txt_settings_logo_upload"><![CDATA[Browse]]></string>
 	<string name="_adm_txt_settings_resize_header"><![CDATA[Resize]]></string>
