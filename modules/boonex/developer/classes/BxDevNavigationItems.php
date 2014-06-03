@@ -68,22 +68,8 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems {
     public function performActionEdit($bUpdateGrid = false) {
         $sAction = 'edit';
 
-        $aIds = bx_get('ids');
-        if(!$aIds || !is_array($aIds)) {
-            $iId = (int)bx_get('id');
-            if(!$iId) {
-                $this->_echoResultJson(array());
-                exit;
-            }
-
-            $aIds = array($iId);
-        }
-
-        $iId = $aIds[0];
-
-        $aItem = array();
-        $this->oDb->getItems(array('type' => 'by_id', 'value' => $iId), $aItem, false);
-        if(empty($aItem) || !is_array($aItem)){
+		$aItem = $this->_getItem('getItems');
+        if($aItem === false) {
             $this->_echoResultJson(array());
             exit;
         }

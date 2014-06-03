@@ -60,22 +60,8 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus {
     public function performActionEdit() {
         $sAction = 'edit';
 
-        $aIds = bx_get('ids');
-        if(!$aIds || !is_array($aIds)) {
-            $iId = (int)bx_get('id');
-            if(!$iId) {
-                $this->_echoResultJson(array());
-                exit;
-            }
-
-            $aIds = array($iId);
-        }
-
-        $iId = $aIds[0];
-
-        $aMenu = array();
-        $this->oDb->getMenus(array('type' => 'by_id', 'value' => $iId), $aMenu, false);
-        if(empty($aMenu) || !is_array($aMenu)){
+	    $aMenu = $this->_getItem('getMenus');
+        if($aMenu === false) {
             $this->_echoResultJson(array());
             exit;
         }
@@ -88,8 +74,8 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus {
 
         $oForm->initChecker($aMenu);
         if($oForm->isSubmittedAndValid()) {
-            if($oForm->update($iId) !== false)
-                $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
+            if($oForm->update($aMenu['id']) !== false)
+                $aRes = array('grid' => $this->getCode(false), 'blink' => $aMenu['id']);
             else
                 $aRes = array('msg' => _t('_bx_dev_nav_err_menus_edit'));
 
@@ -111,22 +97,8 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus {
     public function performActionExport() {
         $sContentInsert = $sContentDelete = "";
 
-        $aIds = bx_get('ids');
-        if(!$aIds || !is_array($aIds)) {
-            $iId = (int)bx_get('id');
-            if(!$iId) {
-                $this->_echoResultJson(array());
-                exit;
-            }
-
-            $aIds = array($iId);
-        }
-
-        $iId = $aIds[0];
-
-        $aMenu = array();
-        $this->oDb->getMenus(array('type' => 'by_id', 'value' => $iId), $aMenu, false);
-        if(empty($aMenu) || !is_array($aMenu)){
+    	$aMenu = $this->_getItem('getMenus');
+        if($aMenu === false) {
             $this->_echoResultJson(array());
             exit;
         }

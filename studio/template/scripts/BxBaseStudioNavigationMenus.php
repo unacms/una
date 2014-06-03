@@ -79,22 +79,8 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus {
     public function performActionEdit() {
         $sAction = 'edit';
 
-        $aIds = bx_get('ids');
-        if(!$aIds || !is_array($aIds)) {
-            $iId = (int)bx_get('id');
-            if(!$iId) {
-                $this->_echoResultJson(array());
-                exit;
-            }
-
-            $aIds = array($iId);
-        }
-
-        $iId = $aIds[0];
-
-        $aMenu = array();
-        $iMenu = $this->oDb->getMenus(array('type' => 'by_id', 'value' => $iId), $aMenu);
-        if($iMenu != 1 || empty($aMenu)){
+    	$aMenu = $this->_getItem('getMenus');
+        if($aMenu === false) {
             $this->_echoResultJson(array());
             exit;
         }
@@ -120,8 +106,8 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus {
             }
             unset($oForm->aInputs['set_title']);
 
-            if($oForm->update($iId) !== false)
-                $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
+            if($oForm->update($aMenu['id']) !== false)
+                $aRes = array('grid' => $this->getCode(false), 'blink' => $aMenu['id']);
             else
                 $aRes = array('msg' => _t('_adm_nav_err_menus_edit'));
 

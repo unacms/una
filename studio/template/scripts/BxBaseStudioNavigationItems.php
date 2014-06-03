@@ -108,22 +108,8 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
     public function performActionEdit($bUpdateGrid = false) {
         $sAction = 'edit';
 
-        $aIds = bx_get('ids');
-        if(!$aIds || !is_array($aIds)) {
-            $iId = (int)bx_get('id');
-            if(!$iId) {
-                $this->_echoResultJson(array());
-                exit;
-            }
-
-            $aIds = array($iId);
-        }
-
-        $iId = $aIds[0];
-
-        $aItem = array();
-        $iItem = $this->oDb->getItems(array('type' => 'by_id', 'value' => $iId), $aItem);
-        if($iItem != 1 || empty($aItem)){
+    	$aItem = $this->_getItem('getItems');
+        if($aItem === false) {
             $this->_echoResultJson(array());
             exit;
         }
@@ -185,8 +171,8 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
             if($sTarget === false && !in_array($aItem['target'], array('', '_blank'))) 
                 unset($oForm->aInputs['target']);
 
-            if($oForm->update($iId) !== false)
-                $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
+            if($oForm->update($aItem['id']) !== false)
+                $aRes = array('grid' => $this->getCode(false), 'blink' => $aItem['id']);
             else
                 $aRes = array('msg' => _t('_adm_nav_err_items_edit'));
 
@@ -204,7 +190,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
 
             $aRes = array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false)));
             if($bUpdateGrid)
-                $aRes = array_merge($aRes, array('grid' => $this->getCode(false), 'blink' => $iId));
+                $aRes = array_merge($aRes, array('grid' => $this->getCode(false), 'blink' => $aItem['id']));
 
             $this->_echoResultJson($aRes, true);
         }
@@ -233,22 +219,8 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
     public function performActionShowTo() {
         $sAction = 'show_to';
 
-        $aIds = bx_get('ids');
-        if(!$aIds || !is_array($aIds)) {
-            $iId = (int)bx_get('id');
-            if(!$iId) {
-                $this->_echoResultJson(array());
-                exit;
-            }
-
-            $aIds = array($iId);
-        }
-
-        $iId = $aIds[0];
-
-        $aItem = array();
-        $iItem = $this->oDb->getItems(array('type' => 'by_id', 'value' => $iId), $aItem);
-        if($iItem != 1 || empty($aItem)){
+	    $aItem = $this->_getItem('getItems');
+        if($aItem === false) {
             $this->_echoResultJson(array());
             exit;
         }
@@ -272,7 +244,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
             	'id' => array(
                     'type' => 'hidden',
                     'name' => 'id',
-                    'value' => $iId,
+                    'value' => $aItem['id'],
                     'db' => array (
                         'pass' => 'Int',
                     ),
@@ -337,8 +309,8 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
-            if($oForm->updateWithVisibility($iId) !== false)
-                $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
+            if($oForm->updateWithVisibility($aItem['id']) !== false)
+                $aRes = array('grid' => $this->getCode(false), 'blink' => $aItem['id']);
             else
                 $aRes = array('msg' => _t('_adm_nav_err_items_show_to'));
 
