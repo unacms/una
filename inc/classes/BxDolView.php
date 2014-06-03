@@ -7,6 +7,7 @@
  * @{
  */
 
+bx_import('BxDolObject');
 bx_import('BxDolViewQuery');
 
 define ('BX_DOL_VIEW_OLD_VIEWS', 3 * 86400); ///< views older than this number of seconds will be deleted automatically
@@ -46,35 +47,18 @@ define ('BX_DOL_VIEW_OLD_VIEWS', 3 * 86400); ///< views older than this number o
  * @endcode
  *
  */
-class BxDolView extends BxDol
+class BxDolView extends BxDolObject
 {
-    var $_iId = 0;    ///< item id to be viewed
-    var $_sSystem = ''; ///< current view system name
-    var $_aSystem = array (); ///< current view system array
-
-    var $_oQuery = null;
-
     /**
      * Constructor
      */
     function BxDolView($sSystem, $iId, $iInit = 1)
     {
-    	parent::__construct();
-
-    	$this->_aSystems = $this->getSystems();
-        if(!isset($this->_aSystems[$sSystem]))
+    	parent::__construct($sSystem, $iId, $iInit);
+		if(empty($this->_sSystem))
 			return;
-
-        $this->_sSystem = $sSystem;
-		$this->_aSystem = $this->_aSystems[$sSystem];
-
-		if(!$this->isEnabled()) 
-			return;
-
+    	
         $this->_oQuery = new BxDolViewQuery($this);
-
-        if($iInit)
-        	$this->init($iId);
     }
 
    /**
@@ -148,48 +132,6 @@ class BxDolView extends BxDol
         }
 
         return $iResult;
-    }
-
-	public function init($iId)
-    {
-    	if(!$this->isEnabled()) 
-        	return;
-
-        if(empty($this->_iId) && $iId)
-			$this->setId($iId);
-    }
-
-	public function getSystemId()
-    {
-        return $this->_aSystem['id'];
-    }
-
-    public function getSystemName()
-    {
-        return $this->_sSystem;
-    }
-
-	public function getSystemInfo()
-    {
-        return $this->_aSystem;
-    }
-
-    public function getId()
-    {
-        return $this->_iId;
-    }
-
-    public function setId($iId)
-    {
-        if($iId == $this->getId())
-        	return;
-
-        $this->_iId = $iId;
-    }
-
-    public function isEnabled ()
-    {
-        return $this->_aSystem && (int)$this->_aSystem['is_on'] == 1;
     }
 
 	function doView()

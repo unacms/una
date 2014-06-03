@@ -71,19 +71,6 @@ class BxDolFtp extends BxDolFile {
         return $bResult;
     }
 
-    protected function _readDirectory($sFilePath) {
-        if(!is_dir($sFilePath) || !($rSource = opendir($sFilePath))) return false;
-
-        $aResult = array();
-        while(($sFile = readdir($rSource)) !== false) {
-            if($sFile == '.' || $sFile =='..' || $sFile[0] == '.') continue;
-            $aResult[] = $sFile;
-        }
-        closedir($rSource);
-
-        return $aResult;
-    }
-
     protected function _deleteDirectory($sPath) {
         if($this->_isDirectory($sPath)) {
             if(substr($sPath, -1) != '/')

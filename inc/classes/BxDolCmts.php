@@ -7,6 +7,7 @@
  * @{
  */
 
+bx_import('BxDolObject');
 bx_import('BxDolCmtsQuery');
 
 define('BX_CMT_OLD_VOTES', 365*86400); ///< comment votes older than this number of seconds will be deleted automatically 
@@ -129,10 +130,8 @@ define('BX_CMT_RATE_VALUE_MINUS', -1);
  *      - $aExtra['rate'] - comment rate 1 or -1
  *
  */
-class BxDolCmts extends BxDol implements iBxDolReplaceable
+class BxDolCmts extends BxDolObject implements iBxDolReplaceable
 {
-	protected $_oQuery = null;
-
 	protected $_sFormObject;
 	protected $_sFormDisplayPost;
 	protected $_sFormDisplayEdit;
@@ -155,10 +154,6 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 	protected $_sBaseUrl = '';
 	protected $_sListAnchor = '';
 
-	protected $_sSystem = 'profile'; ///< current comment system name
-    protected $_aSystem = array (); ///< current comments system array
-    protected $_iId = 0; ///< obect id to be commented
-
     protected $_aMarkers = array ();
 
     protected $_sDisplayType = '';
@@ -178,16 +173,11 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
      * $sSystem - comments system name
      * $iId - obect id to be commented
      */
-    function BxDolCmts( $sSystem, $iId, $iInit = 1)
+    function BxDolCmts($sSystem, $iId, $iInit = 1)
     {
-        parent::BxDol();
-
-        $this->_aSystems = $this->getSystems();
-		if(!isset($this->_aSystems[$sSystem]))
+        parent::__construct($sSystem, $iId, $iInit);
+        if(empty($this->_sSystem))
 			return;
-
-        $this->_sSystem = $sSystem;
-        $this->_aSystem = $this->_aSystems[$sSystem];
 
 		$this->_aSystem['table_images'] = 'sys_cmts_images';
 		$this->_aSystem['table_images2entries'] = 'sys_cmts_images2entries';
@@ -235,9 +225,6 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 
 		$this->_sMenuObjManage = 'sys_cmts_item_manage';
 		$this->_sMenuObjActions = 'sys_cmts_item_actions';
-		
-        if ($iInit)
-            $this->init($iId);
     }
 
 	/**
@@ -276,6 +263,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
             $GLOBALS['bx_dol_cmts_systems'] = BxDolDb::getInstance()->fromCache('sys_objects_cmts', 'getAllWithKey', '
                 SELECT
                     `ID` as `system_id`,
+                    `ID` as `id`,
                     `Name` AS `name`,
                     `Table` AS `table`,
                     `CharsPostMin` AS `chars_post_min`,
@@ -331,38 +319,16 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 
     public function init ($iId)
     {
-        if (empty($this->iId) && $iId)
-            $this->setId($iId);
+    	$bResult = parent::init($iId);
+    	if(!$bResult)
+    		return $bResult;
 
 		$this->addMarkers(array(
 			'object_id' => $this->getId(),
 			'user_id' => $this->_getAuthorId()
 		));
-    }
 
-    public function getId ()
-    {
-        return $this->_iId;
-    }
-
-    public function isEnabled ()
-    {
-        return isset($this->_aSystem['is_on']) && $this->_aSystem['is_on'];
-    }
-
-	public function getSystemId()
-    {
-        return $this->_aSystem['system_id'];
-    }
-
-    public function getSystemName()
-    {
-        return $this->_sSystem;
-    }
-
-	public function getSystemInfo()
-    {
-        return $this->_aSystem;
+		return $bResult;
     }
 
 	public function getMaxLevel()
@@ -437,15 +403,6 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
     public function isAttachImageEnabled()
     {
     	return true;
-    }
-
-    /**
-     * set id to operate with votes
-     */
-    public function setId ($iId)
-    {
-        if ($iId == $this->getId()) return;
-        $this->_iId = $iId;
     }
 
 	/**
