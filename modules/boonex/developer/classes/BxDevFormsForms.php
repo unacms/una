@@ -122,22 +122,8 @@ class BxDevFormsForms extends BxTemplStudioFormsForms {
     public function performActionExport() {
         $sContentInsert = $sContentDelete = "";
 
-        $aIds = bx_get('ids');
-        if(!$aIds || !is_array($aIds)) {
-            $iId = (int)bx_get('id');
-            if(!$iId) {
-                $this->_echoResultJson(array());
-                exit;
-            }
-
-            $aIds = array($iId);
-        }
-
-        $iId = $aIds[0];
-
-        $aForm = array();
-        $this->oDb->getForms(array('type' => 'by_id', 'value' => $iId), $aForm, false);
-        if(empty($aForm) || !is_array($aForm)){
+    	$aForm = $this->_getItem('getForms');
+        if($aForm === false) {
             $this->_echoResultJson(array());
             exit;
         }
