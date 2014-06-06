@@ -74,17 +74,6 @@ function DesignBoxContent ($sTitle, $sContent, $iTemplateNum = BX_DB_DEF, $mixed
 }
 
 /**
- * DEPRECATED
- * Put top code for the page
- **/
-function PageCode($oTemplate = null) {
-    echo "DEPRECATED: function PageCode, use BxDolTemplate::getPageCode instead";
-    if (empty($oTemplate))
-       $oTemplate = BxDolTemplate::getInstance();
-    $oTemplate->getPageCode();
-}
-
-/**
  * Use this function in pages if you want to not cache it.
  **/
 function send_headers_page_changed() {
@@ -96,98 +85,14 @@ function send_headers_page_changed() {
     header("Pragma: no-cache");
 }
 
-
-function getFieldValues( $sField, $sUseLKey = 'LKey' ) {
-
-    require_once(BX_DIRECTORY_PATH_INC . "prof.inc.php");
-
-    global $aPreValues;
-
-    $sValues = BxDolDb::getInstance()->getOne("SELECT `Values` FROM `sys_profile_fields` WHERE `Name` = '$sField'");
-
-    if( substr( $sValues, 0, 2 ) == '#!' ) {
-        //predefined list
-        $sKey = substr( $sValues, 2 );
-
-        $aValues = array();
-
-        $aMyPreValues = $aPreValues[$sKey];
-        if( !$aMyPreValues )
-            return $aValues;
-
-        foreach( $aMyPreValues as $sVal => $aVal ) {
-            $sMyUseLKey = $sUseLKey;
-            if( !isset( $aMyPreValues[$sVal][$sUseLKey] ) )
-                $sMyUseLKey = 'LKey';
-
-            $aValues[$sVal] = $aMyPreValues[$sVal][$sMyUseLKey];
-        }
-    } else {
-        $aValues1 = explode( "\n", $sValues );
-
-        $aValues = array();
-        foreach( $aValues1 as $iKey => $sValue )
-            $aValues[$sValue] = "_$sValue";
-    }
-
-    return $aValues;
-}
-
-function get_member_thumbnail( $ID, $float, $bGenProfLink = false, $sForceSex = 'visitor', $aOnline = array()) {
-    bx_import('BxTemplFunctions');
-    return BxTemplFunctions::getInstance()->getMemberThumbnail($ID, $float, $bGenProfLink, $sForceSex, true, 'medium', $aOnline);
-}
-
-function get_member_icon( $ID, $float = 'none', $bGenProfLink = false ) {
-    bx_import('BxTemplFunctions');
-    return BxTemplFunctions::getInstance()->getMemberIcon( $ID, $float, $bGenProfLink );
-}
-
 function MsgBox($sText, $iTimer = 0) {
     bx_import('BxTemplFunctions');
     return BxTemplFunctions::getInstance()->msgBox($sText, $iTimer);
 }
 
-function LoadingBox($sName) {
-    bx_import('BxTemplFunctions');
-    return BxTemplFunctions::getInstance()->loadingBox($sName);
-}
-
 function PopupBox($sName, $sTitle, $sContent, $isHiddenByDefault = false) {
     bx_import('BxTemplFunctions');
     return BxTemplFunctions::getInstance()->popupBox($sName, $sTitle, $sContent, $isHiddenByDefault);
-}
-
-function getPromoImagesArray() {
-    $sPromoPath = BxDolConfig::getInstance()->get('path_dynamic', 'rpr_images_promo');
-
-    $aAllowedExt = array('jpg' => 1, 'png' => 1, 'gif' => 1, 'jpeg' => 1);
-    $aFiles = array();
-    $rDir = opendir($sPromoPath);
-    if( $rDir ) {
-        while(($sFile = readdir($rDir)) !== false) {
-            if($sFile == '.' or $sFile == '..' or !is_file($sPromoPath . $sFile))
-                continue;
-            $aPathInfo = pathinfo($sFile);
-            $sExt = strtolower($aPathInfo['extension']);
-            if (isset($aAllowedExt[$sExt])) {
-                $aFiles[] = $sFile;
-            }
-        }
-        closedir( $rDir );
-    }
-    shuffle( $aFiles );
-    return $aFiles;
-}
-
-function getTemplateIcon( $sFileName ) {
-    bx_import('BxTemplFunctions');
-    return BxTemplFunctions::getInstance()->getTemplateIcon($sFileName);
-}
-
-function getTemplateImage( $sFileName ) {
-    bx_import('BxTemplFunctions');
-    return BxTemplFunctions::getInstance()->getTemplateImage($sFileName);
 }
 
 function getVersionComment() {
@@ -211,42 +116,6 @@ function getSiteStatUser()
     $aStat = BxDolDb::getInstance()->fromCache('sys_stat_site', 'getAllWithKey', $sqlQuery, 'name');
 
     return "<pre>TODO: nice output\n" . print_r($aStat, true) . '</pre>';
-}
-
-function genAjaxyPopupJS($iTargetID, $sDivID = 'ajaxy_popup_result_div', $sRedirect = '') {
-    $iProcessTime = 1000;
-
-    if ($sRedirect)
-       $sRedirect = "window.location = '$sRedirect';";
-
-    $sJQueryJS = <<<EOF
-<script type="text/javascript">
-
-setTimeout( function(){
-    $('#{$sDivID}_{$iTargetID}').show({$iProcessTime})
-    setTimeout( function(){
-        $('#{$sDivID}_{$iTargetID}').hide({$iProcessTime});
-        $sRedirect
-    }, 3000);
-}, 500);
-
-</script>
-EOF;
-    return $sJQueryJS;
-}
-
-function getBlockWidth ($iAllWidth, $iUnitWidth, $iNumElements) {
-    $iAllowed = $iNumElements * $iUnitWidth;
-    if ($iAllowed > $iAllWidth) {
-        $iMax = (int)floor($iAllWidth / $iUnitWidth);
-        $iAllowed = $iMax*$iUnitWidth;
-    }
-    return $iAllowed;
-}
-
-function getMemberLoginFormCode($sID = 'member_login_form', $sParams = '')
-{
-    trigger_error ("Replace getMemberLoginFormCode with BxDolService::call('system', 'login_form', array(), 'TemplServiceLogin')", E_USER_ERROR);
 }
 
 /**
