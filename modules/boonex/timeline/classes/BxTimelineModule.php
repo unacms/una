@@ -334,7 +334,6 @@ class BxTimelineModule extends BxDolModule
             return array();
 
 		$this->_iOwnerId = $iProfileId;
-        list($sUserName, $sUserUrl) = $this->getUserInfo($iProfileId);
 
         if($this->isAllowedPost() !== true)
             return array();
@@ -868,7 +867,6 @@ class BxTimelineModule extends BxDolModule
     	$sType = bx_get('type');
 		$aParams['type'] = $sType !== false ? bx_process_input($sType, BX_DATA_TEXT) : BX_TIMELINE_TYPE_OWNER;
 
-		$iOwnerId = bx_get('owner_id');
 		$aParams['owner_id'] = $sType !== false ? bx_process_input(bx_get('owner_id'), BX_DATA_INT) : $this->getUserId();
 
         $iStart = bx_get('start');

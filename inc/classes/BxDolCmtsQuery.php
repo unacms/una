@@ -128,7 +128,7 @@ class BxDolCmtsQuery extends BxDolDb
         return $this->getAll($sQuery);
     }
 
-    function getComment ($iId, $iCmtId, $iAuthorId = 0)
+    function getComment ($iId, $iCmtId)
     {
         $sFields = $sJoin = "";
 

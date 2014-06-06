@@ -281,7 +281,7 @@ class BxDolUpgradeDb
     /**
      * execute sql query and return table of records as result
      */
-    function getPairs($query, $sFieldKey, $sFieldValue, $arr_type = MYSQL_ASSOC)
+    function getPairs($query, $sFieldKey, $sFieldValue)
     {
         if(!$query)
             return array();

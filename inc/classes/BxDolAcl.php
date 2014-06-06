@@ -190,7 +190,6 @@ class BxDolAcl extends BxDol implements iBxDolSingleton {
      * when performing the action (like the number of profiles to show in search result)
     */
     function checkAction($iProfileId, $iActionId, $bPerformAction = false) {
-    	global $logged;
 
     	$aResult = array();
     	$aLangFileParams = array();

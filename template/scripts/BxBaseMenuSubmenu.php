@@ -76,7 +76,6 @@ class BxBaseMenuSubmenu extends BxTemplMenu
         if (is_array($this->_mixedMainMenuItemSelected))
             return $this->_mixedMainMenuItemSelected;
 
-        $aRet = array();
         if (!isset($this->_aObject['menu_items']))
             $this->_aObject['menu_items'] = $this->_oQuery->getMenuItems();
 

@@ -206,7 +206,6 @@ function GenerateData($iMutual = 3, $iOneWay = 1, $sTable, $sType, $sObject) {
 
             echo "{$aProfile['id']} " . ($i < $iMutual ? '&lt;=&gt;' : '=&gt;') . " {$r['id']}  <br />\n";
 
-            $aQueries = array();
             if ($i < $iMutual) {
                 // mutual
                 if (!$oConnection->isConnected($aProfile['id'], $r['id'], true)) {

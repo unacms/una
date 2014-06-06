@@ -181,7 +181,6 @@ class BxBaseServiceProfiles extends BxDol
 
     protected function _getLatestModuleTimestamp () 
     {
-        $aRet = array();
         bx_import('BxDolModuleQuery');
         $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules', 'active' => 1, 'order_by' => '`date` ASC'));
         if (empty($aModules))

@@ -23,7 +23,7 @@ class BxCnvCmts extends BxTemplCmts
 
         bx_import('BxDolModule');
         $oModule = BxDolModule::getInstance('bx_convos');
-        if (!($aContentInfo = $oModule->_oDb->getContentInfoById((int)$this->getId())))
+        if (!$oModule->_oDb->getContentInfoById((int)$this->getId()))
             return false;
 
         $aCollaborators = $oModule->_oDb->getCollaborators((int)$this->getId());

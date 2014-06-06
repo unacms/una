@@ -208,7 +208,7 @@ function bx_require_authentication ($bStudio = false) {
     $sID = isset($_COOKIE['memberID']) ? bx_process_input($_COOKIE['memberID']) : false;
     $sPassword = isset($_COOKIE['memberPassword']) ? bx_process_input($_COOKIE['memberPassword']) : false;
     
-    if ($sLoginError = bx_check_login($sID, $sPassword, $iRole)) {
+    if (bx_check_login($sID, $sPassword, $iRole)) {
         bx_login_form($bStudio);
     }   
 

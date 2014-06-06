@@ -1192,7 +1192,6 @@ class BxDolFormChecker {
     // db functions
     function serializeDbValues (&$aInputs, &$aValsToAdd, &$aTrackTextFieldsChanges = null) {
         $oDb = BxDolDb::getInstance();
-        $oChecker = $this->_oChecker;
         $aValsToUpdate = array();
         $s = '';
         

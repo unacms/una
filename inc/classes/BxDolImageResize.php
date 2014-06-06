@@ -187,7 +187,6 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
 
         $iErr = 0;
         $src_im =& $this->_createGDImage($sSrcImage, $size, $iErr);
-        $sizeOrig = $size;
 
         if ($iErr)
             return $iErr;
@@ -378,7 +377,6 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
         {
             $cmd = "{$GLOBALS['MOGRIFY']} -geometry {$this->w}\">\"x{$this->h}\">\" \"$sSrcImage\"";
             @exec( $cmd );
-            $ext = strrchr($sSrcImage, '.');
             $nameWithoutExt = substr( $sSrcImage, 0, strrpos($sSrcImage, '.') );
             if ( file_exists( "{$nameWithoutExt}.mgk" ) )
                 rename( "{$nameWithoutExt}.mgk", $sSrcImage );

@@ -447,7 +447,6 @@ class BxTimelineTemplate extends BxDolModuleTemplate
     public function getAttachLinkField($iUserId)
     {
     	$sStylePrefix = $this->_oConfig->getPrefix('style');
-    	$sJsObject = $this->_oConfig->getJsObject('post');
 
     	$aLinks = $this->_oDb->getUnusedLinks($iUserId);
 
@@ -593,7 +592,6 @@ class BxTimelineTemplate extends BxDolModuleTemplate
     }
 
     protected function _getTmplVarsMenuItemManage(&$aEvent) {
-    	$oModule = $this->getModule();
 
 		bx_import('BxDolMenu');
 		$oMenu = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_manage'));
@@ -612,7 +610,6 @@ class BxTimelineTemplate extends BxDolModuleTemplate
     }
 
     protected function _getTmplVarsMenuItemActions(&$aEvent) {
-    	$oModule = $this->getModule();
 
 		bx_import('BxDolMenu');
 		$oMenu = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_actions'));
@@ -779,8 +776,6 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 	protected function _getTmplVarsContentShare($aContent, $aBrowseParams = array())
     {
     	$sStylePrefix = $this->_oConfig->getPrefix('style');
-    	$sCommonPrefix = $this->_oConfig->getPrefix('common_post');
-		$sJsObject = $this->_oConfig->getJsObject('view');
 
 		$sOwnerLink = $this->parseHtmlByName('bx_a.html', array(
 			'href' => $aContent['owner_url'],

@@ -172,8 +172,6 @@ class BxBaseVote extends BxDolVote
     	$iMinValue = $this->getMinValue();
     	$iMaxValue = $this->getMaxValue();
 
-    	$aVote = $this->_oQuery->getVote($this->getId());
-
     	$aTmplVarsButtons = $aTmplVarsStars = array();
     	for($i = $iMinValue; $i <= $iMaxValue; $i++) {
     		$aTmplVarsStars[] = array(

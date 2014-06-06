@@ -18,15 +18,6 @@ class BxBaseModGeneralRequest extends BxDolRequest
     {
         parent::__construct();
     }
-
-    static function processAsAction($aModule, &$aRequest, $sClass = "Module") 
-    {
-        $sClassRequire = $aModule['class_prefix'] . $sClass;
-        $oModule = BxDolRequest::_require($aModule, $sClassRequire);
-        $aVars = array ('BaseUri' => $oModule->_oConfig->getBaseUri());
-
-        return BxDolRequest::processAsAction($aModule, $aRequest, $sClass);
-    }
 }
 
 /** @} */ 

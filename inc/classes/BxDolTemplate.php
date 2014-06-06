@@ -882,7 +882,6 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      * @return string value associated with the key.
      */
     function parseSystemKey($sKey, $mixedKeyWrapperHtml = null, $bProcessInjection = true) {
-        global $logged;
 
         $aKeyWrappers = $this->_getKeyWrappers($mixedKeyWrapperHtml);
 

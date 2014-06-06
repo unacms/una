@@ -32,7 +32,7 @@ class BxBaseModGeneralModule extends BxDolModule
         $sMode = array_shift($aArgs);
 
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->checkAllowedBrowse())) {
-            $this->_oTemplate->displayAccessDenied ();
+            $this->_oTemplate->displayAccessDenied ($sMsg);
             exit;
         }
     

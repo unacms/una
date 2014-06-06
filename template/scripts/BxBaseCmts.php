@@ -150,7 +150,7 @@ class BxBaseCmts extends BxDolCmts {
 
         list($sAuthorName, $sAuthorLink, $sAuthorIcon) = $this->_getAuthorInfo($aCmt['cmt_author_id']);
 
-        $sClass = $sRet = '';
+        $sClass = '';
         if(isset($aCmt['vote_rate']) && (float)$aCmt['vote_rate'] < $this->_aSystem['viewing_threshold']) {
         	$oTemplate->pareseHtmlByName('comment_hidden.html', array(
         		'js_object' => $this->_sJsObjName,
@@ -389,7 +389,6 @@ class BxBaseCmts extends BxDolCmts {
 
 	protected function _getActionsBox(&$aCmt, $aDp = array())
     {
-    	$iUserId = $this->_getAuthorId();
     	$oTemplate = BxDolTemplate::getInstance();
 
     	//--- Actions Menu

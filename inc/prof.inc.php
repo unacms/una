@@ -34,7 +34,7 @@ function getPreValues ($sKey, $aFields = array()) {
     return $oDb->getAllWithKey($sQuery, 'Value');
 }
 
-function getPreValuesCount ($sKey, $aFields = array()) {
+function getPreValuesCount ($sKey) {
     $oDb = BxDolDb::getInstance();
     $sQuery = $oDb->prepare("SELECT COUNT(*) FROM `" . BX_SYS_PRE_VALUES_TABLE . "` WHERE `Key` = ?", $sKey);
     return $oDb->getOne($sQuery);

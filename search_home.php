@@ -48,8 +48,6 @@ class BxDolPageSearchMain extends BxDolPageView {
 
     function getBlockCode_People() {
 
-        global $logged;
-
         $iProfileId = getLoggedId();
         $aProfile = $iProfileId ? getProfileInfo($iProfileId) : array();
 

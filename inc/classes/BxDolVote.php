@@ -88,7 +88,7 @@ define('BX_DOL_VOTE_USAGE_DEFAULT', BX_DOL_VOTE_USAGE_BLOCK);
 
 class BxDolVote extends BxDolObject
 {
-    public function __construct($sSystem, $iId, $iInit = 1)
+    public function __construct($sSystem, $iId, $iInit = true)
     {
         parent::__construct($sSystem, $iId, $iInit);
         if(empty($this->_sSystem))
@@ -123,7 +123,7 @@ class BxDolVote extends BxDolObject
                 bx_import($sClassName);
         }
 
-        $o = new $sClassName($sSys, $iId, true);
+        $o = new $sClassName($sSys, $iId, $iInit);
         return ($GLOBALS['bxDolClasses']['BxDolVote!' . $sSys . $iId] = $o);
     }
 

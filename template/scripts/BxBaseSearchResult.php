@@ -201,7 +201,6 @@ EOF;
     function showPagination($bAdmin = false, $bChangePage = true, $bPageReload = true)
     {
         $oMain = $this->getMain();
-        $oConfig = $oMain->_oConfig;
 
         $sPageUrl = $this->getCurrentUrl(array(), false);
         $sOnClick = $this->getCurrentOnclick(array(), false);

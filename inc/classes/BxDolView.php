@@ -52,7 +52,7 @@ class BxDolView extends BxDolObject
     /**
      * Constructor
      */
-    function BxDolView($sSystem, $iId, $iInit = 1)
+    function BxDolView($sSystem, $iId, $iInit = true)
     {
     	parent::__construct($sSystem, $iId, $iInit);
 		if(empty($this->_sSystem))
@@ -68,7 +68,7 @@ class BxDolView extends BxDolObject
      * @param $iInit perform initialization
      * @return null on error, or ready to use class instance
      */
-    public static function getObjectInstance($sSys, $iId, $isMakeView = true) 
+    public static function getObjectInstance($sSys, $iId, $iInit = true) 
     {
     	if(isset($GLOBALS['bxDolClasses']['BxDolView!' . $sSys . $iId]))
             return $GLOBALS['bxDolClasses']['BxDolView!' . $sSys . $iId];
@@ -87,7 +87,7 @@ class BxDolView extends BxDolObject
                 bx_import($sClassName);
         }
 
-        $o = new $sClassName($sSys, $iId, true);
+        $o = new $sClassName($sSys, $iId, $iInit);
         return ($GLOBALS['bxDolClasses']['BxDolView!' . $sSys . $iId] = $o);
     }
 

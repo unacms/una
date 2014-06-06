@@ -24,8 +24,6 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
 
     protected function _getProfileAndContentData ($iContentId) 
     {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
         $aContentInfo = array();
         $oProfile = false;
 

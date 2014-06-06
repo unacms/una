@@ -75,7 +75,6 @@ class BxBaseGrid extends BxDolGrid {
     public function performActionEnable() {
         $this->_replaceMarkers ();
 
-        $iAffected = 0;
         $aIds = bx_get('ids');
         if (!$aIds || !is_array($aIds)) {
             $this->_echoResultJson(array());

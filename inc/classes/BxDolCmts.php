@@ -266,7 +266,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
                 bx_import($sClassName);
         }
 
-        $o = new $sClassName($sSys, $iId, true);
+        $o = new $sClassName($sSys, $iId, $iInit);
         return ($GLOBALS['bxDolClasses']['BxDolCmts!' . $sSys . $iId] = $o);
     }
 
@@ -497,7 +497,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 
     public function getCommentRow ($iCmtId)
     {
-        return $this->_oQuery->getComment ($this->getId(), $iCmtId, $this->_getAuthorId());
+        return $this->_oQuery->getComment ($this->getId(), $iCmtId);
     }
 
     public function onObjectDelete ($iObjectId = 0)

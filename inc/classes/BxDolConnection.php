@@ -333,7 +333,7 @@ class BxDolConnection extends BxDol implements iBxDolFactoryObject {
      * Similar to getConnectionsAsArray, but for getCommonContentAsSQLParts, getConnectedContentAsSQLParts or getConnectedInitiatorsAsSQLParts methods
      * @see getConnectionsAsArray
      */    
-    public function getConnectionsAsSQLParts ($sContentType, $sContentTable, $sContentField, $iId1, $iId2, $isMutual = false, $iStart = 0, $iLimit = BX_CONNECTIONS_LIST_LIMIT, $iOrder = BX_CONNECTIONS_ORDER_NONE)
+    public function getConnectionsAsSQLParts ($sContentType, $sContentTable, $sContentField, $iId1, $iId2, $isMutual = false)
     {
         if (BX_CONNECTIONS_CONTENT_TYPE_COMMON == $sContentType)
             return $this->getCommonContentAsSQLParts($sContentTable, $sContentField, $iId1, $iId2, $isMutual);

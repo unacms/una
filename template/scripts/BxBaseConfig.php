@@ -82,7 +82,7 @@ class BxBaseConfig extends BxDol implements iBxDolSingleton {
         if (array_key_exists($sName, $this->_aConfig))
             return $this->_aConfig[$sName];
 
-        trigger_error('Undefined property "' . $aName . '" in ' . get_class($this), E_USER_ERROR);
+        trigger_error('Undefined property "' . $sName . '" in ' . get_class($this), E_USER_ERROR);
 
         return null;
     }

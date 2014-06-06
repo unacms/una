@@ -51,7 +51,6 @@ class BxDolRssFactory extends BxDol {
      *  Photo
      */
     function GenRssByCustomData($aRssData, $sUnitTitleC, $sMainLink, $aFields, $sImage = '', $iPID = 0) {
-        $sUnits = '';
         $sRSSLast = '';
         if (isset($aRssData[0]))
             $sRSSLast = bx_time_utc($aRssData[0][$aFields['DateTimeUTS']]);
@@ -62,11 +61,11 @@ class BxDolRssFactory extends BxDol {
         $iUnitLimitChars = 2000;//(int)getParam('max_blog_preview');
         $sUnitRSSFeed = '';
         if ($aRssData) {
-            foreach ($aRssData as $iUnitID => $aUnitInfo) {
+            foreach ($aRssData as $aUnitInfo) {
                 $sUnitUrl = $aUnitInfo[$aFields['Link']];
                 $sUnitGuid = $aUnitInfo[$aFields['Guid']];
 
-                $sUnitTitle = strmaxwordlen(strip_tags($aUnitInfo[$aFields['Title']]), 100);
+                $sUnitTitle = strip_tags($aUnitInfo[$aFields['Title']]);
                 $sUnitDate = bx_time_utc($aUnitInfo[$aFields['DateTimeUTS']]);
 
                 $sLinkMore = '';

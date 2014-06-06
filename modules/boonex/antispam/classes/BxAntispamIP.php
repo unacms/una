@@ -92,7 +92,7 @@ class BxAntispamIP extends BxDol
         if (preg_match('/^[0-9]+$/', $mixedIP))
             $iIP = $mixedIP;
         else
-            $iIP = sprintf("%u", ip2long($sIP));
+            $iIP = sprintf("%u", ip2long($mixedIP));
 
         $iExpirationInSec = time() + (int)$iExpirationInSec;
 

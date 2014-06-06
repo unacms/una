@@ -50,13 +50,6 @@ function uri2title($sValue) {
 }
 
 /*
- * functions for limiting maximal word length
- */
-function strmaxwordlen($input, $len = 100) {
-    return $input;
-}
-
-/*
  * functions for limiting maximal text length
  */
 function strmaxtextlen($sInput, $iMaxLen = 60, $sEllipsisSign = '&#8230;') {
@@ -248,21 +241,7 @@ function htmlspecialchars_adv( $string ) {
     return htmlspecialchars($string, ENT_COMPAT, 'UTF-8');
 }
 
-function process_text_output( $text, $maxwordlen = 100 ) {
-    return ( htmlspecialchars_adv( strmaxwordlen( $text, $maxwordlen ) ) );
-}
 
-function process_text_withlinks_output( $text, $maxwordlen = 100 ) {
-    return nl2br( html_encode( htmlspecialchars_adv( strmaxwordlen( $text, $maxwordlen ) ) ) );
-}
-
-function process_line_output( $text, $maxwordlen = 100 ) {
-    return htmlspecialchars_adv( strmaxwordlen( $text, $maxwordlen ) );
-}
-
-function process_html_output( $text, $maxwordlen = 100 ) {
-    return strmaxwordlen( $text, $maxwordlen );
-}
 
 /**
  * Send email function
@@ -504,7 +483,7 @@ function uriFilter ($s, $sEmpty = '-') {
 
     $s = get_mb_replace ('/([-^]+)/', '-', $s);
     $s = get_mb_replace ('/([-]+)$/', '', $s); // remove trailing dash
-    if (!$s) $s = '-';
+    if (!$s) $s = $sEmpty;
     return $s;
 }
 
@@ -585,7 +564,7 @@ function bx_import($sClassName, $mixedModule = array()) {
             $o = BxDolModule::getInstance($mixedModule);
             $aModule = $o->_aModule;
         } elseif (is_bool($mixedModule) && true === $mixedModule) {
-            $aModule = $GLOABLS['aModule'];
+            $aModule = $GLOBALS['aModule'];
         }
     }
 
