@@ -11,8 +11,8 @@ defined('BX_DOL') or die('hack attempt');
 bx_import('BxDolDb');
 
 class BxDolStudioPageQuery extends BxDolDb {
-    function BxDolStudioPageQuery() {
-        parent::BxDolDb();
+    function __construct() {
+        parent::__construct();
     }
 
     function getPages($aParams, &$aItems, $bReturnCount = true) {

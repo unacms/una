@@ -18,9 +18,9 @@ class BxDevConfig extends BxDolModuleConfig
 	protected $sAnimationEffect;
     protected $iAnimationSpeed;
 
-    function BxDevConfig($aModule)
+    function __construct($aModule)
     {
-        parent::BxDolModuleConfig($aModule);
+        parent::__construct($aModule);
 
         $this->aJsClasses = array('polyglot' => 'BxDevPolyglot');
         $this->aJsObjects = array('polyglot' => 'oBxDevPolyglot');

@@ -28,8 +28,8 @@ define('BX_DEV_TOOLS_PERMISSIONS', 'permissions');
 class BxDevModule extends BxDolModule {
     public $aTools;
 
-    function BxDevModule($aModule) {
-        parent::BxDolModule($aModule);
+    function __construct($aModule) {
+        parent::__construct($aModule);
 
         $this->aTools = array(
             array('name' => BX_DEV_TOOLS_GENERAL, 'title' => ''),

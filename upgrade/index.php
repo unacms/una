@@ -1,13 +1,11 @@
-<?php
-
-/*
-
-    $aConf['iVersion'] = '7.0';
-    $aConf['iPatch'] = '0'; // RC2
-
-    sys_version
-*/
-
+<?php defined('BX_DOL') or die('hack attempt');
+/**
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinUpgrade Dolphin Upgrade Script
+ * @{
+ */
 
 require_once('./../inc/header.inc.php');
 require_once(BX_DIRECTORY_PATH_ROOT . 'upgrade/classes/BxDolUpgradeController.php');
@@ -31,4 +29,5 @@ else
 
 include (BX_UPGRADE_DIR_TEMPLATES . '_footer.php');
 
-?>
+/** @} */
+

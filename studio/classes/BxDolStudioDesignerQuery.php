@@ -11,8 +11,8 @@ defined('BX_DOL') or die('hack attempt');
 bx_import('BxDolStudioPageQuery');
 
 class BxDolStudioDesignerQuery extends BxDolStudioPageQuery {
-    function BxDolStudioDesignerQuery() {
-        parent::BxDolStudioPageQuery();
+    function __construct() {
+        parent::__construct();
     }
 }
 /** @} */

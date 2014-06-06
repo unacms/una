@@ -10,6 +10,7 @@
  */
 
 bx_import ('BxTemplUploaderSimple');
+bx_import('BxDolModule');
 
 /**
  * Upload files using standard HTML forms.
@@ -18,8 +19,7 @@ bx_import ('BxTemplUploaderSimple');
 class BxTimelineUploaderSimple extends BxTemplUploaderSimple {
     public function __construct ($aObject, $sStorageObject, $sUniqId) {
         parent::__construct($aObject, $sStorageObject, $sUniqId);
-
-        bx_import('BxDolModule');
+        
         $oModule = BxDolModule::getInstance('bx_timeline');
 
         $this->_oTemplate = $oModule->_oTemplate;
@@ -29,8 +29,9 @@ class BxTimelineUploaderSimple extends BxTemplUploaderSimple {
     public function getUploaderButton($mixedGhostTemplate, $isMultiple = true, $aParams = array()) {
     	$sResult = parent::getUploaderButton($mixedGhostTemplate, $isMultiple, $aParams);
 
+        $oModule = BxDolModule::getInstance('bx_timeline');
     	return $this->_oTemplate->parseHtmlByContent($sResult, array(
-			'js_object' => $this->_oTemplate->_oConfig->getJsObject('post'),
+			'js_object' => $oModule->_oConfig->getJsObject('post'),
     	));
     }
 }

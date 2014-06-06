@@ -1,10 +1,11 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 define ('BX_DOL_STORAGE_PUBLIC', 'public');
 define ('BX_DOL_STORAGE_PRIVATE', 'private');
@@ -31,8 +32,8 @@ class BxDolStorageS3 extends BxDolStorage {
     /**
      * constructor
      */
-    public function BxDolStorageS3($aObject) {
-        parent::BxDolStorage($aObject);
+    public function __construct($aObject) {
+        parent::__construct($aObject);
 
         $sAccessKey = getParam('sys_storage_s3_access_key');
         $sSecretKey = getParam('sys_storage_s3_secret_key');
@@ -194,4 +195,6 @@ class BxDolStorageS3 extends BxDolStorage {
         return $sProto . $this->_sBucket . '.s3.amazonaws.com/' . $this->getObjectBaseDir($isPrivate);
     }
 }
+
+/** @} */
 

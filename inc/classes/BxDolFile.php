@@ -8,11 +8,11 @@
  */
 
 class BxDolFile extends BxDol implements iBxDolSingleton {
-    var $_sPathFrom;
-    var $_sPathTo;
+    protected $_sPathFrom;
+    protected $_sPathTo;
 
-    function BxDolFile() {
-        parent::BxDol();
+    function __construct() {
+        parent::__construct();
 
         $this->_sPathFrom = BX_DIRECTORY_PATH_ROOT;
         $this->_sPathTo = BX_DIRECTORY_PATH_ROOT;

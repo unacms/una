@@ -32,21 +32,21 @@ define( 'IMAGE_TYPE_PNG',         3 );
 
 class BxDolImageResize extends BxDol implements iBxDolSingleton {
 
-    var $w = 64, $h = 64; ///< size of destination image
-    var $_isCrop = false;
-    var $_isAutoCrop = false;
-    var $_cropX, $_cropY, $_cropW, $_cropH;
-    var $_iForceOutputType = false; ///< force IMAGE_TYPE_PNG, IMAGE_TYPE_PNG, IMAGE_TYPE_GIF or false to keep the original format // TODO: check if this setting works when ImageMagick is used
-    var $_iJpegQuality = 90; ///< jpeg quality
-    var $_isSquareResize = false; ///< use smart resize, destination image will be exact Width x Height size
-    var $_isUseGD; ///< use GD library or command line ImagMagic utilites
+    protected $w = 64, $h = 64; ///< size of destination image
+    protected $_isCrop = false;
+    protected $_isAutoCrop = false;
+    protected $_cropX, $_cropY, $_cropW, $_cropH;
+    protected $_iForceOutputType = false; ///< force IMAGE_TYPE_PNG, IMAGE_TYPE_PNG, IMAGE_TYPE_GIF or false to keep the original format // TODO: check if this setting works when ImageMagick is used
+    protected $_iJpegQuality = 90; ///< jpeg quality
+    protected $_isSquareResize = false; ///< use smart resize, destination image will be exact Width x Height size
+    protected $_isUseGD; ///< use GD library or command line ImagMagic utilites
 
-    function BxDolImageResize() {
+    function __construct() {
 
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
-        parent::BxDol();
+        parent::__construct();
 
         $this->_isUseGD = getParam('enable_gd') == 'on' && extension_loaded('gd') ? true : false;
     }

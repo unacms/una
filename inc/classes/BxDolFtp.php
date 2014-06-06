@@ -1,22 +1,23 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxDolFile');
 
 class BxDolFtp extends BxDolFile {
-    var $_sHost;
-    var $_sLogin;
-    var $_sPassword;
-    var $_sPathTo;
-    var $_rStream;
+    protected $_sHost;
+    protected $_sLogin;
+    protected $_sPassword;
+    protected $_sPathTo;
+    protected $_rStream;
 
-    function BxDolFtp($sHost, $sLogin, $sPassword, $sPath = '/') {
-        parent::BxDolFile();
+    function __construct($sHost, $sLogin, $sPassword, $sPath = '/') {
+        parent::__construct();
         $this->_sHost = $sHost;
         $this->_sLogin = $sLogin;
         $this->_sPassword = $sPassword;
@@ -145,3 +146,5 @@ class BxDolFtp extends BxDolFile {
         return true;
     }
 }
+
+/** @} */

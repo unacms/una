@@ -60,7 +60,7 @@ class BxTimelineConfig extends BxDolModuleConfig
      */
     public function __construct($aModule)
     {
-        parent::BxDolModuleConfig($aModule);
+        parent::__construct($aModule);
 
         $this->_sAlertSystemName = $this->_sName;
         $this->_sCommentSystemName = $this->_sName;

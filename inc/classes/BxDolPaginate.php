@@ -1,10 +1,11 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 // TODO: get rid of PerPage changer / count all and maybe other advanced features
 
@@ -86,8 +87,8 @@ abstract class BxDolPaginate extends BxDol {
     /**
      * Constructor
      */
-    public function BxDolPaginate($aParams, $oTemplate = null) {
-        parent::BxDol();
+    public function __construct($aParams, $oTemplate = null) {
+        parent::__construct();
 
         if ($oTemplate)
             $this->_oTemplate = $oTemplate;
@@ -338,3 +339,4 @@ abstract class BxDolPaginate extends BxDol {
 
 }
 
+/** @} */

@@ -18,9 +18,9 @@ bx_import('BxTemplFormView');
 
 class BxDolSplashMenuTop extends BxTemplStudioMenuTop implements iBxDolSingleton
 {
-	function BxDolSplashMenuTop()
+	function __construct()
 	{
-		parent::BxTemplStudioMenuTop();
+		parent::__construct();
 
 		$oTemplate = BxDolStudioTemplate::getInstance();
 
@@ -48,7 +48,7 @@ class BxDolSplashMenuTop extends BxTemplStudioMenuTop implements iBxDolSingleton
 
 class BxDolSplashForm extends BxTemplFormView
 {
-	function BxDolSplashForm($oTemplate = false)
+	function __construct($oTemplate = false)
 	{
 		$aInfo = array(
             'form_attrs' => array(
@@ -80,7 +80,7 @@ class BxDolSplashForm extends BxTemplFormView
                 ),
             )
         );
-		parent::BxTemplFormView($aInfo, $oTemplate);
+		parent::__construct($aInfo, $oTemplate);
 	}
 
 	function isSubmittedAndNotValid ()

@@ -14,10 +14,14 @@ define('BX_DOL_PG_MEONLY', '2');
 define('BX_DOL_PG_ALL', '3');
 define('BX_DOL_PG_MEMBERS', '4');
 define('BX_DOL_PG_FRIENDS', '5');
-//define('BX_DOL_PG_FAVES', '6');
-//define('BX_DOL_PG_CONTACTS', '7');
 
 define('BX_DOL_PG_DEFAULT', BX_DOL_PG_ALL);
+
+/** 
+ * @page objects 
+ * @section privacy Privacy
+ * @ref BxDolPrivacy
+ */
 
 /**
  * Privacy settings for any content.
@@ -67,7 +71,7 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
      */
     function __construct($aObject)
     {
-        parent::BxDol();
+        parent::__construct();
 
         $this->_aObject = $aObject;
         $this->_sObject = $aObject['object'];
@@ -297,3 +301,5 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
         return false;
     }
 }
+
+/** @} */

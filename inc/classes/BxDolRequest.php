@@ -1,19 +1,18 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 define('BX_DOL_REQUEST_ERROR_MODULE_NOT_FOUND', 1);
 define('BX_DOL_REQUEST_ERROR_PAGE_NOT_FOUND', 2);
 
-$GLOBALS['bxDolClasses'] = array();
-
 class BxDolRequest extends BxDol {
-    function BxDolRequest() {
-        parent::BxDol();
+    function __construct() {
+        parent::__construct();
     }
     public static function processAsFile($aModule, &$aRequest) {
         if(empty($aRequest) || ($sFileName = array_shift($aRequest)) == "")
@@ -137,9 +136,11 @@ class BxDolRequest extends BxDol {
         $oTemplate = BxDolTemplate::getInstance();
         $oTemplate->setPageNameIndex(BX_PAGE_DEFAULT);
         $oTemplate->setPageHeader(_t("_sys_request_" . $sType . "_not_found_cpt"));
-        $oTemplate->setPageContent('page_main_code', DesignBoxContent('123', MsgBox(_t("_sys_request_" . $sType . "_not_found_cnt", bx_process_output($sParam1), bx_process_output($sParam2))), BX_DB_PADDING_NO_CAPTION));
+        $oTemplate->setPageContent('page_main_code', DesignBoxContent('', MsgBox(_t("_sys_request_" . $sType . "_not_found_cnt", bx_process_output($sParam1), bx_process_output($sParam2))), BX_DB_PADDING_NO_CAPTION));
         $oTemplate->getPageCode();
         exit;
     }
 }
+
+/** @} */
 

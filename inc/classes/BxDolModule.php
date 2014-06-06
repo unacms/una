@@ -40,19 +40,16 @@
  *
  */
 class BxDolModule extends BxDol {
-    var $_aModule;
-
-    var $_oDb;
-
-    var $_oTemplate;
-
-    var $_oConfig;
+    public $_aModule;
+    public $_oDb;
+    public $_oTemplate;
+    public $_oConfig;
 
     /**
      * constructor
      */
-    function BxDolModule($aModule) {
-        parent::BxDol();
+    function __construct($aModule) {
+        parent::__construct();
 
         $this->_aModule = $aModule;
 

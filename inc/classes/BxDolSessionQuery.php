@@ -1,10 +1,11 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxDolDb');
 
@@ -12,10 +13,10 @@ bx_import('BxDolDb');
  * @see BxDolSession
  */
 class BxDolSessionQuery extends BxDolDb {
-    var $sTable;
+    protected $sTable;
 
-    function BxDolSessionQuery() {
-        parent::BxDolDb();
+    function __construct() {
+        parent::__construct();
 
         $this->sTable = 'sys_sessions';
     }
@@ -46,4 +47,6 @@ class BxDolSessionQuery extends BxDolDb {
         return $iRet;
     }
 }
+
+/** @} */
 

@@ -1,10 +1,11 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 define ('BX_DOL_STORAGE_DIR_RIGHTS', 0777);
 define ('BX_DOL_STORAGE_FILE_RIGHTS', 0666);
@@ -20,8 +21,8 @@ class BxDolStorageLocal extends BxDolStorage {
     /**
      * constructor
      */
-    public function BxDolStorageLocal($aObject) {
-        parent::BxDolStorage($aObject);
+    public function __construct($aObject) {
+        parent::__construct($aObject);
     }
 
     /**
@@ -146,4 +147,6 @@ class BxDolStorageLocal extends BxDolStorage {
         }
     }
 }
+
+/** @} */
 

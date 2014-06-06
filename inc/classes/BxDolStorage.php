@@ -205,8 +205,8 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
     /**
      * constructor
      */
-    protected function BxDolStorage($aObject) {
-        parent::BxDol();
+    protected function __construct($aObject) {
+        parent::__construct();
         $this->_aObject = $aObject;
         $this->_iCacheControl = $aObject['cache_control'];
         $this->_aParams = $aObject['params'] ? unserialize($aObject['params']) : '';
@@ -998,7 +998,7 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
  */
 class BxDolStorageHelperXhr {
 
-    var $sName;
+    protected $sName;
 
     function BxDolStorageHelperXhr ($aParams) {
         $this->sName = $aParams['name'];
@@ -1043,7 +1043,7 @@ class BxDolStorageHelperXhr {
  */
 class BxDolStorageHelperForm {  
 
-    var $aFile;
+    protected $aFile;
 
     function BxDolStorageHelperForm ($aParams) {
         $this->aFile = $aParams['file'];
@@ -1081,7 +1081,7 @@ class BxDolStorageHelperForm {
  */
 class BxDolStorageHelperPath { 
 
-    var $sPath;
+    protected $sPath;
 
     function BxDolStorageHelperPath ($aParams) {
         $this->sPath = $aParams['path'];
@@ -1116,9 +1116,9 @@ class BxDolStorageHelperPath {
  */
 class BxDolStorageHelperStorage {
 
-    var $iFileId;
-    var $oStorage;
-    var $aFile;
+    protected $iFileId;
+    protected $oStorage;
+    protected $aFile;
 
     function BxDolStorageHelperStorage ($aParams) {
         $this->iFileId = $aParams['id'];

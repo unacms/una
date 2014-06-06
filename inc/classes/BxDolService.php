@@ -1,10 +1,11 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxDolRequest');
 
@@ -31,11 +32,14 @@ bx_import('BxDolRequest');
  */
 class BxDolService extends BxDol 
 {
-    function BxDolService () 
-    {
-        parent::BxDol();
-    }
-
+    /**
+     * Perform serice call
+     * @param $mixed module name or module id
+     * @param $sMethod service method name in format 'method_name', corresponding class metod is serviceMethodName
+     * @param $aParams params to pass to service method
+     * @param $sClass class to search for service method, by default it is main module class 
+     * @return service call result
+     */
     public static function call($mixed, $sMethod, $aParams = array(), $sClass = 'Module') 
     {
         bx_import('BxDolModuleQuery');
@@ -50,6 +54,22 @@ class BxDolService extends BxDol
         return empty($aModule) ? '' : BxDolRequest::processAsService($aModule, $sMethod, $aParams, $sClass);
     }
 
+    /**
+     * Perform serice call by accepting serialized array of service call parameters:
+     * @code
+     *     array (
+     *         'module' => 'system', // module name
+     *         'method' => 'test', // service method name
+     *         'params' => array(), // array of parameters to pass to service method
+     *         'class' => 'Module', // class to search service method in
+     *     )
+     * @endcode
+     *
+     * @param $s serialized array of serice call
+     * @param $aMarkers service method name in format 'method_name', corresponding class metod is serviceMethodName
+     * @param $sReplaceIn params to pass to service method
+     * @return service call result
+     */
     public static function callSerialized($s, $aMarkers = array(), $sReplaceIn = 'params') 
     {
         $a = @unserialize($s);
@@ -62,9 +82,14 @@ class BxDolService extends BxDol
         return self::call($a['module'], $a['method'], isset($a['params']) ? $a['params'] : array(), isset($a['class']) ? $a['class'] : 'Module');
     }
 
+    /**
+     * Check if string is serialized array
+     */
     public static function isSerializedService($s) 
     {
         return preg_match('/^a:[\d+]:\{/', $s);
     }
 }
+
+/** @} */
 

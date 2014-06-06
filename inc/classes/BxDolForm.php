@@ -607,7 +607,7 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *      
  *      class BxSampleFormCheckerHelper extends BxDolFormCheckerHelper {
  *          
- *          var $_sDiv = ',';
+ *          protected $_sDiv = ',';
  *          
  *          // prepare RBG values to save to the DB
  *          function passRgb ($s) {
@@ -716,28 +716,25 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  */
 class BxDolForm extends BxDol implements iBxDolReplaceable
 {
-
     static $TYPES_CHECKBOX = array('checkbox' => 1, 'switcher' => 1);
     static $TYPES_TEXT = array('text' => 1, 'textarea' => 1);
     static $TYPES_FILE = array('file' => 1);
 
     protected $_aMarkers = array ();
 
-    var $oTemplate;
+    protected $oTemplate;
 
-    var $_isValid = true;
-    var $_sCheckerHelper;
-    var $_aSpecificValues;
+    protected $_isValid = true;
+    protected $_sCheckerHelper;
+    protected $_aSpecificValues;
   
-    var $aFormAttrs;
-    var $aTableAttrs;
-    var $aInputs;
-    var $aParams;
+    public $aFormAttrs; ///< form html element attributes
+    public $aInputs; ///< form inputs
+    public $aParams; ///< additional form parameters 
+    public $id; ///< Form element id
 
-    var $id; ///< Form element id    
-
-    function BxDolForm ($aInfo, $oTemplate) {
-        parent::BxDol();
+    function __construct ($aInfo, $oTemplate) {
+        parent::__construct();
 
         if ($oTemplate)
             $this->oTemplate = $oTemplate;
@@ -745,7 +742,6 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
             $this->oTemplate = BxDolTemplate::getInstance();
 
         $this->aFormAttrs    = isset($aInfo['form_attrs'])   ? $aInfo['form_attrs']  : array();
-        $this->aTableAttrs   = isset($aInfo['table_attrs'])  ? $aInfo['table_attrs'] : array();
         $this->aInputs       = isset($aInfo['inputs'])       ? $aInfo['inputs']      : array();
         $this->aParams       = isset($aInfo['params'])       ? $aInfo['params']      : array();
 
@@ -1066,12 +1062,12 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
 }
 
 class BxDolFormChecker {
-    var $_oChecker;
-    var $_sFormMethod;
-    var $_bFormCsrfChecking;
-    var $_aSpecificValues;
+    protected $_oChecker;
+    protected $_sFormMethod;
+    protected $_bFormCsrfChecking;
+    protected $_aSpecificValues;
 
-    function BxDolFormChecker ($sHelper = '') {
+    function __construct ($sHelper = '') {
         $this->_sFormMethod = BX_DOL_FORM_METHOD_GET;
         $this->_bFormCsrfChecking = true;
 
@@ -1490,4 +1486,4 @@ class BxDolFormCheckerHelper {
     }
 }
 
-/** @} */ 
+/** @} */

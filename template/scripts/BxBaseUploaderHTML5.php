@@ -16,7 +16,7 @@ bx_import ('BxDolUploader');
  */
 class BxBaseUploaderHTML5 extends BxDolUploader {    
 
-    var $_sDivId; ///< div id where upload button will be placed
+    protected $_sDivId; ///< div id where upload button will be placed
 
     function __construct ($aObject, $sStorageObject, $sUniqId) {
         parent::__construct($aObject, $sStorageObject, $sUniqId);

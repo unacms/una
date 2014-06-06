@@ -1,22 +1,23 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxDolTemplate');
 
 class BxDolModuleTemplate extends BxDolTemplate {
-    var $_oDb;
-    var $_oConfig;
-    var $_bObStarted = 0;
+    protected $_oDb;
+    protected $_oConfig;
+    protected $_bObStarted = 0;
 
     /*
      * Constructor.
      */
-    function BxDolModuleTemplate(&$oConfig, &$oDb, $sRootPath = BX_DIRECTORY_PATH_ROOT, $sRootUrl = BX_DOL_URL_ROOT) {
+    function __construct(&$oConfig, &$oDb, $sRootPath = BX_DIRECTORY_PATH_ROOT, $sRootUrl = BX_DOL_URL_ROOT) {
         parent::__construct($sRootPath, $sRootUrl);
 
         $this->_oDb = &$oDb;
@@ -93,3 +94,4 @@ class BxDolModuleTemplate extends BxDolTemplate {
     } 
 }
 
+/** @} */

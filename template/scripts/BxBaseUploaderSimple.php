@@ -15,7 +15,7 @@ bx_import ('BxDolUploader');
  */
 class BxBaseUploaderSimple extends BxDolUploader {    
 
-    var $_sIframeId;
+    protected $_sIframeId;
 
     function __construct ($aObject, $sStorageObject, $sUniqId) {
         parent::__construct($aObject, $sStorageObject, $sUniqId);

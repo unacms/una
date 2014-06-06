@@ -11,8 +11,8 @@ defined('BX_DOL') or die('hack attempt');
 bx_import('BxDolStudioPageQuery');
 
 class BxDolStudioDesignsQuery extends BxDolStudioPageQuery {
-    function BxDolStudioDesignsQuery() {
-        parent::BxDolStudioPageQuery();
+    function __construct() {
+        parent::__construct();
     }
 
     function getTemplatesBy($aParams, &$aItems, $bReturnCount = true) {

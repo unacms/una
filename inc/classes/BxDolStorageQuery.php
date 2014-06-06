@@ -1,10 +1,11 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxDolDb');
 
@@ -16,8 +17,8 @@ class BxDolStorageQuery extends BxDolDb {
     protected $_aObject;
     protected $_sTableFiles;
 
-    public function BxDolStorageQuery($aObject) {
-        parent::BxDolDb();
+    public function __construct($aObject) {
+        parent::__construct();
         $this->_aObject = $aObject;
         $this->_sTableFiles = '`' . $aObject['table_files'] . '`';
     }
@@ -261,4 +262,6 @@ class BxDolStorageQuery extends BxDolDb {
         return $oDb->getOne($sQuery);
     }
 }
+
+/** @} */
 

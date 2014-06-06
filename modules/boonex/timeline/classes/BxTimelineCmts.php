@@ -15,7 +15,7 @@ class BxTimelineCmts extends BxTemplCmts
 {
     function __construct($sSystem, $iId, $iInit = 1)
     {
-        parent::BxTemplCmts($sSystem, $iId, $iInit);
+        parent::__construct($sSystem, $iId, $iInit);
     }
 
     public function isAttachImageEnabled()

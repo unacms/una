@@ -28,7 +28,7 @@ class BxDolVoteQuery extends BxDolDb
 
     public function __construct(&$oModule)
     {
-        parent::BxDolDb();
+        parent::__construct();
 
         $this->_oModule = $oModule;
 

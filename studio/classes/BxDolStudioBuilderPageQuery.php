@@ -12,7 +12,7 @@ bx_import('BxDolStudioPageQuery');
 
 class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery { 
     function __construct() {
-        parent::BxDolStudioPageQuery();
+        parent::__construct();
     }
 
     function getPages($aParams, &$aItems, $bReturnCount = true) {

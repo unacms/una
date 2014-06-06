@@ -7,12 +7,15 @@
  * @{
  */
 
-
 /** 
  * @page objects Objects
  * Classes which represents high level programming constructions to generate ready functionality, like Comments, Votings, Forms. 
  */
 
+/**
+ * Classes instances are stored here
+ */
+$GLOBALS['bxDolClasses'] = array();
 
 /**
  * Base class for all Dolphin classes

@@ -1,10 +1,11 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxDolForm');
 
@@ -15,67 +16,52 @@ class BxBaseFormView extends BxDolForm {
     protected static $_isCssJsAdded = false;
     protected static $_isCssJsAddedViewMode = false;
 
-    var $bEnableErrorIcon = true;
+    /**
+     * Enable or disable error message displaying
+     */
+    protected $bEnableErrorIcon = true;
 
     /**
      * HTML Code of this form
-     *
-     * @var string
      */
-    var $sCode;
+    protected $sCode;
 
     /**
      * Code which will be added to the beginning of the form.
      * For example, hidden inputs.
      * For internal use only
-     *
-     * @var string
      */
-    var $_sCodeAdd = '';
+    protected $_sCodeAdd = '';
 
     /**
      * for internal use only
-     *
-     * @var boolean
      */
-    var $_isSectionOpened = false;
-
-    /**
-     *
-     *
-     * @var boolean
-     */
-    var $_bHtmlEditorAdded = false;
+    protected $_isSectionOpened = false;
 
     /**
      * Default divider for several inputs
-     * @var string
      */
-    var $_sDivider = '<span class="bx-def-margin-left"></span>';
+    protected $_sDivider = '<span class="bx-def-margin-left"></span>';
 
     /**
      * Alternative divider for several inputs
-     * @var string
      */
-    var $_sDividerAlt = '<br />';
+    protected $_sDividerAlt = '<br />';
 
     /**
      * Form is added dynamically.
-     * @var boolean
      */
-    var $_bDynamicMode = false;
+    protected $_bDynamicMode = false;
 
     /**
      * Function name for generation close form section HTML.
-     * @var string
      */
-    var $_sSectionClose = 'getCloseSection';
+    protected $_sSectionClose = 'getCloseSection';
 
     /**
      * Function name for generation open form section HTML.
-     * @var string
      */
-    var $_sSectionOpen = 'getOpenSection';
+    protected $_sSectionOpen = 'getOpenSection';
 
     /**
      * Constructor
@@ -88,8 +74,8 @@ class BxBaseFormView extends BxDolForm {
      *
      * @return BxBaseFormView
      */
-    function BxBaseFormView($aInfo, $oTemplate) {
-        parent::BxDolForm($aInfo, $oTemplate);
+    function __construct($aInfo, $oTemplate) {
+        parent::__construct($aInfo, $oTemplate);
 
         if (isset($this->aParams['view_mode']) && $this->aParams['view_mode']) {
             $this->_sSectionClose = 'getCloseSectionViewMode';
@@ -117,7 +103,6 @@ class BxBaseFormView extends BxDolForm {
     function genForm() {
 
         $this->_sCodeAdd = '';
-        $this->_bHtmlEditorAdded = false;
 
         $sTable = $this->genRows();
 
@@ -1224,3 +1209,4 @@ BLAH;
     }
 }
 
+/** @} */

@@ -10,19 +10,19 @@
 bx_import('BxDolCacheFile');
 
 class BxDolParams extends BxDol {
-    var $_oDb;
-    var $_oCache;
-    var $_sCacheFile;
-    var $_aParams;
+    protected $_oDb;
+    protected $_oCache;
+    protected $_sCacheFile;
+    protected $_aParams;
 
     /**
      * constructor
      */
-    function BxDolParams($oDb) {
+    function __construct($oDb) {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
-        parent::BxDol();
+        parent::__construct();
 
         $this->_oDb = $oDb;
         $this->_oCache = new BxDolCacheFile(); // feel free to change to another cache system if you are sure that it is available

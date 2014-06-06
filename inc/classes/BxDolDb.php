@@ -7,57 +7,58 @@
  * @{
  */
 
-class BxDolDb extends BxDol implements iBxDolSingleton {
+class BxDolDb extends BxDol implements iBxDolSingleton 
+{
+    protected $_bErrorChecking = true;
+    protected $_sErrorMessage;
+    protected $_sHost, $_sPort, $_sSocket, $_sDbname, $_sUser, $_sPassword;
+    protected $_rLink, $_rCurrentRes, $_iCurrentResType;
 
-    var $error_checking = true;
-    var $error_message;
-    var $host, $port, $socket, $dbname, $user, $password, $link;
-    var $current_res, $current_arr_type;
-
-    var $oDbCacheObject = null;
+    protected $_oDbCacheObject = null;
 
     /**
      * set database parameters and connect to it
      */
-    protected function BxDolDb($aDbConf = false) {
-
+    protected function __construct($aDbConf = false) 
+    {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
-        parent::BxDol();
+        parent::__construct();
 
         if (false === $aDbConf) {
-            $this->host = BX_DATABASE_HOST;
-            $this->port = BX_DATABASE_PORT;
-            $this->socket = BX_DATABASE_SOCK;
-            $this->dbname = BX_DATABASE_NAME;
-            $this->user = BX_DATABASE_USER;
-            $this->password = BX_DATABASE_PASS;
+            $this->_sHost = BX_DATABASE_HOST;
+            $this->_sPort = BX_DATABASE_PORT;
+            $this->_sSocket = BX_DATABASE_SOCK;
+            $this->_sDbname = BX_DATABASE_NAME;
+            $this->_sUser = BX_DATABASE_USER;
+            $this->_sPassword = BX_DATABASE_PASS;
         } else {
-            $this->host = $aDbConf['host'];
-            $this->port = $aDbConf['port'];
-            $this->socket = $aDbConf['sock'];
-            $this->dbname = $aDbConf['name'];
-            $this->user = $aDbConf['user'];
-            $this->password = $aDbConf['pwd'];
-            $this->error_checking = isset($aDbConf['error_checking']) ? $aDbConf['error_checking'] : true;
+            $this->_sHost = $aDbConf['host'];
+            $this->_sPort = $aDbConf['port'];
+            $this->_sSocket = $aDbConf['sock'];
+            $this->_sDbname = $aDbConf['name'];
+            $this->_sUser = $aDbConf['user'];
+            $this->_sPassword = $aDbConf['pwd'];
+            $this->_bErrorChecking = isset($aDbConf['error_checking']) ? $aDbConf['error_checking'] : true;
         }
 
-        $this->current_arr_type = MYSQL_ASSOC;
+        $this->_iCurrentResType = MYSQL_ASSOC;
 
         // connect to db automatically
-        if (empty($GLOBALS['bx_db_link'])) {
+        if (empty($GLOBALS['bx_db__rLink'])) {
             $this->connect();
             $GLOBALS['gl_db_cache'] = array();
         } else {
-            $this->link = $GLOBALS['bx_db_link'];
+            $this->_rLink = $GLOBALS['bx_db__rLink'];
         }
     }
 
     /**
      * Prevent cloning the instance
      */
-    public function __clone() {
+    public function __clone() 
+    {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error('Clone is not allowed for the class: ' . get_class($this), E_USER_ERROR);
     }
@@ -85,7 +86,8 @@ class BxDolDb extends BxDol implements iBxDolSingleton {
     /**
      * Get singleton instance of the class
      */
-    public static function getInstance($aDbConf = false, &$sError = null) {
+    public static function getInstance($aDbConf = false, &$sError = null) 
+    {
         if (!isset($GLOBALS['bxDolClasses'][__CLASS__])) {
             $o = new BxDolDb($aDbConf);
             $sErrorMessage = $o->connect();
@@ -106,28 +108,28 @@ class BxDolDb extends BxDol implements iBxDolSingleton {
      */
     function connect()
     {
-        $full_host = $this->host;
-        $full_host .= $this->port ? ':'.$this->port : '';
-        $full_host .= $this->socket ? ':'.$this->socket : '';
+        $full_host = $this->_sHost;
+        $full_host .= $this->_sPort ? ':'.$this->_sPort : '';
+        $full_host .= $this->_sSocket ? ':'.$this->_sSocket : '';
 
-        $this->link = @mysql_pconnect($full_host, $this->user, $this->password);
-        if (!$this->link)
+        $this->_rLink = @mysql_pconnect($full_host, $this->_sUser, $this->_sPassword);
+        if (!$this->_rLink)
             return 'Database connect failed';
 
         if (!$this->select_db())
             return 'Database select failed';
 
-        mysql_query("SET NAMES 'utf8'", $this->link);
-        mysql_query("SET sql_mode = ''", $this->link);
+        mysql_query("SET NAMES 'utf8'", $this->_rLink);
+        mysql_query("SET sql_mode = ''", $this->_rLink);
 
-        $GLOBALS['bx_db_link'] = $this->link;
+        $GLOBALS['bx_db__rLink'] = $this->_rLink;
 
         return '';
     }
 
     function select_db()
     {
-        return @mysql_select_db($this->dbname, $this->link);
+        return @mysql_select_db($this->_sDbname, $this->_rLink);
     }
 
     /**
@@ -135,7 +137,7 @@ class BxDolDb extends BxDol implements iBxDolSingleton {
      */
     function close()
     {
-        mysql_close($this->link);
+        mysql_close($this->_rLink);
     }
 
     /**
@@ -143,7 +145,7 @@ class BxDolDb extends BxDol implements iBxDolSingleton {
      */
     function getServerInfo()
     {
-        return mysql_get_server_info($this->link);
+        return mysql_get_server_info($this->_rLink);
     }
 
     /**
@@ -172,10 +174,12 @@ class BxDolDb extends BxDol implements iBxDolSingleton {
         }
         return $arr_res;
     }
+
     /**
      * execute sql query and return a column as result
      */
-    function getColumn($sQuery) {
+    function getColumn($sQuery) 
+    {
         if(!$sQuery)
             return array();
 
@@ -216,13 +220,13 @@ class BxDolDb extends BxDol implements iBxDolSingleton {
         if(!$query)
             return array();
         if($arr_type != MYSQL_ASSOC && $arr_type != MYSQL_NUM)
-            $this->current_arr_type = MYSQL_ASSOC;
+            $this->_iCurrentResType = MYSQL_ASSOC;
         else
-            $this->current_arr_type = $arr_type;
-        $this->current_res = $this->res ($query);
+            $this->_iCurrentResType = $arr_type;
+        $this->_rCurrentRes = $this->res ($query);
         $arr_res = array();
-        if($this->current_res && mysql_num_rows($this->current_res))
-            $arr_res = mysql_fetch_array($this->current_res, $this->current_arr_type);
+        if($this->_rCurrentRes && mysql_num_rows($this->_rCurrentRes))
+            $arr_res = mysql_fetch_array($this->_rCurrentRes, $this->_iCurrentResType);
         return $arr_res;
     }
 
@@ -231,13 +235,13 @@ class BxDolDb extends BxDol implements iBxDolSingleton {
      */
     function getNextRow()
     {
-        $arr_res = mysql_fetch_array($this->current_res, $this->current_arr_type);
+        $arr_res = mysql_fetch_array($this->_rCurrentRes, $this->_iCurrentResType);
         if($arr_res)
             return $arr_res;
         else
         {
-            mysql_free_result($this->current_res);
-            $this->current_arr_type = MYSQL_ASSOC;
+            mysql_free_result($this->_rCurrentRes);
+            $this->_iCurrentResType = MYSQL_ASSOC;
             return array();
         }
     }
@@ -249,8 +253,8 @@ class BxDolDb extends BxDol implements iBxDolSingleton {
     {
         if ($res)
             return (int)@mysql_num_rows($res);
-        elseif (!$this->current_res)
-            return (int)@mysql_num_rows($this->current_res);
+        elseif (!$this->_rCurrentRes)
+            return (int)@mysql_num_rows($this->_rCurrentRes);
         else
             return 0;
     }
@@ -260,7 +264,7 @@ class BxDolDb extends BxDol implements iBxDolSingleton {
      */
     function getAffectedRows()
     {
-        return mysql_affected_rows($this->link);
+        return mysql_affected_rows($this->_rLink);
     }
 
     /**
@@ -270,38 +274,38 @@ class BxDolDb extends BxDol implements iBxDolSingleton {
     {
         $res = $this->res($query);
         if ($res)
-            return mysql_affected_rows($this->link);
+            return mysql_affected_rows($this->_rLink);
         return false;
     }
 
     /**
      * execute any query
      */
-    function res($query, $error_checking = true)
+    function res($query, $bErrorChecking = true)
     {
         if(!$query)
             return false;
 
         if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->beginQuery($query);
 
-        $res = @mysql_query($query, $this->link);
+        $res = @mysql_query($query, $this->_rLink);
 
         if (false === $res)
-            $this->error_message = @mysql_error($this->link); // we need to remeber last error message since mysql_ping will reset it on the next line !
+            $this->_sErrorMessage = @mysql_error($this->_rLink); // we need to remeber last error message since mysql_ping will reset it on the next line !
         else
-            $this->error_message = '';
+            $this->_sErrorMessage = '';
 
-        if (!$res && !@mysql_ping($this->link)) { // if mysql connection is lost - reconnect and try again
-            @mysql_close($this->link);
+        if (!$res && !@mysql_ping($this->_rLink)) { // if mysql connection is lost - reconnect and try again
+            @mysql_close($this->_rLink);
             $sErrorMessage = $this->connect();
             if ($sErrorMessage)
                 $this->error($sErrorMessage, true);
-            $res = mysql_query($query, $this->link);
+            $res = mysql_query($query, $this->_rLink);
         }
 
         if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->endQuery($res);
 
-        if (!$res && $error_checking)
+        if (!$res && $bErrorChecking)
             $this->error('Database query error', false, $query);
         return $res;
     }
@@ -391,50 +395,55 @@ class BxDolDb extends BxDol implements iBxDolSingleton {
 
     function lastId()
     {
-        return mysql_insert_id($this->link);
+        return mysql_insert_id($this->_rLink);
     }
 
     function getErrorMessage () 
     {
-        $s = mysql_error($this->link);
+        $s = mysql_error($this->_rLink);
         if ($s)
             return $s;
         else
-            return $this->error_message;
+            return $this->_sErrorMessage;
     }
 
     function error($text, $isForceErrorChecking = false, $sSqlQuery = '')
     {
-        if ($this->error_checking || $isForceErrorChecking)
+        if ($this->_bErrorChecking || $isForceErrorChecking)
             $this->genMySQLErr ($text, $sSqlQuery);
         else
             $this->log($text . ': ' . $this->getErrorMessage());
     }
 
-    function isParam($sName, $bCache = true) {
+    function isParam($sName, $bCache = true) 
+    {
         return $this->oParams->exists($sName, $bCache);
     }
 
-    function addParam($sName, $sValue, $iKateg, $sDesc, $sType) {
+    function addParam($sName, $sValue, $iKateg, $sDesc, $sType) 
+    {
         return $this->oParams->add($sName, $sValue, $iKateg, $sDesc, $sType);
     }
 
-    function getParam($sName, $bCache = true) {
+    function getParam($sName, $bCache = true) 
+    {
         return $this->oParams->get($sName, $bCache);
     }
 
-    function setParam($sName, $sValue ) {
+    function setParam($sName, $sValue ) 
+    {
         $this->oParams->set($sName, $sValue);
         return true;
     }
 
-    function listTables() {
-        return mysql_list_tables($GLOBALS['db']['db'], $this->link);
-        //return mysql_list_tables($GLOBALS['db']['db'], $this->link) or $this->error('Database get encoding error');
+    function listTables() 
+    {
+        return mysql_list_tables($GLOBALS['db']['db'], $this->_rLink);
     }
 
-    function getFields($sTable) {
-        $rFields = mysql_list_fields($this->dbname, $sTable, $this->link);
+    function getFields($sTable) 
+    {
+        $rFields = mysql_list_fields($this->_sDbname, $sTable, $this->_rLink);
         $iFields = mysql_num_fields($rFields);
 
         $aResult = array('original' => array(), 'uppercase' => array());
@@ -447,16 +456,19 @@ class BxDolDb extends BxDol implements iBxDolSingleton {
         return $aResult;
     }
 
-    function isFieldExists($sTable, $sFieldName) {
+    function isFieldExists($sTable, $sFieldName) 
+    {
         $aFields = $this->getFields($sTable);
         return in_array(strtoupper($sFieldName), $aFields['uppercase']);
     }
 
-    function getEncoding() {
-        return  mysql_client_encoding($this->link) or $this->error('Database get encoding error');
+    function getEncoding()  
+    {
+        return  mysql_client_encoding($this->_rLink) or $this->error('Database get encoding error');
     }
 
-    function genMySQLErr( $out, $query ='' ) {
+    function genMySQLErr( $out, $query ='' ) 
+    {
         $sParamsOutput = false;
         $sFoundError = '';
 
@@ -515,7 +527,7 @@ EOJ;
                 if( strlen( $query ) )
                     echo "<div><b>Query:</b><br />{$query}</div>";
 
-                if ($this->link)
+                if ($this->_rLink)
                     echo '<div><b>Mysql error:</b><br />' . $this->getErrorMessage() . '</div>';
 
                 echo '<div style="overflow:scroll;height:300px;border:1px solid gray;">';
@@ -553,7 +565,7 @@ EOJ;
             if( strlen( $query ) )
                 $sMailBody .= "Query:  <pre>" . htmlspecialchars_adv($query) . "</pre> ";
 
-            if ($this->link)
+            if ($this->_rLink)
                 $sMailBody .= "Mysql error: " . $this->getErrorMessage() . "<br /><br /> ";
 
             $sMailBody .= $sFoundError. '<br /> ';
@@ -576,28 +588,31 @@ EOJ;
         exit;
     }
 
-    function setErrorChecking ($b) {
-        $this->error_checking = $b;
+    function setErrorChecking ($b) 
+    {
+        $this->_bErrorChecking = $b;
     }
 
-    function getDbCacheObject () {
-        if ($this->oDbCacheObject != null) {
-            return $this->oDbCacheObject;
+    function getDbCacheObject () 
+    {
+        if ($this->_oDbCacheObject != null) {
+            return $this->_oDbCacheObject;
         } else {
             $sEngine = getParam('sys_db_cache_engine');
-            $this->oDbCacheObject = bx_instance ('BxDolCache'.$sEngine);
-            if (!$this->oDbCacheObject->isAvailable())
-                $this->oDbCacheObject = bx_instance ('BxDolCacheFile');
-            return $this->oDbCacheObject;
+            $this->_oDbCacheObject = bx_instance ('BxDolCache'.$sEngine);
+            if (!$this->_oDbCacheObject->isAvailable())
+                $this->_oDbCacheObject = bx_instance ('BxDolCacheFile');
+            return $this->_oDbCacheObject;
         }
     }
 
-    function genDbCacheKey ($sName) {
+    function genDbCacheKey ($sName) 
+    {
         return 'db_' . $sName . '_' . bx_site_hash() . '.php';
     }
 
-    function fromCache ($sName, $sFunc) {
-
+    function fromCache ($sName, $sFunc) 
+    {
         $aArgs = func_get_args();
         array_shift ($aArgs); // shift $sName
         array_shift ($aArgs); // shift $sFunc
@@ -625,8 +640,8 @@ EOJ;
         return $mixedRet;
     }
 
-    function cleanCache ($sName) {
-
+    function cleanCache ($sName) 
+    {
         if (!getParam('sys_db_cache_enable'))
             return true;
 
@@ -637,7 +652,8 @@ EOJ;
         return $oCache->delData($sKey);
     }
 
-    function & fromMemory ($sName, $sFunc) {
+    function & fromMemory ($sName, $sFunc) 
+    {
         if (array_key_exists($sName, $GLOBALS['gl_db_cache'])) {
             return $GLOBALS['gl_db_cache'][$sName];
 
@@ -651,7 +667,8 @@ EOJ;
         }
     }
 
-    function cleanMemory ($sName) {
+    function cleanMemory ($sName) 
+    {
         if (isset($GLOBALS['gl_db_cache'][$sName])) {
             unset($GLOBALS['gl_db_cache'][$sName]);
             return true;
@@ -667,8 +684,9 @@ EOJ;
      * @param string $s string to escape
      * @return escaped string whcich is ready to pass to SQL query.
      */
-    function escape ($s) {
-        return mysql_real_escape_string($s, $this->link);
+    function escape ($s) 
+    {
+        return mysql_real_escape_string($s, $this->_rLink);
     }
 
     /**
@@ -683,23 +701,25 @@ EOJ;
      * @param $mixed array or parameters or just one paramter
      * @return string which is ready to pass to IN(...) SQL construction
      */
-    function implode_escape ($mixed) {
+    function implode_escape ($mixed) 
+    {
         if (is_array($mixed)) {
             $s = '';
             foreach ($mixed as $v)
-                $s .= (is_numeric($v) ? $v : "'" . mysql_real_escape_string($v, $this->link) . "'") . ',';
+                $s .= (is_numeric($v) ? $v : "'" . mysql_real_escape_string($v, $this->_rLink) . "'") . ',';
             if ($s)
                 return substr($s, 0, -1);
             else
                 return 'NULL';
         }
-        return is_numeric($mixed) ? $mixed : ($mixed ? "'" . mysql_real_escape_string($mixed, $this->link) . "'" : 'NULL');
+        return is_numeric($mixed) ? $mixed : ($mixed ? "'" . mysql_real_escape_string($mixed, $this->_rLink) . "'" : 'NULL');
     }
 
     /**
      * @deprecated
      */
-    function unescape ($mixed) {
+    function unescape ($mixed) 
+    {
         if (is_array($mixed)) {
             foreach ($mixed as $k => $v)
                 $mixed[$k] = $this->getOne("SELECT '$v'");
@@ -724,7 +744,8 @@ EOJ;
      * @param mixed $mixed any number if parameters to replace, number of parameters whould match number of ? symbols in SQL query
      * @return string with SQL query ready for execution
      */
-    function prepare ($sQuery) {
+    function prepare ($sQuery) 
+    {
         $aArgs = func_get_args();
         $sQuery = array_shift($aArgs);
         $iPos = 0;
@@ -743,12 +764,13 @@ EOJ;
         return $sQuery;
     }
 
-    function log ($s) {
+    function log ($s) 
+    {
         return file_put_contents(BX_DIRECTORY_PATH_ROOT . 'tmp/db.err.log', date('Y-m-d H:i:s') . "\t" . $s . "\n", FILE_APPEND);
     }
 
-    function executeSQL($sPath, $aReplace = array (), $isBreakOnError = true) {
-
+    function executeSQL($sPath, $aReplace = array (), $isBreakOnError = true) 
+    {
         if(!file_exists($sPath) || !($rHandler = fopen($sPath, "r")))
             return array(array ('query' => "fopen($sPath, 'r')", 'error' => 'file not found or permission denied'));
 
@@ -793,13 +815,15 @@ EOJ;
     }
 }
 
-function getParam( $param_name, $use_cache = true ) {
-    return BxDolDb::getInstance()->getParam($param_name, $use_cache);
+function getParam($sParamName, $bUseCache = true) 
+{
+    return BxDolDb::getInstance()->getParam($sParamName, $bUseCache);
 }
 
-function setParam( $param_name, $param_val ) {
-    return BxDolDb::getInstance()->setParam($param_name, $param_val);
+function setParam($sParamName, $sParamVal) 
+{
+    return BxDolDb::getInstance()->setParam($sParamName, $sParamVal);
 }
-
 
 /** @} */
+

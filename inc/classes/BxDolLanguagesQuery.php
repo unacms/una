@@ -15,7 +15,7 @@ class BxDolLanguagesQuery extends BxDolDb implements iBxDolSingleton {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
-        parent::BxDolDb();
+        parent::__construct();
     }
 
     /**

@@ -1,25 +1,26 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 class BxDolGzip extends BxDol {
-    var $_sType;
-    var $_bGzip;
-    var $_sEncoding;
-    var $_iExpirationOffset;
+    protected $_sType;
+    protected $_bGzip;
+    protected $_sEncoding;
+    protected $_iExpirationOffset;
 
-    var $_sInFile;
+    protected $_sInFile;
 
-    var $_sOutFile;
-    var $_sOutContent;
-    var $_sOutContentZipped;
+    protected $_sOutFile;
+    protected $_sOutContent;
+    protected $_sOutContentZipped;
 
-    function BxDolGzip($sFile) {
-        parent::BxDol();
+    function __construct($sFile) {
+        parent::__construct();
 
         $this->_iExpirationOffset = 3600 * 24 * 10;
 
@@ -129,3 +130,4 @@ class BxDolGzip extends BxDol {
     }
 }
 
+/** @} */

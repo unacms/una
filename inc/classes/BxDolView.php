@@ -12,6 +12,12 @@ bx_import('BxDolViewQuery');
 
 define ('BX_DOL_VIEW_OLD_VIEWS', 3 * 86400); ///< views older than this number of seconds will be deleted automatically
 
+/** 
+ * @page objects 
+ * @section views Views
+ * @ref BxDolView
+ */
+
 /**
  * Track any object views automatically
  *
@@ -52,7 +58,7 @@ class BxDolView extends BxDolObject
     /**
      * Constructor
      */
-    function BxDolView($sSystem, $iId, $iInit = true)
+    function __construct($sSystem, $iId, $iInit = true)
     {
     	parent::__construct($sSystem, $iId, $iInit);
 		if(empty($this->_sSystem))

@@ -12,7 +12,7 @@
 bx_import('BxDolModuleDb');
 
 class BxDevDb extends BxDolModuleDb {
-    function BxDevDb(&$oConfig) {
+    function __construct(&$oConfig) {
         parent::__construct($oConfig);
     }
 

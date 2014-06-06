@@ -1,10 +1,11 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxTemplFormView');
 
@@ -22,7 +23,7 @@ class BxDolFormNested extends BxTemplFormView {
      * @param $sSubmitName main form submit_name; field name of submit form input to determine if form is submitted or not.
      * @param $oTemplate optional template object
      */
-    function BxDolFormNested($sName, $aForm, $sSubmitName = false, $oTemplate = false) {
+    function __construct($sName, $aForm, $sSubmitName = false, $oTemplate = false) {
 
         if (!isset($aForm['params']['nested_form_template']) || !$aForm['params']['nested_form_template'])
             $aForm['params']['nested_form_template'] = 'uploader_nested_form_wrapper.html';
@@ -41,7 +42,7 @@ class BxDolFormNested extends BxTemplFormView {
             );
         }
 
-        parent::BxTemplFormView($aForm, $oTemplate);
+        parent::__construct($aForm, $oTemplate);
     }
 
     function genForm() {
@@ -53,3 +54,4 @@ class BxDolFormNested extends BxTemplFormView {
     }
 }
 
+/** @} */

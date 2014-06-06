@@ -1,20 +1,23 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 bx_import("BxBasePaginate");
 
 /**
  * @see BxDolPaginate
  */
-class BxTemplPaginate extends BxBasePaginate {
-
-    function BxTemplPaginate($aParams, $oTemplate = false) {
-        parent::BxBasePaginate($aParams, $oTemplate);
+class BxTemplPaginate extends BxBasePaginate 
+{
+    function __construct($aParams, $oTemplate = false) 
+    {
+        parent::__construct($aParams, $oTemplate);
     }
 }
 
+/** @} */

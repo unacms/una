@@ -11,11 +11,11 @@ defined('BX_DOL') or die('hack attempt');
 bx_import('BxDolStudioPageQuery');
 
 class BxDolStudioWidgetsQuery extends BxDolStudioPageQuery implements iBxDolSingleton {
-    function BxDolStudioWidgetsQuery() {
+    function __construct() {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
-        parent::BxDolStudioPageQuery();
+        parent::__construct();
     }
 
 	/**

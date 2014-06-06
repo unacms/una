@@ -1,48 +1,33 @@
-<?
+<?php defined('BX_DOL') or die('hack attempt');
+/**
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinUpgrade Dolphin Upgrade Script
+ * @{
+ */
 
-/***************************************************************************
-*                            Dolphin Smart Community Builder
-*                              -------------------
-*     begin                : Mon Mar 23 2006
-*     copyright            : (C) 2007 BoonEx Group
-*     website              : http://www.boonex.com
-* This file is part of Dolphin - Smart Community Builder
-*
-* Dolphin is free software; you can redistribute it and/or modify it under
-* the terms of the GNU General Public License as published by the
-* Free Software Foundation; either version 2 of the
-* License, or  any later version.
-*
-* Dolphin is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU General Public License for more details.
-* You should have received a copy of the GNU General Public License along with Dolphin,
-* see license.txt file; if not, write to marketing@boonex.com
-***************************************************************************/
-
-define( 'BX_UPGRADE_DB_FULL_VISUAL_PROCESSING', true );
-define( 'BX_UPGRADE_DB_FULL_DEBUG_MODE', true );
+define('BX_UPGRADE_DB_FULL_VISUAL_PROCESSING', true);
+define('BX_UPGRADE_DB_FULL_DEBUG_MODE', true);
 
 class BxDolUpgradeDb
 {
-    var $error_checking = true;
-    var $host, $port, $socket, $dbname, $user, $password, $link;
-    var $current_res, $current_arr_type;
+    protected $_bErrorChecking = true;
+    protected $_sHost, $_sPort, $_sSocket, $_sDbname, $_sUser, $_sPassword;
+    protected $_rLink, $_rCurrentRes, $_iCurrentResType;
 
-    var $oParams;
-
-    /*
-    *set database parameters and connect to it
-    */
-    function BxDolUpgradeDb(){
-
-        $this->host = DATABASE_HOST;
-        $this->port = DATABASE_PORT;
-        $this->socket = DATABASE_SOCK;
-        $this->dbname = DATABASE_NAME;
-        $this->user = DATABASE_USER;
-        $this->password = DATABASE_PASS;
-        $this->current_arr_type = MYSQL_ASSOC;
+    /**
+     * set database parameters and connect to it
+     */
+    function __construct()
+    {
+        $this->_sHost = DATABASE_HOST;
+        $this->_sPort = DATABASE_PORT;
+        $this->_sSocket = DATABASE_SOCK;
+        $this->_sDbname = DATABASE_NAME;
+        $this->_sUser = DATABASE_USER;
+        $this->_sPassword = DATABASE_PASS;
+        $this->_iCurrentResType = MYSQL_ASSOC;
 
         $this->connect();
     }
@@ -52,12 +37,12 @@ class BxDolUpgradeDb
      */
     function connect()
     {
-        $full_host = $this->host;
-        $full_host .= $this->port ? ':'.$this->port : '';
-        $full_host .= $this->socket ? ':'.$this->socket : '';
+        $full_host = $this->_sHost;
+        $full_host .= $this->_sPort ? ':'.$this->_sPort : '';
+        $full_host .= $this->_sSocket ? ':'.$this->_sSocket : '';
 
-        $this->link = @mysql_pconnect($full_host, $this->user, $this->password);
-        if (!$this->link)
+        $this->_rLink = @mysql_pconnect($full_host, $this->_sUser, $this->_sPassword);
+        if (!$this->_rLink)
             $this->error('Database connect failed', true);
 
         if (!$this->select_db())
@@ -69,7 +54,7 @@ class BxDolUpgradeDb
 
     function select_db()
     {
-        return @mysql_select_db($this->dbname, $this->link) or $this->error('Cannot complete query (select_db)');
+        return @mysql_select_db($this->_sDbname, $this->_rLink) or $this->error('Cannot complete query (select_db)');
     }
 
     /**
@@ -77,9 +62,8 @@ class BxDolUpgradeDb
      */
     function close()
     {
-        mysql_close($this->link);
+        mysql_close($this->_rLink);
     }
-
 
     /**
      * execute sql query and return one row result
@@ -99,10 +83,12 @@ class BxDolUpgradeDb
         }
         return $arr_res;
     }
+
     /**
      * execute sql query and return a column as result
      */
-    function getColumn($sQuery) {
+    function getColumn($sQuery) 
+    {
         if(!$sQuery)
             return array();
 
@@ -143,13 +129,13 @@ class BxDolUpgradeDb
         if(!$query)
             return array();
         if($arr_type != MYSQL_ASSOC && $arr_type != MYSQL_NUM)
-            $this->current_arr_type = MYSQL_ASSOC;
+            $this->_iCurrentResType = MYSQL_ASSOC;
         else
-            $this->current_arr_type = $arr_type;
-        $this->current_res = $this->res ($query);
+            $this->_iCurrentResType = $arr_type;
+        $this->_rCurrentRes = $this->res ($query);
         $arr_res = array();
-        if($this->current_res && mysql_num_rows($this->current_res))
-            $arr_res = mysql_fetch_array($this->current_res, $this->current_arr_type);
+        if($this->_rCurrentRes && mysql_num_rows($this->_rCurrentRes))
+            $arr_res = mysql_fetch_array($this->_rCurrentRes, $this->_iCurrentResType);
         return $arr_res;
     }
 
@@ -158,13 +144,13 @@ class BxDolUpgradeDb
      */
     function getNextRow()
     {
-        $arr_res = mysql_fetch_array($this->current_res, $this->current_arr_type);
+        $arr_res = mysql_fetch_array($this->_rCurrentRes, $this->_iCurrentResType);
         if($arr_res)
             return $arr_res;
         else
         {
-            mysql_free_result($this->current_res);
-            $this->current_arr_type = MYSQL_ASSOC;
+            mysql_free_result($this->_rCurrentRes);
+            $this->_iCurrentResType = MYSQL_ASSOC;
             return array();
         }
     }
@@ -176,8 +162,8 @@ class BxDolUpgradeDb
     {
         if ($res)
             return (int)@mysql_num_rows($res);
-        elseif (!$this->current_res)
-            return (int)@mysql_num_rows($this->current_res);
+        elseif (!$this->_rCurrentRes)
+            return (int)@mysql_num_rows($this->_rCurrentRes);
         else
             return 0;
     }
@@ -187,7 +173,7 @@ class BxDolUpgradeDb
      */
     function getAffectedRows()
     {
-        return mysql_affected_rows($this->link);
+        return mysql_affected_rows($this->_rLink);
     }
 
     /**
@@ -197,21 +183,21 @@ class BxDolUpgradeDb
     {
         $res = $this->res($query);
         if($res)
-            return mysql_affected_rows($this->link);
+            return mysql_affected_rows($this->_rLink);
         return false;
     }
 
     /**
      * execute any query
      */
-    function res($query, $error_checking = true)
+    function res($query, $bErrorChecking = true)
     {
         if(!$query)
             return false;
         if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->beginQuery($query);
-        $res = mysql_query($query, $this->link);
+        $res = mysql_query($query, $this->_rLink);
         if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->endQuery($res);
-        if (!$res && $error_checking)
+        if (!$res && $bErrorChecking)
             $this->error('Database query error', false, $query);
         return $res;
     }
@@ -301,27 +287,29 @@ class BxDolUpgradeDb
 
     function lastId()
     {
-        return mysql_insert_id($this->link);
+        return mysql_insert_id($this->_rLink);
     }
 
     function error($text, $isForceErrorChecking = false, $sSqlQuery = '')
     {
-        if ($this->error_checking || $isForceErrorChecking)
+        if ($this->_bErrorChecking || $isForceErrorChecking)
             $this->genMySQLErr ($text, $sSqlQuery);
         else
-            $this->log($text.': '.mysql_error($this->link));
+            $this->log($text.': '.mysql_error($this->_rLink));
     }
 
-    function listTables() {
-        return mysql_list_tables($GLOBALS['db']['db'], $this->link);
-        //return mysql_list_tables($GLOBALS['db']['db'], $this->link) or $this->error('Database get encoding error');
+    function listTables() 
+    {
+        return mysql_list_tables($GLOBALS['db']['db'], $this->_rLink);
     }
 
-    function getEncoding() {
-        return  mysql_client_encoding($this->link) or $this->error('Database get encoding error');
+    function getEncoding() 
+    {
+        return  mysql_client_encoding($this->_rLink) or $this->error('Database get encoding error');
     }
 
-    function genMySQLErr( $out, $query ='' ) {
+    function genMySQLErr( $out, $query ='' ) 
+    {
         $aBackTrace = debug_backtrace();
         unset( $aBackTrace[0] );
 
@@ -367,7 +355,7 @@ EOJ;
                 if( strlen( $query ) )
                     echo "<div><b>Query:</b><br />{$query}</div>";
 
-                echo '<div><b>Mysql error:</b><br />'.mysql_error($this->link).'</div>';
+                echo '<div><b>Mysql error:</b><br />'.mysql_error($this->_rLink).'</div>';
                 echo '<div style="overflow:scroll;height:300px;border:1px solid gray;">';
                     echo $sFoundError;
                     echo "<b>Debug backtrace:</b><br />";
@@ -388,16 +376,18 @@ EOJ;
         exit;
     }
 
-    function setErrorChecking ($b) {
-        $this->error_checking = $b;
+    function setErrorChecking ($b) 
+    {
+        $this->_bErrorChecking = $b;
     }
 
-    function escape ($s) {
+    function escape ($s) 
+    {
         return mysql_real_escape_string($s);
     }
 
-    function executeSQL($sPath, $aReplace = array (), $isBreakOnError = true) {
-
+    function executeSQL($sPath, $aReplace = array (), $isBreakOnError = true) 
+    {
         if(!file_exists($sPath) || !($rHandler = fopen($sPath, "r")))
             return array ('query' => "fopen($sPath, 'r')", 'error' => 'file not found or permission denied');
 
@@ -429,7 +419,7 @@ EOJ;
                 $sQuery = str_replace($sDelimiter, "", $sQuery);
             $rResult = $this->res(trim($sQuery), false);
             if(!$rResult) {
-                $aResult[] = array('query' => $sQuery, 'error' => mysql_error($this->link));
+                $aResult[] = array('query' => $sQuery, 'error' => mysql_error($this->_rLink));
                 if ($isBreakOnError)
                     break;
             }
@@ -441,4 +431,6 @@ EOJ;
         return empty($aResult) ? true : $aResult;
     }
 }
-?>
+
+/** @} */
+

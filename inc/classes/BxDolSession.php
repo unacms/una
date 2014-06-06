@@ -13,17 +13,17 @@ define('BX_DOL_SESSION_LIFETIME', 3600);
 define('BX_DOL_SESSION_COOKIE', 'memberSession');
 
 class BxDolSession extends BxDol implements iBxDolSingleton {
-    var $oDb;
-    var $sId;
-    var $iUserId;
-    var $aData;
+    protected $oDb;
+    protected $sId;
+    protected $iUserId;
+    protected $aData;
 
-    private function BxDolSession() {
+    private function __construct() {
 
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
-        parent::BxDol();
+        parent::__construct();
 
         $this->oDb = new BxDolSessionQuery();
         $this->sId = '';

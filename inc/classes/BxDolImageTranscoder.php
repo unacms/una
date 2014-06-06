@@ -91,8 +91,8 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
     /**
      * constructor
      */
-    protected function BxDolImageTranscoder($aObject, $oStorage) {
-        parent::BxDol();
+    protected function __construct($aObject, $oStorage) {
+        parent::__construct();
         $this->_aObject = $aObject;
         $this->_oStorage = $oStorage;        
         $this->_oDb = new BxDolImageTranscoderQuery($aObject);

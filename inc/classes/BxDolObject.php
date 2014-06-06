@@ -7,25 +7,19 @@
  * @{
  */
 
-
-/** 
- * @page objects Objects
- * Classes which represents high level programming constructions to generate ready functionality, like Comments, Votings, Forms. 
- */
-
-
 /**
- * Base class for all Dolphin Object classes
+ * Base class for all Dolphin Object classes.
+ * Child classes usually represents high level programming constructions to generate ready 'objects' functionality, like Comments, Votings, Forms. 
  */
 class BxDolObject extends BxDol {
-	protected $_iId = 0;    ///< item id the action to be performed with
+	protected $_iId = 0; ///< item id the action to be performed with
     protected $_sSystem = ''; ///< current system name
     protected $_aSystem = array(); ///< current system array
 
     protected $_oQuery = null;
 
     public function __construct($sSystem, $iId, $iInit = 1) {
-    	parent::BxDol();
+    	parent::__construct();
 
     	$this->_aSystems = $this->getSystems();
         if(!isset($this->_aSystems[$sSystem]))
@@ -85,3 +79,5 @@ class BxDolObject extends BxDol {
         return $this->_aSystem && (int)$this->_aSystem['is_on'] == 1;
     }
 }
+
+/** @} */

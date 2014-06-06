@@ -15,8 +15,8 @@ define('BX_PROFILE_ACTION_ROBOT', 2); ///< action peformed by some robot based o
 
 class BxDolProfile extends BxDol implements iBxDolProfile {
 
-    var $_iProfileID;
-    var $_oQuery;
+    protected $_iProfileID;
+    protected $_oQuery;
 
     /**
      * Constructor

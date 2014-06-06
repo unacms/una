@@ -11,7 +11,6 @@ ini_set('pcre.backtrack_limit', 1000000);
 
 define('BX_DOL_TEMPLATE_DEFAULT_CODE', 'uni');
 define('BX_DOL_TEMPLATE_FOLDER_ROOT', 'template');
-//define('BX_DOL_TEMPLATE_FOLDER_BASE', 'base');
 
 define('BX_DOL_TEMPLATE_INJECTIONS_CACHE', 'sys_injections.inc');
 
@@ -126,43 +125,43 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     /**
      * Main fields
      */
-    var $_sPrefix;
-    var $_sRootPath;
-    var $_sRootUrl;
-    var $_sSubPath;
-    var $_sInjectionsTable;
-    var $_sInjectionsCache;
-    var $_sCode;
-    var $_sCodeKey;
-    var $_sKeyWrapperHtml;
-    var $_sFolderHtml;
-    var $_sFolderCss;
-    var $_sFolderImages;
-    var $_sFolderIcons;
-    var $_aTemplates;
+    protected $_sPrefix;
+    protected $_sRootPath;
+    protected $_sRootUrl;
+    protected $_sSubPath;
+    protected $_sInjectionsTable;
+    protected $_sInjectionsCache;
+    protected $_sCode;
+    protected $_sCodeKey;
+    protected $_sKeyWrapperHtml;
+    protected $_sFolderHtml;
+    protected $_sFolderCss;
+    protected $_sFolderImages;
+    protected $_sFolderIcons;
+    protected $_aTemplates;
 
-    var $_aLocations;
-    var $_aLocationsJs;
+    protected $_aLocations;
+    protected $_aLocationsJs;
 
     /**
      * Cache related fields
      */
-    var $_bCacheEnable;
-    var $_sCacheFolderUrl;
-    var $_sCachePublicFolderUrl;
-    var $_sCachePublicFolderPath;
-    var $_sCacheFilePrefix;
+    protected $_bCacheEnable;
+    protected $_sCacheFolderUrl;
+    protected $_sCachePublicFolderUrl;
+    protected $_sCachePublicFolderPath;
+    protected $_sCacheFilePrefix;
 
-    var $_bImagesInline;
-    var $_iImagesMaxSize;
+    protected $_bImagesInline;
+    protected $_iImagesMaxSize;
 
-    var $_bCssCache;
-    var $_bCssArchive;
-    var $_sCssCachePrefix;
+    protected $_bCssCache;
+    protected $_bCssArchive;
+    protected $_sCssCachePrefix;
 
-    var $_bJsCache;
-    var $_bJsArchive;
-    var $_sJsCachePrefix;
+    protected $_bJsCache;
+    protected $_bJsArchive;
+    protected $_sJsCachePrefix;
 
     /**
      * Less related fields

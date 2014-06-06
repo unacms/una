@@ -14,8 +14,8 @@ bx_import('BxDolStudioTemplate');
 define('BX_DOL_STUDIO_METHOD_DEFAULT', 'post');
 
 class BxDolStudioForm extends BxBaseFormView {
-    function BxDolStudioForm($aInfo, $oTemplate) {
-        parent::BxBaseFormView($aInfo, $oTemplate !== false ? $oTemplate : BxDolStudioTemplate::getInstance());
+    function __construct($aInfo, $oTemplate) {
+        parent::__construct($aInfo, $oTemplate !== false ? $oTemplate : BxDolStudioTemplate::getInstance());
 
         $this->_sCheckerHelper = isset($this->aParams['checker_helper']) ? $this->aParams['checker_helper'] : 'BxDolStudioFormCheckerHelper';
     }

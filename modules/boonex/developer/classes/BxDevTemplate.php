@@ -12,8 +12,8 @@
 bx_import('BxDolModuleTemplate');
 
 class BxDevTemplate extends BxDolModuleTemplate {
-    function BxDevTemplate(&$oConfig, &$oDb) {
-        parent::BxDolModuleTemplate($oConfig, $oDb);
+    function __construct(&$oConfig, &$oDb) {
+        parent::__construct($oConfig, $oDb);
 
         $this->addStudioCss(array('main.css'));       
     }

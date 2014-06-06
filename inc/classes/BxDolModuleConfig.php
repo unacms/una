@@ -1,10 +1,11 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 /**
  * Base class for Config classes in modules engine.
@@ -27,31 +28,31 @@ defined('BX_DOL') or die('hack attempt');
 
 class BxDolModuleConfig extends BxDol {
 
-    var $_iId;
+    protected $_iId;
 
-    var $_sName;
+    protected $_sName;
 
-    var $_sVendor;
+    protected $_sVendor;
 
-    var $_sClassPrefix;
+    protected $_sClassPrefix;
 
-    var $_sDbPrefix;
+    protected $_sDbPrefix;
 
-    var $_sDirectory;
+    protected $_sDirectory;
 
-    var $_sUri;
+    protected $_sUri;
 
-    var $_sHomePath;
+    protected $_sHomePath;
 
-    var $_sClassPath;
+    protected $_sClassPath;
 
-    var $_sHomeUrl;
+    protected $_sHomeUrl;
 
     /**
      * constructor
      */
-    function BxDolModuleConfig($aModule) {
-        parent::BxDol();
+    function __construct($aModule) {
+        parent::__construct();
 
         $this->_iId = empty($aModule['id']) ? 0 : (int)$aModule['id'];
         $this->_sName = isset($aModule['name']) ? $aModule['name'] : '';
@@ -115,3 +116,4 @@ class BxDolModuleConfig extends BxDol {
     }
 }
 
+/** @} */

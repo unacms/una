@@ -54,17 +54,17 @@ bx_import('BxDolDb');
  *
  */
 class BxDolPermalinks extends BxDolDb implements iBxDolSingleton {
-    var $sCacheFile;
-    var $aLinksStandard;
-    var $aLinksPermalink;
-    var $aPrefixesStandard;
-    var $aPrefixesPermalink;
+    protected $sCacheFile;
+    protected $aLinksStandard;
+    protected $aLinksPermalink;
+    protected $aPrefixesStandard;
+    protected $aPrefixesPermalink;
 
-    function BxDolPermalinks() {
+    function __construct() {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
-        parent::BxDolDb();
+        parent::__construct();
 
         // TODO: allow to disable cache completely
         $oCache = $this->getDbCacheObject();

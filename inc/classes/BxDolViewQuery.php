@@ -1,10 +1,11 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxDolDb');
 
@@ -24,7 +25,7 @@ class BxDolViewQuery extends BxDolDb
 
     public function __construct(&$oModule)
     {
-        parent::BxDolDb();
+        parent::__construct();
 
         $this->_oModule = $oModule;
 
@@ -74,3 +75,5 @@ class BxDolViewQuery extends BxDolDb
         return (int)$this->query($sQuery) > 0;
     }
 }
+
+/** @} */
