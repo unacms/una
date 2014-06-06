@@ -31,8 +31,7 @@ class BxBaseGrid extends BxDolGrid {
             $this->_oTemplate = BxDolTemplate::getInstance();
     }
 
-    public function performActionDisplay() {        
-        require_once(BX_DIRECTORY_PATH_INC . "params.inc.php");
+    public function performActionDisplay() {
         require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
         
         $this->_echoResultJson(array (

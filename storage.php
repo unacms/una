@@ -48,7 +48,6 @@ if (!$oStorage->download($sRemoteId, $sToken)) {
 }
 
 function bx_storage_download_error_occured($sMethod = 'displayPageNotFound') {
-    require_once(BX_DIRECTORY_PATH_INC . "params.inc.php");
     require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
     bx_import('BxDolLanguages');

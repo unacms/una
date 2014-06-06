@@ -50,8 +50,8 @@ header('HTTP/1.1 301 Moved Permanently');
 header('Location: ' . $sImageUrl);
 exit;
 
-function bx_transcoder_error_occured($sMethod = 'displayPageNotFound') {
-    require_once(BX_DIRECTORY_PATH_INC . "params.inc.php");
+function bx_transcoder_error_occured($sMethod = 'displayPageNotFound') 
+{
     require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
     bx_import('BxDolLanguages');
     bx_import('BxDolTemplate');

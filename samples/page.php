@@ -33,7 +33,6 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 
 $aPathInfo = pathinfo(__FILE__);
 require_once ($aPathInfo['dirname'] . '/../inc/header.inc.php');
-require_once(BX_DIRECTORY_PATH_INC . "params.inc.php");
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
 bx_import('BxDolLanguages');

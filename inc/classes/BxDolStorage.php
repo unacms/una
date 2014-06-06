@@ -148,8 +148,6 @@ bx_import('BxDolStorageQuery');
  *
  * @code
  * require_once('./inc/header.inc.php');
- * require_once(BX_DIRECTORY_PATH_INC . "languages.inc.php");
- * require_once(BX_DIRECTORY_PATH_INC . "params.inc.php");
  * require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
  * 
  * bx_import('BxDolStorage');
@@ -180,8 +178,6 @@ bx_import('BxDolStorageQuery');
  * 
  * @code
  * require_once('./inc/header.inc.php');
- * require_once(BX_DIRECTORY_PATH_INC . "languages.inc.php");
- * require_once(BX_DIRECTORY_PATH_INC . "params.inc.php");
  * require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
  * 
  * bx_import('BxDolStorage');

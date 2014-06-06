@@ -47,7 +47,6 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title`, `link`, `on
 
 $aPathInfo = pathinfo(__FILE__);
 require_once ($aPathInfo['dirname'] . '/../inc/header.inc.php');
-require_once(BX_DIRECTORY_PATH_INC . "params.inc.php");
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
 bx_import('BxDolLanguages');

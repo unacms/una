@@ -9,7 +9,6 @@
  * @{
  */
 
-require_once(BX_DIRECTORY_PATH_INC . "params.inc.php");
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
 bx_import('BxDolLanguages');
