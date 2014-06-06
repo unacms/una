@@ -25,11 +25,13 @@ class BxDolCronCmd extends BxDolCron {
 
     function clean_database()
     {
+        $oDb = BxDolDb::getInstance();
+
         $db_clean_mem_levels = (int) getParam("db_clean_mem_levels");
 
         //clear from `sys_acl_levels_members`
-        if (db_res("DELETE FROM `sys_acl_levels_members` WHERE `DateExpires` < NOW() - INTERVAL $db_clean_mem_levels DAY"))
-            db_res("OPTIMIZE TABLE `sys_acl_levels_members`");
+        if ($oDb->query("DELETE FROM `sys_acl_levels_members` WHERE `DateExpires` < NOW() - INTERVAL $db_clean_mem_levels DAY"))
+            $oDb->query("OPTIMIZE TABLE `sys_acl_levels_members`");
 
         //--- Clean sessions ---//
         bx_import('BxDolSession');

@@ -103,7 +103,7 @@ function getFieldValues( $sField, $sUseLKey = 'LKey' ) {
 
     global $aPreValues;
 
-    $sValues = db_value( "SELECT `Values` FROM `sys_profile_fields` WHERE `Name` = '$sField'" );
+    $sValues = BxDolDb::getInstance()->getOne("SELECT `Values` FROM `sys_profile_fields` WHERE `Name` = '$sField'");
 
     if( substr( $sValues, 0, 2 ) == '#!' ) {
         //predefined list
@@ -204,73 +204,13 @@ function getVersionComment() {
     return '<!-- ' . implode(' ', $aVerR) . ' -->';
 }
 
-// ----------------------------------- site statistick functions --------------------------------------//
+function getSiteStatUser() 
+{
+    $sqlQuery = "SELECT `Name` as `name`, `Title` as `capt`, `UserQuery` as `query`, `UserLink` as `link`, `IconName` as `icon`, `AdminQuery` as `adm_query`, `AdminLink` as `adm_link` FROM `sys_stat_site` ORDER BY `StatOrder`";
 
-function getSiteStatBody($aVal, $sMode = '') {
-    $sLink = strlen($aVal['link']) > 0 ? '<a href="'.BX_DOL_URL_ROOT.$aVal['link'].'">{iNum} '._t('_'.$aVal['capt']).'</a>' : '{iNum} '._t('_'.$aVal['capt']) ;
-    if ( $sMode != 'admin' ) {
-        $sBlockId = '';
-        $iNum = strlen($aVal['query']) > 0 ? db_value($aVal['query']) : 0;
-    } else {
-        $sBlockId = "id='{$aVal['name']}'";
-        $iNum  = strlen($aVal['adm_query']) > 0 ? db_value($aVal['adm_query']) : 0;
-        if ( strlen($aVal['adm_link']) > 0 ) {
-            if( substr( $aVal['adm_link'], 0, strlen( 'javascript:' ) ) == 'javascript:' ) {
-                $sHref = 'javascript:void(0);';
-                $sOnclick = 'onclick="' . $aVal['adm_link'] . '"';
-            } else {
-                $sHref = $aVal['adm_link'];
-                $sOnclick = '';
-            }
-            $sLink = '<a href="'.$sHref.'" '.$sOnclick.'>{iNum} '._t('_'.$aVal['capt']).'</a>';
-        } else {
-            $sLink = '{iNum} '._t('_'.$aVal['capt']);
-        }
-    }
+    $aStat = BxDolDb::getInstance()->fromCache('sys_stat_site', 'getAllWithKey', $sqlQuery, 'name');
 
-    $sLink = str_replace('{iNum}', $iNum, $sLink);
-    $sCode =
-    '
-        <div class="siteStatUnit" '. $sBlockId .'>
-            <img src="' . getTemplateIcon($aVal['icon']) . '" alt="" />
-                ' . $sLink . '
-        </div>
-    ';
-
-    return $sCode;
-}
-
-function getSiteStatUser() {
-    global $aStat;
-
-    $oDb = BxDolDb::getInstance();
-    $oCache = $oDb->getDbCacheObject();
-    $aStat = $oCache->getData($oDb->genDbCacheKey('sys_stat_site'));
-    if (null === $aStat) {
-        genSiteStatCache();
-        $aStat = $oCache->getData($oDb->genDbCacheKey('sys_stat_site'));
-    }
-
-    if( !$aStat )
-        $aStat = array();
-
-    $sCode  = '<div class="siteStatMain">';
-
-    foreach($aStat as $aVal)
-        $sCode .= getSiteStatBody($aVal);
-
-    $sCode .= '<div class="clear_both"></div></div>';
-
-    return $sCode;
-}
-
-function genSiteStatFile($aVal) {
-
-    bx_import('BxTemplMenu');
-    $sLink = BxTemplMenu::getInstance() -> getCurrLink($aVal['link']);
-    $sLine = "'{$aVal['name']}'=>array('capt'=>'{$aVal['capt']}', 'query'=>'".addslashes($aVal['query'])."', 'link'=>'$sLink', 'icon'=>'{$aVal['icon']}'),\n";
-
-    return $sLine;
+    return "<pre>TODO: nice output\n" . print_r($aStat, true) . '</pre>';
 }
 
 function genAjaxyPopupJS($iTargetID, $sDivID = 'ajaxy_popup_result_div', $sRedirect = '') {

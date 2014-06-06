@@ -21,7 +21,6 @@
 * see license.txt file; if not, write to marketing@boonex.com
 ***************************************************************************/
 
-require_once( BX_DIRECTORY_PATH_INC . 'db.inc.php' );
 require_once('BxDolCron.php');
 
 class BxDolCronNotifies extends BxDolCron {

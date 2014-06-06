@@ -848,9 +848,11 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
         $oChecker = new BxDolFormChecker($this->_sCheckerHelper);
         $oChecker->setFormMethod($this->aFormAttrs['method']);
         $sSql = $oChecker->dbInsert($this->aParams['db'], $this->aInputs, $aValsToAdd, $isIgnore);
-        if (!$sSql) return false;
-        if (db_res ($sSql))
-            return db_last_id();
+        if (!$sSql) 
+            return false;
+        $oDb = BxDolDb::getInstance();
+        if ($oDb->res($sSql))
+            return $oDb->lastId();
         return false;
     }
 
@@ -860,7 +862,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
         $sSql = $oChecker->dbUpdate($val, $this->aParams['db'], $this->aInputs, $aValsToAdd, $aTrackTextFieldsChanges);
         if (!$sSql) 
             return false;
-        return db_res ($sSql);
+        return BxDolDb::getInstance()->res($sSql);
     }
 
     function delete ($val) {
@@ -869,7 +871,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
         $sSql = $oChecker->dbDelete($val, $this->aParams['db'], $this->aInputs);
         if (!$sSql) 
             return false;
-        return db_res ($sSql);
+        return BxDolDb::getInstance()->res($sSql);
     }
 
     function generateUri ()  {

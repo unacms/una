@@ -137,8 +137,8 @@ require_once(BX_DIRECTORY_PATH_INC . "utils.inc.php");
 bx_import('BxDolConfig');
 bx_import('BxDolService');
 bx_import('BxDolAlerts');
+bx_import('BxDolDb');
 
-require_once(BX_DIRECTORY_PATH_INC . "db.inc.php");
 require_once(BX_DIRECTORY_PATH_INC . "profiles.inc.php");
 
 $o = new BxDolAlerts('system', 'begin', 0);

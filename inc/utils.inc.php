@@ -516,36 +516,6 @@ function bx_mb_strpos ($s, $sReplacement, $iStart = 0) {
 }
 
 /**
-** @description : function will create cache file with all SQL queries ;
-** @return        :
-*/
-function genSiteStatCache() {
-
-    $sqlQuery = "SELECT `Name` as `name`,
-                        `Title` as `capt`,
-                        `UserQuery` as `query`,
-                        `UserLink` as `link`,
-                        `IconName` as `icon`,
-                        `AdminQuery` as `adm_query`,
-                           `AdminLink` as `adm_link`
-                        FROM `sys_stat_site`
-                        ORDER BY `StatOrder` ASC, `ID` ASC";
-
-    $rData = db_res($sqlQuery);
-
-    $sLine = "return array( \n";
-    while ($aVal = mysql_fetch_assoc($rData)) {
-        $sLine .= genSiteStatFile($aVal);
-    }
-    $sLine = rtrim($sLine, ",\n")."\n);";
-
-    $aResult = eval($sLine);
-
-    $oCache = BxDolDb::getInstance()->getDbCacheObject();
-    return $oCache->setData (BxDolDb::getInstance()->genDbCacheKey('sys_stat_site'), $aResult);
-}
-
-/**
  * Import class file, it automatically detects class path by its prefix or module array/name
  *
  * @param $sClassName - full class name or class postfix(withoit prefix) in the case of module class

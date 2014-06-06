@@ -793,4 +793,13 @@ EOJ;
     }
 }
 
+function getParam( $param_name, $use_cache = true ) {
+    return BxDolDb::getInstance()->getParam($param_name, $use_cache);
+}
+
+function setParam( $param_name, $param_val ) {
+    return BxDolDb::getInstance()->setParam($param_name, $param_val);
+}
+
+
 /** @} */

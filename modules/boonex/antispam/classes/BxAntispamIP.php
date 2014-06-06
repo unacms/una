@@ -139,7 +139,7 @@ class BxAntispamIP extends BxDol
         $iAffectedRows = $oDb->query($sQuery);
 
         if ($iAffectedRows) {
-            db_res("OPTIMIZE TABLE `bx_antispam_ip_table`");
+            $oDb->query("OPTIMIZE TABLE `bx_antispam_ip_table`");
             return $iAffectedRows;
         }
 
