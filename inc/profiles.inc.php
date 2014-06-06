@@ -1,44 +1,60 @@
-<?php
+<?php defined('BX_DOL') or defined('BX_DOL_INSTALL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 /**
- * It is needed to check whether user is logged in or not
+ * @return corrently logged in profile id
  */
-function isLogged() {
+function bx_get_logged_profile_id () 
+{
+    bx_import('BxDolProfile');
+    $o = BxDolProfile::getInstance();
+    return $o ? $o->id() : false;
+}
+
+/**
+ * @return true if user is logged in
+ */
+function isLogged() 
+{
     return getLoggedId() != 0;
 }
 
 /**
- * It returns logged in account id
+ * @return logged in account id
  */
-function getLoggedId() {
+function getLoggedId() 
+{
     return isset($_COOKIE['memberID']) && (!empty($GLOBALS['logged']['member']) || !empty($GLOBALS['logged']['admin'])) ? (int)$_COOKIE['memberID'] : 0;
 }
 
 /**
- * It returns logged in account password
+ * @return logged in account password
  */
-function getLoggedPassword() {
+function getLoggedPassword() 
+{
     return isset($_COOKIE['memberPassword']) && ($GLOBALS['logged']['member'] || $GLOBALS['logged']['admin']) ? $_COOKIE['memberPassword'] : '';
 }
 
 /**
- * It checks if account is member.
+ * It checks if account role is member.
  */
-function isMember($iId = 0) {
+function isMember($iId = 0) 
+{
     return isRole(BX_DOL_ROLE_MEMBER, $iId);
 }
 
 if (!function_exists("isAdmin")) {
     /**
-     * It checks if account is admin.
+     * @return true if account is admin
      */
-    function isAdmin($iId = 0) {
+    function isAdmin($iId = 0) 
+    {
         if (!$iId && isset($GLOBALS['logged']['admin']) && $GLOBALS['logged']['admin']) // easier check for currently logged in user
             return true;
         return isRole(BX_DOL_ROLE_ADMIN, $iId);
@@ -46,10 +62,13 @@ if (!function_exists("isAdmin")) {
 }
 
 /**
- * It checks account's role
+ * Check user role
+ * @param $iRole role to check user for
+ * @param $iId optional account id, if it isn't specified then curently logged in account is used
+ * @return true if user is in the provided role
  */
-function isRole($iRole, $iId = 0) {
-
+function isRole($iRole, $iId = 0) 
+{
     if (!(int)$iId)
         $iId = getLoggedId();
 
@@ -69,7 +88,13 @@ function isRole($iRole, $iId = 0) {
     return true;
 }
 
-function bx_login($iId, $bRememberMe = false) {
+/**
+ * Login user by setting necessary cookies
+ * @param $iId account id
+ * @return false if id isn't correct or array of user info if user was logged in
+ */
+function bx_login($iId, $bRememberMe = false) 
+{
     bx_import('BxDolAccountQuery');
     $oAccountQuery = BxDolAccountQuery::getInstance();
 
@@ -96,7 +121,11 @@ function bx_login($iId, $bRememberMe = false) {
     return $oAccountQuery->getInfoById($iId);
 }
 
-function bx_logout($bNotify = true) {
+/**
+ * Logout user by removing cookies
+ */
+function bx_logout($bNotify = true) 
+{
     if ($bNotify && isMember())
         bx_alert('account', 'logout', (int)$_COOKIE['memberID']);
 
@@ -113,13 +142,15 @@ function bx_logout($bNotify = true) {
 	BxDolSession::getInstance()->destroy();
 }
 
-function check_logged() {
-
+/**
+ * Check if user is logged in (necessary cookies are present) and set some global variables
+ */
+function check_logged() 
+{
     $aAccTypes = array(
        BX_DOL_ROLE_ADMIN => 'admin',
        BX_DOL_ROLE_MEMBER => 'member'
     );
-
 
     $sID = isset($_COOKIE['memberID']) ? bx_process_input($_COOKIE['memberID']) : false;
     $sPassword = isset($_COOKIE['memberPassword']) ? bx_process_input($_COOKIE['memberPassword']) : false;
@@ -138,11 +169,11 @@ function check_logged() {
 
 
 /**
- * check unencrypted password
+ * Check unencrypted password
  * @return empty string on success or error string on error
  */
-function bx_check_password($sLogin, $sPassword, $iRole = BX_DOL_ROLE_MEMBER) {
-
+function bx_check_password($sLogin, $sPassword, $iRole = BX_DOL_ROLE_MEMBER) 
+{
     bx_import('BxDolAccount');
     $oAccount = BxDolAccount::getInstance($sLogin);        
     if (!$oAccount) {
@@ -168,11 +199,11 @@ function bx_check_password($sLogin, $sPassword, $iRole = BX_DOL_ROLE_MEMBER) {
 
 
 /**
- * check encrypted password (ex., from Cookie)
+ * Check encrypted password (ex., from Cookie)
  * @return empty string on success or error string on error
  */
-function bx_check_login($iID, $sPassword, $iRole = BX_DOL_ROLE_MEMBER) {
-
+function bx_check_login($iID, $sPassword, $iRole = BX_DOL_ROLE_MEMBER) 
+{
     bx_import('BxDolAccount');
     $oAccount = BxDolAccount::getInstance((int)$iID);
 
@@ -199,8 +230,12 @@ function bx_check_login($iID, $sPassword, $iRole = BX_DOL_ROLE_MEMBER) {
     return '';
 }
 
-function bx_require_authentication ($bStudio = false) {
-
+/**
+ * Declare that content is require user authoriztion and display login form if user isn't logged in
+ * @param $bStudio require webmaster authorization
+ */
+function bx_require_authentication ($bStudio = false) 
+{
     $iRole = BX_DOL_ROLE_MEMBER;
     if ($bStudio)
         $iRole = BX_DOL_ROLE_ADMIN;
@@ -217,8 +252,13 @@ function bx_require_authentication ($bStudio = false) {
 
 
 
-function bx_login_form($bStudio = false, $bAjaxMode = false) {
-
+/**
+ * Display login form and exit
+ * @param $bStudio display login form for studio
+ * @param $bAjaxMode login form displayed via AJAX
+ */
+function bx_login_form($bStudio = false, $bAjaxMode = false) 
+{
     if ($bStudio == 1) {
         bx_import("BxTemplStudioFunctions");
         BxTemplStudioFunctions::getInstance()->getLoginForm();
@@ -240,15 +280,7 @@ function bx_login_form($bStudio = false, $bAjaxMode = false) {
     exit;
 }
 
-
-/**
- * get corrently logged in profile id
- */
-function bx_get_logged_profile_id () {
-    bx_import('BxDolProfile');
-    $o = BxDolProfile::getInstance();
-    return $o ? $o->id() : false;
-}
-
 check_logged();
+
+/** @} */ 
 
