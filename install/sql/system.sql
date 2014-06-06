@@ -985,7 +985,6 @@ CREATE TABLE `sys_cron_jobs` (
 
 INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VALUES
 ('cmd', '0 0 * * *', 'BxDolCronCmd', 'inc/classes/BxDolCronCmd.php', ''),
-('notifies', '*/10 * * * *', 'BxDolCronNotifies', 'inc/classes/BxDolCronNotifies.php', ''),
 ('sys_storage', '* * * * *', 'BxDolCronStorage', 'inc/classes/BxDolCronStorage.php', '');
 
 -- --------------------------------------------------------

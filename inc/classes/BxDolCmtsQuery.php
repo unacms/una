@@ -1,10 +1,11 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxDolDb');
 
@@ -24,7 +25,7 @@ class BxDolCmtsQuery extends BxDolDb
     protected $_sTableImages;
     protected $_sTableImages2Entries;
 
-    function BxDolCmtsQuery(&$oMain)
+    function __construct(&$oMain)
     {
     	$this->_oMain = $oMain;
 
@@ -38,7 +39,7 @@ class BxDolCmtsQuery extends BxDolDb
         $this->_sTableImages = $aSystem['table_images'];
         $this->_sTableImages2Entries = $aSystem['table_images2entries'];
 
-        parent::BxDolDb();
+        parent::__construct();
     }
 
     function getTableName ()
@@ -301,3 +302,6 @@ class BxDolCmtsQuery extends BxDolDb
         return $aFiles;
     }
 }
+
+/** @} */
+

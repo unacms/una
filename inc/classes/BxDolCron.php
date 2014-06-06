@@ -1,10 +1,11 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 /**
  * BxDolCron is parent class for all Dolphin cron jobs, except the cases when the code is evaluated directly.
@@ -17,7 +18,7 @@ defined('BX_DOL') or die('hack attempt');
  *  name - job name to be executed
  *  time - format of entries are five fields of numbers specifying the minute,
  *              hour, day of the month, month and day of the week that a task must be executed.
- * \code
+ * @code
  *              * * * * *
  *              | | | | |
  *              | | | | +--- day of week(0-6 with 0=Sunday)
@@ -25,7 +26,7 @@ defined('BX_DOL') or die('hack attempt');
  *              | | +------- day of month(1-31)
  *              | +--------- hour(0-23)
  *              +----------- minute(0-59)
- * \endcode
+ * @endcode
  *
  *  class - class name which will run
  *  file - path to class file
@@ -36,7 +37,7 @@ defined('BX_DOL') or die('hack attempt');
  * valid numbers in that field, so it translates to "always". If a given time is valid in all five
  * fields then a module function is executed. Here are a few examples that illustrate the possibilities:
  *
- * \code
+ * @code
  *  will run at 16:10:
  *  10 16
  *  will run at 2:00 on saturday:
@@ -49,13 +50,13 @@ defined('BX_DOL') or die('hack attempt');
  *  0 22 * * 1-5
  *  will run each 23 minutes, 2:00, 4:00 ..., everyday
  *  23 0-23/2
- * \endcode
+ * @endcode
  *
  * Example add new cron job:
  *
  * 1. Create new class inherited from "BxDolCron" and add method "processing"
  *
- * \code
+ * @code
  *      class BxDolCronMy extends BxDolCron {
  *
  *          function processing()
@@ -63,11 +64,11 @@ defined('BX_DOL') or die('hack attempt');
  *              // insert code
  *          }
  *      }
- * \endcode
+ * @endcode
  *
  * 2. Add record in `sys_cron_jobs` table
  *
- * @see an example of BxDolCronNotifies, BxDolCronCupid, BxDolCronCmd.
+ * @see an example of BxDolCronCmd, BxDolCronStorage.
  *
  *
  * Memberships/ACL:
@@ -78,13 +79,15 @@ defined('BX_DOL') or die('hack attempt');
  * no alerts available
  *
  */
-class BxDolCron extends BxDol {
-
-    function BxDolCron(){
-        parent::BxDol();
+class BxDolCron extends BxDol 
+{
+    public function __construct()
+    {
+        parent::__construct();
     }
 
-    function processing() {
-    }
+    public function processing() {}
 }
+
+/** @} */
 

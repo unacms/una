@@ -15,10 +15,6 @@ bx_import('BxDolDb');
  */
 class BxDolEmailTemplatesQuery extends BxDolDb {
 
-    public function __construct() {
-        parent::__construct();
-    }
-
     public function getTemplate ($sTemplateName, $iLangAccount, $iLangDefault, $iLangFallback) {
 
         // get email templates keys

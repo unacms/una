@@ -1,22 +1,24 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxDolCache');
 
-class BxDolCacheFile extends BxDolCache {
-    var $sPath;
+class BxDolCacheFile extends BxDolCache 
+{
+    protected $sPath;
 
     /**
      * constructor
      */
-    function BxDolCacheFile() {
-        parent::BxDolCache();
-
+    function __construct() 
+    {
+        parent::__construct();
         $this->sPath = BX_DIRECTORY_PATH_CACHE;
     }
 
@@ -27,8 +29,8 @@ class BxDolCacheFile extends BxDolCache {
      * @param int $iTTL - time to live
      * @return the data is got from cache.
      */
-    function getData($sKey, $iTTL = false) {
-
+    function getData($sKey, $iTTL = false) 
+    {
         if (!file_exists($this->sPath . $sKey))
             return null;
 
@@ -38,6 +40,7 @@ class BxDolCacheFile extends BxDolCache {
         include($this->sPath . $sKey);
         return $mixedData;
     }
+
     /**
      * Save all data in cache file.
      *
@@ -46,7 +49,8 @@ class BxDolCacheFile extends BxDolCache {
      * @param int $iTTL - time to live
      * @return boolean result of operation.
      */
-    function setData($sKey, $mixedData, $iTTL = false) {
+    function setData($sKey, $mixedData, $iTTL = false) 
+    {
         if(file_exists($this->sPath . $sKey) && !is_writable($this->sPath . $sKey))
            return false;
 
@@ -66,7 +70,8 @@ class BxDolCacheFile extends BxDolCache {
      * @param string $sKey - file name
      * @return result of the operation
      */
-    function delData($sKey) {
+    function delData($sKey) 
+    {
         $sFile = $this->sPath . $sKey;
         return !file_exists($sFile) || @unlink($sFile);
     }
@@ -75,8 +80,8 @@ class BxDolCacheFile extends BxDolCache {
      * remove all data from cache by key prefix
      * @return true on success
      */
-    function removeAllByPrefix ($s) {
-
+    function removeAllByPrefix ($s) 
+    {
         if (!($rHandler = opendir($this->sPath)))
             return false;
 
@@ -93,7 +98,8 @@ class BxDolCacheFile extends BxDolCache {
     /**
      * get size of cached data by name prefix
      */
-    function getSizeByPrefix ($s) {
+    function getSizeByPrefix ($s)
+    {
         if (!($rHandler = opendir($this->sPath)))
             return false;
 
@@ -114,7 +120,8 @@ class BxDolCacheFile extends BxDolCache {
      * @param int $iTTL - time to live in seconds
      * @return true if TTL is expired and file is deleted or false otherwise
      */
-    function _removeFileIfTtlExpired ($sFile, $iTTL) {
+    function _removeFileIfTtlExpired ($sFile, $iTTL) 
+    {
         $iTimeDiff = time() - filectime($sFile);
         if ($iTimeDiff > $iTTL) {
             @unlink ($sFile);
@@ -124,4 +131,6 @@ class BxDolCacheFile extends BxDolCache {
         }
     }
 }
+
+/** @} */
 

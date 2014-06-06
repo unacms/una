@@ -18,9 +18,7 @@
  * Base class for all Dolphin classes
  */
 class BxDol {
-    function BxDol () {
-
-    }
+    public function BxDol () {}
 }
 
 /**
@@ -74,3 +72,4 @@ interface iBxDolProfileService {
 }
 
 /** @} */
+

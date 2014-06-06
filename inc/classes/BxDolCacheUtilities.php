@@ -1,11 +1,13 @@
-<?php
-
+<?php defined('BX_DOL') or die('hack attempt');
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
 
-class BxDolCacheUtilities extends BxDolMistake
+class BxDolCacheUtilities extends BxDol
 {
     protected $oMemberMenu;
     protected $oCacheMemberMenu;
@@ -15,7 +17,7 @@ class BxDolCacheUtilities extends BxDolMistake
 
     function __construct ()
     {
-        parent::BxDolMistake();
+        parent::__construct();
 
         // member menu
         bx_import('BxDolMemberMenu');
@@ -96,6 +98,7 @@ class BxDolCacheUtilities extends BxDolMistake
         else
             return array('code' => 0, 'message' => _t('_adm_txt_dashboard_cache_clean_success'));
     }
+
     function _getSizeCacheObject($oCache, $sPrefix)
     {
         return $oCache->getSizeByPrefix ($sPrefix);
@@ -115,6 +118,7 @@ class BxDolCacheUtilities extends BxDolMistake
 
         return array('code' => 0, 'message' => _t('_adm_txt_dashboard_cache_clean_success'));
     }
+
     function _getSizeCache($sPrefix, $sPath)
     {
         if (!($rHandler = opendir($sPath)))
@@ -130,5 +134,7 @@ class BxDolCacheUtilities extends BxDolMistake
 
         return $iSize;
     }
-
 }
+
+/** @} */
+

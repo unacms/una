@@ -20,7 +20,7 @@ class BxBaseStudioLanguages extends BxDolStudioLanguages {
         return array('languages.css');
     }
     function getJs() {
-        return array('common_anim.js', 'page.js', 'languages.js');
+        return array('jquery.anim.js', 'page.js', 'languages.js');
     }
 }
 /** @} */

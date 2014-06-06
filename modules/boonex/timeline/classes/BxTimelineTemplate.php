@@ -27,7 +27,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 	public function getCssJs()
     {
     	$this->addCss(array('plugins/jquery/themes/|jquery-ui.css', 'view.css', 'view-media-tablet.css', 'view-media-desktop.css', 'post.css', 'share.css'));
-        $this->addJs(array('jquery.ui.all.min.js', 'jquery.form.js', 'jquery.resize.js', 'plugins/|masonry.pkgd.min.js', 'common_anim.js', 'main.js', 'view.js', 'post.js', 'share.js'));
+        $this->addJs(array('jquery.ui.all.min.js', 'jquery.form.js', 'jquery.resize.js', 'plugins/|masonry.pkgd.min.js', 'jquery.anim.js', 'main.js', 'view.js', 'post.js', 'share.js'));
     }
 
     public function getJsCode($sType, $aRequestParams = array(), $bWrap = true)

@@ -11,8 +11,8 @@ bx_import('BxDolAccountQuery');
 
 class BxDolAccount extends BxDol {
 
-    var $_iAccountID;
-    var $_oQuery;
+    protected $_iAccountID;
+    protected $_oQuery;
 
     /**
      * Constructor

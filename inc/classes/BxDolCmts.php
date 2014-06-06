@@ -178,9 +178,9 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
      * $sSystem - comments system name
      * $iId - obect id to be commented
      */
-    function BxDolCmts( $sSystem, $iId, $iInit = 1)
+    function __construct($sSystem, $iId, $iInit = 1)
     {
-        parent::BxDol();
+        parent::__construct();
 
         $this->_aSystems = $this->getSystems();
 		if(!isset($this->_aSystems[$sSystem]))
@@ -994,3 +994,4 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 }
 
 /** @} */
+

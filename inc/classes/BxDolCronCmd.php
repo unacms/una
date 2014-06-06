@@ -1,29 +1,27 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 // TODO: make alert for database pruning
-// TODO: move some functionality to modules, like banners, etc
-// TODO: remove command line options
 // TODO: db funtions 2 class function + prepare statements
 // TODO: other refactoring
 
 bx_import('BxDolCron');
 
-class BxDolCronCmd extends BxDolCron {
-
-    // - Functions -
-
-    function finish() {
+class BxDolCronCmd extends BxDolCron 
+{
+    protected function finish() 
+    {
         if ($output = ob_get_clean())
             sendMail(getParam('site_email'), getParam('site_title') . ": Periodic Report", $output, 0, array(), BX_EMAIL_NOTIFY, 'text'); // TODO: email template
     }
 
-    function clean_database()
+    protected function clean_database()
     {
         $oDb = BxDolDb::getInstance();
 
@@ -71,7 +69,8 @@ class BxDolCronCmd extends BxDolCron {
         echo "Deleted expired keys: $iDeletedKeys\n";
     }
 
-    function del_old_all_files() {
+    protected function del_old_all_files() 
+    {
         $num_tmp = 0;
         $num_del = 0;
 
@@ -108,8 +107,8 @@ class BxDolCronCmd extends BxDolCron {
         echo "Deleted temp files: $num_del\n";
     }
 
-    function processing() {
-
+    public function processing()    
+    {
         set_time_limit(0);
         ignore_user_abort();
 
@@ -132,3 +131,6 @@ class BxDolCronCmd extends BxDolCron {
         $this->finish();
     }
 }
+
+/** @} */
+

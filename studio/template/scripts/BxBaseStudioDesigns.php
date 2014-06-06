@@ -21,7 +21,7 @@ class BxBaseStudioDesigns extends BxDolStudioDesigns {
         return array('designs.css');
     }
     function getJs() {
-        return array('common_anim.js', 'page.js', 'designs.js');
+        return array('jquery.anim.js', 'page.js', 'designs.js');
     }
 }
 /** @} */

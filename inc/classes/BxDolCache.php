@@ -1,23 +1,20 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
-class BxDolCache extends BxDol {
-    /**
-     * constructor
-     */
-    function BxDolCache() {
-        parent::BxDol();
-    }
+class BxDolCache extends BxDol 
+{
     /**
      * Is cache engine available?
      * @return boolean
      */
-    function isAvailable() {
+    function isAvailable() 
+    {
         return true;
     }
 
@@ -25,7 +22,8 @@ class BxDolCache extends BxDol {
      * Are required php modules are installed for this cache engine ?
      * @return boolean
      */
-    function isInstalled() {
+    function isInstalled() 
+    {
         return true;
     }
 
@@ -35,4 +33,6 @@ class BxDolCache extends BxDol {
     function removeAllByPrefix ($s) {}
     function getSizeByPrefix ($s) {}
 }
+
+/** @} */
 

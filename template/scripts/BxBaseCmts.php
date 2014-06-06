@@ -1,10 +1,11 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxDolCmts');
 bx_import('BxDolProfile');
@@ -13,13 +14,15 @@ bx_import('BxTemplPaginate');
 /**
  * @see BxDolCmts
  */
-class BxBaseCmts extends BxDolCmts {
+class BxBaseCmts extends BxDolCmts 
+{
 	protected $_sJsObjName;
     protected $_sStylePrefix;
 
-    function BxBaseCmts( $sSystem, $iId, $iInit = 1 ) {
-        BxDolCmts::BxDolCmts( $sSystem, $iId, $iInit );
-        if(empty($sSystem))
+    function __construct( $sSystem, $iId, $iInit = 1 ) 
+    {
+        parent::__construct( $sSystem, $iId, $iInit );
+        if (empty($sSystem))
             return;
 
         $this->_sJsObjName = 'oCmts' . bx_gen_method_name($sSystem, array('_' , '-')) . $iId;
@@ -36,7 +39,7 @@ class BxBaseCmts extends BxDolCmts {
     	$oTemplate = BxDolTemplate::getInstance();
 
         $oTemplate->addCss(array('cmts.css'));
-        $oTemplate->addJs(array('common_anim.js', 'jquery.form.js', 'BxDolCmts.js'));
+        $oTemplate->addJs(array('jquery.anim.js', 'jquery.form.js', 'BxDolCmts.js'));
 
         bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance($this->_sFormObject, $this->_sFormDisplayPost);
@@ -73,7 +76,8 @@ class BxBaseCmts extends BxDolCmts {
     /**
      * get full comments block with initializations
      */
-    function getCommentsBlock($iParentId = 0, $iVParentId = 0, $bInDesignbox = true) {
+    function getCommentsBlock($iParentId = 0, $iVParentId = 0, $bInDesignbox = true) 
+    {
     	$aBp = array('parent_id' => $iParentId, 'vparent_id' => $iVParentId);
 
     	$sCmts = $this->getComments($aBp);
@@ -710,3 +714,6 @@ class BxBaseCmts extends BxDolCmts {
         echo $s;
     }
 }
+
+/** @} */
+

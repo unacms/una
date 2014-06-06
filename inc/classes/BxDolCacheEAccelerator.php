@@ -1,23 +1,17 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxDolCache');
 
-class BxDolCacheEAccelerator extends BxDolCache {
-
-    var $iTTL = 3600;
-
-    /**
-     * constructor
-     */
-    function BxDolCacheEAccelerator() {
-        parent::BxDolCache();
-    }
+class BxDolCacheEAccelerator extends BxDolCache 
+{
+    protected $iTTL = 3600;
 
     /**
      * Get data from shared memory cache
@@ -26,10 +20,12 @@ class BxDolCacheEAccelerator extends BxDolCache {
      * @param int $iTTL - time to live
      * @return the data is got from cache.
      */
-    function getData($sKey, $iTTL = false) {
+    function getData($sKey, $iTTL = false) 
+    {
         $sData = eaccelerator_get($sKey);
         return null === $sData ? null : unserialize($sData);
     }
+
     /**
      * Save data in shared memory cache
      *
@@ -38,7 +34,8 @@ class BxDolCacheEAccelerator extends BxDolCache {
      * @param int $iTTL - time to live
      * @return boolean result of operation.
      */
-    function setData($sKey, $mixedData, $iTTL = false) {
+    function setData($sKey, $mixedData, $iTTL = false) 
+    {
         $bResult = eaccelerator_put($sKey, serialize($mixedData), false === $iTTL ? $this->iTTL : $iTTL);
         return $bResult;
     }
@@ -49,8 +46,8 @@ class BxDolCacheEAccelerator extends BxDolCache {
      * @param string $sKey - file name
      * @return result of the operation
      */
-    function delData($sKey) {
-
+    function delData($sKey) 
+    {
         eaccelerator_lock($sKey);
 
         eaccelerator_rm($sKey);
@@ -64,7 +61,8 @@ class BxDolCacheEAccelerator extends BxDolCache {
      * Check if eAccelerator is available
      * @return boolean
      */
-    function isAvailable() {
+    function isAvailable() 
+    {
         return function_exists('eaccelerator_put');
     }
 
@@ -72,7 +70,8 @@ class BxDolCacheEAccelerator extends BxDolCache {
      * Check if eaccelerator extension is loaded
      * @return boolean
      */
-    function isInstalled() {
+    function isInstalled() 
+    {
         return extension_loaded('eaccelerator');
     }
 
@@ -80,8 +79,8 @@ class BxDolCacheEAccelerator extends BxDolCache {
      * remove all data from cache by key prefix
      * @return true on success
      */
-    function removeAllByPrefix ($s) {
-
+    function removeAllByPrefix ($s) 
+    {
         $l = strlen($s);
         $aKeys = eaccelerator_list_keys();
         foreach ($aKeys as $aKey) {
@@ -93,4 +92,6 @@ class BxDolCacheEAccelerator extends BxDolCache {
         return true;
     }
 }
+
+/** @} */
 

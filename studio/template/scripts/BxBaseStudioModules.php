@@ -20,7 +20,7 @@ class BxBaseStudioModules extends BxDolStudioModules {
         return array('modules.css');
     }
     function getJs() {
-        return array('common_anim.js', 'page.js', 'modules.js');
+        return array('jquery.anim.js', 'page.js', 'modules.js');
     }
     function getJsCode() {
         return BxDolStudioTemplate::getInstance()->parseHtmlByName($this->sTemplPrefix . '_js.html', array(

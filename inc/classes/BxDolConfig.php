@@ -12,23 +12,25 @@ bx_import('BxDol');
 /**
  * System class for main configuration settings.
  */
-class BxDolConfig extends BxDol implements iBxDolSingleton {
-    var $aUrlStatic;
-    var $aUrlDynamic;
+class BxDolConfig extends BxDol implements iBxDolSingleton
+{
+    protected $aUrlStatic;
+    protected $aUrlDynamic;
 
-    var $aPathStatic;
-    var $aPathDynamic;
+    protected $aPathStatic;
+    protected $aPathDynamic;
 
-    var $aDb;
+    protected $aDb;
 
     /**
      * constructor
      */
-    function BxDolConfig() {
+    protected function __construct() 
+    {
         if(isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
-        parent::BxDol();
+        parent::__construct();
 
         $this->aUrlStatic = array();
         $this->aUrlDynamic = array();
@@ -38,10 +40,12 @@ class BxDolConfig extends BxDol implements iBxDolSingleton {
 
         $this->aDb = array();
     }
+
     /**
      * Prevent cloning the instance
      */
-    public function __clone() {
+    public function __clone() 
+    {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error('Clone is not allowed for the class: ' . get_class($this), E_USER_ERROR);
     }
@@ -49,7 +53,8 @@ class BxDolConfig extends BxDol implements iBxDolSingleton {
     /**
      * Get singleton instance of the class
      */
-    public static function getInstance() {
+    public static function getInstance() 
+    {
         if(!isset($GLOBALS['bxDolClasses'][__CLASS__])) {
             $GLOBALS['bxDolClasses'][__CLASS__] = new BxDolConfig();
             $GLOBALS['bxDolClasses'][__CLASS__]->init();
@@ -58,19 +63,14 @@ class BxDolConfig extends BxDol implements iBxDolSingleton {
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
 
-    function init() {
+    function init() 
+    {
         $this->aUrlDynamic = array(
             'tmp' => BX_DOL_URL_ROOT . 'tmp/',
-            'rpr_images_main' => '', //--- For Site's main images like logo, etc
-            'rpr_images_promo' => '', //--- For Promo images
-            'rpr_images_watermark' => '' //--- For Watermarks
         );
 
         $this->aPathDynamic = array(
             'tmp' => BX_DIRECTORY_PATH_ROOT . 'tmp/',
-            'rpr_images_main' => '', //--- For Site's main images like logo, etc
-            'rpr_images_promo' => '', //--- For Promo images
-            'rpr_images_watermark' => '' //--- For Watermarks
         );
 
         $this->aDb = array(
@@ -80,22 +80,26 @@ class BxDolConfig extends BxDol implements iBxDolSingleton {
         );
     }
 
-    function get($sGroup, $sName) {
+    function get($sGroup, $sName) 
+    {
         return $this->{$this->getVarName($sGroup)}[$sName];
     }
 
-    function getGroup($sGroup) {
+    function getGroup($sGroup) 
+    {
         return $this->{$this->getVarName($sGroup)};
     }
 
-    function set($sGroup, $sName, $sValue, $bDefine = false) {
+    function set($sGroup, $sName, $sValue, $bDefine = false) 
+    {
         if($bDefine)
             define($this->getDefineName($sGroup, $sName), $sValue);
         else
             $this->{$this->getVarName($sGroup)}[$sName] = $sValue;
     }
 
-    function setGroup($sGroup, $aValue, $bDefine = false) {
+    function setGroup($sGroup, $aValue, $bDefine = false) 
+    {
         if($bDefine)
             foreach($aValue as $sName => $sValue)
                 define($this->getDefineName($sGroup, $sName), $sValue);
@@ -109,14 +113,17 @@ class BxDolConfig extends BxDol implements iBxDolSingleton {
         }
     }
 
-    private function getVarName($sVar) {
+    private function getVarName($sVar) 
+    {
         return 'a' . bx_gen_method_name($sVar);
     }
 
-    private function getDefineName() {
+    private function getDefineName() 
+    {
         $aArgs = func_get_args();
         return 'BX_' . strtoupper(implode('_', $aArgs));
     }
 }
 
 /** @} */
+

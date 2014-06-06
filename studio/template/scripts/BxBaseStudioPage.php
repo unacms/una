@@ -32,7 +32,7 @@ class BxBaseStudioPage extends BxDolStudioPage {
     }
 
     function getPageJs() {
-        return array('common_anim.js', 'page.js');
+        return array('jquery.anim.js', 'page.js');
     }
 
     function getPageJsClass() {

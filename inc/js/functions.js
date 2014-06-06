@@ -136,26 +136,6 @@ function _t(s, arg0, arg1, arg2) {
     return cs;
 }
 
-
-function showPopupLoginForm() {
-    var oPopupOptions = {};
-
-    if ($('#login_div').length)
-        $('#login_div').dolPopup(oPopupOptions);
-    else {
-        $('<div id="login_div" style="visibility: none;"></div>').prependTo('body').load(
-            sUrlRoot + 'member.php',
-            {
-                action: 'show_login_form',
-                relocate: String(window.location)
-            },
-            function() {
-                $(this).dolPopup(oPopupOptions);
-            }
-        );
-    }
-}
-
 function showPopupAnyHtml(sUrl, sId) {
 
     var oPopupOptions = {};

@@ -1,23 +1,17 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxDolCache');
 
-class BxDolCacheAPC extends BxDolCache {
-
-    var $iTTL = 3600;
-
-    /**
-     * constructor
-     */
-    function BxDolCacheAPC() {
-        parent::BxDolCache();
-    }
+class BxDolCacheAPC extends BxDolCache 
+{
+    protected $iTTL = 3600;
 
     /**
      * Get data from shared memory cache
@@ -26,8 +20,8 @@ class BxDolCacheAPC extends BxDolCache {
      * @param int $iTTL - time to live
      * @return the data is got from cache.
      */
-    function getData($sKey, $iTTL = false) {
-
+    function getData($sKey, $iTTL = false) 
+    {
         $isSucess = false;
         $mixedData = apc_fetch ($sKey, $isSucess);
         if (!$isSucess)
@@ -43,8 +37,8 @@ class BxDolCacheAPC extends BxDolCache {
      * @param int $iTTL - time to live
      * @return boolean result of operation.
      */
-    function setData($sKey, $mixedData, $iTTL = false) {
-
+    function setData($sKey, $mixedData, $iTTL = false) 
+    {
         return apc_store ($sKey, $mixedData, false === $iTTL ? $this->iTTL : $iTTL);
     }
 
@@ -54,8 +48,8 @@ class BxDolCacheAPC extends BxDolCache {
      * @param string $sKey - file name
      * @return result of the operation
      */
-    function delData($sKey) {
-
+    function delData($sKey) 
+    {
         $isSucess = false;
         apc_fetch ($sKey, $isSucess);
         if (!$isSucess)
@@ -68,7 +62,8 @@ class BxDolCacheAPC extends BxDolCache {
      * Check if apc cache functions are available
      * @return boolean
      */
-    function isAvailable() {
+    function isAvailable() 
+    {
         return function_exists('apc_store');
     }
 
@@ -76,7 +71,8 @@ class BxDolCacheAPC extends BxDolCache {
      * Check if apc extension is loaded
      * @return boolean
      */
-    function isInstalled() {
+    function isInstalled() 
+    {
         return extension_loaded('apc');
     }
 
@@ -84,8 +80,8 @@ class BxDolCacheAPC extends BxDolCache {
      * remove all data from cache by key prefix
      * @return true on success
      */
-    function removeAllByPrefix ($s) {
-
+    function removeAllByPrefix ($s) 
+    {
         $l = strlen($s);
         $aKeys = apc_cache_info('user');
         if (isset($aKeys['cache_list']) && is_array($aKeys['cache_list'])) {
@@ -98,4 +94,6 @@ class BxDolCacheAPC extends BxDolCache {
         return true;
     }
 }
+
+/** @} */
 

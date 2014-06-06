@@ -1,20 +1,23 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxBaseCmts');
 
 /**
  * @see BxDolCmts
  */
-class BxTemplCmts extends BxBaseCmts {
-
-    function BxTemplCmts( $sSystem, $iId, $iInit = 1 ) {
-        BxBaseCmts::BxBaseCmts( $sSystem, $iId, $iInit );
+class BxTemplCmts extends BxBaseCmts 
+{
+    function __construct($sSystem, $iId, $iInit = 1) 
+    {
+        parent::__construct($sSystem, $iId, $iInit);
     }
 }
 
+/** @} */

@@ -1,22 +1,16 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    DolphinCore Dolphin Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxDolCacheFile');
 
-class BxDolCacheFileHtml extends BxDolCacheFile {
-
-    /**
-     * constructor
-     */
-    function BxDolCacheFileHtml() {
-        parent::BxDolCacheFile();
-    }
-
+class BxDolCacheFileHtml extends BxDolCacheFile
+{
     /**
      * Get all data from the cache file.
      *
@@ -24,8 +18,8 @@ class BxDolCacheFileHtml extends BxDolCacheFile {
      * @param int $iTTL - time to live
      * @return the data is got from cache.
      */
-    function getData($sKey, $iTTL = false) {
-
+    function getData($sKey, $iTTL = false)
+    {
         if(!file_exists($this->sPath . $sKey))
             return null;
 
@@ -38,7 +32,8 @@ class BxDolCacheFileHtml extends BxDolCacheFile {
     /**
      * Get full path to cache file
      */
-    function getDataFilePath($sKey, $iTTL = false) {
+    function getDataFilePath($sKey, $iTTL = false) 
+    {
         if (!file_exists($this->sPath . $sKey))
             return null;
 
@@ -56,7 +51,8 @@ class BxDolCacheFileHtml extends BxDolCacheFile {
      * @param int $iTTL - time to live
      * @return boolean result of operation.
      */
-    function setData($sKey, $mixedData, $iTTL = false) {
+    function setData($sKey, $mixedData, $iTTL = false) 
+    {
         if(file_exists($this->sPath . $sKey) && !is_writable($this->sPath . $sKey))
            return false;
 
@@ -70,4 +66,6 @@ class BxDolCacheFileHtml extends BxDolCacheFile {
         return true;
     }
 }
+
+/** @} */
 

@@ -39,14 +39,14 @@ defined('BX_DOL') or die('hack attempt');
  */
 class BxDolAlerts extends BxDol {
 
-    var $sUnit;
-    var $sAction;
-    var $iObject;
-    var $iSender;
-    var $aExtras;
+    public $sUnit;
+    public $sAction;
+    public $iObject;
+    public $iSender;
+    public $aExtras;
 
-    var $_aAlerts;
-    var $_aHandlers;
+    protected $_aAlerts;
+    protected $_aHandlers;
 
     /**
      * Constructor
@@ -55,8 +55,8 @@ class BxDolAlerts extends BxDol {
      * @param int $iObjectId - object id
      * @param int $iSenderId - sender (action's author) profile id, if it is false - then currectly logged in profile id is used
      */
-    public function BxDolAlerts($sUnit, $sAction, $iObjectId, $iSender = false, $aExtras = array()) {
-        parent::BxDol();
+    public function __construct($sUnit, $sAction, $iObjectId, $iSender = false, $aExtras = array()) {
+        parent::__construct();
 
         $oDb = BxDolDb::getInstance();
         $oCache = $oDb->getDbCacheObject();
@@ -134,11 +134,11 @@ class BxDolAlerts extends BxDol {
 
 class BxDolAlertsResponse extends BxDol
 {
-    public function __construct() {
+    public function __construct() 
+    {
         parent::__construct();
     }
 
-    public function response($oAlert) {
-    }
+    public function response($oAlert) {}
 }
 
