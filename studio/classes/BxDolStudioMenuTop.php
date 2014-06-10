@@ -22,8 +22,8 @@ class BxDolStudioMenuTop extends BxDol {
     protected $aItems;
     protected $aVisible;
 
-    function BxDolStudioMenuTop() {
-        parent::BxDol();
+    function __construct() {
+        parent::__construct();
 
         $this->aVisible = array(
             BX_DOL_STUDIO_MT_LEFT => false,

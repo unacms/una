@@ -16,8 +16,8 @@ class BxDolStudioModules extends BxDol {
     protected $sLangPrefix;
     protected $sTemplPrefix;
 
-    function BxDolStudioModules() {
-        parent::BxDol(); 
+    function __construct() {
+        parent::__construct(); 
 
         $this->oDb = new BxDolStudioModulesQuery();
         $this->sJsObject = 'oBxDolStudioModules';

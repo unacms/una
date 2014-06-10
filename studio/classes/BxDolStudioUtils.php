@@ -18,7 +18,7 @@ define('BX_DOL_STUDIO_VISIBLE_SELECTED', 'selected');
 
 class BxDolStudioUtils extends BxDol {
     function __construct() {
-        parent::BxDol();
+        parent::__construct();
     }
 
     public static function getSystemName($sValue) {

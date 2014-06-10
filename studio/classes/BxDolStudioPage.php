@@ -25,8 +25,8 @@ class BxDolStudioPage extends BxDol {
     protected $sPageSelected;
     protected $aActions;
 
-    function BxDolStudioPage($mixedPageName) {
-        parent::BxDol();
+    function __construct($mixedPageName) {
+        parent::__construct();
 
         $this->oDb = new BxDolStudioPageQuery();
 
