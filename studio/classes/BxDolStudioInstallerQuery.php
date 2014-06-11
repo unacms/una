@@ -11,8 +11,8 @@ defined('BX_DOL') or die('hack attempt');
 bx_import('BxDolModuleQuery');
 
 class BxDolStudioInstallerQuery extends BxDolModuleQuery {
-    function BxDolStudioInstallerQuery() {
-        parent::BxDolModuleQuery();
+    function __construct() {
+        parent::__construct();
     }
 
     function insertModule(&$aConfig) {

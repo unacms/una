@@ -89,6 +89,8 @@ class BxDolDb extends BxDol implements iBxDolSingleton
     public static function getInstance($aDbConf = false, &$sError = null) 
     {
         if (!isset($GLOBALS['bxDolClasses'][__CLASS__])) {
+            if (false === $aDbConf && !defined('BX_DATABASE_HOST'))
+                return null;
             $o = new BxDolDb($aDbConf);
             $sErrorMessage = $o->connect();
             if ($sErrorMessage) {

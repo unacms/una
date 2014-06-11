@@ -65,7 +65,8 @@ class BxBaseConfig extends BxDol implements iBxDolSingleton {
     function __construct() 
     {
         parent::__construct();
-        if (function_exists('getParam'))
+
+        if (class_exists('BxDolDb') && BxDolDb::getInstance())
             $this->_aConfig['aLessConfig']['bx-page-width'] = getParam('main_div_width');
     }
 
