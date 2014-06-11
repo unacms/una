@@ -7,7 +7,6 @@
  * @{
  */
 
-
 /**
  * Base class for all modules DB classes
  */
@@ -24,7 +23,7 @@ class BxDolModuleDb extends BxDolModuleQuery {
 		if (is_a($oConfig,'BxDolModuleConfig'))
             $this->_sPrefix = $oConfig->getDbPrefix();
         else
-            trigger_error ('It is impossible to create BxDolModuleDb class instance without prefix: ' . get_class($this), E_USER_ERROR);  
+            trigger_error ('It is impossible to create BxDolModuleDb class instance without prefix: ' . get_class($this), E_USER_ERROR);
     }
 
 	public function getPrefix() {

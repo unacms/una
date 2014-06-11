@@ -1,4 +1,14 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
+/**
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ * 
+ * @defgroup    Sites Sites
+ * @ingroup     DolphinModules
+ *
+ * @{
+ */
+
 require_once(BX_SITES_PP_DIRECTORY_PATH_API . 'PPBootStrap.php');
 
 class BxSitesPaypal
@@ -520,3 +530,5 @@ class BxSitesPaypal
 		$oLog->log($mixedValue);
 	}
 }
+
+/** @} */

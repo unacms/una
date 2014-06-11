@@ -17,8 +17,8 @@ define('BX_DOL_STUDIO_WS_DISABLED', 2);
 class BxDolStudioWidgets extends BxTemplStudioPage {
     protected $aWidgets;
 
-    function BxDolStudioWidgets($mixedPageName) {
-        parent::BxTemplStudioPage($mixedPageName);
+    function __construct($mixedPageName) {
+        parent::__construct($mixedPageName);
 
         $this->oDb = BxDolStudioWidgetsQuery::getInstance();
 

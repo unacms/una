@@ -17,8 +17,8 @@ bx_import('BxTemplStudioModules');
 class BxDolStudioLauncher extends BxTemplStudioWidgets {
     protected $aIncludes;
 
-    function BxDolStudioLauncher() {
-        parent::BxTemplStudioWidgets(BX_DOL_STUDIO_PAGE_HOME);
+    function __construct() {
+        parent::__construct(BX_DOL_STUDIO_PAGE_HOME);
 
         $aClasses = array( 
         	'BxTemplStudioModules',

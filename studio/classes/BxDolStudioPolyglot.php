@@ -20,8 +20,8 @@ define('BX_DOL_STUDIO_PGT_TYPE_DEFAULT', BX_DOL_STUDIO_PGT_TYPE_GENERAL);
 class BxDolStudioPolyglot extends BxTemplStudioPage {
     protected $sPage;
 
-    function BxDolStudioPolyglot($sPage = "") {
-        parent::BxTemplStudioPage('polyglot');
+    function __construct($sPage = "") {
+        parent::__construct('polyglot');
 
         $this->oDb = new BxDolStudioPolyglotQuery();
 

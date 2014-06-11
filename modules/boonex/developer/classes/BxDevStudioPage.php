@@ -1,4 +1,4 @@
-<? defined('BX_DOL') or die('hack attempt');
+<?php defined('BX_DOL') or die('hack attempt');
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
@@ -15,8 +15,8 @@ class BxDevStudioPage extends BxTemplStudioModule {
     protected $oModule;
     protected $sUrl;
 
-    function BxDevStudioPage($sModule = "", $sPage = "") {
-        parent::BxTemplStudioModule($sModule, $sPage);
+    function __construct($sModule = "", $sPage = "") {
+        parent::__construct($sModule, $sPage);
 
         bx_import('BxDolModule');
         $this->oModule = BxDolModule::getInstance('bx_developer');

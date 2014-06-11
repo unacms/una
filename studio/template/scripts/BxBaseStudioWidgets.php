@@ -13,8 +13,8 @@ bx_import('BxDolStudioWidgets');
 
 class BxBaseStudioWidgets extends BxDolStudioWidgets {
 
-    function BxBaseStudioWidgets($mixedPageName) {
-        parent::BxDolStudioWidgets($mixedPageName);
+    function __construct($mixedPageName) {
+        parent::__construct($mixedPageName);
     }
 
     function getPageCode($bHidden = false) {

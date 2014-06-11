@@ -28,8 +28,8 @@ class BxDolStudioSettings extends BxTemplStudioPage {
     protected $aCategories;
     protected $aCustomCategories;
 
-    function BxDolStudioSettings($sType = '', $sCategory = '') {
-        parent::BxTemplStudioPage('settings');
+    function __construct($sType = '', $sCategory = '') {
+        parent::__construct('settings');
 
         $this->oDb = new BxDolStudioSettingsQuery();
 

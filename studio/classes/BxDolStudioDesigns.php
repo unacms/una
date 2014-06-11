@@ -14,8 +14,8 @@ bx_import('BxDolStudioTemplate');
 bx_import('BxDolStudioDesignsQuery');
 
 class BxDolStudioDesigns extends BxTemplStudioModules {
-    function BxDolStudioDesigns() {
-        parent::BxTemplStudioModules();
+    function __construct() {
+        parent::__construct();
 
         $this->oDb = new BxDolStudioDesignsQuery();
 

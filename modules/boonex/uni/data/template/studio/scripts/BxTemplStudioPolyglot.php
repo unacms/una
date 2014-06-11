@@ -12,8 +12,8 @@ defined('BX_DOL') or die('hack attempt');
 bx_import('BxBaseStudioPolyglot');
 
 class BxTemplStudioPolyglot extends BxBaseStudioPolyglot { 
-    function BxTemplStudioPolyglot($sPage = '') {
-        parent::BxBaseStudioPolyglot($sPage);
+    function __construct($sPage = '') {
+        parent::__construct($sPage);
     }
 }
 /** @} */

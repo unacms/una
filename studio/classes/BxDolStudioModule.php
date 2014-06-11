@@ -18,8 +18,8 @@ class BxDolStudioModule extends BxTemplStudioPage {
     protected $aModule;
     protected $sPage;
 
-    function BxDolStudioModule($sModule = "", $sPage = "") {
-        parent::BxTemplStudioPage($sModule);
+    function __construct($sModule = "", $sPage = "") {
+        parent::__construct($sModule);
 
         $this->oDb = new BxDolStudioModulesQuery();
 

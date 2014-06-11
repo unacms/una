@@ -19,8 +19,8 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner {
     protected $sIconFormId = 'adm-dsg-icon-form';
     protected $sIconIframeId = 'adm-dsg-icon-iframe';
 
-    function BxBaseStudioDesigner($sPage = '') {
-        parent::BxDolStudioDesigner($sPage);
+    function __construct($sPage = '') {
+        parent::__construct($sPage);
     }
     function getPageCss() {
         return array_merge(parent::getPageCss(), array('forms.css', 'designer.css'));

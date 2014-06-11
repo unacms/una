@@ -18,7 +18,7 @@ class BxContactModule extends BxDolModule
      */
     function __construct($aModule)
     {
-        parent::BxDolModule($aModule);
+        parent::__construct($aModule);
 
         $this->_oConfig->init($this->_oDb);
     }

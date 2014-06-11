@@ -21,8 +21,8 @@ class BxDolStudioStore extends BxTemplStudioPage {
 
     protected $aAlias;
 
-    function BxDolStudioStore($sPage = "") {
-        parent::BxTemplStudioPage('store');
+    function __construct($sPage = "") {
+        parent::__construct('store');
 
         $this->oDb = new BxDolStudioStoreQuery();
 

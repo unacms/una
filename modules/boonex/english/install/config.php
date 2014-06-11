@@ -36,11 +36,16 @@ $aConfig = array(
     'class_prefix' => 'BxEng',
 
     /**
+     * Category for language keys.
+     */
+    'language_category' => 'BoonEx English',
+
+    /**
      * Installation/Uninstallation Section.
      * NOTE. The sequence of actions is critical. Don't change the order. 
      */
     'install' => array(
-        'execute_sql' => 1,    	
+        'execute_sql' => 1,
         'update_languages' => 1,
     	'install_language' => 1,
         'recompile_global_paramaters' => 1
@@ -62,28 +67,6 @@ $aConfig = array(
      */
     'dependencies' => array(),
 
-    /**
-     * Category for language keys.
-     */
-    'language_category' => 'BoonEx English',
-
-    /**
-     * Permissions Section
-     */
-    'install_permissions' => array(),
-    'uninstall_permissions' => array(),
-    
-    /**
-     * Introduction and Conclusion Section.
-     */
-    'install_info' => array(
-        'introduction' => 'inst_intro.html',
-        'conclusion' => 'inst_concl.html'
-    ),
-    'uninstall_info' => array(
-        'introduction' => 'uninst_intro.html',
-        'conclusion' => 'uninst_concl.html'
-    )
 );
 
 /** @} */

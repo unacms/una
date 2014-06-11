@@ -30,7 +30,7 @@ class BxDolStudioBuilderPage extends BxTemplStudioPage {
     protected $aPageRebuild;
 
     function __construct($sType = '', $sPage = '') {
-        parent::BxTemplStudioPage('builder_pages');
+        parent::__construct('builder_pages');
 
         $this->oDb = new BxDolStudioBuilderPageQuery();
 

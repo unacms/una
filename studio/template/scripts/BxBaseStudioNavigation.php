@@ -19,8 +19,8 @@ class BxBaseStudioNavigation extends BxDolStudioNavigation {
         'items' => 'sys_studio_nav_items'
     );
 
-    function BxBaseStudioNavigation($sPage = '') {
-        parent::BxDolStudioNavigation($sPage);
+    function __construct($sPage = '') {
+        parent::__construct($sPage);
 
         $this->sSubpageUrl = BX_DOL_URL_STUDIO . 'builder_menu.php?page=';
     }

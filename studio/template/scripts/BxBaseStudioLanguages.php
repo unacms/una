@@ -13,8 +13,8 @@ bx_import('BxDolStudioLanguages');
 bx_import('BxTemplStudioFunctions');
 
 class BxBaseStudioLanguages extends BxDolStudioLanguages {
-    function BxBaseStudioLanguages() {
-        parent::BxDolStudioLanguages();
+    function __construct() {
+        parent::__construct();
     }
     function getCss() {
         return array('languages.css');

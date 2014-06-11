@@ -12,8 +12,8 @@ defined('BX_DOL') or die('hack attempt');
 bx_import('BxBaseStudioDesigns');
 
 class BxTemplStudioDesigns extends BxBaseStudioDesigns { 
-    function BxTemplStudioDesigns() {
-        parent::BxBaseStudioDesigns();
+    function __construct() {
+        parent::__construct();
     }
 }
 /** @} */

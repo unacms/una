@@ -12,8 +12,8 @@ defined('BX_DOL') or die('hack attempt');
 bx_import('BxBaseStudioStore');
 
 class BxTemplStudioStore extends BxBaseStudioStore { 
-    function BxTemplStudioStore($sPage = "") {
-        parent::BxBaseStudioStore($sPage);
+    function __construct($sPage = "") {
+        parent::__construct($sPage);
     }
 }
 /** @} */

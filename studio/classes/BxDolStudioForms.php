@@ -22,8 +22,8 @@ define('BX_DOL_STUDIO_FORM_TYPE_DEFAULT', BX_DOL_STUDIO_FORM_TYPE_FORMS);
 class BxDolStudioForms extends BxTemplStudioPage {
     protected $sPage;
 
-    function BxDolStudioForms($sPage = "") {
-        parent::BxTemplStudioPage('builder_forms');
+    function __construct($sPage = "") {
+        parent::__construct('builder_forms');
 
         $this->oDb = new BxDolStudioFormsQuery();
 

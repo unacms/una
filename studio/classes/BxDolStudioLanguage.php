@@ -20,8 +20,8 @@ class BxDolStudioLanguage extends BxTemplStudioPage {
 	protected $sLanguage;
 	protected $aLanguage;
 
-    function BxDolStudioLanguage($sLanguage, $sPage) {
-        parent::BxTemplStudioPage($sLanguage);
+    function __construct($sLanguage, $sPage) {
+        parent::__construct($sLanguage);
 
         $this->oDb = new BxDolStudioLanguagesQuery();
 

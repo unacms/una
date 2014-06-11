@@ -13,12 +13,7 @@
  * alerts handler
  */
 class BxProfilerAlertsResponse extends BxDolAlertsResponse 
-{
-    public function __construct() 
-    {
-        parent::__construct();
-    }
-    
+{   
     public function response($oAlert) 
     {
         if ('system' == $oAlert->sUnit && 'begin' == $oAlert->sAction) {

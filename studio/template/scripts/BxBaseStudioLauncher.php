@@ -15,8 +15,8 @@ bx_import('BxDolStudioLauncher');
 bx_import('BxDolStudioTemplate');
 
 class BxBaseStudioLauncher extends BxDolStudioLauncher {
-    function BxBaseStudioLauncher() {
-        parent::BxDolStudioLauncher();
+    function __construct() {
+        parent::__construct();
     }
     function getPageIndex() {
         if(!is_array($this->aPage || empty($this->aPage)))

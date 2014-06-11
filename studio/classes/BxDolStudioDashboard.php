@@ -13,7 +13,7 @@ bx_import('BxDolStudioStoreQuery');
 
 class BxDolStudioDashboard extends BxTemplStudioPage {
 	function __construct() {
-        parent::BxTemplStudioPage('dashboard');
+        parent::__construct('dashboard');
 
 		//--- Check actions ---//
         if(($sAction = bx_get('dbd_action')) !== false) {

@@ -21,8 +21,8 @@ class BxBaseStudioForms extends BxDolStudioForms {
         'pre_values' => 'sys_studio_forms_pre_values'
     );
 
-    function BxBaseStudioForms($sPage = '') {
-        parent::BxDolStudioForms($sPage);
+    function __construct($sPage = '') {
+        parent::__construct($sPage);
 
         $this->sSubpageUrl = BX_DOL_URL_STUDIO . 'builder_forms.php?page=';
     }

@@ -21,8 +21,8 @@ class BxDolStudioDesign extends BxTemplStudioPage {
 	protected $aTemplate;
 	protected $sPage;
 
-    function BxDolStudioDesign($sTemplate = "", $sPage = "") {
-        parent::BxTemplStudioPage($sTemplate);
+    function __construct($sTemplate = "", $sPage = "") {
+        parent::__construct($sTemplate);
 
         $this->oDb = new BxDolStudioDesignsQuery();
 

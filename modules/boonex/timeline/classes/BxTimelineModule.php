@@ -37,17 +37,17 @@ define('BX_TIMELINE_PARSE_TYPE_DEFAULT', BX_TIMELINE_PARSE_TYPE_POST);
 
 class BxTimelineModule extends BxDolModule
 {
-    var $_iOwnerId;
-    var $_sJsPostObject;
-    var $_sJsViewObject;
-    var $_aPostElements;
-    var $_sJsOutlineObject;
+    protected $_iOwnerId;
+    protected $_sJsPostObject;
+    protected $_sJsViewObject;
+    protected $_aPostElements;
+    protected $_sJsOutlineObject;
 
-    var $_sDividerTemplate;
-    var $_sBalloonTemplate;
-    var $_sCmtPostTemplate;
-    var $_sCmtViewTemplate;
-    var $_sCmtTemplate;
+    protected $_sDividerTemplate;
+    protected $_sBalloonTemplate;
+    protected $_sCmtPostTemplate;
+    protected $_sCmtViewTemplate;
+    protected $_sCmtTemplate;
 
     /**
      * Constructor

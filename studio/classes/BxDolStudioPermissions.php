@@ -19,8 +19,8 @@ define('BX_DOL_STUDIO_PRM_TYPE_DEFAULT', BX_DOL_STUDIO_PRM_TYPE_LEVELS);
 class BxDolStudioPermissions extends BxTemplStudioPage {
     protected $sPage;
 
-    function BxDolStudioPermissions($sPage = "") {
-        parent::BxTemplStudioPage('builder_permissions');
+    function __construct($sPage = "") {
+        parent::__construct('builder_permissions');
 
         $this->oDb = new BxDolStudioPermissionsQuery();
 

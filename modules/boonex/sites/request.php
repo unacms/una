@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  * 
- * @defgroup    Notes Notes
+ * @defgroup    Sites Sites
  * @ingroup     DolphinModules
  *
  * @{
@@ -16,14 +16,6 @@ check_logged();
 bx_import('BxDolLanguages');
 bx_import('BxDolRequest');
 
-class BxSitesRequest extends BxDolRequest 
-{
-    function __construct() 
-    {
-        parent::__construct();
-    }
-}
-
-BxSitesRequest::processAsAction($GLOBALS['aModule'], $GLOBALS['aRequest']);
+BxDolRequest::processAsAction($GLOBALS['aModule'], $GLOBALS['aRequest']);
 
 /** @} */ 

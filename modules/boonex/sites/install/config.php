@@ -1,9 +1,9 @@
-<?php 
+<?php
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  * 
- * @defgroup    Notes Notes
+ * @defgroup    Sites Sites
  * @ingroup     DolphinModules
  *
  * @{
@@ -35,6 +35,11 @@ $aConfig = array(
 
     'db_prefix' => 'bx_sites_',
     'class_prefix' => 'BxSites',
+
+    /**
+     * Category for language keys.
+     */
+    'language_category' => 'Sites',
 
     /**
      * Installation/Uninstallation Section.
@@ -69,23 +74,6 @@ $aConfig = array(
      */
     'dependencies' => array(
     ),
-
-    /**
-     * Category for language keys.
-     */
-    'language_category' => 'Sites',
-
-    /**
-     * Introduction and Conclusion Section.
-     */
-    'install_info' => array(
-        'introduction' => '',
-        'conclusion' => ''
-    ),
-    'uninstall_info' => array(
-        'introduction' => '',
-        'conclusion' => ''
-    )
 );
 
 /** @} */ 

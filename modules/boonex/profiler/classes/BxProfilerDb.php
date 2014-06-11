@@ -11,20 +11,6 @@
 
 bx_import('BxDolModuleDb');
 
-/*
- * Profiler module data
- */
-class BxProfilerDb extends BxDolModuleDb {
-    var $_oConfig;
-
-    function BxProfilerDb(&$oConfig) {
-        parent::BxDolModuleDb();
-        $this->_oConfig = $oConfig;
-    }
-
-    function getSettingsCategory() {
-        return $this->getOne("SELECT `ID` FROM `sys_options_cats` WHERE `name` = 'Profiler' LIMIT 1");
-    }
-}
+class BxProfilerDb extends BxDolModuleDb {}
 
 /** @} */

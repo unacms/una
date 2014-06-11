@@ -17,22 +17,20 @@ bx_import('BxDolModule');
  * This module estimate timining, like page openings, mysql queries execution and service calls.
  * Also it can log too long queries, so you can later investigate these bottle necks and speedup whole script.
  */
-class BxProfilerModule extends BxDolModule {
-
-
-    function BxProfilerModule(&$aModule) {
-        parent::BxDolModule($aModule);
+class BxProfilerModule extends BxDolModule 
+{
+    function __construct($aModule) 
+    {
+        parent::__construct($aModule);
     }
 
-    function actionHome () {
+    function actionHome () 
+    {
         $this->_oTemplate->pageStart();
         echo $this->_aModule['title'];
         $this->_oTemplate->pageCode($this->_aModule['title']);
     }
 
-    function isAdmin () {
-        return $GLOBALS['logged']['admin'];
-    }
 }
 
 /** @} */

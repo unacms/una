@@ -1,4 +1,4 @@
-<? defined('BX_DOL') or die('hack attempt');
+<?php defined('BX_DOL') or die('hack attempt');
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
@@ -20,9 +20,9 @@ class BxDevPolyglot extends BxTemplStudioPolyglot
         'manage' => 'mod_dev_pgt_manage'
     );
 
-	function BxDevPolyglot($aParams)
+	function __construct($aParams)
 	{
-        parent::BxTemplStudioPolyglot(isset($aParams['page']) ? $aParams['page'] : '');
+        parent::__construct(isset($aParams['page']) ? $aParams['page'] : '');
 
         $this->aParams = $aParams;
         $this->sSubpageUrl = $this->aParams['url'] . '&pgt_page=';

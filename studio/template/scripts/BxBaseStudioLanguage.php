@@ -17,8 +17,8 @@ class BxBaseStudioLanguage extends BxDolStudioLanguage {
     	'general' => '_adm_lmi_cpt_general'
     );
 
-    function BxBaseStudioLanguage($sLanguage = "", $sPage = "") {
-        parent::BxDolStudioLanguage($sLanguage, $sPage);
+    function __construct($sLanguage = "", $sPage = "") {
+        parent::__construct($sLanguage, $sPage);
     }
     function getPageCss() {
         return array_merge(parent::getPageCss(), array());

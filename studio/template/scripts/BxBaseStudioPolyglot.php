@@ -23,8 +23,8 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot {
         'etemplates' => 'sys_studio_lang_etemplates',
     );
 
-    function BxBaseStudioPolyglot($sPage = '') {
-        parent::BxDolStudioPolyglot($sPage);
+    function __construct($sPage = '') {
+        parent::__construct($sPage);
 
         $this->sSubpageUrl = BX_DOL_URL_STUDIO . 'polyglot.php?page=';
     }

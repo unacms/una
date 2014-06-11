@@ -16,7 +16,7 @@ bx_import('BxDolTemplate');
 
 class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton {
 
-    function BxDolStudioTemplate() {
+    function __construct() {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
@@ -79,7 +79,7 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton {
         $this->_oConfigTemplate = BxTemplStudioConfig::getInstance();
     }
 
-    function parseSystemKey($sKey, $mixedKeyWrapperHtml = null) {
+    function parseSystemKey($sKey, $mixedKeyWrapperHtml = null, $bProcessInjection = true) {
         $sRet = '';
         switch( $sKey ) {
             case 'version':

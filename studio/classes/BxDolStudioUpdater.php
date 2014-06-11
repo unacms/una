@@ -11,8 +11,8 @@ defined('BX_DOL') or die('hack attempt');
 bx_import('BxDolStudioInstaller');
 
 class BxDolStudioUpdater extends BxDolStudioInstaller {
-    public function BxDolStudioUpdater($aConfig) {
-        parent::BxDolStudioInstaller($aConfig);
+    public function __construct($aConfig) {
+        parent::__construct($aConfig);
         $this->_sModulePath = $this->_sBasePath . $aConfig['module_dir'];
 
         $this->_aActions = array_merge($this->_aActions, array(

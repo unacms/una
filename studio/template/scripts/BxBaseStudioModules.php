@@ -13,8 +13,8 @@ bx_import('BxDolStudioModules');
 bx_import('BxDolStudioTemplate');
 
 class BxBaseStudioModules extends BxDolStudioModules {
-    function BxBaseStudioModules() {
-        parent::BxDolStudioModules();
+    function __construct() {
+        parent::__construct();
     }
     function getCss() {
         return array('modules.css');

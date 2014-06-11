@@ -1,4 +1,4 @@
-<? defined('BX_DOL') or die('hack attempt');
+<?php defined('BX_DOL') or die('hack attempt');
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
@@ -20,8 +20,8 @@ class BxDevNavigation extends BxTemplStudioNavigation {
         'items' => 'mod_dev_nav_items'
     );
 
-    function BxDevNavigation($aParams) {
-        parent::BxTemplStudioNavigation(isset($aParams['page']) ? $aParams['page'] : '');
+    function __construct($aParams) {
+        parent::__construct(isset($aParams['page']) ? $aParams['page'] : '');
 
         $this->aParams = $aParams;
         $this->sSubpageUrl = $this->aParams['url'] . '&nav_page=';

@@ -12,8 +12,8 @@ defined('BX_DOL') or die('hack attempt');
 bx_import('BxBaseStudioPermissions');
 
 class BxTemplStudioPermissions extends BxBaseStudioPermissions { 
-    function BxTemplStudioPermissions($sPage = '') {
-        parent::BxBaseStudioPermissions($sPage);
+    function __construct($sPage = '') {
+        parent::__construct($sPage);
     }
 }
 /** @} */

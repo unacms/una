@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxSitesAccount
+class BxSitesAccount extends BxDol
 {
 	protected $_oModule;
 
@@ -17,8 +17,9 @@ class BxSitesAccount
 	protected $bLogEmail = true;
 	protected $bLogError = true;
 
-    function __construct(&$oModule)
+    function __construct($oModule)
     {
+        parent::__construct();
     	$this->_oModule = $oModule;
     }
 
@@ -251,3 +252,5 @@ class BxSitesAccount
 		$oLog->log($mixedValue);
 	}
 }
+
+/** @} */ 

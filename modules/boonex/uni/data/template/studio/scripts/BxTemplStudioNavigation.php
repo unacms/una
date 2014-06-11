@@ -12,8 +12,8 @@ defined('BX_DOL') or die('hack attempt');
 bx_import('BxBaseStudioNavigation');
 
 class BxTemplStudioNavigation extends BxBaseStudioNavigation { 
-    function BxTemplStudioNavigation($sPage = '') {
-        parent::BxBaseStudioNavigation($sPage);
+    function __construct($sPage = '') {
+        parent::__construct($sPage);
     }
 }
 /** @} */

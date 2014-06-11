@@ -21,8 +21,8 @@ define('BX_DOL_STUDIO_DSG_TYPE_DEFAULT', 'general');
 class BxDolStudioDesigner extends BxTemplStudioPage {
     protected $sPage;
 
-    function BxDolStudioDesigner($sPage = "") {
-        parent::BxTemplStudioPage('designer');
+    function __construct($sPage = "") {
+        parent::__construct('designer');
 
         $this->oDb = new BxDolStudioDesignerQuery();
 

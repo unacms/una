@@ -14,8 +14,8 @@ bx_import('BxDolStudioPermissions');
 class BxBaseStudioPermissions extends BxDolStudioPermissions {
     protected $sSubpageUrl;
 
-    function BxBaseStudioPermissions($sPage = '') {
-        parent::BxDolStudioPermissions($sPage);
+    function __construct($sPage = '') {
+        parent::__construct($sPage);
 
         $this->sSubpageUrl = BX_DOL_URL_STUDIO . 'builder_permissions.php?page=';
     }

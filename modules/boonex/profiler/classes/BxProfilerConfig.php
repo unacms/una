@@ -11,12 +11,11 @@
 
 bx_import('BxDolModuleConfig');
 
-class BxProfilerConfig extends BxDolModuleConfig {
-    /**
-     * Constructor
-     */
-    function BxProfilerConfig($aModule) {
-        parent::BxDolModuleConfig($aModule);
+class BxProfilerConfig extends BxDolModuleConfig 
+{
+    function __construct($aModule) 
+    {
+        parent::__construct($aModule);
     }
 }
 

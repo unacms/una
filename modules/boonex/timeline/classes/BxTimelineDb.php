@@ -13,11 +13,11 @@ bx_import('BxDolModuleDb');
 
 class BxTimelineDb extends BxDolModuleDb
 {
-    var $_oConfig;
+    protected $_oConfig;
 
-    var $_sTable;
-    var $_sTableHandlers;
-    var $_sTablesShareTrack;
+    protected $_sTable;
+    protected $_sTableHandlers;
+    protected $_sTablesShareTrack;
 
     /*
      * Constructor.

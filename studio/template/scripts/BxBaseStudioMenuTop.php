@@ -12,11 +12,11 @@ defined('BX_DOL') or die('hack attempt');
 bx_import('BxDolStudioMenuTop');
 
 class BxBaseStudioMenuTop extends BxDolStudioMenuTop implements iBxDolSingleton { 
-    function BxBaseStudioMenuTop() {
+    function __construct() {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
-        parent::BxDolStudioMenuTop();
+        parent::__construct();
     }
 
     public static function getInstance() {

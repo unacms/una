@@ -16,8 +16,8 @@ class BxBaseStudioModule extends BxDolStudioModule {
     	array('name' => 'general', 'icon' => 'mi-mod-general.png', 'title' => '_adm_lmi_cpt_general')
     );
 
-    function BxBaseStudioModule($sModule = "", $sPage = "") {
-        parent::BxDolStudioModule($sModule, $sPage);
+    function __construct($sModule = "", $sPage = "") {
+        parent::__construct($sModule, $sPage);
     }
 
     function getPageCss() {

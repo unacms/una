@@ -11,21 +11,16 @@
 
 bx_import('BxDolModuleTemplate');
 
-if ((int)phpversion() < 5)
-    require_once(BX_DIRECTORY_PATH_MODULES . 'boonex/profiler/inc/fb4.php');
-else
-    require_once(BX_DIRECTORY_PATH_MODULES . 'boonex/profiler/inc/fb5.php');
+require_once(BX_DIRECTORY_PATH_PLUGINS . "firephp/fb.php");
+define('FIREPHP_TABLE', FirePHP::TABLE);
 
 class BxProfilerTemplate extends BxDolModuleTemplate {
 
-    var $_isAjaxOutput = false;
+    protected $_isAjaxOutput = false;
 
-    /**
-     * Constructor
-     */
-    function BxProfilerTemplate(&$oConfig) {
+    function __construct(&$oConfig) {
         $oDb = null;
-        parent::BxDolModuleTemplate($oConfig, $oDb);
+        parent::__construct($oConfig, $oDb);
         $this->_isAjaxOutput = $this->_isAjaxRequest();
     }
 
@@ -93,15 +88,17 @@ class BxProfilerTemplate extends BxDolModuleTemplate {
             return true;
         if (isset($_GET['bx_profiler_ajax_request']))
             return true;
-        if (preg_match('/popup\.php/', bx_html_attribute($_SERVER['PHP_SELF'])))
-            return true;
-        if (preg_match('/subscription\.php/', bx_html_attribute($_SERVER['PHP_SELF'])))
-            return true;
         if (preg_match('/vote\.php/', bx_html_attribute($_SERVER['PHP_SELF'])))
             return true;
-        if (!empty($_GET['r']) && preg_match('/^poll\//', $_GET['r']))
+        if (preg_match('/image_transcoder\.php/', bx_html_attribute($_SERVER['PHP_SELF'])))
             return true;
-        if (preg_match('/pageBuilder\.php/', bx_html_attribute($_SERVER['PHP_SELF'])) && $_REQUEST['action'] == 'load')
+        if (preg_match('/storage\.php/', bx_html_attribute($_SERVER['PHP_SELF'])))
+            return true;
+        if (preg_match('/storage_uploader\.php/', bx_html_attribute($_SERVER['PHP_SELF'])))
+            return true;
+        if (preg_match('/searchKeywordContent\.php/', bx_html_attribute($_SERVER['PHP_SELF'])))
+            return true;
+        if (preg_match('/menu\.php/', bx_html_attribute($_SERVER['PHP_SELF'])))
             return true;
         return false;
     }

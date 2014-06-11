@@ -11,7 +11,7 @@ defined('BX_DOL') or die('hack attempt');
 bx_import('BxDolStudioLanguagesUtilsQuery');
 
 class BxDolStudioPolyglotQuery extends BxDolStudioLanguagesUtilsQuery {
-    function BxDolStudioPolyglotQuery() {
+    function __construct() {
         parent::__construct();
     }
 

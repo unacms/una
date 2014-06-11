@@ -11,9 +11,6 @@
 
 bx_import('BxDolModuleTemplate');
 
-/*
- * Notes module representation.
- */
 class BxSitesTemplate extends BxDolModuleTemplate
 {
     /**

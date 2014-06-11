@@ -12,8 +12,8 @@ defined('BX_DOL') or die('hack attempt');
 bx_import('BxBaseStudioPage');
 
 class BxTemplStudioPage extends BxBaseStudioPage { 
-    function BxTemplStudioPage($mixedPageName) {
-        parent::BxBaseStudioPage($mixedPageName);
+    function __construct($mixedPageName) {
+        parent::__construct($mixedPageName);
     }
 }
 /** @} */

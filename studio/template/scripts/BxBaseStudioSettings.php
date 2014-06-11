@@ -14,8 +14,8 @@ bx_import('BxDolStudioSettings');
 bx_import('BxTemplStudioFormView');
 
 class BxBaseStudioSettings extends BxDolStudioSettings {
-    public function BxBaseStudioSettings($sType = '', $sCategory = '') {
-        parent::BxDolStudioSettings($sType, $sCategory);
+    public function __construct($sType = '', $sCategory = '') {
+        parent::__construct($sType, $sCategory);
     }
     public function getPageCss() {
         return array_merge(parent::getPageCss(), array('forms.css'));

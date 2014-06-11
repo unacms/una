@@ -12,8 +12,8 @@ defined('BX_DOL') or die('hack attempt');
 bx_import('BxBaseStudioForms');
 
 class BxTemplStudioForms extends BxBaseStudioForms { 
-    function BxTemplStudioForms($sPage = '') {
-        parent::BxBaseStudioForms($sPage);
+    function __construct($sPage = '') {
+        parent::__construct($sPage);
     }
 }
 /** @} */

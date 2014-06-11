@@ -17,8 +17,8 @@ class BxBaseStudioDesign extends BxDolStudioDesign {
     	'general' => '_adm_lmi_cpt_general'
     );
 
-    function BxBaseStudioDesign($sTemplate = "", $sPage = "") {
-        parent::BxDolStudioDesign($sTemplate, $sPage);
+    function __construct($sTemplate = "", $sPage = "") {
+        parent::__construct($sTemplate, $sPage);
     }
     function getPageCss() {
         return array_merge(parent::getPageCss(), array());

@@ -20,8 +20,8 @@ define('BX_DOL_STUDIO_NAV_TYPE_DEFAULT', BX_DOL_STUDIO_NAV_TYPE_MENUS);
 class BxDolStudioNavigation extends BxTemplStudioPage {
     protected $sPage;
 
-    function BxDolStudioNavigation($sPage = "") {
-        parent::BxTemplStudioPage('builder_menus');
+    function __construct($sPage = "") {
+        parent::__construct('builder_menus');
 
         $this->oDb = new BxDolStudioNavigationQuery();
 

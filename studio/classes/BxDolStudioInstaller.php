@@ -35,19 +35,19 @@ define("BX_DOL_STUDIO_INSTALLER_FAILED", 1);
  *
  */
 class BxDolStudioInstaller extends BxDolInstallerUtils {
-	var $oDb;
+	protected $oDb;
 
-    var $_aConfig;
-    var $_sBasePath;
-    var $_sHomePath;
-    var $_sModulePath;
+    protected $_aConfig;
+    protected $_sBasePath;
+    protected $_sHomePath;
+    protected $_sModulePath;
 
-    var $_aActions;
-    var $_aNonHashable;
+    protected $_aActions;
+    protected $_aNonHashable;
 
-    var $_bShowOnSuccess = false;
+    protected $_bShowOnSuccess = false;
 
-    function BxDolStudioInstaller($aConfig) {
+    function __construct($aConfig) {
         parent::__construct();
 
         $this->oDb = new BxDolStudioInstallerQuery();

@@ -14,8 +14,8 @@ bx_import('BxTemplStudioFormView');
 bx_import('BxTemplStudioFunctions');
 
 class BxBaseStudioDesigns extends BxDolStudioDesigns {
-    function BxBaseStudioDesigns() {
-        parent::BxDolStudioDesigns();
+    function __construct() {
+        parent::__construct();
     }
     function getCss() {
         return array('designs.css');

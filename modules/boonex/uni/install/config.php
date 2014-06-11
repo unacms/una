@@ -36,6 +36,11 @@ $aConfig = array(
     'class_prefix' => 'BxUni',
 
     /**
+     * Category for language keys.
+     */
+    'language_category' => 'BoonEx UNI',
+
+    /**
      * Installation/Uninstallation Section.
      */
     'install' => array(
@@ -67,29 +72,6 @@ $aConfig = array(
      * Dependencies Section
      */
     'dependencies' => array(),
-
-    /**
-     * Category for language keys.
-     */
-    'language_category' => 'BoonEx UNI',
-
-    /**
-     * Permissions Section
-     */
-    'install_permissions' => array(),
-    'uninstall_permissions' => array(),
-
-    /**
-     * Introduction and Conclusion Section.
-     */
-    'install_info' => array(
-        'introduction' => 'inst_intro.html',
-        'conclusion' => 'inst_concl.html'
-    ),
-    'uninstall_info' => array(
-        'introduction' => 'uninst_intro.html',
-        'conclusion' => 'uninst_concl.html'
-    )
 );
 
 /** @} */

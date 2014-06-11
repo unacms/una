@@ -36,6 +36,11 @@ $aConfig = array(
     'class_prefix' => 'BxRsn',
 
     /**
+     * Category for language keys.
+     */
+    'language_category' => 'BoonEx Russian',
+
+    /**
      * Installation/Uninstallation Section.
      * NOTE. The sequence of actions is critical. Don't change the order. 
      */
@@ -62,28 +67,6 @@ $aConfig = array(
      */
     'dependencies' => array(),
 
-    /**
-     * Category for language keys.
-     */
-    'language_category' => 'BoonEx Russian',
-
-    /**
-     * Permissions Section
-     */
-    'install_permissions' => array(),
-    'uninstall_permissions' => array(),
-    
-    /**
-     * Introduction and Conclusion Section.
-     */
-    'install_info' => array(
-        'introduction' => 'inst_intro.html',
-        'conclusion' => 'inst_concl.html'
-    ),
-    'uninstall_info' => array(
-        'introduction' => 'uninst_intro.html',
-        'conclusion' => 'uninst_concl.html'
-    )
 );
 
 /** @} */

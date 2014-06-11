@@ -17,8 +17,8 @@ require_once(BX_DIRECTORY_PATH_PLUGINS . 'Services_JSON.php');
 
 class BxBaseStudioPage extends BxDolStudioPage {
 
-    function BxBaseStudioPage($mixedPageName) {
-        parent::BxDolStudioPage($mixedPageName);
+    function __construct($mixedPageName) {
+        parent::__construct($mixedPageName);
     }
 
     function getPageIndex() {

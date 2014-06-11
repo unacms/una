@@ -35,6 +35,11 @@ $aConfig = array(
     'class_prefix' => 'BxTimeline',
 
     /**
+     * Category for language keys.
+     */
+    'language_category' => 'Timeline',
+
+    /**
      * Installation/Uninstallation Section.
      */
     'install' => array(
@@ -67,28 +72,6 @@ $aConfig = array(
      */
     'dependencies' => array(),
 
-    /**
-     * Category for language keys.
-     */
-    'language_category' => 'Timeline',
-
-    /**
-     * Permissions Section
-     */
-    'install_permissions' => array(),
-    'uninstall_permissions' => array(),
-
-    /**
-     * Introduction and Conclusion Section.
-     */
-    'install_info' => array(
-        'introduction' => 'inst_intro.html',
-        'conclusion' => 'inst_concl.html'
-    ),
-    'uninstall_info' => array(
-        'introduction' => 'uninst_intro.html',
-        'conclusion' => 'uninst_concl.html'
-    )
 );
 
 /** @} */

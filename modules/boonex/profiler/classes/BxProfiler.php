@@ -28,29 +28,30 @@ bx_import('Template', $GLOBALS['bx_profiler_module']);
 bx_import('Config', $GLOBALS['bx_profiler_module']);
 
 
-class BxProfiler {
+class BxProfiler extends BxDol {
 
-    var $oConfig, $oTemplate;
+    protected $oConfig, $oTemplate;
 
-    var $aConf = array ();
+    protected $aConf = array ();
 
-    var $_iTimeStart = 0;
+    protected $_iTimeStart = 0;
 
-    var $_aQueries = array();
-    var $_sQueryIndex = 0;
+    protected $_aQueries = array();
+    protected $_sQueryIndex = 0;
 
-    var $_aModules = array();
-    var $_aModulesNames = array();
-    var $_aModulesLevel = 0;
+    protected $_aModules = array();
+    protected $_aModulesNames = array();
+    protected $_aModulesLevel = 0;
 
-    var $_aInjections = array();
-    var $_sInjectionIndex = 0;
+    protected $_aInjections = array();
+    protected $_sInjectionIndex = 0;
 
-    var $_sLogDateFormat = "Y-m-d H:i:s";
-    var $_sLogMaxArgLength = 64;
-    var $_sLogFilename = 64;
+    protected $_sLogDateFormat = "Y-m-d H:i:s";
+    protected $_sLogMaxArgLength = 64;
+    protected $_sLogFilename = 64;
 
-    function BxProfiler($iTimeStart) {
+    function __construct($iTimeStart) {
+        parent::__construct();
 
         $this->oConfig = new BxProfilerConfig ($GLOBALS['bx_profiler_module']);
         $this->oTemplate = new BxProfilerTemplate ($this->oConfig);
