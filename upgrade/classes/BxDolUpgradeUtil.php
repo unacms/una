@@ -9,8 +9,8 @@
 
 class BxDolUpgradeUtil {
 
-    var $oDb;
-    var $sFolder;
+    protected $oDb;
+    protected $sFolder;
 
     function BxDolUpgradeUtil($oDb) {
         $this->oDb = $oDb;

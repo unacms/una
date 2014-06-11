@@ -9,8 +9,8 @@
 
 class BxDolUpgradeController {
 
-    var $oDb;
-    var $oUtil;
+    protected $oDb;
+    protected $oUtil;
 
     function BxDolUpgradeController() {
         $this->oDb = new BxDolUpgradeDb();
