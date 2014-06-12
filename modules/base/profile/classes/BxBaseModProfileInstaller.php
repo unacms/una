@@ -17,6 +17,17 @@ class BxBaseModProfileInstaller extends BxBaseModGeneralInstaller
     {
         parent::__construct($aConfig);
     }
+
+    function disable($aParams) 
+    {    
+        $aResult = parent::disable($aParams);
+
+        if ($aResult['result']) { // disabling was successful
+            // TODO: switch accounts context which active profiles belong to this module
+        }
+
+        return $aResult;
+    }
 }
 
 /** @} */ 

@@ -571,7 +571,7 @@ class BxDolConnection extends BxDol implements iBxDolFactoryObject {
      */
     public function onDeleteInitiatorAndContent ($iId) {
         $b = $this->onDeleteInitiator ($iId);
-        $b ||= $this->onDeleteContent ($iId);
+        $b = $this->onDeleteContent ($iId) || $b;
         return $b;
     }
 
@@ -590,7 +590,7 @@ class BxDolConnection extends BxDol implements iBxDolFactoryObject {
      * @return true if some connections were deleted
      */
     public function onDeleteContent ($iIdContent) {
-        return $this->_oQuery->onDelete ($iIdInitiator, 'content');
+        return $this->_oQuery->onDelete ($iIdContent, 'content');
     }
 
 

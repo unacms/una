@@ -105,12 +105,12 @@ class BxBaseModGeneralInstaller extends BxDolStudioInstaller
                 continue;
 
             $sFuncSuffix = 'DeleteInitiatorAndContent';
-            if ('initiator' == $a['conn'])
+            if (isset($a['conn']) && 'initiator' == $a['conn'])
                 $sFuncSuffix = 'DeleteInitiator';
-            elseif ('content' == $a['conn'])
+            elseif (isset($a['conn']) && 'content' == $a['conn'])
                 $sFuncSuffix = 'DeleteContent';
 
-            if ('profiles' == $a['type']) {
+            if (isset($a['type']) && 'profiles' == $a['type']) {
                 $sFunc = 'onModuleProfile' . $sFuncSuffix;
                 $o->$sFunc($this->_aConfig['name']);
             } else {
