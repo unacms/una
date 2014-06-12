@@ -162,6 +162,24 @@ class BxDolConnectionQuery extends BxDolDb {
         return true;
     }
 
+    public function onDelete ($iId, $sField = 'initiator') {
+        $sQuery = $this->prepare("DELETE FROM `{$this->_sTable}` WHERE `$sField` = ?", $iId);
+        return $this->query($sQuery);
+    }
+
+    public function onModuleDelete ($sTable, $sFieldId, $sField = 'initiator') {
+        return $this->onModuleDeleteCustom ($sTable, $sFieldId, $sField);
+    }
+
+    public function onModuleProfileDelete ($sModuleName, $sField = 'initiator') {
+        return $this->onModuleDeleteCustom ('sys_profiles', 'id', $sField, $this->prepare(" AND `sys_profiles`.`type` = ? ", $sModuleName));
+    }
+
+    protected function onModuleDeleteCustom ($sTable, $sFieldId, $sField = 'initiator', $sWhere = '') {
+        $sQuery = "DELETE `" . $this->_sTable . "` FROM `" . $this->_sTable . "` INNER JOIN `{$sTable}` WHERE `" . $this->_sTable . "`.`$sField` = `{$sTable}`.`{$sFieldId}` " . $sWhere;
+        return $this->query($sQuery);
+    }
+
 }
 
 /** @} */

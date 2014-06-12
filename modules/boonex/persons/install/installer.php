@@ -18,6 +18,10 @@ class BxPersonsInstaller extends BxBaseModProfileInstaller
         parent::__construct($aConfig);
         $this->_aTranscoders = array ('bx_persons_icon', 'bx_persons_thumb', 'bx_persons_avatar', 'bx_persons_picture', 'bx_persons_cover', 'bx_persons_cover_thumb');
         $this->_aStorages = array ('bx_persons_pictures');
+        $this->_aConnections = array (
+            'sys_profiles_friends' => array ('type' => 'profiles'),
+            'sys_profiles_subscriptions' => array ('type' => 'profiles'),
+        );
     }
 }
 

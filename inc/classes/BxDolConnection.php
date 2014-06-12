@@ -494,7 +494,7 @@ class BxDolConnection extends BxDol implements iBxDolFactoryObject {
                 ),
             ),
 
-        );        
+        );
     }
 
     /**
@@ -563,6 +563,104 @@ class BxDolConnection extends BxDol implements iBxDolFactoryObject {
         return $oConnection['mutual'] ? false : true;
     }
 
+
+    /**
+     * Must be called when some content is deleted which can have connections as 'content' or as 'initiator', to delete any associated data
+     * @param $iId which can be as conetnt ot initiator
+     * @return true if some connections were deleted
+     */
+    public function onDeleteInitiatorAndContent ($iId) {
+        $b = $this->onDeleteInitiator ($iId);
+        $b ||= $this->onDeleteContent ($iId);
+        return $b;
+    }
+
+    /**
+     * Must be called when some content is deleted which can have connections as 'initiator', to delete any associated data
+     * @param $iIdInitiator initiator id
+     * @return true if some connections were deleted
+     */
+    public function onDeleteInitiator ($iIdInitiator) {
+        return $this->_oQuery->onDelete ($iIdInitiator, 'initiator');
+    }
+
+    /**
+     * Must be called when some content is deleted which can have connections as 'content', to delete any associated data
+     * @param $iIdInitiator initiator id
+     * @return true if some connections were deleted
+     */
+    public function onDeleteContent ($iIdContent) {
+        return $this->_oQuery->onDelete ($iIdInitiator, 'content');
+    }
+
+
+    /**
+     * Must be called when module (which can have connections as 'content' or as 'initiator') is deleted, to delete any associated data.
+     * This method call may be automated via @see BxBaseModGeneralInstaller::_aConnections property.
+     * @param $sTable table name with data which have assiciations with the connection
+     * @param $sFieldId id field name which is associated with the connection
+     * @return number of deleted connections
+     */
+    public function onModuleDeleteInitiatorAndContent ($sTable, $sFieldId) {
+        $iAffected = $this->onModuleDeleteInitiator ($sTable, $sFieldId);
+        $iAffected += $this->onModuleDeleteContent ($sTable, $sFieldId);
+        return $iAffected;
+    }
+
+    /**
+     * Must be called when module (which can have connections as 'initiator') is deleted, to delete any associated data.
+     * This method call may be automated via @see BxBaseModGeneralInstaller::_aConnections property.
+     * @param $sTable table name with data which have assiciations with the connection
+     * @param $sFieldId id field name which is associated with the connection
+     * @return number of deleted connections
+     */
+    public function onModuleDeleteInitiator ($sTable, $sFieldId) {
+        return $this->_oQuery->onModuleDelete ($sTable, $sFieldId, 'initiator');
+    }
+
+    /**
+     * Must be called when module (which can have connections as 'content') is deleted, to delete any associated data.
+     * This method call may be automated via @see BxBaseModGeneralInstaller::_aConnections property.
+     * @param $sTable table name with data which have assiciations with the connection
+     * @param $sFieldId id field name which is associated with the connection
+     * @return number of deleted connections
+     */
+    public function onModuleDeleteContent ($sTable, $sFieldId) {
+        return $this->_oQuery->onModuleDelete ($sTable, $sFieldId, 'content');
+    }
+
+
+    /**
+     * Must be called when module (which can have connections as 'content' or as 'initiator' with 'sys_profiles' table) is deleted, to delete any associated data.
+     * This method call may be automated via @see BxBaseModGeneralInstaller::_aConnections property.
+     * @param $sModuleName module name to delete connections for
+     * @return number of deleted connections
+     */
+    public function onModuleProfileDeleteInitiatorAndContent ($sModuleName) {
+        $iAffected = $this->onModuleProfileDeleteInitiator ($sModuleName);
+        $iAffected += $this->onModuleProfileDeleteContent ($sModuleName);
+        return $iAffected;
+    }
+
+    /**
+     * Must be called when module (which can have connections as 'initiator' with 'sys_profiles' table) is deleted, to delete any associated data.
+     * This method call may be automated via @see BxBaseModGeneralInstaller::_aConnections property.
+     * @param $sModuleName module name to delete connections for
+     * @return number of deleted connections
+     */
+    public function onModuleProfileDeleteInitiator ($sModuleName) {
+        return $this->_oQuery->onModuleProfileDelete ($sModuleName, 'initiator');
+    }
+
+    /**
+     * Must be called when module (which can have connections as 'content' with 'sys_profiles' table) is deleted, to delete any associated data.
+     * This method call may be automated via @see BxBaseModGeneralInstaller::_aConnections property.
+     * @param $sModuleName module name to delete connections for
+     * @return number of deleted connections
+     */
+    public function onModuleProfileDeleteContent ($sModuleName) {
+        return $this->_oQuery->onModuleProfileDelete ($sModuleName, 'content');
+    }
 }
 
 /** @} */

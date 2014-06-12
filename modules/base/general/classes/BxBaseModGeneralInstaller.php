@@ -18,6 +18,8 @@ class BxBaseModGeneralInstaller extends BxDolStudioInstaller
 {
     protected $_aStorages = array (); // storage objects to automatically delete files from upon module uninstallation, don't add storage objects used in image transcoder objects
     protected $_aTranscoders = array (); // image transcoder objects to automatically register/unregister necessary alerts for
+    protected $_aConnections = array (); // connections objects associated with module data, it must be defined which content is associated with the connection, the key is connection object name and value is array (possible array values: type, conn, table, field_id), if 'type' == 'profiles', then it is considered profiles connection and other possible param is 'conn' ('initiator', 'content' or 'both') when 'type' == 'custom' (or ommited), then other possible params are 'conn', 'table' and 'field_id' 
+
     protected $_bUpdateTimeline = false; // set to true to automatically register handlers for timeline module
 
     function __construct($aConfig) 
@@ -92,6 +94,29 @@ class BxBaseModGeneralInstaller extends BxDolStudioInstaller
                 'message' => _t('_adm_err_modules_pending_uninstall'),
                 'result' => false,
             );
+        }
+                
+        // delete associated connections
+        if ($this->_aConnections)
+            bx_import('BxDolConnection');
+        foreach ($this->_aConnections as $sObjectConnections => $a) {
+            $o = BxDolConnection::getObjectInstance($sObjectConnections);
+            if (!$o)
+                continue;
+
+            $sFuncSuffix = 'DeleteInitiatorAndContent';
+            if ('initiator' == $a['conn'])
+                $sFuncSuffix = 'DeleteInitiator';
+            elseif ('content' == $a['conn'])
+                $sFuncSuffix = 'DeleteContent';
+
+            if ('profiles' == $a['type']) {
+                $sFunc = 'onModuleProfile' . $sFuncSuffix;
+                $o->$sFunc($this->_aConfig['name']);
+            } else {
+                $sFunc = 'onModule' . $sFuncSuffix;
+                $o->$sFunc($a['table'], $a['field_id']);
+            }
         }
 
         return parent::uninstall($aParams, $bDisable);
