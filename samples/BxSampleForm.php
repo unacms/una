@@ -152,7 +152,7 @@ class BxSampleForm extends BxTemplFormView {
 
 class BxSampleFormCheckerHelper extends BxDolFormCheckerHelper {
     
-    var $_sDiv = ',';
+    protected $_sDiv = ',';
 
     /**
      * prepare RBG values to save to the DB

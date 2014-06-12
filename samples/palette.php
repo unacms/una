@@ -47,8 +47,8 @@ function PageCompMainCode() {
         $sClassBg = 'bg-col-'.$sColor;        
 ?>
         <div>
-            <div class="<?=$sClass;?> <?=$sClassBg;?>" style="<?=$sStyle;?> color:#fff;">.<?=$sClassBg;?></div>
-            <div class="<?=$sClass;?> <?=$sClassFt;?>" style="<?=$sStyle;?> border:1px solid #ccc;">.<?=$sClassFt;?></div>
+            <div class="<?php echo $sClass;?> <?php echo $sClassBg;?>" style="<?php echo $sStyle;?> color:#fff;">.<?php echo $sClassBg;?></div>
+            <div class="<?php echo $sClass;?> <?php echo $sClassFt;?>" style="<?php echo $sStyle;?> border:1px solid #ccc;">.<?php echo $sClassFt;?></div>
         </div>
 <?php
     }
@@ -61,7 +61,7 @@ function PageCompMainCode() {
         $sClass = 'bx-def-round-corners bx-def-margin-right bx-def-margin-bottom';
 ?>
         <div>
-            <div class="<?=$sClass;?> <?=$sClassBg;?> bx-def-border" style="<?=$sStyle;?>">.<?=$sClassBg;?></div>
+            <div class="<?php echo $sClass;?> <?php echo $sClassBg;?> bx-def-border" style="<?php echo $sStyle;?>">.<?php echo $sClassBg;?></div>
         </div>
 <?php
     }

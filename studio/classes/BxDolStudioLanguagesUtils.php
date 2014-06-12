@@ -125,7 +125,7 @@ class BxDolStudioLanguagesUtils extends BxDolLanguages implements iBxDolSingleto
             if($rHandle === false)
                 return false;
 
-            $sContent = "<?{$sNewLine}\$GLOBALS['LANG'] = array(";
+            $sContent = "<?php{$sNewLine}\$GLOBALS['LANG'] = array(";
             foreach($aKeys as $aKey) {
                 list($sKey, $sString) = str_replace(array("\\", "'"), array("\\\\", "\\'"), array($aKey['key'], $aKey['string']));
                 $sContent .= "{$sNewLine}\t'$sKey' => '$sString',";

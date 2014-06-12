@@ -13,7 +13,7 @@ bx_import('BxDolModuleDb');
 
 class BxContactDb extends BxDolModuleDb
 {
-    var $_oConfig;
+    protected $_oConfig;
 
     /*
      * Constructor.

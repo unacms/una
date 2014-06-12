@@ -348,8 +348,8 @@ EOJ;
             ?>
                 <div style="border:2px solid red;padding:4px;width:600px;margin:0px auto;">
                     <div style="text-align:center;background-color:red;color:white;font-weight:bold;">Error</div>
-                    <div style="text-align:center;"><?=$out?></div>
-            <?
+                    <div style="text-align:center;"><?php echo $out?></div>
+            <?php
             if( BX_UPGRADE_DB_FULL_DEBUG_MODE )
             {
                 if( strlen( $query ) )
@@ -368,7 +368,7 @@ EOJ;
             }
             ?>
                 </div>
-            <?
+            <?php
         }
         else
             echo $out;
