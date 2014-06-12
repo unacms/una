@@ -28,13 +28,13 @@ class BxSitesTemplate extends BxDolModuleTemplate
         $sJsMainObject = $this->_oConfig->getJsObject();
         ob_start();
 ?>
-        var <?=$sJsMainObject; ?> = new <?=$sJsMainClass; ?>({
-            sActionUrl: '<?=BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri(); ?>',
-            sObjName: '<?=$sJsMainObject; ?>',
-            sAnimationEffect: '<?=$this->_oConfig->getAnimationEffect(); ?>',
-            iAnimationSpeed: '<?=$this->_oConfig->getAnimationSpeed(); ?>'
+        var <?php echo $sJsMainObject; ?> = new <?php echo $sJsMainClass; ?>({
+            sActionUrl: '<?php echo BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri(); ?>',
+            sObjName: '<?php echo $sJsMainObject; ?>',
+            sAnimationEffect: '<?php echo $this->_oConfig->getAnimationEffect(); ?>',
+            iAnimationSpeed: '<?php echo $this->_oConfig->getAnimationSpeed(); ?>'
         });
-<?
+<?php
         $sContent = ob_get_clean();
         return $bWrap ? $this->_wrapInTagJsCode($sContent) : $sContent;
     }

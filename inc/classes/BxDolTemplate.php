@@ -1656,7 +1656,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
             }
             else {
                 $sKey = "'" . $aKeyWrappers['left'] . $aKeys[$i] . $aKeyWrappers['right'] . "'s";
-                $sValue = "<?=" . $aVarName . "['" . $aKeys[$i] . "'];?>";
+                $sValue = "<?php echo " . $aVarName . "['" . $aKeys[$i] . "'];?>";
             }
 
             $aKeys[$i] = $sKey;
@@ -1673,27 +1673,29 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
             "'<bx_text:([_\{\}\w\d\s]+[^\s]{1}) \/>'se",
             "'<bx_text_js:([^\s]+) \/>'se",
             "'<bx_text_attribute:([^\s]+) \/>'se",
+        	"'<bx_menu:([^\s]+) \/>'se",
             "'<bx_url_root />'",
-            "'<bx_url_admin />'"
+        	"'<bx_url_studio />'"
         ));
         $aValues = array_merge($aValues, array(
             "\$this->getCached('\\1', \$aVarValues, \$mixedKeyWrapperHtml, BX_DOL_TEMPLATE_CHECK_IN_BOTH, false)",
             "\$this->getCached('\\1', \$aVarValues, \$mixedKeyWrapperHtml, BX_DOL_TEMPLATE_CHECK_IN_BASE, false)",
             "\$this->getCached('\\1', \$aVarValues, \$mixedKeyWrapperHtml, BX_DOL_TEMPLATE_CHECK_IN_TMPL, false)",
-            "<?=\$this->processInjection(\$this->aPage['name_index'], '\\1'); ?>",
+            "<?php echo \$this->processInjection(\$this->aPage['name_index'], '\\1'); ?>",
             "\$this->getImageUrl('\\1')",
             "\$this->getIconUrl('\\1')",
             "_t('\\1')",
             "bx_js_string(_t('\\1'))",
             "bx_html_attribute(_t('\\1'))",
+        	"\$this->getMenu('\\1')",
             BX_DOL_URL_ROOT,
-            BX_DOL_URL_ADMIN
+            BX_DOL_URL_STUDIO
         ));
 
         //--- Parse Predefined Keys ---//
         $sContent = preg_replace($aKeys, $aValues, $sContent);
         //--- Parse System Keys ---//
-        $sContent = preg_replace( "'" . $aKeyWrappers['left'] . "([a-zA-Z0-9_-]+)" . $aKeyWrappers['right'] . "'", "<?=\$this->parseSystemKey('\\1', \$mixedKeyWrapperHtml);?>", $sContent);
+        $sContent = preg_replace( "'" . $aKeyWrappers['left'] . "([a-zA-Z0-9_-]+)" . $aKeyWrappers['right'] . "'", "<?php echo \$this->parseSystemKey('\\1', \$mixedKeyWrapperHtml);?>", $sContent);
 
         return $sContent;
     }

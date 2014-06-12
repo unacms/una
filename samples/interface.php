@@ -215,7 +215,7 @@ function Samples_PaddingsMargins()
     ob_start();
     ?>
 <div class="bx-def-border bx-def-padding">
-    <?=$GLOBALS['SAMPLE_TEXT']; ?>
+    <?php echo $GLOBALS['SAMPLE_TEXT']; ?>
 </div>
     <?php
     $aBlocks['.bx-def-padding'] = ob_get_clean();
@@ -223,7 +223,7 @@ function Samples_PaddingsMargins()
     ob_start();
     ?>
 <div class="bx-def-border bx-def-padding-left bx-def-padding-right">
-    <?=$GLOBALS['SAMPLE_TEXT']; ?>
+    <?php echo $GLOBALS['SAMPLE_TEXT']; ?>
 </div>
     <?php
     $aBlocks['.bx-def-padding-left .bx-def-padding-right'] = ob_get_clean();
@@ -231,7 +231,7 @@ function Samples_PaddingsMargins()
     ob_start();
     ?>
 <div class="bx-def-border bx-def-padding-sec">
-    <?=$GLOBALS['SAMPLE_TEXT']; ?>
+    <?php echo $GLOBALS['SAMPLE_TEXT']; ?>
 </div>
     <?php
     $aBlocks['.bx-def-padding-sec'] = ob_get_clean();
@@ -285,7 +285,7 @@ function Samples_Colors()
     foreach ($aClasses as $sClass) {
         ob_start();
         ?>
-<div class="bx-def-border sample-box-empty <?=$sClass; ?>">
+<div class="bx-def-border sample-box-empty <?php echo $sClass; ?>">
 </div>
         <?php
         $aBlocks['.' . implode(" .", explode(' ', $sClass))] = ob_get_clean();
@@ -302,7 +302,7 @@ function Samples_BordersCornersShadow()
     foreach ($aClasses as $sClass) {
         ob_start();
         ?>
-<div class="sample-box-empty <?=$sClass; ?>">
+<div class="sample-box-empty <?php echo $sClass; ?>">
 </div>
         <?php
         $aBlocks['.' . implode(" .", explode(' ', $sClass))] = ob_get_clean();
@@ -319,7 +319,7 @@ function Samples_ThumbsIconsUnits()
     foreach ($aClasses as $sClass) {
         ob_start();
         ?>
-<img class="<?=$sClass; ?>" src="<?=$GLOBALS['SAMPLE_THUMB']; ?>" />
+<img class="<?php echo $sClass; ?>" src="<?php echo $GLOBALS['SAMPLE_THUMB']; ?>" />
         <?php
         $aBlocks['.' . implode(" .", explode(' ', $sClass))] = ob_get_clean();
     }
@@ -327,7 +327,7 @@ function Samples_ThumbsIconsUnits()
     ob_start();
     ?>
 <div class="bx-def-unit">
-    <a href="javascript:void(0);"><img class="bx-def-thumb bx-def-thumb-size" src="<?=$GLOBALS['SAMPLE_THUMB']; ?>" /></a>
+    <a href="javascript:void(0);"><img class="bx-def-thumb bx-def-thumb-size" src="<?php echo $GLOBALS['SAMPLE_THUMB']; ?>" /></a>
     <div class="bx-def-unit-info bx-def-thumb-size-max-height bx-def-padding-left">
         <span class="bx-def-font-large">Some info here</span><br />
         <span class="bx-def-font-grayed">additional info</span>
@@ -339,7 +339,7 @@ function Samples_ThumbsIconsUnits()
     ob_start();
     ?>
 <div class="bx-def-unit">
-    <a href="javascript:void(0);"><img class="bx-def-icon bx-def-icon-size" src="<?=$GLOBALS['SAMPLE_THUMB']; ?>" /></a>
+    <a href="javascript:void(0);"><img class="bx-def-icon bx-def-icon-size" src="<?php echo $GLOBALS['SAMPLE_THUMB']; ?>" /></a>
     <div class="bx-def-unit-info bx-def-icon-size-max-height bx-def-padding-sec-left">
         Some info here
     </div>
@@ -358,8 +358,8 @@ function Samples_Fonts()
     foreach ($aClasses as $sClass => $sSampleText) {
         ob_start();
         ?>
-<div class="<?=$sClass; ?>">
-<?=$GLOBALS[$sSampleText]; ?>
+<div class="<?php echo $sClass; ?>">
+<?php echo $GLOBALS[$sSampleText]; ?>
 </div>
         <?php
         $aBlocks['.' . implode(" .", explode(' ', $sClass))] = ob_get_clean();

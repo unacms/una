@@ -157,10 +157,10 @@ class BxBaseSearchResult extends BxDolSearchResult
 ?>
     <script type="text/javascript">
         function on_filter_apply (e) {
-            var s = ('' + document.location).replace (/[&]{0,1}<?=$sFilterName;?>=.*/, ''); // remove filter
+            var s = ('' + document.location).replace (/[&]{0,1}<?php echo $sFilterName;?>=.*/, ''); // remove filter
             s = s.replace(/page=\d+/, 'page=1'); // goto 1st page
-            if (e.checked && $('#<?=$sInputId;?>').val().length > 2)
-                s += (-1 == s.indexOf('?') ? '?' : '&') + '<?=$sFilterName;?>=' + $('#<?=$sInputId;?>').val(); // append filter
+            if (e.checked && $('#<?php echo $sInputId;?>').val().length > 2)
+                s += (-1 == s.indexOf('?') ? '?' : '&') + '<?php echo $sFilterName;?>=' + $('#<?php echo $sInputId;?>').val(); // append filter
             document.location = s;
         }
         function on_filter_key_up (e) {
@@ -174,7 +174,7 @@ class BxBaseSearchResult extends BxDolSearchResult
             }
         }
     </script>
-<?
+<?php
             $sJsContent = ob_get_clean();
         }
 
