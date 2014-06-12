@@ -139,7 +139,9 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         bx_import('BxDolProfile');
         $s = '';
         foreach ($a as $iProfileId) {
-            $o = BxDolProfile::getInstance($iProfileId);
+            if (!($o = BxDolProfile::getInstance($iProfileId))) {
+                continue;
+            }
             $s .= $o->getUnit();
         }
 
