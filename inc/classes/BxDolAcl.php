@@ -194,8 +194,6 @@ class BxDolAcl extends BxDol implements iBxDolSingleton {
     	$aResult = array();
     	$aLangFileParams = array();
     
-    	$dateFormat = "F j, Y, g:i a";	// used when displaying error messages // TODO: use standard format
-    
     	$iProfileId = (int)$iProfileId;
     	$iActionId = (int)$iActionId;
     	$bPerformAction = $bPerformAction ? true : false;
@@ -230,7 +228,7 @@ class BxDolAcl extends BxDol implements iBxDolSingleton {
     	 * Check fixed period limitations if present (also for non-members)
     	 */
     	if($aAction['allowed_period_start'] && time() < $aAction['allowed_period_start']) {
-    		$aLangFileParams[CHECK_ACTION_LANG_FILE_BEFORE] = date($dateFormat, $aAction['allowed_period_start']);
+    		$aLangFileParams[CHECK_ACTION_LANG_FILE_BEFORE] = bx_time_js($aAction['allowed_period_start'], BX_FORMAT_DATE_TIME);
 
     		$aResult[CHECK_ACTION_RESULT] = CHECK_ACTION_RESULT_NOT_ALLOWED_BEFORE;
     		$aResult[CHECK_ACTION_MESSAGE] = _t_ext(CHECK_ACTION_MESSAGE_NOT_ALLOWED_BEFORE, $aLangFileParams);
@@ -239,7 +237,7 @@ class BxDolAcl extends BxDol implements iBxDolSingleton {
     	}
 
     	if($aAction['allowed_period_end'] && time() > $aAction['allowed_period_end']) {
-    		$aLangFileParams[CHECK_ACTION_LANG_FILE_AFTER] = date($dateFormat, $aAction['allowed_period_end']);
+    		$aLangFileParams[CHECK_ACTION_LANG_FILE_AFTER] = bx_time_js($aAction['allowed_period_end'], BX_FORMAT_DATE_TIME);
 
     		$aResult[CHECK_ACTION_RESULT] = CHECK_ACTION_RESULT_NOT_ALLOWED_AFTER;
     		$aResult[CHECK_ACTION_MESSAGE] = _t_ext(CHECK_ACTION_MESSAGE_NOT_ALLOWED_AFTER, $aLangFileParams);
@@ -534,11 +532,10 @@ class BxDolAcl extends BxDol implements iBxDolSingleton {
     	
     	// Send notification
     	bx_import('BxDolEmailTemplates');
-        $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_MemChanged', array('membership_level' => $aLevel['name']), 0, $iProfileId);
-        if (!$aTemplate)
-            trigger_error('Email template or translation missing: t_MemChanged', E_USER_ERROR);
+        $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_MemChanged', array('membership_level' => $aLevel['name']), 0, $iProfileId);            
+        if ($aTemplate)
+            sendMail($sProfileEmail, $aTemplate['Subject'], $aTemplate['Body']);
 
-        sendMail($sProfileEmail, $aTemplate['Subject'], $aTemplate['Body']);
     	return true;
     }
 
@@ -604,6 +601,14 @@ class BxDolAcl extends BxDol implements iBxDolSingleton {
 
         $iResult = $aTemplate && sendMail($sProfileEmail, $aTemplate['Subject'], $aTemplate['Body'], $iProfileId, $aPlus);
         return !empty($iResult);
+    }
+
+    /**
+     * clear expired membership levels
+     */
+    public function maintenance () {
+        $iDaysToCleanMemLevels = (int) getParam("db_clean_mem_levels");
+        return $this->oDb->maintenance ($iDaysToCleanMemLevels);
     }
 
     protected function getMemberMembershipInfoCurrent($iProfileId, $iTime = 0) {

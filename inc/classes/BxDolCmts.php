@@ -834,28 +834,26 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
     protected function _prepareTextForEdit ($s)
     {
         if ($this->isNl2br())
-            return str_replace('<br />', "", $s);
+            return htmlspecialchars_decode(str_replace('<br />', "", $s));
 
         return $s;
     }
 
     protected function _prepareTextForSave ($s) 
     {
-    	$iDataAction = $this->isNl2br() ? BX_DATA_TEXT_MULTILINE : BX_DATA_TEXT; // TODO: make sure that it is processed before output !
+    	$iDataAction = $this->isNl2br() ? BX_DATA_TEXT_MULTILINE : BX_DATA_HTML;
 		return bx_process_input($s, $iDataAction);
     }
 
     protected function _prepareTextForOutput ($s)
     {
     	$sHttp = '';
-    	$iDataAction = $this->isNl2br() ? BX_DATA_TEXT_MULTILINE : BX_DATA_TEXT;
 		$sPattern = "/((https?|ftp|news):\/\/)?([a-z]([a-z0-9\-]*\.)+(aero|arpa|biz|com|coop|edu|gov|info|int|jobs|mil|museum|name|nato|net|org|pro|travel|[a-z]{2})|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))(\/[a-z0-9_\-\.~]+)*(\/([a-z0-9_\-\.]*)(\?[a-z0-9+_\-\.%=&amp;]*)?)?(#[a-z][a-z0-9_]*)?/";
-
     	$aMatches = array();
     	if(preg_match($sPattern, $s, $aMatches) && empty($aMatches[1]))
     		$sHttp = 'http://';
 
-		$s = bx_process_output($s, $iDataAction);
+		$s = bx_process_output($s, BX_DATA_HTML);
 		$s = preg_replace($sPattern, '<a href="' . $sHttp . '$0" target="_blank">$0</a>', $s);
 
 		return $s; 

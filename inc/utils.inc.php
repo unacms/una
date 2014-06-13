@@ -156,7 +156,7 @@ function bx_process_input ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams =
     case BX_DATA_HTML:
         return clear_xss($mixedData);
     case BX_DATA_TEXT_MULTILINE:
-        return nl2br(strip_tags($mixedData));
+        return nl2br(htmlspecialchars_adv($mixedData));
     case BX_DATA_TEXT:
     default:
         return $mixedData;

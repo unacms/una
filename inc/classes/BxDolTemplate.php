@@ -903,7 +903,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
                 break;
             case 'page_header':
                 if(isset($this->aPage['header']))
-                    $sRet = bx_process_output($this->aPage['header']);
+                    $sRet = bx_process_output(strip_tags($this->aPage['header']));
                 break;
             case 'page_header_text':
                 if(isset($this->aPage['header_text']))

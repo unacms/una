@@ -7,46 +7,48 @@
  * @{
  */
 
-// TODO: make alert for database pruning
-// TODO: db funtions 2 class function + prepare statements
-// TODO: other refactoring
-
 bx_import('BxDolCron');
 
 class BxDolCronCmd extends BxDolCron 
 {
-    protected function finish() 
+    protected function start() 
     {
-        if ($output = ob_get_clean())
-            sendMail(getParam('site_email'), getParam('site_title') . ": Periodic Report", $output, 0, array(), BX_EMAIL_NOTIFY, 'text'); // TODO: email template
+        set_time_limit(0);
+        ignore_user_abort();
+        ob_start();
     }
 
-    protected function clean_database()
+    protected function finish() 
     {
-        $oDb = BxDolDb::getInstance();
+        bx_alert('system', 'pruning', 0);
 
-        $db_clean_mem_levels = (int) getParam("db_clean_mem_levels");
+        if (!($sOutput = ob_get_clean()))
+            return;
 
-        //clear from `sys_acl_levels_members`
-        if ($oDb->query("DELETE FROM `sys_acl_levels_members` WHERE `DateExpires` < NOW() - INTERVAL $db_clean_mem_levels DAY"))
-            $oDb->query("OPTIMIZE TABLE `sys_acl_levels_members`");
+    	bx_import('BxDolEmailTemplates');
+        $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_Pruning', array('pruning_output' => $sOutput, 'site_title' => getParam('site_title')), 0, 0);
+        if ($aTemplate)
+            sendMail(getParam('site_email'), $aTemplate['Subject'], $aTemplate['Body'], 0, array(), BX_EMAIL_NOTIFY);
+    }
+
+    /**
+     * Clean database by deleting some expired data
+     */
+    protected function cleanDatabase()
+    {
+        // clean expired membership levels
+        bx_import('BxDolAcl');
+        $oAcl = BxDolAcl::getInstance();
+        $iDeleteMemLevels = $oAcl ? $oAcl->maintenance() : 0;
 
         //--- Clean sessions ---//
         bx_import('BxDolSession');
         $oSession = BxDolSession::getInstance();
-        $iSessions = $oSession->oDb->deleteExpired();
+        $iSessions = $oSession ? $oSession->maintenance() : 0;
 
         // clean old views
         bx_import('BxDolView');
         $iDeletedViews = BxDolView::maintenance ();
-
-        // clean old votes
-        bx_import('BxDolVote');
-        BxDolVote::maintenance();
-
-        // clean comments ratings
-        //bx_import('BxDolCmts');
-        //BxDolCmts::maintenance(); // TODO: fix it
 
         // clean storage engine expired private file tokens
         bx_import('BxDolStorage');
@@ -61,72 +63,58 @@ class BxDolCronCmd extends BxDolCron
         $oKey = BxDolKey::getInstance();
         $iDeletedKeys = $oKey ? $oKey->prune() : 0;
 
-        echo "\n- Database cleaning -\n";
-        echo "Deleted sessions: $iSessions\n";
-        echo "Deleted views: $iDeletedViews\n";
-        echo "Storage expired tokens: $iDeletedExpiredTokens\n";
-        echo "Deleted outdated transcoded images: $iDeletedTranscodedImages\n";
-        echo "Deleted expired keys: $iDeletedKeys\n";
+        // clean old votes
+        bx_import('BxDolVote');
+        $iDeletedVotes = BxDolVote::maintenance();
+
+        // clean comments ratings
+        //bx_import('BxDolCmts');
+        //BxDolCmts::maintenance(); // TODO: fix it
+
+        echo _t('_sys_pruning_db', $iDeleteMemLevels, $iSessions, $iDeletedViews, $iDeletedVotes, $iDeletedKeys, $iDeletedExpiredTokens, $iDeletedTranscodedImages);
     }
 
-    protected function del_old_all_files() 
+    /**
+     * Clean tmp folders (tmp, cache) by deleting old files (by default older than 1 month)
+     */
+    protected function cleanTmpFolders() 
     {
-        $num_tmp = 0;
-        $num_del = 0;
+        $iTmpFileLife = 2592000;  // one month
+        $aDirsToClean = array(
+            BX_DIRECTORY_PATH_TMP,
+            BX_DIRECTORY_PATH_CACHE,
+            BX_DIRECTORY_PATH_CACHE_PUBLIC,
+        );
 
-        $file_life = 86400;  // one day
-        $dirToClean = array();
-        $dirToClean[] = BxDolConfig::getInstance()->get('path_dynamic', 'tmp');
-        $dirToClean[] = BX_DIRECTORY_PATH_CACHE;
+        $iNumTmp = 0;
+        $iNumDel = 0;
 
-        foreach( $dirToClean as $value )
-        {
-            if ( !( $lang_dir = opendir( $value ) ) )
-            {
+        foreach ($aDirsToClean as $sDir) {
+            if (!($h = opendir($sDir)))
                 continue;
-            }
-            else
-            {
-                while ($lang_file = readdir( $lang_dir ))
-                {
-                    $diff = time() - filectime( $value . $lang_file);
-                    if ( $diff > $file_life && '.' != $lang_file && '..' != $lang_file && '.htaccess' !== $lang_file )
-                    {
-                        @unlink ($value . $lang_file);
-                        ++$num_del;
-                    }
-                    ++$num_tmp;
+
+            while ($sFile = readdir($h)) {
+                $diff = time() - filectime($sDir . $sFile);
+                if ($diff > $iTmpFileLife && '.' != $sFile && '..' != $sFile && '.htaccess' !== $sFile) {
+                    @unlink ($sDir . $sFile);
+                    ++$iNumDel;
                 }
-                closedir( $lang_dir );
+                ++$iNumTmp;
             }
+            closedir($h);
+
         }
 
-        echo "\n- Temporary files check -\n";
-
-        echo "Total temp files: $num_tmp\n";
-        echo "Deleted temp files: $num_del\n";
+        echo _t('_sys_pruning_files', $iNumTmp, $iNumDel);
     }
 
     public function processing()    
     {
-        set_time_limit(0);
-        ignore_user_abort();
+        $this->start();
 
-        ob_start();
+        $this->cleanTmpFolders();
 
-        $iDay = date( "d" );
-        if (getParam( "cmdDay" ) == $iDay) {
-            echo "Already done today, bailing out\n";
-            $this->finish();
-            return;
-        }
-
-        setParam("cmdDay", $iDay);
-
-        // clear tmp folder 
-        $this->del_old_all_files();
-
-        $this->clean_database();
+        $this->cleanDatabase();
 
         $this->finish();
     }

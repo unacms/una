@@ -1322,8 +1322,8 @@
 	<string name="_sys_acl_action_every_period"><![CDATA[ every {4} hours]]></string>
 	<string name="_sys_acl_action_limit_reached"><![CDATA[You have reached your limit for now. Your current membership (<b>{2}</b>) allows you to {1} no more than {3} times]]></string>
 	<string name="_sys_acl_action_not_allowed"><![CDATA[Your current membership (<b>{2}</b>) doesn't allow you to <b>{1}</b>.]]></string>
-	<string name="_sys_acl_action_not_allowed_after"><![CDATA[Your current membership (<b>{2}</b>) doesn't allow you to <b>{1}</b> since <b>{5}</b>.]]></string>
-	<string name="_sys_acl_action_not_allowed_before"><![CDATA[Your current membership (<b>{2}</b>) doesn't allow you to <b>{1}</b> until <b>{6}</b>.]]></string>
+	<string name="_sys_acl_action_not_allowed_after"><![CDATA[Your current membership (<b>{2}</b>) stopped to allow you to <b>{1}</b> <b>{5}</b>.]]></string>
+	<string name="_sys_acl_action_not_allowed_before"><![CDATA[Your current membership (<b>{2}</b>) will allow you to <b>{1}</b> <b>{6}</b>.]]></string>
 	<string name="_sys_acl_action_pending"><![CDATA[You are currently not an active member. Please, ask the site <a href="mailto:{7}">administrator</a> to make you an active member so you would be able to <b>{1}</b>.]]></string>
 	<string name="_sys_acl_action_suspended"><![CDATA[You can't <b>{1}</b> becuase your profile was suspended, if you don't know why - try to send message to <a href="mailto:{7}">administrator</a>.]]></string>
 	<string name="_sys_acl_action_unauthenticated"><![CDATA[Not logged in users can't <b>{1}</b>.]]></string>
@@ -1461,6 +1461,9 @@ If it is not enabled then please consider implement this optimization, since it 
 <p>Your new password is:</p>
 <p><b>{password}</b></p>
 <bx_include_auto:_email_footer.html />]]></string>
+	<string name="_sys_et_txt_body_pruning"><![CDATA[<bx_include_auto:_email_header.html />
+<p>{pruning_output}</p>
+<bx_include_auto:_email_footer.html />]]></string>
 	<string name="_sys_et_txt_name_system_activation"><![CDATA[Profile activation message]]></string>
 	<string name="_sys_et_txt_name_system_admin_email"><![CDATA[Message sending from the Admin Panel]]></string>
 	<string name="_sys_et_txt_name_system_comment_replied"><![CDATA[The letter is sent to members whose comment was replied]]></string>
@@ -1470,6 +1473,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_et_txt_name_system_mem_changed"><![CDATA[The letter is sent to members whose membership level was changed]]></string>
 	<string name="_sys_et_txt_name_system_mem_expiration"><![CDATA[Membership expiration letter sent to members whose membership level expires]]></string>
 	<string name="_sys_et_txt_name_system_password_reset"><![CDATA[New password message]]></string>
+	<string name="_sys_et_txt_name_system_pruning"><![CDATA[Pruning result]]></string>
 	<string name="_sys_et_txt_subject_activation"><![CDATA[Profile status was changed to Active]]></string>
 	<string name="_sys_et_txt_subject_admin_email"><![CDATA[Message from <SiteName> Admin: <MessageSubject>]]></string>
 	<string name="_sys_et_txt_subject_comment_replied"><![CDATA[Your comment was replied]]></string>
@@ -1479,6 +1483,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_et_txt_subject_mem_changed"><![CDATA[Your membership level was changed]]></string>
 	<string name="_sys_et_txt_subject_mem_expiration"><![CDATA[Your membership is about to expire]]></string>
 	<string name="_sys_et_txt_subject_password_reset"><![CDATA[New Password]]></string>
+	<string name="_sys_et_txt_subject_pruning"><![CDATA[{site_title} pruning result]]></string>
 	<string name="_sys_et_txt_unsubscribe"><![CDATA[Unsubscribe]]></string>
 	<string name="_sys_form_account"><![CDATA[Account]]></string>
 	<string name="_sys_form_account_input_captcha"><![CDATA[Security Image]]></string>
@@ -1801,6 +1806,21 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_paginate_view_all"><![CDATA[View All]]></string>
 	<string name="_sys_please_select"><![CDATA[Please select...]]></string>
 	<string name="_sys_private"><![CDATA[Private]]></string>
+    <string name="_sys_pruning_db"><![CDATA[<h3>Database pruning:</h3>
+        <ul>
+            <li><b>{0}</b> deleted expired memberhsip levels</li>
+            <li><b>{1}</b> deleted expired sessions</li>
+            <li><b>{2}</b> deleted expired views</li>
+            <li><b>{3}</b> deleted expired votes</li>
+            <li><b>{4}</b> deleted expired keys</li>
+            <li><b>{5}</b> deleted expired storage tokens</li>
+            <li><b>{6}</b> deleted outdated transcoded images</li>
+        </ul>]]></string>
+    <string name="_sys_pruning_files"><![CDATA[<h3>Files pruning:</h3>
+        <ul>
+            <li><b>{0}</b> total</li>
+            <li><b>{1}</b> deleted</li>
+        </ul>]]></string>
 	<string name="_sys_ps_group_title_friends"><![CDATA[Friends]]></string>
 	<string name="_sys_ps_group_title_me_only"><![CDATA[Me only]]></string>
 	<string name="_sys_ps_group_title_members"><![CDATA[Members]]></string>

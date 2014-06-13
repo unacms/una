@@ -141,7 +141,11 @@ class BxDolSession extends BxDol implements iBxDolSingleton {
         return $mixedValue;
     }
 
-    private function save() {
+    public function maintenance() {
+        return $this->oDb->deleteExpired();
+    }
+
+    protected function save() {
         if($this->iUserId == 0)
             $this->iUserId = getLoggedId();
 
