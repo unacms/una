@@ -68,7 +68,7 @@
  *
  * 2. Add record in `sys_cron_jobs` table
  *
- * @see an example of BxDolCronCmd, BxDolCronStorage.
+ * @see an example of BxDolCronPruning, BxDolCronStorage.
  *
  *
  * Memberships/ACL:

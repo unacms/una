@@ -9,7 +9,7 @@
 
 bx_import('BxDolCron');
 
-class BxDolCronCmd extends BxDolCron 
+class BxDolCronPruning extends BxDolCron 
 {
     protected function start() 
     {
