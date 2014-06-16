@@ -1,4 +1,4 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
@@ -7,7 +7,6 @@
  * @ingroup     DolphinStudio
  * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxDolStudioMenuTop');
 
@@ -69,4 +68,5 @@ class BxBaseStudioMenuTop extends BxDolStudioMenuTop implements iBxDolSingleton 
     	return $oTemplate->parseHtmlByName('menu_top.html', array('bx_repeat:menus' => $aTmplVars));
     }
 }
+
 /** @} */

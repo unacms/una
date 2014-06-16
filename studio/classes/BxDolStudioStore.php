@@ -1,4 +1,4 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
@@ -6,7 +6,6 @@
  * @defgroup    DolphinStudio Dolphin Studio
  * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxTemplStudioPage');
 bx_import('BxDolStudioStoreQuery');
@@ -391,4 +390,5 @@ class BxDolStudioStore extends BxTemplStudioPage {
     	return isset($this->aAlias[$sType][$sAlias]) ? $this->aAlias[$sType][$sAlias] : $sAlias;
     }
 }
+
 /** @} */

@@ -1,4 +1,4 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
@@ -6,7 +6,6 @@
  * @defgroup    DolphinStudio Dolphin Studio
  * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxTemplStudioPage');
 bx_import('BxDolStudioDesignerQuery');
@@ -133,4 +132,5 @@ class BxDolStudioDesigner extends BxTemplStudioPage {
         return $this->getJsResult('_adm_dsg_scs_save', true, true, BX_DOL_URL_STUDIO . 'designer.php?page=' . BX_DOL_STUDIO_DSG_TYPE_ICON);
     }
 }
+
 /** @} */
