@@ -1,4 +1,4 @@
-<?php
+<?php defined('BX_DOL') or die('hack attempt');
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
@@ -7,7 +7,6 @@
  * @ingroup     DolphinStudio
  * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxDolStudioPermissionsLevels');
 bx_import('BxTemplStudioFormView');
@@ -550,4 +549,5 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels {
         return $iId <= BX_DOL_STUDIO_PERMISSIONS_LEVEL_ID_INT_MAX ? $iId : false;
     }
 }
+
 /** @} */
