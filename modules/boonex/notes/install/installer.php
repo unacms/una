@@ -18,6 +18,7 @@ class BxNotesInstaller extends BxBaseModTextInstaller
         parent::__construct($aConfig);
         $this->_aTranscoders = array ('bx_notes_preview');
         $this->_aStorages = array ('bx_notes_files');
+        $this->_aMenuTriggers = array ('trigger_profile_view_submenu');
     }
 }
 

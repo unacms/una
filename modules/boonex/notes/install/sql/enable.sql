@@ -157,11 +157,10 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_notes_view_submenu', 'bx_notes', 'view-note-comments', '_bx_notes_menu_item_title_system_view_entry_comments', '_bx_notes_menu_item_title_view_entry_submenu_comments', 'page.php?i=view-note-comments&id={content_id}', '', '', '', '', 2147483647, 1, 0, 2);
 
 
--- MENU: add to persons menu
+-- MENU: add menu item to profiles modules (trigger* menu sets are processed separately upon modules enable/disable)
 
-SET @iProfileMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'bx_persons_view_submenu' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_persons_view_submenu', 'bx_notes', 'notes-author', '_bx_notes_menu_item_title_system_view_entries_author', '_bx_notes_menu_item_title_view_entries_author', 'page.php?i=notes-author&profile_id={profile_id}', '', '', '', '', 2147483647, 1, 0, IFNULL(@iProfileMenuOrder, 0) + 1);
+('trigger_profile_view_submenu', 'bx_notes', 'notes-author', '_bx_notes_menu_item_title_system_view_entries_author', '_bx_notes_menu_item_title_view_entries_author', 'page.php?i=notes-author&profile_id={profile_id}', '', '', '', '', 2147483647, 1, 0, 0);
 
 
 -- PRIVACY 

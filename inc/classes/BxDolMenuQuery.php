@@ -31,6 +31,27 @@ class BxDolMenuQuery extends BxDolDb {
         return $aObject;
     }
 
+    static public function getMenuTriggers($sTriggerName) {
+        $oDb = BxDolDb::getInstance();
+        $sQuery = $oDb->prepare("SELECT * FROM `sys_menu_items` WHERE `set_name` = ? ORDER BY `order` DESC", $sTriggerName);
+        return $oDb->getAll($sQuery);
+    }
+
+    static public function addMenuItemToSet($aMenuItem) {
+        $oDb = BxDolDb::getInstance();
+        
+        if (empty($aMenuItem['set_name']))
+            return false;
+
+        if (empty($aMenuItem['order'])) {
+            $sQuery = $oDb->prepare("SELECT `order` FROM `sys_menu_items` WHERE `set_name` = ? AND `active` = 1 ORDER BY `order` DESC LIMIT 1", $aMenuItem['set_name']);
+            $iProfileMenuOrder = (int)$oDb->getOne($sQuery);
+            $aMenuItem['order'] = $iProfileMenuOrder + 1;
+        }
+
+        unset($aMenuItem['id']);
+        return $oDb->query("INSERT INTO `sys_menu_items` SET " . $oDb->arrayToSQL($aMenuItem));
+    }
 
     public function getMenuItems() {
         $sQuery = $this->prepare("SELECT * FROM `sys_menu_items` WHERE `set_name` = ? ORDER BY `order` ASC", $this->_aObject['set_name']);

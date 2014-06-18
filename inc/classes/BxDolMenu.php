@@ -164,6 +164,44 @@ class BxDolMenu extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
     }
 
     /**
+     * Process menu triggers.
+     * Menu triggers allow to automatically add menu items to modules with no different if dependant module was install before or after the module menu item belongs to.
+     * For example module "Notes" adds menu items to all profiles modules (Persons, Organizations, etc) 
+     * with no difference if persons module was installed before or after "Notes" module was installed.
+     * @param $sSetName set name to ad menu item to 
+     * @param $aMenuItem array of menu item descrition, array keys are database fields names, array values are database fields values
+     * @return true on success
+     */
+    static public function processMenuTrigger ($sMenuTriggerName) {
+
+        // get list of active modules
+        bx_import('BxDolModuleQuery');
+        $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array(
+            'type' => 'modules',
+            'active' => 1,
+        ));
+        
+        // get list of menu triggers 
+        $aMenuItem = BxDolMenuQuery::getMenuTriggers($sMenuTriggerName);
+
+        // check each menu item trigger for all modules
+        foreach ($aMenuItem as $aMenuItem) {
+            foreach ($aModules as $aModule) {
+                if (!BxDolRequest::serviceExists($aModule['name'], 'get_menu_set_name_for_menu_trigger'))
+                    continue;
+
+                if (!($sMenuSet = BxDolService::call($aModule['name'], 'get_menu_set_name_for_menu_trigger', array($sMenuTriggerName))))
+                    continue;
+
+                $aMenuItem['set_name'] = $sMenuSet;
+                BxDolMenuQuery::addMenuItemToSet($aMenuItem);
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Set selected menu item for current menu object only.
      * @param $sModule menu item module to set as selected
      * @param $sName menu item name to set as selected

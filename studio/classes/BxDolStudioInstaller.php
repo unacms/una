@@ -165,6 +165,13 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
                 'result' => false
             );
 
+        $sAction = $bEnable ? 'enable' : 'install';
+
+        $aResult = array();
+        bx_alert('system', 'before_' . $sAction, 0, false, array ('config' => $this->_aConfig, 'result' => &$aResult));
+        if ($aResult && !$aResult['result'])
+            return $aResult;
+
         //--- Check mandatory settings ---//
         if($this->oDb->isModuleParamsUsed($this->_aConfig['home_uri'], $this->_aConfig['home_dir'], $this->_aConfig['db_prefix'], $this->_aConfig['class_prefix']))
     		return array(
@@ -244,16 +251,25 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
             $aResult['message'] = $aResult['message'] . $aResultEnable['message'];
         }
 
+        bx_alert('system', $sAction, 0, false, array ('config' => $this->_aConfig, 'result' => &$aResult));
         return $aResult;
     }
 
     public function uninstall($aParams, $bDisable = false) {
+
         //--- Check whether the module was already uninstalled ---//
         if(!$this->oDb->isModule($this->_aConfig['home_uri']))
             return array(
                 'message' => _t('_adm_err_modules_already_uninstalled'),
                 'result' => false
             );
+
+        $sAction = $bDisable ? 'disable' : 'uninstall';
+
+        $aResult = array();
+        bx_alert('system', 'before_' . $sAction, 0, false, array ('config' => $this->_aConfig, 'result' => &$aResult));
+        if ($aResult && !$aResult['result'])
+            return $aResult;
 
         //--- Check for dependent modules ---//
         $bDependent = false;
@@ -289,6 +305,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
             $this->oDb->cleanMemory ('sys_modules');
         }
 
+        
         if($bDisable) {
             $aResultEnable = $this->disable($aParams);
 
@@ -296,6 +313,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
             $aResult['message'] = $aResult['message'] . $aResultEnable['message'];
         }
 
+        bx_alert('system', $sAction, 0, false, array ('config' => $this->_aConfig, 'result' => &$aResult));
         return $aResult;
     }
 

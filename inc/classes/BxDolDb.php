@@ -757,13 +757,28 @@ EOJ;
             elseif (is_numeric($mixedArg))
                 $s = $mixedArg;
             else
-                $s = "'" . mysql_real_escape_string($mixedArg) . "'";
+                $s = "'" . mysql_real_escape_string($mixedArg, $this->_rLink) . "'";
 
             $i = bx_mb_strpos($sQuery, '?', $iPos);
             $sQuery = bx_mb_substr_replace($sQuery, $s, $i, 1);
             $iPos = $i + get_mb_len($s);
         }
         return $sQuery;
+    }
+
+    /**
+     * Convert array of key => values to SQL query.
+     * Array keys are field names and array values are field values.
+     * @param $a array
+     * @param $sDiv fields separator, by default it is ',', another useful value is ' AND '
+     * @return part of SQL query string
+     */
+    function arrayToSQL ($a, $sDiv = ',') 
+    {
+        $s = '';
+        foreach ($a as $k => $v)
+            $s .= "`{$k}` = '" . $this->escape($v) . "'" . $sDiv;
+        return trim($s, $sDiv);
     }
 
     function log ($s) 

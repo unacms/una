@@ -17,10 +17,14 @@ bx_import('BxDolService');
 class BxBaseModGeneralInstaller extends BxDolStudioInstaller 
 {
     protected $_aStorages = array (); // storage objects to automatically delete files from upon module uninstallation, don't add storage objects used in image transcoder objects
+
     protected $_aTranscoders = array (); // image transcoder objects to automatically register/unregister necessary alerts for
+
     protected $_aConnections = array (); // connections objects associated with module data, it must be defined which content is associated with the connection, the key is connection object name and value is array (possible array values: type, conn, table, field_id), if 'type' == 'profiles', then it is considered profiles connection and other possible param is 'conn' ('initiator', 'content' or 'both') when 'type' == 'custom' (or ommited), then other possible params are 'conn', 'table' and 'field_id' 
 
     protected $_bUpdateTimeline = false; // set to true to automatically register handlers for timeline module
+
+    protected $_aMenuTriggers = array(); // list of menu triggers, it must be specified in the module which adds menu item and in modules where menu items are added, @see BxDolMenu::processMenuTrigger
 
     function __construct($aConfig) 
     {
@@ -38,6 +42,12 @@ class BxBaseModGeneralInstaller extends BxDolStudioInstaller
 
         if ($this->_bUpdateTimeline && BxDolRequest::serviceExists('timeline', 'add_handlers'))
             BxDolService::call('timeline', 'add_handlers', array($this->_aConfig['home_uri']));
+
+        if ($this->_aMenuTriggers) {
+            bx_import('BxDolMenu');
+            foreach ($this->_aMenuTriggers as $sMenuTriggerName)
+                BxDolMenu::processMenuTrigger($sMenuTriggerName);
+        }
 
         return $aResult;
     }
@@ -97,25 +107,26 @@ class BxBaseModGeneralInstaller extends BxDolStudioInstaller
         }
                 
         // delete associated connections
-        if ($this->_aConnections)
+        if ($this->_aConnections) {
             bx_import('BxDolConnection');
-        foreach ($this->_aConnections as $sObjectConnections => $a) {
-            $o = BxDolConnection::getObjectInstance($sObjectConnections);
-            if (!$o)
-                continue;
+            foreach ($this->_aConnections as $sObjectConnections => $a) {
+                $o = BxDolConnection::getObjectInstance($sObjectConnections);
+                if (!$o)
+                    continue;
 
-            $sFuncSuffix = 'DeleteInitiatorAndContent';
-            if (isset($a['conn']) && 'initiator' == $a['conn'])
-                $sFuncSuffix = 'DeleteInitiator';
-            elseif (isset($a['conn']) && 'content' == $a['conn'])
-                $sFuncSuffix = 'DeleteContent';
+                $sFuncSuffix = 'DeleteInitiatorAndContent';
+                if (isset($a['conn']) && 'initiator' == $a['conn'])
+                    $sFuncSuffix = 'DeleteInitiator';
+                elseif (isset($a['conn']) && 'content' == $a['conn'])
+                    $sFuncSuffix = 'DeleteContent';
 
-            if (isset($a['type']) && 'profiles' == $a['type']) {
-                $sFunc = 'onModuleProfile' . $sFuncSuffix;
-                $o->$sFunc($this->_aConfig['name']);
-            } else {
-                $sFunc = 'onModule' . $sFuncSuffix;
-                $o->$sFunc($a['table'], $a['field_id']);
+                if (isset($a['type']) && 'profiles' == $a['type']) {
+                    $sFunc = 'onModuleProfile' . $sFuncSuffix;
+                    $o->$sFunc($this->_aConfig['name']);
+                } else {
+                    $sFunc = 'onModule' . $sFuncSuffix;
+                    $o->$sFunc($a['table'], $a['field_id']);
+                }
             }
         }
 
