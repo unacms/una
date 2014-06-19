@@ -66,22 +66,26 @@ class BxDolPermalinks extends BxDolDb implements iBxDolSingleton {
 
         parent::__construct();
 
-        // TODO: allow to disable cache completely
-        $oCache = $this->getDbCacheObject();
-        $a = $oCache->getData($this->genDbCacheKey('sys_permalinks'));
-        if (null === $a) {        
-            if (!$this->cache()) {
-                $this->aLinksStandard = array();
-                $this->aLinksPermalink = array();
-                $this->aPrefixesStandard = array();
-                $this->aPrefixesPermalink = array();
+        if (getParam('sys_db_cache_enable')) {
+            $oCache = $this->getDbCacheObject();
+            $sCacheKey = $this->genDbCacheKey('sys_permalinks');
+            $aPermalinksData = $oCache->getData($sCacheKey);
+            if (null === $aPermalinksData) {
+                $aPermalinksData = $this->getPermalinksData();
+                $oCache->setData ($sCacheKey, $aPermalinksData);
             }
         } else {
-            $this->aLinksStandard = $a['standard'];
-            $this->aLinksPermalink = $a['permalink'];
-            $this->aPrefixesStandard = $a['prefixes_standard'];
-            $this->aPrefixesPermalink = $a['prefixes_permalink'];
+            $aPermalinksData = $this->getPermalinksData();
         }
+
+        $this->aLinksStandard = $aPermalinksData['standard'];
+        $this->aLinksPermalink = $aPermalinksData['permalink'];
+        $this->aPrefixesStandard = $aPermalinksData['prefixes_standard'];
+        $this->aPrefixesPermalink = $aPermalinksData['prefixes_permalink'];
+    }
+
+    public function cacheInvalidate() {
+        return BxDolDb::getInstance()->cleanCache ('sys_permalinks');
     }
 
 	/**
@@ -102,7 +106,7 @@ class BxDolPermalinks extends BxDolDb implements iBxDolSingleton {
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
 
-    function cache() {
+    function getPermalinksData() {
         $aLinksStandard = $this->getAll("SELECT * FROM `sys_permalinks`");
 
         $aResult = array(
@@ -127,15 +131,7 @@ class BxDolPermalinks extends BxDolDb implements iBxDolSingleton {
             }
         }
 
-        $oCache = $this->getDbCacheObject();
-        if (!$oCache->setData ($this->genDbCacheKey('sys_permalinks'), $aResult))
-            return false;
-
-        $this->aLinksStandard = $aResult['standard'];
-        $this->aLinksPermalink = $aResult['permalink'];
-        $this->aPrefixesStandard = $aResult['prefixes_standard'];
-        $this->aPrefixesPermalink = $aResult['prefixes_permalink'];
-        return true;
+        return $aResult;
     }
 
     /**

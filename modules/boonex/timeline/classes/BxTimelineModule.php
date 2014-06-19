@@ -911,7 +911,7 @@ class BxTimelineModule extends BxDolModule
 				$this->_oDb->deleteData($aData);
         }
 
-        BxDolAlerts::cache();
+        BxDolAlerts::cacheInvalidate();
     }
 
 	protected function _echoResultJson($a, $isAutoWrapForFormFileSubmit = false) {

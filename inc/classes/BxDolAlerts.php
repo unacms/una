@@ -58,11 +58,22 @@ class BxDolAlerts extends BxDol {
     public function __construct($sUnit, $sAction, $iObjectId, $iSender = false, $aExtras = array()) {
         parent::__construct();
 
-        $oDb = BxDolDb::getInstance();
-        $oCache = $oDb->getDbCacheObject();
-        $aData = $oCache->getData($oDb->genDbCacheKey('sys_alerts'));
-        if (null === $aData)
-            $aData = BxDolAlerts::cache();
+        if (getParam('sys_db_cache_enable')) {
+
+            $oDb = BxDolDb::getInstance();
+            $oCache = $oDb->getDbCacheObject();
+            $sCacheKey = $this->genDbCacheKey('sys_alerts');
+            $aData = $oCache->getData($sCacheKey);
+            if (null === $aData) {
+                $aData = $this->getAlertsData();
+                $oCache->setData ($sCacheKey, $aData);
+            }
+
+        } else {
+
+            $aData = $this->getAlertsData();
+
+        }
 
         $this->_aAlerts = $aData['alerts'];
         $this->_aHandlers = $aData['handlers'];
@@ -78,6 +89,10 @@ class BxDolAlerts extends BxDol {
         } else {
             $this->iSender = (int)$iSender;
         }
+    }
+
+    public static function cacheInvalidate() {
+        return BxDolDb::getInstance()->cleanCache ('sys_alerts');
     }
 
     /**
@@ -113,7 +128,7 @@ class BxDolAlerts extends BxDol {
      *
      * @return an array with all alerts and handlers.
      */
-    public static function cache() {
+    public function getAlertsData() {
         $oDb = BxDolDb::getInstance();
         $aResult = array('alerts' => array(), 'handlers' => array());
 
@@ -124,9 +139,6 @@ class BxDolAlerts extends BxDol {
         $aHandlers = $oDb->getAll("SELECT `id`, `class`, `file`, `service_call` FROM `sys_alerts_handlers` ORDER BY `id` ASC");
         foreach ($aHandlers as $aHandler)
             $aResult['handlers'][$aHandler['id']] = array('class' => $aHandler['class'], 'file' => $aHandler['file'], 'service_call' => $aHandler['service_call']);
-
-        $oCache = $oDb->getDbCacheObject();
-        $oCache->setData ($oDb->genDbCacheKey('sys_alerts'), $aResult);
 
         return $aResult;
     }

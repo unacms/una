@@ -767,7 +767,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
 
         ob_start();
         bx_import('BxDolPermalinks');
-        $bResult = $bResult && BxDolPermalinks::getInstance()->cache();
+        $bResult = $bResult && BxDolPermalinks::getInstance()->cacheInvalidate();
 
         /*
         TODO: Update the code when menu engine is rewrited. 
