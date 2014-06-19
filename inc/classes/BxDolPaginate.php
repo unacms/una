@@ -7,8 +7,6 @@
  * @{
  */
 
-// TODO: get rid of PerPage changer / count all and maybe other advanced features
-
 bx_import('BxDolTemplate');
 
 define('BX_DOL_PAGINATE_PER_PAGE_DEFAULT', 10);
@@ -128,7 +126,7 @@ abstract class BxDolPaginate extends BxDol {
 
     /**
      * Set number of available items on the page directly from data array.
-     * Since data array should containd additional record - we will pop last item from array automatically.
+     * Since data array should contain additional record - we will pop last item from array automatically.
      * @return nothing.
      */
     public function setNumFromDataArray(&$a, $isAutoPopLastElement = true) {
