@@ -33,7 +33,7 @@ class BxDolStudioDashboard extends BxTemplStudioPage {
 	        			break;
 
 	        		$sVersionAvl = $aContent['value'];
-	        		$sVersionCur = BxDolDb::getInstance()->getParam('sys_version');
+	        		$sVersionCur = getParam('sys_version');
 	        		if(version_compare($sVersionCur, $sVersionAvl) == -1)
 			        	$aResult = array('version' => $sVersionAvl);
 			    	break;

@@ -137,13 +137,13 @@ class BxTimelineConfig extends BxDolModuleConfig
     {
         $this->_oDb = &$oDb;
 
-        $this->_bAllowDelete = $this->_oDb->getParam('bx_timeline_enable_delete') == 'on';
+        $this->_bAllowDelete = getParam('bx_timeline_enable_delete') == 'on';
 
-        $this->_iPerPageProfile = (int)$this->_oDb->getParam('bx_timeline_events_per_page_profile');
-        $this->_iPerPageAccount = (int)$this->_oDb->getParam('bx_timeline_events_per_page_account');
-        $this->_iRssLength = (int)$this->_oDb->getParam('bx_timeline_rss_length');
+        $this->_iPerPageProfile = (int)getParam('bx_timeline_events_per_page_profile');
+        $this->_iPerPageAccount = (int)getParam('bx_timeline_events_per_page_account');
+        $this->_iRssLength = (int)getParam('bx_timeline_rss_length');
 
-        $this->_iCharsDisplayMax = (int)$this->_oDb->getParam('bx_timeline_chars_display_max');        
+        $this->_iCharsDisplayMax = (int)getParam('bx_timeline_chars_display_max');        
 
 		$aHandlers = $this->_oDb->getHandlers();
         foreach($aHandlers as $aHandler) {
@@ -156,7 +156,7 @@ class BxTimelineConfig extends BxDolModuleConfig
            $this->_aHandlers[$aHandler['alert_unit'] . '_' . $aHandler['alert_action']] = $aHandler;
         }
 
-		$sHideTimeline = $this->_oDb->getParam('bx_timeline_events_hide');
+		$sHideTimeline = getParam('bx_timeline_events_hide');
         if(!empty($sHideTimeline))
             $this->_aHandlersHidden = explode(',', $sHideTimeline);
     }

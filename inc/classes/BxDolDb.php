@@ -15,6 +15,8 @@ class BxDolDb extends BxDol implements iBxDolSingleton
     protected $_rLink, $_rCurrentRes, $_iCurrentResType;
 
     protected $_oDbCacheObject = null;
+    protected $_aParams = null;
+    protected $_sParamsCacheName = 'sys_options';
 
     /**
      * set database parameters and connect to it
@@ -61,26 +63,6 @@ class BxDolDb extends BxDol implements iBxDolSingleton
     {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error('Clone is not allowed for the class: ' . get_class($this), E_USER_ERROR);
-    }
-
-    public function __get($sName)
-    {
-        if ('oParams' == $sName) {
-            bx_import('BxDolParams');
-            return BxDolParams::getInstance($this);
-        }
-
-        $aTrace = debug_backtrace();
-        trigger_error('Undefined property via __get(): ' . $sName . ' in ' . $aTrace[0]['file'] . ' on line ' . $aTrace[0]['line'], E_USER_NOTICE);
-
-        return null;
-    }
-
-    public function __isset($sName)
-    {
-        if ('oParams' == $sName)
-            return true;
-        return false;
     }
 
     /**
@@ -417,25 +399,67 @@ class BxDolDb extends BxDol implements iBxDolSingleton
             $this->log($text . ': ' . $this->getErrorMessage());
     }
 
-    function isParam($sName, $bCache = true) 
+    protected function isParamInCache($sKey) 
     {
-        return $this->oParams->exists($sName, $bCache);
+        return isset($this->_aParams[$sKey]);
+    }
+
+    protected function cacheParams($bForceCacheInvalidate = false) 
+    {
+        if ($bForceCacheInvalidate)
+            $this->cacheParamsClear();
+
+        $this->_aParams = $this->fromCache($this->_sParamsCacheName, 'getPairs', "SELECT `name`, `value` FROM `sys_options`", "name", "value");
+        if (empty($this->_aParams)) {
+            $this->_aParams = array ();
+            return false;
+        }
+
+        return true;
+    }
+
+    public function cacheParamsClear() 
+    {
+        return $this->cleanCache($this->_sParamsCacheName);
+    }
+
+    public function isParam($sKey, $bFromCache = true) 
+    {
+    	if ($bFromCache && $this->isParamInCache($sKey))
+    	   return true;
+
+        $sQuery = $this->prepare("SELECT `name` FROM `sys_options` WHERE `name` = ? LIMIT 1", $sKey);
+        return $this->getOne($sQuery) == $sKey;
     }
 
     function addParam($sName, $sValue, $iKateg, $sDesc, $sType) 
     {
-        return $this->oParams->add($sName, $sValue, $iKateg, $sDesc, $sType);
+        $sQuery = $this->prepare("INSERT INTO `sys_options` SET `category_id` = ?, `name` = ?, `caption` = ?, `value` = ?, `type` = ?", $iKateg, $sName, $sDesc, $sValue, $sType);
+        $this->query($sQuery);
+
+        // renew params cache
+        $this->cacheParams(true);
     }
 
-    function getParam($sName, $bCache = true) 
+    function getParam($sKey, $bFromCache = true) 
     {
-        return $this->oParams->get($sName, $bCache);
+        if (!$sKey)
+            return false;
+        if ($bFromCache && $this->isParamInCache($sKey)) {
+            return $this->_aParams[$sKey];
+        } else {
+            $sQuery = $this->prepare("SELECT `value` FROM `sys_options` WHERE `name` = ? LIMIT 1", $sKey);
+            return $this->getOne($sQuery);
+        }
     }
 
-    function setParam($sName, $sValue ) 
+    function setParam($sKey, $mixedValue) 
     {
-        $this->oParams->set($sName, $sValue);
-        return true;
+        $sQuery = $this->prepare("UPDATE `sys_options` SET `value` = ? WHERE `name` = ? LIMIT 1", $mixedValue, $sKey);
+        $this->query($sQuery);
+
+        // renew params cache
+        $this->cacheParams(true);
     }
 
     function listTables() 
@@ -487,10 +511,10 @@ class BxDolDb extends BxDol implements iBxDolSingleton
             {
 
                 // truncating global settings since it repeated many times and output it separately
-                if (isset($aCall['object']) && property_exists($aCall['object'], 'oParams') && property_exists($aCall['object']->oParams, '_aParams')) {
+                if (isset($aCall['object']) && property_exists($aCall['object'], '_aParams')) {
                     if (false === $sParamsOutput)
-                        $sParamsOutput = var_export($aCall['object']->oParams->_aParams, true);
-                    $aCall['object']->oParams->_aParams = '[truncated]';
+                        $sParamsOutput = var_export($aCall['object']->_aParams, true);
+                    $aCall['object']->_aParams = '[truncated]';
                 }
 
                 if (isset($aCall['args']) && is_array($aCall['args']))
@@ -561,7 +585,7 @@ EOJ;
             echo $out;
 
         if(BxDolConfig::getInstance()->get('db', 'error_remort_by_email')) {
-            $sSiteTitle = getParam('site_title');
+            $sSiteTitle = $this->getParam('site_title');
             $sMailBody = "Database error in " . $sSiteTitle . "<br /><br /> \n";
 
             if( strlen( $query ) )
@@ -584,7 +608,7 @@ EOJ;
             $sMailBody .= "<hr />Request parameters: <pre>" . print_r( $_REQUEST, true ) . " </pre>";
             $sMailBody .= "--\nAuto-report system\n";
 
-            sendMail(getParam('site_email_bug_report'), "Database error in " . $sSiteTitle, $sMailBody, 0, array(), BX_EMAIL_SYSTEM, 'html', true);
+            sendMail($this->getParam('site_email_bug_report'), "Database error in " . $sSiteTitle, $sMailBody, 0, array(), BX_EMAIL_SYSTEM, 'html', true);
         }
 
         exit;
@@ -600,7 +624,7 @@ EOJ;
         if ($this->_oDbCacheObject != null) {
             return $this->_oDbCacheObject;
         } else {
-            $sEngine = getParam('sys_db_cache_engine');
+            $sEngine = $this->getParam('sys_db_cache_engine');
             $this->_oDbCacheObject = bx_instance ('BxDolCache'.$sEngine);
             if (!$this->_oDbCacheObject->isAvailable())
                 $this->_oDbCacheObject = bx_instance ('BxDolCacheFile');
@@ -619,7 +643,7 @@ EOJ;
         array_shift ($aArgs); // shift $sName
         array_shift ($aArgs); // shift $sFunc
 
-        if (!getParam('sys_db_cache_enable'))
+        if (!$this->getParam('sys_db_cache_enable'))
             return call_user_func_array (array ($this, $sFunc), $aArgs); // pass other function parameters as database function parameters
 
         $oCache = $this->getDbCacheObject ();
@@ -644,7 +668,7 @@ EOJ;
 
     function cleanCache ($sName) 
     {
-        if (!getParam('sys_db_cache_enable'))
+        if (!$this->getParam('sys_db_cache_enable'))
             return true;
 
         $oCache = $this->getDbCacheObject ();

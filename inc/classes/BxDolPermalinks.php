@@ -121,7 +121,7 @@ class BxDolPermalinks extends BxDolDb implements iBxDolSingleton {
                 'permalink' => $aLink['permalink'],
                 'standard' => $aLink['standard'],
                 'check' => $aLink['check'],
-                'enabled' => $this->getParam($aLink['check']) == 'on',
+                'enabled' => getParam($aLink['check']) == 'on',
             );
             $aResult['standard'][$aLink['standard']] = $a;
             $aResult['permalink'][$aLink['permalink']] = $a;

@@ -78,7 +78,7 @@ class BxDolStudioLanguage extends BxTemplStudioPage {
         if($iLanguages == 1 && $aLanguages[0]['name'] == $sLanguage)
             return array('code' => 1, 'message' => _t('_adm_pgt_err_last_active'));
 
-        $sLanguageDefault = $this->oDb->getParam('lang_default');
+        $sLanguageDefault = getParam('lang_default');
         if($aLanguage['uri'] == $sLanguageDefault)
             return array('code' => 2, 'message' => _t('_adm_pgt_err_deactivate_default'));
 

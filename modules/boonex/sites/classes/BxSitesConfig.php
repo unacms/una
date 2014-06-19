@@ -69,20 +69,20 @@ class BxSitesConfig extends BxDolModuleConfig
     {
     	$this->_oDb = $oDb;
 
-    	$this->iTrialMaxNumber = (int)$this->_oDb->getParam('bx_sites_payment_trial_max_number');
-    	$this->fTrialPrice = (float)$this->_oDb->getParam('bx_sites_payment_trial_price');
-    	$this->sTrialPeriod = $this->_oDb->getParam('bx_sites_payment_trial_period');
-    	$this->iTrialFrequency = (float)$this->_oDb->getParam('bx_sites_payment_trial_frequency');
+    	$this->iTrialMaxNumber = (int)getParam('bx_sites_payment_trial_max_number');
+    	$this->fTrialPrice = (float)getParam('bx_sites_payment_trial_price');
+    	$this->sTrialPeriod = getParam('bx_sites_payment_trial_period');
+    	$this->iTrialFrequency = (float)getParam('bx_sites_payment_trial_frequency');
     	$this->iTrialBillingCycles = 1;
-    	$this->fRegularPrice = (float)$this->_oDb->getParam('bx_sites_payment_regular_price');
-    	$this->sRegularPeriod = $this->_oDb->getParam('bx_sites_payment_regular_period');
-    	$this->iRegularFrequency = (float)$this->_oDb->getParam('bx_sites_payment_regular_frequency');
+    	$this->fRegularPrice = (float)getParam('bx_sites_payment_regular_price');
+    	$this->sRegularPeriod = getParam('bx_sites_payment_regular_period');
+    	$this->iRegularFrequency = (float)getParam('bx_sites_payment_regular_frequency');
     	$this->iRegularBillingCycles = 0;
-    	$this->sEmailBusiness = $this->_oDb->getParam('bx_sites_payment_email_business');
-    	$this->sEmailSandbox = $this->_oDb->getParam('bx_sites_payment_email_sandbox');
-    	$this->bDemoMode = $this->_oDb->getParam('bx_sites_payment_demo_mode') == 'on';
-    	$this->sCurrencyCode = $this->_oDb->getParam('bx_sites_payment_currency_code');
-    	$this->sCurrencySign = $this->_oDb->getParam('bx_sites_payment_currency_sign');
+    	$this->sEmailBusiness = getParam('bx_sites_payment_email_business');
+    	$this->sEmailSandbox = getParam('bx_sites_payment_email_sandbox');
+    	$this->bDemoMode = getParam('bx_sites_payment_demo_mode') == 'on';
+    	$this->sCurrencyCode = getParam('bx_sites_payment_currency_code');
+    	$this->sCurrencySign = getParam('bx_sites_payment_currency_sign');
     }
 
     function getDomainMask()

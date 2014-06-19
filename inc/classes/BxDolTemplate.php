@@ -198,7 +198,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
 
         $this->_sCodeKey = 'skin';
 
-        $sCode = BxDolDb::getInstance()->getParam('template');
+        $sCode = getParam('template');
         if(empty($sCode))
             $sCode = BX_DOL_TEMPLATE_DEFAULT_CODE;
         $this->_checkCode($sCode, false);
@@ -349,20 +349,38 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
         ));
 
         //--- Load injection's cache ---//
-        $oDb = BxDolDb::getInstance();
-        $oCache = $oDb->getDbCacheObject();
-        $aInjections = $oCache->getData($oDb->genDbCacheKey($this->_sInjectionsCache));
-        if($aInjections === null) {
-            $aInjections = $oDb->getAll("SELECT `page_index`, `name`, `key`, `type`, `data`, `replace` FROM `" . $this->_sInjectionsTable . "` WHERE `active`='1'");
-            foreach ($aInjections as $aInjection)
-                $aInjections['page_' . $aInjection['page_index']][$aInjection['key']][] = $aInjection;
+        if (getParam('sys_db_cache_enable')) {
+            $oDb = BxDolDb::getInstance();
+            $oCache = $oDb->getDbCacheObject();
+            $sCacheKey = $oDb->genDbCacheKey($this->_sInjectionsCache);
 
-            $oCache->setData ($oDb->genDbCacheKey($this->_sInjectionsCache), $aInjections);
+            $aInjections = $oCache->getData($sCacheKey);
+            if ($aInjections === null) {
+                $aInjections = $this->getInjectionsData();
+                $oCache->setData ($sCacheKey, $aInjections);
+            }
+        } else {
+            $aInjections = $this->getInjectionsData();
         }
+
         $this->aPage['injections'] = $aInjections;
+
 
         bx_import('BxTemplConfig');
         $this->_oConfigTemplate = BxTemplConfig::getInstance();
+    }
+
+    protected function getInjectionsData () {
+        $oDb = BxDolDb::getInstance();
+
+        $aInjections = $oDb->getAll("SELECT `page_index`, `name`, `key`, `type`, `data`, `replace` FROM `" . $this->_sInjectionsTable . "` WHERE `active`='1'");
+        if (!$aInjections)
+            return array();
+
+        foreach ($aInjections as $aInjection)
+            $aInjections['page_' . $aInjection['page_index']][$aInjection['key']][] = $aInjection;
+
+        return $aInjections;
     }
 
     /**
@@ -612,7 +630,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
             $mixedName = array($mixedName);
 
         foreach($mixedName as $sName)
-            $this->aPage['js_options'][$sName] = BxDolDb::getInstance()->getParam($sName);
+            $this->aPage['js_options'][$sName] = getParam($sName);
     }
     /**
      * Add language translation for key in JS output.

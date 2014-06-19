@@ -943,13 +943,12 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
 
     // Static Methods related to CSRF Tocken
 	public static function genCsrfToken($bReturn = false) {
-        $oDb = BxDolDb::getInstance();
-        if ($oDb->getParam('sys_security_form_token_enable') != 'on')
+        if (getParam('sys_security_form_token_enable') != 'on')
             return false;
 
         $oSession = BxDolSession::getInstance();
 
-        $iCsrfTokenLifetime = (int)$oDb->getParam('sys_security_form_token_lifetime');
+        $iCsrfTokenLifetime = (int)getParam('sys_security_form_token_lifetime');
         if($oSession->getValue('csrf_token') === false || ($iCsrfTokenLifetime != 0 && time() - (int)$oSession->getValue('csrf_token_time') > $iCsrfTokenLifetime)) {
             $sToken = genRndPwd(20, true);
             $oSession->setValue('csrf_token', $sToken);
@@ -1090,7 +1089,7 @@ class BxDolFormChecker {
         $iErrors = 0;
 
         // check CSRF token if it's needed.
-        if (BxDolDb::getInstance()->getParam('sys_security_form_token_enable') == 'on' && $this->_bFormCsrfChecking === true && ($mixedCsrfTokenSys = BxDolForm::getCsrfToken()) !== false) {
+        if (getParam('sys_security_form_token_enable') == 'on' && $this->_bFormCsrfChecking === true && ($mixedCsrfTokenSys = BxDolForm::getCsrfToken()) !== false) {
             $mixedCsrfTokenUsr = BxDolForm::getSubmittedValue('csrf_token', $this->_sFormMethod, $this->_aSpecificValues);
             unset($aInputs['csrf_token']);
 

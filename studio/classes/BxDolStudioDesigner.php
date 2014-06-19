@@ -102,7 +102,7 @@ class BxDolStudioDesigner extends BxTemplStudioPage {
         bx_import('BxDolStorage');
         $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
 
-        $iId = (int)$this->oDb->getParam('sys_site_logo');
+        $iId = (int)getParam('sys_site_logo');
         if($iId != 0 && !$oStorage->deleteFile($iId, $iProfileId))
             return false;
 
@@ -116,7 +116,7 @@ class BxDolStudioDesigner extends BxTemplStudioPage {
         bx_import('BxDolStorage');
         $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
 
-        $iId = (int)$this->oDb->getParam('sys_site_icon');
+        $iId = (int)getParam('sys_site_icon');
         if($iId != 0 && !$oStorage->deleteFile($iId, $iProfileId))
             return $this->getJsResult('_adm_dsg_err_remove_old_icon');
 

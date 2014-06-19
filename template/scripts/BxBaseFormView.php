@@ -149,7 +149,7 @@ BLAH;
     function genRows() {
 
         // add CSRF token if it's needed.
-        if (!(isset($this->aParams['view_mode']) && $this->aParams['view_mode']) && BxDolDb::getInstance()->getParam('sys_security_form_token_enable') == 'on' && (!isset($this->aParams['csrf']['disable']) || (isset($this->aParams['csrf']['disable']) && $this->aParams['csrf']['disable'] !== true)) && ($mixedCsrfToken = BxDolForm::getCsrfToken()) !== false) {
+        if (!(isset($this->aParams['view_mode']) && $this->aParams['view_mode']) && getParam('sys_security_form_token_enable') == 'on' && (!isset($this->aParams['csrf']['disable']) || (isset($this->aParams['csrf']['disable']) && $this->aParams['csrf']['disable'] !== true)) && ($mixedCsrfToken = BxDolForm::getCsrfToken()) !== false) {
             $this->aInputs['csrf_token'] = array(
                 'type' => 'hidden',
                 'name' => 'csrf_token',

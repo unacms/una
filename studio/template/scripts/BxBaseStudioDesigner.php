@@ -106,7 +106,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner {
     protected function getLogo() {
         $oTemplate = BxDolStudioTemplate::getInstance();
 
-        $sAlt = $this->oDb->getParam('sys_site_logo_alt');
+        $sAlt = getParam('sys_site_logo_alt');
 
         $aForm = array(
             'form_attrs' => array(
@@ -138,7 +138,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner {
                     'caption' => _t('_adm_dsg_txt_upload_image'),
                 	'caption_preview' => _t('_adm_dsg_txt_upload_image_preview'),
                     'ajax_action_delete' => $this->getPageJsObject() . '.deleteLogo()',  
-                    'value' => (int)$this->oDb->getParam('sys_site_logo')
+                    'value' => (int)getParam('sys_site_logo')
                 ),
                 'alt' => array(
                     'type' => 'text',
@@ -192,7 +192,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner {
         $sPreview = "";
         $aTmplVars = array('bx_repeat:images' => array());
 
-        if(($iId = (int)$this->oDb->getParam('sys_site_icon')) != 0) {
+        if(($iId = (int)getParam('sys_site_icon')) != 0) {
             $aTranscoders = array(
                 BX_DOL_TRANSCODER_OBJ_ICON_APPLE => '_adm_dsg_txt_icon_apple',
                 BX_DOL_TRANSCODER_OBJ_ICON_FACEBOOK => '_adm_dsg_txt_icon_facebook',
@@ -205,7 +205,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner {
 
                 $sImageUrl = $oTranscoder->getImageUrl($iId);
                 if($sImageUrl === false) {
-                    $this->oDb->setParam('sys_site_icon', 0);
+                    setParam('sys_site_icon', 0);
                     break;
                 }
 

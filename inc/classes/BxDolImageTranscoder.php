@@ -614,7 +614,6 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
     }
 
     protected function clearCacheDB() {
-        $this->_oDb->oParams->clearCache();
         $oCacheDb = $this->_oDb->getDbCacheObject();
         return $oCacheDb->removeAllByPrefix('db_');
     }

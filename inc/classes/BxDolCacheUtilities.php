@@ -88,11 +88,6 @@ class BxDolCacheUtilities extends BxDol
 
     function _clearCacheObject($oCache, $sPrefix)
     {
-        if ('db_' == $sPrefix)
-            $GLOBALS['MySQL']->oParams->clearCache();
-        elseif ($this->oMemberMenu->sMenuMemberKeysCache == $sPrefix)
-            $this->oMemberMenu->deleteMemberMenuCaches();
-
         if (!$oCache->removeAllByPrefix ($sPrefix))
             return array('code' => 1, 'message' => _t('_adm_txt_dashboard_cache_clean_failed'));
         else

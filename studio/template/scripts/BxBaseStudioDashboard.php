@@ -56,13 +56,12 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard {
 
     protected function getBlockCodeVersions($sName, $aBlock)
     {
-    	$oDb = BxDolDb::getInstance();
     	$oTemplate = BxDolStudioTemplate::getInstance();
 
     	$oTemplate->addJsTranslation('_adm_dbd_txt_dolphin_n_available');
     	return $oTemplate->parseHtmlByName('dbd_versions.html', array(
-    		'domain' => $oDb->getParam('site_title'),
-    		'version' => $oDb->getParam('sys_version'),
+    		'domain' => getParam('site_title'),
+    		'version' => getParam('sys_version'),
     		'installed' => bx_time_js(getParam('sys_install_time')),
     	));
     }

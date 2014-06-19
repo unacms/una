@@ -62,7 +62,7 @@ class BxDolAlerts extends BxDol {
 
             $oDb = BxDolDb::getInstance();
             $oCache = $oDb->getDbCacheObject();
-            $sCacheKey = $this->genDbCacheKey('sys_alerts');
+            $sCacheKey = $oDb->genDbCacheKey('sys_alerts');
             $aData = $oCache->getData($sCacheKey);
             if (null === $aData) {
                 $aData = $this->getAlertsData();

@@ -687,7 +687,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
         return $bResult && $oLanguages->compileLanguage(0, true) ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
     function actionRecompileGlobalParamaters($sOperation) {
-        $bResult = $this->oDb->oParams->cache();
+        $bResult = $this->oDb->cacheParamsClear();
         return $bResult ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
     function actionRecompileMainMenu($sOperation) {
@@ -811,7 +811,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
 
         if($bUseFtp) {
         	bx_import('BxDolFtp');
-			$oFile = new BxDolFtp(isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost', $this->oDb->getParam('sys_ftp_login'), $this->oDb->getParam('sys_ftp_password'), $this->oDb->getParam('sys_ftp_dir'));
+			$oFile = new BxDolFtp(isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost', getParam('sys_ftp_login'), getParam('sys_ftp_password'), getParam('sys_ftp_dir'));
 
 			if(!$oFile->connect())
 				return null;

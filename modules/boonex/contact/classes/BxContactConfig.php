@@ -36,9 +36,9 @@ class BxContactConfig extends BxDolModuleConfig
     {
         $this->_oDb = &$oDb;
 
-        $this->_sEmail = $this->_oDb->getParam('bx_contact_email');
+        $this->_sEmail = getParam('bx_contact_email');
         if(empty($this->_sEmail))
-        	$this->_sEmail = $this->_oDb->getParam('site_email');
+        	$this->_sEmail = getParam('site_email');
     }
 
 	public function getSystemName($sType)

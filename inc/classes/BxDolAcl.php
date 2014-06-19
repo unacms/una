@@ -201,7 +201,7 @@ class BxDolAcl extends BxDol implements iBxDolSingleton {
     	$aMembership = $this->getMemberMembershipInfo($iProfileId); // get current profile's membership information
     
     	$aLangFileParams[CHECK_ACTION_LANG_FILE_MEMBERSHIP] = _t($aMembership['name']);
-    	$aLangFileParams[CHECK_ACTION_LANG_FILE_SITE_EMAIL] = $this->oDb->getParam('site_email');
+    	$aLangFileParams[CHECK_ACTION_LANG_FILE_SITE_EMAIL] = getParam('site_email');
 
     	$aAction = $this->oDb->getAction($aMembership['id'], $iActionId);
     	if (!$aAction)

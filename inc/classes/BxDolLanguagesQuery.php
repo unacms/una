@@ -67,7 +67,7 @@ class BxDolLanguagesQuery extends BxDolDb implements iBxDolSingleton {
         		break;
             case 'default':
         	    $aMethod['name'] = 'getRow';
-        		$sWhereClause .= $this->prepare(" AND `tl`.`Name`=?", $this->getParam('lang_default'));
+        		$sWhereClause .= $this->prepare(" AND `tl`.`Name`=?", getParam('lang_default'));
         		break;
         	case 'active':
                 $sWhereClause = " AND `tl`.`Enabled`='1'";

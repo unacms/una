@@ -79,7 +79,7 @@ class BxDolStudioDesign extends BxTemplStudioPage {
         if($iTemplates == 1 && $aTemplates[0]['name'] == $sTemplate)
             return array('code' => 1, 'message' => _t('_adm_dsg_err_last_active'));
 
-        $sTemplateDefault = $this->oDb->getParam('template');
+        $sTemplateDefault = getParam('template');
         if($aTemplate['uri'] == $sTemplateDefault)
             return array('code' => 2, 'message' => _t('_adm_dsg_err_deactivate_default'));
 
