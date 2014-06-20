@@ -167,6 +167,11 @@ class BxDolEmailTemplates extends BxDol implements iBxDolSingleton {
             $oProfile = BxDolProfile::getInstance($iProfileId);
             if ($oProfile && ($aProfileInfo = $oProfile->getInfo())) {
                 $aResultKeys = array_merge($aResultKeys, array(
+                    'profile_name' => $oProfile->getDisplayName(),
+                    'profile_url' => $oProfile->getUrl(),
+                    'profile_thumb' => $oProfile->getThumb(),
+                    'profile_icon' => $oProfile->getIcon(),
+
                     'profile_id' => $aProfileInfo['id'],
                     'profile_status' => $aProfileInfo['status'],
                     'profile_type' => $aProfileInfo['type'],

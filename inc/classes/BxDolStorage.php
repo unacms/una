@@ -410,7 +410,7 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
 
         // create tmp file        
         
-        $sTmpFile = tempnam(realpath(sys_get_temp_dir()), 'bxdol');
+        $sTmpFile = tempnam(BX_DIRECTORY_PATH_TMP, $this->_aObject['object']);
         if (!$oHelper->save($sTmpFile)) {
             $this->setErrorCode(BX_DOL_STORAGE_INVALID_FILE);
             return false;
@@ -660,9 +660,11 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
         return $this->_oDb->getFiles($iProfileId);
     }    
 
-    public function tmpDebugGetFilesList() { // TODO: remove this function, since it is for debugging purposes only
-        $sQuery = "SELECT * FROM `" . $this->_aObject['table_files'] . "`";
-        return $this->_oDb->getAll($sQuery);
+    /**
+     * Get all files in the storage
+     */
+    public function getFilesAll($iStart = 0, $iPerPage = 1000) {
+        return $this->_oDb->getFilesAll($iStart, $iPerPage);
     }
 
     /**

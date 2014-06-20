@@ -291,7 +291,6 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
             return $this->_oStorage->getFileUrlById($iFileId);
         }
 
-        // TODO: reconsider adding timestamp in the url
         return BX_DOL_URL_ROOT . 'image_transcoder.php?o=' . $this->_aObject['object'] . '&h=' . $mixedHandler . '&dpx=' . $this->getDevicePixelRatio() . '&t=' . time();
     }
 
@@ -532,11 +531,9 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
     }
 
     protected function getTmpFilename ($sOverrideName = false) {
-        if ($sOverrideName) {
-            // TODO: generate uniq folder for current dolphin instance and image object
-            return realpath(sys_get_temp_dir()) . DIRECTORY_SEPARATOR . rand(10000, 99999) . $sOverrideName;
-        }
-        return tempnam(realpath(sys_get_temp_dir()), 'bxdol');
+        if ($sOverrideName)
+            return BX_DIRECTORY_PATH_TMP . rand(10000, 99999) . $sOverrideName;
+        return tempnam(BX_DIRECTORY_PATH_TMP, $this->_aObject['object']);
     }
 
     protected function applyFilter_Grayscale ($sFile, $aParams) { 

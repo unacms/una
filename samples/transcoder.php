@@ -101,7 +101,7 @@ $(document).ready(function () {
         }
     }
 
-    $a = $oStorage->tmpDebugGetFilesList();
+    $a = $oStorage->getFilesAll();
     echo "<hr /> <h2>Files List:</h2>";
     echo '<form method="POST">';
     foreach ($a as $r)

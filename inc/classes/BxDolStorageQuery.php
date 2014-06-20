@@ -231,6 +231,11 @@ class BxDolStorageQuery extends BxDolDb {
         return $this->getAll($sQuery);
     }
 
+    public function getFilesAll($iStart, $iPerPage) {
+        $sQuery = $this->prepare("SELECT * FROM `" . $this->_sTableFiles . "` LIMIT ?, ?", (int)$iStart, (int)$iPerPage);
+        return $this->getAll($sQuery);
+    }
+
     public function prune() {
         $iTime = time();
         $sQuery = $this->prepare("DELETE FROM `sys_storage_tokens` WHERE `object` = ? AND `created` < ?", $this->_aObject['object'], $iTime - $this->_aObject['token_life']);

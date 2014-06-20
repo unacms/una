@@ -116,6 +116,14 @@ class BxDolProfile extends BxDol implements iBxDolProfile {
     }
 
     /**
+     * Get account object associated with the profile
+     */
+    public function getAccountObject() {
+        bx_import('BxDolAccount');
+        return BxDolAccount::getInstance($this->getAccountId());
+    }
+
+    /**
      * Get content id associated with the profile
      */
     public function getContentId() {
@@ -258,9 +266,9 @@ class BxDolProfile extends BxDol implements iBxDolProfile {
         $oConn = BxDolConnection::getObjectInstance('sys_profiles_subscriptions');
         $oConn->onDeleteInitiatorAndContent($ID);
 
-        // delete associated content 
-        // TODO: remake deletion of associated content
-        $this->_oQuery->res("DELETE FROM `sys_acl_levels_members` WHERE `IDMember` = {$ID}");
+        // delete profile's acl levels
+        bx_import('BxDolAcl');
+        BxDolAcl::getInstance()->onProfileDelete($ID);
 
         // delete profile
         if (!$this->_oQuery->delete($ID))
@@ -297,38 +305,46 @@ class BxDolProfile extends BxDol implements iBxDolProfile {
      * Change profile status from 'Pending' to the next level - 'Active'
      */
     public function approve($iAction, $iProfileId = 0) {
-        if (!$iProfileId)
-            $iProfileId = $this->_iProfileID;
-        if (!$this->_oQuery->changeStatus($iProfileId, BX_PROFILE_STATUS_ACTIVE))
-            return false;
-        bx_alert('profile', 'approve', $iProfileId, false, array('action' => $iAction));
-        // TODO: send email that profile is approved
-        return true;
+        return $this->changeStatus(BX_PROFILE_STATUS_ACTIVE, 'approve', $iAction, $iProfileId);
     }
 
     /**
      * Change profile status to 'Pending' 
      */
     public function disapprove($iAction, $iProfileId = 0) {
-        if (!$this->_oQuery->changeStatus((int)$iProfileId ? $iProfileId : $this->_iProfileID, BX_PROFILE_STATUS_PENDING))
-            return false;
-        bx_alert('profile', 'disapprove', $iProfileId ? $iProfileId : $this->_iProfileID, false, array('action' => $iAction));
-        // TODO: send email that profile is disapproved ?
-        return true;
+        return $this->changeStatus(BX_PROFILE_STATUS_PENDING, 'disapprove', $iAction, $iProfileId);
     }
 
     /**
      * Change profile status to 'Suspended' 
      */
     public function suspend($iAction, $iProfileId = 0) {
-        if (!$this->_oQuery->changeStatus((int)$iProfileId ? $iProfileId : $this->_iProfileID, BX_PROFILE_STATUS_SUSPENDED))
-            return false;
-        bx_alert('profile', 'suspend', $iProfileId, false, array('action' => $iAction));
-        // TODO: send email that profile is suspended
-        return true;
+        return $this->changeStatus(BX_PROFILE_STATUS_SUSPENDED, 'suspend', $iAction, $iProfileId);
     }
 
+    protected function changeStatus($sStatus, $sAlertActionName, $iAction, $iProfileId = 0) {
+        if (!$iProfileId)
+            $iProfileId = $this->_iProfileID;
 
+        // get account and profile objects
+        $oProfile = BxDolProfile::getInstance($iProfileId);
+        $oAccount = $oProfile->getAccountObject();
+        if (!$oProfile || !$oAccount)
+            return false;
+
+        // change status
+        if (!$this->_oQuery->changeStatus($iProfileId, $sStatus))
+            return false;
+
+        // alert about status changing
+        bx_alert('profile', $sAlertActionName, $iProfileId, false, array('action' => $iAction));
+
+        // send email to member about status change
+        sendMailTemplate('t_ChangeStatus' . ucfirst($sStatus), $oAccount->id(), $iProfileId, array('status' => $sStatus), BX_EMAIL_SYSTEM);
+
+        return true;
+    }
+    
     /**
      * Display informer message if it is possible to switch to this profile
      */

@@ -502,8 +502,8 @@ class BxDolAcl extends BxDol implements iBxDolSingleton {
     		if ($aMembershipCurrent['id'] == MEMBERSHIP_ID_STANDARD) 
                 return true;
 
-    		// delete any present and future memberships
-    		return $this->oDb->deleteLevelByProfileId($iProfileId, true);
+    		// delete present and future memberships
+    		return $this->oDb->deleteLevelByProfileId($iProfileId);
     	}
 
     	if ($iDays < 0) 
@@ -518,7 +518,7 @@ class BxDolAcl extends BxDol implements iBxDolSingleton {
                 return false;
     	}
     	else
-    	    $this->oDb->deleteLevelByProfileId($iProfileId); ///< Delete previous profile's membership level
+    	    $this->oDb->deleteLevelByProfileId($iProfileId, true); ///< Delete any profile's membership level
 
         // set lifetime membership if 0 days is used.
         $iDateExpires = $iDays != 0 ? (int)$iDateStarts + $iDays * $iSecInDay : 'NULL';
@@ -672,6 +672,10 @@ class BxDolAcl extends BxDol implements iBxDolSingleton {
         }
 
         return $aMembershipLast;
+    }
+
+    public function onProfileDelete ($iProfileId) {
+        return $this->oDb->deleteLevelByProfileId($iProfileId, true);
     }
 }
 

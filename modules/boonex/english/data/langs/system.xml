@@ -1408,14 +1408,6 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_designbox_2"><![CDATA[Empty box]]></string>
 	<string name="_sys_designbox_3"><![CDATA[Content + background]]></string>
 	<string name="_sys_et_txt_about_us"><![CDATA[About us]]></string>
-	<string name="_sys_et_txt_body_activation"><![CDATA[<bx_include_auto:_email_header.html />
-<p>Hello,</p>
-<p>Your profile was reviewed and activated!</p>
-<p>Simply follow the link below to enjoy our services:<br />
-<a href="{site_url}member.php">{site_url}member.php</a></p>
-<p>Your e-mail used for registration: <span style="color:#FF6633">{email}</span></p>
-<p><b>Thank you for using our services!</b></p>
-<bx_include_auto:_email_footer.html />]]></string>
 	<string name="_sys_et_txt_body_admin_email"><![CDATA[<bx_include_auto:_email_header.html />
 <p>Hello,</p>
 <p>Administration of the <a href="{site_url}">{site_name}</a> is glad to inform you that</p>
@@ -1461,10 +1453,26 @@ If it is not enabled then please consider implement this optimization, since it 
 <p>Your new password is:</p>
 <p><b>{password}</b></p>
 <bx_include_auto:_email_footer.html />]]></string>
+	<string name="_sys_et_txt_body_profile_change_status_active"><![CDATA[<bx_include_auto:_email_header.html />
+<p>Hello {profile_name},</p>
+<p>Your profile was reviewed and activated!</p>
+<p>Simply follow the link below to enjoy our services:<br />
+<a href="{site_url}member.php">{site_url}member.php</a></p>
+<p>Your e-mail used for registration: <span style="color:#FF6633">{account_email}</span></p>
+<p><b>Thank you for using our services!</b></p>
+<bx_include_auto:_email_footer.html />]]></string>
+	<string name="_sys_et_txt_body_profile_change_status_pending"><![CDATA[<bx_include_auto:_email_header.html />
+<p>Hello {profile_name},</p>
+<p>Your profile is waiting for review, as soon as it is reviewed you will receive notification by email.</p>
+<p><b>Thank you for using our services.</b></p>
+<bx_include_auto:_email_footer.html />]]></string>
+	<string name="_sys_et_txt_body_profile_change_status_suspended"><![CDATA[<bx_include_auto:_email_header.html />
+<p>Hello {profile_name},</p>
+<p>Your profile was suspended.</p>
+<bx_include_auto:_email_footer.html />]]></string>
 	<string name="_sys_et_txt_body_pruning"><![CDATA[<bx_include_auto:_email_header.html />
 <p>{pruning_output}</p>
 <bx_include_auto:_email_footer.html />]]></string>
-	<string name="_sys_et_txt_name_system_activation"><![CDATA[Profile activation message]]></string>
 	<string name="_sys_et_txt_name_system_admin_email"><![CDATA[Message sending from the Admin Panel]]></string>
 	<string name="_sys_et_txt_name_system_comment_replied"><![CDATA[The letter is sent to members whose comment was replied]]></string>
 	<string name="_sys_et_txt_name_system_confirmation"><![CDATA[Profile e-mail confirmation message]]></string>
@@ -1473,8 +1481,10 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_et_txt_name_system_mem_changed"><![CDATA[The letter is sent to members whose membership level was changed]]></string>
 	<string name="_sys_et_txt_name_system_mem_expiration"><![CDATA[Membership expiration letter sent to members whose membership level expires]]></string>
 	<string name="_sys_et_txt_name_system_password_reset"><![CDATA[New password message]]></string>
+	<string name="_sys_et_txt_name_profile_change_status_active"><![CDATA[Profile status changed to active]]></string>
+	<string name="_sys_et_txt_name_profile_change_status_pending"><![CDATA[Profile status changed to pending]]></string>
+	<string name="_sys_et_txt_name_profile_change_status_suspended"><![CDATA[Profile status changed to suspended]]></string>
 	<string name="_sys_et_txt_name_system_pruning"><![CDATA[Pruning result]]></string>
-	<string name="_sys_et_txt_subject_activation"><![CDATA[Profile status was changed to Active]]></string>
 	<string name="_sys_et_txt_subject_admin_email"><![CDATA[Message from <SiteName> Admin: <MessageSubject>]]></string>
 	<string name="_sys_et_txt_subject_comment_replied"><![CDATA[Your comment was replied]]></string>
 	<string name="_sys_et_txt_subject_confirmation"><![CDATA[Confirm Your Email (ACTION REQUIRED)]]></string>
@@ -1483,6 +1493,9 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_et_txt_subject_mem_changed"><![CDATA[Your membership level was changed]]></string>
 	<string name="_sys_et_txt_subject_mem_expiration"><![CDATA[Your membership is about to expire]]></string>
 	<string name="_sys_et_txt_subject_password_reset"><![CDATA[New Password]]></string>
+	<string name="_sys_et_txt_subject_profile_change_status_active"><![CDATA[Profile Activated]]></string>
+	<string name="_sys_et_txt_subject_profile_change_status_pending"><![CDATA[Profile Pending Review]]></string>
+	<string name="_sys_et_txt_subject_profile_change_status_suspended"><![CDATA[Profile was Suspended]]></string>
 	<string name="_sys_et_txt_subject_pruning"><![CDATA[{site_title} pruning result]]></string>
 	<string name="_sys_et_txt_unsubscribe"><![CDATA[Unsubscribe]]></string>
 	<string name="_sys_form_account"><![CDATA[Account]]></string>

@@ -251,7 +251,7 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton {
     }
 
     function deleteLevelByProfileId($iProfileId, $bAll = false) {
-        $sQuery = $this->prepare("DELETE FROM `sys_acl_levels_members` WHERE `IDMember`=?" . ($bAll ? " AND (`DateExpires` IS NULL OR `DateExpires`>NOW())" : ""), $iProfileId);
+        $sQuery = $this->prepare("DELETE FROM `sys_acl_levels_members` WHERE `IDMember` = ? " . ($bAll ? "" : " AND (`DateExpires` IS NULL OR `DateExpires` > NOW())"), $iProfileId);
         return (int)$this->query($sQuery) > 0;
     }
 

@@ -7,6 +7,8 @@
  * @{
  */
 
+// TODO: check if it is used or maybe usefull for future use, also it needs some refactoring
+
 class BxDolCacheUtilities extends BxDol
 {
     protected $oMemberMenu;

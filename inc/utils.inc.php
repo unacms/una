@@ -241,7 +241,29 @@ function htmlspecialchars_adv( $string ) {
     return htmlspecialchars($string, ENT_COMPAT, 'UTF-8');
 }
 
+/**
+ * Send mail to user by parsing email template
+ */
+function sendMailTemplate($sTemplateName, $iAccountId = 0, $iProfileId = 0, $aReplaceVars = array(), $iEmailType = BX_EMAIL_NOTIFY) {
 
+    bx_import('BxDolAccount');
+    $oAccount = BxDolAccount::getInstance($iAccountId);
+
+    bx_import('BxDolProfile');
+    $oProfile = BxDolProfile::getInstance($iProfileId);
+
+    bx_import('BxDolEmailTemplates');
+    $oEmailTemplates = BxDolEmailTemplates::getInstance();
+
+    if (!$oAccount || !$oProfile || !$oEmailTemplates)
+        return false;
+
+    $aTemplate = $oEmailTemplates->parseTemplate($sTemplateName, $aReplaceVars, $iAccountId, $iProfileId);
+    if (!$aTemplate)
+        return false;
+
+    return sendMail($oAccount->getEmail(), $aTemplate['Subject'], $aTemplate['Body'], 0, array(), $iEmailType);
+}
 
 /**
  * Send email function

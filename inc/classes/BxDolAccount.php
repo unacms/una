@@ -116,9 +116,7 @@ class BxDolAccount extends BxDol {
      * Send "confirmation" email
      */
     public function sendConfirmationEmail($iAccountId = false) {
-        $iAccountId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
-        $aAccountInfo = $this->getInfo($iAccountId);
-        $sEmail = $aAccountInfo['email'];
+        $sEmail = $this->getEmail($iAccountId);
 
         bx_import('BxDolKey');
         $oKey = BxDolKey::getInstance();
@@ -186,6 +184,15 @@ class BxDolAccount extends BxDol {
      */
     public function getIcon($iAccountId = false) {
         return BxDolTemplate::getInstance()->getImageUrl('account-icon.png');
+    }
+
+    /**
+     * Get account email
+     */
+    public function getEmail($iAccountId = false) {
+        $iAccountId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
+        $aAccountInfo = $this->getInfo($iAccountId);
+        return $aAccountInfo['email'];
     }
 
     /**
