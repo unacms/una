@@ -10,7 +10,8 @@ CREATE TABLE IF NOT EXISTS `bx_organizations_data` (
   `org_name` varchar(255) NOT NULL,
   `org_cat` int(11) NOT NULL,
   `views` int(11) NOT NULL default '0',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  FULLTEXT KEY `org_name` (`org_name`)
 );
 
 -- TABLE: STORAGES & TRANSCODERS

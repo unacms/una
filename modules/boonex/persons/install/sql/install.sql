@@ -10,7 +10,8 @@ CREATE TABLE IF NOT EXISTS `bx_persons_data` (
   `fullname` varchar(255) NOT NULL,
   `sex` int(11) NOT NULL,
   `views` int(11) NOT NULL default '0',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  FULLTEXT KEY `fullname` (`fullname`)
 );
 
 -- TABLE: STORAGES & TRANSCODERS

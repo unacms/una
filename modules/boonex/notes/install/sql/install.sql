@@ -14,7 +14,8 @@ CREATE TABLE IF NOT EXISTS `bx_notes_posts` (
   `votes` int(11) NOT NULL default '0',
   `comments` int(11) NOT NULL default '0',
   `allow_view_to` int(11) NOT NULL DEFAULT '3',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  FULLTEXT KEY `title_text` (`title`,`text`)
 );
 
 -- TABLE: storages & transcoders

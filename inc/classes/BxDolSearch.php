@@ -675,9 +675,13 @@ class BxDolSearchResult implements iBxDolReplaceable
                 $aSql['order'] = "ORDER BY RAND()";
                 break;
            case 'score':
-                if (is_array($this->aCurrent['restriction']['keyword'])) {
-                  $aSql['order'] = "ORDER BY `score` DESC";
-                  $aSql['ownFields'] .= $this->getSearchFieldsCond($this->aCurrent['searchFields'], $this->aCurrent['restriction']['keyword']['value'], 'score'). ', ';
+                if (is_array($this->aCurrent['restriction']['keyword'])) {    
+                    $sPseud = '';
+                    if ('on' == getParam('useLikeOperator')) {
+                        $aSql['order'] = "ORDER BY `score` DESC";
+                        $sPseud = 'score';
+                    }
+                    $aSql['ownFields'] .= $this->getSearchFieldsCond($this->aCurrent['searchFields'], $this->aCurrent['restriction']['keyword']['value'], $sPseud) . ',';
                 }
                 break;
            case 'none':
@@ -726,7 +730,7 @@ class BxDolSearchResult implements iBxDolReplaceable
     function getSearchFieldsCond ($aFields, $sKeyword, $sPseud = '') 
     {
         if (!$sKeyword)
-            return;
+            return '';
 
         $sTable = empty($this->aCurrent['tableSearch']) ? $this->aCurrent['table'] : $this->aCurrent['tableSearch'];
 
@@ -736,32 +740,33 @@ class BxDolSearchResult implements iBxDolReplaceable
 
         $sKeyword = $oDb->escape($sKeyword);
 
-        $aSql = array(
-            'function' => 'MATCH',
-            'operator' => 'AGAINST',
-            'word' => $sKeyword
-        );
+        if (!is_array($aFields))
+            $aFields = array($aFields);
+
         if ($bLike == 'on') {
-            $aSql = array(
-                'function' => 'CONCAT', // TODO: get rid of CONCAT !!!
-                'operator' => 'LIKE',
-                  'word' => '%' . preg_replace('/\s+/', '%', $sKeyword) . '%'
-            );
-        }
 
-        $sqlWhere = " {$aSql['function']}(";
-        if (is_array($aFields)) {
+            $sKeyword = '%' . preg_replace('/\s+/', '%', $sKeyword) . '%';
+
+            $sSqlWhere = '';
             foreach ($aFields as $sValue)
-                $sqlWhere .= "`{$sTable}`.`$sValue`, ";
+                $sSqlWhere .= "`{$sTable}`.`$sValue` LIKE  '$sKeyword' OR ";
+
+            $sSqlWhere = '(' . trim($sSqlWhere, 'OR ') . ')';
+
         } else {
-                $sqlWhere .= "`{$sTable}`.`$aFields`";
+
+            $sSqlWhere = '';
+            foreach ($aFields as $sValue)
+                $sSqlWhere .= "`{$sTable}`.`$sValue`, ";
+            
+            $sSqlWhere = trim($sSqlWhere, ', ');
+            $sSqlWhere = " MATCH({$sSqlWhere}) AGAINST ('{$sKeyword}') ";
+
+            if (!empty($sPseud))
+                $sSqlWhere .= " AS `$sPseud` ";
         }
-        $sqlWhere = trim($sqlWhere, ', ') . ") {$aSql['operator']} ('{$aSql['word']}')";
 
-        if (strlen($sPseud) > 0)
-            $sqlWhere .= " as `$sPseud`";
-
-        return $sqlWhere;
+        return $sSqlWhere;
     }
 
     /**
