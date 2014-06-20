@@ -970,10 +970,6 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
             case 'copyright':
                 $sRet = _t( '_copyright',   date('Y') ) . getVersionComment();
                 break;
-            case 'flush_header':
-                //TODO: add some variable to disable it if needed
-                //flush();
-                break;
             case 'extra_js':
                 $sRet = empty($this->aPage['extra_js']) ? '' : $this->aPage['extra_js'];
                 break;
