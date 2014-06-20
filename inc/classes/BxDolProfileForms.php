@@ -19,7 +19,6 @@ class BxDolProfileForms extends BxDol {
         parent::__construct ();
     }
 
-    // TODO: remake all calls and include markers with content and profile id at least
     protected function _redirectAndExit ($sUrl, $isPermalink = true, $aMarkers = false) {
         if ($isPermalink) {
             bx_import('BxDolPermalinks');

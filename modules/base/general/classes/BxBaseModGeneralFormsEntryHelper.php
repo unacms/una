@@ -154,7 +154,10 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
 
         // redirect
         bx_import('BxDolPermalinks');
-        $this->_redirectAndExit(BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']));
+        $this->_redirectAndExit($CNF['URL_HOME'], true, array(
+            'account_id' => $oProfile->getAccountId(),
+            'profile_id' => $oProfile->id(),
+        ));
     }
 
     public function viewDataForm ($iContentId, $sDisplay = false) 
