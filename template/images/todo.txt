@@ -1,2 +1,0 @@
-loading.gif spacer.gif are ok
-TODO: all other files need to be deleted/replaces according to new design

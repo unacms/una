@@ -68,13 +68,6 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
         ));
     }
 
-    function loadingBox($sName) 
-    {
-        return $this->_oTemplate->parseHtmlByName('loading.html', array(
-            'name' => $sName,
-        ));
-    }
-
     /**
      * Get standard popup box with title.
      *
@@ -388,7 +381,7 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
 	        $oTranscoder = BxDolImageTranscoder::getObjectInstance(BX_DOL_TRANSCODER_OBJ_ICON_FACEBOOK);
 	        $sImageUrlFcb = $oTranscoder->getImageUrl($iId);
 
-	        //apple touch icon
+	        // apple touch icon
 	        $oTranscoder = BxDolImageTranscoder::getObjectInstance(BX_DOL_TRANSCODER_OBJ_ICON_APPLE);
 	        $sImageUrlApl = $oTranscoder->getImageUrl($iId);
         }

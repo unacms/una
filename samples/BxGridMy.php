@@ -289,7 +289,7 @@ class BxGridMy extends BxTemplGrid {
      */
     protected function _getCellHeaderStatus ($sKey, $aField) { 
         $s = parent::_getCellHeaderDefault($sKey, $aField);
-        return preg_replace ('/<th(.*?)>(.*?)<\/th>/', '<th$1><img src="' . BxDolTemplate::getInstance()->getIconUrl('cmt-female.gif') . '"></th>', $s);
+        return preg_replace ('/<th(.*?)>(.*?)<\/th>/', '<th$1><img src="' . BxDolTemplate::getInstance()->getIconUrl('sys_fl_kg.gif') . '"></th>', $s);
     }
 
     /**
