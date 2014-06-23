@@ -113,7 +113,7 @@ class BxDolStudioOAuth extends BxDol implements iBxDolSingleton {
 			    	return $this->processServerError($aRequestToken);
 
 			    $this->oSession->setValue('sys_oauth_secret', $aRequestToken['oauth_token_secret']);
-			    return _t('_adm_msg_oauth_need_authorize', bx_append_url_params(BX_DOL_OAUTH_URL_AUTHORIZE, array('oauth_token' => $aRequestToken['oauth_token'], 'sid' => generateSid())));
+			    return _t('_adm_msg_oauth_need_authorize', bx_append_url_params(BX_DOL_OAUTH_URL_AUTHORIZE, array('oauth_token' => $aRequestToken['oauth_token'], 'sid' => bx_site_hash())));
 			}
 
 			//--- Get access token. 
@@ -135,7 +135,6 @@ class BxDolStudioOAuth extends BxDol implements iBxDolSingleton {
 			}
 		}
 		catch(OAuthException $e) {
-			//TODO: Write in LOG print_r($e)
 			return _t('_adm_err_oauth_cannot_get_token');
 		}
     }
@@ -157,7 +156,6 @@ class BxDolStudioOAuth extends BxDol implements iBxDolSingleton {
 			return json_decode($oConsumer->getLastResponse(), true);
 		}
     	catch(OAuthException $e) {
-    		//TODO: Write in LOG print_r($e);
 			return array();
 		}
     }

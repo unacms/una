@@ -1231,13 +1231,10 @@
 	<string name="_adm_txt_modules_recompile_comments"><![CDATA[Recompiling comments:]]></string>
 	<string name="_adm_txt_modules_recompile_global_paramaters"><![CDATA[Recompiling global paramaters:]]></string>
 	<string name="_adm_txt_modules_recompile_injections"><![CDATA[Recompiling injections:]]></string>
-	<string name="_adm_txt_modules_recompile_main_menu"><![CDATA[Recompiling main menu:]]></string>
+	<string name="_adm_txt_modules_recompile_menus"><![CDATA[Recompiling menus:]]></string>
 	<string name="_adm_txt_modules_recompile_member_actions"><![CDATA[Recompiling member actions:]]></string>
-	<string name="_adm_txt_modules_recompile_member_menu"><![CDATA[Recompiling member menu:]]></string>
 	<string name="_adm_txt_modules_recompile_member_stats"><![CDATA[Recompiling member statistics:]]></string>
-	<string name="_adm_txt_modules_recompile_page_builder"><![CDATA[Recompiling page builder:]]></string>
 	<string name="_adm_txt_modules_recompile_permalinks"><![CDATA[Recompiling permalinks:]]></string>
-	<string name="_adm_txt_modules_recompile_profile_fields"><![CDATA[Recompiling profile fields:]]></string>
 	<string name="_adm_txt_modules_recompile_search"><![CDATA[Recompiling search:]]></string>
 	<string name="_adm_txt_modules_recompile_site_stats"><![CDATA[Recompiling site statistics:]]></string>
 	<string name="_adm_txt_modules_recompile_votes"><![CDATA[Recompiling votes:]]></string>
