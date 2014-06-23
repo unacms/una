@@ -34,14 +34,19 @@ class BxBaseMenu extends BxDolMenu {
      */
     public function getCode () {
 
+        $sMenuTitle = isset($this->_aObject['title']) ? _t($this->_aObject['title']) : 'Menu-' . rand(0, PHP_INT_MAX);
+        if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->beginMenu($sMenuTitle);
+
+        $s = '';
         $aVars = $this->_getTemplateVars ();
+        if (!empty($aVars['bx_repeat:menu_items'])) {
+            $this->_addJsCss();
+            $s = $this->_oTemplate->parseHtmlByName($this->_aObject['template'], $aVars);
+        }
 
-        if (empty($aVars['bx_repeat:menu_items']))
-            return false;
+        if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->endMenu($sMenuTitle);
 
-        $this->_addJsCss();
-
-        return $this->_oTemplate->parseHtmlByName($this->_aObject['template'], $aVars);
+        return $s;
     }
 
     /** 
@@ -126,7 +131,7 @@ class BxBaseMenu extends BxDolMenu {
                 if (false === strpos($a['icon'], '.')) // font icons
                     $sIcon = $a['icon'];
                 else
-                    $sIconUrl = $this->_oTemplate->getIconUrl($a['icon']); // TODO: it is used in studio only, so move this line of code to studio or maybe all studio icons will use font icons too ?!
+                    $sIconUrl = $this->_oTemplate->getIconUrl($a['icon']);
             }
         }
         return array ($sIcon, $sIconUrl);

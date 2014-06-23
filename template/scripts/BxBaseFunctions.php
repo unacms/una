@@ -270,7 +270,6 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
             'title' => $sTitle,            
             'designbox_content' => $sContent,
             'caption_item' => $this->designBoxMenu ($mixedMenu, array (array('menu' => 1))),
-            'bottom_item' => '', // TODO: remove or implement somehow
         ));
     }
 

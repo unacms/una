@@ -54,8 +54,6 @@ class BxBasePage extends BxDolPage {
 
         $this->_selectMenu();
 
-        // TODO: insert profiler call here 
-
         if (!getParam('sys_page_cache_enable') || !$this->_aObject['cache_lifetime'])
             return $this->_getPageCode();
         
