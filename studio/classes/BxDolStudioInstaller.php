@@ -690,58 +690,12 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
         $bResult = $this->oDb->cacheParamsClear();
         return $bResult ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
-    function actionRecompileMainMenu($sOperation) {
-        /*
-        TODO: Update the code when menu engine is rewrited.
-    	bx_import('BxDolMenu');
-        $bResult = BxDolMenu::getInstance()->_compile();
-		*/
-
-        $bResult = true;
-        return $bResult ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
-    }
-    function actionRecompileMemberMenu($sOperation) {
-        /*
-        //TODO: Recreate if the feature will be available.
-        bx_import('BxDolMemberMenu');
-        $oMemberMenu = new BxDolMemberMenu();
-
-        $bResult = $oMemberMenu->deleteMemberMenuCaches();
-        */
-
-        $bResult = true;
+    function actionRecompileMenus($sOperation) {
+        $bResult = $this->oDb->cleanCache('sys_objects_menu');
         return $bResult ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
     function actionRecompileSiteStats($sOperation) {
         $bResult = $this->oDb->cleanCache('sys_stat_site');
-        return $bResult ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
-    }
-    function actionRecompilePageBuilder($sOperation) {
-        /*
-		//TODO: Recreate when cache engine is available. 
-    	bx_import('BxDolPageViewCacher');
-
-        ob_start();
-        $oPVCacher = new BxDolPageViewCacher('sys_page_compose', 'sys_page_compose.inc');
-        $bResult = $oPVCacher->createCache();
-        ob_get_clean();
-        */
-
-        $bResult = true;
-        return $bResult ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
-    }
-    function actionRecompileProfileFields($sOperation) {
-        /*
-		//TODO: Recreate when cache engine is available. 
-    	bx_import('BxDolPFMCacher');
-
-        ob_start();
-        $oBxDolPFMCacher = new BxDolPFMCacher();
-        $bResult = $oBxDolPFMCacher -> createCache();
-        ob_get_clean();
-		*/
-
-        $bResult = true;
         return $bResult ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
     function actionRecompileComments($sOperation) {        
@@ -765,18 +719,10 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
     function actionRecompilePermalinks($sOperation) {
         $bResult = true;
 
-        ob_start();
         bx_import('BxDolPermalinks');
         $bResult = $bResult && BxDolPermalinks::getInstance()->cacheInvalidate();
 
-        /*
-        TODO: Update the code when menu engine is rewrited. 
-        bx_import('BxDolMenu');
-        $bResult = $bResult && BxDolMenu::getInstance()->_compile();
-		*/
-
-        $bResult = $bResult && $this->oDb->cleanCache('sys_menu_member');
-        ob_get_clean();
+        $bResult = $bResult && ($this->actionRecompileMenus($sOperation) == BX_DOL_STUDIO_INSTALLER_SUCCESS);
 
         return $bResult ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
     }

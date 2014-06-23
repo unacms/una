@@ -44,22 +44,14 @@ $aConfig = array(
      * Installation/Uninstallation Section.
      */
     'install' => array(
-        'show_introduction' => 0,
-        'change_permissions' => 0,
         'execute_sql' => 1,
         'update_languages' => 1,
-        'recompile_global_paramaters' => 1,
-        'clear_db_cache' => 0,
-        'show_conclusion' => 0
+        'recompile_global_paramaters' => 1
     ),
     'uninstall' => array (
-        'show_introduction' => 0,
-        'change_permissions' => 0,
         'execute_sql' => 1,
         'update_languages' => 1,
-        'recompile_global_paramaters' => 1,
-        'clear_db_cache' => 0,
-        'show_conclusion' => 0
+        'recompile_global_paramaters' => 1
     ),
     'enable' => array(
         'execute_sql' => 1

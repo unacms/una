@@ -374,7 +374,7 @@ class BxDolStudioStore extends BxTemplStudioPage {
 		foreach($aItems as $aItem)
 			$aIds[] = $aItem['item_id'];
 
-		$sSid = generateSid();
+		$sSid = bx_site_hash();
 		return BX_DOL_UNITY_URL_MARKET . 'purchase/' . $sVendor . '?sid=' . $sSid . '&products=' . base64_encode(implode(',', $aIds));
     }
 

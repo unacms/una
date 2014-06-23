@@ -654,16 +654,7 @@ class BxTimelineModule extends BxDolModule
 		);
     }
 
-    //--- Check permissions methods ---//
-
-    // TODO: this function is incorrect ,$iAction is never defined, also it looks like it is not used anywhere: rewrite it or delete
-    public function checkActionErrorMsg ($iAction)
-    {
-        $iId = $this->_getAuthorId();
-        $check_res = checkAction($iId, $iAction);
-        return $check_res[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $check_res[CHECK_ACTION_MESSAGE] : '';
-    }
-    
+    //--- Check permissions methods ---//    
     public function isAllowedPost($bPerform = false)
     {
 		if(isAdmin())

@@ -67,10 +67,6 @@ class BxDolCronPruning extends BxDolCron
         bx_import('BxDolVote');
         $iDeletedVotes = BxDolVote::maintenance();
 
-        // clean comments ratings
-        //bx_import('BxDolCmts');
-        //BxDolCmts::maintenance(); // TODO: fix it
-
         echo _t('_sys_pruning_db', $iDeleteMemLevels, $iSessions, $iDeletedViews, $iDeletedVotes, $iDeletedKeys, $iDeletedExpiredTokens, $iDeletedTranscodedImages);
     }
 

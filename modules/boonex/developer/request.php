@@ -9,14 +9,11 @@
  * @{
  */
 
-require_once( BX_DIRECTORY_PATH_CLASSES . 'BxDolRequest.php' );
+require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
-if (isset($aRequest[0]) && 0 == strncmp($aRequest[0], 'act_', 4)) {
-    $aRequest[0] = str_replace('act_', '', $aRequest[0]);
-    // TODO: is header with 'utf8' encoding needed here ?
-    echo BxDolRequest::processAsAction($aModule, $aRequest);
-} else {
-    BxDolRequest::processAsAction($aModule, $aRequest);
-}
+bx_import('BxDolLanguages');
+bx_import('BxDolRequest');
+
+BxDolRequest::processAsAction($GLOBALS['aModule'], $GLOBALS['aRequest']);
 
 /** @} */
