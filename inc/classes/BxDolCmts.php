@@ -306,30 +306,6 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         return $GLOBALS['bx_dol_cmts_systems'];
     }
 
-	/**
-     * it is called on cron every day or similar period to clean old comment votes
-     */
-    public static function maintenance() 
-    {
-        $iResult = 0;
-        $oDb = BxDolDb::getInstance();
-
-        $aSystems = self::getSystems();
-        foreach($aSystems as $aSystem) {
-			if(!$aSystem['is_on'])
-				continue;
-
-            $sQuery = $oDb->prepare("DELETE FROM `{$aSystem['table_track']}` WHERE `cmt_rate_ts` < (UNIX_TIMESTAMP() - ?)", BX_CMT_OLD_VOTES);
-            $iDeleted = (int)$oDb->query($sQuery);
-            if($iDeleted > 0)
-            	$oDb->query("OPTIMIZE TABLE `{$aSystem['table_track']}`");
-
-			$iResult += $iDeleted;
-        }
-
-        return $iResult;
-    }
-
     public function init ($iId)
     {
         if (empty($this->iId) && $iId)
