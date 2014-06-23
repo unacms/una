@@ -111,6 +111,7 @@ class BxSMTPModule extends BxDolModule
             'body'      => $sMailBody,
             'header'    => $sMailHeader,
             'params'    => $sMailParameters,
+            'recipient' => $aRecipientInfo,
             'html'      => $isHtml,
         );
         bx_alert('profile', 'send_mail', $aRecipientInfo ? $aRecipientInfo['ID'] : 0, '', $aAlertData);
@@ -124,10 +125,10 @@ class BxSMTPModule extends BxDolModule
         $sMsg  = '';
         if (isset($_POST['tester_submit']) && $_POST['tester_submit']) {
             
+            $isHTML = bx_get('html') == 'on' ? true : false;
             $sRecipient = bx_process_pass(bx_get('recipient'));
             $sSubj = bx_process_pass(bx_get('subject'));
-            $sBody = bx_process_pass(bx_get('body'));
-            $isHTML = bx_get('html') == 'on' ? true : false;
+            $sBody = bx_process_pass(bx_get('body'), $isHTML ? BX_DATA_HTML : BX_DATA_TEXT);
     
             if (sendMail($sRecipient, $sSubj, $sBody, 0, array(), BX_EMAIL_SYSTEM, $isHTML ? 'html' : ''))
                 $sMsg = MsgBox(_t('_bx_smtp_send_ok'));
@@ -179,7 +180,7 @@ class BxSMTPModule extends BxDolModule
 
     function log ($s)
     {
-        $fn = BX_DIRECTORY_PATH_TMP . "smtp_mailer.log";
+        $fn = BX_DIRECTORY_PATH_ROOT . "logs/smtp_mailer.log";
         $f = @fopen ($fn, 'a');
         if (!$f) 
             return;

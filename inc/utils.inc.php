@@ -331,9 +331,25 @@ function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0
     $sMailSubject = '=?UTF-8?B?' . base64_encode( $sMailSubject ) . '?=';
     $sMailHeader = "MIME-Version: 1.0\r\n" . $sMailHeader;
 
-    // if SMPT mailer is installed and enabled - send mail throught it
-    if (!$isDisableAlert && 'on' == getParam('bx_smtp_on')) { // TODO: remake to use alert: before_send_mail
-        return BxDolService::call('bx_smtp', 'send', array($sRecipientEmail, $sMailSubject, $sMailBody, $sMailHeader, $sMailParameters, 'html' == $sEmailFlag, $aRecipientInfo));
+    // build data for alert handler
+    $bResult = null;
+    $aAlert = array(
+        'email' => $sRecipientEmail,
+        'subject' => $sMailSubject,
+        'body' => $sMailBody,
+        'header' => $sMailHeader,
+        'params' => $sMailParameters,
+        'recipient' => $aRecipientInfo,
+        'html' => 'html' == $sEmailFlag ? true : false,
+        'override_result' => &$bResult,
+    );
+
+    // system alert
+    if (!$isDisableAlert) {
+        bx_alert('system', 'before_send_mail', (isset($aRecipientInfo['ID']) ? $aRecipientInfo['ID'] : 0), '', $aAlert);
+        if ($bResult !== null)
+            return $bResult;
+        unset($aAlert['override_result']);
     }
 
     // send mail
@@ -347,16 +363,8 @@ function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0
     }
 
     // system alert
-    if (!$isDisableAlert) {
-        bx_alert('profile', 'send_mail', (isset($aRecipientInfo['ID']) ? $aRecipientInfo['ID'] : 0), '', array(
-            'email'     => $sRecipientEmail,
-            'subject'   => $sMailSubject,
-            'body'      => $sMailBody,
-            'header'    => $sMailHeader,
-            'params'    => $sMailParameters,
-            'html'      => 'html' == $sEmailFlag ? true : false,
-        ));
-    }
+    if (!$isDisableAlert)
+        bx_alert('system', 'send_mail', (isset($aRecipientInfo['ID']) ? $aRecipientInfo['ID'] : 0), '', $aAlert);
 
     return $iSendingResult;
 }

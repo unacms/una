@@ -1,4 +1,6 @@
+
 -- settings
+
 SET @iTypeOrder = (SELECT MAX(`order`) FROM `sys_options_types` WHERE `group` = 'modules');
 INSERT INTO `sys_options_types` (`group`, `name`, `caption`, `icon`, `order`) VALUES 
 ('modules', 'bx_smtp', '_bx_smtp_adm_stg_cpt_type', 'bx_smtpmailer@modules/boonex/smtpmailer/|std-mi.png', IF(NOT ISNULL(@iTypeOrder), @iTypeOrder + 1, 1));
@@ -19,3 +21,13 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_smtp_from_name', '', @iCategId, '''From'' name of the message', 'digit', '', '', 8, ''),
 ('bx_smtp_from_email', '', @iCategId, 'Override default sender email address', 'digit', '', '', 9, ''),
 ('bx_smtp_send_attachments', '', @iCategId, 'Attach every outgoing email all files from ''modules/boonex/smtpmailer/data/attach/'' folder', 'checkbox', '', '', 10, '');
+
+-- alerts
+
+INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALUES 
+('bx_smtp', 'BxSMTPAlertsResponse', 'modules/boonex/smtpmailer/classes/BxSMTPAlertsResponse.php', '');
+SET @iHandler := LAST_INSERT_ID();
+
+INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
+('system', 'before_send_mail', @iHandler);
+
