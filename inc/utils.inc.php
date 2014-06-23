@@ -629,22 +629,15 @@ function bx_import($sClassName, $mixedModule = array()) {
 function bx_instance($sClassName, $aParams = array(), $aModule = array()) {
     if(isset($GLOBALS['bxDolClasses'][$sClassName]))
         return $GLOBALS['bxDolClasses'][$sClassName];
-    else {
-        bx_import((empty($aModule) ? $sClassName : str_replace($aModule['class_prefix'], '', $sClassName)), $aModule);
 
-        if(empty($aParams))
-            $GLOBALS['bxDolClasses'][$sClassName] = new $sClassName();
-        else {
-            $sParams = "";
-            foreach($aParams as $mixedKey => $mixedValue)
-                $sParams .= "\$aParams[" . $mixedKey . "], ";
-            $sParams = substr($sParams, 0, -2);
+    bx_import((empty($aModule) ? $sClassName : str_replace($aModule['class_prefix'], '', $sClassName)), $aModule);
 
-            $GLOBALS['bxDolClasses'][$sClassName] = eval("return new " . $sClassName . "(" . $sParams . ");"); // TODO: remake without eval
-        }
+    $oClass = new ReflectionClass($sClassName);
+    
+    $GLOBALS['bxDolClasses'][$sClassName] = empty($aParams) ? $oClass->newInstance() : $oClass->newInstanceArgs($aParams);
 
-        return $GLOBALS['bxDolClasses'][$sClassName];
-    }
+    return $GLOBALS['bxDolClasses'][$sClassName];
+
 }
 
 
