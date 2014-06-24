@@ -75,6 +75,7 @@ class BxBaseFormAccount extends BxTemplFormView
     public function __construct($aInfo, $oTemplate) 
     {
         parent::__construct($aInfo, $oTemplate);
+        $this->_bSetPendingApproval = !(bool)getParam('sys_account_autoapproval');
     }
 
     function isValid () 

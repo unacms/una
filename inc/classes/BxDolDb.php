@@ -608,7 +608,7 @@ EOJ;
             $sMailBody .= "<hr />Request parameters: <pre>" . print_r( $_REQUEST, true ) . " </pre>";
             $sMailBody .= "--\nAuto-report system\n";
 
-            sendMail($this->getParam('site_email_bug_report'), "Database error in " . $sSiteTitle, $sMailBody, 0, array(), BX_EMAIL_SYSTEM, 'html', true);
+            sendMail($this->getParam('site_email'), "Database error in " . $sSiteTitle, $sMailBody, 0, array(), BX_EMAIL_SYSTEM, 'html', true);
         }
 
         exit;

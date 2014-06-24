@@ -10,8 +10,6 @@ INSERT INTO `sys_profiles` (`account_id`, `type`, `content_id`, `status`) VALUES
 UPDATE `sys_options` SET `VALUE` = '{admin_email}' WHERE `Name` = 'site_email';
 UPDATE `sys_options` SET `VALUE` = '{site_title}' WHERE `Name` = 'site_title';
 UPDATE `sys_options` SET `VALUE` = '{site_email}' WHERE `Name` = 'site_email_notify';
-UPDATE `sys_options` SET `VALUE` = '{admin_email}' WHERE `Name` = 'site_email_bug_report';
-UPDATE `sys_options` SET `VALUE` = '{site_desc}' WHERE `Name` = 'MetaDescription';
 UPDATE `sys_options` SET `VALUE` = '{version}' WHERE `Name` = 'sys_version';
 UPDATE `sys_options` SET `VALUE` = '{time}' WHERE `Name` = 'sys_install_time';
 

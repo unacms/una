@@ -151,12 +151,6 @@ class BxDolInstallSiteConfig
                 'desc' => _t('_sys_inst_conf_desc_site_title'),
                 'check' => array('checkLength', 1),
             ),
-            'site_desc' => array(
-                'name' => _t('_sys_inst_conf_field_site_desc'),
-                'ex' => 'The place to find new friends, communicate and have fun.',
-                'desc' => _t('_sys_inst_conf_desc_site_desc'),
-                'check' => array('checkLength', 1),
-            ),
             'site_email' => array(
                 'name' => _t('_sys_inst_conf_field_site_email'),
                 'ex' => 'no-reply@youdomain.here',

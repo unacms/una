@@ -1074,35 +1074,30 @@
 	<string name="_adm_reg_license"><![CDATA[License:]]></string>
 	<string name="_adm_reg_title"><![CDATA[<a href="https://www.boonex.com/paymentprovider/payment">Purchase a Dolphin License</a> and Register Your Site.]]></string>
 	<string name="_adm_scs_operation_done"><![CDATA[]]></string>
+	<string name="_adm_stg_cpt_category_account"><![CDATA[Account]]></string>
 	<string name="_adm_stg_cpt_category_cache"><![CDATA[Cache]]></string>
 	<string name="_adm_stg_cpt_category_general"><![CDATA[General]]></string>
 	<string name="_adm_stg_cpt_category_languages"><![CDATA[Languages]]></string>
-	<string name="_adm_stg_cpt_category_massmailer"><![CDATA[Massmailer]]></string>
-	<string name="_adm_stg_cpt_category_memberships"><![CDATA[Memberships]]></string>
 	<string name="_adm_stg_cpt_category_permalinks"><![CDATA[Permalinks]]></string>
-	<string name="_adm_stg_cpt_category_pruning"><![CDATA[Pruning]]></string>
 	<string name="_adm_stg_cpt_category_security"><![CDATA[Security]]></string>
 	<string name="_adm_stg_cpt_category_site_settings"><![CDATA[Site Settings]]></string>
 	<string name="_adm_stg_cpt_category_storage"><![CDATA[Storage]]></string>
 	<string name="_adm_stg_cpt_category_system"><![CDATA[System]]></string>
 	<string name="_adm_stg_cpt_category_templates"><![CDATA[Templates]]></string>
-	<string name="_adm_stg_cpt_option_boonex_aff_id"><![CDATA[My BoonEx Affiliate ID]]></string>
 	<string name="_adm_stg_cpt_option_currency_code"><![CDATA[Currency code (for checkout system)]]></string>
 	<string name="_adm_stg_err_option_currency_code"><![CDATA[Cannot be empty.]]></string>
 	<string name="_adm_stg_cpt_option_currency_sign"><![CDATA[Currency sign (for display purposes only)]]></string>
 	<string name="_adm_stg_err_option_currency_sign"><![CDATA[Cannot be empty.]]></string>
 	<string name="_adm_stg_cpt_option_enable_gd"><![CDATA[Use GD library for image processing]]></string>
 	<string name="_adm_stg_cpt_option_enable_template"><![CDATA[Show Template Switcher]]></string>
-	<string name="_adm_stg_cpt_option_expire_notification_days"><![CDATA[Number of days before membership expiration to notify members ( -1 = after expiration )]]></string>
-	<string name="_adm_stg_cpt_option_expire_notify_once"><![CDATA[Notify members about membership expiration only once (every day otherwise)]]></string>
 	<string name="_adm_stg_cpt_option_lang_default"><![CDATA[Default Language]]></string>
-	<string name="_adm_stg_cpt_option_msgs_per_start"><![CDATA[Send emails from queue, it happens every cron execution (5m-1h)]]></string>
 	<string name="_adm_stg_cpt_option_permalinks_modules"><![CDATA[Enable friendly permalinks for Modules]]></string>
 	<string name="_adm_stg_cpt_option_permalinks_pages"><![CDATA[Enable friendly permalinks for Pages]]></string>
-	<string name="_adm_stg_cpt_option_site_email"><![CDATA[Site Email]]></string>
-	<string name="_adm_stg_cpt_option_site_email_bug_report"><![CDATA[Site Email Bug Report]]></string>
-	<string name="_adm_stg_cpt_option_site_email_notify"><![CDATA[Site Email Notify]]></string>
-	<string name="_adm_stg_cpt_option_site_title"><![CDATA[Site Title]]></string>
+	<string name="_adm_stg_cpt_option_site_email"><![CDATA[Email to receive critical site notifications]]></string>
+	<string name="_adm_stg_cpt_option_site_email_notify"><![CDATA[Email to send site messages from]]></string>
+	<string name="_adm_stg_cpt_option_site_title"><![CDATA[Site title]]></string>
+	<string name="_adm_stg_cpt_option_sys_account_autoapproval"><![CDATA[Automatic account activation after creation]]></string>
+	<string name="_adm_stg_cpt_option_sys_account_default_acl_level"><![CDATA[Default member's level to assign after account creation]]></string>
 	<string name="_adm_stg_cpt_option_sys_cache_memcache_host"><![CDATA[Memcached server host]]></string>
 	<string name="_adm_stg_cpt_option_sys_cache_memcache_port"><![CDATA[Memcached server port]]></string>
 	<string name="_adm_stg_cpt_option_sys_db_cache_enable"><![CDATA[Enable DB cache]]></string>
@@ -1114,7 +1109,6 @@
 	<string name="_adm_stg_cpt_option_sys_ftp_dir"><![CDATA[Path to Dolphin on FTP server]]></string>
 	<string name="_adm_stg_cpt_option_sys_ftp_login"><![CDATA[FTP server login]]></string>
 	<string name="_adm_stg_cpt_option_sys_ftp_password"><![CDATA[FTP server password]]></string>
-	<string name="_adm_stg_cpt_option_sys_mm_cache_engine"><![CDATA[Member menu cache engine (other than File option may require custom server setup)]]></string>
 	<string name="_adm_stg_cpt_option_sys_oauth_key"><![CDATA[BoonEx account key]]></string>
 	<string name="_adm_stg_cpt_option_sys_oauth_secret"><![CDATA[BoonEx account secret]]></string>
 	<string name="_adm_stg_cpt_option_sys_page_cache_enable"><![CDATA[Enable Page cache]]></string>
@@ -1128,10 +1122,10 @@
 	<string name="_adm_stg_cpt_option_sys_security_impact_threshold_block"><![CDATA[Total security impact threshold to send report and block aggressor]]></string>
 	<string name="_adm_stg_cpt_option_sys_security_impact_threshold_log"><![CDATA[Total security impact threshold to send report]]></string>
 	<string name="_adm_stg_cpt_option_sys_storage_default"><![CDATA[Default storage engine (other than Local may require custom/additional setup)]]></string>
-	<string name="_adm_stg_cpt_option_sys_storage_s3_access_key"><![CDATA[AWS Access Key]]></string>
-	<string name="_adm_stg_cpt_option_sys_storage_s3_bucket"><![CDATA[AWS Bucket]]></string>
-	<string name="_adm_stg_cpt_option_sys_storage_s3_domain"><![CDATA[AWS Custom domain (require custom DNS setup)]]></string>
-	<string name="_adm_stg_cpt_option_sys_storage_s3_secret_key"><![CDATA[AWS Secret Key]]></string>
+	<string name="_adm_stg_cpt_option_sys_storage_s3_access_key"><![CDATA[AWS access key]]></string>
+	<string name="_adm_stg_cpt_option_sys_storage_s3_bucket"><![CDATA[AWS bucket]]></string>
+	<string name="_adm_stg_cpt_option_sys_storage_s3_domain"><![CDATA[AWS custom domain (require custom DNS setup)]]></string>
+	<string name="_adm_stg_cpt_option_sys_storage_s3_secret_key"><![CDATA[AWS secret key]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_cache_compress_enable"><![CDATA[Enable compression for JS/CSS files(cache should be enabled)]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_cache_css_enable"><![CDATA[Enable cache for CSS files]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_cache_enable"><![CDATA[Enable cache for HTML files]]></string>
@@ -1604,7 +1598,6 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_inst_conf_desc_language"><![CDATA[Language to install by default.]]></string>
 	<string name="_sys_inst_conf_desc_path_to_binary"><![CDATA[If '{0}' binary doesn't exist, you need to install <a target="_blank" href="http://www.imagemagick.org/">ImageMagick</a>.]]></string>
 	<string name="_sys_inst_conf_desc_root_dir"><![CDATA[Path to directory where Dolphin files are stored.]]></string>
-	<string name="_sys_inst_conf_desc_site_desc"><![CDATA[Meta description of your site.]]></string>
 	<string name="_sys_inst_conf_desc_site_email"><![CDATA[Email to send site messages from.]]></string>
 	<string name="_sys_inst_conf_desc_site_title"><![CDATA[The name of your site.]]></string>
 	<string name="_sys_inst_conf_desc_site_url"><![CDATA[Your site URL here (slash at the end is required).]]></string>
@@ -1622,7 +1615,6 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_inst_conf_field_language"><![CDATA[Language]]></string>
 	<string name="_sys_inst_conf_field_path_to_binary"><![CDATA[Path to '{0}' binary]]></string>
 	<string name="_sys_inst_conf_field_root_dir"><![CDATA[Site directory]]></string>
-	<string name="_sys_inst_conf_field_site_desc"><![CDATA[Site description]]></string>
 	<string name="_sys_inst_conf_field_site_email"><![CDATA[Site e-mail]]></string>
 	<string name="_sys_inst_conf_field_site_title"><![CDATA[Site title]]></string>
 	<string name="_sys_inst_conf_field_site_url"><![CDATA[Site URL]]></string>

@@ -67,13 +67,13 @@ class BxBaseAccountForms extends BxDolProfileForms {
 
         // approve profile if auto-approval is enabled and profile status is 'pending'
         $sStatus = $oProfile->getStatus();
-        $isAutoApprove = $oForm->isSetPendingApproval() ? false : true; // TODO: add setting option to auto-approve added data automatically
+        $isAutoApprove = $oForm->isSetPendingApproval() ? false : true;
         if ($sStatus == BX_PROFILE_STATUS_PENDING && $isAutoApprove)
             $oProfile->approve(BX_PROFILE_ACTION_AUTO);
 
         // set created profile some default membership
         bx_import('BxDolAcl');
-        $iAclLevel = 2; // TODO: add setting option with default membership 
+        $iAclLevel = getParam('sys_account_default_acl_level');
         BxDolAcl::getInstance()->setMembership($iProfileId, $iAclLevel, 0, true); 
 
         // perform action 
@@ -187,7 +187,7 @@ class BxBaseAccountForms extends BxDolProfileForms {
         }
 
         // check if other text info was changed - if auto-appproval is off
-        $isAutoApprove = true; // TODO: add setting option to auto-approve added data automatically
+        $isAutoApprove = $oForm->isSetPendingApproval() ? false : true;
         if (!$isAutoApprove) { 
             bx_import('BxDolProfile');
             $oProfile = BxDolProfile::getInstanceAccountProfile($aAccountInfo['id']); // get profile associated with account, not current porfile
