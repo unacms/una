@@ -958,9 +958,6 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
             case 'dol_options':
                 $sRet = $this->_processJsOptions();
                 break;
-            case 'boonex_footers':
-                $sRet = getParam('enable_dolphin_footer') ? $this->getBoonexFooter() : '';
-                break;
             case 'bottom_text':
                 $sRet = _t( '_bottom_text', date('Y') );
                 break;
@@ -2011,20 +2008,6 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
             'data' => $sData,
             'replace' => $iReplace
         );
-    }
-
-    function getBoonexFooter() {
-        $sAffID = trim(getParam('boonexAffID'));
-        if($sAffID)
-            $sAffID .= '.html';
-
-        return '
-        <div class="bx-def-margin-bottom bx-def-padding-sec bx-def-border bx-def-color-bg-block bx-std-bx-footer bx-def-round-corners">
-            <div style="text-align:center;">
-                ' . _t('_powered_by') . ' <a href="http://www.boonex.com/dolphin/' . $sAffID . '" title="Free Community Software">Dolphin</a>
-                from <a href="http://www.boonex.com/' . $sAffID . '" title="Social, Online Dating and Community Software Experts">BoonEx</a>
-            </div>
-        </div>';
     }
 
 	function getPageCode($oTemplate = null) {

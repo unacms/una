@@ -1540,7 +1540,6 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_adm_stg_cpt_option_sys_page_cache_engine"><![CDATA[Page cache engine (other than File option may require custom server setup)]]></string>
 	<string name="_adm_stg_cpt_option_sys_pb_cache_enable"><![CDATA[Enable page blocks cache]]></string>
 	<string name="_adm_stg_cpt_option_sys_pb_cache_engine"><![CDATA[Page blocks cache engine (other than File option may require custom server setup)]]></string>
-	<string name="_adm_stg_cpt_option_sys_mm_cache_engine"><![CDATA[Member menu cache engine (other than File option may require custom server setup)]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_cache_enable"><![CDATA[Enable cache for HTML files]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_cache_engine"><![CDATA[Template cache engine (other than FileHtml option may require custom server setup)]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_cache_css_enable"><![CDATA[Enable cache for CSS files]]></string>
@@ -1554,32 +1553,17 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_adm_stg_cpt_option_sys_ftp_dir"><![CDATA[Path to Dolphin on FTP server]]></string>
 	<string name="_adm_stg_cpt_option_sys_oauth_key"><![CDATA[BoonEx account key]]></string>
 	<string name="_adm_stg_cpt_option_sys_oauth_secret"><![CDATA[BoonEx account secret]]></string>
-	<string name="_adm_stg_cpt_option_boonex_aff_id"><![CDATA[My BoonEx Affiliate ID]]></string>
 	<string name="_adm_stg_cpt_option_currency_code"><![CDATA[Currency code (for checkout system)]]></string>
 	<string name="_adm_stg_err_option_currency_code"><![CDATA[Cannot be empty.]]></string>
 	<string name="_adm_stg_cpt_option_currency_sign"><![CDATA[Currency sign (for display purposes only)]]></string>
 	<string name="_adm_stg_err_option_currency_sign"><![CDATA[Cannot be empty.]]></string>
 	<string name="_adm_stg_cpt_option_enable_gd"><![CDATA[Use GD library for image processing]]></string>
 	<string name="_adm_stg_cpt_option_use_like_operator"><![CDATA[Use operator LIKE for search (recommended for small content)]]></string>
-	<string name="_adm_stg_cpt_option_"><![CDATA[]]></string>
-
-	<!-- Settings: Massmailer -->
-	<string name="_adm_stg_cpt_category_massmailer"><![CDATA[Massmailer]]></string>
-	<string name="_adm_stg_cpt_option_msgs_per_start"><![CDATA[Send emails from queue, it happens every cron execution (5m-1h)]]></string>
-
-	<!-- Settings: Memberships -->
-	<string name="_adm_stg_cpt_category_memberships"><![CDATA[Memberships]]></string>
-	<string name="_adm_stg_cpt_option_expire_notification_days"><![CDATA[Number of days before membership expiration to notify members ( -1 = after expiration )]]></string>
-	<string name="_adm_stg_cpt_option_expire_notify_once"><![CDATA[Notify members about membership expiration only once (every day otherwise)]]></string>
 
 	<!-- Settings: Permalinks -->
 	<string name="_adm_stg_cpt_category_permalinks"><![CDATA[Permalinks]]></string>
 	<string name="_adm_stg_cpt_option_permalinks_pages"><![CDATA[Enable friendly permalinks for Pages]]></string>
 	<string name="_adm_stg_cpt_option_permalinks_modules"><![CDATA[Enable friendly permalinks for Modules]]></string>
-
-	<!-- Settings: Pruning -->
-	<string name="_adm_stg_cpt_category_pruning"><![CDATA[Pruning]]></string>
-	<string name="_adm_stg_cpt_option_db_clean_mem_levels"><![CDATA[Delete membership levels expired for (days)]]></string>
 
 	<!-- Settings: Security -->
 	<string name="_adm_stg_cpt_category_security"><![CDATA[Security]]></string>
@@ -1602,7 +1586,6 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_adm_stg_cpt_category_site_settings"><![CDATA[Site Settings]]></string>
 	<string name="_adm_stg_cpt_option_site_email"><![CDATA[Site Email]]></string>
 	<string name="_adm_stg_cpt_option_site_email_notify"><![CDATA[Site Email Notify]]></string>
-	<string name="_adm_stg_cpt_option_site_email_bug_report"><![CDATA[Site Email Bug Report]]></string>
 	<string name="_adm_stg_cpt_option_site_title"><![CDATA[Site Title]]></string>
 
 	<!-- Settings: Storage -->

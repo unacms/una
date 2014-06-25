@@ -269,24 +269,23 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `or
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'sys_db_cache_enable', '_adm_stg_cpt_option_sys_db_cache_enable', '', 'checkbox', '', '', '', 1),
-(@iCategoryId, 'sys_db_cache_engine', '_adm_stg_cpt_option_sys_db_cache_engine', 'File', 'select', 'File,EAccelerator,Memcache,APC,XCache', '', '', 2),
+(@iCategoryId, 'sys_db_cache_enable', '_adm_stg_cpt_option_sys_db_cache_enable', '', 'checkbox', '', '', '', 10),
+(@iCategoryId, 'sys_db_cache_engine', '_adm_stg_cpt_option_sys_db_cache_engine', 'File', 'select', 'File,EAccelerator,Memcache,APC,XCache', '', '', 11),
 
-(@iCategoryId, 'sys_cache_memcache_host', '_adm_stg_cpt_option_sys_cache_memcache_host', '', 'digit', '', '', '', 3),
-(@iCategoryId, 'sys_cache_memcache_port', '_adm_stg_cpt_option_sys_cache_memcache_port', '11211', 'digit', '', '', '', 4),
+(@iCategoryId, 'sys_cache_memcache_host', '_adm_stg_cpt_option_sys_cache_memcache_host', '', 'digit', '', '', '', 20),
+(@iCategoryId, 'sys_cache_memcache_port', '_adm_stg_cpt_option_sys_cache_memcache_port', '11211', 'digit', '', '', '', 21),
 
-(@iCategoryId, 'sys_page_cache_enable', '_adm_stg_cpt_option_sys_page_cache_enable', '', 'checkbox', '', '', '', 5),
-(@iCategoryId, 'sys_page_cache_engine', '_adm_stg_cpt_option_sys_page_cache_engine', 'File', 'select', 'File,EAccelerator,Memcache,APC,XCache', '', '', 6),
+(@iCategoryId, 'sys_page_cache_enable', '_adm_stg_cpt_option_sys_page_cache_enable', '', 'checkbox', '', '', '', 30),
+(@iCategoryId, 'sys_page_cache_engine', '_adm_stg_cpt_option_sys_page_cache_engine', 'File', 'select', 'File,EAccelerator,Memcache,APC,XCache', '', '', 31),
 
-(@iCategoryId, 'sys_pb_cache_enable', '_adm_stg_cpt_option_sys_pb_cache_enable', '', 'checkbox', '', '', '', 7),
-(@iCategoryId, 'sys_pb_cache_engine', '_adm_stg_cpt_option_sys_pb_cache_engine', 'File', 'select', 'File,EAccelerator,Memcache,APC,XCache', '', '', 8),
-(@iCategoryId, 'sys_mm_cache_engine', '_adm_stg_cpt_option_sys_mm_cache_engine', 'File', 'select', 'File,EAccelerator,Memcache,APC,XCache', '', '', 9),
+(@iCategoryId, 'sys_pb_cache_enable', '_adm_stg_cpt_option_sys_pb_cache_enable', '', 'checkbox', '', '', '', 40),
+(@iCategoryId, 'sys_pb_cache_engine', '_adm_stg_cpt_option_sys_pb_cache_engine', 'File', 'select', 'File,EAccelerator,Memcache,APC,XCache', '', '', 41),
 
-(@iCategoryId, 'sys_template_cache_enable', '_adm_stg_cpt_option_sys_template_cache_enable', '', 'checkbox', '', '', '', 10),
-(@iCategoryId, 'sys_template_cache_engine', '_adm_stg_cpt_option_sys_template_cache_engine', 'FileHtml', 'select', 'FileHtml,EAccelerator,Memcache,APC,XCache', '', '', 11),
-(@iCategoryId, 'sys_template_cache_css_enable', '_adm_stg_cpt_option_sys_template_cache_css_enable', '', 'checkbox', '', '', '', 12),
-(@iCategoryId, 'sys_template_cache_js_enable', '_adm_stg_cpt_option_sys_template_cache_js_enable', '', 'checkbox', '', '', '', 13),
-(@iCategoryId, 'sys_template_cache_compress_enable', '_adm_stg_cpt_option_sys_template_cache_compress_enable', 'on', 'checkbox', '', '', '', 14);
+(@iCategoryId, 'sys_template_cache_enable', '_adm_stg_cpt_option_sys_template_cache_enable', '', 'checkbox', '', '', '', 50),
+(@iCategoryId, 'sys_template_cache_engine', '_adm_stg_cpt_option_sys_template_cache_engine', 'FileHtml', 'select', 'FileHtml,EAccelerator,Memcache,APC,XCache', '', '', 51),
+(@iCategoryId, 'sys_template_cache_css_enable', '_adm_stg_cpt_option_sys_template_cache_css_enable', '', 'checkbox', '', '', '', 55),
+(@iCategoryId, 'sys_template_cache_js_enable', '_adm_stg_cpt_option_sys_template_cache_js_enable', '', 'checkbox', '', '', '', 56),
+(@iCategoryId, 'sys_template_cache_compress_enable', '_adm_stg_cpt_option_sys_template_cache_compress_enable', 'on', 'checkbox', '', '', '', 57);
 
 
 --
@@ -296,40 +295,18 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `or
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'sys_ftp_login', '_adm_stg_cpt_option_sys_ftp_login', '', 'digit', '', '', '', 1),
-(@iCategoryId, 'sys_ftp_password', '_adm_stg_cpt_option_sys_ftp_password', '', 'digit', '', '', '', 2),
-(@iCategoryId, 'sys_ftp_dir', '_adm_stg_cpt_option_sys_ftp_dir', '', 'digit', '', '', '', 3),
+(@iCategoryId, 'sys_ftp_login', '_adm_stg_cpt_option_sys_ftp_login', '', 'digit', '', '', '', 10),
+(@iCategoryId, 'sys_ftp_password', '_adm_stg_cpt_option_sys_ftp_password', '', 'digit', '', '', '', 11),
+(@iCategoryId, 'sys_ftp_dir', '_adm_stg_cpt_option_sys_ftp_dir', '', 'digit', '', '', '', 12),
 
-(@iCategoryId, 'sys_oauth_key', '_adm_stg_cpt_option_sys_oauth_key', '', 'digit', '', '', '', 4),
-(@iCategoryId, 'sys_oauth_secret', '_adm_stg_cpt_option_sys_oauth_secret', '', 'digit', '', '', '', 5),
-(@iCategoryId, 'boonexAffID', '_adm_stg_cpt_option_boonex_aff_id', '', 'digit', '', '', '', 6),
+(@iCategoryId, 'sys_oauth_key', '_adm_stg_cpt_option_sys_oauth_key', '', 'digit', '', '', '', 20),
+(@iCategoryId, 'sys_oauth_secret', '_adm_stg_cpt_option_sys_oauth_secret', '', 'digit', '', '', '', 21),
 
-(@iCategoryId, 'currency_code', '_adm_stg_cpt_option_currency_code', 'USD', 'select', 'USD,EURO', 'Avail', '_adm_stg_err_option_currency_code', 7),
-(@iCategoryId, 'currency_sign', '_adm_stg_cpt_option_currency_sign', '&#36;', 'digit', '', 'Avail', '_adm_stg_err_option_currency_sign', 8),
+(@iCategoryId, 'currency_code', '_adm_stg_cpt_option_currency_code', 'USD', 'select', 'USD,EURO', 'Avail', '_adm_stg_err_option_currency_code', 30),
+(@iCategoryId, 'currency_sign', '_adm_stg_cpt_option_currency_sign', '&#36;', 'digit', '', 'Avail', '_adm_stg_err_option_currency_sign', 31),
 
-(@iCategoryId, 'enable_gd', '_adm_stg_cpt_option_enable_gd', 'on', 'checkbox', '', '', '', 9),
-(@iCategoryId, 'useLikeOperator', '_adm_stg_cpt_option_use_like_operator', 'on', 'checkbox', '', '', '', 10);
-
-
---
--- CATEGORY: Massmailer
---
-INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'massmailer', '_adm_stg_cpt_category_massmailer', 0, 7);
-SET @iCategoryId = LAST_INSERT_ID();
-
-INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'msgs_per_start', '_adm_stg_cpt_option_msgs_per_start', '20', 'digit', '', '', '', 1);
-
-
---
--- CATEGORY: Memberships
---
-INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'memberships', '_adm_stg_cpt_category_memberships', 0, 8);
-SET @iCategoryId = LAST_INSERT_ID();
-
-INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'expire_notification_days', '_adm_stg_cpt_option_expire_notification_days', '1', 'digit', '', '', '', 1),
-(@iCategoryId, 'expire_notify_once', '_adm_stg_cpt_option_expire_notify_once', 'on', 'checkbox', '', '', '', 2);
+(@iCategoryId, 'enable_gd', '_adm_stg_cpt_option_enable_gd', 'on', 'checkbox', '', '', '', 40),
+(@iCategoryId, 'useLikeOperator', '_adm_stg_cpt_option_use_like_operator', 'on', 'checkbox', '', '', '', 45);
 
 
 --
@@ -341,16 +318,6 @@ SET @iCategoryId = LAST_INSERT_ID();
 INSERT INTO `sys_options` (`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryId, 'permalinks_pages', '_adm_stg_cpt_option_permalinks_pages', 'on', 'checkbox', '', '', '', 1),
 (@iCategoryId, 'permalinks_modules', '_adm_stg_cpt_option_permalinks_modules', 'on', 'checkbox', '', '', '', 2);
-
-
---
--- CATEGORY: Pruning
---
-INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'pruning', '_adm_stg_cpt_category_pruning', 0, 10);
-SET @iCategoryId = LAST_INSERT_ID();
-
-INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'db_clean_mem_levels', 'Delete membership levels expired for (days)', '30', 'digit', '', '', '', 2);
 
 
 --
@@ -374,9 +341,8 @@ SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryId, 'site_title', '_adm_stg_cpt_option_site_title', 'Community', 'digit', '', '', '', 1),
-(@iCategoryId, 'site_email', '_adm_stg_cpt_option_site_email', 'xxx@gmail.com', 'digit', '', '', '', 2),
-(@iCategoryId, 'site_email_notify', '_adm_stg_cpt_option_site_email_notify', 'xxx2@gmail.com', 'digit', '', '', '', 3),
-(@iCategoryId, 'site_email_bug_report', '_adm_stg_cpt_option_site_email_bug_report', 'xxx3@gmail.com', 'digit', '', '', '', 4);
+(@iCategoryId, 'site_email', '_adm_stg_cpt_option_site_email', 'admin@example.com', 'digit', '', '', '', 2),
+(@iCategoryId, 'site_email_notify', '_adm_stg_cpt_option_site_email_notify', 'admin@example.com', 'digit', '', '', '', 3);
 
 
 --
@@ -391,6 +357,17 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_storage_s3_secret_key', '_adm_stg_cpt_option_sys_storage_s3_secret_key', '', 'digit', '', '', '', 3),
 (@iCategoryId, 'sys_storage_s3_bucket', '_adm_stg_cpt_option_sys_storage_s3_bucket', '', 'digit', '', '', '', 4),
 (@iCategoryId, 'sys_storage_s3_domain', '_adm_stg_cpt_option_sys_storage_s3_domain', '', 'digit', '', '', '', 5);
+
+
+--
+-- CATEGORY: Account
+--
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'account', '_adm_stg_cpt_category_account', 0, 14);
+SET @iCategoryId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
+(@iCategoryId, 'sys_account_autoapproval', '_adm_stg_cpt_option_sys_account_autoapproval', 'on', 'checkbox', '', '', '', 10),
+(@iCategoryId, 'sys_account_default_acl_level', '_adm_stg_cpt_option_sys_account_default_acl_level', '2', 'select', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:15:"get_memberships";s:6:"params";a:2:{i:0;b:0;i:1;b:1;}s:5:"class";s:16:"TemplAclServices";}', '', '', 11);
 
 
 -- --------------------------------------------------------

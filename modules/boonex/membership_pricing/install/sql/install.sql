@@ -1,4 +1,16 @@
 
+--
+-- CATEGORY: Memberships
+--
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'memberships', '_adm_stg_cpt_category_memberships', 0, 8);
+SET @iCategoryId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
+(@iCategoryId, 'expire_notification_days', '_adm_stg_cpt_option_expire_notification_days', '1', 'digit', '', '', '', 1),
+(@iCategoryId, 'expire_notify_once', '_adm_stg_cpt_option_expire_notify_once', 'on', 'checkbox', '', '', '', 2),
+(@iCategoryId, 'db_clean_mem_levels', '_adm_stg_cpt_option_db_clean_mem_levels', '30', 'digit', '', '', '', 3);
+
+
 CREATE TABLE `sys_acl_level_prices` (
   `id` int(11) NOT NULL auto_increment,
   `IDLevel` int(10) unsigned NOT NULL DEFAULT '0',
