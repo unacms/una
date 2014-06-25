@@ -1527,7 +1527,6 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_adm_stg_cpt_category_templates"><![CDATA[Templates]]></string>
 	<string name="_adm_stg_cpt_option_template"><![CDATA[Default Template]]></string>
 	<string name="_adm_stg_err_option_template"><![CDATA[Template cannot be empty and must have a valid name.]]></string>
-	<string name="_adm_stg_cpt_option_enable_template"><![CDATA[Show Template Switcher]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_page_width_min"><![CDATA[Min page width(in pixels)]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_page_width_max"><![CDATA[Max page width(in pixels)]]></string>
 
@@ -3193,9 +3192,13 @@ More info about URI DNSBL: <br />
     <string name="_sys_menu_title_account"><![CDATA[Account Menu]]></string>
     <string name="_sys_menu_title_account_settings"><![CDATA[Account Settings Menu]]></string>
     <string name="_sys_menu_title_add_content"><![CDATA[Add Content Menu]]></string>
+    <string name="_sys_menu_title_switch_language"><![CDATA[Switch Language]]></string>
+	<string name="_sys_menu_title_switch_template"><![CDATA[Switch Template]]></string>
 
     <string name="_sys_menu_item_title_system_home"><![CDATA[Home]]></string>
     <string name="_sys_menu_item_title_system_about"><![CDATA[About]]></string>
+    <string name="_sys_menu_item_title_system_switch_language"><![CDATA[Language]]></string>
+	<string name="_sys_menu_item_title_system_switch_template"><![CDATA[Template]]></string>
     <string name="_sys_menu_item_title_system_search"><![CDATA[Search]]></string>
     <string name="_sys_menu_item_title_system_add_content"><![CDATA[Add Content]]></string>
     <string name="_sys_menu_item_title_system_notifications"><![CDATA[Notifications]]></string>
@@ -3216,7 +3219,9 @@ More info about URI DNSBL: <br />
     <string name="_sys_menu_item_title_system_account_settings_delete"><![CDATA[Delete Account]]></string>
 
     <string name="_sys_menu_item_title_home"><![CDATA[Home]]></string>
-    <string name="_sys_menu_item_title_about"><![CDATA[About]]></string>    
+    <string name="_sys_menu_item_title_about"><![CDATA[About]]></string>
+    <string name="_sys_menu_item_title_switch_language"><![CDATA[Language]]></string>
+	<string name="_sys_menu_item_title_switch_template"><![CDATA[Design]]></string>
     <string name="_sys_menu_item_title_account"><![CDATA[Account]]></string>
     <string name="_sys_menu_item_title_create_profile"><![CDATA[Create Profile]]></string>
     <string name="_sys_menu_item_title_logout"><![CDATA[Log Out]]></string>
@@ -3232,6 +3237,8 @@ More info about URI DNSBL: <br />
     <string name="_sys_menu_set_title_account"><![CDATA[Account]]></string>
     <string name="_sys_menu_set_title_add_content"><![CDATA[Add Content]]></string>
     <string name="_sys_menu_set_title_account_settings"><![CDATA[Account Settings]]></string>
+    <string name="_sys_menu_set_title_switch_language"><![CDATA[Switch Language]]></string>
+	<string name="_sys_menu_set_title_switch_template"><![CDATA[Switch Template]]></string>
 
 	<string name="_sys_menu_template_title_main"><![CDATA[Site Navigation]]></string>
 	<string name="_sys_menu_template_title_footer"><![CDATA[Footer Links]]></string>

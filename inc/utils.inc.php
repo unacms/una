@@ -384,24 +384,6 @@ function get_templates_array($bEnabledOnly = true, $bShortInfo = true) {
 		return $oDb->getAllWithKey("SELECT * FROM `sys_modules` WHERE 1 AND `type`='" . BX_DOL_MODULE_TYPE_TEMPLATE . "'" . $sWhereAddon, "uri"); 
 }
 
-/*
- * The Function Show a Line with Templates Names
- */
-function templates_select_txt() {
-    $templ_choices = get_templates_array();
-    $current_template = ( strlen( $_GET['skin'] ) ) ? $_GET['skin'] : $_COOKIE['skin'];
-
-    foreach ($templ_choices as $tmpl_key => $tmpl_value) {
-        if ($current_template == $tmpl_key) {
-            $ReturnResult .= $tmpl_value . ' | ';
-        } else {
-            $sGetTransfer = bx_encode_url_params($_GET, array('skin'));
-            $ReturnResult .= '<a href="' . bx_html_attribute($_SERVER['PHP_SELF']) . '?' . $sGetTransfer . 'skin=' . $tmpl_key . '">' . $tmpl_value . '</a> | ';
-        }
-    }
-    return $ReturnResult;
-}
-
 function extFileExists( $sFileSrc ) {
     return (file_exists( $sFileSrc ) && is_file( $sFileSrc )) ? true : false;
 }

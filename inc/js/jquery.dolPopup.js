@@ -201,19 +201,6 @@
 
         return this.each(function() {
             var e = $(this);
-            /*
-             * TODO: Remove commented if modified version is working properly. Old version was commented because it doesn't work 
-             * for different identical popups with different content which are applied to Window, because the first call sets 
-             * attribute "bx-popup-id" with its ID to Window and then everytime the first popup is displayed without loading 
-             * the other popups even if another ID and URL were passed via Options.
-             * 
-            if ('undefined' == typeof(e.attr('bx-popup-id'))) {
-                id = ('undefined' == typeof(options.id) ? parseInt(2147483647 * Math.random()) : options.id);
-                e.attr('bx-popup-id', id);
-            } else {
-                id = e.attr('bx-popup-id');
-            }
-            */
 
             // get id
             var sPopupId = '';
