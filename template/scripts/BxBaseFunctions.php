@@ -162,45 +162,6 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
             'member_id' => $iMemberId,
         ));
     }
-    
-    /**
-     * TODO: remake for new system
-     *
-     * Function will generate list of installed languages list;
-     *
-     * @return : Html presentation data;
-     */
-    function getLangSwitcher() 
-    {
-        bx_import('BxDolLanguagesQuery');
-        $aLangs = BxDolLanguagesQuery::getInstance()->getLanguages();
-        if(count($aLangs) < 2)
-            return '';
-
-        $sOutputCode = '';
-        foreach( $aLangs as $sName => $sLang ) {
-            $sFlag = $this->_oTemplate->getIconUrl('sys_fl_' . $sName . '.gif');
-            $aTemplateKeys = array (
-                'bx_if:item_img' => array (
-                    'condition' =>  ( $sFlag ),
-                    'content'   => array (
-                        'item_img_src'      => $sFlag,
-                        'item_img_alt'      => $sName,
-                        'item_img_width'    => 18,
-                        'item_img_height'   => 12,
-                    ),
-                ),
-                'item_link'    => BX_DOL_URL_ROOT . 'index.php?lang=' . $sName,
-                'item_onclick' => null,
-                'item_title'   => $sLang,
-                'extra_info'   => null,
-            );
-
-            $sOutputCode .= $this->_oTemplate->parseHtmlByName( 'member_menu_sub_item.html', $aTemplateKeys );
-        }
-    
-        return $sOutputCode;
-    }
 
 	/**
      * functions for limiting maximal string length 

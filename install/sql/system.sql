@@ -257,10 +257,9 @@ SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryId, 'template', '_adm_stg_cpt_option_template', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:13:"get_templates";s:5:"class";s:21:"TemplTemplateServices";}', 'Template', '_adm_stg_err_option_template', 1),
-(@iCategoryId, 'enable_template', '_adm_stg_cpt_option_enable_template', 'on', 'checkbox', '', '', '', 2),
 
-(@iCategoryId, 'sys_template_page_width_min', '_adm_stg_cpt_option_sys_template_page_width_min', '774', 'digit', '', '', '', 3),
-(@iCategoryId, 'sys_template_page_width_max', '_adm_stg_cpt_option_sys_template_page_width_max', '1600', 'digit', '', '', '', 4);
+(@iCategoryId, 'sys_template_page_width_min', '_adm_stg_cpt_option_sys_template_page_width_min', '774', 'digit', '', '', '', 2),
+(@iCategoryId, 'sys_template_page_width_max', '_adm_stg_cpt_option_sys_template_page_width_max', '1600', 'digit', '', '', '', 3);
 
 
 --
@@ -2563,7 +2562,9 @@ INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `templa
 ('sys_cmts_item_actions', '_sys_menu_title_cmts_item_actions', 'sys_cmts_item_actions', 'system', 10, 0, 1, 'BxTemplCmtsMenu', ''),
 ('sys_account_popup', '_sys_menu_title_account_popup', '', 'system', 12, 0, 1, 'BxTemplMenuAccountPopup', ''),
 ('sys_account_notifications', '_sys_menu_title_account_notifications', 'sys_account_notifications', 'system', 13, 0, 1, 'BxTemplMenuAccountNotifications', ''),
-('sys_profile_stats', '_sys_menu_title_profile_stats', 'sys_profile_stats', 'system', 6, 0, 1, 'BxTemplMenuProfileStats', '');
+('sys_profile_stats', '_sys_menu_title_profile_stats', 'sys_profile_stats', 'system', 6, 0, 1, 'BxTemplMenuProfileStats', ''),
+('sys_switch_language', '_sys_menu_title_switch_language', 'sys_switch_language', 'system', 6, 0, 1, 'BxTemplMenuSwitchLanguage', ''),
+('sys_switch_template', '_sys_menu_title_switch_template', 'sys_switch_template', 'system', 6, 0, 1, 'BxTemplMenuSwitchTemplate', '');
 
 CREATE TABLE IF NOT EXISTS `sys_menu_sets` (
   `set_name` varchar(64) NOT NULL,
@@ -2587,7 +2588,9 @@ INSERT INTO `sys_menu_sets` (`set_name`, `module`, `title`, `deletable`) VALUES
 ('sys_profiles_create', 'system', '_sys_menu_set_title_profile_create_links', 0),
 ('sys_profile_stats', 'system', '_sys_menu_set_title_profile_stats', 0),
 ('sys_cmts_item_manage', 'system', '_sys_menu_set_title_cmts_item_manage', 0),
-('sys_cmts_item_actions', 'system', '_sys_menu_set_title_cmts_item_actions', 0);
+('sys_cmts_item_actions', 'system', '_sys_menu_set_title_cmts_item_actions', 0),
+('sys_switch_language', 'system', '_sys_menu_set_title_switch_language', 0),
+('sys_switch_template', 'system', '_sys_menu_set_title_switch_template', 0);
 
 CREATE TABLE IF NOT EXISTS `sys_menu_items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -2616,7 +2619,9 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 
 -- footer menu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
-('sys_footer', 'system', 'about', '_sys_menu_item_title_system_about', '_sys_menu_item_title_about', 'page.php?i=about', '', '', '', '', 2147483647, 1, 1, 1);
+('sys_footer', 'system', 'about', '_sys_menu_item_title_system_about', '_sys_menu_item_title_about', 'page.php?i=about', '', '', '', '', 2147483647, 1, 1, 1),
+('sys_footer', 'system', 'switch_language', '_sys_menu_item_title_system_switch_language', '_sys_menu_item_title_switch_language', 'javascript:void(0);', 'bx_menu_popup(''sys_switch_language'', window);', '', '', '', 2147483647, 1, 1, 2),
+('sys_footer', 'system', 'switch_template', '_sys_menu_item_title_system_switch_template', '_sys_menu_item_title_switch_template', 'javascript:void(0);', 'bx_menu_popup(''sys_switch_template'', window);', '', '', '', 2147483647, 1, 1, 3);
 
 -- site toolbar menu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES

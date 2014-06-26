@@ -948,9 +948,6 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
                 $oInformer = BxDolInformer::getInstance($this);
                 $sRet = $oInformer ? $oInformer->display() : '';
                 break;
-            case 'switch_skin_block':
-                $sRet = getParam("enable_template") ? templates_select_txt() : '';
-                break;
             case 'dol_images':
                 $sRet = $this->_processJsImages();
                 break;
