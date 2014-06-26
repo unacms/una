@@ -228,8 +228,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
 
         $this->addLocationJs('system_inc_js', BX_DIRECTORY_PATH_INC . 'js/' , BX_DOL_URL_ROOT . 'inc/js/');
         $this->addLocationJs('system_inc_js_classes', BX_DIRECTORY_PATH_INC . 'js/classes/' , BX_DOL_URL_ROOT . 'inc/js/classes/');
-        $this->addLocationJs('system_plugins_jquery', BX_DIRECTORY_PATH_PLUGINS . 'jquery/' , BX_DOL_URL_PLUGINS . 'jquery/');
-        $this->addLocationJs('system_plugins_tinymce', BX_DIRECTORY_PATH_PLUGINS . 'tiny_mce/' , BX_DOL_URL_PLUGINS . 'tiny_mce/');
+        $this->addLocationJs('system_plugins_public', BX_DIRECTORY_PATH_PLUGINS_PUBLIC, BX_DOL_URL_PLUGINS_PUBLIC);
 
         $this->_bCacheEnable = !defined('BX_DOL_CRON_EXECUTE') && getParam('sys_template_cache_enable') == 'on';
         $this->_sCacheFolderUrl = '';
@@ -328,16 +327,16 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
 
         //--- Load default JS ---//
         $this->addJsSystem(array(
-            'jquery.js',
-            'jquery.migrate.js',
+            'jquery/jquery.min.js',
+            'jquery/jquery-migrate.min.js',
+            'jquery-ui/jquery.ui.position.min.js',
+            'spin.min.js',
             'jquery.easing.js',
-            'jquery.cookie.js',
+            'jquery.cookie.min.js',
+            'moment-with-langs.js',
             'functions.js',
             'jquery.webForms.js',
             'jquery.dolPopup.js',
-            'jquery.ui.position.min.js',
-            BX_DOL_URL_PLUGINS . 'spin.min.js',
-            BX_DOL_URL_PLUGINS . 'moment/moment+langs.min.js',
         ));
 
         //--- Load default JS ---//

@@ -33,8 +33,8 @@ class BxDolInstallView
     );
 
     protected $_aFilesJs = array (
-        'plugins/jquery/jquery.js',
-        'plugins/jquery/jquery.ui.position.min.js',
+        'plugins_public/jquery/jquery.min.js',
+        'plugins_public/jquery-ui/jquery.ui.position.min.js',
         'inc/js/jquery.dolPopup.js',
         'inc/js/jquery.webForms.js',
     );

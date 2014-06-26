@@ -142,8 +142,8 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
             ));
 
             $this->_oTemplate->addJs(array(
+                'jquery.jfeed.pack.js',
                 'jquery.dolRSSFeed.js',
-                'jquery.jfeed.js'
             ));
 
             $this->_oTemplate->addInjection ('injection_head', 'text', '

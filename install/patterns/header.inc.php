@@ -7,6 +7,7 @@ define('BX_DOL_START', microtime ());
 //--- Main URLs ---//
 define('BX_DOL_URL_ROOT', '%SITE_URL%');
 define('BX_DOL_URL_PLUGINS', BX_DOL_URL_ROOT . 'plugins/');
+define('BX_DOL_URL_PLUGINS_PUBLIC', BX_DOL_URL_ROOT . 'plugins_public/');
 define('BX_DOL_URL_MODULES', BX_DOL_URL_ROOT . 'modules/');
 define('BX_DOL_URL_CACHE_PUBLIC', BX_DOL_URL_ROOT . 'cache_public/');
 define('BX_DOL_URL_BASE', BX_DOL_URL_ROOT . 'template/');
@@ -19,6 +20,7 @@ define('BX_DIRECTORY_PATH_CACHE', BX_DIRECTORY_PATH_ROOT . 'cache/');
 define('BX_DIRECTORY_PATH_CACHE_PUBLIC', BX_DIRECTORY_PATH_ROOT . 'cache_public/');
 define('BX_DIRECTORY_PATH_CLASSES', BX_DIRECTORY_PATH_ROOT . 'inc/classes/');
 define('BX_DIRECTORY_PATH_PLUGINS', BX_DIRECTORY_PATH_ROOT . 'plugins/');
+define('BX_DIRECTORY_PATH_PLUGINS_PUBLIC', BX_DIRECTORY_PATH_ROOT . 'plugins_public/');
 define('BX_DIRECTORY_PATH_MODULES', BX_DIRECTORY_PATH_ROOT . 'modules/');
 define('BX_DIRECTORY_PATH_TMP', BX_DIRECTORY_PATH_ROOT . 'tmp/');
 define('BX_DIRECTORY_STORAGE', BX_DIRECTORY_PATH_ROOT . 'storage/');

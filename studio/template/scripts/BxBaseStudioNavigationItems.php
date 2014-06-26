@@ -408,7 +408,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems {
 
     protected function _addJsCss() {
         parent::_addJsCss();
-        $this->_oTemplate->addJs(array('jquery.form.js', 'navigation_items.js', 'navigation_import.js'));
+        $this->_oTemplate->addJs(array('jquery.form.min.js', 'navigation_items.js', 'navigation_import.js'));
 
         bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());

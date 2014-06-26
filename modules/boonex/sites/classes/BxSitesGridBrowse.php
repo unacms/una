@@ -107,7 +107,7 @@ class BxSitesGridBrowse extends BxTemplGrid {
 
 	protected function _addJsCss() {
         parent::_addJsCss();
-        $this->_oTemplate->addJs(array('jquery.form.js'));
+        $this->_oTemplate->addJs(array('jquery.form.min.js'));
 
         bx_import('BxTemplFormView');
         $oForm = new BxTemplFormView(array());

@@ -39,7 +39,7 @@ class BxBaseCmts extends BxDolCmts
     	$oTemplate = BxDolTemplate::getInstance();
 
         $oTemplate->addCss(array('cmts.css'));
-        $oTemplate->addJs(array('jquery.anim.js', 'jquery.form.js', 'BxDolCmts.js'));
+        $oTemplate->addJs(array('jquery.anim.js', 'jquery.form.min.js', 'BxDolCmts.js'));
 
         bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance($this->_sFormObject, $this->_sFormDisplayPost);

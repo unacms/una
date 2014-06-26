@@ -97,7 +97,7 @@ class BxBaseEditorCLEditor extends BxDolEditor {
             $sScript .= "<script>
                 if ('undefined' == typeof(jQuery(document).cleditor)) {
                     $.getScript('" . bx_js_string(BX_DOL_URL_BASE . 'inc/js/editor.cleditor.js', BX_ESCAPE_STR_APOS) . "');
-                    $.getScript('" . bx_js_string(BX_DOL_URL_PLUGINS . 'cleditor/jquery.cleditor.min.js', BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
+                    $.getScript('" . bx_js_string(BX_DOL_URL_PLUGINS_PUBLIC . 'cleditor/jquery.cleditor.min.js', BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
                         $sInitEditor
                     });
                 } else {
@@ -128,8 +128,8 @@ class BxBaseEditorCLEditor extends BxDolEditor {
             return '';
         if ($this->_bJsCssAdded)
             return '';
-        $this->_oTemplate->addCss(BX_DOL_URL_PLUGINS . 'cleditor/jquery.cleditor.css');
-        $this->_oTemplate->addJs(array('editor.cleditor.js', BX_DOL_URL_PLUGINS . 'cleditor/jquery.cleditor.min.js'));
+        $this->_oTemplate->addCss(BX_DOL_URL_PLUGINS_PUBLIC . 'cleditor/jquery.cleditor.css');
+        $this->_oTemplate->addJs(array('cleditor/jquery.cleditor.min.js', 'editor.cleditor.js'));
         $this->_bJsCssAdded = true;
         return '';
     }

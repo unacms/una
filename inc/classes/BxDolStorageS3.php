@@ -15,7 +15,7 @@ define ('BX_DOL_STORAGE_FILE_RIGHT', 0400);
 
 bx_import('BxDolStorage');
 
-require_once(BX_DIRECTORY_PATH_PLUGINS . 'S3.php');
+require_once(BX_DIRECTORY_PATH_PLUGINS . 'amazon-s3/S3.php');
 
 /**
  * File storage in Amazon S3.

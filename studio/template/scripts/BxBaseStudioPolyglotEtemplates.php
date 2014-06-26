@@ -172,7 +172,7 @@ class BxBaseStudioPolyglotEtemplates extends BxDolStudioPolyglotEtemplates {
 
     protected function _addJsCss() {
         parent::_addJsCss();
-        $this->_oTemplate->addJs(array('jquery.form.js', 'polyglot_etemplates.js'));
+        $this->_oTemplate->addJs(array('jquery.form.min.js', 'polyglot_etemplates.js'));
 
         bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());

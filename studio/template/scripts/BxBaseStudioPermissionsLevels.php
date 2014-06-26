@@ -237,7 +237,7 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels {
 
     protected function _addJsCss() {
         parent::_addJsCss();
-        $this->_oTemplate->addJs(array('jquery.form.js', 'permissions_levels.js'));
+        $this->_oTemplate->addJs(array('jquery.form.min.js', 'permissions_levels.js'));
 
         bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());

@@ -333,7 +333,7 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields {
     protected function _addJsCss() {
         parent::_addJsCss();
         $this->_oTemplate->addCss(array('menu.css'));
-        $this->_oTemplate->addJs(array('jquery.form.js', 'forms_fields.js'));
+        $this->_oTemplate->addJs(array('jquery.form.min.js', 'forms_fields.js'));
 
         bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());

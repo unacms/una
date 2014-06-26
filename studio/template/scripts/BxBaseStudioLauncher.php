@@ -25,13 +25,13 @@ class BxBaseStudioLauncher extends BxDolStudioLauncher {
     }
     function getPageJs() {
         $aJs = array(
-        	'jquery.ui.core.min.js', 
-        	'jquery.ui.widget.min.js',
-        	'jquery.ui.mouse.min.js',
-        	'jquery.ui.sortable.min.js',
+        	'jquery-ui/jquery.ui.core.min.js', 
+        	'jquery-ui/jquery.ui.widget.min.js',
+        	'jquery-ui/jquery.ui.mouse.min.js',
+        	'jquery-ui/jquery.ui.sortable.min.js',
             'jquery.ui.touch-punch.min.js',
         	'jquery.easing.js',
-        	'jquery.cookie.js',
+        	'jquery.cookie.min.js',
         	'launcher.js'
         );
         foreach($this->aIncludes as $sName => $oInclude)

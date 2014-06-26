@@ -34,9 +34,9 @@ $oTemplate = BxDolTemplate::getInstance();
 $oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);
 $oTemplate->setPageHeader ("Interface elements");
 $oTemplate->setPageContent ('page_main_code', PageCompMainCode());
-$oTemplate->addCss(BX_DOL_URL_PLUGINS.'jush/jush.css');
-$oTemplate->addJs(BX_DOL_URL_PLUGINS.'jush/jush.js');
-$oTemplate->addJs(BX_DOL_URL_ROOT.'samples/jquery.smint.js');
+$oTemplate->addCss(BX_DOL_URL_PLUGINS_PUBLIC . 'jush/jush.css');
+$oTemplate->addJs(BX_DOL_URL_PLUGINS_PUBLIC . 'jush/jush.js');
+$oTemplate->addJs(BX_DOL_URL_ROOT . 'samples/jquery.smint.js');
 $oTemplate->getPageCode();
 
 /**

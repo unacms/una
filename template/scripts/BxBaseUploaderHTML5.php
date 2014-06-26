@@ -32,7 +32,7 @@ class BxBaseUploaderHTML5 extends BxDolUploader {
     public function getUploaderButton($sGhostTemplate, $isMultiple = true, $aParams = array()) {
         $s = parent::getUploaderButton($sGhostTemplate, $isMultiple, $aParams);
 
-        $this->_oTemplate->addJs(BX_DOL_URL_PLUGINS . 'fileuploader.js');
+        $this->_oTemplate->addJs('fileuploader.js');
 
         return $s;
     }

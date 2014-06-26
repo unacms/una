@@ -579,10 +579,10 @@ class BxBaseGrid extends BxDolGrid {
 
         if ($this->_aOptions['field_order']) {
             $this->_oTemplate->addJs(array(
-                'jquery.ui.core.min.js',
-                'jquery.ui.widget.min.js',
-                'jquery.ui.mouse.min.js',
-                'jquery.ui.sortable.min.js',                
+                'jquery-ui/jquery.ui.core.min.js',
+                'jquery-ui/jquery.ui.widget.min.js',
+                'jquery-ui/jquery.ui.mouse.min.js',
+                'jquery-ui/jquery.ui.sortable.min.js',
             ));
         } 
 

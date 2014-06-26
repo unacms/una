@@ -162,7 +162,7 @@ class BxDolSplashForm extends BxTemplFormView
 function getPageMainCode()
 {
 	$oTemplate = BxDolStudioTemplate::getInstance();
-	$oTemplate->addJs(array('jquery.form.js'));
+	$oTemplate->addJs(array('jquery.form.min.js'));
 	$oTemplate->addCss(array('splash.css'));
 
 	$oForm = new BxDolSplashForm($oTemplate);

@@ -285,7 +285,7 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys {
 
     protected function _addJsCss() {
         parent::_addJsCss();
-        $this->_oTemplate->addJs(array('jquery.form.js', 'polyglot_keys.js'));
+        $this->_oTemplate->addJs(array('jquery.form.min.js', 'polyglot_keys.js'));
 
         bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());

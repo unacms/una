@@ -58,13 +58,13 @@ class BxProfiler extends BxDol {
         $this->oTemplateAdmin = BxDolStudioTemplate::getInstance();
 
         $aCss = array (
-            BX_DOL_URL_MODULES.'boonex/profiler/template/css/profiler.css',
-            BX_DOL_URL_PLUGINS.'jush/jush.css',
+            BX_DOL_URL_MODULES . 'boonex/profiler/template/css/profiler.css',
+            BX_DOL_URL_PLUGINS_PUBLIC . 'jush/jush.css',
         );
         $aJs = array (
-            BX_DOL_URL_MODULES.'boonex/profiler/js/profiler.js',
-            BX_DOL_URL_ROOT.'plugins/jquery/jquery.tablesorter.js',
-            BX_DOL_URL_PLUGINS.'jush/jush.js',
+            'jquery.tablesorter.min.js',
+            BX_DOL_URL_MODULES . 'boonex/profiler/js/profiler.js',
+            BX_DOL_URL_PLUGINS_PUBLIC . 'jush/jush.js',
         );
 
         foreach ($aCss as $sCssUrl) {

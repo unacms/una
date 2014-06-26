@@ -23,8 +23,8 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
 
         $oTemplate = BxDolTemplate::getInstance();
         $oTemplate->addJs(array (
-            'jquery.ui.all.min.js',
-            'jquery.form.js',
+            'jquery-ui/jquery-ui.custom.min.js',
+            'jquery.form.min.js',
         ));
         $oTemplate->addJsTranslation(array(
             '_bx_cnv_draft_saving_error',

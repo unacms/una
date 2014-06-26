@@ -149,7 +149,7 @@ class BxSitesGridOverview extends BxTemplGrid {
 
 	protected function _addJsCss() {
         parent::_addJsCss();
-        $this->_oTemplate->addJs(array('jquery.form.js'));
+        $this->_oTemplate->addJs(array('jquery.form.min.js'));
         $this->_oTemplate->addJsTranslation(array('_bx_sites_form_site_input_do_cancel_confirm'));
 
         bx_import('BxTemplFormView');

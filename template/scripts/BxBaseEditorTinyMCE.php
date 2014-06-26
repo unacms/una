@@ -131,8 +131,8 @@ class BxBaseEditorTinyMCE extends BxDolEditor
             $sScript = "<script>
                 if ('undefined' == typeof(jQuery(document).tinymce)) {
                     $.getScript('" . bx_js_string(BX_DOL_URL_BASE . 'inc/js/editor.tinymce.js', BX_ESCAPE_STR_APOS) . "');
-                    $.getScript('" . bx_js_string(BX_DOL_URL_BASE . 'inc/js/tinymce.js', BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
-                        $.getScript('" . bx_js_string(BX_DOL_URL_PLUGINS . 'tinymce/jquery.tinymce.min.js', BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
+                    $.getScript('" . bx_js_string(BX_DOL_URL_PLUGINS_PUBLIC . 'tinymce/tinymce.min.js', BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
+                        $.getScript('" . bx_js_string(BX_DOL_URL_PLUGINS_PUBLIC . 'tinymce/jquery.tinymce.min.js', BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
                             $sInitEditor
                         });
                     });
@@ -164,7 +164,7 @@ class BxBaseEditorTinyMCE extends BxDolEditor
             return '';
         if ($this->_bJsCssAdded)
             return '';
-        $this->_oTemplate->addJs(array(BX_DOL_URL_PLUGINS . 'tinymce/tinymce.min.js', BX_DOL_URL_PLUGINS . 'tinymce/jquery.tinymce.min.js', 'editor.tinymce.js'));
+        $this->_oTemplate->addJs(array('tinymce/tinymce.min.js', 'tinymce/jquery.tinymce.min.js', 'editor.tinymce.js'));
         $this->_bJsCssAdded = true;
         return '';
     }

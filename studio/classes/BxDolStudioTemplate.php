@@ -67,11 +67,11 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton {
 
         //--- Add default JS in output
 		$this->addJsSystem(array(
-		    'jquery.js',
-            'jquery.migrate.js',
+		    'jquery/jquery.min.js',
+            'jquery/jquery-migrate.min.js',
+		    'jquery-ui/jquery.ui.position.min.js',
+            'spin.min.js',
 		    'jquery.dolPopup.js',
-		    'jquery.ui.position.min.js',
-            BX_DOL_URL_PLUGINS . 'spin.min.js',
 		));
 
 		bx_import('BxTemplStudioConfig');

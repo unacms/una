@@ -23,7 +23,7 @@ class BxBaseStudioStore extends BxDolStudioStore {
     }
 
     function getPageJs() {
-        return array_merge(parent::getPageJs(), array('jquery.migrate.js', 'jquery.fancybox.js', 'store.js'));
+        return array_merge(parent::getPageJs(), array('jquery.fancybox.pack.js', 'store.js'));
     }
 
     function getPageJsObject() {
