@@ -3,7 +3,7 @@ packages/*
 cache/*
 cache_public/*
 tmp/*
-logs/*
+#logs/*
 
 # Exclude main config file
 inc/header*
