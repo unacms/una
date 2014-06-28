@@ -162,6 +162,7 @@
                 <include name="**/*" />
                 <exclude name=".htaccess" />
                 <exclude name="clover.xml" />
+                <exclude name="phpcdp.xml" />
             </fileset>
         </delete>
         <delete includeemptydirs="true">
