@@ -17,6 +17,7 @@ class BxDolDb extends BxDol implements iBxDolSingleton
     protected $_oDbCacheObject = null;
     protected $_aParams = null;
     protected $_sParamsCacheName = 'sys_options';
+    protected $_sStorageEngine = 'MYISAM';
 
     /**
      * set database parameters and connect to it
@@ -105,6 +106,7 @@ class BxDolDb extends BxDol implements iBxDolSingleton
 
         mysql_query("SET NAMES 'utf8'", $this->_rLink);
         mysql_query("SET sql_mode = ''", $this->_rLink);
+        mysql_query("SET storage_engine=" . $this->_sStorageEngine, $this->_rLink);
 
         $GLOBALS['bx_db__rLink'] = $this->_rLink;
 
