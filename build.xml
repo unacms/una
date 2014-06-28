@@ -163,6 +163,7 @@
                 <exclude name=".htaccess" />
                 <exclude name="clover.xml" />
                 <exclude name="phpcdp.xml" />
+                <exclude name="junit.xml" />
             </fileset>
         </delete>
         <delete includeemptydirs="true">
