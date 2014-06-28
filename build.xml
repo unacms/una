@@ -161,6 +161,7 @@
             <fileset dir="${project.basedir}/logs">
                 <include name="**/*" />
                 <exclude name=".htaccess" />
+                <exclude name="clover.xml" />
             </fileset>
         </delete>
         <delete includeemptydirs="true">
