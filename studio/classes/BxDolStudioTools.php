@@ -32,9 +32,9 @@ class BxDolStudioTools extends BxDolIO
             'inc',
             'cache',
             'cache_public',
+            'logs',
             'tmp',
             'storage',
-//            'plugins/ffmpeg/ffmpeg.exe',
         );
 
         $this->aPostInstallPermissions = array(

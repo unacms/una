@@ -65,13 +65,9 @@ class BxDolConfig extends BxDol implements iBxDolSingleton
 
     function init() 
     {
-        $this->aUrlDynamic = array(
-            'tmp' => BX_DOL_URL_ROOT . 'tmp/',
-        );
+        $this->aUrlDynamic = array();
 
-        $this->aPathDynamic = array(
-            'tmp' => BX_DIRECTORY_PATH_ROOT . 'tmp/',
-        );
+        $this->aPathDynamic = array();
 
         $this->aDb = array(
             'visual_processing' => true,

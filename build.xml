@@ -128,6 +128,7 @@
 
         <chmod file="${deploy_path}/cache" mode="0777" />
         <chmod file="${deploy_path}/cache_public" mode="0777" />
+        <chmod file="${deploy_path}/logs" mode="0777" />
         <chmod file="${deploy_path}/tmp" mode="0777" />
         <chmod file="${deploy_path}/storage" mode="0777" />
 
@@ -153,6 +154,12 @@
         </delete>
         <delete includeemptydirs="true">
             <fileset dir="${project.basedir}/cache_public">
+                <include name="**/*" />
+                <exclude name=".htaccess" />
+            </fileset>
+        </delete>
+        <delete includeemptydirs="true">
+            <fileset dir="${project.basedir}/logs">
                 <include name="**/*" />
                 <exclude name=".htaccess" />
             </fileset>

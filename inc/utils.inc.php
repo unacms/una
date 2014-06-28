@@ -451,7 +451,7 @@ function clear_xss($val) {
         $oConfig->set('Output.FlashCompat', 'true');
         $oConfig->set('HTML.FlashAllowFullScreen', 'true');
 
-        if (getParam('sys_add_nofollow')) { // TODO: add to  "Security" settings
+        if (getParam('sys_add_nofollow')) {
             $sHost = parse_url(BX_DOL_URL_ROOT, PHP_URL_HOST);
             $oConfig->set('URI.Host', $sHost);
             $oConfig->set('HTML.Nofollow', 'true');

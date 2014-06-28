@@ -807,7 +807,7 @@ EOJ;
 
     function log ($s) 
     {
-        return file_put_contents(BX_DIRECTORY_PATH_ROOT . 'tmp/db.err.log', date('Y-m-d H:i:s') . "\t" . $s . "\n", FILE_APPEND);
+        return file_put_contents(BX_DIRECTORY_PATH_ROOT . 'logs/db.err.log', date('Y-m-d H:i:s') . "\t" . $s . "\n", FILE_APPEND);
     }
 
     function executeSQL($sPath, $aReplace = array (), $isBreakOnError = true) 
