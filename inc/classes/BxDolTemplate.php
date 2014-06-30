@@ -560,8 +560,6 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     /**
      * Add dynamic location.
      * 
-     * @todo SHOULD be removed.
-     * 
      * @param string $sLocationPath - location's path. For modules: '[path_to_dolphin]/modules/[vendor_name]/[module_name]/'
      * @param string $sLocationUrl - location's url. For modules: '[url_to_dolphin]/modules/[vendor_name]/[module_name]/'
      * @return location key. Is needed to remove the location.

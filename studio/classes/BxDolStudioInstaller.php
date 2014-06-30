@@ -107,20 +107,11 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
             'recompile_global_paramaters' => array(
                 'title' => _t('_adm_txt_modules_recompile_global_paramaters'),
             ),
-            'recompile_main_menu' => array(
-                'title' => _t('_adm_txt_modules_recompile_main_menu'),
-            ),
-            'recompile_member_menu' => array(
-                'title' => _t('_adm_txt_modules_recompile_member_menu'),
+            'recompile_menus' => array(
+                'title' => _t('_adm_txt_modules_recompile_menus'),
             ),
             'recompile_site_stats' => array(
                 'title' => _t('_adm_txt_modules_recompile_site_stats'),
-            ),
-            'recompile_page_builder' => array(
-                'title' => _t('_adm_txt_modules_recompile_page_builder'),
-            ),
-            'recompile_profile_fields' => array(
-                'title' => _t('_adm_txt_modules_recompile_profile_fields'),
             ),
             'recompile_comments' => array(
                 'title' => _t('_adm_txt_modules_recompile_comments'),
