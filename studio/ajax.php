@@ -10,7 +10,6 @@
 
 require_once('./../inc/header.inc.php');
 require_once(BX_DIRECTORY_PATH_INC . 'design.inc.php');
-require_once(BX_DIRECTORY_PATH_PLUGINS . 'Services_JSON.php');
 
 bx_import('BxDolLanguages');
 
@@ -32,6 +31,5 @@ switch(bx_get('action')) {
 }
 
 header('Content-Type:text/javascript');
-$oJson = new Services_JSON();
-echo $oJson->encode($aResult);
+echo json_encode($aResult);
 /** @} */

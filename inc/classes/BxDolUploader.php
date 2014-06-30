@@ -316,11 +316,9 @@ abstract class BxDolUploader extends BxDol {
                 'js_instance_name' => $this->_sUploaderJsInstance,
             );
         }
-        
+
         if ('json' == $sFormat) {
-            require_once(BX_DIRECTORY_PATH_PLUGINS . 'Services_JSON.php');
-            $oParser = new Services_JSON();
-            return $oParser->encode($a);
+            return json_encode($a);
         } else { // html format is not suported for this data type
             return false;
         }

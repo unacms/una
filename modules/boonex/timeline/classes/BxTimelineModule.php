@@ -12,8 +12,6 @@
 bx_import('BxDolAcl');
 bx_import('BxDolModule');
 
-require_once( BX_DIRECTORY_PATH_PLUGINS . 'Services_JSON.php' );
-
 define('BX_TIMELINE_TYPE_OWNER', 'owner');
 define('BX_TIMELINE_TYPE_CONNECTIONS', 'connections');
 define('BX_TIMELINE_TYPE_ITEM', 'view_item');
@@ -909,10 +907,7 @@ class BxTimelineModule extends BxDolModule
 
         header('Content-type: text/html; charset=utf-8');    
 
-        require_once(BX_DIRECTORY_PATH_PLUGINS . 'Services_JSON.php');
-
-        $oParser = new Services_JSON();
-        $s = $oParser->encode($a);
+        $s = json_encode($a);
         if ($isAutoWrapForFormFileSubmit && !empty($_FILES)) 
             $s = '<textarea>' . $s . '</textarea>'; // http://jquery.malsup.com/form/#file-upload
         echo $s;

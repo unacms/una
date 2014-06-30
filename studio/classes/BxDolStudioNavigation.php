@@ -49,8 +49,7 @@ class BxDolStudioNavigation extends BxTemplStudioPage {
                         $aResult = $this->$sMethod();
 	        }
 
-	        $oJson = new Services_JSON();		        
-            echo $oJson->encode($aResult);
+            echo json_encode($aResult);
             exit;
         }
     }

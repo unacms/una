@@ -46,9 +46,8 @@ class BxDolStudioModule extends BxTemplStudioPage {
                     $aResult = $this->activate($sValue);
                     break;
             }
-    
-            $oJson = new Services_JSON();		        
-            echo $oJson->encode($aResult);
+
+            echo json_encode($aResult);
             exit;
         }
 
