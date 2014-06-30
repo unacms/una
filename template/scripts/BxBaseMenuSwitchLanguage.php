@@ -39,7 +39,7 @@ class BxBaseMenuSwitchLanguage extends BxTemplMenu
 			parse_str($aPage[1], $aPageParams);
 
         bx_import('BxDolLanguagesQuery');
-        $aLanguages = BxDolLanguagesQuery::getInstance()->getLanguages();
+        $aLanguages = BxDolLanguagesQuery::getInstance()->getLanguages(false, true);
 
         $aItems = array();
         foreach( $aLanguages as $sName => $sLang ) {
