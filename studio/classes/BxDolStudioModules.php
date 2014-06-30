@@ -69,8 +69,7 @@ class BxDolStudioModules extends BxDol {
 	            $aResult['message'] = BxTemplStudioFunctions::getInstance()->transBox('', $aResult['message']);
 	        }
 
-	        $oJson = new Services_JSON();		        
-            echo $oJson->encode($aResult);
+            echo json_encode($aResult);
             exit;
         }
     }

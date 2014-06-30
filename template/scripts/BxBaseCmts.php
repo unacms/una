@@ -700,15 +700,14 @@ class BxBaseCmts extends BxDolCmts
     	return BxDolTemplate::getInstance()->parseHtmlByName('comment_empty.html', array(
     		'style_prefix' => $this->_sStylePrefix
     	));
-    } 
-	protected function _echoResultJson($a, $isAutoWrapForFormFileSubmit = false) {
+    }
+
+	protected function _echoResultJson($a, $isAutoWrapForFormFileSubmit = false)
+	{
 
         header('Content-type: text/html; charset=utf-8');    
 
-        require_once(BX_DIRECTORY_PATH_PLUGINS . 'Services_JSON.php');
-
-        $oParser = new Services_JSON();
-        $s = $oParser->encode($a);
+        $s = json_encode($a);
         if ($isAutoWrapForFormFileSubmit && !empty($_FILES)) 
             $s = '<textarea>' . $s . '</textarea>'; // http://jquery.malsup.com/form/#file-upload
         echo $s;

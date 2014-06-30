@@ -96,9 +96,7 @@ class BxBaseUploaderHTML5 extends BxDolUploader {
             $aResponse = array ('error' => $this->getUploadErrorMessages());
         }         
 
-        require_once(BX_DIRECTORY_PATH_PLUGINS . 'Services_JSON.php');
-        $oParser = new Services_JSON();
-        echo htmlspecialchars($oParser->encode($aResponse), ENT_NOQUOTES);
+        echo htmlspecialchars(json_encode($aResponse), ENT_NOQUOTES);
     }
 }
 

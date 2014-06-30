@@ -12,8 +12,6 @@
 bx_import ('BxDolModule');
 bx_import ('BxDolAcl');
 
-require_once( BX_DIRECTORY_PATH_PLUGINS . 'Services_JSON.php' );
-
 define('BX_SITES_ACCOUNT_STATUS_UNCONFIRMED', 'unconfirmed');
 define('BX_SITES_ACCOUNT_STATUS_PENDING', 'pending');
 define('BX_SITES_ACCOUNT_STATUS_TRIAL', 'trial');
@@ -201,8 +199,7 @@ class BxSitesModule extends BxDolModule
 			$aResult = array('code' => '0', 'message' => '', 'redirect' => $sUrl);
 
 		header('Content-Type:text/javascript');
-        $oJson = new Services_JSON();
-        echo $oJson->encode($aResult);
+        echo json_encode($aResult);
 	}
 	*/
 

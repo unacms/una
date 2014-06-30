@@ -40,8 +40,7 @@ class BxDolStudioLauncher extends BxTemplStudioWidgets {
                     break;
 	        }
 
-	        $oJson = new Services_JSON();		        
-            echo $oJson->encode($aResult);
+            echo json_encode($aResult);
             exit;
         }
 

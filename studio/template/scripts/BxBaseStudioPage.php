@@ -12,8 +12,6 @@ bx_import('BxDolStudioPage');
 bx_import('BxDolStudioTemplate');
 bx_import('BxTemplStudioFunctions');
 
-require_once(BX_DIRECTORY_PATH_PLUGINS . 'Services_JSON.php');
-
 class BxBaseStudioPage extends BxDolStudioPage {
 
     function __construct($mixedPageName) {
@@ -49,10 +47,8 @@ class BxBaseStudioPage extends BxDolStudioPage {
         	return '';
 
 		$sOptions = '{}';
-		if(!empty($aOptions)) {
-			$oJson = new Services_JSON();		        
-			$sOptions = $oJson->encode($aOptions);
-		}
+		if(!empty($aOptions))		        
+			$sOptions = json_encode($aOptions);
 
         $sContent = 'var ' . $sJsObject . ' = new ' . $sJsClass . '(' . $sOptions . ');';
 		if($bWrap)
@@ -274,8 +270,7 @@ class BxBaseStudioPage extends BxDolStudioPage {
         if(!empty($sOnResult))
             $aResult['on_result'] = $sOnResult;
 
-        $oJson = new Services_JSON();
-        $sResult = "window.parent." . BX_DOL_STUDIO_PAGE_JS_OBJECT . ".showMessage(" . $oJson->encode($aResult) . ");";
+        $sResult = "window.parent." . BX_DOL_STUDIO_PAGE_JS_OBJECT . ".showMessage(" . json_encode($aResult) . ");";
 
         return BxDolStudioTemplate::getInstance()->_wrapInTagJsCode($sResult);
     }

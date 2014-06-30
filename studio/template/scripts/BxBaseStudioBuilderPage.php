@@ -108,7 +108,6 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
         bx_import('BxTemplPage');
         $oPage = BxTemplPage::getObjectInstance($this->sPage);
 
-        $oJson = new Services_JSON();
     	$oTemplate = BxDolStudioTemplate::getInstance();
     	$sJsObject = $this->getPageJsObject();
 
@@ -166,8 +165,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
             'page_url' => sprintf($this->sPageUrl, '{0}', '{1}'),
             'type' => $this->sType,
         	'page' => $this->sPage,
-            'html_ids' => $oJson->encode($this->aHtmlIds),
-            'languahes' => $oJson->encode($aLanguages),
+            'html_ids' => json_encode($this->aHtmlIds),
+            'languahes' => json_encode($aLanguages),
             'bx_repeat:blocks' => array(
                 array(
                 	'caption' => '',
@@ -1432,6 +1431,10 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
             $aTmplParams['bx_repeat:blocks'][] = array(
                 'js_object' => $sJsObject,
                 'html_id' => $this->aHtmlIds['block_id'] . $aBlock['id'],
+            	'bx_if:is_inactive' => array(
+                    'condition' => false,
+                    'content' => array()
+                ),
                 'bx_if:show_link' => array(
                     'condition' => false,
                     'content' => array()

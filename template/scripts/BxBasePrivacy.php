@@ -38,10 +38,7 @@ class BxBasePrivacy extends BxDolPrivacy {
     {
         header('Content-type: text/html; charset=utf-8');    
 
-        require_once(BX_DIRECTORY_PATH_PLUGINS . 'Services_JSON.php');
-
-        $oParser = new Services_JSON();
-        $s = $oParser->encode($a);
+        $s = json_encode($a);
         if ($isAutoWrapForFormFileSubmit && !empty($_FILES)) 
             $s = '<textarea>' . $s . '</textarea>';
         echo $s;
