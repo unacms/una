@@ -3,23 +3,16 @@
     <table>
         <tr>
             <bx_if:selectAll>
-                <td><input class="admin-actions-select-all" type="checkbox" onclick="$('#{wrapperId} input[name=\'{checkboxName}[]\']:enabled').attr('checked', this.checked)"  {checked} /></td>
+                <td><input class="admin-actions-select-all" type="checkbox" onclick="$('#__wrapper_id__ input[name=\'__checkbox_name__[]\']:enabled').attr('checked', this.checked)"  __checked__ /></td>
                 <td><bx_text:_Select_all /></td>
             </bx_if:selectAll>
             <td>&nbsp;</td>
             <bx_repeat:buttons>
-                <td>
-                    <div class="input_wrapper input_wrapper_submit">
-                    <div class="button_wrapper"><input class="form_input_submit" type="{type}" name="{name}" value="{value}" {onclick} />
-                        <div class="button_wrapper_close"></div>
-                    </div>
-                    <div class="input_close input_close_submit"/>
-                    </div>
-                </td>
+                <td><input class="bx-btn" type="__type__" name="__name__" value="__value__" __onclick__ /></td>
             </bx_repeat:buttons>
-            <bx_if:customHTML>
-                <td>{custom_HTML}</td>
-            </bx_if:customHTML>
+            <bx_if:custom_html>
+                <td>__custom_html__</td>
+            </bx_if:custom_html>
         </tr>
     </table>
 </div>

@@ -115,6 +115,7 @@ class BxBaseSearchResult extends BxDolSearchResult
                 $aBtns[] = $v;
                 continue;
             }
+
             $aBtns[] = array(
                 'type' => 'submit',
                 'name' => $k,
@@ -122,80 +123,41 @@ class BxBaseSearchResult extends BxDolSearchResult
                 'onclick' => '',
             );
         }
-        $aUnit = array(
+
+        return BxDolTemplate::getInstance()->parseHtmlByName('adminActionsPanel.html', array(
             'bx_repeat:buttons' => $aBtns,
-            'bx_if:customHTML' => array(
+            'bx_if:custom_html' => array(
                 'condition' => strlen($sCustomHtml) > 0,
                 'content' => array(
-                    'custom_HTML' => $sCustomHtml,
+                    'custom_html' => $sCustomHtml,
                 )
             ),
             'bx_if:selectAll' => array(
                 'condition' => $bSelectAll,
                 'content' => array(
-                    'wrapperId' => $sWrapperId,
-                    'checkboxName' => $sCheckboxName,
+                    'wrapper_id' => $sWrapperId,
+                    'checkbox_name' => $sCheckboxName,
                     'checked' => ($bSelectAll && $bSelectAllChecked ? 'checked="checked"' : '')
                 )
             ),
-        );
-        return BxDolTemplate::getInstance()->parseHtmlByName('adminActionsPanel.html', $aUnit, array('{','}'));
+        ));
     }
 
     function showAdminFilterPanel($sFilterValue, $sInputId = 'filter_input_id', $sCheckboxId = 'filter_checkbox_id', $sFilterName = 'filter', $sOnApply = '') 
     {
-        $sFilter = _t('_sys_admin_filter');
-        $sApply = _t('_sys_admin_apply');
-
         $sFilterValue = bx_html_attribute($sFilterValue);
         $isChecked = $sFilterValue ? ' checked="checked" ' : '';
 
-        $sJsContent = "";
-        if(empty($sOnApply)) {
-            $sOnApply = 'on_filter_apply(this)';
-            ob_start();
-?>
-    <script type="text/javascript">
-        function on_filter_apply (e) {
-            var s = ('' + document.location).replace (/[&]{0,1}<?php echo $sFilterName;?>=.*/, ''); // remove filter
-            s = s.replace(/page=\d+/, 'page=1'); // goto 1st page
-            if (e.checked && $('#<?php echo $sInputId;?>').val().length > 2)
-                s += (-1 == s.indexOf('?') ? '?' : '&') + '<?php echo $sFilterName;?>=' + $('#<?php echo $sInputId;?>').val(); // append filter
-            document.location = s;
-        }
-        function on_filter_key_up (e) {
-            if (13 == e.keyCode) {
-                $('#<?php echo $sCheckboxId; ?>').attr('checked', 'checked');
-                on_filter_apply($('#<?php echo $sCheckboxId; ?>').get(0));
-                return false;
-            } else {
-                $('#<?php echo $sCheckboxId; ?>').attr('checked', '');
-                return true;
-            }
-        }
-    </script>
-<?php
-            $sJsContent = ob_get_clean();
-        }
+        if(empty($sOnApply))
+            $sOnApply = "on_filter_apply(this, '" . $sInputId . "', '" . $sFilterName . "')";
 
-        return <<<EOF
-    {$sJsContent}
-    <div class="admin_filter_panel">
-        <table>
-            <tr>
-                <td>{$sFilter}</td>
-                <td>
-                    <div class="input_wrapper input_wrapper_text">
-                        <input type="text" id="{$sInputId}" value="{$sFilterValue}" class="form_input_text" onkeypress="return on_filter_key_up(event)" />
-                        <div class="input_close input_close_text">&nbsp;</div>
-                    </div>
-                </td>
-                <td><input type="checkbox" id="{$sCheckboxId}" $isChecked onclick="{$sOnApply}" /></td>
-                <td><label for="{$sCheckboxId}">{$sApply}</label></td>
-            </tr>
-        </table>
-    </div>
-EOF;
+		return BxDolTemplate::getInstance()->parseHtmlByName('adminFilterPanel.html', array(
+			'input_id' => $sInputId,
+			'filter_value' => $sFilterValue,
+			'checkbox_id' => $sCheckboxId,
+			'is_checked' => $isChecked,
+			'on_apply' => $sOnApply,
+		));
     }
 
     function showPagination($bAdmin = false, $bChangePage = true, $bPageReload = true)
