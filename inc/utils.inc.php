@@ -789,10 +789,10 @@ function encryptUserPwd($sPwd, $sSalt) {
     return sha1(md5($sPwd) . $sSalt);
 }
 
-function bx_get ($sName) {
-    if (isset($_GET[$sName]))
+function bx_get ($sName, $sMethod = false) {
+    if (isset($_GET[$sName]) && ('get' == $sMethod || !$sMethod))
         return $_GET[$sName];
-    elseif (isset($_POST[$sName]))
+    elseif (isset($_POST[$sName]) && ('post' == $sMethod || !$sMethod))
         return $_POST[$sName];
     else
         return false;

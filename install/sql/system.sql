@@ -460,6 +460,10 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 ('system', 'delete account', NULL, '_sys_acl_action_delete_account', '_sys_acl_action_delete_account_desc', 0, 2147483646);
 SET @iIdActionAccountDelete = LAST_INSERT_ID();
 
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('system', 'set acl level', NULL, '_sys_acl_action_set_acl_level', '_sys_acl_action_set_acl_level_desc', 0, 2147483646);
+SET @iIdActionSetAclLevel = LAST_INSERT_ID();
+
 
 CREATE TABLE `sys_acl_actions_track` (
   `IDAction` int(10) unsigned NOT NULL DEFAULT '0',
@@ -534,7 +538,10 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iPending, @iIdActionAccountDelete),
 (@iModerator, @iIdActionAccountDelete),
 (@iAdministrator, @iIdActionAccountDelete),
-(@iPremium, @iIdActionAccountDelete);
+(@iPremium, @iIdActionAccountDelete),
+
+-- set acl level
+(@iAdministrator, @iIdActionSetAclLevel);
 
 
 CREATE TABLE `sys_acl_levels` (
@@ -2564,7 +2571,8 @@ INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `templa
 ('sys_account_notifications', '_sys_menu_title_account_notifications', 'sys_account_notifications', 'system', 13, 0, 1, 'BxTemplMenuAccountNotifications', ''),
 ('sys_profile_stats', '_sys_menu_title_profile_stats', 'sys_profile_stats', 'system', 6, 0, 1, 'BxTemplMenuProfileStats', ''),
 ('sys_switch_language', '_sys_menu_title_switch_language', 'sys_switch_language', 'system', 6, 0, 1, 'BxTemplMenuSwitchLanguage', ''),
-('sys_switch_template', '_sys_menu_title_switch_template', 'sys_switch_template', 'system', 6, 0, 1, 'BxTemplMenuSwitchTemplate', '');
+('sys_switch_template', '_sys_menu_title_switch_template', 'sys_switch_template', 'system', 6, 0, 1, 'BxTemplMenuSwitchTemplate', ''),
+('sys_set_acl_level', '_sys_menu_title_set_acl_level', '', 'system', 6, 0, 1, 'BxTemplMenuSetAclLevel', '');
 
 CREATE TABLE IF NOT EXISTS `sys_menu_sets` (
   `set_name` varchar(64) NOT NULL,

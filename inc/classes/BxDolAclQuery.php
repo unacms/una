@@ -246,7 +246,7 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton {
     }
 
     function insertLevelByProfileId($iProfileId, $iMembershipId, $iDateStarts, $iDateExpires, $sTransactionId) {
-        $sQuery = $this->prepare("INSERT `sys_acl_levels_members` (`IDMember`, `IDLevel`, `DateStarts`, `DateExpires`, `TransactionID`) VALUES (?, ?, FROM_UNIXTIME(?), FROM_UNIXTIME(?), '?')", $iProfileId, $iMembershipId, $iDateStarts, $iDateExpires, $sTransactionId);
+        $sQuery = $this->prepare("INSERT `sys_acl_levels_members` (`IDMember`, `IDLevel`, `DateStarts`, `DateExpires`, `TransactionID`) VALUES (?, ?, FROM_UNIXTIME(?), FROM_UNIXTIME(?), ?)", $iProfileId, $iMembershipId, $iDateStarts, $iDateExpires, $sTransactionId);
     	return (int)$this->query($sQuery) > 0;
     }
 

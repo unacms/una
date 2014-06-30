@@ -521,8 +521,8 @@ class BxDolAcl extends BxDol implements iBxDolSingleton {
     	    $this->oDb->deleteLevelByProfileId($iProfileId, true); ///< Delete any profile's membership level
 
         // set lifetime membership if 0 days is used.
-        $iDateExpires = $iDays != 0 ? (int)$iDateStarts + $iDays * $iSecInDay : 'NULL';
-    	if(!$this->insertLevelByProfileId($iProfileId, $iLevelId, $iDateStarts, $iDateExpires, $sTransactionId))
+        $iDateExpires = $iDays != 0 ? (int)$iDateStarts + $iDays * $iSecInDay : null;
+    	if(!$this->oDb->insertLevelByProfileId($iProfileId, $iLevelId, $iDateStarts, $iDateExpires, $sTransactionId))
     	   return false;
 
     	// raise membership alert
@@ -532,7 +532,7 @@ class BxDolAcl extends BxDol implements iBxDolSingleton {
     	
     	// Send notification
     	bx_import('BxDolEmailTemplates');
-        $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_MemChanged', array('membership_level' => $aLevel['name']), 0, $iProfileId);            
+        $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_MemChanged', array('membership_level' => _t($aLevel['name'])), 0, $iProfileId);
         if ($aTemplate)
             sendMail($sProfileEmail, $aTemplate['Subject'], $aTemplate['Body']);
 
@@ -665,7 +665,7 @@ class BxDolAcl extends BxDol implements iBxDolSingleton {
         $aMembership = $aMembershipCurrent;
         while ($aMembership['id'] != MEMBERSHIP_ID_STANDARD) {
             $aMembershipLast = $aMembership;
-            if((int)$aMembership['DateExpires'] == 0)
+            if(!isset($aMembership['DateExpires']) || (int)$aMembership['DateExpires'] == 0)
                 break;
 
             $aMembership = $this->getMemberMembershipInfoCurrent($iProfileId, $aMembership['date_expires']);
