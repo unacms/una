@@ -102,8 +102,11 @@ class BxBaseServiceProfiles extends BxDol
 
         // search in each module
         $a = array();
-        foreach ($aModules as $aModule)
+        foreach ($aModules as $aModule) {
+            if ('system' == $aModule['name']) // don't search in account profiles
+                continue;
             $a = array_merge($a, BxDolService::call($aModule['name'], 'profiles_search', array($sTerm, 10)));
+        }
 
         // sort result
         usort($a, function($r1, $r2) {
@@ -189,7 +192,7 @@ class BxBaseServiceProfiles extends BxDol
         return $aModuleNewest['date'];
     }
 
-    protected function _getProfilesModules () 
+    protected function _getProfilesModules ()
     {
         $aRet = array();
         bx_import('BxDolModuleQuery');

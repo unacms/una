@@ -44,6 +44,16 @@ class BxBaseServices extends BxDol implements iBxDolProfileService {
         return $this->_serviceProfileFunc('getUrl', $iContentId);
     }
 
+    public function serviceProfilesSearch ($sTerm, $iLimit) {
+        bx_import('BxDolAccountQuery');
+        $oDb = BxDolAccountQuery::getInstance();
+        $aRet = array();
+        $a = $oDb->searchByTerm($sTerm, $iLimit);
+        foreach ($a as $r)
+            $aRet[] = array ('label' => $this->serviceProfileName($r['content_id']), 'value' => $r['profile_id']);
+        return $aRet;
+    }
+
     public function _serviceProfileFunc ($sFunc, $iContentId) {
         if (!$iContentId)
             return false;
