@@ -76,25 +76,35 @@ class BxDolModule extends BxDol {
      * @param $sName module name.
      */
     public static function getInstance($sName) {
-        if(empty($sName))
+        if (empty($sName))
             return null;
 
         bx_import('BxDolModuleQuery');
         $aModule = BxDolModuleQuery::getInstance()->getModuleByName($sName);
-        if(empty($aModule) || !is_array($aModule))
+        if (empty($aModule) || !is_array($aModule))
             return null;
 
         $sClassName = $aModule['class_prefix'] . 'Module';
-        if(isset($GLOBALS['bxDolClasses'][$sClassName]))
-           return $GLOBALS['bxDolClasses'][$sClassName];
 
-        $sClassPath = BX_DIRECTORY_PATH_MODULES . $aModule['path'] . '/classes/' . $sClassName . '.php';
-        if(!file_exists($sClassPath))
-            return null;
+        if ('system' != $sName) {
 
-        require_once($sClassPath);
-        $GLOBALS['bxDolClasses'][$sClassName] = new $sClassName($aModule);
-        return $GLOBALS['bxDolClasses'][$sClassName];
+            if (isset($GLOBALS['bxDolClasses'][$sClassName]))
+                return $GLOBALS['bxDolClasses'][$sClassName];
+
+            $sClassPath = BX_DIRECTORY_PATH_MODULES . $aModule['path'] . '/classes/' . $sClassName . '.php';
+            if (!file_exists($sClassPath))
+                return null;
+            require_once($sClassPath);
+
+            $GLOBALS['bxDolClasses'][$sClassName] = new $sClassName($aModule);
+            return $GLOBALS['bxDolClasses'][$sClassName];
+
+        } else {
+
+            $sClassName = 'BxTemplServices';
+            return bx_instance($sClassName, array($aModule));
+
+        }
     }
 
     public static function getTitle($sUri) {
