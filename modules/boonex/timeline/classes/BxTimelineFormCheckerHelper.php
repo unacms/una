@@ -13,7 +13,7 @@ bx_import('BxDolStudioForm');
 
 class BxTimelineFormCheckerHelper extends BxDolStudioFormCheckerHelper
 {
-	function checkGreaterThen($sVal, $iLimit)
+	function checkGreaterThan($sVal, $iLimit)
     {
     	return (int)$sVal > (int)$iLimit;
     }
