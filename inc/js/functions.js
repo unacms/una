@@ -284,6 +284,29 @@ function bx_menu_popup_inline (jSel, e, options) {
         $(jSel).dolPopup(o);
 }
 
+/**
+ * Show pointer popup with menu from URL.
+ * @param iProfileId - profile id to set acl level for
+ * @param iAclLevel - acl level id to assign to a given rofile
+ */
+function bx_set_acl_level (iProfileId, iAclLevel, mixedLoadingElement) {
+
+    if ('undefined' != typeof(mixedLoadingElement))
+        bx_loading($(mixedLoadingElement), true);
+
+    $.post(sUrlRoot + 'menu.php', {o:'sys_set_acl_level', 'profile_id': iProfileId, 'acl_level_id': iAclLevel}, function(data) {
+
+        if ('undefined' != typeof(mixedLoadingElement))
+            bx_loading($(mixedLoadingElement), false);
+
+        if (data.length) {
+            alert(data);
+        } else if ($(mixedLoadingElement).hasClass('bx-popup-applied')) {
+            $(mixedLoadingElement).dolPopupHide().remove();
+        }
+    });
+}
+
 function validateLoginForm(eForm) {
     return true;
 }
@@ -471,3 +494,5 @@ function on_filter_key_up (e, sCheckboxId)
         return true;
     }
 }
+
+

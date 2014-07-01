@@ -26,6 +26,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'profile-subscribe-add' => 'checkAllowedSubscribeAdd',
             'profile-subscribe-remove' => 'checkAllowedSubscribeRemove',
             'profile-actions-more' => 'checkAllowedViewMoreMenu',
+            'profile-set-acl-level' => 'checkAllowedSetMembership',
         );
 
         $this->CNF = array (

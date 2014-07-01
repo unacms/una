@@ -1313,13 +1313,15 @@
 	<string name="_sys_acl_action_delete_account"><![CDATA[Delete Account]]></string>
 	<string name="_sys_acl_action_delete_account_desc"><![CDATA[Delete account also deletes account's content.]]></string>
 	<string name="_sys_acl_action_every_period"><![CDATA[ every {4} hours]]></string>
-	<string name="_sys_acl_action_limit_reached"><![CDATA[You have reached your limit for now. Your current membership (<b>{2}</b>) allows you to {1} no more than {3} times]]></string>
-	<string name="_sys_acl_action_not_allowed"><![CDATA[Your current membership (<b>{2}</b>) doesn't allow you to <b>{1}</b>.]]></string>
-	<string name="_sys_acl_action_not_allowed_after"><![CDATA[Your current membership (<b>{2}</b>) stopped to allow you to <b>{1}</b> <b>{5}</b>.]]></string>
-	<string name="_sys_acl_action_not_allowed_before"><![CDATA[Your current membership (<b>{2}</b>) will allow you to <b>{1}</b> <b>{6}</b>.]]></string>
+	<string name="_sys_acl_action_limit_reached"><![CDATA[You have reached your limit for now. Your current membership ({2}) allows you to {1} no more than {3} times]]></string>
+	<string name="_sys_acl_action_not_allowed"><![CDATA[Your current membership ({2}) doesn't allow you to '{1}'.]]></string>
+	<string name="_sys_acl_action_not_allowed_after"><![CDATA[Your current membership ({2}) stopped to allow you to '{1}' {5}.]]></string>
+	<string name="_sys_acl_action_not_allowed_before"><![CDATA[Your current membership ({2}) will allow you to '{1}' {6}.]]></string>
 	<string name="_sys_acl_action_pending"><![CDATA[You are currently not an active member. Please, ask the site <a href="mailto:{7}">administrator</a> to make you an active member so you would be able to <b>{1}</b>.]]></string>
-	<string name="_sys_acl_action_suspended"><![CDATA[You can't <b>{1}</b> becuase your profile was suspended, if you don't know why - try to send message to <a href="mailto:{7}">administrator</a>.]]></string>
-	<string name="_sys_acl_action_unauthenticated"><![CDATA[Not logged in users can't <b>{1}</b>.]]></string>
+	<string name="_sys_acl_action_set_acl_level"><![CDATA[Set membership level]]></string>
+	<string name="_sys_acl_action_set_acl_level_desc"><![CDATA[Set membership level for profiles]]></string>
+	<string name="_sys_acl_action_suspended"><![CDATA[You can't '{1}' becuase your profile was suspended, if you don't know why - try to send message to <a href="mailto:{7}">administrator</a>.]]></string>
+	<string name="_sys_acl_action_unauthenticated"><![CDATA[Not logged in users can't '{1}'.]]></string>
 	<string name="_sys_acl_action_unconfirmed"><![CDATA[You didn't confirm your profile. Please check your email with profile activation link. Unconfirmed members can't <b>{1}</b>.]]></string>
 	<string name="_sys_acl_action_vote"><![CDATA[Vote]]></string>
 	<string name="_sys_add_friend"><![CDATA[Add friend]]></string>
@@ -1434,7 +1436,6 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_et_txt_body_mem_changed"><![CDATA[<bx_include_auto:_email_header.html />
 <p>Hello,</p>
 <p>Your membership level was changed to: <b>{membership_level}</b></p>
-<p>Please refer to membership page for more details: <a href="{site_url}modules/?r=membership/index/">My Membership</a></p>
 <bx_include_auto:_email_footer.html />]]></string>
 	<string name="_sys_et_txt_body_mem_expiration"><![CDATA[<bx_include_auto:_email_header.html />
 <p>Hello,</p>
@@ -1688,6 +1689,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_item_title_logout"><![CDATA[Sign out]]></string>
 	<string name="_sys_menu_item_title_more"><![CDATA[More]]></string>
 	<string name="_sys_menu_item_title_profile"><![CDATA[Profile]]></string>
+	<string name="_sys_menu_item_title_set_acl_level"><![CDATA[Set membership]]></string>
 	<string name="_sys_menu_item_title_system_about"><![CDATA[About]]></string>
 	<string name="_sys_menu_item_title_system_switch_language"><![CDATA[Language]]></string>
 	<string name="_sys_menu_item_title_system_switch_template"><![CDATA[Template]]></string>
@@ -1710,6 +1712,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_item_title_system_main_menu"><![CDATA[Main Menu]]></string>
 	<string name="_sys_menu_item_title_system_more"><![CDATA[More]]></string>
 	<string name="_sys_menu_item_title_system_profile"><![CDATA[Profile]]></string>
+	<string name="_sys_menu_item_title_system_set_acl_level"><![CDATA[Set membership]]></string>
 	<string name="_sys_menu_set_title_account"><![CDATA[Account]]></string>
 	<string name="_sys_menu_set_title_account_settings"><![CDATA[Account Settings]]></string>
 	<string name="_sys_menu_set_title_account_settings_more"><![CDATA[Account Settings More]]></string>

@@ -172,6 +172,23 @@ class BxBaseModGeneralModule extends BxDolModule
         return _t('_sys_txt_access_denied');
     }
 
+    /**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
+     */
+    public function checkAllowedSetMembership (&$aDataEntry, $isPerformAction = false) 
+    {
+        // admin always has access
+        if (isAdmin($this->_iProfileId))
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+        // check ACL
+        $aCheck = checkActionModule($this->_iProfileId, 'set acl level', 'system', $isPerformAction);
+        if ($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
+            return $aCheck[CHECK_ACTION_MESSAGE];
+
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
+
     // ====== PROTECTED METHODS
 
     protected function _serviceBrowse ($sMode, $aParams = false, $iDesignBox = BX_DB_PADDING_DEF, $bDisplayEmptyMsg = false, $bAjaxPaginate = true) 
