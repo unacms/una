@@ -219,6 +219,7 @@ class BxBaseVote extends BxDolVote
     		'style_prefix' => $this->_sStylePrefix,
     		'js_object' => $this->getJsObjectName(),
     		'class' => ($bShowDoVoteAsButton ? 'bx-btn' : '') . ($bShowDoVoteAsButtonSmall ? 'bx-btn bx-btn-small' : ''),
+    		'title' => _t('_vote_do_like'),
     		'value' => $this->getMinValue(),
     		'do_vote' => $this->_getLabelDoLike($aParams),
     	));

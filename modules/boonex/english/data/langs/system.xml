@@ -1681,8 +1681,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_item_title_add_content"><![CDATA[Add...]]></string>
 	<string name="_sys_menu_item_title_cmts_item_delete"><![CDATA[Delete]]></string>
 	<string name="_sys_menu_item_title_cmts_item_edit"><![CDATA[Edit]]></string>
-	<string name="_sys_menu_item_title_cmts_item_reply"><![CDATA[]]></string>
-	<string name="_sys_menu_item_title_cmts_item_vote"><![CDATA[]]></string>
+	<string name="_sys_menu_item_title_cmts_item_reply"><![CDATA[Reply]]></string>
+	<string name="_sys_menu_item_title_cmts_item_vote"><![CDATA[Vote]]></string>
 	<string name="_sys_menu_item_title_dashboard"><![CDATA[Dash]]></string>
 	<string name="_sys_menu_item_title_home"><![CDATA[Home]]></string>
 	<string name="_sys_menu_item_title_logout"><![CDATA[Sign out]]></string>
@@ -1850,6 +1850,10 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_select"><![CDATA[Select]]></string>
 	<string name="_sys_send"><![CDATA[Send]]></string>
     <string name="_sys_search_placeholder"><![CDATA[Search...]]></string>
+    <string name="_sys_social_sharing_title_facebook"><![CDATA[Share in Facebook]]></string>
+    <string name="_sys_social_sharing_title_googleplus"><![CDATA[Share in Google Plus]]></string>
+    <string name="_sys_social_sharing_title_twitter"><![CDATA[Share in Twitter]]></string>
+    <string name="_sys_social_sharing_title_pinterest"><![CDATA[Share in Pinterest]]></string>
 	<string name="_sys_spam_detected"><![CDATA[Sorry, it looks like you are trying to submit spam]]></string>
 	<string name="_sys_spam_detected_contact"><![CDATA[Sorry, it looks like you are trying to submit spam, if you believe that it is not spam please submit false positive report here: {0}]]></string>
 	<string name="_sys_splash_btn_start"><![CDATA[Start]]></string>

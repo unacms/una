@@ -3140,6 +3140,10 @@ More info about URI DNSBL: <br />
 	<string name="_sys_format_size_mb"><![CDATA[{0} Mb]]></string>
 	<string name="_sys_format_size_gb"><![CDATA[{0} Gb]]></string>
 	<string name="_sys_format_size_tb"><![CDATA[{0} Tb]]></string>
+	<string name="_sys_social_sharing_title_facebook"><![CDATA[Share in Facebook]]></string>
+    <string name="_sys_social_sharing_title_googleplus"><![CDATA[Share in Google Plus]]></string>
+    <string name="_sys_social_sharing_title_twitter"><![CDATA[Share in Twitter]]></string>
+    <string name="_sys_social_sharing_title_pinterest"><![CDATA[Share in Pinterest]]></string>
 	<string name="_sys_storage_restriction_ext_all_allowed"><![CDATA[Wow, files of all types are allowed!]]></string>
 	<string name="_sys_storage_restriction_ext_all_denied"><![CDATA[Sorry, adding all file types is currently restricted.]]></string>
 	<string name="_sys_storage_restriction_ext_allowed"><![CDATA[Please, upload only files of these types: {0}]]></string>
