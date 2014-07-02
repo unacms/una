@@ -7,13 +7,13 @@
  * @{
  */
 
-bx_import('BxTemplMenu');
+bx_import('BxTemplMenuAccountNotifications');
 
 /**
  * Menu representation.
  * @see BxDolMenu
  */
-class BxBaseMenuProfileStats extends BxTemplMenu
+class BxBaseMenuProfileStats extends BxTemplMenuAccountNotifications
 {
     public function __construct ($aObject, $oTemplate)
     {
