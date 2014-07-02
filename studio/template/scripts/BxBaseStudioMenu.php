@@ -10,17 +10,20 @@
 
 bx_import('BxDolStudioMenu');
 
-class BxBaseStudioMenu extends BxDolStudioMenu { 
-    public function __construct ($aObject, $oTemplate) {
+class BxBaseStudioMenu extends BxDolStudioMenu
+{
+    public function __construct ($aObject, $oTemplate)
+    {
         parent::__construct ($aObject, $oTemplate);
     }
 
-	/**
+    /**
      * Check if menu items is selected.
      * @param $a menu item array
      * @return boolean
-     */ 
-    protected function _isSelected ($a) {
+     */
+    protected function _isSelected ($a)
+    {
         return isset($a['selected']) && $a['selected'] === true;
     }
 }

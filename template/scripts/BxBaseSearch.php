@@ -30,7 +30,7 @@ class BxBaseSearch extends BxDolSearch
         if (false === $sTitle)
             $sTitle = _t( "_Search");
 
-        $aValues = $this->getKeyTitlesPairs ();        
+        $aValues = $this->getKeyTitlesPairs ();
         $aValue = isset($_GET['type']) ? bx_process_input($_GET['type']) : array_keys($aValues);
 
         $sIdForm = $this->_sIdForm . ($this->_bLiveSearch ? $this->_sSuffixLiveSearch : '');
@@ -42,7 +42,7 @@ class BxBaseSearch extends BxDolSearch
             'form_attrs' => array(
                'id' => $sIdForm,
                'action' => BX_DOL_URL_ROOT . 'searchKeyword.php',
-               'method' => 'post',               
+               'method' => 'post',
             ),
             'csrf' => array(
                 'disable' => true,

@@ -9,12 +9,15 @@
 
 bx_import('BxDolStudioPageQuery');
 
-class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery { 
-    function __construct() {
+class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
+{
+    function __construct()
+    {
         parent::__construct();
     }
 
-    function getPages($aParams, &$aItems, $bReturnCount = true) {
+    function getPages($aParams, &$aItems, $bReturnCount = true)
+    {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sSelectClause = $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
 
@@ -72,13 +75,15 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery {
         return (int)$this->getOne("SELECT FOUND_ROWS()");
     }
 
-    function updatePage($iId, $aFields) {
+    function updatePage($iId, $aFields)
+    {
         $sSql = "UPDATE `sys_objects_page` SET `" . implode("`=?, `", array_keys($aFields)) . "`=?  WHERE `id`=?";
         $sSql = call_user_func_array(array($this, 'prepare'), array_merge(array($sSql), array_values($aFields), array($iId)));
         return $this->query($sSql);
     }
 
-    function deletePages($aParams) {
+    function deletePages($aParams)
+    {
         $sWhereClause = "";
 
         switch($aParams['type']) {
@@ -96,12 +101,14 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery {
         return (int)$this->query($sSql) > 0;
     }
 
-    function isUniqUri($sUri) {
+    function isUniqUri($sUri)
+    {
         $sSql = $this->prepare("SELECT `id` FROM `sys_objects_page` WHERE `uri`=? LIMIT 1", $sUri);
         return (int)$this->getOne($sSql) <= 0;
     }
 
-    function getLayouts($aParams, &$aItems, $bReturnCount = true) {
+    function getLayouts($aParams, &$aItems, $bReturnCount = true)
+    {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sSelectClause = $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
 
@@ -134,7 +141,8 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery {
         return (int)$this->getOne("SELECT FOUND_ROWS()");
     }
 
-    function getDesignBoxes($aParams, &$aItems, $bReturnCount = true) {
+    function getDesignBoxes($aParams, &$aItems, $bReturnCount = true)
+    {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sSelectClause = $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
 
@@ -167,7 +175,8 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery {
         return (int)$this->getOne("SELECT FOUND_ROWS()");
     }
 
-    function getBlocks($aParams, &$aItems, $bReturnCount = true) {
+    function getBlocks($aParams, &$aItems, $bReturnCount = true)
+    {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sSelectClause = $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
 
@@ -234,7 +243,8 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery {
         return (int)$this->getOne("SELECT FOUND_ROWS()");
     }
 
-    function insertBlock($aFields) {
+    function insertBlock($aFields)
+    {
         $aFields['order'] = $this->getBlockOrderMax($aFields['object']) + 1;
 
         $sSql = "INSERT INTO `sys_pages_blocks` SET `" . implode("`=?, `", array_keys($aFields)) . "`=?";
@@ -242,13 +252,15 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery {
         return (int)$this->query($sSql) > 0;
     }
 
-    function updateBlock($iId, $aFields) {
+    function updateBlock($iId, $aFields)
+    {
         $sSql = "UPDATE `sys_pages_blocks` SET `" . implode("`=?, `", array_keys($aFields)) . "`=?  WHERE `id`=?";
         $sSql = call_user_func_array(array($this, 'prepare'), array_merge(array($sSql), array_values($aFields), array($iId)));
         return $this->query($sSql);
     }
 
-    function deleteBlocks($aParams) {
+    function deleteBlocks($aParams)
+    {
         $sWhereClause = "";
 
         switch($aParams['type']) {
@@ -266,17 +278,20 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery {
         return (int)$this->query($sSql) > 0;
     }
 
-    function resetBlocksByPage($sObject, $iCellId) {
+    function resetBlocksByPage($sObject, $iCellId)
+    {
         $sSql = $this->prepare("UPDATE `sys_pages_blocks` SET `cell_id`=? WHERE `object`=? AND `cell_id`>?", $iCellId, $sObject, $iCellId);
         return $this->query($sSql);
     }
 
-    function getBlockOrderMax($sObject, $iCellId = 1) {
+    function getBlockOrderMax($sObject, $iCellId = 1)
+    {
         $sSql = $this->prepare("SELECT MAX(`order`) FROM `sys_pages_blocks` WHERE `object`=? AND `cell_id`=? LIMIT 1", $sObject, $iCellId);
         return (int)$this->getOne($sSql);
     }
 
-    function deleteImage($aParams) {
+    function deleteImage($aParams)
+    {
         $sWhereClause = "";
 
         switch($aParams['type']) {
@@ -291,7 +306,8 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery {
         return (int)$this->query($sSql) > 0;
     }
 
-    function getMenus() {
+    function getMenus()
+    {
         $sSql = "SELECT `object`, `title` FROM `sys_objects_menu` WHERE 1";
         return $this->getPairs($sSql, 'object', 'title');
     }

@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Timeline Timeline
  * @ingroup     DolphinModules
  *
@@ -35,10 +35,10 @@ class BxTimelineConfig extends BxDolModuleConfig
     protected $_sTranscoderObjectView;
     protected $_aImageUploaders;
 
-	protected $_sConnObjSubscriptions;
+    protected $_sConnObjSubscriptions;
 
-	protected $_sMenuItemManage;
-	protected $_sMenuItemActions;
+    protected $_sMenuItemManage;
+    protected $_sMenuItemActions;
 
     protected $_bJsMode;
     protected $_aJsClass;
@@ -47,13 +47,13 @@ class BxTimelineConfig extends BxDolModuleConfig
     protected $_aHtmlIds;
     protected $_aShareDefaults;
 
-	protected $_sAnimationEffect;
+    protected $_sAnimationEffect;
     protected $_iAnimationSpeed;
     protected $_sStylePrefix;
-	protected $_sCommonPostPrefix;
-	protected $_iPrivacyViewDefault;
-	protected $_iTimelineVisibilityThreshold;
-	protected $_aPregPatterns;
+    protected $_sCommonPostPrefix;
+    protected $_iPrivacyViewDefault;
+    protected $_iTimelineVisibilityThreshold;
+    protected $_aPregPatterns;
 
     /**
      * Constructor
@@ -72,65 +72,65 @@ class BxTimelineConfig extends BxDolModuleConfig
         $this->_sStorageObject = $this->_sName . '_photos';
         $this->_sTranscoderObjectPreview = $this->_sName . '_photos_preview';
         $this->_sTranscoderObjectView = $this->_sName . '_photos_view';
-        $this->_aImageUploaders = array($this->_sName . '_simple');        
+        $this->_aImageUploaders = array($this->_sName . '_simple');
 
-		$this->_sConnObjSubscriptions = 'sys_profiles_subscriptions';
+        $this->_sConnObjSubscriptions = 'sys_profiles_subscriptions';
 
-		$this->_sMenuItemManage = $this->_sName . '_menu_item_manage';
-		$this->_sMenuItemActions = $this->_sName . '_menu_item_actions';
+        $this->_sMenuItemManage = $this->_sName . '_menu_item_manage';
+        $this->_sMenuItemActions = $this->_sName . '_menu_item_actions';
 
         $this->_bJsMode = false;
         $this->_aJsClass = array(
-        	'main' => 'BxTimelineMain',
+            'main' => 'BxTimelineMain',
             'view' => 'BxTimelineView',
             'post' => 'BxTimelinePost',
-        	'share' => 'BxTimelineShare'
+            'share' => 'BxTimelineShare'
         );
         $this->_aJsObjects = array(
             'view' => 'oTimelineView',
-        	'post' => 'oTimelinePost',
-        	'share' => 'oTimelineShare'
+            'post' => 'oTimelinePost',
+            'share' => 'oTimelineShare'
         );
 
         $sHtmlPrefix = str_replace('_', '-', $this->_sName);
         $this->_aHtmlIds = array(
-			'view' => array(
-        		'item_popup' => $sHtmlPrefix . '-item-popup-',
-        		'photo_popup' => $sHtmlPrefix . '-photo-popup-',
-        	),
-        	'post' => array(
-        		'attach_link_popup' =>  $sHtmlPrefix . '-attach-link-popup',
-        		'attach_link_form_field' => $sHtmlPrefix . '-attach-link-form_field',
-        		'attach_link_item' => $sHtmlPrefix . '-attach-link-item-',
-        	),
-        	'share' => array(
-        		'main' => $sHtmlPrefix . '-share-',
-        		'counter' => $sHtmlPrefix . '-share-counter-',
-        		'by_popup' => $sHtmlPrefix . '-share-by-',
-        	)
+            'view' => array(
+                'item_popup' => $sHtmlPrefix . '-item-popup-',
+                'photo_popup' => $sHtmlPrefix . '-photo-popup-',
+            ),
+            'post' => array(
+                'attach_link_popup' =>  $sHtmlPrefix . '-attach-link-popup',
+                'attach_link_form_field' => $sHtmlPrefix . '-attach-link-form_field',
+                'attach_link_item' => $sHtmlPrefix . '-attach-link-item-',
+            ),
+            'share' => array(
+                'main' => $sHtmlPrefix . '-share-',
+                'counter' => $sHtmlPrefix . '-share-counter-',
+                'by_popup' => $sHtmlPrefix . '-share-by-',
+            )
         );
 
         $this->_aShareDefaults = array(
-			'show_do_share_as_button' => false,
-        	'show_do_share_as_button_small' => false,
-			'show_do_share_icon' => true,
-			'show_do_share_label' => false,
-			'show_counter' => true
-		);
+            'show_do_share_as_button' => false,
+            'show_do_share_as_button_small' => false,
+            'show_do_share_icon' => true,
+            'show_do_share_label' => false,
+            'show_counter' => true
+        );
 
         $this->_sAnimationEffect = 'fade';
         $this->_iAnimationSpeed = 'slow';
         $this->_sStylePrefix = 'bx-tl';
         $this->_sCommonPostPrefix = 'timeline_common_';
-		$this->_iPrivacyViewDefault = BX_DOL_PG_ALL;
-		$this->_iTimelineVisibilityThreshold = 0;
+        $this->_iPrivacyViewDefault = BX_DOL_PG_ALL;
+        $this->_iTimelineVisibilityThreshold = 0;
 
-		$this->_aPregPatterns = array(
-			"meta_title" => "/<title>(.*)<\/title>/",
-			"meta_description" => "/<meta[\s]+[^>]*?name[\s]?=[\s\"\']+description[\s\"\']+content[\s]?=[\s\"\']+(.*?)[\"\']+.*?>/",
-			"url" => "/((https?|ftp|news):\/\/)?([a-z]([a-z0-9\-]*\.)+(aero|arpa|biz|com|coop|edu|gov|info|int|jobs|mil|museum|name|nato|net|org|pro|travel|[a-z]{2})|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))(\/[a-z0-9_\-\.~]+)*(\/([a-z0-9_\-\.]*)(\?[a-z0-9+_\-\.%=&amp;]*)?)?(#[a-z][a-z0-9_]*)?/"
-		);
-		
+        $this->_aPregPatterns = array(
+            "meta_title" => "/<title>(.*)<\/title>/",
+            "meta_description" => "/<meta[\s]+[^>]*?name[\s]?=[\s\"\']+description[\s\"\']+content[\s]?=[\s\"\']+(.*?)[\"\']+.*?>/",
+            "url" => "/((https?|ftp|news):\/\/)?([a-z]([a-z0-9\-]*\.)+(aero|arpa|biz|com|coop|edu|gov|info|int|jobs|mil|museum|name|nato|net|org|pro|travel|[a-z]{2})|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))(\/[a-z0-9_\-\.~]+)*(\/([a-z0-9_\-\.]*)(\?[a-z0-9+_\-\.%=&amp;]*)?)?(#[a-z][a-z0-9_]*)?/"
+        );
+
     }
 
     public function init(&$oDb)
@@ -143,102 +143,102 @@ class BxTimelineConfig extends BxDolModuleConfig
         $this->_iPerPageAccount = (int)getParam('bx_timeline_events_per_page_account');
         $this->_iRssLength = (int)getParam('bx_timeline_rss_length');
 
-        $this->_iCharsDisplayMax = (int)getParam('bx_timeline_chars_display_max');        
+        $this->_iCharsDisplayMax = (int)getParam('bx_timeline_chars_display_max');
 
-		$aHandlers = $this->_oDb->getHandlers();
+        $aHandlers = $this->_oDb->getHandlers();
         foreach($aHandlers as $aHandler) {
-        	if($aHandler['type'] === BX_TIMELINE_HANDLER_TYPE_INSERT && !empty($aHandler['content'])) {
-        		$aContent = unserialize($aHandler['content']);
-        		if(is_array($aContent) && !empty($aContent))
-        			$aHandler = array_merge($aHandler, $aContent);
-        	}
+            if($aHandler['type'] === BX_TIMELINE_HANDLER_TYPE_INSERT && !empty($aHandler['content'])) {
+                $aContent = unserialize($aHandler['content']);
+                if(is_array($aContent) && !empty($aContent))
+                    $aHandler = array_merge($aHandler, $aContent);
+            }
 
            $this->_aHandlers[$aHandler['alert_unit'] . '_' . $aHandler['alert_action']] = $aHandler;
         }
 
-		$sHideTimeline = getParam('bx_timeline_events_hide');
+        $sHideTimeline = getParam('bx_timeline_events_hide');
         if(!empty($sHideTimeline))
             $this->_aHandlersHidden = explode(',', $sHideTimeline);
     }
 
     public function isAllowDelete()
     {
-    	return $this->_bAllowDelete;
+        return $this->_bAllowDelete;
     }
     public function getSystemName($sType)
     {
-    	$sResult = '';
+        $sResult = '';
 
-    	switch($sType) {
-    		case 'alert':
-    			$sResult = $this->_sAlertSystemName;
-    			break;
-    		case 'comment':
-    			$sResult = $this->_sCommentSystemName;
-    			break;
-    		case 'vote':
-    			$sResult = $this->_sVoteSystemName;
-    			break;
-    	}
+        switch($sType) {
+            case 'alert':
+                $sResult = $this->_sAlertSystemName;
+                break;
+            case 'comment':
+                $sResult = $this->_sCommentSystemName;
+                break;
+            case 'vote':
+                $sResult = $this->_sVoteSystemName;
+                break;
+        }
 
         return $sResult;
     }
 
-	public function getPrefix($sType)
+    public function getPrefix($sType)
     {
-    	$sResult = '';
+        $sResult = '';
 
-    	switch($sType) {
-    		case 'common_post':
-    			$sResult = $this->_sCommonPostPrefix;
-    			break;
-    		case 'style':
-    			$sResult = $this->_sStylePrefix;
-    			break;
-    	}
-    	
+        switch($sType) {
+            case 'common_post':
+                $sResult = $this->_sCommonPostPrefix;
+                break;
+            case 'style':
+                $sResult = $this->_sStylePrefix;
+                break;
+        }
+
         return $sResult;
     }
 
     public function getObject($sType)
     {
-    	$sResult = '';
+        $sResult = '';
 
-    	switch($sType) {
-    		case 'storage':
-    			$sResult = $this->_sStorageObject;
-    			break;
-    		case 'transcoder_preview':
-    			$sResult = $this->_sTranscoderObjectPreview;
-    			break;
-    		case 'transcoder_view':
-    			$sResult = $this->_sTranscoderObjectView;
-    			break;
-    		case 'conn_subscriptions':
-    			$sResult = $this->_sConnObjSubscriptions;
-    			break;
-    		case 'menu_item_manage':
-    			$sResult = $this->_sMenuItemManage;
-    			break;
-    		case 'menu_item_actions':
-    			$sResult = $this->_sMenuItemActions;
-    			break;
-    	}
+        switch($sType) {
+            case 'storage':
+                $sResult = $this->_sStorageObject;
+                break;
+            case 'transcoder_preview':
+                $sResult = $this->_sTranscoderObjectPreview;
+                break;
+            case 'transcoder_view':
+                $sResult = $this->_sTranscoderObjectView;
+                break;
+            case 'conn_subscriptions':
+                $sResult = $this->_sConnObjSubscriptions;
+                break;
+            case 'menu_item_manage':
+                $sResult = $this->_sMenuItemManage;
+                break;
+            case 'menu_item_actions':
+                $sResult = $this->_sMenuItemActions;
+                break;
+        }
 
         return $sResult;
     }
 
     public function getUploaders($sType)
     {
-    	$aResult = '';
+        $aResult = '';
 
-    	switch($sType) {
-    		case 'image':
-    			$aResult = $this->_aImageUploaders;
-    			break;
-    	}
+        switch($sType) {
+            case 'image':
+                $aResult = $this->_aImageUploaders;
+                break;
+        }
 
-        return $aResult; 
+        return $aResult;
     }
 
     public function getPerPage($sPage = 'profile')
@@ -256,17 +256,17 @@ class BxTimelineConfig extends BxDolModuleConfig
         return $iResult;
     }
 
-	public function getRssLength()
+    public function getRssLength()
     {
         return $this->_iRssLength;
     }
 
     public function getCharsDisplayMax()
     {
-    	return $this->_iCharsDisplayMax;
+        return $this->_iCharsDisplayMax;
     }
 
-	public function isHandler($sKey = '')
+    public function isHandler($sKey = '')
     {
         return isset($this->_aHandlers[$sKey]);
     }
@@ -279,7 +279,7 @@ class BxTimelineConfig extends BxDolModuleConfig
         return $this->_aHandlers[$sKey];
     }
 
-	public function getHandlersHidden()
+    public function getHandlersHidden()
     {
         return $this->_aHandlersHidden;
     }
@@ -289,40 +289,40 @@ class BxTimelineConfig extends BxDolModuleConfig
         return $this->_bJsMode;
     }
 
-	public function getJsMode()
+    public function getJsMode()
     {
         return $this->_bJsMode;
     }
 
-	public function setJsMode($bJsMode)
+    public function setJsMode($bJsMode)
     {
         $this->_bJsMode = $bJsMode;
     }
 
-	public function getJsClass($sType)
+    public function getJsClass($sType)
     {
         return $this->_aJsClass[$sType];
     }
 
-	public function getJsObject($sType)
+    public function getJsObject($sType)
     {
         return $this->_aJsObjects[$sType];
     }
 
-	public function getHtmlIds($sType, $sKey = '')
+    public function getHtmlIds($sType, $sKey = '')
     {
-    	if(empty($sKey))
-    		return $this->_aHtmlIds[$sType];
+        if(empty($sKey))
+            return $this->_aHtmlIds[$sType];
 
         return $this->_aHtmlIds[$sType][$sKey];
     }
 
     public function getShareDefaults()
     {
-    	return $this->_aShareDefaults;
+        return $this->_aShareDefaults;
     }
 
-	public function getAnimationEffect()
+    public function getAnimationEffect()
     {
         return $this->_sAnimationEffect;
     }
@@ -334,10 +334,10 @@ class BxTimelineConfig extends BxDolModuleConfig
 
     public function getPrivacyViewDefault()
     {
-    	return $this->_iPrivacyViewDefault;
+        return $this->_iPrivacyViewDefault;
     }
 
-	public function getPregPattern($sType)
+    public function getPregPattern($sType)
     {
         return $this->_aPregPatterns[$sType];
     }
@@ -345,23 +345,23 @@ class BxTimelineConfig extends BxDolModuleConfig
     /**
      * Ancillary functions
      */
-	public function getViewUrl($iOwnerId)
+    public function getViewUrl($iOwnerId)
     {
-    	bx_import('BxDolPermalinks');
-		return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=timeline-view&id=' . $iOwnerId);
+        bx_import('BxDolPermalinks');
+        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=timeline-view&id=' . $iOwnerId);
     }
 
     public function getItemViewUrl(&$aEvent)
     {
-    	bx_import('BxDolPermalinks');
-		return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=timeline-item&id=' . $aEvent['id']);
+        bx_import('BxDolPermalinks');
+        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=timeline-item&id=' . $aEvent['id']);
     }
 
-	public function isSystem($sType, $sAction)
+    public function isSystem($sType, $sAction)
     {
-    	$sPrefix = $this->getPrefix('common_post');
-    	return strpos($sType, $sPrefix) === false && !empty($sAction);
+        $sPrefix = $this->getPrefix('common_post');
+        return strpos($sType, $sPrefix) === false && !empty($sAction);
     }
 }
 
-/** @} */ 
+/** @} */

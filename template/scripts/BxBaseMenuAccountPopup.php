@@ -20,7 +20,7 @@ class BxBaseMenuAccountPopup extends BxTemplMenu
         parent::__construct ($aObject, $oTemplate);
     }
 
-    protected function _getTemplateVars () 
+    protected function _getTemplateVars ()
     {
         $aVars = parent::_getTemplateVars ();
         $aVars['bx_repeat:menu_items'] = array(true);

@@ -13,19 +13,22 @@ bx_import('BxDolDb');
  * Database queries for grid.
  * @see BxDolGrid
  */
-class BxDolGridQuery extends BxDolDb {
+class BxDolGridQuery extends BxDolDb
+{
     protected $_aObject;
 
-    public function __construct($aObject) {
+    public function __construct($aObject)
+    {
         parent::__construct();
         $this->_aObject = $aObject;
     }
 
-    static public function getGridObject ($sObject) {
+    static public function getGridObject ($sObject)
+    {
         $oDb = BxDolDb::getInstance();
         $sQuery = $oDb->prepare("SELECT * FROM `sys_objects_grid` WHERE `object` = ?", $sObject);
-        $aObject = $oDb->getRow($sQuery);        
-        if (!$aObject || !is_array($aObject)) 
+        $aObject = $oDb->getRow($sQuery);
+        if (!$aObject || !is_array($aObject))
             return false;
 
         // paginate
@@ -64,7 +67,7 @@ class BxDolGridQuery extends BxDolDb {
                 continue;
             $aAdd = unserialize($aRow['params']);
             if (!empty($aAdd) && is_array($aAdd))
-                $aObject['fields'][$sKey] = array_merge($aObject['fields'][$sKey], $aAdd); 
+                $aObject['fields'][$sKey] = array_merge($aObject['fields'][$sKey], $aAdd);
         }
         // get actions
         $a = array('bulk','single','independent');
@@ -73,12 +76,12 @@ class BxDolGridQuery extends BxDolDb {
             $aObject[$sActionField] = array();
             $sQuery = $oDb->prepare("SELECT * FROM `sys_grid_actions` WHERE `object` = ? AND `type` = ? ORDER BY `order`", $sObject, $sActionType);
             $aActions = $oDb->getAllWithKey($sQuery, 'name');
-            if (!$aActions || !is_array($aActions)) 
+            if (!$aActions || !is_array($aActions))
                 continue;
             foreach ($aActions as $sKey => $aRow)
                 $aObject[$sActionField][$sKey] = $aRow['title'] || $aRow['icon'] ? array('title' => _t($aRow['title']), 'icon' => $aRow['icon'], 'confirm' => $aRow['confirm']) : array();
         }
-        
+
         return $aObject;
     }
 

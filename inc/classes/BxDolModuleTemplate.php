@@ -9,7 +9,8 @@
 
 bx_import('BxDolTemplate');
 
-class BxDolModuleTemplate extends BxDolTemplate {
+class BxDolModuleTemplate extends BxDolTemplate
+{
     protected $_oDb;
     protected $_oConfig;
     protected $_bObStarted = 0;
@@ -17,7 +18,8 @@ class BxDolModuleTemplate extends BxDolTemplate {
     /*
      * Constructor.
      */
-    function __construct(&$oConfig, &$oDb, $sRootPath = BX_DIRECTORY_PATH_ROOT, $sRootUrl = BX_DOL_URL_ROOT) {
+    function __construct(&$oConfig, &$oDb, $sRootPath = BX_DIRECTORY_PATH_ROOT, $sRootUrl = BX_DOL_URL_ROOT)
+    {
         parent::__construct($sRootPath, $sRootUrl);
 
         $this->_oDb = &$oDb;
@@ -31,30 +33,35 @@ class BxDolModuleTemplate extends BxDolTemplate {
         $this->addLocationJs($sName, $sHomePath . 'js/', $sHomeUrl . 'js/');
     }
 
-    function addCss($mixedFiles, $bDynamic = false) {
+    function addCss($mixedFiles, $bDynamic = false)
+    {
         return $this->_addFiles(BxDolTemplate::getInstance(), 'addCss', 'addLocation', 'removeLocation', '', $mixedFiles, $bDynamic, true);
     }
 
-    function addJs($mixedFiles, $bDynamic = false) {
+    function addJs($mixedFiles, $bDynamic = false)
+    {
         return $this->_addFiles(BxDolTemplate::getInstance(), 'addJs', 'addLocationJs', 'removeLocationJs', 'js/', $mixedFiles, $bDynamic, true);
     }
 
-    function addJsTranslation($mixedKey) {
-    	BxDolTemplate::getInstance()->addJsTranslation($mixedKey);
+    function addJsTranslation($mixedKey)
+    {
+        BxDolTemplate::getInstance()->addJsTranslation($mixedKey);
     }
 
-    function addStudioCss($mixedFiles, $bDynamic = false, $bSearchInModule = true) {
+    function addStudioCss($mixedFiles, $bDynamic = false, $bSearchInModule = true)
+    {
         bx_import('BxDolStudioTemplate');
         return $this->_addFiles(BxDolStudioTemplate::getInstance(), 'addCss', 'addLocation', 'removeLocation', '', $mixedFiles, $bDynamic, $bSearchInModule);
     }
 
-    function addStudioJs($mixedFiles, $bDynamic = false, $bSearchInModule = true) {
+    function addStudioJs($mixedFiles, $bDynamic = false, $bSearchInModule = true)
+    {
         bx_import('BxDolStudioTemplate');
         return $this->_addFiles(BxDolStudioTemplate::getInstance(), 'addJs', 'addLocationJs', 'removeLocationJs', 'js/', $mixedFiles, $bDynamic, $bSearchInModule);
     }
 
-    function _addFiles($oTemplate, $sFuncAddFiles, $sFuncAddLocation, $sFuncRemoveLocation, $sPath, $mixedFiles, $bDynamic = false, $bSearchInModule = true) {
-
+    function _addFiles($oTemplate, $sFuncAddFiles, $sFuncAddLocation, $sFuncRemoveLocation, $sPath, $mixedFiles, $bDynamic = false, $bSearchInModule = true)
+    {
         $sLocationKey = $bSearchInModule ? $oTemplate->$sFuncAddLocation($this->_oConfig->getUri(), $this->_oConfig->getHomePath() . $sPath, $this->_oConfig->getHomeUrl() . $sPath) : '';
         $mixedResult = $oTemplate->$sFuncAddFiles($mixedFiles, $bDynamic);
         if($sLocationKey != '')
@@ -63,7 +70,8 @@ class BxDolModuleTemplate extends BxDolTemplate {
         return $mixedResult;
     }
 
-    function addStudioInjection($sKey, $sType, $sData, $iReplace = 0) {
+    function addStudioInjection($sKey, $sType, $sData, $iReplace = 0)
+    {
         bx_import('BxDolStudioTemplate');
         BxDolStudioTemplate::getInstance()->aPage['injections']['page_0'][$sKey][] = array(
             'page_index' => 0,
@@ -74,14 +82,16 @@ class BxDolModuleTemplate extends BxDolTemplate {
         );
     }
 
-    function pageStart () {
-        if (0 == $this->_bObStarted)  {            
+    function pageStart ()
+    {
+        if (0 == $this->_bObStarted)  {
             ob_start ();
             $this->_bObStarted = 1;
         }
     }
 
-    function pageEnd ($isGetContent = true) {
+    function pageEnd ($isGetContent = true)
+    {
         if (1 == $this->_bObStarted)  {
             $sRet = '';
             if ($isGetContent)
@@ -91,7 +101,7 @@ class BxDolModuleTemplate extends BxDolTemplate {
             $this->_bObStarted = 0;
             return $sRet;
         }
-    } 
+    }
 }
 
 /** @} */

@@ -10,15 +10,18 @@
 
 bx_import('BxDolStudioPolyglotKeys');
 
-class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys {
-    function __construct($aOptions, $oTemplate = false) {
+class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys
+{
+    function __construct($aOptions, $oTemplate = false)
+    {
         parent::__construct($aOptions, $oTemplate);
 
         $this->_aOptions['actions_single']['edit']['attr']['title'] = _t('_adm_pgt_btn_edit_title');
         $this->_aOptions['actions_single']['delete']['attr']['title'] = _t('_adm_pgt_btn_delete_title');
     }
 
-    public function performActionAdd() {
+    public function performActionAdd()
+    {
         $sAction = 'add';
 
         $aLanguages = array();
@@ -59,7 +62,7 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys {
                         'pass' => 'Int',
                     ),
                 ),
-                
+
             )
         );
 
@@ -86,7 +89,7 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys {
                 ),
             ),
             'controls' => array(
-                'name' => 'controls', 
+                'name' => 'controls',
                 'type' => 'input_set',
                 array(
                     'type' => 'submit',
@@ -111,15 +114,14 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys {
 
         if($oForm->isSubmittedAndValid()) {
             $mixedResult = $this->add($oForm);
-            
+
             if(is_int($mixedResult))
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $mixedResult);
             else
                 $aRes = array('msg' => $mixedResult);
 
             $this->_echoResultJson($aRes, true);
-        }
-        else {
+        } else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-lang-new-key-popup', _t('_adm_pgt_txt_nkp_add_popup'), $this->_oTemplate->parseHtmlByName('pgt_new_key.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
@@ -132,7 +134,8 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys {
         }
     }
 
-    public function performActionEdit() {
+    public function performActionEdit()
+    {
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         $aIds = bx_get('ids');
@@ -203,7 +206,7 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys {
                 ),
             ),
             'controls' => array(
-                'name' => 'controls', 
+                'name' => 'controls',
                 'type' => 'input_set',
                 array(
                     'type' => 'submit',
@@ -235,8 +238,7 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys {
                 $aRes = array('msg' => $mixedResult);
 
             $this->_echoResultJson($aRes, true);
-        }
-        else {
+        } else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-lang-edit-key-popup', _t('_adm_pgt_txt_nkp_edit_popup', $aKey['key']), $this->_oTemplate->parseHtmlByName('pgt_new_key.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
@@ -249,7 +251,8 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys {
         }
     }
 
-    public function performActionDelete() {
+    public function performActionDelete()
+    {
         $iAffected = 0;
         $aIds = bx_get('ids');
         if(!$aIds || !is_array($aIds)) {
@@ -271,11 +274,13 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys {
         $this->_echoResultJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t('_adm_pgt_err_save')));
     }
 
-    function getJsObject() {
+    function getJsObject()
+    {
         return 'oBxDolStudioPolyglotKeys';
     }
 
-    function getCode($isDisplayHeader = true) {
+    function getCode($isDisplayHeader = true)
+    {
         return $this->_oTemplate->parseHtmlByName('pgt_keys.html', array(
             'content' => parent::getCode($isDisplayHeader),
             'js_object' => $this->getJsObject(),
@@ -283,7 +288,8 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys {
         ));
     }
 
-    protected function _addJsCss() {
+    protected function _addJsCss()
+    {
         parent::_addJsCss();
         $this->_oTemplate->addJs(array('jquery.form.min.js', 'polyglot_keys.js'));
 
@@ -292,7 +298,8 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys {
         $oForm->addCssJs();
     }
 
-    protected function _getFilterControls () {
+    protected function _getFilterControls ()
+    {
         parent::_getFilterControls();
 
         $sContent = "";
@@ -305,7 +312,7 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys {
             'name' => 'module',
             'attrs' => array(
                 'id' => 'bx-grid-module-' . $this->_sObject,
-            	'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeFilter()'
+                'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeFilter()'
             ),
             'values' => array(
                 'id-' . BX_DOL_LANGUAGE_CATEGORY_SYSTEM => '',
@@ -328,7 +335,7 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys {
             'name' => 'keyword',
             'attrs' => array(
                 'id' => 'bx-grid-search-' . $this->_sObject,
-                'onKeyup' => 'javascript:$(this).off(); ' . $this->getJsObject() . '.onChangeFilter()' 
+                'onKeyup' => 'javascript:$(this).off(); ' . $this->getJsObject() . '.onChangeFilter()'
             )
         );
 

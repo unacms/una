@@ -14,9 +14,9 @@ bx_import('BxBaseModTextFormEntry');
 /**
  * Create/Edit entry form
  */
-class BxNotesFormEntry extends BxBaseModTextFormEntry 
+class BxNotesFormEntry extends BxBaseModTextFormEntry
 {
-    public function __construct($aInfo, $oTemplate = false) 
+    public function __construct($aInfo, $oTemplate = false)
     {
         $this->MODULE = 'bx_notes';
         parent::__construct($aInfo, $oTemplate);

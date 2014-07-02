@@ -13,9 +13,9 @@ bx_import('BxDolDb');
  * Database queries for BxDolEmailTemplates object.
  * @see BxDolEmailTemplates
  */
-class BxDolEmailTemplatesQuery extends BxDolDb implements iBxDolSingleton 
+class BxDolEmailTemplatesQuery extends BxDolDb implements iBxDolSingleton
 {
-    public static function getInstance() 
+    public static function getInstance()
     {
         if (!isset($GLOBALS['bxDolClasses'][__CLASS__])) {
             $o = new BxDolEmailTemplatesQuery();
@@ -25,7 +25,7 @@ class BxDolEmailTemplatesQuery extends BxDolDb implements iBxDolSingleton
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
 
-    public function getTemplate ($sTemplateName, $iLangAccount, $iLangDefault, $iLangFallback) 
+    public function getTemplate ($sTemplateName, $iLangAccount, $iLangDefault, $iLangFallback)
     {
         // get email templates keys
         $sSql = $this->prepare("SELECT `Subject`, `Body` FROM `sys_email_templates` WHERE `Name`=? LIMIT 1", $sTemplateName);
@@ -33,7 +33,7 @@ class BxDolEmailTemplatesQuery extends BxDolDb implements iBxDolSingleton
         if (!$a)
             return false;
 
-        // build languages idsto search for translation in 
+        // build languages idsto search for translation in
         $aLangs = array ($iLangAccount);
         if ($iLangDefault != $iLangAccount)
             $aLangs[] = $iLangDefault;
@@ -60,7 +60,7 @@ class BxDolEmailTemplatesQuery extends BxDolDb implements iBxDolSingleton
         return array ('Subject' => $sSubject, 'Body' => $sBody);
     }
 
-    public function getLangTranslation ($sKey, $iLangId) 
+    public function getLangTranslation ($sKey, $iLangId)
     {
         $sSql = $this->prepare("SELECT `s`.`String` FROM `sys_localization_strings` as `s` INNER JOIN `sys_localization_keys` AS `k` ON (`s`.`IDKey` = `k`.`ID`) WHERE `k`.`Key` = ? AND `s`.`IDLanguage` = ? LIMIT 1", $sKey, $iLangId);
         return $this->getOne($sSql);

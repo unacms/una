@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    BaseText Base classes for text modules
  * @ingroup     DolphinModules
  *
@@ -11,13 +11,13 @@
 
 bx_import('BxBaseModGeneralInstaller');
 
-class BxBaseModTextInstaller extends BxBaseModGeneralInstaller 
+class BxBaseModTextInstaller extends BxBaseModGeneralInstaller
 {
-    function __construct($aConfig) 
+    function __construct($aConfig)
     {
         parent::__construct($aConfig);
         $this->_bUpdateTimeline = true;
     }
 }
 
-/** @} */ 
+/** @} */

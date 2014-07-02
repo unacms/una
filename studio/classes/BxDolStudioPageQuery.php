@@ -9,12 +9,15 @@
 
 bx_import('BxDolDb');
 
-class BxDolStudioPageQuery extends BxDolDb {
-    function __construct() {
+class BxDolStudioPageQuery extends BxDolDb
+{
+    function __construct()
+    {
         parent::__construct();
     }
 
-    function getPages($aParams, &$aItems, $bReturnCount = true) {
+    function getPages($aParams, &$aItems, $bReturnCount = true)
+    {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
 
@@ -59,7 +62,7 @@ class BxDolStudioPageQuery extends BxDolDb {
                 break;
         }
 
-        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . " 
+        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . "
                 `tp`.`id` AS `id`,
                 `tp`.`index` AS `index`,
                 `tp`.`name` AS `name`,
@@ -75,7 +78,8 @@ class BxDolStudioPageQuery extends BxDolDb {
 
         return (int)$this->getOne("SELECT FOUND_ROWS()");
     }
-    function isBookmarked($aPage) {
+    function isBookmarked($aPage)
+    {
         if(empty($aPage['wid_id']))
             return false;
 
@@ -85,7 +89,8 @@ class BxDolStudioPageQuery extends BxDolDb {
 
         return true;
     }
-    function bookmark(&$aPage) {
+    function bookmark(&$aPage)
+    {
         if(empty($aPage['wid_id']))
             return false;
 

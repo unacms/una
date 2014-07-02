@@ -11,9 +11,9 @@
 
 bx_import('BxDolModuleConfig');
 
-class BxProfilerConfig extends BxDolModuleConfig 
+class BxProfilerConfig extends BxDolModuleConfig
 {
-    function __construct($aModule) 
+    function __construct($aModule)
     {
         parent::__construct($aModule);
     }

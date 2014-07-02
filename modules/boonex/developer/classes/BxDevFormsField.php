@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Developer Developer
  * @ingroup     DolphinModules
  *
@@ -14,78 +14,98 @@ bx_import('BxTemplStudioFormsField');
 
 require_once('BxDevFunctions.php');
 
-class BxDevFormsField extends BxTemplStudioFormsField {
-    function __construct($aParams = array(), $aField = array()) {
+class BxDevFormsField extends BxTemplStudioFormsField
+{
+    function __construct($aParams = array(), $aField = array())
+    {
         parent::__construct($aParams, $aField);
     }
 }
 
-class BxDevFormsFieldBlockHeader extends BxTemplStudioFormsFieldBlockHeader { 
-    function __construct($aParams = array(), $aField = array()) {
-        parent::__construct($aParams, $aField);
-
-        BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
-    }
-}
-
-class BxDevFormsFieldValue extends BxTemplStudioFormsFieldValue { 
-    function __construct($aParams = array(), $aField = array()) {
+class BxDevFormsFieldBlockHeader extends BxTemplStudioFormsFieldBlockHeader
+{
+    function __construct($aParams = array(), $aField = array())
+    {
         parent::__construct($aParams, $aField);
 
         BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
     }
 }
 
-class BxDevFormsFieldText extends BxTemplStudioFormsFieldText { 
-    function __construct($aParams = array(), $aField = array()) {
+class BxDevFormsFieldValue extends BxTemplStudioFormsFieldValue
+{
+    function __construct($aParams = array(), $aField = array())
+    {
         parent::__construct($aParams, $aField);
 
         BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
     }
 }
 
-class BxDevFormsFieldPassword extends BxTemplStudioFormsFieldPassword { 
-    function __construct($aParams = array(), $aField = array()) {
+class BxDevFormsFieldText extends BxTemplStudioFormsFieldText
+{
+    function __construct($aParams = array(), $aField = array())
+    {
         parent::__construct($aParams, $aField);
 
         BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
     }
 }
 
-class BxDevFormsFieldTextarea extends BxTemplStudioFormsFieldTextarea { 
-    function __construct($aParams = array(), $aField = array()) {
+class BxDevFormsFieldPassword extends BxTemplStudioFormsFieldPassword
+{
+    function __construct($aParams = array(), $aField = array())
+    {
         parent::__construct($aParams, $aField);
 
         BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
     }
 }
 
-class BxDevFormsFieldNumber extends BxTemplStudioFormsFieldNumber { 
-    function __construct($aParams = array(), $aField = array()) {
+class BxDevFormsFieldTextarea extends BxTemplStudioFormsFieldTextarea
+{
+    function __construct($aParams = array(), $aField = array())
+    {
         parent::__construct($aParams, $aField);
 
         BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
     }
 }
 
-class BxDevFormsFieldDatepicker extends BxTemplStudioFormsFieldDatepicker { 
-    function __construct($aParams = array(), $aField = array()) {
+class BxDevFormsFieldNumber extends BxTemplStudioFormsFieldNumber
+{
+    function __construct($aParams = array(), $aField = array())
+    {
         parent::__construct($aParams, $aField);
 
         BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
     }
 }
 
-class BxDevFormsFieldDatetime extends BxTemplStudioFormsFieldDatetime { 
-    function __construct($aParams = array(), $aField = array()) {
+class BxDevFormsFieldDatepicker extends BxTemplStudioFormsFieldDatepicker
+{
+    function __construct($aParams = array(), $aField = array())
+    {
         parent::__construct($aParams, $aField);
 
         BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
     }
 }
 
-class BxDevFormsFieldCheckbox extends BxTemplStudioFormsFieldCheckbox { 
-    function __construct($aParams = array(), $aField = array()) {
+class BxDevFormsFieldDatetime extends BxTemplStudioFormsFieldDatetime
+{
+    function __construct($aParams = array(), $aField = array())
+    {
+        parent::__construct($aParams, $aField);
+
+        BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
+    }
+}
+
+class BxDevFormsFieldCheckbox extends BxTemplStudioFormsFieldCheckbox
+{
+    function __construct($aParams = array(), $aField = array())
+    {
         parent::__construct($aParams, $aField);
 
         BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
@@ -94,8 +114,10 @@ class BxDevFormsFieldCheckbox extends BxTemplStudioFormsFieldCheckbox {
     }
 }
 
-class BxDevFormsFieldSwitcher extends BxTemplStudioFormsFieldSwitcher { 
-    function __construct($aParams = array(), $aField = array()) {
+class BxDevFormsFieldSwitcher extends BxTemplStudioFormsFieldSwitcher
+{
+    function __construct($aParams = array(), $aField = array())
+    {
         parent::__construct($aParams, $aField);
 
         BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
@@ -104,120 +126,150 @@ class BxDevFormsFieldSwitcher extends BxTemplStudioFormsFieldSwitcher {
     }
 }
 
-class BxDevFormsFieldFile extends BxTemplStudioFormsFieldFile { 
-    function __construct($aParams = array(), $aField = array()) {
+class BxDevFormsFieldFile extends BxTemplStudioFormsFieldFile
+{
+    function __construct($aParams = array(), $aField = array())
+    {
         parent::__construct($aParams, $aField);
 
         BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
     }
 }
 
-class BxDevFormsFieldSlider extends BxTemplStudioFormsFieldSlider { 
-    function __construct($aParams = array(), $aField = array()) {
+class BxDevFormsFieldSlider extends BxTemplStudioFormsFieldSlider
+{
+    function __construct($aParams = array(), $aField = array())
+    {
         parent::__construct($aParams, $aField);
 
         BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
     }
 }
 
-class BxDevFormsFieldDoublerange extends BxTemplStudioFormsFieldDoublerange { 
-    function __construct($aParams = array(), $aField = array()) {
+class BxDevFormsFieldDoublerange extends BxTemplStudioFormsFieldDoublerange
+{
+    function __construct($aParams = array(), $aField = array())
+    {
         parent::__construct($aParams, $aField);
 
         BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
     }
 }
 
-class BxDevFormsFieldHidden extends BxTemplStudioFormsFieldHidden { 
-    function __construct($aParams = array(), $aField = array()) {
+class BxDevFormsFieldHidden extends BxTemplStudioFormsFieldHidden
+{
+    function __construct($aParams = array(), $aField = array())
+    {
         parent::__construct($aParams, $aField);
 
         BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
     }
 }
 
-class BxDevFormsFieldButton extends BxTemplStudioFormsFieldButton { 
-    function __construct($aParams = array(), $aField = array()) {
+class BxDevFormsFieldButton extends BxTemplStudioFormsFieldButton
+{
+    function __construct($aParams = array(), $aField = array())
+    {
         parent::__construct($aParams, $aField);
 
         BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
     }
 }
 
-class BxDevFormsFieldReset extends BxTemplStudioFormsFieldReset { 
-    function __construct($aParams = array(), $aField = array()) {
+class BxDevFormsFieldReset extends BxTemplStudioFormsFieldReset
+{
+    function __construct($aParams = array(), $aField = array())
+    {
         parent::__construct($aParams, $aField);
 
         BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
     }
 }
 
-class BxDevFormsFieldSubmit extends BxTemplStudioFormsFieldSubmit { 
-    function __construct($aParams = array(), $aField = array()) {
+class BxDevFormsFieldSubmit extends BxTemplStudioFormsFieldSubmit
+{
+    function __construct($aParams = array(), $aField = array())
+    {
         parent::__construct($aParams, $aField);
 
         BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
     }
 }
 
-class BxDevFormsFieldImage extends BxTemplStudioFormsFieldImage { 
-    function __construct($aParams = array(), $aField = array()) {
+class BxDevFormsFieldImage extends BxTemplStudioFormsFieldImage
+{
+    function __construct($aParams = array(), $aField = array())
+    {
         parent::__construct($aParams, $aField);
 
         BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
     }
 }
 
-class BxDevFormsFieldSelect extends BxTemplStudioFormsFieldSelect { 
-    function __construct($aParams = array(), $aField = array()) {
+class BxDevFormsFieldSelect extends BxTemplStudioFormsFieldSelect
+{
+    function __construct($aParams = array(), $aField = array())
+    {
         parent::__construct($aParams, $aField);
 
         BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
     }
 }
 
-class BxDevFormsFieldSelectMultiple extends BxTemplStudioFormsFieldSelectMultiple { 
-    function __construct($aParams = array(), $aField = array()) {
+class BxDevFormsFieldSelectMultiple extends BxTemplStudioFormsFieldSelectMultiple
+{
+    function __construct($aParams = array(), $aField = array())
+    {
         parent::__construct($aParams, $aField);
 
         BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
     }
 }
 
-class BxDevFormsFieldCheckboxSet extends BxTemplStudioFormsFieldCheckboxSet { 
-    function __construct($aParams = array(), $aField = array()) {
+class BxDevFormsFieldCheckboxSet extends BxTemplStudioFormsFieldCheckboxSet
+{
+    function __construct($aParams = array(), $aField = array())
+    {
         parent::__construct($aParams, $aField);
 
         BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
     }
 }
 
-class BxDevFormsFieldRadioSet extends BxTemplStudioFormsFieldRadioSet { 
-    function __construct($aParams = array(), $aField = array()) {
+class BxDevFormsFieldRadioSet extends BxTemplStudioFormsFieldRadioSet
+{
+    function __construct($aParams = array(), $aField = array())
+    {
         parent::__construct($aParams, $aField);
 
         BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
     }
 }
 
-class BxDevFormsFieldCustom extends BxTemplStudioFormsFieldCustom { 
-    function __construct($aParams = array(), $aField = array()) {
+class BxDevFormsFieldCustom extends BxTemplStudioFormsFieldCustom
+{
+    function __construct($aParams = array(), $aField = array())
+    {
         parent::__construct($aParams, $aField);
 
         BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
     }
 }
 
-class BxDevFormsFieldInputSet extends BxTemplStudioFormsFieldInputSet { 
-    function __construct($aParams = array(), $aField = array()) {
+class BxDevFormsFieldInputSet extends BxTemplStudioFormsFieldInputSet
+{
+    function __construct($aParams = array(), $aField = array())
+    {
         parent::__construct($aParams, $aField);
 
         BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
     }
 }
 
-class BxDevFormsFieldCaptcha extends BxTemplStudioFormsFieldCaptcha { 
-    function __construct($aParams = array(), $aField = array()) {
+class BxDevFormsFieldCaptcha extends BxTemplStudioFormsFieldCaptcha
+{
+    function __construct($aParams = array(), $aField = array())
+    {
         parent::__construct($aParams, $aField);
 
         BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);

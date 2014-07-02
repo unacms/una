@@ -12,12 +12,14 @@ bx_import('BxDolStudioModulesQuery');
 
 define('BX_DOL_STUDIO_MOD_TYPE_DEFAULT', 'general');
 
-class BxDolStudioModule extends BxTemplStudioPage {
+class BxDolStudioModule extends BxTemplStudioPage
+{
     protected $sModule;
     protected $aModule;
     protected $sPage;
 
-    function __construct($sModule = "", $sPage = "") {
+    function __construct($sModule = "", $sPage = "")
+    {
         parent::__construct($sModule);
 
         $this->oDb = new BxDolStudioModulesQuery();
@@ -31,7 +33,8 @@ class BxDolStudioModule extends BxTemplStudioPage {
             $this->sPage = $sPage;
     }
 
-    function init() {
+    function init()
+    {
         //--- Check Actions ---//
         if(($sAction = bx_get('mod_action')) !== false) {
             $sAction = bx_process_input($sAction);
@@ -42,7 +45,7 @@ class BxDolStudioModule extends BxTemplStudioPage {
                     $sValue = bx_process_input(bx_get('mod_value'));
                     if(empty($sValue))
                         break;
-    
+
                     $aResult = $this->activate($sValue);
                     break;
             }
@@ -57,14 +60,15 @@ class BxDolStudioModule extends BxTemplStudioPage {
 
         $this->addAction(array(
             'type' => 'switcher',
-        	'name' => 'activate',
-        	'caption' => '_adm_txt_pca_active',
+            'name' => 'activate',
+            'caption' => '_adm_txt_pca_active',
             'checked' => (int)$this->aModule['enabled'] == 1,
             'onchange' => "javascript:" . $this->getPageJsObject() . ".activate('" . $this->sModule . "', this)"
         ), false);
     }
 
-    function activate($sModule) {
+    function activate($sModule)
+    {
         $aModule = $this->oDb->getModuleByName($sModule);
         if(empty($aModule) || !is_array($aModule))
             return array('code' => 1, 'message' => _t('_adm_err_operation_failed'));
@@ -85,12 +89,11 @@ class BxDolStudioModule extends BxTemplStudioPage {
                 'page_menu_code' => $this->getPageMenu(),
                 'page_main_code' => $this->getPageCode()
             ));
-        }
-        else
+        } else
             $aResult['content'] = "";
 
         return $aResult;
-    }    
+    }
 }
 
 /** @} */

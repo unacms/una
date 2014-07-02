@@ -11,11 +11,13 @@ bx_import('BxTemplStudioGrid');
 bx_import('BxDolStudioTemplate');
 bx_import('BxDolStudioNavigationQuery');
 
-class BxDolStudioNavigationItems extends BxTemplStudioGrid {
+class BxDolStudioNavigationItems extends BxTemplStudioGrid
+{
     protected $sModule = '';
     protected $sSet = '';
 
-    public function __construct ($aOptions, $oTemplate = false) {
+    public function __construct ($aOptions, $oTemplate = false)
+    {
         parent::__construct ($aOptions, $oTemplate);
 
         $this->oDb = new BxDolStudioNavigationQuery();
@@ -33,7 +35,8 @@ class BxDolStudioNavigationItems extends BxTemplStudioGrid {
         }
     }
 
-    function deleteById($iId) {
+    function deleteById($iId)
+    {
         $iId = (int)$iId;
 
         $aItem = array();
@@ -44,7 +47,8 @@ class BxDolStudioNavigationItems extends BxTemplStudioGrid {
         return $this->deleteByItem($aItem);
     }
 
-    function deleteByItem(&$aItem) {
+    function deleteByItem(&$aItem)
+    {
         if(is_numeric($aItem['icon']) && (int)$aItem['icon'] != 0) {
             bx_import('BxDolStorage');
             if(!BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES)->deleteFile((int)$aItem['icon'], 0))
@@ -62,7 +66,8 @@ class BxDolStudioNavigationItems extends BxTemplStudioGrid {
         return true;
     }
 
-    protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage) {
+    protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
+    {
         if(empty($this->sSet))
             return array();
 

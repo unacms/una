@@ -12,9 +12,10 @@ bx_import('BxBaseMenuSetAclLevel');
 /**
  * @see BxDolMenu
  */
-class BxTemplMenuSetAclLevel extends BxBaseMenuSetAclLevel {
-
-    public function __construct ($aObject, $oTemplate = false) {
+class BxTemplMenuSetAclLevel extends BxBaseMenuSetAclLevel
+{
+    public function __construct ($aObject, $oTemplate = false)
+    {
         parent::__construct ($aObject, $oTemplate);
     }
 }

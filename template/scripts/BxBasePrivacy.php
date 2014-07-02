@@ -13,11 +13,12 @@ bx_import('BxDolPrivacy');
  * Privacy representation.
  * @see BxDolPrivacy
  */
-class BxBasePrivacy extends BxDolPrivacy {
-
+class BxBasePrivacy extends BxDolPrivacy
+{
     protected $_oTemplate;
 
-    public function __construct ($aOptions, $oTemplate) {
+    public function __construct ($aOptions, $oTemplate)
+    {
         parent::__construct ($aOptions);
 
         if ($oTemplate)
@@ -28,7 +29,7 @@ class BxBasePrivacy extends BxDolPrivacy {
 
     protected function _addJsCss()
     {
-    	/*
+        /*
         $this->_oTemplate->addJs('BxDolGrid.js');
         $this->_oTemplate->addCss('grid.css');
         */
@@ -36,10 +37,10 @@ class BxBasePrivacy extends BxDolPrivacy {
 
     protected function _echoResultJson($a, $isAutoWrapForFormFileSubmit = false)
     {
-        header('Content-type: text/html; charset=utf-8');    
+        header('Content-type: text/html; charset=utf-8');
 
         $s = json_encode($a);
-        if ($isAutoWrapForFormFileSubmit && !empty($_FILES)) 
+        if ($isAutoWrapForFormFileSubmit && !empty($_FILES))
             $s = '<textarea>' . $s . '</textarea>';
         echo $s;
     }

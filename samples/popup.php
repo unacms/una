@@ -7,7 +7,7 @@
  * @{
  */
 
-/** 
+/**
  * @page samples
  * @section popup Popups
  */
@@ -31,14 +31,13 @@ $oTemplate->setPageHeader ("Sample popup");
 $oTemplate->setPageContent ('page_main_code', PageCompMainCode());
 $oTemplate->getPageCode();
 
-
 /**
  * page code function
  */
-function PageCompMainCode() {
+function PageCompMainCode()
+{
+    ob_start();
 
-    ob_start();    
-    
     // transBox
     echo BxTemplFunctions::getInstance()->transBox('bx-sample-popup-transbox', '<div class="bx-def-padding">transBox</div>', true);
     echo '<button class="bx-btn" onclick="$(\'#bx-sample-popup-transbox\').dolPopup()">transBox</button>';

@@ -9,37 +9,41 @@
 
 bx_import('BxDolStudioLanguagesUtilsQuery');
 
-class BxDolStudioPolyglotQuery extends BxDolStudioLanguagesUtilsQuery {
-    function __construct() {
+class BxDolStudioPolyglotQuery extends BxDolStudioLanguagesUtilsQuery
+{
+    function __construct()
+    {
         parent::__construct();
     }
 
-    function getKeyFullInfo($iId, $iPreviewLength = 10) {
-        $sSql = $this->prepare("SELECT 
-        		`tlk`.`ID` AS `id`, 
-        		`tlk`.`Key` AS `key`, 
-        		`tlc`.`Name` AS `module`
-        	FROM `sys_localization_keys` AS `tlk`
-        	LEFT JOIN `sys_localization_categories` AS `tlc` ON `tlk`.`IDCategory`=`tlc`.`ID` 
-        	WHERE `tlk`.`ID`=? LIMIT 1", $iId);
+    function getKeyFullInfo($iId, $iPreviewLength = 10)
+    {
+        $sSql = $this->prepare("SELECT
+                `tlk`.`ID` AS `id`,
+                `tlk`.`Key` AS `key`,
+                `tlc`.`Name` AS `module`
+            FROM `sys_localization_keys` AS `tlk`
+            LEFT JOIN `sys_localization_categories` AS `tlc` ON `tlk`.`IDCategory`=`tlc`.`ID`
+            WHERE `tlk`.`ID`=? LIMIT 1", $iId);
         $aResult = $this->getRow($sSql);
         if(!is_array($aResult) || empty($aResult))
             return array();
 
-        $sSql = $this->prepare("SELECT 
-        		`tls`.`String` AS `string`,
-        		SUBSTRING(`tls`.`String`, 1, ?) AS `preview`, 
-        		`tll`.`Name` AS `lang_name`,
-        		`tll`.`Title` AS `lang_title`
-        	FROM `sys_localization_strings` AS `tls`
-        	LEFT JOIN `sys_localization_languages` AS `tll` ON `tls`.`IDLanguage`=`tll`.`ID`
-        	WHERE `tls`.`IDKey`=?", $iPreviewLength, $iId);
+        $sSql = $this->prepare("SELECT
+                `tls`.`String` AS `string`,
+                SUBSTRING(`tls`.`String`, 1, ?) AS `preview`,
+                `tll`.`Name` AS `lang_name`,
+                `tll`.`Title` AS `lang_title`
+            FROM `sys_localization_strings` AS `tls`
+            LEFT JOIN `sys_localization_languages` AS `tll` ON `tls`.`IDLanguage`=`tll`.`ID`
+            WHERE `tls`.`IDKey`=?", $iPreviewLength, $iId);
         $aResult['strings'] = $this->getAllWithKey($sSql, 'lang_name');
 
-        return $aResult; 
+        return $aResult;
     }
 
-    function getEtemplates($aParams, &$aItems, $bReturnCount = true) {
+    function getEtemplates($aParams, &$aItems, $bReturnCount = true)
+    {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sSelectClause = $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
 

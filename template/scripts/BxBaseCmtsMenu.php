@@ -13,68 +13,69 @@ bx_import('BxTemplMenu');
  * Menu representation.
  * @see BxDolMenu
  */
-class BxBaseCmtsMenu extends BxTemplMenu 
+class BxBaseCmtsMenu extends BxTemplMenu
 {
-	protected $_oCmts;
-	protected $_aCmt;
+    protected $_oCmts;
+    protected $_aCmt;
 
-    public function __construct ($aObject, $oTemplate) 
+    public function __construct ($aObject, $oTemplate)
     {
         parent::__construct ($aObject, $oTemplate);
     }
 
     public function setCmtsData($oCmts, $iCmtId)
     {
-		if(empty($oCmts) || empty($iCmtId))
-			return;
+        if(empty($oCmts) || empty($iCmtId))
+            return;
 
-		$this->_oCmts = $oCmts;
-		$this->_aCmt = $oCmts->getCommentRow($iCmtId);
+        $this->_oCmts = $oCmts;
+        $this->_aCmt = $oCmts->getCommentRow($iCmtId);
 
-		$sVotesOnclick = '';
-		$oVote = $this->_oCmts->getVoteObject($iCmtId);
-		if($oVote !== false)
-			$sVotesOnclick = $oVote->getJsClick();
+        $sVotesOnclick = '';
+        $oVote = $this->_oCmts->getVoteObject($iCmtId);
+        if($oVote !== false)
+            $sVotesOnclick = $oVote->getJsClick();
 
-		$sJsObject = $oCmts->getJsObjectName();
-		$this->addMarkers(array(
-			'js_object' => $sJsObject,
-			'cmt_system' => $this->_oCmts->getSystemName(),
-			'cmt_id' => $this->_oCmts->getId(),
-			'content_id' => $iCmtId,
-			'vote_onclick' => $sVotesOnclick,
-			'reply_onclick' => $sJsObject . '.toggleReply(this, ' . $iCmtId . ')'
-    	));
+        $sJsObject = $oCmts->getJsObjectName();
+        $this->addMarkers(array(
+            'js_object' => $sJsObject,
+            'cmt_system' => $this->_oCmts->getSystemName(),
+            'cmt_id' => $this->_oCmts->getId(),
+            'content_id' => $iCmtId,
+            'vote_onclick' => $sVotesOnclick,
+            'reply_onclick' => $sJsObject . '.toggleReply(this, ' . $iCmtId . ')'
+        ));
     }
 
-	/**
+    /**
      * Check if menu items is visible.
      * @param $a menu item array
      * @return boolean
-     */ 
-    protected function _isVisible ($a) {
+     */
+    protected function _isVisible ($a)
+    {
         if(!parent::_isVisible($a))
-        	return false;
+            return false;
 
-		$sCheckFuncName = '';
+        $sCheckFuncName = '';
         $aCheckFuncParams = array();
         switch ($a['name']) {
-        	case 'item-edit':
-        		$sCheckFuncName = 'isEditAllowed';
-        		if(!empty($this->_aCmt))
-        			$aCheckFuncParams = array($this->_aCmt);
-        		break;
+            case 'item-edit':
+                $sCheckFuncName = 'isEditAllowed';
+                if(!empty($this->_aCmt))
+                    $aCheckFuncParams = array($this->_aCmt);
+                break;
 
-			case 'item-delete':
-        		$sCheckFuncName = 'isRemoveAllowed';
-        		if(!empty($this->_aCmt))
-        			$aCheckFuncParams = array($this->_aCmt);
-        		break;
+            case 'item-delete':
+                $sCheckFuncName = 'isRemoveAllowed';
+                if(!empty($this->_aCmt))
+                    $aCheckFuncParams = array($this->_aCmt);
+                break;
 
-			case 'item-vote':
-				$sCheckFuncName = 'isVoteAllowed';
-				if(!empty($this->_aCmt))
-        			$aCheckFuncParams = array($this->_aCmt);
+            case 'item-vote':
+                $sCheckFuncName = 'isVoteAllowed';
+                if(!empty($this->_aCmt))
+                    $aCheckFuncParams = array($this->_aCmt);
                 break;
 
             case 'item-reply':
@@ -83,9 +84,9 @@ class BxBaseCmtsMenu extends BxTemplMenu
         }
 
         if(!$sCheckFuncName || !method_exists($this->_oCmts, $sCheckFuncName))
-			return true;
+            return true;
 
-		return call_user_func_array(array($this->_oCmts, $sCheckFuncName), $aCheckFuncParams);
+        return call_user_func_array(array($this->_oCmts, $sCheckFuncName), $aCheckFuncParams);
     }
 }
 

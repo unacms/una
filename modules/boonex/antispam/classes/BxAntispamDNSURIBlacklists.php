@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Antispam Antispam
  * @ingroup     DolphinModules
  *
@@ -147,7 +147,7 @@ class BxAntispamDNSURIBlacklists extends BxDol
 
     /*************** private function ***************/
 
-    private function isDbZoneMatch ($iLevel, $sZone) 
+    private function isDbZoneMatch ($iLevel, $sZone)
     {
         $sQuery = $this->oDb->prepare("SELECT `level` FROM `bx_antispam_dnsbluri_zones` WHERE `level` = ? AND `zone` = ? LIMIT 1", $iLevel, $sZone);
         return $this->oDb->getOne($sQuery) ? true : false;

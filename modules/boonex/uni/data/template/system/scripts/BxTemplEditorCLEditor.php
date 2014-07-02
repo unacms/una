@@ -12,9 +12,10 @@ bx_import('BxBaseEditorCLEditor');
 /**
  * @see BxDolEditor
  */
-class BxTemplEditorCLEditor extends BxBaseEditorCLEditor {
-
-    public function __construct ($aObject, $oTemplate = false) {
+class BxTemplEditorCLEditor extends BxBaseEditorCLEditor
+{
+    public function __construct ($aObject, $oTemplate = false)
+    {
         parent::__construct ($aObject, $oTemplate);
     }
 }

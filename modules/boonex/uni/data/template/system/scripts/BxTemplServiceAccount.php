@@ -12,8 +12,10 @@ bx_import('BxBaseServiceAccount');
 /**
  * @see BxBaseServiceAccount
  */
-class BxTemplServiceAccount extends BxBaseServiceAccount {
-    public function __construct() {
+class BxTemplServiceAccount extends BxBaseServiceAccount
+{
+    public function __construct()
+    {
         parent::__construct();
     }
 }

@@ -11,8 +11,10 @@ defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxBaseStudioPolyglotKeys');
 
-class BxTemplStudioPolyglotKeys extends BxBaseStudioPolyglotKeys { 
-    function __construct($aOptions, $oTemplate = false) {
+class BxTemplStudioPolyglotKeys extends BxBaseStudioPolyglotKeys
+{
+    function __construct($aOptions, $oTemplate = false)
+    {
         parent::__construct($aOptions, $oTemplate);
     }
 }

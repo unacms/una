@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Developer Developer
  * @ingroup     DolphinModules
  *
@@ -12,17 +12,20 @@
 bx_import('BxDolModule');
 bx_import('BxTemplStudioNavigationSets');
 
-class BxDevNavigationSets extends BxTemplStudioNavigationSets {
+class BxDevNavigationSets extends BxTemplStudioNavigationSets
+{
     protected $oModule;
 
-    function __construct($aOptions, $oTemplate = false) {
+    function __construct($aOptions, $oTemplate = false)
+    {
         parent::__construct($aOptions, $oTemplate);
 
         $this->oModule = BxDolModule::getInstance('bx_developer');
-        $this->sUrlViewItems = BX_DOL_URL_STUDIO . 'module.php?name=' . $this->oModule->_oConfig->getName() . '&page=navigation&nav_page=items&nav_module=%s&nav_set=%s';        
+        $this->sUrlViewItems = BX_DOL_URL_STUDIO . 'module.php?name=' . $this->oModule->_oConfig->getName() . '&page=navigation&nav_page=items&nav_module=%s&nav_set=%s';
     }
 
-    public function performActionAdd() {
+    public function performActionAdd()
+    {
         $sAction = 'add';
 
         bx_import('BxDolForm');
@@ -41,8 +44,7 @@ class BxDevNavigationSets extends BxTemplStudioNavigationSets {
                 $aRes = array('msg' => _t('_bx_dev_nav_err_sets_create'));
 
             $this->_echoResultJson($aRes, true);
-        }
-        else {
+        } else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-nav-set-create-popup', _t('_bx_dev_nav_txt_sets_create_popup'), $this->_oTemplate->parseHtmlByName('nav_add_set.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
@@ -55,7 +57,8 @@ class BxDevNavigationSets extends BxTemplStudioNavigationSets {
         }
     }
 
-    public function performActionEdit() {
+    public function performActionEdit()
+    {
     $sAction = 'edit';
 
         $aIds = bx_get('ids');
@@ -92,8 +95,7 @@ class BxDevNavigationSets extends BxTemplStudioNavigationSets {
                 $aRes = array('msg' => _t('_bx_dev_nav_err_sets_edit'));
 
             $this->_echoResultJson($aRes, true);
-        }
-        else {
+        } else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-nav-set-edit-popup', _t('_bx_dev_nav_txt_sets_edit_popup', _t($aSet['title'])), $this->_oTemplate->parseHtmlByName('nav_add_set.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
@@ -106,7 +108,8 @@ class BxDevNavigationSets extends BxTemplStudioNavigationSets {
         }
     }
 
-    protected function _getActionDelete ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array()) {
+    protected function _getActionDelete ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
         return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
     }
 }

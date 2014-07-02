@@ -9,25 +9,25 @@
 
 bx_import('BxDolPageQuery');
 
-/** 
- * @page objects 
+/**
+ * @page objects
  * @section page Page
  * @ref BxDolPage
  */
 
 /**
- * Pages. 
+ * Pages.
  *
  * It allows to display pages which are built from studio.
- *  
+ *
  * The new system has the following page features:
  * - Layouts: page can have any structure, not just columns.
  * - SEO: page can have own SEO options, like meta tags and meta keywords, as well as instructions for search bots.
  * - Cache: page can be cached on the server.
  * - Access control: page access can be controlled using member levels.
- * 
- * 
- * 
+ *
+ *
+ *
  * @section page_create Creating the Page object:
  *
  * 1. add record to 'sys_objects_page' table:
@@ -54,7 +54,7 @@ bx_import('BxDolPageQuery');
  *
  * Page can select appropriate menu automatically if 'module' and 'object' fields in 'sys_objects_page' table are matched with 'module' and 'name' fields in 'sys_menu_items' table.
  *
- * 
+ *
  * Page layout are stored in 'sys_pages_layouts' table:
  * - name: inner unique layout name.
  * - icon: layout icon to display in page builder, it should represent basic view of the layout to help studio operator determine the layout structure.
@@ -62,8 +62,8 @@ bx_import('BxDolPageQuery');
  * - template: template name to use to display page with certain layout.
  * - cells_number: number of areas in the layout, page blocks can be places into this areas(cells).
  * To define areas in the layout they should be named as '__cell_N__', where N is cell number, starting from 1.
- * 
- * 
+ *
+ *
  * 2. Add page blocks to 'sys_pages_blocks' table:
  * - object: page object name this block belongs to.
  * - cell_id: cell number in page layout to place block to.
@@ -94,7 +94,7 @@ bx_import('BxDolPageQuery');
  * - deletable: is block deletable from page builder
  * - copyable: is block can be copied to any other page from page builder.
  * - order: block order in particular cell.
- * 
+ *
  * Block design boxes are stored in 'sys_pages_design_boxes' table:
  * - id: consistent id, there are the following defines can be used in the code for each system block style:
  *      - 0 - BX_DB_CONTENT_ONLY: design box with content only - no borders, no background, no caption.
@@ -118,8 +118,8 @@ bx_import('BxDolPageQuery');
  * @endcode
  *
  */
-class BxDolPage extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable {
-
+class BxDolPage extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
+{
     protected $_sObject;
     protected $_aObject;
     protected $_oQuery;
@@ -129,7 +129,8 @@ class BxDolPage extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable 
      * Constructor
      * @param $aObject array of page options
      */
-    public function __construct($aObject) {
+    public function __construct($aObject)
+    {
         parent::__construct();
 
         $this->_sObject = $aObject['object'];
@@ -142,7 +143,8 @@ class BxDolPage extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable 
      * @param $sURI unique page URI
      * @return object instance or false on error
      */
-    static public function getObjectInstanceByURI($sURI) {
+    static public function getObjectInstanceByURI($sURI)
+    {
         $sObject = BxDolPageQuery::getPageObjectNameByURI($sURI);
         return $sObject ? self::getObjectInstance($sObject) : false;
     }
@@ -152,36 +154,37 @@ class BxDolPage extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable 
      * @param $sObject object name
      * @return object instance or false on error
      */
-    static public function getObjectInstance($sObject) {
-
+    static public function getObjectInstance($sObject)
+    {
         if (isset($GLOBALS['bxDolClasses']['BxDolPage!'.$sObject]))
             return $GLOBALS['bxDolClasses']['BxDolPage!'.$sObject];
-        
+
         $aObject = BxDolPageQuery::getPageObject($sObject);
         if (!$aObject || !is_array($aObject))
             return false;
 
         bx_import('BxTemplPage');
-        $sClass = 'BxTemplPage';        
+        $sClass = 'BxTemplPage';
         if (!empty($aObject['override_class_name'])) {
             $sClass = $aObject['override_class_name'];
             if (!empty($aObject['override_class_file']))
                 require_once(BX_DIRECTORY_PATH_ROOT . $aObject['override_class_file']);
-            else    
+            else
                 bx_import($sClass);
         }
-        
+
         $o = new $sClass($aObject);
 
         return ($GLOBALS['bxDolClasses']['BxDolPage!'.$sObject] = $o);
-    }    
+    }
 
     /**
      * Add replace markers. Markers are replaced in raw, html, lang blocks and page title, description, keywords and block titles.
      * @param $a array of markers as key => value
      * @return true on success or false on error
      */
-    public function addMarkers ($a) {
+    public function addMarkers ($a)
+    {
         if (empty($a) || !is_array($a))
             return false;
         $this->_aMarkers = array_merge ($this->_aMarkers, $a);
@@ -192,15 +195,17 @@ class BxDolPage extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable 
      * Replace provided markers in a string
      * @param $mixed string or array to replace markers in
      * @return string where all occured markers are replaced
-     */ 
-    protected function _replaceMarkers ($mixed) {
+     */
+    protected function _replaceMarkers ($mixed)
+    {
         return bx_replace_markers($mixed, $this->_aMarkers);
     }
 
     /**
      * Check if page block is visible.
      */
-    protected function _isVisibleBlock ($a) {
+    protected function _isVisibleBlock ($a)
+    {
         bx_import('BxDolAcl');
         return BxDolAcl::getInstance()->isMemberLevelInSet($a['visible_for_levels']);
     }
@@ -208,7 +213,8 @@ class BxDolPage extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable 
     /**
      * Check if page is visible.
      */
-    protected function _isVisiblePage ($a) {
+    protected function _isVisiblePage ($a)
+    {
         bx_import('BxDolAcl');
         return BxDolAcl::getInstance()->isMemberLevelInSet($a['visible_for_levels']);
     }

@@ -20,12 +20,13 @@ class BxBaseMenuToolbar extends BxTemplMenu
         parent::__construct ($aObject, $oTemplate);
     }
 
-    public function getMenuItems () {
+    public function getMenuItems ()
+    {
         $a = parent::getMenuItems ();
 
         if (!isLogged())
             return $a;
-        
+
         foreach ($a as $k => $r) {
             if ('account' != $r['name'])
                 continue;
@@ -33,7 +34,7 @@ class BxBaseMenuToolbar extends BxTemplMenu
             bx_import('BxDolProfile');
             $oProfile = BxDolProfile::getInstance(bx_get_logged_profile_id ());
             $sUrlIcon = $oProfile->getThumb();
-            if (!$sUrlIcon) 
+            if (!$sUrlIcon)
                 break;
 
             $a[$k]['bx_if:image'] = array (

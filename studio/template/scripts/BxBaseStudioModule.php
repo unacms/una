@@ -10,45 +10,53 @@
 
 bx_import('BxDolStudioModule');
 
-class BxBaseStudioModule extends BxDolStudioModule {
+class BxBaseStudioModule extends BxDolStudioModule
+{
     protected $aMenuItems = array(
-    	array('name' => 'general', 'icon' => 'mi-mod-general.png', 'title' => '_adm_lmi_cpt_general')
+        array('name' => 'general', 'icon' => 'mi-mod-general.png', 'title' => '_adm_lmi_cpt_general')
     );
 
-    function __construct($sModule = "", $sPage = "") {
+    function __construct($sModule = "", $sPage = "")
+    {
         parent::__construct($sModule, $sPage);
     }
 
-    function getPageCss() {
+    function getPageCss()
+    {
         return array_merge(parent::getPageCss(), array('module.css'));
     }
 
-    function getPageJs() {
+    function getPageJs()
+    {
         return array_merge(parent::getPageJs(), array('settings.js', 'module.js'));
     }
 
-    function getPageJsObject() {
+    function getPageJsObject()
+    {
         return 'oBxDolStudioModule';
     }
 
-    function getPageCaption() {
+    function getPageCaption()
+    {
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         $aTmplVars = array(
             'js_object' => $this->getPageJsObject(),
-        	'content' => parent::getPageCaption(),
+            'content' => parent::getPageCaption(),
         );
         return $oTemplate->parseHtmlByName('mod_page_caption.html', $aTmplVars);
     }
 
-    function getPageAttributes() {
+    function getPageAttributes()
+    {
         if((int)$this->aModule['enabled'] == 0)
-        	return 'style="display:none"';
+            return 'style="display:none"';
 
         return parent::getPageAttributes();
     }
 
-    function getPageMenu($aMenu = array(), $aMarkers = array()) {
+    function getPageMenu($aMenu = array(), $aMarkers = array())
+    {
         $sJsObject = $this->getPageJsObject();
 
         $aMenu = array();
@@ -56,15 +64,16 @@ class BxBaseStudioModule extends BxDolStudioModule {
             $aMenu[] = array(
                 'name' => $aItem['name'],
                 'icon' => $aItem['icon'],
-            	'link' => isset($aItem['link'])  ? $aItem['link'] : BX_DOL_URL_STUDIO . 'module.php?name=' . $this->sModule . '&page=' . $aItem['name'],
-            	'title' => _t($aItem['title']),
-            	'selected' => $aItem['name'] == $this->sPage
+                'link' => isset($aItem['link'])  ? $aItem['link'] : BX_DOL_URL_STUDIO . 'module.php?name=' . $this->sModule . '&page=' . $aItem['name'],
+                'title' => _t($aItem['title']),
+                'selected' => $aItem['name'] == $this->sPage
             );
 
         return parent::getPageMenu($aMenu);
     }
 
-    function getPageCode($bHidden = false) {
+    function getPageCode($bHidden = false)
+    {
         $sMethod = 'get' . ucfirst($this->sPage);
         if(!method_exists($this, $sMethod))
             return '';
@@ -75,14 +84,15 @@ class BxBaseStudioModule extends BxDolStudioModule {
         return $this->$sMethod();
     }
 
-    protected function getGeneral() {
+    protected function getGeneral()
+    {
         $oTemplate = BxDolStudioTemplate::getInstance();
-        
+
         bx_import('BxTemplStudioSettings');
         $oPage = new BxTemplStudioSettings($this->sModule);
 
         $aTmplVars = array(
-        	'bx_repeat:blocks' => $oPage->getPageCode(),
+            'bx_repeat:blocks' => $oPage->getPageCode(),
         );
         return $oTemplate->parseHtmlByName('module.html', $aTmplVars);
     }

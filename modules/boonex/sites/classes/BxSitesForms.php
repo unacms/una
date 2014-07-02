@@ -26,44 +26,44 @@ class BxSitesForms extends BxDolProfileForms
         $this->_oModule = $oModule;
     }
 
-	/**
+    /**
      * @return add data html
      */
     public function addDataForm()
     {
-    	$sMsg = $this->_oModule->isAllowedAdd();
+        $sMsg = $this->_oModule->isAllowedAdd();
         if($sMsg !== CHECK_ACTION_RESULT_ALLOWED)
             return MsgBox($sMsg);
 
-		bx_import('BxDolForm');
-        $oForm = BxDolForm::getObjectInstance('bx_sites', 'bx_sites_site_add'); 
+        bx_import('BxDolForm');
+        $oForm = BxDolForm::getObjectInstance('bx_sites', 'bx_sites_site_add');
         if(!$oForm)
             return MsgBox(_t('_sys_txt_error_occured'));
 
-		unset($oForm->aInputs['submit_block'][1]);
-		$oForm->initChecker();
-		if(!$oForm->isSubmittedAndValid())
-			return $oForm->getCode();
+        unset($oForm->aInputs['submit_block'][1]);
+        $oForm->initChecker();
+        if(!$oForm->isSubmittedAndValid())
+            return $oForm->getCode();
 
-		$sDomain = $oForm->getCleanValue('domain');
-		if($this->_oModule->_oDb->isAccount(array('domain' => $sDomain))) 				
-			return MsgBox(_t('_bx_sites_txt_err_site_exists'));
+        $sDomain = $oForm->getCleanValue('domain');
+        if($this->_oModule->_oDb->isAccount(array('domain' => $sDomain)))
+            return MsgBox(_t('_bx_sites_txt_err_site_exists'));
 
-		$iAccountId = $oForm->insert(array(
-			'owner_id' => bx_get_logged_profile_id(),
-			'created' => time(),
-			'status' => BX_SITES_ACCOUNT_STATUS_UNCONFIRMED
-		));
+        $iAccountId = $oForm->insert(array(
+            'owner_id' => bx_get_logged_profile_id(),
+            'created' => time(),
+            'status' => BX_SITES_ACCOUNT_STATUS_UNCONFIRMED
+        ));
 
-		if(!$iAccountId)
-			return MsgBox(_t('_bx_sites_txt_err_site_creation'));
+        if(!$iAccountId)
+            return MsgBox(_t('_bx_sites_txt_err_site_creation'));
 
-		$oAccount = $this->_oModule->getObject('Account');
-		$oAccount->onAccountCreated($iAccountId);
+        $oAccount = $this->_oModule->getObject('Account');
+        $oAccount->onAccountCreated($iAccountId);
 
-		$sUrl = $this->_oModule->startSubscription($iAccountId);
-		header('Location: ' . $sUrl);
-		exit;
+        $sUrl = $this->_oModule->startSubscription($iAccountId);
+        header('Location: ' . $sUrl);
+        exit;
     }
 
     /**
@@ -75,14 +75,14 @@ class BxSitesForms extends BxDolProfileForms
         if($sMsg !== CHECK_ACTION_RESULT_ALLOWED)
             return MsgBox($sMsg);
 
-        // check and display form 
-        $oForm = BxDolForm::getObjectInstance('bx_sites', $sDisplay); 
+        // check and display form
+        $oForm = BxDolForm::getObjectInstance('bx_sites', $sDisplay);
         if(!$oForm)
             return MsgBox(_t('_sys_txt_error_occured'));
 
         $oForm->aInputs['domain']['required'] = false;
         $oForm->aInputs['domain']['attrs'] = array(
-        	'disabled' => 'disabled'
+            'disabled' => 'disabled'
         );
         unset($oForm->aInputs['domain']['checker'], $oForm->aInputs['domain']['db']);
 
@@ -95,16 +95,16 @@ class BxSitesForms extends BxDolProfileForms
             if (!$oForm->isValid())
                 return $oForm->getCode();
             else
-                return MsgBox(_t('_bx_sites_txt_err_site_update')); 
+                return MsgBox(_t('_bx_sites_txt_err_site_update'));
         }
 
         // perform action
         $this->_oModule->isAllowedEdit($aAccount, true);
 
         // create an alert
-        bx_alert($this->_oModule->getName(), 'edited', $aAccount['id']); 
+        bx_alert($this->_oModule->getName(), 'edited', $aAccount['id']);
 
-        // redirect 
+        // redirect
         $this->_redirectAndExit('page.php?i=site-view&id=' . $aAccount['id']);
     }
 
@@ -117,30 +117,30 @@ class BxSitesForms extends BxDolProfileForms
         if($sMsg !== CHECK_ACTION_RESULT_ALLOWED)
             return MsgBox($sMsg);
 
-        // check and display form 
-        $oForm = BxDolForm::getObjectInstance('bx_sites', $sDisplay); 
+        // check and display form
+        $oForm = BxDolForm::getObjectInstance('bx_sites', $sDisplay);
         if(!$oForm)
             return MsgBox(_t('_sys_txt_error_occured'));
 
-        $oForm->initChecker($aAccount); 
+        $oForm->initChecker($aAccount);
         if(!$oForm->isSubmittedAndValid())
             return $oForm->getCode();
 
         if(!$oForm->delete($aAccount['id'], $aAccount))
-			return MsgBox(_t('_bx_sites_txt_err_site_delete'));
+            return MsgBox(_t('_bx_sites_txt_err_site_delete'));
 
-		//delete payment details and history
-		if(!empty($aAccount['id'])) {
-			$this->_oModule->_oDb->deletePaymentDetails(array('account_id' => $aAccount['id']));
-			$this->_oModule->_oDb->deletePaymentHistory(array('account_id' => $aAccount['id']));
-		}
+        //delete payment details and history
+        if(!empty($aAccount['id'])) {
+            $this->_oModule->_oDb->deletePaymentDetails(array('account_id' => $aAccount['id']));
+            $this->_oModule->_oDb->deletePaymentHistory(array('account_id' => $aAccount['id']));
+        }
 
-		// cancel subscription
-		if(!empty($aAccount['pd_profile_id'])) {
-			bx_import('Paypal', $this->_oModule->_aModule);
-			$oPaypal = new BxSitesPaypal($this->_oModule);
-	        $oPaypal->performAction($aAccount['pd_profile_id']);
-		}
+        // cancel subscription
+        if(!empty($aAccount['pd_profile_id'])) {
+            bx_import('Paypal', $this->_oModule->_aModule);
+            $oPaypal = new BxSitesPaypal($this->_oModule);
+            $oPaypal->performAction($aAccount['pd_profile_id']);
+        }
 
         // perform action
         $this->_oModule->isAllowedDelete($aAccount, true);
@@ -148,7 +148,7 @@ class BxSitesForms extends BxDolProfileForms
         // create an alert
         bx_alert($this->_oModule->getName(), 'deleted', $aAccount['id']);
 
-        // redirect 
+        // redirect
         $this->_redirectAndExit('page.php?i=sites-home');
     }
 }

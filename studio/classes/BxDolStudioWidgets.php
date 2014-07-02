@@ -13,10 +13,12 @@ bx_import('BxDolStudioWidgetsQuery');
 define('BX_DOL_STUDIO_WS_ENABLED', 1);
 define('BX_DOL_STUDIO_WS_DISABLED', 2);
 
-class BxDolStudioWidgets extends BxTemplStudioPage {
+class BxDolStudioWidgets extends BxTemplStudioPage
+{
     protected $aWidgets;
 
-    function __construct($mixedPageName) {
+    function __construct($mixedPageName)
+    {
         parent::__construct($mixedPageName);
 
         $this->oDb = BxDolStudioWidgetsQuery::getInstance();
@@ -25,14 +27,15 @@ class BxDolStudioWidgets extends BxTemplStudioPage {
 
         if(!$this->bPageMultiple)
             $this->oDb->getWidgets(array('type' => 'by_page_id', 'value' => $this->aPage['id']), $this->aWidgets, false);
-        else 
+        else
             foreach($this->aPage as $sPage => $aPage) {
                 $this->aWidgets[$sPage] = array();
                 $this->oDb->getWidgets(array('type' => 'by_page_id', 'value' => $aPage['id']), $this->aWidgets[$sPage], false);
             }
     }
 
-    function isEnabled($aWidget) {
+    function isEnabled($aWidget)
+    {
         return true;
     }
 }

@@ -7,9 +7,9 @@
  * @{
  */
 
-/** 
+/**
  * @page objects Objects
- * Classes which represents high level programming constructions to generate ready functionality, like Comments, Votings, Forms. 
+ * Classes which represents high level programming constructions to generate ready functionality, like Comments, Votings, Forms.
  */
 
 /**
@@ -20,35 +20,40 @@ $GLOBALS['bxDolClasses'] = array();
 /**
  * Base class for all Dolphin classes
  */
-class BxDol {
+class BxDol
+{
     public function BxDol () {}
 }
 
 /**
  * Singleton interface, for objects with one instance only
  */
-interface iBxDolSingleton {
+interface iBxDolSingleton
+{
     public static function getInstance();
 }
 
 /**
  * Factory interface for object instances, once instance per object name
  */
-interface iBxDolFactoryObject {
+interface iBxDolFactoryObject
+{
     static public function getObjectInstance($sObject);
 }
 
 /**
  * Replacable interface, class has an ability to replace markers somewhere
  */
-interface iBxDolReplaceable {
+interface iBxDolReplaceable
+{
     public function addMarkers ($a);
 }
 
 /**
  * Profile interface, class must implement basic profile methods to be compliant with Profile interface
  */
-interface iBxDolProfile {
+interface iBxDolProfile
+{
     public function id();
     public function getDisplayName();
     public function getUrl();
@@ -63,7 +68,8 @@ interface iBxDolProfile {
 /**
  * Profile services module interface, module class must implement basic profile services to be compliant with Profile interface
  */
-interface iBxDolProfileService {
+interface iBxDolProfileService
+{
     public function serviceProfileUnit ($iContentId);
     public function serviceProfileAvatar ($iContentId);
     public function serviceProfileThumb ($iContentId);
@@ -75,4 +81,3 @@ interface iBxDolProfileService {
 }
 
 /** @} */
-

@@ -17,7 +17,7 @@ bx_import('BxDolImageTranscoder');
 /**
  * Create/Edit Organization Form.
  */
-class BxOrgsFormEntry extends BxBaseModProfileFormEntry 
+class BxOrgsFormEntry extends BxBaseModProfileFormEntry
 {
     public function __construct($aInfo, $oTemplate = false)
     {

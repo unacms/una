@@ -13,8 +13,10 @@ bx_import('BxDolDb');
  * Database queries for ACL
  * @see BxDolAcl
  */
-class BxDolAclQuery extends BxDolDb implements iBxDolSingleton {
-    function __construct() {
+class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
+{
+    function __construct()
+    {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
@@ -24,7 +26,8 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton {
     /**
      * Prevent cloning the instance
      */
-    public function __clone() {
+    public function __clone()
+    {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error('Clone is not allowed for the class: ' . get_class($this), E_USER_ERROR);
     }
@@ -32,14 +35,16 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton {
     /**
      * Get singleton instance of the class
      */
-    static function getInstance() {
+    static function getInstance()
+    {
         if(!isset($GLOBALS['bxDolClasses'][__CLASS__]))
             $GLOBALS['bxDolClasses'][__CLASS__] = new BxDolAclQuery();
 
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
 
-    function getLevels($aParams, &$aItems, $bReturnCount = true) {
+    function getLevels($aParams, &$aItems, $bReturnCount = true)
+    {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
 
@@ -66,7 +71,7 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton {
                 $aMethod['params'][1] = 'id';
                 $aMethod['params'][2] = 'name';
                 $sWhereClause .= "AND `tal`.`Active`='yes'";
-                break;    
+                break;
             case 'all_pair':
                 $aMethod['name'] = "getPairs";
                 $aMethod['params'][1] = 'id';
@@ -101,7 +106,8 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton {
         return (int)$this->getOne("SELECT FOUND_ROWS()");
     }
 
-    function getActions($aParams, &$aItems, $bReturnCount = true) {
+    function getActions($aParams, &$aItems, $bReturnCount = true)
+    {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sSelectClause = $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
 
@@ -162,13 +168,14 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton {
     }
 
     /**
-	 * Fetch the last purchased/assigned membership that is still active for the given profile.
-	 * 
-	 * NOTE. Don't use cache here, because it's causing an error, if a number of memberrship levels are purchased at the same time.
-	 * 
-	 * fromMemory returns the same DateExpires because buyMembership function is called in cycle in the same session.
-	 */
-    function getLevelCurrent($iProfileId, $iTime = 0) {
+     * Fetch the last purchased/assigned membership that is still active for the given profile.
+     *
+     * NOTE. Don't use cache here, because it's causing an error, if a number of memberrship levels are purchased at the same time.
+     *
+     * fromMemory returns the same DateExpires because buyMembership function is called in cycle in the same session.
+     */
+    function getLevelCurrent($iProfileId, $iTime = 0)
+    {
         $iTime = $iTime == 0 ? time() : (int)$iTime;
 
         $sSql = $this->prepare("
@@ -182,61 +189,66 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton {
                     `sys_acl_levels_members`.`TransactionID` AS `transaction_id`,
                     `sys_profiles`.`status`
             FROM `sys_acl_levels_members`
-			RIGHT JOIN `sys_profiles` ON `sys_acl_levels_members`.IDMember = `sys_profiles`.`id` 
-				AND (`sys_acl_levels_members`.DateStarts IS NULL OR `sys_acl_levels_members`.DateStarts <= FROM_UNIXTIME(?))
-				AND (`sys_acl_levels_members`.DateExpires IS NULL OR `sys_acl_levels_members`.DateExpires > FROM_UNIXTIME(?))
-			LEFT JOIN `sys_acl_levels` ON `sys_acl_levels_members`.IDLevel = `sys_acl_levels`.ID
+            RIGHT JOIN `sys_profiles` ON `sys_acl_levels_members`.IDMember = `sys_profiles`.`id`
+                AND (`sys_acl_levels_members`.DateStarts IS NULL OR `sys_acl_levels_members`.DateStarts <= FROM_UNIXTIME(?))
+                AND (`sys_acl_levels_members`.DateExpires IS NULL OR `sys_acl_levels_members`.DateExpires > FROM_UNIXTIME(?))
+            LEFT JOIN `sys_acl_levels` ON `sys_acl_levels_members`.IDLevel = `sys_acl_levels`.ID
             WHERE `sys_profiles`.`id` = ?
             ORDER BY `sys_acl_levels_members`.DateStarts DESC
             LIMIT 1", $iTime, $iTime, $iProfileId);
 
-    	return $this->getRow($sSql);
+        return $this->getRow($sSql);
     }
 
-    function getLevelByIdCached($iLevel) {
-        $sQuery = $this->prepare("SELECT 
-            	`tal`.`ID` AS `id`, 
-            	`tal`.`Name` AS `name`, 
-            	`tal`.`QuotaSize` AS `quota_size`, 
-            	`tal`.`QuotaNumber` AS `quota_number`, 
-            	`tal`.`QuotaMaxFileSize` AS `quota_max_file_size` 
-        	FROM `sys_acl_levels` AS `tal`
-        	WHERE `tal`.`ID`=? 
-        	LIMIT 1", $iLevel);
+    function getLevelByIdCached($iLevel)
+    {
+        $sQuery = $this->prepare("SELECT
+                `tal`.`ID` AS `id`,
+                `tal`.`Name` AS `name`,
+                `tal`.`QuotaSize` AS `quota_size`,
+                `tal`.`QuotaNumber` AS `quota_number`,
+                `tal`.`QuotaMaxFileSize` AS `quota_max_file_size`
+            FROM `sys_acl_levels` AS `tal`
+            WHERE `tal`.`ID`=?
+            LIMIT 1", $iLevel);
         return $this->fromCache('sys_acl_levels' . $iLevel, 'getRow', $sQuery);
     }
 
-    function getAction($iMembershipId, $iActionId) {
+    function getAction($iMembershipId, $iActionId)
+    {
         $sQuery = $this->prepare("SELECT
-        		`tam`.`IDAction` AS `id`, 
-            	`taa`.`Name` AS `name`,  
+                `tam`.`IDAction` AS `id`,
+                `taa`.`Name` AS `name`,
                 `taa`.`Title` AS `title`,
-            	`tam`.`AllowedCount` AS `allowed_count`, 
-            	`tam`.`AllowedPeriodLen` AS `allowed_period_len`, 
-            	UNIX_TIMESTAMP(`tam`.`AllowedPeriodStart`) as `allowed_period_start`, 
-            	UNIX_TIMESTAMP(`tam`.`AllowedPeriodEnd`) as `allowed_period_end`, 
-            	`tam`.`AdditionalParamValue` AS `additional_param_value` 
-        	FROM `sys_acl_actions` AS `taa`
-        	LEFT JOIN `sys_acl_matrix` AS `tam` ON `tam`.`IDAction` = `taa`.`ID` AND `tam`.`IDLevel` = ?
-        	WHERE `taa`.`ID` = ?", $iMembershipId, $iActionId);
-    	return $this->getRow($sQuery);
+                `tam`.`AllowedCount` AS `allowed_count`,
+                `tam`.`AllowedPeriodLen` AS `allowed_period_len`,
+                UNIX_TIMESTAMP(`tam`.`AllowedPeriodStart`) as `allowed_period_start`,
+                UNIX_TIMESTAMP(`tam`.`AllowedPeriodEnd`) as `allowed_period_end`,
+                `tam`.`AdditionalParamValue` AS `additional_param_value`
+            FROM `sys_acl_actions` AS `taa`
+            LEFT JOIN `sys_acl_matrix` AS `tam` ON `tam`.`IDAction` = `taa`.`ID` AND `tam`.`IDLevel` = ?
+            WHERE `taa`.`ID` = ?", $iMembershipId, $iActionId);
+        return $this->getRow($sQuery);
     }
 
-    function getActionTrack($iActionId, $iProfileId) {
-        $sQuery = $this->prepare("SELECT 
-        		`taat`.`ActionsLeft` AS `actions_left`,
-        		UNIX_TIMESTAMP(`taat`.`ValidSince`) as `valid_since`
-        	FROM `sys_acl_actions_track` AS `taat`
-        	WHERE `taat`.`IDAction`=? AND `taat`.`IDMember`=?", $iActionId, $iProfileId);
-        return $this->getRow($sQuery); 
+    function getActionTrack($iActionId, $iProfileId)
+    {
+        $sQuery = $this->prepare("SELECT
+                `taat`.`ActionsLeft` AS `actions_left`,
+                UNIX_TIMESTAMP(`taat`.`ValidSince`) as `valid_since`
+            FROM `sys_acl_actions_track` AS `taat`
+            WHERE `taat`.`IDAction`=? AND `taat`.`IDMember`=?", $iActionId, $iProfileId);
+        return $this->getRow($sQuery);
     }
 
-    function insertActionTarck($iActionId, $iProfileId, $iActionsLeft, $iValidSince) {
+    function insertActionTarck($iActionId, $iProfileId, $iActionsLeft, $iValidSince)
+    {
         $sQuery = $this->prepare("INSERT INTO `sys_acl_actions_track`(`IDAction`, `IDMember`, `ActionsLeft`, `ValidSince`) VALUES (?, ?, ?, FROM_UNIXTIME(?))", $iActionId, $iProfileId, $iActionsLeft, $iValidSince);
         return (int)$this->query($sQuery) > 0;
     }
 
-    function updateActionTrack($iActionId, $iProfileId, $iActionsLeft, $iValidSince = 0) {
+    function updateActionTrack($iActionId, $iProfileId, $iActionsLeft, $iValidSince = 0)
+    {
         $sUpdateAddon = "";
         if($iValidSince != 0)
             $sUpdateAddon = $this->prepare(", ValidSince=FROM_UNIXTIME(?)", $iValidSince);
@@ -245,17 +257,20 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton {
         return (int)$this->query($sQuery) > 0;
     }
 
-    function insertLevelByProfileId($iProfileId, $iMembershipId, $iDateStarts, $iDateExpires, $sTransactionId) {
+    function insertLevelByProfileId($iProfileId, $iMembershipId, $iDateStarts, $iDateExpires, $sTransactionId)
+    {
         $sQuery = $this->prepare("INSERT `sys_acl_levels_members` (`IDMember`, `IDLevel`, `DateStarts`, `DateExpires`, `TransactionID`) VALUES (?, ?, FROM_UNIXTIME(?), FROM_UNIXTIME(?), ?)", $iProfileId, $iMembershipId, $iDateStarts, $iDateExpires, $sTransactionId);
-    	return (int)$this->query($sQuery) > 0;
+        return (int)$this->query($sQuery) > 0;
     }
 
-    function deleteLevelByProfileId($iProfileId, $bAll = false) {
+    function deleteLevelByProfileId($iProfileId, $bAll = false)
+    {
         $sQuery = $this->prepare("DELETE FROM `sys_acl_levels_members` WHERE `IDMember` = ? " . ($bAll ? "" : " AND (`DateExpires` IS NULL OR `DateExpires` > NOW())"), $iProfileId);
         return (int)$this->query($sQuery) > 0;
     }
 
-    function maintenance($iDaysToCleanMemLevels) {
+    function maintenance($iDaysToCleanMemLevels)
+    {
         $sQuery = $this->prepare("DELETE FROM `sys_acl_levels_members` WHERE `DateExpires` < NOW() - INTERVAL ? DAY", $iDaysToCleanMemLevels);
         if ($iDeleteMemLevels = $this->query($sQuery))
             $this->query("OPTIMIZE TABLE `sys_acl_levels_members`");

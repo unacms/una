@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Developer Developer
  * @ingroup     DolphinModules
  *
@@ -14,10 +14,12 @@ bx_import('BxTemplStudioFormsFields');
 
 require_once('BxDevFormsField.php');
 
-class BxDevFormsFields extends BxTemplStudioFormsFields {
+class BxDevFormsFields extends BxTemplStudioFormsFields
+{
     protected $oModule;
 
-    function __construct($aOptions, $oTemplate = false) {
+    function __construct($aOptions, $oTemplate = false)
+    {
         parent::__construct($aOptions, $oTemplate);
 
         $this->oModule = BxDolModule::getInstance('bx_developer');

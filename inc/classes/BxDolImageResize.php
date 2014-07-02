@@ -22,7 +22,6 @@ define( 'IMAGE_ERROR_GD_WRITE_FAILED',       10 );
 define( 'IMAGE_ERROR_GD_TTF_NOT_SUPPORTED',  11 );
 define( 'IMAGE_ERROR_GD_FILTER_ERROR',       12 );
 
-
 // Image types for GD
 // NOTE: actually these constants exist in PHP >= 4.3.0, but they are included for
 //       back compatibility
@@ -30,8 +29,8 @@ define( 'IMAGE_TYPE_GIF',         1 );
 define( 'IMAGE_TYPE_JPG',         2 );
 define( 'IMAGE_TYPE_PNG',         3 );
 
-class BxDolImageResize extends BxDol implements iBxDolSingleton {
-
+class BxDolImageResize extends BxDol implements iBxDolSingleton
+{
     protected $w = 64, $h = 64; ///< size of destination image
     protected $_isCrop = false;
     protected $_isAutoCrop = false;
@@ -41,8 +40,8 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
     protected $_isSquareResize = false; ///< use smart resize, destination image will be exact Width x Height size
     protected $_isUseGD; ///< use GD library or command line ImagMagic utilites
 
-    function __construct() {
-
+    function __construct()
+    {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
@@ -54,7 +53,8 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
     /**
      * Prevent cloning the instance
      */
-    public function __clone() {
+    public function __clone()
+    {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error('Clone is not allowed for the class: ' . get_class($this), E_USER_ERROR);
     }
@@ -62,15 +62,16 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
     /**
      * Get singleton instance of the class
      */
-    public static function getInstance() {
+    public static function getInstance()
+    {
         if(!isset($GLOBALS['bxDolClasses'][__CLASS__]))
             $GLOBALS['bxDolClasses'][__CLASS__] = new BxDolImageResize();
 
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
 
-    function isAllowedImage ($sPath) {
-
+    function isAllowedImage ($sPath)
+    {
         if ($this->_isUseGD) {
             $aImage = getimagesize($sPath);
             if (!empty($aImage) && in_array($aImage[2], array(1, 2, 3)))
@@ -81,7 +82,8 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
         return false;
     }
 
-    function resize ($mixedImage, $sDstImage = '') {
+    function resize ($mixedImage, $sDstImage = '')
+    {
         if (is_array($mixedImage)) {
             $aRet = array();
             foreach ($mixedImage as $s) {
@@ -93,7 +95,8 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
         }
     }
 
-    function applyWatermark ($mixedImage, $sDstImage, $wtrFilename, $wtrTransparency) {
+    function applyWatermark ($mixedImage, $sDstImage, $wtrFilename, $wtrTransparency)
+    {
         if (is_array($mixedImage)) {
             $aRet = array();
             foreach ($mixedImage as $s) {
@@ -105,7 +108,8 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
         }
     }
 
-    function grayscale ($mixedImage, $sDstImage = '') {
+    function grayscale ($mixedImage, $sDstImage = '')
+    {
         if (is_array($mixedImage)) {
             $aRet = array();
             foreach ($mixedImage as $s) {
@@ -117,17 +121,20 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
         }
     }
 
-    function setSize ($w, $h) {
+    function setSize ($w, $h)
+    {
         $this->w = $w;
         $this->h = $h;
     }
 
-    function removeCropOptions () {
+    function removeCropOptions ()
+    {
         $this->_isCrop = false;
         $this->_isAutoCrop = false;
     }
 
-    function setCropOptions ($x, $y, $w, $h) {
+    function setCropOptions ($x, $y, $w, $h)
+    {
         $this->_isCrop = true;
         $this->_cropX = $x;
         $this->_cropY = $y;
@@ -138,38 +145,46 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
     /**
      * Crop image to destination size with filling whole area of destination size
      */
-    function setAutoCrop ($b) {
+    function setAutoCrop ($b)
+    {
         $this->_isAutoCrop = $b;
     }
 
-    function setJpegOutput ($b) {
+    function setJpegOutput ($b)
+    {
         $this->setOutputType($b ? IMAGE_TYPE_JPG : false);
     }
 
-    function setOutputType ($iType) {
+    function setOutputType ($iType)
+    {
         $this->_iForceOutputType = $iType;;
     }
 
-    function setJpegQuality ($i) {
+    function setJpegQuality ($i)
+    {
         $this->_iJpegQuality = $i;
     }
 
-    function setSquareResize ($b) {
+    function setSquareResize ($b)
+    {
         $this->_isSquareResize = ($b ? true : false);
     }
 
-    function isUsedGD () {
+    function isUsedGD ()
+    {
         return $this->_isUseGD;
     }
 
-    function getImageSize($sPath) {
+    function getImageSize($sPath)
+    {
         $aSize = getimagesize($sPath);
         return array ('w' => $aSize[0], 'h' => $aSize[1]);
     }
 
     // private functions are below -------------------------------
 
-    function _grayscale ($sSrcImage, $sDstImage = '') {
+    function _grayscale ($sSrcImage, $sDstImage = '')
+    {
         if (!file_exists($sSrcImage))
             return IMAGE_ERROR_SOURCE_NOT_EXISTS;
 
@@ -183,8 +198,8 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
         return $this->_isUseGD ? $this->_grayscaleGD ($sSrcImage, $sDstImage) : $this->_grayscaleImageMagick ($sSrcImage, $sDstImage);
     }
 
-    function _grayscaleGD ($sSrcImage, $sDstImage) {
-
+    function _grayscaleGD ($sSrcImage, $sDstImage)
+    {
         $iErr = 0;
         $src_im =& $this->_createGDImage($sSrcImage, $size, $iErr);
 
@@ -193,7 +208,7 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
         if (!$src_im)
             return IMAGE_ERROR_GD_OPEN_FAILED;
 
-        if (!imagefilter($src_im, IMG_FILTER_GRAYSCALE)) 
+        if (!imagefilter($src_im, IMG_FILTER_GRAYSCALE))
             return IMAGE_ERROR_GD_FILTER_ERROR;
 
         $writeResult = $this->_writeImageGD ($src_im, $sDstImage, $size[2]);
@@ -207,8 +222,8 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
         return IMAGE_ERROR_GD_WRITE_FAILED;
     }
 
-    function _grayscaleImageMagick ($sSrcImage, $sDstImage) {
-
+    function _grayscaleImageMagick ($sSrcImage, $sDstImage)
+    {
         $cmd = "{$GLOBALS['CONVERT']} \"$sSrcImage\" -type Grayscale -quantize Gray \"$sDstImage\"";
         @exec( $cmd );
 
@@ -218,7 +233,8 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
         return IMAGE_ERROR_IMAGEMAGICK_ERROR;
     }
 
-    function _resize ($sSrcImage, $sDstImage = '') {
+    function _resize ($sSrcImage, $sDstImage = '')
+    {
         if (!file_exists($sSrcImage))
             return IMAGE_ERROR_SOURCE_NOT_EXISTS;
 
@@ -232,8 +248,8 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
         return $this->_isUseGD ? $this->_resizeGD ($sSrcImage, $sDstImage) : $this->_resizeImageMagick ($sSrcImage, $sDstImage);
     }
 
-    function _resizeGD ($sSrcImage, $sDstImage) {
-
+    function _resizeGD ($sSrcImage, $sDstImage)
+    {
         $iErr = 0;
         $src_im =& $this->_createGDImage($sSrcImage, $size, $iErr);
         $sizeOrig = $size;
@@ -310,29 +326,22 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
         }
 
         // this is more qualitative function, but it doesn't exist in old GD and doesn't support GIF format
-        if ( function_exists( 'imagecreatetruecolor' ) && $size[2] != IMAGE_TYPE_GIF )
-        {
+        if ( function_exists( 'imagecreatetruecolor' ) && $size[2] != IMAGE_TYPE_GIF ) {
             // resize only if size is larger than needed
-            if ( $this->_isCrop || $sizeOrig[0] > $this->w || $sizeOrig[1] > $this->h )
-            {
+            if ( $this->_isCrop || $sizeOrig[0] > $this->w || $sizeOrig[1] > $this->h ) {
                 $dst_im = imagecreatetruecolor( $destW, $destH );
                 imagecolortransparent($dst_im, imagecolorallocate($dst_im, 0, 0, 0));
                 imagealphablending($dst_im, false);
                 imagesavealpha($dst_im, true);
                 $convertResult = imagecopyresampled( $dst_im, $src_im, $xd, $yd, $xs, $ys,
                     $destW, $destH, $size[0], $size[1] );
-            }
-            else
-            {
+            } else {
                 $dst_im = $src_im;
                 $convertResult = true;
             }
-        }
-        else // this is for old GD versions and for GIF images
-        {
+        } else { // this is for old GD versions and for GIF images
             // resize only if size is larger than needed
-            if ( $size[0] > $this->w || $size[1] > $this->h )
-            {
+            if ( $size[0] > $this->w || $size[1] > $this->h ) {
                 $dst_im = imagecreate( $destW, $destH );
                 if ($size[2] == IMAGE_TYPE_GIF) {
                     ImageColorTransparent( $dst_im, imagecolorallocate($dst_im, 0, 0, 0) );
@@ -340,9 +349,7 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
                 }
                 $convertResult = imagecopyresized( $dst_im, $src_im, $xd, $yd, $xs, $ys,
                     $destW, $destH, $size[0], $size[1] );
-            }
-            else
-            {
+            } else {
                 $dst_im = $src_im;
                 $convertResult = true;
             }
@@ -354,13 +361,10 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
         $writeResult = $this->_writeImageGD ($dst_im, $sDstImage, $size[2]);
 
         // free memory
-        if ( $dst_im != $src_im )
-        {
+        if ( $dst_im != $src_im ) {
             imagedestroy( $src_im );
             imagedestroy( $dst_im );
-        }
-        else
-        {
+        } else {
             imagedestroy( $src_im );
         }
 
@@ -370,19 +374,16 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
         return IMAGE_ERROR_GD_WRITE_FAILED;
     }
 
-    function _resizeImageMagick ($sSrcImage, $sDstImage) {
-
+    function _resizeImageMagick ($sSrcImage, $sDstImage)
+    {
         // TODO: $this->_isCrop and $this->_isSquareResize
-        if ( $sSrcImage == $sDstImage )
-        {
+        if ( $sSrcImage == $sDstImage ) {
             $cmd = "{$GLOBALS['MOGRIFY']} -geometry {$this->w}\">\"x{$this->h}\">\" \"$sSrcImage\"";
             @exec( $cmd );
             $nameWithoutExt = substr( $sSrcImage, 0, strrpos($sSrcImage, '.') );
             if ( file_exists( "{$nameWithoutExt}.mgk" ) )
                 rename( "{$nameWithoutExt}.mgk", $sSrcImage );
-        }
-        else
-        {
+        } else {
             $cmd = "{$GLOBALS['CONVERT']} \"$sSrcImage\" -geometry {$this->w}\">\"x{$this->h}\">\" \"$sDstImage\"";
             @exec( $cmd );
         }
@@ -392,7 +393,6 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
 
         return IMAGE_ERROR_IMAGEMAGICK_ERROR;
     }
-
 
     function _applyWatermark( $srcFilename, $dstFilename, $wtrFilename, $wtrTransparency )
     {
@@ -411,18 +411,15 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
         if ( $srcFilename == $dstFilename )
             chmod( $dstFilename, 0666 );
 
-        if ( $this->_isUseGD )
-        {
+        if ( $this->_isUseGD ) {
             return $this->_applyWatermarkGD($srcFilename, $dstFilename, $wtrFilename, $wtrTransparency);
-        }
-        else
-        {
+        } else {
             return $this->_applyWatermarkImageMagick($srcFilename, $dstFilename, $wtrFilename, $wtrTransparency);
         }
     }
 
-    function _applyWatermarkGD($srcFilename, $dstFilename, $wtrFilename, $wtrTransparency) {
-
+    function _applyWatermarkGD($srcFilename, $dstFilename, $wtrFilename, $wtrTransparency)
+    {
         $iErr = 0;
 
         $src_im =& $this->_createGDImage($srcFilename, $size, $iErr);
@@ -450,7 +447,6 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
         if (!$copyResult)
             return IMAGE_ERROR_GD_MERGE_ERROR;
 
-
         imagealphablending($wtr_im, false);
         imagesavealpha($wtr_im, true);
 
@@ -462,8 +458,7 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
         if ( !$mergeResult )
             return IMAGE_ERROR_GD_MERGE_ERROR;
 
-        switch ( $size[2] )
-        {
+        switch ( $size[2] ) {
             case IMAGE_TYPE_GIF:
                 $writeResult = imagegif( $dst_im, $dstFilename );
                 break;
@@ -486,10 +481,8 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
             return IMAGE_ERROR_GD_WRITE_FAILED;
     }
 
-
-
-    function _applyWatermarkImageMagick($srcFilename, $dstFilename, $wtrFilename, $wtrTransparency) {
-
+    function _applyWatermarkImageMagick($srcFilename, $dstFilename, $wtrFilename, $wtrTransparency)
+    {
         $imgTransparency = 100 - $wtrTransparency;
         $cmd = "{$GLOBALS['COMPOSITE']} -gravity \"South\" -dissolve \"$imgTransparency\" \"$wtrFilename\" -dissolve $wtrTransparency \"$srcFilename\" \"$dstFilename\"";
         @exec( $cmd );
@@ -508,8 +501,7 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
         $aSize = getimagesize($s);
 
         // only GIF, JPG and PNG allowed
-        switch ( $aSize[2] )
-        {
+        switch ( $aSize[2] ) {
             case IMAGE_TYPE_GIF:
                 if (!isset($this->gdInfoArray['GIF Read Support']) || !$this->gdInfoArray['GIF Read Support'] || !isset($this->gdInfoArray['GIF Create Support']) || !$this->gdInfoArray['GIF Create Support'])
                     return ($iErr = IMAGE_ERROR_GD_TYPE_NOT_SUPPORTED);
@@ -530,8 +522,8 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton {
         }
     }
 
-    function _writeImageGD ($src_im, $sDstImage, $iSrcImageType) {
-
+    function _writeImageGD ($src_im, $sDstImage, $iSrcImageType)
+    {
         $writeResult = false;
 
         switch ($this->_iForceOutputType){

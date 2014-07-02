@@ -12,10 +12,10 @@ bx_import('BxDolDb');
 /**
  * All queries related to profiles
  */
-class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton {
-
-    public function __construct() {
-
+class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
+{
+    public function __construct()
+    {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
@@ -25,7 +25,8 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton {
     /**
      * Prevent cloning the instance
      */
-    public function __clone() {
+    public function __clone()
+    {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error('Clone is not allowed for the class: ' . get_class($this), E_USER_ERROR);
     }
@@ -33,7 +34,8 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton {
     /**
      * Get singleton instance of the class
      */
-    public static function getInstance() {
+    public static function getInstance()
+    {
         if(!isset($GLOBALS['bxDolClasses'][__CLASS__]))
             $GLOBALS['bxDolClasses'][__CLASS__] = new BxDolProfileQuery();
 
@@ -42,30 +44,33 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton {
 
     /**
      * Get all account profiles.
-     * @param string $iAccountId account id
+     * @param  string  $iAccountId account id
      * @return profile array
      */
-    public function getProfilesByAccount ($iAccountId) {
+    public function getProfilesByAccount ($iAccountId)
+    {
         $sSql = $this->prepare("SELECT * FROM `sys_profiles` WHERE `account_id` = ?", $iAccountId);
         return $this->getAllWithKey($sSql, 'id');
     }
 
     /**
      * Get profile by content id, type and account.
-     * @param string $iAccountId account id
-     * @return array if aprofile ids, key is profile id
+     * @param  string $iAccountId account id
+     * @return array  if aprofile ids, key is profile id
      */
-    public function getProfileByContentTypeAccount ($iContentId, $sType, $iAccountId) {
+    public function getProfileByContentTypeAccount ($iContentId, $sType, $iAccountId)
+    {
         $sSql = $this->prepare("SELECT * FROM `sys_profiles` WHERE `account_id` = ? AND `type` = ? AND `content_id` = ?", $iAccountId, $sType, $iContentId);
         return $this->getRow($sSql);
     }
 
     /**
      * Get profile by content id and type.
-     * @param string $iAccountId account id
-     * @return array if aprofile ids, key is profile id
+     * @param  string $iAccountId account id
+     * @return array  if aprofile ids, key is profile id
      */
-    public function getProfileByContentAndType ($iContentId, $sType) {
+    public function getProfileByContentAndType ($iContentId, $sType)
+    {
         $sSql = $this->prepare("SELECT * FROM `sys_profiles` WHERE `content_id` = ? AND `type` = ?", $iContentId, $sType);
         return $this->getRow($sSql);
     }
@@ -78,7 +83,8 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton {
      * @param $sType profile content type
      * @return inserted profile's id
      */
-    public function insertProfile ($iAccountId, $iContentId, $sStatus, $sType = 'system') {
+    public function insertProfile ($iAccountId, $iContentId, $sStatus, $sType = 'system')
+    {
         $sSql = $this->prepare("INSERT INTO `sys_profiles` SET `account_id` = ?, `type` = ?, `content_id` = ?, `status` = ?", $iAccountId, $sType, $iContentId, $sStatus);
         if (!$this->query($sSql))
             return false;
@@ -93,24 +99,26 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton {
      * @param $sStatus profile status
      * @return true on success or false otherwise
      */
-    public function changeStatus ($iProfileId, $sStatus) {
+    public function changeStatus ($iProfileId, $sStatus)
+    {
         return $this->_updateField ($iProfileId, 'status', $sStatus);
     }
 
     /**
      * Get current account profile.
-     * @param string $iAccountId account id
+     * @param  string  $iAccountId account id
      * @return current account's profile id
      */
-    public function getCurrentProfileByAccount ($iAccountId) {
-        $sSql = $this->prepare("SELECT `profile_id` FROM `sys_accounts` WHERE `id` = ? LIMIT 1", $iAccountId);        
+    public function getCurrentProfileByAccount ($iAccountId)
+    {
+        $sSql = $this->prepare("SELECT `profile_id` FROM `sys_accounts` WHERE `id` = ? LIMIT 1", $iAccountId);
         $iProfileId = $this->getOne($sSql);
         if (!$iProfileId) {
             $sSql = $this->prepare("SELECT `id` FROM `sys_profiles` WHERE `account_id` = ? LIMIT 1", $iAccountId);
             $iProfileId = $this->getOne($sSql);
             if (!$iProfileId)
                 return false;
-            
+
             bx_import('BxDolAccountQuery');
             if (!BxDolAccountQuery::getInstance()->updateCurrentProfile($iAccountId, $iProfileId))
                 return false;
@@ -122,11 +130,12 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton {
      * Get profile by specified field name and value.
      * It is for internal usage only.
      * Use other funtions to get profile info, like getInfoById, etc.
-     * @param string $sField database field name
-     * @param mixed $sValue database field value
-     * @return array with porfile info
+     * @param  string $sField database field name
+     * @param  mixed  $sValue database field value
+     * @return array  with porfile info
      */
-    protected function _getDataByField ($sField, $sValue) {
+    protected function _getDataByField ($sField, $sValue)
+    {
         $sSql = $this->prepare("SELECT * FROM `sys_profiles` WHERE `$sField` = ? LIMIT 1", $sValue);
         return $this->getRow($sSql);
     }
@@ -134,22 +143,25 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton {
     /**
      * get profile id by id
      */
-    public function getIdById($iId) {
+    public function getIdById($iId)
+    {
         return (int)$this->_getFieldByField('id', 'id', $iId);
     }
 
     /**
-     * get account info by profile id 
+     * get account info by profile id
      */
-    public function getAccountInfoByProfileId($iId) {
+    public function getAccountInfoByProfileId($iId)
+    {
         $sSql = $this->prepare("SELECT `a`.* FROM `sys_accounts` AS `a` INNER JOIN `sys_profiles` AS `p` ON (`p`.`account_id` = `a`.`id`) WHERE `p`.`id` = ? LIMIT 1", $iId);
-        return $this->getRow($sSql);        
+        return $this->getRow($sSql);
     }
 
     /**
-     * get account email by profile id 
+     * get account email by profile id
      */
-    public function getEmailById($iId) {
+    public function getEmailById($iId)
+    {
         $a = $this->getAccountInfoByProfileId($iId);
         if (!$a || empty($a['email']))
             return false;
@@ -158,10 +170,11 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton {
 
     /**
      * Get profile info by id
-     * @param int $iID profile id
+     * @param  int   $iID profile id
      * @return array with profile info
      */
-    public function getInfoById( $iID )    {
+    public function getInfoById( $iID )
+    {
         return $this->_getDataByField('id', (int)$iID);
     }
 
@@ -169,12 +182,13 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton {
      * Get profile field by specified field name and value.
      * In most cases it is for internal usage only.
      * Use other funtions to get profile info, like getIdByEmail, etc.
-     * @param string $sFieldRequested database field name to return
-     * @param string $sFieldSearch database field name to search for
-     * @param mixed $sValue database field value
+     * @param  string    $sFieldRequested database field name to return
+     * @param  string    $sFieldSearch    database field name to search for
+     * @param  mixed     $sValue          database field value
      * @return specified profile field value
      */
-    protected function _getFieldByField ($sFieldRequested, $sFieldSearch, $sValue) {
+    protected function _getFieldByField ($sFieldRequested, $sFieldSearch, $sValue)
+    {
         $sSql = $this->prepare("SELECT `$sFieldRequested` FROM `sys_profiles` WHERE `$sFieldSearch` = ? LIMIT 1", $sValue);
         return $this->getOne($sSql);
     }
@@ -183,22 +197,24 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton {
      * Update some field by profile id
      * In most cases it is for internal usage only.
      * Use other funtions to get profile info, like updateLogged, etc.
-     * @param string $sFieldRequested database field name to return
-     * @param string $sFieldSearch database field name to search for
-     * @param mixed $sValue database field value
+     * @param  string    $sFieldRequested database field name to return
+     * @param  string    $sFieldSearch    database field name to search for
+     * @param  mixed     $sValue          database field value
      * @return specified profile field value
      */
-    protected function _updateField ($iId, $sFieldForUpdate, $sValue) {
+    protected function _updateField ($iId, $sFieldForUpdate, $sValue)
+    {
         $sSql = $this->prepare("UPDATE `sys_profiles` SET `$sFieldForUpdate` = ? WHERE `id` = ? LIMIT 1", $sValue, $iId);
         return $this->query($sSql);
     }
 
     /**
      * Delete profile info by id
-     * @param int $iID profile id
+     * @param  int      $iID profile id
      * @return affected rows
      */
-    public function delete($iID) {
+    public function delete($iID)
+    {
         $sSql = $this->prepare("DELETE FROM `sys_profiles` WHERE `id` = ? LIMIT 1", $iID);
         return $this->query($sSql);
     }

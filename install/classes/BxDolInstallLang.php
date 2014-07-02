@@ -13,7 +13,7 @@ class BxDolInstallLang
     protected $_sLang;
     protected $_oModulesTools;
 
-    public function __construct($sLang) 
+    public function __construct($sLang)
     {
         $this->_oModulesTools = new BxDolInstallModulesTools();
         if (!$sLang)
@@ -29,14 +29,15 @@ class BxDolInstallLang
         $this->_aLang = $this->_oModulesTools->readLanguage($aModuleConfig);
     }
 
-    static function getInstance($sLang = '') {
+    static function getInstance($sLang = '')
+    {
         if (!isset($GLOBALS['bxDolClasses'][__CLASS__]))
             $GLOBALS['bxDolClasses'][__CLASS__] = new BxDolInstallLang($sLang);
 
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
 
-    public function _t ($sKey) 
+    public function _t ($sKey)
     {
         $sKey = func_get_arg(0);
         if (isset($this->_aLang[$sKey])) {
@@ -51,8 +52,9 @@ class BxDolInstallLang
 
         return $sKey;
     }
-   
-    public function getAvailableLanguages () {
+
+    public function getAvailableLanguages ()
+    {
         $aRet = array();
         $aModules = $this->_oModulesTools->getModules('language');
         foreach ($aModules as $aModuleConfig)
@@ -78,7 +80,8 @@ if (!function_exists('_t')) {
 
     BxDolInstallLang::getInstance($sLang);
 
-    function _t() {
+    function _t()
+    {
         return call_user_func_array(array(BxDolInstallLang::getInstance(), '_t'), func_get_args());
     }
 }

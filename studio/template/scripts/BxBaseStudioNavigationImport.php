@@ -10,14 +10,17 @@
 
 bx_import('BxDolStudioNavigationImport');
 
-class BxBaseStudioNavigationImport extends BxDolStudioNavigationImport { 
-    function __construct($aOptions, $oTemplate = false) {
+class BxBaseStudioNavigationImport extends BxDolStudioNavigationImport
+{
+    function __construct($aOptions, $oTemplate = false)
+    {
         parent::__construct($aOptions, $oTemplate);
 
         $this->_aOptions['actions_single']['import']['attr']['title'] = _t('_adm_nav_btn_items_import');
     }
 
-    public function performActionImport() {
+    public function performActionImport()
+    {
         $iAffected = 0;
         $aIds = bx_get('ids');
         if(!$aIds || !is_array($aIds)) {
@@ -72,20 +75,22 @@ class BxBaseStudioNavigationImport extends BxDolStudioNavigationImport {
             $oGrid = BxDolGrid::getObjectInstance('sys_studio_nav_items');
             if($oGrid !== false)
                 $aResult = array(
-                	'parent_grid' => $oGrid->getCode(false), 
-                	'parent_blink' => $aIdsAdded, 
-                	'disable' => $aIdsImported, 
-                	'eval' => $this->getJsObject() . '.onImport(oData)'
+                    'parent_grid' => $oGrid->getCode(false),
+                    'parent_blink' => $aIdsAdded,
+                    'disable' => $aIdsImported,
+                    'eval' => $this->getJsObject() . '.onImport(oData)'
                 );
         }
         $this->_echoResultJson($aResult);
     }
 
-    function getJsObject() {
+    function getJsObject()
+    {
         return 'oBxDolStudioNavigationImport';
     }
 
-    function getCode($isDisplayHeader = true) {
+    function getCode($isDisplayHeader = true)
+    {
         return $this->_oTemplate->parseHtmlByName('nav_import.html', array(
             'content' => parent::getCode($isDisplayHeader),
             'js_object' => $this->getJsObject(),
@@ -94,22 +99,26 @@ class BxBaseStudioNavigationImport extends BxDolStudioNavigationImport {
         ));
     }
 
-    protected function _getCellIcon ($mixedValue, $sKey, $aField, $aRow) {        
+    protected function _getCellIcon ($mixedValue, $sKey, $aField, $aRow)
+    {
         $mixedValue = $this->_oTemplate->getIcon($mixedValue, array('class' => 'bx-nav-item-icon bx-def-border'));
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 
-    protected function _getCellModule($mixedValue, $sKey, $aField, $aRow) {
+    protected function _getCellModule($mixedValue, $sKey, $aField, $aRow)
+    {
         $mixedValue = $this->_limitMaxLength($this->getModuleTitle($aRow['module']), $sKey, $aField, $aRow, $this->_isDisplayPopupOnTextOverflow);
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 
-    protected function _getActionDone ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array()) {
+    protected function _getActionDone ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
         $a['attr']['onclick'] = "$('.bx-popup-applied:visible').dolPopupHide()";
         return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
     }
 
-    protected function _getFilterControls () {
+    protected function _getFilterControls ()
+    {
         parent::_getFilterControls();
 
         bx_import('BxTemplStudioFormView');
@@ -120,7 +129,7 @@ class BxBaseStudioNavigationImport extends BxDolStudioNavigationImport {
             'name' => 'set',
             'attrs' => array(
                 'id' => 'bx-grid-set-' . $this->_sObject,
-            	'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeFilter()'
+                'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeFilter()'
             ),
             'value' => '',
             'values' => array()

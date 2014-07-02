@@ -9,8 +9,10 @@
 
 bx_import('BxDolStudioModulesQuery');
 
-class BxDolStudioStoreQuery extends BxDolStudioModulesQuery {
-    function __construct() {
+class BxDolStudioStoreQuery extends BxDolStudioModulesQuery
+{
+    function __construct()
+    {
         parent::__construct();
     }
 }

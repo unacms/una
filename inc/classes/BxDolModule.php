@@ -39,7 +39,8 @@
  * no alerts available
  *
  */
-class BxDolModule extends BxDol {
+class BxDolModule extends BxDol
+{
     public $_aModule;
     public $_oDb;
     public $_oTemplate;
@@ -48,7 +49,8 @@ class BxDolModule extends BxDol {
     /**
      * constructor
      */
-    function __construct($aModule) {
+    function __construct($aModule)
+    {
         parent::__construct();
 
         $this->_aModule = $aModule;
@@ -75,7 +77,8 @@ class BxDolModule extends BxDol {
      *
      * @param $sName module name.
      */
-    public static function getInstance($sName) {
+    public static function getInstance($sName)
+    {
         if (empty($sName))
             return null;
 
@@ -107,18 +110,21 @@ class BxDolModule extends BxDol {
         }
     }
 
-    public static function getTitle($sUri) {
+    public static function getTitle($sUri)
+    {
         return _t(self::getTitleKey($sUri));
     }
 
-    public static function getTitleKey($sUri) {
+    public static function getTitleKey($sUri)
+    {
         return '_sys_module_' . strtolower(str_replace(' ', '_', $sUri));
     }
 
-	/**
+    /**
      * get module name
      */
-    function getName() {
+    function getName()
+    {
         return $this->_aModule['name'];
     }
 
@@ -127,7 +133,8 @@ class BxDolModule extends BxDol {
      *
      * @return boolean result of operation.
      */
-    public function isLogged() {
+    public function isLogged()
+    {
         return isLogged();
     }
 
@@ -136,7 +143,8 @@ class BxDolModule extends BxDol {
      *
      * @return integer user ID.
      */
-    public function getUserId() {
+    public function getUserId()
+    {
         return getLoggedId();
     }
 
@@ -145,7 +153,8 @@ class BxDolModule extends BxDol {
      *
      * @return string user password.
      */
-    public function getUserPassword () {
+    public function getUserPassword ()
+    {
         return getLoggedPassword();
     }
 }

@@ -30,17 +30,17 @@ bx_import('BxDolRequest');
  * no alerts available
  *
  */
-class BxDolService extends BxDol 
+class BxDolService extends BxDol
 {
     /**
      * Perform serice call
      * @param $mixed module name or module id
      * @param $sMethod service method name in format 'method_name', corresponding class metod is serviceMethodName
      * @param $aParams params to pass to service method
-     * @param $sClass class to search for service method, by default it is main module class 
+     * @param $sClass class to search for service method, by default it is main module class
      * @return service call result
      */
-    public static function call($mixed, $sMethod, $aParams = array(), $sClass = 'Module') 
+    public static function call($mixed, $sMethod, $aParams = array(), $sClass = 'Module')
     {
         bx_import('BxDolModuleQuery');
         $oDb = BxDolModuleQuery::getInstance();
@@ -70,7 +70,7 @@ class BxDolService extends BxDol
      * @param $sReplaceIn params to pass to service method
      * @return service call result
      */
-    public static function callSerialized($s, $aMarkers = array(), $sReplaceIn = 'params') 
+    public static function callSerialized($s, $aMarkers = array(), $sReplaceIn = 'params')
     {
         $a = @unserialize($s);
         if (false === $a || !is_array($a))
@@ -85,11 +85,10 @@ class BxDolService extends BxDol
     /**
      * Check if string is serialized array
      */
-    public static function isSerializedService($s) 
+    public static function isSerializedService($s)
     {
         return preg_match('/^a:[\d+]:\{/', $s);
     }
 }
 
 /** @} */
-

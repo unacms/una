@@ -12,10 +12,12 @@ bx_import('BxTemplStudioGrid');
 bx_import('BxDolStudioTemplate');
 bx_import('BxDolStudioPermissionsQuery');
 
-class BxDolStudioPermissionsPrices extends BxTemplStudioGrid {
+class BxDolStudioPermissionsPrices extends BxTemplStudioGrid
+{
     protected $iLevel = 0;
 
-    public function __construct ($aOptions, $oTemplate = false) {
+    public function __construct ($aOptions, $oTemplate = false)
+    {
         parent::__construct ($aOptions, $oTemplate);
 
         $this->oDb = new BxDolStudioPermissionsQuery();
@@ -27,9 +29,10 @@ class BxDolStudioPermissionsPrices extends BxTemplStudioGrid {
         $this->_aQueryAppend['level'] = $this->iLevel;
     }
 
-    protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage) {
+    protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
+    {
         $this->_aOptions['source'] .= $this->oDb->prepare("AND `IDLEvel`=? ", $this->iLevel);
-        return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);; 
+        return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);;
     }
 }
 /** @} */

@@ -14,7 +14,7 @@ $sName = bx_process_input(array_shift($GLOBALS['aRequest']));
 bx_import('BxDolModuleQuery');
 $GLOBALS['aModule'] = BxDolModuleQuery::getInstance()->getModuleByUri($sName);
 
-if (empty($GLOBALS['aModule'])) {    
+if (empty($GLOBALS['aModule'])) {
     require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
     BxDolRequest::moduleNotFound($sName);
 }

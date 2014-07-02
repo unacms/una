@@ -7,7 +7,7 @@
  * @{
  */
 
-/** 
+/**
  * @page samples
  * @section permalinks Permalinks
  */
@@ -25,13 +25,12 @@ $oTemplate->setPageHeader ("Permalinks");
 $oTemplate->setPageContent ('page_main_code', PageCompMainCode());
 $oTemplate->getPageCode();
 
-
 /**
  * page code function
  */
-function PageCompMainCode() {
-
-    ob_start();    
+function PageCompMainCode()
+{
+    ob_start();
 
     bx_import('BxDolPermalinks');
     $oPermalinks = BxDolPermalinks::getInstance();
@@ -57,6 +56,5 @@ function PageCompMainCode() {
 
     return DesignBoxContent("Permalinks", ob_get_clean(), BX_DB_PADDING_DEF);
 }
-
 
 /** @} */

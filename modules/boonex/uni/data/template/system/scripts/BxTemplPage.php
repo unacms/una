@@ -12,9 +12,10 @@ bx_import('BxBasePage');
 /**
  * @see BxDolPage
  */
-class BxTemplPage extends BxBasePage {
-
-    public function __construct ($aObject, $oTemplate = false) {
+class BxTemplPage extends BxBasePage
+{
+    public function __construct ($aObject, $oTemplate = false)
+    {
         parent::__construct ($aObject, $oTemplate);
     }
 }

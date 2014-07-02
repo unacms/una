@@ -10,20 +10,23 @@
 /**
  * System services related to Comments.
  */
-class BxBaseCmtsServices extends BxDol {
-    public function __construct() {
+class BxBaseCmtsServices extends BxDol
+{
+    public function __construct()
+    {
         parent::__construct();
     }
 
-    public function serviceGetMenuItemAddonVote($sSystem, $iId, $iCmtId) {
-    	bx_import('BxDolCmts');
-    	$oCmts = BxDolCmts::getObjectInstance($sSystem, $iId);
+    public function serviceGetMenuItemAddonVote($sSystem, $iId, $iCmtId)
+    {
+        bx_import('BxDolCmts');
+        $oCmts = BxDolCmts::getObjectInstance($sSystem, $iId);
 
-    	$oVote = $oCmts->getVoteObject($iCmtId);
-    	if($oVote !== false)
-    		return $oVote->getCounter();
+        $oVote = $oCmts->getVoteObject($iCmtId);
+        if($oVote !== false)
+            return $oVote->getCounter();
 
-    	return '';
+        return '';
     }
 }
 

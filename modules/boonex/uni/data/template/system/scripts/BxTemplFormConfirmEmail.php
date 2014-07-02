@@ -12,8 +12,10 @@ bx_import('BxBaseFormConfirmEmail');
 /**
  * @see BxBaseFormConfirmEmail
  */
-class BxTemplFormConfirmEmail extends BxBaseFormConfirmEmail {
-    public function __construct($aInfo, $oTemplate = false) {
+class BxTemplFormConfirmEmail extends BxBaseFormConfirmEmail
+{
+    public function __construct($aInfo, $oTemplate = false)
+    {
         parent::__construct($aInfo, $oTemplate);
     }
 }

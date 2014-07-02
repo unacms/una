@@ -13,17 +13,20 @@ bx_import('BxDolStudioPolyglotQuery');
 
 define('BX_DOL_STUDIO_PK_PREVIEW', 100);
 
-class BxDolStudioPolyglotKeys extends BxTemplStudioGrid {
+class BxDolStudioPolyglotKeys extends BxTemplStudioGrid
+{
     protected $iPreviewLength;
 
-    public function __construct ($aOptions, $oTemplate = false) {
+    public function __construct ($aOptions, $oTemplate = false)
+    {
         parent::__construct ($aOptions, $oTemplate);
 
         $this->oDb = new BxDolStudioPolyglotQuery();
         $this->iPreviewLength = BX_DOL_STUDIO_PK_PREVIEW;
     }
 
-    protected function add(&$oForm) {
+    protected function add(&$oForm)
+    {
         $sKey = $oForm->getCleanValue('key');
         $iCategoryId = (int)$oForm->getCleanValue('category_id');
         $aLanguages = explode(',', $oForm->getCleanValue('languages'));
@@ -42,7 +45,8 @@ class BxDolStudioPolyglotKeys extends BxTemplStudioGrid {
 
         return $mixedResult;
     }
-    protected function edit(&$oForm) {
+    protected function edit(&$oForm)
+    {
         $iId = $oForm->getCleanValue('id');
         $aLanguages = explode(',', $oForm->getCleanValue('languages'));
 
@@ -60,7 +64,8 @@ class BxDolStudioPolyglotKeys extends BxTemplStudioGrid {
         return $iId;
     }
 
-    protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage) {
+    protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
+    {
         $iModule = 0;
         if(strpos($sFilter, $this->sParamsDivider) !== false)
             list($iModule, $sFilter) = explode($this->sParamsDivider, $sFilter);

@@ -10,21 +10,24 @@
 
 bx_import('BxDolStudioGrid');
 
-class BxBaseStudioGrid extends BxDolStudioGrid {
-    function __construct($aOptions, $oTemplate = false) {
+class BxBaseStudioGrid extends BxDolStudioGrid
+{
+    function __construct($aOptions, $oTemplate = false)
+    {
         parent::__construct($aOptions, $oTemplate);
     }
 
-    function getJsObject() {
+    function getJsObject()
+    {
         return '';
     }
 
     public function getModulesSelectOne($sGetItemsMethod, $bShowCustom = true, $bShowSystem = true)
     {
-    	if(empty($sGetItemsMethod))
-    		return '';
+        if(empty($sGetItemsMethod))
+            return '';
 
-    	bx_import('BxTemplStudioFormView');
+        bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
 
         $aInputModules = array(
@@ -32,7 +35,7 @@ class BxBaseStudioGrid extends BxDolStudioGrid {
             'name' => 'module',
             'attrs' => array(
                 'id' => 'bx-grid-module-' . $this->_sObject,
-            	'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeModule()'
+                'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeModule()'
             ),
             'value' => $this->sModule,
             'values' => $this->getModules($bShowCustom, $bShowSystem)
@@ -48,13 +51,13 @@ class BxBaseStudioGrid extends BxDolStudioGrid {
         return $oForm->genRow($aInputModules);
     }
 
-	protected function _getItem($sDbMethod = '')
+    protected function _getItem($sDbMethod = '')
     {
-    	$aIds = bx_get('ids');
+        $aIds = bx_get('ids');
         if(!$aIds || !is_array($aIds)) {
             $iId = (int)bx_get('id');
-            if(!$iId) 
-            	return false;
+            if(!$iId)
+                return false;
 
             $aIds = array($iId);
         }
@@ -64,7 +67,7 @@ class BxBaseStudioGrid extends BxDolStudioGrid {
         $aItem = array();
         $this->oDb->$sDbMethod(array('type' => 'by_id', 'value' => $iId), $aItem, false);
         if(!is_array($aItem) || empty($aItem))
-        	return false;
+            return false;
 
         return $aItem;
     }

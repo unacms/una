@@ -1,8 +1,8 @@
-<?php 
+<?php
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Uni Uni template
  * @ingroup     DolphinModules
  *
@@ -14,7 +14,7 @@ $aConfig = array(
      * Main Section.
      */
     'type' => BX_DOL_MODULE_TYPE_TEMPLATE,
-	'name' => 'bx_uni',
+    'name' => 'bx_uni',
     'title' => 'UNI',
     'note' => 'Design template',
     'version' => '1.0.6',

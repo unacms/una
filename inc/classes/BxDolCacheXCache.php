@@ -9,18 +9,18 @@
 
 bx_import('BxDolCache');
 
-class BxDolCacheXCache extends BxDolCache 
+class BxDolCacheXCache extends BxDolCache
 {
     protected $iTTL = 3600;
 
     /**
      * Get data from shared memory cache
      *
-     * @param string $sKey - file name
-     * @param int $iTTL - time to live
-     * @return the data is got from cache.
+     * @param  string $sKey - file name
+     * @param  int    $iTTL - time to live
+     * @return the    data is got from cache.
      */
-    function getData($sKey, $iTTL = false) 
+    function getData($sKey, $iTTL = false)
     {
         if (!xcache_isset($sKey))
             return null;
@@ -31,12 +31,12 @@ class BxDolCacheXCache extends BxDolCache
     /**
      * Save data in shared memory cache
      *
-     * @param string $sKey - file name
-     * @param mixed $mixedData - the data to be cached in the file
-     * @param int $iTTL - time to live
+     * @param  string  $sKey      - file name
+     * @param  mixed   $mixedData - the data to be cached in the file
+     * @param  int     $iTTL      - time to live
      * @return boolean result of operation.
      */
-    function setData($sKey, $mixedData, $iTTL = false) 
+    function setData($sKey, $mixedData, $iTTL = false)
     {
         $bResult = xcache_set($sKey, $mixedData, false === $iTTL ? $this->iTTL : $iTTL);
         return $bResult;
@@ -45,10 +45,10 @@ class BxDolCacheXCache extends BxDolCache
     /**
      * Delete cache from shared memory
      *
-     * @param string $sKey - file name
+     * @param  string $sKey - file name
      * @return result of the operation
      */
-    function delData($sKey) 
+    function delData($sKey)
     {
         if (!xcache_isset($sKey))
             return true;
@@ -60,7 +60,7 @@ class BxDolCacheXCache extends BxDolCache
      * Check if xcache functions are available
      * @return boolean
      */
-    function isAvailable() 
+    function isAvailable()
     {
         return extension_loaded('xcache');
     }
@@ -69,7 +69,7 @@ class BxDolCacheXCache extends BxDolCache
      * Check if xcache extension is loaded
      * @return boolean
      */
-    function isInstalled() 
+    function isInstalled()
     {
         return extension_loaded('xcache');
     }
@@ -78,11 +78,10 @@ class BxDolCacheXCache extends BxDolCache
      * remove all data from cache by key prefix
      * @return true on success
      */
-    function removeAllByPrefix ($s) 
+    function removeAllByPrefix ($s)
     {
         return xcache_unset_by_prefix ($s);
     }
 }
 
 /** @} */
-

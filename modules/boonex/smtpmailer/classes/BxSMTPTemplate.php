@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    SMTPMailer SMTP Mailer
  * @ingroup     DolphinModules
  *
@@ -11,12 +11,12 @@
 
 bx_import ('BxDolModuleTemplate');
 
-class BxSMTPTemplate extends BxDolModuleTemplate 
-{    
-	function __construct(&$oConfig, &$oDb) 
+class BxSMTPTemplate extends BxDolModuleTemplate
+{
+    function __construct(&$oConfig, &$oDb)
     {
-	    parent::__construct($oConfig, $oDb);
-    }    
+        parent::__construct($oConfig, $oDb);
+    }
 }
 
 /** @} */

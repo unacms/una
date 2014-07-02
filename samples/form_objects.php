@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
@@ -7,7 +7,7 @@
  * @{
  */
 
-/** 
+/**
  * @page samples
  * @section form Form
  */
@@ -33,10 +33,10 @@ $oTemplate->getPageCode();
 /**
  * page code function
  */
-function PageCompMainCode() {
-
+function PageCompMainCode()
+{
     // get database object
-    $oDb = BxDolDb::getInstance();    
+    $oDb = BxDolDb::getInstance();
 
     // get id of edited data
     $iEditId = bx_process_input(bx_get('id'), BX_DATA_INT);
@@ -46,7 +46,7 @@ function PageCompMainCode() {
     ob_start();
 
     echo '<a href="' . BX_DOL_URL_ROOT . 'samples/form_objects.php">Add new</a> or edit:<hr class="bx-def-hr" />';
-    
+
     $a = $oDb->getAllWithKey("SELECT * FROM `sample_input_types`", 'id');
     foreach ($a as $r) {
         if ($iEditId == $r['id'])
@@ -56,7 +56,7 @@ function PageCompMainCode() {
     }
 
     $ss = ob_get_clean();
-    ob_start();    
+    ob_start();
 
     if ($iEditId) {
 
@@ -68,11 +68,11 @@ function PageCompMainCode() {
         $oForm->initChecker($a[$iEditId]); // init form checker with edited data
         if ($oForm->isSubmittedAndValid()) {
             if ($oForm->update ($iEditId)) // update database
-                echo MsgBox('Data has been updated'); 
+                echo MsgBox('Data has been updated');
             else
-                echo MsgBox('Data update failed'); 
+                echo MsgBox('Data update failed');
         } else {
-            echo $oForm->getCode(); // display form 
+            echo $oForm->getCode(); // display form
         }
 
     } else {
@@ -85,16 +85,16 @@ function PageCompMainCode() {
         $oForm->initChecker(); // init form checker witout any data - adding new record
         if ($oForm->isSubmittedAndValid()) {
             if ($oForm->insert ()) // add new record to the database
-                echo MsgBox('Data has been added'); 
+                echo MsgBox('Data has been added');
             else
-                echo MsgBox('Data add failed'); 
+                echo MsgBox('Data add failed');
         } else {
-            echo $oForm->getCode(); // display form 
+            echo $oForm->getCode(); // display form
         }
 
-    }    
+    }
 
-    $s = ob_get_clean();    
+    $s = ob_get_clean();
     return DesignBoxContent("Sample Form Object", $ss, BX_DB_PADDING_DEF) . DesignBoxContent($iEditId ? "Edit" : "Add New", $s, BX_DB_PADDING_DEF);
 }
 

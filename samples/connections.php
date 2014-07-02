@@ -7,16 +7,16 @@
  * @{
  */
 
-/** 
+/**
  * @page samples
  * @section connections Connections
  */
 
 /**
  * This sample uses profile friends as sample connections.
- * 
+ *
  * @section usage $_GET params:
- * 
+ *
  * Display connections:
  * - id: profile ID to display connectiond for
  * - method = array: display connections using array method, just plain list of connections IDs
@@ -25,7 +25,7 @@
  *
  * Generate connections:
  * - action = gen: to generate sample connections for all profiles, by default around ~2 friends for each profile, and around ~1 friend request
- */ 
+ */
 
 require_once('./../inc/header.inc.php');
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
@@ -42,7 +42,8 @@ $oTemplate->getPageCode();
 /**
  * page code function
  */
-function PageCompMainCode() {
+function PageCompMainCode()
+{
     $oDb = BxDolDb::getInstance();
 
     // config: for data generation
@@ -54,14 +55,12 @@ function PageCompMainCode() {
     $sType = 'bx_persons'; // profiles type
     $sObject = 'sys_profiles_friends'; // connections object
 
-
     if ('gen' == bx_get('action') || (isset($_SERVER['argv'][1]) && 'gen' == $_SERVER['argv'][1])) {
         echo "\nConnections Generation:  <br />\n";
         GenerateData($iMutual, $iOneWay, $sTable, $sType, $sObject);
         echo "\nData has been generated";
         exit;
     }
-
 
     ob_start();
 
@@ -99,7 +98,7 @@ function PageCompMainCode() {
 
             echo "<h2>Mutual Content (like Friends)</h2>";
             echoDbg($oConnection->getConnectedContent($iProfileId, 1));
-    
+
             echo "<h2>Connected Content</h2>";
             echoDbg($oConnection->getConnectedContent($iProfileId));
 
@@ -111,13 +110,13 @@ function PageCompMainCode() {
 
             echo "<h2>Connected Initiators without mutual content (like Friend Requests received)</h2>";
             echoDbg($oConnection->getConnectedInitiators($iProfileId, 0));
-            
+
         break;
         case 'sql':
 
             $f = function ($aSQLParts) use ($oDb, $sType) {
                 $sQueryOrig = "
-                    SELECT `p`.`id`, `d`.`fullname` 
+                    SELECT `p`.`id`, `d`.`fullname`
                     FROM `bx_persons_data` AS `d`
                     INNER JOIN `sys_profiles` AS `p` ON (`p`.`content_id` = `d`.`id` AND `p`.`type` = ?)
                     {$aSQLParts['join']}
@@ -134,10 +133,8 @@ function PageCompMainCode() {
             echo "<h2>Mutual Content (like Friends)</h2>";
             $f($oConnection->getConnectedContentAsSQLParts('p', 'id', $iProfileId, 1));
 
-
             echo "<h2>Connected Content</h2>";
             $f($oConnection->getConnectedContentAsSQLParts('p', 'id', $iProfileId));
-
 
             echo "<h2>Connected Initiators</h2>";
             $f($oConnection->getConnectedInitiatorsAsSQLParts('p', 'id', $iProfileId));
@@ -168,7 +165,7 @@ function PageCompMainCode() {
 
             echo "<h2>Connected Initiators without mutual content (like Friend Requests received)</h2>";
             echo BxDolService::call('bx_persons', 'browse_connections', array($iProfileId, 'sys_profiles_friends', 'initiators', 0, BX_DB_CONTENT_ONLY));
-            
+
         break;
     }
 
@@ -176,7 +173,8 @@ function PageCompMainCode() {
     return DesignBoxContent("Connections", $s, BX_DB_PADDING_DEF);
 }
 
-function GenerateData($iMutual = 3, $iOneWay = 1, $sTable, $sType, $sObject) {
+function GenerateData($iMutual = 3, $iOneWay = 1, $sTable, $sType, $sObject)
+{
     $oDb = BxDolDb::getInstance();
 
     bx_import('BxDolConnection');
@@ -213,7 +211,7 @@ function GenerateData($iMutual = 3, $iOneWay = 1, $sTable, $sType, $sObject) {
                 }
             } elseif ($i >= $iMutual) {
                 // one-way
-                if (!$oConnection->isConnected($aProfile['id'], $r['id'])) 
+                if (!$oConnection->isConnected($aProfile['id'], $r['id']))
                     $oConnection->addConnection($aProfile['id'], $r['id']);
             }
 

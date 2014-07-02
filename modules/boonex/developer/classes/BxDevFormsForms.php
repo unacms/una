@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Developer Developer
  * @ingroup     DolphinModules
  *
@@ -12,10 +12,12 @@
 bx_import('BxDolModule');
 bx_import('BxTemplStudioFormsForms');
 
-class BxDevFormsForms extends BxTemplStudioFormsForms {
+class BxDevFormsForms extends BxTemplStudioFormsForms
+{
     protected $oModule;
 
-    function __construct($aOptions, $oTemplate = false) {
+    function __construct($aOptions, $oTemplate = false)
+    {
         parent::__construct($aOptions, $oTemplate);
 
         $this->oModule = BxDolModule::getInstance('bx_developer');
@@ -24,7 +26,8 @@ class BxDevFormsForms extends BxTemplStudioFormsForms {
         $this->_aOptions['actions_single']['export']['attr']['title'] = _t('_bx_dev_frm_btn_forms_gl_export');
     }
 
-    public function performActionAdd() {
+    public function performActionAdd()
+    {
         $sAction = 'add';
 
         bx_import('BxDolForm');
@@ -43,8 +46,7 @@ class BxDevFormsForms extends BxTemplStudioFormsForms {
                 $aRes = array('msg' => _t('_bx_dev_frm_err_forms_create'));
 
             $this->_echoResultJson($aRes, true);
-        }
-        else {
+        } else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-frm-form-create-popup', _t('_bx_dev_frm_txt_forms_create_popup'), $this->oModule->_oTemplate->parseHtmlByName('form_add_form.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
@@ -57,7 +59,8 @@ class BxDevFormsForms extends BxTemplStudioFormsForms {
         }
     }
 
-    public function performActionEdit() {
+    public function performActionEdit()
+    {
         $sAction = 'edit';
 
         $aIds = bx_get('ids');
@@ -105,8 +108,7 @@ class BxDevFormsForms extends BxTemplStudioFormsForms {
                 $aRes = array('msg' => _t('_bx_dev_frm_err_forms_edit'));
 
             $this->_echoResultJson($aRes, true);
-        }
-        else {
+        } else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-frm-form-edit-popup', _t('_bx_dev_frm_txt_forms_edit_popup', _t($aForm['title'])), $this->oModule->_oTemplate->parseHtmlByName('form_add_form.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
@@ -119,10 +121,11 @@ class BxDevFormsForms extends BxTemplStudioFormsForms {
         }
     }
 
-    public function performActionExport() {
+    public function performActionExport()
+    {
         $sContentInsert = $sContentDelete = "";
 
-    	$aForm = $this->_getItem('getForms');
+        $aForm = $this->_getItem('getForms');
         if($aForm === false) {
             $this->_echoResultJson(array());
             exit;
@@ -149,7 +152,7 @@ class BxDevFormsForms extends BxTemplStudioFormsForms {
         $aFormStructure = array(
             'form_attrs' => array(),
             'inputs' => array (
-            	'insert' => array(
+                'insert' => array(
                     'type' => 'textarea',
                     'name' => 'insert',
                     'caption' => _t('_bx_dev_frm_txt_forms_export_insert'),

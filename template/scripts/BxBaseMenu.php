@@ -14,12 +14,13 @@ bx_import('BxDolPaginate');
  * Menu representation.
  * @see BxDolMenu
  */
-class BxBaseMenu extends BxDolMenu {
-
+class BxBaseMenu extends BxDolMenu
+{
     protected $_oTemplate;
     protected $_aOptionalParams = array('target' => '', 'onclick' => '');
 
-    public function __construct ($aObject, $oTemplate) {
+    public function __construct ($aObject, $oTemplate)
+    {
         parent::__construct ($aObject);
 
         if ($oTemplate)
@@ -28,12 +29,12 @@ class BxBaseMenu extends BxDolMenu {
             $this->_oTemplate = BxDolTemplate::getInstance();
     }
 
-    /** 
+    /**
      * Get menu code.
      * @return string
      */
-    public function getCode () {
-
+    public function getCode ()
+    {
         $sMenuTitle = isset($this->_aObject['title']) ? _t($this->_aObject['title']) : 'Menu-' . rand(0, PHP_INT_MAX);
         if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->beginMenu($sMenuTitle);
 
@@ -49,22 +50,24 @@ class BxBaseMenu extends BxDolMenu {
         return $s;
     }
 
-    /** 
+    /**
      * Get template variables array
      * @return array
      */
-    protected function _getTemplateVars () {
+    protected function _getTemplateVars ()
+    {
         return array (
             'object' => $this->_sObject,
             'bx_repeat:menu_items' => $this->getMenuItems (),
         );
     }
 
-    /** 
+    /**
      * Get menu items array, which are ready to pass to template.
      * @return array
      */
-    public function getMenuItems () {
+    public function getMenuItems ()
+    {
         $aRet = array();
         if (!isset($this->_aObject['menu_items']))
             $this->_aObject['menu_items'] = $this->_oQuery->getMenuItems();
@@ -89,24 +92,24 @@ class BxBaseMenu extends BxDolMenu {
             list ($sIcon, $sIconUrl) = $this->_getMenuIcon($a);
 
             $a['class_add'] = $this->_isSelected($a) ? 'bx-menu-tab-active' : '';
-            $a['link'] = isset($a['link']) ? $this->_oPermalinks->permalink($a['link']) : 'javascript:void(0);';            
+            $a['link'] = isset($a['link']) ? $this->_oPermalinks->permalink($a['link']) : 'javascript:void(0);';
             $a['title_attr'] = bx_html_attribute($a['title']);
             $a['bx_if:image'] = array (
                 'condition' => (bool)$sIconUrl,
-                'content' => array('icon_url' => $sIconUrl), 
+                'content' => array('icon_url' => $sIconUrl),
             );
             $a['bx_if:icon'] = array (
                 'condition' => (bool)$sIcon,
-                'content' => array('icon' => $sIcon), 
+                'content' => array('icon' => $sIcon),
             );
             $a['bx_if:title'] = array (
                 'condition' => (bool)$a['title'],
-                'content' => array('title' => $a['title']), 
+                'content' => array('title' => $a['title']),
             );
 
             $a['bx_if:addon'] = array (
                 'condition' => (bool)$mixedAddon,
-                'content' => array('addon' => $mixedAddon), 
+                'content' => array('addon' => $mixedAddon),
             );
 
             foreach ($this->_aOptionalParams as $sName => $sDefaultValue)
@@ -119,7 +122,8 @@ class BxBaseMenu extends BxDolMenu {
         return $aRet;
     }
 
-    protected function _getMenuIcon ($a) {
+    protected function _getMenuIcon ($a)
+    {
         $sIcon = false;
         $sIconUrl = false;
         if (!empty($a['icon'])) {
@@ -137,7 +141,8 @@ class BxBaseMenu extends BxDolMenu {
         return array ($sIcon, $sIconUrl);
     }
 
-    protected function _getMenuAddon ($aMenuItem) {
+    protected function _getMenuAddon ($aMenuItem)
+    {
         if (empty($aMenuItem['addon']))
             return '';
 
@@ -146,8 +151,9 @@ class BxBaseMenu extends BxDolMenu {
 
     /**
      * Add css/js files which are needed for menu display and functionality.
-     */    
-    protected function _addJsCss() {
+     */
+    protected function _addJsCss()
+    {
         $this->_oTemplate->addCss('menu.css');
     }
 

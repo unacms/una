@@ -12,14 +12,15 @@ bx_import('BxDolSessionQuery');
 define('BX_DOL_SESSION_LIFETIME', 3600);
 define('BX_DOL_SESSION_COOKIE', 'memberSession');
 
-class BxDolSession extends BxDol implements iBxDolSingleton {
+class BxDolSession extends BxDol implements iBxDolSingleton
+{
     protected $oDb;
     protected $sId;
     protected $iUserId;
     protected $aData;
 
-    private function __construct() {
-
+    private function __construct()
+    {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
@@ -34,7 +35,8 @@ class BxDolSession extends BxDol implements iBxDolSingleton {
     /**
      * Prevent cloning the instance
      */
-    public function __clone() {
+    public function __clone()
+    {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error('Clone is not allowed for the class: ' . get_class($this), E_USER_ERROR);
     }
@@ -42,7 +44,8 @@ class BxDolSession extends BxDol implements iBxDolSingleton {
     /**
      * Get singleton instance of the class
      */
-    public static function getInstance() {
+    public static function getInstance()
+    {
         if(!isset($GLOBALS['bxDolClasses'][__CLASS__]))
             $GLOBALS['bxDolClasses'][__CLASS__] = new BxDolSession();
 
@@ -52,7 +55,8 @@ class BxDolSession extends BxDol implements iBxDolSingleton {
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
 
-    function start(){
+    function start()
+    {
         if (defined('BX_DOL_CRON_EXECUTE'))
             return true;
 
@@ -69,7 +73,8 @@ class BxDolSession extends BxDol implements iBxDolSingleton {
         return true;
     }
 
-    function destroy() {
+    function destroy()
+    {
         $aUrl = parse_url(BX_DOL_URL_ROOT);
         $sPath = isset($aUrl['path']) && !empty($aUrl['path']) ? $aUrl['path'] : '/';
         setcookie(BX_DOL_SESSION_COOKIE, '', time() - 86400, $sPath, '', false, true);
@@ -82,7 +87,8 @@ class BxDolSession extends BxDol implements iBxDolSingleton {
         $this->aData = array();
     }
 
-    function exists($sId = '') {
+    function exists($sId = '')
+    {
         if(empty($sId) && isset($_COOKIE[BX_DOL_SESSION_COOKIE]))
             $sId = bx_process_input($_COOKIE[BX_DOL_SESSION_COOKIE]);
 
@@ -92,21 +98,23 @@ class BxDolSession extends BxDol implements iBxDolSingleton {
             $this->iUserId = (int)$mixedSession['user_id'];
             $this->aData = unserialize($mixedSession['data']);
             return true;
-        }
-        else
+        } else
             return false;
     }
 
-    function getId() {
+    function getId()
+    {
         return $this->sId;
     }
 
-    function setUserId($iUserId) {
-    	$this->iUserId = $iUserId;
-    	$this->save();
+    function setUserId($iUserId)
+    {
+        $this->iUserId = $iUserId;
+        $this->save();
     }
 
-    function setValue($sKey, $mixedValue) {
+    function setValue($sKey, $mixedValue)
+    {
         if(empty($this->sId))
             $this->start();
 
@@ -114,7 +122,8 @@ class BxDolSession extends BxDol implements iBxDolSingleton {
         $this->save();
     }
 
-    function unsetValue($sKey) {
+    function unsetValue($sKey)
+    {
         if(empty($this->sId))
             $this->start();
 
@@ -126,26 +135,30 @@ class BxDolSession extends BxDol implements iBxDolSingleton {
             $this->destroy();
     }
 
-    function getValue($sKey) {
+    function getValue($sKey)
+    {
         if(empty($this->sId))
             $this->start();
 
         return isset($this->aData[$sKey]) ? $this->aData[$sKey] : false;
     }
 
-	function getUnsetValue($sKey) {
+    function getUnsetValue($sKey)
+    {
         $mixedValue = $this->getValue($sKey);
         if($mixedValue !== false)
-        	$this->unsetValue($sKey);
+            $this->unsetValue($sKey);
 
         return $mixedValue;
     }
 
-    public function maintenance() {
+    public function maintenance()
+    {
         return $this->oDb->deleteExpired();
     }
 
-    protected function save() {
+    protected function save()
+    {
         if($this->iUserId == 0)
             $this->iUserId = getLoggedId();
 

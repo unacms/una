@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Antispam Antispam
  * @ingroup     DolphinModules
  *
@@ -15,8 +15,8 @@
 class BxAntispamStopForumSpam extends BxDol
 {
     protected $_aKeys = array (
-        'ip' => 1, 
-        'email' => 1, 
+        'ip' => 1,
+        'email' => 1,
         'username' => 1,
     );
 
@@ -25,14 +25,14 @@ class BxAntispamStopForumSpam extends BxDol
         parent::__construct();
     }
 
-    /** 
+    /**
      * Check if user is spammer
      * @param $aValues - array with keys: ip, email, username
-     * @param $sDesc - desctiption, for example: join 
-     * @return true - on positive detection, false - on error or no spammer detection 
-     */ 
+     * @param $sDesc - desctiption, for example: join
+     * @return true - on positive detection, false - on error or no spammer detection
+     */
     public function isSpammer ($aValues, $sDesc)
-    {        
+    {
         if (!getParam('bx_antispam_stopforumspam_enable'))
             return false;
 
@@ -40,7 +40,7 @@ class BxAntispamStopForumSpam extends BxDol
             return false;
 
         $aRequestParams = array ('f' => 'json');
-        foreach ($this->_aKeys as $k => $b)  
+        foreach ($this->_aKeys as $k => $b)
             if (isset($aValues[$k]))
                 $aRequestParams[$k] = rawurlencode($aValues[$k]);
 
@@ -58,15 +58,15 @@ class BxAntispamStopForumSpam extends BxDol
                 return true;
             }
         }
-    
+
         return false;
     }
 
-    /** 
+    /**
      * Submit spammer
      * @param @aValues - array with keys: ip, email, username
      * @return false - on error, or true - on success
-     */ 
+     */
     public function submitSpammer ($aValues, $sEvidences = false)
     {
         if (!getParam('bx_antispam_stopforumspam_enable'))
@@ -89,7 +89,7 @@ class BxAntispamStopForumSpam extends BxDol
         fputs($fp, "Connection: close\n\n" );
         fputs($fp, $sData);
         fclose($fp);
-        
+
         return true;
     }
 

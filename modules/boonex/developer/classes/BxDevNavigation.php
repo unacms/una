@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Developer Developer
  * @ingroup     DolphinModules
  *
@@ -11,7 +11,8 @@
 
 bx_import('BxTemplStudioNavigation');
 
-class BxDevNavigation extends BxTemplStudioNavigation {
+class BxDevNavigation extends BxTemplStudioNavigation
+{
     protected $oModule;
     protected $aParams;
     protected $aGridObjects = array(
@@ -20,7 +21,8 @@ class BxDevNavigation extends BxTemplStudioNavigation {
         'items' => 'mod_dev_nav_items'
     );
 
-    function __construct($aParams) {
+    function __construct($aParams)
+    {
         parent::__construct(isset($aParams['page']) ? $aParams['page'] : '');
 
         $this->aParams = $aParams;

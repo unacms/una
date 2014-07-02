@@ -7,17 +7,17 @@
  * @{
  */
 
-class BxDolInstallController 
+class BxDolInstallController
 {
 
     protected $_oView;
-    
-    function __construct() 
+
+    function __construct()
     {
         $this->_oView = new BxDolInstallView();
     }
 
-    function run ($sAction = '') 
+    function run ($sAction = '')
     {
         $sMethod = 'action' . bx_gen_method_name($sAction);
         if ($sAction && method_exists($this, $sMethod))
@@ -25,15 +25,15 @@ class BxDolInstallController
         else
             $this->actionInitial ();
     }
-   
-    function actionEmpty () 
+
+    function actionEmpty ()
     {
     }
 
-    function actionAudit () 
+    function actionAudit ()
     {
         $this->_oView->pageStart();
-        
+
         $oAudit = new BxDolStudioToolsAudit();
         $sAuditOutput = $oAudit->generate();
 
@@ -42,7 +42,7 @@ class BxDolInstallController
         $this->_oView->pageEnd($this->_getTitle());
     }
 
-    function actionInitial () 
+    function actionInitial ()
     {
         $this->_oView->pageStart();
 
@@ -62,12 +62,12 @@ class BxDolInstallController
         $this->_oView->pageEnd($this->_getTitle());
     }
 
-    function actionPermissions () 
+    function actionPermissions ()
     {
         $this->_oView->pageStart();
 
         $oAdmTools = new BxDolStudioTools();
-        
+
         $sPermissionsStyles = $oAdmTools->generateStyles();
 
         ob_start();
@@ -81,7 +81,7 @@ class BxDolInstallController
         $this->_oView->pageEnd($this->_getTitle());
     }
 
-    function actionSiteConfig () 
+    function actionSiteConfig ()
     {
         $this->_oView->pageStart();
 
@@ -95,7 +95,7 @@ class BxDolInstallController
         $this->_oView->pageEnd($this->_getTitle());
     }
 
-    function actionFinish () 
+    function actionFinish ()
     {
         require_once(BX_INSTALL_PATH_HEADER);
 
@@ -103,7 +103,7 @@ class BxDolInstallController
 
         $sPathToPhp = "/replace/it/with/path/to/php/binary";
         $a = array(
-            '/usr/local/bin/php', 
+            '/usr/local/bin/php',
             '/usr/bin/php',
             '/opt/local/bin/php',
         );
@@ -118,7 +118,7 @@ class BxDolInstallController
         $this->_oView->pageEnd($this->_getTitle());
     }
 
-    function actionRemoveInstall () 
+    function actionRemoveInstall ()
     {
         require_once(BX_INSTALL_PATH_HEADER);
 
@@ -129,7 +129,8 @@ class BxDolInstallController
         $this->_oView->pageEnd($this->_getTitle());
     }
 
-    protected function _getTitle() {
+    protected function _getTitle()
+    {
         return _t('_sys_inst_title', BX_DOL_VER);
     }
 }

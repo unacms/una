@@ -22,13 +22,15 @@ define('BX_DOL_STUDIO_BP_BLOCK_LANG', 'lang');
 define('BX_DOL_STUDIO_BP_BLOCK_MENU', 'menu');
 define('BX_DOL_STUDIO_BP_BLOCK_SERVICE', 'service');
 
-class BxDolStudioBuilderPage extends BxTemplStudioPage {
+class BxDolStudioBuilderPage extends BxTemplStudioPage
+{
     protected $sType;
     protected $sPage;
     protected $sPageBaseUrl;
     protected $aPageRebuild;
 
-    function __construct($sType = '', $sPage = '') {
+    function __construct($sType = '', $sPage = '')
+    {
         parent::__construct('builder_pages');
 
         $this->oDb = new BxDolStudioBuilderPageQuery();
@@ -52,16 +54,17 @@ class BxDolStudioBuilderPage extends BxTemplStudioPage {
         }
     }
 
-    function init() {
+    function init()
+    {
         //--- Check actions ---//
         if(($sAction = bx_get('bp_action')) !== false) {
-	        $sAction = bx_process_input($sAction);
+            $sAction = bx_process_input($sAction);
 
             $aResult = array('code' => 1, 'message' => _t('_adm_bp_err_cannot_process_action'));
-	        switch($sAction) {
-	            case 'reorder':
-	                if(empty($this->aPageRebuild) || !is_array($this->aPageRebuild))
-	                    break;
+            switch($sAction) {
+                case 'reorder':
+                    if(empty($this->aPageRebuild) || !is_array($this->aPageRebuild))
+                        break;
 
                     $bResult = false;
                     for($i = 1; $i <= $this->aPageRebuild['layout_cells_number']; $i++) {
@@ -70,25 +73,26 @@ class BxDolStudioBuilderPage extends BxTemplStudioPage {
 
                         for($j = 0; $j < $iItems; $j++)
                             $bResult |= $this->oDb->updateBlock((int)$aItems[$j], array(
-                            	'cell_id' => $i,
+                                'cell_id' => $i,
                                 'order' => $j
                             ));
                     }
-	                $aResult = $bResult ? array('code' => 0, 'message' => _t('_adm_bp_scs_save')) : array('code' => 1, 'message' => _t('_adm_bp_err_nothing_changed'));
-	                break;
+                    $aResult = $bResult ? array('code' => 0, 'message' => _t('_adm_bp_scs_save')) : array('code' => 1, 'message' => _t('_adm_bp_err_nothing_changed'));
+                    break;
 
                 default:
                     $sMethod = 'action' . $this->getClassName($sAction);
                     if(method_exists($this, $sMethod))
                         $aResult = $this->$sMethod();
-	        }
+            }
 
             echo json_encode($aResult);
             exit;
         }
     }
 
-    protected function onSaveBlock(&$oForm, &$aBlock) {
+    protected function onSaveBlock(&$oForm, &$aBlock)
+    {
         $iDesignboxId = (int)str_replace($this->sSelectKeyPrefix, '', $oForm->getCleanValue('designbox_id'));
         BxDolForm::setSubmittedValue('designbox_id', $iDesignboxId, $oForm->aFormAttrs['method']);
 
@@ -100,14 +104,13 @@ class BxDolStudioBuilderPage extends BxTemplStudioPage {
         if($aBlock['type'] == BX_DOL_STUDIO_BP_BLOCK_LANG && isset($oForm->aInputs['content'])) {
             bx_import('BxDolStudioLanguagesUtils');
             $oLanguage = BxDolStudioLanguagesUtils::getInstance();
-        
+
             $sContentKey = '';
             $sContentValue = $oForm->getCleanValue('content');
             if($aBlock['content'] == '') {
                 $sContentKey = '_sys_bpb_content_' . $aBlock['id'];
                 $oLanguage->addLanguageString($sContentKey, $sContentValue);
-            }
-            else {
+            } else {
                 $sContentKey = $aBlock['content'];
                 $oLanguage->updateLanguageString($sContentKey, $sContentValue);
             }
@@ -141,14 +144,16 @@ class BxDolStudioBuilderPage extends BxTemplStudioPage {
             BxDolForm::setSubmittedValue('content', implode($this->sParamsDivider, $aRss), $oForm->aFormAttrs['method']);
         }
     }
-    
-    protected function addInArray($aInput, $sKey, $aValues) {
+
+    protected function addInArray($aInput, $sKey, $aValues)
+    {
         bx_import('BxDolStudioUtils');
         return BxDolStudioUtils::addInArray($aInput, $sKey, $aValues);
     }
 
-    protected function getModuleIcon($sName, $sType = 'menu') {
-        if(in_array($sName, array(BX_DOL_STUDIO_MODULE_SYSTEM, BX_DOL_STUDIO_MODULE_CUSTOM, BX_DOL_STUDIO_BP_SKELETONS))) 
+    protected function getModuleIcon($sName, $sType = 'menu')
+    {
+        if(in_array($sName, array(BX_DOL_STUDIO_MODULE_SYSTEM, BX_DOL_STUDIO_MODULE_CUSTOM, BX_DOL_STUDIO_BP_SKELETONS)))
             return BxDolStudioTemplate::getInstance()->getIconUrl('mi-bp-' . $sName . '.png');
 
         return BxDolStudioUtils::getModuleIcon($sName);

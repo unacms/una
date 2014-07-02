@@ -12,9 +12,10 @@ bx_import('BxBaseInformer');
 /**
  * @see BxDolInformer
  */
-class BxTemplInformer extends BxBaseInformer {
-
-    public function __construct ($oTemplate = false) {
+class BxTemplInformer extends BxBaseInformer
+{
+    public function __construct ($oTemplate = false)
+    {
         parent::__construct ($oTemplate);
     }
 }

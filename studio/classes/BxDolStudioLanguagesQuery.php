@@ -9,8 +9,10 @@
 
 bx_import('BxDolStudioPolyglotQuery');
 
-class BxDolStudioLanguagesQuery extends BxDolStudioPolyglotQuery {
-    function __construct() {
+class BxDolStudioLanguagesQuery extends BxDolStudioPolyglotQuery
+{
+    function __construct()
+    {
         parent::__construct();
     }
 }

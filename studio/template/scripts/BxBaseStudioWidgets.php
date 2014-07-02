@@ -10,13 +10,15 @@
 
 bx_import('BxDolStudioWidgets');
 
-class BxBaseStudioWidgets extends BxDolStudioWidgets {
-
-    function __construct($mixedPageName) {
+class BxBaseStudioWidgets extends BxDolStudioWidgets
+{
+    function __construct($mixedPageName)
+    {
         parent::__construct($mixedPageName);
     }
 
-    function getPageCode($bHidden = false) {
+    function getPageCode($bHidden = false)
+    {
         if(empty($this->aPage) || !is_array($this->aPage))
             return BxDolStudioTemplate::getInstance()->displayPageNotFound();
 
@@ -30,7 +32,8 @@ class BxBaseStudioWidgets extends BxDolStudioWidgets {
         return $sContent;
     }
 
-    function getPageWidgets() {
+    function getPageWidgets()
+    {
         if(empty($this->aPage) || !is_array($this->aPage))
             return BxDolStudioTemplate::getInstance()->displayPageNotFound();
 
@@ -44,18 +47,20 @@ class BxBaseStudioWidgets extends BxDolStudioWidgets {
         return $sContent;
     }
 
-    protected function wrapWidgets($sName, $sContent, $bHidden = false) {
+    protected function wrapWidgets($sName, $sContent, $bHidden = false)
+    {
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('widgets_page.html', array(
                 'page' => $sName,
                 'bx_if:page_hidden' => array(
                     'condition' => $bHidden,
                     'content' => array()
                 ),
-            	'content' => $sContent
+                'content' => $sContent
             ));
     }
 
-    protected function getWidgets($sPage, $aWidgets) {
+    protected function getWidgets($sPage, $aWidgets)
+    {
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         $aParseVars = array(
@@ -81,7 +86,7 @@ class BxBaseStudioWidgets extends BxDolStudioWidgets {
                                 'content' => 'javascript:' . $aAction['click'],
                             )
                         ),
-    					'icon' => $oTemplate->getIconUrl($aAction['icon'])
+                        'icon' => $oTemplate->getIconUrl($aAction['icon'])
                     );
             }
 
@@ -125,7 +130,8 @@ class BxBaseStudioWidgets extends BxDolStudioWidgets {
         ));
     }
 
-    protected function getIcon(&$aWidget) {
+    protected function getIcon(&$aWidget)
+    {
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         $sUrl = $oTemplate->getIconUrl($aWidget['icon']);

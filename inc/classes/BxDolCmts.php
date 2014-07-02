@@ -9,7 +9,7 @@
 
 bx_import('BxDolCmtsQuery');
 
-define('BX_CMT_OLD_VOTES', 365*86400); ///< comment votes older than this number of seconds will be deleted automatically 
+define('BX_CMT_OLD_VOTES', 365*86400); ///< comment votes older than this number of seconds will be deleted automatically
 
 define('BX_CMT_ACTION_POST', 'post');
 define('BX_CMT_ACTION_EDIT', 'edit');
@@ -38,9 +38,8 @@ define('BX_CMT_PFP_BOTTOM', 'bottom');
 define('BX_CMT_RATE_VALUE_PLUS', 1);
 define('BX_CMT_RATE_VALUE_MINUS', -1);
 
-
-/** 
- * @page objects 
+/**
+ * @page objects
  * @section comments Comments
  * @ref BxDolCmts
  */
@@ -97,7 +96,7 @@ define('BX_CMT_RATE_VALUE_MINUS', -1);
  * @section acl Memberships/ACL:
  * - comments post
  * - comments edit own
- * - comments remove own 
+ * - comments remove own
  * - comments edit all
  *
  *
@@ -131,31 +130,31 @@ define('BX_CMT_RATE_VALUE_MINUS', -1);
  */
 class BxDolCmts extends BxDol implements iBxDolReplaceable
 {
-	protected $_oQuery = null;
+    protected $_oQuery = null;
 
-	protected $_sFormObject;
-	protected $_sFormDisplayPost;
-	protected $_sFormDisplayEdit;
+    protected $_sFormObject;
+    protected $_sFormDisplayPost;
+    protected $_sFormDisplayEdit;
 
-	protected $_sStorageObject;
-	protected $_sTranscoderPreview;
+    protected $_sStorageObject;
+    protected $_sTranscoderPreview;
 
-	protected $_sTableImages;
-	protected $_sTableImages2Entries;
+    protected $_sTableImages;
+    protected $_sTableImages2Entries;
 
-	protected $_aImageUploaders;
+    protected $_aImageUploaders;
 
-	protected $_sConnObjFriends;
-	protected $_sConnObjSubscriptions;
+    protected $_sConnObjFriends;
+    protected $_sConnObjSubscriptions;
 
-	protected $_sMenuObjManage;
-	protected $_sMenuObjActions;
+    protected $_sMenuObjManage;
+    protected $_sMenuObjActions;
 
-	protected $_sViewUrl = '';
-	protected $_sBaseUrl = '';
-	protected $_sListAnchor = '';
+    protected $_sViewUrl = '';
+    protected $_sBaseUrl = '';
+    protected $_sListAnchor = '';
 
-	protected $_sSystem = 'profile'; ///< current comment system name
+    protected $_sSystem = 'profile'; ///< current comment system name
     protected $_aSystem = array (); ///< current comments system array
     protected $_iId = 0; ///< obect id to be commented
 
@@ -168,7 +167,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
     protected $_sBrowseType = '';
     protected $_sBrowseFilter = '';
     protected $_sBpSessionKeyType = '';
-    protected $_sBpSessionKeyFilter = ''; 
+    protected $_sBpSessionKeyFilter = '';
     protected $_aOrder = array();
 
     protected $_iRememberTime = 2592000;
@@ -183,14 +182,14 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         parent::__construct();
 
         $this->_aSystems = $this->getSystems();
-		if(!isset($this->_aSystems[$sSystem]))
-			return;
+        if(!isset($this->_aSystems[$sSystem]))
+            return;
 
         $this->_sSystem = $sSystem;
         $this->_aSystem = $this->_aSystems[$sSystem];
 
-		$this->_aSystem['table_images'] = 'sys_cmts_images';
-		$this->_aSystem['table_images2entries'] = 'sys_cmts_images2entries';
+        $this->_aSystem['table_images'] = 'sys_cmts_images';
+        $this->_aSystem['table_images2entries'] = 'sys_cmts_images2entries';
 
         $this->_iDpMaxLevel = (int)$this->_aSystem['number_of_levels'];
         $this->_sDisplayType = $this->_iDpMaxLevel == 0 ? BX_CMT_DISPLAY_FLAT : BX_CMT_DISPLAY_THREADED;
@@ -201,55 +200,55 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         $this->_sBpSessionKeyType = 'bx_' . $this->_sSystem . '_bpt_';
         $this->_sBpSessionKeyFilter = 'bx_' . $this->_sSystem . '_bpf_';
         $this->_aOrder = array(
-        	'by' => BX_CMT_ORDER_BY_DATE, 
-        	'way' => BX_CMT_ORDER_WAY_ASC
+            'by' => BX_CMT_ORDER_BY_DATE,
+            'way' => BX_CMT_ORDER_WAY_ASC
         );
 
         list($mixedUserDp, $mixedUserBpType, $mixedUserBpFilter) = $this->_getUserChoice();
-		if(!empty($mixedUserDp))
-			$this->_sDisplayType = $mixedUserDp;
+        if(!empty($mixedUserDp))
+            $this->_sDisplayType = $mixedUserDp;
         if(!empty($mixedUserBpType))
-        	$this->_sBrowseType = $mixedUserBpType;
-		if(!empty($mixedUserBpFilter))
-        	$this->_sBrowseFilter = $mixedUserBpFilter;
+            $this->_sBrowseType = $mixedUserBpType;
+        if(!empty($mixedUserBpFilter))
+            $this->_sBrowseFilter = $mixedUserBpFilter;
 
         $this->_sViewUrl = BX_DOL_URL_ROOT . 'cmts.php';
         $this->_sBaseUrl = $this->_aSystem['base_url'];
         if(get_mb_substr($this->_sBaseUrl, 0, 4) != 'http')
-        	$this->_sBaseUrl = BX_DOL_URL_ROOT . $this->_sBaseUrl;
-		$this->_sListAnchor = "cmts-anchor-%s-%d";
+            $this->_sBaseUrl = BX_DOL_URL_ROOT . $this->_sBaseUrl;
+        $this->_sListAnchor = "cmts-anchor-%s-%d";
 
-		$this->_oQuery = new BxDolCmtsQuery($this);
+        $this->_oQuery = new BxDolCmtsQuery($this);
 
-		$this->_sFormObject = 'sys_comment';
-		$this->_sFormDisplayPost = 'sys_comment_post';
-		$this->_sFormDisplayEdit = 'sys_comment_edit';
+        $this->_sFormObject = 'sys_comment';
+        $this->_sFormDisplayPost = 'sys_comment_post';
+        $this->_sFormDisplayEdit = 'sys_comment_edit';
 
-		$this->_sStorageObject = 'sys_cmts_images';
-		$this->_sTranscoderPreview = 'sys_cmts_images_preview';
+        $this->_sStorageObject = 'sys_cmts_images';
+        $this->_sTranscoderPreview = 'sys_cmts_images_preview';
 
-		$this->_aImageUploaders = array('sys_cmts_simple');
-		
-		$this->_sConnObjFriends = 'sys_profiles_friends';
-		$this->_sConnObjSubscriptions = 'sys_profiles_subscriptions';
+        $this->_aImageUploaders = array('sys_cmts_simple');
 
-		$this->_sMenuObjManage = 'sys_cmts_item_manage';
-		$this->_sMenuObjActions = 'sys_cmts_item_actions';
-		
+        $this->_sConnObjFriends = 'sys_profiles_friends';
+        $this->_sConnObjSubscriptions = 'sys_profiles_subscriptions';
+
+        $this->_sMenuObjManage = 'sys_cmts_item_manage';
+        $this->_sMenuObjActions = 'sys_cmts_item_actions';
+
         if ($iInit)
             $this->init($iId);
     }
 
-	/**
+    /**
      * get comments object instanse
-     * @param $sSys comments object name 
+     * @param $sSys comments object name
      * @param $iId associated content id, where comments are postred in
      * @param $iInit perform initialization
      * @return null on error, or ready to use class instance
-     */ 
-    public static function getObjectInstance($sSys, $iId, $iInit = true) 
+     */
+    public static function getObjectInstance($sSys, $iId, $iInit = true)
     {
-    	if(isset($GLOBALS['bxDolClasses']['BxDolCmts!' . $sSys . $iId]))
+        if(isset($GLOBALS['bxDolClasses']['BxDolCmts!' . $sSys . $iId]))
             return $GLOBALS['bxDolClasses']['BxDolCmts!' . $sSys . $iId];
 
         $aSystems = self::getSystems();
@@ -259,8 +258,8 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         bx_import('BxTemplCmts');
         $sClassName = 'BxTemplCmts';
         if(!empty($aSystems[$sSys]['class_name'])) {
-        	$sClassName = $aSystems[$sSys]['class_name'];
-        	if(!empty($aSystems[$sSys]['class_file']))
+            $sClassName = $aSystems[$sSys]['class_name'];
+            if(!empty($aSystems[$sSys]['class_file']))
                 require_once(BX_DIRECTORY_PATH_ROOT . $aSystems[$sSys]['class_file']);
             else
                 bx_import($sClassName);
@@ -311,10 +310,10 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         if (empty($this->iId) && $iId)
             $this->setId($iId);
 
-		$this->addMarkers(array(
-			'object_id' => $this->getId(),
-			'user_id' => $this->_getAuthorId()
-		));
+        $this->addMarkers(array(
+            'object_id' => $this->getId(),
+            'user_id' => $this->_getAuthorId()
+        ));
     }
 
     public function getId ()
@@ -327,7 +326,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         return isset($this->_aSystem['is_on']) && $this->_aSystem['is_on'];
     }
 
-	public function getSystemId()
+    public function getSystemId()
     {
         return $this->_aSystem['system_id'];
     }
@@ -342,68 +341,68 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         return $this->_sStorageObject;
     }
 
-	public function getSystemInfo()
+    public function getSystemInfo()
     {
         return $this->_aSystem;
     }
 
-	public function getMaxLevel()
-	{
-		return $this->_iDpMaxLevel;
-	}
+    public function getMaxLevel()
+    {
+        return $this->_iDpMaxLevel;
+    }
 
     public function getOrder ()
     {
         return $this->_sOrder;
     }
 
-	public function getPerView ($iCmtParentId = 0)
+    public function getPerView ($iCmtParentId = 0)
     {
         return $iCmtParentId == 0 ? $this->_aSystem['per_view'] : $this->_aSystem['per_view_replies'];
     }
 
     public function getBaseUrl()
     {
-    	return $this->_replaceMarkers($this->_sBaseUrl);
+        return $this->_replaceMarkers($this->_sBaseUrl);
     }
 
     public function getListUrl()
     {
-    	return $this->getBaseUrl() . '#' . $this->getListAnchor();
+        return $this->getBaseUrl() . '#' . $this->getListAnchor();
     }
 
     public function getListAnchor()
     {
-    	return sprintf($this->_sListAnchor, str_replace('_', '-', $this->getSystemName()), $this->getId());
+        return sprintf($this->_sListAnchor, str_replace('_', '-', $this->getSystemName()), $this->getId());
     }
 
     public function getConnectionObject($sType)
     {
-    	$sResult = '';
+        $sResult = '';
 
-    	switch($sType) {
-    		case BX_CMT_FILTER_FRIENDS:
-    			$sResult = $this->_sConnObjFriends;
-    			break;
-    		case BX_CMT_FILTER_SUBSCRIPTIONS:
-    			$sResult = $this->_sConnObjSubscriptions;
-    			break;
-    	}
+        switch($sType) {
+            case BX_CMT_FILTER_FRIENDS:
+                $sResult = $this->_sConnObjFriends;
+                break;
+            case BX_CMT_FILTER_SUBSCRIPTIONS:
+                $sResult = $this->_sConnObjSubscriptions;
+                break;
+        }
 
-    	return $sResult;
+        return $sResult;
     }
 
-	public function getVoteObject($iId)
+    public function getVoteObject($iId)
     {
-    	if(empty($this->_aSystem['object_vote']))
-    		return false;
+        if(empty($this->_aSystem['object_vote']))
+            return false;
 
-    	bx_import('BxDolVote');
+        bx_import('BxDolVote');
         $oVote = BxDolVote::getObjectInstance($this->_aSystem['object_vote'], $iId);
-		if(!$oVote->isEnabled())
-			return false;
+        if(!$oVote->isEnabled())
+            return false;
 
-		return $oVote;
+        return $oVote;
     }
 
     public function isNl2br ()
@@ -418,7 +417,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 
     public function isAttachImageEnabled()
     {
-    	return true;
+        return true;
     }
 
     /**
@@ -430,12 +429,12 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         $this->_iId = $iId;
     }
 
-	/**
+    /**
      * Add replace markers.
      * @param $a array of markers as key => value
      * @return true on success or false on error
      */
-    public function addMarkers ($a) 
+    public function addMarkers ($a)
     {
         if (empty($a) || !is_array($a))
             return false;
@@ -443,25 +442,25 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         return true;
     }
 
-    /** 
+    /**
      * Database functions
      */
-	public function getQueryObject ()
+    public function getQueryObject ()
     {
         return $this->_oQuery;
     }
 
-	public function getCommentsTableName ()
+    public function getCommentsTableName ()
     {
         return $this->_oQuery->getTableName ();
     }
 
     public function getObjectTitle ($iObjectId = 0)
     {
-    	return $this->_oQuery->getObjectTitle ($iObjectId ? $iObjectId : $this->getId());
+        return $this->_oQuery->getObjectTitle ($iObjectId ? $iObjectId : $this->getId());
     }
 
-	public function getCommentsCount ($iObjectId = 0, $iCmtVParentId = 0, $sFilter = '')
+    public function getCommentsCount ($iObjectId = 0, $iCmtVParentId = 0, $sFilter = '')
     {
         return $this->_oQuery->getCommentsCount ($iObjectId ? $iObjectId : $this->getId(), $iCmtVParentId, $this->_getAuthorId(), $sFilter);
     }
@@ -495,14 +494,14 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
     {
         bx_import('BxDolStorage');
         $aSystems = self::getSystems();
-    	foreach($aSystems as $sSystem => $aSystem) {
+        foreach($aSystems as $sSystem => $aSystem) {
             $o = self::getObjectInstance($sSystem, 0);
-            $oQuery = $o->getQueryObject();            
+            $oQuery = $o->getQueryObject();
 
             // delete comments
             $aFiles = array ();
             $oQuery->deleteAuthorComments($iAuthorId, $aFiles);
-            
+
             // delete files
             $oStorage = BxDolStorage::getObjectInstance($o->getStorageObjectName());
             if ($oStorage)
@@ -512,17 +511,17 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
     }
 
     public static function onModuleUninstall ($sModuleName, &$iFiles = null)
-    {        
+    {
         bx_import('BxDolStorage');
         $aSystems = self::getSystems();
-    	foreach($aSystems as $sSystem => $aSystem) {
+        foreach($aSystems as $sSystem => $aSystem) {
             if (0 != strncasecmp($sModuleName, $sSystem, strlen($sModuleName)))
                 continue;
 
             $o = self::getObjectInstance($sSystem, 0);
             $oQuery = $o->getQueryObject();
 
-            // delete comments            
+            // delete comments
             $aFiles = array ();
             $oQuery->deleteAll($aSystem['system_id'], $aFiles);
 
@@ -538,7 +537,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         return true;
     }
 
-    /** 
+    /**
      * Permissions functions
      */
     public function checkAction ($sAction, $isPerformAction = false)
@@ -557,21 +556,21 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 
     public function isVoteAllowed ($aCmt, $isPerformAction = false)
     {
-    	if(!$this->isRatable())
-    		return false;
+        if(!$this->isRatable())
+            return false;
 
-		$oVote = $this->getVoteObject($aCmt['cmt_id']);
-    	if($oVote === false)
-    		return false;
+        $oVote = $this->getVoteObject($aCmt['cmt_id']);
+        if($oVote === false)
+            return false;
 
-    	$iUserId = (int)$this->_getAuthorId();
-    	if($iUserId == 0)
-    		return false;
+        $iUserId = (int)$this->_getAuthorId();
+        if($iUserId == 0)
+            return false;
 
-    	if(isAdmin())
-			return true;
+        if(isAdmin())
+            return true;
 
-        return $oVote->isAllowedVote($isPerformAction); 
+        return $oVote->isAllowedVote($isPerformAction);
     }
 
     public function isPostReplyAllowed ($isPerformAction = false)
@@ -586,11 +585,11 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 
     public function isEditAllowed ($aCmt, $isPerformAction = false)
     {
-    	if(isAdmin())
-    		return true;
+        if(isAdmin())
+            return true;
 
-		if($aCmt['cmt_author_id'] == $this->_getAuthorId() && $this->checkAction ('comments edit own', $isPerformAction))
-			return true;
+        if($aCmt['cmt_author_id'] == $this->_getAuthorId() && $this->checkAction ('comments edit own', $isPerformAction))
+            return true;
 
         return $this->checkAction('comments edit all', $isPerformAction);
     }
@@ -602,11 +601,11 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 
     public function isRemoveAllowed ($aCmt, $isPerformAction = false)
     {
-    	if(isAdmin())
-    		return true;
+        if(isAdmin())
+            return true;
 
-		if($aCmt['cmt_author_id'] == $this->_getAuthorId() && $this->checkAction ('comments remove own', $isPerformAction))
-			return true;
+        if($aCmt['cmt_author_id'] == $this->_getAuthorId() && $this->checkAction ('comments remove own', $isPerformAction))
+            return true;
 
         return $this->checkAction ('comments remove all', $isPerformAction);
     }
@@ -619,7 +618,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
     /**
      * Actions functions
      */
-    public function actionGetFormPost () 
+    public function actionGetFormPost ()
     {
         if (!$this->isEnabled())
             return '';
@@ -631,18 +630,18 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         return $this->getFormBoxPost(array('parent_id' => $iCmtParentId, 'type' => $sCmtBrowse), array('type' => $sCmtDisplay));
     }
 
-	public function actionGetFormEdit ()
+    public function actionGetFormEdit ()
     {
         if (!$this->isEnabled()){
-        	$this->_echoResultJson(array());
-        	return;
+            $this->_echoResultJson(array());
+            return;
         }
 
-		$iCmtId = bx_process_input(bx_get('Cmt'), BX_DATA_INT);
+        $iCmtId = bx_process_input(bx_get('Cmt'), BX_DATA_INT);
         $this->_echoResultJson($this->getFormEdit($iCmtId));
     }
 
-    public function actionGetCmt () 
+    public function actionGetCmt ()
     {
         if (!$this->isEnabled())
             return '';
@@ -653,13 +652,13 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 
         $aCmt = $this->getCommentRow($iCmtId);
         $this->_echoResultJson(array(
-        	'parent_id' => $aCmt['cmt_parent_id'],
-        	'vparent_id' => $aCmt['cmt_vparent_id'],
-        	'content' => $this->getComment($aCmt, array('type' => $sCmtBrowse), array('type' => $sCmtDisplay))
+            'parent_id' => $aCmt['cmt_parent_id'],
+            'vparent_id' => $aCmt['cmt_vparent_id'],
+            'content' => $this->getComment($aCmt, array('type' => $sCmtBrowse), array('type' => $sCmtDisplay))
         ));
     }
 
-    public function actionGetCmts () 
+    public function actionGetCmts ()
     {
         if (!$this->isEnabled())
             return '';
@@ -674,39 +673,39 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         return $this->getComments(array('vparent_id' => $iCmtVParentId, 'start' => $iCmtStart, 'per_view' => $iCmtPerView, 'type' => $sCmtBrowse, 'filter' => $sCmtFilter), array('type' => $sCmtDisplay));
     }
 
-	public function actionGetImage ()
+    public function actionGetImage ()
     {
-    	if (!$this->isEnabled())
+        if (!$this->isEnabled())
            return '';
 
-		$iImgId = bx_process_input(bx_get('ImgId'), BX_DATA_INT);
+        $iImgId = bx_process_input(bx_get('ImgId'), BX_DATA_INT);
         return $this->getImage($iImgId);
     }
 
     public function actionSubmitPostForm()
     {
         if(!$this->isEnabled() || !$this->isPostReplyAllowed()) {
-        	$this->_echoResultJson(array());
-        	return;
+            $this->_echoResultJson(array());
+            return;
         }
 
         $iCmtParentId = 0;
         if(bx_get('cmt_parent_id') !== false)
-			$iCmtParentId = bx_process_input(bx_get('cmt_parent_id'), BX_DATA_INT);
+            $iCmtParentId = bx_process_input(bx_get('cmt_parent_id'), BX_DATA_INT);
 
-		$this->_echoResultJson($this->getFormPost($iCmtParentId));
+        $this->_echoResultJson($this->getFormPost($iCmtParentId));
     }
 
-	public function actionSubmitEditForm()
-	{
+    public function actionSubmitEditForm()
+    {
         if (!$this->isEnabled()) {
-        	$this->_echoResultJson(array());
-        	return;
+            $this->_echoResultJson(array());
+            return;
         };
 
         $iCmtId = 0;
         if(bx_get('cmt_id') !== false)
-			$iCmtId = bx_process_input(bx_get('cmt_id'), BX_DATA_INT);
+            $iCmtId = bx_process_input(bx_get('cmt_id'), BX_DATA_INT);
 
         $this->_echoResultJson($this->getFormEdit($iCmtId));
     }
@@ -714,57 +713,57 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
     public function actionRemove()
     {
         if (!$this->isEnabled()) {
-        	$this->_echoResultJson(array());
-        	return;
+            $this->_echoResultJson(array());
+            return;
         };
 
         $iCmtId = 0;
         if(bx_get('Cmt') !== false)
-        	$iCmtId = bx_process_input(bx_get('Cmt'), BX_DATA_INT);
+            $iCmtId = bx_process_input(bx_get('Cmt'), BX_DATA_INT);
 
         $aCmt = $this->_oQuery->getCommentSimple ($this->getId(), $iCmtId);
         if(!$aCmt) {
-        	$this->_echoResultJson(array('msg' => _t('_No such comment')));
-        	return;
+            $this->_echoResultJson(array('msg' => _t('_No such comment')));
+            return;
         }
 
         if ($aCmt['cmt_replies'] > 0) {
-        	$this->_echoResultJson(array('msg' => _t('_Can not delete comments with replies')));
-        	return;
+            $this->_echoResultJson(array('msg' => _t('_Can not delete comments with replies')));
+            return;
         }
 
         $iCmtAuthorId = $this->_getAuthorId();
         if(!$this->isRemoveAllowed($aCmt)) {
-        	$this->_echoResultJson(array('msg' => $aCmt['cmt_author_id'] == $iCmtAuthorId ? strip_tags($this->msgErrRemoveAllowed()) : _t('_Access denied')));
-        	return;
+            $this->_echoResultJson(array('msg' => $aCmt['cmt_author_id'] == $iCmtAuthorId ? strip_tags($this->msgErrRemoveAllowed()) : _t('_Access denied')));
+            return;
         }
 
         if($this->_oQuery->removeComment ($this->getId(), $aCmt['cmt_id'], $aCmt['cmt_parent_id'])) {
-        	$this->_triggerComment();
+            $this->_triggerComment();
 
-        	bx_import('BxDolStorage');
-			$oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
+            bx_import('BxDolStorage');
+            $oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
 
-			$aImages = $this->_oQuery->getImages($this->_aSystem['system_id'], $aCmt['cmt_id']);
-			foreach($aImages as $aImage)
-				$oStorage->deleteFile($aImage['image_id']);
+            $aImages = $this->_oQuery->getImages($this->_aSystem['system_id'], $aCmt['cmt_id']);
+            foreach($aImages as $aImage)
+                $oStorage->deleteFile($aImage['image_id']);
 
-        	$this->_oQuery->deleteImages($this->_aSystem['system_id'], $aCmt['cmt_id']);
+            $this->_oQuery->deleteImages($this->_aSystem['system_id'], $aCmt['cmt_id']);
 
-			$this->isRemoveAllowed(true);
+            $this->isRemoveAllowed(true);
 
-	        bx_import('BxDolAlerts');
-	        $oZ = new BxDolAlerts($this->_sSystem, 'commentRemoved', $this->getId(), $iCmtAuthorId, array('comment_id' => $aCmt['cmt_id'], 'comment_author_id' => $aCmt['cmt_author_id']));
-	        $oZ->alert();
+            bx_import('BxDolAlerts');
+            $oZ = new BxDolAlerts($this->_sSystem, 'commentRemoved', $this->getId(), $iCmtAuthorId, array('comment_id' => $aCmt['cmt_id'], 'comment_author_id' => $aCmt['cmt_author_id']));
+            $oZ->alert();
 
-	        $this->_echoResultJson(array('id' => $iCmtId));
-	        return;
+            $this->_echoResultJson(array('id' => $iCmtId));
+            return;
         }
 
         $this->_echoResultJson(array('msg' => _t('_cmt_err_cannot_perform_action')));
     }
 
-    /** 
+    /**
      * Internal functions
      */
     protected function _getAuthorId ()
@@ -782,29 +781,29 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         return getVisitorIP();
     }
 
-    
-	protected function _getAuthorInfo($iAuthorId = 0)
-    {
-    	$oProfile = $this->_getAuthorObject($iAuthorId);
 
-		return array(
-			$oProfile->getDisplayName(), 
-			$oProfile->getUrl(), 
-			$oProfile->getThumb(),
-			$oProfile->getUnit()
-		);
+    protected function _getAuthorInfo($iAuthorId = 0)
+    {
+        $oProfile = $this->_getAuthorObject($iAuthorId);
+
+        return array(
+            $oProfile->getDisplayName(),
+            $oProfile->getUrl(),
+            $oProfile->getThumb(),
+            $oProfile->getUnit()
+        );
     }
 
     protected function _getAuthorObject($iAuthorId = 0)
     {
-    	bx_import('BxDolProfile');
-		$oProfile = BxDolProfile::getInstance($iAuthorId);
-		if (!$oProfile) {
-			bx_import('BxDolProfileUndefined');
-			$oProfile = BxDolProfileUndefined::getInstance();
-		}
+        bx_import('BxDolProfile');
+        $oProfile = BxDolProfile::getInstance($iAuthorId);
+        if (!$oProfile) {
+            bx_import('BxDolProfileUndefined');
+            $oProfile = BxDolProfileUndefined::getInstance();
+        }
 
-		return $oProfile;
+        return $oProfile;
     }
 
     protected function _prepareTextForEdit ($s)
@@ -815,72 +814,72 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         return $s;
     }
 
-    protected function _prepareTextForSave ($s) 
+    protected function _prepareTextForSave ($s)
     {
-    	$iDataAction = $this->isNl2br() ? BX_DATA_TEXT_MULTILINE : BX_DATA_HTML;
-		return bx_process_input($s, $iDataAction);
+        $iDataAction = $this->isNl2br() ? BX_DATA_TEXT_MULTILINE : BX_DATA_HTML;
+        return bx_process_input($s, $iDataAction);
     }
 
     protected function _prepareTextForOutput ($s)
     {
-    	$sHttp = '';
-		$sPattern = "/((https?|ftp|news):\/\/)?([a-z]([a-z0-9\-]*\.)+(aero|arpa|biz|com|coop|edu|gov|info|int|jobs|mil|museum|name|nato|net|org|pro|travel|[a-z]{2})|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))(\/[a-z0-9_\-\.~]+)*(\/([a-z0-9_\-\.]*)(\?[a-z0-9+_\-\.%=&amp;]*)?)?(#[a-z][a-z0-9_]*)?/";
-    	$aMatches = array();
-    	if(preg_match($sPattern, $s, $aMatches) && empty($aMatches[1]))
-    		$sHttp = 'http://';
+        $sHttp = '';
+        $sPattern = "/((https?|ftp|news):\/\/)?([a-z]([a-z0-9\-]*\.)+(aero|arpa|biz|com|coop|edu|gov|info|int|jobs|mil|museum|name|nato|net|org|pro|travel|[a-z]{2})|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))(\/[a-z0-9_\-\.~]+)*(\/([a-z0-9_\-\.]*)(\?[a-z0-9+_\-\.%=&amp;]*)?)?(#[a-z][a-z0-9_]*)?/";
+        $aMatches = array();
+        if(preg_match($sPattern, $s, $aMatches) && empty($aMatches[1]))
+            $sHttp = 'http://';
 
-		$s = bx_process_output($s, BX_DATA_HTML);
-		$s = preg_replace($sPattern, '<a href="' . $sHttp . '$0" target="_blank">$0</a>', $s);
+        $s = bx_process_output($s, BX_DATA_HTML);
+        $s = preg_replace($sPattern, '<a href="' . $sHttp . '$0" target="_blank">$0</a>', $s);
 
-		return $s; 
+        return $s;
     }
 
-	protected function _prepareParams(&$aBp, &$aDp)
+    protected function _prepareParams(&$aBp, &$aDp)
     {
-    	$aBp['type'] = isset($aBp['type']) && !empty($aBp['type']) ? $aBp['type'] : $this->_sBrowseType;
-    	$aBp['filter'] = isset($aBp['filter']) && !empty($aBp['filter']) ? $aBp['filter'] : $this->_sBrowseFilter;
-    	$aBp['parent_id'] = isset($aBp['parent_id']) ? $aBp['parent_id'] : 0;
-    	$aBp['start'] = isset($aBp['start']) ? $aBp['start'] : -1;
-    	$aBp['per_view'] = isset($aBp['per_view']) ? $aBp['per_view'] : -1;
-    	$aBp['order']['by'] = isset($aBp['order_by']) ? $aBp['order_by'] : $this->_aOrder['by'];
-    	$aBp['order']['way'] = isset($aBp['order_way']) ? $aBp['order_way'] : $this->_aOrder['way'];
+        $aBp['type'] = isset($aBp['type']) && !empty($aBp['type']) ? $aBp['type'] : $this->_sBrowseType;
+        $aBp['filter'] = isset($aBp['filter']) && !empty($aBp['filter']) ? $aBp['filter'] : $this->_sBrowseFilter;
+        $aBp['parent_id'] = isset($aBp['parent_id']) ? $aBp['parent_id'] : 0;
+        $aBp['start'] = isset($aBp['start']) ? $aBp['start'] : -1;
+        $aBp['per_view'] = isset($aBp['per_view']) ? $aBp['per_view'] : -1;
+        $aBp['order']['by'] = isset($aBp['order_by']) ? $aBp['order_by'] : $this->_aOrder['by'];
+        $aBp['order']['way'] = isset($aBp['order_way']) ? $aBp['order_way'] : $this->_aOrder['way'];
 
-    	$aDp['type'] = isset($aDp['type']) && !empty($aDp['type']) ? $aDp['type'] : $this->_sDisplayType;
+        $aDp['type'] = isset($aDp['type']) && !empty($aDp['type']) ? $aDp['type'] : $this->_sDisplayType;
 
-		switch($aDp['type']) {
-			case BX_CMT_DISPLAY_FLAT:
-				$aBp['vparent_id'] = -1;
-				$aBp['per_view'] = $aBp['per_view'] != -1 ? $aBp['per_view'] : $this->getPerView(0);
-				break;
+        switch($aDp['type']) {
+            case BX_CMT_DISPLAY_FLAT:
+                $aBp['vparent_id'] = -1;
+                $aBp['per_view'] = $aBp['per_view'] != -1 ? $aBp['per_view'] : $this->getPerView(0);
+                break;
 
-			case BX_CMT_DISPLAY_THREADED:
-				$aBp['per_view'] = $aBp['per_view'] != -1 ? $aBp['per_view'] : $this->getPerView($aBp['vparent_id']);
-				break;
-		}
+            case BX_CMT_DISPLAY_THREADED:
+                $aBp['per_view'] = $aBp['per_view'] != -1 ? $aBp['per_view'] : $this->getPerView($aBp['vparent_id']);
+                break;
+        }
 
-		switch ($aBp['type']) {
-			case BX_CMT_BROWSE_POPULAR:
-				$aBp['order'] = array(
-					'by' => BX_CMT_ORDER_BY_POPULAR,
-					'way' => BX_CMT_ORDER_WAY_DESC
-				);
-				break;
-		}
+        switch ($aBp['type']) {
+            case BX_CMT_BROWSE_POPULAR:
+                $aBp['order'] = array(
+                    'by' => BX_CMT_ORDER_BY_POPULAR,
+                    'way' => BX_CMT_ORDER_WAY_DESC
+                );
+                break;
+        }
 
-		$aBp['count'] = $this->getCommentsCount($this->_iId, $aBp['vparent_id'], $aBp['filter']);
-		if($aBp['start'] != -1)
-			return;
+        $aBp['count'] = $this->getCommentsCount($this->_iId, $aBp['vparent_id'], $aBp['filter']);
+        if($aBp['start'] != -1)
+            return;
 
-		$aBp['start'] = 0;
-		if($aBp['type'] == BX_CMT_BROWSE_TAIL) {
-			$aBp['start'] = $aBp['count'] - $aBp['per_view'];
-			if($aBp['start'] < 0) {
-    			$aBp['per_view'] += $aBp['start'];
-    			$aBp['start'] = 0;
-			}
-		}
+        $aBp['start'] = 0;
+        if($aBp['type'] == BX_CMT_BROWSE_TAIL) {
+            $aBp['start'] = $aBp['count'] - $aBp['per_view'];
+            if($aBp['start'] < 0) {
+                $aBp['per_view'] += $aBp['start'];
+                $aBp['start'] = 0;
+            }
+        }
 
-		$this->_setUserChoice($aDp['type'], $aBp['type'], $aBp['filter']);
+        $this->_setUserChoice($aDp['type'], $aBp['type'], $aBp['filter']);
     }
 
     protected function _triggerComment()
@@ -896,66 +895,66 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         return $this->_oQuery->updateTriggerTable($iId, $iCount);
     }
 
-	/**
+    /**
      * Replace provided markers in a string
      * @param $mixed string or array to replace markers in
      * @return string where all occured markers are replaced
-     */ 
-    protected function _replaceMarkers ($mixed) 
+     */
+    protected function _replaceMarkers ($mixed)
     {
         return bx_replace_markers($mixed, $this->_aMarkers);
     }
 
     protected function _getUserChoice()
     {
-    	$mixedDp = $mixedBpType = $mixedBpFilter = false;
-    	if(!isLogged())
-    		return array($mixedDp, $mixedBpType, $mixedBpFilter);
+        $mixedDp = $mixedBpType = $mixedBpFilter = false;
+        if(!isLogged())
+            return array($mixedDp, $mixedBpType, $mixedBpFilter);
 
-    	$iUserId = $this->_getAuthorId();
+        $iUserId = $this->_getAuthorId();
 
-    	bx_import('BxDolSession');
-    	$oSession = BxDolSession::getInstance();
+        bx_import('BxDolSession');
+        $oSession = BxDolSession::getInstance();
 
-    	$mixedDp = $oSession->getValue($this->_sDpSessionKey . $iUserId);
-    	$mixedBpType = $oSession->getValue($this->_sBpSessionKeyType . $iUserId);
-    	$mixedBpFilter = $oSession->getValue($this->_sBpSessionKeyFilter . $iUserId);
+        $mixedDp = $oSession->getValue($this->_sDpSessionKey . $iUserId);
+        $mixedBpType = $oSession->getValue($this->_sBpSessionKeyType . $iUserId);
+        $mixedBpFilter = $oSession->getValue($this->_sBpSessionKeyFilter . $iUserId);
 
-    	return array($mixedDp, $mixedBpType, $mixedBpFilter);
+        return array($mixedDp, $mixedBpType, $mixedBpFilter);
     }
 
     protected function _setUserChoice($sDp, $sBpType, $sBpFilter)
     {
-    	if(!isLogged())
-    		return;
+        if(!isLogged())
+            return;
 
-    	$iUserId = $this->_getAuthorId();
+        $iUserId = $this->_getAuthorId();
 
-    	bx_import('BxDolSession');
-    	$oSession = BxDolSession::getInstance();
+        bx_import('BxDolSession');
+        $oSession = BxDolSession::getInstance();
 
-    	if(!empty($sDp))
-    		$oSession->setValue($this->_sDpSessionKey . $iUserId, $sDp);
+        if(!empty($sDp))
+            $oSession->setValue($this->_sDpSessionKey . $iUserId, $sDp);
 
-    	if(!empty($sBpType))
-	    	$oSession->setValue($this->_sBpSessionKeyType . $iUserId, $sBpType);
-	    	
-	    if(!empty($sBpFilter))
-	    	$oSession->setValue($this->_sBpSessionKeyFilter . $iUserId, $sBpFilter);
+        if(!empty($sBpType))
+            $oSession->setValue($this->_sBpSessionKeyType . $iUserId, $sBpType);
+
+        if(!empty($sBpFilter))
+            $oSession->setValue($this->_sBpSessionKeyFilter . $iUserId, $sBpFilter);
     }
 
-	protected function _sendNotificationEmail($iCmtId, $iCmtParentId)
-	{
-		$aCmt = $this->getCommentRow($iCmtId);
-		$aCmtParent = $this->getCommentRow($iCmtParentId);
-		if(empty($aCmt) || !is_array($aCmt) || empty($aCmtParent) || !is_array($aCmtParent) || (int)$aCmt['cmt_author_id'] == (int)$aCmtParent['cmt_author_id'])
-			return;
+    protected function _sendNotificationEmail($iCmtId, $iCmtParentId)
+    {
+        $aCmt = $this->getCommentRow($iCmtId);
+        $aCmtParent = $this->getCommentRow($iCmtParentId);
+        if(empty($aCmt) || !is_array($aCmt) || empty($aCmtParent) || !is_array($aCmtParent) || (int)$aCmt['cmt_author_id'] == (int)$aCmtParent['cmt_author_id'])
+            return;
 
-		$oProfile = $this->_getAuthorObject($aCmtParent['cmt_author_id']);
+        $oProfile = $this->_getAuthorObject($aCmtParent['cmt_author_id']);
 
-		bx_import('BxDolAccount');
-		$iAccount = $oProfile->getAccountId();
-    	$aAccount = BxDolAccount::getInstance($iAccount)->getInfo();
+        bx_import('BxDolAccount');
+        $iAccount = $oProfile->getAccountId();
+        $aAccount = BxDolAccount::getInstance($iAccount)->getInfo();
 
         $aPlus = array();
         $aPlus['reply_text'] = bx_process_output($aCmt['cmt_text']);
@@ -968,4 +967,3 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 }
 
 /** @} */
-

@@ -9,11 +9,11 @@
 
 bx_import('BxDolTemplate');
 
-class BxBaseFunctions extends BxDol implements iBxDolSingleton 
+class BxBaseFunctions extends BxDol implements iBxDolSingleton
 {
     protected $_oTemplate;
 
-    protected function __construct($oTemplate) 
+    protected function __construct($oTemplate)
     {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
@@ -26,13 +26,13 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
     /**
      * Prevent cloning the instance
      */
-    public function __clone() 
+    public function __clone()
     {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error('Clone is not allowed for the class: ' . get_class($this), E_USER_ERROR);
     }
 
-    public static function getInstance() 
+    public static function getInstance()
     {
         if(!isset($GLOBALS['bxDolClasses']['BxTemplFunctions']))
             $GLOBALS['bxDolClasses']['BxTemplFunctions'] = new BxTemplFunctions();
@@ -40,7 +40,7 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
         return $GLOBALS['bxDolClasses']['BxTemplFunctions'];
     }
 
-    function TemplPageAddComponent($sKey) 
+    function TemplPageAddComponent($sKey)
     {
         switch( $sKey ) {
             case 'something':
@@ -50,7 +50,7 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
         }
     }
 
-    function msgBox($sText, $iTimer = 0, $sOnClose = "") 
+    function msgBox($sText, $iTimer = 0, $sOnClose = "")
     {
         $iId = time() . mt_rand(1, 1000);
 
@@ -71,12 +71,12 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
     /**
      * Get standard popup box with title.
      *
-     * @param string $sName - unique name
-     * @param string $sTitle - translated title
-     * @param string $sContent - content of the box
-     * @return HTML string
+     * @param  string $sName    - unique name
+     * @param  string $sTitle   - translated title
+     * @param  string $sContent - content of the box
+     * @return HTML   string
      */
-    function popupBox($sName, $sTitle, $sContent, $isHiddenByDefault = false) 
+    function popupBox($sName, $sTitle, $sContent, $isHiddenByDefault = false)
     {
         $iId = !empty($sName) ? $sName : time();
 
@@ -91,37 +91,37 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
     /**
      * Get popup box without title.
      *
-     * @param string $sName - unique name
-     * @param string $sContent - content of the box
-     * @return HTML string
+     * @param  string $sName    - unique name
+     * @param  string $sContent - content of the box
+     * @return HTML   string
      */
-    function transBox($sName, $sContent, $isHiddenByDefault = false, $isPlaceInCenter = false) 
+    function transBox($sName, $sContent, $isHiddenByDefault = false, $isPlaceInCenter = false)
     {
-    	$iId = !empty($sName) ? $sName : time();
+        $iId = !empty($sName) ? $sName : time();
 
         return
             ($isPlaceInCenter ? '<div class="login_ajax_wrap">' : '') .
                 $this->_oTemplate->parseHtmlByName('popup_trans.html', array(
-                	'id' => $iId,
-                	'wrapper_style' => $isHiddenByDefault ? 'display:none;' : '',
-                	'content' => $sContent
+                    'id' => $iId,
+                    'wrapper_style' => $isHiddenByDefault ? 'display:none;' : '',
+                    'content' => $sContent
                 )) .
             ($isPlaceInCenter ? '</div>' : '');
     }
 
-    function getTemplateIcon($sName) 
+    function getTemplateIcon($sName)
     {
         $sUrl = $this->_oTemplate->getIconUrl($sName);
         return !empty($sUrl) ? $sUrl : $this->_oTemplate->getIconUrl('spacer.gif');
     }
 
-    function getTemplateImage($sName) 
+    function getTemplateImage($sName)
     {
         $sUrl = $this->_oTemplate->getImageUrl($sName);
         return !empty($sUrl) ? $sUrl : $this->_oTemplate->getImageUrl('spacer.gif');
     }
 
-    function sysIcon ($sIcon, $sName, $sUrl = '', $iWidth = 0) 
+    function sysIcon ($sIcon, $sName, $sUrl = '', $iWidth = 0)
     {
         return '<div class="sys_icon">' . ($sUrl ? '<a title="'.$sName.'" href="'.$sUrl.'">' : '') . '<img alt="'.$sName.'" src="'.$sIcon.'" '.($iWidth ? 'width='.$iWidth : '').' />' . ($sUrl ? '</a>' : '') . '</div>';
     }
@@ -133,7 +133,7 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
      * @param $iRssNum - numbr of rss items to disolay
      * @param $iMemberId - optional member id
      */
-    function getRssHolder ($mixedRssId, $iRssNum, $iMemberId = 0) 
+    function getRssHolder ($mixedRssId, $iRssNum, $iMemberId = 0)
     {
         if (!isset($GLOBALS['gbBxSysIsRssInitialized']) || !$GLOBALS['gbBxSysIsRssInitialized']) {
 
@@ -163,10 +163,10 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
         ));
     }
 
-	/**
-     * functions for limiting maximal string length 
+    /**
+     * functions for limiting maximal string length
      */
-    function getStringWithLimitedLength($sString, $iWidth = 45, $isPopupOnOverflow = false, $bReturnString = true) 
+    function getStringWithLimitedLength($sString, $iWidth = 45, $isPopupOnOverflow = false, $bReturnString = true)
     {
         if (empty($sString) || mb_strlen($sString, 'UTF-8') <= $iWidth)
             return $bReturnString ? $sString : array($sString);
@@ -184,10 +184,10 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
 
             // add word and continue
             $sResult .= ' ' . $sWord;
-            $iPosition += 1 + $iWord;            
+            $iPosition += 1 + $iWord;
         }
 
-        // last word is too long, cut it  
+        // last word is too long, cut it
         if(!$iPosition || $iPosition < $iWidthMin)
             $sResult .= ' ' . mb_substr($sWord, 0, $iWidthReal - $iPosition - $iWord, 'UTF-8');
         $sResult = trim($sResult);
@@ -216,7 +216,7 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
      *      - string: menu object identifier
      *      - array: array of menu links to create menu from
      * @return string
-     * 
+     *
      * @see BX_DB_CONTENT_ONLY
      * @see BX_DB_DEF
      * @see BX_DB_EMPTY
@@ -225,16 +225,16 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
      * @see BX_DB_PADDING_DEF
      * @see BX_DB_PADDING_NO_CAPTION
      */
-    function designBoxContent ($sTitle, $sContent, $iTemplateNum = BX_DB_DEF, $mixedMenu = false) 
+    function designBoxContent ($sTitle, $sContent, $iTemplateNum = BX_DB_DEF, $mixedMenu = false)
     {
         return $this->_oTemplate->parseHtmlByName('designbox_' . (int)$iTemplateNum . '.html', array(
-            'title' => $sTitle,            
+            'title' => $sTitle,
             'designbox_content' => $sContent,
             'caption_item' => $this->designBoxMenu ($mixedMenu, array (array('menu' => 1))),
         ));
     }
 
-    function designBoxMenu ($mixedMenu, $aButtons = array ()) 
+    function designBoxMenu ($mixedMenu, $aButtons = array ())
     {
         $sCode = '';
         $aButtonMenu = false;
@@ -268,7 +268,7 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
                 $sCode .= BxTemplFunctions::getInstance()->transBox($sId, '<div class="bx-def-padding bx-def-color-bg-block">' . $sMenu . '</div>', true);
                 $aButtonMenu = array ('icon' => 'reorder', 'onclick' => "bx_menu_popup_inline('#" . $sId . "', this)");
             }
-            
+
         }
 
         if ($aButtons) {
@@ -277,7 +277,7 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
                 if (isset($aButton['menu']) && $aButton['menu']) {
                     if (!$aButtonMenu)
                         continue;
-                    $aButton = $aButtonMenu;                    
+                    $aButton = $aButtonMenu;
                 }
 
                 $aAttrs = array ();
@@ -302,7 +302,7 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
      * Get logo HTML.
      * @return string
      */
-    function getMainLogo() 
+    function getMainLogo()
     {
         bx_import('BxDolConfig');
 
@@ -327,38 +327,38 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
      */
     function getMetaIcons()
     {
-    	$iId = (int)getParam('sys_site_icon');
-    	$sImageUrlFav = $sImageUrlFcb = $sImageUrlApl = '';
+        $iId = (int)getParam('sys_site_icon');
+        $sImageUrlFav = $sImageUrlFcb = $sImageUrlApl = '';
 
         if(!empty($iId)) {
-        	bx_import('BxDolImageTranscoder');
+            bx_import('BxDolImageTranscoder');
 
-        	// favicon icon
-	        $oTranscoder = BxDolImageTranscoder::getObjectInstance(BX_DOL_TRANSCODER_OBJ_ICON_FAVICON);
-	        $sImageUrlFav = $oTranscoder->getImageUrl($iId);
+            // favicon icon
+            $oTranscoder = BxDolImageTranscoder::getObjectInstance(BX_DOL_TRANSCODER_OBJ_ICON_FAVICON);
+            $sImageUrlFav = $oTranscoder->getImageUrl($iId);
 
-	        // facebook icon
-	        $oTranscoder = BxDolImageTranscoder::getObjectInstance(BX_DOL_TRANSCODER_OBJ_ICON_FACEBOOK);
-	        $sImageUrlFcb = $oTranscoder->getImageUrl($iId);
+            // facebook icon
+            $oTranscoder = BxDolImageTranscoder::getObjectInstance(BX_DOL_TRANSCODER_OBJ_ICON_FACEBOOK);
+            $sImageUrlFcb = $oTranscoder->getImageUrl($iId);
 
-	        // apple touch icon
-	        $oTranscoder = BxDolImageTranscoder::getObjectInstance(BX_DOL_TRANSCODER_OBJ_ICON_APPLE);
-	        $sImageUrlApl = $oTranscoder->getImageUrl($iId);
+            // apple touch icon
+            $oTranscoder = BxDolImageTranscoder::getObjectInstance(BX_DOL_TRANSCODER_OBJ_ICON_APPLE);
+            $sImageUrlApl = $oTranscoder->getImageUrl($iId);
         }
 
         if(empty($sImageUrlFav))
-        	$sImageUrlFav = $this->_oTemplate->getIconUrl('favicon.png');
-        
-		if(empty($sImageUrlFcb))
-			$sImageUrlFcb = $this->_oTemplate->getIconUrl('facebook-icon.png');
+            $sImageUrlFav = $this->_oTemplate->getIconUrl('favicon.png');
 
-		if(empty($sImageUrlApl))
-			$sImageUrlApl = $this->_oTemplate->getIconUrl('apple-touch-icon.png');
+        if(empty($sImageUrlFcb))
+            $sImageUrlFcb = $this->_oTemplate->getIconUrl('facebook-icon.png');
 
-		$sRet = '';
-		$sRet .= '<link rel="icon" sizes="16x16" type="image/png" href="' . $sImageUrlFav . '" />';
-		$sRet .= '<link rel="image_src" sizes="100x100" href="' . $sImageUrlFcb . '" />';
-		$sRet .= '<link rel="apple-touch-icon" sizes="152x152" href="' . $sImageUrlApl . '" />';
+        if(empty($sImageUrlApl))
+            $sImageUrlApl = $this->_oTemplate->getIconUrl('apple-touch-icon.png');
+
+        $sRet = '';
+        $sRet .= '<link rel="icon" sizes="16x16" type="image/png" href="' . $sImageUrlFav . '" />';
+        $sRet .= '<link rel="image_src" sizes="100x100" href="' . $sImageUrlFcb . '" />';
+        $sRet .= '<link rel="apple-touch-icon" sizes="152x152" href="' . $sImageUrlApl . '" />';
 
         return $sRet;
     }
@@ -384,7 +384,7 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
         return '<time datetime="' . $sDateUTC . '" data-bx-format="' . getParam($sFormatIdentifier) . '" data-bx-autoformat="' . ($bForceFormat ? 0 : getParam('sys_format_timeago')) . '">' . $sDateUTC . '</time>';
     }
 
-    function statusOnOff ($mixed) 
+    function statusOnOff ($mixed)
     {
         if ($mixed)
             return '<i class="sys-icon circle col-green1"></i> ' . _t('_sys_on');

@@ -12,59 +12,60 @@ bx_import('BxTemplMenu');
 /**
  * Site main menu representation.
  */
-class BxBaseMenuFooter extends BxTemplMenu 
+class BxBaseMenuFooter extends BxTemplMenu
 {
-    public function __construct ($aObject, $oTemplate) 
+    public function __construct ($aObject, $oTemplate)
     {
         parent::__construct ($aObject, $oTemplate);
     }
 
     public function getMenuItems ()
     {
-    	$aItems = parent::getMenuItems();
-    	foreach($aItems as $iKey => $aItem)
-    		switch($aItem['name']) {
-    			case 'switch_language':
-    				bx_import('BxDolLanguages');
-        			$sLanguage = BxDolLanguages::getInstance()->getCurrentLangName();
+        $aItems = parent::getMenuItems();
+        foreach($aItems as $iKey => $aItem)
+            switch($aItem['name']) {
+                case 'switch_language':
+                    bx_import('BxDolLanguages');
+                    $sLanguage = BxDolLanguages::getInstance()->getCurrentLangName();
 
-    				$sIcon = $this->_oTemplate->parseHtmlByName('bx_img.html', array(
-    					'src' => $this->_oTemplate->getIconUrl('sys_fl_' . $sLanguage . '.gif'),
-    					'bx_repeat:attrs' => array()
-    				));
+                    $sIcon = $this->_oTemplate->parseHtmlByName('bx_img.html', array(
+                        'src' => $this->_oTemplate->getIconUrl('sys_fl_' . $sLanguage . '.gif'),
+                        'bx_repeat:attrs' => array()
+                    ));
 
-    				$aItems[$iKey]['title'] = _t('_sys_menu_item_title_switch_language_mask', $aItems[$iKey]['title'], $sIcon);
-    				break;
+                    $aItems[$iKey]['title'] = _t('_sys_menu_item_title_switch_language_mask', $aItems[$iKey]['title'], $sIcon);
+                    break;
 
-    			case 'switch_template':
-    				$aTemplates = get_templates_array(true, true);
-    				$sTemplate = $aTemplates[$this->_oTemplate->getCode()];
+                case 'switch_template':
+                    $aTemplates = get_templates_array(true, true);
+                    $sTemplate = $aTemplates[$this->_oTemplate->getCode()];
 
-    				$aItems[$iKey]['title'] = _t('_sys_menu_item_title_switch_template_mask', $aItems[$iKey]['title'], $sTemplate);
-    				break;
-    		}
+                    $aItems[$iKey]['title'] = _t('_sys_menu_item_title_switch_template_mask', $aItems[$iKey]['title'], $sTemplate);
+                    break;
+            }
 
-    	return $aItems;
+        return $aItems;
     }
 
-    protected function _isVisible ($a) {
+    protected function _isVisible ($a)
+    {
         if(!parent::_isVisible($a))
-        	return false;
+            return false;
 
-		$bResult = true;
+        $bResult = true;
         switch ($a['name']) {
-        	case 'switch_language':
-        		bx_import('BxDolLanguagesQuery');
-        		$aLanguages = BxDolLanguagesQuery::getInstance()->getLanguages(false, true);
-        		if(count($aLanguages) <= 1)
-        			$bResult = false;
-        		break;
+            case 'switch_language':
+                bx_import('BxDolLanguagesQuery');
+                $aLanguages = BxDolLanguagesQuery::getInstance()->getLanguages(false, true);
+                if(count($aLanguages) <= 1)
+                    $bResult = false;
+                break;
 
-        	case 'switch_template':
-        		$aTemplates = get_templates_array(true, true);
-        		if(count($aTemplates) <= 1)
-        			$bResult = false;
-        		break;
+            case 'switch_template':
+                $aTemplates = get_templates_array(true, true);
+                if(count($aTemplates) <= 1)
+                    $bResult = false;
+                break;
         }
 
         return $bResult;

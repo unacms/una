@@ -12,8 +12,10 @@ bx_import('BxBaseAcl');
 /**
  * @see BxDolAcl
  */
-class BxTemplAcl extends BxBaseAcl {
-    public function __construct() {
+class BxTemplAcl extends BxBaseAcl
+{
+    public function __construct()
+    {
         parent::__construct();
     }
 }

@@ -10,18 +10,20 @@
 /**
  * System service for login form functionality.
  */
-class BxBaseServiceLogin extends BxDol {
-
-    public function __construct() {
+class BxBaseServiceLogin extends BxDol
+{
+    public function __construct()
+    {
         parent::__construct();
     }
 
-    public function serviceTest ($n = 1) {
+    public function serviceTest ($n = 1)
+    {
         return $n*2;
     }
 
-    public function serviceLoginForm ($sParams = '') {
-
+    public function serviceLoginForm ($sParams = '')
+    {
         if (isLogged()) {
             return false;
         }
@@ -51,7 +53,7 @@ class BxBaseServiceLogin extends BxDol {
             $aAuthTypes = array('type' => 'hidden');
 
         }
-        
+
         bx_import ('BxDolForm');
         $oForm = BxDolForm::getObjectInstance('sys_login', 'sys_login');
 
@@ -61,7 +63,7 @@ class BxBaseServiceLogin extends BxDol {
 
         $sFormCode = $oForm->getCode();
 
-        $sJoinText = '';        
+        $sJoinText = '';
         if (strpos($sParams, 'no_join_text') === false) {
             bx_import('BxDolPermalinks');
             $sJoinText = '<hr class="bx-def-hr bx-def-margin-sec-topbottom" /><div>' . _t('_sys_txt_login_description', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account')) . '</div>';

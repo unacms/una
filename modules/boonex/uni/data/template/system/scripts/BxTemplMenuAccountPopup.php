@@ -12,9 +12,10 @@ bx_import('BxBaseMenuAccountPopup');
 /**
  * @see BxDolMenu
  */
-class BxTemplMenuAccountPopup extends BxBaseMenuAccountPopup {
-
-    public function __construct ($aObject, $oTemplate = false) {
+class BxTemplMenuAccountPopup extends BxBaseMenuAccountPopup
+{
+    public function __construct ($aObject, $oTemplate = false)
+    {
         parent::__construct ($aObject, $oTemplate);
     }
 }

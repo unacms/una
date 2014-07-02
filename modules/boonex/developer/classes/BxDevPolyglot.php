@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Developer Developer
  * @ingroup     DolphinModules
  *
@@ -20,8 +20,8 @@ class BxDevPolyglot extends BxTemplStudioPolyglot
         'manage' => 'mod_dev_pgt_manage'
     );
 
-	function __construct($aParams)
-	{
+    function __construct($aParams)
+    {
         parent::__construct(isset($aParams['page']) ? $aParams['page'] : '');
 
         $this->aParams = $aParams;
@@ -33,41 +33,41 @@ class BxDevPolyglot extends BxTemplStudioPolyglot
 
     function getPageCss()
     {
-    	$this->oModule->_oTemplate->addStudioCss(array('polyglot.css'));
-		return parent::getPageCss();
+        $this->oModule->_oTemplate->addStudioCss(array('polyglot.css'));
+        return parent::getPageCss();
     }
 
-	function getPageJs()
-	{
-		$this->oModule->_oTemplate->addStudioJs(array('polyglot.js'));
+    function getPageJs()
+    {
+        $this->oModule->_oTemplate->addStudioJs(array('polyglot.js'));
         return parent::getPageJs();
     }
 
-	function getPageJsClass()
-	{
+    function getPageJsClass()
+    {
         return $this->oModule->_oConfig->getJsClass('polyglot');
     }
 
-	function getPageJsObject()
-	{
+    function getPageJsObject()
+    {
         return $this->oModule->_oConfig->getJsObject('polyglot');
     }
 
     function getPageJsCode($aOptions = array(), $bWrap = true)
     {
-    	$aOptions = array_merge($aOptions, array(
-    		'sActionUrl' => BX_DOL_URL_ROOT . $this->oModule->_oConfig->getBaseUri(),
-    		'sPolyglotUrl' => BX_DOL_URL_STUDIO . 'polyglot.php',
-    		'sObjName' => $this->getPageJsObject(),
-    		'sAnimationEffect' => $this->oModule->_oConfig->getAnimationEffect(),
-    		'iAnimationSpeed' => $this->oModule->_oConfig->getAnimationSpeed()
-    	));
+        $aOptions = array_merge($aOptions, array(
+            'sActionUrl' => BX_DOL_URL_ROOT . $this->oModule->_oConfig->getBaseUri(),
+            'sPolyglotUrl' => BX_DOL_URL_STUDIO . 'polyglot.php',
+            'sObjName' => $this->getPageJsObject(),
+            'sAnimationEffect' => $this->oModule->_oConfig->getAnimationEffect(),
+            'iAnimationSpeed' => $this->oModule->_oConfig->getAnimationSpeed()
+        ));
 
-    	return parent::getPageJsCode($aOptions, $bWrap);
+        return parent::getPageJsCode($aOptions, $bWrap);
     }
 
-	protected function getGeneral()
-	{
+    protected function getGeneral()
+    {
         return $this->getGrid($this->aGridObjects['manage']);
     }
 }

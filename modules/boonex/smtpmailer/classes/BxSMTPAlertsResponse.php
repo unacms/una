@@ -12,9 +12,9 @@
 /**
  * alerts handler
  */
-class BxSMTPAlertsResponse extends BxDolAlertsResponse 
-{   
-    public function response($oAlert) 
+class BxSMTPAlertsResponse extends BxDolAlertsResponse
+{
+    public function response($oAlert)
     {
         if ('system' != $oAlert->sUnit || 'before_send_mail' != $oAlert->sAction || 'on' != getParam('bx_smtp_on'))
             return;

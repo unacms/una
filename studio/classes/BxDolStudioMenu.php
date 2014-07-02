@@ -9,8 +9,10 @@
 
 bx_import('BxBaseMenu');
 
-class BxDolStudioMenu extends BxBaseMenu {
-    public function __construct ($aObject, $oTemplate) {
+class BxDolStudioMenu extends BxBaseMenu
+{
+    public function __construct ($aObject, $oTemplate)
+    {
         parent::__construct ($aObject, $oTemplate !== false ? $oTemplate : BxDolStudioTemplate::getInstance());
     }
 }

@@ -13,11 +13,12 @@ bx_import ('BxDolUploader');
  * Upload files using standard HTML forms.
  * @see BxDolUploader
  */
-class BxBaseUploaderSimple extends BxDolUploader {    
-
+class BxBaseUploaderSimple extends BxDolUploader
+{
     protected $_sIframeId;
 
-    function __construct ($aObject, $sStorageObject, $sUniqId) {
+    function __construct ($aObject, $sStorageObject, $sUniqId)
+    {
         parent::__construct($aObject, $sStorageObject, $sUniqId);
         $this->_sIframeId = 'bx-form-input-files-' . $sUniqId . '-iframe';
         $this->_sButtonTemplate = 'uploader_button_simple.html';
@@ -26,7 +27,8 @@ class BxBaseUploaderSimple extends BxDolUploader {
     /**
      * Get uploader button title
      */
-    public function getUploaderButtonTitle($mixed = false) {
+    public function getUploaderButtonTitle($mixed = false)
+    {
         if (is_string($mixed))
             return $mixed;
         elseif (is_array($mixed) && isset($mixed['Simple']))
@@ -37,9 +39,10 @@ class BxBaseUploaderSimple extends BxDolUploader {
 
     /**
      * Show uploader form.
-     * @return HTML string 
+     * @return HTML string
      */
-    public function getUploaderForm($isMultiple = true, $iContentId = false) {
+    public function getUploaderForm($isMultiple = true, $iContentId = false)
+    {
         parent::getUploaderForm($isMultiple, $iContentId);
 
         $sForm = $this->_oTemplate->parseHtmlByName('uploader_form_simple.html', array(
@@ -58,7 +61,6 @@ class BxBaseUploaderSimple extends BxDolUploader {
         bx_import('BxTemplFunctions');
         return BxTemplFunctions::getInstance()->transBox('', $sForm);
     }
-
 
 }
 

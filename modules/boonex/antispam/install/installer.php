@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Antispam Antispam
  * @ingroup     DolphinModules
  *
@@ -11,12 +11,12 @@
 
 bx_import('BxDolStudioInstaller');
 
-class BxAntispamInstaller extends BxDolStudioInstaller 
+class BxAntispamInstaller extends BxDolStudioInstaller
 {
-    function __construct($aConfig) 
+    function __construct($aConfig)
     {
         parent::__construct($aConfig);
-    }    
+    }
 }
 
-/** @} */ 
+/** @} */

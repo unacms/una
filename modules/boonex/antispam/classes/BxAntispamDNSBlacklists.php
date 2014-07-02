@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Antispam Antispam
  * @ingroup     DolphinModules
  *
@@ -104,7 +104,7 @@ class BxAntispamDNSBlacklists extends BxDol
         return $oDb->getAll("SELECT `zonedomain`, `postvresp` FROM `bx_antispam_dnsbl_rules` WHERE `id` = '" . (int)$iId . "' AND `active` = 1");
     }
 
-    public function clearCache () 
+    public function clearCache ()
     {
         $oDb = BxDolDb::getInstance();
         $oDb->cleanCache('sys_dnsbl_'.BX_DOL_DNSBL_CHAIN_SPAMMERS);
@@ -141,7 +141,7 @@ class BxAntispamDNSBlacklists extends BxDol
                 // we got some result from the DNS query, not NXDOMAIN. should we consider 'positive'?
                 $postvresp = $r['postvresp'];	// check positive match criteria
                 if (
-                    BX_DOL_DNSBL_MATCH_ANY == $postvresp || 
+                    BX_DOL_DNSBL_MATCH_ANY == $postvresp ||
                     (preg_match("/^\d+\.\d+\.\d+\.\d+$/", $postvresp) && $resultaddr == $postvresp) ||
                     (is_numeric($postvresp) && (ip2long($resultaddr) & $postvresp))
                 ) {
@@ -168,7 +168,7 @@ class BxAntispamDNSBlacklists extends BxDol
         return "{$m[4]}.{$m[3]}.{$m[2]}.{$m[1]}";
     }
 
-    private function initChains() 
+    private function initChains()
     {
         $oDb = BxDolDb::getInstance();
 

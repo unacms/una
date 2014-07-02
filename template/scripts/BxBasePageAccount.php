@@ -12,14 +12,15 @@ bx_import('BxTemplPage');
 /**
  * Account page.
  */
-class BxBasePageAccount extends BxTemplPage {    
-
+class BxBasePageAccount extends BxTemplPage
+{
     protected $_aMapStatus2LangKey = array (
         BX_PROFILE_STATUS_PENDING => '_sys_txt_account_pending',
         BX_PROFILE_STATUS_SUSPENDED => '_sys_txt_account_suspended',
     );
 
-    public function __construct($aObject, $oTemplate) {
+    public function __construct($aObject, $oTemplate)
+    {
         parent::__construct($aObject, $oTemplate);
 
         bx_import('BxDolProfile');
@@ -44,7 +45,6 @@ class BxBasePageAccount extends BxTemplPage {
             ));
         }
 
-
         // display message if profile isn't active
         if ($oProfile) {
             $sStatus = $oProfile->getStatus();
@@ -68,7 +68,7 @@ class BxBasePageAccount extends BxTemplPage {
                 $oAccount = BxDolAccount::getInstance();
                 if ($oAccount->updateProfileContext($iSwitchToProfileId))
                     $sInformerMsg = _t('_sys_txt_account_profile_context_changed_success', $oProfile->getDisplayName());
-            } 
+            }
 
             if ($oInformer)
                 $oInformer->add('sys-account-profile-context-change-result', $sInformerMsg ? $sInformerMsg : _t('_error occured'), $sInformerMsg ? BX_INFORMER_INFO : BX_INFORMER_ERROR);
@@ -76,11 +76,13 @@ class BxBasePageAccount extends BxTemplPage {
 
     }
 
-    protected function _getPageCacheParams () {
+    protected function _getPageCacheParams ()
+    {
         return getLoggedId(); // cache is different for every account
     }
 
-    protected function _getBlockCode($aBlock) {
+    protected function _getBlockCode($aBlock)
+    {
         $sAdd = '';
         if ('service' == $aBlock['type'] && $aBlock['content'])
             $sAdd = '<a id="top" class="bx-anchor-invisible">&nbsp;</a>';

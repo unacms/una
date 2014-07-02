@@ -12,8 +12,10 @@ bx_import('BxTemplStudioFunctions');
 bx_import('BxDolStudioTemplate');
 bx_import('BxDolStudioLanguagesQuery');
 
-class BxDolStudioLanguages extends BxTemplStudioModules {
-    function __construct() {
+class BxDolStudioLanguages extends BxTemplStudioModules
+{
+    function __construct()
+    {
         parent::__construct();
 
         $this->oDb = new BxDolStudioLanguagesQuery();

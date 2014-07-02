@@ -10,9 +10,10 @@
 /**
  * System services for connections.
  */
-class BxBaseServiceConnections extends BxDol {
-
-    public function __construct() {
+class BxBaseServiceConnections extends BxDol
+{
+    public function __construct()
+    {
         parent::__construct();
     }
 
@@ -21,7 +22,7 @@ class BxBaseServiceConnections extends BxDol {
      */
     public function serviceConnectionsTable ()
     {
-        bx_import('BxDolGrid'); 
+        bx_import('BxDolGrid');
         $oGrid = BxDolGrid::getObjectInstance('sys_grid_connections');
         if (!$oGrid)
             return false;
@@ -30,7 +31,7 @@ class BxBaseServiceConnections extends BxDol {
     }
 
     /**
-     * get number of received unconfirmed connections (friend requests) 
+     * get number of received unconfirmed connections (friend requests)
      * @param $sConnectionsObject connections object to get unconfirmed connections from
      * @param $mixedId id to get connections for, if omitted then logged-in profile id is used
      * @return number

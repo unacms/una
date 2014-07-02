@@ -9,6 +9,6 @@
     <?php endforeach; ?>
     </ul>
 
-    <a href="?action=audit" class="bx-btn"><? echo _t('_sys_inst_server_audit'); ?></a>
+    <a href="?action=audit" class="bx-btn"><?php echo _t('_sys_inst_server_audit'); ?></a>
 
 </div>

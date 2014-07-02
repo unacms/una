@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Antispam Antispam
  * @ingroup     DolphinModules
  *
@@ -11,7 +11,7 @@
 
 bx_import('BxDolModuleConfig');
 
-class BxAntispamConfig extends BxDolModuleConfig 
+class BxAntispamConfig extends BxDolModuleConfig
 {
     /**
      * map system options to the local options names
@@ -38,24 +38,24 @@ class BxAntispamConfig extends BxDolModuleConfig
         'akismet_enable' => '',
     );
 
-	public function __construct($aModule) 
+    public function __construct($aModule)
     {
-	    parent::__construct($aModule);
+        parent::__construct($aModule);
         $this->restoreAntispamOptions ();
-    }   
+    }
 
     /**
      * Set local option value, system value stays intact, useful for testing and debugging
-     */    
-    public function setAntispamOption ($sOption, $mixedVal) 
+     */
+    public function setAntispamOption ($sOption, $mixedVal)
     {
         $this->_aOptions[$sOption] = $mixedVal;
     }
 
     /**
      * Get an option, local value
-     */ 
-    public function getAntispamOption ($sOption) 
+     */
+    public function getAntispamOption ($sOption)
     {
         return $this->_aOptions[$sOption];
     }

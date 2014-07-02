@@ -14,9 +14,9 @@ bx_import('BxBaseModTextFormsEntryHelper');
 /**
  * Entry forms helper functions
  */
-class BxNotesFormsEntryHelper extends BxBaseModTextFormsEntryHelper 
+class BxNotesFormsEntryHelper extends BxBaseModTextFormsEntryHelper
 {
-    public function __construct($oModule) 
+    public function __construct($oModule)
     {
         parent::__construct($oModule);
     }

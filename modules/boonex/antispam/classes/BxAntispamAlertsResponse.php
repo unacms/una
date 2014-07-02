@@ -12,9 +12,9 @@
 /**
  * alerts handler
  */
-class BxAntispamAlertsResponse extends BxDolAlertsResponse 
+class BxAntispamAlertsResponse extends BxDolAlertsResponse
 {
-    public function response($oAlert) 
+    public function response($oAlert)
     {
         if ('account' == $oAlert->sUnit) {
 
@@ -22,7 +22,7 @@ class BxAntispamAlertsResponse extends BxDolAlertsResponse
                 case 'check_login':
                     $oAlert->aExtras['error_msg'] = BxDolService::call('bx_antispam', 'check_login');
                     break;
-                case 'check_join'; 
+                case 'check_join';
                     $oAlert->aExtras['error_msg'] = BxDolService::call('bx_antispam', 'check_join', array($oAlert->aExtras['email'], &$oAlert->aExtras['approve']));
                     break;
             }

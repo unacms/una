@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Developer Developer
  * @ingroup     DolphinModules
  *
@@ -11,7 +11,8 @@
 
 bx_import('BxTemplStudioForms');
 
-class BxDevForms extends BxTemplStudioForms {
+class BxDevForms extends BxTemplStudioForms
+{
     protected $oModule;
     protected $aParams;
     protected $aGridObjects = array(
@@ -22,7 +23,8 @@ class BxDevForms extends BxTemplStudioForms {
         'pre_values' => 'mod_dev_forms_pre_values'
     );
 
-    function __construct($aParams) {
+    function __construct($aParams)
+    {
         parent::__construct(isset($aParams['page']) ? $aParams['page'] : '');
 
         $this->aParams = $aParams;

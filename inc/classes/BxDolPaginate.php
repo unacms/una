@@ -13,10 +13,10 @@ define('BX_DOL_PAGINATE_PER_PAGE_DEFAULT', 10);
 
 /**
  * Paginage for any content.
- * It is used to create paginate, configuring it via input parameters. 
+ * It is used to create paginate, configuring it via input parameters.
  * Paginate don't support total number of pages, moreover it is not recommended to count all records - it slows down the site.
  * To correctly determine last page we need to pass number of available records on the current page plus one - so we always know if next page is available.
- * 
+ *
  *
  * Two types of paginate presentation is supported:
  * - getPaginate() - to get default paginate, it is better to use it on the whole page.
@@ -36,7 +36,7 @@ define('BX_DOL_PAGINATE_PER_PAGE_DEFAULT', 10);
  * - view_all_url - URL for 'view all' page. This url is not showed by default. It is convinient to use with @see getSimplePaginate.
  * - view_all_caption - optional caption for 'view all' link.
  *
- * 
+ *
  * Available markers to replace in 'page_url' and 'on_change_page' parameters:
  * - {per_page} - current number of items to display per page.
  * - {start} - the number to display items starting from.
@@ -62,21 +62,21 @@ define('BX_DOL_PAGINATE_PER_PAGE_DEFAULT', 10);
  * no alerts available
  *
  */
-abstract class BxDolPaginate extends BxDol {
-
+abstract class BxDolPaginate extends BxDol
+{
     protected static $_isCssAdded = false;
 
     protected $_oTemplate;
 
     protected $_iStart; ///< start display items from this number
     protected $_iNum; ///< available results, you need to query per_page + 1 results, so paginate can determine last page
-    protected $_iPerPage; ///< results per page    
+    protected $_iPerPage; ///< results per page
 
-    protected $_sPageUrl; ///< page url of next/prev page, special markers will be replaced here automatically    
-    protected $_sOnChangePage; ///< on click of next/prev page, special markers will be replaced here automatically 
-    protected $_bInfo; ///< show displayed items info    
+    protected $_sPageUrl; ///< page url of next/prev page, special markers will be replaced here automatically
+    protected $_sOnChangePage; ///< on click of next/prev page, special markers will be replaced here automatically
+    protected $_bInfo; ///< show displayed items info
 
-    protected $_sViewAllUrl; ///< view "all results" url, for "simple" paginate 
+    protected $_sViewAllUrl; ///< view "all results" url, for "simple" paginate
     protected $_sViewAllCaption; ///< 'view all' link caption
 
     protected $_sButtonsClass; ///< add this class to buttons class attribute
@@ -85,7 +85,8 @@ abstract class BxDolPaginate extends BxDol {
     /**
      * Constructor
      */
-    public function __construct($aParams, $oTemplate = null) {
+    public function __construct($aParams, $oTemplate = null)
+    {
         parent::__construct();
 
         if ($oTemplate)
@@ -94,7 +95,7 @@ abstract class BxDolPaginate extends BxDol {
             $this->_oTemplate = BxDolTemplate::getInstance();
 
         if (isset($aParams['count']))
-           trigger_error ('Paginate "count" is deprecated - use "num" instead: ' . get_class($this), E_USER_ERROR); 
+           trigger_error ('Paginate "count" is deprecated - use "num" instead: ' . get_class($this), E_USER_ERROR);
 
         //--- Main settings ---//
         $this->_iStart = isset($aParams['start']) && (int)$aParams['start'] > 0 ? (int)$aParams['start'] : 0;
@@ -109,18 +110,19 @@ abstract class BxDolPaginate extends BxDol {
         $this->_sPaginateClass = isset($aParams['paginate_class']) ? $aParams['paginate_class'] : '';
 
         // page url
-        $this->_sPageUrl = isset($aParams['page_url']) ? $aParams['page_url'] : BX_DOL_URL_ROOT;        
+        $this->_sPageUrl = isset($aParams['page_url']) ? $aParams['page_url'] : BX_DOL_URL_ROOT;
 
-        // on click (js mode)    
+        // on click (js mode)
         $this->_sOnChangePage = isset($aParams['on_change_page']) ? $aParams['on_change_page'] : '';
     }
 
     /**
-     * Get number of available results per page. If it is not last page, 
+     * Get number of available results per page. If it is not last page,
      * then this number is number of result per page plus one.
      * @return integer
      */
-    public function getNum() {
+    public function getNum()
+    {
         return $this->_iNum;
     }
 
@@ -129,7 +131,8 @@ abstract class BxDolPaginate extends BxDol {
      * Since data array should contain additional record - we will pop last item from array automatically.
      * @return nothing.
      */
-    public function setNumFromDataArray(&$a, $isAutoPopLastElement = true) {
+    public function setNumFromDataArray(&$a, $isAutoPopLastElement = true)
+    {
         if ($a && is_array($a))
             $this->_iNum = count($a);
         else
@@ -140,13 +143,14 @@ abstract class BxDolPaginate extends BxDol {
     }
 
     /**
-     * Set number of available items on the page, 
-     * it should be number of items per page + 1 (+1 is needed to correctly determine last page). 
+     * Set number of available items on the page,
+     * it should be number of items per page + 1 (+1 is needed to correctly determine last page).
      * It is possible to set this value automatically @see setNumFromDataArray.
      * @param $i positive integer.
      * @return true on success or false if $i param isn't correct.
      */
-    public function setNum($i) {
+    public function setNum($i)
+    {
         if ($i >= 0) {
             $this->_iNum = (int)$i;
             return true;
@@ -158,7 +162,8 @@ abstract class BxDolPaginate extends BxDol {
      * Position, the data is showing from.
      * @return integer.
      */
-    public function getStart() {
+    public function getStart()
+    {
         return $this->_iStart;
     }
 
@@ -167,7 +172,8 @@ abstract class BxDolPaginate extends BxDol {
      * @param $i positive integer.
      * @return true on siccess or false on error.
      */
-    public function setStart($i) {
+    public function setStart($i)
+    {
         if ($i >= 0) {
             $this->_iStart = (int)$i;
             return true;
@@ -179,7 +185,8 @@ abstract class BxDolPaginate extends BxDol {
      * Get number of records per page.
      * @return integer.
      */
-    public function getPerPage() {
+    public function getPerPage()
+    {
         return $this->_iPerPage;
     }
 
@@ -188,7 +195,8 @@ abstract class BxDolPaginate extends BxDol {
      * @param $i positive integer.
      * @return integer.
      */
-    public function setPerPage($i) {
+    public function setPerPage($i)
+    {
         if ((int)$i > 0) {
             $this->_iPerPage = $iPerPage;
             return true;
@@ -197,7 +205,7 @@ abstract class BxDolPaginate extends BxDol {
     }
 
     /**
-     * Set string to pass to 'onclick' for change page button. 
+     * Set string to pass to 'onclick' for change page button.
      * The following markers are replaced automatically:
      * - {per_page}
      * - {start}
@@ -205,21 +213,24 @@ abstract class BxDolPaginate extends BxDol {
      * @param $i positive integer.
      * @return integer.
      */
-    public function setOnChangePage($s) {
+    public function setOnChangePage($s)
+    {
         $this->_sOnChangePage = $s;
     }
 
     /**
      * @return true if previous page is available, or false if not
      */
-    public function isPrevAvail () {
+    public function isPrevAvail ()
+    {
         return $this->_iStart > 0 ? true : false;
     }
 
     /**
      * @return true if next page is available, or false if not
      */
-    public function isNextAvail () {
+    public function isNextAvail ()
+    {
         return $this->_iNum > $this->_iPerPage ? true : false;
     }
 
@@ -230,16 +241,14 @@ abstract class BxDolPaginate extends BxDol {
      * @param $iPerPage - @see setPerPage.
      * @return HTML string.
      */
-    public function getPaginate($iStart = -1, $iNum = -1, $iPerPage = -1) {
-
+    public function getPaginate($iStart = -1, $iNum = -1, $iPerPage = -1)
+    {
         $this->setNum($iNum);
         if (!$this->_iNum)
             return '';
 
-        $this->setStart($iStart);        
+        $this->setStart($iStart);
         $this->setPerPage($iPerPage);
-
-        
 
         $aReplacement = $this->_getReplacement();
 
@@ -300,8 +309,8 @@ abstract class BxDolPaginate extends BxDol {
      * @param $iPerPage - @see setPerPage.
      * @return HTML string.
      */
-    public function getSimplePaginate($sViewAllUrl = '', $iStart = -1, $iNum = -1, $iPerPage = -1) {
-
+    public function getSimplePaginate($sViewAllUrl = '', $iStart = -1, $iNum = -1, $iPerPage = -1)
+    {
         if ($sViewAllUrl)
             $this->_sViewAllUrl = $sViewAllUrl;
 
@@ -312,7 +321,8 @@ abstract class BxDolPaginate extends BxDol {
         return $this->getPaginate($iStart, $iNum, $iPerPage);
     }
 
-    public function addCssJs () {
+    public function addCssJs ()
+    {
         if (self::$_isCssAdded)
             return false;
         $this->_oTemplate->addCss('paginate.css');
@@ -320,18 +330,21 @@ abstract class BxDolPaginate extends BxDol {
         return true;
     }
 
-    protected function _getReplacement() {
+    protected function _getReplacement()
+    {
         return array(
             'start' => $this->_iStart,
             'per_page' => $this->_iPerPage,
         );
     }
 
-    protected function _getPageChangeUrl($aReplacement) {
+    protected function _getPageChangeUrl($aReplacement)
+    {
         return $this->_oTemplate->parseHtmlByContent($this->_sPageUrl, $aReplacement, array('{', '}'));
     }
 
-    protected function _getPageChangeOnClick($aReplacement) {
+    protected function _getPageChangeOnClick($aReplacement)
+    {
         return !empty($this->_sOnChangePage) ? 'onclick="javascript:' . $this->_oTemplate->parseHtmlByContent($this->_sOnChangePage, $aReplacement, array('{', '}')) . '; return false;"' : '';
     }
 

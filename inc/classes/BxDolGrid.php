@@ -7,15 +7,14 @@
  * @{
  */
 
-
-/** 
- * @page objects 
+/**
+ * @page objects
  * @section grid Grid
  * @ref BxDolGrid
  */
 
 /**
- * Grid for any content. 
+ * Grid for any content.
  *
  * It allows to display some data as grid with ready to use features:
  * - paginate
@@ -24,12 +23,12 @@
  * - search
  * - actions
  *
- * The advantages of the this system: 
+ * The advantages of the this system:
  * - Less code to write - so you can concentrate on the main functionality.
  * - Flexibility - you can turn on/off ready features or override it for the custom behavior.
  *
  * Grid is working together with Paginate to look through the data in the grid. @see BxDolPaginate
- * 
+ *
  * @section grid_create Creating the new Grid object:
  *
  * 1. add record to 'sys_objects_grid' table:
@@ -88,22 +87,22 @@
  *      - attr_cell: tag attributes for the data cell.
  *      - attr_head: tag attributes for the header cell.
  * - order: order of the field.
- * 
+ *
  * There are some fields which are always available, additionally to the provided set of fields:
- * 
- * - order: display column as dragable handle, it makes sense if you have data ordered by some field 
- *          and it is specified in field_order, field_id and table fields; reordering is not correctly 
- *          working with paginate, so make sure that paginate_per_page number is big enough to show all records; 
+ *
+ * - order: display column as dragable handle, it makes sense if you have data ordered by some field
+ *          and it is specified in field_order, field_id and table fields; reordering is not correctly
+ *          working with paginate, so make sure that paginate_per_page number is big enough to show all records;
  *          reordering is working with Sql source_type.
- * - checkbox: display column with checkboxes, so several records can be selected for bulk action; 
- *          you need to specify 'field_id' field, so every checkbox have unique row id; 
+ * - checkbox: display column with checkboxes, so several records can be selected for bulk action;
+ *          you need to specify 'field_id' field, so every checkbox have unique row id;
  *          you need to specify bulk actions separately in 'sys_grid_actions' table;
  *          you can override '_isCheckboxSelected' function to display checkbox as checked by default.
- * - actions: display column with single actions, displayed as buttons; you need to specify field_id field, 
+ * - actions: display column with single actions, displayed as buttons; you need to specify field_id field,
  *          so every action is provided with unique row id; you need to specify single actions separately in sys_grid_actions table.
- *  
+ *
  * 3. Add actions to sys_grid_actions table:
- * 
+ *
  * - object: name of the Grid object.
  * - type: action type, one of the following:
  *      - bulk: bulk action, to perform on the set of records, the action is usually displaed below the grid.
@@ -114,67 +113,67 @@
  * - icon: display action as icon, title need to be empty in this case.
  * - confirm: ask confirmation before performing the action, 0 or 1.
  * - order: order of the action in particular actions set by type.
- * 
+ *
  * Usually you need to handle actions manually, but there are several actions which are available by default:
- * 
+ *
  * - delete: delete the record, it works automatically when 'source_type' is 'Sql' and 'field_id', 'table' fields are specified.
  *
  *
  *
  * @section grid_display_custom_cell Displaying custom cell
- * 
- * Cell is displayed with default design. It is possible to easily customize its design by specifying custom attributes as 'attr_cell' in params field in sys_grid_fields table. 
  *
- * If it is not enough, you can customize it even more by adding the method to your custom class with the following format: 
+ * Cell is displayed with default design. It is possible to easily customize its design by specifying custom attributes as 'attr_cell' in params field in sys_grid_fields table.
+ *
+ * If it is not enough, you can customize it even more by adding the method to your custom class with the following format:
  * _getCell[field name]
- * where [field name] is the name of the field you want to have custom look with the capital first letter. 
+ * where [field name] is the name of the field you want to have custom look with the capital first letter.
  *
  * For example:
  *
  * @code
- * protected function _getCellStatus ($mixedValue, $sKey, $aField, $aRow) {        
- * 
+ * protected function _getCellStatus ($mixedValue, $sKey, $aField, $aRow) {
+ *
  *     $sAttr = $this->_convertAttrs(
  *         $aField, 'attr_cell',
- *         false, 
+ *         false,
  *         isset($aField['width']) ? 'width:' . $aField['width'] : false // add default styles
  *     );
  *     return '<td ' . $sAttr . '><span style="background-color:' . ('Active' == $mixedValue ? '#cfc' : '#fcc') . '">' . $mixedValue . '</span></td>';
- * } 
+ * }
  * @endcode
- *  
+ *
  * Above example is displaying user's status using different colors depending on the status value. Please note that you need to convert attributes by adding some default classes or styles if you need.
  *
  *
  *
  * @section grid_display_custom_header Displaying custom column header
- * 
+ *
  * This is working similar to displaying custom cell. It easily customize its design by specifying custom attributes as 'attr_head' in params field in sys_grid_fields table.
- * If it is not enough, you can customize it even more by adding the method to your custom class with the following format: 
+ * If it is not enough, you can customize it even more by adding the method to your custom class with the following format:
  * _getCellHeader[field name]
- * where [field name] is the name of the field you want to have custom look with the capital first letter. 
- * 
+ * where [field name] is the name of the field you want to have custom look with the capital first letter.
+ *
  * For example:
  *
  * @code
- * protected function _getCellHeaderStatus ($sKey, $aField) { 
+ * protected function _getCellHeaderStatus ($sKey, $aField) {
  *     $s = parent::_getCellHeaderDefault($sKey, $aField);
  *     return preg_replace ('/<th(.*?)>(.*?)<\/th>/', '<th$1><img src="' . BxDolTemplate::getInstance()->getIconUrl('user.png') . '"></th>', $s);
  * }
  * @endcode
- * 
- * The above example replaces column header text with the image. 
+ *
+ * The above example replaces column header text with the image.
  *
  *
  *
  * @section grid_display_custom_action Displaying custom action
- * 
+ *
  * All actions are displayed as buttons. Bulk and independent actions are displaed as big buttons and single actions are displayed as small buttons.
- * 
+ *
  * It is possible to completely customize it by adding the following method to your custom class:
  * _getAction[action name]
- * where [action name] is the action name with the capital first letter. 
- * 
+ * where [action name] is the action name with the capital first letter.
+ *
  * For example:
  *
  * @code
@@ -186,30 +185,30 @@
  *     return '<button ' . $sAttr . ' onclick="$(this).off(); alert(\'default behaviour is overrided, so the action is not performed\');">' . $a['title'] . '</button>';
  * }
  * @endcode
- * 
+ *
  * The above example disables default onclick event and just displays an alert. Please note that you need to convert attributes by adding some default classes or styles if you need.
  *
- * 
- * 
+ *
+ *
  * @section grid_add_action_handler Add action handler
  *
- * As it was mentioned earlier only several actions can be handled automatically, all other actions must be processed manually. 
- * To add action handler you need to add method to your custom class with the following format: 
+ * As it was mentioned earlier only several actions can be handled automatically, all other actions must be processed manually.
+ * To add action handler you need to add method to your custom class with the following format:
  * performAction[action name]
- * where [action name] is the action name with the capital first letter. 
+ * where [action name] is the action name with the capital first letter.
  *
  * For example:
  *
  * @code
  * public function performActionApprove() {
- * 
+ *
  *     $iAffected = 0;
  *     $aIds = bx_get('ids');
  *     if (!$aIds || !is_array($aIds)) {
  *         $this->_echoResultJson(array());
  *         exit;
  *     }
- * 
+ *
  *     $aIdsAffected = array ();
  *     foreach ($aIds as $mixedId) {
  *         if (!$this->_approve($mixedId))
@@ -217,14 +216,14 @@
  *         $aIdsAffected[] = $mixedId;
  *         $iAffected++;
  *     }
- * 
+ *
  *     $this->_echoResultJson(array(
- *         'msg' => $iAffected > 0 ? sprintf("%d profiles successfully activated", $iAffected) : "Profile(s) activation failed", 
+ *         'msg' => $iAffected > 0 ? sprintf("%d profiles successfully activated", $iAffected) : "Profile(s) activation failed",
  *         'grid' => $this->getCode(false),
  *         'blink' => $aIdsAffected,
  *     ));
  * }
- * 
+ *
  * protected function _approve ($mixedId) {
  *     $oDb = BxDolDb::getInstance();
  *     $sTable = $this->_aOptions['table'];
@@ -233,21 +232,21 @@
  *     return $oDb->query($sQuery);
  * }
  * @endcode
- * 
+ *
  * The action can be used as 'single' or 'bulk', in the case of 'single' action 'ids' array always has one element.
- * 
- * As the result, action must outputs JSON array, which is done by _echoResultJson function. 
+ *
+ * As the result, action must outputs JSON array, which is done by _echoResultJson function.
  * The defined indexes in the array determines behavior after action is performed, the following behaviors are supported:
- * 
+ *
  * - msg: display javascript alert message.
  * - grid: reload grid data with the provided HTML code.
  * - popup: display popup with the provided HTML code.
  * - blink: highlight(blink effect) the specified rows, by the ids.
- * 
+ *
  */
 
-class BxDolGrid extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable {
-
+class BxDolGrid extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
+{
     protected $_aMarkers = array ();
 
     protected $_sObject;
@@ -258,7 +257,8 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable 
      * Constructor
      * @param $aOptions array of grid options
      */
-    public function __construct($aOptions) {
+    public function __construct($aOptions)
+    {
         parent::__construct();
 
         $this->_sObject = $aOptions['object'];
@@ -270,8 +270,8 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable 
      * @param $sObject object name
      * @return object instance or false on error
      */
-    public static function getObjectInstance($sObject) {
-
+    public static function getObjectInstance($sObject)
+    {
         if (isset($GLOBALS['bxDolClasses']['BxDolGrid!'.$sObject]))
             return $GLOBALS['bxDolClasses']['BxDolGrid!'.$sObject];
 
@@ -281,24 +281,25 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable 
             return false;
 
         bx_import('BxTemplGrid');
-        $sClass = 'BxTemplGrid';        
+        $sClass = 'BxTemplGrid';
         if (!empty($aObject['override_class_name'])) {
             $sClass = $aObject['override_class_name'];
             if (!empty($aObject['override_class_file']))
                 require_once(BX_DIRECTORY_PATH_ROOT . $aObject['override_class_file']);
-            else    
+            else
                 bx_import($sClass);
         }
-        
+
         $o = new $sClass($aObject);
-        
+
         if (!$o->_isVisibleGrid($aObject))
             return false;
 
         return ($GLOBALS['bxDolClasses']['BxDolGrid!'.$sObject] = $o);
     }
 
-    public function getObject() {
+    public function getObject()
+    {
         return $this->_sObject;
     }
 
@@ -307,7 +308,8 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable 
      * @param $a array of markers as key => value
      * @return true on success or false on error
      */
-    public function addMarkers ($a) {
+    public function addMarkers ($a)
+    {
         if (empty($a) || !is_array($a))
             return false;
         $this->_aMarkers = array_merge ($this->_aMarkers, $a);
@@ -318,21 +320,24 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable 
      * Replace provided markers in form array
      * @param $a form description array
      * @return array where markes are replaced with real values
-     */ 
-    protected function _replaceMarkers () {
+     */
+    protected function _replaceMarkers ()
+    {
         $this->_aOptions['source'] = bx_replace_markers($this->_aOptions['source'], $this->_aMarkers);
     }
 
-    protected function _getData ($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage) {
+    protected function _getData ($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
+    {
         $sFunc = '_getData' . $this->_aOptions['source_type'];
         return $this->$sFunc($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }
 
-    protected function _getDataArray ($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage) {
+    protected function _getDataArray ($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
+    {
         if ($this->_aOptions['source'] && !is_array($this->_aOptions['source'])) {
             $this->_aOptions['source'] = unserialize($this->_aOptions['source']);
         }
-        
+
         // apply filter
         if ($sFilter && (!empty($this->_aOptions['filter_fields']) || !empty($this->_aOptions['filter_fields_translatable']))) {
             $aSource = array();
@@ -365,10 +370,10 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable 
         $sSortField = false;
         $iSortDir = 1;
         if ($sOrderField && !empty($this->_aOptions['sorting_fields']) && is_array($this->_aOptions['sorting_fields']) && in_array($sOrderField, $this->_aOptions['sorting_fields'])) { // explicit order
-            $sSortField = $sOrderField; 
+            $sSortField = $sOrderField;
             $iSortDir = 0 == strcasecmp($sOrderDir, 'desc') ? -1 : 1;
         } elseif (!empty($this->_aOptions['field_order'])) { // order by "order" field
-            $sSortField = $this->_aOptions['field_order']; 
+            $sSortField = $this->_aOptions['field_order'];
         }
 
         if ($sSortField) {
@@ -383,12 +388,13 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable 
         return array_slice($aSourceOrdered, $iStart, $iPerPage, true);
     }
 
-   protected function _getDataSql ($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage) {
+   protected function _getDataSql ($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
+   {
         $oDb = BxDolDb::getInstance();
         $sQuery = $this->_aOptions['source'];
 
         if (false === stripos($sQuery, ' WHERE '))
-            $sQuery .= " WHERE 1 ";        
+            $sQuery .= " WHERE 1 ";
 
         // add filter condition
         $sOrderByFilter = '';
@@ -410,7 +416,7 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable 
                 if (!empty($this->_aOptions['filter_fields_translatable'])) {
                     $sCondFields = '';
                     foreach ($this->_aOptions['filter_fields_translatable'] as $sField)
-                        $sCondFields .= "`k`.`Key` = `{$sField}` OR "; 
+                        $sCondFields .= "`k`.`Key` = `{$sField}` OR ";
 
                     $sCondFields = rtrim($sCondFields, ' OR ');
 
@@ -427,7 +433,7 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable 
 
                     $sCondFields = '';
                     foreach ($this->_aOptions['filter_fields'] as $sField)
-                        $sCondFields .= "`{$sField}`,"; 
+                        $sCondFields .= "`{$sField}`,";
 
                     $sCondFields = rtrim($sCondFields, ',');
 
@@ -458,31 +464,31 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable 
                 $sQuery .= ' AND (' . $sCond . ')';
         }
 
-        // add order 
+        // add order
         $sQuery .= $this->_getDataSqlOrderClause ($sOrderByFilter, $sOrderField, $sOrderDir);
-                
+
 
         $sQuery = $sQuery . $oDb->prepare(' LIMIT ?, ?', $iStart, $iPerPage);
         return $oDb->getAll($sQuery);
     }
 
-    protected function _getDataSqlOrderClause ($sOrderByFilter, $sOrderField, $sOrderDir) {
-
+    protected function _getDataSqlOrderClause ($sOrderByFilter, $sOrderField, $sOrderDir)
+    {
         $sOrderClause = '';
 
-        if ($sOrderField && is_array($this->_aOptions['sorting_fields']) && in_array($sOrderField, $this->_aOptions['sorting_fields'])) { // explicit order 
+        if ($sOrderField && is_array($this->_aOptions['sorting_fields']) && in_array($sOrderField, $this->_aOptions['sorting_fields'])) { // explicit order
 
             $sDir = (0 == strcasecmp($sOrderDir, 'desc') ? 'DESC' : 'ASC');
 
-            if (is_array($this->_aOptions['sorting_fields_translatable']) && in_array($sOrderField, $this->_aOptions['sorting_fields_translatable'])) { 
+            if (is_array($this->_aOptions['sorting_fields_translatable']) && in_array($sOrderField, $this->_aOptions['sorting_fields_translatable'])) {
 
-                // translatable fields            
+                // translatable fields
                 bx_import('BxDolLanguages');
                 $iLang = BxDolLanguages::getInstance()->getCurrentLangId();
                 $oDb = BxDolDb::getInstance();
                 $sOrderClause = $oDb->prepare("ORDER BY (SELECT `s`.`string` FROM `sys_localization_strings` AS `s` INNER JOIN `sys_localization_keys` AS `k` ON (`k`.`ID` = `s`.`IDKey`) WHERE `k`.`KEY` = `$sOrderField` AND `s`.`IDLanguage` = ? LIMIT 1) ", $iLang) . $sDir;
 
-            } else { 
+            } else {
 
                 // regular fields
                 $sOrderClause = " ORDER BY `$sOrderField` $sDir";
@@ -498,19 +504,20 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable 
             if (false == strpos($this->_aOptions['field_order'], ',')) {
                 $sOrderClause = " ORDER BY `" . $this->_aOptions['field_order'] . "` " . $this->_sDefaultSortingOrder;
             } else {
-                $a = explode(',', $this->_aOptions['field_order']);                
+                $a = explode(',', $this->_aOptions['field_order']);
                 foreach ($a as $sField)
                     $sOrderClause .= "`" . trim($sField) . "` " . $this->_sDefaultSortingOrder . ", ";
                 if ($sOrderClause)
                     $sOrderClause = " ORDER BY " . trim($sOrderClause, ', ');
             }
 
-        } 
+        }
 
         return $sOrderClause;
-    }    
+    }
 
-    protected function _getCellData($sKey, $aField, $aRow) {
+    protected function _getCellData($sKey, $aField, $aRow)
+    {
         if (isset($aRow[$sKey])) {
             if (!empty($aField['display'])) {
                 bx_import('BxDolForm');
@@ -525,16 +532,19 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable 
         }
     }
 
-    protected function _cmp ($r1, $r2) {        
+    protected function _cmp ($r1, $r2)
+    {
         $iRet = strcasecmp($r1[$this->_tmpOrderField], $r2[$this->_tmpOrderField]);
         return $iRet ? $this->_tmpOrderDir * $iRet : 0;
     }
 
-    protected function _genMethodName ($s) {
+    protected function _genMethodName ($s)
+    {
         return bx_gen_method_name($s);
     }
 
-    protected function _isVisibleGrid ($a) {
+    protected function _isVisibleGrid ($a)
+    {
         bx_import('BxDolAcl');
         if (!isset($a['visible_for_levels']))
             return true;

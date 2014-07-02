@@ -7,19 +7,19 @@
  * @{
  */
 
-class BxDolUpgradeController {
-
+class BxDolUpgradeController
+{
     protected $oDb;
     protected $oUtil;
 
-    function BxDolUpgradeController() {
+    function BxDolUpgradeController()
+    {
         $this->oDb = new BxDolUpgradeDb();
         $this->oUtil = new BxDolUpgradeUtil($this->oDb);
     }
 
-
-    function showAvailableUpgrades () {
-
+    function showAvailableUpgrades ()
+    {
         $aTemplateFolders = array ();
         $aFolders = $this->oUtil->readUpgrades();
         foreach ($aFolders as $sFolder) {
@@ -30,8 +30,8 @@ class BxDolUpgradeController {
         require (BX_UPGRADE_DIR_TEMPLATES . 'show_available_updates.php');
     }
 
-    function runUpgrade ($sFolder) {
-
+    function runUpgrade ($sFolder)
+    {
         // set current folder
         $this->oUtil->setFolder($sFolder);
 

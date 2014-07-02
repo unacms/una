@@ -11,16 +11,17 @@ bx_import('BxDolModuleQuery');
 bx_import('BxTemplStudioPage');
 bx_import('BxDolStudioDesignsQuery');
 
-
 define('BX_DOL_STUDIO_TEMPL_DEFAULT', 'basic');
 define('BX_DOL_STUDIO_TEMPL_TYPE_DEFAULT', 'general');
 
-class BxDolStudioDesign extends BxTemplStudioPage {
-	protected $sTemplate;
-	protected $aTemplate;
-	protected $sPage;
+class BxDolStudioDesign extends BxTemplStudioPage
+{
+    protected $sTemplate;
+    protected $aTemplate;
+    protected $sPage;
 
-    function __construct($sTemplate = "", $sPage = "") {
+    function __construct($sTemplate = "", $sPage = "")
+    {
         parent::__construct($sTemplate);
 
         $this->oDb = new BxDolStudioDesignsQuery();
@@ -35,18 +36,18 @@ class BxDolStudioDesign extends BxTemplStudioPage {
 
         //--- Check actions ---//
         if(($sAction = bx_get('templ_action')) !== false) {
-	        $sAction = bx_process_input($sAction);
+            $sAction = bx_process_input($sAction);
 
             $aResult = array('code' => 1, 'message' => _t('_adm_dsg_err_cannot_process_action'));
-	        switch($sAction) {
-	            case 'activate':
-	                $sValue = bx_process_input(bx_get('templ_value'));
-	                if(empty($sValue))
-	                    break;
+            switch($sAction) {
+                case 'activate':
+                    $sValue = bx_process_input(bx_get('templ_value'));
+                    if(empty($sValue))
+                        break;
 
-	                $aResult = $this->activate($sValue);
-	                break;
-	        }
+                    $aResult = $this->activate($sValue);
+                    break;
+            }
 
             echo json_encode($aResult);
             exit;
@@ -61,14 +62,15 @@ class BxDolStudioDesign extends BxTemplStudioPage {
 
         $this->addAction(array(
             'type' => 'switcher',
-        	'name' => 'activate',
-        	'caption' => '_adm_txt_pca_active',
+            'name' => 'activate',
+            'caption' => '_adm_txt_pca_active',
             'checked' => (int)$this->aTemplate['enabled'] == 1,
             'onchange' => "javascript:" . $this->getPageJsObject() . ".activate('" . $this->sTemplate . "', this)"
         ), false);
     }
 
-    function activate($sTemplate) {
+    function activate($sTemplate)
+    {
         $aTemplate = BxDolModuleQuery::getInstance()->getModuleByName($sTemplate);
         if(empty($aTemplate) || !is_array($aTemplate))
             return array('code' => 1, 'message' => _t('_adm_err_operation_failed'));
@@ -98,8 +100,7 @@ class BxDolStudioDesign extends BxTemplStudioPage {
                 'page_menu_code' => $this->getPageMenu(),
                 'page_main_code' => $this->getPageCode()
             ));
-        }
-        else
+        } else
             $aResult['content'] = "";
 
         return $aResult;

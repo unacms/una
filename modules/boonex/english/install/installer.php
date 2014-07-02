@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    English English language
  * @ingroup     DolphinModules
  *
@@ -11,9 +11,9 @@
 
 bx_import('BxDolStudioInstaller');
 
-class BxEngInstaller extends BxDolStudioInstaller 
+class BxEngInstaller extends BxDolStudioInstaller
 {
-    function __construct($aConfig) 
+    function __construct($aConfig)
     {
         parent::__construct($aConfig);
     }

@@ -10,43 +10,51 @@
 
 bx_import('BxDolStudioPolyglot');
 
-class BxBaseStudioPolyglot extends BxDolStudioPolyglot {
-	protected $sSubpageUrl;
-	protected $aMenuItems = array(
-        BX_DOL_STUDIO_PGT_TYPE_GENERAL, 
-        BX_DOL_STUDIO_PGT_TYPE_KEYS, 
-    	BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES
-	);
+class BxBaseStudioPolyglot extends BxDolStudioPolyglot
+{
+    protected $sSubpageUrl;
+    protected $aMenuItems = array(
+        BX_DOL_STUDIO_PGT_TYPE_GENERAL,
+        BX_DOL_STUDIO_PGT_TYPE_KEYS,
+        BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES
+    );
     protected $aGridObjects = array(
         'keys' => 'sys_studio_lang_keys',
         'etemplates' => 'sys_studio_lang_etemplates',
     );
 
-    function __construct($sPage = '') {
+    function __construct($sPage = '')
+    {
         parent::__construct($sPage);
 
         $this->sSubpageUrl = BX_DOL_URL_STUDIO . 'polyglot.php?page=';
     }
-    function getPageCss() {
+    function getPageCss()
+    {
         return array_merge(parent::getPageCss(), array('forms.css', 'paginate.css', 'polyglot.css'));
     }
-    function getPageJs() {
+    function getPageJs()
+    {
         return array_merge(parent::getPageJs(), array('jquery.autosize.min.js', 'settings.js', 'polyglot.js'));
     }
-	function getPageJsClass() {
+    function getPageJsClass()
+    {
         return 'BxDolStudioPolyglot';
     }
-    function getPageJsObject() {
+    function getPageJsObject()
+    {
         return 'oBxDolStudioPolyglot';
     }
-    function getPageJsCode($aOptions = array(), $bWrap = true) {
-    	$aOptions = array_merge($aOptions, array(
-    		'sActionUrl' => BX_DOL_URL_STUDIO . 'polyglot.php'
-    	));
+    function getPageJsCode($aOptions = array(), $bWrap = true)
+    {
+        $aOptions = array_merge($aOptions, array(
+            'sActionUrl' => BX_DOL_URL_STUDIO . 'polyglot.php'
+        ));
 
-    	return parent::getPageJsCode($aOptions, $bWrap);
+        return parent::getPageJsCode($aOptions, $bWrap);
     }
-    function getPageMenu($aMenu = array(), $aMarkers = array()) {
+    function getPageMenu($aMenu = array(), $aMarkers = array())
+    {
         $sJsObject = $this->getPageJsObject();
 
         $aMenu = array();
@@ -54,15 +62,16 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot {
             $aMenu[] = array(
                 'name' => $sMenuItem,
                 'icon' => 'mi-pgt-' . $sMenuItem . '.png',
-            	'link' => $this->sSubpageUrl . $sMenuItem,
-            	'title' => _t('_adm_lmi_cpt_' . $sMenuItem),
-            	'selected' => $sMenuItem == $this->sPage
+                'link' => $this->sSubpageUrl . $sMenuItem,
+                'title' => _t('_adm_lmi_cpt_' . $sMenuItem),
+                'selected' => $sMenuItem == $this->sPage
             );
 
         return parent::getPageMenu($aMenu);
     }
 
-    function getPageCode($bHidden = false) {
+    function getPageCode($bHidden = false)
+    {
         $sMethod = 'get' . ucfirst($this->sPage);
         if(!method_exists($this, $sMethod))
             return '';
@@ -70,15 +79,16 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot {
         return $this->$sMethod();
     }
 
-    protected function getGeneral() {
+    protected function getGeneral()
+    {
         $oTemplate = BxDolStudioTemplate::getInstance();
-        
+
         bx_import('BxTemplStudioSettings');
         $oPage = new BxTemplStudioSettings(BX_DOL_STUDIO_STG_TYPE_DEFAULT, BX_DOL_STUDIO_STG_CATEGORY_LANGUAGES);
 
         $aTmplVars = array(
             'js_object' => $this->getPageJsObject(),
-        	'bx_repeat:blocks' => $oPage->getPageCode(),
+            'bx_repeat:blocks' => $oPage->getPageCode(),
             'bx_if:show_new_key_popup' => array(
                 'condition' => false,
                 'content' => array()
@@ -88,15 +98,18 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot {
         return $oTemplate->parseHtmlByName('polyglot.html', $aTmplVars);
     }
 
-    protected function getKeys() {
+    protected function getKeys()
+    {
         return $this->getGrid($this->aGridObjects['keys']);
     }
 
-    protected function getEtemplates() {
+    protected function getEtemplates()
+    {
         return $this->getGrid($this->aGridObjects['etemplates']);
     }
 
-    protected function getGrid($sObjectName) {
+    protected function getGrid($sObjectName)
+    {
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         bx_import('BxDolGrid');
@@ -105,9 +118,9 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot {
             return '';
 
         $aTmplVars = array(
-        	'bx_repeat:blocks' => array(
+            'bx_repeat:blocks' => array(
                 array(
-                	'caption' => '',
+                    'caption' => '',
                     'panel_top' => '',
                     'items' => $oGrid->getCode(),
                     'panel_bottom' => ''

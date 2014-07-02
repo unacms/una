@@ -13,7 +13,7 @@ bx_import('BxTemplMenu');
 
 class BxSitesMenuViewSite extends BxTemplMenu
 {
-	protected $_oModule;
+    protected $_oModule;
     protected $_aContentInfo;
 
     public function __construct($aObject, $oTemplate = false)
@@ -26,7 +26,7 @@ class BxSitesMenuViewSite extends BxTemplMenu
         $this->_aContentInfo = array();
         $aParams = $this->_oModule->getSelectParam();
         if($aParams === false)
-        	return;
+            return;
 
         $this->_aContentInfo = $this->_oModule->_oDb->getAccount($aParams);
         if ($this->_aContentInfo)
@@ -37,11 +37,11 @@ class BxSitesMenuViewSite extends BxTemplMenu
      * Check if menu items is visible.
      * @param $a menu item array
      * @return boolean
-     */ 
+     */
     protected function _isVisible ($a)
     {
         if(empty($this->_aContentInfo))
-        	return false;
+            return false;
 
         $sMsg = $this->_oModule->isAllowedView($this->_aContentInfo);
         if($sMsg !== CHECK_ACTION_RESULT_ALLOWED)
@@ -50,7 +50,8 @@ class BxSitesMenuViewSite extends BxTemplMenu
         return true;
     }
 
-    protected function _addJsCss() {
+    protected function _addJsCss()
+    {
         parent::_addJsCss();
         $this->_oModule->_oTemplate->addJs('forms.js');
     }

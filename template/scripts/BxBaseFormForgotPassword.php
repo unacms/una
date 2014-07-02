@@ -9,12 +9,13 @@
 
 bx_import('BxTemplFormView');
 
-class BxFormForgotPasswordCheckerHelper extends BxDolFormCheckerHelper {
-
+class BxFormForgotPasswordCheckerHelper extends BxDolFormCheckerHelper
+{
     /**
      * Check if email is uniq.
      */
-    function checkEmailExist ($s) {
+    function checkEmailExist ($s)
+    {
         if (!$this->checkEmail($s))
             return false;
 
@@ -27,9 +28,10 @@ class BxFormForgotPasswordCheckerHelper extends BxDolFormCheckerHelper {
 /**
  * Forgot Password Form.
  */
-class BxBaseFormForgotPassword extends BxTemplFormView {
-
-    public function __construct($aInfo, $oTemplate) {
+class BxBaseFormForgotPassword extends BxTemplFormView
+{
+    public function __construct($aInfo, $oTemplate)
+    {
         parent::__construct($aInfo, $oTemplate);
     }
 

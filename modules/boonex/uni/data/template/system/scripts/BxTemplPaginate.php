@@ -12,9 +12,9 @@ bx_import("BxBasePaginate");
 /**
  * @see BxDolPaginate
  */
-class BxTemplPaginate extends BxBasePaginate 
+class BxTemplPaginate extends BxBasePaginate
 {
-    function __construct($aParams, $oTemplate = false) 
+    function __construct($aParams, $oTemplate = false)
     {
         parent::__construct($aParams, $oTemplate);
     }

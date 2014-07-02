@@ -15,14 +15,14 @@ bx_import('BxDolProfile');
 /**
  * Profile forms helper functions
  */
-class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper 
+class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
 {
-    public function __construct($oModule) 
+    public function __construct($oModule)
     {
         parent::__construct($oModule);
     }
 
-    protected function _getProfileAndContentData ($iContentId) 
+    protected function _getProfileAndContentData ($iContentId)
     {
         $aContentInfo = array();
         $oProfile = false;
@@ -40,16 +40,16 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         return array ($oProfile, $aContentInfo);
     }
 
-    protected function onDataDeleteAfter ($iContentId, $aContentInfo, $oProfile) 
+    protected function onDataDeleteAfter ($iContentId, $aContentInfo, $oProfile)
     {
         // delete profile
         if (!$oProfile->delete($aContentInfo['profile_id']))
-            return MsgBox(_t('_sys_txt_error_entry_delete')); 
+            return MsgBox(_t('_sys_txt_error_entry_delete'));
 
         return '';
     }
 
-    protected function onDataEditBefore ($iContentId, $aContentInfo, &$aTrackTextFieldsChanges) 
+    protected function onDataEditBefore ($iContentId, $aContentInfo, &$aTrackTextFieldsChanges)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
@@ -61,7 +61,7 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
             $aTrackTextFieldsChanges = array ();
     }
 
-    protected function onDataEditAfter ($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile) 
+    protected function onDataEditAfter ($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
@@ -73,10 +73,10 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
             $oProfile->disapprove(BX_PROFILE_ACTION_AUTO);
 
         // create an alert
-        bx_alert($this->_oModule->getName(), 'edited', $aContentInfo[$CNF['FIELD_ID']]); 
+        bx_alert($this->_oModule->getName(), 'edited', $aContentInfo[$CNF['FIELD_ID']]);
     }
 
-    protected function onDataAddAfter ($iContentId) 
+    protected function onDataAddAfter ($iContentId)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
@@ -93,7 +93,7 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         // set created profile some default membership
         bx_import('BxDolAcl');
         $iAclLevel = getParam($CNF['PARAM_DEFAULT_ACL_LEVEL']);
-        BxDolAcl::getInstance()->setMembership($iProfileId, $iAclLevel, 0, true); 
+        BxDolAcl::getInstance()->setMembership($iProfileId, $iAclLevel, 0, true);
 
         // alert
         bx_alert($this->_oModule->getName(), 'added', $iContentId);

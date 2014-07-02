@@ -14,9 +14,9 @@ bx_import('BxBaseModProfileFormsEntryHelper');
 /**
  * Person profile forms functions
  */
-class BxPersonsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper 
+class BxPersonsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper
 {
-    public function __construct($oModule) 
+    public function __construct($oModule)
     {
         parent::__construct($oModule);
     }

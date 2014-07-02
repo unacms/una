@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    BaseGeneral Base classes for modules
  * @ingroup     DolphinModules
  *
@@ -14,24 +14,24 @@ bx_import('BxDolStorage');
 bx_import('BxDolImageTranscoder');
 bx_import('BxDolService');
 
-class BxBaseModGeneralInstaller extends BxDolStudioInstaller 
+class BxBaseModGeneralInstaller extends BxDolStudioInstaller
 {
     protected $_aStorages = array (); // storage objects to automatically delete files from upon module uninstallation, don't add storage objects used in image transcoder objects
 
     protected $_aTranscoders = array (); // image transcoder objects to automatically register/unregister necessary alerts for
 
-    protected $_aConnections = array (); // connections objects associated with module data, it must be defined which content is associated with the connection, the key is connection object name and value is array (possible array values: type, conn, table, field_id), if 'type' == 'profiles', then it is considered profiles connection and other possible param is 'conn' ('initiator', 'content' or 'both') when 'type' == 'custom' (or ommited), then other possible params are 'conn', 'table' and 'field_id' 
+    protected $_aConnections = array (); // connections objects associated with module data, it must be defined which content is associated with the connection, the key is connection object name and value is array (possible array values: type, conn, table, field_id), if 'type' == 'profiles', then it is considered profiles connection and other possible param is 'conn' ('initiator', 'content' or 'both') when 'type' == 'custom' (or ommited), then other possible params are 'conn', 'table' and 'field_id'
 
     protected $_bUpdateTimeline = false; // set to true to automatically register handlers for timeline module
 
     protected $_aMenuTriggers = array(); // list of menu triggers, it must be specified in the module which adds menu item and in modules where menu items are added, @see BxDolMenu::processMenuTrigger
 
-    function __construct($aConfig) 
+    function __construct($aConfig)
     {
         parent::__construct($aConfig);
     }
 
-    function enable($aParams) 
+    function enable($aParams)
     {
         $aResult = parent::enable($aParams);
 
@@ -52,8 +52,8 @@ class BxBaseModGeneralInstaller extends BxDolStudioInstaller
         return $aResult;
     }
 
-    function disable($aParams) 
-    {    
+    function disable($aParams)
+    {
         if ($this->_bUpdateTimeline && BxDolRequest::serviceExists('timeline', 'delete_handlers'))
             BxDolService::call('timeline', 'delete_handlers', array($this->_aConfig['home_uri']));
 
@@ -68,17 +68,17 @@ class BxBaseModGeneralInstaller extends BxDolStudioInstaller
         return $aResult;
     }
 
-    function install($aParams, $bEnable = false) 
+    function install($aParams, $bEnable = false)
     {
         return parent::install($aParams, $bEnable);
     }
 
-    function uninstall($aParams, $bDisable = false) 
+    function uninstall($aParams, $bDisable = false)
     {
         // check if module is already waiting while files are deleting
         bx_import('BxDolInstallerUtils');
         if (BxDolInstallerUtils::isModulePendingUninstall($this->_aConfig['home_uri']))
-        	return array(
+            return array(
                 'message' => _t('_adm_err_modules_pending_uninstall_already'),
                 'result' => false,
             );
@@ -100,12 +100,12 @@ class BxBaseModGeneralInstaller extends BxDolStudioInstaller
         // if some files were added to the queue, set module as pending uninstall
         if ($bSetModulePendingUninstall) {
             BxDolInstallerUtils::setModulePendingUninstall($this->_aConfig['home_uri']);
-        	return array(
+            return array(
                 'message' => _t('_adm_err_modules_pending_uninstall'),
                 'result' => false,
             );
         }
-                
+
         // delete associated connections
         if ($this->_aConnections) {
             bx_import('BxDolConnection');
@@ -134,4 +134,4 @@ class BxBaseModGeneralInstaller extends BxDolStudioInstaller
     }
 }
 
-/** @} */ 
+/** @} */

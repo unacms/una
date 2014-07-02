@@ -11,11 +11,13 @@
 bx_import('BxDolStudioNavigationMenus');
 bx_import('BxTemplStudioFormView');
 
-class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus {
+class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus
+{
     private $sCreateNew = 'sys_create_new';
     protected $sUrlViewItems;
 
-    function __construct($aOptions, $oTemplate = false) {
+    function __construct($aOptions, $oTemplate = false)
+    {
         parent::__construct($aOptions, $oTemplate);
 
         $this->_aOptions['actions_single']['edit']['attr']['title'] = _t('_adm_nav_btn_menus_edit');
@@ -24,7 +26,8 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus {
         $this->sUrlViewItems = BX_DOL_URL_STUDIO . 'builder_menu.php?page=items&module=%s&set=%s';
     }
 
-    public function performActionAdd() {
+    public function performActionAdd()
+    {
         $sAction = 'add';
 
         $oForm = $this->_getFormObject($sAction);
@@ -40,7 +43,7 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus {
             $sObject = BxDolForm::getSubmittedValue('title-' . $sLanguage, $oForm->aFormAttrs['method']);
             $sObject = uriGenerate($sObject, 'sys_objects_menu', 'object', 'object');
 
-            //--- New Set Creation 
+            //--- New Set Creation
             if($oForm->getCleanValue('set_name') == $this->sCreateNew) {
                 $sSetTitleValue = $oForm->getCleanValue('set_title');
                 $sSetName = uriGenerate($sSetTitleValue, 'sys_menu_sets', 'set_name', 'set');
@@ -61,8 +64,7 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus {
                 $aRes = array('msg' => _t('_adm_nav_err_menus_create'));
 
             $this->_echoResultJson($aRes, true);
-        }
-        else {
+        } else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-nav-menu-create-popup', _t('_adm_nav_txt_menus_create_popup'), $this->_oTemplate->parseHtmlByName('nav_add_menu.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
@@ -75,10 +77,11 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus {
         }
     }
 
-    public function performActionEdit() {
+    public function performActionEdit()
+    {
         $sAction = 'edit';
 
-    	$aMenu = $this->_getItem('getMenus');
+        $aMenu = $this->_getItem('getMenus');
         if($aMenu === false) {
             $this->_echoResultJson(array());
             exit;
@@ -90,7 +93,7 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus {
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
-            //--- New Set Creation 
+            //--- New Set Creation
             if($oForm->getCleanValue('set_name') == $this->sCreateNew) {
                 $sSetTitleValue = $oForm->getCleanValue('set_title');
                 $sSetName = 'custom_' . $this->getSystemName($sSetTitleValue);
@@ -111,8 +114,7 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus {
                 $aRes = array('msg' => _t('_adm_nav_err_menus_edit'));
 
             $this->_echoResultJson($aRes, true);
-        }
-        else {
+        } else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-nav-menu-edit-popup', _t('_adm_nav_txt_menus_edit_popup', _t($aMenu['title'])), $this->_oTemplate->parseHtmlByName('nav_add_menu.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
@@ -125,7 +127,8 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus {
         }
     }
 
-    public function performActionDelete() {
+    public function performActionDelete()
+    {
         $iAffected = 0;
         $aIds = bx_get('ids');
         if(!$aIds || !is_array($aIds)) {
@@ -156,11 +159,13 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus {
         $this->_echoResultJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t('_adm_nav_err_menus_delete')));
     }
 
-    function getJsObject() {
+    function getJsObject()
+    {
         return 'oBxDolStudioNavigationMenus';
     }
 
-    function getCode($isDisplayHeader = true) {
+    function getCode($isDisplayHeader = true)
+    {
         return $this->_oTemplate->parseHtmlByName('nav_menus.html', array(
             'content' => parent::getCode($isDisplayHeader),
             'js_object' => $this->getJsObject(),
@@ -169,7 +174,8 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus {
         ));
     }
 
-    protected function _addJsCss() {
+    protected function _addJsCss()
+    {
         parent::_addJsCss();
         $this->_oTemplate->addJs(array('jquery.form.min.js', 'navigation_menus.js'));
 
@@ -178,56 +184,61 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus {
         $oForm->addCssJs();
     }
 
-    protected function _getCellTitle ($mixedValue, $sKey, $aField, $aRow) {
+    protected function _getCellTitle ($mixedValue, $sKey, $aField, $aRow)
+    {
         $aValue = $this->_limitMaxLength(_t($aRow['title']), $sKey, $aField, $aRow, $this->_isDisplayPopupOnTextOverflow, false);
 
         $mixedValue = $this->_oTemplate->parseHtmlByName('bx_a.html', array(
             'href' => sprintf($this->sUrlViewItems, $aRow['module'], $aRow['set_name']),
             'title' => _t('_adm_nav_txt_manage_items'),
-        	'bx_repeat:attrs' => array(),
+            'bx_repeat:attrs' => array(),
             'content' => $aValue[0]
         )) . (isset($aValue[1]) ? $aValue[1] : '');
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 
-    protected function _getCellItems ($mixedValue, $sKey, $aField, $aRow) {
-    	if(!empty($aRow['set_name'])) {
-	        $aSets = array();
-	        $this->oDb->getSets(array('type' => 'by_name', 'value' => $aRow['set_name']), $aSets, false);
+    protected function _getCellItems ($mixedValue, $sKey, $aField, $aRow)
+    {
+        if(!empty($aRow['set_name'])) {
+            $aSets = array();
+            $this->oDb->getSets(array('type' => 'by_name', 'value' => $aRow['set_name']), $aSets, false);
 
-	        $mixedValue = $this->_oTemplate->parseHtmlByName('bx_a.html', array(
-	            'href' => sprintf($this->sUrlViewItems, $aRow['module'], $aRow['set_name']),
-	            'title' => _t('_adm_nav_txt_manage_items'),
-	        	'bx_repeat:attrs' => array(),
-	            'content' => _t('_adm_nav_txt_n_items', $aSets['items_count'])
-	        ));
-    	}
+            $mixedValue = $this->_oTemplate->parseHtmlByName('bx_a.html', array(
+                'href' => sprintf($this->sUrlViewItems, $aRow['module'], $aRow['set_name']),
+                'title' => _t('_adm_nav_txt_manage_items'),
+                'bx_repeat:attrs' => array(),
+                'content' => _t('_adm_nav_txt_n_items', $aSets['items_count'])
+            ));
+        }
 
         return parent::_getCellDefault ($mixedValue, $sKey, $aField, $aRow);
     }
 
-    protected function _getCellModule($mixedValue, $sKey, $aField, $aRow) {
+    protected function _getCellModule($mixedValue, $sKey, $aField, $aRow)
+    {
         $mixedValue = $this->_limitMaxLength($this->getModuleTitle($aRow['module']), $sKey, $aField, $aRow, $this->_isDisplayPopupOnTextOverflow);
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 
-    protected function _getActionDelete ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array()) {
+    protected function _getActionDelete ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
         if ($sType == 'single' && (int)$aRow['deletable'] != 1)
             return '';
 
         return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
     }
 
-    protected function _getFilterControls () {
+    protected function _getFilterControls ()
+    {
         parent::_getFilterControls();
 
         return  $this->getModulesSelectAll('getMenus') . $this->getSearchInput();
     }
 
-	protected function _getFormObject($sAction, $aMenu = array())
+    protected function _getFormObject($sAction, $aMenu = array())
     {
-    	$aForm = array(
+        $aForm = array(
             'form_attrs' => array(
                 'id' => 'adm-nav-menu-',
                 'action' => BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction,
@@ -243,7 +254,7 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus {
                 ),
             ),
             'inputs' => array (
-            	'id' => array(
+                'id' => array(
                     'type' => 'hidden',
                     'name' => 'id',
                     'value' => isset($aMenu['id']) ? (int)$aMenu['id'] : 0,
@@ -277,7 +288,7 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus {
                         array('key' => '', 'value' => _t('_adm_nav_txt_menus_set_name_select')),
                         array('key' => $this->sCreateNew, 'value' => _t('_adm_nav_txt_menus_set_name_new'))
                     ),
-                	'required' => '1',
+                    'required' => '1',
                     'attrs' => array(
                         'id' => 'bx-form-field-set-name',
                         'onchange' => $this->getJsObject() . ".onSelectSet(this)"
@@ -319,7 +330,7 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus {
                     'values' => array(
                         array('key' => '', 'value' => _t('_adm_nav_txt_menus_style_select'))
                     ),
-                	'required' => '1',
+                    'required' => '1',
                     'db' => array (
                         'pass' => 'Xss',
                     ),
@@ -330,7 +341,7 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus {
                     ),
                 ),
                 'controls' => array(
-                    'name' => 'controls', 
+                    'name' => 'controls',
                     'type' => 'input_set',
                     array(
                         'type' => 'submit',
@@ -361,23 +372,24 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus {
             $aForm['inputs']['template_id']['values'][] = array('key' => $aTemplate['id'], 'value' => _t($aTemplate['title']));
 
         switch($sAction){
-        	case 'add':
-        		unset($aForm['inputs']['id']);
+            case 'add':
+                unset($aForm['inputs']['id']);
 
-        		$aForm['form_attrs']['id'] .= 'create';
-        		break;
-        		
-        	case 'edit':
-        		$aForm['form_attrs']['id'] .= 'edit';
-        		$aForm['inputs']['set_title']['checker']['func'] = 'UniqueSet';
-        		$aForm['inputs']['controls'][0]['value'] = _t('_adm_nav_btn_menus_save');
-        		break;
+                $aForm['form_attrs']['id'] .= 'create';
+                break;
+
+            case 'edit':
+                $aForm['form_attrs']['id'] .= 'edit';
+                $aForm['inputs']['set_title']['checker']['func'] = 'UniqueSet';
+                $aForm['inputs']['controls'][0]['value'] = _t('_adm_nav_btn_menus_save');
+                break;
         }
 
         return new BxTemplStudioFormView($aForm);
     }
 
-    protected function updateSetFields(&$oForm) {
+    protected function updateSetFields(&$oForm)
+    {
         if($oForm->getCleanValue('set_name') != $this->sCreateNew)
             unset($oForm->aInputs['set_title']['checker']);
         else

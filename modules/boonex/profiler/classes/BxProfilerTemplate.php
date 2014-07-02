@@ -14,17 +14,19 @@ bx_import('BxDolModuleTemplate');
 require_once(BX_DIRECTORY_PATH_PLUGINS . "firephp/fb.php");
 define('FIREPHP_TABLE', FirePHP::TABLE);
 
-class BxProfilerTemplate extends BxDolModuleTemplate {
-
+class BxProfilerTemplate extends BxDolModuleTemplate
+{
     protected $_isAjaxOutput = false;
 
-    function __construct(&$oConfig) {
+    function __construct(&$oConfig)
+    {
         $oDb = null;
         parent::__construct($oConfig, $oDb);
         $this->_isAjaxOutput = $this->_isAjaxRequest();
     }
 
-    function plank($sTitle, $sContent = '') {
+    function plank($sTitle, $sContent = '')
+    {
         if ($this->_isAjaxOutput) {
             if ($sContent && is_array($sContent))
                 fb($sContent, $sTitle, FIREPHP_TABLE);
@@ -37,12 +39,13 @@ class BxProfilerTemplate extends BxDolModuleTemplate {
         return '<div class="bx_profiler_plank"><span class="bx_profiler_plank_title">' . $sTitle . '</span>' . $sContent . '</div>';
     }
 
-    function nameValue ($sName, $sVal) {
+    function nameValue ($sName, $sVal)
+    {
         return $this->_isAjaxOutput ? "{$sName}{$sVal} | " : "<u>$sName</u><b>$sVal</b>";
     }
 
-    function table ($a, $sHighlight = '') {
-
+    function table ($a, $sHighlight = '')
+    {
         if ($this->_isAjaxOutput) {
             $table = array();
             foreach ($a as $r) {
@@ -68,8 +71,7 @@ class BxProfilerTemplate extends BxDolModuleTemplate {
                 $s .= "<thead><tr>$th</tr></thead><tbody>";
             }
             $s .= '<tr>';
-            foreach ($r as $k => $v)
-            {
+            foreach ($r as $k => $v) {
                 $sClass = '';
                 if ($sHighlight && $k == $sHighlight)
                     $sClass = ' class="highlight" ';
@@ -83,7 +85,8 @@ class BxProfilerTemplate extends BxDolModuleTemplate {
         return $s;
     }
 
-    function _isAjaxRequest () {
+    function _isAjaxRequest ()
+    {
         if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) and $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')
             return true;
         if (isset($_GET['bx_profiler_ajax_request']))

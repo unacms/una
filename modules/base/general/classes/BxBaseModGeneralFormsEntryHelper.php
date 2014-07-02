@@ -15,17 +15,17 @@ bx_import('BxDolForm');
 /**
  * Entry forms helper functions
  */
-class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms 
+class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
 {
     protected $_oModule;
 
-    public function __construct($oModule) 
+    public function __construct($oModule)
     {
         parent::__construct();
         $this->_oModule = $oModule;
     }
 
-    public function addDataForm () 
+    public function addDataForm ()
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
@@ -38,13 +38,13 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         if (!$oForm)
             return MsgBox(_t('_sys_txt_error_occured'));
 
-        $oForm->initChecker(); 
+        $oForm->initChecker();
 
         if (!$oForm->isSubmittedAndValid())
             return $oForm->getCode();
 
         // insert data into database
-        $aValsToAdd = array ();        
+        $aValsToAdd = array ();
         $iContentId = $oForm->insert ($aValsToAdd);
         if (!$iContentId) {
             if (!$oForm->isValid())
@@ -53,14 +53,14 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
                 return MsgBox(_t('_sys_txt_error_entry_creation'));
         }
 
-        $sResult = $this->onDataAddAfter ($iContentId); 
+        $sResult = $this->onDataAddAfter ($iContentId);
         if ($sResult)
             return $sResult;
 
-        // perform action 
+        // perform action
         $this->_oModule->checkAllowedAdd(true);
 
-        // redirect 
+        // redirect
         $this->_redirectAndExit('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId);
     }
 
@@ -68,24 +68,24 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if (false === $sDisplay) 
+        if (false === $sDisplay)
             $sDisplay = $CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT'];
 
         // get content data and profile info
         list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         if (!$aContentInfo)
-            return MsgBox(_t('_sys_txt_error_entry_is_not_defined')); 
+            return MsgBox(_t('_sys_txt_error_entry_is_not_defined'));
 
         // check access
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedEdit($aContentInfo)))
             return MsgBox($sMsg);
-        
-        // check and display form 
-        $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $sDisplay); 
+
+        // check and display form
+        $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $sDisplay);
         if (!$oForm)
             return MsgBox(_t('_sys_txt_error_occured'));
 
-        $oForm->initChecker($aContentInfo); 
+        $oForm->initChecker($aContentInfo);
 
         if (!$oForm->isSubmittedAndValid())
             return $oForm->getCode();
@@ -99,7 +99,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             if (!$oForm->isValid())
                 return $oForm->getCode();
             else
-                return MsgBox(_t('_sys_txt_error_entry_update')); 
+                return MsgBox(_t('_sys_txt_error_entry_update'));
         }
 
         $sResult = $this->onDataEditAfter ($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $aTrackTextFieldsChanges, $oProfile);
@@ -109,32 +109,32 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         // perform action
         $this->_oModule->checkAllowedEdit($aContentInfo, true);
 
-        // redirect 
+        // redirect
         $this->_redirectAndExit('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
     }
 
-    public function deleteDataForm ($iContentId, $sDisplay = false) 
+    public function deleteDataForm ($iContentId, $sDisplay = false)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if (false === $sDisplay) 
+        if (false === $sDisplay)
             $sDisplay = $CNF['OBJECT_FORM_ENTRY_DISPLAY_DELETE'];
 
         // get content data and profile info
         list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         if (!$aContentInfo)
-            return MsgBox(_t('_sys_txt_error_entry_is_not_defined')); 
+            return MsgBox(_t('_sys_txt_error_entry_is_not_defined'));
 
         // check access
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedDelete($aContentInfo)))
             return MsgBox($sMsg);
-        
-        // check and display form 
+
+        // check and display form
         $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $sDisplay);
         if (!$oForm)
             return MsgBox(_t('_sys_txt_error_occured'));
 
-        $oForm->initChecker($aContentInfo); 
+        $oForm->initChecker($aContentInfo);
 
         if (!$oForm->isSubmittedAndValid())
             return $oForm->getCode();
@@ -160,23 +160,23 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         ));
     }
 
-    public function viewDataForm ($iContentId, $sDisplay = false) 
+    public function viewDataForm ($iContentId, $sDisplay = false)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if (false === $sDisplay) 
+        if (false === $sDisplay)
             $sDisplay = $CNF['OBJECT_FORM_ENTRY_DISPLAY_VIEW'];
 
         // get content data and profile info
         list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         if (!$aContentInfo)
-            return MsgBox(_t('_sys_txt_error_entry_is_not_defined')); 
+            return MsgBox(_t('_sys_txt_error_entry_is_not_defined'));
 
         // check access
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedView($aContentInfo)))
             return MsgBox($sMsg);
-        
-        // get form 
+
+        // get form
         $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $sDisplay);
         if (!$oForm)
             return MsgBox(_t('_sys_txt_error_occured'));

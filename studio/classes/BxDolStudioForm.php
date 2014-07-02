@@ -12,21 +12,25 @@ bx_import('BxDolStudioTemplate');
 
 define('BX_DOL_STUDIO_METHOD_DEFAULT', 'post');
 
-class BxDolStudioForm extends BxBaseFormView {
-    function __construct($aInfo, $oTemplate) {
+class BxDolStudioForm extends BxBaseFormView
+{
+    function __construct($aInfo, $oTemplate)
+    {
         parent::__construct($aInfo, $oTemplate !== false ? $oTemplate : BxDolStudioTemplate::getInstance());
 
         $this->_sCheckerHelper = isset($this->aParams['checker_helper']) ? $this->aParams['checker_helper'] : 'BxDolStudioFormCheckerHelper';
     }
 
-    function initChecker($aValues = array (), $aSpecificValues = array())  {
+    function initChecker($aValues = array (), $aSpecificValues = array())
+    {
         parent::initChecker($aValues, $aSpecificValues);
 
         if($this->isSubmitted() && !$this->_isValid)
             $this->processTranslationsValue();
     }
 
-    function insert($aValsToAdd = array(), $isIgnore = false) {
+    function insert($aValsToAdd = array(), $isIgnore = false)
+    {
         $sAction = 'insert';
         $this->processTranslationsKey($sAction);
 
@@ -37,7 +41,8 @@ class BxDolStudioForm extends BxBaseFormView {
         return $mixedResult;
     }
 
-    function update($val, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null) {
+    function update($val, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null)
+    {
         $sAction = 'update';
         $this->processTranslationsKey($sAction);
 
@@ -50,14 +55,15 @@ class BxDolStudioForm extends BxBaseFormView {
 
     function updateWithVisibility($iId)
     {
-		$iVisibleFor = BxDolStudioUtils::getVisibilityValue($this->getCleanValue('visible_for'), $this->getCleanValue('visible_for_levels'));
-		BxDolForm::setSubmittedValue('visible_for_levels', $iVisibleFor, $this->aFormAttrs['method']);
-		unset($this->aInputs['visible_for']);
+        $iVisibleFor = BxDolStudioUtils::getVisibilityValue($this->getCleanValue('visible_for'), $this->getCleanValue('visible_for_levels'));
+        BxDolForm::setSubmittedValue('visible_for_levels', $iVisibleFor, $this->aFormAttrs['method']);
+        unset($this->aInputs['visible_for']);
 
-		return $this->update($iId);
+        return $this->update($iId);
     }
 
-    function processImageUploaderSave($sName, $iId = 0) {
+    function processImageUploaderSave($sName, $iId = 0)
+    {
         if($this->aInputs[$sName]['type'] != 'image_uploader')
             return $iId;
 
@@ -72,19 +78,20 @@ class BxDolStudioForm extends BxBaseFormView {
             if((int)$iId != 0 && !$oStorage->deleteFile($iId))
                 return _t('_adm_err_form_view_iu_delete');
 
-            $iId = $oStorage->storeFileFromForm($_FILES[$aInput['name']], false, $iProfileId); 
+            $iId = $oStorage->storeFileFromForm($_FILES[$aInput['name']], false, $iProfileId);
             if($iId === false)
                 return _t('_adm_err_form_view_iu_save') . $oStorage->getErrorString();
-    
+
             $oStorage->afterUploadCleanup($iId, $iProfileId);
         }
 
         return (int)$iId;
     }
 
-    protected function processTranslations($sType = 'insert') {
+    protected function processTranslations($sType = 'insert')
+    {
         $aType2Method = array(
-        	'insert' => 'addLanguageString',
+            'insert' => 'addLanguageString',
             'update' => 'updateLanguageString'
         );
 
@@ -103,7 +110,8 @@ class BxDolStudioForm extends BxBaseFormView {
             }
     }
 
-    protected function processTranslationsKey($sType = 'insert') {
+    protected function processTranslationsKey($sType = 'insert')
+    {
         bx_import('BxDolStudioLanguagesUtils');
         $sLanguage = BxDolStudioLanguagesUtils::getInstance()->getCurrentLangName(false);
 
@@ -114,7 +122,8 @@ class BxDolStudioForm extends BxBaseFormView {
             }
     }
 
-    protected function processTranslationsValue () {
+    protected function processTranslationsValue ()
+    {
         bx_import('BxDolStudioLanguagesUtils');
         $aLanguages = BxDolStudioLanguagesUtils::getInstance()->getLanguages();
 
@@ -124,7 +133,8 @@ class BxDolStudioForm extends BxBaseFormView {
                     $this->aInputs[$sName]['values'][$sLangName] = BxDolForm::getSubmittedValue($sName . '-' . $sLangName, $this->aFormAttrs['method']);
     }
 
-    protected function getTranslationsKey($sType, $sName, $sValue) {
+    protected function getTranslationsKey($sType, $sName, $sValue)
+    {
         $iRand = time();
         $sPrefixDefault = "_sys_form_input";
 
@@ -147,8 +157,10 @@ class BxDolStudioForm extends BxBaseFormView {
     }
 }
 
-class BxDolStudioFormCheckerHelper extends BxDolFormCheckerHelper {
-    function checkAvailTranslatable($sVal, $aName, $sMethod = BX_DOL_STUDIO_METHOD_DEFAULT, $bAll = true) {
+class BxDolStudioFormCheckerHelper extends BxDolFormCheckerHelper
+{
+    function checkAvailTranslatable($sVal, $aName, $sMethod = BX_DOL_STUDIO_METHOD_DEFAULT, $bAll = true)
+    {
         if(empty($sMethod) || empty($aName))
             return false;
 
@@ -168,7 +180,8 @@ class BxDolStudioFormCheckerHelper extends BxDolFormCheckerHelper {
         return $bAll ? true : false;
     }
 
-    function checkLengthTranslatable($sVal, $iLenMin, $iLenMax, $aName, $sMethod = BX_DOL_STUDIO_METHOD_DEFAULT, $bAll = true) {
+    function checkLengthTranslatable($sVal, $iLenMin, $iLenMax, $aName, $sMethod = BX_DOL_STUDIO_METHOD_DEFAULT, $bAll = true)
+    {
         if(empty($sMethod) || empty($aName))
             return false;
 
@@ -190,8 +203,8 @@ class BxDolStudioFormCheckerHelper extends BxDolFormCheckerHelper {
 
     function checkTemplate($sVal)
     {
-    	bx_import('BxDolModuleQuery'); 
-    	return strlen($sVal) > 0 && BxDolModuleQuery::getInstance()->isEnabled($sVal);
+        bx_import('BxDolModuleQuery');
+        return strlen($sVal) > 0 && BxDolModuleQuery::getInstance()->isEnabled($sVal);
     }
 }
 

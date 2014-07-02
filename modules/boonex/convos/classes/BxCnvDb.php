@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Convos Convos
  * @ingroup     DolphinModules
  *
@@ -14,14 +14,14 @@ bx_import('BxBaseModTextDb');
 /*
  * Module database queries
  */
-class BxCnvDb extends BxBaseModTextDb 
+class BxCnvDb extends BxBaseModTextDb
 {
-    public function __construct(&$oConfig) 
+    public function __construct(&$oConfig)
     {
         parent::__construct($oConfig);
     }
 
-    public function conversationToFolder($iConversationId, $iFolderId, $iProfileCollaborator, $iReadCommentsNum = -1) 
+    public function conversationToFolder($iConversationId, $iFolderId, $iProfileCollaborator, $iReadCommentsNum = -1)
     {
         $sQuery = $this->prepare("INSERT INTO `" . $this->getPrefix() . "conv2folder` SET `conv_id` = ?, `folder_id` = ?, `collaborator` = ?, `read_comments` = ?", $iConversationId, $iFolderId, $iProfileCollaborator, $iReadCommentsNum);
         return $this->query($sQuery);
@@ -89,8 +89,8 @@ class BxCnvDb extends BxBaseModTextDb
 
     public function getUnreadMessagesNum ($iProfileId, $iFolderId = BX_CNV_FOLDER_INBOX)
     {
-        $sQuery = $this->prepare("SELECT SUM(`c`.`comments` - `f`.`read_comments`) 
-            FROM `" . $this->getPrefix() . "conv2folder` as `f` 
+        $sQuery = $this->prepare("SELECT SUM(`c`.`comments` - `f`.`read_comments`)
+            FROM `" . $this->getPrefix() . "conv2folder` as `f`
             INNER JOIN `" . $this->getPrefix() . "conversations` AS `c` ON (`c`.`id` = `f`.`conv_id`)
             WHERE `f`.`collaborator` = ? AND `f`.`folder_id` = ?", $iProfileId, $iFolderId);
         return $this->getOne($sQuery);
@@ -99,7 +99,7 @@ class BxCnvDb extends BxBaseModTextDb
     public function getMessagesPreviews ($iProfileId, $iStart = 0, $iLimit = 4, $iFolderId = BX_CNV_FOLDER_INBOX)
     {
         $sQuery = $this->prepare("SELECT `c`.`id`, `c`.`text`, `c`.`author`, `cmts`.`cmt_text`, `c`.`last_reply_profile_id`, `c`.`comments`, (`c`.`comments` - `f`.`read_comments`) AS `unread_messages`, `last_reply_timestamp`
-            FROM `" . $this->getPrefix() . "conv2folder` as `f` 
+            FROM `" . $this->getPrefix() . "conv2folder` as `f`
             INNER JOIN `" . $this->getPrefix() . "conversations` AS `c` ON (`c`.`id` = `f`.`conv_id`)
             LEFT JOIN `" . $this->getPrefix() . "cmts` AS `cmts` ON (`cmts`.`cmt_id` = `c`.`last_reply_comment_id`)
             WHERE `f`.`collaborator` = ? AND `f`.`folder_id` = ?
@@ -109,4 +109,4 @@ class BxCnvDb extends BxBaseModTextDb
     }
 }
 
-/** @} */ 
+/** @} */

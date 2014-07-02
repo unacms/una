@@ -9,7 +9,7 @@
 
 class BxDolIO extends BxDol
 {
-    function __construct() 
+    function __construct()
     {
         parent::__construct();
     }

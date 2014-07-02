@@ -12,9 +12,10 @@ bx_import('BxBasePrivacy');
 /**
  * @see BxDolGrid
  */
-class BxTemplPrivacy extends BxBasePrivacy {
-
-    public function __construct ($aOptions, $oTemplate = false) {
+class BxTemplPrivacy extends BxBasePrivacy
+{
+    public function __construct ($aOptions, $oTemplate = false)
+    {
         parent::__construct ($aOptions, $oTemplate);
     }
 }

@@ -14,9 +14,10 @@ bx_import('BxTemplPage');
 /**
  * Antispam module pages.
  */
-class BxAntispamPage extends BxTemplPage {
-
-    public function __construct($aObject, $oTemplate = false) {
+class BxAntispamPage extends BxTemplPage
+{
+    public function __construct($aObject, $oTemplate = false)
+    {
         parent::__construct($aObject, $oTemplate);
     }
 

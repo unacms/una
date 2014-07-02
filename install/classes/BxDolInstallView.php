@@ -7,7 +7,7 @@
  * @{
  */
 
-class BxDolInstallView 
+class BxDolInstallView
 {
     protected $_sDirPlugins = BX_INSTALL_DIR_PLUGINS;
     protected $_sDirTemplates = BX_INSTALL_DIR_TEMPLATES;
@@ -64,11 +64,11 @@ class BxDolInstallView
         include($this->_sDirTemplates . '_page.php');
     }
 
-    function setToolbarItem($sIcon, $sLink, $sTitle = '', $sTarget = '') 
+    function setToolbarItem($sIcon, $sLink, $sTitle = '', $sTarget = '')
     {
         $this->_aToolbarItem = array(
-            'icon' => $sIcon, 
-            'link' => $sLink, 
+            'icon' => $sIcon,
+            'link' => $sLink,
             'title' => $sTitle,
             'target' => $sTarget,
         );
@@ -80,7 +80,7 @@ class BxDolInstallView
         foreach ($this->_aFilesCss as $sFile)
             if (substr($sFile, -4) === '.css')
                 $s .= '<link rel="stylesheet" href="' . $this->_sUrlCss . $sFile . '" />';
-        return $s; 
+        return $s;
     }
 
     protected function _getFilesJS()
@@ -88,13 +88,13 @@ class BxDolInstallView
         $s = '';
         foreach ($this->_aFilesJs as $sFile)
             $s .= '<script src="' . $this->_sUrlJs . $sFile . '"></script>';
-        return $s; 
+        return $s;
     }
 
     protected function _getInlineCSS()
     {
         $s = '';
-    	require_once($this->_sDirPlugins . 'lessphp/lessc.inc.php');
+        require_once($this->_sDirPlugins . 'lessphp/lessc.inc.php');
         $oLess = new lessc();
         $oConfigBase = new BxBaseConfig();
         $oLess->setVariables($oConfigBase->aLessConfig);
@@ -104,7 +104,7 @@ class BxDolInstallView
 
             $s .= $oLess->compileFile($this->_sPathCss . $sFile) . "\n";
         }
-        return $s; 
+        return $s;
     }
 }
 

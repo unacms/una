@@ -11,54 +11,63 @@
 bx_import('BxDolStudioTemplate');
 bx_import('BxDolStudioDesign');
 
-class BxBaseStudioDesign extends BxDolStudioDesign {
+class BxBaseStudioDesign extends BxDolStudioDesign
+{
     protected $aMenuItems = array(
-    	'general' => '_adm_lmi_cpt_general'
+        'general' => '_adm_lmi_cpt_general'
     );
 
-    function __construct($sTemplate = "", $sPage = "") {
+    function __construct($sTemplate = "", $sPage = "")
+    {
         parent::__construct($sTemplate, $sPage);
     }
-    function getPageCss() {
+    function getPageCss()
+    {
         return array_merge(parent::getPageCss(), array());
     }
-    function getPageJs() {
+    function getPageJs()
+    {
         return array_merge(parent::getPageJs(), array('settings.js', 'design.js'));
     }
-    function getPageJsObject() {
+    function getPageJsObject()
+    {
         return 'oBxDolStudioDesign';
     }
-    function getPageCaption() {
+    function getPageCaption()
+    {
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         $aTmplVars = array(
             'js_object' => $this->getPageJsObject(),
-        	'content' => parent::getPageCaption(),
+            'content' => parent::getPageCaption(),
         );
         return $oTemplate->parseHtmlByName('dsn_page_caption.html', $aTmplVars);
     }
-    function getPageAttributes() {
+    function getPageAttributes()
+    {
         if((int)$this->aTemplate['enabled'] == 0)
-        	return 'style="display:none"';
+            return 'style="display:none"';
 
         return parent::getPageAttributes();
     }
-    function getPageMenu($aMenu = array(), $aMarkers = array()) {
+    function getPageMenu($aMenu = array(), $aMarkers = array())
+    {
         $sJsObject = $this->getPageJsObject();
 
-        $aMenu = array();            
+        $aMenu = array();
         foreach($this->aMenuItems as $sName => $sCaption)
             $aMenu[] = array(
                 'name' => $sName,
                 'icon' => 'mi-templ-' . $sName . '.png',
-            	'link' => BX_DOL_URL_STUDIO . 'design.php?name=' . $this->sTemplate . '&page=' . $sName,
-            	'title' => _t($sCaption),
-            	'selected' => $sName == $this->sPage
+                'link' => BX_DOL_URL_STUDIO . 'design.php?name=' . $this->sTemplate . '&page=' . $sName,
+                'title' => _t($sCaption),
+                'selected' => $sName == $this->sPage
             );
 
         return parent::getPageMenu($aMenu);
     }
-    function getPageCode($bHidden = false) {
+    function getPageCode($bHidden = false)
+    {
         $sMethod = 'get' . ucfirst($this->sPage);
         if(!method_exists($this, $sMethod))
             return '';
@@ -69,14 +78,15 @@ class BxBaseStudioDesign extends BxDolStudioDesign {
         return $this->$sMethod();
     }
 
-    protected function getGeneral() {
+    protected function getGeneral()
+    {
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         bx_import('BxTemplStudioSettings');
         $oPage = new BxTemplStudioSettings($this->sTemplate);
 
         $aTmplVars = array(
-        	'bx_repeat:blocks' => $oPage->getPageCode(),
+            'bx_repeat:blocks' => $oPage->getPageCode(),
         );
         return $oTemplate->parseHtmlByName('design.html', $aTmplVars);
     }

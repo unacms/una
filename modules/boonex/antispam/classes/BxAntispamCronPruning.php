@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Antispam Antispam
  * @ingroup     DolphinModules
  *
@@ -11,9 +11,9 @@
 
 bx_import('BxDolCron');
 
-class BxAntispamCronPruning extends BxDolCron 
+class BxAntispamCronPruning extends BxDolCron
 {
-    function processing() 
+    function processing()
     {
         BxDolService::call('bx_antispam', 'pruning');
     }

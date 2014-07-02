@@ -16,9 +16,9 @@ bx_import('BxDolMenu');
 /**
  * Entry create/edit pages
  */
-class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry 
-{    
-    public function __construct($aObject, $oTemplate = false) 
+class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry
+{
+    public function __construct($aObject, $oTemplate = false)
     {
         parent::__construct($aObject, $oTemplate);
 

@@ -12,15 +12,18 @@ defined('BX_DOL') or die('hack attempt');
 bx_import('BxDolStudioPermissionsPrices');
 bx_import('BxTemplStudioFormView');
 
-class BxBaseStudioPermissionsPrices extends BxDolStudioPermissionsPrices {
-    function __construct($aOptions, $oTemplate = false) {
+class BxBaseStudioPermissionsPrices extends BxDolStudioPermissionsPrices
+{
+    function __construct($aOptions, $oTemplate = false)
+    {
         parent::__construct($aOptions, $oTemplate);
 
         $this->_aOptions['actions_single']['edit']['attr']['title'] = _t('_adm_prm_btn_price_edit');
         $this->_aOptions['actions_single']['delete']['attr']['title'] = _t('_adm_prm_btn_price_delete');
     }
 
-    public function performActionAdd() {
+    public function performActionAdd()
+    {
         $sAction = 'add';
 
         $sFilter = bx_get('filter');
@@ -50,7 +53,7 @@ class BxBaseStudioPermissionsPrices extends BxDolStudioPermissionsPrices {
                     'type' => 'hidden',
                     'name' => 'IDLevel',
                     'value' => $this->iLevel,
-            		'db' => array (
+                    'db' => array (
                         'pass' => 'Int',
                     ),
                 ),
@@ -70,12 +73,12 @@ class BxBaseStudioPermissionsPrices extends BxDolStudioPermissionsPrices {
                     'caption' => _t('_adm_prm_txt_price_add_price'),
                     'info' => '',
                     'value' => '',
-                	'db' => array (
+                    'db' => array (
                         'pass' => 'Float',
                     ),
                 ),
                 'controls' => array(
-                    'name' => 'controls', 
+                    'name' => 'controls',
                     'type' => 'input_set',
                     array(
                         'type' => 'submit',
@@ -110,13 +113,11 @@ class BxBaseStudioPermissionsPrices extends BxDolStudioPermissionsPrices {
             if($iId != 0) {
                 $this->oDb->updateLevels($this->iLevel, array('Purchasable' => 'yes'));
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
-            }
-            else
+            } else
                 $aRes = array('msg' => _t('_adm_prm_err_price_create'));
 
             $this->_echoResultJson($aRes, true);
-        }
-        else {
+        } else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-prm-price-add-popup', _t('_adm_prm_txt_price_add_popup'), $this->_oTemplate->parseHtmlByName('prm_add_price.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
@@ -129,7 +130,8 @@ class BxBaseStudioPermissionsPrices extends BxDolStudioPermissionsPrices {
         }
     }
 
-    public function performActionEdit() {
+    public function performActionEdit()
+    {
         $sAction = 'edit';
 
         $aIds = bx_get('ids');
@@ -171,11 +173,11 @@ class BxBaseStudioPermissionsPrices extends BxDolStudioPermissionsPrices {
                 ),
             ),
             'inputs' => array (
-            	'id' => array(
+                'id' => array(
                     'type' => 'hidden',
                     'name' => 'id',
                     'value' => $iId,
-            		'db' => array (
+                    'db' => array (
                         'pass' => 'Int',
                     ),
                 ),
@@ -183,7 +185,7 @@ class BxBaseStudioPermissionsPrices extends BxDolStudioPermissionsPrices {
                     'type' => 'hidden',
                     'name' => 'IDLevel',
                     'value' => $aPrice['level_id'],
-            		'db' => array (
+                    'db' => array (
                         'pass' => 'Int',
                     ),
                 ),
@@ -203,12 +205,12 @@ class BxBaseStudioPermissionsPrices extends BxDolStudioPermissionsPrices {
                     'caption' => _t('_adm_prm_txt_price_add_price'),
                     'info' => '',
                     'value' => round($aPrice['price'], 2),
-                	'db' => array (
+                    'db' => array (
                         'pass' => 'Float',
                     ),
                 ),
                 'controls' => array(
-                    'name' => 'controls', 
+                    'name' => 'controls',
                     'type' => 'input_set',
                     array(
                         'type' => 'submit',
@@ -247,8 +249,7 @@ class BxBaseStudioPermissionsPrices extends BxDolStudioPermissionsPrices {
                 $aRes = array('msg' => _t('_adm_prm_err_price_update'));
 
             $this->_echoResultJson($aRes, true);
-        }
-        else {
+        } else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-prm-price-edit-popup', _t('_adm_prm_txt_price_edit_popup', $aPrice['days']), $this->_oTemplate->parseHtmlByName('prm_add_price.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
@@ -261,7 +262,8 @@ class BxBaseStudioPermissionsPrices extends BxDolStudioPermissionsPrices {
         }
     }
 
-    function performActionDelete() {
+    function performActionDelete()
+    {
         $aIds = bx_get('ids');
         if (!$aIds || !is_array($aIds)) {
             $this->_echoResultJson(array());
@@ -279,11 +281,13 @@ class BxBaseStudioPermissionsPrices extends BxDolStudioPermissionsPrices {
             $this->oDb->updateLevels($this->iLevel, array('Purchasable' => 'no'));
     }
 
-    function getJsObject() {
+    function getJsObject()
+    {
         return 'oBxDolStudioPermissionsPrices';
     }
 
-    function getCode($isDisplayHeader = true) {
+    function getCode($isDisplayHeader = true)
+    {
         return $this->_oTemplate->parseHtmlByName('prm_prices.html', array(
             'content' => parent::getCode($isDisplayHeader),
             'js_object' => $this->getJsObject(),
@@ -292,7 +296,8 @@ class BxBaseStudioPermissionsPrices extends BxDolStudioPermissionsPrices {
         ));
     }
 
-    protected function _addJsCss() {
+    protected function _addJsCss()
+    {
         parent::_addJsCss();
         $this->_oTemplate->addJs(array('jquery.form.min.js', 'permissions_prices.js'));
 
@@ -300,22 +305,26 @@ class BxBaseStudioPermissionsPrices extends BxDolStudioPermissionsPrices {
         $oForm = new BxTemplStudioFormView(array());
         $oForm->addCssJs();
     }
-    protected function _getCellPrice ($mixedValue, $sKey, $aField, $aRow) {
+    protected function _getCellPrice ($mixedValue, $sKey, $aField, $aRow)
+    {
         return parent::_getCellDefault (_t_format_currency($mixedValue), $sKey, $aField, $aRow);
     }
 
-    protected function _getCellDays ($mixedValue, $sKey, $aField, $aRow) {
+    protected function _getCellDays ($mixedValue, $sKey, $aField, $aRow)
+    {
         return parent::_getCellDefault (_t('_sys_x_days', $mixedValue), $sKey, $aField, $aRow);
     }
 
-    protected function _getActionAdd($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array()) {
+    protected function _getActionAdd($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
         if($this->iLevel == 0)
             $isDisabled = true;
 
         return parent::_getActionDefault($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
-    protected function _getFilterControls () {
+    protected function _getFilterControls ()
+    {
         parent::_getFilterControls();
 
         $sContent = "";
@@ -328,7 +337,7 @@ class BxBaseStudioPermissionsPrices extends BxDolStudioPermissionsPrices {
             'name' => 'level',
             'attrs' => array(
                 'id' => 'bx-grid-level-' . $this->_sObject,
-            	'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeLevel()'
+                'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeLevel()'
             ),
             'value' => 'id-' . $this->iLevel,
             'values' => array()

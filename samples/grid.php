@@ -7,7 +7,7 @@
  * @{
  */
 
-/** 
+/**
  * @page samples
  * @section grid Grid
  */
@@ -30,17 +30,17 @@ $oTemplate->setPageHeader ("Sample grid");
 $oTemplate->setPageContent ('page_main_code', PageCompMainCode());
 $oTemplate->getPageCode();
 
-
 /**
  * page code function
  */
-function PageCompMainCode() {
-    ob_start();    
+function PageCompMainCode()
+{
+    ob_start();
 
     bx_import('BxDolGrid');
     $oGrid = BxDolGrid::getObjectInstance('sample'); // it automatically creates instance of default or custom class by object name
     if ($oGrid)
-        echo $oGrid->getCode(); // print grid object 
+        echo $oGrid->getCode(); // print grid object
 
     return DesignBoxContent("Sample grid", ob_get_clean(), BX_DB_PADDING_DEF);
 }

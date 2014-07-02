@@ -12,8 +12,10 @@ bx_import('BxBaseServiceLogin');
 /**
  * @see BxBaseServiceLogin
  */
-class BxTemplServiceLogin extends BxBaseServiceLogin {
-    public function __construct() {
+class BxTemplServiceLogin extends BxBaseServiceLogin
+{
+    public function __construct()
+    {
         parent::__construct();
     }
 }

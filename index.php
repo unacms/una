@@ -7,8 +7,7 @@
  * @{
  */
 
-if (!file_exists("./inc/header.inc.php"))
-{
+if (!file_exists("./inc/header.inc.php")) {
     // this is dynamic page - send headers to not cache this page
     $now = gmdate('D, d M Y H:i:s') . ' GMT';
     header("Expires: $now");
@@ -17,7 +16,7 @@ if (!file_exists("./inc/header.inc.php"))
     header("Pragma: no-cache");
 
     echo "It seems to be script is <b>not</b> installed.<br />\n";
-    if ( file_exists( "install/index.php" ) ) {        
+    if ( file_exists( "install/index.php" ) ) {
         echo "Please, wait. Redirecting you to installation form...<br />\n";
         echo "<script language=\"javascript\">location.href = 'install/index.php';</script>\n";
     }
@@ -29,8 +28,8 @@ require_once(BX_DIRECTORY_PATH_INC . "profiles.inc.php");
 
 /*
 if(!isLogged()) {
-	require_once("./splash.php");
-	exit;
+    require_once("./splash.php");
+    exit;
 }
 */
 
@@ -38,4 +37,3 @@ $_GET['i'] = 'home';
 require_once("./page.php");
 
 /** @} */
-

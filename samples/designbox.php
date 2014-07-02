@@ -7,7 +7,7 @@
  * @{
  */
 
-/** 
+/**
  * @page samples
  * @section page Page
  */
@@ -25,12 +25,12 @@ $oTemplate->setPageContent ('page_main_code', PageCompMainCode());
 $oTemplate->setPageHeader ("Sample design box");
 $oTemplate->getPageCode();
 
-
 /**
  * page code function
  */
-function PageCompMainCode() {
-    ob_start();    
+function PageCompMainCode()
+{
+    ob_start();
 
     echo 'sample text sample textsample textsample textsample text sample text sample text <br >';
     echo 'sample text sample textsample textsample textsample text sample text sample text <br >';

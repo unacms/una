@@ -9,9 +9,9 @@
 
 bx_import('BxBaseConfig');
 
-class BxTemplConfig extends BxBaseConfig 
+class BxTemplConfig extends BxBaseConfig
 {
-    function __construct() 
+    function __construct()
     {
         parent::__construct();
 

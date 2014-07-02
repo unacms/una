@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Antispam Antispam
  * @ingroup     DolphinModules
  *
@@ -78,7 +78,6 @@ class BxAntispamIP extends BxDol
         return BX_ANTISPAM_IP_TABLE_ALL_BLOCKED_EXCEPT_LISTED == $iIPGlobalType ? true : false;
     }
 
-
     /**
      * Add IP to blocklist
      *
@@ -108,7 +107,7 @@ class BxAntispamIP extends BxDol
     /**
      * Get IP table direcitve by ID
      *
-     * @param $sId 
+     * @param $sId
      * @return array with IP table directive data
      */
     public function getIpTableDirective($iId)
@@ -118,12 +117,12 @@ class BxAntispamIP extends BxDol
         return $oDb->getRow($sQuery);
     }
 
-    public function getIpTableConfigValues () 
+    public function getIpTableConfigValues ()
     {
         return $this->_aIpTableConfigMap;
     }
 
-    public function getIpTableConfigTitle ($i) 
+    public function getIpTableConfigTitle ($i)
     {
         return $this->_aIpTableConfigMap[$i];
     }
@@ -132,7 +131,7 @@ class BxAntispamIP extends BxDol
      * Clean up expired entries
      * @return number of affected rows
      */
-    public function pruning () 
+    public function pruning ()
     {
         $oDb = BxDolDb::getInstance();
         $sQuery = $oDb->prepare("DELETE FROM `bx_antispam_ip_table` WHERE `LastDT` <= ?", time());
@@ -146,7 +145,7 @@ class BxAntispamIP extends BxDol
         return 0;
     }
 
-    protected function _isIpListed($sType, $sIp) 
+    protected function _isIpListed($sType, $sIp)
     {
         $iIp = sprintf("%u", ip2long($sIp));
         $oDb = BxDolDb::getInstance();

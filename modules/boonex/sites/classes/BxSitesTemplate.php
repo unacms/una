@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Sites Sites
  * @ingroup     DolphinModules
  *
@@ -18,12 +18,13 @@ class BxSitesTemplate extends BxDolModuleTemplate
      */
     function __construct(&$oConfig, &$oDb)
     {
-        parent::__construct($oConfig, $oDb);        
+        parent::__construct($oConfig, $oDb);
         $this->addJs('main.js');
         $this->addCss('main.css');
     }
 
-    function getJs($bWrap = false) {
+    function getJs($bWrap = false)
+    {
         $sJsMainClass = $this->_oConfig->getJsClass();
         $sJsMainObject = $this->_oConfig->getJsObject();
         ob_start();
@@ -40,5 +41,4 @@ class BxSitesTemplate extends BxDolModuleTemplate
     }
 }
 
-/** @} */ 
-
+/** @} */

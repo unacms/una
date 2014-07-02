@@ -11,10 +11,12 @@ bx_import('BxTemplStudioGrid');
 bx_import('BxDolStudioTemplate');
 bx_import('BxDolStudioPermissionsQuery');
 
-class BxDolStudioPermissionsActions extends BxTemplStudioGrid {
+class BxDolStudioPermissionsActions extends BxTemplStudioGrid
+{
     protected $iLevel = 0;
 
-    public function __construct ($aOptions, $oTemplate = false) {
+    public function __construct ($aOptions, $oTemplate = false)
+    {
         parent::__construct ($aOptions, $oTemplate);
 
         $this->oDb = new BxDolStudioPermissionsQuery();
@@ -26,17 +28,19 @@ class BxDolStudioPermissionsActions extends BxTemplStudioGrid {
         $this->_aQueryAppend['level'] = $this->iLevel;
     }
 
-    protected function _isRowDisabled($aRow) {
+    protected function _isRowDisabled($aRow)
+    {
         return $aRow['Active'] == 0;
     }
 
-    protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage) {
+    protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
+    {
         if(empty($this->iLevel))
             return array();
 
         $sModule = '';
         if(strpos($sFilter, $this->sParamsDivider) !== false)
-            list($sModule, $sFilter) = explode($this->sParamsDivider, $sFilter);        
+            list($sModule, $sFilter) = explode($this->sParamsDivider, $sFilter);
 
         if($sModule != '')
             $this->_aOptions['source'] .= $this->oDb->prepare(" AND `Module`=?", $sModule);
@@ -50,7 +54,7 @@ class BxDolStudioPermissionsActions extends BxTemplStudioGrid {
         foreach($aActions as $iKey => $aAction)
             $aActions[$iKey]['Active'] = array_key_exists($aAction['ID'], $aActionsActive) ? 1 : 0;
 
-        return $aActions; 
+        return $aActions;
     }
 }
 

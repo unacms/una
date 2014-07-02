@@ -17,8 +17,8 @@ define('BX_DATA_LISTS_KEY_PREFIX', '#!');
 define('BX_DATA_VALUES_DEFAULT', 'LKey'); ///< Use default values for data items, @see BxDolForm::getDataItems
 define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for data items, @see BxDolForm::getDataItems
 
-/** 
- * @page objects 
+/**
+ * @page objects
  * @section forms Forms
  * @ref BxDolForm
  */
@@ -42,10 +42,10 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  * - Form or Form Object - record in sys_objects_form table, or instance of Form class.
  * - Form Display - set of some form inputs in particular order, displayed for some purpose; one form can have several displays, for example add and edit displays.
  * - Form Input or Form Field - form input field, like textarea, checkbox or set of radio buttons.
- * 
- * 
+ *
+ *
  * @section form_creating_object Creating the Form Object
- * 
+ *
  * 1. Create Form Object, add record to sys_objects_form table:
  * - object - name of the Form Object, in the format: vendor prefix, underscore, module prefix, underscore, internal identifier or nothing; for example: bx_group - for group data processing, like group adding or editing.
  * - title - Form Object title to display in studio forms builder.
@@ -62,18 +62,18 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  * - active - 1 or 0, if form is inactive then it can not be used anywhere.
  * - override_class_name - user defined class name which is derived from BxTemplFormView.
  * - override_class_file - the location of the user defined class, leave it empty if class is located in system folders.
- *  
- *  
+ *
+ *
  * 2. Create Form Displays, add records to sys_form_displays table:
- * - display_name - name of the Form Display, in the format: 
- *                  form object name, underscore, internal identifier or nothing; 
+ * - display_name - name of the Form Display, in the format:
+ *                  form object name, underscore, internal identifier or nothing;
  *                  for example: bx_group_add - for displaying group adding form, bx_group_edit - for displaying group editing form
  * - module - module name this display belongs to, it must be associated with name field in sys_modules table.
  * - object - form object name from sys_objects_form table this Form Display belongs to.
  * - title - Form Display title to display in studio forms builder.
  * - view_mode - display form as read-only.
  *
- *  
+ *
  * 3. Create Form Fields, add records to sys_form_inputs table:
  * - object - form object name from sys_objects_form table this Form Field belongs to.
  * - module - module name this field belongs to.
@@ -110,8 +110,8 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *      detailed description of every type will be described below.
  * - caption - input title.
  * - info - some info to help user to input data into the field, it's better to specify format and limits here.
- * - required - indicate that the input is required by displaying asterisk near the field, 
- *              please note that this field don't perform any checking automatically, 
+ * - required - indicate that the input is required by displaying asterisk near the field,
+ *              please note that this field don't perform any checking automatically,
  *              since you mark field as required you need to specify checked function which will check entered value.
  * - collapsed - display section as collapsed by default, for block_header field type only.
  * - html - display visual editor of certain type, for textarea field type only.
@@ -133,7 +133,7 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *      You can inherit BxDolFormCheckerHelper class and add own checker functions, you will need to point your custom class in Form Object params array.
  * - checker_params - serialized array of checker_func parameters.
  * - checker_error - error message to show in case of checking function returns false.
- * - db_pass - function to pass value through before saving to database and after restoring from database (for example when date need to be converted from/to timestamp value), 
+ * - db_pass - function to pass value through before saving to database and after restoring from database (for example when date need to be converted from/to timestamp value),
  *              available values are the following:
  *      - Int - convert value to integer.
  *      - Float - convert value to floating point number.
@@ -144,13 +144,13 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *      - All - do not perform any conversion and pass text as it is, be careful with this, use it only when no other function can be used, and make all necessary security checking by yourself.
  *      - Preg - perform regular expression on the text before saving data to database, regular expression can be provided in db_params field.
  *      - Boolean - this is used for checkboxes with 'on' value which need to be converted into boolean value.
- *      - Set - convert set of values into bit integer before saving to database, and restore bit integer into array of values upon restoration from database, it can be used for select_multiple and checkbox_set field types. 
+ *      - Set - convert set of values into bit integer before saving to database, and restore bit integer into array of values upon restoration from database, it can be used for select_multiple and checkbox_set field types.
  *      Please note that values for this field must be 1,2,4,8,... (values of power of 2); the max number of values are 31 for 32bit hardware and 63 for 64bit hardware.
  *      You can inherit BxDolFormCheckerHelper class and add own pass functions, you will need to point your custom class in Form Object params array.
  * - db_params - serialized array of db_pass parameters.
  * - editable - allow to edit this field from admin forms builder.
  * - deletable - allow to delete this field from admin forms builder.
- * 
+ *
  *
  * 4. Add Form Fields and Form Displays associations, add records to sys_form_display_inputs table:
  * - display_name - name of the Form Display from sys_form_displays table.
@@ -182,7 +182,7 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  * We will not describe above list of parameters in every type, since they work the same way for all types.
  *
  * The list below are field types with their unique parameters, which are designed especially for this field, or some parameters which work differently for the specified field type.
- * 
+ *
  * text - text input field. It is displayed as regular single line text input.
  *      Parameters:
  *      - value - default value, or empty if there is no default value.
@@ -191,12 +191,12 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *      - collapsed - not applicable here.
  *      - html - not applicable here.
  *      - checker_func
- *          Can be used here: Length, Preg, Avail, Email 
+ *          Can be used here: Length, Preg, Avail, Email
  *          Make no sense to use it here: Date, DateTime, Captcha
  *      - db_pass
  *          Can be used here: Int, Float, Xss, All, Preg
  *          Make no sense to use it here: Date, DateTime, XssHtml, Boolean, Set
- * 
+ *
  * password - password input field. It is displayed as HTML input element with invisible input.
  *      Parameters:
  *      - value - default value, or empty if there is no default value.
@@ -205,12 +205,12 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *      - collapsed - not applicable here.
  *      - html - not applicable here.
  *      - checker_func
- *          Can be used here: Length, Preg, Avail. 
+ *          Can be used here: Length, Preg, Avail.
  *          Make no sense to use it here: Date, DateTime, Captcha, Email.
  *      - db_pass
- *          Can be used here: Xss, All. 
+ *          Can be used here: Xss, All.
  *          Make no sense to use it here: Int, Float, Date, DateTime, XssHtml, Boolean, Set, Preg.
- * 
+ *
  * textarea - multiline input field. It can be displayed as regular textarea field or as visual HTML editor.
  *      Parameters:
  *      - value - default value, or empty if there is no default value.
@@ -223,12 +223,12 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *          - 2 - full visual editor, see @BxDolEditor.
  *          - 3 - mini visual editor, see @BxDolEditor.
  *      - checker_func
- *          Can be used here: Length, Preg, Avail 
+ *          Can be used here: Length, Preg, Avail
  *          Make no sense to use it here: Email, Date, DateTime, Captcha
  *      - db_pass
  *          Can be used here: Int, Float, Xss, XssHtml, All, Preg
  *          Make no sense to use it here: Date, DateTime, Boolean, Set
- * 
+ *
  * number - number input field. It is displayed as HTL text input, but with limited width. Also some browsers can add additional controls to this field.
  *      Parameters:
  *      - value - default value, or empty if there is no default value.
@@ -237,12 +237,12 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *      - collapsed - not applicable here.
  *      - html - not applicable here.
  *      - checker_func
- *          Can be used here: Length, Preg, Avail 
+ *          Can be used here: Length, Preg, Avail
  *          Make no sense to use it here: Email, Date, DateTime, Captcha
  *      - db_pass
- *          Can be used here: Int, Float 
+ *          Can be used here: Int, Float
  *          Make no sense to use it here: Xss, XssHtml, All, Preg, Date, DateTime, Boolean, Set
- *  
+ *
  * select - select one from all available values. It is displayed as HTML combo-box.
  *      Parameters:
  *      - value - default value (array index of selected item from values array), or empty - if there is no default value.
@@ -251,12 +251,12 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *      - collapsed - not applicable here.
  *      - html - not applicable here.
  *      - checker_func
- *          Can be used here: Length, Preg, Avail 
+ *          Can be used here: Length, Preg, Avail
  *          Make no sense to use it here: Email, Date, DateTime, Captcha
  *      - db_pass
- *          Can be used here: Int, Float, Xss, All, Preg 
+ *          Can be used here: Int, Float, Xss, All, Preg
  *          Make no sense to use it here: Date, DateTime, XssHtml, Boolean, Set
- *  
+ *
  * select_multiple - select one, multiple or all items from all available values. It is displayed as HTML multiple selection input.
  *      Parameters:
  *      - value - default value (bit integer of array indexes of selected items from values array), or empty - if there is no default value.
@@ -265,13 +265,13 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *      - collapsed - not applicable here.
  *      - html - not applicable here.
  *      - checker_func
- *          Can be used here: Length, Preg, Avail 
+ *          Can be used here: Length, Preg, Avail
  *          Make no sense to use it here: Email, Date, DateTime, Captcha
  *      - db_pass
- *          Can be used here: Int 
+ *          Can be used here: Int
  *          Make no sense to use it here: Float, Xss, All, Preg, Date, DateTime, XssHtml, Boolean, Set
- * 
- * switcher - on/off switcher. It is displayed as custom HTML element with own styles, but on background it works as regular HTML checkbox element. 
+ *
+ * switcher - on/off switcher. It is displayed as custom HTML element with own styles, but on background it works as regular HTML checkbox element.
  *      Parameters:
  *      - value - the value which will be submitted if switcher is on, if switcher is off - nothing is submitted.
  *      - values - not applicable here.
@@ -279,12 +279,12 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *      - collapsed - not applicable here.
  *      - html - not applicable here.
  *      - checker_func
- *          Can be used here: Length, Preg, Avail 
+ *          Can be used here: Length, Preg, Avail
  *          Make no sense to use it here: Email, Date, DateTime, Captcha
  *      - db_pass
- *          Can be used here: Int, Float, Xss, All, Preg, Boolean 
+ *          Can be used here: Int, Float, Xss, All, Preg, Boolean
  *          Make no sense to use it here: Date, DateTime, XssHtml, Set
- * 
+ *
  * checkbox - one checkbox. Displayed as HTML checkbox input element.
  *      Parameters:
  *      - value - the value which will be submitted if checkbox is checked, if checkbox isn't checked - nothing is submitted.
@@ -293,12 +293,12 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *      - collapsed - not applicable here.
  *      - html - not applicable here.
  *      - checker_func
- *          Can be used here: Length, Preg, Avail 
+ *          Can be used here: Length, Preg, Avail
  *          Make no sense to use it here: Email, Date, DateTime, Captcha
  *      - db_pass
- *          Can be used here: Int, Float, Xss, All, Preg, Boolean 
+ *          Can be used here: Int, Float, Xss, All, Preg, Boolean
  *          Make no sense to use it here: Date, DateTime, XssHtml, Set
- * 
+ *
  * checkbox_set - set of checkboxes. It is displayed as set of checkboxes. It is displayed in one row if number of items is equal or less than 3 or every item is displayed on new line if there is more than 3 items in the set.
  *      Parameters:
  *      - value - default value (bit integer of array indexes of selected items from values array), or empty - if there is no default value.
@@ -307,12 +307,12 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *      - collapsed - not applicable here.
  *      - html - not applicable here.
  *      - checker_func
- *          Can be used here: Length, Preg, Avail 
+ *          Can be used here: Length, Preg, Avail
  *          Make no sense to use it here: Email, Date, DateTime, Captcha
  *      - db_pass
- *          Can be used here: Int 
+ *          Can be used here: Int
  *          Make no sense to use it here: Float, Xss, All, Preg, Date, DateTime, XssHtml, Boolean, Set
- *  
+ *
  * radio_set - set of radio buttons. It is displayed as set of radio buttons. It is displayed in one row if number of items is equal or less than 3 or every item is displayed on new line if there is more than 3 items in the set.
  *      Parameters:
  *      - value - default value (array index of selected radio button from values array), or empty - if there is no default value.
@@ -321,12 +321,12 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *      - collapsed - not applicable here.
  *      - html - not applicable here.
  *      - checker_func
- *          Can be used here: Length, Preg, Avail 
+ *          Can be used here: Length, Preg, Avail
  *          Make no sense to use it here: Email, Date, DateTime, Captcha
  *      - db_pass
- *          Can be used here: Int, Float, Xss, All, Preg 
+ *          Can be used here: Int, Float, Xss, All, Preg
  *          Make no sense to use it here: Date, DateTime, XssHtml, Boolean, Set
- * 
+ *
  * slider - select some numeric value within the range using slider control. It is displayed as jQuery UI HTML control, but on background it works as regular HTML text input element.
  *      Parameters:
  *      - value - default value in the format, or empty if there is no default value.
@@ -339,12 +339,12 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *      - max - maximal value, default is 100.
  *      - step - value can be changed by this step only, default is 1.
  *      - checker_func
- *          Can be used here: Length, Avail 
+ *          Can be used here: Length, Avail
  *          Make no sense to use it here: Preg, Email, Date, DateTime, Captcha
  *      - db_pass
- *          Can be used here: Int, Float 
+ *          Can be used here: Int, Float
  *          Make no sense to use it here: Xss, XssHtml, All, Preg, Date, DateTime, Boolean, Set
- * 
+ *
  * doublerange - select range values within the range using slider control.
  *      Parameters:
  *      - value - default value in the format [min value]-[max value], for example 16-99, or empty if there is no default value.
@@ -357,12 +357,12 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *          - max - maximal value, default is 100.
  *          - step - value can be changed by this step only, default is 1.
  *      - checker_func
- *          Can be used here: Length, Avail 
+ *          Can be used here: Length, Avail
  *          Make no sense to use it here: Preg, Email, Date, DateTime, Captcha
  *      - db_pass
- *          Can be used here: Xss, All, Preg 
+ *          Can be used here: Xss, All, Preg
  *          Make no sense to use it here: Int, Float, XssHtml, Date, DateTime, Boolean, Set
- * 
+ *
  * datepicker - date selection control. It is displayed as HTML text input control, when clicking on this input then popup with date selector control is appeared.
  *      Parameters:
  *      - value - default value, in the format YYYY-MMM-DD, or empty if there is no default value.
@@ -371,12 +371,12 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *      - collapsed - not applicable here.
  *      - html - not applicable here.
  *      - checker_func
- *          Can be used here: Date 
+ *          Can be used here: Date
  *          Make no sense to use it here: Length, Preg, Avail, Email, DateTime, Captcha
  *      - db_pass
- *          Can be used here: Date 
+ *          Can be used here: Date
  *          Make no sense to use it here: Int, Float, Xss, All, Preg, DateTime, XssHtml, Boolean, Set
- * 
+ *
  * datetime - date/time selection control.
  *      Parameters:
  *      - value - default value, in the format YYYY-MMM-DD HH:MM:SS, or empty if there is no default value.
@@ -385,12 +385,12 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *      - collapsed - not applicable here.
  *      - html - not applicable here.
  *      - checker_func
- *          Can be used here: DateTime 
+ *          Can be used here: DateTime
  *          Make no sense to use it here: Length, Preg, Avail, Email, Date, Captcha
  *      - db_pass
- *          Can be used here: DateTime 
+ *          Can be used here: DateTime
  *          Make no sense to use it here: Int, Float, Xss, All, Preg, Date, XssHtml, Boolean, Set
- * 
+ *
  * captcha - image captcha. Displayed as image with some text along with HTML text input for entering displayed on the image text.
  *      Parameters:
  *      - value - not applicable here.
@@ -399,12 +399,12 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *      - collapsed - not applicable here.
  *      - html - not applicable here.
  *      - checker_func
- *          Can be used here: Captcha 
+ *          Can be used here: Captcha
  *          Make no sense to use it here: Length, Preg, Avail, Email, Date, DateTime
  *      - db_pass
- *          Can be used here: Xss, All, Preg 
+ *          Can be used here: Xss, All, Preg
  *          Make no sense to use it here: Int, Float, Date, DateTime, XssHtml, Boolean, Set
- *  
+ *
  * hidden - hidden input field. Displayed as hidden HTML input.
  *      Parameters:
  *      - value - hidden input value.
@@ -413,12 +413,12 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *      - collapsed - not applicable here.
  *      - html - not applicable here.
  *      - checker_func
- *          Can be used here: Length, Preg, Avail, Email, Date, DateTime 
+ *          Can be used here: Length, Preg, Avail, Email, Date, DateTime
  *          Make no sense to use it here: Captcha
  *      - db_pass
- *          Can be used here: Int, Float, Xss, All, Preg, Date, DateTime, XssHtml, Boolean 
+ *          Can be used here: Int, Float, Xss, All, Preg, Date, DateTime, XssHtml, Boolean
  *          Make no sense to use it here: Set
- * 
+ *
  * file - file upload input. Displayed as file upload HTML input.
  *      Parameters:
  *      - value - not applicable here.
@@ -427,15 +427,15 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *      - collapsed - not applicable here.
  *      - html - not applicable here.
  *      - checker_func
- *          File name is passed for checking. 
- *          Can be used here: Avail, Length, Preg 
+ *          File name is passed for checking.
+ *          Can be used here: Avail, Length, Preg
  *          Make no sense to use it here: Email, Date, DateTime, Captcha
  *      - db_pass
  *          File can't be stored in the database, so this field isn't applicable here.
- * 
- * files - files upload input. Displayed as complex uploading HTML control. 
+ *
+ * files - files upload input. Displayed as complex uploading HTML control.
  *          This control is too complex to describe it using default set of database fields, you need to use custom class to display this control.
- * 
+ *
  * button - button control. Displayes as HTML button element.
  *      Parameters:
  *      - value - translatable button caption.
@@ -445,7 +445,7 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *      - html - not applicable here.
  *      - checker_func - not applicable here.
  *      - db_pass - not applicable here.
- *  
+ *
  * image - form image button. It is displayed as HTML form image input element.
  *      Parameters:
  *      - value - not applicable here.
@@ -457,7 +457,7 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *          - src - image URL.
  *      - checker_func - not applicable here.
  *      - db_pass - not applicable here.
- * 
+ *
  * reset - form reset button. Displayed as HTML form reset input button. By clicking on this button the form is reset to its default state.
  *      Parameters:
  *      - value - translatable button caption.
@@ -477,8 +477,8 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *      - html - not applicable here.
  *      - checker_func - not applicable here.
  *      - db_pass - not applicable here.
- * 
- * value - just displaying value without any control. 
+ *
+ * value - just displaying value without any control.
  *      Parameters:
  *      - value - the value to display.
  *      - values - not applicable here.
@@ -487,7 +487,7 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *      - html - not applicable here.
  *      - checker_func - not applicable here.
  *      - db_pass - not applicable here.
- * 
+ *
  * block_header - start group of fields. Displayed as form fields divider with caption - then it can be collapsible or without caption - then it is just divider without any functionality.
  *      Parameters:
  *      - value - not applicable here.
@@ -497,9 +497,9 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *      - html - not applicable here.
  *      - checker_func - not applicable here.
  *      - db_pass - not applicable here.
- * 
- * custom - custom control. You need custom class to display this control, so the exact used values are determined by particular realisation. 
- * 
+ *
+ * custom - custom control. You need custom class to display this control, so the exact used values are determined by particular realisation.
+ *
  * input_set - set of other form controls.
  *      Parameters:
  *      - value - not applicable here.
@@ -509,41 +509,41 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *      - html - not applicable here.
  *      - checker_func - not applicable here.
  *      - db_pass - not applicable here.
- * 
- * 
+ *
+ *
  * @section form_using_own_class Using own class for custom behavior
- * 
- * It is possible to provide own class for displaying and processing the form. 
- * To do this you need to point it in override_class_name and override_class_file fields in sys_objects_form table. 
+ *
+ * It is possible to provide own class for displaying and processing the form.
+ * To do this you need to point it in override_class_name and override_class_file fields in sys_objects_form table.
  * Your custom class must be inherited from BxTemplFormView class or its descendants.
- *  
+ *
  *
  * @section form_display_custom_control Displaying custom field control
  *
  * It is possible to leave form field with default caption and override only the form field control.
- * To override some field you need to define the following function: 
+ * To override some field you need to define the following function:
  * @code
- *      protected function genCustomInput[field name] ($aInput). 
+ *      protected function genCustomInput[field name] ($aInput).
  * @endcode
- * Where [field name] is form field name. 
+ * Where [field name] is form field name.
  * For example:
- * 
+ *
  * @code
  *     protected function genCustomInputCustom ($aInput) {
- *         return 
+ *         return
  *         'r: <input type="text" size="2" value="'.(isset($aInput['value'][0]) ? $aInput['value'][0] : '').'" name="'.$aInput['name'].'[]" />' .
  *         'g: <input type="text" size="2" value="'.(isset($aInput['value'][1]) ? $aInput['value'][1] : '').'" name="'.$aInput['name'].'[]" />' .
  *         'b: <input type="text" size="2" value="'.(isset($aInput['value'][2]) ? $aInput['value'][2] : '').'" name="'.$aInput['name'].'[]" />';
  *     }
  * @endcode
- * 
+ *
  *
  * @section form_display_custom_row Displaying custom field row
  *
- * Form row consists of caption and control, by default it is displayed with default design and functionality. 
- * If you need to display some field with custom header and control you need to declare the following function: 
+ * Form row consists of caption and control, by default it is displayed with default design and functionality.
+ * If you need to display some field with custom header and control you need to declare the following function:
  * @code
- *      protected function genCustomRow[field name] ($aInput). 
+ *      protected function genCustomRow[field name] ($aInput).
  * @endcode
  * Where [field name] is form field name.
  *
@@ -559,8 +559,8 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *          die('"sample_form_objects_add" form object or "sample_form_objects_add" display is not defined');
  *      $oForm->initChecker(); // init form checker witout any data - adding new record
  *      if ($oForm->isSubmittedAndValid())
- *          echo 'inserted id: ' . $oForm->insert (); // add new record to the database 
- *      echo $oForm->getCode(); // display form 
+ *          echo 'inserted id: ' . $oForm->insert (); // add new record to the database
+ *      echo $oForm->getCode(); // display form
  * @endcode
  *
  * Printing the form for editing existing record in the database:
@@ -572,7 +572,7 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *      $aRecord = $oDb->getRow();
  *      if (!$aRecord)
  *          die("$iEditId record wasn't found.");
- * 
+ *
  *      bx_import('BxDolForm');
  *      $oForm = BxDolForm::getObjectInstance('sample_form_objects', 'sample_form_objects_edit'); // get form instance for specified form object and display
  *      if (!$oForm)
@@ -580,47 +580,47 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *      $oForm->initChecker($aRecord); // init form checker with edited data
  *      if ($oForm->isSubmittedAndValid())
  *          echo 'updated: ' . $oForm->update ($iEditId); // update database
- *      echo $oForm->getCode(); // display form 
+ *      echo $oForm->getCode(); // display form
  * @endcode
  *
  * Example of custom form class and custom checking helper class:
  *
  * @code
  *      bx_import('BxTemplFormView');
- *      
+ *
  *      class BxSampleForm extends BxTemplFormView {
- *      
+ *
  *          public function __construct ($aInfo, $oTemplate = false) {
  *              parent::__construct ($aInfo, $oTemplate);
  *          }
- *          
- *      
- *          // display input with 'custom' name 
+ *
+ *
+ *          // display input with 'custom' name
  *          protected function genCustomInputCustom ($aInput) {
- *              return 
+ *              return
  *              'r: <input type="text" size="2" value="'.(isset($aInput['value'][0]) ? $aInput['value'][0] : '').'" name="'.$aInput['name'].'[]" />' .
  *              'g: <input type="text" size="2" value="'.(isset($aInput['value'][1]) ? $aInput['value'][1] : '').'" name="'.$aInput['name'].'[]" />' .
  *              'b: <input type="text" size="2" value="'.(isset($aInput['value'][2]) ? $aInput['value'][2] : '').'" name="'.$aInput['name'].'[]" />';
  *          }
- *      
+ *
  *      }
- *      
+ *
  *      class BxSampleFormCheckerHelper extends BxDolFormCheckerHelper {
- *          
+ *
  *          protected $_sDiv = ',';
- *          
+ *
  *          // prepare RBG values to save to the DB
  *          function passRgb ($s) {
  *              if (!is_array($s))
  *                  return false;
- *      
+ *
  *              $sRet = '';
  *              foreach ($s as $k => $v)
  *                  $sRet .= (int)trim($v) . $this->_sDiv;
- *      
+ *
  *              return trim($sRet, $this->_sDiv);
  *          }
- *          
+ *
  *          // prepare RGB values to output to the screen
  *          function displayRgb ($s) {
  *              return explode($this->_sDiv, $s);
@@ -727,13 +727,14 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
     protected $_isValid = true;
     protected $_sCheckerHelper;
     protected $_aSpecificValues;
-  
+
     public $aFormAttrs; ///< form html element attributes
     public $aInputs; ///< form inputs
-    public $aParams; ///< additional form parameters 
+    public $aParams; ///< additional form parameters
     public $id; ///< Form element id
 
-    function __construct ($aInfo, $oTemplate) {
+    function __construct ($aInfo, $oTemplate)
+    {
         parent::__construct();
 
         if ($oTemplate)
@@ -766,11 +767,11 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
      * @param $sObject object name
      * @return object instance or false on error
      */
-    static public function getObjectInstance($sObject, $sDisplayName) {
-
+    static public function getObjectInstance($sObject, $sDisplayName)
+    {
         if (isset($GLOBALS['bxDolClasses']['BxDolForm!'.$sObject.'!'.$sDisplayName]))
             return $GLOBALS['bxDolClasses']['BxDolForm!'.$sObject.'!'.$sDisplayName];
-        
+
         bx_import('BxDolFormQuery');
         $aObject = BxDolFormQuery::getFormArray($sObject, $sDisplayName);
         if (!$aObject || !is_array($aObject))
@@ -778,32 +779,34 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
 
         bx_import('BxTemplFormView');
         $sClass = 'BxTemplFormView';
-        if (!empty($aObject['override_class_name'])) {            
-            $sClass = $aObject['override_class_name'];            
+        if (!empty($aObject['override_class_name'])) {
+            $sClass = $aObject['override_class_name'];
             if (!empty($aObject['override_class_file']))
                 require_once(BX_DIRECTORY_PATH_ROOT . $aObject['override_class_file']);
-            else    
+            else
                 bx_import($sClass);
         }
-        
+
         $o = new $sClass($aObject);
 
         return ($GLOBALS['bxDolClasses']['BxDolForm!'.$sObject.'!'.$sDisplayName] = $o);
     }
 
     /**
-     * Get data items array 
+     * Get data items array
      * @param $sKey data items identifier
      * @param $isUseForSet convert data items keys to use in set fields, make it power of 2 (1,2,4,8,16,etc).
      * @param $sUseValues use default(BX_DATA_VALUES_DEFAULT) or additional(BX_DATA_VALUES_ADDITIONAL) value titles, if additinal value title is missing default title is used
      * @return data items array
      */
-    public static function getDataItems($sKey, $isUseForSet = false, $sUseValues = BX_DATA_VALUES_DEFAULT) {
+    public static function getDataItems($sKey, $isUseForSet = false, $sUseValues = BX_DATA_VALUES_DEFAULT)
+    {
         bx_import('BxDolFormQuery');
         return BxDolFormQuery::getDataItems($sKey, $isUseForSet, $sUseValues);
     }
 
-    function initChecker ($aValues = array (), $aSpecificValues = array())  {
+    function initChecker ($aValues = array (), $aSpecificValues = array())
+    {
         $this->_aSpecificValues = $aSpecificValues;
 
         $oChecker = new BxDolFormChecker($this->_sCheckerHelper);
@@ -822,12 +825,12 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
 
         // init form with provided values
 
-        if ($aValues) 
+        if ($aValues)
             $oChecker->fillWithValues($this->aInputs, $aValues);
 
 
-        if ($this->isSubmitted ()) { 
-            
+        if ($this->isSubmitted ()) {
+
             // init form with submitted data, overwrite prevously declared values
 
             $oChecker->enableFormCsrfChecking(isset($this->aParams['csrf']['disable']) && $this->aParams['csrf']['disable'] === true ? false : true);
@@ -840,11 +843,12 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
         }
     }
 
-    function insert ($aValsToAdd = array(), $isIgnore = false) {
+    function insert ($aValsToAdd = array(), $isIgnore = false)
+    {
         $oChecker = new BxDolFormChecker($this->_sCheckerHelper);
         $oChecker->setFormMethod($this->aFormAttrs['method']);
         $sSql = $oChecker->dbInsert($this->aParams['db'], $this->aInputs, $aValsToAdd, $isIgnore);
-        if (!$sSql) 
+        if (!$sSql)
             return false;
         $oDb = BxDolDb::getInstance();
         if ($oDb->res($sSql))
@@ -852,31 +856,35 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
         return false;
     }
 
-    function update ($val, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null) {
+    function update ($val, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null)
+    {
         $oChecker = new BxDolFormChecker($this->_sCheckerHelper);
         $oChecker->setFormMethod($this->aFormAttrs['method']);
         $sSql = $oChecker->dbUpdate($val, $this->aParams['db'], $this->aInputs, $aValsToAdd, $aTrackTextFieldsChanges);
-        if (!$sSql) 
+        if (!$sSql)
             return false;
         return BxDolDb::getInstance()->res($sSql);
     }
 
-    function delete ($val) {
+    function delete ($val)
+    {
         $oChecker = new BxDolFormChecker($this->_sCheckerHelper);
         $oChecker->setFormMethod($this->aFormAttrs['method']);
         $sSql = $oChecker->dbDelete($val, $this->aParams['db'], $this->aInputs);
-        if (!$sSql) 
+        if (!$sSql)
             return false;
         return BxDolDb::getInstance()->res($sSql);
     }
 
-    function generateUri ()  {
+    function generateUri ()
+    {
         $f = &$this->aParams['db'];
         $sUri = $this->getCleanValue ($f['uri_title']);
         return uriGenerate($sUri, $f['table'], $f['uri']);
     }
 
-    function getCleanValue ($sName)  {
+    function getCleanValue ($sName)
+    {
         $oChecker = new BxDolFormChecker($this->_sCheckerHelper);
         $oChecker->setFormMethod($this->aFormAttrs['method']);
         $a = isset($this->aInputs[$sName]) ? $this->aInputs[$sName] : false;
@@ -886,55 +894,64 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
            return $oChecker->get ($sName);
     }
 
-    function isSubmitted () {
+    function isSubmitted ()
+    {
         return BxDolForm::getSubmittedValue($this->aParams['db']['submit_name'], $this->aFormAttrs['method'], $this->_aSpecificValues) ? true : false;
     }
 
-    function getId () {
+    function getId ()
+    {
         return $this->id;
     }
 
-    function setId ($sId) {
-    	$this->id = $sId;
-    	$this->aFormAttrs['id'] = $sId;
+    function setId ($sId)
+    {
+        $this->id = $sId;
+        $this->aFormAttrs['id'] = $sId;
     }
 
-    function setName($sName) {
-    	$this->aFormAttrs['name'] = $sName;
+    function setName($sName)
+    {
+        $this->aFormAttrs['name'] = $sName;
     }
 
-    function setValid ($isValid) {
+    function setValid ($isValid)
+    {
         $this->_isValid = $isValid;
     }
 
-    function isValid () {
+    function isValid ()
+    {
         return $this->_isValid;
     }
 
-    function isSubmittedAndValid () {
+    function isSubmittedAndValid ()
+    {
         return ($this->isSubmitted() && $this->isValid());
     }
 
-    public static function getSubmittedValue($sKey, $sMethod, &$aSpecificValues = false) {
+    public static function getSubmittedValue($sKey, $sMethod, &$aSpecificValues = false)
+    {
         $aData = array();
         if($sMethod == BX_DOL_FORM_METHOD_GET) {
             $aData = &$_GET;
         } else if($sMethod == BX_DOL_FORM_METHOD_POST) {
             $aData = &$_POST;
-        } else if($sMethod == BX_DOL_FORM_METHOD_SPECIFIC) {            
+        } else if($sMethod == BX_DOL_FORM_METHOD_SPECIFIC) {
             $aData = &$aSpecificValues;
         }
 
         return isset($aData[$sKey]) ? $aData[$sKey] : false;
     }
-    
-    public static function setSubmittedValue($sKey, $mixedValue, $sMethod, &$aSpecificValues = false) {
+
+    public static function setSubmittedValue($sKey, $mixedValue, $sMethod, &$aSpecificValues = false)
+    {
         $aData = array();
         if($sMethod == BX_DOL_FORM_METHOD_GET) {
             $aData = &$_GET;
         } else if($sMethod == BX_DOL_FORM_METHOD_POST) {
             $aData = &$_POST;
-        } else if($sMethod == BX_DOL_FORM_METHOD_SPECIFIC) {            
+        } else if($sMethod == BX_DOL_FORM_METHOD_SPECIFIC) {
             $aData = &$aSpecificValues;
         }
 
@@ -942,7 +959,8 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
     }
 
     // Static Methods related to CSRF Tocken
-	public static function genCsrfToken($bReturn = false) {
+    public static function genCsrfToken($bReturn = false)
+    {
         if (getParam('sys_security_form_token_enable') != 'on')
             return false;
 
@@ -953,34 +971,35 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
             $sToken = genRndPwd(20, true);
             $oSession->setValue('csrf_token', $sToken);
             $oSession->setValue('csrf_token_time', time());
-        }
-        else
+        } else
             $sToken = $oSession->getValue('csrf_token');
 
         if($bReturn)
             return $sToken;
     }
-    public static function getCsrfToken() {
+    public static function getCsrfToken()
+    {
         $oSession = BxDolSession::getInstance();
         return $oSession->getValue('csrf_token');
     }
-    public static function getCsrfTokenTime() {
+    public static function getCsrfTokenTime()
+    {
         $oSession = BxDolSession::getInstance();
         return $oSession->getValue('csrf_token_time');
     }
 
-    function _initCheckerNestedForms ()  {
-
+    function _initCheckerNestedForms ()
+    {
         $isValid = true;
 
-        // process nested forms            
+        // process nested forms
         foreach ($this->aInputs as $sKey => $aInput) {
 
             if ((isset($aInput['type']) && $aInput['type'] != 'files') || !isset($aInput['ghost_template']))
                 continue;
 
             bx_import('BxDolFormNested');
-            if (!(is_array($aInput['ghost_template']) && isset($aInput['ghost_template']['inputs'])) && !(is_object($aInput['ghost_template']) && $aInput['ghost_template'] instanceof BxDolFormNested)) 
+            if (!(is_array($aInput['ghost_template']) && isset($aInput['ghost_template']['inputs'])) && !(is_object($aInput['ghost_template']) && $aInput['ghost_template'] instanceof BxDolFormNested))
                 continue;
 
             $sName = $aInput['name'];
@@ -993,9 +1012,9 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
 
                 // create separate form instance for each file
                 $oFormNested = false;
-                if (is_object($aInput['ghost_template'])) {                    
+                if (is_object($aInput['ghost_template'])) {
                     $oFormNested = clone($aInput['ghost_template']);
-                } else {                    
+                } else {
                     $oFormNested = new BxDolFormNested($aInput['name'], $aInput['ghost_template'], $this->aParams['db']['submit_name'], $this->oTemplate);
                 }
                 $aNestedForms[$iFileId] = $oFormNested;
@@ -1003,13 +1022,13 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
                 // collect nested form values
                 $aSpecificValues = array ();
                 if (isset($this->aParams['db']['submit_name']))
-                    $aSpecificValues = array ($this->aParams['db']['submit_name'] => 1); 
+                    $aSpecificValues = array ($this->aParams['db']['submit_name'] => 1);
                 foreach ($oFormNested->aInputs as $r) {
                     $sName = str_replace('[]', '', $r['name']);
-                    $aValue = $this->getSubmittedValue($sName, $this->aFormAttrs['method']);                        
+                    $aValue = $this->getSubmittedValue($sName, $this->aFormAttrs['method']);
                     $aSpecificValues[$sName] = $aValue[$i];
                 }
-                $oFormNested->initChecker(array(), $aSpecificValues);                    
+                $oFormNested->initChecker(array(), $aSpecificValues);
 
                 // if nested form in invalid - then the whole worm is failed
                 if (!$oFormNested->isValid ())
@@ -1017,9 +1036,9 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
             }
 
             if ($aNestedForms)
-                $this->aInputs[$sKey]['ghost_template'] = $aNestedForms;                
+                $this->aInputs[$sKey]['ghost_template'] = $aNestedForms;
 
-        }            
+        }
 
         return $isValid;
     }
@@ -1028,13 +1047,15 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
      * Check if form field is visible.
      * @param $aInput form field array
      * @return boolean
-     */ 
-    protected function _isVisible ($aInput) {
-        bx_import('BxDolAcl');        
+     */
+    protected function _isVisible ($aInput)
+    {
+        bx_import('BxDolAcl');
         return BxDolAcl::getInstance()->isMemberLevelInSet($aInput['visible_for_levels']);
     }
 
-    protected function _genMethodName ($s) {
+    protected function _genMethodName ($s)
+    {
         return bx_gen_method_name($s);
     }
 
@@ -1043,7 +1064,8 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
      * @param $a array of markers as key => value
      * @return true on success or false on error
      */
-    public function addMarkers ($a) {
+    public function addMarkers ($a)
+    {
         if (empty($a) || !is_array($a))
             return false;
         $this->_aMarkers = array_merge ($this->_aMarkers, $a);
@@ -1054,19 +1076,22 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
      * Replace provided markers in form array
      * @param $a form description array
      * @return array where markes are replaced with real values
-     */ 
-    protected function _replaceMarkers ($a) {
+     */
+    protected function _replaceMarkers ($a)
+    {
         return bx_replace_markers($a, $this->_aMarkers);
     }
 }
 
-class BxDolFormChecker {
+class BxDolFormChecker
+{
     protected $_oChecker;
     protected $_sFormMethod;
     protected $_bFormCsrfChecking;
     protected $_aSpecificValues;
 
-    function __construct ($sHelper = '') {
+    function __construct ($sHelper = '')
+    {
         $this->_sFormMethod = BX_DOL_FORM_METHOD_GET;
         $this->_bFormCsrfChecking = true;
 
@@ -1074,17 +1099,20 @@ class BxDolFormChecker {
         $this->_oChecker = new $sCheckerName();
     }
 
-    function setFormMethod($sMethod, $aSpecificValues = array()) {
+    function setFormMethod($sMethod, $aSpecificValues = array())
+    {
         $this->_sFormMethod = $sMethod;
         $this->_aSpecificValues = $aSpecificValues;
     }
 
-    function enableFormCsrfChecking($bFormCsrfChecking) {
+    function enableFormCsrfChecking($bFormCsrfChecking)
+    {
         $this->_bFormCsrfChecking = $bFormCsrfChecking;
     }
 
     // check function
-    function check (&$aInputs) {
+    function check (&$aInputs)
+    {
         $oChecker = $this->_oChecker;
         $iErrors = 0;
 
@@ -1178,7 +1206,8 @@ class BxDolFormChecker {
     }
 
     // get clean value from GET/POST
-    function get ($sName, $sPass = 'Xss', $aParams = array()) {
+    function get ($sName, $sPass = 'Xss', $aParams = array())
+    {
         if (!$sPass)
             $sPass = 'Xss';
         $this->_oChecker;
@@ -1187,11 +1216,12 @@ class BxDolFormChecker {
     }
 
     // db functions
-    function serializeDbValues (&$aInputs, &$aValsToAdd, &$aTrackTextFieldsChanges = null) {
+    function serializeDbValues (&$aInputs, &$aValsToAdd, &$aTrackTextFieldsChanges = null)
+    {
         $oDb = BxDolDb::getInstance();
         $aValsToUpdate = array();
         $s = '';
-        
+
         if (null !== $aTrackTextFieldsChanges && isset($aTrackTextFieldsChanges['data']))
             $aTrackTextFieldsChanges['changed_fields'] = array();
 
@@ -1201,9 +1231,9 @@ class BxDolFormChecker {
             $valClean = $this->get ($a['name'], $a['db']['pass'], !empty($a['db']['params']) ? $a['db']['params'] : array());
             $aValsToUpdate[$a['name']] = $valClean;
             $aInputs[$k]['db']['value'] = $valClean;
-            
+
             if (null !== $aTrackTextFieldsChanges && isset(BxDolForm::$TYPES_TEXT[$aInputs[$k]['type']]) && isset($aTrackTextFieldsChanges['data'][$a['name']]) && $aTrackTextFieldsChanges['data'][$a['name']] != $valClean)
-                $aTrackTextFieldsChanges['changed_fields'][] = $a['name']; 
+                $aTrackTextFieldsChanges['changed_fields'][] = $a['name'];
         }
 
         // get values which are provided manually
@@ -1217,23 +1247,25 @@ class BxDolFormChecker {
         return $s ? substr ($s, 0, -1) : '';
     }
 
-    function dbInsert (&$aDb, &$aInputs, $aValsToAdd = array(), $isIgnore = false) {
-        if (!$aDb['table']) 
+    function dbInsert (&$aDb, &$aInputs, $aValsToAdd = array(), $isIgnore = false)
+    {
+        if (!$aDb['table'])
             return '';
 
         $sFields = $this->serializeDbValues ($aInputs, $aValsToAdd);
-        if (!$sFields) 
+        if (!$sFields)
             return '';
 
         return "INSERT " . ($isIgnore ? 'IGNORE' : '') . " INTO `{$aDb['table']}` SET $sFields";
     }
 
-    function dbUpdate ($val, &$aDb, &$aInputs, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null) {
-        if (!$aDb['table'] || !$aDb['key']) 
+    function dbUpdate ($val, &$aDb, &$aInputs, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null)
+    {
+        if (!$aDb['table'] || !$aDb['key'])
             return '';
 
         $oDb = BxDolDb::getInstance();
-        
+
         if (null !== $aTrackTextFieldsChanges && !isset($aTrackTextFieldsChanges['data'])) {
             // get row values to compare old and new values
             $sQuery = $oDb->prepare("SELECT * FROM `{$aDb['table']}` WHERE `{$aDb['key']}` = ?", $val);
@@ -1241,14 +1273,15 @@ class BxDolFormChecker {
         }
 
         $sFields = $this->serializeDbValues ($aInputs, $aValsToAdd, $aTrackTextFieldsChanges);
-        if (!$sFields) 
+        if (!$sFields)
             return '';
 
         return "UPDATE `{$aDb['table']}` SET $sFields WHERE " . $oDb->prepare("`{$aDb['key']}` = ?", $val);
     }
 
-    function dbDelete ($val, &$aDb, &$aInputs) {
-        if (!$aDb['table'] || !$aDb['key']) 
+    function dbDelete ($val, &$aDb, &$aInputs)
+    {
+        if (!$aDb['table'] || !$aDb['key'])
             return '';
 
         $oDb = BxDolDb::getInstance();
@@ -1256,7 +1289,8 @@ class BxDolFormChecker {
         return "DELETE FROM `{$aDb['table']}` WHERE " . $oDb->prepare("`{$aDb['key']}` = ?", $val);
     }
 
-    function fillWithValues (&$aInputs, &$aValues) {
+    function fillWithValues (&$aInputs, &$aValues)
+    {
         foreach ($aInputs as $k => $a) {
             if (!isset($aValues[$k])) continue;
 
@@ -1273,11 +1307,12 @@ class BxDolFormChecker {
     }
 }
 
-class BxDolFormCheckerHelper {
-
+class BxDolFormCheckerHelper
+{
     // check functions - check values for limits or patterns
 
-    function checkLength ($s, $iLenMin, $iLenMax) {
+    function checkLength ($s, $iLenMin, $iLenMax)
+    {
         if (is_array($s)) {
             foreach ($s as $k => $v) {
                 $iLen = get_mb_len ($v);
@@ -1289,17 +1324,20 @@ class BxDolFormCheckerHelper {
         $iLen = get_mb_len ($s);
         return $iLen >= $iLenMin && $iLen <= $iLenMax ? true : false;
     }
-    function checkDate ($s) {
+    function checkDate ($s)
+    {
         return $this->checkPreg ($s, '#^\d+\-\d+\-\d+$#');
     }
-    function checkDateTime ($s) {
+    function checkDateTime ($s)
+    {
         // remove unnecessary opera's input value;
         $s = str_replace('T', ' ', $s);
         $s = str_replace('Z', ':00', $s);
 
         return $this->checkPreg ($s, '#^\d+\-\d+\-\d+[\sT]{1}\d+:\d+[:\d+]$#');
     }
-    function checkPreg ($s, $r) {
+    function checkPreg ($s, $r)
+    {
         if (is_array($s)) {
             foreach ($s as $k => $v)
                 if (!preg_match($r, $v))
@@ -1308,30 +1346,35 @@ class BxDolFormCheckerHelper {
         }
         return preg_match($r, $s) ? true : false;
     }
-    function checkAvail ($s) {
+    function checkAvail ($s)
+    {
         if (is_array($s)) {
             return !$this->_isEmptyArray($s);
         }
         return $s ? true : false;
     }
-    function checkEmail($s) {
+    function checkEmail($s)
+    {
         return $this->checkPreg ($s, '/^[a-z0-9_\-]+(\.[_a-z0-9\-]+)*@([_a-z0-9\-]+\.)+([a-z]{2}|aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel)$/i');
     }
-    function checkCaptcha($s) {
-        bx_import('BxDolCaptcha'); 
-        $oCaptcha = BxDolCaptcha::getObjectInstance(); 
+    function checkCaptcha($s)
+    {
+        bx_import('BxDolCaptcha');
+        $oCaptcha = BxDolCaptcha::getObjectInstance();
         if (!$oCaptcha)
             return true;
         return $oCaptcha->check ();
     }
-    function checkIsSpam($val) {
+    function checkIsSpam($val)
+    {
         $bSpam = false;
         bx_alert('system', 'check_spam', 0, getLoggedId(), array('is_spam' => &$bSpam, 'content' => $val, 'where' => 'form'));
         return $bSpam;
     }
 
     // pass functions, prepare values to insert to database
-    function passInt ($s) {
+    function passInt ($s)
+    {
         if (is_array($s)) {
             $a = array ();
             foreach ($s as $k => $v) {
@@ -1341,7 +1384,8 @@ class BxDolFormCheckerHelper {
         }
         return (int)$s;
     }
-    function passFloat ($s) {
+    function passFloat ($s)
+    {
         if (is_array($s)) {
             $a = array ();
             foreach ($s as $k => $v) {
@@ -1351,7 +1395,8 @@ class BxDolFormCheckerHelper {
         }
         return (float)$s;
     }
-    function passDate ($s) {
+    function passDate ($s)
+    {
         if (is_array($s)) {
             $a = array ();
             foreach ($s as $k => $v) {
@@ -1361,13 +1406,15 @@ class BxDolFormCheckerHelper {
         }
         return $this->_passDate ($s);
     }
-    function _passDate ($s) {
+    function _passDate ($s)
+    {
         $iRet = bx_process_input ($s, BX_DATA_DATE_TS);
         if (false === $iRet)
             return 0;
         return $iRet;
     }
-    function passDateTime ($s) {
+    function passDateTime ($s)
+    {
         if (is_array($s)) {
             $a = array ();
             foreach ($s as $k => $v) {
@@ -1377,13 +1424,15 @@ class BxDolFormCheckerHelper {
         }
         return $this->_passDateTime ($s);
     }
-    function _passDateTime ($s) {
+    function _passDateTime ($s)
+    {
         $iRet = bx_process_input ($s, BX_DATA_DATETIME_TS);
         if (false === $iRet)
             return 0;
         return $iRet;
     }
-    function passXss ($s) {
+    function passXss ($s)
+    {
         if (is_array($s)) {
             $a = array ();
             foreach ($s as $k => $v) {
@@ -1393,7 +1442,8 @@ class BxDolFormCheckerHelper {
         }
         return bx_process_input ($s, BX_DATA_TEXT); // "strip tags" option was here in 7.0
     }
-    function passXssHtml ($s) {
+    function passXssHtml ($s)
+    {
         if (is_array($s)) {
             $a = array ();
             foreach ($s as $k => $v) {
@@ -1404,7 +1454,8 @@ class BxDolFormCheckerHelper {
         return bx_process_input ($s, BX_DATA_HTML);
     }
 
-    function passAll ($s) {
+    function passAll ($s)
+    {
         if (is_array($s)) {
             $a = array ();
             foreach ($s as $k => $v) {
@@ -1415,7 +1466,8 @@ class BxDolFormCheckerHelper {
         return bx_process_input ($s);
     }
 
-    function passPreg ($s, $r) {
+    function passPreg ($s, $r)
+    {
         if (is_array($s)) {
             $a = array ();
             foreach ($s as $k => $v) {
@@ -1425,13 +1477,15 @@ class BxDolFormCheckerHelper {
         }
         return $this->_passPreg($s, $r);
     }
-    function _passPreg ($s, $r) {
+    function _passPreg ($s, $r)
+    {
         if (preg_match ($r, $s, $m)) {
             return $m[1];
         }
         return '';
     }
-    function passBoolean ($s) {
+    function passBoolean ($s)
+    {
         if (is_array($s)) {
             $a = array ();
             foreach ($s as $k => $v) {
@@ -1442,7 +1496,8 @@ class BxDolFormCheckerHelper {
         return $s == 'on' ? true : false;
     }
 
-    function passSet ($s) {
+    function passSet ($s)
+    {
         if (is_array($s)) {
             $i = 0;
             foreach ($s as $v)
@@ -1454,13 +1509,16 @@ class BxDolFormCheckerHelper {
 
     // display functions, prepare values to output to the screen
 
-    function displayDate ($i) {
+    function displayDate ($i)
+    {
         return bx_process_output ($i, BX_DATA_DATE_TS);
     }
-    function displayDateTime ($i) {
+    function displayDateTime ($i)
+    {
         return bx_process_output ($i, BX_DATA_DATETIME_TS);
     }
-    function displaySet ($i) {
+    function displaySet ($i)
+    {
         $bit = 1;
         $a = array();
         while ($bit < BX_DOL_INT_MAX && $bit > 0) {
@@ -1473,7 +1531,8 @@ class BxDolFormCheckerHelper {
 
     // for internal usage only
 
-    function _isEmptyArray ($a) {
+    function _isEmptyArray ($a)
+    {
         if (!is_array($a))
             return true;
         if (empty($a))

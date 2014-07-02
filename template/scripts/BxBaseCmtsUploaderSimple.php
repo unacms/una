@@ -13,8 +13,10 @@ bx_import ('BxTemplUploaderSimple');
  * Upload files using standard HTML forms.
  * @see BxBaseUploaderSimple, BxDolUploader
  */
-class BxBaseCmtsUploaderSimple extends BxTemplUploaderSimple {
-    function __construct ($aObject, $sStorageObject, $sUniqId) {
+class BxBaseCmtsUploaderSimple extends BxTemplUploaderSimple
+{
+    function __construct ($aObject, $sStorageObject, $sUniqId)
+    {
         parent::__construct($aObject, $sStorageObject, $sUniqId);
         $this->_sButtonTemplate = 'comments_uploader_bs.html';
     }

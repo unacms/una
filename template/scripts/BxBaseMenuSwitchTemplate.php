@@ -12,20 +12,21 @@ bx_import('BxTemplMenu');
 /**
  * Site main menu representation.
  */
-class BxBaseMenuSwitchTemplate extends BxTemplMenu 
+class BxBaseMenuSwitchTemplate extends BxTemplMenu
 {
-    public function __construct ($aObject, $oTemplate) 
+    public function __construct ($aObject, $oTemplate)
     {
         parent::__construct ($aObject, $oTemplate);
     }
 
-    public function getMenuItems () {
-		$this->loadData();
+    public function getMenuItems ()
+    {
+        $this->loadData();
 
-    	return parent::getMenuItems();
+        return parent::getMenuItems();
     }
 
-	protected function loadData() 
+    protected function loadData()
     {
         $this->setSelected('', $this->_oTemplate->getCode());
 
@@ -33,24 +34,24 @@ class BxBaseMenuSwitchTemplate extends BxTemplMenu
 
         $aPageParams = array();
         if(!empty($aPage[1]))
-			parse_str($aPage[1], $aPageParams);
+            parse_str($aPage[1], $aPageParams);
 
         $aTemplates = get_templates_array(true, true);
 
         $aItems = array();
         foreach( $aTemplates as $sName => $sTemplate ) {
-        	$aPageParams['skin'] = $sName;
-        	
-        	$aItems[] = array(
-        		'id' => $sName, 
-        		'name' => $sName,
-        		'class' => '', 
-        		'title' => $sTemplate, 
-        		'target' => '_self',
-        		'icon' => '',
-        		'link' => bx_html_attribute(bx_append_url_params($aPage[0], $aPageParams)),
-        		'onclick' => ''
-        	);
+            $aPageParams['skin'] = $sName;
+
+            $aItems[] = array(
+                'id' => $sName,
+                'name' => $sName,
+                'class' => '',
+                'title' => $sTemplate,
+                'target' => '_self',
+                'icon' => '',
+                'link' => bx_html_attribute(bx_append_url_params($aPage[0], $aPageParams)),
+                'onclick' => ''
+            );
         }
 
         $this->_aObject['menu_items'] = $aItems;

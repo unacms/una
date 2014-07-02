@@ -14,7 +14,7 @@ bx_import('BxDolDb');
  */
 class BxDolViewQuery extends BxDolDb
 {
-	protected $_oModule;
+    protected $_oModule;
 
     protected $_sTableTrack;
     protected $_sTriggerTable;
@@ -29,7 +29,7 @@ class BxDolViewQuery extends BxDolDb
 
         $this->_oModule = $oModule;
 
-    	$aSystem = $this->_oModule->getSystemInfo();
+        $aSystem = $this->_oModule->getSystemInfo();
         $this->_sTableTrack = $aSystem['table_track'];
         $this->_sTriggerTable = $aSystem['trigger_table'];
         $this->_sTriggerFieldId = $aSystem['trigger_field_id'];
@@ -40,15 +40,15 @@ class BxDolViewQuery extends BxDolDb
 
     public function doView($iObjectId, $iAuthorId, $sAuthorIp)
     {
-    	$iAuthorNip = ip2long($sAuthorIp);
+        $iAuthorNip = ip2long($sAuthorIp);
 
-    	if($iAuthorId)
+        if($iAuthorId)
             $sWhere = $this->prepare(" AND `viewer_id` = ? ", $iAuthorId);
         else
             $sWhere = $this->prepare(" AND `viewer_id` = '0' AND `viewer_nip` = ? ", $iAuthorNip);
 
         $sQuery = $this->prepare("SELECT `date` FROM `{$this->_sTableTrack}` WHERE `object_id` = ? $sWhere", $iObjectId);
-		$iDate = (int)$this->getOne($sQuery);
+        $iDate = (int)$this->getOne($sQuery);
         $iDateNow = time();
 
         if(!$iDate) {
@@ -58,11 +58,11 @@ class BxDolViewQuery extends BxDolDb
 
         if(($iDateNow - $iDate) > $this->_iPeriod) {
             $sQuery = $this->prepare("UPDATE `{$this->_sTableTrack}` SET `date` = ? WHERE `object_id` = ? AND `viewer_id` = ? AND `viewer_nip` = ?", $iDateNow, $iObjectId, $iAuthorId, $iAuthorNip);
-        	return (int)$this->query($sQuery) > 0;
+            return (int)$this->query($sQuery) > 0;
         }
     }
 
-	function deleteObjectViews($iObjectId)
+    function deleteObjectViews($iObjectId)
     {
         $sQuery = $this->prepare("DELETE FROM {$this->_sTableTrack} WHERE `object_id` = ?", $iObjectId);
         $this->query ($sQuery);
@@ -70,7 +70,8 @@ class BxDolViewQuery extends BxDolDb
         $this->query ("OPTIMIZE TABLE {$this->_sTableTrack}");
     }
 
-	public function updateTriggerTable($iObjectId) {
+    public function updateTriggerTable($iObjectId)
+    {
         $sQuery = $this->prepare("UPDATE `{$this->_sTriggerTable}` SET `{$this->_sTriggerFieldCount}` = `{$this->_sTriggerFieldCount}` + 1 WHERE `{$this->_sTriggerFieldId}` = ?", $iObjectId);
         return (int)$this->query($sQuery) > 0;
     }

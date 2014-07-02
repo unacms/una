@@ -9,9 +9,9 @@
 
 bx_import('BxDolCron');
 
-class BxDolCronStorage extends BxDolCron 
+class BxDolCronStorage extends BxDolCron
 {
-    public function processing() 
+    public function processing()
     {
         set_time_limit(36000);
         ignore_user_abort();

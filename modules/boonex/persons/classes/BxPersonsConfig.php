@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Persons Persons
  * @ingroup     DolphinModules
  *
@@ -11,9 +11,9 @@
 
 bx_import('BxBaseModProfileConfig');
 
-class BxPersonsConfig extends BxBaseModProfileConfig 
+class BxPersonsConfig extends BxBaseModProfileConfig
 {
-    function __construct($aModule) 
+    function __construct($aModule)
     {
         parent::__construct($aModule);
 
@@ -101,7 +101,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             // some language keys
             'T' => array (
                 'txt_sample_single' => '_bx_persons_txt_sample_single',
-                'menu_item_title_befriend_sent' => '_bx_persons_menu_item_title_befriend_sent', 
+                'menu_item_title_befriend_sent' => '_bx_persons_menu_item_title_befriend_sent',
                 'menu_item_title_unfriend_cancel_request' => '_bx_persons_menu_item_title_unfriend_cancel_request',
                 'menu_item_title_befriend_confirm' => '_bx_persons_menu_item_title_befriend_confirm',
                 'menu_item_title_unfriend_reject_request' => '_bx_persons_menu_item_title_unfriend_reject_request',
@@ -114,4 +114,4 @@ class BxPersonsConfig extends BxBaseModProfileConfig
 
 }
 
-/** @} */ 
+/** @} */

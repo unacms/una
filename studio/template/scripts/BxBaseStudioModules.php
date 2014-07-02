@@ -11,30 +11,37 @@
 bx_import('BxDolStudioModules');
 bx_import('BxDolStudioTemplate');
 
-class BxBaseStudioModules extends BxDolStudioModules {
-    function __construct() {
+class BxBaseStudioModules extends BxDolStudioModules
+{
+    function __construct()
+    {
         parent::__construct();
     }
-    function getCss() {
+    function getCss()
+    {
         return array('modules.css');
     }
-    function getJs() {
+    function getJs()
+    {
         return array('jquery.anim.js', 'page.js', 'modules.js');
     }
-    function getJsCode() {
+    function getJsCode()
+    {
         return BxDolStudioTemplate::getInstance()->parseHtmlByName($this->sTemplPrefix . '_js.html', array(
-            'js_object' => $this->sJsObject           
+            'js_object' => $this->sJsObject
         ));
     }
-    protected function getPopupConfirm($iWidgetId, &$aModule) {
+    protected function getPopupConfirm($iWidgetId, &$aModule)
+    {
         return BxDolStudioTemplate::getInstance()->parseHtmlByName($this->sTemplPrefix . '_confirm.html', array(
-        	'content' => _t('_adm_' . $this->sLangPrefix . '_cnf_uninstall', $aModule['title']),
+            'content' => _t('_adm_' . $this->sLangPrefix . '_cnf_uninstall', $aModule['title']),
             'click' => $this->sJsObject . ".uninstall(" . $iWidgetId . ", '" . $aModule['name'] . "', 1)"
         ));
     }
-    protected function getPopupResult($sMessage) {
+    protected function getPopupResult($sMessage)
+    {
         return BxDolStudioTemplate::getInstance()->parseHtmlByName($this->sTemplPrefix . '_action_result.html', array(
-        	'content' => $sMessage)
+            'content' => $sMessage)
         );
     }
 }

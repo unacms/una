@@ -14,9 +14,9 @@ bx_import('BxBaseModTextFormEntry');
 /**
  * Create/Edit entry form
  */
-class BxCnvFormEntry extends BxBaseModTextFormEntry 
+class BxCnvFormEntry extends BxBaseModTextFormEntry
 {
-    public function __construct($aInfo, $oTemplate = false) 
+    public function __construct($aInfo, $oTemplate = false)
     {
         $this->MODULE = 'bx_convos';
         parent::__construct($aInfo, $oTemplate);
@@ -29,17 +29,17 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
         $oTemplate->addJsTranslation(array(
             '_bx_cnv_draft_saving_error',
             '_bx_cnv_draft_saved_success',
-        ));    
+        ));
     }
 
-    public function insert ($aValsToAdd = array(), $isIgnore = false) 
+    public function insert ($aValsToAdd = array(), $isIgnore = false)
     {
         $aValsToAdd['last_reply_timestamp'] = time();
         $aValsToAdd['last_reply_profile_id'] = bx_get_logged_profile_id();
 
         $bSaveToDrafts = bx_get('draft_save');
         $iContentId = bx_get('draft_id');
-        $bDraft = $iContentId ? BX_CNV_FOLDER_DRAFTS == $this->_oModule->_oDb->getConversationFolder($iContentId, bx_get_logged_profile_id()) : false; 
+        $bDraft = $iContentId ? BX_CNV_FOLDER_DRAFTS == $this->_oModule->_oDb->getConversationFolder($iContentId, bx_get_logged_profile_id()) : false;
 
         if ($iContentId) {
 
@@ -73,13 +73,13 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
             bx_alert('system', 'check_spam', 0, getLoggedId(), array('is_spam' => &$bSpam, 'content' => $this->getCleanValue('text'), 'where' => $this->MODULE));
             $iFolder = $bSpam ? BX_CNV_FOLDER_SPAM : BX_CNV_FOLDER_INBOX;
 
-            // place conversation to "inbox" (or "spam" - in case of spam) folder 
+            // place conversation to "inbox" (or "spam" - in case of spam) folder
             $aRecipients = array_unique(array_merge($this->getCleanValue('recipients'), array(bx_get_logged_profile_id())), SORT_NUMERIC);
             foreach ($aRecipients as $iProfile) {
                 $oProfile = BxDolProfile::getInstance($iProfile);
-                if (!$oProfile) 
+                if (!$oProfile)
                     continue;
-                
+
                 if ($bDraft && $oProfile->id() == bx_get_logged_profile_id())
                     $this->_oModule->_oDb->moveConvo($iContentId, $oProfile->id(), $iFolder);
                 else
@@ -90,7 +90,8 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
         return $iContentId;
     }
 
-    protected function genCustomInputRecipients ($aInput) {
+    protected function genCustomInputRecipients ($aInput)
+    {
         $sVals = '';
         if (!empty($aInput['value']) && is_array($aInput['value'])) {
             foreach ($aInput['value'] as $sVal) {
@@ -128,7 +129,7 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
         });
 
         $('#{$sId}').on('click', 'span', function() {
-            $(this).remove(); 
+            $(this).remove();
         });
 
     });
@@ -172,13 +173,13 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
 EOS;
     }
 
-    protected function genCustomInputSubmitText ($aInput) 
+    protected function genCustomInputSubmitText ($aInput)
     {
         $aVars = array();
         return $this->_oModule->_oTemplate->parseHtmlByName('form_submit_text.html', $aVars);
     }
 
-    function initChecker ($aValues = array (), $aSpecificValues = array())  
+    function initChecker ($aValues = array (), $aSpecificValues = array())
     {
         if ($iContentId = bx_get('draft_id')) { // if adding from draft, fill in existing fields info
             $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
@@ -189,7 +190,7 @@ EOS;
         return parent::initChecker ($aValues, $aSpecificValues);
     }
 
-    function isValid () 
+    function isValid ()
     {
         if (bx_get('draft_save')) // form is always valid when saving to drafts
             return true;

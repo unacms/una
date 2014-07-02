@@ -9,7 +9,7 @@
 
 bx_import('BxDolSearch');
 
-class BxBaseSearchResult extends BxDolSearchResult 
+class BxBaseSearchResult extends BxDolSearchResult
 {
     public $isError;
 
@@ -26,7 +26,7 @@ class BxBaseSearchResult extends BxDolSearchResult
 
     protected $sCenterContentUnitSelector = false;
 
-    function __construct($oFunctions = false) 
+    function __construct($oFunctions = false)
     {
         parent::__construct();
 
@@ -38,12 +38,12 @@ class BxBaseSearchResult extends BxDolSearchResult
         }
     }
 
-    function getMain() 
+    function getMain()
     {
         // override this to return main module class
     }
 
-    function displayResultBlock () 
+    function displayResultBlock ()
     {
         $sCode = '';
         $aData = $this->getSearchData();
@@ -69,7 +69,7 @@ class BxBaseSearchResult extends BxDolSearchResult
         return $sCode;
     }
 
-    function displaySearchBox ($sCode, $sPaginate = '') 
+    function displaySearchBox ($sCode, $sPaginate = '')
     {
         $sTitle = _t($this->aCurrent['title']);
 
@@ -81,13 +81,13 @@ class BxBaseSearchResult extends BxDolSearchResult
         return $sCode;
     }
 
-    function displaySearchUnit ($aData) 
+    function displaySearchUnit ($aData)
     {
         $oMain = $this->getMain();
         return $oMain->_oTemplate->unit($aData, $this->bProcessPrivateContent, $this->_bLiveSearch ? $this->sUnitTemplateLiveSearch : $this->sUnitTemplate);
     }
 
-    function getDesignBoxMenu () 
+    function getDesignBoxMenu ()
     {
         if (false === ($sLink = $this->getRssPageUrl ()))
             return false;
@@ -97,9 +97,9 @@ class BxBaseSearchResult extends BxDolSearchResult
         );
     }
 
-    function getRssPageUrl () 
+    function getRssPageUrl ()
     {
-        if (!isset($this->aCurrent['rss']) || !$this->aCurrent['rss']['link']) 
+        if (!isset($this->aCurrent['rss']) || !$this->aCurrent['rss']['link'])
             return false;
 
         bx_import('BxDolPermalinks');
@@ -107,7 +107,7 @@ class BxBaseSearchResult extends BxDolSearchResult
         return BX_DOL_URL_ROOT . bx_append_url_params($oPermalinks->permalink($this->aCurrent['rss']['link']), 'rss=1');
     }
 
-    function showAdminActionsPanel($sWrapperId, $aButtons, $sCheckboxName = 'entry', $bSelectAll = true, $bSelectAllChecked = false, $sCustomHtml = '') 
+    function showAdminActionsPanel($sWrapperId, $aButtons, $sCheckboxName = 'entry', $bSelectAll = true, $bSelectAllChecked = false, $sCustomHtml = '')
     {
         $aBtns = array();
         foreach ($aButtons as $k => $v) {
@@ -143,7 +143,7 @@ class BxBaseSearchResult extends BxDolSearchResult
         ));
     }
 
-    function showAdminFilterPanel($sFilterValue, $sInputId = 'filter_input_id', $sCheckboxId = 'filter_checkbox_id', $sFilterName = 'filter', $sOnApply = '') 
+    function showAdminFilterPanel($sFilterValue, $sInputId = 'filter_input_id', $sCheckboxId = 'filter_checkbox_id', $sFilterName = 'filter', $sOnApply = '')
     {
         $sFilterValue = bx_html_attribute($sFilterValue);
         $isChecked = $sFilterValue ? ' checked="checked" ' : '';
@@ -151,13 +151,13 @@ class BxBaseSearchResult extends BxDolSearchResult
         if(empty($sOnApply))
             $sOnApply = "on_filter_apply(this, '" . $sInputId . "', '" . $sFilterName . "')";
 
-		return BxDolTemplate::getInstance()->parseHtmlByName('adminFilterPanel.html', array(
-			'input_id' => $sInputId,
-			'filter_value' => $sFilterValue,
-			'checkbox_id' => $sCheckboxId,
-			'is_checked' => $isChecked,
-			'on_apply' => $sOnApply,
-		));
+        return BxDolTemplate::getInstance()->parseHtmlByName('adminFilterPanel.html', array(
+            'input_id' => $sInputId,
+            'filter_value' => $sFilterValue,
+            'checkbox_id' => $sCheckboxId,
+            'is_checked' => $isChecked,
+            'on_apply' => $sOnApply,
+        ));
     }
 
     function showPagination($bAdmin = false, $bChangePage = true, $bPageReload = true)
@@ -185,7 +185,7 @@ class BxBaseSearchResult extends BxDolSearchResult
      * @param $bReplacePagesParams replace paginate params with current values or leave markers for use in paginate class
      * @return ready to use URL string with BX_DOL_URL_ROOT added in the beginning
      */
-    protected function getCurrentUrl($aAdditionalParams = array(), $bReplacePagesParams = true) 
+    protected function getCurrentUrl($aAdditionalParams = array(), $bReplacePagesParams = true)
     {
         if (BX_DOL_SEARCH_KEYWORD_PAGE === $this->sBrowseUrl || $this->bForceAjaxPaginate)
             return 'javascript:void(0);';
@@ -204,7 +204,7 @@ class BxBaseSearchResult extends BxDolSearchResult
      * @param $bReplacePagesParams replace paginate params with current values or leave markers for use in paginate class
      * @return ready to use URL string with BX_DOL_URL_ROOT added in the beginning
      */
-    protected function getCurrentOnclick($aAdditionalParams = array(), $bReplacePagesParams = true) 
+    protected function getCurrentOnclick($aAdditionalParams = array(), $bReplacePagesParams = true)
     {
         if (BX_DOL_SEARCH_KEYWORD_PAGE !== $this->sBrowseUrl && !$this->bForceAjaxPaginate)
             return '';
@@ -227,7 +227,7 @@ class BxBaseSearchResult extends BxDolSearchResult
         }
     }
 
-    protected function addAdditionalUrlParams($sUrl, $bReplacePagesParams) 
+    protected function addAdditionalUrlParams($sUrl, $bReplacePagesParams)
     {
         // add pages params
         $sUrl = bx_append_url_params($sUrl, array (
@@ -248,7 +248,7 @@ class BxBaseSearchResult extends BxDolSearchResult
         return $sUrl;
     }
 
-    function clearFilters ($aPassParams = array(), $aPassJoins = array()) 
+    function clearFilters ($aPassParams = array(), $aPassJoins = array())
     {
         //clear sorting
         $this->aCurrent['sorting'] = 'last';
@@ -269,7 +269,7 @@ class BxBaseSearchResult extends BxDolSearchResult
         $this->aCurrent['join'] = $aTemp;
     }
 
-    function fillFilters ($aParams) 
+    function fillFilters ($aParams)
     {
         // transform all given values to fields values
         if (is_array($aParams)) {
@@ -283,7 +283,7 @@ class BxBaseSearchResult extends BxDolSearchResult
     /**
      * Set design box template id to use to wrap search results in
      */
-    function setDesignBoxTemplateId ($i) 
+    function setDesignBoxTemplateId ($i)
     {
         $this->iDesignBoxTemplate = $i;
     }

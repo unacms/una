@@ -45,7 +45,7 @@ class BxAntispamModuleTest extends BxDolTestCase
     {
         $any = $this->anything();
         return array(
-            array(true, $any, $any, $any, $any, $any, $any, false), // no spam detection for admin account 
+            array(true, $any, $any, $any, $any, $any, $any, false), // no spam detection for admin account
             array(false, true, $any, $any, $any, $any, $any, false), // no spam detection for whitelisted IP
 
             array(false, false, 'on', false, $any, $any, 'on', false), // no spam detection if not listed in URIDNSBL (in "blocking" mode)
@@ -64,7 +64,7 @@ class BxAntispamModuleTest extends BxDolTestCase
     public function testServiceIsSpam($isAdmin, $bIpWhitelisted, $sUriDnsblEnable, $bUriDnsblBlacklisted, $sAkismetlEnable, $bAkismetBlacklisted, $sBlock, $bRes)
     {
         $this->_oModule->_oConfig->setAntispamOption('antispam_report', ''); // turn off reporting during testing
-        $this->_oModule->_oConfig->setAntispamOption('uridnsbl_enable', $sUriDnsblEnable); 
+        $this->_oModule->_oConfig->setAntispamOption('uridnsbl_enable', $sUriDnsblEnable);
         $this->_oModule->_oConfig->setAntispamOption('akismet_enable', $sAkismetlEnable);
         $this->_oModule->_oConfig->setAntispamOption('antispam_block', $sBlock);
 
@@ -132,7 +132,7 @@ class BxAntispamModuleTest extends BxDolTestCase
 
         } elseif (!$bIpBlocked) { // if ip is NOT blocked - perform further checks
 
-            if ('on' != $sDnsblEnable) { // DNSBL shouldn't be called if it isn't enabled 
+            if ('on' != $sDnsblEnable) { // DNSBL shouldn't be called if it isn't enabled
                 $this->_oMockDNSBlacklists->expects($this->never())->method('dnsbl_lookup_ip');
             } elseif ('on' == $sDnsblEnable) {
                 $this->_oMockDNSBlacklists->expects($this->at(0))->method('dnsbl_lookup_ip')
@@ -160,9 +160,9 @@ class BxAntispamModuleTest extends BxDolTestCase
         return array(
             array(true, $any, $any, $any, false),
             array(false, false, $any, $any, true),
-            array(false, true, 'log', false, true), 
+            array(false, true, 'log', false, true),
             array(false, true, 'block', false, true),
-            array(false, true, 'log', true, true), 
+            array(false, true, 'log', true, true),
             array(false, true, 'block', true, false),
         );
     }
@@ -261,4 +261,3 @@ class BxAntispamModuleTest extends BxDolTestCase
         $this->_oModule->serviceBlockIp($this->_sSampleIP);
     }
 }
-

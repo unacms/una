@@ -48,5 +48,3 @@
         }
 
         echo "Send membership expire letters: $iExpireLetters letters\n";
-
-

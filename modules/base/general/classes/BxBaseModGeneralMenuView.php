@@ -15,13 +15,13 @@ bx_import('BxDolModule');
 /**
  * View entry menu
  */
-class BxBaseModGeneralMenuView extends BxTemplMenu 
+class BxBaseModGeneralMenuView extends BxTemplMenu
 {
     protected $MODULE;
 
     protected $_oModule;
 
-    public function __construct($aObject, $oTemplate = false) 
+    public function __construct($aObject, $oTemplate = false)
     {
         parent::__construct($aObject, $oTemplate);
 
@@ -33,8 +33,8 @@ class BxBaseModGeneralMenuView extends BxTemplMenu
      * Associated "allow*" method with particular menu item is stored in module config in MENU_ITEM_TO_METHOD array.
      * @param $a menu item array
      * @return boolean
-     */ 
-    protected function _isVisible ($a) 
+     */
+    protected function _isVisible ($a)
     {
         // default visible settings
         bx_import('BxDolAcl');

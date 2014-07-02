@@ -9,23 +9,23 @@
 
 bx_import('BxDolCron');
 
-class BxDolCronPruning extends BxDolCron 
+class BxDolCronPruning extends BxDolCron
 {
-    protected function start() 
+    protected function start()
     {
         set_time_limit(0);
         ignore_user_abort();
         ob_start();
     }
 
-    protected function finish() 
+    protected function finish()
     {
         bx_alert('system', 'pruning', 0);
 
         if (!($sOutput = ob_get_clean()))
             return;
 
-    	bx_import('BxDolEmailTemplates');
+        bx_import('BxDolEmailTemplates');
         $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_Pruning', array('pruning_output' => $sOutput, 'site_title' => getParam('site_title')), 0, 0);
         if ($aTemplate)
             sendMail(getParam('site_email'), $aTemplate['Subject'], $aTemplate['Body'], 0, array(), BX_EMAIL_NOTIFY);
@@ -73,7 +73,7 @@ class BxDolCronPruning extends BxDolCron
     /**
      * Clean tmp folders (tmp, cache) by deleting old files (by default older than 1 month)
      */
-    protected function cleanTmpFolders() 
+    protected function cleanTmpFolders()
     {
         $iTmpFileLife = 2592000;  // one month
         $aDirsToClean = array(
@@ -104,7 +104,7 @@ class BxDolCronPruning extends BxDolCron
         echo _t('_sys_pruning_files', $iNumTmp, $iNumDel);
     }
 
-    public function processing()    
+    public function processing()
     {
         $this->start();
 
@@ -117,4 +117,3 @@ class BxDolCronPruning extends BxDolCron
 }
 
 /** @} */
-

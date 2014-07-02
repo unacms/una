@@ -9,12 +9,15 @@
 
 bx_import('BxDolDb');
 
-class BxDolStudioFormsQuery extends BxDolDb {
-    function __construct() {
+class BxDolStudioFormsQuery extends BxDolDb
+{
+    function __construct()
+    {
         parent::__construct();
     }
 
-    function getForms($aParams, &$aItems, $bReturnCount = true) {
+    function getForms($aParams, &$aItems, $bReturnCount = true)
+    {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sSelectClause = $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
 
@@ -71,7 +74,8 @@ class BxDolStudioFormsQuery extends BxDolDb {
         return (int)$this->getOne("SELECT FOUND_ROWS()");
     }
 
-    function getDisplays($aParams, &$aItems, $bReturnCount = true) {
+    function getDisplays($aParams, &$aItems, $bReturnCount = true)
+    {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sSelectClause = $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
 
@@ -128,7 +132,7 @@ class BxDolStudioFormsQuery extends BxDolDb {
                 break;
         }
 
-        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . " 
+        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . "
                 `td`.`id` AS `id`,
                 `td`.`object` AS `object`,
                 `td`.`display_name` AS `name`,
@@ -146,17 +150,19 @@ class BxDolStudioFormsQuery extends BxDolDb {
         return (int)$this->getOne("SELECT FOUND_ROWS()");
     }
 
-    function isInput($sObject, $sName) {
+    function isInput($sObject, $sName)
+    {
         $sSql = $this->prepare("SELECT `id` FROM `sys_form_inputs` WHERE `object`=? AND `name`=? LIMIT 1", $sObject, $sName);
         return (int)$this->getOne($sSql) > 0;
     }
 
-    function getInputs($aParams, &$aItems, $bReturnCount = true) {
+    function getInputs($aParams, &$aItems, $bReturnCount = true)
+    {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sSelectClause = $sFromClause = $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
 
         $sSelectClause = "
-    		`tdi`.`id` AS `id`,
+            `tdi`.`id` AS `id`,
             `ti`.`name` AS `name`,
             `ti`.`type` AS `type`,
             `ti`.`caption_system` AS `caption_system`,
@@ -236,7 +242,8 @@ class BxDolStudioFormsQuery extends BxDolDb {
         return (int)$this->getOne("SELECT FOUND_ROWS()");
     }
 
-    function deleteInputs($aParams) {
+    function deleteInputs($aParams)
+    {
         $sWhereClause = $sLimitClause = "";
 
         switch($aParams['type']) {
@@ -256,7 +263,8 @@ class BxDolStudioFormsQuery extends BxDolDb {
         return (int)$this->query($sSql) > 0;
     }
 
-    function checkInputsInDisplays($sObject, $sDisplayName) {
+    function checkInputsInDisplays($sObject, $sDisplayName)
+    {
         $aDisplay = array();
         $this->getDisplays(array('type' => 'by_object_display', 'object' => $sObject, 'display' => $sDisplayName), $aDisplay, false);
         if(empty($aDisplay) || !is_array($aDisplay))
@@ -266,12 +274,14 @@ class BxDolStudioFormsQuery extends BxDolDb {
         return (int)$this->query($sSql) > 0;
     }
 
-    function getInputOrderMax($sDisplayName) {
+    function getInputOrderMax($sDisplayName)
+    {
         $sSql = $this->prepare("SELECT MAX(`order`) FROM `sys_form_display_inputs` WHERE `display_name`=? LIMIT 1", $sDisplayName);
         return (int)$this->getOne($sSql);
     }
 
-    function getLists($aParams, &$aItems, $bReturnCount = true) {
+    function getLists($aParams, &$aItems, $bReturnCount = true)
+    {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sSelectClause = $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
 
@@ -312,8 +322,8 @@ class BxDolStudioFormsQuery extends BxDolDb {
                 break;
         }
 
-        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . " 
-            	`tl`.`id` AS `id`,
+        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . "
+                `tl`.`id` AS `id`,
                 `tl`.`module` AS `module`,
                 `tl`.`key` AS `key`,
                 `tl`.`title` AS `title`,
@@ -328,24 +338,27 @@ class BxDolStudioFormsQuery extends BxDolDb {
         return (int)$this->getOne("SELECT FOUND_ROWS()");
     }
 
-    function updateList($iId, $aFields) {
+    function updateList($iId, $aFields)
+    {
         $sSql = "UPDATE `sys_form_pre_lists` SET `" . implode("`=?, `", array_keys($aFields)) . "`=?  WHERE `id`=?";
         $sSql = call_user_func_array(array($this, 'prepare'), array_merge(array($sSql), array_values($aFields), array($iId)));
         return $this->query($sSql);
     }
 
-    function isListUsedInSet($sKey) {
+    function isListUsedInSet($sKey)
+    {
         bx_import('BxDolForm');
 
-        $sSql = $this->prepare("SELECT 
-            	COUNT( DISTINCT `ti`.`id`) AS `id`
-            FROM `sys_form_pre_lists` AS `tl` 
+        $sSql = $this->prepare("SELECT
+                COUNT( DISTINCT `ti`.`id`) AS `id`
+            FROM `sys_form_pre_lists` AS `tl`
             LEFT JOIN `sys_form_inputs` AS `ti` ON CONCAT('" . BX_DATA_LISTS_KEY_PREFIX . "', `tl`.`key`)=`ti`.`values` AND `ti`.`type` IN ('select_multiple', 'checkbox_set')
             WHERE 1 AND `tl`.`key`=?", $sKey);
         return (int)$this->getOne($sSql) > 0;
     }
 
-    function getValues($aParams, &$aItems, $bReturnCount = true) {
+    function getValues($aParams, &$aItems, $bReturnCount = true)
+    {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sSelectClause = $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
 
@@ -384,8 +397,8 @@ class BxDolStudioFormsQuery extends BxDolDb {
                 break;
         }
 
-        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . " 
-            	`tv`.`id` AS `id`,
+        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . "
+                `tv`.`id` AS `id`,
                 `tv`.`Key` AS `key`,
                 `tv`.`Key` AS `Key`,
                 `tv`.`Value` AS `value`,
@@ -406,7 +419,8 @@ class BxDolStudioFormsQuery extends BxDolDb {
         return (int)$this->getOne("SELECT FOUND_ROWS()");
     }
 
-    function deleteValues($aParams) {
+    function deleteValues($aParams)
+    {
         $sWhereClause = $sLimitClause = "";
 
         switch($aParams['type']) {
@@ -421,17 +435,20 @@ class BxDolStudioFormsQuery extends BxDolDb {
         return $this->query($sSql) !== false;
     }
 
-    function getValuesOrderMax($sKey) {
+    function getValuesOrderMax($sKey)
+    {
         $sSql = $this->prepare("SELECT MAX(`Order`) FROM `sys_form_pre_values` WHERE `Key`=? LIMIT 1", $sKey);
         return (int)$this->getOne($sSql);
     }
 
-    function alterAdd($sTable, $sField, $sType) {
+    function alterAdd($sTable, $sField, $sType)
+    {
         $sSql = "ALTER TABLE `" . $sTable . "` ADD `" . $sField . "` " . $sType;
         $this->query($sSql);
     }
 
-    function alterRemove($sTable, $sField) {
+    function alterRemove($sTable, $sField)
+    {
         $sSql = "ALTER TABLE `" . $sTable . "` DROP `" . $sField . "`";
         $this->query($sSql);
     }

@@ -12,8 +12,10 @@ bx_import('BxBaseServiceProfiles');
 /**
  * @see BxBaseServiceProfiles
  */
-class BxTemplServiceProfiles extends BxBaseServiceProfiles {
-    public function __construct() {
+class BxTemplServiceProfiles extends BxBaseServiceProfiles
+{
+    public function __construct()
+    {
         parent::__construct();
     }
 }

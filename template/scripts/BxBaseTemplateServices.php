@@ -10,23 +10,25 @@
 /**
  * System services related to Templates.
  */
-class BxBaseTemplateServices extends BxDol {
-    public function __construct() {
+class BxBaseTemplateServices extends BxDol
+{
+    public function __construct()
+    {
         parent::__construct();
     }
 
-	public function serviceGetTemplates($bEnabledOnly = true, $bShortInfo = true)
+    public function serviceGetTemplates($bEnabledOnly = true, $bShortInfo = true)
     {
-    	$aValues = get_templates_array($bEnabledOnly, $bShortInfo);
+        $aValues = get_templates_array($bEnabledOnly, $bShortInfo);
 
-    	$aResult = array(); 
-    	foreach($aValues as $sKey => $sValue) 
-    		$aResult[] = array(
-    			'key' => $sKey, 
-    			'value' => $sValue
-    		);
+        $aResult = array();
+        foreach($aValues as $sKey => $sValue)
+            $aResult[] = array(
+                'key' => $sKey,
+                'value' => $sValue
+            );
 
-    	return $aResult;
+        return $aResult;
     }
 }
 

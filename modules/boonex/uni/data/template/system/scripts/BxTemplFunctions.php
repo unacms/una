@@ -9,7 +9,7 @@
 
 bx_import('BxBaseFunctions');
 
-class BxTemplFunctions extends BxBaseFunctions 
+class BxTemplFunctions extends BxBaseFunctions
 {
     function __construct($oTemplate = null)
     {

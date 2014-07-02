@@ -11,8 +11,10 @@ defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxBaseStudioFormsPreLists');
 
-class BxTemplStudioFormsPreLists extends BxBaseStudioFormsPreLists { 
-    function __construct($aOptions, $oTemplate = false) {
+class BxTemplStudioFormsPreLists extends BxBaseStudioFormsPreLists
+{
+    function __construct($aOptions, $oTemplate = false)
+    {
         parent::__construct($aOptions, $oTemplate);
     }
 }

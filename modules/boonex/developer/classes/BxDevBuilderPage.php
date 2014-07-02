@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Developer Developer
  * @ingroup     DolphinModules
  *
@@ -11,13 +11,15 @@
 
 bx_import('BxTemplStudioBuilderPage');
 
-class BxDevBuilderPage extends BxTemplStudioBuilderPage {
+class BxDevBuilderPage extends BxTemplStudioBuilderPage
+{
     protected $sActionPageExport = 'page_export';
 
     protected $oModule;
     protected $aParams;
 
-    function __construct($aParams) {
+    function __construct($aParams)
+    {
         parent::__construct(isset($aParams['type']) ? $aParams['type'] : '',  isset($aParams['page']) ? $aParams['page'] : '');
 
         $this->aParams = $aParams;
@@ -31,13 +33,15 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage {
         $this->oModule->_oTemplate->addStudioCss(array('builder_page.css'));
     }
 
-    function getBlockPanelTop($aParams = array()) {
+    function getBlockPanelTop($aParams = array())
+    {
          return BxBaseStudioPage::getBlockPanelTop(
             array('panel_top' => $this->oModule->_oTemplate->parseHtmlByName('bp_block_panel_top.html', $this->_getTmplVarsBlockPanelTop()))
         );
     }
 
-    protected function actionPageCreate() {
+    protected function actionPageCreate()
+    {
         bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance('mod_dev_bp_page', 'mod_dev_bp_page_add');
         $oForm->aFormAttrs['action'] = sprintf($this->sPageUrl, $this->sType, $this->sPage) . '&bp_action=' . $this->sActionPageCreate;
@@ -72,12 +76,13 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage {
         return array('popup' => $sContent);
     }
 
-    protected function actionPageExport() {
+    protected function actionPageExport()
+    {
         $sContentInsert = $sContentDelete = "";
 
         $aPage = array();
-		$this->oDb->getPages(array('type' => 'by_object', 'value' => $this->sPage), $aPage, false);
-    	if(empty($aPage) || !is_array($aPage))
+        $this->oDb->getPages(array('type' => 'by_object', 'value' => $this->sPage), $aPage, false);
+        if(empty($aPage) || !is_array($aPage))
             return array();
 
         $sContentInsert .= ($this->oModule->_oDb->getQueryInsert('sys_objects_page', array($aPage), "Dumping data for '" . $aPage['object'] . "' page"));
@@ -91,7 +96,7 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage {
         $aForm = array(
             'form_attrs' => array(),
             'inputs' => array (
-            	'insert' => array(
+                'insert' => array(
                     'type' => 'textarea',
                     'name' => 'insert',
                     'caption' => _t('_bx_dev_bp_txt_page_export_insert'),
@@ -121,9 +126,10 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage {
         )));
 
         return array('popup' => $sContent);
-    }   
+    }
 
-    protected function actionBlockEdit() {
+    protected function actionBlockEdit()
+    {
         $iId = (int)bx_get('id');
         if(!$iId)
             return array();
@@ -157,7 +163,8 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage {
         return array('popup' => $sContent);
     }
 
-	protected function actionBlockDelete() {
+    protected function actionBlockDelete()
+    {
         $sJsObject = $this->getPageJsObject();
         $iId = (int)bx_get('id');
 
@@ -173,7 +180,8 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage {
         return array('eval' => $sJsObject . '.onDeleteBlock(' . $iId . ', oData)');
     }
 
-    protected function getSettingsOptions($bInputsOnly = false) {
+    protected function getSettingsOptions($bInputsOnly = false)
+    {
         $aForm = array(
             'form_attrs' => array(
                 'id' => 'adm-bp-settings-seo',
@@ -184,46 +192,46 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage {
                     'disable' => true
                 )
             ),
-			'inputs' => array(
-            	'object'  => array(
-					'type' => 'text',
-	                'name' => 'object',
-	                'caption' => _t('_bx_dev_bp_txt_page_object'),
-	                'info' => '',
-	                'value' => $this->aPageRebuild['object'],
-	                'required' => '',
-            		'attrs' => array(
+            'inputs' => array(
+                'object'  => array(
+                    'type' => 'text',
+                    'name' => 'object',
+                    'caption' => _t('_bx_dev_bp_txt_page_object'),
+                    'info' => '',
+                    'value' => $this->aPageRebuild['object'],
+                    'required' => '',
+                    'attrs' => array(
                         'disabled' => 'disabled'
                     ),
-				)
+                )
             )
-        ); 
+        );
 
         $aForm['inputs'] += parent::getSettingsOptions(true);
 
         $aForm['inputs']['title_system']['type'] = 'text';
-        $aForm['inputs']['title_system']['caption'] = _t('_bx_dev_bp_txt_page_title_system');        
+        $aForm['inputs']['title_system']['caption'] = _t('_bx_dev_bp_txt_page_title_system');
         $aForm['inputs']['title']['type'] = 'text';
 
         $aUri = array(
-			'uri'  => array(
-				'type' => 'text',
-	            'name' => 'uri',
-	            'caption' => _t('_bx_dev_bp_txt_page_uri'),
-	            'info' => '',
-	            'value' => $this->aPageRebuild['uri'],
-	            'required' => '',
-        		'db' => array (
-                	'pass' => 'Xss',
-				),
-			)
-		);
+            'uri'  => array(
+                'type' => 'text',
+                'name' => 'uri',
+                'caption' => _t('_bx_dev_bp_txt_page_uri'),
+                'info' => '',
+                'value' => $this->aPageRebuild['uri'],
+                'required' => '',
+                'db' => array (
+                    'pass' => 'Xss',
+                ),
+            )
+        );
         $aForm['inputs'] = bx_array_insert_before($aUri, $aForm['inputs'], 'url');
 
         $aForm['inputs']['url']['caption'] = _t('_bx_dev_bp_txt_page_url');
         $aForm['inputs']['url']['db'] = array (
-			'pass' => 'Xss',
-		);
+            'pass' => 'Xss',
+        );
         unset($aForm['inputs']['url']['attrs']['disabled']);
 
         $aForm['inputs']['deletable'] = array(
@@ -233,8 +241,8 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage {
             'info' => '',
             'value' => '1',
             'checked' => (int)$this->aPageRebuild['deletable'] == 1,
-        	'required' => '',
-        	'db' => array (
+            'required' => '',
+            'db' => array (
                 'pass' => 'Int',
             )
         );
@@ -268,7 +276,8 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage {
         return $oForm->getCode();
     }
 
-    protected function getSettingsCache($bInputsOnly = false) {
+    protected function getSettingsCache($bInputsOnly = false)
+    {
         $aForm = array(
             'form_attrs' => array(
                 'id' => 'adm-bp-settings-cache',
@@ -304,11 +313,13 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage {
         return $oForm->getCode();
     }
 
-    protected function getBlockModule($aBlock) {
+    protected function getBlockModule($aBlock)
+    {
         return $this->aPageRebuild['module'];
     }
 
-    protected function getBlockContent($aBlock) {
+    protected function getBlockContent($aBlock)
+    {
         $aFields = array();
 
         switch($aBlock['type']) {
@@ -336,23 +347,25 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage {
         return $aFields;
     }
 
-    protected function getBlocks($sModule) {
+    protected function getBlocks($sModule)
+    {
         $aBlocks = parent::getBlocks($sModule);
 
         if($sModule == BX_DOL_STUDIO_BP_SKELETONS) {
             $aBlock = array();
-    	    $this->oDb->getBlocks(array('type' => 'skeleton_by_type', 'value' => 'service'), $aBlock, false);
-    	    if(!empty($aBlock) && is_array($aBlock))
-    	        $aBlocks[] = $aBlock;
+            $this->oDb->getBlocks(array('type' => 'skeleton_by_type', 'value' => 'service'), $aBlock, false);
+            if(!empty($aBlock) && is_array($aBlock))
+                $aBlocks[] = $aBlock;
         }
 
-    	return $aBlocks;
+        return $aBlocks;
     }
 
-    protected function onLoadBlock(&$oForm, &$aBlock) {
+    protected function onLoadBlock(&$oForm, &$aBlock)
+    {
         $oForm->aFormAttrs['action'] = sprintf($this->sPageUrl, $this->sType, $this->sPage) . '&bp_action=' . $this->sActionBlockEdit;
         $oForm->aInputs['module']['values'] = array_merge(array('' => _t('_bx_dev_bp_txt_select_module')), BxDolStudioUtils::getModules());
-        
+
         $aDBoxes = array();
         $this->oDb->getDesignBoxes(array('type' => 'ordered'), $aDBoxes, false);
         foreach($aDBoxes as $aDBox)
@@ -360,8 +373,8 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage {
 
         $oForm->aInputs['visible_for']['value'] = $aBlock['visible_for_levels'] == BX_DOL_INT_MAX ? BX_DOL_STUDIO_VISIBLE_ALL : BX_DOL_STUDIO_VISIBLE_SELECTED;
         $oForm->aInputs['visible_for']['values'] = array(
-			array('key' => BX_DOL_STUDIO_VISIBLE_ALL, 'value' => _t('_bx_dev_bp_txt_block_visible_for_all')),
-			array('key' => BX_DOL_STUDIO_VISIBLE_SELECTED, 'value' => _t('_bx_dev_bp_txt_block_visible_for_selected')),
+            array('key' => BX_DOL_STUDIO_VISIBLE_ALL, 'value' => _t('_bx_dev_bp_txt_block_visible_for_all')),
+            array('key' => BX_DOL_STUDIO_VISIBLE_SELECTED, 'value' => _t('_bx_dev_bp_txt_block_visible_for_selected')),
         );
         $oForm->aInputs['visible_for']['attrs']['onchange'] = $this->getPageJsObject() . '.onChangeVisibleFor(this)';
 
@@ -378,10 +391,11 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage {
             $aBlock['content'] = BxDevFunctions::unserializeString($aBlock['content']);
 
         if((int)$aBlock['designbox_id'] != 0)
-            $aBlock['designbox_id'] = $this->sSelectKeyPrefix . $aBlock['designbox_id']; 
+            $aBlock['designbox_id'] = $this->sSelectKeyPrefix . $aBlock['designbox_id'];
     }
 
-    protected function onSaveBlock(&$oForm, &$aBlock) {
+    protected function onSaveBlock(&$oForm, &$aBlock)
+    {
         parent::onSaveBlock($oForm, $aBlock);
 
         if($aBlock['type'] == BX_DOL_STUDIO_BP_BLOCK_SERVICE && isset($oForm->aInputs['content'])) {
@@ -391,20 +405,20 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage {
         }
     }
 
-	protected function _getTmplVarsBlockPanelTopActions()
+    protected function _getTmplVarsBlockPanelTopActions()
     {
-    	$sJsObject = $this->getPageJsObject();
+        $sJsObject = $this->getPageJsObject();
 
-    	bx_import('BxDolPermalinks');
+        bx_import('BxDolPermalinks');
         $oPermalinks = BxDolPermalinks::getInstance();
 
-    	return array(
-			'js_object' => $sJsObject,
-        	'url_view' => BX_DOL_URL_ROOT . $oPermalinks->permalink($this->aPageRebuild['url']),
+        return array(
+            'js_object' => $sJsObject,
+            'url_view' => BX_DOL_URL_ROOT . $oPermalinks->permalink($this->aPageRebuild['url']),
             'action_page_export' => $this->sActionPageExport,
             'action_page_edit' => $this->sActionPageEdit,
             'action_block_create' => $this->sActionBlockCreate,
-		);
+        );
     }
 }
 

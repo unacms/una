@@ -13,41 +13,47 @@ bx_import('BxTemplAccountForms');
 /**
  * System service for creating system profile functionality.
  */
-class BxBaseServiceAccount extends BxDol {
-
+class BxBaseServiceAccount extends BxDol
+{
     protected $_oAccountForms;
     protected $_oAccountQuery;
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
-        
+
         $this->_oAccountForms = new BxTemplAccountForms();
         $this->_oAccountQuery = BxDolAccountQuery::getInstance();
     }
 
-    public function serviceCreateAccountForm () {
+    public function serviceCreateAccountForm ()
+    {
         return $this->_oAccountForms->createAccountForm();
     }
 
-    public function serviceAccountSettingsEmail ($iAccountId = false) {
+    public function serviceAccountSettingsEmail ($iAccountId = false)
+    {
         if (false === $iAccountId)
             $iAccountId = getLoggedId();
         return $this->_oAccountForms->editAccountEmailSettingsForm($iAccountId);
     }
 
-    public function serviceAccountSettingsPassword ($iAccountId = false) {
+    public function serviceAccountSettingsPassword ($iAccountId = false)
+    {
         if (false === $iAccountId)
             $iAccountId = getLoggedId();
         return $this->_oAccountForms->editAccountPasswordSettingsForm($iAccountId);
     }
 
-    public function serviceAccountSettingsInfo ($iAccountId = false) {
+    public function serviceAccountSettingsInfo ($iAccountId = false)
+    {
         if (false === $iAccountId)
             $iAccountId = getLoggedId();
         return $this->_oAccountForms->editAccountInfoForm($iAccountId);
     }
 
-    public function serviceAccountSettingsDelAccount ($iAccountId = false) {
+    public function serviceAccountSettingsDelAccount ($iAccountId = false)
+    {
         if (false === $iAccountId)
             $iAccountId = getLoggedId();
         return $this->_oAccountForms->deleteAccountForm($iAccountId);
@@ -56,18 +62,21 @@ class BxBaseServiceAccount extends BxDol {
     /**
      * Display unsubscribe from newsletters form
      */
-    public function serviceUnsubscribeNews() {
+    public function serviceUnsubscribeNews()
+    {
         return $this->_unsubscribeForm('sys_unsubscribe_news');
     }
 
     /**
      * Display unsubscribe from notifications form
      */
-    public function serviceUnsubscribeNotifications() {
+    public function serviceUnsubscribeNotifications()
+    {
         return $this->_unsubscribeForm('sys_unsubscribe_updates');
     }
 
-    protected function _unsubscribeForm($sDisplay) {
+    protected function _unsubscribeForm($sDisplay)
+    {
         $iAccountId = bx_process_input(bx_get('id'));
         $sCode = bx_process_input(bx_get('code'));
 
@@ -98,7 +107,7 @@ class BxBaseServiceAccount extends BxDol {
                 return MsgBox(_t('_sys_txt_unsubscribe_error_occured'));
 
             return MsgBox(_t('_sys_txt_unsubscribe_email_settings_update_success'));
-        } 
+        }
 
         return '<div class="bx-def-padding-bottom">' . _t("_sys_txt_unsubscribe_info", $aAccountInfo['email']) . '</div>' . $oForm->getCode();
     }
@@ -106,9 +115,9 @@ class BxBaseServiceAccount extends BxDol {
     /**
      * Display email confirmation form, if confirmation code is provided then try to confirm profile
      */
-    public function serviceEmailConfirmation($sMsg = false) {
-
-        // if user is logged in and email is confirmed then just display a message 
+    public function serviceEmailConfirmation($sMsg = false)
+    {
+        // if user is logged in and email is confirmed then just display a message
         if (isLogged()) {
             bx_import('BxDolAccount');
             $oAccount = BxDolAccount::getInstance();
@@ -149,16 +158,16 @@ class BxBaseServiceAccount extends BxDol {
             else
                 return $this->confirmEmail(trim($oForm->getCleanValue('code')));
 
-        } 
+        }
 
         return '<div class="bx-def-padding-sec-bottom">' . _t("_sys_txt_confirm_email_desc") . '</div>' . $oForm->getCode();
     }
 
     /**
-     * Perform email confirmation 
+     * Perform email confirmation
      */
-    public function confirmEmail($sKey) {
-        
+    public function confirmEmail($sKey)
+    {
         // check if key exists
         bx_import('BxDolKey');
         $oKey = BxDolKey::getInstance();
@@ -169,7 +178,7 @@ class BxBaseServiceAccount extends BxDol {
         $aData = $oKey->getKeyData($sKey);
         if (!isset($aData['account_id']))
             return MsgBox(_t("_sys_txt_confirm_email_error_occured"));
-        
+
         // check if account exists
         $oAccount = BxDolAccount::getInstance($aData['account_id']);
         if (!$oAccount)
@@ -179,7 +188,7 @@ class BxBaseServiceAccount extends BxDol {
         $oKey->removeKey($sKey);
 
         // confirm email
-        if (!$oAccount->updateEmailConfirmed(true)) 
+        if (!$oAccount->updateEmailConfirmed(true))
             return MsgBox(_t("_sys_txt_confirm_email_error_occured"));
 
         // login to user's account automatically
@@ -201,8 +210,8 @@ class BxBaseServiceAccount extends BxDol {
     /**
      * Display forgot password form, if reset password key is provided then reset password
      */
-    public function serviceForgotPassword() {
-
+    public function serviceForgotPassword()
+    {
         if (bx_get('key'))
             return $this->resetPassword();
 
@@ -223,7 +232,7 @@ class BxBaseServiceAccount extends BxDol {
 
             } else {
 
-                $sEmail = $oForm->getCleanValue('email');                
+                $sEmail = $oForm->getCleanValue('email');
                 $iAccountId = $this->_oAccountQuery->getIdByEmail($sEmail);
 
                 bx_import('BxDolPermalinks');
@@ -246,7 +255,7 @@ class BxBaseServiceAccount extends BxDol {
 
             $sResultMsg = _t("_sys_txt_forgot_pasword_desc");
             $sForm = $oForm->getCode();
-            
+
         }
 
         return '<div class="bx-def-padding-sec-bottom">' . $sResultMsg . '</div>' . $sForm;
@@ -255,13 +264,14 @@ class BxBaseServiceAccount extends BxDol {
     /**
      * Reset password procedure
      */
-    public function resetPassword() {
+    public function resetPassword()
+    {
         $sKey = bx_process_input(bx_get('key'));
 
         // get link to forgot password page for error message
         bx_import('BxDolPermalinks');
         $sUrlForgotPassword = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password');
-        
+
         // check if key exists
         bx_import('BxDolKey');
         $oKey = BxDolKey::getInstance();
@@ -272,7 +282,7 @@ class BxBaseServiceAccount extends BxDol {
         $aData = $oKey->getKeyData($sKey);
         if (!isset($aData['email']))
             return _t("_sys_txt_reset_pasword_error_occured", $sUrlForgotPassword);
-        
+
         // check if account with such email exists
         $iAccountId = $this->_oAccountQuery->getIdByEmail($aData['email']);
         if (!$iAccountId)
@@ -298,8 +308,9 @@ class BxBaseServiceAccount extends BxDol {
 
     /**
      * Generate new password.
-     */ 
-    protected function generateUserNewPwd($iAccountId) {
+     */
+    protected function generateUserNewPwd($iAccountId)
+    {
         $sPwd = genRndPwd();
         $sSalt = genRndSalt();
         $sPasswordHash = encryptUserPwd($sPwd, $sSalt);

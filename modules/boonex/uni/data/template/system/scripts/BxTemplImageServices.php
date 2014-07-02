@@ -12,8 +12,10 @@ bx_import('BxBaseImageServices');
 /**
  * @see BxBaseImageServices
  */
-class BxTemplImageServices extends BxBaseImageServices {
-    public function __construct() {
+class BxTemplImageServices extends BxBaseImageServices
+{
+    public function __construct()
+    {
         parent::__construct();
     }
 }

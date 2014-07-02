@@ -17,7 +17,7 @@ bx_import('BxDolImageTranscoder');
 /**
  * Create/Edit Person Form.
  */
-class BxPersonsFormEntry extends BxBaseModProfileFormEntry 
+class BxPersonsFormEntry extends BxBaseModProfileFormEntry
 {
     public function __construct($aInfo, $oTemplate = false)
     {

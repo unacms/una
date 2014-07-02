@@ -11,10 +11,12 @@
 bx_import('BxDolStudioFormsPreLists');
 bx_import('BxTemplStudioFormView');
 
-class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists {
+class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists
+{
     protected $sUrlViewValues;
 
-    function __construct($aOptions, $oTemplate = false) {
+    function __construct($aOptions, $oTemplate = false)
+    {
         parent::__construct($aOptions, $oTemplate);
 
         $this->_aOptions['actions_single']['edit']['attr']['title'] = _t('_adm_form_btn_pre_lists_edit');
@@ -23,7 +25,8 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists {
         $this->sUrlViewValues = BX_DOL_URL_STUDIO . 'builder_forms.php?page=pre_values&module=%s&list=%s';
     }
 
-    public function performActionAdd() {
+    public function performActionAdd()
+    {
         $sAction = 'add';
 
         $aForm = array(
@@ -45,7 +48,7 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists {
                 'module' => array(
                     'type' => 'hidden',
                     'name' => 'module',
-                	'value' => BX_DOL_STUDIO_MODULE_CUSTOM,
+                    'value' => BX_DOL_STUDIO_MODULE_CUSTOM,
                     'db' => array (
                         'pass' => 'Xss',
                     ),
@@ -53,7 +56,7 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists {
                 'use_for_sets' => array(
                     'type' => 'hidden',
                     'name' => 'use_for_sets',
-                	'value' => 1,
+                    'value' => 1,
                     'db' => array (
                         'pass' => 'Int',
                     ),
@@ -75,7 +78,7 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists {
                     ),
                 ),
                 'controls' => array(
-                    'name' => 'controls', 
+                    'name' => 'controls',
                     'type' => 'input_set',
                     array(
                         'type' => 'submit',
@@ -113,8 +116,7 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists {
                 $aRes = array('msg' => _t('_adm_form_err_pre_lists_create'));
 
             $this->_echoResultJson($aRes, true);
-        }
-        else {
+        } else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-form-pre-list-create-popup', _t('_adm_form_txt_pre_lists_create_popup'), $this->_oTemplate->parseHtmlByName('form_add_list.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
@@ -127,7 +129,8 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists {
         }
     }
 
-    public function performActionEdit() {
+    public function performActionEdit()
+    {
         $sAction = 'edit';
 
         $aList = $this->_getItem('getLists');
@@ -152,7 +155,7 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists {
                 ),
             ),
             'inputs' => array (
-            	'id' => array(
+                'id' => array(
                     'type' => 'hidden',
                     'name' => 'id',
                     'value' => $aList['id'],
@@ -177,7 +180,7 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists {
                     ),
                 ),
                 'controls' => array(
-                    'name' => 'controls', 
+                    'name' => 'controls',
                     'type' => 'input_set',
                     array(
                         'type' => 'submit',
@@ -207,8 +210,7 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists {
                 $aRes = array('msg' => _t('_adm_form_err_pre_lists_edit'));
 
             $this->_echoResultJson($aRes, true);
-        }
-        else {
+        } else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-form-pre-list-edit-popup', _t('_adm_form_txt_pre_lists_edit_popup', _t($aList['title'])), $this->_oTemplate->parseHtmlByName('form_add_list.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
@@ -221,7 +223,8 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists {
         }
     }
 
-    public function performActionDelete() {
+    public function performActionDelete()
+    {
         $sAction = 'delete';
 
         $iAffected = 0;
@@ -254,11 +257,13 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists {
         $this->_echoResultJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t('_adm_from_err_pre_lists_delete')));
     }
 
-    function getJsObject() {
+    function getJsObject()
+    {
         return 'oBxDolStudioFormsPreLists';
     }
 
-    function getCode($isDisplayHeader = true) {
+    function getCode($isDisplayHeader = true)
+    {
         return $this->_oTemplate->parseHtmlByName('forms_lists.html', array(
             'content' => parent::getCode($isDisplayHeader),
             'js_object' => $this->getJsObject(),
@@ -267,7 +272,8 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists {
         ));
     }
 
-    protected function _addJsCss() {
+    protected function _addJsCss()
+    {
         parent::_addJsCss();
         $this->_oTemplate->addJs(array('jquery.form.min.js', 'forms_lists.js'));
 
@@ -276,23 +282,26 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists {
         $oForm->addCssJs();
     }
 
-    protected function _getCellValues ($mixedValue, $sKey, $aField, $aRow) {
+    protected function _getCellValues ($mixedValue, $sKey, $aField, $aRow)
+    {
         $mixedValue = $this->_oTemplate->parseHtmlByName('bx_a.html', array(
             'href' => sprintf($this->sUrlViewValues, $aRow['module'], $aRow['key']),
             'title' => _t('_adm_form_txt_pre_lists_manage_values'),
-        	'bx_repeat:attrs' => array(),
+            'bx_repeat:attrs' => array(),
             'content' => _t('_adm_form_txt_pre_lists_n_values', $aRow['values_count'])
         ));
 
         return parent::_getCellDefault ($mixedValue, $sKey, $aField, $aRow);
     }
 
-    protected function _getCellModule($mixedValue, $sKey, $aField, $aRow) {
+    protected function _getCellModule($mixedValue, $sKey, $aField, $aRow)
+    {
         $mixedValue = $this->_limitMaxLength($this->getModuleTitle($aRow['module']), $sKey, $aField, $aRow, $this->_isDisplayPopupOnTextOverflow);
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 
-    protected function _getCellUseForSets ($mixedValue, $sKey, $aField, $aRow) {
+    protected function _getCellUseForSets ($mixedValue, $sKey, $aField, $aRow)
+    {
         $aChanger = array(
             '0' => '_adm_form_txt_pre_lists_no',
             '1' => '_adm_form_txt_pre_lists_yes'
@@ -301,13 +310,15 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists {
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 
-    protected function _getActionDelete ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array()) {
+    protected function _getActionDelete ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
         if(!$this->_canDelete($aRow))
             return '';
 
-        return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);        
+        return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
     }
-    protected function _getFilterControls () {
+    protected function _getFilterControls ()
+    {
         $sContent = parent::_getFilterControls();
 
         bx_import('BxTemplStudioFormView');
@@ -318,7 +329,7 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists {
             'name' => 'module',
             'attrs' => array(
                 'id' => 'bx-grid-module-' . $this->_sObject,
-            	'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeFilter()'
+                'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeFilter()'
             ),
             'value' => '',
             'values' => $this->getModules()
@@ -334,7 +345,8 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists {
         return  $oForm->genRow($aInputModules) . $sContent;
     }
 
-    protected function _canDelete($aList) {
+    protected function _canDelete($aList)
+    {
         return $aList['module'] == BX_DOL_STUDIO_MODULE_CUSTOM;
     }
 }

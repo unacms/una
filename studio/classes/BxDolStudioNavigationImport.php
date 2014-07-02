@@ -11,10 +11,12 @@ bx_import('BxTemplStudioGridNavigation');
 bx_import('BxDolStudioTemplate');
 bx_import('BxDolStudioNavigationQuery');
 
-class BxDolStudioNavigationImport extends BxTemplStudioGridNavigation {
+class BxDolStudioNavigationImport extends BxTemplStudioGridNavigation
+{
     protected $sSet;
 
-    public function __construct ($aOptions, $oTemplate = false) {
+    public function __construct ($aOptions, $oTemplate = false)
+    {
         parent::__construct ($aOptions, $oTemplate);
 
         $this->oDb = new BxDolStudioNavigationQuery();
@@ -26,10 +28,11 @@ class BxDolStudioNavigationImport extends BxTemplStudioGridNavigation {
         $this->_aQueryAppend['set'] = $this->sSet;
     }
 
-    protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage) {
+    protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
+    {
         $sSet = $sModule = '';
         if(strpos($sFilter, $this->sParamsDivider) !== false)
-            list($sSet, $sModule, $sFilter) = explode($this->sParamsDivider, $sFilter);        
+            list($sSet, $sModule, $sFilter) = explode($this->sParamsDivider, $sFilter);
 
         if($sSet != '')
             $this->_aOptions['source'] .= $this->oDb->prepare(" AND `set_name`=?", $sSet);

@@ -14,7 +14,7 @@ bx_import('BxDolDb');
  */
 class BxDolCmtsQuery extends BxDolDb
 {
-	protected $_oMain;
+    protected $_oMain;
 
     protected $_sTable;
     protected $_sTriggerTable;
@@ -27,9 +27,9 @@ class BxDolCmtsQuery extends BxDolDb
 
     function __construct(&$oMain)
     {
-    	$this->_oMain = $oMain;
+        $this->_oMain = $oMain;
 
-    	$aSystem = $this->_oMain->getSystemInfo();
+        $aSystem = $this->_oMain->getSystemInfo();
         $this->_sTable = $aSystem['table'];
         $this->_sTriggerTable = $aSystem['trigger_table'];
         $this->_sTriggerFieldId = $aSystem['trigger_field_id'];
@@ -47,66 +47,67 @@ class BxDolCmtsQuery extends BxDolDb
         return $this->_sTable;
     }
 
-	function getCommentsCount ($iId, $iCmtVParentId = 0, $iAuthorId = 0, $sFilter = '') {
-		$sWhereParent = '';
+    function getCommentsCount ($iId, $iCmtVParentId = 0, $iAuthorId = 0, $sFilter = '')
+    {
+        $sWhereParent = '';
         if((int)$iCmtVParentId >= 0)
-        	$sWhereParent = $this->prepare(" AND `{$this->_sTable}`.`cmt_vparent_id` = ?", $iCmtVParentId);
+            $sWhereParent = $this->prepare(" AND `{$this->_sTable}`.`cmt_vparent_id` = ?", $iCmtVParentId);
 
         $sJoin = '';
-		if(in_array($sFilter, array(BX_CMT_FILTER_FRIENDS, BX_CMT_FILTER_SUBSCRIPTIONS))) {
-			bx_import('BxDolConnection');
-			$oConnection = BxDolConnection::getObjectInstance($this->_oMain->getConnectionObject($sFilter));
-			
-			$aQueryParts = $oConnection->getConnectedContentAsSQLParts($this->_sTable, 'cmt_author_id', $iAuthorId);
-			$sJoin .= ' ' . $aQueryParts['join'];
-		}
+        if(in_array($sFilter, array(BX_CMT_FILTER_FRIENDS, BX_CMT_FILTER_SUBSCRIPTIONS))) {
+            bx_import('BxDolConnection');
+            $oConnection = BxDolConnection::getObjectInstance($this->_oMain->getConnectionObject($sFilter));
 
-		$sQuery = $this->prepare("SELECT 
-				COUNT(*) 
-			FROM `{$this->_sTable}`
-			$sJoin 
-			WHERE `{$this->_sTable}`.`cmt_object_id` = ?" . $sWhereParent, $iId);
+            $aQueryParts = $oConnection->getConnectedContentAsSQLParts($this->_sTable, 'cmt_author_id', $iAuthorId);
+            $sJoin .= ' ' . $aQueryParts['join'];
+        }
 
-		return (int)$this->getOne($sQuery);
-	}
+        $sQuery = $this->prepare("SELECT
+                COUNT(*)
+            FROM `{$this->_sTable}`
+            $sJoin
+            WHERE `{$this->_sTable}`.`cmt_object_id` = ?" . $sWhereParent, $iId);
+
+        return (int)$this->getOne($sQuery);
+    }
 
     function getComments ($iId, $iCmtVParentId = 0, $iAuthorId = 0, $sFilter = '', $aOrder = array(), $iStart = 0, $iCount = -1)
     {
         $sFields = $sJoin = "";
 
-	    $oVote = $this->_oMain->getVoteObject(0);
+        $oVote = $this->_oMain->getVoteObject(0);
         if($oVote !== false) {
-        	$aSql = $oVote->getSqlParts($this->_sTable, 'cmt_id');
+            $aSql = $oVote->getSqlParts($this->_sTable, 'cmt_id');
 
-        	$sFields .= $aSql['fields'];
-        	$sJoin .= $aSql['join'];
+            $sFields .= $aSql['fields'];
+            $sJoin .= $aSql['join'];
         }
 
         $sWhereParent = '';
         if((int)$iCmtVParentId >= 0)
-        	$sWhereParent = $this->prepare(" AND `{$this->_sTable}`.`cmt_vparent_id` = ?", $iCmtVParentId);
+            $sWhereParent = $this->prepare(" AND `{$this->_sTable}`.`cmt_vparent_id` = ?", $iCmtVParentId);
 
-		if(in_array($sFilter, array(BX_CMT_FILTER_FRIENDS, BX_CMT_FILTER_SUBSCRIPTIONS))) {
-			bx_import('BxDolConnection');
-			$oConnection = BxDolConnection::getObjectInstance($this->_oMain->getConnectionObject($sFilter));
-			
-			$aQueryParts = $oConnection->getConnectedContentAsSQLParts($this->_sTable, 'cmt_author_id', $iAuthorId);
-			$sJoin .= ' ' . $aQueryParts['join'];
-		}
+        if(in_array($sFilter, array(BX_CMT_FILTER_FRIENDS, BX_CMT_FILTER_SUBSCRIPTIONS))) {
+            bx_import('BxDolConnection');
+            $oConnection = BxDolConnection::getObjectInstance($this->_oMain->getConnectionObject($sFilter));
+
+            $aQueryParts = $oConnection->getConnectedContentAsSQLParts($this->_sTable, 'cmt_author_id', $iAuthorId);
+            $sJoin .= ' ' . $aQueryParts['join'];
+        }
 
         $sOder = " ORDER BY `{$this->_sTable}`.`cmt_time` ASC";
         if(isset($aOrder['by']) && isset($aOrder['way'])) {
-        	$aOrder['way'] = strtoupper(in_array($aOrder['way'], array(BX_CMT_ORDER_WAY_ASC, BX_CMT_ORDER_WAY_DESC)) ? $aOrder['way'] : BX_CMT_ORDER_WAY_ASC);
+            $aOrder['way'] = strtoupper(in_array($aOrder['way'], array(BX_CMT_ORDER_WAY_ASC, BX_CMT_ORDER_WAY_DESC)) ? $aOrder['way'] : BX_CMT_ORDER_WAY_ASC);
 
-        	switch($aOrder['by']) {
-        		case BX_CMT_ORDER_BY_DATE:
-        			$sOder = " ORDER BY `{$this->_sTable}`.`cmt_time` " . $aOrder['way'];
-        			break;
+            switch($aOrder['by']) {
+                case BX_CMT_ORDER_BY_DATE:
+                    $sOder = " ORDER BY `{$this->_sTable}`.`cmt_time` " . $aOrder['way'];
+                    break;
 
-        		case BX_CMT_ORDER_BY_POPULAR:
-        			$sOder = " ORDER BY `{$this->_sTable}`.`cmt_rate` " . $aOrder['way'];
-        			break;
-	        }
+                case BX_CMT_ORDER_BY_POPULAR:
+                    $sOder = " ORDER BY `{$this->_sTable}`.`cmt_rate` " . $aOrder['way'];
+                    break;
+            }
         }
 
         $sLimit = $iCount != -1 ? $this->prepare(" LIMIT ?, ?", (int)$iStart, (int)$iCount) : '';
@@ -133,12 +134,12 @@ class BxDolCmtsQuery extends BxDolDb
     {
         $sFields = $sJoin = "";
 
-    	$oVote = $this->_oMain->getVoteObject($iCmtId);
+        $oVote = $this->_oMain->getVoteObject($iCmtId);
         if($oVote !== false) {
-        	$aSql = $oVote->getSqlParts($this->_sTable, 'cmt_id');
+            $aSql = $oVote->getSqlParts($this->_sTable, 'cmt_id');
 
-        	$sFields .= $aSql['fields'];
-        	$sJoin .= $aSql['join'];
+            $sFields .= $aSql['fields'];
+            $sJoin .= $aSql['join'];
         }
 
         $sQuery = $this->prepare("SELECT
@@ -171,17 +172,17 @@ class BxDolCmtsQuery extends BxDolDb
         if (!$this->query($sQuery))
             return false;
 
-		if($iCmtParentId) 
-        	$this->updateRepliesCount($iCmtParentId, -1);
+        if($iCmtParentId)
+            $this->updateRepliesCount($iCmtParentId, -1);
 
         return true;
     }
 
-	function saveImages($iSystemId, $iCmtId, $iImageId)
-	{
-		$sQuery = $this->prepare("INSERT IGNORE INTO `{$this->_sTableImages2Entries}` SET `system_id`=?, `cmt_id`=?, `image_id`=?", $iSystemId, $iCmtId, $iImageId);
-		return (int)$this->query($sQuery) > 0;
-	}
+    function saveImages($iSystemId, $iCmtId, $iImageId)
+    {
+        $sQuery = $this->prepare("INSERT IGNORE INTO `{$this->_sTableImages2Entries}` SET `system_id`=?, `cmt_id`=?, `image_id`=?", $iSystemId, $iCmtId, $iImageId);
+        return (int)$this->query($sQuery) > 0;
+    }
 
     function getImages($iSystemId, $iCmtId, $iId = false)
     {
@@ -195,38 +196,37 @@ class BxDolCmtsQuery extends BxDolDb
         if (false !== $iId) {
             $sWhere .= $this->prepare(" AND `c`.`cmt_object_id` = ?", $iId);
             $sJoin .= " INNER JOIN `{$this->_sTable}` AS `c` ON (`i`.`cmt_id` = `c`.`cmt_id`) ";
-        }        
+        }
 
-    	return $this->getAll("SELECT * FROM `{$this->_sTableImages2Entries}` AS `i` " . $sJoin . " WHERE 1 " . $sWhere);
+        return $this->getAll("SELECT * FROM `{$this->_sTableImages2Entries}` AS `i` " . $sJoin . " WHERE 1 " . $sWhere);
     }
 
-	function deleteImages($iSystemId, $iCmtId)
-	{
+    function deleteImages($iSystemId, $iCmtId)
+    {
         $sWhereAddon = '';
         if (false !== $iCmtId)
             $sWhereAddon = $this->prepare(" AND `cmt_id` = ? ", $iCmtId);
 
-		$sQuery = $this->prepare("DELETE FROM `{$this->_sTableImages2Entries}` WHERE `system_id` = ?", $iSystemId);
+        $sQuery = $this->prepare("DELETE FROM `{$this->_sTableImages2Entries}` WHERE `system_id` = ?", $iSystemId);
         $sQuery .= $sWhereAddon;
 
-    	return $this->query($sQuery);
-	}
+        return $this->query($sQuery);
+    }
 
     function updateRepliesCount($iCmtId, $iCount)
     {
-    	$sQuery = $this->prepare("UPDATE `{$this->_sTable}` SET `cmt_replies`=`cmt_replies`+? WHERE `cmt_id`=? LIMIT 1", $iCount, $iCmtId);
-		return $this->query($sQuery);
+        $sQuery = $this->prepare("UPDATE `{$this->_sTable}` SET `cmt_replies`=`cmt_replies`+? WHERE `cmt_id`=? LIMIT 1", $iCount, $iCmtId);
+        return $this->query($sQuery);
     }
 
     function deleteAuthorComments ($iAuthorId, &$aFiles = null)
     {
-    	$aSystem = $this->_oMain->getSystemInfo();
+        $aSystem = $this->_oMain->getSystemInfo();
 
         $isDelOccured = 0;
         $sQuery = $this->prepare("SELECT `cmt_id`, `cmt_parent_id` FROM {$this->_sTable} WHERE `cmt_author_id` = ? AND `cmt_replies` = 0", $iAuthorId);
         $a = $this->getAll ($sQuery);
-        for ( reset($a) ; list (, $r) = each ($a) ; )
-        {
+        for ( reset($a) ; list (, $r) = each ($a) ; ) {
             $sQuery = $this->prepare("DELETE FROM {$this->_sTable} WHERE `cmt_id` = ?", $r['cmt_id']);
             $this->query ($sQuery);
 
@@ -235,7 +235,7 @@ class BxDolCmtsQuery extends BxDolDb
 
             $aFilesMore = $this->convertImagesArray($this->getImages($aSystem['system_id'], $r['cmt_id']));
             $this->deleteImages($aSystem['system_id'], $r['cmt_id']);
-            if ($aFilesMore && null !== $aFiles) 
+            if ($aFilesMore && null !== $aFiles)
                 $aFiles = array_merge($aFiles, $aFilesMore);
 
             $isDelOccured = 1;
@@ -279,7 +279,7 @@ class BxDolCmtsQuery extends BxDolDb
         $this->query ($sQuery);
     }
 
-	function getObjectTitle($iId)
+    function getObjectTitle($iId)
     {
         $sQuery = $this->prepare("SELECT `{$this->_sTriggerFieldTitle}` FROM `{$this->_sTriggerTable}` WHERE `{$this->_sTriggerFieldId}` = ? LIMIT 1", $iId);
         return $this->getOne($sQuery);
@@ -291,7 +291,7 @@ class BxDolCmtsQuery extends BxDolDb
         return $this->query($sQuery);
     }
 
-    protected function convertImagesArray($a) 
+    protected function convertImagesArray($a)
     {
         if (!$a || !is_array($a))
             return array();
@@ -304,4 +304,3 @@ class BxDolCmtsQuery extends BxDolDb
 }
 
 /** @} */
-

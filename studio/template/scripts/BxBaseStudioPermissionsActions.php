@@ -11,14 +11,17 @@
 bx_import('BxDolStudioPermissionsActions');
 bx_import('BxTemplStudioFormView');
 
-class BxBaseStudioPermissionsActions extends BxDolStudioPermissionsActions {
-    function __construct($aOptions, $oTemplate = false) {
+class BxBaseStudioPermissionsActions extends BxDolStudioPermissionsActions
+{
+    function __construct($aOptions, $oTemplate = false)
+    {
         parent::__construct($aOptions, $oTemplate);
 
         $this->_aOptions['actions_single']['options']['attr']['title'] = _t('_adm_prm_btn_actions_options');
     }
 
-    public function performActionEnable() {
+    public function performActionEnable()
+    {
         $aIds = bx_get('ids');
         $bEnable = (int)bx_get('checked');
 
@@ -42,7 +45,8 @@ class BxBaseStudioPermissionsActions extends BxDolStudioPermissionsActions {
         ));
     }
 
-    public function performActionOptions() {
+    public function performActionOptions()
+    {
         if((int)$this->iLevel == 0)
             $this->iLevel = (int)bx_get('IDLevel');
 
@@ -89,7 +93,7 @@ class BxBaseStudioPermissionsActions extends BxDolStudioPermissionsActions {
                     'type' => 'hidden',
                     'name' => 'IDLevel',
                     'value' => $this->iLevel,
-            		'db' => array (
+                    'db' => array (
                         'pass' => 'Int',
                     ),
                 ),
@@ -97,7 +101,7 @@ class BxBaseStudioPermissionsActions extends BxDolStudioPermissionsActions {
                     'type' => 'hidden',
                     'name' => 'IDAction',
                     'value' => $iId,
-                	'db' => array (
+                    'db' => array (
                         'pass' => 'Int',
                     ),
                 ),
@@ -117,7 +121,7 @@ class BxBaseStudioPermissionsActions extends BxDolStudioPermissionsActions {
                     'caption' => _t('_adm_prm_txt_actions_reset'),
                     'info' => _t('_adm_prm_dsc_actions_reset'),
                     'value' => $aOption['allowed_period_len'],
-                	'db' => array (
+                    'db' => array (
                         'pass' => 'Int',
                     ),
                 ),
@@ -127,12 +131,12 @@ class BxBaseStudioPermissionsActions extends BxDolStudioPermissionsActions {
                     'caption' => _t('_adm_prm_txt_actions_avail_start'),
                     'info' => _t('_adm_prm_dsc_actions_avail'),
                     'value' => $aOption['allowed_period_start'],
-                    'attrs' => array( 
-                        'allow_input' => 'true', 
+                    'attrs' => array(
+                        'allow_input' => 'true',
                     ),
                     'db' => array (
                         'pass' => 'Xss',
-                    ), 
+                    ),
                 ),
                 'AllowedPeriodEnd' => array(
                     'type' => 'datetime',
@@ -140,15 +144,15 @@ class BxBaseStudioPermissionsActions extends BxDolStudioPermissionsActions {
                     'caption' => _t('_adm_prm_txt_actions_avail_end'),
                     'info' => _t('_adm_prm_dsc_actions_avail'),
                     'value' => $aOption['allowed_period_end'],
-                    'attrs' => array( 
-                        'allow_input' => 'true', 
+                    'attrs' => array(
+                        'allow_input' => 'true',
                     ),
                     'db' => array (
                         'pass' => 'Xss',
                     ),
                 ),
                 'controls' => array(
-                    'name' => 'controls', 
+                    'name' => 'controls',
                     'type' => 'input_set',
                     array(
                         'type' => 'submit',
@@ -168,7 +172,7 @@ class BxBaseStudioPermissionsActions extends BxDolStudioPermissionsActions {
             )
         );
 
-        if((int)$aOption['action_countable'] != 1) 
+        if((int)$aOption['action_countable'] != 1)
             unset($aForm['inputs']['AllowedCount'], $aForm['inputs']['AllowedPeriodLen']);
 
         $oForm = new BxTemplStudioFormView($aForm);
@@ -185,8 +189,7 @@ class BxBaseStudioPermissionsActions extends BxDolStudioPermissionsActions {
                     $aUpdate[$sName] = null;
             }
             $this->oDb->updateOptions((int)$oForm->getCleanValue('IDLevel'), (int)$oForm->getCleanValue('IDAction'), $aUpdate);
-        }
-        else {
+        } else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-prm-action-options-popup', _t('_adm_prm_txt_actions_options_popup', _t($aOption['action_title'])), $this->_oTemplate->parseHtmlByName('prm_edit_option.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
@@ -199,11 +202,13 @@ class BxBaseStudioPermissionsActions extends BxDolStudioPermissionsActions {
         }
     }
 
-    function getJsObject() {
+    function getJsObject()
+    {
         return 'oBxDolStudioPermissionsActions';
     }
 
-    function getCode($isDisplayHeader = true) {
+    function getCode($isDisplayHeader = true)
+    {
         return $this->_oTemplate->parseHtmlByName('prm_actions.html', array(
             'content' => parent::getCode($isDisplayHeader),
             'js_object' => $this->getJsObject(),
@@ -212,7 +217,8 @@ class BxBaseStudioPermissionsActions extends BxDolStudioPermissionsActions {
         ));
     }
 
-    protected function _addJsCss() {
+    protected function _addJsCss()
+    {
         parent::_addJsCss();
         $this->_oTemplate->addJs(array('jquery.form.min.js', 'permissions_actions.js'));
 
@@ -221,7 +227,8 @@ class BxBaseStudioPermissionsActions extends BxDolStudioPermissionsActions {
         $oForm->addCssJs();
     }
 
-    protected function _getCellSwitcher($mixedValue, $sKey, $aField, $aRow) {
+    protected function _getCellSwitcher($mixedValue, $sKey, $aField, $aRow)
+    {
         if($this->iLevel == 0)
             return parent::_getCellDefault('', $sKey, $aField, $aRow);
 
@@ -229,23 +236,27 @@ class BxBaseStudioPermissionsActions extends BxDolStudioPermissionsActions {
         return parent::_getCellSwitcher($mixedValue, $sKey, $aField, $aRow);
     }
 
-    protected function _getCellDesc($mixedValue, $sKey, $aField, $aRow) {
+    protected function _getCellDesc($mixedValue, $sKey, $aField, $aRow)
+    {
         $mixedValue = bx_process_output(_t($aRow['Desc']));
         $mixedValue = $this->_limitMaxLength($mixedValue, $sKey, $aField, $aRow, $this->_isDisplayPopupOnTextOverflow);
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 
-    protected function _getCellModule($mixedValue, $sKey, $aField, $aRow) {
+    protected function _getCellModule($mixedValue, $sKey, $aField, $aRow)
+    {
         $mixedValue = $this->_limitMaxLength($this->getModuleTitle($aRow['Module']), $sKey, $aField, $aRow, $this->_isDisplayPopupOnTextOverflow);
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 
-    protected function _getActionOptions ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array()) {
+    protected function _getActionOptions ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
         $a['attr']['bx_grid_action_data'] = urlencode($this->iLevel . $this->sParamsDivider . $a['attr']['bx_grid_action_data']);
         return  parent::_getActionDefault($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
-    protected function _getFilterControls () {
+    protected function _getFilterControls ()
+    {
         parent::_getFilterControls();
 
         $sContent = "";
@@ -258,7 +269,7 @@ class BxBaseStudioPermissionsActions extends BxDolStudioPermissionsActions {
             'name' => 'level',
             'attrs' => array(
                 'id' => 'bx-grid-level-' . $this->_sObject,
-            	'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeLevel()'
+                'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeLevel()'
             ),
             'value' => 'id-' . $this->iLevel,
             'values' => array()
@@ -282,7 +293,7 @@ class BxBaseStudioPermissionsActions extends BxDolStudioPermissionsActions {
             'name' => 'module',
             'attrs' => array(
                 'id' => 'bx-grid-module-' . $this->_sObject,
-            	'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeFilter()'
+                'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeFilter()'
             ),
             'value' => '',
             'values' => $this->getModules(false)
@@ -303,7 +314,7 @@ class BxBaseStudioPermissionsActions extends BxDolStudioPermissionsActions {
             'name' => 'keyword',
             'attrs' => array(
                 'id' => 'bx-grid-search-' . $this->_sObject,
-                'onKeyup' => 'javascript:$(this).off(\'keyup\'); ' . $this->getJsObject() . '.onChangeFilter()' 
+                'onKeyup' => 'javascript:$(this).off(\'keyup\'); ' . $this->getJsObject() . '.onChangeFilter()'
             )
         );
         $sContent .= $oForm->genRow($aInputSearch);

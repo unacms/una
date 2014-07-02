@@ -9,27 +9,33 @@
 
 bx_import('BxDolAclQuery');
 
-class BxDolStudioPermissionsQuery extends BxDolAclQuery {
-    function __construct() {
+class BxDolStudioPermissionsQuery extends BxDolAclQuery
+{
+    function __construct()
+    {
         parent::__construct();
     }
 
-    function isLevelUsed($iId) {
+    function isLevelUsed($iId)
+    {
         $sSql = $this->prepare("SELECT UNIX_TIMESTAMP(MAX(`DateExpires`)) as `MaxDateExpires` FROM `sys_acl_levels_members` WHERE `IDLevel`=?", $iId);
         return (int)$this->getOne($sSql) > time();
     }
 
-    function getLevelOrderMax() {
+    function getLevelOrderMax()
+    {
         return (int)$this->getOne("SELECT MAX(`Order`) FROM `sys_acl_levels` WHERE 1");
     }
 
-    function updateLevels($iId, $aFields) {
+    function updateLevels($iId, $aFields)
+    {
         $sSql = "UPDATE `sys_acl_levels` SET `" . implode("`=?, `", array_keys($aFields)) . "`=?  WHERE `ID`=?";
         $sSql = call_user_func_array(array($this, 'prepare'), array_merge(array($sSql), array_values($aFields), array($iId)));
-        return (int)$this->query($sSql) > 0; 
+        return (int)$this->query($sSql) > 0;
     }
 
-    function deleteLevel($aParams) {
+    function deleteLevel($aParams)
+    {
         $sWhereClause = $sLimitClause = "";
 
         switch($aParams['type']) {
@@ -38,22 +44,24 @@ class BxDolStudioPermissionsQuery extends BxDolAclQuery {
                 break;
         }
 
-        $sSql = "DELETE FROM `tal`, `tam` 
-        	USING `sys_acl_levels` AS `tal` 
-        	LEFT JOIN `sys_acl_matrix` AS `tam` ON `tal`.`ID`=`tam`.`IDLevel`
-        	WHERE 1 " . $sWhereClause . " " . $sLimitClause;
+        $sSql = "DELETE FROM `tal`, `tam`
+            USING `sys_acl_levels` AS `tal`
+            LEFT JOIN `sys_acl_matrix` AS `tam` ON `tal`.`ID`=`tam`.`IDLevel`
+            WHERE 1 " . $sWhereClause . " " . $sLimitClause;
         return (int)$this->query($sSql) > 0;
     }
 
-    function switchAction($iLevelId, $iActionId, $bEnable) {
+    function switchAction($iLevelId, $iActionId, $bEnable)
+    {
         if($bEnable)
             $sSql = $this->prepare("INSERT INTO `sys_acl_matrix`(`IDLevel`, `IDAction`) VALUES(?, ?)", $iLevelId, $iActionId);
-        else 
+        else
             $sSql = $this->prepare("DELETE FROM `sys_acl_matrix` WHERE `IDLevel`=? AND `IDAction`=?", $iLevelId, $iActionId);
         return (int)$this->query($sSql) > 0;
     }
 
-    function getOptions($aParams, &$aItems, $bReturnCount = true) {
+    function getOptions($aParams, &$aItems, $bReturnCount = true)
+    {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
 
@@ -69,7 +77,7 @@ class BxDolStudioPermissionsQuery extends BxDolAclQuery {
                 break;
         }
 
-        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . " 
+        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . "
                 `tam`.`IDLevel` AS `level_id`,
                 `tam`.`IDAction` AS `action_id`,
                 `tam`.`AllowedCount` AS `allowed_count`,
@@ -87,13 +95,15 @@ class BxDolStudioPermissionsQuery extends BxDolAclQuery {
         return (int)$this->getOne("SELECT FOUND_ROWS()");
     }
 
-    function updateOptions($iLevelId, $iActionId, $aFields) {
+    function updateOptions($iLevelId, $iActionId, $aFields)
+    {
         $sSql = "UPDATE `sys_acl_matrix` SET `" . implode("`=?, `", array_keys($aFields)) . "`=?  WHERE `IDLevel`=? AND `IDAction`=?";
         $sSql = call_user_func_array(array($this, 'prepare'), array_merge(array($sSql), array_values($aFields), array($iLevelId, $iActionId)));
-        return (int)$this->query($sSql) > 0; 
+        return (int)$this->query($sSql) > 0;
     }
 
-    function deleteActions($aParams) {
+    function deleteActions($aParams)
+    {
         $sWhereClause = "";
 
         switch($aParams['type']) {

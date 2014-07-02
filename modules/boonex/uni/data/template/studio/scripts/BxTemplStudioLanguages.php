@@ -11,8 +11,10 @@ defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxBaseStudioLanguages');
 
-class BxTemplStudioLanguages extends BxBaseStudioLanguages { 
-    function __construct() {
+class BxTemplStudioLanguages extends BxBaseStudioLanguages
+{
+    function __construct()
+    {
         parent::__construct();
     }
 }

@@ -7,7 +7,7 @@
  * @{
  */
 
-/** 
+/**
  * @page samples
  * @section button Buttons
  */
@@ -16,8 +16,8 @@
  * There are default css classes for buttons.
  *
  * .bx-btn - standard button
- * .bx-btn .bx-btn-small - small buttom 
- * 
+ * .bx-btn .bx-btn-small - small buttom
+ *
  * To make button with font icon, add icon before text and wrap text in 'u' tag:
  * @code
  *   <i class="sys-icon fire-extinguisher"></i><u>Button text</u>
@@ -27,7 +27,7 @@
  * @code
  *   <img src="clock.png" /><u>Button text</u>
  * @endcode
- */ 
+ */
 
 $aPathInfo = pathinfo(__FILE__);
 require_once ($aPathInfo['dirname'] . '/../inc/header.inc.php');
@@ -42,12 +42,11 @@ $oTemplate->setPageHeader ("Buttons");
 $oTemplate->setPageContent ('page_main_code', PageCompMainCode());
 $oTemplate->getPageCode();
 
-
 /**
  * page code function
  */
-function PageCompMainCode() {
-
+function PageCompMainCode()
+{
     ob_start();
 ?>
     <button class="bx-btn bx-def-margin-right">Button text</button>
@@ -76,7 +75,5 @@ function PageCompMainCode() {
 
     return DesignBoxContent("Buttons", ob_get_clean(), BX_DB_PADDING_DEF);
 }
-
-
 
 /** @} */

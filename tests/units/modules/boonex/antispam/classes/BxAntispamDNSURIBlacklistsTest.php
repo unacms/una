@@ -46,11 +46,11 @@ class BxAntispamDNSURIBlacklistsTest extends BxDolTestCase
     {
         if (!$this->isSurbl())
             $this->markTestSkipped('multi.surbl.org is not enabled.');
-        else        
+        else
             $this->assertEquals($bRes, $this->_oDNSURIBlacklists->isSpam($sText));
     }
 
-    protected function isSurbl() 
+    protected function isSurbl()
     {
         $aRules = $this->_oDNSBlacklists->getRules(array(BX_DOL_DNSBL_CHAIN_URIDNS));
         foreach ($aRules as $aRule)
@@ -59,4 +59,3 @@ class BxAntispamDNSURIBlacklistsTest extends BxDolTestCase
         return false;
     }
 }
-

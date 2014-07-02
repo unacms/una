@@ -9,37 +9,44 @@
 
 bx_import('BxDolFile');
 
-class BxDolFtp extends BxDolFile {
+class BxDolFtp extends BxDolFile
+{
     protected $_sHost;
     protected $_sLogin;
     protected $_sPassword;
     protected $_sPathTo;
     protected $_rStream;
 
-    function __construct($sHost, $sLogin, $sPassword, $sPath = '/') {
+    function __construct($sHost, $sLogin, $sPassword, $sPath = '/')
+    {
         parent::__construct();
         $this->_sHost = $sHost;
         $this->_sLogin = $sLogin;
         $this->_sPassword = $sPassword;
         $this->_sPathTo = $sPath . ('/' == substr($sPath, -1) ? '' : '/');
     }
-    function connect() {
+    function connect()
+    {
         $this->_rStream = ftp_connect($this->_sHost);
         return @ftp_login($this->_rStream, $this->_sLogin, $this->_sPassword);
     }
-    function isDolphin() {
+    function isDolphin()
+    {
         return @ftp_size($this->_rStream, $this->_sPathTo . 'inc/header.inc.php') > 0;
     }
-    function copy($sFilePathFrom, $sFilePathTo) {
+    function copy($sFilePathFrom, $sFilePathTo)
+    {
         $sFilePathTo = $this->_sPathTo . $sFilePathTo;
         return $this->_copyFile($sFilePathFrom, $sFilePathTo);
     }
-    function delete($sPath) {
+    function delete($sPath)
+    {
         $sPath = $this->_sPathTo . $sPath;
         return $this->_deleteDirectory($sPath);
     }
 
-    protected function _copyFile($sFilePathFrom, $sFilePathTo) {
+    protected function _copyFile($sFilePathFrom, $sFilePathTo)
+    {
         if(substr($sFilePathFrom, -1) == '*')
             $sFilePathFrom = substr($sFilePathFrom, 0, -1);
 
@@ -48,31 +55,29 @@ class BxDolFtp extends BxDolFile {
             if($this->_isFile($sFilePathTo)) {
                 $aFileParts = $this->_parseFile($sFilePathTo);
                 if(isset($aFileParts[0]))
-					$this->_ftpMkDirR($aFileParts[0]);
+                    $this->_ftpMkDirR($aFileParts[0]);
 
                 $bResult = @ftp_put($this->_rStream, $sFilePathTo, $sFilePathFrom, FTP_BINARY);
-            } 
-            else if($this->_isDirectory($sFilePathTo)) {
+            } else if($this->_isDirectory($sFilePathTo)) {
                 $this->_ftpMkDirR($sFilePathTo);
                 $aFileParts = $this->_parseFile($sFilePathFrom);
                 if(isset($aFileParts[1]))
                     $bResult = @ftp_put($this->_rStream, $this->_validatePath($sFilePathTo) . $aFileParts[1], $sFilePathFrom, FTP_BINARY);
             }
-        } 
-        else if(is_dir($sFilePathFrom) && $this->_isDirectory($sFilePathTo)) {
+        } else if(is_dir($sFilePathFrom) && $this->_isDirectory($sFilePathTo)) {
             $this->_ftpMkDirR($sFilePathTo);
 
             $aInnerFiles = $this->_readDirectory($sFilePathFrom);
             foreach($aInnerFiles as $sFile)
                 $bResult = $this->_copyFile($this->_validatePath($sFilePathFrom) . $sFile, $this->_validatePath($sFilePathTo) . $sFile);
-        }
-        else
+        } else
             $bResult = false;
 
         return $bResult;
     }
 
-    protected function _deleteDirectory($sPath) {
+    protected function _deleteDirectory($sPath)
+    {
         if($this->_isDirectory($sPath)) {
             if(substr($sPath, -1) != '/')
                 $sPath .= '/';
@@ -85,41 +90,46 @@ class BxDolFtp extends BxDolFile {
                 if(!@ftp_rmdir($this->_rStream, $sPath))
                     return false;
 
-        } 
-        else if(!@ftp_delete($this->_rStream, $sPath))
-			return false;
+        } else if(!@ftp_delete($this->_rStream, $sPath))
+            return false;
 
         return true;
     }
-    protected function _validatePath($sPath) {
+    protected function _validatePath($sPath)
+    {
         if($sPath && substr($sPath, -1) != '/' && $this->_isDirectory($sPath))
             $sPath .= '/';
 
         return $sPath;
     }
-    protected function _parseFile($sFilePath) {
+    protected function _parseFile($sFilePath)
+    {
         $aParts = array();
         preg_match("/^([a-zA-Z0-9@~_\.\\\\\/:-]+[\\\\\/])([a-zA-Z0-9~_-]+\.[a-zA-Z]{2,8})$/", $sFilePath, $aParts) ? true : false;
         return count($aParts) > 1 ? array_slice($aParts, 1) : false;
     }
-    protected function _isFile($sFilePath) {
+    protected function _isFile($sFilePath)
+    {
         return preg_match("/^([a-zA-Z0-9@~_\.\\\\\/:-]+)\.([a-zA-Z]){2,8}$/", $sFilePath) ? true : false;
     }
-    protected function _isDirectory($sFilePath) {
+    protected function _isDirectory($sFilePath)
+    {
         return preg_match("/^([a-zA-Z0-9@~_\.\\\\\/:-]+)[\\\\\/]([a-zA-Z0-9~_-]+)[\\\\\/]?$/", $sFilePath) ? true : false;
     }
-	protected function _setPermissions($sPath, $sMode) {
-		$aConvert = array(
-			'writable' => $this->_isDirectory($sPath) ? 0777 : 0666, 
-			'executable' => 0777
-		);
+    protected function _setPermissions($sPath, $sMode)
+    {
+        $aConvert = array(
+            'writable' => $this->_isDirectory($sPath) ? 0777 : 0666,
+            'executable' => 0777
+        );
 
-    	if(@ftp_chmod($this->_rStream, $aConvert[$sMode], $sPath) === false)
-    		return false;
+        if(@ftp_chmod($this->_rStream, $aConvert[$sMode], $sPath) === false)
+            return false;
 
-		return true;
+        return true;
     }
-    protected function _ftpMkDirR($sPath) {
+    protected function _ftpMkDirR($sPath)
+    {
         $sPwd = ftp_pwd ($this->_rStream);
         $aParts = explode("/", $sPath);
         $sPathFull = '';

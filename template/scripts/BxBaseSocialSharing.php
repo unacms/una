@@ -11,21 +11,22 @@ bx_import('BxDolSocialSharing');
 
 /**
  * @see BxDolSocialSharing
- */ 
+ */
 class BxBaseSocialSharing extends BxDolSocialSharing
 {
     protected $_oTemplate;
 
-	/**
-	 * Constructor
-	 */
-	protected function __construct($oTemplate) {
+    /**
+     * Constructor
+     */
+    protected function __construct($oTemplate)
+    {
         parent::__construct();
         $this->_oTemplate = $oTemplate ? $oTemplate : BxDolTemplate::getInstance();
-	}
+    }
 
-    public function getCode ($sContentId, $sModuleName, $sUrl, $sTitle, $aCustomVars = false) {
-
+    public function getCode ($sContentId, $sModuleName, $sUrl, $sTitle, $aCustomVars = false)
+    {
         // define markers for replacments
         bx_import('BxDolLanguages');
         $sLang = BxDolLanguages::getInstance()->getCurrentLanguage();
@@ -34,7 +35,7 @@ class BxBaseSocialSharing extends BxDolSocialSharing
             'module' => $sModuleName,
             'url' => $sUrl,
             'url_encoded' => rawurlencode($sUrl),
-            'lang' => $sLang, 
+            'lang' => $sLang,
             'locale' => $this->_getLocaleFacebook($sLang),
             'title' => $sTitle,
             'title_encoded' => rawurlencode($sTitle),
@@ -42,7 +43,7 @@ class BxBaseSocialSharing extends BxDolSocialSharing
 
         if (!empty($aCustomVars) && is_array($aCustomVars))
             $aMarkers = array_merge($aMarkers, $aCustomVars);
-        
+
         // alert
         $sOverrideOutput = null;
         bx_import('BxDolAlerts');
@@ -77,7 +78,7 @@ class BxBaseSocialSharing extends BxDolSocialSharing
                     $sButton = BxDolService::call($a['module'], $a['method'], isset($a['params']) ? $a['params'] : array(), isset($a['class']) ? $a['class'] : 'Module');
                     break;
             }
-            
+
             if (!isset($sButton) || preg_match('/{[A-Za-z0-9_]+}/', $sButton)) // if not all markers are replaced skip it
                 continue;
             $aButtons[] = array ('button' => $sButton, 'object' => $aButton['object']);

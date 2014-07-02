@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Sites Sites
  * @ingroup     DolphinModules
  *
@@ -56,7 +56,7 @@ $aConfig = array(
     ),
     'enable' => array(
         'execute_sql' => 1,
-    	'recompile_global_paramaters' => 1,
+        'recompile_global_paramaters' => 1,
         'recompile_menus' => 1,
         'recompile_permalinks' => 1,
         'recompile_alerts' => 1,
@@ -64,7 +64,7 @@ $aConfig = array(
     ),
     'disable' => array (
         'execute_sql' => 1,
-	    'recompile_global_paramaters' => 1,
+        'recompile_global_paramaters' => 1,
         'recompile_menus' => 1,
         'recompile_permalinks' => 1,
         'recompile_alerts' => 1,
@@ -78,4 +78,4 @@ $aConfig = array(
     ),
 );
 
-/** @} */ 
+/** @} */

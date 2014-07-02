@@ -12,34 +12,41 @@ bx_import('BxDolStudioUtils');
 
 define('BX_DOL_STUDIO_GRID_PARAMS_DIVIDER', '#-#');
 
-class BxDolStudioGrid extends BxTemplGrid {
+class BxDolStudioGrid extends BxTemplGrid
+{
     protected $sParamsDivider;
     public $oDb;
 
-    public function __construct ($aOptions, $oTemplate = false) {
+    public function __construct ($aOptions, $oTemplate = false)
+    {
         parent::__construct ($aOptions, $oTemplate ? $oTemplate : BxDolStudioTemplate::getInstance());
 
         $this->oDb = null;
         $this->sParamsDivider = BX_DOL_STUDIO_GRID_PARAMS_DIVIDER;
     }
 
-    public function getSystemName($sValue) {
+    public function getSystemName($sValue)
+    {
         return BxDolStudioUtils::getSystemName($sValue);
     }
 
-    public function getClassName($sValue) {
+    public function getClassName($sValue)
+    {
         return BxDolStudioUtils::getClassName($sValue);
     }
 
-    protected function getModuleTitle($sName) {
+    protected function getModuleTitle($sName)
+    {
         return BxDolStudioUtils::getModuleTitle($sName);
     }
 
-    protected function getModules($bShowCustom = true, $bShowSystem = true) {
+    protected function getModules($bShowCustom = true, $bShowSystem = true)
+    {
         return BxDolStudioUtils::getModules($bShowCustom, $bShowSystem);
     }
 
-    protected function _isVisibleGrid ($a) {
+    protected function _isVisibleGrid ($a)
+    {
         return isAdmin();
     }
 }

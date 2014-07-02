@@ -10,7 +10,7 @@
 /**
  * @return corrently logged in profile id
  */
-function bx_get_logged_profile_id () 
+function bx_get_logged_profile_id ()
 {
     bx_import('BxDolProfile');
     $o = BxDolProfile::getInstance();
@@ -20,7 +20,7 @@ function bx_get_logged_profile_id ()
 /**
  * @return true if user is logged in
  */
-function isLogged() 
+function isLogged()
 {
     return getLoggedId() != 0;
 }
@@ -28,7 +28,7 @@ function isLogged()
 /**
  * @return logged in account id
  */
-function getLoggedId() 
+function getLoggedId()
 {
     return isset($_COOKIE['memberID']) && (!empty($GLOBALS['logged']['member']) || !empty($GLOBALS['logged']['admin'])) ? (int)$_COOKIE['memberID'] : 0;
 }
@@ -36,7 +36,7 @@ function getLoggedId()
 /**
  * @return logged in account password
  */
-function getLoggedPassword() 
+function getLoggedPassword()
 {
     return isset($_COOKIE['memberPassword']) && ($GLOBALS['logged']['member'] || $GLOBALS['logged']['admin']) ? $_COOKIE['memberPassword'] : '';
 }
@@ -44,7 +44,7 @@ function getLoggedPassword()
 /**
  * It checks if account role is member.
  */
-function isMember($iId = 0) 
+function isMember($iId = 0)
 {
     return isRole(BX_DOL_ROLE_MEMBER, $iId);
 }
@@ -53,7 +53,7 @@ if (!function_exists("isAdmin")) {
     /**
      * @return true if account is admin
      */
-    function isAdmin($iId = 0) 
+    function isAdmin($iId = 0)
     {
         if (!$iId && isset($GLOBALS['logged']['admin']) && $GLOBALS['logged']['admin']) // easier check for currently logged in user
             return true;
@@ -67,7 +67,7 @@ if (!function_exists("isAdmin")) {
  * @param $iId optional account id, if it isn't specified then curently logged in account is used
  * @return true if user is in the provided role
  */
-function isRole($iRole, $iId = 0) 
+function isRole($iRole, $iId = 0)
 {
     if (!(int)$iId)
         $iId = getLoggedId();
@@ -93,7 +93,7 @@ function isRole($iRole, $iId = 0)
  * @param $iId account id
  * @return false if id isn't correct or array of user info if user was logged in
  */
-function bx_login($iId, $bRememberMe = false) 
+function bx_login($iId, $bRememberMe = false)
 {
     bx_import('BxDolAccountQuery');
     $oAccountQuery = BxDolAccountQuery::getInstance();
@@ -112,7 +112,7 @@ function bx_login($iId, $bRememberMe = false)
     $_COOKIE['memberPassword'] = $sPassword;
 
     bx_import('BxDolSession');
-	BxDolSession::getInstance()->setUserId($iId);
+    BxDolSession::getInstance()->setUserId($iId);
 
     $oAccountQuery->updateLoggedIn($iId);
 
@@ -124,7 +124,7 @@ function bx_login($iId, $bRememberMe = false)
 /**
  * Logout user by removing cookies
  */
-function bx_logout($bNotify = true) 
+function bx_logout($bNotify = true)
 {
     if ($bNotify && isMember())
         bx_alert('account', 'logout', (int)$_COOKIE['memberID']);
@@ -139,13 +139,13 @@ function bx_logout($bNotify = true)
     unset($_COOKIE['memberPassword']);
 
     bx_import('BxDolSession');
-	BxDolSession::getInstance()->destroy();
+    BxDolSession::getInstance()->destroy();
 }
 
 /**
  * Check if user is logged in (necessary cookies are present) and set some global variables
  */
-function check_logged() 
+function check_logged()
 {
     $aAccTypes = array(
        BX_DOL_ROLE_ADMIN => 'admin',
@@ -162,26 +162,25 @@ function check_logged()
             break;
         }
     }
-    
+
     if ((isset($_COOKIE['memberID']) || isset($_COOKIE['memberPassword'])) && !$bLogged)
         bx_logout(false);
 }
-
 
 /**
  * Check unencrypted password
  * @return empty string on success or error string on error
  */
-function bx_check_password($sLogin, $sPassword, $iRole = BX_DOL_ROLE_MEMBER) 
+function bx_check_password($sLogin, $sPassword, $iRole = BX_DOL_ROLE_MEMBER)
 {
     bx_import('BxDolAccount');
-    $oAccount = BxDolAccount::getInstance($sLogin);        
+    $oAccount = BxDolAccount::getInstance($sLogin);
     if (!$oAccount) {
         bx_import('BxDolLanguages');
         return _t("_sys_txt_login_error");
     }
 
-    $aAccountInfo = $oAccount->getInfo();        
+    $aAccountInfo = $oAccount->getInfo();
 
     $sPassCheck = encryptUserPwd($sPassword, $aAccountInfo['salt']);
 
@@ -197,19 +196,18 @@ function bx_check_password($sLogin, $sPassword, $iRole = BX_DOL_ROLE_MEMBER)
     return $sErrorMsg;
 }
 
-
 /**
  * Check encrypted password (ex., from Cookie)
  * @return empty string on success or error string on error
  */
-function bx_check_login($iID, $sPassword, $iRole = BX_DOL_ROLE_MEMBER) 
+function bx_check_login($iID, $sPassword, $iRole = BX_DOL_ROLE_MEMBER)
 {
     bx_import('BxDolAccount');
     $oAccount = BxDolAccount::getInstance((int)$iID);
 
     // If no such account available
-    if (!$oAccount) { 
-        bx_import('BxDolLanguages');       
+    if (!$oAccount) {
+        bx_import('BxDolLanguages');
         return _t("_sys_txt_login_error");
     }
 
@@ -234,7 +232,7 @@ function bx_check_login($iID, $sPassword, $iRole = BX_DOL_ROLE_MEMBER)
  * Declare that content is require user authoriztion and display login form if user isn't logged in
  * @param $bStudio require webmaster authorization
  */
-function bx_require_authentication ($bStudio = false) 
+function bx_require_authentication ($bStudio = false)
 {
     $iRole = BX_DOL_ROLE_MEMBER;
     if ($bStudio)
@@ -242,10 +240,10 @@ function bx_require_authentication ($bStudio = false)
 
     $sID = isset($_COOKIE['memberID']) ? bx_process_input($_COOKIE['memberID']) : false;
     $sPassword = isset($_COOKIE['memberPassword']) ? bx_process_input($_COOKIE['memberPassword']) : false;
-    
+
     if (bx_check_login($sID, $sPassword, $iRole)) {
         bx_login_form($bStudio);
-    }   
+    }
 
     check_logged();
 }
@@ -257,13 +255,13 @@ function bx_require_authentication ($bStudio = false)
  * @param $bStudio display login form for studio
  * @param $bAjaxMode login form displayed via AJAX
  */
-function bx_login_form($bStudio = false, $bAjaxMode = false) 
+function bx_login_form($bStudio = false, $bAjaxMode = false)
 {
     if ($bStudio == 1) {
         bx_import("BxTemplStudioFunctions");
         BxTemplStudioFunctions::getInstance()->getLoginForm();
         exit;
-    }    
+    }
 
     $sFormCode = BxDolService::call('system', 'login_form', array(), 'TemplServiceLogin');
 
@@ -282,5 +280,4 @@ function bx_login_form($bStudio = false, $bAjaxMode = false)
 
 check_logged();
 
-/** @} */ 
-
+/** @} */

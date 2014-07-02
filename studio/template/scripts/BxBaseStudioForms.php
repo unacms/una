@@ -10,7 +10,8 @@
 
 bx_import('BxDolStudioForms');
 
-class BxBaseStudioForms extends BxDolStudioForms {
+class BxBaseStudioForms extends BxDolStudioForms
+{
     protected $sSubpageUrl;
     protected $aGridObjects = array(
         'forms' => 'sys_studio_forms',
@@ -20,27 +21,32 @@ class BxBaseStudioForms extends BxDolStudioForms {
         'pre_values' => 'sys_studio_forms_pre_values'
     );
 
-    function __construct($sPage = '') {
+    function __construct($sPage = '')
+    {
         parent::__construct($sPage);
 
         $this->sSubpageUrl = BX_DOL_URL_STUDIO . 'builder_forms.php?page=';
     }
-    function getPageCss() {
+    function getPageCss()
+    {
         return array_merge(parent::getPageCss(), array('forms.css', 'paginate.css', 'builder_forms.css'));
     }
-    function getPageJs() {
+    function getPageJs()
+    {
         return array_merge(parent::getPageJs(), array());
     }
-    function getPageJsObject() {
+    function getPageJsObject()
+    {
         return '';
     }
-    function getPageMenu($aMenu = array(), $aMarkers = array()) {
+    function getPageMenu($aMenu = array(), $aMarkers = array())
+    {
         $sJsObject = $this->getPageJsObject();
 
         $aMenu = array();
         $aMenuItems = array(
-            BX_DOL_STUDIO_FORM_TYPE_FORMS, 
-            BX_DOL_STUDIO_FORM_TYPE_DISPLAYS, 
+            BX_DOL_STUDIO_FORM_TYPE_FORMS,
+            BX_DOL_STUDIO_FORM_TYPE_DISPLAYS,
             BX_DOL_STUDIO_FORM_TYPE_FIELDS,
             BX_DOL_STUDIO_FORM_TYPE_PRE_LISTS,
             BX_DOL_STUDIO_FORM_TYPE_PRE_VALUES
@@ -49,14 +55,15 @@ class BxBaseStudioForms extends BxDolStudioForms {
             $aMenu[] = array(
                 'name' => $sMenuItem,
                 'icon' => 'mi-form-' . $sMenuItem . '.png',
-            	'link' => $this->sSubpageUrl . $sMenuItem,
-            	'title' => _t('_adm_lmi_cpt_' . $sMenuItem),
-            	'selected' => $sMenuItem == $this->sPage
+                'link' => $this->sSubpageUrl . $sMenuItem,
+                'title' => _t('_adm_lmi_cpt_' . $sMenuItem),
+                'selected' => $sMenuItem == $this->sPage
             );
 
         return parent::getPageMenu($aMenu);
     }
-    function getPageCode($bHidden = false) {
+    function getPageCode($bHidden = false)
+    {
         $sMethod = 'get' .  $this->getClassName($this->sPage);
         if(!method_exists($this, $sMethod))
             return '';
@@ -64,7 +71,8 @@ class BxBaseStudioForms extends BxDolStudioForms {
         return $this->$sMethod();
     }
 
-    function actionGetForms() {
+    function actionGetForms()
+    {
         if(($sModule = bx_get('form_module')) === false)
             return array('code' => 2, 'message' => _t('_adm_form_err_missing_params'));
 
@@ -72,7 +80,8 @@ class BxBaseStudioForms extends BxDolStudioForms {
         return array('code' => 0, 'message' => '', 'content' => $this->getDisplaysObject()->getFormsSelector($sModule));
     }
 
-    function actionGetDisplays() {
+    function actionGetDisplays()
+    {
         if(($sModule = bx_get('form_module')) === false)
             return array('code' => 2, 'message' => _t('_adm_form_err_missing_params'));
 
@@ -80,7 +89,8 @@ class BxBaseStudioForms extends BxDolStudioForms {
         return array('code' => 0, 'message' => '', 'content' => $this->getFieldsObject()->getDisplaysSelector($sModule));
     }
 
-    function actionGetLists() {
+    function actionGetLists()
+    {
         if(($sModule = bx_get('form_module')) === false)
             return array('code' => 2, 'message' => _t('_adm_form_err_missing_params'));
 
@@ -88,43 +98,53 @@ class BxBaseStudioForms extends BxDolStudioForms {
         return array('code' => 0, 'message' => '', 'content' => $this->getPreValuesObject()->getListsSelector($sModule));
     }
 
-    protected function getForms() {
+    protected function getForms()
+    {
         return $this->getGrid($this->aGridObjects['forms']);
     }
 
-    protected function getFormsObject() {
+    protected function getFormsObject()
+    {
         return $this->getGridObject($this->aGridObjects['forms']);
     }
 
-    protected function getDisplays() {
+    protected function getDisplays()
+    {
         return $this->getGrid($this->aGridObjects['displays']);
     }
 
-    protected function getDisplaysObject() {
+    protected function getDisplaysObject()
+    {
         return $this->getGridObject($this->aGridObjects['displays']);
     }
 
-    protected function getFields() {
+    protected function getFields()
+    {
         return $this->getGrid($this->aGridObjects['fields']);
     }
 
-    protected function getFieldsObject() {
+    protected function getFieldsObject()
+    {
         return $this->getGridObject($this->aGridObjects['fields']);
     }
 
-    protected function getPreLists() {
+    protected function getPreLists()
+    {
         return $this->getGrid($this->aGridObjects['pre_lists']);
     }
 
-    protected function getPreValues() {
+    protected function getPreValues()
+    {
         return $this->getGrid($this->aGridObjects['pre_values']);
     }
 
-    protected function getPreValuesObject() {
+    protected function getPreValuesObject()
+    {
         return $this->getGridObject($this->aGridObjects['pre_values']);
     }
 
-    protected function getGridObject($sObjectName) {
+    protected function getGridObject($sObjectName)
+    {
         bx_import('BxDolGrid');
         $oGrid = BxDolGrid::getObjectInstance($sObjectName);
         if(!$oGrid)
@@ -133,7 +153,8 @@ class BxBaseStudioForms extends BxDolStudioForms {
         return $oGrid;
     }
 
-    protected function getGrid($sObjectName) {
+    protected function getGrid($sObjectName)
+    {
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         bx_import('BxDolGrid');
@@ -143,9 +164,9 @@ class BxBaseStudioForms extends BxDolStudioForms {
 
         $aTmplVars = array(
             'js_object' => $this->getPageJsObject(),
-        	'bx_repeat:blocks' => array(
+            'bx_repeat:blocks' => array(
                 array(
-                	'caption' => '',
+                    'caption' => '',
                     'panel_top' => '',
                     'items' => $oGrid->getCode(),
                     'panel_bottom' => ''
@@ -156,7 +177,8 @@ class BxBaseStudioForms extends BxDolStudioForms {
         return $oTemplate->parseHtmlByName('forms.html', $aTmplVars);
     }
 
-    protected function actionValuesList() {
+    protected function actionValuesList()
+    {
         if(($sList = bx_get('form_list')) === false)
             return array();
 

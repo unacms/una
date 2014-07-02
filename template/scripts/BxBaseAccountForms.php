@@ -15,17 +15,18 @@ bx_import('BxDolAccount');
  * System profile(account) forms functions
  * @see BxDolProfileForms
  */
-class BxBaseAccountForms extends BxDolProfileForms {
-
+class BxBaseAccountForms extends BxDolProfileForms
+{
     protected $_iProfileId;
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->_iProfileId = bx_get_logged_profile_id();
     }
 
-    public function createAccountForm () {        
-
+    public function createAccountForm ()
+    {
         // check access
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = BxDolAccount::isAllowedCreate (0)))
             return MsgBox($sMsg);
@@ -35,7 +36,7 @@ class BxBaseAccountForms extends BxDolProfileForms {
         if (!$oForm)
             return MsgBox(_t('_sys_txt_error_occured'));
 
-        $oForm->initChecker(); 
+        $oForm->initChecker();
 
         if (!$oForm->isSubmittedAndValid())
             return $oForm->getCode();
@@ -43,7 +44,7 @@ class BxBaseAccountForms extends BxDolProfileForms {
         // insert data into database
         $aValsToAdd = array (
             'email_confirmed' => 0,
-        );        
+        );
         $iAccountId = $oForm->insert ($aValsToAdd);
         if (!$iAccountId) {
             if (!$oForm->isValid())
@@ -74,39 +75,42 @@ class BxBaseAccountForms extends BxDolProfileForms {
         // set created profile some default membership
         bx_import('BxDolAcl');
         $iAclLevel = getParam('sys_account_default_acl_level');
-        BxDolAcl::getInstance()->setMembership($iProfileId, $iAclLevel, 0, true); 
+        BxDolAcl::getInstance()->setMembership($iProfileId, $iAclLevel, 0, true);
 
-        // perform action 
+        // perform action
         BxDolAccount::isAllowedCreate ($iProfileId, true);
 
         // alert
         bx_alert('account', 'added', $iAccountId);
 
         // login to the created account automatically
-        bx_login($iAccountId);        
+        bx_login($iAccountId);
         $this->_iProfileId = bx_get_logged_profile_id();
-        
-        // redirect 
+
+        // redirect
         $this->_redirectAndExit(getParam('sys_redirect_after_account_added'), true, array(
-            'account_id' => $iAccountId, 
+            'account_id' => $iAccountId,
             'profile_id' => $iProfileId,
         ));
     }
 
-    public function editAccountEmailSettingsForm ($iAccountId) {
+    public function editAccountEmailSettingsForm ($iAccountId)
+    {
         return $this->_editAccountForm ($iAccountId, 'sys_account_settings_email');
     }
 
-    public function editAccountPasswordSettingsForm ($iAccountId) {
+    public function editAccountPasswordSettingsForm ($iAccountId)
+    {
         return $this->_editAccountForm ($iAccountId, 'sys_account_settings_pwd');
     }
 
-    public function editAccountInfoForm ($iAccountId) {
+    public function editAccountInfoForm ($iAccountId)
+    {
         return $this->_editAccountForm ($iAccountId, 'sys_account_settings_info');
     }
 
-    public function deleteAccountForm ($iAccountId) {
-
+    public function deleteAccountForm ($iAccountId)
+    {
         $oAccount = BxDolAccount::getInstance($iAccountId);
         $aAccountInfo = $oAccount ? $oAccount->getInfo() : false;
         if (!$aAccountInfo)
@@ -124,25 +128,25 @@ class BxBaseAccountForms extends BxDolProfileForms {
         if (!$oForm->isSubmitted())
             unset($aAccountInfo['password']);
 
-        $oForm->initChecker($aAccountInfo); 
+        $oForm->initChecker($aAccountInfo);
 
         if (!$oForm->isSubmittedAndValid())
             return $oForm->getCode();
 
         // delete account
         $oAccount = BxDolAccount::getInstance($aAccountInfo['id']);
-        if (!$oAccount->delete()) 
+        if (!$oAccount->delete())
             return MsgBox(_t('_sys_txt_error_account_delete'));
 
         // logout from deleted account
         bx_logout();
 
         // redirect to homepage
-        $this->_redirectAndExit('', false); 
+        $this->_redirectAndExit('', false);
     }
 
-    protected function _editAccountForm ($iAccountId, $sDisplayName) {
-
+    protected function _editAccountForm ($iAccountId, $sDisplayName)
+    {
         $oAccount = BxDolAccount::getInstance($iAccountId);
         $aAccountInfo = $oAccount ? $oAccount->getInfo() : false;
         if (!$aAccountInfo)
@@ -160,7 +164,7 @@ class BxBaseAccountForms extends BxDolProfileForms {
         if (!$oForm->isSubmitted())
             unset($aAccountInfo['password']);
 
-        $oForm->initChecker($aAccountInfo); 
+        $oForm->initChecker($aAccountInfo);
 
         if (!$oForm->isSubmittedAndValid())
             return $oForm->getCode();
@@ -177,7 +181,7 @@ class BxBaseAccountForms extends BxDolProfileForms {
 
         // check if email was changed
         if (!empty($aTrackTextFieldsChanges['changed_fields']) && in_array('email', $aTrackTextFieldsChanges['changed_fields']))
-            $oAccount->updateEmailConfirmed(false);  // mark email as unconfirmed 
+            $oAccount->updateEmailConfirmed(false);  // mark email as unconfirmed
 
         // check if password was changed
         if ($oForm->getCleanValue('password')) {
@@ -188,17 +192,17 @@ class BxBaseAccountForms extends BxDolProfileForms {
 
         // check if other text info was changed - if auto-appproval is off
         $isAutoApprove = $oForm->isSetPendingApproval() ? false : true;
-        if (!$isAutoApprove) { 
+        if (!$isAutoApprove) {
             bx_import('BxDolProfile');
             $oProfile = BxDolProfile::getInstanceAccountProfile($aAccountInfo['id']); // get profile associated with account, not current porfile
-            $aProfileInfo = $oProfile->getInfo();            
+            $aProfileInfo = $oProfile->getInfo();
             unset($aTrackTextFieldsChanges['changed_fields']['email']); // email confirmation is automatic and separate, don't need to deactivate whole profile if email is changed
-            if (BX_PROFILE_STATUS_ACTIVE == $aProfileInfo['status'] && !empty($aTrackTextFieldsChanges['changed_fields']))                 
+            if (BX_PROFILE_STATUS_ACTIVE == $aProfileInfo['status'] && !empty($aTrackTextFieldsChanges['changed_fields']))
                 $oProfile->disapprove(BX_PROFILE_ACTION_AUTO);  // change profile to 'pending' only if some text fields were changed and profile is active
         }
 
         // create an alert
-        bx_alert('account', 'edited', $aAccountInfo['id'], $aAccountInfo['id'], array('display' => $sDisplayName)); 
+        bx_alert('account', 'edited', $aAccountInfo['id'], $aAccountInfo['id'], array('display' => $sDisplayName));
 
         // display result message
         $sMsg = MsgBox(_t('_sys_txt_data_successfully_submitted'));

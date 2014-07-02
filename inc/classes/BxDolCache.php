@@ -7,13 +7,13 @@
  * @{
  */
 
-class BxDolCache extends BxDol 
+class BxDolCache extends BxDol
 {
     /**
      * Is cache engine available?
      * @return boolean
      */
-    function isAvailable() 
+    function isAvailable()
     {
         return true;
     }
@@ -22,7 +22,7 @@ class BxDolCache extends BxDol
      * Are required php modules are installed for this cache engine ?
      * @return boolean
      */
-    function isInstalled() 
+    function isInstalled()
     {
         return true;
     }
@@ -35,4 +35,3 @@ class BxDolCache extends BxDol
 }
 
 /** @} */
-

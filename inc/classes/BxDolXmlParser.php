@@ -9,10 +9,12 @@
 
 bx_import('BxDol');
 
-class BxDolXmlParser extends BxDol implements iBxDolSingleton {
+class BxDolXmlParser extends BxDol implements iBxDolSingleton
+{
     protected $rParser;
 
-    function __construct() {
+    function __construct()
+    {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
@@ -22,7 +24,8 @@ class BxDolXmlParser extends BxDol implements iBxDolSingleton {
     /**
      * Prevent cloning the instance
      */
-    public function __clone() {
+    public function __clone()
+    {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error('Clone is not allowed for the class: ' . get_class($this), E_USER_ERROR);
     }
@@ -30,7 +33,8 @@ class BxDolXmlParser extends BxDol implements iBxDolSingleton {
     /**
      * Get singleton instance of the class
      */
-    public static function getInstance() {
+    public static function getInstance()
+    {
         if(!isset($GLOBALS['bxDolClasses'][__CLASS__]))
             $GLOBALS['bxDolClasses'][__CLASS__] = new BxDolXmlParser();
 
@@ -40,7 +44,8 @@ class BxDolXmlParser extends BxDol implements iBxDolSingleton {
     /**
      * Get the value of specified attribute for specified tag.
      */
-    function getAttribute($sXmlContent, $sXmlTag, $sXmlAttribute) {
+    function getAttribute($sXmlContent, $sXmlTag, $sXmlAttribute)
+    {
         $aValues = $aIndexes = array();
         $rParser = xml_parser_create("UTF-8");
         xml_parse_into_struct($rParser, $sXmlContent, $aValues, $aIndexes);
@@ -53,7 +58,8 @@ class BxDolXmlParser extends BxDol implements iBxDolSingleton {
     /**
      * Get an array of attributes for specified tag or an array of tags with the same name.
      */
-    function getAttributes($sXmlContent, $sXmlTagName, $sXmlTagIndex = -1) {
+    function getAttributes($sXmlContent, $sXmlTagName, $sXmlTagIndex = -1)
+    {
         $aValues = $aIndexes = array();
         $rParser = xml_parser_create("UTF-8");
         xml_parse_into_struct($rParser, $sXmlContent, $aValues, $aIndexes);
@@ -70,8 +76,7 @@ class BxDolXmlParser extends BxDol implements iBxDolSingleton {
             foreach($aTagIndexes as $iTagIndex)
                 $aResult[] = $aValues[$iTagIndex]['attributes'];
             return $aResult;
-        }
-        else {
+        } else {
             $iTagIndex = $aIndexes[strtoupper($sXmlTagName)][$sXmlTagIndex];
             return $aValues[$iTagIndex]['attributes'];
         }
@@ -80,7 +85,8 @@ class BxDolXmlParser extends BxDol implements iBxDolSingleton {
     /**
      * Get an array of tags or one tag if its index is specified.
      */
-    function getTags($sXmlContent, $sXmlTagName, $iXmlTagIndex = -1) {
+    function getTags($sXmlContent, $sXmlTagName, $iXmlTagIndex = -1)
+    {
         $aValues = $aIndexes = array();
         $rParser = xml_parser_create("UTF-8");
         xml_parse_into_struct($rParser, $sXmlContent, $aValues, $aIndexes);
@@ -94,8 +100,7 @@ class BxDolXmlParser extends BxDol implements iBxDolSingleton {
             foreach($aTagIndexes as $iTagIndex)
                 $aResult[] = $aValues[$iTagIndex];
             return $aResult;
-        }
-        else {
+        } else {
             $iTagIndex = $aIndexes[strtoupper($sXmlTagName)][$iXmlTagIndex];
             return $aValues[$iTagIndex];
         }
@@ -104,7 +109,8 @@ class BxDolXmlParser extends BxDol implements iBxDolSingleton {
     /**
      * Gets the values of the given tag.
      */
-    function getValues($sXmlContent, $sXmlTagName) {
+    function getValues($sXmlContent, $sXmlTagName)
+    {
         $aValues = $aIndexes = array();
         $rParser = xml_parser_create("UTF-8");
         xml_parse_into_struct($rParser, $sXmlContent, $aValues, $aIndexes);
@@ -123,7 +129,8 @@ class BxDolXmlParser extends BxDol implements iBxDolSingleton {
     /**
      * Sets the values of tag where attribute "key" equals to specified.
      */
-    function setValues($sXmlContent, $sXmlTagName, $aKeyValues) {
+    function setValues($sXmlContent, $sXmlTagName, $aKeyValues)
+    {
         $aValues = $aIndexes = array();
         $rParser = xml_parser_create("UTF-8");
         xml_parse_into_struct($rParser, $sXmlContent, $aValues, $aIndexes);
@@ -143,7 +150,8 @@ class BxDolXmlParser extends BxDol implements iBxDolSingleton {
     /**
      * Adds given values to XML content.
      */
-    function addValues($sXmlContent, $sXmlTagName, $aKeyValues) {
+    function addValues($sXmlContent, $sXmlTagName, $aKeyValues)
+    {
         $aValues = $aIndexes = array();
         $rParser = xml_parser_create("UTF-8");
         xml_parse_into_struct($rParser, $sXmlContent, $aValues, $aIndexes);
@@ -168,7 +176,8 @@ class BxDolXmlParser extends BxDol implements iBxDolSingleton {
     /**
      * get content in XML format from given values array
      */
-    function getContent($aValues = array()) {
+    function getContent($aValues = array())
+    {
         $sContent = "";
         foreach($aValues as $aValue) {
             $sTagName = strtolower($aValue['tag']);

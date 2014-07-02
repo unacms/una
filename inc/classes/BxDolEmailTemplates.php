@@ -10,15 +10,15 @@
 bx_import('BxDolLanguagesQuery');
 bx_import('BxDolEmailTemplatesQuery');
 
-/** 
- * @page objects 
+/**
+ * @page objects
  * @section email_templates Email Templates
  * @ref BxDolEmailTemplates
  */
 
 /**
  * Email templates are used to send preformated messages.
- * 
+ *
  * Email templates are multilingual.
  *
  * User is sent email in language which is defined in their account, if account language is not set - then default site language is used.
@@ -30,20 +30,20 @@ bx_import('BxDolEmailTemplatesQuery');
  * 1-click unsubscribe link is added automatically to every email (except a few system emails, which is not supposed to unsubscribe from, like forgot password email).
  * Please note: make sure that {unsubscribe} marker is not removed, or unsubscribe link will not be added.
  *
- * 
+ *
  * @section example Example of usage
  *
  * Send an email using email templates:
- * 
+ *
  * @code
- *     
+ *
  *     // define custom template variables
  *     $aPlus = array();
  *     $aPlus['email'] = 'ktoto@example.com';
  *     $aPlus['conf_code'] = '123456';
  *     $aPlus['conf_link'] = BX_DOL_URL_ROOT . 'page.php?i=confirm-email&code=123456';
  *     $aPlus['conf_form_link'] = BX_DOL_URL_ROOT . 'page.php?i=confirm-email';
- *         
+ *
  *     bx_import('BxDolEmailTemplates'); // import class
  *     $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_Confirmation', $aPlus); // get class instance and parse template
  *
@@ -53,20 +53,21 @@ bx_import('BxDolEmailTemplatesQuery');
  *         echo 'email send failed';
  *
  * @endcode
- * 
+ *
  */
-class BxDolEmailTemplates extends BxDol implements iBxDolSingleton {
-
+class BxDolEmailTemplates extends BxDol implements iBxDolSingleton
+{
     protected $_oEmailTemplatesQuery;
 
     protected $iDefaultLangId;
     protected $iFallbackLangId;
-    protected $aDefaultKeys;    
+    protected $aDefaultKeys;
 
     /**
      * Class constructor.
      */
-    protected function __construct() {
+    protected function __construct()
+    {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
@@ -91,7 +92,8 @@ class BxDolEmailTemplates extends BxDol implements iBxDolSingleton {
     /**
      * Prevent cloning the instance
      */
-    public function __clone() {
+    public function __clone()
+    {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error('Clone is not allowed for the class: ' . get_class($this), E_USER_ERROR);
     }
@@ -99,7 +101,8 @@ class BxDolEmailTemplates extends BxDol implements iBxDolSingleton {
     /**
      * Get singleton instance of the class
      */
-    static function getInstance() {
+    static function getInstance()
+    {
         if(!isset($GLOBALS['bxDolClasses'][__CLASS__]))
             $GLOBALS['bxDolClasses'][__CLASS__] = new BxDolEmailTemplates();
 
@@ -109,12 +112,12 @@ class BxDolEmailTemplates extends BxDol implements iBxDolSingleton {
     /**
      * Function will return array of needed template ;
      *
-     * @param string $sTemplateName - name of necessary template.
-     * @param integer $iAccountId - account ID of registered member.
-     * @return array with template 'Subject' and 'Body'.
+     * @param  string  $sTemplateName - name of necessary template.
+     * @param  integer $iAccountId    - account ID of registered member.
+     * @return array   with template 'Subject' and 'Body'.
      */
-    function getTemplate($sTemplateName, $iAccountId = 0 ) {
-
+    function getTemplate($sTemplateName, $iAccountId = 0 )
+    {
         $iUseLang = $this->iDefaultLangId;
         if ($iAccountId) {
             bx_import('BxDolAccount');
@@ -123,7 +126,7 @@ class BxDolEmailTemplates extends BxDol implements iBxDolSingleton {
                 $aAccountInfo = $oAccount->getInfo();
                 $iUseLang = $aAccountInfo['lang_id'] ? $aAccountInfo['lang_id'] : $this->iDefaultLangId;
             }
-        } 
+        }
 
         return $this->_oEmailTemplatesQuery->getTemplate ($sTemplateName, $iUseLang, $this->iDefaultLangId, $this->iFallbackLangId);
     }
@@ -131,13 +134,14 @@ class BxDolEmailTemplates extends BxDol implements iBxDolSingleton {
     /**
      * Function will return array of needed template with neccessary markers replaced ;
      *
-     * @param string $sTemplateName - name of necessary template.
-     * @param string $aTemplatekeys - key ane value pairs to replace in subject and body.
-     * @param integer $iAccountId - account ID of registered member.
-     * @param integer $iProfileId - profile ID of registered member.
-     * @return array with template 'Subject' and 'Body'.
+     * @param  string  $sTemplateName - name of necessary template.
+     * @param  string  $aTemplatekeys - key ane value pairs to replace in subject and body.
+     * @param  integer $iAccountId    - account ID of registered member.
+     * @param  integer $iProfileId    - profile ID of registered member.
+     * @return array   with template 'Subject' and 'Body'.
      */
-    function parseTemplate($sTemplateName, $aTemplateKeys, $iAccountId = 0, $iProfileId = 0) {
+    function parseTemplate($sTemplateName, $aTemplateKeys, $iAccountId = 0, $iProfileId = 0)
+    {
         $aTemplate = $this->getTemplate($sTemplateName, $iAccountId);
         if (!$aTemplate)
             return false;
@@ -147,7 +151,8 @@ class BxDolEmailTemplates extends BxDol implements iBxDolSingleton {
         );
     }
 
-    function parseContent($sContent, $aKeys, $iAccountId = 0, $iProfileId = 0) {
+    function parseContent($sContent, $aKeys, $iAccountId = 0, $iProfileId = 0)
+    {
         $aResultKeys = $this->aDefaultKeys;
 
         if ($iAccountId) {

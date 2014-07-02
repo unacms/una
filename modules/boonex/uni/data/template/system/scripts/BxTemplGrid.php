@@ -12,9 +12,10 @@ bx_import('BxBaseGrid');
 /**
  * @see BxDolGrid
  */
-class BxTemplGrid extends BxBaseGrid {
-
-    public function __construct ($aOptions, $oTemplate = false) {
+class BxTemplGrid extends BxBaseGrid
+{
+    public function __construct ($aOptions, $oTemplate = false)
+    {
         parent::__construct ($aOptions, $oTemplate);
     }
 }

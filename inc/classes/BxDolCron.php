@@ -79,7 +79,7 @@
  * no alerts available
  *
  */
-class BxDolCron extends BxDol 
+class BxDolCron extends BxDol
 {
     public function __construct()
     {
@@ -90,4 +90,3 @@ class BxDolCron extends BxDol
 }
 
 /** @} */
-

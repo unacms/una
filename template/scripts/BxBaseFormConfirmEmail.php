@@ -9,12 +9,13 @@
 
 bx_import('BxTemplFormView');
 
-class BxFormConfirmEmailCheckerHelper extends BxDolFormCheckerHelper {
-
+class BxFormConfirmEmailCheckerHelper extends BxDolFormCheckerHelper
+{
     /**
      * Check if key exists
      */
-    function checkCodeExist ($s) {
+    function checkCodeExist ($s)
+    {
         bx_import('BxDolKey');
         $oKey = BxDolKey::getInstance();
         return $oKey && $oKey->isKeyExists(trim($s));
@@ -25,9 +26,10 @@ class BxFormConfirmEmailCheckerHelper extends BxDolFormCheckerHelper {
 /**
  * Email Confirmation Form.
  */
-class BxBaseFormConfirmEmail extends BxTemplFormView {
-
-    public function __construct($aInfo, $oTemplate) {
+class BxBaseFormConfirmEmail extends BxTemplFormView
+{
+    public function __construct($aInfo, $oTemplate)
+    {
         parent::__construct($aInfo, $oTemplate);
     }
 

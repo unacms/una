@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Convos Convos
  * @ingroup     DolphinModules
  *
@@ -19,14 +19,14 @@ define('BX_CNV_FOLDER_TRASH', 4);
 /**
  * Conversations module
  */
-class BxCnvModule extends BxBaseModTextModule 
+class BxCnvModule extends BxBaseModTextModule
 {
-    function __construct(&$aModule) 
+    function __construct(&$aModule)
     {
         parent::__construct($aModule);
     }
 
-    public function sortCollaborators ($aCollaborators, $iProfileIdLastComment, $iProfileIdAuthor, $iProfileIdCurrent = 0) 
+    public function sortCollaborators ($aCollaborators, $iProfileIdLastComment, $iProfileIdAuthor, $iProfileIdCurrent = 0)
     {
         if (!$iProfileIdCurrent)
             $iProfileIdCurrent = bx_get_logged_profile_id();
@@ -47,7 +47,7 @@ class BxCnvModule extends BxBaseModTextModule
         return $aCollaborators;
     }
 
-    public function setModuleSubmenu ($iCurrentFolderId = 0) 
+    public function setModuleSubmenu ($iCurrentFolderId = 0)
     {
         $CNF = &$this->_oConfig->CNF;
 
@@ -60,7 +60,7 @@ class BxCnvModule extends BxBaseModTextModule
 
         bx_import('BxDolMenu');
         $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
-        if (!$oMenuSubmenu) 
+        if (!$oMenuSubmenu)
             return;
 
         $oMenuSubmenu->setObjectSubmenu($CNF['OBJECT_MENU_SUBMENU'], array (
@@ -78,7 +78,7 @@ class BxCnvModule extends BxBaseModTextModule
      * Mark conversation as unread for the current user
      * @return error string on error, or empty string on success
      */
-    public function markUnread ($iContentId) 
+    public function markUnread ($iContentId)
     {
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
         if (!$aContentInfo)
@@ -97,7 +97,7 @@ class BxCnvModule extends BxBaseModTextModule
      * Delete conversation for current user by content id
      * @return error string on error, or empty string on success
      */
-    public function deleteConvo ($iContentId) 
+    public function deleteConvo ($iContentId)
     {
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
         if (!$aContentInfo)
@@ -112,7 +112,7 @@ class BxCnvModule extends BxBaseModTextModule
         return '';
     }
 
-    public function actionMarkUnread($iContentId) 
+    public function actionMarkUnread($iContentId)
     {
         header('Content-Type:text/plain; charset=utf-8');
 
@@ -125,7 +125,7 @@ class BxCnvModule extends BxBaseModTextModule
         exit;
     }
 
-    public function actionDelete($iContentId) 
+    public function actionDelete($iContentId)
     {
         header('Content-Type:text/plain; charset=utf-8');
 
@@ -141,7 +141,7 @@ class BxCnvModule extends BxBaseModTextModule
     /**
      * Display convos in folder
      */
-    public function actionFolder ($iFolderId) 
+    public function actionFolder ($iFolderId)
     {
         // TODO: add to page builder
         bx_import('BxDolGrid');
@@ -177,12 +177,12 @@ class BxCnvModule extends BxBaseModTextModule
     /**
      * Get possible recipients for start conversation form
      */
-    public function actionAjaxGetRecipients () 
+    public function actionAjaxGetRecipients ()
     {
         $sTerm = bx_get('term');
 
         $a = BxDolService::call('system', 'profiles_search', array($sTerm), 'TemplServiceProfiles');
-        
+
         header('Content-Type:text/javascript; charset=utf-8');
         echo(json_encode($a));
     }
@@ -202,7 +202,7 @@ class BxCnvModule extends BxBaseModTextModule
      * @param $iProfileId - profile to get unread messages for, if omitted then currently logged is profile is used
      * @return integer
      */
-    public function serviceGetUnreadMessagesNum ($iProfileId = 0) 
+    public function serviceGetUnreadMessagesNum ($iProfileId = 0)
     {
         if (!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
@@ -213,14 +213,14 @@ class BxCnvModule extends BxBaseModTextModule
     /**
      * Update last comment time and author
      */
-    public function serviceTriggerCommentPost ($iContentId, $iProfileId, $iCommentId, $iTimestamp = 0) 
+    public function serviceTriggerCommentPost ($iContentId, $iProfileId, $iCommentId, $iTimestamp = 0)
     {
         if (!(int)$iContentId)
             return false;
         $aContentInfo = $this->_oDb->getContentInfoById((int)$iContentId);
         if (!$aContentInfo)
             return false;
-   
+
         if (!$iTimestamp)
             $iTimestamp = time();
 
@@ -233,7 +233,7 @@ class BxCnvModule extends BxBaseModTextModule
     /**
      * Entry collaborators block
      */
-    public function serviceEntityCollaborators ($iContentId = 0) 
+    public function serviceEntityCollaborators ($iContentId = 0)
     {
         if (!$iContentId)
             $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
@@ -242,14 +242,14 @@ class BxCnvModule extends BxBaseModTextModule
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
         if (!$aContentInfo)
             return false;
-   
+
         return $this->_oTemplate->entryCollaborators ($aContentInfo, 5, 'right');
     }
 
     /**
      * No moderators for personal convos
      */
-    protected function _isModerator ($isPerformAction = false) 
+    protected function _isModerator ($isPerformAction = false)
     {
         return false;
     }
@@ -257,7 +257,7 @@ class BxCnvModule extends BxBaseModTextModule
     /**
      * No thumbs for convos
      */
-    public function checkAllowedSetThumb () 
+    public function checkAllowedSetThumb ()
     {
         return _t('_sys_txt_access_denied');
     }
@@ -265,7 +265,7 @@ class BxCnvModule extends BxBaseModTextModule
     /**
      * Only collaborators can view convo
      */
-    public function checkAllowedView ($aDataEntry, $isPerformAction = false) 
+    public function checkAllowedView ($aDataEntry, $isPerformAction = false)
     {
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = parent::checkAllowedView ($aDataEntry, $isPerformAction)))
             return $sMsg;

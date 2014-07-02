@@ -14,26 +14,26 @@ bx_import('BxBaseModGeneralDb');
 /*
  * Profile based module database queries
  */
-class BxBaseModProfileDb extends BxBaseModGeneralDb 
+class BxBaseModProfileDb extends BxBaseModGeneralDb
 {
-    public function __construct(&$oConfig) 
+    public function __construct(&$oConfig)
     {
         parent::__construct($oConfig);
     }
 
-    public function getContentInfoById ($iContentId) 
+    public function getContentInfoById ($iContentId)
     {
         $sQuery = $this->prepare ("SELECT `c`.*, `p`.`account_id`, `p`.`id` AS `profile_id`, `p`.`status` AS `profile_status` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` INNER JOIN `sys_profiles` AS `p` ON (`p`.`content_id` = `c`.`id` AND `p`.`type` = ?) WHERE `c`.`id` = ?", $this->_oConfig->getName(), $iContentId);
         return $this->getRow($sQuery);
     }
 
-    public function updateContentPictureById($iContentId, $iProfileId, $iPictureId, $sFieldPicture) 
+    public function updateContentPictureById($iContentId, $iProfileId, $iPictureId, $sFieldPicture)
     {
         $sQuery = $this->prepare ("UPDATE `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` SET `" . $sFieldPicture . "` = ? WHERE `id` = ? AND `author` = ?", $iPictureId, $iContentId, $iProfileId);
         return $this->res($sQuery);
     }
 
-    public function searchByTerm($sTerm, $iLimit) 
+    public function searchByTerm($sTerm, $iLimit)
     {
         if (!$this->_oConfig->CNF['FIELDS_QUICK_SEARCH'])
             return array();
@@ -49,4 +49,4 @@ class BxBaseModProfileDb extends BxBaseModGeneralDb
     }
 }
 
-/** @} */ 
+/** @} */

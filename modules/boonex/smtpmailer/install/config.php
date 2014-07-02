@@ -1,8 +1,8 @@
-<?php 
+<?php
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    SMTPMailer SMTP Mailer
  * @ingroup     DolphinModules
  *
@@ -10,46 +10,46 @@
  */
 
 $aConfig = array(
-	/**
-	 * Main Section.
-	 */
-	'type' => BX_DOL_MODULE_TYPE_MODULE,
+    /**
+     * Main Section.
+     */
+    'type' => BX_DOL_MODULE_TYPE_MODULE,
     'name' => 'bx_smtp',
-	'title' => 'SMTP Mailer',
+    'title' => 'SMTP Mailer',
     'note' => 'Use remote SMTP server for sending mails.',
-	'version' => '1.0.6',
-	'vendor' => 'BoonEx',
+    'version' => '1.0.6',
+    'vendor' => 'BoonEx',
     'product_url' => 'http://www.boonex.com/products/{uri}',
-	'update_url' => '',
-	
-	'compatible_with' => array(
+    'update_url' => '',
+
+    'compatible_with' => array(
         '8.0.x'
-    ),	
+    ),
 
     /**
-	 * 'home_dir' and 'home_uri' - should be unique. Don't use spaces in 'home_uri' and the other special chars.
-	 */
-	'home_dir' => 'boonex/smtpmailer/',
-	'home_uri' => 'smtpmailer',
-	
-	'db_prefix' => 'bx_smtp_',
-	'class_prefix' => 'BxSMTP',
+     * 'home_dir' and 'home_uri' - should be unique. Don't use spaces in 'home_uri' and the other special chars.
+     */
+    'home_dir' => 'boonex/smtpmailer/',
+    'home_uri' => 'smtpmailer',
 
-	/**
-	 * Category for language keys.
-	 */
-	'language_category' => 'SMTP Mailer',
+    'db_prefix' => 'bx_smtp_',
+    'class_prefix' => 'BxSMTP',
 
-	/**
-	 * Installation/Uninstallation Section.
-	 */
-	'install' => array(
-		'execute_sql' => 1,
-		'update_languages' => 1,
-	),
-	'uninstall' => array (
-		'execute_sql' => 1,
-		'update_languages' => 1,
+    /**
+     * Category for language keys.
+     */
+    'language_category' => 'SMTP Mailer',
+
+    /**
+     * Installation/Uninstallation Section.
+     */
+    'install' => array(
+        'execute_sql' => 1,
+        'update_languages' => 1,
+    ),
+    'uninstall' => array (
+        'execute_sql' => 1,
+        'update_languages' => 1,
     ),
     'enable' => array(
         'execute_sql' => 1,
@@ -63,10 +63,9 @@ $aConfig = array(
     ),
 
     /**
-	 * Dependencies Section
-	 */
-	'dependencies' => array(),
+     * Dependencies Section
+     */
+    'dependencies' => array(),
 );
 
 /** @} */
-

@@ -16,12 +16,12 @@ bx_import('BxDolProfile');
 /**
  * Profile's entries page.
  */
-class BxBaseModTextPageAuthor extends BxTemplPage 
+class BxBaseModTextPageAuthor extends BxTemplPage
 {
     protected $_aProfileInfo;
     protected $_oProfile;
 
-    public function __construct($aObject, $oTemplate = false) 
+    public function __construct($aObject, $oTemplate = false)
     {
         parent::__construct($aObject, $oTemplate);
 

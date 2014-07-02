@@ -9,20 +9,21 @@
 
 bx_import('BxDolAccountQuery');
 
-class BxDolAccount extends BxDol {
-
+class BxDolAccount extends BxDol
+{
     protected $_iAccountID;
     protected $_oQuery;
 
     /**
      * Constructor
      */
-    protected function __construct ($iAccountId) {
+    protected function __construct ($iAccountId)
+    {
         $iAccountId = (int)$iAccountId;
         $sClass = get_class($this) . '_' . $iAccountId;
         if (isset($GLOBALS['bxDolClasses'][$sClass]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
-        
+
         parent::__construct();
 
         $this->_iAccountID = $iAccountId; // since constructor is protected $iAccountId is always valid
@@ -32,7 +33,8 @@ class BxDolAccount extends BxDol {
     /**
      * Prevent cloning the instance
      */
-    public function __clone() {
+    public function __clone()
+    {
         $sClass = get_class($this) . '_' . $this->_iProfileID;
         if (isset($GLOBALS['bxDolClasses'][$sClass]))
             trigger_error('Clone is not allowed for the class: ' . get_class($this), E_USER_ERROR);
@@ -41,8 +43,8 @@ class BxDolAccount extends BxDol {
     /**
      * Get singleton instance of the class
      */
-    public static function getInstance($mixedAccountId = false) {
-
+    public static function getInstance($mixedAccountId = false)
+    {
         if (!$mixedAccountId)
             $mixedAccountId = getLoggedId();
 
@@ -60,14 +62,16 @@ class BxDolAccount extends BxDol {
     /**
      * Get account id
      */
-    public function id() {
+    public function id()
+    {
         return $this->_oQuery->getIdById($this->_iAccountID);
     }
 
     /**
      * Check if account is confirmed, it is checked by email confirmation
      */
-    public function isConfirmed($iAccountId = false) {
+    public function isConfirmed($iAccountId = false)
+    {
         if (!getParam('sys_email_confirmation')) // if email_confirmation procedure is disabled, always return true
             return true;
         $a = $this->getInfo((int)$iAccountId);
@@ -76,11 +80,12 @@ class BxDolAccount extends BxDol {
 
     /**
      * Set account email to confirmed or unconfirmed
-     * @param int $isConfirmed - false: mark email as unconfirmed, true: as confirmed
-     * @param int $iAccountId - optional account id
+     * @param  int  $isConfirmed - false: mark email as unconfirmed, true: as confirmed
+     * @param  int  $iAccountId  - optional account id
      * @return true on success or false on error
      */
-    public function updateEmailConfirmed($isConfirmed, $isAutoSendConfrmationEmail = true, $iAccountId = false) {
+    public function updateEmailConfirmed($isConfirmed, $isAutoSendConfrmationEmail = true, $iAccountId = false)
+    {
         $iId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
 
         if (!$isConfirmed && $isAutoSendConfrmationEmail && getParam('sys_email_confirmation')) // if email_confirmation procedure is enabled - send email confirmation letter
@@ -91,9 +96,10 @@ class BxDolAccount extends BxDol {
             return true;
         }
         return false;
-    }    
+    }
 
-    public function updateProfileContext($iSwitchToProfileId, $iAccountId = false) {
+    public function updateProfileContext($iSwitchToProfileId, $iAccountId = false)
+    {
         $iId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
         $aInfo = $this->getInfo((int)$iId);
         if (!$aInfo)
@@ -115,7 +121,8 @@ class BxDolAccount extends BxDol {
     /**
      * Send "confirmation" email
      */
-    public function sendConfirmationEmail($iAccountId = false) {
+    public function sendConfirmationEmail($iAccountId = false)
+    {
         $sEmail = $this->getEmail($iAccountId);
 
         bx_import('BxDolKey');
@@ -139,14 +146,16 @@ class BxDolAccount extends BxDol {
     /**
      * Get account info
      */
-    public function getInfo($iAccountId = false) {
+    public function getInfo($iAccountId = false)
+    {
         return $this->_oQuery->getInfoById((int)$iAccountId ? (int)$iAccountId : $this->_iAccountID);
     }
 
     /**
      * Get account display name
      */
-    public function getDisplayName($iAccountId = false) {
+    public function getDisplayName($iAccountId = false)
+    {
         $aInfo = $this->getInfo($iAccountId);
         return $aInfo['name'];
     }
@@ -154,53 +163,60 @@ class BxDolAccount extends BxDol {
     /**
      * Get account url
      */
-    public function getUrl($iAccountId = false) {
+    public function getUrl($iAccountId = false)
+    {
         return 'javascript:void(0);';
     }
 
     /**
      * Get account url
      */
-    public function getUnit($iAccountId = false) {
+    public function getUnit($iAccountId = false)
+    {
         return '<div>' . $this->getDisplayName($iAccountId) . '</div>';
     }
 
     /**
      * Get avatar picture url
      */
-    public function getAvatar($iAccountId = false) {
+    public function getAvatar($iAccountId = false)
+    {
         return BxDolTemplate::getInstance()->getImageUrl('account-avatar.png');
     }
 
     /**
      * Get thumb picture url
      */
-    public function getThumb($iAccountId = false) {
+    public function getThumb($iAccountId = false)
+    {
         return BxDolTemplate::getInstance()->getImageUrl('account-thumb.png');
     }
 
     /**
      * Get icon picture url
      */
-    public function getIcon($iAccountId = false) {
+    public function getIcon($iAccountId = false)
+    {
         return BxDolTemplate::getInstance()->getImageUrl('account-icon.png');
     }
 
     /**
      * Get account email
      */
-    public function getEmail($iAccountId = false) {
+    public function getEmail($iAccountId = false)
+    {
         $iAccountId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
         $aAccountInfo = $this->getInfo($iAccountId);
         return $aAccountInfo['email'];
     }
 
     /**
-     * Validate account. 
-     * @param $s - account identifier (id or email) 
+     * Validate account.
+     * @param $s - account identifier (id or email)
      * @return account id or false if account was not found
      */
-    static public function getID($s) {
+    static public function getID($s)
+    {
         $oQuery = BxDolAccountQuery::getInstance();
 
         if (preg_match("/^[_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,4}$/i", $s)) {
@@ -215,8 +231,8 @@ class BxDolAccount extends BxDol {
     /**
      * Delete profile.
      */
-    function delete($iAccountId = false) {
-
+    function delete($iAccountId = false)
+    {
         $ID = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
 
         $aAccountInfo = $this->_oQuery->getInfoById($ID);
@@ -238,7 +254,7 @@ class BxDolAccount extends BxDol {
         foreach ($aProfiles as $iProfileId => $aRow) {
             $oProfile = BxDolProfile::getInstance($iProfileId);
             if (!$oProfile)
-                continue;            
+                continue;
             $oProfile->delete(false, true);
         }
 
@@ -252,7 +268,7 @@ class BxDolAccount extends BxDol {
         // unset class instance to prevent creating the instance again
         $this->_iAccountID = 0;
         $sClass = get_class($this) . '_' . $ID;
-        unset($GLOBALS['bxDolClasses'][$sClass]);        
+        unset($GLOBALS['bxDolClasses'][$sClass]);
 
         return true;
     }
@@ -260,7 +276,8 @@ class BxDolAccount extends BxDol {
     /**
      * Add permament messages.
      */
-    public function addInformerPermanentMessages ($oInformer) {
+    public function addInformerPermanentMessages ($oInformer)
+    {
         if (!$this->isConfirmed()) {
             bx_import('BxDolPermalinks');
             $sUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=confirm-email') . '&resend=1';
@@ -272,8 +289,9 @@ class BxDolAccount extends BxDol {
     /**
      * Get unsubscribe link for the specified mesage type
      */
-    public function getUnsubscribeLink($iEmailType, $iAccountId = false) {
-        $iAccountId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID; 
+    public function getUnsubscribeLink($iEmailType, $iAccountId = false)
+    {
+        $iAccountId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
         bx_import('BxDolPermalinks');
         $sUrl = '';
         switch ($iEmailType) {
@@ -289,18 +307,18 @@ class BxDolAccount extends BxDol {
         return BxDolPermalinks::getInstance()->permalink($sUrl) . '&id=' . $iAccountId . '&code=' . $this->getEmailHash();
     }
 
-    public function getEmailHash($iAccountId = false) {
-        $iAccountId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID; 
+    public function getEmailHash($iAccountId = false)
+    {
+        $iAccountId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
         $a = $this->getInfo();
         return md5($a['email'] . $a['salt'] . BX_DOL_SECRET);
     }
 
-
-
     /**
-     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. 
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
      */
-    static public function isAllowedCreate ($iProfileId, $isPerformAction = false) {
+    static public function isAllowedCreate ($iProfileId, $isPerformAction = false)
+    {
         $aCheck = checkActionModule($iProfileId, 'create account', 'system', $isPerformAction);
         if ($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
             return MsgBox($aCheck[CHECK_ACTION_MESSAGE]);
@@ -308,10 +326,10 @@ class BxDolAccount extends BxDol {
     }
 
     /**
-     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. 
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
      */
-    static public function isAllowedEdit ($iProfileId, $aContentInfo, $isPerformAction = false) {
-
+    static public function isAllowedEdit ($iProfileId, $aContentInfo, $isPerformAction = false)
+    {
         bx_import('BxDolProfile');
         $oProfile = BxDolProfile::getInstance($iProfileId);
         if (!$oProfile)
@@ -325,9 +343,10 @@ class BxDolAccount extends BxDol {
     }
 
     /**
-     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. 
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
      */
-    static public function isAllowedDelete ($iProfileId, $aContentInfo, $isPerformAction = false) {
+    static public function isAllowedDelete ($iProfileId, $aContentInfo, $isPerformAction = false)
+    {
         $aCheck = checkActionModule($iProfileId, 'delete account', 'system', $isPerformAction);
         if ($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
             return MsgBox($aCheck[CHECK_ACTION_MESSAGE]);
@@ -337,4 +356,3 @@ class BxDolAccount extends BxDol {
 }
 
 /** @} */
-

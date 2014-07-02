@@ -14,9 +14,9 @@ bx_import('BxBaseModTextPageBrowse');
 /**
  * Browse entries pages.
  */
-class BxNotesPageBrowse extends BxBaseModTextPageBrowse 
-{    
-    public function __construct($aObject, $oTemplate = false) 
+class BxNotesPageBrowse extends BxBaseModTextPageBrowse
+{
+    public function __construct($aObject, $oTemplate = false)
     {
         $this->MODULE = 'bx_notes';
         parent::__construct($aObject, $oTemplate);

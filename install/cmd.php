@@ -25,7 +25,7 @@ class BxDolInstallCmd
         'module failed' => array ('code' => 5, 'msg' => 'Additional module install failed. '),
     );
 
-    public function __construct() 
+    public function __construct()
     {
         $aPathInfo = pathinfo(__FILE__);
 
@@ -71,7 +71,7 @@ class BxDolInstallCmd
         $this->init();
 
         // peform install
-        
+
         $this->checkRequirements();
         $this->checkPermissions();
         $this->createSiteConfig();
@@ -82,13 +82,13 @@ class BxDolInstallCmd
     protected function getOptions()
     {
         $a = array ();
-        foreach ($this->_aSiteConfig as $sKey => $sValue) 
+        foreach ($this->_aSiteConfig as $sKey => $sValue)
             if ('site_config' != $sKey)
                 $a[] = "$sKey::";
         return $a;
-    } 
+    }
 
-    protected function getHelp() 
+    protected function getHelp()
     {
         $s = "Usage: php cmd.php [options]\n";
 
@@ -108,7 +108,7 @@ class BxDolInstallCmd
         return $s;
     }
 
-    protected function finish($iCode, $sMsg) 
+    protected function finish($iCode, $sMsg)
     {
         if (!$this->_isQuiet)
             fwrite($iCode ? STDERR : STDOUT, $sMsg . "\n");
@@ -119,7 +119,7 @@ class BxDolInstallCmd
     protected function init()
     {
         // skip this test if script is already installed
-        if (file_exists($this->_sHeaderPath)) 
+        if (file_exists($this->_sHeaderPath))
             $this->finish($this->_aReturnCodes['already installed']['code'], $this->_aReturnCodes['already installed']['msg']);
 
         // include necessary files to perform install

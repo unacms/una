@@ -14,9 +14,9 @@ class BxDolCacheFileHtml extends BxDolCacheFile
     /**
      * Get all data from the cache file.
      *
-     * @param string $sKey - file name
-     * @param int $iTTL - time to live
-     * @return the data is got from cache.
+     * @param  string $sKey - file name
+     * @param  int    $iTTL - time to live
+     * @return the    data is got from cache.
      */
     function getData($sKey, $iTTL = false)
     {
@@ -32,7 +32,7 @@ class BxDolCacheFileHtml extends BxDolCacheFile
     /**
      * Get full path to cache file
      */
-    function getDataFilePath($sKey, $iTTL = false) 
+    function getDataFilePath($sKey, $iTTL = false)
     {
         if (!file_exists($this->sPath . $sKey))
             return null;
@@ -46,12 +46,12 @@ class BxDolCacheFileHtml extends BxDolCacheFile
     /**
      * Save all data in cache file.
      *
-     * @param string $sKey - file name
-     * @param mixed $mixedData - the data to be cached in the file
-     * @param int $iTTL - time to live
+     * @param  string  $sKey      - file name
+     * @param  mixed   $mixedData - the data to be cached in the file
+     * @param  int     $iTTL      - time to live
      * @return boolean result of operation.
      */
-    function setData($sKey, $mixedData, $iTTL = false) 
+    function setData($sKey, $mixedData, $iTTL = false)
     {
         if(file_exists($this->sPath . $sKey) && !is_writable($this->sPath . $sKey))
            return false;
@@ -68,4 +68,3 @@ class BxDolCacheFileHtml extends BxDolCacheFile
 }
 
 /** @} */
-

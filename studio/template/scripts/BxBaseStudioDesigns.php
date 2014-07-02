@@ -12,14 +12,18 @@ bx_import('BxDolStudioDesigns');
 bx_import('BxTemplStudioFormView');
 bx_import('BxTemplStudioFunctions');
 
-class BxBaseStudioDesigns extends BxDolStudioDesigns {
-    function __construct() {
+class BxBaseStudioDesigns extends BxDolStudioDesigns
+{
+    function __construct()
+    {
         parent::__construct();
     }
-    function getCss() {
+    function getCss()
+    {
         return array('designs.css');
     }
-    function getJs() {
+    function getJs()
+    {
         return array('jquery.anim.js', 'page.js', 'designs.js');
     }
 }

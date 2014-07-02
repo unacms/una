@@ -12,9 +12,9 @@ bx_import('BxBaseCmts');
 /**
  * @see BxDolCmts
  */
-class BxTemplCmts extends BxBaseCmts 
+class BxTemplCmts extends BxBaseCmts
 {
-    function __construct($sSystem, $iId, $iInit = 1) 
+    function __construct($sSystem, $iId, $iInit = 1)
     {
         parent::__construct($sSystem, $iId, $iInit);
     }

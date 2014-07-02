@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Organizations Organizations
  * @ingroup     DolphinModules
  *
@@ -16,10 +16,10 @@ bx_import ('BxBaseModProfileModule');
  */
 class BxOrgsModule extends BxBaseModProfileModule
 {
-    function __construct(&$aModule) 
+    function __construct(&$aModule)
     {
         parent::__construct($aModule);
     }
 }
 
-/** @} */ 
+/** @} */

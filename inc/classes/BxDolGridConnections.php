@@ -11,19 +11,19 @@ require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
 bx_import('BxTemplGrid');
 
-class BxDolGridConnections extends BxTemplGrid 
+class BxDolGridConnections extends BxTemplGrid
 {
     protected $_bOwner = false;
     protected $_sContentModule = 'bx_persons';
     protected $_sObjectConnections = 'sys_profiles_friends';
 
-    public function __construct ($aOptions, $oTemplate = false) 
+    public function __construct ($aOptions, $oTemplate = false)
     {
         parent::__construct ($aOptions, $oTemplate);
         $this->_sDefaultSortingOrder = 'DESC';
 
         $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
-        if (!$iProfileId) 
+        if (!$iProfileId)
             return;
 
         bx_import('BxDolProfile');
@@ -51,7 +51,7 @@ class BxDolGridConnections extends BxTemplGrid
     /**
      * 'accept' action handler
      */
-    public function performActionAccept() 
+    public function performActionAccept()
     {
         $iId = 0;
         $aIds = bx_get('ids');
@@ -76,12 +76,13 @@ class BxDolGridConnections extends BxTemplGrid
     /**
      * 'add friend' action handler
      */
-    public function performActionAddFriend() 
+    public function performActionAddFriend()
     {
         return $this->performActionAccept();
     }
 
-    protected function _delete ($mixedId) {
+    protected function _delete ($mixedId)
+    {
         bx_import('BxDolConnection');
         $oConn = BxDolConnection::getObjectInstance($this->_sObjectConnections);
 
@@ -99,7 +100,7 @@ class BxDolGridConnections extends BxTemplGrid
         $oProfile = BxDolProfile::getInstance($aRow['id']);
         if (!$oProfile)
             return _t('_sys_txt_error_occured');
-        
+
         return parent::_getCellDefault ($oProfile->getUnit(), $sKey, $aField, $aRow);
     }
 

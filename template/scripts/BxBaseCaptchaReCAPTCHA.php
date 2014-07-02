@@ -13,8 +13,8 @@ bx_import('BxDolCaptcha');
  * reCAPTCHA representation.
  * @see BxDolCaptcha
  */
-class BxBaseCaptchaReCAPTCHA extends BxDolCaptcha {
-
+class BxBaseCaptchaReCAPTCHA extends BxDolCaptcha
+{
     protected $_bJsCssAdded = false;
     protected $_oTemplate;
 
@@ -23,7 +23,8 @@ class BxBaseCaptchaReCAPTCHA extends BxDolCaptcha {
     protected $_sKeyPublic;
     protected $_sKeyPrivate;
 
-    public function __construct ($aObject, $oTemplate) {
+    public function __construct ($aObject, $oTemplate)
+    {
         parent::__construct ($aObject);
 
         if ($oTemplate)
@@ -38,14 +39,14 @@ class BxBaseCaptchaReCAPTCHA extends BxDolCaptcha {
     /**
      * Display captcha.
      */
-    public function display ($bDynamicMode = false) {
-  
+    public function display ($bDynamicMode = false)
+    {
         // TODO: captcha don't display error in javascript mode, try to find the way on how to pass error code in this mode
-      
+
         bx_import('BxDolLanguages');
 
         $sId = 'sys-captcha-' . time() . rand(0, PHP_INT_MAX);
-        $sInit = "            
+        $sInit = "
             Recaptcha.create('" . $this->_sKeyPublic . "', '" . $sId . "', {
                 lang: '" . BxDolLanguages::getInstance()->getCurrentLanguage() . "',
                 theme: '" . $this->_sSkin . "',
@@ -83,8 +84,8 @@ class BxBaseCaptchaReCAPTCHA extends BxDolCaptcha {
     /**
      * Check captcha.
      */
-    public function check () {
-
+    public function check ()
+    {
         require_once(BX_DIRECTORY_PATH_PLUGINS . 'recaptcha/recaptchalib.php');
 
         $oResp = recaptcha_check_answer(
@@ -105,14 +106,16 @@ class BxBaseCaptchaReCAPTCHA extends BxDolCaptcha {
     /**
      * Check if captcha is available, like all API keys are specified.
      */
-    public function isAvailable () {
+    public function isAvailable ()
+    {
         return !empty($this->_sKeyPublic) && !empty($this->_sKeyPrivate);
     }
 
     /**
      * Add css/js files which are needed for display and functionality.
      */
-    protected function _addJsCss($bDynamicMode = false) {
+    protected function _addJsCss($bDynamicMode = false)
+    {
         if ($bDynamicMode)
             return '';
         if ($this->_bJsCssAdded)

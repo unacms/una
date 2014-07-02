@@ -9,8 +9,10 @@
 
 bx_import('BxDolStudioInstaller');
 
-class BxDolStudioUpdater extends BxDolStudioInstaller {
-    public function __construct($aConfig) {
+class BxDolStudioUpdater extends BxDolStudioInstaller
+{
+    public function __construct($aConfig)
+    {
         parent::__construct($aConfig);
         $this->_sModulePath = $this->_sBasePath . $aConfig['module_dir'];
 
@@ -30,7 +32,8 @@ class BxDolStudioUpdater extends BxDolStudioInstaller {
         ));
     }
 
-    public function update($aParams) {
+    public function update($aParams)
+    {
         $oDb = BxDolDb::getInstance();
 
         $aResult = array(
@@ -89,12 +92,13 @@ class BxDolStudioUpdater extends BxDolStudioInstaller {
     }
 
     //--- Action Methods ---//
-    public function actionUpdateFiles($bInstall = true) {
+    public function actionUpdateFiles($bInstall = true)
+    {
         $sPath = $this->_sHomePath . 'source/';
         if(!file_exists($sPath))
             return BX_DOL_STUDIO_INSTALLER_FAILED;
 
-		bx_import('BxDolFtp');
+        bx_import('BxDolFtp');
         $oFtp = new BxDolFtp($_SERVER['HTTP_HOST'], getParam('sys_ftp_login'), getParam('sys_ftp_password'), getParam('sys_ftp_dir'));
         if($oFtp->connect() == false)
             return BX_DOL_STUDIO_INSTALLER_FAILED;
@@ -102,7 +106,8 @@ class BxDolStudioUpdater extends BxDolStudioInstaller {
         return $oFtp->copy($sPath . '*', 'modules/' . $this->_aConfig['module_dir']) ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
 
-    public function actionUpdateLanguages($bInstall = true) {
+    public function actionUpdateLanguages($bInstall = true)
+    {
         $oDb = BxDolDb::getInstance();
 
         bx_import('BxDolStudioLanguagesUtils');
@@ -123,29 +128,30 @@ class BxDolStudioUpdater extends BxDolStudioInstaller {
         return $oLanguages->compileLanguage(0, true) ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
 
-    protected function _updateLanguage($bInstall, $sLanguage, $iCategoryId = 0) {
+    protected function _updateLanguage($bInstall, $sLanguage, $iCategoryId = 0)
+    {
         $oDb = BxDolDb::getInstance();
         $oLanguages = BxDolStudioLanguagesUtils::getInstance();
 
         $sPath = $this->_sHomePath . 'install/langs/' . $sLanguage . '.xml';
         $aLanguageInfo = $oLanguages->readLanguage($sPath, 'update');
         if(empty($aLanguageInfo))
-        	return false;
+            return false;
 
-		$iLanguage = $oLanguages->getLangId($sLanguage);
+        $iLanguage = $oLanguages->getLangId($sLanguage);
 
         //--- Process delete ---//
         if(isset($aLanguageInfo['strings_del']) && is_array($aLanguageInfo['strings_del']))
-			$oLanguages->deleteLanguageKeys($aLanguageInfo['strings_del']);
+            $oLanguages->deleteLanguageKeys($aLanguageInfo['strings_del']);
 
         //--- Process add ---//
         if(isset($aLanguageInfo['strings_add']) && is_array($aLanguageInfo['strings_add']))
-			$oLanguages->addLanguageKeys($iLanguage, $iCategoryId, $aLanguageInfo['strings_add']);
+            $oLanguages->addLanguageKeys($iLanguage, $iCategoryId, $aLanguageInfo['strings_add']);
 
         //--- Process update ---//
         if(isset($aLanguageInfo['strings_upd']) && is_array($aLanguageInfo['strings_upd'])) {
-        	$oLanguages->deleteLanguageKeys($aLanguageInfo['strings_upd']);
-        	$oLanguages->addLanguageKeys($iLanguage, $iCategoryId, $aLanguageInfo['strings_upd']);
+            $oLanguages->deleteLanguageKeys($aLanguageInfo['strings_upd']);
+            $oLanguages->addLanguageKeys($iLanguage, $iCategoryId, $aLanguageInfo['strings_upd']);
         }
 
         return true;

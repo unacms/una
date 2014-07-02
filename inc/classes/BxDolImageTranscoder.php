@@ -10,15 +10,15 @@
 bx_import('BxDolStorage');
 bx_import('BxDolImageTranscoderQuery');
 
-/** 
- * @page objects 
+/**
+ * @page objects
  * @section images_transcoder Images Transcoder
  * @ref BxDolImageTranscoder
  */
 
 /**
- * This class transcodes images on the fly. 
- * Transcoded image is saved in the specified storage engine and next time ready image is served. 
+ * This class transcodes images on the fly.
+ * Transcoded image is saved in the specified storage engine and next time ready image is served.
  *
  *
  * To add image transcoder object add record to 'sys_objects_transcoder_images' table:
@@ -33,28 +33,28 @@ bx_import('BxDolImageTranscoderQuery');
  * - atime_tracking - track last access time to the transcoded data, allowed values 0 - disables or 1 - enabled.
  * - atime_pruning - prune transcoded images by last access time, if last access time of the image is older than atime_pruning seconds - it is deleted, it works when atime_tracking is enabled
  * - ts - unix timestamp of the last change of transcoder parameters, if transcoded image is older than this value - image is deleted and transcoded again.
- * 
+ *
  *
  * Then you need to add image filters to 'sys_transcoder_images_filters' table:
  * - transcoder_object - name of the transcoded object to apply filter to.
  * - filter - filter name, please read futher for available filters.
  * - filter_params - serialized array of filter params, please read futher for particular filters params.
  * - order - if there are several filters for one object, they will be applied in this order.
- * 
- * 
+ *
+ *
  * 'Folder' source types:
  * This source type is some folder with original images for the transcoding, the identifier of the image (handler) is file name.
  * The params are the following:
  * - path - path to the folder with original images
  * This source type has some limitation:
  * - automatic detection of private files is not supported
- * - transcoded file is not automaticlaly deleted/renewed if original file is changed 
+ * - transcoded file is not automaticlaly deleted/renewed if original file is changed
  *
  *
  * 'Storage' source type:
  * The source of original files is Storage engine, the identifier of the image (handler) is file id.
  * The params are the following:
- * - object - name of the Storage object 
+ * - object - name of the Storage object
  *
  *
  * Available filters:
@@ -66,22 +66,22 @@ bx_import('BxDolImageTranscoderQuery');
  * - Grayscale - make image grayscale, there is no parameters for this filter
  *
  *
- * Automatic deletetion of associated data is supported - in the case if original or transcoded file is deleted, 
- * but you need to register alert handlers, just call registerHandlers () function to register handler (for example, during module installation) 
+ * Automatic deletetion of associated data is supported - in the case if original or transcoded file is deleted,
+ * but you need to register alert handlers, just call registerHandlers () function to register handler (for example, during module installation)
  * and call unregisterHandlers () function to unregister handlers (for example, during module uninstallation)
- * 
+ *
  *
  * Example of usage:
  * @code
  * bx_import('BxDolImageTranscoder');
  * $oTranscoder = BxDolImageTranscoder::getObjectInstance('bx_images_thumb'); // change images transcode object name to your own
- * $oTranscoder->registerHandlers(); // make sure to call it only once! before the first usage, no need to call it every time 
+ * $oTranscoder->registerHandlers(); // make sure to call it only once! before the first usage, no need to call it every time
  * $sTranscodedImageUrl = $oTranscoder->getImageUrl('my_dog.jpg'); // the name of file, in the case of 'Folder' storage type this is file name
  * echo 'My dog : <img src="' . $sUrl . '" />'; // transcoded(resized and/or grayscaled) image will be shown, according to the specified filters
  * @endcode
  *
  */
-class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject 
+class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
 {
     protected $_aObject; ///< object properties
     protected $_oStorage; ///< storage object, transcoded images are stored here
@@ -91,10 +91,11 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
     /**
      * constructor
      */
-    protected function __construct($aObject, $oStorage) {
+    protected function __construct($aObject, $oStorage)
+    {
         parent::__construct();
         $this->_aObject = $aObject;
-        $this->_oStorage = $oStorage;        
+        $this->_oStorage = $oStorage;
         $this->_oDb = new BxDolImageTranscoderQuery($aObject);
     }
 
@@ -103,13 +104,13 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
      * @param $sObject - name of trancode object.
      * @return false on error or instance of BxDolImageTranscoder class.
      */
-    public static function getObjectInstance($sObject) {
-
+    public static function getObjectInstance($sObject)
+    {
         if (isset($GLOBALS['bxDolClasses']['BxDolImageTranscoder!'.$sObject]))
             return $GLOBALS['bxDolClasses']['BxDolImageTranscoder!'.$sObject];
- 
+
         // get transcode object
-        $aObject = BxDolImageTranscoderQuery::getTranscoderObject($sObject); 
+        $aObject = BxDolImageTranscoderQuery::getTranscoderObject($sObject);
         if (!$aObject || !is_array($aObject))
             return false;
 
@@ -131,10 +132,11 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
 
     /**
      * Delete outdated transcoed data from all transcoeeed objects, by last access time.
-     * It called on cron, usually every day. 
+     * It called on cron, usually every day.
      * @return total number of pruned/deleted files
      */
-    static public function pruning () {
+    static public function pruning ()
+    {
         $iCount = 0;
         $aObjects = BxDolImageTranscoderQuery::getTranscoderObjects ();
         foreach ($aObjects as $aObject) {
@@ -151,48 +153,53 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
     /**
      * Register handlers array
      * It can be called upon module enable event.
-     * @param $mixed array of transcoders objects, or just one object 
+     * @param $mixed array of transcoders objects, or just one object
      */
-    static public function registerHandlersArray ($mixed) {
+    static public function registerHandlersArray ($mixed)
+    {
         self::_callFuncForObjectsArray ($mixed, 'registerHandlers');
     }
 
     /**
      * Unregister handlers array
      * It can be called upon module disbale event.
-     * @param $mixed array of transcoders objects, or just one object 
+     * @param $mixed array of transcoders objects, or just one object
      */
-    static public function unregisterHandlersArray ($mixed) {
+    static public function unregisterHandlersArray ($mixed)
+    {
         self::_callFuncForObjectsArray ($mixed, 'unregisterHandlers');
     }
 
     /**
      * Cleanup (queue for deletion all resized files)
      * It can be called upon module disbale event.
-     * @param $mixed array of transcoders objects, or just one object 
+     * @param $mixed array of transcoders objects, or just one object
      */
-    static public function cleanupObjectsArray ($mixed) {
+    static public function cleanupObjectsArray ($mixed)
+    {
         self::_callFuncForObjectsArray ($mixed, 'cleanup');
     }
 
     /**
      * Called automatically, upon local(transcoded) file deletetion.
      */
-    static public function onAlertResponseFileDeleteLocal ($oAlert, $sObject) {
+    static public function onAlertResponseFileDeleteLocal ($oAlert, $sObject)
+    {
         $oTranscoder = BxDolImageTranscoder::getObjectInstance($sObject);
         if (!$oTranscoder)
             return;
 
         if ($oAlert->sAction != 'file_deleted')
             return;
-        
+
         $oTranscoder->onDeleteFileLocal($oAlert->iObject);
     }
 
     /**
      * Called automatically, upon original file deletetion.
      */
-    static public function onAlertResponseFileDeleteOrig ($oAlert, $sObject) {
+    static public function onAlertResponseFileDeleteOrig ($oAlert, $sObject)
+    {
         $oTranscoder = BxDolImageTranscoder::getObjectInstance($sObject);
         if (!$oTranscoder)
             return;
@@ -206,20 +213,22 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
     /**
      * Called automatically, upon local(transcoded) file deletetion.
      */
-    public function onDeleteFileLocal($iFileId) {
+    public function onDeleteFileLocal($iFileId)
+    {
         return $this->_oDb->deleteFileTraces($iFileId);
     }
 
     /**
      * Called automatically, upon original file deletetion.
      */
-    public function onDeleteFileOrig($mixedHandler) {
+    public function onDeleteFileOrig($mixedHandler)
+    {
         // delete main file
         $iFileId = $this->_oDb->getFileIdByHandler($mixedHandler);
         if (!$iFileId)
             return false;
 
-        if (!$this->_oStorage->deleteFile($iFileId)) 
+        if (!$this->_oStorage->deleteFile($iFileId))
             return false;
 
         // delete retina file
@@ -234,7 +243,8 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
      * Register necessary alert handlers for automatic deletetion of transcoded data if source file is deleted.
      * Make sure that you call it once, before first usage, for example upon module installation.
      */
-    public function registerHandlers () {
+    public function registerHandlers ()
+    {
         if (!$this->_oDb->registerHandlers ())
             return false;
         return $this->clearCacheDB();
@@ -244,7 +254,8 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
      * Unregister alert handlers for automatic deletetion of transcoded data if source file is deleted.
      * Make sure that you call it once, for example upon module uninstallation.
      */
-    public function unregisterHandlers () {
+    public function unregisterHandlers ()
+    {
         if (!$this->_oDb->unregisterHandlers ())
             return false;
         return $this->clearCacheDB();
@@ -253,26 +264,28 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
     /**
      * Delete (queue for deletion) all resized files for the current object
      */
-    public function cleanup () {
+    public function cleanup ()
+    {
         return $this->_oStorage->queueFilesForDeletionFromObject();
     }
 
     /**
-     * Get storage object where transcoded data is stored    
+     * Get storage object where transcoded data is stored
      */
-    public function getStorage() {
+    public function getStorage()
+    {
         return $this->_oStorage;
     }
 
     /**
-     * Get transcoded image url. 
-     * If transcoded image is ready then direct url to this image is returned. 
+     * Get transcoded image url.
+     * If transcoded image is ready then direct url to this image is returned.
      * If there is no transcoded data available, then special url is returned, upon opening this url image is transcoded automatically and redirects to the ready transcoed image.
      * @params $mixedHandler - image handler
      * @return image url, or false on error.
      */
-    public function getImageUrl($mixedHandler) {
-
+    public function getImageUrl($mixedHandler)
+    {
         if ($this->isImageReady($mixedHandler)) {
 
             $mixedHandler = $this->processHandlerForRetinaDevice($mixedHandler);
@@ -298,27 +311,28 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
      * Check if transcoded data is available. No need to call it directly, it is called automatically when it is needed.
      * @params $mixedHandler - image handler
      * @params $isCheckOutdated - check if transcoded image outdated
-     * @return false if there is no ready transcoed image is available or it is outdated, true if image is ready 
+     * @return false if there is no ready transcoed image is available or it is outdated, true if image is ready
      */
-    public function isImageReady ($mixedHandler, $isCheckOutdated = true) {
+    public function isImageReady ($mixedHandler, $isCheckOutdated = true)
+    {
         $sMethodImageReady = 'isImageReady_' . $this->_aObject['source_type'];
         return $this->$sMethodImageReady($mixedHandler, $isCheckOutdated);
     }
 
-    /** 
+    /**
      * Transcode image, no need to call it directly, it is called automatically when it is needed.
      * @params $mixedHandler - image handler
      * @params $iProfileId - optional profile id, to assign transcoded image to, usually it is NOT assigned to any particular profile, so just leave it default
      * @return true on success, false on error
      */
-    public function transcode ($mixedHandler, $iProfileId = 0) {
-
+    public function transcode ($mixedHandler, $iProfileId = 0)
+    {
         $sExtChange = false;
 
-        // create tmp file locally 
+        // create tmp file locally
         $sMethodStoreFile = 'storeFileLocally_' . $this->_aObject['source_type'];
         $sTmpFile = $this->$sMethodStoreFile($mixedHandler);
-        if (!$sTmpFile) 
+        if (!$sTmpFile)
             return false;
 
         // appply filters to tmp file
@@ -348,7 +362,7 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
             }
         }
 
-        if ($sExtChange && false !== ($iDotPos = strrpos($sTmpFile, '.'))) {            
+        if ($sExtChange && false !== ($iDotPos = strrpos($sTmpFile, '.'))) {
             $sExtOld = substr($sTmpFile, $iDotPos+1);
             if ($sExtOld != $sExtChange) {
                 $sTmpFileOld = $sTmpFile;
@@ -369,7 +383,7 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
         $iFileId = $this->_oStorage->storeFileFromPath ($sTmpFile, $isPrivate, $iProfileId);
         @unlink($sTmpFile);
         if (!$iFileId)
-            return false;                
+            return false;
 
         if (!$this->_oDb->updateHandler($iFileId, $mixedHandler)) {
             $this->_oStorage->deleteFile($iFileId);
@@ -380,14 +394,14 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
 
         return true;
     }
-    
 
     /**
      * Delete outdated files by last access time.
      * @return number of pruned/deleted files
      */
-    public function prune () {
-        $aFiles = $this->_oDb->getFilesForPruning();        
+    public function prune ()
+    {
+        $aFiles = $this->_oDb->getFilesForPruning();
         if (!$aFiles)
             return false;
         $iCount = 0;
@@ -396,7 +410,8 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
         return $iCount;
     }
 
-    public function getDevicePixelRatio () {
+    public function getDevicePixelRatio ()
+    {
         if (isset($_COOKIE['devicePixelRatio']) && (!isset($this->_aObject['source_params']['disable_retina']) || !$this->_aObject['source_params']['disable_retina'])) {
             $iDevicePixelRatio = intval($_COOKIE['devicePixelRatio']);
             if ($iDevicePixelRatio >= 2)
@@ -407,8 +422,8 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
 
     // ---------------------------
 
-    protected function isImageReady_Folder ($mixedHandlerOrig, $isCheckOutdated = true) {
-
+    protected function isImageReady_Folder ($mixedHandlerOrig, $isCheckOutdated = true)
+    {
         $mixedHandler = $this->processHandlerForRetinaDevice($mixedHandlerOrig);
 
         $iFileId = $this->_oDb->getFileIdByHandler($mixedHandler);
@@ -430,8 +445,8 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
         return true;
     }
 
-    protected function isImageReady_Storage ($mixedHandlerOrig, $isCheckOutdated = true) {
-
+    protected function isImageReady_Storage ($mixedHandlerOrig, $isCheckOutdated = true)
+    {
         $mixedHandler = $this->processHandlerForRetinaDevice($mixedHandlerOrig);
 
         $iFileId = $this->_oDb->getFileIdByHandler($mixedHandler);
@@ -446,31 +461,33 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
             $oStorageOriginal = BxDolStorage::getObjectInstance($this->_aObject['source_params']['object']);
             if ($oStorageOriginal) {
                 $aFileOriginal = $oStorageOriginal->getFile($mixedHandlerOrig);
-                if (!$aFileOriginal || $aFileOriginal['modified'] > $aFile['modified'] || $this->_aObject['ts'] > $aFile['modified']) { // if original file was changed OR we changed transcoder object params 
+                if (!$aFileOriginal || $aFileOriginal['modified'] > $aFile['modified'] || $this->_aObject['ts'] > $aFile['modified']) { // if original file was changed OR we changed transcoder object params
                     // delete file, so it will be recreated next time
                     if ($this->_oStorage->deleteFile($aFile['id']))
                         return false;
-                } 
+                }
             }
         }
 
         return true;
     }
 
-    protected function isPrivate_Folder ($mixedHandler) {
+    protected function isPrivate_Folder ($mixedHandler)
+    {
         if ('no' == $this->_aObject['private'])
-            return false;                
+            return false;
         return true;
     }
 
-    protected function isPrivate_Storage ($mixedHandler) {
+    protected function isPrivate_Storage ($mixedHandler)
+    {
         switch ($this->_aObject['private']) {
             case 'no':
                 return false;
             case 'yes':
                 return true;
             default:
-            case 'auto':                
+            case 'auto':
                 $oStorageOriginal = BxDolStorage::getObjectInstance($this->_aObject['source_params']['object']);
                 if (!$oStorageOriginal)
                     return true; // in case of error - make sure that file is not public accidentally
@@ -479,8 +496,8 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
         }
     }
 
-    protected function getFilePath_Folder ($mixedHandler) {
-
+    protected function getFilePath_Folder ($mixedHandler)
+    {
         $sPath = $this->_aObject['source_params']['path'] . $mixedHandler;
         if (!file_exists($sPath))
             $sPath = BX_DIRECTORY_PATH_ROOT . $sPath;
@@ -491,8 +508,8 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
         return $sPath;
     }
 
-    protected function storeFileLocally_Folder ($mixedHandler) {
-
+    protected function storeFileLocally_Folder ($mixedHandler)
+    {
         $sPath = $this->getFilePath_Folder($mixedHandler);
         if (!$sPath)
             return false;
@@ -504,8 +521,8 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
         return $sTmpFile;
     }
 
-    protected function storeFileLocally_Storage ($mixedHandler) {
-
+    protected function storeFileLocally_Storage ($mixedHandler)
+    {
         $oStorageOriginal = BxDolStorage::getObjectInstance($this->_aObject['source_params']['object']);
         if (!$oStorageOriginal)
             return false;
@@ -517,7 +534,6 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
         $sUrl = $oStorageOriginal->getFileUrlById($mixedHandler);
         if (!$sUrl)
             return false;
-                
 
         $sFileData = bx_file_get_contents ($sUrl);
         if (false === $sFileData)
@@ -530,13 +546,15 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
         return $sTmpFile;
     }
 
-    protected function getTmpFilename ($sOverrideName = false) {
+    protected function getTmpFilename ($sOverrideName = false)
+    {
         if ($sOverrideName)
             return BX_DIRECTORY_PATH_TMP . rand(10000, 99999) . $sOverrideName;
         return tempnam(BX_DIRECTORY_PATH_TMP, $this->_aObject['object']);
     }
 
-    protected function applyFilter_Grayscale ($sFile, $aParams) { 
+    protected function applyFilter_Grayscale ($sFile, $aParams)
+    {
         bx_import ('BxDolImageResize');
         $o = BxDolImageResize::getInstance();
         $o->removeCropOptions ();
@@ -549,7 +567,8 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
         return false;
     }
 
-    protected function applyFilter_Resize ($sFile, $aParams) { 
+    protected function applyFilter_Resize ($sFile, $aParams)
+    {
         bx_import ('BxDolImageResize');
         $o = BxDolImageResize::getInstance();
         $o->removeCropOptions ();
@@ -573,7 +592,8 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
         return false;
     }
 
-    protected function _checkForceType ($oImageProcessor, $aParams) { 
+    protected function _checkForceType ($oImageProcessor, $aParams)
+    {
         if (empty($aParams['force_type']))
             $aParams['force_type'] = false;
 
@@ -594,8 +614,8 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
         }
     }
 
-    protected function initFilters () {
-
+    protected function initFilters ()
+    {
         if (false !== $this->_aObject['filters']) // filters are already initilized
             return;
 
@@ -610,23 +630,27 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
 
     }
 
-    protected function clearCacheDB() {
+    protected function clearCacheDB()
+    {
         $oCacheDb = $this->_oDb->getDbCacheObject();
         return $oCacheDb->removeAllByPrefix('db_');
     }
 
-    public function getDevicePixelRatioHandlerSuffix () {
+    public function getDevicePixelRatioHandlerSuffix ()
+    {
         $iDevicePixelRatio = $this->getDevicePixelRatio ();
         if ($iDevicePixelRatio >= 2)
             return $this->_sRetinaSuffix;
         return '';
     }
 
-    protected function processHandlerForRetinaDevice ($mixedHandler) {
+    protected function processHandlerForRetinaDevice ($mixedHandler)
+    {
         return '' . $mixedHandler . $this->getDevicePixelRatioHandlerSuffix ();
     }
 
-    static protected function _callFuncForObjectsArray ($mixed, $sFunc) {
+    static protected function _callFuncForObjectsArray ($mixed, $sFunc)
+    {
         if (!is_array($mixed))
             $mixed = array($mixed);
         foreach ($mixed as $sObject) {

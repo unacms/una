@@ -11,29 +11,30 @@ bx_import('BxDolDb');
 
 class BxDolPrivacyQuery extends BxDolDb
 {
-	protected $_aObject;
+    protected $_aObject;
 
     protected $_sTable;
     protected $_sFieldId;
     protected $_sFieldOwnerId;
 
     protected $_sCachePrivacyObject;
-	protected $_sCachePrivacyObjectDefault;
+    protected $_sCachePrivacyObjectDefault;
 
-	protected $_sCacheGroup;
+    protected $_sCacheGroup;
     protected $_sCacheGroupFriends;
     protected $_sCacheGroupsActive;
 
-	protected $_sCacheTestedObject;
+    protected $_sCacheTestedObject;
 
-    public function __construct($aObject = array()) {
+    public function __construct($aObject = array())
+    {
         parent::__construct();
         $this->_aObject = $aObject;
 
         if(!empty($this->_aObject)) {
-	        $this->_sTable = $this->_aObject['table'];
-	        $this->_sFieldId = $this->_aObject['table_field_id'];
-	        $this->_sFieldOwnerId = $this->_aObject['table_field_author'];
+            $this->_sTable = $this->_aObject['table'];
+            $this->_sFieldId = $this->_aObject['table_field_id'];
+            $this->_sFieldOwnerId = $this->_aObject['table_field_author'];
         }
 
         $this->_sCachePrivacyObject = 'sys_privacy_object_';
@@ -43,19 +44,20 @@ class BxDolPrivacyQuery extends BxDolDb
         $this->_sCacheGroupFriends = 'sys_privacy_group_friends_';
         $this->_sCacheGroupsActVis = 'sys_privacy_group_act_vis';
 
-		$this->_sCacheTestedObject = 'sys_privacy_tested_object_';
+        $this->_sCacheTestedObject = 'sys_privacy_tested_object_';
     }
 
-    static public function getPrivacyObject($sObject) {
+    static public function getPrivacyObject($sObject)
+    {
         $oDb = BxDolDb::getInstance();
 
         $sQuery = $oDb->prepare("SELECT * FROM `sys_objects_privacy` WHERE `object` = ?", $sObject);
 
-        $aObject = $oDb->getRow($sQuery);        
-        if(!$aObject || !is_array($aObject)) 
-			return false;
+        $aObject = $oDb->getRow($sQuery);
+        if(!$aObject || !is_array($aObject))
+            return false;
 
-		return $aObject;
+        return $aObject;
     }
 
     function getObjectInfo($sAction, $iObjectId)
@@ -63,9 +65,9 @@ class BxDolPrivacyQuery extends BxDolDb
         if(empty($this->_sTable) || empty($this->_sFieldId) || empty($this->_sFieldOwnerId))
             return array();
 
-		$sQuery = $this->prepare("SELECT `" . $this->_sFieldOwnerId . "` AS `owner_id`, `" . $sAction . "` AS `group_id` FROM `" . $this->_sTable . "` WHERE `" . $this->_sFieldId . "`=? LIMIT 1", $iObjectId);
+        $sQuery = $this->prepare("SELECT `" . $this->_sFieldOwnerId . "` AS `owner_id`, `" . $sAction . "` AS `group_id` FROM `" . $this->_sTable . "` WHERE `" . $this->_sFieldId . "`=? LIMIT 1", $iObjectId);
 
-		$sCacheKey = $this->_sCacheTestedObject . $this->_sTable . '_' . $this->_aObject['action'] . '_' . $iObjectId;
+        $sCacheKey = $this->_sCacheTestedObject . $this->_sTable . '_' . $this->_aObject['action'] . '_' . $iObjectId;
         return $this->fromMemory($sCacheKey, 'getRow', $sQuery);
     }
 
@@ -79,7 +81,7 @@ class BxDolPrivacyQuery extends BxDolDb
                 $sWhereClause = $this->prepare("`id`=?", (int)$aParams['id']);
                 break;
 
-			case 'active':
+            case 'active':
                 $sCacheFunction = 'fromMemory';
                 $sCacheName = $this->_sCacheGroupsActVis;
                 $sMethod = 'getAll';
@@ -116,7 +118,7 @@ class BxDolPrivacyQuery extends BxDolDb
         return $this->getAll($sQuery);
     }
 
-	function getTitle($sModule, $sAction)
+    function getTitle($sModule, $sAction)
     {
         $aAction = $this->_getAction($sModule, $sAction);
         return !empty($aAction) && isset($aAction['title']) ? $aAction['title'] : '';
@@ -128,14 +130,14 @@ class BxDolPrivacyQuery extends BxDolDb
         return !empty($aAction) && isset($aAction['default_group']) ? $aAction['default_group'] : BX_DOL_PG_DEFAULT;
     }
 
-	function getDefaultGroupByUser($sModule, $sAction, $iOwnerId)
+    function getDefaultGroupByUser($sModule, $sAction, $iOwnerId)
     {
         $sQuery = $this->prepare("SELECT
                `td`.`group_id`
             FROM `sys_objects_privacy` AS `ta`
             LEFT JOIN `sys_privacy_defaults` AS `td` ON `ta`.`id`=`td`.`action_id` AND `td`.`owner_id`=?
-            WHERE 
-            	`ta`.`module`=? AND `ta`.`action`=?
+            WHERE
+                `ta`.`module`=? AND `ta`.`action`=?
             LIMIT 1", $iOwnerId, $sModule, $sAction);
 
         $sCacheKey = $this->_sCachePrivacyObjectDefault . $sModule . '_' . $sAction . '_' . $iOwnerId;
@@ -144,26 +146,26 @@ class BxDolPrivacyQuery extends BxDolDb
 
     function replaceDefaulfGroup($iActionId, $iOwnerId, $iGroupId)
     {
-        $sSql = $this->prepare("REPLACE INTO 
-        		`sys_privacy_defaults` 
-        	SET 
-        		`owner_id`=?, 
-        		`action_id`=?, 
-        		`group_id`=?", $iOwnerId, $iActionId, $iGroupId);
+        $sSql = $this->prepare("REPLACE INTO
+                `sys_privacy_defaults`
+            SET
+                `owner_id`=?,
+                `action_id`=?,
+                `group_id`=?", $iOwnerId, $iActionId, $iGroupId);
 
         return $this->query($sSql);
     }
 
     function getContentByGroupAsSQLPart($sField, $mixedGroupId)
     {
-    	if(is_array($mixedGroupId))
-    		$sWhere = " AND `" . $this->_sTable . "`.`" . $sField . "` IN (" . $this->implode_escape($mixedGroupId) . ")";
-    	else
-    		$sWhere = $this->prepare(" AND `" . $this->_sTable . "`.`" . $sField . "` = ?", $mixedGroupId);
+        if(is_array($mixedGroupId))
+            $sWhere = " AND `" . $this->_sTable . "`.`" . $sField . "` IN (" . $this->implode_escape($mixedGroupId) . ")";
+        else
+            $sWhere = $this->prepare(" AND `" . $this->_sTable . "`.`" . $sField . "` = ?", $mixedGroupId);
 
-    	return array(
-    		'where' => $sWhere
-    	);
+        return array(
+            'where' => $sWhere
+        );
     }
 
     protected function _getAction($sModule, $sAction)

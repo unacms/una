@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Developer Developer
  * @ingroup     DolphinModules
  *
@@ -25,10 +25,12 @@ define('BX_DEV_TOOLS_NAVIGATION', 'navigation');
 define('BX_DEV_TOOLS_POLYGLOT', 'polyglot');
 define('BX_DEV_TOOLS_PERMISSIONS', 'permissions');
 
-class BxDevModule extends BxDolModule {
+class BxDevModule extends BxDolModule
+{
     public $aTools;
 
-    function __construct($aModule) {
+    function __construct($aModule)
+    {
         parent::__construct($aModule);
 
         $this->aTools = array(
@@ -41,7 +43,8 @@ class BxDevModule extends BxDolModule {
         );
     }
 
-    function getToolsList() {
+    function getToolsList()
+    {
         return $this->aTools;
     }
 }

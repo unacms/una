@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Developer Developer
  * @ingroup     DolphinModules
  *
@@ -12,8 +12,10 @@
 bx_import('BxDolModule');
 bx_import('BxTemplStudioFormsPreValues');
 
-class BxDevFormsPreValues extends BxTemplStudioFormsPreValues {
-    function __construct($aOptions, $oTemplate = false) {
+class BxDevFormsPreValues extends BxTemplStudioFormsPreValues
+{
+    function __construct($aOptions, $oTemplate = false)
+    {
         parent::__construct($aOptions, $oTemplate);
 
         $this->oModule = BxDolModule::getInstance('bx_developer');
@@ -32,7 +34,8 @@ class BxDevFormsPreValues extends BxTemplStudioFormsPreValues {
         }
     }
 
-    public function performActionAdd() {
+    public function performActionAdd()
+    {
         $sAction = 'add';
 
         bx_import('BxDolForm');
@@ -52,8 +55,7 @@ class BxDevFormsPreValues extends BxTemplStudioFormsPreValues {
                 $aRes = array('msg' => _t('_bx_dev_frm_err_prevalues_create'));
 
             $this->_echoResultJson($aRes, true);
-        }
-        else {
+        } else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-frm-prevalue-create-popup', _t('_bx_dev_frm_txt_prevalues_create_popup'), $this->oModule->_oTemplate->parseHtmlByName('form_add_value.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
@@ -66,10 +68,11 @@ class BxDevFormsPreValues extends BxTemplStudioFormsPreValues {
         }
     }
 
-    public function performActionEdit() {
+    public function performActionEdit()
+    {
         $sAction = 'edit';
 
-    	$aValue = $this->_getItem('getValues');
+        $aValue = $this->_getItem('getValues');
         if($aValue === false) {
             $this->_echoResultJson(array());
             exit;
@@ -86,13 +89,11 @@ class BxDevFormsPreValues extends BxTemplStudioFormsPreValues {
             if($oForm->update($aValue['id']) !== false) {
                 $this->onSave($oForm);
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $aValue['id']);
-            }
-            else
+            } else
                 $aRes = array('msg' => _t('_bx_dev_frm_err_prevalues_edit'));
 
             $this->_echoResultJson($aRes, true);
-        }
-        else {
+        } else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-frm-prevalue-edit-popup', _t('_bx_dev_frm_txt_prevalues_edit_popup', _t($aValue['lkey'])), $this->oModule->_oTemplate->parseHtmlByName('form_add_value.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
@@ -105,7 +106,8 @@ class BxDevFormsPreValues extends BxTemplStudioFormsPreValues {
         }
     }
 
-    private function onLoad(&$aInputs) {
+    private function onLoad(&$aInputs)
+    {
         $aLists = array();
         $this->oDb->getLists(array('type' => 'all'), $aLists, false);
         foreach($aLists as $aList)
@@ -118,7 +120,8 @@ class BxDevFormsPreValues extends BxTemplStudioFormsPreValues {
         $aInputs['Value']['value'] = $this->_getAvailableSetValue($this->sList);
     }
 
-    private function onAdd(&$oForm) {
+    private function onAdd(&$oForm)
+    {
         $aList = array();
         $this->oDb->getLists(array('type' => 'by_key', 'value' => $oForm->getCleanValue('Key')), $aList, false);
 
@@ -137,7 +140,8 @@ class BxDevFormsPreValues extends BxTemplStudioFormsPreValues {
         return true;
     }
 
-    private function onSave(&$oForm) {
+    private function onSave(&$oForm)
+    {
         $aList = array();
         $this->oDb->getLists(array('type' => 'by_key', 'value' => $oForm->getCleanValue('Key')), $aList, false);
 

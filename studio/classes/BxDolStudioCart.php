@@ -7,49 +7,54 @@
  * @{
  */
 
-class BxDolStudioCart extends BxDol implements iBxDolSingleton {
-	public static $sIDiv = ':';
-	public static $sPDiv = '_';
-	private $sSessionKey = 'bx-std-str-cart';
-	private $bAllowAccumulate = false;
+class BxDolStudioCart extends BxDol implements iBxDolSingleton
+{
+    public static $sIDiv = ':';
+    public static $sPDiv = '_';
+    private $sSessionKey = 'bx-std-str-cart';
+    private $bAllowAccumulate = false;
 
-    public function __construct() {
-    	if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
+    public function __construct()
+    {
+        if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
         parent::__construct ();
     }
 
-	public function __clone() {
+    public function __clone()
+    {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error('Clone is not allowed for the class: ' . get_class($this), E_USER_ERROR);
     }
 
-	public static function getInstance() {
+    public static function getInstance()
+    {
         if (!isset($GLOBALS['bxDolClasses'][__CLASS__])) {
-        	$sClass = __CLASS__;
+            $sClass = __CLASS__;
             $GLOBALS['bxDolClasses'][__CLASS__] = new $sClass();
         }
 
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
 
-	/**
+    /**
      * Conver items to array with necessary structure.
      *
-     * @param string/array $mixed - string with cart items divided with (:) or an array of cart items.
-     * @return array with items.
+     * @param  string/array $mixed - string with cart items divided with (:) or an array of cart items.
+     * @return array        with items.
      */
-    public static function items2array($mixed) {
+    public static function items2array($mixed)
+    {
         $aResult = array();
         if(empty($mixed))
-        	return $aResult;
+            return $aResult;
 
-		$sClass = __CLASS__;
+        $sClass = __CLASS__;
         if(is_string($mixed))
-			$aItems = explode($sClass::$sIDiv, $mixed);
+            $aItems = explode($sClass::$sIDiv, $mixed);
         else if(is_array($mixed))
-			$aItems = $mixed;
+            $aItems = $mixed;
         else
             $aItems = array();
 
@@ -61,69 +66,76 @@ class BxDolStudioCart extends BxDol implements iBxDolSingleton {
         return $aResult;
     }
 
-    public function add($sVendor, $iItemId, $iItemCount) {
-    	$sDiv = BxDolStudioCart::$sPDiv;
-    	$oSession = BxDolSession::getInstance();
+    public function add($sVendor, $iItemId, $iItemCount)
+    {
+        $sDiv = BxDolStudioCart::$sPDiv;
+        $oSession = BxDolSession::getInstance();
 
         $sCartItem = $sVendor . $sDiv . $iItemId . $sDiv . $iItemCount;
         $sCartItems = $this->getItems();
 
         if(strpos($sCartItems, $sVendor . $sDiv . $iItemId . $sDiv) !== false) {
-        	if($this->bAllowAccumulate)
-            	$sCartItems = preg_replace("'" . $sVendor . $sDiv . $iItemId . $sDiv . "([0-9])+'e", "'" . $sVendor . $sDiv . $iItemId . $sDiv ."' . (\\1 + " . $iItemCount . ")",  $sCartItems);
-        }
-        else
+            if($this->bAllowAccumulate)
+                $sCartItems = preg_replace("'" . $sVendor . $sDiv . $iItemId . $sDiv . "([0-9])+'e", "'" . $sVendor . $sDiv . $iItemId . $sDiv ."' . (\\1 + " . $iItemCount . ")",  $sCartItems);
+        } else
             $sCartItems = empty($sCartItems) ? $sCartItem : $sCartItems . BxDolStudioCart::$sIDiv . $sCartItem;
 
-		$this->setItems($sCartItems);
+        $this->setItems($sCartItems);
     }
 
-    public function delete($sVendor, $iItemId = 0) {
-		$sPattern = "'" . $sVendor . (!empty($iItemId) ? "_" . $iItemId : "_[0-9]+") . "_[0-9]+:?'";
+    public function delete($sVendor, $iItemId = 0)
+    {
+        $sPattern = "'" . $sVendor . (!empty($iItemId) ? "_" . $iItemId : "_[0-9]+") . "_[0-9]+:?'";
 
         $sCartItems = $this->getItems();
         $sCartItems = trim(preg_replace($sPattern, "", $sCartItems), BxDolStudioCart::$sIDiv);
         $this->setItems($sCartItems);
     }
 
-	public function getCount($sVendor = '') {
-		if($sVendor == '') {
-			$sItems = $this->getItems();
-			$aItems = $this->items2array($sItems);
-			return count($aItems);
-		}
+    public function getCount($sVendor = '')
+    {
+        if($sVendor == '') {
+            $sItems = $this->getItems();
+            $aItems = $this->items2array($sItems);
+            return count($aItems);
+        }
 
-    	$aVendors = $this->parseByVendor();
-    	if(!isset($aVendors[$sVendor]))
-    		return 0;
+        $aVendors = $this->parseByVendor();
+        if(!isset($aVendors[$sVendor]))
+            return 0;
 
-    	return count($aVendors[$sVendor]);
+        return count($aVendors[$sVendor]);
     }
 
-    public function getByVendor($sVendor) {
-    	$aVendors = $this->parseByVendor();
-    	if(!isset($aVendors[$sVendor]) || empty($aVendors[$sVendor]))
-    		return array();
+    public function getByVendor($sVendor)
+    {
+        $aVendors = $this->parseByVendor();
+        if(!isset($aVendors[$sVendor]) || empty($aVendors[$sVendor]))
+            return array();
 
-    	return $aVendors[$sVendor];
+        return $aVendors[$sVendor];
     }
 
-    public function parseByVendor(){
+    public function parseByVendor()
+    {
         $sItems = $this->getItems();
         return $this->parseBy($this->items2array($sItems), 'vendor');
     }
 
-    protected function getItems() {
-    	$oSession = BxDolSession::getInstance();
+    protected function getItems()
+    {
+        $oSession = BxDolSession::getInstance();
         return $oSession->getValue($this->sSessionKey);
     }
 
-    protected function setItems($sItems) {
-    	$oSession = BxDolSession::getInstance();
-    	$oSession->setValue($this->sSessionKey, $sItems);
+    protected function setItems($sItems)
+    {
+        $oSession = BxDolSession::getInstance();
+        $oSession->setValue($this->sSessionKey, $sItems);
     }
 
-    protected function parseBy($aItems, $sKey) {
+    protected function parseBy($aItems, $sKey)
+    {
         $aResult = array();
         foreach($aItems as $aItem)
             if(isset($aItem[$sKey]))

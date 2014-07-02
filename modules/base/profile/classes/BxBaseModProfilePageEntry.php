@@ -18,13 +18,13 @@ bx_import('BxDolInformer');
 /**
  * Profile create/edit/delete pages.
  */
-class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry 
+class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
 {
     protected $_aProfileInfo;
     protected $_oProfile;
     protected $_oProfileAuthor;
 
-    public function __construct($aObject, $oTemplate = false) 
+    public function __construct($aObject, $oTemplate = false)
     {
         parent::__construct($aObject, $oTemplate);
 
@@ -51,7 +51,7 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
         if (!$this->_aContentInfo || !$this->_oProfile)
             return;
 
-        // select view profile submenu 
+        // select view profile submenu
         $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
         $oMenuSubmenu->setObjectSubmenu($CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY'], array (
             'title' => $this->_oProfile->getDisplayName(),
@@ -65,7 +65,7 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
         $this->addMarkers(array('display_name' => $this->_oProfile->getDisplayName())); // profile display name is also suported
 
         // display message if profile isn't active
-        if (bx_get_logged_profile_id() == $this->_oProfileAuthor->id() && !empty($CNF['INFORMERS']['status'])) { 
+        if (bx_get_logged_profile_id() == $this->_oProfileAuthor->id() && !empty($CNF['INFORMERS']['status'])) {
             $sStatus = $this->_aContentInfo['profile_status'];
             if (isset($CNF['INFORMERS']['status']['map'][$sStatus]))
                 $aInformers[] = array ('name' => $CNF['INFORMERS']['status']['name'], 'msg' => _t($CNF['INFORMERS']['status']['map'][$sStatus]), 'type' => BX_INFORMER_ALERT);

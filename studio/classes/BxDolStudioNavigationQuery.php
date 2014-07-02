@@ -9,12 +9,15 @@
 
 bx_import('BxDolDb');
 
-class BxDolStudioNavigationQuery extends BxDolDb {
-    function __construct() {
+class BxDolStudioNavigationQuery extends BxDolDb
+{
+    function __construct()
+    {
         parent::__construct();
     }
 
-    function getMenus($aParams, &$aItems, $bReturnCount = true) {
+    function getMenus($aParams, &$aItems, $bReturnCount = true)
+    {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sSelectClause = $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
 
@@ -44,7 +47,7 @@ class BxDolStudioNavigationQuery extends BxDolDb {
                 break;
         }
 
-        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . " 
+        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . "
                 `tm`.`id` AS `id`,
                 `tm`.`object` AS `object`,
                 `tm`.`title` AS `title`,
@@ -65,12 +68,14 @@ class BxDolStudioNavigationQuery extends BxDolDb {
         return (int)$this->getOne("SELECT FOUND_ROWS()");
     }
 
-    function isSetExists($sName) {
+    function isSetExists($sName)
+    {
         $sSql = $this->prepare("SELECT COUNT(*) FROM `sys_menu_sets` WHERE `set_name`=? LIMIT 1", $sName);
         return (int)$this->getOne($sSql) == 1;
     }
 
-    function getSets($aParams, &$aItems, $bReturnCount = true) {
+    function getSets($aParams, &$aItems, $bReturnCount = true)
+    {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sSelectClause = $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
 
@@ -105,7 +110,7 @@ class BxDolStudioNavigationQuery extends BxDolDb {
                 break;
         }
 
-        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . " 
+        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . "
                 `tms`.`set_name` AS `name`,
                 `tms`.`set_name` AS `set_name`,
                 `tms`.`module` AS `module`,
@@ -121,13 +126,15 @@ class BxDolStudioNavigationQuery extends BxDolDb {
         return (int)$this->getOne("SELECT FOUND_ROWS()");
     }
 
-    function addSet($aFields) {
+    function addSet($aFields)
+    {
         $sSql = "INSERT INTO `sys_menu_sets` SET `" . implode("`=?, `", array_keys($aFields)) . "`=?";
         $sSql = call_user_func_array(array($this, 'prepare'), array_merge(array($sSql), array_values($aFields)));
-        return (int)$this->query($sSql) > 0; 
+        return (int)$this->query($sSql) > 0;
     }
 
-    function getTemplates($aParams, &$aItems, $bReturnCount = true) {
+    function getTemplates($aParams, &$aItems, $bReturnCount = true)
+    {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sSelectClause = $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
 
@@ -139,7 +146,7 @@ class BxDolStudioNavigationQuery extends BxDolDb {
                 break;
         }
 
-        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . " 
+        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . "
                 `tmt`.`id` AS `id`,
                 `tmt`.`template` AS `template`,
                 `tmt`.`title` AS `title`" . $sSelectClause . "
@@ -153,7 +160,8 @@ class BxDolStudioNavigationQuery extends BxDolDb {
         return (int)$this->getOne("SELECT FOUND_ROWS()");
     }
 
-    function getItems($aParams, &$aItems, $bReturnCount = true) {
+    function getItems($aParams, &$aItems, $bReturnCount = true)
+    {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sSelectClause = $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
 
@@ -186,7 +194,7 @@ class BxDolStudioNavigationQuery extends BxDolDb {
                 break;
         }
 
-        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . " 
+        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . "
                 `tmi`.`id` AS `id`,
                 `tmi`.`set_name` AS `set_name`,
                 `tmi`.`module` AS `module`,
@@ -197,7 +205,7 @@ class BxDolStudioNavigationQuery extends BxDolDb {
                 `tmi`.`onclick` AS `onclick`,
                 `tmi`.`target` AS `target`,
                 `tmi`.`icon` AS `icon`,
-				`tmi`.`submenu_object` AS `submenu_object`,
+                `tmi`.`submenu_object` AS `submenu_object`,
                 `tmi`.`visible_for_levels` AS `visible_for_levels`,
                 `tmi`.`active` AS `active`,
                 `tmi`.`copyable` AS `copyable`,
@@ -212,7 +220,8 @@ class BxDolStudioNavigationQuery extends BxDolDb {
         return (int)$this->getOne("SELECT FOUND_ROWS()");
     }
 
-    function deleteItemsBy($aParams) {
+    function deleteItemsBy($aParams)
+    {
         $sWhereClause = $sLimitClause = "";
 
         switch($aParams['type']) {
@@ -230,19 +239,22 @@ class BxDolStudioNavigationQuery extends BxDolDb {
         return (int)$this->query($sSql) > 0;
     }
 
-    function addItem($aItem) {
+    function addItem($aItem)
+    {
         $sSql = "INSERT INTO `sys_menu_items` SET `" . implode("`=?, `", array_keys($aItem)) . "`=?";
         $sSql = call_user_func_array(array($this, 'prepare'), array_merge(array($sSql), array_values($aItem)));
         return (int)$this->query($sSql) > 0 ? $this->lastId() : 0;
     }
 
-    function updateItem($iId, $aFields) {
+    function updateItem($iId, $aFields)
+    {
         $sSql = "UPDATE `sys_menu_items` SET `" . implode("`=?, `", array_keys($aFields)) . "`=?  WHERE `id`=?";
         $sSql = call_user_func_array(array($this, 'prepare'), array_merge(array($sSql), array_values($aFields), array($iId)));
         return $this->query($sSql);
     }
 
-    function getItemOrderMax($sSetName) {
+    function getItemOrderMax($sSetName)
+    {
         $sSql = $this->prepare("SELECT MAX(`order`) FROM `sys_menu_items` WHERE `set_name`=? LIMIT 1", $sSetName);
         return (int)$this->getOne($sSql);
     }

@@ -10,7 +10,8 @@
 
 bx_import('BxDolStudioNavigation');
 
-class BxBaseStudioNavigation extends BxDolStudioNavigation {
+class BxBaseStudioNavigation extends BxDolStudioNavigation
+{
     protected $sSubpageUrl;
     protected $aGridObjects = array(
         'menus' => 'sys_studio_nav_menus',
@@ -18,41 +19,47 @@ class BxBaseStudioNavigation extends BxDolStudioNavigation {
         'items' => 'sys_studio_nav_items'
     );
 
-    function __construct($sPage = '') {
+    function __construct($sPage = '')
+    {
         parent::__construct($sPage);
 
         $this->sSubpageUrl = BX_DOL_URL_STUDIO . 'builder_menu.php?page=';
     }
-    function getPageCss() {
+    function getPageCss()
+    {
         return array_merge(parent::getPageCss(), array('forms.css', 'paginate.css', 'navigation.css'));
     }
-    function getPageJs() {
+    function getPageJs()
+    {
         return array_merge(parent::getPageJs(), array());
     }
-    function getPageJsObject() {
+    function getPageJsObject()
+    {
         return '';
     }
-    function getPageMenu($aMenu = array(), $aMarkers = array()) {
+    function getPageMenu($aMenu = array(), $aMarkers = array())
+    {
         $sJsObject = $this->getPageJsObject();
 
         $aMenu = array();
         $aMenuItems = array(
-            BX_DOL_STUDIO_NAV_TYPE_MENUS, 
-            BX_DOL_STUDIO_NAV_TYPE_SETS, 
+            BX_DOL_STUDIO_NAV_TYPE_MENUS,
+            BX_DOL_STUDIO_NAV_TYPE_SETS,
             BX_DOL_STUDIO_NAV_TYPE_ITEMS
         );
         foreach($aMenuItems as $sMenuItem)
             $aMenu[] = array(
                 'name' => $sMenuItem,
                 'icon' => 'mi-nav-' . $sMenuItem . '.png',
-            	'link' => $this->sSubpageUrl . $sMenuItem,
-            	'title' => _t('_adm_lmi_cpt_' . $sMenuItem),
-            	'selected' => $sMenuItem == $this->sPage
+                'link' => $this->sSubpageUrl . $sMenuItem,
+                'title' => _t('_adm_lmi_cpt_' . $sMenuItem),
+                'selected' => $sMenuItem == $this->sPage
             );
 
         return parent::getPageMenu($aMenu);
     }
-    function getPageCode($bHidden = false) {
+    function getPageCode($bHidden = false)
+    {
         $sMethod = 'get' . ucfirst($this->sPage);
         if(!method_exists($this, $sMethod))
             return '';
@@ -60,7 +67,8 @@ class BxBaseStudioNavigation extends BxDolStudioNavigation {
         return $this->$sMethod();
     }
 
-    function actionGetSets() {
+    function actionGetSets()
+    {
         if(($sModule = bx_get('nav_module')) === false)
             return array('code' => 2, 'message' => _t('_adm_nav_err_missing_params'));
 
@@ -68,23 +76,28 @@ class BxBaseStudioNavigation extends BxDolStudioNavigation {
         return array('code' => 0, 'message' => '', 'content' => $this->getItemsObject()->getSetsSelector($sModule));
     }
 
-    protected function getMenus() {
+    protected function getMenus()
+    {
         return $this->getGrid($this->aGridObjects['menus']);
     }
 
-    protected function getSets() {
+    protected function getSets()
+    {
         return $this->getGrid($this->aGridObjects['sets']);
     }
 
-    protected function getItems() {
+    protected function getItems()
+    {
         return $this->getGrid($this->aGridObjects['items']);
     }
 
-    protected function getItemsObject() {
+    protected function getItemsObject()
+    {
         return $this->getGridObject($this->aGridObjects['items']);
     }
 
-    protected function getGridObject($sObjectName) {
+    protected function getGridObject($sObjectName)
+    {
         bx_import('BxDolGrid');
         $oGrid = BxDolGrid::getObjectInstance($sObjectName);
         if(!$oGrid)
@@ -93,7 +106,8 @@ class BxBaseStudioNavigation extends BxDolStudioNavigation {
         return $oGrid;
     }
 
-    protected function getGrid($sObjectName) {
+    protected function getGrid($sObjectName)
+    {
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         bx_import('BxDolGrid');
@@ -103,9 +117,9 @@ class BxBaseStudioNavigation extends BxDolStudioNavigation {
 
         $aTmplVars = array(
             'js_object' => $this->getPageJsObject(),
-        	'bx_repeat:blocks' => array(
+            'bx_repeat:blocks' => array(
                 array(
-                	'caption' => '',
+                    'caption' => '',
                     'panel_top' => '',
                     'items' => $oGrid->getCode(),
                     'panel_bottom' => ''

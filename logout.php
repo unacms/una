@@ -25,4 +25,3 @@ $oTemplate->setPageContent ('url_relocate', BX_DOL_URL_ROOT);
 send_headers_page_changed();
 
 $oTemplate->getPageCode();
-

@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Developer Developer
  * @ingroup     DolphinModules
  *
@@ -11,11 +11,13 @@
 
 bx_import('BxTemplStudioModule');
 
-class BxDevStudioPage extends BxTemplStudioModule {
+class BxDevStudioPage extends BxTemplStudioModule
+{
     protected $oModule;
     protected $sUrl;
 
-    function __construct($sModule = "", $sPage = "") {
+    function __construct($sModule = "", $sPage = "")
+    {
         parent::__construct($sModule, $sPage);
 
         bx_import('BxDolModule');
@@ -24,7 +26,8 @@ class BxDevStudioPage extends BxTemplStudioModule {
         $this->sUrl = BX_DOL_URL_STUDIO . 'module.php?name=%s&page=%s';
     }
 
-    function getPageMenu($aMenu = array(), $aMarkers = array()) {
+    function getPageMenu($aMenu = array(), $aMarkers = array())
+    {
         $this->aMenuItems = array();
         foreach($this->oModule->aTools as $aTool)
             $this->aMenuItems[] = array(
@@ -40,14 +43,16 @@ class BxDevStudioPage extends BxTemplStudioModule {
         return $oMenu->getCode();
     }
 
-	protected function getGeneral() {
+    protected function getGeneral()
+    {
         bx_import('BxTemplStudioSettings');
         $oContent = new BxTemplStudioSettings($this->sModule);
 
-		return $this->oModule->_oTemplate->displayPageContent($this->sPage, $oContent);
+        return $this->oModule->_oTemplate->displayPageContent($this->sPage, $oContent);
     }
 
-    protected function getForms() {
+    protected function getForms()
+    {
         $sPage = bx_get('form_page');
         $sPage = $sPage !== false ? bx_process_input($sPage) : '';
 
@@ -58,7 +63,8 @@ class BxDevStudioPage extends BxTemplStudioModule {
         return $this->oModule->_oTemplate->displayPageContent($this->sPage, $oContent);
     }
 
-    protected function getNavigation() {
+    protected function getNavigation()
+    {
         $sPage = bx_get('nav_page');
         $sPage = $sPage !== false ? bx_process_input($sPage) : '';
 
@@ -69,7 +75,8 @@ class BxDevStudioPage extends BxTemplStudioModule {
         return $this->oModule->_oTemplate->displayPageContent($this->sPage, $oContent);
     }
 
-    protected function getPages() {
+    protected function getPages()
+    {
         $sType = bx_get('bp_type');
         $sType = $sType !== false ? bx_process_input($sType) : '';
 
@@ -77,7 +84,7 @@ class BxDevStudioPage extends BxTemplStudioModule {
         $sPage = $sPage !== false ? bx_process_input($sPage) : '';
 
         $oContent = new BxDevBuilderPage(array(
-        	'type' => $sType,
+            'type' => $sType,
             'page' => $sPage,
             'url' => sprintf($this->sUrl, $this->sModule, BX_DEV_TOOLS_PAGES),
         ));
@@ -85,7 +92,8 @@ class BxDevStudioPage extends BxTemplStudioModule {
         return $this->oModule->_oTemplate->displayPageContent($this->sPage, $oContent);
     }
 
-	protected function getPolyglot() {
+    protected function getPolyglot()
+    {
         $sType = bx_get('pgt_type');
         $sType = $sType !== false ? bx_process_input($sType) : '';
 
@@ -99,7 +107,8 @@ class BxDevStudioPage extends BxTemplStudioModule {
         return $this->oModule->_oTemplate->displayPageContent($this->sPage, $oContent);
     }
 
-    protected function getPermissions() {
+    protected function getPermissions()
+    {
         $sPage = bx_get('prm_page');
         $sPage = $sPage !== false ? bx_process_input($sPage) : '';
 

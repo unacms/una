@@ -1,8 +1,8 @@
-<?php 
+<?php
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Timeline Timeline
  * @ingroup     DolphinModules
  *
@@ -13,10 +13,10 @@ $aConfig = array(
     /**
      * Main Section.
      */
-	'type' => BX_DOL_MODULE_TYPE_MODULE,
-	'name' => 'bx_timeline',
+    'type' => BX_DOL_MODULE_TYPE_MODULE,
+    'name' => 'bx_timeline',
     'title' => 'Timeline',
-	'note' => 'Timeline module.',
+    'note' => 'Timeline module.',
     'version' => '1.0.0',
     'vendor' => 'BoonEx',
     'update_url' => '',

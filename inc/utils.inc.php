@@ -34,14 +34,16 @@ define('BX_EMAIL_MASS', 2); ///< mass email, one mesage send to manu users, with
  * The following two functions are needed to convert title to uri and back.
  * It usefull when titles are used in URLs, like in Categories and Tags.
  */
-function title2uri($sValue) {
+function title2uri($sValue)
+{
     return str_replace(
         array('&', '/', '\\', '"', '+'),
         array('[and]', '[slash]', '[backslash]', '[quote]', '[plus]'),
         $sValue
     );
 }
-function uri2title($sValue) {
+function uri2title($sValue)
+{
     return str_replace(
         array('[and]', '[slash]', '[backslash]', '[quote]', '[plus]'),
         array('&', '/', '\\', '"', '+'),
@@ -52,7 +54,8 @@ function uri2title($sValue) {
 /*
  * functions for limiting maximal text length
  */
-function strmaxtextlen($sInput, $iMaxLen = 60, $sEllipsisSign = '&#8230;') {
+function strmaxtextlen($sInput, $iMaxLen = 60, $sEllipsisSign = '&#8230;')
+{
     $sTail = '';
     $s = trim(strip_tags($sInput));
     if (mb_strlen($s) > $iMaxLen) {
@@ -62,7 +65,8 @@ function strmaxtextlen($sInput, $iMaxLen = 60, $sEllipsisSign = '&#8230;') {
     return htmlspecialchars_adv($s) . $sTail;
 }
 
-function html2txt($content, $tags = "") {
+function html2txt($content, $tags = "")
+{
     while($content != strip_tags($content, $tags)) {
         $content = strip_tags($content, $tags);
     }
@@ -70,7 +74,8 @@ function html2txt($content, $tags = "") {
     return $content;
 }
 
-function html_encode($text) {
+function html_encode($text)
+{
      $searcharray =  array(
     "'([-_\w\d.]+@[-_\w\d.]+)'",
     "'((?:(?!://).{3}|^.{0,2}))(www\.[-\d\w\.\/]+)'",
@@ -102,8 +107,8 @@ function html_encode($text) {
  * @param $mixedParams optional parameters to pass for validation
  * @return the filtered data, or FALSE if the filter fails.
  */
-function bx_process_input ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams = false, $isCheckMagicQuotes = true) {
-
+function bx_process_input ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams = false, $isCheckMagicQuotes = true)
+{
     if (is_array($mixedData)) {
         foreach ($mixedData as $k => $v)
             $mixedData[$k] = bx_process_input($v, $iDataType, $mixedParams);
@@ -171,8 +176,8 @@ function bx_process_input ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams =
  * @param $mixedParams optional parameters to pass for validation
  * @return the filtered data, or FALSE if the filter fails.
  */
-function bx_process_output ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams = false) {
-
+function bx_process_output ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams = false)
+{
     if (is_array($mixedData)) {
         foreach ($mixedData as $k => $v)
             $mixedData[$k] = bx_process_output($v, $iDataType, $mixedParams);
@@ -209,7 +214,8 @@ function bx_process_output ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams 
  * Use this function to output data immediately after receiving, without saving to database.
  * Patams are the same as bx_process_input function - @see bx_process_input
  */
-function bx_process_pass ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams = false, $isCheckMagicQuotes = true) {
+function bx_process_pass ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams = false, $isCheckMagicQuotes = true)
+{
     return bx_process_output(bx_process_input ($mixedData, $iDataType, $mixedParams, $isCheckMagicQuotes), $iDataType, $mixedParams);
 }
 
@@ -223,7 +229,8 @@ function bx_process_pass ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams = 
  * for data which should be outputed immediately after submit
  */
 /*
-function process_pass_data( $text, $strip_tags = 0 ) {
+function process_pass_data( $text, $strip_tags = 0 )
+{
     if ( $strip_tags )
         $text = strip_tags($text);
 
@@ -237,15 +244,16 @@ function process_pass_data( $text, $strip_tags = 0 ) {
 /*
  * function for output data from database into html
  */
-function htmlspecialchars_adv( $string ) {
+function htmlspecialchars_adv( $string )
+{
     return htmlspecialchars($string, ENT_COMPAT, 'UTF-8');
 }
 
 /**
  * Send mail to user by parsing email template
  */
-function sendMailTemplate($sTemplateName, $iAccountId = 0, $iProfileId = 0, $aReplaceVars = array(), $iEmailType = BX_EMAIL_NOTIFY) {
-
+function sendMailTemplate($sTemplateName, $iAccountId = 0, $iProfileId = 0, $aReplaceVars = array(), $iEmailType = BX_EMAIL_NOTIFY)
+{
     bx_import('BxDolAccount');
     $oAccount = BxDolAccount::getInstance($iAccountId);
 
@@ -276,8 +284,8 @@ function sendMailTemplate($sTemplateName, $iAccountId = 0, $iProfileId = 0, $aRe
  * @param $iEmailType - email message type: BX_EMAIL_SYSTEM, BX_EMAIL_NOTIFY or BX_EMAIL_MASS
  * @return true if message was send or false otherwise
  */
-function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0, $aPlus = array(), $iEmailType = BX_EMAIL_NOTIFY, $sEmailFlag = 'html', $isDisableAlert = false) {
-
+function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0, $aPlus = array(), $iEmailType = BX_EMAIL_NOTIFY, $sEmailFlag = 'html', $isDisableAlert = false)
+{
     // make sure that recipient's email is valid and message isn't empty
     if (!$sMailBody || !$sRecipientEmail || preg_match('/\(2\)$/', $sRecipientEmail))
         return false;
@@ -302,12 +310,12 @@ function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0
         $oProfile = BxDolProfile::getInstance($iRecipientID);
         if ($oProfile)
             $aRecipientInfo = $oProfile->getInfo();
-    } 
+    }
 
     // get site vars
     $sEmailNotify       = getParam('site_email_notify');
     $sSiteTitle         = getParam('site_title');
-    
+
     // add unsubscribe link
     if (empty($aPlus['unsubscribe'])) {
         $aPlus['unsubscribe'] = '';
@@ -315,7 +323,7 @@ function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0
             $aPlus['unsubscribe'] = ($sLink = $oAccount->getUnsubscribeLink($iEmailType)) ? '<a href="' . BX_DOL_URL_ROOT . $sLink . '">' . _t('_sys_et_txt_unsubscribe') . '</a>' : '';
     }
 
-    // parse template 
+    // parse template
     if ($aPlus || $iRecipientID) {
         if(!is_array($aPlus))
             $aPlus = array();
@@ -372,23 +380,26 @@ function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0
 /*
  * Getting an array with Templates' Names
  */
-function get_templates_array($bEnabledOnly = true, $bShortInfo = true) {
-	bx_import('BxDolDb');
-	$oDb = BxDolDb::getInstance();
+function get_templates_array($bEnabledOnly = true, $bShortInfo = true)
+{
+    bx_import('BxDolDb');
+    $oDb = BxDolDb::getInstance();
 
-	$sWhereAddon = $bEnabledOnly ? " AND `enabled`='1'" : "";
-	
-	if($bShortInfo)
-		return $oDb->getPairs("SELECT `uri`, `title` FROM `sys_modules` WHERE 1 AND `type`='" . BX_DOL_MODULE_TYPE_TEMPLATE . "'" . $sWhereAddon, "uri", "title");
-	else 
-		return $oDb->getAllWithKey("SELECT * FROM `sys_modules` WHERE 1 AND `type`='" . BX_DOL_MODULE_TYPE_TEMPLATE . "'" . $sWhereAddon, "uri"); 
+    $sWhereAddon = $bEnabledOnly ? " AND `enabled`='1'" : "";
+
+    if($bShortInfo)
+        return $oDb->getPairs("SELECT `uri`, `title` FROM `sys_modules` WHERE 1 AND `type`='" . BX_DOL_MODULE_TYPE_TEMPLATE . "'" . $sWhereAddon, "uri", "title");
+    else
+        return $oDb->getAllWithKey("SELECT * FROM `sys_modules` WHERE 1 AND `type`='" . BX_DOL_MODULE_TYPE_TEMPLATE . "'" . $sWhereAddon, "uri");
 }
 
-function extFileExists( $sFileSrc ) {
+function extFileExists( $sFileSrc )
+{
     return (file_exists( $sFileSrc ) && is_file( $sFileSrc )) ? true : false;
 }
 
-function getVisitorIP() {
+function getVisitorIP()
+{
     $ip = "0.0.0.0";
     if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && !empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
         $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
@@ -402,17 +413,20 @@ function getVisitorIP() {
     return $ip;
 }
 
-function genFlag( $country ) {
+function genFlag( $country )
+{
     return '<img src="' . genFlagUrl($country) . '" />';
 }
 
-function genFlagUrl($country) {
+function genFlagUrl($country)
+{
     bx_import('BxDolTemplate');
     return BxDolTemplate::getInstance()->getIconUrl('sys_fl_' . strtolower($country) . '.gif');
 }
 
 // print debug information ( e.g. arrays )
-function echoDbg( $what, $desc = '' ) {
+function echoDbg( $what, $desc = '' )
+{
     if ( $desc )
         echo "<b>$desc:</b> ";
     echo "<pre>";
@@ -420,7 +434,8 @@ function echoDbg( $what, $desc = '' ) {
     echo "</pre>\n";
 }
 
-function echoDbgLog($mWhat, $sDesc = '', $sFileName = 'debug.log') {
+function echoDbgLog($mWhat, $sDesc = '', $sFileName = 'debug.log')
+{
     $sCont =
         '--- ' . date('r') . ' (' . BX_DOL_START_TIME . ") ---\n" .
         $sDesc . "\n" .
@@ -431,8 +446,8 @@ function echoDbgLog($mWhat, $sDesc = '', $sFileName = 'debug.log') {
     fclose($rFile);
 }
 
-function clear_xss($val) {
-
+function clear_xss($val)
+{
     if ($GLOBALS['logged']['admin'])
         return $val;
 
@@ -470,9 +485,10 @@ function clear_xss($val) {
 
 //--------------------------------------- friendly permalinks --------------------------------------//
 //------------------------------------------- main functions ---------------------------------------//
-function uriGenerate ($s, $sTable, $sField, $sEmpty = '-') {
+function uriGenerate ($s, $sTable, $sField, $sEmpty = '-')
+{
     $s = uriFilter($s, $sEmpty);
-    if(uriCheckUniq($s, $sTable, $sField)) 
+    if(uriCheckUniq($s, $sTable, $sField))
         return $s;
 
     // cut off redundant part
@@ -481,7 +497,7 @@ function uriGenerate ($s, $sTable, $sField, $sEmpty = '-') {
 
     // try to add date
     $s .= '-' . date('Y-m-d');
-    if(uriCheckUniq($s, $sTable, $sField)) 
+    if(uriCheckUniq($s, $sTable, $sField))
         return $s;
 
     // try to add number
@@ -492,7 +508,8 @@ function uriGenerate ($s, $sTable, $sField, $sEmpty = '-') {
     return rand(0, 999999999);
 }
 
-function uriFilter ($s, $sEmpty = '-') {
+function uriFilter ($s, $sEmpty = '-')
+{
     bx_import('BxTemplConfig');
     if (BxTemplConfig::getInstance()->bAllowUnicodeInPreg)
         $s = get_mb_replace ('/[^\pL^\pN]+/u', '-', $s); // unicode characters
@@ -505,7 +522,8 @@ function uriFilter ($s, $sEmpty = '-') {
     return $s;
 }
 
-function uriCheckUniq ($s, $sTable, $sField) {
+function uriCheckUniq ($s, $sTable, $sField)
+{
     bx_import('BxDolDb');
     $oDb = BxDolDb::getInstance();
 
@@ -513,23 +531,28 @@ function uriCheckUniq ($s, $sTable, $sField) {
     return !$oDb->query($sSql);
 }
 
-function get_mb_replace ($sPattern, $sReplace, $s) {
+function get_mb_replace ($sPattern, $sReplace, $s)
+{
     return preg_replace ($sPattern, $sReplace, $s);
 }
 
-function get_mb_len ($s) {
+function get_mb_len ($s)
+{
     return (function_exists('mb_strlen')) ? mb_strlen($s) : strlen($s);
 }
 
-function get_mb_substr ($s, $iStart, $iLen) {
+function get_mb_substr ($s, $iStart, $iLen)
+{
     return (function_exists('mb_substr')) ? mb_substr ($s, $iStart, $iLen) : substr ($s, $iStart, $iLen);
 }
 
-function bx_mb_substr_replace($s, $sReplace, $iPosStart, $iLength) {
+function bx_mb_substr_replace($s, $sReplace, $iPosStart, $iLength)
+{
     return mb_substr($s, 0, $iPosStart) . $sReplace . mb_substr($s, $iPosStart + $iLength);
-} 
+}
 
-function bx_mb_strpos ($s, $sReplacement, $iStart = 0) {
+function bx_mb_strpos ($s, $sReplacement, $iStart = 0)
+{
     return mb_strpos($s, $sReplacement, $iStart);
 }
 
@@ -539,7 +562,8 @@ function bx_mb_strpos ($s, $sReplacement, $iStart = 0) {
  * @param $sClassName - full class name or class postfix(withoit prefix) in the case of module class
  * @param $mixedModule - module array or module name in the case of module class
  */
-function bx_import($sClassName, $mixedModule = array()) {
+function bx_import($sClassName, $mixedModule = array())
+{
     if (class_exists($sClassName))
         return;
 
@@ -566,19 +590,19 @@ function bx_import($sClassName, $mixedModule = array()) {
     if (0 == strncmp($sClassName, 'BxDol', 5)) {
         if (0 == strncmp($sClassName, 'BxDolStudio', 11))
             require_once(BX_DOL_DIR_STUDIO_CLASSES . $sClassName . '.php');
-        else 
+        else
             require_once(BX_DIRECTORY_PATH_CLASSES . $sClassName . '.php');
         return;
     }
 
     if (0 == strncmp($sClassName, 'BxBase', 6)) {
-    	if (0 == strncmp($sClassName, 'BxBaseMod', 9)) {
+        if (0 == strncmp($sClassName, 'BxBaseMod', 9)) {
             $aMatches = array();
             if (preg_match('/BxBaseMod([A-Z][a-z]+)/', $sClassName, $aMatches)) {
                 require_once(BX_DIRECTORY_PATH_MODULES . 'base/' . strtolower($aMatches[1]) . '/classes/' . $sClassName . '.php');
                 return;
             }
-    	} if (0 == strncmp($sClassName, 'BxBaseStudio', 12)) {
+        } if (0 == strncmp($sClassName, 'BxBaseStudio', 12)) {
             require_once(BX_DOL_DIR_STUDIO_BASE . 'scripts/' . $sClassName . '.php');
             return;
         } else {
@@ -588,11 +612,10 @@ function bx_import($sClassName, $mixedModule = array()) {
     }
 
     if (0 == strncmp($sClassName, 'BxTempl', 7) && !class_exists($sClassName)) {
-    	if(0 == strncmp($sClassName, 'BxTemplStudio', 13)) {
-    	    bx_import('BxDolStudioTemplate');
-    	    $sPath = BX_DIRECTORY_PATH_MODULES . BxDolStudioTemplate::getInstance()->getPath() . 'data/template/studio/scripts/' . $sClassName . '.php';
-    	}
-        else {
+        if(0 == strncmp($sClassName, 'BxTemplStudio', 13)) {
+            bx_import('BxDolStudioTemplate');
+            $sPath = BX_DIRECTORY_PATH_MODULES . BxDolStudioTemplate::getInstance()->getPath() . 'data/template/studio/scripts/' . $sClassName . '.php';
+        } else {
             bx_import('BxDolTemplate');
             $sPath = BX_DIRECTORY_PATH_MODULES . BxDolTemplate::getInstance()->getPath() . 'data/template/system/scripts/' . $sClassName . '.php';
         }
@@ -614,14 +637,15 @@ function bx_import($sClassName, $mixedModule = array()) {
  * @param array $aModule an array with module description. Is used when the requested class is located in some module.
  * @return unknown
  */
-function bx_instance($sClassName, $aParams = array(), $aModule = array()) {
+function bx_instance($sClassName, $aParams = array(), $aModule = array())
+{
     if(isset($GLOBALS['bxDolClasses'][$sClassName]))
         return $GLOBALS['bxDolClasses'][$sClassName];
 
     bx_import((empty($aModule) ? $sClassName : str_replace($aModule['class_prefix'], '', $sClassName)), $aModule);
 
     $oClass = new ReflectionClass($sClassName);
-    
+
     $GLOBALS['bxDolClasses'][$sClassName] = empty($aParams) ? $oClass->newInstance() : $oClass->newInstanceArgs($aParams);
 
     return $GLOBALS['bxDolClasses'][$sClassName];
@@ -636,7 +660,8 @@ function bx_instance($sClassName, $aParams = array(), $aModule = array()) {
  * @param $iQuoteType - string escaping method: BX_ESCAPE_STR_AUTO(default), BX_ESCAPE_STR_APOS or BX_ESCAPE_STR_QUOTE
  * @return converted string / array
  */
-function bx_js_string ($mixedInput, $iQuoteType = BX_ESCAPE_STR_AUTO) {
+function bx_js_string ($mixedInput, $iQuoteType = BX_ESCAPE_STR_AUTO)
+{
     $aUnits = array(
         "\n" => "\\n",
         "\r" => "",
@@ -664,8 +689,8 @@ function bx_js_string ($mixedInput, $iQuoteType = BX_ESCAPE_STR_AUTO) {
  * @param mixed $mixedInput - string/array which should be filtered
  * @return converted string / array
  */
-function bx_html_attribute ($mixedInput, $iQuoteType = BX_ESCAPE_STR_AUTO) {
-
+function bx_html_attribute ($mixedInput, $iQuoteType = BX_ESCAPE_STR_AUTO)
+{
     $aUnits = array ();
     if (BX_ESCAPE_STR_APOS == $iQuoteType)
         $aUnits["'"] = "\\'";
@@ -683,10 +708,12 @@ function bx_html_attribute ($mixedInput, $iQuoteType = BX_ESCAPE_STR_AUTO) {
  * @param mixed $mixedInput - string/array which should be filtered
  * @return converted string / array
  */
-function bx_php_string_apos ($mixedInput) {
+function bx_php_string_apos ($mixedInput)
+{
     return str_replace("'", "\\'", $mixedInput);
 }
-function bx_php_string_quot ($mixedInput) {
+function bx_php_string_quot ($mixedInput)
+{
     return str_replace('"', '\\"', $mixedInput);
 }
 
@@ -697,8 +724,8 @@ function bx_php_string_quot ($mixedInput) {
  * @param array $aParams - an array of parameters to be pathed with URL.
  * @return string the file's contents.
  */
-function bx_file_get_contents($sFileUrl, $aParams = array(), $bChangeTimeout = false) {
-
+function bx_file_get_contents($sFileUrl, $aParams = array(), $bChangeTimeout = false)
+{
     if ($aParams)
         $sFileUrl = bx_append_url_params($sFileUrl, $aParams);
 
@@ -743,7 +770,8 @@ function bx_file_get_contents($sFileUrl, $aParams = array(), $bChangeTimeout = f
 }
 
 // calculation ini_get('upload_max_filesize') in bytes as example
-function return_bytes($val) {
+function return_bytes($val)
+{
     $val = trim($val);
     $last = strtolower($val{strlen($val)-1});
     $val = (int)$val;
@@ -763,7 +791,8 @@ function return_bytes($val) {
 }
 
 // Generate Random Password
-function genRndPwd($iLength = 8, $bSpecialCharacters = true) {
+function genRndPwd($iLength = 8, $bSpecialCharacters = true)
+{
     $sPassword = '';
     $sChars = "abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
@@ -780,16 +809,19 @@ function genRndPwd($iLength = 8, $bSpecialCharacters = true) {
 }
 
 // Generate Random Salt for Password encryption
-function genRndSalt() {
+function genRndSalt()
+{
     return genRndPwd(8, true);
 }
 
 // Encrypt User Password
-function encryptUserPwd($sPwd, $sSalt) {
+function encryptUserPwd($sPwd, $sSalt)
+{
     return sha1(md5($sPwd) . $sSalt);
 }
 
-function bx_get ($sName, $sMethod = false) {
+function bx_get ($sName, $sMethod = false)
+{
     if (isset($_GET[$sName]) && ('get' == $sMethod || !$sMethod))
         return $_GET[$sName];
     elseif (isset($_POST[$sName]) && ('post' == $sMethod || !$sMethod))
@@ -798,7 +830,8 @@ function bx_get ($sName, $sMethod = false) {
         return false;
 }
 
-function bx_encode_url_params ($a, $aExcludeKeys = array (), $aOnlyKeys = false) {
+function bx_encode_url_params ($a, $aExcludeKeys = array (), $aOnlyKeys = false)
+{
     $s = '';
     foreach ($a as $sKey => $sVal) {
         if (in_array($sKey, $aExcludeKeys))
@@ -816,7 +849,8 @@ function bx_encode_url_params ($a, $aExcludeKeys = array (), $aOnlyKeys = false)
     return $s;
 }
 
-function bx_append_url_params ($sUrl, $mixedParams) {
+function bx_append_url_params ($sUrl, $mixedParams)
+{
     if (!$mixedParams)
         return $sUrl;
 
@@ -832,7 +866,8 @@ function bx_append_url_params ($sUrl, $mixedParams) {
     return $sUrl . $sParams;
 }
 
-function bx_rrmdir($directory) {
+function bx_rrmdir($directory)
+{
     if (substr($directory,-1) == "/")
         $directory = substr($directory,0,-1);
 
@@ -863,7 +898,8 @@ function bx_rrmdir($directory) {
     return true;
 }
 
-function bx_clear_folder ($sPath, $aExts = array ()) {
+function bx_clear_folder ($sPath, $aExts = array ())
+{
     if (substr($$sPath,-1) == "/")
         $sPath = substr($sPath,0,-1);
 
@@ -893,13 +929,14 @@ function bx_clear_folder ($sPath, $aExts = array ()) {
     return true;
 }
 
-function bx_ltrim_str ($sString, $sPrefix, $sReplace = '') {
+function bx_ltrim_str ($sString, $sPrefix, $sReplace = '')
+{
     if ($sReplace && substr($sString, 0, strlen($sReplace)) == $sReplace)
         return $sString;
     if (substr($sString, 0, strlen($sPrefix)) == $sPrefix)
         return $sReplace . substr($sString, strlen($sPrefix));
     return $sString;
-} 
+}
 
 /**
  * Convert array to attributes string
@@ -916,7 +953,8 @@ function bx_ltrim_str ($sString, $sPrefix, $sReplace = '') {
  * @param $sStyles - styles to merge with 'style' attribute
  * @return string
  */
-function bx_convert_array2attrs ($a, $sClasses = false, $sStyles = false) {
+function bx_convert_array2attrs ($a, $sClasses = false, $sStyles = false)
+{
     $sRet = '';
 
     if (!$a || !is_array($a))
@@ -946,26 +984,20 @@ function bx_convert_array2attrs ($a, $sClasses = false, $sStyles = false) {
     return $sRet;
 }
 
-function bx_unicode_urldecode($s) {
-
+function bx_unicode_urldecode($s)
+{
     preg_match_all('/%u([[:alnum:]]{4})/', $s, $a);
 
-    foreach ($a[1] as $uniord)
-    {
+    foreach ($a[1] as $uniord) {
         $dec = hexdec($uniord);
         $utf = '';
 
-        if ($dec < 128)
-        {
+        if ($dec < 128) {
             $utf = chr($dec);
-        }
-        else if ($dec < 2048)
-        {
+        } else if ($dec < 2048) {
             $utf = chr(192 + (($dec - ($dec % 64)) / 64));
             $utf .= chr(128 + ($dec % 64));
-        }
-        else
-        {
+        } else {
             $utf = chr(224 + (($dec - ($dec % 4096)) / 4096));
             $utf .= chr(128 + ((($dec % 4096) - ($dec % 64)) / 64));
             $utf .= chr(128 + ($dec % 64));
@@ -984,12 +1016,14 @@ function bx_unicode_urldecode($s) {
  * @param int $iObjectId - object id
  * @param int $iSenderId - sender (action's author) profile id, if it is false - then currectly logged in profile id is used
  */
-function bx_alert($sUnit, $sAction, $iObjectId, $iSender = false, $aExtras = array()) {
+function bx_alert($sUnit, $sAction, $iObjectId, $iSender = false, $aExtras = array())
+{
     $o = new BxDolAlerts($sUnit, $sAction, $iObjectId, $iSender, $aExtras);
     $o->alert();
-}   
+}
 
-function bx_replace_markers($mixed, $aMarkers) {
+function bx_replace_markers($mixed, $aMarkers)
+{
     if (empty($aMarkers))
         return $mixed;
 
@@ -1004,7 +1038,8 @@ function bx_replace_markers($mixed, $aMarkers) {
     return $mixed;
 }
 
-function bx_site_hash($sSalt = '', $isSkipVersion = false) {
+function bx_site_hash($sSalt = '', $isSkipVersion = false)
+{
     return md5($sSalt . ($isSkipVersion ? '' : getParam('sys_version')) . BX_DOL_SECRET . BX_DOL_URL_ROOT);
 }
 
@@ -1013,7 +1048,8 @@ function bx_site_hash($sSalt = '', $isSkipVersion = false) {
  * @param string where words are separated with underscore
  * @return string where every word begins with capital letter
  */
-function bx_gen_method_name ($s, $sWordsDelimiter = '_') {
+function bx_gen_method_name ($s, $sWordsDelimiter = '_')
+{
     return str_replace(' ', '', ucwords(str_replace($sWordsDelimiter, ' ', $s)));
 }
 
@@ -1022,11 +1058,11 @@ function bx_gen_method_name ($s, $sWordsDelimiter = '_') {
  * @param $sMsg message to display
  * @param $iNumLevelsBack add additional debug backtracing N levels back
  */
-function bx_trigger_error ($sMsg, $iNumLevelsBack = 0) {
+function bx_trigger_error ($sMsg, $iNumLevelsBack = 0)
+{
     $a = debug_backtrace();
     $sMsgAdd = "<br />\n related code in <b>{$a[$iNumLevelsBack]['file']}</b> on line <b>{$a[$iNumLevelsBack]['line']}</b> <br />\n";
     trigger_error ($sMsg . $sMsgAdd, E_USER_ERROR);
 }
 
-/** @} */ 
-
+/** @} */

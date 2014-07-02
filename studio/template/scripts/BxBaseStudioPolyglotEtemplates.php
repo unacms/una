@@ -11,14 +11,17 @@
 bx_import('BxDolStudioPolyglotEtemplates');
 bx_import('BxTemplStudioFormView');
 
-class BxBaseStudioPolyglotEtemplates extends BxDolStudioPolyglotEtemplates {
-    function __construct($aOptions, $oTemplate = false) {
+class BxBaseStudioPolyglotEtemplates extends BxDolStudioPolyglotEtemplates
+{
+    function __construct($aOptions, $oTemplate = false)
+    {
         parent::__construct($aOptions, $oTemplate);
 
         $this->_aOptions['actions_single']['edit']['attr']['title'] = _t('_adm_pgt_btn_etemplates_gl_edit_title');
     }
 
-    public function performActionEdit() {
+    public function performActionEdit()
+    {
         $sAction = 'edit';
 
         $aIds = bx_get('ids');
@@ -57,7 +60,7 @@ class BxBaseStudioPolyglotEtemplates extends BxDolStudioPolyglotEtemplates {
                 ),
             ),
             'inputs' => array (
-            	'ID' => array(
+                'ID' => array(
                     'type' => 'hidden',
                     'name' => 'id',
                     'value' => $iId,
@@ -114,7 +117,7 @@ class BxBaseStudioPolyglotEtemplates extends BxDolStudioPolyglotEtemplates {
                     ),
                 ),
                 'controls' => array(
-                    'name' => 'controls', 
+                    'name' => 'controls',
                     'type' => 'input_set',
                     array(
                         'type' => 'submit',
@@ -144,8 +147,7 @@ class BxBaseStudioPolyglotEtemplates extends BxDolStudioPolyglotEtemplates {
                 $aRes = array('msg' => _t('_adm_pgt_err_etemplates_edit'));
 
             $this->_echoResultJson($aRes, true);
-        }
-        else {
+        } else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-pgt-etemplate-edit-popup', _t('_adm_pgt_txt_etemplates_edit_popup', _t($aEtemplate['name_system'])), $this->_oTemplate->parseHtmlByName('pgt_new_etemplate.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
@@ -158,11 +160,13 @@ class BxBaseStudioPolyglotEtemplates extends BxDolStudioPolyglotEtemplates {
         }
     }
 
-    function getJsObject() {
+    function getJsObject()
+    {
         return 'oBxDolStudioPolyglotEtemplates';
     }
 
-    function getCode($isDisplayHeader = true) {
+    function getCode($isDisplayHeader = true)
+    {
         return $this->_oTemplate->parseHtmlByName('pgt_etemplates.html', array(
             'content' => parent::getCode($isDisplayHeader),
             'js_object' => $this->getJsObject(),
@@ -170,7 +174,8 @@ class BxBaseStudioPolyglotEtemplates extends BxDolStudioPolyglotEtemplates {
         ));
     }
 
-    protected function _addJsCss() {
+    protected function _addJsCss()
+    {
         parent::_addJsCss();
         $this->_oTemplate->addJs(array('jquery.form.min.js', 'polyglot_etemplates.js'));
 
@@ -179,12 +184,14 @@ class BxBaseStudioPolyglotEtemplates extends BxDolStudioPolyglotEtemplates {
         $oForm->addCssJs();
     }
 
-    protected function _getCellModule($mixedValue, $sKey, $aField, $aRow) {
+    protected function _getCellModule($mixedValue, $sKey, $aField, $aRow)
+    {
         $mixedValue = $this->_limitMaxLength($this->getModuleTitle($aRow['Module']), $sKey, $aField, $aRow, $this->_isDisplayPopupOnTextOverflow);
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 
-    protected function _getFilterControls () {
+    protected function _getFilterControls ()
+    {
         parent::_getFilterControls();
 
         $sContent = "";
@@ -197,7 +204,7 @@ class BxBaseStudioPolyglotEtemplates extends BxDolStudioPolyglotEtemplates {
             'name' => 'module',
             'attrs' => array(
                 'id' => 'bx-grid-module-' . $this->_sObject,
-            	'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeFilter()'
+                'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeFilter()'
             ),
             'value' => '',
             'values' => $this->getModules(false)
@@ -217,7 +224,7 @@ class BxBaseStudioPolyglotEtemplates extends BxDolStudioPolyglotEtemplates {
             'name' => 'keyword',
             'attrs' => array(
                 'id' => 'bx-grid-search-' . $this->_sObject,
-                'onKeyup' => 'javascript:$(this).off(\'keyup\'); ' . $this->getJsObject() . '.onChangeFilter()' 
+                'onKeyup' => 'javascript:$(this).off(\'keyup\'); ' . $this->getJsObject() . '.onChangeFilter()'
             )
         );
         $sContent .= $oForm->genRow($aInputSearch);

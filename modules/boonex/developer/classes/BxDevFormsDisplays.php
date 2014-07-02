@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Developer Developer
  * @ingroup     DolphinModules
  *
@@ -12,10 +12,12 @@
 bx_import('BxDolModule');
 bx_import('BxTemplStudioFormsDisplays');
 
-class BxDevFormsDisplays extends BxTemplStudioFormsDisplays {
+class BxDevFormsDisplays extends BxTemplStudioFormsDisplays
+{
     protected $oModule;
 
-    function __construct($aOptions, $oTemplate = false) {
+    function __construct($aOptions, $oTemplate = false)
+    {
         parent::__construct($aOptions, $oTemplate);
 
         $this->oModule = BxDolModule::getInstance('bx_developer');
@@ -35,7 +37,8 @@ class BxDevFormsDisplays extends BxTemplStudioFormsDisplays {
         }
     }
 
-    public function performActionAdd() {
+    public function performActionAdd()
+    {
         $sAction = 'add';
 
         bx_import('BxDolForm');
@@ -53,8 +56,7 @@ class BxDevFormsDisplays extends BxTemplStudioFormsDisplays {
                 $aRes = array('msg' => _t('_bx_dev_frm_err_displays_create'));
 
             $this->_echoResultJson($aRes, true);
-        }
-        else {
+        } else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-frm-display-create-popup', _t('_bx_dev_frm_txt_displays_create_popup'), $this->_oTemplate->parseHtmlByName('form_add_display.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
@@ -67,7 +69,8 @@ class BxDevFormsDisplays extends BxTemplStudioFormsDisplays {
         }
     }
 
-    public function performActionEdit() {
+    public function performActionEdit()
+    {
         $sAction = 'edit';
 
         $aIds = bx_get('ids');
@@ -104,8 +107,7 @@ class BxDevFormsDisplays extends BxTemplStudioFormsDisplays {
                 $aRes = array('msg' => _t('_bx_dev_frm_err_displays_edit'));
 
             $this->_echoResultJson($aRes, true);
-        }
-        else {
+        } else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-frm-display-edit-popup', _t('_bx_dev_frm_txt_displays_edit_popup', _t($aDisplay['title'])), $this->_oTemplate->parseHtmlByName('form_add_display.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
@@ -118,16 +120,17 @@ class BxDevFormsDisplays extends BxTemplStudioFormsDisplays {
         }
     }
 
-    protected function _getActionAdd($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array()) {
+    protected function _getActionAdd($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
         if($this->sObject == '')
             $isDisabled = true;
 
-        return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);        
+        return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
     }
 
     protected function _fillDisplayForm(&$oForm, $sAction)
     {
-    	$oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&object=' . $this->sObject;
+        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&object=' . $this->sObject;
         $oForm->aInputs['module']['values'] = array_merge(array('' => _t('_bx_dev_frm_txt_select_module')), BxDolStudioUtils::getModules());
         $oForm->aInputs['module']['value'] = $this->sModule;
 
@@ -139,6 +142,6 @@ class BxDevFormsDisplays extends BxTemplStudioFormsDisplays {
         asort($oForm->aInputs['object']['values']);
         $oForm->aInputs['object']['values'] = array_merge(array('' => _t('_bx_dev_frm_txt_select_object')), $oForm->aInputs['object']['values']);
         $oForm->aInputs['object']['value'] = $this->sObject;
-    } 
+    }
 }
 /** @} */

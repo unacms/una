@@ -12,8 +12,10 @@ bx_import('BxBaseFormForgotPassword');
 /**
  * @see BxBaseFormForgotPassword
  */
-class BxTemplFormForgotPassword extends BxBaseFormForgotPassword {
-    public function __construct($aInfo, $oTemplate = false) {
+class BxTemplFormForgotPassword extends BxBaseFormForgotPassword
+{
+    public function __construct($aInfo, $oTemplate = false)
+    {
         parent::__construct($aInfo, $oTemplate);
     }
 }

@@ -14,12 +14,12 @@ bx_import('BxBaseModGeneralFormEntry');
 /**
  * Create/edit profile form.
  */
-class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry 
+class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
 {
     protected $_iAccountProfileId = 0;
     protected $_aImageFields = array ();
 
-    public function __construct($aInfo, $oTemplate = false) 
+    public function __construct($aInfo, $oTemplate = false)
     {
         parent::__construct($aInfo, $oTemplate);
 
@@ -62,7 +62,7 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
             if (!isset($this->aInputs[$sField]))
                 continue;
 
-            if ($aValues && !empty($aValues[$CNF['FIELD_ID']])) 
+            if ($aValues && !empty($aValues[$CNF['FIELD_ID']]))
                 $this->aInputs[$sField]['content_id'] = $aValues[$CNF['FIELD_ID']];
 
             $sErrorString = '';
@@ -93,10 +93,10 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
         }
     }
 
-    public function insert ($aValsToAdd = array(), $isIgnore = false) 
+    public function insert ($aValsToAdd = array(), $isIgnore = false)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
-        
+
         if (!empty($this->aInputs[$CNF['FIELD_PICTURE']])) {
             $aValsToAdd = array_merge($aValsToAdd, array (
                 $CNF['FIELD_PICTURE'] => $this->aInputs[$CNF['FIELD_PICTURE']]['file_id'],
@@ -112,7 +112,7 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
         return parent::insert ($aValsToAdd, $isIgnore);
     }
 
-    function update ($iContentId, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null) 
+    function update ($iContentId, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
@@ -125,7 +125,7 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
         return parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
     }
 
-    function delete ($iContentId, $aContentInfo = array()) 
+    function delete ($iContentId, $aContentInfo = array())
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
@@ -135,12 +135,12 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
         }
 
         bx_import('BxDolView');
-		BxDolView::getObjectInstance($CNF['OBJECT_VIEWS'], $iContentId)->onObjectDelete();
+        BxDolView::getObjectInstance($CNF['OBJECT_VIEWS'], $iContentId)->onObjectDelete();
 
         return parent::delete($iContentId);
     }
 
-    function _processFile ($sField, $iFileIdOld, &$sErrorString) 
+    function _processFile ($sField, $iFileIdOld, &$sErrorString)
     {
         if (empty($_FILES[$sField]['tmp_name']))
             return $iFileIdOld;
@@ -161,7 +161,7 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
         return $iFileId;
     }
 
-    function _deleteFile ($iFileId, $sStorageObject) 
+    function _deleteFile ($iFileId, $sStorageObject)
     {
         if (!$iFileId)
             return true;

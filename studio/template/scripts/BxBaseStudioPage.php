@@ -12,13 +12,15 @@ bx_import('BxDolStudioPage');
 bx_import('BxDolStudioTemplate');
 bx_import('BxTemplStudioFunctions');
 
-class BxBaseStudioPage extends BxDolStudioPage {
-
-    function __construct($mixedPageName) {
+class BxBaseStudioPage extends BxDolStudioPage
+{
+    function __construct($mixedPageName)
+    {
         parent::__construct($mixedPageName);
     }
 
-    function getPageIndex() {
+    function getPageIndex()
+    {
         if(!is_array($this->aPage) || empty($this->aPage))
             return BX_PAGE_DEFAULT;
 
@@ -28,36 +30,41 @@ class BxBaseStudioPage extends BxDolStudioPage {
             return !empty($this->aPage[$this->sPageSelected]['index']) ? (int)$this->aPage[$this->sPageSelected]['index'] : BX_PAGE_DEFAULT;
     }
 
-    function getPageJs() {
+    function getPageJs()
+    {
         return array('jquery.anim.js', 'page.js');
     }
 
-    function getPageJsClass() {
+    function getPageJsClass()
+    {
         return '';
     }
 
-	function getPageJsObject() {
+    function getPageJsObject()
+    {
         return '';
     }
 
-	function getPageJsCode($aOptions = array(), $bWrap = true) {
+    function getPageJsCode($aOptions = array(), $bWrap = true)
+    {
         $sJsClass = $this->getPageJsClass();
         $sJsObject = $this->getPageJsObject();
         if(empty($sJsClass) || empty($sJsObject))
-        	return '';
+            return '';
 
-		$sOptions = '{}';
-		if(!empty($aOptions))		        
-			$sOptions = json_encode($aOptions);
+        $sOptions = '{}';
+        if(!empty($aOptions))
+            $sOptions = json_encode($aOptions);
 
         $sContent = 'var ' . $sJsObject . ' = new ' . $sJsClass . '(' . $sOptions . ');';
-		if($bWrap)
-        	$sContent = BxDolStudioTemplate::getInstance()->_wrapInTagJsCode($sContent);
+        if($bWrap)
+            $sContent = BxDolStudioTemplate::getInstance()->_wrapInTagJsCode($sContent);
 
         return $sContent;
     }
 
-    function getPageCss() {
+    function getPageCss()
+    {
         $aCss = array('page.css', 'menu_top.css');
         if((int)$this->aPage['index'] == 3)
             $aCss[] = 'page_columns.css';
@@ -65,18 +72,21 @@ class BxBaseStudioPage extends BxDolStudioPage {
         return $aCss;
     }
 
-    function getPageHeader() {
+    function getPageHeader()
+    {
         if(empty($this->aPage) || !is_array($this->aPage))
             return '';
 
         return _t(!$this->bPageMultiple ? $this->aPage['caption'] : $this->aPage[$this->sPageSelected]['caption']);
     }
 
-    function getPageBreadcrumb() {
+    function getPageBreadcrumb()
+    {
         return array();
     }
 
-    function getPageCaption() {
+    function getPageCaption()
+    {
         if(empty($this->aPage) || !is_array($this->aPage))
             return '';
 
@@ -95,7 +105,7 @@ class BxBaseStudioPage extends BxDolStudioPage {
 
         //--- Menu Left ---//
         $aItems = array(
-        	'back' => array(
+            'back' => array(
                 'name' => 'back',
                 'icon' => 'th',
                 'link' => BX_DOL_URL_STUDIO . 'launcher.php',
@@ -125,38 +135,42 @@ class BxBaseStudioPage extends BxDolStudioPage {
             );
         $oMenu = new BxTemplStudioMenu(array('template' => 'menu_top_toolbar.html', 'menu_items' => $aItems));
         $sMenuRight = $oMenu->getCode();
-        
+
         $aTmplVars = array(
             'menu_left' => $sMenuLeft,
             'caption' => _t($this->aPage['caption']),
-        	'menu_right' => $sMenuRight
+            'menu_right' => $sMenuRight
         );
         return $oTemplate->parseHtmlByName('page_caption.html', $aTmplVars);
     }
 
-    function getPageAttributes() {
+    function getPageAttributes()
+    {
         return '';
     }
 
-    function getPageMenu($aMenu, $aMarkers = array()) {
+    function getPageMenu($aMenu, $aMarkers = array())
+    {
         bx_import('BxTemplStudioMenu');
         $oMenu = new BxTemplStudioMenu(array('template' => 'menu_side.html', 'menu_items' => $aMenu));
         if(!empty($aMarkers))
-        	$oMenu->addMarkers($aMarkers);
+            $oMenu->addMarkers($aMarkers);
 
         return $oMenu->getCode();
     }
 
     function getPageCode($bHidden = false) {}
 
-    protected function getPageCaptionHelp() {
+    protected function getPageCaptionHelp()
+    {
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         $sContent = _t('_adm_txt_show_help_content_empty');
         return $oTemplate->parseHtmlByName('page_caption_help.html', array('content' => $sContent));
     }
 
-    protected function getPageCaptionActions() {
+    protected function getPageCaptionActions()
+    {
         if(empty($this->aActions))
             return "";
 
@@ -183,7 +197,7 @@ class BxBaseStudioPage extends BxDolStudioPage {
                     $aInput['checked'] = $aAction['checked'];
                     $aInput['attrs']['onchange'] = $aAction['onchange'];
                     break;
-            
+
             }
 
             $aForm['inputs'][$aInput['name']] = $aInput;
@@ -196,11 +210,12 @@ class BxBaseStudioPage extends BxDolStudioPage {
     }
 
     /**
-     * 
+     *
      * Block Methods
-     * 
-     */ 
-    function getBlockCaption($aBlock) {
+     *
+     */
+    function getBlockCaption($aBlock)
+    {
         if(empty($aBlock) || !is_array($aBlock))
             return '';
 
@@ -237,7 +252,8 @@ class BxBaseStudioPage extends BxDolStudioPage {
         return $oTemplate->parseHtmlByName('block_caption.html', $aTmplVars);
     }
 
-    function getBlockPanelTop($aBlock) {
+    function getBlockPanelTop($aBlock)
+    {
         if(empty($aBlock) || !is_array($aBlock))
             return '';
 
@@ -249,7 +265,8 @@ class BxBaseStudioPage extends BxDolStudioPage {
         return $oTemplate->parseHtmlByName('block_panel_top.html', $aTmplVars);
     }
 
-    function getBlockPanelBottom($aBlock) {
+    function getBlockPanelBottom($aBlock)
+    {
         if(empty($aBlock) || !is_array($aBlock))
             return '';
 
@@ -261,7 +278,8 @@ class BxBaseStudioPage extends BxDolStudioPage {
         return $oTemplate->parseHtmlByName('block_panel_bottom.html', $aTmplVars);
     }
 
-    protected function getJsResult($sMessage, $bTranslate = true, $bRedirect = false, $sRedirect = '', $sOnResult = '') {
+    protected function getJsResult($sMessage, $bTranslate = true, $bRedirect = false, $sRedirect = '', $sOnResult = '')
+    {
         $aResult = array();
         $aResult['message'] = $bTranslate ? _t($sMessage) : $sMessage;
         if($bRedirect)

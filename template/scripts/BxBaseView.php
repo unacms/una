@@ -20,4 +20,4 @@ class BxBaseView extends BxDolView
     }
 }
 
-/** @} */ 
+/** @} */

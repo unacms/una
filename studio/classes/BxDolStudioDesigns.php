@@ -12,8 +12,10 @@ bx_import('BxTemplStudioFunctions');
 bx_import('BxDolStudioTemplate');
 bx_import('BxDolStudioDesignsQuery');
 
-class BxDolStudioDesigns extends BxTemplStudioModules {
-    function __construct() {
+class BxDolStudioDesigns extends BxTemplStudioModules
+{
+    function __construct()
+    {
         parent::__construct();
 
         $this->oDb = new BxDolStudioDesignsQuery();

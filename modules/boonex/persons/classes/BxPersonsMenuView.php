@@ -14,10 +14,10 @@ bx_import('BxBaseModProfileMenuView');
 /**
  * 'View person' menu.
  */
-class BxPersonsMenuView extends BxBaseModProfileMenuView 
+class BxPersonsMenuView extends BxBaseModProfileMenuView
 {
 
-    public function __construct($aObject, $oTemplate = false) 
+    public function __construct($aObject, $oTemplate = false)
     {
         $this->MODULE = 'bx_persons';
         parent::__construct($aObject, $oTemplate);

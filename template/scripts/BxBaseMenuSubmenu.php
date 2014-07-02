@@ -13,13 +13,13 @@ bx_import('BxTemplMenu');
  * Menu representation.
  * @see BxDolMenu
  */
-class BxBaseMenuSubmenu extends BxTemplMenu 
+class BxBaseMenuSubmenu extends BxTemplMenu
 {
 
     protected $_sObjectSubmenu = false;
     protected $_mixedMainMenuItemSelected = false;
 
-    public function __construct ($aObject, $oTemplate) 
+    public function __construct ($aObject, $oTemplate)
     {
         parent::__construct ($aObject, $oTemplate);
     }
@@ -30,16 +30,16 @@ class BxBaseMenuSubmenu extends BxTemplMenu
      * @param $sForceMainMenuSelection force main menu item selection by menu item name
      */
     public function setObjectSubmenu ($sMenuObject, $sForceMainMenuSelection = false)
-    { 
-        $this->_sObjectSubmenu = $sMenuObject; 
+    {
+        $this->_sObjectSubmenu = $sMenuObject;
         $this->_mixedMainMenuItemSelected = $sForceMainMenuSelection;
     }
 
-    /** 
+    /**
      * Get menu code.
      * @return string
      */
-    public function getCode () 
+    public function getCode ()
     {
         $aMenuItemSelected = $this->_getSelectedMenuItem ();
 //        if (!$aMenuItemSelected)
@@ -63,7 +63,7 @@ class BxBaseMenuSubmenu extends BxTemplMenu
         $oSubmenu = null;
         if ($this->_sObjectSubmenu)
             $oSubmenu = BxDolMenu::getObjectInstance($this->_sObjectSubmenu);
-                
+
         if (!$oSubmenu) {
             $oSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu_main');
             return $oSubmenu->getCode();
@@ -72,7 +72,8 @@ class BxBaseMenuSubmenu extends BxTemplMenu
         }
     }
 
-    protected function _getSelectedMenuItem () {
+    protected function _getSelectedMenuItem ()
+    {
         if (is_array($this->_mixedMainMenuItemSelected))
             return $this->_mixedMainMenuItemSelected;
 
@@ -91,7 +92,7 @@ class BxBaseMenuSubmenu extends BxTemplMenu
 
             if ($this->_mixedMainMenuItemSelected)
                 $isSelected = $this->_mixedMainMenuItemSelected == $a['name'];
-            else 
+            else
                 $isSelected = $this->_isSelected($a) || ($this->_sObjectSubmenu && $this->_sObjectSubmenu == $a['submenu_object']);
 
             if (!$isSelected)

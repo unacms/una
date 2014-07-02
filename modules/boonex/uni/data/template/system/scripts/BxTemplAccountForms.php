@@ -12,8 +12,10 @@ bx_import('BxBaseAccountForms');
 /**
  * @see BxBaseAccountForms
  */
-class BxTemplAccountForms extends BxBaseAccountForms {
-    public function __construct() {
+class BxTemplAccountForms extends BxBaseAccountForms
+{
+    public function __construct()
+    {
         parent::__construct();
     }
 }

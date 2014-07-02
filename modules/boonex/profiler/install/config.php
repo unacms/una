@@ -1,8 +1,8 @@
-<?php 
+<?php
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Profiler Profiler
  * @ingroup     DolphinModules
  *
@@ -13,7 +13,7 @@ $aConfig = array(
     /**
      * Main Section.
      */
-	'type' => BX_DOL_MODULE_TYPE_MODULE,
+    'type' => BX_DOL_MODULE_TYPE_MODULE,
     'name' => 'bx_profiler',
     'title' => 'Profiler',
     'note' => 'Measure different site timings.',

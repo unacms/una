@@ -9,9 +9,9 @@
 
 bx_import('BxBaseSearch');
 
-class BxTemplSearch extends BxBaseSearch 
+class BxTemplSearch extends BxBaseSearch
 {
-    public function __construct ($aChoice = '', $oTemplate = false) 
+    public function __construct ($aChoice = '', $oTemplate = false)
     {
         parent::__construct ($aChoice, $oTemplate);
     }

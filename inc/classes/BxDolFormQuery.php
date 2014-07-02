@@ -13,7 +13,8 @@ bx_import('BxDolDb');
  * Database queries for forms.
  * @see BxDolForm
  */
-class BxDolFormQuery extends BxDolDb {
+class BxDolFormQuery extends BxDolDb
+{
     protected $_aObject;
 
     protected static $TYPES_SET = array (
@@ -26,22 +27,24 @@ class BxDolFormQuery extends BxDolDb {
         'button' => 1,
     );
 
-    public function __construct($aObject) {
+    public function __construct($aObject)
+    {
         parent::__construct();
         $this->_aObject = $aObject;
     }
 
-    static public function getFormArray ($sObject, $sDisplayName) {
+    static public function getFormArray ($sObject, $sDisplayName)
+    {
         $oDb = BxDolDb::getInstance();
 
         $sQuery = $oDb->prepare("SELECT * FROM `sys_objects_form` WHERE `active` = 1 AND `object` = ?", $sObject);
-        $aObject = $oDb->getRow($sQuery);        
-        if (!$aObject || !is_array($aObject)) 
+        $aObject = $oDb->getRow($sQuery);
+        if (!$aObject || !is_array($aObject))
             return false;
 
         $sQuery = $oDb->prepare("SELECT * FROM `sys_form_displays` WHERE `object` = ? AND `display_name` = ?", $sObject, $sDisplayName);
-        $aDisplay = $oDb->getRow($sQuery);        
-        if (!$aDisplay || !is_array($aDisplay)) 
+        $aDisplay = $oDb->getRow($sQuery);
+        if (!$aDisplay || !is_array($aDisplay))
             return false;
 
         $aForm = array ();
@@ -60,10 +63,10 @@ class BxDolFormQuery extends BxDolDb {
 
         // form action
         if (!empty($aForm['form_attrs']['action']) && 0 != strncasecmp($aForm['form_attrs']['action'], 'http://', 7) && 0 != strncasecmp($aForm['form_attrs']['action'], 'https://', 8)) {
-        	bx_import('BxDolPermalinks');
+            bx_import('BxDolPermalinks');
             $aForm['form_attrs']['action'] = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($aForm['form_attrs']['action']);
         }
-        
+
         // params
         if (!empty($aObject['params']))
             $aAddFormParams = unserialize($aObject['params']);
@@ -87,26 +90,26 @@ class BxDolFormQuery extends BxDolDb {
         $aInputs = $oDb->getAllWithKey($sQuery, 'name');
         $aForm['inputs'] = array();
         $aInputSets = array();
-        foreach ($aInputs as $a) {            
+        foreach ($aInputs as $a) {
 
             // main attributes
             $aInput = array (
-                'type' => $a['type'],                
+                'type' => $a['type'],
                 'name' => $a['name'],
                 'caption' => _t($a['caption']),
                 'info' => $a['info'] ? _t($a['info']) : '',
                 'required' => $a['required'] ? true : false,
                 'collapsed' => $a['collapsed'] ? true : false,
-                'html' => $a['html'],  
+                'html' => $a['html'],
                 'attrs' => $a['attrs'] ? unserialize($a['attrs']) : false,
                 'tr_attrs' => $a['attrs_tr'] ? unserialize($a['attrs_tr']) : false,
                 'attrs_wrapper' => $a['attrs_wrapper'] ? unserialize($a['attrs_wrapper']) : false,
                 'visible_for_levels' => $a['visible_for_levels'],
             );
-            
+
             // if type is input set stop to process other attribnutes
-            if ('input_set' == $a['type']) {            
-                $aForm['inputs'][$a['name']] = $aInput; 
+            if ('input_set' == $a['type']) {
+                $aForm['inputs'][$a['name']] = $aInput;
                 $aInputSets[] = $a['name'];
                 continue;
             }
@@ -134,7 +137,7 @@ class BxDolFormQuery extends BxDolDb {
                     $aChecker['params'] = unserialize($a['checker_params']);
                 $aInput['checker'] = $aChecker;
             }
-            
+
             // db processing options
             if (!empty($a['db_pass'])) {
                 $aDb = array ('pass' => $a['db_pass']);
@@ -162,7 +165,8 @@ class BxDolFormQuery extends BxDolDb {
         return $aForm;
     }
 
-    static public function getDataItems($sKey, $isUseForSet = false, $sUseValues = BX_DATA_VALUES_DEFAULT) {
+    static public function getDataItems($sKey, $isUseForSet = false, $sUseValues = BX_DATA_VALUES_DEFAULT)
+    {
         if ($sUseValues != BX_DATA_VALUES_DEFAULT && $sUseValues != BX_DATA_VALUES_ADDITIONAL)
             $sUseValues = BX_DATA_VALUES_DEFAULT;
 
@@ -174,7 +178,7 @@ class BxDolFormQuery extends BxDolDb {
         if ($isUseForSet)
             $iMaxValue = log(BX_DOL_INT_MAX, 2) + 1;
 
-        $aRet = array();    
+        $aRet = array();
         foreach ($a as $r) {
             if ($isUseForSet && (!is_numeric($r['Value']) || $r['Value'] < 1 || $r['Value'] > $iMaxValue))
                 continue;
@@ -184,7 +188,8 @@ class BxDolFormQuery extends BxDolDb {
         return $aRet;
     }
 
-    public function getFormInputs() {
+    public function getFormInputs()
+    {
         $sQuery = $this->prepare("SELECT * FROM `sys_form_inputs` WHERE `object` = ? ORDER BY `order` ASC", $this->_aObject['object']);
         return $this->getAll($sQuery);
     }

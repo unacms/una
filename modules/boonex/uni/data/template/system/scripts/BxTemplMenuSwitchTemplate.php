@@ -12,9 +12,10 @@ bx_import('BxBaseMenuSwitchTemplate');
 /**
  * @see BxDolMenu
  */
-class BxTemplMenuSwitchTemplate extends BxBaseMenuSwitchTemplate {
-
-    public function __construct ($aObject, $oTemplate = false) {
+class BxTemplMenuSwitchTemplate extends BxBaseMenuSwitchTemplate
+{
+    public function __construct ($aObject, $oTemplate = false)
+    {
         parent::__construct ($aObject, $oTemplate);
     }
 }

@@ -10,7 +10,7 @@
 /**
  * System services related to Images' Processing.
  */
-class BxBaseImageServices extends BxDol 
+class BxBaseImageServices extends BxDol
 {
     public function __construct()
     {
@@ -19,14 +19,14 @@ class BxBaseImageServices extends BxDol
 
     public function serviceAlertResponseFileDeleteLocal($oAlert, $sObject)
     {
-    	bx_import('BxDolImageTranscoder'); 
-    	BxDolImageTranscoder::onAlertResponseFileDeleteLocal($oAlert, $sObject);
+        bx_import('BxDolImageTranscoder');
+        BxDolImageTranscoder::onAlertResponseFileDeleteLocal($oAlert, $sObject);
     }
 
-	public function serviceAlertResponseFileDeleteOrig($oAlert, $sObject)
+    public function serviceAlertResponseFileDeleteOrig($oAlert, $sObject)
     {
-    	bx_import('BxDolImageTranscoder'); 
-    	BxDolImageTranscoder::onAlertResponseFileDeleteOrig($oAlert, $sObject);
+        bx_import('BxDolImageTranscoder');
+        BxDolImageTranscoder::onAlertResponseFileDeleteOrig($oAlert, $sObject);
     }
 }
 

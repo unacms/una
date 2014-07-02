@@ -11,14 +11,18 @@
 bx_import('BxDolStudioLanguages');
 bx_import('BxTemplStudioFunctions');
 
-class BxBaseStudioLanguages extends BxDolStudioLanguages {
-    function __construct() {
+class BxBaseStudioLanguages extends BxDolStudioLanguages
+{
+    function __construct()
+    {
         parent::__construct();
     }
-    function getCss() {
+    function getCss()
+    {
         return array('languages.css');
     }
-    function getJs() {
+    function getJs()
+    {
         return array('jquery.anim.js', 'page.js', 'languages.js');
     }
 }

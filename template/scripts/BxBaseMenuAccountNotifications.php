@@ -24,8 +24,8 @@ class BxBaseMenuAccountNotifications extends BxTemplMenu
      * Check if menu items is visible with extended checking for friends notifications
      * @param $a menu item array
      * @return boolean
-     */ 
-    protected function _isVisible ($a) 
+     */
+    protected function _isVisible ($a)
     {
         // default visible settings
         bx_import('BxDolAcl');

@@ -14,20 +14,20 @@ bx_import('BxTemplFormView');
 /**
  * Create/edit entry form
  */
-class BxBaseModGeneralFormEntry extends BxTemplFormView 
+class BxBaseModGeneralFormEntry extends BxTemplFormView
 {
     protected $MODULE;
 
     protected $_oModule;
 
-    public function __construct($aInfo, $oTemplate = false) 
+    public function __construct($aInfo, $oTemplate = false)
     {
         parent::__construct($aInfo, $oTemplate);
-        
+
         $this->_oModule = BxDolModule::getInstance($this->MODULE);
     }
 
-    public function insert ($aValsToAdd = array(), $isIgnore = false) 
+    public function insert ($aValsToAdd = array(), $isIgnore = false)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
@@ -43,7 +43,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         return parent::insert ($aValsToAdd, $isIgnore);
     }
 
-    function update ($iContentId, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null) 
+    function update ($iContentId, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 

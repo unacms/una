@@ -10,25 +10,27 @@
 
 bx_import('BxTemplStudioGrid');
 
-class BxBaseStudioGridNavigation extends BxTemplStudioGrid {
-    function __construct($aOptions, $oTemplate = false) {
+class BxBaseStudioGridNavigation extends BxTemplStudioGrid
+{
+    function __construct($aOptions, $oTemplate = false)
+    {
         parent::__construct($aOptions, $oTemplate);
     }
 
     public function getModulesSelectAll($sGetItemsMethod, $bShowCustom = true, $bShowSystem = true)
     {
-    	if(empty($sGetItemsMethod))
-    		return '';
+        if(empty($sGetItemsMethod))
+            return '';
 
-    	bx_import('BxTemplStudioFormView');
+        bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
 
-    	$aInputModules = array(
+        $aInputModules = array(
             'type' => 'select',
             'name' => 'module',
             'attrs' => array(
                 'id' => 'bx-grid-module-' . $this->_sObject,
-            	'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeFilter()'
+                'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeFilter()'
             ),
             'value' => '',
             'values' => $this->getModules($bShowCustom, $bShowSystem)
@@ -46,15 +48,15 @@ class BxBaseStudioGridNavigation extends BxTemplStudioGrid {
 
     public function getSearchInput()
     {
-    	bx_import('BxTemplStudioFormView');
+        bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
 
-    	$aInputSearch = array(
+        $aInputSearch = array(
             'type' => 'text',
             'name' => 'keyword',
             'attrs' => array(
                 'id' => 'bx-grid-search-' . $this->_sObject,
-                'onKeyup' => 'javascript:$(this).off(\'keyup\'); ' . $this->getJsObject() . '.onChangeFilter()' 
+                'onKeyup' => 'javascript:$(this).off(\'keyup\'); ' . $this->getJsObject() . '.onChangeFilter()'
             )
         );
         return $oForm->genRow($aInputSearch);

@@ -12,9 +12,9 @@ bx_import('BxBaseServiceConnections');
 /**
  * @see BxBaseServiceLogin
  */
-class BxTemplServiceConnections extends BxBaseServiceConnections 
+class BxTemplServiceConnections extends BxBaseServiceConnections
 {
-    public function __construct() 
+    public function __construct()
     {
         parent::__construct();
     }

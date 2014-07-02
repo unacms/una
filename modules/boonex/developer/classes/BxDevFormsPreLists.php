@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Developer Developer
  * @ingroup     DolphinModules
  *
@@ -12,17 +12,20 @@
 bx_import('BxDolModule');
 bx_import('BxTemplStudioFormsPreLists');
 
-class BxDevFormsPreLists extends BxTemplStudioFormsPreLists {
+class BxDevFormsPreLists extends BxTemplStudioFormsPreLists
+{
     protected $oModule;
 
-    function __construct($aOptions, $oTemplate = false) {
+    function __construct($aOptions, $oTemplate = false)
+    {
         parent::__construct($aOptions, $oTemplate);
 
         $this->oModule = BxDolModule::getInstance('bx_developer');
         $this->sUrlViewValues = BX_DOL_URL_STUDIO . 'module.php?name=' . $this->oModule->_oConfig->getName() . '&page=forms&form_page=pre_values&form_module=%s&form_list=%s';
     }
 
-    public function performActionAdd() {
+    public function performActionAdd()
+    {
         $sAction = 'add';
 
         bx_import('BxDolForm');
@@ -41,8 +44,7 @@ class BxDevFormsPreLists extends BxTemplStudioFormsPreLists {
                 $aRes = array('msg' => _t('_bx_dev_frm_err_prelists_create'));
 
             $this->_echoResultJson($aRes, true);
-        }
-        else {
+        } else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-frm-prelist-create-popup', _t('_bx_dev_frm_txt_prelists_create_popup'), $this->oModule->_oTemplate->parseHtmlByName('form_add_list.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
@@ -55,10 +57,11 @@ class BxDevFormsPreLists extends BxTemplStudioFormsPreLists {
         }
     }
 
-    public function performActionEdit() {
+    public function performActionEdit()
+    {
         $sAction = 'edit';
 
-    	$aList = $this->_getItem('getLists');
+        $aList = $this->_getItem('getLists');
         if($aList === false) {
             $this->_echoResultJson(array());
             exit;
@@ -78,8 +81,7 @@ class BxDevFormsPreLists extends BxTemplStudioFormsPreLists {
                 $aRes = array('msg' => _t('_bx_dev_frm_err_prelists_edit'));
 
             $this->_echoResultJson($aRes, true);
-        }
-        else {
+        } else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-frm-prelist-edit-popup', _t('_bx_dev_frm_txt_prelists_edit_popup', _t($aList['title'])), $this->oModule->_oTemplate->parseHtmlByName('form_add_list.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
@@ -92,7 +94,8 @@ class BxDevFormsPreLists extends BxTemplStudioFormsPreLists {
         }
     }
 
-    public function performActionExport() {
+    public function performActionExport()
+    {
         $sContentInsert = $sContentDelete = "";
 
         $aIds = bx_get('ids');
@@ -126,7 +129,7 @@ class BxDevFormsPreLists extends BxTemplStudioFormsPreLists {
         $aFormStructure = array(
             'form_attrs' => array(),
             'inputs' => array (
-            	'insert' => array(
+                'insert' => array(
                     'type' => 'textarea',
                     'name' => 'insert',
                     'caption' => _t('_bx_dev_frm_txt_prelists_export_insert'),
@@ -158,7 +161,8 @@ class BxDevFormsPreLists extends BxTemplStudioFormsPreLists {
         $this->_echoResultJson(array('popup' => $sContent), true);
     }
 
-    protected function _canDelete($aList) {
+    protected function _canDelete($aList)
+    {
         return true;
     }
 }

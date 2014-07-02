@@ -12,8 +12,10 @@ bx_import ('BxBaseUploaderSimple');
 /**
  * @see BxDolUploader
  */
-class BxTemplUploaderSimple extends BxBaseUploaderSimple {
-    function __construct($aObject, $sStorageObject, $sUniqId) {
+class BxTemplUploaderSimple extends BxBaseUploaderSimple
+{
+    function __construct($aObject, $sStorageObject, $sUniqId)
+    {
         parent::__construct($aObject, $sStorageObject, $sUniqId);
     }
 }

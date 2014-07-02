@@ -9,8 +9,8 @@
 
 bx_import('BxDolForm');
 
-class BxBaseFormView extends BxDolForm {    
-
+class BxBaseFormView extends BxDolForm
+{
     protected static $_isToggleJsAdded = false;
 
     protected static $_isCssJsAdded = false;
@@ -74,7 +74,8 @@ class BxBaseFormView extends BxDolForm {
      *
      * @return BxBaseFormView
      */
-    function __construct($aInfo, $oTemplate) {
+    function __construct($aInfo, $oTemplate)
+    {
         parent::__construct($aInfo, $oTemplate);
 
         if (isset($this->aParams['view_mode']) && $this->aParams['view_mode']) {
@@ -88,7 +89,8 @@ class BxBaseFormView extends BxDolForm {
      * @param $bDynamicMode - set it to true if form is added via JS/AJAX call, for example form in AJAX popup.
      * @return string
      */
-    function getCode($bDynamicMode = false) {
+    function getCode($bDynamicMode = false)
+    {
         $this->_bDynamicMode = $bDynamicMode;
         $this->addCssJs ();
         $this->aFormAttrs = $this->_replaceMarkers($this->aFormAttrs);
@@ -100,8 +102,8 @@ class BxBaseFormView extends BxDolForm {
      *
      * @return string
      */
-    function genForm() {
-
+    function genForm()
+    {
         $this->_sCodeAdd = '';
 
         $sTable = $this->genRows();
@@ -146,8 +148,8 @@ BLAH;
      *
      * @return string
      */
-    function genRows() {
-
+    function genRows()
+    {
         // add CSRF token if it's needed.
         if (!(isset($this->aParams['view_mode']) && $this->aParams['view_mode']) && getParam('sys_security_form_token_enable') == 'on' && (!isset($this->aParams['csrf']['disable']) || (isset($this->aParams['csrf']['disable']) && $this->aParams['csrf']['disable'] !== true)) && ($mixedCsrfToken = BxDolForm::getCsrfToken()) !== false) {
             $this->aInputs['csrf_token'] = array(
@@ -157,7 +159,7 @@ BLAH;
                 'db' => array ('pass' => 'Xss'),
                 'visible_for_levels' => PHP_INT_MAX,
             );
-        }        
+        }
 
         // check if we need to generate open section clause
         $sOpenSection = '';
@@ -173,9 +175,9 @@ BLAH;
         $sCont = '';
         $sFuncGenRow = isset($this->aParams['view_mode']) && $this->aParams['view_mode'] ? 'genViewRow' : 'genRow';
         foreach ($this->aInputs as $aInput)
-            if (!isset($aInput['visible_for_levels']) || $this->_isVisible($aInput)) 
+            if (!isset($aInput['visible_for_levels']) || $this->_isVisible($aInput))
                 $sCont .= $this->$sFuncGenRow($aInput);
-        
+
         $sCloseSection = $this->{$this->_sSectionClose}();
 
         return $sOpenSection . $sCont . $sCloseSection;
@@ -184,11 +186,11 @@ BLAH;
     /**
      * Generate single Table Row
      *
-     * @param array $aInput
+     * @param  array  $aInput
      * @return string
      */
-    function genRow(&$aInput) {
-
+    function genRow(&$aInput)
+    {
         if (!isset($aInput['type']))
             $aInput['type'] = false;
 
@@ -235,13 +237,13 @@ BLAH;
     }
 
     /**
-     * Generate single Table Row for view mode 
+     * Generate single Table Row for view mode
      *
-     * @param array $aInput
+     * @param  array  $aInput
      * @return string
      */
-    function genViewRow(&$aInput) {
-
+    function genViewRow(&$aInput)
+    {
         if (!isset($aInput['type']))
             $aInput['type'] = false;
 
@@ -261,7 +263,7 @@ BLAH;
                 $sRow = $this->genBlockEnd($aInput);
             break;
 
-            default:                                
+            default:
                 $sRow = $this->genViewRowWrapped($aInput);
         }
 
@@ -271,11 +273,11 @@ BLAH;
     /**
      * Generate complete wrapped row for view mode form
      *
-     * @param array $aInput
+     * @param  array  $aInput
      * @return string
      */
-    function genViewRowWrapped(&$aInput) {
-
+    function genViewRowWrapped(&$aInput)
+    {
         $sValue = $this->genViewRowValue($aInput);
         if (null === $sValue)
             return '';
@@ -293,11 +295,11 @@ EOS;
     /**
      * Generate value for view mode row
      *
-     * @param array $aInput
+     * @param  array  $aInput
      * @return string
      */
-    function genViewRowValue(&$aInput) {
-
+    function genViewRowValue(&$aInput)
+    {
         switch ($aInput['type']) {
 
             case 'hidden':
@@ -339,21 +341,21 @@ EOS;
                 $sValue = isset($aInput['value']) ? $aInput['value'] : null;
             break;
 
-            default:                                
+            default:
                 $sValue = isset($aInput['value']) ? bx_process_output($aInput['value']) : null;
         }
-        
+
         return $sValue;
     }
 
     /**
      * Generate standard row
      *
-     * @param array $aInput
+     * @param  array  $aInput
      * @return string
      */
-    function genRowStandard(&$aInput, $isOneLine = false) {
-
+    function genRowStandard(&$aInput, $isOneLine = false)
+    {
         $sCaption = isset($aInput['caption']) ? bx_process_output($aInput['caption']) : '';
 
         $sRequired = !empty($aInput['required']) ? '<span class="bx-form-required">*</span> ' : '';
@@ -383,7 +385,7 @@ EOS;
         if ($sCaption)
             $sCaptionCode = '<div class="bx-form-caption' . $sClassOneLineCaption . '">' . $sCaption . $sRequired . '</div>';
         else
-            $sInput .= $sRequired; 
+            $sInput .= $sRequired;
 
         $sInputCode = $this->genWrapperInput($aInput, $sInput);
 
@@ -399,17 +401,18 @@ EOS;
                         ' . ($isOneLine ? '' : $sInfoIcon . $sErrorIcon) . '
                         ' . $sInputCodeExtra . '
                     </div>';
-    
+
         if ($isOneLine)
-            $sCode = $sValueCode . $sCaptionCode . '<div class="bx-clear"></div>' . $sInfoIcon . $sErrorIcon; 
-        else 
+            $sCode = $sValueCode . $sCaptionCode . '<div class="bx-clear"></div>' . $sInfoIcon . $sErrorIcon;
+        else
             $sCode = $sCaptionCode . $sValueCode;
 
         return "<div $sTrAttrs>" . $sCode . "</div>";
     }
 
 
-    function genWrapperInput($aInput, $sContent) {
+    function genWrapperInput($aInput, $sContent)
+    {
         $sAttr = isset($aInput['attrs_wrapper']) && is_array($aInput['attrs_wrapper']) ? bx_convert_array2attrs($aInput['attrs_wrapper']) : '';
 
         $sCode = <<<BLAH
@@ -424,12 +427,12 @@ BLAH;
     /**
      * Generate custom row
      *
-     * @param array $aInput
-     * @param string $sCustomMethod custom method to generate code for input
+     * @param  array  $aInput
+     * @param  string $sCustomMethod custom method to generate code for input
      * @return string
      */
-    function genRowCustom(&$aInput, $sCustomMethod) {
-
+    function genRowCustom(&$aInput, $sCustomMethod)
+    {
         $sCaption = isset($aInput['caption']) ? bx_process_output($aInput['caption']) : '';
 
         $sRequired = !empty($aInput['required']) ? '<span class="bx-form-required">*</span> ' : '';
@@ -437,7 +440,7 @@ BLAH;
         $sClassAdd = !empty($aInput['error']) ? ' bx-form-error' : '';
         $sInfoIcon = !empty($aInput['info']) ? $this->genInfoIcon($aInput['info']) : '';
 
-        $sErrorIcon = $this->genErrorIcon(empty($aInput['error']) ? '' : $aInput['error']);        
+        $sErrorIcon = $this->genErrorIcon(empty($aInput['error']) ? '' : $aInput['error']);
         $sInput = $this->$sCustomMethod($aInput, $sInfoIcon, $sErrorIcon);
 
         if (isset($aInput['name']))
@@ -465,15 +468,15 @@ BLAH;
     /**
      * Generate Block Headers row
      *
-     * @param array $aInput
+     * @param  array  $aInput
      * @return string
      */
-    function genRowBlockHeader(&$aInput) {
-
+    function genRowBlockHeader(&$aInput)
+    {
         $aAttrs = empty($aInput['attrs']) ? '' : $aInput['attrs'];
 
         // if there is no caption - show divider only
-        
+
         if (empty($aInput['caption'])) {
             $sCode = $this->{$this->_sSectionClose}();
             $sCode .= $this->{$this->_sSectionOpen}($aAttrs);
@@ -489,13 +492,13 @@ BLAH;
         // display section with caption
 
         $sCode = $this->{$this->_sSectionClose}();
-    
+
         if (empty($aAttrs))
             $aAttrs['class'] = 'bx-form-collapsable ' . $sClassAddCollapsable;
         else
             $aAttrs['class'] .= ' bx-form-collapsable ' . $sClassAddCollapsable;
 
-        
+
         if (isset($this->aParams['view_mode']) && $this->aParams['view_mode'])
             $sLegend = '<legend class="bx-def-padding-sec-right bx-def-font-grayed bx-def-font-h3">' . bx_process_output($aInput['caption']) . '</legend>';
         else
@@ -506,7 +509,8 @@ BLAH;
         return $sCode;
     }
 
-    function genBlockEnd() {
+    function genBlockEnd()
+    {
         $aNextTbodyAdd = false; // need to have some default
         $sCode = '';
         $sCode .= $this->{$this->_sSectionClose}();
@@ -517,11 +521,11 @@ BLAH;
     /**
      * Generate HTML Input Element
      *
-     * @param array $aInput
+     * @param  array  $aInput
      * @return string Output HTML Code
      */
-    function genInput(&$aInput) {        
-
+    function genInput(&$aInput)
+    {
         if (!empty($aInput['name'])) {
             $sCustomMethod = 'genCustomInput' . $this->_genMethodName($aInput['name']);
             if (method_exists($this, $sCustomMethod))
@@ -536,7 +540,7 @@ BLAH;
             case 'date_time':
             case 'datetime':
             case 'number':
-            case 'checkbox':            
+            case 'checkbox':
             case 'radio':
             case 'file':
             case 'image':
@@ -616,11 +620,11 @@ BLAH;
     /**
      * Generate new Input Element id
      *
-     * @param array $aInput
+     * @param  array  $aInput
      * @return string
      */
-    function getInputId(&$aInput) {
-
+    function getInputId(&$aInput)
+    {
         if (isset($aInput['id']))
             return $aInput['id'];
 
@@ -656,23 +660,23 @@ BLAH;
     /**
      * Generate standard Input Element
      *
-     * @param array $aInput
+     * @param  array  $aInput
      * @return string
      */
-    function genInputStandard(&$aInput) {
-
+    function genInputStandard(&$aInput)
+    {
         // clone attributes for system use ;)
         $aAttrs = empty($aInput['attrs']) ? array() : $aInput['attrs'];
 
         // add default className to attributes
         $aAttrs['type'] = $aInput['type'];
-        if ('datetime' == $aAttrs['type']) 
+        if ('datetime' == $aAttrs['type'])
             $aAttrs['type'] = 'date_time';
 
         if (isset($aInput['name'])) $aAttrs['name'] = $aInput['name'];
         if (isset($aInput['value'])) $aAttrs['value'] = $aInput['value'];
 
-        
+
 
         // for inputs with labels generate id
         if (isset($aInput['label']))
@@ -690,10 +694,11 @@ BLAH;
     /**
      * Generate Switcher Input Element (based on checkbox)
      *
-     * @param array $aInput
+     * @param  array  $aInput
      * @return string
      */
-    function genInputSwitcher(&$aInput) {
+    function genInputSwitcher(&$aInput)
+    {
         $aInput['type'] = 'checkbox';
         $sCheckbox = $this->genInputStandard($aInput);
         $aInput['type'] = 'switcher';
@@ -703,23 +708,23 @@ BLAH;
             $sClass = 'on';
 
         return '
-			<div class="bx-switcher-cont ' . $sClass . '">' . $sCheckbox . '
-				<div class="bx-switcher-canvas">
-					<div class="bx-switcher-on"><i class="sys-icon check"></i></div>
+            <div class="bx-switcher-cont ' . $sClass . '">' . $sCheckbox . '
+                <div class="bx-switcher-canvas">
+                    <div class="bx-switcher-on"><i class="sys-icon check"></i></div>
                     <div class="bx-switcher-off"><i class="sys-icon times"></i></div>
-					<div class="bx-switcher-handler">&nbsp;</div>
-				</div>
-			</div>';
+                    <div class="bx-switcher-handler">&nbsp;</div>
+                </div>
+            </div>';
     }
 
     /**
      * Generate Button Input Element
      *
-     * @param array $aInput
+     * @param  array  $aInput
      * @return string
      */
-    function genInputButton(&$aInput) {
-
+    function genInputButton(&$aInput)
+    {
         // clone attributes for system use ;)
         $aAttrs = empty($aInput['attrs']) ? array() : $aInput['attrs'];
 
@@ -738,11 +743,11 @@ BLAH;
     /**
      * Generate Textarea Element
      *
-     * @param array $aInput
+     * @param  array  $aInput
      * @return string
      */
-    function genInputTextarea(&$aInput) {
-
+    function genInputTextarea(&$aInput)
+    {
         // clone attributes for system use ;)
         $aAttrs = empty($aInput['attrs']) ? array() : $aInput['attrs'];
 
@@ -759,12 +764,12 @@ BLAH;
         return "<textarea $sAttrs>$sValue</textarea>";
     }
 
-    function addHtmlEditor($iViewMode, &$aInput) {
-
+    function addHtmlEditor($iViewMode, &$aInput)
+    {
         bx_import('BxDolEditor');
         $oEditor = BxDolEditor::getObjectInstance();
         if (!$oEditor)
-            return false;  
+            return false;
 
         $this->_sCodeAdd .= $oEditor->attachEditor ('#' . $this->aFormAttrs['id'] . ' [name='.$aInput['name'].']', $iViewMode, $this->_bDynamicMode);
 
@@ -774,11 +779,11 @@ BLAH;
     /**
      * Generate Select Box Element
      *
-     * @param array $aInput
+     * @param  array  $aInput
      * @return string
      */
-    function genInputSelectBox(&$aInput, $sInfo = '', $sError = '') {
-
+    function genInputSelectBox(&$aInput, $sInfo = '', $sError = '')
+    {
         $aNewInput = $aInput;
 
         $aNewInput['type'] = 'select';
@@ -798,11 +803,11 @@ BLAH;
     /**
      * Generate Select Box Element
      *
-     * @param array $aInput
+     * @param  array  $aInput
      * @return string
      */
-    function genInputFiles(&$aInput, $sInfo = '', $sError = '') {
-
+    function genInputFiles(&$aInput, $sInfo = '', $sError = '')
+    {
         $sUniqId = genRndPwd (8, false);
         $sUploaders = '';
         $oUploader = null;
@@ -847,7 +852,7 @@ BLAH;
                 $aParams['images_transcoder'] = bx_js_string($aInput['images_transcoder']);
 
             $sUploaders .= $oUploader->getUploaderButton($sGhostTemplate, isset($aInput['multiple']) ? $aInput['multiple'] : true, $aParams);
-        }                
+        }
 
         return $this->oTemplate->parseHtmlByName('form_field_uploader.html', array(
             'uploaders_buttons' => $sUploaders,
@@ -863,10 +868,11 @@ BLAH;
     /**
      * Generate Select Element
      *
-     * @param array $aInput
+     * @param  array  $aInput
      * @return string
      */
-    function genInputSelect(&$aInput) {
+    function genInputSelect(&$aInput)
+    {
         $sCurValue = isset($aInput['value']) ? $aInput['value'] : '';
         return $this->_genInputSelect($aInput, false, $sCurValue, '_isSelected');
     }
@@ -874,49 +880,54 @@ BLAH;
     /**
      * Generate Multiple Select Element
      *
-     * @param array $aInput
+     * @param  array  $aInput
      * @return string
      */
-    function genInputSelectMultiple(&$aInput) {
+    function genInputSelectMultiple(&$aInput)
+    {
         $aCurValues = array();
         if (isset($aInput['value']) && $aInput['value'])
-            $aCurValues = is_array($aInput['value']) ? $aInput['value'] : array(); 
+            $aCurValues = is_array($aInput['value']) ? $aInput['value'] : array();
         return $this->_genInputSelect($aInput, true, $aCurValues, '_isSelectedMultiple');
     }
 
     /**
      * Generate Checkbox Set Element
      *
-     * @param array $aInput
+     * @param  array  $aInput
      * @return string
      */
-    function genInputCheckboxSet(&$aInput) {
+    function genInputCheckboxSet(&$aInput)
+    {
         $aCurValues = array();
         if (isset($aInput['value']) && $aInput['value'])
-            $aCurValues = is_array($aInput['value']) ? $aInput['value'] : array(); 
+            $aCurValues = is_array($aInput['value']) ? $aInput['value'] : array();
         return $this->_genInputsSet($aInput, 'checkbox', $aCurValues, '_isSelectedMultiple', '[]');
     }
     /**
      * Generate Radiobuttons Set Element
      *
-     * @param array $aInput
+     * @param  array  $aInput
      * @return string
      */
-    function genInputRadioSet(&$aInput) {
+    function genInputRadioSet(&$aInput)
+    {
         $sCurValue = isset($aInput['value']) ? $aInput['value'] : '';
         return $this->_genInputsSet($aInput, 'radio', $sCurValue, '_isSelected');
     }
 
-    function _isSelected ($sValue, $sCurValue) {
+    function _isSelected ($sValue, $sCurValue)
+    {
         return ((string)$sValue === (string)$sCurValue);
     }
 
-    function _isSelectedMultiple ($sValue, $aCurValues) {
+    function _isSelectedMultiple ($sValue, $aCurValues)
+    {
         return in_array($sValue, $aCurValues);
     }
 
-    function _genInputSelect(&$aInput, $isMultiple, $mixedCurrentVal, $sIsSelectedFunc) {
-
+    function _genInputSelect(&$aInput, $isMultiple, $mixedCurrentVal, $sIsSelectedFunc)
+    {
         $aAttrs = empty($aInput['attrs']) ? array() : $aInput['attrs'];
 
         $aAttrs['name'] = $aInput['name'];
@@ -942,12 +953,12 @@ BLAH;
                             case 'group_header':
                                 $sTitle = bx_process_output($sTitle['value']);
                                 $sOptions .= <<<BLAH
-                   					<optgroup label="$sTitle">
+                                       <optgroup label="$sTitle">
 BLAH;
                                 break;
                             case 'group_end':
                                 $sOptions .= <<<BLAH
-                   					</optgroup>
+                                       </optgroup>
 BLAH;
                                 break;
                         }
@@ -981,8 +992,8 @@ BLAH;
         return $sCode;
     }
 
-    function _genInputsSet(&$aInput, $sType, $mixedCurrentVal, $sIsCheckedFunc, $sNameAppend = '') {
-
+    function _genInputsSet(&$aInput, $sType, $mixedCurrentVal, $sIsCheckedFunc, $sNameAppend = '')
+    {
         $aAttrs = empty($aInput['attrs']) || 'radio_set' == $aInput['type'] || 'checkbox_set' == $aInput['type'] ? array() : $aInput['attrs'];
 
         $aAttrs['name']  = $aInput['name'];
@@ -1030,8 +1041,8 @@ BLAH;
         return $sCode;
     }
 
-    function genInputCaptcha(&$aInput) {
-
+    function genInputCaptcha(&$aInput)
+    {
         $aAttrs = empty($aInput['attrs']) ? array() : $aInput['attrs'];
 
         // for inputs with labels generate id
@@ -1040,8 +1051,8 @@ BLAH;
 
         $sAttrs = bx_convert_array2attrs($aAttrs, "bx-form-input-{$aInput['type']}");
 
-        bx_import('BxDolCaptcha'); 
-        $oCaptcha = BxDolCaptcha::getObjectInstance(); 
+        bx_import('BxDolCaptcha');
+        $oCaptcha = BxDolCaptcha::getObjectInstance();
 
         return "<div $sAttrs>" . ($oCaptcha ? $oCaptcha->display($this->_bDynamicMode) : _t('_sys_txt_captcha_not_available')) . "</div>";
     }
@@ -1049,11 +1060,12 @@ BLAH;
     /**
      * Generate Label Element
      *
-     * @param string $sLabel Text of the Label
-     * @param string $sInputID Dependant Input Element ID
+     * @param  string $sLabel   Text of the Label
+     * @param  string $sInputID Dependant Input Element ID
      * @return string HTML code
      */
-    function genLabel(&$aInput) {
+    function genLabel(&$aInput)
+    {
         if (!isset($aInput['label']) or empty($aInput['label']))
             return '';
 
@@ -1065,11 +1077,13 @@ BLAH;
         return $sRet;
     }
 
-    function genInfoIcon($sInfo) {
+    function genInfoIcon($sInfo)
+    {
         return '<div class="bx-form-info bx-def-font-grayed bx-def-font-small">' . bx_process_output($sInfo) . '</div>';
     }
 
-    function genErrorIcon( $sError = '' ) {
+    function genErrorIcon( $sError = '' )
+    {
         if ($this->bEnableErrorIcon) {
             $sStyle = '';
             if (!$sError)
@@ -1078,10 +1092,10 @@ BLAH;
         }
     }
 
-    function getOpenSection($aAttrs = array(), $sLegend = '') {
-
+    function getOpenSection($aAttrs = array(), $sLegend = '')
+    {
         if (!$this->_isSectionOpened) {
-            
+
             if (!$aAttrs || !is_array($aAttrs))
                 $aAttrs = array();
 
@@ -1102,8 +1116,8 @@ BLAH;
         }
     }
 
-    function getCloseSection() {
-
+    function getCloseSection()
+    {
         if ($this->_isSectionOpened) {
 
             $this->_isSectionOpened = false;
@@ -1115,8 +1129,8 @@ BLAH;
         }
     }
 
-    function getOpenSectionViewMode($aAttrs = array(), $sLegend = '') {
-
+    function getOpenSectionViewMode($aAttrs = array(), $sLegend = '')
+    {
         if (!$this->_isSectionOpened) {
 
             if (!$aAttrs || !is_array($aAttrs))
@@ -1139,8 +1153,8 @@ BLAH;
         }
     }
 
-    function getCloseSectionViewMode() {
-
+    function getCloseSectionViewMode()
+    {
         if ($this->_isSectionOpened) {
 
             $this->_isSectionOpened = false;
@@ -1152,19 +1166,19 @@ BLAH;
         }
     }
 
-    function addCssJs () {
-
+    function addCssJs ()
+    {
         if (isset($this->aParams['view_mode']) && $this->aParams['view_mode']) {
 
             if (self::$_isCssJsAddedViewMode)
                 return;
-            
+
             $this->oTemplate->addCss('forms.css');
 
             self::$_isCssJsAddedViewMode = true;
 
         } else {
-    
+
             if (self::$_isCssJsAdded)
                 return;
 

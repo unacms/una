@@ -7,7 +7,7 @@
  * @{
  */
 
-/** 
+/**
  * @page samples
  * @section email Send Email
  */
@@ -25,12 +25,11 @@ $oTemplate->setPageHeader ("Send Email Example");
 $oTemplate->setPageContent ('page_main_code', PageCompMainCode());
 $oTemplate->getPageCode();
 
-
 /**
  * page code function
  */
-function PageCompMainCode() {
-
+function PageCompMainCode()
+{
     ob_start();
 
     bx_import('BxDolAccount');
@@ -39,14 +38,12 @@ function PageCompMainCode() {
     if (!$aAccountInfo)
         return DesignBoxContent("Send Email example", 'Please login first', BX_DB_PADDING_DEF);
 
-
     echo "<h2>Account info</h2>";
     echo "Email: " . $aAccountInfo['email'] . '<br />';
     echo "Email Confirmed: " . ($aAccountInfo['email_confirmed'] ? 'yes' : 'no') . '<br />';
     echo "Receive site updates: " . ($aAccountInfo['receive_updates'] ? 'yes' : 'no') . '<br />';
     echo "Receive site newsletters: " . ($aAccountInfo['receive_news'] ? 'yes' : 'no') . '<br />';
     echo "Site emails are sent from: " . getParam('site_email_notify') . '<br />';
-
 
     $a = array (
         'sys' => array (
@@ -86,6 +83,5 @@ function PageCompMainCode() {
 
     return DesignBoxContent("Send Email Example", ob_get_clean(), BX_DB_PADDING_DEF);
 }
-
 
 /** @} */

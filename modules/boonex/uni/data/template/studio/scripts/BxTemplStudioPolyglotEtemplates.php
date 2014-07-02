@@ -11,8 +11,10 @@ defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxBaseStudioPolyglotEtemplates');
 
-class BxTemplStudioPolyglotEtemplates extends BxBaseStudioPolyglotEtemplates { 
-    function __construct($aOptions, $oTemplate = false) {
+class BxTemplStudioPolyglotEtemplates extends BxBaseStudioPolyglotEtemplates
+{
+    function __construct($aOptions, $oTemplate = false)
+    {
         parent::__construct($aOptions, $oTemplate);
     }
 }

@@ -14,9 +14,9 @@ bx_import('BxBaseModTextMenu');
 /**
  * General class for module menu.
  */
-class BxNotesMenu extends BxBaseModTextMenu 
+class BxNotesMenu extends BxBaseModTextMenu
 {
-    public function __construct($aObject, $oTemplate = false) 
+    public function __construct($aObject, $oTemplate = false)
     {
         $this->MODULE = 'bx_notes';
         parent::__construct($aObject, $oTemplate);

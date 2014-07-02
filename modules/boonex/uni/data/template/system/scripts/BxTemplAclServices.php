@@ -12,8 +12,10 @@ bx_import('BxBaseAclServices');
 /**
  * @see BxBaseAclServices
  */
-class BxTemplAclServices extends BxBaseAclServices {
-    public function __construct() {
+class BxTemplAclServices extends BxBaseAclServices
+{
+    public function __construct()
+    {
         parent::__construct();
     }
 }

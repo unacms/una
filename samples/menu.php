@@ -7,7 +7,7 @@
  * @{
  */
 
-/** 
+/**
  * @page samples
  * @section menu Menu
  */
@@ -58,17 +58,17 @@ $oTemplate->setPageHeader ("Sample menu");
 $oTemplate->setPageContent ('page_main_code', PageCompMainCode());
 $oTemplate->getPageCode();
 
-
 /**
  * page code function
  */
-function PageCompMainCode() {
-    ob_start();    
+function PageCompMainCode()
+{
+    ob_start();
 
     bx_import('BxDolMenu');
     $oMenu = BxDolMenu::getObjectInstance('samples'); // it automatically creates instance of default or custom class by object name
     if ($oMenu)
-        echo $oMenu->getCode(); // print menu object 
+        echo $oMenu->getCode(); // print menu object
 
     return DesignBoxContent("Sample menu", ob_get_clean(), BX_DB_PADDING_DEF);
 }

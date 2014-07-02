@@ -12,25 +12,31 @@ bx_import('BxTemplPaginate');
 bx_import('BxDolStudioDesigner');
 bx_import('BxTemplStudioFormView');
 
-class BxBaseStudioDesigner extends BxDolStudioDesigner {
+class BxBaseStudioDesigner extends BxDolStudioDesigner
+{
     protected $sLogoFormId = 'adm-dsg-logo-form';
     protected $sLogoIframeId = 'adm-dsg-logo-iframe';
     protected $sIconFormId = 'adm-dsg-icon-form';
     protected $sIconIframeId = 'adm-dsg-icon-iframe';
 
-    function __construct($sPage = '') {
+    function __construct($sPage = '')
+    {
         parent::__construct($sPage);
     }
-    function getPageCss() {
+    function getPageCss()
+    {
         return array_merge(parent::getPageCss(), array('forms.css', 'designer.css'));
     }
-    function getPageJs() {
+    function getPageJs()
+    {
         return array_merge(parent::getPageJs(), array('settings.js', 'designer.js'));
     }
-    function getPageJsObject() {
+    function getPageJsObject()
+    {
         return 'oBxDolStudioDesigner';
     }
-    function getPageMenu($aMenu = array(), $aMarkers = array()) {
+    function getPageMenu($aMenu = array(), $aMarkers = array())
+    {
         $sJsObject = $this->getPageJsObject();
 
         $aMenu = array();
@@ -44,14 +50,15 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner {
             $aMenu[] = array(
                 'name' => $sMenuItem,
                 'icon' => 'mi-dsg-' . $sMenuItem . '.png',
-            	'link' => BX_DOL_URL_STUDIO . 'designer.php?page=' . $sMenuItem,
-            	'title' => _t('_adm_lmi_cpt_' . $sMenuItem),
-            	'selected' => $sMenuItem == $this->sPage
+                'link' => BX_DOL_URL_STUDIO . 'designer.php?page=' . $sMenuItem,
+                'title' => _t('_adm_lmi_cpt_' . $sMenuItem),
+                'selected' => $sMenuItem == $this->sPage
             );
 
         return parent::getPageMenu($aMenu);
     }
-    function getPageCode($bHidden = false) {
+    function getPageCode($bHidden = false)
+    {
         $sMethod = 'get' . ucfirst($this->sPage);
         if(!method_exists($this, $sMethod))
             return '';
@@ -59,51 +66,53 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner {
         return $this->$sMethod();
     }
 
-    protected function getGeneral() {
-    	$sJsObject = $this->getPageJsObject();
+    protected function getGeneral()
+    {
+        $sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         $sResult = '';
 
         $sTemplate = getParam('template');
-        $aTemplates = get_templates_array(true, false);        
+        $aTemplates = get_templates_array(true, false);
 
-	    $aTmplVarsTemplates = array ();
-	    foreach($aTemplates as $sUri => $aTemplate) {
-	        $aTmplVarsTemplates[] = array(
-	            'uri' => $sUri,
-	            'title' => htmlspecialchars_adv($aTemplate['title']),
-	            'version' => htmlspecialchars_adv($aTemplate['version']),
-	            'vendor' => htmlspecialchars_adv($aTemplate['vendor']),
-	        	'icon' => $this->getModuleIcon($aTemplate['name'], 'store'),
-	            'bx_if:default' => array (
-	                'condition' => $sUri == $sTemplate,
-	                'content' => array (),
-	            ),
-	            'bx_if:make_default' => array (
-	                'condition' => $sUri != $sTemplate,
-	                'content' => array(
-	            		'js_object' => $sJsObject,
-	                	'uri' => $sUri
-	            	),
-	            )
-	        );
-	    }
+        $aTmplVarsTemplates = array ();
+        foreach($aTemplates as $sUri => $aTemplate) {
+            $aTmplVarsTemplates[] = array(
+                'uri' => $sUri,
+                'title' => htmlspecialchars_adv($aTemplate['title']),
+                'version' => htmlspecialchars_adv($aTemplate['version']),
+                'vendor' => htmlspecialchars_adv($aTemplate['vendor']),
+                'icon' => $this->getModuleIcon($aTemplate['name'], 'store'),
+                'bx_if:default' => array (
+                    'condition' => $sUri == $sTemplate,
+                    'content' => array (),
+                ),
+                'bx_if:make_default' => array (
+                    'condition' => $sUri != $sTemplate,
+                    'content' => array(
+                        'js_object' => $sJsObject,
+                        'uri' => $sUri
+                    ),
+                )
+            );
+        }
 
-	    $sContent  = $sResult ? MsgBox($sResult, 10) : '';
-	    $sContent .= $oTemplate->parseHtmlByName('templates.html', array(
-	        'bx_repeat:templates' => $aTmplVarsTemplates,
-	    ));
+        $sContent  = $sResult ? MsgBox($sResult, 10) : '';
+        $sContent .= $oTemplate->parseHtmlByName('templates.html', array(
+            'bx_repeat:templates' => $aTmplVarsTemplates,
+        ));
 
         $aTmplVars = array(
             'js_object' => $this->getPageJsObject(),
-        	'bx_repeat:blocks' => $sContent,
+            'bx_repeat:blocks' => $sContent,
         );
 
         return $oTemplate->parseHtmlByName('designer.html', $aTmplVars);
     }
 
-    protected function getLogo() {
+    protected function getLogo()
+    {
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         $sAlt = getParam('sys_site_logo_alt');
@@ -136,8 +145,8 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner {
                     'type' => 'image_uploader',
                     'name' => 'image',
                     'caption' => _t('_adm_dsg_txt_upload_image'),
-                	'caption_preview' => _t('_adm_dsg_txt_upload_image_preview'),
-                    'ajax_action_delete' => $this->getPageJsObject() . '.deleteLogo()',  
+                    'caption_preview' => _t('_adm_dsg_txt_upload_image_preview'),
+                    'ajax_action_delete' => $this->getPageJsObject() . '.deleteLogo()',
                     'value' => (int)getParam('sys_site_logo')
                 ),
                 'alt' => array(
@@ -145,7 +154,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner {
                     'name' => 'alt',
                     'caption' => _t('_adm_dsg_txt_alt_text'),
                     'info' => _t('_adm_dsg_dsc_alt_text'),
-                	'value' => $sAlt,
+                    'value' => $sAlt,
                     'checker' => array(
                         'func' => '',
                         'params' => array(),
@@ -173,9 +182,9 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner {
 
         $aTmplVars = array(
             'js_object' => $this->getPageJsObject(),
-        	'bx_repeat:blocks' => array(
+            'bx_repeat:blocks' => array(
                 array(
-                	'caption' => '',
+                    'caption' => '',
                     'panel_top' => '',
                     'items' => $oTemplate->parseHtmlByName('dsr_logo.html', array('logo_iframe_id' => $this->sLogoIframeId, 'form' => $oForm->getCode())),
                     'panel_bottom' => ''
@@ -186,7 +195,8 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner {
         return $oTemplate->parseHtmlByName('designer.html', $aTmplVars);
     }
 
-    protected function getIcon() {
+    protected function getIcon()
+    {
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         $sPreview = "";
@@ -246,7 +256,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner {
                     'type' => 'custom',
                     'name' => 'preview',
                     'content' => $sPreview
-                ), 
+                ),
                 'image' => array(
                     'type' => 'file',
                     'name' => 'image',
@@ -270,9 +280,9 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner {
 
         $aTmplVars = array(
             'js_object' => $this->getPageJsObject(),
-        	'bx_repeat:blocks' => array(
+            'bx_repeat:blocks' => array(
                 array(
-                	'caption' => '',
+                    'caption' => '',
                     'panel_top' => '',
                     'items' => $oTemplate->parseHtmlByName('dsr_icon.html', array('icon_iframe_id' => $this->sIconIframeId, 'form' => $oForm->getCode())),
                     'panel_bottom' => ''
@@ -283,15 +293,16 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner {
         return $oTemplate->parseHtmlByName('designer.html', $aTmplVars);
     }
 
-	protected function getSettings() {
+    protected function getSettings()
+    {
         $oTemplate = BxDolStudioTemplate::getInstance();
-        
+
         bx_import('BxTemplStudioSettings');
         $oPage = new BxTemplStudioSettings(BX_DOL_STUDIO_STG_TYPE_SYSTEM, BX_DOL_STUDIO_STG_CATEGORY_TEMPLATES);
 
         $aTmplVars = array(
             'js_object' => $this->getPageJsObject(),
-        	'bx_repeat:blocks' => $oPage->getPageCode(),
+            'bx_repeat:blocks' => $oPage->getPageCode(),
         );
 
         return $oTemplate->parseHtmlByName('designer.html', $aTmplVars);

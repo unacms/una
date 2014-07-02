@@ -10,12 +10,15 @@ defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxDolAclQuery');
 
-class BxDolStudioPermissionsQuery extends BxDolAclQuery {
-    function __construct() {
+class BxDolStudioPermissionsQuery extends BxDolAclQuery
+{
+    function __construct()
+    {
         parent::__construct();
     }
 
-	function getPrices($aParams, &$aItems, $bReturnCount = true) {
+    function getPrices($aParams, &$aItems, $bReturnCount = true)
+    {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
 
@@ -65,12 +68,14 @@ class BxDolStudioPermissionsQuery extends BxDolAclQuery {
         return (int)$this->getOne("SELECT FOUND_ROWS()");
     }
 
-    function getPriceOrderMax($iLevelId) {
+    function getPriceOrderMax($iLevelId)
+    {
         $sSql = $this->prepare("SELECT MAX(`Order`) FROM `sys_acl_level_prices` WHERE `IDLevel`=?", $iLevelId);
         return (int)$this->getOne($sSql);
     }
 
-    function deletePrices($aParams) {
+    function deletePrices($aParams)
+    {
         $sWhereClause = "";
 
         switch($aParams['type']) {

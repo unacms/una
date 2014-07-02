@@ -14,9 +14,9 @@ bx_import('BxBaseModTextPageEntry');
 /**
  * Entry create/edit pages
  */
-class BxNotesPageEntry extends BxBaseModTextPageEntry 
-{    
-    public function __construct($aObject, $oTemplate = false) 
+class BxNotesPageEntry extends BxBaseModTextPageEntry
+{
+    public function __construct($aObject, $oTemplate = false)
     {
         $this->MODULE = 'bx_notes';
         parent::__construct($aObject, $oTemplate);

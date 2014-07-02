@@ -16,7 +16,7 @@ class BxTemplVote extends BxBaseVote
 {
     function __construct($sSystem, $iId, $iInit = 1)
     {
-		parent::__construct($sSystem, $iId, $iInit);
+        parent::__construct($sSystem, $iId, $iInit);
     }
 }
 

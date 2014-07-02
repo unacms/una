@@ -20,7 +20,8 @@ $oTemplate->getPageCode();
 /**
  * page code function
  */
-function PageCompMainCode() {
+function PageCompMainCode()
+{
     ob_start();
 
     $aForm = array(
@@ -112,7 +113,7 @@ function PageCompMainCode() {
                     'error' => _t( '_ps_ferr_incorrect_length' )
                 ),
             ),
-        
+
             'header_advanced' => array(
                 'type' => 'block_header',
                 'caption' => 'Advanced details',
@@ -128,7 +129,7 @@ function PageCompMainCode() {
                 'required' => true,
             ),
 
-            'select_radio' => array(                
+            'select_radio' => array(
                 'type' => 'radio_set',
                 'name' => 'select_radio',
                 'caption' => _t('Select radio something'),
@@ -170,7 +171,7 @@ function PageCompMainCode() {
                 'type' => 'checkbox',
                 'name' => 'iagree',
                 'value' => '1',
-                'caption' => _t('Do you like it?'),            
+                'caption' => _t('Do you like it?'),
                 'required' => true,
                 'checker' => array(
                     'func' => 'avail',
@@ -199,7 +200,7 @@ function PageCompMainCode() {
     bx_import('BxTemplFormView');
     $oForm = new BxTemplFormView($aForm);
     $oForm->initChecker();
-    if ( $oForm->isSubmittedAndValid() ) {        
+    if ( $oForm->isSubmittedAndValid() ) {
         echo  MsgBox('Data was successfully submitted');
     }
 
@@ -209,4 +210,3 @@ function PageCompMainCode() {
     return DesignBoxContent("Sample form", $s, BX_DB_PADDING_DEF);
 
 }
-

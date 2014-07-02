@@ -9,8 +9,8 @@
 
 bx_import('BxDolDb');
 
-/** 
- * @page objects 
+/**
+ * @page objects
  * @section permalinks Permalinks
  * @ref BxDolPermalinks
  */
@@ -22,8 +22,8 @@ bx_import('BxDolDb');
  * and get it for specified standard URI.
  *
  *
- * All permalinks must match the whole URL, to be automatially determined. 
- * There are only 2 permlinks which are replaced by prefix:     
+ * All permalinks must match the whole URL, to be automatially determined.
+ * There are only 2 permlinks which are replaced by prefix:
  * - modules/?r= - for module URLs
  * - page.php?i= - for pages URLs
  *
@@ -53,14 +53,16 @@ bx_import('BxDolDb');
  * - $aExtra['return_data'] - it is possible to override default behavior, by setting 'return_data' to non NULL value.
  *
  */
-class BxDolPermalinks extends BxDolDb implements iBxDolSingleton {
+class BxDolPermalinks extends BxDolDb implements iBxDolSingleton
+{
     protected $sCacheFile;
     protected $aLinksStandard;
     protected $aLinksPermalink;
     protected $aPrefixesStandard;
     protected $aPrefixesPermalink;
 
-    function __construct() {
+    function __construct()
+    {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
@@ -84,14 +86,16 @@ class BxDolPermalinks extends BxDolDb implements iBxDolSingleton {
         $this->aPrefixesPermalink = $aPermalinksData['prefixes_permalink'];
     }
 
-    public function cacheInvalidate() {
+    public function cacheInvalidate()
+    {
         return BxDolDb::getInstance()->cleanCache ('sys_permalinks');
     }
 
-	/**
+    /**
      * Prevent cloning the instance
      */
-    public function __clone() {
+    public function __clone()
+    {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error('Clone is not allowed for the class: ' . get_class($this), E_USER_ERROR);
     }
@@ -99,14 +103,16 @@ class BxDolPermalinks extends BxDolDb implements iBxDolSingleton {
     /**
      * Get singleton instance of the class
      */
-    public static function getInstance() {
+    public static function getInstance()
+    {
         if(!isset($GLOBALS['bxDolClasses'][__CLASS__]))
             $GLOBALS['bxDolClasses'][__CLASS__] = new BxDolPermalinks();
 
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
 
-    function getPermalinksData() {
+    function getPermalinksData()
+    {
         $aLinksStandard = $this->getAll("SELECT * FROM `sys_permalinks`");
 
         $aResult = array(
@@ -140,7 +146,8 @@ class BxDolPermalinks extends BxDolDb implements iBxDolSingleton {
      * @param $iLength - position of the page name, or false to detect automatically
      * @returm page name (changeable part of URL) or empty string if page name is not detectable.
      */
-    function getPageNameFromLink($sLink, $iLength = false) {
+    function getPageNameFromLink($sLink, $iLength = false)
+    {
         if (false == $iLength) {
             $sLink = $this->_fixUrl($sLink);
             foreach ($this->aPrefixesStandard as $sKey => $iLen) {
@@ -159,8 +166,8 @@ class BxDolPermalinks extends BxDolDb implements iBxDolSingleton {
      * @param $aParams - params to add to the url.
      * @return - relative permalinked URL if it was detected and permalinks are ON or unchanged URL otherwise.
      */
-    function permalink($sLink, $aParams = array()) {
-
+    function permalink($sLink, $aParams = array())
+    {
         $sRet = null;
         bx_alert('system', 'permalink', 0, 0, array('link' => $sLink, 'params' => &$aParams, 'return_data' => &$sRet));
         if (null !== $sRet)
@@ -172,7 +179,7 @@ class BxDolPermalinks extends BxDolDb implements iBxDolSingleton {
 
             if (strncmp($sLink, $sKey, $iLength) !== 0)
                 continue;
-            
+
             $sPage = $this->getPageNameFromLink($sLink, $iLength);
 
             if (!$this->_isEnabled($sKey))
@@ -191,8 +198,8 @@ class BxDolPermalinks extends BxDolDb implements iBxDolSingleton {
      * @param $isStripBaseUrl - strip site prefix (absolute URL) automatically (enabled by default)
      * @return - relative UNpermalinked URL if it was detected or relative URL if URL withing the site or unchanged URL otherwise.
      */
-    function unpermalink($sLink, $isStripBaseUrl = true) {
-        
+    function unpermalink($sLink, $isStripBaseUrl = true)
+    {
         if ($isStripBaseUrl && 0 == strncmp($sLink, BX_DOL_URL_ROOT, strlen(BX_DOL_URL_ROOT)))
             $sLink = substr($sLink, strlen(BX_DOL_URL_ROOT));
 
@@ -205,7 +212,7 @@ class BxDolPermalinks extends BxDolDb implements iBxDolSingleton {
 
             if (strncmp($sLink, $sKey, $iLength) !== 0)
                 continue;
-            
+
             $sPage = substr($sLink, $iLength);
 
             return $this->aLinksPermalink[$sKey]['standard'] . $sPage;
@@ -215,7 +222,8 @@ class BxDolPermalinks extends BxDolDb implements iBxDolSingleton {
         return isset($this->aLinksPermalink[$sLink]) ? $this->aLinksPermalink[$sLink]['standard'] : $sLink;
     }
 
-    function _isEnabled($sLink) {
+    function _isEnabled($sLink)
+    {
         return array_key_exists($sLink, $this->aLinksStandard) && $this->aLinksStandard[$sLink]['enabled'];
     }
 
@@ -223,8 +231,8 @@ class BxDolPermalinks extends BxDolDb implements iBxDolSingleton {
      * redirect to the correct url after switching skin or language
      * only correct modules urls are supported
      */
-    function redirectIfNecessary ($aSkip = array()) {
-
+    function redirectIfNecessary ($aSkip = array())
+    {
         $sCurrentUrl = $_SERVER['PHP_SELF'] . '?' . bx_encode_url_params($_GET, $aSkip);
 
         if (!preg_match('/modules\/index.php\?r=(\w+)(.*)/', $sCurrentUrl, $m))
@@ -242,7 +250,8 @@ class BxDolPermalinks extends BxDolDb implements iBxDolSingleton {
         return true;
     }
 
-    protected function _fixUrl($sLink) {
+    protected function _fixUrl($sLink)
+    {
         if (strncmp($sLink, 'modules/index.php?r=', 20) === 0)
             $sLink = str_replace('modules/index.php?r=', 'modules/?r=', $sLink);
         return $sLink;

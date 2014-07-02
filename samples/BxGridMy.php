@@ -7,7 +7,7 @@
  * @{
  */
 
-/** 
+/**
  * @page samples
  * @section grid Grid
  */
@@ -18,7 +18,6 @@
 
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_mode`, `sorting_fields`, `override_class_name`, `override_class_file`) VALUES
 ('sample', 'Sql', 'SELECT `ID`, `NickName`, `Email`, `City`, `Status` FROM `sample_grid_data` WHERE `Role` != 3 ', 'sample_grid_data', 'ID', 'Order', '', 5, NULL, 'start', '', 'NickName,City,Headline,DescriptionMe,Tags', 'auto', 'ID,NickName,Email,City', 'BxGridMy', 'samples/BxGridMy.php');
-
 
 -- SQL dump of grid object fields:
 
@@ -80,23 +79,23 @@ INSERT INTO `sample_grid_data` VALUES
 (10, 'Andrew5', 'uno5@boonex.com', 'Active', 1, 'male', 'Unite People!', '<p>This is a demo profile that you may find on <a href="http://www.boonex.com/dolphin">BoonEx Dolphin</a> demo sites or some default Dolphin installations. This and other demo profiles are used to post sample media content, messages and friend requests.</p>\r\n<p> </p>\r\n<p>Dolphin is a free, open-source social networking and online dating platform by <a href="http://www.boonex.com">BoonEx Community Software Experts</a>.</p>\r\n<p> </p>\r\n<p>BoonEx mission is to Unite People and thus make the world a better place.</p>', 'AU', 'Castle Hill', '1981-03-31', 'boonex, dolphin, community, unite, people', 10),
 (47, 'Bimbo', 'bambi@bumba.com', 'Unconfirmed', 1, '', '', '', '', 'Bomba', '0000-00-00', '', 3),
 (50, 'X-Man', 'x@man.me', 'Unconfirmed', 1, '', '', '', '', 'Movie City', '0000-00-00', '', 10);
-    
 
 */
- 
 
 bx_import('BxTemplGrid');
 
-class BxGridMy extends BxTemplGrid {
-
-    public function __construct ($aOptions, $oTemplate = false) {
+class BxGridMy extends BxTemplGrid
+{
+    public function __construct ($aOptions, $oTemplate = false)
+    {
         parent::__construct ($aOptions, $oTemplate);
     }
 
     /**
      * add js file for AJAX form submission
      */
-    protected function _addJsCss() {
+    protected function _addJsCss()
+    {
         parent::_addJsCss();
         $this->_oTemplate->addJs('jquery.form.min.js');
 
@@ -108,20 +107,20 @@ class BxGridMy extends BxTemplGrid {
     /**
      * 'add' action handler
      */
-    public function performActionAdd() {
-
+    public function performActionAdd()
+    {
         $sAction = 'add';
 
         $aForm = array(
             'form_attrs' => array(
-                'id' => 'sample-add-form',    
+                'id' => 'sample-add-form',
                 'action' => 'grid.php?o=' . $this->_sObject . '&a=' . $sAction, // grid.php is usiversal actions handler file, we need to pass object and action names to it at least
                 'method' => 'post',
             ),
             'params' => array (
                 'db' => array(
-                    'table' => 'sample_grid_data', 
-                    'key' => 'ID', 
+                    'table' => 'sample_grid_data',
+                    'key' => 'ID',
                     'submit_name' => 'do_submit',
                 ),
             ),
@@ -135,9 +134,9 @@ class BxGridMy extends BxTemplGrid {
                         'func' => 'length',
                         'params' => array(1, 150),
                         'error' => _t( 'Username is required' )
-                    ),                    
+                    ),
                     'db' => array (
-                        'pass' => 'Xss',  
+                        'pass' => 'Xss',
                     ),
                 ),
                 'Email' => array(
@@ -150,7 +149,7 @@ class BxGridMy extends BxTemplGrid {
                         'error' => _t( '_Incorrect Email' )
                     ),
                     'db' => array (
-                        'pass' => 'Xss',  
+                        'pass' => 'Xss',
                     ),
                 ),
                 'City' => array(
@@ -164,7 +163,7 @@ class BxGridMy extends BxTemplGrid {
                         'error' => _t( 'City is required' )
                     ),
                     'db' => array (
-                        'pass' => 'Xss',  
+                        'pass' => 'Xss',
                     ),
                 ),
 
@@ -211,7 +210,7 @@ class BxGridMy extends BxTemplGrid {
                 <div class="bx-def-padding-top bx-def-padding-left bx-def-padding-right bx-def-color-bg-block" style="width:300px;">' . $oForm->getCode() . '</div>
                 <script>
                     $(document).ready(function () {
-                        $("#sample-add-form").ajaxForm({ 
+                        $("#sample-add-form").ajaxForm({
                             dataType: "json",
                             beforeSubmit: function (formData, jqForm, options) {
                                 bx_loading($("#' . $aForm['form_attrs']['id'] . '"), true);
@@ -232,8 +231,8 @@ class BxGridMy extends BxTemplGrid {
     /**
      * 'approve' action handler
      */
-    public function performActionApprove() {
-
+    public function performActionApprove()
+    {
         $iAffected = 0;
         $aIds = bx_get('ids');
         if (!$aIds || !is_array($aIds)) {
@@ -250,11 +249,11 @@ class BxGridMy extends BxTemplGrid {
         }
 
         $this->_echoResultJson(array_merge(
-                array(            
+                array(
                     'grid' => $this->getCode(false),
                     'blink' => $aIdsAffected,
                     'eval' => 'alert(22)',
-                ),            
+                ),
                 $iAffected ? array () : array('msg' => "Profile(s) activation failed")
             )
         );
@@ -263,7 +262,8 @@ class BxGridMy extends BxTemplGrid {
     /**
      * helper funtion for 'approve' action handler
      */
-    protected function _approve ($mixedId) {
+    protected function _approve ($mixedId)
+    {
         $oDb = BxDolDb::getInstance();
         $sTable = $this->_aOptions['table'];
         $sFieldId = $this->_aOptions['field_id'];
@@ -274,11 +274,11 @@ class BxGridMy extends BxTemplGrid {
     /**
      * custom cell look for 'Status' field
      */
-    protected function _getCellStatus ($mixedValue, $sKey, $aField, $aRow) {        
-
+    protected function _getCellStatus ($mixedValue, $sKey, $aField, $aRow)
+    {
         $sAttr = $this->_convertAttrs(
             $aField, 'attr_cell',
-            false, 
+            false,
             isset($aField['width']) ? 'width:' . $aField['width'] : false // add default styles
         );
         return '<td ' . $sAttr . '><span style="background-color:' . ('Active' == $mixedValue ? '#cfc' : '#fcc') . '">' . $mixedValue . '</span></td>';
@@ -287,7 +287,8 @@ class BxGridMy extends BxTemplGrid {
     /**
      * custom column header look for 'Status' field
      */
-    protected function _getCellHeaderStatus ($sKey, $aField) { 
+    protected function _getCellHeaderStatus ($sKey, $aField)
+    {
         $s = parent::_getCellHeaderDefault($sKey, $aField);
         return preg_replace ('/<th(.*?)>(.*?)<\/th>/', '<th$1><img src="' . BxDolTemplate::getInstance()->getIconUrl('sys_fl_kg.gif') . '"></th>', $s);
     }
@@ -295,7 +296,8 @@ class BxGridMy extends BxTemplGrid {
     /**
      * custom behavior for 'custom1' action
      */
-    protected function _getActionCustom1 ($sType, $sKey, $a, $isSmall = false) {
+    protected function _getActionCustom1 ($sType, $sKey, $a, $isSmall = false)
+    {
         $sAttr = $this->_convertAttrs(
             $a, 'attr',
             'bx-btn bx-def-margin-sec-left' . ($isSmall ? ' bx-btn-small' : '') // add default classes

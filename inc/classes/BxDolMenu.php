@@ -10,16 +10,16 @@
 bx_import('BxDolMenuQuery');
 bx_import('BxDolPermalinks');
 
-/** 
- * @page objects 
+/**
+ * @page objects
  * @section menu Menu
  * @ref BxDolMenu
  */
 
 /**
- * Menus. 
+ * Menus.
  *
- * Menu uses some set of items and the template to display it, 
+ * Menu uses some set of items and the template to display it,
  * so it is possible to have several menus which uses the same set of items but different templates.
  *
  * Menu is any set of some links or actions, for example menu can be links in site's footer or actions in profile view.
@@ -29,7 +29,7 @@ bx_import('BxDolPermalinks');
  *
  * 1. Add record to 'sys_objects_menu' table:
  *
- * - object: name of the menu object, in the format: vendor prefix, underscore, module prefix, underscore, internal identifier or nothing; for example: bx_groups_actions - actions menu in group view. 
+ * - object: name of the menu object, in the format: vendor prefix, underscore, module prefix, underscore, internal identifier or nothing; for example: bx_groups_actions - actions menu in group view.
  * - title: name of the menu, displayed in the studio menu builder.
  * - set_name: name of items' set.
  * - module: the module this menu belongs to.
@@ -38,7 +38,7 @@ bx_import('BxDolPermalinks');
  * - active: it is possible to disable particular menu, then it will not be displayed.
  * - override_class_name: user defined class name which is derived from BxTemplMenu.
  * - override_class_file: the location of the user defined class, leave it empty if class is located in system folders.
- * 
+ *
  * Menu templates are stored in 'sys_menu_templates' table:
  * - id: template id.
  * - template: template file.
@@ -81,9 +81,9 @@ bx_import('BxDolPermalinks');
  *         echo $oMenu->getCode; // display menu
  * @endcode
  *
- * But in most cases you don't need to use above code to display menu, 
+ * But in most cases you don't need to use above code to display menu,
  * menu objects are integrated into pages - there is special 'menu' page block type for it.
- * 
+ *
  */
 class BxDolMenu extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
 {
@@ -103,7 +103,8 @@ class BxDolMenu extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
      * Constructor
      * @param $aObject array of menu options
      */
-    public function __construct($aObject) {
+    public function __construct($aObject)
+    {
         parent::__construct();
 
         $this->_sObject = isset($aObject['object']) ? $aObject['object'] : 'bx-menu-obj-' . time() . rand(0, PHP_INT_MAX);
@@ -129,25 +130,25 @@ class BxDolMenu extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
      * @param $sObject object name
      * @return object instance or false on error
      */
-    static public function getObjectInstance($sObject) {
-
+    static public function getObjectInstance($sObject)
+    {
         if (isset($GLOBALS['bxDolClasses']['BxDolMenu!'.$sObject]))
             return $GLOBALS['bxDolClasses']['BxDolMenu!'.$sObject];
-        
+
         $aObject = BxDolMenuQuery::getMenuObject($sObject);
         if (!$aObject || !is_array($aObject))
             return false;
 
         bx_import('BxTemplMenu');
-        $sClass = 'BxTemplMenu';        
+        $sClass = 'BxTemplMenu';
         if (!empty($aObject['override_class_name'])) {
             $sClass = $aObject['override_class_name'];
             if (!empty($aObject['override_class_file']))
                 require_once(BX_DIRECTORY_PATH_ROOT . $aObject['override_class_file']);
-            else    
+            else
                 bx_import($sClass);
         }
-        
+
         $o = new $sClass($aObject);
 
         return ($GLOBALS['bxDolClasses']['BxDolMenu!'.$sObject] = $o);
@@ -158,7 +159,8 @@ class BxDolMenu extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
      * @param $sModule menu item module to set as selected
      * @param $sName menu item name to set as selected
      */
-    static public function setSelectedGlobal ($sModule, $sName) {
+    static public function setSelectedGlobal ($sModule, $sName)
+    {
         self::$SEL_MODULE = $sModule;
         self::$SEL_NAME = $sName;
     }
@@ -166,22 +168,22 @@ class BxDolMenu extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
     /**
      * Process menu triggers.
      * Menu triggers allow to automatically add menu items to modules with no different if dependant module was install before or after the module menu item belongs to.
-     * For example module "Notes" adds menu items to all profiles modules (Persons, Organizations, etc) 
+     * For example module "Notes" adds menu items to all profiles modules (Persons, Organizations, etc)
      * with no difference if persons module was installed before or after "Notes" module was installed.
-     * @param $sSetName set name to ad menu item to 
+     * @param $sSetName set name to ad menu item to
      * @param $aMenuItem array of menu item descrition, array keys are database fields names, array values are database fields values
      * @return true on success
      */
-    static public function processMenuTrigger ($sMenuTriggerName) {
-
+    static public function processMenuTrigger ($sMenuTriggerName)
+    {
         // get list of active modules
         bx_import('BxDolModuleQuery');
         $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array(
             'type' => 'modules',
             'active' => 1,
         ));
-        
-        // get list of menu triggers 
+
+        // get list of menu triggers
         $aMenuItem = BxDolMenuQuery::getMenuTriggers($sMenuTriggerName);
 
         // check each menu item trigger for all modules
@@ -206,7 +208,8 @@ class BxDolMenu extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
      * @param $sModule menu item module to set as selected
      * @param $sName menu item name to set as selected
      */
-    public function setSelected ($sModule, $sName) {
+    public function setSelected ($sModule, $sName)
+    {
         $this->_sSelModule = $sModule;
         $this->_sSelName = $sName;
     }
@@ -216,19 +219,21 @@ class BxDolMenu extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
      * @param $a array of markers as key => value
      * @return true on success or false on error
      */
-    public function addMarkers ($a) {
+    public function addMarkers ($a)
+    {
         if (empty($a) || !is_array($a))
             return false;
         $this->_aMarkers = array_merge ($this->_aMarkers, $a);
         return true;
     }
-  
+
     /**
      * Check if menu items is selected.
      * @param $a menu item array
      * @return boolean
-     */ 
-    protected function _isSelected ($a) {
+     */
+    protected function _isSelected ($a)
+    {
         if ($this->_sSelModule || $this->_sSelName)
             return (!isset($a['module']) || $a['module'] == $this->_sSelModule) && (isset($a['name']) && $a['name'] == $this->_sSelName) ? true : false;
         return (!isset($a['module']) || $a['module'] == self::$SEL_MODULE) && (isset($a['name']) && $a['name'] == self::$SEL_NAME) ? true : false;
@@ -238,8 +243,9 @@ class BxDolMenu extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
      * Check if menu items is visible.
      * @param $a menu item array
      * @return boolean
-     */ 
-    protected function _isVisible ($a) {
+     */
+    protected function _isVisible ($a)
+    {
         bx_import('BxDolAcl');
         return BxDolAcl::getInstance()->isMemberLevelInSet($a['visible_for_levels']);
     }
@@ -248,13 +254,14 @@ class BxDolMenu extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
      * Replace provided markers in menu item array, curently markers are replaced in title, link and onclick fields.
      * @param $a menu item array
      * @return array where markes are replaced with real values
-     */ 
-    protected function _replaceMarkers ($a) {
+     */
+    protected function _replaceMarkers ($a)
+    {
         if (empty($this->_aMarkers))
             return $a;
         $aReplacebleFields = array ('title', 'link', 'onclick');
         foreach ($aReplacebleFields as $sField)
-        	if (isset($a[$sField]))
+            if (isset($a[$sField]))
                 $a[$sField] = bx_replace_markers($a[$sField], $this->_aMarkers);
         return $a;
     }

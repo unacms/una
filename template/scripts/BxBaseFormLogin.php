@@ -12,11 +12,11 @@ bx_import('BxTemplFormView');
 /**
  * Login Form.
  */
-class BxBaseFormLogin extends BxTemplFormView 
+class BxBaseFormLogin extends BxTemplFormView
 {
     protected $_iRole = BX_DOL_ROLE_MEMBER;
 
-    public function __construct($aInfo, $oTemplate) 
+    public function __construct($aInfo, $oTemplate)
     {
         parent::__construct($aInfo, $oTemplate);
 
@@ -24,7 +24,7 @@ class BxBaseFormLogin extends BxTemplFormView
         $this->aInputs['relocate']['value'] = $sRelocate && 0 == strncmp(BX_DOL_URL_ROOT, $sRelocate, strlen(BX_DOL_URL_ROOT)) ? $sRelocate : BX_DOL_URL_ROOT . 'member.php';
     }
 
-    function isValid () 
+    function isValid ()
     {
         if (!parent::isValid ())
             return false;
@@ -32,9 +32,9 @@ class BxBaseFormLogin extends BxTemplFormView
         $sErrorString = bx_check_password($this->getCleanValue('ID'), $this->getCleanValue('Password'), $this->getRole());
         $this->_setCustomError ($sErrorString);
         return $sErrorString ? false : true;
-    }    
+    }
 
-    protected function genCustomInputSubmitText ($aInput) 
+    protected function genCustomInputSubmitText ($aInput)
     {
         bx_import('BxDolPermalinks');
         return '<div class="bx-form-right-line-aligned">
@@ -43,22 +43,22 @@ class BxBaseFormLogin extends BxTemplFormView
                 <div class="clear_both"></div>';
     }
 
-    public function getRole() 
+    public function getRole()
     {
         return $this->_iRole;
     }
 
-    public function setRole ($iRole) 
+    public function setRole ($iRole)
     {
         $this->_iRole = $iRole == BX_DOL_ROLE_ADMIN ? BX_DOL_ROLE_ADMIN : BX_DOL_ROLE_MEMBER;
     }
 
-    public function getLoginError () 
+    public function getLoginError ()
     {
         return isset($this->aInputs['ID']['error']) ? $this->aInputs['ID']['error'] : '';
     }
 
-    protected function _setCustomError ($s) 
+    protected function _setCustomError ($s)
     {
         $this->aInputs['ID']['error'] = $s;
     }

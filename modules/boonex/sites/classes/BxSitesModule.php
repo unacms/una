@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Sites Sites
  * @ingroup     DolphinModules
  *
@@ -54,16 +54,15 @@ class BxSitesModule extends BxDolModule
         $this->_iProfileId = bx_get_logged_profile_id();
     }
 
-
     // ====== SERVICE METHODS
-	public function serviceIsUsed($sDomain)
+    public function serviceIsUsed($sDomain)
     {
-		return $this->_oDb->isAccount(array('domain' => $sDomain));
+        return $this->_oDb->isAccount(array('domain' => $sDomain));
     }
 
     public function serviceBrowse()
     {
-    	bx_import('BxDolGrid');
+        bx_import('BxDolGrid');
         $oGrid = BxDolGrid::getObjectInstance('bx_sites_browse');
         if(!$oGrid)
             return '';
@@ -71,8 +70,8 @@ class BxSitesModule extends BxDolModule
         return $oGrid->getCode();
     }
 
-	public function serviceSiteCreate()
-	{
+    public function serviceSiteCreate()
+    {
         bx_import('Forms', $this->_aModule);
         $oForms = new BxSitesForms($this);
         return $oForms->addDataForm();
@@ -80,131 +79,128 @@ class BxSitesModule extends BxDolModule
 
     public function serviceSiteSubscribe()
     {
-    	$sToken = bx_process_input(bx_get('token'));
-    	if($sToken === false)
-    		return MsgBox(_t('_bx_sites_paypal_err_token_not_found'));
+        $sToken = bx_process_input(bx_get('token'));
+        if($sToken === false)
+            return MsgBox(_t('_bx_sites_paypal_err_token_not_found'));
 
-    	bx_import('Paypal', $this->_aModule);
-		$oPaypal = new BxSitesPaypal($this);
-		$sResultMessage = $oPaypal->subscribe($sToken);
+        bx_import('Paypal', $this->_aModule);
+        $oPaypal = new BxSitesPaypal($this);
+        $sResultMessage = $oPaypal->subscribe($sToken);
 
-		return MsgBox(_t($sResultMessage));
+        return MsgBox(_t($sResultMessage));
     }
 
     public function serviceSiteView()
     {
-    	$iId = bx_process_input(bx_get('id'), BX_DATA_INT);
-    	if($iId === false)
-    		return MsgBox(_t('_bx_sites_txt_err_site_is_not_defined'));
+        $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if($iId === false)
+            return MsgBox(_t('_bx_sites_txt_err_site_is_not_defined'));
 
-    	$aAccount = $this->_oDb->getAccount(array('type' => 'id', 'value' => $iId));
-		if(empty($aAccount) || !is_array($aAccount))
-			return MsgBox(_t('_bx_sites_txt_err_site_is_not_defined'));
+        $aAccount = $this->_oDb->getAccount(array('type' => 'id', 'value' => $iId));
+        if(empty($aAccount) || !is_array($aAccount))
+            return MsgBox(_t('_bx_sites_txt_err_site_is_not_defined'));
 
-		$sMsg = $this->isAllowedView($aAccount);
+        $sMsg = $this->isAllowedView($aAccount);
         if($sMsg !== CHECK_ACTION_RESULT_ALLOWED)
             return MsgBox($sMsg);
 
-		bx_import('BxDolGrid');
+        bx_import('BxDolGrid');
         $oGrid = BxDolGrid::getObjectInstance('bx_sites_overview');
         if(!$oGrid)
             return '';
 
-		$oGrid->setAccount($aAccount);
+        $oGrid->setAccount($aAccount);
         return array(
-        	'title' => $this->getDomain($aAccount['domain']),
-        	'content' => $this->_oTemplate->getJs(true) . $oGrid->getCode()
+            'title' => $this->getDomain($aAccount['domain']),
+            'content' => $this->_oTemplate->getJs(true) . $oGrid->getCode()
         );
     }
 
-	public function serviceSiteEdit()
+    public function serviceSiteEdit()
     {
-    	$aParams = $this->getSelectParam();
-    	if($aParams === false)
-    		return MsgBox(_t('_bx_sites_txt_err_site_is_not_defined'));
-    		
-		$aAccount = $this->_oDb->getAccount($aParams);
-		if(empty($aAccount) || !is_array($aAccount))
-			return MsgBox(_t('_bx_sites_txt_err_site_is_not_defined'));
+        $aParams = $this->getSelectParam();
+        if($aParams === false)
+            return MsgBox(_t('_bx_sites_txt_err_site_is_not_defined'));
 
-		bx_import('Forms', $this->_aModule);
-		$oForms = new BxSitesForms($this);
+        $aAccount = $this->_oDb->getAccount($aParams);
+        if(empty($aAccount) || !is_array($aAccount))
+            return MsgBox(_t('_bx_sites_txt_err_site_is_not_defined'));
 
-		return array(
-			'title' => _t('_bx_sites_page_block_title_site_manage') . ' ' . $this->getDomain($aAccount['domain']),
-			'content' => $oForms->editDataForm($aAccount)
-		);
+        bx_import('Forms', $this->_aModule);
+        $oForms = new BxSitesForms($this);
+
+        return array(
+            'title' => _t('_bx_sites_page_block_title_site_manage') . ' ' . $this->getDomain($aAccount['domain']),
+            'content' => $oForms->editDataForm($aAccount)
+        );
     }
 
-	public function serviceSiteDelete($iId = 0)
+    public function serviceSiteDelete($iId = 0)
     {
-    	if(!$iId)
-    		$iId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if(!$iId)
+            $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
 
-    	if(!$iId)
-    		return MsgBox(_t('_bx_sites_txt_err_site_is_not_defined'));
-    		
-    	$aAccount = $this->_oDb->getAccount(array('type' => 'id', 'value' => $iId));
-		if(empty($aAccount) || !is_array($aAccount))
-			return MsgBox(_t('_bx_sites_txt_err_site_is_not_defined'));
+        if(!$iId)
+            return MsgBox(_t('_bx_sites_txt_err_site_is_not_defined'));
+
+        $aAccount = $this->_oDb->getAccount(array('type' => 'id', 'value' => $iId));
+        if(empty($aAccount) || !is_array($aAccount))
+            return MsgBox(_t('_bx_sites_txt_err_site_is_not_defined'));
 
         bx_import('Forms', $this->_aModule);
         $oProfileForms = new BxSitesForms($this);
 
         return array(
-        	'title' => _t('_bx_sites_page_block_title_site_delete') . ' ' . $this->getDomain($aAccount['domain']),
-        	'content' => $oProfileForms->deleteDataForm($aAccount)
+            'title' => _t('_bx_sites_page_block_title_site_delete') . ' ' . $this->getDomain($aAccount['domain']),
+            'content' => $oProfileForms->deleteDataForm($aAccount)
         );
     }
 
     // ====== ACTION METHODS
-	public function actionIpn()
-	{
-		$aData = &$_POST;
-		foreach($aData as $sKey => $sValue)
-			$aData[$sKey] = bx_process_input(trim($sValue));
+    public function actionIpn()
+    {
+        $aData = &$_POST;
+        foreach($aData as $sKey => $sValue)
+            $aData[$sKey] = bx_process_input(trim($sValue));
 
-		if(!isset($aData['txn_type']))
-			return;
+        if(!isset($aData['txn_type']))
+            return;
 
-		bx_import('Paypal', $this->_aModule);
-		$oPaypal = new BxSitesPaypal($this);
-		$oPaypal->process($aData);
-	
-		bx_import('Account', $this->_aModule);
-		$oAccount = new BxSitesAccount($this);
-		if($oPaypal->bProfileCreated) {
-			$oAccount->onProfileConfirmed($aData);
-		}
-		else if($oPaypal->bProfileCanceled) {
-			$oAccount->onProfileCanceled($aData);
-		}
-		else if($oPaypal->bPaymentDone) {
-			$oAccount->onPaymentReceived($aData, $oPaypal->fPaymentAmout);
-		}
-		else if($oPaypal->bPaymentRefund) {
-			$oAccount->onPaymentRefunded($aData);
-		}
-	}
+        bx_import('Paypal', $this->_aModule);
+        $oPaypal = new BxSitesPaypal($this);
+        $oPaypal->process($aData);
 
-	/*
-	 * Can be removed if it's not used.
-	 * 
-	public function actionReactivate($iId)
-	{
-		$aResult = array('code' => '1', 'message' => _t('_bx_sites_txt_err_cannot_perform'));
+        bx_import('Account', $this->_aModule);
+        $oAccount = new BxSitesAccount($this);
+        if($oPaypal->bProfileCreated) {
+            $oAccount->onProfileConfirmed($aData);
+        } else if($oPaypal->bProfileCanceled) {
+            $oAccount->onProfileCanceled($aData);
+        } else if($oPaypal->bPaymentDone) {
+            $oAccount->onPaymentReceived($aData, $oPaypal->fPaymentAmout);
+        } else if($oPaypal->bPaymentRefund) {
+            $oAccount->onPaymentRefunded($aData);
+        }
+    }
 
-		$sUrl = $this->startSubscription($iId);
-		if(!empty($sUrl))
-			$aResult = array('code' => '0', 'message' => '', 'redirect' => $sUrl);
+    /*
+     * Can be removed if it's not used.
+     *
+    public function actionReactivate($iId)
+    {
+        $aResult = array('code' => '1', 'message' => _t('_bx_sites_txt_err_cannot_perform'));
 
-		header('Content-Type:text/javascript');
+        $sUrl = $this->startSubscription($iId);
+        if(!empty($sUrl))
+            $aResult = array('code' => '0', 'message' => '', 'redirect' => $sUrl);
+
+        header('Content-Type:text/javascript');
         echo json_encode($aResult);
-	}
-	*/
+    }
+    */
 
     // ====== PERMISSION METHODS
-	public function isAllowedAdd ($isPerformAction = false)
+    public function isAllowedAdd ($isPerformAction = false)
     {
         $aCheck = checkActionModule($this->_iProfileId, 'create site', $this->getName(), $isPerformAction);
         if ($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
@@ -213,8 +209,8 @@ class BxSitesModule extends BxDolModule
         return CHECK_ACTION_RESULT_ALLOWED;
     }
 
-	public function isAllowedView ($aDataEntry, $isPerformAction = false)
-	{
+    public function isAllowedView ($aDataEntry, $isPerformAction = false)
+    {
         // moderator and owner always have access
         if ($aDataEntry[BxSitesConfig::$FIELD_AUTHOR] == $this->_iProfileId || $this->isModeratorAccess($isPerformAction))
             return CHECK_ACTION_RESULT_ALLOWED;
@@ -231,8 +227,8 @@ class BxSitesModule extends BxDolModule
         return _t('_sys_txt_access_denied');
     }
 
-	public function isAllowedDelete (&$aDataEntry, $isPerformAction = false)
-	{
+    public function isAllowedDelete (&$aDataEntry, $isPerformAction = false)
+    {
         // moderator and owner always have access
         if ($aDataEntry[BxSitesConfig::$FIELD_AUTHOR] == $this->_iProfileId || $this->isModeratorAccess($isPerformAction))
             return CHECK_ACTION_RESULT_ALLOWED;
@@ -242,7 +238,7 @@ class BxSitesModule extends BxDolModule
 
     public function isModeratorAccess ($isPerformAction = false)
     {
-        $aCheck = checkActionModule($this->_iProfileId, 'manage sites', $this->getName(), $isPerformAction); 
+        $aCheck = checkActionModule($this->_iProfileId, 'manage sites', $this->getName(), $isPerformAction);
         return $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED;
     }
 
@@ -250,49 +246,48 @@ class BxSitesModule extends BxDolModule
     // ====== COMMON METHODS
     public function getSelectParam()
     {
-    	$sType = 'id';
-    	$mixedId = bx_get('id');
-    	if($mixedId === false) {
-    		$mixedId = bx_get('sid');
-    		if($mixedId === false)
-    			return false;
+        $sType = 'id';
+        $mixedId = bx_get('id');
+        if($mixedId === false) {
+            $mixedId = bx_get('sid');
+            if($mixedId === false)
+                return false;
 
-    		$sType = 'profile_sid';
-    		$mixedId = bx_process_input($mixedId);
-    	}
-    	else
-    		$mixedId = bx_process_input($mixedId, BX_DATA_INT);
+            $sType = 'profile_sid';
+            $mixedId = bx_process_input($mixedId);
+        } else
+            $mixedId = bx_process_input($mixedId, BX_DATA_INT);
 
-    	return array('type' => $sType, 'value' => $mixedId);
+        return array('type' => $sType, 'value' => $mixedId);
     }
 
     public function getDomain($sDomain, $bProtocol = false, $bWww = false)
     {
-    	$sDomain = sprintf($this->_oConfig->getDomainMask(), $sDomain);
+        $sDomain = sprintf($this->_oConfig->getDomainMask(), $sDomain);
 
-    	if($bWww)
-    		$sDomain = 'www.' . $sDomain;
+        if($bWww)
+            $sDomain = 'www.' . $sDomain;
 
-    	if($bProtocol)
-    		$sDomain = 'http://' . $sDomain;
+        if($bProtocol)
+            $sDomain = 'http://' . $sDomain;
 
-    	return $sDomain;
+        return $sDomain;
     }
 
     public function getObject($sClass)
     {
-		return bx_instance('BxSites' . $sClass, array($this), $this->_aModule);
+        return bx_instance('BxSites' . $sClass, array($this), $this->_aModule);
     }
 
     public function startSubscription($iId)
     {
-    	$oPaypal = $this->getObject('Paypal');
-		return $oPaypal->start($iId);
+        $oPaypal = $this->getObject('Paypal');
+        return $oPaypal->start($iId);
     }
 
     public function cancelSubscription($sPpProfileId)
     {
-    	$oPaypal = $this->getObject('Paypal');
+        $oPaypal = $this->getObject('Paypal');
         return $oPaypal->performAction($sPpProfileId);
     }
 }

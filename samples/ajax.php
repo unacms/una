@@ -7,7 +7,7 @@
  * @{
  */
 
-/** 
+/**
  * @page samples
  * @section ajax AJAX loader
  */
@@ -32,16 +32,16 @@ $oTemplate->setPageHeader ("AJAX");
 $oTemplate->setPageContent ('page_main_code', PageCompMainCode());
 $oTemplate->getPageCode();
 
-
 /**
  * page code function
  */
-function PageCompMainCode() {
-
+function PageCompMainCode()
+{
     ob_start();
 ?>
     <script>
-    function ajaxTest(e) {
+    function ajaxTest(e)
+    {
         bx_loading_btn(e, 1);
         getHtmlData('bx-result', 'samples/ajax.php?ajax=1', function () {
             bx_loading_btn(e, 0);
@@ -57,6 +57,5 @@ function PageCompMainCode() {
 <?php
     return DesignBoxContent("AJAX", ob_get_clean(), BX_DB_PADDING_DEF);
 }
-
 
 /** @} */

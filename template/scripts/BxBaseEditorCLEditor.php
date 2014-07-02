@@ -13,8 +13,8 @@ bx_import('BxDolEditor');
  * CLEditor editor representation.
  * @see BxDolEditor
  */
-class BxBaseEditorCLEditor extends BxDolEditor {
-
+class BxBaseEditorCLEditor extends BxDolEditor
+{
     /**
      * Common initialization params
      */
@@ -54,7 +54,8 @@ class BxBaseEditorCLEditor extends BxDolEditor {
     protected $_oTemplate;
     protected $_bJsCssAdded = false;
 
-    public function __construct ($aObject, $oTemplate) {
+    public function __construct ($aObject, $oTemplate)
+    {
         parent::__construct ($aObject);
 
         if ($oTemplate)
@@ -69,8 +70,8 @@ class BxBaseEditorCLEditor extends BxDolEditor {
      * @param $iViewMode - editor view mode: BX_EDITOR_STANDARD, BX_EDITOR_MINI, BX_EDITOR_FULL
      * @param $bDynamicMode - is AJAX mode or not, the HTML with editor area is loaded synamically.
      */
-    public function attachEditor ($sSelector, $iViewMode = BX_EDITOR_STANDARD, $bDynamicMode = false) {
-
+    public function attachEditor ($sSelector, $iViewMode = BX_EDITOR_STANDARD, $bDynamicMode = false)
+    {
         // set visual mode
         switch ($iViewMode) {
             case BX_EDITOR_MINI:
@@ -83,9 +84,9 @@ class BxBaseEditorCLEditor extends BxDolEditor {
             default:
                  $sToolsItems = self::$CONF_STANDARD;
         }
-                
+
         // initialize editor
-        $sInitEditor = $this->_replaceMarkers(self::$CONF_COMMON, array(            
+        $sInitEditor = $this->_replaceMarkers(self::$CONF_COMMON, array(
             'bx_var_custom_init' => $sToolsItems,
             'bx_var_selector' => bx_js_string($sSelector, BX_ESCAPE_STR_APOS),
             'bx_var_css_path' => bx_js_string($this->_oTemplate->getCssUrl('editor.css'), BX_ESCAPE_STR_APOS),
@@ -105,7 +106,7 @@ class BxBaseEditorCLEditor extends BxDolEditor {
                         $sInitEditor
                     }, 100);
                 }
-            </script>";            
+            </script>";
 
         } else {
 
@@ -123,7 +124,8 @@ class BxBaseEditorCLEditor extends BxDolEditor {
     /**
      * Add css/js files which are needed for editor display and functionality.
      */
-    protected function _addJsCss($bDynamicMode = false, $sInitEditor = '') {
+    protected function _addJsCss($bDynamicMode = false, $sInitEditor = '')
+    {
         if ($bDynamicMode)
             return '';
         if ($this->_bJsCssAdded)

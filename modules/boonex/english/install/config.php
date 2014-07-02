@@ -1,8 +1,8 @@
-<?php 
+<?php
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    English English language
  * @ingroup     DolphinModules
  *
@@ -14,7 +14,7 @@ $aConfig = array(
      * Main Section.
      */
     'type' => BX_DOL_MODULE_TYPE_LANGUAGE,
-	'name' => 'bx_en',
+    'name' => 'bx_en',
     'title' => 'English',
     'note' => 'Language file',
     'version' => '1.0.6',
@@ -42,16 +42,16 @@ $aConfig = array(
 
     /**
      * Installation/Uninstallation Section.
-     * NOTE. The sequence of actions is critical. Don't change the order. 
+     * NOTE. The sequence of actions is critical. Don't change the order.
      */
     'install' => array(
         'execute_sql' => 1,
         'update_languages' => 1,
-    	'install_language' => 1,
+        'install_language' => 1,
         'recompile_global_paramaters' => 1
     ),
     'uninstall' => array (
-    	'update_languages' => 1,
+        'update_languages' => 1,
         'execute_sql' => 1,
         'recompile_global_paramaters' => 1
     ),

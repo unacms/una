@@ -7,7 +7,8 @@
  * @{
  */
 
-class BxDolGzip extends BxDol {
+class BxDolGzip extends BxDol
+{
     protected $_sType;
     protected $_bGzip;
     protected $_sEncoding;
@@ -19,7 +20,8 @@ class BxDolGzip extends BxDol {
     protected $_sOutContent;
     protected $_sOutContentZipped;
 
-    function __construct($sFile) {
+    function __construct($sFile)
+    {
         parent::__construct();
 
         $this->_iExpirationOffset = 3600 * 24 * 10;
@@ -44,7 +46,8 @@ class BxDolGzip extends BxDol {
         $this->_sOutContentZipped = "";
     }
 
-    static function load($sFile) {
+    static function load($sFile)
+    {
         $oLoader = new BxDolGzip($sFile);
 
         $oLoader->prepare();
@@ -52,7 +55,8 @@ class BxDolGzip extends BxDol {
         $oLoader->output();
     }
 
-    function prepare() {
+    function prepare()
+    {
         header("Content-type: text/" . $this->_sType);
         header("Vary: Accept-Encoding");
         header("Expires: " . gmdate("D, d M Y H:i:s", time() + $this->_iExpirationOffset) . " GMT");
@@ -67,14 +71,16 @@ class BxDolGzip extends BxDol {
         }
     }
 
-    function read() {
+    function read()
+    {
         if($this->_bGzip && file_exists($this->_sOutFile))
             $this->_sOutContentZipped = $this->getFileContents($this->_sOutFile);
         else
             $this->_sOutContent = $this->getFileContents($this->_sInFile);
     }
 
-    function output() {
+    function output()
+    {
         if(!$this->_bGzip) {
             echo $this->_sOutContent;
             return;
@@ -87,7 +93,7 @@ class BxDolGzip extends BxDol {
         }
 
         if (!$this->_sOutContent)
-            return;        
+            return;
 
         $this->_sOutContentZipped = gzencode($this->_sOutContent, 9, FORCE_GZIP);
         $this->putFileContents($this->_sOutFile, $this->_sOutContentZipped);
@@ -95,7 +101,8 @@ class BxDolGzip extends BxDol {
         echo $this->_sOutContentZipped;
     }
 
-    function getFileContents($sPath) {
+    function getFileContents($sPath)
+    {
         $sPath = realpath($sPath);
 
         if(!$sPath || !@is_file($sPath))
@@ -116,7 +123,8 @@ class BxDolGzip extends BxDol {
         return $sContent;
     }
 
-    function putFileContents($sPath, $sContent) {
+    function putFileContents($sPath, $sContent)
+    {
         if (function_exists("file_put_contents"))
             return @file_put_contents($sPath, $sContent);
 

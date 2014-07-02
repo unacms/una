@@ -12,7 +12,8 @@ bx_import('BxDolStudioUtils');
 bx_import('BxDolStudioBuilderPage');
 bx_import('BxTemplStudioFormView');
 
-class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
+class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
+{
     protected $sParamsDivider = '#';
     protected $sSelectKeyPrefix = 'id-';
 
@@ -28,19 +29,20 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
 
     protected $aHtmlIds = array(
         'create_popup_id' => 'adm-bp-create-popup',
-    	'edit_popup_id' => 'adm-bp-edit-popup',
+        'edit_popup_id' => 'adm-bp-edit-popup',
         'uri_field_id' => 'adm-bp-field-uri',
         'settings_group_id' => 'adm-bp-settings-group-',
         'settings_groups_id' => 'adm-bp-settings-groups',
         'create_block_popup_id' => 'adm-bp-create-block-popup',
         'edit_block_popup_id' => 'adm-bp-edit-block-popup',
         'block_id' => 'adm-bpb-',
-    	'block_list_id' => 'adm-bpl-',
+        'block_list_id' => 'adm-bpl-',
         'block_lists_id' => 'adm-bp-block-lists',
-    	'layout_id' => 'adm-bpl-',
+        'layout_id' => 'adm-bpl-',
     );
 
-    function __construct($sType = '', $sPage = '') {
+    function __construct($sType = '', $sPage = '')
+    {
         parent::__construct($sType, $sPage);
 
         $this->sBaseUrl = BX_DOL_URL_STUDIO . 'builder_page.php';
@@ -48,38 +50,42 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
         $this->sPageUrl = $this->sTypeUrl . '&page=%s';
     }
 
-    function getPageCss() {
+    function getPageCss()
+    {
         return array_merge(parent::getPageCss(), array('page_layouts.css', 'builder_page.css'));
     }
 
-    function getPageJs() {
+    function getPageJs()
+    {
         return array_merge(parent::getPageJs(), array(
-        	'jquery-ui/jquery.ui.core.min.js', 
-        	'jquery-ui/jquery.ui.widget.min.js',
-        	'jquery-ui/jquery.ui.mouse.min.js',
-        	'jquery-ui/jquery.ui.sortable.min.js',
+            'jquery-ui/jquery.ui.core.min.js',
+            'jquery-ui/jquery.ui.widget.min.js',
+            'jquery-ui/jquery.ui.mouse.min.js',
+            'jquery-ui/jquery.ui.sortable.min.js',
             'jquery.ui.touch-punch.min.js',
-        	'jquery.easing.js',
+            'jquery.easing.js',
             'jquery.form.min.js',
-        	'functions.js',
-        	'builder_page.js'
+            'functions.js',
+            'builder_page.js'
         ));
     }
 
-    function getPageJsObject() {
+    function getPageJsObject()
+    {
         return 'oBxDolStudioBuilderPage';
     }
 
-    function getPageMenu($aMenu = array(), $aMarkers = array()) {
+    function getPageMenu($aMenu = array(), $aMarkers = array())
+    {
         $aMenuItems = array(
-            BX_DOL_STUDIO_MODULE_SYSTEM => array( 
-            	'name' => BX_DOL_STUDIO_MODULE_SYSTEM,
-            	'icon' => 'std-mi.png',
+            BX_DOL_STUDIO_MODULE_SYSTEM => array(
+                'name' => BX_DOL_STUDIO_MODULE_SYSTEM,
+                'icon' => 'std-mi.png',
             ),
-            BX_DOL_STUDIO_MODULE_CUSTOM => array( 
-            	'name' => BX_DOL_STUDIO_MODULE_CUSTOM,  
-            	'icon' => 'mi-bp-custom.png',
-            	'title' => '_adm_bp_cpt_type_' . BX_DOL_STUDIO_MODULE_CUSTOM,
+            BX_DOL_STUDIO_MODULE_CUSTOM => array(
+                'name' => BX_DOL_STUDIO_MODULE_CUSTOM,
+                'icon' => 'mi-bp-custom.png',
+                'title' => '_adm_bp_cpt_type_' . BX_DOL_STUDIO_MODULE_CUSTOM,
             )
         );
 
@@ -96,67 +102,68 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
             $aMenu[] = array(
                 'name' => $aMenuItem['name'],
                 'icon' => isset($aMenuItem['path']) && $aMenuItem['path'] != '' && $aMenuItem['uri'] != '' ? $aMenuItem['uri'] . '@modules/' . $aMenuItem['path'] . '|std-mi.png' : $aMenuItem['icon'],
-            	'link' =>  sprintf($this->sTypeUrl, $aMenuItem['name']),
-            	'title' => $aMenuItem['title'],
-            	'selected' => $aMenuItem['name'] == $this->sType
+                'link' =>  sprintf($this->sTypeUrl, $aMenuItem['name']),
+                'title' => $aMenuItem['title'],
+                'selected' => $aMenuItem['name'] == $this->sType
             );
 
         return parent::getPageMenu($aMenu);
     }
 
-    function getPageCode($bHidden = false) {
+    function getPageCode($bHidden = false)
+    {
         bx_import('BxTemplPage');
         $oPage = BxTemplPage::getObjectInstance($this->sPage);
 
-    	$oTemplate = BxDolStudioTemplate::getInstance();
-    	$sJsObject = $this->getPageJsObject();
+        $oTemplate = BxDolStudioTemplate::getInstance();
+        $sJsObject = $this->getPageJsObject();
 
-    	$sContent = "";
-    	if(($bPage = $this->sPage != '') === true) {
-    	    $aTmplVars = array();
-    	    for($i = 1; $i <= $this->aPageRebuild['layout_cells_number']; $i++) {
-    	        $aBlocks = array();
-    	        $this->oDb->getBlocks(array('type' => 'by_object_cell', 'object' => $this->aPageRebuild['object'], 'cell' => $i), $aBlocks, false);
+        $sContent = "";
+        if(($bPage = $this->sPage != '') === true) {
+            $aTmplVars = array();
+            for($i = 1; $i <= $this->aPageRebuild['layout_cells_number']; $i++) {
+                $aBlocks = array();
+                $this->oDb->getBlocks(array('type' => 'by_object_cell', 'object' => $this->aPageRebuild['object'], 'cell' => $i), $aBlocks, false);
 
-    	        $aTmplVarsCell = array('id' => $i, 'bx_repeat:blocks' => array());
-    	        foreach($aBlocks as $aBlock)
-    	            $aTmplVarsCell['bx_repeat:blocks'][] = array(
-    	                'html_id' => $this->aHtmlIds['block_id'] . $aBlock['id'],
-    	            	'bx_if:is_inactive' => array(
-    	                    'condition' => (int)$aBlock['active'] == 0,
-    	                    'content' => array()
-    	                ),
-    	                'bx_if:show_link' => array(
-    	                    'condition' => true,
-    	                    'content' => array(
-    	                        'onclick' => $sJsObject . ".performAction('block_edit', {id: " . $aBlock['id'] . "})",
-    	                		'title' => $oPage->getBlockTitle($aBlock),
-    	                    )
-    	                ),
-    	                'bx_if:show_text' => array(
-    	                    'condition' => false,
-    	                    'content' => array()
-    	                ),
-    	                'icon' => $this->getBlockIcon($aBlock),
-    	                'module' => $this->getModuleTitle($aBlock['module']),
-    	                'visible_for' => _t('_adm_bp_txt_visible_for', BxDolStudioUtils::getVisibilityTitle($aBlock['visible_for_levels'])),
-    	                'bx_if:show_checkbox' => array(
-    	                    'condition' => false,
-    	                    'content' => array()
-    	                ),
-    	                'bx_if:show_drag_handle' => array(
+                $aTmplVarsCell = array('id' => $i, 'bx_repeat:blocks' => array());
+                foreach($aBlocks as $aBlock)
+                    $aTmplVarsCell['bx_repeat:blocks'][] = array(
+                        'html_id' => $this->aHtmlIds['block_id'] . $aBlock['id'],
+                        'bx_if:is_inactive' => array(
+                            'condition' => (int)$aBlock['active'] == 0,
+                            'content' => array()
+                        ),
+                        'bx_if:show_link' => array(
+                            'condition' => true,
+                            'content' => array(
+                                'onclick' => $sJsObject . ".performAction('block_edit', {id: " . $aBlock['id'] . "})",
+                                'title' => $oPage->getBlockTitle($aBlock),
+                            )
+                        ),
+                        'bx_if:show_text' => array(
+                            'condition' => false,
+                            'content' => array()
+                        ),
+                        'icon' => $this->getBlockIcon($aBlock),
+                        'module' => $this->getModuleTitle($aBlock['module']),
+                        'visible_for' => _t('_adm_bp_txt_visible_for', BxDolStudioUtils::getVisibilityTitle($aBlock['visible_for_levels'])),
+                        'bx_if:show_checkbox' => array(
+                            'condition' => false,
+                            'content' => array()
+                        ),
+                        'bx_if:show_drag_handle' => array(
                             'condition' => true,
                             'content' => array()
                         )
-    	            );
+                    );
 
-    	        $aTmplVars['cell_' . $i] = $oTemplate->parseHtmlByName('bp_cell.html', $aTmplVarsCell);
-    	    }
+                $aTmplVars['cell_' . $i] = $oTemplate->parseHtmlByName('bp_cell.html', $aTmplVarsCell);
+            }
 
             $sContent = $oTemplate->parseHtmlByName($this->aPageRebuild['layout_template'], $aTmplVars);
-    	}
+        }
 
-    	bx_import('BxDolStudioLanguagesUtils');
+        bx_import('BxDolStudioLanguagesUtils');
         $aLanguages = BxDolStudioLanguagesUtils::getInstance()->getLanguages();
 
         $aTmplVars = array(
@@ -164,12 +171,12 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
             'action_url' => $this->sBaseUrl,
             'page_url' => sprintf($this->sPageUrl, '{0}', '{1}'),
             'type' => $this->sType,
-        	'page' => $this->sPage,
+            'page' => $this->sPage,
             'html_ids' => json_encode($this->aHtmlIds),
             'languahes' => json_encode($aLanguages),
             'bx_repeat:blocks' => array(
                 array(
-                	'caption' => '',
+                    'caption' => '',
                     'panel_top' => $this->getBlockPanelTop(),
                     'items' => $sContent,
                     'panel_bottom' => ''
@@ -181,7 +188,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
         return $oTemplate->parseHtmlByName('builder_page.html', $aTmplVars);
     }
 
-    function getBlockPanelTop($aParams = array()) {
+    function getBlockPanelTop($aParams = array())
+    {
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         return parent::getBlockPanelTop(
@@ -189,7 +197,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
         );
     }
 
-    protected function actionPageCreate() {
+    protected function actionPageCreate()
+    {
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         $sModule = BX_DOL_STUDIO_MODULE_CUSTOM;
@@ -209,7 +218,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
                     'submit_name' => 'do_submit'
                 ),
             ),
-            'inputs' => array (            
+            'inputs' => array (
                 'module' => array(
                     'type' => 'hidden',
                     'name' => 'module',
@@ -270,7 +279,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
                     ),
                     'attrs' => array(
                         'id' => $this->aHtmlIds['uri_field_id'],
-                    	'onfocus' => $this->getPageJsObject() . '.getUri(this);'
+                        'onfocus' => $this->getPageJsObject() . '.getUri(this);'
                     ),
                     'checker' => array (
                         'func' => 'length',
@@ -285,7 +294,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
                     'info' => '',
                     'value' => '',
                     'values' => array(
-            			array('key' => '', 'value' => _t('_adm_bp_txt_page_layout_empty')),
+                        array('key' => '', 'value' => _t('_adm_bp_txt_page_layout_empty')),
                     ),
                     'required' => '1',
                     'db' => array (
@@ -308,7 +317,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
                     ),
                 ),
                 'controls' => array(
-                    'name' => 'controls', 
+                    'name' => 'controls',
                     'type' => 'input_set',
                     array(
                         'type' => 'submit',
@@ -361,7 +370,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
         return array('popup' => $sContent);
     }
 
-    protected function actionPageEdit() {
+    protected function actionPageEdit()
+    {
         $sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
 
@@ -400,16 +410,16 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
         $aTmplParams = array(
             'menu' => array(),
             'html_settings_groups_id' => $this->aHtmlIds['settings_groups_id'],
-        	'bx_repeat:settings_groups' => array()
+            'bx_repeat:settings_groups' => array()
         );
         foreach($aSettings as $aSetting) {
             //--- get menu items
             $aTmplParams['menu'][$aSetting['name']] = array(
                 'name' => $aSetting['name'],
-            	'icon' => '',
+                'icon' => '',
                 'onclick' => $sJsObject . '.onChangeSettingGroup(\'' . $aSetting['name'] . '\', this);',
                 'title' => $aSetting['title'],
-            	'selected' => isset($aSetting['active']) && (int)$aSetting['active'] == 1
+                'selected' => isset($aSetting['active']) && (int)$aSetting['active'] == 1
             );
 
             //--- get settings
@@ -419,7 +429,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
                     'condition' => $aSetting['active'] != 1,
                     'content' => array()
                 ),
-                'content' => $this->{'getSettings' . $this->getClassName($aSetting['name'])}() 
+                'content' => $this->{'getSettings' . $this->getClassName($aSetting['name'])}()
             );
         }
 
@@ -437,7 +447,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
             unset($oForm->aInputs['settings']);
             foreach($aSettings as $aSetting)
                 $oForm->aInputs = array_merge($oForm->aInputs, $this->{'getSettings' . $this->getClassName($aSetting['name'])}(true));
-            
+
             $iVisibleFor = BxDolStudioUtils::getVisibilityValue($oForm->getCleanValue('visible_for'), $oForm->getCleanValue('visible_for_levels'));
             BxDolForm::setSubmittedValue('visible_for_levels', $iVisibleFor, $aForm['form_attrs']['method']);
             unset($oForm->aInputs['visible_for']);
@@ -458,8 +468,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
                 }
 
                 return array();
-            }
-            else
+            } else
                 return array('msg' => _t('_adm_bp_err_save'));
         }
 
@@ -472,7 +481,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
         return array('popup' => $sContent);
     }
 
-    protected function actionPageDelete() {
+    protected function actionPageDelete()
+    {
         if(empty($this->sPage) || empty($this->aPageRebuild) || !is_array($this->aPageRebuild))
             return array('msg' => _t('_adm_bp_err_page_delete'));
 
@@ -500,17 +510,19 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
         return array('msg' => _t('_adm_bp_err_page_delete'));
     }
 
-    protected function actionBlockList() {
+    protected function actionBlockList()
+    {
         $sModule = BX_DOL_STUDIO_BP_TYPE_DEFAULT;
         if(bx_get('bp_module') !== false)
             $sModule = bx_process_input(bx_get('bp_module'));
 
         return array(
-        	'content' => $this->getBlockList($sModule)
+            'content' => $this->getBlockList($sModule)
         );
     }
 
-    protected function actionBlockCreate() {
+    protected function actionBlockCreate()
+    {
         $sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
 
@@ -536,7 +548,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
                     'type' => 'custom',
                     'name' => 'blocks',
                     'content' => '',
-            		'db' => array (
+                    'db' => array (
                         'pass' => 'Int',
                     ),
                 ),
@@ -545,22 +557,22 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
 
         $aMenu = array(
             BX_DOL_STUDIO_BP_SKELETONS => array(
-            	'name' => BX_DOL_STUDIO_BP_SKELETONS,
-            	'icon' => 'mi-bp-skeletons.png',
+                'name' => BX_DOL_STUDIO_BP_SKELETONS,
+                'icon' => 'mi-bp-skeletons.png',
                 'title' => '_sys_block_types_skeletons',
-            	'selected' => $sSelected == BX_DOL_STUDIO_BP_SKELETONS,
+                'selected' => $sSelected == BX_DOL_STUDIO_BP_SKELETONS,
             ),
             BX_DOL_STUDIO_MODULE_SYSTEM => array(
-            	'name' => BX_DOL_STUDIO_MODULE_SYSTEM,
+                'name' => BX_DOL_STUDIO_MODULE_SYSTEM,
                 'icon' => 'std-mi.png',
-            	'title' => '_sys_block_types_system',
-            	'selected' => $sSelected == BX_DOL_STUDIO_MODULE_SYSTEM,
+                'title' => '_sys_block_types_system',
+                'selected' => $sSelected == BX_DOL_STUDIO_MODULE_SYSTEM,
             ),
             BX_DOL_STUDIO_MODULE_CUSTOM => array(
-            	'name' => BX_DOL_STUDIO_MODULE_CUSTOM,
-            	'icon' => 'mi-bp-custom.png',
-            	'title' => '_sys_block_types_custom',
-            	'selected' => $sSelected == BX_DOL_STUDIO_MODULE_CUSTOM,
+                'name' => BX_DOL_STUDIO_MODULE_CUSTOM,
+                'icon' => 'mi-bp-custom.png',
+                'title' => '_sys_block_types_custom',
+                'selected' => $sSelected == BX_DOL_STUDIO_MODULE_CUSTOM,
             )
         );
 
@@ -585,7 +597,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
         $aTmplParams = array(
             'menu' => $oMenu->getCode(),
             'html_block_lists_id' => $this->aHtmlIds['block_lists_id'],
-        	'blocks' => $this->getBlockList($sSelected)
+            'blocks' => $this->getBlockList($sSelected)
         );
 
         $aForm['inputs']['blocks']['content'] = $oTemplate->parseHtmlByName('bp_add_block_form.html', $aTmplParams);
@@ -601,7 +613,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
 
             bx_import('BxDolStudioLanguagesUtils');
             $oLanguage = BxDolStudioLanguagesUtils::getInstance();
-            
+
             bx_import('BxDolStorage');
             $oStorege = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
 
@@ -666,7 +678,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
         return array('popup' => $sContent);
     }
 
-    protected function actionBlockEdit() {
+    protected function actionBlockEdit()
+    {
         $sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
 
@@ -699,7 +712,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
                     'type' => 'hidden',
                     'name' => 'id',
                     'value' => $iId,
-            		'db' => array (
+                    'db' => array (
                         'pass' => 'Int',
                     ),
                 ),
@@ -726,7 +739,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
                     'info' => '',
                     'value' => $this->sSelectKeyPrefix . $aBlock['designbox_id'],
                     'values' => array(
-            			array('key' => '', 'value' => _t('_adm_bp_txt_block_designbox_empty')),
+                        array('key' => '', 'value' => _t('_adm_bp_txt_block_designbox_empty')),
                     ),
                     'required' => '1',
                     'db' => array (
@@ -745,8 +758,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
                     'info' => '',
                     'value' => $aBlock['visible_for_levels'] == BX_DOL_INT_MAX ? BX_DOL_STUDIO_VISIBLE_ALL : BX_DOL_STUDIO_VISIBLE_SELECTED,
                     'values' => array(
-            			array('key' => BX_DOL_STUDIO_VISIBLE_ALL, 'value' => _t('_adm_bp_txt_block_visible_for_all')),
-            			array('key' => BX_DOL_STUDIO_VISIBLE_SELECTED, 'value' => _t('_adm_bp_txt_block_visible_for_selected')),
+                        array('key' => BX_DOL_STUDIO_VISIBLE_ALL, 'value' => _t('_adm_bp_txt_block_visible_for_all')),
+                        array('key' => BX_DOL_STUDIO_VISIBLE_SELECTED, 'value' => _t('_adm_bp_txt_block_visible_for_selected')),
                     ),
                     'required' => '0',
                     'attrs' => array(
@@ -759,7 +772,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
                 'visible_for_levels' => array(
                     'type' => 'checkbox_set',
                     'name' => 'visible_for_levels',
-                	'caption' => _t('_adm_bp_txt_block_visible_for_levels'),
+                    'caption' => _t('_adm_bp_txt_block_visible_for_levels'),
                     'info' => _t('_adm_bp_dsc_block_visible_for_levels'),
                     'value' => array(),
                     'values' => array(),
@@ -773,16 +786,16 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
                 'active' => array(
                     'type' => 'switcher',
                     'name' => 'active',
-                	'caption' => _t('_adm_bp_txt_block_active'),
+                    'caption' => _t('_adm_bp_txt_block_active'),
                     'info' => '',
                     'value' => '1',
-                	'checked' => $aBlock['active'] == '1',
+                    'checked' => $aBlock['active'] == '1',
                     'db' => array (
                         'pass' => 'Int',
                     )
                 ),
                 'controls' => array(
-                    'name' => 'controls', 
+                    'name' => 'controls',
                     'type' => 'input_set',
                     array(
                         'type' => 'submit',
@@ -812,21 +825,21 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
         $aForm['inputs'] = $this->addInArray($aForm['inputs'], 'visible_for_levels', $this->getBlockContent($aBlock));
 
         if((int)$aBlock['deletable'] != 0)
-        	$aForm['inputs']['controls'][] = array (
-				'type' => 'reset',
-				'name' => 'close',
-				'value' => _t('_adm_bp_btn_block_delete'),
-				'attrs' => array(
-					'onclick' => $this->getPageJsObject() . ".deleteBlock(" . $aBlock['id'] . ")",
-					'class' => 'bx-def-margin-sec-left',
-				),
-			);
+            $aForm['inputs']['controls'][] = array (
+                'type' => 'reset',
+                'name' => 'close',
+                'value' => _t('_adm_bp_btn_block_delete'),
+                'attrs' => array(
+                    'onclick' => $this->getPageJsObject() . ".deleteBlock(" . $aBlock['id'] . ")",
+                    'class' => 'bx-def-margin-sec-left',
+                ),
+            );
 
         $oForm = new BxTemplStudioFormView($aForm);
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
-            $this->onSaveBlock($oForm, $aBlock);           
+            $this->onSaveBlock($oForm, $aBlock);
 
             if($oForm->update($iId) !== false)
                 return array('eval' => $sJsObject . '.onEditBlock(oData)');
@@ -843,7 +856,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
         return array('popup' => $sContent);
     }
 
-    protected function actionBlockDelete() {
+    protected function actionBlockDelete()
+    {
         $sJsObject = $this->getPageJsObject();
         $iId = (int)bx_get('id');
 
@@ -852,7 +866,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
         if(empty($aBlock) || !is_array($aBlock))
             return array('msg' => _t('_adm_bp_err_block_not_found'));
 
-		if((int)$aBlock['deletable'] == 0)
+        if((int)$aBlock['deletable'] == 0)
             return array('msg' => _t('_adm_bp_err_block_not_deletable'));
 
         if(!$this->oDb->deleteBlocks(array('type' => 'by_id', 'value' => $iId)))
@@ -862,7 +876,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
         return array('eval' => $sJsObject . '.onDeleteBlock(' . $iId . ', oData)');
     }
 
-    protected function actionImageDelete() {
+    protected function actionImageDelete()
+    {
         $sJsObject = $this->getPageJsObject();
         $iId = (int)bx_get('id');
 
@@ -886,13 +901,14 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
         return $this->actionBlockEdit();
     }
 
-    protected function actionUriGet() {
+    protected function actionUriGet()
+    {
         bx_import('BxDolStudioLanguagesUtils');
         $oLanguage = BxDolStudioLanguagesUtils::getInstance();
         $aLanguages = $oLanguage->getLanguages();
 
         $sLanguageDef = $oLanguage->getDefaultLangName();
-        $sLanguageCur = $oLanguage->getCurrentLangName(false);        
+        $sLanguageCur = $oLanguage->getCurrentLangName(false);
 
         $aValues = array();
         foreach($aLanguages as $sName => $sTitle)
@@ -907,7 +923,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
         else if(array_key_exists($sLanguageCur, $aValues) && $aValues[$sLanguageCur] != '')
             $sUri = $aValues[$sLanguageCur];
         else if(count($aValues) > 0)
-            foreach($aValues as $sValue) 
+            foreach($aValues as $sValue)
                 if(!empty($sValue)) {
                     $sUri = $sValue;
                     break;
@@ -917,7 +933,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
         return array('eval' => $this->getPageJsObject() . '.onGetUri(oData)', 'content' => $sUri);
     }
 
-    protected function getSettingsOptions($bInputsOnly = false) {
+    protected function getSettingsOptions($bInputsOnly = false)
+    {
         $aForm = array(
             'form_attrs' => array(
                 'id' => 'adm-bp-settings-seo',
@@ -929,7 +946,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
                 )
             ),
             'inputs' => array (
-            	'title_system' => array(
+                'title_system' => array(
                     'type' => 'text_translatable',
                     'name' => 'title_system',
                     'caption' => _t('_adm_bp_txt_page_title_system'),
@@ -982,7 +999,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
         return $oForm->getCode();
     }
 
-    protected function getSettingsLayout($bInputsOnly = false) {
+    protected function getSettingsLayout($bInputsOnly = false)
+    {
         $sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
 
@@ -990,13 +1008,13 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
         $this->oDb->getLayouts(array('type' => 'all'), $aLayouts, false);
 
         $aTmplParams = array(
-        	'bx_repeat:layouts' => array(),
+            'bx_repeat:layouts' => array(),
             'form' => ''
         );
 
         foreach($aLayouts as $aLayout)
             $aTmplParams['bx_repeat:layouts'][] = array(
-            	'id' => $aLayout['id'],
+                'id' => $aLayout['id'],
                 'html_id' => $this->aHtmlIds['layout_id'] . $aLayout['id'],
                 'js_object' => $sJsObject,
                 'bx_if:active' => array(
@@ -1004,7 +1022,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
                     'content' => array()
                 ),
                 'icon' => $oTemplate->getImageUrl($aLayout['icon']),
-            	'title' => _t($aLayout['title']),
+                'title' => _t($aLayout['title']),
             );
 
         $aForm = array(
@@ -1022,7 +1040,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
                     'type' => 'hidden',
                     'name' => 'layout_id',
                     'value' => $this->aPageRebuild['layout_id'],
-            		'db' => array (
+                    'db' => array (
                         'pass' => 'Int',
                     ),
                 )
@@ -1038,7 +1056,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
         return $oTemplate->parseHtmlByName('bp_layouts.html', $aTmplParams);
     }
 
-    protected function getSettingsVisibility($bInputsOnly = false) {
+    protected function getSettingsVisibility($bInputsOnly = false)
+    {
         if((int)$this->aPageRebuild['visible_for_levels_editable'] == 0)
             $aInputs = array(
                 'visible_for_levels' => array(
@@ -1047,7 +1066,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
                     'content' => MsgBox(_t('_adm_bp_err_page_visible_for_levels'))
                 )
             );
-        else 
+        else
             $aInputs = array(
                 'visible_for' => array(
                     'type' => 'select',
@@ -1056,8 +1075,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
                     'info' => '',
                     'value' => $this->aPageRebuild['visible_for_levels'] == BX_DOL_INT_MAX ? BX_DOL_STUDIO_VISIBLE_ALL : BX_DOL_STUDIO_VISIBLE_SELECTED,
                     'values' => array(
-            			array('key' => BX_DOL_STUDIO_VISIBLE_ALL, 'value' => _t('_adm_bp_txt_block_visible_for_all')),
-            			array('key' => BX_DOL_STUDIO_VISIBLE_SELECTED, 'value' => _t('_adm_bp_txt_block_visible_for_selected')),
+                        array('key' => BX_DOL_STUDIO_VISIBLE_ALL, 'value' => _t('_adm_bp_txt_block_visible_for_all')),
+                        array('key' => BX_DOL_STUDIO_VISIBLE_SELECTED, 'value' => _t('_adm_bp_txt_block_visible_for_selected')),
                     ),
                     'required' => '0',
                     'attrs' => array(
@@ -1070,11 +1089,11 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
                 'visible_for_levels' => array(
                     'type' => 'checkbox_set',
                     'name' => 'visible_for_levels',
-                	'caption' => _t('_adm_bp_txt_page_visible_for_levels'),
+                    'caption' => _t('_adm_bp_txt_page_visible_for_levels'),
                     'info' => _t('_adm_bp_dsc_page_visible_for_levels'),
                     'value' => '',
                     'values' => array(),
-                	'tr_attrs' => array(
+                    'tr_attrs' => array(
                         'style' => $this->aPageRebuild['visible_for_levels'] == BX_DOL_INT_MAX ? 'display:none' : ''
                     ),
                     'db' => array (
@@ -1105,7 +1124,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
         return $oForm->getCode();
     }
 
-    protected function getSettingsCache($bInputsOnly = false) {
+    protected function getSettingsCache($bInputsOnly = false)
+    {
         $aForm = array(
             'form_attrs' => array(
                 'id' => 'adm-bp-settings-cache',
@@ -1141,7 +1161,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
         return $oForm->getCode();
     }
 
-    protected function getSettingsSeo($bInputsOnly = false) {
+    protected function getSettingsSeo($bInputsOnly = false)
+    {
         $aForm = array(
             'form_attrs' => array(
                 'id' => 'adm-bp-settings-seo',
@@ -1194,7 +1215,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
         return $oForm->getCode();
     }
 
-    protected function getBlockIcon($aBlock) {
+    protected function getBlockIcon($aBlock)
+    {
         $sImageUrl = "";
         switch($aBlock['type']) {
             case BX_DOL_STUDIO_BP_BLOCK_RAW:
@@ -1212,11 +1234,13 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
         return $sImageUrl;
     }
 
-    protected function getBlockModule($aBlock) {
+    protected function getBlockModule($aBlock)
+    {
         return  $aBlock['module'] != BX_DOL_STUDIO_BP_SKELETONS ? $aBlock['module'] : BX_DOL_STUDIO_MODULE_CUSTOM;
     }
 
-    protected function getBlockContent($aBlock) {
+    protected function getBlockContent($aBlock)
+    {
         $aFields = array();
 
         switch($aBlock['type']) {
@@ -1228,7 +1252,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
                         'caption' => _t('_adm_bp_txt_block_content_raw'),
                         'info' => _t('_adm_bp_dsc_block_content_raw'),
                         'value' => $aBlock['content'],
-                		'required' => '0',
+                        'required' => '0',
                         'db' => array (
                             'pass' => 'Xss',
                         ),
@@ -1244,7 +1268,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
                         'caption' => _t('_adm_bp_txt_block_content_raw'),
                         'info' => _t('_adm_bp_dsc_block_content_raw'),
                         'value' => $aBlock['content'],
-                		'required' => '0',
+                        'required' => '0',
                         'html' => 1,
                         'db' => array (
                             'pass' => 'XssHtml',
@@ -1262,7 +1286,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
                         'info' => _t('_adm_bp_dsc_block_content_lang'),
                         'value' => $aBlock['content'] != '' ? _t($aBlock['content']) : '',
                         'required' => '0',
-                		'html' => 3,
+                        'html' => 3,
                         'db' => array (
                             'pass' => 'XssHtml',
                         ),
@@ -1276,11 +1300,11 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
                     list($iImageId, $sImageAlign) = explode($this->sParamsDivider, $aBlock['content']);
 
                 $aFields = array(
-                	'content' => array(
+                    'content' => array(
                         'type' => 'hidden',
                         'name' => 'content',
-                    	'value' => '',
-                		'db' => array (
+                        'value' => '',
+                        'db' => array (
                             'pass' => 'Xss',
                         ),
                     ),
@@ -1288,9 +1312,9 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
                         'type' => 'image_uploader',
                         'name' => 'image_file',
                         'caption' => _t('_adm_bp_txt_block_content_image_file'),
-                    	'caption_preview' => _t('_adm_bp_txt_block_content_image_preview'),
+                        'caption_preview' => _t('_adm_bp_txt_block_content_image_preview'),
                         'info' => _t('_adm_bp_dsc_block_content_image_file'),
-                        'ajax_action_delete' => $this->getPageJsObject() . '.deleteBlockImage(' . $aBlock['id'] . ')',  
+                        'ajax_action_delete' => $this->getPageJsObject() . '.deleteBlockImage(' . $aBlock['id'] . ')',
                         'value' => (int)$iImageId
                     ),
                     'image_align' => array(
@@ -1305,7 +1329,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
                             array('key' => 'center', 'value' => _t('_adm_bp_txt_block_content_image_align_center')),
                             array('key' => 'right', 'value' => _t('_adm_bp_txt_block_content_image_align_right')),
                         ),
-                		'required' => '0',
+                        'required' => '0',
                         'db' => array (
                             'pass' => 'Xss',
                         ),
@@ -1319,11 +1343,11 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
                     list($sRssUrl, $sRssLength) = explode($this->sParamsDivider, $aBlock['content']);
 
                 $aFields = array(
-                	'content' => array(
+                    'content' => array(
                         'type' => 'hidden',
                         'name' => 'content',
-                    	'value' => '',
-                		'db' => array (
+                        'value' => '',
+                        'db' => array (
                             'pass' => 'Xss',
                         ),
                     ),
@@ -1333,7 +1357,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
                         'caption' => _t('_adm_bp_txt_block_content_rss_url'),
                         'info' => _t('_adm_bp_dsc_block_content_rss_url'),
                         'value' => $sRssUrl,
-						'required' => '0',
+                        'required' => '0',
                         'db' => array (
                             'pass' => 'Xss',
                         ),
@@ -1344,7 +1368,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
                         'caption' => _t('_adm_bp_txt_block_content_rss_length'),
                         'info' => _t('_adm_bp_dsc_block_content_rss_length'),
                         'value' => $sRssLength,
-                    	'required' => '0',
+                        'required' => '0',
                         'db' => array (
                             'pass' => 'Int',
                         ),
@@ -1401,7 +1425,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
         return $aFields;
     }
 
-    protected function getBlockList($sModule) {
+    protected function getBlockList($sModule)
+    {
         if(empty($sModule))
             return '';
 
@@ -1414,24 +1439,24 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
             'type' => 'checkbox',
             'name' => 'blocks[]',
             'attrs' => array(
-            	'onChange' => 'javascript:' . $sJsObject . '.onSelectBlock(this);'
+                'onChange' => 'javascript:' . $sJsObject . '.onSelectBlock(this);'
             ),
             'value' => ''
         );
 
-    	$aTmplParams = array(
-    	    'html_block_list_id' => $this->aHtmlIds['block_list_id'] . $sModule,
-    		'bx_repeat:blocks' => array()
-    	);
+        $aTmplParams = array(
+            'html_block_list_id' => $this->aHtmlIds['block_list_id'] . $sModule,
+            'bx_repeat:blocks' => array()
+        );
 
-    	$aBlocks = $this->getBlocks($sModule);
+        $aBlocks = $this->getBlocks($sModule);
         foreach($aBlocks as $aBlock) {
             $aInputCheckbox['value'] = $aBlock['id'];
 
             $aTmplParams['bx_repeat:blocks'][] = array(
                 'js_object' => $sJsObject,
                 'html_id' => $this->aHtmlIds['block_id'] . $aBlock['id'],
-            	'bx_if:is_inactive' => array(
+                'bx_if:is_inactive' => array(
                     'condition' => false,
                     'content' => array()
                 ),
@@ -1442,13 +1467,13 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
                 'bx_if:show_text' => array(
                     'condition' => true,
                     'content' => array(
-                		'title' => _t($aBlock['title']),
+                        'title' => _t($aBlock['title']),
                     )
                 ),
                 'icon' => $this->getBlockIcon($aBlock),
                 'module' => $this->getModuleTitle($aBlock['module']),
-				'visible_for' => _t('_adm_bp_txt_visible_for', BxDolStudioUtils::getVisibilityTitle($aBlock['visible_for_levels'])),
-            	'bx_if:show_checkbox' => array(
+                'visible_for' => _t('_adm_bp_txt_visible_for', BxDolStudioUtils::getVisibilityTitle($aBlock['visible_for_levels'])),
+                'bx_if:show_checkbox' => array(
                     'condition' => true,
                     'content' => array(
                         'content' => $oForm->genRow($aInputCheckbox)
@@ -1464,7 +1489,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
         return $oTemplate->parseHtmlByName('bp_blocks_list.html', $aTmplParams);
     }
 
-    protected function onBlockDelete($aBlock) {
+    protected function onBlockDelete($aBlock)
+    {
         bx_import('BxDolStudioLanguagesUtils');
         BxDolStudioLanguagesUtils::getInstance()->deleteLanguageString($aBlock['title']);
 
@@ -1484,16 +1510,17 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
         }
     }
 
-    protected function getBlocks($sModule) {
+    protected function getBlocks($sModule)
+    {
         $aBlocks = array();
-    	$this->oDb->getBlocks(array('type' => 'by_module_to_copy', 'value' => $sModule), $aBlocks, false);
+        $this->oDb->getBlocks(array('type' => 'by_module_to_copy', 'value' => $sModule), $aBlocks, false);
 
-    	return $aBlocks;
+        return $aBlocks;
     }
 
-	protected function _getTmplVarsBlockPanelTop()
+    protected function _getTmplVarsBlockPanelTop()
     {
-    	$sJsObject = $this->getPageJsObject();
+        $sJsObject = $this->getPageJsObject();
 
         $oForm = new BxTemplStudioFormView(array());
 
@@ -1501,7 +1528,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
             'type' => 'select',
             'name' => 'page',
             'attrs' => array(
-            	'onChange' => 'javascript:' . $this->getPageJsObject() . '.onChangePage(this)'
+                'onChange' => 'javascript:' . $this->getPageJsObject() . '.onChangePage(this)'
             ),
             'value' => $this->sPage,
             'values' => array(
@@ -1520,9 +1547,9 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
             $aTmplVarsActions = $this->_getTmplVarsBlockPanelTopActions();
 
         return array(
-        	'js_object' => $this->getPageJsObject(),
+            'js_object' => $this->getPageJsObject(),
             'selector' => $oForm->genRow($aInputPages),
-        	'action_page_create' => $this->sActionPageCreate,
+            'action_page_create' => $this->sActionPageCreate,
             'bx_if:show_actions' => array(
                 'condition' => $this->sPage != '',
                 'content' => $aTmplVarsActions
@@ -1532,23 +1559,23 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage {
 
     protected function _getTmplVarsBlockPanelTopActions()
     {
-    	$sJsObject = $this->getPageJsObject();
+        $sJsObject = $this->getPageJsObject();
 
-    	bx_import('BxDolPermalinks');
+        bx_import('BxDolPermalinks');
         $oPermalinks = BxDolPermalinks::getInstance();
 
-    	return array(
-			'js_object' => $sJsObject,
-        	'url_view' => BX_DOL_URL_ROOT . $oPermalinks->permalink($this->aPageRebuild['url']),
+        return array(
+            'js_object' => $sJsObject,
+            'url_view' => BX_DOL_URL_ROOT . $oPermalinks->permalink($this->aPageRebuild['url']),
             'action_page_edit' => $this->sActionPageEdit,
             'bx_if:can_delete' => array(
-            	'condition' => (int)$this->aPageRebuild['deletable'] == 1,
+                'condition' => (int)$this->aPageRebuild['deletable'] == 1,
                 'content' => array(
-                	'js_object' => $sJsObject
-				)
-			),
-			'action_block_create' => $this->sActionBlockCreate,
-		);
+                    'js_object' => $sJsObject
+                )
+            ),
+            'action_block_create' => $this->sActionBlockCreate,
+        );
     }
 }
 

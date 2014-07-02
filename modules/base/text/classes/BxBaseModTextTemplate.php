@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    BaseText Base classes for text modules
  * @ingroup     DolphinModules
  *
@@ -14,14 +14,14 @@ bx_import('BxBaseModGeneralTemplate');
 /**
  * Module representation.
  */
-class BxBaseModTextTemplate extends BxBaseModGeneralTemplate 
+class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 {
-    function __construct(&$oConfig, &$oDb) 
+    function __construct(&$oConfig, &$oDb)
     {
         parent::__construct($oConfig, $oDb);
     }
 
-    function unit ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html') 
+    function unit ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html')
     {
         $oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$oModule->_oConfig->CNF;
@@ -75,7 +75,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
                     'title' => bx_process_output($aData[$CNF['FIELD_TITLE']]),
                     'summary_attr' => bx_html_attribute($sSummaryPlain),
                     'content_url' => $sUrl,
-                    'thumb_url' => $sPhotoThumb ? $sPhotoThumb : '',                    
+                    'thumb_url' => $sPhotoThumb ? $sPhotoThumb : '',
                 ),
             ),
             'bx_if:no_thumb' => array (
@@ -90,7 +90,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         return $this->parseHtmlByName($sTemplateName, $aVars);
     }
 
-    function entryText ($aData, $sTemplateName = 'entry-text.html') 
+    function entryText ($aData, $sTemplateName = 'entry-text.html')
     {
         $oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$oModule->_oConfig->CNF;
@@ -102,7 +102,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         return $this->parseHtmlByName($sTemplateName, $aVars);
     }
 
-    function entryAuthor ($aData, $sTemplateName = 'author.html') 
+    function entryAuthor ($aData, $sTemplateName = 'author.html')
     {
         $oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$oModule->_oConfig->CNF;
@@ -151,7 +151,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             $isImage = $oTranscoder && (0 == strncmp('image/', $a['mime_type'], 6)); // preview for images only and transcoder object for preview must be defined
             $sUrlOriginal = $oStorage->getFileUrlById($a['id']);
             $sImgPopupId = 'bx-messages-atachment-popup-' . $a['id'];
-  
+
             // images are displayed with preview and popup upon clicking
             $aGhostFiles[$k]['bx_if:image'] = array (
                 'condition' => $isImage,
@@ -182,5 +182,4 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
     }
 }
 
-/** @} */ 
-
+/** @} */

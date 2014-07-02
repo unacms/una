@@ -10,14 +10,14 @@
 /**
  * System service for profiles handling functionality.
  */
-class BxBaseServiceProfiles extends BxDol 
+class BxBaseServiceProfiles extends BxDol
 {
-    public function __construct() 
+    public function __construct()
     {
         parent::__construct();
     }
 
-    public function serviceProfileStats ($iProfileId = 0) 
+    public function serviceProfileStats ($iProfileId = 0)
     {
         if (!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
@@ -27,7 +27,7 @@ class BxBaseServiceProfiles extends BxDol
 
         bx_import('BxDolProfile');
         $oProfile = BxDolProfile::getInstance($iProfileId);
- 
+
         $aVars = array(
             'profile_id' => $oProfile->id(),
             'profile_url' => $oProfile->getUrl(),
@@ -42,7 +42,7 @@ class BxBaseServiceProfiles extends BxDol
         return $oTemplate->parseHtmlByName('profile_stats.html', $aVars);
     }
 
-    public function serviceProfileNotifications ($iProfileId = 0) 
+    public function serviceProfileNotifications ($iProfileId = 0)
     {
         if (!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
@@ -60,7 +60,7 @@ class BxBaseServiceProfiles extends BxDol
         return $iNum;
     }
 
-    public function serviceGetProfilesModules () 
+    public function serviceGetProfilesModules ()
     {
         if (getParam('sys_db_cache_enable')) { // get list of profiles  modules from db cache, cache is invalidated when new module is installed
 
@@ -95,7 +95,7 @@ class BxBaseServiceProfiles extends BxDol
         return $aModulesArray;
     }
 
-    public function serviceProfilesSearch ($sTerm, $iLimit = 20) 
+    public function serviceProfilesSearch ($sTerm, $iLimit = 20)
     {
         // get list of "profiles" modules
         $aModules = $this->serviceGetProfilesModules();
@@ -117,7 +117,7 @@ class BxBaseServiceProfiles extends BxDol
         return array_slice($a, 0, $iLimit);
     }
 
-    public function serviceProfilesList ($iAccountId = 0) 
+    public function serviceProfilesList ($iAccountId = 0)
     {
         bx_import('BxDolProfileQuery');
         $oProfilesQuery = BxDolProfileQuery::getInstance();
@@ -125,19 +125,19 @@ class BxBaseServiceProfiles extends BxDol
         $aProfiles = $oProfilesQuery->getProfilesByAccount($iAccountId ? $iAccountId : getLoggedId());
         if (!$aProfiles)
             return false;
-        
+
         $s = '';
         foreach ($aProfiles as $aProfile)
             if ($aProfile['type'] != 'system')
                 $s .= BxDolService::call($aProfile['type'], 'profile_unit', array($aProfile['content_id']));
 
-        if (!$s) 
+        if (!$s)
             $s = MsgBox(_t('_sys_txt_empty'));
 
         return $s . '<div class="bx-clear"></div>';
     }
 
-    public function serviceAccountProfileSwitcher ($iAccountId = false) 
+    public function serviceAccountProfileSwitcher ($iAccountId = false)
     {
         bx_import('BxDolProfileQuery');
         $oProfilesQuery = BxDolProfileQuery::getInstance();
@@ -145,7 +145,7 @@ class BxBaseServiceProfiles extends BxDol
         $aProfiles = $oProfilesQuery->getProfilesByAccount($iAccountId ? $iAccountId : getLoggedId());
         if (!$aProfiles)
             return false;
-        
+
         $iLoggedPofileId = bx_get_logged_profile_id();
         $aVars = array (
             'bx_repeat:row' => array(),
@@ -156,7 +156,7 @@ class BxBaseServiceProfiles extends BxDol
             $aVars['bx_repeat:row'][] = array (
                 'bx_if:active' => array (
                     'condition' => $iLoggedPofileId == $aProfile['id'],
-                    'content' => array('id' => $aProfile['id']), 
+                    'content' => array('id' => $aProfile['id']),
                 ),
                 'bx_if:inactive' => array (
                     'condition' => $iLoggedPofileId != $aProfile['id'],
@@ -166,7 +166,7 @@ class BxBaseServiceProfiles extends BxDol
             );
         }
 
-        if (!$aVars['bx_repeat:row']) 
+        if (!$aVars['bx_repeat:row'])
             return array(
                 'content' => MsgBox(_t('_sys_txt_empty')),
                 'menu' => 'sys_add_profile',
@@ -177,12 +177,12 @@ class BxBaseServiceProfiles extends BxDol
         $oTemplate->addCss('account.css');
 
         return array(
-            'content' => $oTemplate->parseHtmlByName('profile_switch_row.html', $aVars), 
+            'content' => $oTemplate->parseHtmlByName('profile_switch_row.html', $aVars),
             'menu' => 'sys_add_profile',
         );
     }
 
-    protected function _getLatestModuleTimestamp () 
+    protected function _getLatestModuleTimestamp ()
     {
         bx_import('BxDolModuleQuery');
         $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules', 'active' => 1, 'order_by' => '`date` ASC'));

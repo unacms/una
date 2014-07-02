@@ -10,44 +10,50 @@
 
 bx_import('BxDolStudioDashboard');
 
-class BxBaseStudioDashboard extends BxDolStudioDashboard {
-    function __construct() {
+class BxBaseStudioDashboard extends BxDolStudioDashboard
+{
+    function __construct()
+    {
         parent::__construct();
     }
 
-    function getPageCss() {
+    function getPageCss()
+    {
         return array_merge(parent::getPageCss(), array('dashboard.css'));
     }
 
-    function getPageJs() {
+    function getPageJs()
+    {
         return array_merge(parent::getPageJs(), array('dashboard.js'));
     }
 
-    function getPageJsObject() {
+    function getPageJsObject()
+    {
         return 'oBxDolStudioDashboard';
     }
 
-    function getPageCode($bHidden = false) {
+    function getPageCode($bHidden = false)
+    {
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         $aBlocks = $this->loadBlocks();
 
         $aTmplVars = array(
-			'js_object' => $this->getPageJsObject(),
+            'js_object' => $this->getPageJsObject(),
             'bx_repeat:blocks' => array()
         );
 
         $sActions = "";
         foreach($aBlocks as $sName => $aBlock) {
-        	$sMethod = 'getBlockCode' . ucfirst($sName);
-        	if(!method_exists($this, $sMethod))
-        		continue;
+            $sMethod = 'getBlockCode' . ucfirst($sName);
+            if(!method_exists($this, $sMethod))
+                continue;
 
             $aTmplVars['bx_repeat:blocks'][] = array(
-            	'caption' => $this->getBlockCaption($aBlock),
-            	'panel_top' => '',
+                'caption' => $this->getBlockCaption($aBlock),
+                'panel_top' => '',
                 'items' => $this->$sMethod($sName, $aBlock),
-            	'panel_bottom' => '',
+                'panel_bottom' => '',
             );
         }
 
@@ -56,27 +62,27 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard {
 
     protected function getBlockCodeVersions($sName, $aBlock)
     {
-    	$oTemplate = BxDolStudioTemplate::getInstance();
+        $oTemplate = BxDolStudioTemplate::getInstance();
 
-    	$oTemplate->addJsTranslation('_adm_dbd_txt_dolphin_n_available');
-    	return $oTemplate->parseHtmlByName('dbd_versions.html', array(
-    		'domain' => getParam('site_title'),
-    		'version' => getParam('sys_version'),
-    		'installed' => bx_time_js(getParam('sys_install_time')),
-    	));
+        $oTemplate->addJsTranslation('_adm_dbd_txt_dolphin_n_available');
+        return $oTemplate->parseHtmlByName('dbd_versions.html', array(
+            'domain' => getParam('site_title'),
+            'version' => getParam('sys_version'),
+            'installed' => bx_time_js(getParam('sys_install_time')),
+        ));
     }
 
-	protected function getBlockCodeSpace($sName, $aBlock)
+    protected function getBlockCodeSpace($sName, $aBlock)
     {
-    	$sSizesSpace = $this->getFolderSize(BX_DIRECTORY_PATH_ROOT);
-    	$iSizeDb = $this->getDbSize();
-		$sSizesMedia = $this->getFolderSize(BX_DIRECTORY_STORAGE);
+        $sSizesSpace = $this->getFolderSize(BX_DIRECTORY_PATH_ROOT);
+        $iSizeDb = $this->getDbSize();
+        $sSizesMedia = $this->getFolderSize(BX_DIRECTORY_STORAGE);
 
-    	return BxDolStudioTemplate::getInstance()->parseHtmlByName('dbd_space.html', array(
-    		'space_size' => _t_format_size($sSizesSpace),
-    		'db_size' => _t_format_size($iSizeDb),
-    		'media_size' => _t_format_size($sSizesMedia)
-    	));
+        return BxDolStudioTemplate::getInstance()->parseHtmlByName('dbd_space.html', array(
+            'space_size' => _t_format_size($sSizesSpace),
+            'db_size' => _t_format_size($iSizeDb),
+            'media_size' => _t_format_size($sSizesMedia)
+        ));
     }
 }
 

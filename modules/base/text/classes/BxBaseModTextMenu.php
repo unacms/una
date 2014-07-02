@@ -14,11 +14,11 @@ bx_import('BxBaseModGeneralMenuView');
 /**
  * General class for module menu.
  */
-class BxBaseModTextMenu extends BxBaseModGeneralMenuView 
+class BxBaseModTextMenu extends BxBaseModGeneralMenuView
 {
     protected $_aContentInfo;
 
-    public function __construct($aObject, $oTemplate = false) 
+    public function __construct($aObject, $oTemplate = false)
     {
         parent::__construct($aObject, $oTemplate);
     }

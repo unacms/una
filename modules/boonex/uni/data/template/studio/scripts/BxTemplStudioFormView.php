@@ -11,8 +11,10 @@ defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxBaseStudioFormView');
 
-class BxTemplStudioFormView extends BxBaseStudioFormView { 
-    function __construct($aInfo, $oTemplate = false) {
+class BxTemplStudioFormView extends BxBaseStudioFormView
+{
+    function __construct($aInfo, $oTemplate = false)
+    {
         parent::__construct($aInfo, $oTemplate);
     }
 }

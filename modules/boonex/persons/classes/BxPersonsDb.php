@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Persons Persons
  * @ingroup     DolphinModules
  *
@@ -14,12 +14,12 @@ bx_import('BxBaseModProfileDb');
 /*
  * Persons module database queries
  */
-class BxPersonsDb extends BxBaseModProfileDb 
+class BxPersonsDb extends BxBaseModProfileDb
 {
-    public function __construct(&$oConfig) 
+    public function __construct(&$oConfig)
     {
         parent::__construct($oConfig);
     }
 }
 
-/** @} */ 
+/** @} */

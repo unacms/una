@@ -15,13 +15,13 @@ bx_import('BxTemplPage');
 /**
  * Browse entries pages.
  */
-class BxBaseModGeneralPageBrowse extends BxTemplPage 
-{   
+class BxBaseModGeneralPageBrowse extends BxTemplPage
+{
     protected $MODULE;
 
     protected $_oModule;
- 
-    public function __construct($aObject, $oTemplate = false) 
+
+    public function __construct($aObject, $oTemplate = false)
     {
         parent::__construct($aObject, $oTemplate);
 

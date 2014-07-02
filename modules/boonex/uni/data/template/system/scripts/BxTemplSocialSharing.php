@@ -12,10 +12,12 @@ bx_import('BxBaseSocialSharing');
 /**
  * @see BxDolSocialSharing
  */
-class BxTemplSocialSharing extends BxBaseSocialSharing {
-	function __construct($oTemplate = false) {
-		parent::__construct($oTemplate);
-	}
+class BxTemplSocialSharing extends BxBaseSocialSharing
+{
+    function __construct($oTemplate = false)
+    {
+        parent::__construct($oTemplate);
+    }
 }
 
 /** @} */

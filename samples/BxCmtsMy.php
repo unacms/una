@@ -7,16 +7,15 @@
  * @{
  */
 
-/** 
+/**
  * @page samples
  * @section comments Comments
  */
 
-
 /**
  * DB Queries for Vote Sample.
 
-INSERT INTO `sys_objects_vote`(`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
+INSERT INTO `sys_objects_vote`(`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES
 ('sample_cmts_vote', 'sample_cmts_votes', 'sample_cmts_votes_track', '604800', '1', '1', '1', '1', 'sample_cmts', 'cmt_id', 'cmt_rate', 'cmt_votes', '', '');
 
 CREATE TABLE IF NOT EXISTS `sample_cmts_votes` (
@@ -36,7 +35,6 @@ CREATE TABLE IF NOT EXISTS `sample_cmts_votes_track` (
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;
 
  */
-
 
 /**
  * DB Queries for Comments Sample.
@@ -60,7 +58,6 @@ CREATE TABLE IF NOT EXISTS `sample_cmts` (
   KEY `cmt_object_id` (`cmt_object_id`,`cmt_parent_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
-
 Note: 'sample_cmts_trigger' table is needed just to check comments counter. In real integration it should be your main content table.
 CREATE TABLE IF NOT EXISTS `sample_cmts_trigger` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -74,10 +71,9 @@ INSERT INTO `sample_cmts_trigger` (`id`, `title`, `comments`) VALUES
 
  */
 
-
 /**
  * DB Queries for Privacy Sample.
- * 
+ *
 
 ALTER TABLE `sample_cmts` ADD `allow_view_to` INT( 11 ) NOT NULL DEFAULT '3';
 
@@ -92,34 +88,34 @@ bx_import('BxTemplCmts');
 
 class BxCmtsMy extends BxTemplCmts
 {
-	function BxCmtsMy( $sSystem, $iId, $iInit = 1 )
-	{
+    function BxCmtsMy( $sSystem, $iId, $iInit = 1 )
+    {
         parent::BxTemplCmts( $sSystem, $iId, $iInit );
     }
 
     function getComment($mixedCmt, $aBp = array(), $aDp = array())
     {
-    	$iCmtId = is_array($mixedCmt) ? (int)$mixedCmt['cmt_id'] : (int)$mixedCmt;
+        $iCmtId = is_array($mixedCmt) ? (int)$mixedCmt['cmt_id'] : (int)$mixedCmt;
 
-    	bx_import('BxDolPrivacy');
-    	$oPrivacy = BxDolPrivacy::getObjectInstance('comments_view');
-		if(!$oPrivacy->check($iCmtId))
-			return '';
+        bx_import('BxDolPrivacy');
+        $oPrivacy = BxDolPrivacy::getObjectInstance('comments_view');
+        if(!$oPrivacy->check($iCmtId))
+            return '';
 
-    	return parent::getComment($mixedCmt, $aBp, $aDp);
+        return parent::getComment($mixedCmt, $aBp, $aDp);
     }
 
     protected function _getFormObject($sAction, $iId)
     {
-    	$oForm = parent::_getFormObject($sAction, $iId);
+        $oForm = parent::_getFormObject($sAction, $iId);
 
-    	bx_import('BxDolPrivacy');
-    	$sFieldName = BxDolPrivacy::getFieldName('view');
-    	$aFieldDescriptor = BxDolPrivacy::getGroupChooser('comments_view');
-		$aFieldDescriptor['caption'] = '';
-	
-    	$oForm->aInputs = bx_array_insert_after(array($sFieldName => $aFieldDescriptor), $oForm->aInputs, 'cmt_text');
-    	return $oForm;
+        bx_import('BxDolPrivacy');
+        $sFieldName = BxDolPrivacy::getFieldName('view');
+        $aFieldDescriptor = BxDolPrivacy::getGroupChooser('comments_view');
+        $aFieldDescriptor['caption'] = '';
+
+        $oForm->aInputs = bx_array_insert_after(array($sFieldName => $aFieldDescriptor), $oForm->aInputs, 'cmt_text');
+        return $oForm;
     }
 }
 

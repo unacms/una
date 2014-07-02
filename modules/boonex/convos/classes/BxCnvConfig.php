@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Convos Convos
  * @ingroup     DolphinModules
  *
@@ -11,9 +11,9 @@
 
 bx_import('BxBaseModTextConfig');
 
-class BxCnvConfig extends BxBaseModTextConfig 
+class BxCnvConfig extends BxBaseModTextConfig
 {
-    function __construct($aModule) 
+    function __construct($aModule)
     {
         parent::__construct($aModule);
 
@@ -83,4 +83,4 @@ class BxCnvConfig extends BxBaseModTextConfig
     }
 }
 
-/** @} */ 
+/** @} */

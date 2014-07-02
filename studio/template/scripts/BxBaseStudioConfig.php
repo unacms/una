@@ -10,27 +10,27 @@
 
 bx_import('BxTemplConfig');
 
-class BxBaseStudioConfig extends BxTemplConfig {
-
-    function __construct() 
+class BxBaseStudioConfig extends BxTemplConfig
+{
+    function __construct()
     {
         parent::__construct();
 
         $this->_aConfig['aLessConfig'] = array_merge($this->_aConfig['aLessConfig'], array(
-        	'bx-margin' => '30px',
-        	'bx-margin-sec' => '20px',
-			'bx-margin-thd' => '10px',
+            'bx-margin' => '30px',
+            'bx-margin-sec' => '20px',
+            'bx-margin-thd' => '10px',
 
-			'bx-padding' => '30px',
-			'bx-padding-sec' => '20px',
-			'bx-padding-thd' => '10px',
+            'bx-padding' => '30px',
+            'bx-padding-sec' => '20px',
+            'bx-padding-thd' => '10px',
 
-        	'bx-size-widget' => '128px',
-        	'bx-round-corners-radius-widget' => '32px',
+            'bx-size-widget' => '128px',
+            'bx-round-corners-radius-widget' => '32px',
         ));
     }
 
-    public static function getInstance() 
+    public static function getInstance()
     {
         if(!isset($GLOBALS['bxDolClasses'][__CLASS__]))
             $GLOBALS['bxDolClasses'][__CLASS__] = new BxTemplStudioConfig();

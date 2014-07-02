@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Developer Developer
  * @ingroup     DolphinModules
  *
@@ -12,10 +12,12 @@
 bx_import('BxDolModule');
 bx_import('BxTemplStudioNavigationItems');
 
-class BxDevNavigationItems extends BxTemplStudioNavigationItems {
+class BxDevNavigationItems extends BxTemplStudioNavigationItems
+{
     protected $oModule;
 
-    function __construct($aOptions, $oTemplate = false) {
+    function __construct($aOptions, $oTemplate = false)
+    {
         parent::__construct($aOptions, $oTemplate);
 
         $this->oModule = BxDolModule::getInstance('bx_developer');
@@ -35,7 +37,8 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems {
         }
     }
 
-    public function performActionAdd() {
+    public function performActionAdd()
+    {
         $sAction = 'add';
 
         bx_import('BxDolForm');
@@ -51,8 +54,7 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems {
                 $aRes = array('msg' => _t('_bx_dev_nav_err_items_create'));
 
             $this->_echoResultJson($aRes, true);
-        }
-        else {
+        } else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-nav-item-create-popup', _t('_bx_dev_nav_txt_items_create_popup'), $this->_oTemplate->parseHtmlByName('nav_add_item.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
@@ -65,10 +67,11 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems {
         }
     }
 
-    public function performActionEdit($bUpdateGrid = false) {
+    public function performActionEdit($bUpdateGrid = false)
+    {
         $sAction = 'edit';
 
-		$aItem = $this->_getItem('getItems');
+        $aItem = $this->_getItem('getItems');
         if($aItem === false) {
             $this->_echoResultJson(array());
             exit;
@@ -88,8 +91,7 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems {
                 $aRes = array('msg' => _t('_bx_dev_nav_err_items_edit'));
 
             $this->_echoResultJson($aRes, true);
-        }
-        else {
+        } else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-nav-item-edit-popup', _t('_bx_dev_nav_txt_items_edit_popup', _t($aItem['title_system'])), $this->oModule->_oTemplate->parseHtmlByName('nav_add_item.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
@@ -102,11 +104,13 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems {
         }
     }
 
-    protected function _getActionDelete ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array()) {
+    protected function _getActionDelete ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
         return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
     }
 
-    private function fillInSelects(&$aInputs) {
+    private function fillInSelects(&$aInputs)
+    {
         $aInputs['module']['values'] = array_merge(array('' => _t('_bx_dev_nav_txt_select_module')), BxDolStudioUtils::getModules());
         $aInputs['module']['value'] = $this->sModule;
 

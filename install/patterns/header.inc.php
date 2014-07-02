@@ -87,7 +87,7 @@ define('BX_PROFILE_STATUS_SUSPENDED', 'suspended'); ///< profile status - suspen
 define('BX_PROFILE_STATUS_ACTIVE', 'active'); ///< profile status - active, profile is active on the site
 define('BX_PROFILE_STATUS_PENDING', 'pending'); ///< profile status - pending, default method of approving is manual approving
 
-define('BX_DOL_SECRET', '%SECRET%'); 
+define('BX_DOL_SECRET', '%SECRET%');
 
 define('CHECK_DOLPHIN_REQUIREMENTS', 1);
 if (defined('CHECK_DOLPHIN_REQUIREMENTS')) {

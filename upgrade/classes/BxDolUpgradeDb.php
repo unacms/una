@@ -76,8 +76,7 @@ class BxDolUpgradeDb
             $arr_type = MYSQL_ASSOC;
         $res = $this->res ($query);
         $arr_res = array();
-        if($res && mysql_num_rows($res))
-        {
+        if($res && mysql_num_rows($res)) {
             $arr_res = mysql_fetch_array($res, $arr_type);
             mysql_free_result($res);
         }
@@ -87,7 +86,7 @@ class BxDolUpgradeDb
     /**
      * execute sql query and return a column as result
      */
-    function getColumn($sQuery) 
+    function getColumn($sQuery)
     {
         if(!$sQuery)
             return array();
@@ -147,8 +146,7 @@ class BxDolUpgradeDb
         $arr_res = mysql_fetch_array($this->_rCurrentRes, $this->_iCurrentResType);
         if($arr_res)
             return $arr_res;
-        else
-        {
+        else {
             mysql_free_result($this->_rCurrentRes);
             $this->_iCurrentResType = MYSQL_ASSOC;
             return array();
@@ -215,8 +213,7 @@ class BxDolUpgradeDb
 
         $res = $this->res ($query);
         $arr_res = array();
-        if($res)
-        {
+        if($res) {
             while($row = mysql_fetch_array($res, $arr_type))
                 $arr_res[] = $row;
             mysql_free_result($res);
@@ -253,10 +250,8 @@ class BxDolUpgradeDb
 
         $res = $this->res ($query);
         $arr_res = array();
-        if($res)
-        {
-            while($row = mysql_fetch_array($res, MYSQL_ASSOC))
-            {
+        if($res) {
+            while($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
                 $arr_res[$row[$sFieldKey]] = $row;
             }
             mysql_free_result($res);
@@ -274,10 +269,8 @@ class BxDolUpgradeDb
 
         $res = $this->res ($query);
         $arr_res = array();
-        if($res)
-        {
-            while($row = mysql_fetch_array($res, MYSQL_ASSOC))
-            {
+        if($res) {
+            while($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
                 $arr_res[$row[$sFieldKey]] = $row[$sFieldValue];
             }
             mysql_free_result($res);
@@ -298,33 +291,29 @@ class BxDolUpgradeDb
             $this->log($text.': '.mysql_error($this->_rLink));
     }
 
-    function listTables() 
+    function listTables()
     {
         return mysql_list_tables($GLOBALS['db']['db'], $this->_rLink);
     }
 
-    function getEncoding() 
+    function getEncoding()
     {
         return  mysql_client_encoding($this->_rLink) or $this->error('Database get encoding error');
     }
 
-    function genMySQLErr( $out, $query ='' ) 
+    function genMySQLErr( $out, $query ='' )
     {
         $aBackTrace = debug_backtrace();
         unset( $aBackTrace[0] );
 
-        if( $query )
-        {
+        if( $query ) {
             //try help to find error
 
             $aFoundError = array();
 
-            foreach( $aBackTrace as $aCall )
-            {
-                foreach( $aCall['args'] as $argNum => $argVal )
-                {
-                    if( is_string($argVal) and strcmp( $argVal, $query ) == 0 )
-                    {
+            foreach( $aBackTrace as $aCall ) {
+                foreach( $aCall['args'] as $argNum => $argVal ) {
+                    if( is_string($argVal) and strcmp( $argVal, $query ) == 0 ) {
                         $aFoundError['file']     = $aCall['file'];
                         $aFoundError['line']     = $aCall['line'];
                         $aFoundError['function'] = $aCall['function'];
@@ -333,8 +322,7 @@ class BxDolUpgradeDb
                 }
             }
 
-            if( $aFoundError )
-            {
+            if( $aFoundError ) {
                 $sFoundError = <<<EOJ
 Found error in the file '<b>{$aFoundError['file']}</b>' at line <b>{$aFoundError['line']}</b>.<br />
 Called '<b>{$aFoundError['function']}</b>' function with erroneous argument #<b>{$aFoundError['arg']}</b>.<br /><br />
@@ -342,16 +330,13 @@ EOJ;
             }
         }
 
-
-        if( BX_UPGRADE_DB_FULL_VISUAL_PROCESSING )
-        {
+        if( BX_UPGRADE_DB_FULL_VISUAL_PROCESSING ) {
             ?>
                 <div style="border:2px solid red;padding:4px;width:600px;margin:0px auto;">
                     <div style="text-align:center;background-color:red;color:white;font-weight:bold;">Error</div>
                     <div style="text-align:center;"><?php echo $out?></div>
             <?php
-            if( BX_UPGRADE_DB_FULL_DEBUG_MODE )
-            {
+            if( BX_UPGRADE_DB_FULL_DEBUG_MODE ) {
                 if( strlen( $query ) )
                     echo "<div><b>Query:</b><br />{$query}</div>";
 
@@ -369,24 +354,23 @@ EOJ;
             ?>
                 </div>
             <?php
-        }
-        else
+        } else
             echo $out;
 
         exit;
     }
 
-    function setErrorChecking ($b) 
+    function setErrorChecking ($b)
     {
         $this->_bErrorChecking = $b;
     }
 
-    function escape ($s) 
+    function escape ($s)
     {
         return mysql_real_escape_string($s);
     }
 
-    function executeSQL($sPath, $aReplace = array (), $isBreakOnError = true) 
+    function executeSQL($sPath, $aReplace = array (), $isBreakOnError = true)
     {
         if(!file_exists($sPath) || !($rHandler = fopen($sPath, "r")))
             return array ('query' => "fopen($sPath, 'r')", 'error' => 'file not found or permission denied');
@@ -433,4 +417,3 @@ EOJ;
 }
 
 /** @} */
-

@@ -17,8 +17,8 @@ define('BX_DOL_PG_FRIENDS', '5');
 
 define('BX_DOL_PG_DEFAULT', BX_DOL_PG_ALL);
 
-/** 
- * @page objects 
+/**
+ * @page objects
  * @section privacy Privacy
  * @ref BxDolPrivacy
  */
@@ -61,8 +61,8 @@ define('BX_DOL_PG_DEFAULT', BX_DOL_PG_ALL);
  */
 class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
 {
-	protected $_oDb;
-	protected $_sObject;
+    protected $_oDb;
+    protected $_sObject;
     protected $_aObject;
 
     /**
@@ -79,7 +79,7 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
         $this->_oDb = new BxDolPrivacyQuery($this->_aObject);
     }
 
-	/**
+    /**
      * Get privacy object instance by object name
      * @param $sObject object name
      * @return object instance or false on error
@@ -92,10 +92,10 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
         bx_import('BxDolPrivacyQuery');
         $aObject = BxDolPrivacyQuery::getPrivacyObject($sObject);
         if(!$aObject || !is_array($aObject))
-			return false;
+            return false;
 
         bx_import('BxTemplPrivacy');
-        $sClass = 'BxTemplPrivacy';        
+        $sClass = 'BxTemplPrivacy';
         if(!empty($aObject['override_class_name'])) {
             $sClass = $aObject['override_class_name'];
             if(!empty($aObject['override_class_file']))
@@ -108,25 +108,25 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
         return ($GLOBALS['bxDolClasses']['BxDolPrivacy!' . $sObject] = $o);
     }
 
-	/**
+    /**
      * Get Select element with available groups.
      *
-     * @param  string $sObject privacy object name.
+     * @param  string  $sObject  privacy object name.
      * @param  integer $iOwnerId object's owner ID.
-     * @param  array $aParams an array of custom selector's params (dynamic_groups - an array of arrays('key' => group_id, 'value' => group_title), title - the title to be used for generated field).
-     * @return an array with Select element description.
+     * @param  array   $aParams  an array of custom selector's params (dynamic_groups - an array of arrays('key' => group_id, 'value' => group_title), title - the title to be used for generated field).
+     * @return an      array with Select element description.
      */
     public static function getGroupChooser($sObject, $iOwnerId = 0, $aParams = array())
     {
-    	$oPrivacy = BxDolPrivacy::getObjectInstance($sObject);
-    	if(empty($oPrivacy))
-    		return array();
+        $oPrivacy = BxDolPrivacy::getObjectInstance($sObject);
+        if(empty($oPrivacy))
+            return array();
 
-		$sModule = $oPrivacy->_aObject['module'];
-		$sAction = $oPrivacy->_aObject['action'];
+        $sModule = $oPrivacy->_aObject['module'];
+        $sAction = $oPrivacy->_aObject['action'];
 
-		if($iOwnerId == 0)
-			$iOwnerId = bx_get_logged_profile_id();
+        if($iOwnerId == 0)
+            $iOwnerId = bx_get_logged_profile_id();
 
         $sValue = $oPrivacy->_oDb->getDefaultGroupByUser($sModule, $sAction, $iOwnerId);
         if(empty($sValue))
@@ -142,14 +142,14 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
         }
 
         if(isset($aParams['dynamic_groups']) && is_array($aParams['dynamic_groups']))
-        	$aValues = array_merge($aValues, $aParams['dynamic_groups']);
+            $aValues = array_merge($aValues, $aParams['dynamic_groups']);
 
         $sName = self::getFieldName($sAction);
 
         $sTitle = isset($aParams['title']) && !empty($aParams['title']) ? $aParams['title'] : '';
         if(empty($sTitle)) {
-        	$sTitle = $oPrivacy->_oDb->getTitle($sModule, $sAction);
-        	$sTitle = _t(!empty($sTitle) ? $sTitle : '_' . $sName);
+            $sTitle = $oPrivacy->_oDb->getTitle($sModule, $sAction);
+            $sTitle = _t(!empty($sTitle) ? $sTitle : '_' . $sName);
         }
 
         return array(
@@ -184,7 +184,8 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
      * @param $mixedGroupId group ID or array of group IDs
      * @return array of conditions, for now with 'restriction' part only is returned
      */
-    public function getContentByGroupAsCondition($mixedGroupId) {
+    public function getContentByGroupAsCondition($mixedGroupId)
+    {
         return array(
             'restriction' => array (
                 'privacy_' . $this->_sObject => array(
@@ -194,7 +195,7 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
                     'table' => $this->_aObject['table'],
                 ),
             ),
-        );        
+        );
     }
 
     /**
@@ -202,10 +203,11 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
      * @param $iProfileIdOwner owner profile ID
      * @return array of conditions, for now with 'restriction' part only is returned
      */
-    public function getContentPublicAsCondition($iProfileIdOwner = 0) {
+    public function getContentPublicAsCondition($iProfileIdOwner = 0)
+    {
         $mixedPrivacyGroups = BX_DOL_PG_ALL;
         if(isLogged()) {
-        	$iProfileIdLogged = bx_get_logged_profile_id();
+            $iProfileIdLogged = bx_get_logged_profile_id();
             if($iProfileIdLogged == $iProfileIdOwner)
                 return array();
 
@@ -222,9 +224,10 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
      * @param $mixedGroupId group ID or array of group IDs
      * @return array of SQL string parts, for now 'where' part only is returned
      */
-	public function getContentByGroupAsSQLPart($mixedGroupId) {
-		$sField = self::getFieldName($this->_aObject['action']);
-		return $this->_oDb->getContentByGroupAsSQLPart($sField, $mixedGroupId);
+    public function getContentByGroupAsSQLPart($mixedGroupId)
+    {
+        $sField = self::getFieldName($this->_aObject['action']);
+        return $this->_oDb->getContentByGroupAsSQLPart($sField, $mixedGroupId);
     }
 
     /**
@@ -249,43 +252,43 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
         if(isAdmin() || $iViewerId == $aObject['owner_id'])
             return true;
 
-		$aGroup = $this->_oDb->getGroupsBy(array('type' => 'id', 'id' => $aObject['group_id']));
+        $aGroup = $this->_oDb->getGroupsBy(array('type' => 'id', 'id' => $aObject['group_id']));
         if(!empty($aGroup) && is_array($aGroup) && (int)$aGroup['active'] == 1 && !empty($aGroup['check'])) {
-        	$sCheckMethod = $this->getCheckMethod($aGroup['check']);
-        	if(method_exists($this, $sCheckMethod) && $this->$sCheckMethod($aObject['owner_id'], $iViewerId))
-        		return true;
+            $sCheckMethod = $this->getCheckMethod($aGroup['check']);
+            if(method_exists($this, $sCheckMethod) && $this->$sCheckMethod($aObject['owner_id'], $iViewerId))
+                return true;
         }
 
         return $this->isDynamicGroupMember($aObject['group_id'], $aObject['owner_id'], $iViewerId, $iObjectId);
     }
 
-	public function checkMeOnly($iOwnerId, $iViewerId)
-	{
-		return false;
-	}
+    public function checkMeOnly($iOwnerId, $iViewerId)
+    {
+        return false;
+    }
 
     public function checkPublic($iOwnerId, $iViewerId)
     {
-    	return true;
+        return true;
     }
 
     public function checkMembers($iOwnerId, $iViewerId)
     {
-    	return isMember();
+        return isMember();
     }
 
     public function checkConnections($iOwnerId, $iViewerId)
     {
-    	bx_import('BxDolConnection');
-    	return BxDolConnection::getObjectInstance('sys_profiles_friends')->isConnected($iOwnerId, $iViewerId, true);
+        bx_import('BxDolConnection');
+        return BxDolConnection::getObjectInstance('sys_profiles_friends')->isConnected($iOwnerId, $iViewerId, true);
     }
 
-	protected function getCheckMethod($s)
+    protected function getCheckMethod($s)
     {
-    	if(substr($s, 0, 1) != '@')
-    		return false;
+        if(substr($s, 0, 1) != '@')
+            return false;
 
-		return bx_gen_method_name(str_replace('@', 'check_', $s));
+        return bx_gen_method_name(str_replace('@', 'check_', $s));
     }
 
     /**

@@ -11,11 +11,13 @@ bx_import('BxTemplStudioGrid');
 bx_import('BxDolStudioTemplate');
 bx_import('BxDolStudioFormsQuery');
 
-class BxDolStudioFormsDisplays extends BxTemplStudioGrid {
+class BxDolStudioFormsDisplays extends BxTemplStudioGrid
+{
     protected $sModule = '';
     protected $sObject = '';
 
-    public function __construct ($aOptions, $oTemplate = false) {
+    public function __construct ($aOptions, $oTemplate = false)
+    {
         parent::__construct ($aOptions, $oTemplate);
 
         $this->oDb = new BxDolStudioFormsQuery();
@@ -33,12 +35,13 @@ class BxDolStudioFormsDisplays extends BxTemplStudioGrid {
         }
     }
 
-    protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage) {
+    protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
+    {
         if(empty($this->sObject))
             return array();
 
         $this->_aOptions['source'] .= $this->oDb->prepare(" AND `td`.`object`=?", $this->sObject);
-        return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage); 
+        return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }
 }
 

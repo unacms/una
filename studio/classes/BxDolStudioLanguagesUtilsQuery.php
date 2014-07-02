@@ -9,12 +9,15 @@
 
 bx_import('BxDolLanguagesQuery');
 
-class BxDolStudioLanguagesUtilsQuery extends BxDolLanguagesQuery {
-    function __construct() {
+class BxDolStudioLanguagesUtilsQuery extends BxDolLanguagesQuery
+{
+    function __construct()
+    {
         parent::__construct();
     }
 
-    function deleteLanguage($iId = 0) {
+    function deleteLanguage($iId = 0)
+    {
         $iId = (int)$iId;
         if($iId <= 0)
             return false;
@@ -43,7 +46,8 @@ class BxDolStudioLanguagesUtilsQuery extends BxDolLanguagesQuery {
         return true;
     }
 
-    function addKey($iCategoryId, $sKey) {
+    function addKey($iCategoryId, $sKey)
+    {
         $sSql = $this->prepare("SELECT `ID` FROM `sys_localization_keys` WHERE `Key`=? LIMIT 1", $sKey);
         if(($iId = (int)$this->getOne($sSql)) != 0)
             return $iId;
@@ -52,7 +56,8 @@ class BxDolStudioLanguagesUtilsQuery extends BxDolLanguagesQuery {
         return (int)$this->query($sSql) > 0 ? $this->lastId() : false;
     }
 
-    function addKeys($iLanguageId, $iCategoryId, &$aKeys) {
+    function addKeys($iLanguageId, $iCategoryId, &$aKeys)
+    {
         foreach($aKeys as $sKey => $sValue) {
             $sQuery = $this->prepare("SELECT `ID` FROM `sys_localization_keys` WHERE `IDCategory`=? AND `Key`=? LIMIT 1", $iCategoryId, $sKey);
             $iKeyId = (int)$this->getOne($sQuery);
@@ -74,19 +79,22 @@ class BxDolStudioLanguagesUtilsQuery extends BxDolLanguagesQuery {
      * Remove language key ONLY. Language strings should be already removed.
      * @param integer $iKeyId language key ID
      */
-    function deleteKey($iKeyId) {
+    function deleteKey($iKeyId)
+    {
         $sQuery = $this->prepare("DELETE FROM `sys_localization_keys` WHERE `ID`=? LIMIT 1", $iKeyId);
         return (int)$this->query($sQuery) > 0;
     }
 
-    function deleteKeys($aKeys) {
+    function deleteKeys($aKeys)
+    {
         foreach($aKeys as $sKey => $sValue) {
             $sQuery = $this->prepare("DELETE FROM `sys_localization_keys`, `sys_localization_strings` USING `sys_localization_keys`, `sys_localization_strings` WHERE `sys_localization_keys`.`ID`=`sys_localization_strings`.`IDKey` AND `sys_localization_keys`.`Key`=?", $sKey);
             $this->query($sQuery);
         }
     }
 
-    function deleteKeysBy($aParams = array()) {
+    function deleteKeysBy($aParams = array())
+    {
         $sWhereClause = "";
 
         switch($aParams['type']) {
@@ -98,37 +106,41 @@ class BxDolStudioLanguagesUtilsQuery extends BxDolLanguagesQuery {
                 break;
         }
 
-        $sSql = "DELETE FROM `tk`, `ts` 
-        		USING 
-        			`sys_localization_categories` AS `tc`, 
-        			`sys_localization_keys` AS `tk`, 
-        			`sys_localization_strings` AS `ts`
-				WHERE `tk`.`ID`=`ts`.`IDKey` AND `tk`.`IDCategory`=`tc`.`ID`" . $sWhereClause;
+        $sSql = "DELETE FROM `tk`, `ts`
+                USING
+                    `sys_localization_categories` AS `tc`,
+                    `sys_localization_keys` AS `tk`,
+                    `sys_localization_strings` AS `ts`
+                WHERE `tk`.`ID`=`ts`.`IDKey` AND `tk`.`IDCategory`=`tc`.`ID`" . $sWhereClause;
         return (int)$this->query($sSql);
     }
 
-    function addString($iKeyId, $iLanguageId, $sString) {
+    function addString($iKeyId, $iLanguageId, $sString)
+    {
         $sSql = $this->prepare("INSERT INTO `sys_localization_strings` SET `IDKey`=?, `IDLanguage`=?, `String`=?", $iKeyId, $iLanguageId, $sString);
         return (int)$this->query($sSql) > 0;
     }
 
-    function updateString($iKeyId, $iLanguageId, $sString) {
+    function updateString($iKeyId, $iLanguageId, $sString)
+    {
         $sSql = $this->prepare("SELECT `IDKey` FROM `sys_localization_strings` WHERE `IDKey`=? AND `IDLanguage`=?", $iKeyId, $iLanguageId);
         $iKeyIdDb = (int)$this->getOne($sSql);
-        
+
         if($iKeyIdDb != 0)
             $sSql = $this->prepare("UPDATE `sys_localization_strings` SET `String`=? WHERE `IDKey`=? AND `IDLanguage`=?", $sString, $iKeyId, $iLanguageId);
-        else 
+        else
             $sSql = $this->prepare("INSERT INTO `sys_localization_strings` SET `IDKey`=?, `IDLanguage`=?, `String`=?", $iKeyId, $iLanguageId, $sString);
         return (int)$this->query($sSql) > 0;
     }
 
-    function deleteString($iKeyId, $iLanguageId) {
+    function deleteString($iKeyId, $iLanguageId)
+    {
         $sSql = $this->prepare("DELETE FROM `sys_localization_strings` WHERE `IDKey`=? AND `IDLanguage`=?", $iKeyId, $iLanguageId);
         return (int)$this->query($sSql) > 0;
     }
 
-    function deleteStringsBy($aParams = array()) {
+    function deleteStringsBy($aParams = array())
+    {
         $sWhereClause = "";
 
         switch($aParams['type']) {
@@ -140,21 +152,22 @@ class BxDolStudioLanguagesUtilsQuery extends BxDolLanguagesQuery {
                 break;
         }
 
-        $sSql = "DELETE FROM `ts` 
-        		USING 
-        			`sys_localization_categories` AS `tc`, 
-        			`sys_localization_keys` AS `tk`, 
-        			`sys_localization_languages` AS `tl`,
-        			`sys_localization_strings` AS `ts`
-				WHERE `tk`.`ID`=`ts`.`IDKey` AND `tk`.`IDCategory`=`tc`.`ID` AND `ts`.`IDLanguage`=`tl`.`ID`" . $sWhereClause;
+        $sSql = "DELETE FROM `ts`
+                USING
+                    `sys_localization_categories` AS `tc`,
+                    `sys_localization_keys` AS `tk`,
+                    `sys_localization_languages` AS `tl`,
+                    `sys_localization_strings` AS `ts`
+                WHERE `tk`.`ID`=`ts`.`IDKey` AND `tk`.`IDCategory`=`tc`.`ID` AND `ts`.`IDLanguage`=`tl`.`ID`" . $sWhereClause;
         return (int)$this->query($sSql);
     }
 
-    function addCategory($sName) {
+    function addCategory($sName)
+    {
         $sQuery = $this->prepare("INSERT IGNORE INTO `sys_localization_categories` SET `Name`=?", $sName);
         $iResult = (int)$this->query($sQuery);
 
-		if($iResult > 0) 
+        if($iResult > 0)
             return (int)$this->lastId();
 
         $iCategoryId = 0;
@@ -162,8 +175,9 @@ class BxDolStudioLanguagesUtilsQuery extends BxDolLanguagesQuery {
         return $iCategoryId;
     }
 
-    function deleteCategory($sName) {
-    	$sQuery = $this->prepare("DELETE FROM `sys_localization_categories` WHERE `Name`=?", $sName);
+    function deleteCategory($sName)
+    {
+        $sQuery = $this->prepare("DELETE FROM `sys_localization_categories` WHERE `Name`=?", $sName);
         $this->query($sQuery);
     }
 }

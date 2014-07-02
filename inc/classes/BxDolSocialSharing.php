@@ -9,8 +9,8 @@
 
 bx_import('BxDolSocialSharingQuery');
 
-/** 
- * @page objects 
+/**
+ * @page objects
  * @section social_sharing Social Sharing Buttons
  * @ref BxDolSocialSharing
  */
@@ -20,7 +20,7 @@ bx_import('BxDolSocialSharingQuery');
  *
  * It displays sharing buttons from popular social networks, like facebook, twitter, gogole plus, etc.
  *
- * 
+ *
  * @section example Example of usage:
  *
  * @code
@@ -30,7 +30,7 @@ bx_import('BxDolSocialSharingQuery');
  *
  *
  * @section alerts Alerts:
- * 
+ *
  * Type/unit: system
  * Action: social_sharing_display
  * Options:
@@ -38,48 +38,51 @@ bx_import('BxDolSocialSharingQuery');
  *      markers - reference to variables for replacement
  *      override_output - override output string
  *
- */ 
+ */
 class BxDolSocialSharing extends BxDol implements iBxDolSingleton
 {
     protected $_oQuery;
-	protected $_aSocialButtons = array (); // active social buttons array
+    protected $_aSocialButtons = array (); // active social buttons array
 
-	/**
-	 * Constructor
-	 */
-	protected function __construct() {
+    /**
+     * Constructor
+     */
+    protected function __construct()
+    {
         parent::__construct();
         $this->_oQuery = new BxDolSocialSharingQuery();
         $this->_aSocialButtons = $this->_oQuery->getActiveButtons();
-	}
+    }
 
     /**
-     * Get object instance 
+     * Get object instance
      * @param $sObject object name
-     * @return object instance 
+     * @return object instance
      */
-    static public function getInstance() {
-
+    static public function getInstance()
+    {
         if (isset($GLOBALS['bxDolClasses']['BxDolSocialSharing']))
             return $GLOBALS['bxDolClasses']['BxDolSocialSharing'];
-        
+
         bx_import('BxTemplSocialSharing');
         $o = new BxTemplSocialSharing();
 
         return ($GLOBALS['bxDolClasses']['BxDolSocialSharing'] = $o);
     }
 
-    public function getCode ($sContentId, $sModuleName, $sUrl, $sTitle, $aCustomVars = false) {
+    public function getCode ($sContentId, $sModuleName, $sUrl, $sTitle, $aCustomVars = false)
+    {
         // overrided in template class
     }
 
     /**
      * Replace provided markers in string.
-     * @param $s - string to replace markers in 
+     * @param $s - string to replace markers in
      * @param $a - markers array
      * @return string with replaces markers
-     */ 
-    protected function _replaceMarkers ($mixed, $aMarkers) {
+     */
+    protected function _replaceMarkers ($mixed, $aMarkers)
+    {
         if (empty($mixed) || empty($aMarkers) || !is_array($aMarkers))
             return $mixed;
         return bx_replace_markers($mixed, $aMarkers);
@@ -89,8 +92,9 @@ class BxDolSocialSharing extends BxDol implements iBxDolSingleton
      * Get most facebook locale for provided language code.
      * @param $sLang lang code
      * @return locale string or empty string if no lacale is found
-     */ 
-    protected function _getLocaleFacebook ($sLang) {
+     */
+    protected function _getLocaleFacebook ($sLang)
+    {
         $aLocales = $this->_getLocalesFacebook();
         if (!$aLocales || !isset($aLocales[$sLang]))
             return '';
@@ -100,8 +104,9 @@ class BxDolSocialSharing extends BxDol implements iBxDolSingleton
     /**
      * Get facebook locales
      * @return locales array, lang is array key and locale is array value
-     */ 
-    protected function _getLocalesFacebook () {
+     */
+    protected function _getLocalesFacebook ()
+    {
         $oCache = $this->_oQuery->getDbCacheObject();
         $sCacheKey = $this->_oQuery->genDbCacheKey('sys_social_sharing_locales_fb');
         $aData = $oCache->getData($sCacheKey);
@@ -117,7 +122,7 @@ class BxDolSocialSharing extends BxDol implements iBxDolSingleton
                 if (!isset($aData[$sLang]))
                     $aData[$sLang] = $sLocale;
             }
-            $oCache->setData ($sCacheKey, $aData); 
+            $oCache->setData ($sCacheKey, $aData);
         }
         return $aData;
     }

@@ -14,9 +14,9 @@ bx_import('BxBaseModProfilePageEntry');
 /**
  * Profile create/edit/delete pages.
  */
-class BxOrgsPageEntry extends BxBaseModProfilePageEntry 
+class BxOrgsPageEntry extends BxBaseModProfilePageEntry
 {
-    public function __construct($aObject, $oTemplate = false) 
+    public function __construct($aObject, $oTemplate = false)
     {
         $this->MODULE = 'bx_organizations';
         parent::__construct($aObject, $oTemplate);

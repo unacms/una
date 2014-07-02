@@ -11,9 +11,9 @@
 
 bx_import('BxBaseModTextSearchResult');
 
-class BxNotesSearchResult extends BxBaseModTextSearchResult 
+class BxNotesSearchResult extends BxBaseModTextSearchResult
 {
-    function __construct($sMode = '', $aParams = array()) 
+    function __construct($sMode = '', $aParams = array())
     {
         parent::__construct($sMode, $aParams);
 
@@ -54,7 +54,7 @@ class BxNotesSearchResult extends BxBaseModTextSearchResult
         switch ($sMode) {
 
             case 'author':
-                bx_import('BxDolProfile');                
+                bx_import('BxDolProfile');
                 $oProfileAuthor = BxDolProfile::getInstance((int)$aParams['author']);
                 if (!$oProfileAuthor) {
                     $this->isError = true;
@@ -67,7 +67,7 @@ class BxNotesSearchResult extends BxBaseModTextSearchResult
                 $this->aCurrent['title'] = _t('_bx_notes_page_title_browse_by_author');
                 $this->aCurrent['rss']['link'] = 'modules/?r=notes/rss/' . $sMode . '/' . $oProfileAuthor->id();
                 break;
-            
+
             case 'public':
                 bx_import('BxDolPermalinks');
                 $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']);
@@ -109,14 +109,14 @@ class BxNotesSearchResult extends BxBaseModTextSearchResult
         $this->setProcessPrivateContent(false);
     }
 
-    function displayResultBlock () 
+    function displayResultBlock ()
     {
         $s = parent::displayResultBlock ();
         $s = '<div class="bx-notes-wrapper ' . ('unit_gallery.html' == $this->sUnitTemplate ? 'bx-def-margin-neg bx-clearfix' : '') . '">' . $s . '</div>';
         return $s;
     }
 
-    function getAlterOrder() 
+    function getAlterOrder()
     {
         if ($this->aCurrent['sorting'] == 'last') {
             $aSql = array();
@@ -128,4 +128,3 @@ class BxNotesSearchResult extends BxBaseModTextSearchResult
 }
 
 /** @} */
-

@@ -7,17 +7,18 @@
  * @{
  */
 
-class BxDolUpgradeUtil {
-
+class BxDolUpgradeUtil
+{
     protected $oDb;
     protected $sFolder;
 
-    function BxDolUpgradeUtil($oDb) {
+    function BxDolUpgradeUtil($oDb)
+    {
         $this->oDb = $oDb;
     }
 
-    function executeCheck ($sModule = '') {
-
+    function executeCheck ($sModule = '')
+    {
         if (!$this->sFolder)
             return 'Upgrade path folder is not defined';
 
@@ -28,8 +29,8 @@ class BxDolUpgradeUtil {
         return include ($sFile);
     }
 
-    function executeConclusion ($sModule = '') {
-
+    function executeConclusion ($sModule = '')
+    {
         if (!$this->sFolder)
             return '';
 
@@ -40,15 +41,16 @@ class BxDolUpgradeUtil {
         return file_get_contents ($sFile);
     }
 
-    function isExecuteScriptAvail ($sModule = '') {
+    function isExecuteScriptAvail ($sModule = '')
+    {
         if (!$this->sFolder)
             return 'Upgrade path folder is not defined';
         $sFile = BX_UPGRADE_DIR_UPGRADES . $this->sFolder . '/' . ($sModule ? 'modules/' . $sModule . '/' : '') . 'script.php';
         return file_exists($sFile) ? true : false;
     }
 
-    function executeScript ($sModule = '') {
-
+    function executeScript ($sModule = '')
+    {
         if (!$this->sFolder)
             return 'Upgrade path folder is not defined';
 
@@ -59,15 +61,16 @@ class BxDolUpgradeUtil {
         return include ($sFile);
     }
 
-    function isExecuteSQLAvail ($sModule = '') {
+    function isExecuteSQLAvail ($sModule = '')
+    {
         if (!$this->sFolder)
             return 'Upgrade path folder is not defined';
         $sFile = BX_UPGRADE_DIR_UPGRADES . $this->sFolder . '/' . ($sModule ? 'modules/' . $sModule . '/' : '') . 'sql.sql';
         return file_exists($sFile) ? true : false;
     }
 
-    function executeSQL ($sModule = '') {
-
+    function executeSQL ($sModule = '')
+    {
         if (!$this->sFolder)
             return 'Upgrade path folder is not defined';
 
@@ -100,8 +103,8 @@ class BxDolUpgradeUtil {
         return $s;
     }
 
-    function executeLangsAdd ($sModule = '') {
-
+    function executeLangsAdd ($sModule = '')
+    {
         if (!$this->sFolder)
             return 'Upgrade path folder is not defined';
 
@@ -113,7 +116,8 @@ class BxDolUpgradeUtil {
         return true;
     }
 
-    function _executeLangAdd ($sModule, $sLang = 'en') {
+    function _executeLangAdd ($sModule, $sLang = 'en')
+    {
         $sFile = BX_UPGRADE_DIR_UPGRADES . $this->sFolder . '/' . ($sModule ? 'modules/' . $sModule . '/' : '') . 'lang_' . $sLang . '.php';
         if (!file_exists($sFile))
             return true; // just skip if language file is not found
@@ -163,8 +167,8 @@ class BxDolUpgradeUtil {
         return true;
     }
 
-    function readLangs ($sModule = '') {
-
+    function readLangs ($sModule = '')
+    {
         $sDir = BX_UPGRADE_DIR_UPGRADES . $this->sFolder . '/' . ($sModule ? 'modules/' . $sModule . '/' : '');
 
         if (!($h = opendir($sDir)))
@@ -186,8 +190,8 @@ class BxDolUpgradeUtil {
 
     }
 
-    function readModules () {
-
+    function readModules ()
+    {
         if (!$this->sFolder)
             return false;
 
@@ -208,8 +212,8 @@ class BxDolUpgradeUtil {
         return $aRet;
     }
 
-    function checkFolder ($sFolder = '') {
-
+    function checkFolder ($sFolder = '')
+    {
         if (!$sFolder)
             $sFolder = $this->sFolder;
         $sFullPath = BX_UPGRADE_DIR_UPGRADES . $sFolder . '/';
@@ -220,12 +224,13 @@ class BxDolUpgradeUtil {
         return true;
     }
 
-    function setFolder ($sFolder) {
+    function setFolder ($sFolder)
+    {
         $this->sFolder = $sFolder;
     }
 
-    function readUpgrades () {
-
+    function readUpgrades ()
+    {
         if (!($h = opendir(BX_UPGRADE_DIR_UPGRADES))) {
             return false;
         }
@@ -244,4 +249,3 @@ class BxDolUpgradeUtil {
 }
 
 /** @} */
-

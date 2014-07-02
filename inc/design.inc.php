@@ -50,11 +50,9 @@ define('BX_DB_PADDING_DEF', 11);
  */
 define('BX_DB_PADDING_NO_CAPTION', 13);
 
-
 define('BX_FORMAT_DATE', 'sys_format_date'); ///< date format identifier for use in @see bx_time_js function
 define('BX_FORMAT_TIME', 'sys_format_time'); ///< time format identifier for use in @see bx_time_js function
 define('BX_FORMAT_DATE_TIME', 'sys_format_datetime'); ///< datetime format identifier for use in @see bx_time_js function
-
 
 /**
  * Display "design box" HTML code
@@ -69,7 +67,8 @@ define('BX_FORMAT_DATE_TIME', 'sys_format_datetime'); ///< datetime format ident
  * @see BX_DB_PADDING_DEF
  * @see BX_DB_PADDING_NO_CAPTION
  */
-function DesignBoxContent ($sTitle, $sContent, $iTemplateNum = BX_DB_DEF, $mixedMenu = false) {
+function DesignBoxContent ($sTitle, $sContent, $iTemplateNum = BX_DB_DEF, $mixedMenu = false)
+{
     bx_import('BxTemplFunctions');
     return BxTemplFunctions::getInstance()->designBoxContent ($sTitle, $sContent, $iTemplateNum, $mixedMenu);
 }
@@ -77,7 +76,8 @@ function DesignBoxContent ($sTitle, $sContent, $iTemplateNum = BX_DB_DEF, $mixed
 /**
  * Use this function in pages if you want to not cache it.
  **/
-function send_headers_page_changed() {
+function send_headers_page_changed()
+{
     $now = gmdate('D, d M Y H:i:s') . ' GMT';
 
     header("Expires: $now");
@@ -86,17 +86,20 @@ function send_headers_page_changed() {
     header("Pragma: no-cache");
 }
 
-function MsgBox($sText, $iTimer = 0) {
+function MsgBox($sText, $iTimer = 0)
+{
     bx_import('BxTemplFunctions');
     return BxTemplFunctions::getInstance()->msgBox($sText, $iTimer);
 }
 
-function PopupBox($sName, $sTitle, $sContent, $isHiddenByDefault = false) {
+function PopupBox($sName, $sTitle, $sContent, $isHiddenByDefault = false)
+{
     bx_import('BxTemplFunctions');
     return BxTemplFunctions::getInstance()->popupBox($sName, $sTitle, $sContent, $isHiddenByDefault);
 }
 
-function getVersionComment() {
+function getVersionComment()
+{
     $aVer = explode('.', getParam('sys_version'));
 
     // version output made for debug possibilities.
@@ -110,7 +113,7 @@ function getVersionComment() {
     return '<!-- ' . implode(' ', $aVerR) . ' -->';
 }
 
-function getSiteStatUser() 
+function getSiteStatUser()
 {
     $sqlQuery = "SELECT `Name` as `name`, `Title` as `capt`, `UserQuery` as `query`, `UserLink` as `link`, `IconName` as `icon`, `AdminQuery` as `adm_query`, `AdminLink` as `adm_link` FROM `sys_stat_site` ORDER BY `StatOrder`";
 
@@ -126,7 +129,7 @@ function getSiteStatUser()
  *
  * This is just short version for:
  * @see BxTemplFunctions::timeForJs
- * 
+ *
  * @param $iUnixTimestamp time as unixtimestamp
  * @param $sFormatIdentifier output format identifier
  *     @see BX_FORMAT_DATE
@@ -134,7 +137,8 @@ function getSiteStatUser()
  *     @see BX_FORMAT_DATE_TIME
  * @param $bForceFormat force provided format and don't use "from now" time autoformat.
  */
-function bx_time_js ($iUnixTimestamp, $sFormatIdentifier = BX_FORMAT_DATE, $bForceFormat = false) {
+function bx_time_js ($iUnixTimestamp, $sFormatIdentifier = BX_FORMAT_DATE, $bForceFormat = false)
+{
     bx_import('BxTemplFunctions');
     return BxTemplFunctions::getInstance()->timeForJs ($iUnixTimestamp, $sFormatIdentifier, $bForceFormat);
 }
@@ -144,7 +148,8 @@ function bx_time_js ($iUnixTimestamp, $sFormatIdentifier = BX_FORMAT_DATE, $bFor
  * @param $iUnixTimestamp - unix timestamp
  * @return ISO8601 formatted date/time string
  */
-function bx_time_utc ($iUnixTimestamp) {
+function bx_time_utc ($iUnixTimestamp)
+{
     return gmdate(DATE_ISO8601, (int)$iUnixTimestamp);
 }
 
@@ -152,5 +157,4 @@ bx_import('BxDolAlerts');
 $oZ = new BxDolAlerts('system', 'design_included', 0);
 $oZ->alert();
 
-/** @} */ 
-
+/** @} */

@@ -7,14 +7,14 @@
  * @{
  */
 
-/** 
+/**
  * @page samples
  * @section interface Interface
  */
 
 /**
  * Interface elements
- */ 
+ */
 
 $aPathInfo = pathinfo(__FILE__);
 require_once ($aPathInfo['dirname'] . '/../inc/header.inc.php');
@@ -42,12 +42,13 @@ $oTemplate->getPageCode();
 /**
  * page code function
  */
-function PageCompMainCode() 
+function PageCompMainCode()
 {
     ob_start();
 ?>
     <script>
-        function samples_interface_toggle_code(e) {
+        function samples_interface_toggle_code(e)
+        {
             var ePre = $(e).parent().find('pre');
             if (!ePre.hasClass('syntax-highlighed')) {
                 var s = ePre.html().replace(/\s+$/gm, '');
@@ -125,7 +126,7 @@ function PageCompMainCode()
         'DesignBoxes' => array ('title' => 'Design Boxes', 'desc' => '
             <a href="samples/designbox.php">Design boxes samples are here</a>'
         ),
-    );    
+    );
     foreach ($aSections as $sName => $a) {
         $sMenu  .= '<li><a href="samples/interface.php#' . $sName . '">' . $a['title'] . '</a></li>';
         $s .= '<div id="' . $sName. '" class="bx-anchor bx-def-margin-top-auto">';
@@ -144,11 +145,10 @@ function PageCompMainCode()
     return DesignBoxContent("Interface elements", $sMenu . $s, BX_DB_NO_CAPTION);
 }
 
-
-function Samples_Buttons() 
-{    
+function Samples_Buttons()
+{
     $aBlocks = array ();
- 
+
     ob_start();
     ?>
 <button class="bx-btn bx-def-margin-right">Button</button>
@@ -156,7 +156,7 @@ function Samples_Buttons()
 <button class="bx-btn bx-btn-disabled bx-def-margin-right">Disabled button</button>
     <?php
     $aBlocks['.bx-btn'] = ob_get_clean();
-    
+
     ob_start();
     ?>
 <button class="bx-btn bx-btn-small bx-def-margin-right">Button</button>
@@ -208,10 +208,10 @@ function Samples_Buttons()
     return FormatBlocks($aBlocks);
 }
 
-function Samples_PaddingsMargins() 
-{    
+function Samples_PaddingsMargins()
+{
     $aBlocks = array ();
-     
+
     ob_start();
     ?>
 <div class="bx-def-border bx-def-padding">
@@ -219,7 +219,7 @@ function Samples_PaddingsMargins()
 </div>
     <?php
     $aBlocks['.bx-def-padding'] = ob_get_clean();
-    
+
     ob_start();
     ?>
 <div class="bx-def-border bx-def-padding-left bx-def-padding-right">
@@ -277,10 +277,10 @@ function Samples_PaddingsMargins()
     return FormatBlocks($aBlocks);
 }
 
-function Samples_Colors() 
-{    
+function Samples_Colors()
+{
     $aBlocks = array ();
-     
+
     $aClasses = array ('bx-def-color-bg-page', 'bx-def-color-bg-block', 'bx-def-color-bg-box', 'bx-def-color-bg-sec', 'bx-def-color-bg-active', 'bx-def-color-bg-hl', 'bx-def-color-bg-hl-hover');
     foreach ($aClasses as $sClass) {
         ob_start();
@@ -294,10 +294,10 @@ function Samples_Colors()
     return FormatBlocks($aBlocks);
 }
 
-function Samples_BordersCornersShadow() 
-{    
+function Samples_BordersCornersShadow()
+{
     $aBlocks = array ();
-     
+
     $aClasses = array ('bx-def-border', 'bx-def-border-left bx-def-border-bottom', 'bx-def-border bx-def-round-corners', 'bx-def-shadow');
     foreach ($aClasses as $sClass) {
         ob_start();
@@ -311,10 +311,10 @@ function Samples_BordersCornersShadow()
     return FormatBlocks($aBlocks);
 }
 
-function Samples_ThumbsIconsUnits() 
-{    
+function Samples_ThumbsIconsUnits()
+{
     $aBlocks = array ();
-     
+
     $aClasses = array ('bx-def-thumb bx-def-thumb-size', 'bx-def-icon bx-def-icon-size');
     foreach ($aClasses as $sClass) {
         ob_start();
@@ -350,10 +350,10 @@ function Samples_ThumbsIconsUnits()
     return FormatBlocks($aBlocks);
 }
 
-function Samples_Fonts() 
-{    
+function Samples_Fonts()
+{
     $aBlocks = array ();
-     
+
     $aClasses = array ('' => 'SAMPLE_TEXT', 'bx-def-font-grayed' => 'SAMPLE_TEXT', 'bx-def-font-small' => 'SAMPLE_TEXT', 'bx-def-font-middle' => 'SAMPLE_TEXT', 'bx-def-font-large' => 'SAMPLE_TEXT', 'bx-def-font-h1' => 'SAMPLE_TITLE', 'bx-def-font-h2' => 'SAMPLE_TITLE', 'bx-def-font-h3' => 'SAMPLE_TITLE', 'bx-def-font-contrasted bx-def-font-h2 bg-col-green3' => 'SAMPLE_TITLE');
     foreach ($aClasses as $sClass => $sSampleText) {
         ob_start();
@@ -368,7 +368,8 @@ function Samples_Fonts()
     return FormatBlocks($aBlocks);
 }
 
-function FormatBlocks ($aBlocks) {
+function FormatBlocks ($aBlocks)
+{
     $s = '<section class="bx-def-padding-top">';
     foreach ($aBlocks as $sCaption => $sBlock) {
         $s .= '<hr class="bx-def-hr bx-def-margin-topbottom" />';
@@ -378,6 +379,5 @@ function FormatBlocks ($aBlocks) {
     $s .= '</section>';
     return $s;
 }
-
 
 /** @} */

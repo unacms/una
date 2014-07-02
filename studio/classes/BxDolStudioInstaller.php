@@ -33,8 +33,9 @@ define("BX_DOL_STUDIO_INSTALLER_FAILED", 1);
  * no alerts available
  *
  */
-class BxDolStudioInstaller extends BxDolInstallerUtils {
-	protected $oDb;
+class BxDolStudioInstaller extends BxDolInstallerUtils
+{
+    protected $oDb;
 
     protected $_aConfig;
     protected $_sBasePath;
@@ -46,7 +47,8 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
 
     protected $_bShowOnSuccess = false;
 
-    function __construct($aConfig) {
+    function __construct($aConfig)
+    {
         parent::__construct();
 
         $this->oDb = new BxDolStudioInstallerQuery();
@@ -99,8 +101,8 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
                 'title' => _t('_adm_txt_modules_execute_sql'),
             ),
             'install_language' => array(
-    			'title' => _t('_adm_txt_modules_install_language'),
-    		),
+                'title' => _t('_adm_txt_modules_install_language'),
+            ),
             'update_languages' => array(
                 'title' => _t('_adm_txt_modules_update_languages'),
             ),
@@ -147,7 +149,8 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
         );
     }
 
-    public function install($aParams, $bEnable = false) {
+    public function install($aParams, $bEnable = false)
+    {
         //--- Check whether the module was already installed ---//
         if($this->oDb->isModule($this->_aConfig['home_uri']))
             return array(
@@ -164,8 +167,8 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
 
         //--- Check mandatory settings ---//
         if($this->oDb->isModuleParamsUsed($this->_aConfig['home_uri'], $this->_aConfig['home_dir'], $this->_aConfig['db_prefix'], $this->_aConfig['class_prefix']))
-    		return array(
-                'message' => _t('_adm_txt_modules_params_used'), 
+            return array(
+                'message' => _t('_adm_txt_modules_params_used'),
                 'result' => false
             );
 
@@ -227,7 +230,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
             $this->_hash($this->_sModulePath, $aFiles);
 
             foreach($aFiles as $aFile)
-            	$this->oDb->insertModuleTrack($iModuleId, $aFile);
+                $this->oDb->insertModuleTrack($iModuleId, $aFile);
 
             $this->oDb->cleanMemory('sys_modules_' . $this->_aConfig['home_uri']);
             $this->oDb->cleanMemory('sys_modules_' . $iModuleId);
@@ -245,8 +248,8 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
         return $aResult;
     }
 
-    public function uninstall($aParams, $bDisable = false) {
-
+    public function uninstall($aParams, $bDisable = false)
+    {
         //--- Check whether the module was already uninstalled ---//
         if(!$this->oDb->isModule($this->_aConfig['home_uri']))
             return array(
@@ -295,7 +298,6 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
             $this->oDb->cleanMemory ('sys_modules');
         }
 
-        
         if($bDisable) {
             $aResultEnable = $this->disable($aParams);
 
@@ -307,28 +309,30 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
         return $aResult;
     }
 
-	public function delete() {
-		bx_import('BxDolFtp');
+    public function delete()
+    {
+        bx_import('BxDolFtp');
         $oFtp = new BxDolFtp($_SERVER['HTTP_HOST'], getParam('sys_ftp_login'), getParam('sys_ftp_password'), getParam('sys_ftp_dir'));
         if(!$oFtp->connect())
-        	return array(
+            return array(
                 'message' => _t('_adm_err_modules_cannot_connect_to_ftp'),
                 'result' => false
             );
 
-		if(!$oFtp->delete('modules/' . $this->_aConfig['home_dir']))
-			return array(
+        if(!$oFtp->delete('modules/' . $this->_aConfig['home_dir']))
+            return array(
                 'message' => _t('_adm_err_modules_cannot_remove_package'),
                 'result' => false
             );
 
         return array(
-        	'message' => '', //_t('_adm_msg_modules_success_delete'), 
-        	'result' => true
+            'message' => '', //_t('_adm_msg_modules_success_delete'),
+            'result' => true
         );
     }
 
-    public function recompile($aParams) {
+    public function recompile($aParams)
+    {
         bx_import('BxDolStudioLanguagesUtils');
         $oLanguages = BxDolStudioLanguagesUtils::getInstance();
 
@@ -350,7 +354,8 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
         return $aResult;
     }
 
-    public function enable($aParams) {
+    public function enable($aParams)
+    {
         $aModule = $this->oDb->getModuleByUri($this->_aConfig['home_uri']);
 
         //--- Check whether the module is installed ---//
@@ -379,7 +384,8 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
         return $aResult;
     }
 
-    public function disable($aParams) {
+    public function disable($aParams)
+    {
         $aModule = $this->oDb->getModuleByUri($this->_aConfig['home_uri']);
 
         //--- Check whether the module is installed ---//
@@ -395,7 +401,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
                 'message' => _t('_adm_err_modules_already_disabled'),
                 'result' => false
             );
-            
+
         //--- Check for dependent modules ---//
         $bDependent = false;
         $aDependents = $this->oDb->getDependent($this->_aConfig['home_uri']);
@@ -425,7 +431,8 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
         return $aResult;
     }
 
-    function _hash($sPath, &$aFiles) {
+    function _hash($sPath, &$aFiles)
+    {
         if(file_exists($sPath) && is_dir($sPath) && ($rSource = opendir($sPath))) {
             while(($sFile = readdir($rSource)) !== false) {
                 if($sFile == '.' || $sFile =='..' || $sFile[0] == '.' || in_array($sFile, $this->_aNonHashable))
@@ -437,17 +444,18 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
                     $aFiles[] = $this->_info($sPath . $sFile);
             }
             closedir($rSource);
-        }
-        else
+        } else
             $aFiles[] = $this->_info($sPath, $sFile);
     }
-    function _info($sPath) {
+    function _info($sPath)
+    {
         return array(
             'file' => str_replace($this->_sModulePath, '', $sPath),
             'hash' => md5(file_get_contents($sPath))
         );
     }
-    function _perform($sOperationName) {
+    function _perform($sOperationName)
+    {
         if(!defined('BX_SKIP_INSTALL_CHECK') && !defined('BX_DOL_CRON_EXECUTE') && !$GLOBALS['logged']['admin'])
             return array('message' => '_adm_mod_err_only_admin_can_perform_operations_with_modules', 'result' => false);
 
@@ -476,7 +484,8 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
         return array('message' => $sMessage, 'result' => true);
     }
 
-    function _displayResult($sAction, $bResult, $sResult = '') {
+    function _displayResult($sAction, $bResult, $sResult = '')
+    {
         $sMessage = $this->_aActions[$sAction]['title'] . ' ';
         if(!empty($sResult) && substr($sResult, 0, 1) == '_')
             $sResult = _t($sResult) . '<br />';
@@ -491,10 +500,12 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
     }
 
     //--- Action Methods ---//
-    function actionOperationFailed($mixedResult) {
+    function actionOperationFailed($mixedResult)
+    {
         return _t('_adm_err_modules_process_action_failed');
     }
-    function actionCheckDependencies($sOperation) {
+    function actionCheckDependencies($sOperation)
+    {
         $sContent = '';
 
         if(in_array($sOperation, array('install', 'enable', 'update'))) {
@@ -511,24 +522,28 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
 
         return empty($sContent) ? BX_DOL_STUDIO_INSTALLER_SUCCESS : array('code' => BX_DOL_STUDIO_INSTALLER_FAILED, 'content' => $sContent);
     }
-    function actionCheckDependenciesFailed($mixedResult) {
+    function actionCheckDependenciesFailed($mixedResult)
+    {
         return $mixedResult['content'];
     }
-    function actionShowIntroduction($sOperation) {
+    function actionShowIntroduction($sOperation)
+    {
         if(!isset($this->_aConfig[$sOperation . '_info']['introduction']))
             return BX_DOL_STUDIO_INSTALLER_FAILED;
 
         $sPath = $this->_sHomePath . 'install/info/' . $this->_aConfig[$sOperation . '_info']['introduction'];
         return file_exists($sPath) ? array("code" => BX_DOL_STUDIO_INSTALLER_SUCCESS, "content" => "<pre>" . file_get_contents($sPath) . "</pre>") : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
-    function actionShowConclusion($sOperation) {
+    function actionShowConclusion($sOperation)
+    {
         if(!isset($this->_aConfig[$sOperation . '_info']['conclusion']))
             return BX_DOL_STUDIO_INSTALLER_FAILED;
 
         $sPath = $this->_sHomePath . 'install/info/' . $this->_aConfig[$sOperation . '_info']['conclusion'];
         return file_exists($sPath) ? array("code" => BX_DOL_STUDIO_INSTALLER_SUCCESS, "content" => "<pre>" . file_get_contents($sPath) . "</pre>") : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
-    function actionCheckPermissions($sOperation) {
+    function actionCheckPermissions($sOperation)
+    {
         if(!isset($this->_aConfig[$sOperation . '_permissions']) || !is_array($this->_aConfig[$sOperation . '_permissions']))
             return BX_DOL_STUDIO_INSTALLER_FAILED;
 
@@ -543,46 +558,49 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
         }
         return empty($aResult) ? BX_DOL_STUDIO_INSTALLER_SUCCESS : array('code' => BX_DOL_STUDIO_INSTALLER_FAILED, 'content' => $aResult);
     }
-    function actionCheckPermissionsFailed($mixedResult) {
+    function actionCheckPermissionsFailed($mixedResult)
+    {
         $sResult = '<br />' . _t('_adm_err_modules_wrong_permissions_check') . '<br />';
         foreach($mixedResult['content'] as $aFile)
             $sResult .= _t('_adm_err_modules_wrong_permissions_msg', $aFile['path'], $aFile['permissions']) . '<br />';
         return $sResult;
     }
-    function actionChangePermissions($sOperation) {
+    function actionChangePermissions($sOperation)
+    {
         if(!isset($this->_aConfig[$sOperation . '_permissions']) || !is_array($this->_aConfig[$sOperation . '_permissions']))
             return BX_DOL_STUDIO_INSTALLER_FAILED;
 
-		$aChangeItems = array();
-		$aPermissions = $this->_aConfig[$sOperation . '_permissions'];
-		foreach($aPermissions as $sPermissions => $aFiles) {
-			$sCheckFunction = 'is' . ucfirst($sPermissions);
-			foreach($aFiles as $sFile) {
-				$sPath = bx_ltrim_str($this->_sModulePath . $sFile, BX_DIRECTORY_PATH_ROOT);
-				if(BxDolInstallerUtils::$sCheckFunction($sPath))
-					continue;
+        $aChangeItems = array();
+        $aPermissions = $this->_aConfig[$sOperation . '_permissions'];
+        foreach($aPermissions as $sPermissions => $aFiles) {
+            $sCheckFunction = 'is' . ucfirst($sPermissions);
+            foreach($aFiles as $sFile) {
+                $sPath = bx_ltrim_str($this->_sModulePath . $sFile, BX_DIRECTORY_PATH_ROOT);
+                if(BxDolInstallerUtils::$sCheckFunction($sPath))
+                    continue;
 
-				$aChangeItems[] = array('file' => $sFile, 'path' => $sPath, 'permissions' => $sPermissions);
+                $aChangeItems[] = array('file' => $sFile, 'path' => $sPath, 'permissions' => $sPermissions);
             }
         }
 
-		if(empty($aChangeItems))
-			return BX_DOL_STUDIO_INSTALLER_SUCCESS;
+        if(empty($aChangeItems))
+            return BX_DOL_STUDIO_INSTALLER_SUCCESS;
 
         $oFile = $this->_getFileManager();
         if(empty($oFile))
-        	return array('code' => BX_DOL_STUDIO_INSTALLER_FAILED);
+            return array('code' => BX_DOL_STUDIO_INSTALLER_FAILED);
 
-		$aResult = array();
+        $aResult = array();
         foreach($aChangeItems as $aChangeItem)
-			if(!$oFile->setPermissions($aChangeItem['path'], $aChangeItem['permissions']))
-				$aResult[] = array('path' => $this->_sModulePath . $aChangeItem['file'], 'permissions' => $aChangeItem['permissions']);
+            if(!$oFile->setPermissions($aChangeItem['path'], $aChangeItem['permissions']))
+                $aResult[] = array('path' => $this->_sModulePath . $aChangeItem['file'], 'permissions' => $aChangeItem['permissions']);
 
         return empty($aResult) ? BX_DOL_STUDIO_INSTALLER_SUCCESS : array('code' => BX_DOL_STUDIO_INSTALLER_FAILED, 'content' => $aResult);
     }
-    function actionChangePermissionsFailed($mixedResult) {
-		if(empty($mixedResult['content']))
-			return $this->actionOperationFailed($mixedResult);
+    function actionChangePermissionsFailed($mixedResult)
+    {
+        if(empty($mixedResult['content']))
+            return $this->actionOperationFailed($mixedResult);
 
         $sResult = '<br />' . _t('_adm_err_modules_wrong_permissions_change') . '<br />';
         foreach($mixedResult['content'] as $aFile)
@@ -590,7 +608,8 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
 
         return $sResult;
     }
-    function actionMoveSources($sOperation) {
+    function actionMoveSources($sOperation)
+    {
         $oFile = $this->_getFileManager();
         $aInstalled = array_merge(array('system'), $this->oDb->getModulesUri());
 
@@ -603,14 +622,14 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
                 $sSrcPath = 'modules/' . $this->_aConfig['home_dir'] . 'install/data/' . $sPath;
                 $sDstPath = $sPath;
                 $bResult &= $oFile->copy($sSrcPath, $sDstPath);
-            }
-            else if($sOperation == 'uninstall')
+            } else if($sOperation == 'uninstall')
                 $bResult &= $oFile->delete($sPath);
         }
 
         return $bResult ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
-    function actionExecuteSql($sOperation) {
+    function actionExecuteSql($sOperation)
+    {
         switch($sOperation) {
             case 'install':
                 $this->actionExecuteSql('disable');
@@ -626,7 +645,8 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
 
         return $mixedResult === true ? BX_DOL_STUDIO_INSTALLER_SUCCESS : array('code' => BX_DOL_STUDIO_INSTALLER_FAILED, 'content' => $mixedResult);
     }
-    function actionExecuteSqlFailed($mixedResult) {
+    function actionExecuteSqlFailed($mixedResult)
+    {
         $sResult = '<br />' . _t('_adm_err_modules_wrong_mysql_query') . '<br />';
         foreach($mixedResult['content'] as $aQuery) {
             $sResult .= _t('_adm_err_modules_wrong_mysql_query_msg', $aQuery['error']) . '<br />';
@@ -634,19 +654,21 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
         }
         return $sResult;
     }
-    function actionInstallLanguage($sOperation) {
+    function actionInstallLanguage($sOperation)
+    {
         bx_import('BxDolStudioLanguagesUtils');
         $oLanguages = BxDolStudioLanguagesUtils::getInstance();
 
         $sLanguage = isset($this->_aConfig['home_uri']) ? $this->_aConfig['home_uri'] : '';
 
-        $bResult = true; 
+        $bResult = true;
         if($sOperation == 'install')
-    	    $bResult = $oLanguages->installLanguage(array('path' => $this->_aConfig['home_dir'], 'uri' => $this->_aConfig['home_uri'], 'lang_category' => $this->_aConfig['language_category']),false);
+            $bResult = $oLanguages->installLanguage(array('path' => $this->_aConfig['home_dir'], 'uri' => $this->_aConfig['home_uri'], 'lang_category' => $this->_aConfig['language_category']),false);
 
         return $bResult && $oLanguages->compileLanguage(0, true) ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
-    function actionUpdateLanguages($sOperation) {
+    function actionUpdateLanguages($sOperation)
+    {
         if(!isset($this->_aConfig['language_category']) || empty($this->_aConfig['language_category']))
             return BX_DOL_STUDIO_INSTALLER_FAILED;
 
@@ -662,9 +684,9 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
 
         //--- Process languages' key=>value pears ---//
         $aModule = array(
-        	'path' => $this->_aConfig['home_dir'], 
-        	'uri' => $this->_aConfig['home_uri'], 
-        	'lang_category' => $this->_aConfig['language_category']
+            'path' => $this->_aConfig['home_dir'],
+            'uri' => $this->_aConfig['home_uri'],
+            'lang_category' => $this->_aConfig['language_category']
         );
 
         if($sOperation == 'install')
@@ -677,37 +699,45 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
 
         return $bResult && $oLanguages->compileLanguage(0, true) ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
-    function actionRecompileGlobalParamaters($sOperation) {
+    function actionRecompileGlobalParamaters($sOperation)
+    {
         $bResult = $this->oDb->cacheParamsClear();
         return $bResult ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
-    function actionRecompileMenus($sOperation) {
+    function actionRecompileMenus($sOperation)
+    {
         $bResult = $this->oDb->cleanCache('sys_objects_menu');
         return $bResult ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
-    function actionRecompileSiteStats($sOperation) {
+    function actionRecompileSiteStats($sOperation)
+    {
         $bResult = $this->oDb->cleanCache('sys_stat_site');
         return $bResult ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
-    function actionRecompileComments($sOperation) {        
+    function actionRecompileComments($sOperation)
+    {
         $bResult = $this->oDb->cleanCache('sys_objects_cmts');
         return $bResult ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
-    function actionRecompileMemberActions($sOperation) {
+    function actionRecompileMemberActions($sOperation)
+    {
         $bResult = $this->oDb->cleanCache('sys_objects_actions');
         return $bResult ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
-    function actionRecompileVotes($sOperation) {
+    function actionRecompileVotes($sOperation)
+    {
         $bResult = $this->oDb->cleanCache('sys_objects_vote');
         return $bResult ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
-    function actionRecompileInjections($sOperation) {
+    function actionRecompileInjections($sOperation)
+    {
         $bResult = $this->oDb->cleanCache('sys_injections.inc');
         $bResult = $bResult && $this->oDb->cleanCache('sys_injections_admin.inc');
 
         return $bResult ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
-    function actionRecompilePermalinks($sOperation) {
+    function actionRecompilePermalinks($sOperation)
+    {
         $bResult = true;
 
         bx_import('BxDolPermalinks');
@@ -717,11 +747,13 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
 
         return $bResult ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
-    function actionRecompileAlerts($sOperation) {
+    function actionRecompileAlerts($sOperation)
+    {
         $bResult = $this->oDb->cleanCache('sys_alerts');
         return $bResult ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
-    function actionClearDbCache($sOperation) {
+    function actionClearDbCache($sOperation)
+    {
         $oCache = $this->oDb->getDbCacheObject();
 
         $bResult = $oCache->removeAllByPrefix('db_');
@@ -729,34 +761,38 @@ class BxDolStudioInstaller extends BxDolInstallerUtils {
     }
 
     //--- Get/Set Methods ---//
-    function getVendor() {
+    function getVendor()
+    {
         return $this->_aConfig['vendor'];
     }
-    function getName() {
+    function getName()
+    {
         return $this->_aConfig['name'];
     }
-    function getTitle() {
+    function getTitle()
+    {
         return $this->_aConfig['title'];
     }
-    function getHomeDir() {
+    function getHomeDir()
+    {
         return $this->_aConfig['home_dir'];
     }
 
     //--- Protected methods ---//
-    protected function _getFileManager($bUseFtp = true) {
+    protected function _getFileManager($bUseFtp = true)
+    {
         $oFile = null;
 
         if($bUseFtp) {
-        	bx_import('BxDolFtp');
-			$oFile = new BxDolFtp(isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost', getParam('sys_ftp_login'), getParam('sys_ftp_password'), getParam('sys_ftp_dir'));
+            bx_import('BxDolFtp');
+            $oFile = new BxDolFtp(isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost', getParam('sys_ftp_login'), getParam('sys_ftp_password'), getParam('sys_ftp_dir'));
 
-			if(!$oFile->connect())
-				return null;
+            if(!$oFile->connect())
+                return null;
 
-			if(!$oFile->isDolphin())
-				return null;
-        }
-        else {
+            if(!$oFile->isDolphin())
+                return null;
+        } else {
             bx_import('BxDolFile');
             $oFile = BxDolFile::getInstance();
         }

@@ -14,9 +14,9 @@ bx_import('BxBaseModProfilePageBrowse');
 /**
  * Browse entries pages.
  */
-class BxPersonsPageBrowse extends BxBaseModProfilePageBrowse 
-{    
-    public function __construct($aObject, $oTemplate = false) 
+class BxPersonsPageBrowse extends BxBaseModProfilePageBrowse
+{
+    public function __construct($aObject, $oTemplate = false)
     {
         $this->MODULE = 'bx_persons';
         parent::__construct($aObject, $oTemplate);

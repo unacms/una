@@ -7,11 +7,11 @@
  * @{
  */
 
-/** 
+/**
  * @page samples
  * @section form Form
  */
- 
+
 /**
 
 -- SQL dump of table with sample data:
@@ -79,7 +79,6 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('sample_form_objects', 'custom', 'header_submit', '', '', 0, 'block_header', 'Submit form block', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 1),
 ('sample_form_objects', 'custom', 'do_submit', '_Submit', '', 0, 'submit', 'Submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 1);
 
-
 -- SQL dump of form inputs association with form display:
 
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
@@ -132,17 +131,19 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 
 bx_import('BxTemplFormView');
 
-class BxSampleForm extends BxTemplFormView {
-
-    public function __construct ($aInfo, $oTemplate = false) {
+class BxSampleForm extends BxTemplFormView
+{
+    public function __construct ($aInfo, $oTemplate = false)
+    {
         parent::__construct ($aInfo, $oTemplate);
     }
 
     /**
-     * display input with 'custom' name 
-     */    
-    protected function genCustomInputCustom ($aInput) {
-        return 
+     * display input with 'custom' name
+     */
+    protected function genCustomInputCustom ($aInput)
+    {
+        return
         'r: <input type="text" size="2" value="'.(isset($aInput['value'][0]) ? $aInput['value'][0] : '').'" name="'.$aInput['name'].'[]" />' .
         'g: <input type="text" size="2" value="'.(isset($aInput['value'][1]) ? $aInput['value'][1] : '').'" name="'.$aInput['name'].'[]" />' .
         'b: <input type="text" size="2" value="'.(isset($aInput['value'][2]) ? $aInput['value'][2] : '').'" name="'.$aInput['name'].'[]" />';
@@ -150,14 +151,15 @@ class BxSampleForm extends BxTemplFormView {
 
 }
 
-class BxSampleFormCheckerHelper extends BxDolFormCheckerHelper {
-    
+class BxSampleFormCheckerHelper extends BxDolFormCheckerHelper
+{
     protected $_sDiv = ',';
 
     /**
      * prepare RBG values to save to the DB
      */
-    function passRgb ($s) {
+    function passRgb ($s)
+    {
         if (!is_array($s))
             return false;
 
@@ -171,7 +173,8 @@ class BxSampleFormCheckerHelper extends BxDolFormCheckerHelper {
     /**
      * prepare RGB values to output to the screen
      */
-    function displayRgb ($s) {
+    function displayRgb ($s)
+    {
         return explode($this->_sDiv, $s);
     }
 

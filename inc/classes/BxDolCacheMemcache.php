@@ -9,7 +9,7 @@
 
 bx_import('BxDolCache');
 
-class BxDolCacheMemcache extends BxDolCache 
+class BxDolCacheMemcache extends BxDolCache
 {
     protected $iTTL = 3600;
     protected $iStoreFlag = 0;
@@ -18,7 +18,7 @@ class BxDolCacheMemcache extends BxDolCache
     /**
      * constructor
      */
-    function __construct() 
+    function __construct()
     {
         parent::__construct();
         if (class_exists('Memcache')) {
@@ -31,11 +31,11 @@ class BxDolCacheMemcache extends BxDolCache
     /**
      * Get data from cache server
      *
-     * @param string $sKey - file name
-     * @param int $iTTL - time to live
-     * @return the data is got from cache.
+     * @param  string $sKey - file name
+     * @param  int    $iTTL - time to live
+     * @return the    data is got from cache.
      */
-    function getData($sKey, $iTTL = false) 
+    function getData($sKey, $iTTL = false)
     {
         $mixedData = $this->oMemcache->get($sKey);
         return false === $mixedData ? null : $mixedData;
@@ -44,12 +44,12 @@ class BxDolCacheMemcache extends BxDolCache
     /**
      * Save data in cache server
      *
-     * @param string $sKey - file name
-     * @param mixed $mixedData - the data to be cached in the file
-     * @param int $iTTL - time to live
+     * @param  string  $sKey      - file name
+     * @param  mixed   $mixedData - the data to be cached in the file
+     * @param  int     $iTTL      - time to live
      * @return boolean result of operation.
      */
-    function setData($sKey, $mixedData, $iTTL = false) 
+    function setData($sKey, $mixedData, $iTTL = false)
     {
         return $this->oMemcache->set($sKey, $mixedData, $this->iStoreFlag, false === $iTTL ? $this->iTTL : $iTTL);
     }
@@ -57,10 +57,10 @@ class BxDolCacheMemcache extends BxDolCache
     /**
      * Delete cache from cache server
      *
-     * @param string $sKey - file name
+     * @param  string $sKey - file name
      * @return result of the operation
      */
-    function delData($sKey) 
+    function delData($sKey)
     {
         $this->oMemcache->delete($sKey);
         return true;
@@ -70,7 +70,7 @@ class BxDolCacheMemcache extends BxDolCache
      * Check if memcache is available
      * @return boolean
      */
-    function isAvailable() 
+    function isAvailable()
     {
         return $this->oMemcache == null ? false : true;
     }
@@ -79,7 +79,7 @@ class BxDolCacheMemcache extends BxDolCache
      * Check if memcache extension is loaded
      * @return boolean
      */
-    function isInstalled() 
+    function isInstalled()
     {
         return extension_loaded('memcache');
     }
@@ -88,7 +88,7 @@ class BxDolCacheMemcache extends BxDolCache
      * remove all data from cache by key prefix
      * @return true on success
      */
-    function removeAllByPrefix ($s) 
+    function removeAllByPrefix ($s)
     {
         // not implemented for current cache
         return false;
@@ -96,4 +96,3 @@ class BxDolCacheMemcache extends BxDolCache
 }
 
 /** @} */
-

@@ -9,14 +9,14 @@
 
 bx_import('BxDolCache');
 
-class BxDolCacheFile extends BxDolCache 
+class BxDolCacheFile extends BxDolCache
 {
     protected $sPath;
 
     /**
      * constructor
      */
-    function __construct() 
+    function __construct()
     {
         parent::__construct();
         $this->sPath = BX_DIRECTORY_PATH_CACHE;
@@ -25,11 +25,11 @@ class BxDolCacheFile extends BxDolCache
     /**
      * Get all data from the cache file.
      *
-     * @param string $sKey - file name
-     * @param int $iTTL - time to live
-     * @return the data is got from cache.
+     * @param  string $sKey - file name
+     * @param  int    $iTTL - time to live
+     * @return the    data is got from cache.
      */
-    function getData($sKey, $iTTL = false) 
+    function getData($sKey, $iTTL = false)
     {
         if (!file_exists($this->sPath . $sKey))
             return null;
@@ -44,12 +44,12 @@ class BxDolCacheFile extends BxDolCache
     /**
      * Save all data in cache file.
      *
-     * @param string $sKey - file name
-     * @param mixed $mixedData - the data to be cached in the file
-     * @param int $iTTL - time to live
+     * @param  string  $sKey      - file name
+     * @param  mixed   $mixedData - the data to be cached in the file
+     * @param  int     $iTTL      - time to live
      * @return boolean result of operation.
      */
-    function setData($sKey, $mixedData, $iTTL = false) 
+    function setData($sKey, $mixedData, $iTTL = false)
     {
         if(file_exists($this->sPath . $sKey) && !is_writable($this->sPath . $sKey))
            return false;
@@ -67,10 +67,10 @@ class BxDolCacheFile extends BxDolCache
     /**
      * Delete cache file.
      *
-     * @param string $sKey - file name
+     * @param  string $sKey - file name
      * @return result of the operation
      */
-    function delData($sKey) 
+    function delData($sKey)
     {
         $sFile = $this->sPath . $sKey;
         return !file_exists($sFile) || @unlink($sFile);
@@ -80,7 +80,7 @@ class BxDolCacheFile extends BxDolCache
      * remove all data from cache by key prefix
      * @return true on success
      */
-    function removeAllByPrefix ($s) 
+    function removeAllByPrefix ($s)
     {
         if (!($rHandler = opendir($this->sPath)))
             return false;
@@ -116,11 +116,11 @@ class BxDolCacheFile extends BxDolCache
 
     /**
      * remove file from dist if TTL expored
-     * @param string $sFile - full path to filename
-     * @param int $iTTL - time to live in seconds
-     * @return true if TTL is expired and file is deleted or false otherwise
+     * @param  string $sFile - full path to filename
+     * @param  int    $iTTL  - time to live in seconds
+     * @return true   if TTL is expired and file is deleted or false otherwise
      */
-    function _removeFileIfTtlExpired ($sFile, $iTTL) 
+    function _removeFileIfTtlExpired ($sFile, $iTTL)
     {
         $iTimeDiff = time() - filectime($sFile);
         if ($iTimeDiff > $iTTL) {
@@ -133,4 +133,3 @@ class BxDolCacheFile extends BxDolCache
 }
 
 /** @} */
-

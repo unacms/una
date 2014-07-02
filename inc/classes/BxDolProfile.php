@@ -10,18 +10,19 @@
 bx_import('BxDolProfileQuery');
 
 define('BX_PROFILE_ACTION_AUTO', 0); ///< automatic action without any checking
-define('BX_PROFILE_ACTION_MANUAL', 1); ///< manual action performed by human 
+define('BX_PROFILE_ACTION_MANUAL', 1); ///< manual action performed by human
 define('BX_PROFILE_ACTION_ROBOT', 2); ///< action peformed by some robot based on some conditions
 
-class BxDolProfile extends BxDol implements iBxDolProfile {
-
+class BxDolProfile extends BxDol implements iBxDolProfile
+{
     protected $_iProfileID;
     protected $_oQuery;
 
     /**
      * Constructor
      */
-    protected function __construct ($iProfileId) {
+    protected function __construct ($iProfileId)
+    {
         $iProfileId = (int)$iProfileId;
         $sClass = get_class($this) . '_' . $iProfileId;
         if (isset($GLOBALS['bxDolClasses'][$sClass]))
@@ -36,7 +37,8 @@ class BxDolProfile extends BxDol implements iBxDolProfile {
     /**
      * Prevent cloning the instance
      */
-    public function __clone() {
+    public function __clone()
+    {
         $sClass = get_class($this) . '_' . $this->_iProfileID;
         if (isset($GLOBALS['bxDolClasses'][$sClass]))
             trigger_error('Clone is not allowed for the class: ' . get_class($this), E_USER_ERROR);
@@ -45,7 +47,8 @@ class BxDolProfile extends BxDol implements iBxDolProfile {
     /**
      * Get singleton instance of Account Profile by account id
      */
-    public static function getInstanceAccountProfile($iAccountId = false) {
+    public static function getInstanceAccountProfile($iAccountId = false)
+    {
         if (!$iAccountId)
             $iAccountId = getLoggedId();
         $oQuery = BxDolProfileQuery::getInstance();
@@ -58,7 +61,8 @@ class BxDolProfile extends BxDol implements iBxDolProfile {
     /**
      * Get singleton instance of Profile by account id, content id and type
      */
-    public static function getInstanceByContentTypeAccount($iContent, $sType, $iAccountId = false) {
+    public static function getInstanceByContentTypeAccount($iContent, $sType, $iAccountId = false)
+    {
         if (!$iAccountId)
             $iAccountId = getLoggedId();
         $oQuery = BxDolProfileQuery::getInstance();
@@ -71,7 +75,8 @@ class BxDolProfile extends BxDol implements iBxDolProfile {
     /**
      * Get singleton instance of Profile by content id and type
      */
-    public static function getInstanceByContentAndType($iContent, $sType) {
+    public static function getInstanceByContentAndType($iContent, $sType)
+    {
         $oQuery = BxDolProfileQuery::getInstance();
         $aProfile = $oQuery->getProfileByContentAndType($iContent, $sType);
         if (!$aProfile)
@@ -82,8 +87,8 @@ class BxDolProfile extends BxDol implements iBxDolProfile {
     /**
      * Get singleton instance of Profile by profile id
      */
-    public static function getInstance($mixedProfileId = false) {
-
+    public static function getInstance($mixedProfileId = false)
+    {
         if (!$mixedProfileId) {
             $oQuery = BxDolProfileQuery::getInstance();
             $mixedProfileId = $oQuery->getCurrentProfileByAccount(getLoggedId());
@@ -103,14 +108,16 @@ class BxDolProfile extends BxDol implements iBxDolProfile {
     /**
      * Get profile id
      */
-    public function id() {
+    public function id()
+    {
         return $this->_oQuery->getIdById($this->_iProfileID);
     }
 
     /**
      * Get account id associated with the profile
      */
-    public function getAccountId() {
+    public function getAccountId()
+    {
         $aInfo = $this->getInfo();
         return $aInfo['account_id'];
     }
@@ -118,7 +125,8 @@ class BxDolProfile extends BxDol implements iBxDolProfile {
     /**
      * Get account object associated with the profile
      */
-    public function getAccountObject() {
+    public function getAccountObject()
+    {
         bx_import('BxDolAccount');
         return BxDolAccount::getInstance($this->getAccountId());
     }
@@ -126,7 +134,8 @@ class BxDolProfile extends BxDol implements iBxDolProfile {
     /**
      * Get content id associated with the profile
      */
-    public function getContentId() {
+    public function getContentId()
+    {
         $aInfo = $this->getInfo();
         return $aInfo['content_id'];
     }
@@ -134,14 +143,16 @@ class BxDolProfile extends BxDol implements iBxDolProfile {
     /**
      * Check if profile status is active
      */
-    public function isActive($iProfileId = false) {
+    public function isActive($iProfileId = false)
+    {
         return BX_PROFILE_STATUS_ACTIVE == $this->getStatus($iProfileId);
     }
 
     /**
      * Get profile status
      */
-    public function getStatus($iProfileId = false) {
+    public function getStatus($iProfileId = false)
+    {
         $aInfo = $this->_oQuery->getInfoById((int)$iProfileId ? $iProfileId : $this->_iProfileID);
         return $aInfo['status'];
     }
@@ -149,16 +160,18 @@ class BxDolProfile extends BxDol implements iBxDolProfile {
     /**
      * Get profile info
      */
-    public function getInfo($iProfileId = 0) {
+    public function getInfo($iProfileId = 0)
+    {
         return $this->_oQuery->getInfoById((int)$iProfileId ? $iProfileId : $this->_iProfileID);
     }
 
     /**
-     * Validate profile id. 
+     * Validate profile id.
      * @param $s - profile id
      * @return profile id or false if profile was not found
      */
-    static public function getID($s) {
+    static public function getID($s)
+    {
         $iId = BxDolProfileQuery::getInstance()->getIdById((int)$s);
         return $iId ? $iId : false;
     }
@@ -166,7 +179,8 @@ class BxDolProfile extends BxDol implements iBxDolProfile {
     /**
      * Get name to display in thumbnail
      */
-    public function getDisplayName($iProfileId = 0) {
+    public function getDisplayName($iProfileId = 0)
+    {
         $aInfo = $this->getInfo($iProfileId);
         return BxDolService::call($aInfo['type'], 'profile_name', array($aInfo['content_id']));
     }
@@ -174,7 +188,8 @@ class BxDolProfile extends BxDol implements iBxDolProfile {
     /**
      * Get profile url
      */
-    public function getUrl($iProfileId = 0) {
+    public function getUrl($iProfileId = 0)
+    {
         $aInfo = $this->getInfo($iProfileId);
         return BxDolService::call($aInfo['type'], 'profile_url', array($aInfo['content_id']));
     }
@@ -182,7 +197,8 @@ class BxDolProfile extends BxDol implements iBxDolProfile {
     /**
      * Get profile unit
      */
-    public function getUnit($iProfileId = 0) {
+    public function getUnit($iProfileId = 0)
+    {
         $aInfo = $this->getInfo($iProfileId);
         return BxDolService::call($aInfo['type'], 'profile_unit', array($aInfo['content_id']));
     }
@@ -190,7 +206,8 @@ class BxDolProfile extends BxDol implements iBxDolProfile {
     /**
      * Get thumbnail url
      */
-    public function getAvatar($iProfileId = 0) {
+    public function getAvatar($iProfileId = 0)
+    {
         $aInfo = $this->getInfo($iProfileId);
         return BxDolService::call($aInfo['type'], 'profile_avatar', array($aInfo['content_id']));
     }
@@ -198,7 +215,8 @@ class BxDolProfile extends BxDol implements iBxDolProfile {
     /**
      * Get thumbnail url
      */
-    public function getThumb($iProfileId = 0) {
+    public function getThumb($iProfileId = 0)
+    {
         $aInfo = $this->getInfo($iProfileId);
         return BxDolService::call($aInfo['type'], 'profile_thumb', array($aInfo['content_id']));
     }
@@ -206,7 +224,8 @@ class BxDolProfile extends BxDol implements iBxDolProfile {
     /**
      * Get icon url
      */
-    public function getIcon($iProfileId = 0) {
+    public function getIcon($iProfileId = 0)
+    {
         $aInfo = $this->getInfo($iProfileId);
         return BxDolService::call($aInfo['type'], 'profile_icon', array($aInfo['content_id']));
     }
@@ -214,7 +233,8 @@ class BxDolProfile extends BxDol implements iBxDolProfile {
     /**
      * get profile edit page url
      */
-    public function getEditUrl($iProfileId = 0) {
+    public function getEditUrl($iProfileId = 0)
+    {
         $aInfo = $this->getInfo($iProfileId);
         return BxDolService::call($aInfo['type'], 'profile_edit_url', array($aInfo['content_id']));
     }
@@ -225,8 +245,8 @@ class BxDolProfile extends BxDol implements iBxDolProfile {
      * @param $bForceDelete - force deletetion is case of account profile deletion
      * @return false on error, or true on success
      */
-    function delete($ID = false, $bForceDelete = false) {
-
+    function delete($ID = false, $bForceDelete = false)
+    {
         $ID = (int)$ID;
         if (!$ID)
             $ID = $this->_iProfileID;
@@ -238,7 +258,7 @@ class BxDolProfile extends BxDol implements iBxDolProfile {
         // delete system profiles (accounts) is not allowed, instead - delete whole account
         if (!$bForceDelete && 'system' == $aProfileInfo['type'])
             return false;
-    
+
         // switch profile context if deleted profile is active profile context
         bx_import('BxDolAccount');
         $oAccount = BxDolAccount::getInstance ($aProfileInfo['account_id']);
@@ -280,7 +300,7 @@ class BxDolProfile extends BxDol implements iBxDolProfile {
         // unset class instance to prevent creating the instance again
         $this->_iProfileID = 0;
         $sClass = get_class($this) . '_' . $ID;
-        unset($GLOBALS['bxDolClasses'][$sClass]);        
+        unset($GLOBALS['bxDolClasses'][$sClass]);
 
         return true;
     }
@@ -293,7 +313,8 @@ class BxDolProfile extends BxDol implements iBxDolProfile {
      * @param $sType profile content type
      * @return inserted profile's id
      */
-    static public function add ($iAction, $iAccountId, $iContentId, $sStatus, $sType = 'system') {
+    static public function add ($iAction, $iAccountId, $iContentId, $sStatus, $sType = 'system')
+    {
         $oQuery = BxDolProfileQuery::getInstance();
         if (!($iProfileId = $oQuery->insertProfile ($iAccountId, $iContentId, $sStatus, $sType)))
             return false;
@@ -304,25 +325,29 @@ class BxDolProfile extends BxDol implements iBxDolProfile {
     /**
      * Change profile status from 'Pending' to the next level - 'Active'
      */
-    public function approve($iAction, $iProfileId = 0) {
+    public function approve($iAction, $iProfileId = 0)
+    {
         return $this->changeStatus(BX_PROFILE_STATUS_ACTIVE, 'approve', $iAction, $iProfileId);
     }
 
     /**
-     * Change profile status to 'Pending' 
+     * Change profile status to 'Pending'
      */
-    public function disapprove($iAction, $iProfileId = 0) {
+    public function disapprove($iAction, $iProfileId = 0)
+    {
         return $this->changeStatus(BX_PROFILE_STATUS_PENDING, 'disapprove', $iAction, $iProfileId);
     }
 
     /**
-     * Change profile status to 'Suspended' 
+     * Change profile status to 'Suspended'
      */
-    public function suspend($iAction, $iProfileId = 0) {
+    public function suspend($iAction, $iProfileId = 0)
+    {
         return $this->changeStatus(BX_PROFILE_STATUS_SUSPENDED, 'suspend', $iAction, $iProfileId);
     }
 
-    protected function changeStatus($sStatus, $sAlertActionName, $iAction, $iProfileId = 0) {
+    protected function changeStatus($sStatus, $sAlertActionName, $iAction, $iProfileId = 0)
+    {
         if (!$iProfileId)
             $iProfileId = $this->_iProfileID;
 
@@ -344,11 +369,12 @@ class BxDolProfile extends BxDol implements iBxDolProfile {
 
         return true;
     }
-    
+
     /**
      * Display informer message if it is possible to switch to this profile
      */
-    public function checkSwitchToProfile($oTemplate = null, $iViewerAccountId = false, $iViewerProfileId = false) {
+    public function checkSwitchToProfile($oTemplate = null, $iViewerAccountId = false, $iViewerProfileId = false)
+    {
         if (false === $iViewerAccountId)
             $iViewerAccountId = getLoggedId();
         if (false === $iViewerProfileId)
@@ -370,4 +396,3 @@ class BxDolProfile extends BxDol implements iBxDolProfile {
 }
 
 /** @} */
-

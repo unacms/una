@@ -17,11 +17,13 @@ define('BX_DOL_STUDIO_MT_RIGHT', 'right');
 define('BX_DOL_STUDIO_MTB_CIRCLE', 'circ');
 define('BX_DOL_STUDIO_MTB_RECTANGLE', 'rect');
 
-class BxDolStudioMenuTop extends BxDol {
+class BxDolStudioMenuTop extends BxDol
+{
     protected $aItems;
     protected $aVisible;
 
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
 
         $this->aVisible = array(
@@ -31,7 +33,7 @@ class BxDolStudioMenuTop extends BxDol {
         );
 
         $this->aItems[BX_DOL_STUDIO_MT_LEFT] = array(
-        	'edit' => array(
+            'edit' => array(
                 'name' => 'edit',
                 'icon' => 'move',
                 'onclick' => $this->getJsObject() . '.clickEdit(this);',
@@ -50,7 +52,7 @@ class BxDolStudioMenuTop extends BxDol {
         $this->aItems[BX_DOL_STUDIO_MT_CENTER] = $iResult ? $aMatch[2] : '';
 
         $this->aItems[BX_DOL_STUDIO_MT_RIGHT] = array(
-        	'site' => array(
+            'site' => array(
                 'name' => 'site',
                 'icon' => 'home',
                 'link' => BX_DOL_URL_ROOT,
@@ -58,19 +60,21 @@ class BxDolStudioMenuTop extends BxDol {
             ),
             'logout' => array(
                 'name' => 'logout',
-            	'icon' => 'power-off',
-				'link' => BX_DOL_URL_ROOT . 'logout.php',
+                'icon' => 'power-off',
+                'link' => BX_DOL_URL_ROOT . 'logout.php',
                 'onclick' => $this->getJsObject() . ".clickLogout(this);",
                 'title' => '_adm_tmi_cpt_logout'
             )
         );
     }
 
-    function setVisible($sPosition, $bValue) {
+    function setVisible($sPosition, $bValue)
+    {
         $this->aVisible[$sPosition] = $bValue;
     }
 
-    function setVisibleAll() {
+    function setVisibleAll()
+    {
         $this->aVisible = array(
             BX_DOL_STUDIO_MT_LEFT => true,
             BX_DOL_STUDIO_MT_CENTER => true,

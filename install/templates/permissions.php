@@ -11,12 +11,12 @@
             <div class="bx-def-margin-bottom">
                 <?php echo _t('_sys_inst_msg_permissions_wrong'); ?>
             </div>
-            <a href="javascript:void(0);" class="bx-btn bx-btn-primary bx-btn-disabled"><? echo _t('_sys_inst_continue'); ?></a>
+            <a href="javascript:void(0);" class="bx-btn bx-btn-primary bx-btn-disabled"><?php echo _t('_sys_inst_continue'); ?></a>
         <?php endif; if ($bPermissionsOk): ?>
-            <a href="?action=site_config" class="bx-btn bx-btn-primary"><? echo _t('_sys_inst_continue'); ?></a>
+            <a href="?action=site_config" class="bx-btn bx-btn-primary"><?php echo _t('_sys_inst_continue'); ?></a>
         <?php endif; ?>
 
-        <a href="javascript:void(0);" onclick="location.reload(false);" class="bx-btn"><? echo _t('_sys_inst_refresh'); ?></a>
+        <a href="javascript:void(0);" onclick="location.reload(false);" class="bx-btn"><?php echo _t('_sys_inst_refresh'); ?></a>
     </div>
 
 </div>

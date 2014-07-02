@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    DolphinEndAdmin Dolphin Studio End Admin Pages 
+ * @defgroup    DolphinEndAdmin Dolphin Studio End Admin Pages
  * @ingroup     DolphinStudio
  * @{
  */
@@ -15,7 +15,7 @@ bx_import('BxDolLanguages');
 
 /**
  * Is used if AJAX based Launcher is disabled.
- * It displays Widget based Builders page. 
+ * It displays Widget based Builders page.
  */
 
 bx_require_authentication(true);

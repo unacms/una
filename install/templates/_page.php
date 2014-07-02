@@ -23,7 +23,6 @@
 </head>
 <body class="bx-def-font bx-def-color-bg-page">
 
-
 <div class="bx-install-page">
 
     <div id="bx-toolbar">
@@ -69,4 +68,3 @@
 
 </body>
 </html>
-

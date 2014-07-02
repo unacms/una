@@ -13,9 +13,10 @@ define('BX_PAGE_COLUMN_DUAL', 3); ///< page, with 2 columns
 
 bx_import('BxDolTemplate');
 
-class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton {
-
-    function __construct() {
+class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton
+{
+    function __construct()
+    {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
@@ -38,7 +39,8 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton {
     /**
      * Prevent cloning the instance
      */
-    public function __clone() {
+    public function __clone()
+    {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error('Clone is not allowed for the class: ' . get_class($this), E_USER_ERROR);
     }
@@ -46,7 +48,8 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton {
     /**
      * Get singleton instance of the class
      */
-    public static function getInstance() {
+    public static function getInstance()
+    {
         if (!isset($GLOBALS['bxDolClasses'][__CLASS__])) {
             $GLOBALS['bxDolClasses'][__CLASS__] = new BxDolStudioTemplate();
             $GLOBALS['bxDolClasses'][__CLASS__]->init();
@@ -55,38 +58,40 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton {
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
 
-    function init() {
+    function init()
+    {
         parent::init();
 
         //--- Add default CSS in output
-		$this->addCssSystem(array(
-			'common.css',
-			'default.less',
-			'general.css',
-		));
+        $this->addCssSystem(array(
+            'common.css',
+            'default.less',
+            'general.css',
+        ));
 
         //--- Add default JS in output
-		$this->addJsSystem(array(
-		    'jquery/jquery.min.js',
+        $this->addJsSystem(array(
+            'jquery/jquery.min.js',
             'jquery/jquery-migrate.min.js',
-		    'jquery-ui/jquery.ui.position.min.js',
+            'jquery-ui/jquery.ui.position.min.js',
             'spin.min.js',
-		    'jquery.dolPopup.js',
-		));
+            'jquery.dolPopup.js',
+        ));
 
-		bx_import('BxTemplStudioConfig');
+        bx_import('BxTemplStudioConfig');
         $this->_oConfigTemplate = BxTemplStudioConfig::getInstance();
     }
 
-    function parseSystemKey($sKey, $mixedKeyWrapperHtml = null, $bProcessInjection = true) {
+    function parseSystemKey($sKey, $mixedKeyWrapperHtml = null, $bProcessInjection = true)
+    {
         $sRet = '';
         switch( $sKey ) {
             case 'version':
                 $sRet = getParam('sys_version');
                 break;
             case 'page_breadcrumb':
-            	$sRet = $this->getPageBreadcrumb();
-            	break;
+                $sRet = $this->getPageBreadcrumb();
+                break;
             case 'dol_images':
                 $sRet = $this->_processJsImages();
                 break;
@@ -114,23 +119,25 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton {
                 $sRet = _t( '_copyright',   date('Y') ) . getVersionComment();
                 break;
             default:
-            	$sRet = parent::parseSystemKey($sKey, $mixedKeyWrapperHtml, false);
-		}
+                $sRet = parent::parseSystemKey($sKey, $mixedKeyWrapperHtml, false);
+        }
 
         return $this->processInjection($this->getPageNameIndex(), $sKey, $sRet);
     }
 
-    function setPageBreadcrumb($aItems) {
+    function setPageBreadcrumb($aItems)
+    {
         $this->aPage['breadcrumb'] = $aItems;
     }
 
-    function getPageBreadcrumb() {
-    	if(empty($this->aPage['breadcrumb']) || !is_array($this->aPage['breadcrumb']))
-    	   return "";
+    function getPageBreadcrumb()
+    {
+        if(empty($this->aPage['breadcrumb']) || !is_array($this->aPage['breadcrumb']))
+           return "";
 
-    	$aItems = array();
-    	foreach($this->aPage['breadcrumb'] as $aItem) {
-    		$bLink = isset($aItem['link']) && $aItem['link'] != '';
+        $aItems = array();
+        foreach($this->aPage['breadcrumb'] as $aItem) {
+            $bLink = isset($aItem['link']) && $aItem['link'] != '';
 
             $aItems[] = array(
                 'bx_if:show_link' => array(
@@ -147,24 +154,27 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton {
                     )
                 )
             );
-    	}
+        }
 
-        return $this->parseHtmlByName('breadcrumb.html', array('bx_repeat:items' => $aItems)); 
+        return $this->parseHtmlByName('breadcrumb.html', array('bx_repeat:items' => $aItems));
     }
 
-    function getIcon($mixedId, $aParams = array()) {
+    function getIcon($mixedId, $aParams = array())
+    {
         return $this->_getImage('icon', $mixedId, $aParams);
     }
 
-    function getImage($mixedId, $aParams = array()) {
+    function getImage($mixedId, $aParams = array())
+    {
         return $this->_getImage('image', $mixedId, $aParams);
     }
 
-    protected function _getImage($sType, $mixedId, $aParams = array()) {
+    protected function _getImage($sType, $mixedId, $aParams = array())
+    {
         $sUrl = "";
         $aType2Method = array('image' => 'getImageUrl', 'icon' => 'getIconUrl');
 
-        //--- Check in System Storage. 
+        //--- Check in System Storage.
         if(is_numeric($mixedId) && (int)$mixedId > 0) {
             bx_import('BxDolStorage');
             if(($sResult = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES)->getFileUrlById((int)$mixedId)) !== false)
@@ -179,7 +189,7 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton {
             $bClass = isset($aParams['class']) && !empty($aParams['class']);
 
             return $this->parseHtmlByName('bx_img.html', array(
-            	'bx_if:class' => array(
+                'bx_if:class' => array(
                     'condition' => $bClass,
                     'content' => array(
                         'content' => $bClass ? $aParams['class'] : ''
@@ -196,13 +206,14 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton {
         ));
     }
 
-    function displayMsg ($s, $bTranslate = false) {
+    function displayMsg ($s, $bTranslate = false)
+    {
         $sTitle = $bTranslate ? _t($s) : $s;
 
         $sContent = MsgBox($sTitle);
         $sContent = $this->parseHtmlByName('page_not_found.html', array (
-	        'content' => $sContent
-	    ));
+            'content' => $sContent
+        ));
 
         $this->setPageNameIndex(BX_PAGE_DEFAULT);
         $this->setPageHeader($sTitle);

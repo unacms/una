@@ -15,13 +15,13 @@ bx_import('BxDolProfile');
 /**
  * View profile entry menu
  */
-class BxBaseModProfileMenuView extends BxBaseModGeneralMenuView 
+class BxBaseModProfileMenuView extends BxBaseModGeneralMenuView
 {
     protected $_oProfile;
     protected $_aContentInfo;
     protected $_aProfileInfo;
 
-    public function __construct($aObject, $oTemplate = false) 
+    public function __construct($aObject, $oTemplate = false)
     {
         parent::__construct($aObject, $oTemplate);
 
@@ -47,7 +47,7 @@ class BxBaseModProfileMenuView extends BxBaseModGeneralMenuView
                 $oConn = BxDolConnection::getObjectInstance('sys_profiles_friends');
                 if ($oConn->isConnectedNotMutual(bx_get_logged_profile_id(), $this->_oProfile->id())) {
                     $this->addMarkers(array(
-                        'title_add_friend' => _t($CNF['T']['menu_item_title_befriend_sent']), 
+                        'title_add_friend' => _t($CNF['T']['menu_item_title_befriend_sent']),
                         'title_remove_friend' => _t($CNF['T']['menu_item_title_unfriend_cancel_request']),
                     ));
                 } elseif ($oConn->isConnectedNotMutual($this->_oProfile->id(), bx_get_logged_profile_id())) {

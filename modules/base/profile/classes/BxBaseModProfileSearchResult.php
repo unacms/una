@@ -11,16 +11,16 @@
 
 bx_import('BxBaseModGeneralSearchResult');
 
-class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult 
+class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
 {
-    public function __construct($sMode = '', $aParams = array()) 
+    public function __construct($sMode = '', $aParams = array())
     {
         parent::__construct($sMode, $aParams);
         $this->sCenterContentUnitSelector = '.bx-base-pofile-unit';
     }
 
     protected function _setConnectionsConditions ($aParams)
-    {           
+    {
         bx_import('BxDolConnection');
         $oConnection = isset($aParams['object']) ? BxDolConnection::getObjectInstance($aParams['object']) : false;
         if (!$oConnection || !isset($aParams['profile']) || !(int)$aParams['profile'])
@@ -38,4 +38,3 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
 }
 
 /** @} */
-

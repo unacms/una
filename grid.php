@@ -19,13 +19,13 @@ if (!$sObject)
 bx_import('BxDolGrid');
 $oGrid = BxDolGrid::getObjectInstance($sObject);
 if (!$oGrid) {
-    // no such grid object available    
+    // no such grid object available
     exit;
 }
 
 $sAction = 'performAction' . bx_gen_method_name(bx_process_input(bx_get('a')));
 if (method_exists($oGrid, $sAction)) {
     $oGrid->$sAction();
-} 
+}
 
 /** @} */

@@ -12,7 +12,7 @@ bx_import('BxDolAclQuery');
 
 /**
  * Message constants passed to _t_ext() function by checkAction()
- * 
+ *
  * NOTE: checkAction() returns language dependent messages
  */
 define('CHECK_ACTION_MESSAGE_NOT_ALLOWED',			"_sys_acl_action_not_allowed");
@@ -65,8 +65,8 @@ define('CHECK_ACTION_RESULT_LIMIT_REACHED', 3);
 define('CHECK_ACTION_RESULT_NOT_ALLOWED_BEFORE', 4);
 define('CHECK_ACTION_RESULT_NOT_ALLOWED_AFTER', 5);
 
-class BxDolAcl extends BxDol implements iBxDolSingleton {
-
+class BxDolAcl extends BxDol implements iBxDolSingleton
+{
     protected $oDb;
 
     protected $_aStandardMemberships = array(
@@ -77,7 +77,7 @@ class BxDolAcl extends BxDol implements iBxDolSingleton {
         MEMBERSHIP_ID_STANDARD => 1,
     );
 
-    protected $_aProfileStatus2LevelMap = array ( 
+    protected $_aProfileStatus2LevelMap = array (
         BX_PROFILE_STATUS_SUSPENDED => MEMBERSHIP_ID_SUSPENDED,
         BX_PROFILE_STATUS_PENDING => MEMBERSHIP_ID_PENDING,
     );
@@ -89,7 +89,8 @@ class BxDolAcl extends BxDol implements iBxDolSingleton {
         MEMBERSHIP_ID_SUSPENDED => '_sys_acl_action_suspended',
     );
 
-    protected function __construct() {
+    protected function __construct()
+    {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
@@ -101,7 +102,8 @@ class BxDolAcl extends BxDol implements iBxDolSingleton {
     /**
      * Prevent cloning the instance
      */
-    public function __clone() {
+    public function __clone()
+    {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error('Clone is not allowed for the class: ' . get_class($this), E_USER_ERROR);
     }
@@ -109,7 +111,8 @@ class BxDolAcl extends BxDol implements iBxDolSingleton {
     /**
      * Get singleton instance of the class
      */
-    public static function getInstance() {
+    public static function getInstance()
+    {
         if(!isset($GLOBALS['bxDolClasses'][__CLASS__])) {
             bx_import('BxTemplAcl');
             $GLOBALS['bxDolClasses'][__CLASS__] = new BxTemplAcl();
@@ -124,7 +127,8 @@ class BxDolAcl extends BxDol implements iBxDolSingleton {
      * @param $iProfileId - profile to check, if it isn't provided or is false then currently logged in profile is used.
      * @return true if member has privided membership levels, or false if member hasn't.
      */
-    public function isMemberLevelInSet($iPermissions, $iProfileId = false) {
+    public function isMemberLevelInSet($iPermissions, $iProfileId = false)
+    {
         if (!$iPermissions)
             return false;
 
@@ -141,18 +145,18 @@ class BxDolAcl extends BxDol implements iBxDolSingleton {
         return ($iPermissions & pow(2, $aACL['id'] - 1));
     }
 
-	/**
+    /**
      * Checks if a given action is allowed for a given profile and updates action information if the
      * action is performed.
      *
-     * @param int $iProfileId ID of a profile that is going to perform an action
-     * @param int $iActionId ID of the action itself
-     * @param boolean $bPerformAction if true, then action information is updated, i.e. action is 'performed'
-     * @return array(	
-     * 				CHECK_ACTION_RESULT => CHECK_ACTION_RESULT_ constant,
-     * 				CHECK_ACTION_MESSAGE => CHECK_ACTION_MESSAGE_ constant,
-     * 				CHECK_ACTION_PARAMETER => additional action parameter (string)
-     * 			)
+     * @param  int     $iProfileId     ID of a profile that is going to perform an action
+     * @param  int     $iActionId      ID of the action itself
+     * @param  boolean $bPerformAction if true, then action information is updated, i.e. action is 'performed'
+     * @return array(
+     *                                CHECK_ACTION_RESULT => CHECK_ACTION_RESULT_ constant,
+     *                                CHECK_ACTION_MESSAGE => CHECK_ACTION_MESSAGE_ constant,
+     *                                CHECK_ACTION_PARAMETER => additional action parameter (string)
+     *                                )
      *
      * NOTES:
      *
@@ -189,188 +193,191 @@ class BxDolAcl extends BxDol implements iBxDolSingleton {
      * $aResult[CHECK_ACTION_PARAMETER] contains an additional parameter that can be considered
      * when performing the action (like the number of profiles to show in search result)
     */
-    function checkAction($iProfileId, $iActionId, $bPerformAction = false) {
+    function checkAction($iProfileId, $iActionId, $bPerformAction = false)
+    {
+        $aResult = array();
+        $aLangFileParams = array();
 
-    	$aResult = array();
-    	$aLangFileParams = array();
-    
-    	$iProfileId = (int)$iProfileId;
-    	$iActionId = (int)$iActionId;
-    	$bPerformAction = $bPerformAction ? true : false;
-    
-    	$aMembership = $this->getMemberMembershipInfo($iProfileId); // get current profile's membership information
-    
-    	$aLangFileParams[CHECK_ACTION_LANG_FILE_MEMBERSHIP] = _t($aMembership['name']);
-    	$aLangFileParams[CHECK_ACTION_LANG_FILE_SITE_EMAIL] = getParam('site_email');
+        $iProfileId = (int)$iProfileId;
+        $iActionId = (int)$iActionId;
+        $bPerformAction = $bPerformAction ? true : false;
 
-    	$aAction = $this->oDb->getAction($aMembership['id'], $iActionId);
-    	if (!$aAction)
+        $aMembership = $this->getMemberMembershipInfo($iProfileId); // get current profile's membership information
+
+        $aLangFileParams[CHECK_ACTION_LANG_FILE_MEMBERSHIP] = _t($aMembership['name']);
+        $aLangFileParams[CHECK_ACTION_LANG_FILE_SITE_EMAIL] = getParam('site_email');
+
+        $aAction = $this->oDb->getAction($aMembership['id'], $iActionId);
+        if (!$aAction)
             bx_trigger_error('Unknown action ID: ' . $iActionId, 2);
 
-    	$aResult[CHECK_ACTION_PARAMETER] = $aAction['additional_param_value'];
-    	$aLangFileParams[CHECK_ACTION_LANG_FILE_ACTION] = !empty($aAction['title']) ? _t($aAction['title']) : $aAction['name'];
+        $aResult[CHECK_ACTION_PARAMETER] = $aAction['additional_param_value'];
+        $aLangFileParams[CHECK_ACTION_LANG_FILE_ACTION] = !empty($aAction['title']) ? _t($aAction['title']) : $aAction['name'];
 
-    	/**
-    	 * Action is not allowed for the current membership
-    	 */
-    	if (is_null($aAction['id'])) {
+        /**
+         * Action is not allowed for the current membership
+         */
+        if (is_null($aAction['id'])) {
 
             $sLangKey = CHECK_ACTION_MESSAGE_NOT_ALLOWED;
             if (isset($this->_aLevel2MessageMap[$aMembership['id']]))
                 $sLangKey = $this->_aLevel2MessageMap[$aMembership['id']];
 
-    		$aResult[CHECK_ACTION_RESULT] = CHECK_ACTION_RESULT_NOT_ALLOWED;
-    		$aResult[CHECK_ACTION_MESSAGE] = _t_ext($sLangKey, $aLangFileParams);
-    		return $aResult;
-    	}
+            $aResult[CHECK_ACTION_RESULT] = CHECK_ACTION_RESULT_NOT_ALLOWED;
+            $aResult[CHECK_ACTION_MESSAGE] = _t_ext($sLangKey, $aLangFileParams);
+            return $aResult;
+        }
 
-    	/**
-    	 * Check fixed period limitations if present (also for non-members)
-    	 */
-    	if($aAction['allowed_period_start'] && time() < $aAction['allowed_period_start']) {
-    		$aLangFileParams[CHECK_ACTION_LANG_FILE_BEFORE] = bx_time_js($aAction['allowed_period_start'], BX_FORMAT_DATE_TIME);
+        /**
+         * Check fixed period limitations if present (also for non-members)
+         */
+        if($aAction['allowed_period_start'] && time() < $aAction['allowed_period_start']) {
+            $aLangFileParams[CHECK_ACTION_LANG_FILE_BEFORE] = bx_time_js($aAction['allowed_period_start'], BX_FORMAT_DATE_TIME);
 
-    		$aResult[CHECK_ACTION_RESULT] = CHECK_ACTION_RESULT_NOT_ALLOWED_BEFORE;
-    		$aResult[CHECK_ACTION_MESSAGE] = _t_ext(CHECK_ACTION_MESSAGE_NOT_ALLOWED_BEFORE, $aLangFileParams);
+            $aResult[CHECK_ACTION_RESULT] = CHECK_ACTION_RESULT_NOT_ALLOWED_BEFORE;
+            $aResult[CHECK_ACTION_MESSAGE] = _t_ext(CHECK_ACTION_MESSAGE_NOT_ALLOWED_BEFORE, $aLangFileParams);
 
-    		return $aResult;
-    	}
+            return $aResult;
+        }
 
-    	if($aAction['allowed_period_end'] && time() > $aAction['allowed_period_end']) {
-    		$aLangFileParams[CHECK_ACTION_LANG_FILE_AFTER] = bx_time_js($aAction['allowed_period_end'], BX_FORMAT_DATE_TIME);
+        if($aAction['allowed_period_end'] && time() > $aAction['allowed_period_end']) {
+            $aLangFileParams[CHECK_ACTION_LANG_FILE_AFTER] = bx_time_js($aAction['allowed_period_end'], BX_FORMAT_DATE_TIME);
 
-    		$aResult[CHECK_ACTION_RESULT] = CHECK_ACTION_RESULT_NOT_ALLOWED_AFTER;
-    		$aResult[CHECK_ACTION_MESSAGE] = _t_ext(CHECK_ACTION_MESSAGE_NOT_ALLOWED_AFTER, $aLangFileParams);
+            $aResult[CHECK_ACTION_RESULT] = CHECK_ACTION_RESULT_NOT_ALLOWED_AFTER;
+            $aResult[CHECK_ACTION_MESSAGE] = _t_ext(CHECK_ACTION_MESSAGE_NOT_ALLOWED_AFTER, $aLangFileParams);
 
-    		return $aResult;
-    	}
+            return $aResult;
+        }
 
-    	/**
-    	 * if non-member, allow action without performing further checks
-    	 */
-    	if ($aMembership['id'] == MEMBERSHIP_ID_NON_MEMBER) {
-    		$aResult[CHECK_ACTION_RESULT] = CHECK_ACTION_RESULT_ALLOWED;
-    		return $aResult;
-    	}
+        /**
+         * if non-member, allow action without performing further checks
+         */
+        if ($aMembership['id'] == MEMBERSHIP_ID_NON_MEMBER) {
+            $aResult[CHECK_ACTION_RESULT] = CHECK_ACTION_RESULT_ALLOWED;
+            return $aResult;
+        }
 
-    	/**
-    	 * Check other limitations (for members only)
-    	 */
-    	$iAllowedCnt = (int)$aAction['allowed_count']; ///< Number of allowed actions. Unlimited if not specified or 0 
-    	$iPeriodLen = (int)$aAction['allowed_period_len']; ///< Period for AllowedCount in hours. If not specified, AllowedCount is treated as total number of actions permitted.
+        /**
+         * Check other limitations (for members only)
+         */
+        $iAllowedCnt = (int)$aAction['allowed_count']; ///< Number of allowed actions. Unlimited if not specified or 0
+        $iPeriodLen = (int)$aAction['allowed_period_len']; ///< Period for AllowedCount in hours. If not specified, AllowedCount is treated as total number of actions permitted.
 
-    	if($iAllowedCnt > 0) {
-            $aActionTrack = $this->oDb->getActionTrack($iActionId, $iProfileId); 
+        if($iAllowedCnt > 0) {
+            $aActionTrack = $this->oDb->getActionTrack($iActionId, $iProfileId);
 
-    		$iActionsLeft = $bPerformAction ? $iAllowedCnt - 1 : $iAllowedCnt;
-    		$iValidSince = time();
+            $iActionsLeft = $bPerformAction ? $iAllowedCnt - 1 : $iAllowedCnt;
+            $iValidSince = time();
 
-    		/**
-    		 * Member is requesting/performing this action for the first time, 
-    		 * and there is no corresponding record in sys_acl_actions_track table.
-    		 */
-    		if(!$aActionTrack) {
+            /**
+             * Member is requesting/performing this action for the first time,
+             * and there is no corresponding record in sys_acl_actions_track table.
+             */
+            if(!$aActionTrack) {
                 $this->oDb->insertActionTarck($iActionId, $iProfileId, $iActionsLeft, $iValidSince);
 
-    			$aResult[CHECK_ACTION_RESULT] = CHECK_ACTION_RESULT_ALLOWED;
-    			return $aResult;
-    		}
+                $aResult[CHECK_ACTION_RESULT] = CHECK_ACTION_RESULT_ALLOWED;
+                return $aResult;
+            }
 
-    		/**
-    		 * Action has been requested/performed at least once at this point and there is a corresponding record in sys_acl_actions_track table
-    		 * 
-    		 * Action record in sys_acl_actions_track table is out of date.
-    		 */
-    		$iPeriodEnd = (int)$aActionTrack['valid_since'] + $iPeriodLen * 3600; //ValidSince is in seconds, PeriodLen is in hours
-    		if($iPeriodLen > 0 && $iPeriodEnd < time()) {
+            /**
+             * Action has been requested/performed at least once at this point and there is a corresponding record in sys_acl_actions_track table
+             *
+             * Action record in sys_acl_actions_track table is out of date.
+             */
+            $iPeriodEnd = (int)$aActionTrack['valid_since'] + $iPeriodLen * 3600; //ValidSince is in seconds, PeriodLen is in hours
+            if($iPeriodLen > 0 && $iPeriodEnd < time()) {
                 $this->oDb->updateActionTrack($iActionId, $iProfileId, $iActionsLeft, $iValidSince);
-    
-    			$aResult[CHECK_ACTION_RESULT] = CHECK_ACTION_RESULT_ALLOWED;
-    			return $aResult;
-    		}
 
-    		$iActionsLeft = (int)$aActionTrack['actions_left']; ///< Action record is up to date
+                $aResult[CHECK_ACTION_RESULT] = CHECK_ACTION_RESULT_ALLOWED;
+                return $aResult;
+            }
+
+            $iActionsLeft = (int)$aActionTrack['actions_left']; ///< Action record is up to date
 
             /**
              * Action limit reached for now
              */
-    		if($iActionsLeft <= 0){
-    			$aLangFileParams[CHECK_ACTION_LANG_FILE_LIMIT] = $iAllowedCnt;
-    			$aLangFileParams[CHECK_ACTION_LANG_FILE_PERIOD] = $iPeriodLen;
-    
-    			$aResult[CHECK_ACTION_RESULT] = CHECK_ACTION_RESULT_LIMIT_REACHED;
-    			$aResult[CHECK_ACTION_MESSAGE] = '<div style="width: 80%">' . _t_ext(CHECK_ACTION_MESSAGE_LIMIT_REACHED, $aLangFileParams) . ($iPeriodLen > 0 ? _t_ext(CHECK_ACTION_MESSAGE_MESSAGE_EVERY_PERIOD, $aLangFileParams) : '') . '.</div>';
-    
-    			return $aResult;
-    		}
+            if($iActionsLeft <= 0){
+                $aLangFileParams[CHECK_ACTION_LANG_FILE_LIMIT] = $iAllowedCnt;
+                $aLangFileParams[CHECK_ACTION_LANG_FILE_PERIOD] = $iPeriodLen;
 
-    		if($bPerformAction) {
-    			$iActionsLeft--;
-    			$this->oDb->updateActionTrack($iActionId, $iProfileId, $iActionsLeft);
-    		}
-    	}
+                $aResult[CHECK_ACTION_RESULT] = CHECK_ACTION_RESULT_LIMIT_REACHED;
+                $aResult[CHECK_ACTION_MESSAGE] = '<div style="width: 80%">' . _t_ext(CHECK_ACTION_MESSAGE_LIMIT_REACHED, $aLangFileParams) . ($iPeriodLen > 0 ? _t_ext(CHECK_ACTION_MESSAGE_MESSAGE_EVERY_PERIOD, $aLangFileParams) : '') . '.</div>';
 
-    	$aResult[CHECK_ACTION_RESULT] = CHECK_ACTION_RESULT_ALLOWED;
-    	return $aResult;
+                return $aResult;
+            }
+
+            if($bPerformAction) {
+                $iActionsLeft--;
+                $this->oDb->updateActionTrack($iActionId, $iProfileId, $iActionsLeft);
+            }
+        }
+
+        $aResult[CHECK_ACTION_RESULT] = CHECK_ACTION_RESULT_ALLOWED;
+        return $aResult;
     }
 
-	/**
+    /**
      * Get the list of existing memberships
      *
-     * @param bool $bPurchasableOnly	if true, fetches only purchasable memberships; 'purchasable' here means that:
-     * - MemLevels.Purchasable = 'yes'
-     * - MemLevels.Active = 'yes'
-     * - there is at least one pricing option for the membership
+     * @param  bool   $bPurchasableOnly if true, fetches only purchasable memberships; 'purchasable' here means that:
+     *                                  - MemLevels.Purchasable = 'yes'
+     *                                  - MemLevels.Active = 'yes'
+     *                                  - there is at least one pricing option for the membership
      * @return array( membershipID_1 => membershipName_1,  membershipID_2 => membershipName_2, ...) if no such memberships, then just array()
      */
-    function getMemberships($bPurchasableOnly = false, $bActiveOnly = false, $isTranslate = true) {
+    function getMemberships($bPurchasableOnly = false, $bActiveOnly = false, $isTranslate = true)
+    {
         $sType = 'all_pair';
         if($bPurchasableOnly)
             $sType = 'all_active_purchasble_pair';
         else if($bActiveOnly)
             $sType = 'all_active_pair';
 
-    	$aLevels = array();
-    	$this->oDb->getLevels(array('type' => $sType), $aLevels, false);
+        $aLevels = array();
+        $this->oDb->getLevels(array('type' => $sType), $aLevels, false);
         if ($isTranslate)
             foreach ($aLevels as $k => $s)
                 $aLevels[$k] = _t($s);
-    	return $aLevels;
+        return $aLevels;
     }
 
     /**
      * Get info about a given membership
      *
-     * @param int $iLevelId membership to get info about
+     * @param  int    $iLevelId membership to get info about
      * @return array(
-     * 				'id'					=>	ID, 
-     * 				'name'					=>	name,
-     * 				'icon'					=>	icon,
-     * 				'description'			=>	description, 
-     * 				'active'				=>	active, 
-     * 				'purchasable'			=>	purchasable, 
-     * 				'removable'				=>	removable
-     * 				'quota_size'			=>	quota size,
-     * 				'quota_number'			=>	quota number,
-     * 				'quota_max_file_size'	=>	quota max file size
-     * 			)
+     *                         'id'					=>	ID,
+     *                         'name'					=>	name,
+     *                         'icon'					=>	icon,
+     *                         'description'			=>	description,
+     *                         'active'				=>	active,
+     *                         'purchasable'			=>	purchasable,
+     *                         'removable'				=>	removable
+     *                         'quota_size'			=>	quota size,
+     *                         'quota_number'			=>	quota number,
+     *                         'quota_max_file_size'	=>	quota max file size
+     *                         )
      */
-    function getMembershipInfo($iLevelId) {
+    function getMembershipInfo($iLevelId)
+    {
         $aLevel = array();
-    	$this->oDb->getLevels(array('type' => 'by_id', 'value' => $iLevelId), $aLevel, false);
-    	return $aLevel;
+        $this->oDb->getLevels(array('type' => 'by_id', 'value' => $iLevelId), $aLevel, false);
+        return $aLevel;
     }
 
     /**
      * Get pricing options for the given membership
      *
-     * @param int $iLevelId membership to get prices for
+     * @param  int    $iLevelId membership to get prices for
      * @return array( days1 => price1, days2 => price2, ...) if no prices set, then just array()
      */
-    function getMembershipPrices($iLevelId) {
-    	$aPrice = array();
-    	$this->oDb->getPrices(array('type' => 'by_level_id_pair', 'value' => $iLevelId), $aPrice, false);
-    	return $aPrice;
+    function getMembershipPrices($iLevelId)
+    {
+        $aPrice = array();
+        $this->oDb->getPrices(array('type' => 'by_level_id_pair', 'value' => $iLevelId), $aPrice, false);
+        return $aPrice;
     }
 
     /**
@@ -391,93 +398,95 @@ class BxDolAcl extends BxDol implements iBxDolSingleton {
      * The Standard, Authenticated and Non-member memberships have their
      * DateStarts and DateExpires attributes set to NULL.
      *
-     * @param int $iProfileId ID of a profile to get info about
-     * @param int $time specifies the time to use when determining membership; if not specified, the function takes the current time
-     * @return array(	
-     * 				'id'			=> membership id,
-     * 				'name'			=> membership name,
-     * 				'date_starts'	=> (UNIX timestamp) date/time purchased,
-     * 				'date_expires'	=> (UNIX timestamp) date/time expires
-     * 			)
+     * @param  int    $iProfileId ID of a profile to get info about
+     * @param  int    $time       specifies the time to use when determining membership; if not specified, the function takes the current time
+     * @return array(
+     *                           'id'			=> membership id,
+     *                           'name'			=> membership name,
+     *                           'date_starts'	=> (UNIX timestamp) date/time purchased,
+     *                           'date_expires'	=> (UNIX timestamp) date/time expires
+     *                           )
      */
-    function getMemberMembershipInfo($iProfileId, $iTime = 0) {
-    	$aMembershipCurrent = $this->getMemberMembershipInfoCurrent($iProfileId, $iTime);
+    function getMemberMembershipInfo($iProfileId, $iTime = 0)
+    {
+        $aMembershipCurrent = $this->getMemberMembershipInfoCurrent($iProfileId, $iTime);
         if (isset($this->_aStandardMemberships[$aMembershipCurrent['id']]))
-    		return $aMembershipCurrent;
-    
-    	$aMembership = $aMembershipCurrent;
-    	do {
-    		$iDateStarts = $aMembership['date_starts'];
-    		$aMembership = $this->getMemberMembershipInfoCurrent($iProfileId, ((int)$iDateStarts < 1 ? 0 : $iDateStarts - 1));
-    	}
-    	while($aMembership['id'] == $aMembershipCurrent['id'] && (int)$aMembership['date_starts']);
+            return $aMembershipCurrent;
 
-    	$aMembership = $aMembershipCurrent;
-    	do {
-    		$iDateExpires = $aMembership['date_expires'];
-    		$aMembership = $this->getMemberMembershipInfoCurrent($iProfileId, $iDateExpires);
-    	}
-    	while($aMembership['id'] == $aMembershipCurrent['id'] && (int)$aMembership['date_expires']);
+        $aMembership = $aMembershipCurrent;
+        do {
+            $iDateStarts = $aMembership['date_starts'];
+            $aMembership = $this->getMemberMembershipInfoCurrent($iProfileId, ((int)$iDateStarts < 1 ? 0 : $iDateStarts - 1));
+        }
+        while($aMembership['id'] == $aMembershipCurrent['id'] && (int)$aMembership['date_starts']);
 
-    	$aMembershipCurrent['date_starts'] = $iDateStarts;
-    	$aMembershipCurrent['date_expires'] = $iDateExpires;
+        $aMembership = $aMembershipCurrent;
+        do {
+            $iDateExpires = $aMembership['date_expires'];
+            $aMembership = $this->getMemberMembershipInfoCurrent($iProfileId, $iDateExpires);
+        } while($aMembership['id'] == $aMembershipCurrent['id'] && (int)$aMembership['date_expires']);
 
-    	return $aMembershipCurrent;
+        $aMembershipCurrent['date_starts'] = $iDateStarts;
+        $aMembershipCurrent['date_expires'] = $iDateExpires;
+
+        return $aMembershipCurrent;
     }
 
     /**
      * Buy a membership for a profile
      *
-     * @param int $iProfileId profile that is going to get the membership
-     * @param int $iMembershipId bought membership
-     * @param int $sTransactionId internal key of the transaction (ID from Transactions table)
-     * @param boolean $bStartsNow if true, the membership will start immediately; if false, the membership will start after the current membership expires
+     * @param  int     $iProfileId     profile that is going to get the membership
+     * @param  int     $iMembershipId  bought membership
+     * @param  int     $sTransactionId internal key of the transaction (ID from Transactions table)
+     * @param  boolean $bStartsNow     if true, the membership will start immediately; if false, the membership will start after the current membership expires
      * @return boolean true in case of success, false in case of failure
      */
-    function buyMembership($iProfileId, $iPriceId, $sTransactionId, $bStartsNow = false) {
+    function buyMembership($iProfileId, $iPriceId, $sTransactionId, $bStartsNow = false)
+    {
         $aPrice = array();
         $this->oDb->getPrices(array('type' => 'by_id', 'value' => (int)$iPriceId), $aPrice, false);
-    	if(!is_array($aPrice) || empty($aPrice))
+        if(!is_array($aPrice) || empty($aPrice))
             return false;
 
         $aLevel = array();
-        $this->oDb->getLevels(array('type' => 'by_id', 'value' => $aPrice['level_id']), $aLevel, false); 
+        $this->oDb->getLevels(array('type' => 'by_id', 'value' => $aPrice['level_id']), $aLevel, false);
         if(!is_array($aLevel) || empty($aLevel))
             return false;
 
-    	$iLevelId = (int)$aLevel['id'];        
+        $iLevelId = (int)$aLevel['id'];
         if (isset($this->_aStandardMemberships[$iLevelId])) // check for predefined non-purchasable memberships
             return false;
 
-    	if($aLevel['active'] != 'yes' || $aLevel['purchasable'] != 'yes') // check if membership is active and purchasable 
+        if($aLevel['active'] != 'yes' || $aLevel['purchasable'] != 'yes') // check if membership is active and purchasable
             return false;
 
-    	return $this->setMembership((int)$iProfileId, $iLevelId, $aPrice['days'], $bStartsNow, $sTransactionId);
+        return $this->setMembership((int)$iProfileId, $iLevelId, $aPrice['days'], $bStartsNow, $sTransactionId);
     }
 
     /**
      * Set a membership for a profile
      *
-     * @param int $iProfileId profile that is going to get the membership
-     * @param int $iLevelId membership that is going to be assigned to the profile
-     * if $iLevelId == MEMBERSHIP_ID_STANDARD then $days and $bStartsNow parameters are not used, 
-     * so Standard membership is always set immediately and `forever`
-     * @param int $iDays number of days to set membership for if 0, then the membership is set forever
-     * @param boolean $bStartsNow if true, the membership will start immediately if false, the membership will start after the current membership expires
+     * @param  int     $iProfileId profile that is going to get the membership
+     * @param  int     $iLevelId   membership that is going to be assigned to the profile
+     *                             if $iLevelId == MEMBERSHIP_ID_STANDARD then $days and $bStartsNow parameters are not used,
+     *                             so Standard membership is always set immediately and `forever`
+     * @param  int     $iDays      number of days to set membership for if 0, then the membership is set forever
+     * @param  boolean $bStartsNow if true, the membership will start immediately if false, the membership will start after the current membership expires
      * @return boolean true in case of success, false in case of failure
      */
-    function setMembership($iProfileId, $iLevelId, $iDays = 0, $bStartsNow = false, $sTransactionId = '') {    
-    	$iProfileId = (int)$iProfileId;
-    	$iLevelId = (int)$iLevelId;
-    	$iDays = (int)$iDays;
-    	$bStartsNow = $bStartsNow ? true : false;
+    function setMembership($iProfileId, $iLevelId, $iDays = 0, $bStartsNow = false, $sTransactionId = '')
+    {
+        $iProfileId = (int)$iProfileId;
+        $iLevelId = (int)$iLevelId;
+        $iDays = (int)$iDays;
+        $bStartsNow = $bStartsNow ? true : false;
 
-    	$iSecInDay = 86400;
+        $iSecInDay = 86400;
 
-    	if (!$iProfileId)
-    		$iProfileId = -1;
+        if (!$iProfileId)
+            $iProfileId = -1;
 
-    	if (empty($sTransactionId)) 
+        if (empty($sTransactionId))
             $sTransactionId = 'NULL';
 
         // check if profile exists
@@ -485,58 +494,57 @@ class BxDolAcl extends BxDol implements iBxDolSingleton {
         if(($sProfileEmail = BxDolProfileQuery::getInstance()->getEmailById($iProfileId)) === false)
             return false;
 
-    	// check if membership exists
-    	$aLevel = array();
-    	$this->oDb->getLevels(array('type' => 'by_id', 'value' => $iLevelId), $aLevel, false);
-    	if(empty($aLevel) || !is_array($aLevel))
-    	    return false;            
-
-    	if($iLevelId == MEMBERSHIP_ID_NON_MEMBER) 
+        // check if membership exists
+        $aLevel = array();
+        $this->oDb->getLevels(array('type' => 'by_id', 'value' => $iLevelId), $aLevel, false);
+        if(empty($aLevel) || !is_array($aLevel))
             return false;
 
-    	$aMembershipCurrent = $this->getMemberMembershipInfo($iProfileId);
-    	$aMembershipLatest = $this->getMemberMembershipInfoLatest($iProfileId);
+        if($iLevelId == MEMBERSHIP_ID_NON_MEMBER)
+            return false;
 
-    	// setting Standard membership level 
-    	if ($iLevelId == MEMBERSHIP_ID_STANDARD) {
-    		if ($aMembershipCurrent['id'] == MEMBERSHIP_ID_STANDARD) 
+        $aMembershipCurrent = $this->getMemberMembershipInfo($iProfileId);
+        $aMembershipLatest = $this->getMemberMembershipInfoLatest($iProfileId);
+
+        // setting Standard membership level
+        if ($iLevelId == MEMBERSHIP_ID_STANDARD) {
+            if ($aMembershipCurrent['id'] == MEMBERSHIP_ID_STANDARD)
                 return true;
 
-    		// delete present and future memberships
-    		return $this->oDb->deleteLevelByProfileId($iProfileId);
-    	}
+            // delete present and future memberships
+            return $this->oDb->deleteLevelByProfileId($iProfileId);
+        }
 
-    	if ($iDays < 0) 
+        if ($iDays < 0)
             return false;
 
-    	$iDateStarts = time();
-    	if (!$bStartsNow) {
-    		// make the membership starts after the latest membership expires or return false if latest membership isn't Standard and is lifetime membership.
-    		if(!is_null($aMembershipLatest['date_expires']))
+        $iDateStarts = time();
+        if (!$bStartsNow) {
+            // make the membership starts after the latest membership expires or return false if latest membership isn't Standard and is lifetime membership.
+            if(!is_null($aMembershipLatest['date_expires']))
                 $iDateStarts = $aMembershipLatest['date_expires'];
-    		else if(is_null($aMembershipLatest['date_expires']) && $aMembershipLatest['id'] != MEMBERSHIP_ID_STANDARD)
+            else if(is_null($aMembershipLatest['date_expires']) && $aMembershipLatest['id'] != MEMBERSHIP_ID_STANDARD)
                 return false;
-    	}
-    	else
-    	    $this->oDb->deleteLevelByProfileId($iProfileId, true); ///< Delete any profile's membership level
+        } else
+            $this->oDb->deleteLevelByProfileId($iProfileId, true); ///< Delete any profile's membership level
 
         // set lifetime membership if 0 days is used.
         $iDateExpires = $iDays != 0 ? (int)$iDateStarts + $iDays * $iSecInDay : null;
-    	if(!$this->oDb->insertLevelByProfileId($iProfileId, $iLevelId, $iDateStarts, $iDateExpires, $sTransactionId))
-    	   return false;
+        if(!$this->oDb->insertLevelByProfileId($iProfileId, $iLevelId, $iDateStarts, $iDateExpires, $sTransactionId))
+           return false;
 
-    	// raise membership alert
-    	bx_import('BxDolAlerts');
-    	$oZ = new BxDolAlerts('profile', 'set_membership', '', $iProfileId, array('mlevel'=> $iLevelId, 'days' => $iDays, 'starts_now' => $bStartsNow, 'txn_id' => $sTransactionId));
-    	$oZ->alert();
-    	
-    	// Send notification
-    	bx_import('BxDolEmailTemplates');
+        // raise membership alert
+        bx_import('BxDolAlerts');
+        $oZ = new BxDolAlerts('profile', 'set_membership', '', $iProfileId, array('mlevel'=> $iLevelId, 'days' => $iDays, 'starts_now' => $bStartsNow, 'txn_id' => $sTransactionId));
+        $oZ->alert();
+
+        // Send notification
+        bx_import('BxDolEmailTemplates');
         $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_MemChanged', array('membership_level' => _t($aLevel['name'])), 0, $iProfileId);
         if ($aTemplate)
             sendMail($sProfileEmail, $aTemplate['Subject'], $aTemplate['Body']);
 
-    	return true;
+        return true;
     }
 
     /**
@@ -545,8 +553,8 @@ class BxDolAcl extends BxDol implements iBxDolSingleton {
      *
      * @param $aActions array of actions from sys_acl_actions table, with default array keys (starting from 0) and text values
      */
-    function defineMembershipActions($mixedActions, $sPrefix = 'BX_') {
-
+    function defineMembershipActions($mixedActions, $sPrefix = 'BX_')
+    {
         if (is_array($mixedActions))
             $aActions = $mixedActions;
         else
@@ -564,7 +572,7 @@ class BxDolAcl extends BxDol implements iBxDolSingleton {
         $this->oDb->getActions(array('type' => 'by_names', 'value' => $aNames), $aActions, false);
         foreach($aActions as $aAction)
             define($sPrefix . strtoupper(str_replace(' ', '_', $aAction['name'])), $aAction['id']);
-    }		
+    }
 
     /**
      * get action id by module and name
@@ -572,16 +580,17 @@ class BxDolAcl extends BxDol implements iBxDolSingleton {
      * @param $sModule module name
      * @param $aActions array of actions from sys_acl_actions table, with default array keys (starting from 0) and text values
      */
-    function getMembershipActionId($sAction, $sModule) {
-
+    function getMembershipActionId($sAction, $sModule)
+    {
         $this->oDb->getActions(array('type' => 'by_names_and_module', 'value' => $sAction, 'module' => $sModule), $aActions, false);
         if (count($aActions) > 1)
-            trigger_error('Duplicate action - name:' . $sAction . ', module:' . $sModule, E_USER_ERROR);        
+            trigger_error('Duplicate action - name:' . $sAction . ', module:' . $sModule, E_USER_ERROR);
         $aAction = array_pop($aActions);
         return $aAction['id'];
-    }		
+    }
 
-    function getExpirationLetter($iProfileId, $sLevelName, $iLevelExpireDays ) {
+    function getExpirationLetter($iProfileId, $sLevelName, $iLevelExpireDays )
+    {
         $iProfileId = (int)$iProfileId;
 
         if(!$iProfileId)
@@ -593,7 +602,7 @@ class BxDolAcl extends BxDol implements iBxDolSingleton {
 
         $aPlus = array(
             'membership_name' => $sLevelName,
-        	'expire_days' => $iLevelExpireDays
+            'expire_days' => $iLevelExpireDays
         );
 
         bx_import('BxDolEmailTemplates');
@@ -606,13 +615,14 @@ class BxDolAcl extends BxDol implements iBxDolSingleton {
     /**
      * clear expired membership levels
      */
-    public function maintenance () {
+    public function maintenance ()
+    {
         $iDaysToCleanMemLevels = (int) getParam("db_clean_mem_levels");
         return $this->oDb->maintenance ($iDaysToCleanMemLevels);
     }
 
-    protected function getMemberMembershipInfoCurrent($iProfileId, $iTime = 0) {
-
+    protected function getMemberMembershipInfoCurrent($iProfileId, $iTime = 0)
+    {
         $aMemLevel = false;
 
         // get profile status
@@ -621,14 +631,14 @@ class BxDolAcl extends BxDol implements iBxDolSingleton {
         $aProfileInfo = $oProfile ? $oProfile->getInfo() : false;
         $sProfileStatus = $aProfileInfo ? $aProfileInfo['status'] : false;
 
-    	// profile is not active, so return standard memberships according to profile status
+        // profile is not active, so return standard memberships according to profile status
         if (BX_PROFILE_STATUS_ACTIVE != $sProfileStatus) {
-        
+
             bx_import('BxDolAccount');
-            $oAccount = $aProfileInfo ? BxDolAccount::getInstance($aProfileInfo['account_id']) : false;            
-            if ($oAccount && !$oAccount->isConfirmed()) 
+            $oAccount = $aProfileInfo ? BxDolAccount::getInstance($aProfileInfo['account_id']) : false;
+            if ($oAccount && !$oAccount->isConfirmed())
                 $iLevelId = MEMBERSHIP_ID_UNCONFIRMED; // every account's profile is unconfirmed if account is unconfirmed
-            elseif (!isset($this->_aProfileStatus2LevelMap[$sProfileStatus])) 
+            elseif (!isset($this->_aProfileStatus2LevelMap[$sProfileStatus]))
                 $iLevelId = MEMBERSHIP_ID_NON_MEMBER; // if there is no profile status - then it isn't member
             else
                 $iLevelId = $this->_aProfileStatus2LevelMap[$sProfileStatus]; // get member level id which associated with every non-active status
@@ -640,24 +650,24 @@ class BxDolAcl extends BxDol implements iBxDolSingleton {
 
             return $aMemLevel;
 
-        } 
+        }
 
         // profile is active get memebr level from profile
-    	$aMemLevel = $this->oDb->getLevelCurrent((int)$iProfileId, $iTime);
+        $aMemLevel = $this->oDb->getLevelCurrent((int)$iProfileId, $iTime);
 
-    
-        // There are no purchased/assigned memberships for the profile or all of them have expired. 
+        // There are no purchased/assigned memberships for the profile or all of them have expired.
         // In this case the profile is assumed to have Standard membership.
-    	if (!$aMemLevel || is_null($aMemLevel['id'])) {
+        if (!$aMemLevel || is_null($aMemLevel['id'])) {
             $aMemLevel = $this->oDb->getLevelByIdCached(MEMBERSHIP_ID_STANDARD);
             if (!$aMemLevel)
                 trigger_error ('Standard member level is missing: ' . MEMBERSHIP_ID_NON_MEMBER, E_USER_ERROR);
-    	}
+        }
 
-    	return $aMemLevel;
+        return $aMemLevel;
     }
 
-    protected function getMemberMembershipInfoLatest($iProfileId, $iTime = 0) {
+    protected function getMemberMembershipInfoLatest($iProfileId, $iTime = 0)
+    {
         $aMembershipCurrent = $this->getMemberMembershipInfoCurrent($iProfileId, $iTime);
         if (isset($this->_aStandardMemberships[$aMembershipCurrent['id']]))
             return $aMembershipCurrent;
@@ -674,17 +684,19 @@ class BxDolAcl extends BxDol implements iBxDolSingleton {
         return $aMembershipLast;
     }
 
-    public function onProfileDelete ($iProfileId) {
+    public function onProfileDelete ($iProfileId)
+    {
         return $this->oDb->deleteLevelByProfileId($iProfileId, true);
     }
 }
 
-function checkAction($iProfileId, $iActionId, $bPerformAction = false) {
+function checkAction($iProfileId, $iActionId, $bPerformAction = false)
+{
     return BxDolAcl::getInstance()->checkAction($iProfileId, $iActionId, $bPerformAction);
 }
 
-function checkActionModule($iProfileId, $sActionName, $sModuleName, $bPerformAction = false) {
-
+function checkActionModule($iProfileId, $sActionName, $sModuleName, $bPerformAction = false)
+{
     $oACL = BxDolAcl::getInstance();
 
     $iActionId = $oACL->getMembershipActionId($sActionName, $sModuleName);

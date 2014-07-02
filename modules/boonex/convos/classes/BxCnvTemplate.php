@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Convos Convos
  * @ingroup     DolphinModules
  *
@@ -14,12 +14,12 @@ bx_import('BxBaseModTextTemplate');
 /*
  * Module representation.
  */
-class BxCnvTemplate extends BxBaseModTextTemplate 
+class BxCnvTemplate extends BxBaseModTextTemplate
 {
     /**
      * Constructor
      */
-    function __construct(&$oConfig, &$oDb) 
+    function __construct(&$oConfig, &$oDb)
     {
         $this->MODULE = 'bx_convos';
         parent::__construct($oConfig, $oDb);
@@ -31,7 +31,7 @@ class BxCnvTemplate extends BxBaseModTextTemplate
         $CNF = &$oModule->_oConfig->CNF;
 
         bx_import('BxDolProfile');
-    
+
         $aCollaborators = $this->_oDb->getCollaborators($aContentInfo[$CNF['FIELD_ID']]);
         //unset($aCollaborators[$aContentInfo[$CNF['FIELD_AUTHOR']]]);
 
@@ -113,12 +113,12 @@ class BxCnvTemplate extends BxBaseModTextTemplate
         return $this->parseHtmlByName('collaborators.html', $aVars);
     }
 
-    function getAuthorDesc ($aData) 
+    function getAuthorDesc ($aData)
     {
         $oModule = BxDolModule::getInstance($this->MODULE);
         if ($aData['last_reply_timestamp'] == $aData[$oModule->_oConfig->CNF['FIELD_ADDED']])
             return bx_time_js($aData[$oModule->_oConfig->CNF['FIELD_ADDED']], BX_FORMAT_DATE);
-        
+
         return _t('_bx_cnv_author_desc', bx_time_js($aData[$oModule->_oConfig->CNF['FIELD_ADDED']], BX_FORMAT_DATE), bx_time_js($aData['last_reply_timestamp'], BX_FORMAT_DATE));
     }
 
@@ -216,7 +216,7 @@ class BxCnvTemplate extends BxBaseModTextTemplate
             );
         }
         return $this->parseHtmlByName('messages_previews.html', $aVars);
-    } 
+    }
 
     function entryMessagePreviewInGrid ($r)
     {
@@ -245,8 +245,7 @@ class BxCnvTemplate extends BxBaseModTextTemplate
         $aVars['bx_if:unread_messages2'] = $aVars['bx_if:unread_messages'];
         return $this->parseHtmlByName('message_preview_in_grid.html', $aVars);
     }
-    
+
 }
 
-/** @} */ 
-
+/** @} */

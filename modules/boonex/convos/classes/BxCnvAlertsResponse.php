@@ -12,17 +12,17 @@
 /**
  * alerts handler
  */
-class BxCnvAlertsResponse extends BxDolAlertsResponse 
+class BxCnvAlertsResponse extends BxDolAlertsResponse
 {
     protected $MODULE;
 
-    public function __construct() 
+    public function __construct()
     {
         parent::__construct();
         $this->MODULE = 'bx_convos';
     }
-    
-    public function response($oAlert) 
+
+    public function response($oAlert)
     {
         if ($this->MODULE == $oAlert->sUnit) {
 

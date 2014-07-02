@@ -12,10 +12,10 @@ bx_import('BxDolDb');
 /**
  * All queries related to account
  */
-class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton {
-
-    public function __construct() {
-
+class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton
+{
+    public function __construct()
+    {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
@@ -25,7 +25,8 @@ class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton {
     /**
      * Prevent cloning the instance
      */
-    public function __clone() {
+    public function __clone()
+    {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error('Clone is not allowed for the class: ' . get_class($this), E_USER_ERROR);
     }
@@ -33,7 +34,8 @@ class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton {
     /**
      * Get singleton instance of the class
      */
-    public static function getInstance() {
+    public static function getInstance()
+    {
         if(!isset($GLOBALS['bxDolClasses'][__CLASS__]))
             $GLOBALS['bxDolClasses'][__CLASS__] = new BxDolAccountQuery();
 
@@ -44,53 +46,59 @@ class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton {
      * Get account by specified field name and value.
      * It is for internal usage only.
      * Use other funtions to get account info, like getInfoById, etc.
-     * @param string $sField database field name
-     * @param mixed $sValue database field value
-     * @return array with porfile info
+     * @param  string $sField database field name
+     * @param  mixed  $sValue database field value
+     * @return array  with porfile info
      */
-    protected function _getDataByField ($sField, $sValue) {
+    protected function _getDataByField ($sField, $sValue)
+    {
         $sSql = $this->prepare("SELECT * FROM `sys_accounts` WHERE `$sField` = ? LIMIT 1", $sValue);
         return $this->getRow($sSql);
     }
 
     /**
      * Get account info by id
-     * @param int $iID account id
+     * @param  int   $iID account id
      * @return array with account info
      */
-    public function getInfoById( $iID )    {
+    public function getInfoById( $iID )
+    {
         return $this->_getDataByField('id', (int)$iID);
     }
 
     /**
      * get account id by emial
      */
-    public function getIdByEmail($sEmail) {
+    public function getIdByEmail($sEmail)
+    {
         return (int)$this->_getFieldByField('id', 'email', $sEmail);
     }
 
     /**
      * get account id by id
      */
-    public function getIdById($iId) {
+    public function getIdById($iId)
+    {
         return (int)$this->_getFieldByField('id', 'id', $iId);
     }
 
     /**
      * Get account email by id
-     * @param string $s search account by this id
+     * @param  string  $s search account by this id
      * @return account email
      */
-    public function getEmail($iID) {
+    public function getEmail($iID)
+    {
         return $this->_getFieldByField('email', 'id', (int)$iID);
     }
 
     /**
      * Get account password by id
-     * @param string $s search account by this id
+     * @param  string  $s search account by this id
      * @return account password
      */
-    public function getPassword($iID) {
+    public function getPassword($iID)
+    {
         return $this->_getFieldByField('password', 'id', (int)$iID);
     }
 
@@ -101,46 +109,51 @@ class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton {
      * @param $iAccountId - account id to update password for
      * @return number of affected rows
      */
-    public function updatePassword($sPasswordHash, $sSalt, $iAccountId) {
+    public function updatePassword($sPasswordHash, $sSalt, $iAccountId)
+    {
         $sQuery = $this->prepare("UPDATE `sys_accounts` SET `password` = ?, `salt` = ? WHERE `id`= ?", $sPasswordHash, $sSalt, $iAccountId);
         return $this->query($sQuery);
     }
 
     /**
      * Update last logged in time
-     * @param int $iID account id
+     * @param  int    $iID account id
      * @return number of affected rows
      */
-    public function updateLoggedIn($iID) {
+    public function updateLoggedIn($iID)
+    {
         return $this->_updateField ($iID, 'logged', time());
     }
 
     /**
      * Update language
-     * @param int $iID account id
+     * @param  int    $iID account id
      * @return number of affected rows
      */
-    public function updateLanguage($iID, $iLangId) {
+    public function updateLanguage($iID, $iLangId)
+    {
         return $this->_updateField ($iID, 'lang_id', $iLangId);
     }
 
     /**
      * Update current profile id associated with account
-     * @param int $iID account id
-     * @param int $iProfileId set current profile id to this value
+     * @param  int    $iID        account id
+     * @param  int    $iProfileId set current profile id to this value
      * @return number of affected rows
      */
-    public function updateCurrentProfile($iID, $iProfileId) {
+    public function updateCurrentProfile($iID, $iProfileId)
+    {
         return $this->_updateField ($iID, 'profile_id', $iProfileId);
     }
 
     /**
      * Update 'email_confirmed' field.
-     * @param int $isConfirmed - 0: mark email as unconfirmed, 1: as confirmed
-     * @param int $iID - account id
+     * @param  int    $isConfirmed - 0: mark email as unconfirmed, 1: as confirmed
+     * @param  int    $iID         - account id
      * @return number of affected rows
      */
-    public function updateEmailConfirmed($isConfirmed, $iID) {
+    public function updateEmailConfirmed($isConfirmed, $iID)
+    {
         return $this->_updateField ($iID, 'email_confirmed', $isConfirmed ? 1 : 0);
     }
 
@@ -148,12 +161,13 @@ class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton {
      * Get account field by specified field name and value.
      * In most cases it is for internal usage only.
      * Use other funtions to get account info, like getIdByEmail, etc.
-     * @param string $sFieldRequested database field name to return
-     * @param string $sFieldSearch database field name to search for
-     * @param mixed $sValue database field value
+     * @param  string    $sFieldRequested database field name to return
+     * @param  string    $sFieldSearch    database field name to search for
+     * @param  mixed     $sValue          database field value
      * @return specified account field value
      */
-    protected function _getFieldByField ($sFieldRequested, $sFieldSearch, $sValue) {
+    protected function _getFieldByField ($sFieldRequested, $sFieldSearch, $sValue)
+    {
         $sSql = $this->prepare("SELECT `$sFieldRequested` FROM `sys_accounts` WHERE `$sFieldSearch` = ? LIMIT 1", $sValue);
         return $this->getOne($sSql);
     }
@@ -162,22 +176,24 @@ class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton {
      * Update some field by account id
      * In most cases it is for internal usage only.
      * Use other funtions to get account info, like updateLogged, etc.
-     * @param string $sFieldRequested database field name to return
-     * @param string $sFieldSearch database field name to search for
-     * @param mixed $sValue database field value
+     * @param  string    $sFieldRequested database field name to return
+     * @param  string    $sFieldSearch    database field name to search for
+     * @param  mixed     $sValue          database field value
      * @return specified account field value
      */
-    protected function _updateField ($iId, $sFieldForUpdate, $sValue) {
+    protected function _updateField ($iId, $sFieldForUpdate, $sValue)
+    {
         $sSql = $this->prepare("UPDATE `sys_accounts` SET `$sFieldForUpdate` = ? WHERE `id` = ? LIMIT 1", $sValue, $iId);
         return $this->query($sSql);
     }
 
     /**
      * Delete account info by id
-     * @param int $iID profile id
+     * @param  int      $iID profile id
      * @return affected rows
      */
-    public function delete($iID) {
+    public function delete($iID)
+    {
         $sSql = $this->prepare("DELETE FROM `sys_accounts` WHERE `id` = ? LIMIT 1", $iID);
         return $this->query($sSql);
     }
@@ -185,7 +201,7 @@ class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton {
     /**
      * Search account profile by keyword
      */
-    public function searchByTerm($sTerm, $iLimit) 
+    public function searchByTerm($sTerm, $iLimit)
     {
         $aFieldsQuickSearch = array('name', 'email');
         $sWhere = '';
@@ -200,4 +216,3 @@ class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton {
 }
 
 /** @} */
-

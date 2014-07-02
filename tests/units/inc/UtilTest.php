@@ -69,9 +69,9 @@ class UtilTest extends PHPUnit_Framework_TestCase
      */
     function testTitleToUri($sIn, $sOut)
     {
-    	$this->assertEquals(title2uri($sIn), $sOut);
+        $this->assertEquals(title2uri($sIn), $sOut);
     }
-	public function providerForTitleToUri()
+    public function providerForTitleToUri()
     {
         return array(
             array('test', 'test'),
@@ -83,15 +83,15 @@ class UtilTest extends PHPUnit_Framework_TestCase
         );
     }
 
-	/**
+    /**
      * @see uri2title
      * @dataProvider providerForUriToTitle
      */
     function testUriToTitle($sIn, $sOut)
     {
-    	$this->assertEquals(uri2title($sIn), $sOut);
+        $this->assertEquals(uri2title($sIn), $sOut);
     }
-	public function providerForUriToTitle()
+    public function providerForUriToTitle()
     {
         return array(
             array('test', 'test'),

@@ -24,5 +24,5 @@ if ($oVote && $sSys && $iObjectId && $sAction) {
     header('Content-Type: text/html; charset=utf-8');
     $sMethod = 'action' . ucfirst($sAction);
     if(method_exists($oVote, $sMethod))
-    	echo $oVote->$sMethod();
+        echo $oVote->$sMethod();
 }

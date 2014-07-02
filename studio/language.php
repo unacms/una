@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    DolphinEndAdmin Dolphin Studio End Admin Pages 
+ * @defgroup    DolphinEndAdmin Dolphin Studio End Admin Pages
  * @ingroup     DolphinStudio
  * @{
  */
@@ -18,7 +18,7 @@ bx_require_authentication(true);
 $sName = bx_get('name');
 if($sName === false)
     $sName = bx_get('lang_value');
-$sName = $sName !== false ? bx_process_input($sName) : '';   
+$sName = $sName !== false ? bx_process_input($sName) : '';
 
 $sPage = bx_get('page');
 $sPage = $sPage !== false ? bx_process_input($sPage) : '';

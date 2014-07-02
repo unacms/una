@@ -12,20 +12,26 @@ bx_import('BxDolStudioTemplate');
 bx_import('BxDolStudioSettings');
 bx_import('BxTemplStudioFormView');
 
-class BxBaseStudioSettings extends BxDolStudioSettings {
-    public function __construct($sType = '', $sCategory = '') {
+class BxBaseStudioSettings extends BxDolStudioSettings
+{
+    public function __construct($sType = '', $sCategory = '')
+    {
         parent::__construct($sType, $sCategory);
     }
-    public function getPageCss() {
+    public function getPageCss()
+    {
         return array_merge(parent::getPageCss(), array('forms.css'));
     }
-    public function getPageJs() {
+    public function getPageJs()
+    {
         return array_merge(parent::getPageJs(), array('settings.js'));
     }
-    public function getPageJsObject() {
+    public function getPageJsObject()
+    {
         return 'oBxDolStudioSettings';
     }
-    public function getPageMenu($aMenu = array(), $aMarkers = array()) {
+    public function getPageMenu($aMenu = array(), $aMarkers = array())
+    {
         $aTypes = $aMenu = array();
         if($this->oDb->getTypes(array('type' => 'all'), $aTypes) > 0 ) {
             $aTypesGrouped = array();
@@ -37,15 +43,16 @@ class BxBaseStudioSettings extends BxDolStudioSettings {
                     $aMenu[] = array(
                         'name' => $aType['name'],
                         'icon' => $this->getMenuIcon($sGroup, $aType),
-                    	'link' => BX_DOL_URL_STUDIO . 'settings.php?page=' . $aType['name'],
-                    	'title' => $aType['caption'],
-                    	'selected' => $aType['name'] == $this->sType
+                        'link' => BX_DOL_URL_STUDIO . 'settings.php?page=' . $aType['name'],
+                        'title' => $aType['caption'],
+                        'selected' => $aType['name'] == $this->sType
                     );
         }
 
         return parent::getPageMenu($aMenu);
     }
-    public function getPageCode($sCategorySelected = '') {
+    public function getPageCode($sCategorySelected = '')
+    {
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         $aCategories = array();
@@ -101,7 +108,7 @@ class BxBaseStudioSettings extends BxDolStudioSettings {
         }
         $aForm['inputs'] = array_merge(
 
-            $aForm['inputs'], 
+            $aForm['inputs'],
 
             (!$bWrap ? array() : array(
                 'header_save' => array(
@@ -137,7 +144,8 @@ class BxBaseStudioSettings extends BxDolStudioSettings {
         return $oTemplate->parseHtmlByName('settings.html', array('js_object' => $this->getPageJsObject(), 'form' => $oForm->getCode()));
     }
 
-    protected function header($aCategory, $aFields) {
+    protected function header($aCategory, $aFields)
+    {
         return array_merge(
             array(
                 'category_' . $aCategory['id'] . '_beg' => array(
@@ -151,7 +159,8 @@ class BxBaseStudioSettings extends BxDolStudioSettings {
             $aFields);
     }
 
-    protected function field($aItem) {
+    protected function field($aItem)
+    {
         $aField = array();
         switch($aItem['type']) {
             case 'digit':
@@ -238,7 +247,8 @@ class BxBaseStudioSettings extends BxDolStudioSettings {
         }
         return $aField;
     }
-    protected function getMenuIcon($sGroup, &$aType) {
+    protected function getMenuIcon($sGroup, &$aType)
+    {
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         if(empty($aType['icon']) || ($sUrl = $oTemplate->getIconUrl($aType['icon'])) == "")

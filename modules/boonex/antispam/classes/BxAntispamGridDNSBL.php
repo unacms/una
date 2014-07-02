@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Antispam Antispam
  * @ingroup     DolphinModules
  *
@@ -11,9 +11,9 @@
 
 bx_import('BxTemplGrid');
 
-class BxAntispamGridDNSBL extends BxTemplGrid 
+class BxAntispamGridDNSBL extends BxTemplGrid
 {
-    public function __construct ($aOptions, $oTemplate = false) 
+    public function __construct ($aOptions, $oTemplate = false)
     {
         parent::__construct ($aOptions, $oTemplate);
     }
@@ -21,7 +21,7 @@ class BxAntispamGridDNSBL extends BxTemplGrid
     /**
      * add js file for AJAX form submission
      */
-    protected function _addJsCss() 
+    protected function _addJsCss()
     {
         parent::_addJsCss();
 
@@ -40,8 +40,8 @@ class BxAntispamGridDNSBL extends BxTemplGrid
         bx_import('BxTemplFunctions');
 
         $s = BxTemplFunctions::getInstance()->popupBox(
-            'bx_antispam_poppup_help', 
-            _t('_bx_antispam_popup_help'), 
+            'bx_antispam_poppup_help',
+            _t('_bx_antispam_popup_help'),
             _t('_bx_antispam_help_dnsbl')
         );
 
@@ -65,7 +65,7 @@ class BxAntispamGridDNSBL extends BxTemplGrid
         bx_import('BxTemplFunctions');
         $s = BxTemplFunctions::getInstance()->popupBox(
             'bx_antispam_popup_block_log',
-            _t('_bx_antispam_popup_block_log'), 
+            _t('_bx_antispam_popup_block_log'),
             $sGrid . '<button class="bx-btn" style="float:none;" onclick ="$(\'.bx-popup-applied:visible\').dolPopupHide();">' . _t('_sys_close') . '</button>'
         );
 
@@ -76,7 +76,7 @@ class BxAntispamGridDNSBL extends BxTemplGrid
     /**
      * 'recheck' action handler
      */
-    public function performActionRecheckItem() 
+    public function performActionRecheckItem()
     {
         bx_import('BxDolModule');
         $oModule = BxDolModule::getInstance('bx_antispam');
@@ -118,7 +118,7 @@ class BxAntispamGridDNSBL extends BxTemplGrid
     /**
      * 'recheck' action handler
      */
-    public function performActionRecheck() 
+    public function performActionRecheck()
     {
         bx_import('BxDolModule');
         $oModule = BxDolModule::getInstance('bx_antispam');
@@ -142,7 +142,7 @@ class BxAntispamGridDNSBL extends BxTemplGrid
                     'type' => 'text',
                     'name' => 'ip_url',
                     'value' => getVisitorIP(),
-                    'caption' => _t('_bx_antispam_field_ip_url'),            
+                    'caption' => _t('_bx_antispam_field_ip_url'),
                     'attrs' => array('id' => 'bx_antispam_ip_url'),
                 ),
 
@@ -190,7 +190,7 @@ class BxAntispamGridDNSBL extends BxTemplGrid
     /**
      * 'recheck' action handler
      */
-    public function performActionAdd() 
+    public function performActionAdd()
     {
         bx_import('BxTemplFormView');
 
@@ -255,7 +255,7 @@ class BxAntispamGridDNSBL extends BxTemplGrid
                 'comment' => '_bx_antispam_rule_note_country',
                 'added' => time(),
                 'active' => 1,
-                
+
             );
 
             $iRecentId = $oForm->insert ($aCustomValues, true); // insert new record
@@ -273,7 +273,7 @@ class BxAntispamGridDNSBL extends BxTemplGrid
             $s = BxTemplFunctions::getInstance()->popupBox($oForm->getId() . '_form', _t('_bx_antispam_popup_dnsbl_add'), $oForm->getCode() . '
                 <script>
                     $(document).ready(function () {
-                        $("#' . $oForm->getId() . '").ajaxForm({ 
+                        $("#' . $oForm->getId() . '").ajaxForm({
                             dataType: "json",
                             beforeSubmit: function (formData, jqForm, options) {
                                 bx_loading($("#' . $oForm->getId() . '"), true);
@@ -291,12 +291,12 @@ class BxAntispamGridDNSBL extends BxTemplGrid
         }
     }
 
-    protected function _getCellChain ($mixedValue, $sKey, $aField, $aRow) 
+    protected function _getCellChain ($mixedValue, $sKey, $aField, $aRow)
     {
         return parent::_getCellDefault (_t('_bx_antispam_chain_' . $mixedValue), $sKey, $aField, $aRow);
     }
 
-    protected function _getCellZonedomain ($mixedValue, $sKey, $aField, $aRow) 
+    protected function _getCellZonedomain ($mixedValue, $sKey, $aField, $aRow)
     {
         $s = $mixedValue;
         if ($aRow['url'])
@@ -304,7 +304,7 @@ class BxAntispamGridDNSBL extends BxTemplGrid
         return parent::_getCellDefault ($s, $sKey, $aField, $aRow);
     }
 
-    protected function _getCellComment ($mixedValue, $sKey, $aField, $aRow) 
+    protected function _getCellComment ($mixedValue, $sKey, $aField, $aRow)
     {
         $sCountry = '';
         $aMatches = array();
@@ -315,13 +315,13 @@ class BxAntispamGridDNSBL extends BxTemplGrid
         return parent::_getCellDefault (_t($mixedValue, $sCountry), $sKey, $aField, $aRow);
     }
 
-    protected function _getCellActions ($mixedValue, $sKey, $aField, $aRow) 
+    protected function _getCellActions ($mixedValue, $sKey, $aField, $aRow)
     {
         if (preg_match('/^(\w{2})\.countries\.nerd\.dk\.$/', $aRow['zonedomain'], $aMatches)) {
             $aRow['active'] = 1;
             return parent::_getCellActions ($mixedValue, $sKey, $aField, $aRow);
         }
-        
+
         return parent::_getCellDefault ('', $sKey, $aField, $aRow);
     }
 

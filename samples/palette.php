@@ -7,7 +7,7 @@
  * @{
  */
 
-/** 
+/**
  * @page samples
  * @section palette Palette
  */
@@ -15,7 +15,7 @@
 /**
  * This sample shows default Dolphin palette colors.
  * Palette colors are defined as css classes.
- */ 
+ */
 
 require_once('./../inc/header.inc.php');
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
@@ -32,9 +32,10 @@ $oTemplate->getPageCode();
 /**
  * page code function
  */
-function PageCompMainCode() {
+function PageCompMainCode()
+{
     ob_start();
-    
+
     $aColors = array ('red1', 'red1-dark', 'red2', 'red2-dark', 'red3', 'red3-dark', 'green1', 'green1-dark', 'green2', 'green2-dark', 'green3', 'green3-dark', 'blue1', 'blue1-dark', 'blue2', 'blue2-dark', 'blue3', 'blue3-dark', 'gray', 'gray-dark');
 
     $aDefBg = array ('bx-def-color-bg-page', 'bx-def-color-bg-block', 'bx-def-color-bg-box', 'bx-def-color-bg-sec', 'bx-def-color-bg-active', 'bx-def-color-bg-hl', 'bx-def-color-bg-hl-hover');
@@ -44,7 +45,7 @@ function PageCompMainCode() {
     foreach ($aColors as $sColor) {
         $sClass = 'bx-def-round-corners bx-def-margin-right bx-def-margin-bottom';
         $sClassFt = 'col-'.$sColor;
-        $sClassBg = 'bg-col-'.$sColor;        
+        $sClassBg = 'bg-col-'.$sColor;
 ?>
         <div>
             <div class="<?php echo $sClass;?> <?php echo $sClassBg;?>" style="<?php echo $sStyle;?> color:#fff;">.<?php echo $sClassBg;?></div>

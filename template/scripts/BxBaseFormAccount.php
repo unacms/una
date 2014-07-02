@@ -9,13 +9,12 @@
 
 bx_import('BxTemplFormView');
 
-
-class BxFormAccountCheckerHelper extends BxDolFormCheckerHelper 
+class BxFormAccountCheckerHelper extends BxDolFormCheckerHelper
 {
     /**
      * Password confirmation check.
      */
-    function checkPasswordConfirm ($s) 
+    function checkPasswordConfirm ($s)
     {
         return $s == bx_process_input(bx_get(BxTemplFormAccount::$FIELD_PASSWORD));
     }
@@ -23,7 +22,7 @@ class BxFormAccountCheckerHelper extends BxDolFormCheckerHelper
     /**
      * Password confirmation check.
      */
-    function checkPasswordCurrent ($s) 
+    function checkPasswordCurrent ($s)
     {
 
         bx_import('BxDolAccount');
@@ -39,7 +38,7 @@ class BxFormAccountCheckerHelper extends BxDolFormCheckerHelper
     /**
      * Check if email is uniq.
      */
-    function checkEmailUniq ($s) 
+    function checkEmailUniq ($s)
     {
         if (!$this->checkEmail($s))
             return false;
@@ -63,7 +62,7 @@ class BxFormAccountCheckerHelper extends BxDolFormCheckerHelper
 /**
  * Create/Edit Account Form.
  */
-class BxBaseFormAccount extends BxTemplFormView 
+class BxBaseFormAccount extends BxTemplFormView
 {
     static $FIELD_PASSWORD = 'password';
     static $FIELD_SALT = 'salt';
@@ -72,13 +71,13 @@ class BxBaseFormAccount extends BxTemplFormView
 
     protected $_bSetPendingApproval = false;
 
-    public function __construct($aInfo, $oTemplate) 
+    public function __construct($aInfo, $oTemplate)
     {
         parent::__construct($aInfo, $oTemplate);
         $this->_bSetPendingApproval = !(bool)getParam('sys_account_autoapproval');
     }
 
-    function isValid () 
+    function isValid ()
     {
         if (!parent::isValid ())
             return false;
@@ -89,14 +88,14 @@ class BxBaseFormAccount extends BxTemplFormView
             $this->_setCustomError ($sErrorMsg);
 
         return $sErrorMsg ? false : true;
-    }    
+    }
 
     public function isSetPendingApproval()
     {
         return $this->_bSetPendingApproval;
     }
 
-    public function insert ($aValsToAdd = array(), $isIgnore = false) 
+    public function insert ($aValsToAdd = array(), $isIgnore = false)
     {
         $sPwd = $this->getCleanValue(self::$FIELD_PASSWORD);
         $sSalt = genRndSalt();
@@ -111,7 +110,7 @@ class BxBaseFormAccount extends BxTemplFormView
         return parent::insert ($aValsToAdd, $isIgnore);
     }
 
-    function update ($val, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null) 
+    function update ($val, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null)
     {
         $sPwd = $this->getCleanValue(self::$FIELD_PASSWORD);
         if ($sPwd) {
@@ -120,7 +119,7 @@ class BxBaseFormAccount extends BxTemplFormView
         }
 
         $aValsToAdd = array_merge(
-            $aValsToAdd, 
+            $aValsToAdd,
             array (self::$FIELD_CHANGED => time()),
             $sPwd ? array (self::$FIELD_PASSWORD => $sPasswordHash, self::$FIELD_SALT => $sSalt) : array()
         );

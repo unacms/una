@@ -9,8 +9,10 @@
 
 bx_import('BxDolStudioPageQuery');
 
-class BxDolStudioDesignerQuery extends BxDolStudioPageQuery {
-    function __construct() {
+class BxDolStudioDesignerQuery extends BxDolStudioPageQuery
+{
+    function __construct()
+    {
         parent::__construct();
     }
 }

@@ -12,8 +12,10 @@ bx_import ('BxBaseUploaderHTML5');
 /**
  * @see BxDolUploader
  */
-class BxTemplUploaderHTML5 extends BxBaseUploaderHTML5 {
-    function __construct($aObject, $sStorageObject, $sUniqId) {
+class BxTemplUploaderHTML5 extends BxBaseUploaderHTML5
+{
+    function __construct($aObject, $sStorageObject, $sUniqId)
+    {
         parent::__construct($aObject, $sStorageObject, $sUniqId);
     }
 }

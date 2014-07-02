@@ -26,8 +26,8 @@
  *
  */
 
-class BxDolModuleConfig extends BxDol {
-
+class BxDolModuleConfig extends BxDol
+{
     protected $_iId;
 
     protected $_sName;
@@ -51,7 +51,8 @@ class BxDolModuleConfig extends BxDol {
     /**
      * constructor
      */
-    function __construct($aModule) {
+    function __construct($aModule)
+    {
         parent::__construct();
 
         $this->_iId = empty($aModule['id']) ? 0 : (int)$aModule['id'];
@@ -67,25 +68,32 @@ class BxDolModuleConfig extends BxDol {
         $this->_sUri = $aModule['uri'];
         $this->_sHomeUrl = BX_DOL_URL_MODULES . $this->_sDirectory;
     }
-    function getId() {
+    function getId()
+    {
         return $this->_iId;
     }
-    function getName() {
+    function getName()
+    {
         return $this->_sName;
     }
-    function getClassPrefix() {
+    function getClassPrefix()
+    {
         return $this->_sClassPrefix;
     }
-    function getDbPrefix() {
+    function getDbPrefix()
+    {
         return $this->_sDbPrefix;
     }
-    function getDirectory() {
+    function getDirectory()
+    {
         return $this->_sDirectory;
     }
-    function getHomePath() {
+    function getHomePath()
+    {
         return $this->_sHomePath;
     }
-    function getClassPath() {
+    function getClassPath()
+    {
         return $this->_sClassPath;
     }
     /**
@@ -93,7 +101,8 @@ class BxDolModuleConfig extends BxDol {
      *
      * @return string with unique URI.
      */
-    function getUri() {
+    function getUri()
+    {
         return $this->_sUri;
     }
     /**
@@ -102,7 +111,8 @@ class BxDolModuleConfig extends BxDol {
      * example /modules/?r=module_uri or /m/module_uri
      * @return string with base URI.
      */
-    function getBaseUri() {
+    function getBaseUri()
+    {
         bx_import('BxDolPermalinks');
         return BxDolPermalinks::getInstance()->permalink('modules/?r=' . $this->_sUri . '/');
     }
@@ -111,7 +121,8 @@ class BxDolModuleConfig extends BxDol {
      *
      * @return string with full URL.
      */
-    function getHomeUrl() {
+    function getHomeUrl()
+    {
         return $this->_sHomeUrl;
     }
 }

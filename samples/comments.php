@@ -7,7 +7,7 @@
  * @{
  */
 
-/** 
+/**
  * @page samples
  * @section comments Comments
  */
@@ -34,13 +34,14 @@ $oTemplate->getPageCode();
 /**
  * page code function
  */
-function PageCompMainCode() {
-	$iObjectId = 1;
+function PageCompMainCode()
+{
+    $iObjectId = 1;
 
-	bx_import('BxDolCmts');
-	$oCmts = BxDolCmts::getObjectInstance('sample', $iObjectId);
-	if(!$oCmts->isEnabled())
-		return '';
+    bx_import('BxDolCmts');
+    $oCmts = BxDolCmts::getObjectInstance('sample', $iObjectId);
+    if(!$oCmts->isEnabled())
+        return '';
 
     return $oCmts->getCommentsBlock();
 }

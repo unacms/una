@@ -11,8 +11,10 @@ defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxBaseStudioModule');
 
-class BxTemplStudioModule extends BxBaseStudioModule { 
-    function __construct($sModule = "", $sPage = "") {
+class BxTemplStudioModule extends BxBaseStudioModule
+{
+    function __construct($sModule = "", $sPage = "")
+    {
         parent::__construct($sModule, $sPage);
     }
 }

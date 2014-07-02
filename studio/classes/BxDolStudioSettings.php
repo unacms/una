@@ -21,13 +21,15 @@ define('BX_DOL_STUDIO_STG_CATEGORY_SYSTEM', 'system');
 define('BX_DOL_STUDIO_STG_CATEGORY_LANGUAGES', 'languages');
 define('BX_DOL_STUDIO_STG_CATEGORY_TEMPLATES', 'templates');
 
-class BxDolStudioSettings extends BxTemplStudioPage {
+class BxDolStudioSettings extends BxTemplStudioPage
+{
     protected $sType;
     protected $sCategory;
     protected $aCategories;
     protected $aCustomCategories;
 
-    function __construct($sType = '', $sCategory = '') {
+    function __construct($sType = '', $sCategory = '')
+    {
         parent::__construct('settings');
 
         $this->oDb = new BxDolStudioSettingsQuery();
@@ -60,7 +62,8 @@ class BxDolStudioSettings extends BxTemplStudioPage {
         }
     }
 
-    function saveChanges(&$oForm) {
+    function saveChanges(&$oForm)
+    {
         $aCategories = explode(',', $oForm->getCleanValue('categories'));
 
         foreach ($aCategories as $sCategory) {
@@ -72,22 +75,22 @@ class BxDolStudioSettings extends BxTemplStudioPage {
                 $aData[$aOption['name']] = $oForm->getCleanValue($aOption['name']);
 
                 if(!empty($aOption['check'])) {
-                	$sCheckerHelper = '';
-                	if(!empty($aOption['type_name']) && BxDolRequest::serviceExists($aOption['type_name'], 'get_settings_checker_helper'))
-                		$sCheckerHelper = BxDolService::call($aOption['type_name'], 'get_settings_checker_helper');
+                    $sCheckerHelper = '';
+                    if(!empty($aOption['type_name']) && BxDolRequest::serviceExists($aOption['type_name'], 'get_settings_checker_helper'))
+                        $sCheckerHelper = BxDolService::call($aOption['type_name'], 'get_settings_checker_helper');
 
-                	if($sCheckerHelper == '') {
-                		bx_import('BxDolStudioForm');
-                		$sCheckerHelper = 'BxDolStudioFormCheckerHelper';
-                	}
+                    if($sCheckerHelper == '') {
+                        bx_import('BxDolStudioForm');
+                        $sCheckerHelper = 'BxDolStudioFormCheckerHelper';
+                    }
 
-                	$oChecker = new $sCheckerHelper();
-                	$aCheckFunction = array($oChecker, 'check' . bx_gen_method_name($aOption['check']));
-                	$aCheckFunctionParams = array($aData[$aOption['name']]);
-                	if(!empty($aOption['check_params']))
-                		$aCheckFunctionParams = array_merge($aCheckFunctionParams, unserialize($aOption['check_params']));
+                    $oChecker = new $sCheckerHelper();
+                    $aCheckFunction = array($oChecker, 'check' . bx_gen_method_name($aOption['check']));
+                    $aCheckFunctionParams = array($aData[$aOption['name']]);
+                    if(!empty($aOption['check_params']))
+                        $aCheckFunctionParams = array_merge($aCheckFunctionParams, unserialize($aOption['check_params']));
 
-                	if(is_callable($aCheckFunction) && !call_user_func_array($aCheckFunction, $aCheckFunctionParams)) {
+                    if(is_callable($aCheckFunction) && !call_user_func_array($aCheckFunction, $aCheckFunctionParams)) {
                         $this->sCategory = $sCategory;
                         return $this->getJsResult(_t('_adm_stg_err_save_error_message', _t($aOption['caption']), _t($aOption['check_error'])), false);
                     }
@@ -105,14 +108,16 @@ class BxDolStudioSettings extends BxTemplStudioPage {
         return $this->getJsResult('_adm_stg_scs_save');
     }
 
-    protected function getProcessedValue($aOption, $mixedValue) {
+    protected function getProcessedValue($aOption, $mixedValue)
+    {
         if(is_array($mixedValue))
             $mixedValue = implode(',', $mixedValue);
 
         return $mixedValue;
     }
 
-    protected function getEmptyValue($aOption) {
+    protected function getEmptyValue($aOption)
+    {
         $mixedValue = '';
         switch($aOption['type']) {
             case 'digit':

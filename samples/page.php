@@ -7,11 +7,10 @@
  * @{
  */
 
-/** 
+/**
  * @page samples
  * @section page Page
  */
-
 
 /**
 
@@ -30,7 +29,6 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 
 */
 
-
 $aPathInfo = pathinfo(__FILE__);
 require_once ($aPathInfo['dirname'] . '/../inc/header.inc.php');
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
@@ -43,18 +41,18 @@ $oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);
 $oTemplate->setPageContent ('page_main_code', PageCompMainCode());
 $oTemplate->getPageCode();
 
-
 /**
  * page code function
  */
-function PageCompMainCode() {
-    ob_start();    
+function PageCompMainCode()
+{
+    ob_start();
 
     bx_import('BxDolPage');
     $oPage = BxDolPage::getObjectInstance('sample'); // it automatically creates instance of default or custom class by object name
     if ($oPage)
         echo $oPage->getCode(); // print page
-    else 
+    else
         echo '"sample" page is missing.';
 
     return ob_get_clean();

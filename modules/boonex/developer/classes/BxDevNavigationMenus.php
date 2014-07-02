@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Developer Developer
  * @ingroup     DolphinModules
  *
@@ -12,19 +12,22 @@
 bx_import('BxDolModule');
 bx_import('BxTemplStudioNavigationMenus');
 
-class BxDevNavigationMenus extends BxTemplStudioNavigationMenus {
+class BxDevNavigationMenus extends BxTemplStudioNavigationMenus
+{
     protected $oModule;
 
-    function __construct($aOptions, $oTemplate = false) {
+    function __construct($aOptions, $oTemplate = false)
+    {
         parent::__construct($aOptions, $oTemplate);
 
         $this->_aOptions['actions_single']['export']['attr']['title'] = _t('_bx_dev_nav_btn_menus_gl_export');
 
         $this->oModule = BxDolModule::getInstance('bx_developer');
-        $this->sUrlViewItems = BX_DOL_URL_STUDIO . 'module.php?name=' . $this->oModule->_oConfig->getName() . '&page=navigation&nav_page=items&nav_module=%s&nav_set=%s';        
+        $this->sUrlViewItems = BX_DOL_URL_STUDIO . 'module.php?name=' . $this->oModule->_oConfig->getName() . '&page=navigation&nav_page=items&nav_module=%s&nav_set=%s';
     }
 
-    public function performActionAdd() {
+    public function performActionAdd()
+    {
         $sAction = 'add';
 
         bx_import('BxDolForm');
@@ -43,8 +46,7 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus {
                 $aRes = array('msg' => _t('_bx_dev_nav_err_menus_create'));
 
             $this->_echoResultJson($aRes, true);
-        }
-        else {
+        } else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-nav-menu-create-popup', _t('_bx_dev_nav_txt_menus_create_popup'), $this->oModule->_oTemplate->parseHtmlByName('nav_add_menu.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
@@ -57,10 +59,11 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus {
         }
     }
 
-    public function performActionEdit() {
+    public function performActionEdit()
+    {
         $sAction = 'edit';
 
-	    $aMenu = $this->_getItem('getMenus');
+        $aMenu = $this->_getItem('getMenus');
         if($aMenu === false) {
             $this->_echoResultJson(array());
             exit;
@@ -80,8 +83,7 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus {
                 $aRes = array('msg' => _t('_bx_dev_nav_err_menus_edit'));
 
             $this->_echoResultJson($aRes, true);
-        }
-        else {
+        } else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-nav-menu-edit-popup', _t('_bx_dev_nav_txt_menus_edit_popup', _t($aMenu['title'])), $this->oModule->_oTemplate->parseHtmlByName('nav_add_menu.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
@@ -94,10 +96,11 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus {
         }
     }
 
-    public function performActionExport() {
+    public function performActionExport()
+    {
         $sContentInsert = $sContentDelete = "";
 
-    	$aMenu = $this->_getItem('getMenus');
+        $aMenu = $this->_getItem('getMenus');
         if($aMenu === false) {
             $this->_echoResultJson(array());
             exit;
@@ -119,7 +122,7 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus {
         $aFormStructure = array(
             'form_attrs' => array(),
             'inputs' => array (
-            	'insert' => array(
+                'insert' => array(
                     'type' => 'textarea',
                     'name' => 'insert',
                     'caption' => _t('_bx_dev_nav_txt_menus_export_insert'),
@@ -151,7 +154,8 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus {
         $this->_echoResultJson(array('popup' => $sContent), true);
     }
 
-    private function fillInSelects(&$aInputs) {
+    private function fillInSelects(&$aInputs)
+    {
         $aInputs['module']['values'] = array_merge(array('' => _t('_bx_dev_nav_txt_select_module')), BxDolStudioUtils::getModules());
         $aInputs['set_name']['values'] = array(
             array('key' => '', 'value' => _t('_bx_dev_nav_txt_menus_set_name_select'))
@@ -162,7 +166,7 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus {
         foreach($aSets as $sSet)
             $aInputs['set_name']['values'][] = array('key' => $sSet['name'], 'value' => _t($sSet['title']));
 
-		$aInputs['template_id']['values'] = array(
+        $aInputs['template_id']['values'] = array(
             array('key' => '', 'value' => _t('_bx_dev_nav_txt_menus_template_id_select'))
         );
 

@@ -59,8 +59,8 @@ define('BX_DOL_STORAGE_QUEUED_DELETIONS_PER_RUN', 200); ///< max number of file 
 
 bx_import('BxDolStorageQuery');
 
-/** 
- * @page objects 
+/**
+ * @page objects
  * @section storage Storage
  * @ref BxDolStorage
  */
@@ -69,7 +69,7 @@ bx_import('BxDolStorageQuery');
  * This class unify storage.
  * As the result there are many advantages:
  * - files can be stored as on localhost as on remote storage, for example Amazon s3
- * - all files are in one place and separated from other files, so the data can be organised more easily, 
+ * - all files are in one place and separated from other files, so the data can be organised more easily,
  *   for example moved to dedicated disk if there is not enough storage
  * - simplicity of usage, there are hight level classes to handle all necessary operations, including upload and security
  * - quotas settings, so you always control how much space you are going to use
@@ -77,19 +77,19 @@ bx_import('BxDolStorageQuery');
  *
  *
  * Usage.
- * 
- * Step 1: 
+ *
+ * Step 1:
  * Add record to 'sys_objects_storage' table, like you doing this for Comments or Voting objects:
- * - object - your storage object name, usually it is in the following format - vendor prefix, underscore, module prefix; 
+ * - object - your storage object name, usually it is in the following format - vendor prefix, underscore, module prefix;
  *   for example for BoonEx Forum module it can be bx_forum.
  * - engine - storage engine, for now the following engines are supported:
  *     1. Local - local storage, by default files are stored in /storage/ subfolder in Dolphin root directory
  *     2. S3 - Amazon S3 storage, files are stored on Amazon S3 storage, you need to point AWS Access Key, AWS Secret Key and AWS Bucket in the settings
  * - params - custom storage engine params as php serialized string
  * - token_life - life of the security token in seconds for private files
- * - cache_control - control browser cache, allow browser to store files in browser's cache for this number of seconds, to disable browser cache, 
+ * - cache_control - control browser cache, allow browser to store files in browser's cache for this number of seconds, to disable browser cache,
  *   or let browser to decide on its own set it to 0(zero)
- * - levels - store files in subfolders, generated from filename; it is useful when there is limit of number of files/folders per directory; 
+ * - levels - store files in subfolders, generated from filename; it is useful when there is limit of number of files/folders per directory;
  *   for example if level is 2 and file name is abc.jpg then the file will be stored in a/b/abc.jpg folder, set to to 0(zero) to disable this feature
  * - table_files - table where file info is stored, please refer to step 2 for more details
  * - ext_mode - file extensions restriction mode:
@@ -103,9 +103,9 @@ bx_import('BxDolStorageQuery');
  * - current_number - current number of files in this storage engine
  * - max_file_size - max file size for this storage engine, please note that other server settings are used if they are less than this setting option
  * - ts - unix timestamp of the last file upload
- * 
- * 
- * Step 2: 
+ *
+ *
+ * Step 2:
  * Create table for files.
  *
  * @code
@@ -126,18 +126,18 @@ bx_import('BxDolStorageQuery');
  * );
  * @endcode
  *
- * You need to enter this table name in 'table_files' field in 'sys_objects_storage' table, mentioned in step 1. 
- * The files will be added to this table automatically, all you need is to save 'id' from this table, so you can refer to the file by the 'id'. 
+ * You need to enter this table name in 'table_files' field in 'sys_objects_storage' table, mentioned in step 1.
+ * The files will be added to this table automatically, all you need is to save 'id' from this table, so you can refer to the file by the 'id'.
  * It is not recommended to change this table, it is better to create another table which will be connected with this one by file 'id'.
- * 
- * 
+ *
+ *
  * Step 3:
  * Handling upload.
  *
  * Sample HTML form:
  *  @code
  * <form enctype="multipart/form-data" method="POST" action="store_file.php">
- *     Choose a file to upload: 
+ *     Choose a file to upload:
  *     <input name="file" type="file" />
  *     <br />
  *     <input type="submit" name="add" value="Upload File" />
@@ -149,53 +149,53 @@ bx_import('BxDolStorageQuery');
  * @code
  * require_once('./inc/header.inc.php');
  * require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
- * 
+ *
  * bx_import('BxDolStorage');
  * BxDolStorage::pruning(); // pruning is needed to clear expired security tokens, you can call it on cron when your server is not busy
  * $oStorage = BxDolStorage::getObjectInstance('my_module'); // create storage object instance, 'my_module' is value of 'object' field in 'sys_objects_storage' table
- * 
+ *
  * if (isset($_POST['add'])) { // if form is submitted
- *         $iId = $oStorage->storeFileFromForm($_FILES['file'], true, 0); // store file from submitted HTML form, 'file' is input name with field, true means store file as private, 0 is profile id 
+ *         $iId = $oStorage->storeFileFromForm($_FILES['file'], true, 0); // store file from submitted HTML form, 'file' is input name with field, true means store file as private, 0 is profile id
  *         if ($iId) { // storeFileFromForm returns file id, not false value means operation is successful.
- *             // save $iId somewhere, so you can refer to the file after 
- *             $iCount = $oStorage->afterUploadCleanup($iId, $iProfileId); // since we saved $iId, we remove it from the orphans list, so it will not appear on the form next time (persistent storage) 
+ *             // save $iId somewhere, so you can refer to the file after
+ *             $iCount = $oStorage->afterUploadCleanup($iId, $iProfileId); // since we saved $iId, we remove it from the orphans list, so it will not appear on the form next time (persistent storage)
  *             echo "uploaded file id: " . $iId . "(deleted orphans:" . $iCount . ")";
  *         } else {
- *             // something went wrong - print the error 
- *             echo "error uploading file: " . $oStorage->getErrorString() 
+ *             // something went wrong - print the error
+ *             echo "error uploading file: " . $oStorage->getErrorString()
  *         }
  * }
  * @endcode
  *
- * Please refer to the functions definition for more additional description of functions params. 
- * 
- *  
+ * Please refer to the functions definition for more additional description of functions params.
+ *
+ *
  * Step 4:
  * Displaying the file.
- * 
- * Use the following code to retrieve saved file. Remember you saved filed id somewhere in the previous step. 
+ *
+ * Use the following code to retrieve saved file. Remember you saved filed id somewhere in the previous step.
  * Lets assume that the uploaded file is image, then we can show it using the following code:
- * 
+ *
  * @code
  * require_once('./inc/header.inc.php');
  * require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
- * 
+ *
  * bx_import('BxDolStorage');
- * $oStorage = BxDolStorage::getObjectInstance('my_module'); 
- * 
- * $iId = 1234; // since you've saved it somewhere in the previous step, you can retrieve it here 
- * 
+ * $oStorage = BxDolStorage::getObjectInstance('my_module');
+ *
+ * $iId = 1234; // since you've saved it somewhere in the previous step, you can retrieve it here
+ *
  * echo "Uploaded image: <img src="' . $oStorage->getFileUrlById($iId) . '" />;";
  * @endcode
- * 
- * It will show the file, regardless if it is private or public. 
- * You need to control it by yourself who will view the file. 
- * The difference in viewing private files is that link to the file is expiring after N seconds, 
+ *
+ * It will show the file, regardless if it is private or public.
+ * You need to control it by yourself who will view the file.
+ * The difference in viewing private files is that link to the file is expiring after N seconds,
  * you control this period using 'token_life' field in 'sys_objects_storage' table.
- * 
+ *
  */
-abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
-
+abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject
+{
     protected $_aObject; ///< object properties
     protected $_iCacheControl; ///< browser cache in seconds, 0 - disabled
     protected $_aParams; ///< custom params
@@ -205,7 +205,8 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
     /**
      * constructor
      */
-    protected function __construct($aObject) {
+    protected function __construct($aObject)
+    {
         parent::__construct();
         $this->_aObject = $aObject;
         $this->_iCacheControl = $aObject['cache_control'];
@@ -218,8 +219,8 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
      * @param $sObject object name
      * @return object instance or false on error
      */
-    public static function getObjectInstance($sObject) {
-
+    public static function getObjectInstance($sObject)
+    {
         if (isset($GLOBALS['bxDolClasses']['BxDolStorage!'.$sObject]))
             return $GLOBALS['bxDolClasses']['BxDolStorage!'.$sObject];
 
@@ -238,11 +239,12 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
     }
 
     /**
-     * Delete old security tokens from database. 
+     * Delete old security tokens from database.
      * It is alutomatically called upin cron execution, usually once in a day.
      * @return number of deleted records
      */
-    public static function pruning() {
+    public static function pruning()
+    {
         $iDeleted = 0;
         $a = BxDolStorageQuery::getStorageObjects();
         foreach ($a as $aObject) {
@@ -258,7 +260,8 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
      * Max number of deletetion per time is defined in @see BX_DOL_STORAGE_QUEUED_DELETIONS_PER_RUN
      * @return number of deleted records
      */
-    public static function pruneDeletions() {
+    public static function pruneDeletions()
+    {
         $iDeleted = 0;
         $a = BxDolStorageQuery::getQueuedFilesForDeletion(BX_DOL_STORAGE_QUEUED_DELETIONS_PER_RUN);
         foreach ($a as $r) {
@@ -274,7 +277,8 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
      * @param $sPrefix - usually module name
      * @return number of files pending for deletion which were found by prefix
      */
-    public static function isQueuedFilesForDeletion ($sPrefix) {
+    public static function isQueuedFilesForDeletion ($sPrefix)
+    {
         return BxDolStorageQuery::isQueuedFilesForDeletion($sPrefix);
     }
 
@@ -282,7 +286,8 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
      * Is storage engine available?
      * @return boolean
      */
-    function isAvailable() {
+    function isAvailable()
+    {
         return true;
     }
 
@@ -290,7 +295,8 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
      * Are required php modules installed for this storage engine ?
      * @return boolean
      */
-    public function isInstalled() {
+    public function isInstalled()
+    {
         return true;
     }
 
@@ -298,7 +304,8 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
      * Get error code from the last occured error
      * @return error code
      */
-    public function getErrorCode() {
+    public function getErrorCode()
+    {
         return $this->_iErrorCode;
     }
 
@@ -306,38 +313,38 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
      * Get error string from the last occured error
      * @return error string
      */
-    public function getErrorString() {
-        $a = array (            
+    public function getErrorString()
+    {
+        $a = array (
             1000 => '_sys_storage_err_no_input_method',
             1001 => '_sys_storage_err_no_file',
             1002 => '_sys_storage_invalid_file',
             1003 => '_sys_storage_err_file_too_big',
             1004 => '_sys_storage_err_wrong_ext',
-            1005 => '_sys_storage_err_user_quota_exceeded', 
+            1005 => '_sys_storage_err_user_quota_exceeded',
             1006 => '_sys_storage_err_object_quota_exceeded',
-            1007 => '_sys_storage_err_site_quota_exceeded', 
-            1008 => '_sys_storage_err_engine_add', 
+            1007 => '_sys_storage_err_site_quota_exceeded',
+            1008 => '_sys_storage_err_engine_add',
 
             2001 => '_sys_storage_err_file_not_found',
-            2002 => '_sys_storage_err_unlink', 
+            2002 => '_sys_storage_err_unlink',
 
-            5001 => '_sys_storage_err_db', 
-            5002 => '_sys_storage_err_filesystem_perm', 
-            5003 => '_sys_storage_err_permission_denied', 
-            5004 => '_sys_storage_err_engine_get', 
+            5001 => '_sys_storage_err_db',
+            5002 => '_sys_storage_err_filesystem_perm',
+            5003 => '_sys_storage_err_permission_denied',
+            5004 => '_sys_storage_err_engine_get',
         );
         return _t($a[$this->_iErrorCode]);
     }
-
 
     /**
      * Get max file size allowed for current user, it checks user quota, object quota, site quota and php setting
      * @param $iProfileId profile id to check quota for
      * @return quota size in bytes
      */
-    public function getMaxUploadFileSize ($iProfileId) {
-
-        $iMin = PHP_INT_MAX;        
+    public function getMaxUploadFileSize ($iProfileId)
+    {
+        $iMin = PHP_INT_MAX;
 
         $aUserQuota = $this->_oDb->getUserQuota($iProfileId);
         if ($aUserQuota['max_file_size'] && $aUserQuota['max_file_size'] < $iMin)
@@ -357,7 +364,7 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
     }
 
     /**
-     * Store file in the storage area. It is not recommended to use this function directly, 
+     * Store file in the storage area. It is not recommended to use this function directly,
      * use other funtions like: storeFileFromForm, storeFileFromXhr, storeFileFromPath
      * @param $sMethod upload method, like regular Form upload, upload from URL, etc
      * @param $aMethodParams upload method params
@@ -367,8 +374,8 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
      * @param $iContentId content id to associate with ghost file
      * @return id of added file on success, false on error - to get exact error string call getErrorString()
      */
-    public function storeFile($sMethod, $aMethodParams, $sName = false, $isPrivate = true, $iProfileId = 0, $iContentId = 0) {
-
+    public function storeFile($sMethod, $aMethodParams, $sName = false, $isPrivate = true, $iProfileId = 0, $iContentId = 0)
+    {
         // setup input source using helper classes, like $_FILES or some URL for example
 
         $sHelperClass = 'BxDolStorageHelper' . $sMethod;
@@ -408,8 +415,8 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
             return false;
         }
 
-        // create tmp file        
-        
+        // create tmp file
+
         $sTmpFile = tempnam(BX_DIRECTORY_PATH_TMP, $this->_aObject['object']);
         if (!$oHelper->save($sTmpFile)) {
             $this->setErrorCode(BX_DOL_STORAGE_INVALID_FILE);
@@ -432,17 +439,17 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
         // add record in db
 
         $iTime = time();
-        $iSize = $oHelper->getSize();        
+        $iSize = $oHelper->getSize();
         $bFileAdded = $this->_oDb->addFile($iProfileId, $sLocalId, $sRemoteNamePath, $oHelper->getName(), $sMimeType, $sExt, $iSize, $iTime, $isPrivate);
         $iId = $this->_oDb->lastId();
-        if (!$bFileAdded || !$iId) {        
+        if (!$bFileAdded || !$iId) {
             $this->deleteFileFromEngine($sPath . $sLocalId, $isPrivate);
             $this->setErrorCode(BX_DOL_STORAGE_ERR_DB);
             return false;
         }
-            
+
         // after upload callback + triggers update
-    
+
         if (!$this->onFileAdded (array(
             'id' => $iId,
             'profile_id' => $iProfileId,
@@ -455,7 +462,7 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
             'private' => $isPrivate ? 1 : 0,
         ))) {
             $this->deleteFileFromEngine($sPath . $sLocalId, $isPrivate);
-            $this->_oDb->deleteFile($iId);            
+            $this->_oDb->deleteFile($iId);
             return false;
         }
 
@@ -465,39 +472,42 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
     /**
      * convert default multiple files array into more logical one
      */
-    public function convertMultipleFilesArray($aFiles) { 
-        
+    public function convertMultipleFilesArray($aFiles)
+    {
         if (!is_array($aFiles) || !is_array($aFiles['name']))
             return false;
         $aRet = array ();
-        foreach ($aFiles['name'] as $i => $sName) {            
+        foreach ($aFiles['name'] as $i => $sName) {
             foreach ($aFiles as $sKey => $r) {
                 if (!$aFiles['name'][$i])
                     break;
                 $aRet[$i][$sKey] = $aFiles[$sKey][$i];
-            }            
+            }
         }
-        return $aRet;    
+        return $aRet;
     }
 
     /**
      * the same as storeFile, but it tries to do it directly from uploaded file
      */
-    public function storeFileFromForm($aFile, $isPrivate = true, $iProfileId = 0, $iContentId = 0) {
+    public function storeFileFromForm($aFile, $isPrivate = true, $iProfileId = 0, $iContentId = 0)
+    {
         return $this->storeFile('Form', array('file' => $aFile), false, $isPrivate, $iProfileId, $iContentId);
     }
 
     /**
      * the same as storeFile, but it tries to do it directly from HTML5 file upload method
      */
-    public function storeFileFromXhr($sName, $isPrivate = true, $iProfileId = 0, $iContentId = 0) {
+    public function storeFileFromXhr($sName, $isPrivate = true, $iProfileId = 0, $iContentId = 0)
+    {
         return $this->storeFile('Xhr', array('name' => $sName), false, $isPrivate, $iProfileId, $iContentId);
     }
 
     /**
      * the same as storeFile, but it tries to do it directly from local file
      */
-    public function storeFileFromPath($sPath, $isPrivate = true, $iProfileId = 0, $iContentId = 0) {
+    public function storeFileFromPath($sPath, $isPrivate = true, $iProfileId = 0, $iContentId = 0)
+    {
         return $this->storeFile('Path', array('path' => $sPath), false, $isPrivate, $iProfileId, $iContentId);
     }
 
@@ -506,7 +516,8 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
      * @param $aParams['id'] - file ID in the storage
      * @param $aParams['storage'] - the storage name
      */
-    public function storeFileFromStorage($aParams, $isPrivate = true, $iProfileId = 0, $iContentId = 0) {
+    public function storeFileFromStorage($aParams, $isPrivate = true, $iProfileId = 0, $iContentId = 0)
+    {
         if (!isset($aParams['id']) || !(int)$aParams['id'])
             $aParams['id'] = 0;
 
@@ -519,8 +530,8 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
     /**
      * Delete file by file id.
      */
-    public function deleteFile($iFileId, $iProfileId = 0) { 
-        
+    public function deleteFile($iFileId, $iProfileId = 0)
+    {
         $aFile = $this->_oDb->getFileById ($iFileId);
         if (!$aFile) {
             $this->setErrorCode(BX_DOL_STORAGE_ERR_FILE_NOT_FOUND);
@@ -530,8 +541,8 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
         if (!$this->onBeforeFileDelete ($aFile, $iProfileId)) {
             return false;
         }
-    
-        if (!$this->deleteFileFromEngine($aFile['path'], $aFile['private'])) { 
+
+        if (!$this->deleteFileFromEngine($aFile['path'], $aFile['private'])) {
             return false;
         }
 
@@ -552,7 +563,8 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
      * @param $mixedFileId file id or array of file ids.
      * @return number of queued files
      */
-    public function queueFilesForDeletion($mixedFileId) {
+    public function queueFilesForDeletion($mixedFileId)
+    {
         if (!is_array($mixedFileId))
             $mixedFileId = array ($mixedFileId);
         bx_import('BxDolForm');
@@ -561,12 +573,13 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
     }
 
     /**
-     * Queue file(s) for deletion by getting neccesary files from ghosts table by profile id and content id 
+     * Queue file(s) for deletion by getting neccesary files from ghosts table by profile id and content id
      * @param $iProfileId profile id associated with files
      * @param $iContentId content id associated with files, or false if to check by profile id only
      * @return number of queued files
      */
-    public function queueFilesForDeletionFromGhosts($iProfileId, $iContentId = false) {
+    public function queueFilesForDeletionFromGhosts($iProfileId, $iContentId = false)
+    {
         $aFiles = $this->getGhosts ($iProfileId, $iContentId);
         return $this->queueFiles($aFiles);
     }
@@ -575,7 +588,8 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
      * Queue file(s) for deletion of the whole storage object
      * @return number of queued files
      */
-    public function queueFilesForDeletionFromObject() {
+    public function queueFilesForDeletionFromObject()
+    {
         $aFiles = $this->getFiles (false);
         return $this->queueFiles($aFiles);
     }
@@ -583,13 +597,14 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
     /**
      * Set file private or public.
      */
-    public function setFilePrivate($iFileId, $isPrivate = true) {
+    public function setFilePrivate($iFileId, $isPrivate = true)
+    {
         if (!$this->_oDb->modifyFilePrivate ($iFileId, $isPrivate)) {
             $this->setErrorCode(BX_DOL_STORAGE_ERR_DB);
             return false;
         }
         return true;
-    } 
+    }
 
     /**
      * Get file url.
@@ -602,8 +617,9 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
      * Get file info array by file id.
      * @param $iFileId file id
      * @return array
-     */ 
-    public function getFile($iFileId) {
+     */
+    public function getFile($iFileId)
+    {
         return $this->_oDb->getFileById($iFileId);
     }
 
@@ -612,21 +628,23 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
      * @param $iFileId file id
      * @return boolean
      */
-    public function isFilePrivate($iFileId) { 
+    public function isFilePrivate($iFileId)
+    {
         $aFile = $this->getFile ($iFileId);
         return $aFile['private'] ? true : false;
-    } 
+    }
 
     /**
      * Call this function after saving/associate just uploaded file id, so file is not orphaned/ghost.
-     * Ghost files appear on download form automaticaly during next upload, 
+     * Ghost files appear on download form automaticaly during next upload,
      * for example if file was uploaded but was not submitted for some reason.
      * This mechanism ensure that the file is not lost.
      * @param $mixedFileIds array of file ids or just one file id
      * @param $iProfileId profile id
      * @param return number of deleted ghost files
      */
-    public function afterUploadCleanup($mixedFileIds, $iProfileId, $iContentId = false) {
+    public function afterUploadCleanup($mixedFileIds, $iProfileId, $iContentId = false)
+    {
         return $this->_oDb->deleteGhosts($mixedFileIds, $iProfileId, $iContentId);
     }
 
@@ -636,7 +654,8 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
      * @param $iContentId content id, or false to not consider content id at all
      * @return array of arrays
      */
-    public function getGhosts($iProfileId, $iContentId = false) {
+    public function getGhosts($iProfileId, $iContentId = false)
+    {
         return $this->_oDb->getGhosts($iProfileId, $iContentId);
     }
 
@@ -647,7 +666,8 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
      * @param $iContentId content id
      * @return true on success or false otherwise
      */
-    public function updateGhostsContentId($mixedFileIds, $iProfileId, $iContentId) {
+    public function updateGhostsContentId($mixedFileIds, $iProfileId, $iContentId)
+    {
         return $this->_oDb->updateGhostsContentId($mixedFileIds, $iProfileId, $iContentId);
     }
 
@@ -656,14 +676,16 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
      * @param $iProfileId profile id
      * @return array of arrays
      */
-    public function getFiles($iProfileId) {
+    public function getFiles($iProfileId)
+    {
         return $this->_oDb->getFiles($iProfileId);
-    }    
+    }
 
     /**
      * Get all files in the storage
      */
-    public function getFilesAll($iStart = 0, $iPerPage = 1000) {
+    public function getFilesAll($iStart = 0, $iPerPage = 1000)
+    {
         return $this->_oDb->getFilesAll($iStart, $iPerPage);
     }
 
@@ -672,7 +694,8 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
      * @param $iProfileId profile id
      * @return string
      */
-    public function getRestrictionsTextExtensions ($iProfileId) {
+    public function getRestrictionsTextExtensions ($iProfileId)
+    {
         switch ($this->_aObject['ext_mode']) {
             case 'allow-deny':
                 if (!$this->_aObject['ext_allow'])
@@ -692,7 +715,8 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
      * @param $iProfileId profile id
      * @return string
      */
-    public function getRestrictionsTextFileSize ($iProfileId) {
+    public function getRestrictionsTextFileSize ($iProfileId)
+    {
         return _t('_sys_storage_restriction_size', _t_format_size($this->getMaxUploadFileSize($iProfileId)));
     }
 
@@ -701,7 +725,8 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
      * @param $iProfileId profile id
      * @return array of strings
      */
-    public function getRestrictionsTextArray ($iProfileId) {
+    public function getRestrictionsTextArray ($iProfileId)
+    {
         $aTypes = array('Extensions', 'FileSize');
         $aRet = array();
         foreach ($aTypes as $sType) {
@@ -714,27 +739,28 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
     }
 
     /**
-     * Reread available mimetypes from particular file. 
+     * Reread available mimetypes from particular file.
      * It clears 'sys_storage_mime_types' table and fill it with data form provided file.
      * The format of file is: mime/type _space_or_tab_ extentions_sperated_by_space.
      * Usually the file is mime.types file from apache or /etc/mime.types from unix systems.
      * @param $sFile file to read mime types from
-     * @return false if file was not found or can not be read, string with result on other case - it can contains file markup errors or localized "Success" string if everything went fine. 
+     * @return false if file was not found or can not be read, string with result on other case - it can contains file markup errors or localized "Success" string if everything went fine.
      */
-    public function reloadMimeTypesFromFile ($sFile) {
+    public function reloadMimeTypesFromFile ($sFile)
+    {
         $sResult = '';
 
         $aIcons = array (
             'mime-type-psd.png' => array('psd'),
             'mime-type-png.png' => array('png'),
-            'mime-type-image.png' => 'image/', 
+            'mime-type-image.png' => 'image/',
             'mime-type-video.png' => 'video/',
             'mime-type-audio.png' => 'audio/',
             'mime-type-presentation.png' => array('ppt', 'pptx', 'sxi', 'sti', 'odp', 'sdp', 'sdd'),
-            'mime-type-spreadsheet.png' => array('xls', 'xlt', 'xlsx', 'sxc', 'stc', 'ods', 'ots', 'sdc', 'csv', 'dif', 'slk', 'pxl'),            
+            'mime-type-spreadsheet.png' => array('xls', 'xlt', 'xlsx', 'sxc', 'stc', 'ods', 'ots', 'sdc', 'csv', 'dif', 'slk', 'pxl'),
             'mime-type-document.png' => array('doc', 'docx', 'odt', 'ott', 'sxw', 'stw', 'rtf', 'sdw', 'txt', 'pdb', 'psw', 'pdf'),
             'mime-type-vector.png' => array('ac5', 'ac6', 'aff', 'agd1', 'ai', 'ait', 'art', 'awg', 'b2f', 'cag', 'cbd', 'cdl', 'cdr', 'cdr3', 'cdr4', 'cdr5', 'cdr6', 'cdrw', 'cdx', 'cgm', 'cht', 'cil', 'cit', 'cnv', 'csl', 'ctn', 'cv5', 'cvg', 'cvi', 'cvl', 'cvs', 'cvx', 'dcs', 'ddoc', 'ddrw', 'ded', 'design', 'dmw', 'do', 'dpp', 'dpr', 'draw', 'drw', 'dsf', 'dsf', 'dsx', 'dvg', 'dxb', 'emb', 'evf', 'fcd', 'fh', 'fhd', 'fmv', 'fs', 'ft10', 'ft11', 'ft9', 'ft8', 'gem', 'gl2', 'graffle', 'gsd', 'gsd', 'hpg', 'hpgl', 'hpgl2', 'hpl', 'hplj', 'hpp', 'hppcl', 'idw', 'ima', 'macdraw', 'md', 'mgcb', 'mgs', 'mvg', 'nap', 'naplps', 'odg', 'p10', 'pat', 'pct', 'pd', 'pdw', 'pgs', 'pic', 'pif', 'pix', 'plo', 'plot', 'plt', 'ps', 'psid', 'pws', 'rdl', 's57', 'sdw', 'sif', 'sk2', 'slddwg', 'sp', 'spa', 'svf', 'svg', 'svgb', 'svgz', 'sxd', 'tdr', 'tlc', 'tng', 'vbr', 'vec', 'vect', 'veh', 'vml', 'vss', 'web', 'web', 'web', 'yal'),
-            'mime-type-archive.png' => array('7z', '7zip', 'aar', 'ace', 'alz', 'arj', 'bz2', 'bza', 'bzip2', 'bzp', 'bzp2', 'cab', 'czip', 'gnutar', 'gz', 'gza', 'gzi', 'gzip', 'ha', 'lhz', 'lzma', 'pzip', 'rar', 'roo', 's7z', 'tar', 'tar-gz', 'tar-lzma', 'tar-z', 'taz', 'tbz', 'tbz2', 'tgz', 'tz', 'z', 'zip', 'zipx', 'zix', 'zoo'), 
+            'mime-type-archive.png' => array('7z', '7zip', 'aar', 'ace', 'alz', 'arj', 'bz2', 'bza', 'bzip2', 'bzp', 'bzp2', 'cab', 'czip', 'gnutar', 'gz', 'gza', 'gzi', 'gzip', 'ha', 'lhz', 'lzma', 'pzip', 'rar', 'roo', 's7z', 'tar', 'tar-gz', 'tar-lzma', 'tar-z', 'taz', 'tbz', 'tbz2', 'tgz', 'tz', 'z', 'zip', 'zipx', 'zix', 'zoo'),
         );
 
         $f = fopen ($sFile, 'r');
@@ -754,7 +780,7 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
 
             $sMimeType = $a[0];
             $aExts = preg_split ("/[\s]+/", $a[1]);
-            
+
             foreach ($aExts as $sExt) {
                 $sIcon = '';
                 foreach ($aIcons as $sIc => $if) {
@@ -768,9 +794,9 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
                     $sResult .= _t('_Error') . ': ' . $sMimeType . "\t" . $sExt . "\n";
             }
         }
-        
+
         fclose($f);
-    
+
         if (!$sResult)
             $sResult = _t('_Success');
 
@@ -782,7 +808,8 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
      * @param $sFileName file name
      * @return file extention string
      */
-    public function getFileExt ($sFileName) {
+    public function getFileExt ($sFileName)
+    {
         return strtolower(pathinfo($sFileName, PATHINFO_EXTENSION));
     }
 
@@ -791,7 +818,8 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
      * @param $sFileName file name
      * @return file title string
      */
-    public function getFileTitle ($sFileName) {
+    public function getFileTitle ($sFileName)
+    {
         return pathinfo($sFileName, PATHINFO_FILENAME);
     }
 
@@ -800,7 +828,8 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
      * @param $sFileName file name
      * @return file mime type string
      */
-    public function getMimeTypeByFileName ($sFileName) {
+    public function getMimeTypeByFileName ($sFileName)
+    {
         $sExt = $this->getFileExt($sFileName);
         $sMimeType = $this->_oDb->getMimeTypeByExt($sExt);
         if (!$sMimeType)
@@ -809,13 +838,14 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
     }
 
     /**
-     * Get file icon by file name. 
-     * File icon is just icon filename without patch or URL. 
+     * Get file icon by file name.
+     * File icon is just icon filename without patch or URL.
      * File icons must be located in images/icons directory in your template subfolder.
      * @param $sFileName file name
      * @return file icon string
      */
-    public function getIconNameByFileName ($sFileName) {
+    public function getIconNameByFileName ($sFileName)
+    {
         $sExt = $this->getFileExt($sFileName);
         $sIcon = $this->_oDb->getIconByExt($sExt);
         if (!$sIcon)
@@ -825,8 +855,8 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
 
     // ------------ internal functions - events
 
-    protected function onBeforeFileAdd ($aFileInfo) {
-
+    protected function onBeforeFileAdd ($aFileInfo)
+    {
         if ($aFileInfo['size'] > $this->getMaxUploadFileSize($aFileInfo['profile_id'])) {
             $this->setErrorCode(BX_DOL_STORAGE_ERR_FILE_TOO_BIG);
             return false;
@@ -836,8 +866,8 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
 
         $aObjectQuota = $this->_oDb->getStorageObjectQuota();
         if (
-            ($aObjectQuota['quota_size'] && ($aObjectQuota['current_size'] + $aFileInfo['size'] > $aObjectQuota['quota_size'])) 
-            || 
+            ($aObjectQuota['quota_size'] && ($aObjectQuota['current_size'] + $aFileInfo['size'] > $aObjectQuota['quota_size']))
+            ||
             ($aObjectQuota['quota_number'] && ($aObjectQuota['current_number'] + 1 > $aObjectQuota['quota_number']))
             ) {
             $this->setErrorCode(BX_DOL_STORAGE_ERR_OBJECT_QUOTA_EXCEEDED);
@@ -846,14 +876,14 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
 
         $aUserQuota = $this->_oDb->getUserQuota($aFileInfo['profile_id']);
         if (
-            ($aUserQuota['quota_size'] && ($aUserQuota['current_size'] + $aFileInfo['size'] > $aUserQuota['quota_size'])) 
-            || 
+            ($aUserQuota['quota_size'] && ($aUserQuota['current_size'] + $aFileInfo['size'] > $aUserQuota['quota_size']))
+            ||
             ($aUserQuota['quota_number'] && ($aUserQuota['current_number'] + 1 > $aUserQuota['quota_number']))
             ) {
             $this->setErrorCode(BX_DOL_STORAGE_ERR_USER_QUOTA_EXCEEDED);
             return false;
         }
-        
+
         $this->setErrorCode(BX_DOL_STORAGE_ERR_OK);
 
         $bRet = true;
@@ -861,8 +891,8 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
         return $bRet;
     }
 
-    protected function onFileAdded ($aFileInfo) {
-
+    protected function onFileAdded ($aFileInfo)
+    {
         // TODO: update site quota - BX_DOL_STORAGE_ERR_SITE_QUOTA_EXCEEDED
 
         if (!$this->_oDb->updateStorageObjectQuota($aFileInfo['size'], 1)) {
@@ -882,17 +912,18 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
 
         $this->setErrorCode(BX_DOL_STORAGE_ERR_OK);
 
-        $bRet = true;        
+        $bRet = true;
         bx_alert($this->_aObject['object'], 'file_added', $aFileInfo['id'], $aFileInfo['profile_id'], array('file_info' => $aFileInfo, 'return_value' => &$bRet));
         return $bRet;
     }
 
-    function insertGhost($iFileId, $iProfileId, $iContentId = 0) {
+    function insertGhost($iFileId, $iProfileId, $iContentId = 0)
+    {
         return $this->_oDb->insertGhosts ($iFileId, $iProfileId, $iContentId);
     }
 
-    function onBeforeFileDelete ($aFileInfo, $iProfileId) {
-
+    function onBeforeFileDelete ($aFileInfo, $iProfileId)
+    {
         $this->setErrorCode(BX_DOL_STORAGE_ERR_OK);
 
         $bRet = true;
@@ -900,8 +931,8 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
         return $bRet;
     }
 
-    function onFileDeleted ($aFileInfo, $iProfileId) {
-
+    function onFileDeleted ($aFileInfo, $iProfileId)
+    {
         // TODO: update site quota
 
         if (!$this->_oDb->updateStorageObjectQuota(-$aFileInfo['size'], -1)) {
@@ -923,15 +954,17 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
 
     // ------------ internal functions
 
-    protected function setErrorCode($i) {
+    protected function setErrorCode($i)
+    {
         return ($this->_iErrorCode = $i);
     }
 
-    protected function genRandName($isCheckForUniq = true) {
+    protected function genRandName($isCheckForUniq = true)
+    {
         $sRandName = genRndPwd(32, false);
         if ($isCheckForUniq) {
             $iTries = 10;
-            do {              
+            do {
                 $aFile = $this->_oDb->getFileByRemoteId($sRandName);
                 $bExist = is_array($aFile) && $aFile;
             } while (--$iTries && $bExist);
@@ -939,7 +972,8 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
         return $sRandName;
     }
 
-    protected function genPath($s, $iLevels) {
+    protected function genPath($s, $iLevels)
+    {
         $sRet = '';
         $i = 1;
         while ($iLevels-- > 0)
@@ -947,11 +981,13 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
         return $sRet;
     }
 
-    protected function genRemoteNamePath ($sPath, $sLocalId, $sExt) {
+    protected function genRemoteNamePath ($sPath, $sLocalId, $sExt)
+    {
         return $sPath . $sLocalId;
     }
 
-    protected function isValidExt ($sExt) {
+    protected function isValidExt ($sExt)
+    {
         switch ($this->_aObject['ext_mode']) {
             case 'allow-deny':
                 if ($this->isAllowedExt($sExt))
@@ -966,23 +1002,27 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
         }
     }
 
-    protected function isAllowedExt ($sExt) {
+    protected function isAllowedExt ($sExt)
+    {
         return $this->isAllowedDeniedExt($sExt, 'ext_allow');
     }
 
-    protected function isDeniedExt ($sExt) {
+    protected function isDeniedExt ($sExt)
+    {
         return $this->isAllowedDeniedExt($sExt, 'ext_deny');
     }
 
-    protected function isAllowedDeniedExt ($sExt, $sExtMode) {
+    protected function isAllowedDeniedExt ($sExt, $sExtMode)
+    {
         if ('' == $this->_aObject[$sExtMode])
             return false;
-        if (!is_array($this->_aObject[$sExtMode]))    
+        if (!is_array($this->_aObject[$sExtMode]))
             $this->_aObject[$sExtMode] = explode(',', $this->_aObject[$sExtMode]);
         return in_array ($sExt, $this->_aObject[$sExtMode]);
     }
 
-    protected function queueFiles($aFiles) {
+    protected function queueFiles($aFiles)
+    {
         if (!$aFiles)
             return 0;
 
@@ -998,28 +1038,31 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject {
 /**
  * Handle file uploads via XMLHttpRequest
  */
-class BxDolStorageHelperXhr {
-
+class BxDolStorageHelperXhr
+{
     protected $sName;
 
-    function BxDolStorageHelperXhr ($aParams) {
+    function BxDolStorageHelperXhr ($aParams)
+    {
         $this->sName = $aParams['name'];
     }
 
-    function getImmediateError() {
+    function getImmediateError()
+    {
         return BX_DOL_STORAGE_ERR_OK;
     }
 
-    function save($path) {    
+    function save($path)
+    {
         $input = fopen("php://input", "r");
         $temp = tmpfile();
         $realSize = stream_copy_to_stream($input, $temp);
         fclose($input);
-        
+
         if (false === $this->getSize() || $realSize != $this->getSize())
             return false;
-        
-        $target = fopen($path, "w");        
+
+        $target = fopen($path, "w");
         fseek($temp, 0, SEEK_SET);
         stream_copy_to_stream($temp, $target);
         fclose($target);
@@ -1028,31 +1071,34 @@ class BxDolStorageHelperXhr {
         return true;
     }
 
-    function getName() {
+    function getName()
+    {
         return $this->sName;
     }
 
-    function getSize() {
+    function getSize()
+    {
         if (isset($_SERVER["CONTENT_LENGTH"]))
-            return (int)$_SERVER["CONTENT_LENGTH"];            
+            return (int)$_SERVER["CONTENT_LENGTH"];
         else
             return false;
-    }   
+    }
 }
 
 /**
  * Handle file uploads via regular form post (uses the $_FILES array)
  */
-class BxDolStorageHelperForm {  
-
+class BxDolStorageHelperForm
+{
     protected $aFile;
 
-    function BxDolStorageHelperForm ($aParams) {
+    function BxDolStorageHelperForm ($aParams)
+    {
         $this->aFile = $aParams['file'];
     }
 
-    function getImmediateError() {
-
+    function getImmediateError()
+    {
         if (!$this->aFile['size'] || !$this->aFile['tmp_name'])
             return BX_DOL_STORAGE_ERR_NO_FILE;
 
@@ -1062,67 +1108,75 @@ class BxDolStorageHelperForm {
         return BX_DOL_STORAGE_ERR_OK;
     }
 
-    function save($path) {
+    function save($path)
+    {
         if (!move_uploaded_file($this->aFile['tmp_name'], $path)){
             return false;
         }
         return true;
     }
 
-    function getName() {
+    function getName()
+    {
         return $this->aFile['name'];
     }
 
-    function getSize() {
+    function getSize()
+    {
         return $this->aFile['size'];
     }
 }
 
 /**
- * Store file from local file path 
+ * Store file from local file path
  */
-class BxDolStorageHelperPath { 
-
+class BxDolStorageHelperPath
+{
     protected $sPath;
 
-    function BxDolStorageHelperPath ($aParams) {
+    function BxDolStorageHelperPath ($aParams)
+    {
         $this->sPath = $aParams['path'];
     }
 
-    function getImmediateError() {
-
+    function getImmediateError()
+    {
         if (!file_exists($this->sPath))
             return BX_DOL_STORAGE_ERR_NO_FILE;
 
         return BX_DOL_STORAGE_ERR_OK;
     }
 
-    function save($path) {
+    function save($path)
+    {
         if (!copy($this->sPath, $path)) {
             return false;
         }
         return true;
     }
 
-    function getName() {
+    function getName()
+    {
         return pathinfo($this->sPath, PATHINFO_BASENAME);
     }
 
-    function getSize() {
+    function getSize()
+    {
         return filesize($this->sPath);
     }
 }
 
 /**
- * Handle file uploads from the same or another storage object 
+ * Handle file uploads from the same or another storage object
  */
-class BxDolStorageHelperStorage {
-
+class BxDolStorageHelperStorage
+{
     protected $iFileId;
     protected $oStorage;
     protected $aFile;
 
-    function BxDolStorageHelperStorage ($aParams) {
+    function BxDolStorageHelperStorage ($aParams)
+    {
         $this->iFileId = $aParams['id'];
         $this->oStorage = BxDolStorage::getObjectInstance($aParams['storage']);
 
@@ -1131,11 +1185,11 @@ class BxDolStorageHelperStorage {
             $this->aFile = $this->oStorage->getFile($this->iFileId);
     }
 
-    function getImmediateError() {
-
+    function getImmediateError()
+    {
         if (!$this->iFileId)
             return BX_DOL_STORAGE_ERR_NO_FILE;
-        
+
         if (!$this->oStorage)
             return BX_DOL_STORAGE_ERR_ENGINE_GET;
 
@@ -1145,7 +1199,8 @@ class BxDolStorageHelperStorage {
         return BX_DOL_STORAGE_ERR_OK;
     }
 
-    function save($path) {
+    function save($path)
+    {
         $s = bx_file_get_contents ($this->oStorage->getFileUrlById($this->iFileId));
         if (!$s)
             return false;
@@ -1153,11 +1208,13 @@ class BxDolStorageHelperStorage {
         return file_put_contents($path, $s) ? true : false;
     }
 
-    function getName() {
+    function getName()
+    {
         return $this->aFile['file_name'];
     }
 
-    function getSize() {
+    function getSize()
+    {
         return $this->aFile['size'];
     }
 }

@@ -12,8 +12,8 @@ bx_import('BxDolViewQuery');
 
 define ('BX_DOL_VIEW_OLD_VIEWS', 3 * 86400); ///< views older than this number of seconds will be deleted automatically
 
-/** 
- * @page objects 
+/**
+ * @page objects
  * @section views Views
  * @ref BxDolView
  */
@@ -22,7 +22,7 @@ define ('BX_DOL_VIEW_OLD_VIEWS', 3 * 86400); ///< views older than this number o
  * Track any object views automatically
  *
  * Add record to sys_object_view table to track object views,
- * to record view just create this class instance with your object id, 
+ * to record view just create this class instance with your object id,
  * for example:
  * @code
  *  BxDolView::getObjectInstance('my_system', 25); // 25 - is object id
@@ -60,23 +60,23 @@ class BxDolView extends BxDolObject
      */
     function __construct($sSystem, $iId, $iInit = true)
     {
-    	parent::__construct($sSystem, $iId, $iInit);
-		if(empty($this->_sSystem))
-			return;
-    	
+        parent::__construct($sSystem, $iId, $iInit);
+        if(empty($this->_sSystem))
+            return;
+
         $this->_oQuery = new BxDolViewQuery($this);
     }
 
    /**
      * get votes object instanse
-     * @param $sSys view object name 
+     * @param $sSys view object name
      * @param $iId associated content id, where vote is available
      * @param $iInit perform initialization
      * @return null on error, or ready to use class instance
      */
-    public static function getObjectInstance($sSys, $iId, $iInit = true) 
+    public static function getObjectInstance($sSys, $iId, $iInit = true)
     {
-    	if(isset($GLOBALS['bxDolClasses']['BxDolView!' . $sSys . $iId]))
+        if(isset($GLOBALS['bxDolClasses']['BxDolView!' . $sSys . $iId]))
             return $GLOBALS['bxDolClasses']['BxDolView!' . $sSys . $iId];
 
         $aSystems = self::getSystems();
@@ -86,8 +86,8 @@ class BxDolView extends BxDolObject
         bx_import('BxTemplView');
         $sClassName = 'BxTemplView';
         if(!empty($aSystems[$sSys]['class_name'])) {
-        	$sClassName = $aSystems[$sSys]['class_name'];
-        	if(!empty($aSystems[$sSys]['class_file']))
+            $sClassName = $aSystems[$sSys]['class_name'];
+            if(!empty($aSystems[$sSys]['class_file']))
                 require_once(BX_DIRECTORY_PATH_ROOT . $aSystems[$sSys]['class_file']);
             else
                 bx_import($sClassName);
@@ -97,11 +97,11 @@ class BxDolView extends BxDolObject
         return ($GLOBALS['bxDolClasses']['BxDolView!' . $sSys . $iId] = $o);
     }
 
-	public static function &getSystems()
+    public static function &getSystems()
     {
         if(!isset($GLOBALS['bx_dol_vote_systems']))
-			$GLOBALS['bx_dol_view_systems'] = BxDolDb::getInstance()->fromCache('sys_objects_view', 'getAllWithKey', '
-        		SELECT
+            $GLOBALS['bx_dol_view_systems'] = BxDolDb::getInstance()->fromCache('sys_objects_view', 'getAllWithKey', '
+                SELECT
                     `id` as `id`,
                     `name` AS `name`,
                     `table_track` AS `table_track`,
@@ -117,37 +117,38 @@ class BxDolView extends BxDolObject
         return $GLOBALS['bx_dol_view_systems'];
     }
 
-	/**
+    /**
      * it is called on cron every day or similar period to clean old votes
      */
-    public static function maintenance() {        
+    public static function maintenance()
+    {
         $iResult = 0;
         $oDb = BxDolDb::getInstance();
 
         $aSystems = self::getSystems();
         foreach($aSystems as $aSystem) {
-			if(!$aSystem['is_on'])
-				continue;
+            if(!$aSystem['is_on'])
+                continue;
 
             $sQuery = $oDb->prepare("DELETE FROM `{$aSystem['table_track']}` WHERE `date` < (UNIX_TIMESTAMP() - ?)", BX_DOL_VIEW_OLD_VIEWS);
             $iDeleted = (int)$oDb->query($sQuery);
             if($iDeleted > 0)
-            	$oDb->query("OPTIMIZE TABLE `{$aSystem['table_track']}`");
+                $oDb->query("OPTIMIZE TABLE `{$aSystem['table_track']}`");
 
-			$iResult += $iDeleted;
+            $iResult += $iDeleted;
         }
 
         return $iResult;
     }
 
-	function doView()
+    function doView()
     {
-        if(!$this->isEnabled()) 
-        	return false;
+        if(!$this->isEnabled())
+            return false;
 
-		$iObjectId = $this->getId();
-		$iAuthorId = $this->_getAuthorId();
-		$sAuthorIp = $this->_getAuthorIp();
+        $iObjectId = $this->getId();
+        $iAuthorId = $this->_getAuthorId();
+        $sAuthorIp = $this->_getAuthorIp();
 
         if($this->_oQuery->doView($iObjectId, $iAuthorId, $sAuthorIp)) {
             $this->_triggerView();
@@ -163,10 +164,10 @@ class BxDolView extends BxDolObject
 
     function onObjectDelete($iObjectId = 0)
     {
-    	$this->_oQuery->deleteObjectViews($iObjectId ? $iObjectId : $this->getId());
+        $this->_oQuery->deleteObjectViews($iObjectId ? $iObjectId : $this->getId());
     }
 
-	protected function _getAuthorId ()
+    protected function _getAuthorId ()
     {
         return isMember() ? bx_get_logged_profile_id() : 0;
     }
@@ -176,10 +177,10 @@ class BxDolView extends BxDolObject
         return getVisitorIP();
     }
 
-	protected function _triggerView()
+    protected function _triggerView()
     {
         if(!$this->_aSystem['trigger_table'])
-			return false;
+            return false;
 
         $iId = $this->getId();
         if(!$iId)
@@ -189,4 +190,4 @@ class BxDolView extends BxDolObject
     }
 }
 
-/** @} */ 
+/** @} */

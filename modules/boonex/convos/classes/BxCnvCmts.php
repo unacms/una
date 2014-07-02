@@ -35,8 +35,8 @@ class BxCnvCmts extends BxTemplCmts
 
     public function isRemoveAllowed ($aCmt, $isPerformAction = false)
     {
-    	if (isAdmin())
-    		return true;
+        if (isAdmin())
+            return true;
 
         return false;
     }

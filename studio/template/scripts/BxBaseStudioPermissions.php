@@ -10,29 +10,35 @@
 
 bx_import('BxDolStudioPermissions');
 
-class BxBaseStudioPermissions extends BxDolStudioPermissions {
+class BxBaseStudioPermissions extends BxDolStudioPermissions
+{
     protected $sSubpageUrl;
 
-    function __construct($sPage = '') {
+    function __construct($sPage = '')
+    {
         parent::__construct($sPage);
 
         $this->sSubpageUrl = BX_DOL_URL_STUDIO . 'builder_permissions.php?page=';
     }
-    function getPageCss() {
+    function getPageCss()
+    {
         return array_merge(parent::getPageCss(), array('forms.css', 'paginate.css', 'permissions.css'));
     }
-    function getPageJs() {
+    function getPageJs()
+    {
         return array_merge(parent::getPageJs(), array('permissions.js'));
     }
-    function getPageJsObject() {
+    function getPageJsObject()
+    {
         return 'oBxDolStudioPermissions';
     }
-    function getPageMenu($aMenu = array(), $aMarkers = array()) {
+    function getPageMenu($aMenu = array(), $aMarkers = array())
+    {
         $sJsObject = $this->getPageJsObject();
 
         $aMenu = array();
         $aMenuItems = array(
-            BX_DOL_STUDIO_PRM_TYPE_LEVELS, 
+            BX_DOL_STUDIO_PRM_TYPE_LEVELS,
             BX_DOL_STUDIO_PRM_TYPE_ACTIONS
         );
 
@@ -40,14 +46,15 @@ class BxBaseStudioPermissions extends BxDolStudioPermissions {
             $aMenu[] = array(
                 'name' => $sMenuItem,
                 'icon' => 'mi-prm-' . $sMenuItem . '.png',
-            	'link' => $this->sSubpageUrl . $sMenuItem,
-            	'title' => _t('_adm_lmi_cpt_' . $sMenuItem),
-            	'selected' => $sMenuItem == $this->sPage
+                'link' => $this->sSubpageUrl . $sMenuItem,
+                'title' => _t('_adm_lmi_cpt_' . $sMenuItem),
+                'selected' => $sMenuItem == $this->sPage
             );
 
         return parent::getPageMenu($aMenu);
     }
-    function getPageCode($bHidden = false) {
+    function getPageCode($bHidden = false)
+    {
         $sMethod = 'get' . ucfirst($this->sPage);
         if(!method_exists($this, $sMethod))
             return '';
@@ -55,19 +62,23 @@ class BxBaseStudioPermissions extends BxDolStudioPermissions {
         return $this->$sMethod();
     }
 
-    protected function getLevels() {
+    protected function getLevels()
+    {
         return $this->getGrid('sys_studio_acl');
     }
 
-    protected function getActions() {
+    protected function getActions()
+    {
         return $this->getGrid('sys_studio_acl_actions');
     }
 
-    protected function getPrices() {
+    protected function getPrices()
+    {
         return $this->getGrid('sys_studio_acl_prices');
     }
 
-    protected function getGrid($sObjectName) {
+    protected function getGrid($sObjectName)
+    {
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         bx_import('BxDolGrid');
@@ -77,9 +88,9 @@ class BxBaseStudioPermissions extends BxDolStudioPermissions {
 
         $aTmplVars = array(
             'js_object' => $this->getPageJsObject(),
-        	'bx_repeat:blocks' => array(
+            'bx_repeat:blocks' => array(
                 array(
-                	'caption' => '',
+                    'caption' => '',
                     'panel_top' => '',
                     'items' => $oGrid->getCode(),
                     'panel_bottom' => ''

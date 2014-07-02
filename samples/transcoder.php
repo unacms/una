@@ -7,12 +7,12 @@
  * @{
  */
 
-/** 
+/**
  * @page samples
  * @section transcoder_images Transcoder Images
- * 
- * This sample shows how transcoder can be used for the folder with images. 
- * 
+ *
+ * This sample shows how transcoder can be used for the folder with images.
+ *
  * @code
  *
  * CREATE TABLE IF NOT EXISTS `bx_resizer_files` (
@@ -40,9 +40,9 @@
  * INSERT INTO `sys_transcoder_images_filters` (`transcoder_object`, `filter`, `filter_params`, `order`) VALUES
  * ('sample', 'Resize', 'a:3:{s:1:"w";i:100;s:1:"h";i:100;s:13:"square_resize";i:0;}', 1),
  * ('sample', 'Grayscale', '', 2);
- * 
+ *
  * @endcode
- * 
+ *
  */
 
 require_once('./../inc/header.inc.php');
@@ -60,8 +60,9 @@ $oTemplate->getPageCode();
 /**
  * page code function
  */
-function PageCompMainCode() {
-    ob_start();    
+function PageCompMainCode()
+{
+    ob_start();
 
     $iProfileId = 123;
     bx_import('BxDolImageTranscoder');
@@ -88,8 +89,8 @@ $(document).ready(function () {
             if ($bRet)
                 echo "<hr />deleted file id: " . $iFileId . "<hr />";
             else
-                echo "<hr />file deleting error: " . $oStorage->getErrorString() . "<hr />"; 
-        }        
+                echo "<hr />file deleting error: " . $oStorage->getErrorString() . "<hr />";
+        }
     } else {
         $sPath = BX_DIRECTORY_PATH_ROOT . 'samples/img/';
         $h = opendir($sPath);
@@ -113,4 +114,3 @@ $(document).ready(function () {
     return DesignBoxContent("Sample transcoder", $s, BX_DB_PADDING_DEF);
 
 }
-

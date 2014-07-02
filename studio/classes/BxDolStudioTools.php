@@ -20,7 +20,7 @@ class BxDolStudioTools extends BxDolIO
 {
     protected $bInstallScript;
     protected $sRootPath;
-    
+
     public $aInstallPermissions;
     public $aPostInstallPermissions;
 
@@ -39,7 +39,7 @@ class BxDolStudioTools extends BxDolIO
 
         $this->aPostInstallPermissions = array(
         );
-                
+
         if (defined('BX_DOL_INSTALL') && BX_DOL_INSTALL) {
             $this->bInstallScript = true;
             $this->sRootPath = BX_INSTALL_URL_ROOT;
@@ -111,7 +111,7 @@ EOF;
                 $sHtml .= $this->_getHtmlPermissionRow($s, $r);
             echo $this->_getHtmlPermissionTable($sHtml);
         }
-        
+
 
         return $bRet;
     }
@@ -198,7 +198,7 @@ EOF;
         return $oAudit->generate();
     }
 
-    protected function _getHtmlPermissionRow($s, $r) 
+    protected function _getHtmlPermissionRow($s, $r)
     {
         $sAwaitedPerm = BX_DOL_PERM_EXE == $r['type'] ? _t('_adm_admtools_Executable') : _t('_adm_admtools_Writable');
         $sResultPerm = $sAwaitedPerm;
@@ -210,8 +210,8 @@ EOF;
                 $sResultPerm = _t('_adm_admtools_Not_Exists');
             else
                 $sResultPerm = BX_DOL_PERM_EXE == $r['type'] ? _t('_adm_admtools_Non_Executable') : _t('_adm_admtools_Non_Writable');
-        }     
-        
+        }
+
         return <<<EOF
 <tr class="bx-def-color-bg-hl-even">
     <td class="bx-def-padding-thd">{$s}</td>
@@ -221,7 +221,7 @@ EOF;
 EOF;
     }
 
-    protected function _getHtmlPermissionTable($sRows) 
+    protected function _getHtmlPermissionTable($sRows)
     {
         $sDirsC = _t('_adm_admtools_Path');
         $sCurrentLevelC = _t('_adm_admtools_Current_level');
@@ -243,7 +243,7 @@ EOF;
 EOF;
     }
 
-    protected function _getFileType($s) 
+    protected function _getFileType($s)
     {
         $sType = BX_DOL_PERM_FILE;
         if (is_dir($this->sRootPath . $s))
@@ -253,7 +253,7 @@ EOF;
         return $sType;
     }
 
-    protected function _checkPermissionsModules(&$aMessages) 
+    protected function _checkPermissionsModules(&$aMessages)
     {
         $bRet = true;
         bx_import('BxDolModuleDb');

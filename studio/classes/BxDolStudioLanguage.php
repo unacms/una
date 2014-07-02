@@ -14,12 +14,14 @@ bx_import('BxDolStudioLanguagesQuery');
 define('BX_DOL_STUDIO_LANG_DEFAULT', 'en');
 define('BX_DOL_STUDIO_LANG_TYPE_DEFAULT', 'general');
 
-class BxDolStudioLanguage extends BxTemplStudioPage {
-	protected $oDb;
-	protected $sLanguage;
-	protected $aLanguage;
+class BxDolStudioLanguage extends BxTemplStudioPage
+{
+    protected $oDb;
+    protected $sLanguage;
+    protected $aLanguage;
 
-    function __construct($sLanguage, $sPage) {
+    function __construct($sLanguage, $sPage)
+    {
         parent::__construct($sLanguage);
 
         $this->oDb = new BxDolStudioLanguagesQuery();
@@ -34,19 +36,19 @@ class BxDolStudioLanguage extends BxTemplStudioPage {
 
         //--- Check actions ---//
         if(($sAction = bx_get('lang_action')) !== false) {
-	        $sAction = bx_process_input($sAction);
+            $sAction = bx_process_input($sAction);
 
             $aResult = array('code' => 1, 'message' => _t('_adm_pgt_err_cannot_process_action'));
-	        switch($sAction) {
-	            case 'activate':
-	                $sValue = bx_process_input(bx_get('lang_value'));
-	                if(empty($sValue))
-	                    break;
+            switch($sAction) {
+                case 'activate':
+                    $sValue = bx_process_input(bx_get('lang_value'));
+                    if(empty($sValue))
+                        break;
 
-	                $aResult = $this->activate($sValue);
-	                break;
-	        }
-		        
+                    $aResult = $this->activate($sValue);
+                    break;
+            }
+
             echo json_encode($aResult);
             exit;
         }
@@ -60,14 +62,15 @@ class BxDolStudioLanguage extends BxTemplStudioPage {
 
         $this->addAction(array(
             'type' => 'switcher',
-        	'name' => 'activate',
-        	'caption' => '_adm_txt_pca_active',
+            'name' => 'activate',
+            'caption' => '_adm_txt_pca_active',
             'checked' => (int)$this->aLanguage['enabled'] == 1,
             'onchange' => "javascript:" . $this->getPageJsObject() . ".activate('" . $this->sLanguage . "', this)"
         ), false);
     }
 
-    function activate($sLanguage) {
+    function activate($sLanguage)
+    {
         $aLanguage = BxDolModuleQuery::getInstance()->getModuleByName($sLanguage);
         if(empty($aLanguage) || !is_array($aLanguage))
             return array('code' => 1, 'message' => _t('_adm_err_operation_failed'));
@@ -97,8 +100,7 @@ class BxDolStudioLanguage extends BxTemplStudioPage {
                 'page_menu_code' => $this->getPageMenu(),
                 'page_main_code' => $this->getPageCode()
             ));
-        }
-        else
+        } else
             $aResult['content'] = "";
 
         return $aResult;

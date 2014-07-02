@@ -145,7 +145,7 @@ class BxDolStudioToolsAudit extends BxDol
         return ob_get_clean();
     }
 
-    public function generateStyles() 
+    public function generateStyles()
     {
         ?>
 <style>
@@ -165,7 +165,7 @@ class BxDolStudioToolsAudit extends BxDol
         <?php
     }
 
-    public function generateJs() 
+    public function generateJs()
     {
         $sUrlSelf = bx_js_string($_SERVER['PHP_SELF'], BX_ESCAPE_STR_APOS);
         ?>
@@ -227,7 +227,7 @@ class BxDolStudioToolsAudit extends BxDol
 
         $aMessages = array ();
 
-        $sPhpVer = PHP_VERSION;        
+        $sPhpVer = PHP_VERSION;
         if (empty($sLatestPhpVersion))
             $aVer = array('type' => BX_DOL_AUDIT_UNDEF, 'msg' => _t('_sys_audit_msg_value_checking_failed'), 'params' => array ('real_val' => $sPhpVer));
         elseif (version_compare($sPhpVer, $this->sMinPhpVer, '<'))
@@ -262,7 +262,7 @@ class BxDolStudioToolsAudit extends BxDol
         }
     }
 
-    protected function requirementsMySQL() 
+    protected function requirementsMySQL()
     {
         $sMysqlVer = BxDolDb::getInstance()->getServerInfo();
         if (preg_match ('/^(\d+)\.(\d+)\.(\d+)/', $sMysqlVer, $m)) {
@@ -288,7 +288,7 @@ class BxDolStudioToolsAudit extends BxDol
         echo $this->getSection(_t('_sys_audit_section_webserver'), $_SERVER['SERVER_SOFTWARE'], $s);
     }
 
-    protected function requirementsOS() 
+    protected function requirementsOS()
     {
         $s = $this->getBlock(php_uname());
         echo $this->getSection(_t('_sys_audit_section_os'), '', $s);
@@ -311,7 +311,7 @@ class BxDolStudioToolsAudit extends BxDol
             $sLatestDolphinVer = $m[1];
         else
             $sLatestDolphinVer = 'undefined';
-       
+
         $sDolphinVer = getParam('sys_version');
         $aMessage = array('type' => BX_DOL_AUDIT_OK);
         if (!version_compare($sDolphinVer, $sLatestDolphinVer, '>='))
@@ -398,7 +398,7 @@ class BxDolStudioToolsAudit extends BxDol
 
     protected function optimizationDolphin()
     {
-        $s = '';      
+        $s = '';
         foreach ($this->aDolphinOptimizationSettings as $sName => $a) {
 
             $sVal = ('always_on' == $a['enabled'] || getParam($a['enabled'])) ? 'On' : 'Off';
@@ -480,7 +480,7 @@ class BxDolStudioToolsAudit extends BxDol
 
     protected function format_input ($mixedVal, $a)
     {
-        if (isset($a['type']) && 'bytes' == $a['type']) 
+        if (isset($a['type']) && 'bytes' == $a['type'])
             return $this->format_bytes ($mixedVal);
         else
             return $mixedVal;
@@ -530,7 +530,6 @@ class BxDolStudioToolsAudit extends BxDol
         return $this->getBlock('', '', $this->getMsgHTML($sModule, $aMessage), false);
     }
 
-
     protected function getPhpAccelerator ()
     {
         $aAccelerators = array (
@@ -564,7 +563,7 @@ class BxDolStudioToolsAudit extends BxDol
         }
     }
 
-    protected function setErrorReporting () 
+    protected function setErrorReporting ()
     {
         if (version_compare(phpversion(), "5.3.0", ">=") == 1)
             $this->iPhpErrorReporting = error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED & ~E_STRICT);
@@ -572,12 +571,12 @@ class BxDolStudioToolsAudit extends BxDol
             $this->iPhpErrorReporting = error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
     }
 
-    protected function restoreErrorReporting () 
+    protected function restoreErrorReporting ()
     {
         error_reporting($this->iPhpErrorReporting);
     }
-    
-    protected function getSection($sTitle, $sTitleAddon, $sContent) 
+
+    protected function getSection($sTitle, $sTitleAddon, $sContent)
     {
         $s = '<b>' . $sTitle . '</b>: ' . $sTitleAddon;
         $s .= '<ul>';
@@ -586,7 +585,7 @@ class BxDolStudioToolsAudit extends BxDol
         return $s;
     }
 
-    protected function getBlock($sName, $sValue = '', $sMsg = '', $bWrapAsListItem = true) 
+    protected function getBlock($sName, $sValue = '', $sMsg = '', $bWrapAsListItem = true)
     {
         $s = $bWrapAsListItem ? '<li>'  : '';
         if ($sName !== '')
@@ -598,7 +597,7 @@ class BxDolStudioToolsAudit extends BxDol
         return $s . ($bWrapAsListItem ? '</li>' : '') . "\n";
     }
 
-    protected function getMsgHTML($sName, $a) 
+    protected function getMsgHTML($sName, $a)
     {
         $s = '';
         $s .= '<b class="' . $this->aType2ClassCSS[$a['type']]. '">' . $this->aType2Title[$a['type']]. '</b> ';

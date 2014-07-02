@@ -13,11 +13,11 @@ require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
 bx_import('BxTemplGrid');
 
-class BxCnvGrid extends BxTemplGrid 
+class BxCnvGrid extends BxTemplGrid
 {
     protected $MODULE;
 
-    public function __construct ($aOptions, $oTemplate = false) 
+    public function __construct ($aOptions, $oTemplate = false)
     {
         $this->MODULE = 'bx_convos';
         parent::__construct ($aOptions, $oTemplate);
@@ -30,7 +30,7 @@ class BxCnvGrid extends BxTemplGrid
             ));
     }
 
-    public function performActionCompose() 
+    public function performActionCompose()
     {
         bx_import('BxDolModule');
         $oModule = BxDolModule::getInstance($this->MODULE);
@@ -42,7 +42,7 @@ class BxCnvGrid extends BxTemplGrid
         header('Location:' . $sUrl);
     }
 
-    protected function _getActionAdd ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array()) 
+    protected function _getActionAdd ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
         bx_import('BxDolModule');
         $oModule = BxDolModule::getInstance($this->MODULE);
@@ -57,18 +57,18 @@ class BxCnvGrid extends BxTemplGrid
         return parent::_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
-    protected function _getCellHeaderWrapper ($sKey, $aField, $sHeader, $sAttr) 
+    protected function _getCellHeaderWrapper ($sKey, $aField, $sHeader, $sAttr)
     {
         $sHeader = '<span>' . $sHeader . '</span>';
         return parent::_getCellHeaderWrapper ($sKey, $aField, $sHeader, $sAttr);
     }
 
-    protected function _getCellPreview ($mixedValue, $sKey, $aField, $aRow) 
+    protected function _getCellPreview ($mixedValue, $sKey, $aField, $aRow)
     {
         return parent::_getCellDefault ('', $sKey, $aField, $aRow);
     }
 
-    protected function _getCellLastReplyTimestamp ($mixedValue, $sKey, $aField, $aRow) 
+    protected function _getCellLastReplyTimestamp ($mixedValue, $sKey, $aField, $aRow)
     {
         bx_import('BxDolModule');
         $oModule = BxDolModule::getInstance($this->MODULE);
@@ -84,7 +84,7 @@ class BxCnvGrid extends BxTemplGrid
         return parent::_getCellDefault ($s, $sKey, $aField, $aRow);
     }
 
-    protected function _getCellComments ($mixedValue, $sKey, $aField, $aRow) 
+    protected function _getCellComments ($mixedValue, $sKey, $aField, $aRow)
     {
         bx_import('BxDolModule');
         $oModule = BxDolModule::getInstance($this->MODULE);
@@ -92,18 +92,19 @@ class BxCnvGrid extends BxTemplGrid
         return parent::_getCellDefault ('<div class="bx-cnv-grid-field-messages"><span>' . (1 + $mixedValue) . '</span>' . $s . '</div>', $sKey, $aField, $aRow);
     }
 
-    protected function _delete ($mixedId) 
+    protected function _delete ($mixedId)
     {
         bx_import('BxDolModule');
         $oModule = BxDolModule::getInstance($this->MODULE);
 
         if ($sErrorMsg = $oModule->deleteConvo ($mixedId))
             return false;
-    
+
         return $oModule->_oDb->moveConvo((int)$mixedId, bx_get_logged_profile_id(), BX_CNV_FOLDER_TRASH);
     }
 
-    protected function _addJsCss() {
+    protected function _addJsCss()
+    {
         parent::_addJsCss();
         bx_import('BxDolModule');
         $oModule = BxDolModule::getInstance($this->MODULE);

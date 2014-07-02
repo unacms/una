@@ -11,10 +11,12 @@
 bx_import('BxDolStudioFormsPreValues');
 bx_import('BxTemplStudioFormView');
 
-class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues {
+class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
+{
     protected $sUrlPage;
 
-    function __construct($aOptions, $oTemplate = false) {
+    function __construct($aOptions, $oTemplate = false)
+    {
         parent::__construct($aOptions, $oTemplate);
 
         $this->_aOptions['actions_single']['edit']['attr']['title'] = _t('_adm_form_btn_pre_values_edit');
@@ -23,7 +25,8 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues {
         $this->sUrlPage = BX_DOL_URL_STUDIO . 'builder_forms.php?page=pre_values';
     }
 
-    public function performActionAdd() {
+    public function performActionAdd()
+    {
         $sAction = 'add';
 
         $aList = array();
@@ -50,12 +53,12 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues {
                 'Key' => array(
                     'type' => 'hidden',
                     'name' => 'Key',
-                	'value' => $this->sList,
+                    'value' => $this->sList,
                     'db' => array (
                         'pass' => 'Xss',
                     ),
                 ),
-            	'Value' => array(
+                'Value' => array(
                     'type' => 'hidden',
                     'name' => 'Value',
                     'value' => $this->_getAvailableSetValue($this->sList),
@@ -88,7 +91,7 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues {
                     'required' => '0'
                 ),
                 'controls' => array(
-                    'name' => 'controls', 
+                    'name' => 'controls',
                     'type' => 'input_set',
                     array(
                         'type' => 'submit',
@@ -134,8 +137,7 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues {
                 $aRes = array('msg' => _t('_adm_form_err_pre_values_create'));
 
             $this->_echoResultJson($aRes, true);
-        }
-        else {
+        } else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-form-pre-value-create-popup', _t('_adm_form_txt_pre_values_create_popup'), $this->_oTemplate->parseHtmlByName('form_add_value.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
@@ -148,10 +150,11 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues {
         }
     }
 
-    public function performActionEdit() {
+    public function performActionEdit()
+    {
         $sAction = 'edit';
 
-	    $aValue = $this->_getItem('getValues');
+        $aValue = $this->_getItem('getValues');
         if($aValue === false) {
             $this->_echoResultJson(array());
             exit;
@@ -177,7 +180,7 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues {
                 ),
             ),
             'inputs' => array(
-            	'id' => array(
+                'id' => array(
                     'type' => 'hidden',
                     'name' => 'id',
                     'value' => $aValue['id'],
@@ -211,7 +214,7 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues {
                     'required' => '0'
                 ),
                 'controls' => array(
-                    'name' => 'controls', 
+                    'name' => 'controls',
                     'type' => 'input_set',
                     array(
                         'type' => 'submit',
@@ -261,8 +264,7 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues {
                 $aRes = array('msg' => _t('_adm_form_err_pre_values_edit'));
 
             $this->_echoResultJson($aRes, true);
-        }
-        else {
+        } else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-form-pre-value-edit-popup', _t('_adm_form_txt_pre_values_edit_popup', _t($aValue['lkey'])), $this->_oTemplate->parseHtmlByName('form_add_value.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
@@ -275,7 +277,8 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues {
         }
     }
 
-    public function performActionDelete() {
+    public function performActionDelete()
+    {
         $sAction = 'delete';
 
         $iAffected = 0;
@@ -305,7 +308,7 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues {
             $oLanguage->deleteLanguageString($aValue['lkey']);
             $oLanguage->deleteLanguageString($aValue['lkey2']);
 
-            if((int)$aList['use_for_sets'] != 1) {            
+            if((int)$aList['use_for_sets'] != 1) {
                 $bUseInSets = 1;
                 $aValues = BxDolForm::getDataItems($this->sList);
                 foreach($aValues as $mixedValue => $sTitle)
@@ -325,11 +328,13 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues {
         $this->_echoResultJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t('_adm_form_err_pre_values_delete')));
     }
 
-    function getJsObject() {
+    function getJsObject()
+    {
         return 'oBxDolStudioFormsValues';
     }
 
-    function getListsSelector($sModule = '') {
+    function getListsSelector($sModule = '')
+    {
         bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
 
@@ -338,7 +343,7 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues {
             'name' => 'list',
             'attrs' => array(
                 'id' => 'bx-grid-list-' . $this->_sObject,
-            	'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeList()'
+                'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeList()'
             ),
             'value' => $this->sList,
             'values' => array()
@@ -355,7 +360,7 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues {
             $this->oDb->getValues(array('type' => 'counter_by_lists'), $aCounter, false);
             foreach($aLists as $aList)
                 $aInputLists['values'][$aList['key']] = _t($aList['title']) . " (" . (isset($aCounter[$aList['key']]) ? $aCounter[$aList['key']] : "0") . ")";
-    
+
             asort($aInputLists['values']);
         }
 
@@ -364,17 +369,19 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues {
         return $oForm->genRow($aInputLists);
     }
 
-    function getCode($isDisplayHeader = true) {
+    function getCode($isDisplayHeader = true)
+    {
         return $this->_oTemplate->parseHtmlByName('forms_values.html', array(
             'content' => parent::getCode($isDisplayHeader),
             'js_object' => $this->getJsObject(),
-        	'page_url' => $this->sUrlPage,
+            'page_url' => $this->sUrlPage,
             'grid_object' => $this->_sObject,
             'params_divider' => $this->sParamsDivider
         ));
     }
 
-    protected function _addJsCss() {
+    protected function _addJsCss()
+    {
         parent::_addJsCss();
         $this->_oTemplate->addJs(array('jquery.form.min.js', 'forms_values.js'));
 
@@ -383,14 +390,16 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues {
         $oForm->addCssJs();
     }
 
-    protected function _getActionAdd($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array()) {
+    protected function _getActionAdd($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
         if($this->sList == '')
             $isDisabled = true;
 
         return parent::_getActionDefault($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
-    protected function _getFilterControls () {
+    protected function _getFilterControls ()
+    {
         parent::_getFilterControls();
 
         $sContent = $this->getModulesSelectOne('getValues') . $this->getListsSelector($this->sModule);
@@ -413,7 +422,8 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues {
         return  $sContent;
     }
 
-    protected function _getAvailableSetValue($sList) {
+    protected function _getAvailableSetValue($sList)
+    {
         $aValues = array();
         $this->oDb->getValues(array('type' =>'by_key_key_value', 'value' => $sList), $aValues, false);
         ksort($aValues);
@@ -432,7 +442,8 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues {
         return $iValue;
     }
 
-    protected function canUseForSet($mixedValue) {
+    protected function canUseForSet($mixedValue)
+    {
         return is_numeric($mixedValue) && (int)$mixedValue >= 1 && (int)$mixedValue <= BX_DOL_STUDIO_FIELD_PRE_VALUE_INT_MAX;
     }
 }

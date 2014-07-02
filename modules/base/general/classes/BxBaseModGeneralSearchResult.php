@@ -11,7 +11,7 @@
 
 bx_import('BxTemplSearchResult');
 
-class BxBaseModGeneralSearchResult extends BxTemplSearchResult 
+class BxBaseModGeneralSearchResult extends BxTemplSearchResult
 {
     protected $oModule;
 
@@ -20,13 +20,13 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
         parent::__construct();
     }
 
-    function getMain() 
+    function getMain()
     {
         bx_import('BxDolModule');
         return BxDolModule::getInstance($this->aCurrent['name']);
     }
 
-    function getRssUnitLink (&$a) 
+    function getRssUnitLink (&$a)
     {
         $CNF = &$this->oModule->_oConfig->CNF;
 
@@ -34,7 +34,7 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $a[$CNF['FIELD_ID']]);
     }
 
-    function getRssPageUrl () 
+    function getRssPageUrl ()
     {
         if (false === parent::getRssPageUrl())
             return false;
@@ -44,8 +44,8 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
         return BX_DOL_URL_ROOT . $oPermalinks->permalink($this->aCurrent['rss']['link']);
     }
 
-    function rss () 
-    {        
+    function rss ()
+    {
         if (!isset($this->aCurrent['rss']))
             return '';
 
@@ -56,4 +56,3 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
 }
 
 /** @} */
-

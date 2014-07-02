@@ -11,8 +11,10 @@ defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxBaseStudioNavigationMenus');
 
-class BxTemplStudioNavigationMenus extends BxBaseStudioNavigationMenus { 
-    function __construct($aOptions, $oTemplate = false) {
+class BxTemplStudioNavigationMenus extends BxBaseStudioNavigationMenus
+{
+    function __construct($aOptions, $oTemplate = false)
+    {
         parent::__construct($aOptions, $oTemplate);
     }
 }

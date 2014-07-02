@@ -12,18 +12,18 @@ bx_import('BxTemplMenu');
 /**
  * Site main menu representation.
  */
-class BxBaseMenuSite extends BxTemplMenu 
+class BxBaseMenuSite extends BxTemplMenu
 {
 
     protected $_sObjectSubmenu = false;
     protected $_mixedMainMenuItemSelected = false;
 
-    public function __construct ($aObject, $oTemplate) 
+    public function __construct ($aObject, $oTemplate)
     {
         parent::__construct ($aObject, $oTemplate);
     }
 
-    public function getCode () 
+    public function getCode ()
     {
         bx_import('BxTemplSearch');
         $oSearch = new BxTemplSearch();
@@ -33,7 +33,7 @@ class BxBaseMenuSite extends BxTemplMenu
             'menu' => parent::getCode (),
             'search' => $oSearch->getForm(BX_DB_CONTENT_ONLY) . $oSearch->getResultsContainer(),
         );
-        return $this->_oTemplate->parseHtmlByName('menu_site.html', $aVars); 
+        return $this->_oTemplate->parseHtmlByName('menu_site.html', $aVars);
     }
 
 }

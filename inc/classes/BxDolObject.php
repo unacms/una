@@ -9,44 +9,46 @@
 
 /**
  * Base class for all Dolphin Object classes.
- * Child classes usually represents high level programming constructions to generate ready 'objects' functionality, like Comments, Votings, Forms. 
+ * Child classes usually represents high level programming constructions to generate ready 'objects' functionality, like Comments, Votings, Forms.
  */
-class BxDolObject extends BxDol {
-	protected $_iId = 0; ///< item id the action to be performed with
+class BxDolObject extends BxDol
+{
+    protected $_iId = 0; ///< item id the action to be performed with
     protected $_sSystem = ''; ///< current system name
     protected $_aSystem = array(); ///< current system array
 
     protected $_oQuery = null;
 
-    public function __construct($sSystem, $iId, $iInit = 1) {
-    	parent::__construct();
+    public function __construct($sSystem, $iId, $iInit = 1)
+    {
+        parent::__construct();
 
-    	$this->_aSystems = $this->getSystems();
+        $this->_aSystems = $this->getSystems();
         if(!isset($this->_aSystems[$sSystem]))
-			return;
+            return;
 
         $this->_sSystem = $sSystem;
-		$this->_aSystem = $this->_aSystems[$sSystem];
+        $this->_aSystem = $this->_aSystems[$sSystem];
 
-		if(!$this->isEnabled()) 
-			return;
+        if(!$this->isEnabled())
+            return;
 
-		if($iInit)
-			$this->init($iId);
+        if($iInit)
+            $this->init($iId);
     }
 
-	public function init($iId)
+    public function init($iId)
     {
-    	if(!$this->isEnabled()) 
-        	return false;
+        if(!$this->isEnabled())
+            return false;
 
         if(empty($this->_iId) && $iId)
-			$this->setId($iId);
+            $this->setId($iId);
 
-		return true;
+        return true;
     }
 
-	public function getSystemId()
+    public function getSystemId()
     {
         return $this->_aSystem['id'];
     }
@@ -56,25 +58,25 @@ class BxDolObject extends BxDol {
         return $this->_sSystem;
     }
 
-	public function getSystemInfo()
+    public function getSystemInfo()
     {
         return $this->_aSystem;
     }
 
-	public function getId()
+    public function getId()
     {
         return $this->_iId;
     }
 
-	public function setId($iId)
+    public function setId($iId)
     {
         if($iId == $this->getId())
-        	return;
+            return;
 
         $this->_iId = $iId;
     }
 
-	public function isEnabled ()
+    public function isEnabled ()
     {
         return $this->_aSystem && (int)$this->_aSystem['is_on'] == 1;
     }

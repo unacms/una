@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Developer Developer
  * @ingroup     DolphinModules
  *
@@ -11,7 +11,8 @@
 
 bx_import('BxDolStudioUtils');
 
-class BxDevFunctions {
+class BxDevFunctions
+{
     function __construct() {}
 
     /*
@@ -19,7 +20,8 @@ class BxDevFunctions {
      *
      * @see BxDevFormsField
      */
-    public static function changeFormField($aParams, &$aInputs, &$oDb) {
+    public static function changeFormField($aParams, &$aInputs, &$oDb)
+    {
         $aInputs['module']['type'] = 'select';
         $aInputs['module']['values'] = array_merge(array('' => _t('_bx_dev_frm_txt_select_module')), BxDolStudioUtils::getModules());
         $aInputs['module']['value'] = $aParams['module'];
@@ -37,15 +39,16 @@ class BxDevFunctions {
         $sTrlTypePostfix = '_translatable';
         $sTrlCheckFuncPostfix = 'Translatable';
         foreach($aInputs as $sName => $aInput)
-        	if(isset($aInput['type']) && stripos($aInput['type'], $sTrlTypePostfix) !== false) {
-        		$aInputs[$sName]['type'] = str_ireplace($sTrlTypePostfix, '', $aInput['type']);
+            if(isset($aInput['type']) && stripos($aInput['type'], $sTrlTypePostfix) !== false) {
+                $aInputs[$sName]['type'] = str_ireplace($sTrlTypePostfix, '', $aInput['type']);
 
-        		if(isset($aInput['checker']['func']) && stripos($aInput['checker']['func'], $sTrlCheckFuncPostfix) !== false)
-        			$aInputs[$sName]['checker']['func'] = str_ireplace($sTrlCheckFuncPostfix, '', $aInput['checker']['func']);
-        	}
+                if(isset($aInput['checker']['func']) && stripos($aInput['checker']['func'], $sTrlCheckFuncPostfix) !== false)
+                    $aInputs[$sName]['checker']['func'] = str_ireplace($sTrlCheckFuncPostfix, '', $aInput['checker']['func']);
+            }
     }
 
-    public static function serializeString($sValue) {
+    public static function serializeString($sValue)
+    {
         if(empty($sValue))
             return '';
 
@@ -57,7 +60,8 @@ class BxDevFunctions {
         return serialize($aValue);
     }
 
-    public static function unserializeString($sValue) {
+    public static function unserializeString($sValue)
+    {
         if(empty($sValue))
             return '';
 
@@ -65,17 +69,18 @@ class BxDevFunctions {
         if(empty($aValue) || !is_array($aValue))
             return '';
 
-        return var_export($aValue, true);        
+        return var_export($aValue, true);
     }
 
     /**
      * Add slashes before "'" and "\" characters that the value containing them can be used in export feature.
      *
-     * @param string $sString - the input string to add slashes
-     * @param boolean $bDoubleEscape - whether the string needs to be two more escaped or not
-     * @return string the slashed string
+     * @param  string  $sString       - the input string to add slashes
+     * @param  boolean $bDoubleEscape - whether the string needs to be two more escaped or not
+     * @return string  the slashed string
      */
-    public static function dbAddSlashes($sString = '', $bDoubleEscape = false) {
+    public static function dbAddSlashes($sString = '', $bDoubleEscape = false)
+    {
         if ($bDoubleEscape)
             $sString = str_replace('\\', '\\\\\\\\', $sString);
         else

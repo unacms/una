@@ -10,23 +10,26 @@
 /**
  * System services related to Languages.
  */
-class BxBaseLanguagesServices extends BxDol {
-    public function __construct() {
+class BxBaseLanguagesServices extends BxDol
+{
+    public function __construct()
+    {
         parent::__construct();
     }
 
-    public function serviceGetLanguages($bIdAsKey = false, $bActiveOnly = false) {
-    	bx_import('BxDolLanguages');
-    	$aValues = BxDolLanguages::getInstance()->getLanguages($bIdAsKey, $bActiveOnly);
+    public function serviceGetLanguages($bIdAsKey = false, $bActiveOnly = false)
+    {
+        bx_import('BxDolLanguages');
+        $aValues = BxDolLanguages::getInstance()->getLanguages($bIdAsKey, $bActiveOnly);
 
-    	$aResult = array(); 
-    	foreach($aValues as $sKey => $sValue) 
-    		$aResult[] = array(
-    			'key' => $sKey, 
-    			'value' => $sValue
-    		);
+        $aResult = array();
+        foreach($aValues as $sKey => $sValue)
+            $aResult[] = array(
+                'key' => $sKey,
+                'value' => $sValue
+            );
 
-		return $aResult;
+        return $aResult;
     }
 }
 

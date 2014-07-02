@@ -14,9 +14,9 @@ bx_import('BxBaseModTextPageAuthor');
 /**
  * Profile's entries page.
  */
-class BxNotesPageAuthor extends BxBaseModTextPageAuthor 
+class BxNotesPageAuthor extends BxBaseModTextPageAuthor
 {
-    public function __construct($aObject, $oTemplate = false) 
+    public function __construct($aObject, $oTemplate = false)
     {
         parent::__construct($aObject, $oTemplate);
     }

@@ -10,16 +10,18 @@
 /**
  * Functions to automate profile creation/editing/deletion forms.
  */
-class BxDolProfileForms extends BxDol {
-
+class BxDolProfileForms extends BxDol
+{
     /**
      * Constructor
      */
-    protected function __construct () {
+    protected function __construct ()
+    {
         parent::__construct ();
     }
 
-    protected function _redirectAndExit ($sUrl, $isPermalink = true, $aMarkers = false) {
+    protected function _redirectAndExit ($sUrl, $isPermalink = true, $aMarkers = false)
+    {
         if ($isPermalink) {
             bx_import('BxDolPermalinks');
             $sUrl = BxDolPermalinks::getInstance()->permalink($sUrl);
@@ -33,12 +35,12 @@ class BxDolProfileForms extends BxDol {
      * @param $mixed string or array to replace markers in
      * @param $aMarkers araay or markers for replacement, for example: array ('num' => 123, 'name' => 'Ivan');
      * @return string where all markers are replaced
-     */ 
-    protected function _replaceMarkers ($mixed, $aMarkers) {
+     */
+    protected function _replaceMarkers ($mixed, $aMarkers)
+    {
         return bx_replace_markers($mixed, $aMarkers);
     }
 
 }
 
 /** @} */
-

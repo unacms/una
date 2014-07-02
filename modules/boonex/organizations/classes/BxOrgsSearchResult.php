@@ -11,9 +11,9 @@
 
 bx_import('BxBaseModProfileSearchResult');
 
-class BxOrgsSearchResult extends BxBaseModProfileSearchResult 
+class BxOrgsSearchResult extends BxBaseModProfileSearchResult
 {
-    function __construct($sMode = '', $aParams = false) 
+    function __construct($sMode = '', $aParams = false)
     {
         parent::__construct($sMode, $aParams);
 
@@ -96,7 +96,7 @@ class BxOrgsSearchResult extends BxBaseModProfileSearchResult
         parent::__construct();
     }
 
-    function getAlterOrder() 
+    function getAlterOrder()
     {
         switch ($this->aCurrent['sorting']) {
         case 'none':
@@ -109,7 +109,7 @@ class BxOrgsSearchResult extends BxBaseModProfileSearchResult
         }
     }
 
-    function _getPseud () 
+    function _getPseud ()
     {
         return array(
             'id' => 'id',
@@ -122,4 +122,3 @@ class BxOrgsSearchResult extends BxBaseModProfileSearchResult
 }
 
 /** @} */
-

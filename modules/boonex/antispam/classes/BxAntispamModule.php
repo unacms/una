@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Antispam Antispam
  * @ingroup     DolphinModules
  *
@@ -11,14 +11,14 @@
 
 bx_import('BxDolModule');
 
-class BxAntispamModule extends BxDolModule 
+class BxAntispamModule extends BxDolModule
 {
-    public function __construct(&$aModule) 
+    public function __construct(&$aModule)
     {
         parent::__construct($aModule);
     }
 
-    public function serviceIpTable () 
+    public function serviceIpTable ()
     {
         $o = bx_instance('BxAntispamIP', array(), $this->_aModule);
         $s = _t('_bx_antispam_ip_table_status', mb_strtolower($o->getIpTableConfigTitle((int)getParam('bx_antispam_ip_list_type'))));
@@ -26,10 +26,10 @@ class BxAntispamModule extends BxDolModule
         return $s;
     }
 
-    public function serviceDnsblList () 
+    public function serviceDnsblList ()
     {
         bx_import('BxTemplFunctions');
-        $s = _t('_bx_antispam_dnsbl_status', 
+        $s = _t('_bx_antispam_dnsbl_status',
              BxTemplFunctions::getInstance()->statusOnOff($this->_oConfig->getAntispamOption('dnsbl_enable')),
              BxTemplFunctions::getInstance()->statusOnOff($this->_oConfig->getAntispamOption('uridnsbl_enable')),
              mb_strtolower(_t('_bx_antispam_dnsbl_behaviour_login_' . $this->_oConfig->getAntispamOption('dnsbl_behaviour_login'))),
@@ -39,7 +39,7 @@ class BxAntispamModule extends BxDolModule
         return $s;
     }
 
-    public function serviceBlockLog () 
+    public function serviceBlockLog ()
     {
         return $this->_grid('bx_antispam_grid_block_log');
     }
@@ -50,7 +50,7 @@ class BxAntispamModule extends BxDolModule
      * then it checks URLs found in text for DNSURI black lists (@see BxAntispamDNSURIBlacklists),
      * then it checks text in Akismet service (@see BxAntispamAkismet).
      * It can send report if spam is found or tries to inform caller to block the content (depending on configuration).
-     * 
+     *
      * @param $sContent content to check for spam
      * @param $sIp IP address of content poster
      * @param $isStripSlashes slashes parameter:
@@ -58,7 +58,7 @@ class BxAntispamModule extends BxDolModule
      *          BX_SLASHES_NO_ACTION - do not perform any action with slashes
      * @return true if spam detected and content shouln't be recorded, false if content should be processed as usual.
      */
-    public function serviceIsSpam ($sContent, $sIp = '', $isStripSlashes = BX_SLASHES_AUTO) 
+    public function serviceIsSpam ($sContent, $sIp = '', $isStripSlashes = BX_SLASHES_AUTO)
     {
         if (defined('BX_DOL_CRON_EXECUTE') || isAdmin())
             return false;
@@ -112,10 +112,9 @@ class BxAntispamModule extends BxDolModule
         return false;
     }
 
-
     /**
      * Perform complex check if user is allowed to login.
-     * First it checks if IP is directly blocked (@see serviceIsIpBlocked), 
+     * First it checks if IP is directly blocked (@see serviceIsIpBlocked),
      * then it checks in DNS black lists (@see serviceIsIpDnsBlacklisted).
      *
      * @param $sIp IP to check, or empty for current IP
@@ -129,7 +128,7 @@ class BxAntispamModule extends BxDolModule
 
         if (!$sIp)
             $sIp = getVisitorIP();
-            
+
         if (!$sErrorMsg && $this->serviceIsIpBlocked($sIp))
             $sErrorMsg = $this->getErrorMessageIpBlocked();
 
@@ -148,7 +147,7 @@ class BxAntispamModule extends BxDolModule
      * @param $sCurIP IP to check, or empty for current IP
      * @return empty string - if join should be allowed, error message - if join should be blocked
      */
-    public function serviceCheckJoin ($sEmail, &$bApproval, $sIp = '') 
+    public function serviceCheckJoin ($sEmail, &$bApproval, $sIp = '')
     {
         $bJoinBlock = ('block' == $this->_oConfig->getAntispamOption('dnsbl_behaviour_join'));
         $bApproval = false;
@@ -168,7 +167,6 @@ class BxAntispamModule extends BxDolModule
                 $sErrorMsg = $this->getErrorMessageSpam();
         }
 
-        
         if (!$sErrorMsg) {
             $oStopForumSpam = bx_instance('BxAntispamStopForumSpam', array(), $this->_aModule);
             if ($oStopForumSpam->isSpammer(array('email' => $sEmail, 'ip' => $sIp), $sNote))
@@ -260,7 +258,7 @@ class BxAntispamModule extends BxDolModule
         }
     }
 
-    protected function getErrorMessageIpBlocked () 
+    protected function getErrorMessageIpBlocked ()
     {
         bx_import('BxDolLanguages');
         return _t('_bx_antispam_ip_blocked', $this->getErrorMessageSubmitFalsePositiveReport());
@@ -279,7 +277,7 @@ class BxAntispamModule extends BxDolModule
         return '';
     }
 
-    protected function _grid ($sObjectGrid) 
+    protected function _grid ($sObjectGrid)
     {
         bx_import('BxDolGrid');
         $oGrid = BxDolGrid::getObjectInstance($sObjectGrid);

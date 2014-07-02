@@ -12,9 +12,9 @@ bx_import('BxBaseMenuAccountNotifications');
 /**
  * @see BxDolMenu
  */
-class BxTemplMenuAccountNotifications extends BxBaseMenuAccountNotifications 
+class BxTemplMenuAccountNotifications extends BxBaseMenuAccountNotifications
 {
-    public function __construct ($aObject, $oTemplate = false) 
+    public function __construct ($aObject, $oTemplate = false)
     {
         parent::__construct ($aObject, $oTemplate);
     }

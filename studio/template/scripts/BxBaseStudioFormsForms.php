@@ -11,10 +11,12 @@
 bx_import('BxDolStudioFormsForms');
 bx_import('BxTemplStudioFormView');
 
-class BxBaseStudioFormsForms extends BxDolStudioFormsForms {
+class BxBaseStudioFormsForms extends BxDolStudioFormsForms
+{
     protected $sUrlViewDisplays;
 
-    function __construct($aOptions, $oTemplate = false) {
+    function __construct($aOptions, $oTemplate = false)
+    {
         parent::__construct($aOptions, $oTemplate);
 
         $this->_aOptions['actions_single']['edit']['attr']['title'] = _t('_adm_form_btn_forms_edit');
@@ -22,7 +24,8 @@ class BxBaseStudioFormsForms extends BxDolStudioFormsForms {
         $this->sUrlViewDisplays = BX_DOL_URL_STUDIO . 'builder_forms.php?page=displays&module=%s&object=%s';
     }
 
-    public function performActionEdit() {
+    public function performActionEdit()
+    {
         $sAction = 'edit';
 
         $aIds = bx_get('ids');
@@ -61,7 +64,7 @@ class BxBaseStudioFormsForms extends BxDolStudioFormsForms {
                 ),
             ),
             'inputs' => array (
-            	'id' => array(
+                'id' => array(
                     'type' => 'hidden',
                     'name' => 'id',
                     'value' => $iId,
@@ -86,7 +89,7 @@ class BxBaseStudioFormsForms extends BxDolStudioFormsForms {
                     ),
                 ),
                 'controls' => array(
-                    'name' => 'controls', 
+                    'name' => 'controls',
                     'type' => 'input_set',
                     array(
                         'type' => 'submit',
@@ -116,8 +119,7 @@ class BxBaseStudioFormsForms extends BxDolStudioFormsForms {
                 $aRes = array('msg' => _t('_adm_form_err_forms_edit'));
 
             $this->_echoResultJson($aRes, true);
-        }
-        else {
+        } else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-form-forms-edit-popup', _t('_adm_form_txt_forms_edit_popup', _t($aFormData['title'])), $this->_oTemplate->parseHtmlByName('form_add_form.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
@@ -130,11 +132,13 @@ class BxBaseStudioFormsForms extends BxDolStudioFormsForms {
         }
     }
 
-    function getJsObject() {
+    function getJsObject()
+    {
         return 'oBxDolStudioFormsForms';
     }
 
-    function getCode($isDisplayHeader = true) {
+    function getCode($isDisplayHeader = true)
+    {
         return $this->_oTemplate->parseHtmlByName('forms_forms.html', array(
             'content' => parent::getCode($isDisplayHeader),
             'js_object' => $this->getJsObject(),
@@ -143,7 +147,8 @@ class BxBaseStudioFormsForms extends BxDolStudioFormsForms {
         ));
     }
 
-    protected function _addJsCss() {
+    protected function _addJsCss()
+    {
         parent::_addJsCss();
         $this->_oTemplate->addJs(array('jquery.form.min.js', 'forms_forms.js'));
 
@@ -152,26 +157,29 @@ class BxBaseStudioFormsForms extends BxDolStudioFormsForms {
         $oForm->addCssJs();
     }
 
-    protected function _getCellModule($mixedValue, $sKey, $aField, $aRow) {
+    protected function _getCellModule($mixedValue, $sKey, $aField, $aRow)
+    {
         $mixedValue = $this->_limitMaxLength($this->getModuleTitle($aRow['module']), $sKey, $aField, $aRow, $this->_isDisplayPopupOnTextOverflow);
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 
-    protected function _getCellDisplays ($mixedValue, $sKey, $aField, $aRow) {
+    protected function _getCellDisplays ($mixedValue, $sKey, $aField, $aRow)
+    {
         $aDisplayes = array();
         $this->oDb->getDisplays(array('type' => 'by_object', 'value' => $aRow['object']), $aDisplayes, false);
 
         $mixedValue = $this->_oTemplate->parseHtmlByName('bx_a.html', array(
             'href' => sprintf($this->sUrlViewDisplays, $aRow['module'], $aRow['object']),
             'title' => _t('_adm_form_txt_forms_manage_displays'),
-        	'bx_repeat:attrs' => array(),
+            'bx_repeat:attrs' => array(),
             'content' => _t('_adm_form_txt_forms_n_displays', count($aDisplayes))
         ));
 
         return parent::_getCellDefault ($mixedValue, $sKey, $aField, $aRow);
     }
 
-    protected function _getFilterControls () {
+    protected function _getFilterControls ()
+    {
         parent::_getFilterControls();
 
         $sContent = "";
@@ -184,7 +192,7 @@ class BxBaseStudioFormsForms extends BxDolStudioFormsForms {
             'name' => 'module',
             'attrs' => array(
                 'id' => 'bx-grid-module-' . $this->_sObject,
-            	'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeFilter()'
+                'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeFilter()'
             ),
             'value' => '',
             'values' => $this->getModules(false)
@@ -204,7 +212,7 @@ class BxBaseStudioFormsForms extends BxDolStudioFormsForms {
             'name' => 'keyword',
             'attrs' => array(
                 'id' => 'bx-grid-search-' . $this->_sObject,
-                'onKeyup' => 'javascript:$(this).off(\'keyup\'); ' . $this->getJsObject() . '.onChangeFilter()' 
+                'onKeyup' => 'javascript:$(this).off(\'keyup\'); ' . $this->getJsObject() . '.onChangeFilter()'
             )
         );
         $sContent .= $oForm->genRow($aInputSearch);

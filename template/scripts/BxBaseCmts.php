@@ -14,12 +14,12 @@ bx_import('BxTemplPaginate');
 /**
  * @see BxDolCmts
  */
-class BxBaseCmts extends BxDolCmts 
+class BxBaseCmts extends BxDolCmts
 {
-	protected $_sJsObjName;
+    protected $_sJsObjName;
     protected $_sStylePrefix;
 
-    function __construct( $sSystem, $iId, $iInit = 1 ) 
+    function __construct( $sSystem, $iId, $iInit = 1 )
     {
         parent::__construct( $sSystem, $iId, $iInit );
         if (empty($sSystem))
@@ -31,27 +31,27 @@ class BxBaseCmts extends BxDolCmts
         BxDolTemplate::getInstance()->addJsTranslation('_sys_txt_cmt_loading');
     }
 
-	/**
+    /**
      * Add comments CSS/JS
      */
     public function addCssJs ()
     {
-    	$oTemplate = BxDolTemplate::getInstance();
+        $oTemplate = BxDolTemplate::getInstance();
 
         $oTemplate->addCss(array('cmts.css'));
         $oTemplate->addJs(array('jquery.anim.js', 'jquery.form.min.js', 'BxDolCmts.js'));
 
         bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance($this->_sFormObject, $this->_sFormDisplayPost);
-		$oForm->addCssJs();
+        $oForm->addCssJs();
     }
 
     public function getJsObjectName()
     {
-    	return $this->_sJsObjName;
+        return $this->_sJsObjName;
     }
 
-	/**
+    /**
      * Get initialization section of comments box
      *
      * @return string
@@ -59,14 +59,14 @@ class BxBaseCmts extends BxDolCmts
     public function getJsScript()
     {
         $aParams = array(
-        	'sObjName' => $this->_sJsObjName,
-        	'sRootUrl' => BX_DOL_URL_ROOT,
-        	'sSystem' => $this->getSystemName(),
-        	'iAuthorId' => $this->_getAuthorId(),
-        	'iObjId' => $this->getId(),
-        	'sPostFormPosition' => $this->_aSystem['post_form_position'],
-        	'sBrowseType' => $this->_sBrowseType,
-        	'sDisplayType' => $this->_sDisplayType
+            'sObjName' => $this->_sJsObjName,
+            'sRootUrl' => BX_DOL_URL_ROOT,
+            'sSystem' => $this->getSystemName(),
+            'iAuthorId' => $this->_getAuthorId(),
+            'iObjId' => $this->getId(),
+            'sPostFormPosition' => $this->_aSystem['post_form_position'],
+            'sBrowseType' => $this->_sBrowseType,
+            'sDisplayType' => $this->_sDisplayType
         );
 
         $this->addCssJs();
@@ -76,31 +76,31 @@ class BxBaseCmts extends BxDolCmts
     /**
      * get full comments block with initializations
      */
-    function getCommentsBlock($iParentId = 0, $iVParentId = 0, $bInDesignbox = true) 
+    function getCommentsBlock($iParentId = 0, $iVParentId = 0, $bInDesignbox = true)
     {
-    	$aBp = array('parent_id' => $iParentId, 'vparent_id' => $iVParentId);
+        $aBp = array('parent_id' => $iParentId, 'vparent_id' => $iVParentId);
 
-    	$sCmts = $this->getComments($aBp);
-    	if(empty($sCmts))
-			$sCmts = $this->_getEmpty();
+        $sCmts = $this->getComments($aBp);
+        if(empty($sCmts))
+            $sCmts = $this->_getEmpty();
 
-    	$sCaption = _t('_cmt_block_comments_title', $this->getCommentsCount());
-    	$sContent = BxDolTemplate::getInstance()->parseHtmlByName('comments_block.html', array(
-    		'system' => $this->_sSystem,
-    		'list_anchor' => $this->getListAnchor(),
-    		'id' => $this->getId(),
-    		'comments' => $sCmts,
-    		'post_form_top' => $this->getFormBoxPost($aBp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_TOP)),
-			'post_form_bottom'  => $this->getFormBoxPost($aBp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_BOTTOM)),
-    		'script' => $this->getJsScript()
-    	));
+        $sCaption = _t('_cmt_block_comments_title', $this->getCommentsCount());
+        $sContent = BxDolTemplate::getInstance()->parseHtmlByName('comments_block.html', array(
+            'system' => $this->_sSystem,
+            'list_anchor' => $this->getListAnchor(),
+            'id' => $this->getId(),
+            'comments' => $sCmts,
+            'post_form_top' => $this->getFormBoxPost($aBp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_TOP)),
+            'post_form_bottom'  => $this->getFormBoxPost($aBp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_BOTTOM)),
+            'script' => $this->getJsScript()
+        ));
 
-    	return $bInDesignbox ? DesignBoxContent($sCaption, $sContent, BX_DB_PADDING_DEF, $this->_getControlsBox()) : array(
-            'title' => $sCaption, 
+        return $bInDesignbox ? DesignBoxContent($sCaption, $sContent, BX_DB_PADDING_DEF, $this->_getControlsBox()) : array(
+            'title' => $sCaption,
             'content' => $sContent,
             'designbox_id' => BX_DB_PADDING_DEF,
             'menu' => $this->_getControlsBox(),
-        ); 
+        );
     }
 
     /**
@@ -108,22 +108,22 @@ class BxBaseCmts extends BxDolCmts
      *
      * @param array $aBp - browse params array
      * @param array $aDp - display params array
-     * 
+     *
      */
     function getComments($aBp = array(), $aDp = array())
     {
-    	$this->_prepareParams($aBp, $aDp);
+        $this->_prepareParams($aBp, $aDp);
 
-		$aCmts = $this->getCommentsArray($aBp['vparent_id'], $aBp['filter'], $aBp['order'], $aBp['start'], $aBp['per_view']);
-		if(empty($aCmts) || !is_array($aCmts))
-			return '';
+        $aCmts = $this->getCommentsArray($aBp['vparent_id'], $aBp['filter'], $aBp['order'], $aBp['start'], $aBp['per_view']);
+        if(empty($aCmts) || !is_array($aCmts))
+            return '';
 
-		$sCmts = '';
-		foreach($aCmts as $k => $aCmt)
-			$sCmts .= $this->getComment($aCmt, $aBp, $aDp);
+        $sCmts = '';
+        foreach($aCmts as $k => $aCmt)
+            $sCmts .= $this->getComment($aCmt, $aBp, $aDp);
 
-		$sCmts = $this->_getMoreLink($sCmts, $aBp, $aDp);
-		return $sCmts;
+        $sCmts = $this->_getMoreLink($sCmts, $aBp, $aDp);
+        return $sCmts;
     }
 
     /**
@@ -131,150 +131,150 @@ class BxBaseCmts extends BxDolCmts
      */
     function getCommentBlock($iCmtId = 0)
     {
-    	return BxDolTemplate::getInstance()->parseHtmlByName('comment_block.html', array(
-    		'system' => $this->_sSystem,
-    		'id' => $this->getId(),
-    		'comment' => $this->getComment($iCmtId, array('type' => $this->_sBrowseType), array('type' => BX_CMT_DISPLAY_THREADED)),
-    		'script' => $this->getJsScript()
-    	));
+        return BxDolTemplate::getInstance()->parseHtmlByName('comment_block.html', array(
+            'system' => $this->_sSystem,
+            'id' => $this->getId(),
+            'comment' => $this->getComment($iCmtId, array('type' => $this->_sBrowseType), array('type' => BX_CMT_DISPLAY_THREADED)),
+            'script' => $this->getJsScript()
+        ));
     }
 
     /**
      * get one just posted comment
      *
-     * @param int $iCmtId - comment id
+     * @param  int    $iCmtId - comment id
      * @return string
      */
     function getComment($mixedCmt, $aBp = array(), $aDp = array())
     {
-    	$oTemplate = BxDolTemplate::getInstance();
+        $oTemplate = BxDolTemplate::getInstance();
 
-    	$iUserId = $this->_getAuthorId();
-    	$aCmt = !is_array($mixedCmt) ? $this->getCommentRow((int)$mixedCmt) : $mixedCmt;
+        $iUserId = $this->_getAuthorId();
+        $aCmt = !is_array($mixedCmt) ? $this->getCommentRow((int)$mixedCmt) : $mixedCmt;
 
         list($sAuthorName, $sAuthorLink, $sAuthorIcon) = $this->_getAuthorInfo($aCmt['cmt_author_id']);
 
         $sClass = '';
         if(isset($aCmt['vote_rate']) && (float)$aCmt['vote_rate'] < $this->_aSystem['viewing_threshold']) {
-        	$oTemplate->pareseHtmlByName('comment_hidden.html', array(
-        		'js_object' => $this->_sJsObjName,
-        		'id' => $aCmt['cmt_id'],
-        		'title' => bx_process_output(_t('_hidden_comment', $sAuthorName)),
-        		'bx_if:show_replies' => array(
-        			'condition' => $aCmt['cmt_replies'] > 0,
-        			'content' => array(
-						'replies' => _t('_Show N replies', $aCmt['cmt_replies'])
-        			)
-        		)
-        	));
+            $oTemplate->pareseHtmlByName('comment_hidden.html', array(
+                'js_object' => $this->_sJsObjName,
+                'id' => $aCmt['cmt_id'],
+                'title' => bx_process_output(_t('_hidden_comment', $sAuthorName)),
+                'bx_if:show_replies' => array(
+                    'condition' => $aCmt['cmt_replies'] > 0,
+                    'content' => array(
+                        'replies' => _t('_Show N replies', $aCmt['cmt_replies'])
+                    )
+                )
+            ));
 
             $sClass = ' cmt-hidden';
         }
 
-		if($aCmt['cmt_author_id'] == $iUserId)
-			$sClass .= ' cmt-mine';
+        if($aCmt['cmt_author_id'] == $iUserId)
+            $sClass .= ' cmt-mine';
 
-		$sActions = $this->_getActionsBox($aCmt, $aDp);
+        $sActions = $this->_getActionsBox($aCmt, $aDp);
 
-		$sText = $aCmt['cmt_text'];
-		$sTextMore = '';
+        $sText = $aCmt['cmt_text'];
+        $sTextMore = '';
 
-		$iMaxLength = (int)$this->_aSystem['chars_display_max'];
-		if(strlen($sText) > $iMaxLength) {
-			$iLength = strpos($sText, ' ', $iMaxLength);
-			
-			$sTextMore = trim(substr($sText, $iLength));
-			$sText = trim(substr($sText, 0, $iLength));
-		}
+        $iMaxLength = (int)$this->_aSystem['chars_display_max'];
+        if(strlen($sText) > $iMaxLength) {
+            $iLength = strpos($sText, ' ', $iMaxLength);
 
-		$sText = $this->_prepareTextForOutput($sText);
-		$sTextMore = $this->_prepareTextForOutput($sTextMore);
+            $sTextMore = trim(substr($sText, $iLength));
+            $sText = trim(substr($sText, 0, $iLength));
+        }
 
-		$aTmplReplyTo = array();
-		if((int)$aCmt['cmt_parent_id'] != 0) {
-			$aParent = $this->getCommentRow($aCmt['cmt_parent_id']);
-			list($sParAuthorName, $sParAuthorLink, $sParAuthorIcon) = $this->_getAuthorInfo($aParent['cmt_author_id']);
+        $sText = $this->_prepareTextForOutput($sText);
+        $sTextMore = $this->_prepareTextForOutput($sTextMore);
 
-			$aTmplReplyTo = array(
-				'style_prefix' => $this->_sStylePrefix,
-        		'par_cmt_link' => $this->getBaseUrl() . '#' . $this->_sSystem . $aCmt['cmt_parent_id'],
-        		'par_cmt_author' => $sParAuthorName
-        	);
-		}
+        $aTmplReplyTo = array();
+        if((int)$aCmt['cmt_parent_id'] != 0) {
+            $aParent = $this->getCommentRow($aCmt['cmt_parent_id']);
+            list($sParAuthorName, $sParAuthorLink, $sParAuthorIcon) = $this->_getAuthorInfo($aParent['cmt_author_id']);
 
-		$aTmplImages = array();
-		if($this->isAttachImageEnabled()) {
-			$aImages = $this->_oQuery->getImages($this->_aSystem['system_id'], $aCmt['cmt_id']);
-			if(!empty($aImages) && is_array($aImages)) {
-				bx_import('BxDolImageTranscoder');
-	        	$oTranscoder = BxDolImageTranscoder::getObjectInstance($this->_sTranscoderPreview);
-	
-	        	foreach($aImages as $aImage)
-	        		$aTmplImages[] = array(
-	        			'style_prefix' => $this->_sStylePrefix,
-	        			'js_object' => $this->_sJsObjName,
-	        			'id' => $aImage['image_id'],
-	        			'image' => $oTranscoder->getImageUrl($aImage['image_id'])
-	        		);
-			}
-		}
+            $aTmplReplyTo = array(
+                'style_prefix' => $this->_sStylePrefix,
+                'par_cmt_link' => $this->getBaseUrl() . '#' . $this->_sSystem . $aCmt['cmt_parent_id'],
+                'par_cmt_author' => $sParAuthorName
+            );
+        }
 
-		$sReplies = '';
-		if((int)$aCmt['cmt_replies'] > 0 && !empty($aDp) && $aDp['type'] == BX_CMT_DISPLAY_THREADED)
-			$sReplies = $this->getComments(array('parent_id' => $aCmt['cmt_id'], 'vparent_id' => $aCmt['cmt_id'], 'type' => $aBp['type']), $aDp);
+        $aTmplImages = array();
+        if($this->isAttachImageEnabled()) {
+            $aImages = $this->_oQuery->getImages($this->_aSystem['system_id'], $aCmt['cmt_id']);
+            if(!empty($aImages) && is_array($aImages)) {
+                bx_import('BxDolImageTranscoder');
+                $oTranscoder = BxDolImageTranscoder::getObjectInstance($this->_sTranscoderPreview);
 
-		$bAuthorIcon = !empty($sAuthorIcon);
+                foreach($aImages as $aImage)
+                    $aTmplImages[] = array(
+                        'style_prefix' => $this->_sStylePrefix,
+                        'js_object' => $this->_sJsObjName,
+                        'id' => $aImage['image_id'],
+                        'image' => $oTranscoder->getImageUrl($aImage['image_id'])
+                    );
+            }
+        }
+
+        $sReplies = '';
+        if((int)$aCmt['cmt_replies'] > 0 && !empty($aDp) && $aDp['type'] == BX_CMT_DISPLAY_THREADED)
+            $sReplies = $this->getComments(array('parent_id' => $aCmt['cmt_id'], 'vparent_id' => $aCmt['cmt_id'], 'type' => $aBp['type']), $aDp);
+
+        $bAuthorIcon = !empty($sAuthorIcon);
         return $oTemplate->parseHtmlByName('comment.html', array(
-        	'system' => $this->_sSystem,
-        	'style_prefix' => $this->_sStylePrefix,
-        	'js_object' => $this->_sJsObjName,
-        	'id' => $aCmt['cmt_id'],
-        	'class' => $sClass,
-        	'bx_if:show_icon' => array(
-        		'condition' => $bAuthorIcon,
-        		'content' => array(
-        			'author_icon' => $sAuthorIcon
-        		)
-        	),
-        	'bx_if:show_icon_empty' => array(
-        		'condition' => !$bAuthorIcon,
-        		'content' => array()
-        	),
-        	'bx_if:show_author_link' => array(
-        		'condition' => !empty($sAuthorLink),
-        		'content' => array(
-        			'author_link' => $sAuthorLink,
-        			'author_name' => $sAuthorName
-        		)
-        	),
-        	'bx_if:show_author_text' => array(
-        		'condition' => empty($sAuthorLink),
-        		'content' => array(
-        			'author_name' => $sAuthorName
-        		)
-        	),
-        	'bx_if:show_reply_to' => array(
-        		'condition' => !empty($aTmplReplyTo),
-        		'content' => $aTmplReplyTo
-        	),
-        	'text' => $sText,
-        	'bx_if:show_more' => array(
-        		'condition' => !empty($sTextMore),
-        		'content' => array(
-        			'style_prefix' => $this->_sStylePrefix,
-        			'js_object' => $this->_sJsObjName,
-        			'text_more' => $sTextMore
-        		)
-        	),
-        	'bx_if:show_attached' => array(
-        		'condition' => !empty($aTmplImages),
-        		'content' => array(
-        			'style_prefix' => $this->_sStylePrefix,
-        			'bx_repeat:attached' => $aTmplImages
-        		)
-        	),
-        	'actions' => $sActions,
-        	'replies' =>  $sReplies
+            'system' => $this->_sSystem,
+            'style_prefix' => $this->_sStylePrefix,
+            'js_object' => $this->_sJsObjName,
+            'id' => $aCmt['cmt_id'],
+            'class' => $sClass,
+            'bx_if:show_icon' => array(
+                'condition' => $bAuthorIcon,
+                'content' => array(
+                    'author_icon' => $sAuthorIcon
+                )
+            ),
+            'bx_if:show_icon_empty' => array(
+                'condition' => !$bAuthorIcon,
+                'content' => array()
+            ),
+            'bx_if:show_author_link' => array(
+                'condition' => !empty($sAuthorLink),
+                'content' => array(
+                    'author_link' => $sAuthorLink,
+                    'author_name' => $sAuthorName
+                )
+            ),
+            'bx_if:show_author_text' => array(
+                'condition' => empty($sAuthorLink),
+                'content' => array(
+                    'author_name' => $sAuthorName
+                )
+            ),
+            'bx_if:show_reply_to' => array(
+                'condition' => !empty($aTmplReplyTo),
+                'content' => $aTmplReplyTo
+            ),
+            'text' => $sText,
+            'bx_if:show_more' => array(
+                'condition' => !empty($sTextMore),
+                'content' => array(
+                    'style_prefix' => $this->_sStylePrefix,
+                    'js_object' => $this->_sJsObjName,
+                    'text_more' => $sTextMore
+                )
+            ),
+            'bx_if:show_attached' => array(
+                'condition' => !empty($aTmplImages),
+                'content' => array(
+                    'style_prefix' => $this->_sStylePrefix,
+                    'bx_repeat:attached' => $aTmplImages
+                )
+            ),
+            'actions' => $sActions,
+            'replies' =>  $sReplies
         ));
     }
 
@@ -283,42 +283,42 @@ class BxBaseCmts extends BxDolCmts
         return $this->_getFormBox(BX_CMT_ACTION_POST, $aBp, $aDp);
     }
 
-	function getFormBoxEdit($aBp = array(), $aDp = array())
+    function getFormBoxEdit($aBp = array(), $aDp = array())
     {
         return $this->_getFormBox(BX_CMT_ACTION_EDIT, $aBp, $aDp);
     }
 
-	function getFormPost($iCmtParentId = 0)
-	{
+    function getFormPost($iCmtParentId = 0)
+    {
         return $this->_getFormPost($iCmtParentId);
     }
 
-	function getFormEdit($aCmt)
-	{
+    function getFormEdit($aCmt)
+    {
         return $this->_getFormEdit($aCmt);
     }
 
     function getImage($iImgId)
     {
-    	if(!$this->isAttachImageEnabled())
-    		return '';
+        if(!$this->isAttachImageEnabled())
+            return '';
 
-    	$oTemplate = BxDolTemplate::getInstance();
+        $oTemplate = BxDolTemplate::getInstance();
 
-    	bx_import('BxDolStorage');
-		$oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
+        bx_import('BxDolStorage');
+        $oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
 
-		$sContent = $oTemplate->parseHtmlByName('bx_img.html', array(
-    		'src' => $oStorage->getFileUrlById($iImgId),
-        	'bx_repeat:attrs' => array(
-        		array('key' => 'alt', 'value' => bx_html_attribute(_t('_cmt_view_attached_image'))),
-        		array('key' => 'title', 'value' => bx_html_attribute(_t('_cmt_close_attached_image'))),
-        		array('key' => 'onclick', 'value' => $this->_sJsObjName . '.hideImage(this);'),
-        		array('key' => 'class', 'value' => $this->_sStylePrefix . '-attached-image')
-        	)
-    	));
+        $sContent = $oTemplate->parseHtmlByName('bx_img.html', array(
+            'src' => $oStorage->getFileUrlById($iImgId),
+            'bx_repeat:attrs' => array(
+                array('key' => 'alt', 'value' => bx_html_attribute(_t('_cmt_view_attached_image'))),
+                array('key' => 'title', 'value' => bx_html_attribute(_t('_cmt_close_attached_image'))),
+                array('key' => 'onclick', 'value' => $this->_sJsObjName . '.hideImage(this);'),
+                array('key' => 'class', 'value' => $this->_sStylePrefix . '-attached-image')
+            )
+        ));
 
-    	bx_import('BxTemplStudioFunctions');
+        bx_import('BxTemplStudioFunctions');
         return BxTemplStudioFunctions::getInstance()->transBox($this->_sSystem . '-attached-image', $sContent, true);
     }
 
@@ -327,273 +327,273 @@ class BxBaseCmts extends BxDolCmts
      */
     protected function _getControlsBox()
     {
-    	$oTemplate = BxDolTemplate::getInstance();
+        $oTemplate = BxDolTemplate::getInstance();
 
-    	$sDisplay = '';
-    	$bDisplay = (int)$this->_aSystem['is_display_switch'] == 1;
-    	if($bDisplay) {
-			$aDisplayLinks = array(
-				array('id' => $this->_sSystem . '-flat', 'name' => $this->_sSystem . '-flat', 'class' => '', 'title' => '_cmt_display_flat', 'target' => '_self', 'onclick' => 'javascript:' . $this->_sJsObjName . '.cmtChangeDisplay(this, \'flat\');'),
-				array('id' => $this->_sSystem . '-threaded', 'name' => $this->_sSystem . '-threaded', 'class' => '', 'title' => '_cmt_display_threaded', 'target' => '_self', 'onclick' => 'javascript:' . $this->_sJsObjName . '.cmtChangeDisplay(this, \'threaded\');')
-			);
+        $sDisplay = '';
+        $bDisplay = (int)$this->_aSystem['is_display_switch'] == 1;
+        if($bDisplay) {
+            $aDisplayLinks = array(
+                array('id' => $this->_sSystem . '-flat', 'name' => $this->_sSystem . '-flat', 'class' => '', 'title' => '_cmt_display_flat', 'target' => '_self', 'onclick' => 'javascript:' . $this->_sJsObjName . '.cmtChangeDisplay(this, \'flat\');'),
+                array('id' => $this->_sSystem . '-threaded', 'name' => $this->_sSystem . '-threaded', 'class' => '', 'title' => '_cmt_display_threaded', 'target' => '_self', 'onclick' => 'javascript:' . $this->_sJsObjName . '.cmtChangeDisplay(this, \'threaded\');')
+            );
 
-    		bx_import('BxTemplMenuInteractive');
-			$oMenu = new BxTemplMenuInteractive(array('template' => 'menu_interactive_vertical.html', 'menu_id'=> $this->_sSystem . '-display', 'menu_items' => $aDisplayLinks));
-			$oMenu->setSelected('', $this->_sSystem . '-' . $this->_sDisplayType);
-        	$sDisplay = $oMenu->getCode();
-    	}
+            bx_import('BxTemplMenuInteractive');
+            $oMenu = new BxTemplMenuInteractive(array('template' => 'menu_interactive_vertical.html', 'menu_id'=> $this->_sSystem . '-display', 'menu_items' => $aDisplayLinks));
+            $oMenu->setSelected('', $this->_sSystem . '-' . $this->_sDisplayType);
+            $sDisplay = $oMenu->getCode();
+        }
 
-    	$sBrowseType = '';
-    	$bBrowseType = (int)$this->_aSystem['is_browse_switch'] == 1;
-    	if($bBrowseType) {
-    		$aBrowseLinks = array(
-    			array('id' => $this->_sSystem . '-tail', 'name' => $this->_sSystem . '-tail', 'class' => '', 'title' => '_cmt_browse_tail', 'target' => '_self', 'onclick' => 'javascript:' . $this->_sJsObjName . '.cmtChangeBrowse(this, \'tail\');'),
-				array('id' => $this->_sSystem . '-head', 'name' => $this->_sSystem . '-head', 'class' => '', 'title' => '_cmt_browse_head', 'target' => '_self', 'onclick' => 'javascript:' . $this->_sJsObjName . '.cmtChangeBrowse(this, \'head\');'),
-				array('id' => $this->_sSystem . '-popular', 'name' => $this->_sSystem . '-popular', 'class' => '', 'title' => '_cmt_browse_popular', 'target' => '_self', 'onclick' => 'javascript:' . $this->_sJsObjName . '.cmtChangeBrowse(this, \'popular\');'),
-    		);
+        $sBrowseType = '';
+        $bBrowseType = (int)$this->_aSystem['is_browse_switch'] == 1;
+        if($bBrowseType) {
+            $aBrowseLinks = array(
+                array('id' => $this->_sSystem . '-tail', 'name' => $this->_sSystem . '-tail', 'class' => '', 'title' => '_cmt_browse_tail', 'target' => '_self', 'onclick' => 'javascript:' . $this->_sJsObjName . '.cmtChangeBrowse(this, \'tail\');'),
+                array('id' => $this->_sSystem . '-head', 'name' => $this->_sSystem . '-head', 'class' => '', 'title' => '_cmt_browse_head', 'target' => '_self', 'onclick' => 'javascript:' . $this->_sJsObjName . '.cmtChangeBrowse(this, \'head\');'),
+                array('id' => $this->_sSystem . '-popular', 'name' => $this->_sSystem . '-popular', 'class' => '', 'title' => '_cmt_browse_popular', 'target' => '_self', 'onclick' => 'javascript:' . $this->_sJsObjName . '.cmtChangeBrowse(this, \'popular\');'),
+            );
 
-    		bx_import('BxTemplMenuInteractive');
-			$oMenu = new BxTemplMenuInteractive(array('template' => 'menu_interactive_vertical.html', 'menu_id'=> $this->_sSystem . '-browse', 'menu_items' => $aBrowseLinks));
-			$oMenu->setSelected('', $this->_sSystem . '-' . $this->_sBrowseType);
-        	$sBrowseType = $oMenu->getCode();
-    	}
+            bx_import('BxTemplMenuInteractive');
+            $oMenu = new BxTemplMenuInteractive(array('template' => 'menu_interactive_vertical.html', 'menu_id'=> $this->_sSystem . '-browse', 'menu_items' => $aBrowseLinks));
+            $oMenu->setSelected('', $this->_sSystem . '-' . $this->_sBrowseType);
+            $sBrowseType = $oMenu->getCode();
+        }
 
-    	$sBrowseFilter = '';
-    	$bBrowseFilter = $bBrowseType;
-    	if($bBrowseFilter) {
-    		$aFilterLinks = array(
-	        	array('id' => $this->_sSystem . '-all', 'name' => $this->_sSystem . '-all', 'class' => '', 'title' => '_cmt_browse_all', 'target' => '_self', 'onclick' => 'javascript:' . $this->_sJsObjName . '.cmtChangeFilter(this, \'all\');'),
-        		array('id' => $this->_sSystem . '-friends', 'name' => $this->_sSystem . '-friends', 'class' => '', 'title' => '_cmt_browse_friends', 'target' => '_self', 'onclick' => 'javascript:' . $this->_sJsObjName . '.cmtChangeFilter(this, \'friends\');'),
-				array('id' => $this->_sSystem . '-subscriptions', 'name' => $this->_sSystem . '-subscriptions', 'class' => '', 'title' => '_cmt_browse_subscriptions', 'target' => '_self', 'onclick' => 'javascript:' . $this->_sJsObjName . '.cmtChangeFilter(this, \'subscriptions\');')
-        	);
+        $sBrowseFilter = '';
+        $bBrowseFilter = $bBrowseType;
+        if($bBrowseFilter) {
+            $aFilterLinks = array(
+                array('id' => $this->_sSystem . '-all', 'name' => $this->_sSystem . '-all', 'class' => '', 'title' => '_cmt_browse_all', 'target' => '_self', 'onclick' => 'javascript:' . $this->_sJsObjName . '.cmtChangeFilter(this, \'all\');'),
+                array('id' => $this->_sSystem . '-friends', 'name' => $this->_sSystem . '-friends', 'class' => '', 'title' => '_cmt_browse_friends', 'target' => '_self', 'onclick' => 'javascript:' . $this->_sJsObjName . '.cmtChangeFilter(this, \'friends\');'),
+                array('id' => $this->_sSystem . '-subscriptions', 'name' => $this->_sSystem . '-subscriptions', 'class' => '', 'title' => '_cmt_browse_subscriptions', 'target' => '_self', 'onclick' => 'javascript:' . $this->_sJsObjName . '.cmtChangeFilter(this, \'subscriptions\');')
+            );
 
-        	$oMenu = new BxTemplMenuInteractive(array('template' => 'menu_interactive_vertical.html', 'menu_id'=> $this->_sSystem . '-filter', 'menu_items' => $aFilterLinks));
-			$oMenu->setSelected('', $this->_sSystem . '-' . $this->_sBrowseFilter);
-        	$sBrowseFilter = $oMenu->getCode();
-    	}
+            $oMenu = new BxTemplMenuInteractive(array('template' => 'menu_interactive_vertical.html', 'menu_id'=> $this->_sSystem . '-filter', 'menu_items' => $aFilterLinks));
+            $oMenu->setSelected('', $this->_sSystem . '-' . $this->_sBrowseFilter);
+            $sBrowseFilter = $oMenu->getCode();
+        }
 
-    	return $oTemplate->parseHtmlByName('comments_controls.html', array(
-    		'display_switcher' => $bDisplay ? $sDisplay : '',
-    		'bx_if:is_divider_1' => array(
-    			'condition' => $bDisplay && $bBrowseType,
-    			'content' => array(
-    				'style_prefix' => $this->_sStylePrefix,
-    			)
-    		),
-    		'browse_switcher' => $bBrowseType ? $sBrowseType : '',
-    		'bx_if:is_divider_2' => array(
-    			'condition' => $bBrowseType && $bBrowseFilter,
-    			'content' => array(
-    				'style_prefix' => $this->_sStylePrefix,
-    			)
-    		),
-    		'filter_switcher' => $bBrowseFilter ? $sBrowseFilter : '',
-		));
+        return $oTemplate->parseHtmlByName('comments_controls.html', array(
+            'display_switcher' => $bDisplay ? $sDisplay : '',
+            'bx_if:is_divider_1' => array(
+                'condition' => $bDisplay && $bBrowseType,
+                'content' => array(
+                    'style_prefix' => $this->_sStylePrefix,
+                )
+            ),
+            'browse_switcher' => $bBrowseType ? $sBrowseType : '',
+            'bx_if:is_divider_2' => array(
+                'condition' => $bBrowseType && $bBrowseFilter,
+                'content' => array(
+                    'style_prefix' => $this->_sStylePrefix,
+                )
+            ),
+            'filter_switcher' => $bBrowseFilter ? $sBrowseFilter : '',
+        ));
     }
 
-	protected function _getActionsBox(&$aCmt, $aDp = array())
+    protected function _getActionsBox(&$aCmt, $aDp = array())
     {
-    	$oTemplate = BxDolTemplate::getInstance();
+        $oTemplate = BxDolTemplate::getInstance();
 
-    	//--- Actions Menu
-		bx_import('BxDolMenu');
-		$oMenuActions = BxDolMenu::getObjectInstance($this->_sMenuObjActions);
-		$oMenuActions->setCmtsData($this, $aCmt['cmt_id']);
-		$sMenuActions = $oMenuActions->getCode();
+        //--- Actions Menu
+        bx_import('BxDolMenu');
+        $oMenuActions = BxDolMenu::getObjectInstance($this->_sMenuObjActions);
+        $oMenuActions->setCmtsData($this, $aCmt['cmt_id']);
+        $sMenuActions = $oMenuActions->getCode();
 
-		$oVote = $this->getVoteObject($aCmt['cmt_id']);
-		if($oVote !== false)
-			$sMenuActions .= $oVote->getJsScript();
+        $oVote = $this->getVoteObject($aCmt['cmt_id']);
+        if($oVote !== false)
+            $sMenuActions .= $oVote->getJsScript();
 
         //--- Manage Menu
-		$oMenuManage = BxDolMenu::getObjectInstance($this->_sMenuObjManage);
-		$oMenuManage->setCmtsData($this, $aCmt['cmt_id']);
+        $oMenuManage = BxDolMenu::getObjectInstance($this->_sMenuObjManage);
+        $oMenuManage->setCmtsData($this, $aCmt['cmt_id']);
 
-		$sMenuManage = $oMenuManage->getCode();
-		$bMenuManage = !empty($sMenuManage);
-		if($bMenuManage) {
-			$sMenuManage = $oTemplate->parseHtmlByName('comment_manage.html', array(
-				'style_prefix' => $this->_sStylePrefix,
-				'content' => $sMenuManage
-			));
+        $sMenuManage = $oMenuManage->getCode();
+        $bMenuManage = !empty($sMenuManage);
+        if($bMenuManage) {
+            $sMenuManage = $oTemplate->parseHtmlByName('comment_manage.html', array(
+                'style_prefix' => $this->_sStylePrefix,
+                'content' => $sMenuManage
+            ));
 
-			bx_import('BxTemplFunctions');
-			$sMenuManage = BxTemplFunctions::getInstance()->transBox($this->_sSystem . '-manage-' . $aCmt['cmt_id'], $sMenuManage, true);
-		}
+            bx_import('BxTemplFunctions');
+            $sMenuManage = BxTemplFunctions::getInstance()->transBox($this->_sSystem . '-manage-' . $aCmt['cmt_id'], $sMenuManage, true);
+        }
 
-		$sAgo = bx_time_js($aCmt['cmt_time']);
-		$bObjectTitle = !empty($this->_aSystem['trigger_field_title']);
+        $sAgo = bx_time_js($aCmt['cmt_time']);
+        $bObjectTitle = !empty($this->_aSystem['trigger_field_title']);
         return $oTemplate->parseHtmlByName('comment_actions.html', array(
-        	'id' => $aCmt['cmt_id'],
-        	'js_object' => $this->_sJsObjName,
-        	'style_prefix' => $this->_sStylePrefix,
-        	'bx_if:show_ago_link' => array(
-        		'condition' => $bObjectTitle,
-        		'content' => array(
-        			'style_prefix' => $this->_sStylePrefix,
-        			'view_link' => bx_append_url_params($this->_sViewUrl, array(
-		        		'sys' => $this->_sSystem,
-		        		'id' => $this->_iId,
-		        		'cmt_id' => $aCmt['cmt_id']
-		        	)),
-		        	'ago' => $sAgo
-        		)
-        	),
-        	'bx_if:show_ago_text' => array(
-        		'condition' => !$bObjectTitle,
-        		'content' => array(
-        			'ago' => $sAgo
-        		)
-        	),
-        	'menu_actions' => $sMenuActions,
+            'id' => $aCmt['cmt_id'],
+            'js_object' => $this->_sJsObjName,
+            'style_prefix' => $this->_sStylePrefix,
+            'bx_if:show_ago_link' => array(
+                'condition' => $bObjectTitle,
+                'content' => array(
+                    'style_prefix' => $this->_sStylePrefix,
+                    'view_link' => bx_append_url_params($this->_sViewUrl, array(
+                        'sys' => $this->_sSystem,
+                        'id' => $this->_iId,
+                        'cmt_id' => $aCmt['cmt_id']
+                    )),
+                    'ago' => $sAgo
+                )
+            ),
+            'bx_if:show_ago_text' => array(
+                'condition' => !$bObjectTitle,
+                'content' => array(
+                    'ago' => $sAgo
+                )
+            ),
+            'menu_actions' => $sMenuActions,
 /*
-        	'bx_if:hide_rate_count' => array(
-        		'condition' => (int)$aCmt['cmt_rate'] <= 0,
-        		'content' => array()
-        	),
-        	'points' => _t(in_array($aCmt['cmt_rate'], array(-1, 0, 1)) ? '_N_point' : '_N_points', $aCmt['cmt_rate']),
+            'bx_if:hide_rate_count' => array(
+                'condition' => (int)$aCmt['cmt_rate'] <= 0,
+                'content' => array()
+            ),
+            'points' => _t(in_array($aCmt['cmt_rate'], array(-1, 0, 1)) ? '_N_point' : '_N_points', $aCmt['cmt_rate']),
 */
-        	'bx_if:show_menu_manage' => array(
-        		'condition' => $bMenuManage,
-        		'content' => array(
-        			'js_object' => $this->_sJsObjName,
-        			'style_prefix' => $this->_sStylePrefix,
-        			'id' => $aCmt['cmt_id'],
-        			'popup_text' => $sMenuManage
-        		)
-        	)
+            'bx_if:show_menu_manage' => array(
+                'condition' => $bMenuManage,
+                'content' => array(
+                    'js_object' => $this->_sJsObjName,
+                    'style_prefix' => $this->_sStylePrefix,
+                    'id' => $aCmt['cmt_id'],
+                    'popup_text' => $sMenuManage
+                )
+            )
         ));
     }
 
     protected function _getFormBox($sType, $aBp, $aDp)
     {
-    	$iCmtParentId = isset($aBp['parent_id']) ? (int)$aBp['parent_id'] : 0;
-    	$sPosition = isset($aDp['position']) ? $aDp['position'] : '';
+        $iCmtParentId = isset($aBp['parent_id']) ? (int)$aBp['parent_id'] : 0;
+        $sPosition = isset($aDp['position']) ? $aDp['position'] : '';
 
-    	if(!$this->isPostReplyAllowed())
-    		return '';
+        if(!$this->isPostReplyAllowed())
+            return '';
 
-		$sPositionSystem = $this->_aSystem['post_form_position'];
-		if(!empty($sPosition) && $sPositionSystem != $sPosition)
-			return '';
+        $sPositionSystem = $this->_aSystem['post_form_position'];
+        if(!empty($sPosition) && $sPositionSystem != $sPosition)
+            return '';
 
-		$sMethod = '_getForm' . ucfirst($sType);
-		$aForm = $this->$sMethod($iCmtParentId);
+        $sMethod = '_getForm' . ucfirst($sType);
+        $aForm = $this->$sMethod($iCmtParentId);
 
-    	return BxDolTemplate::getInstance()->parseHtmlByName('comment_reply_box.html', array(
-    		'js_object' => $this->_sJsObjName,
-    		'style_prefix' => $this->_sStylePrefix,
-    		'bx_if:show_class' => array(
-    			'condition' => !empty($sPosition),
-    			'content' => array(
-    				'class' => $this->_sStylePrefix . '-reply-' . $sPosition
-    			)
-    		),
-			'form' => $aForm['form'],
-        	'form_id' => $aForm['form_id'],
-    	));
+        return BxDolTemplate::getInstance()->parseHtmlByName('comment_reply_box.html', array(
+            'js_object' => $this->_sJsObjName,
+            'style_prefix' => $this->_sStylePrefix,
+            'bx_if:show_class' => array(
+                'condition' => !empty($sPosition),
+                'content' => array(
+                    'class' => $this->_sStylePrefix . '-reply-' . $sPosition
+                )
+            ),
+            'form' => $aForm['form'],
+            'form_id' => $aForm['form_id'],
+        ));
     }
 
     protected function _getFormPost($iCmtParentId = 0)
     {
-    	$oForm = $this->_getFormObject(BX_CMT_ACTION_POST, $iCmtParentId);
+        $oForm = $this->_getFormObject(BX_CMT_ACTION_POST, $iCmtParentId);
         $oForm->aInputs['cmt_parent_id']['value'] = $iCmtParentId;
-    	$oForm->initChecker();
+        $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
-        	$iCmtAuthorId = $this->_getAuthorId();
-        	$iCmtParentId = $oForm->getCleanValue('cmt_parent_id');
-        	$sCmtText = $oForm->getCleanValue('cmt_text');
-			$sCmtText = $this->_prepareTextForSave ($sCmtText);
-			$oForm->setSubmittedValue('cmt_text', $sCmtText, $oForm->aFormAttrs['method']);
+            $iCmtAuthorId = $this->_getAuthorId();
+            $iCmtParentId = $oForm->getCleanValue('cmt_parent_id');
+            $sCmtText = $oForm->getCleanValue('cmt_text');
+            $sCmtText = $this->_prepareTextForSave ($sCmtText);
+            $oForm->setSubmittedValue('cmt_text', $sCmtText, $oForm->aFormAttrs['method']);
 
-	        $iLevel = 0;
-	    	$iCmtVisualParentId = 0;
-	    	if((int)$iCmtParentId > 0) {
-	    		$aParent = $this->getCommentRow($iCmtParentId);
+            $iLevel = 0;
+            $iCmtVisualParentId = 0;
+            if((int)$iCmtParentId > 0) {
+                $aParent = $this->getCommentRow($iCmtParentId);
 
-	    		$iLevel = (int)$aParent['cmt_level'] + 1;
-	    		$iCmtVisualParentId = $iLevel > $this->getMaxLevel() ? $aParent['cmt_vparent_id'] : $iCmtParentId;
-	    	}
+                $iLevel = (int)$aParent['cmt_level'] + 1;
+                $iCmtVisualParentId = $iLevel > $this->getMaxLevel() ? $aParent['cmt_vparent_id'] : $iCmtParentId;
+            }
 
-			$iCmtId = (int)$oForm->insert(array('cmt_vparent_id' => $iCmtVisualParentId, 'cmt_object_id' => $this->_iId, 'cmt_author_id' => $iCmtAuthorId, 'cmt_level' => $iLevel, 'cmt_time' => time()));
-			if($iCmtId != 0) {
-				if($this->isAttachImageEnabled()) {
-					$aImages = $oForm->getCleanValue('cmt_image');
-					if(!empty($aImages) && is_array($aImages)) {
-						bx_import('BxDolStorage');
-						$oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
-	
-						foreach($aImages as $iImageId)
-							if($this->_oQuery->saveImages($this->_aSystem['system_id'], $iCmtId, $iImageId))
-								$oStorage->afterUploadCleanup($iImageId, $iCmtAuthorId);
-					}
-				}
+            $iCmtId = (int)$oForm->insert(array('cmt_vparent_id' => $iCmtVisualParentId, 'cmt_object_id' => $this->_iId, 'cmt_author_id' => $iCmtAuthorId, 'cmt_level' => $iLevel, 'cmt_time' => time()));
+            if($iCmtId != 0) {
+                if($this->isAttachImageEnabled()) {
+                    $aImages = $oForm->getCleanValue('cmt_image');
+                    if(!empty($aImages) && is_array($aImages)) {
+                        bx_import('BxDolStorage');
+                        $oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
 
-				if($iCmtParentId) {
-        			$this->_oQuery->updateRepliesCount($iCmtParentId, 1);
+                        foreach($aImages as $iImageId)
+                            if($this->_oQuery->saveImages($this->_aSystem['system_id'], $iCmtId, $iImageId))
+                                $oStorage->afterUploadCleanup($iImageId, $iCmtAuthorId);
+                    }
+                }
 
-        			$this->_sendNotificationEmail($iCmtId, $iCmtParentId);
-				}
+                if($iCmtParentId) {
+                    $this->_oQuery->updateRepliesCount($iCmtParentId, 1);
 
-				$this->_triggerComment();
+                    $this->_sendNotificationEmail($iCmtId, $iCmtParentId);
+                }
 
-		        $this->isPostReplyAllowed(true);
+                $this->_triggerComment();
 
-		        bx_import('BxDolAlerts');
-		        $oZ = new BxDolAlerts($this->_sSystem, 'commentPost', $this->getId(), $iCmtAuthorId, array('comment_id' => $iCmtId, 'comment_author_id' => $iCmtAuthorId));
-		        $oZ->alert();
+                $this->isPostReplyAllowed(true);
 
-		        return array('id' => $iCmtId, 'parent_id' => $iCmtParentId);
-			}
+                bx_import('BxDolAlerts');
+                $oZ = new BxDolAlerts($this->_sSystem, 'commentPost', $this->getId(), $iCmtAuthorId, array('comment_id' => $iCmtId, 'comment_author_id' => $iCmtAuthorId));
+                $oZ->alert();
 
-			return array('msg' => _t('_cmt_err_cannot_perform_action'));
+                return array('id' => $iCmtId, 'parent_id' => $iCmtParentId);
+            }
+
+            return array('msg' => _t('_cmt_err_cannot_perform_action'));
         }
 
         return array('form' => $oForm->getCode(), 'form_id' => $oForm->id);
     }
 
-	protected function _getFormEdit($iCmtId)
+    protected function _getFormEdit($iCmtId)
     {
-	    $aCmt = $this->_oQuery->getCommentSimple ($this->getId(), $iCmtId);
+        $aCmt = $this->_oQuery->getCommentSimple ($this->getId(), $iCmtId);
         if(!$aCmt)
-        	return array('msg' => _t('_No such comment'));
+            return array('msg' => _t('_No such comment'));
 
-		$iCmtAuthorId = $this->_getAuthorId();
+        $iCmtAuthorId = $this->_getAuthorId();
         if(!$this->isEditAllowed($aCmt))
-        	return array('msg' => $aCmt['cmt_author_id'] == $iCmtAuthorId ? strip_tags($this->msgErrEditAllowed()) : _t('_Access denied'));
+            return array('msg' => $aCmt['cmt_author_id'] == $iCmtAuthorId ? strip_tags($this->msgErrEditAllowed()) : _t('_Access denied'));
 
-		$oForm = $this->_getFormObject(BX_CMT_ACTION_EDIT, $aCmt['cmt_id']);
-		$aCmt['cmt_text'] = $this->_prepareTextForEdit($aCmt['cmt_text']);
+        $oForm = $this->_getFormObject(BX_CMT_ACTION_EDIT, $aCmt['cmt_id']);
+        $aCmt['cmt_text'] = $this->_prepareTextForEdit($aCmt['cmt_text']);
 
-		$oForm->initChecker($aCmt);
-		if($oForm->isSubmittedAndValid()) {
-			$sCmtText = $oForm->getCleanValue('cmt_text');
-			$sCmtText = $this->_prepareTextForSave ($sCmtText);
-			$oForm->setSubmittedValue('cmt_text', $sCmtText, $oForm->aFormAttrs['method']);
+        $oForm->initChecker($aCmt);
+        if($oForm->isSubmittedAndValid()) {
+            $sCmtText = $oForm->getCleanValue('cmt_text');
+            $sCmtText = $this->_prepareTextForSave ($sCmtText);
+            $oForm->setSubmittedValue('cmt_text', $sCmtText, $oForm->aFormAttrs['method']);
 
-	        if($oForm->update($iCmtId)) {
-				$this->isEditAllowed(true);
+            if($oForm->update($iCmtId)) {
+                $this->isEditAllowed(true);
 
-	            bx_import('BxDolAlerts');
-	            $oZ = new BxDolAlerts($this->_sSystem, 'commentUpdated', $this->getId(), $iCmtAuthorId, array('comment_id' => $aCmt['cmt_id'], 'comment_author_id' => $aCmt['cmt_author_id']));
-	            $oZ->alert();
+                bx_import('BxDolAlerts');
+                $oZ = new BxDolAlerts($this->_sSystem, 'commentUpdated', $this->getId(), $iCmtAuthorId, array('comment_id' => $aCmt['cmt_id'], 'comment_author_id' => $aCmt['cmt_author_id']));
+                $oZ->alert();
 
-	            return array('id' => $iCmtId, 'text' => $sCmtText);
-	        }
+                return array('id' => $iCmtId, 'text' => $sCmtText);
+            }
 
-	        return array('msg' => _t('_cmt_err_cannot_perform_action'));
-		}
+            return array('msg' => _t('_cmt_err_cannot_perform_action'));
+        }
 
-		return array('form' => $oForm->getCode(), 'form_id' => $oForm->id);
+        return array('form' => $oForm->getCode(), 'form_id' => $oForm->id);
     }
 
-	protected function _getFormObject($sAction, $iId)
+    protected function _getFormObject($sAction, $iId)
     {
-    	$sActionCap = ucfirst($sAction);
-    	$sDisplayName = '_sFormDisplay' . $sActionCap;
+        $sActionCap = ucfirst($sAction);
+        $sDisplayName = '_sFormDisplay' . $sActionCap;
 
-    	bx_import('BxDolForm');
+        bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance($this->_sFormObject, $this->$sDisplayName);
         $oForm->setId(sprintf($oForm->aFormAttrs['id'], $sAction, $this->_sSystem, $iId));
         $oForm->setName(sprintf($oForm->aFormAttrs['name'], $sAction, $this->_sSystem, $iId));
@@ -603,116 +603,115 @@ class BxBaseCmts extends BxDolCmts
         $oForm->aInputs['action']['value'] = 'Submit' . $sActionCap . 'Form';
 
         if(!$this->isAttachImageEnabled())
-        	unset($oForm->aInputs['cmt_image']);
+            unset($oForm->aInputs['cmt_image']);
 
-	    if(isset($oForm->aInputs['cmt_image'])) {
-	    	$aFormNested = array(
-	        	'params' =>array(
-	        		'nested_form_template' => 'comments_uploader_nfw.html'
-	        	),
-		        'inputs' => array(),
-		    );
+        if(isset($oForm->aInputs['cmt_image'])) {
+            $aFormNested = array(
+                'params' =>array(
+                    'nested_form_template' => 'comments_uploader_nfw.html'
+                ),
+                'inputs' => array(),
+            );
 
-		    bx_import('BxDolFormNested');
-		    $oFormNested = new BxDolFormNested('cmt_image', $aFormNested, 'cmt_submit');
-	
-	        $oForm->aInputs['cmt_image']['storage_object'] = $this->_sStorageObject;
-	        $oForm->aInputs['cmt_image']['images_transcoder'] = $this->_sTranscoderPreview;
-	        $oForm->aInputs['cmt_image']['uploaders'] = $this->_aImageUploaders;
-	        $oForm->aInputs['cmt_image']['upload_buttons_titles'] = array('Simple' => 'camera');
-	        $oForm->aInputs['cmt_image']['multiple'] = true;
-	        $oForm->aInputs['cmt_image']['ghost_template'] = $oFormNested;
-	    }
+            bx_import('BxDolFormNested');
+            $oFormNested = new BxDolFormNested('cmt_image', $aFormNested, 'cmt_submit');
+
+            $oForm->aInputs['cmt_image']['storage_object'] = $this->_sStorageObject;
+            $oForm->aInputs['cmt_image']['images_transcoder'] = $this->_sTranscoderPreview;
+            $oForm->aInputs['cmt_image']['uploaders'] = $this->_aImageUploaders;
+            $oForm->aInputs['cmt_image']['upload_buttons_titles'] = array('Simple' => 'camera');
+            $oForm->aInputs['cmt_image']['multiple'] = true;
+            $oForm->aInputs['cmt_image']['ghost_template'] = $oFormNested;
+        }
 
         if(isset($oForm->aInputs['cmt_text'])) {
-        	$iCmtTextMin = (int)$this->_aSystem['chars_post_min'];
-			$iCmtTextMax = (int)$this->_aSystem['chars_post_max'];
+            $iCmtTextMin = (int)$this->_aSystem['chars_post_min'];
+            $iCmtTextMax = (int)$this->_aSystem['chars_post_max'];
 
-        	$oForm->aInputs['cmt_text']['checker']['params'] = array($iCmtTextMin, $iCmtTextMax);
-        	$oForm->aInputs['cmt_text']['checker']['error'] = _t('_Please enter n1-n2 characters', $iCmtTextMin, $iCmtTextMax);
+            $oForm->aInputs['cmt_text']['checker']['params'] = array($iCmtTextMin, $iCmtTextMax);
+            $oForm->aInputs['cmt_text']['checker']['error'] = _t('_Please enter n1-n2 characters', $iCmtTextMin, $iCmtTextMax);
         }
 
         return $oForm;
     }
 
-	protected function _getMoreLink($sCmts, $aBp = array(), $aDp = array())
+    protected function _getMoreLink($sCmts, $aBp = array(), $aDp = array())
     {
-    	$iStart = $iPerView = 0;
-    	switch($aBp['type']) {
-    		case BX_CMT_BROWSE_HEAD:
-    		case BX_CMT_BROWSE_POPULAR:
-    		case BX_CMT_BROWSE_CONNECTION:
-    			$iPerView = $aBp['per_view'];
+        $iStart = $iPerView = 0;
+        switch($aBp['type']) {
+            case BX_CMT_BROWSE_HEAD:
+            case BX_CMT_BROWSE_POPULAR:
+            case BX_CMT_BROWSE_CONNECTION:
+                $iPerView = $aBp['per_view'];
 
-    			$iStart = $aBp['start'] + $iPerView;
-    			if($iStart >= $aBp['count'])
-    				return $sCmts;
+                $iStart = $aBp['start'] + $iPerView;
+                if($iStart >= $aBp['count'])
+                    return $sCmts;
 
-    			break;
+                break;
 
-    		case BX_CMT_BROWSE_TAIL:
-    			$iPerView = $aBp['per_view'];
+            case BX_CMT_BROWSE_TAIL:
+                $iPerView = $aBp['per_view'];
 
-				$iStart = $aBp['start'] - $iPerView;
-    			if($iStart < 0) {
-    				$iPerView += $iStart;
-    				$iStart = 0;
-    			}
+                $iStart = $aBp['start'] - $iPerView;
+                if($iStart < 0) {
+                    $iPerView += $iStart;
+                    $iStart = 0;
+                }
 
-    			if($iStart == 0 && $iPerView == 0)
-					return $sCmts;
+                if($iStart == 0 && $iPerView == 0)
+                    return $sCmts;
 
-    			break;
-    	}
+                break;
+        }
 
-    	$bRoot = (int)$aBp['vparent_id'] <= 0;
+        $bRoot = (int)$aBp['vparent_id'] <= 0;
 
-    	$sMore = BxDolTemplate::getInstance()->parseHtmlByName('comment_more.html', array(
-			'js_object' => $this->_sJsObjName,
-			'style_prefix' => $this->_sStylePrefix,
-    		'bx_if:is_root' => array(
-    			'condition' => $bRoot,
-    			'content' => array()
-    		),
-			'parent_id' => $aBp['vparent_id'],
-    		'start' => $iStart,
-    		'per_view' => $iPerView,
-    		'title' => _t('_load_more_' . ($aBp['vparent_id'] == 0 ? 'comments' : 'replies') . '_' . $aBp['type'])
-		));
+        $sMore = BxDolTemplate::getInstance()->parseHtmlByName('comment_more.html', array(
+            'js_object' => $this->_sJsObjName,
+            'style_prefix' => $this->_sStylePrefix,
+            'bx_if:is_root' => array(
+                'condition' => $bRoot,
+                'content' => array()
+            ),
+            'parent_id' => $aBp['vparent_id'],
+            'start' => $iStart,
+            'per_view' => $iPerView,
+            'title' => _t('_load_more_' . ($aBp['vparent_id'] == 0 ? 'comments' : 'replies') . '_' . $aBp['type'])
+        ));
 
-    	switch($aBp['type']) {
-    		case BX_CMT_BROWSE_HEAD:
-    			case BX_CMT_BROWSE_POPULAR:
-    			case BX_CMT_BROWSE_CONNECTION:
-    			$sCmts .= $sMore;
-    			break;
+        switch($aBp['type']) {
+            case BX_CMT_BROWSE_HEAD:
+                case BX_CMT_BROWSE_POPULAR:
+                case BX_CMT_BROWSE_CONNECTION:
+                $sCmts .= $sMore;
+                break;
 
-    		case BX_CMT_BROWSE_TAIL:
-				$sCmts = $sMore . $sCmts;
-    			break;
-    	}
+            case BX_CMT_BROWSE_TAIL:
+                $sCmts = $sMore . $sCmts;
+                break;
+        }
 
-    	return $sCmts;
+        return $sCmts;
     }
 
     protected function _getEmpty()
     {
-    	return BxDolTemplate::getInstance()->parseHtmlByName('comment_empty.html', array(
-    		'style_prefix' => $this->_sStylePrefix
-    	));
+        return BxDolTemplate::getInstance()->parseHtmlByName('comment_empty.html', array(
+            'style_prefix' => $this->_sStylePrefix
+        ));
     }
 
-	protected function _echoResultJson($a, $isAutoWrapForFormFileSubmit = false)
-	{
+    protected function _echoResultJson($a, $isAutoWrapForFormFileSubmit = false)
+    {
 
-        header('Content-type: text/html; charset=utf-8');    
+        header('Content-type: text/html; charset=utf-8');
 
         $s = json_encode($a);
-        if ($isAutoWrapForFormFileSubmit && !empty($_FILES)) 
+        if ($isAutoWrapForFormFileSubmit && !empty($_FILES))
             $s = '<textarea>' . $s . '</textarea>'; // http://jquery.malsup.com/form/#file-upload
         echo $s;
     }
 }
 
 /** @} */
-

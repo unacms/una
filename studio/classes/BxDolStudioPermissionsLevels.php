@@ -13,14 +13,17 @@ bx_import('BxDolStudioPermissionsQuery');
 
 define('BX_DOL_STUDIO_PERMISSIONS_LEVEL_ID_INT_MAX', round(log(BX_DOL_INT_MAX, 2)));
 
-class BxDolStudioPermissionsLevels extends BxTemplStudioGrid {
-    public function __construct ($aOptions, $oTemplate = false) {
+class BxDolStudioPermissionsLevels extends BxTemplStudioGrid
+{
+    public function __construct ($aOptions, $oTemplate = false)
+    {
         parent::__construct ($aOptions, $oTemplate);
 
         $this->oDb = new BxDolStudioPermissionsQuery();
     }
 
-    protected function delete($iId) {
+    protected function delete($iId)
+    {
         $aLevel = array();
         $iLevel = $this->oDb->getLevels(array('type' => 'by_id', 'value' => (int)$iId), $aLevel);
         if($iLevel != 1 || empty($aLevel))
@@ -43,11 +46,13 @@ class BxDolStudioPermissionsLevels extends BxTemplStudioGrid {
         return $this->oDb->deleteLevel(array('type' => 'by_id', 'value' => $aLevel['id']));
     }
 
-    protected function _switcherChecked2State($isChecked) {
+    protected function _switcherChecked2State($isChecked)
+    {
         return $isChecked ? 'yes' : 'no';
     }
 
-    protected function _switcherState2Checked($mixedState) {
+    protected function _switcherState2Checked($mixedState)
+    {
         return 'yes' == $mixedState ? true : false;
     }
 }

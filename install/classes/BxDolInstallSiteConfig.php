@@ -210,7 +210,7 @@ class BxDolInstallSiteConfig
         );
     }
 
-    public function getAutoValues($aData = array()) 
+    public function getAutoValues($aData = array())
     {
         $aRet = array();
         foreach($this->_aConfig as $sKey => $a) {
@@ -272,7 +272,7 @@ class BxDolInstallSiteConfig
 EOF;
     }
 
-    public function processConfigData ($a) 
+    public function processConfigData ($a)
     {
         $aSteps = array('checkConfig', 'processConfigDataDb', 'processConfigDataHeader', 'processModules');
         foreach ($aSteps as $sFunc) {
@@ -284,7 +284,7 @@ EOF;
         return array();
     }
 
-    protected function checkConfig($a) 
+    protected function checkConfig($a)
     {
         $aErrorFields = array();
         foreach ($this->_aConfig as $sKey => $r) {
@@ -292,7 +292,7 @@ EOF;
                 $aErrorFields[$sKey] = true;
         }
 
-        if (!empty($aErrorFields)) 
+        if (!empty($aErrorFields))
             $aErrorFields[BX_INSTALL_ERR_GENERAL] = _t('_sys_inst_msg_form_error');
 
         return $aErrorFields;
@@ -330,15 +330,15 @@ EOF;
         return array();
     }
 
-    public function processConfigDataHeader ($a) 
+    public function processConfigDataHeader ($a)
     {
         $aMarkers = $this->getMarkersForPhp($a);
-        
+
         $sFile = $this->_sPatternHeader;
         $sHeader = file_get_contents($sFile);
         if (false === $sHeader)
             return array(BX_INSTALL_ERR_GENERAL => _t('_sys_inst_msg_file_read_failed', $sFile));
-    
+
         $sHeader = str_replace(array_keys($aMarkers), array_values($aMarkers), $sHeader);
 
         if (false === file_put_contents(BX_INSTALL_PATH_HEADER, $sHeader))
@@ -358,7 +358,7 @@ EOF;
             $sErrorMessage = $this->processModuleByUri ($a[$sModuleType], array ('install', 'enable'), $sModuleType);
             if ($sErrorMessage)
                 return array(BX_INSTALL_ERR_GENERAL => $sErrorMessage);
-        } 
+        }
 
         bx_import('BxDolAccount');
         $oAccount = BxDolAccount::getInstance($a['admin_email']);
@@ -389,7 +389,7 @@ EOF;
         require_once(BX_INSTALL_PATH_HEADER);
         bx_import('BxDolStudioInstallerUtils');
         bx_import('BxDolLanguages');
-        BxDolLanguages::getInstance();        
+        BxDolLanguages::getInstance();
         $oModulesTools = new BxDolInstallModulesTools();
 
         $aModules = $oModulesTools->getModules($sModuleType);
@@ -407,7 +407,7 @@ EOF;
         return '';
     }
 
-    protected function dbErrors2ErrorFields ($a) 
+    protected function dbErrors2ErrorFields ($a)
     {
         $s = '';
         foreach ($a as $r)
@@ -415,9 +415,9 @@ EOF;
         return array(BX_INSTALL_ERR_GENERAL => $s);
     }
 
-    protected function processInputData ($a) 
+    protected function processInputData ($a)
     {
-        foreach ($a as $sKey => $mixedValue) 
+        foreach ($a as $sKey => $mixedValue)
             $a[$sKey] = bx_process_input($mixedValue);
         return $a;
     }
@@ -438,7 +438,7 @@ EOF;
         return $aMarkers;
     }
 
-    protected function getMarkersForDb($a, $oDb) 
+    protected function getMarkersForDb($a, $oDb)
     {
         $a = $this->getMarkers($a);
         $aMarkers = array();
@@ -449,7 +449,7 @@ EOF;
         return $aMarkers;
     }
 
-    protected function getMarkersForPhp($a) 
+    protected function getMarkersForPhp($a)
     {
         $a = $this->getMarkers($a);
         $aMarkers = array();
@@ -458,7 +458,7 @@ EOF;
         return $aMarkers;
     }
 
-    protected function getFormFields($aErrorFields, $aData) 
+    protected function getFormFields($aErrorFields, $aData)
     {
         $s = '';
         foreach($this->_aConfig as $sKey => $a) {
@@ -469,7 +469,7 @@ EOF;
         return $s;
     }
 
-    protected function rowInput ($aData, $sKey, $a, $isError = false) 
+    protected function rowInput ($aData, $sKey, $a, $isError = false)
     {
         $sAutoMessage = '';
         $sValue = bx_html_attribute($this->def ($aData, $sKey, $a, $sAutoMessage));
@@ -477,7 +477,7 @@ EOF;
         return $this->rowWrapper ($aData, $sInput, $sAutoMessage, 'text', $sKey, $a, $isError);
     }
 
-    protected function rowSelect ($aData, $sKey, $a, $isError = false) 
+    protected function rowSelect ($aData, $sKey, $a, $isError = false)
     {
         $sAutoMessage = '';
         $sValue = bx_html_attribute($this->def ($aData, $sKey, $a, $sAutoMessage));
@@ -513,12 +513,12 @@ EOF;
                     $sError
                     <div class="bx-form-info bx-def-font-grayed bx-def-font-small">
                         {$sDesc}
-                    </div>                    
+                    </div>
                 </div></div>
 EOF;
     }
 
-    protected function rowSectionOpen ($aData, $sKey, $a) 
+    protected function rowSectionOpen ($aData, $sKey, $a)
     {
         return <<<EOF
                     <div class="bx-form-section-wrapper bx-def-margin-top">
@@ -528,7 +528,7 @@ EOF;
 EOF;
     }
 
-    protected function rowSectionClose ($aData, $sKey, $a) 
+    protected function rowSectionClose ($aData, $sKey, $a)
     {
         return <<<EOF
                             </div>
@@ -537,24 +537,24 @@ EOF;
 EOF;
     }
 
-    protected function check ($sKey, $sValue, $a) 
+    protected function check ($sKey, $sValue, $a)
     {
         if (empty($a['check']))
             return true;
         return $this->{$a['check'][0]}($sValue, $a['check'][1]);
     }
 
-    protected function checkLength ($s, $i) 
+    protected function checkLength ($s, $i)
     {
         return mb_strlen($s) >= $i ? true : false;
     }
 
-    protected function checkEmail ($s, $i) 
+    protected function checkEmail ($s, $i)
     {
         return mb_strlen($s) > $i && false !== strpos($s, '@') ? true : false;
     }
 
-    protected function def ($aData, $sKey, $a, &$sAutoMessage) 
+    protected function def ($aData, $sKey, $a, &$sAutoMessage)
     {
         if (isset($aData[$sKey]))
             return bx_process_pass($aData[$sKey]);
@@ -570,22 +570,22 @@ EOF;
         return isset($a['def']) ? $a['def'] : '';
     }
 
-    protected function defUrl ($foo) 
+    protected function defUrl ($foo)
     {
         $s = "http://" . $this->_sServerHttpHost . $this->_sServerPhpSelf;
         return preg_replace("/install\/(index\.php$)/", '', $s);
     }
 
-    protected function defPath ($foo) 
+    protected function defPath ($foo)
     {
         $s = rtrim($this->_sServerDocumentRoot, '/') . $this->_sServerPhpSelf;
         return preg_replace("/install\/(index\.php$)/", '', $s);
     }
 
-    protected function defImageMagickBin ($sBin) 
+    protected function defImageMagickBin ($sBin)
     {
         $a = array(
-            '/usr/X11R6/bin/', 
+            '/usr/X11R6/bin/',
             '/usr/local/bin/',
             '/usr/bin/',
             '/usr/local/X11R6/bin/',

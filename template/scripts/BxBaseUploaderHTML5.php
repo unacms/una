@@ -10,15 +10,16 @@
 bx_import ('BxDolUploader');
 
 /**
- * Upload files using AJAX uploader with multiple files selection support (without flash), 
+ * Upload files using AJAX uploader with multiple files selection support (without flash),
  * it works in Firefox and WebKit(Safari, Chrome) browsers only, but has fallback for other browsers (IE, Opera).
  * @see BxDolUploader
  */
-class BxBaseUploaderHTML5 extends BxDolUploader {    
-
+class BxBaseUploaderHTML5 extends BxDolUploader
+{
     protected $_sDivId; ///< div id where upload button will be placed
 
-    function __construct ($aObject, $sStorageObject, $sUniqId) {
+    function __construct ($aObject, $sStorageObject, $sUniqId)
+    {
         parent::__construct($aObject, $sStorageObject, $sUniqId);
 
         $this->_sDivId = 'bx-form-input-files-' . $sUniqId . '-div-' . $this->_aObject['object'];
@@ -27,9 +28,10 @@ class BxBaseUploaderHTML5 extends BxDolUploader {
 
     /**
      * Show uploader button.
-     * @return HTML string 
+     * @return HTML string
      */
-    public function getUploaderButton($sGhostTemplate, $isMultiple = true, $aParams = array()) {
+    public function getUploaderButton($sGhostTemplate, $isMultiple = true, $aParams = array())
+    {
         $s = parent::getUploaderButton($sGhostTemplate, $isMultiple, $aParams);
 
         $this->_oTemplate->addJs('fileuploader.js');
@@ -40,7 +42,8 @@ class BxBaseUploaderHTML5 extends BxDolUploader {
     /**
      * Get uploader button title
      */
-    public function getUploaderButtonTitle($mixed = false) {
+    public function getUploaderButtonTitle($mixed = false)
+    {
         if (is_string($mixed))
             return $mixed;
         elseif (is_array($mixed) && isset($mixed['HTML5']))
@@ -51,9 +54,10 @@ class BxBaseUploaderHTML5 extends BxDolUploader {
 
     /**
      * Show uploader form.
-     * @return HTML string 
+     * @return HTML string
      */
-    public function getUploaderForm($isMultiple = true, $iContentId = false) {
+    public function getUploaderForm($isMultiple = true, $iContentId = false)
+    {
         parent::getUploaderForm($isMultiple, $iContentId);
 
         $sForm = $this->_oTemplate->parseHtmlByName('uploader_form_html5.html', array(
@@ -74,8 +78,8 @@ class BxBaseUploaderHTML5 extends BxDolUploader {
      * @param $mixedFiles as usual $_FILES['some_name'] array, but maybe some other params depending on the uploader
      * @return nothing, but if some files failed to upload, the actual error message can be determined by calling BxDolUploader::getUploadErrorMessages()
      */
-    public function handleUploads ($iProfileId, $mixedFiles, $isMultiple = true, $iContentId = false) {
-
+    public function handleUploads ($iProfileId, $mixedFiles, $isMultiple = true, $iContentId = false)
+    {
         bx_import('BxDolStorage');
         $oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
 
@@ -94,7 +98,7 @@ class BxBaseUploaderHTML5 extends BxDolUploader {
         } else {
             $this->appendUploadErrorMessage(_t('_sys_uploader_err_msg', isset($_FILES['qqfile']['name']) ? $_FILES['qqfile']['name'] : bx_get('qqfile'), $oStorage->getErrorString()));
             $aResponse = array ('error' => $this->getUploadErrorMessages());
-        }         
+        }
 
         echo htmlspecialchars(json_encode($aResponse), ENT_NOQUOTES);
     }

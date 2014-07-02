@@ -10,11 +10,13 @@
 
 bx_import('BxDolStudioNavigationSets');
 bx_import('BxTemplStudioFormView');
-        
-class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets {
+
+class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets
+{
     protected $sUrlViewItems;
 
-    function __construct($aOptions, $oTemplate = false) {
+    function __construct($aOptions, $oTemplate = false)
+    {
         parent::__construct($aOptions, $oTemplate);
 
         $this->_aOptions['actions_single']['edit']['attr']['title'] = _t('_adm_nav_btn_sets_edit');
@@ -23,7 +25,8 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets {
         $this->sUrlViewItems = BX_DOL_URL_STUDIO . 'builder_menu.php?page=items&module=%s&set=%s';
     }
 
-    public function performActionAdd() {
+    public function performActionAdd()
+    {
         $sAction = 'add';
 
         $aForm = array(
@@ -67,7 +70,7 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets {
                     ),
                 ),
                 'controls' => array(
-                    'name' => 'controls', 
+                    'name' => 'controls',
                     'type' => 'input_set',
                     array(
                         'type' => 'submit',
@@ -103,8 +106,7 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets {
                 $aRes = array('msg' => _t('_adm_nav_err_sets_create'));
 
             $this->_echoResultJson($aRes, true);
-        }
-        else {
+        } else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-nav-set-create-popup', _t('_adm_nav_txt_sets_create_popup'), $this->_oTemplate->parseHtmlByName('nav_add_set.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
@@ -117,7 +119,8 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets {
         }
     }
 
-    public function performActionEdit() {
+    public function performActionEdit()
+    {
         $sAction = 'edit';
 
         $aIds = bx_get('ids');
@@ -156,7 +159,7 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets {
                 ),
             ),
             'inputs' => array (
-            	'set_name' => array(
+                'set_name' => array(
                     'type' => 'hidden',
                     'name' => 'set_name',
                     'value' => $sId,
@@ -181,7 +184,7 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets {
                     ),
                 ),
                 'controls' => array(
-                    'name' => 'controls', 
+                    'name' => 'controls',
                     'type' => 'input_set',
                     array(
                         'type' => 'submit',
@@ -212,8 +215,7 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets {
                 $aRes = array('msg' => _t('_adm_nav_err_sets_edit'));
 
             $this->_echoResultJson($aRes, true);
-        }
-        else {
+        } else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-nav-set-edit-popup', _t('_adm_nav_txt_sets_edit_popup', _t($aSet['title'])), $this->_oTemplate->parseHtmlByName('nav_add_set.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
@@ -226,7 +228,8 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets {
         }
     }
 
-    public function performActionDelete() {
+    public function performActionDelete()
+    {
         $iAffected = 0;
         $aIds = bx_get('ids');
         if(!$aIds || !is_array($aIds)) {
@@ -250,7 +253,7 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets {
                 continue;
 
             $aMenus = array();
-            $this->oDb->getMenus(array('type' => 'by_set_name', 'value' => $sId), $aMenus, false);    
+            $this->oDb->getMenus(array('type' => 'by_set_name', 'value' => $sId), $aMenus, false);
             if(is_array($aMenus) && count($aMenus) > 0) {
                 $this->_echoResultJson(array('msg' => _t('_adm_nav_err_sets_delete_used')));
                 exit;
@@ -263,7 +266,7 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets {
             $this->oDb->getItems(array('type' => 'by_set_name', 'value' => $aSet['name']), $aItems, false);
             if(is_array($aItems) && !empty($aItems))
                 foreach($aItems as $aItem)
-                    $oGridItems->deleteByItem($aItem); 
+                    $oGridItems->deleteByItem($aItem);
 
             bx_import('BxDolStudioLanguagesUtils');
             BxDolStudioLanguagesUtils::getInstance()->deleteLanguageString($aSet['title']);
@@ -275,11 +278,13 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets {
         $this->_echoResultJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t('_adm_nav_err_sets_delete')));
     }
 
-    function getJsObject() {
+    function getJsObject()
+    {
         return 'oBxDolStudioNavigationSets';
     }
 
-    function getCode($isDisplayHeader = true) {
+    function getCode($isDisplayHeader = true)
+    {
         return $this->_oTemplate->parseHtmlByName('nav_sets.html', array(
             'content' => parent::getCode($isDisplayHeader),
             'js_object' => $this->getJsObject(),
@@ -288,7 +293,8 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets {
         ));
     }
 
-    protected function _addJsCss() {
+    protected function _addJsCss()
+    {
         parent::_addJsCss();
         $this->_oTemplate->addJs(array('jquery.form.min.js', 'navigation_sets.js'));
 
@@ -297,33 +303,37 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets {
         $oForm->addCssJs();
     }
 
-    protected function _getCellModule($mixedValue, $sKey, $aField, $aRow) {
+    protected function _getCellModule($mixedValue, $sKey, $aField, $aRow)
+    {
         $mixedValue = $this->_limitMaxLength($this->getModuleTitle($aRow['module']), $sKey, $aField, $aRow, $this->_isDisplayPopupOnTextOverflow);
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 
-    protected function _getCellItems ($mixedValue, $sKey, $aField, $aRow) {
+    protected function _getCellItems ($mixedValue, $sKey, $aField, $aRow)
+    {
         $aSets = array();
         $this->oDb->getSets(array('type' => 'by_name', 'value' => $aRow['set_name']), $aSets, false);
 
         $mixedValue = $this->_oTemplate->parseHtmlByName('bx_a.html', array(
             'href' => sprintf($this->sUrlViewItems, $aRow['module'], $aRow['set_name']),
             'title' => _t('_adm_nav_txt_manage_items'),
-        	'bx_repeat:attrs' => array(),
+            'bx_repeat:attrs' => array(),
             'content' => _t('_adm_nav_txt_n_items', $aSets['items_count'])
         ));
 
         return parent::_getCellDefault ($mixedValue, $sKey, $aField, $aRow);
     }
 
-    protected function _getActionDelete ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array()) {
+    protected function _getActionDelete ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
         if ($sType == 'single' && (int)$aRow['deletable'] != 1)
             return '';
 
         return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
     }
 
-    protected function _getFilterControls () {
+    protected function _getFilterControls ()
+    {
         parent::_getFilterControls();
 
         return  $this->getModulesSelectAll('getSets') . $this->getSearchInput();

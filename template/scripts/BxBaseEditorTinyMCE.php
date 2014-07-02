@@ -13,12 +13,12 @@ bx_import('BxDolEditor');
  * TinyMCE editor representation.
  * @see BxDolEditor
  */
-class BxBaseEditorTinyMCE extends BxDolEditor 
+class BxBaseEditorTinyMCE extends BxDolEditor
 {
     /**
      * Common initialization params
      */
-    protected static $CONF_COMMON = "                    
+    protected static $CONF_COMMON = "
                     jQuery('{bx_var_selector}').tinymce({
                         {bx_var_custom_init}
                         document_base_url: '{bx_url_root}',
@@ -79,7 +79,7 @@ class BxBaseEditorTinyMCE extends BxDolEditor
     protected $_oTemplate;
     protected $_bJsCssAdded = false;
 
-    public function __construct ($aObject, $oTemplate) 
+    public function __construct ($aObject, $oTemplate)
     {
         parent::__construct ($aObject);
 
@@ -95,7 +95,7 @@ class BxBaseEditorTinyMCE extends BxDolEditor
      * @param $iViewMode - editor view mode: BX_EDITOR_STANDARD, BX_EDITOR_MINI, BX_EDITOR_FULL
      * @param $bDynamicMode - is AJAX mode or not, the HTML with editor area is loaded dynamically.
      */
-    public function attachEditor ($sSelector, $iViewMode = BX_EDITOR_STANDARD, $bDynamicMode = false) 
+    public function attachEditor ($sSelector, $iViewMode = BX_EDITOR_STANDARD, $bDynamicMode = false)
     {
         // set visual mode
         switch ($iViewMode) {
@@ -114,9 +114,8 @@ class BxBaseEditorTinyMCE extends BxDolEditor
         bx_import('BxDolLanguages');
         $sLang = BxDolLanguages::getInstance()->detectLanguageFromArray (self::$CONF_LANGS);
 
-                
         // initialize editor
-        $sInitEditor = $this->_replaceMarkers(self::$CONF_COMMON, array(            
+        $sInitEditor = $this->_replaceMarkers(self::$CONF_COMMON, array(
             'bx_var_custom_init' => $sToolsItems,
             'bx_var_plugins_path' => bx_js_string(BX_DOL_URL_PLUGINS, BX_ESCAPE_STR_APOS),
             'bx_var_css_path' => bx_js_string($this->_oTemplate->getCssUrl('editor.css'), BX_ESCAPE_STR_APOS),
@@ -158,7 +157,7 @@ class BxBaseEditorTinyMCE extends BxDolEditor
     /**
      * Add css/js files which are needed for editor display and functionality.
      */
-    protected function _addJsCss($bDynamicMode = false, $sInitEditor = '') 
+    protected function _addJsCss($bDynamicMode = false, $sInitEditor = '')
     {
         if ($bDynamicMode)
             return '';

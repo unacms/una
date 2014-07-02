@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    BaseProfile Base classes for profile modules
  * @ingroup     DolphinModules
  *
@@ -14,9 +14,9 @@ bx_import('BxBaseModGeneralTemplate');
 /*
  * Profile based modules representation.
  */
-class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate 
+class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 {
-    function __construct(&$oConfig, &$oDb) 
+    function __construct(&$oConfig, &$oDb)
     {
         parent::__construct($oConfig, $oDb);
     }
@@ -24,12 +24,12 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     /**
      * Get profile unit
      */
-    function unit ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html') 
+    function unit ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html')
     {
         $CNF = &$this->_oConfig->CNF;
 
         // TODO: add privacy checking here
-    
+
         // get profile's url
         bx_import('BxDolPermalinks');
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
@@ -50,7 +50,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     /**
      * Get profile cover
      */
-    function cover ($aData, $sTemplateName = 'cover.html') 
+    function cover ($aData, $sTemplateName = 'cover.html')
     {
         $CNF = &$this->_oConfig->CNF;
 
@@ -64,7 +64,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         $sUrlPictureChange = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_EDIT_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
 
         $sUrlCover = $this->urlCover ($aData);
-        $sUrlCoverChange = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_EDIT_COVER'] . '&id=' . $aData[$CNF['FIELD_ID']]);        
+        $sUrlCoverChange = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_EDIT_COVER'] . '&id=' . $aData[$CNF['FIELD_ID']]);
 
         $sCoverPopup = '';
         $sCoverPopupId = $this->MODULE . '-popup-cover';
@@ -96,7 +96,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             )), true, true);
         }
 
-        // generate html        
+        // generate html
         $aVars = array (
             'id' => $aData[$CNF['FIELD_ID']],
             'content_url' => $sUrl,
@@ -106,7 +106,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             'picture_popup' => $sPicturePopup,
             'picture_popup_id' => $sPicturePopupId,
             'picture_url' => $sUrlPicture,
-            'picture_href' => !$aData[$CNF['FIELD_PICTURE']] && CHECK_ACTION_RESULT_ALLOWED === $oModule->checkAllowedEdit($aData) ? $sUrlPictureChange : 'javascript:void(0);',            
+            'picture_href' => !$aData[$CNF['FIELD_PICTURE']] && CHECK_ACTION_RESULT_ALLOWED === $oModule->checkAllowedEdit($aData) ? $sUrlPictureChange : 'javascript:void(0);',
 
             'cover_popup' => $sCoverPopup,
             'cover_popup_id' => $sCoverPopupId,
@@ -120,7 +120,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     /**
      * Get profile picture thumb url
      */
-    function thumb ($aData, $bSubstituteNoImage = true) 
+    function thumb ($aData, $bSubstituteNoImage = true)
     {
         $CNF = &$this->_oConfig->CNF;
         return $this->_image ($CNF['FIELD_PICTURE'], $CNF['OBJECT_IMAGES_TRANSCODER_THUMB'], 'no-picture-thumb.png', $aData, $bSubstituteNoImage);
@@ -129,7 +129,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     /**
      * Get profile picture icon url
      */
-    function icon ($aData, $bSubstituteNoImage = true) 
+    function icon ($aData, $bSubstituteNoImage = true)
     {
         $CNF = &$this->_oConfig->CNF;
         return $this->_image ($CNF['FIELD_PICTURE'], $CNF['OBJECT_IMAGES_TRANSCODER_ICON'], 'no-picture-icon.png', $aData, $bSubstituteNoImage);
@@ -138,7 +138,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     /**
      * Get profile picture preview url
      */
-    function urlAvatar ($aData, $bSubstituteNoImage = true) 
+    function urlAvatar ($aData, $bSubstituteNoImage = true)
     {
         $CNF = &$this->_oConfig->CNF;
         return $this->_image ($CNF['FIELD_PICTURE'], $CNF['OBJECT_IMAGES_TRANSCODER_AVATAR'], 'no-picture-preview.png', $aData, $bSubstituteNoImage);
@@ -147,7 +147,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     /**
      * Get profile picture url
      */
-    function urlPicture ($aData, $bSubstituteNoImage = true) 
+    function urlPicture ($aData, $bSubstituteNoImage = true)
     {
         $CNF = &$this->_oConfig->CNF;
         return $this->_image ($CNF['FIELD_PICTURE'], $CNF['OBJECT_IMAGES_TRANSCODER_PICTURE'], 'no-picture-preview.png', $aData, $bSubstituteNoImage);
@@ -156,7 +156,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     /**
      * Get profile cover image url
      */
-    function urlCover ($aData, $bSubstituteNoImage = true) 
+    function urlCover ($aData, $bSubstituteNoImage = true)
     {
         $CNF = &$this->_oConfig->CNF;
         return $this->_image ($CNF['FIELD_COVER'], $CNF['OBJECT_IMAGES_TRANSCODER_COVER'], 'no-picture-cover.png', $aData, $bSubstituteNoImage);
@@ -165,11 +165,11 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     /**
      * Get profile picture icon url
      */
-    function _image ($sField, $sTranscodeObject, $sNoImage, $aData, $bSubstituteNoImage = true) 
+    function _image ($sField, $sTranscodeObject, $sNoImage, $aData, $bSubstituteNoImage = true)
     {
         $sImageUrl = false;
         if ($aData[$sField]) {
-            bx_import('BxDolImageTranscoder');                    
+            bx_import('BxDolImageTranscoder');
             $oImagesTranscoder = BxDolImageTranscoder::getObjectInstance($sTranscodeObject);
             if ($oImagesTranscoder)
                 $sImageUrl = $oImagesTranscoder->getImageUrl($aData[$sField]);
@@ -178,5 +178,4 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     }
 }
 
-/** @} */ 
-
+/** @} */

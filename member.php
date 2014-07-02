@@ -12,7 +12,7 @@ require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
 bx_import('BxDolLanguages');
 
-if (isset($_POST['ID'])) { // login form is submitted    
+if (isset($_POST['ID'])) { // login form is submitted
 
     bx_import ('BxDolForm');
     $oForm = BxDolForm::getObjectInstance('sys_login', 'sys_login');
@@ -20,7 +20,7 @@ if (isset($_POST['ID'])) { // login form is submitted
     bx_alert('account', 'before_login', 0, 0, array('form' => $oForm));
 
     $oForm->initChecker();
-    $oForm->setRole(bx_get('role'));    
+    $oForm->setRole(bx_get('role'));
     $bLoginSuccess = $oForm->isSubmittedAndValid();
 
     $bAjxMode = (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') ? true : false;
@@ -31,7 +31,7 @@ if (isset($_POST['ID'])) { // login form is submitted
         exit;
 
     } elseif ($bLoginSuccess) {
-        
+
         bx_import('BxDolAccount');
         $oAccount = BxDolAccount::getInstance($oForm->getCleanValue('ID'));
         $aAccount = bx_login($oAccount->id(), ($oForm->getCleanValue('rememberMe') ? true : false));
@@ -50,7 +50,7 @@ if (isset($_POST['ID'])) { // login form is submitted
         exit;
     }
 
-} 
+}
 
 bx_require_authentication();
 
@@ -58,4 +58,3 @@ bx_import('BxDolPermalinks');
 header('Location: ' . BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=account-profile-switcher'));
 
 /** @} */
-

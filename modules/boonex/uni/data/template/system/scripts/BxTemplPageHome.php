@@ -12,8 +12,10 @@ bx_import('BxBasePageHome');
 /**
  * @see BxBasePageHome
  */
-class BxTemplPageHome extends BxBasePageHome {
-    public function __construct($aObject, $oTemplate = false) {
+class BxTemplPageHome extends BxBasePageHome
+{
+    public function __construct($aObject, $oTemplate = false)
+    {
         parent::__construct($aObject, $oTemplate);
     }
 }

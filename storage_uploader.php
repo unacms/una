@@ -22,7 +22,6 @@ if (false === $iContentId || '' === $iContentId)
 else
     $iContentId = bx_process_input($iContentId, BX_DATA_INT);
 
-
 if (!$sUploaderObject || !$sStorageObject || !$sUniqId)
     exit;
 
@@ -39,27 +38,27 @@ switch ($sAction) {
 
     case 'show_uploader_form':
         header('Content-type: text/html; charset=utf-8');
-        
+
         require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
         bx_import('BxDolLanguages');
-        
+
         echo $oUploader->getUploaderForm($isMultiple, $iContentId);
         break;
-    
+
     case 'restore_ghosts':
         header('Content-type: text/html; charset=utf-8');
         $sImagesTranscoder = bx_process_input(bx_get('img_trans'));
-        echo $oUploader->getGhosts(bx_get_logged_profile_id(), $sFormat, $sImagesTranscoder, $iContentId); 
+        echo $oUploader->getGhosts(bx_get_logged_profile_id(), $sFormat, $sImagesTranscoder, $iContentId);
         break;
-    
+
     case 'delete':
         header('Content-type: text/html; charset=utf-8');
         $iFileId = bx_process_input(bx_get('id'), BX_DATA_INT);
         echo $oUploader->deleteGhost($iFileId, bx_get_logged_profile_id());
         break;
 
-    case 'upload':   
+    case 'upload':
         header('Content-type: text/html; charset=utf-8');
 
         bx_import('BxDolLanguages');
@@ -68,4 +67,3 @@ switch ($sAction) {
         break;
 
 }
-

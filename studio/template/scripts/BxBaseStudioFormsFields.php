@@ -13,11 +13,13 @@ bx_import('BxTemplStudioFormsField');
 
 define('BX_DOL_STUDIO_FORMS_FIELDS_JS_OBJECT', 'oBxDolStudioFormsFields');
 
-class BxBaseStudioFormsFields extends BxDolStudioFormsFields {
+class BxBaseStudioFormsFields extends BxDolStudioFormsFields
+{
     protected $sClass;
     protected $sUrlPage;
 
-    function __construct($aOptions, $oTemplate = false) {
+    function __construct($aOptions, $oTemplate = false)
+    {
         parent::__construct($aOptions, $oTemplate);
 
         $this->_aConfirmMessages['delete'] = _t('_adm_form_txt_confirm_delete');
@@ -28,7 +30,8 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields {
         $this->sUrlPage = BX_DOL_URL_STUDIO . 'builder_forms.php?page=fields';
     }
 
-    public function performActionAdd() {
+    public function performActionAdd()
+    {
         $sAction = 'add';
 
         $sType = '';
@@ -52,7 +55,8 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields {
         }
     }
 
-    public function performActionEdit() {
+    public function performActionEdit()
+    {
         $sAction = 'edit';
 
         $aIds = bx_get('ids');
@@ -95,7 +99,8 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields {
         }
     }
 
-    public function performActionDelete() {
+    public function performActionDelete()
+    {
         $sAction = 'delete';
 
         $iAffected = 0;
@@ -139,7 +144,8 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields {
         $this->_echoResultJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t('_adm_from_err_field_delete')));
     }
 
-    public function performActionShowTo() {
+    public function performActionShowTo()
+    {
         $sAction = 'show_to';
 
         $aIds = bx_get('ids');
@@ -154,7 +160,7 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields {
         }
 
         $iId = $aIds[0];
-                
+
         $aField = array();
         $this->oDb->getInputs(array('type' => 'by_object_id', 'object' => $this->sObject, 'id' => (int)$iId), $aField, false);
         if(empty($aField) || !is_array($aField)) {
@@ -178,7 +184,7 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields {
                 ),
             ),
             'inputs' => array (
-            	'id' => array(
+                'id' => array(
                     'type' => 'hidden',
                     'name' => 'id',
                     'value' => $iId,
@@ -193,8 +199,8 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields {
                     'info' => '',
                     'value' => $aField['visible_for_levels'] == BX_DOL_INT_MAX ? BX_DOL_STUDIO_VISIBLE_ALL : BX_DOL_STUDIO_VISIBLE_SELECTED,
                     'values' => array(
-            			array('key' => BX_DOL_STUDIO_VISIBLE_ALL, 'value' => _t('_adm_form_txt_field_visible_for_all')),
-            			array('key' => BX_DOL_STUDIO_VISIBLE_SELECTED, 'value' => _t('_adm_form_txt_field_visible_for_selected')),
+                        array('key' => BX_DOL_STUDIO_VISIBLE_ALL, 'value' => _t('_adm_form_txt_field_visible_for_all')),
+                        array('key' => BX_DOL_STUDIO_VISIBLE_SELECTED, 'value' => _t('_adm_form_txt_field_visible_for_selected')),
                     ),
                     'required' => '0',
                     'attrs' => array(
@@ -207,7 +213,7 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields {
                 'visible_for_levels' => array(
                     'type' => 'checkbox_set',
                     'name' => 'visible_for_levels',
-                	'caption' => _t('_adm_form_txt_field_visible_for_levels'),
+                    'caption' => _t('_adm_form_txt_field_visible_for_levels'),
                     'info' => _t('_adm_form_dsc_field_visible_for_levels'),
                     'value' => '',
                     'values' => array(),
@@ -219,7 +225,7 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields {
                     ),
                 ),
                 'controls' => array(
-                    'name' => 'controls', 
+                    'name' => 'controls',
                     'type' => 'input_set',
                     array(
                         'type' => 'submit',
@@ -252,8 +258,7 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields {
                 $aRes = array('msg' => _t('_adm_form_err_field_show_to'));
 
             $this->_echoResultJson($aRes, true);
-        }
-        else {
+        } else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-form-field-show-to-popup', _t('_adm_form_txt_field_show_to_popup', _t($aField['caption_system'])), $this->_oTemplate->parseHtmlByName('form_add_field.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
@@ -266,11 +271,13 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields {
         }
     }
 
-    function getJsObject() {
+    function getJsObject()
+    {
         return BX_DOL_STUDIO_FORMS_FIELDS_JS_OBJECT;
     }
 
-    function getDisplaysSelector($sModule = '') {
+    function getDisplaysSelector($sModule = '')
+    {
         bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
 
@@ -279,7 +286,7 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields {
             'name' => 'display',
             'attrs' => array(
                 'id' => 'bx-grid-display-' . $this->_sObject,
-            	'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeDisplay()'
+                'onChange' => 'javascript:' . $this->getJsObject() . '.onChangeDisplay()'
             ),
             'value' => $this->sObject . $this->sParamsDivider . $this->sDisplay,
             'values' => array(
@@ -296,22 +303,22 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields {
         if(!empty($aDisplays)) {
             $aDisplaysGrouped = $aCounter = array();
             $this->oDb->getInputs(array('type' => 'counter_by_displays'), $aCounter, false);
-    
+
             foreach($aDisplays as $aDisplay)
                 $aDisplaysGrouped[_t($aDisplay['form_title'])][] = $aDisplay;
             ksort($aDisplaysGrouped);
-    
+
             foreach($aDisplaysGrouped as $sForm => $aDisplays) {
                 if(!empty($aDisplays))
                     $aInputDisplays['values'][] = array('type' => 'group_header', 'value' => _t($aDisplays[0]['form_title']) . " (" . (isset($aCounter[$aDisplays[0]['name']]) ? $aCounter[$aDisplays[0]['name']] : "0") . ")");
-    
+
                 $aDisplaysSubgroup = array();
                 foreach($aDisplays as $aDisplay)
                     $aDisplaysSubgroup[$aDisplay['object'] . $this->sParamsDivider . $aDisplay['name']] = _t($aDisplay['title']);
-    
+
                 asort($aDisplaysSubgroup);
                 $aInputDisplays['values'] = array_merge($aInputDisplays['values'], $aDisplaysSubgroup);
-    
+
                 if(!empty($aDisplays))
                     $aInputDisplays['values'][] = array('type' => 'group_end');
             }
@@ -320,17 +327,19 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields {
         return $oForm->genRow($aInputDisplays);
     }
 
-    function getCode($isDisplayHeader = true) {
+    function getCode($isDisplayHeader = true)
+    {
         return $this->_oTemplate->parseHtmlByName('forms_fields.html', array(
             'content' => parent::getCode($isDisplayHeader),
             'js_object' => $this->getJsObject(),
-        	'page_url' => $this->sUrlPage,
+            'page_url' => $this->sUrlPage,
             'grid_object' => $this->_sObject,
             'params_divider' => $this->sParamsDivider
         ));
     }
 
-    protected function _addJsCss() {
+    protected function _addJsCss()
+    {
         parent::_addJsCss();
         $this->_oTemplate->addCss(array('menu.css'));
         $this->_oTemplate->addJs(array('jquery.form.min.js', 'forms_fields.js'));
@@ -340,24 +349,28 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields {
         $oForm->addCssJs();
     }
 
-    protected function _getCellSwitcher ($mixedValue, $sKey, $aField, $aRow) {
+    protected function _getCellSwitcher ($mixedValue, $sKey, $aField, $aRow)
+    {
         if((int)$aRow['editable'] == 0)
             return parent::_getCellDefault('', $sKey, $aField, $aRow);
 
         return parent::_getCellSwitcher($mixedValue, $sKey, $aField, $aRow);
     }
 
-    protected function _getCellType ($mixedValue, $sKey, $aField, $aRow) {
+    protected function _getCellType ($mixedValue, $sKey, $aField, $aRow)
+    {
         $mixedValue = $this->_oTemplate->getIcon('ui-' . $aRow['type'] . '.png', array('alt' => _t('_adm_form_txt_field_type_' . $aRow['type'])));
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 
-    protected function _getCellModule($mixedValue, $sKey, $aField, $aRow) {
+    protected function _getCellModule($mixedValue, $sKey, $aField, $aRow)
+    {
         $mixedValue = $this->_limitMaxLength($this->getModuleTitle($aRow['module']), $sKey, $aField, $aRow, $this->_isDisplayPopupOnTextOverflow);
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 
-    protected function _getCellVisibleForLevels ($mixedValue, $sKey, $aField, $aRow) {
+    protected function _getCellVisibleForLevels ($mixedValue, $sKey, $aField, $aRow)
+    {
         if((int)$aRow['editable'] == 0)
             return parent::_getCellDefault('', $sKey, $aField, $aRow);
 
@@ -374,36 +387,42 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields {
         return parent::_getCellDefault ($mixedValue, $sKey, $aField, $aRow);
     }
 
-    protected function _getActionAdd ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array()) {
+    protected function _getActionAdd ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
         if($this->sDisplay == '')
             $isDisabled = true;
 
-        return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);        
+        return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
     }
 
-    protected function _getActionEdit ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array()) {
+    protected function _getActionEdit ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
         if($sType == 'single' && (int)$aRow['editable'] == 0)
             return '';
 
-        return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);        
+        return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
     }
 
-    protected function _getActionDelete ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array()) {
+    protected function _getActionDelete ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
         if($sType == 'single' && (int)$aRow['deletable'] == 0)
             return '';
 
-        return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);        
+        return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
     }
 
-    protected function _getActionShowTo ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array()) {
+    protected function _getActionShowTo ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
         return '';
     }
 
-    protected function _getActionsDisabledBehavior($aRow) {
+    protected function _getActionsDisabledBehavior($aRow)
+    {
         return false;
     }
 
-    protected function _getFilterControls () {
+    protected function _getFilterControls ()
+    {
         parent::_getFilterControls();
 
         $sContent = $this->getModulesSelectOne('getInputs') . $this->getDisplaysSelector($this->sModule);

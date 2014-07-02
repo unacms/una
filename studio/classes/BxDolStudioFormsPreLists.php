@@ -11,17 +11,20 @@ bx_import('BxTemplStudioGrid');
 bx_import('BxDolStudioTemplate');
 bx_import('BxDolStudioFormsQuery');
 
-class BxDolStudioFormsPreLists extends BxTemplStudioGrid {
-    public function __construct ($aOptions, $oTemplate = false) {
+class BxDolStudioFormsPreLists extends BxTemplStudioGrid
+{
+    public function __construct ($aOptions, $oTemplate = false)
+    {
         parent::__construct ($aOptions, $oTemplate);
 
         $this->oDb = new BxDolStudioFormsQuery();
     }
 
-    protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage) {
+    protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
+    {
         $sModule = '';
         if(strpos($sFilter, $this->sParamsDivider) !== false)
-            list($sModule, $sFilter) = explode($this->sParamsDivider, $sFilter);        
+            list($sModule, $sFilter) = explode($this->sParamsDivider, $sFilter);
 
         if($sModule != '')
             $this->_aOptions['source'] .= $this->oDb->prepare(" AND `module`=?", $sModule);

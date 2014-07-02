@@ -30,18 +30,15 @@ function getPeriod($sPeriod, $iLow, $iHigh)
     $iStep = 1;
     $sErr = '';
 
-    do
-    {
-        if ('' === $sPeriod)
-        {
+    do {
+        if ('' === $sPeriod) {
             $sErr = 'Variable sPeriod is emply';
             break;
         }
 
         $aParam = explode('/', $sPeriod);
 
-        if (count($aParam) > 2)
-        {
+        if (count($aParam) > 2) {
             $sErr = 'Error of format for string assigning period';
             break;
         }
@@ -51,12 +48,10 @@ function getPeriod($sPeriod, $iLow, $iHigh)
 
         $sPeriod = $aParam[0];
 
-        if ($sPeriod != '*')
-        {
+        if ($sPeriod != '*') {
             $aParam = explode('-', $sPeriod);
 
-            if (count($aParam) > 2)
-            {
+            if (count($aParam) > 2) {
                 $sErr = 'Error of format for string assigning period';
                 break;
             }
@@ -65,14 +60,11 @@ function getPeriod($sPeriod, $iLow, $iHigh)
                 $aRes = getRange($aParam[0], $aParam[1], $iStep);
             else
                 $aRes = explode(',', $sPeriod);
-        }
-        else
+        } else
             $aRes = getRange($iLow, $iHigh, $iStep);
-    }
-    while(false);
+    } while(false);
 
-    if ($sErr)
-    {
+    if ($sErr) {
         // show error or add to log
     }
 
@@ -87,10 +79,8 @@ function checkCronJob($sPeriods, $aDate = array())
     if(empty($aDate))
         $aDate = getdate(time());
 
-    for ($i = 0; $i < count($aParam); $i++)
-    {
-        switch ($i)
-        {
+    for ($i = 0; $i < count($aParam); $i++) {
+        switch ($i) {
             case 0:
                 $aRes = getPeriod($aParam[$i], 0, 59);
                 $bRes = in_array($aDate['minutes'], $aRes);
@@ -128,9 +118,8 @@ function runJob($aJob)
 
         $oHandler = new $aJob['class']();
         $oHandler->processing();
-    }
-    else if(!empty($aJob['service_call']) && BxDolService::isSerializedService($aJob['service_call']))
-		BxDolService::callSerialized($aJob['service_call']);
+    } else if(!empty($aJob['service_call']) && BxDolService::isSerializedService($aJob['service_call']))
+        BxDolService::callSerialized($aJob['service_call']);
 }
 
 $oDb = BxDolDb::getInstance();
@@ -142,4 +131,3 @@ foreach($aJobs as $aRow) {
     if (checkCronJob($aRow['time'], $aDate))
         runJob($aRow);
 }
-

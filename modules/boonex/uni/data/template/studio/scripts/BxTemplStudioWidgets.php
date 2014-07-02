@@ -11,8 +11,10 @@ defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxBaseStudioWidgets');
 
-class BxTemplStudioWidgets extends BxBaseStudioWidgets { 
-    function __construct($mixedPageName) {
+class BxTemplStudioWidgets extends BxBaseStudioWidgets
+{
+    function __construct($mixedPageName)
+    {
         parent::__construct($mixedPageName);
     }
 }

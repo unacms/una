@@ -11,8 +11,10 @@ defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxBaseStudioDashboard');
 
-class BxTemplStudioDashboard extends BxBaseStudioDashboard { 
-    function __construct() {
+class BxTemplStudioDashboard extends BxBaseStudioDashboard
+{
+    function __construct()
+    {
         parent::__construct();
     }
 }

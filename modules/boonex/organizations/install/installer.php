@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Organizations Organizations
  * @ingroup     DolphinModules
  *
@@ -11,9 +11,9 @@
 
 bx_import('BxBaseModProfileInstaller');
 
-class BxOrgsInstaller extends BxBaseModProfileInstaller 
+class BxOrgsInstaller extends BxBaseModProfileInstaller
 {
-    function __construct($aConfig) 
+    function __construct($aConfig)
     {
         parent::__construct($aConfig);
         $this->_aTranscoders = array ('bx_organizations_icon', 'bx_organizations_thumb', 'bx_organizations_avatar', 'bx_organizations_picture', 'bx_organizations_cover', 'bx_organizations_cover_thumb');
@@ -26,4 +26,4 @@ class BxOrgsInstaller extends BxBaseModProfileInstaller
     }
 }
 
-/** @} */ 
+/** @} */

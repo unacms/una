@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Developer Developer
  * @ingroup     DolphinModules
  *
@@ -11,13 +11,16 @@
 
 bx_import('BxDolModuleDb');
 
-class BxDevDb extends BxDolModuleDb {
-    function __construct(&$oConfig) {
+class BxDevDb extends BxDolModuleDb
+{
+    function __construct(&$oConfig)
+    {
         parent::__construct($oConfig);
     }
 
-    function getQueryInsert($sTable, $aItems, $mixedComment = false, $aExclude = array('id')) {
-    	bx_import('BxDevFunctions');
+    function getQueryInsert($sTable, $aItems, $mixedComment = false, $aExclude = array('id'))
+    {
+        bx_import('BxDevFunctions');
 
         $bFirst = true;
         $sContent = $sComment = "";
@@ -32,7 +35,7 @@ class BxDevDb extends BxDolModuleDb {
 
             bx_import('BxDevFunctions');
             foreach ($aValues as $iKey => $sValue)
-            	$aValues[$iKey] = BxDevFunctions::dbAddSlashes($sValue, true);
+                $aValues[$iKey] = BxDevFunctions::dbAddSlashes($sValue, true);
 
             if($bFirst) {
                 $sContent .= "INSERT INTO `" . $sTable . "`(`" . implode("`, `", $aKeys) . "`) VALUES \n";
@@ -52,7 +55,8 @@ class BxDevDb extends BxDolModuleDb {
         return $sComment . $sContent;
     }
 
-    function getQueryDelete($sTable, $sKey, $aItems, $mixedComment = false) {
+    function getQueryDelete($sTable, $sKey, $aItems, $mixedComment = false)
+    {
         $sContent = $sComment = "";
         foreach($aItems as $aItem)
             if(isset($aItem[$sKey])) {

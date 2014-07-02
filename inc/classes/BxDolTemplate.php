@@ -121,7 +121,8 @@ define('BX_PAGE_TRANSITION', 150); ///< transition page with redirect to display
  * no alerts available
  *
  */
-class BxDolTemplate extends BxDol implements iBxDolSingleton {
+class BxDolTemplate extends BxDol implements iBxDolSingleton
+{
     /**
      * Main fields
      */
@@ -182,8 +183,8 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     /**
      * Constructor
      */
-    protected function __construct($sRootPath = BX_DIRECTORY_PATH_ROOT, $sRootUrl = BX_DOL_URL_ROOT) {
-
+    protected function __construct($sRootPath = BX_DIRECTORY_PATH_ROOT, $sRootUrl = BX_DOL_URL_ROOT)
+    {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
@@ -260,7 +261,8 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     /**
      * Prevent cloning the instance
      */
-    public function __clone() {
+    public function __clone()
+    {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error('Clone is not allowed for the class: ' . get_class($this), E_USER_ERROR);
     }
@@ -268,7 +270,8 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     /**
      * Get singleton instance of the class
      */
-    public static function getInstance() {
+    public static function getInstance()
+    {
         if(!isset($GLOBALS['bxDolClasses'][__CLASS__])) {
             $GLOBALS['bxDolClasses'][__CLASS__] = new BxDolTemplate();
             $GLOBALS['bxDolClasses'][__CLASS__]->init();
@@ -276,11 +279,12 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
 
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
-    
+
     /**
      * Load templates.
      */
-    function loadTemplates() {
+    function loadTemplates()
+    {
         $aResult = array();
         foreach($this->_aTemplates as $sName)
             $aResult[$sName] = $this->getHtml($sName . '.html');
@@ -290,7 +294,8 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      * Initialize template engine.
      * Note. The method is executed with the system, you shouldn't execute it in your subclasses.
      */
-    function init() {
+    function init()
+    {
         //--- Load page elements related static variables ---//
         $this->aPage = array(
             'name_index' => BX_PAGE_DEFAULT,
@@ -301,10 +306,10 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
             'robots' => '',
             'css_name' => array(),
             'css_compiled' => array(),
-        	'css_system' => array(),
+            'css_system' => array(),
             'js_name' => array(),
             'js_compiled' => array(),
-        	'js_system' => array(),
+            'js_system' => array(),
             'js_options' => array(),
             'js_translations' => array(),
             'js_images' => array(),
@@ -343,7 +348,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
         bx_import('BxDolLanguages');
         $this->addJsTranslation(array(
             '_are you sure?',
-        	'_error occured',
+            '_error occured',
             '_sys_loading',
         ));
 
@@ -364,12 +369,12 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
 
         $this->aPage['injections'] = $aInjections;
 
-
         bx_import('BxTemplConfig');
         $this->_oConfigTemplate = BxTemplConfig::getInstance();
     }
 
-    protected function getInjectionsData () {
+    protected function getInjectionsData ()
+    {
         $oDb = BxDolDb::getInstance();
 
         $aInjections = $oDb->getAll("SELECT `page_index`, `name`, `key`, `type`, `data`, `replace` FROM `" . $this->_sInjectionsTable . "` WHERE `active`='1'");
@@ -386,31 +391,35 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      * Set page name index
      * @param int $i name index
      */
-    function setPageNameIndex($i) {
+    function setPageNameIndex($i)
+    {
         $this->aPage['name_index'] = $i;
     }
-    
+
     /**
      * Get page name index
      * @return int $i name index
      */
-    function getPageNameIndex() {
-    	return isset($this->aPage['name_index']) ? (int)$this->aPage['name_index'] : 0;
+    function getPageNameIndex()
+    {
+        return isset($this->aPage['name_index']) ? (int)$this->aPage['name_index'] : 0;
     }
 
     /**
      * Set page header
      * @param string $s page header
      */
-    function setPageHeader($s) {
+    function setPageHeader($s)
+    {
         $this->aPage['header'] = $s;
     }
-    
+
     /**
      * Get page header
      * @return string $s page header
      */
-    function getPageHeader() {
+    function getPageHeader()
+    {
         return $this->aPage['header'];
     }
 
@@ -418,7 +427,8 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      * Set page params. Available page params are: name_index, header
      * @param array $a page params
      */
-    function setPageParams($a) {
+    function setPageParams($a)
+    {
         if (!empty($this->aPage))
             $this->aPage = array_merge($this->aPage, $a);
         else
@@ -429,7 +439,8 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      * Get page params.
      * @return array $a page params
      */
-    function getPageParams() {
+    function getPageParams()
+    {
         return $this->aPage;
     }
 
@@ -438,7 +449,8 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      *
      * @param string $sDescription necessary page description.
      */
-    function setPageDescription($sDescription) {
+    function setPageDescription($sDescription)
+    {
         $this->aPage['description'] = $sDescription;
     }
 
@@ -447,28 +459,31 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      *
      * @param string $s page meta robots.
      */
-    function setPageMetaRobots($s) {
+    function setPageMetaRobots($s)
+    {
         $this->aPage['robots'] = $s;
     }
 
     /**
      * Set page content for some variable.
-     * @param string $sVar name of content variable
+     * @param string $sVar     name of content variable
      * @param string $sContent content for $sVar variable
-     * @param int $iIndex optional page index, default is index which was set before with @see setPageNameIndex function, or 0
+     * @param int    $iIndex   optional page index, default is index which was set before with @see setPageNameIndex function, or 0
      */
-    function setPageContent($sVar, $sContent, $iIndex = false) {
+    function setPageContent($sVar, $sContent, $iIndex = false)
+    {
         $i = false !== $iIndex ? $iIndex : $this->getPageNameIndex();
         $this->aPageContent[$i][$sVar] = $sContent;
     }
 
     /**
      * Get page content for some variable.
-     * @param string $sVar name of content variable
-     * @param int $iIndex optional page index, default is index which was set before with @see setPageNameIndex function, or 0
+     * @param  string $sVar   name of content variable
+     * @param  int    $iIndex optional page index, default is index which was set before with @see setPageNameIndex function, or 0
      * @return string page content for some variable or for the whole page.
      */
-    function getPageContent($sVar = false, $iIndex = false) {
+    function getPageContent($sVar = false, $iIndex = false)
+    {
         $i = false !== $iIndex ? $iIndex : $this->getPageNameIndex();
         return false !== $sVar ? $this->aPageContent[$i][$sVar] : $this->aPageContent[$i];
     }
@@ -478,17 +493,19 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      *
      * @return string template's code.
      */
-    function getCode() {
+    function getCode()
+    {
         return $this->_sCode;
     }
 
-	/**
-     * Check whether code is associated with active template.  
-     * 
-     * @param string $sCode template's unique URI. 
+    /**
+     * Check whether code is associated with active template.
+     *
+     * @param string  $sCode      template's unique URI.
      * @param boolean $bSetCookie save code in COOKIE or not.
      */
-    protected function _checkCode($sCode, $bSetCookie) {
+    protected function _checkCode($sCode, $bSetCookie)
+    {
         if(empty($sCode) || !preg_match('/^[A-Za-z0-9_-]+$/', $sCode))
             return;
 
@@ -512,12 +529,13 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
         setcookie( $this->_sCodeKey, $this->_sCode, time() + 60*60*24*365, $sPath);
     }
 
-	/**
+    /**
      * Get currently active template path.
      *
      * @return string template's path.
      */
-    function getPath() {
+    function getPath()
+    {
         return $this->_sSubPath;
     }
 
@@ -527,7 +545,8 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      *
      * @param string $sTitle necessary page title.
      */
-    function setPageTitle($sTitle) {
+    function setPageTitle($sTitle)
+    {
         $this->setPageHeader($sTitle);
     }
 
@@ -537,7 +556,8 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      *
      * @param string $sTitle necessary page's main box title.
      */
-    function setPageMainBoxTitle($sTitle) {
+    function setPageMainBoxTitle($sTitle)
+    {
         $this->setPageParams(array('header_text' => $sTitle));
     }
 
@@ -545,11 +565,12 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      * Add location in array of locations.
      * Note. Location is the path/url to folder where 'templates' folder is stored.
      *
-     * @param string $sKey - location's    unique key.
+     * @param string $sKey          - location's    unique key.
      * @param string $sLocationPath - location's path. For modules: '[path_to_dolphin]/modules/[vendor_name]/[module_name]/'
-     * @param string $sLocationUrl - location's url. For modules: '[url_to_dolphin]/modules/[vendor_name]/[module_name]/'
+     * @param string $sLocationUrl  - location's url. For modules: '[url_to_dolphin]/modules/[vendor_name]/[module_name]/'
      */
-    function addLocation($sKey, $sLocationPath, $sLocationUrl) {
+    function addLocation($sKey, $sLocationPath, $sLocationUrl)
+    {
         $this->_aLocations[$sKey] = array(
             'path' => $sLocationPath,
             'url' => $sLocationUrl,
@@ -559,12 +580,13 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     }
     /**
      * Add dynamic location.
-     * 
-     * @param string $sLocationPath - location's path. For modules: '[path_to_dolphin]/modules/[vendor_name]/[module_name]/'
-     * @param string $sLocationUrl - location's url. For modules: '[url_to_dolphin]/modules/[vendor_name]/[module_name]/'
+     *
+     * @param  string   $sLocationPath - location's path. For modules: '[path_to_dolphin]/modules/[vendor_name]/[module_name]/'
+     * @param  string   $sLocationUrl  - location's url. For modules: '[url_to_dolphin]/modules/[vendor_name]/[module_name]/'
      * @return location key. Is needed to remove the location.
      */
-    function addDynamicLocation($sLocationPath, $sLocationUrl) {
+    function addDynamicLocation($sLocationPath, $sLocationUrl)
+    {
         $sLocationKey = time();
         $this->addLocation($sLocationKey, $sLocationPath, $sLocationUrl);
 
@@ -576,7 +598,8 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      *
      * @param string $sKey - location's    unique key.
      */
-    function removeLocation($sKey) {
+    function removeLocation($sKey)
+    {
         if(isset($this->_aLocations[$sKey]))
            unset($this->_aLocations[$sKey]);
     }
@@ -584,11 +607,12 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      * Add JS location in array of JS locations.
      * Note. Location is the path/url to folder where JS files are stored.
      *
-     * @param string $sKey - location's    unique key.
+     * @param string $sKey          - location's    unique key.
      * @param string $sLocationPath - location's path. For modules: '[path_to_dolphin]/modules/[vendor_name]/[module_name]/js/'
-     * @param string $sLocationUrl - location's url. For modules: '[url_to_dolphin]/modules/[vendor_name]/[module_name]/js/'
+     * @param string $sLocationUrl  - location's url. For modules: '[url_to_dolphin]/modules/[vendor_name]/[module_name]/js/'
      */
-    function addLocationJs($sKey, $sLocationPath, $sLocationUrl) {
+    function addLocationJs($sKey, $sLocationPath, $sLocationUrl)
+    {
         $this->_aLocationsJs[$sKey] = array(
             'path' => $sLocationPath,
             'url' => $sLocationUrl
@@ -597,11 +621,12 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     /**
      * Add dynamic JS location.
      *
-     * @param string $sLocationPath - location's path. For modules: '[path_to_dolphin]/modules/[vendor_name]/[module_name]/'
-     * @param string $sLocationUrl - location's url. For modules: '[url_to_dolphin]/modules/[vendor_name]/[module_name]/'
+     * @param  string   $sLocationPath - location's path. For modules: '[path_to_dolphin]/modules/[vendor_name]/[module_name]/'
+     * @param  string   $sLocationUrl  - location's url. For modules: '[url_to_dolphin]/modules/[vendor_name]/[module_name]/'
      * @return location key. Is needed to remove the location.
      */
-    function addDynamicLocationJs($sLocationPath, $sLocationUrl) {
+    function addDynamicLocationJs($sLocationPath, $sLocationUrl)
+    {
         $sLocationKey = time();
         $this->addLocationJs($sLocationKey, $sLocationPath, $sLocationUrl);
 
@@ -613,7 +638,8 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      *
      * @param string $sKey - JS location's    unique key.
      */
-    function removeLocationJs($sKey) {
+    function removeLocationJs($sKey)
+    {
         if(isset($this->_aLocationsJs[$sKey]))
            unset($this->_aLocationsJs[$sKey]);
     }
@@ -622,7 +648,8 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      *
      * @param mixed $mixedName option's name or an array of options' names.
      */
-    function addJsOption($mixedName) {
+    function addJsOption($mixedName)
+    {
         if(is_string($mixedName))
             $mixedName = array($mixedName);
 
@@ -634,7 +661,8 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      *
      * @param mixed $mixedKey language key or an array of keys.
      */
-    function addJsTranslation($mixedKey) {
+    function addJsTranslation($mixedKey)
+    {
         if(is_string($mixedKey))
             $mixedKey = array($mixedKey);
 
@@ -645,9 +673,10 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      * Add image in JS output.
      *
      * @param array $aImages an array of image descriptors.
-     * The descriptor is a key/value pear in the array of descriptors.
+     *                       The descriptor is a key/value pear in the array of descriptors.
      */
-    function addJsImage($aImages) {
+    function addJsImage($aImages)
+    {
         if(!is_array($aImages))
             return;
 
@@ -663,9 +692,10 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      * Add icon in JS output.
      *
      * @param array $aIcons an array of icons descriptors.
-     * The descriptor is a key/value pear in the array of descriptors.
+     *                      The descriptor is a key/value pear in the array of descriptors.
      */
-    function addJsIcon($aIcons) {
+    function addJsIcon($aIcons)
+    {
         if(!is_array($aIcons))
             return;
 
@@ -680,10 +710,11 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     /**
      * Set page keywords.
      *
-     * @param mixed $mixedKeywords necessary page keywords(string - single keyword, array - an array of keywords).
-     * @param string $sDevider - string devider.
+     * @param mixed  $mixedKeywords necessary page keywords(string - single keyword, array - an array of keywords).
+     * @param string $sDevider      - string devider.
      */
-    function addPageKeywords($mixedKeywords, $sDevider = ',') {
+    function addPageKeywords($mixedKeywords, $sDevider = ',')
+    {
         if(is_string($mixedKeywords))
             $mixedKeywords = strpos($mixedKeywords, $sDevider) !== false ? explode($sDevider, $mixedKeywords) : array($mixedKeywords);
 
@@ -696,20 +727,22 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      * Get template, which was loaded earlier.
      * @see method this->loadTemplates and field this->_aTemplates
      *
-     * @param string $sName - template name.
+     * @param  string $sName - template name.
      * @return string template's content.
      */
-    function getTemplate($sName) {
+    function getTemplate($sName)
+    {
         return $this->_aTemplates[$sName];
     }
     /**
      * Get full URL for the icon.
      *
-     * @param string $sName icon's file name.
-     * @param string $sCheckIn where the content would be searched(base, template, both)
+     * @param  string $sName    icon's file name.
+     * @param  string $sCheckIn where the content would be searched(base, template, both)
      * @return string full URL.
      */
-    function getIconUrl($sName, $sCheckIn = BX_DOL_TEMPLATE_CHECK_IN_BOTH) {
+    function getIconUrl($sName, $sCheckIn = BX_DOL_TEMPLATE_CHECK_IN_BOTH)
+    {
         $sContent = "";
         if(($sContent = $this->_getInlineData('icon', $sName, $sCheckIn)) !== false)
             return $sContent;
@@ -719,22 +752,23 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     /**
      * Get absolute Path for the icon.
      *
-     * @param string $sName - icon's file name.
-     * @param string $sCheckIn where the content would be searched(base, template, both)
+     * @param  string $sName    - icon's file name.
+     * @param  string $sCheckIn where the content would be searched(base, template, both)
      * @return string absolute path.
      */
-    function getIconPath($sName, $sCheckIn = BX_DOL_TEMPLATE_CHECK_IN_BOTH) {
-
+    function getIconPath($sName, $sCheckIn = BX_DOL_TEMPLATE_CHECK_IN_BOTH)
+    {
         return $this->_getAbsoluteLocation('path', $this->_sFolderIcons, $sName, $sCheckIn);
     }
     /**
      * Get full URL for the image.
      *
-     * @param string $sName - images's file name.
-     * @param string $sCheckIn where the content would be searched(base, template, both)
+     * @param  string $sName    - images's file name.
+     * @param  string $sCheckIn where the content would be searched(base, template, both)
      * @return string full URL.
      */
-    function getImageUrl($sName, $sCheckIn = BX_DOL_TEMPLATE_CHECK_IN_BOTH) {
+    function getImageUrl($sName, $sCheckIn = BX_DOL_TEMPLATE_CHECK_IN_BOTH)
+    {
         $sContent = "";
         if(($sContent = $this->_getInlineData('image', $sName, $sCheckIn)) !== false)
             return $sContent;
@@ -744,31 +778,34 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     /**
      * Get absolute Path for the image.
      *
-     * @param string $sName - image's file name.
-     * @param string $sCheckIn where the content would be searched(base, template, both)
+     * @param  string $sName    - image's file name.
+     * @param  string $sCheckIn where the content would be searched(base, template, both)
      * @return string absolute path.
      */
-    function getImagePath($sName, $sCheckIn = BX_DOL_TEMPLATE_CHECK_IN_BOTH) {
+    function getImagePath($sName, $sCheckIn = BX_DOL_TEMPLATE_CHECK_IN_BOTH)
+    {
         return $this->_getAbsoluteLocation('path', $this->_sFolderImages, $sName, $sCheckIn);
     }
     /**
      * Get full URL of CSS file.
      *
-     * @param string $sName - CSS file name.
-     * @param string $sCheckIn where the content would be searched(base, template, both)
+     * @param  string $sName    - CSS file name.
+     * @param  string $sCheckIn where the content would be searched(base, template, both)
      * @return string full URL.
      */
-    function getCssUrl($sName, $sCheckIn = BX_DOL_TEMPLATE_CHECK_IN_BOTH) {
+    function getCssUrl($sName, $sCheckIn = BX_DOL_TEMPLATE_CHECK_IN_BOTH)
+    {
         return $this->_getAbsoluteLocation('url', $this->_sFolderCss, $sName, $sCheckIn);
     }
     /**
      * Get full Path of CSS file.
      *
-     * @param string $sName - CSS file name.
-     * @param string $sCheckIn where the content would be searched(base, template, both)
+     * @param  string $sName    - CSS file name.
+     * @param  string $sCheckIn where the content would be searched(base, template, both)
      * @return string full URL.
      */
-    function getCssPath($sName, $sCheckIn = BX_DOL_TEMPLATE_CHECK_IN_BOTH) {
+    function getCssPath($sName, $sCheckIn = BX_DOL_TEMPLATE_CHECK_IN_BOTH)
+    {
         return $this->_getAbsoluteLocation('path', $this->_sFolderCss, $sName, $sCheckIn);
     }
 
@@ -777,7 +814,8 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      * @param $s menu object name
      * @return html or empty string
      */
-    function getMenu ($s) {
+    function getMenu ($s)
+    {
         bx_import('BxDolMenu');
         $oMenu = BxDolMenu::getObjectInstance($s);
         return $oMenu ? $oMenu->getCode () : '';
@@ -786,11 +824,12 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     /**
      * Get content of HTML file.
      *
-     * @param string $sName - HTML file name.
-     * @param string $sCheckIn where the content would be searched(base, template, both)
+     * @param  string $sName    - HTML file name.
+     * @param  string $sCheckIn where the content would be searched(base, template, both)
      * @return string full content of the file and false on failure.
      */
-    function getHtml($sName, $sCheckIn = BX_DOL_TEMPLATE_CHECK_IN_BOTH) {
+    function getHtml($sName, $sCheckIn = BX_DOL_TEMPLATE_CHECK_IN_BOTH)
+    {
         $sAbsolutePath = $this->_getAbsoluteLocation('path', $this->_sFolderHtml, $sName, $sCheckIn);
         return !empty($sAbsolutePath) ? file_get_contents($sAbsolutePath) : false;
     }
@@ -800,14 +839,14 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      *
      * @see allows to use cache.
      *
-     * @param string $sName - HTML file name.
-     * @param array $aVariables - key/value pairs. key should be the same as template's key, but without prefix and postfix.
-     * @param mixed $mixedKeyWrapperHtml - key wrapper(string value if left and right parts are the same, array(left, right) otherwise).
-     * @param string $sCheckIn where the content would be searched(base, template, both)
+     * @param  string $sName               - HTML file name.
+     * @param  array  $aVariables          - key/value pairs. key should be the same as template's key, but without prefix and postfix.
+     * @param  mixed  $mixedKeyWrapperHtml - key wrapper(string value if left and right parts are the same, array(left, right) otherwise).
+     * @param  string $sCheckIn            where the content would be searched(base, template, both)
      * @return string the result of operation.
      */
-    function parseHtmlByName($sName, $aVariables, $mixedKeyWrapperHtml = null, $sCheckIn = BX_DOL_TEMPLATE_CHECK_IN_BOTH) {
-
+    function parseHtmlByName($sName, $aVariables, $mixedKeyWrapperHtml = null, $sCheckIn = BX_DOL_TEMPLATE_CHECK_IN_BOTH)
+    {
         if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->beginTemplate($sName, $sRand = time().rand());
 
         if (($sContent = $this->getCached($sName, $aVariables, $mixedKeyWrapperHtml, $sCheckIn)) !== false) {
@@ -828,12 +867,13 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      *
      * @see Doesn't allow to use cache.
      *
-     * @param string $sContent - HTML file content.
-     * @param array $aVariables - key/value pairs. key should be the same as template's key, but without prefix and postfix.
-     * @param mixed $mixedKeyWrapperHtml - key wrapper(string value if left and right parts are the same, array(left, right) otherwise).
+     * @param  string $sContent            - HTML file content.
+     * @param  array  $aVariables          - key/value pairs. key should be the same as template's key, but without prefix and postfix.
+     * @param  mixed  $mixedKeyWrapperHtml - key wrapper(string value if left and right parts are the same, array(left, right) otherwise).
      * @return string the result of operation.
      */
-    function parseHtmlByContent($sContent, $aVariables, $mixedKeyWrapperHtml = null) {
+    function parseHtmlByContent($sContent, $aVariables, $mixedKeyWrapperHtml = null)
+    {
         if(empty($sContent))
             return "";
 
@@ -844,12 +884,13 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      *
      * @see Doesn't allow to use cache.
      *
-     * @param string $sName - template name.
-     * @param array $aVariables - key/value pairs. Key should be the same as template's key, excluding prefix and postfix.
+     * @param  string $sName      - template name.
+     * @param  array  $aVariables - key/value pairs. Key should be the same as template's key, excluding prefix and postfix.
      * @return string the result of operation.
      * @see $this->_aTemplates
      */
-    function parseHtmlByTemplateName($sName, $aVariables, $mixedKeyWrapperHtml = null) {
+    function parseHtmlByTemplateName($sName, $aVariables, $mixedKeyWrapperHtml = null)
+    {
         if(!isset($this->_aTemplates[$sName]) || empty($this->_aTemplates[$sName]))
             return "";
 
@@ -860,12 +901,12 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      *
      * @see allows to use cache.
      *
-     * @param string $sName - HTML file name.
-     * @param array $aVariables - key/value pairs. key should be the same as template's key, but without prefix and postfix.
+     * @param  string $sName      - HTML file name.
+     * @param  array  $aVariables - key/value pairs. key should be the same as template's key, but without prefix and postfix.
      * @return string the result of operation.
      */
-    function parsePageByName($sName, $aVariables) {
-
+    function parsePageByName($sName, $aVariables)
+    {
         if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->beginPage($sName);
 
         $sContent = $this->parseHtmlByName($sName, $aVariables, $this->_sKeyWrapperHtml, BX_DOL_TEMPLATE_CHECK_IN_BOTH);
@@ -892,11 +933,11 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     /**
      * Parse system keys.
      *
-     * @param string $sKey key
+     * @param  string $sKey key
      * @return string value associated with the key.
      */
-    function parseSystemKey($sKey, $mixedKeyWrapperHtml = null, $bProcessInjection = true) {
-
+    function parseSystemKey($sKey, $mixedKeyWrapperHtml = null, $bProcessInjection = true)
+    {
         $aKeyWrappers = $this->_getKeyWrappers($mixedKeyWrapperHtml);
 
         $sRet = '';
@@ -929,7 +970,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
                 $sRet = BxTemplFunctions::getInstance()->getMetaIcons();
                 break;
             case 'popup_loading':
-            	$sContent = $this->parsePageByName('popup_loading.html', array());
+                $sContent = $this->parsePageByName('popup_loading.html', array());
 
                 bx_import('BxTemplFunctions');
                 $sRet = BxTemplFunctions::getInstance()->transBox('bx-popup-loading', $sContent, true);
@@ -971,10 +1012,10 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
             default:
                 bx_import('BxTemplFunctions');
                 $sRet = ($sTemplAdd = BxTemplFunctions::getInstance()->TemplPageAddComponent($sKey)) !== false ? $sTemplAdd : $aKeyWrappers['left'] . $sKey . $aKeyWrappers['right'];
-		}
+        }
 
-		if($bProcessInjection)
-        	$sRet = $this->processInjection($this->getPageNameIndex(), $sKey, $sRet);
+        if($bProcessInjection)
+            $sRet = $this->processInjection($this->getPageNameIndex(), $sKey, $sRet);
 
         return $sRet;
     }
@@ -982,7 +1023,8 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      * Get cache object for templates
      * @return cache class instance
      */
-    function getTemplatesCacheObject () {
+    function getTemplatesCacheObject ()
+    {
         $sCacheEngine = getParam('sys_template_cache_engine');
         $oCacheEngine = bx_instance('BxDolCache' . $sCacheEngine);
         if(!$oCacheEngine->isAvailable())
@@ -992,14 +1034,15 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     /**
      * Get template from cache if it's enabled.
      *
-     * @param string $sName template name
-     * @param string $aVariables key/value pairs. key should be the same as template's key, but without prefix and postfix.
-     * @param mixed $mixedKeyWrapperHtml - key wrapper(string value if left and right parts are the same, array(0 => left, 1 => right) otherwise).
-     * @param string $sCheckIn where the content would be searched(base, template, both)
-     * @param boolean $bEvaluate need to evaluate the template or not.
-     * @return string result of operation or false on failure.
+     * @param  string  $sName               template name
+     * @param  string  $aVariables          key/value pairs. key should be the same as template's key, but without prefix and postfix.
+     * @param  mixed   $mixedKeyWrapperHtml - key wrapper(string value if left and right parts are the same, array(0 => left, 1 => right) otherwise).
+     * @param  string  $sCheckIn            where the content would be searched(base, template, both)
+     * @param  boolean $bEvaluate           need to evaluate the template or not.
+     * @return string  result of operation or false on failure.
      */
-    function getCached($sName, &$aVariables, $mixedKeyWrapperHtml = null, $sCheckIn = BX_DOL_TEMPLATE_CHECK_IN_BOTH, $bEvaluate = true) {
+    function getCached($sName, &$aVariables, $mixedKeyWrapperHtml = null, $sCheckIn = BX_DOL_TEMPLATE_CHECK_IN_BOTH, $bEvaluate = true)
+    {
         // initialization
 
         if(!$this->_bCacheEnable)
@@ -1061,54 +1104,59 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     /**
      * Add JS file(s) to global output.
      *
-     * @param mixed $mixedFiles string value represents a single JS file name. An array - array of JS file names.
-     * @param boolean $bDynamic in the dynamic mode JS file(s) are not included to global output, but are returned from the function directly.
+     * @param  mixed          $mixedFiles string value represents a single JS file name. An array - array of JS file names.
+     * @param  boolean        $bDynamic   in the dynamic mode JS file(s) are not included to global output, but are returned from the function directly.
      * @return boolean/string result of operation.
      */
-    function addJs($mixedFiles, $bDynamic = false) {
+    function addJs($mixedFiles, $bDynamic = false)
+    {
         return $this->_processFiles('js', 'add', $mixedFiles, $bDynamic);
     }
 
-	/**
-     * Add System JS file(s) to global output. 
+    /**
+     * Add System JS file(s) to global output.
      * System JS files are the files which are attached to all pages. They will be cached separately from the others.
      *
-     * @param mixed $mixedFiles string value represents a single JS file name. An array - array of JS file names.
-     * @param boolean $bDynamic in the dynamic mode JS file(s) are not included to global output, but are returned from the function directly.
+     * @param  mixed          $mixedFiles string value represents a single JS file name. An array - array of JS file names.
+     * @param  boolean        $bDynamic   in the dynamic mode JS file(s) are not included to global output, but are returned from the function directly.
      * @return boolean/string result of operation.
      */
-    function addJsSystem($mixedFiles) {
+    function addJsSystem($mixedFiles)
+    {
         return $this->_processFiles('js', 'add', $mixedFiles, false, true);
     }
 
     /**
      * Delete JS file(s) from global output.
      *
-     * @param mixed $mixedFiles string value represents a single JS file name. An array - array of JS file names.
+     * @param  mixed   $mixedFiles string value represents a single JS file name. An array - array of JS file names.
      * @return boolean result of operation.
      */
-    function deleteJs($mixedFiles) {
+    function deleteJs($mixedFiles)
+    {
         return $this->_processFiles('js', 'delete', $mixedFiles);
     }
 
     /**
      * Delete System JS file(s) from global output.
      *
-     * @param mixed $mixedFiles string value represents a single JS file name. An array - array of JS file names.
+     * @param  mixed   $mixedFiles string value represents a single JS file name. An array - array of JS file names.
      * @return boolean result of operation.
      */
-    function deleteJsSystem($mixedFiles) {
+    function deleteJsSystem($mixedFiles)
+    {
         return $this->_processFiles('js', 'delete', $mixedFiles, false, true);
     }
 
     /**
      * Compile JS files in one file.
      *
-     * @param string $sAbsolutePath CSS file absolute path(full URL for external CSS/JS files).
-     * @param array $aIncluded an array of already included JS files.
+     * @param  string $sAbsolutePath CSS file absolute path(full URL for external CSS/JS files).
+     * @param  array  $aIncluded     an array of already included JS files.
      * @return string result of operation.
      */
-    function _compileJs($sAbsolutePath, &$aIncluded) {
+    function _compileJs($sAbsolutePath, &$aIncluded)
+    {
         if(isset($aIncluded[$sAbsolutePath]))
            return '';
 
@@ -1118,8 +1166,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
             $sName = '';
 
             $sContent = bx_file_get_contents($sAbsolutePath);
-        }
-        else {
+        } else {
             $aFileInfo = pathinfo($sAbsolutePath);
             $sPath = $aFileInfo['dirname'] . DIRECTORY_SEPARATOR;
             $sName = $aFileInfo['basename'];
@@ -1153,70 +1200,77 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     /**
      * Wrap an URL to JS file into JS tag.
      *
-     * @param string $sFile - URL to JS file.
+     * @param  string $sFile - URL to JS file.
      * @return string the result of operation.
      */
-    function _wrapInTagJs($sFile) {
+    function _wrapInTagJs($sFile)
+    {
         return "<script language=\"javascript\" type=\"text/javascript\" src=\"" . $sFile . "\"></script>";
     }
     /**
      * Wrap JS code into JS tag.
      *
-     * @param string $sCode - JS code.
+     * @param  string $sCode - JS code.
      * @return string the result of operation.
      */
-    function _wrapInTagJsCode($sCode) {
+    function _wrapInTagJsCode($sCode)
+    {
         return "<script language=\"javascript\" type=\"text/javascript\">\n<!--\n" . $sCode . "\n-->\n</script>";
     }
 
     /**
      * Add CSS file(s) to global output.
      *
-     * @param mixed $mixedFiles string value represents a single CSS file name. An array - array of CSS file names.
-     * @param boolean $bDynamic in the dynamic mode CSS file(s) are not included to global output, but are returned from the function directly.
+     * @param  mixed          $mixedFiles string value represents a single CSS file name. An array - array of CSS file names.
+     * @param  boolean        $bDynamic   in the dynamic mode CSS file(s) are not included to global output, but are returned from the function directly.
      * @return boolean/string result of operation
      */
-    function addCss($mixedFiles, $bDynamic = false) {
+    function addCss($mixedFiles, $bDynamic = false)
+    {
         return $this->_processFiles('css', 'add', $mixedFiles, $bDynamic);
     }
 
-	/**
+    /**
      * Add System CSS file(s) to global output.
      * System CSS files are the files which are attached to all pages. They will be cached separately from the others.
      *
-     * @param mixed $mixedFiles string value represents a single CSS file name. An array - array of CSS file names.
+     * @param  mixed          $mixedFiles string value represents a single CSS file name. An array - array of CSS file names.
      * @return boolean/string result of operation
      */
-    function addCssSystem($mixedFiles) {
+    function addCssSystem($mixedFiles)
+    {
         return $this->_processFiles('css', 'add', $mixedFiles, false, true);
     }
 
     /**
      * Delete CSS file(s) from global output.
      *
-     * @param mixed $mixedFiles string value represents a single CSS file name. An array - array of CSS file names.
+     * @param  mixed   $mixedFiles string value represents a single CSS file name. An array - array of CSS file names.
      * @return boolean result of operation.
      */
-    function deleteCss($mixedFiles){
+    function deleteCss($mixedFiles)
+    {
         return $this->_processFiles('css', 'delete', $mixedFiles);
     }
-	/**
+    /**
      * Delete System CSS file(s) from global output.
      *
-     * @param mixed $mixedFiles string value represents a single CSS file name. An array - array of CSS file names.
+     * @param  mixed   $mixedFiles string value represents a single CSS file name. An array - array of CSS file names.
      * @return boolean result of operation.
      */
-    function deleteCssSystem($mixedFiles){
+    function deleteCssSystem($mixedFiles)
+    {
         return $this->_processFiles('css', 'delete', $mixedFiles, false, true);
     }
     /**
      * Compile CSS files' structure(@see @import css_file_path) in one file.
      *
-     * @param string $sAbsolutePath CSS file absolute path(full URL for external CSS/JS files).
-     * @param array $aIncluded an array of already included CSS files.
+     * @param  string $sAbsolutePath CSS file absolute path(full URL for external CSS/JS files).
+     * @param  array  $aIncluded     an array of already included CSS files.
      * @return string result of operation.
      */
-    function _compileCss($sAbsolutePath, &$aIncluded) {
+    function _compileCss($sAbsolutePath, &$aIncluded)
+    {
         if(isset($aIncluded[$sAbsolutePath]))
            return '';
 
@@ -1226,8 +1280,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
             $sName = '';
 
             $sContent = bx_file_get_contents($sAbsolutePath);
-        }
-        else {
+        } else {
             $aFileInfo = pathinfo($sAbsolutePath);
             $sPath = $aFileInfo['dirname'] . DIRECTORY_SEPARATOR;
             $sName = $aFileInfo['basename'];
@@ -1257,8 +1310,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
                 ),
                 $sContent
             );
-        }
-        else {
+        } else {
             $sContent = preg_replace(
                 "'@import\s+url\s*\(\s*[\'|\"]*\s*([a-zA-Z0-9\.\/_-]+)\s*[\'|\"]*\s*\)\s*;'e",
                 "\$this->_compileCss(realpath(\$sPath . dirname('\\1')) . DIRECTORY_SEPARATOR . basename('\\1'), \$aIncluded)",
@@ -1274,31 +1326,32 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
         return $sContent;
     }
 
-	/**
+    /**
      * Less CSS
      *
-     * @param mixed $mixed CSS string to process with Less compiler or an array with CSS file's Path and URL. 
-     * @param boolean $bContent whether $mixed has CSS content or file path.
-     * @return string minified CSS string.
+     * @param  mixed   $mixed    CSS string to process with Less compiler or an array with CSS file's Path and URL.
+     * @param  boolean $bContent whether $mixed has CSS content or file path.
+     * @return string  minified CSS string.
      */
-    function _lessCss($mixed) {
-    	require_once(BX_DIRECTORY_PATH_PLUGINS . 'lessphp/lessc.inc.php');
+    function _lessCss($mixed)
+    {
+        require_once(BX_DIRECTORY_PATH_PLUGINS . 'lessphp/lessc.inc.php');
         $oLess = new lessc();
-        
+
         $oLess->setVariables($this->_oConfigTemplate->aLessConfig);
 
-    	if(is_array($mixed) && isset($mixed['url']) && isset($mixed['path'])) {
-    		$sPathFile = realpath($mixed['path']);
-    		$aInfoFile = pathinfo($sPathFile);
-    		if (!isset($aInfoFile['extension']) || $aInfoFile['extension'] != 'less')
-    			return $mixed;
+        if(is_array($mixed) && isset($mixed['url']) && isset($mixed['path'])) {
+            $sPathFile = realpath($mixed['path']);
+            $aInfoFile = pathinfo($sPathFile);
+            if (!isset($aInfoFile['extension']) || $aInfoFile['extension'] != 'less')
+                return $mixed;
 
-			$sPathRoot = realpath(BX_DIRECTORY_PATH_ROOT);
-    		$sFile = $this->_sLessCachePrefix . trim(str_replace(array('.' . $aInfoFile['extension'], DIRECTORY_SEPARATOR), array('', '_'), bx_ltrim_str($sPathFile, $sPathRoot)), '_') . '.css';
+            $sPathRoot = realpath(BX_DIRECTORY_PATH_ROOT);
+            $sFile = $this->_sLessCachePrefix . trim(str_replace(array('.' . $aInfoFile['extension'], DIRECTORY_SEPARATOR), array('', '_'), bx_ltrim_str($sPathFile, $sPathRoot)), '_') . '.css';
 
-    		$oLess->checkedCompile($mixed['path'], $this->_sCachePublicFolderPath . $sFile);
-    		return array('url' => $this->_sCachePublicFolderUrl . $sFile, 'path' => $this->_sCachePublicFolderPath . $sFile);
-    	}
+            $oLess->checkedCompile($mixed['path'], $this->_sCachePublicFolderPath . $sFile);
+            return array('url' => $this->_sCachePublicFolderUrl . $sFile, 'path' => $this->_sCachePublicFolderPath . $sFile);
+        }
 
         return $oLess->compile($mixed);
     }
@@ -1306,10 +1359,11 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     /**
      * Minify CSS
      *
-     * @param string $s CSS string to minify
+     * @param  string $s CSS string to minify
      * @return string minified CSS string.
      */
-    function _minifyCss($s) {
+    function _minifyCss($s)
+    {
         require_once(BX_DIRECTORY_PATH_PLUGINS . 'minify/lib/Minify/CSS/Compressor.php');
         return Minify_CSS_Compressor::process($s);
     }
@@ -1317,11 +1371,12 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     /**
      * Static callback function for CSS compiler.
      *
-     * @param string $sPath CSS file absolute path.
-     * @param array $aMatches matched parts of image's URL.
+     * @param  string $sPath    CSS file absolute path.
+     * @param  array  $aMatches matched parts of image's URL.
      * @return string converted image's URL.
      */
-    public static function _callbackParseUrl($sPath, $aMatches) {
+    public static function _callbackParseUrl($sPath, $aMatches)
+    {
         $sFile = basename($aMatches[1]);
         $sDirectory = dirname($aMatches[1]);
 
@@ -1337,10 +1392,11 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     /**
      * Wrap an URL to CSS file into CSS tag.
      *
-     * @param string $sFile - URL to CSS file.
+     * @param  string $sFile - URL to CSS file.
      * @return string the result of operation.
      */
-    function _wrapInTagCss($sFile) {
+    function _wrapInTagCss($sFile)
+    {
         if (!$sFile)
             return '';
         return "<link href=\"" . $sFile . "\" rel=\"stylesheet\" type=\"text/css\" />";
@@ -1348,20 +1404,22 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     /**
      * Wrap CSS code into CSS tag.
      *
-     * @param string $sCode - CSS code.
+     * @param  string $sCode - CSS code.
      * @return string the result of operation.
      */
-    function _wrapInTagCssCode($sCode) {
+    function _wrapInTagCssCode($sCode)
+    {
         return "<link rel=\"stylesheet\" type=\"text/css\">" . $sCode . "</link>";
     }
     /**
      * Include CSS/JS file(s) attached to the page in its head section.
      * @see the method is system and would be called automatically.
      *
-     * @param string $sType the type of file('js' or 'css')
+     * @param  string $sType the type of file('js' or 'css')
      * @return string the result CSS code.
      */
-    function includeFiles($sType, $bSystem = false) {
+    function includeFiles($sType, $bSystem = false)
+    {
         $sUpcaseType = ucfirst($sType);
 
         $sArrayKey = $sType . ($bSystem ? '_system' : '_compiled');
@@ -1401,7 +1459,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
             if(($sContent = $this->$sMethodCompile($aFile['path'], $aIncluded)) !== false)
                 $sResult .= $sContent;
 
-		if ($this->_bLessEnable && method_exists($this, $sMethodLess))
+        if ($this->_bLessEnable && method_exists($this, $sMethodLess))
             $sResult = $this->$sMethodLess($sResult);
 
         if ($this->_bMinifyEnable && method_exists($this, $sMethodMinify))
@@ -1425,22 +1483,23 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     /**
      * Include CSS/JS files without caching.
      *
-     * @param string $sType the file type (css or js)
-     * @param array $aFiles CSS/JS files to be added to the page.
+     * @param  string $sType  the file type (css or js)
+     * @param  array  $aFiles CSS/JS files to be added to the page.
      * @return string result of operation.
      */
-    function _includeFiles($sType, &$aFiles) {
-    	$sUpcaseType = ucfirst($sType);
+    function _includeFiles($sType, &$aFiles)
+    {
+        $sUpcaseType = ucfirst($sType);
 
         $sMethodWrap = '_wrapInTag' . $sUpcaseType;
         $sMethodLess = '_less' . $sUpcaseType;
 
         $sResult = "";
         foreach($aFiles as $aFile) {
-        	if($this->_bLessEnable && method_exists($this, $sMethodLess))
-        		$aFile = $this->$sMethodLess($aFile, false);
+            if($this->_bLessEnable && method_exists($this, $sMethodLess))
+                $aFile = $this->$sMethodLess($aFile, false);
 
-			$sResult .= $this->$sMethodWrap($aFile['url']);
+            $sResult .= $this->$sMethodWrap($aFile['url']);
         }
 
         return $sResult;
@@ -1448,12 +1507,13 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     /**
      * Insert/Delete CSS file from output stack.
      *
-     * @param string $sType the file type (css or js)
-     * @param string $sAction add/delete
-     * @param mixed $mixedFiles string value represents a single CSS file name. An array - array of CSS file names.
+     * @param  string  $sType      the file type (css or js)
+     * @param  string  $sAction    add/delete
+     * @param  mixed   $mixedFiles string value represents a single CSS file name. An array - array of CSS file names.
      * @return boolean result of operation.
      */
-    function _processFiles($sType, $sAction, $mixedFiles, $bDynamic = false, $bSystem = false) {
+    function _processFiles($sType, $sAction, $mixedFiles, $bDynamic = false, $bSystem = false)
+    {
         if(empty($mixedFiles))
             return $bDynamic ? "" : false;
 
@@ -1486,7 +1546,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
             if(empty($sPath) || empty($sUrl))
                 continue;
 
-			$sArrayKey = $sType . ($bSystem ? '_system' : '_compiled');
+            $sArrayKey = $sType . ($bSystem ? '_system' : '_compiled');
             switch($sAction) {
                 case 'add':
                     if($bDynamic)
@@ -1520,12 +1580,13 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     /**
      * Parse content.
      *
-     * @param string $sContent - HTML file's content.
-     * @param array $aVariables - key/value pairs. key should be the same as template's key, but without prefix and postfix.
-     * @param mixed $mixedKeyWrapperHtml - key wrapper(string value if left and right parts are the same, array(0 => left, 1 => right) otherwise).
+     * @param  string $sContent            - HTML file's content.
+     * @param  array  $aVariables          - key/value pairs. key should be the same as template's key, but without prefix and postfix.
+     * @param  mixed  $mixedKeyWrapperHtml - key wrapper(string value if left and right parts are the same, array(0 => left, 1 => right) otherwise).
      * @return string the result of operation.
      */
-    function _parseContent($sContent, $aVariables, $mixedKeyWrapperHtml = null) {
+    function _parseContent($sContent, $aVariables, $mixedKeyWrapperHtml = null)
+    {
         $aKeys = array_keys($aVariables);
         $aValues = array_values($aVariables);
 
@@ -1547,8 +1608,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
                     else if(is_string($aValues[$i]))
                         $sValue = $aValues[$i];
                 }
-            }
-            else if (strncmp($aKeys[$i], 'bx_if:', 6) === 0) {
+            } else if (strncmp($aKeys[$i], 'bx_if:', 6) === 0) {
                 $sKey = "'<" . $aKeys[$i] . ">(.*)<\/" . $aKeys[$i] . ">'s";
 
                 $aMatches = array();
@@ -1558,8 +1618,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
                 if(isset($aMatches[1]) && !empty($aMatches[1]))
                     if(is_array($aValues[$i]) && isset($aValues[$i]['content']) && isset($aValues[$i]['condition']) && $aValues[$i]['condition'])
                         $sValue .= $this->parseHtmlByContent($aMatches[1], $aValues[$i]['content'], $mixedKeyWrapperHtml);
-            }
-            else {
+            } else {
                 $sKey = "'" . $aKeyWrappers['left'] . $aKeys[$i] . $aKeyWrappers['right'] . "'s";
                 $sValue = str_replace('$', '\\$', $aValues[$i]);
             }
@@ -1608,14 +1667,15 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     /**
      * Compile content
      *
-     * @param string $sContent template.
-     * @param string $aVarName variable name to be saved in the output file.
-     * @param integer $iVarDepth depth is used to process nesting, for example, in cycles.
-     * @param array $aVarValues values to be compiled in.
-     * @param mixed $mixedKeyWrapperHtml key wrapper(string value if left and right parts are the same, array(0 => left, 1 => right) otherwise).
-     * @return string the result of operation.
+     * @param  string  $sContent            template.
+     * @param  string  $aVarName            variable name to be saved in the output file.
+     * @param  integer $iVarDepth           depth is used to process nesting, for example, in cycles.
+     * @param  array   $aVarValues          values to be compiled in.
+     * @param  mixed   $mixedKeyWrapperHtml key wrapper(string value if left and right parts are the same, array(0 => left, 1 => right) otherwise).
+     * @return string  the result of operation.
      */
-    function _compileContent($sContent, $aVarName, $iVarDepth, $aVarValues, $mixedKeyWrapperHtml = null) {
+    function _compileContent($sContent, $aVarName, $iVarDepth, $aVarValues, $mixedKeyWrapperHtml = null)
+    {
         $aKeys = array_keys($aVarValues);
         $aValues = array_values($aVarValues);
 
@@ -1640,8 +1700,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
                     $sValue .= $sInnerValue;
                     $sValue .= "<?php } else if(is_string(" . $aVarName . "['" . $aKeys[$i] . "'])) echo " . $aVarName . "['" . $aKeys[$i] . "']; ?>";
                 }
-            }
-            else if(strpos($aKeys[$i], 'bx_if:') === 0) {
+            } else if(strpos($aKeys[$i], 'bx_if:') === 0) {
                 $sKey = "'<" . $aKeys[$i] . ">(.*)<\/" . $aKeys[$i] . ">'s";
 
                 $aMatches = array();
@@ -1658,8 +1717,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
                     $sValue .= $sInnerValue;
                     $sValue .= "<?php } ?>";
                 }
-            }
-            else {
+            } else {
                 $sKey = "'" . $aKeyWrappers['left'] . $aKeys[$i] . $aKeyWrappers['right'] . "'s";
                 $sValue = "<?php echo " . $aVarName . "['" . $aKeys[$i] . "'];?>";
             }
@@ -1678,9 +1736,9 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
             "'<bx_text:([_\{\}\w\d\s]+[^\s]{1}) \/>'se",
             "'<bx_text_js:([^\s]+) \/>'se",
             "'<bx_text_attribute:([^\s]+) \/>'se",
-        	"'<bx_menu:([^\s]+) \/>'se",
+            "'<bx_menu:([^\s]+) \/>'se",
             "'<bx_url_root />'",
-        	"'<bx_url_studio />'"
+            "'<bx_url_studio />'"
         ));
         $aValues = array_merge($aValues, array(
             "\$this->getCached('\\1', \$aVarValues, \$mixedKeyWrapperHtml, BX_DOL_TEMPLATE_CHECK_IN_BOTH, false)",
@@ -1692,7 +1750,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
             "_t('\\1')",
             "bx_js_string(_t('\\1'))",
             "bx_html_attribute(_t('\\1'))",
-        	"\$this->getMenu('\\1')",
+            "\$this->getMenu('\\1')",
             BX_DOL_URL_ROOT,
             BX_DOL_URL_STUDIO
         ));
@@ -1707,20 +1765,20 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     /**
      * Get absolute location of some template's part.
      *
-     * @param string $sType - result type. Available values 'url' and 'path'.
-     * @param string $sFolder - folders to be searched in. @see $_sFolderHtml, $_sFolderCss, $_sFolderImages and $_sFolderIcons
-     * @param string $sName - requested part name.
-     * @param string $sCheckIn where the content would be searched(base, template, both)
+     * @param  string $sType    - result type. Available values 'url' and 'path'.
+     * @param  string $sFolder  - folders to be searched in. @see $_sFolderHtml, $_sFolderCss, $_sFolderImages and $_sFolderIcons
+     * @param  string $sName    - requested part name.
+     * @param  string $sCheckIn where the content would be searched(base, template, both)
      * @return string absolute location (path/url) of the part.
      */
-    function _getAbsoluteLocation($sType, $sFolder, $sName, $sCheckIn = BX_DOL_TEMPLATE_CHECK_IN_BOTH) {
+    function _getAbsoluteLocation($sType, $sFolder, $sName, $sCheckIn = BX_DOL_TEMPLATE_CHECK_IN_BOTH)
+    {
         $sDirectory = $this->getPath();
 
         if($sType == 'path') {
             $sDivider = DIRECTORY_SEPARATOR;
             $sRoot = BX_DIRECTORY_PATH_ROOT;
-        }
-        else if($sType == 'url') {
+        } else if($sType == 'url') {
             $sDivider = '/';
             $sRoot = BX_DOL_URL_ROOT;
         }
@@ -1762,11 +1820,12 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     /**
      * Get absolute location of some template's part.
      *
-     * @param string $sType result type. Available values 'url' and 'path'.
-     * @param string $sName requested part name.
+     * @param  string $sType result type. Available values 'url' and 'path'.
+     * @param  string $sName requested part name.
      * @return string absolute location (path/url) of the part.
      */
-    function _getAbsoluteLocationJs($sType, $sName) {
+    function _getAbsoluteLocationJs($sType, $sName)
+    {
         $sResult = '';
         $aLocations = array_reverse($this->_aLocationsJs, true);
         foreach($aLocations as $sKey => $aLocation) {
@@ -1778,18 +1837,20 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
         }
         return $sType == 'path' && !empty($sResult) ? realpath($sResult) : $sResult;
     }
-    function _getAbsoluteLocationCss($sType, $sName) {
+    function _getAbsoluteLocationCss($sType, $sName)
+    {
         return $this->_getAbsoluteLocation($sType, $this->_sFolderCss, $sName);
     }
     /**
      * Get inline data for Images and Icons.
      *
-     * @param string $sType image/icon
-     * @param string $sName file name
-     * @param string $sCheckIn where the content would be searched(base, template, both)
+     * @param  string  $sType    image/icon
+     * @param  string  $sName    file name
+     * @param  string  $sCheckIn where the content would be searched(base, template, both)
      * @return unknown
      */
-    function _getInlineData($sType, $sName, $sCheckIn) {
+    function _getInlineData($sType, $sName, $sCheckIn)
+    {
         switch($sType) {
             case 'image':
                 $sFolder = $this->_sFolderImages;
@@ -1811,10 +1872,11 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     /**
      * Get file name where the template would be cached.
      *
-     * @param string $sAbsolutePath template's real path.
+     * @param  string $sAbsolutePath template's real path.
      * @return string the result of operation.
      */
-    function _getCacheFileName($sType, $sAbsolutePath) {
+    function _getCacheFileName($sType, $sAbsolutePath)
+    {
         $sResult = bx_site_hash($sAbsolutePath);
         switch($sType) {
             case 'html':
@@ -1833,10 +1895,11 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     /**
      * Get template key wrappers(left, right)
      *
-     * @param mixed $mixedKeyWrapperHtml key wrapper(string value if left and right parts are the same, array(0 => left, 1 => right) otherwise).
+     * @param  mixed $mixedKeyWrapperHtml key wrapper(string value if left and right parts are the same, array(0 => left, 1 => right) otherwise).
      * @return array result of operation.
      */
-    function _getKeyWrappers($mixedKeyWrapperHtml) {
+    function _getKeyWrappers($mixedKeyWrapperHtml)
+    {
         $aResult = array();
         if(!empty($mixedKeyWrapperHtml) && is_string($mixedKeyWrapperHtml))
             $aResult = array('left' => $mixedKeyWrapperHtml, 'right' => $mixedKeyWrapperHtml);
@@ -1852,11 +1915,12 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      *
      * @return string with JS code.
      */
-    function _processJsTranslations() {
+    function _processJsTranslations()
+    {
         $sReturn = '';
         if(isset($this->aPage['js_translations']) && is_array($this->aPage['js_translations'])) {
-	        foreach($this->aPage['js_translations'] as $sKey => $sString)
-	            $sReturn .= "'" .  bx_js_string($sKey) . "': '" . bx_js_string($sString) . "',";
+            foreach($this->aPage['js_translations'] as $sKey => $sString)
+                $sReturn .= "'" .  bx_js_string($sKey) . "': '" . bx_js_string($sString) . "',";
 
             $sReturn = substr($sReturn, 0, -1);
         }
@@ -1868,11 +1932,12 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      *
      * @return string with JS code.
      */
-    function _processJsOptions() {
+    function _processJsOptions()
+    {
         $sReturn = '';
         if(isset($this->aPage['js_options']) && is_array($this->aPage['js_options'])) {
-	        foreach($this->aPage['js_options'] as $sName => $mixedValue)
-	            $sReturn .= "'" .  bx_js_string($sName) . "': '" . bx_js_string($mixedValue) . "',";
+            foreach($this->aPage['js_options'] as $sName => $mixedValue)
+                $sReturn .= "'" .  bx_js_string($sName) . "': '" . bx_js_string($mixedValue) . "',";
 
             $sReturn = substr($sReturn, 0, -1);
         }
@@ -1884,11 +1949,12 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      *
      * @return string with JS code.
      */
-    function _processJsImages() {
+    function _processJsImages()
+    {
         $sReturn = '';
         if(isset($this->aPage['js_images']) && is_array($this->aPage['js_images'])) {
-	        foreach($this->aPage['js_images'] as $sKey => $sUrl)
-	            $sReturn .= "'" .  bx_js_string($sKey) . "': '" . bx_js_string($sUrl) . "',";
+            foreach($this->aPage['js_images'] as $sKey => $sUrl)
+                $sReturn .= "'" .  bx_js_string($sKey) . "': '" . bx_js_string($sUrl) . "',";
 
             $sReturn = substr($sReturn, 0, -1);
         }
@@ -1903,7 +1969,8 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      * @param $sName file name.
      * @return string with URL
      */
-    function _getLoaderUrl($sType, $sName) {
+    function _getLoaderUrl($sType, $sName)
+    {
         return BX_DOL_URL_ROOT . 'gzip_loader.php?file=' . $sName . '.' . $sType;
     }
 
@@ -1912,23 +1979,28 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
      * Functions to display pages with errors, messages and so on.
      *
      */
-    function displayAccessDenied ($sMsg = '') {
+    function displayAccessDenied ($sMsg = '')
+    {
         header("HTTP/1.0 403 Forbidden");
         $this->displayMsg($sMsg ? $sMsg : _t('_Access denied'));
     }
-    function displayNoData ($sMsg = '') {
+    function displayNoData ($sMsg = '')
+    {
         header("HTTP/1.0 204 No Content");
         $this->displayMsg($sMsg ? $sMsg : _t('_Empty'));
     }
-    function displayErrorOccured ($sMsg = '') {
+    function displayErrorOccured ($sMsg = '')
+    {
         header("HTTP/1.0 500 Internal Server Error");
         $this->displayMsg($sMsg ? $sMsg : _t('_error occured'));
     }
-    function displayPageNotFound ($sMsg = '') {
+    function displayPageNotFound ($sMsg = '')
+    {
         header("HTTP/1.0 404 Not Found");
         $this->displayMsg($sMsg ? $sMsg : _t('_sys_request_page_not_found_cpt'));
     }
-    function displayMsg ($s, $bTranslate = false) {
+    function displayMsg ($s, $bTranslate = false)
+    {
         $sTitle = $bTranslate ? _t($s) : $s;
         $oTemplate = BxDolTemplate::getInstance();
         $oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);
@@ -1938,19 +2010,19 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
         exit;
     }
 
-
     /**
      * * * * Static methods for work with template injections * * *
      *
      * Static method is used to add/replace the content of some key in the template.
      * It's usefull when you don't want to modify existing template but need to add some data to existing template key.
      *
-     * @param integer $iPageIndex - page index where injections would processed. Use 0 if you want it to be done on all the pages.
-     * @param string $sKey - template key.
-     * @param string $sValue - the data to be added.
-     * @return string the result of operation.
+     * @param  integer $iPageIndex - page index where injections would processed. Use 0 if you want it to be done on all the pages.
+     * @param  string  $sKey       - template key.
+     * @param  string  $sValue     - the data to be added.
+     * @return string  the result of operation.
      */
-    function processInjection($iPageIndex, $sKey, $sValue = "") {
+    function processInjection($iPageIndex, $sKey, $sValue = "")
+    {
         if($iPageIndex != 0 && isset($this->aPage['injections']['page_0'][$sKey]) && isset($this->aPage['injections']['page_' . $iPageIndex][$sKey]))
            $aSelection = @array_merge($this->aPage['injections']['page_0'][$sKey], $this->aPage['injections']['page_' . $iPageIndex][$sKey]);
         else if(isset($this->aPage['injections']['page_0'][$sKey]))
@@ -1992,12 +2064,13 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
     /**
      * Static method to add ingection available on the current page only.
      *
-     * @param string $sKey - template's key.
-     * @param string $sType - injection type(text, php).
-     * @param string $sData - the data to be added.
+     * @param string  $sKey     - template's key.
+     * @param string  $sType    - injection type(text, php).
+     * @param string  $sData    - the data to be added.
      * @param integer $iReplace - replace already existed data or not.
      */
-    function addInjection($sKey, $sType, $sData, $iReplace = 0) {
+    function addInjection($sKey, $sType, $sData, $iReplace = 0)
+    {
         $this->aPage['injections']['page_0'][$sKey][] = array(
             'page_index' => 0,
             'key' => $sKey,
@@ -2007,14 +2080,15 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton {
         );
     }
 
-	function getPageCode($oTemplate = null) {
-	    if (empty($oTemplate))
-	       $oTemplate = $this;
+    function getPageCode($oTemplate = null)
+    {
+        if (empty($oTemplate))
+           $oTemplate = $this;
 
-	    header( 'Content-type: text/html; charset=utf-8' );
+        header( 'Content-type: text/html; charset=utf-8' );
         header( 'X-Frame-Options: sameorigin' );
-	    echo $oTemplate->parsePageByName('page_' . $oTemplate->getPageNameIndex() . '.html', $oTemplate->getPageContent());
-	}
+        echo $oTemplate->parsePageByName('page_' . $oTemplate->getPageNameIndex() . '.html', $oTemplate->getPageContent());
+    }
 }
 
 /** @} */

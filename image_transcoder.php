@@ -28,7 +28,7 @@ bx_import('BxDolImageTranscoder');
 $oTranscoder = BxDolImageTranscoder::getObjectInstance($sTranscoderObject);
 
 if (!$oTranscoder) {
-    ob_end_clean();    
+    ob_end_clean();
     bx_transcoder_error_occured();
     exit;
 }
@@ -50,7 +50,7 @@ header('HTTP/1.1 301 Moved Permanently');
 header('Location: ' . $sImageUrl);
 exit;
 
-function bx_transcoder_error_occured($sMethod = 'displayPageNotFound') 
+function bx_transcoder_error_occured($sMethod = 'displayPageNotFound')
 {
     require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
     bx_import('BxDolLanguages');
@@ -60,4 +60,3 @@ function bx_transcoder_error_occured($sMethod = 'displayPageNotFound')
 }
 
 /** @} */
-

@@ -46,7 +46,7 @@ class BxDolInstallerUtils extends BxDolIO
     }
 
     /**
-     * Set module for delayed uninstall 
+     * Set module for delayed uninstall
      */
     static public function setModulePendingUninstall($sUri, $bPendingUninstall = true)
     {

@@ -11,13 +11,13 @@
 
 bx_import('BxBaseModGeneralSearchResult');
 
-class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult 
+class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
 {
     protected $aUnitViews = array('extended' => 'unit.html', 'gallery' => 'unit_gallery.html');
     protected $sUnitViewDefault = 'gallery';
     protected $sUnitViewParamName = 'unit_view';
 
-    function __construct($sMode = '', $aParams = array()) 
+    function __construct($sMode = '', $aParams = array())
     {
         parent::__construct($sMode, $aParams);
 
@@ -27,7 +27,7 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
             $this->sUnitTemplate = $this->aUnitViews[bx_get($this->sUnitViewParamName)];
     }
 
-    function getDesignBoxMenu () 
+    function getDesignBoxMenu ()
     {
         $aMenu = parent::getDesignBoxMenu ();
         if (!$aMenu)
@@ -42,7 +42,7 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
         );
     }
 
-    function _getPseud () 
+    function _getPseud ()
     {
         return array(
             'id' => 'id',
@@ -56,4 +56,3 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
 }
 
 /** @} */
-

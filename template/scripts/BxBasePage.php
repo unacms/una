@@ -13,12 +13,13 @@ bx_import('BxDolPage');
  * Page representation.
  * @see BxDolPage
  */
-class BxBasePage extends BxDolPage {
-
+class BxBasePage extends BxDolPage
+{
     protected $_oTemplate;
     protected $_oPageCacheObject = null;
 
-    public function __construct ($aObject, $oTemplate) {
+    public function __construct ($aObject, $oTemplate)
+    {
         parent::__construct ($aObject);
 
         if ($oTemplate)
@@ -28,18 +29,18 @@ class BxBasePage extends BxDolPage {
     }
 
     /**
-     * Get page code with automatic caching, adding necessary css/js files and system template vars. 
+     * Get page code with automatic caching, adding necessary css/js files and system template vars.
      * @return string.
      */
-    public function getCode () {
-
+    public function getCode ()
+    {
         if (bx_get('dynamic') && ($iBlockId = (int)bx_get('pageBlock'))) {
 
             if (!$this->_isVisiblePage($this->_aObject)) {
                 header('HTTP/1.0 403 Forbidden');
                 exit;
             }
-            
+
             header( 'Content-type:text/html;charset=utf-8' );
             echo $this->_getBlockOnlyCode($iBlockId);
             exit;
@@ -49,14 +50,14 @@ class BxBasePage extends BxDolPage {
             return $this->_getPageAccessDeniedMsg ();
 
         $this->_addJsCss();
- 
+
         $this->_addSysTemplateVars();
 
         $this->_selectMenu();
 
         if (!getParam('sys_page_cache_enable') || !$this->_aObject['cache_lifetime'])
             return $this->_getPageCode();
-        
+
         $oCache = $this->_getPageCacheObject();
         $sKey = $this->_getPageCacheKey();
 
@@ -67,16 +68,17 @@ class BxBasePage extends BxDolPage {
         } else {
             $sPageCode = $this->_getPageCode();
             $oCache->setData($sKey, $sPageCode, $this->_aObject['cache_lifetime']);
-        }        
+        }
 
         return $sPageCode;
     }
-    
+
     /**
      * Get block title.
      * @return string
      */
-    public function getBlockTitle ($aBlock) {
+    public function getBlockTitle ($aBlock)
+    {
         return $this->_replaceMarkers(_t($aBlock['title']));
     }
 
@@ -84,7 +86,8 @@ class BxBasePage extends BxDolPage {
      * Get page code only.
      * @return string
      */
-    protected function _getPageCode () {
+    protected function _getPageCode ()
+    {
         $aVars = array ();
         $aBlocks = $this->_oQuery->getPageBlocks();
         foreach ($aBlocks as $sKey => $aCell) {
@@ -104,7 +107,8 @@ class BxBasePage extends BxDolPage {
      * Get one block code only.
      * @return string
      */
-    protected function _getBlockOnlyCode ($iBlockId) {
+    protected function _getBlockOnlyCode ($iBlockId)
+    {
         $aBlock = $this->_oQuery->getPageBlock((int)$iBlockId);
         return $this->_getBlockCode($aBlock);
     }
@@ -113,7 +117,8 @@ class BxBasePage extends BxDolPage {
      * Get block code.
      * @return string
      */
-    protected function _getBlockCode($aBlock) {
+    protected function _getBlockCode($aBlock)
+    {
         $sContentWithBox = '';
 
         if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->beginPageBlock(_t($aBlock['title']), $aBlock['id']);
@@ -128,10 +133,10 @@ class BxBasePage extends BxDolPage {
             if (is_array($mixedContent)) {
                 if (isset($mixedContent['content']))
                     $sContentWithBox = DesignBoxContent(
-                    	isset($mixedContent['title']) ? $mixedContent['title'] : $sTitle, 
-                    	$mixedContent['content'], 
-                    	isset($mixedContent['designbox_id']) ? $mixedContent['designbox_id'] : $aBlock['designbox_id'], 
-                    	isset($mixedContent['menu']) ? $mixedContent['menu'] : false
+                        isset($mixedContent['title']) ? $mixedContent['title'] : $sTitle,
+                        $mixedContent['content'],
+                        isset($mixedContent['designbox_id']) ? $mixedContent['designbox_id'] : $aBlock['designbox_id'],
+                        isset($mixedContent['menu']) ? $mixedContent['menu'] : false
                     );
             } elseif (is_string($mixedContent)) {
                 $sContentWithBox = DesignBoxContent($sTitle, $mixedContent, $aBlock['designbox_id']);
@@ -148,18 +153,20 @@ class BxBasePage extends BxDolPage {
     /**
      * Add necessary js and css files.
      */
-    protected function _addJsCss() {
+    protected function _addJsCss()
+    {
         $this->_oTemplate->addCss('page_layouts.css');
     }
 
     /**
      * Set system template variables, like page title, meta description, meta keywords and meta robots.
      */
-    protected function _addSysTemplateVars () {
+    protected function _addSysTemplateVars ()
+    {
         $sPageTitle = $this->_getPageTitle();
         if ($sPageTitle)
             $this->_oTemplate->setPageHeader ($sPageTitle);
-   
+
         $sMetaDesc = $this->_getPageMetaDesc();
         if ($sMetaDesc)
             $this->_oTemplate->setPageDescription ($sMetaDesc);
@@ -175,17 +182,19 @@ class BxBasePage extends BxDolPage {
 
     /**
      * Select menu from page properties.
-     */ 
-    protected function _selectMenu () {
+     */
+    protected function _selectMenu ()
+    {
         bx_import('BxDolMenu');
-        BxDolMenu::setSelectedGlobal ($this->_aObject['module'], $this->_aObject['uri']); 
+        BxDolMenu::setSelectedGlobal ($this->_aObject['module'], $this->_aObject['uri']);
     }
 
     /**
      * Get content for 'raw' block type.
      * @return string
      */
-    protected function _getBlockRaw ($aBlock) {
+    protected function _getBlockRaw ($aBlock)
+    {
         return $this->_replaceMarkers($aBlock['content']);
     }
 
@@ -193,7 +202,8 @@ class BxBasePage extends BxDolPage {
      * Get content for 'html' block type.
      * @return string
      */
-    protected function _getBlockHtml ($aBlock) {
+    protected function _getBlockHtml ($aBlock)
+    {
         return $this->_getBlockRaw ($aBlock);
     }
 
@@ -201,7 +211,8 @@ class BxBasePage extends BxDolPage {
      * Get content for 'lang' block type.
      * @return string
      */
-    protected function _getBlockLang ($aBlock) {
+    protected function _getBlockLang ($aBlock)
+    {
         return $this->_replaceMarkers(_t(trim($aBlock['content'])));
     }
 
@@ -209,7 +220,8 @@ class BxBasePage extends BxDolPage {
      * Get content for 'image' block type.
      * @return string
      */
-    protected function _getBlockImage ($aBlock) {
+    protected function _getBlockImage ($aBlock)
+    {
         if (empty($aBlock['content']))
             return false;
 
@@ -238,7 +250,8 @@ class BxBasePage extends BxDolPage {
      * Get content for 'rss' block type.
      * @return string
      */
-    protected function _getBlockRss ($aBlock) {
+    protected function _getBlockRss ($aBlock)
+    {
         if (empty($aBlock['content']))
             return false;
 
@@ -253,7 +266,8 @@ class BxBasePage extends BxDolPage {
      * Get content for 'menu' block type.
      * @return string
      */
-    protected function _getBlockMenu ($aBlock) {
+    protected function _getBlockMenu ($aBlock)
+    {
         bx_import('BxTemplMenu');
         $oMenu = BxTemplMenu::getObjectInstance($aBlock['content']);
         return $oMenu ? $oMenu->getCode () : '';
@@ -263,7 +277,8 @@ class BxBasePage extends BxDolPage {
      * Get content for 'service' block type.
      * @return string
      */
-    protected function _getBlockService ($aBlock) {
+    protected function _getBlockService ($aBlock)
+    {
         return BxDolService::callSerialized($aBlock['content'], $this->_aMarkers);
     }
 
@@ -271,7 +286,8 @@ class BxBasePage extends BxDolPage {
      * Get page title.
      * @return string
      */
-    protected function _getPageTitle() {
+    protected function _getPageTitle()
+    {
         return $this->_replaceMarkers(_t($this->_aObject['title']));
     }
 
@@ -279,7 +295,8 @@ class BxBasePage extends BxDolPage {
      * Get page meta description.
      * @return string
      */
-    protected function _getPageMetaDesc() {
+    protected function _getPageMetaDesc()
+    {
         return $this->_replaceMarkers(_t($this->_aObject['meta_description']));
     }
 
@@ -287,7 +304,8 @@ class BxBasePage extends BxDolPage {
      * Get page meta keywords.
      * @return string
      */
-    protected function _getPageMetaKeywords() {
+    protected function _getPageMetaKeywords()
+    {
         return $this->_replaceMarkers(_t($this->_aObject['meta_keywords']));
     }
 
@@ -295,7 +313,8 @@ class BxBasePage extends BxDolPage {
      * Get page meta robots.
      * @return string
      */
-    protected function _getPageMetaRobots() {
+    protected function _getPageMetaRobots()
+    {
         return _t($this->_aObject['meta_robots']);
     }
 
@@ -303,16 +322,17 @@ class BxBasePage extends BxDolPage {
      * Get access denied message HTML.
      * @return string
      */
-    protected function _getPageAccessDeniedMsg () {
+    protected function _getPageAccessDeniedMsg ()
+    {
         return MsgBox(_t('_Access denied'));
     }
-
 
     /**
      * Get page cache object.
      * @return cache object instance
      */
-    protected function _getPageCacheObject () {
+    protected function _getPageCacheObject ()
+    {
         if ($this->_oPageCacheObject != null) {
             return $this->_oPageCacheObject;
         } else {
@@ -329,7 +349,8 @@ class BxBasePage extends BxDolPage {
      * @param $isPrefixOnly return key prefix only.
      * @return string
      */
-    protected function _getPageCacheKey ($isPrefixOnly = false) {
+    protected function _getPageCacheKey ($isPrefixOnly = false)
+    {
         $s = 'page_' . $this->_aObject['object'] . '_';
         if ($isPrefixOnly)
             return $s;
@@ -339,11 +360,12 @@ class BxBasePage extends BxDolPage {
     }
 
     /**
-     * Additional cache key. In the case of dynamic page. 
+     * Additional cache key. In the case of dynamic page.
      * For example - profile page, where each profile has own page.
      * @return string
      */
-    protected function _getPageCacheParams () {
+    protected function _getPageCacheParams ()
+    {
         return '';
     }
 
@@ -352,7 +374,8 @@ class BxBasePage extends BxDolPage {
      * @param $isDelAllWithPagePrefix delete cache by prefix, it can be used for dynamic pages, like profile view, where for each profile separate cache is generated.
      * @return string
      */
-    protected function cleanCache ($isDelAllWithPagePrefix = false) {
+    protected function cleanCache ($isDelAllWithPagePrefix = false)
+    {
         $oCache = $this->_getPageCacheObject ();
         $sKey = $this->_getPageCacheKey($isDelAllWithPagePrefix);
 
@@ -364,4 +387,3 @@ class BxBasePage extends BxDolPage {
 }
 
 /** @} */
-

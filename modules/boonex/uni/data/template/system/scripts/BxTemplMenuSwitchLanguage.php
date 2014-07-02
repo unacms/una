@@ -12,9 +12,10 @@ bx_import('BxBaseMenuSwitchLanguage');
 /**
  * @see BxDolMenu
  */
-class BxTemplMenuSwitchLanguage extends BxBaseMenuSwitchLanguage {
-
-    public function __construct ($aObject, $oTemplate = false) {
+class BxTemplMenuSwitchLanguage extends BxBaseMenuSwitchLanguage
+{
+    public function __construct ($aObject, $oTemplate = false)
+    {
         parent::__construct ($aObject, $oTemplate);
     }
 }

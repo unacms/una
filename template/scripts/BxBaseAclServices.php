@@ -10,15 +10,17 @@
 /**
  * System services related to ACL.
  */
-class BxBaseAclServices extends BxDol {
-    public function __construct() {
+class BxBaseAclServices extends BxDol
+{
+    public function __construct()
+    {
         parent::__construct();
     }
 
-	public function serviceGetMemberships($bPurchasableOnly = false, $bActiveOnly = false, $isTranslate = true)
+    public function serviceGetMemberships($bPurchasableOnly = false, $bActiveOnly = false, $isTranslate = true)
     {
-    	bx_import('BxDolAcl');
-    	return BxDolAcl::getInstance()->getMemberships($bPurchasableOnly, $bActiveOnly, $isTranslate);
+        bx_import('BxDolAcl');
+        return BxDolAcl::getInstance()->getMemberships($bPurchasableOnly, $bActiveOnly, $isTranslate);
     }
 }
 

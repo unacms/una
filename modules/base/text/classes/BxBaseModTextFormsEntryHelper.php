@@ -15,24 +15,24 @@ bx_import('BxDolProfile');
 /**
  * Entry forms helper functions
  */
-class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper 
+class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
 {
-    public function __construct($oModule) 
+    public function __construct($oModule)
     {
         parent::__construct($oModule);
     }
 
     /**
-     * @return main content text 
+     * @return main content text
      */
-    public function viewDataText ($iContentId) 
+    public function viewDataText ($iContentId)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         // get content data and profile info
         list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         if (!$aContentInfo)
-            return MsgBox(_t('_sys_txt_error_entry_is_not_defined')); 
+            return MsgBox(_t('_sys_txt_error_entry_is_not_defined'));
 
         // check access
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedView($aContentInfo)))
@@ -42,14 +42,14 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
     }
 
     /**
-     * @return main content text 
+     * @return main content text
      */
-    public function viewDataEntry ($iContentId) 
+    public function viewDataEntry ($iContentId)
     {
         // get content data and profile info
         list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         if (!$aContentInfo)
-            return MsgBox(_t('_sys_txt_error_entry_is_not_defined')); 
+            return MsgBox(_t('_sys_txt_error_entry_is_not_defined'));
 
         // check access
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedView($aContentInfo)))
@@ -58,11 +58,10 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         return $this->_oModule->_oTemplate->entryText($aContentInfo);
     }
 
-
     /**
      * @return array of profile object and content info
      */
-    protected function _getProfileAndContentData ($iContentId) 
+    protected function _getProfileAndContentData ($iContentId)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
@@ -82,16 +81,16 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         return array ($oProfile, $aContentInfo);
     }
 
-    protected function onDataDeleteAfter ($iContentId, $aContentInfo, $oProfile) 
+    protected function onDataDeleteAfter ($iContentId, $aContentInfo, $oProfile)
     {
         return '';
     }
 
-    protected function onDataEditBefore ($iContentId, $aContentInfo, &$aTrackTextFieldsChanges) 
+    protected function onDataEditBefore ($iContentId, $aContentInfo, &$aTrackTextFieldsChanges)
     {
     }
 
-    protected function onDataEditAfter ($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile) 
+    protected function onDataEditAfter ($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
@@ -104,12 +103,12 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
 
         // create an alert
         bx_import('BxDolPrivacy');
-        bx_alert($this->_oModule->getName(), 'edited', $aContentInfo[$CNF['FIELD_ID']], false, array('privacy_view' => $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']])); 
+        bx_alert($this->_oModule->getName(), 'edited', $aContentInfo[$CNF['FIELD_ID']], false, array('privacy_view' => $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]));
 
         return '';
     }
 
-    protected function onDataAddAfter ($iContentId) 
+    protected function onDataAddAfter ($iContentId)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 

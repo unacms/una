@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    Antispam Antispam
  * @ingroup     DolphinModules
  *
@@ -13,9 +13,9 @@ require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
 bx_import('BxTemplGrid');
 
-class BxAntispamGridIpTable extends BxTemplGrid 
+class BxAntispamGridIpTable extends BxTemplGrid
 {
-    public function __construct ($aOptions, $oTemplate = false) 
+    public function __construct ($aOptions, $oTemplate = false)
     {
         parent::__construct ($aOptions, $oTemplate);
     }
@@ -23,7 +23,7 @@ class BxAntispamGridIpTable extends BxTemplGrid
     /**
      * add js file for AJAX form submission
      */
-    protected function _addJsCss() 
+    protected function _addJsCss()
     {
         parent::_addJsCss();
 
@@ -37,7 +37,7 @@ class BxAntispamGridIpTable extends BxTemplGrid
     /**
      * 'add' action handler
      */
-    public function performActionAdd() 
+    public function performActionAdd()
     {
         $this->_performAction('add', 'bx_antispam_ip_table_form_add');
     }
@@ -45,7 +45,7 @@ class BxAntispamGridIpTable extends BxTemplGrid
     /**
      * 'edit' action handler
      */
-    public function performActionEdit() 
+    public function performActionEdit()
     {
         $iId = 0;
         $aIds = bx_get('ids');
@@ -114,7 +114,7 @@ class BxAntispamGridIpTable extends BxTemplGrid
             $s = BxTemplFunctions::getInstance()->popupBox($oForm->getId() . '_form', _t('_bx_antispam_form_ip_table_add'), $oForm->getCode() . '
                 <script>
                     $(document).ready(function () {
-                        $("#' . $oForm->getId() . '").ajaxForm({ 
+                        $("#' . $oForm->getId() . '").ajaxForm({
                             dataType: "json",
                             beforeSubmit: function (formData, jqForm, options) {
                                 bx_loading($("#' . $oForm->getId() . '"), true);
@@ -132,23 +132,22 @@ class BxAntispamGridIpTable extends BxTemplGrid
         }
     }
 
-
-    protected function _getCellType ($mixedValue, $sKey, $aField, $aRow) 
+    protected function _getCellType ($mixedValue, $sKey, $aField, $aRow)
     {
         return parent::_getCellDefault ('allow' == $mixedValue ? _t('_bx_antispam_ip_allow') : _t('_bx_antispam_ip_deny'), $sKey, $aField, $aRow);
     }
 
-    protected function _getCellLastDT ($mixedValue, $sKey, $aField, $aRow) 
+    protected function _getCellLastDT ($mixedValue, $sKey, $aField, $aRow)
     {
         return parent::_getCellDefault (bx_time_js($mixedValue, BX_FORMAT_DATE), $sKey, $aField, $aRow);
     }
 
-    protected function _getCellFrom ($mixedValue, $sKey, $aField, $aRow) 
+    protected function _getCellFrom ($mixedValue, $sKey, $aField, $aRow)
     {
         return parent::_getCellDefault (long2ip($mixedValue), $sKey, $aField, $aRow);
     }
 
-    protected function _getCellTo ($mixedValue, $sKey, $aField, $aRow) 
+    protected function _getCellTo ($mixedValue, $sKey, $aField, $aRow)
     {
         return parent::_getCellDefault (long2ip($mixedValue), $sKey, $aField, $aRow);
     }

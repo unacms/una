@@ -12,7 +12,6 @@
 define ('BX_PROFILER', true);
 define ('BX_PROFILER_DISPLAY', 1);
 
-
 require_once(BX_DIRECTORY_PATH_MODULES . 'boonex/profiler/install/config.php');
 $GLOBALS['bx_profiler_module'] = array (
     'title' => $aConfig['title'],
@@ -27,9 +26,8 @@ bx_import('BxDolStudioTemplate');
 bx_import('Template', $GLOBALS['bx_profiler_module']);
 bx_import('Config', $GLOBALS['bx_profiler_module']);
 
-
-class BxProfiler extends BxDol {
-
+class BxProfiler extends BxDol
+{
     protected $oConfig, $oTemplate;
 
     protected $aConf = array ();
@@ -50,7 +48,8 @@ class BxProfiler extends BxDol {
     protected $_sLogMaxArgLength = 64;
     protected $_sLogFilename = 64;
 
-    function __construct($iTimeStart) {
+    function __construct($iTimeStart)
+    {
         parent::__construct();
 
         $this->oConfig = new BxProfilerConfig ($GLOBALS['bx_profiler_module']);
@@ -87,8 +86,8 @@ class BxProfiler extends BxDol {
     }
 
     // output profiler debug panel
-    function output () {
-
+    function output ()
+    {
         $iPageTIme = $this->_getCurrentDelay ();
         if (isset($this->aConf['long_page']) && $iPageTIme > $this->aConf['long_page'])
             $this->logPageOpen ($iPageTIme);
@@ -117,18 +116,21 @@ class BxProfiler extends BxDol {
         }
     }
 
-    function _logBegin ($s) {
+    function _logBegin ($s)
+    {
         $sDate = date ($this->_sLogDateFormat);
         return "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" . $sDate . " " . $s . "\n" .
         "User ID: " . $_COOKIE['memberID']  . "\n" .
         "User role: " . ($GLOBALS['logged']['admin'] ? 'admin' : ($GLOBALS['logged']['member'] ? 'member' : 'guest')) . "\n";
     }
 
-    function _logEnd () {
+    function _logEnd ()
+    {
         return "\n";
     }
 
-    function _appendToLog ($s) {
+    function _appendToLog ($s)
+    {
         $f = fopen ( BX_DIRECTORY_PATH_ROOT . 'logs/bx_profiler.log', 'a');
         if (!$f)
             return;
@@ -136,7 +138,8 @@ class BxProfiler extends BxDol {
         fclose($f);
     }
 
-    function logSqlQuery ($iTime, $aSqlQuery, &$res) {
+    function logSqlQuery ($iTime, $aSqlQuery, &$res)
+    {
         $s  = $this->_logBegin ('LONG SQL QUERY: ' . $aSqlQuery['time']);
         $s .= "Rows: " . $aSqlQuery['rows'] . "\n";
         $s .= "Affected: " . $aSqlQuery['affected'] . "\n";
@@ -147,7 +150,8 @@ class BxProfiler extends BxDol {
         $this->_appendToLog ($s);
     }
 
-    function logModuleQuery ($iTime, $aModuleQuery) {
+    function logModuleQuery ($iTime, $aModuleQuery)
+    {
         $s  = $this->_logBegin ('LONG MODULE QUERY: ' . $aModuleQuery['time']);
         $s .= "Module name: " . $aModuleQuery['name'] . "\n";
         $s .= "Query type: " . $aModuleQuery['type'] . "\n";
@@ -159,7 +163,8 @@ class BxProfiler extends BxDol {
         $this->_appendToLog ($s);
     }
 
-    function logPageOpen ($iTime) {
+    function logPageOpen ($iTime)
+    {
         $s  = $this->_logBegin ('LONG PAGE OPEN: ' . $this->_formatTime($iTime, 5));
         $s .= "Request method: " . $_SERVER['REQUEST_METHOD'] . "\n";
         $s .= "Query string: " . $_SERVER['QUERY_STRING'] . "\n";
@@ -172,7 +177,8 @@ class BxProfiler extends BxDol {
         $this->_appendToLog ($s);
     }
 
-    function beginModule($sType, $sHash, &$aModule, $sClassFile, $sMethod = '' ) {
+    function beginModule($sType, $sHash, &$aModule, $sClassFile, $sMethod = '' )
+    {
         ++$this->_aModulesLevel;
         $this->_aModulesNames[$aModule['title']] = isset($this->_aModulesNames[$aModule['title']]) ? $this->_aModulesNames[$aModule['title']] + 1 : 1;
         $this->_aModules[$sHash] = array (
@@ -185,7 +191,8 @@ class BxProfiler extends BxDol {
         );
     }
 
-    function endModule($sType, $sHash) {
+    function endModule($sType, $sHash)
+    {
         --$this->_aModulesLevel;
         $iTime = $this->_calcTime ($this->_aModules[$sHash]['begin']);
         unset ($this->_aModules[$sHash]['begin']);
@@ -195,12 +202,14 @@ class BxProfiler extends BxDol {
             $this->logModuleQuery ($iTime, $this->_aModules[$sHash]);
     }
 
-    function beginInjection ($sId) {
+    function beginInjection ($sId)
+    {
         $this->_sInjectionIndex = $sId;
         $this->_aInjections[$sId]['begin'] = microtime ();
     }
 
-    function endInjection ($sId, $aInjection) {
+    function endInjection ($sId, $aInjection)
+    {
         if (!isset($this->_aInjections[$sId]))
             return;
         $iTime = $this->_calcTime ($this->_aInjections[$sId]['begin']);
@@ -212,13 +221,15 @@ class BxProfiler extends BxDol {
         $this->_aInjections[$sId]['raw_time'] = $iTime;
     }
 
-    function beginPageBlock ($sName, $iBlockId) {
+    function beginPageBlock ($sName, $iBlockId)
+    {
         $this->_sPageBlockIndex = $iBlockId;
         $this->_aPagesBlocks[$this->_sPageBlockIndex]['name'] = $sName;
         $this->_aPagesBlocks[$this->_sPageBlockIndex]['begin'] = microtime ();
     }
 
-    function endPageBlock ($iBlockId, $isEmpty, $isCached) {
+    function endPageBlock ($iBlockId, $isEmpty, $isCached)
+    {
         if (!$this->_sPageBlockIndex)
             return;
         $iTime = $this->_calcTime ($this->_aPagesBlocks[$this->_sPageBlockIndex]['begin']);
@@ -229,13 +240,15 @@ class BxProfiler extends BxDol {
         $this->_aPagesBlocks[$this->_sPageBlockIndex]['raw_time'] = $iTime;
     }
 
-    function beginPage ($sName) {
+    function beginPage ($sName)
+    {
         $this->_sPageIndex = md5 ($sName.time().rand());
         $this->_aPages[$this->_sPageIndex]['name'] = $sName;
         $this->_aPages[$this->_sPageIndex]['begin'] = microtime ();
     }
 
-    function endPage (&$sContent) {
+    function endPage (&$sContent)
+    {
         if (!$this->_sPageIndex || !isset($this->_aPages[$this->_sPageIndex]['begin']))
             return;
         $iTime = $this->_calcTime ($this->_aPages[$this->_sPageIndex]['begin']);
@@ -244,13 +257,15 @@ class BxProfiler extends BxDol {
         $this->_aPages[$this->_sPageIndex]['raw_time'] = $iTime;
     }
 
-    function beginTemplate ($sName, $sRand) {
+    function beginTemplate ($sName, $sRand)
+    {
         $this->_aTemplateIndexes[$sName.$sRand] = 1;
         $this->_aTemplates[$sName.$sRand]['name'] = $sName;
         $this->_aTemplates[$sName.$sRand]['begin'] = microtime ();
     }
 
-    function endTemplate ($sName, $sRand, &$sContent, $isCached) {
+    function endTemplate ($sName, $sRand, &$sContent, $isCached)
+    {
         if (!isset($this->_aTemplateIndexes[$sName.$sRand]))
             return;
         $iTime = $this->_calcTime ($this->_aTemplates[$sName.$sRand]['begin']);
@@ -260,13 +275,15 @@ class BxProfiler extends BxDol {
         $this->_aTemplates[$sName.$sRand]['raw_time'] = $iTime;
     }
 
-    function beginQuery ($sSql) {
+    function beginQuery ($sSql)
+    {
         $this->_sQueryIndex = md5 ($sSql.time().rand());
         $this->_aQueries[$this->_sQueryIndex]['sql'] = $sSql;
         $this->_aQueries[$this->_sQueryIndex]['begin'] = microtime ();
     }
 
-    function endQuery (&$res) {
+    function endQuery (&$res)
+    {
         if (!$this->_sQueryIndex)
             return;
         $iTime = $this->_calcTime ($this->_aQueries[$this->_sQueryIndex]['begin']);
@@ -279,12 +296,14 @@ class BxProfiler extends BxDol {
             $this->logSqlQuery ($iTime, $this->_aQueries[$this->_sQueryIndex], $res);
     }
 
-    function beginMenu ($sName) {
+    function beginMenu ($sName)
+    {
         $this->_aMenus[$sName]['name'] = $sName;
         $this->_aMenus[$sName]['begin'] = microtime ();
     }
 
-    function endMenu ($sName) {
+    function endMenu ($sName)
+    {
         if (!isset($this->_aMenus[$sName]))
             return;
         $iTime = $this->_calcTime ($this->_aMenus[$sName]['begin']);
@@ -293,14 +312,15 @@ class BxProfiler extends BxDol {
         $this->_aMenus[$sName]['raw_time'] = $iTime;
     }
 
-    function _getCurrentDelay () {
+    function _getCurrentDelay ()
+    {
         $i1 = explode(' ', microtime ());
         $i2 = explode(' ', $this->_iTimeStart);
         return ($i1[0]+$i1[1]) - ($i2[0]+$i2[1]);
     }
 
-    function _plankMain () {
-
+    function _plankMain ()
+    {
         $sTime = $this->_formatTime($this->_getCurrentDelay ());
         if (function_exists('memory_get_usage'))
             $sMemory = $this->_formatBytes(memory_get_usage(true)) . ' of ' . ini_get('memory_limit') . ' allowed';
@@ -314,8 +334,8 @@ class BxProfiler extends BxDol {
         );
     }
 
-    function _plankTemplates () {
-
+    function _plankTemplates ()
+    {
         if (empty($GLOBALS['bx_profiler']->_aPages) && empty($GLOBALS['bx_profiler']->_aTemplates))
             return;
 
@@ -364,8 +384,8 @@ class BxProfiler extends BxDol {
         );
     }
 
-    function _plankInjections () {
-
+    function _plankInjections ()
+    {
         if (!$GLOBALS['bx_profiler']->_aInjections)
             return;
 
@@ -385,8 +405,8 @@ class BxProfiler extends BxDol {
         );
     }
 
-    function _plankPagesBlocks () {
-
+    function _plankPagesBlocks ()
+    {
         if (empty($GLOBALS['bx_profiler']->_aPagesBlocks))
             return;
 
@@ -442,8 +462,8 @@ class BxProfiler extends BxDol {
         );
     }
 
-    function _plankMenus () {
-
+    function _plankMenus ()
+    {
         if (empty($GLOBALS['bx_profiler']->_aMenus))
             return;
 
@@ -463,8 +483,8 @@ class BxProfiler extends BxDol {
         );
     }
 
-    function _plankSql () {
-
+    function _plankSql ()
+    {
         if (empty($GLOBALS['bx_profiler']->_aQueries))
             return;
 
@@ -484,8 +504,8 @@ class BxProfiler extends BxDol {
         );
     }
 
-    function _plankModules () {
-
+    function _plankModules ()
+    {
         if (empty($GLOBALS['bx_profiler']->_aModules))
             return;
 
@@ -507,11 +527,13 @@ class BxProfiler extends BxDol {
         );
     }
 
-    function _formatTime ($i, $iPrecision = 3) {
+    function _formatTime ($i, $iPrecision = 3)
+    {
         return round($i, $iPrecision) . ' sec';
     }
 
-    function _formatBytes ($i) {
+    function _formatBytes ($i)
+    {
         if ($i > 1024*1024)
             return round($i/1024/1024, 1) . 'M';
         elseif ($i > 1024)
@@ -520,7 +542,8 @@ class BxProfiler extends BxDol {
             return $i . 'B';
     }
 
-    function _isProfilerDisabled() {
+    function _isProfilerDisabled()
+    {
         if (isset($GLOBALS['bx_profiler_disable']) || isset($_GET['bx_profiler_disable']))
             return true;
         if (
@@ -534,13 +557,15 @@ class BxProfiler extends BxDol {
         return false;
     }
 
-    function _calcTime ($begin) {
+    function _calcTime ($begin)
+    {
         $i1 = explode(' ', microtime ());
         $i2 = explode(' ', $begin);
         return ($i1[0]+$i1[1]) - ($i2[0]+$i2[1]);
     }
 
-    function _debugPrintArray ($mixed) {
+    function _debugPrintArray ($mixed)
+    {
         $sArgs .= 'Array(';
         foreach ($mixed as $mixed2)
             $sArgs .= (is_object($mixed2) ? $this->_debugPrintObject($mixed2) : $this->_debugPrintAny($mixed2)) . ',';
@@ -549,19 +574,21 @@ class BxProfiler extends BxDol {
         return $sArgs;
     }
 
-    function _debugPrintObject ($mixed) {
+    function _debugPrintObject ($mixed)
+    {
         return get_class($mixed) . ' instance';
     }
 
-    function _debugPrintAny ($mixed) {
+    function _debugPrintAny ($mixed)
+    {
         if (is_string)
             return "'" . (strlen($mixed) > $this->_sLogMaxArgLength ? substr($mixed, 0, $this->_sLogMaxArgLength) . '...' : $mixed) . "'";
         else
             return $mixed;
     }
 
-    function _debugBackTrace ($iShifts = 0) {
-
+    function _debugBackTrace ($iShifts = 0)
+    {
         $a = debug_backtrace();
         while (--$iShifts > -1)
             array_shift($a);
@@ -592,7 +619,8 @@ class BxProfiler extends BxDol {
         return $s;
     }
 
-    function _getHeaderContentType() {
+    function _getHeaderContentType()
+    {
         $aHeaders = headers_list();
         foreach ($aHeaders as $s) {
             $a = explode(':', $s);
@@ -601,7 +629,7 @@ class BxProfiler extends BxDol {
                 return strtolower(trim($aa[0]));
             }
         }
-        
+
         return false;
     }
 }

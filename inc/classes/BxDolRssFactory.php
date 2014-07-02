@@ -7,22 +7,22 @@
  * @{
  */
 
-class BxDolRssFactory extends BxDol {
-
+class BxDolRssFactory extends BxDol
+{
     /**
      * @param array $aRssData, fields:
-     *    UnitID
-     *    OwnerID
-     *    UnitTitle
-     *    UnitLink
-     *    UnitDesc
-     *    UnitDateTimeUTS
-     *    UnitIcon
+     *                         UnitID
+     *                         OwnerID
+     *                         UnitTitle
+     *                         UnitLink
+     *                         UnitDesc
+     *                         UnitDateTimeUTS
+     *                         UnitIcon
      */
-    function GenRssByData($aRssData, $sUnitTitleC, $sMainLink) {
-
+    function GenRssByData($aRssData, $sUnitTitleC, $sMainLink)
+    {
         return $this->GenRssByCustomData($aRssData, $sUnitTitleC, $sMainLink, array(
-        	'Guid' => 'UnitID',
+            'Guid' => 'UnitID',
             'Link' => 'UnitLink',
             'Title' => 'UnitTitle',
             'DateTimeUTS' => 'UnitDateTimeUTS',
@@ -43,7 +43,8 @@ class BxDolRssFactory extends BxDol {
      * Optional fields:
      *  Photo
      */
-    function GenRssByCustomData($aRssData, $sUnitTitleC, $sMainLink, $aFields, $sImage = '', $iPID = 0) {
+    function GenRssByCustomData($aRssData, $sUnitTitleC, $sMainLink, $aFields, $sImage = '', $iPID = 0)
+    {
         $sRSSLast = '';
         if (isset($aRssData[0]))
             $sRSSLast = bx_time_utc($aRssData[0][$aFields['DateTimeUTS']]);
@@ -91,4 +92,3 @@ class BxDolRssFactory extends BxDol {
 }
 
 /** @} */
-

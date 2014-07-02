@@ -12,8 +12,10 @@ bx_import('BxBaseFormAccount');
 /**
  * @see BxBaseFormAccount
  */
-class BxTemplFormAccount extends BxBaseFormAccount {
-    public function __construct($aInfo, $oTemplate = false) {
+class BxTemplFormAccount extends BxBaseFormAccount
+{
+    public function __construct($aInfo, $oTemplate = false)
+    {
         parent::__construct($aInfo, $oTemplate);
     }
 }

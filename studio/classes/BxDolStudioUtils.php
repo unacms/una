@@ -15,24 +15,29 @@ define('BX_DOL_STUDIO_MODULE_CUSTOM', 'custom');
 define('BX_DOL_STUDIO_VISIBLE_ALL', 'all');
 define('BX_DOL_STUDIO_VISIBLE_SELECTED', 'selected');
 
-class BxDolStudioUtils extends BxDol {
-    function __construct() {
+class BxDolStudioUtils extends BxDol
+{
+    function __construct()
+    {
         parent::__construct();
     }
 
-    public static function getSystemName($sValue) {
+    public static function getSystemName($sValue)
+    {
         return str_replace(' ', '_', strtolower($sValue));
     }
 
-    public static function getClassName($sValue) {
+    public static function getClassName($sValue)
+    {
         return bx_gen_method_name($sValue);
     }
 
-    public static function getModuleIcon($sName, $sType = 'menu') {
+    public static function getModuleIcon($sName, $sType = 'menu')
+    {
         $aType2Prefix = array('menu' => 'mi', 'page' => 'pi', 'store' => 'si');
 
         $oTemplate = BxDolStudioTemplate::getInstance();
-        $sDefaultIcon = $oTemplate->getIconUrl($aType2Prefix[$sType] . '-mod-empty.png'); 
+        $sDefaultIcon = $oTemplate->getIconUrl($aType2Prefix[$sType] . '-mod-empty.png');
 
         bx_import('BxDolModuleQuery');
         $aModule = BxDolModuleQuery::getInstance()->getModuleByName($sName);
@@ -43,37 +48,40 @@ class BxDolStudioUtils extends BxDol {
         return !empty($sModuleIcon) ? $sModuleIcon : $sDefaultIcon;
     }
 
-    public static function getModuleTitle($sName) {
+    public static function getModuleTitle($sName)
+    {
         $sPrefix = '_adm_txt_module_';
-    
+
         if(in_array($sName, array(BX_DOL_STUDIO_MODULE_SYSTEM, BX_DOL_STUDIO_MODULE_CUSTOM)))
             return _t($sPrefix . $sName);
-    
+
         bx_import('BxDolModuleQuery');
         $aModule = BxDolModuleQuery::getInstance()->getModuleByName($sName);
         if(!empty($aModule))
             return $aModule['title'];
-    
+
         return _t($sPrefix . strtolower($sName));
     }
 
-    public static function getModules($bShowCustom = true, $bShowSystem = true) {
+    public static function getModules($bShowCustom = true, $bShowSystem = true)
+    {
         $aResult = array();
-    
+
         if($bShowSystem)
             $aResult[BX_DOL_STUDIO_MODULE_SYSTEM] = self::getModuleTitle(BX_DOL_STUDIO_MODULE_SYSTEM);
-    
+
         if($bShowCustom)
             $aResult[BX_DOL_STUDIO_MODULE_CUSTOM] = self::getModuleTitle(BX_DOL_STUDIO_MODULE_CUSTOM);
-    
+
         bx_import('BxDolModuleQuery');
         $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules', 'active' => 1));
         foreach($aModules as $aModule)
             $aResult[$aModule['name']] = $aModule['title'];
-    
+
         return $aResult;
     }
-    public static function getVisibilityTitle($iValue) {
+    public static function getVisibilityTitle($iValue)
+    {
         $iCount = self::getVisibilityCount($iValue);
 
         $sResult = "";
@@ -95,8 +103,9 @@ class BxDolStudioUtils extends BxDol {
 
         return $sResult;
     }
-    
-    public static function getVisibilityCount($iValue) {
+
+    public static function getVisibilityCount($iValue)
+    {
         $iResult = 0;
 
         $iValue = (int)$iValue;
@@ -117,7 +126,8 @@ class BxDolStudioUtils extends BxDol {
         return $iResult;
     }
 
-    public static function getVisibilityValue($sVisibleFor, $aVisibleForLevels) {
+    public static function getVisibilityValue($sVisibleFor, $aVisibleForLevels)
+    {
         if($sVisibleFor == BX_DOL_STUDIO_VISIBLE_ALL)
             return BX_DOL_INT_MAX;
 
@@ -129,28 +139,30 @@ class BxDolStudioUtils extends BxDol {
         return $iVisibleFor;
     }
 
-    public static function getVisibilityValues($iValue, &$aValuesAll, &$aValuesSelected) {
+    public static function getVisibilityValues($iValue, &$aValuesAll, &$aValuesSelected)
+    {
         bx_import('BxDolAcl');
         $aLevels = BxDolAcl::getInstance()->getMemberships(false, true);
         foreach($aLevels as $iKey => $sValue) {
             if(((int)$iValue & pow(2, (int)$iKey - 1)) != 0)
                 $aValuesSelected[] = $iKey;
-            
+
             $aValuesAll[$iKey] = _t($sValue);
         }
     }
 
-    public static function addInArray($aInput, $sKey, $aValues) {
+    public static function addInArray($aInput, $sKey, $aValues)
+    {
         reset($aInput);
         $iInput = count($aInput);
         for($i = 0; $i < $iInput; $i++, next($aInput))
             if(key($aInput) == $sKey)
                 break;
-    
+
         $aOutput = array_slice($aInput, 0, $i + 1);
         $aOutput = array_merge($aOutput, $aValues);
         $aOutput = array_merge($aOutput, array_slice($aInput, $i + 1));
-    
+
         return $aOutput;
     }
 }

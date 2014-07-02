@@ -37,8 +37,8 @@ defined('BX_DOL') or die('hack attempt');
  * no alerts available
  *
  */
-class BxDolAlerts extends BxDol {
-
+class BxDolAlerts extends BxDol
+{
     public $sUnit;
     public $sAction;
     public $iObject;
@@ -50,12 +50,13 @@ class BxDolAlerts extends BxDol {
 
     /**
      * Constructor
-     * @param string $sType - system type
-     * @param string $sAction - system action
-     * @param int $iObjectId - object id
-     * @param int $iSenderId - sender (action's author) profile id, if it is false - then currectly logged in profile id is used
+     * @param string $sType     - system type
+     * @param string $sAction   - system action
+     * @param int    $iObjectId - object id
+     * @param int    $iSenderId - sender (action's author) profile id, if it is false - then currectly logged in profile id is used
      */
-    public function __construct($sUnit, $sAction, $iObjectId, $iSender = false, $aExtras = array()) {
+    public function __construct($sUnit, $sAction, $iObjectId, $iSender = false, $aExtras = array())
+    {
         parent::__construct();
 
         if (getParam('sys_db_cache_enable')) {
@@ -80,7 +81,7 @@ class BxDolAlerts extends BxDol {
 
         $this->sUnit = $sUnit;
         $this->sAction = $sAction;
-        $this->iObject = (int)$iObjectId;        
+        $this->iObject = (int)$iObjectId;
         $this->aExtras = $aExtras;
         if (false === $iSender) {
             bx_import('BxDolProfile');
@@ -91,15 +92,16 @@ class BxDolAlerts extends BxDol {
         }
     }
 
-    public static function cacheInvalidate() {
+    public static function cacheInvalidate()
+    {
         return BxDolDb::getInstance()->cleanCache ('sys_alerts');
     }
 
     /**
      * Notifies the necessary handlers about the alert.
      */
-    public function alert() {
-
+    public function alert()
+    {
         if (isset($this->_aAlerts[$this->sUnit]) && isset($this->_aAlerts[$this->sUnit][$this->sAction]))
             foreach($this->_aAlerts[$this->sUnit][$this->sAction] as $iHandlerId) {
                 $aHandler = $this->_aHandlers[$iHandlerId];
@@ -110,15 +112,14 @@ class BxDolAlerts extends BxDol {
 
                     $oHandler = new $aHandler['class']();
                     $oHandler->response($this);
-                } 
-                else if(!empty($aHandler['service_call']) && BxDolService::isSerializedService($aHandler['service_call'])) {
-                	$aService = unserialize($aHandler['service_call']);
+                } else if(!empty($aHandler['service_call']) && BxDolService::isSerializedService($aHandler['service_call'])) {
+                    $aService = unserialize($aHandler['service_call']);
 
-                	$aParams = array($this);
-                	if(isset($aService['params']) && is_array($aService['params']))
-                		$aParams = array_merge($aParams, $aService['params']);
+                    $aParams = array($this);
+                    if(isset($aService['params']) && is_array($aService['params']))
+                        $aParams = array_merge($aParams, $aService['params']);
 
-					BxDolService::call($aService['module'], $aService['method'], $aParams, isset($aService['class']) ? $aService['class'] : 'Module');
+                    BxDolService::call($aService['module'], $aService['method'], $aParams, isset($aService['class']) ? $aService['class'] : 'Module');
                 }
             }
     }
@@ -128,7 +129,8 @@ class BxDolAlerts extends BxDol {
      *
      * @return an array with all alerts and handlers.
      */
-    public function getAlertsData() {
+    public function getAlertsData()
+    {
         $oDb = BxDolDb::getInstance();
         $aResult = array('alerts' => array(), 'handlers' => array());
 
@@ -146,11 +148,10 @@ class BxDolAlerts extends BxDol {
 
 class BxDolAlertsResponse extends BxDol
 {
-    public function __construct() 
+    public function __construct()
     {
         parent::__construct();
     }
 
     public function response($oAlert) {}
 }
-

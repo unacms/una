@@ -11,8 +11,10 @@ defined('BX_DOL') or die('hack attempt');
 
 bx_import('BxBaseStudioMenu');
 
-class BxTemplStudioMenu extends BxBaseStudioMenu { 
-    public function __construct ($aObject, $oTemplate = false) {
+class BxTemplStudioMenu extends BxBaseStudioMenu
+{
+    public function __construct ($aObject, $oTemplate = false)
+    {
         parent::__construct ($aObject, $oTemplate);
     }
 }

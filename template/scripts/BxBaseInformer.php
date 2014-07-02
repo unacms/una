@@ -13,8 +13,8 @@ bx_import('BxDolInformer');
  * Informer representation.
  * @see BxDolInformer
  */
-class BxBaseInformer extends BxDolInformer {
-
+class BxBaseInformer extends BxDolInformer
+{
     protected $_bJsCssAdded = false;
 
     protected $_oTemplate;
@@ -25,7 +25,8 @@ class BxBaseInformer extends BxDolInformer {
         BX_INFORMER_ERROR => 'bx-informer-msg-error',
     );
 
-    public function __construct ($oTemplate) {
+    public function __construct ($oTemplate)
+    {
         parent::__construct ();
 
         if ($oTemplate)
@@ -37,8 +38,8 @@ class BxBaseInformer extends BxDolInformer {
     /**
      * Display Informer.
      */
-    public function display () {
-
+    public function display ()
+    {
         $this->_addPermanentMessages();
 
         if (!$this->_aMessages)
@@ -56,7 +57,8 @@ class BxBaseInformer extends BxDolInformer {
     /**
      * Add css/js files which are needed for display and functionality.
      */
-    protected function _addJsCss() {
+    protected function _addJsCss()
+    {
         if ($this->_bJsCssAdded)
             return;
         $this->_oTemplate->addCss(array('informer.css'));

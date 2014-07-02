@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    BaseProfile Base classes for profile modules
  * @ingroup     DolphinModules
  *
@@ -15,11 +15,11 @@ bx_import ('BxDolAcl');
 /**
  * Base class for profile modules.
  */
-class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolProfileService 
+class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolProfileService
 {
     protected $_iAccountId;
 
-    function __construct(&$aModule) 
+    function __construct(&$aModule)
     {
         parent::__construct($aModule);
         $this->_iAccountId = getLoggedId();
@@ -34,7 +34,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         return '';
     }
 
-    public function serviceProfilesSearch ($sTerm, $iLimit) 
+    public function serviceProfilesSearch ($sTerm, $iLimit)
     {
         $aRet = array();
         $a = $this->_oDb->searchByTerm($sTerm, $iLimit);
@@ -43,43 +43,43 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         return $aRet;
     }
 
-    public function serviceProfileUnit ($iContentId) 
+    public function serviceProfileUnit ($iContentId)
     {
         return $this->_serviceTemplateFunc('unit', $iContentId);
     }
 
-    public function serviceProfileAvatar ($iContentId) 
+    public function serviceProfileAvatar ($iContentId)
     {
         return $this->_serviceTemplateFunc('urlAvatar', $iContentId);
     }
 
-    public function serviceProfileEditUrl ($iContentId) 
+    public function serviceProfileEditUrl ($iContentId)
     {
         bx_import('BxDolPermalinks');
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->_oConfig->CNF['URI_EDIT_ENTRY'] . '&id=' . $iContentId);
     }
 
-    public function serviceProfileThumb ($iContentId) 
+    public function serviceProfileThumb ($iContentId)
     {
         return $this->_serviceTemplateFunc('thumb', $iContentId);
     }
 
-    public function serviceProfileIcon ($iContentId) 
+    public function serviceProfileIcon ($iContentId)
     {
         return $this->_serviceTemplateFunc('icon', $iContentId);
     }
 
-    public function serviceProfileName ($iContentId) 
+    public function serviceProfileName ($iContentId)
     {
         if (!$iContentId)
             return false;
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
         if (!$aContentInfo)
-            return false;        
+            return false;
         return $aContentInfo[$this->_oConfig->CNF['FIELD_NAME']];
     }
 
-    public function serviceProfileUrl ($iContentId) 
+    public function serviceProfileUrl ($iContentId)
     {
         if (!$iContentId)
             return false;
@@ -91,20 +91,20 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
     }
 
-    public function serviceBrowseRecentProfiles () 
+    public function serviceBrowseRecentProfiles ()
     {
         return $this->_serviceBrowse ('recent');
     }
 
-    public function serviceBrowseConnections ($iProfileId, $sObjectConnections = 'sys_profiles_friends', $sConnectionsType = 'content', $iMutual = false, $iDesignBox = BX_DB_PADDING_DEF, $iProfileId2 = 0) 
+    public function serviceBrowseConnections ($iProfileId, $sObjectConnections = 'sys_profiles_friends', $sConnectionsType = 'content', $iMutual = false, $iDesignBox = BX_DB_PADDING_DEF, $iProfileId2 = 0)
     {
         return $this->_serviceBrowse (
-            'connections', 
+            'connections',
             array(
                 'object' => $sObjectConnections,
                 'type' => $sConnectionsType,
                 'mutual' => $iMutual,
-                'profile' => (int)$iProfileId,  
+                'profile' => (int)$iProfileId,
                 'profile2' => (int)$iProfileId2),
             $iDesignBox
         );
@@ -154,14 +154,14 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
 
         // return profiles + paginate
         return $s . (!$iStart && $oPaginate->getNum() <= $iLimit ?  '' : $oPaginate->getSimplePaginate());
-    } 
+    }
 
-    public function serviceEntityEditCover ($iContentId = 0) 
+    public function serviceEntityEditCover ($iContentId = 0)
     {
         return $this->_serviceEntityForm ('editDataForm', $iContentId, $this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT_COVER']);
     }
 
-    public function serviceProfileCover ($iContentId = 0) 
+    public function serviceProfileCover ($iContentId = 0)
     {
        if (!$iContentId)
             $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
@@ -175,7 +175,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         return $this->_oTemplate->cover($aContentInfo);
     }
 
-    public function serviceProfileFriends ($iContentId = 0) 
+    public function serviceProfileFriends ($iContentId = 0)
     {
         if (!$iContentId)
             $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
@@ -185,7 +185,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
         if (!$aContentInfo)
             return false;
-        
+
         bx_import('BxDolConnection');
         $s = $this->serviceBrowseConnectionsQuick ($aContentInfo['profile_id'], 'sys_profiles_friends', BX_CONNECTIONS_CONTENT_TYPE_CONTENT, true);
         if (!$s)
@@ -196,9 +196,9 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
     // ====== PERMISSION METHODS
 
     /**
-     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. 
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
      */
-    public function checkAllowedEdit ($aDataEntry, $isPerformAction = false) 
+    public function checkAllowedEdit ($aDataEntry, $isPerformAction = false)
     {
         // moderator always has access
         if ($this->_isModerator($isPerformAction))
@@ -216,7 +216,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
     /**
      * Check if user can change cover image
      */
-    public function checkAllowedChangeCover ($aDataEntry, $isPerformAction = false) 
+    public function checkAllowedChangeCover ($aDataEntry, $isPerformAction = false)
     {
         // moderator always has access
         if ($this->_isModerator($isPerformAction))
@@ -232,9 +232,9 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
     }
 
     /**
-     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. 
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
      */
-    public function checkAllowedDelete (&$aDataEntry, $isPerformAction = false) 
+    public function checkAllowedDelete (&$aDataEntry, $isPerformAction = false)
     {
         // moderator always has access
         if ($this->_isModerator($isPerformAction))
@@ -252,9 +252,9 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
     }
 
     /**
-     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. 
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
      */
-    public function checkAllowedViewMoreMenu (&$aDataEntry, $isPerformAction = false) 
+    public function checkAllowedViewMoreMenu (&$aDataEntry, $isPerformAction = false)
     {
         bx_import('BxTemplMenu');
         $oMenu = BxTemplMenu::getObjectInstance($this->_oConfig->CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE']);
@@ -264,17 +264,17 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
     }
 
     /**
-     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. 
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
      */
-    public function checkAllowedFriendAdd (&$aDataEntry, $isPerformAction = false) 
+    public function checkAllowedFriendAdd (&$aDataEntry, $isPerformAction = false)
     {
         return $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, 'sys_profiles_friends', true, false);
     }
 
     /**
-     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. 
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
      */
-    public function checkAllowedFriendRemove (&$aDataEntry, $isPerformAction = false) 
+    public function checkAllowedFriendRemove (&$aDataEntry, $isPerformAction = false)
     {
         if (CHECK_ACTION_RESULT_ALLOWED === $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, 'sys_profiles_friends', false, true, true))
             return CHECK_ACTION_RESULT_ALLOWED;
@@ -282,24 +282,24 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
     }
 
     /**
-     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. 
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
      */
-    public function checkAllowedSubscribeAdd (&$aDataEntry, $isPerformAction = false) 
+    public function checkAllowedSubscribeAdd (&$aDataEntry, $isPerformAction = false)
     {
         return $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, 'sys_profiles_subscriptions', false, false);
     }
 
     /**
-     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. 
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
      */
-    public function checkAllowedSubscribeRemove (&$aDataEntry, $isPerformAction = false) 
+    public function checkAllowedSubscribeRemove (&$aDataEntry, $isPerformAction = false)
     {
         return $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, 'sys_profiles_subscriptions', false, true);
     }
 
     // ====== PROTECTED METHODS
 
-    protected function _checkAllowedConnect (&$aDataEntry, $isPerformAction, $sObjConnection, $isMutual, $isInvertResult, $isSwap = false) 
+    protected function _checkAllowedConnect (&$aDataEntry, $isPerformAction, $sObjConnection, $isMutual, $isInvertResult, $isSwap = false)
     {
         if (!$this->_iProfileId)
             return _t('_sys_txt_access_denied');
@@ -324,18 +324,18 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         return $isConnected ? _t('_sys_txt_access_denied') : CHECK_ACTION_RESULT_ALLOWED;
     }
 
-    protected function _buildRssParams($sMode, $aArgs) 
+    protected function _buildRssParams($sMode, $aArgs)
     {
         $aParams = array ();
         $sMode = bx_process_input($sMode);
         switch ($sMode) {
-            case 'connections':                
+            case 'connections':
                 $aParams = array(
-                    'object' => isset($aArgs[0]) ? $aArgs[0] : '', 
-                    'type' => isset($aArgs[1]) ? $aArgs[1] : '', 
-                    'profile' => isset($aArgs[2]) ? (int)$aArgs[2] : 0, 
+                    'object' => isset($aArgs[0]) ? $aArgs[0] : '',
+                    'type' => isset($aArgs[1]) ? $aArgs[1] : '',
+                    'profile' => isset($aArgs[2]) ? (int)$aArgs[2] : 0,
                     'mutual' => isset($aArgs[3]) ? (int)$aArgs[3] : 0,
-                    'profile2' => isset($aArgs[4]) ? (int)$aArgs[4] : 0, 
+                    'profile2' => isset($aArgs[4]) ? (int)$aArgs[4] : 0,
                 );
                 break;
         }
@@ -344,4 +344,4 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
     }
 }
 
-/** @} */ 
+/** @} */

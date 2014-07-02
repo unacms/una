@@ -12,8 +12,10 @@ bx_import('BxBaseFormLogin');
 /**
  * @see BxBaseFormLogin
  */
-class BxTemplFormLogin extends BxBaseFormLogin {
-    public function __construct($aInfo, $oTemplate = false) {
+class BxTemplFormLogin extends BxBaseFormLogin
+{
+    public function __construct($aInfo, $oTemplate = false)
+    {
         parent::__construct($aInfo, $oTemplate);
     }
 }

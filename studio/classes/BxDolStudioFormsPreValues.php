@@ -13,11 +13,13 @@ bx_import('BxDolStudioFormsQuery');
 
 define('BX_DOL_STUDIO_FIELD_PRE_VALUE_INT_MAX', round(log(BX_DOL_INT_MAX, 2)));
 
-class BxDolStudioFormsPreValues extends BxTemplStudioGrid {
+class BxDolStudioFormsPreValues extends BxTemplStudioGrid
+{
     protected $sModule;
     protected $sList;
 
-    public function __construct ($aOptions, $oTemplate = false) {
+    public function __construct ($aOptions, $oTemplate = false)
+    {
         parent::__construct ($aOptions, $oTemplate);
 
         $this->oDb = new BxDolStudioFormsQuery();
@@ -35,7 +37,8 @@ class BxDolStudioFormsPreValues extends BxTemplStudioGrid {
         }
     }
 
-    protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage) {
+    protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
+    {
         if(empty($this->sList))
             return array();
 

@@ -21,25 +21,25 @@ bx_import('BxDolCmts');
 $oCmts = BxDolCmts::getObjectInstance($sSys, $iObjectId, true);
 
 if ($oCmts && $sSys && $iObjectId) {
-	if($sAction) {
-	    header('Content-Type: text/html; charset=utf-8');
-	    $sMethod = 'action' . $sAction;
-	    echo $oCmts->$sMethod();
-	    exit;
-	}
+    if($sAction) {
+        header('Content-Type: text/html; charset=utf-8');
+        $sMethod = 'action' . $sAction;
+        echo $oCmts->$sMethod();
+        exit;
+    }
 
-	$iCmtId = bx_get('cmt_id');
-	if($iCmtId !== false) {
-		$sObjectTitle = $oCmts->getObjectTitle($iObjectId);
+    $iCmtId = bx_get('cmt_id');
+    if($iCmtId !== false) {
+        $sObjectTitle = $oCmts->getObjectTitle($iObjectId);
 
-		$sHeader = _t('_cmt_page_view_header', $sObjectTitle);
-		$sTitle = _t('_cmt_page_view_title', $oCmts->getBaseUrl(), $sObjectTitle);
-		$sContent = DesignBoxContent($sTitle, $oCmts->getCommentBlock($iCmtId), BX_DB_PADDING_DEF);
+        $sHeader = _t('_cmt_page_view_header', $sObjectTitle);
+        $sTitle = _t('_cmt_page_view_title', $oCmts->getBaseUrl(), $sObjectTitle);
+        $sContent = DesignBoxContent($sTitle, $oCmts->getCommentBlock($iCmtId), BX_DB_PADDING_DEF);
 
-		$oTemplate = BxDolTemplate::getInstance();
-		$oTemplate->setPageNameIndex(BX_PAGE_DEFAULT);
-		$oTemplate->setPageHeader($sHeader);
-		$oTemplate->setPageContent('page_main_code', $sContent);
-		$oTemplate->getPageCode();
-	}
+        $oTemplate = BxDolTemplate::getInstance();
+        $oTemplate->setPageNameIndex(BX_PAGE_DEFAULT);
+        $oTemplate->setPageHeader($sHeader);
+        $oTemplate->setPageContent('page_main_code', $sContent);
+        $oTemplate->getPageCode();
+    }
 }

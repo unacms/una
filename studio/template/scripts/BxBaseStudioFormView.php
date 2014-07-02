@@ -10,20 +10,24 @@
 
 bx_import('BxDolStudioForm');
 
-class BxBaseStudioFormView extends BxDolStudioForm {
-    function __construct($aInfo, $oTemplate) {
+class BxBaseStudioFormView extends BxDolStudioForm
+{
+    function __construct($aInfo, $oTemplate)
+    {
         parent::__construct($aInfo, $oTemplate);
     }
 
-    function addCssJs() {
+    function addCssJs()
+    {
         parent::addCssJs();
 
         $this->oTemplate->addJs(array(
-        	'forms.js'
+            'forms.js'
         ));
     }
 
-    function genRow(&$aInput) {
+    function genRow(&$aInput)
+    {
         $sRow = '';
         switch($aInput['type']) {
             case 'image_uploader':
@@ -37,7 +41,8 @@ class BxBaseStudioFormView extends BxDolStudioForm {
         return $sRow;
     }
 
-    function genInput(&$aInput) {
+    function genInput(&$aInput)
+    {
         $sInput = '';
         switch($aInput['type']) {
             case 'text_translatable':
@@ -56,7 +61,8 @@ class BxBaseStudioFormView extends BxDolStudioForm {
         return $sInput;
     }
 
-    function genRowImageUploader(&$aInput) {
+    function genRowImageUploader(&$aInput)
+    {
         $aTmplVarsPreview = array(
             'bx_if:show_empty' => array(
                 'condition' => true,
@@ -79,7 +85,7 @@ class BxBaseStudioFormView extends BxDolStudioForm {
                 $aTmplVarsPreview['bx_if:show_image'] = array(
                     'condition' => true,
                     'content' => array(
-                    	'url' => $sFileUrl,
+                        'url' => $sFileUrl,
                         'bx_if:show_action_delete' => array(
                             'condition' => isset($aInput['ajax_action_delete']) && $aInput['ajax_action_delete'] != "",
                             'content' => array(
@@ -95,7 +101,7 @@ class BxBaseStudioFormView extends BxDolStudioForm {
         $aInputPreview = array(
             'type' => 'custom',
             'name' => 'preview',
-        	'caption' => isset($aInput['caption_preview']) ? $aInput['caption_preview'] : _t('_adm_txt_form_view_iu_preview'),
+            'caption' => isset($aInput['caption_preview']) ? $aInput['caption_preview'] : _t('_adm_txt_form_view_iu_preview'),
             'content' => $this->oTemplate->parseHtmlByName('form_view_iu_preview.html', $aTmplVarsPreview)
         );
         $sRow .= $this->genRow($aInputPreview);
@@ -106,7 +112,8 @@ class BxBaseStudioFormView extends BxDolStudioForm {
         return $sRow;
     }
 
-    function genInputTranslatable(&$aInput, $sType = 'text') {
+    function genInputTranslatable(&$aInput, $sType = 'text')
+    {
         $iValueLength = 20;
         $sInputIdPrefix = 'bx-form-input-';
         $aInputMethod = array('text' => 'genInputStandard', 'textarea' => 'genInputTextarea');
@@ -126,7 +133,7 @@ class BxBaseStudioFormView extends BxDolStudioForm {
 
         $aInput['type'] = 'hidden';
         $aInput['attrs'] = array(
-        	'id' => $sInputIdPrefix . $aInput['name']
+            'id' => $sInputIdPrefix . $aInput['name']
         );
         $sInput .= $this->genInputStandard($aInput);
 
@@ -145,14 +152,14 @@ class BxBaseStudioFormView extends BxDolStudioForm {
             $aInput['value'] = $sValue;
             $aInput['attrs'] = array(
                 'id' => $sInputIdPrefix . $aInput['name'],
-				'style' => !$bLanguage ? 'display:none;' : ''
+                'style' => !$bLanguage ? 'display:none;' : ''
             );
             $sInput .= $this->$aInputMethod[$sType]($aInput);
 
             $aTmplVarValue = array(
                 'condition' => $bValue,
                 'content' => array(
-                	'value' => strmaxtextlen($sValue, $iValueLength)
+                    'value' => strmaxtextlen($sValue, $iValueLength)
                 )
             );
             $aTmplVarMissing = array(
@@ -161,8 +168,8 @@ class BxBaseStudioFormView extends BxDolStudioForm {
             );
             $aTmplVars[] = array(
                 'name' => $sInputName,
-            	'lang_name' => $aLanguage['name'],
-            	'lang_flag' => $aLanguage['icon'],
+                'lang_name' => $aLanguage['name'],
+                'lang_flag' => $aLanguage['icon'],
                 'lang_title' => $aLanguage['title'],
                 'bx_if:hide_active' => array(
                     'condition' => !$bLanguage,
@@ -174,7 +181,7 @@ class BxBaseStudioFormView extends BxDolStudioForm {
                     'condition' => $bLanguage,
                     'content' => array()
                 ),
-            	'bx_if:pas_value' => $aTmplVarValue,
+                'bx_if:pas_value' => $aTmplVarValue,
                 'bx_if:pas_missing' => $aTmplVarMissing,
             );
         }

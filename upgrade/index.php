@@ -17,7 +17,6 @@ define ('BX_UPGRADE_DIR_TEMPLATES', BX_DIRECTORY_PATH_ROOT . 'upgrade/templates/
 
 $sFolder = $_REQUEST['folder'];
 
-
 include (BX_UPGRADE_DIR_TEMPLATES . '_header.php');
 
 $oController = new BxDolUpgradeController ();
@@ -30,4 +29,3 @@ else
 include (BX_UPGRADE_DIR_TEMPLATES . '_footer.php');
 
 /** @} */
-

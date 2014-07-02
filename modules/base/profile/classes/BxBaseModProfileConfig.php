@@ -2,7 +2,7 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
- * 
+ *
  * @defgroup    BaseProfile Base classes for profile modules
  * @ingroup     DolphinModules
  *
@@ -11,12 +11,12 @@
 
 bx_import('BxBaseModGeneralConfig');
 
-class BxBaseModProfileConfig extends BxBaseModGeneralConfig 
+class BxBaseModProfileConfig extends BxBaseModGeneralConfig
 {
-    function __construct($aModule) 
+    function __construct($aModule)
     {
         parent::__construct($aModule);
     }
 }
 
-/** @} */ 
+/** @} */
