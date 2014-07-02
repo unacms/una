@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_timeline',
     'title' => 'Timeline',
     'note' => 'Timeline module.',
-    'version' => '1.0.0',
+    'version' => '8.0.0',
     'vendor' => 'BoonEx',
     'update_url' => '',
 

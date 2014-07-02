@@ -2,8 +2,6 @@
 -- Database: v 8.0
 --
 
-SET @sSysVersion = '8.0.0';
-
 -- --------------------------------------------------------
 
 SET NAMES 'utf8';
@@ -215,7 +213,7 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `or
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'sys_version', '', @sSysVersion, 'digit', '', '', '', 2),
+(@iCategoryId, 'sys_version', '', '8', 'digit', '', '', '', 2),
 (@iCategoryId, 'sys_install_time', '', '0', 'digit', '', '', '', 3),
 
 (@iCategoryId, 'sys_site_logo', '', '0', 'digit', '', '', '', 20),

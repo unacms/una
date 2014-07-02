@@ -17,13 +17,13 @@ $aConfig = array(
     'name' => 'bx_developer',
     'title' => 'Developer',
     'note' => 'Developer tools...',
-    'version' => '1.0.0',
+    'version' => '8.0.0',
     'vendor' => 'BoonEx',
     'product_url' => 'http://www.boonex.com/products/{uri}',
     'update_url' => 'http://www.boonex.com/products/{uri}',
 
     'compatible_with' => array(
-        '8.0.0'
+        '8.0.x'
     ),
 
     /**
