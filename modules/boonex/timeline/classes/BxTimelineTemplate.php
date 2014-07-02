@@ -90,11 +90,18 @@ class BxTimelineTemplate extends BxDolModuleTemplate
     {
         list($sContent, $sLoadMore, $sBack) = $this->getPosts($aParams);
 
+        $sViewImagePopupId = $this->_oConfig->getHtmlIds('view', 'photo_popup');
+        $sViewImagePopupContent = $this->parseHtmlByName('popup_image.html', array(
+    		'image_url' => ''
+    	));
+
+    	bx_import('BxTemplFunctions');
         return $this->parseHtmlByName('block_view.html', array(
             'style_prefix' => $this->_oConfig->getPrefix('style'),
             'back' => $sBack,
             'content' => $sContent,
             'load_more' =>  $sLoadMore,
+        	'view_image_popup' => BxTemplFunctions::getInstance()->transBox($sViewImagePopupId, $sViewImagePopupContent, true),
             'js_content' => $this->getJsCode('view', array(
                 'type' => $aParams['type'],
                 'owner_id' => $aParams['owner_id'],
@@ -122,6 +129,9 @@ class BxTimelineTemplate extends BxDolModuleTemplate
     {
         return $this->getItemBlock($iId);
     }
+
+    /*
+	TODO: Remove if it's not needed. Including HTML template.
 
     public function getPhotoPopup($iEventId, $iStart)
     {
@@ -159,6 +169,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
             )
         ));
     }
+    */
 
     public function getPost(&$aEvent, $aBrowseParams = array())
     {
@@ -897,12 +908,13 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 
                     foreach($aPhotos as $iPhotoId) {
                         $iPhotoIndex = array_search($iPhotoId, $aPhotos);
+                        $sPhotoSrcOrig = $oStorage->getFileUrlById($iPhotoId);
 
                         $aResult['content']['images'][] = array(
                             'src' => $oTranscoder->getImageUrl($iPhotoId),
-                            'src_orig' => $oStorage->getFileUrlById($iPhotoId),
+                            'src_orig' => $sPhotoSrcOrig,
                             'title' => '',
-                            'onclick' => $sJsObject . '.showPhoto(this, ' . $aEvent['id'] . ', ' . $iPhotoIndex . ')'
+                            'onclick' => $sJsObject . '.showPhoto(this, \'' . $sPhotoSrcOrig . '\')' //TODO: Remove if it's not needed. $sJsObject . '.showPhoto(this, ' . $aEvent['id'] . ', ' . $iPhotoIndex . ')'
                         );
                     }
                 }

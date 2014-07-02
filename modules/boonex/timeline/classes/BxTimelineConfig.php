@@ -96,7 +96,7 @@ class BxTimelineConfig extends BxDolModuleConfig
         $this->_aHtmlIds = array(
             'view' => array(
                 'item_popup' => $sHtmlPrefix . '-item-popup-',
-                'photo_popup' => $sHtmlPrefix . '-photo-popup-',
+                'photo_popup' => $sHtmlPrefix . '-photo-popup',
             ),
             'post' => array(
                 'attach_link_popup' =>  $sHtmlPrefix . '-attach-link-popup',
