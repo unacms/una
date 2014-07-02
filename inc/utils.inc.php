@@ -1073,7 +1073,7 @@ function bx_get_ver ()
     bx_import('BxDolDb');
     $oDb = BxDolDb::getInstance();
     $sQuery = $oDb->prepare("SELECT `version` FROM `sys_modules` WHERE `name` = 'system'");
-    return $oDb->fromMemory('getOne', $sQuery);
+    return $oDb->fromMemory('sys_version', 'getOne', $sQuery);
 }
 
 /** @} */
