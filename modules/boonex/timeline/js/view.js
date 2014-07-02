@@ -103,6 +103,13 @@ BxTimelineView.prototype.showItem = function(oLink, iId) {
 	return false;
 };
 
+BxTimelineView.prototype.showPhoto = function(oLink, sUrl) {
+	$('#' + this._aHtmlIds['photo_popup']).dolPopupImage(sUrl);
+};
+
+/*
+TODO: Remove if it's not needed.
+
 BxTimelineView.prototype.showPhoto = function(oLink, iEventId, iStart) {
     var oData = this._getDefaultData();
     oData['event_id'] = iEventId;
@@ -125,6 +132,7 @@ BxTimelineView.prototype.showPhoto = function(oLink, iEventId, iStart) {
 BxTimelineView.prototype.hidePhoto = function(oLink) {
 	$(".bx-popup-applied:visible").dolPopupHide();
 };
+*/
 
 BxTimelineView.prototype.commentItem = function(oLink, sSystem, iId) {
 	var $this = this;
