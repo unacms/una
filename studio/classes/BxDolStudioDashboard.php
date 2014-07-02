@@ -35,15 +35,10 @@ class BxDolStudioDashboard extends BxTemplStudioPage
                         break;
 
                     $sVersionAvl = $aContent['value'];
-                    $sVersionCur = getParam('sys_version');
+                    $sVersionCur = bx_get_ver();
                     if(version_compare($sVersionCur, $sVersionAvl) == -1)
                         $aResult = array('version' => $sVersionAvl);
                     break;
-                /*
-                case 'action_name':
-                    $aResult = array();
-                    break;
-                */
             }
 
             if(!empty($aResult['message'])) {

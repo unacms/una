@@ -87,7 +87,7 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton
         $sRet = '';
         switch( $sKey ) {
             case 'version':
-                $sRet = getParam('sys_version');
+                $sRet = bx_get_ver();
                 break;
             case 'page_breadcrumb':
                 $sRet = $this->getPageBreadcrumb();

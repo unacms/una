@@ -1040,7 +1040,7 @@ function bx_replace_markers($mixed, $aMarkers)
 
 function bx_site_hash($sSalt = '', $isSkipVersion = false)
 {
-    return md5($sSalt . ($isSkipVersion ? '' : getParam('sys_version')) . BX_DOL_SECRET . BX_DOL_URL_ROOT);
+    return md5($sSalt . ($isSkipVersion ? '' : bx_get_ver()) . BX_DOL_SECRET . BX_DOL_URL_ROOT);
 }
 
 /**
@@ -1063,6 +1063,17 @@ function bx_trigger_error ($sMsg, $iNumLevelsBack = 0)
     $a = debug_backtrace();
     $sMsgAdd = "<br />\n related code in <b>{$a[$iNumLevelsBack]['file']}</b> on line <b>{$a[$iNumLevelsBack]['line']}</b> <br />\n";
     trigger_error ($sMsg . $sMsgAdd, E_USER_ERROR);
+}
+
+/**
+ * Get dolphin version
+ */
+function bx_get_ver ()
+{
+    bx_import('BxDolDb');
+    $oDb = BxDolDb::getInstance();
+    $sQuery = $oDb->prepare("SELECT `version` FROM `sys_modules` WHERE `name` = 'system'");
+    return $oDb->fromMemory('getOne', $sQuery);
 }
 
 /** @} */

@@ -213,7 +213,6 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `or
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'sys_version', '', '8', 'digit', '', '', '', 2),
 (@iCategoryId, 'sys_install_time', '', '0', 'digit', '', '', '', 3),
 
 (@iCategoryId, 'sys_site_logo', '', '0', 'digit', '', '', '', 20),
@@ -728,7 +727,7 @@ CREATE TABLE `sys_modules` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 INSERT INTO `sys_modules` (`type`, `name`, `title`, `vendor`, `version`, `product_url`, `update_url`, `path`, `uri`, `class_prefix`, `db_prefix`, `lang_category`, `dependencies`, `date`, `enabled`) VALUES
-('module', 'system', 'System', 'BoonEx', @sSysVersion, '', '', '', 'system', 'Bx', 'sys_', 'System', '', 0, 1);
+('module', 'system', 'System', 'BoonEx', '8', '', '', '', 'system', 'Bx', 'sys_', 'System', '', 0, 1);
 
 
 CREATE TABLE `sys_modules_file_tracks` (

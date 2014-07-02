@@ -67,7 +67,7 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
         $oTemplate->addJsTranslation('_adm_dbd_txt_dolphin_n_available');
         return $oTemplate->parseHtmlByName('dbd_versions.html', array(
             'domain' => getParam('site_title'),
-            'version' => getParam('sys_version'),
+            'version' => bx_get_ver(),
             'installed' => bx_time_js(getParam('sys_install_time')),
         ));
     }

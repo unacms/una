@@ -312,7 +312,7 @@ class BxDolStudioToolsAudit extends BxDol
         else
             $sLatestDolphinVer = 'undefined';
 
-        $sDolphinVer = getParam('sys_version');
+        $sDolphinVer = bx_get_ver();
         $aMessage = array('type' => BX_DOL_AUDIT_OK);
         if (!version_compare($sDolphinVer, $sLatestDolphinVer, '>='))
             $aMessage = array('type' => BX_DOL_AUDIT_WARN, 'msg' => _t('_sys_audit_msg_version_is_outdated', $sLatestDolphinVer));

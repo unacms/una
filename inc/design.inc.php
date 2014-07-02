@@ -100,7 +100,7 @@ function PopupBox($sName, $sTitle, $sContent, $isHiddenByDefault = false)
 
 function getVersionComment()
 {
-    $aVer = explode('.', getParam('sys_version'));
+    $aVer = explode('.', bx_get_ver());
 
     // version output made for debug possibilities.
     // randomizing made for security issues. do not change it...
