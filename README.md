@@ -1,5 +1,4 @@
 #[Dolphin 8](http://www.boonex.com)
-=========
 
 Community software platform
 
