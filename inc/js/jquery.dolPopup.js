@@ -302,6 +302,8 @@
                 if ('undefined' != typeof(sLoadingElement))
                     bx_loading (sLoadingElement, false);
 
+                ePopup.find('img').attr('src', sUrl);
+
                 // fit image into the browser window
                 if ((w * k - eImg.width) < (h * k - eImg.height)) {
                     ePopup.find('img').css({
