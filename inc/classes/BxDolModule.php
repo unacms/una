@@ -120,6 +120,14 @@ class BxDolModule extends BxDol
         return '_sys_module_' . strtolower(str_replace(' ', '_', $sUri));
     }
 
+	/**
+     * is module enabled
+     */
+    function isEnabled()
+    {
+        return (int)$this->_aModule['enabled'] == 1;
+    }
+
     /**
      * get module name
      */

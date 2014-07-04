@@ -130,6 +130,10 @@ class BxBaseModGeneralInstaller extends BxDolStudioInstaller
             }
         }
 
+        //request Timeline cleaning
+        if ($this->_bUpdateTimeline && BxDolRequest::serviceExists('timeline', 'delete_module_events'))
+            BxDolService::call('timeline', 'delete_module_events', array($this->_aConfig['home_uri']));
+
         return parent::uninstall($aParams, $bDisable);
     }
 }

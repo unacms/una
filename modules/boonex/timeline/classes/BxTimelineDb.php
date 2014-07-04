@@ -41,10 +41,8 @@ class BxTimelineDb extends BxDolModuleDb
 
     public function insertData($aData)
     {
+    	//--- Update Timeline Handlers ---//
         foreach($aData['handlers'] as $aHandler) {
-            //--- Delete module related events ---//
-            $this->deleteEvent(array('type' => $aHandler['alert_unit'], 'action' => $aHandler['alert_action']));
-
             $sContent = '';
             if($aHandler['type'] == BX_TIMELINE_HANDLER_TYPE_INSERT)
                 $sContent = serialize(array(
@@ -55,7 +53,6 @@ class BxTimelineDb extends BxDolModuleDb
                     'group_by' => $aHandler['group_by']
                 ));
 
-            //--- Update Timeline Handlers ---//
             $sQuery = $this->prepare("INSERT INTO
                     `{$this->_sTableHandlers}`
                 SET
@@ -83,11 +80,8 @@ class BxTimelineDb extends BxDolModuleDb
 
     public function deleteData($aData)
     {
+    	//--- Update Timeline Handlers ---//
         foreach($aData['handlers'] as $aHandler) {
-            //--- Delete module related events ---//
-            $this->deleteEvent(array('type' => $aHandler['alert_unit'], 'action' => $aHandler['alert_action']));
-
-            //--- Update Wall Handlers ---//
             $sQuery = $this->prepare("DELETE FROM
                     `{$this->_sTableHandlers}`
                 WHERE
@@ -111,6 +105,12 @@ class BxTimelineDb extends BxDolModuleDb
 
             $this->query($sQuery);
         }
+    }
+
+    public function deleteModuleEvents($aData)
+    {
+    	foreach($aData['handlers'] as $aHandler)
+            $this->deleteEvent(array('type' => $aHandler['alert_unit'], 'action' => $aHandler['alert_action']));
     }
 
     public function getHandlers($aParams = array())
