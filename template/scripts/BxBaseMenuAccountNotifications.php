@@ -33,7 +33,7 @@ class BxBaseMenuAccountNotifications extends BxTemplMenu
             return false;
 
         // show only friends for currently active profile for friend request notification
-        if ('notifications-friend-requests' == $a['name']) {
+        if ('notifications-friend-requests' == $a['name'] || 'profile-stats-friend-requests' == $a['name']) {
             $oProfile = BxDolProfile::getInstance();
             $aInfo = $oProfile->getInfo();
             if ($a['module'] != $aInfo['type'])

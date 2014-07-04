@@ -285,7 +285,7 @@ function bx_menu_popup_inline (jSel, e, options) {
 }
 
 /**
- * Show pointer popup with menu from URL.
+ * Set ACL level for specified profile
  * @param iProfileId - profile id to set acl level for
  * @param iAclLevel - acl level id to assign to a given rofile
  */

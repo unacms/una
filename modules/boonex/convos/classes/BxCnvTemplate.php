@@ -169,6 +169,9 @@ class BxCnvTemplate extends BxBaseModTextTemplate
 
     function getMessagesPreviews ($a)
     {
+        if (empty($a))
+            return MsgBox(_t('_Empty'));
+
         bx_import('BxDolProfile');
         bx_import('BxDolProfileUndefined');
         bx_import('BxDolPermalinks');
