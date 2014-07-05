@@ -289,12 +289,17 @@ class BxTimelineModule extends BxDolModule
      */
     public function serviceAddHandlers($sModuleUri = 'all')
     {
-        $this->_updateHandlers($sModuleUri, true);
+        $this->_updateModuleData('add_handlers', $sModuleUri);
     }
 
     public function serviceDeleteHandlers($sModuleUri = 'all')
     {
-        $this->_updateHandlers($sModuleUri, false);
+        $this->_updateModuleData('delete_handlers', $sModuleUri);
+    }
+
+	public function serviceDeleteModuleEvents($sModuleUri = 'all')
+    {
+        $this->_updateModuleData('delete_module_events', $sModuleUri);
     }
 
     function serviceGetActionsChecklist()
@@ -411,23 +416,34 @@ class BxTimelineModule extends BxDolModule
 
     public function serviceGetShareElementBlock($iOwnerId, $sType, $sAction, $iObjectId, $aParams = array())
     {
-        $aParams = array_merge($this->_oConfig->getShareDefaults(), $aParams);
+    	if(!$this->isEnabled())
+    		return '';
 
+        $aParams = array_merge($this->_oConfig->getShareDefaults(), $aParams);
         return $this->_oTemplate->getShareElement($iOwnerId, $sType, $sAction, $iObjectId, $aParams);
     }
 
     public function serviceGetShareCounter($sType, $sAction, $iObjectId)
     {
+    	if(!$this->isEnabled())
+    		return '';
+
         return $this->_oTemplate->getShareCounter($sType, $sAction, $iObjectId);
     }
 
     public function serviceGetShareJsScript()
     {
+    	if(!$this->isEnabled())
+    		return '';
+
         return $this->_oTemplate->getShareJsScript();
     }
 
     public function serviceGetShareJsClick($iOwnerId, $sType, $sAction, $iObjectId)
     {
+    	if(!$this->isEnabled())
+    		return '';
+
         return $this->_oTemplate->getShareJsClick($iOwnerId, $sType, $sAction, $iObjectId);
     }
 
@@ -885,7 +901,7 @@ class BxTimelineModule extends BxDolModule
         return bx_process_input($s, BX_DATA_TEXT_MULTILINE);
     }
 
-    protected function _updateHandlers($sModuleUri = 'all', $bInstall = true)
+    protected function _updateModuleData($sAction, $sModuleUri = 'all')
     {
         $aModules = $sModuleUri == 'all' ? $this->_oDb->getModules() : array($this->_oDb->getModuleByUri($sModuleUri));
 
@@ -897,13 +913,22 @@ class BxTimelineModule extends BxDolModule
             if(empty($aData) || !is_array($aData))
                 continue;
 
-            if($bInstall)
-                $this->_oDb->insertData($aData);
-            else
-                $this->_oDb->deleteData($aData);
-        }
+			switch($sAction) {
+				case 'add_handlers':
+					$this->_oDb->insertData($aData);
+					BxDolAlerts::cacheInvalidate();
+					break;
 
-        BxDolAlerts::cacheInvalidate();
+				case 'delete_handlers':
+					$this->_oDb->deleteData($aData);
+					BxDolAlerts::cacheInvalidate();
+					break;
+
+				case 'delete_module_events':
+					$this->_oDb->deleteModuleEvents($aData);
+					break;
+			}
+        }
     }
 
     protected function _echoResultJson($a, $isAutoWrapForFormFileSubmit = false)
