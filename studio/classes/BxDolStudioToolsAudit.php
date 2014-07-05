@@ -172,7 +172,7 @@ class BxDolStudioToolsAudit extends BxDol
         <script language="javascript">
             function bx_sys_adm_audit_test_email()
             {
-                var sEmail = prompt('<?php echo _t('_Email'); ?>', '<?php echo function_exists('getParam') ? getParam('site_email') : ''; ?>');
+                var sEmail = prompt('<?php echo _t('_Email'); ?>', '<?php echo class_exists('BxDolDb') && BxDolDb::getInstance() ? BxDolDb::getInstance()->getParam('site_email') : ''; ?>');
                 if (null == sEmail || ('string' == (typeof sEmail) && !sEmail.length))
                     return;
 
@@ -304,7 +304,7 @@ class BxDolStudioToolsAudit extends BxDol
     {
         $sDolphinPath = defined('BX_DIRECTORY_PATH_ROOT') ? BX_DIRECTORY_PATH_ROOT : BX_INSTALL_DIR_ROOT;
 
-        $sEmailToCkeckMailSending = function_exists('getParam') ? getParam('site_email') : '';
+        $sEmailToCkeckMailSending = class_exists('BxDolDb') && BxDolDb::getInstance() ? BxDolDb::getInstance()->getParam('site_email') : '';
 
         $sLatestDolphinVer = file_get_contents("http://rss.boonex.com/");
         if (preg_match ('#<dolphin>([\.0-9]+)</dolphin>#', $sLatestDolphinVer, $m))
