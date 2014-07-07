@@ -1,8 +1,8 @@
 
 @font-face {
   font-family: 'sys-user';
-  src: url('../fonts/fontawesome-webfont.eot?v=4.0.2');
-  src: url('../fonts/fontawesome-webfont.eot?v=4.0.2#iefix') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff?v=4.0.2') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.0.2') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.0.2#fontawesomeregular') format('svg');
+  src: url('../fonts/fontawesome-webfont.eot?v=4.1.0');
+  src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.1.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff?v=4.1.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.1.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.1.0#fontawesomeregular') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -12,7 +12,6 @@
     font-weight:normal;
     font-style:normal;
 }
-
 
 .sys-icon.glass:before {
   content: "\f000";
@@ -195,6 +194,8 @@
 .sys-icon.video-camera:before {
   content: "\f03d";
 }
+.sys-icon.photo:before,
+.sys-icon.image:before,
 .sys-icon.picture-o:before {
   content: "\f03e";
 }
@@ -220,7 +221,7 @@
 .sys-icon.check-square-o:before {
   content: "\f046";
 }
-.sys-icon.move:before {
+.sys-icon.arrows:before {
   content: "\f047";
 }
 .sys-icon.step-backward:before {
@@ -305,10 +306,10 @@
 .sys-icon.share:before {
   content: "\f064";
 }
-.sys-icon.resize-full:before {
+.sys-icon.expand:before {
   content: "\f065";
 }
-.sys-icon.resize-small:before {
+.sys-icon.compress:before {
   content: "\f066";
 }
 .sys-icon.plus:before {
@@ -375,10 +376,10 @@
 .sys-icon.folder-open:before {
   content: "\f07c";
 }
-.sys-icon.resize-vertical:before {
+.sys-icon.arrows-v:before {
   content: "\f07d";
 }
-.sys-icon.resize-horizontal:before {
+.sys-icon.arrows-h:before {
   content: "\f07e";
 }
 .sys-icon.bar-chart-o:before {
@@ -523,10 +524,11 @@
 .sys-icon.briefcase:before {
   content: "\f0b1";
 }
-.sys-icon.fullscreen:before {
+.sys-icon.arrows-alt:before {
   content: "\f0b2";
 }
-.sys-icon.group:before {
+.sys-icon.group:before,
+.sys-icon.users:before {
   content: "\f0c0";
 }
 .sys-icon.chain:before,
@@ -557,7 +559,9 @@
 .sys-icon.square:before {
   content: "\f0c8";
 }
-.sys-icon.reorder:before {
+.sys-icon.navicon:before,
+.sys-icon.reorder:before,
+.sys-icon.bars:before {
   content: "\f0c9";
 }
 .sys-icon.list-ul:before {
@@ -616,11 +620,11 @@
   content: "\f0dc";
 }
 .sys-icon.sort-down:before,
-.sys-icon.sort-asc:before {
+.sys-icon.sort-desc:before {
   content: "\f0dd";
 }
 .sys-icon.sort-up:before,
-.sys-icon.sort-desc:before {
+.sys-icon.sort-asc:before {
   content: "\f0de";
 }
 .sys-icon.envelope:before {
@@ -694,10 +698,10 @@
 .sys-icon.file-text-o:before {
   content: "\f0f6";
 }
-.sys-icon.building:before {
+.sys-icon.building-o:before {
   content: "\f0f7";
 }
-.sys-icon.hospital:before {
+.sys-icon.hospital-o:before {
   content: "\f0f8";
 }
 .sys-icon.ambulance:before {
@@ -783,12 +787,6 @@
 .sys-icon.folder-open-o:before {
   content: "\f115";
 }
-.sys-icon.expand-o:before {
-  content: "\f116";
-}
-.sys-icon.collapse-o:before {
-  content: "\f117";
-}
 .sys-icon.smile-o:before {
   content: "\f118";
 }
@@ -816,10 +814,8 @@
 .sys-icon.code:before {
   content: "\f121";
 }
+.sys-icon.mail-reply-all:before,
 .sys-icon.reply-all:before {
-  content: "\f122";
-}
-.sys-icon.mail-reply-all:before {
   content: "\f122";
 }
 .sys-icon.star-half-empty:before,
@@ -903,16 +899,16 @@
 .sys-icon.anchor:before {
   content: "\f13d";
 }
-.sys-icon.unlock-o:before {
+.sys-icon.unlock-alt:before {
   content: "\f13e";
 }
 .sys-icon.bullseye:before {
   content: "\f140";
 }
-.sys-icon.ellipsis-horizontal:before {
+.sys-icon.ellipsis-h:before {
   content: "\f141";
 }
-.sys-icon.ellipsis-vertical:before {
+.sys-icon.ellipsis-v:before {
   content: "\f142";
 }
 .sys-icon.rss-square:before {
@@ -1163,4 +1159,239 @@
 .sys-icon.turkish-lira:before,
 .sys-icon.try:before {
   content: "\f195";
+}
+.sys-icon.plus-square-o:before {
+  content: "\f196";
+}
+.sys-icon.space-shuttle:before {
+  content: "\f197";
+}
+.sys-icon.slack:before {
+  content: "\f198";
+}
+.sys-icon.envelope-square:before {
+  content: "\f199";
+}
+.sys-icon.wordpress:before {
+  content: "\f19a";
+}
+.sys-icon.openid:before {
+  content: "\f19b";
+}
+.sys-icon.institution:before,
+.sys-icon.bank:before,
+.sys-icon.university:before {
+  content: "\f19c";
+}
+.sys-icon.mortar-board:before,
+.sys-icon.graduation-cap:before {
+  content: "\f19d";
+}
+.sys-icon.yahoo:before {
+  content: "\f19e";
+}
+.sys-icon.google:before {
+  content: "\f1a0";
+}
+.sys-icon.reddit:before {
+  content: "\f1a1";
+}
+.sys-icon.reddit-square:before {
+  content: "\f1a2";
+}
+.sys-icon.stumbleupon-circle:before {
+  content: "\f1a3";
+}
+.sys-icon.stumbleupon:before {
+  content: "\f1a4";
+}
+.sys-icon.delicious:before {
+  content: "\f1a5";
+}
+.sys-icon.digg:before {
+  content: "\f1a6";
+}
+.sys-icon.pied-piper-square:before,
+.sys-icon.pied-piper:before {
+  content: "\f1a7";
+}
+.sys-icon.pied-piper-alt:before {
+  content: "\f1a8";
+}
+.sys-icon.drupal:before {
+  content: "\f1a9";
+}
+.sys-icon.joomla:before {
+  content: "\f1aa";
+}
+.sys-icon.language:before {
+  content: "\f1ab";
+}
+.sys-icon.fax:before {
+  content: "\f1ac";
+}
+.sys-icon.building:before {
+  content: "\f1ad";
+}
+.sys-icon.child:before {
+  content: "\f1ae";
+}
+.sys-icon.paw:before {
+  content: "\f1b0";
+}
+.sys-icon.spoon:before {
+  content: "\f1b1";
+}
+.sys-icon.cube:before {
+  content: "\f1b2";
+}
+.sys-icon.cubes:before {
+  content: "\f1b3";
+}
+.sys-icon.behance:before {
+  content: "\f1b4";
+}
+.sys-icon.behance-square:before {
+  content: "\f1b5";
+}
+.sys-icon.steam:before {
+  content: "\f1b6";
+}
+.sys-icon.steam-square:before {
+  content: "\f1b7";
+}
+.sys-icon.recycle:before {
+  content: "\f1b8";
+}
+.sys-icon.automobile:before,
+.sys-icon.car:before {
+  content: "\f1b9";
+}
+.sys-icon.cab:before,
+.sys-icon.taxi:before {
+  content: "\f1ba";
+}
+.sys-icon.tree:before {
+  content: "\f1bb";
+}
+.sys-icon.spotify:before {
+  content: "\f1bc";
+}
+.sys-icon.deviantart:before {
+  content: "\f1bd";
+}
+.sys-icon.soundcloud:before {
+  content: "\f1be";
+}
+.sys-icon.database:before {
+  content: "\f1c0";
+}
+.sys-icon.file-pdf-o:before {
+  content: "\f1c1";
+}
+.sys-icon.file-word-o:before {
+  content: "\f1c2";
+}
+.sys-icon.file-excel-o:before {
+  content: "\f1c3";
+}
+.sys-icon.file-powerpoint-o:before {
+  content: "\f1c4";
+}
+.sys-icon.file-photo-o:before,
+.sys-icon.file-picture-o:before,
+.sys-icon.file-image-o:before {
+  content: "\f1c5";
+}
+.sys-icon.file-zip-o:before,
+.sys-icon.file-archive-o:before {
+  content: "\f1c6";
+}
+.sys-icon.file-sound-o:before,
+.sys-icon.file-audio-o:before {
+  content: "\f1c7";
+}
+.sys-icon.file-movie-o:before,
+.sys-icon.file-video-o:before {
+  content: "\f1c8";
+}
+.sys-icon.file-code-o:before {
+  content: "\f1c9";
+}
+.sys-icon.vine:before {
+  content: "\f1ca";
+}
+.sys-icon.codepen:before {
+  content: "\f1cb";
+}
+.sys-icon.jsfiddle:before {
+  content: "\f1cc";
+}
+.sys-icon.life-bouy:before,
+.sys-icon.life-saver:before,
+.sys-icon.support:before,
+.sys-icon.life-ring:before {
+  content: "\f1cd";
+}
+.sys-icon.circle-o-notch:before {
+  content: "\f1ce";
+}
+.sys-icon.ra:before,
+.sys-icon.rebel:before {
+  content: "\f1d0";
+}
+.sys-icon.ge:before,
+.sys-icon.empire:before {
+  content: "\f1d1";
+}
+.sys-icon.git-square:before {
+  content: "\f1d2";
+}
+.sys-icon.git:before {
+  content: "\f1d3";
+}
+.sys-icon.hacker-news:before {
+  content: "\f1d4";
+}
+.sys-icon.tencent-weibo:before {
+  content: "\f1d5";
+}
+.sys-icon.qq:before {
+  content: "\f1d6";
+}
+.sys-icon.wechat:before,
+.sys-icon.weixin:before {
+  content: "\f1d7";
+}
+.sys-icon.send:before,
+.sys-icon.paper-plane:before {
+  content: "\f1d8";
+}
+.sys-icon.send-o:before,
+.sys-icon.paper-plane-o:before {
+  content: "\f1d9";
+}
+.sys-icon.history:before {
+  content: "\f1da";
+}
+.sys-icon.circle-thin:before {
+  content: "\f1db";
+}
+.sys-icon.header:before {
+  content: "\f1dc";
+}
+.sys-icon.paragraph:before {
+  content: "\f1dd";
+}
+.sys-icon.sliders:before {
+  content: "\f1de";
+}
+.sys-icon.share-alt:before {
+  content: "\f1e0";
+}
+.sys-icon.share-alt-square:before {
+  content: "\f1e1";
+}
+.sys-icon.bomb:before {
+  content: "\f1e2";
 }
