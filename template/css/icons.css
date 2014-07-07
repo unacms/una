@@ -221,6 +221,7 @@
 .sys-icon.check-square-o:before {
   content: "\f046";
 }
+.sys-icon.move:before,
 .sys-icon.arrows:before {
   content: "\f047";
 }
