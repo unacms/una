@@ -515,8 +515,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
                 'content' => $aTmplVarsMenuItemActions
             ),
             'comments' => $bBrowseItem ? $this->_getComments($aEvent['comments']) : '',
-            'votes' => $this->_getVotes($aEvent['votes']),
-            'view_image_popup' => $bBrowseItem ? $this->_getComments($aEvent['comments']) : '',
+            'votes' => $this->_getVotes($aEvent['votes'])
         );
 
         return $this->parseHtmlByName('item.html', $aTmplVars);
