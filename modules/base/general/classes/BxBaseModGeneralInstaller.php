@@ -40,8 +40,8 @@ class BxBaseModGeneralInstaller extends BxDolStudioInstaller
 
         BxDolImageTranscoder::registerHandlersArray($this->_aTranscoders);
 
-        if ($this->_bUpdateTimeline && BxDolRequest::serviceExists('timeline', 'add_handlers'))
-            BxDolService::call('timeline', 'add_handlers', array($this->_aConfig['home_uri']));
+        if ($this->_bUpdateTimeline && BxDolRequest::serviceExists('bx_timeline', 'add_handlers'))
+            BxDolService::call('bx_timeline', 'add_handlers', array($this->_aConfig['home_uri']));
 
         if ($this->_aMenuTriggers) {
             bx_import('BxDolMenu');
@@ -54,8 +54,8 @@ class BxBaseModGeneralInstaller extends BxDolStudioInstaller
 
     function disable($aParams)
     {
-        if ($this->_bUpdateTimeline && BxDolRequest::serviceExists('timeline', 'delete_handlers'))
-            BxDolService::call('timeline', 'delete_handlers', array($this->_aConfig['home_uri']));
+        if ($this->_bUpdateTimeline && BxDolRequest::serviceExists('bx_timeline', 'delete_handlers'))
+            BxDolService::call('bx_timeline', 'delete_handlers', array($this->_aConfig['home_uri']));
 
         BxDolImageTranscoder::unregisterHandlersArray($this->_aTranscoders);
         BxDolImageTranscoder::cleanupObjectsArray($this->_aTranscoders);
@@ -131,8 +131,8 @@ class BxBaseModGeneralInstaller extends BxDolStudioInstaller
         }
 
         //request Timeline cleaning
-        if ($this->_bUpdateTimeline && BxDolRequest::serviceExists('timeline', 'delete_module_events'))
-            BxDolService::call('timeline', 'delete_module_events', array($this->_aConfig['home_uri']));
+        if ($this->_bUpdateTimeline && BxDolRequest::serviceExists('bx_timeline', 'delete_module_events'))
+            BxDolService::call('bx_timeline', 'delete_module_events', array($this->_aConfig['home_uri']));
 
         return parent::uninstall($aParams, $bDisable);
     }

@@ -864,6 +864,7 @@ class BxTimelineModule extends BxDolModule
         $aParams['filter'] = !empty($sFilter) ? $sFilter : BX_TIMELINE_FILTER_ALL;
         $aParams['modules'] = is_array($aModules) && !empty($aModules) ? $aModules : array();
         $aParams['timeline'] = (int)$iTimeline > 0 ? $iTimeline : 0;
+        $aParams['active'] = 1;
 
         return $aParams;
     }
@@ -917,11 +918,15 @@ class BxTimelineModule extends BxDolModule
 				case 'add_handlers':
 					$this->_oDb->insertData($aData);
 					BxDolAlerts::cacheInvalidate();
+
+					$this->_oDb->activateModuleEvents($aData, true);
 					break;
 
 				case 'delete_handlers':
 					$this->_oDb->deleteData($aData);
 					BxDolAlerts::cacheInvalidate();
+
+					$this->_oDb->activateModuleEvents($aData, false);
 					break;
 
 				case 'delete_module_events':

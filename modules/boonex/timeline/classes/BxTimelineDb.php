@@ -113,6 +113,14 @@ class BxTimelineDb extends BxDolModuleDb
             $this->deleteEvent(array('type' => $aHandler['alert_unit'], 'action' => $aHandler['alert_action']));
     }
 
+	public function activateModuleEvents($aData, $bActivate = true)
+    {
+    	$iActivate = $bActivate ? 1 : 0;
+
+    	foreach($aData['handlers'] as $aHandler)
+            $this->updateEvent(array('active' => $iActivate), array('type' => $aHandler['alert_unit'], 'action' => $aHandler['alert_action']));
+    }
+
     public function getHandlers($aParams = array())
     {
         $sMethod = 'getAll';
@@ -179,6 +187,9 @@ class BxTimelineDb extends BxDolModuleDb
     {
         $sMethod = 'getAll';
         $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
+
+        if(isset($aParams['active']))
+        	$sWhereClause .= $this->prepare("AND `{$this->_sTable}`.`active`=? ", (int)$aParams['active']);
 
         switch($aParams['browse']) {
             case 'id':

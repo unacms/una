@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_events` (
   `comments` int(11) unsigned NOT NULL default '0',
   `shares` int(11) unsigned NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
+  `active` tinyint(4) NOT NULL default '1',
   PRIMARY KEY  (`id`),
   KEY `owner_id` (`owner_id`)
 );
