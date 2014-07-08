@@ -104,7 +104,7 @@ BxTimelineView.prototype.showItem = function(oLink, iId) {
 };
 
 BxTimelineView.prototype.showPhoto = function(oLink, sUrl) {
-	$('#' + this._aHtmlIds['photo_popup']).dolPopupImage(sUrl);
+	$('#' + this._aHtmlIds['photo_popup']).dolPopupImage(sUrl, $(oLink).parent());
 };
 
 BxTimelineView.prototype.commentItem = function(oLink, sSystem, iId) {
