@@ -191,7 +191,8 @@ class BxBaseModGeneralModule extends BxDolModule
 
     // ====== PROTECTED METHODS
 
-    protected function _serviceBrowse ($sMode, $aParams = false, $iDesignBox = BX_DB_PADDING_DEF, $bDisplayEmptyMsg = false, $bAjaxPaginate = true)
+    //TODO: Need to check and fix. When $bAjaxPaginate is TRUE, "View" selector (gallery/extended view) has an empty 'onclick'. 
+    protected function _serviceBrowse ($sMode, $aParams = false, $iDesignBox = BX_DB_PADDING_DEF, $bDisplayEmptyMsg = false, $bAjaxPaginate = false)
     {
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->checkAllowedBrowse()))
             return MsgBox($sMsg);

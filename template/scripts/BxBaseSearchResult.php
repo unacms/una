@@ -195,7 +195,7 @@ class BxBaseSearchResult extends BxDolSearchResult
 
         $sUrlStart = BX_DOL_URL_ROOT . $oPermalinks->permalink($this->sBrowseUrl);
 
-        return $this->addAdditionalUrlParams($sUrlStart, $bReplacePagesParams);
+        return $this->addAdditionalUrlParams($sUrlStart, $aAdditionalParams, $bReplacePagesParams);
     }
 
     /**
@@ -212,7 +212,7 @@ class BxBaseSearchResult extends BxDolSearchResult
         if (BX_DOL_SEARCH_KEYWORD_PAGE === $this->sBrowseUrl) {
 
             $sLoadDynamicUrl = BX_DOL_URL_ROOT . 'searchKeywordContent.php?searchMode=ajax&section[]=' . $this->aCurrent['name'];
-            $sLoadDynamicUrl = $this->addAdditionalUrlParams($sLoadDynamicUrl, $bReplacePagesParams);
+            $sLoadDynamicUrl = $this->addAdditionalUrlParams($sLoadDynamicUrl, $aAdditionalParams, $bReplacePagesParams);
 
             $sKeyword = bx_get('keyword');
             if ($sKeyword !== false && mb_strlen($sKeyword) > 0)
@@ -227,7 +227,9 @@ class BxBaseSearchResult extends BxDolSearchResult
         }
     }
 
-    protected function addAdditionalUrlParams($sUrl, $bReplacePagesParams)
+    //TODO: $aAdditionalParams variable was used but was not initiated or even defined anywhere in the method. Additionale params were not attached to the URL because of it.
+    //So, I added the the variable as function parameter and updated method calls accordingly.
+    protected function addAdditionalUrlParams($sUrl, $aAdditionalParams, $bReplacePagesParams)
     {
         // add pages params
         $sUrl = bx_append_url_params($sUrl, array (
