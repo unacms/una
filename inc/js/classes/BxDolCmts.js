@@ -267,7 +267,7 @@ BxDolCmts.prototype.showMore = function(oLink)
 };
 
 BxDolCmts.prototype.showImage = function(oLink, sUrl) {
-	$(this._sRootId + '-view-image-popup').dolPopupImage(sUrl);
+	$(this._sRootId + '-view-image-popup').dolPopupImage(sUrl, $(oLink).parent());
 };
 
 BxDolCmts.prototype.toggleReply = function(e, iCmtParentId)
