@@ -38,14 +38,14 @@ class BxBaseStudioPermissions extends BxDolStudioPermissions
 
         $aMenu = array();
         $aMenuItems = array(
-            BX_DOL_STUDIO_PRM_TYPE_LEVELS,
-            BX_DOL_STUDIO_PRM_TYPE_ACTIONS
+            BX_DOL_STUDIO_PRM_TYPE_LEVELS => array('icon' => 'sliders'),
+            BX_DOL_STUDIO_PRM_TYPE_ACTIONS => array('icon' => 'exchange')
         );
 
-        foreach($aMenuItems as $sMenuItem)
+        foreach($aMenuItems as $sMenuItem => $aItem)
             $aMenu[] = array(
                 'name' => $sMenuItem,
-                'icon' => 'mi-prm-' . $sMenuItem . '.png',
+                'icon' => $aItem['icon'],
                 'link' => $this->sSubpageUrl . $sMenuItem,
                 'title' => _t('_adm_lmi_cpt_' . $sMenuItem),
                 'selected' => $sMenuItem == $this->sPage

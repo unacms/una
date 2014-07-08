@@ -153,10 +153,26 @@ class BxDolStudioBuilderPage extends BxTemplStudioPage
 
     protected function getModuleIcon($sName, $sType = 'menu')
     {
-        if(in_array($sName, array(BX_DOL_STUDIO_MODULE_SYSTEM, BX_DOL_STUDIO_MODULE_CUSTOM, BX_DOL_STUDIO_BP_SKELETONS)))
-            return BxDolStudioTemplate::getInstance()->getIconUrl('mi-bp-' . $sName . '.png');
+    	$sResult = '';
 
-        return BxDolStudioUtils::getModuleIcon($sName);
+    	switch($sName) {
+    		case BX_DOL_STUDIO_MODULE_SYSTEM:
+    			$sResult = 'cog';
+    			break;
+
+    		case BX_DOL_STUDIO_MODULE_CUSTOM:
+    			$sResult = 'wrench';
+    			break;
+
+    		case BX_DOL_STUDIO_BP_SKELETONS:
+    			$sResult = 'qrcode';
+    			break;
+
+    		default:
+    			$sResult = BxDolStudioUtils::getModuleIcon($sName);
+    	}
+
+        return $sResult;
     }
 }
 

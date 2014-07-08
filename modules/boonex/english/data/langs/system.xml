@@ -1249,6 +1249,7 @@
 	<string name="_adm_txt_select_module"><![CDATA[Select Module...]]></string>
 	<string name="_adm_txt_show_help"><![CDATA[Help]]></string>
 	<string name="_adm_txt_show_help_content_empty"><![CDATA[Help is not available]]></string>
+	<string name="_adm_txt_uninstall"><![CDATA[Uninstall]]></string>
 	<string name="_adm_wgt_cpt_builder_forms"><![CDATA[Forms]]></string>
 	<string name="_adm_wgt_cpt_builder_menus"><![CDATA[Navigation]]></string>
 	<string name="_adm_wgt_cpt_builder_pages"><![CDATA[Pages]]></string>

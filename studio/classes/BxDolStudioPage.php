@@ -91,16 +91,7 @@ class BxDolStudioPage extends BxDol
         bx_import('BxDolStudioTemplate');
         $oTemplate = BxDolStudioTemplate::getInstance();
 
-        $aResult = array('code' => 0, 'message' => _t('_adm_scs_operation_done'));
-        if($this->aPage['bookmarked']) {
-            $aResult['icon'] = $oTemplate->getIconUrl('ics-star-act.png');
-            $aResult['title'] = bx_js_string(_t('_adm_txt_favorites_remove'));
-        } else {
-            $aResult['icon'] = $oTemplate->getIconUrl('ics-star-pas.png');
-            $aResult['title'] = bx_js_string(_t('_adm_txt_favorites_add'));
-        }
-
-        return $aResult;
+        return array('code' => 0, 'message' => _t('_adm_scs_operation_done'));
     }
 
     protected function getSystemName($sValue)
@@ -118,9 +109,9 @@ class BxDolStudioPage extends BxDol
         return BxDolStudioUtils::getModuleTitle($sName);
     }
 
-    protected function getModuleIcon($sName, $sType = 'menu')
+    protected function getModuleIcon($sName, $sType = 'menu', $bReturnAsUrl = true)
     {
-        return BxDolStudioUtils::getModuleIcon($sName, $sType);
+        return BxDolStudioUtils::getModuleIcon($sName, $sType, $bReturnAsUrl);
     }
 
     protected function getModules($bShowCustom = true, $bShowSystem = true)

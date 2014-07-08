@@ -14,7 +14,7 @@ bx_import('BxDolStudioDesign');
 class BxBaseStudioDesign extends BxDolStudioDesign
 {
     protected $aMenuItems = array(
-        'general' => '_adm_lmi_cpt_general'
+        BX_DOL_STUDIO_TEMPL_TYPE_SETTINGS => array('caption' => '_adm_lmi_cpt_settings', 'icon' => 'cogs')
     );
 
     function __construct($sTemplate = "", $sPage = "")
@@ -55,12 +55,12 @@ class BxBaseStudioDesign extends BxDolStudioDesign
         $sJsObject = $this->getPageJsObject();
 
         $aMenu = array();
-        foreach($this->aMenuItems as $sName => $sCaption)
+        foreach($this->aMenuItems as $sName => $aItem)
             $aMenu[] = array(
                 'name' => $sName,
-                'icon' => 'mi-templ-' . $sName . '.png',
+                'icon' => $aItem['icon'],
                 'link' => BX_DOL_URL_STUDIO . 'design.php?name=' . $this->sTemplate . '&page=' . $sName,
-                'title' => _t($sCaption),
+                'title' => _t($aItem['caption']),
                 'selected' => $sName == $this->sPage
             );
 
@@ -78,7 +78,7 @@ class BxBaseStudioDesign extends BxDolStudioDesign
         return $this->$sMethod();
     }
 
-    protected function getGeneral()
+    protected function getSettings()
     {
         $oTemplate = BxDolStudioTemplate::getInstance();
 

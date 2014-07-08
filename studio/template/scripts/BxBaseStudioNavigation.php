@@ -43,14 +43,14 @@ class BxBaseStudioNavigation extends BxDolStudioNavigation
 
         $aMenu = array();
         $aMenuItems = array(
-            BX_DOL_STUDIO_NAV_TYPE_MENUS,
-            BX_DOL_STUDIO_NAV_TYPE_SETS,
-            BX_DOL_STUDIO_NAV_TYPE_ITEMS
+            BX_DOL_STUDIO_NAV_TYPE_MENUS => array('icon' => 'sitemap'),
+            BX_DOL_STUDIO_NAV_TYPE_SETS => array('icon' => 'align-justify'),
+            BX_DOL_STUDIO_NAV_TYPE_ITEMS => array('icon' => 'indent')
         );
-        foreach($aMenuItems as $sMenuItem)
+        foreach($aMenuItems as $sMenuItem => $aItem)
             $aMenu[] = array(
                 'name' => $sMenuItem,
-                'icon' => 'mi-nav-' . $sMenuItem . '.png',
+                'icon' => $aItem['icon'],
                 'link' => $this->sSubpageUrl . $sMenuItem,
                 'title' => _t('_adm_lmi_cpt_' . $sMenuItem),
                 'selected' => $sMenuItem == $this->sPage

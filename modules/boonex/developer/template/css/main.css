@@ -54,7 +54,6 @@ div.bx-dev-menu-main li {
 
 div.bx-dev-menu-main li:hover,
 div.bx-dev-menu-main li.bx-def-color-bg-active {
-    background-color:gray;
     opacity:1;
     -moz-box-shadow: 0 0 9px 0px #ffffff;
     -webkit-box-shadow: 0 0 9px 0px #ffffff;
@@ -65,13 +64,26 @@ div.bx-dev-menu-main div.bx-dev-mm-item {
 	position: relative;
 	width: 32px;
 	height: 32px;
-}
+} 
 
 div.bx-dev-menu-main div.bx-dev-mm-item img {
 	width: 32px;
     height: 32px;
 }
 
+div.bx-dev-menu-main div.bx-dev-mm-item i.sys-icon {
+	position: absolute;
+	top: 0px;
+    left: 0px;
+    width:32px;
+	height: 32px;
+
+    color:white;
+    font-size:20px;
+    text-align:center;
+    text-shadow:none;
+	line-height: 32px;
+}
 
 /*--- Page Content ---*/
 div.bx-dev-page-columns-cnt {

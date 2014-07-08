@@ -17,6 +17,18 @@ div.bx-stdp-icon {
 	top: 0px;
 	left: 0px;
 	overflow: hidden;
+	line-height: 8rem;
+}
+div.bx-stdp-icon i.sys-icon {
+	position: absolute;
+	z-index: 2;
+	left: 0px;
+	width: 128px;
+
+    font-size: 96px;
+    text-align: center;
+    text-shadow: none;
+    color: white;
 }
 div.bx-stdp-content {
 	overflow: hidden;

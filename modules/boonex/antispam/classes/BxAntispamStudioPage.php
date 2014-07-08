@@ -25,7 +25,7 @@ class BxAntispamStudioPage extends BxTemplStudioModule
         bx_import('BxDolPermalinks');
 
         $this->aMenuItems = array(
-            array('name' => 'general', 'icon' => 'cogs', 'title' => '_adm_lmi_cpt_settings'),
+            array('name' => 'settings', 'icon' => 'cogs', 'title' => '_adm_lmi_cpt_settings'),
             array('name' => 'ip_table', 'icon' => 'align-justify', 'title' => '_bx_antispam_ip_table', 'link' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=antispam-ip-table')),
             array('name' => 'dnsbl_list', 'icon' => 'align-justify', 'title' => '_bx_antispam_dnsbl_list', 'link' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=antispam-dnsbl-list')),
             array('name' => 'block_log', 'icon' => 'clock-o', 'title' => '_bx_antispam_block_log', 'link' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=antispam-block-log')),

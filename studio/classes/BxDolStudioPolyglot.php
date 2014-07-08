@@ -10,11 +10,11 @@
 bx_import('BxTemplStudioPage');
 bx_import('BxDolStudioPolyglotQuery');
 
-define('BX_DOL_STUDIO_PGT_TYPE_GENERAL', 'general');
+define('BX_DOL_STUDIO_PGT_TYPE_SETTINGS', 'settings');
 define('BX_DOL_STUDIO_PGT_TYPE_KEYS', 'keys');
 define('BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES', 'etemplates');
 
-define('BX_DOL_STUDIO_PGT_TYPE_DEFAULT', BX_DOL_STUDIO_PGT_TYPE_GENERAL);
+define('BX_DOL_STUDIO_PGT_TYPE_DEFAULT', BX_DOL_STUDIO_PGT_TYPE_SETTINGS);
 
 class BxDolStudioPolyglot extends BxTemplStudioPage
 {

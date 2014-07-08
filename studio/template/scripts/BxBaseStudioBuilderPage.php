@@ -80,28 +80,34 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         $aMenuItems = array(
             BX_DOL_STUDIO_MODULE_SYSTEM => array(
                 'name' => BX_DOL_STUDIO_MODULE_SYSTEM,
-                'icon' => 'std-mi.png',
+                'icon' => 'cog',
             ),
             BX_DOL_STUDIO_MODULE_CUSTOM => array(
                 'name' => BX_DOL_STUDIO_MODULE_CUSTOM,
-                'icon' => 'mi-bp-custom.png',
+                'icon' => 'wrench',
                 'title' => '_adm_bp_cpt_type_' . BX_DOL_STUDIO_MODULE_CUSTOM,
             )
         );
 
         bx_import('BxDolModuleQuery');
         $aModulesDb = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules'));
-        foreach($aModulesDb as $aModuleDb)
-            if(!empty($aMenuItems[$aModuleDb['name']]))
-                $aMenuItems[$aModuleDb['name']] = array_merge($aMenuItems[$aModuleDb['name']], $aModuleDb);
+        foreach($aModulesDb as $aModuleDb) {
+        	$sName = $aModuleDb['name'];
+
+            if(!empty($aMenuItems[$sName]))
+                $aMenuItems[$sName] = array_merge($aMenuItems[$sName], $aModuleDb);
             else
-                $aMenuItems[$aModuleDb['name']] = $aModuleDb;
+                $aMenuItems[$sName] = $aModuleDb;
+
+			if(empty($aMenuItems[$sName]['icon']))
+				$aMenuItems[$sName]['icon'] = BxDolStudioUtils::getModuleIcon($aModuleDb, 'menu', false); 
+        }
 
         $aMenu = array();
         foreach($aMenuItems as $aMenuItem)
             $aMenu[] = array(
                 'name' => $aMenuItem['name'],
-                'icon' => isset($aMenuItem['path']) && $aMenuItem['path'] != '' && $aMenuItem['uri'] != '' ? $aMenuItem['uri'] . '@modules/' . $aMenuItem['path'] . '|std-mi.png' : $aMenuItem['icon'],
+                'icon' => $aMenuItem['icon'],
                 'link' =>  sprintf($this->sTypeUrl, $aMenuItem['name']),
                 'title' => $aMenuItem['title'],
                 'selected' => $aMenuItem['name'] == $this->sType
@@ -126,7 +132,9 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                 $this->oDb->getBlocks(array('type' => 'by_object_cell', 'object' => $this->aPageRebuild['object'], 'cell' => $i), $aBlocks, false);
 
                 $aTmplVarsCell = array('id' => $i, 'bx_repeat:blocks' => array());
-                foreach($aBlocks as $aBlock)
+                foreach($aBlocks as $aBlock) {
+                	list($sIcon, $sIconUrl) = $this->getBlockIcon($aBlock);
+
                     $aTmplVarsCell['bx_repeat:blocks'][] = array(
                         'html_id' => $this->aHtmlIds['block_id'] . $aBlock['id'],
                         'bx_if:is_inactive' => array(
@@ -144,7 +152,14 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                             'condition' => false,
                             'content' => array()
                         ),
-                        'icon' => $this->getBlockIcon($aBlock),
+                        'bx_if:image' => array (
+			                'condition' => (bool)$sIconUrl,
+			                'content' => array('icon_url' => $sIconUrl),
+			            ),
+						'bx_if:icon' => array (
+			                'condition' => (bool)$sIcon,
+			                'content' => array('icon' => $sIcon),
+			            ),
                         'module' => $this->getModuleTitle($aBlock['module']),
                         'visible_for' => _t('_adm_bp_txt_visible_for', BxDolStudioUtils::getVisibilityTitle($aBlock['visible_for_levels'])),
                         'bx_if:show_checkbox' => array(
@@ -156,6 +171,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                             'content' => array()
                         )
                     );
+                }
 
                 $aTmplVars['cell_' . $i] = $oTemplate->parseHtmlByName('bp_cell.html', $aTmplVarsCell);
             }
@@ -558,19 +574,19 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         $aMenu = array(
             BX_DOL_STUDIO_BP_SKELETONS => array(
                 'name' => BX_DOL_STUDIO_BP_SKELETONS,
-                'icon' => 'mi-bp-skeletons.png',
+                'icon' => 'qrcode',
                 'title' => '_sys_block_types_skeletons',
                 'selected' => $sSelected == BX_DOL_STUDIO_BP_SKELETONS,
             ),
             BX_DOL_STUDIO_MODULE_SYSTEM => array(
                 'name' => BX_DOL_STUDIO_MODULE_SYSTEM,
-                'icon' => 'std-mi.png',
+                'icon' => 'cog',
                 'title' => '_sys_block_types_system',
                 'selected' => $sSelected == BX_DOL_STUDIO_MODULE_SYSTEM,
             ),
             BX_DOL_STUDIO_MODULE_CUSTOM => array(
                 'name' => BX_DOL_STUDIO_MODULE_CUSTOM,
-                'icon' => 'mi-bp-custom.png',
+                'icon' => 'wrench',
                 'title' => '_sys_block_types_custom',
                 'selected' => $sSelected == BX_DOL_STUDIO_MODULE_CUSTOM,
             )
@@ -579,13 +595,15 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         bx_import('BxDolModuleQuery');
         $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules'));
         foreach($aModules as $aModule) {
-            if($aModule['path'] != '' && $aModule['uri'] != '')
-                $aModule['icon'] = $aModule['uri'] . '@modules/' . $aModule['path'] . '|std-mi.png';
+        	$sName = $aModule['name'];
 
             if(!empty($aMenu[$aModule['name']]))
-                $aMenu[$aModule['name']] = array_merge($aMenu[$aModule['name']], $aModule);
+                $aMenu[$sName] = array_merge($aMenu[$sName], $aModule);
             else
-                $aMenu[$aModule['name']] = $aModule;
+                $aMenu[$sName] = $aModule;
+                
+			if(empty($aMenu[$sName]['icon']))
+				$aMenu[$sName]['icon'] = BxDolStudioUtils::getModuleIcon($aModule, 'menu', false); 
         }
 
         foreach($aMenu as $sKey => $aItem)
@@ -1217,21 +1235,45 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
     protected function getBlockIcon($aBlock)
     {
-        $sImageUrl = "";
+        $sIcon = $sIconUrl = "";
+
+        $sResult = '';
         switch($aBlock['type']) {
             case BX_DOL_STUDIO_BP_BLOCK_RAW:
+            	$sResult = 'file-text-o';
+            	break;
+
             case BX_DOL_STUDIO_BP_BLOCK_HTML:
+            	$sResult = 'code';
+            	break;
+
             case BX_DOL_STUDIO_BP_BLOCK_RSS:
+            	$sResult = 'rss';
+            	break;
+
             case BX_DOL_STUDIO_BP_BLOCK_IMAGE:
+            	$sResult = 'picture-o';
+            	break;
+
             case BX_DOL_STUDIO_BP_BLOCK_LANG:
+            	$sResult = 'globe';
+            	break;
+
             case BX_DOL_STUDIO_BP_BLOCK_MENU:
-                $sImageUrl = BxDolStudioTemplate::getInstance()->getIconUrl('bi-bp-' . $aBlock['type'] . '.png');
-                break;
+            	$sResult = 'list-alt';
+            	break;
+
             case BX_DOL_STUDIO_BP_BLOCK_SERVICE:
-                $sImageUrl = $this->getModuleIcon($aBlock['module'], 'page');
+                $sResult = $this->getModuleIcon($aBlock['module'], 'page');
                 break;
         }
-        return $sImageUrl;
+
+        if(strpos($sResult, '.') === false)
+			$sIcon = $sResult;
+		else
+        	$sIconUrl = $sResult;
+
+        return array($sIcon, $sIconUrl);
     }
 
     protected function getBlockModule($aBlock)
@@ -1451,6 +1493,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
         $aBlocks = $this->getBlocks($sModule);
         foreach($aBlocks as $aBlock) {
+        	list($sIcon, $sIconUrl) = $this->getBlockIcon($aBlock);
+
             $aInputCheckbox['value'] = $aBlock['id'];
 
             $aTmplParams['bx_repeat:blocks'][] = array(
@@ -1470,7 +1514,14 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                         'title' => _t($aBlock['title']),
                     )
                 ),
-                'icon' => $this->getBlockIcon($aBlock),
+                'bx_if:image' => array (
+	                'condition' => (bool)$sIconUrl,
+	                'content' => array('icon_url' => $sIconUrl),
+	            ),
+				'bx_if:icon' => array (
+	                'condition' => (bool)$sIcon,
+	                'content' => array('icon' => $sIcon),
+	            ),
                 'module' => $this->getModuleTitle($aBlock['module']),
                 'visible_for' => _t('_adm_bp_txt_visible_for', BxDolStudioUtils::getVisibilityTitle($aBlock['visible_for_levels'])),
                 'bx_if:show_checkbox' => array(

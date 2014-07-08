@@ -18,7 +18,7 @@ require_once('BxDevNavigation.php');
 require_once('BxDevPolyglot.php');
 require_once('BxDevPermissions.php');
 
-define('BX_DEV_TOOLS_GENERAL', 'general');
+define('BX_DEV_TOOLS_SETTINGS', 'settings');
 define('BX_DEV_TOOLS_FORMS', 'forms');
 define('BX_DEV_TOOLS_PAGES', 'pages');
 define('BX_DEV_TOOLS_NAVIGATION', 'navigation');
@@ -34,12 +34,12 @@ class BxDevModule extends BxDolModule
         parent::__construct($aModule);
 
         $this->aTools = array(
-            array('name' => BX_DEV_TOOLS_GENERAL, 'title' => ''),
-            array('name' => BX_DEV_TOOLS_FORMS, 'title' => ''),
-            array('name' => BX_DEV_TOOLS_NAVIGATION, 'title' => ''),
-            array('name' => BX_DEV_TOOLS_PAGES, 'title' => ''),
-            array('name' => BX_DEV_TOOLS_POLYGLOT, 'title' => ''),
-            //array('name' => BX_DEV_TOOLS_PERMISSIONS, 'title' => ''),
+            array('name' => BX_DEV_TOOLS_SETTINGS, 'title' => '', 'icon' => 'cogs'),
+            array('name' => BX_DEV_TOOLS_FORMS, 'title' => '', 'icon' => 'bx-dev-mi-forms.png'),
+            array('name' => BX_DEV_TOOLS_NAVIGATION, 'title' => '', 'icon' => 'bx-dev-mi-navigation.png'),
+            array('name' => BX_DEV_TOOLS_PAGES, 'title' => '', 'icon' => 'bx-dev-mi-pages.png'),
+            array('name' => BX_DEV_TOOLS_POLYGLOT, 'title' => '', 'icon' => 'bx-dev-mi-polyglot.png'),
+            //array('name' => BX_DEV_TOOLS_PERMISSIONS, 'title' => '', 'icon' => 'bx-dev-mi-permissions.png'),
         );
     }
 

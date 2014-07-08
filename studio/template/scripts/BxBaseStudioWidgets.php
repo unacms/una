@@ -76,9 +76,16 @@ class BxBaseStudioWidgets extends BxDolStudioWidgets
                 $aService = unserialize($aWidget['cnt_actions']);
                 $aActions = BxDolService::call($aService['module'], $aService['method'], array_merge(array($aWidget), $aService['params']), $aService['class']);
 
-                foreach($aActions as $aAction)
+                foreach($aActions as $aAction) {
+                	$sActionIcon = $aAction['icon'];
+                	$bActionIcon = strpos($sActionIcon, '.') === false;
+
+                	if(!$bActionIcon)
+						$sActionIcon = $oTemplate->getIconUrl($sActionIcon);
+
+                	$sCaption = _t($aAction['caption']);
                     $aTmplVarsActions[] = array(
-                        'caption' => _t($aAction['caption']),
+                        'caption' => $sCaption,
                         'url' => !empty($aAction['url']) ? $oTemplate->parseHtmlByContent($aAction['url'], $aParseVars, array('{', '}')) : 'javascript:void(0)',
                         'bx_if:show_click' => array(
                             'condition' => !empty($aAction['click']),
@@ -86,9 +93,20 @@ class BxBaseStudioWidgets extends BxDolStudioWidgets
                                 'content' => 'javascript:' . $aAction['click'],
                             )
                         ),
-                        'icon' => $oTemplate->getIconUrl($aAction['icon'])
+                        'bx_if:action_icon' => array (
+			                'condition' => $bActionIcon,
+			                'content' => array('icon' => $sActionIcon, 'caption' => $sCaption),
+			            ),
+		                'bx_if:action_image' => array (
+			                'condition' => !$bActionIcon,
+			                'content' => array('icon_url' => $sActionIcon, 'caption' => $sCaption),
+			            ),
                     );
+                }
             }
+
+            $sIcon = $this->getIcon($aWidget);
+            $bIcon = strpos($sIcon, '.') === false;
 
             $aTmplVars[] = array(
                 'id' => $aWidget['id'],
@@ -117,7 +135,14 @@ class BxBaseStudioWidgets extends BxDolStudioWidgets
                         'bx_repeat:actions' => $aTmplVarsActions,
                     )
                 ),
-                'icon' => $this->getIcon($aWidget),
+	            'bx_if:icon' => array (
+	                'condition' => $bIcon,
+	                'content' => array('icon' => $sIcon),
+	            ),
+                'bx_if:image' => array (
+	                'condition' => !$bIcon,
+	                'content' => array('icon_url' => $sIcon),
+	            ),
                 'caption' => _t($aWidget['caption']),
                 'widget_disabled_class' => !$this->isEnabled($aWidget) ? 'bx-std-widget-icon-disabled' : '',
                 'widget_bookmarked_class' => (int)$aWidget['bookmark'] == 1 ? 'bx-std-widget-icon-bookmarked' : '',
@@ -135,8 +160,13 @@ class BxBaseStudioWidgets extends BxDolStudioWidgets
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         $sUrl = $oTemplate->getIconUrl($aWidget['icon']);
-        if(empty($sUrl))
-            $sUrl = $oTemplate->getIconUrl('wi-empty.png');
+        if(empty($sUrl)) {
+        	bx_import('BxDolModuleQuery');
+	        $aModule = BxDolModuleQuery::getInstance()->getModuleByName($aWidget['module']);
+
+        	bx_import('BxDolStudioUtils');
+            $sUrl = BxDolStudioUtils::getIconDefault($aModule['type']);
+        }
 
         return $sUrl;
     }

@@ -12,7 +12,10 @@ bx_import('BxTemplStudioPage');
 bx_import('BxDolStudioDesignsQuery');
 
 define('BX_DOL_STUDIO_TEMPL_DEFAULT', 'basic');
-define('BX_DOL_STUDIO_TEMPL_TYPE_DEFAULT', 'general');
+
+define('BX_DOL_STUDIO_TEMPL_TYPE_SETTINGS', 'settings');
+
+define('BX_DOL_STUDIO_TEMPL_TYPE_DEFAULT', BX_DOL_STUDIO_TEMPL_TYPE_SETTINGS);
 
 class BxDolStudioDesign extends BxTemplStudioPage
 {

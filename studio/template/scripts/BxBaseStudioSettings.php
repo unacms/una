@@ -249,12 +249,20 @@ class BxBaseStudioSettings extends BxDolStudioSettings
     }
     protected function getMenuIcon($sGroup, &$aType)
     {
-        $oTemplate = BxDolStudioTemplate::getInstance();
-
-        if(empty($aType['icon']) || ($sUrl = $oTemplate->getIconUrl($aType['icon'])) == "")
+        bx_import('BxDolStudioUtils');
+        if(empty($aType['icon']) || ($sUrl = BxDolStudioTemplate::getInstance()->getIconUrl($aType['icon'])) == "")
             switch($sGroup) {
                 case BX_DOL_STUDIO_STG_GROUP_MODULES:
-                    $aType['icon'] = 'mi-mod-empty.png';
+                	$aType['icon'] = BxDolStudioUtils::getIconDefault(BX_DOL_MODULE_TYPE_MODULE);
+                	break;
+
+                case BX_DOL_STUDIO_STG_GROUP_LANGUAGES:
+                	$aType['icon'] = BxDolStudioUtils::getIconDefault(BX_DOL_MODULE_TYPE_LANGUAGE);
+                	break;
+
+                case BX_DOL_STUDIO_STG_GROUP_TEMPLATES:
+                    $aType['icon'] = BxDolStudioUtils::getIconDefault(BX_DOL_MODULE_TYPE_TEMPLATE);
+                	break;
             }
 
         return $aType['icon'];

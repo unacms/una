@@ -10,13 +10,16 @@
 bx_import('BxTemplStudioPage');
 bx_import('BxDolStudioModulesQuery');
 
-define('BX_DOL_STUDIO_MOD_TYPE_DEFAULT', 'general');
+define('BX_DOL_STUDIO_MOD_TYPE_SETTINGS', 'settings');
+
+define('BX_DOL_STUDIO_MOD_TYPE_DEFAULT', BX_DOL_STUDIO_MOD_TYPE_SETTINGS);
 
 class BxDolStudioModule extends BxTemplStudioPage
 {
     protected $sModule;
     protected $aModule;
     protected $sPage;
+    protected $sPageDefault = BX_DOL_STUDIO_MOD_TYPE_DEFAULT;
 
     function __construct($sModule = "", $sPage = "")
     {
@@ -28,7 +31,7 @@ class BxDolStudioModule extends BxTemplStudioPage
         if(is_string($sModule) && !empty($sModule))
             $this->sModule = $sModule;
 
-        $this->sPage = BX_DOL_STUDIO_MOD_TYPE_DEFAULT;
+        $this->sPage = $this->sPageDefault;
         if(is_string($sPage) && !empty($sPage))
             $this->sPage = $sPage;
     }

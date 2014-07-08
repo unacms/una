@@ -14,7 +14,7 @@ bx_import('BxDolStudioLanguage');
 class BxBaseStudioLanguage extends BxDolStudioLanguage
 {
     protected $aMenuItems = array(
-        'general' => '_adm_lmi_cpt_general'
+        BX_DOL_STUDIO_LANG_TYPE_SETTINGS => array('caption' => '_adm_lmi_cpt_settings', 'icon' => 'cogs')
     );
 
     function __construct($sLanguage = "", $sPage = "")
@@ -56,12 +56,12 @@ class BxBaseStudioLanguage extends BxDolStudioLanguage
         $sJsObject = $this->getPageJsObject();
 
         $aMenu = array();
-        foreach($this->aMenuItems as $sName => $sCaption)
+        foreach($this->aMenuItems as $sName => $aItem)
             $aMenu[] = array(
                 'name' => $sName,
-                'icon' => 'mi-lang-' . $sName . '.png',
+                'icon' => $aItem['icon'],
                 'link' => BX_DOL_URL_STUDIO . 'languages.php?name=' . $this->sLanguage . '&page=' . $sName,
-                'title' => _t($sCaption),
+                'title' => _t($aItem['caption']),
                 'selected' => $sName == $this->sPage
             );
 
@@ -80,7 +80,7 @@ class BxBaseStudioLanguage extends BxDolStudioLanguage
         return $this->$sMethod();
     }
 
-    protected function getGeneral()
+    protected function getSettings()
     {
         $oTemplate = BxDolStudioTemplate::getInstance();
 

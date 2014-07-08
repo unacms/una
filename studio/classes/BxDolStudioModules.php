@@ -31,10 +31,10 @@ class BxDolStudioModules extends BxDol
     {
         return array(
             array (
-                'caption' => _t('_adm_' . $this->sLangPrefix . '_txt_uninstall'),
+                'caption' => _t('_adm_txt_uninstall'),
                 'link' => '',
                 'click' => $this->sJsObject . ".uninstall(" . $aWidget['id'] . ", '" . $aWidget['page_name'] . "', 0)",
-                'icon' => 'bx-std-wai-cross.png'
+                'icon' => 'times-circle'
             )
         );
     }

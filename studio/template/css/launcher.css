@@ -61,6 +61,20 @@ div.bx-std-widget-nl {
     height: 128px;
 
     background-color:transparent;
+
+    line-height: 128px;
+}
+
+.bx-std-widget-icon i.sys-icon {
+	position: absolute;
+	z-index: 2;
+	left: 0px;
+	width: 128px;
+
+    font-size: 96px;
+    text-align: center;
+    text-shadow: none;
+    color: white;
 }
 
 .bx-std-widget-shadow {
@@ -180,6 +194,17 @@ div.bx-std-widget-action {
     float: left;
     width: 40px;
     height: 40px;
+	line-height: 40px;
+}
+div.bx-std-widget-action i.sys-icon {
+	position: absolute;
+	left: 0px;
+	width: 40px;
+
+    font-size: 32px;
+    text-align: center;
+    text-shadow: none;
+    color: white;
 }
 .bx-std-widget-loading {
     display:none;

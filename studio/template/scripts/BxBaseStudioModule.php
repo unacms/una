@@ -13,7 +13,7 @@ bx_import('BxDolStudioModule');
 class BxBaseStudioModule extends BxDolStudioModule
 {
     protected $aMenuItems = array(
-        array('name' => 'general', 'icon' => 'mi-mod-general.png', 'title' => '_adm_lmi_cpt_general')
+        array('name' => BX_DOL_STUDIO_MOD_TYPE_SETTINGS, 'icon' => 'cogs', 'title' => '_adm_lmi_cpt_settings')
     );
 
     function __construct($sModule = "", $sPage = "")
@@ -84,7 +84,7 @@ class BxBaseStudioModule extends BxDolStudioModule
         return $this->$sMethod();
     }
 
-    protected function getGeneral()
+    protected function getSettings()
     {
         $oTemplate = BxDolStudioTemplate::getInstance();
 

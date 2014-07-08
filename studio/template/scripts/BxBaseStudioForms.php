@@ -45,16 +45,16 @@ class BxBaseStudioForms extends BxDolStudioForms
 
         $aMenu = array();
         $aMenuItems = array(
-            BX_DOL_STUDIO_FORM_TYPE_FORMS,
-            BX_DOL_STUDIO_FORM_TYPE_DISPLAYS,
-            BX_DOL_STUDIO_FORM_TYPE_FIELDS,
-            BX_DOL_STUDIO_FORM_TYPE_PRE_LISTS,
-            BX_DOL_STUDIO_FORM_TYPE_PRE_VALUES
+            BX_DOL_STUDIO_FORM_TYPE_FORMS => array('icon' => 'list-alt'),
+            BX_DOL_STUDIO_FORM_TYPE_DISPLAYS => array('icon' => 'desktop'),
+            BX_DOL_STUDIO_FORM_TYPE_FIELDS => array('icon' => 'check-square'),
+            BX_DOL_STUDIO_FORM_TYPE_PRE_LISTS => array('icon' => 'align-justify'),
+            BX_DOL_STUDIO_FORM_TYPE_PRE_VALUES => array('icon' => 'indent'),
         );
-        foreach($aMenuItems as $sMenuItem)
+        foreach($aMenuItems as $sMenuItem => $aItem)
             $aMenu[] = array(
                 'name' => $sMenuItem,
-                'icon' => 'mi-form-' . $sMenuItem . '.png',
+                'icon' => $aItem['icon'], 'mi-form-' . $sMenuItem . '.png',
                 'link' => $this->sSubpageUrl . $sMenuItem,
                 'title' => _t('_adm_lmi_cpt_' . $sMenuItem),
                 'selected' => $sMenuItem == $this->sPage

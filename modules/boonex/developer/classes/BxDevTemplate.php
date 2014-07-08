@@ -27,7 +27,7 @@ class BxDevTemplate extends BxDolModuleTemplate
 
         $sMenu = $oContent->getPageMenu();
         $sContent = $oContent->getPageJsCode() . $oContent->getPageCode();
-        if(in_array($sPage, array('general')) || empty($sMenu)) {
+        if(in_array($sPage, array(BX_DEV_TOOLS_SETTINGS)) || empty($sMenu)) {
             $this->addStudioInjection('injection_body_style', 'text', ' bx-dev-page-body-single');
             return $sContent;
         }

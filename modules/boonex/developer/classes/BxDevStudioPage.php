@@ -32,9 +32,9 @@ class BxDevStudioPage extends BxTemplStudioModule
         foreach($this->oModule->aTools as $aTool)
             $this->aMenuItems[] = array(
                 'name' => $aTool['name'],
-                'icon' => 'bx-dev-mi-' . $aTool['name'] . '.png',
+                'icon' => $aTool['icon'],
                 'link' => sprintf($this->sUrl, $this->sModule, $aTool['name']),
-                'title' => '',
+                'title' => $aTool['title'],
                 'selected' => $aTool['name'] == $this->sPage
             );
 
@@ -43,7 +43,7 @@ class BxDevStudioPage extends BxTemplStudioModule
         return $oMenu->getCode();
     }
 
-    protected function getGeneral()
+    protected function getSettings()
     {
         bx_import('BxTemplStudioSettings');
         $oContent = new BxTemplStudioSettings($this->sModule);
@@ -98,7 +98,7 @@ class BxDevStudioPage extends BxTemplStudioModule
         $sType = $sType !== false ? bx_process_input($sType) : '';
 
         $sPage = bx_get('pgt_page');
-        $sPage = $sPage !== false ? bx_process_input($sPage) : '';
+        $sPage = $sPage !== false ? bx_process_input($sPage) : 'manager';
 
         $oContent = new BxDevPolyglot(array(
             'page' => $sPage,

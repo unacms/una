@@ -1509,6 +1509,7 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
     <string name="_adm_txt_form_view_iu_delete"><![CDATA[Delete]]></string>
     <string name="_adm_err_form_view_iu_delete"><![CDATA[Cannot remove current image.]]></string>
     <string name="_adm_err_form_view_iu_save"><![CDATA[Cannot save: ]]></string>
+    <string name="_adm_txt_uninstall"><![CDATA[Uninstall]]></string>
 
     <!-- Settings -->
 	<string name="_adm_wgt_cpt_settings"><![CDATA[Settings]]></string>
@@ -1629,11 +1630,9 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
     <!-- Extensions -->
 	<string name="_adm_mod_err_cannot_process_action"><![CDATA[Cannot process action. It does not have an associated handler.]]></string>
     <string name="_adm_mod_err_process_operation_failed"><![CDATA[Cannot {0} module from "{1}" directory]]></string>
-    <string name="_adm_mod_txt_uninstall"><![CDATA[Uninstall]]></string>
     <string name="_adm_mod_cnf_uninstall"><![CDATA[<h3>Uninstall "{0}" module?</h3><p>Uninstalling "{0}" module will also delete all of its data. Do you want to continue?</p>]]></string>
 
     <!-- Templates -->
-    <string name="_adm_dsn_txt_uninstall"><![CDATA[Uninstall]]></string>
     <string name="_adm_dsn_cnf_uninstall"><![CDATA[<h3>Uninstall "{0}" template?</h3><p>Uninstalling "{0}" template will also delete all of its data. Do you want to continue?</p>]]></string>
 
     <!-- Designer -->
@@ -1662,7 +1661,6 @@ Please click "Continue" below to navigate to the home page of the site.]]></stri
 	<string name="_adm_dsg_scs_save"><![CDATA[The changes were successfully saved]]></string>
 
     <!-- Languages -->
-    <string name="_adm_lang_txt_uninstall"><![CDATA[Uninstall]]></string>
     <string name="_adm_lang_cnf_uninstall"><![CDATA[<h3>Uninstall "{0}" language?</h3><p>Uninstalling "{0}" language will also delete all of its data. Do you want to continue?</p>]]></string>
 
 	<!-- Polyglot -->

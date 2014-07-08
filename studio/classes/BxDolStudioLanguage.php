@@ -12,7 +12,10 @@ bx_import('BxTemplStudioPage');
 bx_import('BxDolStudioLanguagesQuery');
 
 define('BX_DOL_STUDIO_LANG_DEFAULT', 'en');
-define('BX_DOL_STUDIO_LANG_TYPE_DEFAULT', 'general');
+
+define('BX_DOL_STUDIO_LANG_TYPE_SETTINGS', 'settings');
+
+define('BX_DOL_STUDIO_LANG_TYPE_DEFAULT', BX_DOL_STUDIO_LANG_TYPE_SETTINGS);
 
 class BxDolStudioLanguage extends BxTemplStudioPage
 {

@@ -66,7 +66,7 @@ class BxDevPolyglot extends BxTemplStudioPolyglot
         return parent::getPageJsCode($aOptions, $bWrap);
     }
 
-    protected function getGeneral()
+    protected function getManager()
     {
         return $this->getGrid($this->aGridObjects['manage']);
     }

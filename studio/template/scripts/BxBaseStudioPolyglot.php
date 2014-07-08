@@ -14,9 +14,9 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot
 {
     protected $sSubpageUrl;
     protected $aMenuItems = array(
-        BX_DOL_STUDIO_PGT_TYPE_GENERAL,
-        BX_DOL_STUDIO_PGT_TYPE_KEYS,
-        BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES
+        BX_DOL_STUDIO_PGT_TYPE_SETTINGS => array('icon' => 'cogs'),
+        BX_DOL_STUDIO_PGT_TYPE_KEYS => array('icon' => 'key'),
+        BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES => array('icon' => 'envelope-o')
     );
     protected $aGridObjects = array(
         'keys' => 'sys_studio_lang_keys',
@@ -58,10 +58,10 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot
         $sJsObject = $this->getPageJsObject();
 
         $aMenu = array();
-        foreach($this->aMenuItems as $sMenuItem)
+        foreach($this->aMenuItems as $sMenuItem => $aItem)
             $aMenu[] = array(
                 'name' => $sMenuItem,
-                'icon' => 'mi-pgt-' . $sMenuItem . '.png',
+                'icon' => $aItem['icon'],
                 'link' => $this->sSubpageUrl . $sMenuItem,
                 'title' => _t('_adm_lmi_cpt_' . $sMenuItem),
                 'selected' => $sMenuItem == $this->sPage
@@ -79,7 +79,7 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot
         return $this->$sMethod();
     }
 
-    protected function getGeneral()
+    protected function getSettings()
     {
         $oTemplate = BxDolStudioTemplate::getInstance();
 

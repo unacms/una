@@ -61,6 +61,19 @@ div.adm-bpb-icon img {
     width: 32px;
     height: 32px;
 }
+div.adm-bpb-icon i.sys-icon {
+	position: absolute;
+    width:32px;
+	height: 32px;
+	top: 0px;
+	left: 0px;
+
+    color:white;
+    font-size:20px;
+    text-align:center;
+    text-shadow:none;
+	line-height: 32px;
+}
 div.adm-bpb-info {
 	min-height: 32px;
 	padding-left: 40px; 

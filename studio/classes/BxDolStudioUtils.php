@@ -12,6 +12,8 @@ bx_import('BxDol');
 define('BX_DOL_STUDIO_MODULE_SYSTEM', 'system');
 define('BX_DOL_STUDIO_MODULE_CUSTOM', 'custom');
 
+define('BX_DOL_STUDIO_MODULE_ICON_DEFAULT', 'lightbulb-o');
+
 define('BX_DOL_STUDIO_VISIBLE_ALL', 'all');
 define('BX_DOL_STUDIO_VISIBLE_SELECTED', 'selected');
 
@@ -32,20 +34,53 @@ class BxDolStudioUtils extends BxDol
         return bx_gen_method_name($sValue);
     }
 
-    public static function getModuleIcon($sName, $sType = 'menu')
+    public static function getIconDefault($sType = '')
+    {
+    	$sIcon = '';
+
+		switch ($sType) {
+			case BX_DOL_MODULE_TYPE_MODULE:
+				$sIcon = 'cube';
+				break;
+
+			case BX_DOL_MODULE_TYPE_LANGUAGE:
+				$sIcon = 'language';
+				break;
+
+			case BX_DOL_MODULE_TYPE_TEMPLATE:
+				$sIcon = 'adjust';
+				break;
+
+			default:
+				$sIcon = BX_DOL_STUDIO_MODULE_ICON_DEFAULT;
+		}
+
+		return $sIcon;
+    }
+    
+    public static function getModuleIcon($mixedModule, $sType = 'menu', $bReturnAsUrl = true)
     {
         $aType2Prefix = array('menu' => 'mi', 'page' => 'pi', 'store' => 'si');
 
-        $oTemplate = BxDolStudioTemplate::getInstance();
-        $sDefaultIcon = $oTemplate->getIconUrl($aType2Prefix[$sType] . '-mod-empty.png');
+        if(!is_array($mixedModule)) {
+	        bx_import('BxDolModuleQuery');
+	        $aModule = BxDolModuleQuery::getInstance()->getModuleByName($mixedModule);
+        }
+        else 
+        	$aModule = $mixedModule;
 
-        bx_import('BxDolModuleQuery');
-        $aModule = BxDolModuleQuery::getInstance()->getModuleByName($sName);
+		$sDefaultIcon = self::getIconDefault(isset($aModule['type']) ? $aModule['type'] : '');
         if(empty($aModule))
             return $sDefaultIcon;
 
-        $sModuleIcon = isset($aModule['path']) ? $oTemplate->getIconUrl($aModule['name'] . '@modules/' . $aModule['path'] . '|std-' . $aType2Prefix[$sType] . '.png') : '';
-        return !empty($sModuleIcon) ? $sModuleIcon : $sDefaultIcon;
+        $sModuleIcon = '';
+        if(isset($aModule['path']))
+			$sModuleIcon = $aModule['name'] . '@modules/' . $aModule['path'] . '|std-' . $aType2Prefix[$sType] . '.png';
+		else if(isset($aModule['dir']))
+			$sModuleIcon = $aModule['name'] . '@modules/' . $aModule['dir'] . '|std-' . $aType2Prefix[$sType] . '.png';
+        $sModuleIconUrl = BxDolStudioTemplate::getInstance()->getIconUrl($sModuleIcon);
+
+        return !empty($sModuleIcon) && !empty($sModuleIconUrl) ? ($bReturnAsUrl ? $sModuleIconUrl : $sModuleIcon) : $sDefaultIcon;
     }
 
     public static function getModuleTitle($sName)

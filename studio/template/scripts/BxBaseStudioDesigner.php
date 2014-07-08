@@ -41,15 +41,15 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
 
         $aMenu = array();
         $aMenuItems = array(
-            BX_DOL_STUDIO_DSG_TYPE_GENERAL,
-            BX_DOL_STUDIO_DSG_TYPE_LOGO,
-            BX_DOL_STUDIO_DSG_TYPE_ICON,
-            BX_DOL_STUDIO_DSG_TYPE_SETTINGS
+            BX_DOL_STUDIO_DSG_TYPE_GENERAL => array('icon' => 'globe'),
+            BX_DOL_STUDIO_DSG_TYPE_LOGO => array('icon' => 'pencil'),
+            BX_DOL_STUDIO_DSG_TYPE_ICON => array('icon' => 'picture-o'),
+            BX_DOL_STUDIO_DSG_TYPE_SETTINGS => array('icon' => 'cogs'),
         );
-        foreach($aMenuItems as $sMenuItem)
+        foreach($aMenuItems as $sMenuItem => $aItem)
             $aMenu[] = array(
                 'name' => $sMenuItem,
-                'icon' => 'mi-dsg-' . $sMenuItem . '.png',
+                'icon' => $aItem['icon'],
                 'link' => BX_DOL_URL_STUDIO . 'designer.php?page=' . $sMenuItem,
                 'title' => _t('_adm_lmi_cpt_' . $sMenuItem),
                 'selected' => $sMenuItem == $this->sPage
@@ -78,12 +78,22 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
 
         $aTmplVarsTemplates = array ();
         foreach($aTemplates as $sUri => $aTemplate) {
+        	$sIcon = $this->getModuleIcon($aTemplate, 'store');
+	        $bIcon = strpos($sIcon, '.') === false;
+
             $aTmplVarsTemplates[] = array(
                 'uri' => $sUri,
                 'title' => htmlspecialchars_adv($aTemplate['title']),
                 'version' => htmlspecialchars_adv($aTemplate['version']),
                 'vendor' => htmlspecialchars_adv($aTemplate['vendor']),
-                'icon' => $this->getModuleIcon($aTemplate['name'], 'store'),
+            	'bx_if:icon' => array (
+	                'condition' => $bIcon,
+	                'content' => array('icon' => $sIcon),
+	            ),
+                'bx_if:image' => array (
+	                'condition' => !$bIcon,
+	                'content' => array('icon_url' => $sIcon),
+	            ),
                 'bx_if:default' => array (
                     'condition' => $sUri == $sTemplate,
                     'content' => array (),

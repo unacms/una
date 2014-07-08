@@ -41,11 +41,18 @@ class BxBaseStudioStore extends BxDolStudioStore
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         $aMenu = array();
-        $aMenuItems = array('goodies', 'featured', 'purchases', 'updates', 'checkout', 'downloaded');
-        foreach($aMenuItems as $sMenuItem)
+        $aMenuItems = array(
+	        'goodies' => array('icon' => 'home'), 
+	        'featured' => array('icon' => 'thumbs-up'), 
+	        'purchases' => array('icon' => 'shopping-cart'), 
+	        'updates' => array('icon' => 'refresh'), 
+	        'checkout' => array('icon' => 'credit-card'), 
+	        'downloaded' => array('icon' => 'list')
+        );
+        foreach($aMenuItems as $sMenuItem => $aItem)
             $aMenu[] = array(
                 'name' => $sMenuItem,
-                'icon' => 'mi-str-' . $sMenuItem . '.png',
+                'icon' => $aItem['icon'],
                 'link' => BX_DOL_URL_STUDIO . 'store.php?page=' . $sMenuItem,
                 'title' => _t('_adm_lmi_cpt_' . $sMenuItem),
                 'selected' => $sMenuItem == $this->sPage
@@ -321,14 +328,20 @@ class BxBaseStudioStore extends BxDolStudioStore
 
         //--- Prepare modules.
         foreach($aProducts['modules'] as $aModule) {
-            $sIcon = $oTemplate->getIconUrl($aModule['name'] . '@modules/' . $aModule['dir'] . '|std-si.png');
-            if(empty($sIcon))
-                $sIcon = $oTemplate->getIconUrl('si-mod-empty.png');
+        	$sIcon = BxDolStudioUtils::getModuleIcon($aModule, 'store');
+        	$bIcon = strpos($sIcon, '.') === false;
 
             $sModules .= $oTemplate->parseHtmlByName('str_product_v1.html', array(
                 'js_object' => $sJsObject,
                 'url' => $aModule['link_market'],
-                'icon' => $sIcon,
+                'bx_if:icon' => array (
+	                'condition' => $bIcon,
+	                'content' => array('icon' => $sIcon),
+	            ),
+                'bx_if:image' => array (
+	                'condition' => !$bIcon,
+	                'content' => array('icon_url' => $sIcon),
+	            ),
                 'title' => $aModule['title'],
                 'vendor' => $aModule['vendor'],
                 'version' => $aModule['version'],
@@ -346,14 +359,20 @@ class BxBaseStudioStore extends BxDolStudioStore
 
         //--- Prepare updates.
         foreach($aProducts['updates'] as $aUpdate) {
-            $sIcon = $oTemplate->getIconUrl($aUpdate['module_name'] . '@modules/' . $aUpdate['module_dir'] . '|std-si.png');
-            if(empty($sIcon))
-                $sIcon = $oTemplate->getIconUrl('si-mod-empty.png');
+        	$sIcon = BxDolStudioUtils::getModuleIcon(array('type' => $aUpdate['module_type'], 'name' => $aUpdate['module_name'], 'dir' => $aUpdate['module_dir']), 'store');
+        	$bIcon = strpos($sIcon, '.') === false;
 
             $sUpdates .= $oTemplate->parseHtmlByName('str_update_v1.html', array(
                 'js_object' => $sJsObject,
                 'url' => $aUpdate['module_link_market'],
-                'icon' => $sIcon,
+                'bx_if:icon' => array (
+	                'condition' => $bIcon,
+	                'content' => array('icon' => $sIcon),
+	            ),
+                'bx_if:image' => array (
+	                'condition' => !$bIcon,
+	                'content' => array('icon_url' => $sIcon),
+	            ),
                 'title' => $aUpdate['title'],
                 'vendor' => $aUpdate['vendor'],
                 'versions' => _t('_adm_str_txt_update_from_to', $aUpdate['version_from'], $aUpdate['version_to']),
@@ -394,7 +413,9 @@ class BxBaseStudioStore extends BxDolStudioStore
             'bx_repeat:blocks' => array(
                 array(
                     'caption' => $this->getBlockCaption(array('caption' => _t($sCaption), 'actions' => $aActions)),
-                    'items' => MsgBox(_t($sContent))
+                	'panel_top' => '',
+                    'items' => MsgBox(_t($sContent)),
+                	'panel_bottom' => ''
                 )
             )
         ));
@@ -534,11 +555,21 @@ class BxBaseStudioStore extends BxDolStudioStore
             $sPrice = !$bFree ? _t('_adm_str_txt_price_csign', $aItem['currency_sign'], $aItem['price']) : _t('_adm_str_txt_price_free');
             $sDiscount = !$bFree && !empty($aItem['discount']) ? _t('_adm_str_txt_discount_csign', $aItem['currency_sign'], $aItem['discount']['price']) : '';
 
+            $sIcon = !empty($aItem['thumbnail']['big']) ? $aItem['thumbnail']['big'] : BxDolStudioUtils::getIconDefault(BX_DOL_MODULE_TYPE_MODULE);
+			$bIcon = strpos($sIcon, '.') === false;
+
             $sResult .= $oTemplate->parseHtmlByName('str_product_v2.html', array(
                 'js_object' => $sJsObject,
                 'id' => $aItem['id'],
                 'url' => $aItem['url'],
-                'icon' => !empty($aItem['thumbnail']['big']) ? $aItem['thumbnail']['big'] : $oTemplate->getIconUrl('si-mod-empty.png'),
+                'bx_if:icon' => array (
+	                'condition' => $bIcon,
+	                'content' => array('icon' => $sIcon),
+	            ),
+                'bx_if:image' => array (
+	                'condition' => !$bIcon,
+	                'content' => array('icon_url' => $sIcon),
+	            ),
                 'title' => $aItem['title'],
                 'bx_if:show_vendor_price' => array(
                     'condition' => !$bShoppingCart,
@@ -598,11 +629,21 @@ class BxBaseStudioStore extends BxDolStudioStore
         foreach($aItems as $aItem) {
             $bDownloadable = (int)$aItem['is_file'] == 1;
 
+            $sIcon = !empty($aItem['thumbnail']['big']) ? $aItem['thumbnail']['big'] : BxDolStudioUtils::getIconDefault(BX_DOL_MODULE_TYPE_MODULE);
+			$bIcon = strpos($sIcon, '.') === false;
+
             $sResult .= $oTemplate->parseHtmlByName('str_update_v2.html', array(
                 'js_object' => $sJsObject,
                 'id' => $aItem['id'],
                 'url' => $aItem['url'],
-                'icon' => !empty($aItem['thumbnail']['big']) ? $aItem['thumbnail']['big'] : $oTemplate->getIconUrl('si-mod-empty.png'),
+            	'bx_if:icon' => array (
+	                'condition' => $bIcon,
+	                'content' => array('icon' => $sIcon),
+	            ),
+                'bx_if:image' => array (
+	                'condition' => !$bIcon,
+	                'content' => array('icon_url' => $sIcon),
+	            ),
                 'title' => $aItem['title'],
                 'vendor' => $aItem['author'],
                 'versions' => _t('_adm_str_txt_update_from_to', $aItem['file_version'], $aItem['file_version_to']),

@@ -174,6 +174,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         }
 
         return array(
+        	'type' => $aConfig['type'],
             'name' => isset($aConfig['name']) ? $aConfig['name'] : $aConfig['home_uri'],
             'title' => $sTitle,
             'vendor' => $aConfig['vendor'],
@@ -205,6 +206,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
             'version_from' => $aConfig['version_from'],
             'version_to' => $aConfig['version_to'],
             'dir' => $aConfig['home_dir'],
+        	'module_type' => $aModule['type'],
             'module_name' => $aModule['name'],
             'module_dir' => $aModule['dir'],
             'module_link_market' => $aModule['link_market'],
