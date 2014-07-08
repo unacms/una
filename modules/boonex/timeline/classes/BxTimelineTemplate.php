@@ -90,18 +90,12 @@ class BxTimelineTemplate extends BxDolModuleTemplate
     {
         list($sContent, $sLoadMore, $sBack) = $this->getPosts($aParams);
 
-        $sViewImagePopupId = $this->_oConfig->getHtmlIds('view', 'photo_popup');
-        $sViewImagePopupContent = $this->parseHtmlByName('popup_image.html', array(
-    		'image_url' => ''
-    	));
-
-    	bx_import('BxTemplFunctions');
         return $this->parseHtmlByName('block_view.html', array(
             'style_prefix' => $this->_oConfig->getPrefix('style'),
             'back' => $sBack,
             'content' => $sContent,
             'load_more' =>  $sLoadMore,
-        	'view_image_popup' => BxTemplFunctions::getInstance()->transBox($sViewImagePopupId, $sViewImagePopupContent, true),
+        	'view_image_popup' => $this->_getImagePopup(),
             'js_content' => $this->getJsCode('view', array(
                 'type' => $aParams['type'],
                 'owner_id' => $aParams['owner_id'],
@@ -122,6 +116,8 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 
         $sContent = $this->getJsCode('view');
         $sContent .= $this->getPost($aEvent, array('type' => BX_TIMELINE_TYPE_ITEM));
+        $sContent .= $this->_getImagePopup();
+
         return $sContent;
     }
 
@@ -129,47 +125,6 @@ class BxTimelineTemplate extends BxDolModuleTemplate
     {
         return $this->getItemBlock($iId);
     }
-
-    /*
-	TODO: Remove if it's not needed. Including HTML template.
-
-    public function getPhotoPopup($iEventId, $iStart)
-    {
-        $sStylePrefix = $this->_oConfig->getPrefix('style');
-        $sJsObject = $this->_oConfig->getJsObject('view');
-
-        $aPhotos = $this->_oDb->getPhotos($iEventId);
-        $iPhotos = count($aPhotos);
-
-        if(empty($aPhotos[$iStart]))
-            return MsgBox(_t('_Empty'));
-
-        $sPaginate = '';
-        if($iPhotos > 1) {
-            bx_import('BxTemplPaginate');
-            $oPaginate = new BxTemplPaginate(array(
-                'start' => $iStart,
-                'num' => (isset($aPhotos[$iStart + 1]) ? 2 : 1),
-                'per_page' => 1,
-                'on_change_page' => $sJsObject . '.showPhoto(this, ' . $iEventId . ', {start})'
-            ));
-
-            $sPaginate = $oPaginate->getSimplePaginate();
-        }
-
-        return $this->parseHtmlByName('attach_photo_popup.html', array(
-            'style_prefix' => $sStylePrefix,
-            'photo' => $this->_getPhoto($aPhotos[$iStart]),
-            'bx_if:show_paginate' => array(
-                'condition' => !empty($sPaginate),
-                'content' => array(
-                    'style_prefix' => $sStylePrefix,
-                    'paginate' => $sPaginate
-                )
-            )
-        ));
-    }
-    */
 
     public function getPost(&$aEvent, $aBrowseParams = array())
     {
@@ -560,7 +515,8 @@ class BxTimelineTemplate extends BxDolModuleTemplate
                 'content' => $aTmplVarsMenuItemActions
             ),
             'comments' => $bBrowseItem ? $this->_getComments($aEvent['comments']) : '',
-            'votes' => $this->_getVotes($aEvent['votes'])
+            'votes' => $this->_getVotes($aEvent['votes']),
+            'view_image_popup' => $bBrowseItem ? $this->_getComments($aEvent['comments']) : '',
         );
 
         return $this->parseHtmlByName('item.html', $aTmplVars);
@@ -602,21 +558,15 @@ class BxTimelineTemplate extends BxDolModuleTemplate
         return $oVote->getJsScript();
     }
 
-    protected function _getPhoto($iPhotoId)
+    protected function _getImagePopup()
     {
-        $sStylePrefix = $this->_oConfig->getPrefix('style');
-        $sJsObject = $this->_oConfig->getJsObject('view');
+        $sViewImagePopupId = $this->_oConfig->getHtmlIds('view', 'photo_popup');
+        $sViewImagePopupContent = $this->parseHtmlByName('popup_image.html', array(
+    		'image_url' => ''
+    	));
 
-        bx_import('BxDolStorage');
-        $oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage'));
-
-        return $this->parsePageByName('bx_img.html', array(
-            'src' => $oStorage->getFileUrlById($iPhotoId),
-            'bx_repeat:attrs' => array(
-                array('key' => 'onclick', 'value' => $sJsObject . '.hidePhoto(this)'),
-                array('key' => 'class', 'value' => $sStylePrefix . '-attached-image')
-            ),
-        ));
+    	bx_import('BxTemplFunctions');
+    	return BxTemplFunctions::getInstance()->transBox($sViewImagePopupId, $sViewImagePopupContent, true);
     }
 
     protected function _getTmplVarsMenuItemManage(&$aEvent)
@@ -914,7 +864,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
                             'src' => $oTranscoder->getImageUrl($iPhotoId),
                             'src_orig' => $sPhotoSrcOrig,
                             'title' => '',
-                            'onclick' => $sJsObject . '.showPhoto(this, \'' . $sPhotoSrcOrig . '\')' //TODO: Remove if it's not needed. $sJsObject . '.showPhoto(this, ' . $aEvent['id'] . ', ' . $iPhotoIndex . ')'
+                            'onclick' => $sJsObject . '.showPhoto(this, \'' . $sPhotoSrcOrig . '\')'
                         );
                     }
                 }

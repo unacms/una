@@ -203,21 +203,6 @@ class BxTimelineModule extends BxDolModule
         echo $this->_oTemplate->getViewItemPopup($iItemId);
     }
 
-    /*
-	TODO: Remove if it's not needed.
-
-    public function actionGetPhotoPopup()
-    {
-        $iEventId = bx_process_input(bx_get('event_id'), BX_DATA_INT);
-        $iStart = bx_process_input(bx_get('start'), BX_DATA_INT);
-
-        if(!$iEventId)
-            return;
-
-        echo $this->_oTemplate->getPhotoPopup($iEventId, $iStart);
-    }
-    */
-
     public function actionAddAttachLink()
     {
         $aResult = $this->getFormAttachLink();

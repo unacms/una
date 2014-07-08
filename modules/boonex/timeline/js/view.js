@@ -107,33 +107,6 @@ BxTimelineView.prototype.showPhoto = function(oLink, sUrl) {
 	$('#' + this._aHtmlIds['photo_popup']).dolPopupImage(sUrl);
 };
 
-/*
-TODO: Remove if it's not needed.
-
-BxTimelineView.prototype.showPhoto = function(oLink, iEventId, iStart) {
-    var oData = this._getDefaultData();
-    oData['event_id'] = iEventId;
-    oData['start'] = iStart;
-
-    var sId = this._aHtmlIds['photo_popup'] + iEventId;
-    if($('#' + sId).length != 0)
-    	$('#' + sId).bx_anim('hide', this._sAnimationEffect, 0, function() {
-    		$(this).remove();    		
-    	});
-
-    $(window).dolPopupAjax({
-		id: {value: this._aHtmlIds['photo_popup'] + iEventId, force: true},
-		url: bx_append_url_params(this._sActionsUri + 'get_photo_popup/', oData)
-	});
-
-	return false;
-};
-
-BxTimelineView.prototype.hidePhoto = function(oLink) {
-	$(".bx-popup-applied:visible").dolPopupHide();
-};
-*/
-
 BxTimelineView.prototype.commentItem = function(oLink, sSystem, iId) {
 	var $this = this;
 

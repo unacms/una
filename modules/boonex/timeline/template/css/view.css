@@ -120,21 +120,6 @@ div.bx-tl-shared div.bx-tl-content {
 div.bx-tl-item-actions {}
 
 
-/*--- View Image Style ---*/
-div.bx-tl-attach-photo-popup {}
-div.bx-tl-paginate div.bx-paginate {
-	position: relative;
-	float: right;
-}
-img.bx-tl-attached-image {
-	max-width: 640px;
-	max-width: 40rem;
-
-	max-height: 640px;
-	max-height: 40rem;
-}
-
-
 /*--- Empty Style ---*/
 div.bx-tl-empty div.bx-msg-box-container {
 	margin-top: 0px;
