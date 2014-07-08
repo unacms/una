@@ -14,7 +14,7 @@ bx_import('BxBaseModGeneralSearchResult');
 class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
 {
     protected $aUnitViews = array('extended' => 'unit.html', 'gallery' => 'unit_gallery.html');
-    protected $sUnitViewDefault = 'gallery';
+    protected $sUnitViewDefault = 'extended';
     protected $sUnitViewParamName = 'unit_view';
 
     function __construct($sMode = '', $aParams = array())
