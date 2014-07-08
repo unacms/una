@@ -92,6 +92,7 @@ class BxBaseCmts extends BxDolCmts
             'comments' => $sCmts,
             'post_form_top' => $this->getFormBoxPost($aBp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_TOP)),
             'post_form_bottom'  => $this->getFormBoxPost($aBp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_BOTTOM)),
+        	'view_image_popup' => $this->_getViewImagePopup(),
             'script' => $this->getJsScript()
         ));
 
@@ -135,6 +136,7 @@ class BxBaseCmts extends BxDolCmts
             'system' => $this->_sSystem,
             'id' => $this->getId(),
             'comment' => $this->getComment($iCmtId, array('type' => $this->_sBrowseType), array('type' => BX_CMT_DISPLAY_THREADED)),
+        	'view_image_popup' => $this->_getViewImagePopup(), 
             'script' => $this->getJsScript()
         ));
     }
@@ -206,15 +208,18 @@ class BxBaseCmts extends BxDolCmts
         if($this->isAttachImageEnabled()) {
             $aImages = $this->_oQuery->getImages($this->_aSystem['system_id'], $aCmt['cmt_id']);
             if(!empty($aImages) && is_array($aImages)) {
-                bx_import('BxDolImageTranscoder');
+                bx_import('BxDolStorage');
+        		$oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
+
+            	bx_import('BxDolImageTranscoder');
                 $oTranscoder = BxDolImageTranscoder::getObjectInstance($this->_sTranscoderPreview);
 
                 foreach($aImages as $aImage)
                     $aTmplImages[] = array(
                         'style_prefix' => $this->_sStylePrefix,
                         'js_object' => $this->_sJsObjName,
-                        'id' => $aImage['image_id'],
-                        'image' => $oTranscoder->getImageUrl($aImage['image_id'])
+                        'image' => $oTranscoder->getImageUrl($aImage['image_id']),
+                    	'image_orig' => $oStorage->getFileUrlById($aImage['image_id'])
                     );
             }
         }
@@ -296,30 +301,6 @@ class BxBaseCmts extends BxDolCmts
     function getFormEdit($aCmt)
     {
         return $this->_getFormEdit($aCmt);
-    }
-
-    function getImage($iImgId)
-    {
-        if(!$this->isAttachImageEnabled())
-            return '';
-
-        $oTemplate = BxDolTemplate::getInstance();
-
-        bx_import('BxDolStorage');
-        $oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
-
-        $sContent = $oTemplate->parseHtmlByName('bx_img.html', array(
-            'src' => $oStorage->getFileUrlById($iImgId),
-            'bx_repeat:attrs' => array(
-                array('key' => 'alt', 'value' => bx_html_attribute(_t('_cmt_view_attached_image'))),
-                array('key' => 'title', 'value' => bx_html_attribute(_t('_cmt_close_attached_image'))),
-                array('key' => 'onclick', 'value' => $this->_sJsObjName . '.hideImage(this);'),
-                array('key' => 'class', 'value' => $this->_sStylePrefix . '-attached-image')
-            )
-        ));
-
-        bx_import('BxTemplStudioFunctions');
-        return BxTemplStudioFunctions::getInstance()->transBox($this->_sSystem . '-attached-image', $sContent, true);
     }
 
     /**
@@ -702,6 +683,16 @@ class BxBaseCmts extends BxDolCmts
         ));
     }
 
+    protected function _getViewImagePopup()
+    {
+    	$sViewImagePopupId = 'cmts-box-' . $this->_sSystem . '-' . $this->getId() . '-view-image-popup' ;
+        $sViewImagePopupContent = BxDolTemplate::getInstance()->parseHtmlByName('popup_image.html', array(
+    		'image_url' => ''
+    	));
+
+    	bx_import('BxTemplFunctions');
+    	return BxTemplFunctions::getInstance()->transBox($sViewImagePopupId, $sViewImagePopupContent, true);
+    }
     protected function _echoResultJson($a, $isAutoWrapForFormFileSubmit = false)
     {
 

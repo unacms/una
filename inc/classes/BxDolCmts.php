@@ -673,15 +673,6 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         return $this->getComments(array('vparent_id' => $iCmtVParentId, 'start' => $iCmtStart, 'per_view' => $iCmtPerView, 'type' => $sCmtBrowse, 'filter' => $sCmtFilter), array('type' => $sCmtDisplay));
     }
 
-    public function actionGetImage ()
-    {
-        if (!$this->isEnabled())
-           return '';
-
-        $iImgId = bx_process_input(bx_get('ImgId'), BX_DATA_INT);
-        return $this->getImage($iImgId);
-    }
-
     public function actionSubmitPostForm()
     {
         if(!$this->isEnabled() || !$this->isPostReplyAllowed()) {

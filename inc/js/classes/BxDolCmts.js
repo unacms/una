@@ -266,40 +266,8 @@ BxDolCmts.prototype.showMore = function(oLink)
 	$(oLink).parent('span').next('span').show().prev('span').remove();
 };
 
-BxDolCmts.prototype.showImage = function(oLink, iId) {
-	var $this = this;
-
-    var oData = this._getDefaultActions();
-    oData['action'] = 'GetImage';
-    oData['ImgId'] = iId;
-
-    if(oLink)
-    	this._loadingInContent(oLink, true);
-
-    jQuery.get (
-        this._sActionsUrl,
-        oData,
-        function (s) {
-        	var oPopup = $(s).hide(); 
-
-	    	$('#' + oPopup.attr('id')).remove();
-	        oPopup.prependTo('body').find('img').bind('load', function() {
-	        	if(oLink)
-	        		$this._loadingInContent(oLink, false);
-
-	        	$(this).parents('.bx-popup-wrapper').dolPopup({
-		        	fog: {
-						color: '#fff',
-						opacity: .7
-		            }
-		        });	        	
-	        });	        
-        }
-    );
-};
-
-BxDolCmts.prototype.hideImage = function(oLink) {
-	$(".bx-popup-applied:visible").dolPopupHide();
+BxDolCmts.prototype.showImage = function(oLink, sUrl) {
+	$(this._sRootId + '-view-image-popup').dolPopupImage(sUrl);
 };
 
 BxDolCmts.prototype.toggleReply = function(e, iCmtParentId)

@@ -136,15 +136,6 @@
 		background-position: center center;
 		background-repeat: no-repeat;
 	}
-
-	img.cmt-attached-image {
-		position: relative;
-		max-width: 600px;
-		max-width: 37.5rem;
-		max-height: 600px;
-		max-height: 37.5rem;
-		cursor: pointer;
-	}
 	
     /*--- Comment Actions ---*/
 	div.cmt-actions {
