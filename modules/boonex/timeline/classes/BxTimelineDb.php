@@ -109,16 +109,36 @@ class BxTimelineDb extends BxDolModuleDb
 
     public function deleteModuleEvents($aData)
     {
-    	foreach($aData['handlers'] as $aHandler)
+    	foreach($aData['handlers'] as $aHandler) {
+    		//Delete system events.
             $this->deleteEvent(array('type' => $aHandler['alert_unit'], 'action' => $aHandler['alert_action']));
+
+            //Delete shared events.
+    		$aEvents = $this->getEvents(array('browse' => 'shared_by_descriptor', 'type' => $aHandler['alert_unit'], 'action' => $aHandler['alert_action']));
+			foreach($aEvents as $aEvent) {
+				$aContent = unserialize($aEvent['content']);
+				if(isset($aContent['type']) && $aContent['type'] == $aHandler['alert_unit'] && isset($aContent['action']) && $aContent['action'] == $aHandler['alert_action'])
+					$this->deleteEvent(array('id' => (int)$aEvent['id']));
+			}
+    	}
     }
 
 	public function activateModuleEvents($aData, $bActivate = true)
     {
     	$iActivate = $bActivate ? 1 : 0;
 
-    	foreach($aData['handlers'] as $aHandler)
+    	foreach($aData['handlers'] as $aHandler) {
+    		//Activate (deactivate) system events.
             $this->updateEvent(array('active' => $iActivate), array('type' => $aHandler['alert_unit'], 'action' => $aHandler['alert_action']));
+
+			//Activate (deactivate) shared events.
+			$aEvents = $this->getEvents(array('browse' => 'shared_by_descriptor', 'type' => $aHandler['alert_unit'], 'action' => $aHandler['alert_action']));
+			foreach($aEvents as $aEvent) {
+				$aContent = unserialize($aEvent['content']);
+				if(isset($aContent['type']) && $aContent['type'] == $aHandler['alert_unit'] && isset($aContent['action']) && $aContent['action'] == $aHandler['alert_action'])
+					$this->updateEvent(array('active' => $iActivate), array('id' => (int)$aEvent['id']));
+			}
+    	}
     }
 
     public function getHandlers($aParams = array())
@@ -161,25 +181,13 @@ class BxTimelineDb extends BxDolModuleDb
         if(empty($aParamsSet) || empty($aParamsWhere))
             return false;
 
-        $aSet = array();
-        foreach($aParamsSet as $sKey => $sValue)
-           $aSet[] = $this->prepare("`" . $sKey . "`=?", $sValue);
-
-        $aWhere = array();
-        foreach($aParamsWhere as $sKey => $sValue)
-           $aWhere[] = $this->prepare("`" . $sKey . "`=?", $sValue);
-
-        $sSql = "UPDATE `{$this->_sTable}` SET " . implode(", ", $aSet) . " WHERE " . implode(" AND ", $aWhere);
+        $sSql = "UPDATE `{$this->_sTable}` SET " . $this->arrayToSQL($aParamsSet) . " WHERE " . $this->arrayToSQL($aParamsWhere, " AND ");
         return $this->query($sSql);
     }
 
     public function deleteEvent($aParams, $sWhereAddon = "")
     {
-        $aWhere = array();
-        foreach($aParams as $sKey => $sValue)
-           $aWhere[] = $this->prepare("`" . $sKey . "`=?", $sValue);
-
-        $sSql = "DELETE FROM `{$this->_sTable}` WHERE " . implode(" AND ", $aWhere) . $sWhereAddon;
+        $sSql = "DELETE FROM `{$this->_sTable}` WHERE " . $this->arrayToSQL($aParams, " AND ") . $sWhereAddon;
         return $this->query($sSql);
     }
 
@@ -262,6 +270,14 @@ class BxTimelineDb extends BxDolModuleDb
                         break;
                 }
                 break;
+
+            case 'shared_by_descriptor':
+            	if(isset($aParams['type']))
+                	$sWhereClause .= "AND `{$this->_sTable}`.`content` LIKE '%" . $this->escape($aParams['type']) . "%'";
+
+                if(isset($aParams['action']))
+                	$sWhereClause .= "AND `{$this->_sTable}`.`content` LIKE '%" . $this->escape($aParams['action']) . "%'";
+                break;
         }
 
         $sSql = "SELECT
@@ -322,12 +338,31 @@ class BxTimelineDb extends BxDolModuleDb
 
     public function getShared($sType, $sAction, $iObjectId)
     {
-        if($this->_oConfig->isSystem($sType, $sAction))
+    	$bSystem = $this->_oConfig->isSystem($sType, $sAction);
+
+        if($bSystem)
             $aParams = array('browse' => 'descriptor', 'type' => $sType, 'action' => $sAction, 'object_id' => $iObjectId);
         else
             $aParams = array('browse' => 'id', 'value' => $iObjectId);
 
-        return $this->getEvents($aParams);
+		$aShared = $this->getEvents($aParams);
+		if($bSystem && (empty($aShared) || !is_array($aShared))) {
+			$iId = $this->insertEvent(array(
+				'owner_id' => 0,
+				'type' => $sType,
+				'action' => $sAction,
+				'object_id' => $iObjectId,
+				'object_privacy_view' => $this->_oConfig->getPrivacyViewDefault(),
+				'content' => '',
+				'title' => '',
+				'description' => '',
+				'hidden' => 1
+			));
+
+			$aShared = $this->getEvents(array('browse' => 'id', 'value' => $iId));
+		}
+
+        return $aShared;
     }
 
     function getSharedBy($iSharedId)

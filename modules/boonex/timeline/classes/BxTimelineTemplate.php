@@ -871,15 +871,19 @@ class BxTimelineTemplate extends BxDolModuleTemplate
 
             case BX_TIMELINE_PARSE_TYPE_SHARE:
                 if(empty($aEvent['content']))
-                    break;
+                    return array();
 
                 $aContent = unserialize($aEvent['content']);
 
                 if(!$this->_oConfig->isSystem($aContent['type'] , $aContent['action'])) {
                     $aShared = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $aContent['object_id']));
                     $aShared = $this->_getCommonData($aShared);
-                } else
-                    $aShared = $this->_getSystemData($aContent);
+                } 
+                else
+                	$aShared = $this->_getSystemData($aContent);
+
+				if(empty($aShared) || !is_array($aShared))
+					return array();
 
                 $aResult['content'] = array_merge($aContent, $aShared['content']);
                 $aResult['content']['parse_type'] = !empty($aShared['content_type']) ? $aShared['content_type'] : BX_TIMELINE_PARSE_TYPE_DEFAULT;

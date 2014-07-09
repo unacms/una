@@ -114,6 +114,7 @@ class BxTimelineModule extends BxDolModule
             'object_id' => bx_process_input(bx_get('object_id'), BX_DATA_INT),
         );
 
+        //TODO: Share (from OUTSIDE) shouldn't depend on the original post in Timeline.
         $aShared = $this->_oDb->getShared($aContent['type'], $aContent['action'], $aContent['object_id']);
         if(empty($aShared) || !is_array($aShared)) {
             $this->_echoResultJson(array('code' => 1, 'msg' => _t('_bx_timeline_txt_err_cannot_share')));
@@ -850,6 +851,7 @@ class BxTimelineModule extends BxDolModule
         $aParams['modules'] = is_array($aModules) && !empty($aModules) ? $aModules : array();
         $aParams['timeline'] = (int)$iTimeline > 0 ? $iTimeline : 0;
         $aParams['active'] = 1;
+        $aParams['hidden'] = 0;
 
         return $aParams;
     }

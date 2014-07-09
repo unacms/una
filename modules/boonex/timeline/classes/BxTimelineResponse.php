@@ -77,6 +77,13 @@ class BxTimelineResponse extends BxDolAlertsResponse
 
             case BX_TIMELINE_HANDLER_TYPE_DELETE:
                 $this->_oModule->_oDb->deleteEvent(array('type' => $oAlert->sUnit, 'object_id' => $oAlert->iObject));
+
+        		$aEvents = $this->_oModule->_oDb->getEvents(array('browse' => 'shared_by_descriptor', 'type' => $oAlert->sUnit));
+				foreach($aEvents as $aEvent) {
+					$aContent = unserialize($aEvent['content']);
+					if(isset($aContent['type']) && $aContent['type'] == $oAlert->sUnit && isset($aContent['object_id']) && (int)$aContent['object_id'] == $oAlert->iObject)
+						$this->_oModule->_oDb->deleteEvent(array('id' => (int)$aEvent['id']));
+				}
                 break;
         }
     }
