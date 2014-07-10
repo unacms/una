@@ -129,7 +129,8 @@ class BxBaseEditorTinyMCE extends BxDolEditor
 
             $sScript = "<script>
                 if ('undefined' == typeof(jQuery(document).tinymce)) {
-                    $.getScript('" . bx_js_string(BX_DOL_URL_BASE . 'inc/js/editor.tinymce.js', BX_ESCAPE_STR_APOS) . "');
+                    window.tinyMCEPreInit = {base : '" . bx_js_string(BX_DOL_URL_PLUGINS_PUBLIC . 'tinymce', BX_ESCAPE_STR_APOS) . "', suffix : '.min', query : ''};
+                    $.getScript('" . bx_js_string(BX_DOL_URL_ROOT . 'inc/js/editor.tinymce.js', BX_ESCAPE_STR_APOS) . "');
                     $.getScript('" . bx_js_string(BX_DOL_URL_PLUGINS_PUBLIC . 'tinymce/tinymce.min.js', BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
                         $.getScript('" . bx_js_string(BX_DOL_URL_PLUGINS_PUBLIC . 'tinymce/jquery.tinymce.min.js', BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
                             $sInitEditor
