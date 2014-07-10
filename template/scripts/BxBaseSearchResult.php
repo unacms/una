@@ -221,21 +221,20 @@ class BxBaseSearchResult extends BxDolSearchResult
             return "return !loadDynamicBlockAuto(this, '{$sLoadDynamicUrl}');";
 
         } else {
-
-            return "return !loadDynamicBlockAutoPaginate(this, '{start}', '{per_page}');";
+            
+            return "return !loadDynamicBlockAutoPaginate(this, '{start}', '{per_page}', " . (empty($aAdditionalParams) ? 'undefined' : "'" . trim($this->addAdditionalUrlParams('', $aAdditionalParams, false, false), '&?') . "'") . ");"; 
 
         }
     }
 
-    //TODO: $aAdditionalParams variable was used but was not initiated or even defined anywhere in the method. Additionale params were not attached to the URL because of it.
-    //So, I added the the variable as function parameter and updated method calls accordingly.
-    protected function addAdditionalUrlParams($sUrl, $aAdditionalParams, $bReplacePagesParams)
+    protected function addAdditionalUrlParams($sUrl, $aAdditionalParams, $bReplacePagesParams, $bAddPaginateParams = true)
     {
-        // add pages params
-        $sUrl = bx_append_url_params($sUrl, array (
-            'start' => $bReplacePagesParams ? (int)$this->aCurrent['paginate']['start'] : '{start}',
-            'per_page' => $bReplacePagesParams ? (int)$this->aCurrent['paginate']['perPage'] : '{per_page}',
-        ));
+        if ($bAddPaginateParams) { // add pages params
+            $sUrl = bx_append_url_params($sUrl, array (
+                'start' => $bReplacePagesParams ? (int)$this->aCurrent['paginate']['start'] : '{start}',
+                'per_page' => $bReplacePagesParams ? (int)$this->aCurrent['paginate']['perPage'] : '{per_page}',
+            ));
+        }
 
         foreach ($this->aGetParams as $sGetParam) {
             $sValue = false;

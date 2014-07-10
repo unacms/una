@@ -63,12 +63,14 @@ function getHtmlData( elem, url, callback, method , confirmation)
     }
 }
 
-function loadDynamicBlockAutoPaginate (e, iStart, iPerPage) {
+function loadDynamicBlockAutoPaginate (e, iStart, iPerPage, sAdditionalUrlParams) {
 
     sUrl = location.href;
 
     sUrl = sUrl.replace(/start=\d+/, '').replace(/per_page=\d+/, '').replace(/[&\?]+$/, '');
     sUrl = bx_append_url_params(sUrl, 'start=' + parseInt(iStart) + '&per_page=' + parseInt(iPerPage));
+    if ('undefined' != typeof(sAdditionalUrlParams))
+        sUrl = bx_append_url_params(sUrl, sAdditionalUrlParams);
 
     return loadDynamicBlockAuto(e, sUrl);
 }

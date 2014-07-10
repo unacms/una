@@ -35,11 +35,31 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
 
         return array_merge(
             array(
-                array('name' => 'gallery', 'title' => _t('_sys_menu_title_gallery'), 'link' => $this->getCurrentUrl(array($this->sUnitViewParamName => 'gallery')), 'icon' => 'th'),
-                array('name' => 'extended', 'title' => _t('_sys_menu_title_extended'), 'link' => $this->getCurrentUrl(array($this->sUnitViewParamName => 'extended')), 'icon' => 'list'),
+                array(
+                    'name' => 'gallery', 
+                    'title' => _t('_sys_menu_title_gallery'), 
+                    'link' => $this->getCurrentUrl(array($this->sUnitViewParamName => 'gallery')), 
+                    'onclick' => $this->getCurrentOnclick(array($this->sUnitViewParamName => 'gallery')), 
+                    'icon' => 'th'),
+                array(
+                    'name' => 'extended', 
+                    'title' => _t('_sys_menu_title_extended'), 
+                    'link' => $this->getCurrentUrl(array($this->sUnitViewParamName => 'extended')), 
+                    'onclick' => $this->getCurrentOnclick(array($this->sUnitViewParamName => 'extended')), 
+                    'icon' => 'list'),
             ),
             $aMenu
         );
+    }
+
+    protected function getCurrentOnclick($aAdditionalParams = array(), $bReplacePagesParams = true) 
+    {
+        // always add UnitView as additional param
+        $sUnitView = bx_process_input(bx_get($this->sUnitViewParamName));
+        if ($sUnitView && isset($this->aUnitViews[$sUnitView]))
+            $aAdditionalParams = array_merge(array($this->sUnitViewParamName => $sUnitView), $aAdditionalParams);
+
+        return parent::getCurrentOnclick($aAdditionalParams, $bReplacePagesParams);
     }
 
     function _getPseud ()
