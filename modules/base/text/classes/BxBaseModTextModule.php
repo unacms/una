@@ -163,6 +163,48 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
         return $oMenu ? $oMenu->getCode() : false;
     }
 
+	/**
+     * Data for Notification
+     */
+    public function serviceGetNotificationsData()
+    {
+        return array(
+            'handlers' => array(
+                array('type' => 'insert', 'alert_unit' => $this->_aModule['name'], 'alert_action' => 'added', 'module_name' => $this->_aModule['name'], 'module_method' => 'get_notifications_post', 'module_class' => 'Module'),
+                array('type' => 'update', 'alert_unit' => $this->_aModule['name'], 'alert_action' => 'edited'),
+                array('type' => 'delete', 'alert_unit' => $this->_aModule['name'], 'alert_action' => 'deleted')
+            ),
+            'alerts' => array(
+                array('unit' => $this->_aModule['name'], 'action' => 'added'),
+                array('unit' => $this->_aModule['name'], 'action' => 'edited'),
+                array('unit' => $this->_aModule['name'], 'action' => 'deleted'),
+            )
+        );
+    }
+
+    /**
+     * Entry post for Timeline
+     */
+    public function serviceGetNotificationsPost($aEvent)
+    {
+        $aContentInfo = $this->_oDb->getContentInfoById($aEvent['object_id']);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return array();
+
+		$CNF = &$this->_oConfig->CNF;
+
+        bx_import('BxDolPermalinks');
+        $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+        $sEntryCaption = isset($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...');
+
+		return array(
+			'entry_sample' => _t($CNF['T']['txt_sample_single']),
+			'entry_url' => $sEntryUrl,
+			'entry_caption' => $sEntryCaption,
+			'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
+		);
+    }
+
     /**
      * Data for Timeline
      */
