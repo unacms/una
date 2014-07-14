@@ -16,7 +16,7 @@ $aConfig = array(
      */
     'type' => BX_DOL_MODULE_TYPE_MODULE,
     'name' => 'bx_convos',
-    'title' => 'Convos',
+    'title' => 'Conversations',
     'note' => 'Conversations module.',
     'version' => '8.0.0',
     'vendor' => 'BoonEx',
@@ -39,7 +39,7 @@ $aConfig = array(
     /**
      * Category for language keys.
      */
-    'language_category' => 'Convos',
+    'language_category' => 'Conversations',
 
     /**
      * Installation/Uninstallation Section.
