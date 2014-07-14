@@ -810,6 +810,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $iTimeline = bx_get('timeline');
         $aParams['timeline'] = $iTimeline !== false ? bx_process_input($iTimeline, BX_DATA_INT) : 0;
 
+        $aParams['active'] = 1;
+        $aParams['hidden'] = 0;
+
         return $aParams;
     }
 

@@ -188,7 +188,66 @@ class BxBaseModNotificationsDb extends BxDolModuleDb
         $sSql = "DELETE FROM `{$this->_sTable}` WHERE " . $this->arrayToSQL($aParams, " AND ") . $sWhereAddon;
         return $this->query($sSql);
     }
-    
+
+	public function getEvents($aParams, $bReturnCount = false)
+    {
+        list($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause) = $this->_getSqlPartsEvents($aParams);
+
+        $sSql = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . $sSelectClause . "
+                `{$this->_sTable}`.*
+            FROM `{$this->_sTable}`
+            LEFT JOIN `{$this->_sTableHandlers}` ON `{$this->_sTable}`.`type`=`{$this->_sTableHandlers}`.`alert_unit` AND `{$this->_sTable}`.`action`=`{$this->_sTableHandlers}`.`alert_action` " . $sJoinClause . "
+            WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
+
+        $aEntries = $this->$sMethod($sSql);
+        if(!$bReturnCount)
+        	return $aEntries;
+
+		return array($aEntries, (int)$this->getOne("SELECT FOUND_ROWS()"));
+    }
+
+	protected function _getSqlPartsEvents($aParams)
+    {
+    	$sMethod = 'getAll';
+        $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
+
+        switch($aParams['browse']) {
+            case 'id':
+                $sMethod = 'getRow';
+                $sWhereClause = $this->prepare("AND `{$this->_sTable}`.`id`=? ", $aParams['value']);
+                $sLimitClause = "LIMIT 1";
+                break;
+
+			case 'first':
+				$sMethod = 'getRow';
+				list($sJoinClause, $sWhereClause) = $this->_getSqlPartsEventsList($aParams);
+				$sOrderClause = "ORDER BY `{$this->_sTable}`.`date` DESC";
+				$sLimitClause = "LIMIT 1";
+				break;
+
+			case 'last':
+				$sMethod = 'getRow';
+				list($sJoinClause, $sWhereClause) = $this->_getSqlPartsEventsList($aParams);
+				$sOrderClause = "ORDER BY `{$this->_sTable}`.`date` ASC";
+				$sLimitClause = "LIMIT 1";
+				break;
+
+			case 'list':
+				list($sJoinClause, $sWhereClause) = $this->_getSqlPartsEventsList($aParams);
+				$sOrderClause = "ORDER BY `{$this->_sTable}`.`date` DESC";
+				$sLimitClause = isset($aParams['per_page']) ? "LIMIT " . $aParams['start'] . ", " . $aParams['per_page'] : "";
+				break;
+        }
+
+        return array($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause);
+    }
+
+    protected function _getSqlPartsEventsList($aParams)
+    {
+    	$sJoinClause = $sWhereClause = "";
+
+    	return array($sJoinClause, $sWhereClause);
+    }
 }
 
 /** @} */

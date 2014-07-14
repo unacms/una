@@ -120,6 +120,8 @@ class BxNtfsModule extends BxBaseModNotificationsModule
         $aModules = bx_get('modules');
         $aParams['modules'] = $aModules !== false ? bx_process_input($aModules, BX_DATA_TEXT) : array();
 
+        $aParams['active'] = 1;
+
         return $aParams;
     }
 }
