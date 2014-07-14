@@ -22,7 +22,7 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
     }
 
     /**
-     * Overwtire the method of parent class.
+     * Overwritten method of parent class.
      *
      * @param BxDolAlerts $oAlert an instance of alert.
      */
