@@ -50,8 +50,8 @@
 	<string name="_bx_persons_page_title_delete_profile"><![CDATA[Delete Profile]]></string>
 	<string name="_bx_persons_page_title_sys_view_profile"><![CDATA[View Person's Profile]]></string>
 	<string name="_bx_persons_page_title_view_profile"><![CDATA[{display_name}]]></string>
-	<string name="_bx_persons_page_title_browse"><![CDATA[Persons]]></string>
-	<string name="_bx_persons_page_title_browse_recent"><![CDATA[Persons]]></string>
+	<string name="_bx_persons_page_title_browse"><![CDATA[People]]></string>
+	<string name="_bx_persons_page_title_browse_recent"><![CDATA[People]]></string>
 	<string name="_bx_persons_page_title_browse_connections"><![CDATA[{0} connections]]></string>
 	<string name="_bx_persons_page_title_browse_connections_mutual"><![CDATA[{0} and {1} mutual connections]]></string>
 	<string name="_bx_persons_page_title_sys_profile_friends"><![CDATA[Friends]]></string>
@@ -59,7 +59,7 @@
 	<string name="_bx_persons_page_title_sys_profile_info"><![CDATA[Profile Info]]></string>
 	<string name="_bx_persons_page_title_profile_info"><![CDATA[Info about {display_name}]]></string>
 	<string name="_bx_persons_page_title_sys_home"><![CDATA[Persons Home]]></string>
-	<string name="_bx_persons_page_title_home"><![CDATA[Persons]]></string>
+	<string name="_bx_persons_page_title_home"><![CDATA[People]]></string>
 
 	<string name="_bx_persons_page_block_title_create_profile"><![CDATA[Create Person's Profile]]></string>
 	<string name="_bx_persons_page_block_title_edit_profile"><![CDATA[Edit Profile]]></string>
@@ -69,7 +69,7 @@
 	<string name="_bx_persons_page_block_title_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_persons_page_block_title_profile_cover"><![CDATA[Profile Cover]]></string>
 	<string name="_bx_persons_page_block_title_profile_actions"><![CDATA[Actions]]></string>
-	<string name="_bx_persons_page_block_title_latest_profiles"><![CDATA[Recent Persons]]></string>
+	<string name="_bx_persons_page_block_title_latest_profiles"><![CDATA[Recent People]]></string>
 
 
     <string name="_bx_persons_menu_title_submenu"><![CDATA[Persons Submenu]]></string>
@@ -113,7 +113,7 @@
     <string name="_bx_persons_menu_item_title_system_entries_public"><![CDATA[Public]]></string>
     <string name="_bx_persons_menu_item_title_entries_public"><![CDATA[Public]]></string>
     <string name="_bx_persons_menu_item_title_system_entries_home"><![CDATA[Persons]]></string>
-    <string name="_bx_persons_menu_item_title_entries_home"><![CDATA[Persons]]></string>
+    <string name="_bx_persons_menu_item_title_entries_home"><![CDATA[People]]></string>
 
     <string name="_bx_persons_txt_account_pending"><![CDATA[This profile is pending approval, please wait until it is activated.]]></string>
     <string name="_bx_persons_txt_account_suspended"><![CDATA[This profile is suspended.]]></string>
