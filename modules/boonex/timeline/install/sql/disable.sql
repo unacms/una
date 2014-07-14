@@ -33,3 +33,7 @@ DELETE FROM `sys_objects_cmts` WHERE `Name`='bx_timeline' LIMIT 1;
 
 -- VOTES
 DELETE FROM `sys_objects_vote` WHERE `Name`='bx_timeline' LIMIT 1;
+
+
+-- MODULES' CONNECTIONS
+DELETE FROM `sys_modules_connections` WHERE `module`='bx_timeline' LIMIT 1;

@@ -16,7 +16,6 @@ class BxBaseModTextInstaller extends BxBaseModGeneralInstaller
     function __construct($aConfig)
     {
         parent::__construct($aConfig);
-        $this->_bUpdateTimeline = true;
     }
 }
 

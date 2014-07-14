@@ -106,6 +106,9 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             'update_languages' => array(
                 'title' => _t('_adm_txt_modules_update_languages'),
             ),
+            'update_connections' => array(
+                'title' => _t('_adm_txt_modules_update_connections'),
+            ),
             'recompile_global_paramaters' => array(
                 'title' => _t('_adm_txt_modules_recompile_global_paramaters'),
             ),
@@ -698,6 +701,27 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             $oLanguages->deleteLanguageCategory($this->_aConfig['language_category']);
 
         return $bResult && $oLanguages->compileLanguage(0, true) ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
+    }
+	function actionUpdateConnections($sOperation)
+    {
+        if(!in_array($sOperation, array('install', 'uninstall', 'enable', 'disable'))) 
+        	return BX_DOL_STUDIO_INSTALLER_FAILED;
+
+		if(empty($this->_aConfig['connections']) || !is_array($this->_aConfig['connections']))
+            return BX_DOL_STUDIO_INSTALLER_SUCCESS;
+
+		foreach($this->_aConfig['connections'] as $sModule) {
+			if(!$this->oDb->isModuleByName($sModule))
+				continue;
+
+			$aConnection = $this->oDb->getConnectionsBy(array('type' => 'module', 'value' => $sModule));
+			if(empty($aConnection) || empty($aConnection['on_' . $sOperation]) || !BxDolRequest::serviceExists($aConnection['module'], $aConnection['on_' . $sOperation]))
+				continue;
+
+			BxDolService::call($aConnection['module'], $aConnection['on_' . $sOperation], array($this->_aConfig['home_uri']));
+		}
+
+        return BX_DOL_STUDIO_INSTALLER_SUCCESS;
     }
     function actionRecompileGlobalParamaters($sOperation)
     {

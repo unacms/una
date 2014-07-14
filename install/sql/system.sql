@@ -739,6 +739,16 @@ CREATE TABLE `sys_modules_file_tracks` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 
+CREATE TABLE `sys_modules_connections` (
+  `id` int(11) unsigned NOT NULL auto_increment,
+  `module` varchar(32) NOT NULL default '',
+  `on_install` varchar(255) NOT NULL default '',
+  `on_uninstall` varchar(255) NOT NULL default '',
+  `on_enable` varchar(255) NOT NULL default '',
+  `on_disable` varchar(255) NOT NULL default '',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
 -- --------------------------------------------------------
 
 --

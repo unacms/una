@@ -16,6 +16,31 @@ class BxDolStudioInstallerQuery extends BxDolModuleQuery
         parent::__construct();
     }
 
+    function getConnectionsBy($aParams = array())
+    {
+    	$sMethod = 'getAll';
+    	$sWhereClause = "";
+
+        switch($aParams['type']) {
+            case 'module':
+            	$sMethod = 'getRow';
+                $sWhereClause .= $this->prepare(" AND `module`=?", $aParams['value']);
+                break;
+        }
+
+        $sSql = "SELECT
+                `id`,
+                `module`,
+                `on_install`,
+                `on_uninstall`,
+                `on_enable`,
+                `on_disable`
+            FROM `sys_modules_connections`
+            WHERE 1" . $sWhereClause;
+
+        return $this->$sMethod($sSql);
+    }
+
     function insertModule(&$aConfig)
     {
         $sProductUrl = isset($aConfig['product_url']) ? $aConfig['product_url'] : '';

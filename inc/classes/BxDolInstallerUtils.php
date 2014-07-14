@@ -39,6 +39,24 @@ class BxDolInstallerUtils extends BxDolIO
         return false;
     }
 
+    static public function getModuleConfig($mixed)
+    {
+    	$sConfig = '';
+    	if(is_array($mixed) && !empty($mixed['path']))
+			$sConfig = BX_DIRECTORY_PATH_MODULES . $mixed['path'] . 'install/config.php';
+		else if(is_string($mixed))
+			$sConfig = $mixed;
+		else 
+			return array();
+
+    	if(!file_exists($sConfig))
+            return array();
+
+        include($sConfig);
+
+        return $aConfig;
+    }
+
     static public function isModuleInstalled($sUri)
     {
         bx_import('BxDolModuleQuery');

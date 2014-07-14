@@ -22,8 +22,6 @@ class BxBaseModGeneralInstaller extends BxDolStudioInstaller
 
     protected $_aConnections = array (); // connections objects associated with module data, it must be defined which content is associated with the connection, the key is connection object name and value is array (possible array values: type, conn, table, field_id), if 'type' == 'profiles', then it is considered profiles connection and other possible param is 'conn' ('initiator', 'content' or 'both') when 'type' == 'custom' (or ommited), then other possible params are 'conn', 'table' and 'field_id'
 
-    protected $_bUpdateTimeline = false; // set to true to automatically register handlers for timeline module
-
     protected $_aMenuTriggers = array(); // list of menu triggers, it must be specified in the module which adds menu item and in modules where menu items are added, @see BxDolMenu::processMenuTrigger
 
     function __construct($aConfig)
@@ -40,9 +38,6 @@ class BxBaseModGeneralInstaller extends BxDolStudioInstaller
 
         BxDolImageTranscoder::registerHandlersArray($this->_aTranscoders);
 
-        if ($this->_bUpdateTimeline && BxDolRequest::serviceExists('bx_timeline', 'add_handlers'))
-            BxDolService::call('bx_timeline', 'add_handlers', array($this->_aConfig['home_uri']));
-
         if ($this->_aMenuTriggers) {
             bx_import('BxDolMenu');
             foreach ($this->_aMenuTriggers as $sMenuTriggerName)
@@ -54,9 +49,6 @@ class BxBaseModGeneralInstaller extends BxDolStudioInstaller
 
     function disable($aParams)
     {
-        if ($this->_bUpdateTimeline && BxDolRequest::serviceExists('bx_timeline', 'delete_handlers'))
-            BxDolService::call('bx_timeline', 'delete_handlers', array($this->_aConfig['home_uri']));
-
         BxDolImageTranscoder::unregisterHandlersArray($this->_aTranscoders);
         BxDolImageTranscoder::cleanupObjectsArray($this->_aTranscoders);
 
@@ -129,10 +121,6 @@ class BxBaseModGeneralInstaller extends BxDolStudioInstaller
                 }
             }
         }
-
-        //request Timeline cleaning
-        if ($this->_bUpdateTimeline && BxDolRequest::serviceExists('bx_timeline', 'delete_module_events'))
-            BxDolService::call('bx_timeline', 'delete_module_events', array($this->_aConfig['home_uri']));
 
         return parent::uninstall($aParams, $bDisable);
     }

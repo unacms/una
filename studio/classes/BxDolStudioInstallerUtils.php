@@ -151,12 +151,11 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
     protected function getConfigModule($sConfigPath, $aInstalledPathes = array(), $aInstalledInfo = array())
     {
-        if(!file_exists($sConfigPath))
+    	$aConfig = self::getModuleConfig($sConfigPath);
+        if(empty($aConfig) || !is_array($aConfig))
             return array();
 
-        include($sConfigPath);
         $sModulePath = $aConfig['home_dir'];
-        $sTitle = bx_process_output($aConfig['title']);
 
         $bInstalled = !empty($aInstalledPathes) && in_array($sModulePath, $aInstalledPathes);
         $bEnabled = $bInstalled && !empty($aInstalledInfo) && (int)$aInstalledInfo[$sModulePath]['enabled'] == 1;
@@ -176,7 +175,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         return array(
         	'type' => $aConfig['type'],
             'name' => isset($aConfig['name']) ? $aConfig['name'] : $aConfig['home_uri'],
-            'title' => $sTitle,
+            'title' => bx_process_output($aConfig['title']),
             'vendor' => $aConfig['vendor'],
             'version' => $aConfig['version'],
             'uri' => $aConfig['home_uri'],
@@ -194,14 +193,12 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         if(empty($aModule) || !$aModule['installed'])
             return array();
 
-        if(!file_exists($sConfigPathUpdate))
+		$aConfig = self::getModuleConfig($sConfigPathUpdate);
+        if(empty($aConfig) || !is_array($aConfig))
             return array();
 
-        include($sConfigPathUpdate);
-        $sTitle = bx_process_output($aConfig['title']);
-
         return array(
-            'title' => $sTitle,
+            'title' => bx_process_output($aConfig['title']),
             'vendor' => $aConfig['vendor'],
             'version_from' => $aConfig['version_from'],
             'version_to' => $aConfig['version_to'],
