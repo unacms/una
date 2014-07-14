@@ -250,6 +250,9 @@ abstract class BxDolPaginate extends BxDol
         $this->setStart($iStart);
         $this->setPerPage($iPerPage);
 
+        if (0 == $this->getStart() && !$this->isNextAvail ())
+            return '';
+
         $aReplacement = $this->_getReplacement();
 
         //--- Previous Page button ---//
