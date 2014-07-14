@@ -11,11 +11,11 @@
 
 .bx-paginate-btns,
 .bx-paginate-info {
-    float:right;
+    float:left;
 }
 
 .bx-paginate-view-all {
-    float:left;
+    float:right;
 }
 
 .bx-paginate-btn-next {
