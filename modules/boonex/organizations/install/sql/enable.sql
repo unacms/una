@@ -87,8 +87,9 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 
 -- PAGE: add block to homepage
 
+SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = 'sys_home' AND `cell_id` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
-('sys_home', 0, 'bx_organizations', '_bx_orgs_page_block_title_latest_profiles', 0, 2147483647, 'service', 'a:2:{s:6:"module";s:16:"bx_organizations";s:6:"method";s:22:"browse_recent_profiles";}', 0, 1, 0);
+('sys_home', 1, 'bx_organizations', '_bx_orgs_page_block_title_latest_profiles', 0, 2147483647, 'service', 'a:2:{s:6:"module";s:16:"bx_organizations";s:6:"method";s:22:"browse_recent_profiles";}', 1, 0, IFNULL(@iBlockOrder, 0) + 1);
 
 -- MENU
 
