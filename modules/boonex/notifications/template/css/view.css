@@ -1,0 +1,24 @@
+/*--- View Block Style ---*/
+div.bx-ntfs-view {
+	position: relative;
+}
+
+/*--- Event Style ---*/
+div.bx-ntfs-event {
+	position: relative;
+}
+div.bx-ntfs-event-cnt {
+	position: relative;
+	overflow: hidden;
+}
+div.bx-ntfs-owner-avatar {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+/*--- Empty Style ---*/
+div.bx-ntfs-empty div.bx-msg-box-container {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
