@@ -9,28 +9,21 @@
  * @{
  */
 
-bx_import('BxDolModuleTemplate');
+bx_import('BxBaseModNotificationsTemplate');
 
-class BxTimelineTemplate extends BxDolModuleTemplate
+class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 {
     function __construct(&$oConfig, &$oDb)
     {
         parent::__construct($oConfig, $oDb);
     }
 
-    protected function getModule()
-    {
-        $sName = $this->_oConfig->getName();
-        return BxDolModule::getInstance($sName);
-    }
-
     public function getCssJs()
     {
+    	parent::getCssJs();
+
         $this->addCss(array(
             'jquery-ui/jquery-ui.css',
-            'view.css',
-            'view-media-tablet.css',
-            'view-media-desktop.css',
             'post.css',
             'share.css',
         ));
@@ -39,37 +32,9 @@ class BxTimelineTemplate extends BxDolModuleTemplate
             'jquery.form.min.js',
             'jquery.ba-resize.min.js',
             'masonry.pkgd.min.js',
-            'jquery.anim.js',
-            'main.js',
-            'view.js',
             'post.js',
             'share.js',
         ));
-    }
-
-    public function getJsCode($sType, $aRequestParams = array(), $bWrap = true)
-    {
-        $oModule = $this->getModule();
-
-        $sBaseUri = $this->_oConfig->getBaseUri();
-        $sJsClass = $this->_oConfig->getJsClass($sType);
-        $sJsObject = $this->_oConfig->getJsObject($sType);
-
-        $aParams = array(
-            'sActionUri' => $sBaseUri,
-            'sActionUrl' => BX_DOL_URL_ROOT . $sBaseUri,
-            'sObjName' => $sJsObject,
-            'iOwnerId' => $oModule->_iOwnerId,
-            'sAnimationEffect' => $this->_oConfig->getAnimationEffect(),
-            'iAnimationSpeed' => $this->_oConfig->getAnimationSpeed(),
-            'aHtmlIds' => $this->_oConfig->getHtmlIds($sType),
-            'oRequestParams' => !empty($aRequestParams) ? $aRequestParams : array()
-        );
-
-        $sContent = "var " . $sJsObject . " = new " . $sJsClass . "(" . json_encode($aParams) . ");";
-
-        $this->getCssJs();
-        return !$bWrap ? $sContent : $this->_wrapInTagJsCode($sContent);
     }
 
     public function getPostBlock($iOwnerId)
@@ -477,7 +442,7 @@ class BxTimelineTemplate extends BxDolModuleTemplate
         $aTmplVarsMenuItemActions = $this->_getTmplVarsMenuItemActions($aEvent, $aBrowseParams);
 
         $aTmplVarsTimelineOwner = array();
-        if(isset($aBrowseParams['type']) && $aBrowseParams['type'] == BX_TIMELINE_TYPE_CONNECTIONS)
+        if(isset($aBrowseParams['type']) && $aBrowseParams['type'] == BX_BASE_MOD_NTFS_TYPE_CONNECTIONS)
             $aTmplVarsTimelineOwner = $this->_getTmplVarsTimelineOwner($aEvent);
 
         $bBrowseItem = isset($aBrowseParams['type']) && $aBrowseParams['type'] == BX_TIMELINE_TYPE_ITEM;
@@ -796,21 +761,17 @@ class BxTimelineTemplate extends BxDolModuleTemplate
         if(!$this->_oConfig->isHandler($sHandler))
             return '';
 
-        $mixedResult = array();
         $aHandler = $this->_oConfig->getHandlers($sHandler);
-        if(empty($aHandler['module_uri']) && empty($aHandler['module_class']) && empty($aHandler['module_method'])) {
-            $sMethod = 'display' . bx_gen_method_name($aHandler['alert_unit'] . '_' . $aHandler['alert_action']);
-            if(!method_exists($this, $sMethod))
-                return '';
-
-            $mixedResult = $this->$sMethod($aEvent);
-        } else {
-            $aEvent['js_mode'] = $this->_oConfig->getJsMode();
-
-            $mixedResult = BxDolService::call($aHandler['module_name'], $aHandler['module_method'], array($aEvent), $aHandler['module_class']);
+        if(!empty($aHandler['module_name']) && !empty($aHandler['module_class']) && !empty($aHandler['module_method'])) {
+        	$aEvent['js_mode'] = $this->_oConfig->getJsMode();
+            return BxDolService::call($aHandler['module_name'], $aHandler['module_method'], array($aEvent), $aHandler['module_class']);
         }
 
-        return $mixedResult;
+		$sMethod = 'display' . bx_gen_method_name($aHandler['alert_unit'] . '_' . $aHandler['alert_action']);
+		if(!method_exists($this, $sMethod))
+        	return '';
+
+		return $this->$sMethod($aEvent);
     }
 
     protected function _getCommonData(&$aEvent)

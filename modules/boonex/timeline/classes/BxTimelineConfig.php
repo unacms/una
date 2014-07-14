@@ -10,16 +10,10 @@
  */
 
 bx_import('BxDolPrivacy');
-bx_import('BxDolModuleConfig');
+bx_import('BxBaseModNotificationsConfig');
 
-class BxTimelineConfig extends BxDolModuleConfig
+class BxTimelineConfig extends BxBaseModNotificationsConfig
 {
-    protected $_oDb;
-
-    protected $_sAlertSystemName;
-    protected $_sCommentSystemName;
-    protected $_sVoteSystemName;
-
     protected $_bAllowDelete;
 
     protected $_iPerPageProfile;
@@ -27,31 +21,17 @@ class BxTimelineConfig extends BxDolModuleConfig
     protected $_iRssLength;
     protected $_iCharsDisplayMax;
 
-    protected $_aHandlers;
-    protected $_aHandlersHidden;
-
     protected $_sStorageObject;
     protected $_sTranscoderObjectPreview;
     protected $_sTranscoderObjectView;
     protected $_aImageUploaders;
 
-    protected $_sConnObjSubscriptions;
-
     protected $_sMenuItemManage;
     protected $_sMenuItemActions;
 
     protected $_bJsMode;
-    protected $_aJsClass;
-    protected $_aJsObjects;
-
-    protected $_aHtmlIds;
     protected $_aShareDefaults;
 
-    protected $_sAnimationEffect;
-    protected $_iAnimationSpeed;
-    protected $_sStylePrefix;
-    protected $_sCommonPostPrefix;
-    protected $_iPrivacyViewDefault;
     protected $_iTimelineVisibilityThreshold;
     protected $_aPregPatterns;
 
@@ -62,22 +42,32 @@ class BxTimelineConfig extends BxDolModuleConfig
     {
         parent::__construct($aModule);
 
-        $this->_sAlertSystemName = $this->_sName;
-        $this->_sCommentSystemName = $this->_sName;
-        $this->_sVoteSystemName = $this->_sName;
+        $this->_aSystemNames = array(
+			'alert' => $this->_sName,
+        	'comment' => $this->_sName,
+        	'vote' => $this->_sName
+		);
 
-        $this->_aHandlersHidden = array();
-        $this->_aHandlers = array();
+        $this->_aPrefixes = array(
+        	'style' => 'bx-tl',
+        	'language' => '_bx_timeline',
+        	'option' => 'bx_timeline_',
+        	'common_post' => 'timeline_common_'
+        );
 
-        $this->_sStorageObject = $this->_sName . '_photos';
-        $this->_sTranscoderObjectPreview = $this->_sName . '_photos_preview';
-        $this->_sTranscoderObjectView = $this->_sName . '_photos_view';
+        $this->_aObjects = array(
+        	'storage' => $this->_sName . '_photos',
+        	'transcoder_preview' => $this->_sName . '_photos_preview',
+        	'transcoder_view' => $this->_sName . '_photos_view',
+        	'conn_subscriptions' => 'sys_profiles_subscriptions',
+        	'menu_item_manage' => $this->_sName . '_menu_item_manage',
+        	'menu_item_actions' => $this->_sName . '_menu_item_actions'
+        );
+        
+        $this->_aHandlerDescriptor = array('module_name' => '', 'module_method' => '', 'module_class' => '', 'groupable' => '', 'group_by' => '');
+        $this->_sHandlersMethod = 'get_timeline_data';
+
         $this->_aImageUploaders = array($this->_sName . '_simple');
-
-        $this->_sConnObjSubscriptions = 'sys_profiles_subscriptions';
-
-        $this->_sMenuItemManage = $this->_sName . '_menu_item_manage';
-        $this->_sMenuItemActions = $this->_sName . '_menu_item_actions';
 
         $this->_bJsMode = false;
         $this->_aJsClass = array(
@@ -118,11 +108,6 @@ class BxTimelineConfig extends BxDolModuleConfig
             'show_counter' => true
         );
 
-        $this->_sAnimationEffect = 'fade';
-        $this->_iAnimationSpeed = 'slow';
-        $this->_sStylePrefix = 'bx-tl';
-        $this->_sCommonPostPrefix = 'timeline_common_';
-        $this->_iPrivacyViewDefault = BX_DOL_PG_ALL;
         $this->_iTimelineVisibilityThreshold = 0;
 
         $this->_aPregPatterns = array(
@@ -135,97 +120,24 @@ class BxTimelineConfig extends BxDolModuleConfig
 
     public function init(&$oDb)
     {
-        $this->_oDb = &$oDb;
+    	parent::init($oDb);
 
-        $this->_bAllowDelete = getParam('bx_timeline_enable_delete') == 'on';
+    	$sOptionPrefix = $this->getPrefix('option');
+        $this->_bAllowDelete = getParam($sOptionPrefix . 'enable_delete') == 'on';
 
-        $this->_iPerPageProfile = (int)getParam('bx_timeline_events_per_page_profile');
-        $this->_iPerPageAccount = (int)getParam('bx_timeline_events_per_page_account');
-        $this->_iRssLength = (int)getParam('bx_timeline_rss_length');
+        $this->_aPerPage = array(
+    		'default' => 10,
+        	'profile' => (int)getParam($sOptionPrefix . 'events_per_page_profile'),
+        	'account' => (int)getParam($sOptionPrefix . 'events_per_page_account')
+    	);
 
-        $this->_iCharsDisplayMax = (int)getParam('bx_timeline_chars_display_max');
-
-        $aHandlers = $this->_oDb->getHandlers();
-        foreach($aHandlers as $aHandler) {
-            if($aHandler['type'] === BX_TIMELINE_HANDLER_TYPE_INSERT && !empty($aHandler['content'])) {
-                $aContent = unserialize($aHandler['content']);
-                if(is_array($aContent) && !empty($aContent))
-                    $aHandler = array_merge($aHandler, $aContent);
-            }
-
-           $this->_aHandlers[$aHandler['alert_unit'] . '_' . $aHandler['alert_action']] = $aHandler;
-        }
-
-        $sHideTimeline = getParam('bx_timeline_events_hide');
-        if(!empty($sHideTimeline))
-            $this->_aHandlersHidden = explode(',', $sHideTimeline);
+        $this->_iRssLength = (int)getParam($sOptionPrefix . 'rss_length');
+        $this->_iCharsDisplayMax = (int)getParam($sOptionPrefix . 'chars_display_max');
     }
 
     public function isAllowDelete()
     {
         return $this->_bAllowDelete;
-    }
-    public function getSystemName($sType)
-    {
-        $sResult = '';
-
-        switch($sType) {
-            case 'alert':
-                $sResult = $this->_sAlertSystemName;
-                break;
-            case 'comment':
-                $sResult = $this->_sCommentSystemName;
-                break;
-            case 'vote':
-                $sResult = $this->_sVoteSystemName;
-                break;
-        }
-
-        return $sResult;
-    }
-
-    public function getPrefix($sType)
-    {
-        $sResult = '';
-
-        switch($sType) {
-            case 'common_post':
-                $sResult = $this->_sCommonPostPrefix;
-                break;
-            case 'style':
-                $sResult = $this->_sStylePrefix;
-                break;
-        }
-
-        return $sResult;
-    }
-
-    public function getObject($sType)
-    {
-        $sResult = '';
-
-        switch($sType) {
-            case 'storage':
-                $sResult = $this->_sStorageObject;
-                break;
-            case 'transcoder_preview':
-                $sResult = $this->_sTranscoderObjectPreview;
-                break;
-            case 'transcoder_view':
-                $sResult = $this->_sTranscoderObjectView;
-                break;
-            case 'conn_subscriptions':
-                $sResult = $this->_sConnObjSubscriptions;
-                break;
-            case 'menu_item_manage':
-                $sResult = $this->_sMenuItemManage;
-                break;
-            case 'menu_item_actions':
-                $sResult = $this->_sMenuItemActions;
-                break;
-        }
-
-        return $sResult;
     }
 
     public function getUploaders($sType)
@@ -241,21 +153,6 @@ class BxTimelineConfig extends BxDolModuleConfig
         return $aResult;
     }
 
-    public function getPerPage($sPage = 'profile')
-    {
-        $iResult = 10;
-        switch($sPage) {
-            case 'profile':
-                $iResult = $this->_iPerPageProfile;
-                break;
-            case 'account':
-                $iResult = $this->_iPerPageAccount;
-                break;
-        }
-
-        return $iResult;
-    }
-
     public function getRssLength()
     {
         return $this->_iRssLength;
@@ -264,24 +161,6 @@ class BxTimelineConfig extends BxDolModuleConfig
     public function getCharsDisplayMax()
     {
         return $this->_iCharsDisplayMax;
-    }
-
-    public function isHandler($sKey = '')
-    {
-        return isset($this->_aHandlers[$sKey]);
-    }
-
-    public function getHandlers($sKey = '')
-    {
-        if($sKey == '')
-            return $this->_aHandlers;
-
-        return $this->_aHandlers[$sKey];
-    }
-
-    public function getHandlersHidden()
-    {
-        return $this->_aHandlersHidden;
     }
 
     public function isJsMode()
@@ -299,42 +178,9 @@ class BxTimelineConfig extends BxDolModuleConfig
         $this->_bJsMode = $bJsMode;
     }
 
-    public function getJsClass($sType)
-    {
-        return $this->_aJsClass[$sType];
-    }
-
-    public function getJsObject($sType)
-    {
-        return $this->_aJsObjects[$sType];
-    }
-
-    public function getHtmlIds($sType, $sKey = '')
-    {
-        if(empty($sKey))
-            return $this->_aHtmlIds[$sType];
-
-        return $this->_aHtmlIds[$sType][$sKey];
-    }
-
     public function getShareDefaults()
     {
         return $this->_aShareDefaults;
-    }
-
-    public function getAnimationEffect()
-    {
-        return $this->_sAnimationEffect;
-    }
-
-    public function getAnimationSpeed()
-    {
-        return $this->_iAnimationSpeed;
-    }
-
-    public function getPrivacyViewDefault()
-    {
-        return $this->_iPrivacyViewDefault;
     }
 
     public function getPregPattern($sType)

@@ -10,15 +10,10 @@
  */
 
 bx_import('BxDolAcl');
-bx_import('BxDolModule');
+bx_import('BxBaseModNotificationsModule');
 
-define('BX_TIMELINE_TYPE_OWNER', 'owner');
-define('BX_TIMELINE_TYPE_CONNECTIONS', 'connections');
 define('BX_TIMELINE_TYPE_ITEM', 'view_item');
-
-define('BX_TIMELINE_HANDLER_TYPE_INSERT', 'insert');
-define('BX_TIMELINE_HANDLER_TYPE_UPDATE', 'update');
-define('BX_TIMELINE_HANDLER_TYPE_DELETE', 'delete');
+define('BX_TIMELINE_TYPE_DEFAULT', BX_BASE_MOD_NTFS_TYPE_OWNER);
 
 define('BX_TIMELINE_FILTER_ALL', 'all');
 define('BX_TIMELINE_FILTER_OWNER', 'owner');
@@ -32,10 +27,8 @@ define('BX_TIMELINE_PARSE_TYPE_POST', 'post');
 define('BX_TIMELINE_PARSE_TYPE_SHARE', 'share');
 define('BX_TIMELINE_PARSE_TYPE_DEFAULT', BX_TIMELINE_PARSE_TYPE_POST);
 
-class BxTimelineModule extends BxDolModule
+class BxTimelineModule extends BxBaseModNotificationsModule
 {
-    public $_iOwnerId;
-
     protected $_sJsPostObject;
     protected $_sJsViewObject;
     protected $_aPostElements;
@@ -53,9 +46,6 @@ class BxTimelineModule extends BxDolModule
     function __construct($aModule)
     {
         parent::__construct($aModule);
-        $this->_oConfig->init($this->_oDb);
-        $this->_oTemplate->init();
-        $this->_iOwnerId = 0;
     }
 
     /**
@@ -272,43 +262,7 @@ class BxTimelineModule extends BxDolModule
 
     /**
      * SERVICE METHODS
-     */
-    public function serviceAddHandlers($sModuleUri = 'all')
-    {
-        $this->_updateModuleData('add_handlers', $sModuleUri);
-    }
-
-    public function serviceDeleteHandlers($sModuleUri = 'all')
-    {
-        $this->_updateModuleData('delete_handlers', $sModuleUri);
-    }
-
-	public function serviceDeleteModuleEvents($sModuleUri = 'all')
-    {
-        $this->_updateModuleData('delete_module_events', $sModuleUri);
-    }
-
-    function serviceGetActionsChecklist()
-    {
-        $aHandlers = $this->_oConfig->getHandlers();
-
-        $aResults = array();
-        foreach($aHandlers as $aHandler) {
-            if($aHandler['type'] != BX_TIMELINE_HANDLER_TYPE_INSERT)
-                continue;
-
-            $aModule = $this->_oDb->getModuleByName($aHandler['module_name']);
-            if(empty($aModule))
-                $aModule['title'] = _t('_bx_timeline_alert_module_' . $aHandler['alert_unit']);
-
-            $aResults[$aHandler['id']] = $aModule['title'] . ' (' . _t('_bx_timeline_alert_action_' . $aHandler['alert_action']) . ')';
-        }
-
-        asort($aResults);
-        return $aResults;
-    }
-
-    /*
+     * 
      * Get Post block for a separate page.
      */
     public function serviceGetBlockPost($sProfileModule = 'bx_persons', $iProfileId = 0)
@@ -361,7 +315,8 @@ class BxTimelineModule extends BxDolModule
             return array();
 
         $sJsObject = $this->_oConfig->getJsObject('view');
-        $aParams = $this->_prepareParams(BX_TIMELINE_TYPE_OWNER, $iProfileId, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline);
+        $aParams = $this->_prepareParams(BX_BASE_MOD_NTFS_TYPE_OWNER, $iProfileId, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline);
+        $aParams['per_page'] = (int)$iPerPage > 0 ? $iPerPage : $this->_oConfig->getPerPage('profile');
 
         $this->_iOwnerId = $aParams['owner_id'];
         list($sUserName, $sUserUrl) = $this->getUserInfo($aParams['owner_id']);
@@ -383,7 +338,8 @@ class BxTimelineModule extends BxDolModule
 
     public function serviceGetBlockViewAccount($iProfileId = 0, $iStart = -1, $iPerPage = -1, $iTimeline = -1, $sFilter = '', $aModules = array())
     {
-        $aParams = $this->_prepareParams(BX_TIMELINE_TYPE_CONNECTIONS, $iProfileId, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline);
+        $aParams = $this->_prepareParams(BX_BASE_MOD_NTFS_TYPE_CONNECTIONS, $iProfileId, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline);
+        $aParams['per_page'] = (int)$iPerPage > 0 ? $iPerPage : $this->_oConfig->getPerPage('account');
 
         $this->_iOwnerId = $aParams['owner_id'];
 
@@ -631,33 +587,6 @@ class BxTimelineModule extends BxDolModule
         return $oVote;
     }
 
-    public function getUserId()
-    {
-        return isLogged() ? bx_get_logged_profile_id() : 0;
-    }
-
-    public function getUserIp()
-    {
-        return getVisitorIP();
-    }
-
-    public function getUserInfo($iUserId = 0)
-    {
-        bx_import('BxDolProfile');
-        $oProfile = BxDolProfile::getInstance($iUserId);
-        if (!$oProfile) {
-            bx_import('BxDolProfileUndefined');
-            $oProfile = BxDolProfileUndefined::getInstance();
-        }
-
-        return array(
-            $oProfile->getDisplayName(),
-            $oProfile->getUrl(),
-            $oProfile->getThumb(),
-            $oProfile->getUnit()
-        );
-    }
-
     //--- Check permissions methods ---//
     public function isAllowedPost($bPerform = false)
     {
@@ -843,7 +772,7 @@ class BxTimelineModule extends BxDolModule
     {
         $aParams = array();
         $aParams['browse'] = 'list';
-        $aParams['type'] = !empty($sType) ? $sType : BX_TIMELINE_TYPE_OWNER;
+        $aParams['type'] = !empty($sType) ? $sType : BX_TIMELINE_TYPE_DEFAULT;
         $aParams['owner_id'] = (int)$iOwnerId != 0 ? $iOwnerId : $this->getUserId();
         $aParams['start'] = (int)$iStart > 0 ? $iStart : 0;
         $aParams['per_page'] = (int)$iPerPage > 0 ? $iPerPage : $this->_oConfig->getPerPage();
@@ -862,7 +791,7 @@ class BxTimelineModule extends BxDolModule
         $aParams['browse'] = 'list';
 
         $sType = bx_get('type');
-        $aParams['type'] = $sType !== false ? bx_process_input($sType, BX_DATA_TEXT) : BX_TIMELINE_TYPE_OWNER;
+        $aParams['type'] = $sType !== false ? bx_process_input($sType, BX_DATA_TEXT) : BX_TIMELINE_TYPE_DEFAULT;
 
         $aParams['owner_id'] = $sType !== false ? bx_process_input(bx_get('owner_id'), BX_DATA_INT) : $this->getUserId();
 
@@ -887,50 +816,6 @@ class BxTimelineModule extends BxDolModule
     protected function _prepareTextForSave($s)
     {
         return bx_process_input($s, BX_DATA_TEXT_MULTILINE);
-    }
-
-    protected function _updateModuleData($sAction, $sModuleUri = 'all')
-    {
-        $aModules = $sModuleUri == 'all' ? $this->_oDb->getModules() : array($this->_oDb->getModuleByUri($sModuleUri));
-
-        foreach($aModules as $aModule) {
-            if(!BxDolRequest::serviceExists($aModule, 'get_timeline_data'))
-                continue;
-
-            $aData = BxDolService::call($aModule['name'], 'get_timeline_data');
-            if(empty($aData) || !is_array($aData))
-                continue;
-
-			switch($sAction) {
-				case 'add_handlers':
-					$this->_oDb->insertData($aData);
-					BxDolAlerts::cacheInvalidate();
-
-					$this->_oDb->activateModuleEvents($aData, true);
-					break;
-
-				case 'delete_handlers':
-					$this->_oDb->deleteData($aData);
-					BxDolAlerts::cacheInvalidate();
-
-					$this->_oDb->activateModuleEvents($aData, false);
-					break;
-
-				case 'delete_module_events':
-					$this->_oDb->deleteModuleEvents($aData);
-					break;
-			}
-        }
-    }
-
-    protected function _echoResultJson($a, $isAutoWrapForFormFileSubmit = false)
-    {
-        header('Content-type: text/html; charset=utf-8');
-
-        $s = json_encode($a);
-        if ($isAutoWrapForFormFileSubmit && !empty($_FILES))
-            $s = '<textarea>' . $s . '</textarea>'; // http://jquery.malsup.com/form/#file-upload
-        echo $s;
     }
 }
 

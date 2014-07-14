@@ -9,14 +9,10 @@
  * @{
  */
 
-bx_import('BxDolModuleDb');
+bx_import('BxBaseModNotificationsDb');
 
-class BxTimelineDb extends BxDolModuleDb
+class BxTimelineDb extends BxBaseModNotificationsDb
 {
-    protected $_oConfig;
-
-    protected $_sTable;
-    protected $_sTableHandlers;
     protected $_sTablesShareTrack;
 
     /*
@@ -25,120 +21,7 @@ class BxTimelineDb extends BxDolModuleDb
     function __construct(&$oConfig)
     {
         parent::__construct($oConfig);
-
-        $this->_oConfig = $oConfig;
-
-        $this->_sTable = $this->_sPrefix . 'events';
-        $this->_sTableHandlers = $this->_sPrefix . 'handlers';
         $this->_sTableSharesTrack = $this->_sPrefix . 'shares_track';
-    }
-
-    public function getAlertHandlerId()
-    {
-        $sQuery = $this->prepare("SELECT `id` FROM `sys_alerts_handlers` WHERE `name`=? LIMIT 1", $this->_oConfig->getSystemName('alert'));
-        return (int)$this->getOne($sQuery);
-    }
-
-    public function insertData($aData)
-    {
-    	//--- Update Timeline Handlers ---//
-        foreach($aData['handlers'] as $aHandler) {
-            $sContent = '';
-            if($aHandler['type'] == BX_TIMELINE_HANDLER_TYPE_INSERT)
-                $sContent = serialize(array(
-                    'module_name' => $aHandler['module_name'],
-                    'module_method' => $aHandler['module_method'],
-                    'module_class' => !empty($aHandler['module_class']) ? $aHandler['module_class'] : 'Module',
-                    'groupable' => $aHandler['groupable'],
-                    'group_by' => $aHandler['group_by']
-                ));
-
-            $sQuery = $this->prepare("INSERT INTO
-                    `{$this->_sTableHandlers}`
-                SET
-                    `type`=?,
-                    `alert_unit`=?,
-                    `alert_action`=?,
-                    `content`=?", $aHandler['type'], $aHandler['alert_unit'], $aHandler['alert_action'], $sContent);
-
-            $this->query($sQuery);
-        }
-
-        //--- Update System Alerts ---//
-        $iHandlerId = $this->getAlertHandlerId();
-        foreach($aData['alerts'] as $aAlert) {
-            $sQuery = $this->prepare("INSERT INTO
-                    `sys_alerts`
-                SET
-                    `unit`=?,
-                    `action`=?,
-                    `handler_id`=?", $aAlert['unit'], $aAlert['action'], $iHandlerId);
-
-            $this->query($sQuery);
-        }
-    }
-
-    public function deleteData($aData)
-    {
-    	//--- Update Timeline Handlers ---//
-        foreach($aData['handlers'] as $aHandler) {
-            $sQuery = $this->prepare("DELETE FROM
-                    `{$this->_sTableHandlers}`
-                WHERE
-                    `alert_unit`=? AND
-                    `alert_action`=?
-                LIMIT 1", $aHandler['alert_unit'], $aHandler['alert_action']);
-
-            $this->query($sQuery);
-        }
-
-        //--- Update System Alerts ---//
-        $iHandlerId = $this->getAlertHandlerId();
-        foreach($aData['alerts'] as $aAlert) {
-            $sQuery = $this->prepare("DELETE FROM
-                    `sys_alerts`
-                WHERE
-                    `unit`=? AND
-                    `action`=? AND
-                    `handler_id`=?
-                LIMIT 1", $aAlert['unit'], $aAlert['action'], $iHandlerId);
-
-            $this->query($sQuery);
-        }
-    }
-
-    public function deleteModuleEvents($aData)
-    {
-    	foreach($aData['handlers'] as $aHandler) {
-    		//Delete system events.
-            $this->deleteEvent(array('type' => $aHandler['alert_unit'], 'action' => $aHandler['alert_action']));
-
-            //Delete shared events.
-    		$aEvents = $this->getEvents(array('browse' => 'shared_by_descriptor', 'type' => $aHandler['alert_unit'], 'action' => $aHandler['alert_action']));
-			foreach($aEvents as $aEvent) {
-				$aContent = unserialize($aEvent['content']);
-				if(isset($aContent['type']) && $aContent['type'] == $aHandler['alert_unit'] && isset($aContent['action']) && $aContent['action'] == $aHandler['alert_action'])
-					$this->deleteEvent(array('id' => (int)$aEvent['id']));
-			}
-    	}
-    }
-
-	public function activateModuleEvents($aData, $bActivate = true)
-    {
-    	$iActivate = $bActivate ? 1 : 0;
-
-    	foreach($aData['handlers'] as $aHandler) {
-    		//Activate (deactivate) system events.
-            $this->updateEvent(array('active' => $iActivate), array('type' => $aHandler['alert_unit'], 'action' => $aHandler['alert_action']));
-
-			//Activate (deactivate) shared events.
-			$aEvents = $this->getEvents(array('browse' => 'shared_by_descriptor', 'type' => $aHandler['alert_unit'], 'action' => $aHandler['alert_action']));
-			foreach($aEvents as $aEvent) {
-				$aContent = unserialize($aEvent['content']);
-				if(isset($aContent['type']) && $aContent['type'] == $aHandler['alert_unit'] && isset($aContent['action']) && $aContent['action'] == $aHandler['alert_action'])
-					$this->updateEvent(array('active' => $iActivate), array('id' => (int)$aEvent['id']));
-			}
-    	}
     }
 
     public function getHandlers($aParams = array())
@@ -161,37 +44,7 @@ class BxTimelineDb extends BxDolModuleDb
         return $this->$sMethod($sSql);
     }
 
-    public function insertEvent($aParamsSet)
-    {
-        if(empty($aParamsSet))
-            return 0;
-
-        $aSet = array();
-        foreach($aParamsSet as $sKey => $sValue)
-           $aSet[] = $this->prepare("`" . $sKey . "`=?", $sValue);
-
-        if((int)$this->query("INSERT INTO `{$this->_sTable}` SET " . implode(", ", $aSet) . ", `date`=UNIX_TIMESTAMP()") <= 0)
-            return 0;
-
-        return (int)$this->lastId();
-    }
-
-    public function updateEvent($aParamsSet, $aParamsWhere)
-    {
-        if(empty($aParamsSet) || empty($aParamsWhere))
-            return false;
-
-        $sSql = "UPDATE `{$this->_sTable}` SET " . $this->arrayToSQL($aParamsSet) . " WHERE " . $this->arrayToSQL($aParamsWhere, " AND ");
-        return $this->query($sSql);
-    }
-
-    public function deleteEvent($aParams, $sWhereAddon = "")
-    {
-        $sSql = "DELETE FROM `{$this->_sTable}` WHERE " . $this->arrayToSQL($aParams, " AND ") . $sWhereAddon;
-        return $this->query($sSql);
-    }
-
-    public function getEvents($aParams)
+    public function getEvents($aParams, $bReturnCount = false)
     {
         $sMethod = 'getAll';
         $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
@@ -240,11 +93,11 @@ class BxTimelineDb extends BxDolModuleDb
                 //--- Check type
                 if(!empty($aParams['owner_id']))
                     switch($aParams['type']) {
-                        case BX_TIMELINE_TYPE_OWNER:
+                        case BX_BASE_MOD_NTFS_TYPE_OWNER:
                             $sWhereClause .= $this->prepare("AND `{$this->_sTable}`.`owner_id`=? ", $aParams['owner_id']);
                             break;
 
-                        case BX_TIMELINE_TYPE_CONNECTIONS:
+                        case BX_BASE_MOD_NTFS_TYPE_CONNECTIONS:
                             bx_import('BxDolConnection');
                             $oConnection = BxDolConnection::getObjectInstance($this->_oConfig->getObject('conn_subscriptions'));
 
@@ -280,7 +133,7 @@ class BxTimelineDb extends BxDolModuleDb
                 break;
         }
 
-        $sSql = "SELECT
+        $sSql = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . "
                 `{$this->_sTable}`.`id` AS `id`,
                 `{$this->_sTable}`.`owner_id` AS `owner_id`,
                 `{$this->_sTable}`.`type` AS `type`,
@@ -299,7 +152,11 @@ class BxTimelineDb extends BxDolModuleDb
             LEFT JOIN `{$this->_sTableHandlers}` ON `{$this->_sTable}`.`type`=`{$this->_sTableHandlers}`.`alert_unit` AND `{$this->_sTable}`.`action`=`{$this->_sTableHandlers}`.`alert_action` " . $sJoinClause . "
             WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
 
-        return $this->$sMethod($sSql);
+        $aEntries = $this->$sMethod($sSql);
+        if(!$bReturnCount)
+        	return $aEntries;
+
+		return array($aEntries, (int)$this->getOne("SELECT FOUND_ROWS()"));
     }
 
     public function getMaxDuration($aParams)

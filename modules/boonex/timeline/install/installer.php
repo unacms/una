@@ -9,32 +9,15 @@
  * @{
  */
 
-bx_import('BxBaseModGeneralInstaller');
+bx_import('BxBaseModNotificationsInstaller');
 
-class BxTimelineInstaller extends BxBaseModGeneralInstaller
+class BxTimelineInstaller extends BxBaseModNotificationsInstaller
 {
     function __construct($aConfig)
     {
         parent::__construct($aConfig);
         $this->_aTranscoders = array ('bx_timeline_photos_preview', 'bx_timeline_photos_view');
         $this->_aStorages = array ('bx_timeline_photos');
-    }
-
-    function enable($aParams)
-    {
-        $aResult = parent::enable($aParams);
-
-        if($aResult['result'])
-            BxDolService::call($this->_aConfig['name'], 'add_handlers');
-
-        return $aResult;
-    }
-
-    function disable($aParams)
-    {
-         BxDolService::call($this->_aConfig['name'], 'delete_handlers');
-
-        return parent::disable($aParams);
     }
 }
 
