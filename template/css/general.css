@@ -3,6 +3,10 @@
     margin:0 auto;
 }
 
+.bx-page-image-container img {
+    width:100%;
+}
+
 /* --------------- toolbar */
 
 #bx-toolbar {
@@ -17,7 +21,7 @@
     opacity:0;
 
     -webkit-transition: opacity .2s;
-   transition: opacity .2s;
+    transition: opacity .2s;
 }
 
 #bx-toolbar-content {
