@@ -151,7 +151,7 @@ class BxDolStudioBuilderPage extends BxTemplStudioPage
         return BxDolStudioUtils::addInArray($aInput, $sKey, $aValues);
     }
 
-    protected function getModuleIcon($sName, $sType = 'menu')
+    protected function getModuleIcon($sName, $sType = 'menu', $bReturnAsUrl = true)
     {
     	$sResult = '';
 
@@ -169,7 +169,7 @@ class BxDolStudioBuilderPage extends BxTemplStudioPage
     			break;
 
     		default:
-    			$sResult = BxDolStudioUtils::getModuleIcon($sName);
+    			$sResult = parent::getModuleIcon($sName, $sType, $bReturnAsUrl);
     	}
 
         return $sResult;
