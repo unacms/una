@@ -24,4 +24,4 @@ DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandlerId LIMIT 1;
 
 
 -- MODULES' CONNECTIONS
-DELETE FROM `sys_modules_connections` WHERE `module`=@sName LIMIT 1;
+DELETE FROM `sys_modules_relations` WHERE `module`=@sName LIMIT 1;

@@ -52,12 +52,12 @@ $aConfig = array(
     'uninstall' => array (
         'execute_sql' => 1,
         'update_languages' => 1,
-    	'update_connections' => 1,
+    	'update_relations' => 1,
         'clear_db_cache' => 1,
     ),
     'enable' => array(
         'execute_sql' => 1,
-    	'update_connections' => 1,
+    	'update_relations' => 1,
         'recompile_menus' => 1,
         'recompile_permalinks' => 1,
         'recompile_alerts' => 1,
@@ -65,7 +65,7 @@ $aConfig = array(
     ),
     'disable' => array (
         'execute_sql' => 1,
-    	'update_connections' => 1,
+    	'update_relations' => 1,
         'recompile_menus' => 1,
         'recompile_permalinks' => 1,
         'recompile_alerts' => 1,
@@ -80,7 +80,7 @@ $aConfig = array(
     /**
      * Connections Section
      */
-    'connections' => array(
+    'relations' => array(
     	'bx_timeline',
     	'bx_notifications'
     ),

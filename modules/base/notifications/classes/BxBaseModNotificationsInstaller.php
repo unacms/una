@@ -39,7 +39,7 @@ class BxBaseModNotificationsInstaller extends BxBaseModGeneralInstaller
     	$aModules = $this->oDb->getModules();
 	    foreach($aModules as $aModule) {
 	    	$aConfig = self::getModuleConfig($aModule);
-			if(!empty($aConfig['connections']) && is_array($aConfig['connections']) && in_array($this->_aConfig['name'], $aConfig['connections']))
+			if(!empty($aConfig['relations']) && is_array($aConfig['relations']) && in_array($this->_aConfig['name'], $aConfig['relations']))
 				BxDolService::call($this->_aConfig['name'], $sAction, array($aModule['uri']));
 		}
     }

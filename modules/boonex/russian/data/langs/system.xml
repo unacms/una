@@ -2422,7 +2422,7 @@ Without doing that you won't be submitted to our database.</p>
 	<string name="_adm_txt_modules_move_sources"><![CDATA[Move source files:]]></string>
 	<string name="_adm_txt_modules_execute_sql"><![CDATA[Changing database:]]></string>
 	<string name="_adm_txt_modules_install_language"><![CDATA[Install language:]]></string>
-	<string name="_adm_txt_modules_update_connections"><![CDATA[Update connections:]]></string>
+	<string name="_adm_txt_modules_update_relations"><![CDATA[Update relations:]]></string>
 	<string name="_adm_txt_modules_update_languages"><![CDATA[Update languages:]]></string>
 	<string name="_adm_txt_modules_recompile_global_paramaters"><![CDATA[Recompiling global paramaters:]]></string>
 	<string name="_adm_txt_modules_recompile_menus"><![CDATA[Recompiling menus:]]></string>

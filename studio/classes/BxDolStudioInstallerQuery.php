@@ -16,7 +16,7 @@ class BxDolStudioInstallerQuery extends BxDolModuleQuery
         parent::__construct();
     }
 
-    function getConnectionsBy($aParams = array())
+    function getRelationsBy($aParams = array())
     {
     	$sMethod = 'getAll';
     	$sWhereClause = "";
@@ -35,7 +35,7 @@ class BxDolStudioInstallerQuery extends BxDolModuleQuery
                 `on_uninstall`,
                 `on_enable`,
                 `on_disable`
-            FROM `sys_modules_connections`
+            FROM `sys_modules_relations`
             WHERE 1" . $sWhereClause;
 
         return $this->$sMethod($sSql);
