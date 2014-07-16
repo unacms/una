@@ -109,6 +109,9 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             'update_relations' => array(
                 'title' => _t('_adm_txt_modules_update_relations'),
             ),
+            'process_deleted_profiles' => array(
+                'title' => _t('_adm_txt_modules_process_deleted_profiles'),
+            ),
             'recompile_global_paramaters' => array(
                 'title' => _t('_adm_txt_modules_recompile_global_paramaters'),
             ),
