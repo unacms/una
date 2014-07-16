@@ -132,5 +132,5 @@ INSERT INTO `sys_objects_vote`(`Name`, `TableMain`, `TableTrack`, `PostTimeout`,
 
 
 -- MODULES' CONNECTIONS
-INSERT INTO `sys_modules_connections` (`module`, `on_install`, `on_uninstall`, `on_enable`, `on_disable`) VALUES
+INSERT INTO `sys_modules_relations` (`module`, `on_install`, `on_uninstall`, `on_enable`, `on_disable`) VALUES
 ('bx_timeline', '', 'delete_module_events', 'add_handlers', 'delete_handlers');

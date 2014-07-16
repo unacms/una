@@ -36,5 +36,5 @@ INSERT INTO `sys_alerts_handlers`(`name`, `class`, `file`, `service_call`) VALUE
 
 
 -- MODULES' CONNECTIONS
-INSERT INTO `sys_modules_connections` (`module`, `on_install`, `on_uninstall`, `on_enable`, `on_disable`) VALUES
+INSERT INTO `sys_modules_relations` (`module`, `on_install`, `on_uninstall`, `on_enable`, `on_disable`) VALUES
 (@sName, '', 'delete_module_events', 'add_handlers', 'delete_handlers');

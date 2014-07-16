@@ -36,4 +36,4 @@ DELETE FROM `sys_objects_vote` WHERE `Name`='bx_timeline' LIMIT 1;
 
 
 -- MODULES' CONNECTIONS
-DELETE FROM `sys_modules_connections` WHERE `module`='bx_timeline' LIMIT 1;
+DELETE FROM `sys_modules_relations` WHERE `module`='bx_timeline' LIMIT 1;

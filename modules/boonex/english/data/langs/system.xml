@@ -1237,7 +1237,7 @@
 	<string name="_adm_txt_modules_show_conclusion"><![CDATA[Conclusion from vendor:]]></string>
 	<string name="_adm_txt_modules_show_introduction"><![CDATA[Introduction from vendor:]]></string>
 	<string name="_adm_txt_modules_update_files"><![CDATA[Update files:]]></string>
-	<string name="_adm_txt_modules_update_connections"><![CDATA[Update connections:]]></string>
+	<string name="_adm_txt_modules_update_relations"><![CDATA[Update relations:]]></string>
 	<string name="_adm_txt_modules_update_languages"><![CDATA[Update languages:]]></string>
 	<string name="_adm_txt_modules_update_latest"><![CDATA[You have the most current version.]]></string>
 	<string name="_adm_txt_modules_update_text"><![CDATA[New version {0} is available.]]></string>
