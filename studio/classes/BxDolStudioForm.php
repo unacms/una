@@ -88,6 +88,23 @@ class BxDolStudioForm extends BxBaseFormView
         return (int)$iId;
     }
 
+	function getCleanValue ($sName)
+    {
+        $oChecker = new BxDolFormChecker($this->_sCheckerHelper);
+        $oChecker->setFormMethod($this->aFormAttrs['method']);
+
+        $a = isset($this->aInputs[$sName]) ? $this->aInputs[$sName] : false;
+        if($a && isset($a['db']['pass']))
+			$aResult = $oChecker->get($a['name'], $a['db']['pass'], isset($a['db']['params']) && $a['db']['params'] ? $a['db']['params'] : array());
+        else
+			$aResult = $oChecker->get($sName);
+
+		if(!empty($a['reverse']) && !empty($a['values']))
+			$aResult = array_diff(array_keys($a['values']), (is_array($aResult) ? $aResult : array()));
+
+		return $aResult;
+    }
+
     protected function processTranslations($sType = 'insert')
     {
         $aType2Method = array(

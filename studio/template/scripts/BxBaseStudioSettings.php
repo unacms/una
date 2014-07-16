@@ -198,11 +198,13 @@ class BxBaseStudioSettings extends BxDolStudioSettings
                 );
                 break;
             case 'list':
+            case 'rlist':
                 $aField = array(
                     'type' => 'checkbox_set',
                     'name' => $aItem['name'],
                     'caption' => _t($aItem['caption']),
-                    'value' => explode(',', $aItem['value']),
+                    'value' => !empty($aItem['value']) ? explode(',', $aItem['value']) : array(),
+                	'reverse' => $aItem['type'] == 'rlist',
                     'db' => array (
                         'pass' => 'Xss',
                     ),
@@ -213,7 +215,6 @@ class BxBaseStudioSettings extends BxDolStudioSettings
                 else
                     foreach(explode(',', $aItem['extra']) as $sValue)
                         $aField['values'][$sValue] = $sValue;
-
                 break;
             case 'select':
                 $aField = array(

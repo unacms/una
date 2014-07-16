@@ -199,6 +199,24 @@ class BxBaseStudioFormView extends BxDolStudioForm
 
         return $sInput . $sControl;
     }
+
+    /**
+     * Generate Reverse Checkbox Set Element
+     *
+     * @param  array  $aInput
+     * @return string
+     */
+    function genInputCheckboxSet(&$aInput)
+    {
+        $aCurValues = array();
+        if (isset($aInput['value']) && $aInput['value'])
+            $aCurValues = is_array($aInput['value']) ? $aInput['value'] : array();
+
+		if(!empty($aInput['reverse']))
+			$aCurValues = array_diff(array_keys($aInput['values']), $aCurValues);
+
+        return $this->_genInputsSet($aInput, 'checkbox', $aCurValues, '_isSelectedMultiple', '[]');
+    }
 }
 
 /** @} */

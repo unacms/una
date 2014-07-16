@@ -161,7 +161,7 @@ CREATE TABLE `sys_options` (
   `name` varchar(64) NOT NULL default '',
   `caption` varchar(255) NOT NULL default '',
   `value` mediumtext NOT NULL,
-  `type` enum('digit','text','checkbox','select','combobox','file','list') NOT NULL default 'digit',
+  `type` enum('digit','text','checkbox','select','combobox','file','list','rlist') NOT NULL default 'digit',
   `extra` text NOT NULL default '',
   `check` varchar(32) NOT NULL,
   `check_params` text NOT NULL,
