@@ -39,15 +39,15 @@ class BxNtfsDb extends BxBaseModNotificationsDb
 
 		//--- Apply modules or handlers filter
 		$sWhereModuleFilter = '';
-		if(isset($aParams['modules']) && !empty($aParams['modules']) && is_array($aParams['modules']))
-			$sWhereModuleFilter = "AND `type` IN (" . $this->implode_escape($aParams['modules']) . ") ";
+		if(!empty($aParams['modules']) && is_array($aParams['modules']))
+			$sWhereModuleFilter = "AND `" . $this->_sTable . "`.`type` IN (" . $this->implode_escape($aParams['modules']) . ") ";
 
 		if($sWhereModuleFilter == '') {
 			$aHidden = $this->_oConfig->getHandlersHidden();
-			$sWhereModuleFilter = is_array($aHidden) && !empty($aHidden) ? "AND `th`.`id` NOT IN (" . $this->implode_escape($aHidden) . ") " : "";
+			$sWhereModuleFilter = !empty($aHidden) && is_array($aHidden) ? "AND `" . $this->_sTableHandlers . "`.`id` NOT IN (" . $this->implode_escape($aHidden) . ") " : "";
 		}
 
-		if($sWhereModuleFilter == '')
+		if($sWhereModuleFilter != '')
 			$sWhereClause .= $sWhereModuleFilter;
 
 		//--- Check flag 'New'

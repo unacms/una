@@ -27,7 +27,7 @@ SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_params`, `check_error`, `extra`, `order`) VALUES
 ('bx_notifications_events_per_page', '10', @iCategId, '_bx_ntfs_option_events_per_page', 'digit', '', '', '', '', 1),
-('bx_notifications_events_hide', '', @iCategId, '_bx_ntfs_option_events_hide', 'list', '', '', '', 'a:2:{s:6:"module";s:16:"bx_notifications";s:6:"method";s:21:"get_actions_checklist";}', 2);
+('bx_notifications_events_hide', '', @iCategId, '_bx_ntfs_option_events_hide', 'rlist', '', '', '', 'a:2:{s:6:"module";s:16:"bx_notifications";s:6:"method";s:21:"get_actions_checklist";}', 2);
 
 
 -- ALERTS
