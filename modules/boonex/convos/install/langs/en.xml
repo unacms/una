@@ -54,10 +54,12 @@
     <string name="_bx_cnv_menu_title_folders_more"><![CDATA[Conversations folders]]></string>
     <string name="_bx_cnv_menu_set_title_submenu"><![CDATA[Conversations folders]]></string>
     <string name="_bx_cnv_menu_set_title_folders_more"><![CDATA[More folders]]></string>
-
-
+    <string name="_bx_cnv_menu_item_title_system_message"><![CDATA[Message]]></string>
+    <string name="_bx_cnv_menu_item_title_message"><![CDATA[Message]]></string>
     <string name="_bx_cnv_menu_item_title_system_mark_unread_entry"><![CDATA[Mark as unread]]></string>
     <string name="_bx_cnv_menu_item_title_mark_unread_entry"><![CDATA[Mark as unread]]></string>
+
+
     <string name="_bx_cnv_menu_item_title_system_delete_entry"><![CDATA[Delete conversation]]></string>
     <string name="_bx_cnv_menu_item_title_delete_entry"><![CDATA[Delete conversation]]></string>
     <string name="_bx_cnv_menu_item_title_system_folder_inbox"><![CDATA[Inbox]]></string>

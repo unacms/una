@@ -18,6 +18,7 @@ class BxCnvInstaller extends BxBaseModTextInstaller
         parent::__construct($aConfig);
         $this->_aTranscoders = array ('bx_convos_preview');
         $this->_aStorages = array ('bx_convos_files');
+        $this->_aMenuTriggers = array ('trigger_profile_view_actions');
     }
 }
 

@@ -49,7 +49,7 @@ class BxDolMenuQuery extends BxDolDb
             return false;
 
         if (empty($aMenuItem['order'])) {
-            $sQuery = $oDb->prepare("SELECT `order` FROM `sys_menu_items` WHERE `set_name` = ? AND `active` = 1 ORDER BY `order` DESC LIMIT 1", $aMenuItem['set_name']);
+            $sQuery = $oDb->prepare("SELECT `order` FROM `sys_menu_items` WHERE `set_name` = ? AND `active` = 1 AND `order` != 9999 ORDER BY `order` DESC LIMIT 1", $aMenuItem['set_name']);
             $iProfileMenuOrder = (int)$oDb->getOne($sQuery);
             $aMenuItem['order'] = $iProfileMenuOrder + 1;
         }
