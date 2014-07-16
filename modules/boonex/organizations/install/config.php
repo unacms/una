@@ -53,6 +53,7 @@ $aConfig = array(
         'execute_sql' => 1,
         'update_languages' => 1,
         'clear_db_cache' => 1,
+        'process_deleted_profiles' => 1,
     ),
     'enable' => array(
         'execute_sql' => 1,
