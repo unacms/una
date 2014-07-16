@@ -59,11 +59,15 @@ class BxBaseModNotificationsModule extends BxDolModule
             if($aHandler['type'] != BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT)
                 continue;
 
-            $aModule = $this->_oDb->getModuleByName($aHandler['module_name']);
+			$aModule = array();
+			if(!empty($aHandler['module_name']))
+            	$aModule = $this->_oDb->getModuleByName($aHandler['module_name']);
+
             if(empty($aModule))
                 $aModule['title'] = _t($sLangPrefix . '_alert_module_' . $aHandler['alert_unit']);
 
-            $aResults[$aHandler['id']] = $aModule['title'] . ' (' . _t($sLangPrefix . '_alert_action_' . $aHandler['alert_action']) . ')';
+			$sAction = !empty($aHandler['alert_action']) ? ' (' . _t($sLangPrefix . '_alert_action_' . $aHandler['alert_action']) . ')' : '';
+            $aResults[$aHandler['id']] = $aModule['title'] . $sAction;
         }
 
         asort($aResults);

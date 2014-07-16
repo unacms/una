@@ -24,26 +24,6 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         $this->_sTableSharesTrack = $this->_sPrefix . 'shares_track';
     }
 
-    public function getHandlers($aParams = array())
-    {
-        $sMethod = 'getAll';
-        $sWhereClause = '';
-
-        if(!empty($aParams))
-            switch($aParams['type']) {}
-
-        $sSql = "SELECT
-                `id` AS `id`,
-                `type` AS `type`,
-                `alert_unit` AS `alert_unit`,
-                `alert_action` AS `alert_action`,
-                `content` AS `content`
-            FROM `{$this->_sTableHandlers}`
-            WHERE 1 AND `alert_unit` NOT LIKE ('" . $this->_oConfig->getPrefix('common_post') . "%')" . $sWhereClause;
-
-        return $this->$sMethod($sSql);
-    }
-
     public function getMaxDuration($aParams)
     {
         $aParams['browse'] = 'last';
@@ -271,15 +251,15 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
 		//--- Apply modules or handlers filter
         $sWhereModuleFilter = '';
-        if(isset($aParams['modules']) && !empty($aParams['modules']) && is_array($aParams['modules']))
-        	$sWhereModuleFilter = "AND `type` IN (" . $this->implode_escape($aParams['modules']) . ") ";
+        if(!empty($aParams['modules']) && is_array($aParams['modules']))
+        	$sWhereModuleFilter = "AND `" . $this->_sTable . "`.`type` IN (" . $this->implode_escape($aParams['modules']) . ") ";
 
 		if($sWhereModuleFilter == '') {
         	$aHidden = $this->_oConfig->getHandlersHidden();
-			$sWhereModuleFilter = is_array($aHidden) && !empty($aHidden) ? "AND `th`.`id` NOT IN (" . $this->implode_escape($aHidden) . ") " : "";
+			$sWhereModuleFilter = !empty($aHidden) && is_array($aHidden) ? "AND `" . $this->_sTableHandlers . "`.`id` NOT IN (" . $this->implode_escape($aHidden) . ") " : "";
 		}
 
-		if($sWhereModuleFilter == '')
+		if($sWhereModuleFilter != '')
 			$sWhereClause .= $sWhereModuleFilter;
 
 		//--- Check type

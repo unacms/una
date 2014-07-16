@@ -77,7 +77,7 @@ class BxBaseModNotificationsConfig extends BxDolModuleConfig
                     $aHandler = array_merge($aHandler, $aContent);
             }
 
-           $this->_aHandlers[$aHandler['alert_unit'] . '_' . $aHandler['alert_action']] = $aHandler;
+           $this->_aHandlers[$aHandler['alert_unit'] . (!empty($aHandler['alert_action']) ? '_' . $aHandler['alert_action'] :'')] = $aHandler;
         }
 
         $sHideTimeline = getParam($sOptionPrefix . 'events_hide');

@@ -61,7 +61,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_timeline_events_per_page_profile', '10', @iCategId, '_bx_timeline_option_events_per_page_profile', 'digit', '', '', '', '', 2),
 ('bx_timeline_events_per_page_account', '20', @iCategId, '_bx_timeline_option_events_per_page_account', 'digit', '', '', '', '', 3),
 ('bx_timeline_rss_length', '5', @iCategId, '_bx_timeline_option_rss_length', 'digit', '', '', '', '', 4),
-('bx_timeline_events_hide', '', @iCategId, '_bx_timeline_option_events_hide', 'list', '', '', '', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:21:"get_actions_checklist";}', 5),
+('bx_timeline_events_hide', '', @iCategId, '_bx_timeline_option_events_hide', 'rlist', '', '', '', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:21:"get_actions_checklist";}', 5),
 ('bx_timeline_chars_display_max', '300', @iCategId, '_bx_timeline_option_chars_display_max', 'digit', 'GreaterThan', 'a:1:{s:3:"min";i:150;}', '_bx_timeline_option_err_chars_display_max', '', 6);
 
 

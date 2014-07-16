@@ -33,11 +33,8 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_handlers` (
 );
 
 INSERT INTO `bx_timeline_handlers`(`type`, `alert_unit`, `alert_action`, `content`) VALUES
-('insert', 'timeline_common_text', '', ''),
-('insert', 'timeline_common_link', '', ''),
-('insert', 'timeline_common_photos', '', ''),
-('insert', 'timeline_common_sounds', '', ''),
-('insert', 'timeline_common_videos', '', '');
+('insert', 'timeline_common_post', '', ''),
+('insert', 'timeline_common_share', '', '');
 
 -- TABLES: UPLOADERS
 CREATE TABLE IF NOT EXISTS `bx_timeline_photos` (
