@@ -48,9 +48,14 @@ class BxDolStudioLanguagesUtilsQuery extends BxDolLanguagesQuery
 
     function addKey($iCategoryId, $sKey)
     {
-        $sSql = $this->prepare("SELECT `ID` FROM `sys_localization_keys` WHERE `Key`=? LIMIT 1", $sKey);
-        if(($iId = (int)$this->getOne($sSql)) != 0)
-            return $iId;
+        $sSql = $this->prepare("SELECT `ID`, `IDCategory` FROM `sys_localization_keys` WHERE `Key`=? LIMIT 1", $sKey);
+        $aKey = $this->getRow($sSql);
+        if(!empty($aKey) && is_array($aKey)) {
+        	if((int)$aKey['IDCategory'] != $iCategoryId)
+        		$this->updateKeys(array('IDCategory' => $iCategoryId), array('ID' => $aKey['ID']));
+        	
+            return $aKey['ID'];
+        }
 
         $sSql = $this->prepare("INSERT INTO `sys_localization_keys` SET `IDCategory`=?, `Key`=?", $iCategoryId, $sKey);
         return (int)$this->query($sSql) > 0 ? $this->lastId() : false;
@@ -87,10 +92,14 @@ class BxDolStudioLanguagesUtilsQuery extends BxDolLanguagesQuery
 
     function deleteKeys($aKeys)
     {
+    	$iResult = 0;
+
         foreach($aKeys as $sKey => $sValue) {
-            $sQuery = $this->prepare("DELETE FROM `sys_localization_keys`, `sys_localization_strings` USING `sys_localization_keys`, `sys_localization_strings` WHERE `sys_localization_keys`.`ID`=`sys_localization_strings`.`IDKey` AND `sys_localization_keys`.`Key`=?", $sKey);
-            $this->query($sQuery);
+            $sQuery = $this->prepare("DELETE FROM `tk`, `ts` USING `sys_localization_keys` AS `tk` LEFT JOIN `sys_localization_strings` AS `ts` ON `tk`.`ID`=`ts`.`IDKey` WHERE `tk`.`Key`=?", $sKey);
+            $iResult += (int)$this->query($sQuery);
         }
+
+        return $iResult;
     }
 
     function deleteKeysBy($aParams = array())
@@ -113,6 +122,15 @@ class BxDolStudioLanguagesUtilsQuery extends BxDolLanguagesQuery
                     `sys_localization_strings` AS `ts`
                 WHERE `tk`.`ID`=`ts`.`IDKey` AND `tk`.`IDCategory`=`tc`.`ID`" . $sWhereClause;
         return (int)$this->query($sSql);
+    }
+
+    function updateKeys($aParamsSet, $aParamsWhere)
+    {
+        if(empty($aParamsSet) || empty($aParamsWhere))
+            return false;
+
+        $sSql = "UPDATE `sys_localization_keys` SET " . $this->arrayToSQL($aParamsSet) . " WHERE " . $this->arrayToSQL($aParamsWhere, " AND ");
+        return $this->query($sSql);
     }
 
     function addString($iKeyId, $iLanguageId, $sString)
@@ -150,24 +168,24 @@ class BxDolStudioLanguagesUtilsQuery extends BxDolLanguagesQuery
             case 'by_cat_and_lang':
                 $sWhereClause .= $this->prepare(" AND `tc`.`ID`=? AND `tl`.`ID`=?", $aParams['category_id'], $aParams['language_id']);
                 break;
+            case 'by_key_and_lang':
+            	$sWhereClause .= $this->prepare(" AND `tk`.`Key`=? AND `tl`.`ID`=?", $aParams['key'], $aParams['language_id']);
+                break;
         }
 
         $sSql = "DELETE FROM `ts`
-                USING
-                    `sys_localization_categories` AS `tc`,
-                    `sys_localization_keys` AS `tk`,
-                    `sys_localization_languages` AS `tl`,
-                    `sys_localization_strings` AS `ts`
-                WHERE `tk`.`ID`=`ts`.`IDKey` AND `tk`.`IDCategory`=`tc`.`ID` AND `ts`.`IDLanguage`=`tl`.`ID`" . $sWhereClause;
+                USING `sys_localization_keys` AS `tk` 
+				LEFT JOIN `sys_localization_categories` AS `tc` ON `tk`.`IDCategory`=`tc`.`ID` 
+				LEFT JOIN `sys_localization_strings` AS `ts` ON `tk`.`ID`=`ts`.`IDKey` 
+				LEFT JOIN `sys_localization_languages` AS `tl` ON `ts`.`IDLanguage`=`tl`.`ID`
+                WHERE 1" . $sWhereClause;
         return (int)$this->query($sSql);
     }
 
     function addCategory($sName)
     {
         $sQuery = $this->prepare("INSERT IGNORE INTO `sys_localization_categories` SET `Name`=?", $sName);
-        $iResult = (int)$this->query($sQuery);
-
-        if($iResult > 0)
+        if((int)$this->query($sQuery) > 0)
             return (int)$this->lastId();
 
         $iCategoryId = 0;

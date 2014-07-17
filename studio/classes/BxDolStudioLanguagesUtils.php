@@ -184,8 +184,9 @@ class BxDolStudioLanguagesUtils extends BxDolLanguages implements iBxDolSingleto
         if(!empty($mixedLang)) {
             $sType = is_string($mixedLang) && !is_numeric($mixedLang) ? 'by_name' : 'by_id';
             $this->oDb->getLanguagesBy(array('type' => $sType, 'value' => $mixedLang), $aLanguages[0], false);
-        } else
-            $this->oDb->getLanguagesBy(array('type' => 'all'), $aLanguages, false);
+        } 
+        else
+			$this->oDb->getLanguagesBy(array('type' => 'all'), $aLanguages, false);
 
         $bResult = true;
         foreach($aLanguages as $aLanguage) {
@@ -193,27 +194,20 @@ class BxDolStudioLanguagesUtils extends BxDolLanguages implements iBxDolSingleto
                 continue;
 
             bx_import('BxDolModuleQuery');
-            $aLanguageModule = BxDolModuleQuery::getInstance()->getModuleByUri($aLanguage['name']);
+            $oModuleQuery = BxDolModuleQuery::getInstance();
+
+            $aLanguageModule = $oModuleQuery->getModuleByUri($aLanguage['name']);
             if(empty($aLanguageModule) || !is_array($aLanguageModule))
                 continue;
 
             $sPath = BX_DIRECTORY_PATH_MODULES . $aLanguageModule['path'] . 'data/langs/';
 
-            if(!empty($mixedModule))
+            if(empty($mixedModule))
                 $bResult &= $this->_restoreLanguageByModule($aLanguage, $sPath, $mixedModule);
             else {
-                if(!($rHandler = opendir($sPath)))
-                    continue;
-
-                while(($sFileName = readdir($rHandler)) !== false) {
-                    if(substr($sFileName, -3) != 'xml')
-                        continue;
-
-                    $sModule = substr($sFileName, 0, -4);
-                    $bResult &= $this->_restoreLanguageByModule($aLanguage, $sPath, $sModule);
-                }
-
-                closedir($rHandler);
+            	$aModules = $oModuleQuery->getModules();
+            	foreach($aModules as $aModule)
+            		$bResult &= $this->_restoreLanguageByModule($aLanguage, $sPath, $aModule);
             }
 
             if($bRecompile)
@@ -391,7 +385,7 @@ class BxDolStudioLanguagesUtils extends BxDolLanguages implements iBxDolSingleto
 
     function deleteLanguageKeys($aKeys)
     {
-        $this->oDb->deleteKeys($aKeys);
+        return $this->oDb->deleteKeys($aKeys);
     }
 
     function addLanguageCategory($sName)
@@ -430,15 +424,26 @@ class BxDolStudioLanguagesUtils extends BxDolLanguages implements iBxDolSingleto
 
         $aCategory = array();
         $this->oDb->getCategoriesBy(array('type' => 'by_name', 'value' => $aModule['lang_category']), $aCategory, false);
-        if(empty($aCategory) || !is_array($aCategory))
-            return false;
 
-        $this->oDb->deleteStringsBy(array('type' => 'by_cat_and_lang', 'category_id' => $aCategory['id'], 'language_id' => $aLanguage['id']));
+        $iCategoryId = 0;
+        if(empty($aCategory) || !is_array($aCategory)) {
+        	$iCategoryId = $this->addLanguageCategory($aModule['lang_category']);
+        	if(empty($iCategoryId))
+        		return false;
+        }
+        else
+        	$iCategoryId = $aCategory['id'];
+
+		$bDeleteStringsByKey = !$this->oDb->deleteStringsBy(array('type' => 'by_cat_and_lang', 'category_id' => $iCategoryId, 'language_id' => $aLanguage['id']));
 
         $bResult = true;
         foreach($aLanguageInfo['strings'] as $sKey => $sValue)
-            if($sKey != '')
-                $bResult &= $this->addLanguageString($sKey, $sValue, $aLanguage['id'], $aCategory['id'], false) > 0;
+            if($sKey != '') {
+            	if($bDeleteStringsByKey)
+            		$this->oDb->deleteStringsBy(array('type' => 'by_key_and_lang', 'key' => $sKey, 'language_id' => $aLanguage['id']));
+
+                $bResult &= $this->addLanguageString($sKey, $sValue, $aLanguage['id'], $iCategoryId, false) > 0;
+            }
 
         return $bResult;
     }
