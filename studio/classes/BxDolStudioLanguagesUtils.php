@@ -202,7 +202,7 @@ class BxDolStudioLanguagesUtils extends BxDolLanguages implements iBxDolSingleto
 
             $sPath = BX_DIRECTORY_PATH_MODULES . $aLanguageModule['path'] . 'data/langs/';
 
-            if(empty($mixedModule))
+            if(!empty($mixedModule))
                 $bResult &= $this->_restoreLanguageByModule($aLanguage, $sPath, $mixedModule);
             else {
             	$aModules = $oModuleQuery->getModules();
