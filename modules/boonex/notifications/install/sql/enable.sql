@@ -10,13 +10,13 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 
 
 -- MENU: Notifications
-SET @iMIOrder = (SELECT MAX(`order`) FROM `sys_menu_items` WHERE `set_name` = 'sys_account_notifications');
+SET @iMIOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_account_notifications');
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
 ('sys_account_notifications', @sName, 'notifications-notifications', '_bx_ntfs_menu_item_title_system_notifications', '_bx_ntfs_menu_item_title_notifications', 'page.php?i=notifications-view', '', '', 'bell col-green3', 'a:2:{s:6:"module";s:16:"bx_notifications";s:6:"method";s:28:"get_unread_notifications_num";}', '', 2147483646, 1, 0, @iMIOrder + 1);
 
 
 -- SETTINGS
-SET @iTypeOrder = (SELECT MAX(`order`) FROM `sys_options_types` WHERE `group` = 'modules');
+SET @iTypeOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_options_types` WHERE `group` = 'modules');
 INSERT INTO `sys_options_types`(`group`, `name`, `caption`, `icon`, `order`) VALUES 
 ('modules', @sName, '_bx_ntfs', 'bx_notifications@modules/boonex/notifications/|std-mi.png', IF(ISNULL(@iTypeOrder), 1, @iTypeOrder + 1));
 SET @iTypeId = LAST_INSERT_ID();
