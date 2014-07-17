@@ -1220,6 +1220,7 @@
 	<string name="_adm_txt_modules_password"><![CDATA[Password]]></string>
 	<string name="_adm_txt_modules_path_to_dolphin"><![CDATA[Path to Dolphin's folder]]></string>
 	<string name="_adm_txt_modules_process_action_success"><![CDATA[Done]]></string>
+	<string name="_adm_txt_modules_process_deleted_profiles"><![CDATA[Process deleted profiles:]]></string>
 	<string name="_adm_txt_modules_process_failed"><![CDATA[Failed]]></string>
 	<string name="_adm_txt_modules_process_success"><![CDATA[Done]]></string>
 	<string name="_adm_txt_modules_recompile_alerts"><![CDATA[Recompiling alerts:]]></string>

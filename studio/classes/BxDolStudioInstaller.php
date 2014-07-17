@@ -109,6 +109,9 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             'update_relations' => array(
                 'title' => _t('_adm_txt_modules_update_relations'),
             ),
+            'process_deleted_profiles' => array(
+                'title' => _t('_adm_txt_modules_process_deleted_profiles'),
+            ),
             'recompile_global_paramaters' => array(
                 'title' => _t('_adm_txt_modules_recompile_global_paramaters'),
             ),
@@ -720,6 +723,17 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 
 			BxDolService::call($aRelation['module'], $aRelation['on_' . $sOperation], array($this->_aConfig['home_uri']));
 		}
+
+        return BX_DOL_STUDIO_INSTALLER_SUCCESS;
+    }
+	function actionProcessDeletedProfiles($sOperation)
+    {
+        if(!in_array($sOperation, array('install', 'uninstall', 'enable', 'disable'))) 
+        	return BX_DOL_STUDIO_INSTALLER_FAILED;
+
+        bx_import('BxDolProfileQuery');
+        $o = BxDolProfileQuery::getInstance();
+        $o->processDeletedProfiles();
 
         return BX_DOL_STUDIO_INSTALLER_SUCCESS;
     }

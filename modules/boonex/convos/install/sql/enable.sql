@@ -102,6 +102,10 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
 ('sys_profile_stats', 'bx_convos', 'profile-stats-unread-messages', '_bx_cnv_menu_item_title_system_unread_messages', '_bx_cnv_menu_item_title_unread_messages', 'modules/?r=convos/folder/1', '', '', 'comments col-red1', 'a:2:{s:6:"module";s:9:"bx_convos";s:6:"method";s:23:"get_unread_messages_num";}', '', 2147483646, 1, 0, 2);
 
+-- MENU: add menu item to profiles modules actions menu (trigger* menu sets are processed separately upon modules enable/disable)
+
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('trigger_profile_view_actions', 'bx_convos', 'convos-compose', '_bx_cnv_menu_item_title_system_message', '_bx_cnv_menu_item_title_message', 'page.php?i=start-convo&profiles={profile_id}', '', '', '', '', 2147483647, 1, 0, 0);
 
 -- GRID
 

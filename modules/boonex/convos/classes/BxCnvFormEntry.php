@@ -95,7 +95,9 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
         $sVals = '';
         if (!empty($aInput['value']) && is_array($aInput['value'])) {
             foreach ($aInput['value'] as $sVal) {
-               $sVals .= '<span class="bx-def-color-bg-hl bx-def-round-corners">' . BxDolProfile::getInstance($sVal)->getDisplayName() . '<input type="hidden" name="' . $aInput['name'] . '[]" value="' . $sVal . '" /></span>';
+                if (!$sVal || !($oProfile = BxDolProfile::getInstance($sVal)))
+                    continue;
+               $sVals .= '<b class="val bx-def-color-bg-hl bx-def-round-corners">' . $oProfile->getDisplayName() . '<input type="hidden" name="' . $aInput['name'] . '[]" value="' . $sVal . '" /></b>';
             }
             $sVals = trim($sVals, ',');
         }
@@ -116,8 +118,11 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
         });
 
         $('#{$sId} input[type=text]').on('superselect', function(e, item) {
+            $(this).hide();
             if ('undefined' != typeof(item))
-                $(this).before('<span class="bx-def-color-bg-hl bx-def-round-corners">'+ item.label +'<input type="hidden" name="{$aInput['name']}[]" value="'+ item.value +'" /></span>');
+                $(this).before('<b class="bx-def-color-bg-hl bx-def-round-corners">'+ item.label +'<input type="hidden" name="{$aInput['name']}[]" value="'+ item.value +'" /></b>');
+            fAutoShrinkInput();
+            $(this).show();
             this.value = '';
 
         }).on('keydown', function(e) {
@@ -128,42 +133,54 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
 
         });
 
-        $('#{$sId}').on('click', 'span', function() {
+        $('#{$sId}').on('click', 'b', function() {
             $(this).remove();
+            fAutoShrinkInput();
         });
 
+        fAutoShrinkInput = function () {
+            var iWidthCont = $('#{$sId}.bx-form-input-autotoken').innerWidth();
+            var iWidthExisting = 0;
+            $('#{$sId}.bx-form-input-autotoken b').each(function () {
+                iWidthExisting += $(this).outerWidth(true);
+            });
+            $('#{$sId}.bx-form-input-autotoken input').width(parseInt(iWidthCont - iWidthExisting > 180 ? iWidthCont - iWidthExisting : 180) - 5);
+        };
+
+        fAutoShrinkInput();
     });
 </script>
 <style>
     .bx-form-input-autotoken {
-      float:left;
-      padding:0px;
-      height:auto;
+        float:left;
+        padding:0px;
+        height:auto;
     }
-    .bx-form-input-autotoken span {
-      cursor:pointer;
-      display:block;
-      float:left;
-      padding:0.5em;
-      padding-right:1.5em;
-      margin:0.1em;
+    .bx-form-input-autotoken b {
+        cursor:pointer;
+        display:block;
+        float:left;
+        padding:0.5em;
+        padding-right:1.5em;
+        margin:0.1em;
+        font-weight:normal;
     }
-    .bx-form-input-autotoken span:hover{
-      opacity:0.7;
+    .bx-form-input-autotoken b:hover {
+        opacity:0.7;
     }
-    .bx-form-input-autotoken span:after{
-     position:absolute;
-     content:"x";
-     padding:0 0.5em;
-     margin:0.2em 0 0.7em 0.5em;
-     font-size:0.7em;
-     font-weight:bold;
+    .bx-form-input-autotoken b:after {
+        position:absolute;
+        content:"x";
+        padding:0 0.5em;
+        margin:0.2em 0 0.7em 0.5em;
+        font-size:0.7em;
+        font-weight:bold;
     }
     .bx-form-input-autotoken input {
-      border:0;
-      margin:0;
-      padding:0 0 0 5px;
-      width:auto;
+        border:0;
+        margin:0;
+        padding:0 0 0 5px;
+        width:auto;
     }
 </style>
 <div id="{$sId}" class="bx-form-input-autotoken bx-def-font-inputs bx-form-input-text">
@@ -187,6 +204,13 @@ EOS;
                 $aValues = array_merge($aContentInfo, $aValues);
         }
 
+        if ($sProfilesIds = bx_get('profiles')) { // if writing directly to some recipients, pre-fill them
+            $a = explode(',', $sProfilesIds);
+            $a = array_unique(BxDolFormCheckerHelper::passInt($a));
+            if ($a)
+                $aValues['recipients'] = array_merge(empty($aValues['recipients']) ? array() : $aValues['recipients'], $a);
+            
+        }
         return parent::initChecker ($aValues, $aSpecificValues);
     }
 

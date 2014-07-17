@@ -219,6 +219,20 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
         return $this->query($sSql);
     }
 
+    /**
+     * Reset deleted profile ids and assign system profile ids.
+     * Should be called after profiles module deletion.
+     * It can be called automatically if 
+     * @code
+     * 'process_deleted_profiles' => 1 
+     * @code
+     * is specified in module config.php file in 'uninstall' section.
+     */
+    public function processDeletedProfiles ()
+    {
+        $this->query("UPDATE  `sys_accounts` AS  `a` LEFT OUTER JOIN  `sys_profiles` AS  `p` ON  `a`.`profile_id` =  `p`.`id` SET  `a`.`profile_id` =0 WHERE  `p`.`id` IS NULL"); // reset deleted profiles
+        return $this->query("UPDATE  `sys_accounts` AS  `a` INNER JOIN  `sys_profiles` AS  `p` ON  `a`.`id` =  `p`.`account_id` AND  `p`.`type` =  'system' SET  `a`.`profile_id` =  `p`.`id`"); // assign system profile to reset accounts
+    }
 }
 
 /** @} */
