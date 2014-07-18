@@ -155,7 +155,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         );
     }
 
-    public function install($aParams, $bAutoEnable = true)
+    public function install($aParams, $bAutoEnable = false)
     {
     	$bAutoEnable = $bAutoEnable || (isset($aParams['auto_enable']) && (bool)$aParams['auto_enable']);
 
