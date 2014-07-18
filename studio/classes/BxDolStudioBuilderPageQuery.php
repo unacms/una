@@ -175,6 +175,17 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
         return (int)$this->getOne("SELECT FOUND_ROWS()");
     }
 
+    function getModulesWithCopyableBlocks()
+    {
+    	$sSql = $this->prepare("SELECT
+				`tm`.`name` AS `module`
+			FROM `sys_modules` AS `tm`
+			LEFT JOIN `sys_pages_blocks` AS `tpb` ON `tm`.`name`=`tpb`.`module`
+			WHERE `tm`.`type`=? AND `tpb`.`copyable`=?
+			GROUP BY `tm`.`name`", BX_DOL_MODULE_TYPE_MODULE, 1);
+    	return $this->getColumn($sSql);
+    }
+
     function getBlocks($aParams, &$aItems, $bReturnCount = true)
     {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));

@@ -594,10 +594,13 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
         bx_import('BxDolModuleQuery');
         $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules'));
+        $aModulesWithBlocks = $this->oDb->getModulesWithCopyableBlocks();
         foreach($aModules as $aModule) {
         	$sName = $aModule['name'];
+        	if(!in_array($sName, $aModulesWithBlocks))
+        		continue;
 
-            if(!empty($aMenu[$aModule['name']]))
+            if(!empty($aMenu[$sName]))
                 $aMenu[$sName] = array_merge($aMenu[$sName], $aModule);
             else
                 $aMenu[$sName] = $aModule;

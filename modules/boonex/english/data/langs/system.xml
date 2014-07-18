@@ -940,7 +940,7 @@
 	<string name="_adm_page_cpt_login"><![CDATA[Login]]></string>
 	<string name="_adm_page_cpt_polyglot"><![CDATA[Polyglot]]></string>
 	<string name="_adm_page_cpt_settings"><![CDATA[Settings]]></string>
-	<string name="_adm_page_cpt_store"><![CDATA[Store]]></string>
+	<string name="_adm_page_cpt_store"><![CDATA[Extensions]]></string>
 	<string name="_adm_pgt_btn_add_new_key"><![CDATA[Create New Key]]></string>
 	<string name="_adm_pgt_btn_delete"><![CDATA[Delete]]></string>
 	<string name="_adm_pgt_btn_delete_title"><![CDATA[Delete key]]></string>
@@ -1260,7 +1260,7 @@
 	<string name="_adm_wgt_cpt_designer"><![CDATA[Designer]]></string>
 	<string name="_adm_wgt_cpt_polyglot"><![CDATA[Polyglot]]></string>
 	<string name="_adm_wgt_cpt_settings"><![CDATA[Settings]]></string>
-	<string name="_adm_wgt_cpt_store"><![CDATA[Store]]></string>
+	<string name="_adm_wgt_cpt_store"><![CDATA[Extensions]]></string>
 	<string name="_are you sure?"><![CDATA[Are you sure?]]></string>
 	<string name="_bottom_text"><![CDATA[2002-{0}. Product of <a class="bottom_text" href="http://www.boonex.com/">BoonEx Group</a>.]]></string>
 	<string name="_cmt_block_comments_title"><![CDATA[Comments ({0})]]></string>
