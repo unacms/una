@@ -19,12 +19,6 @@ define('BX_TIMELINE_FILTER_ALL', 'all');
 define('BX_TIMELINE_FILTER_OWNER', 'owner');
 define('BX_TIMELINE_FILTER_OTHER', 'other');
 
-/*
-define('BX_TIMELINE_PARSE_TYPE_TEXT', 'text');
-define('BX_TIMELINE_PARSE_TYPE_LINK', 'link');
-define('BX_TIMELINE_PARSE_TYPE_PHOTO', 'photo');
-*/
-
 define('BX_TIMELINE_PARSE_TYPE_POST', 'post');
 define('BX_TIMELINE_PARSE_TYPE_SHARE', 'share');
 define('BX_TIMELINE_PARSE_TYPE_DEFAULT', BX_TIMELINE_PARSE_TYPE_POST);
