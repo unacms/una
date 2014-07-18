@@ -6,7 +6,7 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_notifications_view', '_bx_ntfs_page_title_system_view', '_bx_ntfs_page_title_view', @sName, 5, 2147483647, 1, 'notifications-view', 'page.php?i=notifications-view', '', '', '', 0, 1, 0, '', '');
 
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
-('bx_notifications_view', 1, @sName, '_bx_ntfs_page_block_title_view', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:16:"bx_notifications";s:6:"method";s:14:"get_block_view";}', 0, 0, 1);
+('bx_notifications_view', 1, @sName, '_bx_ntfs_page_block_title_view', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:16:"bx_notifications";s:6:"method";s:14:"get_block_view";}', 0, 1, 1);
 
 
 -- MENU: Notifications
