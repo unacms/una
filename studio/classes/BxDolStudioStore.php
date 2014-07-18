@@ -133,7 +133,7 @@ class BxDolStudioStore extends BxTemplStudioPage
                         break;
 
                     bx_import('BxDolStudioInstallerUtils');
-                    $aResult = BxDolStudioInstallerUtils::getInstance()->perform($sValue, 'install');
+                    $aResult = BxDolStudioInstallerUtils::getInstance()->perform($sValue, 'install', array('auto_enable' => true));
                     break;
 
                 case 'update':

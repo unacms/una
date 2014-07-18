@@ -155,8 +155,10 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         );
     }
 
-    public function install($aParams, $bEnable = false)
+    public function install($aParams, $bAutoEnable = true)
     {
+    	$bAutoEnable = $bAutoEnable || (isset($aParams['auto_enable']) && (bool)$aParams['auto_enable']);
+
         //--- Check whether the module was already installed ---//
         if($this->oDb->isModule($this->_aConfig['home_uri']))
             return array(
@@ -164,7 +166,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
                 'result' => false
             );
 
-        $sAction = $bEnable ? 'enable' : 'install';
+        $sAction = $bAutoEnable ? 'enable' : 'install';
 
         $aResult = array();
         bx_alert('system', 'before_' . $sAction, 0, false, array ('config' => $this->_aConfig, 'result' => &$aResult));
@@ -200,12 +202,9 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             if($aLanguage['uri'] == 'en')
                 continue;
 
-            $sLanguageConfig = BX_DIRECTORY_PATH_MODULES . $aLanguage['path'] . '/install/config.php';
-            if(!file_exists($sLanguageConfig))
-                continue;
-
-            include_once($sLanguageConfig);
-            $aLanguageConfig = &$aConfig;
+			$aLanguageConfig = self::getModuleConfig(BX_DIRECTORY_PATH_MODULES . $aLanguage['path'] . '/install/config.php');
+			if(empty($aLanguageConfig))
+				continue;
 
             if(!isset($aLanguageConfig['includes'][$sModuleUri]) || empty($aLanguageConfig['includes'][$sModuleUri]))
                 continue;
@@ -243,19 +242,22 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             $this->oDb->cleanMemory('sys_modules');
         }
 
-        if($bEnable) {
-            $aResultEnable = $this->enable($aParams);
-
-            $aResult['result'] = $aResult['result'] & $aResultEnable['result'];
-            $aResult['message'] = $aResult['message'] . $aResultEnable['message'];
-        }
-
         bx_alert('system', $sAction, 0, false, array ('config' => $this->_aConfig, 'result' => &$aResult));
+
+	    if($aResult['result'] && $bAutoEnable) {
+			$aResultEnable = $this->enable($aParams);
+
+			$aResult['result'] = $aResult['result'] & $aResultEnable['result'];
+			$aResult['message'] = $aResult['message'] . $aResultEnable['message'];
+		}
+
         return $aResult;
     }
 
-    public function uninstall($aParams, $bDisable = false)
+    public function uninstall($aParams, $bAutoDisable = false)
     {
+    	$bAutoDisable = $bAutoDisable || (isset($aParams['auto_disable']) && (bool)$aParams['auto_disable']);
+
         //--- Check whether the module was already uninstalled ---//
         if(!$this->oDb->isModule($this->_aConfig['home_uri']))
             return array(
@@ -263,7 +265,13 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
                 'result' => false
             );
 
-        $sAction = $bDisable ? 'disable' : 'uninstall';
+		if($bAutoDisable) {
+            $aResultDisable = $this->disable($aParams);
+            if(!$aResultDisable['result'])
+            	return $aResultDisable;
+        }
+
+        $sAction = $bAutoDisable ? 'disable' : 'uninstall';
 
         $aResult = array();
         bx_alert('system', 'before_' . $sAction, 0, false, array ('config' => $this->_aConfig, 'result' => &$aResult));
@@ -304,11 +312,9 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             $this->oDb->cleanMemory ('sys_modules');
         }
 
-        if($bDisable) {
-            $aResultEnable = $this->disable($aParams);
-
-            $aResult['result'] = $aResult['result'] & $aResultEnable['result'];
-            $aResult['message'] = $aResult['message'] . $aResultEnable['message'];
+        if($bAutoDisable) {
+	        $aResult['result'] = $aResultDisable['result'] & $aResult['result'];
+			$aResult['message'] = $aResultDisable['message'] . $aResult['message'];
         }
 
         bx_alert('system', $sAction, 0, false, array ('config' => $this->_aConfig, 'result' => &$aResult));

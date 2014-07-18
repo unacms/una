@@ -45,10 +45,10 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         $sInstallerFile = 'install/installer.php';
         $sInstallerClass = $sOperation == 'update' ? 'Updater' : 'Installer';
 
-        $sPathConfig = BX_DIRECTORY_PATH_MODULES . $sDirectory . $sConfigFile;
+        $aConfig = self::getModuleConfig(BX_DIRECTORY_PATH_MODULES . $sDirectory . $sConfigFile);
+
         $sPathInstaller = BX_DIRECTORY_PATH_MODULES . $sDirectory . $sInstallerFile;
-        if(file_exists($sPathConfig) && file_exists($sPathInstaller)) {
-            include($sPathConfig);
+        if(!empty($aConfig) && file_exists($sPathInstaller)) {
             require_once($sPathInstaller);
 
             $sClassName = $aConfig['class_prefix'] . $sInstallerClass;
