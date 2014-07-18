@@ -166,10 +166,8 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
                 'result' => false
             );
 
-        $sAction = $bAutoEnable ? 'enable' : 'install';
-
         $aResult = array();
-        bx_alert('system', 'before_' . $sAction, 0, false, array ('config' => $this->_aConfig, 'result' => &$aResult));
+        bx_alert('system', 'before_install', 0, false, array ('config' => $this->_aConfig, 'result' => &$aResult));
         if ($aResult && !$aResult['result'])
             return $aResult;
 
@@ -242,7 +240,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             $this->oDb->cleanMemory('sys_modules');
         }
 
-        bx_alert('system', $sAction, 0, false, array ('config' => $this->_aConfig, 'result' => &$aResult));
+        bx_alert('system', 'install', 0, false, array ('config' => $this->_aConfig, 'result' => &$aResult));
 
 	    if($aResult['result'] && $bAutoEnable) {
 			$aResultEnable = $this->enable($aParams);
@@ -271,10 +269,8 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             	return $aResultDisable;
         }
 
-        $sAction = $bAutoDisable ? 'disable' : 'uninstall';
-
         $aResult = array();
-        bx_alert('system', 'before_' . $sAction, 0, false, array ('config' => $this->_aConfig, 'result' => &$aResult));
+        bx_alert('system', 'before_uninstall', 0, false, array ('config' => $this->_aConfig, 'result' => &$aResult));
         if ($aResult && !$aResult['result'])
             return $aResult;
 
@@ -317,7 +313,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 			$aResult['message'] = $aResultDisable['message'] . $aResult['message'];
         }
 
-        bx_alert('system', $sAction, 0, false, array ('config' => $this->_aConfig, 'result' => &$aResult));
+        bx_alert('system', 'uninstall', 0, false, array ('config' => $this->_aConfig, 'result' => &$aResult));
         return $aResult;
     }
 
@@ -384,6 +380,11 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
                 'result' => false
             );
 
+		$aResult = array();
+        bx_alert('system', 'before_enable', 0, false, array ('config' => $this->_aConfig, 'result' => &$aResult));
+        if ($aResult && !$aResult['result'])
+            return $aResult;
+
         $aResult = $this->_perform('enable');
         if($aResult['result']) {
             $this->oDb->enableModuleByUri($aModule['uri']);
@@ -393,6 +394,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             $this->oDb->cleanMemory('sys_modules');
         }
 
+        bx_alert('system', 'enable', 0, false, array ('config' => $this->_aConfig, 'result' => &$aResult));
         return $aResult;
     }
 
@@ -413,6 +415,11 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
                 'message' => _t('_adm_err_modules_already_disabled'),
                 'result' => false
             );
+
+		$aResult = array();
+        bx_alert('system', 'before_disable', 0, false, array ('config' => $this->_aConfig, 'result' => &$aResult));
+        if ($aResult && !$aResult['result'])
+            return $aResult;
 
         //--- Check for dependent modules ---//
         $bDependent = false;
@@ -440,6 +447,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             $this->oDb->cleanMemory('sys_modules');
         }
 
+        bx_alert('system', 'disable', 0, false, array ('config' => $this->_aConfig, 'result' => &$aResult));
         return $aResult;
     }
 
