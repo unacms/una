@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `bx_contact_entries` (
 
 -- FORMS
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
-('mod_cnt_contact', @sName, '_bx_contact_form_contact', 'page.php?i=contact', '', 'do_submit', 'bx_contact_entries', 'id', 'uri', 'subject', '', 0, 1, '', '');
+('mod_cnt_contact', @sName, '_bx_contact_form_contact', '', '', 'do_submit', 'bx_contact_entries', 'id', 'uri', 'subject', '', 0, 1, '', '');
 
 INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
 ('mod_cnt_contact_send', @sName, 'mod_cnt_contact', '_bx_contact_form_contact_display_send', 0);

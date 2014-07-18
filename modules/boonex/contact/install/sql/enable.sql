@@ -6,7 +6,7 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_contact_contact', '_bx_contact_page_title_sys_contact', '_bx_contact_page_title_contact', @sName, 5, 2147483647, 1, 'contact', 'page.php?i=contact', '', '', '', 0, 1, 0, '', '');
 
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
-('bx_contact_contact', 1, @sName, '_bx_contact_page_block_title_form', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_contact";s:6:"method";s:14:"get_block_form";}', 0, 0, 1);
+('bx_contact_contact', 1, @sName, '_bx_contact_page_block_title_form', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_contact";s:6:"method";s:14:"get_block_form";}', 0, 1, 1);
 
 
 -- MENU: FOOTER
