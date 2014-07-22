@@ -17,6 +17,7 @@ define('BX_BASE_MOD_NTFS_HANDLER_TYPE_DELETE', 'delete');
 
 define('BX_BASE_MOD_NTFS_TYPE_OWNER', 'owner');
 define('BX_BASE_MOD_NTFS_TYPE_CONNECTIONS', 'connections');
+define('BX_BASE_MOD_NTFS_TYPE_PUBLIC', 'public');
 
 /**
  * Base module class.
