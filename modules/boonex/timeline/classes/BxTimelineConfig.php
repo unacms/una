@@ -16,8 +16,6 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 {
     protected $_bAllowDelete;
 
-    protected $_iPerPageProfile;
-    protected $_iPerPageAccount;
     protected $_iRssLength;
     protected $_iCharsDisplayMax;
 
@@ -128,7 +126,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_aPerPage = array(
     		'default' => 10,
         	'profile' => (int)getParam($sOptionPrefix . 'events_per_page_profile'),
-        	'account' => (int)getParam($sOptionPrefix . 'events_per_page_account')
+        	'account' => (int)getParam($sOptionPrefix . 'events_per_page_account'),
+        	'home' => (int)getParam($sOptionPrefix . 'events_per_page_home')
     	);
 
         $this->_iRssLength = (int)getParam($sOptionPrefix . 'rss_length');

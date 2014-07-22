@@ -343,6 +343,17 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         return array('content' => $sContent);
     }
 
+	public function serviceGetBlockViewHome($iProfileId = 0, $iStart = -1, $iPerPage = -1, $iTimeline = -1, $sFilter = '', $aModules = array())
+    {
+        $aParams = $this->_prepareParams(BX_BASE_MOD_NTFS_TYPE_PUBLIC, $iProfileId, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline);
+        $aParams['per_page'] = (int)$iPerPage > 0 ? $iPerPage : $this->_oConfig->getPerPage('home');
+
+        $this->_iOwnerId = $aParams['owner_id'];
+
+        $sContent = $this->_oTemplate->getViewBlock($aParams);
+        return array('content' => $sContent);
+    }
+
     public function serviceGetBlockItem()
     {
         $iItemId = bx_process_input(bx_get('id'), BX_DATA_INT);

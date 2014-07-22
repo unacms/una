@@ -263,25 +263,35 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 			$sWhereClause .= $sWhereModuleFilter;
 
 		//--- Check type
-		if(!empty($aParams['owner_id']))
-			switch($aParams['type']) {
-				case BX_BASE_MOD_NTFS_TYPE_OWNER:
-					$sWhereClause .= $this->prepare("AND `{$this->_sTable}`.`owner_id`=? ", $aParams['owner_id']);
+		switch($aParams['type']) {
+			case BX_BASE_MOD_NTFS_TYPE_OWNER:
+				if(empty($aParams['owner_id']))
 					break;
 
-				case BX_BASE_MOD_NTFS_TYPE_CONNECTIONS:
-					bx_import('BxDolConnection');
-					$oConnection = BxDolConnection::getObjectInstance($this->_oConfig->getObject('conn_subscriptions'));
-					
-					$aQueryParts = $oConnection->getConnectedContentAsSQLParts($this->_sPrefix . "events", 'owner_id', $aParams['owner_id']);
-					$sJoinClause .= ' ' . $aQueryParts['join'];
-					
-					$iUserId = bx_get_logged_profile_id();
-					$sCommonPostPrefix = $this->_oConfig->getPrefix('common_post');
-					
-					$sWhereClause .= "AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` <> " . $iUserId . ", 1)";
+				$sWhereClause .= $this->prepare("AND `{$this->_sTable}`.`owner_id`=? ", $aParams['owner_id']);
+				break;
+
+			case BX_BASE_MOD_NTFS_TYPE_CONNECTIONS:
+				if(empty($aParams['owner_id']))
 					break;
-			}
+
+				bx_import('BxDolConnection');
+				$oConnection = BxDolConnection::getObjectInstance($this->_oConfig->getObject('conn_subscriptions'));
+
+				$aQueryParts = $oConnection->getConnectedContentAsSQLParts($this->_sPrefix . "events", 'owner_id', $aParams['owner_id']);
+				$sJoinClause .= ' ' . $aQueryParts['join'];
+
+				$iUserId = bx_get_logged_profile_id();
+				$sCommonPostPrefix = $this->_oConfig->getPrefix('common_post');
+
+				$sWhereClause .= "AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` <> " . $iUserId . ", 1) ";
+				break;
+
+			case BX_BASE_MOD_NTFS_TYPE_PUBLIC:
+				$sCommonPostPrefix = $this->_oConfig->getPrefix('common_post');
+				$sWhereClause .= "AND SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") <> '" . $sCommonPostPrefix . "' ";
+				break;
+		}
 
 		return array($sJoinClause, $sWhereClause);
     }
