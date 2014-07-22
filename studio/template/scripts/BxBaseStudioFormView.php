@@ -208,14 +208,11 @@ class BxBaseStudioFormView extends BxDolStudioForm
      */
     function genInputCheckboxSet(&$aInput)
     {
-        $aCurValues = array();
-        if (isset($aInput['value']) && $aInput['value'])
-            $aCurValues = is_array($aInput['value']) ? $aInput['value'] : array();
-
+     	$aInput['value'] = isset($aInput['value']) && $aInput['value'] && is_array($aInput['value']) ? $aInput['value'] : array();
 		if(!empty($aInput['reverse']))
-			$aCurValues = array_diff(array_keys($aInput['values']), $aCurValues);
+			$aInput['value'] = array_diff(array_keys($aInput['values']), $aInput['value']);
 
-        return $this->_genInputsSet($aInput, 'checkbox', $aCurValues, '_isSelectedMultiple', '[]');
+        return parent::genInputCheckboxSet($aInput);
     }
 }
 
