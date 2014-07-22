@@ -38,7 +38,7 @@ class BxDolInstallCmd
             'db_name' => 'test',
             'db_user' => 'root',
             'db_password' => 'root',
-            'site_title' => 'Dolphin Test',
+            'site_title' => 'Dolphin U Test',
             'site_email' => 'no-reply@example.com',
             'admin_email' => 'admin@example.com',
             'admin_username' => 'admin',
