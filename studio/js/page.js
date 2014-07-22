@@ -41,6 +41,8 @@ BxDolStudioPage.prototype.processJson = function (oData) {
 };
 
 BxDolStudioPage.prototype.togglePopup = function(sName, oLink) {
+	var $this = this;
+
 	var sId = '#bx-std-pcap-menu-popup-' + sName;
 	if($(sId + ':visible').length > 0) {
 		$(sId).dolPopupHide();
@@ -49,15 +51,40 @@ BxDolStudioPage.prototype.togglePopup = function(sName, oLink) {
 
 	$(oLink).parent().addClass('bx-menu-tab-active');
 
+	var oPopupOptions = {
+		pointer:{
+			el:$(oLink)
+		},
+		onHide: function() {
+			$(oLink).parent().removeClass('bx-menu-tab-active');
+		}
+	};
+
+	switch(sName) {
+		case 'help':
+			oPopupOptions = $.extend({}, oPopupOptions, {
+				onShow: function() {
+					var oPopup = $(this);
+					var oPopupRss = oPopup.find('.RSSAggrCont');
+					if(!oPopupRss.find('.bx-loading-ajax').length)
+						return;
+
+					oPopupRss.dolRSSFeed({
+						onError: function() {
+							oPopupRss.html(_t('_adm_txt_show_help_content_empty'));
+							oPopup._dolPopupSetPosition(oPopupOptions);
+						},
+						onShow: function() {
+							oPopup._dolPopupSetPosition(oPopupOptions);
+						}
+					});
+				}
+			});
+			break;
+	}
+
 	if($(sId).html().length > 0)
-		$(sId).dolPopup({
-			pointer:{
-				el:$(oLink)
-			},
-			onHide: function() {
-				$(oLink).parent().removeClass('bx-menu-tab-active');
-			}
-		});
+		$(sId).dolPopup(oPopupOptions);
 };
 
 BxDolStudioPage.prototype.showMessage = function(oData) {

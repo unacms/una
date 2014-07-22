@@ -20,12 +20,15 @@ $aPredefinedRssFeeds = array (
     'boonex_unity_market_featured' => 'http://www.boonex.com/unity/extensions/featured_posts?rss=1',
 );
 
-if (isset($aPredefinedRssFeeds[$mixedBlockId])) {
+$sCont = "";
 
+$aMatches = array();
+$sPattern = "/((https?|ftp|news):\/\/)?([a-z]([a-z0-9\-]*\.)+(aero|arpa|biz|com|coop|edu|gov|info|int|jobs|mil|museum|name|nato|net|org|pro|travel|[a-z]{2})|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))(\/[a-z0-9_\-\.~]+)*(\/([a-z0-9_\-\.]*)(\?[a-z0-9+_\-\.%=&amp;]*)?)?(#[a-z][a-z0-9_]*)?/";
+if(preg_match($sPattern, $mixedBlockId, $aMatches))
+	$sCont = $aMatches[0];
+else if(isset($aPredefinedRssFeeds[$mixedBlockId]))
     $sCont = $aPredefinedRssFeeds[$mixedBlockId];
-
-} else {
-
+else {
     bx_import('BxDolPageQuery');
     $oPageQuery = new BxDolPageQuery(array());
     $sCont = $oPageQuery->getPageBlockContent($mixedBlockId);

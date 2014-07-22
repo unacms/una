@@ -36,7 +36,7 @@ class BxDolStudioModule extends BxTemplStudioPage
             $this->sPage = $sPage;
     }
 
-    function init()
+    public function init()
     {
         //--- Check Actions ---//
         if(($sAction = bx_get('mod_action')) !== false) {
@@ -61,6 +61,12 @@ class BxDolStudioModule extends BxTemplStudioPage
         if(empty($this->aModule) || !is_array($this->aModule))
             BxDolStudioTemplate::getInstance()->displayPageNotFound();
 
+		$this->addMarkers(array(
+			'module_name' => $this->aModule['name'],
+			'module_uri' => $this->aModule['uri'],
+			'module_title' => $this->aModule['title']
+		));
+
         $this->addAction(array(
             'type' => 'switcher',
             'name' => 'activate',
@@ -68,9 +74,11 @@ class BxDolStudioModule extends BxTemplStudioPage
             'checked' => (int)$this->aModule['enabled'] == 1,
             'onchange' => "javascript:" . $this->getPageJsObject() . ".activate('" . $this->sModule . "', this)"
         ), false);
+
+        $this->sPageRssHelpUrl = $this->aModule['help_url'];
     }
 
-    function activate($sModule)
+    public function activate($sModule)
     {
         $aModule = $this->oDb->getModuleByName($sModule);
         if(empty($aModule) || !is_array($aModule))

@@ -19,7 +19,7 @@ class BxBaseStudioPage extends BxDolStudioPage
         parent::__construct($mixedPageName);
     }
 
-    function getPageIndex()
+    public function getPageIndex()
     {
         if(!is_array($this->aPage) || empty($this->aPage))
             return BX_PAGE_DEFAULT;
@@ -30,22 +30,22 @@ class BxBaseStudioPage extends BxDolStudioPage
             return !empty($this->aPage[$this->sPageSelected]['index']) ? (int)$this->aPage[$this->sPageSelected]['index'] : BX_PAGE_DEFAULT;
     }
 
-    function getPageJs()
+    public function getPageJs()
     {
-        return array('jquery.anim.js', 'page.js');
+        return array('jquery.anim.js', 'jquery.jfeed.pack.js', 'jquery.dolRSSFeed.js', 'page.js');
     }
 
-    function getPageJsClass()
-    {
-        return '';
-    }
-
-    function getPageJsObject()
+    public function getPageJsClass()
     {
         return '';
     }
 
-    function getPageJsCode($aOptions = array(), $bWrap = true)
+    public function getPageJsObject()
+    {
+        return '';
+    }
+
+    public function getPageJsCode($aOptions = array(), $bWrap = true)
     {
         $sJsClass = $this->getPageJsClass();
         $sJsObject = $this->getPageJsObject();
@@ -63,7 +63,7 @@ class BxBaseStudioPage extends BxDolStudioPage
         return $sContent;
     }
 
-    function getPageCss()
+    public function getPageCss()
     {
         $aCss = array('page.css', 'menu_top.css');
         if((int)$this->aPage['index'] == 3)
@@ -72,7 +72,7 @@ class BxBaseStudioPage extends BxDolStudioPage
         return $aCss;
     }
 
-    function getPageHeader()
+    public function getPageHeader()
     {
         if(empty($this->aPage) || !is_array($this->aPage))
             return '';
@@ -80,12 +80,12 @@ class BxBaseStudioPage extends BxDolStudioPage
         return _t(!$this->bPageMultiple ? $this->aPage['caption'] : $this->aPage[$this->sPageSelected]['caption']);
     }
 
-    function getPageBreadcrumb()
+    public function getPageBreadcrumb()
     {
         return array();
     }
 
-    function getPageCaption()
+    public function getPageCaption()
     {
         if(empty($this->aPage) || !is_array($this->aPage))
             return '';
@@ -144,12 +144,12 @@ class BxBaseStudioPage extends BxDolStudioPage
         return $oTemplate->parseHtmlByName('page_caption.html', $aTmplVars);
     }
 
-    function getPageAttributes()
+    public function getPageAttributes()
     {
         return '';
     }
 
-    function getPageMenu($aMenu, $aMarkers = array())
+    public function getPageMenu($aMenu, $aMarkers = array())
     {
         bx_import('BxTemplStudioMenu');
         $oMenu = new BxTemplStudioMenu(array('template' => 'menu_side.html', 'menu_items' => $aMenu));
@@ -159,14 +159,22 @@ class BxBaseStudioPage extends BxDolStudioPage
         return $oMenu->getCode();
     }
 
-    function getPageCode($bHidden = false) {}
+    public function getPageCode($bHidden = false) {}
 
     protected function getPageCaptionHelp()
     {
-        $oTemplate = BxDolStudioTemplate::getInstance();
+    	$this->sPageRssHelpUrl = bx_replace_markers($this->sPageRssHelpUrl, $this->aMarkers);
 
-        $sContent = _t('_adm_txt_show_help_content_empty');
-        return $oTemplate->parseHtmlByName('page_caption_help.html', array('content' => $sContent));
+    	$GLOBALS['gbBxSysIsRssInitialized'] = true;
+
+    	bx_import('BxTemplFunctions');
+    	$sContent = BxTemplFunctions::getInstance()->getRssHolder($this->sPageRssHelpUrl, $this->iPageRssHelpLength);
+
+        $oTemplate = BxDolStudioTemplate::getInstance();
+    	$oTemplate->addJsTranslation('_adm_txt_show_help_content_empty');
+        return $oTemplate->parseHtmlByName('page_caption_help.html', array(
+        	'content' => $sContent
+        ));
     }
 
     protected function getPageCaptionActions()
@@ -214,7 +222,7 @@ class BxBaseStudioPage extends BxDolStudioPage
      * Block Methods
      *
      */
-    function getBlockCaption($aBlock)
+    public function getBlockCaption($aBlock)
     {
         if(empty($aBlock) || !is_array($aBlock))
             return '';
@@ -252,7 +260,7 @@ class BxBaseStudioPage extends BxDolStudioPage
         return $oTemplate->parseHtmlByName('block_caption.html', $aTmplVars);
     }
 
-    function getBlockPanelTop($aBlock)
+    public function getBlockPanelTop($aBlock)
     {
         if(empty($aBlock) || !is_array($aBlock))
             return '';
@@ -265,7 +273,7 @@ class BxBaseStudioPage extends BxDolStudioPage
         return $oTemplate->parseHtmlByName('block_panel_top.html', $aTmplVars);
     }
 
-    function getBlockPanelBottom($aBlock)
+    public function getBlockPanelBottom($aBlock)
     {
         if(empty($aBlock) || !is_array($aBlock))
             return '';

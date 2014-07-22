@@ -20,10 +20,16 @@ define('BX_DOL_STUDIO_MIT_ITEM', 'item');
 class BxDolStudioPage extends BxDol
 {
     protected $oDb;
+
     protected $aPage;
     protected $bPageMultiple;
     protected $sPageSelected;
+
     protected $aActions;
+    protected $aMarkers;
+
+    protected $sPageRssHelpUrl;
+    protected $iPageRssHelpLength;
 
     function __construct($mixedPageName)
     {
@@ -34,7 +40,11 @@ class BxDolStudioPage extends BxDol
         $this->aPage = array();
         $this->bPageMultiple = false;
         $this->sPageSelected = '';
+
         $this->aActions = array();
+
+        $this->sPageRssHelpUrl = 'http://feed.boonex.com/?section={page_name}';
+        $this->iPageRssHelpLength = 5;
 
         if(is_string($mixedPageName)) {
             $this->oDb->getPages(array('type' => 'by_page_name_full', 'value' => $mixedPageName), $this->aPage, false);
@@ -59,6 +69,11 @@ class BxDolStudioPage extends BxDol
             }
         }
 
+        $this->aMarkers = array(
+        	'page_name' => $this->aPage['name'],
+        	'page_caption' => $this->aPage['caption'],
+        );
+
         if(!$this->bPageMultiple)
             $this->addAction(array(
                 'type' => 'switcher',
@@ -69,7 +84,7 @@ class BxDolStudioPage extends BxDol
             ));
     }
 
-    function addAction($aAction, $bOnRight = true)
+    public function addAction($aAction, $bOnRight = true)
     {
         if($bOnRight)
             $this->aActions[] = $aAction;
@@ -77,12 +92,26 @@ class BxDolStudioPage extends BxDol
             $this->aActions = array_merge(array($aAction), $this->aActions);
     }
 
-    function removeActions()
+    public function removeActions()
     {
         $this->aActions = array();
     }
 
-    function bookmark()
+    /**
+     * Add replace markers.
+     * @param $a array of markers as key => value
+     * @return true on success or false on error
+     */
+    public function addMarkers($a)
+    {
+        if(empty($a) || !is_array($a))
+            return false;
+
+        $this->aMarkers = array_merge($this->aMarkers, $a);
+        return true;
+    }
+
+    public function bookmark()
     {
         $bResult = $this->oDb->bookmark($this->aPage);
         if(!$bResult)

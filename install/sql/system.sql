@@ -709,6 +709,7 @@ CREATE TABLE `sys_modules` (
   `version` varchar(32) NOT NULL default '',
   `product_url` varchar(128) NOT NULL default '',
   `update_url` varchar(128) NOT NULL default '',
+  `help_url` varchar(128) NOT NULL default '',
   `path` varchar(255) NOT NULL default '',  
   `uri` varchar(32) NOT NULL default '',
   `class_prefix` varchar(32) NOT NULL default '',

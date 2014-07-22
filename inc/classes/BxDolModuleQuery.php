@@ -134,6 +134,7 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
                 `version`,
                 `product_url`,
                 `update_url`,
+                `help_url`,
                 `path`,
                 `uri`,
                 `class_prefix`,
