@@ -127,43 +127,6 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
     }
 
     /**
-     * Outputs holder html for dynamically loaded RSS.
-     * It automatically adds necessary js, css files and make injection into HTML HEAD section.
-     * @param $mixedRssId - system rss name, or current block id (if inserted into builder page)
-     * @param $iRssNum - numbr of rss items to disolay
-     * @param $iMemberId - optional member id
-     */
-    function getRssHolder ($mixedRssId, $iRssNum, $iMemberId = 0)
-    {
-        if (!isset($GLOBALS['gbBxSysIsRssInitialized']) || !$GLOBALS['gbBxSysIsRssInitialized']) {
-
-            $this->_oTemplate->addCss(array(
-                'rss.css',
-            ));
-
-            $this->_oTemplate->addJs(array(
-                'jquery.jfeed.pack.js',
-                'jquery.dolRSSFeed.js',
-            ));
-
-            $this->_oTemplate->addInjection ('injection_head', 'text', '
-                <script type="text/javascript" language="javascript">
-                    $(document).ready( function() {
-                        $("div.RSSAggrCont").dolRSSFeed();
-                    });
-                </script>');
-
-            $GLOBALS['gbBxSysIsRssInitialized'] = true;
-        }
-
-        return $this->_oTemplate->parseHtmlByName('rss_holder.html', array (
-            'rss_id' => $mixedRssId,
-            'rss_num' => $iRssNum,
-            'member_id' => $iMemberId,
-        ));
-    }
-
-    /**
      * functions for limiting maximal string length
      */
     function getStringWithLimitedLength($sString, $iWidth = 45, $isPopupOnOverflow = false, $bReturnString = true)

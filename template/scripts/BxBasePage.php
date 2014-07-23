@@ -258,8 +258,8 @@ class BxBasePage extends BxDolPage
         list( $sUrl, $iNum ) = explode('#', $aBlock['content']);
         $iNum = (int)$iNum;
 
-        bx_import('BxTemplFunctions');
-        return BxTemplFunctions::getInstance()->getRssHolder ($aBlock['id'], $iNum);
+        bx_import('BxDolRss');
+        return BxDolRss::getObjectInstance('sys_page_block')->getHolder($aBlock['id'], $iNum);
     }
 
     /**

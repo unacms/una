@@ -25,7 +25,8 @@ class BxDolStudioDashboard extends BxTemplStudioPage
                 case 'check_update_script':
                     $aResult = array();
 
-                    $sContent = bx_file_get_contents(BX_DOL_URL_ROOT . 'get_rss_feed.php?ID=boonex_version&member=0');
+                    bx_import('BxDolRss');
+                    $sContent = BxDolRss::getObjectInstance('sys_boonex')->getFeed('boonex_version');
                     if(empty($sContent))
                         break;
 

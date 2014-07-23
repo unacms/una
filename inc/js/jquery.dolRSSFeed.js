@@ -12,14 +12,15 @@
 		return this.each( function(){
 
 			var $Cont = $(this);
+			var sRSSObject = $Cont.attr( 'rssobject' );
 			var iRSSID = $Cont.attr( 'rssid' );
-			if( !iRSSID && oOptions.forceUrl == undefined )
+			if((!iRSSID || !sRSSObject) && oOptions.forceUrl == undefined)
 				return false;
 
 			var iMaxNum = parseInt( $Cont.attr( 'rssnum' ) || 0 );
 			var iMemID  = parseInt( $Cont.attr( 'member' ) || 0 );
 
-			var sFeedURL = (oOptions.forceUrl != undefined) ? oOptions.forceUrl : sUrlRoot + 'get_rss_feed.php?ID=' + iRSSID + '&member=' + iMemID;
+			var sFeedURL = (oOptions.forceUrl != undefined) ? oOptions.forceUrl : sUrlRoot + 'get_rss_feed.php?object=' + sRSSObject + '&id=' + iRSSID + '&member=' + iMemID;
 
             bx_loading_animate($(this).find('.bx-loading-ajax'));
 
