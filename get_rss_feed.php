@@ -16,7 +16,17 @@ $iUserId = bx_process_input(bx_get('member'), BX_DATA_INT);
 bx_import('BxDolRss');
 $oRss = BxDolRss::getObjectInstance($sObject);
 
-if($oRss)
-	echo $oRss->getFeed($mixedId, $iUserId);
+if ($oRss && ($s = $oRss->getFeed($mixedId, $iUserId))) {
+
+    header('Content-type: text/xml; charset=utf-8');
+	echo $s;
+
+} else {
+
+    bx_import('BxDolLanguages');
+    bx_import('BxDolTemplate');
+    BxDolTemplate::getInstance()->displayPageNotFound();
+    
+}
 
 /** @} */
