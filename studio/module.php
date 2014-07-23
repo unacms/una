@@ -24,8 +24,8 @@ $sName = $sName !== false ? bx_process_input($sName) : '';
 $sPage = bx_get('page');
 $sPage = $sPage !== false ? bx_process_input($sPage) : '';
 
-$oPage = getPageObject($sName, $sPage);
-$oPage->init();
+bx_import('BxDolStudioModule');
+$oPage = BxDolStudioModule::getObjectInstance($sName, $sPage);
 
 bx_import('BxDolStudioTemplate');
 $oTemplate = BxDolStudioTemplate::getInstance();
@@ -39,23 +39,4 @@ $oTemplate->addCss($oPage->getPageCss());
 $oTemplate->addJs($oPage->getPageJs());
 $oTemplate->getPageCode();
 
-function getPageObject($sName, $sPage)
-{
-    bx_import('BxDolModuleQuery');
-    $oModuleDb = BxDolModuleQuery::getInstance();
-
-    if($sName != '' && $oModuleDb->isModuleByName($sName)) {
-        $aModule = $oModuleDb->getModuleByName($sName);
-
-        if(file_exists(BX_DIRECTORY_PATH_MODULES . $aModule['path'] . 'classes/' . $aModule['class_prefix'] . 'StudioPage.php')) {
-            bx_import('StudioPage', $aModule);
-
-            $sClass = $aModule['class_prefix'] . 'StudioPage';
-            return new $sClass($sName, $sPage);
-        }
-    }
-
-    bx_import('BxTemplStudioModule');
-    return new BxTemplStudioModule($sName, $sPage);
-}
 /** @} */

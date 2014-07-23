@@ -163,12 +163,8 @@ class BxBaseStudioPage extends BxDolStudioPage
 
     protected function getPageCaptionHelp()
     {
-    	$this->sPageRssHelpUrl = bx_replace_markers($this->sPageRssHelpUrl, $this->aMarkers);
-
-    	$GLOBALS['gbBxSysIsRssInitialized'] = true;
-
-    	bx_import('BxTemplFunctions');
-    	$sContent = BxTemplFunctions::getInstance()->getRssHolder($this->sPageRssHelpUrl, $this->iPageRssHelpLength);
+    	bx_import('BxDolRss');
+    	$sContent = BxDolRss::getObjectInstance($this->sPageRssHelpObject)->getHolder($this->sPageRssHelpId, $this->iPageRssHelpLength, 0, false);
 
         $oTemplate = BxDolStudioTemplate::getInstance();
     	$oTemplate->addJsTranslation('_adm_txt_show_help_content_empty');

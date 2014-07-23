@@ -26,6 +26,7 @@ class BxDolStudioModule extends BxTemplStudioPage
         parent::__construct($sModule);
 
         $this->oDb = new BxDolStudioModulesQuery();
+        $this->sPageRssHelpObject = 'sys_studio_module_help'; 
 
         $this->sModule = '';
         if(is_string($sModule) && !empty($sModule))
@@ -35,6 +36,29 @@ class BxDolStudioModule extends BxTemplStudioPage
         if(is_string($sPage) && !empty($sPage))
             $this->sPage = $sPage;
     }
+
+	public static function getObjectInstance($sModule = "", $sPage = "", $bInit = true)
+	{
+	    bx_import('BxDolModuleQuery');
+	    $oModuleDb = BxDolModuleQuery::getInstance();
+
+	    bx_import('BxTemplStudioModule');
+        $sClass = 'BxTemplStudioModule';
+	    if($sModule != '' && $oModuleDb->isModuleByName($sModule)) {
+	        $aModule = $oModuleDb->getModuleByName($sModule);
+
+	        if(file_exists(BX_DIRECTORY_PATH_MODULES . $aModule['path'] . 'classes/' . $aModule['class_prefix'] . 'StudioPage.php')) {
+	            bx_import('StudioPage', $aModule);
+	            $sClass = $aModule['class_prefix'] . 'StudioPage';
+	        }
+	    }
+
+	    $oObject = new $sClass($sModule, $sPage);
+	    if($bInit)
+	    	$oObject->init();
+
+	    return $oObject;
+	}
 
     public function init()
     {
@@ -61,10 +85,13 @@ class BxDolStudioModule extends BxTemplStudioPage
         if(empty($this->aModule) || !is_array($this->aModule))
             BxDolStudioTemplate::getInstance()->displayPageNotFound();
 
+		$this->sPageRssHelpUrl = $this->aModule['help_url'];
+		$this->sPageRssHelpId = $this->aModule['name'];
+
 		$this->addMarkers(array(
 			'module_name' => $this->aModule['name'],
 			'module_uri' => $this->aModule['uri'],
-			'module_title' => $this->aModule['title']
+			'module_title' => $this->aModule['title'],
 		));
 
         $this->addAction(array(
@@ -74,8 +101,6 @@ class BxDolStudioModule extends BxTemplStudioPage
             'checked' => (int)$this->aModule['enabled'] == 1,
             'onchange' => "javascript:" . $this->getPageJsObject() . ".activate('" . $this->sModule . "', this)"
         ), false);
-
-        $this->sPageRssHelpUrl = $this->aModule['help_url'];
     }
 
     public function activate($sModule)
