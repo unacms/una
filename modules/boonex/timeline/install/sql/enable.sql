@@ -124,6 +124,10 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 -- ALERTS
 INSERT INTO `sys_alerts_handlers`(`name`, `class`, `file`, `service_call`) VALUES 
 ('bx_timeline', 'BxTimelineResponse', 'modules/boonex/timeline/classes/BxTimelineResponse.php', '');
+SET @iHandler := LAST_INSERT_ID();
+
+INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
+('profile', 'delete', @iHandler);
 
 
 -- COMMENTS

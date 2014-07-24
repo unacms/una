@@ -24,6 +24,7 @@ DELETE FROM `sys_acl_actions` WHERE `Module` = 'bx_timeline';
 
 -- ALERTS
 SET @iHandlerId = (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = 'bx_timeline' LIMIT 1);
+DELETE FROM `sys_alerts` WHERE `handler_id` = @iHandlerId;
 DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandlerId LIMIT 1;
 
 

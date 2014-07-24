@@ -70,14 +70,19 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                 break;
 
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_DELETE:
-                $this->_oModule->_oDb->deleteEvent(array('type' => $oAlert->sUnit, 'object_id' => $oAlert->iObject));
+            	if($oAlert->sUnit == 'profile' && $oAlert->sAction == 'delete') {
+            		$aEvents = $this->_oModule->_oDb->getEvents(array('browse' => 'owner_id', 'value' => $oAlert->iObject));
+            		foreach($aEvents as $aEvent)
+            			$this->_oModule->deleteEvent($aEvent);
 
-        		$aEvents = $this->_oModule->_oDb->getEvents(array('browse' => 'shared_by_descriptor', 'type' => $oAlert->sUnit));
-				foreach($aEvents as $aEvent) {
-					$aContent = unserialize($aEvent['content']);
-					if(isset($aContent['type']) && $aContent['type'] == $oAlert->sUnit && isset($aContent['object_id']) && (int)$aContent['object_id'] == $oAlert->iObject)
-						$this->_oModule->_oDb->deleteEvent(array('id' => (int)$aEvent['id']));
-				}
+					$aEvents = $this->_oModule->_oDb->getEvents(array('browse' => 'common_by_object', 'value' => $oAlert->iObject));
+					foreach($aEvents as $aEvent)
+            			$this->_oModule->deleteEvent($aEvent);
+            		break;
+            	}
+
+            	$aEvent = $this->_oModule->_oDb->getEvents(array('browse' => 'descriptor', 'type' => $oAlert->sUnit, 'object_id' => $oAlert->iObject));
+            	$this->_oModule->deleteEvent($aEvent);
                 break;
         }
     }

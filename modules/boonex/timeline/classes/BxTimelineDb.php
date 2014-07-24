@@ -207,10 +207,27 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
 
         switch($aParams['browse']) {
+        	case 'owner_id':
+        		$sWhereClause = $this->prepare("AND `{$this->_sTable}`.`owner_id`=? ", $aParams['value']);
+        		break;
+
+        	case 'common_by_object':
+        		$sCommonPostPrefix = $this->_oConfig->getPrefix('common_post');
+        		$sWhereClause = $this->prepare("AND SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ")='" . $sCommonPostPrefix . "' AND `{$this->_sTable}`.`object_id`=? ", $aParams['value']);
+        		break;
+
             case 'descriptor':
                 $sMethod = 'getRow';
-                $sWhereClause = $this->prepare("AND `{$this->_sTable}`.`type`=? AND `{$this->_sTable}`.`action`=? AND `{$this->_sTable}`.`object_id`=? ", $aParams['type'], $aParams['action'], $aParams['object_id']);
-                $sLimitClause = "LIMIT 1";
+                $sWhereClause = "";
+
+                if(isset($aParams['type']))
+                	$sWhereClause .= $this->prepare("AND `{$this->_sTable}`.`type`=? ", $aParams['type']);
+				if(isset($aParams['action']))
+					$sWhereClause .= $this->prepare("AND `{$this->_sTable}`.`action`=? ", $aParams['action']);
+				if(isset($aParams['object_id']))
+					$sWhereClause .= $this->prepare("AND `{$this->_sTable}`.`object_id`=? ", $aParams['object_id']);
+
+				$sLimitClause = "LIMIT 1";
                 break;
 
             case 'shared_by_descriptor':

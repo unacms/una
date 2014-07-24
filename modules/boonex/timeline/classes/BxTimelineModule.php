@@ -81,14 +81,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             return;
         }
 
-        if(!$this->_oDb->deleteEvent(array('id' => $iId))) {
-            $this->_echoResultJson(array('code' => 2));
-            return;
-        }
-
-        $this->onDelete($aEvent);
-
-        $this->_echoResultJson(array('code' => 0, 'id' => $iId));
+        if(!$this->deleteEvent($aEvent))
+        	$this->_echoResultJson(array('code' => 2));
+        else 
+        	$this->_echoResultJson(array('code' => 0, 'id' => $iId));
     }
 
     public function actionShare()
@@ -100,7 +96,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             'object_id' => bx_process_input(bx_get('object_id'), BX_DATA_INT),
         );
 
-        //TODO: Share (from OUTSIDE) shouldn't depend on the original post in Timeline.
         $aShared = $this->_oDb->getShared($aContent['type'], $aContent['action'], $aContent['object_id']);
         if(empty($aShared) || !is_array($aShared)) {
             $this->_echoResultJson(array('code' => 1, 'msg' => _t('_bx_timeline_txt_err_cannot_share')));
@@ -445,6 +440,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule
     /*
      * COMMON METHODS
      */
+    public function deleteEvent($aEvent)
+    {
+    	if(empty($aEvent) || !is_array($aEvent) || !$this->_oDb->deleteEvent(array('id' => (int)$aEvent['id'])))
+            return false;
+
+        $this->onDelete($aEvent);
+        return true;
+    }
+
     public function getFormAttachLink()
     {
         $iUserId = $this->getUserId();
@@ -718,20 +722,26 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
     public function onDelete($aEvent)
     {
-        $aPhotos = $this->_oDb->getPhotos($aEvent['id']);
-        if(!empty($aPhotos) && is_array($aPhotos)) {
-            bx_import('BxDolStorage');
-            $oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage'));
+    	$sCommonPostPrefix = $this->_oConfig->getPrefix('common_post');
 
-            foreach($aPhotos as $iPhotoId)
-                $oStorage->deleteFile($iPhotoId);
+    	//--- Delete attached photos and links when common event was deleted.
+    	if($aEvent['type'] == $sCommonPostPrefix . BX_TIMELINE_PARSE_TYPE_POST) {
+	        $aPhotos = $this->_oDb->getPhotos($aEvent['id']);
+	        if(!empty($aPhotos) && is_array($aPhotos)) {
+	            bx_import('BxDolStorage');
+	            $oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage'));
+	
+	            foreach($aPhotos as $iPhotoId)
+	                $oStorage->deleteFile($iPhotoId);
+	
+	            $this->_oDb->deletePhotos($aEvent['id']);
+	        }
+	
+	        $this->_oDb->deleteLinks($aEvent['id']);
+    	}
 
-            $this->_oDb->deletePhotos($aEvent['id']);
-        }
-
-        $this->_oDb->deleteLinks($aEvent['id']);
-
-        if($aEvent['type'] == $this->_oConfig->getPrefix('common_post') . BX_TIMELINE_PARSE_TYPE_SHARE) {
+    	//--- Update parent event when share event was deleted.
+        if($aEvent['type'] == $sCommonPostPrefix . BX_TIMELINE_PARSE_TYPE_SHARE) {
             $this->_oDb->deleteShareTrack($aEvent['id']);
 
             $aContent = unserialize($aEvent['content']);
@@ -739,6 +749,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             if(!empty($aShared) && is_array($aShared))
                 $this->_oDb->updateShareCounter($aShared['id'], $aShared['shares'], -1);
         }
+
+        //--- Find and delete share events when parent event was deleted.
+        $bSystem = $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']);
+	    $aShareEvents = $this->_oDb->getEvents(array('browse' => 'shared_by_descriptor', 'type' => $aEvent['type']));
+		foreach($aShareEvents as $aShareEvent) {
+			$aContent = unserialize($aShareEvent['content']);
+			if(isset($aContent['type']) && $aContent['type'] == $aEvent['type'] && isset($aContent['object_id']) && (($bSystem && (int)$aContent['object_id'] == (int)$aEvent['object_id']) || (!$bSystem  && (int)$aContent['object_id'] == (int)$aEvent['id'])))
+				$this->_oDb->deleteEvent(array('id' => (int)$aShareEvent['id']));
+		}
 
         //--- Event -> Delete for Alerts Engine ---//
         bx_import('BxDolAlerts');
