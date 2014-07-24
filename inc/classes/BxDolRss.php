@@ -15,6 +15,37 @@ bx_import('BxDolRssQuery');
  * @ref BxDolRss
  */
 
+/**
+ * This class unifies the usage of RSS feeds in the script.
+ *
+ *
+ * Usage.
+ *
+ * Step 1:
+ * Add record to sys_objects_rss table, like you are doing this for Comments or Voting objects:
+ * - object: your rss object name, usually it is in the following format - vendor prefix, underscore, module prefix;
+ * - class_name: user defined class name which is derived from BxTemplRss.
+ * - class_file: the location of the user defined class, leave it empty if class is located in system folders.
+ * 
+ * Step 2:
+ * Write a code for getUrl method in your class (MyModuleRss) which is derived from BxTemplRss.
+ * @code
+ * public function getUrl($mixedId) {
+ * 		if(!isset($this->aFeeds[$mixedId]))
+ * 			return false;
+ * 
+ * 		return $this->aFeeds[$mixedId];
+ * }
+ * @endcode
+ * 
+ * Step 2:
+ * Get an RSS placeholder to display somewhere on a page
+ * @code
+ *  bx_import('BxDolRss');
+ *  BxDolRss::getObjectInstance('my_module_rss_object')->getHolder($mixedRssId, $iRssNum);
+ * @endcode
+ *
+ */
 
 class BxDolRss extends BxDol implements iBxDolFactoryObject
 {
