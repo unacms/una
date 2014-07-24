@@ -1092,6 +1092,7 @@
 	<string name="_adm_stg_cpt_option_expire_notification_days"><![CDATA[Number of days before membership expiration to notify members ( -1 = after expiration )]]></string>
 	<string name="_adm_stg_cpt_option_expire_notify_once"><![CDATA[Notify members about membership expiration only once (every day otherwise)]]></string>
 	<string name="_adm_stg_cpt_option_lang_default"><![CDATA[Default Language]]></string>
+	<string name="_adm_stg_cpt_option_lang_subst_from_en"><![CDATA[Substitute (during compilation) missing translations with english ones]]></string>	
 	<string name="_adm_stg_cpt_option_permalinks_modules"><![CDATA[Enable friendly permalinks for Modules]]></string>
 	<string name="_adm_stg_cpt_option_permalinks_pages"><![CDATA[Enable friendly permalinks for Pages]]></string>
 	<string name="_adm_stg_cpt_option_site_email"><![CDATA[Email to receive critical site notifications]]></string>

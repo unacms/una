@@ -11,7 +11,7 @@ bx_import('BxDolModuleQuery');
 bx_import('BxTemplStudioPage');
 bx_import('BxDolStudioLanguagesQuery');
 
-define('BX_DOL_STUDIO_LANG_DEFAULT', 'en');
+define('BX_DOL_STUDIO_LANG_DEFAULT', BX_DOL_LANGUAGE_DEFAULT);
 
 define('BX_DOL_STUDIO_LANG_TYPE_SETTINGS', 'settings');
 

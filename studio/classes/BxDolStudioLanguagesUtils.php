@@ -122,8 +122,15 @@ class BxDolStudioLanguagesUtils extends BxDolLanguages implements iBxDolSingleto
             if(!$bForce && (int)$aLanguage['enabled'] != 1)
                 continue;
 
-            $aKeys = array();
-            $this->oDb->getKeysBy(array('type' => 'by_language_id', 'value' => $aLanguage['id']), $aKeys);
+			$aKeys = array();
+            $this->oDb->getKeysBy(array('type' => 'by_language_id_key_key', 'value' => $aLanguage['id']), $aKeys);
+
+            if($aLanguage['name'] != BX_DOL_LANGUAGE_DEFAULT && getParam('lang_subst_from_en') == 'on') {
+				$aKeysAll = array();
+				$this->oDb->getKeysBy(array('type' => 'by_language_name_key_key', 'value' => BX_DOL_LANGUAGE_DEFAULT), $aKeysAll);
+
+	            $aKeys = array_merge($aKeysAll, $aKeys);
+            }
 
             $sLanguageFile = "lang-" . $aLanguage['name'] . ".php";
             $oFile->delete('cache/' . $sLanguageFile);

@@ -10,6 +10,8 @@
 bx_import('BxDol');
 bx_import('BxDolLanguagesQuery');
 
+define('BX_DOL_LANGUAGE_DEFAULT', 'en');
+
 define('BX_DOL_LANGUAGE_CATEGORY_SYSTEM', 1);
 define('BX_DOL_LANGUAGE_CATEGORY_CUSTOM', 2);
 
@@ -70,7 +72,7 @@ class BxDolLanguages extends BxDol implements iBxDolSingleton
             $sLang = $this->tryToGetLang(getParam('lang_default'));
 
         if(!$sLang)
-            $sLang = $this->tryToGetLang('en');
+            $sLang = $this->tryToGetLang(BX_DOL_LANGUAGE_DEFAULT);
 
         setlocale(LC_TIME, $sLang . '_' . strtoupper($sLang) . '.utf-8', $sLang . '_' . strtoupper($sLang) . '.utf8', $sLang . '.utf-8', $sLang . '.utf8', $sLang);
         return $sLang;

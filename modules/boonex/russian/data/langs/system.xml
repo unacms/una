@@ -3181,10 +3181,10 @@ More info about URI DNSBL: <br />
     <string name="_sys_menu_title_switch_language"><![CDATA[Switch Language]]></string>
 	<string name="_sys_menu_title_switch_template"><![CDATA[Switch Template]]></string>
 
-    <string name="_sys_menu_item_title_system_home"><![CDATA[Home]]></string>
-    <string name="_sys_menu_item_title_system_about"><![CDATA[About]]></string>
-    <string name="_sys_menu_item_title_system_switch_language"><![CDATA[Language]]></string>
-	<string name="_sys_menu_item_title_system_switch_template"><![CDATA[Template]]></string>
+    <string name="_sys_menu_item_title_system_home"><![CDATA[Главная]]></string>
+    <string name="_sys_menu_item_title_system_about"><![CDATA[О нас]]></string>
+    <string name="_sys_menu_item_title_system_switch_language"><![CDATA[Язак]]></string>
+	<string name="_sys_menu_item_title_system_switch_template"><![CDATA[Дизайн]]></string>
     <string name="_sys_menu_item_title_system_search"><![CDATA[Search]]></string>
     <string name="_sys_menu_item_title_system_add_content"><![CDATA[Add Content]]></string>
     <string name="_sys_menu_item_title_system_notifications"><![CDATA[Notifications]]></string>
@@ -3204,8 +3204,8 @@ More info about URI DNSBL: <br />
     <string name="_sys_menu_item_title_system_account_settings_pwd"><![CDATA[Password]]></string>
     <string name="_sys_menu_item_title_system_account_settings_delete"><![CDATA[Delete Account]]></string>
 
-    <string name="_sys_menu_item_title_home"><![CDATA[Home]]></string>
-    <string name="_sys_menu_item_title_about"><![CDATA[About]]></string>
+    <string name="_sys_menu_item_title_home"><![CDATA[Главная]]></string>
+    <string name="_sys_menu_item_title_about"><![CDATA[О нас]]></string>
     <string name="_sys_menu_item_title_switch_language"><![CDATA[Язык]]></string>
     <string name="_sys_menu_item_title_switch_language_mask"><![CDATA[{1} {0}]]></string>
 	<string name="_sys_menu_item_title_switch_template"><![CDATA[Дизайн]]></string>

@@ -85,6 +85,10 @@ class BxDolLanguagesQuery extends BxDolDb implements iBxDolSingleton
                 $sWhereClause .= $this->prepare(" AND `tl`.`ID`=?", $aParams['value']);
                 $sOrderClause = " `tl`.`Name` ASC ";
                 break;
+			case 'all_by_name':
+                $sWhereClause .= $this->prepare(" AND `tl`.`Name`=?", $aParams['value']);
+                $sOrderClause = " `tl`.`Name` ASC ";
+                break;
             case 'all_key_id':
                 $aMethod['name'] = 'getAllWithKey';
                 $aMethod['params'][1] = 'id';
@@ -142,7 +146,19 @@ class BxDolLanguagesQuery extends BxDolDb implements iBxDolSingleton
                 $sWhereClause = $this->prepare(" AND `tk`.`Key`=? ", $aParams['value']);
                 break;
 
-            case 'by_language_id':
+			case 'by_language_name_key_key':
+            	$aMethod['name'] = 'getAllWithKey';
+            	$aMethod['params'][1] = 'key';
+
+                $sSelectClause .= ", `ts`.`String` AS `string` ";
+                $sJoinClause = " LEFT JOIN `sys_localization_strings` AS `ts` ON `tk`.`ID`=`ts`.`IDKey` LEFT JOIN `sys_localization_languages` AS `tl` ON `ts`.`IDLanguage`=`tl`.`ID` ";
+                $sWhereClause = $this->prepare(" AND `tl`.`Name`=? ", (int)$aParams['value']);
+                break;
+
+            case 'by_language_id_key_key':
+            	$aMethod['name'] = 'getAllWithKey';
+            	$aMethod['params'][1] = 'key';
+
                 $sSelectClause .= ", `ts`.`String` AS `string` ";
                 $sJoinClause = " LEFT JOIN `sys_localization_strings` AS `ts` ON `tk`.`ID`=`ts`.`IDKey` ";
                 $sWhereClause = $this->prepare(" AND `ts`.`IDLanguage`=? ", (int)$aParams['value']);
