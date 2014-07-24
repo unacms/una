@@ -152,7 +152,7 @@ class BxDolLanguagesQuery extends BxDolDb implements iBxDolSingleton
 
                 $sSelectClause .= ", `ts`.`String` AS `string` ";
                 $sJoinClause = " LEFT JOIN `sys_localization_strings` AS `ts` ON `tk`.`ID`=`ts`.`IDKey` LEFT JOIN `sys_localization_languages` AS `tl` ON `ts`.`IDLanguage`=`tl`.`ID` ";
-                $sWhereClause = $this->prepare(" AND `tl`.`Name`=? ", (int)$aParams['value']);
+                $sWhereClause = $this->prepare(" AND `tl`.`Name`=? ", $aParams['value']);
                 break;
 
             case 'by_language_id_key_key':
