@@ -15,21 +15,3 @@ function BxDolStudioLogin() {
 		});
 	});
 }
-
-BxDolStudioLogin.prototype.onFocus = function(oInput) {
-	$aDefaults = {'ID': '_adm_txt_login_username', 'Password': '_adm_txt_login_password'};
-
-	if($(oInput).val() == aDolLang[$aDefaults[$(oInput).attr('name')]])
-		$(oInput).val('');
-
-	$(oInput).removeClass('bx-def-color-ft-grayed-i');
-};
-
-BxDolStudioLogin.prototype.onBlur = function(oInput) {
-	$aDefaults = {'ID': '_adm_txt_login_username', 'Password': '_adm_txt_login_password'};
-
-	if($(oInput).val() == '') {
-		$(oInput).val(aDolLang[$aDefaults[$(oInput).attr('name')]]);
-		$(oInput).addClass('bx-def-color-ft-grayed-i');
-	}
-};
