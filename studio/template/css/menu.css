@@ -1,6 +1,6 @@
 @import url(../../../template/css/menu.css);
 
-.bx-menu-ver li div {
+.bx-popup .bx-menu-ver li div {
 	padding: 10px 20px 10px 10px;
     padding: 0.625rem 1.25rem 0.625rem 0.625rem;
 }
