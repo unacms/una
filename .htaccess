@@ -1,33 +1,15 @@
+
 Options -MultiViews -Indexes
 
-# TODO: clean it as much as possible
-# TODO: get rid of blogs and ads rewrite code
-
-<IfModule mod_php4.c>
-    php_flag register_globals Off
-</IfModule>
 <IfModule mod_php5.c>
     php_flag allow_url_include Off
     php_flag register_globals Off
 </IfModule>
 
 <IfModule mod_rewrite.c>
-RewriteEngine on
-
-RewriteRule ^search/tag/([^/.]+)/{0,1}$  search.php?Tags=$1 [QSA,L]
-
-RewriteRule ^m/(.*)$  modules/index.php?r=$1 [QSA,L]
-
-RewriteRule ^page/(.*)$  page.php?i=$1 [QSA,L]
-
-RewriteRule ^storage/([a-zA-Z0-9]+)/([a-zA-Z0-9\.]+)  storage.php?o=$1&f=$2   [QSA,L]
-
-RewriteCond %{REQUEST_FILENAME} -f [OR]
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule .+ - [L]
-RewriteRule ^([^/]+)$ profile.php?ID=$1 [QSA,L]
-
+    RewriteEngine on
+    RewriteRule ^m/(.*)$  modules/index.php?r=$1 [QSA,L]
+    RewriteRule ^page/(.*)$  page.php?i=$1 [QSA,L]
+    RewriteRule ^storage/([a-zA-Z0-9]+)/([a-zA-Z0-9\.]+)  storage.php?o=$1&f=$2   [QSA,L]
 </IfModule>
 
-AddType application/vnd.adobe.air-application-installer-package+zip .air
-AddType application/x-shockwave-flash .swf
