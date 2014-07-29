@@ -19,7 +19,10 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
 
     function getPageCss()
     {
-        return array_merge(parent::getPageCss(), array('page_layouts.css', 'dashboard.css'));
+        return array_merge(parent::getPageCss(), array(
+        	'page_layouts.css', 
+        	'dashboard.css',
+        ));
     }
 
     function getPageJs()

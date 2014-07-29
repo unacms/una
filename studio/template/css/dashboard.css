@@ -34,8 +34,8 @@ div.bx-dbd-update-script span {
 /*--- Chart based blocks ---*/
 div.bx-dbd-space-chart,
 div.bx-dbd-cache-chart {
-	width: 512px;
-	height: 256px;
+	width: 400px;
+	height: 200px;
 	margin: 0px auto; 
 }
 

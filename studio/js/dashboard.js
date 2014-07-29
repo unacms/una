@@ -63,9 +63,6 @@ BxDolStudioDashboard.prototype.showChart = function(sType, oData) {
     oDataTable.addRows(this.oData);
 
     var oOptions = {
-        	width: 512,
-        	height: 256,
-
 			chartArea: {
 				left:10,
 				top:10,
