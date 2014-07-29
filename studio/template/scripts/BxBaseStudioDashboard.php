@@ -28,7 +28,6 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
     function getPageJs()
     {
         return array_merge(parent::getPageJs(), array(
-        	"https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart']}]}",
         	'jquery.anim.js',
         	'dashboard.js'
         ));
@@ -46,12 +45,15 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
 
 	function getPageJsCode($aOptions = array(), $bWrap = true)
     {
+    	$sResult = BxDolStudioTemplate::getInstance()->_wrapInTagJs("https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart']}]}");
+
         $aOptions = array_merge($aOptions, array(
             'sActionUrl' => BX_DOL_URL_STUDIO . 'dashboard.php',
         	'sVersion' => '__version__'
-        ));
+        ));        
+        $sResult .= parent::getPageJsCode($aOptions, $bWrap);
 
-		return parent::getPageJsCode($aOptions, $bWrap);
+		return $sResult;
     }
 
     function getPageCode($bHidden = false)
