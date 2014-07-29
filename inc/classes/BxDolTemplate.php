@@ -1755,7 +1755,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
             "'<bx_text:([_\{\}\w\d\s]+[^\s]{1}) \/>'se",
             "'<bx_text_js:([^\s]+) \/>'se",
             "'<bx_text_attribute:([^\s]+) \/>'se",
-            "'<bx_menu:([^\s]+) \/>'se",
+            "'<bx_menu:([^\s]+) \/>'s",
             "'<bx_url_root />'",
             "'<bx_url_studio />'"
         ));
@@ -1769,7 +1769,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
             "_t('\\1')",
             "bx_js_string(_t('\\1'))",
             "bx_html_attribute(_t('\\1'))",
-            "\$this->getMenu('\\1')",
+            "<?php echo \$this->getMenu('\\1'); ?>",
             BX_DOL_URL_ROOT,
             BX_DOL_URL_STUDIO
         ));
