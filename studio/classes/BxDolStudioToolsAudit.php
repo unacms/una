@@ -197,20 +197,33 @@ class BxDolStudioToolsAudit extends BxDol
         <?php
     }
 
-    public function checkRequirements($sType = BX_DOL_AUDIT_FAIL)
+    /**
+     * Check minimal Dolphin requirements
+     * @param $sType - BX_DOL_AUDIT_FAIL, BX_DOL_AUDIT_WARN, BX_DOL_AUDIT_UNDEF or BX_DOL_AUDIT_OK
+     * @param $sFunc - requirementsPHP, requirementsMySQL or requirementsWebServer
+     * @return array of FAIL, WARN, UNDEF or OK items, if array is empty then no specified items are found
+     */
+    public function checkRequirements($sType = BX_DOL_AUDIT_FAIL, $sFunc = 'requirementsPHP')
     {
         $this->setErrorReporting();
 
-        $aRet = array ();
-        $aMessages = array ();
-        $this->requirementsPHP(false, $aMessages);
+        $aRet = array ();        
+        $aMessages = array ();  
+
+        $this->$sFunc(false, $aMessages);
+
         foreach ($aMessages as $sName => $r)
             if ($sType == $r['type'])
-                $aRet[] = "$sName = " . $this->format_output($r['params']['real_val'], isset($this->aPhpSettings[$sName]) ? $this->aPhpSettings[$sName] : '') . " - " . $this->getMsgHTML($sName, $r);
+                $aRet[] = "$sName = " . $this->format_output($r['params']['real_val'], isset($this->aPhpSettings[$sName]) ? $this->aPhpSettings[$sName] : '') . " - " . $this->getMsgHTML($sName, $r);        
 
         $this->restoreErrorReporting();
 
         return $aRet;
+    }
+
+    public function typeToTitle ($sType) 
+    {
+        return $this->aType2Title[$sType];
     }
 
     protected function requirements()
@@ -269,7 +282,7 @@ class BxDolStudioToolsAudit extends BxDol
         }
     }
 
-    protected function requirementsMySQL()
+    protected function requirementsMySQL($bEcho = true, &$aOutputMessages = null)
     {
         $sMysqlVer = BxDolDb::getInstance()->getServerInfo();
         if (preg_match ('/^(\d+)\.(\d+)\.(\d+)/', $sMysqlVer, $m)) {
@@ -282,17 +295,31 @@ class BxDolStudioToolsAudit extends BxDol
             $aMessage = array('type' => BX_DOL_AUDIT_UNDEF, 'msg' => _t('_sys_audit_msg_value_checking_failed'));
         }
 
-        $s = $this->getBlock(_t('_sys_audit_version'), $sMysqlVer, $this->getMsgHTML(_t('_sys_audit_version'), $aMessage));
-        echo $this->getSection('MySQL', '', $s);
+        if (null !== $aOutputMessages)
+            $aOutputMessages['mysql'] = array($aMessage);
+
+        if ($bEcho) {
+            $s = $this->getBlock(_t('_sys_audit_version'), $sMysqlVer, $this->getMsgHTML(_t('_sys_audit_version'), $aMessage));
+            echo $this->getSection('MySQL', '', $s);
+        }
     }
 
-    protected function requirementsWebServer()
+    protected function requirementsWebServer($bEcho = true, &$aOutputMessages = null)
     {
-        $s = '';
+        $aMessages = array();
         foreach ($this->aRequiredApacheModules as $sName => $sNameCompiledName)
-            $s .= $this->getBlock($sName, '', $this->checkApacheModule($sName, $sNameCompiledName));
+            $aMessages[$sName] = $this->checkApacheModule($sName, $sNameCompiledName);
 
-        echo $this->getSection(_t('_sys_audit_section_webserver'), $_SERVER['SERVER_SOFTWARE'], $s);
+        if (null !== $aOutputMessages)
+            $aOutputMessages = $aMessages;
+
+        if ($bEcho) {
+            $s = '';
+            foreach ($aMessages as $sName => $r) {
+                $s .= $this->getBlock($sName, '', $this->getBlock('', '', $this->getMsgHTML($sName, $r), false));
+            }
+            echo $this->getSection(_t('_sys_audit_section_webserver'), $_SERVER['SERVER_SOFTWARE'], $s);
+        }
     }
 
     protected function requirementsOS()
@@ -522,8 +549,7 @@ class BxDolStudioToolsAudit extends BxDol
             if (!$sApachectlPath)
                 $sApachectlPath = trim(`which /usr/local/apache/bin/apache2ctl`);
             if (!$sApachectlPath) {
-                $aMessage = array('type' => BX_DOL_AUDIT_UNDEF, 'msg' => _t('_sys_audit_msg_apache_module_undef', $sModule));
-                return $this->getBlock($sModule, '', $this->getMsgHTML($sModule, $aMessage));
+                return array('type' => BX_DOL_AUDIT_UNDEF, 'msg' => _t('_sys_audit_msg_apache_module_undef', $sModule));
             }
             $ret = (boolean)`$sApachectlPath -M 2>&1 | grep $sModule`;
             if (!$ret)
@@ -533,8 +559,8 @@ class BxDolStudioToolsAudit extends BxDol
         $aMessage = array('type' => BX_DOL_AUDIT_OK);
         if (!$ret)
             $aMessage = array('type' => BX_DOL_AUDIT_FAIL, 'msg' => _t('_sys_audit_msg_apache_module_fail', $sModule));
-
-        return $this->getBlock('', '', $this->getMsgHTML($sModule, $aMessage), false);
+        
+        return $aMessage;
     }
 
     protected function getPhpAccelerator ()

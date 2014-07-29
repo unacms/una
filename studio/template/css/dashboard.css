@@ -44,3 +44,8 @@ div.bx-dbd-host-tools .bx-btn {
     display: inline-block;
     float: none;
 }
+
+div.bx-dbd-host-tools .bx-dbd-host-tools-item {
+    float: left;
+    width: 50%;
+}

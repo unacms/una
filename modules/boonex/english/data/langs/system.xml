@@ -523,6 +523,7 @@
 	<string name="_adm_dbd_btn_update"><![CDATA[Update]]></string>
 	<string name="_adm_dbd_txt_dolphin_n_available"><![CDATA[Dolphin {0} available!]]></string>
 	<string name="_adm_dbd_txt_dolphin_on"><![CDATA[Dolphin U on]]></string>
+	<string name="_adm_dbd_txt_htools_status"><![CDATA[{0} - <b>{1}</b>]]></string>
 	<string name="_adm_dbd_txt_installed"><![CDATA[Installed:]]></string>
 	<string name="_adm_dbd_txt_version"><![CDATA[Version:]]></string>
 	<string name="_adm_dbd_txt_su_database"><![CDATA[Database]]></string>
@@ -1972,7 +1973,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_uploader_simple_submit_button"><![CDATA[Upload]]></string>
 	<string name="_sys_uploader_simple_title"><![CDATA[Simple Upload]]></string>
 	<string name="_sys_uploader_upload_canceled"><![CDATA[Too bad. Upload canceled.]]></string>
-	<string name="_sys_edit_profile"><![CDATA[Edit profile]]></string>
+	<string name="_sys_edit_profile"><![CDATA[Edit profile]]></string>    
+	<string name="_sys_warn"><![CDATA[warning]]></string>
 	<string name="_sys_x_days"><![CDATA[{0} days]]></string>
 	<string name="_to"><![CDATA[to]]></string>
 	<string name="_top"><![CDATA[Top]]></string>

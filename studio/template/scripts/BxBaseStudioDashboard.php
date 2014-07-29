@@ -113,15 +113,29 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
 		bx_import('BxDolStudioToolsAudit');
 		$oAudit = new BxDolStudioToolsAudit();
 
-        $aErrors = $oAudit->checkRequirements(BX_DOL_AUDIT_FAIL);
-        $aWarnings = $oAudit->checkRequirements(BX_DOL_AUDIT_WARN);
+        bx_import('BxTemplFunctions');
+        $oFunc = BxTemplFunctions::getInstance();
+
+        $aCheckRequirements = array (
+            'PHP' => 'requirementsPHP',
+            'MySQL' => 'requirementsMySQL',
+            'Web Server' => 'requirementsWebServer',
+        );
+        
+        $aLevels = array (BX_DOL_AUDIT_FAIL, BX_DOL_AUDIT_WARN, BX_DOL_AUDIT_UNDEF);
 
         $aTmplVarsItems = array();
-        foreach($aErrors as $sError)
-        	$aTmplVarsItems[] = array('item' => $sError);
-
-        foreach($aWarnings as $sWarning)
-        	$aTmplVarsItems[] = array('item' => $sWarning);
+        foreach ($aCheckRequirements as $sTitle => $sFunc) {
+            $sStatus = BX_DOL_AUDIT_OK;
+            foreach ($aLevels as $sLevel) { 
+                $a = $oAudit->checkRequirements($sLevel, $sFunc);
+                if (!empty($a)) {
+                    $sStatus = $sLevel;
+                    break;
+                }
+            }
+            $aTmplVarsItems[] = array('status' => $oFunc->statusOnOff($sStatus), 'msg' => _t('_adm_dbd_txt_htools_status', $sTitle, $oAudit->typeToTitle($sStatus)));
+        }
 
 		$aMenu = array(
 			array(
@@ -134,7 +148,6 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
 
         $sContent = BxDolStudioTemplate::getInstance()->parseHtmlByName('dbd_htools.html', array(
 	    	'bx_repeat:items' => $aTmplVarsItems,
-        	'styles' => $oAudit->generateStyles(true)
 	    ));
 
 		return array('content' => $sContent, 'menu' => $aMenu);
