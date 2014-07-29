@@ -1,3 +1,11 @@
+div.bx-dashboard {
+	position: relative;
+}
+div.bx-dbd-column {
+	position: relative;
+	float: left;
+	width: 50%;
+}
 div.bx-dbd-block-content {
 	position: relative;
 }
@@ -22,4 +30,17 @@ div.bx-dbd-update-script span {
 	line-height: 26px;
 	line-height: 1.6rem;
 }
-/*--- Space Usage block ---*/
+
+/*--- Chart based blocks ---*/
+div.bx-dbd-space-chart,
+div.bx-dbd-cache-chart {
+	width: 512px;
+	height: 256px;
+	margin: 0px auto; 
+}
+
+/*--- Host Tools block ---*/
+div.bx-dbd-host-tools .bx-btn {
+    display: inline-block;
+    float: none;
+}

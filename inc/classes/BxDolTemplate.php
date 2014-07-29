@@ -1019,6 +1019,25 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
 
         return $sRet;
     }
+    function getCacheFilePrefix($sType)
+    {
+    	$sResult = '';
+    	switch($sType) {
+    		case 'template':
+				$sResult = $this->_sCacheFilePrefix;
+				break;
+
+    		case 'css':
+    			$sResult = $this->_sCssCachePrefix;
+    			break;
+
+    		case 'js':
+    			$sResult = $this->_sJsCachePrefix;
+    			break;
+    	}
+
+    	return $sResult;
+    }
     /**
      * Get cache object for templates
      * @return cache class instance

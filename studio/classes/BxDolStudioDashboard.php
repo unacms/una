@@ -12,9 +12,20 @@ bx_import('BxDolStudioStoreQuery');
 
 class BxDolStudioDashboard extends BxTemplStudioPage
 {
+	protected $aItemsCache;
+
     function __construct()
     {
         parent::__construct('dashboard');
+
+        $this->aItemsCache = array (
+		    array('name' => 'all', 'title' => _t('_adm_dbd_txt_c_all')),
+		    array('name' => 'db', 'title' => _t('_adm_dbd_txt_c_db')),
+		    array('name' => 'template', 'title' => _t('_adm_dbd_txt_c_template')),
+		    array('name' => 'css', 'title' => _t('_adm_dbd_txt_c_css')),
+		    array('name' => 'js', 'title' => _t('_adm_dbd_txt_c_js')),
+		    array('name' => 'users', 'title' => _t('_adm_dbd_txt_c_users')),
+		);
 
         //--- Check actions ---//
         if(($sAction = bx_get('dbd_action')) !== false) {
@@ -40,6 +51,51 @@ class BxDolStudioDashboard extends BxTemplStudioPage
                     if(version_compare($sVersionCur, $sVersionAvl) == -1)
                         $aResult = array('version' => $sVersionAvl);
                     break;
+
+				case 'clear_cache':
+					$sValue = bx_get('dbd_value');
+					if($sValue === false)
+						break;
+
+					$sValue = bx_process_input($sValue);
+
+					bx_import('BxDolCacheUtilities');
+					$oCacheUtilities = BxDolCacheUtilities::getInstance();
+
+					switch ($sValue) {
+				        case 'all':
+				            foreach($this->aItemsCache as $aItem) {
+				            	if($aItem['name'] == 'all')
+				            		continue;
+
+				                $aResult = $oCacheUtilities->clear($aItem['name']);
+				                if($aResult['code'] != 0)
+				                    break;
+				            }
+				            break;
+
+				        case 'users':
+				        case 'db':
+				        case 'template':
+				        case 'css':
+				        case 'js':
+				            $aResult = $oCacheUtilities->clear($sValue);
+				            break;
+
+				        default:
+				            $aResult = array('code' => 1, 'message' => _t('_Error Occured'));
+				    }
+
+				    if($aResult['code'] == 0)
+				        $aResult['data'] = $this->getCacheChartData(false);
+
+					break;
+
+				case 'server_audit':
+					bx_import('BxDolStudioToolsAudit');
+					$oAudit = new BxDolStudioToolsAudit();
+					echo $oAudit->generate();
+					exit;
             }
 
             if(!empty($aResult['message'])) {
@@ -53,21 +109,6 @@ class BxDolStudioDashboard extends BxTemplStudioPage
             echo json_encode($aResult);
             exit;
         }
-    }
-
-    protected function loadBlocks()
-    {
-        $aNames = array('versions', 'space');
-
-        $aBlocks = array();
-        foreach($aNames as $sName)
-            $aBlocks[$sName] = array(
-                'caption' => '_adm_block_cpt_' . $sName,
-                'actions' => array(),
-                'items' => ''
-            );
-
-        return $aBlocks;
     }
 
     protected function getDbSize()
@@ -97,6 +138,23 @@ class BxDolStudioDashboard extends BxTemplStudioPage
         }
 
         return $iTotalSize;
+    }
+
+    protected function getCacheChartData($bAsString = true)
+    {
+		bx_import('BxDolCacheUtilities');
+		$oCacheUtilities = BxDolCacheUtilities::getInstance();
+
+    	$aChartData = array();
+    	foreach($this->aItemsCache as $aItem) {
+    		if($aItem['name'] == 'all')
+	            continue;
+
+	        $iSize = $oCacheUtilities->size($aItem['name']);
+	        $aChartData[] = array(bx_js_string($aItem['title'], BX_ESCAPE_STR_APOS), array('v' => $iSize, 'f' => bx_js_string(_t_format_size($iSize))));
+    	}
+
+    	return $bAsString ? json_encode($aChartData) : $aChartData;
     }
 }
 

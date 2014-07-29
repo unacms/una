@@ -11,9 +11,6 @@
 
 class BxDolCacheUtilities extends BxDol
 {
-    protected $oMemberMenu;
-    protected $oCacheMemberMenu;
-    protected $oCachePb;
     protected $oCacheDb;
     protected $oCacheTemplates;
 
@@ -21,21 +18,22 @@ class BxDolCacheUtilities extends BxDol
     {
         parent::__construct();
 
-        // member menu
-        bx_import('BxDolMemberMenu');
-        $this->oMemberMenu = new BxDolMemberMenu();
-        $this->oCacheMemberMenu = $this->oMemberMenu->getCacheObject();
-
-        // page blocks
-        bx_import('BxDolPageViewAdmin');
-        $oPageViewCacher = new BxDolPageViewCacher ('', '');
-        $this->oCachePb = $oPageViewCacher->getBlocksCacheObject ();
-
         // DB
-        $this->oCacheDb = $GLOBALS['MySQL']->getDbCacheObject();
+        $this->oCacheDb = BxDolDb::getInstance()->getDbCacheObject();
 
         // templates
-        $this->oCacheTemplates = $GLOBALS['oSysTemplate']->getTemplatesCacheObject();
+        $this->oCacheTemplates = BxDolTemplate::getInstance()->getTemplatesCacheObject();
+    }
+
+	/**
+     * Get singleton instance of the class
+     */
+    public static function getInstance()
+    {
+        if(!isset($GLOBALS['bxDolClasses'][__CLASS__]))
+            $GLOBALS['bxDolClasses'][__CLASS__] = new BxDolCacheUtilities();
+
+        return $GLOBALS['bxDolClasses'][__CLASS__];
     }
 
     function clear($sCache)
@@ -49,21 +47,12 @@ class BxDolCacheUtilities extends BxDol
         return $isFormatted ? sprintf("%.2f", $iSize / 1024 / 1024) : $iSize;
     }
 
-    function _action($sCache, $sMode = 'clear')
+    protected function _action($sCache, $sMode = 'clear')
     {
-        $sFuncCacheObject = ('clear' == $sMode ? '_clearCacheObject' : '_getSizeCacheObject');
-        $sFuncCacheFile = ('clear' == $sMode ? '_clearCache' : '_getSizeCache');
+        $sFuncCacheObject = $sMode == 'clear' ? '_clearCacheObject' : '_getSizeCacheObject';
+        $sFuncCacheFile = $sMode == 'clear' ? '_clearCache' : '_getSizeCache';
 
         switch ($sCache) {
-
-            case 'member_menu':
-                $mixedResult = $this->$sFuncCacheObject ($this->oCacheMemberMenu, $this->oMemberMenu->sMenuMemberKeysCache);
-                break;
-
-            case 'pb':
-                $mixedResult = $this->$sFuncCacheObject ($this->oCacheDb, 'pb_');
-                break;
-
             case 'users':
                 $mixedResult = $this->$sFuncCacheFile('user', BX_DIRECTORY_PATH_CACHE);
                 break;
@@ -73,15 +62,15 @@ class BxDolCacheUtilities extends BxDol
                 break;
 
             case 'template':
-                $mixedResult = $this->$sFuncCacheObject ($this->oCacheTemplates, $GLOBALS['oSysTemplate']->_sCacheFilePrefix);
+                $mixedResult = $this->$sFuncCacheObject ($this->oCacheTemplates, BxDolStudioTemplate::getInstance()->getCacheFilePrefix($sCache));
                 break;
 
             case 'css':
-                $mixedResult = $this->$sFuncCacheFile($GLOBALS['oSysTemplate']->_sCssCachePrefix, BX_DIRECTORY_PATH_CACHE_PUBLIC);
+                $mixedResult = $this->$sFuncCacheFile(BxDolStudioTemplate::getInstance()->getCacheFilePrefix($sCache), BX_DIRECTORY_PATH_CACHE_PUBLIC);
                 break;
 
             case 'js':
-                $mixedResult = $this->$sFuncCacheFile($GLOBALS['oSysTemplate']->_sJsCachePrefix, BX_DIRECTORY_PATH_CACHE_PUBLIC);
+                $mixedResult = $this->$sFuncCacheFile(BxDolStudioTemplate::getInstance()->getCacheFilePrefix($sCache), BX_DIRECTORY_PATH_CACHE_PUBLIC);
                 break;
         }
 
@@ -91,9 +80,9 @@ class BxDolCacheUtilities extends BxDol
     function _clearCacheObject($oCache, $sPrefix)
     {
         if (!$oCache->removeAllByPrefix ($sPrefix))
-            return array('code' => 1, 'message' => _t('_adm_txt_dashboard_cache_clean_failed'));
+            return array('code' => 1, 'message' => _t('_adm_dbd_err_c_clean_failed'));
         else
-            return array('code' => 0, 'message' => _t('_adm_txt_dashboard_cache_clean_success'));
+            return array('code' => 0, 'message' => _t('_adm_dbd_msg_c_clean_success'));
     }
 
     function _getSizeCacheObject($oCache, $sPrefix)
@@ -104,7 +93,7 @@ class BxDolCacheUtilities extends BxDol
     function _clearCache($sPrefix, $sPath)
     {
         if (!($rHandler = opendir($sPath)))
-            return array('code' => 1, 'message' => _t('_adm_txt_dashboard_cache_clean_failed'));
+            return array('code' => 1, 'message' => _t('_adm_dbd_err_c_clean_failed'));
 
         $l = strlen($sPrefix);
         while (($sFile = readdir($rHandler)) !== false)
@@ -113,7 +102,7 @@ class BxDolCacheUtilities extends BxDol
 
         closedir($rHandler);
 
-        return array('code' => 0, 'message' => _t('_adm_txt_dashboard_cache_clean_success'));
+        return array('code' => 0, 'message' => _t('_adm_dbd_msg_c_clean_success'));
     }
 
     function _getSizeCache($sPrefix, $sPath)

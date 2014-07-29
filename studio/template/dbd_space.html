@@ -1,11 +1,8 @@
-<div class="bx-dbd-block-content bx-def-margin-bottom">
-	<div class="bx-def-margin-thd-top-auto">
-		<span><bx_text:_adm_dbd_txt_space_size />&nbsp;</span><b>__space_size__</b>
-	</div>
-	<div class="bx-def-margin-thd-top-auto">
-		<span><bx_text:_adm_dbd_txt_db_size />&nbsp;</span><b>__db_size__</b>
-	</div>
-	<div class="bx-def-margin-thd-top-auto">
-		<span><bx_text:_adm_dbd_txt_media_size />&nbsp;</span><b>__media_size__</b>
-	</div>
+<div class="bx-dbd-block-content">
+	<div id="bx-dbd-space-chart" class="bx-dbd-space-chart bx-def-border"></div>
+
+	<script type="text/javascript">
+		bx_loading('bx-dbd-space-chart', true);
+		__js_object__.initChart('space', __chart_data__);
+	</script>
 </div>

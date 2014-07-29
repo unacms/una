@@ -145,8 +145,9 @@ class BxDolStudioToolsAudit extends BxDol
         return ob_get_clean();
     }
 
-    public function generateStyles()
+    public function generateStyles($bReturn = false)
     {
+    	ob_start();
         ?>
 <style>
     .ok {
@@ -163,6 +164,12 @@ class BxDolStudioToolsAudit extends BxDol
     }
 </style>
         <?php
+        $sStyles = ob_get_clean();
+
+        if($bReturn)
+			return $sStyles;
+
+		echo $sStyles;
     }
 
     public function generateJs()

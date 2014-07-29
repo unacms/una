@@ -67,6 +67,7 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton
             'common.css',
             'default.less',
             'general.css',
+        	'menu.css',
         ));
 
         //--- Add default JS in output
