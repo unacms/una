@@ -22,8 +22,8 @@ class BxBaseEditorTinyMCE extends BxDolEditor
                     jQuery('{bx_var_selector}').tinymce({
                         {bx_var_custom_init}
                         document_base_url: '{bx_url_root}',
-                        skin: '{bx_var_skin}',
-                        language: '{bx_var_lang}',
+                        skin_url: '{bx_url_tinymce}skins/{bx_var_skin}/',
+                        language_url: '{bx_url_tinymce}langs/{bx_var_lang}.js',
                         content_css: '{bx_var_css_path}',
                         entity_encoding: 'raw'
                     });
@@ -33,10 +33,21 @@ class BxBaseEditorTinyMCE extends BxDolEditor
      * Standard view initialization params
      */
     protected static $CONF_STANDARD = "
-                        plugins: 'autolink,autosave,lists,media,paste,fullscreen,hr,link,image,code',
+                        external_plugins: {
+                            autolink: '{bx_url_tinymce}plugins/autolink/plugin.min.js',
+                            autosave: '{bx_url_tinymce}plugins/autosave/plugin.min.js',
+                            lists: '{bx_url_tinymce}plugins/lists/plugin.min.js',
+                            media: '{bx_url_tinymce}plugins/media/plugin.min.js',
+                            paste: '{bx_url_tinymce}plugins/paste/plugin.min.js',
+                            fullscreen: '{bx_url_tinymce}plugins/fullscreen/plugin.min.js',
+                            hr: '{bx_url_tinymce}plugins/hr/plugin.min.js',
+                            link: '{bx_url_tinymce}plugins/link/plugin.min.js',
+                            image: '{bx_url_tinymce}plugins/image/plugin.min.js',
+                            code: '{bx_url_tinymce}plugins/code/plugin.min.js',
+                        },
                         width: '100%',
                         height: '270',
-                        theme: 'modern',
+                        theme_url: '{bx_url_tinymce}themes/modern/theme.min.js',
                         toolbar: 'bold italic underline removeformat | bullist numlist | alignleft aligncenter alignright | undo redo  pastetext | blockquote hr link unlink image media | fullscreen code',
                         statusbar: true,
                         resize: true,
@@ -47,10 +58,16 @@ class BxBaseEditorTinyMCE extends BxDolEditor
      */
     protected static $CONF_MINI = "
                         menubar: false,
-                        plugins: 'autolink,lists,paste,link,image',
+                        external_plugins: {
+                            autolink: '{bx_url_tinymce}plugins/autolink/plugin.min.js',
+                            lists: '{bx_url_tinymce}plugins/lists/plugin.min.js',
+                            paste: '{bx_url_tinymce}plugins/paste/plugin.min.js',
+                            link: '{bx_url_tinymce}plugins/link/plugin.min.js',
+                            image: '{bx_url_tinymce}plugins/image/plugin.min.js',
+                        },
                         width: '100%',
                         height: '150',
-                        theme: 'modern',
+                        theme_url: '{bx_url_tinymce}themes/modern/theme.min.js',
                         toolbar: 'bold italic underline removeformat | bullist numlist | alignleft aligncenter alignright | blockquote | link unlink image',
                         statusbar: false,
     ";
@@ -59,10 +76,26 @@ class BxBaseEditorTinyMCE extends BxDolEditor
      * Full view initialization params
      */
     protected static $CONF_FULL = "
-                        plugins: 'autolink,autosave,lists,table,media,searchreplace,print,paste,fullscreen,hr,link,image,anchor,code,autoresize',
+                        external_plugins: {
+                            autolink: '{bx_url_tinymce}plugins/autolink/plugin.min.js',
+                            autosave: '{bx_url_tinymce}plugins/autosave/plugin.min.js',
+                            lists: '{bx_url_tinymce}plugins/lists/plugin.min.js',
+                            table: '{bx_url_tinymce}plugins/table/plugin.min.js',
+                            media: '{bx_url_tinymce}plugins/media/plugin.min.js',
+                            searchreplace: '{bx_url_tinymce}plugins/searchreplace/plugin.min.js',
+                            print: '{bx_url_tinymce}plugins/print/plugin.min.js',
+                            paste: '{bx_url_tinymce}plugins/paste/plugin.min.js',
+                            fullscreen: '{bx_url_tinymce}plugins/fullscreen/plugin.min.js',
+                            hr: '{bx_url_tinymce}plugins/hr/plugin.min.js',
+                            link: '{bx_url_tinymce}plugins/link/plugin.min.js',
+                            image: '{bx_url_tinymce}plugins/image/plugin.min.js',
+                            anchor: '{bx_url_tinymce}plugins/anchor/plugin.min.js',
+                            code: '{bx_url_tinymce}plugins/code/plugin.min.js',
+                            autoresize: '{bx_url_tinymce}plugins/autoresize/plugin.min.js',
+                        },
                         width: '100%',
                         height: '320',
-                        theme: 'modern',
+                        theme_url: '{bx_url_tinymce}themes/modern/theme.min.js',
                         toolbar: [
                             'bold italic underline removeformat | subscript superscript | bullist numlist | alignleft aligncenter alignright alignjustify | undo redo pastetext | blockquote hr link unlink image media',
                             'outdent indent | anchor | searchreplace | print | fullscreen code'
@@ -123,6 +156,7 @@ class BxBaseEditorTinyMCE extends BxDolEditor
             'bx_var_lang' => bx_js_string($sLang, BX_ESCAPE_STR_APOS),
             'bx_var_selector' => bx_js_string($sSelector, BX_ESCAPE_STR_APOS),
             'bx_url_root' => bx_js_string(BX_DOL_URL_ROOT, BX_ESCAPE_STR_APOS),
+            'bx_url_tinymce' => bx_js_string(BX_DOL_URL_PLUGINS_PUBLIC . 'tinymce/', BX_ESCAPE_STR_APOS),
         ));
 
         if ($bDynamicMode) {

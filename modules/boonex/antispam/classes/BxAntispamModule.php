@@ -30,8 +30,8 @@ class BxAntispamModule extends BxDolModule
     {
         bx_import('BxTemplFunctions');
         $s = _t('_bx_antispam_dnsbl_status',
-             BxTemplFunctions::getInstance()->statusOnOff($this->_oConfig->getAntispamOption('dnsbl_enable')),
-             BxTemplFunctions::getInstance()->statusOnOff($this->_oConfig->getAntispamOption('uridnsbl_enable')),
+             BxTemplFunctions::getInstance()->statusOnOff((bool)$this->_oConfig->getAntispamOption('dnsbl_enable'), true),
+             BxTemplFunctions::getInstance()->statusOnOff((bool)$this->_oConfig->getAntispamOption('uridnsbl_enable'), true),
              mb_strtolower(_t('_bx_antispam_dnsbl_behaviour_login_' . $this->_oConfig->getAntispamOption('dnsbl_behaviour_login'))),
              mb_strtolower(_t('_bx_antispam_dnsbl_behaviour_join_' . $this->_oConfig->getAntispamOption('dnsbl_behaviour_join')))
         );

@@ -347,11 +347,16 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
         return '<time datetime="' . $sDateUTC . '" data-bx-format="' . getParam($sFormatIdentifier) . '" data-bx-autoformat="' . ($bForceFormat ? 0 : getParam('sys_format_timeago')) . '">' . $sDateUTC . '</time>';
     }
 
-    function statusOnOff ($mixed)
+    function statusOnOff ($mixed, $isMsg = false)
     {
-        if ($mixed)
-            return '<i class="sys-icon circle col-green1"></i> ' . _t('_sys_on');
-        return '<i class="sys-icon circle col-red2"></i> ' . _t('_sys_off');
+        if ((is_bool($mixed) && !$mixed) || (is_string($mixed) && 'fail' == $mixed))
+            return '<i class="sys-icon circle col-red2"></i> ' . ($isMsg ? _t('_sys_off') : '');
+        elseif (is_string($mixed) && 'warn' == $mixed)
+            return '<i class="sys-icon circle col-red3"></i> ' . ($isMsg ? _t('_sys_warn') : '');
+        elseif (is_string($mixed) && 'undef' == $mixed)
+            return '<i class="sys-icon circle col-gray"></i> ' . ($isMsg ? _t('_undefined') : '');
+        else
+            return '<i class="sys-icon circle col-green1"></i> ' . ($isMsg ? _t('_sys_on') : '');
     }
 }
 

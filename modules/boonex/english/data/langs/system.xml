@@ -523,6 +523,7 @@
 	<string name="_adm_dbd_btn_update"><![CDATA[Update]]></string>
 	<string name="_adm_dbd_txt_dolphin_n_available"><![CDATA[Dolphin {0} available!]]></string>
 	<string name="_adm_dbd_txt_dolphin_on"><![CDATA[Dolphin U on]]></string>
+	<string name="_adm_dbd_txt_htools_status"><![CDATA[{0} - <b>{1}</b>]]></string>
 	<string name="_adm_dbd_txt_installed"><![CDATA[Installed:]]></string>
 	<string name="_adm_dbd_txt_version"><![CDATA[Version:]]></string>
 	<string name="_adm_dbd_txt_su_database"><![CDATA[Database]]></string>
@@ -1788,7 +1789,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_on"><![CDATA[on]]></string>
     <string name="_sys_off"><![CDATA[off]]></string>
 	<string name="_sys_page_block_title_about"><![CDATA[About]]></string>
-	<string name="_sys_page_block_title_account_profile_switcher"><![CDATA[Switch Profile]]></string>
+	<string name="_sys_page_block_title_account_profile_switcher"><![CDATA[Use site as ...]]></string>
 	<string name="_sys_page_block_title_account_settings_delete"><![CDATA[Delete Account]]></string>
 	<string name="_sys_page_block_title_account_settings_email"><![CDATA[Email Settings]]></string>
 	<string name="_sys_page_block_title_account_settings_info"><![CDATA[Edit Account]]></string>
@@ -1907,6 +1908,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_storage_restriction_ext_allowed"><![CDATA[Please, upload only files of these types: {0}]]></string>
 	<string name="_sys_storage_restriction_ext_denied"><![CDATA[You may upload any types of files except for {0}]]></string>
 	<string name="_sys_storage_restriction_size"><![CDATA[Maximum file size limit is {0}]]></string>
+	<string name="_sys_switch_profile"><![CDATA[Switch profile]]></string>
 	<string name="_sys_submit"><![CDATA[Submit]]></string>
 	<string name="_sys_txt_access_denied"><![CDATA[Access denied]]></string>
 	<string name="_sys_txt_account_pending"><![CDATA[Your account is pending approval, please wait until it is activated.]]></string>
@@ -1979,7 +1981,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_uploader_simple_submit_button"><![CDATA[Upload]]></string>
 	<string name="_sys_uploader_simple_title"><![CDATA[Simple Upload]]></string>
 	<string name="_sys_uploader_upload_canceled"><![CDATA[Too bad. Upload canceled.]]></string>
-	<string name="_sys_edit_profile"><![CDATA[Edit profile]]></string>
+	<string name="_sys_edit_profile"><![CDATA[Edit profile]]></string>    
+	<string name="_sys_warn"><![CDATA[warning]]></string>
 	<string name="_sys_x_days"><![CDATA[{0} days]]></string>
 	<string name="_to"><![CDATA[to]]></string>
 	<string name="_top"><![CDATA[Top]]></string>
