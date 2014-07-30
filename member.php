@@ -37,7 +37,7 @@ if (isset($_POST['ID'])) { // login form is submitted
         $aAccount = bx_login($oAccount->id(), ($oForm->getCleanValue('rememberMe') ? true : false));
 
         $sUrlRelocate = $oForm->getCleanValue('relocate');
-        if (!$sUrlRelocate || BX_DOL_URL_ROOT == $sUrlRelocate || basename($sUrlRelocate) == 'join.php' || 0 != strncmp($sUrlRelocate, BX_DOL_URL_ROOT, strlen(BX_DOL_URL_ROOT)))
+        if (!$sUrlRelocate || 0 != strncmp($sUrlRelocate, BX_DOL_URL_ROOT, strlen(BX_DOL_URL_ROOT)))
             $sUrlRelocate = BX_DOL_ROLE_ADMIN == $oForm->getRole() ? BX_DOL_URL_STUDIO . 'launcher.php' : BX_DOL_URL_ROOT . 'member.php';
 
         bx_import('BxDolTemplate');
