@@ -1682,6 +1682,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_item_title_switch_template_mask"><![CDATA[{0} ({1})]]></string>
 	<string name="_sys_menu_item_title_account_menu"><![CDATA[{member_display_name}]]></string>
 	<string name="_sys_menu_item_title_account_profile_context"><![CDATA[Profiles]]></string>
+	<string name="_sys_menu_item_title_account_dashboard"><![CDATA[Dashboard]]></string>
+	<string name="_sys_menu_item_title_account_dashboard_administration"><![CDATA[Administration]]></string>
 	<string name="_sys_menu_item_title_account_settings"><![CDATA[Settings]]></string>
 	<string name="_sys_menu_item_title_account_settings_delete"><![CDATA[Delete]]></string>
 	<string name="_sys_menu_item_title_account_settings_email"><![CDATA[Email]]></string>
@@ -1703,6 +1705,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_item_title_system_switch_template"><![CDATA[Template]]></string>
 	<string name="_sys_menu_item_title_system_account_menu"><![CDATA[Account]]></string>
 	<string name="_sys_menu_item_title_system_account_profile_context"><![CDATA[Profiles]]></string>
+	<string name="_sys_menu_item_title_system_account_dashboard_administration"><![CDATA[Administration]]></string>
 	<string name="_sys_menu_item_title_system_account_settings"><![CDATA[Settings]]></string>
 	<string name="_sys_menu_item_title_system_account_settings_delete"><![CDATA[Delete]]></string>
 	<string name="_sys_menu_item_title_system_account_settings_email"><![CDATA[Email]]></string>
@@ -1722,6 +1725,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_item_title_system_profile"><![CDATA[Profile]]></string>
 	<string name="_sys_menu_item_title_system_set_acl_level"><![CDATA[Set membership]]></string>
 	<string name="_sys_menu_set_title_account"><![CDATA[Account]]></string>
+	<string name="_sys_menu_set_title_account_dashboard"><![CDATA[Account Dashboard]]></string>
+	<string name="_sys_menu_set_title_account_dashboard_administration"><![CDATA[Account Dashboard Administration]]></string>
 	<string name="_sys_menu_set_title_account_settings"><![CDATA[Account Settings]]></string>
 	<string name="_sys_menu_set_title_account_settings_more"><![CDATA[Account Settings More]]></string>
 	<string name="_sys_menu_set_title_account_notifications"><![CDATA[Notifications]]></string>
@@ -1751,6 +1756,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_template_title_ver_lite"><![CDATA[Vertical Links (lite)]]></string>
 	<string name="_sys_menu_template_title_account_popup"><![CDATA[Account popup]]></string>
 	<string name="_sys_menu_title_account"><![CDATA[Account Menu]]></string>
+	<string name="_sys_menu_title_account_dashboard"><![CDATA[Account Dashboard Menu]]></string>
+	<string name="_sys_menu_title_account_dashboard_administration"><![CDATA[Account Dashboard Administration Menu]]></string>
 	<string name="_sys_menu_title_account_settings"><![CDATA[Account Settings Menu]]></string>
 	<string name="_sys_menu_title_account_settings_more"><![CDATA[Account Settings More Menu]]></string>
 	<string name="_sys_menu_title_add_content"><![CDATA[Add Content Menu]]></string>

@@ -3,11 +3,16 @@ SET @sName = 'bx_notifications';
 
 -- PAGES & BLOCKS
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_notifications_view', '_bx_ntfs_page_title_system_view', '_bx_ntfs_page_title_view', @sName, 5, 2147483647, 1, 'notifications-view', 'page.php?i=notifications-view', '', '', '', 0, 1, 0, '', '');
+('bx_notifications_view', '_bx_ntfs_page_title_system_view', '_bx_ntfs_page_title_view', @sName, 5, 2147483647, 1, 'notifications-view', 'page.php?i=notifications-view', '', '', '', 0, 1, 0, 'BxNtfsPageView', 'modules/boonex/notifications/classes/BxNtfsPageView.php');
 
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
 ('bx_notifications_view', 1, @sName, '_bx_ntfs_page_block_title_view', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:16:"bx_notifications";s:6:"method";s:14:"get_block_view";}', 0, 1, 1);
 
+
+-- MENU: Dashboard
+SET @iMIOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_account_dashboard');
+INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
+('sys_account_dashboard', @sName, 'account-dashboard-notifications', '_bx_ntfs_menu_item_title_system_notifications', '_bx_ntfs_menu_item_title_notifications', 'page.php?i=notifications-view', '', '', 'bell col-green3', '', '', 2147483646, 1, 0, @iMIOrder + 1);
 
 -- MENU: Notifications
 SET @iMIOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_account_notifications');
