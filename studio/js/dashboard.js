@@ -18,9 +18,6 @@ function BxDolStudioDashboard(oOptions) {
     	$('.bx-dbd-block-content').bxTime();
 
     	$this.checkForUpdateScript();
-
-    	$this.getBlockContent('space');
-    	$this.getBlockContent('htools');
     });
 }
 

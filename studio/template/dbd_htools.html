@@ -6,4 +6,11 @@
 			</bx_repeat:items>
 		</div>
 	</bx_if:show_content>
+	<bx_if:show_loader>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				__js_object__.getBlockContent('htools');
+			});
+		</script>
+	</bx_if:show_loader>
 </div>

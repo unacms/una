@@ -8,7 +8,7 @@
  */
 
 bx_import('BxTemplStudioPage');
-bx_import('BxDolStudioStoreQuery');
+bx_import('BxDolStudioDashboardQuery');
 
 class BxDolStudioDashboard extends BxTemplStudioPage
 {
@@ -18,6 +18,8 @@ class BxDolStudioDashboard extends BxTemplStudioPage
     function __construct()
     {
         parent::__construct('dashboard');
+
+        $this->oDb = new BxDolStudioDashboardQuery();
 
         $this->aBlocks = array(
         	'space' => 'serviceGetBlockSpace',
@@ -47,7 +49,7 @@ class BxDolStudioDashboard extends BxTemplStudioPage
 					if(!isset($this->aBlocks[$sValue]))
 						break;
 						
-					$aBlock = $this->{$this->aBlocks[$sValue]}(true);
+					$aBlock = $this->{$this->aBlocks[$sValue]}(false);
 					if(!empty($aBlock['content']))
             			$aResult = array('code' => 0, 'data' => $aBlock['content']);
 

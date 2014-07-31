@@ -75,19 +75,41 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
     	return array('content' => $sContent);
     }
 
-    public function serviceGetBlockSpace($bShowContent = false)
+    public function serviceGetBlockSpace($bDynamic = false)
     {
-    	$aChartData = array();
-    	if($bShowContent) {
-	    	$iSizeDiskTotal = $this->getFolderSize(BX_DIRECTORY_PATH_ROOT);
-	    	$iSizeDiskMedia = $this->getFolderSize(BX_DIRECTORY_STORAGE);
-	    	$iSizeDb = $this->getDbSize();
+    	$bInclideScriptSpace = false; //Use dynamic loading by default if this setting is enabled.
 
+    	$sJsObject = $this->getPageJsObject();
+
+    	$aChartData = array();
+    	if(!$bDynamic) {
 	    	$aItems = array(
-	    		array('label' => '_adm_dbd_txt_su_database', 'value' => $iSizeDb),
-	    		array('label' => '_adm_dbd_txt_su_user_media', 'value' => $iSizeDiskMedia),
-	    		array('label' => '_adm_dbd_txt_su_system', 'value' => $iSizeDiskTotal - $iSizeDiskMedia),    		
+	    		array('label' => '_adm_dbd_txt_su_database', 'value' => $this->getDbSize()),
 	    	);
+
+	    	if($bInclideScriptSpace) {
+	    		$iSizeDiskTotal = $this->getFolderSize(BX_DIRECTORY_PATH_ROOT);
+	    		$iSizeDiskMedia = $this->getFolderSize(BX_DIRECTORY_STORAGE);
+	    	
+	    		$aItems[] = array('label' => '_adm_dbd_txt_su_system', 'value' => $iSizeDiskTotal - $iSizeDiskMedia);
+	    	}
+
+	    	bx_import('BxDolModuleQuery');
+	    	$aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'all'));
+	    	foreach($aModules as $aModule) {
+	    		$sName = $aModule['name'];
+	    		$sTitle = $aModule['title'];
+
+	    		if($aModule['name'] == 'system') {
+	    			$sName = 'sys';
+	    			$sTitle = _t('_adm_dbd_txt_su_system_media');	    			
+	    		}
+
+				$aItems[] = array(
+					'label' => $sTitle, 
+					'value' => (int)$this->oDb->getModuleStorageSize($sName)
+				);
+	    	}
 
 	    	$iSizeTotal = 0;
 	        $aChartData = array();
@@ -99,10 +121,16 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
 
         $sContent = BxDolStudioTemplate::getInstance()->parseHtmlByName('dbd_space.html', array(
         	'bx_if:show_content' => array(
-        		'condition' => $bShowContent,
+        		'condition' => !$bDynamic,
         		'content' => array(
-		        	'js_object' => $this->getPageJsObject(),
+		        	'js_object' => $sJsObject,
 		        	'chart_data' => json_encode($aChartData)
+       			)
+       		),
+       		'bx_if:show_loader' => array(
+       			'condition' => $bDynamic,
+       			'content' => array(
+       				'js_object' => $sJsObject,
        			)
        		)
         ));
@@ -110,7 +138,7 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
         return array('content' => $sContent);
     }
 
-	public function serviceGetBlockHostTools($bShowContent = false)
+	public function serviceGetBlockHostTools($bDynamic = true)
 	{
 		$sJsObject = $this->getPageJsObject();
 
@@ -124,7 +152,7 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
 		);
 
 		$aTmplVarsItems = array();
-		if($bShowContent) {
+		if(!$bDynamic) {
 			bx_import('BxDolStudioToolsAudit');
 			$oAudit = new BxDolStudioToolsAudit();
 	
@@ -155,11 +183,17 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
 
         $sContent = BxDolStudioTemplate::getInstance()->parseHtmlByName('dbd_htools.html', array(
         	'bx_if:show_content' => array(
-        		'condition' => $bShowContent,
+        		'condition' => !$bDynamic,
         		'content' => array(
 	    			'bx_repeat:items' => $aTmplVarsItems,
        			)
-        	)
+        	),
+        	'bx_if:show_loader' => array(
+       			'condition' => $bDynamic,
+       			'content' => array(
+       				'js_object' => $sJsObject,
+       			)
+       		)
 	    ));
 
 		return array('content' => $sContent, 'menu' => $aMenu);

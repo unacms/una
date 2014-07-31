@@ -6,4 +6,11 @@
 			__js_object__.initChart('space', __chart_data__);
 		</script>
 	</bx_if:show_content>
+	<bx_if:show_loader>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				__js_object__.getBlockContent('space');
+			});
+		</script>
+	</bx_if:show_loader>
 </div>

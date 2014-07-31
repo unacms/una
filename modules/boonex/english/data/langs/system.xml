@@ -527,8 +527,8 @@
 	<string name="_adm_dbd_txt_installed"><![CDATA[Installed:]]></string>
 	<string name="_adm_dbd_txt_version"><![CDATA[Version:]]></string>
 	<string name="_adm_dbd_txt_su_database"><![CDATA[Database]]></string>
-	<string name="_adm_dbd_txt_su_user_media"><![CDATA[User Media]]></string>
 	<string name="_adm_dbd_txt_su_system"><![CDATA[System]]></string>
+	<string name="_adm_dbd_txt_su_system_media"><![CDATA[System Media]]></string>
 	<string name="_adm_dbd_txt_c_clear_all"><![CDATA[Clear all caches]]></string>
 	<string name="_adm_dbd_txt_c_db"><![CDATA[DB]]></string>
 	<string name="_adm_dbd_txt_c_clear_db"><![CDATA[Clear DB cache]]></string>
