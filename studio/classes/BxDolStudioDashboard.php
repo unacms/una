@@ -12,19 +12,24 @@ bx_import('BxDolStudioStoreQuery');
 
 class BxDolStudioDashboard extends BxTemplStudioPage
 {
+	protected $aBlocks;
 	protected $aItemsCache;
 
     function __construct()
     {
         parent::__construct('dashboard');
 
+        $this->aBlocks = array(
+        	'space' => 'serviceGetBlockSpace',
+        	'htools' => 'serviceGetBlockHostTools',
+        );
+
         $this->aItemsCache = array (
-		    array('name' => 'all', 'title' => _t('_adm_dbd_txt_c_all')),
-		    array('name' => 'db', 'title' => _t('_adm_dbd_txt_c_db')),
-		    array('name' => 'template', 'title' => _t('_adm_dbd_txt_c_template')),
-		    array('name' => 'css', 'title' => _t('_adm_dbd_txt_c_css')),
-		    array('name' => 'js', 'title' => _t('_adm_dbd_txt_c_js')),
-		    array('name' => 'users', 'title' => _t('_adm_dbd_txt_c_users')),
+		    array('name' => 'all'),
+		    array('name' => 'db'),
+		    array('name' => 'template'),
+		    array('name' => 'css'),
+		    array('name' => 'js')
 		);
 
         //--- Check actions ---//
@@ -33,6 +38,21 @@ class BxDolStudioDashboard extends BxTemplStudioPage
 
             $aResult = array('code' => 1, 'message' => _t('_adm_err_cannot_process_action'));
             switch($sAction) {
+            	case 'get_block':
+            		$sValue = bx_get('dbd_value');
+					if($sValue === false)
+						break;
+
+					$sValue = bx_process_input($sValue);
+					if(!isset($this->aBlocks[$sValue]))
+						break;
+						
+					$aBlock = $this->{$this->aBlocks[$sValue]}(true);
+					if(!empty($aBlock['content']))
+            			$aResult = array('code' => 0, 'data' => $aBlock['content']);
+
+            		break;
+            		
                 case 'check_update_script':
                     $aResult = array();
 
@@ -64,17 +84,21 @@ class BxDolStudioDashboard extends BxTemplStudioPage
 
 					switch ($sValue) {
 				        case 'all':
+				        	$aResult = false;
 				            foreach($this->aItemsCache as $aItem) {
 				            	if($aItem['name'] == 'all')
 				            		continue;
 
-				                $aResult = $oCacheUtilities->clear($aItem['name']);
-				                if($aResult['code'] != 0)
-				                    break;
+				                $aResultClear = $oCacheUtilities->clear($aItem['name']);
+				                if($aResultClear === false)
+				                	continue;
+
+								$aResult = $aResultClear;
+				                if(isset($aResult['code']) && $aResult['code'] != 0)
+									break;
 				            }
 				            break;
 
-				        case 'users':
 				        case 'db':
 				        case 'template':
 				        case 'css':
@@ -86,7 +110,9 @@ class BxDolStudioDashboard extends BxTemplStudioPage
 				            $aResult = array('code' => 1, 'message' => _t('_Error Occured'));
 				    }
 
-				    if($aResult['code'] == 0)
+				    if($aResult === false)
+				    	$aResult['data'] = MsgBox(_t('_adm_dbd_msg_c_all_disabled'));
+				    else if(isset($aResult['code']) && $aResult['code'] == 0)
 				        $aResult['data'] = $this->getCacheChartData(false);
 
 					break;
@@ -151,8 +177,14 @@ class BxDolStudioDashboard extends BxTemplStudioPage
 	            continue;
 
 	        $iSize = $oCacheUtilities->size($aItem['name']);
-	        $aChartData[] = array(bx_js_string($aItem['title'], BX_ESCAPE_STR_APOS), array('v' => $iSize, 'f' => bx_js_string(_t_format_size($iSize))));
+	        if($iSize === false)
+	        	continue;
+
+	        $aChartData[] = array(bx_js_string(_t('_adm_dbd_txt_c_' . $aItem['name']), BX_ESCAPE_STR_APOS), array('v' => $iSize, 'f' => bx_js_string(_t_format_size($iSize))));
     	}
+
+    	if(empty($aChartData))
+    		return false;
 
     	return $bAsString ? json_encode($aChartData) : $aChartData;
     }

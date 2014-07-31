@@ -18,8 +18,37 @@ function BxDolStudioDashboard(oOptions) {
     	$('.bx-dbd-block-content').bxTime();
 
     	$this.checkForUpdateScript();
+
+    	$this.getBlockContent('space');
+    	$this.getBlockContent('htools');
     });
 }
+
+BxDolStudioDashboard.prototype.getBlockContent = function(sType) {
+	var $this = this;
+	var oDate = new Date();
+	var sDivId = 'bx-dbd-' + sType;
+
+	bx_loading('bx-dbd-' + sType, true);
+
+	$.get(
+		this.sActionsUrl,
+		{
+			dbd_action: 'get_block',
+			dbd_value: sType,
+			_t: oDate.getTime()
+		},
+		function(oData) {
+			bx_loading('bx-dbd-' + sType, false);
+
+			if(!oData.data)
+			    return;
+
+			$('#' + sDivId).replaceWith(oData.data);
+		},
+		'json'
+	);
+};
 
 BxDolStudioDashboard.prototype.checkForUpdateScript = function() {
 	var $this = this;
@@ -45,14 +74,16 @@ BxDolStudioDashboard.prototype.checkForUpdateScript = function() {
 BxDolStudioDashboard.prototype.initChart = function(sType, oData) {
 	var $this = this;
 
-    google.setOnLoadCallback(function() {
+	bx_loading('bx-dbd-' + sType, true);
+	google.load("visualization", "1", {packages:["corechart"], callback: function() {
+    	bx_loading('bx-dbd-' + sType, false);
     	$this.showChart(sType, oData);
-    });
+    }});
 };
 
 BxDolStudioDashboard.prototype.showChart = function(sType, oData) {
-	var sDivId = 'bx-dbd-' + sType + '-chart';
-    $('#' + sDivId).html('');
+	var oChart = $('#bx-dbd-' + sType + ' .bx-dbd-chart');
+	oChart.html('');
 
     var oDataTable = new google.visualization.DataTable();
     oDataTable.addColumn('string', 'Label');
@@ -62,23 +93,21 @@ BxDolStudioDashboard.prototype.showChart = function(sType, oData) {
 		this.oData = oData;
     oDataTable.addRows(this.oData);
 
-    var oOptions = {
-			chartArea: {
-				left:10,
-				top:10,
-				width:'92%',
-				height:'92%'
-			}
-        };
-
-    var oChart = new google.visualization.PieChart($('#' + sDivId)[0]);
-    oChart.draw(oDataTable, oOptions);
+    var oChart = new google.visualization.PieChart(oChart[0]);
+    oChart.draw(oDataTable, {
+		chartArea: {
+			left:10,
+			top:10,
+			width:'92%',
+			height:'92%'
+		}
+    });
 };
 
 BxDolStudioDashboard.prototype.clearCache = function(sType) {
 	var $this = this;
 	var oDate = new Date();
-	var sDivId = 'bx-dbd-cache-chart';
+	var sDivId = 'bx-dbd-cache';
 
 	$('#' + sDivId).parents('.bx-page-block-container').find('.bx-db-header .bx-popup-applied:visible').dolPopupHide();
 
@@ -94,11 +123,15 @@ BxDolStudioDashboard.prototype.clearCache = function(sType) {
         function(oData) {
         	bx_loading(sDivId, false);
 
-        	if(oData.message.length > 0)
+        	if(oData.message != undefined && oData.message.length > 0)
     			$this.popup(oData.message);
 
-            if(oData.data != undefined)
-            	$this.showChart('cache', oData.data);
+            if(oData.data != undefined) {
+            	if(typeof oData.data == 'object')
+            		$this.showChart('cache', oData.data);
+            	else if(typeof oData.data == 'string')
+            		$('#' + sDivId).html(oData.data);
+            }
         },
         'json'
     );

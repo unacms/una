@@ -32,20 +32,19 @@ div.bx-dbd-update-script span {
 }
 
 /*--- Chart based blocks ---*/
-div.bx-dbd-space-chart,
-div.bx-dbd-cache-chart {
+div.bx-dbd-chart {
 	width: 400px;
 	height: 200px;
 	margin: 0px auto; 
 }
 
 /*--- Host Tools block ---*/
-div.bx-dbd-host-tools .bx-btn {
+div.bx-dbd-htools .bx-btn {
     display: inline-block;
     float: none;
 }
 
-div.bx-dbd-host-tools .bx-dbd-host-tools-item {
+div.bx-dbd-htools .bx-dbd-htools-item {
     float: left;
     width: 50%;
 }

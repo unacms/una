@@ -28,6 +28,7 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
     function getPageJs()
     {
         return array_merge(parent::getPageJs(), array(
+        	'https://www.google.com/jsapi',
         	'jquery.anim.js',
         	'dashboard.js'
         ));
@@ -45,15 +46,12 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
 
 	function getPageJsCode($aOptions = array(), $bWrap = true)
     {
-    	$sResult = BxDolStudioTemplate::getInstance()->_wrapInTagJs("https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart']}]}");
-
         $aOptions = array_merge($aOptions, array(
             'sActionUrl' => BX_DOL_URL_STUDIO . 'dashboard.php',
         	'sVersion' => '__version__'
         ));        
-        $sResult .= parent::getPageJsCode($aOptions, $bWrap);
 
-		return $sResult;
+		return parent::getPageJsCode($aOptions, $bWrap);
     }
 
     function getPageCode($bHidden = false)
@@ -77,65 +75,44 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
     	return array('content' => $sContent);
     }
 
-    public function serviceGetBlockSpace()
+    public function serviceGetBlockSpace($bShowContent = false)
     {
-    	$sJsObject = $this->getPageJsObject();
+    	$aChartData = array();
+    	if($bShowContent) {
+	    	$iSizeDiskTotal = $this->getFolderSize(BX_DIRECTORY_PATH_ROOT);
+	    	$iSizeDiskMedia = $this->getFolderSize(BX_DIRECTORY_STORAGE);
+	    	$iSizeDb = $this->getDbSize();
 
-    	$iSizeDiskTotal = $this->getFolderSize(BX_DIRECTORY_PATH_ROOT);
-    	$iSizeDiskMedia = $this->getFolderSize(BX_DIRECTORY_STORAGE);
-    	$iSizeDb = $this->getDbSize();
+	    	$aItems = array(
+	    		array('label' => '_adm_dbd_txt_su_database', 'value' => $iSizeDb),
+	    		array('label' => '_adm_dbd_txt_su_user_media', 'value' => $iSizeDiskMedia),
+	    		array('label' => '_adm_dbd_txt_su_system', 'value' => $iSizeDiskTotal - $iSizeDiskMedia),    		
+	    	);
 
-    	$aItems = array(
-    		array('label' => '_adm_dbd_txt_su_database', 'value' => $iSizeDb),
-    		array('label' => '_adm_dbd_txt_su_user_media', 'value' => $iSizeDiskMedia),
-    		array('label' => '_adm_dbd_txt_su_system', 'value' => $iSizeDiskTotal - $iSizeDiskMedia),    		
-    	);
-
-    	$iSizeTotal = 0;
-        $aChartData = array();
-        foreach($aItems as $sColor => $aItem) {
-        	$iSizeTotal += $aItem['value'];
-            $aChartData[] = array(bx_js_string(strip_tags(_t($aItem['label'])), BX_ESCAPE_STR_APOS), array('v' => $aItem['value'], 'f' => bx_js_string(_t_format_size($aItem['value']))));
-        }
+	    	$iSizeTotal = 0;
+	        $aChartData = array();
+	        foreach($aItems as $sColor => $aItem) {
+	        	$iSizeTotal += $aItem['value'];
+	            $aChartData[] = array(bx_js_string(strip_tags(_t($aItem['label'])), BX_ESCAPE_STR_APOS), array('v' => $aItem['value'], 'f' => bx_js_string(_t_format_size($aItem['value']))));
+	        }
+    	}
 
         $sContent = BxDolStudioTemplate::getInstance()->parseHtmlByName('dbd_space.html', array(
-        	'js_object' => $sJsObject,
-        	'chart_data' => json_encode($aChartData)
+        	'bx_if:show_content' => array(
+        		'condition' => $bShowContent,
+        		'content' => array(
+		        	'js_object' => $this->getPageJsObject(),
+		        	'chart_data' => json_encode($aChartData)
+       			)
+       		)
         ));
 
         return array('content' => $sContent);
     }
 
-	public function serviceGetBlockHostTools()
+	public function serviceGetBlockHostTools($bShowContent = false)
 	{
 		$sJsObject = $this->getPageJsObject();
-
-		bx_import('BxDolStudioToolsAudit');
-		$oAudit = new BxDolStudioToolsAudit();
-
-        bx_import('BxTemplFunctions');
-        $oFunc = BxTemplFunctions::getInstance();
-
-        $aCheckRequirements = array (
-            'PHP' => 'requirementsPHP',
-            'MySQL' => 'requirementsMySQL',
-            'Web Server' => 'requirementsWebServer',
-        );
-        
-        $aLevels = array (BX_DOL_AUDIT_FAIL, BX_DOL_AUDIT_WARN, BX_DOL_AUDIT_UNDEF);
-
-        $aTmplVarsItems = array();
-        foreach ($aCheckRequirements as $sTitle => $sFunc) {
-            $sStatus = BX_DOL_AUDIT_OK;
-            foreach ($aLevels as $sLevel) { 
-                $a = $oAudit->checkRequirements($sLevel, $sFunc);
-                if (!empty($a)) {
-                    $sStatus = $sLevel;
-                    break;
-                }
-            }
-            $aTmplVarsItems[] = array('status' => $oFunc->statusOnOff($sStatus), 'msg' => _t('_adm_dbd_txt_htools_status', $sTitle, $oAudit->typeToTitle($sStatus)));
-        }
 
 		$aMenu = array(
 			array(
@@ -146,8 +123,43 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
 			)
 		);
 
+		$aTmplVarsItems = array();
+		if($bShowContent) {
+			bx_import('BxDolStudioToolsAudit');
+			$oAudit = new BxDolStudioToolsAudit();
+	
+	        bx_import('BxTemplFunctions');
+	        $oFunc = BxTemplFunctions::getInstance();
+	
+	        $aCheckRequirements = array (
+	            'PHP' => 'requirementsPHP',
+	            'MySQL' => 'requirementsMySQL',
+	            'Web Server' => 'requirementsWebServer',
+	        );
+	
+	        $aLevels = array (BX_DOL_AUDIT_FAIL, BX_DOL_AUDIT_WARN, BX_DOL_AUDIT_UNDEF);
+	
+	        $aTmplVarsItems = array();
+	        foreach ($aCheckRequirements as $sTitle => $sFunc) {
+	            $sStatus = BX_DOL_AUDIT_OK;
+	            foreach ($aLevels as $sLevel) { 
+	                $a = $oAudit->checkRequirements($sLevel, $sFunc);
+	                if (!empty($a)) {
+	                    $sStatus = $sLevel;
+	                    break;
+	                }
+	            }
+	            $aTmplVarsItems[] = array('status' => $oFunc->statusOnOff($sStatus), 'msg' => _t('_adm_dbd_txt_htools_status', $sTitle, $oAudit->typeToTitle($sStatus)));
+	        }
+		}
+
         $sContent = BxDolStudioTemplate::getInstance()->parseHtmlByName('dbd_htools.html', array(
-	    	'bx_repeat:items' => $aTmplVarsItems,
+        	'bx_if:show_content' => array(
+        		'condition' => $bShowContent,
+        		'content' => array(
+	    			'bx_repeat:items' => $aTmplVarsItems,
+       			)
+        	)
 	    ));
 
 		return array('content' => $sContent, 'menu' => $aMenu);
@@ -157,20 +169,35 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
 	{
 		$sJsObject = $this->getPageJsObject();
 
-		$aMenu = array();
-	    foreach($this->aItemsCache as $aItem)
-			$aMenu[] = array(
-				'name' => $aItem['name'], 
-				'title' => _t($aItem['title']), 
-				'link' => 'javascript:void(0)', 
-				'onclick' => $sJsObject . ".clearCache('" . $aItem['name'] . "')"
-			);
+		$sChartData = $this->getCacheChartData();
+		$bChartData = $sChartData !== false;
 
-	    $sContent = BxDolStudioTemplate::getInstance()->parseHtmlByName('dbd_cache.html', array(
-	    	'js_object' => $sJsObject,
-	        'chart_data' => $this->getCacheChartData(),
-	    ));
-    
+		$aMenu = array();
+		if($bChartData)
+		    foreach($this->aItemsCache as $aItem)
+				$aMenu[] = array(
+					'name' => $aItem['name'], 
+					'title' => _t('_adm_dbd_txt_c_clear_' . $aItem['name']), 
+					'link' => 'javascript:void(0)', 
+					'onclick' => $sJsObject . ".clearCache('" . $aItem['name'] . "')"
+				);
+
+		$sContent = BxDolStudioTemplate::getInstance()->parseHtmlByName('dbd_cache.html', array(
+			'bx_if:show_chart' => array(
+				'condition' => $bChartData,
+				'content' => array(
+					'js_object' => $sJsObject,
+		        	'chart_data' => $sChartData,
+				)
+			),
+			'bx_if:show_empty' => array(
+				'condition' => !$bChartData,
+				'content' => array(
+					'message' => MsgBox(_t('_adm_dbd_msg_c_all_disabled'))
+				)
+			),
+		));
+
 		return array('content' => $sContent, 'menu' => $aMenu);
 	}
 }

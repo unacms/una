@@ -1,8 +1,9 @@
-<div class="bx-dbd-block-content">
-	<div id="bx-dbd-space-chart" class="bx-dbd-space-chart bx-def-border"></div>
+<div id="bx-dbd-space" class="bx-dbd-block-content">
+	<bx_if:show_content>
+		<div class="bx-dbd-chart bx-def-border"></div>
 
-	<script type="text/javascript">
-		bx_loading('bx-dbd-space-chart', true);
-		__js_object__.initChart('space', __chart_data__);
-	</script>
+		<script type="text/javascript">
+			__js_object__.initChart('space', __chart_data__);
+		</script>
+	</bx_if:show_content>
 </div>
