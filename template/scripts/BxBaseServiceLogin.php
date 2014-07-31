@@ -22,7 +22,7 @@ class BxBaseServiceLogin extends BxDol
         return $n*2;
     }
 
-    public function serviceLoginForm ($sParams = '')
+    public function serviceLoginForm ($sParams = '', $sForceRelocate = '')
     {
         if (isLogged()) {
             return false;
@@ -60,6 +60,11 @@ class BxBaseServiceLogin extends BxDol
         $sCustomHtmlBefore = '';
         $sCustomHtmlAfter = '';
         bx_alert('profile', 'show_login_form', 0, 0, array('oForm' => $oForm, 'sParams' => &$sParams, 'sCustomHtmlBefore' => &$sCustomHtmlBefore, 'sCustomHtmlAfter' => &$sCustomHtmlAfter, 'aAuthTypes' => &$aAuthTypes));
+
+        if ($sForceRelocate && 0 === mb_stripos($sForceRelocate, BX_DOL_URL_ROOT))
+            $oForm->aInputs['relocate']['value'] = $sForceRelocate;
+        elseif ('homepage' == $sForceRelocate)
+            $oForm->aInputs['relocate']['value'] = BX_DOL_URL_ROOT;
 
         $sFormCode = $oForm->getCode();
 

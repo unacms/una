@@ -20,8 +20,22 @@ class BxBaseFormLogin extends BxTemplFormView
     {
         parent::__construct($aInfo, $oTemplate);
 
+        $aNoRelocatePages = array('forgot-password', 'login', 'create-account', 'logout');
+
         $sRelocate = bx_process_input(bx_get('relocate'));
-        $this->aInputs['relocate']['value'] = $sRelocate && 0 == strncmp(BX_DOL_URL_ROOT, $sRelocate, strlen(BX_DOL_URL_ROOT)) ? $sRelocate : BX_DOL_URL_ROOT . 'member.php';
+        if (!$sRelocate && isset($_SERVER['HTTP_REFERER']) && 0 === mb_stripos($_SERVER['HTTP_REFERER'], BX_DOL_URL_ROOT)) {
+
+            $sRelocate = $_SERVER['HTTP_REFERER'];
+    
+            foreach ($aNoRelocatePages as $s) {
+                if (false !== mb_stripos($_SERVER['HTTP_REFERER'], $s)) {
+                    $sRelocate = BX_DOL_URL_ROOT . 'member.php';
+                    break;
+                }
+            }   
+        }
+        
+        $this->aInputs['relocate']['value'] = $sRelocate ? $sRelocate : BX_DOL_URL_ROOT . 'member.php';
     }
 
     function isValid ()
