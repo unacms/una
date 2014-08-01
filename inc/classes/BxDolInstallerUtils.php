@@ -122,11 +122,6 @@ class BxDolInstallerUtils extends BxDolIO
         }
     }
 
-    public function setNonHashableFiles($a)
-    {
-        $this->_aNonHashableFiles = $a;
-    }
-
     public function hashFiles($sPath, &$aFiles)
     {
         if (file_exists($sPath) && is_dir($sPath) && ($rSource = opendir($sPath))) {
@@ -143,8 +138,8 @@ class BxDolInstallerUtils extends BxDolIO
                     $aFiles[] = $this->hashInfo($sPath . $sFile);
             }
             closedir($rSource);
-        } else {
-            $aFiles[] = $this->hashInfo($sPath, $sFile);
+        } elseif (file_exists($sPath) && is_file($sPath)) {
+            $aFiles[] = $this->hashInfo($sPath);
         }
     }
 

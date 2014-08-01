@@ -99,6 +99,8 @@ class BxDolInstallController
     {
         require_once(BX_INSTALL_PATH_HEADER);
 
+        $this->hashSystemFiles();
+
         $this->_oView->pageStart();
 
         $sPathToPhp = "/replace/it/with/path/to/php/binary";
@@ -132,6 +134,19 @@ class BxDolInstallController
     protected function _getTitle()
     {
         return _t('_sys_inst_title', BX_DOL_VER);
+    }
+
+    protected function hashSystemFiles()
+    {
+        bx_import('BxDolInstallerHasher');
+        $oHasher = new BxDolInstallerHasher();
+        $aFiles = $oHasher->getSystemFilesHash ();
+
+        bx_import('BxDolStudioInstallerQuery');
+        $oDb = new BxDolStudioInstallerQuery();
+
+        foreach($aFiles as $aFile)
+            $oDb->insertModuleTrack(0, $aFile);
     }
 }
 

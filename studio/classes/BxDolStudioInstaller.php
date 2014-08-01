@@ -149,10 +149,10 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             ),
         );
 
-        $this->setNonHashableFiles(array(
+        $this->_aNonHashableFiles = array(
             'install',
             'updates'
-        ));
+        );
     }
 
     public function install($aParams, $bAutoEnable = false)
