@@ -11,6 +11,8 @@ bx_import('BxDolIO');
 
 class BxDolInstallerUtils extends BxDolIO
 {
+    protected $_aNonHashableFiles = array();
+
     function __construct()
     {
         parent::__construct();
@@ -118,6 +120,45 @@ class BxDolInstallerUtils extends BxDolIO
             $aMessage = BxDolEmailTemplates::getInstance()->parseTemplate('t_DelayedModuleUninstall', $aTemplateKeys);
             sendMail (getParam('site_email'), $aMessage['Subject'], $aMessage['Body'], 0, array(), BX_EMAIL_SYSTEM);
         }
+    }
+
+    public function setNonHashableFiles($a)
+    {
+        $this->_aNonHashableFiles = $a;
+    }
+
+    public function hashFiles($sPath, &$aFiles)
+    {
+        if (file_exists($sPath) && is_dir($sPath) && ($rSource = opendir($sPath))) {
+            while (($sFile = readdir($rSource)) !== false) {
+                if ($sFile == '.' || $sFile =='..' || $sFile[0] == '.')
+                    continue;
+                
+                if (in_array($this->filePathWithoutBase($sPath . $sFile), $this->_aNonHashableFiles))
+                    continue;                
+
+                if (is_dir($sPath . $sFile))
+                    $this->hashFiles($sPath . $sFile . '/', $aFiles);
+                else
+                    $aFiles[] = $this->hashInfo($sPath . $sFile);
+            }
+            closedir($rSource);
+        } else {
+            $aFiles[] = $this->hashInfo($sPath, $sFile);
+        }
+    }
+
+    protected function hashInfo($sPath)
+    {
+        return array(
+            'file' => $this->filePathWithoutBase($sPath),
+            'hash' => md5(file_get_contents($sPath))
+        );
+    }
+
+    protected function filePathWithoutBase($sPath)
+    {
+        return bx_ltrim_str($sPath, BX_DIRECTORY_PATH_ROOT);
     }
 }
 

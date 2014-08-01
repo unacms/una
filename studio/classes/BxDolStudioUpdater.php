@@ -61,7 +61,7 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
         $aFilesOrig = $oDb->getAllWithKey($sQuery, "file");
 
         $aFiles = array();
-        $this->_hash($this->_sModulePath, $aFiles);
+        $this->hashFiles($this->_sModulePath, $aFiles);
         foreach($aFiles as $aFile)
             if(!isset($aFilesOrig[$aFile['file']]) || $aFilesOrig[$aFile['file']]['hash'] != $aFile['hash'])
                 return array_merge($aResult, array(
@@ -78,7 +78,7 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
             $oDb->query($sQuery);
 
             $aFiles = array();
-            $this->_hash(BX_DIRECTORY_PATH_ROOT . 'modules/' . $this->_aConfig['module_dir'], $aFiles);
+            $this->hashFiles(BX_DIRECTORY_PATH_ROOT . 'modules/' . $this->_aConfig['module_dir'], $aFiles);
             foreach($aFiles as $aFile) {
                 $sQuery = $oDb->prepare("INSERT IGNORE INTO `sys_modules_file_tracks`(`module_id`, `file`, `hash`) VALUES(?, ?, ?)", $aModuleInfo['id'], $aFile['file'], $aFile['hash']);
                 $oDb->query($sQuery);

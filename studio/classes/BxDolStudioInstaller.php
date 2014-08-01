@@ -43,7 +43,6 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
     protected $_sModulePath;
 
     protected $_aActions;
-    protected $_aNonHashable;
 
     protected $_bShowOnSuccess = false;
 
@@ -149,10 +148,11 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
                 'title' => _t('_adm_txt_modules_show_conclusion'),
             ),
         );
-        $this->_aNonHashable = array(
+
+        $this->setNonHashableFiles(array(
             'install',
             'updates'
-        );
+        ));
     }
 
     public function install($aParams, $bAutoEnable = false)
@@ -230,7 +230,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             $oLanguages->compileLanguage();
 
             $aFiles = array();
-            $this->_hash($this->_sModulePath, $aFiles);
+            $this->hashFiles($this->_sModulePath, $aFiles);
 
             foreach($aFiles as $aFile)
                 $this->oDb->insertModuleTrack($iModuleId, $aFile);
@@ -451,29 +451,11 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         return $aResult;
     }
 
-    function _hash($sPath, &$aFiles)
+    protected function filePathWithoutBase($sPath)
     {
-        if(file_exists($sPath) && is_dir($sPath) && ($rSource = opendir($sPath))) {
-            while(($sFile = readdir($rSource)) !== false) {
-                if($sFile == '.' || $sFile =='..' || $sFile[0] == '.' || in_array($sFile, $this->_aNonHashable))
-                    continue;
+        return bx_ltrim_str($sPath, $this->_sModulePath);
+    }
 
-                if(is_dir($sPath . $sFile))
-                    $this->_hash($sPath . $sFile . '/', $aFiles);
-                else
-                    $aFiles[] = $this->_info($sPath . $sFile);
-            }
-            closedir($rSource);
-        } else
-            $aFiles[] = $this->_info($sPath, $sFile);
-    }
-    function _info($sPath)
-    {
-        return array(
-            'file' => str_replace($this->_sModulePath, '', $sPath),
-            'hash' => md5(file_get_contents($sPath))
-        );
-    }
     function _perform($sOperationName)
     {
         if(!defined('BX_SKIP_INSTALL_CHECK') && !defined('BX_DOL_CRON_EXECUTE') && !$GLOBALS['logged']['admin'])
