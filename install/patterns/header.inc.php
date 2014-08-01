@@ -99,8 +99,7 @@ if (file_exists(BX_DIRECTORY_PATH_ROOT . '.bx_maintenance') && !defined('BX_DOL_
     exit;
 }
 
-define('CHECK_DOLPHIN_REQUIREMENTS', 1);
-if (defined('CHECK_DOLPHIN_REQUIREMENTS')) {
+if (!defined('DISABLE_DOLPHIN_REQUIREMENTS_CHECK')) {
     $aErrors = array();
 
     $aErrors[] = (ini_get('register_globals') == 0) ? '' : '<b>register_globals</b> is on (you need to disable it, or your site will be unsafe)';
