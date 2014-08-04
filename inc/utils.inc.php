@@ -1076,4 +1076,98 @@ function bx_get_ver ()
     return $oDb->fromMemory('sys_version', 'getOne', $sQuery);
 }
 
+/**
+ * Check if site maintetance mode is enabled.
+ * Maintetance mode is enabled when '.bx_maintenance' file exists in Dolphin root folder, 
+ * please note that this is hidden file and some file managers don't show it.
+ * @param $bShowHttpError show 503 HTTP error if site is in mainenance mode
+ * @return true if site is in maintenance mode, or false otherwise
+ */
+function bx_check_maintenance_mode ($bShowHttpError = false)
+{
+    $bMaintetance = file_exists(BX_DIRECTORY_PATH_ROOT . '.bx_maintenance') && !defined('BX_DOL_UPGRADING');
+
+    if ($bMaintetance && $bShowHttpError)
+        bx_show_service_unavailable_error_and_exit ('Site is temporarily unavailable due to scheduled maintenance, please try again in a minute.', 600);
+
+    return $bMaintetance;
+}
+
+/**
+ * Check for minimal requirements.
+ * if DISABLE_DOLPHIN_REQUIREMENTS_CHECK is defined then this requirements checking is skipped.
+ * @param $bShowHttpError show 503 HTTP error if site doesn't meet minimal requirements
+ * @return false if requirements are met, or array of errors of requirements aren't met
+ */
+function bx_check_minimal_requirements ($bShowHttpError = false)
+{
+    if (defined('DISABLE_DOLPHIN_REQUIREMENTS_CHECK'))
+        return false;
+
+    $aErrors = array();
+
+    $aErrors[] = (ini_get('register_globals') == 0) ? '' : '<b>register_globals</b> is on (you need to disable it, or your site will be unsafe)';
+    $aErrors[] = (ini_get('safe_mode') == 0) ? '' : '<b>safe_mode</b> is on (you need to disable it)';
+    $aErrors[] = (version_compare(PHP_VERSION, '5.2.0', '<')) ? 'PHP version is too old (please update to <b>PHP 5.2.0</b> at least)' : '';
+    $aErrors[] = (!extension_loaded( 'mbstring')) ? '<b>mbstring</b> extension not installed (Dolphin cannot work without it)' : '';
+    $aErrors[] = (ini_get('allow_url_include') == 0) ? '' : '<b>allow_url_include</b> is on (you need to disable it, or your site will be unsafe)';
+
+    $aErrors = array_diff($aErrors, array('')); // delete empty
+
+    $bFailedMinimalRequirements = !empty($aErrors);
+
+    if ($bFailedMinimalRequirements && $bShowHttpError) {
+        $sErrors = implode(" <br /> ", $aErrors);
+        bx_show_service_unavailable_error_and_exit($sErrors);
+    }
+
+    return $bFailedMinimalRequirements ? $aErrors : false;
+}
+
+/**
+ * Check if redirect to the correct hostname is required, for example redirect from site.com to www.site.com
+ * @param $bProcessRedirect process redirect and exit if needed
+ */
+function bx_check_redirect_to_correct_hostname ($bProcessRedirect = false)
+{
+    $aUrl = parse_url(BX_DOL_URL_ROOT);
+
+    $bRedirectRequired = isset($_SERVER['HTTP_HOST']) && 0 != strcasecmp($_SERVER['HTTP_HOST'], $aUrl['host']) && 0 != strcasecmp($_SERVER['HTTP_HOST'], $aUrl['host'] . ':80');
+
+    if ($bRedirectRequired && $bProcessRedirect) {
+        header( "Location:http://{$aUrl['host']}{$_SERVER['REQUEST_URI']}" );
+        exit;
+    }
+    
+    return $bRedirectRequired;
+}
+
+/**
+ * Check if redirect to remove install folder.
+ * If BX_SKIP_INSTALL_CHECK is defined then this redirect checking is skipped.
+ * @param $bProcessRedirect process redirect and exit if needed
+ */
+function bx_check_redirect_to_remove_install_folder ($bProcessRedirect = false)
+{
+    $bRemoveInstallFolder = !defined ('BX_SKIP_INSTALL_CHECK') && file_exists(BX_DIRECTORY_PATH_ROOT . 'install');
+
+    if ($bRemoveInstallFolder && $bProcessRedirect) {
+        header('Location:' . BX_DOL_URL_ROOT . 'install/index.php?action=remove_install');
+        exit;
+    }
+
+    return $bRemoveInstallFolder;
+}
+
+/**
+ * Show HTTP 503 service unavailable error and exit
+ */
+function bx_show_service_unavailable_error_and_exit ($sMsg = false, $iRetryAfter = 86400)
+{
+    header('HTTP/1.0 503 Service Unavailable', true, 503);
+    header('Retry-After: 600');
+    echo $sMsg ? $sMsg : 'Service temporarily unavailable';
+    exit;
+}
+
 /** @} */

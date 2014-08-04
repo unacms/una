@@ -488,7 +488,7 @@ class BxDolDb extends BxDol implements iBxDolSingleton
         return  mysql_client_encoding($this->_rLink) or $this->error('Database get encoding error');
     }
 
-    function genMySQLErr( $out, $query ='' )
+    function genMySQLErr($sOutput, $query = '')
     {
         $sParamsOutput = false;
         $sFoundError = '';
@@ -532,10 +532,13 @@ EOJ;
 
         bx_import('BxDolConfig');
         if (BxDolConfig::getInstance()->get('db', 'visual_processing')) {
+
+            ob_start();
+
             ?>
                 <div style="border:2px solid red;padding:4px;width:600px;margin:0px auto;">
                     <div style="text-align:center;background-color:red;color:white;font-weight:bold;">Error</div>
-                    <div style="text-align:center;"><?php echo $out?></div>
+                    <div style="text-align:center;"><?php echo $sOutput; ?></div>
             <?php
             if(BxDolConfig::getInstance()->get('db', 'debug_mode')) {
                 if( strlen( $query ) )
@@ -568,10 +571,11 @@ EOJ;
             ?>
                 </div>
             <?php
-        } else
-            echo $out;
 
-        if(BxDolConfig::getInstance()->get('db', 'error_remort_by_email')) {
+            $sOutput = ob_get_clean();
+        } 
+
+        if (BxDolConfig::getInstance()->get('db', 'error_remort_by_email')) {
             $sSiteTitle = $this->getParam('site_title');
             $sMailBody = "Database error in " . $sSiteTitle . "<br /><br /> \n";
 
@@ -598,7 +602,7 @@ EOJ;
             sendMail($this->getParam('site_email'), "Database error in " . $sSiteTitle, $sMailBody, 0, array(), BX_EMAIL_SYSTEM, 'html', true);
         }
 
-        exit;
+        bx_show_service_unavailable_error_and_exit($sOutput);
     }
 
     function setErrorChecking ($b)

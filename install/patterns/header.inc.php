@@ -89,56 +89,22 @@ define('BX_PROFILE_STATUS_PENDING', 'pending'); ///< profile status - pending, d
 
 define('BX_DOL_SECRET', '%SECRET%');
 
-if (file_exists(BX_DIRECTORY_PATH_ROOT . '.bx_maintenance') && !defined('BX_DOL_UPGRADING')) {
-    header('HTTP/1.0 503 Service Unavailable', true, 503);
-    header('Retry-After: 600');
-    if (file_exists(BX_DIRECTORY_PATH_ROOT . 'bx_maintenance.php'))
-        include(BX_DIRECTORY_PATH_ROOT . 'bx_maintenance.php');
-    else
-        echo 'Site is temporarily unavailable due to scheduled maintenance, please try again in a minute.';
-    exit;
-}
-
-if (!defined('DISABLE_DOLPHIN_REQUIREMENTS_CHECK')) {
-    $aErrors = array();
-
-    $aErrors[] = (ini_get('register_globals') == 0) ? '' : '<b>register_globals</b> is on (you need to disable it, or your site will be unsafe)';
-    $aErrors[] = (ini_get('safe_mode') == 0) ? '' : '<b>safe_mode</b> is on (you need to disable it)';
-    $aErrors[] = (version_compare(PHP_VERSION, '5.2.0', '<')) ? 'PHP version is too old (please update to <b>PHP 5.2.0</b> at least)' : '';
-    $aErrors[] = (!extension_loaded( 'mbstring')) ? '<b>mbstring</b> extension not installed (Dolphin cannot work without it)' : '';
-    $aErrors[] = (ini_get('allow_url_include') == 0) ? '' : '<b>allow_url_include</b> is on (you need to disable it, or your site will be unsafe)';
-
-    $aErrors = array_diff($aErrors, array('')); // delete empty
-    if (!empty($aErrors)) {
-        $sErrors = implode(" <br /> ", $aErrors);
-        echo '<p style="color:red;">' . $sErrors . '</p><p><a href="https://github.com/boonex/dolphin/wiki">Dolphin Wiki</a></p>';
-        exit;
-    }
-}
-
-// check correct hostname
-$aUrl = parse_url( BX_DOL_URL_ROOT );
-if (isset($_SERVER['HTTP_HOST']) and 0 != strcasecmp($_SERVER['HTTP_HOST'], $aUrl['host']) and 0 != strcasecmp($_SERVER['HTTP_HOST'], $aUrl['host'] . ':80')) {
-    header( "Location:http://{$aUrl['host']}{$_SERVER['REQUEST_URI']}" );
-    exit;
-}
-
-// check if install folder exists
-if (!defined ('BX_SKIP_INSTALL_CHECK') && file_exists(BX_DIRECTORY_PATH_ROOT . 'install')) {
-    header('Location:' . BX_DOL_URL_ROOT . 'install/index.php?action=remove_install');
-    exit;
-}
-
 // set PHP options
+
 error_reporting(E_ALL);
-ini_set('magic_quotes_sybase', 0);
 mb_internal_encoding('UTF-8');
 mb_regex_encoding('UTF-8');
 date_default_timezone_set('UTC');
 
-// include files necessary for basic functionality
+// include files needed for basic functionality and perform some checks
+
 require_once(BX_DIRECTORY_PATH_CLASSES . "BxDol.php");
 require_once(BX_DIRECTORY_PATH_INC . "utils.inc.php");
+
+bx_check_maintenance_mode (true);
+bx_check_minimal_requirements(true);
+bx_check_redirect_to_correct_hostname(true);
+bx_check_redirect_to_remove_install_folder(true);
 
 bx_import('BxDolConfig');
 bx_import('BxDolService');
