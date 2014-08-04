@@ -79,14 +79,14 @@
  * no alerts available
  *
  */
-class BxDolCron extends BxDol
+abstract class BxDolCron extends BxDol
 {
     public function __construct()
     {
         parent::__construct();
     }
 
-    public function processing() {}
+    abstract public function processing();
 }
 
 /** @} */

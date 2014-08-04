@@ -10,11 +10,6 @@ define('BX_DOL_CRON_EXECUTE', '1');
 
 $aPathInfo = pathinfo(__FILE__);
 require_once ($aPathInfo['dirname'] . '/../inc/header.inc.php');
-require_once(BX_DIRECTORY_PATH_INC . 'utils.inc.php');
-require_once(BX_DIRECTORY_PATH_INC . 'profiles.inc.php' );
-
-bx_import('BxDolDb');
-bx_import('BxDolLanguages');
 
 function getRange($iLow, $iHigh, $iStep)
 {
@@ -112,21 +107,38 @@ function checkCronJob($sPeriods, $aDate = array())
 
 function runJob($aJob)
 {
-    if(!empty($aJob['file']) && !empty($aJob['class']) && file_exists(BX_DIRECTORY_PATH_ROOT . $aJob['file'])) {
-        if(!class_exists($aJob['class']))
+    if (!empty($aJob['file']) && !empty($aJob['class']) && file_exists(BX_DIRECTORY_PATH_ROOT . $aJob['file'])) {
+        if (!class_exists($aJob['class']))
             require_once(BX_DIRECTORY_PATH_ROOT . $aJob['file']);
 
         $oHandler = new $aJob['class']();
         $oHandler->processing();
-    } else if(!empty($aJob['service_call']) && BxDolService::isSerializedService($aJob['service_call']))
+    } else if (!empty($aJob['service_call']) && BxDolService::isSerializedService($aJob['service_call']))
         BxDolService::callSerialized($aJob['service_call']);
 }
 
+
 $oDb = BxDolDb::getInstance();
-$aJobs = $oDb->fromCache('sys_cron_jobs', 'getAll', 'SELECT * FROM `sys_cron_jobs`');
 
+// run one time transient jobs
+
+$aJobsTransient = $oDb->getAllWithKey("SELECT * FROM `sys_cron_jobs` WHERE `time` = 'transient'", 'name');
+if (!empty($aJobsTransient)) {
+    $oDb->query("DELETE FROM `sys_cron_jobs` WHERE `time` = 'transient'");
+
+    foreach ($aJobsTransient as $aRow)
+        runJob($aRow);
+
+    if (isset($aJobsTransient['sys_upgrade']))
+        exit;
+}
+
+// run regular cron jobs
+
+bx_import('BxDolLanguages');
+
+$aJobs = $oDb->fromCache('sys_cron_jobs', 'getAll', "SELECT * FROM `sys_cron_jobs`");
 $aDate = getdate(time());
-
 foreach($aJobs as $aRow) {
     if (checkCronJob($aRow['time'], $aDate))
         runJob($aRow);
