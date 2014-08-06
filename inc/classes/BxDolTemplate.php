@@ -1745,30 +1745,45 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
             $aValues[$i] = $sValue;
         }
 
+        try {
+        	$aCallbackPatterns = array(
+        		"'<bx_include_auto:([^\s]+) \/>'s" => BX_DOL_TEMPLATE_CHECK_IN_BOTH,
+        		"'<bx_include_base:([^\s]+) \/>'s" => BX_DOL_TEMPLATE_CHECK_IN_BASE,
+        		"'<bx_include_tmpl:([^\s]+) \/>'s" => BX_DOL_TEMPLATE_CHECK_IN_TMPL
+        	);
+
+	        $oTemplate = &$this;
+	        foreach($aCallbackPatterns as $sPattern => $sCheckIn)
+		        $sContent = preg_replace_callback($sPattern, function($aMatches) use($oTemplate, $aVarValues, $mixedKeyWrapperHtml, $sCheckIn) {
+		        	$mixedResult = $oTemplate->getCached($aMatches[1], $aVarValues, $mixedKeyWrapperHtml, $sCheckIn, false);
+		        	if($mixedResult === false)
+		        		throw new Exception('Unable to create cache file.');
+
+		        	return $mixedResult;
+		        }, $sContent);
+        }
+        catch(Exception $oException) {
+        	return false;
+        }
+
         $aKeys = array_merge($aKeys, array(
-            "'<bx_include_auto:([^\s]+) \/>'se",
-            "'<bx_include_base:([^\s]+) \/>'se",
-            "'<bx_include_tmpl:([^\s]+) \/>'se",
             "'<bx_injection:([^\s]+) />'s",
-            "'<bx_image_url:([^\s]+) \/>'se",
-            "'<bx_icon_url:([^\s]+) \/>'se",
-            "'<bx_text:([_\{\}\w\d\s]+[^\s]{1}) \/>'se",
-            "'<bx_text_js:([^\s]+) \/>'se",
-            "'<bx_text_attribute:([^\s]+) \/>'se",
+            "'<bx_image_url:([^\s]+) \/>'s",
+            "'<bx_icon_url:([^\s]+) \/>'s",
+            "'<bx_text:([_\{\}\w\d\s]+[^\s]{1}) \/>'s",
+            "'<bx_text_js:([^\s]+) \/>'s",
+            "'<bx_text_attribute:([^\s]+) \/>'s",
             "'<bx_menu:([^\s]+) \/>'s",
             "'<bx_url_root />'",
             "'<bx_url_studio />'"
         ));
         $aValues = array_merge($aValues, array(
-            "\$this->getCached('\\1', \$aVarValues, \$mixedKeyWrapperHtml, BX_DOL_TEMPLATE_CHECK_IN_BOTH, false)",
-            "\$this->getCached('\\1', \$aVarValues, \$mixedKeyWrapperHtml, BX_DOL_TEMPLATE_CHECK_IN_BASE, false)",
-            "\$this->getCached('\\1', \$aVarValues, \$mixedKeyWrapperHtml, BX_DOL_TEMPLATE_CHECK_IN_TMPL, false)",
             "<?php echo \$this->processInjection(\$this->aPage['name_index'], '\\1'); ?>",
-            "\$this->getImageUrl('\\1')",
-            "\$this->getIconUrl('\\1')",
-            "_t('\\1')",
-            "bx_js_string(_t('\\1'))",
-            "bx_html_attribute(_t('\\1'))",
+            "<?php echo \$this->getImageUrl('\\1'); ?>",
+            "<?php echo \$this->getIconUrl('\\1'); ?>",
+            "<?php echo _t('\\1'); ?>",
+            "<?php echo bx_js_string(_t('\\1')); ?>",
+            "<?php echo bx_html_attribute(_t('\\1')); ?>",
             "<?php echo \$this->getMenu('\\1'); ?>",
             BX_DOL_URL_ROOT,
             BX_DOL_URL_STUDIO
