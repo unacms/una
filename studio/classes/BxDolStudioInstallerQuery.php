@@ -63,6 +63,18 @@ class BxDolStudioInstallerQuery extends BxDolModuleQuery
         $this->query($sQuery);
     }
 
+    function getModuleTrackFiles($iModuleId)
+    {
+        $sQuery = $this->prepare("SELECT `file`, `hash` FROM `sys_modules_file_tracks` WHERE `module_id` = ?", $iModuleId);
+        return $this->getAllWithKey($sQuery, "file");
+    }
+
+    function deleteModuleTrackFiles($iModuleId)
+    {
+        $sQuery = $this->prepare("DELETE FROM `sys_modules_file_tracks` WHERE `module_id` = ?", $iModuleId);
+        return $this->query($sQuery);
+    }
+
     function deleteModule($aConfig)
     {
         $sQuery = $this->prepare("SELECT `id` FROM `sys_modules` WHERE `vendor`=? AND `path`=? LIMIT 1", $aConfig['vendor'], $aConfig['home_dir']);
@@ -71,8 +83,7 @@ class BxDolStudioInstallerQuery extends BxDolModuleQuery
         $sQuery = $this->prepare("DELETE FROM `sys_modules` WHERE `vendor`=? AND `path`=? LIMIT 1", $aConfig['vendor'], $aConfig['home_dir']);
         $this->query($sQuery);
 
-        $sQuery = $this->prepare("DELETE FROM `sys_modules_file_tracks` WHERE `module_id`=?", $iId);
-        $this->query($sQuery);
+        $this->deleteModuleTrackFiles($iId);
 
         return $iId;
     }

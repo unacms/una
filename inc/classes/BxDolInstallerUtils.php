@@ -122,6 +122,11 @@ class BxDolInstallerUtils extends BxDolIO
         }
     }
 
+    /**
+     * Generate hash for module files.
+     * @param $sPath module's root folder
+     * @param $aFiles array to fill with files hashes
+     */
     public function hashFiles($sPath, &$aFiles)
     {
         if (file_exists($sPath) && is_dir($sPath) && ($rSource = opendir($sPath))) {
@@ -143,11 +148,34 @@ class BxDolInstallerUtils extends BxDolIO
         }
     }
 
+    /** 
+     * Check module's files hashes. For system files use @see BxDolInstallerHasher class.
+     * @param $aFiles current files checksums 
+     * @param $iModuleId module id
+     * @return empty array on success, or array of files which checksum was changed 
+     */
+    public function hashCheck($aFiles, $iModuleId, $bBreakOnFirstError = false)
+    {
+        $oDb = bx_instance('BxDolStudioInstallerQuery');
+
+        $aFilesOrig = $oDb->getModuleTrackFiles($iModuleId);
+        $aFailedFailes = array();
+        foreach ($aFiles as $aFile) {
+            if (!isset($aFilesOrig[$aFile['file']]) || $aFilesOrig[$aFile['file']]['hash'] != $aFile['hash']) {
+                $aFailedFailes[] = $aFile['file'];
+                if ($bBreakOnFirstError)
+                    return $aFailedFailes;
+            }
+        }
+
+        return $aFailedFailes;
+    }
+
     protected function hashInfo($sPath)
     {
         return array(
             'file' => $this->filePathWithoutBase($sPath),
-            'hash' => md5(file_get_contents($sPath))
+            'hash' => md5_file($sPath)
         );
     }
 

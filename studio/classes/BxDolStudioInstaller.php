@@ -8,7 +8,6 @@
  */
 
 bx_import('BxDolInstallerUtils');
-bx_import('BxDolStudioInstallerQuery');
 
 define("BX_DOL_STUDIO_INSTALLER_SUCCESS", 0);
 define("BX_DOL_STUDIO_INSTALLER_FAILED", 1);
@@ -50,7 +49,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
     {
         parent::__construct();
 
-        $this->oDb = new BxDolStudioInstallerQuery();
+        $this->oDb = bx_instance('BxDolStudioInstallerQuery');
 
         $this->_aConfig = $aConfig;
         $this->_sBasePath = BX_DIRECTORY_PATH_MODULES;

@@ -34,7 +34,7 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
 
     public function update($aParams)
     {
-        $oDb = BxDolDb::getInstance();
+        $oDb = bx_instance('BxDolStudioInstallerQuery');
 
         $aResult = array(
             'operation_title' => _t('_adm_txt_modules_operation_update', $this->_aConfig['title'], $this->_aConfig['version_from'], $this->_aConfig['version_to'])
@@ -57,32 +57,26 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
             ));
 
         //--- Check hash ---//
-        $sQuery = $oDb->prepare("SELECT `file`, `hash` FROM `sys_modules_file_tracks` WHERE `module_id`=?", $aModuleInfo['id']);
-        $aFilesOrig = $oDb->getAllWithKey($sQuery, "file");
-
         $aFiles = array();
-        $this->hashFiles($this->_sModulePath, $aFiles);
-        foreach($aFiles as $aFile)
-            if(!isset($aFilesOrig[$aFile['file']]) || $aFilesOrig[$aFile['file']]['hash'] != $aFile['hash'])
-                return array_merge($aResult, array(
-                    'message' => $this->_displayResult('check_module_hash', false, '_adm_err_modules_module_was_modified'),
-                    'result' => false
-                ));
+        $this->hashFiles(BX_DIRECTORY_PATH_ROOT . 'modules/' . $this->_aConfig['module_dir'], $aFiles);
+        if (!empty($this->hashCheck($aFiles, $aModuleInfo['id'], true))
+            return array_merge($aResult, array(
+                'message' => $this->_displayResult('check_module_hash', false, '_adm_err_modules_module_was_modified'),
+                'result' => false
+            ));
 
         //--- Perform action and check results ---//
         $aResult = array_merge($aResult, $this->_perform('install', 'Update'));
         if($aResult['result']) {
             $sQuery = $oDb->prepare("UPDATE `sys_modules` SET `version`=? WHERE `id`=?", $this->_aConfig['version_to'], $aModuleInfo['id']);
             $oDb->query($sQuery);
-            $sQuery = $oDb->prepare("DELETE FROM `sys_modules_file_tracks` WHERE `module_id`=?", $aModuleInfo['id']);
-            $oDb->query($sQuery);
+
+            $oDb->deleteModuleTrackFiles($aModuleInfo['id']);
 
             $aFiles = array();
             $this->hashFiles(BX_DIRECTORY_PATH_ROOT . 'modules/' . $this->_aConfig['module_dir'], $aFiles);
-            foreach($aFiles as $aFile) {
-                $sQuery = $oDb->prepare("INSERT IGNORE INTO `sys_modules_file_tracks`(`module_id`, `file`, `hash`) VALUES(?, ?, ?)", $aModuleInfo['id'], $aFile['file'], $aFile['hash']);
-                $oDb->query($sQuery);
-            }
+            foreach($aFiles as $aFile)
+                $oDb->insertModuleTrack($aModuleInfo['id'], $aFile);
 
             //--- Remove update pckage ---//
             $this->delete();

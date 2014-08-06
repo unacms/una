@@ -98,8 +98,9 @@ class BxDolInstallController
     function actionFinish ()
     {
         require_once(BX_INSTALL_PATH_HEADER);
-
-        $this->hashSystemFiles();
+        
+        $oHasher = bx_instance('BxDolInstallerHasher');
+        $oHasher->hashSystemFiles();
 
         $this->_oView->pageStart();
 
@@ -136,18 +137,7 @@ class BxDolInstallController
         return _t('_sys_inst_title', BX_DOL_VER);
     }
 
-    protected function hashSystemFiles()
-    {
-        bx_import('BxDolInstallerHasher');
-        $oHasher = new BxDolInstallerHasher();
-        $aFiles = $oHasher->getSystemFilesHash ();
 
-        bx_import('BxDolStudioInstallerQuery');
-        $oDb = new BxDolStudioInstallerQuery();
-
-        foreach($aFiles as $aFile)
-            $oDb->insertModuleTrack(0, $aFile);
-    }
 }
 
 /** @} */
