@@ -590,7 +590,7 @@
 	<string name="_adm_err_modules_wrong_version_script"><![CDATA[The module is not compatible with your version of Dolphin script]]></string>
 	<string name="_adm_err_oauth_cannot_get_token"><![CDATA[Cannot connect to <b>BoonEx</b>. Please try again later.]]></string>
 	<string name="_adm_err_oauth_cannot_read_answer"><![CDATA[Cannot get a valid answer from <b>BoonEx</b>. Please try again later.]]></string>
-	<string name="_adm_err_oauth_empty_key_secret"><![CDATA[You need to enter Key and Secret provided by <b>BoonEx</b> in Settings -> Other]]></string>
+	<string name="_adm_err_oauth_empty_key_secret"><![CDATA[You need to enter Key and Secret provided by <b>BoonEx</b> in Settings -> General.]]></string>
 	<string name="_adm_err_operation_failed"><![CDATA[Operation failed. Please report.]]></string>
 	<string name="_adm_form_btn_displays_cancel"><![CDATA[Cancel]]></string>
 	<string name="_adm_form_btn_displays_edit"><![CDATA[Edit display]]></string>
@@ -1157,13 +1157,13 @@
 	<string name="_adm_stg_err_save_error_message"><![CDATA[Error in '{0}': {1}]]></string>
 	<string name="_adm_str_cpt_files_file"><![CDATA[File]]></string>
 	<string name="_adm_str_cpt_files_version"><![CDATA[Version]]></string>
-	<string name="_adm_str_err_cannot_connect_to_ftp"><![CDATA[Cannot connect to FTP server. Please check FTP access details in Settings -> Other.]]></string>
+	<string name="_adm_str_err_cannot_connect_to_ftp"><![CDATA[Cannot connect to FTP server. Please check FTP access details in Settings -> General.]]></string>
 	<string name="_adm_str_err_cannot_unzip_package"><![CDATA[Cannot unarchive ZIP package.]]></string>
 	<string name="_adm_str_err_cannot_write"><![CDATA[Cannot save downloaded file.]]></string>
 	<string name="_adm_str_err_destination_not_valid"><![CDATA[Destination FTP folder doesn't look like a valid Dolphin root folder.]]></string>
 	<string name="_adm_str_err_download_failed"><![CDATA[Download faild. Please report.]]></string>
 	<string name="_adm_str_err_ftp_copy_failed"><![CDATA[FTP transfer failed, please check write permission for this FTP user.]]></string>
-	<string name="_adm_str_err_no_ftp_info"><![CDATA[FTP access info was not specified. You may enter it via Settings -> Other.]]></string>
+	<string name="_adm_str_err_no_ftp_info"><![CDATA[FTP access info was not specified. You may enter it via Settings -> General.]]></string>
 	<string name="_adm_str_err_no_product_info"><![CDATA[Cannot load product info. Try again later.]]></string>
 	<string name="_adm_str_err_wrong_package_format"><![CDATA[Wrong package format.]]></string>
 	<string name="_adm_str_err_zip_not_available"><![CDATA[ZIP library is not available.]]></string>
