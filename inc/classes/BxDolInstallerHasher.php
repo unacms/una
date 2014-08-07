@@ -9,6 +9,10 @@
 
 bx_import('BxDolInstallerUtils');
 
+/**
+ * Functions for hashing system files.
+ * Hashing functions for module file are in @see BxDolInstallerUtils class.
+ */
 class BxDolInstallerHasher extends BxDolInstallerUtils
 {
     protected $_iSystemModuleId = 0;

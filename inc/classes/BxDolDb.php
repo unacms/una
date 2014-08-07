@@ -531,7 +531,7 @@ EOJ;
         }
 
         bx_import('BxDolConfig');
-        if (BxDolConfig::getInstance()->get('db', 'visual_processing')) {
+        if (defined('BX_DB_FULL_VISUAL_PROCESSING') && BX_DB_FULL_VISUAL_PROCESSING) {
 
             ob_start();
 
@@ -540,8 +540,8 @@ EOJ;
                     <div style="text-align:center;background-color:red;color:white;font-weight:bold;">Error</div>
                     <div style="text-align:center;"><?php echo $sOutput; ?></div>
             <?php
-            if(BxDolConfig::getInstance()->get('db', 'debug_mode')) {
-                if( strlen( $query ) )
+            if (defined('BX_DB_FULL_DEBUG_MODE') && BX_DB_FULL_DEBUG_MODE) {
+                if (!empty($query))
                     echo "<div><b>Query:</b><br />{$query}</div>";
 
                 if ($this->_rLink)
@@ -575,7 +575,7 @@ EOJ;
             $sOutput = ob_get_clean();
         } 
 
-        if (BxDolConfig::getInstance()->get('db', 'error_remort_by_email')) {
+        if (defined('BX_DB_DO_EMAIL_ERROR_REPORT') && BX_DB_DO_EMAIL_ERROR_REPORT) {
             $sSiteTitle = $this->getParam('site_title');
             $sMailBody = "Database error in " . $sSiteTitle . "<br /><br /> \n";
 

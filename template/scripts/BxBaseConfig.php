@@ -10,9 +10,7 @@
 class BxBaseConfig extends BxDol implements iBxDolSingleton
 {
     protected $_aConfig = array (
-        'iTagsMinFontSize' => 10, // minimal font size of tag
-        'iTagsMaxFontSize' => 30, // maximal font size of tag
-        'bAllowUnicodeInPreg' => false, // allow unicode in regular expressions
+        'bAllowUnicodeInPreg' => false, ///< allow unicode in regular expressions
         'aLessConfig' => array (
             'bx-page-width' => '1000px',
 
