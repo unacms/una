@@ -137,7 +137,7 @@ BxDolStudioDashboard.prototype.clearCache = function(sType) {
 BxDolStudioDashboard.prototype.serverAudit = function() {
 	var $this = this;
 	var oDate = new Date();
-	var sDivId = 'bx-dbd-host-tools';
+	var sDivId = 'bx-dbd-htools';
 
 	$('#' + sDivId).parents('.bx-page-block-container').find('.bx-db-header .bx-popup-applied:visible').dolPopupHide();
 
