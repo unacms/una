@@ -66,9 +66,6 @@ define('BX_DOL_DIR_STUDIO_INC', BX_DOL_DIR_STUDIO . 'inc/');
 define('BX_DOL_DIR_STUDIO_CLASSES', BX_DOL_DIR_STUDIO . 'classes/');
 define('BX_DOL_DIR_STUDIO_BASE', BX_DOL_DIR_STUDIO . 'template/');
 
-//--- BoonEx Unity Settings ---//
-define('BX_DOL_UNITY_URL_ROOT', 'http://www.boonex.com/');
-
 //--- User Roles ---//
 define('BX_DOL_ROLE_GUEST', 0);
 define('BX_DOL_ROLE_MEMBER', 1);
