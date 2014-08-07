@@ -75,10 +75,13 @@ class BxDolInstallerHasher extends BxDolInstallerUtils
         return true;
     }
 
-    public function checkSystemFilesHash () 
+    public function checkSystemFilesHash (&$fChangedFilesPercent) 
     {
         $aFiles = $this->getSystemFilesHash ();
-        return $this->hashCheck($aFiles, $this->_iSystemModuleId);
+        $aFilesChanged = $this->hashCheck($aFiles, $this->_iSystemModuleId);
+        if (null !== $fChangedFilesPercent && 0 != count($aFiles))
+            $fChangedFilesPercent = count($aFilesChanged) / count($aFiles);
+        return $aFilesChanged;
     }
 }
 

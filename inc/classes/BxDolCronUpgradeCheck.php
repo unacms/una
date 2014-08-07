@@ -13,8 +13,10 @@ class BxDolCronUpgradeCheck extends BxDolCron
 {
     public function processing()
     {
-        bx_import('BxDolUpgrader');
-        $o = new BxDolUpgrader();
+        if ('on' != getParam('sys_autoupdate_system'))
+            return;
+
+        $o = bx_instance('BxDolUpgrader');
         $o->prepare();
     }
 }

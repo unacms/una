@@ -340,8 +340,11 @@ SET @iCategoryId = LAST_INSERT_ID();
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryId, 'site_title', '_adm_stg_cpt_option_site_title', 'Community', 'digit', '', '', '', 1),
 (@iCategoryId, 'site_email', '_adm_stg_cpt_option_site_email', 'admin@example.com', 'digit', '', '', '', 2),
-(@iCategoryId, 'site_email_notify', '_adm_stg_cpt_option_site_email_notify', 'admin@example.com', 'digit', '', '', '', 3);
+(@iCategoryId, 'site_email_notify', '_adm_stg_cpt_option_site_email_notify', 'admin@example.com', 'digit', '', '', '', 3),
 
+(@iCategoryId, 'sys_autoupdate_system', '_adm_stg_cpt_option_sys_autoupdate_system', 'on', 'checkbox', '', '', '', 10),
+(@iCategoryId, 'sys_autoupdate_modules', '_adm_stg_cpt_option_sys_autoupdate_modules', 'on', 'checkbox', '', '', '', 11),
+(@iCategoryId, 'sys_autoupdate_force_modified_files', '_adm_stg_cpt_option_sys_autoupdate_force_modified_files', '', 'checkbox', '', '', '', 12);
 
 --
 -- CATEGORY: Storage

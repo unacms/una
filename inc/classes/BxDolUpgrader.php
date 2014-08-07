@@ -7,6 +7,8 @@
  * @{
  */
 
+define('BX_FORCE_AUTOUPDATE_MAX_CHANGED_FILES_PERCENT', 0.05);
+
 class BxDolUpgrader extends BxDol
 {
     protected $_sUrlVersionCheck = 'http://rss.boonex.com/u/';
@@ -28,13 +30,20 @@ class BxDolUpgrader extends BxDol
             if (!$this->isUpgradeAvailable($aVersionUpdateInfo))
                 break;
 
-            // TODO: check db version and files version (files version file need to be added)
+            if (BX_DOL_VERSION != bx_get_ver()) {
+                $this->setError(_t('_sys_upgrade_db_and_files_versions_different'));
+                break;
+            }
 
-            // TODO: add setting opton to force update even if some of the files were modified (3%-5%)
-            $aFailedFiles = $this->checkFilesChecksums ();
-            if (!empty($aFailedFiles)) {
+            $fChangedFilesPercent = 1;
+            $aFailedFiles = $this->checkFilesChecksums ($fChangedFilesPercent);
+            $bAutoupdateForceModifiedFiles = ('on' == getParam('sys_autoupdate_force_modified_files'));
+            if (!empty($aFailedFiles) && !$bAutoupdateForceModifiedFiles) {
                 $this->setError(_t('_sys_upgrade_files_checksum_failed', implode(',', $aFailedFiles)));
                 break;
+            }
+            elseif ($fChangedFilesPercent > BX_FORCE_AUTOUPDATE_MAX_CHANGED_FILES_PERCENT && $bAutoupdateForceModifiedFiles) {
+                $this->setError(_t('_sys_upgrade_files_checksum_failed_too_many', round($fChangedFilesPercent * 100)));
             }
 
             if (!($sPatchPath = $this->downloadPatch ($aVersionUpdateInfo))) {
@@ -144,10 +153,10 @@ class BxDolUpgrader extends BxDol
         return $sRootFolder ? $sTmpFolder . '/' . trim($sRootFolder, '/') . '/' : false;
     }
 
-    protected function checkFilesChecksums ()
+    protected function checkFilesChecksums (&$fChangedFilesPercent)
     {
         $oHasher = bx_instance('BxDolInstallerHasher');
-        return $oHasher->checkSystemFilesHash();
+        return $oHasher->checkSystemFilesHash($fChangedFilesPercent);
     }
 
     protected function isValidPatch ($sUnpackedPath, $aVersionUpdateInfo)
