@@ -26,7 +26,10 @@ div.bx-dbd-vi-column {
 	float: left;
 	width: 50%;
 }
-div.bx-dbd-update-script span {
+div.bx-dbd-version {
+	position: relative;
+	float: left;
+
 	line-height: 26px;
 	line-height: 1.6rem;
 }

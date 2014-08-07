@@ -65,13 +65,26 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
 
 	public function serviceGetBlockVersion()
     {
-    	$oTemplate = BxDolStudioTemplate::getInstance();
+    	$bVersionAvailable = false;
+    	$sVersionAvailable = '';
 
-        $oTemplate->addJsTranslation('_adm_dbd_txt_dolphin_n_available');
-        $sContent = $oTemplate->parseHtmlByName('dbd_versions.html', array(
+    	$oUpgrader = bx_instance('BxDolUpgrader'); 
+    	$aUpdateInfo = $oUpgrader->getVersionUpdateInfo();
+    	if($oUpgrader->isNewVersionAvailable($aUpdateInfo)) {
+    		$bVersionAvailable = true;
+    		$sVersionAvailable = _t('_adm_dbd_txt_dolphin_n_available', $aUpdateInfo['latest_version']);
+    	}
+
+        $sContent = BxDolStudioTemplate::getInstance()->parseHtmlByName('dbd_versions.html', array(
             'domain' => getParam('site_title'),
             'version' => bx_get_ver(),
             'installed' => bx_time_js(getParam('sys_install_time')),
+        	'bx_if:show_version_available' => array(
+        		'condition' => $bVersionAvailable,
+        		'content' => array(
+        			'version_available' => $sVersionAvailable
+        		)
+        	)
         ));
 
     	return array('content' => $sContent);

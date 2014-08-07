@@ -54,25 +54,6 @@ class BxDolStudioDashboard extends BxTemplStudioPage
             			$aResult = array('code' => 0, 'data' => $aBlock['content']);
 
             		break;
-            		
-                case 'check_update_script':
-                    $aResult = array();
-
-                    bx_import('BxDolRss');
-                    $sContent = BxDolRss::getObjectInstance('sys_boonex')->getFeed('boonex_version');
-                    if(empty($sContent))
-                        break;
-
-                    bx_import('BxDolXmlParser');
-                    $aContent = BxDolXmlParser::getInstance()->getTags($sContent, 'dolphin', 0);
-                    if(empty($aContent) || !is_array($aContent) || empty($aContent['value']))
-                        break;
-
-                    $sVersionAvl = $aContent['value'];
-                    $sVersionCur = bx_get_ver();
-                    if(version_compare($sVersionCur, $sVersionAvl) == -1)
-                        $aResult = array('version' => $sVersionAvl);
-                    break;
 
 				case 'clear_cache':
 					$sValue = bx_get('dbd_value');

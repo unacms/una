@@ -16,8 +16,6 @@ function BxDolStudioDashboard(oOptions) {
     var $this = this;
     $(document).ready(function() {
     	$('.bx-dbd-block-content').bxTime();
-
-    	$this.checkForUpdateScript();
     });
 }
 
@@ -42,27 +40,6 @@ BxDolStudioDashboard.prototype.getBlockContent = function(sType) {
 			    return;
 
 			$('#' + sDivId).replaceWith(oData.data);
-		},
-		'json'
-	);
-};
-
-BxDolStudioDashboard.prototype.checkForUpdateScript = function() {
-	var $this = this;
-	var oDate = new Date();
-	var sDivId = 'bx-dbd-update-script';
-
-	$.get(
-		this.sActionsUrl,
-		{
-			dbd_action: 'check_update_script',
-			_t: oDate.getTime()
-		},
-		function(oData) {
-			if(!oData.version)
-			    return;
-
-			$('#' + sDivId + ' span').html(_t('_adm_dbd_txt_dolphin_n_available', oData.version)).parents('#' + sDivId + ':hidden').show();
 		},
 		'json'
 	);

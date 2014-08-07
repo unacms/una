@@ -5,9 +5,11 @@
 	<div class="bx-dbd-virsion-info">
 		<div class="bx-def-margin-thd-top"><bx_text:_adm_dbd_txt_dolphin_on />&nbsp;<b>__domain__</b></div>
 		<div class="bx-def-margin-thd-top"><bx_text:_adm_dbd_txt_version />&nbsp;<b>__version__</b>&nbsp;<bx_text:_adm_dbd_txt_installed />&nbsp;<b>__installed__</b></div>
-		<div class="bx-dbd-update-script bx-def-margin-thd-top" id="bx-dbd-update-script" style="display:none">
-			<a class="bx-btn bx-btn-small" href="javascript:void(0)" onclick="javascript:alert('TODO: Redirect to update script.')"><bx_text:_adm_dbd_btn_update /></a>
-			<span class="col-red1 bx-def-padding-thd-left"></span>
-		</div>
+		<bx_if:show_version_available>
+			<div class="bx-dbd-version-available bx-def-margin-thd-top bx-clearfix">
+				<div class="bx-dbd-version bx-def-margin-thd-right col-red1">__version_available__</div>
+				<a class="bx-btn bx-btn-small" href="javascript:void(0)" onclick="javascript:alert('TODO: Redirect to update script.')"><bx_text:_adm_dbd_btn_update /></a>
+			</div>
+		</bx_if:show_version_available>
 	</div>
 </div>
