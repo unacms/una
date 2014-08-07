@@ -85,9 +85,16 @@ class BxDolUpgrader extends BxDol
         return $a;
     }
 
+    public function isNewVersionAvailable ($a)
+    {
+        if (1 == version_compare(strtolower($a['latest_version']), strtolower(bx_get_ver())))
+            return true;
+        return false;
+    }
+
     public function isUpgradeAvailable ($a)
     {
-        if (1 == version_compare(strtolower($a['latest_version']), strtolower(bx_get_ver())) && isset($a['patch']))
+        if ($this->isNewVersionAvailable($a) && isset($a['patch']))
             return true;
         return false;
     }
