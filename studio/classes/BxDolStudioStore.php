@@ -10,6 +10,8 @@
 bx_import('BxTemplStudioPage');
 bx_import('BxDolStudioStoreQuery');
 
+define('BX_DOL_UNITY_URL_MARKET', BX_DOL_UNITY_URL_ROOT . 'market/');
+
 define('BX_DOL_STUDIO_STR_TYPE_DEFAULT', 'downloaded');
 
 class BxDolStudioStore extends BxTemplStudioPage
