@@ -63,24 +63,39 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
     	return $oPage->getCode();
     }
 
+    public function serviceGetWidgetNotices() {
+    	$iResult = 0;
+
+    	//--- Check Version
+    	$sVersionAvailable = $this->getVersionAvailable();
+    	if($sVersionAvailable !== false)
+    		$iResult += 1;
+
+    	//--- Check Host Requirements
+    	bx_import('BxDolStudioToolsAudit');
+		$oAudit = new BxDolStudioToolsAudit();
+
+    	foreach($this->aItemsHTools as $sTitle => $sFunc) {
+    		$aResult = $oAudit->checkRequirements(BX_DOL_AUDIT_OK, $sFunc);
+			if(empty($aResult))
+				$iResult += 1;
+    	}
+
+    	return $iResult;
+    }
+
 	public function serviceGetBlockVersion()
     {
-    	$bVersionAvailable = false;
-    	$sVersionAvailable = '';
-
-    	$oUpgrader = bx_instance('BxDolUpgrader'); 
-    	$aUpdateInfo = $oUpgrader->getVersionUpdateInfo();
-    	if($oUpgrader->isNewVersionAvailable($aUpdateInfo)) {
-    		$bVersionAvailable = true;
-    		$sVersionAvailable = _t('_adm_dbd_txt_dolphin_n_available', $aUpdateInfo['latest_version']);
-    	}
+    	$sVersionAvailable = $this->getVersionAvailable();
+    	if($sVersionAvailable !== false)
+    		$sVersionAvailable = _t('_adm_dbd_txt_dolphin_n_available', $sVersionAvailable);
 
         $sContent = BxDolStudioTemplate::getInstance()->parseHtmlByName('dbd_versions.html', array(
             'domain' => getParam('site_title'),
             'version' => bx_get_ver(),
             'installed' => bx_time_js(getParam('sys_install_time')),
         	'bx_if:show_version_available' => array(
-        		'condition' => $bVersionAvailable,
+        		'condition' => !empty($sVersionAvailable),
         		'content' => array(
         			'version_available' => $sVersionAvailable
         		)
@@ -170,20 +185,14 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
 		if(!$bDynamic) {
 			bx_import('BxDolStudioToolsAudit');
 			$oAudit = new BxDolStudioToolsAudit();
-	
+
 	        bx_import('BxTemplFunctions');
 	        $oFunc = BxTemplFunctions::getInstance();
-	
-	        $aCheckRequirements = array (
-	            'PHP' => 'requirementsPHP',
-	            'MySQL' => 'requirementsMySQL',
-	            'Web Server' => 'requirementsWebServer',
-	        );
-	
+
 	        $aLevels = array (BX_DOL_AUDIT_FAIL, BX_DOL_AUDIT_WARN, BX_DOL_AUDIT_UNDEF);
-	
+
 	        $aTmplVarsItems = array();
-	        foreach ($aCheckRequirements as $sTitle => $sFunc) {
+	        foreach ($this->aItemsHTools as $sTitle => $sFunc) {
 	            $sStatus = BX_DOL_AUDIT_OK;
 	            foreach ($aLevels as $sLevel) { 
 	                $a = $oAudit->checkRequirements($sLevel, $sFunc);
@@ -249,6 +258,13 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
 
 		return array('content' => $sContent, 'menu' => $aMenu);
 	}
+
+    private function getVersionAvailable()
+    {
+    	$oUpgrader = bx_instance('BxDolUpgrader'); 
+    	$aUpdateInfo = $oUpgrader->getVersionUpdateInfo();
+    	return $oUpgrader->isNewVersionAvailable($aUpdateInfo) ? $aUpdateInfo['latest_version'] : false;
+    }
 }
 
 /** @} */

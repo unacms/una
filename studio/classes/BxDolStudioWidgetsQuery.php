@@ -70,17 +70,20 @@ class BxDolStudioWidgetsQuery extends BxDolStudioPageQuery implements iBxDolSing
             case 'by_page_id':
                 $sWhereClause .= $this->prepare("AND `tw2p`.`page_id`=?", $aParams['value']);
                 break;
+            case 'all_with_notices':
+				$sWhereClause .= "AND `tw`.`cnt_notices`<>''";
+            	break;
         }
 
         $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . "
                 `tw`.`id` AS `id`,
-                `tw`.`page_id` AS `page_id`,
-                `tw`.`module` AS `module`,
+                `tp`.`id` AS `page_id`,
                 `tp`.`index` AS `page_index`,
                 `tp`.`name` AS `page_name`,
                 `tp`.`header` AS `page_header`,
                 `tp`.`caption` AS `page_caption`,
                 `tp`.`icon` AS `page_icon`,
+                `tw`.`module` AS `module`,
                 `tw`.`url` AS `url`,
                 `tw`.`click` AS `click`,
                 `tw`.`icon` AS `icon`,

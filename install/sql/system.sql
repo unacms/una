@@ -858,12 +858,15 @@ CREATE TABLE `sys_injections` (
   `name` varchar(128) NOT NULL default '',
   `page_index` int(11) NOT NULL default '0',
   `key` varchar(128) NOT NULL default '',
-  `type` enum('text', 'php') NOT NULL default 'text',
+  `type` enum('text', 'service') NOT NULL default 'text',
   `data` text NOT NULL default '',
   `replace` TINYINT NOT NULL DEFAULT '0',
   `active` TINYINT NOT NULL DEFAULT '1',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+INSERT INTO `sys_injections`(`name`, `page_index`, `key`, `type`, `data`, `replace`, `active`) VALUES
+('update_cache', 150, 'injection_head', 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:17:"get_cache_updater";s:6:"params";a:0:{}s:5:"class";s:19:"TemplStudioLauncher";}', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -872,13 +875,12 @@ CREATE TABLE `sys_injections_admin` (
   `name` varchar(128) NOT NULL default '',
   `page_index` int(11) NOT NULL default '0',
   `key` varchar(128) NOT NULL default '',
-  `type` enum('text','php') NOT NULL default 'text',
+  `type` enum('text','service') NOT NULL default 'text',
   `data` text NOT NULL,
   `replace` tinyint(4) NOT NULL default '0',
   `active` tinyint(4) NOT NULL default '1',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
 
 -- --------------------------------------------------------
 
@@ -3265,7 +3267,7 @@ INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `capt
 INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 2);
 
 INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
-(@iIdDashboard, 'system', '{url_studio}dashboard.php', '', 'wi-dashboard.png', '_adm_wgt_cpt_dashboard', '', '');
+(@iIdDashboard, 'system', '{url_studio}dashboard.php', '', 'wi-dashboard.png', '_adm_wgt_cpt_dashboard', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:18:"get_widget_notices";s:6:"params";a:0:{}s:5:"class";s:20:"TemplStudioDashboard";}', '');
 INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 3);
 
 

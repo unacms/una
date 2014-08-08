@@ -14,6 +14,7 @@ class BxDolStudioDashboard extends BxTemplStudioPage
 {
 	protected $aBlocks;
 	protected $aItemsCache;
+	protected $aItemsHTools;
 
     function __construct()
     {
@@ -32,6 +33,12 @@ class BxDolStudioDashboard extends BxTemplStudioPage
 		    array('name' => 'template'),
 		    array('name' => 'css'),
 		    array('name' => 'js')
+		);
+
+		$this->aItemsHTools = array (
+	    	'PHP' => 'requirementsPHP',
+			'MySQL' => 'requirementsMySQL',
+			'Web Server' => 'requirementsWebServer',
 		);
 
         //--- Check actions ---//

@@ -10,8 +10,9 @@ function BxDolStudioLauncher(oOptions) {
     this.sObjName = oOptions.sObjName == undefined ? 'oBxDolStudioLauncher' : oOptions.sObjName;
     this.sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'fade' : oOptions.sAnimationEffect;
     this.iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'fast' : oOptions.iAnimationSpeed;
+    this.bInit = oOptions.bInit == undefined ? true : oOptions.bInit;
 
-    //--- Jitter Settings ---//
+	//--- Jitter Settings ---//
     this.aJitterConf = {
 		item: '.bx-std-widget-icon',
 		elements: '.bx-std-widget-actions,.bx-std-widget-icon-jitter,.bx-std-widget-caption-jitter'
@@ -23,7 +24,13 @@ function BxDolStudioLauncher(oOptions) {
 		placeholder: 'bx-std-widget bx-std-widget-empty'
     };
 
+    if(this.bInit)
+    	this.init();
+}
+
+BxDolStudioLauncher.prototype.init = function() {
     var $this = this;
+
     $(window).bind('resize', function(e) {
 		$this.resize();
 	});
@@ -56,7 +63,19 @@ function BxDolStudioLauncher(oOptions) {
     	if($this._isFavorites())
     		$('.bx-menu-tab-favorite').addClass('bx-menu-tab-active');
     });
-}
+};
+
+BxDolStudioLauncher.prototype.updateCache = function() {
+	var oDate = new Date();
+
+	$.get(
+		this.sActionsUrl,
+		{
+			action: 'launcher-update-cache',
+			_t:oDate.getTime()
+		}
+	);
+};
 
 BxDolStudioLauncher.prototype.resize = function() {
 	$('.bx-std-widgets').each(function() {
@@ -71,7 +90,7 @@ BxDolStudioLauncher.prototype.resize = function() {
 
 		for(var i = 1; i * iWidgetsPerLine <= iWidgetsTotal; i++)
 			oWidget.eq(i * iWidgetsPerLine).addClass('bx-std-widget-nl');
-	})
+	});
 };
 
 BxDolStudioLauncher.prototype.reorder = function(oDraggable) {

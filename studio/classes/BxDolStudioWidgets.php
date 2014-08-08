@@ -15,15 +15,19 @@ define('BX_DOL_STUDIO_WS_DISABLED', 2);
 
 class BxDolStudioWidgets extends BxTemplStudioPage
 {
-    protected $aWidgets;
+	protected $sCacheKeyNotices = 'std_widgets_notices';
 
-    function __construct($mixedPageName)
+    protected $aWidgets;
+    protected $aWidgetsNotices;
+
+    public function __construct($mixedPageName)
     {
         parent::__construct($mixedPageName);
 
         $this->oDb = BxDolStudioWidgetsQuery::getInstance();
 
         $this->aWidgets = array();
+        $this->aWidgetsNotices = array();
 
         if(!$this->bPageMultiple)
             $this->oDb->getWidgets(array('type' => 'by_page_id', 'value' => $this->aPage['id']), $this->aWidgets, false);
@@ -32,11 +36,36 @@ class BxDolStudioWidgets extends BxTemplStudioPage
                 $this->aWidgets[$sPage] = array();
                 $this->oDb->getWidgets(array('type' => 'by_page_id', 'value' => $aPage['id']), $this->aWidgets[$sPage], false);
             }
+
+		//--- Load Cache (Widgets' Notices)
+		$oCache = $this->oDb->getDbCacheObject();
+		$sCacheKey = $this->oDb->genDbCacheKey($this->sCacheKeyNotices);
+		$this->aWidgetsNotices = $oCache->getData($sCacheKey);
     }
 
-    function isEnabled($aWidget)
+    public function isEnabled($aWidget)
     {
         return true;
+    }
+
+    public function updateCache()
+    {
+    	$aWidgets = array();
+    	$this->oDb->getWidgets(array('type' => 'all_with_notices'), $aWidgets, false);
+
+    	$aResult = array();
+    	foreach($aWidgets as $aWidget) {
+    		if(BxDolService::isSerializedService($aWidget['cnt_notices'])) {
+				$aService = unserialize($aWidget['cnt_notices']);
+	            $sNotices = BxDolService::call($aService['module'], $aService['method'], array_merge(array($aWidget), $aService['params']), $aService['class']);
+			}
+
+			$aResult[$aWidget['id']] = $sNotices;
+    	}
+
+    	$oCache = $this->oDb->getDbCacheObject();
+    	$sCacheKey = $this->oDb->genDbCacheKey($this->sCacheKeyNotices);
+    	return $oCache->setData($sCacheKey, $aResult);
     }
 }
 

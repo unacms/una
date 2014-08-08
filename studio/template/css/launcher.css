@@ -165,7 +165,7 @@ div.bx-std-widget-icon-jitter img {
 
 div.bx-std-widget-notices {
     position: absolute;
-    top: -3px;
+    top: 0px;
     left: 45px;
     width: 38px;
     height: 27px;
