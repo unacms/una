@@ -12,12 +12,12 @@ bx_import('BxDolStudioWidgets');
 
 class BxBaseStudioWidgets extends BxDolStudioWidgets
 {
-    function __construct($mixedPageName)
+    public function __construct($mixedPageName)
     {
         parent::__construct($mixedPageName);
     }
 
-    function getPageCode($bHidden = false)
+    public function getPageCode($bHidden = false)
     {
         if(empty($this->aPage) || !is_array($this->aPage))
             return BxDolStudioTemplate::getInstance()->displayPageNotFound();
@@ -32,7 +32,7 @@ class BxBaseStudioWidgets extends BxDolStudioWidgets
         return $sContent;
     }
 
-    function getPageWidgets()
+    public function getPageWidgets()
     {
         if(empty($this->aPage) || !is_array($this->aPage))
             return BxDolStudioTemplate::getInstance()->displayPageNotFound();
@@ -108,6 +108,8 @@ class BxBaseStudioWidgets extends BxDolStudioWidgets
             $sIcon = $this->getIcon($aWidget);
             $bIcon = strpos($sIcon, '.') === false;
 
+            $sNotices = !empty($this->aWidgetsNotices[$aWidget['id']]) ? $this->aWidgetsNotices[$aWidget['id']] : '';
+
             $aTmplVars[] = array(
                 'id' => $aWidget['id'],
                 'url' => !empty($aWidget['url']) ? $oTemplate->parseHtmlByContent($aWidget['url'], $aParseVars, array('{', '}')) : 'javascript:void(0)',
@@ -124,9 +126,9 @@ class BxBaseStudioWidgets extends BxDolStudioWidgets
                     )
                 ),
                 'bx_if:show_notice' => array(
-                    'condition' => !empty($aWidget['cnt_notices']),
+                    'condition' => !empty($sNotices),
                     'content' => array(
-                        'content' => $aWidget['cnt_notices']
+                        'content' => $sNotices
                     )
                 ),
                 'bx_if:show_actions' => array(

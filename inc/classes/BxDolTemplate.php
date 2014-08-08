@@ -2093,19 +2093,18 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
 
                 if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->beginInjection($sRand = time().rand());
 
+                $sInjData = '';
                 switch($aInjection['type']) {
                     case 'text':
                         $sInjData = $aInjection['data'];
                         break;
-                    case 'php':
-                        ob_start();
-                        $sInjData = eval($aInjection['data']);
-                        if(!empty($sInjData))
-                            ob_end_clean();
-                        else
-                            $sInjData = ob_get_clean();
+
+                    case 'service':
+                    	if(BxDolService::isSerializedService($aInjection['data']))
+                    		$sInjData = BxDolService::callSerialized($aInjection['data']);                    	
                         break;
                 }
+
                 if((int)$aInjection['replace'] == 1)
                     $sValue = $sInjData;
                 else

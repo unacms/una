@@ -33,6 +33,10 @@ class BxDolStudioLauncher extends BxTemplStudioWidgets
 
             $aResult = array('code' => 1, 'message' => _t('_adm_err_operation_failed'));
             switch($sAction) {
+				case 'launcher-update-cache':
+					$aResult = $this->updateCache();
+					break;
+
                 case 'launcher-reorder':
                     $sPage = bx_process_input(bx_get('page'));
                     $aItems = bx_process_input(bx_get('items'));
