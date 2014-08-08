@@ -7,8 +7,8 @@
  * @{
  */
 
-define ('BX_DOL_STORAGE_DIR_RIGHTS', 0777);
-define ('BX_DOL_STORAGE_FILE_RIGHTS', 0666);
+define ('BX_DOL_STORAGE_DIR_RIGHTS', BX_DOL_DIR_RIGHTS);
+define ('BX_DOL_STORAGE_FILE_RIGHTS', BX_DOL_FILE_RIGHTS);
 
 bx_import('BxDolStorage');
 

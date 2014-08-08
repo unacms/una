@@ -1114,6 +1114,9 @@
 	<string name="_adm_stg_cpt_option_sys_account_autoapproval"><![CDATA[Automatic account activation after creation]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_default_acl_level"><![CDATA[Default member's level to assign after account creation]]></string>
 	<string name="_adm_stg_cpt_option_sys_add_nofollow"><![CDATA[Add "nofollow" attribute for external links]]></string>
+	<string name="_adm_stg_cpt_option_sys_autoupdate_force_modified_files"><![CDATA[Force site and module auto-update, even if some files were modified]]></string>
+	<string name="_adm_stg_cpt_option_sys_autoupdate_modules"><![CDATA[Extensions auto-update]]></string>
+	<string name="_adm_stg_cpt_option_sys_autoupdate_system"><![CDATA[System files auto-update]]></string>
 	<string name="_adm_stg_cpt_option_sys_cache_memcache_host"><![CDATA[Memcached server host]]></string>
 	<string name="_adm_stg_cpt_option_sys_cache_memcache_port"><![CDATA[Memcached server port]]></string>
 	<string name="_adm_stg_cpt_option_sys_db_cache_enable"><![CDATA[Enable DB cache]]></string>
@@ -1972,15 +1975,14 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_txt_unsubscribe_error_occured"><![CDATA[Error occured, please login to your account and update email references there or contact site administrator to unsubscribe you manually.]]></string>
 	<string name="_sys_txt_unsubscribe_info"><![CDATA[Update email preferences for <b>{0}</b>]]></string>
 	<string name="_sys_txt_unsubscribe_wrong_link"><![CDATA[Unsubscribe link is wrong.]]></string>
-
+	<string name="_sys_upgrade_db_and_files_versions_different"><![CDATA[Database and files versions are different, probably porevious patch wasn't applied correctly.]]></string>
+	<string name="_sys_upgrade_files_checksum_failed"><![CDATA[Can't apply apgrade becase the following files were modified: {0}]]></string>
+	<string name="_sys_upgrade_files_checksum_failed_too_many"><![CDATA[Can't apply upgrade becase too many files({0}%) were modified]]></string>
 	<string name="_sys_upgrade_get_version_info_failed"><![CDATA[Get version info failed, please check internet connection on the web-server or web-server firewall]]></string>
-	<string name="_sys_upgrade_patch_download_failed"><![CDATA[Patch download failed, or downloaded file can't be saved]]></string>
-	<string name="_sys_upgrade_patch_unpack_failed"><![CDATA[Patch unpack failed]]></string>
 	<string name="_sys_upgrade_patch_checksum_failed"><![CDATA[Downloaded patch file checksum is invalid]]></string>
-	<string name="_sys_upgrade_files_checksum_failed"><![CDATA[Can't apply script becase the following files were modified: {0}]]></string>
+	<string name="_sys_upgrade_patch_download_failed"><![CDATA[Patch download failed, or downloaded file can't be saved]]></string>
 	<string name="_sys_upgrade_patch_invalid"><![CDATA[Invalid patch, it can't be applied to your version or incorrect files structure in the patch.]]></string>
-
-
+	<string name="_sys_upgrade_patch_unpack_failed"><![CDATA[Patch unpack failed]]></string>
 	<string name="_sys_uploader_close"><![CDATA[Close]]></string>
 	<string name="_sys_uploader_confirm_close_popup"><![CDATA[Oh no! Are you sure? This may discard uploading files, seriously.]]></string>
 	<string name="_sys_uploader_confirm_leaving_page"><![CDATA[Upload is in progress! Stay cool and don't close this page, or it will cut off half-way.]]></string>

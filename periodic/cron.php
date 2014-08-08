@@ -133,6 +133,9 @@ if (!empty($aJobsTransient)) {
         exit;
 }
 
+if (bx_check_maintenance_mode()) // don't run regular cron jobs when site is in maintenance mode
+    exit;
+
 // run regular cron jobs
 
 bx_import('BxDolLanguages');

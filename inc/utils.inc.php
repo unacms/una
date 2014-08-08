@@ -1066,7 +1066,7 @@ function bx_trigger_error ($sMsg, $iNumLevelsBack = 0)
 }
 
 /**
- * Get dolphin version
+ * Get Dolphin system DB version, for files version @see BX_DOL_VERSION, these versions must match
  */
 function bx_get_ver ()
 {

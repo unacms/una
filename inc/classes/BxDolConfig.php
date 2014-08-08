@@ -68,12 +68,6 @@ class BxDolConfig extends BxDol implements iBxDolSingleton
         $this->aUrlDynamic = array();
 
         $this->aPathDynamic = array();
-
-        $this->aDb = array(
-            'visual_processing' => true,
-            'debug_mode' => true,
-            'error_remort_by_email' => false
-        );
     }
 
     function get($sGroup, $sName)

@@ -9,15 +9,11 @@
 
 bx_import('BxDolCron');
 
-class BxDolCronUpgradeCheck extends BxDolCron
+class BxDolUpgradeCron extends BxDolCron
 {
     public function processing()
     {
-        if ('on' != getParam('sys_autoupdate_system'))
-            return;
-
-        $o = bx_instance('BxDolUpgrader');
-        $o->prepare();
+        echo "URA! \n";
     }
 }
 

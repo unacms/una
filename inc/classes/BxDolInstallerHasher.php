@@ -9,6 +9,10 @@
 
 bx_import('BxDolInstallerUtils');
 
+/**
+ * Functions for hashing system files.
+ * Hashing functions for module file are in @see BxDolInstallerUtils class.
+ */
 class BxDolInstallerHasher extends BxDolInstallerUtils
 {
     protected $_iSystemModuleId = 0;
@@ -71,10 +75,13 @@ class BxDolInstallerHasher extends BxDolInstallerUtils
         return true;
     }
 
-    public function checkSystemFilesHash () 
+    public function checkSystemFilesHash (&$fChangedFilesPercent) 
     {
         $aFiles = $this->getSystemFilesHash ();
-        return $this->hashCheck($aFiles, $this->_iSystemModuleId);
+        $aFilesChanged = $this->hashCheck($aFiles, $this->_iSystemModuleId);
+        if (null !== $fChangedFilesPercent && 0 != count($aFiles))
+            $fChangedFilesPercent = count($aFilesChanged) / count($aFiles);
+        return $aFilesChanged;
     }
 }
 
