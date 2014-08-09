@@ -20,6 +20,8 @@ class BxDolUpgradeCron extends BxDolCron
 {
     public function processing()
     {
+        // TODO: lock site (set maintenance mode)
+
         $oController = new BxDolUpgradeController();
 
         $aFolders = $oController->getAllUpgrades();
@@ -33,6 +35,8 @@ class BxDolUpgradeCron extends BxDolCron
             if (!$oController->runUpgrade($sFolder))
                 echo $oController->getErrorMsg() . "\n"; // TODO: email report ?
         }
+
+        // TODO: unlock site (remove maintenance mode)
     }
 }
 

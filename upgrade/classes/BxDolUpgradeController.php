@@ -70,6 +70,18 @@ class BxDolUpgradeController
             $this->aLogMsgs[] = "$sFolder upgrade can be applied";
         }
 
+        $mixedResult = $this->oUtil->checkPermissions ();
+        if (true !== $mixedResult) {
+            $this->sError = $mixedResult;
+            return false;
+        }
+
+        // TODO: copy new files
+
+        // TODO: delete deprecated files
+
+        // TODO: update files hash
+
         // run system SQL upgrade
         $mixedResult = $this->oUtil->isExecuteSQLAvail ();
         if (true === $mixedResult) {
@@ -231,9 +243,8 @@ class BxDolUpgradeController
 
         // run module custom script upgrade
         $sResult = $this->oUtil->executeConclusion ();
-        if ($sResult) {
+        if ($sResult)
             $this->aLogMsgs[] = $sResult;
-        }
 
         return true;
     }
