@@ -304,6 +304,20 @@ class BxDolUpgradeUtil
 
         return true;
     }
+
+    function copyFiles ()
+    {
+        // TODO: use standalone copying 
+        require_once(BX_DIRECTORY_PATH_CLASSES . 'BxDolFile.php');
+        $o = BxDolFile::getInstance();
+        $o->setForceOverwrite(true);
+
+        $sDirSource = bx_ltrim_str(BX_UPGRADE_DIR_UPGRADES . $this->sFolder . '/files/', BX_DIRECTORY_PATH_ROOT);
+        if (!$o->copy($sDirSource, ''))
+            return "Files copying failed";
+
+        return true;
+    }
 }
 
 /** @} */

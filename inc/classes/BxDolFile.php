@@ -11,8 +11,9 @@ class BxDolFile extends BxDol implements iBxDolSingleton
 {
     protected $_sPathFrom;
     protected $_sPathTo;
+    protected $_bForceOverwrite = false;
 
-    function __construct()
+    protected function __construct()
     {
         parent::__construct();
 
@@ -65,9 +66,19 @@ class BxDolFile extends BxDol implements iBxDolSingleton
         return $this->_setPermissions($sPath, $sMode);
     }
 
+    function setForceOverwrite($b)
+    {
+        $this->_bForceOverwrite = $b;
+    }
+
+    function getForceOverwrite()
+    {
+        return $this->_bForceOverwrite;
+    }
+
     protected function _copyFile($sFilePathFrom, $sFilePathTo)
     {
-        if(file_exists($sFilePathTo))
+        if(!$this->getForceOverwrite() && file_exists($sFilePathTo))
             return true;
 
         if(substr($sFilePathFrom, -1) == '*')
@@ -94,8 +105,9 @@ class BxDolFile extends BxDol implements iBxDolSingleton
             $aInnerFiles = $this->_readDirectory($sFilePathFrom);
             foreach($aInnerFiles as $sFile)
                 $bResult = $this->_copyFile($this->_validatePath($sFilePathFrom) . $sFile, $this->_validatePath($sFilePathTo) . $sFile);
-        } else
+        } else {
             $bResult = false;
+        }
 
         return $bResult;
     }
@@ -107,7 +119,7 @@ class BxDolFile extends BxDol implements iBxDolSingleton
 
         $aResult = array();
         while(($sFile = readdir($rSource)) !== false) {
-            if($sFile == '.' || $sFile =='..' || $sFile[0] == '.')
+            if($sFile == '.' || $sFile =='..')
                 continue;
             $aResult[] = $sFile;
         }
@@ -149,13 +161,13 @@ class BxDolFile extends BxDol implements iBxDolSingleton
     protected function _parseFile($sFilePath)
     {
         $aParts = array();
-        preg_match("/^([a-zA-Z0-9@~_\.\\\\\/:-]+[\\\\\/])([a-zA-Z0-9~_-]+\.[a-zA-Z]{2,8})$/", $sFilePath, $aParts) ? true : false;
+        preg_match("/^([a-zA-Z0-9@~_\.\\\\\/:-]+[\\\\\/])([a-zA-Z0-9~_\.-]+)$/", $sFilePath, $aParts);
         return count($aParts) > 1 ? array_slice($aParts, 1) : false;
     }
 
     protected function _isFile($sFilePath)
     {
-        return preg_match("/^([a-zA-Z0-9@~_\.\\\\\/:-]+)\.([a-zA-Z]){2,8}$/", $sFilePath) ? true : false;
+        return preg_match("/^([a-zA-Z0-9@~_\.\\\\\/:-]+)$/", $sFilePath) ? true : false;
     }
 
     protected function _isDirectory($sFilePath)

@@ -76,7 +76,11 @@ class BxDolUpgradeController
             return false;
         }
 
-        // TODO: copy new files
+        $mixedResult = $this->oUtil->copyFiles ();
+        if (true !== $mixedResult) {
+            $this->sError = $mixedResult;
+            return false;
+        }
 
         // TODO: delete deprecated files
 
