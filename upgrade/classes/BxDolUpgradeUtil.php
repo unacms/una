@@ -9,8 +9,8 @@
 
 class BxDolUpgradeUtil
 {
-    protected $oDb;
-    protected $sFolder;
+    var $oDb;
+    var $sFolder;
 
     function BxDolUpgradeUtil($oDb)
     {
@@ -193,6 +193,9 @@ class BxDolUpgradeUtil
     function readModules ()
     {
         if (!$this->sFolder)
+            return false;
+
+        if (!file_exists(BX_UPGRADE_DIR_UPGRADES . $this->sFolder . '/modules/'))
             return false;
 
         if (!($h = opendir(BX_UPGRADE_DIR_UPGRADES . $this->sFolder . '/modules/')))

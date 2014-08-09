@@ -14,6 +14,12 @@ class BxDolUpgrader extends BxDol
     protected $_sUrlVersionCheck = 'http://rss.boonex.com/u/';
     protected $_sError = false;
 
+    /**
+     * Prepare for system upgrade.
+     * It prepares upgrade by downloading upgrade pack and performing different checks.
+     * After all check are successfully completed, transient cron job is set to run upgrade upon next cron run.
+     * @return true if upgrade was successfully scheduled to run, or false on error (you can call @see getError to determine particular error message)
+     */
     public function prepare()
     {
         $this->setError(false);
@@ -71,14 +77,18 @@ class BxDolUpgrader extends BxDol
                 break;
             }
 
+            if (!$this->setTransientUpgradeCronJob ($sUnpackedPath)) {
+                $this->deleteUpgradeFolder($sPatchPath);
+                $this->setError(_t('_sys_upgrade_set_cron_failed'));
+                break;
+            }
+
             break;
         }
 
         umask($iUmaskSave);
 
-        // TODO: check error and set transient cron for the real update of files and db!
-
-        echo 'Err:' . $this->getError() . "\n";
+        return $this->getError() ? false : true;
     }
 
     public function getVersionUpdateInfo ()
@@ -161,8 +171,17 @@ class BxDolUpgrader extends BxDol
 
     protected function isValidPatch ($sUnpackedPath, $aVersionUpdateInfo)
     {
-        $sCheckFilePath =  $sUnpackedPath . 'upgrade/files/' . $this->normalizeVersion(bx_get_ver()) . '-' . $this->normalizeVersion($aVersionUpdateInfo['patch']['ver']) . '/check.php';
-        return file_exists($sCheckFilePath);
+        $sPath = $sUnpackedPath . 'files/' . $this->normalizeVersion(bx_get_ver()) . '-' . $this->normalizeVersion($aVersionUpdateInfo['patch']['ver']) . '/';
+        $sCheckFilePath =  $sPath . 'check.php';
+        $sVersionFilePath =  $sPath . 'files/inc/version.inc.php';
+        return file_exists($sCheckFilePath) && file_exists($sVersionFilePath) && file_exists($sUnpackedPath . 'BxDolUpgradeCron.php');
+    }
+
+    protected function setTransientUpgradeCronJob ($sUnpackedPath)
+    {
+        $oDb = BxDolDb::getInstance();
+        $sQuery = $oDb->prepare("INSERT INTO `sys_cron_jobs` SET `name` = 'sys_perform_upgrade', `time` = 'transient', `class` = 'BxDolUpgradeCron', `file` = ?", bx_ltrim_str($sUnpackedPath, BX_DIRECTORY_PATH_ROOT) . 'BxDolUpgradeCron.php');
+        return $oDb->query($sQuery);
     }
 
     public function getError()
