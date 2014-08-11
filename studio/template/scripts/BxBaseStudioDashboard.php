@@ -76,9 +76,11 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
 		$oAudit = new BxDolStudioToolsAudit();
 
     	foreach($this->aItemsHTools as $sTitle => $sFunc) {
-    		$aResult = $oAudit->checkRequirements(BX_DOL_AUDIT_OK, $sFunc);
-			if(empty($aResult))
+    		$aResult = $oAudit->checkRequirements(BX_DOL_AUDIT_FAIL, $sFunc);
+			if(!empty($aResult)) {
 				$iResult += 1;
+				break;
+			}
     	}
 
     	return $iResult;
