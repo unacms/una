@@ -18,13 +18,7 @@ class BxDolRssBoonEx extends BxTemplRss
         parent::__construct($aObject);
 
         $this->aFeeds = array (
-        	'boonex_version' => 'http://rss.boonex.com/',
-
-		    'boonex_news' => 'http://www.boonex.com/unity/blog/featured_posts/?rss=1',
-		    'boonex_unity_market' => 'http://www.boonex.com/unity/extensions/latest/?rss=1',
-		    'boonex_unity_lang_files' => 'http://www.boonex.com/unity/extensions/tag/translations&rss=1',
-		    'boonex_unity_market_templates' => 'http://www.boonex.com/unity/extensions/tag/templates&rss=1',
-		    'boonex_unity_market_featured' => 'http://www.boonex.com/unity/extensions/featured_posts?rss=1',
+		    'boonex_news' => 'http://www.boonex.com/unity/blog/featured_posts/?rss=1'
 		);
     }
 
