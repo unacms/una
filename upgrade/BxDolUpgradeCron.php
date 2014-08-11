@@ -20,23 +20,37 @@ class BxDolUpgradeCron extends BxDolCron
 {
     public function processing()
     {
-        // TODO: lock site (set maintenance mode)
-
         $oController = new BxDolUpgradeController();
+        if ($oController->setMaintenanceMode(true)) {
+        
+            $aFolders = $oController->getAllUpgrades();
+            $j = count($aFolders);
 
-        $aFolders = $oController->getAllUpgrades();
-        $j = count($aFolders);
+            for ($i = 0; $i < $j; ++$i) {
+                $sFolder = $oController->getAvailableUpgrade();
+                if (!$sFolder)
+                    continue;
 
-        for ($i = 0; $i < $j; ++$i) {
-            $sFolder = $oController->getAvailableUpgrade();
-            if (!$sFolder)
-                continue;
+                if (!$oController->runUpgrade($sFolder))
+                    break;
 
-            if (!$oController->runUpgrade($sFolder))
-                echo $oController->getErrorMsg() . "\n"; // TODO: email report ?
+                $oController->writeLog();
+
+                sendMailTemplateSystem('t_UpgradeSuccess', array (
+                    'new_version' => bx_get_ver(true),
+                ));
+            }
+
+            $oController->setMaintenanceMode(false);
         }
 
-        // TODO: unlock site (remove maintenance mode)
+        if ($sErrorMsg = $oController->getErrorMsg()) {
+            $oController->writeLog();
+            sendMailTemplateSystem('t_UpgradeFailed', array (
+                'error_msg' => $sErrorMsg,
+            ));
+            setParam('sys_autoupdate_system', ''); // disable auto-update if it is failed
+        }
     }
 }
 

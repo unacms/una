@@ -60,6 +60,18 @@ class BxDolAccount extends BxDol
     }
 
     /**
+     * Get studio operator account singleton instance on the class
+     */
+    public static function getInstanceStudioOperator()
+    {
+        $oQuery = BxDolAccountQuery::getInstance();
+        if (!($iId = $oQuery->getStudioOperatorId()))
+            return false;
+
+        return self::getInstance($iId);
+    }
+
+    /**
      * Get account id
      */
     public function id()

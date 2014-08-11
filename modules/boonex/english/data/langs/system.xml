@@ -1483,6 +1483,13 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_et_txt_body_pruning"><![CDATA[<bx_include_auto:_email_header.html />
 <p>{pruning_output}</p>
 <bx_include_auto:_email_footer.html />]]></string>
+	<string name="_sys_et_txt_body_upgrade_failed"><![CDATA[<bx_include_auto:_email_header.html />
+<p>Site upgrade failed due to the following error:</p>
+<p>{error_msg}</p>
+<bx_include_auto:_email_footer.html />]]></string>
+	<string name="_sys_et_txt_body_upgrade_success"><![CDATA[<bx_include_auto:_email_header.html />
+<p>Site was successfully upgraded to {new_version}.</p>
+<bx_include_auto:_email_footer.html />]]></string>
 	<string name="_sys_et_txt_name_system_admin_email"><![CDATA[Message sending from the Admin Panel]]></string>
 	<string name="_sys_et_txt_name_system_comment_replied"><![CDATA[The letter is sent to members whose comment was replied]]></string>
 	<string name="_sys_et_txt_name_system_confirmation"><![CDATA[Profile e-mail confirmation message]]></string>
@@ -1506,7 +1513,9 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_et_txt_subject_profile_change_status_active"><![CDATA[Profile Activated]]></string>
 	<string name="_sys_et_txt_subject_profile_change_status_pending"><![CDATA[Profile Pending Review]]></string>
 	<string name="_sys_et_txt_subject_profile_change_status_suspended"><![CDATA[Profile was Suspended]]></string>
-	<string name="_sys_et_txt_subject_pruning"><![CDATA[{site_title} pruning result]]></string>
+	<string name="_sys_et_txt_subject_pruning"><![CDATA[{site_name} pruning result]]></string>
+	<string name="_sys_et_txt_subject_upgrade_failed"><![CDATA[{site_name} upgrade failed]]></string>
+	<string name="_sys_et_txt_subject_upgrade_success"><![CDATA[{site_name} upgrade success]]></string>
 	<string name="_sys_et_txt_unsubscribe"><![CDATA[Unsubscribe]]></string>
 	<string name="_sys_form_account"><![CDATA[Account]]></string>
 	<string name="_sys_form_account_input_captcha"><![CDATA[Security Image]]></string>

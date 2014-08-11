@@ -30,6 +30,8 @@ define('BX_EMAIL_SYSTEM', 0); ///< system email without unsubscribe link, like f
 define('BX_EMAIL_NOTIFY', 1); ///< notification message, with unsubscribe link
 define('BX_EMAIL_MASS', 2); ///< mass email, one mesage send to manu users, with unsubscribe link
 
+define('BX_MAINTENANCE_FILE', '.bx_maintenance'); ///< file name to use as mantenance mode indicator
+
 /**
  * The following two functions are needed to convert title to uri and back.
  * It usefull when titles are used in URLs, like in Categories and Tags.
@@ -254,6 +256,8 @@ function htmlspecialchars_adv( $string )
  */
 function sendMailTemplate($sTemplateName, $iAccountId = 0, $iProfileId = 0, $aReplaceVars = array(), $iEmailType = BX_EMAIL_NOTIFY)
 {
+    bx_import('BxDolLanguages');
+
     bx_import('BxDolAccount');
     $oAccount = BxDolAccount::getInstance($iAccountId);
 
@@ -266,13 +270,32 @@ function sendMailTemplate($sTemplateName, $iAccountId = 0, $iProfileId = 0, $aRe
     if (!$oAccount || !$oProfile || !$oEmailTemplates)
         return false;
 
-    $aTemplate = $oEmailTemplates->parseTemplate($sTemplateName, $aReplaceVars, $iAccountId, $iProfileId);
+    $aTemplate = $oEmailTemplates->parseTemplate($sTemplateName, $aReplaceVars, $iAccountId, (int)$iProfileId);
     if (!$aTemplate)
         return false;
 
     return sendMail($oAccount->getEmail(), $aTemplate['Subject'], $aTemplate['Body'], 0, array(), $iEmailType);
 }
 
+/**
+ * Send system email 
+ */
+function sendMailTemplateSystem($sTemplateName, $aReplaceVars = array(), $iEmailType = BX_EMAIL_SYSTEM)
+{
+    bx_import('BxDolLanguages');
+
+    bx_import('BxDolEmailTemplates');
+    $oEmailTemplates = BxDolEmailTemplates::getInstance();
+
+    if (!$oEmailTemplates)
+        return false;
+
+    $aTemplate = $oEmailTemplates->parseTemplate($sTemplateName, $aReplaceVars);
+    if (!$aTemplate)
+        return false;
+
+    return sendMail(getParam('site_email'), $aTemplate['Subject'], $aTemplate['Body'], 0, array(), $iEmailType);
+}
 /**
  * Send email function
  *
@@ -1068,10 +1091,14 @@ function bx_trigger_error ($sMsg, $iNumLevelsBack = 0)
 /**
  * Get Dolphin system DB version, for files version @see BX_DOL_VERSION, these versions must match
  */
-function bx_get_ver ()
+function bx_get_ver ($bInvalidateCache = false)
 {
     bx_import('BxDolDb');
     $oDb = BxDolDb::getInstance();
+
+    if ($bInvalidateCache)
+        $oDb->cleanMemory('sys_version');
+    
     $sQuery = $oDb->prepare("SELECT `version` FROM `sys_modules` WHERE `name` = 'system'");
     return $oDb->fromMemory('sys_version', 'getOne', $sQuery);
 }
@@ -1085,7 +1112,7 @@ function bx_get_ver ()
  */
 function bx_check_maintenance_mode ($bShowHttpError = false)
 {
-    $bMaintetance = file_exists(BX_DIRECTORY_PATH_ROOT . '.bx_maintenance') && !defined('BX_DOL_UPGRADING');
+    $bMaintetance = file_exists(BX_DIRECTORY_PATH_ROOT . BX_MAINTENANCE_FILE) && !defined('BX_DOL_UPGRADING');
 
     if ($bMaintetance && $bShowHttpError)
         bx_show_service_unavailable_error_and_exit ('Site is temporarily unavailable due to scheduled maintenance, please try again in a minute.', 600);

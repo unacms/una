@@ -7,6 +7,8 @@
  * @{
  */
 
+define('BX_SYSTEM_MODULE_ID', 0);
+
 bx_import('BxDolInstallerUtils');
 
 /**
@@ -15,7 +17,6 @@ bx_import('BxDolInstallerUtils');
  */
 class BxDolInstallerHasher extends BxDolInstallerUtils
 {
-    protected $_iSystemModuleId = 0;
     protected $_aSystemFiles = array(
 
         // slash at the end is necessary for directories
@@ -70,7 +71,7 @@ class BxDolInstallerHasher extends BxDolInstallerUtils
         $oDb = bx_instance('BxDolStudioInstallerQuery');
 
         foreach($aFiles as $aFile)
-            $oDb->insertModuleTrack($this->_iSystemModuleId, $aFile);
+            $oDb->insertModuleTrack(BX_SYSTEM_MODULE_ID, $aFile);
 
         return true;
     }
@@ -78,7 +79,7 @@ class BxDolInstallerHasher extends BxDolInstallerUtils
     public function checkSystemFilesHash (&$fChangedFilesPercent) 
     {
         $aFiles = $this->getSystemFilesHash ();
-        $aFilesChanged = $this->hashCheck($aFiles, $this->_iSystemModuleId);
+        $aFilesChanged = $this->hashCheck($aFiles, BX_SYSTEM_MODULE_ID);
         if (null !== $fChangedFilesPercent && 0 != count($aFiles))
             $fChangedFilesPercent = count($aFilesChanged) / count($aFiles);
         return $aFilesChanged;

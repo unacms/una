@@ -9,10 +9,10 @@
 
 class BxDolUpgradeUtil
 {
-    var $oDb;
-    var $sFolder;
+    protected $oDb;
+    protected $sFolder;
 
-    function BxDolUpgradeUtil($oDb)
+    public function __construct($oDb)
     {
         $this->oDb = $oDb;
     }
@@ -315,6 +315,45 @@ class BxDolUpgradeUtil
         $sDirSource = bx_ltrim_str(BX_UPGRADE_DIR_UPGRADES . $this->sFolder . '/files/', BX_DIRECTORY_PATH_ROOT);
         if (!$o->copy($sDirSource, ''))
             return "Files copying failed";
+
+        return true;
+    }
+
+    function filesDelete ()
+    {
+        $sFile = BX_UPGRADE_DIR_UPGRADES . $this->sFolder . '/files_delete.php';
+        if (!file_exists($sFile))
+            return true; // just skip it if file isn't found
+
+        include ($sFile);
+        if (!$aFilesDelete && !is_array($aFilesDelete))
+            return true;
+
+        foreach ($aFilesDelete as $sFile)
+            @unlink(BX_DIRECTORY_PATH_ROOT . $sFile);
+
+        return true;
+    }
+
+    function updateFilesHash ()
+    {
+        require_once(BX_DIRECTORY_PATH_CLASSES . 'BxDolIO.php');
+        require_once(BX_DIRECTORY_PATH_CLASSES . 'BxDolInstallerUtils.php');
+        require_once(BX_DIRECTORY_PATH_CLASSES . 'BxDolInstallerHasher.php');
+
+        $o = new BxDolInstallerHasher();
+
+        $aFiles = $o->getSystemFilesHash ();
+        if (!$aFiles)
+            return 'Can\'t get files list to update hash';
+
+        $sQuery = $this->oDb->prepare("DELETE FROM `sys_modules_file_tracks` WHERE `module_id` = ?", BX_SYSTEM_MODULE_ID);
+        $this->oDb->query($sQuery);
+
+        foreach($aFiles as $aFile) {
+            $sQuery = $this->oDb->prepare("INSERT IGNORE INTO `sys_modules_file_tracks`(`module_id`, `file`, `hash`) VALUES(?, ?, ?)", BX_SYSTEM_MODULE_ID, $aFile['file'], $aFile['hash']);
+            $this->oDb->query($sQuery);
+        }
 
         return true;
     }

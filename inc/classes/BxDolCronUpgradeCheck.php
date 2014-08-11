@@ -17,8 +17,12 @@ class BxDolCronUpgradeCheck extends BxDolCron
             return;
 
         $o = bx_instance('BxDolUpgrader');
-        if (!$o->prepare())
-            echo $o->getError() . "\n"; // TODO: email report ?
+        if (!$o->prepare()) {            
+            sendMailTemplateSystem('t_UpgradeFailed', array (
+                'error_msg' => $o->getError(),
+            ));
+            setParam('sys_autoupdate_system', ''); // disable auto-update if it is failed
+        }
     }
 }
 

@@ -83,6 +83,14 @@ class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton
     }
 
     /**
+     * get first studio operator id
+     */
+    public function getStudioOperatorId()
+    {
+        return (int)$this->_getFieldByField('id', 'role', 3);
+    }
+
+    /**
      * Get account email by id
      * @param  string  $s search account by this id
      * @return account email

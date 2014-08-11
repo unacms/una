@@ -370,6 +370,26 @@ EOJ;
         return mysql_real_escape_string($s);
     }
 
+    function prepare ($sQuery)
+    {
+        $aArgs = func_get_args();
+        $sQuery = array_shift($aArgs);
+        $iPos = 0;
+        foreach ($aArgs as $mixedArg) {
+            if (is_null($mixedArg))
+                $s = 'NULL';
+            elseif (is_numeric($mixedArg))
+                $s = $mixedArg;
+            else
+                $s = "'" . mysql_real_escape_string($mixedArg) . "'";
+
+            $i = bx_mb_strpos($sQuery, '?', $iPos);
+            $sQuery = bx_mb_substr_replace($sQuery, $s, $i, 1);
+            $iPos = $i + get_mb_len($s);
+        }
+        return $sQuery;
+    }
+
     function executeSQL($sPath, $aReplace = array (), $isBreakOnError = true)
     {
         if(!file_exists($sPath) || !($rHandler = fopen($sPath, "r")))

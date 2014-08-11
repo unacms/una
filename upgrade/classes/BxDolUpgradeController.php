@@ -13,6 +13,7 @@ class BxDolUpgradeController
     protected $oUtil;
     protected $aLogMsgs;
     protected $sError;
+    protected $sConclusion;
 
     public function __construct()
     {
@@ -28,6 +29,48 @@ class BxDolUpgradeController
     public function getLogMessages()
     {
         return $this->aLogMsgs;
+    }
+
+    public function getConclusion()
+    {
+        return $this->sConclusion;
+    }
+
+    public function writeLog()
+    {
+        if (empty($this->aLogMsgs))
+            return true;
+
+        $s = "\n\n\n--------- " . date('c') . "\n";
+        $s .= implode("\n", $this->aLogMsgs);
+
+        if ($this->sConclusion)
+            $s .= "\nCONCLUSION:" . $this->sConclusion;
+
+        if ($this->sError)
+            $s .= "\nERROR:" . $this->sError;
+
+        return file_put_contents(BX_DIRECTORY_PATH_ROOT . 'logs/upgrade.log', $s, FILE_APPEND);
+    }
+
+    public function setMaintenanceMode($bSetMaintenanceMode)
+    {
+        if ($bSetMaintenanceMode) {
+
+            if (false !== file_put_contents(BX_DIRECTORY_PATH_ROOT . BX_MAINTENANCE_FILE, time()))
+                return true;
+
+            $this->sError = 'Enabling site maintetance mode failed';
+            return false;
+            
+        } else {
+
+            if (unlink(BX_DIRECTORY_PATH_ROOT . BX_MAINTENANCE_FILE))
+                return true;
+
+            $this->sError = 'Disabling site maintetance mode failed';
+            return false;
+        }
     }
 
     public function getAllUpgrades ()
@@ -58,33 +101,32 @@ class BxDolUpgradeController
         $this->aLogMsgs = array();
         $this->sError = false;
 
+        if (bx_get_ver() != BX_DOL_VERSION) {
+            $this->sError = 'Database and files versions are different';
+            return false;
+        }
+
         // set current folder
         $this->oUtil->setFolder($sFolder);
 
-        // precheck
-        $mixedResult = $this->oUtil->executeCheck ();
-        if (true !== $mixedResult) {
-            $this->sError = $mixedResult;
-            return false;
-        } else {
-            $this->aLogMsgs[] = "$sFolder upgrade can be applied";
+        // run oprations with files
+        $aFilesOperations = array (
+            'executeCheck' => "$sFolder upgrade will be applied",
+            'checkPermissions' => "Files permissions are ok and can be overwritten",
+            'copyFiles' => "Files copying successfully completed",
+            'filesDelete' => "Deprecated files were successfully deleted or there is no files to delete",
+            'updateFilesHash' => "System files hash was successfully updated",
+        );
+    
+        foreach ($aFilesOperations as $sFunc => $sSuccessMsg) {
+            $mixedResult = $this->oUtil->$sFunc ();
+            if (true !== $mixedResult) {
+                $this->sError = $mixedResult;
+                return false;
+            } else {
+                $this->aLogMsgs[] = $sSuccessMsg;
+            }
         }
-
-        $mixedResult = $this->oUtil->checkPermissions ();
-        if (true !== $mixedResult) {
-            $this->sError = $mixedResult;
-            return false;
-        }
-
-        $mixedResult = $this->oUtil->copyFiles ();
-        if (true !== $mixedResult) {
-            $this->sError = $mixedResult;
-            return false;
-        }
-
-        // TODO: delete deprecated files
-
-        // TODO: update files hash
 
         // run system SQL upgrade
         $mixedResult = $this->oUtil->isExecuteSQLAvail ();
@@ -96,7 +138,7 @@ class BxDolUpgradeController
                 $this->sError = $mixedResult;
                 return false;
             } else {
-                $this->aLogMsgs[] = "System SQL script was successfully executed.";
+                $this->aLogMsgs[] = "System SQL script was successfully executed";
             }
 
         } elseif (false === $mixedResult) {
@@ -108,18 +150,18 @@ class BxDolUpgradeController
 
         // get list of available language files updates
         if (false === ($aLangs = $this->oUtil->readLangs ())) {
-            $this->sError = 'Error reading the directory with language updates.';
+            $this->sError = 'Error reading the directory with language updates';
             return false;
         } else {
-            $sTemplateMessage = 'The following languages will be affected for system: <br />';
+            $sTemplateMessage = "The following languages will be affected for system:\n";
             if (!$aLangs) {
-                $sTemplateMessage .= " - No languages will be affected.";
+                $sTemplateMessage .= " - No languages will be affected\n";
             } else {
                 foreach ($aLangs as $sLang) {
-                    $sTemplateMessage .= ' - ' . $sLang . '<br />';
+                    $sTemplateMessage .= ' - ' . $sLang . "\n";
                 }
             }
-            $this->aLogMsgs[] = $sTemplateMessage;
+            $this->aLogMsgs[] = trim($sTemplateMessage);
         }
 
         // run system langs upgrade
@@ -130,7 +172,7 @@ class BxDolUpgradeController
                 $this->sError = $mixedResult;
                 return false;
             } else {
-                $this->aLogMsgs[] = "System language strings were successfully added.";
+                $this->aLogMsgs[] = "System language strings were successfully added";
             }
 
         }
@@ -144,7 +186,7 @@ class BxDolUpgradeController
                 $this->sError = $mixedResult;
                 return false;
             } else {
-                $this->aLogMsgs[] = "System after update custom script was successfully executed.";
+                $this->aLogMsgs[] = "System after update custom script was successfully executed";
             }
 
         } elseif (false === $mixedResult) {
@@ -155,20 +197,20 @@ class BxDolUpgradeController
         }
 
         // get list of modules updates
-        if (false === ($aModules = $this->oUtil->readModules ())) {
-            // skip modules update
-            return true;
-        } else {
-            $sTemplateMessage = 'The following modules will be updated: <br />';
+        if (false !== ($aModules = $this->oUtil->readModules ())) {
+            $sTemplateMessage = "The following modules will be updated:\n";
             if (!$aModules) {
-                $sTemplateMessage .= " - No modules will be updated.";
+                $sTemplateMessage .= " - No modules will be updated\n";
             } else {
                 foreach ($aModules as $sModule) {
-                    $sTemplateMessage .= ' - ' . $sModule . '<br />';
+                    $sTemplateMessage .= ' - ' . $sModule . "\n";
                 }
             }
-            $this->aLogMsgs[] = $sTemplateMessage;
+            $this->aLogMsgs[] = trim($sTemplateMessage);
         }
+
+        if (!$aModules)
+            $aModules = array();
 
         foreach ($aModules as $sModule) {
 
@@ -181,7 +223,7 @@ class BxDolUpgradeController
                     $this->sError = $mixedResult;
                     return false;
                 } else {
-                    $this->aLogMsgs[] = "<b>$sModule</b> module SQL script was successfully executed.";
+                    $this->aLogMsgs[] = "'$sModule' module SQL script was successfully executed";
                 }
 
             } elseif (false === $mixedResult) {
@@ -193,18 +235,18 @@ class BxDolUpgradeController
 
             // get list of available language files updates
             if (false === ($aLangs = $this->oUtil->readLangs ($sModule))) {
-                $this->sError = 'Error reading the directory with language updates.';
+                $this->sError = 'Error reading the directory with language updates';
                 return false;
             } else {
-                $sTemplateMessage = "The following languages will be affected for <b>$sModule</b> module: <br />";
+                $sTemplateMessage = "The following languages will be affected for '$sModule' module:\n";
                 if (!$aLangs) {
-                    $sTemplateMessage .= " - No languages will be affected.";
+                    $sTemplateMessage .= " - No languages will be affected\n";
                 } else {
                     foreach ($aLangs as $sLang) {
-                        $sTemplateMessage .= ' - ' . $sLang . '<br />';
+                        $sTemplateMessage .= ' - ' . $sLang . "\n";
                     }
                 }
-                $this->aLogMsgs[] = $sTemplateMessage;
+                $this->aLogMsgs[] = trim($sTemplateMessage);
             }
 
             // run module langs upgrade
@@ -215,7 +257,7 @@ class BxDolUpgradeController
                     $this->sError = $mixedResult;
                     return false;
                 } else {
-                    $this->aLogMsgs[] = "<b>$sModule</b> module language strings were successfully added.";
+                    $this->aLogMsgs[] = "'$sModule' module language strings were successfully added";
                 }
 
             }
@@ -229,7 +271,7 @@ class BxDolUpgradeController
                     $this->sError = $mixedResult;
                     return false;
                 } else {
-                    $this->aLogMsgs[] = "<b>$sModule</b> module after update custom script was successfully executed.";
+                    $this->aLogMsgs[] = "'$sModule' module after update custom script was successfully executed";
                 }
 
             } elseif (false === $mixedResult) {
@@ -248,7 +290,7 @@ class BxDolUpgradeController
         // run module custom script upgrade
         $sResult = $this->oUtil->executeConclusion ();
         if ($sResult)
-            $this->aLogMsgs[] = $sResult;
+            $this->sConclusion = $sResult;
 
         return true;
     }
