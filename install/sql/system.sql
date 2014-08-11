@@ -3124,7 +3124,7 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 -- content blocks
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
 
-('sys_home', 1, 'system', '_sys_page_block_title_login', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:10:"login_form";s:6:"params";a:1:{i:0;s:12:"no_join_text";}s:5:"class";s:17:"TemplServiceLogin";}', 0, 1, 1),
+('sys_home', 1, 'system', '_sys_page_block_title_login', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:10:\"login_form\";s:5:\"class\";s:17:\"TemplServiceLogin\";}', 0, 1, 1),
 
 ('sys_about', 1, 'system', '_sys_page_block_title_about', 11, 2147483647, 'lang', '_sys_page_lang_block_about', 0, 1, 1),
 

@@ -11,40 +11,80 @@ class BxDolUpgradeController
 {
     protected $oDb;
     protected $oUtil;
+    protected $aLogMsgs;
+    protected $sError;
 
-    function BxDolUpgradeController()
+    public function __construct()
     {
         $this->oDb = new BxDolUpgradeDb();
         $this->oUtil = new BxDolUpgradeUtil($this->oDb);
     }
 
-    function showAvailableUpgrades ()
+    public function getErrorMsg()
+    {
+        return $this->sError;
+    }
+
+    public function getLogMessages()
+    {
+        return $this->aLogMsgs;
+    }
+
+    public function getAllUpgrades ()
     {
         $aTemplateFolders = array ();
         $aFolders = $this->oUtil->readUpgrades();
         foreach ($aFolders as $sFolder) {
             $this->oUtil->setFolder($sFolder);
-            $aTemplateFolders[$sFolder] = $this->oUtil->executeCheck ();
+            $aTemplateFolders[$sFolder] = $this->oUtil->executeCheck();
         }
-
-        require (BX_UPGRADE_DIR_TEMPLATES . 'show_available_updates.php');
+        return $aTemplateFolders;
     }
 
-    function runUpgrade ($sFolder)
+    public function getAvailableUpgrade ()
     {
+        $aTemplateFolders = array ();
+        $aFolders = $this->oUtil->readUpgrades();
+        foreach ($aFolders as $sFolder) {
+            $this->oUtil->setFolder($sFolder);
+            if (true === $this->oUtil->executeCheck())
+                return $sFolder;
+        }
+        return false;
+    }
+
+    public function runUpgrade ($sFolder)
+    {
+        $this->aLogMsgs = array();
+        $this->sError = false;
+
         // set current folder
         $this->oUtil->setFolder($sFolder);
 
         // precheck
         $mixedResult = $this->oUtil->executeCheck ();
         if (true !== $mixedResult) {
-            $sTemplateMessage = $mixedResult;
-            require (BX_UPGRADE_DIR_TEMPLATES . 'message_error.php');
-            return;
+            $this->sError = $mixedResult;
+            return false;
         } else {
-            $sTemplateMessage = "$sFolder upgrade can be applied";
-            require (BX_UPGRADE_DIR_TEMPLATES . 'message_success_step.php');
+            $this->aLogMsgs[] = "$sFolder upgrade can be applied";
         }
+
+        $mixedResult = $this->oUtil->checkPermissions ();
+        if (true !== $mixedResult) {
+            $this->sError = $mixedResult;
+            return false;
+        }
+
+        $mixedResult = $this->oUtil->copyFiles ();
+        if (true !== $mixedResult) {
+            $this->sError = $mixedResult;
+            return false;
+        }
+
+        // TODO: delete deprecated files
+
+        // TODO: update files hash
 
         // run system SQL upgrade
         $mixedResult = $this->oUtil->isExecuteSQLAvail ();
@@ -53,35 +93,33 @@ class BxDolUpgradeController
             $mixedResult = $this->oUtil->executeSQL ();
             if (true !== $mixedResult) {
                 $sTemplateMessage = $mixedResult;
-                require (BX_UPGRADE_DIR_TEMPLATES . 'message_error.php');
-                return;
+                $this->sError = $mixedResult;
+                return false;
             } else {
-                $sTemplateMessage = "System SQL script was successfully executed.";
-                require (BX_UPGRADE_DIR_TEMPLATES . 'message_success_step.php');
+                $this->aLogMsgs[] = "System SQL script was successfully executed.";
             }
 
         } elseif (false === $mixedResult) {
             // just skip if not available found
         } else {
-            $sTemplateMessage = $mixedResult;
-            require (BX_UPGRADE_DIR_TEMPLATES . 'message_error.php');
-            return;
+            $this->sError = $mixedResult;
+            return false;
         }
 
         // get list of available language files updates
         if (false === ($aLangs = $this->oUtil->readLangs ())) {
-            $sTemplateMessage = 'Error reading the directory with language updates.';
-            require (BX_UPGRADE_DIR_TEMPLATES . 'message_error.php');
-            return;
+            $this->sError = 'Error reading the directory with language updates.';
+            return false;
         } else {
             $sTemplateMessage = 'The following languages will be affected for system: <br />';
-            if (!$aLangs)
+            if (!$aLangs) {
                 $sTemplateMessage .= " - No languages will be affected.";
-            else
+            } else {
                 foreach ($aLangs as $sLang) {
                     $sTemplateMessage .= ' - ' . $sLang . '<br />';
                 }
-            require (BX_UPGRADE_DIR_TEMPLATES . 'message_success_step.php');
+            }
+            $this->aLogMsgs[] = $sTemplateMessage;
         }
 
         // run system langs upgrade
@@ -89,12 +127,10 @@ class BxDolUpgradeController
 
             $mixedResult = $this->oUtil->executeLangsAdd ();
             if (true !== $mixedResult) {
-                $sTemplateMessage = $mixedResult;
-                require (BX_UPGRADE_DIR_TEMPLATES . 'message_error.php');
-                return;
+                $this->sError = $mixedResult;
+                return false;
             } else {
-                $sTemplateMessage = "System language strings were successfully added.";
-                require (BX_UPGRADE_DIR_TEMPLATES . 'message_success_step.php');
+                $this->aLogMsgs[] = "System language strings were successfully added.";
             }
 
         }
@@ -105,36 +141,33 @@ class BxDolUpgradeController
 
             $mixedResult = $this->oUtil->executeScript ();
             if (true !== $mixedResult) {
-                $sTemplateMessage = $mixedResult;
-                require (BX_UPGRADE_DIR_TEMPLATES . 'message_error.php');
-                return;
+                $this->sError = $mixedResult;
+                return false;
             } else {
-                $sTemplateMessage = "System after update custom script was successfully executed.";
-                require (BX_UPGRADE_DIR_TEMPLATES . 'message_success_step.php');
+                $this->aLogMsgs[] = "System after update custom script was successfully executed.";
             }
 
         } elseif (false === $mixedResult) {
             // just skip if not available found
         } else {
-            $sTemplateMessage = $mixedResult;
-            require (BX_UPGRADE_DIR_TEMPLATES . 'message_error.php');
-            return;
+            $this->sError = $mixedResult;
+            return false;
         }
 
         // get list of modules updates
         if (false === ($aModules = $this->oUtil->readModules ())) {
-            $sTemplateMessage = 'Error reading modules updates.';
-            require (BX_UPGRADE_DIR_TEMPLATES . 'message_error.php');
-            return;
+            // skip modules update
+            return true;
         } else {
             $sTemplateMessage = 'The following modules will be updated: <br />';
-            if (!$aModules)
+            if (!$aModules) {
                 $sTemplateMessage .= " - No modules will be updated.";
-            else
+            } else {
                 foreach ($aModules as $sModule) {
                     $sTemplateMessage .= ' - ' . $sModule . '<br />';
                 }
-            require (BX_UPGRADE_DIR_TEMPLATES . 'message_success_step.php');
+            }
+            $this->aLogMsgs[] = $sTemplateMessage;
         }
 
         foreach ($aModules as $sModule) {
@@ -145,36 +178,33 @@ class BxDolUpgradeController
 
                 $mixedResult = $this->oUtil->executeSQL ($sModule);
                 if (true !== $mixedResult) {
-                    $sTemplateMessage = $mixedResult;
-                    require (BX_UPGRADE_DIR_TEMPLATES . 'message_error.php');
-                    return;
+                    $this->sError = $mixedResult;
+                    return false;
                 } else {
-                    $sTemplateMessage = "<b>$sModule</b> module SQL script was successfully executed.";
-                    require (BX_UPGRADE_DIR_TEMPLATES . 'message_success_step.php');
+                    $this->aLogMsgs[] = "<b>$sModule</b> module SQL script was successfully executed.";
                 }
 
             } elseif (false === $mixedResult) {
                 // just skip if not available found
             } else {
-                $sTemplateMessage = $mixedResult;
-                require (BX_UPGRADE_DIR_TEMPLATES . 'message_error.php');
-                return;
+                $this->sError = $mixedResult;
+                return false;
             }
 
             // get list of available language files updates
             if (false === ($aLangs = $this->oUtil->readLangs ($sModule))) {
-                $sTemplateMessage = 'Error reading the directory with language updates.';
-                require (BX_UPGRADE_DIR_TEMPLATES . 'message_error.php');
-                return;
+                $this->sError = 'Error reading the directory with language updates.';
+                return false;
             } else {
                 $sTemplateMessage = "The following languages will be affected for <b>$sModule</b> module: <br />";
-                if (!$aLangs)
+                if (!$aLangs) {
                     $sTemplateMessage .= " - No languages will be affected.";
-                else
+                } else {
                     foreach ($aLangs as $sLang) {
                         $sTemplateMessage .= ' - ' . $sLang . '<br />';
                     }
-                require (BX_UPGRADE_DIR_TEMPLATES . 'message_success_step.php');
+                }
+                $this->aLogMsgs[] = $sTemplateMessage;
             }
 
             // run module langs upgrade
@@ -182,12 +212,10 @@ class BxDolUpgradeController
 
                 $mixedResult = $this->oUtil->executeLangsAdd ($sModule);
                 if (true !== $mixedResult) {
-                    $sTemplateMessage = $mixedResult;
-                    require (BX_UPGRADE_DIR_TEMPLATES . 'message_error.php');
-                    return;
+                    $this->sError = $mixedResult;
+                    return false;
                 } else {
-                    $sTemplateMessage = "<b>$sModule</b> module language strings were successfully added.";
-                    require (BX_UPGRADE_DIR_TEMPLATES . 'message_success_step.php');
+                    $this->aLogMsgs[] = "<b>$sModule</b> module language strings were successfully added.";
                 }
 
             }
@@ -198,40 +226,32 @@ class BxDolUpgradeController
 
                 $mixedResult = $this->oUtil->executeScript ($sModule);
                 if (true !== $mixedResult) {
-                    $sTemplateMessage = $mixedResult;
-                    require (BX_UPGRADE_DIR_TEMPLATES . 'message_error.php');
-                    return;
+                    $this->sError = $mixedResult;
+                    return false;
                 } else {
-                    $sTemplateMessage = "<b>$sModule</b> module after update custom script was successfully executed.";
-                    require (BX_UPGRADE_DIR_TEMPLATES . 'message_success_step.php');
+                    $this->aLogMsgs[] = "<b>$sModule</b> module after update custom script was successfully executed.";
                 }
 
             } elseif (false === $mixedResult) {
                 // just skip if not available
             } else {
-                $sTemplateMessage = $mixedResult;
-                require (BX_UPGRADE_DIR_TEMPLATES . 'message_error.php');
-                return;
+                $this->sError = $mixedResult;
+                return false;
             }
 
             // run module custom script upgrade
             $sResult = $this->oUtil->executeConclusion ($sModule);
-            if ($sResult) {
-                $sTemplateMessage = $sResult;
-                require (BX_UPGRADE_DIR_TEMPLATES . 'message_success_step.php');
-            }
-
+            if ($sResult)
+                $this->aLogMsgs[] = $sResult;
         }
 
         // run module custom script upgrade
         $sResult = $this->oUtil->executeConclusion ();
-        if ($sResult) {
-            $sTemplateMessage = $sResult;
-            require (BX_UPGRADE_DIR_TEMPLATES . 'message_success_step.php');
-        }
+        if ($sResult)
+            $this->aLogMsgs[] = $sResult;
 
+        return true;
     }
-
 }
 
 /** @} */

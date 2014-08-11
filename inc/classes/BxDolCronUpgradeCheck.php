@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    DolphinCore Dolphin Core
+ * @defgroup    DolphinUpgrade Dolphin Upgrade Script
  * @{
  */
 
@@ -17,7 +17,8 @@ class BxDolCronUpgradeCheck extends BxDolCron
             return;
 
         $o = bx_instance('BxDolUpgrader');
-        $o->prepare();
+        if (!$o->prepare())
+            echo $o->getError() . "\n"; // TODO: email report ?
     }
 }
 

@@ -129,7 +129,7 @@ if (!empty($aJobsTransient)) {
     foreach ($aJobsTransient as $aRow)
         runJob($aRow);
 
-    if (isset($aJobsTransient['sys_upgrade']))
+    if (isset($aJobsTransient['sys_perform_upgrade']))
         exit;
 }
 

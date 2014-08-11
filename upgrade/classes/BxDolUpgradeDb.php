@@ -21,12 +21,12 @@ class BxDolUpgradeDb
      */
     function __construct()
     {
-        $this->_sHost = DATABASE_HOST;
-        $this->_sPort = DATABASE_PORT;
-        $this->_sSocket = DATABASE_SOCK;
-        $this->_sDbname = DATABASE_NAME;
-        $this->_sUser = DATABASE_USER;
-        $this->_sPassword = DATABASE_PASS;
+        $this->_sHost = BX_DATABASE_HOST;
+        $this->_sPort = BX_DATABASE_PORT;
+        $this->_sSocket = BX_DATABASE_SOCK;
+        $this->_sDbname = BX_DATABASE_NAME;
+        $this->_sUser = BX_DATABASE_USER;
+        $this->_sPassword = BX_DATABASE_PASS;
         $this->_iCurrentResType = MYSQL_ASSOC;
 
         $this->connect();

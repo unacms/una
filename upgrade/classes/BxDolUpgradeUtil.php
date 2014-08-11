@@ -9,8 +9,8 @@
 
 class BxDolUpgradeUtil
 {
-    protected $oDb;
-    protected $sFolder;
+    var $oDb;
+    var $sFolder;
 
     function BxDolUpgradeUtil($oDb)
     {
@@ -195,6 +195,9 @@ class BxDolUpgradeUtil
         if (!$this->sFolder)
             return false;
 
+        if (!file_exists(BX_UPGRADE_DIR_UPGRADES . $this->sFolder . '/modules/'))
+            return false;
+
         if (!($h = opendir(BX_UPGRADE_DIR_UPGRADES . $this->sFolder . '/modules/')))
             return false;
 
@@ -245,6 +248,75 @@ class BxDolUpgradeUtil
         closedir($h);
 
         return $aRet;
+    }
+
+    function checkPermissions ()
+    {
+        $aFilesFailedRead = array();
+        $aFilesFailedWrite = array();
+        $sPathBaseUpgrade = BX_UPGRADE_DIR_UPGRADES . $this->sFolder . '/files/';
+        $aFiles = array();
+        if (!$this->_checkPermissionGetFilesList($sPathBaseUpgrade, $aFiles) || empty($aFiles))
+            return 'Can\'t retrieve list of files for the upgrade';
+
+        foreach ($aFiles as $sFileSource) {
+
+            if (!is_readable($sFileSource)) // check if source file is readable
+                $aFilesFailedRead[] = $sFileSource;
+
+            $sFileDest = BX_DIRECTORY_PATH_ROOT . bx_ltrim_str($sFileSource, $sPathBaseUpgrade);
+            
+            if (file_exists($sFileDest)) {
+                if (!is_writable($sFileDest)) // check if destination file exists and is writable
+                    $aFilesFailedWrite[] = $sFileDest;
+            } else {
+                $sDir = pathinfo($sFileDest, PATHINFO_DIRNAME); 
+                if (file_exists($sDir) && !is_writable($sDir)) // check if directory is writable, where new desination file will be places
+                    $aFilesFailedWrite[] = $sFileDest;
+            }
+            
+        }
+            
+        if (empty($aFilesFailedRead) && empty($aFilesFailedWrite))
+            return true;
+
+        $s = !empty($aFilesFailedRead) ? sprintf('The following files can\'t be read: %s. ', implode(', ', $aFilesFailedRead)) : '';
+        $s .= !empty($aFilesFailedWrite) ? sprintf('The following files can\'t be written: %s.', implode(', ', $aFilesFailedWrite)) : '';
+        return $s;
+    }
+
+    function _checkPermissionGetFilesList ($sPath, &$aFiles)
+    {
+        if (!file_exists($sPath) || !is_dir($sPath) || !($rSource = opendir($sPath)))
+            return false;
+
+        while (($sFile = readdir($rSource)) !== false) {
+            if ($sFile == '.' || $sFile =='..')
+                continue;
+
+            if (is_dir($sPath . $sFile))
+                $this->_checkPermissionGetFilesList($sPath . $sFile . '/', $aFiles);
+            else
+                $aFiles[] = $sPath . $sFile;
+        }
+
+        closedir($rSource);
+
+        return true;
+    }
+
+    function copyFiles ()
+    {
+        // TODO: use standalone copying 
+        require_once(BX_DIRECTORY_PATH_CLASSES . 'BxDolFile.php');
+        $o = BxDolFile::getInstance();
+        $o->setForceOverwrite(true);
+
+        $sDirSource = bx_ltrim_str(BX_UPGRADE_DIR_UPGRADES . $this->sFolder . '/files/', BX_DIRECTORY_PATH_ROOT);
+        if (!$o->copy($sDirSource, ''))
+            return "Files copying failed";
+
+        return true;
     }
 }
 
