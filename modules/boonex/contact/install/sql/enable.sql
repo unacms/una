@@ -31,22 +31,24 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 
 -- ACL
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-(@sName, 'contact', NULL, '_bx_contact_acl_action_contact', '', 1, 1);
+(@sName, 'contact', NULL, '_bx_contact_acl_action_contact', '', 1, 0);
 SET @iIdActionContact = LAST_INSERT_ID();
 
 SET @iUnauthenticated = 1;
-SET @iStandard = 2;
-SET @iUnconfirmed = 3;
-SET @iPending = 4;
-SET @iSuspended = 5;
-SET @iModerator = 6;
-SET @iAdministrator = 7;
-SET @iPremium = 8;
+SET @iAccount = 2;
+SET @iStandard = 3;
+SET @iUnconfirmed = 4;
+SET @iPending = 5;
+SET @iSuspended = 6;
+SET @iModerator = 7;
+SET @iAdministrator = 8;
+SET @iPremium = 9;
 
 INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
 -- contact
 (@iUnauthenticated, @iIdActionContact),
+(@iAccount, @iIdActionContact),
 (@iStandard, @iIdActionContact),
 (@iUnconfirmed, @iIdActionContact),
 (@iPending, @iIdActionContact),

@@ -72,29 +72,30 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 
 -- ACL
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('bx_timeline', 'post', NULL, '_bx_timeline_acl_action_post', '', 1, 1);
+('bx_timeline', 'post', NULL, '_bx_timeline_acl_action_post', '', 1, 3);
 SET @iIdActionPost = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('bx_timeline', 'delete', NULL, '_bx_timeline_acl_action_delete', '', 1, 1);
+('bx_timeline', 'delete', NULL, '_bx_timeline_acl_action_delete', '', 1, 3);
 SET @iIdActionDelete = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('bx_timeline', 'vote', NULL, '_bx_timeline_acl_action_vote', '', 1, 1);
+('bx_timeline', 'vote', NULL, '_bx_timeline_acl_action_vote', '', 1, 0);
 SET @iIdActionVote = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('bx_timeline', 'share', NULL, '_bx_timeline_acl_action_share', '', 1, 1);
+('bx_timeline', 'share', NULL, '_bx_timeline_acl_action_share', '', 1, 3);
 SET @iIdActionShare = LAST_INSERT_ID();
 
 SET @iUnauthenticated = 1;
-SET @iStandard = 2;
-SET @iUnconfirmed = 3;
-SET @iPending = 4;
-SET @iSuspended = 5;
-SET @iModerator = 6;
-SET @iAdministrator = 7;
-SET @iPremium = 8;
+SET @iAccount = 2;
+SET @iStandard = 3;
+SET @iUnconfirmed = 4;
+SET @iPending = 5;
+SET @iSuspended = 6;
+SET @iModerator = 7;
+SET @iAdministrator = 8;
+SET @iPremium = 9;
 
 INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 

@@ -252,7 +252,7 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
     protected function _getCellSwitcher ($mixedValue, $sKey, $aField, $aRow)
     {
         bx_import('BxDolAcl');
-        if(in_array($aRow['ID'], array(MEMBERSHIP_ID_NON_MEMBER, MEMBERSHIP_ID_STANDARD, MEMBERSHIP_ID_UNCONFIRMED, MEMBERSHIP_ID_PENDING, MEMBERSHIP_ID_SUSPENDED)))
+        if(in_array($aRow['ID'], array(MEMBERSHIP_ID_NON_MEMBER, MEMBERSHIP_ID_ACCOUNT, MEMBERSHIP_ID_STANDARD, MEMBERSHIP_ID_UNCONFIRMED, MEMBERSHIP_ID_PENDING, MEMBERSHIP_ID_SUSPENDED)))
             return parent::_getCellDefault('', $sKey, $aField, $aRow);;
 
         return parent::_getCellSwitcher($mixedValue, $sKey, $aField, $aRow);

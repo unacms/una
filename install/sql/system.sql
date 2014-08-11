@@ -436,23 +436,23 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 SET @iIdActionVote = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('system', 'comments post', NULL, '_sys_acl_action_comments_post', '', 0, 1);
+('system', 'comments post', NULL, '_sys_acl_action_comments_post', '', 0, 3);
 SET @iIdActionCmtPost = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('system', 'comments edit own', NULL, '_sys_acl_action_comments_edit_own', '', 0, 1);
+('system', 'comments edit own', NULL, '_sys_acl_action_comments_edit_own', '', 0, 3);
 SET @iIdActionCmtEditOwn = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('system', 'comments remove own', NULL, '_sys_acl_action_comments_remove_own', '', 0, 1);
+('system', 'comments remove own', NULL, '_sys_acl_action_comments_remove_own', '', 0, 3);
 SET @iIdActionCmtRemoveOwn = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('system', 'comments edit all', NULL, '_sys_acl_action_comments_edit_all', '', 0, 1);
+('system', 'comments edit all', NULL, '_sys_acl_action_comments_edit_all', '', 0, 3);
 SET @iIdActionCmtEditAll = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('system', 'comments remove all', NULL, '_sys_acl_action_comments_remove_all', '', 0, 1);
+('system', 'comments remove all', NULL, '_sys_acl_action_comments_remove_all', '', 0, 3);
 SET @iIdActionCmtRemoveAll = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
@@ -460,11 +460,11 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 SET @iIdActionAccountCreate = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('system', 'delete account', NULL, '_sys_acl_action_delete_account', '_sys_acl_action_delete_account_desc', 0, 2147483646);
+('system', 'delete account', NULL, '_sys_acl_action_delete_account', '_sys_acl_action_delete_account_desc', 0, 1);
 SET @iIdActionAccountDelete = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('system', 'set acl level', NULL, '_sys_acl_action_set_acl_level', '_sys_acl_action_set_acl_level_desc', 0, 2147483646);
+('system', 'set acl level', NULL, '_sys_acl_action_set_acl_level', '_sys_acl_action_set_acl_level_desc', 0, 3);
 SET @iIdActionSetAclLevel = LAST_INSERT_ID();
 
 
@@ -490,13 +490,14 @@ CREATE TABLE `sys_acl_matrix` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 SET @iUnauthenticated = 1;
-SET @iStandard = 2;
-SET @iUnconfirmed = 3;
-SET @iPending = 4;
-SET @iSuspended = 5;
-SET @iModerator = 6;
-SET @iAdministrator = 7;
-SET @iPremium = 8;
+SET @iAccount = 2;
+SET @iStandard = 3;
+SET @iUnconfirmed = 4;
+SET @iPending = 5;
+SET @iSuspended = 6;
+SET @iModerator = 7;
+SET @iAdministrator = 8;
+SET @iPremium = 9;
 
 INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
@@ -536,6 +537,7 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iUnauthenticated, @iIdActionAccountCreate),
 
 -- account delete
+(@iAccount, @iIdActionAccountDelete),
 (@iStandard, @iIdActionAccountDelete),
 (@iUnconfirmed, @iIdActionAccountDelete),
 (@iPending, @iIdActionAccountDelete),
@@ -566,13 +568,14 @@ CREATE TABLE `sys_acl_levels` (
 
 INSERT INTO `sys_acl_levels` (`ID`, `Name`, `Icon`, `Description`, `Active`, `Purchasable`, `Removable`, `QuotaSize`, `QuotaNumber`, `QuotaMaxFileSize`, `Order`) VALUES
 (1, '_adm_prm_txt_level_unauthenticated', 'acl-non-member.png', '', 'yes', 'no', 'no', 0, 0, 0, 1),
-(2, '_adm_prm_txt_level_standard', 'acl-standard.png', '', 'yes', 'no', 'no', 0, 0, 0, 2),
-(3, '_adm_prm_txt_level_unconfirmed', 'acl-unconfirmed.png', '', 'yes', 'no', 'no', 0, 0, 0, 3),
-(4, '_adm_prm_txt_level_pending', 'acl-pending.png', '', 'yes', 'no', 'no', 0, 0, 0, 4),
-(5, '_adm_prm_txt_level_suspended', 'acl-suspended.png', '', 'yes', 'no', 'no', 0, 0, 0, 5),
-(6, '_adm_prm_txt_level_moderator', 'acl-moderator.png', '', 'yes', 'no', 'no', 0, 0, 0, 6),
-(7, '_adm_prm_txt_level_administrator', 'acl-administrator.png', '', 'yes', 'no', 'no', 0, 0, 0, 7),
-(8, '_adm_prm_txt_level_premium', 'acl-premium.png', '', 'yes', 'yes', 'no', 0, 0, 0, 8);
+(2, '_adm_prm_txt_level_account', 'acl-account.png', '', 'yes', 'no', 'no', 0, 0, 0, 2),
+(3, '_adm_prm_txt_level_standard', 'acl-standard.png', '', 'yes', 'no', 'no', 0, 0, 0, 3),
+(4, '_adm_prm_txt_level_unconfirmed', 'acl-unconfirmed.png', '', 'yes', 'no', 'no', 0, 0, 0, 4),
+(5, '_adm_prm_txt_level_pending', 'acl-pending.png', '', 'yes', 'no', 'no', 0, 0, 0, 5),
+(6, '_adm_prm_txt_level_suspended', 'acl-suspended.png', '', 'yes', 'no', 'no', 0, 0, 0, 6),
+(7, '_adm_prm_txt_level_moderator', 'acl-moderator.png', '', 'yes', 'no', 'no', 0, 0, 0, 7),
+(8, '_adm_prm_txt_level_administrator', 'acl-administrator.png', '', 'yes', 'no', 'no', 0, 0, 0, 8),
+(9, '_adm_prm_txt_level_premium', 'acl-premium.png', '', 'yes', 'yes', 'no', 0, 0, 0, 9);
 
 
 -- --------------------------------------------------------
