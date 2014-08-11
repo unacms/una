@@ -1047,6 +1047,7 @@
 	<string name="_adm_prm_txt_description"><![CDATA[Description]]></string>
 	<string name="_adm_prm_txt_enable"><![CDATA[Enable]]></string>
 	<string name="_adm_prm_txt_icon"><![CDATA[Icon]]></string>
+	<string name="_adm_prm_txt_level_account"><![CDATA[Account]]></string>
 	<string name="_adm_prm_txt_level_administrator"><![CDATA[Administrator]]></string>
 	<string name="_adm_prm_txt_level_create_popup"><![CDATA[Add New Level]]></string>
 	<string name="_adm_prm_txt_level_description"><![CDATA[Description]]></string>
@@ -1923,6 +1924,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_txt_account_profile_context_changed_success"><![CDATA[Current profile has been succesfully changed to: <b>{0}</b>]]></string>
 	<string name="_sys_txt_account_suspended"><![CDATA[Your account is suspended.]]></string>
 	<string name="_sys_txt_account_unconfirmed"><![CDATA[Your email address is unconfirmed. Please, check your email ({1}) for a confirmation letter and click email confirmation link. Can't find the letter? Check your SPAM folder or <a href="{0}">send the verification letter again</a>.]]></string>
+	<string name="_sys_txt_account_profile_system"><![CDATA[You have no profiles created, so you can't perform any actions on the site, please <a href="{0}">create  profile</a>.]]></string>
 	<string name="_sys_txt_captcha_not_available"><![CDATA[CAPTCHA not available]]></string>
     <string name="_sys_txt_change_image"><![CDATA[Change Picure]]></string>
 	<string name="_sys_txt_cmt_loading"><![CDATA[Loading...]]></string>

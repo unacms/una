@@ -126,26 +126,27 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 -- ACL
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('bx_convos', 'create entry', NULL, '_bx_cnv_acl_action_create_entry', '', 1, 1);
+('bx_convos', 'create entry', NULL, '_bx_cnv_acl_action_create_entry', '', 1, 3);
 SET @iIdActionEntryCreate = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('bx_convos', 'delete entry', NULL, '_bx_cnv_acl_action_delete_entry', '', 1, 1);
+('bx_convos', 'delete entry', NULL, '_bx_cnv_acl_action_delete_entry', '', 1, 3);
 SET @iIdActionEntryDelete = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('bx_convos', 'view entry', NULL, '_bx_cnv_acl_action_view_entry', '', 1, 1);
+('bx_convos', 'view entry', NULL, '_bx_cnv_acl_action_view_entry', '', 1, 0);
 SET @iIdActionEntryView = LAST_INSERT_ID();
 
 
 SET @iUnauthenticated = 1;
-SET @iStandard = 2;
-SET @iUnconfirmed = 3;
-SET @iPending = 4;
-SET @iSuspended = 5;
-SET @iModerator = 6;
-SET @iAdministrator = 7;
-SET @iPremium = 8;
+SET @iAccount = 2;
+SET @iStandard = 3;
+SET @iUnconfirmed = 4;
+SET @iPending = 5;
+SET @iSuspended = 6;
+SET @iModerator = 7;
+SET @iAdministrator = 8;
+SET @iPremium = 9;
 
 INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
@@ -163,6 +164,7 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
 -- entry view
 (@iUnauthenticated, @iIdActionEntryView),
+(@iAccount, @iIdActionEntryView),
 (@iStandard, @iIdActionEntryView),
 (@iUnconfirmed, @iIdActionEntryView),
 (@iPending, @iIdActionEntryView),

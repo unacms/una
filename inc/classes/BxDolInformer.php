@@ -102,12 +102,17 @@ class BxDolInformer extends BxDol
      */
     protected function _addPermanentMessages ()
     {
-        // add account related permament messages
+        // add account & profile related permament messages
         if (isLogged()) {
             bx_import('BxDolAccount');
             $oAccount = BxDolAccount::getInstance();
             if ($oAccount)
                 $oAccount->addInformerPermanentMessages($this);
+                
+			bx_import('BxDolProfile');
+            $oProfile = BxDolProfile::getInstance();
+            if ($oProfile)
+                $oProfile->addInformerPermanentMessages($this);
         }
 
         // add permament messages from modules

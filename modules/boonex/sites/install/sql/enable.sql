@@ -67,22 +67,23 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 
 -- ACL
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('bx_sites', 'create site', NULL, '_bx_sites_acl_action_create_site', '', 1, 1);
+('bx_sites', 'create site', NULL, '_bx_sites_acl_action_create_site', '', 1, 3);
 SET @iIdActionSiteCreate = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('bx_sites', 'manage sites', NULL, '_bx_sites_acl_action_manage_sites', '', 1, 1);
+('bx_sites', 'manage sites', NULL, '_bx_sites_acl_action_manage_sites', '', 1, 3);
 SET @iIdActionManageSites = LAST_INSERT_ID();
 
 
 SET @iUnauthenticated = 1;
-SET @iStandard = 2;
-SET @iUnconfirmed = 3;
-SET @iPending = 4;
-SET @iSuspended = 5;
-SET @iModerator = 6;
-SET @iAdministrator = 7;
-SET @iPremium = 8;
+SET @iAccount = 2;
+SET @iStandard = 3;
+SET @iUnconfirmed = 4;
+SET @iPending = 5;
+SET @iSuspended = 6;
+SET @iModerator = 7;
+SET @iAdministrator = 8;
+SET @iPremium = 9;
 
 INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 

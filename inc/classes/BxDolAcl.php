@@ -41,12 +41,13 @@ define('CHECK_ACTION_LANG_FILE_SITE_EMAIL',	7);
  * Standard membership ID's
  */
 define('MEMBERSHIP_ID_NON_MEMBER', 1);
-define('MEMBERSHIP_ID_STANDARD', 2);
-define('MEMBERSHIP_ID_UNCONFIRMED', 3);
-define('MEMBERSHIP_ID_PENDING', 4);
-define('MEMBERSHIP_ID_SUSPENDED', 5);
-define('MEMBERSHIP_ID_MODERATOR', 6);
-define('MEMBERSHIP_ID_ADMINISTRATOR', 7);
+define('MEMBERSHIP_ID_ACCOUNT', 2);
+define('MEMBERSHIP_ID_STANDARD', 3);
+define('MEMBERSHIP_ID_UNCONFIRMED', 4);
+define('MEMBERSHIP_ID_PENDING', 5);
+define('MEMBERSHIP_ID_SUSPENDED', 6);
+define('MEMBERSHIP_ID_MODERATOR', 7);
+define('MEMBERSHIP_ID_ADMINISTRATOR', 8);
 
 /**
  * Indices for checkAction() result array
@@ -71,6 +72,7 @@ class BxDolAcl extends BxDol implements iBxDolSingleton
 
     protected $_aStandardMemberships = array(
         MEMBERSHIP_ID_NON_MEMBER => 1,
+        MEMBERSHIP_ID_ACCOUNT => 1,
         MEMBERSHIP_ID_UNCONFIRMED => 1,
         MEMBERSHIP_ID_PENDING => 1,
         MEMBERSHIP_ID_SUSPENDED => 1,
@@ -630,10 +632,19 @@ class BxDolAcl extends BxDol implements iBxDolSingleton
         $oProfile = BxDolProfile::getInstance($iProfileId);
         $aProfileInfo = $oProfile ? $oProfile->getInfo() : false;
         $sProfileStatus = $aProfileInfo ? $aProfileInfo['status'] : false;
+        $sProfileType = $aProfileInfo ? $aProfileInfo['type'] : false;
+
+        // account profile
+	    if($sProfileType == 'system') {
+        	$aMemLevel = $this->oDb->getLevelByIdCached(MEMBERSHIP_ID_ACCOUNT);
+        	if (!$aMemLevel)
+                trigger_error ('Standard member level is missing: ' . MEMBERSHIP_ID_ACCOUNT, E_USER_ERROR);
+
+        	return $aMemLevel;
+        }
 
         // profile is not active, so return standard memberships according to profile status
         if (BX_PROFILE_STATUS_ACTIVE != $sProfileStatus) {
-
             bx_import('BxDolAccount');
             $oAccount = $aProfileInfo ? BxDolAccount::getInstance($aProfileInfo['account_id']) : false;
             if ($oAccount && !$oAccount->isConfirmed())
@@ -649,7 +660,6 @@ class BxDolAcl extends BxDol implements iBxDolSingleton
                 trigger_error ('Standard member level is missing: ' . $iLevelId, E_USER_ERROR);
 
             return $aMemLevel;
-
         }
 
         // profile is active get memebr level from profile

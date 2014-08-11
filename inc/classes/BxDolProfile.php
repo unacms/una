@@ -393,6 +393,22 @@ class BxDolProfile extends BxDol implements iBxDolProfile
             $oInformer->add('sys-switch-profile-context', _t('_sys_txt_account_profile_context_change_suggestion', BxDolPermalinks::getInstance()->permalink('page.php?i=account-profile-switcher', array('switch_to_profile' => $this->id()))), BX_INFORMER_INFO);
 
     }
+
+	/**
+     * Add permament messages.
+     */
+    public function addInformerPermanentMessages ($oInformer)
+    {
+    	$aInfo = $this->getInfo();
+    	$aProfiles = $this->_oQuery->getProfilesByAccount($aInfo['account_id']);
+
+        if ($aInfo['type'] == 'system' && count($aProfiles) == 1) {
+            bx_import('BxDolPermalinks');
+            $sUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=account-profile-switcher');
+
+            $oInformer->add('sys-account-profile-system', _t('_sys_txt_account_profile_system', $sUrl), BX_INFORMER_ALERT);
+        }
+    }
 }
 
 /** @} */
