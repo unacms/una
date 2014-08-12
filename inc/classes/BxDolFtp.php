@@ -39,11 +39,6 @@ class BxDolFtp extends BxDolFile
         $sFilePathTo = $this->_sPathTo . $sFilePathTo;
         return $this->_copyFile($sFilePathFrom, $sFilePathTo);
     }
-    function delete($sPath)
-    {
-        $sPath = $this->_sPathTo . $sPath;
-        return $this->_deleteDirectory($sPath);
-    }
 
     protected function _copyFile($sFilePathFrom, $sFilePathTo)
     {
@@ -95,26 +90,11 @@ class BxDolFtp extends BxDolFile
 
         return true;
     }
-    protected function _validatePath($sPath)
-    {
-        if($sPath && substr($sPath, -1) != '/' && $this->_isDirectory($sPath))
-            $sPath .= '/';
-
-        return $sPath;
-    }
     protected function _parseFile($sFilePath)
     {
         $aParts = array();
         preg_match("/^([a-zA-Z0-9@~_\.\\\\\/:-]+[\\\\\/])([a-zA-Z0-9~_-]+\.[a-zA-Z]{2,8})$/", $sFilePath, $aParts);
         return count($aParts) > 1 ? array_slice($aParts, 1) : false;
-    }
-    protected function _isFile($sFilePath)
-    {
-        return preg_match("/^([a-zA-Z0-9@~_\.\\\\\/:-]+)\.([a-zA-Z]){2,8}$/", $sFilePath) ? true : false;
-    }
-    protected function _isDirectory($sFilePath)
-    {
-        return preg_match("/^([a-zA-Z0-9@~_\.\\\\\/:-]+)[\\\\\/]([a-zA-Z0-9~_-]+)[\\\\\/]?$/", $sFilePath) ? true : false;
     }
     protected function _setPermissions($sPath, $sMode)
     {
