@@ -105,7 +105,7 @@ class BxDolFtp extends BxDolFile
     protected function _parseFile($sFilePath)
     {
         $aParts = array();
-        preg_match("/^([a-zA-Z0-9@~_\.\\\\\/:-]+[\\\\\/])([a-zA-Z0-9~_-]+\.[a-zA-Z]{2,8})$/", $sFilePath, $aParts) ? true : false;
+        preg_match("/^([a-zA-Z0-9@~_\.\\\\\/:-]+[\\\\\/])([a-zA-Z0-9~_-]+\.[a-zA-Z]{2,8})$/", $sFilePath, $aParts);
         return count($aParts) > 1 ? array_slice($aParts, 1) : false;
     }
     protected function _isFile($sFilePath)
