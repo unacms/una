@@ -167,7 +167,7 @@ class BxDolFile extends BxDol implements iBxDolSingleton
 
     protected function _isFile($sFilePath)
     {
-        return preg_match("/^([a-zA-Z0-9@~_\.\\\\\/:-]+)$/", $sFilePath) ? true : false;
+        return preg_match("/^([a-zA-Z0-9@~_\.\\\\\/:-]+)\.([a-zA-Z]){2,8}$/", $sFilePath) ? true : false;
     }
 
     protected function _isDirectory($sFilePath)

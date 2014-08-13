@@ -148,7 +148,7 @@ INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `B
 ('system', '_sys_et_txt_name_system_pruning', 't_Pruning', '_sys_et_txt_subject_pruning', '_sys_et_txt_body_pruning'),
 ('system', '_sys_et_txt_name_profile_change_status_active', 't_ChangeStatusActive', '_sys_et_txt_subject_profile_change_status_active', '_sys_et_txt_body_profile_change_status_active'),
 ('system', '_sys_et_txt_name_profile_change_status_suspended', 't_ChangeStatusSuspended', '_sys_et_txt_subject_profile_change_status_suspended', '_sys_et_txt_body_profile_change_status_suspended'),
-('system', '_sys_et_txt_name_profile_change_status_pending', 't_ChangeStatusPending', '_sys_et_txt_subject_profile_change_status_pending', '_sys_et_txt_body_profile_change_status_pending');
+('system', '_sys_et_txt_name_profile_change_status_pending', 't_ChangeStatusPending', '_sys_et_txt_subject_profile_change_status_pending', '_sys_et_txt_body_profile_change_status_pending'),
 ('system', '_sys_et_txt_upgrade_failed', 't_UpgradeFailed', '_sys_et_txt_subject_upgrade_failed', '_sys_et_txt_body_upgrade_failed'),
 ('system', '_sys_et_txt_upgrade_success', 't_UpgradeSuccess', '_sys_et_txt_subject_upgrade_success', '_sys_et_txt_body_upgrade_success');
 
