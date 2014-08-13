@@ -22,34 +22,44 @@ class BxDolUpgradeCron extends BxDolCron
     {
         $oController = new BxDolUpgradeController();
         if ($oController->setMaintenanceMode(true)) {
-        
-            $aFolders = $oController->getAllUpgrades();
-            $j = count($aFolders);
+    
+            // if upgrade was successful
+            if (($sFolder = $oController->getAvailableUpgrade()) && $oController->runUpgrade($sFolder)) { 
 
-            for ($i = 0; $i < $j; ++$i) {
-                $sFolder = $oController->getAvailableUpgrade();
-                if (!$sFolder)
-                    continue;
-
-                if (!$oController->runUpgrade($sFolder))
-                    break;
-
+                // write upgrade log
                 $oController->writeLog();
 
+                // send email notification
+                bx_import('BxDolLanguages');
                 sendMailTemplateSystem('t_UpgradeSuccess', array (
                     'new_version' => bx_get_ver(true),
+                    'conclusion' => $oController->getConclusion() ? _t('_sys_upgrade_conclusion', $oController->getConclusion()) : '',
                 ));
+
+                // if next upgrade (in case of bulk upgrade) is available then schedule to run it ASAP, upon next cron run
+                if ($oController->getAvailableUpgrade()) { 
+                    bx_import('BxDolUpgrader');
+                    $oUpgrader = bx_instance('BxDolUpgrader');
+                    $oUpgrader->setTransientUpgradeCronJob(pathinfo(__FILE__, PATHINFO_DIRNAME));
+                }
             }
 
             $oController->setMaintenanceMode(false);
         }
 
-        if ($sErrorMsg = $oController->getErrorMsg()) {
+        // if something went grong during upgrade
+        if ($sErrorMsg = $oController->getErrorMsg()) { 
+
+            // write upgrade log
             $oController->writeLog();
+
+            // send email notification
             sendMailTemplateSystem('t_UpgradeFailed', array (
                 'error_msg' => $sErrorMsg,
             ));
-            setParam('sys_autoupdate_system', ''); // disable auto-update if it is failed
+
+            // disable auto-upgrade if it is failed
+            setParam('sys_autoupdate_system', '');
         }
     }
 }
