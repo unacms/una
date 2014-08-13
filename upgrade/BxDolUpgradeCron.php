@@ -36,11 +36,17 @@ class BxDolUpgradeCron extends BxDolCron
                     'conclusion' => $oController->getConclusion() ? _t('_sys_upgrade_conclusion', $oController->getConclusion()) : '',
                 ));
 
-                // if next upgrade (in case of bulk upgrade) is available then schedule to run it ASAP, upon next cron run
-                if ($oController->getAvailableUpgrade()) { 
-                    bx_import('BxDolUpgrader');
+                // if next upgrade is available (in case of bulk upgrade) then schedule to run it upon next cron run
+                $sUpgradeDir = pathinfo(__FILE__, PATHINFO_DIRNAME);
+                if ($oController->getAvailableUpgrade()) {
+
                     $oUpgrader = bx_instance('BxDolUpgrader');
-                    $oUpgrader->setTransientUpgradeCronJob(pathinfo(__FILE__, PATHINFO_DIRNAME));
+                    $oUpgrader->setTransientUpgradeCronJob($sUpgradeDir);
+
+                } elseif (0 === strpos($sUpgradeDir, BX_DIRECTORY_PATH_TMP)) {
+
+                    @unlink($sUpgradeDir);
+
                 }
             }
 

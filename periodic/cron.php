@@ -124,7 +124,7 @@ $oDb = BxDolDb::getInstance();
 
 $aJobsTransient = $oDb->getAllWithKey("SELECT * FROM `sys_cron_jobs` WHERE `time` = 'transient'", 'name');
 if (!empty($aJobsTransient)) {
-    // $oDb->query("DELETE FROM `sys_cron_jobs` WHERE `time` = 'transient'"); // TODO: temporarily commented out
+    $oDb->query("DELETE FROM `sys_cron_jobs` WHERE `time` = 'transient'");
 
     foreach ($aJobsTransient as $aRow)
         runJob($aRow);

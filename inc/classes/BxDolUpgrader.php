@@ -45,7 +45,7 @@ class BxDolUpgrader extends BxDol
             $aFailedFiles = $this->checkFilesChecksums ($fChangedFilesPercent);
             $bAutoupdateForceModifiedFiles = ('on' == getParam('sys_autoupdate_force_modified_files'));
             if (!empty($aFailedFiles) && !$bAutoupdateForceModifiedFiles) {
-                $this->setError(_t('_sys_upgrade_files_checksum_failed', implode(',', $aFailedFiles)));
+                $this->setError(_t('_sys_upgrade_files_checksum_failed', implode(', ', $aFailedFiles)));
                 break;
             }
             elseif ($fChangedFilesPercent > BX_FORCE_AUTOUPDATE_MAX_CHANGED_FILES_PERCENT && $bAutoupdateForceModifiedFiles) {
