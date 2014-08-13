@@ -97,19 +97,60 @@
     <!-- ============================================  -->
     <target name="package" depends="clean">
         <tstamp />
-        <property name="package_file" value="Dolphin-${DSTAMP}-${build}.zip" override="yes" />
+        <property name="package_name" value="Dolphin-${DSTAMP}-${build}" override="yes" />
+        <property name="package_file" value="${package_name}.zip" />
         <echo msg="Packaging ${package_file} file..." />
 
         <mkdir dir="${project.basedir}/packages" />
+        <delete dir="${project.basedir}/packages/tmp" quiet="true" />
         <delete file="${project.basedir}/packages/${package_file}" quiet="true" />
-        <zip destfile="${project.basedir}/packages/${package_file}">
+
+        <copy todir="${project.basedir}/packages/tmp/${package_name}">
             <fileset refid="files_dist" />
+        </copy>
+
+        <zip destfile="${project.basedir}/packages/${package_file}">
+            <fileset dir="${project.basedir}/packages/tmp" defaultexcludes="true" />
         </zip>
+
+        <delete dir="${project.basedir}/packages/tmp" quiet="true" />
 
     </target>
 
     <!-- ============================================  -->
-    <!-- Target: deploy                                  -->
+    <!-- Target: package_upgrade                       -->
+    <!-- ============================================  -->
+    <target name="package_upgrade">
+        <tstamp />
+        <propertyprompt propertyName="version_from" promptText="Enter version to upgrade from" />
+        <propertyprompt propertyName="version_to" promptText="Enter version to upgrade to" />
+        <property name="package_name" value="Dolphin-Patch-v.${version_from}-to-v.${version_to}" override="yes" />
+        <property name="package_file" value="${package_name}.zip" />
+        <echo msg="Packaging ${package_file} file..." />
+
+        <mkdir dir="${project.basedir}/packages" />
+        <delete dir="${project.basedir}/packages/tmp" quiet="true" />
+        <delete file="${project.basedir}/packages/${package_file}" quiet="true" />
+
+        <copy todir="${project.basedir}/packages/tmp/${package_name}">
+            <fileset dir="${project.basedir}/upgrade" defaultexcludes="true">
+                <include name="classes/**/*" />
+                <include name="BxDolUpgradeCron.php" />
+                <include name="files/${version_from}-*/**/*" />
+                <include name="files/*-${version_to}/**/*" />
+            </fileset>
+        </copy>
+
+        <zip destfile="${project.basedir}/packages/${package_file}">
+            <fileset dir="${project.basedir}/packages/tmp" defaultexcludes="true" />
+        </zip>
+
+        <delete dir="${project.basedir}/packages/tmp" quiet="true" />
+
+    </target>
+
+    <!-- ============================================  -->
+    <!-- Target: deploy                                -->
     <!-- ============================================  -->
     <target name="deploy">
         <property name="deploy_path" value="/var/www" override="yes" />
