@@ -84,32 +84,36 @@ class BxDolFile extends BxDol implements iBxDolSingleton
         if(substr($sFilePathFrom, -1) == '*')
             $sFilePathFrom = substr($sFilePathFrom, 0, -1);
 
-        $bResult = true;
+        //--- Copy file to file/folder
         if(is_file($sFilePathFrom)) {
             if($this->_isFile($sFilePathTo)) {
                 $aFileParts = $this->_parseFile($sFilePathTo);
                 if(isset($aFileParts[0]))
-                    @mkdir($this->_rStream, $aFileParts[0]);
+                    @mkdir($aFileParts[0]);
 
-                $bResult = @copy($sFilePathFrom, $sFilePathTo);
-            } else if($this->_isDirectory($sFilePathTo)) {
+                return @copy($sFilePathFrom, $sFilePathTo);
+            }
+            else {
                 @mkdir($sFilePathTo);
 
                 $aFileParts = $this->_parseFile($sFilePathFrom);
-                if(isset($aFileParts[1]))
-                    $bResult = @copy($sFilePathFrom, $this->_validatePath($sFilePathTo) . $aFileParts[1]);
+				return @copy($sFilePathFrom, $this->_validatePath($sFilePathTo) . $aFileParts[1]);
             }
-        } else if(is_dir($sFilePathFrom) && $this->_isDirectory($sFilePathTo)) {
-            @mkdir($sFilePathTo);
-
-            $aInnerFiles = $this->_readDirectory($sFilePathFrom);
-            foreach($aInnerFiles as $sFile)
-                $bResult = $this->_copyFile($this->_validatePath($sFilePathFrom) . $sFile, $this->_validatePath($sFilePathTo) . $sFile);
-        } else {
-            $bResult = false;
         }
 
-        return $bResult;
+        //--- Copy directory to directory
+        if(is_dir($sFilePathFrom) && $this->_isDirectory($sFilePathTo)) {
+            @mkdir($sFilePathTo);
+
+            $bResult = true;
+            $aInnerFiles = $this->_readDirectory($sFilePathFrom);
+            foreach($aInnerFiles as $sFile)
+                $bResult = $bResult && $this->_copyFile($this->_validatePath($sFilePathFrom) . $sFile, $this->_validatePath($sFilePathTo) . $sFile);
+
+			return $bResult;
+        }
+
+        return false;
     }
 
     protected function _readDirectory($sFilePath)
@@ -134,8 +138,7 @@ class BxDolFile extends BxDol implements iBxDolSingleton
             return true;
 
         if($this->_isDirectory($sPath)) {
-            if(substr($sPath, -1) != '/')
-                $sPath .= '/';
+        	$sPath = $this->_validatePath($sPath);
 
             $aFiles = $this->_readDirectory($sPath);
             if(is_array($aFiles) && !empty($aFiles))
@@ -152,27 +155,34 @@ class BxDolFile extends BxDol implements iBxDolSingleton
 
     protected function _validatePath($sPath)
     {
-        if($sPath && substr($sPath, -1) != '/' && $this->_isDirectory($sPath))
-            $sPath .= '/';
-
-        return $sPath;
+        return $sPath . ($sPath && !$this->_isEndWithSlash($sPath) && $this->_isDirectory($sPath) ? '/' : '');
     }
 
     protected function _parseFile($sFilePath)
     {
-        $aParts = array();
-        preg_match("/^([a-zA-Z0-9@~_\.\\\\\/:-]+[\\\\\/])([a-zA-Z0-9~_\.-]+)$/", $sFilePath, $aParts);
-        return count($aParts) > 1 ? array_slice($aParts, 1) : false;
+        return array(dirname($sFilePath), basename($sFilePath));
     }
 
     protected function _isFile($sFilePath)
     {
-        return preg_match("/^([a-zA-Z0-9@~_\.\\\\\/:-]+)\.([a-zA-Z]){2,8}$/", $sFilePath) ? true : false;
+    	if($this->_isEndWithSlash($sFilePath))
+    		return false;
+
+    	$aInfo = pathinfo($sFilePath);
+    	if(!isset($aInfo['extension']))
+    		return false;
+
+        return true;
     }
 
     protected function _isDirectory($sFilePath)
     {
-        return preg_match("/^([a-zA-Z0-9@~_\.\\\\\/:-]+)[\\\\\/]([a-zA-Z0-9~_-]+)[\\\\\/]?$/", $sFilePath) ? true : false;
+        return !$this->_isFile($sFilePath);
+    }
+
+    protected function _isEndWithSlash($sFilePath)
+    {
+    	return in_array(substr($sFilePath, -1), array('/', '\\'));
     }
 
     protected function _getPermissions($sPath)
