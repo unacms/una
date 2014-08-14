@@ -22,34 +22,50 @@ class BxDolUpgradeCron extends BxDolCron
     {
         $oController = new BxDolUpgradeController();
         if ($oController->setMaintenanceMode(true)) {
-        
-            $aFolders = $oController->getAllUpgrades();
-            $j = count($aFolders);
+    
+            // if upgrade was successful
+            if (($sFolder = $oController->getAvailableUpgrade()) && $oController->runUpgrade($sFolder)) { 
 
-            for ($i = 0; $i < $j; ++$i) {
-                $sFolder = $oController->getAvailableUpgrade();
-                if (!$sFolder)
-                    continue;
-
-                if (!$oController->runUpgrade($sFolder))
-                    break;
-
+                // write upgrade log
                 $oController->writeLog();
 
+                // send email notification
+                bx_import('BxDolLanguages');
                 sendMailTemplateSystem('t_UpgradeSuccess', array (
                     'new_version' => bx_get_ver(true),
+                    'conclusion' => $oController->getConclusion() ? _t('_sys_upgrade_conclusion', $oController->getConclusion()) : '',
                 ));
+
+                // if next upgrade is available (in case of bulk upgrade) then schedule to run it upon next cron run
+                $sUpgradeDir = pathinfo(__FILE__, PATHINFO_DIRNAME);
+                if ($oController->getAvailableUpgrade()) {
+
+                    $oUpgrader = bx_instance('BxDolUpgrader');
+                    $oUpgrader->setTransientUpgradeCronJob($sUpgradeDir);
+
+                } elseif (0 === strpos($sUpgradeDir, BX_DIRECTORY_PATH_TMP)) {
+
+                    @unlink($sUpgradeDir);
+
+                }
             }
 
             $oController->setMaintenanceMode(false);
         }
 
-        if ($sErrorMsg = $oController->getErrorMsg()) {
+        // if something went grong during upgrade
+        if ($sErrorMsg = $oController->getErrorMsg()) { 
+
+            // write upgrade log
             $oController->writeLog();
+
+            // send email notification
             sendMailTemplateSystem('t_UpgradeFailed', array (
                 'error_msg' => $sErrorMsg,
             ));
-            setParam('sys_autoupdate_system', ''); // disable auto-update if it is failed
+
+            // disable auto-upgrade if it is failed
+            setParam('sys_autoupdate_system', '');
         }
     }
 }

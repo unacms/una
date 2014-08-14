@@ -17,7 +17,7 @@ class BxDolCronUpgradeCheck extends BxDolCron
             return;
 
         $o = bx_instance('BxDolUpgrader');
-        if (!$o->prepare()) {            
+        if (!$o->prepare()) {
             sendMailTemplateSystem('t_UpgradeFailed', array (
                 'error_msg' => $o->getError(),
             ));

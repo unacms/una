@@ -45,7 +45,7 @@ class BxDolUpgrader extends BxDol
             $aFailedFiles = $this->checkFilesChecksums ($fChangedFilesPercent);
             $bAutoupdateForceModifiedFiles = ('on' == getParam('sys_autoupdate_force_modified_files'));
             if (!empty($aFailedFiles) && !$bAutoupdateForceModifiedFiles) {
-                $this->setError(_t('_sys_upgrade_files_checksum_failed', implode(',', $aFailedFiles)));
+                $this->setError(_t('_sys_upgrade_files_checksum_failed', implode(', ', $aFailedFiles)));
                 break;
             }
             elseif ($fChangedFilesPercent > BX_FORCE_AUTOUPDATE_MAX_CHANGED_FILES_PERCENT && $bAutoupdateForceModifiedFiles) {
@@ -177,8 +177,9 @@ class BxDolUpgrader extends BxDol
         return file_exists($sCheckFilePath) && file_exists($sVersionFilePath) && file_exists($sUnpackedPath . 'BxDolUpgradeCron.php');
     }
 
-    protected function setTransientUpgradeCronJob ($sUnpackedPath)
+    public function setTransientUpgradeCronJob ($sUnpackedPath)
     {
+        $sUnpackedPath = rtrim($sUnpackedPath, '/') . '/';
         $oDb = BxDolDb::getInstance();
         $sQuery = $oDb->prepare("INSERT INTO `sys_cron_jobs` SET `name` = 'sys_perform_upgrade', `time` = 'transient', `class` = 'BxDolUpgradeCron', `file` = ?", bx_ltrim_str($sUnpackedPath, BX_DIRECTORY_PATH_ROOT) . 'BxDolUpgradeCron.php');
         return $oDb->query($sQuery);
