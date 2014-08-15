@@ -86,19 +86,31 @@ class BxDolCronPruning extends BxDolCron
         $iNumDel = 0;
 
         foreach ($aDirsToClean as $sDir) {
+
             if (!($h = opendir($sDir)))
                 continue;
 
             while ($sFile = readdir($h)) {
-                $diff = time() - filectime($sDir . $sFile);
-                if ($diff > $iTmpFileLife && '.' != $sFile && '..' != $sFile && '.htaccess' !== $sFile) {
-                    @unlink ($sDir . $sFile);
-                    ++$iNumDel;
-                }
-                ++$iNumTmp;
-            }
-            closedir($h);
 
+                if ('.' == $sFile || '..' == $sFile || '.' == $sFile[0])
+                    continue;
+
+                ++$iNumTmp;
+
+                $iDiff = time() - filemtime($sDir . $sFile);
+
+                if ($iDiff < $iTmpFileLife)
+                    continue;
+
+                if (is_file($sDir . $sFile))
+                    @unlink ($sDir . $sFile);
+                else
+                    @bx_rrmdir($sDir . $sFile);
+
+                ++$iNumDel;
+            }
+
+            closedir($h);
         }
 
         echo _t('_sys_pruning_files', $iNumTmp, $iNumDel);
