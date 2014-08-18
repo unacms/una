@@ -232,28 +232,45 @@ class BxDolStudioStore extends BxTemplStudioPage
     protected function loadPurchases()
     {
         bx_import('BxDolStudioOAuth');
-        return BxDolStudioOAuth::getInstance()->loadItems(array('dol_type' => 'purchased_products'));
+        $aProducts = BxDolStudioOAuth::getInstance()->loadItems(array('dol_type' => 'purchased_products', 'dol_domain' => BX_DOL_URL_ROOT));
+
+        if(!empty($aProducts) && is_array($aProducts))
+	        foreach ($aProducts as $aProduct)
+	        	$this->oDb->updateModule(array('hash' => $aProduct['hash']), array('name' => $aProduct['name']));
+
+        return $aProducts;
     }
 
-    protected function loadUpdates()
+    protected function loadUpdates($bAuthorizedLoading = false)
     {
         bx_import('BxDolModuleQuery');
         $oModules = BxDolModuleQuery::getInstance();
         $aModules = $oModules->getModules();
 
-        $aParams = array();
+        $aProducts = array();
         foreach($aModules as $aModule) {
-            if(!isset($aModule['name']) || empty($aModule['name']))
+            if(empty($aModule['name']) || empty($aModule['hash']))
                 continue;
 
-            $aParams[] = array(
+            $aProducts[] = array(
                 'name' => $aModule['name'],
                 'version' => $aModule['version'],
+            	'hash' => $aModule['hash'],
             );
         }
+        $sProducts = base64_encode(serialize($aProducts));
 
-        bx_import('BxDolStudioOAuth');
-        return BxDolStudioOAuth::getInstance()->loadItems(array('dol_type' => 'available_updates', 'dol_products' => base64_encode(serialize($aParams))));
+        if($bAuthorizedLoading) {
+	        bx_import('BxDolStudioOAuth');
+	        return BxDolStudioOAuth::getInstance()->loadItems(array('dol_type' => 'available_updates', 'dol_products' => $sProducts));
+        }
+
+		bx_import('BxDolStudioJson');
+		return BxDolStudioJson::getInstance()->load(BX_DOL_UNITY_URL_MARKET . 'json_browse_updates', array(
+			'products' => $sProducts,
+			'domain' => BX_DOL_URL_ROOT,
+			'user' => (int)$this->oDb->getParam('sys_oauth_user') 
+		));
     }
 
     protected function loadCheckout()

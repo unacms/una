@@ -38,8 +38,7 @@ class BxDolStudioJson extends BxDol implements iBxDolSingleton
         if(empty($sContent))
             return false;
 
-        //--- Uncomment to debug
-        //echo $sContent; exit;
+        //echo $sContent; exit;		//--- Uncomment to debug
         $mixedResult = json_decode($sContent, true);
         if(is_null($mixedResult))
             return false;
