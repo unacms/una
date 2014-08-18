@@ -15,6 +15,15 @@ class BxDolStudioModulesQuery extends BxDolModuleQuery
     {
         parent::__construct();
     }
+
+	public function updateModule($aParamsSet, $aParamsWhere)
+    {
+        if(empty($aParamsSet) || empty($aParamsWhere))
+            return false;
+
+        $sSql = "UPDATE `sys_modules` SET " . $this->arrayToSQL($aParamsSet) . " WHERE " . $this->arrayToSQL($aParamsWhere, " AND ");
+        return $this->query($sSql);
+    }
 }
 
 /** @} */

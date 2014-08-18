@@ -216,6 +216,7 @@ SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryId, 'sys_install_time', '', '0', 'digit', '', '', '', 3),
+(@iCategoryId, 'sys_oauth_user', '', '0', 'digit', '', '', '', 4),
 
 (@iCategoryId, 'sys_site_logo', '', '0', 'digit', '', '', '', 20),
 (@iCategoryId, 'sys_site_logo_alt', '_adm_dsg_txt_alt_text', '0', 'text', '', '', '', 21),
@@ -748,6 +749,7 @@ CREATE TABLE `sys_modules` (
   `date` int(11) unsigned NOT NULL default '0',
   `enabled` tinyint(1) NOT NULL default '0',
   `pending_uninstall` tinyint(4) NOT NULL,
+  `hash` varchar(32) NOT NULL default '',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `path` (`path`),

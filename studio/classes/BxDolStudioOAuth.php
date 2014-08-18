@@ -144,10 +144,13 @@ class BxDolStudioOAuth extends BxDol implements iBxDolSingleton
                 if($this->isServerError($aAccessToken))
                     return $this->processServerError($aAccessToken);
 
+				$iUser = (int)bx_get('oauth_user');
+				setParam('sys_oauth_user', $iUser);
+
                 $this->oSession->setValue('sys_oauth_token', $aAccessToken['oauth_token']);
                 $this->oSession->setValue('sys_oauth_secret', $aAccessToken['oauth_token_secret']);
                 $this->oSession->setValue('sys_oauth_authorized', 1);
-                $this->oSession->setValue('sys_oauth_authorized_user', (int)bx_get('oauth_user'));
+                $this->oSession->setValue('sys_oauth_authorized_user', $iUser);
 
                 return true;
             }
@@ -169,8 +172,8 @@ class BxDolStudioOAuth extends BxDol implements iBxDolSingleton
             $oConsumer->setToken($this->oSession->getValue('sys_oauth_token'), $this->oSession->getValue('sys_oauth_secret'));
             $oConsumer->fetch(BX_DOL_OAUTH_URL_FETCH_DATA, $aParams, OAUTH_HTTP_METHOD_POST);
 
-            //--- Uncomment to debug
-            //echo $oConsumer->getLastResponse(); exit;
+            
+            //echo $oConsumer->getLastResponse(); exit;	//--- Uncomment to debug
             return json_decode($oConsumer->getLastResponse(), true);
         } catch(OAuthException $e) {
             return array();
