@@ -36,8 +36,7 @@ CREATE TABLE `sys_objects_editor` (
 
 
 INSERT INTO `sys_objects_editor` (`object`, `title`, `skin`, `override_class_name`, `override_class_file`) VALUES
-('sys_tinymce', 'TinyMCE', 'lightgray', 'BxTemplEditorTinyMCE', ''),
-('sys_cleditor', 'CLEditor', '', 'BxTemplEditorCLEditor', '');
+('sys_tinymce', 'TinyMCE', 'lightgray', 'BxTemplEditorTinyMCE', '');
 
 
 -- --------------------------------------------------------
