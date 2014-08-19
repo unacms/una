@@ -45,7 +45,7 @@ class BxDolUpgradeCron extends BxDolCron
 
                 } elseif (0 === strpos($sUpgradeDir, BX_DIRECTORY_PATH_TMP)) {
 
-                    @unlink($sUpgradeDir);
+                    @bx_rrmdir($sUpgradeDir);
 
                 }
             }

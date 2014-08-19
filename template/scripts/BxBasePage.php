@@ -195,7 +195,7 @@ class BxBasePage extends BxDolPage
      */
     protected function _getBlockRaw ($aBlock)
     {
-        return $this->_replaceMarkers($aBlock['content']);
+        return '<div class="bx-page-raw-container">' . $this->_replaceMarkers($aBlock['content']) . '</div>';
     }
 
     /**
@@ -204,7 +204,7 @@ class BxBasePage extends BxDolPage
      */
     protected function _getBlockHtml ($aBlock)
     {
-        return $this->_getBlockRaw ($aBlock);
+        return '<div class="bx-page-html-container">' . $this->_replaceMarkers($aBlock['content']) . '</div>';
     }
 
     /**
@@ -213,7 +213,7 @@ class BxBasePage extends BxDolPage
      */
     protected function _getBlockLang ($aBlock)
     {
-        return $this->_replaceMarkers(_t(trim($aBlock['content'])));
+        return '<div class="bx-page-lang-container">' . $this->_replaceMarkers(_t(trim($aBlock['content']))) . '</div>';
     }
 
     /**

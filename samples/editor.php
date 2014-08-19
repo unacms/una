@@ -49,7 +49,7 @@ function PageCompMainCode()
 
     echo '<hr class="bx-def-hr" />';
 
-    $aEditors = array('sys_cleditor', 'sys_tinymce');
+    $aEditors = array('sys_tinymce');
     $aViewModes = array(BX_EDITOR_MINI => 'Mini', BX_EDITOR_STANDARD => 'Standard', BX_EDITOR_FULL => 'Full');
     foreach ($aViewModes as $iViewMode => $sViewModeHeader) {
         echo "<h1>$sViewModeHeader</h1>";

@@ -3,8 +3,14 @@
     margin:0 auto;
 }
 
-.bx-page-image-container img {
-    width:100%;
+
+.bx-page-image-container img,
+.bx-page-html-container img {
+    max-width:100%;
+    height:auto;
+}
+.bx-page-html-container {
+    overflow:hidden;
 }
 
 /* --------------- toolbar */
