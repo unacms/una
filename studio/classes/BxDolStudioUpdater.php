@@ -59,9 +59,18 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
         //--- Check hash ---//
         $aFiles = array();
         $this->hashFiles(BX_DIRECTORY_PATH_ROOT . 'modules/' . $this->_aConfig['module_dir'], $aFiles);
-        if (!empty($this->hashCheck($aFiles, $aModuleInfo['id'], true))
-            return array_merge($aResult, array(
+
+        list($aFilesChanged, $fChangedPercent) = $this->hashCheck($aFiles, $aModuleInfo['id']);
+        $bAutoupdateForceModifiedFiles = getParam('sys_autoupdate_force_modified_files') == 'on';
+
+    	if(!empty($aFilesChanged) && !$bAutoupdateForceModifiedFiles) 
+    		return array_merge($aResult, array(
                 'message' => $this->_displayResult('check_module_hash', false, '_adm_err_modules_module_was_modified'),
+                'result' => false
+            ));
+		else if($fChangedPercent > BX_FORCE_AUTOUPDATE_MAX_CHANGED_FILES_PERCENT && $bAutoupdateForceModifiedFiles) 
+			return array_merge($aResult, array(
+                'message' => $this->_displayResult('check_module_hash', false, _t('_sys_upgrade_files_checksum_failed_too_many', round($fChangedPercent * 100))),
                 'result' => false
             ));
 
@@ -109,11 +118,10 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
         $aLanguages = $oLanguages->getLanguages();
 
         //--- Process languages' key=>value pears ---//
-        $sModuleConfig = $this->_sHomePath . 'install/config.php';
-        if(!file_exists($sModuleConfig))
+        $aConfig = self::getModuleConfig($this->_sHomePath . 'install/config.php');
+        if(empty($aConfig) || !is_array($aConfig))
             return BX_DOL_STUDIO_INSTALLER_FAILED;
 
-        include($sModuleConfig);
         $iCategoryId = $oLanguages->getLanguageCategory($aConfig['language_category']);
 
         foreach($aLanguages as $sName => $sTitle)

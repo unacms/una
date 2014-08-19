@@ -8,8 +8,8 @@
  */
 
 bx_import('BxTemplStudioPage');
-bx_import('BxDolStudioOAuth');
 bx_import('BxDolStudioStoreQuery');
+bx_import('BxDolStudioInstallerUtils');
 
 define('BX_DOL_STUDIO_STR_TYPE_DEFAULT', 'downloaded');
 
@@ -21,6 +21,7 @@ class BxDolStudioStore extends BxTemplStudioPage
     protected $iClient;
 
     protected $aAlias;
+    protected $bAuthAccessUpdates;
 
     function __construct($sPage = "")
     {
@@ -35,11 +36,13 @@ class BxDolStudioStore extends BxTemplStudioPage
             ),
             'category' => array()
         );
+        $this->bAuthAccessUpdates = false;
 
         $this->sPage = BX_DOL_STUDIO_STR_TYPE_DEFAULT;
         if(is_string($sPage) && !empty($sPage))
             $this->sPage = $sPage;
 
+		bx_import('BxDolStudioOAuth');
         $this->iClient = BxDolStudioOAuth::getAuthorizedClient();
 
         //--- Check actions ---//
@@ -58,13 +61,18 @@ class BxDolStudioStore extends BxTemplStudioPage
                     break;
 
                 case 'get-file':
-                    $iId = (int)bx_get('str_id');
-                    $aResult = $this->getFile($iId);
+                    $iFileId = (int)bx_get('str_id');
+                    $aResult = $this->getFile($iFileId);
                     break;
 
                 case 'get-product':
                     $iId = (int)bx_get('str_id');
                     $aResult = $this->getProduct($iId);
+                    break;
+
+                case 'get-update':
+                    $sModuleName = bx_process_input(bx_get('str_id'));
+                    $aResult = $this->getUpdate($sModuleName);
                     break;
 
                 case 'get-products-by-type':
@@ -241,36 +249,10 @@ class BxDolStudioStore extends BxTemplStudioPage
         return $aProducts;
     }
 
-    protected function loadUpdates($bAuthorizedLoading = false)
+    protected function loadUpdates()
     {
-        bx_import('BxDolModuleQuery');
-        $oModules = BxDolModuleQuery::getInstance();
-        $aModules = $oModules->getModules();
-
-        $aProducts = array();
-        foreach($aModules as $aModule) {
-            if(empty($aModule['name']) || empty($aModule['hash']))
-                continue;
-
-            $aProducts[] = array(
-                'name' => $aModule['name'],
-                'version' => $aModule['version'],
-            	'hash' => $aModule['hash'],
-            );
-        }
-        $sProducts = base64_encode(serialize($aProducts));
-
-        if($bAuthorizedLoading) {
-	        bx_import('BxDolStudioOAuth');
-	        return BxDolStudioOAuth::getInstance()->loadItems(array('dol_type' => 'available_updates', 'dol_products' => $sProducts));
-        }
-
-		bx_import('BxDolStudioJson');
-		return BxDolStudioJson::getInstance()->load(BX_DOL_UNITY_URL_MARKET . 'json_browse_updates', array(
-			'products' => $sProducts,
-			'domain' => BX_DOL_URL_ROOT,
-			'user' => (int)$this->oDb->getParam('sys_oauth_user') 
-		));
+    	bx_import('BxDolStudioInstallerUtils');
+        return BxDolStudioInstallerUtils::getInstance()->checkUpdates($this->bAuthAccessUpdates);
     }
 
     protected function loadCheckout()
@@ -307,8 +289,8 @@ class BxDolStudioStore extends BxTemplStudioPage
         $oInstallerUtils = BxDolStudioInstallerUtils::getInstance();
 
         return array(
-            'modules' => $oInstallerUtils->loadModules(),
-            'updates' => $oInstallerUtils->loadUpdates()
+            'modules' => $oInstallerUtils->getModules(),
+            'updates' => $oInstallerUtils->getUpdates()
         );
     }
 
@@ -329,65 +311,22 @@ class BxDolStudioStore extends BxTemplStudioPage
         return BxDolStudioOAuth::getInstance()->loadItems(array('dol_type' => 'product_files', 'dol_product_id' => $iId, 'dol_file_type' => $sType));
     }
 
-    protected function loadFile($iId)
+    /*
+     * Load package (module, update) using OAuth authorization.
+     */
+    protected function loadFile($iFileId)
     {
-        bx_import('BxDolStudioOAuth');
-        $aItem = BxDolStudioOAuth::getInstance()->loadItems(array('dol_type' => 'product_file', 'dol_file_id' => $iId));
-        if(empty($aItem) || !is_array($aItem))
-            return $aItem;
+        bx_import('BxDolStudioInstallerUtils');
+        return BxDolStudioInstallerUtils::getInstance()->downloadFileAuthorized($iFileId);
+    }
 
-        //--- write ZIP archive.
-        $sFilePath = BX_DIRECTORY_PATH_TMP . $aItem['name'];
-        if (!$rHandler = fopen($sFilePath, 'w'))
-            return _t('_adm_str_err_cannot_write');
-
-        if (!fwrite($rHandler, urldecode($aItem['content'])))
-            return _t('_adm_str_err_cannot_write');
-
-        fclose($rHandler);
-
-        //--- Unarchive package.
-        if(!class_exists('ZipArchive'))
-            return _t('_adm_str_err_zip_not_available');
-
-        $oZip = new ZipArchive();
-        if($oZip->open($sFilePath) !== true)
-            return _t('_adm_str_err_cannot_unzip_package');
-
-        $sPackageRootFolder = $oZip->numFiles > 0 ? $oZip->getNameIndex(0) : false;
-        if($sPackageRootFolder && file_exists(BX_DIRECTORY_PATH_TMP . $sPackageRootFolder)) // remove existing tmp folder with the same name
-            bx_rrmdir(BX_DIRECTORY_PATH_TMP . $sPackageRootFolder);
-
-        if($sPackageRootFolder && !$oZip->extractTo(BX_DIRECTORY_PATH_TMP))
-            return _t('_adm_str_err_cannot_unzip_package');
-
-        $oZip->close();
-
-        //--- Move unarchived package.
-        $sLogin = getParam('sys_ftp_login');
-        $sPassword = getParam('sys_ftp_password');
-        $sPath = getParam('sys_ftp_dir');
-        if(empty($sLogin) || empty($sPassword) || empty($sPath))
-            return _t('_adm_str_err_no_ftp_info');
-
-        bx_import('BxDolFtp');
-        $oFtp = new BxDolFtp($_SERVER['HTTP_HOST'], $sLogin, $sPassword, $sPath);
-
-        if(!$oFtp->connect())
-            return _t('_adm_str_err_cannot_connect_to_ftp');
-
-        if(!$oFtp->isDolphin())
-            return _t('_adm_str_err_destination_not_valid');
-
-        $sConfigPath = BX_DIRECTORY_PATH_TMP . $sPackageRootFolder . '/install/config.php';
-        if(!file_exists($sConfigPath))
-            return _t('_adm_str_err_wrong_package_format');
-
-        include($sConfigPath);
-        if(empty($aConfig) || empty($aConfig['home_dir']) || !$oFtp->copy(BX_DIRECTORY_PATH_TMP . $sPackageRootFolder . '/', 'modules/' . $aConfig['home_dir']))
-            return _t('_adm_str_err_ftp_copy_failed');
-
-        return true;
+    /*
+     * Load update's package publicly.
+     */
+	protected function loadUpdate($sModuleName)
+    {
+        bx_import('BxDolStudioInstallerUtils');
+        return BxDolStudioInstallerUtils::getInstance()->downloadUpdatePublic($sModuleName);
     }
 
     private function checkoutCart($sVendor)

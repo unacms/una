@@ -490,7 +490,6 @@ class BxBaseStudioStore extends BxDolStudioStore
                 'condition' => ($bFree || $bPurchased) && $bDownloadable,
                 'content' => array(
                     'js_object' => $sJsObject,
-                    'id' => $aProduct['id'],
                     'file_id' => $aProduct['file_id'],
                 )
             )
@@ -515,7 +514,6 @@ class BxBaseStudioStore extends BxDolStudioStore
         foreach($aFiles as $aFile)
             $aTmplVarsFiles[] = array(
                 'js_object' => $sJsObject,
-                'product_id' => $iId,
                 'id' => $aFile['id'],
                 'title' => $aFile['name'],
                 'version' => empty($aFile['version_to']) ? $aFile['version'] : _t('_adm_str_txt_update_from_to', $aFile['version'], $aFile['version_to']),
@@ -528,9 +526,18 @@ class BxBaseStudioStore extends BxDolStudioStore
         return array('code' => 0, 'message' => $sContent);
     }
 
-    protected function getFile($iId)
+    protected function getFile($iFileId)
     {
-        $mixedResult = $this->loadFile($iId);
+        $mixedResult = $this->loadFile($iFileId);
+        if($mixedResult !== true)
+            return array('code' => 1, 'message' => (!empty($mixedResult) ? $mixedResult : _t('_adm_str_err_download_failed')));
+
+        return array('code' => 0, 'message' => _t('_adm_str_msg_download_successfully'));
+    }
+
+	protected function getUpdate($sModuleName)
+    {
+        $mixedResult = $this->loadUpdate($sModuleName);
         if($mixedResult !== true)
             return array('code' => 1, 'message' => (!empty($mixedResult) ? $mixedResult : _t('_adm_str_err_download_failed')));
 
@@ -599,7 +606,6 @@ class BxBaseStudioStore extends BxDolStudioStore
                     'condition' => !$bShoppingCart && ($bFree || $bPurchased) && $bDownloadable,
                     'content' => array(
                         'js_object' => $sJsObject,
-                        'id' => $aItem['id'],
                         'file_id' => $aItem['file_id'],
                     )
                 ),
@@ -650,9 +656,7 @@ class BxBaseStudioStore extends BxDolStudioStore
                 'bx_if:show_download' => array(
                     'condition' => $bDownloadable,
                     'content' => array(
-                        'js_object' => $sJsObject,
-                        'id' => $aItem['id'],
-                        'file_id' => $aItem['file_id'],
+	            		'on_click' => $sJsObject . "." . ($this->bAuthAccessUpdates ? "getFile(" . $aItem['file_id'] . ", this)" : "getUpdate('" . $aItem['name'] . "', this)")
                     )
                 )
             ));

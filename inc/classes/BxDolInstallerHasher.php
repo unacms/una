@@ -79,9 +79,7 @@ class BxDolInstallerHasher extends BxDolInstallerUtils
     public function checkSystemFilesHash (&$fChangedFilesPercent) 
     {
         $aFiles = $this->getSystemFilesHash ();
-        $aFilesChanged = $this->hashCheck($aFiles, BX_SYSTEM_MODULE_ID);
-        if (null !== $fChangedFilesPercent && 0 != count($aFiles))
-            $fChangedFilesPercent = count($aFilesChanged) / count($aFiles);
+        list($aFilesChanged, $fChangedFilesPercent) = $this->hashCheck($aFiles, BX_SYSTEM_MODULE_ID);
         return $aFilesChanged;
     }
 }

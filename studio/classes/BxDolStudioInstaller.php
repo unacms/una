@@ -488,8 +488,8 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
     function _displayResult($sAction, $bResult, $sResult = '')
     {
         $sMessage = $this->_aActions[$sAction]['title'] . ' ';
-        if(!empty($sResult) && substr($sResult, 0, 1) == '_')
-            $sResult = _t($sResult) . '<br />';
+        if(!empty($sResult))
+            $sResult = (substr($sResult, 0, 1) == '_' ? _t($sResult) : $sResult) . '<br />';
 
         if(!$bResult)
             return $sMessage . '<span style="color:red;">' . $sResult . '</span>';

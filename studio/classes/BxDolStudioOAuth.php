@@ -7,8 +7,7 @@
  * @{
  */
 
-define('BX_DOL_UNITY_URL_ROOT', 'http://www.boonex.com/');
-define('BX_DOL_UNITY_URL_MARKET', BX_DOL_UNITY_URL_ROOT . 'market/');
+bx_import('BxDolStudioInstallerUtils');
 
 define('BX_DOL_OAUTH_URL_REQUEST_TOKEN', BX_DOL_UNITY_URL_ROOT . 'scripts_public/oauth_request_token.php5');
 define('BX_DOL_OAUTH_URL_AUTHORIZE', BX_DOL_UNITY_URL_ROOT . 'scripts_public/oauth_authorize.php5');

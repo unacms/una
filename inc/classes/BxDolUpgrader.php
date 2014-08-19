@@ -7,8 +7,6 @@
  * @{
  */
 
-define('BX_FORCE_AUTOUPDATE_MAX_CHANGED_FILES_PERCENT', 0.05);
-
 class BxDolUpgrader extends BxDol
 {
     protected $_sUrlVersionCheck = 'http://rss.boonex.com/u/';

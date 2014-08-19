@@ -23,7 +23,7 @@
             	<input class="bx-btn bx-btn-small bx-std-pc-purchase" type="button" value="<bx_text:_adm_btn_purchase_submit />" onclick="javascript:__js_object__.addToCart('__vendor__', __id__, this)" />
             </bx_if:show_purchase>
         	<bx_if:show_download>
-            	<input class="bx-btn bx-btn-small bx-std-pc-download" type="button" value="<bx_text:_adm_btn_download_submit />" onclick="javascript:__js_object__.getFile(__id__, '__file_id__', this)" />
+            	<input class="bx-btn bx-btn-small bx-std-pc-download" type="button" value="<bx_text:_adm_btn_download_submit />" onclick="javascript:__js_object__.getFile(__file_id__, this)" />
             </bx_if:show_download>
             <bx_if:show_delete>
             	<input class="bx-btn bx-btn-small bx-std-pc-delete" type="button" value="<bx_text:_adm_btn_delete_submit />" onclick="javascript:__js_object__.deleteFromCart('__vendor__', __id__, this)" />

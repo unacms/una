@@ -126,7 +126,15 @@ BxDolStudioStore.prototype.checkoutCart = function(sVendor, oButton) {
 	);
 };
 
-BxDolStudioStore.prototype.getFile = function(iProductId, iFileId, oButton) {
+BxDolStudioStore.prototype.getFile = function(iFileId, oButton) {
+	this._getFile('get-file', iFileId, oButton);
+};
+
+BxDolStudioStore.prototype.getUpdate = function(sModuleName, oButton) {
+	this._getFile('get-update', sModuleName, oButton);
+};
+
+BxDolStudioStore.prototype._getFile = function(sAction, mixedId, oButton) {
 	var oDate = new Date();
 	var $this = this;
 	bx_loading(this.sIdPageContent, true);
@@ -134,8 +142,8 @@ BxDolStudioStore.prototype.getFile = function(iProductId, iFileId, oButton) {
 	$.get(
 		this.sActionsUrl,
 		{
-			str_action: 'get-file',
-			str_id: iFileId,
+			str_action: sAction,
+			str_id: mixedId,
 			_t:oDate.getTime()
 		},
 		function(oData) {

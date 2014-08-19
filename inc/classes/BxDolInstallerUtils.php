@@ -6,8 +6,9 @@
  * @defgroup    DolphinCore Dolphin Core
  * @{
  */
-
 bx_import('BxDolIO');
+
+define('BX_FORCE_AUTOUPDATE_MAX_CHANGED_FILES_PERCENT', 0.05);
 
 class BxDolInstallerUtils extends BxDolIO
 {
@@ -154,23 +155,23 @@ class BxDolInstallerUtils extends BxDolIO
      * @param $iModuleId module id
      * @return empty array on success, or array of files which checksum was changed 
      */
-    public function hashCheck($aFiles, $iModuleId, $bBreakOnFirstError = false)
+    public function hashCheck($aFiles, $iModuleId)
     {
         $oDb = bx_instance('BxDolStudioInstallerQuery');
 
         $aFilesOrig = $oDb->getModuleTrackFiles($iModuleId);
-        $aFailedFailes = array();
-        foreach ($aFiles as $aFile) {
-            if (!isset($aFilesOrig[$aFile['file']]) || $aFilesOrig[$aFile['file']]['hash'] != $aFile['hash']) {
-                $aFailedFailes[] = $aFile['file'];
-                if ($bBreakOnFirstError)
-                    return $aFailedFailes;
-            }
-        }
+        $aFailesChanged = array();
+        foreach ($aFiles as $aFile)
+            if(!isset($aFilesOrig[$aFile['file']]) || $aFilesOrig[$aFile['file']]['hash'] != $aFile['hash'])
+                $aFailesChanged[] = $aFile['file'];
 
-        return $aFailedFailes;
+		$fChangedPercent = 0;
+        if(count($aFilesOrig) != 0)
+            $fChangedPercent = count($aFailesChanged) / count($aFilesOrig);
+
+        return array($aFailesChanged, $fChangedPercent);
     }
-
+    
     protected function hashInfo($sPath)
     {
         return array(
