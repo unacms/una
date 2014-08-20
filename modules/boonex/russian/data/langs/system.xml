@@ -2388,7 +2388,6 @@ Without doing that you won't be submitted to our database.</p>
 	<string name="_adm_msg_modules_success_disable"><![CDATA[The package was disabled successfully]]></string>
 	<string name="_adm_err_modules_wrong_package_format"><![CDATA[Wrong package format]]></string>
 	<string name="_adm_err_modules_cannot_unzip_package"><![CDATA[Cannot unarchive the package]]></string>
-	<string name="_adm_err_modules_cannot_connect_to_ftp"><![CDATA[Cannot connect to FTP server]]></string>
 	<string name="_adm_err_modules_cannot_upload_package"><![CDATA[Cannot upload the package]]></string>
 	<string name="_adm_err_modules_cannot_remove_package"><![CDATA[Cannot remove package.]]></string>
 	<string name="_adm_err_modules_process_action_failed"><![CDATA[An error occured. Contact with module's vendor]]></string>

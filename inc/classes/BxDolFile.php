@@ -11,7 +11,6 @@ class BxDolFile extends BxDol implements iBxDolSingleton
 {
     protected $_sPathFrom;
     protected $_sPathTo;
-    protected $_bForceOverwrite = false;
 
     protected function __construct()
     {
@@ -43,8 +42,12 @@ class BxDolFile extends BxDol implements iBxDolSingleton
 
     function copy($sFilePathFrom, $sFilePathTo)
     {
-        $sFilePathFrom = $this->_sPathFrom . $sFilePathFrom;
-        $sFilePathTo = $this->_sPathTo . $sFilePathTo;
+    	if(substr($sFilePathFrom, 0, strlen($this->_sPathFrom)) != $this->_sPathFrom)
+        	$sFilePathFrom = $this->_sPathFrom . $sFilePathFrom;
+
+        if(substr($sFilePathTo, 0, strlen($this->_sPathTo)) != $this->_sPathTo)
+        	$sFilePathTo = $this->_sPathTo . $sFilePathTo;
+
         return $this->_copyFile($sFilePathFrom, $sFilePathTo);
     }
 
@@ -66,21 +69,8 @@ class BxDolFile extends BxDol implements iBxDolSingleton
         return $this->_setPermissions($sPath, $sMode);
     }
 
-    function setForceOverwrite($b)
-    {
-        $this->_bForceOverwrite = $b;
-    }
-
-    function getForceOverwrite()
-    {
-        return $this->_bForceOverwrite;
-    }
-
     protected function _copyFile($sFilePathFrom, $sFilePathTo)
     {
-        if(!$this->getForceOverwrite() && file_exists($sFilePathTo))
-            return true;
-
         if(substr($sFilePathFrom, -1) == '*')
             $sFilePathFrom = substr($sFilePathFrom, 0, -1);
 
@@ -89,12 +79,12 @@ class BxDolFile extends BxDol implements iBxDolSingleton
             if($this->_isFile($sFilePathTo)) {
                 $aFileParts = $this->_parseFile($sFilePathTo);
                 if(isset($aFileParts[0]))
-                    @mkdir($aFileParts[0]);
+                    $this->_mkDirR($aFileParts[0]);
 
                 return @copy($sFilePathFrom, $sFilePathTo);
             }
             else {
-                @mkdir($sFilePathTo);
+                $this->_mkDirR($sFilePathTo);
 
                 $aFileParts = $this->_parseFile($sFilePathFrom);
 				return @copy($sFilePathFrom, $this->_validatePath($sFilePathTo) . $aFileParts[1]);
@@ -102,8 +92,8 @@ class BxDolFile extends BxDol implements iBxDolSingleton
         }
 
         //--- Copy directory to directory
-        if(is_dir($sFilePathFrom) && $this->_isDirectory($sFilePathTo)) {
-            @mkdir($sFilePathTo);
+        if(is_dir($sFilePathFrom) && $this->_isDirectory($sFilePathTo)) {      	
+            $this->_mkDirR($sFilePathTo);
 
             $bResult = true;
             $aInnerFiles = $this->_readDirectory($sFilePathFrom);
@@ -201,6 +191,40 @@ class BxDolFile extends BxDol implements iBxDolSingleton
         $aConvert = array('writable' => 0666, 'executable' => 0777);
 
         return chmod($sPath, $aConvert[$sMode]);
+    }
+
+	protected function _mkDirR($sPath)
+    {
+		$sPathFull = '';
+        $sPathCurrent = getcwd();
+
+        $aParts = explode('/', $sPath);
+    	if($sPath[0] == '/') {
+            $sPathFull = '/';
+            @chdir($sPathFull);
+        }
+
+        foreach($aParts as $sPart) {
+            if(!$sPart)
+				continue;
+
+            $sPathFull .= $sPart;
+            if($sPart == '..')
+                @chdir($sPart);
+            else if(!@chdir($sPart)) {
+                if(!@mkdir($sPart)) {
+                    @chdir($sPathCurrent);
+                    return false;
+                }
+
+                @chdir($sPart);
+            }
+
+            $sPathFull .= '/';
+        }
+
+        @chdir($sPathCurrent);
+        return true;
     }
 }
 

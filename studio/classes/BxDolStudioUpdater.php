@@ -101,12 +101,11 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
         if(!file_exists($sPath))
             return BX_DOL_STUDIO_INSTALLER_FAILED;
 
-        bx_import('BxDolFtp');
-        $oFtp = new BxDolFtp($_SERVER['HTTP_HOST'], getParam('sys_ftp_login'), getParam('sys_ftp_password'), getParam('sys_ftp_dir'));
-        if($oFtp->connect() == false)
-            return BX_DOL_STUDIO_INSTALLER_FAILED;
+		$oFile = $this->_getFileManager();
+		if(empty($oFile))
+			return BX_DOL_STUDIO_INSTALLER_FAILED;
 
-        return $oFtp->copy($sPath . '*', 'modules/' . $this->_aConfig['module_dir']) ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
+        return $oFile->copy($sPath . '*', 'modules/' . $this->_aConfig['module_dir']) ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
 
     public function actionUpdateLanguages($bInstall = true)

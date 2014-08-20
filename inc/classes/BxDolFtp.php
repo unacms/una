@@ -14,7 +14,6 @@ class BxDolFtp extends BxDolFile
     protected $_sHost;
     protected $_sLogin;
     protected $_sPassword;
-    protected $_sPathTo;
     protected $_rStream;
 
     function __construct($sHost, $sLogin, $sPassword, $sPath = '/')
@@ -23,21 +22,20 @@ class BxDolFtp extends BxDolFile
         $this->_sHost = $sHost;
         $this->_sLogin = $sLogin;
         $this->_sPassword = $sPassword;
+
+        $this->_sPathFrom = '';
         $this->_sPathTo = $sPath . ('/' == substr($sPath, -1) ? '' : '/');
     }
+
     function connect()
     {
         $this->_rStream = ftp_connect($this->_sHost);
         return @ftp_login($this->_rStream, $this->_sLogin, $this->_sPassword);
     }
+
     function isDolphin()
     {
         return @ftp_size($this->_rStream, $this->_sPathTo . 'inc/header.inc.php') > 0;
-    }
-    function copy($sFilePathFrom, $sFilePathTo)
-    {
-        $sFilePathTo = $this->_sPathTo . $sFilePathTo;
-        return $this->_copyFile($sFilePathFrom, $sFilePathTo);
     }
 
     protected function _copyFile($sFilePathFrom, $sFilePathTo)
@@ -50,17 +48,18 @@ class BxDolFtp extends BxDolFile
             if($this->_isFile($sFilePathTo)) {
                 $aFileParts = $this->_parseFile($sFilePathTo);
                 if(isset($aFileParts[0]))
-                    $this->_ftpMkDirR($aFileParts[0]);
+                    $this->_mkDirR($aFileParts[0]);
 
                 $bResult = @ftp_put($this->_rStream, $sFilePathTo, $sFilePathFrom, FTP_BINARY);
             } else if($this->_isDirectory($sFilePathTo)) {
-                $this->_ftpMkDirR($sFilePathTo);
+                $this->_mkDirR($sFilePathTo);
+
                 $aFileParts = $this->_parseFile($sFilePathFrom);
                 if(isset($aFileParts[1]))
                     $bResult = @ftp_put($this->_rStream, $this->_validatePath($sFilePathTo) . $aFileParts[1], $sFilePathFrom, FTP_BINARY);
             }
         } else if(is_dir($sFilePathFrom) && $this->_isDirectory($sFilePathTo)) {
-            $this->_ftpMkDirR($sFilePathTo);
+            $this->_mkDirR($sFilePathTo);
 
             $aInnerFiles = $this->_readDirectory($sFilePathFrom);
             foreach($aInnerFiles as $sFile)
@@ -116,7 +115,7 @@ class BxDolFtp extends BxDolFile
 
         return true;
     }
-    protected function _ftpMkDirR($sPath)
+    protected function _mkDirR($sPath)
     {
         $sPwd = ftp_pwd ($this->_rStream);
         $aParts = explode("/", $sPath);
