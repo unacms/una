@@ -737,8 +737,6 @@ CREATE TABLE `sys_modules` (
   `title` varchar(255) NOT NULL default '',
   `vendor` varchar(64) NOT NULL default '',
   `version` varchar(32) NOT NULL default '',
-  `product_url` varchar(128) NOT NULL default '',
-  `update_url` varchar(128) NOT NULL default '',
   `help_url` varchar(128) NOT NULL default '',
   `path` varchar(255) NOT NULL default '',  
   `uri` varchar(32) NOT NULL default '',
@@ -758,8 +756,8 @@ CREATE TABLE `sys_modules` (
   UNIQUE KEY `db_prefix` (`db_prefix`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
-INSERT INTO `sys_modules` (`type`, `name`, `title`, `vendor`, `version`, `product_url`, `update_url`, `path`, `uri`, `class_prefix`, `db_prefix`, `lang_category`, `dependencies`, `date`, `enabled`) VALUES
-('module', 'system', 'System', 'BoonEx', '8', '', '', '', 'system', 'Bx', 'sys_', 'System', '', 0, 1);
+INSERT INTO `sys_modules` (`type`, `name`, `title`, `vendor`, `version`, `path`, `uri`, `class_prefix`, `db_prefix`, `lang_category`, `dependencies`, `date`, `enabled`) VALUES
+('module', 'system', 'System', 'BoonEx', '8', '', 'system', 'Bx', 'sys_', 'System', '', 0, 1);
 
 
 CREATE TABLE `sys_modules_file_tracks` (

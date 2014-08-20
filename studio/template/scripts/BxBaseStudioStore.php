@@ -333,7 +333,7 @@ class BxBaseStudioStore extends BxDolStudioStore
 
             $sModules .= $oTemplate->parseHtmlByName('str_product_v1.html', array(
                 'js_object' => $sJsObject,
-                'url' => $aModule['link_market'],
+             	'name' => $aModule['name'],
                 'bx_if:icon' => array (
 	                'condition' => $bIcon,
 	                'content' => array('icon' => $sIcon),
@@ -364,7 +364,7 @@ class BxBaseStudioStore extends BxDolStudioStore
 
             $sUpdates .= $oTemplate->parseHtmlByName('str_update_v1.html', array(
                 'js_object' => $sJsObject,
-                'url' => $aUpdate['module_link_market'],
+            	'name' => $aUpdate['module_name'],
                 'bx_if:icon' => array (
 	                'condition' => $bIcon,
 	                'content' => array('icon' => $sIcon),
@@ -421,13 +421,13 @@ class BxBaseStudioStore extends BxDolStudioStore
         ));
     }
 
-    protected function getProduct($iId)
+    protected function getProduct($sModuleName, $bDownloaded = false)
     {
         $sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
 
-        $aProduct = $this->loadProduct($iId);
-        if(!is_array($aProduct))
+        $aProduct = $this->loadProduct($sModuleName);
+        if(empty($aProduct) || !is_array($aProduct))
             return array('code' => 1, 'message' => (!empty($aProduct) ? $aProduct : _t('_adm_str_err_no_product_info')));
 
         $bFree = (int)$aProduct['is_free'] == 1;
@@ -487,7 +487,7 @@ class BxBaseStudioStore extends BxDolStudioStore
                 )
             ),
             'bx_if:show_download' => array(
-                'condition' => ($bFree || $bPurchased) && $bDownloadable,
+                'condition' => ($bFree || $bPurchased) && $bDownloadable && !$bDownloaded,
                 'content' => array(
                     'js_object' => $sJsObject,
                     'file_id' => $aProduct['file_id'],
@@ -568,6 +568,7 @@ class BxBaseStudioStore extends BxDolStudioStore
             $sResult .= $oTemplate->parseHtmlByName('str_product_v2.html', array(
                 'js_object' => $sJsObject,
                 'id' => $aItem['id'],
+            	'name' => $aItem['name'],
                 'url' => $aItem['url'],
                 'bx_if:icon' => array (
 	                'condition' => $bIcon,
@@ -641,6 +642,7 @@ class BxBaseStudioStore extends BxDolStudioStore
             $sResult .= $oTemplate->parseHtmlByName('str_update_v2.html', array(
                 'js_object' => $sJsObject,
                 'id' => $aItem['id'],
+            	'name' => $aItem['name'],
                 'url' => $aItem['url'],
             	'bx_if:icon' => array (
 	                'condition' => $bIcon,

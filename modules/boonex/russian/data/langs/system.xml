@@ -2443,8 +2443,7 @@ Without doing that you won't be submitted to our database.</p>
 	<string name="_adm_txt_modules_title_update"><![CDATA[<span class="modules-item-title">{0}</span> ({1} - {2})]]></string>
 	<string name="_adm_txt_modules_upload"><![CDATA[Add New Module]]></string>
 	<string name="_adm_txt_modules_market"><![CDATA[BoonEx Market]]></string>
-	<string name="_adm_txt_modules_updates"><![CDATA[Available Updates]]></string>
-	<string name="_adm_txt_modules_market_link"><![CDATA[Market Link]]></string>   
+	<string name="_adm_txt_modules_updates"><![CDATA[Available Updates]]></string>   
 	<string name="_adm_txt_modules_install"><![CDATA[Install]]></string>
 	<string name="_adm_txt_modules_delete"><![CDATA[Delete]]></string>
 	<string name="_adm_txt_modules_enable"><![CDATA[Enable]]></string>

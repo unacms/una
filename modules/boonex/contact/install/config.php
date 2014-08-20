@@ -19,8 +19,6 @@ $aConfig = array(
     'note' => 'Contact module.',
     'version' => '8.0.0',
     'vendor' => 'BoonEx',
-	'product_url' => 'http://www.boonex.com/products/{uri}',
-    'update_url' => 'http://www.boonex.com/products/{uri}',
 	'help_url' => 'http://feed.boonex.com/?section={module_name}',
     
 

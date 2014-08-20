@@ -288,18 +288,6 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         $bInstalled = !empty($aInstalledPathes) && in_array($sModulePath, $aInstalledPathes);
         $bEnabled = $bInstalled && !empty($aInstalledInfo) && (int)$aInstalledInfo[$sModulePath]['enabled'] == 1;
 
-        $sLinkMarket = '';
-        if(isset($aConfig['product_url'])) {
-            $aTmplVars = array(
-                'vendor' => $aConfig['vendor'],
-                'version' => $aConfig['version'],
-                'uri' => $aConfig['home_uri'],
-                'title' => $aConfig['title']
-            );
-
-            $sLinkMarket = BxDolStudioTemplate::getInstance()->parseHtmlByContent(bx_html_attribute($aConfig['product_url']), $aTmplVars, array('{', '}'));
-        }
-
         return array(
         	'type' => $aConfig['type'],
             'name' => isset($aConfig['name']) ? $aConfig['name'] : $aConfig['home_uri'],
@@ -309,7 +297,6 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
             'uri' => $aConfig['home_uri'],
             'dir' => $aConfig['home_dir'],
             'note' => isset($aConfig['note']) ? bx_process_output($aConfig['note']) : '',
-            'link_market' => $sLinkMarket,
             'installed' => $bInstalled,
             'enabled' => $bInstalled && $bEnabled
         );
@@ -333,8 +320,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
             'dir' => $aConfig['home_dir'],
         	'module_type' => $aModule['type'],
             'module_name' => $aModule['name'],
-            'module_dir' => $aModule['dir'],
-            'module_link_market' => $aModule['link_market'],
+            'module_dir' => $aModule['dir']
         );
     }
 

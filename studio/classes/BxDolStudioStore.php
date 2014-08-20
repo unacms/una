@@ -66,8 +66,9 @@ class BxDolStudioStore extends BxTemplStudioPage
                     break;
 
                 case 'get-product':
-                    $iId = (int)bx_get('str_id');
-                    $aResult = $this->getProduct($iId);
+                    $sModuleName = bx_process_input(bx_get('str_id'));
+                    $bDownloaded = (int)bx_get('str_downloaded');
+                    $aResult = $this->getProduct($sModuleName, $bDownloaded);
                     break;
 
                 case 'get-update':
@@ -294,12 +295,12 @@ class BxDolStudioStore extends BxTemplStudioPage
         );
     }
 
-    protected function loadProduct($iId)
+    protected function loadProduct($sModuleName)
     {
         bx_import('BxDolStudioJson');
         $oJson = BxDolStudioJson::getInstance();
 
-        return $oJson->load(BX_DOL_UNITY_URL_MARKET . 'json_get_product_by_id', array('value' => $iId, 'client' => $this->iClient));
+        return $oJson->load(BX_DOL_UNITY_URL_MARKET . 'json_get_product_by_name', array('value' => $sModuleName, 'client' => $this->iClient));
     }
 
     /*

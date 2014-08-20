@@ -1227,7 +1227,6 @@
 	<string name="_adm_txt_modules_install_language"><![CDATA[Install language:]]></string>
 	<string name="_adm_txt_modules_login"><![CDATA[Login]]></string>
 	<string name="_adm_txt_modules_market"><![CDATA[BoonEx Market]]></string>
-	<string name="_adm_txt_modules_market_link"><![CDATA[Market Link]]></string>
 	<string name="_adm_txt_modules_move_sources"><![CDATA[Move source files:]]></string>
 	<string name="_adm_txt_modules_operation_update"><![CDATA[Installation of update <b>{0}</b> from {1} up to {2}]]></string>
 	<string name="_adm_txt_modules_package_module"><![CDATA[Module]]></string>

@@ -43,15 +43,13 @@ class BxDolStudioInstallerQuery extends BxDolModuleQuery
 
     function insertModule(&$aConfig)
     {
-        $sProductUrl = isset($aConfig['product_url']) ? $aConfig['product_url'] : '';
-        $sUpdateUrl = isset($aConfig['update_url']) ? $aConfig['update_url'] : '';
         $sHelpUrl = isset($aConfig['help_url']) ? $aConfig['help_url'] : '';
 
         $sDependencies = '';
         if(isset($aConfig['dependencies']) && is_array($aConfig['dependencies']))
             $sDependencies = implode(',', $aConfig['dependencies']);
 
-        $sQuery = $this->prepare("INSERT IGNORE INTO `sys_modules`(`type`, `name`, `title`, `vendor`, `version`, `product_url`, `update_url`, `help_url`, `path`, `uri`, `class_prefix`, `db_prefix`, `lang_category`, `dependencies`, `date`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, UNIX_TIMESTAMP())", $aConfig['type'], $aConfig['name'], $aConfig['title'], $aConfig['vendor'], $aConfig['version'], $sProductUrl, $sUpdateUrl, $sHelpUrl, $aConfig['home_dir'], $aConfig['home_uri'], $aConfig['class_prefix'], $aConfig['db_prefix'], $aConfig['language_category'], $sDependencies);
+        $sQuery = $this->prepare("INSERT IGNORE INTO `sys_modules`(`type`, `name`, `title`, `vendor`, `version`, `help_url`, `path`, `uri`, `class_prefix`, `db_prefix`, `lang_category`, `dependencies`, `date`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, UNIX_TIMESTAMP())", $aConfig['type'], $aConfig['name'], $aConfig['title'], $aConfig['vendor'], $aConfig['version'], $sHelpUrl, $aConfig['home_dir'], $aConfig['home_uri'], $aConfig['class_prefix'], $aConfig['db_prefix'], $aConfig['language_category'], $sDependencies);
         $iResult = (int)$this->query($sQuery);
 
         return $iResult > 0 ? (int)$this->lastId() : 0;
