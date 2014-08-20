@@ -150,6 +150,57 @@
     </target>
 
     <!-- ============================================  -->
+    <!-- Target: package_all_modules                   -->
+    <!-- ============================================  -->
+    <target name="package_all_modules">
+        <property name="vendor" value="boonex" override="yes" />
+        
+        <foreach param="module" target="package_module">
+            <fileset dir="${project.basedir}/modules/${vendor}">
+                <include name="*" />
+            </fileset>
+        </foreach>
+
+    </target>
+    
+    <!-- ============================================  -->
+    <!-- Target: package_module                        -->
+    <!-- ============================================  -->
+    <target name="package_module">
+        <tstamp />
+        <property name="vendor" value="boonex" override="yes" />
+        <property name="module" value="antispam" override="yes" />
+
+        <if>
+            <available file="${project.basedir}/modules/${vendor}/${module}/install/config.php" type="file" />
+            <then>
+                <php expression="eval('include(&quot;${project.basedir}/modules/${vendor}/${module}/install/config.php&quot;); return $aConfig[&quot;version&quot;];')" returnProperty="module_version" />
+                <property name="package_name" value="${module}" />
+                <property name="package_file" value="${package_name}-v.${module_version}.zip" />
+
+                <echo msg="Packaging ${package_file} file..." />
+
+                <mkdir dir="${project.basedir}/packages" />
+                <delete dir="${project.basedir}/packages/tmp" quiet="true" />
+                <delete file="${project.basedir}/packages/${package_file}" quiet="true" />
+
+                <copy todir="${project.basedir}/packages/tmp/${package_name}">
+                    <fileset dir="${project.basedir}/modules/${vendor}/${module}" defaultexcludes="true">
+                        <exclude name="updates/" />
+                    </fileset>
+                </copy>
+
+                <zip destfile="${project.basedir}/packages/${package_file}">
+                    <fileset dir="${project.basedir}/packages/tmp" defaultexcludes="true" />
+                </zip>
+
+                <delete dir="${project.basedir}/packages/tmp" quiet="true" />
+            </then>
+        </if>
+
+    </target>
+
+    <!-- ============================================  -->
     <!-- Target: deploy                                -->
     <!-- ============================================  -->
     <target name="deploy">
