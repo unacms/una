@@ -9,6 +9,7 @@
 bx_import('BxDolIO');
 
 define('BX_FORCE_AUTOUPDATE_MAX_CHANGED_FILES_PERCENT', 0.05);
+define('BX_FORCE_USE_FTP_FILE_TRANSFER', false);
 
 class BxDolInstallerUtils extends BxDolIO
 {

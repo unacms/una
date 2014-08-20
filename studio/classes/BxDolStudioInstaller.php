@@ -32,6 +32,7 @@ define("BX_DOL_STUDIO_INSTALLER_FAILED", 1);
  * no alerts available
  *
  */
+
 class BxDolStudioInstaller extends BxDolInstallerUtils
 {
     protected $oDb;
@@ -41,6 +42,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
     protected $_sHomePath;
     protected $_sModulePath;
 
+    protected $_bUseFtp;
     protected $_aActions;
 
     protected $_bShowOnSuccess = false;
@@ -55,6 +57,8 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         $this->_sBasePath = BX_DIRECTORY_PATH_MODULES;
         $this->_sHomePath = $this->_sBasePath . $aConfig['home_dir'];
         $this->_sModulePath = $this->_sBasePath . $aConfig['home_dir'];
+
+        $this->_bUseFtp = BX_FORCE_USE_FTP_FILE_TRANSFER;
 
         $this->_aActions = array(
             'perform_install' => array(
@@ -318,19 +322,17 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 
     public function delete()
     {
-        bx_import('BxDolFtp');
-        $oFtp = new BxDolFtp($_SERVER['HTTP_HOST'], getParam('sys_ftp_login'), getParam('sys_ftp_password'), getParam('sys_ftp_dir'));
-        if(!$oFtp->connect())
-            return array(
-                'message' => _t('_adm_err_modules_cannot_connect_to_ftp'),
-                'result' => false
-            );
+    	$aError = array(
+			'message' => _t('_adm_err_modules_cannot_remove_package'),
+			'result' => false
+		);
 
-        if(!$oFtp->delete('modules/' . $this->_aConfig['home_dir']))
-            return array(
-                'message' => _t('_adm_err_modules_cannot_remove_package'),
-                'result' => false
-            );
+    	$oFile = $this->_getFileManager();
+    	if(empty($oFile))
+    		return $aError;
+
+        if(!$oFile->delete('modules/' . $this->_aConfig['home_dir']))
+            return $aError;
 
         return array(
             'message' => '', //_t('_adm_msg_modules_success_delete'),
@@ -812,11 +814,11 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
     }
 
     //--- Protected methods ---//
-    protected function _getFileManager($bUseFtp = true)
+    protected function _getFileManager()
     {
         $oFile = null;
 
-        if($bUseFtp) {
+        if($this->_bUseFtp) {
             bx_import('BxDolFtp');
             $oFile = new BxDolFtp(isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost', getParam('sys_ftp_login'), getParam('sys_ftp_password'), getParam('sys_ftp_dir'));
 
@@ -825,7 +827,8 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 
             if(!$oFile->isDolphin())
                 return null;
-        } else {
+        }
+        else {
             bx_import('BxDolFile');
             $oFile = BxDolFile::getInstance();
         }

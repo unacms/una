@@ -213,7 +213,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 		return $this->downloadFile($aItem);
     }
 
-    protected function downloadFile($aItem)
+    protected function downloadFile($aItem, $bUseFtp = BX_FORCE_USE_FTP_FILE_TRANSFER)
     {
         if(empty($aItem) || !is_array($aItem))
             return $aItem;
@@ -246,28 +246,33 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         $oZip->close();
 
         //--- Move unarchived package.
-        $sLogin = getParam('sys_ftp_login');
-        $sPassword = getParam('sys_ftp_password');
-        $sPath = getParam('sys_ftp_dir');
-        if(empty($sLogin) || empty($sPassword) || empty($sPath))
-            return _t('_adm_str_err_no_ftp_info');
+        if($bUseFtp) {
+	        $sLogin = getParam('sys_ftp_login');
+	        $sPassword = getParam('sys_ftp_password');
+	        $sPath = getParam('sys_ftp_dir');
+	        if(empty($sLogin) || empty($sPassword) || empty($sPath))
+	            return _t('_adm_str_err_no_ftp_info');
+	
+	        bx_import('BxDolFtp');
+	        $oFile = new BxDolFtp($_SERVER['HTTP_HOST'], $sLogin, $sPassword, $sPath);
+	
+	        if(!$oFile->connect())
+	            return _t('_adm_str_err_cannot_connect_to_ftp');
+	
+	        if(!$oFile->isDolphin())
+	            return _t('_adm_str_err_destination_not_valid');
+        }
+        else {
+        	bx_import('BxDolFile');
+        	$oFile = BxDolFile::getInstance();
+        }
 
-        bx_import('BxDolFtp');
-        $oFtp = new BxDolFtp($_SERVER['HTTP_HOST'], $sLogin, $sPassword, $sPath);
-
-        if(!$oFtp->connect())
-            return _t('_adm_str_err_cannot_connect_to_ftp');
-
-        if(!$oFtp->isDolphin())
-            return _t('_adm_str_err_destination_not_valid');
-
-        $sConfigPath = BX_DIRECTORY_PATH_TMP . $sPackageRootFolder . '/install/config.php';
-        if(!file_exists($sConfigPath))
+        $aConfig = self::getModuleConfig(BX_DIRECTORY_PATH_TMP . $sPackageRootFolder . 'install/config.php');
+        if(empty($aConfig) || !is_array($aConfig) || empty($aConfig['home_dir']))
             return _t('_adm_str_err_wrong_package_format');
 
-		$aConfig = self::getModuleConfig($sConfigPath);
-        if(empty($aConfig) || empty($aConfig['home_dir']) || !$oFtp->copy(BX_DIRECTORY_PATH_TMP . $sPackageRootFolder . '/', 'modules/' . $aConfig['home_dir']))
-            return _t('_adm_str_err_ftp_copy_failed');
+        if(!$oFile->copy(BX_DIRECTORY_PATH_TMP . $sPackageRootFolder, 'modules/' . $aConfig['home_dir']))
+            return _t('_adm_str_err_files_copy_failed');
 
         return true;
     }

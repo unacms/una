@@ -570,7 +570,6 @@
 	<string name="_adm_err_modules_already_uninstalled"><![CDATA[The module was already uninstalled.]]></string>
 	<string name="_adm_err_modules_cannot_add_to_cart"><![CDATA[Cannot add the product to shopping cart.]]></string>
 	<string name="_adm_err_modules_cannot_checkout_empty_vendor"><![CDATA[Cannot checkout. The vendor is unknown.]]></string>
-	<string name="_adm_err_modules_cannot_connect_to_ftp"><![CDATA[Cannot connect to FTP server]]></string>
 	<string name="_adm_err_modules_cannot_delete_from_cart"><![CDATA[Cannot delete the product(s) from shopping cart.]]></string>
 	<string name="_adm_err_modules_cannot_remove_package"><![CDATA[Cannot remove package.]]></string>
 	<string name="_adm_err_modules_module_not_found"><![CDATA[Module not found]]></string>
@@ -1167,7 +1166,7 @@
 	<string name="_adm_str_err_cannot_write"><![CDATA[Cannot save downloaded file.]]></string>
 	<string name="_adm_str_err_destination_not_valid"><![CDATA[Destination FTP folder doesn't look like a valid Dolphin root folder.]]></string>
 	<string name="_adm_str_err_download_failed"><![CDATA[Download faild. Please report.]]></string>
-	<string name="_adm_str_err_ftp_copy_failed"><![CDATA[FTP transfer failed, please check write permission for this FTP user.]]></string>
+	<string name="_adm_str_err_files_copy_failed"><![CDATA[File transfer failed, please check write permissions.]]></string>
 	<string name="_adm_str_err_no_ftp_info"><![CDATA[FTP access info was not specified. You may enter it via Settings -> General.]]></string>
 	<string name="_adm_str_err_no_product_info"><![CDATA[Cannot load product info. Try again later.]]></string>
 	<string name="_adm_str_err_wrong_package_format"><![CDATA[Wrong package format.]]></string>
