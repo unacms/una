@@ -22,10 +22,6 @@
     overflow:hidden;
 }
 
-.bx-base-text-unit-no-thumb {
-    overflow:hidden;
-}
-
 .bx-base-text-unit-summary p {
     margin:0;
 }
@@ -34,10 +30,6 @@
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
-}
-
-.bx-base-text-unit-gallery {
-    float:left;
 }
 
 .bx-base-text-unit-gallery .bx-base-text-unit-no-thumb,

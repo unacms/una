@@ -831,7 +831,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
     function getHtml($sName, $sCheckIn = BX_DOL_TEMPLATE_CHECK_IN_BOTH)
     {
         $sAbsolutePath = $this->_getAbsoluteLocation('path', $this->_sFolderHtml, $sName, $sCheckIn);
-        return !empty($sAbsolutePath) ? file_get_contents($sAbsolutePath) : false;
+        return !empty($sAbsolutePath) ? trim(file_get_contents($sAbsolutePath)) : false;
     }
 
     /**
