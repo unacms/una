@@ -17,12 +17,14 @@ class BxDolCronUpgradeModulesCheck extends BxDolCron
             return;
 
         $o = bx_instance('BxDolUpgraderModules');
-        if (!$o->prepare()) {            
+        if(!$o->prepare()) {
             sendMailTemplateSystem('t_UpgradeFailed', array (
                 'error_msg' => $o->getError(),
             ));
             setParam('sys_autoupdate_modules', ''); // disable auto-update if it is failed
         }
+        else
+        	sendMailTemplateSystem('t_UpgradeModulesSuccess');
     }
 }
 
