@@ -526,6 +526,7 @@
 	<string name="_adm_dbd_txt_htools_status"><![CDATA[{0} - <b>{1}</b>]]></string>
 	<string name="_adm_dbd_txt_installed"><![CDATA[Installed:]]></string>
 	<string name="_adm_dbd_txt_version"><![CDATA[Version:]]></string>
+	<string name="_adm_dbd_msg_upgrade_started"><![CDATA[Site will be upgraded within a minute]]></string>
 	<string name="_adm_dbd_txt_su_database"><![CDATA[Database]]></string>
 	<string name="_adm_dbd_txt_su_system"><![CDATA[System]]></string>
 	<string name="_adm_dbd_txt_su_system_media"><![CDATA[System Media]]></string>

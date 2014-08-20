@@ -67,7 +67,7 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
     	$iResult = 0;
 
     	//--- Check Version
-    	$sVersionAvailable = $this->getVersionAvailable();
+    	list($sVersionAvailable) = $this->getVersionUpgradeAvailable();
     	if($sVersionAvailable !== false)
     		$iResult += 1;
 
@@ -88,7 +88,7 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
 
 	public function serviceGetBlockVersion()
     {
-    	$sVersionAvailable = $this->getVersionAvailable();
+    	list($sVersionAvailable, $bUpgradeAvailable) = $this->getVersionUpgradeAvailable();
     	if($sVersionAvailable !== false)
     		$sVersionAvailable = _t('_adm_dbd_txt_dolphin_n_available', $sVersionAvailable);
 
@@ -100,6 +100,12 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
         		'condition' => !empty($sVersionAvailable),
         		'content' => array(
         			'version_available' => $sVersionAvailable
+        		)
+        	),
+			'bx_if:show_upgrade_available' => array(
+        		'condition' => $bUpgradeAvailable,
+        		'content' => array(
+        			'js_object' => $this->getPageJsObject()
         		)
         	)
         ));
@@ -261,11 +267,15 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
 		return array('content' => $sContent, 'menu' => $aMenu);
 	}
 
-    private function getVersionAvailable()
+    private function getVersionUpgradeAvailable()
     {
     	$oUpgrader = bx_instance('BxDolUpgrader'); 
     	$aUpdateInfo = $oUpgrader->getVersionUpdateInfo();
-    	return $oUpgrader->isNewVersionAvailable($aUpdateInfo) ? $aUpdateInfo['latest_version'] : false;
+
+    	$mixedVersion = $oUpgrader->isNewVersionAvailable($aUpdateInfo) ? $aUpdateInfo['latest_version'] : false;
+    	$bUpgrade = $oUpgrader->isUpgradeAvailable($aUpdateInfo);
+
+    	return array($mixedVersion, $bUpgrade);
     }
 }
 

@@ -62,6 +62,14 @@ class BxDolStudioDashboard extends BxTemplStudioPage
 
             		break;
 
+            	case 'perform_upgrade':
+            		$oUpgrader = bx_instance('BxDolUpgrader');
+			        if(!$oUpgrader->prepare())
+			        	$aResult = array('code' => 1, 'message' => $oUpgrader->getError());
+			        else
+			        	$aResult = array('code' => 0, 'message' => _t('_adm_dbd_msg_upgrade_started'));
+					break;
+
 				case 'clear_cache':
 					$sValue = bx_get('dbd_value');
 					if($sValue === false)

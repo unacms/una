@@ -19,12 +19,37 @@ function BxDolStudioDashboard(oOptions) {
     });
 }
 
+BxDolStudioDashboard.prototype.performUpgrade = function() {
+	var $this = this;
+	var oDate = new Date();
+	var sDivId = 'bx-dbd-version';
+
+	bx_loading(sDivId, true);
+
+	$.get(
+		this.sActionsUrl,
+		{
+			dbd_action: 'perform_upgrade',
+			_t: oDate.getTime()
+		},
+		function(oData) {
+			bx_loading(sDivId, false);
+
+			if(!oData.message)
+			    return;
+
+			$this.popup(oData.message);
+		},
+		'json'
+	);
+};
+
 BxDolStudioDashboard.prototype.getBlockContent = function(sType) {
 	var $this = this;
 	var oDate = new Date();
 	var sDivId = 'bx-dbd-' + sType;
 
-	bx_loading('bx-dbd-' + sType, true);
+	bx_loading(sDivId, true);
 
 	$.get(
 		this.sActionsUrl,
@@ -34,7 +59,7 @@ BxDolStudioDashboard.prototype.getBlockContent = function(sType) {
 			_t: oDate.getTime()
 		},
 		function(oData) {
-			bx_loading('bx-dbd-' + sType, false);
+			bx_loading(sDivId, false);
 
 			if(!oData.data)
 			    return;
@@ -47,10 +72,11 @@ BxDolStudioDashboard.prototype.getBlockContent = function(sType) {
 
 BxDolStudioDashboard.prototype.initChart = function(sType, oData) {
 	var $this = this;
+	var sDivId = 'bx-dbd-' + sType;
 
-	bx_loading('bx-dbd-' + sType, true);
+	bx_loading(sDivId, true);
 	google.load("visualization", "1", {packages:["corechart"], callback: function() {
-    	bx_loading('bx-dbd-' + sType, false);
+    	bx_loading(sDivId, false);
     	$this.showChart(sType, oData);
     }});
 };
