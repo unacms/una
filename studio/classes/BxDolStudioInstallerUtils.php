@@ -162,7 +162,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
         $aProducts = array();
         foreach($aModules as $aModule) {
-            if(empty($aModule['name']) || empty($aModule['hash']))
+            if(empty($aModule['name']))
                 continue;
 
             $aProducts[] = array(

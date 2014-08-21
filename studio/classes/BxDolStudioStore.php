@@ -243,6 +243,7 @@ class BxDolStudioStore extends BxTemplStudioPage
         bx_import('BxDolStudioOAuth');
         $aProducts = BxDolStudioOAuth::getInstance()->loadItems(array('dol_type' => 'purchased_products', 'dol_domain' => BX_DOL_URL_ROOT));
 
+        $this->oDb->updateModule(array('hash' => ''));
         if(!empty($aProducts) && is_array($aProducts))
 	        foreach ($aProducts as $aProduct)
 	        	$this->oDb->updateModule(array('hash' => $aProduct['hash']), array('name' => $aProduct['name']));
