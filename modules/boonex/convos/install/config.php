@@ -18,7 +18,7 @@ $aConfig = array(
     'name' => 'bx_convos',
     'title' => 'Conversations',
     'note' => 'Conversations module.',
-    'version' => '8.0.0',
+    'version' => '8.0.1.DEV',
     'vendor' => 'BoonEx',
 	'help_url' => 'http://feed.boonex.com/?section={module_name}',
 
