@@ -189,10 +189,11 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
 			)
 		);
 
+		bx_import('BxDolStudioToolsAudit');
+		$oAudit = new BxDolStudioToolsAudit();
+
 		$aTmplVarsItems = array();
 		if(!$bDynamic) {
-			bx_import('BxDolStudioToolsAudit');
-			$oAudit = new BxDolStudioToolsAudit();
 
 	        bx_import('BxTemplFunctions');
 	        $oFunc = BxTemplFunctions::getInstance();

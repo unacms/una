@@ -353,8 +353,8 @@ class BxDolStudioToolsAudit extends BxDol
 
         $s = '';
         $s .= $this->getBlock(_t('_sys_audit_version_dolphin'), $sDolphinVer, $this->getMsgHTML(_t('_sys_audit_version_dolphin'), $aMessage));
-        $s .= $this->getBlock(_t('_sys_audit_permissions'), '', _t('_sys_audit_msg_permissions'));
-        $s .= $this->getBlock('ffmpeg', '', _t('_sys_audit_msg_ffmpeg', `{$sDolphinPath}flash/modules/global/app/ffmpeg.exe 2>&1`));
+        //$s .= $this->getBlock(_t('_sys_audit_permissions'), '', _t('_sys_audit_msg_permissions'));
+        //$s .= $this->getBlock('ffmpeg', '', _t('_sys_audit_msg_ffmpeg', `{$sDolphinPath}flash/modules/global/app/ffmpeg.exe 2>&1`));
         $s .= $this->getBlock(_t('_sys_audit_mail_sending'), '', _t('_sys_audit_msg_mail_sending'));
         $s .= $this->getBlock(_t('_sys_audit_cron_jobs'), '', _t('_sys_audit_msg_cron_jobs', `crontab -l 2>&1`));
 
