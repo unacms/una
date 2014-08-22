@@ -137,7 +137,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
     public function perform($sDirectory, $sOperation, $aParams = array())
     {
-    	if(self::isRealOwner())
+    	if(self::isRealOwner() || in_array($sOperation, array('install', 'uninstall', 'enable', 'disable')))
     		return $this->performAction($sDirectory, $sOperation, $aParams);
 
     	bx_import('BxDolCronQuery');
