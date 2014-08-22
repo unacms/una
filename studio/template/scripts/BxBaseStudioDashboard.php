@@ -63,6 +63,31 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
     	return $oPage->getCode();
     }
 
+	public function getPageCodeVersionAvailable()
+	{
+		list($sVersionAvailable, $bUpgradeAvailable) = $this->getVersionUpgradeAvailable();
+		if(!$sVersionAvailable && !$bUpgradeAvailable)
+			return '';
+
+    	if($sVersionAvailable !== false)
+    		$sVersionAvailable = _t('_adm_dbd_txt_dolphin_n_available', $sVersionAvailable);
+
+		return BxDolStudioTemplate::getInstance()->parseHtmlByName('dbd_versions_upgrade.html', array(
+			'bx_if:show_version_available' => array(
+        		'condition' => !empty($sVersionAvailable),
+        		'content' => array(
+        			'version_available' => $sVersionAvailable
+        		)
+        	),
+			'bx_if:show_upgrade_available' => array(
+        		'condition' => $bUpgradeAvailable,
+        		'content' => array(
+        			'js_object' => $this->getPageJsObject()
+        		)
+        	)
+		));
+	}
+
     public function serviceGetWidgetNotices() {
     	$iResult = 0;
 
@@ -88,26 +113,13 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
 
 	public function serviceGetBlockVersion()
     {
-    	list($sVersionAvailable, $bUpgradeAvailable) = $this->getVersionUpgradeAvailable();
-    	if($sVersionAvailable !== false)
-    		$sVersionAvailable = _t('_adm_dbd_txt_dolphin_n_available', $sVersionAvailable);
+    	$sJsObject = $this->getPageJsObject();
 
         $sContent = BxDolStudioTemplate::getInstance()->parseHtmlByName('dbd_versions.html', array(
+        	'js_object' => $sJsObject,
             'domain' => getParam('site_title'),
             'version' => bx_get_ver(),
-            'installed' => bx_time_js(getParam('sys_install_time')),
-        	'bx_if:show_version_available' => array(
-        		'condition' => !empty($sVersionAvailable),
-        		'content' => array(
-        			'version_available' => $sVersionAvailable
-        		)
-        	),
-			'bx_if:show_upgrade_available' => array(
-        		'condition' => $bUpgradeAvailable,
-        		'content' => array(
-        			'js_object' => $this->getPageJsObject()
-        		)
-        	)
+            'installed' => bx_time_js(getParam('sys_install_time'))
         ));
 
     	return array('content' => $sContent);

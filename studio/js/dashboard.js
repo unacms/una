@@ -19,6 +19,31 @@ function BxDolStudioDashboard(oOptions) {
     });
 }
 
+BxDolStudioDashboard.prototype.checkForUpgrade = function() {
+	var $this = this;
+	var oDate = new Date();
+	var sDivId = 'bx-dbd-version';
+
+	bx_loading(sDivId, true);
+
+	$.get(
+		this.sActionsUrl,
+		{
+			dbd_action: 'check_for_upgrade',
+			_t: oDate.getTime()
+		},
+		function(oData) {
+			bx_loading(sDivId, false);
+
+			if(!oData.data)
+			    return;
+
+			$('#' + sDivId + ' .bx-dbd-version-available').html(oData.data).show();
+		},
+		'json'
+	);
+};
+
 BxDolStudioDashboard.prototype.performUpgrade = function() {
 	var $this = this;
 	var oDate = new Date();

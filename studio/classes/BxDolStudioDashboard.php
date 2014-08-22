@@ -62,6 +62,10 @@ class BxDolStudioDashboard extends BxTemplStudioPage
 
             		break;
 
+				case 'check_for_upgrade':
+					$aResult = array('code' => 0, 'data' => $this->getPageCodeVersionAvailable());
+                    break;
+
             	case 'perform_upgrade':
             		$oUpgrader = bx_instance('BxDolUpgrader');
 			        if(!$oUpgrader->prepare())

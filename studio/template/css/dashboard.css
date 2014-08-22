@@ -26,6 +26,9 @@ div.bx-dbd-vi-column {
 	float: left;
 	width: 50%;
 }
+div.bx-dbd-version-available {
+	display: none;
+}
 div.bx-dbd-version {
 	position: relative;
 	float: left;
