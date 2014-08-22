@@ -822,6 +822,7 @@
 	<string name="_adm_mod_err_cannot_process_action"><![CDATA[Cannot process action. It does not have an associated handler.]]></string>
     <string name="_adm_mod_err_only_admin_can_perform_operations_with_modules"><![CDATA[Only admin can perform operations with modules]]></string>
 	<string name="_adm_mod_err_process_operation_failed"><![CDATA[Cannot {0} module from "{1}" directory]]></string>
+	<string name="_adm_mod_msg_process_operation_scheduled"><![CDATA[Operation was scheduled and will be performed in a few minutes. Please wait.]]></string>	
 	<string name="_adm_msg_modules_success_added_to_cart"><![CDATA[The product was successfully added to shopping cart.]]></string>
 	<string name="_adm_msg_modules_success_checkouted"><![CDATA[The payment was successfully accepted and should be processed automatically in a few minutes. Then the purchased product(s) will be available in Store -> Purchases.<br />Note. If it doesn't happen for some reason, you need to contact with product's vendor and provide him with your payment's details. He'll be able to process payment manually if the payment was received.]]></string>
 	<string name="_adm_msg_modules_success_delete"><![CDATA[The package was deleted successfully]]></string>
@@ -1171,7 +1172,8 @@
 	<string name="_adm_str_err_no_product_info"><![CDATA[Cannot load product info. Try again later.]]></string>
 	<string name="_adm_str_err_wrong_package_format"><![CDATA[Wrong package format.]]></string>
 	<string name="_adm_str_err_zip_not_available"><![CDATA[ZIP library is not available.]]></string>
-	<string name="_adm_str_msg_download_successfully"><![CDATA[Module was successfully downloaded. You may install it via Store -> Downloaded.]]></string>
+	<string name="_adm_str_msg_download_scheduled"><![CDATA[Download was scheduled. In a few minutes downloaded package will be available to install via Store -> Downloaded.]]></string>
+	<string name="_adm_str_msg_download_successfully"><![CDATA[Download was successfully finished. You may install it via Store -> Downloaded.]]></string>
 	<string name="_adm_str_txt_discount_csign"><![CDATA[({0}{1} for Premium)]]></string>
 	<string name="_adm_str_txt_items_by"><![CDATA[item(s) by]]></string>
 	<string name="_adm_str_txt_price_csign"><![CDATA[{0}{1}]]></string>

@@ -89,6 +89,25 @@ class BxDolService extends BxDol
     {
         return preg_match('/^a:[\d+]:\{/', $s);
     }
+
+    /**
+     * Serialized service call array
+     */
+    public static function getSerializedService($mixedModule, $sMethod, $aParams = array(), $sClass = '')
+    {
+		$aService = array(
+			'module' => $mixedModule,
+			'method' => $sMethod,
+		);
+
+		if(!empty($aParams))
+			$aService['params'] = $aParams;
+
+		if(!empty($sClass))
+			$aService['class'] = $sClass;
+
+		return serialize($aService);
+    }
 }
 
 /** @} */

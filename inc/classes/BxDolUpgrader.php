@@ -178,9 +178,7 @@ class BxDolUpgrader extends BxDol
     public function setTransientUpgradeCronJob ($sUnpackedPath)
     {
         $sUnpackedPath = rtrim($sUnpackedPath, '/') . '/';
-        $oDb = BxDolDb::getInstance();
-        $sQuery = $oDb->prepare("INSERT INTO `sys_cron_jobs` SET `name` = 'sys_perform_upgrade', `time` = 'transient', `class` = 'BxDolUpgradeCron', `file` = ?", bx_ltrim_str($sUnpackedPath, BX_DIRECTORY_PATH_ROOT) . 'BxDolUpgradeCron.php');
-        return $oDb->query($sQuery);
+        return BxDolCronQuery::getInstance()->addTransientJobClass('sys_perform_upgrade', 'BxDolUpgradeCron', bx_ltrim_str($sUnpackedPath, BX_DIRECTORY_PATH_ROOT) . 'BxDolUpgradeCron.php');
     }
 
     public function getError()

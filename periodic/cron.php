@@ -117,14 +117,14 @@ function runJob($aJob)
         BxDolService::callSerialized($aJob['service_call']);
 }
 
-
-$oDb = BxDolDb::getInstance();
+bx_import('BxDolLanguages');
+bx_import('BxDolCronQuery');
+$oDb = BxDolCronQuery::getInstance();
 
 // run one time transient jobs
-
-$aJobsTransient = $oDb->getAllWithKey("SELECT * FROM `sys_cron_jobs` WHERE `time` = 'transient'", 'name');
+$aJobsTransient = $oDb->getTransientJobs();
 if (!empty($aJobsTransient)) {
-    $oDb->query("DELETE FROM `sys_cron_jobs` WHERE `time` = 'transient'");
+	$oDb->deleteTransientJobs();
 
     foreach ($aJobsTransient as $aRow)
         runJob($aRow);
@@ -137,10 +137,7 @@ if (bx_check_maintenance_mode()) // don't run regular cron jobs when site is in 
     exit;
 
 // run regular cron jobs
-
-bx_import('BxDolLanguages');
-
-$aJobs = $oDb->fromCache('sys_cron_jobs', 'getAll', "SELECT * FROM `sys_cron_jobs`");
+$aJobs = $oDb->getJobs();
 $aDate = getdate(time());
 foreach($aJobs as $aRow) {
     if (checkCronJob($aRow['time'], $aDate))

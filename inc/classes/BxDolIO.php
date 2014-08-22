@@ -14,6 +14,27 @@ class BxDolIO extends BxDol
         parent::__construct();
     }
 
+    public static function isRealOwner()
+    {
+    	if(defined('BX_DOL_CRON_EXECUTE'))
+    		trigger_error('Function can\'t be called under cron', E_USER_ERROR);
+
+		$sName = mktime() . rand(0, 999999999);
+		$sFilePath = BX_DIRECTORY_PATH_TMP . $sName . '.txt';
+		if(!$rHandler = fopen($sFilePath, 'w'))
+            return false;
+
+		if(!fwrite($rHandler, $sName))
+            return false;
+
+		fclose($rHandler);
+
+		$bResult = fileowner(BX_DIRECTORY_PATH_INC . 'utils.inc.php') === fileowner($sFilePath);
+		@unlink($sFilePath);
+
+		return $bResult;
+    }
+
     public static function isExecutable($sFile)
     {
         clearstatcache();

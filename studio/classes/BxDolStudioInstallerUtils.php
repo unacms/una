@@ -42,34 +42,14 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
 
-    public function perform($sDirectory, $sOperation, $aParams = array())
+    public function serviceDownloadFile($aItem, $bUseFtp)
     {
-        $sConfigFile = 'install/config.php';
-        $sInstallerFile = 'install/installer.php';
-        $sInstallerClass = $sOperation == 'update' ? 'Updater' : 'Installer';
+    	return $this->performDownload($aItem, $bUseFtp);
+    }
 
-        $aConfig = self::getModuleConfig(BX_DIRECTORY_PATH_MODULES . $sDirectory . $sConfigFile);
-
-        $sPathInstaller = BX_DIRECTORY_PATH_MODULES . $sDirectory . $sInstallerFile;
-        if(!empty($aConfig) && file_exists($sPathInstaller)) {
-            require_once($sPathInstaller);
-
-            $sClassName = $aConfig['class_prefix'] . $sInstallerClass;
-            $oInstaller = new $sClassName($aConfig);
-            $aResult = $oInstaller->$sOperation($aParams);
-
-            $aResult = array(
-                'code' => $aResult['result'] ? 0 : 1,
-                'message' => $aResult['message'],
-            );
-        } 
-        else
-            $aResult = array(
-                'code' => 2,
-                'message' => _t('_adm_mod_err_process_operation_failed', $sOperation, $sDirectory),
-            );
-
-        return $aResult;
+	public function servicePerform($sDirectory, $sOperation, $aParams)
+    {
+    	return $this->performAction($sDirectory, $sOperation, $aParams);
     }
 
     public function getModules()
@@ -155,6 +135,21 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         return $aUpdates;
     }
 
+    public function perform($sDirectory, $sOperation, $aParams = array())
+    {
+    	if(self::isRealOwner())
+    		return $this->performAction($sDirectory, $sOperation, $aParams);
+
+    	bx_import('BxDolCronQuery');
+		if(BxDolCronQuery::getInstance()->addTransientJobService('sys_perform_install', array('system', 'perform', array($sDirectory, $sOperation, $aParams), 'DolStudioInstallerUtils')))
+			return array('code' => 1, 'message' => _t('_adm_mod_msg_process_operation_scheduled'));
+
+		return array(
+			'code' => 2,
+            'message' => _t('_adm_mod_err_process_operation_failed', $sOperation, $sDirectory),
+		);
+    }
+
     public function checkUpdates($bAuthorizedAccess = false)
     {
 		bx_import('BxDolModuleQuery');
@@ -215,38 +210,95 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
     protected function downloadFile($aItem, $bUseFtp = BX_FORCE_USE_FTP_FILE_TRANSFER)
     {
+    	if(self::isRealOwner())
+    		return $this->performDownload($aItem, $bUseFtp);
+
+		bx_import('BxDolCronQuery');
+		if(BxDolCronQuery::getInstance()->addTransientJobService('sys_perform_download', array('system', 'download_file', array($aItem, $bUseFtp), 'DolStudioInstallerUtils')))
+			return _t('_adm_str_msg_download_scheduled');
+
+		return false;
+    }
+
+    protected function performDownload($aItem, $bUseFtp)
+    {
         if(empty($aItem) || !is_array($aItem))
             return $aItem;
 
         //--- write ZIP archive.
-        $sFilePath = BX_DIRECTORY_PATH_TMP . $aItem['name'];
-        if (!$rHandler = fopen($sFilePath, 'w'))
+        $sFilePath = '';
+        $mixedResult = $this->performWrite($aItem, $sFilePath);
+
+        if($mixedResult !== true)
+        	return $mixedResult;
+
+        //--- Unarchive package.
+        $sPackagePath = '';
+        $mixedResult = $this->performUnarchive($sFilePath, $sPackagePath);
+
+        @unlink($sFilePath);
+        if($mixedResult !== true)
+        	return $mixedResult;
+
+        //--- Copy unarchived package.
+        $mixedResult = $this->performCopy($sPackagePath, $bUseFtp);
+
+        @bx_rrmdir($sPackagePath);
+        if($mixedResult !== true)
+        	return $mixedResult;
+
+        return true;
+    }
+
+    protected function performWrite($aItem, &$sFilePath)
+    {
+    	$sFilePath = BX_DIRECTORY_PATH_TMP . $aItem['name'];
+
+    	if(file_exists($sFilePath))
+        	@unlink($sFilePath);
+
+        if(!$rHandler = fopen($sFilePath, 'w'))
             return _t('_adm_str_err_cannot_write');
 
-        if (!fwrite($rHandler, urldecode($aItem['content'])))
+        if(!fwrite($rHandler, urldecode($aItem['content'])))
             return _t('_adm_str_err_cannot_write');
 
         fclose($rHandler);
+        
+        return true;
+    }
 
-        //--- Unarchive package.
-        if(!class_exists('ZipArchive'))
+    protected function performUnarchive($sFilePath, &$sPackagePath)
+    {
+    	if(!class_exists('ZipArchive'))
             return _t('_adm_str_err_zip_not_available');
 
         $oZip = new ZipArchive();
         if($oZip->open($sFilePath) !== true)
             return _t('_adm_str_err_cannot_unzip_package');
 
-        $sPackageRootFolder = $oZip->numFiles > 0 ? $oZip->getNameIndex(0) : false;
-        if($sPackageRootFolder && file_exists(BX_DIRECTORY_PATH_TMP . $sPackageRootFolder)) // remove existing tmp folder with the same name
-            bx_rrmdir(BX_DIRECTORY_PATH_TMP . $sPackageRootFolder);
+        $sPackageFolder = '';
+        if($oZip->numFiles > 0)
+        	$sPackageFolder = $oZip->getNameIndex(0);
 
-        if($sPackageRootFolder && !$oZip->extractTo(BX_DIRECTORY_PATH_TMP))
+        if(empty($sPackageFolder))
+        	return _t('_adm_str_err_cannot_unzip_package');
+        
+		$sPackagePath = BX_DIRECTORY_PATH_TMP . $sPackageFolder;
+        if(file_exists($sPackagePath)) // remove existing tmp folder with the same name
+            @bx_rrmdir($sPackagePath);
+
+        if(!$oZip->extractTo(BX_DIRECTORY_PATH_TMP))
             return _t('_adm_str_err_cannot_unzip_package');
 
         $oZip->close();
 
-        //--- Move unarchived package.
-        if($bUseFtp) {
+        return true;
+    }
+
+    protected function performCopy($sPackagePath, $bUseFtp)
+    {
+    	if($bUseFtp) {
 	        $sLogin = getParam('sys_ftp_login');
 	        $sPassword = getParam('sys_ftp_password');
 	        $sPath = getParam('sys_ftp_dir');
@@ -267,14 +319,41 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         	$oFile = BxDolFile::getInstance();
         }
 
-        $aConfig = self::getModuleConfig(BX_DIRECTORY_PATH_TMP . $sPackageRootFolder . 'install/config.php');
+        $aConfig = self::getModuleConfig($sPackagePath . 'install/config.php');
         if(empty($aConfig) || !is_array($aConfig) || empty($aConfig['home_dir']))
             return _t('_adm_str_err_wrong_package_format');
 
-        if(!$oFile->copy(BX_DIRECTORY_PATH_TMP . $sPackageRootFolder, 'modules/' . $aConfig['home_dir']))
+        if(!$oFile->copy($sPackagePath, 'modules/' . $aConfig['home_dir']))
             return _t('_adm_str_err_files_copy_failed');
 
-        return true;
+		return true;
+    }
+
+    protected function performAction($sDirectory, $sOperation, $aParams = array())
+    {
+        $sConfigFile = 'install/config.php';
+        $sInstallerFile = 'install/installer.php';
+        $sInstallerClass = $sOperation == 'update' ? 'Updater' : 'Installer';
+
+        $aConfig = self::getModuleConfig(BX_DIRECTORY_PATH_MODULES . $sDirectory . $sConfigFile);
+
+        $sPathInstaller = BX_DIRECTORY_PATH_MODULES . $sDirectory . $sInstallerFile;
+        if(empty($aConfig) || !file_exists($sPathInstaller))
+        	return array(
+        		'code' => 2, 
+        		'message' => _t('_adm_mod_err_process_operation_failed', $sOperation, $sDirectory)
+        	); 
+
+		require_once($sPathInstaller);
+
+		$sClassName = $aConfig['class_prefix'] . $sInstallerClass;
+		$oInstaller = new $sClassName($aConfig);
+		$aResult = $oInstaller->$sOperation($aParams);
+
+        return array(
+        	'code' => $aResult['result'] ? 0 : 2,
+        	'message' => $aResult['message']
+        );
     }
 
     protected function getConfigModule($sConfigPath, $aInstalledPathes = array(), $aInstalledInfo = array())

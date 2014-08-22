@@ -195,36 +195,7 @@ class BxDolFile extends BxDol implements iBxDolSingleton
 
 	protected function _mkDirR($sPath)
     {
-		$sPathFull = '';
-        $sPathCurrent = getcwd();
-
-        $aParts = explode('/', $sPath);
-    	if($sPath[0] == '/') {
-            $sPathFull = '/';
-            @chdir($sPathFull);
-        }
-
-        foreach($aParts as $sPart) {
-            if(!$sPart)
-				continue;
-
-            $sPathFull .= $sPart;
-            if($sPart == '..')
-                @chdir($sPart);
-            else if(!@chdir($sPart)) {
-                if(!@mkdir($sPart)) {
-                    @chdir($sPathCurrent);
-                    return false;
-                }
-
-                @chdir($sPart);
-            }
-
-            $sPathFull .= '/';
-        }
-
-        @chdir($sPathCurrent);
-        return true;
+        return @mkdir($sPath, 0777, true);
     }
 }
 
