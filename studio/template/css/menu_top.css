@@ -39,6 +39,7 @@ div.bx-std-page-caption div.bx-std-menu-top-right {
     right: 10px;
 	height: 50px;
 }
-li.bx-menu-tab-favorite.bx-menu-tab-active i.sys-icon {
+
+div.bx-std-menu-top li.bx-menu-tab-active i.sys-icon {
 	color: #ffe900;
 }
