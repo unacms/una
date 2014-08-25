@@ -137,7 +137,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
     public function perform($sDirectory, $sOperation, $aParams = array())
     {
-    	if(self::isRealOwner() || in_array($sOperation, array('install', 'uninstall', 'enable', 'disable')))
+    	if(defined('BX_DOL_CRON_EXECUTE') || self::isRealOwner() || in_array($sOperation, array('install', 'uninstall', 'enable', 'disable')))
     		return $this->performAction($sDirectory, $sOperation, $aParams);
 
     	bx_import('BxDolCronQuery');
@@ -210,7 +210,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
     protected function downloadFile($aItem, $bUseFtp = BX_FORCE_USE_FTP_FILE_TRANSFER)
     {
-    	if(self::isRealOwner())
+    	if(defined('BX_DOL_CRON_EXECUTE') || self::isRealOwner())
     		return $this->performDownload($aItem, $bUseFtp);
 
 		bx_import('BxDolCronQuery');
