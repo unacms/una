@@ -629,6 +629,9 @@ class BxBaseStudioStore extends BxDolStudioStore
         if(!is_array($aItems))
             return $aItems;
 
+		if(empty($aItems))
+			return MsgBox(_t('_Empty'));
+
         $sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
 
