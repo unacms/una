@@ -118,9 +118,7 @@ div#adm-bp-create-block-popup div.bx-popup-content {
 }
 
 div.adm-bp-create-block-form {}
-div#adm-bp-create-block-popup div.adm-bp-create-block-form {
-	margin-top:-20px;
-}
+
 div.adm-bp-create-block-form-cnt {}
 
 div.adm-bp-create-block-form fieldset.bx-form-section {
@@ -170,9 +168,7 @@ div#adm-bp-edit-popup div.bx-popup-content {
     padding-right: 0px; 
 }
 
-div.adm-bp-edit-form {
-	margin-top:-20px;
-}
+div.adm-bp-edit-form {}
 div.adm-bp-edit-form-cnt {}
 
 div.adm-bp-edit-form fieldset.bx-form-section {

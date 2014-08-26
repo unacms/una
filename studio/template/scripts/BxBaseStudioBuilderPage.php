@@ -648,6 +648,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                 $aBlock['cell_id'] = 1;
                 $aBlock['module'] = $this->getBlockModule($aBlock);
                 $aBlock['title'] = $sTitleKey;
+				$aBlock['copyable'] = 0;
                 $aBlock['deletable'] = 1;
 
                 //--- Process Lang copy
