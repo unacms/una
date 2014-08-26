@@ -105,7 +105,15 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
 		if(empty($oFile))
 			return BX_DOL_STUDIO_INSTALLER_FAILED;
 
-        return $oFile->copy($sPath . '*', 'modules/' . $this->_aConfig['module_dir']) ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
+		if(!$oFile->copy($sPath . '*', 'modules/' . $this->_aConfig['module_dir']))
+			return BX_DOL_STUDIO_INSTALLER_FAILED;
+
+		if(!empty($this->_aConfig['delete_files']) && is_array($this->_aConfig['delete_files']))
+			foreach($this->_aConfig['delete_files'] as $sFile)
+				if(!$oFile->delete('modules/' . $this->_aConfig['module_dir'] . $sFile))
+					return BX_DOL_STUDIO_INSTALLER_FAILED;
+
+        return BX_DOL_STUDIO_INSTALLER_SUCCESS;
     }
 
     public function actionUpdateLanguages($bInstall = true)
