@@ -260,7 +260,8 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         if(!$rHandler = fopen($sFilePath, 'w'))
             return _t('_adm_str_err_cannot_write');
 
-        if(!fwrite($rHandler, urldecode($aItem['content'])))
+        $sContent = urldecode($aItem['content']);
+        if(!fwrite($rHandler, $sContent, strlen($sContent)))
             return _t('_adm_str_err_cannot_write');
 
         fclose($rHandler);
