@@ -31,6 +31,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         'add_popup_id' => 'adm-bp-add-popup',
         'edit_popup_id' => 'adm-bp-edit-popup',
         'uri_field_id' => 'adm-bp-field-uri',
+    	'url_field_id' => 'adm-bp-field-url',
         'settings_group_id' => 'adm-bp-settings-group-',
         'settings_groups_id' => 'adm-bp-settings-groups',
         'create_block_popup_id' => 'adm-bp-create-block-popup',
@@ -814,7 +815,9 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                 $aValues[$sName] = bx_process_input($mixedValue);
 
         $sUri = "";
-        if(array_key_exists('en', $aValues) && $aValues['en'] != '')
+        if(($mixedValue = bx_get('uri')) !== false)
+        	$sUri = bx_process_input($mixedValue);
+        else if(array_key_exists('en', $aValues) && $aValues['en'] != '')
             $sUri = $aValues['en'];
         else if(array_key_exists($sLanguageDef, $aValues) && $aValues[$sLanguageDef] != '')
             $sUri = $aValues[$sLanguageDef];
@@ -828,11 +831,17 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                 }
 
         $sUri = $sUri != "" ? uriGenerate($sUri, 'sys_objects_page', 'uri') : "";
-        return array('eval' => $this->getPageJsObject() . '.onGetUri(oData)', 'content' => $sUri);
+
+        bx_import('BxDolPermalinks');
+        $sUrl = BxDolPermalinks::getInstance()->permalink($this->sPageBaseUrl . $sUri);
+
+        return array('eval' => $this->getPageJsObject() . '.onGetUri(oData)', 'uri' => $sUri, 'url' => $sUrl);
     }
 
     protected function getSettingsOptions($aPage, $bCreate = true, $bInputsOnly = false)
     {
+    	bx_import('BxDolPermalinks');
+
         $aForm = array(
             'form_attrs' => array(
                 'id' => 'adm-bp-settings-seo',
@@ -875,43 +884,50 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                         'params' => array(3,100),
                         'error' => _t('_adm_bp_err_page_title'),
                     ),
-                )
+                ),
+                'url' => array(
+					'type' => 'text',
+					'name' => 'url',
+					'caption' => _t('_adm_bp_txt_page_url'),
+					'info' => _t('_adm_bp_dsc_page_url'),
+					'value' => isset($aPage['url']) ? BxDolPermalinks::getInstance()->permalink($aPage['url']) : '',
+					'required' => '0',
+					'attrs' => array(
+                		'id' => $this->aHtmlIds['url_field_id'],
+						'disabled' => 'disabled'
+					),
+				)
             )
         );
 
-        if($bCreate)
-        	$aForm['inputs']['uri'] = array(
-				'type' => 'text',
-				'name' => 'uri',
-				'caption' => _t('_adm_bp_txt_page_uri'),
-				'info' => _t('_adm_bp_dsc_page_uri'),
-				'value' => '',
-				'required' => '1',
-				'db' => array (
-					'pass' => 'Xss',
-				),
-				'attrs' => array(
-					'id' => $this->aHtmlIds['uri_field_id'],
-					'onfocus' => $this->getPageJsObject() . '.getUri(this);'
-				),
-				'checker' => array (
-					'func' => 'length',
-					'params' => array(3,100),
-				    'error' => _t('_adm_bp_err_page_uri'),
-				),
-			);
-        else
-        	$aForm['inputs']['url'] = array(
-				'type' => 'text',
-				'name' => 'url',
-				'caption' => _t('_adm_bp_txt_page_url'),
-				'info' => _t('_adm_bp_dsc_page_url'),
-				'value' => isset($aPage['url']) ? $aPage['url'] : '',
-				'required' => '0',
-				'attrs' => array(
-					'disabled' => 'disabled'
-				),
-			);
+        if($bCreate) {
+        	$sJsObject = $this->getPageJsObject();
+
+        	$aForm['inputs']['title']['attrs']['onblur'] = $sJsObject . '.getUri(this);';
+
+        	$aForm['inputs'] = bx_array_insert_before(array(
+        		'uri' => array(
+					'type' => 'text',
+					'name' => 'uri',
+					'caption' => _t('_adm_bp_txt_page_uri'),
+					'info' => _t('_adm_bp_dsc_page_uri'),
+					'value' => '',
+					'required' => '1',
+        			'attrs' => array(
+						'id' => $this->aHtmlIds['uri_field_id'],
+						'onblur' => $sJsObject . '.getUri(this);'
+					),
+					'db' => array (
+						'pass' => 'Xss',
+					),
+					'checker' => array (
+						'func' => 'length',
+						'params' => array(3,100),
+					    'error' => _t('_adm_bp_err_page_uri'),
+					),
+				)
+        	), $aForm['inputs'], 'url');
+        }
 
         if($bInputsOnly)
             return $aForm['inputs'];

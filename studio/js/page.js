@@ -13,7 +13,7 @@ function BxDolStudioPage(oOptions) {
 }
 
 BxDolStudioPage.prototype.processJson = function (oData) {
-	bx_loading($('body'), false);
+	bx_loading('bx-std-page-columns', false);
 
     //--- Show Message
     if(oData && oData.msg != undefined)

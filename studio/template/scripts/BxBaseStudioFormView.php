@@ -120,6 +120,7 @@ class BxBaseStudioFormView extends BxDolStudioForm
 
         $sInput = '';
         $sInputName = $aInput['name'];
+        $aInputAttrs = isset($aInput['attrs']) && is_array($aInput['attrs']) ? $aInput['attrs'] : array();
 
         bx_import('BxTemplStudioFunctions');
         $oFunctions = BxTemplStudioFunctions::getInstance();
@@ -132,9 +133,9 @@ class BxBaseStudioFormView extends BxDolStudioForm
         $aStrings = $oLanguage->getLanguageString($aInput['value']);
 
         $aInput['type'] = 'hidden';
-        $aInput['attrs'] = array(
+        $aInput['attrs'] = array_merge($aInputAttrs, array(
             'id' => $sInputIdPrefix . $aInput['name']
-        );
+        ));
         $sInput .= $this->genInputStandard($aInput);
 
         $aTmplVars = array();
@@ -150,10 +151,10 @@ class BxBaseStudioFormView extends BxDolStudioForm
             $aInput['type'] = $sType;
             $aInput['name'] = $sInputName . '-' . $aLanguage['name'];
             $aInput['value'] = $sValue;
-            $aInput['attrs'] = array(
+            $aInput['attrs'] = array_merge($aInputAttrs, array(
                 'id' => $sInputIdPrefix . $aInput['name'],
                 'style' => !$bLanguage ? 'display:none;' : ''
-            );
+            ));
             $sInput .= $this->$aInputMethod[$sType]($aInput);
 
             $aTmplVarValue = array(

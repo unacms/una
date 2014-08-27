@@ -48,32 +48,35 @@ BxDolStudioBuilderPage.prototype.onChangePage = function(oSelect) {
 	document.location.href = this.parsePageUrl({page: $(oSelect).val()});
 };
 
-BxDolStudioBuilderPage.prototype.getUri = function(oText) {
-	var $this = this;
+BxDolStudioBuilderPage.prototype.getUri = function(oElement) {
+	var mixedParams = {};
 
-	var sUri = $(oText).val();
-	if(sUri.length != 0)
-		return;
+	var sUri = $('#' + this.oHtmlIds['uri_field_id']).val();
+	if(sUri.length > 0)
+		mixedParams['uri'] = sUri;
+	else {
+		var bGot = false;
 
-	var bGet = false;
-	var oValues = {};
-	$.each(this.oLanguages, function(sKey, sValue) {
-		oValues[sKey] = $('#bx-form-input-title-' + sKey).val();
-		if(oValues[sKey].length > 0)
-			bGet = true;
-	});
+		$.each(this.oLanguages, function(sKey, sValue) {
+			mixedParams[sKey] = $('#bx-form-input-title-' + sKey).val();
+			if(mixedParams[sKey].length > 0)
+				bGot = true;
+		});
 
-	if(!bGet)
-		return;
+		if(!bGot)
+			return;
+	}
 
-	bx_loading(this.oHtmlIds['create_popup_id'], true);
-	this.performAction('uri_get', oValues);
+	bx_loading(this.oHtmlIds['add_popup_id'], true);
+
+	this.performAction('uri_get', mixedParams);
 };
 
 BxDolStudioBuilderPage.prototype.onGetUri = function(oData) {
-	bx_loading(this.oHtmlIds['create_popup_id'], false);
+	bx_loading(this.oHtmlIds['add_popup_id'], false);
 
-	$('#' + this.oHtmlIds['uri_field_id']).val(oData.content);
+	$('#' + this.oHtmlIds['uri_field_id']).val(oData.uri);
+	$('#' + this.oHtmlIds['url_field_id']).val(oData.url);
 };
 
 BxDolStudioBuilderPage.prototype.onCreatePage = function(sType, sPage) {
@@ -232,7 +235,8 @@ BxDolStudioBuilderPage.prototype.performAction = function(sAction, aParams) {
 	aParams.bp_page = $this.sPage;
 	aParams._t = oDate.getTime();
 
-	bx_loading($('body'), true);
+	if($('.bx-loading-ajax:visible').length == 0)
+		bx_loading('bx-std-page-columns', true);
 
 	$.post(
 		this.sActionUrl,
