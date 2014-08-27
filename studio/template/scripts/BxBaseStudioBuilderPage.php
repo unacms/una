@@ -28,7 +28,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
     protected $sPageUrl;
 
     protected $aHtmlIds = array(
-        'create_popup_id' => 'adm-bp-create-popup',
+        'add_popup_id' => 'adm-bp-add-popup',
         'edit_popup_id' => 'adm-bp-edit-popup',
         'uri_field_id' => 'adm-bp-field-uri',
         'settings_group_id' => 'adm-bp-settings-group-',
@@ -40,6 +40,14 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         'block_lists_id' => 'adm-bp-block-lists',
         'layout_id' => 'adm-bpl-',
     );
+
+	protected $aPageSettings = array(
+		array('name' => 'options', 'title' => '_adm_bp_mi_page_options', 'active' => 1),
+        array('name' => 'layout', 'title' => '_adm_bp_mi_page_layout', 'active' => 0),
+        array('name' => 'visibility', 'title' => '_adm_bp_mi_page_visibility', 'active' => 0),
+        array('name' => 'cache', 'title' => '_adm_bp_mi_page_cache', 'active' => 0),
+        array('name' => 'seo', 'title' => '_adm_bp_mi_page_seo', 'active' => 0)
+	);
 
     function __construct($sType = '', $sPage = '')
     {
@@ -251,125 +259,34 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                         'pass' => 'Int',
                     ),
                 ),
-                'title_system' => array(
-                    'type' => 'text_translatable',
-                    'name' => 'title_system',
-                    'caption' => _t('_adm_bp_txt_page_title_system'),
-                    'info' => _t('_adm_bp_dsc_page_title_system'),
-                    'value' => '_sys_bpb',
-                    'required' => '1',
-                    'db' => array (
-                        'pass' => 'Xss',
-                    ),
-                    'checker' => array (
-                        'func' => 'length',
-                        'params' => array(3,100),
-                        'error' => _t('_adm_bp_err_page_name'),
-                    ),
+                'settings' => array(
+                    'type' => 'custom',
+                    'name' => 'settings',
+                    'content' => $oTemplate->parseHtmlByName('bp_edit_page_form.html', $this->_getTmplVarsPageSettings()),
                 ),
-                'title' => array(
-                    'type' => 'text_translatable',
-                    'name' => 'title',
-                    'caption' => _t('_adm_bp_txt_page_title'),
-                    'info' => _t('_adm_bp_dsc_page_title'),
-                    'value' => '_sys_bpb',
-                    'required' => '1',
-                    'db' => array (
-                        'pass' => 'Xss',
-                    ),
-                    'checker' => array (
-                        'func' => 'length',
-                        'params' => array(3,100),
-                        'error' => _t('_adm_bp_err_page_title'),
-                    ),
-                ),
-                'uri' => array(
-                    'type' => 'text',
-                    'name' => 'uri',
-                    'caption' => _t('_adm_bp_txt_page_uri'),
-                    'info' => _t('_adm_bp_dsc_page_uri'),
-                    'value' => '',
-                    'required' => '1',
-                    'db' => array (
-                        'pass' => 'Xss',
-                    ),
-                    'attrs' => array(
-                        'id' => $this->aHtmlIds['uri_field_id'],
-                        'onfocus' => $this->getPageJsObject() . '.getUri(this);'
-                    ),
-                    'checker' => array (
-                        'func' => 'length',
-                        'params' => array(3,100),
-                        'error' => _t('_adm_bp_err_page_uri'),
-                    ),
-                ),
-                'layout_id' => array(
-                    'type' => 'select',
-                    'name' => 'layout_id',
-                    'caption' => _t('_adm_bp_txt_page_layout'),
-                    'info' => '',
-                    'value' => '',
-                    'values' => array(
-                        array('key' => '', 'value' => _t('_adm_bp_txt_page_layout_empty')),
-                    ),
-                    'required' => '1',
-                    'db' => array (
-                        'pass' => 'Int',
-                    ),
-                    'checker' => array (
-                        'func' => 'avail',
-                        'params' => array(),
-                        'error' => _t('_adm_bp_err_page_layout'),
-                    ),
-                ),
-                'meta_description' => array(
-                    'type' => 'textarea',
-                    'name' => 'meta_description',
-                    'caption' => _t('_adm_bp_txt_page_meta_description'),
-                    'info' => _t('_adm_bp_dsc_page_meta_description'),
-                    'value' => '',
-                    'db' => array (
-                        'pass' => 'Xss',
-                    ),
-                ),
-                'controls' => array(
-                    'name' => 'controls',
-                    'type' => 'input_set',
-                    array(
-                        'type' => 'submit',
-                        'name' => 'do_submit',
-                        'value' => _t('_adm_bp_btn_page_create'),
-                    ),
-                    array (
-                        'type' => 'reset',
-                        'name' => 'close',
-                        'value' => _t('_adm_bp_btn_page_cancel'),
-                        'attrs' => array(
-                            'onclick' => "$('.bx-popup-applied:visible').dolPopupHide()",
-                            'class' => 'bx-def-margin-sec-left',
-                        ),
-                    )
-                )
-            )
-        );
+			)
+		);
 
-        $aLayouts = array();
-        $this->oDb->getLayouts(array('type' => 'all'), $aLayouts, false);
-        foreach($aLayouts as $aLayout)
-            $aForm['inputs']['layout_id']['values'][] = array('key' => $aLayout['id'], 'value' => _t($aLayout['title']));
-
-        $oForm = new BxTemplStudioFormView($aForm);
+		$oForm = new BxTemplStudioFormView($aForm);
         $oForm->initChecker();
 
-        $sContent = "";
         if($oForm->isSubmittedAndValid()) {
-            bx_import('BxDolStudioLanguagesUtils');
+        	unset($oForm->aInputs['settings']);
+            foreach($this->aPageSettings as $aSetting)
+                $oForm->aInputs = array_merge($oForm->aInputs, $this->{'getSettings' . $this->getClassName($aSetting['name']) . 'Fields'}());
+
+        	bx_import('BxDolStudioLanguagesUtils');
             $sLanguage = BxDolStudioLanguagesUtils::getInstance()->getCurrentLangName(false);
 
             $sObject = BxDolForm::getSubmittedValue('title-' . $sLanguage, $aForm['form_attrs']['method']);
             $sObject = uriGenerate($sObject, 'sys_objects_page', 'object', 'object');
 
             $sUri = $oForm->getCleanValue('uri');
+
+            $iVisibleFor = BxDolStudioUtils::getVisibilityValue($oForm->getCleanValue('visible_for'), $oForm->getCleanValue('visible_for_levels'));
+            BxDolForm::setSubmittedValue('visible_for_levels', $iVisibleFor, $aForm['form_attrs']['method']);
+            unset($oForm->aInputs['visible_for']);
+
             $iId = (int)$oForm->insert(array('object' => $sObject, 'url' => $this->sPageBaseUrl . $sUri));
             if($iId != 0)
                 return array('eval' => $this->getPageJsObject() . '.onCreatePage(\'' . $sModule . '\', \'' . $sObject . '\')');
@@ -378,7 +295,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         }
 
         bx_import('BxTemplStudioFunctions');
-        $sContent = BxTemplStudioFunctions::getInstance()->popupBox($this->aHtmlIds['create_popup_id'], _t('_adm_bp_txt_create_popup'), $oTemplate->parseHtmlByName('bp_add_page.html', array(
+        $sContent = BxTemplStudioFunctions::getInstance()->popupBox($this->aHtmlIds['add_popup_id'], _t('_adm_bp_txt_create_popup'), $oTemplate->parseHtmlByName('bp_add_page.html', array(
             'form_id' => $aForm['form_attrs']['id'],
             'form' => $oForm->getCode(true)
         )));
@@ -410,59 +327,18 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                 'settings' => array(
                     'type' => 'custom',
                     'name' => 'settings',
-                    'content' => '',
+                    'content' => $oTemplate->parseHtmlByName('bp_edit_page_form.html', $this->_getTmplVarsPageSettings($this->aPageRebuild, false)),
                 ),
             )
         );
 
-        $aSettings = array(
-            array('name' => 'options', 'title' => '_adm_bp_mi_page_options', 'active' => 1),
-            array('name' => 'layout', 'title' => '_adm_bp_mi_page_layout', 'active' => 0),
-            array('name' => 'visibility', 'title' => '_adm_bp_mi_page_visibility', 'active' => 0),
-            array('name' => 'cache', 'title' => '_adm_bp_mi_page_cache', 'active' => 0),
-            array('name' => 'seo', 'title' => '_adm_bp_mi_page_seo', 'active' => 0)
-        );
-
-        $aTmplParams = array(
-            'menu' => array(),
-            'html_settings_groups_id' => $this->aHtmlIds['settings_groups_id'],
-            'bx_repeat:settings_groups' => array()
-        );
-        foreach($aSettings as $aSetting) {
-            //--- get menu items
-            $aTmplParams['menu'][$aSetting['name']] = array(
-                'name' => $aSetting['name'],
-                'icon' => '',
-                'onclick' => $sJsObject . '.onChangeSettingGroup(\'' . $aSetting['name'] . '\', this);',
-                'title' => $aSetting['title'],
-                'selected' => isset($aSetting['active']) && (int)$aSetting['active'] == 1
-            );
-
-            //--- get settings
-            $aTmplParams['bx_repeat:settings_groups'][] = array(
-                'html_settings_group_id' => $this->aHtmlIds['settings_group_id'] .  $aSetting['name'],
-                'bx_if:hidden' => array(
-                    'condition' => $aSetting['active'] != 1,
-                    'content' => array()
-                ),
-                'content' => $this->{'getSettings' . $this->getClassName($aSetting['name'])}()
-            );
-        }
-
-        bx_import('BxTemplStudioMenu');
-        $oMenu = new BxTemplStudioMenu(array('template' => 'menu_side.html', 'menu_items' => $aTmplParams['menu']));
-        $aTmplParams['menu'] = $oMenu->getCode();
-
-        $aForm['inputs']['settings']['content'] = $oTemplate->parseHtmlByName('bp_edit_page_form.html', $aTmplParams);
-
         $oForm = new BxTemplStudioFormView($aForm);
         $oForm->initChecker();
 
-        $sContent = "";
         if($oForm->isSubmittedAndValid()) {
             unset($oForm->aInputs['settings']);
-            foreach($aSettings as $aSetting)
-                $oForm->aInputs = array_merge($oForm->aInputs, $this->{'getSettings' . $this->getClassName($aSetting['name'])}(true));
+            foreach($this->aPageSettings as $aSetting)
+                $oForm->aInputs = array_merge($oForm->aInputs, $this->{'getSettings' . $this->getClassName($aSetting['name']) . 'Fields'}($this->aPageRebuild, false));
 
             $iVisibleFor = BxDolStudioUtils::getVisibilityValue($oForm->getCleanValue('visible_for'), $oForm->getCleanValue('visible_for_levels'));
             BxDolForm::setSubmittedValue('visible_for_levels', $iVisibleFor, $aForm['form_attrs']['method']);
@@ -955,7 +831,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         return array('eval' => $this->getPageJsObject() . '.onGetUri(oData)', 'content' => $sUri);
     }
 
-    protected function getSettingsOptions($bInputsOnly = false)
+    protected function getSettingsOptions($aPage, $bCreate = true, $bInputsOnly = false)
     {
         $aForm = array(
             'form_attrs' => array(
@@ -973,7 +849,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                     'name' => 'title_system',
                     'caption' => _t('_adm_bp_txt_page_title_system'),
                     'info' => _t('_adm_bp_dsc_page_title_system'),
-                    'value' => $this->aPageRebuild['title_system'],
+                    'value' => isset($aPage['title_system']) ? $aPage['title_system'] : '',
                     'required' => '1',
                     'db' => array (
                         'pass' => 'Xss',
@@ -989,7 +865,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                     'name' => 'title',
                     'caption' => _t('_adm_bp_txt_page_title'),
                     'info' => _t('_adm_bp_dsc_page_title'),
-                    'value' => $this->aPageRebuild['title'],
+                    'value' => isset($aPage['title']) ? $aPage['title'] : '',
                     'required' => '1',
                     'db' => array (
                         'pass' => 'Xss',
@@ -999,20 +875,43 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                         'params' => array(3,100),
                         'error' => _t('_adm_bp_err_page_title'),
                     ),
-                ),
-                'url' => array(
-                    'type' => 'text',
-                    'name' => 'url',
-                    'caption' => _t('_adm_bp_txt_page_url'),
-                    'info' => _t('_adm_bp_dsc_page_url'),
-                    'value' => $this->aPageRebuild['url'],
-                    'required' => '0',
-                    'attrs' => array(
-                        'disabled' => 'disabled'
-                    ),
-                ),
+                )
             )
         );
+
+        if($bCreate)
+        	$aForm['inputs']['uri'] = array(
+				'type' => 'text',
+				'name' => 'uri',
+				'caption' => _t('_adm_bp_txt_page_uri'),
+				'info' => _t('_adm_bp_dsc_page_uri'),
+				'value' => '',
+				'required' => '1',
+				'db' => array (
+					'pass' => 'Xss',
+				),
+				'attrs' => array(
+					'id' => $this->aHtmlIds['uri_field_id'],
+					'onfocus' => $this->getPageJsObject() . '.getUri(this);'
+				),
+				'checker' => array (
+					'func' => 'length',
+					'params' => array(3,100),
+				    'error' => _t('_adm_bp_err_page_uri'),
+				),
+			);
+        else
+        	$aForm['inputs']['url'] = array(
+				'type' => 'text',
+				'name' => 'url',
+				'caption' => _t('_adm_bp_txt_page_url'),
+				'info' => _t('_adm_bp_dsc_page_url'),
+				'value' => isset($aPage['url']) ? $aPage['url'] : '',
+				'required' => '0',
+				'attrs' => array(
+					'disabled' => 'disabled'
+				),
+			);
 
         if($bInputsOnly)
             return $aForm['inputs'];
@@ -1021,10 +920,17 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         return $oForm->getCode();
     }
 
-    protected function getSettingsLayout($bInputsOnly = false)
+    protected function getSettingsOptionsFields($aPage = array(), $bCreate = true, $bInputsOnly = false)
+    {
+    	return $this->getSettingsOptions($aPage, $bCreate, true);
+    }
+
+    protected function getSettingsLayout($aPage = array(), $bCreate = true, $bInputsOnly = false)
     {
         $sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
+
+        $iLayout = isset($aPage['layout_id']) ? (int)$aPage['layout_id'] : 5;
 
         $aLayouts = array();
         $this->oDb->getLayouts(array('type' => 'all'), $aLayouts, false);
@@ -1040,7 +946,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                 'html_id' => $this->aHtmlIds['layout_id'] . $aLayout['id'],
                 'js_object' => $sJsObject,
                 'bx_if:active' => array(
-                    'condition' => (int)$this->aPageRebuild['layout_id'] == (int)$aLayout['id'],
+                    'condition' => (int)$aLayout['id'] == $iLayout,
                     'content' => array()
                 ),
                 'icon' => $oTemplate->getImageUrl($aLayout['icon']),
@@ -1061,7 +967,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                 'layout_id' => array(
                     'type' => 'hidden',
                     'name' => 'layout_id',
-                    'value' => $this->aPageRebuild['layout_id'],
+                    'value' => $iLayout,
                     'db' => array (
                         'pass' => 'Int',
                     ),
@@ -1078,9 +984,16 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         return $oTemplate->parseHtmlByName('bp_layouts.html', $aTmplParams);
     }
 
-    protected function getSettingsVisibility($bInputsOnly = false)
+    protected function getSettingsLayoutFields($aPage = array(), $bCreate = true)
     {
-        if((int)$this->aPageRebuild['visible_for_levels_editable'] == 0)
+    	return $this->getSettingsLayout($aPage, $bCreate, true);
+    }
+
+    protected function getSettingsVisibility($aPage = array(), $bCreate = true, $bInputsOnly = false)
+    {
+    	$iVisibleForLevels = isset($aPage['visible_for_levels']) ? (int)$aPage['visible_for_levels'] : BX_DOL_INT_MAX;
+
+        if(isset($aPage['visible_for_levels_editable']) && (int)$aPage['visible_for_levels_editable'] == 0)
             $aInputs = array(
                 'visible_for_levels' => array(
                     'type' => 'custom',
@@ -1095,7 +1008,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                     'name' => 'visible_for',
                     'caption' => _t('_adm_bp_txt_block_visible_for'),
                     'info' => '',
-                    'value' => $this->aPageRebuild['visible_for_levels'] == BX_DOL_INT_MAX ? BX_DOL_STUDIO_VISIBLE_ALL : BX_DOL_STUDIO_VISIBLE_SELECTED,
+                    'value' => $iVisibleForLevels == BX_DOL_INT_MAX ? BX_DOL_STUDIO_VISIBLE_ALL : BX_DOL_STUDIO_VISIBLE_SELECTED,
                     'values' => array(
                         array('key' => BX_DOL_STUDIO_VISIBLE_ALL, 'value' => _t('_adm_bp_txt_block_visible_for_all')),
                         array('key' => BX_DOL_STUDIO_VISIBLE_SELECTED, 'value' => _t('_adm_bp_txt_block_visible_for_selected')),
@@ -1116,7 +1029,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                     'value' => '',
                     'values' => array(),
                     'tr_attrs' => array(
-                        'style' => $this->aPageRebuild['visible_for_levels'] == BX_DOL_INT_MAX ? 'display:none' : ''
+                        'style' => $iVisibleForLevels == BX_DOL_INT_MAX ? 'display:none' : ''
                     ),
                     'db' => array (
                         'pass' => 'Int',
@@ -1137,16 +1050,21 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             'inputs' => $aInputs
         );
 
-        if($bInputsOnly)
-            return $aForm['inputs'];
+        BxDolStudioUtils::getVisibilityValues($iVisibleForLevels, $aForm['inputs']['visible_for_levels']['values'], $aForm['inputs']['visible_for_levels']['value']);
 
-        BxDolStudioUtils::getVisibilityValues($this->aPageRebuild['visible_for_levels'], $aForm['inputs']['visible_for_levels']['values'], $aForm['inputs']['visible_for_levels']['value']);
+        if($bInputsOnly)
+            return $aForm['inputs'];       	
 
         $oForm = new BxTemplStudioFormView($aForm);
         return $oForm->getCode();
     }
 
-    protected function getSettingsCache($bInputsOnly = false)
+    protected function getSettingsVisibilityFields($aPage = array(), $bCreate = true)
+    {
+    	return $this->getSettingsVisibility($aPage = array(), $bCreate, true);
+    }
+
+    protected function getSettingsCache($aPage = array(), $bCreate = true, $bInputsOnly = false)
     {
         $aForm = array(
             'form_attrs' => array(
@@ -1164,10 +1082,10 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                     'name' => 'cache_lifetime',
                     'caption' => _t('_adm_bp_txt_page_cache_lifetime'),
                     'info' => _t('_adm_bp_dsc_page_cache_lifetime'),
-                    'value' => $this->aPageRebuild['cache_lifetime'],
+                    'value' => isset($aPage['cache_lifetime']) ? $aPage['cache_lifetime'] : 0,
                     'required' => '',
                     'attrs' => array(
-                        'disabled' => (int)$this->aPageRebuild['cache_editable'] == 0 ? 'disabled' : ''
+                        'disabled' => isset($aPage['cache_editable']) && (int)$aPage['cache_editable'] == 0 ? 'disabled' : ''
                     ),
                     'db' => array (
                         'pass' => 'Int',
@@ -1183,7 +1101,12 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         return $oForm->getCode();
     }
 
-    protected function getSettingsSeo($bInputsOnly = false)
+    protected function getSettingsCacheFields($aPage = array(), $bCreate = true)
+    {
+    	return $this->getSettingsCache($aPage, $bCreate, true);
+    }
+
+    protected function getSettingsSeo($aPage = array(), $bCreate = true, $bInputsOnly = false)
     {
         $aForm = array(
             'form_attrs' => array(
@@ -1201,7 +1124,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                     'name' => 'meta_description',
                     'caption' => _t('_adm_bp_txt_page_meta_description'),
                     'info' => _t('_adm_bp_dsc_page_meta_description'),
-                    'value' => $this->aPageRebuild['meta_description'],
+                    'value' => isset($aPage['meta_description']) ? $aPage['meta_description'] : '',
                     'db' => array (
                         'pass' => 'Xss',
                     ),
@@ -1211,7 +1134,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                     'name' => 'meta_keywords',
                     'caption' => _t('_adm_bp_txt_page_meta_keywords'),
                     'info' => _t('_adm_bp_dsc_page_meta_keywords'),
-                    'value' => $this->aPageRebuild['meta_keywords'],
+                    'value' => isset($aPage['meta_keywords']) ? $aPage['meta_keywords'] : '',
                     'db' => array (
                         'pass' => 'Xss',
                     ),
@@ -1221,7 +1144,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                     'name' => 'meta_robots',
                     'caption' => _t('_adm_bp_txt_page_meta_robots'),
                     'info' => _t('_adm_bp_dsc_page_meta_robots'),
-                    'value' => $this->aPageRebuild['meta_robots'],
+                    'value' => isset($aPage['meta_robots']) ? $aPage['meta_robots'] : '',
                     'required' => '0',
                     'db' => array (
                         'pass' => 'Xss',
@@ -1235,6 +1158,11 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
         $oForm = new BxTemplStudioFormView($aForm);
         return $oForm->getCode();
+    }
+
+    protected function getSettingsSeoFields($aPage = array(), $bCreate = true)
+    {
+    	return $this->getSettingsSeo($aPage, $bCreate, true);
     }
 
     protected function getBlockIcon($aBlock)
@@ -1631,6 +1559,43 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             ),
             'action_block_create' => $this->sActionBlockCreate,
         );
+    }
+
+    protected function _getTmplVarsPageSettings($aPage = array(), $bCreate = true)
+    {
+    	$sJsObject = $this->getPageJsObject();
+
+        $aTmplParams = array(
+            'menu' => array(),
+            'html_settings_groups_id' => $this->aHtmlIds['settings_groups_id'],
+            'bx_repeat:settings_groups' => array()
+        );
+        foreach($this->aPageSettings as $aSetting) {
+            //--- get menu items
+            $aTmplParams['menu'][$aSetting['name']] = array(
+                'name' => $aSetting['name'],
+                'icon' => '',
+                'onclick' => $sJsObject . '.onChangeSettingGroup(\'' . $aSetting['name'] . '\', this);',
+                'title' => $aSetting['title'],
+                'selected' => isset($aSetting['active']) && (int)$aSetting['active'] == 1
+            );
+
+            //--- get settings
+            $aTmplParams['bx_repeat:settings_groups'][] = array(
+                'html_settings_group_id' => $this->aHtmlIds['settings_group_id'] .  $aSetting['name'],
+                'bx_if:hidden' => array(
+                    'condition' => $aSetting['active'] != 1,
+                    'content' => array()
+                ),
+                'content' => $this->{'getSettings' . $this->getClassName($aSetting['name'])}($aPage, $bCreate)
+            );
+        }
+
+        bx_import('BxTemplStudioMenu');
+        $oMenu = new BxTemplStudioMenu(array('template' => 'menu_side.html', 'menu_items' => $aTmplParams['menu']));
+        $aTmplParams['menu'] = $oMenu->getCode();
+
+        return $aTmplParams;
     }
 }
 

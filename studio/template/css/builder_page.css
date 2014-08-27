@@ -104,10 +104,6 @@ div.adm-bp-cell div.adm-bpb-info {
 	padding-left: 75px; 
 }
 
-/*--- Create Page popups style ---*/
-div.adm-bp-create-form {}
-div.adm-bp-create-form-cnt {}
-
 /*--- Add Block popup style ---*/
 div#adm-bp-create-block-popup div.bx-popup-width {
 	width: 620px;
@@ -160,23 +156,31 @@ div.adm-bp-cbf-counter {
 /*--- Edit Block popup style ---*/
 
 /*--- Page Settings popups style ---*/
+div#adm-bp-add-popup div.bx-popup-width,
 div#adm-bp-edit-popup div.bx-popup-width {
     width: 560px;
 }
+div#adm-bp-add-popup div.bx-popup-content,
 div#adm-bp-edit-popup div.bx-popup-content {
     padding-left: 0px;
     padding-right: 0px; 
 }
 
+div.adm-bp-add-form {}
+div.adm-bp-add-form-cnt {}
+
 div.adm-bp-edit-form {}
 div.adm-bp-edit-form-cnt {}
 
+div.adm-bp-add-form fieldset.bx-form-section,
 div.adm-bp-edit-form fieldset.bx-form-section {
     padding-bottom: 0px;
 }
+div.adm-bp-add-form div.bx-std-pmen-item-cnt, 
 div.adm-bp-edit-form div.bx-std-pmen-item-cnt {
 	padding-left: 20px;
 }
+div.adm-bp-add-form div.bx-form-input-wrapper-custom, 
 div.adm-bp-edit-form div.bx-form-input-wrapper-custom {
 	position: relative;
 }
