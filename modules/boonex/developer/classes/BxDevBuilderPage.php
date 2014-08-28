@@ -68,7 +68,7 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage
         }
 
         bx_import('BxTemplStudioFunctions');
-        $sContent = BxTemplStudioFunctions::getInstance()->popupBox($this->aHtmlIds['create_popup_id'], _t('_bx_dev_bp_txt_page_create_popup'), $this->oModule->_oTemplate->parseHtmlByName('bp_add_page.html', array(
+        $sContent = BxTemplStudioFunctions::getInstance()->popupBox($this->aHtmlIds['add_popup_id'], _t('_bx_dev_bp_txt_page_create_popup'), $this->oModule->_oTemplate->parseHtmlByName('bp_add_page.html', array(
             'form_id' => $oForm->aFormAttrs['id'],
             'form' => $oForm->getCode(true)
         )));
@@ -180,7 +180,7 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage
         return array('eval' => $sJsObject . '.onDeleteBlock(' . $iId . ', oData)');
     }
 
-    protected function getSettingsOptions($bInputsOnly = false)
+    protected function getSettingsOptions($aPage, $bCreate = true, $bInputsOnly = false)
     {
         $aForm = array(
             'form_attrs' => array(
@@ -207,7 +207,7 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage
             )
         );
 
-        $aForm['inputs'] += parent::getSettingsOptions(true);
+        $aForm['inputs'] += parent::getSettingsOptions($aPage, $bCreate, true);
 
         $aForm['inputs']['title_system']['type'] = 'text';
         $aForm['inputs']['title_system']['caption'] = _t('_bx_dev_bp_txt_page_title_system');
@@ -276,7 +276,7 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage
         return $oForm->getCode();
     }
 
-    protected function getSettingsCache($bInputsOnly = false)
+    protected function getSettingsCache($aPage, $bCreate = true, $bInputsOnly = false)
     {
         $aForm = array(
             'form_attrs' => array(
@@ -288,7 +288,7 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage
                     'disable' => true
                 )
             ),
-            'inputs' => parent::getSettingsCache(true)
+            'inputs' => parent::getSettingsCache($aPage, $bCreate, true)
         );
 
         unset($aForm['inputs']['cache_lifetime']['attrs']);
