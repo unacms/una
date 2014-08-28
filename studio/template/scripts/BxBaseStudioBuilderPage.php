@@ -1584,7 +1584,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         $aTmplParams = array(
             'menu' => array(),
             'html_settings_groups_id' => $this->aHtmlIds['settings_groups_id'],
-            'bx_repeat:settings_groups' => array()
+            'bx_repeat:settings_groups' => array(),
+        	'submit' => _t($bCreate ? '_adm_bp_btn_page_create' : '_adm_bp_btn_page_apply')
         );
         foreach($this->aPageSettings as $aSetting) {
             //--- get menu items
