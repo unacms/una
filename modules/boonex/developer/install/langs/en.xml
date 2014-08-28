@@ -372,4 +372,11 @@
     <string name="_bx_dev_pgt_txt_manage_recompile_title_plur"><![CDATA[Recompile %s language for all modules.]]></string>
     <string name="_bx_dev_pgt_txt_manage_restore_title_plur"><![CDATA[Restore %s language for all modules.]]></string>
     <string name="_bx_dev_pgt_txt_manage_modules_all"><![CDATA[All]]></string>
+
+	<!-- Hash -->
+	<string name="_bx_dev_hash_msg_reset_hash_system"><![CDATA[System hash was successfully reset.]]></string>
+	<string name="_bx_dev_hash_err_reset_hash_system"><![CDATA[Cannot reset system hash.]]></string>
+	<string name="_bx_dev_hash_msg_reset_hash_modules"><![CDATA[Hash was successfully reset for the following modules:]]></string>
+	<string name="_bx_dev_hash_txt_reset_hash_module"><![CDATA[Module]]></string>
+	<string name="_bx_dev_hash_txt_reset_hash_files"><![CDATA[Files Hashed]]></string>
 </resources>

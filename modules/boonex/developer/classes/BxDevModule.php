@@ -47,5 +47,62 @@ class BxDevModule extends BxDolModule
     {
         return $this->aTools;
     }
+
+    public function actionResetHash($sType) {
+    	$oDb = bx_instance('BxDolStudioInstallerQuery');
+
+    	$sResult = '';
+    	switch ($sType) {
+    		case 'system':
+    			$oHasher = bx_instance('BxDolInstallerHasher');
+
+    			$oDb->deleteModuleTrackFiles(BX_SYSTEM_MODULE_ID);
+
+    			$sResult = _t('_bx_dev_hash_' . ($oHasher->hashSystemFiles() ? 'msg' : 'err') . '_reset_hash_system');    			
+    			break;
+
+    		case 'modules':
+    			bx_import('BxDolInstallerUtils');
+
+				bx_import('BxDolModuleQuery');
+				$aModules = BxDolModuleQuery::getInstance()->getModules();
+
+				$aTmplVarsModules = array();
+				foreach($aModules as $aModule) {
+					if($aModule['name'] == 'system')
+						continue;
+
+					$aConfig = BxDolInstallerUtils::getModuleConfig($aModule);
+					$sPathInstaller = BX_DIRECTORY_PATH_MODULES . $aModule['path'] . 'install/installer.php';
+					if(empty($aConfig) || !file_exists($sPathInstaller))
+						continue;
+
+					require_once($sPathInstaller);
+
+					$sClassName = $aConfig['class_prefix'] . 'Installer';
+					$oInstaller = new $sClassName($aConfig);
+
+					$oDb->deleteModuleTrackFiles($aModule['id']);
+
+					$aFiles = array();
+				    $oInstaller->hashFiles(BX_DIRECTORY_PATH_ROOT . 'modules/' . $aModule['path'], $aFiles);
+					foreach($aFiles as $aFile)
+				    	$oDb->insertModuleTrack($aModule['id'], $aFile);
+
+					$aTmplVarsModules[] = array(
+						'module' => $aModule['title'],
+						'files' => count($aFiles)
+					);
+				}
+
+				$sResult = $this->_oTemplate->parseHtmlByName('hash_modules.html', array(
+					'bx_repeat:modules' => $aTmplVarsModules
+				));
+				break;
+    	}
+
+    	echo $sResult;
+    	exit;
+    }
 }
 /** @} */
