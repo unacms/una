@@ -154,6 +154,9 @@ div.adm-bp-cbf-counter {
 }
 
 /*--- Edit Block popup style ---*/
+div.adm-bp-edit-block-form {
+	margin-top: 0px;
+}
 
 /*--- Page Settings popups style ---*/
 div#adm-bp-add-popup div.bx-popup-width,

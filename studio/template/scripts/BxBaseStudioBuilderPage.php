@@ -570,6 +570,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
         bx_import('BxTemplStudioFunctions');
         $sContent = BxTemplStudioFunctions::getInstance()->popupBox($this->aHtmlIds['create_block_popup_id'], _t('_adm_bp_txt_new_block_popup'), $oTemplate->parseHtmlByName('bp_add_block.html', array(
+        	'action' => 'create',
             'form_id' => $aForm['form_attrs']['id'],
             'form' => $oForm->getCode(true)
         )));
@@ -748,6 +749,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
         bx_import('BxTemplStudioFunctions');
         $sContent = BxTemplStudioFunctions::getInstance()->popupBox($this->aHtmlIds['edit_block_popup_id'], _t('_adm_bp_txt_edit_block_popup', _t($aBlock['title'])), $oTemplate->parseHtmlByName('bp_add_block.html', array(
+        	'action' => 'edit',
             'form_id' => $aForm['form_attrs']['id'],
             'form' => $oForm->getCode(true)
         )));
