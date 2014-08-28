@@ -23,8 +23,6 @@ class BxDolCronUpgradeModulesCheck extends BxDolCron
             ));
             setParam('sys_autoupdate_modules', ''); // disable auto-update if it is failed
         }
-        else
-        	sendMailTemplateSystem('t_UpgradeModulesSuccess');
     }
 }
 

@@ -19,6 +19,7 @@ class BxDolUpgraderModules extends BxDolUpgrader
         bx_import('BxDolStudioInstallerUtils');
         $oInstallerUtils = BxDolStudioInstallerUtils::getInstance();
 
+        $aUpdated = array();
         while(true) {
         	$aUpdates = $oInstallerUtils->checkUpdates();
 	        foreach($aUpdates as $aUpdate) {
@@ -39,12 +40,30 @@ class BxDolUpgraderModules extends BxDolUpgrader
         			$this->setError($aResult['message']);
         			break;
         		}
+        		else 
+        			$aUpdated[$aUpdate['module_name']] = $aUpdate['version_to'];
         	}
 
         	break;
         }
 
         umask($iUmaskSave);
+
+        if(!empty($aUpdated)) {
+        	bx_import('BxDolModuleQuery');
+			$oModuleQuery = BxDolModuleQuery::getInstance();
+
+        	$sUpdated = '';
+        	foreach($aUpdated as $sModule => $sVersion) {
+        		$aModule = $oModuleQuery->getModuleByName($sModule);
+
+        		$sUpdated .= _t('_sys_et_txt_body_upgraded_module', $aModule['title'], $sVersion);
+        	}
+
+        	sendMailTemplateSystem('t_UpgradeModulesSuccess', array (
+                'conclusion' => $sUpdated,
+            ));
+        }
 
         return $this->getError() ? false : true;
     }

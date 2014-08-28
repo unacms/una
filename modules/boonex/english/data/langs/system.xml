@@ -1494,8 +1494,10 @@ If it is not enabled then please consider implement this optimization, since it 
 {conclusion}
 <bx_include_auto:_email_footer.html />]]></string>
 	<string name="_sys_et_txt_body_upgrade_modules_success"><![CDATA[<bx_include_auto:_email_header.html />
-<p>Modules were successfully upgraded.</p>
+<p>The following modules were successfully upgraded.</p>
+{conclusion}
 <bx_include_auto:_email_footer.html />]]></string>
+	<string name="_sys_et_txt_body_upgraded_module"><![CDATA[<b>{0}</b> module: up to {1} version.<br />]]></string>
 	<string name="_sys_et_txt_name_system_admin_email"><![CDATA[Message sending from the Admin Panel]]></string>
 	<string name="_sys_et_txt_name_system_comment_replied"><![CDATA[The letter is sent to members whose comment was replied]]></string>
 	<string name="_sys_et_txt_name_system_confirmation"><![CDATA[Profile e-mail confirmation message]]></string>
