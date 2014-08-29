@@ -7,12 +7,12 @@
  * @{
  */
 
-require_once(BX_DIRECTORY_PATH_ROOT . 'upgrade/classes/BxDolUpgradeController.php');
-require_once(BX_DIRECTORY_PATH_ROOT . 'upgrade/classes/BxDolUpgradeUtil.php');
-require_once(BX_DIRECTORY_PATH_ROOT . 'upgrade/classes/BxDolUpgradeDb.php');
-
 $aPathInfo = pathinfo(__FILE__);
 define ('BX_UPGRADE_DIR_UPGRADES', $aPathInfo['dirname'] . '/files/');
+
+require_once($aPathInfo['dirname'] . '/classes/BxDolUpgradeController.php');
+require_once($aPathInfo['dirname'] . '/classes/BxDolUpgradeUtil.php');
+require_once($aPathInfo['dirname'] . '/classes/BxDolUpgradeDb.php');
 
 bx_import('BxDolCron');
 
