@@ -123,6 +123,7 @@
 	<string name="__Bulgaria"><![CDATA[Bulgaria]]></string>
 	<string name="__Bulgarian"><![CDATA[Bulgarian]]></string>
 	<string name="__Burkina Faso"><![CDATA[Burkina Faso]]></string>
+	<string name="__Burma"><![CDATA[Burma]]></string>
 	<string name="__Burmese"><![CDATA[Burmese]]></string>
 	<string name="__Burundi"><![CDATA[Burundi]]></string>
 	<string name="__Cambodia"><![CDATA[Cambodia]]></string>
@@ -143,6 +144,7 @@
 	<string name="__Congo, Republic of the"><![CDATA[Congo, Republic of the]]></string>
 	<string name="__Cook Islands"><![CDATA[Cook Islands]]></string>
 	<string name="__Costa Rica"><![CDATA[Costa Rica]]></string>
+	<string name="__Cote d'Ivoire"><![CDATA[__Cote d'Ivoire]]></string>
 	<string name="__Croatia"><![CDATA[Croatia]]></string>
 	<string name="__Croatian"><![CDATA[Croatian]]></string>
 	<string name="__Cuba"><![CDATA[Cuba]]></string>
@@ -165,6 +167,7 @@
 	<string name="__Estonia"><![CDATA[Estonia]]></string>
 	<string name="__Estonian"><![CDATA[Estonian]]></string>
 	<string name="__Ethiopia"><![CDATA[Ethiopia]]></string>
+	<string name="__Falkland Islands (Islas Malvinas)"><![CDATA[Falkland Islands (Islas Malvinas)]]></string>
 	<string name="__Faroe Islands"><![CDATA[Faroe Islands]]></string>
 	<string name="__Fiji"><![CDATA[Fiji]]></string>
 	<string name="__Finland"><![CDATA[Finland]]></string>
@@ -196,7 +199,9 @@
 	<string name="__Heard Island and McDonald Islands"><![CDATA[Heard Island and McDonald Islands]]></string>
 	<string name="__Hebrew"><![CDATA[Hebrew]]></string>
 	<string name="__Hindi"><![CDATA[Hindi]]></string>
+	<string name="__Holy See (Vatican City)"><![CDATA[Holy See (Vatican City)]]></string>
 	<string name="__Honduras"><![CDATA[Honduras]]></string>
+	<string name="__Hong Kong (SAR)"><![CDATA[Hong Kong (SAR)]]></string>
 	<string name="__Hungarian"><![CDATA[Hungarian]]></string>
 	<string name="__Hungary"><![CDATA[Hungary]]></string>
 	<string name="__Iceland"><![CDATA[Iceland]]></string>
@@ -454,7 +459,7 @@
 	<string name="_adm_bp_err_block_not_found"><![CDATA[The requested block cannot be found.]]></string>
 	<string name="_adm_bp_err_block_title"><![CDATA[Enter title, more then 3 characters]]></string>
 	<string name="_adm_bp_err_cannot_process_action"><![CDATA[Cannot process action. It does not have an associated handler.]]></string>
-	<string name="_adm_bp_err_nothing_changed"><![CDATA[Nothing was changed or an error occured.]]></string>
+	<string name="_adm_bp_err_nothing_changed"><![CDATA[Nothing was changed or an error occurred.]]></string>
 	<string name="_adm_bp_err_page_create"><![CDATA[Cannot create the page.]]></string>
 	<string name="_adm_bp_err_page_delete"><![CDATA[Cannot delete the page.]]></string>
 	<string name="_adm_bp_err_page_layout"><![CDATA[Please, select a page layout.]]></string>
@@ -577,7 +582,7 @@
 	<string name="_adm_err_modules_module_was_modified"><![CDATA[Module was modified]]></string>
 	<string name="_adm_err_modules_pending_uninstall"><![CDATA[Module uninstall was postponed. Module will be uninstalled automatically after all its files are deleted.]]></string>
 	<string name="_adm_err_modules_pending_uninstall_already"><![CDATA[Module is pending uninstall already.]]></string>
-	<string name="_adm_err_modules_process_action_failed"><![CDATA[An error occured. Contact with module's vendor]]></string>
+	<string name="_adm_err_modules_process_action_failed"><![CDATA[An error occurred. Contact with module's vendor]]></string>
 	<string name="_adm_err_modules_wrong_dependency_disable"><![CDATA[Failed to disable. The module has the following dependent modules. You need to disable them first.]]></string>
 	<string name="_adm_err_modules_wrong_dependency_install"><![CDATA[The following modules should be installed first:]]></string>
 	<string name="_adm_err_modules_wrong_dependency_uninstall"><![CDATA[Failed to uninstall. The module has the following dependent modules. You need to uninstall them first.]]></string>
@@ -601,7 +606,7 @@
 	<string name="_adm_form_btn_field_edit"><![CDATA[Edit field]]></string>
 	<string name="_adm_form_btn_field_save"><![CDATA[Save]]></string>
 	<string name="_adm_form_btn_fields_create"><![CDATA[Add New Field]]></string>
-	<string name="_adm_form_btn_fields_visible"><![CDATA[Visibile For]]></string>
+	<string name="_adm_form_btn_fields_visible"><![CDATA[Visible For]]></string>
 	<string name="_adm_form_btn_forms_cancel"><![CDATA[Cancel]]></string>
 	<string name="_adm_form_btn_forms_edit"><![CDATA[Edit form]]></string>
 	<string name="_adm_form_btn_forms_save"><![CDATA[Save]]></string>
@@ -839,7 +844,7 @@
 	<string name="_adm_nav_btn_items_edit"><![CDATA[Edit item]]></string>
 	<string name="_adm_nav_btn_items_gl_create"><![CDATA[Add New Item]]></string>
 	<string name="_adm_nav_btn_items_gl_import"><![CDATA[Import Items]]></string>
-	<string name="_adm_nav_btn_items_gl_visible"><![CDATA[Visibile For]]></string>
+	<string name="_adm_nav_btn_items_gl_visible"><![CDATA[Visible For]]></string>
 	<string name="_adm_nav_btn_items_import"><![CDATA[Import item]]></string>
 	<string name="_adm_nav_btn_items_save"><![CDATA[Save]]></string>
 	<string name="_adm_nav_btn_menus_add"><![CDATA[Add]]></string>
@@ -888,7 +893,7 @@
 	<string name="_adm_nav_err_missing_params"><![CDATA[The required parameters are missing.]]></string>
 	<string name="_adm_nav_err_sets_create"><![CDATA[Cannot create set]]></string>
 	<string name="_adm_nav_err_sets_delete"><![CDATA[Cannot delete set]]></string>
-	<string name="_adm_nav_err_sets_delete_used"><![CDATA[Set can't be deleted becuase it is in use]]></string>
+	<string name="_adm_nav_err_sets_delete_used"><![CDATA[Set can't be deleted because it is in use]]></string>
 	<string name="_adm_nav_err_sets_edit"><![CDATA[Cannot update set]]></string>
 	<string name="_adm_nav_err_sets_title"><![CDATA[A title with at least 3 characters is required.]]></string>
 	<string name="_adm_nav_txt_all_modules"><![CDATA[All Modules]]></string>
@@ -900,7 +905,7 @@
 	<string name="_adm_nav_txt_items_gl_link_menu"><![CDATA[Menu:]]></string>
 	<string name="_adm_nav_txt_items_gl_module"><![CDATA[Module]]></string>
 	<string name="_adm_nav_txt_items_gl_title_system"><![CDATA[System Name]]></string>
-	<string name="_adm_nav_txt_items_gl_visible"><![CDATA[Visibile For]]></string>
+	<string name="_adm_nav_txt_items_gl_visible"><![CDATA[Visible For]]></string>
 	<string name="_adm_nav_txt_items_icon"><![CDATA[Icon]]></string>
 	<string name="_adm_nav_txt_items_icon_image"><![CDATA[]]></string>
 	<string name="_adm_nav_txt_items_icon_image_new"><![CDATA[]]></string>
@@ -1032,9 +1037,9 @@
 	<string name="_adm_prm_err_level_icon_image_remove"><![CDATA[Cannot remove icon]]></string>
 	<string name="_adm_prm_err_level_id"><![CDATA[Membership levels limit is reached.]]></string>
 	<string name="_adm_prm_err_level_name"><![CDATA[You need to enter name(3, 100) for membership level]]></string>
-	<string name="_adm_prm_err_level_quota_max_file_size"><![CDATA[You need to enter a numeric value, leave 0 for unlimit]]></string>
-	<string name="_adm_prm_err_level_quota_number"><![CDATA[You need to enter a numeric value, leave 0 for unlimit]]></string>
-	<string name="_adm_prm_err_level_quota_size"><![CDATA[You need to enter a numeric value, leave 0 for unlimit]]></string>
+	<string name="_adm_prm_err_level_quota_max_file_size"><![CDATA[You need to enter a numeric value, leave 0 for unlimited]]></string>
+	<string name="_adm_prm_err_level_quota_number"><![CDATA[You need to enter a numeric value, leave 0 for unlimited]]></string>
+	<string name="_adm_prm_err_level_quota_size"><![CDATA[You need to enter a numeric value, leave 0 for unlimited]]></string>
 	<string name="_adm_prm_err_price_create"><![CDATA[Cannot create pricing option]]></string>
 	<string name="_adm_prm_err_price_duplicate"><![CDATA[The similar pricing option already exists for this level.]]></string>
 	<string name="_adm_prm_err_price_update"><![CDATA[Cannot update pricing option]]></string>
@@ -1138,8 +1143,8 @@
 	<string name="_adm_stg_cpt_option_sys_pb_cache_engine"><![CDATA[Page blocks cache engine (other than File option may require custom server setup)]]></string>
 	<string name="_adm_stg_cpt_option_sys_recaptcha_key_private"><![CDATA[reCAPTCHA private key]]></string>
 	<string name="_adm_stg_cpt_option_sys_recaptcha_key_public"><![CDATA[reCAPTCHA public key]]></string>
-	<string name="_adm_stg_cpt_option_sys_security_form_token_enable"><![CDATA[Enable CSRF tocken in forms]]></string>
-	<string name="_adm_stg_cpt_option_sys_security_form_token_lifetime"><![CDATA[CSRF tocken lifetime in seconds(0 - do not track time)]]></string>
+	<string name="_adm_stg_cpt_option_sys_security_form_token_enable"><![CDATA[Enable CSRF token in forms]]></string>
+	<string name="_adm_stg_cpt_option_sys_security_form_token_lifetime"><![CDATA[CSRF token lifetime in seconds(0 - do not track time)]]></string>
 	<string name="_adm_stg_cpt_option_sys_security_impact_threshold_block"><![CDATA[Total security impact threshold to send report and block aggressor]]></string>
 	<string name="_adm_stg_cpt_option_sys_security_impact_threshold_log"><![CDATA[Total security impact threshold to send report]]></string>
 	<string name="_adm_stg_cpt_option_sys_storage_default"><![CDATA[Default storage engine (other than Local may require custom/additional setup)]]></string>
@@ -1166,7 +1171,7 @@
 	<string name="_adm_str_err_cannot_unzip_package"><![CDATA[Cannot unarchive ZIP package.]]></string>
 	<string name="_adm_str_err_cannot_write"><![CDATA[Cannot save downloaded file.]]></string>
 	<string name="_adm_str_err_destination_not_valid"><![CDATA[Destination FTP folder doesn't look like a valid Dolphin root folder.]]></string>
-	<string name="_adm_str_err_download_failed"><![CDATA[Download faild. Please report.]]></string>
+	<string name="_adm_str_err_download_failed"><![CDATA[Download failed. Please report.]]></string>
 	<string name="_adm_str_err_files_copy_failed"><![CDATA[File transfer failed, please check write permissions.]]></string>
 	<string name="_adm_str_err_no_ftp_info"><![CDATA[FTP access info was not specified. You may enter it via Settings -> General.]]></string>
 	<string name="_adm_str_err_no_product_info"><![CDATA[Cannot load product info. Try again later.]]></string>
@@ -1243,7 +1248,7 @@
 	<string name="_adm_txt_modules_recompile_alerts"><![CDATA[Recompiling alerts:]]></string>
 	<string name="_adm_txt_modules_recompile_browse"><![CDATA[Recompiling browse:]]></string>
 	<string name="_adm_txt_modules_recompile_comments"><![CDATA[Recompiling comments:]]></string>
-	<string name="_adm_txt_modules_recompile_global_paramaters"><![CDATA[Recompiling global paramaters:]]></string>
+	<string name="_adm_txt_modules_recompile_global_paramaters"><![CDATA[Recompiling global parameters:]]></string>
 	<string name="_adm_txt_modules_recompile_injections"><![CDATA[Recompiling injections:]]></string>
 	<string name="_adm_txt_modules_recompile_menus"><![CDATA[Recompiling menus:]]></string>
 	<string name="_adm_txt_modules_recompile_member_actions"><![CDATA[Recompiling member actions:]]></string>
@@ -1327,7 +1332,7 @@
 	<string name="_sys_acl_action_comments_remove_all"><![CDATA[Comments Remove All]]></string>
 	<string name="_sys_acl_action_comments_remove_own"><![CDATA[Comments Remove Own]]></string>
 	<string name="_sys_acl_action_create_account"><![CDATA[Create Account]]></string>
-	<string name="_sys_acl_action_create_account_desc"><![CDATA[It make sence for guests only, you can temporary disable it or set limit by time for example.]]></string>
+	<string name="_sys_acl_action_create_account_desc"><![CDATA[It make sense for guests only, you can temporary disable it or set limit by time for example.]]></string>
 	<string name="_sys_acl_action_delete_account"><![CDATA[Delete Account]]></string>
 	<string name="_sys_acl_action_delete_account_desc"><![CDATA[Delete account also deletes account's content.]]></string>
 	<string name="_sys_acl_action_every_period"><![CDATA[ every {4} hours]]></string>
@@ -1338,7 +1343,7 @@
 	<string name="_sys_acl_action_pending"><![CDATA[You are currently not an active member. Please, ask the site <a href="mailto:{7}">administrator</a> to make you an active member so you would be able to <b>{1}</b>.]]></string>
 	<string name="_sys_acl_action_set_acl_level"><![CDATA[Set membership level]]></string>
 	<string name="_sys_acl_action_set_acl_level_desc"><![CDATA[Set membership level for profiles]]></string>
-	<string name="_sys_acl_action_suspended"><![CDATA[You can't '{1}' becuase your profile was suspended, if you don't know why - try to send message to <a href="mailto:{7}">administrator</a>.]]></string>
+	<string name="_sys_acl_action_suspended"><![CDATA[You can't '{1}' because your profile was suspended, if you don't know why - try to send message to <a href="mailto:{7}">administrator</a>.]]></string>
 	<string name="_sys_acl_action_unauthenticated"><![CDATA[Not logged in users can't '{1}'.]]></string>
 	<string name="_sys_acl_action_unconfirmed"><![CDATA[You didn't confirm your profile. Please check your email with profile activation link. Unconfirmed members can't <b>{1}</b>.]]></string>
 	<string name="_sys_acl_action_vote"><![CDATA[Vote]]></string>
@@ -1411,7 +1416,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_conn_err_connection_does_not_exists"><![CDATA[Connection doesn't exist]]></string>
 	<string name="_sys_conn_err_connection_is_awaiting_confirmation"><![CDATA[Connection request is awaiting confirmation]]></string>
 	<string name="_sys_conn_err_input_data_is_not_defined"><![CDATA[Input data isn't defined]]></string>
-	<string name="_sys_conn_msg_success"><![CDATA[Operation has beed succesfully completed]]></string>
+	<string name="_sys_conn_msg_success"><![CDATA[Operation has beed successfully completed]]></string>
 	<string name="_sys_currency"><![CDATA[{0}{1}]]></string>
 	<string name="_sys_designbox_0"><![CDATA[Content only]]></string>
 	<string name="_sys_designbox_1"><![CDATA[Content + title + background]]></string>
@@ -1618,10 +1623,10 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_unsubscribe_input_receive_updates"><![CDATA[Receive Site Updates]]></string>
 	<string name="_sys_form_unsubscribe_input_submit"><![CDATA[Submit]]></string>
 	<string name="_sys_format_size_b"><![CDATA[{0} bytes]]></string>
-	<string name="_sys_format_size_gb"><![CDATA[{0} Gb]]></string>
-	<string name="_sys_format_size_kb"><![CDATA[{0} Kb]]></string>
-	<string name="_sys_format_size_mb"><![CDATA[{0} Mb]]></string>
-	<string name="_sys_format_size_tb"><![CDATA[{0} Tb]]></string>
+	<string name="_sys_format_size_gb"><![CDATA[{0} GB]]></string>
+	<string name="_sys_format_size_kb"><![CDATA[{0} KB]]></string>
+	<string name="_sys_format_size_mb"><![CDATA[{0} MB]]></string>
+	<string name="_sys_format_size_tb"><![CDATA[{0} TB]]></string>
 	<string name="_sys_grid_confirmation"><![CDATA[Are you sure?]]></string>
 	<string name="_sys_grid_delete_failed"><![CDATA[Delete failed]]></string>
 	<string name="_sys_grid_search"><![CDATA[Search...]]></string>
@@ -1917,8 +1922,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_splash_inp_postfix"><![CDATA[.online.me]]></string>
 	<string name="_sys_splash_slogan"><![CDATA[The easiest way to create your own social website.]]></string>
 	<string name="_sys_storage_err_db"><![CDATA[database error]]></string>
-	<string name="_sys_storage_err_engine_add"><![CDATA[error occured]]></string>
-	<string name="_sys_storage_err_engine_get"><![CDATA[error occured]]></string>
+	<string name="_sys_storage_err_engine_add"><![CDATA[error occurred]]></string>
+	<string name="_sys_storage_err_engine_get"><![CDATA[error occurred]]></string>
 	<string name="_sys_storage_err_file_not_found"><![CDATA[file not found]]></string>
 	<string name="_sys_storage_err_file_too_big"><![CDATA[file is too big]]></string>
 	<string name="_sys_storage_err_filesystem_perm"><![CDATA[permissions error]]></string>
@@ -1941,18 +1946,18 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_txt_access_denied"><![CDATA[Access denied]]></string>
 	<string name="_sys_txt_account_pending"><![CDATA[Your account is pending approval, please wait until it is activated.]]></string>
 	<string name="_sys_txt_account_profile_context_change_suggestion"><![CDATA[This is your profile, you can <a href="{0}">change your current profile</a> to this profile]]></string>
-	<string name="_sys_txt_account_profile_context_changed_success"><![CDATA[Current profile has been succesfully changed to: <b>{0}</b>]]></string>
+	<string name="_sys_txt_account_profile_context_changed_success"><![CDATA[Current profile has been successfully changed to: <b>{0}</b>]]></string>
 	<string name="_sys_txt_account_suspended"><![CDATA[Your account is suspended.]]></string>
 	<string name="_sys_txt_account_unconfirmed"><![CDATA[Your email address is unconfirmed. Please, check your email ({1}) for a confirmation letter and click email confirmation link. Can't find the letter? Check your SPAM folder or <a href="{0}">send the verification letter again</a>.]]></string>
 	<string name="_sys_txt_account_profile_system"><![CDATA[You have no profiles created, so you can't perform any actions on the site, please <a href="{0}">create  profile</a>.]]></string>
 	<string name="_sys_txt_captcha_not_available"><![CDATA[CAPTCHA not available]]></string>
-    <string name="_sys_txt_change_image"><![CDATA[Change Picure]]></string>
+    <string name="_sys_txt_change_image"><![CDATA[Change Picture]]></string>
 	<string name="_sys_txt_cmt_loading"><![CDATA[Loading...]]></string>
 	<string name="_sys_txt_confirm_email_already_confirmed"><![CDATA[Your email address is already confirmed.]]></string>
 	<string name="_sys_txt_confirm_email_desc"><![CDATA[Please enter confirmation code which was sent to your email address, or just click confirmation link in the same email message.]]></string>
-	<string name="_sys_txt_confirm_email_error_occured"><![CDATA[Error occured, please try to login to your account and resend verification email.]]></string>
+	<string name="_sys_txt_confirm_email_error_occured"><![CDATA[Error occurred, please try to login to your account and resend verification email.]]></string>
 	<string name="_sys_txt_confirm_email_sent"><![CDATA[Email verification letter was sent, please check your inbox.]]></string>
-	<string name="_sys_txt_confirm_email_sent_failed"><![CDATA[Error occured, please report error to site administrator.]]></string>
+	<string name="_sys_txt_confirm_email_sent_failed"><![CDATA[Error occurred, please report error to site administrator.]]></string>
 	<string name="_sys_txt_confirm_email_success"><![CDATA[You email address was successfully confirmed.]]></string>
     <string name="_sys_txt_current_picture"><![CDATA[Current Picture]]></string>
 	<string name="_sys_txt_data_successfully_submitted"><![CDATA[Done]]></string>
@@ -1968,13 +1973,13 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_txt_error_entry_delete"><![CDATA[Entry delete failed]]></string>
 	<string name="_sys_txt_error_entry_is_not_defined"><![CDATA[Requested resource doesn't exist]]></string>
 	<string name="_sys_txt_error_entry_update"><![CDATA[Entry update failed]]></string>
-	<string name="_sys_txt_error_occured"><![CDATA[Error Occured]]></string>
+	<string name="_sys_txt_error_occured"><![CDATA[Error Occurred]]></string>
 
 	<string name="_sys_txt_forgot_pasword"><![CDATA[Forgot password?]]></string>
 	<string name="_sys_txt_forgot_pasword_check_email"><![CDATA[Email was sent, please follow instructions in the email message.]]></string>
 	<string name="_sys_txt_forgot_pasword_desc"><![CDATA[Enter your account email address to get a password-reset link.]]></string>
 	<string name="_sys_txt_forgot_pasword_email_send_failed"><![CDATA[Email send failed, please try again later.]]></string>
-	<string name="_sys_txt_forgot_pasword_error_occured"><![CDATA[Error occured, please report error to the site administrator.]]></string>
+	<string name="_sys_txt_forgot_pasword_error_occured"><![CDATA[Error occurred, please report error to the site administrator.]]></string>
 
     <string name="_sys_txt_form_entry_input_picture_delete"><![CDATA[Delete]]></string>
     <string name="_sys_txt_form_entry_input_picture_insert"><![CDATA[Insert to Post]]></string>
@@ -1990,17 +1995,17 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_txt_n_friends"><![CDATA[{0} friends]]></string>
     <string name="_sys_txt_n_mutual_friends"><![CDATA[{0} mutual friends]]></string>
     <string name="_sys_txt_one_mutual_friend"><![CDATA[<a href="{0}">{1}</a> mutual friend]]></string>
-	<string name="_sys_txt_reset_pasword_email_send_failed"><![CDATA[Your new password is <b>{0}</b>, please make sure to save it somewhere becuase we wasn't able to send it to your email. You can change it to any other password after first login.]]></string>
+	<string name="_sys_txt_reset_pasword_email_send_failed"><![CDATA[Your new password is <b>{0}</b>, please make sure to save it somewhere because we wasn't able to send it to your email. You can change it to any other password after first login.]]></string>
 	<string name="_sys_txt_reset_pasword_email_sent"><![CDATA[Your new password - <b>{0}</b> - was sent to your email. You can change it once you login to your account.]]></string>
-	<string name="_sys_txt_reset_pasword_error_occured"><![CDATA[Error occured, please <a href="{0}">try again</a>.]]></string>
+	<string name="_sys_txt_reset_pasword_error_occured"><![CDATA[Error occurred, please <a href="{0}">try again</a>.]]></string>
 	<string name="_sys_txt_unsubscribe_email_settings_update_success"><![CDATA[Your email preferences has been successfully updated.]]></string>
-	<string name="_sys_txt_unsubscribe_error_occured"><![CDATA[Error occured, please login to your account and update email references there or contact site administrator to unsubscribe you manually.]]></string>
+	<string name="_sys_txt_unsubscribe_error_occured"><![CDATA[Error occurred, please login to your account and update email references there or contact site administrator to unsubscribe you manually.]]></string>
 	<string name="_sys_txt_unsubscribe_info"><![CDATA[Update email preferences for <b>{0}</b>]]></string>
 	<string name="_sys_txt_unsubscribe_wrong_link"><![CDATA[Unsubscribe link is wrong.]]></string>
 	<string name="_sys_upgrade_conclusion"><![CDATA[<h3>Important info:</h3><p>{0}</p>]]></string>
 	<string name="_sys_upgrade_db_and_files_versions_different"><![CDATA[Database and files versions are different, probably previous patch wasn't applied correctly.]]></string>
-	<string name="_sys_upgrade_files_checksum_failed"><![CDATA[Can't apply apgrade becase the following files were modified: {0}]]></string>
-	<string name="_sys_upgrade_files_checksum_failed_too_many"><![CDATA[Can't apply upgrade becase too many files({0}%) were modified]]></string>
+	<string name="_sys_upgrade_files_checksum_failed"><![CDATA[Can't apply upgrade because the following files were modified: {0}]]></string>
+	<string name="_sys_upgrade_files_checksum_failed_too_many"><![CDATA[Can't apply upgrade because too many files({0}%) were modified]]></string>
 	<string name="_sys_upgrade_get_version_info_failed"><![CDATA[Get version info failed, please check internet connection on the web-server or web-server firewall]]></string>
 	<string name="_sys_upgrade_patch_checksum_failed"><![CDATA[Downloaded patch file checksum is invalid]]></string>
 	<string name="_sys_upgrade_patch_download_failed"><![CDATA[Patch download failed, or downloaded file can't be saved]]></string>
