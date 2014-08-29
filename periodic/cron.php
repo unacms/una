@@ -117,7 +117,6 @@ function runJob($aJob)
         BxDolService::callSerialized($aJob['service_call']);
 }
 
-bx_import('BxDolLanguages');
 bx_import('BxDolCronQuery');
 $oDb = BxDolCronQuery::getInstance();
 
@@ -135,6 +134,8 @@ if (!empty($aJobsTransient)) {
 
 if (bx_check_maintenance_mode()) // don't run regular cron jobs when site is in maintenance mode
     exit;
+
+bx_import('BxDolLanguages');
 
 // run regular cron jobs
 $aJobs = $oDb->getJobs();
