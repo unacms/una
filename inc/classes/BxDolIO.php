@@ -19,7 +19,7 @@ class BxDolIO extends BxDol
     	if(defined('BX_DOL_CRON_EXECUTE'))
     		trigger_error('Function can\'t be called under cron', E_USER_ERROR);
 
-		$sName = mktime() . rand(0, 999999999);
+		$sName = time() . rand(0, 999999999);
 		$sFilePath = BX_DIRECTORY_PATH_TMP . $sName . '.txt';
 		if(!$rHandler = fopen($sFilePath, 'w'))
             return false;
