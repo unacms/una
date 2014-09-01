@@ -117,7 +117,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
                                 $sConfigPathModule = $sPath . $sVendor . '/' . $sModule . '/install/config.php';
                                 $sConfigPathUpdate = $sPath . $sVendor . '/' . $sModule . '/updates/' . $sUpdate . '/install/config.php';
                                 $aUpdate = $this->getConfigUpdate($sConfigPathModule, $sConfigPathUpdate, $aInstalledPathes, $aInstalledInfo);
-                                if(empty($aUpdate))
+                                if(empty($aUpdate) || !is_array($aUpdate) || version_compare($aUpdate['module_version'], $aUpdate['version_from']) != 0)
                                     continue;
 
                                 $aUpdates[$aUpdate['title']] = $aUpdate;
@@ -401,7 +401,8 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
             'dir' => $aConfig['home_dir'],
         	'module_type' => $aModule['type'],
             'module_name' => $aModule['name'],
-            'module_dir' => $aModule['dir']
+            'module_dir' => $aModule['dir'],
+        	'module_version' => $aModule['version']
         );
     }
 
