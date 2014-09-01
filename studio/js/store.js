@@ -178,7 +178,7 @@ BxDolStudioStore.prototype.getFiles = function(iId, sType, oButton) {
 	);
 };
 
-BxDolStudioStore.prototype.info = function(sModuleName, iDownloaded, oLink) {
+BxDolStudioStore.prototype.info = function(sModuleName, oLink) {
 	var oDate = new Date();
 	var $this = this;
 	bx_loading(this.sIdPageContent, true);
@@ -188,7 +188,6 @@ BxDolStudioStore.prototype.info = function(sModuleName, iDownloaded, oLink) {
 		{
 			str_action: 'get-product',
 			str_id: sModuleName,
-			str_downloaded: iDownloaded,
 			_t:oDate.getTime()
 		},
 		function(oData) {

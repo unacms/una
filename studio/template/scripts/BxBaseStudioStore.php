@@ -421,7 +421,7 @@ class BxBaseStudioStore extends BxDolStudioStore
         ));
     }
 
-    protected function getProduct($sModuleName, $bDownloaded = false)
+    protected function getProduct($sModuleName)
     {
         $sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
@@ -430,9 +430,15 @@ class BxBaseStudioStore extends BxDolStudioStore
         if(empty($aProduct) || !is_array($aProduct))
             return array('code' => 1, 'message' => (!empty($aProduct) ? $aProduct : _t('_adm_str_err_no_product_info')));
 
+		$aDownloaded = $this->getDownloadedModules();
+
         $bFree = (int)$aProduct['is_free'] == 1;
         $bPurchased = (int)$aProduct['is_purchased'] == 1;
+
         $bDownloadable = (int)$aProduct['is_file'] == 1;
+        $bDownloaded = in_array($aProduct['name'], $aDownloaded);
+        $bDownload = ($bFree || $bPurchased) && $bDownloadable;
+
         $bDiscount = !empty($aProduct['discount']);
         $bScreenshots = is_array($aProduct['screenshots']) && !empty($aProduct['screenshots']);
 
@@ -487,12 +493,16 @@ class BxBaseStudioStore extends BxDolStudioStore
                 )
             ),
             'bx_if:show_download' => array(
-                'condition' => ($bFree || $bPurchased) && $bDownloadable && !$bDownloaded,
+                'condition' => $bDownload && !$bDownloaded,
                 'content' => array(
                     'js_object' => $sJsObject,
                     'file_id' => $aProduct['file_id'],
                 )
-            )
+            ),
+            'bx_if:show_download_disabled' => array(
+				'condition' => $bDownload && $bDownloaded,
+				'content' => array()
+			),
         ));
 
         return array('code' => 0, 'message' => '', 'popup' => PopupBox('bx-std-str-popup-product', $aProduct['title'], $sContent, true), 'screenshots' => $iScreenshots);
@@ -552,13 +562,18 @@ class BxBaseStudioStore extends BxDolStudioStore
         $sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
 
+        $aDownloaded = $this->getDownloadedModules();
         $bShoppingCart = isset($aParams['is_shopping_cart']) && $aParams['is_shopping_cart'];
 
         $sResult = '';
         foreach($aItems as $aItem) {
             $bFree = (int)$aItem['is_free'] == 1;
             $bPurchased = (int)$aItem['is_purchased'] == 1;
+
             $bDownloadable = (int)$aItem['is_file'] == 1;
+            $bDownloaded = in_array($aItem['name'], $aDownloaded);
+            $bDownload = !$bShoppingCart && ($bFree || $bPurchased) && $bDownloadable;
+
             $sPrice = !$bFree ? _t('_adm_str_txt_price_csign', $aItem['currency_sign'], $aItem['price']) : _t('_adm_str_txt_price_free');
             $sDiscount = !$bFree && !empty($aItem['discount']) ? _t('_adm_str_txt_discount_csign', $aItem['currency_sign'], $aItem['discount']['price']) : '';
 
@@ -604,12 +619,16 @@ class BxBaseStudioStore extends BxDolStudioStore
                     )
                 ),
                 'bx_if:show_download' => array(
-                    'condition' => !$bShoppingCart && ($bFree || $bPurchased) && $bDownloadable,
+                    'condition' => $bDownload && !$bDownloaded,
                     'content' => array(
                         'js_object' => $sJsObject,
-                        'file_id' => $aItem['file_id'],
+                        'file_id' => $aItem['file_id']
                     )
                 ),
+                'bx_if:show_download_disabled' => array(
+					'condition' => $bDownload && $bDownloaded,
+					'content' => array()
+				),
                 'bx_if:show_delete' => array(
                     'condition' => $bShoppingCart,
                     'content' => array(
@@ -668,6 +687,12 @@ class BxBaseStudioStore extends BxDolStudioStore
         }
 
         return $sResult;
+    }
+
+    private function getDownloadedModules()
+    {
+		bx_import('BxDolStudioInstallerUtils');
+        return array_keys(BxDolStudioInstallerUtils::getInstance()->getModules(false));
     }
 }
 

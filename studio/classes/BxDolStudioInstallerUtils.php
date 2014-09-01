@@ -52,7 +52,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
     	return $this->performAction($sDirectory, $sOperation, $aParams);
     }
 
-    public function getModules()
+    public function getModules($bTitleAsKey = true)
     {
         $aModules = array();
         $oTemplate = BxDolStudioTemplate::getInstance();
@@ -76,7 +76,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
                         if(empty($aModule))
                             continue;
 
-                        $aModules[$aModule['title']] = $aModule;
+                        $aModules[$bTitleAsKey ? $aModule['title'] : $aModule['name']] = $aModule;
                     }
                     closedir($rHandleModule);
                 }

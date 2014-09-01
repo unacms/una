@@ -67,8 +67,7 @@ class BxDolStudioStore extends BxTemplStudioPage
 
                 case 'get-product':
                     $sModuleName = bx_process_input(bx_get('str_id'));
-                    $bDownloaded = (int)bx_get('str_downloaded');
-                    $aResult = $this->getProduct($sModuleName, $bDownloaded);
+                    $aResult = $this->getProduct($sModuleName);
                     break;
 
                 case 'get-update':

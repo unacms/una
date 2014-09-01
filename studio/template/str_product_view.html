@@ -83,6 +83,9 @@
 		<bx_if:show_download>
 			<input class="bx-btn bx-def-margin-right" type="button" value="<bx_text:_adm_btn_download_submit />" onclick="javascript:__js_object__.getFile(__file_id__, this)" />
 		</bx_if:show_download>
+		<bx_if:show_download_disabled>
+			<input class="bx-btn bx-btn-disabled bx-def-margin-right" type="button" value="<bx_text:_adm_btn_download_submit />" disabled="disabled" />
+		</bx_if:show_download_disabled>
 		<input class="bx-btn bx-def-margin-right" type="button" value="<bx_text:_adm_btn_cancel_submit />" onclick="javascript:$('.bx-popup-applied:visible').dolPopupHide();" />
 		<div class="bx-std-cb"></div>
 	</div>
