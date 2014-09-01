@@ -1642,6 +1642,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_inst_conf_desc_db_sock"><![CDATA[Leave blank or specify MySQL database socket path.]]></string>
 	<string name="_sys_inst_conf_desc_db_user"><![CDATA[Your MySQL database user name with read/write access.]]></string>
 	<string name="_sys_inst_conf_desc_language"><![CDATA[Language to install by default.]]></string>
+	<string name="_sys_inst_conf_desc_oauth_key_secret"><![CDATA[<a target="_blank" href="http://www.boonex.com/oauth/get_consumer">Get BoonEx key&secret</a>]]></string>
 	<string name="_sys_inst_conf_desc_path_to_binary"><![CDATA[If '{0}' binary doesn't exist, you need to install <a target="_blank" href="http://www.imagemagick.org/">ImageMagick</a>.]]></string>
 	<string name="_sys_inst_conf_desc_root_dir"><![CDATA[Path to directory where Dolphin files are stored.]]></string>
 	<string name="_sys_inst_conf_desc_site_email"><![CDATA[Email to send site messages from.]]></string>
@@ -1659,6 +1660,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_inst_conf_field_db_sock"><![CDATA[Database socket path]]></string>
 	<string name="_sys_inst_conf_field_db_user"><![CDATA[Database user]]></string>
 	<string name="_sys_inst_conf_field_language"><![CDATA[Language]]></string>
+	<string name="_sys_inst_conf_field_oauth_key"><![CDATA[BoonEx key]]></string>
+	<string name="_sys_inst_conf_field_oauth_secret"><![CDATA[BoonEx secret]]></string>
 	<string name="_sys_inst_conf_field_path_to_binary"><![CDATA[Path to '{0}' binary]]></string>
 	<string name="_sys_inst_conf_field_root_dir"><![CDATA[Site directory]]></string>
 	<string name="_sys_inst_conf_field_site_email"><![CDATA[Site e-mail]]></string>
@@ -1669,6 +1672,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_inst_conf_no_example"><![CDATA[no example]]></string>
 	<string name="_sys_inst_conf_not_found"><![CDATA[<span style="color:red">Not found</span>]]></string>
 	<string name="_sys_inst_conf_section_db_config"><![CDATA[DB config]]></string>
+	<string name="_sys_inst_conf_section_link_with_market"><![CDATA[Link with BoonEx market]]></string>
 	<string name="_sys_inst_conf_section_modules"><![CDATA[Modules]]></string>
 	<string name="_sys_inst_conf_section_paths"><![CDATA[Site paths]]></string>
 	<string name="_sys_inst_conf_section_site_info"><![CDATA[Site info]]></string>
