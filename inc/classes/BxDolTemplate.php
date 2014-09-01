@@ -1348,15 +1348,13 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
     /**
      * Less CSS
      *
-     * @param  mixed   $mixed    CSS string to process with Less compiler or an array with CSS file's Path and URL.
-     * @param  boolean $bContent whether $mixed has CSS content or file path.
-     * @return string  minified CSS string.
+     * @param  mixed $mixed CSS string to process with Less compiler or an array with CSS file's Path and URL.
+     * @return mixed string or an array with CSS file's Path and URL.
      */
     function _lessCss($mixed)
     {
         require_once(BX_DIRECTORY_PATH_PLUGINS . 'lessphp/lessc.inc.php');
         $oLess = new lessc();
-
         $oLess->setVariables($this->_oConfigTemplate->aLessConfig);
 
         if(is_array($mixed) && isset($mixed['url']) && isset($mixed['path'])) {
@@ -1472,14 +1470,17 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
         }
 
         //--- Collect all attached CSS/JS in one file ---//
+        $bLess = $this->_bLessEnable && method_exists($this, $sMethodLess);
+
         $sResult = "";
         $aIncluded = array();
-        foreach($aFiles as $aFile)
+        foreach($aFiles as $aFile) {
+        	if($bLess)
+				$aFile = $this->$sMethodLess($aFile);
+
             if(($sContent = $this->$sMethodCompile($aFile['path'], $aIncluded)) !== false)
                 $sResult .= $sContent;
-
-        if ($this->_bLessEnable && method_exists($this, $sMethodLess))
-            $sResult = $this->$sMethodLess($sResult);
+        }
 
         if ($this->_bMinifyEnable && method_exists($this, $sMethodMinify))
             $sResult = $this->$sMethodMinify($sResult);
@@ -1516,7 +1517,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
         $sResult = "";
         foreach($aFiles as $aFile) {
             if($this->_bLessEnable && method_exists($this, $sMethodLess))
-                $aFile = $this->$sMethodLess($aFile, false);
+                $aFile = $this->$sMethodLess($aFile);
 
             $sResult .= $this->$sMethodWrap($aFile['url']);
         }
