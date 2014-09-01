@@ -191,13 +191,13 @@ class BxDolInstallSiteConfig
                 'name' => _t('_sys_inst_conf_field_oauth_key'),
                 'ex' => '123abc4d',
                 'desc' => _t('_sys_inst_conf_desc_oauth_key_secret'),
-                'check' => array('checkLengthExact', 8),
+                'check' => array('checkLengthExactOrEmpty', 8),
             ),
             'oauth_secret' => array(
                 'name' => _t('_sys_inst_conf_field_oauth_secret'),
                 'ex' => '45de12368a9b367abc23512a',
                 'desc' => _t('_sys_inst_conf_desc_oauth_key_secret'),
-                'check' => array('checkLengthExact', 24),
+                'check' => array('checkLengthExactOrEmpty', 24),
             ),
 
             'section_link_to_market_close' => array(
@@ -573,9 +573,9 @@ EOF;
         return mb_strlen($s) >= $i ? true : false;
     }
 
-    protected function checkLengthExact ($s, $i)
+    protected function checkLengthExactOrEmpty ($s, $i)
     {
-        return mb_strlen($s) == $i;
+        return empty($s) || mb_strlen($s) == $i;
     }
 
     protected function checkEmail ($s, $i)
