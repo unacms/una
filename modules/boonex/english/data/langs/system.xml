@@ -1198,6 +1198,7 @@
 	<string name="_adm_str_txt_pv_updated"><![CDATA[Updated]]></string>
 	<string name="_adm_str_txt_pv_vendor"><![CDATA[Vendor]]></string>
 	<string name="_adm_str_txt_pv_version"><![CDATA[Version]]></string>
+	<string name="_adm_str_txt_pv_version_mask"><![CDATA[{0} ({1} is available)]]></string>
 	<string name="_adm_str_txt_update_from_to"><![CDATA[{0} - {1}]]></string>
 	<string name="_adm_tmi_cpt_edit"><![CDATA[Manage Launcher]]></string>
 	<string name="_adm_tmi_cpt_favorite"><![CDATA[Show Favorite Only]]></string>

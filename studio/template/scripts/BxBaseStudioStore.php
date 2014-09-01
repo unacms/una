@@ -430,20 +430,21 @@ class BxBaseStudioStore extends BxDolStudioStore
         if(empty($aProduct) || !is_array($aProduct))
             return array('code' => 1, 'message' => (!empty($aProduct) ? $aProduct : _t('_adm_str_err_no_product_info')));
 
-		$aDownloaded = $this->getDownloadedModules();
+		$aDownloaded = $this->getDownloadedModules(false);
 
         $bFree = (int)$aProduct['is_free'] == 1;
         $bPurchased = (int)$aProduct['is_purchased'] == 1;
 
         $bDownloadable = (int)$aProduct['is_file'] == 1;
-        $bDownloaded = in_array($aProduct['name'], $aDownloaded);
+        $bDownloaded = array_key_exists($sModuleName, $aDownloaded);
         $bDownload = ($bFree || $bPurchased) && $bDownloadable;
 
         $bDiscount = !empty($aProduct['discount']);
-        $bScreenshots = is_array($aProduct['screenshots']) && !empty($aProduct['screenshots']);
+        $sVersion = $bDownloaded && version_compare($aDownloaded[$sModuleName]['version'], $aProduct['version']) != 0 ? _t('_adm_str_txt_pv_version_mask', $aDownloaded[$sModuleName]['version'], $aProduct['version']) : $aProduct['version'];
 
         $iScreenshots = 0;
         $aScreenshots = array();
+        $bScreenshots = is_array($aProduct['screenshots']) && !empty($aProduct['screenshots']);
         if($bScreenshots) {
             $iScreenshots = count($aProduct['screenshots']);
             foreach($aProduct['screenshots'] as $aScreenshot)
@@ -459,7 +460,7 @@ class BxBaseStudioStore extends BxDolStudioStore
             'url' => $aProduct['url'],
             'author_name' => $aProduct['author_name'],
             'author_url' => $aProduct['author_url'],
-            'version' => $aProduct['version'],
+            'version' => $sVersion,
             'price' => !$bFree ? _t('_adm_str_txt_price_csign', $aProduct['author_currency_sign'], $aProduct['price']) : _t('_adm_str_txt_price_free'),
             'bx_if:show_discount' => array(
                 'condition' => !$bFree && $bDiscount,
@@ -689,10 +690,12 @@ class BxBaseStudioStore extends BxDolStudioStore
         return $sResult;
     }
 
-    private function getDownloadedModules()
+    private function getDownloadedModules($bNamesOnly = true)
     {
 		bx_import('BxDolStudioInstallerUtils');
-        return array_keys(BxDolStudioInstallerUtils::getInstance()->getModules(false));
+		$aModules = BxDolStudioInstallerUtils::getInstance()->getModules(false);
+
+        return $bNamesOnly ? array_keys($aModules) : $aModules;
     }
 }
 

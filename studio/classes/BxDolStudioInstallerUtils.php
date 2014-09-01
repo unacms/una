@@ -367,13 +367,14 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
         $bInstalled = !empty($aInstalledPathes) && in_array($sModulePath, $aInstalledPathes);
         $bEnabled = $bInstalled && !empty($aInstalledInfo) && (int)$aInstalledInfo[$sModulePath]['enabled'] == 1;
+        $sVersion = $bInstalled && !empty($aInstalledInfo) ? $aInstalledInfo[$sModulePath]['version'] : $aConfig['version'];
 
         return array(
         	'type' => $aConfig['type'],
             'name' => isset($aConfig['name']) ? $aConfig['name'] : $aConfig['home_uri'],
             'title' => bx_process_output($aConfig['title']),
             'vendor' => $aConfig['vendor'],
-            'version' => $aConfig['version'],
+            'version' => $sVersion,
             'uri' => $aConfig['home_uri'],
             'dir' => $aConfig['home_dir'],
             'note' => isset($aConfig['note']) ? bx_process_output($aConfig['note']) : '',
