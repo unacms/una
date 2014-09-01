@@ -276,7 +276,7 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage
         return $oForm->getCode();
     }
 
-    protected function getSettingsCache($aPage, $bCreate = true, $bInputsOnly = false)
+    protected function getSettingsCache($aPage = array(), $bCreate = true, $bInputsOnly = false)
     {
         $aForm = array(
             'form_attrs' => array(
