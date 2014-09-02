@@ -180,6 +180,30 @@ class BxDolInstallSiteConfig
                 'func' => 'rowSectionClose',
             ),
 
+            // link with boonex market
+
+            'section_link_to_market_open' => array(
+                'name' => _t('_sys_inst_conf_section_link_with_market'),
+                'func' => 'rowSectionOpen',
+            ),
+
+            'oauth_key' => array(
+                'name' => _t('_sys_inst_conf_field_oauth_key'),
+                'ex' => '123abc4d',
+                'desc' => _t('_sys_inst_conf_desc_oauth_key_secret'),
+                'check' => array('checkLengthExactOrEmpty', 8),
+            ),
+            'oauth_secret' => array(
+                'name' => _t('_sys_inst_conf_field_oauth_secret'),
+                'ex' => '45de12368a9b367abc23512a',
+                'desc' => _t('_sys_inst_conf_desc_oauth_key_secret'),
+                'check' => array('checkLengthExactOrEmpty', 24),
+            ),
+
+            'section_link_to_market_close' => array(
+                'func' => 'rowSectionClose',
+            ),
+
             // modules
 
             'section_modules_open' => array(
@@ -547,6 +571,11 @@ EOF;
     protected function checkLength ($s, $i)
     {
         return mb_strlen($s) >= $i ? true : false;
+    }
+
+    protected function checkLengthExactOrEmpty ($s, $i)
+    {
+        return empty($s) || mb_strlen($s) == $i;
     }
 
     protected function checkEmail ($s, $i)
