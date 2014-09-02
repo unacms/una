@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_adm_str_txt_pv_version_mask"><![CDATA[{0} ({1} is available)]]></string_add>
+</resources>
