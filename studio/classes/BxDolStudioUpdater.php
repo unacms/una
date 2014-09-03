@@ -29,6 +29,9 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
             'update_files' => array(
                 'title' => _t('_adm_txt_modules_update_files'),
             ),
+            'restore_languages' => array(
+                'title' => _t('_adm_txt_modules_restore_languages'),
+            ),
         ));
     }
 
@@ -118,18 +121,15 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
 
     public function actionUpdateLanguages($bInstall = true)
     {
-        $oDb = BxDolDb::getInstance();
-
-        bx_import('BxDolStudioLanguagesUtils');
-        $oLanguages = BxDolStudioLanguagesUtils::getInstance();
-        $aLanguages = $oLanguages->getLanguages();
-
-        //--- Process languages' key=>value pears ---//
         $aConfig = self::getModuleConfig($this->_sHomePath . 'install/config.php');
         if(empty($aConfig) || !is_array($aConfig))
             return BX_DOL_STUDIO_INSTALLER_FAILED;
 
-        $iCategoryId = $oLanguages->getLanguageCategory($aConfig['language_category']);
+    	bx_import('BxDolStudioLanguagesUtils');
+        $oLanguages = BxDolStudioLanguagesUtils::getInstance();
+        $aLanguages = $oLanguages->getLanguages();
+
+        $iCategoryId = !empty($aConfig['language_category']) ? $oLanguages->getLanguageCategory($aConfig['language_category']) : 0;
 
         foreach($aLanguages as $sName => $sTitle)
             $this->_updateLanguage($bInstall, $sName, $iCategoryId);
@@ -137,7 +137,30 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
         return $oLanguages->compileLanguage(0, true) ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
 
-    protected function _updateLanguage($bInstall, $sLanguage, $iCategoryId = 0)
+    /*
+     * Restore module's language files.
+     * 
+     * Note. Mainly the action is needed for Updates in 'language' type modules. 
+     * It should be used after 'update_files' action if some changes were done in module's language files. 
+     */
+    public function actionRestoreLanguages($bInstall = true)
+    {
+    	$aConfig = self::getModuleConfig($this->_sHomePath . 'install/config.php');
+        if(empty($aConfig) || !is_array($aConfig) || empty($aConfig['module_uri']))
+            return BX_DOL_STUDIO_INSTALLER_FAILED;
+
+		bx_import('BxDolStudioLanguagesUtils');
+        $oLanguages = BxDolStudioLanguagesUtils::getInstance();
+        $aLanguages = $oLanguages->getLanguages();
+
+        $bResult = true;
+        foreach($aLanguages as $sName => $sTitle)
+        	$bResult &= $oLanguages->restoreLanguage($sName, $aConfig['module_uri']);
+
+        return $bResult ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
+    }
+
+    protected function _updateLanguage($bInstall, $sLanguage, $iCategory = 0)
     {
         $oDb = BxDolDb::getInstance();
         $oLanguages = BxDolStudioLanguagesUtils::getInstance();
@@ -149,19 +172,23 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
 
         $iLanguage = $oLanguages->getLangId($sLanguage);
 
-        //--- Process delete ---//
-        if(isset($aLanguageInfo['strings_del']) && is_array($aLanguageInfo['strings_del']))
-            $oLanguages->deleteLanguageKeys($aLanguageInfo['strings_del']);
+        if(!empty($aLanguageInfo['category']))
+        	$iCategory = $oLanguages->getLanguageCategory($aLanguageInfo['category']);
 
-        //--- Process add ---//
-        if(isset($aLanguageInfo['strings_add']) && is_array($aLanguageInfo['strings_add']))
-            $oLanguages->addLanguageKeys($iLanguage, $iCategoryId, $aLanguageInfo['strings_add']);
+        //--- Process delete. Note. Deletion is performed for all languages. ---//
+        if(isset($aLanguageInfo['strings_del']))
+        	foreach($aLanguageInfo['strings_del'] as $sKey => $sValue)
+        		$oLanguages->deleteLanguageString($sKey, 0, false);
 
-        //--- Process update ---//
-        if(isset($aLanguageInfo['strings_upd']) && is_array($aLanguageInfo['strings_upd'])) {
-            $oLanguages->deleteLanguageKeys($aLanguageInfo['strings_upd']);
-            $oLanguages->addLanguageKeys($iLanguage, $iCategoryId, $aLanguageInfo['strings_upd']);
-        }
+        //--- Process add. Note. Key's category will be updated if it doesn't match. ---//
+        if(isset($aLanguageInfo['strings_add']))
+        	foreach($aLanguageInfo['strings_add'] as $sKey => $sValue)
+        		$oLanguages->addLanguageString($sKey, $sValue, $iLanguage, $iCategory, false);
+
+        //--- Process update. Note. Key's category will be updated if it doesn't match. ---//
+        if(isset($aLanguageInfo['strings_upd']))
+        	foreach($aLanguageInfo['strings_upd'] as $sKey => $sValue)
+        		$oLanguages->updateLanguageString($sKey, $sValue, $iLanguage, $iCategory, false);
 
         return true;
     }
