@@ -72,11 +72,6 @@ class BxBaseAccountForms extends BxDolProfileForms
         if ($sStatus == BX_PROFILE_STATUS_PENDING && $isAutoApprove)
             $oProfile->approve(BX_PROFILE_ACTION_AUTO);
 
-        // set created profile some default membership
-        bx_import('BxDolAcl');
-        $iAclLevel = getParam('sys_account_default_acl_level');
-        BxDolAcl::getInstance()->setMembership($iProfileId, $iAclLevel, 0, true);
-
         // perform action
         BxDolAccount::isAllowedCreate ($iProfileId, true);
 

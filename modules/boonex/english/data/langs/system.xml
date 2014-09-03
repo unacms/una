@@ -1119,7 +1119,6 @@
 	<string name="_adm_stg_cpt_option_site_email_notify"><![CDATA[Email to send site messages from]]></string>
 	<string name="_adm_stg_cpt_option_site_title"><![CDATA[Site title]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_autoapproval"><![CDATA[Automatic account activation after creation]]></string>
-	<string name="_adm_stg_cpt_option_sys_account_default_acl_level"><![CDATA[Default member's level to assign after account creation]]></string>
 	<string name="_adm_stg_cpt_option_sys_add_nofollow"><![CDATA[Add "nofollow" attribute for external links]]></string>
 	<string name="_adm_stg_cpt_option_sys_autoupdate_force_modified_files"><![CDATA[Force site and module auto-update, even if some files were modified]]></string>
 	<string name="_adm_stg_cpt_option_sys_autoupdate_modules"><![CDATA[Extensions auto-update]]></string>
@@ -1327,6 +1326,7 @@
 	<string name="_sys_access_denied_to_private_content"><![CDATA[Access denied. This is private content.]]></string>
 	<string name="_sys_actions"><![CDATA[Actions]]></string>
 	<string name="_sys_active"><![CDATA[Active]]></string>
+	<string name="_sys_acl_action_account"><![CDATA[You didn't created any profiles, so you can't '{1}'.]]></string>
 	<string name="_sys_acl_action_comments_edit_all"><![CDATA[Comments Edit All]]></string>
 	<string name="_sys_acl_action_comments_edit_own"><![CDATA[Comments Edit Own]]></string>
 	<string name="_sys_acl_action_comments_post"><![CDATA[Comments Post]]></string>
