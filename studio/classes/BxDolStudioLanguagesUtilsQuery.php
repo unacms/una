@@ -53,7 +53,7 @@ class BxDolStudioLanguagesUtilsQuery extends BxDolLanguagesQuery
         if(!empty($aKey) && is_array($aKey)) {
         	if((int)$aKey['IDCategory'] != $iCategoryId)
         		$this->updateKeys(array('IDCategory' => $iCategoryId), array('ID' => $aKey['ID']));
-        	
+
             return $aKey['ID'];
         }
 
@@ -135,7 +135,7 @@ class BxDolStudioLanguagesUtilsQuery extends BxDolLanguagesQuery
 
     function addString($iKeyId, $iLanguageId, $sString)
     {
-        $sSql = $this->prepare("INSERT INTO `sys_localization_strings` SET `IDKey`=?, `IDLanguage`=?, `String`=?", $iKeyId, $iLanguageId, $sString);
+        $sSql = $this->prepare("INSERT IGNORE INTO `sys_localization_strings` SET `IDKey`=?, `IDLanguage`=?, `String`=?", $iKeyId, $iLanguageId, $sString);
         return (int)$this->query($sSql) > 0;
     }
 

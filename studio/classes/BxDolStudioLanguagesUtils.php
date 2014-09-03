@@ -81,6 +81,14 @@ class BxDolStudioLanguagesUtils extends BxDolLanguages implements iBxDolSingleto
         $aResult = array();
         $aResult['name'] = $oXmlParser->getAttribute($sXmlContent, 'resources', 'name');
 
+        $aResult['title'] = $oXmlParser->getAttribute($sXmlContent, 'resources', 'title');
+        if($aResult['title'] === false)
+			unset($aResult['title']);
+
+        $aResult['category'] = $oXmlParser->getAttribute($sXmlContent, 'resources', 'category');
+		if($aResult['category'] === false)
+			unset($aResult['category']);
+
         switch($sType) {
             case 'restore':
                 $aResult['strings'] = $oXmlParser->getValues($sXmlContent, 'string');
@@ -88,8 +96,17 @@ class BxDolStudioLanguagesUtils extends BxDolLanguages implements iBxDolSingleto
 
             case 'update':
                 $aResult['strings_del'] = $oXmlParser->getValues($sXmlContent, 'string_del');
+                if(empty($aResult['strings_del']) || !is_array($aResult['strings_del']))
+                	unset($aResult['strings_del']);
+
                 $aResult['strings_add'] = $oXmlParser->getValues($sXmlContent, 'string_add');
+                if(empty($aResult['strings_add']) || !is_array($aResult['strings_add']))
+                	unset($aResult['strings_add']);
+
                 $aResult['strings_upd'] = $oXmlParser->getValues($sXmlContent, 'string_upd');
+                if(empty($aResult['strings_upd']) || !is_array($aResult['strings_upd']))
+                	unset($aResult['strings_upd']);
+
                 break;
         }
 
@@ -316,18 +333,24 @@ class BxDolStudioLanguagesUtils extends BxDolLanguages implements iBxDolSingleto
         return $iKeyId;
     }
 
-    function updateLanguageString($sKey, $sString, $iLangId = 0, $bRecompile = true)
+    function updateLanguageString($sKey, $mixedString, $iLangId = 0, $iCategoryId = 0, $bRecompile = true)
     {
         $sKey = bx_process_input($sKey);
-        $sString = bx_process_input($sString);
+        $mixedString = bx_process_input($mixedString);
         $iLangId = (int)$iLangId;
+        $iCategoryId = (int)$iCategoryId;
+        if(empty($iCategoryId))
+        	$iCategoryId = BX_DOL_LANGUAGE_CATEGORY_CUSTOM;
 
         $aKey = array();
         $this->oDb->getKeysBy(array('type' => 'by_name', 'value' => $sKey), $aKey);
         if(empty($aKey))
-            return $this->addLanguageString($sKey, $sString, $iLangId, BX_DOL_LANGUAGE_CATEGORY_CUSTOM, $bRecompile);
+            return $this->addLanguageString($sKey, $mixedString, $iLangId, $iCategoryId, $bRecompile);
 
-        return $this->updateLanguageStringById($aKey['id'], $sString, $iLangId, $bRecompile);
+		if((int)$aKey['category_id'] != $iCategoryId)
+			$this->oDb->updateKeys(array('IDCategory' => $iCategoryId), array('ID' => $aKey['id']));
+
+        return $this->updateLanguageStringById($aKey['id'], $mixedString, $iLangId, $bRecompile);
     }
 
     function updateLanguageStringById($iKeyId, $mixedString, $iLangId = 0, $bRecompile = true)
@@ -383,16 +406,6 @@ class BxDolStudioLanguagesUtils extends BxDolLanguages implements iBxDolSingleto
         }
 
         return $this->oDb->deleteKey($iKeyId);
-    }
-
-    function addLanguageKeys($iLanguageId, $iCategoryId, &$aKeys)
-    {
-        $this->oDb->addKeys($iLanguageId, $iCategoryId, $aKeys);
-    }
-
-    function deleteLanguageKeys($aKeys)
-    {
-        return $this->oDb->deleteKeys($aKeys);
     }
 
     function addLanguageCategory($sName)

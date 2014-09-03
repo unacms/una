@@ -51,8 +51,16 @@ class BxDolXmlParser extends BxDol implements iBxDolSingleton
         xml_parse_into_struct($rParser, $sXmlContent, $aValues, $aIndexes);
         xml_parser_free($rParser);
 
-        $aFieldIndex = $aIndexes[strtoupper($sXmlTag)][0];
-        return $aValues[$aFieldIndex]['attributes'][strtoupper($sXmlAttribute)];
+        $sTag = strtoupper($sXmlTag);
+        if(!isset($aIndexes[$sTag]))
+        	return false;
+
+        $iFieldIndex = $aIndexes[$sTag][0];
+        $sAttribute = strtoupper($sXmlAttribute);
+		if(!isset($aValues[$iFieldIndex]['attributes'][$sAttribute]))
+			return false;
+
+        return $aValues[$iFieldIndex]['attributes'][$sAttribute];
     }
 
     /**
@@ -116,8 +124,9 @@ class BxDolXmlParser extends BxDol implements iBxDolSingleton
         xml_parse_into_struct($rParser, $sXmlContent, $aValues, $aIndexes);
         xml_parser_free($rParser);
 
-        $aTagIndexes = $aIndexes[strtoupper($sXmlTagName)];
-        $aTagIndexes = isset($aTagIndexes) ? $aTagIndexes : array();
+        $sTag = strtoupper($sXmlTagName);
+        $aTagIndexes = isset($aIndexes[$sTag]) ? $aIndexes[$sTag] : array();
+
         $aReturnValues = array();
         foreach($aTagIndexes as $iTagIndex) {
             $aReturnValues[$aValues[$iTagIndex]['attributes']['NAME']] =
