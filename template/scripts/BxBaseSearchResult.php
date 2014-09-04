@@ -55,7 +55,7 @@ class BxBaseSearchResult extends BxDolSearchResult
                 $sCode .= $this->displaySearchUnit($aValue);
 
             $sSearchResultBlockId = 'bx-search-result-block-' . rand(0, PHP_INT_MAX);
-            $sCode = '<div id="' . $sSearchResultBlockId . '" class="bx-search-result-block bx-clearfix">' . $sCode . '</div>';
+            $sCode = '<div id="' . $sSearchResultBlockId . '" class="bx-search-result-block bx-def-margin-bottom bx-clearfix">' . $sCode . '</div>';
 
             if (!$this->_bLiveSearch && $this->sCenterContentUnitSelector) {
                 $sCode .= "
