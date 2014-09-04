@@ -18,7 +18,6 @@
 .bx-base-text-unit-no-thumb,
 .bx-base-text-unit-thumb {
     display:block;
-    float:right;
     overflow:hidden;
 }
 

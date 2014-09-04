@@ -485,9 +485,15 @@ h3,
 }
 .bx-def-gal-unit-size {
     display:inline-block;
-    width:33.3%;
+    width:100%;
     height:auto;
     vertical-align:top;
     overflow:hidden;
     .box-sizing();
+}
+div[min-width~="480px"][max-width~="720px"] .bx-def-gal-unit-size {
+    width:50%;
+}
+div[min-width~="720px"] .bx-def-gal-unit-size {
+    width:33.3%;
 }

@@ -86,6 +86,7 @@ class BxDolAcl extends BxDol implements iBxDolSingleton
 
     protected $_aLevel2MessageMap = array (
         MEMBERSHIP_ID_NON_MEMBER => '_sys_acl_action_unauthenticated',
+        MEMBERSHIP_ID_ACCOUNT => '_sys_acl_action_account',
         MEMBERSHIP_ID_UNCONFIRMED => '_sys_acl_action_unconfirmed',
         MEMBERSHIP_ID_PENDING => '_sys_acl_action_pending',
         MEMBERSHIP_ID_SUSPENDED => '_sys_acl_action_suspended',
