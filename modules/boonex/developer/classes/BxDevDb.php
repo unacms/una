@@ -20,8 +20,6 @@ class BxDevDb extends BxDolModuleDb
 
     function getQueryInsert($sTable, $aItems, $mixedComment = false, $aExclude = array('id'))
     {
-        bx_import('BxDevFunctions');
-
         $bFirst = true;
         $sContent = $sComment = "";
         foreach($aItems as $aItem) {
@@ -33,7 +31,6 @@ class BxDevDb extends BxDolModuleDb
             $aValues = array_values($aItem);
             $iValues = count($aValues);
 
-            bx_import('BxDevFunctions');
             foreach ($aValues as $iKey => $sValue)
                 $aValues[$iKey] = BxDevFunctions::dbAddSlashes($sValue, true);
 

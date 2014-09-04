@@ -840,7 +840,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         return array('eval' => $this->getPageJsObject() . '.onGetUri(oData)', 'uri' => $sUri, 'url' => $sUrl);
     }
 
-    protected function getSettingsOptions($aPage, $bCreate = true, $bInputsOnly = false)
+    protected function getSettingsOptions($aPage = array(), $bCreate = true, $bInputsOnly = false)
     {
     	bx_import('BxDolPermalinks');
 

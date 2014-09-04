@@ -39,7 +39,7 @@ BxDolStudioModule.prototype.activate = function(sName, oChecbox) {
 			}
 			else
 				oContent.bx_anim('hide', $this.sAnimationEffect, $this.iAnimationSpeed, function() {
-					$(this).html(oData.content)
+					$(this).html(oData.content);
 					oBg.addClass('bx-std-page-bg-empty');
 				});
 		},

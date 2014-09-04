@@ -11,12 +11,7 @@
 
 bx_import('BxDolModule');
 
-require_once('BxDevForms.php');
 require_once('BxDevFunctions.php');
-require_once('BxDevBuilderPage.php');
-require_once('BxDevNavigation.php');
-require_once('BxDevPolyglot.php');
-require_once('BxDevPermissions.php');
 
 define('BX_DEV_TOOLS_SETTINGS', 'settings');
 define('BX_DEV_TOOLS_FORMS', 'forms');

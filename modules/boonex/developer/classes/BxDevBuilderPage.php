@@ -180,7 +180,7 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage
         return array('eval' => $sJsObject . '.onDeleteBlock(' . $iId . ', oData)');
     }
 
-    protected function getSettingsOptions($aPage, $bCreate = true, $bInputsOnly = false)
+    protected function getSettingsOptions($aPage = array(), $bCreate = true, $bInputsOnly = false)
     {
         $aForm = array(
             'form_attrs' => array(

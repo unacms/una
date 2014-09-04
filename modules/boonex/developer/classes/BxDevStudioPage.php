@@ -21,7 +21,7 @@ class BxDevStudioPage extends BxTemplStudioModule
         parent::__construct($sModule, $sPage);
 
         bx_import('BxDolModule');
-        $this->oModule = BxDolModule::getInstance('bx_developer');
+        $this->oModule = BxDolModule::getInstance($this->sModule);
 
         $this->sUrl = BX_DOL_URL_STUDIO . 'module.php?name=%s&page=%s';
     }
@@ -56,6 +56,7 @@ class BxDevStudioPage extends BxTemplStudioModule
         $sPage = bx_get('form_page');
         $sPage = $sPage !== false ? bx_process_input($sPage) : '';
 
+		bx_import('Forms', $this->aModule);
         $oContent = new BxDevForms(array(
             'page' => $sPage,
             'url' => sprintf($this->sUrl, $this->sModule, BX_DEV_TOOLS_FORMS),
@@ -68,6 +69,7 @@ class BxDevStudioPage extends BxTemplStudioModule
         $sPage = bx_get('nav_page');
         $sPage = $sPage !== false ? bx_process_input($sPage) : '';
 
+        bx_import('Navigation', $this->aModule);
         $oContent = new BxDevNavigation(array(
             'page' => $sPage,
             'url' => sprintf($this->sUrl, $this->sModule, BX_DEV_TOOLS_NAVIGATION),
@@ -83,6 +85,7 @@ class BxDevStudioPage extends BxTemplStudioModule
         $sPage = bx_get('bp_page');
         $sPage = $sPage !== false ? bx_process_input($sPage) : '';
 
+        bx_import('BuilderPage', $this->aModule);
         $oContent = new BxDevBuilderPage(array(
             'type' => $sType,
             'page' => $sPage,
@@ -100,6 +103,7 @@ class BxDevStudioPage extends BxTemplStudioModule
         $sPage = bx_get('pgt_page');
         $sPage = $sPage !== false ? bx_process_input($sPage) : 'manager';
 
+        bx_import('Polyglot', $this->aModule);
         $oContent = new BxDevPolyglot(array(
             'page' => $sPage,
             'url' => sprintf($this->sUrl, $this->sModule, BX_DEV_TOOLS_POLYGLOT),
@@ -112,6 +116,7 @@ class BxDevStudioPage extends BxTemplStudioModule
         $sPage = bx_get('prm_page');
         $sPage = $sPage !== false ? bx_process_input($sPage) : '';
 
+        bx_import('Permissions', $this->aModule);
         $oContent = new BxDevPermissions(array(
             'page' => $sPage,
             'url' => sprintf($this->sUrl, $this->sModule, BX_DEV_TOOLS_PERMISSIONS),
