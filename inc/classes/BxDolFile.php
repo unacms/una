@@ -190,7 +190,7 @@ class BxDolFile extends BxDol implements iBxDolSingleton
     {
         $aConvert = array('writable' => 0666, 'executable' => 0777);
 
-        return chmod($sPath, $aConvert[$sMode]);
+        return @chmod($sPath, $aConvert[$sMode]);
     }
 
 	protected function _mkDirR($sPath)

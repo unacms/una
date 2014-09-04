@@ -7,6 +7,7 @@
  * @{
  */
 
+bx_import('BxDolLanguages');
 bx_import('BxDolInstallerUtils');
 
 define('BX_DOL_UNITY_URL_ROOT', 'http://www.boonex.com/');
@@ -42,14 +43,14 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
 
-    public function serviceDownloadFile($aItem, $bUseFtp)
+    public function serviceDownloadFileComplete($sFilePath)
     {
-    	return $this->performDownload($aItem, $bUseFtp);
+    	return $this->downloadFileComplete($sFilePath);
     }
 
-	public function servicePerform($sDirectory, $sOperation, $aParams)
+	public function servicePerformAction($sDirectory, $sOperation, $aParams)
     {
-    	return $this->performAction($sDirectory, $sOperation, $aParams);
+    	return $this->perform($sDirectory, $sOperation, $aParams);
     }
 
     public function getModules($bTitleAsKey = true)
@@ -137,17 +138,30 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
     public function perform($sDirectory, $sOperation, $aParams = array())
     {
-    	if(defined('BX_DOL_CRON_EXECUTE') || self::isRealOwner() || in_array($sOperation, array('install', 'uninstall', 'enable', 'disable')))
-    		return $this->performAction($sDirectory, $sOperation, $aParams);
+    	if(!defined('BX_DOL_CRON_EXECUTE') && !self::isRealOwner() && !in_array($sOperation, array('enable', 'disable'))) {
+    		if($this->addTransientJob('perform_action', array($sDirectory, $sOperation, $aParams)))
+    			return array('code' => 1, 'message' => _t('_adm_mod_msg_process_operation_scheduled'));
+    		else 
+    			return array('code' => 2, 'message' => _t('_adm_mod_err_process_operation_failed', $sOperation, $sDirectory));
+    	}
 
-    	bx_import('BxDolCronQuery');
-		if(BxDolCronQuery::getInstance()->addTransientJobService('sys_perform_install', array('system', 'perform', array($sDirectory, $sOperation, $aParams), 'DolStudioInstallerUtils')))
-			return array('code' => 1, 'message' => _t('_adm_mod_msg_process_operation_scheduled'));
+    	$sConfigFile = 'install/config.php';
+        $sInstallerFile = 'install/installer.php';
+        $sInstallerClass = $sOperation == 'update' ? 'Updater' : 'Installer';
 
-		return array(
-			'code' => 2,
-            'message' => _t('_adm_mod_err_process_operation_failed', $sOperation, $sDirectory),
-		);
+        $aConfig = self::getModuleConfig(BX_DIRECTORY_PATH_MODULES . $sDirectory . $sConfigFile);
+
+        $sPathInstaller = BX_DIRECTORY_PATH_MODULES . $sDirectory . $sInstallerFile;
+        if(empty($aConfig) || !file_exists($sPathInstaller))
+        	return array('code' => 2, 'message' => _t('_adm_mod_err_process_operation_failed', $sOperation, $sDirectory)); 
+
+		require_once($sPathInstaller);
+
+		$sClassName = $aConfig['class_prefix'] . $sInstallerClass;
+		$oInstaller = new $sClassName($aConfig);
+		$aResult = $oInstaller->$sOperation($aParams);
+
+        return array('code' => $aResult['result'] ? 0 : 2, 'message' => $aResult['message']);
     }
 
     public function checkUpdates($bAuthorizedAccess = false)
@@ -186,7 +200,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
     	bx_import('BxDolStudioOAuth');
 		$aItem = BxDolStudioOAuth::getInstance()->loadItems(array('dol_type' => 'product_file', 'dol_file_id' => $iFileId));
 
-		return $this->downloadFile($aItem);
+		return $this->downloadFileInit($aItem);
     }
 
     public function downloadUpdatePublic($sModuleName)
@@ -205,32 +219,27 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 			'user' => (int)getParam('sys_oauth_user') 
 		));
 
-		return $this->downloadFile($aItem);
+		return $this->downloadFileInit($aItem);
     }
 
-    protected function downloadFile($aItem, $bUseFtp = BX_FORCE_USE_FTP_FILE_TRANSFER)
+    protected function downloadFileInit($aItem)
     {
-    	if(defined('BX_DOL_CRON_EXECUTE') || self::isRealOwner())
-    		return $this->performDownload($aItem, $bUseFtp);
+    	if(empty($aItem) || !is_array($aItem))
+			return $aItem;
 
-		bx_import('BxDolCronQuery');
-		if(BxDolCronQuery::getInstance()->addTransientJobService('sys_perform_download', array('system', 'download_file', array($aItem, $bUseFtp), 'DolStudioInstallerUtils')))
-			return _t('_adm_str_msg_download_scheduled');
-
-		return false;
-    }
-
-    protected function performDownload($aItem, $bUseFtp)
-    {
-        if(empty($aItem) || !is_array($aItem))
-            return $aItem;
-
-        //--- write ZIP archive.
+    	//--- write ZIP archive.
         $sFilePath = '';
         $mixedResult = $this->performWrite($aItem, $sFilePath);
-
         if($mixedResult !== true)
         	return $mixedResult;
+
+		return $this->downloadFileComplete($sFilePath);
+    }
+
+    protected function downloadFileComplete($sFilePath, $bUseFtp = BX_FORCE_USE_FTP_FILE_TRANSFER)
+    {
+		if(!defined('BX_DOL_CRON_EXECUTE') && !self::isRealOwner())
+			return _t($this->addTransientJob('download_file_complete', array($sFilePath)) ? '_adm_str_msg_download_scheduled' : '_adm_str_err_download_failed');
 
         //--- Unarchive package.
         $sPackagePath = '';
@@ -330,33 +339,6 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 		return true;
     }
 
-    protected function performAction($sDirectory, $sOperation, $aParams = array())
-    {
-        $sConfigFile = 'install/config.php';
-        $sInstallerFile = 'install/installer.php';
-        $sInstallerClass = $sOperation == 'update' ? 'Updater' : 'Installer';
-
-        $aConfig = self::getModuleConfig(BX_DIRECTORY_PATH_MODULES . $sDirectory . $sConfigFile);
-
-        $sPathInstaller = BX_DIRECTORY_PATH_MODULES . $sDirectory . $sInstallerFile;
-        if(empty($aConfig) || !file_exists($sPathInstaller))
-        	return array(
-        		'code' => 2, 
-        		'message' => _t('_adm_mod_err_process_operation_failed', $sOperation, $sDirectory)
-        	); 
-
-		require_once($sPathInstaller);
-
-		$sClassName = $aConfig['class_prefix'] . $sInstallerClass;
-		$oInstaller = new $sClassName($aConfig);
-		$aResult = $oInstaller->$sOperation($aParams);
-
-        return array(
-        	'code' => $aResult['result'] ? 0 : 2,
-        	'message' => $aResult['message']
-        );
-    }
-
     protected function getConfigModule($sConfigPath, $aInstalledPathes = array(), $aInstalledInfo = array())
     {
     	$aConfig = self::getModuleConfig($sConfigPath);
@@ -416,6 +398,15 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
             $aInstalledInfo[$aModule['path']] = $aModule;
 
         $aInstalledPathes = array_keys($aInstalledInfo);
+    }
+
+    private function addTransientJob($sAction, $aParams)
+    {
+		bx_import('BxDolCronQuery');
+		if(BxDolCronQuery::getInstance()->addTransientJobService('sys_' . $sAction, array('system', $sAction, $aParams, 'DolStudioInstallerUtils')))
+			return true;
+
+		return false;
     }
 }
 
