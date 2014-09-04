@@ -1088,7 +1088,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
         // recreate cache if it is empty
 
         if ($sCacheContent === null && ($sContent = file_get_contents($sAbsolutePath)) !== false && ($sContent = $this->_compileContent($sContent, "\$" . $sCacheVariableName, 1, $aVariables, $mixedKeyWrapperHtml)) !== false) {
-            if (false === $oCacheEngine->setData($sCacheKey, $sContent))
+            if (false === $oCacheEngine->setData($sCacheKey, trim($sContent)))
                 return false;
 
             if ($isFileBasedEngine)
