@@ -90,12 +90,6 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             'show_introduction' => array(
                 'title' => _t('_adm_txt_modules_show_introduction'),
             ),
-            'check_permissions' => array(
-                'title' => _t('_adm_txt_modules_check_permissions'),
-            ),
-            'change_permissions' => array(
-                'title' => _t('_adm_txt_modules_change_permissions'),
-            ),
             'move_sources' => array(
                 'title' => _t('_adm_txt_modules_move_sources'),
             ),
@@ -544,72 +538,6 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 
         $sPath = $this->_sHomePath . 'install/info/' . $this->_aConfig[$sOperation . '_info']['conclusion'];
         return file_exists($sPath) ? array("code" => BX_DOL_STUDIO_INSTALLER_SUCCESS, "content" => "<pre>" . file_get_contents($sPath) . "</pre>") : BX_DOL_STUDIO_INSTALLER_FAILED;
-    }
-    function actionCheckPermissions($sOperation)
-    {
-        if(!isset($this->_aConfig[$sOperation . '_permissions']) || !is_array($this->_aConfig[$sOperation . '_permissions']))
-            return BX_DOL_STUDIO_INSTALLER_FAILED;
-
-        $aResult = array();
-        $aPermissions = $this->_aConfig[$sOperation . '_permissions'];
-        foreach($aPermissions as $sPermissions => $aFiles) {
-            $sCheckFunction = 'is' . ucfirst($sPermissions);
-            $sCptPermissions = _t('_adm_txt_modules_' . $sPermissions);
-            foreach($aFiles as $sFile)
-                if(!BxDolInstallerUtils::$sCheckFunction(str_replace(BX_DIRECTORY_PATH_ROOT, '', $this->_sModulePath . $sFile)))
-                    $aResult[] = array('path' => $this->_sModulePath . $sFile, 'permissions' => $sCptPermissions);
-        }
-        return empty($aResult) ? BX_DOL_STUDIO_INSTALLER_SUCCESS : array('code' => BX_DOL_STUDIO_INSTALLER_FAILED, 'content' => $aResult);
-    }
-    function actionCheckPermissionsFailed($mixedResult)
-    {
-        $sResult = '<br />' . _t('_adm_err_modules_wrong_permissions_check') . '<br />';
-        foreach($mixedResult['content'] as $aFile)
-            $sResult .= _t('_adm_err_modules_wrong_permissions_msg', $aFile['path'], $aFile['permissions']) . '<br />';
-        return $sResult;
-    }
-    function actionChangePermissions($sOperation)
-    {
-        if(!isset($this->_aConfig[$sOperation . '_permissions']) || !is_array($this->_aConfig[$sOperation . '_permissions']))
-            return BX_DOL_STUDIO_INSTALLER_FAILED;
-
-        $aChangeItems = array();
-        $aPermissions = $this->_aConfig[$sOperation . '_permissions'];
-        foreach($aPermissions as $sPermissions => $aFiles) {
-            $sCheckFunction = 'is' . ucfirst($sPermissions);
-            foreach($aFiles as $sFile) {
-                $sPath = bx_ltrim_str($this->_sModulePath . $sFile, BX_DIRECTORY_PATH_ROOT);
-                if(BxDolInstallerUtils::$sCheckFunction($sPath))
-                    continue;
-
-                $aChangeItems[] = array('file' => $sFile, 'path' => $sPath, 'permissions' => $sPermissions);
-            }
-        }
-
-        if(empty($aChangeItems))
-            return BX_DOL_STUDIO_INSTALLER_SUCCESS;
-
-        $oFile = $this->_getFileManager();
-        if(empty($oFile))
-            return array('code' => BX_DOL_STUDIO_INSTALLER_FAILED);
-
-        $aResult = array();
-        foreach($aChangeItems as $aChangeItem)
-            if(!$oFile->setPermissions($aChangeItem['path'], $aChangeItem['permissions']))
-                $aResult[] = array('path' => $this->_sModulePath . $aChangeItem['file'], 'permissions' => $aChangeItem['permissions']);
-
-        return empty($aResult) ? BX_DOL_STUDIO_INSTALLER_SUCCESS : array('code' => BX_DOL_STUDIO_INSTALLER_FAILED, 'content' => $aResult);
-    }
-    function actionChangePermissionsFailed($mixedResult)
-    {
-        if(empty($mixedResult['content']))
-            return $this->actionOperationFailed($mixedResult);
-
-        $sResult = '<br />' . _t('_adm_err_modules_wrong_permissions_change') . '<br />';
-        foreach($mixedResult['content'] as $aFile)
-            $sResult .= _t('_adm_err_modules_wrong_permissions_msg', $aFile['path'], $aFile['permissions']) . '<br />';
-
-        return $sResult;
     }
     function actionMoveSources($sOperation)
     {

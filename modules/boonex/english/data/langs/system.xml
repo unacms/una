@@ -1216,12 +1216,10 @@
 	<string name="_adm_txt_module_custom"><![CDATA[Custom]]></string>
 	<string name="_adm_txt_module_skeletons"><![CDATA[Skeletons]]></string>
 	<string name="_adm_txt_module_system"><![CDATA[System]]></string>
-	<string name="_adm_txt_modules_change_permissions"><![CDATA[Changing permissions:]]></string>
 	<string name="_adm_txt_modules_check_dependencies"><![CDATA[Check module dependencies:]]></string>
 	<string name="_adm_txt_modules_check_module_exists"><![CDATA[Check module for existence:]]></string>
 	<string name="_adm_txt_modules_check_module_hash"><![CDATA[Check module hash:]]></string>
 	<string name="_adm_txt_modules_check_module_version"><![CDATA[Check module version:]]></string>
-	<string name="_adm_txt_modules_check_permissions"><![CDATA[Checking permissions:]]></string>
 	<string name="_adm_txt_modules_check_script_version"><![CDATA[Check the Dolphin version for compatibility:]]></string>
 	<string name="_adm_txt_modules_clear_db_cache"><![CDATA[Clear database cache:]]></string>
 	<string name="_adm_txt_modules_delete"><![CDATA[Delete]]></string>

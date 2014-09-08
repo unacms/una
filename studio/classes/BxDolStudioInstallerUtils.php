@@ -138,7 +138,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
     public function perform($sDirectory, $sOperation, $aParams = array())
     {
-    	if(!defined('BX_DOL_CRON_EXECUTE') && !self::isRealOwner() && !in_array($sOperation, array('enable', 'disable'))) {
+    	if(!defined('BX_DOL_CRON_EXECUTE') && !self::isRealOwner() && !in_array($sOperation, array('install', 'uninstall', 'enable', 'disable'))) {
     		if($this->addTransientJob('perform_action', array($sDirectory, $sOperation, $aParams)))
     			return array('code' => 1, 'message' => _t('_adm_mod_msg_process_operation_scheduled'));
     		else 
@@ -261,8 +261,9 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
     protected function performWrite($aItem, &$sFilePath)
     {
-    	$sFilePath = BX_DIRECTORY_PATH_TMP . $aItem['name'];
+    	$iUmaskSave = umask(0);
 
+    	$sFilePath = BX_DIRECTORY_PATH_TMP . $aItem['name'];
     	if(file_exists($sFilePath))
         	@unlink($sFilePath);
 
@@ -275,11 +276,14 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
         fclose($rHandler);
         
+        umask($iUmaskSave);
         return true;
     }
 
     protected function performUnarchive($sFilePath, &$sPackagePath)
     {
+    	$iUmaskSave = umask(0);
+
     	if(!class_exists('ZipArchive'))
             return _t('_adm_str_err_zip_not_available');
 
@@ -303,6 +307,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
         $oZip->close();
 
+        umask($iUmaskSave);
         return true;
     }
 

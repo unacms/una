@@ -2417,7 +2417,6 @@ Without doing that you won't be submitted to our database.</p>
 	<string name="_adm_txt_modules_check_script_version"><![CDATA[Check the Dolphin version for compatibility:]]></string>
 	<string name="_adm_txt_modules_check_dependencies"><![CDATA[Check module dependencies:]]></string>
 	<string name="_adm_txt_modules_show_introduction"><![CDATA[Introduction from vendor:]]></string>
-	<string name="_adm_txt_modules_change_permissions"><![CDATA[Checking permissions:]]></string>
 	<string name="_adm_txt_modules_move_sources"><![CDATA[Move source files:]]></string>
 	<string name="_adm_txt_modules_execute_sql"><![CDATA[Changing database:]]></string>
 	<string name="_adm_txt_modules_install_language"><![CDATA[Install language:]]></string>
