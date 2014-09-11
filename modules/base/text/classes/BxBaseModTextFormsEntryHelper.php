@@ -100,6 +100,11 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         // change profile to 'pending' only if profile is 'active'
         if ($oProfile->isActive() && !empty($aTrackTextFieldsChanges['changed_fields']))
             $oProfile->disapprove(BX_PROFILE_ACTION_AUTO);
+        if (!empty($CNF['OBJECT_METATAGS'])) { // && isset($aTrackTextFieldsChanges['changed_fields'][$CNF['FIELD_TEXT']])) { // TODO: check if aTrackTextFieldsChanges works 
+            bx_import('BxDolMetatags');
+            $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
+            $oMetatags->keywordsAdd($aContentInfo[$CNF['FIELD_ID']], $aContentInfo[$CNF['FIELD_TEXT']]);
+        }
 
         // create an alert
         bx_import('BxDolPrivacy');
@@ -114,6 +119,12 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
 
         if (!($aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId)))
             return MsgBox(_t('_sys_txt_error_occured'));
+
+        if (!empty($CNF['OBJECT_METATAGS'])) {
+            bx_import('BxDolMetatags');
+            $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
+            $oMetatags->keywordsAdd($aContentInfo[$CNF['FIELD_ID']], $aContentInfo[$CNF['FIELD_TEXT']]);
+        }
 
         // alert
         bx_import('BxDolPrivacy');

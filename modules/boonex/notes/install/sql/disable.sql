@@ -25,3 +25,6 @@ DELETE FROM `sys_acl_actions` WHERE `Module` = 'bx_notes';
 -- SEARCH
 DELETE FROM `sys_objects_search` WHERE `ObjectName` = 'bx_notes';
 
+-- METATAGS
+DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_notes';
+

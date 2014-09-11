@@ -87,7 +87,7 @@ class BxNotesSearchResult extends BxBaseModTextSearchResult
                 $this->isError = true;
         }
 
-        // add replacable markers and replace them
+        // add replaceable markers and replace them
         if ($oProfileAuthor) {
             $this->addMarkers($oProfileAuthor->getInfo()); // profile info is replacable
             $this->addMarkers(array('profile_id' => $oProfileAuthor->id())); // profile id is replacable
