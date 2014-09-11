@@ -239,15 +239,8 @@ class BxDolStudioStore extends BxTemplStudioPage
 
     protected function loadPurchases()
     {
-        bx_import('BxDolStudioOAuth');
-        $aProducts = BxDolStudioOAuth::getInstance()->loadItems(array('dol_type' => 'purchased_products', 'dol_domain' => BX_DOL_URL_ROOT));
-
-        $this->oDb->updateModule(array('hash' => ''));
-        if(!empty($aProducts) && is_array($aProducts))
-	        foreach ($aProducts as $aProduct)
-	        	$this->oDb->updateModule(array('hash' => $aProduct['hash']), array('name' => $aProduct['name']));
-
-        return $aProducts;
+		bx_import('BxDolStudioInstallerUtils');
+        return BxDolStudioInstallerUtils::getInstance()->checkModules(true);
     }
 
     protected function loadUpdates()

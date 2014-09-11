@@ -151,10 +151,22 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
         $sSql = "SELECT `uri` FROM `sys_modules` ORDER BY `uri`";
         return $this->fromMemory('sys_modules_uri', 'getColumn', $sSql);
     }
+
     function getDependent($sUri)
     {
         $sSql = "SELECT `id`, `title` FROM `sys_modules` WHERE `dependencies` LIKE '%" . $this->escape($sUri) . "%'";
         return $this->getAll($sSql);
+    }
+
+	public function updateModule($aParamsSet, $aParamsWhere = array())
+    {
+        if(empty($aParamsSet))
+            return false;
+
+		$sWhereClause = !empty($aParamsWhere) ? $this->arrayToSQL($aParamsWhere, " AND ") : "1";
+
+        $sSql = "UPDATE `sys_modules` SET " . $this->arrayToSQL($aParamsSet) . " WHERE " . $sWhereClause;
+        return $this->query($sSql);
     }
 }
 

@@ -552,7 +552,10 @@ class BxBaseStudioStore extends BxDolStudioStore
         if($mixedResult !== true)
             return array('code' => 1, 'message' => (!empty($mixedResult) ? $mixedResult : _t('_adm_str_err_download_failed')));
 
-        return array('code' => 0, 'message' => _t('_adm_str_msg_download_successfully'));
+		bx_import('BxDolStudioInstallerUtils');
+		$aUpdate = BxDolStudioInstallerUtils::getInstance()->getUpdate($sModuleName);
+
+        return array('code' => 0, 'message' => _t('_adm_str_msg_download_successfully'), 'path' => $aUpdate['dir']);
     }
 
     protected function displayProducts($aItems, $aParams = array())
@@ -681,7 +684,8 @@ class BxBaseStudioStore extends BxDolStudioStore
                 'bx_if:show_download' => array(
                     'condition' => $bDownloadable,
                     'content' => array(
-	            		'on_click' => $sJsObject . "." . ($this->bAuthAccessUpdates ? "getFile(" . $aItem['file_id'] . ", this)" : "getUpdate('" . $aItem['name'] . "', this)")
+	            		'caption' => _t($this->bAuthAccessUpdates ? '_adm_btn_download_submit' : '_adm_btn_install_submit'),
+	            		'on_click' => $sJsObject . "." . ($this->bAuthAccessUpdates ? "getFile(" . $aItem['file_id'] . ", this)" : "getUpdateAndInstall('" . $aItem['name'] . "', this)")
                     )
                 )
             ));

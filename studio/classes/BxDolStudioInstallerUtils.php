@@ -58,8 +58,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         $aModules = array();
         $oTemplate = BxDolStudioTemplate::getInstance();
 
-        $aInstalledPathes = $aInstalledInfo = array();
-        $this->getInstalledInfo($aInstalledPathes, $aInstalledInfo);
+        $aInstalledInfo = $this->getInstalledInfo();
 
         $sPath = BX_DIRECTORY_PATH_MODULES;
         if(($rHandleVendor = opendir($sPath)) !== false) {
@@ -72,8 +71,8 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
                         if(!is_dir($sPath . $sVendor . '/' . $sModule) || substr($sModule, 0, 1) == '.')
                             continue;
 
-                        $sConfigPath = $sPath . $sVendor . '/' . $sModule . '/install/config.php';
-                        $aModule = $this->getConfigModule($sConfigPath, $aInstalledPathes, $aInstalledInfo);
+						$sModulePath = $sVendor . '/' . $sModule . '/';
+                        $aModule = $this->getConfigModule($sPath . $sModulePath . 'install/config.php', !empty($aInstalledInfo[$sModulePath]) ? $aInstalledInfo[$sModulePath] : array());
                         if(empty($aModule))
                             continue;
 
@@ -96,8 +95,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         bx_import('BxDolStudioTemplate');
         $oTemplate = BxDolStudioTemplate::getInstance();
 
-        $aInstalledPathes = $aInstalledInfo = array();
-        $this->getInstalledInfo($aInstalledPathes, $aInstalledInfo);
+        $aInstalledInfo = $this->getInstalledInfo();
 
         $sPath = BX_DIRECTORY_PATH_MODULES;
         if(($rHandleVendor = opendir($sPath)) !== false) {
@@ -110,21 +108,13 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
                         if(!is_dir($sPath . $sVendor . '/' . $sModule) || substr($sModule, 0, 1) == '.')
                             continue;
 
-                        if(($rHandleUpdate = @opendir($sPath . $sVendor . '/' . $sModule . '/updates/')) !== false) {
-                            while(($sUpdate = readdir($rHandleUpdate)) !== false) {
-                                if(!is_dir($sPath . $sVendor . '/' . $sModule . '/updates/' . $sUpdate) || substr($sUpdate, 0, 1) == '.')
-                                    continue;
+						$sModulePath = $sVendor . '/' . $sModule . '/';
+						if(empty($aInstalledInfo[$sModulePath]))
+							continue;
 
-                                $sConfigPathModule = $sPath . $sVendor . '/' . $sModule . '/install/config.php';
-                                $sConfigPathUpdate = $sPath . $sVendor . '/' . $sModule . '/updates/' . $sUpdate . '/install/config.php';
-                                $aUpdate = $this->getConfigUpdate($sConfigPathModule, $sConfigPathUpdate, $aInstalledPathes, $aInstalledInfo);
-                                if(empty($aUpdate) || !is_array($aUpdate) || version_compare($aUpdate['module_version'], $aUpdate['version_from']) != 0)
-                                    continue;
-
-                                $aUpdates[$aUpdate['title']] = $aUpdate;
-                            }
-                            closedir($rHandleUpdate);
-                        }
+						$aUpdate = $this->getUpdate($aInstalledInfo[$sModulePath]);
+						if(!empty($aUpdate))
+							$aUpdates[$aUpdate['title']] = $aUpdate;
                     }
                     closedir($rHandleModule);
                 }
@@ -134,6 +124,43 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
         ksort($aUpdates);
         return $aUpdates;
+    }
+
+    public function getUpdate($mixedModule)
+    {
+    	$aResult = array();
+
+    	if(!is_array($mixedModule)) {
+    		bx_import('BxDolModuleQuery');
+			$mixedModule = BxDolModuleQuery::getInstance()->{is_numeric($mixedModule) ? 'getModuleById' : 'getModuleByName'}($mixedModule); 
+    	}
+
+    	if(empty($mixedModule) || !is_array($mixedModule))
+    		return $aResult;
+
+    	$sPathModule = BX_DIRECTORY_PATH_MODULES . $mixedModule['path'];
+    	$sPathUpdates = $sPathModule . 'updates/';
+
+    	$rHandleUpdate = @opendir($sPathUpdates);
+		if($rHandleUpdate === false)
+			return $aResult; 
+
+		while(($sUpdate = readdir($rHandleUpdate)) !== false) {
+			$sPathUpdate = $sPathUpdates . $sUpdate . '/';
+			if(substr($sUpdate, 0, 1) == '.' || !is_dir($sPathUpdate))
+            	continue;
+
+			$aUpdate = $this->getConfigUpdate($sPathModule . 'install/config.php', $sPathUpdate . 'install/config.php', $mixedModule);
+			if(empty($aUpdate) || !is_array($aUpdate) || version_compare($aUpdate['module_version'], $aUpdate['version_from']) != 0)
+            	continue;
+
+			$aResult = $aUpdate;
+			break;
+		}
+
+		closedir($rHandleUpdate);
+
+        return $aResult;
     }
 
     public function perform($sDirectory, $sOperation, $aParams = array())
@@ -164,10 +191,34 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         return array('code' => $aResult['result'] ? 0 : 2, 'message' => $aResult['message']);
     }
 
+    public function checkModules($bAuthorizedAccess = false)
+    {
+    	if($bAuthorizedAccess) {
+    		bx_import('BxDolStudioOAuth');
+        	$aProducts = BxDolStudioOAuth::getInstance()->loadItems(array('dol_type' => 'purchased_products', 'dol_domain' => BX_DOL_URL_ROOT));
+    	}
+    	else {
+	    	bx_import('BxDolStudioJson');
+			$aProducts = BxDolStudioJson::getInstance()->load(BX_DOL_UNITY_URL_MARKET . 'json_browse_purchased', array(
+				'key' => getParam('sys_oauth_key')
+			));
+    	}
+
+    	bx_import('BxDolModuleQuery');
+    	$oModuleDb = BxDolModuleQuery::getInstance();
+
+    	$oModuleDb->updateModule(array('hash' => ''));
+        if(!empty($aProducts) && is_array($aProducts))
+	        foreach ($aProducts as $aProduct)
+	        	$oModuleDb->updateModule(array('hash' => $aProduct['hash']), array('name' => $aProduct['name']));
+
+		return $aProducts;
+    }
+
     public function checkUpdates($bAuthorizedAccess = false)
     {
 		bx_import('BxDolModuleQuery');
-        $aModules = BxDolModuleQuery::getInstance()->getModules();
+		$aModules = BxDolModuleQuery::getInstance()->getModules();
 
         $aProducts = array();
         foreach($aModules as $aModule) {
@@ -180,6 +231,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
             	'hash' => $aModule['hash'],
             );
         }
+
         $sProducts = base64_encode(serialize($aProducts));
 
         if($bAuthorizedAccess) {
@@ -189,9 +241,8 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
 		bx_import('BxDolStudioJson');
 		return BxDolStudioJson::getInstance()->load(BX_DOL_UNITY_URL_MARKET . 'json_browse_updates', array(
-			'products' => $sProducts,
-			'domain' => BX_DOL_URL_ROOT,
-			'user' => (int)getParam('sys_oauth_user') 
+			'key' => getParam('sys_oauth_key'),
+			'products' => $sProducts
 		));
     }
 
@@ -210,13 +261,12 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
 		bx_import('BxDolStudioJson');
 		$aItem = BxDolStudioJson::getInstance()->load(BX_DOL_UNITY_URL_MARKET . 'json_download_update', array(
+			'key' => getParam('sys_oauth_key'),
 			'product' => base64_encode(serialize(array(
 				'name' => $aModule['name'],
 	            'version' => $aModule['version'],
 	            'hash' => $aModule['hash'],
 			))),
-			'domain' => BX_DOL_URL_ROOT,
-			'user' => (int)getParam('sys_oauth_user') 
 		));
 
 		return $this->downloadFileInit($aItem);
@@ -344,17 +394,15 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 		return true;
     }
 
-    protected function getConfigModule($sConfigPath, $aInstalledPathes = array(), $aInstalledInfo = array())
+    protected function getConfigModule($sConfigPath, $aInstalled = array())
     {
     	$aConfig = self::getModuleConfig($sConfigPath);
         if(empty($aConfig) || !is_array($aConfig))
             return array();
 
-        $sModulePath = $aConfig['home_dir'];
-
-        $bInstalled = !empty($aInstalledPathes) && in_array($sModulePath, $aInstalledPathes);
-        $bEnabled = $bInstalled && !empty($aInstalledInfo) && (int)$aInstalledInfo[$sModulePath]['enabled'] == 1;
-        $sVersion = $bInstalled && !empty($aInstalledInfo) ? $aInstalledInfo[$sModulePath]['version'] : $aConfig['version'];
+        $bInstalled = !empty($aInstalled);
+        $bEnabled = $bInstalled && (int)$aInstalled['enabled'] == 1;
+        $sVersion = $bInstalled ? $aInstalled['version'] : $aConfig['version'];
 
         return array(
         	'type' => $aConfig['type'],
@@ -366,13 +414,13 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
             'dir' => $aConfig['home_dir'],
             'note' => isset($aConfig['note']) ? bx_process_output($aConfig['note']) : '',
             'installed' => $bInstalled,
-            'enabled' => $bInstalled && $bEnabled
+            'enabled' => $bEnabled
         );
     }
 
-    protected function getConfigUpdate($sConfigPathModule, $sConfigPathUpdate, $aInstalledPathes = array(), $aInstalledInfo = array())
+    protected function getConfigUpdate($sConfigPathModule, $sConfigPathUpdate, $aInstalledModule = array())
     {
-        $aModule = $this->getConfigModule($sConfigPathModule, $aInstalledPathes, $aInstalledInfo);
+        $aModule = $this->getConfigModule($sConfigPathModule, $aInstalledModule);
         if(empty($aModule) || !$aModule['installed'])
             return array();
 
@@ -393,16 +441,16 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         );
     }
 
-    private function getInstalledInfo(&$aInstalledPathes, &$aInstalledInfo)
+    private function getInstalledInfo()
     {
-        bx_import('BxDolModuleDb');
-        $aModules = BxDolModuleDb::getInstance()->getModules();
+        bx_import('BxDolModuleQuery');
+        $aModules = BxDolModuleQuery::getInstance()->getModules();
 
         $aInstalledInfo = array();
         foreach($aModules as $aModule)
             $aInstalledInfo[$aModule['path']] = $aModule;
 
-        $aInstalledPathes = array_keys($aInstalledInfo);
+        return $aInstalledInfo;
     }
 
     private function addTransientJob($sAction, $aParams)

@@ -226,6 +226,9 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             $oLanguages->addLanguageString($sTitleKey, $this->_aConfig['title']);
             $oLanguages->compileLanguage();
 
+            bx_import('BxDolStudioInstallerUtils');
+            BxDolStudioInstallerUtils::getInstance()->checkModules();
+
             $aFiles = array();
             $this->hashFiles($this->_sModulePath, $aFiles);
 

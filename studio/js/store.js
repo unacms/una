@@ -127,14 +127,29 @@ BxDolStudioStore.prototype.checkoutCart = function(sVendor, oButton) {
 };
 
 BxDolStudioStore.prototype.getFile = function(iFileId, oButton) {
-	this._getFile('get-file', iFileId, oButton);
+	this._getFile('get-file', iFileId, '', oButton);
 };
 
 BxDolStudioStore.prototype.getUpdate = function(sModuleName, oButton) {
-	this._getFile('get-update', sModuleName, oButton);
+	this._getFile('get-update', sModuleName, '', oButton);
 };
 
-BxDolStudioStore.prototype._getFile = function(sAction, mixedId, oButton) {
+BxDolStudioStore.prototype.getUpdateAndInstall = function(sModuleName, oButton) {
+	var $this = this;
+
+	var onResult = function(oData, oButton) {
+		if(oData.code != 0 || !oData.path) {
+			$this._onGetFile(oData, oButton);
+			return;
+		}
+
+		$this.update(oData.path, oButton);
+	};
+
+	this._getFile('get-update', sModuleName, onResult, oButton);
+};
+
+BxDolStudioStore.prototype._getFile = function(sAction, mixedId, onResult, oButton) {
 	var oDate = new Date();
 	var $this = this;
 	bx_loading(this.sIdPageContent, true);
@@ -147,11 +162,19 @@ BxDolStudioStore.prototype._getFile = function(sAction, mixedId, oButton) {
 			_t:oDate.getTime()
 		},
 		function(oData) {
-			bx_loading($this.sIdPageContent, false);
-			$this.showPopup($this.sIdPopupFile, oData.message, oButton);
+			if(typeof onResult == 'function')
+				onResult(oData, oButton);
+			else
+				$this._onGetFile(oData, oButton);
 		},
 		'json'
 	);
+};
+
+BxDolStudioStore.prototype._onGetFile = function(oData, oButton) {
+	bx_loading(this.sIdPageContent, false);
+
+	this.showPopup(this.sIdPopupFile, oData.message, oButton);
 };
 
 /*
