@@ -75,6 +75,11 @@ class BxDolStudioStore extends BxTemplStudioPage
                     $aResult = $this->getUpdate($sModuleName);
                     break;
 
+				case 'get-update-and-install':
+                    $sModuleName = bx_process_input(bx_get('str_id'));
+                    $aResult = $this->getUpdate($sModuleName, true);
+                    break;
+
                 case 'get-products-by-type':
                     $this->sPage = bx_process_input(bx_get('str_value'));
 
@@ -317,10 +322,10 @@ class BxDolStudioStore extends BxTemplStudioPage
     /*
      * Load update's package publicly.
      */
-	protected function loadUpdate($sModuleName)
+	protected function loadUpdate($sModuleName, $bAutoUpdate = false)
     {
         bx_import('BxDolStudioInstallerUtils');
-        return BxDolStudioInstallerUtils::getInstance()->downloadUpdatePublic($sModuleName);
+        return BxDolStudioInstallerUtils::getInstance()->downloadUpdatePublic($sModuleName, $bAutoUpdate);
     }
 
     private function checkoutCart($sVendor)

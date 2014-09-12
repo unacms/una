@@ -15,12 +15,16 @@ define('BX_DOL_UNITY_URL_MARKET', BX_DOL_UNITY_URL_ROOT . 'market/');
 
 class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSingleton
 {
+	protected $bUseFtp;
+
     public function __construct()
     {
         if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
         parent::__construct();
+
+        $this->bUseFtp = BX_FORCE_USE_FTP_FILE_TRANSFER;
     }
 
     /**
@@ -43,9 +47,9 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
 
-    public function serviceDownloadFileComplete($sFilePath)
+    public function serviceDownloadFileComplete($sFilePath, $sAutoAction = '')
     {
-    	return $this->downloadFileComplete($sFilePath);
+    	return $this->downloadFileComplete($sFilePath, $sAutoAction);
     }
 
 	public function servicePerformAction($sDirectory, $sOperation, $aParams)
@@ -254,7 +258,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 		return $this->downloadFileInit($aItem);
     }
 
-    public function downloadUpdatePublic($sModuleName)
+    public function downloadUpdatePublic($sModuleName, $bAutoUpdate = false)
     {
     	bx_import('BxDolModuleQuery');
 		$aModule = BxDolModuleQuery::getInstance()->getModuleByName($sModuleName);
@@ -269,10 +273,10 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 			))),
 		));
 
-		return $this->downloadFileInit($aItem);
+		return $this->downloadFileInit($aItem, $bAutoUpdate ? 'update' : '');
     }
 
-    protected function downloadFileInit($aItem)
+    protected function downloadFileInit($aItem, $sAutoAction = '')
     {
     	if(empty($aItem) || !is_array($aItem))
 			return $aItem;
@@ -283,13 +287,14 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         if($mixedResult !== true)
         	return $mixedResult;
 
-		return $this->downloadFileComplete($sFilePath);
+		return $this->downloadFileComplete($sFilePath, $sAutoAction);
     }
 
-    protected function downloadFileComplete($sFilePath, $bUseFtp = BX_FORCE_USE_FTP_FILE_TRANSFER)
+    protected function downloadFileComplete($sFilePath, $sAutoAction = '')
     {
+    	$bAutoAction = !empty($sAutoAction);
 		if(!defined('BX_DOL_CRON_EXECUTE') && !self::isRealOwner())
-			return _t($this->addTransientJob('download_file_complete', array($sFilePath)) ? '_adm_str_msg_download_scheduled' : '_adm_str_err_download_failed');
+			return _t($this->addTransientJob('download_file_complete', array($sFilePath, $sAutoAction)) ? '_adm_str_msg_download' . ($bAutoAction ? '_and_install' : '') . '_scheduled' : '_adm_str_err_download_failed');
 
         //--- Unarchive package.
         $sPackagePath = '';
@@ -300,11 +305,20 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         	return $mixedResult;
 
         //--- Copy unarchived package.
-        $mixedResult = $this->performCopy($sPackagePath, $bUseFtp);
+        $sHomePath = '';
+        $mixedResult = $this->performCopy($sPackagePath, $sHomePath);
 
         @bx_rrmdir($sPackagePath);
         if($mixedResult !== true)
         	return $mixedResult;
+
+		if(!$bAutoAction)
+			 return true;
+
+		//--- Autoinstall the downloaded package if it's needed.
+		$aResult = $this->perform($sHomePath, $sAutoAction);
+		if((int)$aResult['code'] != 0)
+			return $aResult['message'];
 
         return true;
     }
@@ -361,9 +375,9 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         return true;
     }
 
-    protected function performCopy($sPackagePath, $bUseFtp)
+    protected function performCopy($sPackagePath, &$sHomePath)
     {
-    	if($bUseFtp) {
+    	if($this->bUseFtp) {
 	        $sLogin = getParam('sys_ftp_login');
 	        $sPassword = getParam('sys_ftp_password');
 	        $sPath = getParam('sys_ftp_dir');
@@ -388,7 +402,8 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         if(empty($aConfig) || !is_array($aConfig) || empty($aConfig['home_dir']))
             return _t('_adm_str_err_wrong_package_format');
 
-        if(!$oFile->copy($sPackagePath, 'modules/' . $aConfig['home_dir']))
+		$sHomePath = $aConfig['home_dir'];
+        if(!$oFile->copy($sPackagePath, 'modules/' . $sHomePath))
             return _t('_adm_str_err_files_copy_failed');
 
 		return true;

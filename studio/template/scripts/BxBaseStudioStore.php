@@ -546,16 +546,13 @@ class BxBaseStudioStore extends BxDolStudioStore
         return array('code' => 0, 'message' => _t('_adm_str_msg_download_successfully'));
     }
 
-	protected function getUpdate($sModuleName)
+	protected function getUpdate($sModuleName, $bAutoUpdate = false)
     {
-        $mixedResult = $this->loadUpdate($sModuleName);
+        $mixedResult = $this->loadUpdate($sModuleName, $bAutoUpdate);
         if($mixedResult !== true)
             return array('code' => 1, 'message' => (!empty($mixedResult) ? $mixedResult : _t('_adm_str_err_download_failed')));
 
-		bx_import('BxDolStudioInstallerUtils');
-		$aUpdate = BxDolStudioInstallerUtils::getInstance()->getUpdate($sModuleName);
-
-        return array('code' => 0, 'message' => _t('_adm_str_msg_download_successfully'), 'path' => $aUpdate['dir']);
+        return array('code' => 0, 'message' => _t('_adm_str_msg_download' . ($bAutoUpdate ? '_and_install' : '') . '_successfully'));
     }
 
     protected function displayProducts($aItems, $aParams = array())

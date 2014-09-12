@@ -1176,8 +1176,10 @@
 	<string name="_adm_str_err_no_product_info"><![CDATA[Cannot load product info. Try again later.]]></string>
 	<string name="_adm_str_err_wrong_package_format"><![CDATA[Wrong package format.]]></string>
 	<string name="_adm_str_err_zip_not_available"><![CDATA[ZIP library is not available.]]></string>
-	<string name="_adm_str_msg_download_scheduled"><![CDATA[Download was scheduled. In a few minutes downloaded package will be available to install via Store -> Downloaded.]]></string>
-	<string name="_adm_str_msg_download_successfully"><![CDATA[Download was successfully finished. You may install it via Store -> Downloaded.]]></string>
+	<string name="_adm_str_msg_download_scheduled"><![CDATA[Download was scheduled. In a few minutes downloaded package will be available to install via Extensions -> Downloaded.]]></string>
+	<string name="_adm_str_msg_download_and_install_scheduled"><![CDATA[Download and subsequent installation were scheduled. It may take a few minutes.]]></string>
+	<string name="_adm_str_msg_download_successfully"><![CDATA[Download was successfully finished. You may install it via Extensions -> Downloaded.]]></string>
+	<string name="_adm_str_msg_download_and_install_successfully"><![CDATA[Download and subsequent installation were successfully finished.]]></string>
 	<string name="_adm_str_txt_discount_csign"><![CDATA[({0}{1} for Premium)]]></string>
 	<string name="_adm_str_txt_items_by"><![CDATA[item(s) by]]></string>
 	<string name="_adm_str_txt_price_csign"><![CDATA[{0}{1}]]></string>

@@ -138,15 +138,17 @@ BxDolStudioStore.prototype.getUpdateAndInstall = function(sModuleName, oButton) 
 	var $this = this;
 
 	var onResult = function(oData, oButton) {
-		if(oData.code != 0 || !oData.path) {
+		if(oData.code != 0) {
 			$this._onGetFile(oData, oButton);
 			return;
 		}
 
-		$this.update(oData.path, oButton);
+		bx_loading($this.sIdPageContent, false);
+
+		$(oButton).parents('.bx-std-product:first').hide();
 	};
 
-	this._getFile('get-update', sModuleName, onResult, oButton);
+	this._getFile('get-update-and-install', sModuleName, onResult, oButton);
 };
 
 BxDolStudioStore.prototype._getFile = function(sAction, mixedId, onResult, oButton) {
