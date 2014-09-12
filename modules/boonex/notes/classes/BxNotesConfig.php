@@ -52,6 +52,7 @@ class BxNotesConfig extends BxBaseModTextConfig
             'OBJECT_IMAGES_TRANSCODER_PREVIEW' => 'bx_notes_preview',
             'OBJECT_VIEWS' => 'bx_notes',
             'OBJECT_VOTES' => 'bx_notes',
+            'OBJECT_METATAGS' => 'bx_notes',
             'OBJECT_COMMENTS' => 'bx_notes',
             'OBJECT_PRIVACY_VIEW' => 'bx_notes_allow_view_to',
             'OBJECT_FORM_ENTRY' => 'bx_notes',

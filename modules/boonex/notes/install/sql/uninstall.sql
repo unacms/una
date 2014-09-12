@@ -1,7 +1,7 @@
 
 -- TABLES
 
-DROP TABLE IF EXISTS `bx_notes_posts`, `bx_notes_files`, `bx_notes_photos_resized`, `bx_notes_cmts`, `bx_notes_votes`, `bx_notes_votes_track`, `bx_notes_views_track`;
+DROP TABLE IF EXISTS `bx_notes_posts`, `bx_notes_files`, `bx_notes_photos_resized`, `bx_notes_cmts`, `bx_notes_votes`, `bx_notes_votes_track`, `bx_notes_views_track`, `bx_notes_meta_keywords`;
 
 -- STORAGES & TRANSCODERS
 

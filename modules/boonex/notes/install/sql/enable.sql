@@ -245,3 +245,7 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `ClassName`, `ClassPath`) VALUES
 ('bx_notes', '_bx_notes', 'BxNotesSearchResult', 'modules/boonex/notes/classes/BxNotesSearchResult.php');
 
+-- METATAGS
+INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `table_pictures`, `override_class_name`, `override_class_file`) VALUES
+('bx_notes', 'bx_notes_meta_keywords', '', '', '', '', '');
+
