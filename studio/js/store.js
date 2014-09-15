@@ -154,7 +154,9 @@ BxDolStudioStore.prototype.getUpdateAndInstall = function(sModuleName, oButton) 
 BxDolStudioStore.prototype._getFile = function(sAction, mixedId, onResult, oButton) {
 	var oDate = new Date();
 	var $this = this;
+
 	bx_loading(this.sIdPageContent, true);
+	$(oButton).addClass('bx-btn-disabled');
 
 	$.get(
 		this.sActionsUrl,
@@ -175,8 +177,11 @@ BxDolStudioStore.prototype._getFile = function(sAction, mixedId, onResult, oButt
 
 BxDolStudioStore.prototype._onGetFile = function(oData, oButton) {
 	bx_loading(this.sIdPageContent, false);
+	if(oData.code != 0)
+		$(oButton).removeClass('bx-btn-disabled');
 
-	this.showPopup(this.sIdPopupFile, oData.message, oButton);
+	if(oData.message)
+		this.showPopup(this.sIdPopupFile, oData.message, oButton);
 };
 
 /*
