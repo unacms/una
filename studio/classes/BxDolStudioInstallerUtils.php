@@ -47,14 +47,20 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
 
+    /*
+     * Is used to complete Downloading inside Transient Cron Job.
+     */
     public function serviceDownloadFileComplete($sFilePath, $sAutoAction = '')
     {
-    	return $this->downloadFileComplete($sFilePath, $sAutoAction);
+    	return $this->downloadFileComplete($sFilePath, $sAutoAction, true);
     }
 
+    /*
+     * Is used to perform action inside Transient Cron Job.
+     */
 	public function servicePerformAction($sDirectory, $sOperation, $aParams)
     {
-    	return $this->perform($sDirectory, $sOperation, $aParams);
+    	return $this->perform($sDirectory, $sOperation, $aParams, true);
     }
 
     public function getModules($bTitleAsKey = true)
@@ -167,7 +173,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         return $aResult;
     }
 
-    public function perform($sDirectory, $sOperation, $aParams = array())
+    public function perform($sDirectory, $sOperation, $aParams = array(), $bTransient = false)
     {
     	if(!defined('BX_DOL_CRON_EXECUTE') && !self::isRealOwner() && !in_array($sOperation, array('install', 'uninstall', 'enable', 'disable'))) {
     		if($this->addTransientJob('perform_action', array($sDirectory, $sOperation, $aParams)))
@@ -183,14 +189,22 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         $aConfig = self::getModuleConfig(BX_DIRECTORY_PATH_MODULES . $sDirectory . $sConfigFile);
 
         $sPathInstaller = BX_DIRECTORY_PATH_MODULES . $sDirectory . $sInstallerFile;
-        if(empty($aConfig) || !file_exists($sPathInstaller))
-        	return array('code' => 2, 'message' => _t('_adm_mod_err_process_operation_failed', $sOperation, $sDirectory)); 
+        if(empty($aConfig) || !file_exists($sPathInstaller)) {
+        	$sMessage = _t('_adm_mod_err_process_operation_failed', $sOperation, $sDirectory);
+        	if($bTransient)
+        		$this->emailNotify($sMessage);
+
+        	return array('code' => 2, 'message' => $sMessage);
+        } 
 
 		require_once($sPathInstaller);
 
 		$sClassName = $aConfig['class_prefix'] . $sInstallerClass;
 		$oInstaller = new $sClassName($aConfig);
 		$aResult = $oInstaller->$sOperation($aParams);
+
+		if(!$aResult['result'] && $bTransient)
+			$this->emailNotify($aResult['message']);
 
         return array('code' => $aResult['result'] ? 0 : 2, 'message' => $aResult['message']);
     }
@@ -290,7 +304,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 		return $this->downloadFileComplete($sFilePath, $sAutoAction);
     }
 
-    protected function downloadFileComplete($sFilePath, $sAutoAction = '')
+    protected function downloadFileComplete($sFilePath, $sAutoAction = '', $bTransient = false)
     {
     	$bAutoAction = !empty($sAutoAction);
 		if(!defined('BX_DOL_CRON_EXECUTE') && !self::isRealOwner())
@@ -301,24 +315,36 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         $mixedResult = $this->performUnarchive($sFilePath, $sPackagePath);
 
         @unlink($sFilePath);
-        if($mixedResult !== true)
+        if($mixedResult !== true) {
+        	if($bTransient)
+        		$this->emailNotify($mixedResult);
+
         	return $mixedResult;
+        }
 
         //--- Copy unarchived package.
         $sHomePath = '';
         $mixedResult = $this->performCopy($sPackagePath, $sHomePath);
 
         @bx_rrmdir($sPackagePath);
-        if($mixedResult !== true)
+        if($mixedResult !== true) {
+        	if($bTransient)
+        		$this->emailNotify($mixedResult);
+
         	return $mixedResult;
+        }
 
 		if(!$bAutoAction)
 			 return true;
 
 		//--- Autoinstall the downloaded package if it's needed.
 		$aResult = $this->perform($sHomePath, $sAutoAction);
-		if((int)$aResult['code'] != 0)
+		if((int)$aResult['code'] != 0) {
+			if($bTransient)
+        		$this->emailNotify($aResult['message']);
+
 			return $aResult['message'];
+		}
 
         return true;
     }
@@ -475,6 +501,13 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 			return true;
 
 		return false;
+    }
+
+    private function emailNotify($sMessage)
+    {
+    	sendMailTemplateSystem('t_BgOperationFailed', array (
+			'conclusion' => strip_tags($sMessage),
+		));
     }
 }
 

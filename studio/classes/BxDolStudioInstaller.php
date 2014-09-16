@@ -773,12 +773,12 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 
     protected function _isCompatibleWith()
     {
+    	$sVersionCur = bx_get_ver();
+
     	$bCompatible = false;
         if(isset($this->_aConfig['compatible_with']) && is_array($this->_aConfig['compatible_with']))
-            foreach($this->_aConfig['compatible_with'] as $iKey => $sVersion) {
-                $sVersion = '/^' . str_replace(array('.', 'x'), array('\.', '[A-Za-z0-9-]+'), $sVersion) . '$/is';
-                $bCompatible = $bCompatible || (preg_match($sVersion, bx_get_ver()) > 0);
-            }
+            foreach($this->_aConfig['compatible_with'] as $iKey => $sVersionReq)
+            	$bCompatible = $bCompatible || (version_compare($sVersionCur, $sVersionReq, '>=') == 1);
 
 		return $bCompatible;
     }

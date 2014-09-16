@@ -1504,6 +1504,10 @@ If it is not enabled then please consider implement this optimization, since it 
 <p>The following modules were successfully upgraded.</p>
 {conclusion}
 <bx_include_auto:_email_footer.html />]]></string>
+	<string name="_sys_et_txt_body_bg_operation_failed"><![CDATA[<bx_include_auto:_email_header.html />
+<p>Background operation failed with the following message.</p>
+{conclusion}
+<bx_include_auto:_email_footer.html />]]></string>
 	<string name="_sys_et_txt_body_upgraded_module"><![CDATA[<b>{0}</b> module: up to {1} version.<br />]]></string>
 	<string name="_sys_et_txt_name_system_admin_email"><![CDATA[Message sending from the Admin Panel]]></string>
 	<string name="_sys_et_txt_name_system_comment_replied"><![CDATA[The letter is sent to members whose comment was replied]]></string>
@@ -1520,6 +1524,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_et_txt_name_upgrade_failed"><![CDATA[Upgrade failed]]></string>
 	<string name="_sys_et_txt_name_upgrade_success"><![CDATA[Site upgrade success]]></string>
 	<string name="_sys_et_txt_name_upgrade_modules_success"><![CDATA[Modules upgrade success]]></string>
+	<string name="_sys_et_txt_name_bg_operation_failed"><![CDATA[Background operation failed]]></string>
 	<string name="_sys_et_txt_subject_admin_email"><![CDATA[Message from <SiteName> Admin: <MessageSubject>]]></string>
 	<string name="_sys_et_txt_subject_comment_replied"><![CDATA[Your comment was replied]]></string>
 	<string name="_sys_et_txt_subject_confirmation"><![CDATA[Confirm Your Email (ACTION REQUIRED)]]></string>
@@ -1535,6 +1540,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_et_txt_subject_upgrade_failed"><![CDATA[{site_name} upgrade failed]]></string>
 	<string name="_sys_et_txt_subject_upgrade_success"><![CDATA[{site_name} upgrade success]]></string>
 	<string name="_sys_et_txt_subject_upgrade_modules_success"><![CDATA[Modules upgrade success]]></string>
+	<string name="_sys_et_txt_subject_bg_operation_failed"><![CDATA[Background operation failed]]></string>
 	<string name="_sys_et_txt_unsubscribe"><![CDATA[Unsubscribe]]></string>
 	<string name="_sys_form_account"><![CDATA[Account]]></string>
 	<string name="_sys_form_account_input_captcha"><![CDATA[Security Image]]></string>
