@@ -44,16 +44,22 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
         );
 
         //--- Check for module to update ---//
-        $sQuery = $oDb->prepare("SELECT `id`, `version` FROM `sys_modules` WHERE `path`=? AND `uri`=? LIMIT 1", $this->_aConfig['module_dir'], $this->_aConfig['module_uri']);
-        $aModuleInfo = $oDb->getRow($sQuery);
+        $aModuleInfo = $oDb->getModulesBy(array('type' => 'path_and_uri', 'path' => $this->_aConfig['module_dir'], 'uri' => $this->_aConfig['module_uri']));
         if(!$aModuleInfo)
             return array_merge($aResult, array(
                 'message' => $this->_displayResult('check_module_exists', false, '_adm_err_modules_module_not_found'),
                 'result' => false
             ));
 
+		//--- Check Dolphin version compatibility ---//
+        if(!$this->_isCompatibleWith())
+            return array(
+                'message' => $this->_displayResult('check_script_version', false, _t('_adm_err_modules_wrong_version_script_update', $aModuleInfo['title'])),
+                'result' => false
+            );
+
         //--- Check version ---//
-        if($aModuleInfo['version'] != $this->_aConfig['version_from'])
+        if(version_compare($aModuleInfo['version'], $this->_aConfig['version_from']) != 0)
             return array_merge($aResult, array(
                 'message' => $this->_displayResult('check_module_version', false, '_adm_err_modules_wrong_version'),
                 'result' => false
@@ -80,8 +86,7 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
         //--- Perform action and check results ---//
         $aResult = array_merge($aResult, $this->_perform('install', 'Update'));
         if($aResult['result']) {
-            $sQuery = $oDb->prepare("UPDATE `sys_modules` SET `version`=? WHERE `id`=?", $this->_aConfig['version_to'], $aModuleInfo['id']);
-            $oDb->query($sQuery);
+            $oDb->updateModule(array('version' => $this->_aConfig['version_to']), array('id' => $aModuleInfo['id']));
 
             $oDb->deleteModuleTrackFiles($aModuleInfo['id']);
 

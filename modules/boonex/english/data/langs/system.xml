@@ -593,6 +593,7 @@
 	<string name="_adm_err_modules_wrong_permissions_msg"><![CDATA[{0} - {1}]]></string>
 	<string name="_adm_err_modules_wrong_version"><![CDATA[The module has incompatible version]]></string>
 	<string name="_adm_err_modules_wrong_version_script"><![CDATA[The module is not compatible with your version of Dolphin script]]></string>
+	<string name="_adm_err_modules_wrong_version_script_update"><![CDATA[The new version of {0} module isn't compatible with your version of Dolphin. Please upgrade Dolphin first (Dashboard > Version) and then try to upgrade the module.]]></string>
 	<string name="_adm_err_oauth_cannot_get_token"><![CDATA[Cannot connect to <b>BoonEx</b>. Please try again later.]]></string>
 	<string name="_adm_err_oauth_cannot_read_answer"><![CDATA[Cannot get a valid answer from <b>BoonEx</b>. Please try again later.]]></string>
 	<string name="_adm_err_oauth_empty_key_secret"><![CDATA[You need to enter Key and Secret provided by <b>BoonEx</b> in Settings -> General.]]></string>

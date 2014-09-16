@@ -22,7 +22,7 @@ class BxBaseStudioStore extends BxDolStudioStore
 
     function getPageCss()
     {
-        return array_merge(parent::getPageCss(), array('store.css', 'store-media-tablet.css', 'store-media-desktop.css'));
+        return array_merge(parent::getPageCss(), array('modules.css', 'store.css', 'store-media-tablet.css', 'store-media-desktop.css'));
     }
 
     function getPageJs()

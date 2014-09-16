@@ -176,13 +176,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             );
 
         //--- Check version compatibility ---//
-        $bCompatible = false;
-        if(isset($this->_aConfig['compatible_with']) && is_array($this->_aConfig['compatible_with']))
-            foreach($this->_aConfig['compatible_with'] as $iKey => $sVersion) {
-                $sVersion = '/^' . str_replace(array('.', 'x'), array('\.', '[A-Za-z0-9-]+'), $sVersion) . '$/is';
-                $bCompatible = $bCompatible || (preg_match($sVersion, bx_get_ver()) > 0);
-            }
-        if(!$bCompatible)
+        if(!$this->_isCompatibleWith())
             return array(
                 'message' => $this->_displayResult('check_script_version', false, '_adm_err_modules_wrong_version_script'),
                 'result' => false
@@ -486,17 +480,27 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 
     function _displayResult($sAction, $bResult, $sResult = '')
     {
+    	$oTemplate = BxDolStudioTemplate::getInstance();
+
         $sMessage = $this->_aActions[$sAction]['title'] . ' ';
         if(!empty($sResult))
             $sResult = (substr($sResult, 0, 1) == '_' ? _t($sResult) : $sResult) . '<br />';
 
         if(!$bResult)
-            return $sMessage . '<span style="color:red;">' . $sResult . '</span>';
+            return $oTemplate->parseHtmlByName('mod_action_result_step.html', array(
+            	'color' => 'red',
+            	'title' => $sMessage,
+            	'content' => $sResult
+            ));
 
         if($bResult && !in_array($sAction, array('show_introduction', 'show_conclusion')) && !$this->_bShowOnSuccess)
             return;
 
-        return $sMessage . '<span style="color:green;">' . (!empty($sResult) ? $sResult : _t('_adm_txt_modules_process_action_success') . '<br />') . '</span>';
+        return $oTemplate->parseHtmlByName('mod_action_result_step.html', array(
+        	'color' => 'green',
+            'title' => $sMessage,
+            'content' => !empty($sResult) ? $sResult : _t('_adm_txt_modules_process_action_success') . '<br />'
+        ));
     }
 
     //--- Action Methods ---//
@@ -765,6 +769,18 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         }
 
         return $oFile;
+    }
+
+    protected function _isCompatibleWith()
+    {
+    	$bCompatible = false;
+        if(isset($this->_aConfig['compatible_with']) && is_array($this->_aConfig['compatible_with']))
+            foreach($this->_aConfig['compatible_with'] as $iKey => $sVersion) {
+                $sVersion = '/^' . str_replace(array('.', 'x'), array('\.', '[A-Za-z0-9-]+'), $sVersion) . '$/is';
+                $bCompatible = $bCompatible || (preg_match($sVersion, bx_get_ver()) > 0);
+            }
+
+		return $bCompatible;
     }
 }
 

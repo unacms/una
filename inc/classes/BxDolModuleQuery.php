@@ -101,7 +101,8 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
     }
     function getModulesBy($aParams = array())
     {
-        $sPostfix = $sWhereClause = "";
+    	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
+        $sPostfix = $sWhereClause = $sOrderByClause = "";
 
         switch($aParams['type']) {
             case 'modules':
@@ -116,6 +117,10 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
                 $sPostfix .= '_templates';
                 $sWhereClause .= $this->prepare(" AND `type`=?", BX_DOL_MODULE_TYPE_TEMPLATE);
                 break;
+            case 'path_and_uri':
+            	$aMethod['name'] = 'getRow';
+            	$sWhereClause .= $this->prepare(" AND `path`=? AND `uri`=?", $aParams['path'], $aParams['uri']);
+            	break;
         }
 
         if(isset($aParams['active'])) {
@@ -125,7 +130,7 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
 
         $sOrderByClause = " ORDER BY " . (isset($aParams['order_by']) ? $aParams['order_by'] : '`title`');
 
-        $sSql = "SELECT
+        $aMethod['params'][0] = "SELECT
                 `id`,
                 `type`,
                 `name`,
@@ -141,9 +146,12 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
                 `date`,
                 `enabled`
             FROM `sys_modules`
-            WHERE 1 " . $sWhereClause .
-            $sOrderByClause;
-        return $this->fromMemory('sys_modules' . $sPostfix, 'getAll', $sSql);
+            WHERE 1 " . $sWhereClause . $sOrderByClause;
+
+        if(empty($sPostfix))
+        	return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+
+        return call_user_func_array(array($this, 'fromMemory'), array_merge(array('sys_modules' . $sPostfix, $aMethod['name']), $aMethod['params']));
     }
 
     function getModulesUri()

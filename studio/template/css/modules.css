@@ -4,3 +4,10 @@ div.bx-mod-confirm-cnt{}
 
 div.bx-mod-action-result {}
 div.bx-mod-action-result-cnt {}
+
+div.bx-mod-action-result-step {
+	max-width: 480px;
+	max-width: 30rem;
+}
+div.bx-mod-ars-title,
+div.bx-mod-ars-content {}
