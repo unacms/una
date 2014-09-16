@@ -480,6 +480,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 
     function _displayResult($sAction, $bResult, $sResult = '')
     {
+    	bx_import('BxDolStudioTemplate');
     	$oTemplate = BxDolStudioTemplate::getInstance();
 
         $sMessage = $this->_aActions[$sAction]['title'] . ' ';
