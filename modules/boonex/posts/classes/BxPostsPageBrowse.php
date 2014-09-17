@@ -3,22 +3,22 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    Notes Notes
+ * @defgroup    Posts Posts
  * @ingroup     DolphinModules
  *
  * @{
  */
 
-bx_import('BxBaseModTextMenu');
+bx_import('BxBaseModTextPageBrowse');
 
 /**
- * General class for module menu.
+ * Browse entries pages.
  */
-class BxNotesMenu extends BxBaseModTextMenu
+class BxPostsPageBrowse extends BxBaseModTextPageBrowse
 {
     public function __construct($aObject, $oTemplate = false)
     {
-        $this->MODULE = 'bx_notes';
+        $this->MODULE = 'bx_posts';
         parent::__construct($aObject, $oTemplate);
     }
 }

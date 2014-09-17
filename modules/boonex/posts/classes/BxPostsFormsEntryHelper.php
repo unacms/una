@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    Notes Notes
+ * @defgroup    Posts Posts
  * @ingroup     DolphinModules
  *
  * @{
@@ -14,7 +14,7 @@ bx_import('BxBaseModTextFormsEntryHelper');
 /**
  * Entry forms helper functions
  */
-class BxNotesFormsEntryHelper extends BxBaseModTextFormsEntryHelper
+class BxPostsFormsEntryHelper extends BxBaseModTextFormsEntryHelper
 {
     public function __construct($oModule)
     {

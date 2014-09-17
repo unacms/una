@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    Notes Notes
+ * @defgroup    Posts Posts
  * @ingroup     DolphinModules
  *
  * @{
@@ -14,11 +14,11 @@ bx_import('BxBaseModTextMenuView');
 /**
  * View entry menu
  */
-class BxNotesMenuView extends BxBaseModTextMenuView
+class BxPostsMenuView extends BxBaseModTextMenuView
 {
     public function __construct($aObject, $oTemplate = false)
     {
-        $this->MODULE = 'bx_notes';
+        $this->MODULE = 'bx_posts';
         parent::__construct($aObject, $oTemplate);
     }
 }

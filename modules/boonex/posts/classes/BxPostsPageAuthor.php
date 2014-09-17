@@ -3,24 +3,24 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    Notes Notes
+ * @defgroup    Posts Posts
  * @ingroup     DolphinModules
  *
  * @{
  */
 
-bx_import('BxBaseModTextPageBrowse');
+bx_import('BxBaseModTextPageAuthor');
 
 /**
- * Browse entries pages.
+ * Profile's entries page.
  */
-class BxNotesPageBrowse extends BxBaseModTextPageBrowse
+class BxPostsPageAuthor extends BxBaseModTextPageAuthor
 {
     public function __construct($aObject, $oTemplate = false)
     {
-        $this->MODULE = 'bx_notes';
         parent::__construct($aObject, $oTemplate);
     }
+
 }
 
 /** @} */

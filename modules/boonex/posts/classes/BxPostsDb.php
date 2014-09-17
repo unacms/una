@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    Notes Notes
+ * @defgroup    Posts Posts
  * @ingroup     DolphinModules
  *
  * @{
@@ -14,7 +14,7 @@ bx_import('BxBaseModTextDb');
 /*
  * Module database queries
  */
-class BxNotesDb extends BxBaseModTextDb
+class BxPostsDb extends BxBaseModTextDb
 {
     function __construct(&$oConfig)
     {

@@ -3,23 +3,18 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    Notes Notes
+ * @defgroup    Posts Posts
  * @ingroup     DolphinModules
  *
  * @{
  */
 
-bx_import ('BxBaseModTextModule');
+require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
-/**
- * Notes module
- */
-class BxNotesModule extends BxBaseModTextModule
-{
-    function __construct(&$aModule)
-    {
-        parent::__construct($aModule);
-    }
-}
+check_logged();
+
+bx_import('BxBaseModTextRequest');
+
+BxBaseModTextRequest::processAsAction($GLOBALS['aModule'], $GLOBALS['aRequest']);
 
 /** @} */

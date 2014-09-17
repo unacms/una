@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    Notes Notes
+ * @defgroup    Posts Posts
  * @ingroup     DolphinModules
  *
  * @{
@@ -11,22 +11,22 @@
 
 bx_import('BxBaseModTextSearchResult');
 
-class BxNotesSearchResult extends BxBaseModTextSearchResult
+class BxPostsSearchResult extends BxBaseModTextSearchResult
 {
     function __construct($sMode = '', $aParams = array())
     {
         parent::__construct($sMode, $aParams);
 
         $this->aCurrent = array(
-            'name' => 'bx_notes',
-            'title' => _t('_bx_notes_page_title_browse'),
-            'table' => 'bx_notes_posts',
+            'name' => 'bx_posts',
+            'title' => _t('_bx_posts_page_title_browse'),
+            'table' => 'bx_posts_posts',
             'ownFields' => array('id', 'title', 'text', 'thumb', 'author', 'added'),
             'searchFields' => array('title', 'text'),
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
             ),
-            'paginate' => array('perPage' => getParam('bx_notes_per_page_browse'), 'start' => 0),
+            'paginate' => array('perPage' => getParam('bx_posts_per_page_browse'), 'start' => 0),
             'sorting' => 'last',
             'rss' => array(
                 'title' => '',
@@ -44,7 +44,7 @@ class BxNotesSearchResult extends BxBaseModTextSearchResult
             'ident' => 'id',
         );
 
-        $this->sFilterName = 'bx_notes_filter';
+        $this->sFilterName = 'bx_posts_filter';
         $this->oModule = $this->getMain();
 
         $oProfileAuthor = null;
@@ -64,20 +64,20 @@ class BxNotesSearchResult extends BxBaseModTextSearchResult
                 $this->aCurrent['restriction']['author']['value'] = $oProfileAuthor->id();
 
                 $this->sBrowseUrl = 'page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id={profile_id}';
-                $this->aCurrent['title'] = _t('_bx_notes_page_title_browse_by_author');
-                $this->aCurrent['rss']['link'] = 'modules/?r=notes/rss/' . $sMode . '/' . $oProfileAuthor->id();
+                $this->aCurrent['title'] = _t('_bx_posts_page_title_browse_by_author');
+                $this->aCurrent['rss']['link'] = 'modules/?r=posts/rss/' . $sMode . '/' . $oProfileAuthor->id();
                 break;
 
             case 'public':
                 bx_import('BxDolPermalinks');
                 $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']);
-                $this->aCurrent['title'] = _t('_bx_notes_page_title_browse_recent');
-                $this->aCurrent['rss']['link'] = 'modules/?r=notes/rss/' . $sMode;
+                $this->aCurrent['title'] = _t('_bx_posts_page_title_browse_recent');
+                $this->aCurrent['rss']['link'] = 'modules/?r=posts/rss/' . $sMode;
                 break;
 
             case '': // search results
                 $this->sBrowseUrl = BX_DOL_SEARCH_KEYWORD_PAGE;
-                $this->aCurrent['title'] = _t('_bx_notes');
+                $this->aCurrent['title'] = _t('_bx_posts');
                 $this->aCurrent['paginate']['perPage'] = 3;
                 unset($this->aCurrent['rss']);
                 break;
@@ -112,7 +112,7 @@ class BxNotesSearchResult extends BxBaseModTextSearchResult
     function displayResultBlock ()
     {
         $s = parent::displayResultBlock ();
-        $s = '<div class="bx-notes-wrapper ' . ('unit_gallery.html' == $this->sUnitTemplate ? 'bx-def-margin-neg bx-clearfix' : '') . '">' . $s . '</div>';
+        $s = '<div class="bx-posts-wrapper ' . ('unit_gallery.html' == $this->sUnitTemplate ? 'bx-def-margin-neg bx-clearfix' : '') . '">' . $s . '</div>';
         return $s;
     }
 
@@ -120,7 +120,7 @@ class BxNotesSearchResult extends BxBaseModTextSearchResult
     {
         if ($this->aCurrent['sorting'] == 'last') {
             $aSql = array();
-            $aSql['order'] = " ORDER BY `bx_notes_posts`.`added` DESC";
+            $aSql['order'] = " ORDER BY `bx_posts_posts`.`added` DESC";
             return $aSql;
         }
         return array();

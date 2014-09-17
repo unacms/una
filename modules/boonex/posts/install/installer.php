@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    Notes Notes
+ * @defgroup    Posts Posts
  * @ingroup     DolphinModules
  *
  * @{
@@ -11,13 +11,13 @@
 
 bx_import('BxBaseModTextInstaller');
 
-class BxNotesInstaller extends BxBaseModTextInstaller
+class BxPostsInstaller extends BxBaseModTextInstaller
 {
     function __construct($aConfig)
     {
         parent::__construct($aConfig);
-        $this->_aTranscoders = array ('bx_notes_preview');
-        $this->_aStorages = array ('bx_notes_files');
+        $this->_aTranscoders = array ('bx_posts_preview');
+        $this->_aStorages = array ('bx_posts_files');
         $this->_aMenuTriggers = array ('trigger_profile_view_submenu');
     }
 }

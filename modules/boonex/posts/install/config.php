@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    Notes Notes
+ * @defgroup    Posts Posts
  * @ingroup     DolphinModules
  *
  * @{
@@ -15,10 +15,10 @@ $aConfig = array(
      * Main Section.
      */
     'type' => BX_DOL_MODULE_TYPE_MODULE,
-    'name' => 'bx_notes',
-    'title' => 'Notes',
+    'name' => 'bx_posts',
+    'title' => 'Posts',
     'note' => 'Basic blogging module.',
-    'version' => '8.0.1.DEV',
+    'version' => '8.0.0.DEV',
     'vendor' => 'BoonEx',
 	'help_url' => 'http://feed.boonex.com/?section={module_name}',
 
@@ -29,16 +29,16 @@ $aConfig = array(
     /**
      * 'home_dir' and 'home_uri' - should be unique. Don't use spaces in 'home_uri' and the other special chars.
      */
-    'home_dir' => 'boonex/notes/',
-    'home_uri' => 'notes',
+    'home_dir' => 'boonex/posts/',
+    'home_uri' => 'posts',
 
-    'db_prefix' => 'bx_notes_',
-    'class_prefix' => 'BxNotes',
+    'db_prefix' => 'bx_posts_',
+    'class_prefix' => 'BxPosts',
 
     /**
      * Category for language keys.
      */
-    'language_category' => 'Notes',
+    'language_category' => 'Posts',
 
     /**
      * Installation/Uninstallation Section.
