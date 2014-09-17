@@ -236,6 +236,7 @@ class BxDolVote extends BxDolObject
         $iObjectId = $this->getId();
         $iAuthorId = $this->_getAuthorId();
         $iAuthorIp = $this->_getAuthorIp();
+        $bLikeMode = $this->isLikeMode();
 
         $bUndo = $this->isUndo() && $this->_oQuery->isVoted($iObjectId, $iAuthorId) ? true : false;
 
@@ -244,7 +245,7 @@ class BxDolVote extends BxDolObject
             return;
         }
 
-        if(!$this->isLikeMode() && !$this->_oQuery->isPostTimeoutEnded($iObjectId, $iAuthorIp)) {
+        if(!$bLikeMode && !$this->_oQuery->isPostTimeoutEnded($iObjectId, $iAuthorIp)) {
             $this->_echoResultJson(array('code' => 3, 'msg' => _t('_vote_err_duplicate_vote')));
             return;
         }
@@ -280,7 +281,9 @@ class BxDolVote extends BxDolObject
             'code' => 0,
             'rate' => $aVote['rate'],
             'count' => $aVote['count'],
-            'countf' => (int)$aVote['count'] > 0 ? $this->_getLabelCounter($aVote['count']) : ''
+            'countf' => (int)$aVote['count'] > 0 ? $this->_getLabelCounter($aVote['count']) : '',
+        	'label_icon' => $bLikeMode ? $this->_getIconDoLike(!$bUndo) : '',
+        	'label_title' => $bLikeMode ? _t($this->_getTitleDoLike(!$bUndo)) : ''
         ));
     }
 
@@ -362,6 +365,16 @@ class BxDolVote extends BxDolObject
         }
 
         return $oProfile;
+    }
+
+    protected function _getIconDoLike($bVoted)
+    {
+    	return $bVoted ?  'thumbs-down' : 'thumbs-up';
+    }
+
+    protected function _getTitleDoLike($bVoted)
+    {
+    	return $bVoted ? '_vote_do_unlike' : '_vote_do_like';
     }
 
     protected function _triggerVote()

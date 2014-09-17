@@ -145,8 +145,12 @@ class BxBaseVote extends BxDolVote
         if(!method_exists($this, $sMethodDoVote))
             return '';
 
-        $aVote = $this->_oQuery->getVote($this->getId());
+		$iObjectId = $this->getId();
+		$iAuthorId = $this->_getAuthorId();
+        $aVote = $this->_oQuery->getVote($iObjectId);
+
         $aParams = array_merge($this->_aElementDefaults[$sType], $aParams);
+        $aParams['is_voted'] = $this->isUndo() && $this->_oQuery->isVoted($iObjectId, $iAuthorId) ? true : false;
 
         $sTmplName = 'vote_element_' . (!empty($aParams['usage']) ? $aParams['usage'] : BX_DOL_VOTE_USAGE_DEFAULT) . '.html';
         return BxDolTemplate::getInstance()->parseHtmlByName($sTmplName, array(
@@ -233,12 +237,18 @@ class BxBaseVote extends BxDolVote
 
     protected function _getLabelDoLike($aParams = array())
     {
+    	$bVoted = isset($aParams['is_voted']) && $aParams['is_voted'] === true;
+    	$oTemplate = BxDolTemplate::getInstance();
+
         $sResult = '';
         if(isset($aParams['show_do_vote_icon']) && $aParams['show_do_vote_icon'] == true)
-            $sResult .= BxDolTemplate::getInstance()->parseHtmlByName('bx_icon.html', array('name' => 'plus'));
+            $sResult .= $oTemplate->parseHtmlByName('bx_icon.html', array('name' => $this->_getIconDoLike($bVoted)));
 
         if(isset($aParams['show_do_vote_label']) && $aParams['show_do_vote_label'] == true)
-            $sResult .= ($sResult != '' ? ' ' : '') . _t('_vote_do_like');
+            $sResult .= ($sResult != '' ? ' ' : '') . $oTemplate->parseHtmlByName('bx_span.html', array(
+            	'bx_repeat:attrs' => array(),
+            	'content' => _t($this->_getTitleDoLike($bVoted))
+            ));
 
         return $sResult;
     }

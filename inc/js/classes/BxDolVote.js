@@ -78,6 +78,16 @@ BxDolVote.prototype.vote = function (oLink, iValue)
     		if(oData && oData.code != 0)
                 return;
 
+    		if($this._iLikeMode) {
+	    		if(oData && oData.label_icon)
+	    			$(oLink).find('.sys-icon').attr('class', 'sys-icon ' + oData.label_icon);
+
+	    		if(oData && oData.label_title) {
+	    			$(oLink).attr('title', oData.label_title);
+	    			$(oLink).find('span').html(oData.label_title);
+	    		}
+    		}
+
     		if(!$this._iLikeMode)
     			$this._iSaveWidth = Math.round(oData.rate * $this._getStarWidth(oLink));
 
