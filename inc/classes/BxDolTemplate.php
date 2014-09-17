@@ -1321,28 +1321,44 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
         if($bExternal) {
             $sContent = preg_replace(
                 array(
-                    "'@import\s+url\s*\(\s*[\'|\"]*\s*([a-zA-Z0-9\.\/_-]+)\s*[\'|\"]*\s*\)\s*;'e",
-                    "'url\s*\(\s*[\'|\"]*\s*([a-zA-Z0-9\.\/\?\#_=-]+)\s*[\'|\"]*\s*\)'e"
+                    "'@import\s+url\s*\(\s*[\'|\"]*\s*([a-zA-Z0-9\.\/_-]+)\s*[\'|\"]*\s*\)\s*;'",
+                    "'url\s*\(\s*[\'|\"]*\s*([a-zA-Z0-9\.\/\?\#_=-]+)\s*[\'|\"]*\s*\)'"
                 ),
                 array(
                     "",
-                    "'url(' . \$sPath . '\\1)'"
+                    "'url('" . $sPath . "'\\1)'"
                 ),
                 $sContent
             );
-        } else {
-            $sContent = preg_replace(
-                "'@import\s+url\s*\(\s*[\'|\"]*\s*([a-zA-Z0-9\.\/_-]+)\s*[\'|\"]*\s*\)\s*;'e",
-                "\$this->_compileCss(realpath(\$sPath . dirname('\\1')) . DIRECTORY_SEPARATOR . basename('\\1'), \$aIncluded)",
-                $sContent
-            );
-
-            $sContent = preg_replace_callback(
-                "'url\s*\(\s*[\'|\"]*\s*([a-zA-Z0-9\.\/\?\#_=-]+)\s*[\'|\"]*\s*\)'",
-                create_function('$aMatches', 'return BxDolTemplate::_callbackParseUrl("' . addslashes($sPath) . '", $aMatches);'),
-                $sContent
-            );
         }
+        else {
+        	try {
+        		$oTemplate = &$this;
+
+	            $sContent = preg_replace_callback(
+	                "'@import\s+url\s*\(\s*[\'|\"]*\s*([a-zA-Z0-9\.\/_-]+)\s*[\'|\"]*\s*\)\s*;'", function ($aMatches)  use($oTemplate, $sPath, $aIncluded) {
+	                	return $oTemplate->_compileCss(realpath($sPath . dirname($aMatches[1])) . DIRECTORY_SEPARATOR . basename($aMatches[1]), $aIncluded);
+	                }, $sContent);
+	
+	            $sContent = preg_replace_callback(
+	                "'url\s*\(\s*[\'|\"]*\s*([a-zA-Z0-9\.\/\?\#_=-]+)\s*[\'|\"]*\s*\)'", function ($aMatches)  use($oTemplate, $sPath) {
+						$sFile = basename($aMatches[1]);
+				        $sDirectory = dirname($aMatches[1]);
+				
+				        $sRootPath = realpath(BX_DIRECTORY_PATH_ROOT);
+				        $sAbsolutePath = realpath(addslashes($sPath) . $sDirectory) . DIRECTORY_SEPARATOR . $sFile;
+				
+				        $sRootPath = str_replace(DIRECTORY_SEPARATOR, '/', $sRootPath);
+				        $sAbsolutePath = str_replace(DIRECTORY_SEPARATOR, '/', $sAbsolutePath);
+				
+				        return 'url(' . bx_ltrim_str($sAbsolutePath, $sRootPath, BX_DOL_URL_ROOT) . ')';
+	                }, $sContent);
+			}
+	    	catch(Exception $oException) {
+	        	return '';
+	        }
+        }
+
         return $sContent;
     }
 
@@ -1384,27 +1400,6 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
     {
         require_once(BX_DIRECTORY_PATH_PLUGINS . 'minify/lib/Minify/CSS/Compressor.php');
         return Minify_CSS_Compressor::process($s);
-    }
-
-    /**
-     * Static callback function for CSS compiler.
-     *
-     * @param  string $sPath    CSS file absolute path.
-     * @param  array  $aMatches matched parts of image's URL.
-     * @return string converted image's URL.
-     */
-    public static function _callbackParseUrl($sPath, $aMatches)
-    {
-        $sFile = basename($aMatches[1]);
-        $sDirectory = dirname($aMatches[1]);
-
-        $sRootPath = realpath(BX_DIRECTORY_PATH_ROOT);
-        $sAbsolutePath = realpath($sPath . $sDirectory) . DIRECTORY_SEPARATOR . $sFile;
-
-        $sRootPath = str_replace(DIRECTORY_SEPARATOR, '/', $sRootPath);
-        $sAbsolutePath = str_replace(DIRECTORY_SEPARATOR, '/', $sAbsolutePath);
-
-        return 'url(' . bx_ltrim_str($sAbsolutePath, $sRootPath, BX_DOL_URL_ROOT) . ')';
     }
 
     /**
@@ -1648,31 +1643,33 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
             $aValues[$i] = $sValue;
         }
 
+        try {
+        	$oTemplate = &$this;
+
+        	$aCallbackPatterns = array(
+        		"'<bx_include_auto:([^\s]+) \/>'s" => BX_DOL_TEMPLATE_CHECK_IN_BOTH,
+        		"'<bx_include_base:([^\s]+) \/>'s" => BX_DOL_TEMPLATE_CHECK_IN_BASE,
+        		"'<bx_include_tmpl:([^\s]+) \/>'s" => BX_DOL_TEMPLATE_CHECK_IN_TMPL
+        	);
+	        foreach($aCallbackPatterns as $sPattern => $sCheckIn)
+		        $sContent = preg_replace_callback($sPattern, function($aMatches) use($oTemplate, $aVariables, $mixedKeyWrapperHtml, $sCheckIn) {
+		        	return $oTemplate->parseHtmlByName($aMatches[1], $aVariables, $mixedKeyWrapperHtml, $sCheckIn);
+		        }, $sContent);
+
+			$sContent = $this->_parseContentKeys($sContent, array(
+				"'<bx_injection:([^\s]+) />'s" => 'get_injection',
+            	"'<bx_menu:([^\s]+) \/>'s" => 'get_menu',
+			));
+        }
+		catch(Exception $oException) {
+        	return '';
+        }
+
         $aKeys = array_merge($aKeys, array(
-            "'<bx_include_auto:([^\s]+) \/>'se",
-            "'<bx_include_tmpl:([^\s]+) \/>'se",
-            "'<bx_include_base:([^\s]+) \/>'se",
-            "'<bx_injection:([^\s]+) />'se",
-            "'<bx_image_url:([^\s]+) \/>'se",
-            "'<bx_icon_url:([^\s]+) \/>'se",
-            "'<bx_text:([_\{\}\w\d\s]+[^\s]{1}) \/>'se",
-            "'<bx_text_js:([^\s]+) \/>'se",
-            "'<bx_text_attribute:([^\s]+) \/>'se",
-            "'<bx_menu:([^\s]+) \/>'se",
             "'<bx_url_root />'",
             "'<bx_url_studio />'",
         ));
         $aValues = array_merge($aValues, array(
-            "\$this->parseHtmlByName('\\1', \$aVariables, \$mixedKeyWrapperHtml, BX_DOL_TEMPLATE_CHECK_IN_BOTH)",
-            "\$this->parseHtmlByName('\\1', \$aVariables, \$mixedKeyWrapperHtml, BX_DOL_TEMPLATE_CHECK_IN_TMPL)",
-            "\$this->parseHtmlByName('\\1', \$aVariables, \$mixedKeyWrapperHtml, BX_DOL_TEMPLATE_CHECK_IN_BASE)",
-            "\$this->processInjection(\$this->aPage['name_index'], '\\1')",
-            "\$this->getImageUrl('\\1')",
-            "\$this->getIconUrl('\\1')",
-            "_t('\\1')",
-            "bx_js_string(_t('\\1'))",
-            "bx_html_attribute(_t('\\1'))",
-            "\$this->getMenu('\\1')",
             BX_DOL_URL_ROOT,
             BX_DOL_URL_STUDIO,
         ));
@@ -1764,37 +1761,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
 		        	return $mixedResult;
 		        }, $sContent);
 
-			$aCallbackPatterns = array(
-				"'<bx_image_url:([^\s]+) \/>'s" => "get_image_url",
-				"'<bx_icon_url:([^\s]+) \/>'s" => "get_icon_url",
-				"'<bx_text:([_\{\}\w\d\s]+[^\s]{1}) \/>'s" => "get_text",
-				"'<bx_text_js:([^\s]+) \/>'s" => "get_text_js",
-				"'<bx_text_attribute:([^\s]+) \/>'s" => "get_text_attribute",
-			);
-			foreach($aCallbackPatterns as $sPattern => $sAction)
-				$sContent = preg_replace_callback($sPattern, function($aMatches) use($oTemplate, $sAction) {
-			    	$sResult = '';
-
-		        	switch($sAction) {
-		        		case 'get_image_url':
-		        			$sResult = $oTemplate->getImageUrl($aMatches[1]);
-		        			break;
-		        		case 'get_icon_url':
-		        			$sResult = $oTemplate->getIconUrl($aMatches[1]);
-		        			break;
-						case 'get_text':
-		        			$sResult = _t($aMatches[1]);
-		        			break;
-		        		case 'get_text_js':
-		        			$sResult = bx_js_string(_t($aMatches[1]));
-		        			break;
-		        		case 'get_text_attribute':
-		        			$sResult = bx_html_attribute(_t($aMatches[1]));
-		        			break;
-		        	}
-
-		        	return $sResult;
-		        }, $sContent);
+			$sContent = $this->_parseContentKeys($sContent);
         }
         catch(Exception $oException) {
         	return false;
@@ -1820,6 +1787,52 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
 
         return $sContent;
     }
+    protected function _parseContentKeys($sContent, $aCallbackPatterns = array())
+    {
+    	$oTemplate = &$this;
+
+    	$aCallbackPatterns = array_merge($aCallbackPatterns, array(
+			"'<bx_image_url:([^\s]+) \/>'s" => "get_image_url",
+			"'<bx_icon_url:([^\s]+) \/>'s" => "get_icon_url",
+			"'<bx_text:([_\{\}\w\d\s]+[^\s]{1}) \/>'s" => "get_text",
+			"'<bx_text_js:([^\s]+) \/>'s" => "get_text_js",
+			"'<bx_text_attribute:([^\s]+) \/>'s" => "get_text_attribute",
+		));
+
+		foreach($aCallbackPatterns as $sPattern => $sAction)
+			$sContent = preg_replace_callback($sPattern, function($aMatches) use($oTemplate, $sAction) {
+		    	$sResult = '';
+
+	        	switch($sAction) {
+	        		case 'get_image_url':
+	        			$sResult = $oTemplate->getImageUrl($aMatches[1]);
+	        			break;
+	        		case 'get_icon_url':
+	        			$sResult = $oTemplate->getIconUrl($aMatches[1]);
+	        			break;
+					case 'get_text':
+	        			$sResult = _t($aMatches[1]);
+	        			break;
+	        		case 'get_text_js':
+	        			$sResult = bx_js_string(_t($aMatches[1]));
+	        			break;
+	        		case 'get_text_attribute':
+	        			$sResult = bx_html_attribute(_t($aMatches[1]));
+	        			break;
+	        		case 'get_injection':
+	        			$sResult = $oTemplate->processInjection($oTemplate->getPageNameIndex(), $aMatches[1]);
+	        			break;
+	        		case 'get_menu':
+	        			$sResult = $oTemplate->getMenu($aMatches[1]);
+	        			break;
+	        	}
+
+	        	return $sResult;
+	        }, $sContent);
+
+		return $sContent;
+    }
+
     /**
      * Get absolute location of some template's part.
      *
