@@ -312,11 +312,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
     protected function downloadFileComplete($sFilePath, $aParams = array())
     {
-    	$sAutoAction = '';
-    	if(isset($aParams['auto_action'])) {
-    		$sAutoAction = $aParams['auto_action'];
-    		unset($aParams['auto_action']);
-    	}
+    	$sAutoAction = isset($aParams['auto_action']) ? $aParams['auto_action'] : '';
     	$bAutoAction = !empty($sAutoAction);
 
     	$bTransient = false;
