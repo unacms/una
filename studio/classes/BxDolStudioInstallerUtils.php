@@ -312,14 +312,14 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
     protected function downloadFileComplete($sFilePath, $aParams = array())
     {
-    	$sAutoAction = isset($aParams['auto_action']) ? $aParams['auto_action'] : '';
-    	$bAutoAction = !empty($sAutoAction);
-
-    	$bTransient = false;
+		$bTransient = false;
     	if(isset($aParams['transient']) && $aParams['transient'] === true) {
     		$bTransient = true;
     		unset($aParams['transient']);
     	}
+
+    	$sAutoAction = isset($aParams['auto_action']) ? $aParams['auto_action'] : '';
+    	$bAutoAction = !empty($sAutoAction);
 
 		if(!defined('BX_DOL_CRON_EXECUTE') && !self::isRealOwner())
 			return _t($this->addTransientJob('download_file_complete', array($sFilePath, $aParams)) ? '_adm_str_msg_download' . ($bAutoAction ? '_and_install' : '') . '_scheduled' : '_adm_str_err_download_failed');
