@@ -50,9 +50,9 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
     /*
      * Is used to complete Downloading inside Transient Cron Job.
      */
-    public function serviceDownloadFileComplete($sFilePath, $sAutoAction = '')
+    public function serviceDownloadFileComplete($sFilePath, $aParams = array())
     {
-    	return $this->downloadFileComplete($sFilePath, $sAutoAction, true);
+    	return $this->downloadFileComplete($sFilePath, array_merge($aParams, array('transient' => true)));
     }
 
     /*
@@ -60,7 +60,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
      */
 	public function servicePerformAction($sDirectory, $sOperation, $aParams)
     {
-    	return $this->perform($sDirectory, $sOperation, $aParams, true);
+    	return $this->perform($sDirectory, $sOperation, array_merge($aParams, array('transient' => true)));
     }
 
     public function getModules($bTitleAsKey = true)
@@ -173,8 +173,14 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         return $aResult;
     }
 
-    public function perform($sDirectory, $sOperation, $aParams = array(), $bTransient = false)
+    public function perform($sDirectory, $sOperation, $aParams = array())
     {
+	    $bTransient = false;
+    	if(isset($aParams['transient']) && $aParams['transient'] === true) {
+    		$bTransient = true;
+    		unset($aParams['transient']);
+    	}
+
     	if(!defined('BX_DOL_CRON_EXECUTE') && !self::isRealOwner() && !in_array($sOperation, array('install', 'uninstall', 'enable', 'disable'))) {
     		if($this->addTransientJob('perform_action', array($sDirectory, $sOperation, $aParams)))
     			return array('code' => 1, 'message' => _t('_adm_mod_msg_process_operation_scheduled'));
@@ -287,10 +293,10 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 			))),
 		));
 
-		return $this->downloadFileInit($aItem, $bAutoUpdate ? 'update' : '');
+		return $this->downloadFileInit($aItem, array('updated_module_name' => $sModuleName, 'auto_action' => $bAutoUpdate ? 'update' : ''));
     }
 
-    protected function downloadFileInit($aItem, $sAutoAction = '')
+    protected function downloadFileInit($aItem, $aParams = array())
     {
     	if(empty($aItem) || !is_array($aItem))
 			return $aItem;
@@ -301,14 +307,26 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         if($mixedResult !== true)
         	return $mixedResult;
 
-		return $this->downloadFileComplete($sFilePath, $sAutoAction);
+		return $this->downloadFileComplete($sFilePath, $aParams);
     }
 
-    protected function downloadFileComplete($sFilePath, $sAutoAction = '', $bTransient = false)
+    protected function downloadFileComplete($sFilePath, $aParams = array())
     {
+    	$sAutoAction = '';
+    	if(isset($aParams['auto_action'])) {
+    		$sAutoAction = $aParams['auto_action'];
+    		unset($aParams['auto_action']);
+    	}
     	$bAutoAction = !empty($sAutoAction);
+
+    	$bTransient = false;
+    	if(isset($aParams['transient']) && $aParams['transient'] === true) {
+    		$bTransient = true;
+    		unset($aParams['transient']);
+    	}
+
 		if(!defined('BX_DOL_CRON_EXECUTE') && !self::isRealOwner())
-			return _t($this->addTransientJob('download_file_complete', array($sFilePath, $sAutoAction)) ? '_adm_str_msg_download' . ($bAutoAction ? '_and_install' : '') . '_scheduled' : '_adm_str_err_download_failed');
+			return _t($this->addTransientJob('download_file_complete', array($sFilePath, $aParams)) ? '_adm_str_msg_download' . ($bAutoAction ? '_and_install' : '') . '_scheduled' : '_adm_str_err_download_failed');
 
         //--- Unarchive package.
         $sPackagePath = '';
@@ -338,7 +356,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 			 return true;
 
 		//--- Autoinstall the downloaded package if it's needed.
-		$aResult = $this->perform($sHomePath, $sAutoAction);
+		$aResult = $this->perform($sHomePath, $sAutoAction, $aParams);
 		if((int)$aResult['code'] != 0) {
 			if($bTransient)
         		$this->emailNotify($aResult['message']);

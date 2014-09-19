@@ -20,6 +20,9 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
             'check_module_exists' => array(
                 'title' => _t('_adm_txt_modules_check_module_exists'),
             ),
+            'check_module_matches' => array(
+                'title' => _t('_adm_txt_modules_check_module_matches'),
+            ),
             'check_module_version' => array(
                 'title' => _t('_adm_txt_modules_check_module_version'),
             ),
@@ -48,6 +51,12 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
         if(!$aModuleInfo)
             return array_merge($aResult, array(
                 'message' => $this->_displayResult('check_module_exists', false, '_adm_err_modules_module_not_found'),
+                'result' => false
+            ));
+
+		if(isset($aParams['updated_module_name']) && strcmp($aParams['updated_module_name'], $aModuleInfo['name']) != 0)
+			return array_merge($aResult, array(
+                'message' => $this->_displayResult('check_module_matches', false, '_adm_err_modules_module_not_match'),
                 'result' => false
             ));
 

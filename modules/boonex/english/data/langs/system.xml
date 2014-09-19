@@ -578,6 +578,7 @@
 	<string name="_adm_err_modules_cannot_delete_from_cart"><![CDATA[Cannot delete the product(s) from shopping cart.]]></string>
 	<string name="_adm_err_modules_cannot_remove_package"><![CDATA[Cannot remove package.]]></string>
 	<string name="_adm_err_modules_module_not_found"><![CDATA[Module not found]]></string>
+	<string name="_adm_err_modules_module_not_match"><![CDATA[Update is not suitable for this module.]]></string>
 	<string name="_adm_err_modules_module_not_installed"><![CDATA[Module not installed]]></string>
 	<string name="_adm_err_modules_module_was_modified"><![CDATA[Module was modified]]></string>
 	<string name="_adm_err_modules_pending_uninstall"><![CDATA[Module uninstall was postponed. Module will be uninstalled automatically after all its files are deleted.]]></string>
@@ -1221,6 +1222,7 @@
 	<string name="_adm_txt_module_system"><![CDATA[System]]></string>
 	<string name="_adm_txt_modules_check_dependencies"><![CDATA[Check module dependencies:]]></string>
 	<string name="_adm_txt_modules_check_module_exists"><![CDATA[Check module for existence:]]></string>
+	<string name="_adm_txt_modules_check_module_matches"><![CDATA[Check module to match:]]></string>
 	<string name="_adm_txt_modules_check_module_hash"><![CDATA[Check module hash:]]></string>
 	<string name="_adm_txt_modules_check_module_version"><![CDATA[Check module version:]]></string>
 	<string name="_adm_txt_modules_check_script_version"><![CDATA[Check the Dolphin version for compatibility:]]></string>
