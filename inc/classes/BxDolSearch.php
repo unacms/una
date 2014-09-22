@@ -47,6 +47,7 @@ class BxDolSearch extends BxDol
     protected $aChoice  = array(); ///< array of current search classes which were choosen in search area
 
     protected $_bLiveSearch = false;
+    protected $_sMetaType = '';
 
     /**
      * Constructor
@@ -90,6 +91,7 @@ class BxDolSearch extends BxDol
             $oEx = new $aValue['class']();
             $oEx->setId($aValue['id']);
             $oEx->setLiveSearch($this->_bLiveSearch);
+            $oEx->setMetaType($this->_sMetaType);
             $sCode .= $oEx->processing();
         }
         return $sCode;
@@ -113,6 +115,14 @@ class BxDolSearch extends BxDol
     {
         $this->_bLiveSearch = $bLiveSearch;
     }
+
+    public function setMetaType($s)
+    {
+        $aMetaTypes = array('location_country', 'location_country_city', 'mention', 'keyword');
+        if (in_array($s, $aMetaTypes))
+            $this->_sMetaType = $s;
+    }
+
 }
 
 /*
@@ -234,6 +244,7 @@ class BxDolSearchResult implements iBxDolReplaceable
     protected $bForceAjaxPaginate = false; ///< force ajax paginate
 
     protected $_bLiveSearch = false;
+    protected $_sMetaType = '';
 
     protected $_aMarkers = array (); ///< markers to replace somewhere, usually title and browse url (defined in custom class)
 
@@ -265,6 +276,11 @@ class BxDolSearchResult implements iBxDolReplaceable
     public function setLiveSearch($bLiveSearch)
     {
         $this->_bLiveSearch = $bLiveSearch;
+    }
+
+    public function setMetaType($s)
+    {
+        $this->_sMetaType = $s;
     }
 
     /**
@@ -384,9 +400,9 @@ class BxDolSearchResult implements iBxDolReplaceable
      */
     function setFieldUnit ($sFieldName, $sTableName, $sOperator = '', $bRenameMode = true)
     {
-        if (strlen($sOperator) > 0) {
+        if (!empty($sOperator))
             $sqlUnit  = "$sOperator(`$sTableName`.`$sFieldName`)";
-        } else
+        else
             $sqlUnit  = "`$sTableName`.`$sFieldName`";
 
         if (isset($this->aPseud) && $bRenameMode !== false) {
@@ -496,8 +512,9 @@ class BxDolSearchResult implements iBxDolReplaceable
             $aSql['joinFields'] .= $aJoins['joinFields'];
             $aSql['join'] = $aJoins['join'];
             $aSql['groupBy'] = $aJoins['groupBy'];
-        } else
-            $aSql['ownFields'] = trim($aSql['ownFields'], ', ');
+        } 
+
+        $aSql['ownFields'] = trim($aSql['ownFields'], ', ');
 
         // from
         $aSql['from'] = " FROM `{$this->aCurrent['table']}`";
@@ -548,9 +565,7 @@ class BxDolSearchResult implements iBxDolReplaceable
      */
     function setConditionParams()
     {
-        $aWhere = array();
-        $aWhere[] = '1';
-
+        // keyword
         $sKeyword = bx_process_input(bx_get('keyword'));
         if ($sKeyword !== false)
             $this->aCurrent['restriction']['keyword'] = array(
@@ -559,6 +574,7 @@ class BxDolSearchResult implements iBxDolReplaceable
                 'operator' => 'against'
             );
 
+        // owner
         if (isset($_GET['ownerName'])) {
             $sName = bx_process_input($_GET['ownerName']);
             $iUser = (int)BxDolProfileQuery::getInstance()->getIdByNickname($sName);
@@ -568,6 +584,29 @@ class BxDolSearchResult implements iBxDolReplaceable
 
         if (!empty($iUser))
             $this->aCurrent['restriction']['owner']['value'] = $iUser;
+        
+        // meta info
+        if ($this->_sMetaType && !empty($this->aCurrent['object_metatags'])) {
+            bx_import('BxDolMetatags');
+            $o = BxDolMetatags::getObjectInstance($this->aCurrent['object_metatags']);            
+            if ($o) {
+                unset($this->aCurrent['restriction']['keyword']);
+                switch ($this->_sMetaType) {
+                    case 'location_country':
+                        // TODO:
+                        break;
+                    case 'location_country_city':
+                        // TODO:
+                        break;
+                    case 'mention':
+                        // TODO:
+                        break;
+                    case 'keyword':
+                        $o->keywordsSetSearchCondition($this, $sKeyword);
+                        break;
+                }
+            }
+        }
 
         $this->setPaginate();
         $iNum = $this->getNum();

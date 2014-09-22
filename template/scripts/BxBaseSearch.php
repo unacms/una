@@ -27,6 +27,9 @@ class BxBaseSearch extends BxDolSearch
 
     public function getForm($iDesignBoxTemplate = BX_DB_PADDING_DEF, $sTitle = false)
     {
+        if ($this->_sMetaType)
+            return '';
+
         if (false === $sTitle)
             $sTitle = _t( "_Search");
 
