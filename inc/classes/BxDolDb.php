@@ -396,7 +396,7 @@ class BxDolDb extends BxDol implements iBxDolSingleton
 
     protected function isParamInCache($sKey)
     {
-        return isset($this->_aParams[$sKey]);
+        return is_array($this->_aParams) && isset($this->_aParams[$sKey]);
     }
 
     protected function cacheParams($bForceCacheInvalidate = false)
