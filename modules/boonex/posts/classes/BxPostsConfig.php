@@ -34,6 +34,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             'FIELD_PHOTO' => 'pictures',
             'FIELD_THUMB' => 'thumb',
             'FIELD_COMMENTS' => 'comments',
+            'FIELD_LOCATION_PREFIX' => 'location',
 
             // page URIs
             'URI_VIEW_ENTRY' => 'view-post',

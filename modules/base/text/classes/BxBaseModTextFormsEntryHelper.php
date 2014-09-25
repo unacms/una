@@ -104,6 +104,7 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
             bx_import('BxDolMetatags');
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
             $oMetatags->keywordsAdd($aContentInfo[$CNF['FIELD_ID']], $aContentInfo[$CNF['FIELD_TEXT']]);
+            $oMetatags->locationsAddFromForm($aContentInfo[$CNF['FIELD_ID']], $CNF['FIELD_LOCATION_PREFIX']);
         }
 
         // create an alert
@@ -124,6 +125,7 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
             bx_import('BxDolMetatags');
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
             $oMetatags->keywordsAdd($aContentInfo[$CNF['FIELD_ID']], $aContentInfo[$CNF['FIELD_TEXT']]);
+            $oMetatags->locationsAddFromForm($aContentInfo[$CNF['FIELD_ID']], $CNF['FIELD_LOCATION_PREFIX']);
         }
 
         // alert

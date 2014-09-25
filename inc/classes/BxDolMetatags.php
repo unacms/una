@@ -188,6 +188,12 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
     {
         // TODO:        
     }
+    public function locationsAddFromForm($iId, $sName, $oForm = null) 
+    {
+        if (!$oForm)
+            $oForm = new BxDolForm(array());
+        $this->locationsAdd($iId, $oForm->getCleanValue($sName.'_lat'), $oForm->getCleanValue($sName.'_lng'), $oForm->getCleanValue($sName.'_country'), $oForm->getCleanValue($sName.'_state'), $oForm->getCleanValue($sName.'_city'), $oForm->getCleanValue($sName.'_zip'));
+    }
 
     /**
      * Get locations string with links

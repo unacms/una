@@ -58,11 +58,25 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         $sProto = (0 == strncmp('https', BX_DOL_URL_ROOT, 5)) ? 'https' : 'http';
         $this->oTemplate->addJs($sProto . '://maps.google.com/maps/api/js?sensor=false');
 
-        return $this->oTemplate->parseHtmlByName('form_field_location.html', array (
+        $aInput['checked'] = $this->getCleanValue($aInput['name'] . '_lat') && $this->getCleanValue($aInput['name'] . '_lng') ? 1 : 0;
+
+        $aVars = array (
             'input' => $this->genInputSwitcher($aInput),
             'name' => $aInput['name'],
             'id_status' => $this->getInputId($aInput) . '_status',
-        ));
+            'location_string' => _t('_sys_location_undefined'),
+            'lat' => $this->getCleanValue($aInput['name'] . '_lat'),
+            'lng' => $this->getCleanValue($aInput['name'] . '_lng'),
+            'country' => $this->getCleanValue($aInput['name'] . '_country'),
+            'state' => $this->getCleanValue($aInput['name'] . '_state'),
+            'city' => $this->getCleanValue($aInput['name'] . '_city'),
+            'zip' => $this->getCleanValue($aInput['name'] . '_zip'),
+        );
+        if ($aVars['country']) {
+            $aCountries = BxDolFormQuery::getDataItems('Country');
+            $aVars['location_string'] = ($aVars['city'] ? $aVars['city'] . ', ' : '') . $aCountries[$aVars['country']];
+        }
+        return $this->oTemplate->parseHtmlByName('form_field_location.html', $aVars);
     }
 
     function addCssJs ()
