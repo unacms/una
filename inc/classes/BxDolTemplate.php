@@ -212,6 +212,9 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
         $sCode = !empty($_GET[$this->_sCodeKey]) ? $_GET[$this->_sCodeKey] : '';
         $this->_checkCode($sCode, true);
 
+        if (!$this->_sSubPath)
+            $this->_sSubPath = 'boonex/' . BX_DOL_TEMPLATE_DEFAULT_CODE . '/';
+
         if(isset($_GET[$this->_sCodeKey])) {
             bx_import('BxDolPermalinks');
             if(BxDolPermalinks::getInstance()->redirectIfNecessary(array($this->_sCodeKey)))

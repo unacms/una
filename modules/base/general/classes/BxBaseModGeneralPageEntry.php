@@ -40,9 +40,17 @@ class BxBaseModGeneralPageEntry extends BxTemplPage
         }
         $this->_oModule->checkAllowedView($this->_aContentInfo, true);
 
+        $CNF = &$this->_oModule->_oConfig->CNF;
         if (!empty($CNF['OBJECT_VIEWS'])) {
             bx_import('BxDolView');
             BxDolView::getObjectInstance($CNF['OBJECT_VIEWS'], $this->_aContentInfo[$CNF['FIELD_ID']])->doView();
+        }
+
+        if (!empty($CNF['OBJECT_METATAGS'])) {
+            bx_import('BxDolMetatags');
+            $o = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
+            if ($o)
+                $o->metaAdd($this->_aContentInfo[$CNF['FIELD_ID']]);
         }
 
         return parent::getCode ();

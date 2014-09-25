@@ -11,18 +11,16 @@ require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 bx_import('BxTemplSearch');
 bx_import('BxDolTemplate');
 
-$o = new BxDolSearch();
-$o->setLiveSearch(bx_get('live_search') ? 1 : 0);
+$oSearch = new BxTemplSearch();
+$oSearch->setLiveSearch(bx_get('live_search') ? 1 : 0);
+$oSearch->setMetaType(bx_process_input(bx_get('type')));
 
 $sCode = '';
 if (bx_get('keyword')) {
-    $sCode = $o->response();
+    $sCode = $oSearch->response();
     if (!$sCode)
-        $sCode = $o->getEmptyResult();
+        $sCode = $oSearch->getEmptyResult();
 }
-
-$oSearch = new BxTemplSearch();
-$oSearch->setLiveSearch(false);
 
 $oTemplate = BxDolTemplate::getInstance();
 $oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);

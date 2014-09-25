@@ -125,7 +125,7 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
             return $s;
     
         foreach ($a as $sKeyword)
-            $s = str_ireplace('#' . $sKeyword, '<a href="#"><s>#</s><b>' . $sKeyword . '</b></a>', $s);
+            $s = str_ireplace('#' . $sKeyword, '<a rel="tag" href="' . BX_DOL_URL_ROOT . 'searchKeyword.php?type=keyword&keyword=' . rawurlencode($sKeyword) . '"><s>#</s><b>' . $sKeyword . '</b></a>', $s);
 
         return $s;
     }
@@ -134,9 +134,9 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
      * Add keywords meta info to the head section
      * @param $iId content id
      */
-    protected function keywordsAddMeta($iId) 
+    protected function keywordsAddMeta($iId)
     {
-        // TODO:
+        BxDolTemplate::getInstance()->addPageKeywords($this->keywordsGet($iId));
     }
 
     /**
@@ -146,6 +146,29 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
     public function keywordsGet($iId)
     {
         return $this->_oQuery->keywordsGet($iId);
+    }
+
+    /**
+     * Set condition for search results object for meta keyword
+     * @param $oSearchResult search results object
+     * @param $sKeyword keyword
+     */
+    public function keywordsSetSearchCondition($oSearchResult, $sKeyword)
+    {
+        $oSearchResult->aCurrent['restriction']['meta_keyword'] = array(
+            'value' => $sKeyword,
+            'field' => 'keyword',
+            'operator' => '=',
+            'table' => $this->_aObject['table_keywords'],
+        );
+
+        $oSearchResult->aCurrent['join']['meta_keyword'] = array(
+            'type' => 'INNER',
+            'table' => $this->_aObject['table_keywords'],
+            'mainField' => $oSearchResult->aCurrent['ident'],
+            'onField' => 'object_id',
+            'joinFields' => array(),
+        );
     }
 
 
@@ -185,6 +208,16 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
         // TODO:
     }
 
+    /**
+     * Set condition for search results object for meta locations
+     * @param $oSearchResult search results object
+     * @param $sCountry country and other location info
+     */
+    public function locationsSetSearchCondition($oSearchResult, $sCountry, $sState = false, $sCity = false, $sZip = false)
+    {
+        // TODO:
+    }
+
 
 
     /**
@@ -215,6 +248,16 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
     protected function mentionsAddMeta($iId) 
     {
         return 0;
+    }
+
+    /**
+     * Set condition for search results object for mentions
+     * @param $oSearchResult search results object
+     * @param $sMention smbd
+     */
+    public function mentionsSetSearchCondition($oSearchResult, $sMention)
+    {
+        // TODO:
     }
 
 
