@@ -2,6 +2,7 @@
 <resources name="en" flag="gb" title="English">
 
 	<string name="_bx_posts"><![CDATA[Posts]]></string>
+	<string name="_bx_posts_cmts"><![CDATA[Posts' Comments]]></string>
 
 	<string name="_bx_posts_option_summary_chars"><![CDATA[Number of characters in auto-cropped post summary]]></string>
 	<string name="_bx_posts_option_plain_summary_chars"><![CDATA[Number of characters in plain post description when post hasn't thumb]]></string>
@@ -68,6 +69,7 @@
     <string name="_bx_posts_page_title_entries_of_author"><![CDATA[Posts of {display_name}]]></string>
     <string name="_bx_posts_page_block_title_entries_of_author"><![CDATA[Posts of author]]></string>   
     <string name="_bx_posts_page_block_title_entries_actions"><![CDATA[Posts actions]]></string>
+    <string name="_bx_posts_page_block_title_browse_cmts"><![CDATA[Posts' Comments]]></string>
 
     <string name="_bx_posts_menu_set_title_view_entry"><![CDATA[View Post]]></string>
     <string name="_bx_posts_menu_title_view_entry"><![CDATA[View Post]]></string>
@@ -97,4 +99,5 @@
     <string name="_bx_posts_menu_set_title_entries_my"><![CDATA[My Posts Menu]]></string>
 
     <string name="_bx_posts_txt_sample_single"><![CDATA[post]]></string>
+    <string name="_bx_posts_txt_sample_comment_single"><![CDATA[post's comment]]></string>
 </resources>

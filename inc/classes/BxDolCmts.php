@@ -170,6 +170,8 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
     protected $_sBpSessionKeyFilter = '';
     protected $_aOrder = array();
 
+    protected $_sSnippetLenthLiveSearch = 50;
+
     protected $_iRememberTime = 2592000;
 
     /**
@@ -374,6 +376,18 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
     public function getListAnchor()
     {
         return sprintf($this->_sListAnchor, str_replace('_', '-', $this->getSystemName()), $this->getId());
+    }
+
+	public function getViewUrl($iCmtId)
+    {
+    	if(empty($this->_aSystem['trigger_field_title']))
+    		return '';
+
+    	return bx_append_url_params($this->_sViewUrl, array(
+			'sys' => $this->_sSystem,
+			'id' => $this->_iId,
+			'cmt_id' => $iCmtId
+		));
     }
 
     public function getConnectionObject($sType)

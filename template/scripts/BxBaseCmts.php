@@ -130,12 +130,16 @@ class BxBaseCmts extends BxDolCmts
     /**
      * get comment view block with initializations
      */
-    function getCommentBlock($iCmtId = 0)
+    function getCommentBlock($iCmtId = 0, $aBp = array(), $aDp = array())
     {
         return BxDolTemplate::getInstance()->parseHtmlByName('comment_block.html', array(
             'system' => $this->_sSystem,
             'id' => $this->getId(),
-            'comment' => $this->getComment($iCmtId, array('type' => $this->_sBrowseType), array('type' => BX_CMT_DISPLAY_THREADED)),
+            'comment' => $this->getComment(
+        		$iCmtId, 
+        		array_merge(array('type' => $this->_sBrowseType), $aBp), 
+        		array_merge(array('type' => BX_CMT_DISPLAY_THREADED), $aDp)
+        	),
         	'view_image_popup' => $this->_getViewImagePopup(), 
             'script' => $this->getJsScript()
         ));
@@ -283,6 +287,39 @@ class BxBaseCmts extends BxDolCmts
         ));
     }
 
+	/**
+     * get one comment for "Live Search"
+     *
+     * @param  int    $iCmtId - comment id
+     * @return string
+     */
+    function getCommentLiveSearch($mixedCmt, $aParams = array())
+    {
+        $aCmt = !is_array($mixedCmt) ? $this->getCommentRow((int)$mixedCmt) : $mixedCmt;
+
+        list($sAuthorName, $sAuthorLink, $sAuthorIcon) = $this->_getAuthorInfo($aCmt['cmt_author_id']);
+        $bAuthorIcon = !empty($sAuthorIcon);
+
+        $sViewLink = $this->getViewUrl($aCmt['cmt_id']);
+
+        return BxDolTemplate::getInstance()->parseHtmlByName('comment_live_search.html', array(
+            'bx_if:show_icon' => array(
+                'condition' => $bAuthorIcon,
+                'content' => array(
+                    'author_icon' => $sAuthorIcon,
+        			'view_link' => $sViewLink
+                )
+            ),
+            'bx_if:show_icon_empty' => array(
+                'condition' => !$bAuthorIcon,
+                'content' => array()
+            ),
+            'view_link' => $sViewLink,
+            'text' => BxTemplFunctions::getInstance()->getStringWithLimitedLength(strip_tags($aCmt['cmt_text']), $this->_sSnippetLenthLiveSearch),
+            'sample' => isset($aParams['txt_sample_single']) ? _t($aParams['txt_sample_single']) : ''
+        ));
+    }
+
     function getFormBoxPost($aBp = array(), $aDp = array())
     {
         return $this->_getFormBox(BX_CMT_ACTION_POST, $aBp, $aDp);
@@ -374,33 +411,40 @@ class BxBaseCmts extends BxDolCmts
 
     protected function _getActionsBox(&$aCmt, $aDp = array())
     {
-        $oTemplate = BxDolTemplate::getInstance();
+    	$oTemplate = BxDolTemplate::getInstance();
 
-        //--- Actions Menu
-        bx_import('BxDolMenu');
-        $oMenuActions = BxDolMenu::getObjectInstance($this->_sMenuObjActions);
-        $oMenuActions->setCmtsData($this, $aCmt['cmt_id']);
-        $sMenuActions = $oMenuActions->getCode();
+    	$bViewOnly = isset($aDp['view_only']) && $aDp['view_only'] === true;
 
-        $oVote = $this->getVoteObject($aCmt['cmt_id']);
-        if($oVote !== false)
-            $sMenuActions .= $oVote->getJsScript();
+        $bMenuManage = false;
+        $sMenuActions = $sMenuManage = '';
 
-        //--- Manage Menu
-        $oMenuManage = BxDolMenu::getObjectInstance($this->_sMenuObjManage);
-        $oMenuManage->setCmtsData($this, $aCmt['cmt_id']);
+		if(!$bViewOnly) {
+	        //--- Actions Menu
+	        bx_import('BxDolMenu');
+	        $oMenuActions = BxDolMenu::getObjectInstance($this->_sMenuObjActions);
+	        $oMenuActions->setCmtsData($this, $aCmt['cmt_id']);
+	        $sMenuActions = $oMenuActions->getCode();
 
-        $sMenuManage = $oMenuManage->getCode();
-        $bMenuManage = !empty($sMenuManage);
-        if($bMenuManage) {
-            $sMenuManage = $oTemplate->parseHtmlByName('comment_manage.html', array(
-                'style_prefix' => $this->_sStylePrefix,
-                'content' => $sMenuManage
-            ));
-
-            bx_import('BxTemplFunctions');
-            $sMenuManage = BxTemplFunctions::getInstance()->transBox($this->_sSystem . '-manage-' . $aCmt['cmt_id'], $sMenuManage, true);
-        }
+	        $oVote = $this->getVoteObject($aCmt['cmt_id']);
+	        if($oVote !== false)
+	            $sMenuActions .= $oVote->getJsScript();
+	
+	        //--- Manage Menu
+	        $oMenuManage = BxDolMenu::getObjectInstance($this->_sMenuObjManage);
+	        $oMenuManage->setCmtsData($this, $aCmt['cmt_id']);
+	
+	        $sMenuManage = $oMenuManage->getCode();
+	        $bMenuManage = !empty($sMenuManage);
+	        if($bMenuManage) {
+	            $sMenuManage = $oTemplate->parseHtmlByName('comment_manage.html', array(
+	                'style_prefix' => $this->_sStylePrefix,
+	                'content' => $sMenuManage
+	            ));
+	
+	            bx_import('BxTemplFunctions');
+	            $sMenuManage = BxTemplFunctions::getInstance()->transBox($this->_sSystem . '-manage-' . $aCmt['cmt_id'], $sMenuManage, true);
+	        }
+		}
 
         $sAgo = bx_time_js($aCmt['cmt_time']);
         $bObjectTitle = !empty($this->_aSystem['trigger_field_title']);
@@ -412,11 +456,7 @@ class BxBaseCmts extends BxDolCmts
                 'condition' => $bObjectTitle,
                 'content' => array(
                     'style_prefix' => $this->_sStylePrefix,
-                    'view_link' => bx_append_url_params($this->_sViewUrl, array(
-                        'sys' => $this->_sSystem,
-                        'id' => $this->_iId,
-                        'cmt_id' => $aCmt['cmt_id']
-                    )),
+                    'view_link' => $this->getViewUrl($aCmt['cmt_id']),
                     'ago' => $sAgo
                 )
             ),

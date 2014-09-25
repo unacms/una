@@ -80,6 +80,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             // some language keys
             'T' => array (
                 'txt_sample_single' => '_bx_posts_txt_sample_single',
+            	'txt_sample_comment_single' => '_bx_posts_txt_sample_comment_single',
             ),
         );
 

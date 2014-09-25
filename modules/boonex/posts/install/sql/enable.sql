@@ -243,7 +243,8 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
 -- SEARCH
 INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `ClassName`, `ClassPath`) VALUES
-('bx_posts', '_bx_posts', 'BxPostsSearchResult', 'modules/boonex/posts/classes/BxPostsSearchResult.php');
+('bx_posts', '_bx_posts', 'BxPostsSearchResult', 'modules/boonex/posts/classes/BxPostsSearchResult.php'),
+('bx_posts_cmts', '_bx_posts_cmts', 'BxPostsCmtsSearchResult', 'modules/boonex/posts/classes/BxPostsCmtsSearchResult.php');
 
 -- METATAGS
 INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `table_pictures`, `override_class_name`, `override_class_file`) VALUES

@@ -80,18 +80,25 @@ class BxDolSearch extends BxDol
      */
     public function response ()
     {
-        bx_import('BxDolTemplate');
+    	bx_import('BxTemplSearchResult');		
+
         $sCode = '';
         foreach ($this->aChoice as $sKey => $aValue) {
-            if (!class_exists($aValue['class'])) {
-                $sClassPath = str_replace('{tmpl}', BxDolTemplate::getInstance()->getCode(), $aValue['file']);
-                require_once(BX_DIRECTORY_PATH_ROOT . $sClassPath);
-            }
-            $oEx = new $aValue['class']();
+        	$sClassName = 'BxTemplSearchResult';
+	        if(!empty($aValue['class'])) {
+	            $sClassName = $aValue['class'];
+	            if(!empty($aValue['file']))
+	                require_once(BX_DIRECTORY_PATH_ROOT . $aValue['file']);
+	            else
+	                bx_import($sClassName);
+	        }
+
+            $oEx = new $sClassName();
             $oEx->setId($aValue['id']);
             $oEx->setLiveSearch($this->_bLiveSearch);
             $sCode .= $oEx->processing();
         }
+
         return $sCode;
     }
 
