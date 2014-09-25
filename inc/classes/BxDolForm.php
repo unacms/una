@@ -767,7 +767,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
      * @param $sObject object name
      * @return object instance or false on error
      */
-    static public function getObjectInstance($sObject, $sDisplayName)
+    static public function getObjectInstance($sObject, $sDisplayName, $oTemplate = false)
     {
         if (isset($GLOBALS['bxDolClasses']['BxDolForm!'.$sObject.'!'.$sDisplayName]))
             return $GLOBALS['bxDolClasses']['BxDolForm!'.$sObject.'!'.$sDisplayName];
@@ -787,7 +787,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
                 bx_import($sClass);
         }
 
-        $o = new $sClass($aObject);
+        $o = new $sClass($aObject, $oTemplate);
 
         return ($GLOBALS['bxDolClasses']['BxDolForm!'.$sObject.'!'.$sDisplayName] = $o);
     }

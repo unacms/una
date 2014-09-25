@@ -141,12 +141,12 @@
     border:0.15rem solid #79bd9a;
 	
     -webkit-border-radius:0.3rem;
-	-moz-border-radius:0.3rem;	
+    -moz-border-radius:0.3rem;	
     border-radius:0.3rem;
 
     outline:none;
 
-	background-color: #fff;
+    background-color: #fff;
 
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)"; 
     filter: alpha(opacity=90); 

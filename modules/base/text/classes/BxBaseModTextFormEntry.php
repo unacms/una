@@ -188,7 +188,6 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
             if (self::$_isCssJsAdded)
                 return;
             $this->_oModule->_oTemplate->addJs('modules/base/text/js/|forms.js');
-            $this->_oModule->_oTemplate->addCss('forms.css');
         }
 
         return parent::addCssJs ();

@@ -53,6 +53,29 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         return parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
     }
 
+    protected function genCustomInputLocation ($aInput) 
+    {
+        $sProto = (0 == strncmp('https', BX_DOL_URL_ROOT, 5)) ? 'https' : 'http';
+        $this->oTemplate->addJs($sProto . '://maps.google.com/maps/api/js?sensor=false');
+
+        return $this->oTemplate->parseHtmlByName('form_field_location.html', array (
+            'input' => $this->genInputSwitcher($aInput),
+            'name' => $aInput['name'],
+            'id_status' => $this->getInputId($aInput) . '_status',
+        ));
+    }
+
+    function addCssJs ()
+    {
+        if (!isset($this->aParams['view_mode']) || !$this->aParams['view_mode']) {
+            if (self::$_isCssJsAdded)
+                return;
+            $this->_oModule->_oTemplate->addCss('form.css');
+        }
+
+        return parent::addCssJs ();
+    }
+
 }
 
 /** @} */
