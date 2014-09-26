@@ -60,6 +60,28 @@ class BxDolMetatagsQuery extends BxDolDb
 
 
 
+    public function locationsAdd($mixedContentId, $fLat, $fLng, $sCountryCode, $sState, $sCity, $sZip)
+    {
+        $this->locationsDelete($mixedContentId);
+        if (!$fLat && !$fLng)
+            return true;
+
+        $sQuery = $this->prepare("INSERT INTO `{$this->_aObject['table_locations']}` SET `object_id` = ?, `lat` = ?, `lng` = ?, `country` = ?, `state` = ?, `city` = ?, `zip` = ?", $mixedContentId, $fLat, $fLng, $sCountryCode, $sState, $sCity, $sZip);
+        return $this->query($sQuery);
+    }
+    
+    public function locationsDelete($mixedContentId)
+    {
+        return $this->metaDelete($this->_aObject['table_locations'], $mixedContentId);
+    }
+
+    public function locationGet($mixedContentId)
+    {
+        $sQuery = $this->prepare("SELECT * FROM `{$this->_aObject['table_locations']}` WHERE `object_id` = ?", $mixedContentId);
+        return $this->getRow($sQuery);
+    }
+
+
     protected function metaDelete($sTable, $mixedContentId)
     {
         $sQuery = $this->prepare("DELETE FROM `{$sTable}` WHERE `object_id` = ?", $mixedContentId);

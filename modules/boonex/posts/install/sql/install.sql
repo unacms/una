@@ -108,6 +108,18 @@ CREATE TABLE `bx_posts_meta_keywords` (
   KEY `keyword` (`keyword`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+CREATE TABLE `bx_posts_meta_locations` (
+  `object_id` int(10) unsigned NOT NULL,
+  `lat` double NOT NULL,
+  `lng` double NOT NULL,
+  `country` varchar(2) NOT NULL,
+  `state` varchar(255) NOT NULL,
+  `city` varchar(255) NOT NULL,
+  `zip` varchar(255) NOT NULL,
+  PRIMARY KEY (`object_id`),
+  KEY `country_state_city` (`country`,`state`(8),`city`(8))
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 
 -- STORAGES & TRANSCODERS
 

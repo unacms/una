@@ -98,11 +98,13 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         $aVars = $aData;
         $aVars['entry_title'] = isset($aData[$CNF['FIELD_TITLE']]) ? $aData[$CNF['FIELD_TITLE']] : '';
         $aVars['entry_text'] = $aData[$CNF['FIELD_TEXT']];
+        $aVars['entry_location'] = '';
 
         if (!empty($CNF['OBJECT_METATAGS'])) {
             bx_import('BxDolMetatags');
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
             $aVars['text'] = $oMetatags->keywordsParse($aData[$CNF['FIELD_ID']], $aVars['text']);
+            $aVars['entry_location'] = $oMetatags->locationsString($aData[$CNF['FIELD_ID']]);
         }
 
         return $this->parseHtmlByName($sTemplateName, $aVars);

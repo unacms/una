@@ -305,6 +305,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
             'header' => '',
             'header_text' => '',
             'keywords' => array(),
+            'location' => array(),
             'description'  => '',
             'robots' => '',
             'css_name' => array(),
@@ -728,6 +729,37 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
         $this->aPage['keywords'] = isset($this->aPage['keywords']) && is_array($this->aPage['keywords']) ? array_merge($this->aPage['keywords'], $mixedKeywords) : $mixedKeywords;
     }
     /**
+     * Set page locatoin coordinates.
+     *
+     * @param $fLat latitude
+     * @param $fLng longitude
+     */
+    function addPageMetaLocation($fLat, $fLng, $sCountryCode)
+    {
+        $this->aPage['location'] = array('lat' => $fLat, 'lng' => $fLng, 'country' => $sCountryCode);
+    }
+    /**
+     * Returns page meta info, like meta keyword, meta description, location, etc
+     */
+    function getMetaInfo()
+    {
+        $sRet = '';
+
+        if (!empty($this->aPage['keywords']) && is_array($this->aPage['keywords']))
+            $sRet .= '<meta name="keywords" content="' . bx_html_attribute(implode(',', $this->aPage['keywords'])) . '" />';
+
+        if (!empty($this->aPage['description']) && is_string($this->aPage['description']))
+            $sRet .= '<meta name="description" content="' . bx_html_attribute($this->aPage['description']) . '" />';
+
+        if (!empty($this->aPage['location']) && isset($this->aPage['location']['lat']) && isset($this->aPage['location']['lng']) && isset($this->aPage['location']['country']))
+            $sRet .= '
+                <meta name="ICBM" content="' . $this->aPage['location']['lat'] . ';' . $this->aPage['location']['lng'] . '" />
+                <meta name="geo.position" content="' . $this->aPage['location']['lat'] . ';' . $this->aPage['location']['lng'] . '" />
+                <meta name="geo.region" content="' . bx_html_attribute($this->aPage['location']['country']) . '" />';
+
+        return $sRet;
+    }
+    /**
      * Get template, which was loaded earlier.
      * @see method this->loadTemplates and field this->_aTemplates
      *
@@ -953,13 +985,8 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
                 if(!empty($this->aPage['robots']) && is_string($this->aPage['robots']))
                     $sRet = '<meta name="robots" content="' . bx_html_attribute($this->aPage['robots']) . '" />';
                 break;
-            case 'page_keywords':
-                if(!empty($this->aPage['keywords']) && is_array($this->aPage['keywords']))
-                    $sRet = '<meta name="keywords" content="' . bx_html_attribute(implode(',', $this->aPage['keywords'])) . '" />';
-                break;
-            case 'page_description':
-                if(!empty($this->aPage['description']) && is_string($this->aPage['description']))
-                    $sRet = '<meta name="description" content="' . bx_html_attribute($this->aPage['description']) . '" />';
+            case 'meta_info':
+                $sRet = $this->getMetaInfo();
                 break;
             case 'page_header':
                 if(isset($this->aPage['header']))

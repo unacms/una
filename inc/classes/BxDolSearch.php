@@ -597,10 +597,10 @@ class BxDolSearchResult implements iBxDolReplaceable
                 unset($this->aCurrent['restriction']['keyword']);
                 switch ($this->_sMetaType) {
                     case 'location_country':
-                        // TODO:
+                        $o->locationsSetSearchCondition($this, $sKeyword);
                         break;
                     case 'location_country_city':
-                        // TODO:
+                        $o->locationsSetSearchCondition($this, $sKeyword, bx_process_input(bx_get('state')), bx_process_input(bx_get('city')));
                         break;
                     case 'mention':
                         // TODO:

@@ -61,22 +61,30 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         $aInput['checked'] = $this->getCleanValue($aInput['name'] . '_lat') && $this->getCleanValue($aInput['name'] . '_lng') ? 1 : 0;
 
         $aVars = array (
-            'input' => $this->genInputSwitcher($aInput),
             'name' => $aInput['name'],
             'id_status' => $this->getInputId($aInput) . '_status',
             'location_string' => _t('_sys_location_undefined'),
-            'lat' => $this->getCleanValue($aInput['name'] . '_lat'),
-            'lng' => $this->getCleanValue($aInput['name'] . '_lng'),
-            'country' => $this->getCleanValue($aInput['name'] . '_country'),
-            'state' => $this->getCleanValue($aInput['name'] . '_state'),
-            'city' => $this->getCleanValue($aInput['name'] . '_city'),
-            'zip' => $this->getCleanValue($aInput['name'] . '_zip'),
         );
+        $aLocationIndexes = array ('lat', 'lng', 'country', 'state', 'city', 'zip');
+        foreach ($aLocationIndexes as $sKey)
+            $aVars[$sKey] = $this->getLoctionVal($aInput, $sKey);
         if ($aVars['country']) {
             $aCountries = BxDolFormQuery::getDataItems('Country');
             $aVars['location_string'] = ($aVars['city'] ? $aVars['city'] . ', ' : '') . $aCountries[$aVars['country']];
         }
+        if ($this->getLoctionVal($aInput, 'lat') && $this->getLoctionVal($aInput, 'lng'))
+            $aInput['checked'] = true;
+        $aVars['input'] = $this->genInputSwitcher($aInput);
+
         return $this->oTemplate->parseHtmlByName('form_field_location.html', $aVars);
+    }
+
+    protected function getLoctionVal ($aInput, $sIndex) 
+    {
+        $s = $aInput['name'] . '_' . $sIndex;
+        if (isset($this->_aSpecificValues[$s]))
+            return $this->_aSpecificValues[$s];
+        return $this->getCleanValue($s);
     }
 
     function addCssJs ()
