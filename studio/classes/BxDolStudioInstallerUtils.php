@@ -16,6 +16,7 @@ define('BX_DOL_UNITY_URL_MARKET', BX_DOL_UNITY_URL_ROOT . 'market/');
 class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSingleton
 {
 	protected $bUseFtp;
+	protected $sAuthorizedAccessClass;
 
     public function __construct()
     {
@@ -25,6 +26,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         parent::__construct();
 
         $this->bUseFtp = BX_FORCE_USE_FTP_FILE_TRANSFER;
+        $this->sAuthorizedAccessClass = 'BxDolStudioOAuthPlugin';
     }
 
     /**
@@ -217,16 +219,10 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
     public function checkModules($bAuthorizedAccess = false)
     {
-    	if($bAuthorizedAccess) {
-    		bx_import('BxDolStudioOAuth');
-        	$aProducts = BxDolStudioOAuth::getInstance()->loadItems(array('dol_type' => 'purchased_products', 'dol_domain' => BX_DOL_URL_ROOT));
-    	}
-    	else {
-	    	bx_import('BxDolStudioJson');
-			$aProducts = BxDolStudioJson::getInstance()->load(BX_DOL_UNITY_URL_MARKET . 'json_browse_purchased', array(
-				'key' => getParam('sys_oauth_key')
-			));
-    	}
+    	if($bAuthorizedAccess)
+        	$aProducts = $this->getAccessObject(true)->loadItems(array('dol_type' => 'purchased_products', 'dol_domain' => BX_DOL_URL_ROOT));
+    	else
+			$aProducts = $this->getAccessObject(false)->load(BX_DOL_UNITY_URL_MARKET . 'json_browse_purchased', array('key' => getParam('sys_oauth_key')));
 
     	bx_import('BxDolModuleQuery');
     	$oModuleDb = BxDolModuleQuery::getInstance();
@@ -258,13 +254,10 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
         $sProducts = base64_encode(serialize($aProducts));
 
-        if($bAuthorizedAccess) {
-	        bx_import('BxDolStudioOAuth');
-	        return BxDolStudioOAuth::getInstance()->loadItems(array('dol_type' => 'available_updates', 'dol_products' => $sProducts));
-        }
+        if($bAuthorizedAccess)
+	        return $this->getAccessObject(true)->loadItems(array('dol_type' => 'available_updates', 'dol_products' => $sProducts));
 
-		bx_import('BxDolStudioJson');
-		return BxDolStudioJson::getInstance()->load(BX_DOL_UNITY_URL_MARKET . 'json_browse_updates', array(
+		return $this->getAccessObject(false)->load(BX_DOL_UNITY_URL_MARKET . 'json_browse_updates', array(
 			'key' => getParam('sys_oauth_key'),
 			'products' => $sProducts
 		));
@@ -272,8 +265,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
     public function downloadFileAuthorized($iFileId)
     {
-    	bx_import('BxDolStudioOAuth');
-		$aItem = BxDolStudioOAuth::getInstance()->loadItems(array('dol_type' => 'product_file', 'dol_file_id' => $iFileId));
+		$aItem = $this->getAccessObject(true)->loadItems(array('dol_type' => 'product_file', 'dol_file_id' => $iFileId));
 
 		return $this->downloadFileInit($aItem);
     }
@@ -283,8 +275,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
     	bx_import('BxDolModuleQuery');
 		$aModule = BxDolModuleQuery::getInstance()->getModuleByName($sModuleName);
 
-		bx_import('BxDolStudioJson');
-		$aItem = BxDolStudioJson::getInstance()->load(BX_DOL_UNITY_URL_MARKET . 'json_download_update', array(
+		$aItem = $this->getAccessObject(false)->load(BX_DOL_UNITY_URL_MARKET . 'json_download_update', array(
 			'key' => getParam('sys_oauth_key'),
 			'product' => base64_encode(serialize(array(
 				'name' => $aModule['name'],
@@ -522,6 +513,14 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
     	sendMailTemplateSystem('t_BgOperationFailed', array (
 			'conclusion' => strip_tags($sMessage),
 		));
+    }
+
+    private function getAccessObject($bAuthorizedAccess)
+    {
+    	$sClass = $bAuthorizedAccess ? $this->sAuthorizedAccessClass : 'BxDolStudioJson';
+
+		bx_import($sClass);
+		return $sClass::getInstance();
     }
 }
 

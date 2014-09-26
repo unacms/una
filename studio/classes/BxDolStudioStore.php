@@ -51,15 +51,6 @@ class BxDolStudioStore extends BxTemplStudioPage
 
             $aResult = array('code' => 1, 'message' => _t('_adm_mod_err_cannot_process_action'));
             switch($sAction) {
-                /*
-                 * NOTE. Is needed for download popup selector. Isn't used for now.
-                 */
-                case 'get-files':
-                    $iId = (int)bx_get('str_id');
-                    $sType = bx_process_input(bx_get('str_type'));
-                    $aResult = $this->getFiles($iId, $sType);
-                    break;
-
                 case 'get-file':
                     $iFileId = (int)bx_get('str_id');
                     $aResult = $this->getFile($iFileId);
@@ -299,15 +290,6 @@ class BxDolStudioStore extends BxTemplStudioPage
         $oJson = BxDolStudioJson::getInstance();
 
         return $oJson->load(BX_DOL_UNITY_URL_MARKET . 'json_get_product_by_name', array('value' => $sModuleName, 'client' => $this->iClient));
-    }
-
-    /*
-     * NOTE. Is needed for download popup selector. Isn't used for now.
-     */
-    protected function loadFiles($iId, $sType)
-    {
-        bx_import('BxDolStudioOAuth');
-        return BxDolStudioOAuth::getInstance()->loadItems(array('dol_type' => 'product_files', 'dol_product_id' => $iId, 'dol_file_type' => $sType));
     }
 
     /*

@@ -509,34 +509,6 @@ class BxBaseStudioStore extends BxDolStudioStore
         return array('code' => 0, 'message' => '', 'popup' => PopupBox('bx-std-str-popup-product', $aProduct['title'], $sContent, true), 'screenshots' => $iScreenshots);
     }
 
-    /*
-     * NOTE. Is needed for download popup selector. Isn't used for now.
-     */
-    protected function getFiles($iId, $sType)
-    {
-        $sJsObject = $this->getPageJsObject();
-        $oTemplate = BxDolStudioTemplate::getInstance();
-
-        $aFiles = $this->loadFiles($iId, $sType);
-        if(!is_array($aFiles))
-            return array('code' => 1, 'message' => (!empty($aFiles) ? $aFiles : _t('_adm_str_err_no_files')));
-
-        $aTmplVarsFiles = array();
-        foreach($aFiles as $aFile)
-            $aTmplVarsFiles[] = array(
-                'js_object' => $sJsObject,
-                'id' => $aFile['id'],
-                'title' => $aFile['name'],
-                'version' => empty($aFile['version_to']) ? $aFile['version'] : _t('_adm_str_txt_update_from_to', $aFile['version'], $aFile['version_to']),
-            );
-
-        $sContent = $oTemplate->parseHtmlByName('str_files.html', array(
-            'bx_repeat:files' => $aTmplVarsFiles
-        ));
-
-        return array('code' => 0, 'message' => $sContent);
-    }
-
     protected function getFile($iFileId)
     {
         $mixedResult = $this->loadFile($iFileId);

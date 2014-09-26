@@ -184,30 +184,6 @@ BxDolStudioStore.prototype._onGetFile = function(oData, oButton) {
 		this.showPopup(this.sIdPopupFile, oData.message, oButton);
 };
 
-/*
- * NOTE. Is needed for download popup selector. Isn't used for now.
- */
-BxDolStudioStore.prototype.getFiles = function(iId, sType, oButton) {
-	var oDate = new Date();
-	var $this = this;
-	bx_loading(this.sIdPageContent, true);
-
-	$.get(
-		this.sActionsUrl,
-		{
-			str_action: 'get-files',
-			str_id: iId,
-			str_type: sType,
-			_t:oDate.getTime()
-		},
-		function(oData) {
-			bx_loading($this.sIdPageContent, false);
-			$this.showPopup($this.sIdPopupFiles, oData.message, oButton);
-		},
-		'json'
-	);
-};
-
 BxDolStudioStore.prototype.info = function(sModuleName, oLink) {
 	var oDate = new Date();
 	var $this = this;
