@@ -31,7 +31,7 @@
 .bx-form-section {
     margin:0;
     border-width:2px;
-    border-width:0.15rem;
+    border-width:0.125rem;
     border-bottom:none;
     border-left:none;
     border-right:none;
@@ -138,15 +138,15 @@
     vertical-align:middle;
 
     border:2px solid #79bd9a;
-    border:0.15rem solid #79bd9a;
+    border:0.125rem solid #79bd9a;
 	
     -webkit-border-radius:0.3rem;
-	-moz-border-radius:0.3rem;	
+    -moz-border-radius:0.3rem;	
     border-radius:0.3rem;
 
     outline:none;
 
-	background-color: #fff;
+    background-color: #fff;
 
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)"; 
     filter: alpha(opacity=90); 
@@ -234,7 +234,7 @@
     background-color:#fff;
 
     border:2px solid #79bd9a;
-    border:0.15rem solid #79bd9a;
+    border:0.125rem solid #79bd9a;
     -moz-border-radius: 1rem;
     -webkit-border-radius: 1rem;
     border-radius: 1rem;

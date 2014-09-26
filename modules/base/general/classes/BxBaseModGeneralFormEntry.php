@@ -53,6 +53,43 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         return parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
     }
 
+    protected function genCustomInputLocation ($aInput) 
+    {
+        $sProto = (0 == strncmp('https', BX_DOL_URL_ROOT, 5)) ? 'https' : 'http';
+        $this->oTemplate->addJs($sProto . '://maps.google.com/maps/api/js?sensor=false');
+
+        $aInput['checked'] = $this->getCleanValue($aInput['name'] . '_lat') && $this->getCleanValue($aInput['name'] . '_lng') ? 1 : 0;
+
+        $aVars = array (
+            'input' => $this->genInputSwitcher($aInput),
+            'name' => $aInput['name'],
+            'id_status' => $this->getInputId($aInput) . '_status',
+            'location_string' => _t('_sys_location_undefined'),
+            'lat' => $this->getCleanValue($aInput['name'] . '_lat'),
+            'lng' => $this->getCleanValue($aInput['name'] . '_lng'),
+            'country' => $this->getCleanValue($aInput['name'] . '_country'),
+            'state' => $this->getCleanValue($aInput['name'] . '_state'),
+            'city' => $this->getCleanValue($aInput['name'] . '_city'),
+            'zip' => $this->getCleanValue($aInput['name'] . '_zip'),
+        );
+        if ($aVars['country']) {
+            $aCountries = BxDolFormQuery::getDataItems('Country');
+            $aVars['location_string'] = ($aVars['city'] ? $aVars['city'] . ', ' : '') . $aCountries[$aVars['country']];
+        }
+        return $this->oTemplate->parseHtmlByName('form_field_location.html', $aVars);
+    }
+
+    function addCssJs ()
+    {
+        if (!isset($this->aParams['view_mode']) || !$this->aParams['view_mode']) {
+            if (self::$_isCssJsAdded)
+                return;
+            $this->_oModule->_oTemplate->addCss('form.css');
+        }
+
+        return parent::addCssJs ();
+    }
+
 }
 
 /** @} */

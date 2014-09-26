@@ -516,7 +516,7 @@ class BxDolSearchResult implements iBxDolReplaceable
         $aJoins = $this->getJoins();
         if (!empty($aJoins)) {
             $aSql['ownFields'] .= $aJoins['ownFields'];
-            $aSql['joinFields'] .= $aJoins['joinFields'];
+            $aSql['ownFields'] .= $aJoins['joinFields'];
             $aSql['join'] = $aJoins['join'];
             $aSql['groupBy'] = $aJoins['groupBy'];
         } 
@@ -541,9 +541,6 @@ class BxDolSearchResult implements iBxDolReplaceable
 
         // execution
         $sqlQuery = "SELECT " . $aSql['ownFields'];
-
-        if (isset($aSql['joinFields']))
-            $sqlQuery .= ' ' . $aSql['joinFields'];
 
         $sqlQuery .= ' ' . $aSql['from'];
 

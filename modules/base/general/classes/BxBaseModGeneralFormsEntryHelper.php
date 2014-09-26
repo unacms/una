@@ -34,7 +34,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             return MsgBox($sMsg);
 
         // check and display form
-        $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD']);
+        $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'], $this->_oModule->_oTemplate);
         if (!$oForm)
             return MsgBox(_t('_sys_txt_error_occured'));
 

@@ -1601,6 +1601,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_forgot_password_input_caption_system_email"><![CDATA[Email]]></string>
 	<string name="_sys_form_forgot_password_input_email"><![CDATA[Email]]></string>
 	<string name="_sys_form_forgot_password_input_submit"><![CDATA[Submit]]></string>
+	<string name="_sys_form_input_sys_location"><![CDATA[Location]]></string>
+	<string name="_sys_form_input_location"><![CDATA[Location]]></string>
 	<string name="_sys_form_login"><![CDATA[Sign in]]></string>
 	<string name="_sys_form_login_input_caption_system_captcha"><![CDATA[Captcha]]></string>
 	<string name="_sys_form_login_input_caption_system_delete_confirm"><![CDATA[Confirm Delete]]></string>
@@ -1723,6 +1725,9 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_layout_top_area_bar_right"><![CDATA[Top area with right bar]]></string>
 	<string name="_sys_layout_topbottom_area_2_columns"><![CDATA[Top&bottom areas with 2 columns in the middle]]></string>
 	<string name="_sys_loading"><![CDATA[Loading...]]></string>
+	<string name="_sys_location_determining"><![CDATA[Determining location...]]></string>
+	<string name="_sys_location_geolocation_not_supported_by_browser"><![CDATA[Geolocation is not supported by this browser]]></string>
+	<string name="_sys_location_undefined"><![CDATA[No location]]></string>
 	<string name="_sys_menu_item_title_about"><![CDATA[About]]></string>
 	<string name="_sys_menu_item_title_switch_language"><![CDATA[Language]]></string>
 	<string name="_sys_menu_item_title_switch_language_mask"><![CDATA[{1} {0}]]></string>
