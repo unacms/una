@@ -692,7 +692,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
         //--- Event -> Post for Alerts Engine ---//
         bx_import('BxDolAlerts');
-        $oAlert = new BxDolAlerts($this->_oConfig->getSystemName('alert'), 'post_' . $sPostType, $iId, $iSenderId);
+        $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'post_' . $sPostType, $iId, $iSenderId);
         $oAlert->alert();
         //--- Event -> Post for Alerts Engine ---//
     }
@@ -715,7 +715,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
         //--- Timeline -> Update for Alerts Engine ---//
         bx_import('BxDolAlerts');
-        $oAlert = new BxDolAlerts($this->_oConfig->getSystemName('alert'), 'share', $aShared['id'], $iUserId);
+        $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'share', $aShared['id'], $iUserId);
         $oAlert->alert();
         //--- Timeline -> Update for Alerts Engine ---//
     }
@@ -761,7 +761,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
         //--- Event -> Delete for Alerts Engine ---//
         bx_import('BxDolAlerts');
-        $oAlert = new BxDolAlerts($this->_oConfig->getSystemName('alert'), 'delete', $aEvent['id'], $this->getUserId());
+        $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'delete', $aEvent['id'], $this->getUserId());
         $oAlert->alert();
         //--- Event -> Delete for Alerts Engine ---//
     }

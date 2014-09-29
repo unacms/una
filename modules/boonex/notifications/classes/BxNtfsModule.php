@@ -82,7 +82,7 @@ class BxNtfsModule extends BxBaseModNotificationsModule
     {
     	//--- Event -> Post for Alerts Engine ---//
         bx_import('BxDolAlerts');
-        $oAlert = new BxDolAlerts($this->_oConfig->getSystemName('alert'), 'post', $iId);
+        $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'post', $iId);
         $oAlert->alert();
         //--- Event -> Post for Alerts Engine ---//
     }

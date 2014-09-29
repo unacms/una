@@ -40,11 +40,16 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     {
         parent::__construct($aModule);
 
-        $this->_aSystemNames = array(
-			'alert' => $this->_sName,
-        	'comment' => $this->_sName,
-        	'vote' => $this->_sName
-		);
+        $this->CNF = array (
+        	// objects
+            'OBJECT_COMMENTS' => $this->_sName,
+        
+        	// some language keys
+            'T' => array (
+                'txt_sample_single' => '_bx_timeline_txt_sample',
+            	'txt_sample_comment_single' => '_bx_timeline_txt_sample_comment_single',
+            ),
+        );
 
         $this->_aPrefixes = array(
         	'style' => 'bx-tl',
@@ -54,6 +59,9 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         );
 
         $this->_aObjects = array(
+        	'alert' => $this->_sName,
+        	'comment' => $this->CNF['OBJECT_COMMENTS'],
+        	'vote' => $this->_sName,
         	'storage' => $this->_sName . '_photos',
         	'transcoder_preview' => $this->_sName . '_photos_preview',
         	'transcoder_view' => $this->_sName . '_photos_view',

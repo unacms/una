@@ -859,7 +859,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 break;
         }
 
-        $sSystem = $this->_oConfig->getSystemName('vote');
+        $sSystem = $this->_oConfig->getObject('vote');
         if($oModule->getVoteObject($sSystem, $aEvent['id']) !== false)
             $aResult['votes'] = array(
                 'system' => $sSystem,
@@ -867,7 +867,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'count' => $aEvent['votes']
             );
 
-        $sSystem = $this->_oConfig->getSystemName('comment');
+        $sSystem = $this->_oConfig->getObject('comment');
         if($oModule->getCmtsObject($sSystem, $aEvent['id']) !== false)
             $aResult['comments'] = array(
                 'system' => $sSystem,

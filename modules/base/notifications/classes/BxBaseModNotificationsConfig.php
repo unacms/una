@@ -9,13 +9,12 @@
  * @{
  */
 
-bx_import('BxDolModuleConfig');
+bx_import('BxBaseModGeneralConfig');
 
-class BxBaseModNotificationsConfig extends BxDolModuleConfig
+class BxBaseModNotificationsConfig extends BxBaseModGeneralConfig
 {
 	protected $_oDb;
 
-	protected $_aSystemNames;
     protected $_aPrefixes;
     protected $_aObjects;
 
@@ -39,11 +38,9 @@ class BxBaseModNotificationsConfig extends BxDolModuleConfig
     {
         parent::__construct($aModule);
 
-        $this->_aSystemNames = array(
-			'alert' => $this->_sName
-		);
 		$this->_aPrefixes = array();
 		$this->_aObjects = array(
+			'alert' => $this->_sName,
 			'conn_subscriptions' => 'sys_profiles_subscriptions'
 		);
 
@@ -83,14 +80,6 @@ class BxBaseModNotificationsConfig extends BxDolModuleConfig
         $sHideTimeline = getParam($sOptionPrefix . 'events_hide');
         if(!empty($sHideTimeline))
             $this->_aHandlersHidden = explode(',', $sHideTimeline);
-    }
-
-	public function getSystemName($sType = '')
-    {
-    	if(empty($sType))
-            return $this->_aSystemNames;
-
-        return $this->_aSystemNames[$sType];
     }
 
     public function getPrefix($sType = '')

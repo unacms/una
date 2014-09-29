@@ -33,7 +33,7 @@ class BxBaseModNotificationsDb extends BxDolModuleDb
 
     public function getAlertHandlerId()
     {
-        $sQuery = $this->prepare("SELECT `id` FROM `sys_alerts_handlers` WHERE `name`=? LIMIT 1", $this->_oConfig->getSystemName('alert'));
+        $sQuery = $this->prepare("SELECT `id` FROM `sys_alerts_handlers` WHERE `name`=? LIMIT 1", $this->_oConfig->getObject('alert'));
         return (int)$this->getOne($sQuery);
     }
 

@@ -2,6 +2,7 @@
 <resources name="en" flag="gb" title="English">
 
 	<string name="_bx_timeline"><![CDATA[Timeline]]></string>
+	<string name="_bx_timeline_cmts"><![CDATA[Timelines' Comments]]></string>
 
 	<string name="_bx_timeline_option_enable_delete"><![CDATA[Allow Timeline owner to remove items]]></string>
 	<string name="_bx_timeline_option_events_per_page_profile"><![CDATA[Number of events are displayed on Profile page]]></string>
@@ -55,6 +56,7 @@
 	<string name="_bx_timeline_page_block_title_item"><![CDATA[Item]]></string>
 	<string name="_bx_timeline_page_block_title_view_account"><![CDATA[Subscriptions Timeline]]></string>
 	<string name="_bx_timeline_page_block_title_view_home"><![CDATA[Outline]]></string>
+	<string name="_bx_timeline_page_block_title_browse_cmts"><![CDATA[Timelines' Comments]]></string>
 
     <string name="_bx_timeline_menu_item_view_all"><![CDATA[All posts]]></string>
     <string name="_bx_timeline_menu_item_view_owner"><![CDATA[Posts by {0}]]></string>
@@ -94,6 +96,7 @@
 	<string name="_bx_timeline_txt_user_added_sample"><![CDATA[{0} added {1}]]></string>
 	<string name="_bx_timeline_txt_user_shared_sample"><![CDATA[{0} shared {1}'s {2}]]></string>
 	<string name="_bx_timeline_txt_sample"><![CDATA[post]]></string>
+	<string name="_bx_timeline_txt_sample_comment_single"><![CDATA[post's comment]]></string>
 
 	<string name="_bx_timeline_txt_do_share"><![CDATA[Share]]></string>
 	<string name="_bx_timeline_txt_shared"><![CDATA[Shared {0}'s {1}.]]></string>
