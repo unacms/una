@@ -155,6 +155,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
     public function install($aParams, $bAutoEnable = false)
     {
     	$bAutoEnable = $bAutoEnable || (isset($aParams['auto_enable']) && (bool)$aParams['auto_enable']);
+    	$bHtmlResponce = isset($aParams['html_response']) && (bool)$aParams['html_response'];
 
         //--- Check whether the module was already installed ---//
         if($this->oDb->isModule($this->_aConfig['home_uri']))
@@ -178,7 +179,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         //--- Check version compatibility ---//
         if(!$this->_isCompatibleWith())
             return array(
-                'message' => $this->_displayResult('check_script_version', false, '_adm_err_modules_wrong_version_script'),
+                'message' => $this->_displayResult('check_script_version', false, '_adm_err_modules_wrong_version_script', $bHtmlResponce),
                 'result' => false
             );
 
@@ -204,7 +205,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         }
 
         //--- Check actions ---//
-        $aResult = $this->_perform('install');
+        $aResult = $this->_perform('install', $aParams);
         if($aResult['result']) {
             $sDependencies = "";
             if(isset($this->_aConfig['install']['check_dependencies']) && (int)$this->_aConfig['install']['check_dependencies'] == 1 && isset($this->_aConfig['dependencies']) && is_array($this->_aConfig['dependencies']))
@@ -249,6 +250,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
     public function uninstall($aParams, $bAutoDisable = false)
     {
     	$bAutoDisable = $bAutoDisable || (isset($aParams['auto_disable']) && (bool)$aParams['auto_disable']);
+    	$bHtmlResponce = isset($aParams['html_response']) && (bool)$aParams['html_response'];
 
         //--- Check whether the module was already uninstalled ---//
         if(!$this->oDb->isModule($this->_aConfig['home_uri']))
@@ -281,11 +283,11 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 
         if($bDependent)
             return array(
-                'message' => $this->_displayResult('check_dependencies', false, $sMessage),
+                'message' => $this->_displayResult('check_dependencies', false, $sMessage, $bHtmlResponce),
                 'result' => false
             );
 
-        $aResult = $this->_perform('uninstall');
+        $aResult = $this->_perform('uninstall', $aParams);
         if($aResult['result']) {
             $iModuleId = $this->oDb->deleteModule($this->_aConfig);
 
@@ -311,7 +313,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         return $aResult;
     }
 
-    public function delete()
+    public function delete($aParams)
     {
     	$aError = array(
 			'message' => _t('_adm_err_modules_cannot_remove_package'),
@@ -377,7 +379,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         if ($aResult && !$aResult['result'])
             return $aResult;
 
-        $aResult = $this->_perform('enable');
+        $aResult = $this->_perform('enable', $aParams);
         if($aResult['result']) {
             $this->oDb->enableModuleByUri($aModule['uri']);
 
@@ -392,6 +394,8 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 
     public function disable($aParams)
     {
+    	$bHtmlResponce = isset($aParams['html_response']) && (bool)$aParams['html_response'];
+
         $aModule = $this->oDb->getModuleByUri($this->_aConfig['home_uri']);
 
         //--- Check whether the module is installed ---//
@@ -426,11 +430,11 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 
         if($bDependent)
             return array(
-                'message' => $this->_displayResult('check_dependencies', false, $sMessage),
+                'message' => $this->_displayResult('check_dependencies', false, $sMessage, $bHtmlResponce),
                 'result' => false
             );
 
-        $aResult = $this->_perform('disable');
+        $aResult = $this->_perform('disable', $aParams);
         if($aResult['result']) {
             $this->oDb->disableModuleByUri($aModule['uri']);
 
@@ -448,8 +452,10 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         return bx_ltrim_str($sPath, $this->_sModulePath);
     }
 
-    function _perform($sOperationName)
+    function _perform($sOperationName, $aParams = array())
     {
+    	$bHtmlResponce = isset($aParams['html_response']) && (bool)$aParams['html_response'];
+
         if(!defined('BX_SKIP_INSTALL_CHECK') && !defined('BX_DOL_CRON_EXECUTE') && !$GLOBALS['logged']['admin'])
             return array('message' => '_adm_mod_err_only_admin_can_perform_operations_with_modules', 'result' => false);
 
@@ -463,13 +469,13 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 
             //--- On Success ---//
             if((is_int($mixedResult) && (int)$mixedResult == BX_DOL_STUDIO_INSTALLER_SUCCESS) || (isset($mixedResult['code']) && (int)$mixedResult['code'] == BX_DOL_STUDIO_INSTALLER_SUCCESS)) {
-                $sMessage .= $this->_displayResult($sAction, true, isset($mixedResult['content']) ? $mixedResult['content'] : '');
+                $sMessage .= $this->_displayResult($sAction, true, isset($mixedResult['content']) ? $mixedResult['content'] : '', $bHtmlResponce);
                 continue;
             }
 
             //--- On Failed ---//
             $sMethodFailed = $sMethod . 'Failed';
-            return array('message' => $this->_displayResult($sAction, false, method_exists($this, $sMethodFailed) ? $this->$sMethodFailed($mixedResult) : $this->actionOperationFailed($mixedResult)), 'result' => false);
+            return array('message' => $this->_displayResult($sAction, false, method_exists($this, $sMethodFailed) ? $this->$sMethodFailed($mixedResult) : $this->actionOperationFailed($mixedResult), $bHtmlResponce), 'result' => false);
         }
 
         if($this->_bShowOnSuccess)
@@ -478,29 +484,24 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         return array('message' => $sMessage, 'result' => true);
     }
 
-    function _displayResult($sAction, $bResult, $sResult = '')
+    function _displayResult($sAction, $bResult, $sResult = '', $bHtmlResponse = true)
     {
-    	bx_import('BxDolStudioTemplate');
-    	$oTemplate = BxDolStudioTemplate::getInstance();
+    	if($bResult && !in_array($sAction, array('show_introduction', 'show_conclusion')) && !$this->_bShowOnSuccess)
+            return '';
 
-        $sMessage = $this->_aActions[$sAction]['title'] . ' ';
+        $sTitle = $this->_aActions[$sAction]['title'] . ' ';
         if(!empty($sResult))
             $sResult = (substr($sResult, 0, 1) == '_' ? _t($sResult) : $sResult) . '<br />';
 
-        if(!$bResult)
-            return $oTemplate->parseHtmlByName('mod_action_result_step.html', array(
-            	'color' => 'red',
-            	'title' => $sMessage,
-            	'content' => $sResult
-            ));
+		$sContent = !empty($sResult) ? $sResult : _t($bResult ? '_adm_txt_modules_process_action_success' : '_adm_err_modules_process_action_failed') . '<br />';
+		if(!$bHtmlResponse)
+			return $sTitle . $sContent;
 
-        if($bResult && !in_array($sAction, array('show_introduction', 'show_conclusion')) && !$this->_bShowOnSuccess)
-            return;
-
-        return $oTemplate->parseHtmlByName('mod_action_result_step.html', array(
-        	'color' => 'green',
-            'title' => $sMessage,
-            'content' => !empty($sResult) ? $sResult : _t('_adm_txt_modules_process_action_success') . '<br />'
+		bx_import('BxDolStudioTemplate');
+        return BxDolStudioTemplate::getInstance()->parseHtmlByName('mod_action_result_step.html', array(
+        	'color' => $bResult ? 'green' : 'red',
+            'title' => $sTitle,
+            'content' => $sContent
         ));
     }
 
@@ -537,7 +538,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             return BX_DOL_STUDIO_INSTALLER_FAILED;
 
         $sPath = $this->_sHomePath . 'install/info/' . $this->_aConfig[$sOperation . '_info']['introduction'];
-        return file_exists($sPath) ? array("code" => BX_DOL_STUDIO_INSTALLER_SUCCESS, "content" => "<pre>" . file_get_contents($sPath) . "</pre>") : BX_DOL_STUDIO_INSTALLER_FAILED;
+        return file_exists($sPath) ? array("code" => BX_DOL_STUDIO_INSTALLER_SUCCESS, "content" => file_get_contents($sPath)) : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
     function actionShowConclusion($sOperation)
     {
@@ -545,7 +546,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             return BX_DOL_STUDIO_INSTALLER_FAILED;
 
         $sPath = $this->_sHomePath . 'install/info/' . $this->_aConfig[$sOperation . '_info']['conclusion'];
-        return file_exists($sPath) ? array("code" => BX_DOL_STUDIO_INSTALLER_SUCCESS, "content" => "<pre>" . file_get_contents($sPath) . "</pre>") : BX_DOL_STUDIO_INSTALLER_FAILED;
+        return file_exists($sPath) ? array("code" => BX_DOL_STUDIO_INSTALLER_SUCCESS, "content" => file_get_contents($sPath)) : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
     function actionMoveSources($sOperation)
     {

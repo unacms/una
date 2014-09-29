@@ -110,9 +110,7 @@ class BxDolStudioModule extends BxTemplStudioPage
             return array('code' => 1, 'message' => _t('_adm_err_operation_failed'));
 
         bx_import('BxDolStudioInstallerUtils');
-        $oInstallerUtils = BxDolStudioInstallerUtils::getInstance();
-
-        $aResult = (int)$aModule['enabled'] == 0 ? $oInstallerUtils->perform($aModule['path'], 'enable') : $oInstallerUtils->perform($aModule['path'], 'disable');
+        $aResult = BxDolStudioInstallerUtils::getInstance()->perform($aModule['path'], ((int)$aModule['enabled'] == 0 ? 'enable' : 'disable'), array('html_response' => true));
         if($aResult['code'] != 0)
             return $aResult;
 

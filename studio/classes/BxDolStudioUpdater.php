@@ -40,6 +40,8 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
 
     public function update($aParams)
     {
+    	$bHtmlResponce = isset($aParams['html_response']) && (bool)$aParams['html_response'];
+
         $oDb = bx_instance('BxDolStudioInstallerQuery');
 
         $aResult = array(
@@ -50,27 +52,27 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
         $aModuleInfo = $oDb->getModulesBy(array('type' => 'path_and_uri', 'path' => $this->_aConfig['module_dir'], 'uri' => $this->_aConfig['module_uri']));
         if(!$aModuleInfo)
             return array_merge($aResult, array(
-                'message' => $this->_displayResult('check_module_exists', false, '_adm_err_modules_module_not_found'),
+                'message' => $this->_displayResult('check_module_exists', false, '_adm_err_modules_module_not_found', $bHtmlResponce),
                 'result' => false
             ));
 
 		if(isset($aParams['updated_module_name']) && strcmp($aParams['updated_module_name'], $aModuleInfo['name']) != 0)
 			return array_merge($aResult, array(
-                'message' => $this->_displayResult('check_module_matches', false, '_adm_err_modules_module_not_match'),
+                'message' => $this->_displayResult('check_module_matches', false, '_adm_err_modules_module_not_match', $bHtmlResponce),
                 'result' => false
             ));
 
 		//--- Check Dolphin version compatibility ---//
         if(!$this->_isCompatibleWith())
             return array(
-                'message' => $this->_displayResult('check_script_version', false, _t('_adm_err_modules_wrong_version_script_update', $aModuleInfo['title'])),
+                'message' => $this->_displayResult('check_script_version', false, _t('_adm_err_modules_wrong_version_script_update', $aModuleInfo['title']), $bHtmlResponce),
                 'result' => false
             );
 
         //--- Check version ---//
         if(version_compare($aModuleInfo['version'], $this->_aConfig['version_from']) != 0)
             return array_merge($aResult, array(
-                'message' => $this->_displayResult('check_module_version', false, '_adm_err_modules_wrong_version'),
+                'message' => $this->_displayResult('check_module_version', false, '_adm_err_modules_wrong_version', $bHtmlResponce),
                 'result' => false
             ));
 
@@ -83,17 +85,17 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
 
     	if(!empty($aFilesChanged) && !$bAutoupdateForceModifiedFiles) 
     		return array_merge($aResult, array(
-                'message' => $this->_displayResult('check_module_hash', false, '_adm_err_modules_module_was_modified'),
+                'message' => $this->_displayResult('check_module_hash', false, '_adm_err_modules_module_was_modified', $bHtmlResponce),
                 'result' => false
             ));
 		else if($fChangedPercent > BX_FORCE_AUTOUPDATE_MAX_CHANGED_FILES_PERCENT && $bAutoupdateForceModifiedFiles) 
 			return array_merge($aResult, array(
-                'message' => $this->_displayResult('check_module_hash', false, _t('_sys_upgrade_files_checksum_failed_too_many', round($fChangedPercent * 100))),
+                'message' => $this->_displayResult('check_module_hash', false, _t('_sys_upgrade_files_checksum_failed_too_many', round($fChangedPercent * 100)), $bHtmlResponce),
                 'result' => false
             ));
 
         //--- Perform action and check results ---//
-        $aResult = array_merge($aResult, $this->_perform('install', 'Update'));
+        $aResult = array_merge($aResult, $this->_perform('install', $aParams));
         if($aResult['result']) {
             $oDb->updateModule(array('version' => $this->_aConfig['version_to']), array('id' => $aModuleInfo['id']));
 

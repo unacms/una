@@ -137,7 +137,7 @@ class BxDolStudioStore extends BxTemplStudioPage
                         break;
 
                     bx_import('BxDolStudioInstallerUtils');
-                    $aResult = BxDolStudioInstallerUtils::getInstance()->perform($sValue, 'install', array('auto_enable' => true));
+                    $aResult = BxDolStudioInstallerUtils::getInstance()->perform($sValue, 'install', array('auto_enable' => true, 'html_response' => true));
                     break;
 
                 case 'update':
@@ -146,7 +146,7 @@ class BxDolStudioStore extends BxTemplStudioPage
                         break;
 
                     bx_import('BxDolStudioInstallerUtils');
-                    $aResult = BxDolStudioInstallerUtils::getInstance()->perform($sValue, 'update');
+                    $aResult = BxDolStudioInstallerUtils::getInstance()->perform($sValue, 'update', array('html_response' => true));
                     break;
 
                 case 'delete':
@@ -155,7 +155,7 @@ class BxDolStudioStore extends BxTemplStudioPage
                         break;
 
                     bx_import('BxDolStudioInstallerUtils');
-                    $aResult = BxDolStudioInstallerUtils::getInstance()->perform($sValue, 'delete');
+                    $aResult = BxDolStudioInstallerUtils::getInstance()->perform($sValue, 'delete', array('html_response' => true));
                     break;
             }
 

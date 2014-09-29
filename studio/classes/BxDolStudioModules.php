@@ -62,7 +62,7 @@ class BxDolStudioModules extends BxDol
                     }
 
                     bx_import('BxDolStudioInstallerUtils');
-                    $aResult = BxDolStudioInstallerUtils::getInstance()->perform($aModule['path'], 'uninstall');
+                    $aResult = BxDolStudioInstallerUtils::getInstance()->perform($aModule['path'], 'uninstall', array('html_response' => true));
                     if(!empty($aResult['message']))
                         $aResult['message'] = $this->getPopupResult($aResult['message']);
                     break;
