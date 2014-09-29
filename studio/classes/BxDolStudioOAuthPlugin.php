@@ -33,6 +33,7 @@ class BxDolStudioOAuthPlugin extends BxDolStudioOAuth implements iBxDolSingleton
 
         $this->sKey = getParam('sys_oauth_key');
         $this->sSecret = getParam('sys_oauth_secret');
+        $this->sDataRetrieveMethod = 'POST';
 
         $this->sService = 'Dolphin';
         $this->oStorage = new Session();
@@ -111,7 +112,7 @@ class BxDolStudioOAuthPlugin extends BxDolStudioOAuth implements iBxDolSingleton
 
         try {
         	$oService = $this->getServiceObject();
-			$sResponse = $oService->request(BX_DOL_OAUTH_URL_FETCH_DATA, OAUTH_HTTP_METHOD_POST, $aParams);
+			$sResponse = $oService->request(BX_DOL_OAUTH_URL_FETCH_DATA, $this->sDataRetrieveMethod, $aParams);
 
             //echo $sResponse; exit;	//--- Uncomment to debug
             return json_decode($sResponse, true);

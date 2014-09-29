@@ -25,6 +25,7 @@ class BxDolStudioOAuth extends BxDol
 
 	protected $sKey;
     protected $sSecret;
+    protected $sDataRetrieveMethod;
 
     public function __construct()
     {

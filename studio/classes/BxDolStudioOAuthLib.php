@@ -20,6 +20,7 @@ class BxDolStudioOAuthLib extends BxDolStudioOAuth implements iBxDolSingleton
 
         $this->sKey = getParam('sys_oauth_key');
         $this->sSecret = getParam('sys_oauth_secret');
+        $this->sDataRetrieveMethod = OAUTH_HTTP_METHOD_POST;
     }
 
     public function __clone()
@@ -101,7 +102,7 @@ class BxDolStudioOAuthLib extends BxDolStudioOAuth implements iBxDolSingleton
             $oConsumer->enableDebug();
 
             $oConsumer->setToken($this->oSession->getValue('sys_oauth_token'), $this->oSession->getValue('sys_oauth_secret'));
-            $oConsumer->fetch(BX_DOL_OAUTH_URL_FETCH_DATA, $aParams, OAUTH_HTTP_METHOD_POST);
+            $oConsumer->fetch(BX_DOL_OAUTH_URL_FETCH_DATA, $aParams, $this->sDataRetrieveMethod);
 
             
             //echo $oConsumer->getLastResponse(); exit;	//--- Uncomment to debug
