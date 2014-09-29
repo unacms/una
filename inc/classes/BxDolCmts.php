@@ -7,6 +7,7 @@
  * @{
  */
 
+bx_import('BxDolPermalinks');
 bx_import('BxDolCmtsQuery');
 
 define('BX_CMT_OLD_VOTES', 365*86400); ///< comment votes older than this number of seconds will be deleted automatically
@@ -215,7 +216,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
             $this->_sBrowseFilter = $mixedUserBpFilter;
 
         $this->_sViewUrl = BX_DOL_URL_ROOT . 'cmts.php';
-        $this->_sBaseUrl = $this->_aSystem['base_url'];
+        $this->_sBaseUrl = BxDolPermalinks::getInstance()->permalink($this->_aSystem['base_url']);
         if(get_mb_substr($this->_sBaseUrl, 0, 4) != 'http')
             $this->_sBaseUrl = BX_DOL_URL_ROOT . $this->_sBaseUrl;
         $this->_sListAnchor = "cmts-anchor-%s-%d";
