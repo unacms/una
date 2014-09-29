@@ -184,14 +184,14 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
      * @param $sZip optional ZIP/postcode
      * @return true if location was added, or false otherwise
      */
-    public function locationsAdd($iId, $sLatitude, $sLongitude, $sCountryCode = '', $sState = '', $sCity = '', $sZip = '') 
+    public function locationsAdd($iId, $sLatitude, $sLongitude, $sCountryCode, $sState, $sCity, $sZip = '') 
     {
-        // TODO:        
+        return $this->_oQuery->locationsAdd($iId, $sLatitude, $sLongitude, $sCountryCode, $sState, $sCity, $sZip);
     }
     public function locationsAddFromForm($iId, $sName, $oForm = null) 
     {
         if (!$oForm)
-            $oForm = new BxDolForm(array());
+            $oForm = new BxDolForm(array(), false);
         $this->locationsAdd($iId, $oForm->getCleanValue($sName.'_lat'), $oForm->getCleanValue($sName.'_lng'), $oForm->getCleanValue($sName.'_country'), $oForm->getCleanValue($sName.'_state'), $oForm->getCleanValue($sName.'_city'), $oForm->getCleanValue($sName.'_zip'));
     }
 
@@ -200,9 +200,21 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
      * @param $iId content id
      * @return string with links to country and city
      */
-    public function locationsString($iId) 
+    public function locationsString($iId)
     {
-        // TODO:
+        bx_import('BxDolFormQuery');
+        $aCountries = BxDolFormQuery::getDataItems('Country');
+        $aLocation = $this->locationGet($iId);
+        if (!$aLocation || !$aLocation['country'] || !isset($aCountries[$aLocation['country']]))
+            return '';
+
+        $sCountryUrl = '<a href="' . BX_DOL_URL_ROOT . 'searchKeyword.php?type=location_country&keyword=' . $aLocation['country'] . '">' . $aCountries[$aLocation['country']] . '</a>';
+        if (!$aLocation['city'])
+            return _t('_sys_location_country', $sCountryUrl);
+
+        $sCityUrl = '<a href="' . BX_DOL_URL_ROOT . 'searchKeyword.php?type=location_country_city&keyword=' . $aLocation['country'] . '&state=' . rawurlencode($aLocation['state']) . '&city=' . rawurlencode($aLocation['city']) . '">' . $aLocation['city'] . '</a>';
+            
+        return _t('_sys_location_country_city', $sCountryUrl, $sCityUrl);
     }
 
     /**
@@ -211,7 +223,8 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
      */
     protected function locationsAddMeta($iId) 
     {
-        // TODO:
+        $aLocation = $this->locationGet($iId);
+        BxDolTemplate::getInstance()->addPageMetaLocation($aLocation['lat'], $aLocation['lng'], $aLocation['country']);
     }
 
     /**
@@ -221,10 +234,43 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
      */
     public function locationsSetSearchCondition($oSearchResult, $sCountry, $sState = false, $sCity = false, $sZip = false)
     {
-        // TODO:
+        $a = array('country' => 'sCountry', 'state' => 'sState', 'city' => 'sCity', 'zip' => 'sZip');
+        foreach ($a as $sIndex => $sVar) {
+            if (!$$sVar)
+                continue;
+
+            $oSearchResult->aCurrent['restriction']['meta_location_' . $sIndex] = array(
+                'value' => $$sVar,
+                'field' => $sIndex,
+                'operator' => '=',
+                'table' => $this->_aObject['table_locations'],
+            );
+        }
+
+        $oSearchResult->aCurrent['join']['meta_keyword'] = array(
+            'type' => 'INNER',
+            'table' => $this->_aObject['table_locations'],
+            'mainField' => $oSearchResult->aCurrent['ident'],
+            'onField' => 'object_id',
+            'joinFields' => array(),
+        );
     }
 
+    /**
+     * Get location
+     * @return location array
+     */
+    public function locationGet($iId, $sPrefix = '')
+    {
+        $a = $this->_oQuery->locationGet($iId);
+        if (!$sPrefix)
+            return $a;
 
+        $aRet = array();
+        foreach ($a as $sKey => $sVal)
+            $aRet[$sPrefix . '_' . $sKey] = $sVal;
+        return $aRet;
+    }
 
     /**
      * Add @mentions from the string (most probably @mentions will be some sort of links already, so parsing may have to look for smth like <a data-mention="bx_persons|123">mention name</a> instead of @mention, since there is no usernames for profiles modules and name could contain spaces and othr characters)

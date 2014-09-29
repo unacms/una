@@ -81,11 +81,17 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             return MsgBox($sMsg);
 
         // check and display form
-        $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $sDisplay);
+        $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $sDisplay, $this->_oModule->_oTemplate);
         if (!$oForm)
             return MsgBox(_t('_sys_txt_error_occured'));
 
-        $oForm->initChecker($aContentInfo);
+        $aSpecificValues = array();
+        bx_import('BxDolMetatags');
+        if (!empty($CNF['OBJECT_METATAGS'])) {
+            $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
+            $aSpecificValues = $oMetatags->locationGet($iContentId, $CNF['FIELD_LOCATION_PREFIX']);
+        }
+        $oForm->initChecker($aContentInfo, $aSpecificValues);
 
         if (!$oForm->isSubmittedAndValid())
             return $oForm->getCode();
@@ -130,7 +136,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             return MsgBox($sMsg);
 
         // check and display form
-        $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $sDisplay);
+        $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $sDisplay, $this->_oModule->_oTemplate);
         if (!$oForm)
             return MsgBox(_t('_sys_txt_error_occured'));
 
@@ -177,7 +183,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             return MsgBox($sMsg);
 
         // get form
-        $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $sDisplay);
+        $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $sDisplay, $this->_oModule->_oTemplate);
         if (!$oForm)
             return MsgBox(_t('_sys_txt_error_occured'));
 
