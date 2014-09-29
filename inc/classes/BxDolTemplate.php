@@ -1599,7 +1599,8 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
                         $sResult .= $this->$sMethodWrap($sUrl);
                     else {
                         $bFound = false;
-                        foreach($this->aPage[$sArrayKey]  as $iKey => $aValue)
+                        $aSearchIn = $bSystem ? $this->aPage[$sArrayKey] : array_merge($this->aPage[$sType . '_system'], $this->aPage[$sArrayKey]);
+                        foreach($aSearchIn as $iKey => $aValue)
                             if($aValue['url'] == $sUrl && $aValue['path'] == $sPath) {
                                 $bFound = true;
                                 break;
