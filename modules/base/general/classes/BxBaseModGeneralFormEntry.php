@@ -92,7 +92,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         if (!isset($this->aParams['view_mode']) || !$this->aParams['view_mode']) {
             if (self::$_isCssJsAdded)
                 return;
-            $this->_oModule->_oTemplate->addCss('form.css');
+            $this->_oModule->_oTemplate->addCss('forms.css');
         }
 
         return parent::addCssJs ();
