@@ -1,0 +1,13 @@
+@import url(../../../../../../../template/css/common.css);
+
+a {
+    color:#29789c;
+}
+
+/* --------------- design boxes */
+.bx-db-title {
+	line-height: normal;
+}
+.bx-db-menu {
+	line-height: normal;
+}
