@@ -69,16 +69,23 @@ class BxBaseSearchResult extends BxDolSearchResult
         return $sCode;
     }
 
-    function displaySearchBox ($sCode, $sPaginate = '')
+    function displaySearchBox ($sContent, $sPaginate = '')
     {
         $sTitle = _t($this->aCurrent['title']);
+		$sContent .= $sPaginate;
+		$sMenu = $this->getDesignBoxMenu();
 
-        $sCode = $this->oFunctions->designBoxContent($sTitle, $sCode . $sPaginate, $this->iDesignBoxTemplate, $this->getDesignBoxMenu());
+        if ($this->id) {
+        	$sCode = $this->oFunctions->designBoxContent($sTitle, $sContent, $this->iDesignBoxTemplate, $sMenu);
+            return '<div class="bx-page-block-container bx-clearfix" id="bx-page-block-' . $this->id . '">' . $sCode . '</div>';
+        }
 
-        if ($this->id)
-            $sCode = '<div class="bx-page-block-container bx-clearfix" id="bx-page-block-' . $this->id . '">' . $sCode . '</div>';
-
-        return $sCode;
+        return array(
+        	'title' => $sTitle,
+        	'content' => $sContent,
+        	'designbox_id' => $this->iDesignBoxTemplate,
+        	'menu' => $sMenu
+        );
     }
 
     function displaySearchUnit ($aData)

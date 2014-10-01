@@ -130,18 +130,15 @@ class BxBasePage extends BxDolPage
 
             $sTitle = $this->getBlockTitle($aBlock);
 
-            if (is_array($mixedContent)) {
-                if (isset($mixedContent['content']))
-                    $sContentWithBox = DesignBoxContent(
-                        isset($mixedContent['title']) ? $mixedContent['title'] : $sTitle,
-                        $mixedContent['content'],
-                        isset($mixedContent['designbox_id']) ? $mixedContent['designbox_id'] : $aBlock['designbox_id'],
-                        isset($mixedContent['menu']) ? $mixedContent['menu'] : false
-                    );
-            } elseif (is_string($mixedContent)) {
+            if (is_array($mixedContent) && !empty($mixedContent['content'])) {
+				$sContentWithBox = DesignBoxContent(
+                	isset($mixedContent['title']) ? $mixedContent['title'] : $sTitle,
+                    $mixedContent['content'],
+                    isset($mixedContent['designbox_id']) ? $mixedContent['designbox_id'] : $aBlock['designbox_id'],
+                    isset($mixedContent['menu']) ? $mixedContent['menu'] : false
+				);
+            } elseif (is_string($mixedContent) && !empty($mixedContent)) {
                 $sContentWithBox = DesignBoxContent($sTitle, $mixedContent, $aBlock['designbox_id']);
-            } else {
-                $sContentWithBox = false;
             }
         }
 
