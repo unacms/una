@@ -247,6 +247,12 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
                 $sImage = $oStorage->getFileUrlById($aContentInfo[$CNF['FIELD_THUMB']]);
         }
 
+        $aImages = array();
+        if(!empty($sImage))
+        	$aImages = array(
+				array('url' => $sUrl, 'src' => $sImage)
+			);
+
         //--- Votes
         bx_import('BxDolVote');
         $oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $aEvent['object_id']);
@@ -278,12 +284,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
                 'url' => $sUrl,
                 'title' => isset($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...'),
                 'text' => $aContentInfo[$CNF['FIELD_TEXT']],
-                'images' => array(
-                    array(
-                        'url' => $sUrl,
-                        'src' => $sImage
-                    )
-                )
+                'images' => $aImages,
             ), //a string to display or array to parse default template before displaying.
             'votes' => $aVotes,
             'comments' => $aComments,

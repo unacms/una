@@ -91,7 +91,9 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $sHtmlPrefix = str_replace('_', '-', $this->_sName);
         $this->_aHtmlIds = array(
             'view' => array(
-                'item_popup' => $sHtmlPrefix . '-item-popup-',
+        		'main' => $sHtmlPrefix,
+        		'item' => $sHtmlPrefix . '-item-',
+                'menu_popup' => $sHtmlPrefix . '-menu-popup-',
                 'photo_popup' => $sHtmlPrefix . '-photo-popup',
             ),
             'post' => array(

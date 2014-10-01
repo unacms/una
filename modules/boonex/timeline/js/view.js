@@ -85,19 +85,16 @@ BxTimelineView.prototype.showMoreContent = function(oLink) {
 	this.reloadMasonry();
 };
 
-BxTimelineView.prototype.showItemMenu = function(oLink) {
-	var sId = $(oLink).parents('.bx-tl-item-menu:first').children('.bx-popup-wrapper:hidden').attr('id');
-	if(sId)
-		bx_menu_popup_inline('#' + sId, oLink);
-};
-
-BxTimelineView.prototype.showItem = function(oLink, iId) {
-    var oData = this._getDefaultData();    
+BxTimelineView.prototype.showManageMenu = function(oLink, iId) {
+	var oData = this._getDefaultData();    
     oData['id'] = iId;
 
-    $(window).dolPopupAjax({
-		id: this._aHtmlIds['item_popup'] + iId,
-		url: bx_append_url_params(this._sActionsUri + 'get_post_popup/', oData)
+    $(this.sIdView).dolPopupAjax({
+		id: this._aHtmlIds['menu_popup'] + iId,
+		url: bx_append_url_params(this._sActionsUri + 'get_manage_menu_popup/', oData),
+		pointer:{
+			el:$(oLink)
+		}
 	});
 
 	return false;

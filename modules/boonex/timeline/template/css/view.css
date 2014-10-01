@@ -44,9 +44,7 @@ div.bx-tl-item-cnt {
 
 /*+++ Item Menu +++*/
 div.bx-tl-item-menu {
-	position: absolute;
-	top: 0px;
-	right: 0px;
+	float: left;
 }
 div.bx-tl-item-menu .bx-menu-ver li {
 	white-space: nowrap;
@@ -60,13 +58,7 @@ div.bx-tl-item-menu-button {
 	line-height: 1.2rem;
 	text-align: center;
 }
-div.bx-tl-item-menu-button a {
-	color: rgba(56, 120, 119, 0.5);
-}
-div.bx-tl-item-menu-button a:hover {
-	text-decoration: none;
-	color: rgba(56, 120, 119, 1.0);
-}
+
 div.bx-tl-item-menu-button i.sys-icon {
 	display: inline-block;
 }
@@ -117,7 +109,9 @@ div.bx-tl-shared div.bx-tl-content {
 }
 
 /*+++ Item Actions +++*/
-div.bx-tl-item-actions {}
+div.bx-tl-item-actions {
+	float: left;
+}
 
 
 /*--- Empty Style ---*/

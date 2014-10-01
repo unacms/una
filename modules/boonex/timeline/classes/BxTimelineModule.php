@@ -176,13 +176,13 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $this->_echoResultJson(array('content' => $sComments));
     }
 
-    public function actionGetPostPopup()
+    public function actionGetManageMenuPopup()
     {
         $iItemId = bx_process_input(bx_get('id'), BX_DATA_INT);
         if(!$iItemId)
             return;
 
-        echo $this->_oTemplate->getViewItemPopup($iItemId);
+        echo $this->getManageMenuObject($iItemId)->getCode();
     }
 
     public function actionAddAttachLink()
@@ -596,6 +596,17 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             return false;
 
         return $oVote;
+    }
+
+    public function getManageMenuObject($mixedEvent)
+    {
+    	if(!is_array($mixedEvent))
+    		$mixedEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => (int)$mixedEvent));
+
+        bx_import('BxDolMenu');
+        $oMenu = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_manage'));
+        $oMenu->setEvent($mixedEvent);
+        return $oMenu;
     }
 
     //--- Check permissions methods ---//

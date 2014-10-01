@@ -1,4 +1,4 @@
-<div id="bx-timeline-item-__id__" class="__style_prefix__-item __class__">
+<div id="__html_id__" class="__style_prefix__-item __class__">
 	<div class="__style_prefix__-item-ind bx-def-padding-sec">
 	    <div class="__style_prefix__-item-cnt bx-def-padding bx-def-round-corners bx-def-color-bg-sec">
 	    	<div class="__style_prefix__-item-owner bx-def-margin-bottom"> 
@@ -22,23 +22,24 @@
 						<a class="__style_prefix__-date" href="__item_view_url__">__item_date__</a>
 					</div>
 				</div>
+			</div>
+			__content__
+			<div class="__style_prefix__-activity bx-clearfix">
 				<bx_if:show_menu_item_manage>
-					<div class="__style_prefix__-item-menu">
-						__menu_item_manage__
+					<div class="__style_prefix__-item-menu bx-def-margin-left-auto bx-def-margin-top">
 						<div class="__style_prefix__-item-menu-button bx-def-font-large">
-				   			<a href="javascript:void(0)" onclick="javascript:__js_object__.showItemMenu(this);">
-								<i class="sys-icon chevron-down"></i>
+				   			<a href="javascript:void(0)" onclick="javascript:__js_object__.showManageMenu(this, __id__);">
+								<i class="sys-icon ellipsis-h"></i>
 							</a>
 						</div>
 					</div>
 			   	</bx_if:show_menu_item_manage>
+				<bx_if:show_menu_item_actions>
+					<div class="__style_prefix__-item-actions bx-def-margin-left-auto bx-def-margin-top">
+						__menu_item_actions__
+					</div>
+				</bx_if:show_menu_item_actions>
 			</div>
-			__content__
-			<bx_if:show_menu_item_actions>
-				<div class="__style_prefix__-item-actions bx-def-margin-top">
-					__menu_item_actions__
-				</div>
-			</bx_if:show_menu_item_actions>
 			__comments__
 			__votes__
 		</div>

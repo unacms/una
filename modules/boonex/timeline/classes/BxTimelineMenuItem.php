@@ -88,6 +88,22 @@ class BxTimelineMenuItem extends BxTemplMenu
         ));
     }
 
+    public function isVisible()
+    {
+    	if(!isset($this->_aObject['menu_items']))
+			$this->_aObject['menu_items'] = $this->_oQuery->getMenuItems();
+
+    	$bVisible = false;
+    	foreach ($this->_aObject['menu_items'] as $a) {
+    		if((isset($a['active']) && !$a['active']) || (isset($a['visible_for_levels']) && !$this->_isVisible($a)))
+				continue;
+			
+			$bVisible = true;
+			break;
+    	}
+
+    	return $bVisible;
+    }
     /**
      * Check if menu items is visible.
      * @param $a menu item array

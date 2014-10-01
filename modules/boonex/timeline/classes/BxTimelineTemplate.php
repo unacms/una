@@ -57,6 +57,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         return $this->parseHtmlByName('block_view.html', array(
             'style_prefix' => $this->_oConfig->getPrefix('style'),
+        	'html_id' => $this->_oConfig->getHtmlIds('view', 'main'),
             'back' => $sBack,
             'content' => $sContent,
             'load_more' =>  $sLoadMore,
@@ -84,11 +85,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sContent .= $this->_getImagePopup();
 
         return $sContent;
-    }
-
-    public function getItemPopup($iId)
-    {
-        return $this->getItemBlock($iId);
     }
 
     public function getPost(&$aEvent, $aBrowseParams = array())
@@ -438,7 +434,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         list($sAuthorName, $sAuthorUrl, $sAuthorIcon) = $oModule->getUserInfo($aEvent['object_owner_id']);
         $bAuthorIcon = !empty($sAuthorIcon);
 
-        $aTmplVarsMenuItemManage = $this->_getTmplVarsMenuItemManage($aEvent, $aBrowseParams);
         $aTmplVarsMenuItemActions = $this->_getTmplVarsMenuItemActions($aEvent, $aBrowseParams);
 
         $aTmplVarsTimelineOwner = array();
@@ -450,11 +445,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aTmplVars = array (
             'style_prefix' => $sStylePrefix,
             'js_object' => $sJsObject,
+        	'html_id' => $this->_oConfig->getHtmlIds('view', 'item') . $aEvent['id'],
             'class' => $bBrowseItem ? 'bx-tl-view-sizer' : 'bx-tl-grid-sizer',
-            'id' => $aEvent['id'],
             'bx_if:show_menu_item_manage' => array(
-                'condition' => !empty($aTmplVarsMenuItemManage),
-                'content' => $aTmplVarsMenuItemManage
+                'condition' => $oModule->getManageMenuObject($aEvent)->isVisible(),
+                'content' => array(
+        			'style_prefix' => $sStylePrefix,
+		            'js_object' => $sJsObject,
+		        	'id' => $aEvent['id'],
+        		)
             ),
             'bx_if:show_icon' => array(
                 'condition' => $bAuthorIcon,
@@ -492,8 +491,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if(!method_exists($this, $sMethod))
             return '';
 
-           $aTmplVars = $this->$sMethod($aContent, $aBrowseParams);
-           return $this->parseHtmlByName('type_' . $sType . '.html', $aTmplVars);
+		$aTmplVars = $this->$sMethod($aContent, $aBrowseParams);
+		return $this->parseHtmlByName('type_' . $sType . '.html', $aTmplVars);
     }
 
     protected function _getComments($aComments)
@@ -531,24 +530,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     	bx_import('BxTemplFunctions');
     	return BxTemplFunctions::getInstance()->transBox($sViewImagePopupId, $sViewImagePopupContent, true);
-    }
-
-    protected function _getTmplVarsMenuItemManage(&$aEvent)
-    {
-        bx_import('BxDolMenu');
-        $oMenu = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_manage'));
-        $oMenu->setEvent($aEvent);
-
-        bx_import('BxTemplFunctions');
-        $sMenu = BxTemplFunctions::getInstance()->designBoxMenu($oMenu);
-        if(empty($sMenu))
-            return array();
-
-        return array(
-            'style_prefix' => $this->_oConfig->getPrefix('style'),
-            'js_object' => $this->_oConfig->getJsObject('view'),
-            'menu_item_manage' => $sMenu
-        );
     }
 
     protected function _getTmplVarsMenuItemActions(&$aEvent)

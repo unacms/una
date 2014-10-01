@@ -229,7 +229,7 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
             if ($sMenu) {
                 $sId = 'bx-menu-db-' . time() . rand(0, PHP_INT_MAX);
                 $sCode .= BxTemplFunctions::getInstance()->transBox($sId, '<div class="bx-def-padding bx-def-color-bg-block">' . $sMenu . '</div>', true);
-                $aButtonMenu = array ('icon' => 'reorder', 'onclick' => "bx_menu_popup_inline('#" . $sId . "', this)");
+                $aButtonMenu = array ('icon' => 'ellipsis-h', 'onclick' => "bx_menu_popup_inline('#" . $sId . "', this)");
             }
 
         }
