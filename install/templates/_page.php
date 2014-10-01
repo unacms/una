@@ -26,7 +26,7 @@
 <div class="bx-install-page">
 
     <div id="bx-toolbar">
-        <div class="bx-page-wrapper bx-def-padding-sec-left bx-def-padding-sec-right bx-def-page-width">
+        <div class="bx-def-centered bx-def-padding-sec-left bx-def-padding-sec-right bx-def-page-width">
             <div id="bx-toolbar-content" class="bx-clearfix">
                 <div id="bx-menu-toolbar-1-container"></div>
                 <div id="bx-logo-container"><a class="bx-def-font-contrasted"><?=$sTitle; ?></a></div>
@@ -47,7 +47,7 @@
 
     <div id="bx-menu-main-bar-wrapper"></div>
 
-    <div class="bx-page-wrapper bx-def-padding-sec-left bx-def-padding-sec-right bx-def-page-width">
+    <div class="bx-page-wrapper bx-def-centered bx-def-padding-sec-left bx-def-padding-sec-right bx-def-page-width">
         <div id="bx-content-container" class="bx-def-padding-sec-left bx-def-padding-sec-right">
             <div id="bx-content-main" class="bx-def-margin-top">
                 <?=$sCode; ?>
@@ -58,7 +58,7 @@
 </div>
 
 <div class="bx-install-footer">
-    <div class="bx-page-wrapper bx-def-padding-sec-left bx-def-padding-sec-right bx-def-page-width">
+    <div class="bx-def-centered bx-def-padding-sec-left bx-def-padding-sec-right bx-def-page-width">
         <div id="bx-content-container" class="bx-def-padding-sec-left bx-def-padding-sec-right bx-clearfix">
             <div class="bx-install-footer-text">BoonEx - Community Software Experts</div>
             <div class="bx-install-footer-copyright">&copy; BoonEx Pty Ltd</div>
