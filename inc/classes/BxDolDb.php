@@ -451,10 +451,12 @@ class BxDolDb extends BxDol implements iBxDolSingleton
     function setParam($sKey, $mixedValue)
     {
         $sQuery = $this->prepare("UPDATE `sys_options` SET `value` = ? WHERE `name` = ? LIMIT 1", $mixedValue, $sKey);
-        $this->query($sQuery);
+        $bResult = (int)$this->query($sQuery) > 0;
 
         // renew params cache
-        $this->cacheParams(true);
+        $bResult &= $this->cacheParams(true);
+
+        return $bResult;
     }
 
     function listTables()

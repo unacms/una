@@ -91,9 +91,11 @@
 /* --------------- footer */
 
 #bx-footer {
-    margin-bottom:60px;
+    padding-bottom:60px;
 }
-
+#bx-menu-bottom {
+	float: left;
+}
 #bx-footer-copyright {
     float:right;
 }
