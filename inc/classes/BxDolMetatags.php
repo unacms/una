@@ -224,7 +224,8 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
     protected function locationsAddMeta($iId) 
     {
         $aLocation = $this->locationGet($iId);
-        BxDolTemplate::getInstance()->addPageMetaLocation($aLocation['lat'], $aLocation['lng'], $aLocation['country']);
+        if (!empty($aLocation['lat']) && !empty($aLocation['lng']) && !empty($aLocation['country']))
+            BxDolTemplate::getInstance()->addPageMetaLocation($aLocation['lat'], $aLocation['lng'], $aLocation['country']);
     }
 
     /**
