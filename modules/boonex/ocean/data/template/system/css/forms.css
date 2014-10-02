@@ -16,3 +16,19 @@
 .bx-form-input-text {
     border-color:#6097b0;
 }
+
+.bx-form-input-slider:focus,
+.bx-form-input-doublerange:focus,
+.bx-form-input-number:focus,
+.bx-form-input-datepicker:focus,
+.bx-form-input-datetime:focus,
+.bx-form-input-textarea:focus,
+.bx-form-input-password:focus,
+.bx-form-input-text:focus {
+	border-color:#57889e;
+}
+
+/* switcher */
+.bx-switcher-cont {
+	border-color: #6097b0;
+}

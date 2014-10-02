@@ -11,3 +11,25 @@ a {
 .bx-db-menu {
 	line-height: normal;
 }
+
+/* --------------- loading indicator */
+.bx-loading-ajax {
+	background-color:#8cd9ff;
+    background-color:rgba(69, 202, 255, 0.5);
+}
+
+/* --------------- button */
+.bx-btn {
+	background-color: #42c0f1;
+}
+.bx-btn:active,
+.bx-btn:hover {	
+    background-color: #45caff;
+}
+.bx-btn.bx-btn-primary {
+    background-color: #008fb8;
+}
+.bx-btn.bx-btn-primary:hover,
+.bx-btn.bx-btn-primary:active { 
+    background-color: #0098c7;
+}
