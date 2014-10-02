@@ -12,6 +12,16 @@ a {
 	line-height: normal;
 }
 
+/* --------------- popup boxes */
+.bx-popup-border {
+	border-color: #008fb8;
+}
+
+/* --------------- message box */
+.bx-msg-box {
+	background-color:rgba(0, 143, 184, 0.3);
+}
+
 /* --------------- loading indicator */
 .bx-loading-ajax {
 	background-color:#8cd9ff;

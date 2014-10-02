@@ -20,6 +20,8 @@ class BxTemplConfig extends BxBaseConfig
         	'bx-color-sec' => '#fff',
         	'bx-color-hl' => 'rgba(202, 242, 252, 0.2)',
         	'bx-color-active' => 'rgba(202, 242, 252, 0.4)',
+        
+        	'bx-border-color' => '#00a0ce',
         ));
 
         bx_import('BxDolTemplate');
