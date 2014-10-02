@@ -808,11 +808,12 @@ BLAH;
      */
     function genInputFiles(&$aInput, $sInfo = '', $sError = '')
     {
+        bx_import('BxDolUploader');
+
         $sUniqId = genRndPwd (8, false);
         $sUploaders = '';
         $oUploader = null;
         foreach ($aInput['uploaders'] as $sUploaderObject) {
-            bx_import('BxDolUploader');
             $oUploader = BxDolUploader::getObjectInstance($sUploaderObject, $aInput['storage_object'], $sUniqId);
             if (!$oUploader)
                 continue;
@@ -1213,6 +1214,25 @@ BLAH;
                 'timepicker-addon/jquery-ui-sliderAccess.js',
                 'timepicker-addon/i18n/jquery-ui-timepicker-' . $sCalendarLang . '.js',
             );
+
+            foreach ($this->aInputs as $aInput) {
+                if (!isset($aInput['type']) || 'files' != $aInput['type'] /*|| !isset($aInput['uploaders'])*/)
+                    continue;
+   
+                bx_import('BxDolUploader');
+
+                // TODO: get rid of hardcode(remove 2 lines below) and uncomment the code below/above when uploaders will be specified in comments
+                $oUploader = BxDolUploader::getObjectInstance('sys_cmts_simple', 'sys_cmts_images', '');
+                $oUploader->addCssJs();
+/* 
+                foreach ($aInput['uploaders'] as $sUploaderObject) {
+                    $oUploader = BxDolUploader::getObjectInstance($sUploaderObject, $aInput['storage_object'], '');
+                    if ($oUploader)
+                        $oUploader->addCssJs();
+                }
+*/
+            }
+                    
 
             $this->oTemplate->addJs($aJs);
             $this->oTemplate->addCss($aCss);

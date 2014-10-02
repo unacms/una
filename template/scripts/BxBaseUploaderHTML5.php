@@ -27,16 +27,12 @@ class BxBaseUploaderHTML5 extends BxDolUploader
     }
 
     /**
-     * Show uploader button.
-     * @return HTML string
-     */
-    public function getUploaderButton($sGhostTemplate, $isMultiple = true, $aParams = array())
+     * add necessary js, css files and js translations
+     */ 
+    public function addCssJs ()
     {
-        $s = parent::getUploaderButton($sGhostTemplate, $isMultiple, $aParams);
-
+        parent::addCssJs ();
         $this->_oTemplate->addJs('fileuploader.js');
-
-        return $s;
     }
 
     /**

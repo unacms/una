@@ -252,14 +252,7 @@ abstract class BxDolUploader extends BxDol
      */
     public function getUploaderButton($mixedGhostTemplate, $isMultiple = true, $aParams = array())
     {
-        $this->_oTemplate->addCss('uploaders.css');
-
-        $this->_oTemplate->addJs('BxDolUploader.js');
-        $this->_oTemplate->addJsTranslation(array(
-            '_sys_uploader_confirm_leaving_page',
-            '_sys_uploader_confirm_close_popup',
-            '_sys_uploader_upload_canceled',
-        ));
+        $this->addCssJs ();
 
         $sJsValue = '';
         if (is_array($mixedGhostTemplate)) {
@@ -283,6 +276,20 @@ abstract class BxDolUploader extends BxDol
         );
         $aParams = array_merge($aParamsDefault, $aParams);
         return $this->_oTemplate->parseHtmlByName($this->_sButtonTemplate, $aParams);
+    }
+
+    /**
+     * add necessary js, css files and js translations
+     */ 
+    public function addCssJs ()
+    {
+        $this->_oTemplate->addCss('uploaders.css');
+        $this->_oTemplate->addJs('BxDolUploader.js');
+        $this->_oTemplate->addJsTranslation(array(
+            '_sys_uploader_confirm_leaving_page',
+            '_sys_uploader_confirm_close_popup',
+            '_sys_uploader_upload_canceled',
+        ));
     }
 
     /**
