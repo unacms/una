@@ -93,9 +93,9 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
     }
 
-    public function serviceBrowseRecentProfiles ()
+    public function serviceBrowseRecentProfiles ($bDisplayEmptyMsg = false)
     {
-        return $this->_serviceBrowse ('recent');
+        return $this->_serviceBrowse ('recent', false, BX_DB_PADDING_DEF, $bDisplayEmptyMsg);
     }
 
     public function serviceBrowseConnections ($iProfileId, $sObjectConnections = 'sys_profiles_friends', $sConnectionsType = 'content', $iMutual = false, $iDesignBox = BX_DB_PADDING_DEF, $iProfileId2 = 0)
