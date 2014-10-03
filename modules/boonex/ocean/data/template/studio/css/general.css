@@ -16,3 +16,10 @@ div.bx-std-page-caption {
   	border-bottom: 1px solid #4c4c4c;
 	box-shadow: 0px 1px 3px #888;
 }
+
+/**
+ * Page Menu (Left Side)
+ */
+div.bx-menu-tab-active {
+	background-color: #b9e2f6;
+}
