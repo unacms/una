@@ -14,7 +14,10 @@ a {
 
 /* --------------- popup boxes */
 .bx-popup-border {
-	border-color: #008fb8;
+	border-color: #0084b4;
+}
+.bx-popup-header {
+    background-color: #0084b4;
 }
 
 /* --------------- message box */
