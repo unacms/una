@@ -62,7 +62,7 @@ class BxDolModuleTemplate extends BxDolTemplate
 
     function _addFiles($oTemplate, $sFuncAddFiles, $sFuncAddLocation, $sFuncRemoveLocation, $sPath, $mixedFiles, $bDynamic = false, $bSearchInModule = true)
     {
-        $sLocationKey = $bSearchInModule ? $oTemplate->$sFuncAddLocation($this->_oConfig->getUri(), $this->_oConfig->getHomePath() . $sPath, $this->_oConfig->getHomeUrl() . $sPath) : '';
+        $sLocationKey = $bSearchInModule ? $oTemplate->$sFuncAddLocation($this->_oConfig->getName(), $this->_oConfig->getHomePath() . $sPath, $this->_oConfig->getHomeUrl() . $sPath) : '';
         $mixedResult = $oTemplate->$sFuncAddFiles($mixedFiles, $bDynamic);
         if($sLocationKey != '')
             $oTemplate->$sFuncRemoveLocation($sLocationKey);

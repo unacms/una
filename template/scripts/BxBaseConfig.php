@@ -35,7 +35,7 @@ class BxBaseConfig extends BxDol implements iBxDolSingleton
 
             'bx-color-page' => '#fff',
             'bx-color-block' => '#fff',
-            'bx-color-box' => '#fff',
+            'bx-color-box' => '#f2f2f2',
             'bx-color-sec' => '#f2f2f2',
             'bx-color-hl' => 'rgba(196, 248, 156, 0.2)',
             'bx-color-active' => 'rgba(196, 248, 156, 0.4)',
