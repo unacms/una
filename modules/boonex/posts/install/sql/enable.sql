@@ -247,6 +247,6 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `ClassName`, `ClassPath
 ('bx_posts_cmts', '_bx_posts_cmts', 'BxPostsCmtsSearchResult', 'modules/boonex/posts/classes/BxPostsCmtsSearchResult.php');
 
 -- METATAGS
-INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `table_pictures`, `override_class_name`, `override_class_file`) VALUES
-('bx_posts', 'bx_posts_meta_keywords', 'bx_posts_meta_locations', '', '', '', '');
+INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
+('bx_posts', 'bx_posts_meta_keywords', 'bx_posts_meta_locations', '', '', '');
 
