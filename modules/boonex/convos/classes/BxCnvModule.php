@@ -143,35 +143,29 @@ class BxCnvModule extends BxBaseModTextModule
      */
     public function actionFolder ($iFolderId)
     {
-        // TODO: add to page builder
-        bx_import('BxDolGrid');
-        $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->CNF['OBJECT_GRID']);
-        if (!$oGrid){
-            $this->_oTemplate->displayErrorOccured();
-            exit;
-        }
+        $oTemplate = BxDolTemplate::getInstance();
 
+        bx_import('BxDolPage');
         $aFolder = $this->_oDb->getFolder((int)$iFolderId);
-        if (!$aFolder) {
+        $oPage = BxDolPage::getObjectInstance('bx_convos_home');
+
+        if (!$aFolder || !$oPage) {
             $this->_oTemplate->displayPageNotFound();
             exit;
         }
 
-        $this->setModuleSubmenu ((int)$iFolderId);
-
-        // TODO: incorporate markers into custom class, so replace will work in search and so on
-        $oGrid->addMarkers(array(
+        // add replaceable markers
+        $oPage->addMarkers(array(
             'folder_id' => (int)$iFolderId,
-            'profile_id' => bx_get_logged_profile_id(),
+            'folder' => _t($aFolder['name']),
         ));
 
-        // TODO: refactor below
-        $oTemplate = BxDolTemplate::getInstance();
-        $oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);
-        $oTemplate->setPageHeader (str_replace('{folder}', _t($aFolder['name']), _t('_bx_cnv_page_title_folder')));
-        $oTemplate->setPageContent ('page_main_code', $oGrid->getCode());
-        $oTemplate->getPageCode();
+        $s = $oPage->getCode();
 
+        $this->_oTemplate = BxDolTemplate::getInstance();
+        $this->_oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);
+        $this->_oTemplate->setPageContent ('page_main_code', $s);
+        $this->_oTemplate->getPageCode();
     }
 
     /**
@@ -185,6 +179,28 @@ class BxCnvModule extends BxBaseModTextModule
 
         header('Content-Type:text/javascript; charset=utf-8');
         echo(json_encode($a));
+    }
+
+    public function serviceConversationsInFolder ($iFolderId = BX_CNV_FOLDER_INBOX)
+    {
+        bx_import('BxDolGrid');
+        $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->CNF['OBJECT_GRID']);
+        if (!$oGrid)
+            return false;
+
+        $aFolder = $this->_oDb->getFolder((int)$iFolderId);
+        if (!$aFolder)
+            return false;
+
+        $this->setModuleSubmenu ((int)$iFolderId);
+
+        // TODO: incorporate markers into custom class, so replace will work in search and so on
+        $oGrid->addMarkers(array(
+            'folder_id' => (int)$iFolderId,
+            'profile_id' => bx_get_logged_profile_id(),
+        ));
+
+        return $oGrid->getCode();
     }
 
     public function serviceMessagesPreviews ($iProfileId = 0)

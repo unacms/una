@@ -48,7 +48,7 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_convos_home', '_bx_cnv_page_title_sys_folder', '_bx_cnv_page_title_folder', 'bx_convos', 5, 2147483647, 1, 'convos-folder', 'modules/?r=convos/folder/1', '', '', '', 0, 1, 0, 'BxCnvPageBrowse', 'modules/boonex/convos/classes/BxCnvPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_convos_home', 1, 'bx_convos', '_bx_cnv_page_block_title_folder', 0, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_convos\";s:6:\"method\";s:4:\"home\";}', 0, 1, 0);
+('bx_convos_home', 1, 'bx_convos', '_bx_cnv_page_block_title_folder', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_convos";s:6:"method";s:23:"conversations_in_folder";s:6:"params";a:1:{i:0;s:11:"{folder_id}";}}', 0, 1, 0);
 
 
 -- MENU: actions menu for view entry 
