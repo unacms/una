@@ -5,8 +5,8 @@ function BxTimelineMain() {
 	this.sIdItem = '#bx-timeline-item-';
 
 	this.sClassMasonry = 'bx-tl-masonry';
-	this.sClassActions = 'bx-tl-item-actions';
-	this.sClassComments = 'bx-tl-item-comments';
+	this.sClassItem = 'bx-tl-item';
+	this.sClassItemComments = 'bx-tl-item-comments-holder';
 }
 
 BxTimelineMain.prototype.isMasonry = function() {

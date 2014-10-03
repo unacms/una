@@ -111,10 +111,8 @@ BxTimelineView.prototype.commentItem = function(oLink, sSystem, iId) {
     oData['system'] = sSystem;    
     oData['id'] = iId;
 
-    var oActions = $(oLink).parents('.' + this.sClassActions + ':first');
-    var oComments = oActions.next('.' + this.sClassComments);
-
-    if(oComments.length > 0) {
+    var oComments = $(oLink).parents('.' + this.sClassItem + ':first').find('.' + this.sClassItemComments);
+    if(oComments.children().length > 0) {
     	oComments.bx_anim('toggle', this._sAnimationEffect, this._iAnimationSpeed);
     	return;
     }
@@ -132,7 +130,7 @@ BxTimelineView.prototype.commentItem = function(oLink, sSystem, iId) {
         	if(!oData.content)
         		return;
 
-        	oActions.after($(oData.content).hide()).next('.' + $this.sClassComments + ':hidden').bxTime().bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
+        	oComments.html($(oData.content).hide()).children(':hidden').bxTime().bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
         },
         'json'
     );
