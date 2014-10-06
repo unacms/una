@@ -1,15 +1,5 @@
 @import url(../../../../../../../template/css/general.css);
 
-html,
-body {
-	height: 100%;	
-}
-
-.bx-main {
-	position: relative;
-	min-height: 100%;
-}
-
 /* --------------- toolbar */
 #bx-toolbar {
 	height: 64px;
