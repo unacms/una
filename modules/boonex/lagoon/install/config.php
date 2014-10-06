@@ -14,10 +14,10 @@ $aConfig = array(
      * Main Section.
      */
     'type' => BX_DOL_MODULE_TYPE_TEMPLATE,
-    'name' => 'bx_uni',
-    'title' => 'UNI',
+    'name' => 'bx_lagoon',
+    'title' => 'Lagoon',
     'note' => 'Design template',
-    'version' => '8.0.1.DEV',
+    'version' => '8.0.0.DEV',
     'vendor' => 'Boonex',
 	'help_url' => 'http://feed.boonex.com/?section={module_name}',
 
@@ -28,16 +28,16 @@ $aConfig = array(
     /**
      * 'home_dir' and 'home_uri' - should be unique. Don't use spaces in 'home_uri' and the other special chars.
      */
-    'home_dir' => 'boonex/uni/',
-    'home_uri' => 'uni',
+    'home_dir' => 'boonex/lagoon/',
+    'home_uri' => 'lagoon',
 
-    'db_prefix' => 'bx_uni_',
-    'class_prefix' => 'BxUni',
+    'db_prefix' => 'bx_lagoon_',
+    'class_prefix' => 'BxLagoon',
 
     /**
      * Category for language keys.
      */
-    'language_category' => 'BoonEx UNI',
+    'language_category' => 'BoonEx Lagoon',
 
     /**
      * Installation/Uninstallation Section.

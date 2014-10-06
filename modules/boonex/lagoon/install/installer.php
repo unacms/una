@@ -11,7 +11,7 @@
 
 bx_import('BxDolStudioInstaller');
 
-class BxUniInstaller extends BxDolStudioInstaller
+class BxLagoonInstaller extends BxDolStudioInstaller
 {
     function __construct($aConfig)
     {
