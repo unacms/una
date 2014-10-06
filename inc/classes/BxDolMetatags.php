@@ -83,13 +83,22 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
      * Add all available meta tags to the head section 
      * @return number of successfully added metas
      */
-    public function metaAdd($iId) 
+    public function metaAdd($iId, $mixedImage = false)
     {
         $i = 0;
         foreach ($this->_aMetas as $sMeta) {
             $sFunc = $sMeta . 'AddMeta';
             $i += $this->$sFunc($iId);
         }
+
+        if ($mixedImage && is_array($mixedImage)) {
+            bx_import('BxDolStorage');
+            $oStorage = BxDolStorage::getObjectInstance($mixedImage['object']);
+            $mixedImage = $oStorage ? $oStorage->getFileUrlById($mixedImage['id']) : false;
+        }
+        if ($mixedImage) 
+            BxDolTemplate::getInstance()->addPageMetaImage($mixedImage);
+
         return $i;
     }
 

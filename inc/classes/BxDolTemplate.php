@@ -739,6 +739,15 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
         $this->aPage['location'] = array('lat' => $fLat, 'lng' => $fLng, 'country' => $sCountryCode);
     }
     /**
+     * Set page meta image.
+     *
+     * @param $sImageUrl meta image url
+     */
+    function addPageMetaImage($sImageUrl)
+    {
+        $this->aPage['image'] = $sImageUrl;
+    }
+    /**
      * Returns page meta info, like meta keyword, meta description, location, etc
      */
     function getMetaInfo()
@@ -756,6 +765,13 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
                 <meta name="ICBM" content="' . $this->aPage['location']['lat'] . ';' . $this->aPage['location']['lng'] . '" />
                 <meta name="geo.position" content="' . $this->aPage['location']['lat'] . ';' . $this->aPage['location']['lng'] . '" />
                 <meta name="geo.region" content="' . bx_html_attribute($this->aPage['location']['country']) . '" />';
+
+        if (!empty($this->aPage['image'])) {
+            $sRet .= '<meta property="og:image" content="' . $this->aPage['image'] . '" />';
+        } else {
+            bx_import('BxTemplFunctions');
+            $sRet .= BxTemplFunctions::getInstance()->getMetaIcons();
+        }
 
         return $sRet;
     }
@@ -995,10 +1011,6 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
             case 'page_header_text':
                 if(isset($this->aPage['header_text']))
                     $sRet = bx_process_output($this->aPage['header_text']);
-                break;
-            case 'page_icons':
-                bx_import('BxTemplFunctions');
-                $sRet = BxTemplFunctions::getInstance()->getMetaIcons();
                 break;
             case 'popup_loading':
                 $sContent = $this->parsePageByName('popup_loading.html', array());

@@ -3173,7 +3173,6 @@ CREATE TABLE `sys_objects_metatags` (
   `table_keywords` varchar(255) NOT NULL,
   `table_locations` varchar(255) NOT NULL,
   `table_mentions` varchar(255) NOT NULL,
-  `table_pictures` varchar(255) NOT NULL,
   `override_class_name` varchar(255) NOT NULL,
   `override_class_file` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
