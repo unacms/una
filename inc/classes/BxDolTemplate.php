@@ -9,7 +9,7 @@
 
 ini_set('pcre.backtrack_limit', 1000000);
 
-define('BX_DOL_TEMPLATE_DEFAULT_CODE', 'uni');
+define('BX_DOL_TEMPLATE_DEFAULT_CODE', 'lagoon');
 define('BX_DOL_TEMPLATE_FOLDER_ROOT', 'template');
 
 define('BX_DOL_TEMPLATE_INJECTIONS_CACHE', 'sys_injections.inc');
