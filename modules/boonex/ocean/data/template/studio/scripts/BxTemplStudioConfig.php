@@ -16,6 +16,10 @@ class BxTemplStudioConfig extends BxBaseStudioConfig
     function __construct()
     {
         parent::__construct();
+
+        $this->_aConfig['aLessConfig'] = array_merge($this->_aConfig['aLessConfig'], array(
+        	'bx-border-color-layout' => '#b9e2f6',
+        ));
     }
 }
 
