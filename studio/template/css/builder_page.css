@@ -129,8 +129,8 @@ div.adm-bp-cbf-left {
     left: 0px;
 	width: 179px;
 	height: 300px;
-	border-top: 1px solid #cccccc;
-	border-right: 1px solid #cccccc;
+	border-style: solid;
+	border-width: 1px 1px 0px 0px;
 	overflow-y: auto; 
 }
 div.adm-bp-cbf-left-cnt {}
@@ -139,12 +139,14 @@ div.adm-bp-cbf-right {
 	width: 440px;
 	height: 300px;
 	margin-left: 180px;
-	border-top: 1px solid #cccccc;
+	border-style: solid;
+	border-width: 1px 0px 0px 0px;
 	overflow-y: auto;
 }
 div.adm-bp-cbf-right-cnt {}
 div.adm-bp-cbf-controls {
-	border-top: 1px solid #cccccc;
+	border-style: solid;
+	border-width: 1px 0px 0px 0px;
 }
 div.adm-bp-cbf-counter {
 	position: relative;
@@ -193,8 +195,8 @@ div.adm-bp-epf-left {
 	left: 0px;
     width: 179px;
     height: 310px;
-	border-top: 1px solid #cccccc;
-    border-right: 1px solid #cccccc;
+	border-style: solid;
+	border-width: 1px 1px 0px 0px;
     overflow-y: auto; 
 }
 div.adm-bp-epf-left-cnt {}
@@ -203,12 +205,14 @@ div.adm-bp-epf-right {
     width: 380px;
     height: 310px;
 	margin-left: 180px;
-	border-top: 1px solid #cccccc;
+	border-style: solid;
+	border-width: 1px 0px 0px 0px;
     overflow-y: auto;
 }
 div.adm-bp-epf-right-cnt {}
 div.adm-bp-epf-controls {
-    border-top: 1px solid #cccccc;
+	border-style: solid;
+	border-width: 1px 0px 0px 0px;
 }
 div#adm-bp-settings-group-layout {
     margin: 0px -10px;
