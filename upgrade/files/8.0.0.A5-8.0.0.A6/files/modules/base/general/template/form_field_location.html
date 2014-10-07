@@ -1,0 +1,77 @@
+
+<div class="bx-form-input-location-cont bx-clearfix">
+    __input__
+    <div id="__id_status__" class="bx-def-margin-left">__location_string__</div>
+</div>
+
+<input type="hidden" name="__name___lat" value="__lat__" />
+<input type="hidden" name="__name___lng" value="__lng__" />
+<input type="hidden" name="__name___country" value="__country__" />
+<input type="hidden" name="__name___state" value="__state__" />
+<input type="hidden" name="__name___city" value="__city__" />
+<input type="hidden" name="__name___zip" value="__zip__" />
+
+<script>
+    $('input[name=__name__]').on('change', function () {
+        var oMap = {
+            '__name___lat': '', 
+            '__name___lng': '', 
+            '__name___city': 'locality', 
+            '__name___state': 'administrative_area_level_1', 
+            '__name___country': 'country',  
+            '__name___zip': 'postal_code'
+        };
+
+        var callbackOnLocationReset = function (error) {
+            var sKey;
+            for (sKey in oMap) 
+                $('[name="' + sKey + '"]').val('');
+            $('#__id_status__').html("<bx_text_js:_sys_location_undefined />");
+        }
+
+        var callbackOnLocationSucess = function (position) {
+            $('[name="__name___lat"]').val(position.coords.latitude);
+            $('[name="__name___lng"]').val(position.coords.longitude);
+
+            var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            var geocoder = new google.maps.Geocoder();
+
+            geocoder.geocode({'latLng': latlng}, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {                
+                    var i, sKey, sCountry, sCity, o = results[0]['address_components'];
+                    for (i in o) {
+                        for (sKey in oMap) {
+                            if (o[i].types.indexOf(oMap[sKey]) > -1)
+                                $('[name="' + sKey + '"]').val(o[i].short_name);
+                            
+                            if (o[i].types.indexOf('locality') > -1)
+                                sCity = o[i].short_name;
+                            else if (o[i].types.indexOf('country') > -1)
+                                sCountry = o[i].long_name;
+                        }
+                    }
+                    if ('undefined' != typeof(sCity) && sCity.length)
+                        $('#__id_status__').html(sCity + ", " + sCountry);
+                    else
+                        $('#__id_status__').html(sCountry);
+                } 
+                else {
+                    $('#__id_status__').html(status);
+                }
+            });
+
+        }
+
+        if ($(this).is(':checked')) {
+            $('#__id_status__').html('<bx_text_js:_sys_location_determining />');
+            if (navigator.geolocation)
+                navigator.geolocation.getCurrentPosition(callbackOnLocationSucess, callbackOnLocationReset);
+            else
+                $('#__id_status__').html('<bx_text_js:_sys_location_geolocation_not_supported_by_browser />');
+        } else {
+            callbackOnLocationReset();
+        }
+    });
+
+</script>
+

@@ -1,0 +1,15 @@
+
+@import url(../../../general/template/css/forms.css);
+
+.bx-uploader-ghost .bx-base-text-icon-wrapper {
+    float:left;
+}
+
+.bx-base-text-uploader-ghost input.bx-form-input-text {
+    width:300px;
+}
+
+.bx-base-text-use-as-thumb input,
+.bx-base-text-use-as-thumb label {
+    vertical-align:middle;
+}

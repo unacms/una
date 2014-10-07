@@ -1,0 +1,68 @@
+
+@import url(../../../general/template/css/main.css);
+
+/* unit */
+
+.bx-base-text-unit:first-child h1 {
+    padding-top:0;
+}
+
+.bx-base-text-unit h1 {
+    margin:0;
+}
+
+.bx-base-text-unit .sys-icon {
+    vertical-align:middle;
+}
+
+.bx-base-text-unit-no-thumb,
+.bx-base-text-unit-thumb {
+    display:block;
+    overflow:hidden;
+}
+
+.bx-base-text-unit-summary p {
+    margin:0;
+}
+
+.bx-base-text-unit-info {
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.bx-base-text-unit-gallery .bx-base-text-unit-no-thumb,
+.bx-base-text-unit-gallery .bx-base-text-unit-thumb {
+    float:none;
+    line-height:1.25em;
+}
+
+.bx-base-text-unit-gallery h2 {
+    line-height:1.25em;
+    max-height:3.75em;
+    overflow:hidden; 
+}
+
+.bx-base-text-wrapper {
+    margin-bottom:0;
+}
+
+/* view page */
+
+.bx-base-text-entity-content p:first-child,
+.bx-base-text-entity-content h1:first-child {
+    margin-top:0;
+}
+
+.bx-base-text-entity-content p:last-child,
+.bx-base-text-entity-content h1:last-child {
+    margin-bottom:0;
+}
+
+.bx-base-text-entity-share .bx-vote,
+.bx-base-text-entity-share .bx-tl-share,
+.bx-base-text-entity-share .bx-social-sharing {
+	position: relative;
+	float: left;
+}
+
