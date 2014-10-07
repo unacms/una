@@ -107,7 +107,7 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
                 $oDb->insertModuleTrack($aModuleInfo['id'], $aFile);
 
             //--- Remove update pckage ---//
-            $this->delete();
+            $this->delete($aParams);
         }
 
         return $aResult;
