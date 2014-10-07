@@ -1,0 +1,47 @@
+<div id="__html_id__" class="__style_prefix__-item __class__">
+	<div class="__style_prefix__-item-ind bx-def-padding-sec">
+	    <div class="__style_prefix__-item-cnt bx-def-padding bx-def-round-corners bx-def-color-bg-box">
+	    	<div class="__style_prefix__-item-owner bx-def-margin-bottom"> 
+		       	<div class="__style_prefix__-owner-avatar bx-def-thumb bx-def-thumb-size">
+					<bx_if:show_icon>
+						<img class="bx-def-thumb bx-def-thumb-size" src="__author_icon__" />
+					</bx_if:show_icon>
+					<bx_if:show_icon_empty>
+						<i class="sys-icon user"></i>
+					</bx_if:show_icon_empty>
+				</div>
+				<div class="__style_prefix__-owner-info bx-def-thumb-size-min-height bx-def-thumb-size-left-indent">
+					<div class="__style_prefix__-owner-name">
+						<a href="__item_owner_url__" class="__style_prefix__-owner-name">__item_owner_name__</a>
+			            <bx_if:show_timeline_owner>
+				        	<i class="sys-icon caret-right"></i>
+				        	<a href="__owner_url__" class="__style_prefix__-timeline-owner-name">__owner_username__</a>
+				        </bx_if:show_timeline_owner>
+					</div>
+					<div class="__style_prefix__-item-info bx-def-margin-sec-top">
+						<a class="__style_prefix__-date" href="__item_view_url__">__item_date__</a>
+					</div>
+				</div>
+			</div>
+			__content__
+			<div class="__style_prefix__-activity bx-clearfix">
+				<bx_if:show_menu_item_manage>
+					<div class="__style_prefix__-item-menu bx-def-margin-left-auto bx-def-margin-top">
+						<div class="__style_prefix__-item-menu-button bx-def-font-large">
+				   			<a href="javascript:void(0)" onclick="javascript:__js_object__.showManageMenu(this, __id__);">
+								<i class="sys-icon ellipsis-h"></i>
+							</a>
+						</div>
+					</div>
+			   	</bx_if:show_menu_item_manage>
+				<bx_if:show_menu_item_actions>
+					<div class="__style_prefix__-item-actions bx-def-margin-left-auto bx-def-margin-top">
+						__menu_item_actions__
+					</div>
+				</bx_if:show_menu_item_actions>
+			</div>
+			<div class="__style_prefix__-item-comments-holder">__comments__</div>
+			__votes__
+		</div>
+	</div>
+</div>

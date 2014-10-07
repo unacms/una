@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_bx_timeline_cmts"><![CDATA[Timelines' Comments]]></string_add>
+	<string_add name="_bx_timeline_page_block_title_browse_cmts"><![CDATA[Timelines' Comments]]></string_add>
+	<string_add name="_bx_timeline_txt_sample_comment_single"><![CDATA[post's comment]]></string_add>
+</resources>

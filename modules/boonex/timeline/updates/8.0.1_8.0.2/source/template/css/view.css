@@ -1,0 +1,125 @@
+/*--- General section ---*/
+
+
+/*--- View Block Style ---*/
+div.bx-tl-view {
+	position: relative;
+}
+.bx-tl-grid-sizer {
+	width: 100%;
+}
+.bx-tl-view-sizer {
+	width: 100%;
+}
+.bx-tl-view-sizer div.bx-tl-item-ind {
+	padding: 0px;
+}
+
+
+/*--- Back Style ---*/
+
+
+/*--- Load More Style ---*/
+div.bx-tl-load-more {}
+
+div.bx-tl-jump-to {
+	position: relative;
+	float: right;
+	line-height: 36px;
+	line-height: 2.25rem;
+}
+
+
+/*--- Item Style ---*/
+div.bx-tl-item {
+	position: relative;
+}
+div.bx-tl-item-ind {
+	position: relative;
+}
+div.bx-tl-item-cnt {
+	position: relative;
+	overflow: hidden;
+}
+
+/*+++ Item Menu +++*/
+div.bx-tl-item-menu {
+	float: left;
+}
+div.bx-tl-item-menu .bx-menu-ver li {
+	white-space: nowrap;
+}
+div.bx-tl-item-menu-button {
+	width: 20px;
+	width: 1.25rem;
+	height: 20px;
+	height: 1.25rem;
+	line-height: 20px;
+	line-height: 1.25rem;
+	text-align: center;
+}
+
+div.bx-tl-item-menu-button i.sys-icon {
+	display: inline-block;
+}
+
+/*+++ Item Owner +++*/
+div.bx-tl-item-owner {
+	position: relative;
+}
+div.bx-tl-owner-avatar {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+/*+++ Item Text +++*/
+div.bx-tl-item-text {}
+span.bx-tl-content-see-more a {
+	font-weight: bold;
+}
+
+/*+++ Item Image +++*/
+div.bx-tl-item-image {
+	text-align: center;
+	overflow: hidden;
+}
+div.bx-tl-item-image img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+/*+++ Item Shared +++*/
+div.bx-tl-shared div.bx-tl-item-text {
+	padding-left: 5px;
+	padding-left: 0.3rem;
+
+	border-left: 1px solid #999999;
+	border-left: 0.07rem solid #999999;
+}
+div.bx-tl-shared div.bx-tl-title {
+	font-size: 1.0rem;
+}
+div.bx-tl-shared div.bx-tl-title a {
+	color: #999999;
+}
+div.bx-tl-shared div.bx-tl-content {
+	font-size: 0.875rem;
+	color: #999999;
+}
+
+/*+++ Item Actions +++*/
+div.bx-tl-item-actions {
+	float: left;
+}
+
+
+/*--- Empty Style ---*/
+div.bx-tl-empty div.bx-msg-box-container {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+
+/*--- Comments Styles ---*/
+div.bx-tl-comments {}
