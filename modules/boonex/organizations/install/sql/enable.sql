@@ -32,7 +32,7 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 ('bx_organizations_view_profile', 'view-organization-profile', '_bx_orgs_page_title_sys_view_profile', '_bx_orgs_page_title_view_profile', 'bx_organizations', 10, 2147483647, 1, 'page.php?i=view-organization-profile', '', '', '', 0, 1, 0, 'BxOrgsPageEntry', 'modules/boonex/organizations/classes/BxOrgsPageEntry.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_organizations_view_profile', 1, 'bx_organizations', '_bx_orgs_page_block_title_profile_actions', 0, 2147483647, 'service', 'a:2:{s:6:\"module\";s:16:\"bx_organizations\";s:6:\"method\";s:14:\"entity_actions\";}', 0, 0, 0),
+('bx_organizations_view_profile', 1, 'bx_organizations', '_bx_orgs_page_block_title_profile_actions', 3, 2147483647, 'service', 'a:2:{s:6:\"module\";s:16:\"bx_organizations\";s:6:\"method\";s:14:\"entity_actions\";}', 0, 0, 0),
 ('bx_organizations_view_profile', 1, 'bx_organizations', '_bx_orgs_page_block_title_profile_cover', 3, 2147483647, 'service', 'a:2:{s:6:\"module\";s:16:\"bx_organizations\";s:6:\"method\";s:13:\"profile_cover\";}', 0, 0, 1),
 ('bx_organizations_view_profile', 2, 'bx_organizations', '_bx_orgs_page_block_title_profile_info', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:16:\"bx_organizations\";s:6:\"method\";s:11:\"entity_info\";}', 0, 0, 0),
 ('bx_organizations_view_profile', 3, 'bx_organizations', '_bx_orgs_page_block_title_profile_friends', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:16:\"bx_organizations\";s:6:\"method\";s:15:\"profile_friends\";}', 0, 0, 0);
