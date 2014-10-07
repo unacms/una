@@ -1038,7 +1038,7 @@
 	<string name="_adm_prm_err_level_icon_image"><![CDATA[Cannot upload icon: ]]></string>
 	<string name="_adm_prm_err_level_icon_image_remove"><![CDATA[Cannot remove icon]]></string>
 	<string name="_adm_prm_err_level_id"><![CDATA[Membership levels limit is reached.]]></string>
-	<string name="_adm_prm_err_level_name"><![CDATA[You need to enter name(3, 100) for membership level]]></string>
+	<string name="_adm_prm_err_level_name"><![CDATA[You need to enter name(3, 100) for all languages]]></string>
 	<string name="_adm_prm_err_level_quota_max_file_size"><![CDATA[You need to enter a numeric value, leave 0 for unlimited]]></string>
 	<string name="_adm_prm_err_level_quota_number"><![CDATA[You need to enter a numeric value, leave 0 for unlimited]]></string>
 	<string name="_adm_prm_err_level_quota_size"><![CDATA[You need to enter a numeric value, leave 0 for unlimited]]></string>
