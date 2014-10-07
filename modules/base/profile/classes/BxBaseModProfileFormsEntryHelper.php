@@ -92,7 +92,7 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
 
         // set created profile some default membership
         bx_import('BxDolAcl');
-        $iAclLevel = getParam($CNF['PARAM_DEFAULT_ACL_LEVEL']);
+        $iAclLevel = isAdmin() ? MEMBERSHIP_ID_ADMINISTRATOR : getParam($CNF['PARAM_DEFAULT_ACL_LEVEL']);
         BxDolAcl::getInstance()->setMembership($iProfileId, $iAclLevel, 0, true);
 
         // alert
