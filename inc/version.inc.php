@@ -7,6 +7,6 @@
  * @{
  */
 
-define('BX_DOL_VERSION', '8.0.0-A6'); ///< Dolphin system files version, for DB version @see bx_get_ver, DB and files version must match
+define('BX_DOL_VERSION', '8.0.0-DEV6'); ///< Dolphin system files version, for DB version @see bx_get_ver, DB and files version must match
 
 /** @} */
