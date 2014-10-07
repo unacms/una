@@ -18,7 +18,7 @@ class BxTemplConfig extends BxBaseConfig
         $this->_aConfig['aLessConfig'] = array_merge($this->_aConfig['aLessConfig'], array(
         	'bx-color-page' => '#b9e2f6',
         	'bx-color-block' => '#fff',
-        	'bx-color-box' => '#b9e2f6',
+        	'bx-color-box' => '#daf8ff',
         	'bx-color-sec' => '#fff',
         	'bx-color-hl' => 'rgba(202, 242, 252, 0.2)',
         	'bx-color-active' => 'rgba(202, 242, 252, 0.4)',

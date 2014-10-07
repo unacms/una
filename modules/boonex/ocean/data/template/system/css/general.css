@@ -12,11 +12,6 @@
   	border-bottom: 1px solid #4c4c4c;
 	box-shadow: 0px 1px 3px #888;
 }
-#bx-menu-toolbar-1-container,
-#bx-menu-toolbar-2-container {
-    top: 8px;
-    top: 0.5rem;
-}
 #bx-logo-container {
 	height: 64px;
     height: 4rem;
