@@ -131,9 +131,10 @@ class BxDolInstallerUtils extends BxDolIO
      */
     public function hashFiles($sPath, &$aFiles)
     {
+        $aExcludes = array('.', '..', 'error_log', 'php.ini', '.DS_Store', 'Thumbs.db');
         if (file_exists($sPath) && is_dir($sPath) && ($rSource = opendir($sPath))) {
             while (($sFile = readdir($rSource)) !== false) {
-                if ($sFile == '.' || $sFile =='..' || $sFile[0] == '.')
+                if ('.' == $sFile[0] || in_array($sFile, $aExcludes))
                     continue;
                 
                 if (in_array($this->filePathWithoutBase($sPath . $sFile), $this->_aNonHashableFiles))
