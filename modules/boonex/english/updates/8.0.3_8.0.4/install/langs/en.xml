@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_adm_err_modules_module_not_match"><![CDATA[Update is not suitable for this module.]]></string_add>
+	<string_add name="_adm_err_modules_wrong_version_script_update"><![CDATA[The new version of {0} module isn't compatible with your version of Dolphin. Please upgrade Dolphin first (Dashboard > Version) and then try to upgrade the module.]]></string_add>
+	<string_add name="_adm_str_msg_download_and_install_scheduled"><![CDATA[Download and subsequent installation were scheduled. It may take a few minutes.]]></string_add>
+	<string_add name="_adm_str_msg_download_and_install_successfully"><![CDATA[Download and subsequent installation were successfully finished.]]></string_add>
+	<string_add name="_adm_txt_modules_check_module_matches"><![CDATA[Check module to match:]]></string_add>
+	<string_add name="_sys_acl_action_account"><![CDATA[You didn't created any profiles, so you can't '{1}'.]]></string_add>
+	<string_add name="_sys_et_txt_body_bg_operation_failed"><![CDATA[<bx_include_auto:_email_header.html />
+<p>Background operation failed with the following message.</p>
+{conclusion}
+<bx_include_auto:_email_footer.html />]]></string_add>
+	<string_add name="_sys_et_txt_name_bg_operation_failed"><![CDATA[Background operation failed]]></string_add>
+	<string_add name="_sys_et_txt_subject_bg_operation_failed"><![CDATA[Background operation failed]]></string_add>
+	<string_add name="_sys_form_input_sys_location"><![CDATA[Location]]></string_add>
+	<string_add name="_sys_form_input_location"><![CDATA[Location]]></string_add>
+	<string_add name="_sys_location_country"><![CDATA[ &mdash; in {0}]]></string_add>
+	<string_add name="_sys_location_country_city"><![CDATA[ &mdash; in {1}, {0}]]></string_add>
+	<string_add name="_sys_location_determining"><![CDATA[Determining location...]]></string_add>
+	<string_add name="_sys_location_geolocation_not_supported_by_browser"><![CDATA[Geolocation is not supported by this browser]]></string_add>
+	<string_add name="_sys_location_undefined"><![CDATA[No location]]></string_add>
+	<string_add name="_vote_do_unlike"><![CDATA[No thank you]]></string_add>
+
+	<string_upd name="__Burma"><![CDATA[Burma]]></string_upd>
+	<string_upd name="__Cote d'Ivoire"><![CDATA[Cote d'Ivoire]]></string_upd>
+	<string_upd name="__Falkland Islands (Islas Malvinas)"><![CDATA[Falkland Islands (Islas Malvinas)]]></string_upd>
+	<string_upd name="__Holy See (Vatican City)"><![CDATA[Holy See (Vatican City)]]></string_upd>
+	<string_upd name="__Hong Kong (SAR)"><![CDATA[Hong Kong (SAR)]]></string_upd>
+	<string_upd name="_adm_mod_msg_process_operation_scheduled"><![CDATA[Operation was scheduled and will be performed in a few minutes. Please wait.]]></string_upd>	
+	<string_upd name="_adm_str_msg_download_scheduled"><![CDATA[Download was scheduled. In a few minutes downloaded package will be available to install via Store -> Downloaded.]]></string_upd>
+	<string_upd name="_sys_et_txt_body_upgraded_module"><![CDATA[<b>{0}</b> module: up to {1} version.<br />]]></string_upd>
+	<string_upd name="_adm_bp_err_nothing_changed"><![CDATA[Nothing was changed or an error occurred.]]></string_upd>
+	<string_upd name="_adm_err_modules_process_action_failed"><![CDATA[An error occurred. Contact with module's vendor]]></string_upd>
+	<string_upd name="_adm_form_btn_fields_visible"><![CDATA[Visible For]]></string_upd>
+	<string_upd name="_adm_nav_btn_items_gl_visible"><![CDATA[Visible For]]></string_upd>
+	<string_upd name="_adm_nav_err_sets_delete_used"><![CDATA[Set can't be deleted because it is in use]]></string_upd>
+	<string_upd name="_adm_nav_txt_items_gl_visible"><![CDATA[Visible For]]></string_upd>
+	<string_upd name="_adm_prm_err_level_quota_max_file_size"><![CDATA[You need to enter a numeric value, leave 0 for unlimited]]></string_upd>
+	<string_upd name="_adm_prm_err_level_quota_number"><![CDATA[You need to enter a numeric value, leave 0 for unlimited]]></string_upd>
+	<string_upd name="_adm_prm_err_level_quota_size"><![CDATA[You need to enter a numeric value, leave 0 for unlimited]]></string_upd>
+	<string_upd name="_adm_stg_cpt_option_sys_security_form_token_enable"><![CDATA[Enable CSRF token in forms]]></string_upd>
+	<string_upd name="_adm_stg_cpt_option_sys_security_form_token_lifetime"><![CDATA[CSRF token lifetime in seconds(0 - do not track time)]]></string_upd>
+	<string_upd name="_adm_str_err_download_failed"><![CDATA[Download failed. Please report.]]></string_upd>
+	<string_upd name="_adm_str_msg_download_successfully"><![CDATA[Download was successfully finished. You may install it via Store -> Downloaded.]]></string_upd>
+	<string_upd name="_adm_txt_modules_recompile_global_paramaters"><![CDATA[Recompiling global parameters:]]></string_upd>
+	<string_upd name="_sys_acl_action_create_account_desc"><![CDATA[It make sense for guests only, you can temporary disable it or set limit by time for example.]]></string_upd>
+	<string_upd name="_sys_acl_action_suspended"><![CDATA[You can't '{1}' because your profile was suspended, if you don't know why - try to send message to <a href="mailto:{7}">administrator</a>.]]></string_upd>
+	<string_upd name="_sys_conn_msg_success"><![CDATA[Operation has beed successfully completed]]></string_upd>
+	<string_upd name="_sys_et_txt_body_upgrade_modules_success"><![CDATA[<bx_include_auto:_email_header.html />
+<p>The following modules were successfully upgraded.</p>
+{conclusion}
+<bx_include_auto:_email_footer.html />]]></string_upd>
+	<string_upd name="_sys_format_size_gb"><![CDATA[{0} GB]]></string_upd>
+	<string_upd name="_sys_format_size_kb"><![CDATA[{0} KB]]></string_upd>
+	<string_upd name="_sys_format_size_mb"><![CDATA[{0} MB]]></string_upd>
+	<string_upd name="_sys_format_size_tb"><![CDATA[{0} TB]]></string_upd>
+	<string_upd name="_sys_storage_err_engine_add"><![CDATA[error occurred]]></string_upd>
+	<string_upd name="_sys_storage_err_engine_get"><![CDATA[error occurred]]></string_upd>
+	<string_upd name="_sys_txt_account_profile_context_changed_success"><![CDATA[Current profile has been successfully changed to: <b>{0}</b>]]></string_upd>
+	<string_upd name="_sys_txt_change_image"><![CDATA[Change Picture]]></string_upd>
+	<string_upd name="_sys_txt_confirm_email_error_occured"><![CDATA[Error occurred, please try to login to your account and resend verification email.]]></string_upd>
+	<string_upd name="_sys_txt_confirm_email_sent_failed"><![CDATA[Error occurred, please report error to site administrator.]]></string_upd>
+	<string_upd name="_sys_txt_error_occured"><![CDATA[Error Occurred]]></string_upd>
+	<string_upd name="_sys_txt_forgot_pasword_error_occured"><![CDATA[Error occurred, please report error to the site administrator.]]></string_upd>
+	<string_upd name="_sys_txt_reset_pasword_email_send_failed"><![CDATA[Your new password is <b>{0}</b>, please make sure to save it somewhere because we wasn't able to send it to your email. You can change it to any other password after first login.]]></string_upd>
+	<string_upd name="_sys_txt_reset_pasword_error_occured"><![CDATA[Error occurred, please <a href="{0}">try again</a>.]]></string_upd>
+	<string_upd name="_sys_txt_unsubscribe_error_occured"><![CDATA[Error occurred, please login to your account and update email references there or contact site administrator to unsubscribe you manually.]]></string_upd>
+	<string_upd name="_sys_upgrade_files_checksum_failed"><![CDATA[Can't apply upgrade because the following files were modified: {0}]]></string_upd>
+	<string_upd name="_sys_upgrade_files_checksum_failed_too_many"><![CDATA[Can't apply upgrade because too many files({0}%) were modified]]></string_upd>
+	<string_upd name="_adm_str_txt_pv_version_mask"><![CDATA[{0} ({1} is available)]]></string_upd>
+	<string_upd name="_sys_inst_conf_desc_oauth_key_secret"><![CDATA[<a target="_blank" href="http://www.boonex.com/oauth/get_consumer">Get BoonEx key&secret</a>]]></string_upd>
+	<string_upd name="_sys_inst_conf_field_oauth_key"><![CDATA[BoonEx key]]></string_upd>
+	<string_upd name="_sys_inst_conf_field_oauth_secret"><![CDATA[BoonEx secret]]></string_upd>
+	<string_upd name="_sys_inst_conf_section_link_with_market"><![CDATA[Link with BoonEx market]]></string_upd>
+	<string_upd name="_adm_prm_err_level_name"><![CDATA[You need to enter name(3, 100) for all languages]]></string_upd>
+	<string_upd name="_adm_str_msg_download_scheduled"><![CDATA[Download was scheduled. In a few minutes downloaded package will be available to install via Extensions -> Downloaded.]]></string_upd>
+	<string_upd name="_adm_str_msg_download_successfully"><![CDATA[Download was successfully finished. You may install it via Extensions -> Downloaded.]]></string_upd>
+	<string_upd name="_vote_do_like"><![CDATA[Thank you]]></string_upd>
+	<string_upd name="_vote_do_like_by"><![CDATA[Thanked by]]></string_upd>
+
+	<string_del name="_adm_stg_cpt_option_sys_account_default_acl_level"><![CDATA[Default member's level to assign after account creation]]></string_del>
+	<string_del name="_adm_txt_modules_change_permissions"><![CDATA[Changing permissions:]]></string_del>
+	<string_del name="_adm_txt_modules_check_permissions"><![CDATA[Checking permissions:]]></string_del>
+</resources>
