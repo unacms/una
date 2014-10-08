@@ -215,6 +215,9 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
         if (!$this->_sSubPath)
             $this->_sSubPath = 'boonex/' . BX_DOL_TEMPLATE_DEFAULT_CODE . '/';
 
+        if (!file_exists(BX_DIRECTORY_PATH_MODULES . $this->_sSubPath)) // just for 8.0.0-A6 upgrade
+            $this->_sSubPath = 'boonex/uni/';
+
         if(isset($_GET[$this->_sCodeKey])) {
             bx_import('BxDolPermalinks');
             if(BxDolPermalinks::getInstance()->redirectIfNecessary(array($this->_sCodeKey)))
