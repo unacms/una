@@ -18,7 +18,7 @@ $aConfig = array(
     'name' => 'bx_persons',
     'title' => 'Persons',
     'note' => 'Basic person profiles functionality.',
-    'version' => '8.0.1.DEV',
+    'version' => '8.0.2.DEV',
     'vendor' => 'BoonEx',
 	'help_url' => 'http://feed.boonex.com/?section={module_name}',
 
