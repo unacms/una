@@ -7,6 +7,8 @@
  * @{
  */
 
+$_COOKIE['skin'] = 'uni'; // just for 8.0.0-A6 upgrade
+
 $aPathInfo = pathinfo(__FILE__);
 define ('BX_UPGRADE_DIR_UPGRADES', $aPathInfo['dirname'] . '/files/');
 
