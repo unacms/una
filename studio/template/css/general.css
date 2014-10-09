@@ -5,9 +5,6 @@ body {
 iframe.bx-std-hidden {
 	display: none;
 }
-body.bx-std-bg {
-	background-color: #3b8686;
-}
 div.bx-std-cb {
     clear: both;
     font-size: 1px;

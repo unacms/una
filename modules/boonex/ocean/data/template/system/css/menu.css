@@ -20,3 +20,15 @@ ul.bx-menu-toolbar li a img {
 	margin-top: 8px;
     margin-top: 0.5rem;
 }
+
+.bx-menu-toolbar-item-title {
+	font-weight: bold;
+}
+.bx-menu-toolbar-item-addon {
+	background-color: #008fb8;
+}
+
+/* --------------- account popup menu */
+.bx-menu-account-popup-profile {
+	font-weight: bold;
+}
