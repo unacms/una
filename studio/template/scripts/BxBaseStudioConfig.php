@@ -25,6 +25,7 @@ class BxBaseStudioConfig extends BxTemplConfig
             'bx-padding-sec' => '20px',
             'bx-padding-thd' => '10px',
 
+        	'bx-color-page' => '#ffffff',
         	'bx-border-color-layout' => '#cccccc',
 
             'bx-size-widget' => '128px',
