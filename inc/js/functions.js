@@ -31,8 +31,7 @@ function getHtmlData( elem, url, callback, method , confirmation)
     $loadingDiv.css({
         position: 'absolute',
         left: iLeftOff,
-        top:  iTopOff,
-        zIndex:100
+        top:  iTopOff
     });
 
     if (undefined != method && (method == 'post' || method == 'POST')) {
@@ -184,9 +183,9 @@ function bx_loading_content (elem, b, isReplace) {
         block.find(".bx-loading-ajax").remove();
     } else if (!block.find('.bx-loading-ajax').length) {
         if ('undefined' != typeof(isReplace) && isReplace)
-            block.html('<div class="bx-loading-ajax" style="position:static;"></div>');
+            block.html('<div class="bx-loading-ajax bx-def-z-index-front" style="position:static;"></div>');
         else
-            block.append('<div class="bx-loading-ajax"></div>');
+            block.append('<div class="bx-loading-ajax bx-def-z-index-front"></div>');
         bx_loading_animate(block.find('.bx-loading-ajax'));
     } 
 }

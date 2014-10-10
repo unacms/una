@@ -25,7 +25,7 @@
 
 <div class="bx-install-page">
 
-    <div id="bx-toolbar">
+    <div id="bx-toolbar" class="bx-def-z-index-nav">
         <div class="bx-def-centered bx-def-padding-sec-left bx-def-padding-sec-right bx-def-page-width">
             <div id="bx-toolbar-content" class="bx-clearfix">
                 <div id="bx-menu-toolbar-1-container"></div>

@@ -53,9 +53,8 @@
 .bx-uploader-html5 { }
 
 .bx-uploader-html5-drop-area { 
-    width:auto;     
-    z-index:2;
-    height:200px; 
+    width:auto;
+    height:200px;
     
     line-height:200px; 
     text-align:center;

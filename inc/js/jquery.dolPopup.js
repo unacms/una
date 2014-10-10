@@ -37,7 +37,7 @@
         }
 
         if (o.fog && !$('#bx-popup-fog').length) {
-            $('<div id="bx-popup-fog" style="display: none;">&nbsp;</div>')
+            $('<div id="bx-popup-fog" class="bx-def-z-index-overlay" style="display: none;">&nbsp;</div>')
                 .prependTo('body')
                 .css({
                     position: 'fixed',
@@ -46,8 +46,7 @@
                     width: $(window).width(),
                     height: $(window).height(),
                     opacity: o.fog.opacity,
-                    backgroundColor: o.fog.color,
-                    zIndex: 999
+                    backgroundColor: o.fog.color
                 });
         }
         
@@ -60,6 +59,8 @@
 
         return this.each(function() {
             var $el = $(this);
+
+            $el.addClass('bx-def-z-index-modal');
 
             // element must have id
             if (!$el.attr('id'))
@@ -74,7 +75,6 @@
             $el.css({
                 display: 'block',
                 visibility: 'hidden',
-                zIndex: 1000,
                 position: 'absolute',
                 top: 0,
                 left: 0
