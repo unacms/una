@@ -1725,8 +1725,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_layout_top_area_bar_right"><![CDATA[Top area with right bar]]></string>
 	<string name="_sys_layout_topbottom_area_2_columns"><![CDATA[Top&bottom areas with 2 columns in the middle]]></string>
 	<string name="_sys_loading"><![CDATA[Loading...]]></string>
-	<string name="_sys_location_country"><![CDATA[ &mdash; in {0}]]></string>
-	<string name="_sys_location_country_city"><![CDATA[ &mdash; in {1}, {0}]]></string>
+	<string name="_sys_location_country"><![CDATA[<i class="sys-icon location-arrow"></i> {0}]]></string>
+	<string name="_sys_location_country_city"><![CDATA[<i class="sys-icon location-arrow"></i> {1}, {0}]]></string>
 	<string name="_sys_location_determining"><![CDATA[Determining location...]]></string>
 	<string name="_sys_location_geolocation_not_supported_by_browser"><![CDATA[Geolocation is not supported by this browser]]></string>
 	<string name="_sys_location_undefined"><![CDATA[No location]]></string>
