@@ -1810,6 +1810,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_template_title_ver"><![CDATA[Vertical Links]]></string>
 	<string name="_sys_menu_template_title_ver_lite"><![CDATA[Vertical Links (lite)]]></string>
 	<string name="_sys_menu_template_title_account_popup"><![CDATA[Account popup]]></string>
+	<string name="_sys_menu_template_title_custom"><![CDATA[Custom menu items]]></string>
 	<string name="_sys_menu_title_account"><![CDATA[Account Menu]]></string>
 	<string name="_sys_menu_title_account_dashboard"><![CDATA[Account Dashboard Menu]]></string>
 	<string name="_sys_menu_title_account_dashboard_administration"><![CDATA[Account Dashboard Administration Menu]]></string>

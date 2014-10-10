@@ -119,15 +119,22 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             'description' => ''
         ));
 
-        if(!empty($iId)) {
-            $this->onShare($iId, $aShared);
-
-            $sCounter = $this->_oTemplate->getShareCounter($aContent['type'], $aContent['action'], $aContent['object_id']);
-            $this->_echoResultJson(array('code' => 0, 'counter' => $sCounter, 'msg' => _t('_bx_timeline_txt_msg_success_share')));
-            return;
+        if(empty($iId)) {
+	        $this->_echoResultJson(array('code' => 3, 'msg' => _t('_bx_timeline_txt_err_cannot_share')));        
+	        return;
         }
 
-        $this->_echoResultJson(array('code' => 3, 'msg' => _t('_bx_timeline_txt_err_cannot_share')));
+        $this->onShare($iId, $aShared);
+
+        $aShared = $this->_oDb->getShared($aContent['type'], $aContent['action'], $aContent['object_id']);
+		$sCounter = $this->_oTemplate->getShareCounter($aShared);
+
+		$this->_echoResultJson(array(
+			'code' => 0, 
+			'msg' => _t('_bx_timeline_txt_msg_success_share'), 
+			'count' => $aShared['shares'], 
+			'counter' => $sCounter
+		));
     }
 
     function actionGetPost()
@@ -372,7 +379,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule
     	if(!$this->isEnabled())
     		return '';
 
-        return $this->_oTemplate->getShareCounter($sType, $sAction, $iObjectId);
+		$aShared = $this->_oDb->getShared($sType, $sAction, $iObjectId);
+
+        return $this->_oTemplate->getShareCounter($aShared);
     }
 
     public function serviceGetShareJsScript()
@@ -409,18 +418,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             ),
             'content' => $iCounter > 0 ? $iCounter : ''
         ));
-    }
-
-    public function serviceGetMenuItemAddonVote($sSystem, $iObjectId)
-    {
-        if(empty($sSystem) || empty($iObjectId))
-            return '';
-
-        $oVote = $this->getVoteObject($sSystem, $iObjectId);
-        if($oVote === false)
-            return '';
-
-        return $oVote->getCounter();
     }
 
     public function serviceGetMenuItemAddonShare($sType, $sAction, $iObjectId)

@@ -68,59 +68,64 @@ class BxBaseMenu extends BxDolMenu
      */
     public function getMenuItems ()
     {
-        $aRet = array();
         if (!isset($this->_aObject['menu_items']))
             $this->_aObject['menu_items'] = $this->_oQuery->getMenuItems();
 
-        foreach ($this->_aObject['menu_items'] as $a) {
-
-            if (isset($a['active']) && !$a['active'])
-                continue;
-
-            if (isset($a['visible_for_levels']) && !$this->_isVisible($a))
-                continue;
-
-            $a['title'] = _t($a['title']);
-
-            $a = $this->_replaceMarkers($a);
-
-            $mixedAddon = $this->_getMenuAddon($a);
-            $this->addMarkers(array('addon' => $mixedAddon));
-
-            $a = $this->_replaceMarkers($a);
-
-            list ($sIcon, $sIconUrl) = $this->_getMenuIcon($a);
-
-            $a['class_add'] = $this->_isSelected($a) ? 'bx-menu-tab-active' : '';
-            $a['link'] = isset($a['link']) ? $this->_oPermalinks->permalink($a['link']) : 'javascript:void(0);';
-            $a['title_attr'] = bx_html_attribute($a['title']);
-            $a['bx_if:image'] = array (
-                'condition' => (bool)$sIconUrl,
-                'content' => array('icon_url' => $sIconUrl),
-            );
-            $a['bx_if:icon'] = array (
-                'condition' => (bool)$sIcon,
-                'content' => array('icon' => $sIcon),
-            );
-            $a['bx_if:title'] = array (
-                'condition' => (bool)$a['title'],
-                'content' => array('title' => $a['title']),
-            );
-
-            $a['bx_if:addon'] = array (
-                'condition' => (bool)$mixedAddon,
-                'content' => array('addon' => $mixedAddon),
-            );
-
-            foreach ($this->_aOptionalParams as $sName => $sDefaultValue)
-                if (!isset($a[$sName]))
-                    $a[$sName] = $sDefaultValue;
-
-            $aRet[] = $a;
+		$aItems = array();
+        foreach ($this->_aObject['menu_items'] as $aItem) {
+        	$aItem = $this->_getMenuItem ($aItem);
+        	if($aItem !== false)
+            	$aItems[] = $aItem;
         }
 
-        return $aRet;
+        return $aItems;
     }
+
+	protected function _getMenuItem ($a)
+	{
+		if (isset($a['active']) && !$a['active'])
+			return false;
+
+		if (isset($a['visible_for_levels']) && !$this->_isVisible($a))
+        	return false;
+
+		$a['title'] = _t($a['title']);
+
+		$a = $this->_replaceMarkers($a);
+
+		$mixedAddon = $this->_getMenuAddon($a);
+		$this->addMarkers(array('addon' => $mixedAddon));
+
+		$a = $this->_replaceMarkers($a);
+
+		list ($sIcon, $sIconUrl) = $this->_getMenuIcon($a);
+
+		$a['class_add'] = $this->_isSelected($a) ? 'bx-menu-tab-active' : '';
+		$a['link'] = isset($a['link']) ? $this->_oPermalinks->permalink($a['link']) : 'javascript:void(0);';
+		$a['title_attr'] = bx_html_attribute($a['title']);
+		$a['bx_if:image'] = array (
+			'condition' => (bool)$sIconUrl,
+			'content' => array('icon_url' => $sIconUrl),
+		);
+		$a['bx_if:icon'] = array (
+        	'condition' => (bool)$sIcon,
+            'content' => array('icon' => $sIcon),
+		);
+		$a['bx_if:title'] = array (
+			'condition' => (bool)$a['title'],
+			'content' => array('title' => $a['title']),
+		);
+		$a['bx_if:addon'] = array (
+			'condition' => (bool)$mixedAddon,
+			'content' => array('addon' => $mixedAddon),
+		);
+
+		foreach ($this->_aOptionalParams as $sName => $sDefaultValue)
+        	if (!isset($a[$sName]))
+            	$a[$sName] = $sDefaultValue;
+
+		return $a;
+	}
 
     protected function _getMenuIcon ($a)
     {

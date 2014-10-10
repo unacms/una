@@ -306,19 +306,21 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'condition' => $bShowCounter,
                 'content' => array(
                     'style_prefix' => $sStylePrefix,
-                    'counter' => $this->getShareCounter($sType, $sAction, $iObjectId)
+        			'bx_if:show_hidden' => array(
+        				'condition' => (int)$aShared['shares'] == 0,
+        				'content' => array()
+        			),
+                    'counter' => $this->getShareCounter($aShared)
                 )
             ),
             'script' => $this->getShareJsScript()
         ));
     }
 
-    public function getShareCounter($sType, $sAction, $iObjectId)
+    public function getShareCounter($aEvent)
     {
         $sStylePrefix = $this->_oConfig->getPrefix('style');
         $sJsObject = $this->_oConfig->getJsObject('share');
-
-        $aEvent = $this->_oDb->getShared($sType, $sAction, $iObjectId);
 
         return $this->parseHtmlByName('share_counter.html', array(
             'href' => 'javascript:void(0)',

@@ -34,8 +34,9 @@ BxTimelineShare.prototype.shareItem = function(oLink, iOwnerId, sType, sAction, 
                 alert(oData.msg);
 
         	if(oData && oData.counter != undefined) {
-        		var sCounterId = $(oData.counter).attr('id');
-        		$('#' + sCounterId).replaceWith(oData.counter);
+        		var sCounter = $(oData.counter).attr('id');
+        		$('#' + sCounter).replaceWith(oData.counter);
+        		$('#' + sCounter).parents('.' + $this.sSP + '-share-counter-holder:first').bx_anim(oData.count > 0 ? 'show' : 'hide');
         	}
         },
         'json'

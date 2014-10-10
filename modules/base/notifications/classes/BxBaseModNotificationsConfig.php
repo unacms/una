@@ -87,7 +87,7 @@ class BxBaseModNotificationsConfig extends BxBaseModGeneralConfig
     	if(empty($sType))
             return $this->_aPrefixes;
 
-        return $this->_aPrefixes[$sType];
+        return isset($this->_aPrefixes[$sType]) ? $this->_aPrefixes[$sType] : '';
     }
 
     public function getObject($sType = '')
@@ -95,7 +95,7 @@ class BxBaseModNotificationsConfig extends BxBaseModGeneralConfig
     	if(empty($sType))
             return $this->_aObjects;
 
-        return $this->_aObjects[$sType];
+        return isset($this->_aObjects[$sType]) ? $this->_aObjects[$sType] : '';
     }
 
 	public function getHandlerDescriptor()
@@ -117,7 +117,7 @@ class BxBaseModNotificationsConfig extends BxBaseModGeneralConfig
         if($sKey == '')
             return $this->_aHandlers;
 
-        return $this->_aHandlers[$sKey];
+        return isset($this->_aHandlers[$sKey]) ? $this->_aHandlers[$sKey] : '';
     }
 
     public function getHandlersHidden()
@@ -127,12 +127,12 @@ class BxBaseModNotificationsConfig extends BxBaseModGeneralConfig
 
 	public function getJsClass($sType)
     {
-        return $this->_aJsClass[$sType];
+        return isset($this->_aJsClass[$sType]) ? $this->_aJsClass[$sType] : '';
     }
 
     public function getJsObject($sType)
     {
-        return $this->_aJsObjects[$sType];
+        return isset($this->_aJsObjects[$sType]) ? $this->_aJsObjects[$sType] : '';
     }
 
 	public function getPerPage($sType = 'default')
@@ -140,15 +140,15 @@ class BxBaseModNotificationsConfig extends BxBaseModGeneralConfig
     	if(empty($sType))
             return $this->_aPerPage;
 
-        return $this->_aPerPage[$sType];
+        return isset($this->_aPerPage[$sType]) ? $this->_aPerPage[$sType] : '';
     }
 
     public function getHtmlIds($sType, $sKey = '')
     {
         if(empty($sKey))
-            return $this->_aHtmlIds[$sType];
+            return isset($this->_aHtmlIds[$sType]) ? $this->_aHtmlIds[$sType] : array();
 
-        return $this->_aHtmlIds[$sType][$sKey];
+        return isset($this->_aHtmlIds[$sType][$sKey]) ? $this->_aHtmlIds[$sType][$sKey] : '';
     }
 
     public function getAnimationEffect()

@@ -94,6 +94,8 @@ BxDolVote.prototype.vote = function (oLink, iValue)
             var oCounter = $this._getCounter(oLink);
             if(oCounter)
             	oCounter.html(oData.countf);
+
+            oCounter.parents('.' + $this._sSP + '-counter-holder:first').bx_anim(oData.count > 0 ? 'show' : 'hide');
         },
         'json'
     );

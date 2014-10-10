@@ -14,7 +14,7 @@ bx_import('BxTemplMenu');
 /**
  * 'Item' menu.
  */
-class BxTimelineMenuItem extends BxTemplMenu
+class BxTimelineMenuItemActions extends BxTemplMenu
 {
     protected $_aEvent;
     protected $_oModule;
@@ -36,14 +36,6 @@ class BxTimelineMenuItem extends BxTemplMenu
             return;
 
         $this->_aEvent = $aEvent;
-
-        $iVotesObject = 0;
-        $sVotesSystem = $sVotesOnclick = '';
-        if(isset($aEvent['votes']) && is_array($aEvent['votes']) && isset($aEvent['votes']['system'])) {
-            $sVotesSystem = $aEvent['votes']['system'];
-            $iVotesObject = $aEvent['votes']['object_id'];
-            $sVotesOnclick = $this->_oModule->getVoteObject($sVotesSystem, $iVotesObject)->getJsClick();
-        }
 
         $iCommentsObject = 0;
         $sCommentsSystem = $sCommentsOnclick = '';
@@ -77,10 +69,6 @@ class BxTimelineMenuItem extends BxTemplMenu
             'comment_object' => $iCommentsObject,
             'comment_onclick' => $sCommentsOnclick,
 
-            'vote_system' => $sVotesSystem,
-            'vote_object' => $iVotesObject,
-            'vote_onclick' => $sVotesOnclick,
-
             'share_type' => $sShareType,
             'share_action' => $sShareAction,
             'share_object' => $iShareObject,
@@ -104,6 +92,46 @@ class BxTimelineMenuItem extends BxTemplMenu
 
     	return $bVisible;
     }
+
+    protected function _getMenuItem ($aItem)
+    {
+    	if (isset($aItem['active']) && !$aItem['active'])
+			return false;
+
+		if (isset($aItem['visible_for_levels']) && !$this->_isVisible($aItem))
+        	return false;
+
+    	$sMethod = '_getMenuItem' . str_replace(' ', '', ucwords(str_replace('-', ' ', $aItem['name'])));
+
+    	if(!method_exists($this, $sMethod)) {
+    		$aItem = parent::_getMenuItem($aItem);
+    		if($aItem === false)
+    			return false;
+
+			$sItem = $this->_oModule->_oTemplate->parseHtmlByName('menu_item.html', $aItem);
+    	}
+    	else
+    		$sItem = $this->$sMethod($aItem);
+
+    	if(empty($sItem))
+    		return false;
+
+		return array(
+			'class' => $this->_isSelected($aItem) ? 'bx-menu-tab-active' : '',
+			'item' => $sItem
+		);
+    }
+
+    protected function _getMenuItemItemVote($aItem)
+    {
+        if(!isset($this->_aEvent['votes']) || !is_array($this->_aEvent['votes']) || !isset($this->_aEvent['votes']['system'])) 
+        	return false;
+
+		$sVotesSystem = $this->_aEvent['votes']['system'];
+		$iVotesObject = $this->_aEvent['votes']['object_id'];
+    	return $this->_oModule->getVoteObject($sVotesSystem, $iVotesObject)->getElementInline();
+    }
+
     /**
      * Check if menu items is visible.
      * @param $a menu item array
@@ -117,12 +145,6 @@ class BxTimelineMenuItem extends BxTemplMenu
         $sCheckFuncName = '';
         $aCheckFuncParams = array();
         switch ($a['name']) {
-            case 'item-delete':
-                $sCheckFuncName = 'isAllowedDelete';
-                if(!empty($this->_aEvent))
-                    $aCheckFuncParams = array($this->_aEvent);
-                break;
-
             case 'item-comment':
                 $sCheckFuncName = 'isAllowedComment';
                 if(!empty($this->_aEvent))

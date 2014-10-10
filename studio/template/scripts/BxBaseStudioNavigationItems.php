@@ -492,6 +492,14 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
         return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
     }
 
+	protected function _getActionEdit ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
+        if($sType == 'single' && (int)$aRow['editable'] == 0)
+            return '';
+
+        return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
+    }
+
     protected function _getActionDelete ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
         if ($sType == 'single' && $aRow['module'] == BX_DOL_STUDIO_MODULE_SYSTEM)

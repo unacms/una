@@ -63,6 +63,8 @@ BxTimelineView.prototype.deletePost = function(oLink, iId) {
                 alert(oData.msg);
 
             if(oData && oData.code == 0)
+            	$(oLink).parents('.bx-popup-applied:first:visible').dolPopupHide();
+
                 $($this.sIdItem + oData.id).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
                     $(this).remove();
 
@@ -166,7 +168,7 @@ BxTimelineView.prototype._getPosts = function(oElement, sAction) {
 	        		default:
 	        			$this.loadingInBlock(oElement, false);
 
-	        			oView.find('.bx-tl-items').bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+	        			oView.find('.' + $this.sClassItems).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
 			                $(this).html(sItems).show().bxTime();
 
 			                if($this.isMasonryEmpty()) {
@@ -184,10 +186,10 @@ BxTimelineView.prototype._getPosts = function(oElement, sAction) {
         	}
 
         	if(oData && oData.load_more != undefined)
-        		oView.find('.bx-tl-load-more-holder').html($.trim(oData.load_more));
+        		oView.find('.' + $this.sSP + '-load-more-holder').html($.trim(oData.load_more));
 
         	if(oData && oData.back != undefined)
-        		oView.find('.bx-tl-back-holder').html($.trim(oData.back));
+        		oView.find('.' + $this.sSP + '-back-holder').html($.trim(oData.back));
         },
         'json'
     );

@@ -164,6 +164,10 @@ class BxBaseVote extends BxDolVote
                 'condition' => isset($aParams['show_counter']) && $aParams['show_counter'] === true,
                 'content' => array(
                     'style_prefix' => $this->_sStylePrefix,
+        			'bx_if:show_hidden' => array(
+        				'condition' => (int)$aVote['count'] == 0,
+        				'content' => array()
+        			),
                     'counter' => $this->getCounter()
                 )
             ),

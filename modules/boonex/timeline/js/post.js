@@ -187,11 +187,11 @@ BxTimelinePost.prototype._getPost = function(oElement, iPostId) {
         	$this.loadingInBlock(oView, false);
 
         	if($.trim(oData.item).length) {
-        		if(!oView.find('.bx-tl-load-more').is(':visible'))
-        			oView.find('.bx-tl-load-more').show();
+        		if(!oView.find('.' + $this.sSP + '-load-more').is(':visible'))
+        			oView.find('.' + $this.sSP + '-load-more').show();
 
-        		if(oView.find('.bx-tl-empty').is(':visible'))
-        			oView.find('.bx-tl-empty').hide();
+        		if(oView.find('.' + $this.sSP + '-empty').is(':visible'))
+        			oView.find('.' + $this.sSP + '-empty').hide();
 
         		if(!$this.isMasonry())
         			$this.initMasonry();

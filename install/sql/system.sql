@@ -2575,7 +2575,8 @@ INSERT INTO `sys_menu_templates` (`id`, `template`, `title`) VALUES
 (11, 'menu_interactive_vertical.html', '_sys_menu_template_title_interactive_vertical'),
 (12, 'menu_account_popup.html', '_sys_menu_template_title_account_popup'),
 (13, 'menu_account_notifications.html', '_sys_menu_template_title_account_notifications'),
-(14, 'menu_floating_blocks_big.html', '_sys_menu_template_title_floating_blocks_big');
+(14, 'menu_floating_blocks_big.html', '_sys_menu_template_title_floating_blocks_big'),
+(15, 'menu_custom.html', '_sys_menu_template_title_custom');
 
 CREATE TABLE IF NOT EXISTS `sys_objects_menu` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -2660,6 +2661,7 @@ CREATE TABLE IF NOT EXISTS `sys_menu_items` (
   `visible_for_levels` int(11) NOT NULL DEFAULT '2147483647',
   `active` tinyint(4) NOT NULL DEFAULT '1',
   `copyable` tinyint(4) NOT NULL DEFAULT '1',
+  `editable` tinyint(4) NOT NULL DEFAULT '1',
   `order` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
