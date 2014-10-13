@@ -65,6 +65,14 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
     	return $this->perform($sDirectory, $sOperation, array_merge($aParams, array('transient' => true)));
     }
 
+    public function getAccessObject($bAuthorizedAccess)
+    {
+    	$sClass = $bAuthorizedAccess ? $this->sAuthorizedAccessClass : 'BxDolStudioJson';
+
+		bx_import($sClass);
+		return $sClass::getInstance();
+    }
+
     public function getModules($bTitleAsKey = true)
     {
         $aModules = array();
@@ -513,14 +521,6 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
     	sendMailTemplateSystem('t_BgOperationFailed', array (
 			'conclusion' => strip_tags($sMessage),
 		));
-    }
-
-    private function getAccessObject($bAuthorizedAccess)
-    {
-    	$sClass = $bAuthorizedAccess ? $this->sAuthorizedAccessClass : 'BxDolStudioJson';
-
-		bx_import($sClass);
-		return $sClass::getInstance();
     }
 }
 

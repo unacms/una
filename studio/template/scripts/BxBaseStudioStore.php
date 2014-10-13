@@ -97,27 +97,37 @@ class BxBaseStudioStore extends BxDolStudioStore
         $sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
 
-        $aProducts = $this->loadGoodies();
-
-        $aTmplVars = array(
+		$aTmplVars = array(
             'js_object' => $sJsObject,
             'bx_repeat:blocks' => array()
         );
 
-        $sActions = "";
-        foreach($aProducts as $aBlock) {
-            $sItems = $oTemplate->parseHtmlByName('str_products.html', array(
-                'list' => $this->displayProducts($aBlock['items']),
-                'paginate' => ''
-            ));
+        $mixedResult = BxDolStudioInstallerUtils::getInstance()->getAccessObject(true)->doAuthorize();
+        if($mixedResult === true) {
+	        $aProducts = $this->loadGoodies();
 
-            $aTmplVars['bx_repeat:blocks'][] = array(
-                'caption' => $this->getBlockCaption($aBlock),
+	        $sActions = "";
+	        foreach($aProducts as $aBlock) {
+	            $sItems = $oTemplate->parseHtmlByName('str_products.html', array(
+	                'list' => $this->displayProducts($aBlock['items']),
+	                'paginate' => ''
+	            ));
+
+	            $aTmplVars['bx_repeat:blocks'][] = array(
+	                'caption' => $this->getBlockCaption($aBlock),
+	                'panel_top' => '',
+	                'items' => $sItems,
+	                'panel_bottom' => ''
+	            );
+	        }
+        }
+        else 
+        	$aTmplVars['bx_repeat:blocks'][] = array(
+                'caption' => $this->getBlockCaption(array('caption' => _t('_adm_block_cpt_goodies'), 'actions' => array())),
                 'panel_top' => '',
-                'items' => $sItems,
+                'items' => $mixedResult,
                 'panel_bottom' => ''
             );
-        }
 
         return $oTemplate->parseHtmlByName('store.html', $aTmplVars);
     }
@@ -127,28 +137,33 @@ class BxBaseStudioStore extends BxDolStudioStore
         $sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
 
-        $iStart = (int)bx_get('str_start');
-        $iPerPage = (int)bx_get('str_per_page');
-        if(empty($iPerPage))
-            $iPerPage = $this->iPerPageDefault;
+        $mixedResult = BxDolStudioInstallerUtils::getInstance()->getAccessObject(true)->doAuthorize();
+        if($mixedResult === true) {
+	        $iStart = (int)bx_get('str_start');
+	        $iPerPage = (int)bx_get('str_per_page');
+	        if(empty($iPerPage))
+	            $iPerPage = $this->iPerPageDefault;
 
-        $aProducts = $this->loadFeatured($iStart, $iPerPage + 1);
+	        $aProducts = $this->loadFeatured($iStart, $iPerPage + 1);
 
-        bx_import('BxTemplPaginate');
-        $oPaginate = new BxTemplPaginate(array(
-            'start' => $iStart,
-            'per_page' => $iPerPage,
-            'on_change_page' => $sJsObject . ".changePagePaginate(this, 'featured', {start}, {per_page})"
-        ));
-        $oPaginate->setNumFromDataArray($aProducts);
+	        bx_import('BxTemplPaginate');
+	        $oPaginate = new BxTemplPaginate(array(
+	            'start' => $iStart,
+	            'per_page' => $iPerPage,
+	            'on_change_page' => $sJsObject . ".changePagePaginate(this, 'featured', {start}, {per_page})"
+	        ));
+	        $oPaginate->setNumFromDataArray($aProducts);
 
-        $sContent = $oTemplate->parseHtmlByName('str_products.html', array(
-            'list' => $this->displayProducts($aProducts),
-            'paginate' => $oPaginate->getSimplePaginate()
-        ));
+	        $sContent = $oTemplate->parseHtmlByName('str_products.html', array(
+	            'list' => $this->displayProducts($aProducts),
+	            'paginate' => $oPaginate->getSimplePaginate()
+	        ));
+        }
+        else 
+        	$sContent = $mixedResult;
 
-        if(!$bWrapInBlock)
-            return $sContent;
+		if(!$bWrapInBlock)
+			return $sContent;
 
         return $oTemplate->parseHtmlByName('store.html', array(
             'js_object' => $sJsObject,
