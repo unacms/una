@@ -42,8 +42,28 @@ html {
 
 /* common.css */
 
-.bx-popup-width {
-	width:auto;
+.bx-popup-box-wrapper,
+.bx-popup-box {
+	width:100%;
+    height:100%;
+}
+
+.bx-popup-box > div {
+	border-radius:0;
+	-moz-border-radius:0;
+	-webkit-border-radius:0;
+}
+
+.bx-popup-image-wrapper .bx-popup-border,
+.bx-popup-box-wrapper .bx-popup-border {
+    border:none;
+}
+
+.bx-popup-image-wrapper .bx-popup,
+.bx-popup-box-wrapper .bx-popup {
+	-moz-box-shadow:none;
+	-webkit-box-shadow:none;
+    box-shadow:none;
 }
 
 /* page layouts */
