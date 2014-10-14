@@ -39,16 +39,14 @@ class BxDolStudioOAuthLib extends BxDolStudioOAuth implements iBxDolSingleton
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
 
-    protected function authorize($sKey, $sSecret)
+    protected function authorize()
     {
         if($this->isAuthorized())
             return true;
 
-        try {
-            $oConsumer = new OAuth($sKey, $sSecret);
-            $oConsumer->setAuthType(OAUTH_AUTH_TYPE_URI);
-            $oConsumer->enableDebug();
+		$oConsumer = $this->getServiceObject(false);
 
+        try {
             $bToken = bx_get('oauth_token') !== false;
             $mixedSecret = $this->oSession->getValue('sys_oauth_secret');
             if(!$bToken && $mixedSecret !== false) {
@@ -57,59 +55,83 @@ class BxDolStudioOAuthLib extends BxDolStudioOAuth implements iBxDolSingleton
             }
 
             //--- Get request token and redirect to authorize.
-            if(!$bToken && $mixedSecret === false) {
-                $aRequestToken = $oConsumer->getRequestToken(BX_DOL_OAUTH_URL_REQUEST_TOKEN);
-                if(empty($aRequestToken))
-                    return _t('_adm_err_oauth_cannot_get_token');
-
-                if($this->isServerError($aRequestToken))
-                    return $this->processServerError($aRequestToken);
-
-                $this->oSession->setValue('sys_oauth_secret', $aRequestToken['oauth_token_secret']);
-                return _t('_adm_msg_oauth_need_authorize', bx_append_url_params(BX_DOL_OAUTH_URL_AUTHORIZE, array('oauth_token' => $aRequestToken['oauth_token'], 'sid' => bx_site_hash())));
-            }
+            if(!$bToken && $mixedSecret === false)
+                return $this->getRequestToken($oConsumer);
 
             //--- Get access token.
-            if($bToken && $mixedSecret !== false) {
-                $oConsumer->setToken(bx_get('oauth_token'), $mixedSecret);
-                $aAccessToken = $oConsumer->getAccessToken(bx_append_url_params(BX_DOL_OAUTH_URL_ACCESS_TOKEN, array('oauth_verifier' => bx_get('oauth_verifier'))));
-                if(empty($aAccessToken))
-                    return _t('_adm_err_oauth_cannot_get_token');
-
-                if($this->isServerError($aAccessToken))
-                    return $this->processServerError($aAccessToken);
-
-                $this->oSession->setValue('sys_oauth_token', $aAccessToken['oauth_token']);
-                $this->oSession->setValue('sys_oauth_secret', $aAccessToken['oauth_token_secret']);
-                $this->oSession->setValue('sys_oauth_authorized', 1);
-                $this->oSession->setValue('sys_oauth_authorized_user', (int)bx_get('oauth_user'));
-
-                return true;
-            }
-        } catch(OAuthException $e) {
-            return _t('_adm_err_oauth_cannot_get_token');
+            if($bToken && $mixedSecret !== false)
+                return $this->getAccessToken(bx_get('oauth_token'), $mixedSecret, bx_get('oauth_verifier'), (int)bx_get('oauth_user'),  $oConsumer);
         }
+        catch(OAuthException $e) {
+            return $this->getRequestToken();
+        }
+
+        return $this->getRequestToken();
     }
 
-    protected function fetch($sKey, $sSecret, $aParams = array())
+    protected function getRequestToken($oConsumer = null)
+    {
+    	if(empty($oConsumer))
+    		$oConsumer = $this->getServiceObject();
+
+    	$aRequestToken = $oConsumer->getRequestToken(BX_DOL_OAUTH_URL_REQUEST_TOKEN);
+		if(empty($aRequestToken))
+        	return _t('_adm_err_oauth_cannot_get_token');
+
+		if($this->isServerError($aRequestToken))
+			throw new OAuthException();
+
+		$this->oSession->setValue('sys_oauth_secret', $aRequestToken['oauth_token_secret']);
+		return _t('_adm_msg_oauth_need_authorize', bx_append_url_params(BX_DOL_OAUTH_URL_AUTHORIZE, array('oauth_token' => $aRequestToken['oauth_token'], 'sid' => bx_site_hash())));
+    }
+
+    protected function getAccessToken($sToken, $mixedSecret, $sVerifier, $iUser,  $oConsumer)
+    {
+		$oConsumer->setToken($sToken, $mixedSecret);
+		$aAccessToken = $oConsumer->getAccessToken(bx_append_url_params(BX_DOL_OAUTH_URL_ACCESS_TOKEN, array('oauth_verifier' => $sVerifier)));
+		if(empty($aAccessToken))
+			return _t('_adm_err_oauth_cannot_get_token');
+
+		if($this->isServerError($aAccessToken))
+			throw new OAuthException();
+
+		$this->oSession->setValue('sys_oauth_token', $aAccessToken['oauth_token']);
+		$this->oSession->setValue('sys_oauth_secret', $aAccessToken['oauth_token_secret']);
+		$this->oSession->setValue('sys_oauth_authorized', 1);
+		$this->oSession->setValue('sys_oauth_authorized_user', $iUser);
+
+		return true;
+    }
+    
+    protected function fetch($aParams = array())
     {
         if(!$this->isAuthorized())
             return array();
 
-        try {
-            $oConsumer = new OAuth($sKey, $sSecret);
-            $oConsumer->setAuthType(OAUTH_AUTH_TYPE_URI);
-            $oConsumer->enableDebug();
+		$oConsumer = $this->getServiceObject(false);
 
+        try {
             $oConsumer->setToken($this->oSession->getValue('sys_oauth_token'), $this->oSession->getValue('sys_oauth_secret'));
             $oConsumer->fetch(BX_DOL_OAUTH_URL_FETCH_DATA, $aParams, $this->sDataRetrieveMethod);
 
-            
             //echo $oConsumer->getLastResponse(); exit;	//--- Uncomment to debug
             return json_decode($oConsumer->getLastResponse(), true);
-        } catch(OAuthException $e) {
+        } 
+        catch(OAuthException $e) {
             return array();
         }
+    }
+
+	private function getServiceObject($bClearStorage = true)
+    {
+    	if($bClearStorage)
+    		$this->unsetAuthorizedUser();
+
+    	$oConsumer = new OAuth($this->sKey, $this->sSecret);
+		$oConsumer->setAuthType(OAUTH_AUTH_TYPE_URI);
+        $oConsumer->enableDebug();
+
+        return $oConsumer;
     }
 }
 
