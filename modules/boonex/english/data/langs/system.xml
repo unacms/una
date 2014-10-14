@@ -407,6 +407,7 @@
 	<string name="_adm_block_cpt_downloaded_modules"><![CDATA[Modules]]></string>
 	<string name="_adm_block_cpt_downloaded_updates"><![CDATA[Updates]]></string>
 	<string name="_adm_block_cpt_featured"><![CDATA[Featured]]></string>
+	<string name="_adm_block_cpt_goodies"><![CDATA[Storefront]]></string>
 	<string name="_adm_block_cpt_languages"><![CDATA[Languages]]></string>
 	<string name="_adm_block_cpt_last_featured"><![CDATA[Latest Featured]]></string>
 	<string name="_adm_block_cpt_last_languages"><![CDATA[Latest Languages]]></string>

@@ -52,20 +52,25 @@ class BxDolStudioOAuth extends BxDol
         if(empty($this->sKey) || empty($this->sSecret))
             return _t('_adm_err_oauth_empty_key_secret');
 
-        $mixedResult = $this->authorize($this->sKey, $this->sSecret);
+        $mixedResult = $this->authorize();
         if($mixedResult !== true)
             return $mixedResult;
 
-        $aItems = $this->fetch($this->sKey, $this->sSecret, $aParams);
+        $aItems = $this->fetch($aParams);
         if(is_null($aItems))
             return _t('_adm_err_oauth_cannot_read_answer');
         else if(empty($aItems))
             return MsgBox(_t('_Empty'));
 
-        if($this->isServerError($aItems))
-            return $this->processServerError($aItems);
-
         return $aItems;
+    }
+
+    public function doAuthorize()
+    {
+    	if(empty($this->sKey) || empty($this->sSecret))
+            return _t('_adm_err_oauth_empty_key_secret');
+
+        return $this->authorize();
     }
 
     protected function isAuthorized()
@@ -78,34 +83,17 @@ class BxDolStudioOAuth extends BxDol
     	return self::getAuthorizedClient();
     }
 
+	protected function unsetAuthorizedUser()
+	{
+		$this->oSession->unsetValue('sys_oauth_token');
+		$this->oSession->unsetValue('sys_oauth_secret');
+        $this->oSession->unsetValue('sys_oauth_authorized');
+		$this->oSession->unsetValue('sys_oauth_authorized_user');
+	}
+
     protected function isServerError($aResult)
     {
         return isset($aResult[$this->sErrorCode]) && isset($aResult[$this->sErrorMessage]);
-    }
-
-    protected function processServerError($aResult)
-    {
-        $iCode = $aResult[$this->sErrorCode];
-        $sMessage = $aResult[$this->sErrorMessage];
-
-        switch($iCode) {
-            case '8':
-            case '16':
-            case '32':
-            case '64':
-            case '256':
-            case '1024':
-            case '2048':
-                bx_import('BxDolSession');
-                $this->oSession = BxDolSession::getInstance();
-                $this->oSession->unsetValue('sys_oauth_token');
-                $this->oSession->unsetValue('sys_oauth_secret');
-                $this->oSession->unsetValue('sys_oauth_authorized');
-                $this->oSession->unsetValue('sys_oauth_authorized_user');
-                break;
-        }
-
-        return $sMessage;
     }
 }
 

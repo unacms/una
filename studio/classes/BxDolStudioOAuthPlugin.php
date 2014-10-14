@@ -36,7 +36,6 @@ class BxDolStudioOAuthPlugin extends BxDolStudioOAuth implements iBxDolSingleton
         $this->sDataRetrieveMethod = 'POST';
 
         $this->sService = 'Dolphin';
-        $this->oStorage = new Session();
     }
 
     public function __clone()
@@ -55,14 +54,14 @@ class BxDolStudioOAuthPlugin extends BxDolStudioOAuth implements iBxDolSingleton
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
 
-    protected function authorize($sKey, $sSecret)
+    protected function authorize()
     {
-        if($this->isAuthorized())
-            return true;
+		if($this->isAuthorized())
+			return true;
+
+		$oService = $this->getServiceObject();
 
         try {
-        	$oService = $this->getServiceObject();
-
             $bToken = bx_get('oauth_token') !== false;
             $mixedSecret = $this->oSession->getValue('sys_oauth_secret');
             if(!$bToken && $mixedSecret !== false) {
@@ -71,48 +70,62 @@ class BxDolStudioOAuthPlugin extends BxDolStudioOAuth implements iBxDolSingleton
             }
 
             //--- Get request token and redirect to authorize.
-            if(!$bToken && $mixedSecret === false) {
-            	$oToken = $oService->requestRequestToken();
-            	if(empty($oToken))
-                    return _t('_adm_err_oauth_cannot_get_token');
-
-				$this->oSession->setValue('sys_oauth_secret', $oToken->getRequestTokenSecret());
-
-			    $oUrl = $oService->getAuthorizationUri(array('oauth_token' => $oToken->getRequestToken()));
-                return _t('_adm_msg_oauth_need_authorize', bx_append_url_params($oUrl, array('sid' => bx_site_hash())));
-            }
+            if(!$bToken && $mixedSecret === false)
+            	return $this->getRequestToken($oService);
 
             //--- Get access token.
-            if($bToken && $mixedSecret !== false) {
-            	$oToken = $this->oStorage->retrieveAccessToken($this->sService);
-            	$oAccessToken = $oService->requestAccessToken(bx_get('oauth_token'), bx_get('oauth_verifier'), $oToken->getRequestTokenSecret());
-            	if(empty($oAccessToken))
-                    return _t('_adm_err_oauth_cannot_get_token');
-
-                $this->oSession->setValue('sys_oauth_token', $oAccessToken->getAccessToken());
-                $this->oSession->setValue('sys_oauth_secret', $oAccessToken->getAccessTokenSecret());
-                $this->oSession->setValue('sys_oauth_authorized', 1);
-                $this->oSession->setValue('sys_oauth_authorized_user', (int)bx_get('oauth_user'));
-
-                return true;
-            }
+            if($bToken && $mixedSecret !== false)
+            	return $this->getAccessToken(bx_get('oauth_token'), bx_get('oauth_verifier'), (int)bx_get('oauth_user'), $oService);
         }
         catch(TokenResponseException $e) {
-            return _t('_adm_err_oauth_cannot_get_token');
+        	$this->unsetAuthorizedUser();
+            return $this->getRequestToken();
         }
         catch(TokenNotFoundException $e) {
-            return _t('_adm_err_oauth_cannot_get_token');
+        	$this->unsetAuthorizedUser();
+            return $this->getRequestToken();
         }
+
+        return $this->getRequestToken();
     }
 
-    protected function fetch($sKey, $sSecret, $aParams = array())
+    protected function getRequestToken($oService = null)
+    {
+    	if(empty($oService))
+    		$oService = $this->getServiceObject();
+
+		$oToken = $oService->requestRequestToken();
+		if(empty($oToken))
+			return _t('_adm_err_oauth_cannot_get_token');
+
+		$this->oSession->setValue('sys_oauth_secret', $oToken->getRequestTokenSecret());
+
+		$oUrl = $oService->getAuthorizationUri(array('oauth_token' => $oToken->getRequestToken()));
+		return _t('_adm_msg_oauth_need_authorize', bx_append_url_params($oUrl, array('sid' => bx_site_hash())));
+    }
+
+    protected function getAccessToken($sToken, $sVerifier, $iUser,  $oService)
+    {
+		$oToken = $this->oStorage->retrieveAccessToken($this->sService);
+		$oAccessToken = $oService->requestAccessToken($sToken, $sVerifier, $oToken->getRequestTokenSecret());
+		if(empty($oAccessToken))
+			return _t('_adm_err_oauth_cannot_get_token');
+
+		$this->oSession->setValue('sys_oauth_token', $oAccessToken->getAccessToken());
+		$this->oSession->setValue('sys_oauth_secret', $oAccessToken->getAccessTokenSecret());
+		$this->oSession->setValue('sys_oauth_authorized', 1);
+		$this->oSession->setValue('sys_oauth_authorized_user', $iUser);
+
+		return true;
+    }
+
+    protected function fetch($aParams = array())
     {
         if(!$this->isAuthorized())
             return array();
 
         try {
-        	$oService = $this->getServiceObject();
-			$sResponse = $oService->request(BX_DOL_OAUTH_URL_FETCH_DATA, $this->sDataRetrieveMethod, $aParams);
+			$sResponse = $this->getServiceObject()->request(BX_DOL_OAUTH_URL_FETCH_DATA, $this->sDataRetrieveMethod, $aParams);
 
             //echo $sResponse; exit;	//--- Uncomment to debug
             return json_decode($sResponse, true);
@@ -124,6 +137,8 @@ class BxDolStudioOAuthPlugin extends BxDolStudioOAuth implements iBxDolSingleton
 
     private function getServiceObject()
     {
+	 	$this->oStorage = new Session();
+
     	$oUrl = new Uri(BX_DOL_URL_STUDIO . 'store.php?page=purchases');
 		$oCredentials = new Credentials($this->sKey, $this->sSecret, $oUrl->getAbsoluteUri());
 
