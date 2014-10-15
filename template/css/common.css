@@ -147,7 +147,7 @@ blockquote {
     border-left-color:transparent;
 }
 
-.bx-popup-image-wrapper {
+.bx-popup-image-container {
     position: relative;
 }
 
@@ -155,6 +155,18 @@ blockquote {
     position: absolute;
     right: 0;
     top: 0;
+}
+
+.bx-popup-image-wrapper img {
+    display: block;
+}
+
+.bx-popup-element-close:hover,
+.bx-popup-element-close {
+    position:absolute;
+    top:0;
+    left:0;
+    text-decoration:none;
 }
 
 /* --------------- message box */
