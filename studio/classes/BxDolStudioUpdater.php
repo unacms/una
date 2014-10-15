@@ -42,14 +42,12 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
     {
     	$bHtmlResponce = isset($aParams['html_response']) && (bool)$aParams['html_response'];
 
-        $oDb = bx_instance('BxDolStudioInstallerQuery');
-
         $aResult = array(
             'operation_title' => _t('_adm_txt_modules_operation_update', $this->_aConfig['title'], $this->_aConfig['version_from'], $this->_aConfig['version_to'])
         );
 
         //--- Check for module to update ---//
-        $aModuleInfo = $oDb->getModulesBy(array('type' => 'path_and_uri', 'path' => $this->_aConfig['module_dir'], 'uri' => $this->_aConfig['module_uri']));
+        $aModuleInfo = $this->oDb->getModulesBy(array('type' => 'path_and_uri', 'path' => $this->_aConfig['module_dir'], 'uri' => $this->_aConfig['module_uri']));
         if(!$aModuleInfo)
             return array_merge($aResult, array(
                 'message' => $this->_displayResult('check_module_exists', false, '_adm_err_modules_module_not_found', $bHtmlResponce),
@@ -97,14 +95,14 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
         //--- Perform action and check results ---//
         $aResult = array_merge($aResult, $this->_perform('install', $aParams));
         if($aResult['result']) {
-            $oDb->updateModule(array('version' => $this->_aConfig['version_to']), array('id' => $aModuleInfo['id']));
+            $this->oDb->updateModule(array('version' => $this->_aConfig['version_to']), array('id' => $aModuleInfo['id']));
 
-            $oDb->deleteModuleTrackFiles($aModuleInfo['id']);
+            $this->oDb->deleteModuleTrackFiles($aModuleInfo['id']);
 
             $aFiles = array();
             $this->hashFiles(BX_DIRECTORY_PATH_ROOT . 'modules/' . $this->_aConfig['module_dir'], $aFiles);
             foreach($aFiles as $aFile)
-                $oDb->insertModuleTrack($aModuleInfo['id'], $aFile);
+                $this->oDb->insertModuleTrack($aModuleInfo['id'], $aFile);
 
             //--- Remove update pckage ---//
             $this->delete($aParams);
@@ -133,6 +131,25 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
 					return BX_DOL_STUDIO_INSTALLER_FAILED;
 
         return BX_DOL_STUDIO_INSTALLER_SUCCESS;
+    }
+
+    public function actionExecuteSql($sOperation)
+    {
+    	$aModule = $this->oDb->getModuleByUri($this->_aConfig['module_uri']);
+    	if(empty($aModule))
+    		return BX_DOL_STUDIO_INSTALLER_FAILED;
+
+    	$sPathInstall = $this->_sHomePath . 'install/sql/install.sql';
+    	$sPathEnable = $this->_sHomePath . 'install/sql/enable.sql';
+
+    	$mixedResult = true;
+    	if(file_exists($sPathInstall))
+        	$mixedResult = $this->oDb->executeSQL($sPathInstall);
+
+		if($mixedResult === true && (int)$aModule['enabled'] == 1 && file_exists($sPathEnable))
+			$mixedResult = $this->oDb->executeSQL($sPathEnable);
+
+        return $mixedResult === true ? BX_DOL_STUDIO_INSTALLER_SUCCESS : array('code' => BX_DOL_STUDIO_INSTALLER_FAILED, 'content' => $mixedResult);
     }
 
     public function actionUpdateLanguages($bInstall = true)
@@ -178,7 +195,6 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
 
     protected function _updateLanguage($bInstall, $sLanguage, $iCategory = 0)
     {
-        $oDb = BxDolDb::getInstance();
         $oLanguages = BxDolStudioLanguagesUtils::getInstance();
 
         $sPath = $this->_sHomePath . 'install/langs/' . $sLanguage . '.xml';

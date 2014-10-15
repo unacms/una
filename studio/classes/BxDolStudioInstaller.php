@@ -580,13 +580,15 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
                 break;
         }
 
-        bx_import('BxDolDb');
-        $mixedResult = BxDolDb::getInstance()->executeSQL($this->_sHomePath . 'install/sql/' . $sOperation . '.sql');
+        $mixedResult = $this->oDb->executeSQL($this->_sHomePath . 'install/sql/' . $sOperation . '.sql');
 
         return $mixedResult === true ? BX_DOL_STUDIO_INSTALLER_SUCCESS : array('code' => BX_DOL_STUDIO_INSTALLER_FAILED, 'content' => $mixedResult);
     }
     function actionExecuteSqlFailed($mixedResult)
     {
+    	if(is_int($mixedResult))
+    		return $this->actionOperationFailed($mixedResult);
+
         $sResult = '<br />' . _t('_adm_err_modules_wrong_mysql_query') . '<br />';
         foreach($mixedResult['content'] as $aQuery) {
             $sResult .= _t('_adm_err_modules_wrong_mysql_query_msg', $aQuery['error']) . '<br />';
