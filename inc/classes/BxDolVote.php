@@ -183,11 +183,10 @@ class BxDolVote extends BxDolObject
 
     public function isLikeMode()
     {
-        $bUndo = $this->isUndo();
         $iMinValue = $this->getMinValue();
         $iMaxValue = $this->getMaxValue();
 
-        return $iMinValue == $iMaxValue && $bUndo;
+        return $iMinValue == $iMaxValue;
     }
 
     public function getMinValue()
@@ -236,16 +235,19 @@ class BxDolVote extends BxDolObject
         $iObjectId = $this->getId();
         $iAuthorId = $this->_getAuthorId();
         $iAuthorIp = $this->_getAuthorIp();
+
+        $bUndo = $this->isUndo();
         $bLikeMode = $this->isLikeMode();
 
-        $bUndo = $this->isUndo() && $this->_oQuery->isVoted($iObjectId, $iAuthorId) ? true : false;
+        $bVoted = $this->_oQuery->isVoted($iObjectId, $iAuthorId);
+        $bPerformUndo = $bVoted && $bUndo ? true : false;
 
-        if(!$bUndo && !$this->isAllowedVote(true)) {
+        if(!$bPerformUndo && !$this->isAllowedVote(true)) {
             $this->_echoResultJson(array('code' => 2, 'msg' => $this->msgErrAllowedVote()));
             return;
         }
 
-        if(!$bLikeMode && !$this->_oQuery->isPostTimeoutEnded($iObjectId, $iAuthorIp)) {
+        if((!$bLikeMode && !$this->_oQuery->isPostTimeoutEnded($iObjectId, $iAuthorIp)) || ($bLikeMode && $bVoted && !$bUndo)) {
             $this->_echoResultJson(array('code' => 3, 'msg' => _t('_vote_err_duplicate_vote')));
             return;
         }
@@ -266,14 +268,14 @@ class BxDolVote extends BxDolObject
         if($iValue > $iMaxValue)
             $iValue = $iMaxValue;
 
-        if(!$this->_oQuery->putVote($iObjectId, $iAuthorId, $iAuthorIp, $iValue, $bUndo)) {
+        if(!$this->_oQuery->putVote($iObjectId, $iAuthorId, $iAuthorIp, $iValue, $bPerformUndo)) {
             $this->_echoResultJson(array('code' => 5));
             return;
         }
 
         $this->_triggerVote();
 
-        $oZ = new BxDolAlerts($this->_sSystem, 'rate', $this->getId(), $iAuthorId, array('value' => $iValue, 'undo' => $bUndo));
+        $oZ = new BxDolAlerts($this->_sSystem, 'rate', $this->getId(), $iAuthorId, array('value' => $iValue, 'undo' => $bPerformUndo));
         $oZ->alert();
 
         $aVote = $this->_oQuery->getVote($iObjectId);
@@ -282,8 +284,9 @@ class BxDolVote extends BxDolObject
             'rate' => $aVote['rate'],
             'count' => $aVote['count'],
             'countf' => (int)$aVote['count'] > 0 ? $this->_getLabelCounter($aVote['count']) : '',
-        	'label_icon' => $bLikeMode ? $this->_getIconDoLike(!$bUndo) : '',
-        	'label_title' => $bLikeMode ? _t($this->_getTitleDoLike(!$bUndo)) : ''
+        	'label_icon' => $bLikeMode ? $this->_getIconDoLike(!$bVoted) : '',
+        	'label_title' => $bLikeMode ? _t($this->_getTitleDoLike(!$bVoted)) : '',
+        	'disabled' => !$bVoted && !$bUndo,
         ));
     }
 
@@ -369,12 +372,12 @@ class BxDolVote extends BxDolObject
 
     protected function _getIconDoLike($bVoted)
     {
-    	return $bVoted ?  'thumbs-down' : 'thumbs-up';
+    	return $bVoted && $this->isUndo() ?  'thumbs-down' : 'thumbs-up';
     }
 
     protected function _getTitleDoLike($bVoted)
     {
-    	return $bVoted ? '_vote_do_unlike' : '_vote_do_like';
+    	return $bVoted && $this->isUndo() ? '_vote_do_unlike' : '_vote_do_like';
     }
 
     protected function _triggerVote()

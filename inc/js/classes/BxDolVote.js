@@ -86,6 +86,9 @@ BxDolVote.prototype.vote = function (oLink, iValue)
 	    			$(oLink).attr('title', oData.label_title);
 	    			$(oLink).find('span').html(oData.label_title);
 	    		}
+
+	    		if(oData && oData.disabled)
+	    			$(oLink).removeAttr('onclick').addClass('bx-btn-disabled');
     		}
 
     		if(!$this._iLikeMode)

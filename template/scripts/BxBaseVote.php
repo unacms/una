@@ -150,7 +150,7 @@ class BxBaseVote extends BxDolVote
         $aVote = $this->_oQuery->getVote($iObjectId);
 
         $aParams = array_merge($this->_aElementDefaults[$sType], $aParams);
-        $aParams['is_voted'] = $this->isUndo() && $this->_oQuery->isVoted($iObjectId, $iAuthorId) ? true : false;
+        $aParams['is_voted'] = $this->_oQuery->isVoted($iObjectId, $iAuthorId) ? true : false;
 
         $sTmplName = 'vote_element_' . (!empty($aParams['usage']) ? $aParams['usage'] : BX_DOL_VOTE_USAGE_DEFAULT) . '.html';
         return BxDolTemplate::getInstance()->parseHtmlByName($sTmplName, array(
@@ -221,15 +221,31 @@ class BxBaseVote extends BxDolVote
 
     protected function _getDoVoteLikes($aParams = array())
     {
+    	$bVoted = isset($aParams['is_voted']) && $aParams['is_voted'] === true;
         $bShowDoVoteAsButtonSmall = isset($aParams['show_do_vote_as_button_small']) && $aParams['show_do_vote_as_button_small'] == true;
         $bShowDoVoteAsButton = !$bShowDoVoteAsButtonSmall && isset($aParams['show_do_vote_as_button']) && $aParams['show_do_vote_as_button'] == true;
+		$bDisabled = $bVoted && !$this->isUndo();
+
+        $sClass = '';
+		if($bShowDoVoteAsButton)
+			$sClass = 'bx-btn';
+		else if ($bShowDoVoteAsButtonSmall)
+			$sClass = 'bx-btn bx-btn-small';
+
+		if($bDisabled)
+			$sClass .= ' bx-btn-disabled';
 
         return BxDolTemplate::getInstance()->parseHtmlByName($this->_sTmplNameDoVoteLikes, array(
             'style_prefix' => $this->_sStylePrefix,
-            'js_object' => $this->getJsObjectName(),
-            'class' => ($bShowDoVoteAsButton ? 'bx-btn' : '') . ($bShowDoVoteAsButtonSmall ? 'bx-btn bx-btn-small' : ''),
-            'title' => _t('_vote_do_like'),
-            'value' => $this->getMinValue(),
+            'class' => $sClass,
+            'title' => _t($bVoted && $this->isUndo() ? '_vote_do_unlike' : '_vote_do_like'),
+        	'bx_if:show_onclick' => array(
+        		'condition' => !$bDisabled,
+        		'content' => array(
+        			'js_object' => $this->getJsObjectName(),
+        			'value' => $this->getMinValue(),
+        		)
+        	),
             'do_vote' => $this->_getLabelDoLike($aParams),
         ));
     }
