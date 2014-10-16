@@ -137,13 +137,8 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
     protected $_sFormDisplayPost;
     protected $_sFormDisplayEdit;
 
-    protected $_sStorageObject;
-    protected $_sTranscoderPreview;
-
     protected $_sTableImages;
     protected $_sTableImages2Entries;
-
-    protected $_aImageUploaders;
 
     protected $_sConnObjFriends;
     protected $_sConnObjSubscriptions;
@@ -226,11 +221,6 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         $this->_sFormObject = 'sys_comment';
         $this->_sFormDisplayPost = 'sys_comment_post';
         $this->_sFormDisplayEdit = 'sys_comment_edit';
-
-        $this->_sStorageObject = 'sys_cmts_images';
-        $this->_sTranscoderPreview = 'sys_cmts_images_preview';
-
-        $this->_aImageUploaders = array('sys_cmts_simple');
 
         $this->_sConnObjFriends = 'sys_profiles_friends';
         $this->_sConnObjSubscriptions = 'sys_profiles_subscriptions';
@@ -341,7 +331,12 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 
     public function getStorageObjectName()
     {
-        return $this->_sStorageObject;
+    	return $this->_getFormObject()->getStorageObjectName();
+    }
+
+	public function getTranscoderPreviewName()
+    {
+    	return $this->_getFormObject()->getTranscoderPreviewName();
     }
 
     public function getSystemInfo()
@@ -748,7 +743,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
             $this->_triggerComment();
 
             bx_import('BxDolStorage');
-            $oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
+            $oStorage = BxDolStorage::getObjectInstance($this->getStorageObjectName());
 
             $aImages = $this->_oQuery->getImages($this->_aSystem['system_id'], $aCmt['cmt_id']);
             foreach($aImages as $aImage)
@@ -810,6 +805,14 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         }
 
         return $oProfile;
+    }
+
+	protected function _getFormObject($sAction = BX_CMT_ACTION_POST)
+    {
+        $sDisplayName = '_sFormDisplay' . ucfirst($sAction);
+
+        bx_import('BxDolForm');
+        return BxDolForm::getObjectInstance($this->_sFormObject, $this->$sDisplayName);
     }
 
     protected function _prepareTextForEdit ($s)

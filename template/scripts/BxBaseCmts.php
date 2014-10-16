@@ -213,10 +213,10 @@ class BxBaseCmts extends BxDolCmts
             $aImages = $this->_oQuery->getImages($this->_aSystem['system_id'], $aCmt['cmt_id']);
             if(!empty($aImages) && is_array($aImages)) {
                 bx_import('BxDolStorage');
-        		$oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
+        		$oStorage = BxDolStorage::getObjectInstance($this->getStorageObjectName());
 
             	bx_import('BxDolImageTranscoder');
-                $oTranscoder = BxDolImageTranscoder::getObjectInstance($this->_sTranscoderPreview);
+                $oTranscoder = BxDolImageTranscoder::getObjectInstance($this->getTranscoderPreviewName());
 
                 foreach($aImages as $aImage)
                     $aTmplImages[] = array(
@@ -517,7 +517,7 @@ class BxBaseCmts extends BxDolCmts
 
     protected function _getFormPost($iCmtParentId = 0)
     {
-        $oForm = $this->_getFormObject(BX_CMT_ACTION_POST, $iCmtParentId);
+        $oForm = $this->_getForm(BX_CMT_ACTION_POST, $iCmtParentId);
         $oForm->aInputs['cmt_parent_id']['value'] = $iCmtParentId;
         $oForm->initChecker();
 
@@ -543,7 +543,7 @@ class BxBaseCmts extends BxDolCmts
                     $aImages = $oForm->getCleanValue('cmt_image');
                     if(!empty($aImages) && is_array($aImages)) {
                         bx_import('BxDolStorage');
-                        $oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
+                        $oStorage = BxDolStorage::getObjectInstance($this->getStorageObjectName());
 
                         foreach($aImages as $iImageId)
                             if($this->_oQuery->saveImages($this->_aSystem['system_id'], $iCmtId, $iImageId))
@@ -584,7 +584,7 @@ class BxBaseCmts extends BxDolCmts
         if(!$this->isEditAllowed($aCmt))
             return array('msg' => $aCmt['cmt_author_id'] == $iCmtAuthorId ? strip_tags($this->msgErrEditAllowed()) : _t('_Access denied'));
 
-        $oForm = $this->_getFormObject(BX_CMT_ACTION_EDIT, $aCmt['cmt_id']);
+        $oForm = $this->_getForm(BX_CMT_ACTION_EDIT, $aCmt['cmt_id']);
         $aCmt['cmt_text'] = $this->_prepareTextForEdit($aCmt['cmt_text']);
 
         $oForm->initChecker($aCmt);
@@ -609,41 +609,18 @@ class BxBaseCmts extends BxDolCmts
         return array('form' => $oForm->getCode(), 'form_id' => $oForm->id);
     }
 
-    protected function _getFormObject($sAction, $iId)
+    protected function _getForm($sAction, $iId)
     {
-        $sActionCap = ucfirst($sAction);
-        $sDisplayName = '_sFormDisplay' . $sActionCap;
-
-        bx_import('BxDolForm');
-        $oForm = BxDolForm::getObjectInstance($this->_sFormObject, $this->$sDisplayName);
+        $oForm = $this->_getFormObject($sAction);
         $oForm->setId(sprintf($oForm->aFormAttrs['id'], $sAction, $this->_sSystem, $iId));
         $oForm->setName(sprintf($oForm->aFormAttrs['name'], $sAction, $this->_sSystem, $iId));
         $oForm->aParams['db']['table'] = $this->_aSystem['table'];
         $oForm->aInputs['sys']['value'] = $this->_sSystem;
         $oForm->aInputs['id']['value'] = $this->_iId;
-        $oForm->aInputs['action']['value'] = 'Submit' . $sActionCap . 'Form';
+        $oForm->aInputs['action']['value'] = 'Submit' . ucfirst($sAction) . 'Form';
 
         if(!$this->isAttachImageEnabled())
             unset($oForm->aInputs['cmt_image']);
-
-        if(isset($oForm->aInputs['cmt_image'])) {
-            $aFormNested = array(
-                'params' =>array(
-                    'nested_form_template' => 'comments_uploader_nfw.html'
-                ),
-                'inputs' => array(),
-            );
-
-            bx_import('BxDolFormNested');
-            $oFormNested = new BxDolFormNested('cmt_image', $aFormNested, 'cmt_submit');
-
-            $oForm->aInputs['cmt_image']['storage_object'] = $this->_sStorageObject;
-            $oForm->aInputs['cmt_image']['images_transcoder'] = $this->_sTranscoderPreview;
-            $oForm->aInputs['cmt_image']['uploaders'] = $this->_aImageUploaders;
-            $oForm->aInputs['cmt_image']['upload_buttons_titles'] = array('Simple' => 'camera');
-            $oForm->aInputs['cmt_image']['multiple'] = true;
-            $oForm->aInputs['cmt_image']['ghost_template'] = $oFormNested;
-        }
 
         if(isset($oForm->aInputs['cmt_text'])) {
             $iCmtTextMin = (int)$this->_aSystem['chars_post_min'];
