@@ -335,6 +335,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
             'media-tablet.css',
             'media-phone.css',
             'media-print.css',
+            BX_DOL_URL_PLUGINS_PUBLIC . 'marka/marka.min.css',
         ));
 
         //--- Load default JS ---//
@@ -350,6 +351,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
             'jquery.webForms.js',
             'jquery.dolPopup.js',
             'elementQuery.min.js',
+            'marka/marka.min.js',
         ));
 
         //--- Load default JS ---//

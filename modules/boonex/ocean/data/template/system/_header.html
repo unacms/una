@@ -53,7 +53,14 @@
 
         $(document).ready(function () {
             bx_time('__lang__');
+
             $('#bx-toolbar').css({opacity: 0.9});
+
+            $('.sys-icon-a').each(function () {
+                var e = $(this);
+                var m = new Marka(e.get(0)), r = e.attr('data-rotate'), c = e.attr('data-color');
+                m.set(e.attr('data-icon')).rotate(r ? r : 'up').color(c ? c : '#29789c');
+            });
         });
 
         (function(w) {

@@ -286,6 +286,51 @@ function bx_menu_popup_inline (jSel, e, options) {
 }
 
 /**
+ * Show pointer popup with menu from existing HTML.
+ * @param jSel - jQuery selector for html to show in popup
+ * @param e - element to click to open/close slider
+ * @param options - popup options
+ */
+function bx_menu_slide (jSel, e) {
+    var options = options || {};
+    var eSlider = $(jSel);
+    var eBlock = eSlider.parents('.bx-page-block-container');
+    var eIcon = $(e).find('.sys-icon-a');
+
+    var fClose = function () {
+        if (eIcon)
+            (new Marka(eIcon[0])).set(eIcon.attr('data-icon-orig'));
+        eSlider.slideUp()
+    };
+
+    var fOpen = function () {
+        if (eIcon) {
+            eIcon.attr('data-icon-orig', eIcon.attr('data-icon'));
+            (new Marka(eIcon[0])).set('times');
+        }
+        eSlider.css({
+            position: 'absolute',
+            top: eBlock.find('.bx-db-header').outerHeight(true),
+            left: 0,
+            width: eBlock.width()
+        });
+        eSlider.slideDown();
+    };    
+    
+    if ($(jSel + ':visible').length) {
+        fClose();
+    } 
+    else {
+        fOpen();
+        eSlider.find('a').each(function () {
+            $(this).on('click', function () {
+                fClose();
+            });
+        });
+    }
+}
+
+/**
  * Set ACL level for specified profile
  * @param iProfileId - profile id to set acl level for
  * @param iAclLevel - acl level id to assign to a given rofile

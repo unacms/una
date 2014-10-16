@@ -12,6 +12,7 @@ bx_import('BxDolTemplate');
 class BxBaseFunctions extends BxDol implements iBxDolSingleton
 {
     protected $_oTemplate;
+    protected $_sDesignBoxIcon = 'chevron';
 
     protected function __construct($oTemplate)
     {
@@ -107,6 +108,17 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
                     'content' => $sContent
                 )) .
             ($isPlaceInCenter ? '</div>' : '');
+    }
+
+    function slideBox($sName, $sContent, $isHiddenByDefault = false)
+    {
+        $iId = !empty($sName) ? $sName : time();
+
+        return $this->_oTemplate->parseHtmlByName('popup_slide.html', array(
+            'id' => $iId,
+            'wrapper_style' => $isHiddenByDefault ? 'display:none;' : '',
+            'content' => $sContent
+        ));
     }
 
     function getTemplateIcon($sName)
@@ -228,8 +240,8 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
 
             if ($sMenu) {
                 $sId = 'bx-menu-db-' . time() . rand(0, PHP_INT_MAX);
-                $sCode .= BxTemplFunctions::getInstance()->transBox($sId, '<div class="bx-def-padding bx-def-color-bg-block">' . $sMenu . '</div>', true);
-                $aButtonMenu = array ('icon' => 'ellipsis-h', 'onclick' => "bx_menu_popup_inline('#" . $sId . "', this)");
+                $sCode .= $this->slideBox($sId, '<div class="bx-def-padding">' . $sMenu . '</div>', true);
+                $aButtonMenu = array ('icon-a' => $this->_sDesignBoxIcon, 'onclick' => "bx_menu_slide('#" . $sId . "', this)");
             }
 
         }
@@ -252,6 +264,7 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
 
                 $sCode .= '<a href="javascript:void(0);" ' . $sAttrs . '>';
                 $sCode .= !empty($aButton['icon']) ? '<i class="sys-icon ' . $aButton['icon'] . ' bx-def-font-h2"></i>' : '';
+                $sCode .= !empty($aButton['icon-a']) ? '<i class="sys-icon-a" data-rotate="down" data-icon="' . $aButton['icon-a'] . '"></i>' : '';
                 $sCode .= !empty($aButton['title']) ? $aButton['title'] : '';
                 $sCode .= '</a>';
             }
