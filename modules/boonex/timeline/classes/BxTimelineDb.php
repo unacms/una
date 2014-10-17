@@ -189,10 +189,10 @@ class BxTimelineDb extends BxBaseModNotificationsDb
     {
         switch($sFilter) {
             case BX_TIMELINE_FILTER_OWNER:
-                $sFilterAddon = " AND `te`.`action`='' AND `te`.`object_id`='" . $iOwnerId . "' ";
+                $sFilterAddon = " AND `{$this->_sTable}`.`action`='' AND `{$this->_sTable}`.`object_id`='" . $iOwnerId . "' ";
                 break;
             case BX_TIMELINE_FILTER_OTHER:
-                $sFilterAddon = " AND `te`.`action`='' AND `te`.`object_id`<>'" . $iOwnerId . "' ";
+                $sFilterAddon = " AND `{$this->_sTable}`.`action`='' AND `{$this->_sTable}`.`object_id`<>'" . $iOwnerId . "' ";
                 break;
             case BX_TIMELINE_FILTER_ALL:
             default:

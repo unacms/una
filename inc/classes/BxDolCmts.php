@@ -680,7 +680,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         $sCmtDisplay = isset($_REQUEST['CmtDisplay']) ? bx_process_input($_REQUEST['CmtDisplay'], BX_DATA_TEXT) : '';
         $sCmtFilter = isset($_REQUEST['CmtFilter']) ? bx_process_input($_REQUEST['CmtFilter'], BX_DATA_TEXT) : '';
 
-        return $this->getComments(array('vparent_id' => $iCmtVParentId, 'start' => $iCmtStart, 'per_view' => $iCmtPerView, 'type' => $sCmtBrowse, 'filter' => $sCmtFilter), array('type' => $sCmtDisplay));
+        return $this->getComments(array('vparent_id' => $iCmtVParentId, 'start' => $iCmtStart, 'per_view' => $iCmtPerView, 'type' => $sCmtBrowse, 'filter' => $sCmtFilter), array('type' => $sCmtDisplay, 'show_empty' => true));
     }
 
     public function actionSubmitPostForm()
