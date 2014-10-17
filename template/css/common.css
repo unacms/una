@@ -178,6 +178,10 @@ blockquote {
     text-decoration:none;
 }
 
+.bx-popup-slide-wrapper {
+    opacity:0.9;
+}
+
 .bx-popup-slide-wrapper li {
     text-align:right;
 }
