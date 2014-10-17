@@ -79,17 +79,14 @@ class BxBaseCmts extends BxDolCmts
     function getCommentsBlock($iParentId = 0, $iVParentId = 0, $bInDesignbox = true)
     {
         $aBp = array('parent_id' => $iParentId, 'vparent_id' => $iVParentId);
-
-        $sCmts = $this->getComments($aBp);
-        if(empty($sCmts))
-            $sCmts = $this->_getEmpty();
+        $aDp = array('show_empty' => true);
 
         $sCaption = _t('_cmt_block_comments_title', $this->getCommentsCount());
         $sContent = BxDolTemplate::getInstance()->parseHtmlByName('comments_block.html', array(
             'system' => $this->_sSystem,
             'list_anchor' => $this->getListAnchor(),
             'id' => $this->getId(),
-            'comments' => $sCmts,
+            'comments' => $this->getComments($aBp, $aDp),
             'post_form_top' => $this->getFormBoxPost($aBp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_TOP)),
             'post_form_bottom'  => $this->getFormBoxPost($aBp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_BOTTOM)),
         	'view_image_popup' => $this->_getViewImagePopup(),
@@ -117,8 +114,8 @@ class BxBaseCmts extends BxDolCmts
 
         $aCmts = $this->getCommentsArray($aBp['vparent_id'], $aBp['filter'], $aBp['order'], $aBp['start'], $aBp['per_view']);
         if(empty($aCmts) || !is_array($aCmts))
-            return '';
-
+            return isset($aDp['show_empty']) && $aDp['show_empty'] === true ? $this->_getEmpty() : '';
+            
         $sCmts = '';
         foreach($aCmts as $k => $aCmt)
             $sCmts .= $this->getComment($aCmt, $aBp, $aDp);
