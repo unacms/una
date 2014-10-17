@@ -1218,19 +1218,13 @@ BLAH;
             foreach ($this->aInputs as $aInput) {
                 if (!isset($aInput['type']) || 'files' != $aInput['type'] /*|| !isset($aInput['uploaders'])*/)
                     continue;
-   
-                bx_import('BxDolUploader');
 
-                // TODO: get rid of hardcode(remove 2 lines below) and uncomment the code below/above when uploaders will be specified in comments
-                $oUploader = BxDolUploader::getObjectInstance('sys_cmts_simple', 'sys_cmts_images', '');
-                $oUploader->addCssJs();
-/* 
+                bx_import('BxDolUploader');
                 foreach ($aInput['uploaders'] as $sUploaderObject) {
                     $oUploader = BxDolUploader::getObjectInstance($sUploaderObject, $aInput['storage_object'], '');
                     if ($oUploader)
                         $oUploader->addCssJs();
                 }
-*/
             }
                     
 
