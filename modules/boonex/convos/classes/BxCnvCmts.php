@@ -56,9 +56,9 @@ class BxCnvCmts extends BxTemplCmts
         return $this->msgErrRemoveAllowed ();
     }
 
-    protected function _getFormObject($sAction, $iId)
+    protected function _getFormObject($sAction = BX_CMT_ACTION_POST)
     {
-        $oForm = parent::_getFormObject($sAction, $iId);
+        $oForm = parent::_getFormObject($sAction);
         $oForm->aInputs['cmt_submit']['value'] = _t('_sys_send');
         return $oForm;
     }

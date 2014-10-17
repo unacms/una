@@ -61,7 +61,16 @@ blockquote {
     overflow:hidden;
 }
 
+.sys-icon-a {
+    width:2rem;
+    height:2rem;
+}
+
 /* --------------- design boxes */
+
+.bx-db-container {
+    position:relative;
+}
 
 .bx-db-title {
     display:inline-block;
@@ -167,6 +176,10 @@ blockquote {
     top:0;
     left:0;
     text-decoration:none;
+}
+
+.bx-popup-slide-wrapper li {
+    text-align:right;
 }
 
 /* --------------- message box */
