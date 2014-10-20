@@ -27,7 +27,7 @@ class BxBaseStudioStore extends BxDolStudioStore
 
     function getPageJs()
     {
-    	BxDolStudioTemplate::getInstance()->addJsTranslation(array('_adm_btn_queued'));
+    	BxDolStudioTemplate::getInstance()->addJsTranslation(array('_adm_btn_queued_submit'));
         return array_merge(parent::getPageJs(), array('jquery.fancybox.pack.js', 'store.js'));
     }
 
@@ -347,6 +347,10 @@ class BxBaseStudioStore extends BxDolStudioStore
         	$sIcon = BxDolStudioUtils::getModuleIcon($aModule, 'store');
         	$bIcon = strpos($sIcon, '.') === false;
 
+        	$bInstalled = $aModule['installed'];
+        	$bQueued = !$bInstalled && $this->oDb->isQueued('action', $aModule['dir']);
+        	
+
             $sModules .= $oTemplate->parseHtmlByName('str_product_v1.html', array(
                 'js_object' => $sJsObject,
              	'name' => $aModule['name'],
@@ -363,11 +367,15 @@ class BxBaseStudioStore extends BxDolStudioStore
                 'version' => $aModule['version'],
                 'dir' => $aModule['dir'],
                 'bx_if:hide_install' => array(
-                    'condition' => $aModule['installed'],
+                    'condition' => $bInstalled || $bQueued,
+                    'content' => array()
+                ),
+                'bx_if:hide_queued' => array(
+                    'condition' => !$bQueued,
                     'content' => array()
                 ),
                 'bx_if:hide_installed' => array(
-                    'condition' => !$aModule['installed'],
+                    'condition' => !$bInstalled || $bQueued,
                     'content' => array()
                 )
             ));
@@ -444,7 +452,7 @@ class BxBaseStudioStore extends BxDolStudioStore
 
         $aProduct = $this->loadProduct($sModuleName);
         if(empty($aProduct) || !is_array($aProduct))
-            return array('code' => 1, 'message' => (!empty($aProduct) ? $aProduct : _t('_adm_str_err_no_product_info')));
+            return array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => (!empty($aProduct) ? $aProduct : _t('_adm_str_err_no_product_info')));
 
 		$aDownloaded = $this->getDownloadedModules(false);
 
@@ -522,29 +530,33 @@ class BxBaseStudioStore extends BxDolStudioStore
 			),
         ));
 
-        return array('code' => 0, 'message' => '', 'popup' => PopupBox('bx-std-str-popup-product', $aProduct['title'], $sContent, true), 'screenshots' => $iScreenshots);
+        return array('code' => BX_DOL_STUDIO_IU_RC_SUCCESS, 'message' => '', 'popup' => PopupBox('bx-std-str-popup-product', $aProduct['title'], $sContent, true), 'screenshots' => $iScreenshots);
     }
 
     protected function getFile($iFileId)
     {
         $mixedResult = $this->loadFile($iFileId);
         if($mixedResult === true)
-        	return array('code' => 0, 'message' => _t('_adm_str_msg_download_successfully'));
+        	return array('code' => BX_DOL_STUDIO_IU_RC_SUCCESS, 'message' => _t('_adm_str_msg_download_successfully'));
 
         if(is_string($mixedResult))
-			return array('code' => 1, 'message' => (!empty($mixedResult) ? $mixedResult : _t('_adm_str_err_download_failed')));
+			return array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => (!empty($mixedResult) ? $mixedResult : _t('_adm_str_err_download_failed')));
 
 		if(is_array($mixedResult))
-			return array_merge(array('code' => 1, 'message' => _t('_adm_str_err_download_failed')), $mixedResult);
+			return array_merge(array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_str_err_download_failed')), $mixedResult);
     }
 
 	protected function getUpdate($sModuleName, $bAutoUpdate = false)
     {
         $mixedResult = $this->loadUpdate($sModuleName, $bAutoUpdate);
-        if($mixedResult !== true)
-            return array('code' => 1, 'message' => (!empty($mixedResult) ? $mixedResult : _t('_adm_str_err_download_failed')));
+        if($mixedResult === true)
+        	return array('code' => BX_DOL_STUDIO_IU_RC_SUCCESS, 'message' => _t('_adm_str_msg_download' . ($bAutoUpdate ? '_and_install' : '') . '_successfully'));
 
-        return array('code' => 0, 'message' => _t('_adm_str_msg_download' . ($bAutoUpdate ? '_and_install' : '') . '_successfully'));
+		if(is_string($mixedResult))
+			return array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => (!empty($mixedResult) ? $mixedResult : _t('_adm_str_err_download_failed')));
+
+		if(is_array($mixedResult))
+        	return array_merge(array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_str_err_download_failed')), $mixedResult);
     }
 
     protected function displayProducts($aItems, $aParams = array())
@@ -566,7 +578,7 @@ class BxBaseStudioStore extends BxDolStudioStore
             $bDownloadable = (int)$aItem['is_file'] == 1;
             $bDownloaded = in_array($aItem['name'], $aDownloaded);
             $bDownload = !$bShoppingCart && ($bFree || $bPurchased) && $bDownloadable;
-            $bQueued = $this->oDb->isDownloadQueued($aItem['name']);
+            $bQueued = $this->oDb->isQueued('download', $aItem['name']);
 
             $sPrice = !$bFree ? _t('_adm_str_txt_price_csign', $aItem['currency_sign'], $aItem['price']) : _t('_adm_str_txt_price_free');
             $sDiscount = !$bFree && !empty($aItem['discount']) ? _t('_adm_str_txt_discount_csign', $aItem['currency_sign'], $aItem['discount']['price']) : '';

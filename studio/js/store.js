@@ -183,7 +183,7 @@ BxDolStudioStore.prototype._onGetFile = function(oData, oButton) {
 			$(oButton).removeClass('bx-btn-disabled');
 			break;
 		case 2:
-			$(oButton).val(_t('_adm_btn_queued'));
+			$(oButton).val(_t('_adm_btn_queued_submit'));
 			break;
 	}
 
@@ -266,9 +266,9 @@ BxDolStudioStore.prototype.initScreenshots = function(iCount) {
 
 BxDolStudioStore.prototype.install = function(sValue, oInput) {
 	var $this = this;
-	var onSuccess = function() {
-		$(oInput).parent('.bx-std-pc-buttons').hide(0, function() {
-			$(this).siblings(':hidden').show(0);
+	var onSuccess = function(oData) {
+		$(oInput).parent('.bx-std-pc-buttons:first').hide(0, function() {
+			$(this).siblings('.bx-std-pcb-installed:hidden').show(0);
 		});
 	};
 
@@ -277,7 +277,7 @@ BxDolStudioStore.prototype.install = function(sValue, oInput) {
 
 BxDolStudioStore.prototype.update = function(sValue, oInput) {
 	var $this = this;
-	var onSuccess = function() {
+	var onSuccess = function(oData) {
 		$(oInput).parents('.bx-std-product:first').hide();
 	};
 
@@ -285,8 +285,17 @@ BxDolStudioStore.prototype.update = function(sValue, oInput) {
 };
 
 BxDolStudioStore.prototype.remove = function(sValue, oInput) {
-	var onSuccess = function() {
-		$(oInput).parents('.bx-std-product:first').hide();
+	var onSuccess = function(oData) {
+		switch(parseInt(oData.code)) {
+			case 0:
+				$(oInput).parents('.bx-std-product:first').hide();
+				break;
+			case 2:
+				$(oInput).parent('.bx-std-pc-buttons:first').hide(0, function() {
+					$(this).siblings('.bx-std-pcb-queued:hidden').show(0);
+				});
+				break;
+		}
 	};
 
     return this.perform('delete', sValue, onSuccess);
@@ -314,8 +323,13 @@ BxDolStudioStore.prototype.perform = function(sType, sValue, onSuccess) {
     		if(oData.message.length > 0)
     			$this.showPopup('bx-std-str-popup-' + sType, oData.message);
 
-    		if(oData.code == 0 && typeof onSuccess == 'function')
-    			onSuccess();
+    		switch(parseInt(oData.code)) {
+	    		case 0:
+	    		case 2:
+	    			if(typeof onSuccess == 'function')
+	    				onSuccess(oData);
+	    			break;
+    		}
     	},
     	'json'
     );

@@ -525,7 +525,7 @@
 	<string name="_adm_btn_installed_submit"><![CDATA[Installed]]></string>
 	<string name="_adm_btn_login_submit"><![CDATA[Enter Studio]]></string>
 	<string name="_adm_btn_purchase_submit"><![CDATA[Purchase]]></string>
-	<string name="_adm_btn_queued"><![CDATA[Queued]]></string>
+	<string name="_adm_btn_queued_submit"><![CDATA[Queued]]></string>
 	<string name="_adm_btn_settings_save"><![CDATA[Save]]></string>
 	<string name="_adm_dbd_btn_update"><![CDATA[Update]]></string>
 	<string name="_adm_dbd_txt_dolphin_n_available"><![CDATA[Dolphin {0} is available!]]></string>

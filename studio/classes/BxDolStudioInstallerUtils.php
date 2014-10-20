@@ -13,6 +13,10 @@ bx_import('BxDolInstallerUtils');
 define('BX_DOL_UNITY_URL_ROOT', 'http://www.boonex.com/');
 define('BX_DOL_UNITY_URL_MARKET', BX_DOL_UNITY_URL_ROOT . 'market/');
 
+define('BX_DOL_STUDIO_IU_RC_SUCCESS', 0);
+define('BX_DOL_STUDIO_IU_RC_FAILED', 1);
+define('BX_DOL_STUDIO_IU_RC_SCHEDULED', 2);
+
 class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSingleton
 {
 	protected $bUseFtp;
@@ -202,10 +206,10 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
     	}
 
     	if(!defined('BX_DOL_CRON_EXECUTE') && !self::isRealOwner() && !in_array($sOperation, array('install', 'uninstall', 'enable', 'disable'))) {
-    		if($this->addTransientJob(self::getNamePerformAction($sDirectory . '_' . $sOperation), 'perform_action', array($sDirectory, $sOperation, $aParams)))
-    			return array('code' => 1, 'message' => _t('_adm_mod_msg_process_operation_scheduled'));
+    		if($this->addTransientJob(self::getNamePerformAction($sDirectory), 'perform_action', array($sDirectory, $sOperation, $aParams)))
+    			return array('code' => BX_DOL_STUDIO_IU_RC_SCHEDULED, 'message' => _t('_adm_mod_msg_process_operation_scheduled'));
     		else 
-    			return array('code' => 2, 'message' => _t('_adm_mod_err_process_operation_failed', $sOperation, $sDirectory));
+    			return array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_mod_err_process_operation_failed', $sOperation, $sDirectory));
     	}
 
     	$sConfigFile = 'install/config.php';
@@ -220,7 +224,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         	if($bTransient)
         		$this->emailNotify($sMessage);
 
-        	return array('code' => 2, 'message' => $sMessage);
+        	return array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => $sMessage);
         } 
 
 		require_once($sPathInstaller);
@@ -232,7 +236,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 		if(!$aResult['result'] && $bTransient)
 			$this->emailNotify($aResult['message']);
 
-        return array('code' => $aResult['result'] ? 0 : 2, 'message' => $aResult['message']);
+        return array('code' => $aResult['result'] ? BX_DOL_STUDIO_IU_RC_SUCCESS : BX_DOL_STUDIO_IU_RC_FAILED, 'message' => $aResult['message']);
     }
 
     public function checkModules($bAuthorizedAccess = false)
@@ -334,7 +338,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 			if(!$this->addTransientJob(self::getNameDownloadFile($aParams['module_name']), 'download_file_complete', array($sFilePath, $aParams)))
 				return _t('_adm_str_err_download_failed');
 
-			return array('code' => '2', 'message' => _t('_adm_str_msg_download' . ($bAutoAction ? '_and_install' : '') . '_scheduled'));
+			return array('code' => BX_DOL_STUDIO_IU_RC_SCHEDULED, 'message' => _t('_adm_str_msg_download' . ($bAutoAction ? '_and_install' : '') . '_scheduled'));
 		}
 
         //--- Unarchive package.
