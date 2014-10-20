@@ -330,7 +330,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
     	$sAutoAction = isset($aParams['auto_action']) ? $aParams['auto_action'] : '';
     	$bAutoAction = !empty($sAutoAction);
 
-		if(!defined('BX_DOL_CRON_EXECUTE') && self::isRealOwner()) {
+		if(!defined('BX_DOL_CRON_EXECUTE') && !self::isRealOwner()) {
 			if(!$this->addTransientJob(self::getNameDownloadFile($aParams['module_name']), 'download_file_complete', array($sFilePath, $aParams)))
 				return _t('_adm_str_err_download_failed');
 
