@@ -44,8 +44,12 @@ html {
 
 .bx-popup-box-wrapper,
 .bx-popup-box {
-	width:100%;
+    position:fixed !important;
+    width:100%;
+	width:100vw;
     height:100%;
+    height:100vh;
+    overflow:scroll;
 }
 
 .bx-popup-box > div {

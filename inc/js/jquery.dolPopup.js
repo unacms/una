@@ -38,17 +38,18 @@
 
         if (o.fog && !$('#bx-popup-fog').length) {
             $('<div id="bx-popup-fog" class="bx-def-z-index-overlay" style="display: none;">&nbsp;</div>')
-                .prependTo('body')
-                .css({
-                    position: 'fixed',
-                    top: 0,
-                    left: 0,
-                    width: $(window).width(),
-                    height: $(window).height(),
-                    opacity: o.fog.opacity,
-                    backgroundColor: o.fog.color
-                });
+                .prependTo('body');
         }
+
+        $('#bx-popup-fog').css({
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: $(window).width(),
+            height: $(window).height(),
+            opacity: o.fog.opacity,
+            backgroundColor: o.fog.color
+        });
         
         $(window).on('resize.popupFog', function () {
             $('#bx-popup-fog').css({
@@ -400,6 +401,7 @@
                 });
 
             } else if (o.position == 'centered') {
+
                 $el.position({
                     of: window,
                     my: 'center center+' + ($el.outerHeight() > $(window).height() ? parseInt(($el.outerHeight() - $(window).height()) / 2) : '0'),

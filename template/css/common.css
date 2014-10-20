@@ -62,8 +62,8 @@ blockquote {
 }
 
 .sys-icon-a {
-    width:2rem;
-    height:2rem;
+    width:1.5rem;
+    height:1.5rem;
 }
 
 /* --------------- design boxes */
@@ -176,6 +176,10 @@ blockquote {
     top:0;
     left:0;
     text-decoration:none;
+}
+
+.bx-popup-slide-wrapper {
+    opacity:0.9;
 }
 
 .bx-popup-slide-wrapper li {
