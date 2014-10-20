@@ -49,6 +49,16 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
 
+    public static function getNamePerformAction($sParam)
+    {
+    	return 'sys_perform_action_' . md5($sParam);
+    }
+
+    public static function getNameDownloadFile($sParam)
+    {
+    	return 'sys_download_file_complete_' . $sParam;
+    }
+
     /*
      * Is used to complete Downloading inside Transient Cron Job.
      */
@@ -192,7 +202,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
     	}
 
     	if(!defined('BX_DOL_CRON_EXECUTE') && !self::isRealOwner() && !in_array($sOperation, array('install', 'uninstall', 'enable', 'disable'))) {
-    		if($this->addTransientJob('perform_action', array($sDirectory, $sOperation, $aParams)))
+    		if($this->addTransientJob(self::getNamePerformAction($sDirectory . '_' . $sOperation), 'perform_action', array($sDirectory, $sOperation, $aParams)))
     			return array('code' => 1, 'message' => _t('_adm_mod_msg_process_operation_scheduled'));
     		else 
     			return array('code' => 2, 'message' => _t('_adm_mod_err_process_operation_failed', $sOperation, $sDirectory));
@@ -275,7 +285,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
     {
 		$aItem = $this->getAccessObject(true)->loadItems(array('dol_type' => 'product_file', 'dol_file_id' => $iFileId));
 
-		return $this->downloadFileInit($aItem);
+		return $this->downloadFileInit($aItem, array('module_name' => $aItem['module_name']));
     }
 
     public function downloadUpdatePublic($sModuleName, $bAutoUpdate = false)
@@ -292,7 +302,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 			))),
 		));
 
-		return $this->downloadFileInit($aItem, array('updated_module_name' => $sModuleName, 'auto_action' => $bAutoUpdate ? 'update' : ''));
+		return $this->downloadFileInit($aItem, array('module_name' => $sModuleName, 'auto_action' => $bAutoUpdate ? 'update' : ''));
     }
 
     protected function downloadFileInit($aItem, $aParams = array())
@@ -320,8 +330,12 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
     	$sAutoAction = isset($aParams['auto_action']) ? $aParams['auto_action'] : '';
     	$bAutoAction = !empty($sAutoAction);
 
-		if(!defined('BX_DOL_CRON_EXECUTE') && !self::isRealOwner())
-			return _t($this->addTransientJob('download_file_complete', array($sFilePath, $aParams)) ? '_adm_str_msg_download' . ($bAutoAction ? '_and_install' : '') . '_scheduled' : '_adm_str_err_download_failed');
+		if(!defined('BX_DOL_CRON_EXECUTE') && self::isRealOwner()) {
+			if(!$this->addTransientJob(self::getNameDownloadFile($aParams['module_name']), 'download_file_complete', array($sFilePath, $aParams)))
+				return _t('_adm_str_err_download_failed');
+
+			return array('code' => '2', 'message' => _t('_adm_str_msg_download' . ($bAutoAction ? '_and_install' : '') . '_scheduled'));
+		}
 
         //--- Unarchive package.
         $sPackagePath = '';
@@ -507,10 +521,10 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         return $aInstalledInfo;
     }
 
-    private function addTransientJob($sAction, $aParams)
+    private function addTransientJob($sName, $sAction, $aParams)
     {
 		bx_import('BxDolCronQuery');
-		if(BxDolCronQuery::getInstance()->addTransientJobService('sys_' . $sAction, array('system', $sAction, $aParams, 'DolStudioInstallerUtils')))
+		if(BxDolCronQuery::getInstance()->addTransientJobService($sName, array('system', $sAction, $aParams, 'DolStudioInstallerUtils')))
 			return true;
 
 		return false;

@@ -177,8 +177,15 @@ BxDolStudioStore.prototype._getFile = function(sAction, mixedId, onResult, oButt
 
 BxDolStudioStore.prototype._onGetFile = function(oData, oButton) {
 	bx_loading(this.sIdPageContent, false);
-	if(oData.code != 0)
-		$(oButton).removeClass('bx-btn-disabled');
+
+	switch(parseInt(oData.code)) {
+		case 1:
+			$(oButton).removeClass('bx-btn-disabled');
+			break;
+		case 2:
+			$(oButton).val(_t('_adm_btn_queued'));
+			break;
+	}
 
 	if(oData.message)
 		this.showPopup(this.sIdPopupFile, oData.message, oButton);

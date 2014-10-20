@@ -15,6 +15,15 @@ class BxDolStudioStoreQuery extends BxDolStudioModulesQuery
     {
         parent::__construct();
     }
+
+    public function isDownloadQueued($sName)
+    {
+    	bx_import('BxDolStudioInstallerUtils');
+    	$sJobName = BxDolStudioInstallerUtils::getNameDownloadFile($sName);
+
+    	$sSql = $this->prepare("SELECT `id` FROM `sys_cron_jobs` WHERE name=? LIMIT 1", $sJobName);
+    	return (int)$this->getOne($sSql) > 0;
+    }
 }
 
 /** @} */

@@ -27,6 +27,7 @@ class BxBaseStudioStore extends BxDolStudioStore
 
     function getPageJs()
     {
+    	BxDolStudioTemplate::getInstance()->addJsTranslation(array('_adm_btn_queued'));
         return array_merge(parent::getPageJs(), array('jquery.fancybox.pack.js', 'store.js'));
     }
 
@@ -527,10 +528,14 @@ class BxBaseStudioStore extends BxDolStudioStore
     protected function getFile($iFileId)
     {
         $mixedResult = $this->loadFile($iFileId);
-        if($mixedResult !== true)
-            return array('code' => 1, 'message' => (!empty($mixedResult) ? $mixedResult : _t('_adm_str_err_download_failed')));
+        if($mixedResult === true)
+        	return array('code' => 0, 'message' => _t('_adm_str_msg_download_successfully'));
 
-        return array('code' => 0, 'message' => _t('_adm_str_msg_download_successfully'));
+        if(is_string($mixedResult))
+			return array('code' => 1, 'message' => (!empty($mixedResult) ? $mixedResult : _t('_adm_str_err_download_failed')));
+
+		if(is_array($mixedResult))
+			return array_merge(array('code' => 1, 'message' => _t('_adm_str_err_download_failed')), $mixedResult);
     }
 
 	protected function getUpdate($sModuleName, $bAutoUpdate = false)
@@ -561,6 +566,7 @@ class BxBaseStudioStore extends BxDolStudioStore
             $bDownloadable = (int)$aItem['is_file'] == 1;
             $bDownloaded = in_array($aItem['name'], $aDownloaded);
             $bDownload = !$bShoppingCart && ($bFree || $bPurchased) && $bDownloadable;
+            $bQueued = $this->oDb->isDownloadQueued($aItem['name']);
 
             $sPrice = !$bFree ? _t('_adm_str_txt_price_csign', $aItem['currency_sign'], $aItem['price']) : _t('_adm_str_txt_price_free');
             $sDiscount = !$bFree && !empty($aItem['discount']) ? _t('_adm_str_txt_discount_csign', $aItem['currency_sign'], $aItem['discount']['price']) : '';
@@ -607,14 +613,18 @@ class BxBaseStudioStore extends BxDolStudioStore
                     )
                 ),
                 'bx_if:show_download' => array(
-                    'condition' => $bDownload && !$bDownloaded,
+                    'condition' => $bDownload && !$bQueued && !$bDownloaded,
                     'content' => array(
                         'js_object' => $sJsObject,
                         'file_id' => $aItem['file_id']
                     )
                 ),
                 'bx_if:show_download_disabled' => array(
-					'condition' => $bDownload && $bDownloaded,
+					'condition' => $bDownload && !$bQueued && $bDownloaded,
+					'content' => array()
+				),
+				'bx_if:show_queued_disabled' => array(
+					'condition' => $bDownload && $bQueued && !$bDownloaded,
 					'content' => array()
 				),
                 'bx_if:show_delete' => array(

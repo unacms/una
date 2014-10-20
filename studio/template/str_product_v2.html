@@ -28,6 +28,9 @@
             <bx_if:show_download_disabled>
             	<input class="bx-btn bx-btn-small bx-btn-disabled bx-std-pc-download" type="button" value="<bx_text:_adm_btn_download_submit />" disabled="disabled" />
             </bx_if:show_download_disabled>
+            <bx_if:show_queued_disabled>
+            	<input class="bx-btn bx-btn-small bx-btn-disabled bx-std-pc-queued" type="button" value="<bx_text:_adm_btn_queued />" disabled="disabled" />
+            </bx_if:show_queued_disabled>
             <bx_if:show_delete>
             	<input class="bx-btn bx-btn-small bx-std-pc-delete" type="button" value="<bx_text:_adm_btn_delete_submit />" onclick="javascript:__js_object__.deleteFromCart('__vendor__', __id__, this)" />
             </bx_if:show_delete>
