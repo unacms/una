@@ -68,7 +68,6 @@ class BxDolStudioToolsAudit extends BxDol
             'php module: curl' => array('op' => 'module', 'val' => 'curl'),
             'php module: gd' => array('op' => 'module', 'val' => 'gd'),
             'php module: mbstring' => array('op' => 'module', 'val' => 'mbstring'),
-            'php module: xsl' => array('op' => 'module', 'val' => 'xsl', 'warn' => 1),
             'php module: json' => array('op' => 'module', 'val' => 'json', 'warn' => 1),
             'php module: openssl' => array('op' => 'module', 'val' => 'openssl', 'warn' => 1),
             'php module: zip' => array('op' => 'module', 'val' => 'zip', 'warn' => 1),

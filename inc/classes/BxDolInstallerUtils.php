@@ -20,20 +20,6 @@ class BxDolInstallerUtils extends BxDolIO
         parent::__construct();
     }
 
-    static public function isXsltEnabled()
-    {
-        if (((int)phpversion()) >= 5) {
-            if (class_exists ('DOMDocument') && class_exists ('XsltProcessor'))
-                return true;
-        } else {
-            if (function_exists('domxml_xslt_stylesheet_file'))
-                return true;
-            elseif (function_exists ('xslt_create'))
-                return true;
-        }
-        return false;
-    }
-
     static public function isAllowUrlInclude()
     {
         if (version_compare(phpversion(), "5.2", ">") == 1) {
