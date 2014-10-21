@@ -1216,7 +1216,7 @@ BLAH;
             );
 
             foreach ($this->aInputs as $aInput) {
-                if (!isset($aInput['type']) || 'files' != $aInput['type'] /*|| !isset($aInput['uploaders'])*/)
+                if (!isset($aInput['type']) || 'files' != $aInput['type'] || !isset($aInput['uploaders']))
                     continue;
 
                 bx_import('BxDolUploader');
