@@ -54,7 +54,7 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
                 'result' => false
             ));
 
-		if(isset($aParams['updated_module_name']) && strcmp($aParams['updated_module_name'], $aModuleInfo['name']) != 0)
+		if(isset($aParams['module_name']) && strcmp($aParams['module_name'], $aModuleInfo['name']) != 0)
 			return array_merge($aResult, array(
                 'message' => $this->_displayResult('check_module_matches', false, '_adm_err_modules_module_not_match', $bHtmlResponce),
                 'result' => false

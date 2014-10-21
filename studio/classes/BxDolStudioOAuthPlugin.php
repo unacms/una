@@ -130,8 +130,9 @@ class BxDolStudioOAuthPlugin extends BxDolStudioOAuth implements iBxDolSingleton
             //echo $sResponse; exit;	//--- Uncomment to debug
             return json_decode($sResponse, true);
         }
-        catch(OAuthException $e) {
-            return array();
+    	catch(TokenNotFoundException $e) {
+        	$this->unsetAuthorizedUser();
+            return $this->getRequestToken();
         }
     }
 
