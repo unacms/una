@@ -47,6 +47,10 @@
     margin-bottom:0;
 }
 
+.bx-base-text-unit-ext .bx-base-text-unit-thumb {
+    float:left;
+}
+
 /* view page */
 
 .bx-base-text-entity-content p:first-child,
