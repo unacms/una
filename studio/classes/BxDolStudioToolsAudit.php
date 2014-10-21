@@ -17,7 +17,7 @@ class BxDolStudioToolsAudit extends BxDol
     protected $aType2ClassCSS;
     protected $aType2Title;
 
-    protected $sLatestPhp53Version;
+    protected $aLatestPhp;
     protected $sMinPhpVer;
     protected $aPhpSettings;
     protected $iPhpErrorReporting;
@@ -47,8 +47,12 @@ class BxDolStudioToolsAudit extends BxDol
             BX_DOL_AUDIT_OK => _t('_sys_audit_title_ok'),
         );
 
-        $this->sLatestPhp53Version = '5.3.28';
-        $this->sMinPhpVer = '5.2.0';
+        $this->aLatestPhp = array(
+            '5.3' => '5.3.29',
+            '5.4' => '5.4.34',
+            '5.5' => '5.5.18',
+        );
+        $this->sMinPhpVer = '5.3.0';
         $this->aPhpSettings = array (
             'allow_url_fopen' => array('op' => '=', 'val' => true, 'type' => 'bool'),
             'allow_url_include' => array('op' => '=', 'val' => false, 'type' => 'bool'),
@@ -68,8 +72,6 @@ class BxDolStudioToolsAudit extends BxDol
             'php module: json' => array('op' => 'module', 'val' => 'json', 'warn' => 1),
             'php module: openssl' => array('op' => 'module', 'val' => 'openssl', 'warn' => 1),
             'php module: zip' => array('op' => 'module', 'val' => 'zip', 'warn' => 1),
-            'php module: ftp' => array('op' => 'module', 'val' => 'ftp', 'warn' => 1),
-            'php module: oauth' => array('op' => 'module', 'val' => 'oauth', 'warn' => 1),
         );
 
         $this->sMinMysqlVer = '4.1.2';
@@ -252,10 +254,14 @@ class BxDolStudioToolsAudit extends BxDol
             $aVer = array('type' => BX_DOL_AUDIT_UNDEF, 'msg' => _t('_sys_audit_msg_value_checking_failed'), 'params' => array ('real_val' => $sPhpVer));
         elseif (version_compare($sPhpVer, $this->sMinPhpVer, '<'))
             $aVer = array('type' => BX_DOL_AUDIT_FAIL, 'msg' => _t('_sys_audit_msg_version_is_incompatible', $this->sMinPhpVer), 'params' => array ('real_val' => $sPhpVer));
-        elseif (version_compare($sPhpVer, '5.4.0', '>=') && version_compare($sPhpVer, '6.0.0', '<') && !version_compare($sPhpVer, $sLatestPhpVersion, '>='))
+        elseif (version_compare($sPhpVer, '5.6.0', '>=') && version_compare($sPhpVer, '6.0.0', '<') && !version_compare($sPhpVer, $sLatestPhpVersion, '>='))
             $aVer = array('type' => BX_DOL_AUDIT_WARN, 'msg' => _t('_sys_audit_msg_version_is_outdated', $sLatestPhpVersion), 'params' => array ('real_val' => $sPhpVer));
-        elseif (version_compare($sPhpVer, '5.2.0', '>=') && version_compare($sPhpVer, '5.4.0', '<') && !version_compare($sPhpVer, $this->sLatestPhp53Version, '>='))
-            $aVer = array('type' => BX_DOL_AUDIT_WARN, 'msg' => _t('_sys_audit_msg_version_is_outdated', $this->sLatestPhp53Version), 'params' => array ('real_val' => $sPhpVer));
+        elseif (version_compare($sPhpVer, '5.5.0', '>=') && version_compare($sPhpVer, '5.6.0', '<') && !version_compare($sPhpVer, $this->aLatestPhp['5.5'], '>='))
+            $aVer = array('type' => BX_DOL_AUDIT_WARN, 'msg' => _t('_sys_audit_msg_version_is_outdated', $this->aLatestPhp['5.5']), 'params' => array ('real_val' => $sPhpVer));
+        elseif (version_compare($sPhpVer, '5.4.0', '>=') && version_compare($sPhpVer, '5.5.0', '<') && !version_compare($sPhpVer, $this->aLatestPhp['5.4'], '>='))
+            $aVer = array('type' => BX_DOL_AUDIT_WARN, 'msg' => _t('_sys_audit_msg_version_is_outdated', $this->aLatestPhp['5.4']), 'params' => array ('real_val' => $sPhpVer));
+        elseif (version_compare($sPhpVer, '5.3.0', '>=') && version_compare($sPhpVer, '5.4.0', '<') && !version_compare($sPhpVer, $this->aLatestPhp['5.3'], '>='))
+            $aVer = array('type' => BX_DOL_AUDIT_WARN, 'msg' => _t('_sys_audit_msg_version_is_outdated', $this->aLatestPhp['5.3']), 'params' => array ('real_val' => $sPhpVer));
         else
             $aVer = array('type' => BX_DOL_AUDIT_OK, 'params' => array ('real_val' => $sPhpVer));
         $aMessages[_t('_sys_audit_version')] = $aVer;
