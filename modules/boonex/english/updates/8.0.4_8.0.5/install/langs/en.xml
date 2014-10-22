@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_adm_block_cpt_goodies"><![CDATA[Storefront]]></string_add>
+	<string_add name="_adm_btn_queued_submit"><![CDATA[Queued]]></string_add>
+	<string_add name="_cmt_view_attached_image"><![CDATA[View image]]></string_add>
+	<string_add name="_sys_menu_template_title_custom"><![CDATA[Custom menu items]]></string_add>
+
+	<string_upd name="_sys_location_country"><![CDATA[<i class="sys-icon location-arrow"></i> {0}]]></string_upd>
+	<string_upd name="_sys_location_country_city"><![CDATA[<i class="sys-icon location-arrow"></i> {1}, {0}]]></string_upd>
+</resources>

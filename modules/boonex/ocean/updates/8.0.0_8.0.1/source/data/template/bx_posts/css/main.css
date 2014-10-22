@@ -1,0 +1,12 @@
+@import url(../../../../../posts/template/css/main.css);
+
+.bx-base-text-author,
+.bx-menu-btns-hor.bx-menu-object-bx_posts_my,
+.bx-menu-btns-hor.bx-menu-object-bx_posts_view {
+	padding: 20px;
+  	padding: 1.25rem;
+}
+
+.bx-base-text-unit-author {
+	font-weight: bold;
+}

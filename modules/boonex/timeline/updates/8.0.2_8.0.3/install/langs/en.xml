@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_del name="_bx_timeline_menu_item_title_item_vote"><![CDATA[Plus]]></string_del>
+</resources>

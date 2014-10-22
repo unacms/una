@@ -1,0 +1,3 @@
+UPDATE `sys_pages_blocks` SET `designbox_id`='3' WHERE `object`='bx_convos_view_entry' AND `title`='_bx_cnv_page_block_title_entry_collaborators' LIMIT 1;
+UPDATE `sys_pages_blocks` SET `designbox_id`='3' WHERE `object`='bx_convos_view_entry' AND `title`='_bx_cnv_page_block_title_entry_actions' LIMIT 1;
+UPDATE `sys_pages_blocks` SET `designbox_id`='3' WHERE `object`='bx_convos_view_entry' AND `title`='_bx_cnv_page_block_title_entry_author' LIMIT 1;

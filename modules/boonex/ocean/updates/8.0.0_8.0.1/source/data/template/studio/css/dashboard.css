@@ -1,0 +1,6 @@
+@import url(../../../../../../../studio/template/css/dashboard.css);
+
+/*--- Background ---*/
+div.bx-std-page-bg {
+	background-image: url(../images/bx-std-bg-columns.png);
+}

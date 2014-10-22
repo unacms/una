@@ -1,0 +1,8 @@
+@import url(../../../../../convos/template/css/main.css);
+
+.bx-base-text-author,
+.bx-cnv-collaborators,
+.bx-menu-btns-hor.bx-menu-object-bx_convos_view {
+	padding: 20px;
+  	padding: 1.25rem;
+}
