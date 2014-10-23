@@ -85,6 +85,22 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_persons_home', 1, 'bx_persons', '_bx_persons_page_block_title_latest_profiles', 0, 2147483647, 'service', 'a:3:{s:6:\"module\";s:10:\"bx_persons\";s:6:\"method\";s:22:\"browse_recent_profiles\";s:6:"params";a:1:{i:0;b:1;}}', 0, 1, 0);
 
+-- PAGE: module moderation
+
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_persons_moderation', '_bx_persons_page_title_sys_moderation', '_bx_persons_page_title_moderation', 'bx_persons', 5, 64, 1, 'persons-moderation', 'page.php?i=persons-moderation', '', '', '', 0, 1, 0, 'BxPersonsPageBrowse', 'modules/boonex/persons/classes/BxPersonsPageBrowse.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
+('bx_persons_moderation', 1, 'bx_persons', '_bx_persons_page_block_title_moderation', 11, 64, 'service', 'a:3:{s:6:\"module\";s:10:\"bx_persons\";s:6:\"method\";s:15:\"manage_entities\";s:6:\"params\";a:1:{i:0;s:10:\"moderation\";}}', 0, 1, 0);
+
+-- PAGE: module administration
+
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_persons_administration', '_bx_persons_page_title_sys_administration', '_bx_persons_page_title_administration', 'bx_persons', 5, 128, 1, 'persons-administration', 'page.php?i=persons-administration', '', '', '', 0, 1, 0, 'BxPersonsPageBrowse', 'modules/boonex/persons/classes/BxPersonsPageBrowse.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
+('bx_persons_administration', 1, 'bx_persons', '_bx_persons_page_block_title_administration', 11, 128, 'service', 'a:3:{s:6:\"module\";s:10:\"bx_persons\";s:6:\"method\";s:15:\"manage_entities\";s:6:\"params\";a:1:{i:0;s:14:\"administration\";}}', 0, 1, 0);
+
 -- PAGE: add block to homepage
 
 SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = 'sys_home' AND `cell_id` = 1 ORDER BY `order` DESC LIMIT 1);
@@ -145,7 +161,9 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_persons_submenu', 'bx_persons', '_bx_persons_menu_set_title_submenu', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_persons_submenu', 'bx_persons', 'persons-home', '_bx_persons_menu_item_title_system_entries_public', '_bx_persons_menu_item_title_entries_public', 'page.php?i=persons-home', '', '', '', '', 2147483647, 1, 1, 1);
+('bx_persons_submenu', 'bx_persons', 'persons-home', '_bx_persons_menu_item_title_system_entries_public', '_bx_persons_menu_item_title_entries_public', 'page.php?i=persons-home', '', '', '', '', 2147483647, 1, 1, 1),
+('bx_persons_submenu', 'bx_persons', 'persons-moderation', '_bx_persons_menu_item_title_system_entries_moderation', '_bx_persons_menu_item_title_entries_moderation', 'page.php?i=persons-moderation', '', '', '', '', 64, 1, 1, 2),
+('bx_persons_submenu', 'bx_persons', 'persons-administration', '_bx_persons_menu_item_title_system_entries_administration', '_bx_persons_menu_item_title_entries_administration', 'page.php?i=persons-administration', '', '', '', '', 128, 1, 1, 3);
 
 -- MENU: view submenu
 
@@ -244,3 +262,28 @@ INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigg
 -- SEARCH
 INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `ClassName`, `ClassPath`) VALUES
 ('bx_persons', '_bx_persons', 'BxPersonsSearchResult', 'modules/boonex/persons/classes/BxPersonsSearchResult.php');
+
+-- GRIDS: administration
+INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `override_class_name`, `override_class_file`) VALUES
+('bx_persons_administration', 'Sql', 'SELECT `td`.*, `ta`.`email` AS `account`, `ta`.`logged` AS `last_online`, `tp`.`status` AS `status` FROM `bx_persons_data` AS `td` LEFT JOIN `sys_profiles` AS `tp` ON `td`.`id`=`tp`.`content_id` AND `tp`.`type`=''bx_persons'' LEFT JOIN `sys_accounts` AS `ta` ON `tp`.`account_id`=`ta`.`id` WHERE 1 ', 'bx_persons_data', 'id', '', 'status', '', 100, NULL, 'start', '', 'fullname', '', 'like', '', '', 'BxPersonGridAdministration', 'modules/boonex/persons/classes/BxPersonGridAdministration.php'),
+('bx_persons_moderation', 'Sql', 'SELECT `td`.*, `ta`.`email` AS `account`, `ta`.`logged` AS `last_online`, `tp`.`status` AS `status` FROM `bx_persons_data` AS `td` LEFT JOIN `sys_profiles` AS `tp` ON `td`.`id`=`tp`.`content_id` AND `tp`.`type`=''bx_persons'' LEFT JOIN `sys_accounts` AS `ta` ON `tp`.`account_id`=`ta`.`id` WHERE 1 ', 'bx_persons_data', 'id', '', 'status', '', 100, NULL, 'start', '', 'fullname', '', 'like', '', '', 'BxPersonGridModeration', 'modules/boonex/persons/classes/BxPersonGridModeration.php');
+
+INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
+('bx_persons_administration', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
+('bx_persons_administration', 'switcher', '', '8%', 0, '', '', 2),
+('bx_persons_administration', 'fullname', '_bx_persons_grid_column_title_adm_fullname', '25%', 0, '', '', 3),
+('bx_persons_administration', 'last_online', '_bx_persons_grid_column_title_adm_last_online', '25%', 1, '25', '', 4),
+('bx_persons_administration', 'account', '_bx_persons_grid_column_title_adm_account', '25%', 0, '25', '', 5),
+('bx_persons_administration', 'actions', '', '15%', 0, '', '', 6),
+('bx_persons_moderation', 'switcher', '', '10%', 0, '', '', 1),
+('bx_persons_moderation', 'fullname', '_bx_persons_grid_column_title_adm_fullname', '25%', 0, '', '', 2),
+('bx_persons_moderation', 'last_online', '_bx_persons_grid_column_title_adm_last_online', '25%', 1, '25', '', 3),
+('bx_persons_moderation', 'account', '_bx_persons_grid_column_title_adm_account', '25%', 0, '25', '', 4),
+('bx_persons_moderation', 'actions', '', '15%', 0, '', '', 5);
+
+
+INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
+('bx_persons_administration', 'bulk', 'delete', '_bx_persons_grid_action_title_adm_delete', '', 0, 1),
+('bx_persons_administration', 'single', 'delete', '', 'remove', 1, 1),
+('bx_persons_administration', 'single', 'settings', '', 'cog', 0, 2),
+('bx_persons_moderation', 'single', 'settings', '', 'cog', 0, 1);

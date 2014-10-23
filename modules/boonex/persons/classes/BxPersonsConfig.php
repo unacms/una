@@ -80,6 +80,8 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'OBJECT_MENU_SUBMENU' => 'bx_persons_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_persons_view_submenu',  // view entry submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'persons-home', // first item in view entry submenu from main module submenu
+            'OBJECT_GRID_ADMINISTRATION' => 'bx_persons_administration',
+        	'OBJECT_GRID_MODERATION' => 'bx_persons_moderation',
 
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (
@@ -110,8 +112,23 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             ),
 
         );
-    }
 
+        $this->_aJsClass = array(
+        	'moderation' => 'BxPersonsModeration',
+        	'administration' => 'BxPersonsAdministration'
+        );
+
+        $this->_aJsObjects = array(
+            'moderation' => 'oBxPersonsModeration',
+        	'administration' => 'oBxPersonsAdministration'
+        );
+
+        $this->_aGridObjects = array(
+        	'moderation' => $this->CNF['OBJECT_GRID_MODERATION'],
+        	'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
+        	
+        );
+    }
 }
 
 /** @} */
