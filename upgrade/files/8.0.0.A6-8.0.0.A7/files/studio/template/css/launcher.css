@@ -1,0 +1,249 @@
+body.bx-std-bg {
+	background-color: #3b8686;
+}
+
+/**
+ * Launcher
+ */
+div.bx-std-launcher {
+	position: relative;
+	float: left;
+	clear: both;
+	width: 100%;
+	left: 0px;
+}
+
+
+/**
+ * Widget
+ */
+div.bx-std-widgets-wrp {
+    position: relative;
+	float: left;
+    top: 0px;
+	width: 100%;
+}
+div.bx-std-widgets-center {
+    position: relative;
+    float: left;
+    left: 50%;
+}
+div.bx-std-widgets {
+    position: relative;
+    float: left;
+    left: -50%;
+	min-height: 238px;
+    margin: 0px 30px;
+}
+div.bx-std-widgets-highlight {
+    background-color: red;
+}
+div.bx-std-widget {
+    position: relative;
+    float: left;
+	padding: 30px;
+}
+div.bx-std-widget-empty {
+    width: 128px;
+    height: 178px;
+}
+div.bx-std-widget-nl {
+	clear: both;
+}
+
+.bx-std-widget-dragging {
+    -webkit-transform: scale(1.05, 1.05);
+    -moz-transform: scale(1.05, 1.05);
+    -ms-transform: scale(1.05, 1.05);
+    transform: scale(1.05, 1.05);
+}
+
+.bx-std-widget-icon {
+    position: relative;
+    top:0px;
+    width: 128px;
+    height: 128px;
+
+    background-color:transparent;
+
+    line-height: 128px;
+}
+
+.bx-std-widget-icon i.sys-icon {
+	position: absolute;
+	z-index: 2;
+	left: 0px;
+	width: 128px;
+
+    font-size: 96px;
+    text-align: center;
+    text-shadow: none;
+    color: white;
+}
+
+.bx-std-widget-shadow {
+    position:absolute;
+    top:2px;
+    left:2px;
+    width: 124px;
+    height: 124px;
+    z-index:1;
+
+    -moz-border-radius: 32px;
+    -webkit-border-radius: 32px;
+    border-radius: 32px;
+
+    /* big shadow */
+    -moz-box-shadow: 0px 15px 20px rgba(51, 51, 51, 0.55);
+    -webkit-box-shadow: 0px 15px 20px rgba(51, 51, 51, 0.55);
+    box-shadow: 0px 15px 20px rgba(51, 51, 51, 0.55);
+}
+
+.bx-std-widget-icon-trans {
+    -webkit-transition: all 0.15s ease-out;
+    -moz-transition: all 0.15s ease-out;
+    -ms-transition: all 0.15s ease-out;
+    -o-transition: all 0.15s ease-out;
+}
+
+.bx-std-widget-icon:hover {
+    top:3px;
+}
+
+.bx-std-widget-icon:hover .bx-std-widget-shadow {
+    -moz-box-shadow: 0px 12px 15px rgba(51, 51, 51, 0.55);
+    -webkit-box-shadow: 0px 12px 15px rgba(51, 51, 51, 0.55);
+    box-shadow: 0px 12px 15px rgba(51, 51, 51, 0.55);
+}
+
+.bx-std-widget-dragging .bx-std-widget-shadow {
+    -moz-box-shadow: 0px 25px 40px rgba(51, 51, 51, 0.55);
+    -webkit-box-shadow: 0px 25px 40px rgba(51, 51, 51, 0.55);
+    box-shadow: 0px 25px 40px rgba(51, 51, 51, 0.55);
+}
+
+.bx-std-widget-icon-disabled {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
+    filter: alpha(opacity=40);
+    -moz-opacity: 0.4;
+    -khtml-opacity: 0.4;
+    opacity: 0.4;    
+}
+
+.bx-std-widget-link > img {
+    position:relative;
+    z-index:2;
+
+    width: 128px;
+    height: 128px;
+
+    background-color: transparent;
+    background-position:0px 0px;
+    background-repeat:no-repeat;
+}
+
+div.bx-std-widget-icon-jitter {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    width: 128px;
+    height: 128px;
+    z-index: 5;
+
+    background-color: transparent;
+}
+
+div.bx-std-widget-icon-jitter img {
+    position:absolute;
+
+    bottom:-5px;
+    left:24px;
+    width:80px;
+    height:40px;
+
+    background-color: transparent;
+    background-image:url(../images/bx-std-widget-drag.png);
+
+    cursor: move;
+}
+
+div.bx-std-widget-notices {
+    position: absolute;
+    top: 0px;
+    left: 45px;
+    width: 38px;
+    height: 27px;
+    z-index: 3;
+    overflow:visible;
+    
+    color:#fff;
+    font-weight:bold;
+    text-shadow: #633 0px -1px 0px;        
+    line-height:25px;
+    text-align:center;
+
+    background-color: transparent;
+    background-image: url(../images/bx-std-bg-widget-notice.png);
+}
+div.bx-std-widget-actions {
+    position: absolute;
+    display: none;
+    top: 10px;
+    right: 10px;
+    height: 40px;
+    z-index: 10;
+}
+div.bx-std-widget-action {
+    position: relative;
+    float: left;
+    width: 40px;
+    height: 40px;
+	line-height: 40px;
+}
+div.bx-std-widget-action i.sys-icon {
+	position: absolute;
+	left: 0px;
+	width: 40px;
+
+    font-size: 32px;
+    text-align: center;
+    text-shadow: none;
+    color: white;
+}
+.bx-std-widget-loading {
+    display:none;
+    position:absolute;
+    top: 176px;
+    left: 30px;
+    width: 128px;
+    height: 15px;
+
+    background-image: url(../images/loading.gif);
+    background-repeat: no-repeat;
+    background-position: center center;
+
+    -moz-opacity: 0.5;
+    -khtml-opacity: 0.5;
+    opacity: 0.5;
+}
+div.bx-std-widget-caption {
+    position: relative;
+    width: 128px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center; 
+    overflow: hidden;
+
+    text-shadow: #000 0px 5px 12px;
+}
+div.bx-std-widget-caption-jitter {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 128px;
+    height: 50px;
+}
+div.bx-std-widget-caption a {
+    color: #ffffff;
+    font-weight:normal;
+}

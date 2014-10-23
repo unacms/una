@@ -1,0 +1,43 @@
+<div id="__form_container_id__" class="bx-uploader-form-cont bx-def-padding bx-def-color-bg-block">
+    <div class="bx-def-padding-sec-bottom">__restrictions_text__</div>
+    <div id="__errors_container_id__"></div>
+    <div id="__div_id__"></div>
+</div>
+<script>
+    __uploader_instance_name__.initUploader({
+        template: '<div class="bx-uploader-html5">' + 
+                '<ul class="bx-uploader-html5-list bx-def-margin-bottom"></ul>' +
+                '<div class="bx-btn bx-btn-primary bx-uploader-html5-button bx-def-margin-sec-right"><bx_text_js:_sys_uploader_html5_shoose_file /></div>' + 
+                '<div class="bx-btn" onclick="__uploader_instance_name__.onClickCancel()"><bx_text:_sys_uploader_close /></div>' + 
+                '<div class="bx-clear">&nbsp;</div>' +  
+                '<div class="bx-uploader-html5-drop-area bx-def-margin-sec-top bx-def-z-index-front"><bx_text_js:_sys_uploader_html5_drop_area /></div>' +
+             '</div>',
+
+        // template for one item in file list
+        fileTemplate: '<li>' +
+                '<span class="bx-uploader-html5-file"></span>' +
+                '<span class="bx-uploader-html5-spinner"></span>' +
+                '<span class="bx-uploader-html5-size"></span>' +
+                '<a class="bx-uploader-html5-cancel" href="#"><bx_text_js:_Cancel /></a>' +
+                '<span class="bx-uploader-html5-failed-text"><bx_text_js:_Failed /></span>' +
+            '</li>',
+        
+        classes: {
+            // used to get elements from templates
+            button: 'bx-uploader-html5-button',
+            drop: 'bx-uploader-html5-drop-area',
+            dropActive: 'bx-uploader-html5-drop-area-active',
+            list: 'bx-uploader-html5-list',
+                        
+            file: 'bx-uploader-html5-file',
+            spinner: 'bx-uploader-html5-spinner',
+            size: 'bx-uploader-html5-size',
+            cancel: 'bx-uploader-html5-cancel',
+
+            // added to list item when upload completes
+            // used in css to hide progress spinner
+            success: 'bx-uploader-html5-success',
+            fail: 'bx-uploader-html5-fail'
+        }
+    });
+</script>
