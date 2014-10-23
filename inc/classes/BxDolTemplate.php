@@ -1724,8 +1724,11 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
 
         //--- Parse Predefined Keys ---//
         $sContent = preg_replace($aKeys, $aValues, $sContent);
+
         //--- Parse System Keys ---//
-        $sContent = preg_replace( "'" . $aKeyWrappers['left'] . "([a-zA-Z0-9_-]+)" . $aKeyWrappers['right'] . "'e", "\$this->parseSystemKey('\\1', \$mixedKeyWrapperHtml)", $sContent);
+        $sContent = preg_replace_callback("'" . $aKeyWrappers['left'] . "([a-zA-Z0-9_-]+)" . $aKeyWrappers['right'] . "'", function($aMatches) use($oTemplate, $mixedKeyWrapperHtml) {
+        	return $oTemplate->parseSystemKey($aMatches[1], $mixedKeyWrapperHtml);
+        }, $sContent);
 
         return $sContent;
     }
