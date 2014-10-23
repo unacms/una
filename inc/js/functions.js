@@ -201,6 +201,11 @@ function bx_loading (elem, b) {
 
     var block = $(elem);
 
+    if (block.hasClass('bx-btn')) {
+        bx_loading_btn (block, b);
+        return;
+    }
+
     if (1 == b || true == b) {
 
         bx_loading_content(block, b);
