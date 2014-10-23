@@ -23,6 +23,24 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         parent::__construct($oConfig, $oDb);
         $this->addCss ('main.css');
     }
+
+	public function getJsCode($sType, $aRequestParams = array(), $bWrap = true)
+    {
+        $sBaseUri = $this->_oConfig->getBaseUri();
+        $sJsClass = $this->_oConfig->getJsClass($sType);
+        $sJsObject = $this->_oConfig->getJsObject($sType);
+
+        $aParams = array(
+            'sActionUri' => $sBaseUri,
+            'sActionUrl' => BX_DOL_URL_ROOT . $sBaseUri,
+            'sObjName' => $sJsObject,
+        	'sObjNameGrid' => $this->_oConfig->getGridObject($sType),
+            'oRequestParams' => !empty($aRequestParams) ? $aRequestParams : array()
+        );
+        $sContent = "var " . $sJsObject . " = new " . $sJsClass . "(" . json_encode($aParams) . ");";
+
+        return !$bWrap ? $sContent : $this->_wrapInTagJsCode($sContent);
+    }
 }
 
 /** @} */
