@@ -18,7 +18,7 @@
         onShow: function () {},
         onBeforeHide: function () {},
         onHide: function () {},
-        speed: 150
+        speed: 200
     }; 
 
     $.fn.dolPopupDefaultPointerOptions = {
@@ -81,7 +81,11 @@
                 left: 0
             });
 
+
             setTimeout(function() { // timeout is needed for some browsers to render element
+
+                $el.removeClass('bx-popup-transitions bx-popup-inactive');
+
                 $el._dolPopupSetPosition(o);
 
                 if (!$el.hasClass('bx-popup-applied')) { // do this only once
@@ -120,15 +124,26 @@
 
                 o.onBeforeShow();
 
+                $el.addClass('bx-popup-inactive');
+
+                setTimeout(function () {
+                    $el.addClass('bx-popup-transitions bx-popup-active');
+                }, 10);
+    
                 if (o.speed > 0) {
-                    $el.css({display: 'none', visibility: 'visible'}).fadeIn(o.speed, o.onShow);
+
+                    $el.css({display: 'block', visibility: 'visible'});
+
                     if (o.fog)
                         $('#bx-popup-fog').fadeIn(o.speed);
+
                 } else {
+
                     $el.css({display: 'block', visibility: 'visible'});
+
                     if (o.fog)
                         $('#bx-popup-fog').show(o.onShow);
-                }
+                }                
 
             }, 10);
         });
@@ -146,7 +161,7 @@
                 return false;
 
             if (!$el.is(':visible') || 'hidden' == $el.css('visibility') || 'none' == $el.css('display'))
-                return false;
+                return false;            
 
             var o = $.extend({}, $el.data('bx-popup-options'), options);
 
@@ -159,13 +174,23 @@
 
             o.onBeforeHide();
 
-            if (o.speed > 0) {                
+            $el.removeClass('bx-popup-active').addClass('bx-popup-inactive');
+
+            if (o.speed > 0) {
+
                 if (o.fog)
                     $('#bx-popup-fog').fadeOut(o.speed);
-                $el.fadeOut(o.speed, o.onHide);
-            } else {                
+
+                setTimeout(function () {
+                    $el.hide();
+                    o.onHide();
+                }, o.speed);
+
+            } else {
+
                 if (o.fog)
                     $('#bx-popup-fog').hide();
+
                 $el.hide(o.onHide);
             }
         });
