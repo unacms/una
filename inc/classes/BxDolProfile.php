@@ -323,11 +323,12 @@ class BxDolProfile extends BxDol implements iBxDolProfile
     }
 
     /**
-     * Change profile status from 'Suspended' to - 'Active'
+     * Change profile status to 'Active'
      */
     public function activate($iAction, $iProfileId = 0)
     {
-        return $this->changeStatus(BX_PROFILE_STATUS_ACTIVE, 'activate', $iAction, $iProfileId);
+        $sStatus = $this->getStatus($iProfileId);
+        return $this->changeStatus(BX_PROFILE_STATUS_ACTIVE, BX_PROFILE_STATUS_PENDING == $sStatus ? 'approve' : 'activate', $iAction, $iProfileId);
     }
 
     /**
