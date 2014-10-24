@@ -72,6 +72,9 @@
                 return true;
             } 
 
+            if (false != o.pointer) // all popups without pointer are responsive
+                $el.removeClass('bx-popup-responsive').addClass('bx-popup-with-pointer');
+
             // default style for correct positioning
             $el.css({
                 display: 'block',
@@ -84,8 +87,10 @@
 
             setTimeout(function() { // timeout is needed for some browsers to render element
 
-                $el.removeClass('bx-popup-transitions bx-popup-inactive');
+                // remove any transitions before setting popup position
+                $el.removeClass('bx-popup-transitions bx-popup-inactive'); 
 
+                // set popup position
                 $el._dolPopupSetPosition(o);
 
                 if (!$el.hasClass('bx-popup-applied')) { // do this only once
@@ -124,26 +129,25 @@
 
                 o.onBeforeShow();
 
+                // transition effect
                 $el.addClass('bx-popup-inactive');
-
                 setTimeout(function () {
                     $el.addClass('bx-popup-transitions bx-popup-active');
                 }, 10);
     
-                if (o.speed > 0) {
-
-                    $el.css({display: 'block', visibility: 'visible'});
-
-                    if (o.fog)
+                // show popup
+                $el.css({display: 'block', visibility: 'visible'});
+                if (o.fog) {
+                    if (o.speed > 0)
                         $('#bx-popup-fog').fadeIn(o.speed);
-
-                } else {
-
-                    $el.css({display: 'block', visibility: 'visible'});
-
-                    if (o.fog)
-                        $('#bx-popup-fog').show(o.onShow);
-                }                
+                    else
+                        $('#bx-popup-fog').show();
+                }
+                
+                setTimeout(function () {
+                    o.onShow();                    
+                    $el.find('input').focus(); // put cursor to the first input element
+                }, o.speed);
 
             }, 10);
         });
@@ -270,6 +274,8 @@
                     bx_menu_on(e, true);
 
                 $('<div id="' + sPopupId + '" style="display:none;">' + $('#bx-popup-loading').html() + '</div>').appendTo('body').find(options.container).hide();
+
+                $('#' + sPopupId).addClass($('#bx-popup-loading').attr('class'));
 
                 var oLoading = $('#' + sPopupId + ' .bx-popup-loading-wrapped');
                 bx_loading_content(oLoading, true, true);

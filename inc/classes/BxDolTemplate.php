@@ -1018,10 +1018,18 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
                     $sRet = bx_process_output($this->aPage['header_text']);
                 break;
             case 'popup_loading':
-                $sContent = $this->parsePageByName('popup_loading.html', array());
-
                 bx_import('BxTemplFunctions');
-                $sRet = BxTemplFunctions::getInstance()->transBox('bx-popup-loading', $sContent, true);
+                $s = $this->parsePageByName('popup_loading.html', array());
+                $sRet = BxTemplFunctions::getInstance()->transBox('bx-popup-loading', $s, true);
+
+                bx_import('BxTemplSearch');
+                $oSearch = new BxTemplSearch();
+                $oSearch->setLiveSearch(true);
+                $s = $this->parsePageByName('search.html', array(
+                    'search_form' => $oSearch->getForm(BX_DB_CONTENT_ONLY),
+                    'results' => $oSearch->getResultsContainer(),
+                ));
+                $sRet .= BxTemplFunctions::getInstance()->transBox('bx-popup-search', $s, true);
                 break;
             case 'lang':
                 $sRet = bx_lang_name();

@@ -42,8 +42,10 @@ html {
 
 /* common.css */
 
-.bx-popup-box-wrapper,
-.bx-popup-box {
+.bx-popup-responsive.bx-popup-trans-wrapper:not(.bx-popup-image-wrapper),
+.bx-popup-responsive:not(.bx-popup-image-wrapper) .bx-popup-trans,
+.bx-popup-responsive.bx-popup-box-wrapper,
+.bx-popup-responsive .bx-popup-box {
     position:fixed !important;
     width:100%;
 	width:100vw;
@@ -52,19 +54,22 @@ html {
     overflow:scroll;
 }
 
-.bx-popup-box > div {
+.bx-popup-responsive .bx-popup-trans > div,
+.bx-popup-responsive .bx-popup-box > div {
 	border-radius:0;
 	-moz-border-radius:0;
 	-webkit-border-radius:0;
 }
 
-.bx-popup-image-wrapper .bx-popup-border,
-.bx-popup-box-wrapper .bx-popup-border {
+.bx-popup-responsive.bx-popup-image-wrapper .bx-popup-border,
+.bx-popup-responsive.bx-popup-trans-wrapper .bx-popup-border,
+.bx-popup-responsive.bx-popup-box-wrapper .bx-popup-border {
     border:none;
 }
 
-.bx-popup-image-wrapper .bx-popup,
-.bx-popup-box-wrapper .bx-popup {
+.bx-popup-responsive.bx-popup-image-wrapper .bx-popup,
+.bx-popup-responsive.bx-popup-trans-wrapper .bx-popup,
+.bx-popup-responsive.bx-popup-box-wrapper .bx-popup {
 	-moz-box-shadow:none;
 	-webkit-box-shadow:none;
     box-shadow:none;

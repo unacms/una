@@ -66,6 +66,12 @@ blockquote {
     height:1.5rem;    
 }
 
+.bx-search-site {
+    width:20rem;
+    margin-left:auto;
+    margin-right:auto;
+}
+
 /* --------------- design boxes */
 
 .bx-db-container {
@@ -212,6 +218,13 @@ blockquote {
 
 .bx-popup-slide-wrapper li {
     text-align:right;
+}
+
+.bx-popup-image-wrapper .bx-popup-close-wrapper,
+.bx-popup-image-wrapper .bx-popup-element-close,
+.bx-popup-with-pointer .bx-popup-close-wrapper,
+.bx-popup-with-pointer .bx-popup-element-close {
+    display:none;
 }
 
 /* --------------- message box */
