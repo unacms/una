@@ -63,7 +63,7 @@ blockquote {
 
 .sys-icon-a {
     width:1.5rem;
-    height:1.5rem;
+    height:1.5rem;    
 }
 
 /* --------------- design boxes */
@@ -95,6 +95,10 @@ blockquote {
 
 .bx-db-menu-tab-btn a {
     text-decoration:none;
+}
+
+.bx-db-menu .sys-icon-a {
+    vertical-align:middle;
 }
 
 /* --------------- popup boxes */
