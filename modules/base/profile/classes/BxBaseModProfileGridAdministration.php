@@ -179,7 +179,12 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
     protected function _getProfileObject($iId)
     {
     	bx_import('BxDolProfile');
-    	return  BxDolProfile::getInstanceByContentAndType((int)$iId, $this->_oModule->_oConfig->getName());
+    	$oProfile = BxDolProfile::getInstanceByContentAndType((int)$iId, $this->_oModule->_oConfig->getName());
+        if (!$oProfile) {
+            bx_import('BxDolProfileUndefined');
+            $oProfile = BxDolProfileUndefined::getInstance();
+        }
+        return $oProfile;
     }
 
     protected function _getProfileId($iId)
