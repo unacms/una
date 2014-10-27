@@ -114,13 +114,11 @@ class BxPersonsConfig extends BxBaseModProfileConfig
         );
 
         $this->_aJsClass = array(
-        	'moderation' => 'BxPersonsModeration',
-        	'administration' => 'BxPersonsAdministration'
+        	'manage_tools' => 'BxPersonsManageTools'
         );
 
         $this->_aJsObjects = array(
-            'moderation' => 'oBxPersonsModeration',
-        	'administration' => 'oBxPersonsAdministration'
+        	'manage_tools' => 'oBxPersonsManageTools'
         );
 
         $this->_aGridObjects = array(

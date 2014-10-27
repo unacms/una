@@ -91,7 +91,7 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_persons_moderation', '_bx_persons_page_title_sys_moderation', '_bx_persons_page_title_moderation', 'bx_persons', 5, 64, 1, 'persons-moderation', 'page.php?i=persons-moderation', '', '', '', 0, 1, 0, 'BxPersonsPageBrowse', 'modules/boonex/persons/classes/BxPersonsPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_persons_moderation', 1, 'bx_persons', '_bx_persons_page_block_title_moderation', 11, 64, 'service', 'a:3:{s:6:\"module\";s:10:\"bx_persons\";s:6:\"method\";s:15:\"manage_entities\";s:6:\"params\";a:1:{i:0;s:10:\"moderation\";}}', 0, 1, 0);
+('bx_persons_moderation', 1, 'bx_persons', '_bx_persons_page_block_title_moderation', 11, 64, 'service', 'a:3:{s:6:\"module\";s:10:\"bx_persons\";s:6:\"method\";s:12:\"manage_tools\";s:6:\"params\";a:1:{i:0;s:10:\"moderation\";}}', 0, 1, 0);
 
 -- PAGE: module administration
 
@@ -99,7 +99,7 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_persons_administration', '_bx_persons_page_title_sys_administration', '_bx_persons_page_title_administration', 'bx_persons', 5, 128, 1, 'persons-administration', 'page.php?i=persons-administration', '', '', '', 0, 1, 0, 'BxPersonsPageBrowse', 'modules/boonex/persons/classes/BxPersonsPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_persons_administration', 1, 'bx_persons', '_bx_persons_page_block_title_administration', 11, 128, 'service', 'a:3:{s:6:\"module\";s:10:\"bx_persons\";s:6:\"method\";s:15:\"manage_entities\";s:6:\"params\";a:1:{i:0;s:14:\"administration\";}}', 0, 1, 0);
+('bx_persons_administration', 1, 'bx_persons', '_bx_persons_page_block_title_administration', 11, 128, 'service', 'a:3:{s:6:\"module\";s:10:\"bx_persons\";s:6:\"method\";s:12:\"manage_tools\";s:6:\"params\";a:1:{i:0;s:14:\"administration\";}}', 0, 1, 0);
 
 -- PAGE: add block to homepage
 
@@ -189,6 +189,17 @@ SET @iNotifMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
 ('sys_profile_stats', 'bx_persons', 'profile-stats-friend-requests', '_bx_persons_menu_item_title_system_friend_requests', '_bx_persons_menu_item_title_friend_requests', 'page.php?i=persons-profile-friends&profile_id={member_id}', '', '', 'group col-blue3', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:31:"get_unconfirmed_connections_num";s:6:"params";a:1:{i:0;s:20:"sys_profiles_friends";}s:5:"class";s:23:"TemplServiceConnections";}', '', 2147483646, 1, 0, IFNULL(@iNotifMenuOrder, 0) + 1);
 
+-- MENU: manage tools submenu
+
+INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
+('bx_persons_menu_manage_tools', '_bx_persons_menu_title_manage_tools', 'bx_persons_menu_manage_tools', 'bx_persons', 6, 0, 1, 'BxPersonsMenuManageTools', 'modules/boonex/persons/classes/BxPersonsMenuManageTools.php');
+
+INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
+('bx_persons_menu_manage_tools', 'bx_persons', '_bx_persons_menu_set_title_manage_tools', 0);
+
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('bx_persons_menu_manage_tools', 'bx_persons', 'delete_spammer', '_bx_persons_menu_item_title_system_delete_spammer', '_bx_persons_menu_item_title_delete_spammer', 'javascript:void(0)', 'javascript:{js_object}.onClickDeleteSpammer({content_id});', '_self', 'trash-o', '', 128, 1, 0, 0);
+
 
 -- ACL
 
@@ -272,18 +283,20 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_persons_administration', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
 ('bx_persons_administration', 'switcher', '', '8%', 0, '', '', 2),
 ('bx_persons_administration', 'fullname', '_bx_persons_grid_column_title_adm_fullname', '25%', 0, '', '', 3),
-('bx_persons_administration', 'last_online', '_bx_persons_grid_column_title_adm_last_online', '25%', 1, '25', '', 4),
+('bx_persons_administration', 'last_online', '_bx_persons_grid_column_title_adm_last_online', '20%', 1, '25', '', 4),
 ('bx_persons_administration', 'account', '_bx_persons_grid_column_title_adm_account', '25%', 0, '25', '', 5),
-('bx_persons_administration', 'actions', '', '15%', 0, '', '', 6),
+('bx_persons_administration', 'actions', '', '20%', 0, '', '', 6),
 ('bx_persons_moderation', 'switcher', '', '10%', 0, '', '', 1),
 ('bx_persons_moderation', 'fullname', '_bx_persons_grid_column_title_adm_fullname', '25%', 0, '', '', 2),
 ('bx_persons_moderation', 'last_online', '_bx_persons_grid_column_title_adm_last_online', '25%', 1, '25', '', 3),
 ('bx_persons_moderation', 'account', '_bx_persons_grid_column_title_adm_account', '25%', 0, '25', '', 4),
 ('bx_persons_moderation', 'actions', '', '15%', 0, '', '', 5);
 
-
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
-('bx_persons_administration', 'bulk', 'delete', '_bx_persons_grid_action_title_adm_delete', '', 0, 1),
-('bx_persons_administration', 'single', 'delete', '', 'remove', 1, 1),
-('bx_persons_administration', 'single', 'settings', '', 'cog', 0, 2),
+('bx_persons_administration', 'bulk', 'set_acl_level', '_bx_persons_grid_action_title_adm_set_acl_level', '', 0, 1),
+('bx_persons_administration', 'bulk', 'delete', '_bx_persons_grid_action_title_adm_delete', '', 1, 2),
+('bx_persons_administration', 'bulk', 'delete_spammer', '_bx_persons_grid_action_title_adm_delete_spammer', '', 1, 3),
+('bx_persons_administration', 'single', 'set_acl_level', '', 'certificate', 0, 1),
+('bx_persons_administration', 'single', 'delete', '', 'remove', 1, 2),
+('bx_persons_administration', 'single', 'settings', '', 'cog', 0, 3),
 ('bx_persons_moderation', 'single', 'settings', '', 'cog', 0, 1);

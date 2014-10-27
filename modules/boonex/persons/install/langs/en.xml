@@ -85,6 +85,10 @@
     <string name="_bx_persons_menu_title_view_profile_actions_more"><![CDATA[Person More Actions]]></string>
     <string name="_bx_persons_menu_set_title_view_profile_submenu"><![CDATA[View Person Submenu]]></string>
     <string name="_bx_persons_menu_title_view_profile_submenu"><![CDATA[View Person Submenu]]></string>
+	<string name="_bx_persons_menu_set_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
+    <string name="_bx_persons_menu_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
+    <string name="_bx_persons_menu_item_title_system_delete_spammer"><![CDATA[Delete Spammer]]></string>
+    <string name="_bx_persons_menu_item_title_delete_spammer"><![CDATA[Delete Spammer]]></string>
     <string name="_bx_persons_menu_item_title_system_edit_profile"><![CDATA[Edit Person]]></string>
     <string name="_bx_persons_menu_item_title_edit_profile"><![CDATA[Edit Profile]]></string>
     <string name="_bx_persons_menu_item_title_system_delete_profile"><![CDATA[Delete Person]]></string>
@@ -132,6 +136,8 @@
     <string name="_bx_persons_grid_column_title_adm_last_online"><![CDATA[Last Online]]></string>
     <string name="_bx_persons_grid_column_title_adm_account"><![CDATA[Account]]></string>
     <string name="_bx_persons_grid_action_title_adm_delete"><![CDATA[Delete]]></string>
+    <string name="_bx_persons_grid_action_title_adm_delete_spammer"><![CDATA[Delete Spammer]]></string>
+    <string name="_bx_persons_grid_action_title_adm_set_acl_level"><![CDATA[Set Membership]]></string>
 
     <string name="_bx_persons_txt_account_pending"><![CDATA[This profile is pending approval, please wait until it is activated.]]></string>
     <string name="_bx_persons_txt_account_suspended"><![CDATA[This profile is suspended.]]></string>

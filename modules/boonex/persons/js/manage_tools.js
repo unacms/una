@@ -6,10 +6,10 @@
  * @{
  */
 
-function BxPersonsModeration(oOptions) {
+function BxPersonsManageTools(oOptions) {
 	this._sActionsUrl = oOptions.sActionUrl;
 	this._sObjNameGrid = oOptions.sObjNameGrid;
-    this._sObjName = oOptions.sObjName == undefined ? 'oBxPersonsModeration' : oOptions.sObjName;
+    this._sObjName = oOptions.sObjName == undefined ? 'oBxPersonsManageTools' : oOptions.sObjName;
 
     this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'fade' : oOptions.sAnimationEffect;
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
@@ -19,7 +19,7 @@ function BxPersonsModeration(oOptions) {
     this._oRequestParams = oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams;
 }
 
-BxPersonsModeration.prototype.onChangeFilter = function(oFilter) {
+BxPersonsManageTools.prototype.onChangeFilter = function(oFilter) {
 	var oFilter1 = $('#bx-grid-filter1-' + this._sObjNameGrid);
 	var sValueFilter1 = oFilter1.length > 0 ? oFilter1.val() : '';
 
@@ -29,6 +29,19 @@ BxPersonsModeration.prototype.onChangeFilter = function(oFilter) {
 		sValueSearch = '';
 
 	glGrids[this._sObjNameGrid].setFilter(sValueFilter1 + this._sParamsDivider + sValueSearch, true);
+};
+
+BxPersonsManageTools.prototype.onClickSettings = function(sMenuObject, oButton) {
+	if($(oButton).hasClass('bx-btn-disabled'))
+		return false;
+
+	bx_menu_popup(sMenuObject, oButton, {}, {
+		content_id: $(oButton).attr('bx_grid_action_data')
+	});
+};
+
+BxPersonsManageTools.prototype.onClickDeleteSpammer = function(iContentId) {
+	glGrids[this._sObjNameGrid].actionWithId(iContentId, 'delete_spammer', {}, '', false, 1);
 };
 
 /** @} */
