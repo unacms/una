@@ -91,7 +91,7 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
         $this->_echoResultJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t('_adm_nav_err_menus_delete')));
     }
 
-	public function performActionDeleteSpammer()
+	public function performActionDeleteWithContent()
     {
     	$this->performActionDelete(true);
     }

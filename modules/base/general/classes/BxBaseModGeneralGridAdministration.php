@@ -34,6 +34,7 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
         if(empty($sFilterName) || empty($aFilterValues))
             return '';
 
+		$sName = $this->_oModule->_oConfig->getName();
 		$sJsObject = $this->_oModule->_oConfig->getJsObject('manage_tools');
 
 		$sFilterField = '_s' . str_replace(' ', '', ucwords(str_replace('_', ' ', $sFilterName)));
@@ -48,7 +49,7 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
                 'onChange' => 'javascript:' . $sJsObject . '.onChangeFilter(this)'
             ),
             'value' => $this->$sFilterField,
-            'values' => array_merge(array('' => _t('_bx_persons_grid_filter_item_title_adm_select_one')), $aFilterValues)
+            'values' => array_merge(array('' => _t('_' . $sName . '_grid_filter_item_title_adm_select_one')), $aFilterValues)
         );
 
         bx_import('BxTemplFormView');
