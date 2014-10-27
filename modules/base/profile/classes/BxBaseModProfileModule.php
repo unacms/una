@@ -26,6 +26,18 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
     }
 
     // ====== SERVICE METHODS
+	public function serviceGetMenuAddonManageTools()
+	{
+		bx_import('SearchResult', $this->_aModule);
+        $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
+        $o = new $sClass();
+        $o->fillFilters(array(
+			'perofileStatus' => BX_PROFILE_STATUS_PENDING
+        ));
+        $o->unsetPaginate();
+
+        return $o->getNum();
+	}
 
     public function serviceGetMenuSetNameForMenuTrigger ($sMenuTriggerName)
     {

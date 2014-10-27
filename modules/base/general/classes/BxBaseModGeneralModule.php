@@ -66,6 +66,11 @@ class BxBaseModGeneralModule extends BxDolModule
         return $this->_oTemplate->getJsCode('manage_tools', array('sObjNameGrid' => $this->_oConfig->getGridObject($sType))) . $oGrid->getCode();
     }
 
+    public function serviceGetMenuAddonManageTools()
+    {
+    	return '';
+    }
+
     /**
      * Add entry form
      * @return HTML string

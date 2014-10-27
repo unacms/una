@@ -758,6 +758,11 @@ class BxDolSearchResult implements iBxDolReplaceable
             $this->aCurrent['paginate']['start'] = 0;
     }
 
+    function unsetPaginate()
+    {
+    	unset($this->aCurrent['paginate']);
+    }
+
     /**
      * Get sql where condition for search fields
      * @param array of search fields
