@@ -201,6 +201,11 @@ function bx_loading (elem, b) {
 
     var block = $(elem);
 
+    if (block.hasClass('bx-btn')) {
+        bx_loading_btn (block, b);
+        return;
+    }
+
     if (1 == b || true == b) {
 
         bx_loading_content(block, b);
@@ -271,6 +276,8 @@ function bx_menu_popup (o, e, options, vars) {
     var options = options || {};
     var vars = vars || {};
     var o = $.extend({}, $.fn.dolPopupDefaultOptions, options, {id: o, url: bx_append_url_params('menu.php', $.extend({o:o}, vars))});
+    if ('undefined' == typeof(e))
+        e = window;
     $(e).dolPopupAjax(o);
 }
 

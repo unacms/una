@@ -63,7 +63,13 @@ blockquote {
 
 .sys-icon-a {
     width:1.5rem;
-    height:1.5rem;
+    height:1.5rem;    
+}
+
+.bx-search-site {
+    width:20rem;
+    margin-left:auto;
+    margin-right:auto;
 }
 
 /* --------------- design boxes */
@@ -97,7 +103,35 @@ blockquote {
     text-decoration:none;
 }
 
+.bx-db-menu .sys-icon-a {
+    vertical-align:middle;
+}
+
 /* --------------- popup boxes */
+
+.bx-popup-transitions {
+    -webkit-transition: opacity 0.2s ease-in-out, -webkit-transform 0.2s ease-in-out;
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.bx-popup-inactive {
+    -webkit-opacity: 0;
+    opacity: 0;
+
+    -webkit-transform: scale(0.75);
+    transform: scale(0.75);
+}
+
+.bx-popup-active {
+    -webkit-opacity: 1;
+    opacity: 1;
+
+    -webkit-transform: scale(1);
+    transform: scale(1);
+
+    -webkit-transition: opacity 0.2s ease-in-out, -webkit-transform 0.2s ease-in-out;
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
 
 .bx-popup-width {
 	width: 500px;
@@ -184,6 +218,13 @@ blockquote {
 
 .bx-popup-slide-wrapper li {
     text-align:right;
+}
+
+.bx-popup-image-wrapper .bx-popup-close-wrapper,
+.bx-popup-image-wrapper .bx-popup-element-close,
+.bx-popup-with-pointer .bx-popup-close-wrapper,
+.bx-popup-with-pointer .bx-popup-element-close {
+    display:none;
 }
 
 /* --------------- message box */

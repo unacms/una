@@ -18,7 +18,7 @@
         onShow: function () {},
         onBeforeHide: function () {},
         onHide: function () {},
-        speed: 150
+        speed: 200
     }; 
 
     $.fn.dolPopupDefaultPointerOptions = {
@@ -72,6 +72,9 @@
                 return true;
             } 
 
+            if (false != o.pointer) // all popups without pointer are responsive
+                $el.removeClass('bx-popup-responsive').addClass('bx-popup-with-pointer');
+
             // default style for correct positioning
             $el.css({
                 display: 'block',
@@ -81,7 +84,13 @@
                 left: 0
             });
 
+
             setTimeout(function() { // timeout is needed for some browsers to render element
+
+                // remove any transitions before setting popup position
+                $el.removeClass('bx-popup-transitions bx-popup-inactive'); 
+
+                // set popup position
                 $el._dolPopupSetPosition(o);
 
                 if (!$el.hasClass('bx-popup-applied')) { // do this only once
@@ -120,15 +129,25 @@
 
                 o.onBeforeShow();
 
-                if (o.speed > 0) {
-                    $el.css({display: 'none', visibility: 'visible'}).fadeIn(o.speed, o.onShow);
-                    if (o.fog)
+                // transition effect
+                $el.addClass('bx-popup-inactive');
+                setTimeout(function () {
+                    $el.addClass('bx-popup-transitions bx-popup-active');
+                }, 10);
+    
+                // show popup
+                $el.css({display: 'block', visibility: 'visible'});
+                if (o.fog) {
+                    if (o.speed > 0)
                         $('#bx-popup-fog').fadeIn(o.speed);
-                } else {
-                    $el.css({display: 'block', visibility: 'visible'});
-                    if (o.fog)
-                        $('#bx-popup-fog').show(o.onShow);
+                    else
+                        $('#bx-popup-fog').show();
                 }
+                
+                setTimeout(function () {
+                    o.onShow();                    
+                    $el.find('input').focus(); // put cursor to the first input element
+                }, o.speed);
 
             }, 10);
         });
@@ -146,7 +165,7 @@
                 return false;
 
             if (!$el.is(':visible') || 'hidden' == $el.css('visibility') || 'none' == $el.css('display'))
-                return false;
+                return false;            
 
             var o = $.extend({}, $el.data('bx-popup-options'), options);
 
@@ -159,13 +178,23 @@
 
             o.onBeforeHide();
 
-            if (o.speed > 0) {                
+            $el.removeClass('bx-popup-active').addClass('bx-popup-inactive');
+
+            if (o.speed > 0) {
+
                 if (o.fog)
                     $('#bx-popup-fog').fadeOut(o.speed);
-                $el.fadeOut(o.speed, o.onHide);
-            } else {                
+
+                setTimeout(function () {
+                    $el.hide();
+                    o.onHide();
+                }, o.speed);
+
+            } else {
+
                 if (o.fog)
                     $('#bx-popup-fog').hide();
+
                 $el.hide(o.onHide);
             }
         });
@@ -245,6 +274,8 @@
                     bx_menu_on(e, true);
 
                 $('<div id="' + sPopupId + '" style="display:none;">' + $('#bx-popup-loading').html() + '</div>').appendTo('body').find(options.container).hide();
+
+                $('#' + sPopupId).addClass($('#bx-popup-loading').attr('class'));
 
                 var oLoading = $('#' + sPopupId + ' .bx-popup-loading-wrapped');
                 bx_loading_content(oLoading, true, true);

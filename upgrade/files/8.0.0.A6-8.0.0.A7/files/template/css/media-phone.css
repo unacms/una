@@ -1,0 +1,90 @@
+@media (max-width:720px) {
+
+html {
+    font-size:70%;
+}
+
+.bx-def-media-phone-hide {
+    display:none;
+}
+.bx-def-media-phone-show-block {
+    display:block;
+}
+
+
+.bx-def-constraint-all *,
+.bx-def-constraint-list ol, .bx-def-constraint-list ul,
+.bx-def-constraint-pre pre,
+.bx-def-constraint-object object,
+.bx-def-constraint-iframe iframe,
+.bx-def-constraint-img img {
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+
+    max-width:300px !important;
+    overflow:hidden !important;
+}
+.bx-def-constraint-img img {
+    height:auto !important;
+}
+.bx-def-constraint-pre pre {
+    overflow:scroll !important;
+}
+
+
+/* default.css */ 
+
+.bx-def-page-width {
+    width:auto;
+}
+
+/* common.css */
+
+.bx-popup-box-wrapper,
+.bx-popup-box {
+    position:fixed !important;
+    width:100%;
+	width:100vw;
+    height:100%;
+    height:100vh;
+    overflow:scroll;
+}
+
+.bx-popup-box > div {
+	border-radius:0;
+	-moz-border-radius:0;
+	-webkit-border-radius:0;
+}
+
+.bx-popup-image-wrapper .bx-popup-border,
+.bx-popup-box-wrapper .bx-popup-border {
+    border:none;
+}
+
+.bx-popup-image-wrapper .bx-popup,
+.bx-popup-box-wrapper .bx-popup {
+	-moz-box-shadow:none;
+	-webkit-box-shadow:none;
+    box-shadow:none;
+}
+
+/* page layouts */
+
+.bx-layout-col {
+    float:none !important;
+    width:auto !important;
+}
+
+.bx-layout-cell {
+    padding:0 !important;
+}
+
+/* menu.css */
+
+ul.bx-menu-toolbar li a span {
+    display:none;
+}
+
+} /* @media end */

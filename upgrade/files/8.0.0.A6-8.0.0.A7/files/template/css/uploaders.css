@@ -1,0 +1,82 @@
+
+.bx-uploader-msg-info {
+    padding:1px 0px 1px 16px;
+    background-image:url(../images/icons/information-small-white.png);
+    background-repeat:no-repeat;    
+}
+
+.bx-uploader-msg-err {
+    padding:1px 0px 1px 16px;
+    background-image:url(../images/icons/exclamation-small-red.png);
+    background-repeat:no-repeat;    
+    color:#900;
+}
+
+.bx-uploader-form-cont {
+    width:500px;
+}
+
+.bx-uploader-ghost-preview {
+    width:101px; 
+    float:left;
+}
+
+.bx-uploader-ghost-preview img {
+    width:101px;
+    min-height:20px;
+    background-image:url(../images/loading-spinner.gif);
+    background-repeat:no-repeat;
+    background-position:center center;
+    -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(.7, transparent), to(rgba(0,0,0,0.4)));
+}
+
+.bx-uploader-ghost-form {
+    width:500px; 
+    float:left;
+}
+
+.bx-uploader-ghost-form-filename {
+
+}
+ 
+.bx-uploader-ghost-form-actions {
+}
+
+/* simple uploader */
+
+.bx-uploader-simple-file {
+    margin-bottom:5px;
+}
+
+/* html5 uploader */
+
+.bx-uploader-html5 { }
+
+.bx-uploader-html5-drop-area { 
+    width:auto;
+    height:200px;
+    
+    line-height:200px; 
+    text-align:center;
+
+    border:5px dashed #ccc;
+}
+
+.bx-uploader-html5-drop-area-active { border-color:#999; }
+
+.bx-uploader-html5-list { padding:0; list-style:none; }
+.bx-uploader-html5-list li { margin:0; padding:0; line-height:15px; }
+.bx-uploader-html5-file, .bx-uploader-html5-spinner, .bx-uploader-html5-size, .bx-uploader-html5-cancel, .bx-uploader-html5-failed-text {
+    margin-right: 7px;
+}
+
+.bx-uploader-html5-file {}
+.bx-uploader-html5-spinner { display:inline-block; background: url("../images/loading-spinner.gif"); width:15px; height:15px; vertical-align:text-bottom; }
+.bx-uploader-html5-size, .bx-uploader-html5-cancel {}
+
+.bx-uploader-html5-failed-text { display:none; }
+.bx-uploader-html5-fail .bx-uploader-html5-failed-text { display:inline; }
+
+.bx-uploader-html5-button input {
+    height:38px;
+}
