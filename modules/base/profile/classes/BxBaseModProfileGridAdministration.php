@@ -158,6 +158,7 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
     	$sName = $this->_oModule->_oConfig->getName() . "_menu_manage_tools";
     	$sJsObject = $this->_oModule->_oConfig->getJsObject('manage_tools');
 
+    	bx_import('BxDolMenu');
     	$sMenu = BxDolMenu::getObjectInstance($sName)->getCode();
     	if(empty($sMenu))
     		return '';
