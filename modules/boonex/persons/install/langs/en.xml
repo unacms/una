@@ -127,6 +127,8 @@
     <string name="_bx_persons_menu_item_title_entries_administration"><![CDATA[Administration]]></string>
     <string name="_bx_persons_menu_item_title_system_entries_home"><![CDATA[Persons]]></string>
     <string name="_bx_persons_menu_item_title_entries_home"><![CDATA[People]]></string>
+	<string name="_bx_persons_menu_item_title_system_admt_persons"><![CDATA[People]]></string>
+	<string name="_bx_persons_menu_item_title_admt_persons"><![CDATA[{addon} pending approval person(s)]]></string>   
 
 	<string name="_bx_persons_grid_filter_item_title_adm_select_one"><![CDATA[Select Status...]]></string>
 	<string name="_bx_persons_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
