@@ -34,7 +34,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
             'sActionUri' => $sBaseUri,
             'sActionUrl' => BX_DOL_URL_ROOT . $sBaseUri,
             'sObjName' => $sJsObject,
-        	'sObjNameGrid' => '',
+        	'aHtmlIds' => array(),
             'oRequestParams' => array()
         ), $aParams);
         $sContent = "var " . $sJsObject . " = new " . $sJsClass . "(" . json_encode($aParams) . ");";

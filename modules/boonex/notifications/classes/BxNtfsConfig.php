@@ -21,6 +21,12 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
     {
         parent::__construct($aModule);
 
+        $this->CNF = array (
+        	'URL_HOME' => 'page.php?i=notifications-view',
+
+        	'OBJECT_MENU_SUBMENU' => 'bx_notifications_submenu', // main module submenu
+        );
+        
 		$this->_aPrefixes = array(
         	'style' => 'bx-ntfs',
         	'language' => '_bx_ntfs',

@@ -40,8 +40,8 @@ BxPersonsManageTools.prototype.onClickSettings = function(sMenuObject, oButton) 
 	});
 };
 
-BxPersonsManageTools.prototype.onClickDeleteSpammer = function(iContentId) {
-	glGrids[this._sObjNameGrid].actionWithId(iContentId, 'delete_spammer', {}, '', false, 1);
+BxPersonsManageTools.prototype.onClickDeleteWithContent = function(iContentId) {
+	glGrids[this._sObjNameGrid].actionWithId(iContentId, 'delete_with_content', {}, '', false, 1);
 };
 
 /** @} */

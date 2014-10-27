@@ -78,6 +78,27 @@ class BxNtfsModule extends BxBaseModNotificationsModule
     /*
      * COMMON METHODS
      */
+    public function setSubmenu($sSelected)
+    {
+    	bx_import('BxDolMenu');
+    	$oSubmenuSystem = BxDolMenu::getObjectInstance('sys_site_submenu');
+        if(!$oSubmenuSystem)
+			return;
+
+		$CNF = &$this->_oConfig->CNF;
+
+		bx_import('BxDolPermalinks');
+        $oSubmenuSystem->setObjectSubmenu($CNF['OBJECT_MENU_SUBMENU'], array (
+            'title' => _t('_bx_ntfs'),
+            'link' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']),
+            'icon' => '',
+        ));
+
+        $oSubmenuModule = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SUBMENU']);
+        if($oSubmenuModule)
+			$oSubmenuModule->setSelected($this->_oConfig->getName(), $sSelected);
+    }
+
     public function onPost($iId)
     {
     	//--- Event -> Post for Alerts Engine ---//

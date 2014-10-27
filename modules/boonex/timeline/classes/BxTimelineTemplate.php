@@ -45,8 +45,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'style_prefix' => $this->_oConfig->getPrefix('style'),
             'js_object' => $this->_oConfig->getJsObject('post'),
             'js_content' => $this->getJsCode('post', array(
-                'owner_id' => $iOwnerId
-            )),
+            	'oRequestParams' => array('owner_id' => $iOwnerId)
+        	)),
             'form' => $aForm['form']
         ));
     }
@@ -63,13 +63,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'load_more' =>  $sLoadMore,
         	'view_image_popup' => $this->_getImagePopup(),
             'js_content' => $this->getJsCode('view', array(
-                'type' => $aParams['type'],
-                'owner_id' => $aParams['owner_id'],
-                'start' => $aParams['start'],
-                'per_page' => $aParams['per_page'],
-                'filter' => $aParams['filter'],
-                'modules' => $aParams['modules'],
-                'timeline' => $aParams['timeline'],
+            	'oRequestParams' => array(
+	                'type' => $aParams['type'],
+	                'owner_id' => $aParams['owner_id'],
+	                'start' => $aParams['start'],
+	                'per_page' => $aParams['per_page'],
+	                'filter' => $aParams['filter'],
+	                'modules' => $aParams['modules'],
+	                'timeline' => $aParams['timeline'],
+        		)
             )) . $this->getJsCode('share')
         ));
     }
