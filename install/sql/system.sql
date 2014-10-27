@@ -2603,7 +2603,6 @@ INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `templa
 ('sys_account', '_sys_menu_title_account', 'sys_account_links', 'system', 7, 0, 1, '', ''),
 ('sys_add_content', '_sys_menu_title_add_content', 'sys_add_content_links', 'system', 14, 0, 1, '', ''),
 ('sys_add_profile', '_sys_menu_title_add_profile', 'sys_add_profile_links', 'system', 4, 0, 1, '', ''),
-('sys_account_dashboard_submenu', '_sys_menu_title_account_dashboard', 'sys_account_dashboard', 'system', 8, 0, 1, '', ''),
 ('sys_account_dashboard_administration', '_sys_menu_title_account_dashboard_administration', 'sys_account_dashboard_administration', 'system', 4, 0, 1, '', ''),
 ('sys_account_settings_submenu', '_sys_menu_title_account_settings', 'sys_account_settings', 'system', 8, 0, 1, '', ''),
 ('sys_account_settings_more', '_sys_menu_title_account_settings_more', 'sys_account_settings_more', 'system', 4, 0, 1, '', ''),
@@ -2634,7 +2633,6 @@ INSERT INTO `sys_menu_sets` (`set_name`, `module`, `title`, `deletable`) VALUES
 ('sys_account_notifications', 'system', '_sys_menu_set_title_account_notifications', 0),
 ('sys_add_content_links', 'system', '_sys_menu_set_title_add_content', 0),
 ('sys_add_profile_links', 'system', '_sys_menu_set_title_add_profile', 0),
-('sys_account_dashboard', 'system', '_sys_menu_set_title_account_dashboard', 0),
 ('sys_account_dashboard_administration', 'system', '_sys_menu_set_title_account_dashboard_administration', 0),
 ('sys_account_settings', 'system', '_sys_menu_set_title_account_settings', 0),
 ('sys_account_settings_more', 'system', '_sys_menu_set_title_account_settings_more', 0),
@@ -2695,10 +2693,6 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 ('sys_account_links', 'system', 'account-settings', '_sys_menu_item_title_system_account_settings', '_sys_menu_item_title_account_settings', 'page.php?i=account-settings-email', '', '', 'cog', '', 2147483646, 1, 1, 3),
 ('sys_account_links', 'system', 'add-content', '_sys_menu_item_title_system_add_content', '_sys_menu_item_title_add_content', 'page.php?i=add-content', '', '', 'plus', '', 2147483646, 1, 1, 4),
 ('sys_account_links', 'system', 'logout', '_sys_menu_item_title_system_logout', '_sys_menu_item_title_logout', 'logout.php', '', '', 'sign-out', '', 2147483646, 1, 1, 5);
-
--- account dashboard menu
-INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
-('sys_account_dashboard', 'system', 'account-dashboard-administration', '_sys_menu_item_title_system_account_dashboard_administration', '_sys_menu_item_title_account_dashboard_administration', 'javascript:void(0);', 'bx_menu_popup(''sys_account_dashboard_administration'', this);', '', '', '', 64, 1, 1, 1);
 
 -- account settings menu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
