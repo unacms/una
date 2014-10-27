@@ -9,9 +9,9 @@
  * @{
  */
 
-bx_import('BxDolModuleTemplate');
+bx_import('BxBaseModGeneralTemplate');
 
-class BxBaseModNotificationsTemplate extends BxDolModuleTemplate
+class BxBaseModNotificationsTemplate extends BxBaseModGeneralTemplate
 {
 	function __construct(&$oConfig, &$oDb)
     {
@@ -32,7 +32,7 @@ class BxBaseModNotificationsTemplate extends BxDolModuleTemplate
         ));
     }
 
-	public function getJsCode($sType, $aRequestParams = array(), $bWrap = true)
+	public function getJsCode($sType, $aParams = array(), $bWrap = true)
     {
         $oModule = $this->getModule();
 
@@ -40,21 +40,15 @@ class BxBaseModNotificationsTemplate extends BxDolModuleTemplate
         $sJsClass = $this->_oConfig->getJsClass($sType);
         $sJsObject = $this->_oConfig->getJsObject($sType);
 
-        $aParams = array(
-            'sActionUri' => $sBaseUri,
-            'sActionUrl' => BX_DOL_URL_ROOT . $sBaseUri,
-            'sObjName' => $sJsObject,
-            'iOwnerId' => $oModule->_iOwnerId,
+        $aParams = array_merge(array(
+        	'iOwnerId' => $oModule->_iOwnerId,
             'sAnimationEffect' => $this->_oConfig->getAnimationEffect(),
             'iAnimationSpeed' => $this->_oConfig->getAnimationSpeed(),
-            'aHtmlIds' => $this->_oConfig->getHtmlIds($sType),
-            'oRequestParams' => !empty($aRequestParams) ? $aRequestParams : array()
-        );
-
-        $sContent = "var " . $sJsObject . " = new " . $sJsClass . "(" . json_encode($aParams) . ");";
+            'aHtmlIds' => $this->_oConfig->getHtmlIds($sType)
+        ), $aParams);
 
         $this->getCssJs();
-        return !$bWrap ? $sContent : $this->_wrapInTagJsCode($sContent);
+        return parent::getJsCode($sType, $aParams, $bWrap);
     }
 
 	protected function getModule()

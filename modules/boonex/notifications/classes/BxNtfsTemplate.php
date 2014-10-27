@@ -26,11 +26,13 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
             'style_prefix' => $this->_oConfig->getPrefix('style'),
             'content' => $this->getPosts($aParams),
             'js_content' => $this->getJsCode('view', array(
-                'type' => $aParams['type'],
-                'owner_id' => $aParams['owner_id'],
-                'start' => $aParams['start'],
-                'per_page' => $aParams['per_page'],
-                'modules' => $aParams['modules']
+        		'oRequestParams' => array(
+	                'type' => $aParams['type'],
+	                'owner_id' => $aParams['owner_id'],
+	                'start' => $aParams['start'],
+	                'per_page' => $aParams['per_page'],
+	                'modules' => $aParams['modules']
+       			)
             ))
         ));
     }
