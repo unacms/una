@@ -6,6 +6,10 @@
 	<string name="_bx_ntfs_page_title_view"><![CDATA[Notifications]]></string>
 	<string name="_bx_ntfs_page_block_title_view"><![CDATA[Notifications]]></string>
 
+	<string name="_bx_ntfs_menu_title_submenu"><![CDATA[Notifications Submenu]]></string>
+	<string name="_bx_ntfs_menu_set_title_submenu"><![CDATA[Notifications Submenu]]></string>
+	<string name="_bx_ntfs_menu_item_title_system_notifications_all"><![CDATA[All Notifications]]></string>
+	<string name="_bx_ntfs_menu_item_title_notifications_all"><![CDATA[All Notifications]]></string>
     <string name="_bx_ntfs_menu_item_title_system_notifications"><![CDATA[Notifications]]></string>
     <string name="_bx_ntfs_menu_item_title_notifications"><![CDATA[Notifications]]></string>
 

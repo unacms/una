@@ -9,23 +9,23 @@
  * @{
  */
 
-bx_import('BxTemplPageDashboard');
+bx_import('BxDolMenu');
+bx_import('BxDolModule');
+bx_import('BxTemplPage');
 
-/**
- * Entry create/edit pages
- */
-class BxNtfsPageView extends BxTemplPageDashboard
+class BxNtfsPageView extends BxTemplPage
 {
-	protected $sModule;
+	protected $_sModule;
+	protected $_oModule;
 
     public function __construct($aObject, $oTemplate = false)
     {
         parent::__construct($aObject, $oTemplate);
 
-    	$this->sModule = 'bx_notifications';        
+    	$this->_sModule = 'bx_notifications';
+		$this->_oModule = BxDolModule::getInstance($this->_sModule);
 
-    	bx_import('BxDolMenu');
-        BxDolMenu::getObjectInstance('sys_account_dashboard_submenu')->setSelected($this->sModule, 'account-dashboard-notifications');
+		$this->_oModule->setSubmenu('notifications-all');
     }
 }
 

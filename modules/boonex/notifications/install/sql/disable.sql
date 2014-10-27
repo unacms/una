@@ -7,6 +7,8 @@ DELETE FROM `sys_pages_blocks` WHERE `module` = @sName;
 
 
 -- MENU
+DELETE FROM `sys_objects_menu` WHERE `module` = @sName;
+DELETE FROM `sys_menu_sets` WHERE `module` = @sName;
 DELETE FROM `sys_menu_items` WHERE `module` = @sName;
 
 
