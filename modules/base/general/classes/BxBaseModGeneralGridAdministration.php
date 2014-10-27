@@ -34,7 +34,7 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
         if(empty($sFilterName) || empty($aFilterValues))
             return '';
 
-		$sJsObject = $this->_oModule->_oConfig->getJsObject($this->_sManageType);
+		$sJsObject = $this->_oModule->_oConfig->getJsObject('manage_tools');
 
 		$sFilterField = '_s' . str_replace(' ', '', ucwords(str_replace('_', ' ', $sFilterName)));
 		foreach($aFilterValues as $sKey => $sValue)
@@ -58,7 +58,7 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
 
 	protected function _getSearchInput()
     {
-        $sJsObject = $this->_oModule->_oConfig->getJsObject($this->_sManageType);
+        $sJsObject = $this->_oModule->_oConfig->getJsObject('manage_tools');
 
         $aInputSearch = array(
             'type' => 'text',

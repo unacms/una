@@ -14,33 +14,24 @@ bx_import('BxTemplMenu');
  */
 class BxBaseMenuSetAclLevel extends BxTemplMenu
 {
+	protected $mixedProfileId;
+
     public function __construct ($aObject, $oTemplate)
     {
         parent::__construct ($aObject, $oTemplate);
     }
 
-    public function getCode ()
+    public function getCode ($mixedProfileId = 0)
     {
-        if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' && ($iProfileId = bx_get('profile_id', 'post')) && ($iAclLevelId = bx_get('acl_level_id', 'post'))) {
+    	$this->mixedProfileId = $mixedProfileId;
 
-            $sMsg = '';
-            bx_import('BxDolAcl');
-
-            $aCheck = checkActionModule($iProfileId, 'set acl level', 'system', false);
-            if (isAdmin() || $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED) {
-
-                $oAcl = BxDolAcl::getInstance();
-                if ($oAcl->setMembership($iProfileId, $iAclLevelId, 0, true))
-                    checkActionModule($iProfileId, 'delete account', 'system', true); // perform action
-                else
-                    $sMsg = _t('_error occured');
-
-            } else {
-                $sMsg = $aCheck[CHECK_ACTION_MESSAGE];
-            }
+        if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' && ($mixedProfileId = bx_get('profile_id', 'post')) && ($iAclLevelId = bx_get('acl_level_id', 'post'))) {
+			$mixedProfileId = urldecode($mixedProfileId);
+			if(!is_numeric($mixedProfileId))
+				$mixedProfileId = unserialize($mixedProfileId);
 
             header('Content-type: text/html; charset=utf-8');
-            echo $sMsg;
+            echo $this->setMembership($mixedProfileId, $iAclLevelId);
             exit;
         }
 
@@ -55,17 +46,22 @@ class BxBaseMenuSetAclLevel extends BxTemplMenu
 
     protected function loadData()
     {
-        $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+    	$mixedProfileId = $this->mixedProfileId;
+    	if(bx_get('profile_id') !== false)
+        	$mixedProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
 
         bx_import('BxDolAcl');
         $oAcl = BxDolAcl::getInstance();
         if (!$oAcl)
             return;
 
-        $aProfileAclLevel = $oAcl->getMemberMembershipInfo($iProfileId);
-        $aAclLevels = $oAcl->getMemberships(false, true);
+		$bBulk = is_array($mixedProfileId);
+		if(!$bBulk) {
+			$aProfileAclLevel = $oAcl->getMemberMembershipInfo($mixedProfileId);
+			$this->setSelected('', $aProfileAclLevel['id']);
+		}
 
-        $this->setSelected('', $aProfileAclLevel['id']);
+		$aAclLevels = $oAcl->getMemberships(false, true);
 
         $aItems = array();
         foreach ($aAclLevels as $iId => $sTitle) {
@@ -76,11 +72,36 @@ class BxBaseMenuSetAclLevel extends BxTemplMenu
                 'title' => $sTitle,
                 'icon' => '',
                 'link' => 'javascript:void(0);',
-                'onclick' => "bx_set_acl_level({$iProfileId}, {$iId}, '#bx-popup-ajax-wrapper-sys_set_acl_level');"
+                'onclick' => "bx_set_acl_level(" . (!$bBulk ? $mixedProfileId : "'" . urlencode(serialize($mixedProfileId)) . "'") . ", {$iId}, '.bx-popup-applied');"
             );
         }
 
         $this->_aObject['menu_items'] = $aItems;
+    }
+
+    protected function setMembership($mixedProfileId, $iAclLevelId)
+    {
+        bx_import('BxDolAcl');
+
+        if(!is_array($mixedProfileId))
+        	$mixedProfileId = array($mixedProfileId);
+
+		$iPerformerId = bx_get_logged_profile_id();
+        $aCheck = checkActionModule($iPerformerId, 'set acl level', 'system', false);
+        if(!isAdmin() && $aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
+			return $aCheck[CHECK_ACTION_MESSAGE];
+
+		$iSet = 0;
+		$oAcl = BxDolAcl::getInstance();
+		foreach($mixedProfileId as $iProfileId) {
+        	if(!$oAcl->setMembership($iProfileId, $iAclLevelId, 0, true))
+        		continue;
+
+			$iSet += 1;
+			checkActionModule($iPerformerId, 'set acl level', 'system', true); // perform action
+		}
+
+		return count($mixedProfileId) != $iSet ? _t('_error occured') : '';
     }
 }
 

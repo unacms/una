@@ -53,17 +53,17 @@ class BxBaseModGeneralModule extends BxDolModule
 
     // ====== SERVICE METHODS
 
-	public function serviceManageEntities($sType)
+	public function serviceManageTools($sType)
     {
     	bx_import('BxDolGrid');
         $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->getGridObject($sType));
         if(!$oGrid)
             return '';
 
-        $this->_oTemplate->addCss(array($sType . '.css'));
-        $this->_oTemplate->addJs(array($sType . '.js'));
+        $this->_oTemplate->addCss(array('manage_tools.css'));
+        $this->_oTemplate->addJs(array('manage_tools.js'));
         $this->_oTemplate->addJsTranslation(array('_sys_grid_search'));
-        return $this->_oTemplate->getJsCode($sType) . $oGrid->getCode();
+        return $this->_oTemplate->getJsCode('manage_tools', array('sObjNameGrid' => $this->_oConfig->getGridObject($sType))) . $oGrid->getCode();
     }
 
     /**

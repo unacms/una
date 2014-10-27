@@ -20,7 +20,7 @@ class BxBaseModProfileGridModeration extends BxBaseModProfileGridAdministration
         $this->_sManageType = 'moderation';
     }
 
-	public function performActionDelete()
+	public function performActionDelete($bWithContent = false)
     {
         $this->_echoResultJson(array());
     }

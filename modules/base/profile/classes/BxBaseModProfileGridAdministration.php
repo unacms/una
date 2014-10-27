@@ -26,8 +26,36 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
         }
     }
 
-	public function performActionDelete()
+    public function performActionSetAclLevel()
     {
+    	bx_import('BxDolMenu');
+    	$oMenu = BxDolMenu::getObjectInstance('sys_set_acl_level');
+
+    	$aIds = bx_get('ids');
+        if(!$aIds || !is_array($aIds) || !$oMenu) {
+            $this->_echoResultJson(array());
+            exit;
+        }
+
+        foreach($aIds as $iKey => $iId)
+        	$aIds[$iKey] = $this->_getProfileId($iId);
+
+		if(count($aIds) == 1)
+			$aIds = $aIds[0];
+
+    	bx_import('BxTemplFunctions');
+		$sContent = BxTemplFunctions::getInstance()->transBox($this->_oModule->_oConfig->getName() . 'set_acl_level_popup', $oMenu->getCode($aIds));
+
+    	$this->_echoResultJson(array('popup' => $sContent), true);
+    }
+
+	public function performActionDelete($bWithContent = false)
+    {
+    	if($bWithContent) {
+			$this->_echoResultJson(array('msg' => 'TODO: delete with content'));
+	    	return;
+    	}
+
         $iAffected = 0;
         $aIds = bx_get('ids');
         if(!$aIds || !is_array($aIds)) {
@@ -37,7 +65,7 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
 
         $aIdsAffected = array ();
         foreach($aIds as $iId) {
-        	$oProfile = BxDolProfile::getInstanceByContentAndType((int)$iId, $this->_oModule->_oConfig->getName());
+        	$oProfile = $this->_getProfileObject(iId);
 
         	if((int)$this->_delete($iId) == 0)
                 continue;
@@ -45,11 +73,20 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
         	if(!$oProfile->delete())
         		continue;
 
+        	if($bWithContent)	{
+        		//TODO: delete content after profile deletion
+        	}
+
             $aIdsAffected[] = $iId;
             $iAffected++;
         }
 
         $this->_echoResultJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t('_adm_nav_err_menus_delete')));
+    }
+
+	public function performActionDeleteSpammer()
+    {
+    	$this->performActionDelete(true);
     }
 
 	protected function _switcherChecked2State($isChecked)
@@ -64,9 +101,9 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
 
     protected function _enable ($mixedId, $isChecked)
     {
-        $oDb = BxDolDb::getInstance();
-        $sQuery = $oDb->prepare("UPDATE `sys_profiles` SET `status` = ? WHERE `content_id` = ? AND `type` = ?", $this->_switcherChecked2State($isChecked), $mixedId, $this->_oModule->_oConfig->getName());
-        return $oDb->query($sQuery);
+    	$iAction = BX_PROFILE_ACTION_MANUAL;
+    	$oProfile = $this->_getProfileObject($mixedId);
+    	return $isChecked ? $oProfile->activate($iAction) : $oProfile->suspend($iAction);
     }
 
     protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
@@ -95,9 +132,51 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
         return  $this->_getFilterSelectOne($sFilterName, $aFilterValues) . $this->_getSearchInput();
     }
 
+    protected function _getCellFullname($mixedValue, $sKey, $aField, $aRow)
+    {
+    	$oProfile = $this->_getProfileObject($aRow['id']);
+
+        $mixedValue = $this->_oTemplate->parseHtmlByName('bx_a.html', array(
+            'href' => $oProfile->getUrl(),
+            'title' => $mixedValue,
+            'bx_repeat:attrs' => array(),
+            'content' => $mixedValue
+        ));
+
+        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+    }
+
+    protected function _getActionSettings($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
+    	$sName = $this->_oModule->_oConfig->getName() . "_menu_manage_tools";
+    	$sJsObject = $this->_oModule->_oConfig->getJsObject('manage_tools');
+
+    	$sMenu = BxDolMenu::getObjectInstance($sName)->getCode();
+    	if(empty($sMenu))
+    		return '';
+
+    	$a['attr'] = array_merge($a['attr'], array(
+    		"bx-popup-id" => $sName . "-" . $aRow['id'],
+    		"onclick" => "$(this).off('click'); " . $sJsObject . ".onClickSettings('" . $sName . "', this);"
+    	));
+
+    	return $this->_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+    }
+
     protected function _getCellLastOnline($mixedValue, $sKey, $aField, $aRow)
     {
         return parent::_getCellDefault(bx_time_js($mixedValue), $sKey, $aField, $aRow);
+    }
+
+    protected function _getProfileObject($iId)
+    {
+    	bx_import('BxDolProfile');
+    	return  BxDolProfile::getInstanceByContentAndType((int)$iId, $this->_oModule->_oConfig->getName());
+    }
+
+    protected function _getProfileId($iId)
+    {
+    	return $this->_getProfileObject($iId)->id();
     }
 }
 

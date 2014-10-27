@@ -2056,7 +2056,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_top"><![CDATA[Top]]></string>
 	<string name="_uknown"><![CDATA[unknown]]></string>
 	<string name="_undefined"><![CDATA[undefined]]></string>
-	<string name="_vote_do_like"><![CDATA[Thank you]]></string>
+	<string name="_vote_do_like"><![CDATA[Thank you!]]></string>
 	<string name="_vote_do_unlike"><![CDATA[No thank you]]></string>
 	<string name="_vote_do_like_by"><![CDATA[Thanked by]]></string>
 	<string name="_vote_err_duplicate_vote"><![CDATA[Duplicate vote]]></string>
