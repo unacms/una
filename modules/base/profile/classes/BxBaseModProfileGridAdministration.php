@@ -43,8 +43,15 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
 		if(count($aIds) == 1)
 			$aIds = $aIds[0];
 
+		$sContent = $this->_oTemplate->parseHtmlByName('bx_div.html', array(
+			'bx_repeat:attrs' => array(
+				array('key' => 'class', 'value' => 'bx-def-padding')
+			),
+			'content' => $oMenu->getCode($aIds)
+		));
+
     	bx_import('BxTemplFunctions');
-		$sContent = BxTemplFunctions::getInstance()->transBox($this->_oModule->_oConfig->getName() . 'set_acl_level_popup', $oMenu->getCode($aIds));
+		$sContent = BxTemplFunctions::getInstance()->transBox($this->_oModule->_oConfig->getName() . 'set_acl_level_popup', $sContent);
 
     	$this->_echoResultJson(array('popup' => $sContent), true);
     }
