@@ -27,3 +27,8 @@ DELETE FROM `sys_objects_view` WHERE `Name` = 'bx_organizations';
 
 -- SEARCH
 DELETE FROM `sys_objects_search` WHERE `ObjectName` = 'bx_organizations';
+
+-- GRIDS
+DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_organizations_administration', 'bx_organizations_moderation');
+DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_organizations_administration', 'bx_organizations_moderation');
+DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_organizations_administration', 'bx_organizations_moderation');

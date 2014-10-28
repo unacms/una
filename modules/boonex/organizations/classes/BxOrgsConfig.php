@@ -80,6 +80,8 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'OBJECT_MENU_SUBMENU' => 'bx_organizations_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_organizations_view_submenu',  // view entry submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'organizations-home', // first item in view entry submenu from main module submenu
+            'OBJECT_GRID_ADMINISTRATION' => 'bx_organizations_administration',
+        	'OBJECT_GRID_MODERATION' => 'bx_organizations_moderation',
 
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (
@@ -109,6 +111,24 @@ class BxOrgsConfig extends BxBaseModProfileConfig
                 'menu_item_title_unfriend' => '_bx_orgs_menu_item_title_unfriend',
             ),
 
+        );
+
+        $this->_aPrefixes = array(
+        	'lang' => '_bx_orgs'
+        );
+
+        $this->_aJsClass = array(
+        	'manage_tools' => 'BxOrgsManageTools'
+        );
+
+        $this->_aJsObjects = array(
+        	'manage_tools' => 'oBxOrgsManageTools'
+        );
+
+        $this->_aGridObjects = array(
+        	'moderation' => $this->CNF['OBJECT_GRID_MODERATION'],
+        	'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
+        	
         );
     }
 
