@@ -113,6 +113,10 @@ class BxPersonsConfig extends BxBaseModProfileConfig
 
         );
 
+		$this->_aPrefixes = array(
+        	'lang' => '_bx_persons'
+        );
+
         $this->_aJsClass = array(
         	'manage_tools' => 'BxPersonsManageTools'
         );

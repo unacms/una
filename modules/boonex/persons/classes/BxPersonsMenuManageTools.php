@@ -12,7 +12,7 @@
 bx_import('BxBaseModProfileMenuManageTools');
 
 /**
- * 'View person' menu.
+ * 'Persons manage tools' menu.
  */
 class BxPersonsMenuManageTools extends BxBaseModProfileMenuManageTools
 {
