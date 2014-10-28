@@ -144,10 +144,10 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
 
     	$mixedResult = true;
     	if(file_exists($sPathInstall))
-        	$mixedResult = $this->oDb->executeSQL($sPathInstall);
+        	$mixedResult = $this->oDb->executeSQL($sPathInstall, $this->getMarkersForDb());
 
 		if($mixedResult === true && (int)$aModule['enabled'] == 1 && file_exists($sPathEnable))
-			$mixedResult = $this->oDb->executeSQL($sPathEnable);
+			$mixedResult = $this->oDb->executeSQL($sPathEnable, $this->getMarkersForDb());
 
         return $mixedResult === true ? BX_DOL_STUDIO_INSTALLER_SUCCESS : array('code' => BX_DOL_STUDIO_INSTALLER_FAILED, 'content' => $mixedResult);
     }

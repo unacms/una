@@ -580,7 +580,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
                 break;
         }
 
-        $mixedResult = $this->oDb->executeSQL($this->_sHomePath . 'install/sql/' . $sOperation . '.sql');
+        $mixedResult = $this->oDb->executeSQL($this->_sHomePath . 'install/sql/' . $sOperation . '.sql', $this->getMarkersForDb());
 
         return $mixedResult === true ? BX_DOL_STUDIO_INSTALLER_SUCCESS : array('code' => BX_DOL_STUDIO_INSTALLER_FAILED, 'content' => $mixedResult);
     }
@@ -785,6 +785,14 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             	$bCompatible = $bCompatible || (version_compare($sVersionCur, $sVersionReq, '>=') == 1);
 
 		return $bCompatible;
+    }
+
+    protected function getMarkersForDb()
+    {
+        return array(
+            'from' => array('{db_name}'),
+            'to' => array(defined('BX_DATABASE_NAME') ? BX_DATABASE_NAME : ''),
+        );
     }
 }
 
