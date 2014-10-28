@@ -91,6 +91,8 @@ class BxBaseMenu extends BxDolMenu
 
 		$a['title'] = _t($a['title']);
 
+        $this->removeMarker('addon');
+
 		$a = $this->_replaceMarkers($a);
 
 		$mixedAddon = $this->_getMenuAddon($a);

@@ -228,6 +228,15 @@ class BxDolMenu extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
     }
 
     /**
+     * Remove marker
+     * @param $s marker key
+     */
+    public function removeMarker ($s) 
+    {
+        unset($this->_aMarkers[$s]);
+    }
+
+    /**
      * Check if menu items is selected.
      * @param $a menu item array
      * @return boolean
