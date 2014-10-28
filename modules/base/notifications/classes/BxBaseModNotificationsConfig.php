@@ -15,16 +15,12 @@ class BxBaseModNotificationsConfig extends BxBaseModGeneralConfig
 {
 	protected $_oDb;
 
-    protected $_aPrefixes;
     protected $_aObjects;
 
 	protected $_aHandlerDescriptor;
     protected $_sHandlersMethod;
     protected $_aHandlers;
     protected $_aHandlersHidden;
-
-    protected $_aJsClass;
-    protected $_aJsObjects;
 
     protected $_aPerPage;
     protected $_aHtmlIds;
@@ -82,14 +78,6 @@ class BxBaseModNotificationsConfig extends BxBaseModGeneralConfig
             $this->_aHandlersHidden = explode(',', $sHideTimeline);
     }
 
-    public function getPrefix($sType = '')
-    {
-    	if(empty($sType))
-            return $this->_aPrefixes;
-
-        return isset($this->_aPrefixes[$sType]) ? $this->_aPrefixes[$sType] : '';
-    }
-
     public function getObject($sType = '')
     {
     	if(empty($sType))
@@ -123,16 +111,6 @@ class BxBaseModNotificationsConfig extends BxBaseModGeneralConfig
     public function getHandlersHidden()
     {
         return $this->_aHandlersHidden;
-    }
-
-	public function getJsClass($sType)
-    {
-        return isset($this->_aJsClass[$sType]) ? $this->_aJsClass[$sType] : '';
-    }
-
-    public function getJsObject($sType)
-    {
-        return isset($this->_aJsObjects[$sType]) ? $this->_aJsObjects[$sType] : '';
     }
 
 	public function getPerPage($sType = 'default')
