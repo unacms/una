@@ -141,6 +141,7 @@
     <string name="_bx_orgs_grid_action_title_adm_delete"><![CDATA[Delete]]></string>
     <string name="_bx_orgs_grid_action_title_adm_delete_with_content"><![CDATA[Delete With Content]]></string>
     <string name="_bx_orgs_grid_action_title_adm_set_acl_level"><![CDATA[Set Membership]]></string>
+	<string name="_bx_orgs_grid_action_err_delete"><![CDATA[Cannot delete the selected organization(s).]]></string>
 
     <string name="_bx_orgs_txt_account_pending"><![CDATA[This profile is pending approval, please wait until it is activated.]]></string>
     <string name="_bx_orgs_txt_account_suspended"><![CDATA[This profile is suspended.]]></string>

@@ -29,7 +29,25 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
         $this->_sParamsDivider = '#-#';
     }
 
-    public function _getFilterSelectOne($sFilterName, $aFilterValues)
+    protected function _getActionSettings($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
+    	$sJsObject = $this->_oModule->_oConfig->getJsObject('manage_tools');
+    	$sMenuName = $this->_oModule->_oConfig->CNF['OBJECT_MENU_MANAGE_TOOLS'];
+
+    	bx_import('BxDolMenu');
+    	$sMenu = BxDolMenu::getObjectInstance($sMenuName)->getCode();
+    	if(empty($sMenu))
+    		return '';
+
+    	$a['attr'] = array_merge($a['attr'], array(
+    		"bx-popup-id" => $sMenuName . "-" . $aRow['id'],
+    		"onclick" => "$(this).off('click'); " . $sJsObject . ".onClickSettings('" . $sMenuName . "', this);"
+    	));
+
+    	return $this->_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+    }
+
+    protected function _getFilterSelectOne($sFilterName, $aFilterValues)
     {
         if(empty($sFilterName) || empty($aFilterValues))
             return '';

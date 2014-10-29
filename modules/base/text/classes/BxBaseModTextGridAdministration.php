@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    BaseProfile Base classes for profile modules
+ * @defgroup    BaseText Base classes for text modules
  * @ingroup     DolphinModules
  * 
  * @{
@@ -11,7 +11,7 @@
 
 bx_import('BxBaseModGeneralGridAdministration');
 
-class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministration
+class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
 {
 	protected $_sFilter1;
 
@@ -26,44 +26,9 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
         }
     }
 
-    public function performActionSetAclLevel()
-    {
-    	bx_import('BxDolMenu');
-    	$oMenu = BxDolMenu::getObjectInstance('sys_set_acl_level');
-
-    	$aIds = bx_get('ids');
-        if(!$aIds || !is_array($aIds) || !$oMenu) {
-            $this->_echoResultJson(array());
-            exit;
-        }
-
-        foreach($aIds as $iKey => $iId)
-        	$aIds[$iKey] = $this->_getProfileId($iId);
-
-		if(count($aIds) == 1)
-			$aIds = $aIds[0];
-
-		$sContent = $this->_oTemplate->parseHtmlByName('bx_div.html', array(
-			'bx_repeat:attrs' => array(
-				array('key' => 'class', 'value' => 'bx-def-padding')
-			),
-			'content' => $oMenu->getCode($aIds)
-		));
-
-    	bx_import('BxTemplFunctions');
-		$sContent = BxTemplFunctions::getInstance()->transBox($this->_oModule->_oConfig->getName() . 'set_acl_level_popup', $sContent);
-
-    	$this->_echoResultJson(array('popup' => $sContent), true);
-    }
-
-	public function performActionDelete($bWithContent = false)
+	public function performActionDelete()
     {
     	$sPrefixLang = $this->_oModule->_oConfig->getPrefix('lang');
-
-    	if($bWithContent) {
-			$this->_echoResultJson(array('msg' => 'TODO: delete with content'));
-	    	return;
-    	}
 
         $iAffected = 0;
         $aIds = bx_get('ids');
@@ -74,17 +39,8 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
 
         $aIdsAffected = array ();
         foreach($aIds as $iId) {
-        	$oProfile = $this->_getProfileObject(iId);
-
         	if((int)$this->_delete($iId) == 0)
                 continue;
-
-        	if(!$oProfile->delete())
-        		continue;
-
-        	if($bWithContent)	{
-        		//TODO: delete content after profile deletion
-        	}
 
             $aIdsAffected[] = $iId;
             $iAffected++;
@@ -93,26 +49,14 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
         $this->_echoResultJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t($sPrefixLang . '_grid_action_err_delete')));
     }
 
-	public function performActionDeleteWithContent()
+    protected function _switcherChecked2State($isChecked)
     {
-    	$this->performActionDelete(true);
-    }
-
-	protected function _switcherChecked2State($isChecked)
-    {
-        return $isChecked ? 'active' : 'suspended';
+        return $isChecked ? 'active' : 'hidden';
     }
 
     protected function _switcherState2Checked($mixedState)
     {
         return 'active' == $mixedState ? true : false;
-    }
-
-    protected function _enable ($mixedId, $isChecked)
-    {
-    	$iAction = BX_PROFILE_ACTION_MANUAL;
-    	$oProfile = $this->_getProfileObject($mixedId);
-    	return $isChecked ? $oProfile->activate($iAction) : $oProfile->suspend($iAction);
     }
 
     protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
@@ -121,7 +65,7 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
             list($this->_sFilter1, $sFilter) = explode($this->_sParamsDivider, $sFilter);
 
     	if(!empty($this->_sFilter1))
-        	$this->_aOptions['source'] .= $this->_oModule->_oDb->prepare(" AND `tp`.`status`=?", $this->_sFilter1);
+        	$this->_aOptions['source'] .= $this->_oModule->_oDb->prepare(" AND `status`=?", $this->_sFilter1);
 
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }
@@ -136,19 +80,21 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
         $sFilterName = 'filter1';
         $aFilterValues = array(
 			'active' => $sPrefixLang . '_grid_filter_item_title_adm_active',
-            'pending' => $sPrefixLang . '_grid_filter_item_title_adm_pending',
-            'suspended' => $sPrefixLang . '_grid_filter_item_title_adm_suspended',
+            'hidden' => $sPrefixLang . '_grid_filter_item_title_adm_hidden',
 		);
 
         return  $this->_getFilterSelectOne($sFilterName, $aFilterValues) . $this->_getSearchInput();
     }
 
-    protected function _getCellFullname($mixedValue, $sKey, $aField, $aRow)
+	protected function _getCellTitle($mixedValue, $sKey, $aField, $aRow)
     {
-    	$oProfile = $this->_getProfileObject($aRow['id']);
+    	$CNF = &$this->_oModule->_oConfig->CNF;
+
+        bx_import('BxDolPermalinks');
+        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aRow[$CNF['FIELD_ID']]);
 
         $mixedValue = $this->_oTemplate->parseHtmlByName('bx_a.html', array(
-            'href' => $oProfile->getUrl(),
+            'href' => $sUrl,
             'title' => $mixedValue,
             'bx_repeat:attrs' => array(),
             'content' => $mixedValue
@@ -157,25 +103,35 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 
-    protected function _getCellLastOnline($mixedValue, $sKey, $aField, $aRow)
+    protected function _getCellAdded($mixedValue, $sKey, $aField, $aRow)
     {
         return parent::_getCellDefault(bx_time_js($mixedValue), $sKey, $aField, $aRow);
+    }
+
+    protected function _getCellAuthor($mixedValue, $sKey, $aField, $aRow)
+    {
+    	$oProfile = $this->_getProfileObject($aRow['author']);
+    	$sProfile = $oProfile->getDisplayName();
+
+        $mixedValue = $this->_oTemplate->parseHtmlByName('bx_a.html', array(
+            'href' => $oProfile->getUrl(),
+            'title' => $sProfile,
+            'bx_repeat:attrs' => array(),
+            'content' => $sProfile
+        ));
+
+        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 
     protected function _getProfileObject($iId)
     {
     	bx_import('BxDolProfile');
-    	$oProfile = BxDolProfile::getInstanceByContentAndType((int)$iId, $this->_oModule->_oConfig->getName());
+        $oProfile = BxDolProfile::getInstance($iId);
         if (!$oProfile) {
             bx_import('BxDolProfileUndefined');
             $oProfile = BxDolProfileUndefined::getInstance();
         }
         return $oProfile;
-    }
-
-    protected function _getProfileId($iId)
-    {
-    	return $this->_getProfileObject($iId)->id();
     }
 }
 

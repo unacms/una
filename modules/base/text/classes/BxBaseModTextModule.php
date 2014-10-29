@@ -23,6 +23,18 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
     }
 
     // ====== SERVICE METHODS
+	public function serviceGetMenuAddonManageTools()
+	{
+		bx_import('SearchResult', $this->_aModule);
+        $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
+        $o = new $sClass();
+        $o->fillFilters(array(
+			'status' => 'hidden'
+        ));
+        $o->unsetPaginate();
+
+        return $o->getNum();
+	}
 
     /**
      * Display pablic entries

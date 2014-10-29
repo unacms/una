@@ -3,15 +3,15 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    BaseProfile Base classes for profile modules
+ * @defgroup    BaseText Base classes for text modules
  * @ingroup     DolphinModules
  * 
  * @{
  */
 
-bx_import('BxBaseModProfileGridAdministration');
+bx_import('BxBaseModTextGridAdministration');
 
-class BxBaseModProfileGridModeration extends BxBaseModProfileGridAdministration
+class BxBaseModTextGridModeration extends BxBaseModTextGridAdministration
 {
     public function __construct ($aOptions, $oTemplate = false)
     {
@@ -20,7 +20,7 @@ class BxBaseModProfileGridModeration extends BxBaseModProfileGridAdministration
         $this->_sManageType = 'moderation';
     }
 
-	public function performActionDelete($bWithContent = false)
+	public function performActionDelete()
     {
         $this->_echoResultJson(array());
     }
