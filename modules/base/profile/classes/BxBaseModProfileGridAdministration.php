@@ -34,20 +34,31 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
     	$aIds = bx_get('ids');
         if(!$aIds || !is_array($aIds) || !$oMenu) {
             $this->_echoResultJson(array());
-            exit;
+            return;
         }
 
-        foreach($aIds as $iKey => $iId)
-        	$aIds[$iKey] = $this->_getProfileId($iId);
+        $aIdsResult = array();
+        foreach($aIds as $iId) {
+        	$aContentInfo = $this->_oModule->_oDb->getContentInfoById($iId);
+	    	if($this->_oModule->checkAllowedSetMembership($aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED)
+	    		continue;
 
-		if(count($aIds) == 1)
-			$aIds = $aIds[0];
+        	$aIdsResult[] = $this->_getProfileId($iId);
+        }
+
+        if(empty($aIdsResult)) {
+            $this->_echoResultJson(array());
+            return;
+        }
+
+		if(count($aIdsResult) == 1)
+			$aIdsResult = $aIdsResult[0];
 
 		$sContent = $this->_oTemplate->parseHtmlByName('bx_div.html', array(
 			'bx_repeat:attrs' => array(
 				array('key' => 'class', 'value' => 'bx-def-padding')
 			),
-			'content' => $oMenu->getCode($aIds)
+			'content' => $oMenu->getCode($aIdsResult)
 		));
 
     	bx_import('BxTemplFunctions');
@@ -56,46 +67,9 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
     	$this->_echoResultJson(array('popup' => $sContent), true);
     }
 
-	public function performActionDelete($bWithContent = false)
-    {
-    	$sPrefixLang = $this->_oModule->_oConfig->getPrefix('lang');
-
-    	if($bWithContent) {
-			$this->_echoResultJson(array('msg' => 'TODO: delete with content'));
-	    	return;
-    	}
-
-        $iAffected = 0;
-        $aIds = bx_get('ids');
-        if(!$aIds || !is_array($aIds)) {
-            $this->_echoResultJson(array());
-            exit;
-        }
-
-        $aIdsAffected = array ();
-        foreach($aIds as $iId) {
-        	$oProfile = $this->_getProfileObject(iId);
-
-        	if((int)$this->_delete($iId) == 0)
-                continue;
-
-        	if(!$oProfile->delete())
-        		continue;
-
-        	if($bWithContent)	{
-        		//TODO: delete content after profile deletion
-        	}
-
-            $aIdsAffected[] = $iId;
-            $iAffected++;
-        }
-
-        $this->_echoResultJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t($sPrefixLang . '_grid_action_err_delete')));
-    }
-
 	public function performActionDeleteWithContent()
     {
-    	$this->performActionDelete(true);
+    	$this->performActionDelete(array('with_content' => true));
     }
 
 	protected function _switcherChecked2State($isChecked)
@@ -177,6 +151,16 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
     {
     	return $this->_getProfileObject($iId)->id();
     }
+
+    protected function _onDelete($iId, $aParams = array())
+    {
+    	if(isset($aParams['with_content']) && $aParams['with_content'] === true)	{
+			//TODO: delete content after profile deletion
+		}
+
+		return parent::_onDelete($iId, $aParams);
+    }
+    
 }
 
 /** @} */

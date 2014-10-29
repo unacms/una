@@ -41,6 +41,8 @@ BxPersonsManageTools.prototype.onClickSettings = function(sMenuObject, oButton) 
 };
 
 BxPersonsManageTools.prototype.onClickDeleteWithContent = function(iContentId) {
+	$('.bx-popup-applied:visible').dolPopupHide();
+
 	glGrids[this._sObjNameGrid].actionWithId(iContentId, 'delete_with_content', {}, '', false, 1);
 };
 
