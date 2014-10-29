@@ -26,6 +26,7 @@ class BxPostsSearchResult extends BxBaseModTextSearchResult
             'searchFields' => array('title', 'text'),
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
+        		'status' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
             ),
             'paginate' => array('perPage' => getParam('bx_posts_per_page_browse'), 'start' => 0),
             'sorting' => 'last',

@@ -66,6 +66,9 @@ class BxPostsConfig extends BxBaseModTextConfig
             'OBJECT_MENU_SUBMENU' => 'bx_posts_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_posts_view_submenu', // view entry submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'posts-home', // first item in view entry submenu from main module submenu
+            'OBJECT_MENU_MANAGE_TOOLS' => 'bx_posts_menu_manage_tools', //manage menu in content administration tools
+            'OBJECT_GRID_ADMINISTRATION' => 'bx_posts_administration',
+        	'OBJECT_GRID_MODERATION' => 'bx_posts_moderation',
 
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (
@@ -85,6 +88,23 @@ class BxPostsConfig extends BxBaseModTextConfig
             ),
         );
 
+        $this->_aPrefixes = array(
+        	'lang' => '_bx_posts'
+        );
+
+        $this->_aJsClass = array(
+        	'manage_tools' => 'BxPostsManageTools'
+        );
+
+        $this->_aJsObjects = array(
+        	'manage_tools' => 'oBxPostsManageTools'
+        );
+
+        $this->_aGridObjects = array(
+        	'moderation' => $this->CNF['OBJECT_GRID_MODERATION'],
+        	'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
+        	
+        );
     }
 }
 

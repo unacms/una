@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    BaseProfile Base classes for profile modules
+ * @defgroup    BaseText Base classes for text modules
  * @ingroup     DolphinModules
  *
  * @{
@@ -14,7 +14,7 @@ bx_import('BxBaseModGeneralMenuManageTools');
 /**
  * Manage tools submenu
  */
-class BxBaseModProfileMenuManageTools extends BxBaseModGeneralMenuManageTools
+class BxBaseModTextMenuManageTools extends BxBaseModGeneralMenuManageTools
 {
     public function __construct($aObject, $oTemplate = false)
     {
