@@ -29,6 +29,49 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
         $this->_sParamsDivider = '#-#';
     }
 
+	public function performActionDelete($aParams = array())
+    {
+    	$sPrefixLang = $this->_oModule->_oConfig->getPrefix('lang');
+    	$sPrefixClass = $this->_oModule->_oConfig->getClassPrefix();
+
+    	//TODO: remove this check when 'delete with content' feature will be realized in onDelete method.
+    	if(isset($aParams['with_content']) && $aParams['with_content'] === true) {
+			$this->_echoResultJson(array('msg' => 'TODO: delete with content'));
+	    	return;
+    	}
+
+        $iAffected = 0;
+        $aIds = bx_get('ids');
+        if(!$aIds || !is_array($aIds)) {
+            $this->_echoResultJson(array());
+            exit;
+        }
+
+        bx_import('FormsEntryHelper', $this->_oModule->_aModule);
+        $sClass = $sPrefixClass . 'FormsEntryHelper';
+        $oFormsHelper = new $sClass($this->_oModule);
+
+        $aIdsAffected = array ();
+        foreach($aIds as $iId) {
+			$aContentInfo = $this->_oModule->_oDb->getContentInfoById($iId);
+	    	if($this->_oModule->checkAllowedDelete($aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED)
+	    		continue;
+
+        	if($oFormsHelper->deleteData($iId) != '')
+                continue;
+
+			if(!$this->_onDelete($iId, $aParams))
+				continue;
+
+			$this->_oModule->checkAllowedDelete($aContentInfo, true);
+
+            $aIdsAffected[] = $iId;
+            $iAffected++;
+        }
+
+        $this->_echoResultJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t($sPrefixLang . '_grid_action_err_delete')));
+    }
+
     protected function _getActionSettings($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
     	$sJsObject = $this->_oModule->_oConfig->getJsObject('manage_tools');
@@ -91,6 +134,11 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
 		bx_import('BxTemplFormView');
         $oForm = new BxTemplFormView(array());
         return $oForm->genRow($aInputSearch);
+    }
+
+    protected function _onDelete($iId, $aParams = array())
+    {
+    	return true;
     }
 }
 

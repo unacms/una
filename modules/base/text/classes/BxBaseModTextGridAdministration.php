@@ -26,29 +26,6 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
         }
     }
 
-	public function performActionDelete()
-    {
-    	$sPrefixLang = $this->_oModule->_oConfig->getPrefix('lang');
-
-        $iAffected = 0;
-        $aIds = bx_get('ids');
-        if(!$aIds || !is_array($aIds)) {
-            $this->_echoResultJson(array());
-            exit;
-        }
-
-        $aIdsAffected = array ();
-        foreach($aIds as $iId) {
-        	if((int)$this->_delete($iId) == 0)
-                continue;
-
-            $aIdsAffected[] = $iId;
-            $iAffected++;
-        }
-
-        $this->_echoResultJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t($sPrefixLang . '_grid_action_err_delete')));
-    }
-
     protected function _switcherChecked2State($isChecked)
     {
         return $isChecked ? 'active' : 'hidden';
