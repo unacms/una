@@ -44,7 +44,7 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
     {
         // delete profile
         if (!$oProfile->delete($aContentInfo['profile_id']))
-            return MsgBox(_t('_sys_txt_error_entry_delete'));
+            return _t('_sys_txt_error_entry_delete');
 
         return '';
     }

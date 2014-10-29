@@ -145,18 +145,11 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         if (!$oForm->isSubmittedAndValid())
             return $oForm->getCode();
 
-        if (!$oForm->delete ($aContentInfo[$CNF['FIELD_ID']], $aContentInfo))
-            return MsgBox(_t('_sys_txt_error_entry_delete'));
-
-        $sResult = $this->onDataDeleteAfter ($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $oProfile);
-        if ($sResult)
-            return $sResult;
+        if ($sError = $this->deleteData($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $oProfile, $oForm))
+            return MsgBox($sError);
 
         // perform action
         $this->_oModule->checkAllowedDelete($aContentInfo, true);
-
-        // create an alert
-        bx_alert($this->_oModule->getName(), 'deleted', $aContentInfo[$CNF['FIELD_ID']]);
 
         // redirect
         bx_import('BxDolPermalinks');
@@ -164,6 +157,39 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             'account_id' => $oProfile->getAccountId(),
             'profile_id' => $oProfile->id(),
         ));
+    }
+
+    /**
+     * Delete data entry
+     * @param $iContentId entry id
+     * @param $oForm optional content info array
+     * @param $aContentInfo optional content info array
+     * @param $oProfile optional content author profile
+     * @return error string on error or empty string on success
+     */
+    public function deleteData ($iContentId, $aContentInfo = false, $oProfile = null, $oForm = null)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if (!$aContentInfo || !$oProfile)
+            list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
+
+        if (!$aContentInfo)
+            return _t('_sys_txt_error_entry_is_not_defined');
+
+        if (!$oForm)
+            $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $CNF['OBJECT_FORM_ENTRY_DISPLAY_DELETE'], $this->_oModule->_oTemplate);
+
+        if (!$oForm->delete ($aContentInfo[$CNF['FIELD_ID']], $aContentInfo))
+            return _t('_sys_txt_error_entry_delete');
+
+        if ($sResult = $this->onDataDeleteAfter ($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $oProfile))
+            return $sResult;
+
+        // create an alert
+        bx_alert($this->_oModule->getName(), 'deleted', $aContentInfo[$CNF['FIELD_ID']]);
+
+        return '';
     }
 
     public function viewDataForm ($iContentId, $sDisplay = false)
