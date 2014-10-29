@@ -146,7 +146,7 @@
                 
                 setTimeout(function () {
                     o.onShow();                    
-                    $el.find('input').focus(); // put cursor to the first input element
+                    $el.find('input[type=text]').focus(); // put cursor to the first input element
                 }, o.speed);
 
             }, 10);

@@ -57,25 +57,21 @@ BxDolUploaderSimple.prototype.showUploaderForm = function () {
     var $this = this;
     var sUrl = this._getUrlWithStandardParams() + '&a=show_uploader_form&m=' + (this._isMultiple ? 1 : 0) + '&c=' + this._iContentId + '&_t=' + escape(new Date());
 
-    $('#' + $this._sPopupContainerId).remove();
-    $('<div id="' + this._sPopupContainerId + '" style="display: none;"></div>').prependTo('body').load(
-        sUrl,
-        function() {
-             $(this).dolPopup({
-                onBeforeShow: function() {
-                    if ($this.isMultiple())
-                        $('#' + $this._sPopupContainerId + ' .bx-uploader-add-more-files').show();
-                    else
-                        $('#' + $this._sPopupContainerId + ' .bx-uploader-add-more-files').hide();
-                    $('#' + $this._sPopupContainerId + ' .bx-popup-element-close').click(function() {
-                        $this.onClickCancel();
-                    });
-                },
-                closeElement: false,
-                closeOnOuterClick: false
+    $(window).dolPopupAjax({
+        url: sUrl,
+        id: {force: true, value: this._sPopupContainerId},
+        onBeforeShow: function() {
+            if ($this.isMultiple())
+                $('#' + $this._sPopupContainerId + ' .bx-uploader-add-more-files').show();
+            else
+                $('#' + $this._sPopupContainerId + ' .bx-uploader-add-more-files').hide();
+            $('#' + $this._sPopupContainerId + ' .bx-popup-element-close').click(function() {
+                $this.onClickCancel();
             });
-        }
-    );
+        },
+        closeElement: false,
+        closeOnOuterClick: false
+    });
 }
 
 BxDolUploaderSimple.prototype.onClickCancel = function () {
@@ -177,9 +173,9 @@ BxDolUploaderSimple.prototype._showError = function (s, bAppend) {
     if (s == undefined || !s.length)
         return;
     if (!bAppend)
-        $('#' + this._sErrorsContainerId).html(this._sTemplateError.replace('{error}', s));
+        $('#' + this._sPopupContainerId + ' #' + this._sErrorsContainerId).html(this._sTemplateError.replace('{error}', s));
     else
-        $('#' + this._sErrorsContainerId).prepend(this._sTemplateError.replace('{error}', s));
+        $('#' + this._sPopupContainerId + ' #' + this._sErrorsContainerId).prepend(this._sTemplateError.replace('{error}', s));
     this._isErrorShown = true;
 }
 
