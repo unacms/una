@@ -303,6 +303,8 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
 ('bx_posts_administration', 'bulk', 'delete', '_bx_posts_grid_action_title_adm_delete', '', 1, 2),
+('bx_posts_administration', 'single', 'edit', '', 'pencil', 0, 1),
 ('bx_posts_administration', 'single', 'delete', '', 'remove', 1, 2),
 ('bx_posts_administration', 'single', 'settings', '', 'cog', 0, 3),
-('bx_posts_moderation', 'single', 'settings', '', 'cog', 0, 1);
+('bx_posts_moderation', 'single', 'edit', '', 'pencil', 0, 1),
+('bx_posts_moderation', 'single', 'settings', '', 'cog', 0, 2);

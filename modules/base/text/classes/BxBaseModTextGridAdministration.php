@@ -100,6 +100,20 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 
+    protected function _getActionEdit($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
+    	$CNF = &$this->_oModule->_oConfig->CNF;
+
+		bx_import('BxDolPermalinks');
+        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_EDIT_ENTRY'] . '&id=' . $aRow[$CNF['FIELD_ID']]);
+
+    	$a['attr'] = array_merge($a['attr'], array(
+    		"onclick" => "window.open('" . $sUrl . "','_self');"
+    	));
+
+    	return $this->_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+    }
+
     protected function _getProfileObject($iId)
     {
     	bx_import('BxDolProfile');

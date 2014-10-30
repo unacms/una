@@ -40,6 +40,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             'URI_VIEW_ENTRY' => 'view-post',
             'URI_AUTHOR_ENTRIES' => 'posts-author',
             'URI_ADD_ENTRY' => 'create-post',
+        	'URI_EDIT_ENTRY' => 'edit-post',
 
             'URL_HOME' => 'page.php?i=posts-home',
 
