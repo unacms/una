@@ -1,14 +1,5 @@
 
-.bx-uploader-msg-info {
-    padding:1px 0px 1px 16px;
-    background-image:url(../images/icons/information-small-white.png);
-    background-repeat:no-repeat;    
-}
-
 .bx-uploader-msg-err {
-    padding:1px 0px 1px 16px;
-    background-image:url(../images/icons/exclamation-small-red.png);
-    background-repeat:no-repeat;    
     color:#900;
 }
 

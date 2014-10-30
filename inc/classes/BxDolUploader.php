@@ -405,7 +405,7 @@ abstract class BxDolUploader extends BxDol
 
         $a = $oStorage->getRestrictionsTextArray(bx_get_logged_profile_id());
         foreach ($a as $s)
-            $sTextRestrictions .= '<div class="bx-uploader-msg-info">' . $s . '</div>';
+            $sTextRestrictions .= '<div class="bx-uploader-msg-info bx-def-font-grayed">' . $s . '</div>';
 
         return $sTextRestrictions;
     }

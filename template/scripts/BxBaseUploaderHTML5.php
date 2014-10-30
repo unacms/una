@@ -54,9 +54,7 @@ class BxBaseUploaderHTML5 extends BxDolUploader
      */
     public function getUploaderForm($isMultiple = true, $iContentId = false)
     {
-        parent::getUploaderForm($isMultiple, $iContentId);
-
-        $sForm = $this->_oTemplate->parseHtmlByName('uploader_form_html5.html', array(
+        return $this->_oTemplate->parseHtmlByName('uploader_form_html5.html', array(
             'form_container_id' => $this->_sFormContainerId,
             'errors_container_id' => $this->_sErrorsContainerId,
             'uploader_instance_name' => $this->getNameJsInstanceUploader(),
@@ -64,9 +62,6 @@ class BxBaseUploaderHTML5 extends BxDolUploader
             'div_id' => $this->_sDivId,
             'content_id' => $iContentId,
         ));
-
-        bx_import('BxTemplFunctions');
-        return BxTemplFunctions::getInstance()->transBox('', $sForm);
     }
 
     /**
