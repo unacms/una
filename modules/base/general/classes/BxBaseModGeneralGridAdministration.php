@@ -110,7 +110,7 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
                 'onChange' => 'javascript:' . $sJsObject . '.onChangeFilter(this)'
             ),
             'value' => $this->$sFilterField,
-            'values' => array_merge(array('' => _t($sPrefixLang . '_grid_filter_item_title_adm_select_one')), $aFilterValues)
+            'values' => array_merge(array('' => _t($sPrefixLang . '_grid_filter_item_title_adm_select_one_' . $sFilterName)), $aFilterValues)
         );
 
         bx_import('BxTemplFormView');
