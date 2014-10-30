@@ -28,6 +28,10 @@ ul.bx-menu-toolbar li a img {
 	background-color: #008fb8;
 }
 
+ul.bx-menu-toolbar li a .sys-icon-a {
+    margin-top:1rem;
+}
+
 /* --------------- account popup menu */
 .bx-menu-account-popup-profile {
 	font-weight: bold;
