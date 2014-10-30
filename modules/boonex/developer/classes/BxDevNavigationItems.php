@@ -85,8 +85,8 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems
 
         $oForm->initChecker($aItem);
         if($oForm->isSubmittedAndValid()) {
-            if($oForm->update($iId) !== false)
-                $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
+            if($oForm->update($aItem['id']) !== false)
+                $aRes = array('grid' => $this->getCode(false), 'blink' => $aItem['id']);
             else
                 $aRes = array('msg' => _t('_bx_dev_nav_err_items_edit'));
 
