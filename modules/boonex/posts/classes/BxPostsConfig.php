@@ -40,6 +40,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             'URI_VIEW_ENTRY' => 'view-post',
             'URI_AUTHOR_ENTRIES' => 'posts-author',
             'URI_ADD_ENTRY' => 'create-post',
+        	'URI_EDIT_ENTRY' => 'edit-post',
 
             'URL_HOME' => 'page.php?i=posts-home',
 
@@ -85,11 +86,11 @@ class BxPostsConfig extends BxBaseModTextConfig
             'T' => array (
                 'txt_sample_single' => '_bx_posts_txt_sample_single',
             	'txt_sample_comment_single' => '_bx_posts_txt_sample_comment_single',
+            	'grid_action_err_delete' => '_bx_posts_grid_action_err_delete',
+				'filter_item_active' => '_bx_posts_grid_filter_item_title_adm_active',
+            	'filter_item_hidden' => '_bx_posts_grid_filter_item_title_adm_hidden',
+            	'filter_item_select_one_filter1' => '_bx_posts_grid_filter_item_title_adm_select_one_filter1'
             ),
-        );
-
-        $this->_aPrefixes = array(
-        	'lang' => '_bx_posts'
         );
 
         $this->_aJsClass = array(

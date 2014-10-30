@@ -285,8 +285,8 @@ INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations
 
 -- GRIDS: administration
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `override_class_name`, `override_class_file`) VALUES
-('bx_posts_administration', 'Sql', 'SELECT * FROM `bx_posts_posts` WHERE 1 ', 'bx_posts_posts', 'id', '', 'status', '', 100, NULL, 'start', '', 'title,text', '', 'like', '', '', 'BxPostsGridAdministration', 'modules/boonex/posts/classes/BxPostsGridAdministration.php'),
-('bx_posts_moderation', 'Sql', 'SELECT * FROM `bx_posts_posts` WHERE 1 ', 'bx_posts_posts', 'id', '', 'status', '', 100, NULL, 'start', '', 'title,text', '', 'like', '', '', 'BxPostsGridModeration', 'modules/boonex/posts/classes/BxPostsGridModeration.php');
+('bx_posts_administration', 'Sql', 'SELECT * FROM `bx_posts_posts` WHERE 1 ', 'bx_posts_posts', 'id', '', 'status', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 'BxPostsGridAdministration', 'modules/boonex/posts/classes/BxPostsGridAdministration.php'),
+('bx_posts_moderation', 'Sql', 'SELECT * FROM `bx_posts_posts` WHERE 1 ', 'bx_posts_posts', 'id', '', 'status', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 'BxPostsGridModeration', 'modules/boonex/posts/classes/BxPostsGridModeration.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_posts_administration', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
@@ -303,6 +303,8 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
 ('bx_posts_administration', 'bulk', 'delete', '_bx_posts_grid_action_title_adm_delete', '', 1, 2),
+('bx_posts_administration', 'single', 'edit', '', 'pencil', 0, 1),
 ('bx_posts_administration', 'single', 'delete', '', 'remove', 1, 2),
 ('bx_posts_administration', 'single', 'settings', '', 'cog', 0, 3),
-('bx_posts_moderation', 'single', 'settings', '', 'cog', 0, 1);
+('bx_posts_moderation', 'single', 'edit', '', 'pencil', 0, 1),
+('bx_posts_moderation', 'single', 'settings', '', 'cog', 0, 2);

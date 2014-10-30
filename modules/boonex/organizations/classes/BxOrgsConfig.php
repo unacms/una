@@ -110,12 +110,13 @@ class BxOrgsConfig extends BxBaseModProfileConfig
                 'menu_item_title_unfriend_reject_request' => '_bx_orgs_menu_item_title_unfriend_reject_request',
                 'menu_item_title_befriend' => '_bx_orgs_menu_item_title_befriend',
                 'menu_item_title_unfriend' => '_bx_orgs_menu_item_title_unfriend',
+            	'grid_action_err_delete' => '_bx_orgs_grid_action_err_delete',
+				'filter_item_active' => '_bx_orgs_grid_filter_item_title_adm_active',
+            	'filter_item_pending' => '_bx_orgs_grid_filter_item_title_adm_pending',
+            	'filter_item_suspended' => '_bx_orgs_grid_filter_item_title_adm_suspended',
+            	'filter_item_select_one_filter1' => '_bx_orgs_grid_filter_item_title_adm_select_one_filter1'
             ),
 
-        );
-
-        $this->_aPrefixes = array(
-        	'lang' => '_bx_orgs'
         );
 
         $this->_aJsClass = array(

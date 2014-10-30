@@ -52,12 +52,12 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
     {
         parent::_getFilterControls();
 
-        $sPrefixLang = $this->_oModule->_oConfig->getPrefix('lang');
+        $CNF = &$this->_oModule->_oConfig->CNF;
 
         $sFilterName = 'filter1';
         $aFilterValues = array(
-			'active' => $sPrefixLang . '_grid_filter_item_title_adm_active',
-            'hidden' => $sPrefixLang . '_grid_filter_item_title_adm_hidden',
+        	'active' => $CNF['T']['filter_item_active'],
+            'pending' => $CNF['T']['filter_item_hidden'],
 		);
 
         return  $this->_getFilterSelectOne($sFilterName, $aFilterValues) . $this->_getSearchInput();
@@ -98,6 +98,20 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
         ));
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+    }
+
+    protected function _getActionEdit($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
+    	$CNF = &$this->_oModule->_oConfig->CNF;
+
+		bx_import('BxDolPermalinks');
+        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_EDIT_ENTRY'] . '&id=' . $aRow[$CNF['FIELD_ID']]);
+
+    	$a['attr'] = array_merge($a['attr'], array(
+    		"onclick" => "window.open('" . $sUrl . "','_self');"
+    	));
+
+    	return $this->_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
     protected function _getProfileObject($iId)

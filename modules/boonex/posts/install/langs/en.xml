@@ -112,7 +112,7 @@
 	<string name="_bx_posts_menu_item_title_system_admt_posts"><![CDATA[Posts]]></string>
 	<string name="_bx_posts_menu_item_title_admt_posts"><![CDATA[{addon} hidden post(s)]]></string> 
 
-	<string name="_bx_posts_grid_filter_item_title_adm_select_one"><![CDATA[Select Status...]]></string>
+	<string name="_bx_posts_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Select Status...]]></string>
 	<string name="_bx_posts_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
 	<string name="_bx_posts_grid_filter_item_title_adm_hidden"><![CDATA[Hidden]]></string>
 	<string name="_bx_posts_grid_column_title_adm_active"><![CDATA[Active]]></string>

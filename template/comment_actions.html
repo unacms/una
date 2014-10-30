@@ -5,11 +5,11 @@
 		</bx_if:show_ago_link>
 		<bx_if:show_ago_text>__ago__</bx_if:show_ago_text>
 	</div>
+	<bx_if:show_menu_manage>
+		<div class="__style_prefix__-comment-manage-link bx-def-margin-right">
+			<a class="__style_prefix__-comment-manage bx-def-margin-sec-left-auto" href="javascript:void(0)" onclick="__js_object__.toggleManagePopup(this, __id__); return false;" title="<bx_text_attribute:_Manage />"><i class="sys-icon ellipsis-h"></i></a>
+		</div>
+		__popup_text__
+	</bx_if:show_menu_manage>
 	__menu_actions__
 </div>
-<bx_if:show_menu_manage>
-	<div class="__style_prefix__-comment-manage-link bx-def-font-large">
-		<a class="__style_prefix__-comment-manage bx-def-margin-sec-left-auto" href="javascript:void(0)" onclick="__js_object__.toggleManagePopup(this, __id__); return false;" title="<bx_text_attribute:_Manage />"><i class="sys-icon chevron-down"></i></a>
-	</div>
-	__popup_text__
-</bx_if:show_menu_manage>

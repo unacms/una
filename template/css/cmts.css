@@ -142,23 +142,12 @@
 		position: relative;
 	}
 	div.cmt-ago,
+	div.cmt-comment-manage-link, 
 	div.cmt-actions ul.bx-menu-hor,
 	div.cmt-points-wrp {
 		position: relative;
 		float: left;
 	}
-    div.cmt-comment-manage-link {
-		position: absolute;
-    	top: 0px;
-    	right: 0px;
-    }
-    div.cmt-comment-manage-link a {
-		color: rgba(56, 120, 119, 0.5);
-    }
-    div.cmt-comment-manage-link a:hover {
-		text-decoration: none;
-		color: rgba(56, 120, 119, 1.0);
-    }
     div.cmt-comment-manage .bx-menu-ver li {
 		white-space: nowrap;
     }
