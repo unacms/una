@@ -31,8 +31,7 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
 
 	public function performActionDelete($aParams = array())
     {
-    	$sPrefixLang = $this->_oModule->_oConfig->getPrefix('lang');
-    	$sPrefixClass = $this->_oModule->_oConfig->getClassPrefix();
+    	$CNF = &$this->_oModule->_oConfig->CNF;
 
     	//TODO: remove this check when 'delete with content' feature will be realized in onDelete method.
     	if(isset($aParams['with_content']) && $aParams['with_content'] === true) {
@@ -48,7 +47,7 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
         }
 
         bx_import('FormsEntryHelper', $this->_oModule->_aModule);
-        $sClass = $sPrefixClass . 'FormsEntryHelper';
+        $sClass = $this->_oModule->_oConfig->getClassPrefix() . 'FormsEntryHelper';
         $oFormsHelper = new $sClass($this->_oModule);
 
         $aIdsAffected = array ();
@@ -69,7 +68,7 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
             $iAffected++;
         }
 
-        $this->_echoResultJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t($sPrefixLang . '_grid_action_err_delete')));
+        $this->_echoResultJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t($CNF['T']['grid_action_err_delete'])));
     }
 
     protected function _getActionSettings($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
@@ -95,8 +94,8 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
         if(empty($sFilterName) || empty($aFilterValues))
             return '';
 
+		$CNF = &$this->_oModule->_oConfig->CNF;
 		$sJsObject = $this->_oModule->_oConfig->getJsObject('manage_tools');
-		$sPrefixLang = $this->_oModule->_oConfig->getPrefix('lang');
 
 		$sFilterField = '_s' . str_replace(' ', '', ucwords(str_replace('_', ' ', $sFilterName)));
 		foreach($aFilterValues as $sKey => $sValue)
@@ -110,7 +109,7 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
                 'onChange' => 'javascript:' . $sJsObject . '.onChangeFilter(this)'
             ),
             'value' => $this->$sFilterField,
-            'values' => array_merge(array('' => _t($sPrefixLang . '_grid_filter_item_title_adm_select_one_' . $sFilterName)), $aFilterValues)
+            'values' => array_merge(array('' => _t($CNF['T']['filter_item_select_one_' . $sFilterName])), $aFilterValues)
         );
 
         bx_import('BxTemplFormView');

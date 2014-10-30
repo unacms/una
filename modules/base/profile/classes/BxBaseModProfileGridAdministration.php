@@ -105,13 +105,13 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
     {
         parent::_getFilterControls();
 
-        $sPrefixLang = $this->_oModule->_oConfig->getPrefix('lang');
+        $CNF = &$this->_oModule->_oConfig->CNF;
 
         $sFilterName = 'filter1';
         $aFilterValues = array(
-			'active' => $sPrefixLang . '_grid_filter_item_title_adm_active',
-            'pending' => $sPrefixLang . '_grid_filter_item_title_adm_pending',
-            'suspended' => $sPrefixLang . '_grid_filter_item_title_adm_suspended',
+			'active' => $CNF['T']['filter_item_active'],
+            'pending' => $CNF['T']['filter_item_pending'],
+            'suspended' => $CNF['T']['filter_item_suspended'],
 		);
 
         return  $this->_getFilterSelectOne($sFilterName, $aFilterValues) . $this->_getSearchInput();

@@ -52,12 +52,12 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
     {
         parent::_getFilterControls();
 
-        $sPrefixLang = $this->_oModule->_oConfig->getPrefix('lang');
+        $CNF = &$this->_oModule->_oConfig->CNF;
 
         $sFilterName = 'filter1';
         $aFilterValues = array(
-			'active' => $sPrefixLang . '_grid_filter_item_title_adm_active',
-            'hidden' => $sPrefixLang . '_grid_filter_item_title_adm_hidden',
+        	'active' => $CNF['T']['filter_item_active'],
+            'pending' => $CNF['T']['filter_item_hidden'],
 		);
 
         return  $this->_getFilterSelectOne($sFilterName, $aFilterValues) . $this->_getSearchInput();
