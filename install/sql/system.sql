@@ -2601,7 +2601,7 @@ INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `templa
 ('sys_toolbar_site', '_sys_menu_title_toolbar_site', 'sys_toolbar_site', 'system', 5, 0, 1, '', ''),
 ('sys_toolbar_member', '_sys_menu_title_toolbar_member', 'sys_toolbar_member', 'system', 5, 0, 1, 'BxTemplMenuToolbar', ''),
 ('sys_account', '_sys_menu_title_account', 'sys_account_links', 'system', 7, 0, 1, '', ''),
-('sys_add_content', '_sys_menu_title_add_content', 'sys_add_content_links', 'system', 14, 0, 1, '', ''),
+('sys_add_content', '_sys_menu_title_add_content', 'sys_add_content_links', 'system', 14, 0, 1, 'BxTemplMenuSite', ''),
 ('sys_add_profile', '_sys_menu_title_add_profile', 'sys_add_profile_links', 'system', 4, 0, 1, '', ''),
 ('sys_account_dashboard_manage_tools', '_sys_menu_title_account_dashboard_manage_tools', 'sys_account_dashboard_manage_tools', 'system', 4, 0, 1, '', ''),
 ('sys_account_settings_submenu', '_sys_menu_title_account_settings', 'sys_account_settings', 'system', 8, 0, 1, '', ''),
@@ -2677,12 +2677,12 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 
 -- site toolbar menu
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_toolbar_site', 'system', 'main-menu', '_sys_menu_item_title_system_main_menu', '', 'javascript:void(0);', 'bx_menu_popup(\'sys_site\');', '', 'reorder', '', 2147483647, 1, 1, 1),
+('sys_toolbar_site', 'system', 'main-menu', '_sys_menu_item_title_system_main_menu', '', 'javascript:void(0);', 'bx_menu_popup(\'sys_site\');', '', 'a:bars', '', 2147483647, 1, 1, 1),
 ('sys_toolbar_site', 'system', 'search', '_sys_menu_item_title_system_search', '', 'javascript:void(0);', '$(\'#bx-popup-search\').dolPopup();', '', 'search', '', 2147483647, 1, 1, 2);
 
 -- member toolbar menu
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_toolbar_member', 'system', 'add-content', '_sys_menu_item_title_system_add_content', '', 'javascript:void(0);', 'bx_menu_popup(\'sys_add_content\');', '', 'plus', '', 510, 1, 1, 0),
+('sys_toolbar_member', 'system', 'add-content', '_sys_menu_item_title_system_add_content', '', 'javascript:void(0);', 'bx_menu_popup(\'sys_add_content\');', '', 'a:plus', '', 510, 1, 1, 0),
 ('sys_toolbar_member', 'system', 'account', '_sys_menu_item_title_system_account_menu', '_sys_menu_item_title_account_menu', 'javascript:void(0);', 'bx_menu_popup(\'sys_account_popup\');', '', 'user', 'sys_account_popup', 510, 1, 0, 1),
 ('sys_toolbar_member', 'system', 'login', '_sys_menu_item_title_system_login', '', 'page.php?i=login', '', '', 'user', '', 1, 1, 0, 2);
 

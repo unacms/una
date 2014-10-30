@@ -1030,6 +1030,9 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
                     'results' => $oSearch->getResultsContainer(),
                 ));
                 $sRet .= BxTemplFunctions::getInstance()->transBox('bx-popup-search', $s, true);
+
+                $sRet .= $this->getMenu ('sys_site');
+                $sRet .= isLogged() ? $this->getMenu ('sys_add_content') : '';
                 break;
             case 'lang':
                 $sRet = bx_lang_name();

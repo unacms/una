@@ -300,38 +300,69 @@ function bx_menu_popup_inline (jSel, e, options) {
  * Show pointer popup with menu from existing HTML.
  * @param jSel - jQuery selector for html to show in popup
  * @param e - element to click to open/close slider
- * @param options - popup options
+ * @param sPosition - 'block' for sliding menu in blocks, 'site' - for sliding main menu
  */
-function bx_menu_slide (jSel, e) {
+function bx_menu_slide (jSel, e, sPosition) {
     var options = options || {};
-    var eSlider = $(jSel);
-    var eBlock = eSlider.parents('.bx-page-block-container');
-    var eIcon = $(e).find('.sys-icon-a');
+    var eSlider = $(jSel);    
 
-    var fClose = function () {
-        if (eIcon)
-            (new Marka(eIcon[0])).set(eIcon.attr('data-icon-orig'));
-        eSlider.slideUp()
-    };
+    if ('undefined' == typeof(e))
+        e = eSlider.data('data-control-btn');
 
-    var fOpen = function () {
-        if (eIcon) {
-            eIcon.attr('data-icon-orig', eIcon.attr('data-icon'));
-            (new Marka(eIcon[0])).set('times');
-        }
+    var eIcon = $(e).find('.sys-icon-a');    
+
+    var fPositionBlock = function () {
+        var eBlock = eSlider.parents('.bx-page-block-container');
         eSlider.css({
             position: 'absolute',
             top: eBlock.find('.bx-db-header').outerHeight(true),
             left: 0,
             width: eBlock.width()
         });
+    };
+
+    var fPositionSite = function () {
+        var eToolbar = $('#bx-toolbar');
+        eSlider.css({
+            position: 'fixed',
+            top: eToolbar.outerHeight(true),
+            left: 0,
+            width: eToolbar.width()
+        });        
+    };
+
+    var fClose = function () {
+        if (eIcon.length)
+            (new Marka(eIcon[0])).set(eIcon.attr('data-icon-orig'));
+        eSlider.slideUp()
+    };
+
+    var fOpen = function () {
+        if (eIcon.length) {
+            eIcon.attr('data-icon-orig', eIcon.attr('data-icon'));
+            (new Marka(eIcon[0])).set('times');
+        }
+
+        if ('block' == sPosition)
+            fPositionBlock();
+        else
+            fPositionSite();
+
         eSlider.slideDown();
+
+        eSlider.data('data-control-btn', e);
     };    
     
+    if ('undefined' == typeof(sPosition))
+        sPosition = 'block';
+
     if ($(jSel + ':visible').length) {
         fClose();
     } 
     else {
+        $('.bx-sliding-menu-main:visible, .bx-popup-slide-wrapper:visible').each(function () {
+            bx_menu_slide('#' + this.id); // close all opened sliding menus
+        });
         fOpen();
         eSlider.find('a').each(function () {
             $(this).on('click', function () {
