@@ -87,6 +87,11 @@
 
             setTimeout(function() { // timeout is needed for some browsers to render element
 
+                if (o.fog) {
+                    $('html, body').addClass('bx-popup-lock');
+                    $('.bx-main').addClass('bx-def-blur');
+                }
+
                 // remove any transitions before setting popup position
                 $el.removeClass('bx-popup-transitions bx-popup-inactive'); 
 
@@ -149,7 +154,7 @@
                     $el.find('input[type=text]').focus(); // put cursor to the first input element
                 }, o.speed);
 
-            }, 10);
+            }, 100);
         });
     };
 
@@ -197,6 +202,9 @@
 
                 $el.hide(o.onHide);
             }
+            
+            $("html, body").removeClass('bx-popup-lock');
+            $('.bx-main').removeClass('bx-def-blur');
         });
     };
 

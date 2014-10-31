@@ -51,7 +51,7 @@ html {
 	width:100vw;
     height:100%;
     height:100vh;
-    overflow:scroll;
+    overflow:auto;
 }
 
 .bx-popup-responsive .bx-popup-trans > div,
