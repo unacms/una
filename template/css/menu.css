@@ -230,10 +230,14 @@ ul.bx-menu-toolbar li a {
     text-decoration:none;
 }
 
-ul.bx-menu-toolbar li a .sys-icon, 
+ul.bx-menu-toolbar li a .sys-icon,
+ul.bx-menu-toolbar li a .sys-icon-a,
 ul.bx-menu-toolbar li a img,
 ul.bx-menu-toolbar li a span {
     vertical-align:top;
+}
+ul.bx-menu-toolbar li a .sys-icon-a {
+    margin-top:0.5rem;
 }
 ul.bx-menu-toolbar li a span {
     margin-right:0;
@@ -248,16 +252,29 @@ ul.bx-menu-toolbar li img {
     background-repeat:no-repeat;
 }
 
+ul.bx-menu-toolbar li .sys-icon-a,
 ul.bx-menu-toolbar li .sys-icon {
     display:inline-block;
     vertical-align:middle;
     font-size:32px;
     font-size:2rem;
     text-align:center;
+    width:2rem;
+    height:2rem;
 }
 
 
 /* --------------- floating blocks menu */
+
+.bx-sliding-menu-main {
+    overflow-x:scroll;
+    opacity:0.9
+}
+.bx-sliding-menu-main ul.bx-menu-floating-blocks-big {
+    display:table;
+    margin:0 auto;
+    white-space:nowrap;
+}
 
 .bx-popup-content .bx-menu-floating-blocks {
     width:256px;
@@ -271,7 +288,7 @@ ul.bx-menu-floating-blocks-big,
 ul.bx-menu-floating-blocks {
     padding:0;
     margin:0;
-    list-style:none;    
+    list-style:none;
 }
 
 .bx-menu-floating-blocks-big li,

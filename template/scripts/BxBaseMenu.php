@@ -100,7 +100,7 @@ class BxBaseMenu extends BxDolMenu
 
 		$a = $this->_replaceMarkers($a);
 
-		list ($sIcon, $sIconUrl) = $this->_getMenuIcon($a);
+		list ($sIcon, $sIconUrl, $sIconA) = $this->_getMenuIcon($a);
 
 		$a['class_add'] = $this->_isSelected($a) ? 'bx-menu-tab-active' : '';
 		$a['link'] = isset($a['link']) ? $this->_oPermalinks->permalink($a['link']) : 'javascript:void(0);';
@@ -112,6 +112,10 @@ class BxBaseMenu extends BxDolMenu
 		$a['bx_if:icon'] = array (
         	'condition' => (bool)$sIcon,
             'content' => array('icon' => $sIcon),
+		);
+		$a['bx_if:icon-a'] = array (
+        	'condition' => (bool)$sIconA,
+            'content' => array('icon-a' => $sIconA),
 		);
 		$a['bx_if:title'] = array (
 			'condition' => (bool)$a['title'],
@@ -132,6 +136,7 @@ class BxBaseMenu extends BxDolMenu
     protected function _getMenuIcon ($a)
     {
         $sIcon = false;
+        $sIconA = false;
         $sIconUrl = false;
         if (!empty($a['icon'])) {
             if ((int)$a['icon'] > 0 ) {
@@ -139,13 +144,17 @@ class BxBaseMenu extends BxDolMenu
                 $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
                 $sIconUrl = $oStorage ? $oStorage->getFileUrlById((int)$a['icon']) : false;
             } else {
-                if (false === strpos($a['icon'], '.')) // font icons
-                    $sIcon = $a['icon'];
-                else
+                if (false === strpos($a['icon'], '.')) { 
+                    if (0 === strncmp($a['icon'], 'a:', 2))
+                        $sIconA = substr($a['icon'], 2); // animated icon
+                    else
+                        $sIcon = $a['icon']; // font icons
+                } else {
                     $sIconUrl = $this->_oTemplate->getIconUrl($a['icon']);
+                }
             }
         }
-        return array ($sIcon, $sIconUrl);
+        return array ($sIcon, $sIconUrl, $sIconA);
     }
 
     protected function _getMenuAddon ($aMenuItem)
