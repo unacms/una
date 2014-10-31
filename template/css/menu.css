@@ -307,10 +307,10 @@ ul.bx-menu-floating-blocks {
     height:4rem;
 }
 .bx-menu-floating-blocks-big li {
-    width:192px;
-    width:12rem;
-    height:192px;
-    height:12rem;
+    width:128px;
+    width:8rem;
+    height:128px;
+    height:8rem;
 }
 
 .bx-menu-floating-blocks-big li:hover,
@@ -349,10 +349,10 @@ ul.bx-menu-floating-blocks {
 .bx-menu-floating-blocks-big li img,
 .bx-menu-floating-blocks-big li .sys-icon {
     display:block;
-    width:128px;
-    width:8rem;
-    height:128px;
-    height:8rem;
+    width:64px;
+    width:4rem;
+    height:64px;
+    height:4rem;
     margin:16px 32px 8px 32px;
     margin:1rem 2rem 0.5rem 2rem;
 }
@@ -373,10 +373,10 @@ ul.bx-menu-floating-blocks {
     font-size:2rem;
 }
 .bx-menu-floating-blocks-big li .sys-icon {
-    line-height:128px;
-    line-height:8rem;
-    font-size:128px;
-    font-size:8rem;
+    line-height:64px;
+    line-height:4rem;
+    font-size:64px;
+    font-size:4rem;
 }
 
 .bx-menu-floating-blocks-big li .bx-menu-floating-blocks-title,
