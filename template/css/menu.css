@@ -131,8 +131,8 @@ ul.bx-menu-ver {
 /* --------------- main menu */
 
 #bx-menu-main-container {
-    height:36px;
-    height:2.2rem;
+    height:40px;
+    height:2.5rem;
     white-space: nowrap;
     overflow:hidden;    
 }
@@ -146,8 +146,8 @@ ul.bx-menu-ver {
 #bx-menu-main-submenu,
 #bx-menu-main {
     display:inline-block;
-    line-height:36px;
-    line-height:2.2rem;
+    line-height:40px;
+    line-height:2.5rem;
     vertical-align:top;
 }
 
