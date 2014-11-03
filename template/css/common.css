@@ -231,6 +231,7 @@ body > .bx-popup-wrapper {
 
 .bx-popup-slide-wrapper {
     opacity:0.9;
+    width:100%;
 }
 
 .bx-popup-slide-wrapper li {

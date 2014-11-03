@@ -326,8 +326,7 @@ function bx_menu_slide (jSel, e, sPosition) {
         eSlider.css({
             position: 'fixed',
             top: eToolbar.outerHeight(true),
-            left: 0,
-            width: eToolbar.width()
+            left: 0
         });        
     };
 
