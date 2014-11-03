@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `sys_objects_social_sharing` (
 
 
 INSERT INTO `sys_objects_social_sharing` (`object`, `type`, `content`, `order`, `active`) VALUES
-('facebook', 'html', '<a class="bx-btn" title="<bx_text:_sys_social_sharing_title_facebook />" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={url_encoded}"><i class="sys-icon facebook"></i><span>32</span></a>', 1, 1),
+('facebook', 'html', '<a class="bx-btn" title="<bx_text:_sys_social_sharing_title_facebook />" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={url_encoded}"><i class="sys-icon facebook"></i></a>', 1, 1),
 ('googleplus', 'html', '<a class="bx-btn" title="<bx_text:_sys_social_sharing_title_googleplus />" target="_blank" href="https://plus.google.com/share?url={url_encoded}"><i class="sys-icon google-plus"></i></a>', 2, 1),
 ('twitter', 'html', '<a class="bx-btn" title="<bx_text:_sys_social_sharing_title_twitter />" target="_blank" href="https://twitter.com/share?url={url_encoded}"><i class="sys-icon twitter"></i></a>', 3, 1),
 ('pinterest', 'html', '<a class="bx-btn" title="<bx_text:_sys_social_sharing_title_pinterest />" target="_blank" href="http://pinterest.com/pin/create/button/?url={url_encoded}&media={img_url_encoded}&description={title_encoded}" class="pin-it-button" count-layout="horizontal"><i class="sys-icon pinterest"></i></a>', 4, 1);
