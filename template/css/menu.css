@@ -141,7 +141,7 @@ ul.bx-menu-ver {
     height:60px;
     height:4rem;
     overflow:auto;
-    -webkit-overflow-scrolling:touch;
+    /* -webkit-overflow-scrolling:touch; */
 }
 
 #bx-menu-main-submenu,
@@ -271,7 +271,7 @@ ul.bx-menu-toolbar li .sys-icon {
     width:100%;
     opacity:0.9;
     overflow-x:auto;
-    -webkit-overflow-scrolling:touch;
+    /* -webkit-overflow-scrolling:touch; */
 }
 .bx-sliding-menu-main ul.bx-menu-floating-blocks-big {
     display:table;
