@@ -77,6 +77,14 @@ class BxPostsSearchResult extends BxBaseModTextSearchResult
                 $this->aCurrent['rss']['link'] = 'modules/?r=posts/rss/' . $sMode;
                 break;
 
+            case 'popular':
+                bx_import('BxDolPermalinks');
+                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_POPULAR']);
+                $this->aCurrent['title'] = _t('_bx_posts_page_title_browse_popular');
+                $this->aCurrent['rss']['link'] = 'modules/?r=posts/rss/' . $sMode;
+                $this->aCurrent['sorting'] = 'popular';
+                break;
+
             case '': // search results
                 $this->sBrowseUrl = BX_DOL_SEARCH_KEYWORD_PAGE;
                 $this->aCurrent['title'] = _t('_bx_posts');
@@ -120,12 +128,16 @@ class BxPostsSearchResult extends BxBaseModTextSearchResult
 
     function getAlterOrder()
     {
-        if ($this->aCurrent['sorting'] == 'last') {
-            $aSql = array();
-            $aSql['order'] = " ORDER BY `bx_posts_posts`.`added` DESC";
-            return $aSql;
+        $aSql = array();
+        switch ($this->aCurrent['sorting']) {
+            case 'last':
+                $aSql['order'] = ' ORDER BY `bx_posts_posts`.`added` DESC';
+                break;
+            case 'popular':
+                $aSql['order'] = ' ORDER BY `bx_posts_posts`.`views` DESC';
+                break;
         }
-        return array();
+        return $aSql;
     }
 }
 

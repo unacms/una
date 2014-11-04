@@ -65,13 +65,13 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 ('bx_posts_view_entry_comments', 1, 'bx_posts', '_bx_posts_page_block_title_entry_comments', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_posts\";s:6:\"method\";s:15:\"entity_comments\";}', 0, 0, 1);
 
 
--- PAGE: featured entries
+-- PAGE: popular entries
 
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_posts_featured', '_bx_posts_page_title_sys_entries_featured', '_bx_posts_page_title_entries_featured', 'bx_posts', 5, 2147483647, 1, 'posts-featured', 'page.php?i=posts-featured', '', '', '', 0, 1, 0, 'BxPostsPageBrowse', 'modules/boonex/posts/classes/BxPostsPageBrowse.php');
+('bx_posts_popular', '_bx_posts_page_title_sys_entries_popular', '_bx_posts_page_title_entries_popular', 'bx_posts', 5, 2147483647, 1, 'posts-popular', 'page.php?i=posts-popular', '', '', '', 0, 1, 0, 'BxPostsPageBrowse', 'modules/boonex/posts/classes/BxPostsPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_posts_featured', 1, 'bx_posts', '_bx_posts_page_block_title_featured_entries', 0, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_posts\";s:6:\"method\";s:15:\"browse_featured\";}', 0, 1, 1);
+('bx_posts_popular', 1, 'bx_posts', '_bx_posts_page_block_title_popular_entries', 0, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_posts\";s:6:\"method\";s:14:\"browse_popular\";}', 0, 1, 1);
 
 
 -- PAGE: entries of author
@@ -162,7 +162,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_posts_submenu', 'bx_posts', 'posts-home', '_bx_posts_menu_item_title_system_entries_public', '_bx_posts_menu_item_title_entries_public', 'page.php?i=posts-home', '', '', '', '', 2147483647, 1, 1, 1),
-('bx_posts_submenu', 'bx_posts', 'posts-featured', '_bx_posts_menu_item_title_system_entries_featured', '_bx_posts_menu_item_title_entries_featured', 'page.php?i=posts-featured', '', '', '', '', 2147483647, 1, 1, 2),
+('bx_posts_submenu', 'bx_posts', 'posts-popular', '_bx_posts_menu_item_title_system_entries_popular', '_bx_posts_menu_item_title_entries_popular', 'page.php?i=posts-popular', '', '', '', '', 2147483647, 1, 1, 2),
 ('bx_posts_submenu', 'bx_posts', 'posts-moderation', '_bx_posts_menu_item_title_system_entries_moderation', '_bx_posts_menu_item_title_entries_moderation', 'page.php?i=posts-moderation', '', '', '', '', 64, 1, 1, 3),
 ('bx_posts_submenu', 'bx_posts', 'posts-administration', '_bx_posts_menu_item_title_system_entries_administration', '_bx_posts_menu_item_title_entries_administration', 'page.php?i=posts-administration', '', '', '', '', 128, 1, 1, 4);
 
