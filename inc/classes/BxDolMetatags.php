@@ -213,6 +213,7 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
      */
     public function locationsString($iId)
     {
+        bx_import('BxDolForm');
         bx_import('BxDolFormQuery');
         $aCountries = BxDolFormQuery::getDataItems('Country');
         $aLocation = $this->locationGet($iId);
