@@ -46,7 +46,7 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 -- PAGE: view entry
 
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_posts_view_entry', '_bx_posts_page_title_sys_view_entry', '_bx_posts_page_title_view_entry', 'bx_posts', 11, 2147483647, 1, 'view-post', '', '', '', '', 0, 1, 0, 'BxPostsPageEntry', 'modules/boonex/posts/classes/BxPostsPageEntry.php');
+('bx_posts_view_entry', '_bx_posts_page_title_sys_view_entry', '_bx_posts_page_title_view_entry', 'bx_posts', 10, 2147483647, 1, 'view-post', '', '', '', '', 0, 1, 0, 'BxPostsPageEntry', 'modules/boonex/posts/classes/BxPostsPageEntry.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('bx_posts_view_entry', 3, 'bx_posts', '_bx_posts_page_block_title_entry_location', 3, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_posts\";s:6:\"method\";s:15:\"entity_location\";}', 0, 0, 1, 0),
