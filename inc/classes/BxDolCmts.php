@@ -27,6 +27,7 @@ define('BX_CMT_ORDER_BY_DATE', 'date');
 define('BX_CMT_ORDER_BY_POPULAR', 'popular');
 
 define('BX_CMT_FILTER_ALL', 'all');
+define('BX_CMT_FILTER_OTHERS', 'others');
 define('BX_CMT_FILTER_FRIENDS', 'friends');
 define('BX_CMT_FILTER_SUBSCRIPTIONS', 'subscriptions');
 

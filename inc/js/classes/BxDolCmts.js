@@ -253,7 +253,29 @@ BxDolCmts.prototype.cmtChangeFilter = function(oLink, sType)
 		$this._cmtsReplaceContent($(sListId), sContent);
 	});
 };
+BxDolCmts.prototype.showLiveUpdate = function(oData)
+{
+	if(!oData.code)
+		return;
 
+	var iCountNew = parseInt(oData.count_new);
+	var iCountOld = parseInt(oData.count_old);
+	if(iCountNew <= iCountOld)
+		return;
+
+	var oNotification = $(oData.code);
+	oNotification.find('.cmt-message span').html(iCountNew - iCountOld);
+
+	var sId = oNotification.attr('id');
+	$('#' + sId).remove();
+
+    $(oNotification).prependTo('body').dolPopup({
+    	position: 'fixed',
+    	top: ($(window).height() - oNotification.height()) + 'px',
+    	left: ($(window).width() - oNotification.width())/2 + 'px',
+    	fog: false
+    });
+};
 BxDolCmts.prototype.showReplacement = function(iCmtId)
 {
     $('#cmt' + iCmtId + '-hidden').bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function(){

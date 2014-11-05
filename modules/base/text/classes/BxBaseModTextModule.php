@@ -154,6 +154,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
         $oCmts = BxDolCmts::getObjectInstance($this->_oConfig->CNF['OBJECT_COMMENTS'], $iContentId);
         if (!$oCmts || !$oCmts->isEnabled())
             return false;
+
         return $oCmts->getCommentsBlock(0, 0, false);
     }
 
