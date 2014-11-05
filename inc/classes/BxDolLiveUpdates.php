@@ -10,8 +10,6 @@
 bx_import('BxDol');
 bx_import('BxDolLiveUpdatesQuery');
 
-define('BX_DOL_LIVE_UPDATES_TYPE_TRANSIENT', 'transient');
-
 /**
  * @page objects
  * @section live updates Live Updates
@@ -120,7 +118,6 @@ class BxDolLiveUpdates extends BxDol
 
     	$this->_aSystems[$sName] = array(
     		'name' => $sName,
-    		'type' => BX_DOL_LIVE_UPDATES_TYPE_TRANSIENT,
     		'frequency' => $iFrequency,
     		'service_call' => $sServiceCall,
     		'active' => $bActive ? 1 : 0
