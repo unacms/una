@@ -2,7 +2,7 @@
 .bx-main {
 	position: relative;
 	min-height: 100%;
-    transition: filter 0.2s ease-in-out, -webkit-filter 0.2s ease-in-out;
+	min-height: 100vh;
 }
 
 .bx-page-image-container img,

@@ -38,9 +38,9 @@ function PageCompMainCode()
 {
     ob_start();
 
-    // transBox
+    // transBox    
     echo BxTemplFunctions::getInstance()->transBox('bx-sample-popup-transbox', '<div class="bx-def-padding">transBox</div>', true);
-    echo '<button class="bx-btn bx-def-margin-sec" onclick="$(\'#bx-sample-popup-transbox\').dolPopup()">transBox</button>';
+    echo '<div></div><button class="bx-btn bx-def-margin-sec" onclick="$(\'#bx-sample-popup-transbox\').dolPopup()">transBox</button>';
 
     // transBox AJAX
     echo '<button class="bx-btn bx-def-margin-sec" onclick="$(window).dolPopupAjax({url: \'samples/popup.php?_t=a'.time().'\'})">transBox AJAX</button>';
