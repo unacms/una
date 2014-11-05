@@ -81,6 +81,13 @@ class BxBaseCmts extends BxDolCmts
         $aBp = array('parent_id' => $iParentId, 'vparent_id' => $iVParentId);
         $aDp = array('show_empty' => true);
 
+		//add live update
+		$sServiceCall = BxDolService::getSerializedService('system', 'get_live_updates_comments', array($this->_sSystem, $this->_iId, $this->_getAuthorId()), 'TemplCmtsServices');
+
+		bx_import('BxDolLiveUpdates');
+		BxDolLiveUpdates::getInstance()->add($this->_sSystem . '_live_updates_cmts', 1, $sServiceCall);
+		//add live update
+
         $sCaption = _t('_cmt_block_comments_title', $this->getCommentsCount());
         $sContent = BxDolTemplate::getInstance()->parseHtmlByName('comments_block.html', array(
             'system' => $this->_sSystem,

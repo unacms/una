@@ -155,14 +155,6 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
         if (!$oCmts || !$oCmts->isEnabled())
             return false;
 
-		//add transient live update
-		$sName = $this->_oConfig->getName();
-		$sServiceCall = BxDolService::getSerializedService('system', 'get_live_updates_comments', array($this->_oConfig->CNF['OBJECT_COMMENTS'], $iContentId, $this->_iProfileId), 'TemplCmtsServices');
-
-		bx_import('BxDolLiveUpdates');
-		BxDolLiveUpdates::getInstance()->add($sName . '_live_updates_cmts', 1, $sServiceCall);
-		//add transient live update
-
         return $oCmts->getCommentsBlock(0, 0, false);
     }
 
