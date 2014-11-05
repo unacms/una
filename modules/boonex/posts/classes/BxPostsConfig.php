@@ -43,6 +43,7 @@ class BxPostsConfig extends BxBaseModTextConfig
         	'URI_EDIT_ENTRY' => 'edit-post',
 
             'URL_HOME' => 'page.php?i=posts-home',
+            'URL_POPULAR' => 'page.php?i=posts-popular',
 
             // some params
             'PARAM_CHARS_SUMMARY' => 'bx_posts_summary_chars',

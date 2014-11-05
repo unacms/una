@@ -49,9 +49,9 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
      * Display featured entries
      * @return HTML string
      */
-    public function serviceBrowseFeatured ()
+    public function serviceBrowsePopular ()
     {
-        return $this->_serviceBrowse ('public', false, BX_DB_PADDING_DEF, true);
+        return $this->_serviceBrowse ('popular', false, BX_DB_PADDING_DEF, true);
     }
 
     /**
@@ -125,6 +125,19 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
     public function serviceEntityTextBlock ($iContentId = 0)
     {
         return $this->_serviceEntityForm ('viewDataEntry', $iContentId);
+    }
+
+    /**
+     * Entry location info
+     */
+    public function serviceEntityLocation ($iContentId = 0)
+    {
+        if (!$iContentId)
+            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if (!$iContentId)
+            return false;
+
+        return $this->_oTemplate->entryLocation ($iContentId);
     }
 
     /**

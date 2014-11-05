@@ -233,6 +233,7 @@ div.bx-std-widget-caption {
     line-height: 50px;
     text-align: center; 
     overflow: hidden;
+    text-overflow: ellipsis;
 
     text-shadow: #000 0px 5px 12px;
 }
@@ -243,6 +244,7 @@ div.bx-std-widget-caption-jitter {
     width: 128px;
     height: 50px;
 }
+div.bx-std-widget-caption,
 div.bx-std-widget-caption a {
     color: #ffffff;
     font-weight:normal;

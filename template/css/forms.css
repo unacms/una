@@ -368,11 +368,8 @@
 
 .bx-form-row-view-wrapper > div {
     display: inline-block;
-    /* For IE 7 */
-    zoom: 1;
-    *display: inline;
-    
     white-space: normal;
+    vertical-align: bottom;
 }
 
 .bx-form-row-view-wrapper-textarea > div {

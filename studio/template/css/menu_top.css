@@ -40,6 +40,12 @@ div.bx-std-page-caption div.bx-std-menu-top-right {
 	height: 50px;
 }
 
+div.bx-std-menu-top i.sys-icon {
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
 div.bx-std-menu-top li.bx-menu-tab-active i.sys-icon {
 	color: #ffe900;
+    text-shadow:0 0 4px #ffe900;
 }
