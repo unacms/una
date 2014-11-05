@@ -196,3 +196,24 @@
 		background-position: center center;
 		background-repeat: no-repeat;
     }
+
+    /*--- Live Update Notification Styles ---*/
+    div.cmt-notification {
+    	border-color: #616161;
+		border-bottom: none;
+
+    	border-bottom-right-radius: 0px;
+    	border-bottom-left-radius: 0px;
+
+    	background-color: rgba(97, 97, 97, .5);
+    }
+    div.cmt-notification div.cmt-cnt {
+		padding-left: 80px;
+    	padding-left: 5rem;
+    	padding-right: 80px;     	
+    	padding-right: 5rem;
+    }
+    div.cmt-notification a {
+		color: #ffffff;
+    	font-weight: bold;
+    }

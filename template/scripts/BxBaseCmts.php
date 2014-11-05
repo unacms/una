@@ -337,6 +337,18 @@ class BxBaseCmts extends BxDolCmts
         return $this->_getFormEdit($aCmt);
     }
 
+    function getNotification($iCount = 0)
+    {
+    	bx_import('BxDolTemplate');
+    	$sContent = BxDolTemplate::getInstance()->parseHtmlByName('comments_notification.html', array(
+    		'html_id' => 'cmts-notification-' . $this->_sSystem . '-' + $this->_iId,
+			'style_prefix' => $this->_sStylePrefix,
+    		'url' => $this->getBaseUrl(),
+			'message' => _t('_cmt_txt_n_new_comments', $iCount)
+		));
+
+		return $sContent;
+    }
     /**
      * private functions
      */
@@ -672,7 +684,7 @@ class BxBaseCmts extends BxDolCmts
             'parent_id' => $aBp['vparent_id'],
             'start' => $iStart,
             'per_view' => $iPerView,
-            'title' => _t('_load_more_' . ($aBp['vparent_id'] == 0 ? 'comments' : 'replies') . '_' . $aBp['type'])
+            'title' => _t('_cmt_load_more_' . ($aBp['vparent_id'] == 0 ? 'comments' : 'replies') . '_' . $aBp['type'])
         ));
 
         switch($aBp['type']) {

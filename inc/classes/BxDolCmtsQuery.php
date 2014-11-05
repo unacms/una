@@ -49,24 +49,31 @@ class BxDolCmtsQuery extends BxDolDb
 
     function getCommentsCount ($iId, $iCmtVParentId = 0, $iAuthorId = 0, $sFilter = '')
     {
-        $sWhereParent = '';
+        $sWhereClause = '';
         if((int)$iCmtVParentId >= 0)
-            $sWhereParent = $this->prepare(" AND `{$this->_sTable}`.`cmt_vparent_id` = ?", $iCmtVParentId);
+            $sWhereClause .= $this->prepare(" AND `{$this->_sTable}`.`cmt_vparent_id` = ?", $iCmtVParentId);
 
-        $sJoin = '';
-        if(in_array($sFilter, array(BX_CMT_FILTER_FRIENDS, BX_CMT_FILTER_SUBSCRIPTIONS))) {
-            bx_import('BxDolConnection');
-            $oConnection = BxDolConnection::getObjectInstance($this->_oMain->getConnectionObject($sFilter));
+        $sJoinClause = '';
+        switch($sFilter) {
+        	case BX_CMT_FILTER_FRIENDS:
+        	case BX_CMT_FILTER_SUBSCRIPTIONS:
+	            bx_import('BxDolConnection');
+	            $oConnection = BxDolConnection::getObjectInstance($this->_oMain->getConnectionObject($sFilter));
+	
+	            $aQueryParts = $oConnection->getConnectedContentAsSQLParts($this->_sTable, 'cmt_author_id', $iAuthorId);
+	            $sJoinClause .= ' ' . $aQueryParts['join'];
+	            break;
 
-            $aQueryParts = $oConnection->getConnectedContentAsSQLParts($this->_sTable, 'cmt_author_id', $iAuthorId);
-            $sJoin .= ' ' . $aQueryParts['join'];
+        	case BX_CMT_FILTER_OTHERS:
+        		$sWhereClause .= $this->prepare(" AND `{$this->_sTable}`.`cmt_author_id` <> ?", $iAuthorId);
+        		break;
         }
 
         $sQuery = $this->prepare("SELECT
                 COUNT(*)
             FROM `{$this->_sTable}`
-            $sJoin
-            WHERE `{$this->_sTable}`.`cmt_object_id` = ?" . $sWhereParent, $iId);
+            $sJoinClause
+            WHERE `{$this->_sTable}`.`cmt_object_id` = ?" . $sWhereClause, $iId);
 
         return (int)$this->getOne($sQuery);
     }

@@ -23,12 +23,12 @@ class BxDolObject extends BxDol
     {
         parent::__construct();
 
-        $this->_aSystems = $this->getSystems();
-        if(!isset($this->_aSystems[$sSystem]))
+        $aSystems = $this->getSystems();
+        if(!isset($aSystems[$sSystem]))
             return;
 
         $this->_sSystem = $sSystem;
-        $this->_aSystem = $this->_aSystems[$sSystem];
+        $this->_aSystem = $aSystems[$sSystem];
 
         if(!$this->isEnabled())
             return;

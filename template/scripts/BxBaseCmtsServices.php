@@ -28,6 +28,22 @@ class BxBaseCmtsServices extends BxDol
 
         return '';
     }
+
+    public function serviceGetLiveUpdatesComments($sSystem, $iContentId, $iProfileId)
+    {
+    	bx_import('BxDolCmts');
+        $oCmts = BxDolCmts::getObjectInstance($sSystem, $iContentId);
+        if(!$oCmts || !$oCmts->isEnabled())
+            return false;
+
+    	return array(
+    		'count' => $oCmts->getCommentsCount($iContentId, 0, BX_CMT_FILTER_OTHERS), // required
+    		'method' => $oCmts->getJsObjectName() . '.showLiveUpdate(oData)', // required
+    		'data' => array(
+    			'code' => $oCmts->getNotification()
+    		),  // optional, may have some additional data to be passed in JS method provided using 'method' param above.
+    	);
+    }
 }
 
 /** @} */
