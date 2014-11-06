@@ -143,6 +143,9 @@ body > .bx-popup-wrapper {
 }
 
 .bx-popup-active {
+    max-height:100%;
+    overflow-y:auto;
+
     -webkit-opacity: 1;
     opacity: 1;
 

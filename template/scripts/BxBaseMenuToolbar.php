@@ -46,6 +46,15 @@ class BxBaseMenuToolbar extends BxTemplMenu
 
         return $a;
     }
+
+    protected function _getMenuItem ($a)
+    {
+        $a = parent::_getMenuItem ($a);
+        if ('add-content' == $a['name'] || 'search' == $a['name'])
+            $a['class_add'] .= ' bx-def-media-phone-hide';
+        return $a;
+    }
+
 }
 
 /** @} */
