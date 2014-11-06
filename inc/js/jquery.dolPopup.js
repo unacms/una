@@ -27,6 +27,46 @@
         offset_pointer: '0 0'
     }; 
 
+    function _getScrollbarWidth () {
+        if ($(document.body).height() <= $(window).height()) {
+            return 0;
+        }
+
+        var outer = document.createElement("div"),
+            inner = document.createElement("div"),
+            widthNoScroll,
+            widthWithScroll;
+
+        outer.style.visibility = "hidden";
+        outer.style.width = "100px";
+        document.body.appendChild(outer);
+
+        widthNoScroll = outer.offsetWidth;
+
+        // Force scrollbars
+        outer.style.overflow = "scroll";
+
+        // Add innerdiv
+        inner.style.width = "100%";
+        outer.appendChild(inner);
+
+        widthWithScroll = inner.offsetWidth;
+
+        // Remove divs
+        outer.parentNode.removeChild(outer);
+
+        return widthNoScroll - widthWithScroll;
+    };
+
+    function _dolPopupLockScreen (bLock) {
+        var eBody = $(document.body),
+            eBodyHtml = $("html, body"),
+            iPaddingRight = parseInt(eBody.css("padding-right")) + ((bLock ? 1 : -1) * _getScrollbarWidth());
+
+        eBody.css("padding-right", iPaddingRight + "px");
+        bLock ? eBodyHtml.addClass('bx-popup-lock') : eBodyHtml.removeClass('bx-popup-lock');
+    };
+
     $.fn.dolPopup = function(options) {
         var options = options || {};
         var o = $.extend({}, $.fn.dolPopupDefaultOptions, options);
@@ -48,7 +88,8 @@
             width: $(window).width(),
             height: $(window).height(),
             opacity: o.fog.opacity,
-            backgroundColor: o.fog.color
+            backgroundColor: o.fog.color,
+            '-webkit-backface-visibility': 'hidden'
         });
         
         $(window).on('resize.popupFog', function () {
@@ -84,13 +125,13 @@
                 left: 0
             });
 
+            $el.detach().appendTo('body');
+
 
             setTimeout(function() { // timeout is needed for some browsers to render element
 
-                if (o.fog) {
-                    $('html, body').addClass('bx-popup-lock');
-                    $('.bx-main').addClass('bx-def-blur');
-                }
+                if (o.fog)
+                    _dolPopupLockScreen(true);
 
                 // remove any transitions before setting popup position
                 $el.removeClass('bx-popup-transitions bx-popup-inactive'); 
@@ -203,8 +244,7 @@
                 $el.hide(o.onHide);
             }
             
-            $("html, body").removeClass('bx-popup-lock');
-            $('.bx-main').removeClass('bx-def-blur');
+            _dolPopupLockScreen(false);
         });
     };
 

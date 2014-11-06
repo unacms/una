@@ -21,9 +21,12 @@ a > img {
     border:none;
 }
 
-html,
+html {
+    height:100%;
+}
 body {
-	height: 100%; 
+	min-height: 100%;
+    min-height: 100vh;
     padding: 0;
     margin: 0;
 }
@@ -244,6 +247,42 @@ body > .bx-popup-wrapper {
 .bx-popup-with-pointer .bx-popup-element-close {
     display:none;
 }
+
+/* --------------- make popup fullscreen */
+
+.bx-popup-responsive.bx-popup-trans-wrapper:not(.bx-popup-image-wrapper),
+.bx-popup-responsive:not(.bx-popup-image-wrapper) .bx-popup-trans,
+.bx-popup-responsive.bx-popup-box-wrapper,
+.bx-popup-responsive .bx-popup-box {
+    position:fixed !important;
+    width:100%;
+	width:100vw;
+    height:100%;
+    height:100vh;
+    overflow:auto;
+}
+
+.bx-popup-responsive .bx-popup-trans > div,
+.bx-popup-responsive .bx-popup-box > div {
+	border-radius:0;
+	-moz-border-radius:0;
+	-webkit-border-radius:0;
+}
+
+.bx-popup-responsive.bx-popup-image-wrapper:not(.foo) .bx-popup-border,
+.bx-popup-responsive.bx-popup-trans-wrapper:not(.foo) .bx-popup-border,
+.bx-popup-responsive.bx-popup-box-wrapper:not(.foo) .bx-popup-border {
+    border:none;
+}
+
+.bx-popup-responsive.bx-popup-image-wrapper .bx-popup,
+.bx-popup-responsive.bx-popup-trans-wrapper .bx-popup,
+.bx-popup-responsive.bx-popup-box-wrapper .bx-popup {
+	-moz-box-shadow:none;
+	-webkit-box-shadow:none;
+    box-shadow:none;
+}
+
 
 /* --------------- message box */
 
