@@ -89,7 +89,7 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
     	return $this->_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
-    protected function _getFilterSelectOne($sFilterName, $aFilterValues)
+    protected function _getFilterSelectOne($sFilterName, $sFilterValue, $aFilterValues)
     {
         if(empty($sFilterName) || empty($aFilterValues))
             return '';
@@ -97,7 +97,6 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
 		$CNF = &$this->_oModule->_oConfig->CNF;
 		$sJsObject = $this->_oModule->_oConfig->getJsObject('manage_tools');
 
-		$sFilterField = '_s' . str_replace(' ', '', ucwords(str_replace('_', ' ', $sFilterName)));
 		foreach($aFilterValues as $sKey => $sValue)
 			$aFilterValues[$sKey] = _t($sValue);
 
@@ -108,7 +107,7 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
                 'id' => 'bx-grid-' . $sFilterName . '-' . $this->_sObject,
                 'onChange' => 'javascript:' . $sJsObject . '.onChangeFilter(this)'
             ),
-            'value' => $this->$sFilterField,
+            'value' => $sFilterValue,
             'values' => array_merge(array('' => _t($CNF['T']['filter_item_select_one_' . $sFilterName])), $aFilterValues)
         );
 

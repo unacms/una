@@ -303,10 +303,9 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_persons_moderation', 'account', '_bx_persons_grid_column_title_adm_account', '25%', 0, '25', '', 4),
 ('bx_persons_moderation', 'actions', '', '15%', 0, '', '', 5),
 ('bx_persons_common', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
-('bx_persons_common', 'switcher', '', '8%', 0, '', '', 2),
-('bx_persons_common', 'fullname', '_bx_persons_grid_column_title_adm_fullname', '40%', 0, '', '', 3),
-('bx_persons_common', 'last_online', '_bx_persons_grid_column_title_adm_last_online', '30%', 1, '25', '', 4),
-('bx_persons_common', 'actions', '', '20%', 0, '', '', 5);
+('bx_persons_common', 'fullname', '_bx_persons_grid_column_title_adm_fullname', '48%', 0, '', '', 2),
+('bx_persons_common', 'last_online', '_bx_persons_grid_column_title_adm_last_online', '30%', 1, '25', '', 3),
+('bx_persons_common', 'actions', '', '20%', 0, '', '', 4);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
 ('bx_persons_administration', 'bulk', 'set_acl_level', '_bx_persons_grid_action_title_adm_set_acl_level', '', 0, 1),
