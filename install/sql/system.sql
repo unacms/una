@@ -2695,7 +2695,7 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 ('sys_account_links', 'system', 'dashboard', '_sys_menu_item_title_system_dashboard', '_sys_menu_item_title_dashboard', 'page.php?i=dashboard', '', '', 'dashboard', '', 2147483646, 1, 1, 1),
 ('sys_account_links', 'system', 'profile', '_sys_menu_item_title_system_profile', '_sys_menu_item_title_profile', '{member_url}', '', '', 'user', '', 2147483646, 1, 1, 2),
 ('sys_account_links', 'system', 'account-settings', '_sys_menu_item_title_system_account_settings', '_sys_menu_item_title_account_settings', 'page.php?i=account-settings-email', '', '', 'cog', '', 2147483646, 1, 1, 3),
-('sys_account_links', 'system', 'add-content', '_sys_menu_item_title_system_add_content', '_sys_menu_item_title_add_content', 'page.php?i=add-content', '', '', 'plus', '', 2147483646, 1, 1, 4),
+('sys_account_links', 'system', 'add-content', '_sys_menu_item_title_system_add_content', '_sys_menu_item_title_add_content', 'javascript:void(0);', 'bx_menu_slide(\'#bx-sliding-menu-sys_add_content\', $(\'bx-menu-toolbar-item-add-content a\').get(0), \'site\');', '', 'plus', '', 2147483646, 1, 1, 4),
 ('sys_account_links', 'system', 'logout', '_sys_menu_item_title_system_logout', '_sys_menu_item_title_logout', 'logout.php', '', '', 'sign-out', '', 2147483646, 1, 1, 5);
 
 -- account settings menu
@@ -3050,7 +3050,6 @@ INSERT INTO `sys_objects_page` (`object`, `uri`, `title_system`, `title`, `modul
 ('sys_account_profile_switcher', 'account-profile-switcher', '_sys_page_title_system_account_profile_switcher', '_sys_page_title_account_profile_switcher', 'system', 5, 2147483647, 1, 'page.php?i=account-profile-switcher', '', '', '', 0, 1, 0, 'BxTemplPageAccount', ''),
 ('sys_unsubscribe_notifications', 'unsubscribe-notifications', '_sys_page_title_system_unsubscribe_notifications', '_sys_page_title_unsubscribe_notifications', 'system', 5, 2147483647, 1, 'page.php?i=unsubscribe-notifications', '', '', '', 0, 1, 0, '', ''),
 ('sys_unsubscribe_news', 'unsubscribe-news', '_sys_page_title_system_unsubscribe_news', '_sys_page_title_unsubscribe_news', 'system', 5, 2147483647, 1, 'page.php?i=unsubscribe-news', '', '', '', 0, 1, 0, '', ''),
-('sys_add_content', 'add-content', '_sys_page_title_system_add_content', '_sys_page_title_add_content', 'system', 5, 2147483647, 1, 'page.php?i=add-content', '', '', '', 0, 1, 0, '', ''),
 ('sys_std_dashboard', '', '_sys_page_title_system_studio_dashboard', '_sys_page_title_studio_dashboard', 'system', 4, 2147483647, 1, '', '', '', '', 0, 1, 0, '', '');
 
 
@@ -3157,8 +3156,6 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 ('sys_unsubscribe_notifications', 1, 'system', '_sys_page_block_title_unsubscribe_notifications', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:25:"unsubscribe_notifications";s:6:"params";a:0:{}s:5:"class";s:19:"TemplServiceAccount";}', 0, 1, 1),
 
 ('sys_unsubscribe_news', 1, 'system', '_sys_page_block_title_unsubscribe_news', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:16:"unsubscribe_news";s:6:"params";a:0:{}s:5:"class";s:19:"TemplServiceAccount";}', 0, 1, 1),
-
-('sys_add_content', 1, 'system', '_sys_page_block_title_add_content', 11, 2147483647, 'menu', 'sys_add_content', 0, 1, 1),
 
 -- studio dashboard blocks
 ('sys_std_dashboard', 1, 'system', '_sys_page_block_title_std_dash_version', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:17:"get_block_version";s:6:"params";a:0:{}s:5:"class";s:20:"TemplStudioDashboard";}', 0, 0, 1),
