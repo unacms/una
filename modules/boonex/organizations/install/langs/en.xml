@@ -122,6 +122,8 @@
     <string name="_bx_orgs_menu_item_title_entries_manage"><![CDATA[Manage]]></string>
     <string name="_bx_orgs_menu_item_title_system_entries_home"><![CDATA[Orgs]]></string>
     <string name="_bx_orgs_menu_item_title_entries_home"><![CDATA[Orgs]]></string>
+	<string name="_bx_orgs_menu_item_title_system_admt_organizations_my"><![CDATA[My Organizations]]></string>
+	<string name="_bx_orgs_menu_item_title_admt_organizations_my"><![CDATA[My Organizations]]></string>
     <string name="_bx_orgs_menu_item_title_system_admt_organizations"><![CDATA[Organizations]]></string>
 	<string name="_bx_orgs_menu_item_title_admt_organizations"><![CDATA[Organizations - {addon} unapproved]]></string>
 	<string name="_bx_orgs_menu_item_title_manage_my"><![CDATA[My Organizations]]></string>

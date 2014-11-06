@@ -195,10 +195,11 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 --('bx_posts_menu_manage_tools', 'bx_posts', 'delete-with-content', '_bx_posts_menu_item_title_system_delete_with_content', '_bx_posts_menu_item_title_delete_with_content', 'javascript:void(0)', 'javascript:{js_object}.onClickDeleteWithContent({content_id});', '_self', 'trash-o', '', 128, 1, 0, 0);
 
 -- MENU: dashboard manage tools
-
+SET @iManageMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard_manage_tools' LIMIT 1);
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_account_dashboard_manage_tools', 'bx_posts', 'posts-moderation', '_bx_posts_menu_item_title_system_admt_posts', '_bx_posts_menu_item_title_admt_posts', 'page.php?i=posts-moderation', '', '_self', '', 'a:2:{s:6:"module";s:8:"bx_posts";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 64, 1, 0, 1),
-('sys_account_dashboard_manage_tools', 'bx_posts', 'posts-administration', '_bx_posts_menu_item_title_system_admt_posts', '_bx_posts_menu_item_title_admt_posts', 'page.php?i=posts-administration', '', '_self', '', 'a:2:{s:6:"module";s:8:"bx_posts";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 128, 1, 0, 1);
+('sys_account_dashboard_manage_tools', 'bx_posts', 'posts-manage', '_bx_posts_menu_item_title_system_admt_posts_my', '_bx_posts_menu_item_title_admt_posts_my', 'page.php?i=posts-manage', '', '_self', '', '', '', 2147483646, 1, 0, @iManageMenuOrder + 1),
+('sys_account_dashboard_manage_tools', 'bx_posts', 'posts-moderation', '_bx_posts_menu_item_title_system_admt_posts', '_bx_posts_menu_item_title_admt_posts', 'page.php?i=posts-moderation', '', '_self', '', 'a:2:{s:6:"module";s:8:"bx_posts";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 64, 1, 0, @iManageMenuOrder + 2),
+('sys_account_dashboard_manage_tools', 'bx_posts', 'posts-administration', '_bx_posts_menu_item_title_system_admt_posts', '_bx_posts_menu_item_title_admt_posts', 'page.php?i=posts-administration', '', '_self', '', 'a:2:{s:6:"module";s:8:"bx_posts";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 128, 1, 0, @iManageMenuOrder + 3);
 
 -- MENU: add menu item to profiles modules (trigger* menu sets are processed separately upon modules enable/disable)
 
