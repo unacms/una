@@ -25,6 +25,7 @@ class BxPersonsSearchResult extends BxBaseModProfileSearchResult
             'ownFields' => array(),
             'searchFields' => array('fullname'),
             'restriction' => array(
+        		'account_id' => array('value' => '', 'field' => 'account_id', 'operator' => '='),
                 'perofileStatus' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
                 'perofileType' => array('value' => 'bx_persons', 'field' => 'type', 'operator' => '='),
                 'owner' => array('value' => '', 'field' => 'author', 'operator' => '=', 'table' => 'bx_persons_data'),

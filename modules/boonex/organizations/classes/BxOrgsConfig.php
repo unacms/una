@@ -50,8 +50,12 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'URI_VIEW_ENTRY' => 'view-organization-profile',
             'URI_EDIT_ENTRY' => 'edit-organization-profile',
             'URI_EDIT_COVER' => 'edit-organization-cover',
+        	'URI_MANAGE_COMMON' => 'organizations-manage',
 
             'URL_HOME' => 'page.php?i=organizations-home',
+        	'URL_MANAGE_COMMON' => 'page.php?i=organizations-manage',
+        	'URL_MANAGE_MODERATION' => 'page.php?i=organizations-moderation',
+        	'URL_MANAGE_ADMINISTRATION' => 'page.php?i=organizations-administration',
 
             // some params
             'PARAM_AUTOAPPROVAL' => 'bx_organizations_autoapproval',
@@ -83,6 +87,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_organizations_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_GRID_ADMINISTRATION' => 'bx_organizations_administration',
         	'OBJECT_GRID_MODERATION' => 'bx_organizations_moderation',
+        	'OBJECT_GRID_COMMON' => 'bx_organizations_common',
 
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (
@@ -114,7 +119,9 @@ class BxOrgsConfig extends BxBaseModProfileConfig
 				'filter_item_active' => '_bx_orgs_grid_filter_item_title_adm_active',
             	'filter_item_pending' => '_bx_orgs_grid_filter_item_title_adm_pending',
             	'filter_item_suspended' => '_bx_orgs_grid_filter_item_title_adm_suspended',
-            	'filter_item_select_one_filter1' => '_bx_orgs_grid_filter_item_title_adm_select_one_filter1'
+            	'filter_item_select_one_filter1' => '_bx_orgs_grid_filter_item_title_adm_select_one_filter1',
+            	'menu_item_manage_my' => '_bx_orgs_menu_item_title_manage_my',
+            	'menu_item_manage_all' => '_bx_orgs_menu_item_title_manage_all',
             ),
 
         );
@@ -128,6 +135,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
         );
 
         $this->_aGridObjects = array(
+        	'common' => $this->CNF['OBJECT_GRID_COMMON'],
         	'moderation' => $this->CNF['OBJECT_GRID_MODERATION'],
         	'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
         	

@@ -60,11 +60,9 @@
 	<string name="_bx_persons_page_title_profile_info"><![CDATA[Info about {display_name}]]></string>
 	<string name="_bx_persons_page_title_sys_home"><![CDATA[Persons Home]]></string>
 	<string name="_bx_persons_page_title_home"><![CDATA[People]]></string>
-	<string name="_bx_persons_page_title_sys_moderation"><![CDATA[People Moderation]]></string>
-	<string name="_bx_persons_page_title_moderation"><![CDATA[People Moderation]]></string>
-	<string name="_bx_persons_page_title_sys_administration"><![CDATA[People Administration]]></string>
-	<string name="_bx_persons_page_title_administration"><![CDATA[People Administration]]></string>
-		
+	<string name="_bx_persons_page_title_sys_manage"><![CDATA[Manage Profiles]]></string>
+	<string name="_bx_persons_page_title_manage"><![CDATA[Manage Profiles]]></string>
+
 	<string name="_bx_persons_page_block_title_create_profile"><![CDATA[Create Person's Profile]]></string>
 	<string name="_bx_persons_page_block_title_edit_profile"><![CDATA[Edit Profile]]></string>
 	<string name="_bx_persons_page_block_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>
@@ -74,8 +72,7 @@
 	<string name="_bx_persons_page_block_title_profile_cover"><![CDATA[Profile Cover]]></string>
 	<string name="_bx_persons_page_block_title_profile_actions"><![CDATA[Actions]]></string>
 	<string name="_bx_persons_page_block_title_latest_profiles"><![CDATA[Recent People]]></string>
-	<string name="_bx_persons_page_block_title_moderation"><![CDATA[People Moderation]]></string>
-	<string name="_bx_persons_page_block_title_administration"><![CDATA[People Administration]]></string>
+	<string name="_bx_persons_page_block_title_manage"><![CDATA[Manage Profiles]]></string>
 
     <string name="_bx_persons_menu_title_submenu"><![CDATA[Persons Submenu]]></string>
     <string name="_bx_persons_menu_set_title_submenu"><![CDATA[Persons Submenu]]></string>
@@ -119,18 +116,20 @@
     <string name="_bx_persons_menu_item_title_friends"><![CDATA[Friends]]></string>
     <string name="_bx_persons_menu_item_title_system_friend_requests"><![CDATA[Friend requests number]]></string>
     <string name="_bx_persons_menu_item_title_friend_requests"><![CDATA[{addon} friend requests]]></string>
+    <string name="_bx_persons_menu_item_title_system_manage_my_profiles"><![CDATA[My profiles]]></string>
+    <string name="_bx_persons_menu_item_title_manage_my_profiles"><![CDATA[{addon} profiles]]></string>    
     <string name="_bx_persons_menu_item_title_system_entries_public"><![CDATA[Public]]></string>
     <string name="_bx_persons_menu_item_title_entries_public"><![CDATA[Public]]></string>
-    <string name="_bx_persons_menu_item_title_system_entries_moderation"><![CDATA[Moderation]]></string>
-    <string name="_bx_persons_menu_item_title_entries_moderation"><![CDATA[Moderation]]></string>
-    <string name="_bx_persons_menu_item_title_system_entries_administration"><![CDATA[Administration]]></string>
-    <string name="_bx_persons_menu_item_title_entries_administration"><![CDATA[Administration]]></string>
+    <string name="_bx_persons_menu_item_title_system_entries_manage"><![CDATA[Manage]]></string>
+    <string name="_bx_persons_menu_item_title_entries_manage"><![CDATA[Manage]]></string>
     <string name="_bx_persons_menu_item_title_system_entries_home"><![CDATA[Persons]]></string>
     <string name="_bx_persons_menu_item_title_entries_home"><![CDATA[People]]></string>
-	<string name="_bx_persons_menu_item_title_system_admt_persons"><![CDATA[People]]></string>
-	<string name="_bx_persons_menu_item_title_admt_persons"><![CDATA[{addon} pending approval person(s)]]></string>   
+	<string name="_bx_persons_menu_item_title_system_admt_persons"><![CDATA[Profiles]]></string>
+	<string name="_bx_persons_menu_item_title_admt_persons"><![CDATA[Profiles - {addon} unapproved]]></string>
+	<string name="_bx_persons_menu_item_title_manage_my"><![CDATA[My Profiles]]></string>
+	<string name="_bx_persons_menu_item_title_manage_all"><![CDATA[All Profiles]]></string>   
 
-	<string name="_bx_persons_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Select Status...]]></string>
+	<string name="_bx_persons_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
 	<string name="_bx_persons_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
 	<string name="_bx_persons_grid_filter_item_title_adm_pending"><![CDATA[Pending]]></string>
 	<string name="_bx_persons_grid_filter_item_title_adm_suspended"><![CDATA[Suspended]]></string>

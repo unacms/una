@@ -13,16 +13,26 @@ bx_import('BxBaseModGeneralGridAdministration');
 
 class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
 {
-	protected $_sFilter1;
+	protected $_sFilter1Name;
+	protected $_sFilter1Value;
+	protected $_aFilter1Values;
 
     public function __construct ($aOptions, $oTemplate = false)
     {
         parent::__construct ($aOptions, $oTemplate);
 
-    	$sFilter1 = bx_get('filter1');
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $this->_sFilter1Name = 'filter1';
+        $this->_aFilter1Values = array(
+        	'active' => $CNF['T']['filter_item_active'],
+            'hidden' => $CNF['T']['filter_item_hidden'],
+		);
+        
+    	$sFilter1 = bx_get($this->_sFilter1Name);
         if(!empty($sFilter1)) {
-            $this->_sFilter1 = bx_process_input($sFilter1);
-            $this->_aQueryAppend['filter1'] = $this->_sFilter1;
+            $this->_sFilter1Value = bx_process_input($sFilter1);
+            $this->_aQueryAppend['filter1'] = $this->_sFilter1Value;
         }
     }
 
@@ -39,10 +49,10 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
     protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
     {
         if(strpos($sFilter, $this->_sParamsDivider) !== false)
-            list($this->_sFilter1, $sFilter) = explode($this->_sParamsDivider, $sFilter);
+            list($this->_sFilter1Value, $sFilter) = explode($this->_sParamsDivider, $sFilter);
 
-    	if(!empty($this->_sFilter1))
-        	$this->_aOptions['source'] .= $this->_oModule->_oDb->prepare(" AND `status`=?", $this->_sFilter1);
+    	if(!empty($this->_sFilter1Value))
+        	$this->_aOptions['source'] .= $this->_oModule->_oDb->prepare(" AND `status`=?", $this->_sFilter1Value);
 
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }
@@ -52,15 +62,7 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
     {
         parent::_getFilterControls();
 
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
-        $sFilterName = 'filter1';
-        $aFilterValues = array(
-        	'active' => $CNF['T']['filter_item_active'],
-            'pending' => $CNF['T']['filter_item_hidden'],
-		);
-
-        return  $this->_getFilterSelectOne($sFilterName, $aFilterValues) . $this->_getSearchInput();
+        return  $this->_getFilterSelectOne($this->_sFilter1Name, $this->_sFilter1Value, $this->_aFilter1Values) . $this->_getSearchInput();
     }
 
 	protected function _getCellTitle($mixedValue, $sKey, $aField, $aRow)
