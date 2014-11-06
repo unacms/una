@@ -604,11 +604,16 @@ function on_filter_key_up (e, sCheckboxId)
     }
 }
 
-function bx_activate_anim_icons()
+function bx_activate_anim_icons(sColor)
 {
+    if ('undefined' == typeof(sColor))
+        sColor = glBxAnimIconColor;
+    else
+       glBxAnimIconColor = sColor;
+
     $('.sys-icon-a').not('.marka').each(function () {
         var e = $(this);
         var m = new Marka(e.get(0)), r = e.attr('data-rotate'), c = e.attr('data-color');
-        m.set(e.attr('data-icon')).rotate(r ? r : 'up').color(c ? c : '#3e8685');
+        m.set(e.attr('data-icon')).rotate(r ? r : 'down').color(c ? c : sColor);
     });
 }

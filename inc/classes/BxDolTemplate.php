@@ -1025,14 +1025,14 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
                 bx_import('BxTemplSearch');
                 $oSearch = new BxTemplSearch();
                 $oSearch->setLiveSearch(true);
-                $s = $this->parsePageByName('search.html', array(
+                $sRet .= $this->parsePageByName('search.html', array(
                     'search_form' => $oSearch->getForm(BX_DB_CONTENT_ONLY),
                     'results' => $oSearch->getResultsContainer(),
                 ));
-                $sRet .= BxTemplFunctions::getInstance()->transBox('bx-popup-search', $s, true);
 
-                $sRet .= $this->getMenu ('sys_site');
+                $sRet .= $this->getMenu ('sys_site');                
                 $sRet .= isLogged() ? $this->getMenu ('sys_add_content') : '';
+                $sRet .= isLogged() ? $this->getMenu ('sys_account_popup') : '';
                 break;
             case 'lang':
                 $sRet = bx_lang_name();

@@ -267,6 +267,14 @@ ul.bx-menu-toolbar li .sys-icon {
 
 /* --------------- floating blocks menu */
 
+.bx-sliding-menu-close,
+.bx-sliding-menu-close:hover {
+    position:absolute;
+    top:0;
+    right:0;
+    text-decoration:none;
+}
+
 .bx-sliding-menu-main {
     width:100%;
     opacity:0.9;
@@ -385,6 +393,7 @@ ul.bx-menu-floating-blocks {
     text-align:center;
     overflow:hidden;
     text-overflow:ellipsis;
+    white-space:nowrap;
 }
 
 /* --------------- interactive block menu */
@@ -433,6 +442,5 @@ ul.bx-menu-btns-hor li {
 
 .bx-menu-account-popup-switch-profile:hover,
 .bx-menu-account-popup-switch-profile {
-    float:right;
     text-decoration:none;
 }
