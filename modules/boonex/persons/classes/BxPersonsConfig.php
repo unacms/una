@@ -50,8 +50,12 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'URI_VIEW_ENTRY' => 'view-persons-profile',
             'URI_EDIT_ENTRY' => 'edit-persons-profile',
             'URI_EDIT_COVER' => 'edit-persons-cover',
+        	'URI_MANAGE_COMMON' => 'persons-manage',
 
             'URL_HOME' => 'page.php?i=persons-home',
+        	'URL_MANAGE_COMMON' => 'page.php?i=persons-manage',
+        	'URL_MANAGE_MODERATION' => 'page.php?i=persons-moderation',
+        	'URL_MANAGE_ADMINISTRATION' => 'page.php?i=persons-administration',
 
             // some params
             'PARAM_AUTOAPPROVAL' => 'bx_persons_autoapproval',
@@ -83,6 +87,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_persons_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_GRID_ADMINISTRATION' => 'bx_persons_administration',
         	'OBJECT_GRID_MODERATION' => 'bx_persons_moderation',
+        	'OBJECT_GRID_COMMON' => 'bx_persons_common',
 
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (
@@ -114,7 +119,9 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             	'filter_item_active' => '_bx_persons_grid_filter_item_title_adm_active',
             	'filter_item_pending' => '_bx_persons_grid_filter_item_title_adm_pending',
             	'filter_item_suspended' => '_bx_persons_grid_filter_item_title_adm_suspended',
-            	'filter_item_select_one_filter1' => '_bx_persons_grid_filter_item_title_adm_select_one_filter1'
+            	'filter_item_select_one_filter1' => '_bx_persons_grid_filter_item_title_adm_select_one_filter1',
+            	'menu_item_manage_my' => '_bx_persons_menu_item_title_manage_my',
+            	'menu_item_manage_all' => '_bx_persons_menu_item_title_manage_all',
             ),
 
         );
@@ -128,6 +135,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
         );
 
         $this->_aGridObjects = array(
+        	'common' => $this->CNF['OBJECT_GRID_COMMON'],
         	'moderation' => $this->CNF['OBJECT_GRID_MODERATION'],
         	'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
         	

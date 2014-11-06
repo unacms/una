@@ -3,26 +3,20 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    BaseText Base classes for text modules
+ * @defgroup    Posts Posts
  * @ingroup     DolphinModules
  * 
  * @{
  */
 
-bx_import('BxBaseModTextGridAdministration');
+bx_import('BxBaseModProfileGridCommon');
 
-class BxBaseModTextGridModeration extends BxBaseModTextGridAdministration
+class BxPersonsGridCommon extends BxBaseModProfileGridCommon
 {
     public function __construct ($aOptions, $oTemplate = false)
     {
+    	$this->MODULE = 'bx_persons';
         parent::__construct ($aOptions, $oTemplate);
-
-        $this->_sManageType = 'moderation';
-    }
-
-	public function performActionDelete($aParams = array())
-    {
-        $this->_echoResultJson(array());
     }
 }
 

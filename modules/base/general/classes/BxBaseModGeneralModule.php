@@ -53,17 +53,50 @@ class BxBaseModGeneralModule extends BxDolModule
 
     // ====== SERVICE METHODS
 
-	public function serviceManageTools($sType)
+	public function serviceManageTools($sType = 'common')
     {
     	bx_import('BxDolGrid');
         $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->getGridObject($sType));
         if(!$oGrid)
             return '';
 
+		$CNF = &$this->_oConfig->CNF;
+
+		bx_import('BxDolAcl');
+		$oAcl = BxDolAcl::getInstance();
+
+		$sMenu = '';
+		if($oAcl->isMemberLevelInSet(192)) {
+			bx_import('BxDolPermalinks');
+			$oPermalink = BxDolPermalinks::getInstance();
+
+			$aMenuItems = array(
+				array('id' => 'manage-common', 'name' => 'manage-common', 'class' => '', 'link' => $oPermalink->permalink($CNF['URL_MANAGE_COMMON']), 'target' => '_self', 'title' => _t($CNF['T']['menu_item_manage_my']), 'active' => 1)
+			);
+			if($oAcl->isMemberLevelInSet(64))
+				$aMenuItems[] = array('id' => 'manage-moderation', 'name' => 'manage-moderation', 'class' => '', 'link' => $oPermalink->permalink($CNF['URL_MANAGE_MODERATION']), 'target' => '_self', 'title' => _t($CNF['T']['menu_item_manage_all']), 'active' => 1);
+			if($oAcl->isMemberLevelInSet(128))
+				$aMenuItems[] = array('id' => 'manage-administration', 'name' => 'manage-administration', 'class' => '', 'link' => $oPermalink->permalink($CNF['URL_MANAGE_ADMINISTRATION']), 'target' => '_self', 'title' => _t($CNF['T']['menu_item_manage_all']), 'active' => 1);
+
+			bx_import('BxTemplMenu');
+            $oMenu = new BxTemplMenu(array(
+            	'template' => 'menu_vertical.html', 
+            	'menu_items' => $aMenuItems
+            ), $this->_oTemplate);
+            $oMenu->setSelected($this->_aModule['name'], 'manage-' . $sType);
+            $sMenu = $oMenu->getCode();
+		}
+
+		bx_import('BxTemplMenu');
+		BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SUBMENU'])->setSelected($this->_aModule['name'], $CNF['URI_MANAGE_COMMON']);
+
         $this->_oTemplate->addCss(array('manage_tools.css'));
         $this->_oTemplate->addJs(array('manage_tools.js'));
         $this->_oTemplate->addJsTranslation(array('_sys_grid_search'));
-        return $this->_oTemplate->getJsCode('manage_tools', array('sObjNameGrid' => $this->_oConfig->getGridObject($sType))) . $oGrid->getCode();
+        return array(
+        	'content' => $this->_oTemplate->getJsCode('manage_tools', array('sObjNameGrid' => $this->_oConfig->getGridObject($sType))) . $oGrid->getCode(),
+        	'menu' => $sMenu
+        );
     }
 
     public function serviceGetMenuAddonManageTools()

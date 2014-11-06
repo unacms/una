@@ -72,12 +72,9 @@
     <string name="_bx_posts_page_block_title_entries_of_author"><![CDATA[Posts of author]]></string>   
     <string name="_bx_posts_page_block_title_entries_actions"><![CDATA[Posts actions]]></string>
     <string name="_bx_posts_page_block_title_browse_cmts"><![CDATA[Posts' Comments]]></string>
-	<string name="_bx_posts_page_title_sys_moderation"><![CDATA[Posts Moderation]]></string>
-	<string name="_bx_posts_page_title_moderation"><![CDATA[Posts Moderation]]></string>
-	<string name="_bx_posts_page_title_sys_administration"><![CDATA[Posts Administration]]></string>
-	<string name="_bx_posts_page_title_administration"><![CDATA[Posts Administration]]></string>
-	<string name="_bx_posts_page_block_title_moderation"><![CDATA[Posts Moderation]]></string>
-	<string name="_bx_posts_page_block_title_administration"><![CDATA[Posts Administration]]></string>    
+	<string name="_bx_posts_page_title_sys_manage"><![CDATA[Manage Posts]]></string>
+	<string name="_bx_posts_page_title_manage"><![CDATA[Manage Posts]]></string>
+	<string name="_bx_posts_page_block_title_manage"><![CDATA[Manage Posts]]></string>    
 
     <string name="_bx_posts_menu_set_title_view_entry"><![CDATA[View Post]]></string>
     <string name="_bx_posts_menu_title_view_entry"><![CDATA[View Post]]></string>
@@ -94,10 +91,8 @@
     <string name="_bx_posts_menu_item_title_entries_home"><![CDATA[Posts]]></string>
     <string name="_bx_posts_menu_item_title_system_entries_public"><![CDATA[Public]]></string>
     <string name="_bx_posts_menu_item_title_entries_public"><![CDATA[Public]]></string>
-    <string name="_bx_posts_menu_item_title_system_entries_moderation"><![CDATA[Moderation]]></string>
-    <string name="_bx_posts_menu_item_title_entries_moderation"><![CDATA[Moderation]]></string>
-    <string name="_bx_posts_menu_item_title_system_entries_administration"><![CDATA[Administration]]></string>
-    <string name="_bx_posts_menu_item_title_entries_administration"><![CDATA[Administration]]></string>
+    <string name="_bx_posts_menu_item_title_system_entries_manage"><![CDATA[Manage]]></string>
+    <string name="_bx_posts_menu_item_title_entries_manage"><![CDATA[Manage]]></string>
     <string name="_bx_posts_menu_item_title_system_entries_popular"><![CDATA[Popular]]></string>
     <string name="_bx_posts_menu_item_title_entries_popular"><![CDATA[Popular]]></string>
     <string name="_bx_posts_menu_title_view_entry_submenu"><![CDATA[View Post Submenu]]></string>
@@ -112,7 +107,9 @@
     <string name="_bx_posts_menu_set_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_posts_menu_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
 	<string name="_bx_posts_menu_item_title_system_admt_posts"><![CDATA[Posts]]></string>
-	<string name="_bx_posts_menu_item_title_admt_posts"><![CDATA[{addon} hidden post(s)]]></string> 
+	<string name="_bx_posts_menu_item_title_admt_posts"><![CDATA[Posts - {addon} hidden]]></string> 
+	<string name="_bx_posts_menu_item_title_manage_my"><![CDATA[My Posts]]></string>
+	<string name="_bx_posts_menu_item_title_manage_all"><![CDATA[All Posts]]></string>
 
 	<string name="_bx_posts_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Select Status...]]></string>
 	<string name="_bx_posts_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>

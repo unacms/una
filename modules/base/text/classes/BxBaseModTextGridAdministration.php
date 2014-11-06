@@ -57,7 +57,7 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
         $sFilterName = 'filter1';
         $aFilterValues = array(
         	'active' => $CNF['T']['filter_item_active'],
-            'pending' => $CNF['T']['filter_item_hidden'],
+            'hidden' => $CNF['T']['filter_item_hidden'],
 		);
 
         return  $this->_getFilterSelectOne($sFilterName, $aFilterValues) . $this->_getSearchInput();

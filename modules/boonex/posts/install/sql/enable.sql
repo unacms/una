@@ -92,21 +92,26 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_posts_home', 1, 'bx_posts', '_bx_posts_page_block_title_recent_entries', 0, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_posts\";s:6:\"method\";s:13:\"browse_public\";}', 0, 1, 0);
 
--- PAGE: module moderation
-
+-- PAGE: module manage
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_posts_moderation', '_bx_posts_page_title_sys_moderation', '_bx_posts_page_title_moderation', 'bx_posts', 5, 64, 1, 'posts-moderation', 'page.php?i=posts-moderation', '', '', '', 0, 1, 0, 'BxPostsPageBrowse', 'modules/boonex/posts/classes/BxPostsPageBrowse.php');
+('bx_posts_manage', '_bx_posts_page_title_sys_manage', '_bx_posts_page_title_manage', 'bx_posts', 5, 2147483647, 1, 'posts-manage', 'page.php?i=posts-manage', '', '', '', 0, 1, 0, 'BxPostsPageBrowse', 'modules/boonex/posts/classes/BxPostsPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_posts_moderation', 1, 'bx_posts', '_bx_posts_page_block_title_moderation', 11, 64, 'service', 'a:3:{s:6:\"module\";s:8:\"bx_posts\";s:6:\"method\";s:12:\"manage_tools\";s:6:\"params\";a:1:{i:0;s:10:\"moderation\";}}', 0, 1, 0);
+('bx_posts_manage', 1, 'bx_posts', '_bx_posts_page_block_title_manage', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_posts\";s:6:\"method\";s:12:\"manage_tools\";}}', 0, 1, 0);
+
+-- PAGE: module moderation
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_posts_moderation', '_bx_posts_page_title_sys_manage', '_bx_posts_page_title_manage', 'bx_posts', 5, 64, 1, 'posts-moderation', 'page.php?i=posts-moderation', '', '', '', 0, 1, 0, 'BxPostsPageBrowse', 'modules/boonex/posts/classes/BxPostsPageBrowse.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
+('bx_posts_moderation', 1, 'bx_posts', '_bx_posts_page_block_title_manage', 11, 64, 'service', 'a:3:{s:6:\"module\";s:8:\"bx_posts\";s:6:\"method\";s:12:\"manage_tools\";s:6:\"params\";a:1:{i:0;s:10:\"moderation\";}}', 0, 1, 0);
 
 -- PAGE: module administration
-
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_posts_administration', '_bx_posts_page_title_sys_administration', '_bx_posts_page_title_administration', 'bx_posts', 5, 128, 1, 'posts-administration', 'page.php?i=posts-administration', '', '', '', 0, 1, 0, 'BxPostsPageBrowse', 'modules/boonex/posts/classes/BxPostsPageBrowse.php');
+('bx_posts_administration', '_bx_posts_page_title_sys_manage', '_bx_posts_page_title_manage', 'bx_posts', 5, 128, 1, 'posts-administration', 'page.php?i=posts-administration', '', '', '', 0, 1, 0, 'BxPostsPageBrowse', 'modules/boonex/posts/classes/BxPostsPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_posts_administration', 1, 'bx_posts', '_bx_posts_page_block_title_administration', 11, 128, 'service', 'a:3:{s:6:\"module\";s:8:\"bx_posts\";s:6:\"method\";s:12:\"manage_tools\";s:6:\"params\";a:1:{i:0;s:14:\"administration\";}}', 0, 1, 0);
+('bx_posts_administration', 1, 'bx_posts', '_bx_posts_page_block_title_manage', 11, 128, 'service', 'a:3:{s:6:\"module\";s:8:\"bx_posts\";s:6:\"method\";s:12:\"manage_tools\";s:6:\"params\";a:1:{i:0;s:14:\"administration\";}}', 0, 1, 0);
 
 -- PAGE: add block to homepage
 
@@ -164,8 +169,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_posts_submenu', 'bx_posts', 'posts-home', '_bx_posts_menu_item_title_system_entries_public', '_bx_posts_menu_item_title_entries_public', 'page.php?i=posts-home', '', '', '', '', 2147483647, 1, 1, 1),
 ('bx_posts_submenu', 'bx_posts', 'posts-popular', '_bx_posts_menu_item_title_system_entries_popular', '_bx_posts_menu_item_title_entries_popular', 'page.php?i=posts-popular', '', '', '', '', 2147483647, 1, 1, 2),
-('bx_posts_submenu', 'bx_posts', 'posts-moderation', '_bx_posts_menu_item_title_system_entries_moderation', '_bx_posts_menu_item_title_entries_moderation', 'page.php?i=posts-moderation', '', '', '', '', 64, 1, 1, 3),
-('bx_posts_submenu', 'bx_posts', 'posts-administration', '_bx_posts_menu_item_title_system_entries_administration', '_bx_posts_menu_item_title_entries_administration', 'page.php?i=posts-administration', '', '', '', '', 128, 1, 1, 4);
+('bx_posts_submenu', 'bx_posts', 'posts-manage', '_bx_posts_menu_item_title_system_entries_manage', '_bx_posts_menu_item_title_entries_manage', 'page.php?i=posts-manage', '', '', '', '', 2147483647, 1, 1, 3);
 
 -- MENU: sub-menu for view entry
 
@@ -284,10 +288,12 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `ClassName`, `ClassPath
 INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
 ('bx_posts', 'bx_posts_meta_keywords', 'bx_posts_meta_locations', '', '', '');
 
--- GRIDS: administration
+-- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `override_class_name`, `override_class_file`) VALUES
 ('bx_posts_administration', 'Sql', 'SELECT * FROM `bx_posts_posts` WHERE 1 ', 'bx_posts_posts', 'id', '', 'status', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 'BxPostsGridAdministration', 'modules/boonex/posts/classes/BxPostsGridAdministration.php'),
-('bx_posts_moderation', 'Sql', 'SELECT * FROM `bx_posts_posts` WHERE 1 ', 'bx_posts_posts', 'id', '', 'status', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 'BxPostsGridModeration', 'modules/boonex/posts/classes/BxPostsGridModeration.php');
+('bx_posts_moderation', 'Sql', 'SELECT * FROM `bx_posts_posts` WHERE 1 ', 'bx_posts_posts', 'id', '', 'status', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 'BxPostsGridModeration', 'modules/boonex/posts/classes/BxPostsGridModeration.php'),
+('bx_posts_common', 'Sql', 'SELECT * FROM `bx_posts_posts` WHERE 1 ', 'bx_posts_posts', 'id', '', 'status', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 'BxPostsGridCommon', 'modules/boonex/posts/classes/BxPostsGridCommon.php');
+
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_posts_administration', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
@@ -300,7 +306,12 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_posts_moderation', 'title', '_bx_posts_grid_column_title_adm_title', '25%', 0, '', '', 2),
 ('bx_posts_moderation', 'added', '_bx_posts_grid_column_title_adm_added', '25%', 1, '25', '', 3),
 ('bx_posts_moderation', 'author', '_bx_posts_grid_column_title_adm_author', '25%', 0, '25', '', 4),
-('bx_posts_moderation', 'actions', '', '15%', 0, '', '', 5);
+('bx_posts_moderation', 'actions', '', '15%', 0, '', '', 5),
+('bx_posts_common', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
+('bx_posts_common', 'switcher', '', '8%', 0, '', '', 2),
+('bx_posts_common', 'title', '_bx_posts_grid_column_title_adm_title', '40%', 0, '', '', 3),
+('bx_posts_common', 'added', '_bx_posts_grid_column_title_adm_added', '30%', 1, '25', '', 4),
+('bx_posts_common', 'actions', '', '20%', 0, '', '', 5);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
 ('bx_posts_administration', 'bulk', 'delete', '_bx_posts_grid_action_title_adm_delete', '', 1, 2),
@@ -308,4 +319,8 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 ('bx_posts_administration', 'single', 'delete', '', 'remove', 1, 2),
 ('bx_posts_administration', 'single', 'settings', '', 'cog', 0, 3),
 ('bx_posts_moderation', 'single', 'edit', '', 'pencil', 0, 1),
-('bx_posts_moderation', 'single', 'settings', '', 'cog', 0, 2);
+('bx_posts_moderation', 'single', 'settings', '', 'cog', 0, 2),
+('bx_posts_common', 'bulk', 'delete', '_bx_posts_grid_action_title_adm_delete', '', 1, 2),
+('bx_posts_common', 'single', 'edit', '', 'pencil', 0, 1),
+('bx_posts_common', 'single', 'delete', '', 'remove', 1, 2),
+('bx_posts_common', 'single', 'settings', '', 'cog', 0, 3);

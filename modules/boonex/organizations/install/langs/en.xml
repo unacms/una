@@ -60,10 +60,8 @@
 	<string name="_bx_orgs_page_title_profile_info"><![CDATA[Info about {display_name}]]></string>
 	<string name="_bx_orgs_page_title_sys_home"><![CDATA[Organizations Home]]></string>
 	<string name="_bx_orgs_page_title_home"><![CDATA[Organizations]]></string>
-	<string name="_bx_orgs_page_title_sys_moderation"><![CDATA[Organizations Moderation]]></string>
-	<string name="_bx_orgs_page_title_moderation"><![CDATA[Organizations Moderation]]></string>
-	<string name="_bx_orgs_page_title_sys_administration"><![CDATA[Organizations Administration]]></string>
-	<string name="_bx_orgs_page_title_administration"><![CDATA[Organizations Administration]]></string>
+	<string name="_bx_orgs_page_title_sys_manage"><![CDATA[Manage Organizations]]></string>
+	<string name="_bx_orgs_page_title_manage"><![CDATA[Manage Organizations]]></string>
 
 	<string name="_bx_orgs_page_block_title_create_profile"><![CDATA[Create Organization's Profile]]></string>
 	<string name="_bx_orgs_page_block_title_edit_profile"><![CDATA[Edit Profile]]></string>
@@ -74,8 +72,7 @@
 	<string name="_bx_orgs_page_block_title_profile_cover"><![CDATA[Profile Cover]]></string>
 	<string name="_bx_orgs_page_block_title_profile_actions"><![CDATA[Actions]]></string>
 	<string name="_bx_orgs_page_block_title_latest_profiles"><![CDATA[Recent Organizations]]></string>
-	<string name="_bx_orgs_page_block_title_moderation"><![CDATA[Organizations Moderation]]></string>
-	<string name="_bx_orgs_page_block_title_administration"><![CDATA[Organizations Administration]]></string>
+	<string name="_bx_orgs_page_block_title_manage"><![CDATA[Manage Organizations]]></string>
 
     <string name="_bx_orgs_menu_title_submenu"><![CDATA[Organizations Submenu]]></string>
     <string name="_bx_orgs_menu_set_title_submenu"><![CDATA[Organizations Submenu]]></string>
@@ -121,14 +118,14 @@
     <string name="_bx_orgs_menu_item_title_friend_requests"><![CDATA[{addon} friend requests]]></string>
     <string name="_bx_orgs_menu_item_title_system_entries_public"><![CDATA[Public]]></string>
     <string name="_bx_orgs_menu_item_title_entries_public"><![CDATA[Public]]></string>
-    <string name="_bx_orgs_menu_item_title_system_entries_moderation"><![CDATA[Moderation]]></string>
-    <string name="_bx_orgs_menu_item_title_entries_moderation"><![CDATA[Moderation]]></string>
-    <string name="_bx_orgs_menu_item_title_system_entries_administration"><![CDATA[Administration]]></string>
-    <string name="_bx_orgs_menu_item_title_entries_administration"><![CDATA[Administration]]></string>
+    <string name="_bx_orgs_menu_item_title_system_entries_manage"><![CDATA[Manage]]></string>
+    <string name="_bx_orgs_menu_item_title_entries_manage"><![CDATA[Manage]]></string>
     <string name="_bx_orgs_menu_item_title_system_entries_home"><![CDATA[Orgs]]></string>
     <string name="_bx_orgs_menu_item_title_entries_home"><![CDATA[Orgs]]></string>
     <string name="_bx_orgs_menu_item_title_system_admt_organizations"><![CDATA[Organizations]]></string>
-	<string name="_bx_orgs_menu_item_title_admt_organizations"><![CDATA[{addon} pending approval organization(s)]]></string>
+	<string name="_bx_orgs_menu_item_title_admt_organizations"><![CDATA[Organizations - {addon} unapproved]]></string>
+	<string name="_bx_orgs_menu_item_title_manage_my"><![CDATA[My Organizations]]></string>
+	<string name="_bx_orgs_menu_item_title_manage_all"><![CDATA[All Organizations]]></string>
 
 	<string name="_bx_orgs_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Select Status...]]></string>
 	<string name="_bx_orgs_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>

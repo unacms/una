@@ -41,9 +41,13 @@ class BxPostsConfig extends BxBaseModTextConfig
             'URI_AUTHOR_ENTRIES' => 'posts-author',
             'URI_ADD_ENTRY' => 'create-post',
         	'URI_EDIT_ENTRY' => 'edit-post',
+        	'URI_MANAGE_COMMON' => 'posts-manage',
 
             'URL_HOME' => 'page.php?i=posts-home',
             'URL_POPULAR' => 'page.php?i=posts-popular',
+        	'URL_MANAGE_COMMON' => 'page.php?i=posts-manage',
+        	'URL_MANAGE_MODERATION' => 'page.php?i=posts-moderation',
+        	'URL_MANAGE_ADMINISTRATION' => 'page.php?i=posts-administration',
 
             // some params
             'PARAM_CHARS_SUMMARY' => 'bx_posts_summary_chars',
@@ -71,6 +75,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_posts_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_GRID_ADMINISTRATION' => 'bx_posts_administration',
         	'OBJECT_GRID_MODERATION' => 'bx_posts_moderation',
+        	'OBJECT_GRID_COMMON' => 'bx_posts_common',
 
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (
@@ -90,7 +95,9 @@ class BxPostsConfig extends BxBaseModTextConfig
             	'grid_action_err_delete' => '_bx_posts_grid_action_err_delete',
 				'filter_item_active' => '_bx_posts_grid_filter_item_title_adm_active',
             	'filter_item_hidden' => '_bx_posts_grid_filter_item_title_adm_hidden',
-            	'filter_item_select_one_filter1' => '_bx_posts_grid_filter_item_title_adm_select_one_filter1'
+            	'filter_item_select_one_filter1' => '_bx_posts_grid_filter_item_title_adm_select_one_filter1',
+            	'menu_item_manage_my' => '_bx_posts_menu_item_title_manage_my',
+            	'menu_item_manage_all' => '_bx_posts_menu_item_title_manage_all',
             ),
         );
 
@@ -103,6 +110,7 @@ class BxPostsConfig extends BxBaseModTextConfig
         );
 
         $this->_aGridObjects = array(
+        	'common' => $this->CNF['OBJECT_GRID_COMMON'],
         	'moderation' => $this->CNF['OBJECT_GRID_MODERATION'],
         	'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
         	
