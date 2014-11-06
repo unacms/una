@@ -116,6 +116,8 @@
     <string name="_bx_persons_menu_item_title_friends"><![CDATA[Friends]]></string>
     <string name="_bx_persons_menu_item_title_system_friend_requests"><![CDATA[Friend requests number]]></string>
     <string name="_bx_persons_menu_item_title_friend_requests"><![CDATA[{addon} friend requests]]></string>
+    <string name="_bx_persons_menu_item_title_system_manage_my_profiles"><![CDATA[My profiles]]></string>
+    <string name="_bx_persons_menu_item_title_manage_my_profiles"><![CDATA[{addon} profiles]]></string>    
     <string name="_bx_persons_menu_item_title_system_entries_public"><![CDATA[Public]]></string>
     <string name="_bx_persons_menu_item_title_entries_public"><![CDATA[Public]]></string>
     <string name="_bx_persons_menu_item_title_system_entries_manage"><![CDATA[Manage]]></string>
@@ -124,8 +126,6 @@
     <string name="_bx_persons_menu_item_title_entries_home"><![CDATA[People]]></string>
 	<string name="_bx_persons_menu_item_title_system_admt_persons"><![CDATA[Profiles]]></string>
 	<string name="_bx_persons_menu_item_title_admt_persons"><![CDATA[Profiles - {addon} unapproved]]></string>
-	<string name="_bx_persons_menu_item_title_system_admt_persons_my"><![CDATA[My Profiles]]></string>
-	<string name="_bx_persons_menu_item_title_admt_persons_my"><![CDATA[My Profiles]]></string>
 	<string name="_bx_persons_menu_item_title_manage_my"><![CDATA[My Profiles]]></string>
 	<string name="_bx_persons_menu_item_title_manage_all"><![CDATA[All Profiles]]></string>   
 

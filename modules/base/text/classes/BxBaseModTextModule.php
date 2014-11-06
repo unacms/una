@@ -36,6 +36,19 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
         return $o->getNum();
 	}
 
+	public function serviceGetMenuAddonManageToolsProfileStats()
+	{
+		bx_import('SearchResult', $this->_aModule);
+        $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
+        $o = new $sClass();
+        $o->fillFilters(array(
+			'author' => bx_get_logged_profile_id()
+        ));
+        $o->unsetPaginate();
+
+        return $o->getNum();
+	}
+
     /**
      * Display pablic entries
      * @return HTML string

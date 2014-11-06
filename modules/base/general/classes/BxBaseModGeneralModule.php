@@ -101,7 +101,12 @@ class BxBaseModGeneralModule extends BxDolModule
 
     public function serviceGetMenuAddonManageTools()
     {
-    	return '';
+    	return 0;
+    }
+    
+    public function serviceGetMenuAddonManageToolsProfileStats()
+    {
+    	return 0;
     }
 
     /**

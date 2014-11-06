@@ -104,12 +104,12 @@
     <string name="_bx_posts_menu_item_title_view_entries_author"><![CDATA[Posts]]></string>
     <string name="_bx_posts_menu_title_entries_my"><![CDATA[My Posts Action Menu]]></string>
     <string name="_bx_posts_menu_set_title_entries_my"><![CDATA[My Posts Menu]]></string>
+	<string name="_bx_posts_menu_item_title_system_manage_my_posts"><![CDATA[My posts]]></string>
+    <string name="_bx_posts_menu_item_title_manage_my_posts"><![CDATA[{addon} posts]]></string>
     <string name="_bx_posts_menu_set_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_posts_menu_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
 	<string name="_bx_posts_menu_item_title_system_admt_posts"><![CDATA[Posts]]></string>
-	<string name="_bx_posts_menu_item_title_admt_posts"><![CDATA[Posts - {addon} hidden]]></string> 
-	<string name="_bx_posts_menu_item_title_system_admt_posts_my"><![CDATA[My Posts]]></string>
-	<string name="_bx_posts_menu_item_title_admt_posts_my"><![CDATA[My Posts]]></string>
+	<string name="_bx_posts_menu_item_title_admt_posts"><![CDATA[Posts - {addon} hidden]]></string>
 	<string name="_bx_posts_menu_item_title_manage_my"><![CDATA[My Posts]]></string>
 	<string name="_bx_posts_menu_item_title_manage_all"><![CDATA[All Posts]]></string>
 
