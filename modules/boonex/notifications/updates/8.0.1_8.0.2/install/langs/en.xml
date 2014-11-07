@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_bx_ntfs_menu_title_submenu"><![CDATA[Notifications Submenu]]></string_add>
+	<string_add name="_bx_ntfs_menu_set_title_submenu"><![CDATA[Notifications Submenu]]></string_add>
+	<string_add name="_bx_ntfs_menu_item_title_system_notifications_all"><![CDATA[All Notifications]]></string_add>
+	<string_add name="_bx_ntfs_menu_item_title_notifications_all"><![CDATA[All Notifications]]></string_add>
+
+	<string_upd name="_bx_ntfs_txt_item_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> added a new {entry_sample} <a href="{entry_url}">{entry_caption}</a>]]></string_upd>
+</resources>

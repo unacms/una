@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_bx_orgs_page_title_sys_manage"><![CDATA[Manage Organizations]]></string_add>
+	<string_add name="_bx_orgs_page_title_manage"><![CDATA[Manage Organizations]]></string_add>
+	<string_add name="_bx_orgs_page_block_title_manage"><![CDATA[Manage Organizations]]></string_add>
+	<string_add name="_bx_orgs_menu_set_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string_add>
+    <string_add name="_bx_orgs_menu_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string_add>
+    <string_add name="_bx_orgs_menu_item_title_system_delete_with_content"><![CDATA[Delete With Content]]></string_add>
+    <string_add name="_bx_orgs_menu_item_title_delete_with_content"><![CDATA[Delete With Content]]></string_add>
+	<string_add name="_bx_orgs_menu_item_title_system_manage_my_organizations"><![CDATA[My organizations]]></string_add>
+    <string_add name="_bx_orgs_menu_item_title_manage_my_organizations"><![CDATA[{addon} organizations]]></string_add>
+	<string_add name="_bx_orgs_menu_item_title_system_entries_manage"><![CDATA[Manage]]></string_add>
+    <string_add name="_bx_orgs_menu_item_title_entries_manage"><![CDATA[Manage]]></string_add>
+	<string_add name="_bx_orgs_menu_item_title_system_admt_organizations"><![CDATA[Organizations]]></string_add>
+	<string_add name="_bx_orgs_menu_item_title_admt_organizations"><![CDATA[Organizations - {addon} unapproved]]></string_add>
+	<string_add name="_bx_orgs_menu_item_title_manage_my"><![CDATA[My Organizations]]></string_add>
+	<string_add name="_bx_orgs_menu_item_title_manage_all"><![CDATA[All Organizations]]></string_add>
+	<string_add name="_bx_orgs_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string_add>
+	<string_add name="_bx_orgs_grid_filter_item_title_adm_active"><![CDATA[Active]]></string_add>
+	<string_add name="_bx_orgs_grid_filter_item_title_adm_pending"><![CDATA[Pending]]></string_add>
+	<string_add name="_bx_orgs_grid_filter_item_title_adm_suspended"><![CDATA[Suspended]]></string_add>
+	<string_add name="_bx_orgs_grid_column_title_adm_active"><![CDATA[Active]]></string_add>
+    <string_add name="_bx_orgs_grid_column_title_adm_org_name"><![CDATA[Name]]></string_add>
+    <string_add name="_bx_orgs_grid_column_title_adm_last_online"><![CDATA[Last Online]]></string_add>
+    <string_add name="_bx_orgs_grid_column_title_adm_account"><![CDATA[Account]]></string_add>
+    <string_add name="_bx_orgs_grid_action_title_adm_delete"><![CDATA[Delete]]></string_add>
+    <string_add name="_bx_orgs_grid_action_title_adm_delete_with_content"><![CDATA[Delete With Content]]></string_add>
+    <string_add name="_bx_orgs_grid_action_title_adm_set_acl_level"><![CDATA[Set Membership]]></string_add>
+	<string_add name="_bx_orgs_grid_action_err_delete"><![CDATA[Cannot delete the selected organization(s).]]></string_add>
+</resources>

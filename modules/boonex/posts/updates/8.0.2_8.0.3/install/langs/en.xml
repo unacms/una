@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_bx_posts_page_title_browse_popular"><![CDATA[Popular Posts]]></string_add>
+	<string_add name="_bx_posts_page_block_title_entry_location"><![CDATA[Location]]></string_add>
+    <string_add name="_bx_posts_page_title_sys_entries_popular"><![CDATA[Popular Posts]]></string_add>
+    <string_add name="_bx_posts_page_title_entries_popular"><![CDATA[Popular Posts]]></string_add>
+    <string_add name="_bx_posts_page_block_title_popular_entries"><![CDATA[Popular Posts]]></string_add>
+	<string_add name="_bx_posts_page_title_sys_manage"><![CDATA[Manage Posts]]></string_add>
+	<string_add name="_bx_posts_page_title_manage"><![CDATA[Manage Posts]]></string_add>
+	<string_add name="_bx_posts_page_block_title_manage"><![CDATA[Manage Posts]]></string_add> 
+    <string_add name="_bx_posts_menu_item_title_system_entries_manage"><![CDATA[Manage]]></string_add>
+    <string_add name="_bx_posts_menu_item_title_entries_manage"><![CDATA[Manage]]></string_add>
+    <string_add name="_bx_posts_menu_item_title_system_entries_popular"><![CDATA[Popular]]></string_add>
+    <string_add name="_bx_posts_menu_item_title_entries_popular"><![CDATA[Popular]]></string_add>
+	<string_add name="_bx_posts_menu_item_title_system_manage_my_posts"><![CDATA[My posts]]></string_add>
+    <string_add name="_bx_posts_menu_item_title_manage_my_posts"><![CDATA[{addon} posts]]></string_add>
+    <string_add name="_bx_posts_menu_set_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string_add>
+    <string_add name="_bx_posts_menu_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string_add>
+	<string_add name="_bx_posts_menu_item_title_system_admt_posts"><![CDATA[Posts]]></string_add>
+	<string_add name="_bx_posts_menu_item_title_admt_posts"><![CDATA[Posts - {addon} hidden]]></string_add>
+	<string_add name="_bx_posts_menu_item_title_manage_my"><![CDATA[My Posts]]></string_add>
+	<string_add name="_bx_posts_menu_item_title_manage_all"><![CDATA[All Posts]]></string_add>
+	<string_add name="_bx_posts_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string_add>
+	<string_add name="_bx_posts_grid_filter_item_title_adm_active"><![CDATA[Active]]></string_add>
+	<string_add name="_bx_posts_grid_filter_item_title_adm_hidden"><![CDATA[Hidden]]></string_add>
+	<string_add name="_bx_posts_grid_column_title_adm_active"><![CDATA[Active]]></string_add>
+    <string_add name="_bx_posts_grid_column_title_adm_title"><![CDATA[Title]]></string_add>
+    <string_add name="_bx_posts_grid_column_title_adm_added"><![CDATA[Added]]></string_add>
+    <string_add name="_bx_posts_grid_column_title_adm_author"><![CDATA[Author]]></string_add>
+    <string_add name="_bx_posts_grid_action_title_adm_delete"><![CDATA[Delete]]></string_add>
+    <string_add name="_bx_posts_grid_action_err_delete"><![CDATA[Cannot delete the selected post(s).]]></string_add>
+
+	<string_del name="_bx_posts_page_title_sys_entries_featured" />
+    <string_del name="_bx_posts_page_title_entries_featured" />
+    <string_del name="_bx_posts_page_block_title_featured_entries" />
+	<string_del name="_bx_posts_menu_item_title_system_entries_featured" />
+    <string_del name="_bx_posts_menu_item_title_entries_featured" />
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_cmt_txt_n_new_comments"><![CDATA[<span>{0}</span> new comment(s).]]></string_add>
+	<string_add name="_cmt_load_more_comments_head"><![CDATA[See newer comments...]]></string_add>
+	<string_add name="_cmt_load_more_comments_tail"><![CDATA[See older comments...]]></string_add>
+	<string_add name="_cmt_load_more_comments_popular"><![CDATA[See more comments...]]></string_add>
+	<string_add name="_cmt_load_more_replies_head"><![CDATA[See newer replies...]]></string_add>
+	<string_add name="_cmt_load_more_replies_tail"><![CDATA[See older replies...]]></string_add>
+	<string_add name="_cmt_load_more_replies_popular"><![CDATA[See more replies...]]></string_add>
+	<string_add name="_sys_menu_item_title_search"><![CDATA[Search]]></string_add>
+	<string_add name="_sys_menu_item_title_system_search"><![CDATA[Search]]></string_add>
+	<string_add name="_sys_menu_set_title_account_dashboard_manage_tools"><![CDATA[Account Dashboard Manage Tools]]></string_add>
+	<string_add name="_sys_menu_title_account_dashboard_manage_tools"><![CDATA[Account Dashboard Manage Tools Menu]]></string_add>
+	<string_add name="_sys_page_block_title_manage_tools"><![CDATA[Manage]]></string_add>
+
+	<string_upd name="_vote_do_like"><![CDATA[Thank you!]]></string_upd>
+
+	<string_del name="_sys_menu_set_title_account_dashboard" />
+	<string_del name="_sys_menu_set_title_account_dashboard_administration" />
+	<string_del name="_sys_menu_title_account_dashboard" />
+	<string_del name="_sys_menu_title_account_dashboard_administration" />
+</resources>
