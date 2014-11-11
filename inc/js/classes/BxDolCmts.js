@@ -6,10 +6,12 @@
 
 function BxDolCmts (options) {
     this._sObjName = undefined == options.sObjName ? 'oCmts' : options.sObjName;    // javascript object name, to run current object instance from onTimer
+    this._sActionsUrl = options.sRootUrl + 'cmts.php'; // actions url address
+
     this._sSystem = options.sSystem; // current comment system
     this._iAuthorId = options.iAuthorId; // this comment's author ID.
     this._iObjId = options.iObjId; // this object id comments
-    this._sActionsUrl = options.sRootUrl + 'cmts.php'; // actions url address
+    this._sBaseUrl = options.sBaseUrl; // base url to view comment's listing.
 
     this._sPostFormPosition = undefined == options.sPostFormPosition ? 'top' : options.sPostFormPosition;
     this._sDisplayType = undefined == options.sDisplayType ? 'threaded' : options.sDisplayType;
@@ -27,6 +29,9 @@ function BxDolCmts (options) {
     	var sFormId = $(this._sRootId + ' .cmt-post-reply form').attr('id');
     	this.cmtInitFormPost(sFormId);
     }
+
+    // blink (highlight) necessary comments
+    this._cmtsBlink($(this._sRootId));
 }
 
 /*--- Main layout functionality ---*/
@@ -162,6 +167,8 @@ BxDolCmts.prototype.cmtEdit = function(oLink, iCmtId) {
                 alert(oData.msg);
 
         	if(oData && oData.form != undefined && oData.form_id != undefined) {
+        		$(oLink).parents('.bx-popup-applied:first:visible').dolPopupHide();
+
         		$(sBodyId).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
                     $(this).html(oData.form).bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
                     	$this.cmtInitFormEdit(oData.form_id);
@@ -194,6 +201,8 @@ BxDolCmts.prototype.cmtRemove = function(e, iCmtId) {
                 alert(oData.msg);
 
             if(oData && oData.id != undefined) {
+            	$(e).parents('.bx-popup-applied:first:visible').dolPopupHide();
+
             	$('#cmt' + oData.id).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
                 	var oCounter = $(this).parent('ul.cmts').siblings('.cmt-cont').find('.cmt-actions a.cmt-comment-replies span');
                 	if(oCounter)
@@ -217,7 +226,14 @@ BxDolCmts.prototype.cmtLoad = function(oLink, iCmtParentId, iStart, iPerView)
 	else 
 		this._loading($(oLink).parents('ul.cmts:first'), true);
 
-	this._getCmts(null, iCmtParentId, iStart, iPerView, this._sDisplayType, this._sBrowseType, this._sBrowseFilter, function(sListId, sContent) {
+	this._getCmts(oLink, {
+		CmtParent: iCmtParentId,
+		CmtStart: iStart,
+		CmtPerView: iPerView,
+		CmtBrowse: this._sBrowseType,
+		CmtFilter: this._sBrowseFilter,
+		CmtDisplay: this._sDisplayType
+	}, function(sListId, sContent) {
 		if(bButton)
 			$this._loadingInButton(oLink, false);
 		else 
@@ -230,7 +246,12 @@ BxDolCmts.prototype.cmtLoad = function(oLink, iCmtParentId, iStart, iPerView)
 BxDolCmts.prototype.cmtChangeDisplay = function(oLink, sType)
 {
 	var $this = this;
-	this._getCmts(oLink, 0, undefined, undefined, sType, this._sBrowseType, this._sBrowseFilter, function(sListId, sContent) {
+	this._getCmts(oLink, {
+		CmtParent: 0,
+		CmtBrowse: this._sBrowseType,
+		CmtFilter: this._sBrowseFilter,
+		CmtDisplay: sType
+	}, function(sListId, sContent) {
 		$this._sDisplayType = sType;
 		$this._cmtsReplaceContent($(sListId), sContent);
 	});
@@ -239,7 +260,12 @@ BxDolCmts.prototype.cmtChangeDisplay = function(oLink, sType)
 BxDolCmts.prototype.cmtChangeBrowse = function(oLink, sType)
 {
 	var $this = this;
-	this._getCmts(oLink, 0, undefined, undefined, this._sDisplayType, sType, this._sBrowseFilter, function(sListId, sContent) {
+	this._getCmts(oLink, {
+		CmtParent: 0,
+		CmtBrowse: sType,
+		CmtFilter: this._sBrowseFilter,
+		CmtDisplay: this._sDisplayType
+	}, function(sListId, sContent) {
 		$this._sBrowseType = sType;
 		$this._cmtsReplaceContent($(sListId), sContent);
 	});
@@ -248,28 +274,29 @@ BxDolCmts.prototype.cmtChangeBrowse = function(oLink, sType)
 BxDolCmts.prototype.cmtChangeFilter = function(oLink, sType)
 {
 	var $this = this;
-	this._getCmts(oLink, 0, undefined, undefined, this._sDisplayType, $this._sBrowseType, sType, function(sListId, sContent) {
+	this._getCmts(oLink, {
+		CmtParent: 0,
+		CmtBrowse: this._sBrowseType,
+		CmtFilter: sType,
+		CmtDisplay: this._sDisplayType
+	}, function(sListId, sContent) {
 		$this._sBrowseFilter = sType;
 		$this._cmtsReplaceContent($(sListId), sContent);
 	});
 };
 BxDolCmts.prototype.showLiveUpdate = function(oData)
 {
+	/*
+	 * Note. oData.count_old and oData.count_new are also available and can be checked or used in notification popup.  
+	 */
 	if(!oData.code)
 		return;
 
-	var iCountNew = parseInt(oData.count_new);
-	var iCountOld = parseInt(oData.count_old);
-	if(iCountNew <= iCountOld)
-		return;
-
 	var oNotification = $(oData.code);
-	oNotification.find('.cmt-message span').html(iCountNew - iCountOld);
-
 	var sId = oNotification.attr('id');
 	$('#' + sId).remove();
 
-    $(oNotification).prependTo('body').dolPopup({
+    oNotification.prependTo('body').dolPopup({
     	position: 'fixed',
     	top: ($(window).height() - oNotification.height()) + 'px',
     	left: ($(window).width() - oNotification.width())/2 + 'px',
@@ -340,6 +367,24 @@ BxDolCmts.prototype.toggleManagePopup = function(oLink, iCmtId) {
 	});
 };
 
+BxDolCmts.prototype.goTo = function(oLink, sGoToId, sBlinkIds)
+{
+	$(oLink).parents('.bx-popup-applied:first:visible').dolPopupHide();
+
+	var $this = this;
+	this._getCmts(null, {
+		CmtParent: 0,
+		CmtBrowse: this._sBrowseType,
+		CmtFilter: this._sBrowseFilter,
+		CmtDisplay: this._sDisplayType,
+		CmtBlink: sBlinkIds
+	}, function(sListId, sContent) {
+		$this._cmtsReplaceContent($(sListId), sContent, function() {
+			location.hash = sGoToId;
+		});
+	});
+};
+
 BxDolCmts.prototype._getCmt = function (e, iCmtId)
 {
     var $this = this;
@@ -375,34 +420,24 @@ BxDolCmts.prototype._getCmt = function (e, iCmtId)
     );
 };
 
-BxDolCmts.prototype._getCmts = function (e, iCmtParentId, iStart, iPerView, sDisplayType, sBrowseType, sBrowseFilter, onLoad)
+BxDolCmts.prototype._getCmts = function (oElement, oRequestParams, onLoad)
 {
     var $this = this;
     var oData = this._getDefaultActions();    
     oData['action'] = 'GetCmts';
-    oData['CmtParent'] = iCmtParentId;
-    if(parseInt(iStart) >= 0)
-        oData['CmtStart'] = iStart;
-    if(parseInt(iPerView) >= 0)
-        oData['CmtPerView'] = iPerView;
-    if(sDisplayType)
-        oData['CmtDisplay'] = sDisplayType;
-    if(sBrowseType)
-        oData['CmtBrowse'] = sBrowseType;
-    if(sBrowseFilter)
-        oData['CmtFilter'] = sBrowseFilter;
+    oData = $.extend({}, oData, oRequestParams);
 
-    var sListId =  this._sRootId + ' #cmt' + iCmtParentId + ' > ul:first';
+    var sListId =  this._sRootId + ' #cmt' + oData['CmtParent'] + ' > ul:first';
 
-    if(e)
-        this._loadingInBlock(e, true);
+    if(oElement)
+        this._loadingInBlock(oElement, true);
 
     jQuery.post (
         this._sActionsUrl,
         oData,
         function(s) {
-        	if(e)
-        		$this._loadingInBlock(e, false);
+        	if(oElement)
+        		$this._loadingInBlock(oElement, false);
 
         	if(typeof onLoad == 'function')
     			onLoad(sListId, s);
@@ -449,19 +484,42 @@ BxDolCmts.prototype._cmtsPrepend = function(sIdTo, sContent)
 	$(sIdTo).prepend($(sContent).hide()).children(':hidden').bxTime().bx_anim('show', this._sAnimationEffect, this._iAnimationSpeed);
 };
 
-BxDolCmts.prototype._cmtsReplace = function(oReplace, sContent)
+BxDolCmts.prototype._cmtsReplace = function(oReplace, sContent, onLoad)
 {
 	var $this = this;
 	$(oReplace).bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
-		$(this).after($(sContent).hide()).nextAll(':hidden').bxTime().bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
+		$(this).after($(sContent).hide()).nextAll(':hidden').bxTime().bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+			$this._cmtsBlink($(this));
+
+			if(typeof onLoad == 'function')
+    			onLoad();
+		});
 		$(this).remove();
 	});
 };
-BxDolCmts.prototype._cmtsReplaceContent = function(oParent, sContent)
+BxDolCmts.prototype._cmtsReplaceContent = function(oParent, sContent, onLoad)
 {
 	var $this = this;
 	$(oParent).bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
-		$(this).html(sContent).bxTime().bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
+		$(this).html(sContent).bxTime().bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+			$this._cmtsBlink($(this));
+
+			if(typeof onLoad == 'function')
+    			onLoad();
+		});
+	});
+};
+
+BxDolCmts.prototype._cmtsBlink = function(oParent)
+{
+	var sBlinkClass = 'cmt-blink';
+
+	oParent.find('.' + sBlinkClass + '-plate:visible').animate({
+		opacity: 0
+	}, 
+	5000, 
+	function() {
+		oParent.find('.' + sBlinkClass).removeClass(sBlinkClass);
 	});
 };
 

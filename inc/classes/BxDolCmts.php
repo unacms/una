@@ -674,14 +674,10 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         if (!$this->isEnabled())
             return '';
 
-        $iCmtVParentId = bx_process_input($_REQUEST['CmtParent'], BX_DATA_INT);
-        $iCmtStart = isset($_REQUEST['CmtStart']) ? bx_process_input($_REQUEST['CmtStart'], BX_DATA_INT) : -1;
-        $iCmtPerView = isset($_REQUEST['CmtPerView']) ? bx_process_input($_REQUEST['CmtPerView'], BX_DATA_INT) : -1;
-        $sCmtBrowse = isset($_REQUEST['CmtBrowse']) ? bx_process_input($_REQUEST['CmtBrowse'], BX_DATA_TEXT) : '';
-        $sCmtDisplay = isset($_REQUEST['CmtDisplay']) ? bx_process_input($_REQUEST['CmtDisplay'], BX_DATA_TEXT) : '';
-        $sCmtFilter = isset($_REQUEST['CmtFilter']) ? bx_process_input($_REQUEST['CmtFilter'], BX_DATA_TEXT) : '';
+        $aBp = $aDp = array();
+		$this->_getParams($aBp, $aDp);
 
-        return $this->getComments(array('vparent_id' => $iCmtVParentId, 'start' => $iCmtStart, 'per_view' => $iCmtPerView, 'type' => $sCmtBrowse, 'filter' => $sCmtFilter), array('type' => $sCmtDisplay, 'show_empty' => true));
+        return $this->getComments($aBp, $aDp);
     }
 
     public function actionSubmitPostForm()
@@ -816,6 +812,18 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         return BxDolForm::getObjectInstance($this->_sFormObject, $this->$sDisplayName);
     }
 
+    protected function _getParams(&$aBp, &$aDp)
+    {
+    	$aBp['vparent_id'] = isset($_REQUEST['CmtParent'])? bx_process_input($_REQUEST['CmtParent'], BX_DATA_INT) : 0;
+    	$aBp['type'] = isset($_REQUEST['CmtBrowse']) ? bx_process_input($_REQUEST['CmtBrowse'], BX_DATA_TEXT) : '';
+    	$aBp['filter'] = isset($_REQUEST['CmtFilter']) ? bx_process_input($_REQUEST['CmtFilter'], BX_DATA_TEXT) : '';
+        $aBp['start'] = isset($_REQUEST['CmtStart']) ? bx_process_input($_REQUEST['CmtStart'], BX_DATA_INT) : -1;
+        $aBp['per_view'] = isset($_REQUEST['CmtPerView']) ? bx_process_input($_REQUEST['CmtPerView'], BX_DATA_INT) : -1;
+
+        $aDp['type'] = isset($_REQUEST['CmtDisplay']) ? bx_process_input($_REQUEST['CmtDisplay'], BX_DATA_TEXT) : '';
+        $aDp['blink'] = isset($_REQUEST['CmtBlink']) ? bx_process_input($_REQUEST['CmtBlink'], BX_DATA_TEXT) : '';
+    }
+
     protected function _prepareTextForEdit ($s)
     {
         if ($this->isNl2br())
@@ -855,6 +863,9 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         $aBp['order']['way'] = isset($aBp['order_way']) ? $aBp['order_way'] : $this->_aOrder['way'];
 
         $aDp['type'] = isset($aDp['type']) && !empty($aDp['type']) ? $aDp['type'] : $this->_sDisplayType;
+        $aDp['blink'] = isset($aDp['blink']) && !empty($aDp['blink']) ? $aDp['blink'] : array();
+        if(!is_array($aDp['blink']))
+        	$aDp['blink'] = explode(',', $aDp['blink']);
 
         switch($aDp['type']) {
             case BX_CMT_DISPLAY_FLAT:

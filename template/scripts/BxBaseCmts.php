@@ -64,6 +64,7 @@ class BxBaseCmts extends BxDolCmts
             'sSystem' => $this->getSystemName(),
             'iAuthorId' => $this->_getAuthorId(),
             'iObjId' => $this->getId(),
+        	'sBaseUrl' => $this->getBaseUrl(),
             'sPostFormPosition' => $this->_aSystem['post_form_position'],
             'sBrowseType' => $this->_sBrowseType,
             'sDisplayType' => $this->_sDisplayType
@@ -78,11 +79,15 @@ class BxBaseCmts extends BxDolCmts
      */
     function getCommentsBlock($iParentId = 0, $iVParentId = 0, $bInDesignbox = true)
     {
-        $aBp = array('parent_id' => $iParentId, 'vparent_id' => $iVParentId);
-        $aDp = array('show_empty' => true);
+    	$aBp = $aDp = array();
+		$this->_getParams($aBp, $aDp);
+
+        $aBp['parent_id'] = $iParentId;
+        $aBp['vparent_id'] = $iVParentId;
+        $aDp['show_empty'] = true;
 
 		//add live update
-		$sServiceCall = BxDolService::getSerializedService('system', 'get_live_updates_comments', array($this->_sSystem, $this->_iId, $this->_getAuthorId()), 'TemplCmtsServices');
+		$sServiceCall = BxDolService::getSerializedService('system', 'get_live_updates_comments', array($this->_sSystem, $this->_iId, $this->_getAuthorId(), '{count}'), 'TemplCmtsServices');
 
 		bx_import('BxDolLiveUpdates');
 		BxDolLiveUpdates::getInstance()->add($this->_sSystem . '_live_updates_cmts', 1, $sServiceCall);
@@ -122,7 +127,7 @@ class BxBaseCmts extends BxDolCmts
         $aCmts = $this->getCommentsArray($aBp['vparent_id'], $aBp['filter'], $aBp['order'], $aBp['start'], $aBp['per_view']);
         if(empty($aCmts) || !is_array($aCmts))
             return isset($aDp['show_empty']) && $aDp['show_empty'] === true ? $this->_getEmpty() : '';
-            
+
         $sCmts = '';
         foreach($aCmts as $k => $aCmt)
             $sCmts .= $this->getComment($aCmt, $aBp, $aDp);
@@ -183,6 +188,9 @@ class BxBaseCmts extends BxDolCmts
 
         if($aCmt['cmt_author_id'] == $iUserId)
             $sClass .= ' cmt-mine';
+
+		if(!empty($aDp['blink']) && in_array($aCmt['cmt_id'], $aDp['blink']))
+			$sClass .= ' cmt-blink';
 
         $sActions = $this->_getActionsBox($aCmt, $aDp);
 
@@ -344,14 +352,35 @@ class BxBaseCmts extends BxDolCmts
         return $this->_getFormEdit($aCmt);
     }
 
-    function getNotification($iCount = 0)
+    function getNotification($iCountOld = 0, $iCountNew = 0)
     {
+    	$sUrl = $this->getBaseUrl();
+    	$sOnClick = '';
+
+    	$iCount = (int)$iCountNew - (int)$iCountOld;
+    	if($iCount > 0) {
+    		$aCommentsIds = $this->_oQuery->getCommentsBy(array('type' => 'latest_ids', 'object_id' => $this->_iId, 'start' => '0', 'per_page' => $iCount));
+    		if(!empty($aCommentsIds) && is_array($aCommentsIds)) {
+    			$sBlink = implode(',', $aCommentsIds);
+    			$iCommentId = array_pop($aCommentsIds);
+
+				$sUrl = "javascript:void(0)";
+				$sOnClick = "javascript:" . $this->getJsObjectName() . ".goTo(this, '" . $this->_sSystem . $iCommentId . "', '" . $sBlink . "');";
+    		}
+    	}
+
     	bx_import('BxDolTemplate');
     	$sContent = BxDolTemplate::getInstance()->parseHtmlByName('comments_notification.html', array(
     		'html_id' => 'cmts-notification-' . $this->_sSystem . '-' + $this->_iId,
 			'style_prefix' => $this->_sStylePrefix,
-    		'url' => $this->getBaseUrl(),
-			'message' => _t('_cmt_txt_n_new_comments', $iCount)
+    		'url' => $sUrl,
+    		'bx_if:show_onclick' => array(
+    			'condition' => !empty($sOnClick),
+    			'content' => array(
+    				'onclick' => $sOnClick
+    			)
+    		),
+			'message' => _t('_cmt_txt_n_new_comments', (int)$iCountNew - (int)$iCountOld)
 		));
 
 		return $sContent;
