@@ -12,6 +12,7 @@ function BxDolLiveUpdates(oOptions)
 	this._bServerRequesting = oOptions.bServerRequesting == undefined ? {} : oOptions.bServerRequesting;
 
 	this._iHandler = 0;
+	this._bBusy = false;
 
 	this.init();
 }
@@ -35,12 +36,14 @@ BxDolLiveUpdates.prototype.destroy = function() {
 };
 
 BxDolLiveUpdates.prototype.perform = function() {
-	if(!this._bServerRequesting)
+	if(!this._bServerRequesting || this._bBusy)
 		return;
 
 	var $this = this;
 	var oDate = new Date();
 
+	this._bBusy = true;
+	
     $.get(
     	this._sActionsUrl,
         {
@@ -55,6 +58,8 @@ BxDolLiveUpdates.prototype.perform = function() {
         			oFunc(oValue.data);
         		}
         	});
+
+        	$this._bBusy = false;
         },
         'json'
     );

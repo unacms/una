@@ -137,6 +137,41 @@ class BxDolCmtsQuery extends BxDolDb
         return $this->getAll($sQuery);
     }
 
+	function getCommentsBy($aParams = array())
+    {
+    	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
+        $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
+
+        $sSelectClause = "
+        	`{$this->_sTable}`.`cmt_id`,
+            `{$this->_sTable}`.`cmt_parent_id`,
+            `{$this->_sTable}`.`cmt_vparent_id`,
+            `{$this->_sTable}`.`cmt_object_id`,
+            `{$this->_sTable}`.`cmt_author_id`,
+            `{$this->_sTable}`.`cmt_level`,
+            `{$this->_sTable}`.`cmt_text`,
+            `{$this->_sTable}`.`cmt_replies`,
+            `{$this->_sTable}`.`cmt_time`";
+
+        if(isset($aParams['object_id']))
+        	$sWhereClause .= $this->prepare(" AND `{$this->_sTable}`.`cmt_object_id` = ?" , (int)$aParams['object_id']);
+
+        switch($aParams['type']) {
+            case 'latest_ids':
+            	$aMethod['name'] = 'getColumn';
+				$sSelectClause = "`{$this->_sTable}`.`cmt_id`";
+                $sOrderClause = "ORDER BY `{$this->_sTable}`.`cmt_time` DESC";
+                $sLimitClause = isset($aParams['per_page']) ? "LIMIT " . $aParams['start'] . ", " . $aParams['per_page'] : "";
+                break;
+        }
+
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . "
+            FROM `{$this->_sTable}` " . $sJoinClause . "
+            WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
+
+		return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+    }
+
     function getComment ($iId, $iCmtId)
     {
         $sFields = $sJoin = "";
