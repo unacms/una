@@ -154,6 +154,7 @@ class BxBaseServiceProfiles extends BxDol
             if ($aProfile['type'] == 'system') // skip system account profile
                 continue;
             $aVars['bx_repeat:row'][] = array (
+                'class' => $iLoggedPofileId == $aProfile['id'] ? '' : 'bx-def-color-bg-box',
                 'bx_if:active' => array (
                     'condition' => $iLoggedPofileId == $aProfile['id'],
                     'content' => array('id' => $aProfile['id']),

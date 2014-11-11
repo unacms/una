@@ -49,7 +49,11 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
      */
     public function getProfilesByAccount ($iAccountId)
     {
-        $sSql = $this->prepare("SELECT * FROM `sys_profiles` WHERE `account_id` = ?", $iAccountId);
+        bx_import('BxDolAccountQuery');
+        $oAccountQuery = BxDolAccountQuery::getInstance();
+        $aAccountInfo = $oAccountQuery->getInfoById($iAccountId);
+
+        $sSql = $this->prepare("SELECT * FROM `sys_profiles` WHERE `account_id` = ? ORDER BY `id` = ? DESC", $iAccountId, $aAccountInfo['profile_id']);
         return $this->getAllWithKey($sSql, 'id');
     }
 
