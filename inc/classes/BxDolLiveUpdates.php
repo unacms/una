@@ -76,7 +76,7 @@ class BxDolLiveUpdates extends BxDol
     		return array();
 
 		$aCached = $this->_getCachedData();
-		$aRequested = $this->_getRequestedData($iIndex, true);
+		$aRequested = $this->_getRequestedData($iIndex, true, $aCached);
 
 		$aResult = array();
 		$bUpdateCache = false;
@@ -193,7 +193,7 @@ class BxDolLiveUpdates extends BxDol
     	$oCache->setData($sCacheKey, $aCached, $iCacheTtl);
     }
 
-    protected function _getRequestedData($iIndex = 0, $bIndexCheck = false)
+    protected function _getRequestedData($iIndex = 0, $bIndexCheck = false, $aCachedData = array())
     {
     	$aResult = array();
 
@@ -207,7 +207,11 @@ class BxDolLiveUpdates extends BxDol
 			if(!BxDolService::isSerializedService($aSystem['service_call']))
 				continue;
 
-			$aResponce = BxDolService::callSerialized($aSystem['service_call']);
+			$aMarkers = array();
+			if(!empty($aCachedData) && isset($aCachedData[$aSystem['name']]))
+				$aMarkers = array('count' => (int)$aCachedData[$aSystem['name']]);
+
+			$aResponce = BxDolService::callSerialized($aSystem['service_call'], $aMarkers);
 			if(empty($aResponce) || !is_array($aResponce) || !isset($aResponce['count'], $aResponce['method']))
 				continue;
 
