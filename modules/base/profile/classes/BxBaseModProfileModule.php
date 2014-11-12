@@ -234,8 +234,11 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
 
         // owner (checked by account! not as profile as ususal) always have access
         bx_import('BxDolProfile');
-        $oProfileAurhor = BxDolProfile::getInstance($aDataEntry[$this->_oConfig->CNF['FIELD_AUTHOR']]);
-        if ($oProfileAurhor->getAccountId() == $this->_iAccountId)
+        $oProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $this->_aModule['name']);
+        if (!$oProfile)
+            return _t('_sys_txt_error_occured');
+
+        if ($oProfile->getAccountId() == $this->_iAccountId)
             return CHECK_ACTION_RESULT_ALLOWED;
 
         return _t('_sys_txt_access_denied');
@@ -252,8 +255,11 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
 
         // owner (checked by account! not as profile as ususal) always have access
         bx_import('BxDolProfile');
-        $oProfileAurhor = BxDolProfile::getInstance($aDataEntry[$this->_oConfig->CNF['FIELD_AUTHOR']]);
-        if ($oProfileAurhor->getAccountId() == $this->_iAccountId)
+        $oProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $this->_aModule['name']);
+        if (!$oProfile)
+            return _t('_sys_txt_error_occured');
+
+        if ($oProfile->getAccountId() == $this->_iAccountId)
             return CHECK_ACTION_RESULT_ALLOWED;
 
         return _t('_sys_txt_access_denied');
@@ -269,11 +275,14 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
             return CHECK_ACTION_RESULT_ALLOWED;
 
         // check ACL and owner (checked by account! not as profile as ususal)
-        bx_import('BxDolProfile');
-        $oProfileAurhor = BxDolProfile::getInstance($aDataEntry[$this->_oConfig->CNF['FIELD_AUTHOR']]);
-
         $aCheck = checkActionModule($this->_iProfileId, 'delete entry', $this->getName(), $isPerformAction);
-        if ($oProfileAurhor->getAccountId() == $this->_iAccountId && $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED)
+
+        bx_import('BxDolProfile');
+        $oProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $this->_aModule['name']);
+        if (!$oProfile)
+            return _t('_sys_txt_error_occured');
+
+        if ($oProfile->getAccountId() == $this->_iAccountId && $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED)
             return CHECK_ACTION_RESULT_ALLOWED;
 
         return _t('_sys_txt_access_denied');

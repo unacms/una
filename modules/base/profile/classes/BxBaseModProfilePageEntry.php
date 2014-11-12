@@ -22,7 +22,6 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
 {
     protected $_aProfileInfo;
     protected $_oProfile;
-    protected $_oProfileAuthor;
 
     public function __construct($aObject, $oTemplate = false)
     {
@@ -45,7 +44,6 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
         if ($this->_oProfile) {
             $this->_aProfileInfo = $this->_oProfile->getInfo();
             $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($this->_aProfileInfo['content_id']);
-            $this->_oProfileAuthor = $this->_aContentInfo ? BxDolProfile::getInstance($this->_aContentInfo[$CNF['FIELD_AUTHOR']]) : false;
         }
 
         if (!$this->_aContentInfo || !$this->_oProfile)
@@ -65,7 +63,7 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
         $this->addMarkers(array('display_name' => $this->_oProfile->getDisplayName())); // profile display name is also suported
 
         // display message if profile isn't active
-        if (bx_get_logged_profile_id() == $this->_oProfileAuthor->id() && !empty($CNF['INFORMERS']['status'])) {
+        if (bx_get_logged_profile_id() == $this->_oProfile->id() && !empty($CNF['INFORMERS']['status'])) {
             $sStatus = $this->_aContentInfo['profile_status'];
             if (isset($CNF['INFORMERS']['status']['map'][$sStatus]))
                 $aInformers[] = array ('name' => $CNF['INFORMERS']['status']['name'], 'msg' => _t($CNF['INFORMERS']['status']['map'][$sStatus]), 'type' => BX_INFORMER_ALERT);
