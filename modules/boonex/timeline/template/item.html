@@ -25,20 +25,20 @@
 			</div>
 			__content__
 			<div class="__style_prefix__-activity bx-clearfix">
+				<bx_if:show_menu_item_actions>
+					<div class="__style_prefix__-item-actions bx-def-margin-left-auto bx-def-margin-top">
+						__menu_item_actions__
+					</div>
+				</bx_if:show_menu_item_actions>
 				<bx_if:show_menu_item_manage>
 					<div class="__style_prefix__-item-menu bx-def-margin-left-auto bx-def-margin-top">
-						<div class="__style_prefix__-item-menu-button bx-def-font-large">
+						<div class="__style_prefix__-item-menu-button">
 				   			<a href="javascript:void(0)" onclick="javascript:__js_object__.showManageMenu(this, __id__);">
 								<i class="sys-icon ellipsis-h"></i>
 							</a>
 						</div>
 					</div>
 			   	</bx_if:show_menu_item_manage>
-				<bx_if:show_menu_item_actions>
-					<div class="__style_prefix__-item-actions bx-def-margin-left-auto bx-def-margin-top">
-						__menu_item_actions__
-					</div>
-				</bx_if:show_menu_item_actions>
 			</div>
 			<div class="__style_prefix__-item-comments-holder">__comments__</div>
 			__votes__
