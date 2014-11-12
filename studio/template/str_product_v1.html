@@ -15,14 +15,22 @@
         <div class="bx-std-pc-vendor bx-def-margin-thd-top bx-def-font-small">__vendor__ &bull; <span class="bx-std-pc-version">__version__</span></div>
         <div class="bx-std-pc-action bx-def-margin-thd-top">
         	<div class="bx-std-pc-buttons bx-std-pcb-install bx-clearfix" <bx_if:hide_install>style="display:none"</bx_if:hide_install>>
-        		<input class="bx-btn bx-btn-small bx-def-margin-sec-left-auto" type="button" value="<bx_text:_adm_btn_install_submit />" onclick="javascript:__js_object__.install('__dir__', this)" />
-        		<input class="bx-btn bx-btn-small bx-def-margin-sec-left-auto" type="button" value="<bx_text:_adm_btn_delete_submit />" onclick="javascript:__js_object__.remove('__dir__', this)" />
+        		<button class="bx-btn bx-btn-small bx-def-margin-sec-left-auto" type="button" onclick="javascript:__js_object__.install('__dir__', this)">
+        			<bx_text:_adm_btn_install_submit />
+        		</button>
+        		<button class="bx-btn bx-btn-small bx-def-margin-sec-left-auto" type="button" onclick="javascript:__js_object__.remove('__dir__', this)">
+        			<bx_text:_adm_btn_delete_submit />
+        		</button>
         	</div>
         	<div class="bx-std-pc-buttons bx-std-pcb-queued bx-clearfix" <bx_if:hide_queued>style="display:none"</bx_if:hide_queued>>
-            	<input class="bx-btn bx-btn-small bx-btn-disabled" type="button" value="<bx_text:_adm_btn_queued_submit />" />
+            	<button class="bx-btn bx-btn-small bx-btn-disabled" type="button">
+            		<bx_text:_adm_btn_queued_submit />
+            	</button>
             </div>
             <div class="bx-std-pc-buttons bx-std-pcb-installed bx-clearfix" <bx_if:hide_installed>style="display:none"</bx_if:hide_installed>>
-            	<input class="bx-btn bx-btn-small bx-btn-disabled" type="button" value="<bx_text:_adm_btn_installed_submit />" />
+            	<button class="bx-btn bx-btn-small bx-btn-disabled" type="button">
+            		<bx_text:_adm_btn_installed_submit />
+            	</button>
             </div>
         </div>
     </div>

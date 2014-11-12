@@ -20,19 +20,29 @@
         </bx_if:show_count_price>
         <div class="bx-std-pc-action bx-def-margin-thd-top bx-clearfix">
         	<bx_if:show_purchase>
-            	<input class="bx-btn bx-btn-small bx-std-pc-purchase" type="button" value="<bx_text:_adm_btn_purchase_submit />" onclick="javascript:__js_object__.addToCart('__vendor__', __id__, this)" />
+            	<button class="bx-btn bx-btn-small bx-std-pc-purchase" type="button" onclick="javascript:__js_object__.addToCart('__vendor__', __id__, this)">
+            		<bx_text:_adm_btn_purchase_submit />
+            	</button>
             </bx_if:show_purchase>
         	<bx_if:show_download>
-            	<input class="bx-btn bx-btn-small bx-std-pc-download" type="button" value="<bx_text:_adm_btn_download_submit />" onclick="javascript:__js_object__.getFile(__file_id__, this)" />
+            	<button class="bx-btn bx-btn-small bx-std-pc-download" type="button" onclick="javascript:__js_object__.getFile(__file_id__, this)">
+            		<bx_text:_adm_btn_download_submit />
+            	</button>
             </bx_if:show_download>
             <bx_if:show_download_disabled>
-            	<input class="bx-btn bx-btn-small bx-btn-disabled bx-std-pc-download" type="button" value="<bx_text:_adm_btn_download_submit />" disabled="disabled" />
+            	<button class="bx-btn bx-btn-small bx-btn-disabled bx-std-pc-download" type="button" disabled="disabled">
+            		<bx_text:_adm_btn_download_submit />
+            	</button>
             </bx_if:show_download_disabled>
             <bx_if:show_queued_disabled>
-            	<input class="bx-btn bx-btn-small bx-btn-disabled bx-std-pc-queued" type="button" value="<bx_text:_adm_btn_queued_submit />" disabled="disabled" />
+            	<button class="bx-btn bx-btn-small bx-btn-disabled bx-std-pc-queued" type="button" disabled="disabled">
+            		<bx_text:_adm_btn_queued_submit />
+            	</button>
             </bx_if:show_queued_disabled>
             <bx_if:show_delete>
-            	<input class="bx-btn bx-btn-small bx-std-pc-delete" type="button" value="<bx_text:_adm_btn_delete_submit />" onclick="javascript:__js_object__.deleteFromCart('__vendor__', __id__, this)" />
+            	<button class="bx-btn bx-btn-small bx-std-pc-delete" type="button" onclick="javascript:__js_object__.deleteFromCart('__vendor__', __id__, this)">
+            		<bx_text:_adm_btn_delete_submit />
+            	</button>
             </bx_if:show_delete>
         </div>
     </div>

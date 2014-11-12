@@ -155,7 +155,7 @@ BxDolStudioStore.prototype._getFile = function(sAction, mixedId, onResult, oButt
 	var oDate = new Date();
 	var $this = this;
 
-	bx_loading(this.sIdPageContent, true);
+	bx_loading_btn(oButton, true);
 	$(oButton).addClass('bx-btn-disabled');
 
 	$.get(
@@ -176,7 +176,7 @@ BxDolStudioStore.prototype._getFile = function(sAction, mixedId, onResult, oButt
 };
 
 BxDolStudioStore.prototype._onGetFile = function(oData, oButton) {
-	bx_loading(this.sIdPageContent, false);
+	bx_loading_btn(oButton, false);
 
 	switch(parseInt(oData.code)) {
 		case 1:
@@ -272,7 +272,7 @@ BxDolStudioStore.prototype.install = function(sValue, oInput) {
 		});
 	};
 
-	return this.perform('install', sValue, onSuccess);
+	return this.perform('install', sValue, onSuccess, oInput);
 };
 
 BxDolStudioStore.prototype.update = function(sValue, oInput) {
@@ -281,7 +281,7 @@ BxDolStudioStore.prototype.update = function(sValue, oInput) {
 		$(oInput).parents('.bx-std-product:first').hide();
 	};
 
-	return this.perform('update', sValue, onSuccess);
+	return this.perform('update', sValue, onSuccess, oInput);
 };
 
 BxDolStudioStore.prototype.remove = function(sValue, oInput) {
@@ -298,17 +298,17 @@ BxDolStudioStore.prototype.remove = function(sValue, oInput) {
 		}
 	};
 
-    return this.perform('delete', sValue, onSuccess);
+    return this.perform('delete', sValue, onSuccess, oInput);
 };
 
-BxDolStudioStore.prototype.perform = function(sType, sValue, onSuccess) {
+BxDolStudioStore.prototype.perform = function(sType, sValue, onSuccess, oInput) {
 	var oDate = new Date();
 	var $this = this;
 
 	if(!sValue)
         return false;
 
-	bx_loading(this.sIdPageContent, true);
+	bx_loading_btn(oInput, true);
 
     $.post(
     	this.sActionsUrl,
@@ -318,7 +318,7 @@ BxDolStudioStore.prototype.perform = function(sType, sValue, onSuccess) {
     		_t:oDate.getTime()
     	},
     	function (oData) {
-    		bx_loading($this.sIdPageContent, false);
+    		bx_loading_btn(oInput, false);
 
     		if(oData.message.length > 0)
     			$this.showPopup('bx-std-str-popup-' + sType, oData.message);
