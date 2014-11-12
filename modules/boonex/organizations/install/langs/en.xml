@@ -98,6 +98,8 @@
     <string name="_bx_orgs_menu_item_title_view_profile_friends"><![CDATA[Friends]]></string>
     <string name="_bx_orgs_menu_item_title_system_view_profile_info"><![CDATA[Info]]></string>
     <string name="_bx_orgs_menu_item_title_view_profile_info"><![CDATA[Info]]></string>
+    <string name="_bx_orgs_menu_item_title_system_view_profile_view"><![CDATA[Organization]]></string>
+    <string name="_bx_orgs_menu_item_title_view_profile_view"><![CDATA[Organization]]></string>
     <string name="_bx_orgs_menu_item_title_system_befriend"><![CDATA[Add friend]]></string>
     <string name="_bx_orgs_menu_item_title_befriend"><![CDATA[Add friend]]></string>
     <string name="_bx_orgs_menu_item_title_befriend_sent"><![CDATA[Add friend (requested)]]></string>
