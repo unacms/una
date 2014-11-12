@@ -32,6 +32,12 @@ ul.bx-menu-toolbar li a .sys-icon-a {
     margin-top:1rem;
 }
 
+/* --------------- floating blocks menu */
+
+.bx-sliding-menu-fullheight {
+    height:calc(100% - 4rem);
+}
+
 /* --------------- account popup menu */
 .bx-menu-account-popup-profile {
 	font-weight: bold;

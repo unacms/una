@@ -276,15 +276,31 @@ ul.bx-menu-toolbar li .sys-icon {
 }
 
 .bx-sliding-menu-main {
-    width:100%;
+    width:100%;    
     opacity:0.9;
     overflow-x:auto;
     /* -webkit-overflow-scrolling:touch; */
 }
+
+.bx-sliding-menu-fullheight {
+    height:calc(100% - 3rem);
+    overflow-x:hidden;
+    overflow-y:auto;
+}
+
 .bx-sliding-menu-main ul.bx-menu-floating-blocks-big {
     display:table;
     margin:0 auto;
     white-space:nowrap;
+}
+
+.bx-sliding-menu-main .bx-menu-account-popup-profile-switcher {
+    overflow:hidden;
+
+}
+
+.bx-menu-account-popup-profile-switcher-link b {
+    vertical-align:middle;
 }
 
 .bx-popup-content .bx-menu-floating-blocks {
@@ -438,9 +454,4 @@ ul.bx-menu-btns-hor li {
 
 .bx-popup-content .bx-menu-account-popup {
     min-width:17em;
-}
-
-.bx-menu-account-popup-switch-profile:hover,
-.bx-menu-account-popup-switch-profile {
-    text-decoration:none;
 }

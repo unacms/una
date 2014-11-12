@@ -24,11 +24,16 @@ class BxBaseMenuAccountPopup extends BxTemplMenu
     protected function _getTemplateVars ()
     {
         $aVars = parent::_getTemplateVars ();
+
         $aVars['bx_repeat:menu_items'] = array(true);
         $aVars['profile_display_name'] = BxDolProfile::getInstance()->getDisplayName();
         $aVars['url_switch_profile'] = BxDolPermalinks::getInstance()->permalink('page.php?i=account-profile-switcher');
         $aVars['menu_account'] = BxDolMenu::getObjectInstance('sys_account')->getCode();
         $aVars['menu_notifications'] = BxDolMenu::getObjectInstance('sys_account_notifications')->getCode();
+
+        $a = BxDolService::call('system', 'account_profile_switcher', array(), 'TemplServiceProfiles');
+        $aVars['profile_switcher'] = $a['content'];
+
         return $aVars;
     }
 }

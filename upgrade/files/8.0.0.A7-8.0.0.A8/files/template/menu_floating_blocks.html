@@ -1,0 +1,19 @@
+<div class="bx-def-margin-sec-neg">
+    <ul class="bx-menu-floating-blocks bx-menu-object-__object__ bx-clearfix">
+        <bx_repeat:menu_items><li class="bx-def-round-corners bx-def-color-bg-hl-hover bx-def-box-sizing __class_add__">
+            <a href="__link__" target="__target__" onclick="__onclick__">
+                <div class="bx-menu-floating-blocks-icon">
+                    <bx_if:icon><i class="sys-icon __icon__"></i></bx_if:icon>
+                    <bx_if:image><img style="background-image:url(__icon_url__)" src="<bx_icon_url:spacer.gif />" /></bx_if:image>
+                </div>
+                <div class="bx-menu-floating-blocks-title bx-def-font-small">__title__</div>
+            </a>                
+        </li></bx_repeat:menu_items>
+    </ul>
+</div>
+<script language="javascript">
+    $(document).ready(function () {
+        // add default class to active menu items
+        $('.bx-menu-floating-blocks > li.bx-menu-tab-active').not('.bx-def-color-bg-active').addClass('bx-def-color-bg-active');
+    });
+</script>

@@ -377,8 +377,12 @@ function bx_menu_slide (jSel, e, sPosition) {
         });
 
         setTimeout(function () {
-           
+
+            var iWidthPrev = $(window).width();
             $(window).on('resize.bx-sliding-menu', function () {
+                if ($(this).width() == iWidthPrev)
+                    return;
+                iWidthPrev = $(this).width();
                 fCloseAllOpened();
             });
  

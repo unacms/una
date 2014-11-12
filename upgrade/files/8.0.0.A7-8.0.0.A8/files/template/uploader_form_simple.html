@@ -1,0 +1,39 @@
+<div id="__form_container_id__" class="bx-uploader-form-cont">
+
+    <form enctype="multipart/form-data" method="POST" target="__iframe_id__" action="<bx_url_root />storage_uploader.php" onsubmit="__uploader_instance_name__.onBeforeUpload(this);">
+
+        <div class="bx-uploader-loading">
+        </div>
+
+        <div class="bx-uploader-files-list">
+
+            <div class="bx-def-padding-sec-bottom">__restrictions_text__</div>
+
+            <div class="bx-def-padding-sec-bottom" id="__errors_container_id__"></div>
+
+            <div class="bx-uploader-simple-file"><input name="f[]" type="file" /></div>
+
+            <div class="bx-uploader-add-more-files"><a href="javascript:void(0);" onclick="$('#__form_container_id__ .bx-uploader-simple-file').first().clone().insertBefore(this)"><bx_text:_sys_uploader_simple_attach_one_more_file /></a></div>
+
+            <input name="uo" value="__engine__" type="hidden" /> 
+            <input name="so" value="__storage_object__" type="hidden" /> 
+            <input name="uid" value="__uniq_id__" type="hidden" /> 
+            <input name="m" value="__multiple__" type="hidden" /> 
+            <input name="c" value="__content_id__" type="hidden" /> 
+            <input name="a" value="upload" type="hidden" /> 
+
+        </div>
+        
+        <div class="bx-def-padding-top bx-clearfix">
+
+            <div class="bx-btn bx-btn-primary bx-def-margin-sec-right" onclick="$('#__form_container_id__ form').submit();"><bx_text:_sys_uploader_simple_submit_button /></div> 
+
+            <div class="bx-btn" onclick="__uploader_instance_name__.onClickCancel()"><bx_text:_sys_uploader_close /></div>
+
+        </div>
+
+    </form>
+
+    <iframe name="__iframe_id__" id="__iframe_id__" style="width:0px; height:0px; border:0px; float:left;"></iframe>
+
+</div>
