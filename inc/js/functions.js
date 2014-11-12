@@ -387,7 +387,7 @@ function bx_menu_slide (jSel, e, sPosition) {
             });
  
             $(document).on('click.bx-sliding-menu', function (event) {
-                if ($(event.target).parents('.bx-sliding-menu-main, .bx-popup-slide-wrapper, .bx-db-header').length || $(event.target).filter('.bx-sliding-menu-main, .bx-popup-slide-wrapper, .bx-db-header').length || e.isSameNode(event.target))
+                if ($(event.target).parents('.bx-sliding-menu-main, .bx-popup-slide-wrapper, .bx-db-header').length || $(event.target).filter('.bx-sliding-menu-main, .bx-popup-slide-wrapper, .bx-db-header').length || e === event.target)
                     event.stopPropagation();
                 else
                     fCloseAllOpened();
