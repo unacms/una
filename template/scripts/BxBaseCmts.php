@@ -234,7 +234,7 @@ class BxBaseCmts extends BxDolCmts
                     $aTmplImages[] = array(
                         'style_prefix' => $this->_sStylePrefix,
                         'js_object' => $this->_sJsObjName,
-                        'image' => $oTranscoder->getImageUrl($aImage['image_id']),
+                        'image' => $oTranscoder->getFileUrl($aImage['image_id']),
                     	'image_orig' => $oStorage->getFileUrlById($aImage['image_id'])
                     );
             }

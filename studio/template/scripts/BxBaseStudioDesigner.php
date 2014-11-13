@@ -223,7 +223,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
             foreach($aTranscoders as $sTranscoder => $sTitle) {
                 $oTranscoder = BxDolTranscoderImage::getObjectInstance($sTranscoder);
 
-                $sImageUrl = $oTranscoder->getImageUrl($iId);
+                $sImageUrl = $oTranscoder->getFileUrl($iId);
                 if($sImageUrl === false) {
                     setParam('sys_site_icon', 0);
                     break;

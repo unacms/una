@@ -39,7 +39,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             bx_import('BxDolTranscoderImage');
             $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);
             if ($oImagesTranscoder)
-                $sPhotoThumb = $oImagesTranscoder->getImageUrl($aData[$CNF['FIELD_THUMB']]);
+                $sPhotoThumb = $oImagesTranscoder->getFileUrl($aData[$CNF['FIELD_THUMB']]);
         }
 
         // get entry url
@@ -181,7 +181,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
                     'url_original' => $sUrlOriginal,
                     'attr_file_name' => bx_html_attribute($a['file_name']),
                     'popup_id' => $sImgPopupId,
-                    'url_preview' => $oTranscoder->getImageUrl($a['id']),
+                    'url_preview' => $oTranscoder->getFileUrl($a['id']),
                     'popup' =>  BxTemplFunctions::getInstance()->transBox($sImgPopupId, '<img src="' . $sUrlOriginal . '" />', true, true),
                 ),
             );

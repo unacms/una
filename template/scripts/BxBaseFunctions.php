@@ -311,15 +311,15 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
 
             // favicon icon
             $oTranscoder = BxDolTranscoderImage::getObjectInstance(BX_DOL_TRANSCODER_OBJ_ICON_FAVICON);
-            $sImageUrlFav = $oTranscoder->getImageUrl($iId);
+            $sImageUrlFav = $oTranscoder->getFileUrl($iId);
 
             // facebook icon
             $oTranscoder = BxDolTranscoderImage::getObjectInstance(BX_DOL_TRANSCODER_OBJ_ICON_FACEBOOK);
-            $sImageUrlFcb = $oTranscoder->getImageUrl($iId);
+            $sImageUrlFcb = $oTranscoder->getFileUrl($iId);
 
             // apple touch icon
             $oTranscoder = BxDolTranscoderImage::getObjectInstance(BX_DOL_TRANSCODER_OBJ_ICON_APPLE);
-            $sImageUrlApl = $oTranscoder->getImageUrl($iId);
+            $sImageUrlApl = $oTranscoder->getFileUrl($iId);
         }
 
         if(empty($sImageUrlFav))

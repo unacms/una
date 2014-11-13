@@ -97,7 +97,7 @@ $(document).ready(function () {
         while (false !== ($sFile = readdir($h))) {
             if ('.' == $sFile[0] || !is_file($sPath . $sFile))
                 continue;
-            $sUrl = $oTranscoder->getImageUrl($sFile);
+            $sUrl = $oTranscoder->getFileUrl($sFile);
             echo $sFile . ' : <img src="' . $sUrl . '" /> <br /> ' . $sUrl . ' <hr />';
         }
     }

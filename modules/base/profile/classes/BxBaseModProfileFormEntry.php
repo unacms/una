@@ -82,7 +82,7 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
                 'bx_if:picture' => array (
                     'condition' => $oTranscoder && isset($aValues[$sField]) && $aValues[$sField] ? true : false,
                     'content' => array (
-                        'picture_url' => $oTranscoder && isset($aValues[$sField]) && $aValues[$sField] ? $oTranscoder->getImageUrl($aValues[$sField]) : '',
+                        'picture_url' => $oTranscoder && isset($aValues[$sField]) && $aValues[$sField] ? $oTranscoder->getFileUrl($aValues[$sField]) : '',
                     ),
                 ),
                 'bx_if:no_picture' => array (

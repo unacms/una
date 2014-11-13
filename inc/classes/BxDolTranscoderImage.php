@@ -12,7 +12,7 @@ bx_import('BxDolTranscoderImageQuery');
 
 /**
  * @page objects
- * @section transcoder)images Images Transcoder
+ * @section transcoder_images Images Transcoder
  * @ref BxDolTranscoderImage
  */
 
@@ -76,7 +76,7 @@ bx_import('BxDolTranscoderImageQuery');
  * bx_import('BxDolTranscoderImage');
  * $oTranscoder = BxDolTranscoderImage::getObjectInstance('bx_images_thumb'); // change images transcode object name to your own
  * $oTranscoder->registerHandlers(); // make sure to call it only once! before the first usage, no need to call it every time
- * $sTranscodedImageUrl = $oTranscoder->getImageUrl('my_dog.jpg'); // the name of file, in the case of 'Folder' storage type this is file name
+ * $sTranscodedImageUrl = $oTranscoder->getFileUrl('my_dog.jpg'); // the name of file, in the case of 'Folder' storage type this is file name
  * echo 'My dog : <img src="' . $sUrl . '" />'; // transcoded(resized and/or grayscaled) image will be shown, according to the specified filters
  * @endcode
  *
@@ -84,23 +84,23 @@ bx_import('BxDolTranscoderImageQuery');
 class BxDolTranscoderImage extends BxDol implements iBxDolFactoryObject
 {
     protected $_aObject; ///< object properties
-    protected $_oStorage; ///< storage object, transcoded images are stored here
+    protected $_oStorage; ///< storage object, transcoded files are stored here
     protected $_oDb; ///< database queries object
     protected $_sRetinaSuffix = '@2x'; ///< handler suffix for retina image file
 
     /**
      * constructor
      */
-    protected function __construct($aObject, $oStorage)
+    protected function __construct($aObject, $oStorage, $oDb)
     {
         parent::__construct();
         $this->_aObject = $aObject;
         $this->_oStorage = $oStorage;
-        $this->_oDb = new BxDolTranscoderImageQuery($aObject);
+        $this->_oDb = $oDb;
     }
 
     /**
-     * Get image transcode object instance.
+     * Get transcode object instance.
      * @param $sObject - name of trancode object.
      * @return false on error or instance of BxDolTranscoderImage class.
      */
@@ -125,7 +125,7 @@ class BxDolTranscoderImage extends BxDol implements iBxDolFactoryObject
             return false;
 
         // create instance
-        $o = new BxDolTranscoderImage($aObject, $oStorage);
+        $o = new BxDolTranscoderImage($aObject, $oStorage, new BxDolTranscoderImageQuery($aObject));
 
         return ($GLOBALS['bxDolClasses']['BxDolTranscoderImage!'.$sObject] = $o);
     }
@@ -185,7 +185,7 @@ class BxDolTranscoderImage extends BxDol implements iBxDolFactoryObject
      */
     static public function onAlertResponseFileDeleteLocal ($oAlert, $sObject)
     {
-        $oTranscoder = BxDolTranscoderImage::getObjectInstance($sObject);
+        $oTranscoder = self::getObjectInstance($sObject);
         if (!$oTranscoder)
             return;
 
@@ -200,7 +200,7 @@ class BxDolTranscoderImage extends BxDol implements iBxDolFactoryObject
      */
     static public function onAlertResponseFileDeleteOrig ($oAlert, $sObject)
     {
-        $oTranscoder = BxDolTranscoderImage::getObjectInstance($sObject);
+        $oTranscoder = self::getObjectInstance($sObject);
         if (!$oTranscoder)
             return;
 
@@ -278,15 +278,15 @@ class BxDolTranscoderImage extends BxDol implements iBxDolFactoryObject
     }
 
     /**
-     * Get transcoded image url.
-     * If transcoded image is ready then direct url to this image is returned.
+     * Get transcoded file url.
+     * If transcoded file is ready then direct url to the file is returned.
      * If there is no transcoded data available, then special url is returned, upon opening this url image is transcoded automatically and redirects to the ready transcoed image.
-     * @params $mixedHandler - image handler
-     * @return image url, or false on error.
+     * @params $mixedHandler - file handler
+     * @return file url, or false on error.
      */
-    public function getImageUrl($mixedHandler)
+    public function getFileUrl($mixedHandler)
     {
-        if ($this->isImageReady($mixedHandler)) {
+        if ($this->isFileReady($mixedHandler)) {
 
             $mixedHandler = $this->processHandlerForRetinaDevice($mixedHandler);
 
@@ -309,20 +309,20 @@ class BxDolTranscoderImage extends BxDol implements iBxDolFactoryObject
 
     /**
      * Check if transcoded data is available. No need to call it directly, it is called automatically when it is needed.
-     * @params $mixedHandler - image handler
-     * @params $isCheckOutdated - check if transcoded image outdated
-     * @return false if there is no ready transcoed image is available or it is outdated, true if image is ready
+     * @params $mixedHandler - file handler
+     * @params $isCheckOutdated - check if transcoded file is outdated
+     * @return false if there is no ready transcoded file is available or it is outdated, true if file is ready
      */
-    public function isImageReady ($mixedHandler, $isCheckOutdated = true)
+    public function isFileReady ($mixedHandler, $isCheckOutdated = true)
     {
-        $sMethodImageReady = 'isImageReady_' . $this->_aObject['source_type'];
-        return $this->$sMethodImageReady($mixedHandler, $isCheckOutdated);
+        $sMethodFileReady = 'isFileReady_' . $this->_aObject['source_type'];
+        return $this->$sMethodFileReady($mixedHandler, $isCheckOutdated);
     }
 
     /**
-     * Transcode image, no need to call it directly, it is called automatically when it is needed.
-     * @params $mixedHandler - image handler
-     * @params $iProfileId - optional profile id, to assign transcoded image to, usually it is NOT assigned to any particular profile, so just leave it default
+     * Transcode file, no need to call it directly, it is called automatically when it is needed.
+     * @params $mixedHandler - file handler
+     * @params $iProfileId - optional profile id, to assign transcoded file ownership to, usually it is NOT assigned to any particular profile, so just leave it default
      * @return true on success, false on error
      */
     public function transcode ($mixedHandler, $iProfileId = 0)
@@ -422,7 +422,7 @@ class BxDolTranscoderImage extends BxDol implements iBxDolFactoryObject
 
     // ---------------------------
 
-    protected function isImageReady_Folder ($mixedHandlerOrig, $isCheckOutdated = true)
+    protected function isFileReady_Folder ($mixedHandlerOrig, $isCheckOutdated = true)
     {
         $mixedHandler = $this->processHandlerForRetinaDevice($mixedHandlerOrig);
 
@@ -445,7 +445,7 @@ class BxDolTranscoderImage extends BxDol implements iBxDolFactoryObject
         return true;
     }
 
-    protected function isImageReady_Storage ($mixedHandlerOrig, $isCheckOutdated = true)
+    protected function isFileReady_Storage ($mixedHandlerOrig, $isCheckOutdated = true)
     {
         $mixedHandler = $this->processHandlerForRetinaDevice($mixedHandlerOrig);
 

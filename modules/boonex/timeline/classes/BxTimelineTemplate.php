@@ -806,7 +806,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                         $sPhotoSrcOrig = $oStorage->getFileUrlById($iPhotoId);
 
                         $aResult['content']['images'][] = array(
-                            'src' => $oTranscoder->getImageUrl($iPhotoId),
+                            'src' => $oTranscoder->getFileUrl($iPhotoId),
                             'src_orig' => $sPhotoSrcOrig,
                             'title' => '',
                             'onclick' => $sJsObject . '.showPhoto(this, \'' . $sPhotoSrcOrig . '\')'

@@ -35,12 +35,12 @@ if (!$oTranscoder) {
 
 ob_end_clean();
 
-if (!$oTranscoder->isImageReady($sHandler) && !$oTranscoder->transcode ($sHandler)) {
+if (!$oTranscoder->isFileReady($sHandler) && !$oTranscoder->transcode ($sHandler)) {
     bx_transcoder_error_occured();
     exit;
 }
 
-$sImageUrl = $oTranscoder->getImageUrl($sHandler);
+$sImageUrl = $oTranscoder->getFileUrl($sHandler);
 if (!$sImageUrl) {
     bx_transcoder_error_occured();
     exit;
