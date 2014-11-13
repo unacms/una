@@ -491,9 +491,9 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 
         $sTitle = $this->_aActions[$sAction]['title'] . ' ';
         if(!empty($sResult))
-            $sResult = (substr($sResult, 0, 1) == '_' ? _t($sResult) : $sResult) . '<br />';
+            $sResult = (substr($sResult, 0, 1) == '_' ? _t($sResult) : $sResult);
 
-		$sContent = !empty($sResult) ? $sResult : _t($bResult ? '_adm_txt_modules_process_action_success' : '_adm_err_modules_process_action_failed') . '<br />';
+		$sContent = !empty($sResult) ? $sResult : _t($bResult ? '_adm_txt_modules_process_action_success' : '_adm_err_modules_process_action_failed');
 		if(!$bHtmlResponse)
 			return $sTitle . $sContent;
 

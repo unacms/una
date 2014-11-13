@@ -63,6 +63,11 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
     	return 'sys_download_file_complete_' . $sParam;
     }
 
+	public static function getNamePerformModulesUpgrade()
+    {
+    	return 'sys_upgrade_modules_transient';
+    }
+
     /*
      * Is used to complete Downloading inside Transient Cron Job.
      */
@@ -77,6 +82,14 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 	public function servicePerformAction($sDirectory, $sOperation, $aParams)
     {
     	return $this->perform($sDirectory, $sOperation, array_merge($aParams, array('transient' => true)));
+    }
+
+	/*
+     * Is used to perform modules upgrade inside Transient Cron Job.
+     */
+	public function servicePerformModulesUpgrade($bEmailNotify)
+    {
+    	return $this->performModulesUpgrade(true, $bEmailNotify);
     }
 
     public function getAccessObject($bAuthorizedAccess)
@@ -237,6 +250,46 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 			$this->emailNotify($aResult['message']);
 
         return array('code' => $aResult['result'] ? BX_DOL_STUDIO_IU_RC_SUCCESS : BX_DOL_STUDIO_IU_RC_FAILED, 'message' => $aResult['message']);
+    }
+
+    public function performModulesUpgrade($bDirectly = true, $bEmailNotify = true)
+    {
+    	if(!defined('BX_DOL_CRON_EXECUTE') && !$bDirectly)
+    		return $this->addTransientJob(self::getNamePerformModulesUpgrade(), 'perform_modules_upgrade', array($bEmailNotify));   	
+
+        $iUmaskSave = umask(0);
+
+        $aFailed = array();
+		$aUpdates = $this->checkUpdates();
+	    foreach($aUpdates as $aUpdate) {
+	    	$mixedResult = $this->downloadUpdatePublic($aUpdate['name']);
+	        if($mixedResult !== true) {
+	        	$aFailed[$aUpdate['name']] = $mixedResult;
+				continue;
+			}
+		}
+
+		umask($iUmaskSave);
+
+		$aSuccess = array();
+		$aUpdates = $this->getUpdates();
+		foreach($aUpdates as $aUpdate) {
+			$aResult = $this->perform($aUpdate['dir'], 'update');
+			if((int)$aResult['code'] != 0) {
+				$aFailed[$aUpdate['module_name']] = $aResult['message'];
+				continue;
+			}
+
+			$aSuccess[$aUpdate['module_name']] = $aUpdate['version_to'];
+		}
+
+    	if($bEmailNotify && !empty($aSuccess))
+    		$this->emailNotifyModulesUpgrade('success', $aSuccess);
+
+        if($bEmailNotify && !empty($aFailed))
+        	$this->emailNotifyModulesUpgrade('failed', $aFailed);
+
+		return empty($aFailed);
     }
 
     public function checkModules($bAuthorizedAccess = false)
@@ -538,6 +591,24 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
     {
     	sendMailTemplateSystem('t_BgOperationFailed', array (
 			'conclusion' => strip_tags($sMessage),
+		));
+    }
+
+    private function emailNotifyModulesUpgrade($sResult, $aData)
+    {
+    	bx_import('BxDolModuleQuery');
+		$oModuleQuery = BxDolModuleQuery::getInstance();
+
+    	$sConclusion = '';
+    	if(!empty($aData))
+			foreach($aData as $sModule => $sMessage) {
+				$aModule = $oModuleQuery->getModuleByName($sModule);
+
+				$sConclusion .= _t('_sys_et_txt_body_modules_upgrade_' . $sResult, $aModule['title'], $sMessage);
+			}
+
+		sendMailTemplateSystem('t_UpgradeModules' . ucfirst($sResult), array (
+			'conclusion' => $sConclusion,
 		));
     }
 }
