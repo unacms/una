@@ -170,9 +170,8 @@ class BxDolMenu extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
      * Menu triggers allow to automatically add menu items to modules with no different if dependant module was install before or after the module menu item belongs to.
      * For example module "Notes" adds menu items to all profiles modules (Persons, Organizations, etc)
      * with no difference if persons module was installed before or after "Notes" module was installed.
-     * @param $sSetName set name to ad menu item to
-     * @param $aMenuItem array of menu item descrition, array keys are database fields names, array values are database fields values
-     * @return true on success
+     * @param $sMenuTriggerName trigger name to process, usually specified in module installer class - @see BxBaseModGeneralInstaller
+     * @return always true, always success
      */
     static public function processMenuTrigger ($sMenuTriggerName)
     {

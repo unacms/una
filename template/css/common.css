@@ -64,7 +64,6 @@ blockquote {
 }
 .bx-anchor-invisible {
     display:block;
-    display:inline-block;
     height:0px;
     width:0px;
     overflow:hidden;

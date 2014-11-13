@@ -19,14 +19,14 @@ class BxBaseImageServices extends BxDol
 
     public function serviceAlertResponseFileDeleteLocal($oAlert, $sObject)
     {
-        bx_import('BxDolImageTranscoder');
-        BxDolImageTranscoder::onAlertResponseFileDeleteLocal($oAlert, $sObject);
+        bx_import('BxDolTranscoderImage');
+        BxDolTranscoderImage::onAlertResponseFileDeleteLocal($oAlert, $sObject);
     }
 
     public function serviceAlertResponseFileDeleteOrig($oAlert, $sObject)
     {
-        bx_import('BxDolImageTranscoder');
-        BxDolImageTranscoder::onAlertResponseFileDeleteOrig($oAlert, $sObject);
+        bx_import('BxDolTranscoderImage');
+        BxDolTranscoderImage::onAlertResponseFileDeleteOrig($oAlert, $sObject);
     }
 }
 

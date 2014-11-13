@@ -10,6 +10,7 @@
  */
 
 bx_import('BxBaseModGeneralFormEntry');
+bx_import('BxDolTranscoderImage');
 
 /**
  * Create/edit profile form.
@@ -75,13 +76,13 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
             if (!isset($this->aInputs[$aVals['field_preview']]) || !empty($this->aInputs[$aVals['field_preview']]['content']))
                 continue;
 
-            $oTranscoder = BxDolImageTranscoder::getObjectInstance($aVals['images_transcoder']);
+            $oTranscoder = BxDolTranscoderImage::getObjectInstance($aVals['images_transcoder']);
 
             $aVars = array (
                 'bx_if:picture' => array (
                     'condition' => $oTranscoder && isset($aValues[$sField]) && $aValues[$sField] ? true : false,
                     'content' => array (
-                        'picture_url' => $oTranscoder && isset($aValues[$sField]) && $aValues[$sField] ? $oTranscoder->getImageUrl($aValues[$sField]) : '',
+                        'picture_url' => $oTranscoder && isset($aValues[$sField]) && $aValues[$sField] ? $oTranscoder->getFileUrl($aValues[$sField]) : '',
                     ),
                 ),
                 'bx_if:no_picture' => array (

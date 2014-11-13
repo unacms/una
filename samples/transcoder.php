@@ -65,8 +65,8 @@ function PageCompMainCode()
     ob_start();
 
     $iProfileId = 123;
-    bx_import('BxDolImageTranscoder');
-    $oTranscoder = BxDolImageTranscoder::getObjectInstance('sample');
+    bx_import('BxDolTranscoderImage');
+    $oTranscoder = BxDolTranscoderImage::getObjectInstance('sample');
     if (!$oTranscoder)
         die('Transcoder object isn\'t defined');
 
@@ -97,7 +97,7 @@ $(document).ready(function () {
         while (false !== ($sFile = readdir($h))) {
             if ('.' == $sFile[0] || !is_file($sPath . $sFile))
                 continue;
-            $sUrl = $oTranscoder->getImageUrl($sFile);
+            $sUrl = $oTranscoder->getFileUrl($sFile);
             echo $sFile . ' : <img src="' . $sUrl . '" /> <br /> ' . $sUrl . ' <hr />';
         }
     }

@@ -11,7 +11,7 @@
 
 bx_import('BxDolStudioInstaller');
 bx_import('BxDolStorage');
-bx_import('BxDolImageTranscoder');
+bx_import('BxDolTranscoderImage');
 bx_import('BxDolService');
 
 class BxBaseModGeneralInstaller extends BxDolStudioInstaller
@@ -36,7 +36,7 @@ class BxBaseModGeneralInstaller extends BxDolStudioInstaller
         if (!$aResult['result']) // proces further only in case of successful enable
             return $aResult;
 
-        BxDolImageTranscoder::registerHandlersArray($this->_aTranscoders);
+        BxDolTranscoderImage::registerHandlersArray($this->_aTranscoders);
 
         if ($this->_aMenuTriggers) {
             bx_import('BxDolMenu');
@@ -49,13 +49,13 @@ class BxBaseModGeneralInstaller extends BxDolStudioInstaller
 
     function disable($aParams)
     {
-        BxDolImageTranscoder::unregisterHandlersArray($this->_aTranscoders);
-        BxDolImageTranscoder::cleanupObjectsArray($this->_aTranscoders);
+        BxDolTranscoderImage::unregisterHandlersArray($this->_aTranscoders);
+        BxDolTranscoderImage::cleanupObjectsArray($this->_aTranscoders);
 
         $aResult = parent::disable($aParams);
 
         if (!$aResult['result']) // we need to register it back if disabling failed
-            BxDolImageTranscoder::registerHandlersArray($this->_aTranscoders);
+            BxDolTranscoderImage::registerHandlersArray($this->_aTranscoders);
 
         return $aResult;
     }

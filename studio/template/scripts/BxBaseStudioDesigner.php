@@ -219,11 +219,11 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
                 BX_DOL_TRANSCODER_OBJ_ICON_FAVICON => '_adm_dsg_txt_icon_favicon'
             );
 
-            bx_import('BxDolImageTranscoder');
+            bx_import('BxDolTranscoderImage');
             foreach($aTranscoders as $sTranscoder => $sTitle) {
-                $oTranscoder = BxDolImageTranscoder::getObjectInstance($sTranscoder);
+                $oTranscoder = BxDolTranscoderImage::getObjectInstance($sTranscoder);
 
-                $sImageUrl = $oTranscoder->getImageUrl($iId);
+                $sImageUrl = $oTranscoder->getFileUrl($iId);
                 if($sImageUrl === false) {
                     setParam('sys_site_icon', 0);
                     break;

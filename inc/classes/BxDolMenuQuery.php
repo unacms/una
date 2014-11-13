@@ -54,6 +54,9 @@ class BxDolMenuQuery extends BxDolDb
             $aMenuItem['order'] = $iProfileMenuOrder + 1;
         }
 
+        $sQuery = $oDb->prepare("DELETE FROM `sys_menu_items` WHERE `set_name` = ? AND `name` = ?", $aMenuItem['set_name'], $aMenuItem['name']);
+        $oDb->query($sQuery);
+
         unset($aMenuItem['id']);
         return $oDb->query("INSERT INTO `sys_menu_items` SET " . $oDb->arrayToSQL($aMenuItem));
     }

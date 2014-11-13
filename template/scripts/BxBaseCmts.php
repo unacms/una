@@ -227,14 +227,14 @@ class BxBaseCmts extends BxDolCmts
                 bx_import('BxDolStorage');
         		$oStorage = BxDolStorage::getObjectInstance($this->getStorageObjectName());
 
-            	bx_import('BxDolImageTranscoder');
-                $oTranscoder = BxDolImageTranscoder::getObjectInstance($this->getTranscoderPreviewName());
+            	bx_import('BxDolTranscoderImage');
+                $oTranscoder = BxDolTranscoderImage::getObjectInstance($this->getTranscoderPreviewName());
 
                 foreach($aImages as $aImage)
                     $aTmplImages[] = array(
                         'style_prefix' => $this->_sStylePrefix,
                         'js_object' => $this->_sJsObjName,
-                        'image' => $oTranscoder->getImageUrl($aImage['image_id']),
+                        'image' => $oTranscoder->getFileUrl($aImage['image_id']),
                     	'image_orig' => $oStorage->getFileUrlById($aImage['image_id'])
                     );
             }
