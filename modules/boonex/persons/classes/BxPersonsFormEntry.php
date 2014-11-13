@@ -12,7 +12,6 @@
 bx_import('BxBaseModProfileFormEntry');
 bx_import('BxDolProfile');
 bx_import('BxDolStorage');
-bx_import('BxDolImageTranscoder');
 
 /**
  * Create/Edit Person Form.

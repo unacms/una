@@ -24,8 +24,8 @@ require_once('./inc/header.inc.php');
 $sTranscoderObject = bx_process_input(bx_get('o'));
 $sHandler = bx_process_input(bx_get('h'));
 
-bx_import('BxDolImageTranscoder');
-$oTranscoder = BxDolImageTranscoder::getObjectInstance($sTranscoderObject);
+bx_import('BxDolTranscoderImage');
+$oTranscoder = BxDolTranscoderImage::getObjectInstance($sTranscoderObject);
 
 if (!$oTranscoder) {
     ob_end_clean();

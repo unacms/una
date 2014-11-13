@@ -8,12 +8,12 @@
  */
 
 bx_import('BxDolStorage');
-bx_import('BxDolImageTranscoderQuery');
+bx_import('BxDolTranscoderImageQuery');
 
 /**
  * @page objects
- * @section images_transcoder Images Transcoder
- * @ref BxDolImageTranscoder
+ * @section transcoder)images Images Transcoder
+ * @ref BxDolTranscoderImage
  */
 
 /**
@@ -73,15 +73,15 @@ bx_import('BxDolImageTranscoderQuery');
  *
  * Example of usage:
  * @code
- * bx_import('BxDolImageTranscoder');
- * $oTranscoder = BxDolImageTranscoder::getObjectInstance('bx_images_thumb'); // change images transcode object name to your own
+ * bx_import('BxDolTranscoderImage');
+ * $oTranscoder = BxDolTranscoderImage::getObjectInstance('bx_images_thumb'); // change images transcode object name to your own
  * $oTranscoder->registerHandlers(); // make sure to call it only once! before the first usage, no need to call it every time
  * $sTranscodedImageUrl = $oTranscoder->getImageUrl('my_dog.jpg'); // the name of file, in the case of 'Folder' storage type this is file name
  * echo 'My dog : <img src="' . $sUrl . '" />'; // transcoded(resized and/or grayscaled) image will be shown, according to the specified filters
  * @endcode
  *
  */
-class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
+class BxDolTranscoderImage extends BxDol implements iBxDolFactoryObject
 {
     protected $_aObject; ///< object properties
     protected $_oStorage; ///< storage object, transcoded images are stored here
@@ -96,21 +96,21 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
         parent::__construct();
         $this->_aObject = $aObject;
         $this->_oStorage = $oStorage;
-        $this->_oDb = new BxDolImageTranscoderQuery($aObject);
+        $this->_oDb = new BxDolTranscoderImageQuery($aObject);
     }
 
     /**
      * Get image transcode object instance.
      * @param $sObject - name of trancode object.
-     * @return false on error or instance of BxDolImageTranscoder class.
+     * @return false on error or instance of BxDolTranscoderImage class.
      */
     public static function getObjectInstance($sObject)
     {
-        if (isset($GLOBALS['bxDolClasses']['BxDolImageTranscoder!'.$sObject]))
-            return $GLOBALS['bxDolClasses']['BxDolImageTranscoder!'.$sObject];
+        if (isset($GLOBALS['bxDolClasses']['BxDolTranscoderImage!'.$sObject]))
+            return $GLOBALS['bxDolClasses']['BxDolTranscoderImage!'.$sObject];
 
         // get transcode object
-        $aObject = BxDolImageTranscoderQuery::getTranscoderObject($sObject);
+        $aObject = BxDolTranscoderImageQuery::getTranscoderObject($sObject);
         if (!$aObject || !is_array($aObject))
             return false;
 
@@ -125,9 +125,9 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
             return false;
 
         // create instance
-        $o = new BxDolImageTranscoder($aObject, $oStorage);
+        $o = new BxDolTranscoderImage($aObject, $oStorage);
 
-        return ($GLOBALS['bxDolClasses']['BxDolImageTranscoder!'.$sObject] = $o);
+        return ($GLOBALS['bxDolClasses']['BxDolTranscoderImage!'.$sObject] = $o);
     }
 
     /**
@@ -138,11 +138,11 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
     static public function pruning ()
     {
         $iCount = 0;
-        $aObjects = BxDolImageTranscoderQuery::getTranscoderObjects ();
+        $aObjects = BxDolTranscoderImageQuery::getTranscoderObjects ();
         foreach ($aObjects as $aObject) {
             if (!$aObject['atime_tracking'] || !$aObject['atime_pruning'])
                 continue;
-            $oTranscoder = BxDolImageTranscoder::getObjectInstance($aObject['object']);
+            $oTranscoder = BxDolTranscoderImage::getObjectInstance($aObject['object']);
             if (!$oTranscoder)
                 continue;
             $iCount += $oTranscoder->prune();
@@ -185,7 +185,7 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
      */
     static public function onAlertResponseFileDeleteLocal ($oAlert, $sObject)
     {
-        $oTranscoder = BxDolImageTranscoder::getObjectInstance($sObject);
+        $oTranscoder = BxDolTranscoderImage::getObjectInstance($sObject);
         if (!$oTranscoder)
             return;
 
@@ -200,7 +200,7 @@ class BxDolImageTranscoder extends BxDol implements iBxDolFactoryObject
      */
     static public function onAlertResponseFileDeleteOrig ($oAlert, $sObject)
     {
-        $oTranscoder = BxDolImageTranscoder::getObjectInstance($sObject);
+        $oTranscoder = BxDolTranscoderImage::getObjectInstance($sObject);
         if (!$oTranscoder)
             return;
 

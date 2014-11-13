@@ -798,8 +798,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     bx_import('BxDolStorage');
                     $oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage'));
 
-                    bx_import('BxDolImageTranscoder');
-                    $oTranscoder = BxDolImageTranscoder::getObjectInstance($this->_oConfig->getObject('transcoder_view'));
+                    bx_import('BxDolTranscoderImage');
+                    $oTranscoder = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_view'));
 
                     foreach($aPhotos as $iPhotoId) {
                         $iPhotoIndex = array_search($iPhotoId, $aPhotos);

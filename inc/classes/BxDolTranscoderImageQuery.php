@@ -10,9 +10,9 @@
 bx_import('BxDolDb');
 
 /**
- * @see BxDolImageTranscoder
+ * @see BxDolTranscoderImage
  */
-class BxDolImageTranscoderQuery extends BxDolDb
+class BxDolTranscoderImageQuery extends BxDolDb
 {
     protected $_aObject;
 

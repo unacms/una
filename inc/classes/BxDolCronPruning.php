@@ -55,8 +55,8 @@ class BxDolCronPruning extends BxDolCron
         $iDeletedExpiredTokens = BxDolStorage::pruning();
 
         // clean outdated transcoded images
-        bx_import('BxDolImageTranscoder');
-        $iDeletedTranscodedImages = BxDolImageTranscoder::pruning();
+        bx_import('BxDolTranscoderImage');
+        $iDeletedTranscodedImages = BxDolTranscoderImage::pruning();
 
         // clean expired keys
         bx_import('BxDolKey');

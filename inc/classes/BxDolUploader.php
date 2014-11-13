@@ -320,8 +320,8 @@ abstract class BxDolUploader extends BxDol
 
         $oImagesTranscoder = false;
         if ($sImagesTranscoder) {
-            bx_import('BxDolImageTranscoder');
-            $oImagesTranscoder = BxDolImageTranscoder::getObjectInstance($sImagesTranscoder);
+            bx_import('BxDolTranscoderImage');
+            $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($sImagesTranscoder);
         }
 
         $a = '';

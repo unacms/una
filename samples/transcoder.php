@@ -65,8 +65,8 @@ function PageCompMainCode()
     ob_start();
 
     $iProfileId = 123;
-    bx_import('BxDolImageTranscoder');
-    $oTranscoder = BxDolImageTranscoder::getObjectInstance('sample');
+    bx_import('BxDolTranscoderImage');
+    $oTranscoder = BxDolTranscoderImage::getObjectInstance('sample');
     if (!$oTranscoder)
         die('Transcoder object isn\'t defined');
 

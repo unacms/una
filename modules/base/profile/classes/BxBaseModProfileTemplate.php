@@ -169,8 +169,8 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     {
         $sImageUrl = false;
         if ($aData[$sField]) {
-            bx_import('BxDolImageTranscoder');
-            $oImagesTranscoder = BxDolImageTranscoder::getObjectInstance($sTranscodeObject);
+            bx_import('BxDolTranscoderImage');
+            $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($sTranscodeObject);
             if ($oImagesTranscoder)
                 $sImageUrl = $oImagesTranscoder->getImageUrl($aData[$sField]);
         }
