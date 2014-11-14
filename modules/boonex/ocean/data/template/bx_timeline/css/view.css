@@ -1,5 +1,11 @@
 @import url(../../../../../timeline/template/css/view.css);
 
+div.bx-tl-activity div.bx-tl-item-actions,
+div.bx-tl-activity div.bx-tl-item-menu {
+	margin-left: 10px;
+	margin-left: 0.625rem;
+}
+
 /*+++ Item Menu +++*/
 .bx-tl-item-menu  .bx-tl-item-menu-button,
 .bx-menu-hor.bx-menu-hor-inline.bx-menu-object-bx_timeline_menu_item_actions li {
@@ -33,8 +39,7 @@ div.bx-tl-owner-name {
 	font-size: 1.25rem;
 }
 div.bx-tl-item-info {
-	margin-top: 5px;
-	margin-top: 0.3125rem;
+
 }
 
 /*+++ Item Text +++*/
