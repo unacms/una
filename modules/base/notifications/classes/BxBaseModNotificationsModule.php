@@ -75,6 +75,11 @@ class BxBaseModNotificationsModule extends BxDolModule
         return $aResults;
     }
 
+    public function isAllowedView($bPerform = false)
+    {
+		return true;
+    }
+
 	public function getUserId()
     {
         return isLogged() ? bx_get_logged_profile_id() : 0;

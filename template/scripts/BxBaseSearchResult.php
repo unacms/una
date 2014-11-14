@@ -77,7 +77,7 @@ class BxBaseSearchResult extends BxDolSearchResult
 
         if ($this->id) {
         	$sCode = $this->oFunctions->designBoxContent($sTitle, $sContent, $this->iDesignBoxTemplate, $sMenu);
-            return '<div class="bx-page-block-container bx-clearfix" id="bx-page-block-' . $this->id . '">' . $sCode . '</div>';
+            return '<div class="bx-page-block-container bx-def-padding-topbottom bx-clearfix" id="bx-page-block-' . $this->id . '">' . $sCode . '</div>';
         }
 
         return array(
