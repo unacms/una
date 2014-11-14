@@ -47,6 +47,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         	// some language keys
             'T' => array (
                 'txt_sample_single' => '_bx_timeline_txt_sample',
+        		'txt_sample_single_ext' => '_bx_timeline_txt_sample_ext',
             	'txt_sample_comment_single' => '_bx_timeline_txt_sample_comment_single',
             ),
         );
@@ -134,7 +135,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_bAllowDelete = getParam($sOptionPrefix . 'enable_delete') == 'on';
 
         $this->_aPerPage = array(
-    		'default' => 10,
+    		'default' => (int)getParam($sOptionPrefix . 'events_per_page'),
         	'profile' => (int)getParam($sOptionPrefix . 'events_per_page_profile'),
         	'account' => (int)getParam($sOptionPrefix . 'events_per_page_account'),
         	'home' => (int)getParam($sOptionPrefix . 'events_per_page_home')
