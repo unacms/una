@@ -257,8 +257,6 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
     	if(!defined('BX_DOL_CRON_EXECUTE') && !$bDirectly)
     		return $this->addTransientJob(self::getNamePerformModulesUpgrade(), 'perform_modules_upgrade', array($bEmailNotify));   	
 
-        $iUmaskSave = umask(0);
-
         $aFailed = array();
 		$aUpdates = $this->checkUpdates();
 	    foreach($aUpdates as $aUpdate) {
@@ -268,8 +266,6 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 				continue;
 			}
 		}
-
-		umask($iUmaskSave);
 
 		$aSuccess = array();
 		$aUpdates = $this->getUpdates();
