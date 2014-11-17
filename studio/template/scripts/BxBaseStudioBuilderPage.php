@@ -132,6 +132,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
         $oTemplate = BxDolStudioTemplate::getInstance();
         $sJsObject = $this->getPageJsObject();
+        $sTxtEmpty = _t('_sys_txt_empty');
 
         $sContent = "";
         if(($bPage = $this->sPage != '') === true) {
@@ -142,6 +143,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
                 $aTmplVarsCell = array('id' => $i, 'bx_repeat:blocks' => array());
                 foreach($aBlocks as $aBlock) {
+                	$sTitle = $oPage->getBlockTitle($aBlock);
                 	list($sIcon, $sIconUrl) = $this->getBlockIcon($aBlock);
 
                     $aTmplVarsCell['bx_repeat:blocks'][] = array(
@@ -154,7 +156,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                             'condition' => true,
                             'content' => array(
                                 'onclick' => $sJsObject . ".performAction('block_edit', {id: " . $aBlock['id'] . "})",
-                                'title' => $oPage->getBlockTitle($aBlock),
+                                'title' => !empty($sTitle) ? $sTitle : $sTxtEmpty,
                             )
                         ),
                         'bx_if:show_text' => array(
