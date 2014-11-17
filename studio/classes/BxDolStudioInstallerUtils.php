@@ -431,18 +431,22 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
     protected function performWrite($aItem, &$sFilePath)
     {
-    	$iUmaskSave = umask(0);
-
     	$sFilePath = BX_DIRECTORY_PATH_TMP . $aItem['name'];
     	if(file_exists($sFilePath))
         	@unlink($sFilePath);
 
-        if(!$rHandler = fopen($sFilePath, 'w'))
+		$iUmaskSave = umask(0);
+
+        if(!$rHandler = fopen($sFilePath, 'w')) {
+        	umask($iUmaskSave);
             return _t('_adm_str_err_cannot_write');
+        }
 
         $sContent = urldecode($aItem['content']);
-        if(!fwrite($rHandler, $sContent, strlen($sContent)))
+        if(!fwrite($rHandler, $sContent, strlen($sContent))) {
+        	umask($iUmaskSave);
             return _t('_adm_str_err_cannot_write');
+        }
 
         fclose($rHandler);
         
@@ -452,28 +456,34 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
     protected function performUnarchive($sFilePath, &$sPackagePath)
     {
-    	$iUmaskSave = umask(0);
-
     	if(!class_exists('ZipArchive'))
             return _t('_adm_str_err_zip_not_available');
 
+		$iUmaskSave = umask(0);
+
         $oZip = new ZipArchive();
-        if($oZip->open($sFilePath) !== true)
+        if($oZip->open($sFilePath) !== true) {
+        	umask($iUmaskSave);
             return _t('_adm_str_err_cannot_unzip_package');
+        }
 
         $sPackageFolder = '';
         if($oZip->numFiles > 0)
         	$sPackageFolder = $oZip->getNameIndex(0);
 
-        if(empty($sPackageFolder))
+        if(empty($sPackageFolder)) {
+        	umask($iUmaskSave);
         	return _t('_adm_str_err_cannot_unzip_package');
+        }
         
 		$sPackagePath = BX_DIRECTORY_PATH_TMP . $sPackageFolder;
         if(file_exists($sPackagePath)) // remove existing tmp folder with the same name
             @bx_rrmdir($sPackagePath);
 
-        if(!$oZip->extractTo(BX_DIRECTORY_PATH_TMP))
+        if(!$oZip->extractTo(BX_DIRECTORY_PATH_TMP)) {
+        	umask($iUmaskSave);
             return _t('_adm_str_err_cannot_unzip_package');
+        }
 
         $oZip->close();
 
