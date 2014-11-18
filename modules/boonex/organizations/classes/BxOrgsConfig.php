@@ -85,9 +85,12 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_organizations_view_submenu',  // view entry submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'organizations-home', // first item in view entry submenu from main module submenu
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_organizations_menu_manage_tools', //manage menu in content administration tools
+            'OBJECT_PAGE_VIEW_ENTRY' => 'bx_organizations_view_profile',
             'OBJECT_GRID_ADMINISTRATION' => 'bx_organizations_administration',
         	'OBJECT_GRID_MODERATION' => 'bx_organizations_moderation',
         	'OBJECT_GRID_COMMON' => 'bx_organizations_common',
+
+        	'TRIGGER_PAGE_VIEW_ENTRY' => 'trigger_page_organizations_view_entry',
 
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (

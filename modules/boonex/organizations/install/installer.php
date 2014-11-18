@@ -23,6 +23,7 @@ class BxOrgsInstaller extends BxBaseModProfileInstaller
             'sys_profiles_subscriptions' => array ('type' => 'profiles'),
         );
         $this->_aMenuTriggers = array ('trigger_profile_view_submenu');
+        $this->_aPageTriggers = array ('trigger_page_organizations_view_entry');
     }
 }
 

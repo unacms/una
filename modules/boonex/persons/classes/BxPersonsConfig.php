@@ -85,9 +85,12 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_persons_view_submenu',  // view entry submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'persons-home', // first item in view entry submenu from main module submenu
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_persons_menu_manage_tools', //manage menu in content administration tools
+            'OBJECT_PAGE_VIEW_ENTRY' => 'bx_persons_view_profile',
             'OBJECT_GRID_ADMINISTRATION' => 'bx_persons_administration',
         	'OBJECT_GRID_MODERATION' => 'bx_persons_moderation',
         	'OBJECT_GRID_COMMON' => 'bx_persons_common',
+
+        	'TRIGGER_PAGE_VIEW_ENTRY' => 'trigger_page_persons_view_entry',
 
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (

@@ -52,8 +52,10 @@
 	<string name="_bx_timeline_page_title_account"><![CDATA[Timeline]]></string>
 	<string name="_bx_timeline_page_block_title_post"><![CDATA[Post to Timeline]]></string>
 	<string name="_bx_timeline_page_block_title_view"><![CDATA[Timeline]]></string>
-	<string name="_bx_timeline_page_block_title_post_profile"><![CDATA[Post to Timeline]]></string>
-	<string name="_bx_timeline_page_block_title_view_profile"><![CDATA[Timeline]]></string>
+	<string name="_bx_timeline_page_block_title_post_profile_persons"><![CDATA[Post to Timeline]]></string>
+	<string name="_bx_timeline_page_block_title_post_profile_organizations"><![CDATA[Post to Timeline]]></string>
+	<string name="_bx_timeline_page_block_title_view_profile_persons"><![CDATA[Timeline]]></string>
+	<string name="_bx_timeline_page_block_title_view_profile_organizations"><![CDATA[Timeline]]></string>
 	<string name="_bx_timeline_page_block_title_item"><![CDATA[Item]]></string>
 	<string name="_bx_timeline_page_block_title_view_account"><![CDATA[Subscriptions Timeline]]></string>
 	<string name="_bx_timeline_page_block_title_view_home"><![CDATA[Outline]]></string>
