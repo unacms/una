@@ -166,11 +166,11 @@ INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `
 ('bx_timeline_photos_preview', 'Local', '', 360, 2592000, 3, 'bx_timeline_photos_preview', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
 ('bx_timeline_photos_view', 'Local', '', 360, 2592000, 3, 'bx_timeline_photos_view', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0);
 
-INSERT INTO `sys_objects_transcoder_images` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`) VALUES
+INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`) VALUES
 ('bx_timeline_photos_preview', 'bx_timeline_photos_preview', 'Storage', 'a:1:{s:6:"object";s:18:"bx_timeline_photos";}', 'no', '1', '2592000', '0'),
 ('bx_timeline_photos_view', 'bx_timeline_photos_view', 'Storage', 'a:1:{s:6:"object";s:18:"bx_timeline_photos";}', 'no', '1', '2592000', '0');
 
-INSERT INTO `sys_transcoder_images_filters` (`transcoder_object`, `filter`, `filter_params`, `order`) VALUES
+INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_params`, `order`) VALUES
 ('bx_timeline_photos_preview', 'Resize', 'a:4:{s:1:"w";s:3:"100";s:1:"h";s:3:"100";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0'),
 ('bx_timeline_photos_view', 'Resize', 'a:4:{s:1:"w";s:3:"318";s:1:"h";s:3:"318";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0');
 

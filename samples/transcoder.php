@@ -34,10 +34,10 @@
  * INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
  * ('resizer', 'Local', '', 360, 84000, 0, 'bx_resizer_files', 'deny-allow', '', 'exe,com,bat,pif,scr', 1000000000, 0, 100, 0, 300000000, 0);
  *
- * INSERT INTO `sys_objects_transcoder_images` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`) VALUES
+ * INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`) VALUES
  * ('sample', 'resizer', 'Folder', 'a:1:{s:4:"path";s:12:"samples/img/";}', 'no', 0, 0, 0);
  *
- * INSERT INTO `sys_transcoder_images_filters` (`transcoder_object`, `filter`, `filter_params`, `order`) VALUES
+ * INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_params`, `order`) VALUES
  * ('sample', 'Resize', 'a:3:{s:1:"w";i:100;s:1:"h";i:100;s:13:"square_resize";i:0;}', 1),
  * ('sample', 'Grayscale', '', 2);
  *

@@ -7,7 +7,7 @@
  * @{
  */
 
-bx_import('BxDolLanguagesQuery');
+bx_import('BxDolLanguages');
 bx_import('BxDolEmailTemplatesQuery');
 
 /**

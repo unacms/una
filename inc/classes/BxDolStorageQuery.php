@@ -257,7 +257,7 @@ class BxDolStorageQuery extends BxDolDb
 
     public function getFilesAll($iStart, $iPerPage)
     {
-        $sQuery = $this->prepare("SELECT * FROM `" . $this->_sTableFiles . "` LIMIT ?, ?", (int)$iStart, (int)$iPerPage);
+        $sQuery = $this->prepare("SELECT * FROM " . $this->_sTableFiles . " LIMIT ?, ?", (int)$iStart, (int)$iPerPage);
         return $this->getAll($sQuery);
     }
 

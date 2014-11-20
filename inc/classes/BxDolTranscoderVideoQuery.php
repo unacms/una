@@ -12,13 +12,13 @@ bx_import('BxDolTranscoderQuery');
 /**
  * @see BxDolTranscoderVideo
  */
-class BxDolTranscoderImageQuery extends BxDolTranscoderQuery
+class BxDolTranscoderVideoQuery extends BxDolTranscoderQuery
 {
     public function __construct($aObject)
     {
-        parent::__construct($aObject, false);
-        $this->_sTableFiles = '`sys_transcoder_images_files`';
-        $this->_sHandlerPrefix = 'sys_image_transcoder_';
+        parent::__construct($aObject, true);
+        $this->_sTableFiles = '`sys_transcoder_videos_files`';
+        $this->_sHandlerPrefix = 'sys_video_transcoder_';
     }
 }
 

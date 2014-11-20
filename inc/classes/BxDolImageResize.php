@@ -181,6 +181,11 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton
         return array ('w' => $aSize[0], 'h' => $aSize[1]);
     }
 
+    function getAverageColor($sPath)
+    {
+    	return $this->isUsedGD() ? $this->_getAverageColorGD($sPath) : $this->_getAverageColorImageMagic($sPath);
+    }
+
     // private functions are below -------------------------------
 
     function _grayscale ($sSrcImage, $sDstImage = '')
@@ -556,6 +561,39 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton
         }
 
         return $writeResult;
+    }
+
+	function _getAverageColorGD($sPath)
+    {
+    	$iError = 0;
+		$aSize = array();
+		$oImgOrig = $this->_createGDImage($sPath, $aSize, $iError);
+		if($iError != IMAGE_ERROR_SUCCESS)
+			return false;
+
+		$oImgTmp = ImageCreateTrueColor(1,1);
+		ImageCopyResampled($oImgTmp, $oImgOrig, 0, 0, 0, 0, 1, 1, $aSize[0],$aSize[1]);
+		$iRgb = ImageColorAt($oImgTmp, 0, 0);
+
+		$iRed = ($iRgb >> 16) & 0xFF;
+		$iGreen = ($iRgb >> 8) & 0xFF;
+		$iBlue = $iRgb & 0xFF;
+
+		return array('r' => $iRed, 'g' => $iGreen, 'b' => $iBlue);
+    }
+
+    function _getAverageColorImageMagic($sPath)
+    {
+    	$sCmd = "{$GLOBALS['CONVERT']} $sPath -filter box -resize 1x1! -format \"%[fx:round(255*u.r)],%[fx:round(255*u.g)],%[fx:round(255*u.b)]\" info:";
+        $sResult = @exec($sCmd);
+        if(empty($sResult))
+        	return false;
+
+        $aResult = explode(',', $sResult);
+		if(count($aResult) != 3)
+			return false;
+
+		return array('r' => $aResult[0], 'g' => $aResult[1], 'b' => $aResult[2]);
     }
 }
 
