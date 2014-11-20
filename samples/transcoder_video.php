@@ -157,7 +157,7 @@ function PageCompMainCode()
             $sUrlWebM = $oTranscoderWebM->getFileUrl($r['id']);
 
             echo '<h3>' . $r['file_name'] . '</h3>
-                <video controls="" preload="auto" autobuffer="" poster="' . $sUrlPoster . '" style="width:100%; height:200px;">
+                <video controls="" preload="none" autobuffer="" poster="' . $sUrlPoster . '" style="width:100%; height:200px;">
                     ' . ($sUrlWebM ? '<source type="video/webm; codecs="vp8, vorbis" src="' . $sUrlWebM . '" />' : '') . '
                     ' . ($sUrlMP4  ? '<source type="video/mp4" src="' . $sUrlMP4 . '" />' : '') . '
                 </video>
@@ -168,23 +168,23 @@ function PageCompMainCode()
 
     $a = $oStorageOrig->getFilesAll();
 ?>
-    <h2>Files List:</h2>
+    <h2>Files List</h2>
     <form method="POST">
         <?php foreach ($a as $r): ?>
             <input type="checkbox" name="file_id[]" value="<?=$r['id'] ?>" />
             <?=$r['file_name'] ?>
             <br />
         <?php endforeach; ?>
-        <input type="submit" name="delete" value="Delete" />
+        <input type="submit" name="delete" value="Delete" class="bx-btn bx-btn-small bx-def-margin-sec-top" style="float:none;" />
     </form>
     <hr class="bx-def-hr" /> 
 
 
-    <h2>Upload:</h2>
+    <h2>Upload</h2>
     <form enctype="multipart/form-data" method="POST">
         <input type="file" name="file" />
         <br />
-        <input type="submit" name="upload" value="Upload" />
+        <input type="submit" name="upload" value="Upload" class="bx-btn bx-btn-small bx-def-margin-sec-top" style="float:none;" />
     </form>
 <?php
 
