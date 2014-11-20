@@ -356,9 +356,11 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject
 
         // TODO: get and check site quota
 
-        $iUploadMaxFilesize = return_bytes(ini_get('upload_max_filesize'));
-        if ($iUploadMaxFilesize && $iUploadMaxFilesize < $iMin)
-            $iMin = $iUploadMaxFilesize;
+        if (!defined('BX_DOL_CRON_EXECUTE')) {
+            $iUploadMaxFilesize = return_bytes(ini_get('upload_max_filesize'));
+            if ($iUploadMaxFilesize && $iUploadMaxFilesize < $iMin)
+                $iMin = $iUploadMaxFilesize;
+        }
 
         return $iMin;
     }
