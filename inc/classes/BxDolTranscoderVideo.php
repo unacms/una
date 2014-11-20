@@ -134,6 +134,7 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
             'vcodec' => 'libx264',
             's' => $this->_getOptionSizeForVideo ($sFile, $aParams),
             'b:v' => isset($aParams['video_bitrate']) ? $aParams['video_bitrate'] . 'k' : '512k',
+            'movflags' => '+faststart',
             'acodec' => 'aac',
             'ar' => '44100',
             'b:a' => isset($aParams['audio_bitrate']) ? $aParams['audio_bitrate'] . 'k' : '128k',
