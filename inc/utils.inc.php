@@ -1198,4 +1198,68 @@ function bx_show_service_unavailable_error_and_exit ($sMsg = false, $iRetryAfter
     exit;
 }
 
+/**
+ * The function is sumilar to php readfile, but it send all required headers and can send file by chunks and suports file seek
+ * @param $sPath path to file to output to the browser
+ * @param $sFilename filename without path, ig file is saved from browser, then this name is used, not used(empty) by default
+ * @param $sMimeType file mime type, by default 'application/octet-stream'
+ * @param $iCacheAge file cache age, by default 0
+ * @param $sCachePrivacy cache privacy 'public' (default value) or 'private'
+ * @return true on success or false on error
+ */
+function bx_smart_readfile($sPath, $sFilename = '', $sMimeType = 'application/octet-stream', $iCacheAge = 0, $sCachePrivacy = 'public')
+{
+    if(!file_exists($sPath)) {
+        header ("HTTP/1.0 404 Not Found");
+        return;
+    }
+
+    $size = filesize($sPath);
+    $time = date('r',filemtime($sPath));
+
+    $fm = @fopen($sPath,'rb');
+    if (!$fm) 
+        return false;
+
+    $begin = 0;
+    $end = $size;
+
+    if (isset($_SERVER['HTTP_RANGE'])) {
+        if (preg_match('/bytes=\h*(\d+)-(\d*)[\D.*]?/i', $_SERVER['HTTP_RANGE'], $matches)) {
+            $begin = intval($matches[1]);
+            if (!empty($matches[2]))
+                $end = intval($matches[2]);
+        }
+    }
+
+    if ($begin > 0 || $end < $size)
+        header('HTTP/1.0 206 Partial Content');
+    else
+        header('HTTP/1.0 200 OK');
+
+    header('Content-Type: ' . $sMimeType);
+    header('Cache-Control: ' . $sCachePrivacy . ', must-revalidate, max-age=' . $iCacheAge);
+    header('Pragma: no-cache');
+    header('Accept-Ranges: bytes');
+    header('Content-Length:' . ($end - $begin));
+    header('Content-Range: bytes ' . $begin . '-' . $end . '/' . $size);
+    if ($sFilename)
+        header('Content-Disposition: inline; filename=' . $sFilename);
+    header('Content-Transfer-Encoding: binary');
+    header('Last-Modified:' . $time);
+    header('Connection: close');
+
+    $cur = $begin;
+    fseek($fm, $begin, 0);
+
+    while (!feof($fm) && $cur < $end && (connection_status() == 0)) {
+        print fread($fm, min(1024*16, $end - $cur));
+        $cur += 1024*16;
+    }
+
+    fclose($fm);
+
+    return true;
+}
+
 /** @} */
