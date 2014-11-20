@@ -37,8 +37,7 @@ class BxDolTranscoder extends BxDol implements iBxDolFactoryObject
         parent::__construct();
         $this->_aObject = $aObject;
         $this->_oStorage = $oStorage;
-        $this->_oDb = new BxDolTranscoderImageQuery($aObject, false);
-        $this->_sQueueTable = $this->_oDb->getQueueTable();
+        $this->_oDb = null;
     }
 
     /**
