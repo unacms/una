@@ -178,6 +178,44 @@ class BxDolPage extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
         return ($GLOBALS['bxDolClasses']['BxDolPage!'.$sObject] = $o);
     }
 
+	/**
+     * Process page triggers.
+     * Page triggers allow to automatically add page blocks to modules with no different if dependant module was install before or after the module page block belongs to.
+     * For example module "Notes" adds page blocks to all profiles modules (Persons, Organizations, etc)
+     * with no difference if persons module was installed before or after "Notes" module was installed.
+     * @param $sPageTriggerName trigger name to process, usually specified in module installer class - @see BxBaseModGeneralInstaller
+     * @return always true, always success
+     */
+    static public function processPageTrigger ($sPageTriggerName)
+    {
+        // get list of active modules
+        bx_import('BxDolModuleQuery');
+        $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array(
+            'type' => 'modules',
+            'active' => 1,
+        ));
+
+        // get list of menu triggers
+        $aPageBlocks = BxDolPageQuery::getPageTriggers($sPageTriggerName);
+
+        // check each menu item trigger for all modules
+        foreach ($aPageBlocks as $aPageBlock) {
+            foreach ($aModules as $aModule) {
+                if (!BxDolRequest::serviceExists($aModule['name'], 'get_page_object_for_page_trigger'))
+                    continue;
+
+				$sPageObject = BxDolService::call($aModule['name'], 'get_page_object_for_page_trigger', array($sPageTriggerName));
+                if (!$sPageObject)
+                    continue;
+
+                $aPageBlock['object'] = $sPageObject;
+                BxDolPageQuery::addPageBlockToPage($aPageBlock);
+            }
+        }
+
+        return true;
+    }
+
     /**
      * Add replace markers. Markers are replaced in raw, html, lang blocks and page title, description, keywords and block titles.
      * @param $a array of markers as key => value

@@ -167,7 +167,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_persons_submenu', 'bx_persons', 'persons-home', '_bx_persons_menu_item_title_system_entries_public', '_bx_persons_menu_item_title_entries_public', 'page.php?i=persons-home', '', '', '', '', 2147483647, 1, 1, 1),
-('bx_persons_submenu', 'bx_persons', 'persons-manage', '_bx_persons_menu_item_title_system_entries_manage', '_bx_persons_menu_item_title_entries_manage', 'page.php?i=persons-manage', '', '', '', '', 2147483647, 1, 1, 2);
+('bx_persons_submenu', 'bx_persons', 'persons-manage', '_bx_persons_menu_item_title_system_entries_manage', '_bx_persons_menu_item_title_entries_manage', 'page.php?i=persons-manage', '', '', '', '', 2147483646, 1, 1, 2);
 
 -- MENU: view submenu
 

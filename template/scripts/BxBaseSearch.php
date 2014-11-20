@@ -96,13 +96,13 @@ class BxBaseSearch extends BxDolSearch
             $o->addCssJs();
         }
 
-        return DesignBoxContent($sTitle, $sForm, $iDesignBoxTemplate);
+        return '<div class="bx-page-block-container bx-def-padding-topbottom bx-clearfix">' . DesignBoxContent($sTitle, $sForm, $iDesignBoxTemplate) . '</div>';
     }
 
     public function getResultsContainer($sCode = '')
     {
         $sIdResults = $this->_sIdResults . ($this->_bLiveSearch ? $this->_sSuffixLiveSearch : '');
-        return '<div id="' . $sIdResults . '" class="bx-def-margin-top">' . $sCode . '</div>';
+        return '<div id="' . $sIdResults . '">' . $sCode . '</div>';
     }
 }
 

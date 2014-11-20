@@ -18,6 +18,7 @@ class BxTimelineInstaller extends BxBaseModNotificationsInstaller
         parent::__construct($aConfig);
         $this->_aTranscoders = array ('bx_timeline_photos_preview', 'bx_timeline_photos_view');
         $this->_aStorages = array ('bx_timeline_photos');
+        $this->_aPageTriggers = array ('trigger_page_persons_view_entry', 'trigger_page_organizations_view_entry');
     }
 }
 

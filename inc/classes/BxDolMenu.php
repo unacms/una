@@ -183,10 +183,10 @@ class BxDolMenu extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
         ));
 
         // get list of menu triggers
-        $aMenuItem = BxDolMenuQuery::getMenuTriggers($sMenuTriggerName);
+        $aMenuItems = BxDolMenuQuery::getMenuTriggers($sMenuTriggerName);
 
         // check each menu item trigger for all modules
-        foreach ($aMenuItem as $aMenuItem) {
+        foreach ($aMenuItems as $aMenuItem) {
             foreach ($aModules as $aModule) {
                 if (!BxDolRequest::serviceExists($aModule['name'], 'get_menu_set_name_for_menu_trigger'))
                     continue;

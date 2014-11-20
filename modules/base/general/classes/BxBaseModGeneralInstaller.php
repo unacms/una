@@ -24,6 +24,8 @@ class BxBaseModGeneralInstaller extends BxDolStudioInstaller
 
     protected $_aMenuTriggers = array(); // list of menu triggers, it must be specified in the module which adds menu item and in modules where menu items are added, @see BxDolMenu::processMenuTrigger
 
+    protected $_aPageTriggers = array(); // list of page triggers, it must be specified in the module which adds page block and in modules where page blocks are added, @see BxDolMenu::processPageTrigger
+
     function __construct($aConfig)
     {
         parent::__construct($aConfig);
@@ -42,6 +44,12 @@ class BxBaseModGeneralInstaller extends BxDolStudioInstaller
             bx_import('BxDolMenu');
             foreach ($this->_aMenuTriggers as $sMenuTriggerName)
                 BxDolMenu::processMenuTrigger($sMenuTriggerName);
+        }
+
+	    if ($this->_aPageTriggers) {
+            bx_import('BxDolPage');
+            foreach ($this->_aPageTriggers as $sPageTriggerName)
+                BxDolPage::processPageTrigger($sPageTriggerName);
         }
 
         return $aResult;

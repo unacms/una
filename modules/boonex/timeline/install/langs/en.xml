@@ -8,6 +8,7 @@
 	<string name="_bx_timeline_option_events_per_page_profile"><![CDATA[Number of events are displayed on Profile page]]></string>
 	<string name="_bx_timeline_option_events_per_page_account"><![CDATA[Number of events are displayed on Account page]]></string>
 	<string name="_bx_timeline_option_events_per_page_home"><![CDATA[Number of events are displayed on Home page]]></string>
+	<string name="_bx_timeline_option_events_per_page"><![CDATA[Number of events per page]]></string>
 	<string name="_bx_timeline_option_rss_length"><![CDATA[The length of RSS feed]]></string>
 	<string name="_bx_timeline_option_events_hide"><![CDATA[Show events in Timeline]]></string>
 	<string name="_bx_timeline_option_chars_display_max"><![CDATA[Max number of displayed character in text post]]></string>
@@ -51,8 +52,10 @@
 	<string name="_bx_timeline_page_title_account"><![CDATA[Timeline]]></string>
 	<string name="_bx_timeline_page_block_title_post"><![CDATA[Post to Timeline]]></string>
 	<string name="_bx_timeline_page_block_title_view"><![CDATA[Timeline]]></string>
-	<string name="_bx_timeline_page_block_title_post_profile"><![CDATA[Post to Timeline]]></string>
-	<string name="_bx_timeline_page_block_title_view_profile"><![CDATA[Timeline]]></string>
+	<string name="_bx_timeline_page_block_title_post_profile_persons"><![CDATA[Post to Timeline]]></string>
+	<string name="_bx_timeline_page_block_title_post_profile_organizations"><![CDATA[Post to Timeline]]></string>
+	<string name="_bx_timeline_page_block_title_view_profile_persons"><![CDATA[Timeline]]></string>
+	<string name="_bx_timeline_page_block_title_view_profile_organizations"><![CDATA[Timeline]]></string>
 	<string name="_bx_timeline_page_block_title_item"><![CDATA[Item]]></string>
 	<string name="_bx_timeline_page_block_title_view_account"><![CDATA[Subscriptions Timeline]]></string>
 	<string name="_bx_timeline_page_block_title_view_home"><![CDATA[Outline]]></string>
@@ -95,7 +98,8 @@
 	<string name="_bx_timeline_txt_user_added_sample"><![CDATA[{0} added {1}]]></string>
 	<string name="_bx_timeline_txt_user_shared_sample"><![CDATA[{0} shared {1}'s {2}]]></string>
 	<string name="_bx_timeline_txt_sample"><![CDATA[post]]></string>
-	<string name="_bx_timeline_txt_sample_comment_single"><![CDATA[post's comment]]></string>
+	<string name="_bx_timeline_txt_sample_ext"><![CDATA[timeline post]]></string>
+	<string name="_bx_timeline_txt_sample_comment_single"><![CDATA[timeline post's comment]]></string>
 
 	<string name="_bx_timeline_txt_do_share"><![CDATA[Share]]></string>
 	<string name="_bx_timeline_txt_shared"><![CDATA[Shared {0}'s {1}.]]></string>

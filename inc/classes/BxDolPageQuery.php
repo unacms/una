@@ -39,6 +39,33 @@ class BxDolPageQuery extends BxDolDb
         return $oDb->getOne($sQuery);
     }
 
+	static public function getPageTriggers($sTriggerName)
+    {
+        $oDb = BxDolDb::getInstance();
+        $sQuery = $oDb->prepare("SELECT * FROM `sys_pages_blocks` WHERE `object` = ? ORDER BY `id` ASC", $sTriggerName);
+        return $oDb->getAll($sQuery);
+    }
+
+    static public function addPageBlockToPage($aPageBlock)
+    {
+        $oDb = BxDolDb::getInstance();
+
+        if (empty($aPageBlock['object']))
+            return false;
+
+        if (empty($aPageBlock['order'])) {
+        	$iCellId = !empty($aPageBlock['cell_id']) ? (int)$aPageBlock['cell_id'] : 1;
+            $sQuery = $oDb->prepare("SELECT `order` FROM `sys_pages_blocks` WHERE `object` = ? AND `cell_id` = ? AND `active` = 1 ORDER BY `order` DESC LIMIT 1", $aPageBlock['object'], $iCellId);
+            $aPageBlock['order'] = (int)$oDb->getOne($sQuery) + 1;
+        }
+
+        $sQuery = $oDb->prepare("DELETE FROM `sys_pages_blocks` WHERE `object` = ? AND `type` = ? AND `title` = ?", $aPageBlock['object'], $aPageBlock['type'], $aPageBlock['title']);
+        $oDb->query($sQuery);
+
+        unset($aPageBlock['id']);
+        return $oDb->query("INSERT INTO `sys_pages_blocks` SET " . $oDb->arrayToSQL($aPageBlock));
+    }
+
     public function getPageBlocks()
     {
         $aRet = array ();

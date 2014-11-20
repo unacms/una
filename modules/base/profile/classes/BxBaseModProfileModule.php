@@ -62,6 +62,14 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         return '';
     }
 
+	public function serviceGetPageObjectForPageTrigger ($sPageTriggerName)
+    {
+        if(isset($this->_oConfig->CNF['TRIGGER_PAGE_VIEW_ENTRY']) && $this->_oConfig->CNF['TRIGGER_PAGE_VIEW_ENTRY'] == $sPageTriggerName)
+        	return $this->_oConfig->CNF['OBJECT_PAGE_VIEW_ENTRY'];
+
+        return '';
+    }
+
     public function serviceProfilesSearch ($sTerm, $iLimit)
     {
         $aRet = array();

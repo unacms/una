@@ -1508,6 +1508,10 @@ If it is not enabled then please consider implement this optimization, since it 
 <p>Upgrade failed due to the following error:</p>
 <p>{error_msg}</p>
 <bx_include_auto:_email_footer.html />]]></string>
+	<string name="_sys_et_txt_body_upgrade_modules_failed"><![CDATA[<bx_include_auto:_email_header.html />
+<p>The following errors appeared during modules upgrade:</p>
+<p>{conclusion}</p>
+<bx_include_auto:_email_footer.html />]]></string>
 	<string name="_sys_et_txt_body_upgrade_success"><![CDATA[<bx_include_auto:_email_header.html />
 <p>Site was successfully upgraded to {new_version}.</p>
 {conclusion}
@@ -1520,7 +1524,8 @@ If it is not enabled then please consider implement this optimization, since it 
 <p>Background operation failed with the following message.</p>
 {conclusion}
 <bx_include_auto:_email_footer.html />]]></string>
-	<string name="_sys_et_txt_body_upgraded_module"><![CDATA[<b>{0}</b> module: up to {1} version.<br />]]></string>
+	<string name="_sys_et_txt_body_modules_upgrade_success"><![CDATA[<b>{0}</b> module: up to {1} version.<br />]]></string>
+	<string name="_sys_et_txt_body_modules_upgrade_failed"><![CDATA[<b>{0}</b> module: {1}<br />]]></string>
 	<string name="_sys_et_txt_name_system_admin_email"><![CDATA[Message sending from the Admin Panel]]></string>
 	<string name="_sys_et_txt_name_system_comment_replied"><![CDATA[The letter is sent to members whose comment was replied]]></string>
 	<string name="_sys_et_txt_name_system_confirmation"><![CDATA[Profile e-mail confirmation message]]></string>
@@ -1550,8 +1555,9 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_et_txt_subject_profile_change_status_suspended"><![CDATA[Profile was Suspended]]></string>
 	<string name="_sys_et_txt_subject_pruning"><![CDATA[{site_name} pruning result]]></string>
 	<string name="_sys_et_txt_subject_upgrade_failed"><![CDATA[{site_name} upgrade failed]]></string>
+	<string name="_sys_et_txt_subject_upgrade_modules_failed"><![CDATA[Modules upgrade failed on {site_name}]]></string>
 	<string name="_sys_et_txt_subject_upgrade_success"><![CDATA[{site_name} upgrade success]]></string>
-	<string name="_sys_et_txt_subject_upgrade_modules_success"><![CDATA[Modules upgrade success]]></string>
+	<string name="_sys_et_txt_subject_upgrade_modules_success"><![CDATA[Modules upgrade success on {site_name}]]></string>
 	<string name="_sys_et_txt_subject_bg_operation_failed"><![CDATA[Background operation failed]]></string>
 	<string name="_sys_et_txt_unsubscribe"><![CDATA[Unsubscribe]]></string>
 	<string name="_sys_form_account"><![CDATA[Account]]></string>

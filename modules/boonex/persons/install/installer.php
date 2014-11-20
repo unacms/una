@@ -23,6 +23,7 @@ class BxPersonsInstaller extends BxBaseModProfileInstaller
             'sys_profiles_subscriptions' => array ('type' => 'profiles'),
         );
         $this->_aMenuTriggers = array ('trigger_profile_view_submenu', 'trigger_profile_view_actions');
+        $this->_aPageTriggers = array ('trigger_page_persons_view_entry');
     }
 }
 

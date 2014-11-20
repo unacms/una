@@ -63,6 +63,11 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
     	return 'sys_download_file_complete_' . $sParam;
     }
 
+	public static function getNamePerformModulesUpgrade()
+    {
+    	return 'sys_upgrade_modules_transient';
+    }
+
     /*
      * Is used to complete Downloading inside Transient Cron Job.
      */
@@ -77,6 +82,14 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 	public function servicePerformAction($sDirectory, $sOperation, $aParams)
     {
     	return $this->perform($sDirectory, $sOperation, array_merge($aParams, array('transient' => true)));
+    }
+
+	/*
+     * Is used to perform modules upgrade inside Transient Cron Job.
+     */
+	public function servicePerformModulesUpgrade($bEmailNotify)
+    {
+    	return $this->performModulesUpgrade(true, $bEmailNotify);
     }
 
     public function getAccessObject($bAuthorizedAccess)
@@ -239,6 +252,42 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         return array('code' => $aResult['result'] ? BX_DOL_STUDIO_IU_RC_SUCCESS : BX_DOL_STUDIO_IU_RC_FAILED, 'message' => $aResult['message']);
     }
 
+    public function performModulesUpgrade($bDirectly = true, $bEmailNotify = true)
+    {
+    	if(!defined('BX_DOL_CRON_EXECUTE') && !$bDirectly)
+    		return $this->addTransientJob(self::getNamePerformModulesUpgrade(), 'perform_modules_upgrade', array($bEmailNotify));   	
+
+        $aFailed = array();
+		$aUpdates = $this->checkUpdates();
+	    foreach($aUpdates as $aUpdate) {
+	    	$mixedResult = $this->downloadUpdatePublic($aUpdate['name']);
+	        if($mixedResult !== true) {
+	        	$aFailed[$aUpdate['name']] = $mixedResult;
+				continue;
+			}
+		}
+
+		$aSuccess = array();
+		$aUpdates = $this->getUpdates();
+		foreach($aUpdates as $aUpdate) {
+			$aResult = $this->perform($aUpdate['dir'], 'update');
+			if((int)$aResult['code'] != 0) {
+				$aFailed[$aUpdate['module_name']] = $aResult['message'];
+				continue;
+			}
+
+			$aSuccess[$aUpdate['module_name']] = $aUpdate['version_to'];
+		}
+
+    	if($bEmailNotify && !empty($aSuccess))
+    		$this->emailNotifyModulesUpgrade('success', $aSuccess);
+
+        if($bEmailNotify && !empty($aFailed))
+        	$this->emailNotifyModulesUpgrade('failed', $aFailed);
+
+		return empty($aFailed);
+    }
+
     public function checkModules($bAuthorizedAccess = false)
     {
     	if($bAuthorizedAccess)
@@ -382,18 +431,22 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
     protected function performWrite($aItem, &$sFilePath)
     {
-    	$iUmaskSave = umask(0);
-
     	$sFilePath = BX_DIRECTORY_PATH_TMP . $aItem['name'];
     	if(file_exists($sFilePath))
         	@unlink($sFilePath);
 
-        if(!$rHandler = fopen($sFilePath, 'w'))
+		$iUmaskSave = umask(0);
+
+        if(!$rHandler = fopen($sFilePath, 'w')) {
+        	umask($iUmaskSave);
             return _t('_adm_str_err_cannot_write');
+        }
 
         $sContent = urldecode($aItem['content']);
-        if(!fwrite($rHandler, $sContent, strlen($sContent)))
+        if(!fwrite($rHandler, $sContent, strlen($sContent))) {
+        	umask($iUmaskSave);
             return _t('_adm_str_err_cannot_write');
+        }
 
         fclose($rHandler);
         
@@ -403,28 +456,34 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
     protected function performUnarchive($sFilePath, &$sPackagePath)
     {
-    	$iUmaskSave = umask(0);
-
     	if(!class_exists('ZipArchive'))
             return _t('_adm_str_err_zip_not_available');
 
+		$iUmaskSave = umask(0);
+
         $oZip = new ZipArchive();
-        if($oZip->open($sFilePath) !== true)
+        if($oZip->open($sFilePath) !== true) {
+        	umask($iUmaskSave);
             return _t('_adm_str_err_cannot_unzip_package');
+        }
 
         $sPackageFolder = '';
         if($oZip->numFiles > 0)
         	$sPackageFolder = $oZip->getNameIndex(0);
 
-        if(empty($sPackageFolder))
+        if(empty($sPackageFolder)) {
+        	umask($iUmaskSave);
         	return _t('_adm_str_err_cannot_unzip_package');
+        }
         
 		$sPackagePath = BX_DIRECTORY_PATH_TMP . $sPackageFolder;
         if(file_exists($sPackagePath)) // remove existing tmp folder with the same name
             @bx_rrmdir($sPackagePath);
 
-        if(!$oZip->extractTo(BX_DIRECTORY_PATH_TMP))
+        if(!$oZip->extractTo(BX_DIRECTORY_PATH_TMP)) {
+        	umask($iUmaskSave);
             return _t('_adm_str_err_cannot_unzip_package');
+        }
 
         $oZip->close();
 
@@ -538,6 +597,24 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
     {
     	sendMailTemplateSystem('t_BgOperationFailed', array (
 			'conclusion' => strip_tags($sMessage),
+		));
+    }
+
+    private function emailNotifyModulesUpgrade($sResult, $aData)
+    {
+    	bx_import('BxDolModuleQuery');
+		$oModuleQuery = BxDolModuleQuery::getInstance();
+
+    	$sConclusion = '';
+    	if(!empty($aData))
+			foreach($aData as $sModule => $sMessage) {
+				$aModule = $oModuleQuery->getModuleByName($sModule);
+
+				$sConclusion .= _t('_sys_et_txt_body_modules_upgrade_' . $sResult, $aModule['title'], $sMessage);
+			}
+
+		sendMailTemplateSystem('t_UpgradeModules' . ucfirst($sResult), array (
+			'conclusion' => $sConclusion,
 		));
     }
 }

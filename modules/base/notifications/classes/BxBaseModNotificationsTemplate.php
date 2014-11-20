@@ -56,6 +56,56 @@ class BxBaseModNotificationsTemplate extends BxBaseModGeneralTemplate
         $sName = $this->_oConfig->getName();
         return BxDolModule::getInstance($sName);
     }
+    
+    public function getPost(&$aEvent, $aBrowseParams = array())
+    {
+    	return '';
+    }
+
+	function unit($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html')
+    {
+    	$this->getCssJs();
+
+    	if($sTemplateName == 'unit.html')
+    		return $this->getPost($aData);
+
+        $oModule = $this->getModule();
+        $CNF = &$this->_oConfig->CNF;
+
+        if ($isCheckPrivateContent && CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $oModule->isAllowedView($aData))) {
+            $aVars = array (
+                'summary' => $sMsg,
+            );
+            return $this->parseHtmlByName('unit_private.html', $aVars);
+        }
+
+        list($sAuthorName, $sAuthorUrl, $sAuthorIcon) = $oModule->getUserInfo($aData['object_id']);
+        $bAuthorIcon = !empty($sAuthorIcon);
+
+        // generate html
+        $aVars = array (
+            'id' => $aData['id'],
+            'author' => $sAuthorName,
+            'author_url' => $sAuthorUrl,
+            'title' => bx_process_output($aData['title']),
+        	'item_url' => $this->_oConfig->getItemViewUrl($aData),
+            'item_date' => bx_time_js($aData['date'], BX_FORMAT_DATE),
+            'module_name' => _t($CNF['T']['txt_sample_single_ext']),
+            'ts' => $aData['date'],
+            'bx_if:show_icon' => array(
+                'condition' => $bAuthorIcon,
+                'content' => array(
+                    'author_icon' => $sAuthorIcon
+                )
+            ),
+            'bx_if:show_icon_empty' => array(
+                'condition' => !$bAuthorIcon,
+                'content' => array()
+            ),
+        );
+
+        return $this->parseHtmlByName($sTemplateName, $aVars);
+    }
 
 }
 
