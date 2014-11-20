@@ -3023,7 +3023,7 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 
 
 CREATE TABLE IF NOT EXISTS `sys_transcoder_queue` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,a
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `transcoder_object` varchar(64) NOT NULL,
   `profile_id` int(10) unsigned NOT NULL,
   `file_url_source` varchar(255) NOT NULL,
