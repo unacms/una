@@ -16,7 +16,54 @@ bx_import('BxDolTranscoderVideoQuery');
  * @ref BxDolTranscoderVideo
  */
 
-
+/**
+ * This class transcodes videos and generates video thumbnails.
+ *
+ * To generate video which plays in all moders browsers along with video poster, 
+ * you need to create 3 different video transcoding objects which will generate .mp4, .webm videos and video poster.
+ * Video is convering upon first access, so it is probably better to force video conversion by calling @see BxDolTranscoderVideo::getFileUrl just after video uploading.
+ * Video for conversion is queued and when cron is run video conversion is performed.
+ * While video is pending for conversion or in the process @see BxDolTranscoderVideo::getFileUrl methods returns empty string for video and predefined image for video poster.
+ *
+ * Transcoder object and other params are the same as in @see BxDolTranscoderImage, but it is highly recommended to disable 'atime_pruning' and 'atime_tracking', or set it to fairly big value, since video transcoding is not performed on the fly and takes some time. 
+ *
+ * Available filters:
+ * - Mp4 - this filter convert video into .mp4 format along with resizing, the parameters are the following:
+ *     - h - height of resulted video (360 by default), for video it is highly recommended to specify only height parameter (no width parameter, )
+ *     - video_bitrate - video bitrate (512k by default)
+ *     - audio_bitrate - video bitrate (128k by default)
+ *     - ffmpeg_options - additional command line options for ffmepeg, as key => value array (empty by default)
+ * - Webm - this filter convert video into .webm format along with resizing, the parameters are the same as for Mp4 filter
+ * - Poster - this filter generates video thumbnail, it tries to get poster at 0, 3 and 5 seconds from the beginning, it gets first not fully blacke/white thumb
+ *
+ *
+ * Example of usage:
+ * @code
+ * bx_import('BxDolTranscoder');
+ *
+ * // transcoder objects which generate .mp4, .webm videos and image poster
+ * $oTranscoderMp4 = BxDolTranscoder::getObjectInstance('bx_video_mp4'); 
+ * $oTranscoderWebm = BxDolTranscoder::getObjectInstance('bx_video_webm');
+ * $oTranscoderPoster = BxDolTranscoder::getObjectInstance('bx_video_poster');
+ *
+ * // make sure to call it only once (for example: during module installation), before the first usage, no need to call it every time
+ * $oTranscoderMp4->registerHandlers(); 
+ * $oTranscoderWebm->registerHandlers(); 
+ * $oTranscoderPoster->registerHandlers(); 
+ *
+ * // get URLs of transcoded videos and video thumbnail, 33 is ID of original video file stored in specified storage object
+ * $sUrlMp4 = $oTranscoder->getFileUrl(33);
+ * $sUrlWebM = $oTranscoder->getFileUrl(33);
+ * $sUrlPoster = $oTranscoder->getFileUrl(33);
+ *
+ * echo 'My cat:
+ *     <video poster="' . $sUrlPoster . '">
+ *         <source type="video/webm; codecs="vp8, vorbis" src="' . $sUrlWebM . '" />
+ *         <source type="video/mp4" src="' . $sUrlMp4 . '" />
+ *     </video>'; 
+ * @endcode
+ *
+ */
 class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObject
 {
     protected function __construct($aObject, $oStorage)
@@ -33,7 +80,7 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
     }
 
     /**
-     * If video not processed yet then empty string is returned for video, and predefined image is returned for video poster
+     * If video isn't processed yet then empty string is returned for video, or predefined image is returned for video poster
      */
     public function getFileUrlNotReady($mixedHandler)
     {
@@ -86,7 +133,7 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
             'strict' => 'experimental',
             'vcodec' => 'libx264',
             's' => $this->_getOptionSizeForVideo ($sFile, $aParams),
-            'b:v' => isset($aParams['video_bitrate']) ? $aParams['video_bitrate'] . 'k' : '',
+            'b:v' => isset($aParams['video_bitrate']) ? $aParams['video_bitrate'] . 'k' : '512k',
             'acodec' => 'aac',
             'ar' => '44100',
             'b:a' => isset($aParams['audio_bitrate']) ? $aParams['audio_bitrate'] . 'k' : '128k',
@@ -100,7 +147,7 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
     {
         return $this->_convertVideo($sFile, $sFile, '.webm', $aParams, array (
             's' => $this->_getOptionSizeForVideo ($sFile, $aParams),
-            'b:v' => isset($aParams['video_bitrate']) ? $aParams['video_bitrate'] . 'k' : '',
+            'b:v' => isset($aParams['video_bitrate']) ? $aParams['video_bitrate'] . 'k' : '512k',
             'acodec' => 'libvorbis',
             'ar' => '44100',
             'b:a' => isset($aParams['audio_bitrate']) ? $aParams['audio_bitrate'] . 'k' : '128k',
@@ -108,7 +155,7 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
     }
 
     /**
-     * Convert video using ffmpeg binary. Video conversion otput is written to the log variable.
+     * Convert video using ffmpeg binary. Video conversion otput is written to the 'log' variable.
      * @param $sFile input file for conversion
      * @param $sFileOut output file for conversion, can be the same as input file
      * @param $sExt output file extension, in the format '.ext'
@@ -150,9 +197,9 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
 
     /**
      * Get video size. 
-     * It generated image from the video and returns size of this image.
-     * @param $sFile path to video file
-     * @return array where 'w' is width and 'h' is height
+     * It generated image from the video and returns size of the image.
+     * @param $sFile path to the video file
+     * @return array where 'w' key is width and 'h' key is height
      */
     protected function _getVideoSize ($sFile)
     {

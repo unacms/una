@@ -11,13 +11,13 @@ bx_import('BxDolStorage');
 bx_import('BxDolTranscoder');
 bx_import('BxDolTranscoderQuery');
 
-define('BX_DOL_QUEUE_PENDING', 'pending'); ///< file is pending processing
-define('BX_DOL_QUEUE_PROCESSING', 'processing'); ///< file is in process
-define('BX_DOL_QUEUE_COMPLETE', 'complete'); ///< file is processed
-define('BX_DOL_QUEUE_FAILED', 'failed'); ///< file processing failed
+define('BX_DOL_QUEUE_PENDING', 'pending'); ///< file is pending for processing
+define('BX_DOL_QUEUE_PROCESSING', 'processing'); ///< file is in the process
+define('BX_DOL_QUEUE_COMPLETE', 'complete'); ///< file is already processed
+define('BX_DOL_QUEUE_FAILED', 'failed'); ///< file processing was failed
 
 /**
- * Base class for video and image transcoders
+ * Base class for @see BxDolTranscoderImage and @see BxDolTranscoderVideo transcoders
  */
 class BxDolTranscoder extends BxDol implements iBxDolFactoryObject
 {
