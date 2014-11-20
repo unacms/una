@@ -383,7 +383,7 @@ class BxDolTranscoder extends BxDol implements iBxDolFactoryObject
             if ($bRet)
                 $this->_oDb->deleteFromQueue($mixedHandler);
             else
-                $this->_oDb->updateQueueStatus($mixedHandler, BX_DOL_QUEUE_FAILED, 'store file failed');
+                $this->_oDb->updateQueueStatus($mixedHandler, BX_DOL_QUEUE_FAILED, "store file failed:\n" . $this->getLog());
                 
         }
 
@@ -449,8 +449,10 @@ class BxDolTranscoder extends BxDol implements iBxDolFactoryObject
         $sMethodIsPrivate = 'isPrivate_' . $this->_aObject['source_type'];
         $isPrivate = $this->$sMethodIsPrivate($mixedHandler);
         $iFileId = $this->_oStorage->storeFileFromPath ($sTmpFile, $isPrivate, $iProfileId);
-        if (!$iFileId)
+        if (!$iFileId) {
+            $this->addToLog($this->_oStorage->getErrorString());
             return false;
+        }
 
         if (!$this->_oDb->updateHandler($iFileId, $mixedHandler)) {
             $this->_oStorage->deleteFile($iFileId);
