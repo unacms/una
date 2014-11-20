@@ -183,7 +183,7 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
             @unlink($sFileOut);
         }
 
-        $sCommand = BX_SYSTEM_FFMPEG . ' -y -i "' . escapeshellcmd($sFile) . '" ' . $sOptions . ' ' . $sFileOut;
+        $sCommand = BX_SYSTEM_FFMPEG . ' -y -i "' . escapeshellcmd($sFile) . '" ' . $sOptions . ' ' . $sFileOut . ' 2>&1';
         $sOutput = `$sCommand`;
         $this->addToLog("\n---\n{$sCommand}\n{$sOutput}\n");
 
