@@ -1,0 +1,11 @@
+/*--- Invite block ---*/
+div.bx-inv-invite-btn  {
+	text-align: center;
+}
+div.bx-inv-invite-btn .bx-btn {
+	float: none;
+	display: inline-block;
+}
+
+/*--- Request Invite block ---*/
+div.bx-inv-request-btn  {}
