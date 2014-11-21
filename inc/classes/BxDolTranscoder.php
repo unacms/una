@@ -406,22 +406,21 @@ class BxDolTranscoder extends BxDol implements iBxDolFactoryObject
             }
         }
 
-        if ($sExtChange && false !== ($iDotPos = strrpos($sTmpFile, '.'))) {
-            $sExtOld = substr($sTmpFile, $iDotPos+1);
+        if ($sExtChange) {
+            $iDotPos = strrpos($sTmpFile, '.');
+            $sExtOld = false === $iDotPos ? '' : substr($sTmpFile, $iDotPos+1);
             if ($sExtOld != $sExtChange) {
                 $sTmpFileOld = $sTmpFile;
-                $sTmpFile = substr_replace ($sTmpFile, $sExtChange, $iDotPos+1, strlen($sExtOld));
+                $sTmpFile = false === $iDotPos ? $sTmpFile . '.' . $sExtChange : substr_replace($sTmpFile, $sExtChange, $iDotPos+1, strlen($sExtOld));
                 if (!rename($sTmpFileOld, $sTmpFile)) {
                     @unlink($sTmpFileOld);
                     $this->_oDb->updateQueueStatus($mixedHandler, BX_DOL_QUEUE_FAILED, "change file extension failed: $sTmpFileOld => $sTmpFile");
                     return false;
                 }
             }
-
         }
 
         $mixedHandler = $this->processHandlerForRetinaDevice($mixedHandler);
-
         
         $bRet = true;
         if ($this->_sQueueStorage) {
@@ -703,13 +702,8 @@ class BxDolTranscoder extends BxDol implements iBxDolFactoryObject
     }
 
     protected function storeFileLocally_Queue ($mixedHandler)
-    {
-        $sMethodStoreFile = 'storeFileLocally_' . $this->_aObject['source_type'];
-        $sTmpFile = $this->$sMethodStoreFile($mixedHandler);
-        if ($sTmpFile)
-            return $sTmpFile;
-        
-        $aQueue = $o->getDb->getFromQueue($r['file_id_source']);
+    {   
+        $aQueue = $this->_oDb->getFromQueue($mixedHandler);
         if (!$aQueue || !$aQueue['file_url_source'])
             return false;
 
