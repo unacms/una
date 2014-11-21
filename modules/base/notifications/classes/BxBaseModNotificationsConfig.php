@@ -78,14 +78,6 @@ class BxBaseModNotificationsConfig extends BxBaseModGeneralConfig
             $this->_aHandlersHidden = explode(',', $sHideTimeline);
     }
 
-    public function getObject($sType = '')
-    {
-    	if(empty($sType))
-            return $this->_aObjects;
-
-        return isset($this->_aObjects[$sType]) ? $this->_aObjects[$sType] : '';
-    }
-
 	public function getHandlerDescriptor()
     {
     	return $this->_aHandlerDescriptor;

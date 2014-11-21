@@ -37,9 +37,16 @@ class BxBaseAccountForms extends BxDolProfileForms
             return MsgBox(_t('_sys_txt_error_occured'));
 
         $oForm->initChecker();
+        if (!$oForm->isSubmittedAndValid()) {
+        	$sCode = $oForm->getCode();
 
-        if (!$oForm->isSubmittedAndValid())
-            return $oForm->getCode();
+        	bx_alert('account', 'add_form', 0, 0, array(
+        		'form_object' => &$oForm,
+        		'form_code' => &$sCode
+        	));
+
+            return $sCode;
+        }
 
         // insert data into database
         $aValsToAdd = array (
