@@ -20,8 +20,8 @@ DROP TABLE IF EXISTS `bx_timeline_votes_track`;
 -- STORAGES, TRANSCODERS, UPLOADERS
 DELETE FROM `sys_objects_uploader` WHERE `object` = 'bx_timeline_simple';
 DELETE FROM `sys_objects_storage` WHERE `object` IN ('bx_timeline_photos', 'bx_timeline_photos_preview', 'bx_timeline_photos_view');
-DELETE FROM `sys_objects_transcoder_images` WHERE `object` IN ('bx_timeline_photos_preview', 'bx_timeline_photos_view');
-DELETE FROM `sys_transcoder_images_filters` WHERE `transcoder_object` IN ('bx_timeline_photos_preview', 'bx_timeline_photos_view');
+DELETE FROM `sys_objects_transcoder` WHERE `object` IN ('bx_timeline_photos_preview', 'bx_timeline_photos_view');
+DELETE FROM `sys_transcoder_filters` WHERE `transcoder_object` IN ('bx_timeline_photos_preview', 'bx_timeline_photos_view');
 
 
 -- Forms All

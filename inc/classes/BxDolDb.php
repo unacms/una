@@ -506,7 +506,7 @@ class BxDolDb extends BxDol implements iBxDolSingleton
             foreach( $aBackTrace as $aCall ) {
 
                 // truncating global settings since it repeated many times and output it separately
-                if (isset($aCall['object']) && property_exists($aCall['object'], '_aParams')) {
+                if (isset($aCall['object']) && is_a($aCall['object'], 'BxDolDb')) {
                     if (false === $sParamsOutput)
                         $sParamsOutput = var_export($aCall['object']->_aParams, true);
                     $aCall['object']->_aParams = '[truncated]';

@@ -68,11 +68,7 @@ class BxDolStorageLocal extends BxDolStorage
             return false;
         }
 
-        header('Content-Type: ' . $aFile['mime_type']);
-        if ($this->_iCacheControl > 0)
-            header('Cache-Control: max-age=' . ($aFile['private'] && $this->_iCacheControl > $this->_aObject['token_life'] ? $this->_aObject['token_life'] : $this->_iCacheControl));
-
-        if (false === readfile($sFileLocation)) {
+        if (!bx_smart_readfile($sFileLocation, $aFile['file_name'], $aFile['mime_type'], $aFile['private'] && $this->_iCacheControl > $this->_aObject['token_life'] ? $this->_aObject['token_life'] : $this->_iCacheControl, $aFile['private'] ? 'private' : 'public')) {
             $this->setErrorCode(BX_DOL_STORAGE_ERR_ENGINE_GET);
             return false;
         }

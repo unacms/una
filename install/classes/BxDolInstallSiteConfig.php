@@ -458,6 +458,7 @@ EOF;
         $aMarkers['version'] = BX_DOL_VER;
         $aMarkers['time'] = time();
         $aMarkers['secret'] = genRndPwd(11);
+        $aMarkers['ffmpeg_path'] = $aMarkers['root_dir'] . 'plugins/ffmpeg/ffmpeg.exe';
 
         return $aMarkers;
     }

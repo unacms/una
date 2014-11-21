@@ -1198,4 +1198,81 @@ function bx_show_service_unavailable_error_and_exit ($sMsg = false, $iRetryAfter
     exit;
 }
 
+/**
+ * The function is sumilar to php readfile, but it send all required headers and can send file by chunks and suports file seek
+ * @param $sPath path to file to output to the browser
+ * @param $sFilename filename without path, ig file is saved from browser, then this name is used, not used(empty) by default
+ * @param $sMimeType file mime type, by default 'application/octet-stream'
+ * @param $iCacheAge file cache age, by default 0
+ * @param $sCachePrivacy cache privacy 'public' (default value) or 'private'
+ * @return true on success or false on error
+ */
+function bx_smart_readfile($sPath, $sFilename = '', $sMimeType = 'application/octet-stream', $iCacheAge = 0, $sCachePrivacy = 'public')
+{
+    if (!file_exists($sPath))
+        return  false;
+
+    $fp = @fopen($sPath, 'rb');
+
+    $size   = filesize($sPath);
+    $length = $size;
+    $start  = 0;
+    $end    = $size - 1;
+
+    header('Content-type: ' . $sMimeType);
+    header('Cache-Control: ' . $sCachePrivacy . ', must-revalidate, max-age=' . $iCacheAge);
+    header("Accept-Ranges: 0-$length");
+    if ($sFilename)
+        header('Content-Disposition: inline; filename=' . $sFilename);
+
+    if (isset($_SERVER['HTTP_RANGE'])) {
+
+        $c_start = $start;
+        $c_end   = $end;
+
+        list(, $range) = explode('=', $_SERVER['HTTP_RANGE'], 2);
+        if (strpos($range, ',') !== false) {
+            header('HTTP/1.1 416 Requested Range Not Satisfiable');
+            header("Content-Range: bytes $start-$end/$size");
+            return false;
+        }
+        if ($range == '-') {
+            $c_start = $size - substr($range, 1);
+        }else{
+            $range  = explode('-', $range);
+            $c_start = $range[0];
+            $c_end   = (isset($range[1]) && is_numeric($range[1])) ? $range[1] : $size;
+        }
+        $c_end = ($c_end > $end) ? $end : $c_end;
+        if ($c_start > $c_end || $c_start > $size - 1 || $c_end >= $size) {
+            header('HTTP/1.1 416 Requested Range Not Satisfiable');
+            header("Content-Range: bytes $start-$end/$size");
+            return false;
+        }
+        $start  = $c_start;
+        $end    = $c_end;
+        $length = $end - $start + 1;
+        fseek($fp, $start);
+        header('HTTP/1.1 206 Partial Content');
+    }
+    header("Content-Range: bytes $start-$end/$size");
+    header("Content-Length: ".$length);
+
+
+    $buffer = 1024 * 8;
+    while(!feof($fp) && ($p = ftell($fp)) <= $end) {
+
+        if ($p + $buffer > $end) {
+            $buffer = $end - $p + 1;
+        }
+        set_time_limit(0);
+        echo fread($fp, $buffer);
+        flush();
+    }
+
+    fclose($fp);
+
+    return true;
+}
+
 /** @} */

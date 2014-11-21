@@ -12,8 +12,8 @@ DELETE FROM sys_profiles WHERE `type` = 'bx_persons';
 DELETE FROM `sys_objects_storage` WHERE `object` IN('bx_persons_pictures', 'bx_persons_pictures_resized');
 DELETE FROM `sys_storage_tokens` WHERE `object` IN('bx_persons_pictures', 'bx_persons_pictures_resized');
 
-DELETE FROM `sys_objects_transcoder_images` WHERE `object` IN('bx_persons_icon', 'bx_persons_thumb', 'bx_persons_avatar', 'bx_persons_picture', 'bx_persons_cover', 'bx_persons_cover_thumb');
-DELETE FROM `sys_transcoder_images_filters` WHERE `transcoder_object` IN('bx_persons_icon', 'bx_persons_thumb', 'bx_persons_avatar', 'bx_persons_picture', 'bx_persons_cover', 'bx_persons_cover_thumb');
+DELETE FROM `sys_objects_transcoder` WHERE `object` IN('bx_persons_icon', 'bx_persons_thumb', 'bx_persons_avatar', 'bx_persons_picture', 'bx_persons_cover', 'bx_persons_cover_thumb');
+DELETE FROM `sys_transcoder_filters` WHERE `transcoder_object` IN('bx_persons_icon', 'bx_persons_thumb', 'bx_persons_avatar', 'bx_persons_picture', 'bx_persons_cover', 'bx_persons_cover_thumb');
 DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_persons_icon', 'bx_persons_thumb', 'bx_persons_avatar', 'bx_persons_picture', 'bx_persons_cover', 'bx_persons_cover_thumb');
 
 -- FORMS
