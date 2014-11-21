@@ -15,6 +15,7 @@ class BxBaseModGeneralConfig extends BxDolModuleConfig
 {
     public $CNF;
 
+    protected $_aObjects;
     protected $_aPrefixes;
     protected $_aJsClass;
     protected $_aJsObjects;
@@ -24,10 +25,19 @@ class BxBaseModGeneralConfig extends BxDolModuleConfig
     {
         parent::__construct($aModule);
 
+        $this->_aObjects = array();
         $this->_aPrefixes = array();
         $this->_aJsClass = array();
         $this->_aJsObjects = array();
         $this->_aGridObjects = array();
+    }
+
+    public function getObject($sType = '')
+    {
+    	if(empty($sType))
+            return $this->_aObjects;
+
+        return isset($this->_aObjects[$sType]) ? $this->_aObjects[$sType] : '';
     }
 
 	public function getPrefix($sType = '')
