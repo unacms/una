@@ -1209,55 +1209,68 @@ function bx_show_service_unavailable_error_and_exit ($sMsg = false, $iRetryAfter
  */
 function bx_smart_readfile($sPath, $sFilename = '', $sMimeType = 'application/octet-stream', $iCacheAge = 0, $sCachePrivacy = 'public')
 {
-    if(!file_exists($sPath)) {
-        header ("HTTP/1.0 404 Not Found");
-        return;
-    }
+    if (!file_exists($sPath))
+        return  false;
 
-    $size = filesize($sPath);
-    $time = date('r',filemtime($sPath));
+    $fp = @fopen($sPath, 'rb');
 
-    $fm = @fopen($sPath,'rb');
-    if (!$fm) 
-        return false;
+    $size   = filesize($sPath);
+    $length = $size;
+    $start  = 0;
+    $end    = $size - 1;
 
-    $begin = 0;
-    $end = $size;
-
-    if (isset($_SERVER['HTTP_RANGE'])) {
-        if (preg_match('/bytes=\h*(\d+)-(\d*)[\D.*]?/i', $_SERVER['HTTP_RANGE'], $matches)) {
-            $begin = intval($matches[1]);
-            if (!empty($matches[2]))
-                $end = intval($matches[2]);
-        }
-    }
-
-    if ($begin > 0 || $end < $size)
-        header('HTTP/1.0 206 Partial Content');
-    else
-        header('HTTP/1.0 200 OK');
-
-    header('Content-Type: ' . $sMimeType);
+    header('Content-type: ' . $sMimeType);
     header('Cache-Control: ' . $sCachePrivacy . ', must-revalidate, max-age=' . $iCacheAge);
-    header('Pragma: no-cache');
-    header('Accept-Ranges: bytes');
-    header('Content-Length:' . ($end - $begin));
-    header('Content-Range: bytes ' . $begin . '-' . $end . '/' . $size);
+    header("Accept-Ranges: 0-$length");
     if ($sFilename)
         header('Content-Disposition: inline; filename=' . $sFilename);
-    header('Content-Transfer-Encoding: binary');
-    header('Last-Modified:' . $time);
-    header('Connection: close');
 
-    $cur = $begin;
-    fseek($fm, $begin, 0);
+    if (isset($_SERVER['HTTP_RANGE'])) {
 
-    while (!feof($fm) && $cur < $end && (connection_status() == 0)) {
-        print fread($fm, min(1024*16, $end - $cur));
-        $cur += 1024*16;
+        $c_start = $start;
+        $c_end   = $end;
+
+        list(, $range) = explode('=', $_SERVER['HTTP_RANGE'], 2);
+        if (strpos($range, ',') !== false) {
+            header('HTTP/1.1 416 Requested Range Not Satisfiable');
+            header("Content-Range: bytes $start-$end/$size");
+            return false;
+        }
+        if ($range == '-') {
+            $c_start = $size - substr($range, 1);
+        }else{
+            $range  = explode('-', $range);
+            $c_start = $range[0];
+            $c_end   = (isset($range[1]) && is_numeric($range[1])) ? $range[1] : $size;
+        }
+        $c_end = ($c_end > $end) ? $end : $c_end;
+        if ($c_start > $c_end || $c_start > $size - 1 || $c_end >= $size) {
+            header('HTTP/1.1 416 Requested Range Not Satisfiable');
+            header("Content-Range: bytes $start-$end/$size");
+            return false;
+        }
+        $start  = $c_start;
+        $end    = $c_end;
+        $length = $end - $start + 1;
+        fseek($fp, $start);
+        header('HTTP/1.1 206 Partial Content');
+    }
+    header("Content-Range: bytes $start-$end/$size");
+    header("Content-Length: ".$length);
+
+
+    $buffer = 1024 * 8;
+    while(!feof($fp) && ($p = ftell($fp)) <= $end) {
+
+        if ($p + $buffer > $end) {
+            $buffer = $end - $p + 1;
+        }
+        set_time_limit(0);
+        echo fread($fp, $buffer);
+        flush();
     }
 
-    fclose($fm);
+    fclose($fp);
 
     return true;
 }

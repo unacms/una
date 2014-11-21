@@ -130,12 +130,11 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
     protected function applyFilter_Mp4 ($sFile, $aParams)
     {
         return $this->_convertVideo($sFile, $sFile, '.mp4', $aParams, array (
-            'strict' => 'experimental',
             'vcodec' => 'libx264',
             's' => $this->_getOptionSizeForVideo ($sFile, $aParams),
             'b:v' => isset($aParams['video_bitrate']) ? $aParams['video_bitrate'] . 'k' : '512k',
             'movflags' => '+faststart',
-            'acodec' => 'aac',
+            'acodec' => 'libvo_aacenc',
             'ar' => '44100',
             'b:a' => isset($aParams['audio_bitrate']) ? $aParams['audio_bitrate'] . 'k' : '128k',
         ));
