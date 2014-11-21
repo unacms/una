@@ -43,7 +43,12 @@ class BxInvTemplate extends BxDolModuleTemplate
     	return $this->parseHtmlByName('block_request.html', array(
     		'style_prefix' => $this->_oConfig->getPrefix('style'),
     		'text' => _t('_bx_invites_txt_request_block_text'),
-    		'url' => $sUrl
+    		'bx_if:show_button_request' => array(
+    			'condition' => $this->_oConfig->isRequestInvite(),
+    			'content' => array(
+    				'url' => $sUrl
+    			)
+    		)
     	));
     }
 }
