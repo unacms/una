@@ -23,9 +23,26 @@ bx_import('BxDolTranscoderVideoQuery');
  * you need to create 3 different video transcoding objects which will generate .mp4, .webm videos and video poster.
  * Video is convering upon first access, so it is probably better to force video conversion by calling @see BxDolTranscoderVideo::getFileUrl just after video uploading.
  * Video for conversion is queued and when cron is run video conversion is performed.
- * While video is pending for conversion or in the process @see BxDolTranscoderVideo::getFileUrl methods returns empty string for video and predefined image for video poster.
+ * While video is pending for conversion or in the process then 
+ * @see BxDolTranscoderVideo::getFileUrl methods returns empty string for video and predefined image for video poster.
  *
- * Transcoder object and other params are the same as in @see BxDolTranscoderImage, but it is highly recommended to disable 'atime_pruning' and 'atime_tracking', or set it to fairly big value, since video transcoding is not performed on the fly and takes some time. 
+ * Transcoder object and other params are the same as in @see BxDolTranscoderImage, but it is highly recommended to disable 'atime_pruning' and 'atime_tracking', 
+ * or set it to fairly big value, since video transcoding is not performed on the fly and takes some time. 
+ *
+ * Video conversion can be performed on separate server or multiple servers, to do it:
+ * - install dolphin on separate server(s), but connect to the same DB which your main site is using
+ * - enable (TODO: create option) option (when it is enabled it takes a little longer to convert videos)
+ * - add the following code to the begining of inc/header.inc.php file on the main site, where your actual site in installed:
+ *   @code
+ *     define('BX_TRANSCODER_PROCESS_COMPLETED', '');
+ *   @endcode
+ * - if you don't want your main site to convert videos, so all conversion will be performed on the separate server, add the following code to the begining of inc/header.inc.php file on the main site:
+ *   @code
+ *     define('BX_TRANSCODER_NO_TRANSCODING', '');
+ *   @endcode
+ * - all servers must have different host name
+ * - only main server must be used as site, additional sites are just for video conversion, don't perform any action on these sites
+ *
  *
  * Available filters:
  * - Mp4 - this filter convert video into .mp4 format along with resizing, the parameters are the following:
@@ -69,7 +86,7 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
     protected function __construct($aObject, $oStorage)
     {
         parent::__construct($aObject, $oStorage);
-        $this->_sQueueStorage = ''; // TODO:
+        $this->_sQueueStorage = '';//'sys_transcoder_queue_files'; // TODO: add to param - enable/disable queue storage
         $this->_oDb = new BxDolTranscoderVideoQuery($aObject);
         $this->_sQueueTable = $this->_oDb->getQueueTable();
     }
@@ -117,7 +134,7 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
         }
 
         if (!$bRet) {
-            unlink($sFileOut);
+            @unlink($sFileOut);
             return false;
         }
 
@@ -130,11 +147,12 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
     protected function applyFilter_Mp4 ($sFile, $aParams)
     {
         return $this->_convertVideo($sFile, $sFile, '.mp4', $aParams, array (
+            'strict' => 'experimental',
             'vcodec' => 'libx264',
             's' => $this->_getOptionSizeForVideo ($sFile, $aParams),
             'b:v' => isset($aParams['video_bitrate']) ? $aParams['video_bitrate'] . 'k' : '512k',
             'movflags' => '+faststart',
-            'acodec' => 'libvo_aacenc',
+            'acodec' => 'aac',
             'ar' => '44100',
             'b:a' => isset($aParams['audio_bitrate']) ? $aParams['audio_bitrate'] . 'k' : '128k',
         ));
@@ -212,8 +230,10 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
             'an' => ' ',
         ));
 
-        if (!$bRet)        
+        if (!$bRet) {
+            @unlink($sFileOut);
             return false;
+        }
 
 	    bx_import('BxDolImageResize');
     	$oImage = BxDolImageResize::getInstance();

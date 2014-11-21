@@ -121,15 +121,24 @@ class BxDolTranscoderQuery extends BxDolDb
         return true;
     }
 
-    static public function queuePruning ()
+    static public function getForDeletionFromQueue ($sServer, $iLimit = 10)
     {
         $oDb = BxDolDb::getInstance();
 
-        $sQuery = $oDb->prepare("DELETE FROM `" . self::TABLE_QUEUE . "` WHERE `status` = ? AND `changed` < ? - ?", BX_DOL_QUEUE_PROCESSING, time(), BX_DOL_QUEUE_PRUNE_PROCESSING);
+        // delete items which are stuck in processing status
+        $sQuery = $oDb->prepare("DELETE FROM `" . self::TABLE_QUEUE . "` WHERE `server` = ? AND `status` = ? AND `changed` < ? - ?", $sServer, BX_DOL_QUEUE_PROCESSING, time(), BX_DOL_QUEUE_PRUNE_PROCESSING);
         $oDb->query($sQuery);
 
-        $sQuery = $oDb->prepare("DELETE FROM `" . self::TABLE_QUEUE . "` WHERE `status` = ? AND `changed` < ? - ?", BX_DOL_QUEUE_FAILED, time(), BX_DOL_QUEUE_PRUNE_FAILED);
-        return $oDb->query($sQuery);
+        // get files which are subject to delete: with status 'delete' and expired 'failed' items
+        $sQuery = $oDb->prepare("SELECT * FROM `" . self::TABLE_QUEUE . "` WHERE `server` = ? AND ((`status` = ? AND `changed` < ? - ?) OR `status` = ?)", $sServer, BX_DOL_QUEUE_FAILED, time(), BX_DOL_QUEUE_PRUNE_FAILED, BX_DOL_QUEUE_DELETE);
+        return $oDb->getAll($sQuery);
+    }
+
+    static public function getCompletedFromQueue ($iLimit = 10)
+    {
+        $oDb = BxDolDb::getInstance();
+        $sQuery = $oDb->prepare("SELECT * FROM `" . self::TABLE_QUEUE . "` WHERE `status` = 'complete' ORDER BY `added` ASC LIMIT ?", $iLimit);
+        return $oDb->getAll($sQuery);
     }
 
     static public function getNextInQueue ($sServer, $iLimit = 5)
@@ -174,7 +183,7 @@ class BxDolTranscoderQuery extends BxDolDb
         return $this->query($sQuery);
     }
 
-    public function updateQueueStatus ($mixedId, $sStatus, $sLog = '', $sServer = '')
+    public function updateQueueStatus ($mixedId, $sStatus, $sLog = '', $sServer = '', $mixedIdResult = '', $sFileUrlResult = '', $sFileExtResult = '')
     {
         if (!$this->_sTableQueue)
             return false;
@@ -182,7 +191,8 @@ class BxDolTranscoderQuery extends BxDolDb
         $sQueryVals = $this->prepare("`status` = ?, changed = ? WHERE `transcoder_object` = ? AND `file_id_source` = ?", $sStatus, time(), $this->_aObject['object'], $mixedId);
         $sQueryServer = $sServer ? $this->prepare(" `server` = ?, ", $sServer) : '';
         $sQueryLog = $sLog ? $this->prepare(" `log` = ?, ", $sLog) : '';
-        $sQueryAll = "UPDATE `" . $this->_sTableQueue . "` SET " . $sQueryServer . $sQueryLog . $sQueryVals;
+        $sQueryResultFile = $mixedIdResult && $sFileUrlResult ? $this->prepare(" `file_id_result` = ?, `file_url_result` = ?, `file_ext_result` = ?, ", $mixedIdResult, $sFileUrlResult, $sFileExtResult) : '';
+        $sQueryAll = "UPDATE `" . $this->_sTableQueue . "` SET " . $sQueryServer . $sQueryLog . $sQueryResultFile . $sQueryVals;
         return $this->query($sQueryAll);
     }
 

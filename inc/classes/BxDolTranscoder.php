@@ -15,6 +15,7 @@ define('BX_DOL_QUEUE_PENDING', 'pending'); ///< file is pending for processing
 define('BX_DOL_QUEUE_PROCESSING', 'processing'); ///< file is in the process
 define('BX_DOL_QUEUE_COMPLETE', 'complete'); ///< file is already processed
 define('BX_DOL_QUEUE_FAILED', 'failed'); ///< file processing was failed
+define('BX_DOL_QUEUE_DELETE', 'delete'); ///< file is subject to delete
 
 /**
  * Base class for @see BxDolTranscoderImage and @see BxDolTranscoderVideo transcoders
@@ -107,20 +108,75 @@ class BxDolTranscoder extends BxDol implements iBxDolFactoryObject
     }
 
     /**
-     * process files queued for transcoding
+     * Process files queued for transcoding
+     * Can be performed on separate server.
      */
     static public function processQueue ($bQueuePruning = true)
     {
         if ($bQueuePruning)
-            BxDolTranscoderQuery::queuePruning ();
+            self::pruneQueue();
+
         $a = BxDolTranscoderQuery::getNextInQueue (gethostname());
         foreach ($a as $r) {
             $o = self::getObjectInstance($r['transcoder_object']);
-            $aQueue = $o->getDb()->getFromQueue($r['file_id_source']);
-            if ($aQueue['status'] != 'pending')
+            $aQueue = $o->getDb()->getFromQueue($r['file_id_source']); 
+            if (!$aQueue || $aQueue['status'] != BX_DOL_QUEUE_PENDING)
                 continue;
             
             $o->transcode($aQueue['file_id_source'], $aQueue['profile_id']);
+        }
+    }
+
+    static public function pruneQueue () 
+    {
+        $a = BxDolTranscoderQuery::getForDeletionFromQueue (gethostname());
+        if (!$a)
+            return false;
+
+        foreach ($a as $aQueue) {
+            $o = self::getObjectInstance($aQueue['transcoder_object']);
+            $o->deleteFromQueue($aQueue['file_id_source']);
+        }
+    }
+
+    /**
+     * Store completed files from tmp queue storage to the final storage
+     * Must be performed on the actual site.
+     */
+    static public function processCompleted ()
+    {
+        $a = BxDolTranscoderQuery::getCompletedFromQueue ();
+        foreach ($a as $r) {
+            $o = self::getObjectInstance($r['transcoder_object']);
+            $aQueue = $o->getDb()->getFromQueue($r['file_id_source']); 
+            if (!$aQueue || $aQueue['status'] != BX_DOL_QUEUE_COMPLETE)
+                continue;
+            
+            if ($aQueue['file_url_result'] && $aQueue['file_id_result']) {
+  
+                // get transcoded file from provided URL              
+                $sFileData = bx_file_get_contents ($aQueue['file_url_result']);
+                if (false === $sFileData) {
+                    $o->getDb()->updateQueueStatus($aQueue['file_id_source'], BX_DOL_QUEUE_FAILED, "download file failed: {$aQueue['file_url_result']}\n");
+                    continue;   
+                }
+                
+                $sTmpFile = $o->getTmpFilename ('.' . $aQueue['file_ext_result']);
+                if (!file_put_contents($sTmpFile, $sFileData)) {
+                    $o->getDb()->updateQueueStatus($aQueue['file_id_source'], BX_DOL_QUEUE_FAILED, "store downloaded file failed\n");
+                    @unlink($sTmpFile);
+                    continue;
+                }
+                
+                // store downloaded file in final storage
+                if ($o->storeTranscodedFile($aQueue['file_id_source'], $sTmpFile, $aQueue['profile_id']))
+                   $o->getDb()->updateQueueStatus($aQueue['file_id_source'], BX_DOL_QUEUE_DELETE); // mark to delete it (deletion is performed on the server where it was transcoded)
+                else
+                    $o->getDb()->updateQueueStatus($aQueue['file_id_source'], BX_DOL_QUEUE_FAILED, "store file failed:\n" . $o->getLog());
+
+                // delete tmp local file
+                @unlink($sTmpFile);
+            }
         }
     }
 
@@ -370,22 +426,24 @@ class BxDolTranscoder extends BxDol implements iBxDolFactoryObject
         $bRet = true;
         if ($this->_sQueueStorage) {
 
-            // TODO: store in tmp storage 
-
-            $this->_oDb->updateQueueStatus($mixedHandler, BX_DOL_QUEUE_COMPLETE);
+            $sFileUrlResult = '';
+            if (!($iFileIdResult = $this->storeTranscodedFileInQueueStorage($mixedHandler, $sTmpFile, $sFileUrlResult)))
+                $this->_oDb->updateQueueStatus($mixedHandler, BX_DOL_QUEUE_FAILED, "store queue tmp file failed:\n" . $this->getLog());
+            else
+                $this->_oDb->updateQueueStatus($mixedHandler, BX_DOL_QUEUE_COMPLETE, '', '', $iFileIdResult, $sFileUrlResult, $sExtChange);
 
         } else {
 
             $bRet = $this->storeTranscodedFile($mixedHandler, $sTmpFile, $iProfileId);
-        
-            @unlink($sTmpFile);
             
             if ($bRet)
-                $this->_oDb->deleteFromQueue($mixedHandler);
+                $this->deleteFromQueue($mixedHandler);
             else
                 $this->_oDb->updateQueueStatus($mixedHandler, BX_DOL_QUEUE_FAILED, "store file failed:\n" . $this->getLog());
                 
         }
+
+        @unlink($sTmpFile);
 
         return $bRet;
     }
@@ -429,6 +487,13 @@ class BxDolTranscoder extends BxDol implements iBxDolFactoryObject
         return false;
     }
 
+    public function getTmpFilename ($sOverrideName = false)
+    {
+        if ($sOverrideName)
+            return BX_DIRECTORY_PATH_TMP . rand(10000, 99999) . $sOverrideName;
+        return tempnam(BX_DIRECTORY_PATH_TMP, $this->_aObject['object']);
+    }
+
     public function clearLog()
     {
         $this->_sLog = '';
@@ -444,7 +509,25 @@ class BxDolTranscoder extends BxDol implements iBxDolFactoryObject
         return $this->_sLog;
     }
 
-    protected function storeTranscodedFile ($mixedHandler, $sTmpFile, $iProfileId)
+    public function deleteFromQueue ($mixedHandler)
+    {
+        $sErrMsg = "delete queue tmp file failed:\n";
+        $a = $this->_oDb->getFromQueue($mixedHandler);
+        if (!$a || $a['server'] != gethostname()) // deletion must be performed on the server where it was transcoded
+            return false;
+        
+        if ($a['file_id_result'] && $this->_sQueueStorage && 0 != strncmp($a['log'], $sErrMsg, strlen($sErrMsg))) {
+            $oStorage = BxDolStorage::getObjectInstance($this->_sQueueStorage);
+            if (!$oStorage->deleteFile($a['file_id_result'])) {
+                $this->_oDb->updateQueueStatus($mixedHandler, BX_DOL_QUEUE_FAILED, $sErrMsg . $this->getLog());
+                return false;
+            }
+        }
+
+        return $this->_oDb->deleteFromQueue($mixedHandler);
+    }
+
+    public function storeTranscodedFile ($mixedHandler, $sTmpFile, $iProfileId)
     {
         $sMethodIsPrivate = 'isPrivate_' . $this->_aObject['source_type'];
         $isPrivate = $this->$sMethodIsPrivate($mixedHandler);
@@ -462,6 +545,29 @@ class BxDolTranscoder extends BxDol implements iBxDolFactoryObject
         $this->_oStorage->afterUploadCleanup($iFileId, $iProfileId);
 
         return true;
+    }
+
+    protected function storeTranscodedFileInQueueStorage ($mixedHandler, $sTmpFile, &$sFileUrlResult)
+    {
+        if (!$this->_sQueueStorage)
+            return false;
+
+        $oStorage = BxDolStorage::getObjectInstance($this->_sQueueStorage);
+
+        $iFileIdResult = $oStorage->storeFileFromPath ($sTmpFile, 1, 0);
+        if (!$iFileIdResult) {
+            $this->addToLog($oStorage->getErrorString());
+            return false;
+        }
+
+        if (!($sFileUrlResult = $oStorage->getFileUrlById($iFileIdResult))) {
+            $this->_oStorage->deleteFile($iFileIdResult);
+            return false;
+        }
+
+        $oStorage->afterUploadCleanup($iFileIdResult, 0);
+
+        return $iFileIdResult;
     }
 
     protected function addToQueue($mixedHandler, $iProfileId = 0)
@@ -634,13 +740,6 @@ class BxDolTranscoder extends BxDol implements iBxDolFactoryObject
             return false;
 
         return $oStorageOriginal->getFileUrlById($mixedHandler);
-    }
-
-    protected function getTmpFilename ($sOverrideName = false)
-    {
-        if ($sOverrideName)
-            return BX_DIRECTORY_PATH_TMP . rand(10000, 99999) . $sOverrideName;
-        return tempnam(BX_DIRECTORY_PATH_TMP, $this->_aObject['object']);
     }
 
     protected function initFilters ()

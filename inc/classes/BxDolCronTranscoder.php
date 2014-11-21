@@ -17,7 +17,12 @@ class BxDolCronTranscoder extends BxDolCron
         ignore_user_abort();
 
         bx_import('BxDolTranscoder');
-        BxDolTranscoder::processQueue();
+
+        if (!defined('BX_TRANSCODER_NO_TRANSCODING'))
+            BxDolTranscoder::processQueue();
+
+        if (defined('BX_TRANSCODER_PROCESS_COMPLETED'))
+            BxDolTranscoder::processCompleted(); 
     }
 }
 
