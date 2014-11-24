@@ -24,7 +24,7 @@ class BxBaseModGeneralInstaller extends BxDolStudioInstaller
 
     protected $_aMenuTriggers = array(); // list of menu triggers, it must be specified in the module which adds menu item and in modules where menu items are added, @see BxDolMenu::processMenuTrigger
 
-    protected $_aPageTriggers = array(); // list of page triggers, it must be specified in the module which adds page block and in modules where page blocks are added, @see BxDolMenu::processPageTrigger
+    protected $_aPageTriggers = array(); // list of page triggers, it must be specified in the module which adds page block and in modules where page blocks are added, @see BxDolPage::processPageTrigger
 
     function __construct($aConfig)
     {

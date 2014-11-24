@@ -195,10 +195,10 @@ class BxDolPage extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
             'active' => 1,
         ));
 
-        // get list of menu triggers
+        // get list of page block triggers
         $aPageBlocks = BxDolPageQuery::getPageTriggers($sPageTriggerName);
 
-        // check each menu item trigger for all modules
+        // check each page block trigger for all modules
         foreach ($aPageBlocks as $aPageBlock) {
             foreach ($aModules as $aModule) {
                 if (!BxDolRequest::serviceExists($aModule['name'], 'get_page_object_for_page_trigger'))
