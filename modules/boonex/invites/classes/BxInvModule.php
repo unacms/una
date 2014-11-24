@@ -63,6 +63,7 @@ class BxInvModule extends BxDolModule
 			);
 
         bx_import('BxDolForm');
+        bx_import('FormCheckerHelper', $this->_aModule);
         $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject('form_invite'), $this->_oConfig->getObject('form_display_invite_send'));
         $oForm->aInputs['text']['value'] = _t('_bx_invites_msg_invitation');
 
@@ -178,17 +179,16 @@ class BxInvModule extends BxDolModule
 
 		$iSent = 0;
 		$iDate = time();
-		$aEmails = explode(';', $sEmails);
+		$aEmails = preg_split("/[\s\n,;]+/", $sEmails);
 		if(is_array($aEmails) && !empty($aEmails))
 			foreach($aEmails as $sEmail) {
 				if($iLimit !== false && (int)$iLimit <= 0)
 					break;
 
 				$sKey = $oKeys->getNewKey(false, $iKeyLifetime);
-				$sJoinUrl .= '&' . $sKeyCode . '=' . $sKey;
 
 				$sEmail = trim($sEmail);
-				if(sendMail($sEmail, $aMessage['Subject'], $aMessage['Body'], 0, array('join_url' => $sJoinUrl), BX_EMAIL_SYSTEM)) {
+				if(sendMail($sEmail, $aMessage['Subject'], $aMessage['Body'], 0, array('join_url' => bx_append_url_params($sJoinUrl, array($sKeyCode => $sKey))), BX_EMAIL_SYSTEM)) {
 					$oForm->insert(array(
 						'account_id' => $iAccountId,
 						'profile_id' => $iProfileId,

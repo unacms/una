@@ -9,7 +9,7 @@
 	<string name="_bx_invites_form_invite_input_sys_emails"><![CDATA[Emails]]></string>
 	<string name="_bx_invites_form_invite_input_emails"><![CDATA[Emails]]></string>
 	<string name="_bx_invites_form_invite_input_emails_inf"><![CDATA[Use semicolon to separate emails.]]></string>
-	<string name="_bx_invites_form_invite_input_emails_err"><![CDATA[You need to type at least one email.]]></string>
+	<string name="_bx_invites_form_invite_input_emails_err"><![CDATA[You need to use correct emails and enter at least one email.]]></string>
 	<string name="_bx_invites_form_invite_input_sys_text"><![CDATA[Text]]></string>
 	<string name="_bx_invites_form_invite_input_text"><![CDATA[Text]]></string>
 	<string name="_bx_invites_form_invite_input_text_err"><![CDATA[You need to type the text which will be added to invitation email.]]></string>

@@ -23,13 +23,13 @@ CREATE TABLE IF NOT EXISTS `bx_inv_requests` (
 
 -- FORMS
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
-('bx_invites_invite', @sName, '_bx_invites_form_invite', '', '', 'do_submit', 'bx_inv_invites', 'id', '', '', '', 0, 1, '', '');
+('bx_invites_invite', @sName, '_bx_invites_form_invite', '', '', 'do_submit', 'bx_inv_invites', 'id', '', '', 'a:1:{s:14:"checker_helper";s:22:"BxInvFormCheckerHelper";}', 0, 1, '', '');
 
 INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
 ('bx_invites_invite_send', @sName, 'bx_invites_invite', '_bx_invites_form_invite_display_send', 0);
 
 INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES
-('bx_invites_invite', @sName, 'emails', '', '', 0, 'textarea', '_bx_invites_form_invite_input_sys_emails', '_bx_invites_form_invite_input_emails', '_bx_invites_form_invite_input_emails_inf', 1, 0, 0, '', '', '', 'Avail', '', '_bx_invites_form_invite_input_emails_err', '', '', 0, 0),
+('bx_invites_invite', @sName, 'emails', '', '', 0, 'textarea', '_bx_invites_form_invite_input_sys_emails', '_bx_invites_form_invite_input_emails', '_bx_invites_form_invite_input_emails_inf', 1, 0, 0, '', '', '', 'Emails', '', '_bx_invites_form_invite_input_emails_err', '', '', 0, 0),
 ('bx_invites_invite', @sName, 'text', '', '', 0, 'textarea', '_bx_invites_form_invite_input_sys_text', '_bx_invites_form_invite_input_text', '', 1, 0, 0, '', '', '', 'Length', 'a:2:{s:3:"min";i:10;s:3:"max";i:5000;}', '_bx_invites_form_invite_input_text_err', '', '', 0, 0),
 ('bx_invites_invite', @sName, 'do_submit', '_bx_invites_form_invite_input_do_submit', '', 0, 'submit', '_bx_invites_form_invite_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
 
