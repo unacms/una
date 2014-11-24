@@ -185,9 +185,11 @@ class BxInvModule extends BxDolModule
 				if($iLimit !== false && (int)$iLimit <= 0)
 					break;
 
-				$sKey = $oKeys->getNewKey(false, $iKeyLifetime);
-
 				$sEmail = trim($sEmail);
+				if(empty($sEmail))
+					continue;
+
+				$sKey = $oKeys->getNewKey(false, $iKeyLifetime);
 				if(sendMail($sEmail, $aMessage['Subject'], $aMessage['Body'], 0, array('join_url' => bx_append_url_params($sJoinUrl, array($sKeyCode => $sKey))), BX_EMAIL_SYSTEM)) {
 					$oForm->insert(array(
 						'account_id' => $iAccountId,

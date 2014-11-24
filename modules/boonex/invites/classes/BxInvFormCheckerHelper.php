@@ -17,7 +17,7 @@ class BxInvFormCheckerHelper extends BxDolFormCheckerHelper
     {
     	$aEmails = preg_split("/[\s\n,;]+/", $s);
     	foreach($aEmails as $sEmail)
-    		if(!self::checkEmail($sEmail))
+    		if(!empty($sEmail) && !self::checkEmail($sEmail))
     			return false;
 
         return true;
