@@ -31,7 +31,7 @@ bx_import('BxDolTranscoderVideoQuery');
  *
  * Video conversion can be performed on separate server or multiple servers, to do it:
  * - install dolphin on separate server(s), but connect to the same DB which your main site is using
- * - enable (TODO: create option) option (when it is enabled it takes a little longer to convert videos)
+ * - enable 'sys_transcoder_queue_files' option (when it is enabled it takes a little longer to convert videos)
  * - add the following code to the begining of inc/header.inc.php file on the main site, where your actual site in installed:
  *   @code
  *     define('BX_TRANSCODER_PROCESS_COMPLETED', '');
@@ -86,7 +86,7 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
     protected function __construct($aObject, $oStorage)
     {
         parent::__construct($aObject, $oStorage);
-        $this->_sQueueStorage = '';//'sys_transcoder_queue_files'; // TODO: add to param - enable/disable queue storage
+        $this->_sQueueStorage = getParam('sys_transcoder_queue_storage') ? 'sys_transcoder_queue_files' : '';
         $this->_oDb = new BxDolTranscoderVideoQuery($aObject);
         $this->_sQueueTable = $this->_oDb->getQueueTable();
     }

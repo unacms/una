@@ -1162,6 +1162,7 @@
 	<string name="_adm_stg_cpt_option_sys_template_cache_js_enable"><![CDATA[Enable cache for JS files]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_page_width_max"><![CDATA[Max page width(in pixels)]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_page_width_min"><![CDATA[Min page width(in pixels)]]></string>
+	<string name="_adm_stg_cpt_option_sys_transcoder_queue_storage"><![CDATA[Remote video transcoding]]></string>
 	<string name="_adm_stg_cpt_option_template"><![CDATA[Default Template]]></string>
 	<string name="_adm_stg_err_option_template"><![CDATA[Template cannot be empty and must have a valid name.]]></string>
 	<string name="_adm_stg_cpt_option_use_like_operator"><![CDATA[Use operator LIKE for search (recommended for small content)]]></string>
