@@ -77,7 +77,7 @@
 	<string name="_bx_invites_et_invite_form_message_subject"><![CDATA[Invitation from {site_name}.]]></string>
 	<string name="_bx_invites_et_invite_form_message_body"><![CDATA[<bx_include_auto:_email_header.html />
 <p><b>Dear Friend</b>,</p>
-<p><b>{profile_name}</b> invites you to join to <a href="{site_url}">{site_name}</a> community site.<br />Message from <b>{profile_name}</b>:</p>
+<p>{profile_name} invites you to join to <a href="{site_url}">{site_name}</a> community site.<br />Message from {profile_name}:</p>
 <hr />
 <p>{text}</p>
 <hr />
@@ -88,8 +88,8 @@
 	<string name="_bx_invites_et_request_form_message_subject"><![CDATA[Request invitation.]]></string>
 	<string name="_bx_invites_et_request_form_message_body"><![CDATA[<bx_include_auto:_email_header.html />
 <p><b>Dear Administrator</b>,</p>
-<p>You were contacted by <u>{sender_name}</u> with email <u>{sender_email}</u> from <u>{sender_ip}</u> IP address.</p>
-<p>He (She) wants to get an invitation to join <b>{site_name}</b> site.</p>
+<p>{sender_name} (<a href="mailto:{sender_email}">{sender_email}</a>; IP {sender_ip}) requested an invitation to join <b>{site_name}</b> site.</p>
+<p><a href="{manage_url}">Click here</a> to manage requests.</p>
 <bx_include_auto:_email_footer.html />]]></string>
 
 
