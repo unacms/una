@@ -15,8 +15,8 @@ $aConfig = array(
      */
     'type' => BX_DOL_MODULE_TYPE_MODULE,
     'name' => 'bx_invites',
-    'title' => 'Invites',
-    'note' => 'Invites module.',
+    'title' => 'Invitations',
+    'note' => 'Invitations module.',
     'version' => '8.0.0.DEV',
     'vendor' => 'BoonEx',
 	'help_url' => 'http://feed.boonex.com/?section={module_name}',
@@ -37,7 +37,7 @@ $aConfig = array(
     /**
      * Category for language keys.
      */
-    'language_category' => 'Invites',
+    'language_category' => 'Invitations',
 
     /**
      * Installation/Uninstallation Section.

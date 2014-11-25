@@ -62,9 +62,7 @@ class BxInvModule extends BxDolModule
 				'content' => MsgBox(_t('_bx_invites_err_limit_reached'))
 			);
 
-        bx_import('BxDolForm');
-        bx_import('FormCheckerHelper', $this->_aModule);
-        $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject('form_invite'), $this->_oConfig->getObject('form_display_invite_send'));
+        $oForm = $this->getFormObjectInvite();
         $oForm->aInputs['text']['value'] = _t('_bx_invites_msg_invitation');
 
         $sResult = '';
@@ -164,10 +162,8 @@ class BxInvModule extends BxDolModule
 		$sKeyCode = $this->_oConfig->getKeyCode();
 		$iKeyLifetime = $this->_oConfig->getKeyLifetime();
 
-		if(empty($oForm)) {
-			bx_import('BxDolForm');
-			$oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject('form_invite'), $this->_oConfig->getObject('form_display_invite_send'));
-		}
+		if(empty($oForm))
+			$oForm = $this->getFormObjectInvite();
 
 		bx_import('BxDolPermalinks');
 		$sJoinUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account');
@@ -271,6 +267,16 @@ class BxInvModule extends BxDolModule
         $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'request');
         $oAlert->alert();
         //--- Event -> Request for Alerts Engine ---//
+    }
+
+    protected function getFormObjectInvite($sDisplay = '')
+    {
+    	if(empty($sDisplay))
+    		$sDisplay = $this->_oConfig->getObject('form_display_invite_send');
+
+    	bx_import('BxDolForm');
+        bx_import('FormCheckerHelper', $this->_aModule);
+        return BxDolForm::getObjectInstance($this->_oConfig->getObject('form_invite'), $sDisplay);
     }
 }
 
