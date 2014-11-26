@@ -222,7 +222,7 @@
         <chmod file="${deploy_path}/logs" mode="0777" />
         <chmod file="${deploy_path}/tmp" mode="0777" />
         <chmod file="${deploy_path}/storage" mode="0777" />
-        <chmod file="${deploy_path}/plugins/ffmpeg/ffmpeg.exe" mode="0755" />
+        <chmod file="${deploy_path}/plugins/ffmpeg/ffmpeg.exe" mode="0777" />
 
         <phingcall target="install">
             <property name="install_base_dir" value="${deploy_path}" />
