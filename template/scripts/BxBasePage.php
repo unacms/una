@@ -41,6 +41,13 @@ class BxBasePage extends BxDolPage
                 exit;
             }
 
+            bx_alert('system', 'page_output_block', 0, false, array(
+                'page_name' => $this->_sObject,
+                'page_object' => $this,
+                'page_query' => $this->_oQuery,
+                'block_id' => (int)$iBlockId,
+            ));
+
             header( 'Content-type:text/html;charset=utf-8' );
             echo $this->_getBlockOnlyCode($iBlockId);
             exit;
@@ -69,6 +76,13 @@ class BxBasePage extends BxDolPage
             $sPageCode = $this->_getPageCode();
             $oCache->setData($sKey, $sPageCode, $this->_aObject['cache_lifetime']);
         }
+
+        bx_alert('system', 'page_output', 0, false, array(
+            'page_name' => $this->_sObject,
+            'page_object' => $this,
+            'page_query' => $this->_oQuery,
+            'page_code' => &$sPageCode,
+        ));
 
         return $sPageCode;
     }
