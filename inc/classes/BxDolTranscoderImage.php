@@ -62,6 +62,7 @@ bx_import('BxDolTranscoderImageQuery');
  *     - w - width of resulted image.
  *     - h - height of resulted image.
  *     - square_resize - make resulted image square, even of original image is not square, 'w' and 'h' parameters must be the same.
+ *     - crop_resize - crop image to destination size with filling whole area of destination size.
  *     - force_type - always change type of the image to the specified type: jpg, png, gif.
  * - Grayscale - make image grayscale, there is no parameters for this filter
  *

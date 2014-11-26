@@ -21,7 +21,7 @@ bx_import('BxDolTranscoderVideoQuery');
  *
  * To generate video which plays in all moders browsers along with video poster, 
  * you need to create 3 different video transcoding objects which will generate .mp4, .webm videos and video poster.
- * Video is convering upon first access, so it is probably better to force video conversion by calling @see BxDolTranscoderVideo::getFileUrl just after video uploading.
+ * Video is converting upon first access, so it is probably better to force video conversion by calling @see BxDolTranscoderVideo::getFileUrl just after video uploading.
  * Video for conversion is queued and when cron is run video conversion is performed.
  * While video is pending for conversion or in the process then 
  * @see BxDolTranscoderVideo::getFileUrl methods returns empty string for video and predefined image for video poster.
@@ -46,12 +46,12 @@ bx_import('BxDolTranscoderVideoQuery');
  *
  * Available filters:
  * - Mp4 - this filter convert video into .mp4 format along with resizing, the parameters are the following:
- *     - h - height of resulted video (360 by default), for video it is highly recommended to specify only height parameter (no width parameter, )
+ *     - h - height of resulted video (360px by default), for video it is highly recommended to specify only height parameter (without width parameter)
  *     - video_bitrate - video bitrate (512k by default)
  *     - audio_bitrate - video bitrate (128k by default)
  *     - ffmpeg_options - additional command line options for ffmepeg, as key => value array (empty by default)
  * - Webm - this filter convert video into .webm format along with resizing, the parameters are the same as for Mp4 filter
- * - Poster - this filter generates video thumbnail, it tries to get poster at 0, 3 and 5 seconds from the beginning, it gets first not fully blacke/white thumb
+ * - Poster - this filter generates video thumbnail, it tries to get poster at 0, 3 and 5 seconds from the beginning, it gets first not fully black/white thumb
  *
  *
  * Example of usage:
@@ -80,6 +80,7 @@ bx_import('BxDolTranscoderVideoQuery');
  *     </video>'; 
  * @endcode
  *
+ * Also @see transcoder_videos sample for complete example.
  */
 class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObject
 {
@@ -200,7 +201,7 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
             @unlink($sFileOut);
         }
 
-        $sCommand = BX_SYSTEM_FFMPEG . ' -y -i "' . escapeshellcmd($sFile) . '" ' . $sOptions . ' ' . $sFileOut . ' 2>&1';
+        $sCommand = escapeshellcmd(BX_SYSTEM_FFMPEG) . ' -y -i ' . escapeshellarg($sFile) . ' ' . $sOptions . ' ' . escapeshellarg($sFileOut) . ' 2>&1';
         $sOutput = `$sCommand`;
         $this->addToLog("\n---\n{$sCommand}\n{$sOutput}\n");
 
