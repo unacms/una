@@ -26,7 +26,7 @@ bx_import('BxDolKeyQuery');
  *  bx_import('BxDolKey'); // import class
  *  $oKeys = BxDolKey::getInstance(); // get object instance
  *  if ($oKeys) // check if object is available for using
- *      echo $oKeys->getNewKey (3600); // get new hashed key, which will be automatically deleted after 1 hour
+ *      echo $oKeys->getNewKey (false, 3600); // get new hashed key, which will be automatically deleted after 1 hour
  * @endcode
  *
  * Check if hashed key exists:
@@ -78,6 +78,7 @@ class BxDolKey extends BxDol implements iBxDolSingleton
 
     /**
      * Get new key.
+     * @param $aData - some data to associate with the key
      * @param $iExpire - number of seconds to generated key after, by default - 1 week
      * @return newly generated key string
      */
