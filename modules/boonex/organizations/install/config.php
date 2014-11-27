@@ -41,6 +41,47 @@ $aConfig = array(
     'language_category' => 'Organizations',
 
     /**
+     * Connections.
+     */
+    'connections' => array(
+    	'sys_profiles_friends' => array ('type' => 'profiles'),
+		'sys_profiles_subscriptions' => array ('type' => 'profiles'),
+    ),
+
+    /**
+     * Menu triggers.
+     */
+    'menu_triggers' => array(
+    	'trigger_profile_view_submenu'
+    ),
+
+    /**
+     * Page triggers.
+     */
+    'page_triggers' => array (
+    	'trigger_page_organizations_view_entry', 
+    ),
+
+    /**
+     * Storages.
+     */
+    'storages' => array(
+    	'bx_organizations_pics'
+    ),
+
+	/**
+     * Transcoders.
+     */
+    'transcoders' => array(
+    	'bx_organizations_icon', 
+    	'bx_organizations_thumb', 
+    	'bx_organizations_avatar', 
+    	'bx_organizations_picture', 
+    	'bx_organizations_cover', 
+    	'bx_organizations_cover_thumb'
+    ),
+
+    /**
      * Installation/Uninstallation Section.
      */
     'install' => array(
@@ -49,24 +90,31 @@ $aConfig = array(
         'clear_db_cache' => 1,
     ),
     'uninstall' => array (
+    	'process_storages' => 1,
         'execute_sql' => 1,
         'update_languages' => 1,
+    	'process_connections' => 1,
+    	'process_deleted_profiles' => 1,
         'clear_db_cache' => 1,
-        'process_deleted_profiles' => 1,
     ),
     'enable' => array(
         'execute_sql' => 1,
-        'recompile_menus' => 1,
-        'recompile_permalinks' => 1,
-        'recompile_alerts' => 1,
+        'clear_db_cache' => 1,
+    ),
+    'enable_success' => array(
+    	'process_menu_triggers' => 1,
+    	'process_page_triggers' => 1,
+    	'register_transcoders' => 1,
         'clear_db_cache' => 1,
     ),
     'disable' => array (
         'execute_sql' => 1,
-        'recompile_menus' => 1,
-        'recompile_permalinks' => 1,
-        'recompile_alerts' => 1,
+    	'unregister_transcoders' => 1,
         'clear_db_cache' => 1,
+    ),
+    'disable_failed' => array (
+    	'register_transcoders' => 1,
+    	'clear_db_cache' => 1,
     ),
 
     /**

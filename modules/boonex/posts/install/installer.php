@@ -16,9 +16,6 @@ class BxPostsInstaller extends BxBaseModTextInstaller
     function __construct($aConfig)
     {
         parent::__construct($aConfig);
-        $this->_aTranscoders = array ('bx_posts_preview');
-        $this->_aStorages = array ('bx_posts_files');
-        $this->_aMenuTriggers = array ('trigger_profile_view_submenu');
     }
 }
 

@@ -55,18 +55,10 @@ $aConfig = array(
     ),
     'enable' => array(
         'execute_sql' => 1,
-        'recompile_global_paramaters' => 1,
-        'recompile_menus' => 1,
-        'recompile_permalinks' => 1,
-        'recompile_alerts' => 1,
         'clear_db_cache' => 1,
     ),
     'disable' => array (
         'execute_sql' => 1,
-        'recompile_global_paramaters' => 1,
-        'recompile_menus' => 1,
-        'recompile_permalinks' => 1,
-        'recompile_alerts' => 1,
         'clear_db_cache' => 1,
     ),
 

@@ -45,12 +45,12 @@ $aConfig = array(
     'install' => array(
         'execute_sql' => 1,
         'update_languages' => 1,
-        'recompile_global_paramaters' => 1
+    	'clear_db_cache' => 1
     ),
     'uninstall' => array (
         'execute_sql' => 1,
         'update_languages' => 1,
-        'recompile_global_paramaters' => 1
+    	'clear_db_cache' => 1
     ),
     'enable' => array(
         'execute_sql' => 1
