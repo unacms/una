@@ -519,6 +519,9 @@ class BxBaseGrid extends BxDolGrid
 
     protected function _getActionDefault ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
+        if ($a['icon_only'] && empty($a['attr']['title']) && !empty($a['title']))
+            $a['attr']['title'] = $a['title'];
+
         $sAttr = $this->_convertAttrs(
             $a, 'attr',
             'bx-btn bx-def-margin-sec-left' . ($isSmall ? ' bx-btn-small' : '') . ($isDisabled ? ' bx-btn-disabled' : '') // add default classes
@@ -532,7 +535,7 @@ class BxBaseGrid extends BxDolGrid
             elseif ($sIconUrl = $this->_oTemplate->getIconUrl($a['icon']))
                 $sImage = '<i style="background-image:url(' . $sIconUrl . ');"></i>';
         }
-        return '<button ' . $sAttr . '>' . $sIcon . $sImage . $a['title'] . '</button>';
+        return '<button ' . $sAttr . '>' . $sIcon . $sImage . ($a['icon_only'] ? '' : $a['title']) . '</button>';
     }
 
     protected function _getActionDivider ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())

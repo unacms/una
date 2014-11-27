@@ -2864,6 +2864,7 @@ CREATE TABLE IF NOT EXISTS `sys_grid_actions` (
   `name` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
   `icon` varchar(255) NOT NULL,
+  `icon_only` tinyint(4) NOT NULL DEFAULT '0',
   `confirm` tinyint(4) NOT NULL DEFAULT '1',
   `order` int(11) NOT NULL,
   UNIQUE KEY `object_name_type` (`object`,`type`,`name`)

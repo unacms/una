@@ -35,6 +35,7 @@ class BxDolStudioTools extends BxDolIO
             'logs',
             'tmp',
             'storage',
+            'plugins/ffmpeg/ffmpeg.exe',
         );
 
         $this->aPostInstallPermissions = array(

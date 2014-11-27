@@ -2,7 +2,7 @@
 <div id="__id_wrap__">
 
     <bx_if:display_header>
-        <div class="bx-grid-header bx-def-margin-top">
+        <div class="bx-grid-header bx-def-margin-top bx-clearfix">
 
             <bx_if:filter>
                 <div style="float:left;">
@@ -16,7 +16,6 @@
                 </div>
             </bx_if:actions_independent>
 
-            <div class="bx-clear"></div>
         </div>
     </bx_if:display_header>
 
@@ -46,7 +45,7 @@
 
         <hr class="bx-def-hr" />
 
-        <div class="bx-grid-footer bx-def-margin-bottom bx-def-margin-sec-top">
+        <div class="bx-grid-footer bx-def-margin-bottom bx-def-margin-sec-top bx-clearfix">
             <bx_if:actions_bulk>
                 <div style="float:left;">
                     __actions_bulk__
@@ -56,8 +55,6 @@
             <div style="float:right;">
                 __paginate__
             </div>
-
-            <div class="bx-clear"></div>
         </div>
 
     </div>
