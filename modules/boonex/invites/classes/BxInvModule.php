@@ -115,11 +115,15 @@ class BxInvModule extends BxDolModule
 			if($iId !== false) {
 				$sRequestsEmail = $this->_oConfig->getRequestsEmail();
 				if(!empty($sRequestsEmail)) {
+					bx_import('BxDolPermalinks');
+					$sManageUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=invites-requests');
+
 					bx_import('BxDolEmailTemplates');
 					$aMessage = BxDolEmailTemplates::getInstance()->parseTemplate('bx_invites_request_form_message', array(
 						'sender_name' => bx_process_output($oForm->getCleanValue('name')),
 						'sender_email' => bx_process_output($oForm->getCleanValue('email')),
-						'sender_ip' => $sIp
+						'sender_ip' => $sIp,
+						'manage_url' => $sManageUrl
 					));
 
 					sendMail($sRequestsEmail, $aMessage['Subject'], $aMessage['Body'], 0, array(), BX_EMAIL_SYSTEM);

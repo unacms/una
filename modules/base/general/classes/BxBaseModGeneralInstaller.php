@@ -10,127 +10,13 @@
  */
 
 bx_import('BxDolStudioInstaller');
-bx_import('BxDolStorage');
-bx_import('BxDolTranscoderImage');
 bx_import('BxDolService');
 
 class BxBaseModGeneralInstaller extends BxDolStudioInstaller
 {
-    protected $_aStorages = array (); // storage objects to automatically delete files from upon module uninstallation, don't add storage objects used in image transcoder objects
-
-    protected $_aTranscoders = array (); // image transcoder objects to automatically register/unregister necessary alerts for
-
-    protected $_aConnections = array (); // connections objects associated with module data, it must be defined which content is associated with the connection, the key is connection object name and value is array (possible array values: type, conn, table, field_id), if 'type' == 'profiles', then it is considered profiles connection and other possible param is 'conn' ('initiator', 'content' or 'both') when 'type' == 'custom' (or ommited), then other possible params are 'conn', 'table' and 'field_id'
-
-    protected $_aMenuTriggers = array(); // list of menu triggers, it must be specified in the module which adds menu item and in modules where menu items are added, @see BxDolMenu::processMenuTrigger
-
-    protected $_aPageTriggers = array(); // list of page triggers, it must be specified in the module which adds page block and in modules where page blocks are added, @see BxDolPage::processPageTrigger
-
     function __construct($aConfig)
     {
         parent::__construct($aConfig);
-    }
-
-    function enable($aParams)
-    {
-        $aResult = parent::enable($aParams);
-
-        if (!$aResult['result']) // proces further only in case of successful enable
-            return $aResult;
-
-        BxDolTranscoderImage::registerHandlersArray($this->_aTranscoders);
-
-        if ($this->_aMenuTriggers) {
-            bx_import('BxDolMenu');
-            foreach ($this->_aMenuTriggers as $sMenuTriggerName)
-                BxDolMenu::processMenuTrigger($sMenuTriggerName);
-        }
-
-	    if ($this->_aPageTriggers) {
-            bx_import('BxDolPage');
-            foreach ($this->_aPageTriggers as $sPageTriggerName)
-                BxDolPage::processPageTrigger($sPageTriggerName);
-        }
-
-        return $aResult;
-    }
-
-    function disable($aParams)
-    {
-        BxDolTranscoderImage::unregisterHandlersArray($this->_aTranscoders);
-        BxDolTranscoderImage::cleanupObjectsArray($this->_aTranscoders);
-
-        $aResult = parent::disable($aParams);
-
-        if (!$aResult['result']) // we need to register it back if disabling failed
-            BxDolTranscoderImage::registerHandlersArray($this->_aTranscoders);
-
-        return $aResult;
-    }
-
-    function install($aParams, $bEnable = false)
-    {
-        return parent::install($aParams, $bEnable);
-    }
-
-    function uninstall($aParams, $bDisable = false)
-    {
-        // check if module is already waiting while files are deleting
-        bx_import('BxDolInstallerUtils');
-        if (BxDolInstallerUtils::isModulePendingUninstall($this->_aConfig['home_uri']))
-            return array(
-                'message' => _t('_adm_err_modules_pending_uninstall_already'),
-                'result' => false,
-            );
-
-        // queue for deletion storage files
-        $bSetModulePendingUninstall = false;
-        foreach ($this->_aStorages as $s) {
-            if (($o = BxDolStorage::getObjectInstance($s)) && $o->queueFilesForDeletionFromObject())
-                $bSetModulePendingUninstall = true;
-        }
-
-        // delete comments and queue for deletion comments attachments
-        bx_import('BxDolCmts');
-        $iFiles = 0;
-        BxDolCmts::onModuleUninstall ($this->_aConfig['name'], $iFiles);
-        if ($iFiles)
-            $bSetModulePendingUninstall = true;
-
-        // if some files were added to the queue, set module as pending uninstall
-        if ($bSetModulePendingUninstall) {
-            BxDolInstallerUtils::setModulePendingUninstall($this->_aConfig['home_uri']);
-            return array(
-                'message' => _t('_adm_err_modules_pending_uninstall'),
-                'result' => false,
-            );
-        }
-
-        // delete associated connections
-        if ($this->_aConnections) {
-            bx_import('BxDolConnection');
-            foreach ($this->_aConnections as $sObjectConnections => $a) {
-                $o = BxDolConnection::getObjectInstance($sObjectConnections);
-                if (!$o)
-                    continue;
-
-                $sFuncSuffix = 'DeleteInitiatorAndContent';
-                if (isset($a['conn']) && 'initiator' == $a['conn'])
-                    $sFuncSuffix = 'DeleteInitiator';
-                elseif (isset($a['conn']) && 'content' == $a['conn'])
-                    $sFuncSuffix = 'DeleteContent';
-
-                if (isset($a['type']) && 'profiles' == $a['type']) {
-                    $sFunc = 'onModuleProfile' . $sFuncSuffix;
-                    $o->$sFunc($this->_aConfig['name']);
-                } else {
-                    $sFunc = 'onModule' . $sFuncSuffix;
-                    $o->$sFunc($a['table'], $a['field_id']);
-                }
-            }
-        }
-
-        return parent::uninstall($aParams, $bDisable);
     }
 }
 

@@ -16,14 +16,6 @@ class BxOrgsInstaller extends BxBaseModProfileInstaller
     function __construct($aConfig)
     {
         parent::__construct($aConfig);
-        $this->_aTranscoders = array ('bx_organizations_icon', 'bx_organizations_thumb', 'bx_organizations_avatar', 'bx_organizations_picture', 'bx_organizations_cover', 'bx_organizations_cover_thumb');
-        $this->_aStorages = array ('bx_organizations_pics');
-        $this->_aConnections = array (
-            'sys_profiles_friends' => array ('type' => 'profiles'),
-            'sys_profiles_subscriptions' => array ('type' => 'profiles'),
-        );
-        $this->_aMenuTriggers = array ('trigger_profile_view_submenu');
-        $this->_aPageTriggers = array ('trigger_page_organizations_view_entry');
     }
 }
 

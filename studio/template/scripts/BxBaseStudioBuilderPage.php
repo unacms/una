@@ -211,7 +211,10 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             )
         );
 
-        $oTemplate->addJsTranslation('_adm_bp_wrn_page_delete');
+        $oTemplate->addJsTranslation(array(
+        	'_adm_bp_wrn_page_delete',
+        	'_adm_bp_wrn_page_block_delete'
+        ));
         return $oTemplate->parseHtmlByName('builder_page.html', $aTmplVars);
     }
 

@@ -183,6 +183,9 @@ BxDolStudioBuilderPage.prototype.onEditBlock = function(oData) {
 };
 
 BxDolStudioBuilderPage.prototype.deleteBlock = function(iId) {
+	if(!confirm(aDolLang['_adm_bp_wrn_page_block_delete']))
+		return;
+
 	bx_loading(this.oHtmlIds['edit_block_popup_id'], true);
 	this.performAction('block_delete', {id:iId});
 };

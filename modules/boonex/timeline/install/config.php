@@ -40,6 +40,29 @@ $aConfig = array(
     'language_category' => 'Timeline',
 
     /**
+     * List of page triggers.
+     */
+    'page_triggers' => array (
+    	'trigger_page_persons_view_entry', 
+    	'trigger_page_organizations_view_entry'
+    ),
+
+    /**
+     * Storages.
+     */
+    'storages' => array(
+    	'bx_timeline_photos'
+    ),
+
+    /**
+     * Transcoders.
+     */
+    'transcoders' => array(
+    	'bx_timeline_photos_preview',
+    	'bx_timeline_photos_view'
+    ),
+
+    /**
      * Installation/Uninstallation Section.
      */
     'install' => array(
@@ -48,21 +71,28 @@ $aConfig = array(
         'clear_db_cache' => 1,
     ),
     'uninstall' => array (
+    	'process_storages' => 1,
         'execute_sql' => 1,
         'update_languages' => 1,
         'clear_db_cache' => 1,
     ),
     'enable' => array(
         'execute_sql' => 1,
-        'recompile_permalinks' => 1,
-        'recompile_alerts' => 1,
         'clear_db_cache' => 1,
+    ),
+    'enable_success' => array(
+    	'process_page_triggers' => 1,
+    	'register_transcoders' => 1,
+    	'clear_db_cache' => 1,
     ),
     'disable' => array (
         'execute_sql' => 1,
-        'recompile_permalinks' => 1,
-        'recompile_alerts' => 1,
+    	'unregister_transcoders' => 1,
         'clear_db_cache' => 1,
+    ),
+    'disable_failed' => array (
+    	'register_transcoders' => 1,
+    	'clear_db_cache' => 1,
     ),
 
     /**

@@ -13,6 +13,12 @@ DELETE FROM `sys_form_displays` WHERE `module` = @sName;
 DELETE FROM `sys_objects_form` WHERE `module` = @sName;
 
 
+-- GRIDS
+DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_invites_requests');
+DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_invites_requests');
+DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_invites_requests');
+
+
 -- STUDIO PAGE & WIDGET
 DELETE FROM `tp`, `tw`, `tpw`
 USING `sys_std_pages` AS `tp`, `sys_std_widgets` AS `tw`, `sys_std_pages_widgets` AS `tpw`

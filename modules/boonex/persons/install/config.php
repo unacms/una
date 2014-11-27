@@ -41,6 +41,48 @@ $aConfig = array(
     'language_category' => 'Persons',
 
     /**
+     * Connections.
+     */
+    'connections' => array(
+		'sys_profiles_friends' => array ('type' => 'profiles'),
+		'sys_profiles_subscriptions' => array ('type' => 'profiles'),
+    ),
+
+    /**
+     * Menu triggers.
+     */
+    'menu_triggers' => array(
+    	'trigger_profile_view_submenu', 
+    	'trigger_profile_view_actions'
+    ),
+
+	/**
+     * Page triggers.
+     */
+    'page_triggers' => array (
+    	'trigger_page_persons_view_entry', 
+    ),
+
+    /**
+     * Storages.
+     */
+    'storages' => array(
+    	'bx_persons_pictures'
+    ),
+
+	/**
+     * Transcoders.
+     */
+    'transcoders' => array(
+    	'bx_persons_icon',
+    	'bx_persons_thumb',
+    	'bx_persons_avatar',
+    	'bx_persons_picture',
+    	'bx_persons_cover',
+    	'bx_persons_cover_thumb'
+    ),
+
+    /**
      * Installation/Uninstallation Section.
      */
     'install' => array(
@@ -49,24 +91,31 @@ $aConfig = array(
         'clear_db_cache' => 1,
     ),
     'uninstall' => array (
+    	'process_storages' => 1,
         'execute_sql' => 1,
         'update_languages' => 1,
+    	'process_connections' => 1,
+    	'process_deleted_profiles' => 1,
         'clear_db_cache' => 1,
-        'process_deleted_profiles' => 1,
     ),
     'enable' => array(
         'execute_sql' => 1,
-        'recompile_menus' => 1,
-        'recompile_permalinks' => 1,
-        'recompile_alerts' => 1,
+        'clear_db_cache' => 1,
+    ),
+	'enable_success' => array(
+    	'process_menu_triggers' => 1,
+    	'process_page_triggers' => 1,
+    	'register_transcoders' => 1,
         'clear_db_cache' => 1,
     ),
     'disable' => array (
         'execute_sql' => 1,
-        'recompile_menus' => 1,
-        'recompile_permalinks' => 1,
-        'recompile_alerts' => 1,
+    	'unregister_transcoders' => 1,
         'clear_db_cache' => 1,
+    ),
+    'disable_failed' => array (
+    	'register_transcoders' => 1,
+    	'clear_db_cache' => 1,
     ),
 
     /**

@@ -41,6 +41,27 @@ $aConfig = array(
     'language_category' => 'Posts',
 
     /**
+     * Menu triggers.
+     */
+    'menu_triggers' => array(
+    	'trigger_profile_view_submenu'
+    ),
+
+    /**
+     * Storages.
+     */
+    'storages' => array(
+    	'bx_posts_files'
+    ),
+
+    /**
+     * Transcoders.
+     */
+    'transcoders' => array(
+		'bx_posts_preview'
+    ),
+
+    /**
      * Installation/Uninstallation Section.
      */
     'install' => array(
@@ -49,6 +70,7 @@ $aConfig = array(
         'clear_db_cache' => 1,
     ),
     'uninstall' => array (
+    	'process_storages' => 1,
         'execute_sql' => 1,
         'update_languages' => 1,
     	'update_relations' => 1,
@@ -57,18 +79,22 @@ $aConfig = array(
     'enable' => array(
         'execute_sql' => 1,
     	'update_relations' => 1,
-        'recompile_menus' => 1,
-        'recompile_permalinks' => 1,
-        'recompile_alerts' => 1,
+        'clear_db_cache' => 1,
+    ),
+    'enable_success' => array(
+    	'process_menu_triggers' => 1,
+    	'register_transcoders' => 1,
         'clear_db_cache' => 1,
     ),
     'disable' => array (
         'execute_sql' => 1,
     	'update_relations' => 1,
-        'recompile_menus' => 1,
-        'recompile_permalinks' => 1,
-        'recompile_alerts' => 1,
+    	'unregister_transcoders' => 1,
         'clear_db_cache' => 1,
+    ),
+    'disable_failed' => array (
+    	'register_transcoders' => 1,
+    	'clear_db_cache' => 1,
     ),
 
     /**
