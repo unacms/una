@@ -108,22 +108,3 @@ SET @iHandler := LAST_INSERT_ID();
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('account', 'add_form', @iHandler),
 ('account', 'added', @iHandler);
-
-
--- GRIDS
-INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `override_class_name`, `override_class_file`) VALUES
-('bx_invites_requests', 'Sql', 'SELECT * FROM `bx_inv_requests` WHERE 1 ', 'bx_inv_requests', 'id', '', '', '', 20, NULL, 'start', '', 'name,email', '', 'like', '', '', 'BxInvGridRequests', 'modules/boonex/invites/classes/BxInvGridRequests.php');
-
-INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
-('bx_invites_requests', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
-('bx_invites_requests', 'name', '_bx_invites_grid_column_title_name', '25%', 0, '', '', 2),
-('bx_invites_requests', 'email', '_bx_invites_grid_column_title_email', '20%', 1, '25', '', 3),
-('bx_invites_requests', 'nip', '_bx_invites_grid_column_title_nip', '15%', 0, '15', '', 4),
-('bx_invites_requests', 'date', '_bx_invites_grid_column_title_date', '20%', 0, '20', '', 5),
-('bx_invites_requests', 'actions', '', '18%', 0, '', '', 6);
-
-INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
-('bx_invites_requests', 'bulk', 'invite', '_bx_invites_grid_action_title_adm_invite', '', 0, 1),
-('bx_invites_requests', 'bulk', 'delete', '_bx_invites_grid_action_title_adm_delete', '', 1, 2),
-('bx_invites_requests', 'single', 'invite', '', 'envelope', 0, 1),
-('bx_invites_requests', 'single', 'delete', '', 'remove', 1, 2);

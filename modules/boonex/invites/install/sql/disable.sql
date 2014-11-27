@@ -33,9 +33,3 @@ DELETE FROM `sys_email_templates` WHERE `Module` = @sName;
 SET @iHandlerId = (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = @sName LIMIT 1);
 DELETE FROM `sys_alerts` WHERE `handler_id` = @iHandlerId;
 DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandlerId LIMIT 1;
-
-
--- GRIDS
-DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_invites_requests');
-DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_invites_requests');
-DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_invites_requests');
