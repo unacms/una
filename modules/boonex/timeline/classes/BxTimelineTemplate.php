@@ -419,13 +419,22 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sJsObject = $this->_oConfig->getJsObject('post');
         $sLinkIdPrefix = $this->_oConfig->getHtmlIds('post', 'attach_link_item');
 
+        $aLinkAttrs = array();
+        if($this->_oDb->getParam('sys_add_nofollow') == 'on' && strncmp(BX_DOL_URL_ROOT, $aLink['url'], strlen(BX_DOL_URL_ROOT)) != 0)
+        	$aLinkAttrs[] = array('key' => 'rel', 'value' => 'nofollow');
+        
         return $this->parsePageByName('attach_link_item.html', array(
             'html_id' => $sLinkIdPrefix . $aLink['id'],
             'style_prefix' => $sStylePrefix,
             'js_object' => $sJsObject,
             'id' => $aLink['id'],
             'url' => $aLink['url'],
-            'title' => $aLink['title'],
+        	'link' => $this->parsePageByName('bx_a.html', array(
+        		'href' => $aLink['url'],
+        		'title' => $aLink['title'],
+        		'bx_repeat:attrs' => $aLinkAttrs,
+        		'content' => $aLink['title'],
+        	)),
         ));
     }
 
@@ -608,13 +617,23 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sTextMore = $this->_prepareTextForOutput($sTextMore);
 
         //--- Process Links ---//
+		$bAddNofollow = $this->_oDb->getParam('sys_add_nofollow') == 'on';
+
         $aTmplVarsLinks = array();
         if(!empty($aContent['links']))
-            foreach($aContent['links'] as $aLink)
+            foreach($aContent['links'] as $aLink) {
+            	$aLinkAttrs = array();
+		        if($bAddNofollow && strncmp(BX_DOL_URL_ROOT, $aLink['url'], strlen(BX_DOL_URL_ROOT)) != 0)
+       				$aLinkAttrs[] = array('key' => 'rel', 'value' => 'nofollow');
+
                 $aTmplVarsLinks[] = array(
                     'style_prefix' => $sStylePrefix,
-                    'url' => $aLink['url'],
-                    'title' => $aLink['title'],
+                	'link' => $this->parsePageByName('bx_a.html', array(
+		        		'href' => $aLink['url'],
+		        		'title' => $aLink['title'],
+		        		'bx_repeat:attrs' => $aLinkAttrs,
+		        		'content' => $aLink['title'],
+		        	)),
                     'bx_if:show_text' => array(
                         'condition' => !empty($aLink['text']),
                         'content' => array(
@@ -623,6 +642,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                         )
                     )
                 );
+            }
 
         //--- Process Photos ---//
         $aTmplVarsImages = array();
