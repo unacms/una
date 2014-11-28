@@ -108,7 +108,7 @@ BxTimelinePost.prototype.afterFormAttachLinkSubmit = function (oForm, oData)
 
 	if(oData && oData.form != undefined && oData.form_id != undefined) {
 		$('#' + oData.form_id).replaceWith(oData.form);
-		this.initFormPost(oData.form_id);
+		this.initFormAttachLink(oData.form_id);
 
 		return;
 	}

@@ -317,14 +317,14 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_posts_common', 'added', '_bx_posts_grid_column_title_adm_added', '30%', 1, '25', '', 4),
 ('bx_posts_common', 'actions', '', '20%', 0, '', '', 5);
 
-INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
-('bx_posts_administration', 'bulk', 'delete', '_bx_posts_grid_action_title_adm_delete', '', 1, 2),
-('bx_posts_administration', 'single', 'edit', '', 'pencil', 0, 1),
-('bx_posts_administration', 'single', 'delete', '', 'remove', 1, 2),
-('bx_posts_administration', 'single', 'settings', '', 'cog', 0, 3),
-('bx_posts_moderation', 'single', 'edit', '', 'pencil', 0, 1),
-('bx_posts_moderation', 'single', 'settings', '', 'cog', 0, 2),
-('bx_posts_common', 'bulk', 'delete', '_bx_posts_grid_action_title_adm_delete', '', 1, 2),
-('bx_posts_common', 'single', 'edit', '', 'pencil', 0, 1),
-('bx_posts_common', 'single', 'delete', '', 'remove', 1, 2),
-('bx_posts_common', 'single', 'settings', '', 'cog', 0, 3);
+INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
+('bx_posts_administration', 'bulk', 'delete', '_bx_posts_grid_action_title_adm_delete', '', 0, 1, 2),
+('bx_posts_administration', 'single', 'edit', '_bx_posts_grid_action_title_adm_edit', 'pencil', 1, 0, 1),
+('bx_posts_administration', 'single', 'delete', '_bx_posts_grid_action_title_adm_delete', 'remove', 1, 1, 2),
+('bx_posts_administration', 'single', 'settings', '_bx_posts_grid_action_title_adm_more_actions', 'cog', 1, 0, 3),
+('bx_posts_moderation', 'single', 'edit', '_bx_posts_grid_action_title_adm_edit', 'pencil', 1, 0, 1),
+('bx_posts_moderation', 'single', 'settings', '_bx_posts_grid_action_title_adm_more_actions', 'cog', 1, 0, 2),
+('bx_posts_common', 'bulk', 'delete', '_bx_posts_grid_action_title_adm_delete', '', 0, 1, 2),
+('bx_posts_common', 'single', 'edit', '_bx_posts_grid_action_title_adm_edit', 'pencil', 1, 0, 1),
+('bx_posts_common', 'single', 'delete', '_bx_posts_grid_action_title_adm_delete', 'remove', 1, 1, 2),
+('bx_posts_common', 'single', 'settings', '_bx_posts_grid_action_title_adm_more_actions', 'cog', 1, 0, 3);

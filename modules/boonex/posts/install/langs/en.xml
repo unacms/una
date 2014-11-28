@@ -120,8 +120,11 @@
     <string name="_bx_posts_grid_column_title_adm_title"><![CDATA[Title]]></string>
     <string name="_bx_posts_grid_column_title_adm_added"><![CDATA[Added]]></string>
     <string name="_bx_posts_grid_column_title_adm_author"><![CDATA[Author]]></string>
+    <string name="_bx_posts_grid_action_title_adm_edit"><![CDATA[Edit]]></string>
     <string name="_bx_posts_grid_action_title_adm_delete"><![CDATA[Delete]]></string>
+    <string name="_bx_posts_grid_action_title_adm_more_actions"><![CDATA[More Actions]]></string>
     <string name="_bx_posts_grid_action_err_delete"><![CDATA[Cannot delete the selected post(s).]]></string>
+    
 
     <string name="_bx_posts_txt_sample_single"><![CDATA[post]]></string>
     <string name="_bx_posts_txt_sample_comment_single"><![CDATA[post's comment]]></string>

@@ -307,15 +307,15 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_persons_common', 'last_online', '_bx_persons_grid_column_title_adm_last_online', '30%', 1, '25', '', 3),
 ('bx_persons_common', 'actions', '', '20%', 0, '', '', 4);
 
-INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
-('bx_persons_administration', 'bulk', 'set_acl_level', '_bx_persons_grid_action_title_adm_set_acl_level', '', 0, 1),
-('bx_persons_administration', 'bulk', 'delete', '_bx_persons_grid_action_title_adm_delete', '', 1, 2),
-('bx_persons_administration', 'bulk', 'delete_with_content', '_bx_persons_grid_action_title_adm_delete_with_content', '', 1, 3),
-('bx_persons_administration', 'single', 'set_acl_level', '', 'certificate', 0, 1),
-('bx_persons_administration', 'single', 'delete', '', 'remove', 1, 2),
-('bx_persons_administration', 'single', 'settings', '', 'cog', 0, 3),
-('bx_persons_moderation', 'single', 'settings', '', 'cog', 0, 1),
-('bx_persons_common', 'bulk', 'delete', '_bx_persons_grid_action_title_adm_delete', '', 1, 2),
-('bx_persons_common', 'bulk', 'delete_with_content', '_bx_persons_grid_action_title_adm_delete_with_content', '', 1, 3),
-('bx_persons_common', 'single', 'delete', '', 'remove', 1, 2),
-('bx_persons_common', 'single', 'settings', '', 'cog', 0, 3);
+INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
+('bx_persons_administration', 'bulk', 'set_acl_level', '_bx_persons_grid_action_title_adm_set_acl_level', '', 0, 0, 1),
+('bx_persons_administration', 'bulk', 'delete', '_bx_persons_grid_action_title_adm_delete', '', 0, 1, 2),
+('bx_persons_administration', 'bulk', 'delete_with_content', '_bx_persons_grid_action_title_adm_delete_with_content', '', 0, 1, 3),
+('bx_persons_administration', 'single', 'set_acl_level', '_bx_persons_grid_action_title_adm_set_acl_level', 'certificate', 1, 0, 1),
+('bx_persons_administration', 'single', 'delete', '_bx_persons_grid_action_title_adm_delete', 'remove', 1, 1, 2),
+('bx_persons_administration', 'single', 'settings', '_bx_persons_grid_action_title_adm_more_actions', 'cog', 1, 0, 3),
+('bx_persons_moderation', 'single', 'settings', '_bx_persons_grid_action_title_adm_more_actions', 'cog', 1, 0, 1),
+('bx_persons_common', 'bulk', 'delete', '_bx_persons_grid_action_title_adm_delete', '', 0, 1, 2),
+('bx_persons_common', 'bulk', 'delete_with_content', '_bx_persons_grid_action_title_adm_delete_with_content', '', 0, 1, 3),
+('bx_persons_common', 'single', 'delete', '_bx_persons_grid_action_title_adm_delete', 'remove', 1, 1, 2),
+('bx_persons_common', 'single', 'settings', '_bx_persons_grid_action_title_adm_more_actions', 'cog', 1, 0, 3);
