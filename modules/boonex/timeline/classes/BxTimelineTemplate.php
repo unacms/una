@@ -885,15 +885,26 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     protected function _prepareTextForOutput($s)
     {
-        $sHttp = '';
-        $sPattern = $this->_oConfig->getPregPattern('url');
+    	$oTemplate = &$this;
 
-        $aMatches = array();
-        if(preg_match($sPattern, $s, $aMatches) && empty($aMatches[1]))
-            $sHttp = 'http://';
+        $sPattern = $this->_oConfig->getPregPattern('url');
+        $bAddNofollow = $this->_oDb->getParam('sys_add_nofollow') == 'on';
 
         $s = bx_process_output($s, BX_DATA_TEXT_MULTILINE);
-        $s = preg_replace($sPattern, '<a href="' . $sHttp . '$0" target="_blank">$0</a>', $s);
+        $s = preg_replace_callback($sPattern, function($aMatches) use($oTemplate, $bAddNofollow) {
+        	$aLinkAttrs = array(
+        		array('key' => 'target', 'value' => '_blank')
+        	);
+	        if($bAddNofollow && strncmp(BX_DOL_URL_ROOT, $aMatches[0], strlen(BX_DOL_URL_ROOT)) != 0)
+	        	$aLinkAttrs[] = array('key' => 'rel', 'value' => 'nofollow');
+
+        	return $oTemplate->parsePageByName('bx_a.html', array(
+        		'href' => (empty($aMatches[1]) ? 'http://' : '') . $aMatches[0],
+        		'title' => $aMatches[0],
+        		'bx_repeat:attrs' => $aLinkAttrs,
+        		'content' => $aMatches[0],
+        	));
+        }, $s);
 
         return $s;
     }
