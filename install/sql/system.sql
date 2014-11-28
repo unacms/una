@@ -852,9 +852,9 @@ CREATE TABLE IF NOT EXISTS `sys_cmts_images2entries` (
 CREATE TABLE IF NOT EXISTS `sys_cmts_ids` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `system_id` int(11) NOT NULL DEFAULT '0',
-  `obj_id` int(11) NOT NULL DEFAULT '0',
+  `cmt_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `system_obj_id` (`system_id`,`obj_id`)
+  UNIQUE KEY `system_cmt_id` (`system_id`,`cmt_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `sys_cmts_meta_keywords` (

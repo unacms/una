@@ -131,6 +131,10 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
         $o = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $iContentId);
         if ($o) $o->onObjectDelete();
 
+        bx_import('BxDolMetatags');
+        $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
+        $oMetatags->onDeleteContent($iContentId);
+
         // delete db record
 
         return parent::delete($iContentId);

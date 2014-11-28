@@ -493,8 +493,11 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
     public function onObjectDelete ($iObjectId = 0)
     {
         // delete comments
-        $aFiles = array();
-        $this->_oQuery->deleteObjectComments ($iObjectId ? $iObjectId : $this->getId(), $aFiles);
+        $aFiles = $aCmtIds = array();
+        $this->_oQuery->deleteObjectComments ($iObjectId ? $iObjectId : $this->getId(), $aFiles, $aCmtIds);
+
+        // delete meta info
+        $this->deleteMetaInfo($aCmtIds);
 
         // delete files
         if ($aFiles) {
@@ -514,9 +517,12 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
             $oQuery = $o->getQueryObject();
 
             // delete comments
-            $aFiles = array ();
-            $oQuery->deleteAuthorComments($iAuthorId, $aFiles);
+            $aFiles = $aCmtIds = array ();
+            $oQuery->deleteAuthorComments($iAuthorId, $aFiles, $aCmtIds);
 
+            // delete meta info
+            $this->deleteMetaInfo($aCmtIds);
+    
             // delete files
             $oStorage = BxDolStorage::getObjectInstance($o->getStorageObjectName());
             if ($oStorage)
@@ -537,8 +543,11 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
             $oQuery = $o->getQueryObject();
 
             // delete comments
-            $aFiles = array ();
-            $oQuery->deleteAll($aSystem['system_id'], $aFiles);
+            $aFiles = $aCmtIds = array ();
+            $oQuery->deleteAll($aSystem['system_id'], $aFiles, $aCmtIds);
+
+            // delete meta info
+            $this->deleteMetaInfo($aCmtIds);
 
             // delete files
             $oStorage = BxDolStorage::getObjectInstance($o->getStorageObjectName());
@@ -550,6 +559,23 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         }
 
         return true;
+    }
+
+    function deleteMetaInfo ($mixedCmtId)
+    {
+        if (!$this->_sMetatagsObj)
+            return;
+
+        if (!is_array($mixedCmtId))
+            $mixedCmtId = array($mixedCmtId);
+
+        bx_import('BxDolMetatags');
+        $oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj);
+
+        foreach ($mixedCmtId as $iCmtId) {
+            $oMetatags->onDeleteContent($this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId));
+            $this->_oQuery->deleteCmtIds($this->_aSystem['system_id'], $iCmtId);
+        }
     }
 
     /**
@@ -754,6 +780,8 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 
             $this->isRemoveAllowed(true);
 
+            $this->deleteMetaInfo ($aCmt['cmt_id']);
+
             bx_import('BxDolAlerts');
             $oZ = new BxDolAlerts($this->_sSystem, 'commentRemoved', $this->getId(), $iCmtAuthorId, array('comment_id' => $aCmt['cmt_id'], 'comment_author_id' => $aCmt['cmt_author_id']));
             $oZ->alert();
@@ -842,7 +870,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         return bx_process_input($s, $iDataAction);
     }
 
-    protected function _prepareTextForOutput ($s)
+    protected function _prepareTextForOutput ($s, $iCmtId = 0)
     {
     	bx_import('BxDolTemplate');
     	$oTemplate = BxDolTemplate::getInstance();
@@ -865,6 +893,12 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         		'content' => $aMatches[0],
         	));
         }, $s);
+
+        if ($this->_sMetatagsObj && $iCmtId) {
+            bx_import('BxDolMetatags');
+            $oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj);
+            $s = $oMetatags->keywordsParse($this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId), $s);
+        }
 
         return $s;
     }

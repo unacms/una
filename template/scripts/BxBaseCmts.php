@@ -205,8 +205,8 @@ class BxBaseCmts extends BxDolCmts
             $sText = trim(substr($sText, 0, $iLength));
         }
 
-        $sText = $this->_prepareTextForOutput($sText);
-        $sTextMore = $this->_prepareTextForOutput($sTextMore);
+        $sText = $this->_prepareTextForOutput($sText, $aCmt['cmt_id']);
+        $sTextMore = $this->_prepareTextForOutput($sTextMore, $aCmt['cmt_id']);
 
         $aTmplReplyTo = array();
         if((int)$aCmt['cmt_parent_id'] != 0) {
@@ -609,7 +609,7 @@ class BxBaseCmts extends BxDolCmts
                 if ($this->_sMetatagsObj) {
                     bx_import('BxDolMetatags');
                     $oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj);
-                    $oMetatags->keywordsAdd($this->_oQuery->getUniqId($this->_aSystem['system_id'], $this->getId()), $sCmtText);
+                    $oMetatags->keywordsAdd($this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId), $sCmtText);
                 }
 
                 bx_import('BxDolAlerts');
@@ -651,14 +651,14 @@ class BxBaseCmts extends BxDolCmts
                 if ($this->_sMetatagsObj) {
                     bx_import('BxDolMetatags');
                     $oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj);
-                    $oMetatags->keywordsAdd($this->_oQuery->getUniqId($this->_aSystem['system_id'], $this->getId()), $sCmtText);
+                    $oMetatags->keywordsAdd($this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId), $sCmtText);
                 }
 
                 bx_import('BxDolAlerts');
                 $oZ = new BxDolAlerts($this->_sSystem, 'commentUpdated', $this->getId(), $iCmtAuthorId, array('comment_id' => $aCmt['cmt_id'], 'comment_author_id' => $aCmt['cmt_author_id']));
                 $oZ->alert();
 
-                return array('id' => $iCmtId, 'text' => $sCmtText);
+                return array('id' => $iCmtId, 'text' => $this->_prepareTextForOutput($sCmtText, $iCmtId));
             }
 
             return array('msg' => _t('_cmt_err_cannot_perform_action'));

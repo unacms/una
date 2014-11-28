@@ -265,7 +265,7 @@ class BxDolCmtsQuery extends BxDolDb
         return $this->query($sQuery);
     }
 
-    function deleteAuthorComments ($iAuthorId, &$aFiles = null)
+    function deleteAuthorComments ($iAuthorId, &$aFiles = null, &$aCmtIds = null)
     {
         $aSystem = $this->_oMain->getSystemInfo();
 
@@ -284,6 +284,9 @@ class BxDolCmtsQuery extends BxDolDb
             if ($aFilesMore && null !== $aFiles)
                 $aFiles = array_merge($aFiles, $aFilesMore);
 
+            if (null !== $aCmtIds)
+                $aCmtIds[] = $r['cmt_id'];
+
             $isDelOccured = 1;
         }
         $sQuery = $this->prepare("UPDATE {$this->_sTable} SET `cmt_author_id` = 0 WHERE `cmt_author_id` = ? AND `cmt_replies` != 0", $iAuthorId);
@@ -292,7 +295,7 @@ class BxDolCmtsQuery extends BxDolDb
             $this->query ("OPTIMIZE TABLE {$this->_sTable}");
     }
 
-    function deleteObjectComments ($iObjectId, &$aFilesReturn = null)
+    function deleteObjectComments ($iObjectId, &$aFilesReturn = null, &$aCmtIds = null)
     {
         $aSystem = $this->_oMain->getSystemInfo();
         $aFiles = $this->convertImagesArray($this->getImages($aSystem['system_id'], false, $iObjectId));
@@ -303,6 +306,11 @@ class BxDolCmtsQuery extends BxDolDb
             $this->query ($sQuery);
         }
 
+        if (null !== $aCmtIds) {
+            $sQuery = $this->prepare("SELECT `cmt_id` FROM {$this->_sTable} WHERE `cmt_object_id` = ?", $iObjectId);
+            $aCmtIds = $this->getColumn ($sQuery);
+        }
+
         $sQuery = $this->prepare("DELETE FROM {$this->_sTable} WHERE `cmt_object_id` = ?", $iObjectId);
         $this->query ($sQuery);
         $this->query ("OPTIMIZE TABLE {$this->_sTable}");
@@ -311,7 +319,7 @@ class BxDolCmtsQuery extends BxDolDb
             $aFilesReturn = $aFiles;
     }
 
-    function deleteAll ($iSystemId, &$aFiles = null)
+    function deleteAll ($iSystemId, &$aFiles = null, &$aCmtIds = null)
     {
         // get files
         if (null !== $aFiles)
@@ -320,9 +328,18 @@ class BxDolCmtsQuery extends BxDolDb
         // delete files
         $this->deleteImages($iSystemId, false);
 
+        if (null !== $aCmtIds)
+            $aCmtIds = $this->getColumn ("SELECT `cmt_id` FROM {$this->_sTable}");
+
         // delete comments
         $sQuery = $this->prepare("TRUNCATE TABLE {$this->_sTable}");
         $this->query ($sQuery);
+    }
+
+    function deleteCmtIds ($iSystemId, $iCmtId)
+    {
+        $sQuery = $this->prepare("DELETE FROM {$this->_sTableIds} WHERE `system_id` = ? AND `cmt_id` = ?", $iSystemId, $iCmtId);
+        return $this->query ($sQuery);
     }
 
     function getObjectTitle($iId)
@@ -337,13 +354,13 @@ class BxDolCmtsQuery extends BxDolDb
         return $this->query($sQuery);
     }
 
-    function getUniqId($iSystemId, $iObjId)
+    function getUniqId($iSystemId, $iCmtId)
     {
-        $sQuery = $this->prepare("SELECT `id` FROM `{$this->_sTableIds}` WHERE `system_id` = ? AND `obj_id` = ?", $iSystemId, $iObjId);
+        $sQuery = $this->prepare("SELECT `id` FROM `{$this->_sTableIds}` WHERE `system_id` = ? AND `cmt_id` = ?", $iSystemId, $iCmtId);
         if ($iUniqId = $this->getOne($sQuery))
             return $iUniqId;
             
-        $sQuery = $this->prepare("INSERT INTO `{$this->_sTableIds}` SET `system_id` = ?, `obj_id` = ?", $iSystemId, $iObjId);
+        $sQuery = $this->prepare("INSERT INTO `{$this->_sTableIds}` SET `system_id` = ?, `cmt_id` = ?", $iSystemId, $iCmtId);
         if (!$this->query($sQuery))
             return false;
 

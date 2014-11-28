@@ -421,7 +421,12 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
      */
     public function onDeleteContent($iId) 
     {
-        // TODO: 
+        $i = 0;
+        foreach ($this->_aMetas as $sMeta) {
+            $sFunc = $sMeta . 'Delete';
+            $i += $this->_oQuery->$sFunc($iId);
+        }
+        return $i;
     }
 
 }
