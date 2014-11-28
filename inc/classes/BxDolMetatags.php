@@ -17,14 +17,93 @@ define('BX_METATAGS_KEYWORDS_MAX', 9);
  * @ref BxDolMetatags
  */
 
-// TODO: client side controls: new form input for getting user's location, some js to help to enter @mentions and #keywords(optional)
-// TODO: implementation with some modules
-// TODO: integrate to comments, try to integrate to one metatags object - maybe specify metatags object in comments object and make appropriate changes in comments, comments content should be treated as main conetent and main content should be shown in search results)
-// TODO: pages for listing content by @keyword, @mention, country location, city location, or BETTER try integrate it to the search engine, to not make separate pages in each module
+// TODO: client side controls: some js to help to enter @mentions and #keywords(optional)
+// TODO: integrate to comments, try to integrate to one metatags object - maybe specify metatags object in comments object and make appropriate changes in comments, 
+//       comments content should be treated as main conetent and main content should be shown in search results
 // TODO: integration with notifications, when smbd is @mentioned
 
 /**
- * Meta-tags for different content.
+ * Meta-tags for different content. It can handle #keywords, @mentions, locations and meta image for the content.
+ *
+ * Keywords are parsed after content add and edit and added to the database, 
+ * later when content is displayed #keywords are highlighted as links to the search page with all content with this keyword, 
+ * also keywords are displayed as meta info in page header.
+ * 
+ * Location info upon content adding/editing is displayed as custom field, it detects current user location and attach location as hidden form fields.
+ * When content is displayed location can be shown as clickable links to search page where results are other items from same location,
+ * also location is displayed as meta info in page header as latutude and longitude.
+ * 
+ * Content image can be added as meta info using this class as well.
+ *
+ *
+ *
+ * @section metatags_create Add new meta-tags object.
+ *
+ * To add new meta-tags object insert new record into `sys_objects_metatags` table:
+ * - object: name of the meta-tags object, in the format: vendor prefix, underscore, module prefix, underscore, internal identifier or nothing
+ * - table_keywords: table name to store keywords, leave empty to disable keywords
+ * - table_locations: table name to store locations, leave empty to disable locations
+ * - table_mentions: table name to store mentions, leave empty to disable mentions
+ * - override_class_name: class name to override  
+ * - override_class_file: class file path to override
+ *
+ *
+ *
+ * @section metatags_locations Location
+ *
+ * Upon content 'add' and 'edit' form submit, call BxDolMetatags::locationsAddFromForm
+ * @code
+ *   $oMetatags = BxDolMetatags::getObjectInstance('object_name');
+ *   $oMetatags->locationsAddFromForm($iContentId);
+ * @endcode
+ *
+ * Upon 'edit' form display call BxDolMetatags::locationGet to fill-in location form input, for example:
+ * @code
+ *   $oMetatags = BxDolMetatags::getObjectInstance('object_name');
+ *   $aSpecificValues = $oMetatags->locationGet($iContentId);
+ *   $oForm->initChecker($aContentInfo, $aSpecificValues);
+ * @endcode
+ *
+ * To display location call BxDolMetatags::locationsString:
+ * @code
+ *   $oMetatags = BxDolMetatags::getObjectInstance('object_name');
+ *   echo $oMetatags->locationsString($iContentId)
+ * @endcode
+ *
+ * Upon page display call BxDolMetatags::metaAdd to add location (and all other, including content image) meta information to the page header:
+ * @code
+ *   $o = BxDolMetatags::getObjectInstance('object_name');
+ *   $o->metaAdd($iContentId, array('id' => $iFileId, 'object' => 'storage_object_name'));
+ * @endcode
+ * 
+ * Form object must have location field, usual name for this field is 'location' (this name is used as $sPrefix in some functions), type is 'custom', 
+ * also form object must be derived from BxBaseModGeneralFormEntry class, which has custom field declaration.
+ *
+ *
+ *
+ * @section metatags_keywords #keyword
+ *
+ * Upon content 'add' and 'edit' form submit, call BxDolMetatags::locationsAddFromForm
+ * @code
+ *   $oMetatags = BxDolMetatags::getObjectInstance('object_name');
+ *   $oMetatags->keywordsAdd($iContentId, $aContentInfo['text_field_with_hash_tags']);
+ * @endcode
+ *
+ * Before displaying the text with hashtags call BxDolMetatags::keywordsParse to highlight keywords:
+ * @code
+ *   $oMetatags = BxDolMetatags::getObjectInstance('object_name');
+ *   $sText = $oMetatags->keywordsParse($iContentId, $sText);
+ * @endcode
+ *
+ * Upon page display call BxDolMetatags::metaAdd to add keywords (and all other, including content image) meta information to the page header.
+ *
+ *
+ *
+ * @section metatags_mention @mention
+ * TODO:
+ *
+ *
+ *
  */
 class BxDolMetatags extends BxDol implements iBxDolFactoryObject
 {
@@ -199,11 +278,20 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
     {
         return $this->_oQuery->locationsAdd($iId, $sLatitude, $sLongitude, $sCountryCode, $sState, $sCity, $sZip);
     }
-    public function locationsAddFromForm($iId, $sName, $oForm = null) 
+
+    /**
+     * Add location for the content from POST data
+     * @param $iId content id
+     * @param $sPrefix field prefix for POST data, or empty -  if no prefix
+     * @param $oForm form to use to get POST data, or null - then new form instance will be created
+     */
+    public function locationsAddFromForm($iId, $sPrefix = '', $oForm = null)
     {
+        if ($sPrefix)
+            $sPrefix .= '_';
         if (!$oForm)
             $oForm = new BxDolForm(array(), false);
-        $this->locationsAdd($iId, $oForm->getCleanValue($sName.'_lat'), $oForm->getCleanValue($sName.'_lng'), $oForm->getCleanValue($sName.'_country'), $oForm->getCleanValue($sName.'_state'), $oForm->getCleanValue($sName.'_city'), $oForm->getCleanValue($sName.'_zip'));
+        $this->locationsAdd($iId, $oForm->getCleanValue($sPrefix.'lat'), $oForm->getCleanValue($sPrefix.'lng'), $oForm->getCleanValue($sPrefix.'country'), $oForm->getCleanValue($sPrefix.'state'), $oForm->getCleanValue($sPrefix.'city'), $oForm->getCleanValue($sPrefix.'zip'));
     }
 
     /**
@@ -271,7 +359,9 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
 
     /**
      * Get location
-     * @return location array
+     * @param $iId content id
+     * @param $sPrefix field prefix for returning data array
+     * @return location array with the following keys (when no prefix specified): object_id, lat, lng, country, state, city, zip
      */
     public function locationGet($iId, $sPrefix = '')
     {
@@ -324,31 +414,6 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
     {
         // TODO:
     }
-
-
-
-    /**
-     * Add thumb for the content
-     * @param $iId content id
-     * @param $sStorageObject storage object name where file is stored
-     * @param $mixedFileId file id in the storage
-     * @return true if file was added, or false otherwise
-     */
-    public function picturesAdd($iId, $sStorageObject, $mixedFileId) 
-    {
-        // TODO:        
-    }
-
-    /**
-     * Add thumb meta info to the head section
-     * @param $iId content id
-     */
-    protected function picturesAddMeta($iId) 
-    {
-        // TODO:
-    }
-
-
 
     /**
      * Delete all data associated with the content
