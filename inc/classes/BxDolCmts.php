@@ -190,6 +190,8 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         $this->_aSystem['table_images'] = 'sys_cmts_images';
         $this->_aSystem['table_images2entries'] = 'sys_cmts_images2entries';
 
+        $this->_aSystem['table_ids'] = 'sys_cmts_ids';
+
         $this->_iDpMaxLevel = (int)$this->_aSystem['number_of_levels'];
         $this->_sDisplayType = $this->_iDpMaxLevel == 0 ? BX_CMT_DISPLAY_FLAT : BX_CMT_DISPLAY_THREADED;
         $this->_sDpSessionKey = 'bx_' . $this->_sSystem . '_dp_';
@@ -228,6 +230,8 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 
         $this->_sMenuObjManage = 'sys_cmts_item_manage';
         $this->_sMenuObjActions = 'sys_cmts_item_actions';
+
+        $this->_sMetatagsObj = 'sys_cmts';
 
         if ($iInit)
             $this->init($iId);

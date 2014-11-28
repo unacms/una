@@ -606,6 +606,12 @@ class BxBaseCmts extends BxDolCmts
 
                 $this->isPostReplyAllowed(true);
 
+                if ($this->_sMetatagsObj) {
+                    bx_import('BxDolMetatags');
+                    $oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj);
+                    $oMetatags->keywordsAdd($this->_oQuery->getUniqId($this->_aSystem['system_id'], $this->getId()), $sCmtText);
+                }
+
                 bx_import('BxDolAlerts');
                 $oZ = new BxDolAlerts($this->_sSystem, 'commentPost', $this->getId(), $iCmtAuthorId, array('comment_id' => $iCmtId, 'comment_author_id' => $iCmtAuthorId));
                 $oZ->alert();
@@ -639,7 +645,14 @@ class BxBaseCmts extends BxDolCmts
             $oForm->setSubmittedValue('cmt_text', $sCmtText, $oForm->aFormAttrs['method']);
 
             if($oForm->update($iCmtId)) {
+
                 $this->isEditAllowed(true);
+
+                if ($this->_sMetatagsObj) {
+                    bx_import('BxDolMetatags');
+                    $oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj);
+                    $oMetatags->keywordsAdd($this->_oQuery->getUniqId($this->_aSystem['system_id'], $this->getId()), $sCmtText);
+                }
 
                 bx_import('BxDolAlerts');
                 $oZ = new BxDolAlerts($this->_sSystem, 'commentUpdated', $this->getId(), $iCmtAuthorId, array('comment_id' => $aCmt['cmt_id'], 'comment_author_id' => $aCmt['cmt_author_id']));

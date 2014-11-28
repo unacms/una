@@ -25,6 +25,8 @@ class BxDolCmtsQuery extends BxDolDb
     protected $_sTableImages;
     protected $_sTableImages2Entries;
 
+    protected $_sTableIds;
+
     function __construct(&$oMain)
     {
         $this->_oMain = $oMain;
@@ -38,6 +40,8 @@ class BxDolCmtsQuery extends BxDolDb
 
         $this->_sTableImages = $aSystem['table_images'];
         $this->_sTableImages2Entries = $aSystem['table_images2entries'];
+
+        $this->_sTableIds = $aSystem['table_ids'];
 
         parent::__construct();
     }
@@ -331,6 +335,19 @@ class BxDolCmtsQuery extends BxDolDb
     {
         $sQuery = $this->prepare("UPDATE `{$this->_sTriggerTable}` SET `{$this->_sTriggerFieldComments}` = ? WHERE `{$this->_sTriggerFieldId}` = ? LIMIT 1", $iCount, $iId);
         return $this->query($sQuery);
+    }
+
+    function getUniqId($iSystemId, $iObjId)
+    {
+        $sQuery = $this->prepare("SELECT `id` FROM `{$this->_sTableIds}` WHERE `system_id` = ? AND `obj_id` = ?", $iSystemId, $iObjId);
+        if ($iUniqId = $this->getOne($sQuery))
+            return $iUniqId;
+            
+        $sQuery = $this->prepare("INSERT INTO `{$this->_sTableIds}` SET `system_id` = ?, `obj_id` = ?", $iSystemId, $iObjId);
+        if (!$this->query($sQuery))
+            return false;
+
+        return $this->lastId();
     }
 
     protected function convertImagesArray($a)
