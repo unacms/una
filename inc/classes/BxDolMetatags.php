@@ -104,6 +104,14 @@ define('BX_METATAGS_KEYWORDS_MAX', 9);
  *
  *
  *
+ * @section metatags_delete_content Content deletion
+ * 
+ * When content is deleted associated meta data can be deleted by calling BxDolMetatags::onDeleteContent:
+ * @code
+ *   $oMetatags = BxDolMetatags::getObjectInstance('object_name');
+ *   $oMetatags->onDeleteContent($iContentId);
+ * @endcode
+ *
  */
 class BxDolMetatags extends BxDol implements iBxDolFactoryObject
 {
