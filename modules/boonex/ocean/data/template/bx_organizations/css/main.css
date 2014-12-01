@@ -1,5 +1,10 @@
 @import url(../../../../../../base/profile/template/css/main.css);
 
+.bx-base-pofile-unit {
+    width:174px;
+    width:10.875rem;
+}
+
 .bx-menu-btns-hor.bx-menu-object-bx_organizations_view_actions {
 	padding: 20px;
   	padding: 1.25rem;
