@@ -156,6 +156,13 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_votes_track` (
   KEY `vote` (`object_id`, `author_nip`)
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;
 
+-- TABLE: metas
+CREATE TABLE `bx_timeline_meta_keywords` (
+  `object_id` int(10) unsigned NOT NULL,
+  `keyword` varchar(255) NOT NULL,
+  KEY `object_id` (`object_id`),
+  KEY `keyword` (`keyword`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- STORAGES, TRANSCODERS, UPLOADERS
 INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES

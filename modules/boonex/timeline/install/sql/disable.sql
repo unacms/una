@@ -40,5 +40,9 @@ DELETE FROM `sys_objects_vote` WHERE `Name`='bx_timeline' LIMIT 1;
 DELETE FROM `sys_objects_search` WHERE `ObjectName` IN ('bx_timeline', 'bx_timeline_cmts');
 
 
+-- METATAGS
+DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_timeline';
+
+
 -- MODULES' CONNECTIONS
 DELETE FROM `sys_modules_relations` WHERE `module`='bx_timeline' LIMIT 1;

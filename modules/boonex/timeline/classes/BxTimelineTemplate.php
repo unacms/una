@@ -486,7 +486,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             ),
             'item_view_url' => $this->_oConfig->getItemViewUrl($aEvent),
             'item_date' => bx_time_js($aEvent['date']),
-            'content' => is_string($aEvent['content']) ? $aEvent['content'] : $this->_getContent($sType, $aEvent['content'], $aBrowseParams),
+            'content' => is_string($aEvent['content']) ? $aEvent['content'] : $this->_getContent($sType, $aEvent, $aBrowseParams),
             'bx_if:show_menu_item_actions' => array(
                 'condition' => !empty($aTmplVarsMenuItemActions),
                 'content' => $aTmplVarsMenuItemActions
@@ -498,13 +498,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         return $this->parseHtmlByName('item.html', $aTmplVars);
     }
 
-    protected function _getContent($sType, $aContent, $aBrowseParams = array())
+    protected function _getContent($sType, $aEvent, $aBrowseParams = array())
     {
         $sMethod = '_getTmplVarsContent' . ucfirst($sType);
         if(!method_exists($this, $sMethod))
             return '';
 
-		$aTmplVars = $this->$sMethod($aContent, $aBrowseParams);
+		$aTmplVars = $this->$sMethod($aEvent, $aBrowseParams);
 		return $this->parseHtmlByName('type_' . $sType . '.html', $aTmplVars);
     }
 
@@ -579,8 +579,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         return $aTmplVarsTimelineOwner;
     }
 
-    protected function _getTmplVarsContentPost($aContent, $aBrowseParams = array())
+    protected function _getTmplVarsContentPost($aEvent, $aBrowseParams = array())
     {
+    	$aContent = &$aEvent['content'];
         $sStylePrefix = $this->_oConfig->getPrefix('style');
         $sJsObject = $this->_oConfig->getJsObject('view');
 
@@ -613,8 +614,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $sText = trim(substr($sText, 0, $iLength));
         }
 
-        $sText = $this->_prepareTextForOutput($sText);
-        $sTextMore = $this->_prepareTextForOutput($sTextMore);
+        $sText = $this->_prepareTextForOutput($sText, $aEvent['id']);
+        $sTextMore = $this->_prepareTextForOutput($sTextMore, $aEvent['id']);
 
         //--- Process Links ---//
 		$bAddNofollow = $this->_oDb->getParam('sys_add_nofollow') == 'on';
@@ -720,8 +721,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         );
     }
 
-    protected function _getTmplVarsContentShare($aContent, $aBrowseParams = array())
+    protected function _getTmplVarsContentShare($aEvent, $aBrowseParams = array())
     {
+    	$aContent = &$aEvent['content'];
         $sStylePrefix = $this->_oConfig->getPrefix('style');
 
         $sOwnerLink = $this->parseHtmlByName('bx_a.html', array(
@@ -740,7 +742,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         ));
 
         $sTitle = _t('_bx_timeline_txt_shared', $sOwnerLink, $sSampleLink);
-        $sText = $this->_getContent($aContent['parse_type'], $aContent);
+        $sText = $this->_getContent($aContent['parse_type'], $aEvent);
 
         return array(
             'bx_if:show_title' => array(
@@ -883,7 +885,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         return $aResult;
     }
 
-    protected function _prepareTextForOutput($s)
+    protected function _prepareTextForOutput($s, $iEventId = 0)
     {
     	$oTemplate = &$this;
 
@@ -905,6 +907,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         		'content' => $aMatches[0],
         	));
         }, $s);
+
+        bx_import('BxDolMetatags');
+        $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
+		$s = $oMetatags->keywordsParse($iEventId, $s);
 
         return $s;
     }

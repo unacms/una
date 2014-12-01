@@ -68,7 +68,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         	'transcoder_view' => $this->_sName . '_photos_view',
         	'conn_subscriptions' => 'sys_profiles_subscriptions',
         	'menu_item_manage' => $this->_sName . '_menu_item_manage',
-        	'menu_item_actions' => $this->_sName . '_menu_item_actions'
+        	'menu_item_actions' => $this->_sName . '_menu_item_actions',
+        	'metatags' => $this->_sName,
         );
         
         $this->_aHandlerDescriptor = array('module_name' => '', 'module_method' => '', 'module_class' => '', 'groupable' => '', 'group_by' => '');

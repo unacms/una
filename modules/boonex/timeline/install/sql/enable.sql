@@ -152,6 +152,11 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `ClassName`, `ClassPath
 ('bx_timeline_cmts', '_bx_timeline_cmts', 'BxTimelineCmtsSearchResult', 'modules/boonex/timeline/classes/BxTimelineCmtsSearchResult.php');
 
 
+-- METATAGS
+INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
+('bx_timeline', 'bx_timeline_meta_keywords', '', '', '', '');
+
+
 -- MODULES' CONNECTIONS
 INSERT INTO `sys_modules_relations` (`module`, `on_install`, `on_uninstall`, `on_enable`, `on_disable`) VALUES
 ('bx_timeline', '', 'delete_module_events', 'add_handlers', 'delete_handlers');

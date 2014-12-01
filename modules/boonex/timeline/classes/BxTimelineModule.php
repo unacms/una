@@ -545,6 +545,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             ));
 
             if(!empty($iId)) {
+            	bx_import('BxDolMetatags');
+            	$oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
+ 				$oMetatags->keywordsAdd($iId, $aContent['text']);
+
                 if(!empty($aLinkIds) && is_array($aLinkIds))
                     foreach($aLinkIds as $iLinkId)
                         $this->_oDb->saveLink($iId, $iLinkId);
