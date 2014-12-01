@@ -482,7 +482,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $iUserId = $this->getUserId();
 
         bx_import('BxDolForm');
-        $oForm = BxDolForm::getObjectInstance('mod_tml_post', 'mod_tml_post_add');
+        $oForm = BxDolForm::getObjectInstance('mod_tml_post', 'mod_tml_post_add', $this->_oTemplate);
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'post/';
         $oForm->aInputs['owner_id']['value'] = $this->_iOwnerId;
 
@@ -548,6 +548,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             	bx_import('BxDolMetatags');
             	$oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
  				$oMetatags->keywordsAdd($iId, $aContent['text']);
+ 				$oMetatags->locationsAddFromForm($iId, $this->_oConfig->CNF['FIELD_LOCATION_PREFIX']);
 
                 if(!empty($aLinkIds) && is_array($aLinkIds))
                     foreach($aLinkIds as $iLinkId)
@@ -770,6 +771,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 			if(isset($aContent['type']) && $aContent['type'] == $aEvent['type'] && isset($aContent['object_id']) && (($bSystem && (int)$aContent['object_id'] == (int)$aEvent['object_id']) || (!$bSystem  && (int)$aContent['object_id'] == (int)$aEvent['id'])))
 				$this->_oDb->deleteEvent(array('id' => (int)$aShareEvent['id']));
 		}
+
+		//--- Delete associated meta.
+		bx_import('BxDolMetatags');
+        $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
+        $oMetatags->onDeleteContent($aEvent['id']);
 
         //--- Event -> Delete for Alerts Engine ---//
         bx_import('BxDolAlerts');

@@ -164,6 +164,18 @@ CREATE TABLE `bx_timeline_meta_keywords` (
   KEY `keyword` (`keyword`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+CREATE TABLE `bx_timeline_meta_locations` (
+  `object_id` int(10) unsigned NOT NULL,
+  `lat` double NOT NULL,
+  `lng` double NOT NULL,
+  `country` varchar(2) NOT NULL,
+  `state` varchar(255) NOT NULL,
+  `city` varchar(255) NOT NULL,
+  `zip` varchar(255) NOT NULL,
+  PRIMARY KEY (`object_id`),
+  KEY `country_state_city` (`country`,`state`(8),`city`(8))
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 -- STORAGES, TRANSCODERS, UPLOADERS
 INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
 ('bx_timeline_simple', 1, 'BxTimelineUploaderSimple', 'modules/boonex/timeline/classes/BxTimelineUploaderSimple.php');
@@ -184,7 +196,7 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 
 -- Forms -> Post
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
-('mod_tml_post', @sName, '_bx_timeline_form_post', '', '', 'do_submit', 'bx_timeline_events', 'id', '', '', '', 0, 1, '', '');
+('mod_tml_post', @sName, '_bx_timeline_form_post', '', '', 'do_submit', 'bx_timeline_events', 'id', '', '', '', 0, 1, 'BxTimelineForm', 'modules/boonex/timeline/classes/BxTimelineForm.php');
 
 INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
 ('mod_tml_post_add', @sName, 'mod_tml_post', '_bx_timeline_form_post_display_add', 0);
@@ -194,6 +206,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('mod_tml_post', @sName, 'action', '', '', 0, 'hidden', '_bx_timeline_form_post_input_sys_action', '', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('mod_tml_post', @sName, 'owner_id', '0', '', 0, 'hidden', '_bx_timeline_form_post_input_sys_owner_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('mod_tml_post', @sName, 'text', '', '', 0, 'textarea', '_bx_timeline_form_post_input_sys_text', '_bx_timeline_form_post_input_text', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
+('mod_tml_post', @sName, 'location', '', '', 0, 'custom', '_sys_form_input_sys_location', '_sys_form_input_location', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('mod_tml_post', @sName, 'link', '', '', 0, 'custom', '_bx_timeline_form_post_input_sys_link', '', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('mod_tml_post', @sName, 'photo', '', '', 0, 'files', '_bx_timeline_form_post_input_sys_photo', '_bx_timeline_form_post_input_photo', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('mod_tml_post', @sName, 'do_submit', '_bx_timeline_form_post_input_do_submit', '', 0, 'submit', '_bx_timeline_form_post_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
@@ -203,9 +216,10 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('mod_tml_post_add', 'action', 2147483647, 1, 2),
 ('mod_tml_post_add', 'owner_id', 2147483647, 1, 3),
 ('mod_tml_post_add', 'text', 2147483647, 1, 4),
-('mod_tml_post_add', 'link', 2147483647, 1, 5),
-('mod_tml_post_add', 'photo', 2147483647, 1, 6),
-('mod_tml_post_add', 'do_submit', 2147483647, 1, 7);
+('mod_tml_post_add', 'location', 2147483647, 1, 5),
+('mod_tml_post_add', 'link', 2147483647, 1, 6),
+('mod_tml_post_add', 'photo', 2147483647, 1, 7),
+('mod_tml_post_add', 'do_submit', 2147483647, 1, 8);
 
 -- Forms -> Attach link
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES

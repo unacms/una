@@ -17,6 +17,7 @@ DROP TABLE IF EXISTS `bx_timeline_votes`;
 DROP TABLE IF EXISTS `bx_timeline_votes_track`;
 
 DROP TABLE IF EXISTS `bx_timeline_meta_keywords`;
+DROP TABLE IF EXISTS `bx_timeline_meta_locations`;
 
 
 -- STORAGES, TRANSCODERS, UPLOADERS

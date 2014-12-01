@@ -455,6 +455,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $bBrowseItem = isset($aBrowseParams['type']) && $aBrowseParams['type'] == BX_TIMELINE_TYPE_ITEM;
 
+        bx_import('BxDolMetatags');
+        $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
+ 		$sLocation = $oMetatags->locationsString($aEvent['id']);
+ 
         $aTmplVars = array (
             'style_prefix' => $sStylePrefix,
             'js_object' => $sJsObject,
@@ -487,6 +491,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'item_view_url' => $this->_oConfig->getItemViewUrl($aEvent),
             'item_date' => bx_time_js($aEvent['date']),
             'content' => is_string($aEvent['content']) ? $aEvent['content'] : $this->_getContent($sType, $aEvent, $aBrowseParams),
+            'bx_if:show_location' => array(
+            	'condition' => !empty($sLocation),
+            	'content' => array(
+            		'style_prefix' > $sStylePrefix,
+            		'location' => $sLocation
+            	)
+            ),
             'bx_if:show_menu_item_actions' => array(
                 'condition' => !empty($aTmplVarsMenuItemActions),
                 'content' => $aTmplVarsMenuItemActions
