@@ -70,6 +70,7 @@ require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
 bx_import('BxDolLanguages');
 bx_import('BxDolTemplate');
+bx_import('BxTemplFunctions');
 
 $oTemplate = BxDolTemplate::getInstance();
 $oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);
@@ -156,12 +157,9 @@ function PageCompMainCode()
             $sUrlMP4 = $oTranscoderMP4->getFileUrl($r['id']);
             $sUrlWebM = $oTranscoderWebM->getFileUrl($r['id']);
 
-            echo '<h3>' . $r['file_name'] . '</h3>
-                <video controls="" preload="none" autobuffer="" poster="' . $sUrlPoster . '" style="width:100%; height:200px;">
-                    ' . ($sUrlWebM ? '<source type="video/webm; codecs="vp8, vorbis" src="' . $sUrlWebM . '" />' : '') . '
-                    ' . ($sUrlMP4  ? '<source type="video/mp4" src="' . $sUrlMP4 . '" />' : '') . '
-                </video>
-                <hr class="bx-def-hr" />';
+            echo '<h3>' . $r['file_name'] . '</h3>';
+            echo BxTemplFunctions::getInstance()->videoPlayer($sUrlPoster, $sUrlMP4, $sUrlWebM, false, 'height:200px;');
+            echo '<hr class="bx-def-hr" />';
         }
     }
 

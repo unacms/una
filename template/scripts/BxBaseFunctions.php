@@ -371,6 +371,30 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
         else
             return '<i class="sys-icon circle col-green1"></i> ' . ($isMsg ? _t('_sys_on') : '');
     }
+
+    /**
+     * Ouputs HTML5 video player.
+     * @param $sUrlPoster video poster image
+     * @param $sUrlMP4 .mp4 video
+     * @param $sUrlWebM .webm video
+     * @param $aAttrs custom attributes, defaults are: controls="" preload="none" autobuffer=""
+     * @param $sStyles custom styles, defaults are: width:100%; height:auto;
+     */
+    function videoPlayer ($sUrlPoster, $sUrlMP4, $sUrlWebM = '', $aAttrs = false, $sStyles = '')
+    {
+        $aAttrsDefaults = array(
+            'controls' => '',
+            'preload' => 'none',
+            'autobuffer' => '', 
+        );
+        $aAttrs = array_merge($aAttrsDefaults, is_array($aAttrs) ? $aAttrs : array());
+        $sAttrs = bx_convert_array2attrs($aAttrs, '', 'width:100%; height:auto;' . trim($sStyles));
+
+        return '<video ' . $sAttrs . ' poster="' . $sUrlPoster . '">
+                    ' . ($sUrlWebM ? '<source type="video/webm; codecs="vp8, vorbis" src="' . $sUrlWebM . '" />' : '') . '
+                    ' . ($sUrlMP4  ? '<source type="video/mp4" src="' . $sUrlMP4 . '" />' : '') . '
+                </video>';
+    }
 }
 
 /** @} */
