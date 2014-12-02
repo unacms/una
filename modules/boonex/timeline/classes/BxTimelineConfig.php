@@ -74,8 +74,12 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         	'menu_item_manage' => $this->_sName . '_menu_item_manage',
         	'menu_item_actions' => $this->_sName . '_menu_item_actions',
         	'metatags' => $this->_sName,
+        	'form_post' => $this->_sName . '_post',
+        	'form_attach_link' => $this->_sName . '_attach_link',
+        	'form_display_post_add' => $this->_sName . '_post_add',
+        	'form_display_attach_link_add' => $this->_sName . '_attach_link_add'
         );
-        
+
         $this->_aHandlerDescriptor = array('module_name' => '', 'module_method' => '', 'module_class' => '', 'groupable' => '', 'group_by' => '');
         $this->_sHandlersMethod = 'get_timeline_data';
 
