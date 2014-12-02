@@ -39,7 +39,7 @@ class BxContactModule extends BxDolModule
         $sResult = '';
 
         bx_import('BxDolForm');
-        $oForm = BxDolForm::getObjectInstance('mod_cnt_contact', 'mod_cnt_contact_send');
+        $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject('form_contact'), $this->_oConfig->getObject('form_display_contact_send'), $this->_oTemplate);
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
@@ -114,7 +114,7 @@ class BxContactModule extends BxDolModule
 
         //--- Event -> Contact for Alerts Engine ---//
         bx_import('BxDolAlerts');
-        $oAlert = new BxDolAlerts($this->_oConfig->getSystemName('alert'), 'contact', 0, $iUserId);
+        $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'contact', 0, $iUserId);
         $oAlert->alert();
         //--- Event -> Contact for Alerts Engine ---//
     }

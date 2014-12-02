@@ -10,13 +10,11 @@
  */
 
 bx_import('BxDolPrivacy');
-bx_import('BxDolModuleConfig');
+bx_import('BxBaseModGeneralConfig');
 
-class BxContactConfig extends BxDolModuleConfig
+class BxContactConfig extends BxBaseModGeneralConfig
 {
     protected $_oDb;
-
-    protected $_sAlertSystemName;
 
     protected $_sEmail;
 
@@ -27,7 +25,11 @@ class BxContactConfig extends BxDolModuleConfig
     {
         parent::__construct($aModule);
 
-        $this->_sAlertSystemName = $this->_sName;
+        $this->_aObjects = array(
+        	'alert' => $this->_sName,
+        	'form_contact' => $this->_sName . '_contact',
+        	'form_display_contact_send' => $this->_sName . '_contact_send'
+        );
 
         $this->_sEmail = '';
     }
@@ -39,19 +41,6 @@ class BxContactConfig extends BxDolModuleConfig
         $this->_sEmail = getParam('bx_contact_email');
         if(empty($this->_sEmail))
             $this->_sEmail = getParam('site_email');
-    }
-
-    public function getSystemName($sType)
-    {
-        $sResult = '';
-
-        switch($sType) {
-            case 'alert':
-                $sResult = $this->_sAlertSystemName;
-                break;
-        }
-
-        return $sResult;
     }
 
     public function getEmail()
