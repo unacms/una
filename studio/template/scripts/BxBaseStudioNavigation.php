@@ -13,17 +13,19 @@ bx_import('BxDolStudioNavigation');
 class BxBaseStudioNavigation extends BxDolStudioNavigation
 {
     protected $sSubpageUrl;
-    protected $aGridObjects = array(
-        'menus' => 'sys_studio_nav_menus',
-        'sets' => 'sys_studio_nav_sets',
-        'items' => 'sys_studio_nav_items'
-    );
+    protected $aGridObjects;
 
     function __construct($sPage = '')
     {
         parent::__construct($sPage);
 
         $this->sSubpageUrl = BX_DOL_URL_STUDIO . 'builder_menu.php?page=';
+
+        $this->aGridObjects = array(
+	        'menus' => 'sys_studio_nav_menus',
+	        'sets' => 'sys_studio_nav_sets',
+	        'items' => 'sys_studio_nav_items'
+	    );
     }
     function getPageCss()
     {

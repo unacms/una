@@ -20,6 +20,7 @@ $sPage = $sPage !== false ? bx_process_input($sPage) : '';
 
 bx_import('BxTemplStudioPolyglot');
 $oPage = new BxTemplStudioPolyglot($sPage);
+$oPage->init();
 
 bx_import('BxDolStudioTemplate');
 $oTemplate = BxDolStudioTemplate::getInstance();

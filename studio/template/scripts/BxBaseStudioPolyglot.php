@@ -13,21 +13,25 @@ bx_import('BxDolStudioPolyglot');
 class BxBaseStudioPolyglot extends BxDolStudioPolyglot
 {
     protected $sSubpageUrl;
-    protected $aMenuItems = array(
-        BX_DOL_STUDIO_PGT_TYPE_SETTINGS => array('icon' => 'cogs'),
-        BX_DOL_STUDIO_PGT_TYPE_KEYS => array('icon' => 'key'),
-        BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES => array('icon' => 'envelope-o')
-    );
-    protected $aGridObjects = array(
-        'keys' => 'sys_studio_lang_keys',
-        'etemplates' => 'sys_studio_lang_etemplates',
-    );
+    protected $aMenuItems;
+    protected $aGridObjects;
 
     function __construct($sPage = '')
     {
         parent::__construct($sPage);
 
         $this->sSubpageUrl = BX_DOL_URL_STUDIO . 'polyglot.php?page=';
+
+		$this->aMenuItems = array(
+	        BX_DOL_STUDIO_PGT_TYPE_SETTINGS => array('icon' => 'cogs'),
+	        BX_DOL_STUDIO_PGT_TYPE_KEYS => array('icon' => 'key'),
+	        BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES => array('icon' => 'envelope-o')
+	    );
+
+		$this->aGridObjects = array(
+        	'keys' => 'sys_studio_lang_keys',
+        	'etemplates' => 'sys_studio_lang_etemplates',
+    );
     }
     function getPageCss()
     {

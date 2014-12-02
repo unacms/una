@@ -56,39 +56,39 @@ class BxDolStudioBuilderPage extends BxTemplStudioPage
 
     function init()
     {
-        //--- Check actions ---//
-        if(($sAction = bx_get('bp_action')) !== false) {
-            $sAction = bx_process_input($sAction);
+        if(($sAction = bx_get('bp_action')) === false) 
+        	return;
 
-            $aResult = array('code' => 1, 'message' => _t('_adm_bp_err_cannot_process_action'));
-            switch($sAction) {
-                case 'reorder':
-                    if(empty($this->aPageRebuild) || !is_array($this->aPageRebuild))
-                        break;
+		$sAction = bx_process_input($sAction);
 
-                    $bResult = false;
-                    for($i = 1; $i <= $this->aPageRebuild['layout_cells_number']; $i++) {
-                        $aItems = bx_get('bp_items_' . $i);
-                        $iItems = count($aItems);
+		$aResult = array('code' => 1, 'message' => _t('_adm_bp_err_cannot_process_action'));
+		switch($sAction) {
+			case 'reorder':
+				if(empty($this->aPageRebuild) || !is_array($this->aPageRebuild))
+					break;
 
-                        for($j = 0; $j < $iItems; $j++)
-                            $bResult |= $this->oDb->updateBlock((int)$aItems[$j], array(
-                                'cell_id' => $i,
-                                'order' => $j
-                            ));
-                    }
-                    $aResult = $bResult ? array('code' => 0, 'message' => _t('_adm_bp_scs_save')) : array('code' => 1, 'message' => _t('_adm_bp_err_nothing_changed'));
-                    break;
+				$bResult = false;
+				for($i = 1; $i <= $this->aPageRebuild['layout_cells_number']; $i++) {
+					$aItems = bx_get('bp_items_' . $i);
+					$iItems = count($aItems);
 
-                default:
-                    $sMethod = 'action' . $this->getClassName($sAction);
-                    if(method_exists($this, $sMethod))
-                        $aResult = $this->$sMethod();
-            }
+					for($j = 0; $j < $iItems; $j++)
+					$bResult |= $this->oDb->updateBlock((int)$aItems[$j], array(
+						'cell_id' => $i,
+						'order' => $j
+					));
+				}
+				$aResult = $bResult ? array('code' => 0, 'message' => _t('_adm_bp_scs_save')) : array('code' => 1, 'message' => _t('_adm_bp_err_nothing_changed'));
+				break;
 
-            echo json_encode($aResult);
-            exit;
-        }
+			default:
+				$sMethod = 'action' . $this->getClassName($sAction);
+				if(method_exists($this, $sMethod))
+			    	$aResult = $this->$sMethod();
+		}
+
+		echo json_encode($aResult);
+		exit;
     }
 
     protected function onSaveBlock(&$oForm, &$aBlock)
