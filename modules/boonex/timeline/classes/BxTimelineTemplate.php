@@ -494,7 +494,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'bx_if:show_location' => array(
             	'condition' => !empty($sLocation),
             	'content' => array(
-            		'style_prefix' > $sStylePrefix,
+            		'style_prefix' => $sStylePrefix,
             		'location' => $sLocation
             	)
             ),
