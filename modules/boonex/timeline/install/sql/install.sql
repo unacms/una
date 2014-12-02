@@ -196,49 +196,49 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 
 -- Forms -> Post
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
-('mod_tml_post', @sName, '_bx_timeline_form_post', '', '', 'do_submit', 'bx_timeline_events', 'id', '', '', '', 0, 1, 'BxTimelineForm', 'modules/boonex/timeline/classes/BxTimelineForm.php');
+('bx_timeline_post', @sName, '_bx_timeline_form_post', '', '', 'do_submit', 'bx_timeline_events', 'id', '', '', '', 0, 1, 'BxTimelineForm', 'modules/boonex/timeline/classes/BxTimelineForm.php');
 
 INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
-('mod_tml_post_add', @sName, 'mod_tml_post', '_bx_timeline_form_post_display_add', 0);
+('bx_timeline_post_add', @sName, 'bx_timeline_post', '_bx_timeline_form_post_display_add', 0);
 
 INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES
-('mod_tml_post', @sName, 'type', 'post', '', 0, 'hidden', '_bx_timeline_form_post_input_sys_type', '', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
-('mod_tml_post', @sName, 'action', '', '', 0, 'hidden', '_bx_timeline_form_post_input_sys_action', '', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
-('mod_tml_post', @sName, 'owner_id', '0', '', 0, 'hidden', '_bx_timeline_form_post_input_sys_owner_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
-('mod_tml_post', @sName, 'text', '', '', 0, 'textarea', '_bx_timeline_form_post_input_sys_text', '_bx_timeline_form_post_input_text', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
-('mod_tml_post', @sName, 'location', '', '', 0, 'custom', '_sys_form_input_sys_location', '_sys_form_input_location', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
-('mod_tml_post', @sName, 'link', '', '', 0, 'custom', '_bx_timeline_form_post_input_sys_link', '', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
-('mod_tml_post', @sName, 'photo', '', '', 0, 'files', '_bx_timeline_form_post_input_sys_photo', '_bx_timeline_form_post_input_photo', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
-('mod_tml_post', @sName, 'do_submit', '_bx_timeline_form_post_input_do_submit', '', 0, 'submit', '_bx_timeline_form_post_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
+('bx_timeline_post', @sName, 'type', 'post', '', 0, 'hidden', '_bx_timeline_form_post_input_sys_type', '', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
+('bx_timeline_post', @sName, 'action', '', '', 0, 'hidden', '_bx_timeline_form_post_input_sys_action', '', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
+('bx_timeline_post', @sName, 'owner_id', '0', '', 0, 'hidden', '_bx_timeline_form_post_input_sys_owner_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('bx_timeline_post', @sName, 'text', '', '', 0, 'textarea', '_bx_timeline_form_post_input_sys_text', '_bx_timeline_form_post_input_text', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
+('bx_timeline_post', @sName, 'location', '', '', 0, 'custom', '_sys_form_input_sys_location', '_sys_form_input_location', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_timeline_post', @sName, 'link', '', '', 0, 'custom', '_bx_timeline_form_post_input_sys_link', '', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
+('bx_timeline_post', @sName, 'photo', '', '', 0, 'files', '_bx_timeline_form_post_input_sys_photo', '_bx_timeline_form_post_input_photo', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
+('bx_timeline_post', @sName, 'do_submit', '_bx_timeline_form_post_input_do_submit', '', 0, 'submit', '_bx_timeline_form_post_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
 
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
-('mod_tml_post_add', 'type', 2147483647, 1, 1),
-('mod_tml_post_add', 'action', 2147483647, 1, 2),
-('mod_tml_post_add', 'owner_id', 2147483647, 1, 3),
-('mod_tml_post_add', 'text', 2147483647, 1, 4),
-('mod_tml_post_add', 'location', 2147483647, 1, 5),
-('mod_tml_post_add', 'link', 2147483647, 1, 6),
-('mod_tml_post_add', 'photo', 2147483647, 1, 7),
-('mod_tml_post_add', 'do_submit', 2147483647, 1, 8);
+('bx_timeline_post_add', 'type', 2147483647, 1, 1),
+('bx_timeline_post_add', 'action', 2147483647, 1, 2),
+('bx_timeline_post_add', 'owner_id', 2147483647, 1, 3),
+('bx_timeline_post_add', 'text', 2147483647, 1, 4),
+('bx_timeline_post_add', 'location', 2147483647, 1, 5),
+('bx_timeline_post_add', 'link', 2147483647, 1, 6),
+('bx_timeline_post_add', 'photo', 2147483647, 1, 7),
+('bx_timeline_post_add', 'do_submit', 2147483647, 1, 8);
 
 -- Forms -> Attach link
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
-('mod_tml_attach_link', @sName, '_bx_timeline_form_attach_link', '', '', 'do_submit', 'bx_timeline_links', 'id', '', '', '', 0, 1, '', '');
+('bx_timeline_attach_link', @sName, '_bx_timeline_form_attach_linkbx_timeline_', 'do_submit', 'bx_timeline_links', 'id', '', '', '', 0, 1, '', '');
 
 INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
-('mod_tml_attach_link_add', @sName, 'mod_tml_attach_link', '_bx_timeline_form_attach_link_display_add', 0);
+('bx_timeline_attach_link_add', @sName, 'bx_timeline_attach_link', '_bx_timeline_form_attach_link_display_add', 0);
 
 INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES
-('mod_tml_attach_link', @sName, 'url', '', '', 0, 'text', '_bx_timeline_form_attach_link_input_sys_url', '_bx_timeline_form_attach_link_input_url', '', 0, 0, 0, '', '', '', 'Preg', 'a:1:{s:4:"preg";s:0:"";}', '_bx_timeline_form_attach_link_input_url_err', 'Xss', '', 0, 0),
-('mod_tml_attach_link', @sName, 'controls', '', 'do_submit,do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
-('mod_tml_attach_link', @sName, 'do_submit', '_bx_timeline_form_attach_link_input_do_submit', '', 0, 'submit', '_bx_timeline_form_attach_link_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
-('mod_tml_attach_link', @sName, 'do_cancel', '_bx_timeline_form_attach_link_input_do_cancel', '', 0, 'button', '_bx_timeline_form_attach_link_input_do_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0);
+('bx_timeline_attach_link', @sName, 'url', '', '', 0, 'text', '_bx_timeline_form_attach_link_input_sys_url', '_bx_timeline_form_attach_link_input_url', '', 0, 0, 0, '', '', '', 'Preg', 'a:1:{s:4:"preg";s:0:"";}', '_bx_timeline_form_attach_link_input_url_err', 'Xss', '', 0, 0),
+('bx_timeline_attach_link', @sName, 'controls', '', 'do_submit,do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_timeline_attach_link', @sName, 'do_submit', '_bx_timeline_form_attach_link_input_do_submit', '', 0, 'submit', '_bx_timeline_form_attach_link_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_timeline_attach_link', @sName, 'do_cancel', '_bx_timeline_form_attach_link_input_do_cancel', '', 0, 'button', '_bx_timeline_form_attach_link_input_do_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0);
 
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
-('mod_tml_attach_link_add', 'url', 2147483647, 1, 1),
-('mod_tml_attach_link_add', 'controls', 2147483647, 1, 2),
-('mod_tml_attach_link_add', 'do_submit', 2147483647, 1, 3),
-('mod_tml_attach_link_add', 'do_cancel', 2147483647, 1, 4);
+('bx_timeline_attach_link_add', 'url', 2147483647, 1, 1),
+('bx_timeline_attach_link_add', 'controls', 2147483647, 1, 2),
+('bx_timeline_attach_link_add', 'do_submit', 2147483647, 1, 3),
+('bx_timeline_attach_link_add', 'do_cancel', 2147483647, 1, 4);
 
 
 -- STUDIO PAGE & WIDGET

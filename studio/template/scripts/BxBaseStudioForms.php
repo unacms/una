@@ -13,19 +13,21 @@ bx_import('BxDolStudioForms');
 class BxBaseStudioForms extends BxDolStudioForms
 {
     protected $sSubpageUrl;
-    protected $aGridObjects = array(
-        'forms' => 'sys_studio_forms',
-        'displays' => 'sys_studio_forms_displays',
-        'fields' => 'sys_studio_forms_fields',
-        'pre_lists' => 'sys_studio_forms_pre_lists',
-        'pre_values' => 'sys_studio_forms_pre_values'
-    );
+    protected $aGridObjects;
 
     function __construct($sPage = '')
     {
         parent::__construct($sPage);
 
         $this->sSubpageUrl = BX_DOL_URL_STUDIO . 'builder_forms.php?page=';
+
+        $this->aGridObjects = array(
+	        'forms' => 'sys_studio_forms',
+	        'displays' => 'sys_studio_forms_displays',
+	        'fields' => 'sys_studio_forms_fields',
+	        'pre_lists' => 'sys_studio_forms_pre_lists',
+	        'pre_values' => 'sys_studio_forms_pre_values'
+    	);
     }
     function getPageCss()
     {

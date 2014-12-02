@@ -20,6 +20,7 @@ $sPage = $sPage !== false ? bx_process_input($sPage) : '';
 
 bx_import('BxTemplStudioNavigation');
 $oPage = new BxTemplStudioNavigation($sPage);
+$oPage->init();
 
 bx_import('BxDolStudioTemplate');
 $oTemplate = BxDolStudioTemplate::getInstance();

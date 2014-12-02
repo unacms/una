@@ -61,6 +61,8 @@ class BxDevStudioPage extends BxTemplStudioModule
             'page' => $sPage,
             'url' => sprintf($this->sUrl, $this->sModule, BX_DEV_TOOLS_FORMS),
         ));
+		$oContent->init();
+
         return $this->oModule->_oTemplate->displayPageContent($this->sPage, $oContent);
     }
 
@@ -74,6 +76,8 @@ class BxDevStudioPage extends BxTemplStudioModule
             'page' => $sPage,
             'url' => sprintf($this->sUrl, $this->sModule, BX_DEV_TOOLS_NAVIGATION),
         ));
+		$oContent->init();
+
         return $this->oModule->_oTemplate->displayPageContent($this->sPage, $oContent);
     }
 
@@ -92,6 +96,7 @@ class BxDevStudioPage extends BxTemplStudioModule
             'url' => sprintf($this->sUrl, $this->sModule, BX_DEV_TOOLS_PAGES),
         ));
         $oContent->init();
+
         return $this->oModule->_oTemplate->displayPageContent($this->sPage, $oContent);
     }
 
@@ -108,6 +113,8 @@ class BxDevStudioPage extends BxTemplStudioModule
             'page' => $sPage,
             'url' => sprintf($this->sUrl, $this->sModule, BX_DEV_TOOLS_POLYGLOT),
         ));
+        $oContent->init();
+
         return $this->oModule->_oTemplate->displayPageContent($this->sPage, $oContent);
     }
 
@@ -121,6 +128,8 @@ class BxDevStudioPage extends BxTemplStudioModule
             'page' => $sPage,
             'url' => sprintf($this->sUrl, $this->sModule, BX_DEV_TOOLS_PERMISSIONS),
         ));
+        $oContent->init();
+
         return $this->oModule->_oTemplate->displayPageContent($this->sPage, $oContent);
     }
 }

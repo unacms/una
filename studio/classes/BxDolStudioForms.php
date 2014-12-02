@@ -31,32 +31,35 @@ class BxDolStudioForms extends BxTemplStudioPage
         $this->sPage = BX_DOL_STUDIO_FORM_TYPE_DEFAULT;
         if(is_string($sPage) && !empty($sPage))
             $this->sPage = $sPage;
-
-        //--- Check actions ---//
-        if(($sAction = bx_get('form_action')) !== false) {
-            $sAction = bx_process_input($sAction);
-
-            $aResult = array('code' => 1, 'message' => _t('_adm_form_err_cannot_process_action'));
-            switch($sAction) {
-                case 'get-page-by-type':
-                    $sValue = bx_process_input(bx_get('form_value'));
-                    if(empty($sValue))
-                        break;
-
-                    $this->sPage = $sValue;
-                    $aResult = array('code' => 0, 'content' => $this->getPageCode());
-                    break;
-
-                default:
-                    $sMethod = 'action' . $this->getClassName($sAction);
-                    if(method_exists($this, $sMethod))
-                        $aResult = $this->$sMethod();
-            }
-
-            echo json_encode($aResult);
-            exit;
-        }
     }
+
+	public function init()
+	{
+        if(($sAction = bx_get('form_action')) === false) 
+        	return;
+
+		$sAction = bx_process_input($sAction);
+
+		$aResult = array('code' => 1, 'message' => _t('_adm_form_err_cannot_process_action'));
+        switch($sAction) {
+        	case 'get-page-by-type':
+            	$sValue = bx_process_input(bx_get('form_value'));
+                if(empty($sValue))
+                	break;
+
+				$this->sPage = $sValue;
+				$aResult = array('code' => 0, 'content' => $this->getPageCode());
+				break;
+
+			default:
+				$sMethod = 'action' . $this->getClassName($sAction);
+				if(method_exists($this, $sMethod))
+					$aResult = $this->$sMethod();
+		}
+
+		echo json_encode($aResult);
+		exit;
+	}
 
     protected function getSystemName($sValue)
     {

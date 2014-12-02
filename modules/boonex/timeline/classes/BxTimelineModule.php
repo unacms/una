@@ -451,7 +451,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $iUserId = $this->getUserId();
 
         bx_import('BxDolForm');
-        $oForm = BxDolForm::getObjectInstance('mod_tml_attach_link', 'mod_tml_attach_link_add');
+        $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject('form_attach_link'), $this->_oConfig->getObject('form_display_attach_link_add'), $this->_oTemplate);
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'add_attach_link/';
         $oForm->aInputs['url']['checker']['params']['preg'] = $this->_oConfig->getPregPattern('url');
 
@@ -471,7 +471,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             if(!empty($iId))
                 return array('item' => $this->_oTemplate->getAttachLinkItem($iUserId, $iId));
 
-            return array('msg' => _t('_adm_nav_err_menus_create'));
+            return array('msg' => _t('_bx_timeline_txt_err_cannot_perform_action'));
         }
 
         return array('form' => $oForm->getCode(), 'form_id' => $oForm->id);
@@ -482,7 +482,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $iUserId = $this->getUserId();
 
         bx_import('BxDolForm');
-        $oForm = BxDolForm::getObjectInstance('mod_tml_post', 'mod_tml_post_add', $this->_oTemplate);
+        $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject('form_post'), $this->_oConfig->getObject('form_display_post_add'), $this->_oTemplate);
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'post/';
         $oForm->aInputs['owner_id']['value'] = $this->_iOwnerId;
 

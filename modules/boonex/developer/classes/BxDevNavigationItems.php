@@ -40,9 +40,11 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems
     public function performActionAdd()
     {
         $sAction = 'add';
+        $sFormObject = $this->oModule->_oConfig->getObject('form_nav_item');
+        $sFormDisplay = $this->oModule->_oConfig->getObject('form_display_nav_item_add');
 
         bx_import('BxDolForm');
-        $oForm = BxDolForm::getObjectInstance('mod_dev_nav_item', 'mod_dev_nav_item_add');
+        $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&set=' . $this->sSet;
         $this->fillInSelects($oForm->aInputs);
 
@@ -70,6 +72,8 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems
     public function performActionEdit($bUpdateGrid = false)
     {
         $sAction = 'edit';
+        $sFormObject = $this->oModule->_oConfig->getObject('form_nav_item');
+        $sFormDisplay = $this->oModule->_oConfig->getObject('form_display_nav_item_edit');
 
         $aItem = $this->_getItem('getItems');
         if($aItem === false) {
@@ -78,7 +82,7 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems
         }
 
         bx_import('BxDolForm');
-        $oForm = BxDolForm::getObjectInstance('mod_dev_nav_item', 'mod_dev_nav_item_edit');
+        $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&set=' . $this->sSet;
         $oForm->aInputs['controls'][0]['value'] = _t('_bx_dev_nav_btn_items_save');
         $this->fillInSelects($oForm->aInputs);
