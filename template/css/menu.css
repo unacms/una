@@ -326,10 +326,10 @@ ul.bx-menu-floating-blocks {
     *display: inline;
     vertical-align:top;    
 
-    width:64px;
-    width:4rem;
-    height:64px;
-    height:4rem;
+    width:80px;
+    width:5rem;
+    height:80px;
+    height:5rem;
 }
 .bx-menu-floating-blocks-big li {
     width:128px;
@@ -368,8 +368,8 @@ ul.bx-menu-floating-blocks {
     width:2rem;
     height:32px;
     height:2rem;
-    margin:8px 16px 3px 16px;
-    margin:0.5rem 1rem 0.2rem 1rem;
+    margin:16px 20px 3px 20px;
+    margin:1rem 1.5rem 0.2rem 1.5rem;
 }
 .bx-menu-floating-blocks-big li img,
 .bx-menu-floating-blocks-big li .sys-icon {

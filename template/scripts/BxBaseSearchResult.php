@@ -20,7 +20,7 @@ class BxBaseSearchResult extends BxDolSearchResult
 
     protected $aGetParams = array(); ///< get params to keep in paginate and other browsing links
 
-    protected $iDesignBoxTemplate = BX_DB_PADDING_DEF; ///< design box ID to warp result in
+    protected $iDesignBoxTemplate = 11; ///< design box ID to wrap result in, or false to disable design box wrapping
 
     protected $aConstants;
 
@@ -71,20 +71,18 @@ class BxBaseSearchResult extends BxDolSearchResult
 
     function displaySearchBox ($sContent, $sPaginate = '')
     {
-        $sTitle = _t($this->aCurrent['title']);
 		$sContent .= $sPaginate;
 		$sMenu = $this->getDesignBoxMenu();
 
         if ($this->id) {
+            $sTitle = _t($this->aCurrent['title']);
         	$sCode = $this->oFunctions->designBoxContent($sTitle, $sContent, $this->iDesignBoxTemplate, $sMenu);
             return '<div class="bx-page-block-container bx-def-padding-topbottom bx-clearfix" id="bx-page-block-' . $this->id . '">' . $sCode . '</div>';
         }
 
-        return array(
-        	'title' => $sTitle,
+        return array(        	
         	'content' => $sContent,
-        	'designbox_id' => $this->iDesignBoxTemplate,
-        	'menu' => $sMenu
+        	'menu' => $sMenu,
         );
     }
 

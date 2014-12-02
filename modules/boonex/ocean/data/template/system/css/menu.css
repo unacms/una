@@ -38,6 +38,10 @@ ul.bx-menu-toolbar li a .sys-icon-a {
     height:calc(100% - 4rem);
 }
 
+.bx-menu-account-popup-profile-switcher-link b {
+    vertical-align:baseline;
+}
+
 /* --------------- account popup menu */
 .bx-menu-account-popup-profile {
 	font-weight: bold;
