@@ -27,9 +27,11 @@ class BxDevNavigationSets extends BxTemplStudioNavigationSets
     public function performActionAdd()
     {
         $sAction = 'add';
+        $sFormObject = $this->oModule->_oConfig->getObject('form_nav_set');
+        $sFormDisplay = $this->oModule->_oConfig->getObject('form_display_nav_set_add');
 
         bx_import('BxDolForm');
-        $oForm = BxDolForm::getObjectInstance('mod_dev_nav_set', 'mod_dev_nav_set_add');
+        $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction;
         $oForm->aInputs['module']['values'] = array_merge(array('' => _t('_bx_dev_nav_txt_select_module')), BxDolStudioUtils::getModules());
 
@@ -59,7 +61,9 @@ class BxDevNavigationSets extends BxTemplStudioNavigationSets
 
     public function performActionEdit()
     {
-    $sAction = 'edit';
+	    $sAction = 'edit';
+	    $sFormObject = $this->oModule->_oConfig->getObject('form_nav_set');
+        $sFormDisplay = $this->oModule->_oConfig->getObject('form_display_nav_set_edit');
 
         $aIds = bx_get('ids');
         if(!$aIds || !is_array($aIds)) {
@@ -82,7 +86,7 @@ class BxDevNavigationSets extends BxTemplStudioNavigationSets
         }
 
         bx_import('BxDolForm');
-        $oForm = BxDolForm::getObjectInstance('mod_dev_nav_set', 'mod_dev_nav_set_edit');
+        $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction;
         $oForm->aInputs['module']['values'] = array_merge(array('' => _t('_bx_dev_frm_txt_select_module')), BxDolStudioUtils::getModules());
         $oForm->aInputs['controls'][0]['value'] = _t('_bx_dev_frm_btn_displays_save');

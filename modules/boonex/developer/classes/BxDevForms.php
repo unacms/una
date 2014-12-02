@@ -15,13 +15,7 @@ class BxDevForms extends BxTemplStudioForms
 {
     protected $oModule;
     protected $aParams;
-    protected $aGridObjects = array(
-        'forms' => 'mod_dev_forms',
-        'displays' => 'mod_dev_forms_displays',
-        'fields' => 'mod_dev_forms_fields',
-        'pre_lists' => 'mod_dev_forms_pre_lists',
-        'pre_values' => 'mod_dev_forms_pre_values'
-    );
+    protected $aGridObjects;
 
     function __construct($aParams)
     {
@@ -32,6 +26,14 @@ class BxDevForms extends BxTemplStudioForms
 
         bx_import('BxDolModule');
         $this->oModule = BxDolModule::getInstance('bx_developer');
+
+        $this->aGridObjects = array(
+        	'forms' => $this->oModule->_oConfig->getObject('grid_forms'),
+	        'displays' => $this->oModule->_oConfig->getObject('grid_forms_displays'),
+	        'fields' => $this->oModule->_oConfig->getObject('grid_forms_fields'),
+	        'pre_lists' => $this->oModule->_oConfig->getObject('grid_forms_pre_lists'),
+	        'pre_values' => $this->oModule->_oConfig->getObject('grid_forms_pre_values'),
+        );
 
         $this->oModule->_oTemplate->addStudioCss(array('forms.css'));
     }

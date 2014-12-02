@@ -40,9 +40,11 @@ class BxDevFormsDisplays extends BxTemplStudioFormsDisplays
     public function performActionAdd()
     {
         $sAction = 'add';
+        $sFormObject = $this->oModule->_oConfig->getObject('form_forms_display');
+        $sFormDisplay = $this->oModule->_oConfig->getObject('form_display_forms_display_add');
 
         bx_import('BxDolForm');
-        $oForm = BxDolForm::getObjectInstance('mod_dev_forms_display', 'mod_dev_forms_display_add');
+        $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
         $this->_fillDisplayForm($oForm, $sAction);
 
         $oForm->initChecker();
@@ -72,6 +74,8 @@ class BxDevFormsDisplays extends BxTemplStudioFormsDisplays
     public function performActionEdit()
     {
         $sAction = 'edit';
+        $sFormObject = $this->oModule->_oConfig->getObject('form_forms_display');
+        $sFormDisplay = $this->oModule->_oConfig->getObject('form_display_forms_display_edit');
 
         $aIds = bx_get('ids');
         if(!$aIds || !is_array($aIds)) {
@@ -94,7 +98,7 @@ class BxDevFormsDisplays extends BxTemplStudioFormsDisplays
         }
 
         bx_import('BxDolForm');
-        $oForm = BxDolForm::getObjectInstance('mod_dev_forms_display', 'mod_dev_forms_display_edit');
+        $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
 
         $this->_fillDisplayForm($oForm, $sAction);
         $oForm->aInputs['controls'][0]['value'] = _t('_bx_dev_frm_btn_displays_save');

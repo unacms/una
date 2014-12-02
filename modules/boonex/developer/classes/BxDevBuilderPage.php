@@ -42,8 +42,11 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage
 
     protected function actionPageCreate()
     {
+    	$sFormObject = $this->oModule->_oConfig->getObject('form_bp_page');
+        $sFormDisplay = $this->oModule->_oConfig->getObject('form_display_bp_page_add');
+
         bx_import('BxDolForm');
-        $oForm = BxDolForm::getObjectInstance('mod_dev_bp_page', 'mod_dev_bp_page_add');
+        $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
         $oForm->aFormAttrs['action'] = sprintf($this->sPageUrl, $this->sType, $this->sPage) . '&bp_action=' . $this->sActionPageCreate;
         $oForm->aInputs['module']['values'] = array_merge(array('' => _t('_bx_dev_bp_txt_select_module')), BxDolStudioUtils::getModules());
 
@@ -130,6 +133,9 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage
 
     protected function actionBlockEdit()
     {
+    	$sFormObject = $this->oModule->_oConfig->getObject('form_bp_block');
+        $sFormDisplay = $this->oModule->_oConfig->getObject('form_display_bp_block_edit');
+        
         $iId = (int)bx_get('id');
         if(!$iId)
             return array();
@@ -140,7 +146,7 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage
             return array('msg' => _t('_bx_dev_bp_err_block_not_found'));
 
         bx_import('BxDolForm');
-        $oForm = BxDolForm::getObjectInstance('mod_dev_bp_block', 'mod_dev_bp_block_edit');
+        $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
 
         $this->onLoadBlock($oForm, $aBlock);
 

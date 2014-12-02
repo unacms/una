@@ -11,23 +11,26 @@ WHERE `tp`.`name`=@sName;
 --
 -- Forms Builder
 --
-DELETE FROM `sys_objects_grid` WHERE `object` IN ('mod_dev_forms', 'mod_dev_forms_displays', 'mod_dev_forms_fields', 'mod_dev_forms_pre_lists', 'mod_dev_forms_pre_values');
-DELETE FROM `sys_grid_fields` WHERE `object` IN ('mod_dev_forms', 'mod_dev_forms_displays', 'mod_dev_forms_fields', 'mod_dev_forms_pre_lists', 'mod_dev_forms_pre_values');
-DELETE FROM `sys_grid_actions` WHERE `object` IN ('mod_dev_forms', 'mod_dev_forms_displays', 'mod_dev_forms_fields', 'mod_dev_forms_pre_lists', 'mod_dev_forms_pre_values');
+DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_developer_forms', 'bx_developer_forms_displays', 'bx_developer_forms_fields', 'bx_developer_forms_pre_lists', 'bx_developer_forms_pre_values');
+DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_developer_forms', 'bx_developer_forms_displays', 'bx_developer_forms_fields', 'bx_developer_forms_pre_lists', 'bx_developer_forms_pre_values');
+DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_developer_forms', 'bx_developer_forms_displays', 'bx_developer_forms_fields', 'bx_developer_forms_pre_lists', 'bx_developer_forms_pre_values');
+
 
 --
 -- Navigation Builder
 --
-DELETE FROM `sys_objects_grid` WHERE `object` IN ('mod_dev_nav_menus', 'mod_dev_nav_sets', 'mod_dev_nav_items');
-DELETE FROM `sys_grid_fields` WHERE `object` IN ('mod_dev_nav_menus', 'mod_dev_nav_sets', 'mod_dev_nav_items');
-DELETE FROM `sys_grid_actions` WHERE `object` IN ('mod_dev_nav_menus', 'mod_dev_nav_sets', 'mod_dev_nav_items');
+DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_developer_nav_menus', 'bx_developer_nav_sets', 'bx_developer_nav_items');
+DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_developer_nav_menus', 'bx_developer_nav_sets', 'bx_developer_nav_items');
+DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_developer_nav_menus', 'bx_developer_nav_sets', 'bx_developer_nav_items');
+
 
 --
 -- Polyglot
 --
-DELETE FROM `sys_objects_grid` WHERE `object` IN ('mod_dev_pgt_manage');
-DELETE FROM `sys_grid_fields` WHERE `object` IN ('mod_dev_pgt_manage');
-DELETE FROM `sys_grid_actions` WHERE `object` IN ('mod_dev_pgt_manage');
+DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_developer_pgt_manage');
+DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_developer_pgt_manage');
+DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_developer_pgt_manage');
+
 
 --
 -- Forms All

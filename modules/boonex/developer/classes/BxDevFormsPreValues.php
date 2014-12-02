@@ -37,9 +37,11 @@ class BxDevFormsPreValues extends BxTemplStudioFormsPreValues
     public function performActionAdd()
     {
         $sAction = 'add';
+        $sFormObject = $this->oModule->_oConfig->getObject('form_forms_prevalue');
+        $sFormDisplay = $this->oModule->_oConfig->getObject('form_display_forms_prevalue_add');
 
         bx_import('BxDolForm');
-        $oForm = BxDolForm::getObjectInstance('mod_dev_forms_prevalue', 'mod_dev_forms_prevalue_add');
+        $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&list=' . $this->sList;
 
         $this->onLoad($oForm->aInputs);
@@ -71,6 +73,8 @@ class BxDevFormsPreValues extends BxTemplStudioFormsPreValues
     public function performActionEdit()
     {
         $sAction = 'edit';
+        $sFormObject = $this->oModule->_oConfig->getObject('form_forms_prevalue');
+        $sFormDisplay = $this->oModule->_oConfig->getObject('form_display_forms_prevalue_edit');
 
         $aValue = $this->_getItem('getValues');
         if($aValue === false) {
@@ -79,7 +83,7 @@ class BxDevFormsPreValues extends BxTemplStudioFormsPreValues
         }
 
         bx_import('BxDolForm');
-        $oForm = BxDolForm::getObjectInstance('mod_dev_forms_prevalue', 'mod_dev_forms_prevalue_edit');
+        $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&list=' . $this->sList;
 
         $this->onLoad($oForm->aInputs);

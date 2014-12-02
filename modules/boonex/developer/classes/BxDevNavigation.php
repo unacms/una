@@ -15,11 +15,7 @@ class BxDevNavigation extends BxTemplStudioNavigation
 {
     protected $oModule;
     protected $aParams;
-    protected $aGridObjects = array(
-        'menus' => 'mod_dev_nav_menus',
-        'sets' => 'mod_dev_nav_sets',
-        'items' => 'mod_dev_nav_items'
-    );
+    protected $aGridObjects;
 
     function __construct($aParams)
     {
@@ -30,6 +26,12 @@ class BxDevNavigation extends BxTemplStudioNavigation
 
         bx_import('BxDolModule');
         $this->oModule = BxDolModule::getInstance('bx_developer');
+
+        $this->aGridObjects = array(
+	        'menus' => $this->oModule->_oConfig->getObject('grid_nav_menus'),
+	        'sets' => $this->oModule->_oConfig->getObject('grid_nav_sets'),
+	        'items' => $this->oModule->_oConfig->getObject('grid_nav_items')
+	    );
 
         $this->oModule->_oTemplate->addStudioCss(array('navigation.css'));
     }

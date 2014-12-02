@@ -29,9 +29,11 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus
     public function performActionAdd()
     {
         $sAction = 'add';
+        $sFormObject = $this->oModule->_oConfig->getObject('form_nav_menu');
+        $sFormDisplay = $this->oModule->_oConfig->getObject('form_display_nav_menu_add');
 
         bx_import('BxDolForm');
-        $oForm = BxDolForm::getObjectInstance('mod_dev_nav_menu', 'mod_dev_nav_menu_add');
+        $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction;
         $this->fillInSelects($oForm->aInputs);
 
@@ -62,6 +64,8 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus
     public function performActionEdit()
     {
         $sAction = 'edit';
+        $sFormObject = $this->oModule->_oConfig->getObject('form_nav_menu');
+        $sFormDisplay = $this->oModule->_oConfig->getObject('form_display_nav_menu_edit');
 
         $aMenu = $this->_getItem('getMenus');
         if($aMenu === false) {
@@ -70,7 +74,7 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus
         }
 
         bx_import('BxDolForm');
-        $oForm = BxDolForm::getObjectInstance('mod_dev_nav_menu', 'mod_dev_nav_menu_edit');
+        $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction;
         $oForm->aInputs['controls'][0]['value'] = _t('_bx_dev_nav_btn_menus_save');
         $this->fillInSelects($oForm->aInputs);

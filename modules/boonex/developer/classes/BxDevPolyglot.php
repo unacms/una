@@ -15,10 +15,8 @@ class BxDevPolyglot extends BxTemplStudioPolyglot
 {
     protected $oModule;
     protected $aParams;
-    protected $aMenuItems = array();
-    protected $aGridObjects = array(
-        'manage' => 'mod_dev_pgt_manage'
-    );
+    protected $aMenuItems;
+    protected $aGridObjects;
 
     function __construct($aParams)
     {
@@ -29,6 +27,12 @@ class BxDevPolyglot extends BxTemplStudioPolyglot
 
         bx_import('BxDolModule');
         $this->oModule = BxDolModule::getInstance('bx_developer');
+
+        $this->aMenuItems = array();
+
+		$this->aGridObjects = array(
+			'manage' => $this->oModule->_oConfig->getObject('grid_pgt_manage'),
+		);
     }
 
     function getPageCss()

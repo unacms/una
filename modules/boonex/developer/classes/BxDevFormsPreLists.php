@@ -27,9 +27,11 @@ class BxDevFormsPreLists extends BxTemplStudioFormsPreLists
     public function performActionAdd()
     {
         $sAction = 'add';
+        $sFormObject = $this->oModule->_oConfig->getObject('form_forms_prelist');
+        $sFormDisplay = $this->oModule->_oConfig->getObject('form_display_forms_prelist_add');
 
         bx_import('BxDolForm');
-        $oForm = BxDolForm::getObjectInstance('mod_dev_forms_prelist', 'mod_dev_forms_prelist_add');
+        $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction;
         $oForm->aInputs['module']['values'] = array_merge(array('' => _t('_bx_dev_frm_txt_select_module')), BxDolStudioUtils::getModules());
 
@@ -60,6 +62,8 @@ class BxDevFormsPreLists extends BxTemplStudioFormsPreLists
     public function performActionEdit()
     {
         $sAction = 'edit';
+        $sFormObject = $this->oModule->_oConfig->getObject('form_forms_prelist');
+        $sFormDisplay = $this->oModule->_oConfig->getObject('form_display_forms_prelist_edit');
 
         $aList = $this->_getItem('getLists');
         if($aList === false) {
@@ -68,7 +72,7 @@ class BxDevFormsPreLists extends BxTemplStudioFormsPreLists
         }
 
         bx_import('BxDolForm');
-        $oForm = BxDolForm::getObjectInstance('mod_dev_forms_prelist', 'mod_dev_forms_prelist_edit');
+        $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction;
         $oForm->aInputs['module']['values'] = array_merge(array('' => _t('_bx_dev_frm_txt_select_module')), BxDolStudioUtils::getModules());
         $oForm->aInputs['controls'][0]['value'] = _t('_bx_dev_frm_btn_prelists_save');
