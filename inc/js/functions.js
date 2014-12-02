@@ -262,6 +262,10 @@ function bx_center_content (sSel, sBlockStyle) {
     var iWidthContainer = eCenter.innerWidth();           
     var iPerRow = parseInt(iWidthContainer/iWidthUnit);
     var iLeft = (iWidthContainer - (iAll > iPerRow ? iPerRow * iWidthUnit : iAll * iWidthUnit)) / 2;
+
+    if (iWidthUnit > iWidthContainer)
+        return;
+
     eCenter.css("padding-left", iLeft);
 }
 
