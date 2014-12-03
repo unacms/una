@@ -299,10 +299,6 @@ ul.bx-menu-toolbar li .sys-icon {
 
 }
 
-.bx-menu-account-popup-profile-switcher-link b {
-    vertical-align:middle;
-}
-
 .bx-popup-content .bx-menu-floating-blocks {
     width:256px;
     width:16rem;
@@ -466,3 +462,11 @@ ul.bx-menu-btns-hor li {
     position:relative;
 }
 
+.bx-menu-account-popup-profile-switcher-link b {
+    vertical-align:middle;
+}
+
+.bx-menu-account-popup-profile-switcher-link a:hover,
+.bx-menu-account-popup-profile-switcher-link a {
+    text-decoration:none;
+}
