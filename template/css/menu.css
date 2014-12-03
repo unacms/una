@@ -455,3 +455,14 @@ ul.bx-menu-btns-hor li {
 .bx-popup-content .bx-menu-account-popup {
     min-width:17em;
 }
+
+.bx-menu-search-popup-title,
+.bx-menu-account-popup-profile,
+.bx-menu-account-popup-menu {
+    text-align:center;
+}
+
+.bx-sliding-menu-main > .bx-def-page-width {
+    position:relative;
+}
+
