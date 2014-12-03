@@ -103,10 +103,10 @@ BxDolUploaderSimple.prototype.onUploadCompleted = function (sErrorMsg) {
 
     this._isUploadsInProgress = false;
     this._unlockPageFromLeaving();
+    this._loading(false, true);
 
     if (sErrorMsg.length) {
-        this.restoreGhosts();
-        this._loading(false, true);
+        this.restoreGhosts();        
         this._showError(sErrorMsg);
     } else {        
         this.restoreGhosts();
