@@ -77,6 +77,10 @@ html {
     box-shadow:none;
 }
 
+.bx-popup-width {
+    width:100%;
+}
+
 /* page layouts */
 
 .bx-layout-col {
