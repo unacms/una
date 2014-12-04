@@ -356,10 +356,11 @@ function bx_menu_slide (jSel, e, sPosition) {
             fPositionBlock();
         else
             fPositionSite();
-
+        
         eSlider.slideDown();
+        eSlider.find('.bx-sliding-menu-cont').css('left', '0');
 
-        eSlider.data('data-control-btn', e);
+        eSlider.data('data-control-btn', e);        
     };    
     
     if ('undefined' == typeof(sPosition))
