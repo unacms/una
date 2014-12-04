@@ -267,6 +267,16 @@ ul.bx-menu-toolbar li .sys-icon {
 
 /* --------------- floating blocks menu */
 
+.bx-sliding-menu-cont {
+    position:relative; 
+    left:-200vw;
+
+    -webkit-transition:left 0.5s cubic-bezier(0, 0.97, 0.65, 1.2);
+    -moz-transition:left 0.5s cubic-bezier(0, 0.97, 0.65, 1.2);
+    -o-transition:left 0.5s cubic-bezier(0, 0.97, 0.65, 1.2);
+    transition:left 0.5s cubic-bezier(0, 0.97, 0.65, 1.2);
+}
+
 .bx-sliding-menu-close,
 .bx-sliding-menu-close:hover {
     position:absolute;
@@ -297,10 +307,6 @@ ul.bx-menu-toolbar li .sys-icon {
 .bx-sliding-menu-main .bx-menu-account-popup-profile-switcher {
     overflow:hidden;
 
-}
-
-.bx-menu-account-popup-profile-switcher-link b {
-    vertical-align:middle;
 }
 
 .bx-popup-content .bx-menu-floating-blocks {
@@ -454,4 +460,23 @@ ul.bx-menu-btns-hor li {
 
 .bx-popup-content .bx-menu-account-popup {
     min-width:17em;
+}
+
+.bx-menu-search-popup-title,
+.bx-menu-account-popup-profile,
+.bx-menu-account-popup-menu {
+    text-align:center;
+}
+
+.bx-sliding-menu-main > .bx-def-page-width {
+    position:relative;
+}
+
+.bx-menu-account-popup-profile-switcher-link b {
+    vertical-align:middle;
+}
+
+.bx-menu-account-popup-profile-switcher-link a:hover,
+.bx-menu-account-popup-profile-switcher-link a {
+    text-decoration:none;
 }
