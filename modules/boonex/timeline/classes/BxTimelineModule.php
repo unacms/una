@@ -23,6 +23,9 @@ define('BX_TIMELINE_PARSE_TYPE_POST', 'post');
 define('BX_TIMELINE_PARSE_TYPE_SHARE', 'share');
 define('BX_TIMELINE_PARSE_TYPE_DEFAULT', BX_TIMELINE_PARSE_TYPE_POST);
 
+define('BX_TIMELINE_MEDIA_PHOTO', 'photo');
+define('BX_TIMELINE_MEDIA_VIDEO', 'video');
+
 class BxTimelineModule extends BxBaseModNotificationsModule
 {
     protected $_sJsPostObject;
@@ -483,30 +486,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
         bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject('form_post'), $this->_oConfig->getObject('form_display_post_add'), $this->_oTemplate);
-        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'post/';
-        $oForm->aInputs['owner_id']['value'] = $this->_iOwnerId;
-
-        if(isset($oForm->aInputs['link']))
-            $oForm->aInputs['link']['content'] = $this->_oTemplate->getAttachLinkField($iUserId);
-
-        if(isset($oForm->aInputs['photo'])) {
-            $aFormNested = array(
-                'params' =>array(
-                    'nested_form_template' => 'uploader_nfw.html'
-                ),
-                'inputs' => array(),
-            );
-
-            bx_import('BxDolFormNested');
-            $oFormNested = new BxDolFormNested('photo', $aFormNested, 'do_submit', $this->_oTemplate);
-
-            $oForm->aInputs['photo']['storage_object'] = $this->_oConfig->getObject('storage');
-            $oForm->aInputs['photo']['images_transcoder'] = $this->_oConfig->getObject('transcoder_preview');
-            $oForm->aInputs['photo']['uploaders'] = $this->_oConfig->getUploaders('image');
-            $oForm->aInputs['photo']['upload_buttons_titles'] = array('Simple' => 'camera');
-            $oForm->aInputs['photo']['multiple'] = true;
-            $oForm->aInputs['photo']['ghost_template'] = $oFormNested;
-        }
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
@@ -526,11 +505,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
             //--- Process Link ---//
             $aLinkIds = $oForm->getCleanValue('link');
-            unset($oForm->aInputs['link']);
 
-            //--- Process Photos ---//
-            $aPhotoIds = $oForm->getCleanValue('photo');
-            unset($oForm->aInputs['photo']);
+            //--- Process Media ---//
+            $aPhotoIds = $oForm->getCleanValue(BX_TIMELINE_MEDIA_PHOTO);
+            $aVideoIds = $oForm->getCleanValue(BX_TIMELINE_MEDIA_VIDEO);
 
             $sTitle = _t('_bx_timeline_txt_user_added_sample', $sUserName, _t('_bx_timeline_txt_sample'));
             $sDescription = !empty($aContent['text']) ? $aContent['text'] : '';
@@ -550,18 +528,14 @@ class BxTimelineModule extends BxBaseModNotificationsModule
  				$oMetatags->keywordsAdd($iId, $aContent['text']);
  				$oMetatags->locationsAddFromForm($iId, $this->_oConfig->CNF['FIELD_LOCATION_PREFIX']);
 
+				//--- Process Link ---//
                 if(!empty($aLinkIds) && is_array($aLinkIds))
                     foreach($aLinkIds as $iLinkId)
                         $this->_oDb->saveLink($iId, $iLinkId);
 
-                if(!empty($aPhotoIds) && is_array($aPhotoIds)) {
-                    bx_import('BxDolStorage');
-                    $oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage'));
-
-                    foreach($aPhotoIds as $iPhotoId)
-                        if($this->_oDb->savePhoto($iId, $iPhotoId))
-                            $oStorage->afterUploadCleanup($iPhotoId, $iUserId);
-                }
+				//--- Process Media ---// 
+				$this->_saveMedia(BX_TIMELINE_MEDIA_PHOTO, $iId, $aPhotoIds);
+				$this->_saveMedia(BX_TIMELINE_MEDIA_VIDEO, $iId, $aVideoIds);
 
                 $this->onPost($iId);
 
@@ -600,13 +574,24 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         return $oVote;
     }
 
+    public function getAttachmentsMenuObject()
+    {
+		bx_import('BxDolMenu');
+        $oMenu = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_post_attachments'), $this->_oTemplate);
+        $oMenu->addMarkers(array(
+            'js_object' => $this->_oConfig->getJsObject('post'),
+        ));
+
+        return $oMenu;
+    }
+
     public function getManageMenuObject($mixedEvent)
     {
     	if(!is_array($mixedEvent))
     		$mixedEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => (int)$mixedEvent));
 
         bx_import('BxDolMenu');
-        $oMenu = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_manage'));
+        $oMenu = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_manage'), $this->_oTemplate);
         $oMenu->setEvent($mixedEvent);
         return $oMenu;
     }
@@ -737,19 +722,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule
     {
     	$sCommonPostPrefix = $this->_oConfig->getPrefix('common_post');
 
-    	//--- Delete attached photos and links when common event was deleted.
+    	//--- Delete attached photos, videos and links when common event was deleted.
     	if($aEvent['type'] == $sCommonPostPrefix . BX_TIMELINE_PARSE_TYPE_POST) {
-	        $aPhotos = $this->_oDb->getPhotos($aEvent['id']);
-	        if(!empty($aPhotos) && is_array($aPhotos)) {
-	            bx_import('BxDolStorage');
-	            $oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage'));
-	
-	            foreach($aPhotos as $iPhotoId)
-	                $oStorage->deleteFile($iPhotoId);
-	
-	            $this->_oDb->deletePhotos($aEvent['id']);
-	        }
-	
+    		$this->_deleteMedia(BX_TIMELINE_MEDIA_PHOTO, $aEvent['id']);
+    		$this->_deleteMedia(BX_TIMELINE_MEDIA_VIDEO, $aEvent['id']);
+
 	        $this->_oDb->deleteLinks($aEvent['id']);
     	}
 
@@ -810,6 +787,36 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             return false;
 
         return array($sSystem, $iObjectId, $iCount);
+    }
+
+    protected function _saveMedia($sType, $iId, $aItemIds)
+    {
+    	if(empty($aItemIds) || !is_array($aItemIds))
+    		return; 
+
+    	$iUserId = $this->getUserId();
+
+		bx_import('BxDolStorage');
+		$oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage_' . strtolower($sType) . 's'));
+
+		foreach($aItemIds as $iItemId)
+        	if($this->_oDb->saveMedia($sType, $iId, $iItemId))
+            	$oStorage->afterUploadCleanup($iItemId, $iUserId);
+    }
+
+    protected function _deleteMedia($sType, $iId)
+    {
+	    $aItems = $this->_oDb->getMedia($sType, $iId);
+	    if(empty($aItems) || !is_array($aItems))
+	    	return;
+
+		bx_import('BxDolStorage');
+		$oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage_' . strtolower($sType) . 's'));
+
+		foreach($aItems as $iItemId)
+			$oStorage->deleteFile($iItemId);
+
+		$this->_oDb->deleteMedia($sType, $iId);
     }
 
     protected function _prepareParams($sType, $iOwnerId, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline)

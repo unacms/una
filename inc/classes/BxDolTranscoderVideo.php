@@ -69,15 +69,11 @@ bx_import('BxDolTranscoderVideoQuery');
  * $oTranscoderPoster->registerHandlers(); 
  *
  * // get URLs of transcoded videos and video thumbnail, 33 is ID of original video file stored in specified storage object
- * $sUrlMp4 = $oTranscoder->getFileUrl(33);
- * $sUrlWebM = $oTranscoder->getFileUrl(33);
- * $sUrlPoster = $oTranscoder->getFileUrl(33);
+ * $sUrlMp4 = $oTranscoderMp4->getFileUrl(33);
+ * $sUrlWebM = $oTranscoderWebm->getFileUrl(33);
+ * $sUrlPoster = $oTranscoderPoster->getFileUrl(33);
  *
- * echo 'My cat:
- *     <video poster="' . $sUrlPoster . '">
- *         <source type="video/webm; codecs="vp8, vorbis" src="' . $sUrlWebM . '" />
- *         <source type="video/mp4" src="' . $sUrlMp4 . '" />
- *     </video>'; 
+ * echo 'My cat:' . BxTemplFunctions::getInstance()->videoPlayer($sUrlPoster, $sUrlMP4, $sUrlWebM); 
  * @endcode
  *
  * Also @see transcoder_videos sample for complete example.

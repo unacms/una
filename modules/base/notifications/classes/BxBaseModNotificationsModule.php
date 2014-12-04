@@ -80,6 +80,11 @@ class BxBaseModNotificationsModule extends BxDolModule
 		return true;
     }
 
+    public function getOwnerId()
+    {
+    	return $this->_iOwnerId;
+    }
+
 	public function getUserId()
     {
         return isLogged() ? bx_get_logged_profile_id() : 0;

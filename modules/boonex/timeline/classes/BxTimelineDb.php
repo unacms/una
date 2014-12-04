@@ -15,6 +15,9 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 {
     protected $_sTablesShareTrack;
 
+    protected $_aTablesMedia;
+    protected $_aTablesMedia2Events;
+
     /*
      * Constructor.
      */
@@ -22,6 +25,15 @@ class BxTimelineDb extends BxBaseModNotificationsDb
     {
         parent::__construct($oConfig);
         $this->_sTableSharesTrack = $this->_sPrefix . 'shares_track';
+
+        $this->_aTablesMedia = array(
+        	BX_TIMELINE_MEDIA_PHOTO => $this->_sPrefix . 'photos',
+        	BX_TIMELINE_MEDIA_VIDEO => $this->_sPrefix . 'videos' 
+        );
+        $this->_aTablesMedia2Events = array(
+        	BX_TIMELINE_MEDIA_PHOTO => $this->_sPrefix . 'photos2events',
+        	BX_TIMELINE_MEDIA_VIDEO => $this->_sPrefix . 'videos2events'
+        );
     }
 
     public function getMaxDuration($aParams)
@@ -94,29 +106,36 @@ class BxTimelineDb extends BxBaseModNotificationsDb
     }
 
     //--- Photo uploader related methods ---//
-    public function savePhoto($iEventId, $iPhId)
+    public function saveMedia($sType, $iEventId, $iItemId)
     {
-        $sQuery = $this->prepare("INSERT INTO `" . $this->_sPrefix . "photos2events` SET `event_id`=?, `photo_id`=?", $iEventId, $iPhId);
+    	$sTable = $this->_aTablesMedia2Events[$sType];
+
+        $sQuery = $this->prepare("INSERT INTO `" . $sTable . "` SET `event_id`=?, `media_id`=?", $iEventId, $iItemId);
         return (int)$this->query($sQuery) > 0;
     }
 
-    public function deletePhotos($iEventId)
+    public function deleteMedia($sType, $iEventId)
     {
-        $sQuery = $this->prepare("DELETE FROM `" . $this->_sPrefix . "photos2events` WHERE `event_id` = ?", $iEventId);
+    	$sTable = $this->_aTablesMedia2Events[$sType];
+
+        $sQuery = $this->prepare("DELETE FROM `" . $sTable . "` WHERE `event_id` = ?", $iEventId);
         return (int)$this->query($sQuery) > 0;
     }
 
-    public function getPhotos($iEventId, $iOffset = 0)
+    public function getMedia($sType, $iEventId, $iOffset = 0)
     {
+    	$sTableMedia = $this->_aTablesMedia[$sType];
+    	$sTableMedia2Events = $this->_aTablesMedia2Events[$sType];
+
         $sLimitAddon = '';
         if($iOffset != 0)
             $sLimitAddon = $this->prepare(" OFFSET ?", $iOffset);
 
         $sQuery = $this->prepare("SELECT
-                 `tpe`.`photo_id` AS `id`
-            FROM `" . $this->_sPrefix . "photos2events` AS `tpe`
-            LEFT JOIN `" . $this->_sPrefix . "photos` AS `tp` ON `tpe`.`photo_id` = `tp`.`id`
-            WHERE `tpe`.`event_id` = ?" . $sLimitAddon, $iEventId);
+                 `tme`.`media_id` AS `id`
+            FROM `" . $sTableMedia2Events . "` AS `tme`
+            LEFT JOIN `" . $sTableMedia . "` AS `tm` ON `tme`.`media_id`=`tm`.`id`
+            WHERE `tme`.`event_id`=?" . $sLimitAddon, $iEventId);
 
         return $this->getColumn($sQuery);
     }

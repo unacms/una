@@ -24,9 +24,13 @@
 	<string name="_bx_timeline_form_post_input_sys_link"><![CDATA[Link]]></string>
 	<string name="_bx_timeline_form_post_input_link_alt"><![CDATA[Add Link]]></string>
 	<string name="_bx_timeline_form_post_input_link_err_delete"><![CDATA[Cannot remove the link. Please report.]]></string>
-	<string name="_bx_timeline_form_post_input_sys_photo"><![CDATA[Content]]></string>
+	<string name="_bx_timeline_form_post_input_sys_photo"><![CDATA[Photo]]></string>
 	<string name="_bx_timeline_form_post_input_photo"><![CDATA[]]></string>
 	<string name="_bx_timeline_form_post_input_photo_alt"><![CDATA[Add Photo]]></string>
+	<string name="_bx_timeline_form_post_input_sys_video"><![CDATA[Video]]></string>
+	<string name="_bx_timeline_form_post_input_video"><![CDATA[]]></string>
+	<string name="_bx_timeline_form_post_input_video_alt"><![CDATA[Add Video]]></string>
+	<string name="_bx_timeline_form_post_input_sys_attachments"><![CDATA[Attachments]]></string>
 	<string name="_bx_timeline_form_post_input_sys_do_submit"><![CDATA[Post]]></string>
 	<string name="_bx_timeline_form_post_input_do_submit"><![CDATA[Post]]></string>
 
@@ -78,6 +82,15 @@
     <string name="_bx_timeline_menu_item_title_system_item_vote"><![CDATA[Vote]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_share"><![CDATA[Share]]></string>
     <string name="_bx_timeline_menu_item_title_item_share"><![CDATA[Share]]></string>
+
+	<string name="_bx_timeline_menu_title_post_attachments"><![CDATA[Form Attachments]]></string>
+    <string name="_bx_timeline_menu_set_title_post_attachments"><![CDATA[Form Attachments]]></string>
+    <string name="_bx_timeline_menu_item_title_system_add_link"><![CDATA[Add Link]]></string>
+    <string name="_bx_timeline_menu_item_title_add_link"><![CDATA[Add Link]]></string>
+    <string name="_bx_timeline_menu_item_title_system_add_photo"><![CDATA[Add Photo]]></string>
+    <string name="_bx_timeline_menu_item_title_add_photo"><![CDATA[Add Photo]]></string>
+    <string name="_bx_timeline_menu_item_title_system_add_video"><![CDATA[Add Video]]></string>
+    <string name="_bx_timeline_menu_item_title_add_video"><![CDATA[Add Video]]></string>
 
     <string name="_bx_timeline_menu_item_title_system_timeline"><![CDATA[Timeline]]></string>
     <string name="_bx_timeline_menu_item_title_timeline"><![CDATA[Timeline]]></string>

@@ -130,7 +130,7 @@ class BxDolMenu extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
      * @param $sObject object name
      * @return object instance or false on error
      */
-    static public function getObjectInstance($sObject)
+    static public function getObjectInstance($sObject, $oTemplate = false)
     {
         if (isset($GLOBALS['bxDolClasses']['BxDolMenu!'.$sObject]))
             return $GLOBALS['bxDolClasses']['BxDolMenu!'.$sObject];
@@ -149,7 +149,7 @@ class BxDolMenu extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
                 bx_import($sClass);
         }
 
-        $o = new $sClass($aObject);
+        $o = new $sClass($aObject, $oTemplate);
 
         return ($GLOBALS['bxDolClasses']['BxDolMenu!'.$sObject] = $o);
     }

@@ -691,6 +691,16 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             }
         }
 
+    	//--- Process Videos ---//
+        $aTmplVarsVideos = array();
+        if(!empty($aContent['videos']))
+            foreach($aContent['videos'] as $aVideo) {
+                $aTmplVarsVideos[] = array(
+                    'style_prefix' => $sStylePrefix,
+                	'video' => BxTemplFunctions::getInstance()->videoPlayer($aVideo['src_poster'], $aVideo['src_mp4'], $aVideo['src_webm']) 
+                );
+            }
+
         return array(
             'style_prefix' => $sStylePrefix,
             'bx_if:show_title' => array(
@@ -727,6 +737,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'content' => array(
                     'style_prefix' => $sStylePrefix,
                     'bx_repeat:images' => $aTmplVarsImages
+                )
+            ),
+            'bx_if:show_videos' => array(
+                'condition' => !empty($aTmplVarsVideos),
+                'content' => array(
+                    'style_prefix' => $sStylePrefix,
+                    'bx_repeat:videos' => $aTmplVarsVideos
                 )
             )
         );
@@ -826,16 +843,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                             'text' => $aLink['text']
                         );
 
-                $aPhotos = $this->_oDb->getPhotos($aEvent['id']);
+                $aPhotos = $this->_oDb->getMedia(BX_TIMELINE_MEDIA_PHOTO, $aEvent['id']);
                 if(!empty($aPhotos) && is_array($aPhotos)) {
                     bx_import('BxDolStorage');
-                    $oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage'));
+                    $oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage_photos'));
 
                     bx_import('BxDolTranscoderImage');
-                    $oTranscoder = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_view'));
+                    $oTranscoder = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_view'));
 
                     foreach($aPhotos as $iPhotoId) {
-                        $iPhotoIndex = array_search($iPhotoId, $aPhotos);
                         $sPhotoSrcOrig = $oStorage->getFileUrlById($iPhotoId);
 
                         $aResult['content']['images'][] = array(
@@ -843,6 +859,22 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                             'src_orig' => $sPhotoSrcOrig,
                             'title' => '',
                             'onclick' => $sJsObject . '.showPhoto(this, \'' . $sPhotoSrcOrig . '\')'
+                        );
+                    }
+                }
+
+                $aVideos = $this->_oDb->getMedia(BX_TIMELINE_MEDIA_VIDEO, $aEvent['id']);
+                if(!empty($aVideos) && is_array($aVideos)) {
+                	bx_import('BxDolTranscoderVideo');
+                    $oTranscoderPoster = BxDolTranscoderVideo::getObjectInstance($this->_oConfig->getObject('transcoder_videos_poster'));
+                    $oTranscoderMp4 = BxDolTranscoderVideo::getObjectInstance($this->_oConfig->getObject('transcoder_videos_mp4'));
+                    $oTranscoderWebm = BxDolTranscoderVideo::getObjectInstance($this->_oConfig->getObject('transcoder_videos_webm'));
+
+                    foreach($aVideos as $iVideoId) {
+                        $aResult['content']['videos'][] = array(
+                            'src_poster' => $oTranscoderPoster->getFileUrl($iVideoId),
+                        	'src_mp4' => $oTranscoderMp4->getFileUrl($iVideoId),
+                        	'src_webm' => $oTranscoderWebm->getFileUrl($iVideoId),
                         );
                     }
                 }

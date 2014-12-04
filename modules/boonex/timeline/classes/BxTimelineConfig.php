@@ -22,7 +22,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     protected $_sStorageObject;
     protected $_sTranscoderObjectPreview;
     protected $_sTranscoderObjectView;
-    protected $_aImageUploaders;
+    protected $_aPhotoUploaders;
+    protected $_aVideoUploaders;
 
     protected $_sMenuItemManage;
     protected $_sMenuItemActions;
@@ -67,13 +68,22 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         	'alert' => $this->_sName,
         	'comment' => $this->CNF['OBJECT_COMMENTS'],
         	'vote' => $this->_sName,
-        	'storage' => $this->_sName . '_photos',
-        	'transcoder_preview' => $this->_sName . '_photos_preview',
-        	'transcoder_view' => $this->_sName . '_photos_view',
+        	'metatags' => $this->_sName,
+
+        	'storage_photos' => $this->_sName . '_photos',
+        	'storage_videos' => $this->_sName . '_videos',
+        	'transcoder_photos_preview' => $this->_sName . '_photos_preview',
+        	'transcoder_photos_view' => $this->_sName . '_photos_view',
+        	'transcoder_videos_poster' => $this->_sName . '_videos_poster',
+        	'transcoder_videos_mp4' => $this->_sName . '_videos_mp4',
+        	'transcoder_videos_webm' => $this->_sName . '_videos_webm',
+
         	'conn_subscriptions' => 'sys_profiles_subscriptions',
+
         	'menu_item_manage' => $this->_sName . '_menu_item_manage',
         	'menu_item_actions' => $this->_sName . '_menu_item_actions',
-        	'metatags' => $this->_sName,
+        	'menu_post_attachments' => $this->_sName . '_menu_post_attachments',
+
         	'form_post' => $this->_sName . '_post',
         	'form_attach_link' => $this->_sName . '_attach_link',
         	'form_display_post_add' => $this->_sName . '_post_add',
@@ -83,7 +93,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_aHandlerDescriptor = array('module_name' => '', 'module_method' => '', 'module_class' => '', 'groupable' => '', 'group_by' => '');
         $this->_sHandlersMethod = 'get_timeline_data';
 
-        $this->_aImageUploaders = array($this->_sName . '_simple');
+        $this->_aPhotoUploaders = array($this->_sName . '_simple_photo');
+        $this->_aVideoUploaders = array($this->_sName . '_simple_video');
 
         $this->_bJsMode = false;
         $this->_aJsClass = array(
@@ -161,11 +172,14 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
     public function getUploaders($sType)
     {
-        $aResult = '';
+        $aResult = array();
 
         switch($sType) {
-            case 'image':
-                $aResult = $this->_aImageUploaders;
+            case 'photo':
+                $aResult = $this->_aPhotoUploaders;
+                break;
+			case 'video':
+                $aResult = $this->_aVideoUploaders;
                 break;
         }
 

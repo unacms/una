@@ -51,7 +51,8 @@ $aConfig = array(
      * Storages.
      */
     'storages' => array(
-    	'bx_timeline_photos'
+    	'bx_timeline_photos',
+    	'bx_timeline_videos'
     ),
 
     /**
@@ -59,7 +60,10 @@ $aConfig = array(
      */
     'transcoders' => array(
     	'bx_timeline_photos_preview',
-    	'bx_timeline_photos_view'
+    	'bx_timeline_photos_view',
+    	'bx_timeline_videos_poster',
+    	'bx_timeline_videos_mp4',
+    	'bx_timeline_videos_webm'
     ),
 
     /**
