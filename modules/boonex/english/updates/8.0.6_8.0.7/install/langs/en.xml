@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_adm_bp_wrn_page_block_delete"><![CDATA[Are you sure you want to delete the block?]]></string_add>
+	<string_add name="_adm_stg_cpt_option_sys_transcoder_queue_storage"><![CDATA[Remote video transcoding]]></string_add>
+	<string_add name="_adm_txt_modules_process_connections"><![CDATA[Process connections:]]></string_add>
+	<string_add name="_adm_txt_modules_process_menu_triggers"><![CDATA[Process menu triggers:]]></string_add>
+	<string_add name="_adm_txt_modules_process_page_triggers"><![CDATA[Process page triggers:]]></string_add>
+	<string_add name="_adm_txt_modules_process_storages"><![CDATA[Process storages:]]></string_add>
+	<string_add name="_adm_txt_modules_register_transcoders"><![CDATA[Register transcoders:]]></string_add>
+	<string_add name="_adm_txt_modules_unregister_transcoders"><![CDATA[Unregister transcoders:]]></string_add>
+	<string_add name="_sys_et_txt_body_upgrade_modules_failed"><![CDATA[<bx_include_auto:_email_header.html />
+<p>The following errors appeared during modules upgrade:</p>
+<p>{conclusion}</p>
+<bx_include_auto:_email_footer.html />]]></string_add>
+	<string_add name="_sys_et_txt_body_modules_upgrade_success"><![CDATA[<b>{0}</b> module: up to {1} version.<br />]]></string_add>
+	<string_add name="_sys_et_txt_body_modules_upgrade_failed"><![CDATA[<b>{0}</b> module: {1}<br />]]></string_add>
+	<string_add name="_sys_et_txt_subject_upgrade_modules_failed"><![CDATA[Modules upgrade failed on {site_name}]]></string_add>
+    <string_add name="_sys_txt_my_profiles"><![CDATA[<b class="bx-def-font-h1">@</b> my profiles...</a>]]></string_add>
+
+	<string_upd name="_sys_et_txt_subject_upgrade_modules_success"><![CDATA[Modules upgrade success on {site_name}]]></string_upd>
+
+	<string_del name="_adm_txt_modules_recompile_alerts" />
+	<string_del name="_adm_txt_modules_recompile_browse" />
+	<string_del name="_adm_txt_modules_recompile_comments" />
+	<string_del name="_adm_txt_modules_recompile_global_paramaters" />
+	<string_del name="_adm_txt_modules_recompile_injections" />
+	<string_del name="_adm_txt_modules_recompile_menus" />
+	<string_del name="_adm_txt_modules_recompile_member_actions" />
+	<string_del name="_adm_txt_modules_recompile_member_stats" />
+	<string_del name="_adm_txt_modules_recompile_permalinks" />
+	<string_del name="_adm_txt_modules_recompile_search" />
+	<string_del name="_adm_txt_modules_recompile_site_stats" />
+	<string_del name="_adm_txt_modules_recompile_votes" />
+	<string_del name="_sys_et_txt_body_upgraded_module" />
+</resources>

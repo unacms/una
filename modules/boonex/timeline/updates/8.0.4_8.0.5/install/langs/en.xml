@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_bx_timeline_option_events_per_page"><![CDATA[Number of events per page]]></string_add>
+	<string_add name="_bx_timeline_form_post_input_sys_video"><![CDATA[Video]]></string_add>
+	<string_add name="_bx_timeline_form_post_input_video"><![CDATA[]]></string_add>
+	<string_add name="_bx_timeline_form_post_input_video_alt"><![CDATA[Add Video]]></string_add>
+	<string_add name="_bx_timeline_form_post_input_sys_attachments"><![CDATA[Attachments]]></string_add>
+	<string_add name="_bx_timeline_page_block_title_post_profile_persons"><![CDATA[Post to Timeline]]></string_add>
+	<string_add name="_bx_timeline_page_block_title_post_profile_organizations"><![CDATA[Post to Timeline]]></string_add>
+	<string_add name="_bx_timeline_page_block_title_view_profile_persons"><![CDATA[Timeline]]></string_add>
+	<string_add name="_bx_timeline_page_block_title_view_profile_organizations"><![CDATA[Timeline]]></string_add>
+	<string_add name="_bx_timeline_menu_title_post_attachments"><![CDATA[Form Attachments]]></string_add>
+    <string_add name="_bx_timeline_menu_set_title_post_attachments"><![CDATA[Form Attachments]]></string_add>
+    <string_add name="_bx_timeline_menu_item_title_system_add_link"><![CDATA[Add Link]]></string_add>
+    <string_add name="_bx_timeline_menu_item_title_add_link"><![CDATA[Add Link]]></string_add>
+    <string_add name="_bx_timeline_menu_item_title_system_add_photo"><![CDATA[Add Photo]]></string_add>
+    <string_add name="_bx_timeline_menu_item_title_add_photo"><![CDATA[Add Photo]]></string_add>
+    <string_add name="_bx_timeline_menu_item_title_system_add_video"><![CDATA[Add Video]]></string_add>
+    <string_add name="_bx_timeline_menu_item_title_add_video"><![CDATA[Add Video]]></string_add>
+	<string_add name="_bx_timeline_txt_sample_ext"><![CDATA[timeline post]]></string_add>
+
+	<string_upd name="_bx_timeline_form_post_input_sys_photo"><![CDATA[Photo]]></string_upd>
+	<string_upd name="_bx_timeline_txt_sample_comment_single"><![CDATA[timeline post's comment]]></string_upd>
+
+	<string_del name="_bx_timeline_page_block_title_post_profile" />
+	<string_del name="_bx_timeline_page_block_title_view_profile" />
+</resources>

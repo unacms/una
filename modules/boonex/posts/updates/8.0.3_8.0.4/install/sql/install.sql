@@ -1,0 +1,1 @@
+UPDATE `sys_form_inputs` SET `caption`='' WHERE `object`='bx_posts' AND `name`='location' LIMIT 1;

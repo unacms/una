@@ -1,0 +1,36 @@
+<div class="__style_prefix__-item-text">
+	<bx_if:show_title>
+		<div class="__style_prefix__-title bx-def-margin-sec-bottom bx-def-font-large">__title__</div>
+	</bx_if:show_title>
+	<bx_if:show_content>
+		<div class="__style_prefix__-content">
+		__item_content__<bx_if:show_more><span class="__style_prefix__-content-see-more">... <a class="bx-def-font-small" href="javascript:void(0)" onclick="__js_object__.showMoreContent(this);"><bx_text:_see_more /></a></span><span style="display:none;"> __item_content_more__</span></bx_if:show_more>
+		</div>
+	</bx_if:show_content>
+</div>
+<bx_if:show_links>
+	<div class="__style_prefix__-item-links bx-def-margin-top">
+		<bx_repeat:links>
+	   		<div class="__style_prefix__-item-link bx-def-margin-top-auto bx-def-padding-sec bx-def-border">
+	   			<div class="__style_prefix__-il-title">__link__</div>
+	   			<bx_if:show_text>
+	   				<div class="__style_prefix__-il-text bx-def-font-small bx-def-font-grayed">__text__</div>
+	   			</bx_if:show_text>
+	   		</div>
+	   	</bx_repeat:links>
+	</div>
+</bx_if:show_links>
+<bx_if:show_images>
+	<div class="__style_prefix__-item-images bx-def-margin-top bx-def-margin-leftright-neg">
+		<bx_repeat:images>
+	   		<div class="__style_prefix__-item-image bx-def-margin-top-auto">__image__</div>
+	   	</bx_repeat:images>
+	</div>
+</bx_if:show_images>
+<bx_if:show_videos>
+	<div class="__style_prefix__-item-videos bx-def-margin-top bx-def-margin-leftright-neg">
+		<bx_repeat:videos>
+	   		<div class="__style_prefix__-item-video bx-def-margin-top-auto">__video__</div>
+	   	</bx_repeat:videos>
+	</div>
+</bx_if:show_videos>

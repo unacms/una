@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_bx_orgs_menu_item_title_system_view_profile_view"><![CDATA[Organization]]></string_add>
+    <string_add name="_bx_orgs_menu_item_title_view_profile_view"><![CDATA[Organization]]></string_add>
+	<string_add name="_bx_orgs_grid_action_title_adm_more_actions"><![CDATA[More Actions]]></string_add>
+</resources>
