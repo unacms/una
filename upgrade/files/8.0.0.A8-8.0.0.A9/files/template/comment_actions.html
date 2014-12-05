@@ -1,0 +1,15 @@
+<div class="__style_prefix__-actions bx-def-margin-sec-top bx-clearfix">
+	<div class="__style_prefix__-ago bx-def-margin-right">
+		<bx_if:show_ago_link>
+			<a class="__style_prefix__-ago" href="__view_link__" rel="nofollow">__ago__</a>
+		</bx_if:show_ago_link>
+		<bx_if:show_ago_text>__ago__</bx_if:show_ago_text>
+	</div>
+	__menu_actions__
+	<bx_if:show_menu_manage>
+		<div class="__style_prefix__-comment-manage-link bx-def-margin-left">
+			<a class="__style_prefix__-comment-manage bx-def-margin-sec-left-auto" href="javascript:void(0)" onclick="__js_object__.toggleManagePopup(this, __id__); return false;" title="<bx_text_attribute:_Manage />"><i class="sys-icon ellipsis-h"></i></a>
+		</div>
+		__popup_text__
+	</bx_if:show_menu_manage>
+</div>

@@ -1,0 +1,21 @@
+
+.sys-profile-switch-row {
+    margin-top:1px;
+}
+
+.sys-profile-switch-row-control,
+.sys-profile-switch-row-unit {
+    display:inline-block;
+    vertical-align:middle;
+}
+
+.sys-profile-switch-row-unit .bx-def-unit {
+    margin:0;
+}
+
+.sys-profile-switch-row-control .sys-icon {
+    display:inline-block;
+    width:2rem;
+    height:2rem;
+    font-size:2rem;
+}
