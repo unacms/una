@@ -49,8 +49,8 @@ class BxDolStudioToolsAudit extends BxDol
 
         $this->aLatestPhp = array(
             '5.3' => '5.3.29',
-            '5.4' => '5.4.34',
-            '5.5' => '5.5.18',
+            '5.4' => '5.4.35',
+            '5.5' => '5.5.19',
         );
         $this->sMinPhpVer = '5.3.0';
         $this->aPhpSettings = array (
