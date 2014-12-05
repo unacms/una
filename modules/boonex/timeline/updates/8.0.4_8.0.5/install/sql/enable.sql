@@ -2,6 +2,8 @@
 DELETE FROM `sys_pages_blocks` WHERE `object`='bx_persons_view_profile' AND `title` IN ('_bx_timeline_page_block_title_post_profile', '_bx_timeline_page_block_title_view_profile');
 
 SET @iPBCellProfile = 4;
+DELETE FROM `sys_pages_blocks` WHERE `object`='trigger_page_persons_view_entry' AND `title` IN ('_bx_timeline_page_block_title_post_profile_persons', '_bx_timeline_page_block_title_view_profile_persons');
+DELETE FROM `sys_pages_blocks` WHERE `object`='trigger_page_organizations_view_entry' AND `title` IN ('_bx_timeline_page_block_title_post_profile_organizations', '_bx_timeline_page_block_title_view_profile_organizations');
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
 ('trigger_page_persons_view_entry', @iPBCellProfile, 'bx_timeline', '_bx_timeline_page_block_title_post_profile_persons', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:22:"get_block_post_profile";s:6:"params";a:1:{i:0;s:10:"bx_persons";}}', 0, 0, 0),
 ('trigger_page_persons_view_entry', @iPBCellProfile, 'bx_timeline', '_bx_timeline_page_block_title_view_profile_persons', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:22:"get_block_view_profile";s:6:"params";a:1:{i:0;s:10:"bx_persons";}}', 0, 0, 0),
