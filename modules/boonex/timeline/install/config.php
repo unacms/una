@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_timeline',
     'title' => 'Timeline',
     'note' => 'Timeline module.',
-    'version' => '8.0.5.DEV',
+    'version' => '8.0.6.DEV',
     'vendor' => 'BoonEx',
 	'help_url' => 'http://feed.boonex.com/?section={module_name}',
 
