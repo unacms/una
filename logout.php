@@ -1,8 +1,10 @@
 <?php
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    TridentCore Trident Core
+ * @{
  */
 
 ob_start();
@@ -25,3 +27,5 @@ $oTemplate->setPageContent ('url_relocate', BX_DOL_URL_ROOT);
 send_headers_page_changed();
 
 $oTemplate->getPageCode();
+
+/** @} */

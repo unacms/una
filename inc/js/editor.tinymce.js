@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    TridentCore Trident Core
+ * @{
+ */
 
 function bx_editor_insert_img (sEditorId, sImgId, sImgUrl, sClasses) {
 
@@ -38,3 +45,4 @@ function bx_editor_remove_img (aEditorIds, aMarkers) {
 
 }
 
+/** @} */
