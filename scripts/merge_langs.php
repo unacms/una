@@ -2,6 +2,9 @@
 /**
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    TridentCore Scripts
+ * @{
  */
 
 require_once( './../inc/header.inc.php' );
@@ -167,3 +170,5 @@ $s
         </textarea>
         <hr class=\"bx-def-hr bx-def-margin-top bx-def-margin-bottom\" />";
 }
+
+/** @} */
