@@ -4,7 +4,7 @@
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
  * @defgroup    Timeline Timeline
- * @ingroup     DolphinModules
+ * @ingroup     TridentModules
  *
  * @{
  */

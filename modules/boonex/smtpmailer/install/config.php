@@ -4,7 +4,7 @@
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
  * @defgroup    SMTPMailer SMTP Mailer
- * @ingroup     DolphinModules
+ * @ingroup     TridentModules
  *
  * @{
  */
