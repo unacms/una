@@ -342,6 +342,7 @@ class BxDolStudioToolsAudit extends BxDol
     protected function siteSetup()
     {
         $sDolphinPath = defined('BX_DIRECTORY_PATH_ROOT') ? BX_DIRECTORY_PATH_ROOT : BX_INSTALL_DIR_ROOT;
+        $sFfmpegPath = defined('BX_SYSTEM_FFMPEG') ? BX_SYSTEM_FFMPEG : '';
 
         $sEmailToCkeckMailSending = class_exists('BxDolDb') && BxDolDb::getInstance() ? BxDolDb::getInstance()->getParam('site_email') : '';
 
@@ -356,11 +357,15 @@ class BxDolStudioToolsAudit extends BxDol
         if (!version_compare($sDolphinVer, $sLatestDolphinVer, '>='))
             $aMessage = array('type' => BX_DOL_AUDIT_WARN, 'msg' => _t('_sys_audit_msg_version_is_outdated', $sLatestDolphinVer));
 
-        $s = '';
-        $s .= $this->getBlock(_t('_sys_audit_version_dolphin'), $sDolphinVer, $this->getMsgHTML(_t('_sys_audit_version_dolphin'), $aMessage));
-        //$s .= $this->getBlock(_t('_sys_audit_permissions'), '', _t('_sys_audit_msg_permissions'));
-        //$s .= $this->getBlock('ffmpeg', '', _t('_sys_audit_msg_ffmpeg', `{$sDolphinPath}flash/modules/global/app/ffmpeg.exe 2>&1`));
+        $s = $this->getBlock(_t('_sys_audit_version_script'), $sDolphinVer, $this->getMsgHTML(_t('_sys_audit_version_script'), $aMessage));
+
+        $s .= $this->getBlock(_t('_sys_audit_permissions'), '', _t('_sys_audit_msg_permissions'));
+
+        if ($sFfmpegPath)
+            $s .= $this->getBlock('ffmpeg', '', _t('_sys_audit_msg_ffmpeg', `{$sFfmpegPath} 2>&1`));
+
         $s .= $this->getBlock(_t('_sys_audit_mail_sending'), '', _t('_sys_audit_msg_mail_sending'));
+
         $s .= $this->getBlock(_t('_sys_audit_cron_jobs'), '', _t('_sys_audit_msg_cron_jobs', `crontab -l 2>&1`));
 
         echo '<h1>' . _t('_sys_audit_header_site_setup') . '</h1>';
@@ -442,12 +447,12 @@ class BxDolStudioToolsAudit extends BxDol
 
             $sVal = ('always_on' == $a['enabled'] || getParam($a['enabled'])) ? 'On' : 'Off';
             if ($a['cache_engine'])
-                $sVal .= _t('_sys_audit_msg_dolphin_x_based_cache_engine', getParam($a['cache_engine']));
+                $sVal .= _t('_sys_audit_msg_x_based_cache_engine', getParam($a['cache_engine']));
 
             if ('always_on' != $a['enabled'] && !getParam($a['enabled']))
-                $aMessage = array('type' => BX_DOL_AUDIT_FAIL, 'msg' => _t('_sys_audit_msg_dolphin_optimization_fail'));
+                $aMessage = array('type' => BX_DOL_AUDIT_FAIL, 'msg' => _t('_sys_audit_msg_optimization_fail'));
             elseif ($a['check_accel'] && !$this->getPhpAccelerator() && 'File' == getParam($a['cache_engine']))
-                $aMessage = array('type' => BX_DOL_AUDIT_WARN, 'msg' => _t('_sys_audit_msg_dolphin_optimization_warn'));
+                $aMessage = array('type' => BX_DOL_AUDIT_WARN, 'msg' => _t('_sys_audit_msg_optimization_warn'));
             else
                 $aMessage = array('type' => BX_DOL_AUDIT_OK);
 

@@ -162,7 +162,15 @@ BxDolStudioDashboard.prototype.clearCache = function(sType) {
     );
 };
 
+BxDolStudioDashboard.prototype.permissions = function() {
+    this.hostTools('permissions');
+}
+
 BxDolStudioDashboard.prototype.serverAudit = function() {
+    this.hostTools('server_audit');
+}
+
+BxDolStudioDashboard.prototype.hostTools = function(sAction) {
 	var $this = this;
 	var oDate = new Date();
 	var sDivId = 'bx-dbd-htools';
@@ -174,7 +182,7 @@ BxDolStudioDashboard.prototype.serverAudit = function() {
 	$.get(
 		this.sActionsUrl,
 		{
-			dbd_action: 'server_audit',
+			dbd_action: sAction,
 			_t: oDate.getTime()
 		},
 		function(sData) {

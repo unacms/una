@@ -529,8 +529,8 @@
 	<string name="_adm_btn_queued_submit"><![CDATA[Queued]]></string>
 	<string name="_adm_btn_settings_save"><![CDATA[Save]]></string>
 	<string name="_adm_dbd_btn_update"><![CDATA[Update]]></string>
-	<string name="_adm_dbd_txt_dolphin_n_available"><![CDATA[Dolphin {0} is available!]]></string>
-	<string name="_adm_dbd_txt_dolphin_on"><![CDATA[Dolphin U on]]></string>
+	<string name="_adm_dbd_txt_version_n_available"><![CDATA[Trident {0} is available!]]></string>
+	<string name="_adm_dbd_txt_script_on"><![CDATA[Trident on]]></string>
 	<string name="_adm_dbd_txt_htools_status"><![CDATA[{0} - <b>{1}</b>]]></string>
 	<string name="_adm_dbd_txt_installed"><![CDATA[Installed:]]></string>
 	<string name="_adm_dbd_txt_version"><![CDATA[Version:]]></string>
@@ -596,8 +596,8 @@
 	<string name="_adm_err_modules_wrong_permissions_check"><![CDATA[You need to change permissions for the following files and folders:]]></string>
 	<string name="_adm_err_modules_wrong_permissions_msg"><![CDATA[{0} - {1}]]></string>
 	<string name="_adm_err_modules_wrong_version"><![CDATA[The module has incompatible version]]></string>
-	<string name="_adm_err_modules_wrong_version_script"><![CDATA[The module is not compatible with your version of Dolphin script]]></string>
-	<string name="_adm_err_modules_wrong_version_script_update"><![CDATA[The new version of {0} module isn't compatible with your version of Dolphin. Please upgrade Dolphin first (Dashboard > Version) and then try to upgrade the module.]]></string>
+	<string name="_adm_err_modules_wrong_version_script"><![CDATA[The module is not compatible with your version of Trident]]></string>
+	<string name="_adm_err_modules_wrong_version_script_update"><![CDATA[The new version of {0} module isn't compatible with your version of Trident. Please upgrade Trident first (Studio &gt; Dashboard &gt; Version) and then try to upgrade the module.]]></string>
 	<string name="_adm_err_oauth_cannot_get_token"><![CDATA[Cannot connect to <b>BoonEx</b>. Please try again later.]]></string>
 	<string name="_adm_err_oauth_cannot_read_answer"><![CDATA[Cannot get a valid answer from <b>BoonEx</b>. Please try again later.]]></string>
 	<string name="_adm_err_oauth_empty_key_secret"><![CDATA[You need to enter Key and Secret provided by <b>BoonEx</b> in Settings -> General.]]></string>
@@ -1095,9 +1095,6 @@
 	<string name="_adm_prm_txt_visibility_items_anyone"><![CDATA[Anyone]]></string>
 	<string name="_adm_prm_txt_visibility_items_n_user_levels"><![CDATA[{0} User Levels]]></string>
 	<string name="_adm_prm_txt_visibility_items_nobody"><![CDATA[Nobody]]></string>
-	<string name="_adm_reg_desciption"><![CDATA[A purchased license removes BoonEx ads from your site and upgrades your Unity account to "Advanced". For even more goodies and "Premium" membership <a href="https://www.boonex.com/paymentprovider/payment">go Prime</a>.]]></string>
-	<string name="_adm_reg_license"><![CDATA[License:]]></string>
-	<string name="_adm_reg_title"><![CDATA[<a href="https://www.boonex.com/paymentprovider/payment">Purchase a Dolphin License</a> and Register Your Site.]]></string>
 	<string name="_adm_scs_operation_done"><![CDATA[]]></string>
 	<string name="_adm_stg_cpt_category_account"><![CDATA[Account]]></string>
 	<string name="_adm_stg_cpt_category_cache"><![CDATA[Cache]]></string>
@@ -1136,7 +1133,7 @@
 	<string name="_adm_stg_cpt_option_sys_format_datetime"><![CDATA[Datetime Format]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_time"><![CDATA[Time Format]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_timeago"><![CDATA[Use 'time ago' format for dates less than this number of seconds]]></string>
-	<string name="_adm_stg_cpt_option_sys_ftp_dir"><![CDATA[Path to Dolphin on FTP server]]></string>
+	<string name="_adm_stg_cpt_option_sys_ftp_dir"><![CDATA[Path to the script on FTP server]]></string>
 	<string name="_adm_stg_cpt_option_sys_ftp_login"><![CDATA[FTP server login]]></string>
 	<string name="_adm_stg_cpt_option_sys_ftp_password"><![CDATA[FTP server password]]></string>
 	<string name="_adm_stg_cpt_option_sys_oauth_key"><![CDATA[BoonEx account key]]></string>
@@ -1175,7 +1172,7 @@
 	<string name="_adm_str_err_cannot_connect_to_ftp"><![CDATA[Cannot connect to FTP server. Please check FTP access details in Settings -> General.]]></string>
 	<string name="_adm_str_err_cannot_unzip_package"><![CDATA[Cannot unarchive ZIP package.]]></string>
 	<string name="_adm_str_err_cannot_write"><![CDATA[Cannot save downloaded file.]]></string>
-	<string name="_adm_str_err_destination_not_valid"><![CDATA[Destination FTP folder doesn't look like a valid Dolphin root folder.]]></string>
+	<string name="_adm_str_err_destination_not_valid"><![CDATA[Destination FTP folder doesn't look like a valid the script root folder.]]></string>
 	<string name="_adm_str_err_download_failed"><![CDATA[Download failed. Please report.]]></string>
 	<string name="_adm_str_err_files_copy_failed"><![CDATA[File transfer failed, please check write permissions.]]></string>
 	<string name="_adm_str_err_no_ftp_info"><![CDATA[FTP access info was not specified. You may enter it via Settings -> General.]]></string>
@@ -1229,7 +1226,7 @@
 	<string name="_adm_txt_modules_check_module_matches"><![CDATA[Check module to match:]]></string>
 	<string name="_adm_txt_modules_check_module_hash"><![CDATA[Check module hash:]]></string>
 	<string name="_adm_txt_modules_check_module_version"><![CDATA[Check module version:]]></string>
-	<string name="_adm_txt_modules_check_script_version"><![CDATA[Check the Dolphin version for compatibility:]]></string>
+	<string name="_adm_txt_modules_check_script_version"><![CDATA[Check the script version for compatibility:]]></string>
 	<string name="_adm_txt_modules_clear_db_cache"><![CDATA[Clear database cache:]]></string>
 	<string name="_adm_txt_modules_delete"><![CDATA[Delete]]></string>
 	<string name="_adm_txt_modules_disable"><![CDATA[Disable]]></string>
@@ -1247,7 +1244,6 @@
 	<string name="_adm_txt_modules_package_to_upload"><![CDATA[Package to upload]]></string>
 	<string name="_adm_txt_modules_params_used"><![CDATA[A module with similar unique parameters is already installed.]]></string>
 	<string name="_adm_txt_modules_password"><![CDATA[Password]]></string>
-	<string name="_adm_txt_modules_path_to_dolphin"><![CDATA[Path to Dolphin's folder]]></string>
 	<string name="_adm_txt_modules_process_action_success"><![CDATA[Done]]></string>
 	<string name="_adm_txt_modules_process_connections"><![CDATA[Process connections:]]></string>
 	<string name="_adm_txt_modules_process_deleted_profiles"><![CDATA[Process deleted profiles:]]></string>
@@ -1370,9 +1366,9 @@
 	<string name="_sys_audit_msg_apache_module_fail"><![CDATA[you will need to install {0} for Apache]]></string>
 	<string name="_sys_audit_msg_apache_module_undef"><![CDATA[try to check manually: apachectl -M 2>&1 | grep {0}]]></string>
 	<string name="_sys_audit_msg_cron_jobs"><![CDATA[<pre class="code">{0}</pre> if you are unsure if output is correct then <a href="#manual_audit">manual server audit</a> may be required]]></string>
-	<string name="_sys_audit_msg_dolphin_optimization_fail"><![CDATA[please enable this cache in Dolphin Admin Panel -> Settings -> Advanced Settings]]></string>
-	<string name="_sys_audit_msg_dolphin_optimization_warn"><![CDATA[installing PHP accelerator will speed-up file cache]]></string>
-	<string name="_sys_audit_msg_dolphin_x_based_cache_engine"><![CDATA[ ({0} based cache engine)]]></string>
+	<string name="_sys_audit_msg_optimization_fail"><![CDATA[please enable this cache in Studio &gt; Settings &gt; Cache]]></string>
+	<string name="_sys_audit_msg_optimization_warn"><![CDATA[installing PHP accelerator will speed-up file cache]]></string>
+	<string name="_sys_audit_msg_x_based_cache_engine"><![CDATA[ ({0} based cache engine)]]></string>
 	<string name="_sys_audit_msg_ffmpeg"><![CDATA[<pre class="code">{0}</pre>if you don't know if output is correct then <a href="#manual_audit">manual server audit</a> may be required.]]></string>
 	<string name="_sys_audit_msg_hardware_requirements"><![CDATA[Hardware requirements can not be determined automatically - <a href="#manual_audit">manual server audit</a> may be required.]]></string>
 	<string name="_sys_audit_msg_mail_send_failed"><![CDATA[mail send failed]]></string>
@@ -1384,8 +1380,8 @@ If you don't know how to do it by yourself you can submit <a target="_blank" hre
 </p>]]></string>
 	<string name="_sys_audit_msg_must_be"><![CDATA[must be {0} {1}]]></string>
 	<string name="_sys_audit_msg_optimization_apache_module"><![CDATA[To apply this optimization you need to have <b>{0}</b> - {1}]]></string>
-	<string name="_sys_audit_msg_permissions"><![CDATA[please <a href="javascript:void(0);" onclick="switchAdmPage($('#main_menu1'));">click here</a> to find out if dolphin permissions are correct.]]></string>
-	<string name="_sys_audit_msg_php_accelerator_missing"><![CDATA[Dolphin can be much faster if you install some PHP accelerator]]></string>
+	<string name="_sys_audit_msg_permissions"><![CDATA[please <a href="javascript:void(0);" onclick="oBxDolStudioDashboard.permissions()">click here</a> to find out if permissions are correct.]]></string>
+	<string name="_sys_audit_msg_php_accelerator_missing"><![CDATA[The script can be much faster if you install some PHP accelerator]]></string>
 	<string name="_sys_audit_msg_php_setup_inefficient"><![CDATA[your PHP setup maybe very inefficient, <a href="javascript:void(0)" onclick="bx_sys_adm_audit_phpinfo()">please check it for sure</a> and try to switch to mod_php, apache dso module or FastCGI]]></string>
 	<string name="_sys_audit_msg_serverside_compression"><![CDATA[
 can be checked <a href="#manual_audit">manually</a> or in "Page Speed" tool build-in into browser.<br />
@@ -1395,7 +1391,7 @@ If it is not enabled then please consider implement this optimization, since it 
 <a href="{0}">click here to check it in Google Page Speed</a><br />
 If it is not enabled then please consider implement this optimization, since it improve perceived site speed and save the bandwidth, refer to <a target="_blank" href="http://www.boonex.com/trac/dolphin/wiki/HostingServerSetupRecommendations#Usersidecachingforstaticcontent">this tutorial</a> on how to do this.<br />{1}]]></string>
 	<string name="_sys_audit_msg_value_checking_failed"><![CDATA[value checking failed]]></string>
-	<string name="_sys_audit_msg_version_is_incompatible"><![CDATA[your version is incompatible with Dolphin, must be at least {0}]]></string>
+	<string name="_sys_audit_msg_version_is_incompatible"><![CDATA[your version is incompatible with Trident, must be at least {0}]]></string>
 	<string name="_sys_audit_msg_version_is_outdated"><![CDATA[your version is probably outdated, upgrade to the latest {0} maybe required]]></string>
 	<string name="_sys_audit_permissions"><![CDATA[Files and folders permissions]]></string>
 	<string name="_sys_audit_php_accelerator"><![CDATA[PHP accelerator]]></string>
@@ -1410,7 +1406,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_audit_title_warn"><![CDATA[WARNING]]></string>
 	<string name="_sys_audit_userside_caching"><![CDATA[User-side caching for static content]]></string>
 	<string name="_sys_audit_version"><![CDATA[version]]></string>
-	<string name="_sys_audit_version_dolphin"><![CDATA[Dolphin version]]></string>
+	<string name="_sys_audit_version_script"><![CDATA[Trident version]]></string>
 	<string name="_sys_block_type_html"><![CDATA[html]]></string>
 	<string name="_sys_block_type_image"><![CDATA[image]]></string>
 	<string name="_sys_block_type_lang"><![CDATA[lang]]></string>
@@ -1667,7 +1663,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_inst_conf_desc_language"><![CDATA[Language to install by default.]]></string>
 	<string name="_sys_inst_conf_desc_oauth_key_secret"><![CDATA[<a target="_blank" href="http://www.boonex.com/oauth/get_consumer">Get BoonEx key&secret</a>]]></string>
 	<string name="_sys_inst_conf_desc_path_to_binary"><![CDATA[If '{0}' binary doesn't exist, you need to install <a target="_blank" href="http://www.imagemagick.org/">ImageMagick</a>.]]></string>
-	<string name="_sys_inst_conf_desc_root_dir"><![CDATA[Path to directory where Dolphin files are stored.]]></string>
+	<string name="_sys_inst_conf_desc_root_dir"><![CDATA[Path to directory where Trident files are stored.]]></string>
 	<string name="_sys_inst_conf_desc_site_email"><![CDATA[Email to send site messages from.]]></string>
 	<string name="_sys_inst_conf_desc_site_title"><![CDATA[The name of your site.]]></string>
 	<string name="_sys_inst_conf_desc_site_url"><![CDATA[Your site URL here (slash at the end is required).]]></string>
@@ -1713,7 +1709,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_inst_msg_file_write_failed"><![CDATA[File write failed: {0}]]></string>
 	<string name="_sys_inst_msg_finish"><![CDATA[But some additional manual steps are required:]]></string>
 	<string name="_sys_inst_msg_finish_cron_jobs"><![CDATA[Setup the following cron jobs command:]]></string>
-	<string name="_sys_inst_msg_finish_delete_install_folder"><![CDATA[Remove <b>/install/</b> folder from Dolphin root folder.]]></string>
+	<string name="_sys_inst_msg_finish_delete_install_folder"><![CDATA[Remove <b>/install/</b> folder from the script root folder.]]></string>
 	<string name="_sys_inst_msg_finish_goto_studio"><![CDATA[<a href="{0}studio/">Go to Studio</a> to add additional modules and customize the site.]]></string>
 	<string name="_sys_inst_msg_form_error"><![CDATA[Please fix form errors.]]></string>
 	<string name="_sys_inst_msg_module_error"><![CDATA[{0} - {1}]]></string>
@@ -1724,7 +1720,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_inst_server_audit"><![CDATA[Server audit]]></string>
 	<string name="_sys_inst_site_config"><![CDATA[Site configuration]]></string>
 	<string name="_sys_inst_start_installation"><![CDATA[Start installation]]></string>
-	<string name="_sys_inst_title"><![CDATA[Dolphin U {0} Installation]]></string>
+	<string name="_sys_inst_title"><![CDATA[Trident {0} Installation]]></string>
 	<string name="_sys_layout_1_column"><![CDATA[1 column]]></string>
 	<string name="_sys_layout_2_columns"><![CDATA[2 columns]]></string>
 	<string name="_sys_layout_3_columns"><![CDATA[3 columns]]></string>
@@ -1876,7 +1872,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_page_block_title_std_dash_space"><![CDATA[Space Usage]]></string>
 	<string name="_sys_page_block_title_std_dash_host_tools"><![CDATA[Host Tools]]></string>
 	<string name="_sys_page_block_title_std_dash_cache"><![CDATA[Cache]]></string>
-	<string name="_sys_page_lang_block_about"><![CDATA[This site is powered by BoonEx Dolphin U. The rest is a mystery.]]></string>
+	<string name="_sys_page_lang_block_about"><![CDATA[This site is powered by BoonEx Trident. The rest is a mystery.]]></string>
 	<string name="_sys_page_title_about"><![CDATA[About]]></string>
 	<string name="_sys_page_title_account_profile_switcher"><![CDATA[Switch Profile]]></string>
 	<string name="_sys_page_title_account_settings_delete"><![CDATA[Delete Account]]></string>
