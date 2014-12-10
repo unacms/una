@@ -1,5 +1,5 @@
 {
-    "name": "BoonEx/Dolphin Tests",
+    "name": "BoonEx/Trident Tests",
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
         "sebastian/phpcpd": "*",

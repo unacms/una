@@ -576,8 +576,8 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
      * Note. Location is the path/url to folder where 'templates' folder is stored.
      *
      * @param string $sKey          - location's    unique key.
-     * @param string $sLocationPath - location's path. For modules: '[path_to_dolphin]/modules/[vendor_name]/[module_name]/'
-     * @param string $sLocationUrl  - location's url. For modules: '[url_to_dolphin]/modules/[vendor_name]/[module_name]/'
+     * @param string $sLocationPath - location's path. For modules: '[path_to_script]/modules/[vendor_name]/[module_name]/'
+     * @param string $sLocationUrl  - location's url. For modules: '[url_to_script]/modules/[vendor_name]/[module_name]/'
      */
     function addLocation($sKey, $sLocationPath, $sLocationUrl)
     {
@@ -591,8 +591,8 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
     /**
      * Add dynamic location.
      *
-     * @param  string   $sLocationPath - location's path. For modules: '[path_to_dolphin]/modules/[vendor_name]/[module_name]/'
-     * @param  string   $sLocationUrl  - location's url. For modules: '[url_to_dolphin]/modules/[vendor_name]/[module_name]/'
+     * @param  string   $sLocationPath - location's path. For modules: '[path_to_script]/modules/[vendor_name]/[module_name]/'
+     * @param  string   $sLocationUrl  - location's url. For modules: '[url_to_script]/modules/[vendor_name]/[module_name]/'
      * @return location key. Is needed to remove the location.
      */
     function addDynamicLocation($sLocationPath, $sLocationUrl)
@@ -618,8 +618,8 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
      * Note. Location is the path/url to folder where JS files are stored.
      *
      * @param string $sKey          - location's    unique key.
-     * @param string $sLocationPath - location's path. For modules: '[path_to_dolphin]/modules/[vendor_name]/[module_name]/js/'
-     * @param string $sLocationUrl  - location's url. For modules: '[url_to_dolphin]/modules/[vendor_name]/[module_name]/js/'
+     * @param string $sLocationPath - location's path. For modules: '[path_to_script]/modules/[vendor_name]/[module_name]/js/'
+     * @param string $sLocationUrl  - location's url. For modules: '[url_to_script]/modules/[vendor_name]/[module_name]/js/'
      */
     function addLocationJs($sKey, $sLocationPath, $sLocationUrl)
     {
@@ -631,8 +631,8 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
     /**
      * Add dynamic JS location.
      *
-     * @param  string   $sLocationPath - location's path. For modules: '[path_to_dolphin]/modules/[vendor_name]/[module_name]/'
-     * @param  string   $sLocationUrl  - location's url. For modules: '[url_to_dolphin]/modules/[vendor_name]/[module_name]/'
+     * @param  string   $sLocationPath - location's path. For modules: '[path_to_script]/modules/[vendor_name]/[module_name]/'
+     * @param  string   $sLocationUrl  - location's url. For modules: '[url_to_script]/modules/[vendor_name]/[module_name]/'
      * @return location key. Is needed to remove the location.
      */
     function addDynamicLocationJs($sLocationPath, $sLocationUrl)

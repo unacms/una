@@ -115,14 +115,14 @@ class BxDolInstallSiteConfig
             ),
             'db_name' => array(
                 'name' => _t('_sys_inst_conf_field_db_name'),
-                'ex' => 'mydomian_dolphin',
+                'ex' => 'mydomian_tri',
                 'desc' => _t('_sys_inst_conf_desc_db_name'),
                 'check' => array('checkLength', 1),
                 'db_conf' => 'name',
             ),
             'db_user' => array(
                 'name' => _t('_sys_inst_conf_field_db_user'),
-                'ex' => 'mydomian_dolphin',
+                'ex' => 'mydomian_tri',
                 'desc' => _t('_sys_inst_conf_desc_db_user'),
                 'check' => array('checkLength', 1),
                 'db_conf' => 'user',

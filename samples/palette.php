@@ -13,7 +13,7 @@
  */
 
 /**
- * This sample shows default Dolphin palette colors.
+ * This sample shows default palette colors.
  * Palette colors are defined as css classes.
  */
 

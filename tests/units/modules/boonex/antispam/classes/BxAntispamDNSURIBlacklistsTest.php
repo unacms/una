@@ -28,10 +28,10 @@ class BxAntispamDNSURIBlacklistsTest extends BxDolTestCase
         // it is assumed that multi.surbl.org. rule is enabled
         return array(
             array("some text without urls", false), // no spam detection in text without urls
-            array("Hello. \nDolphin lives on http://www.boonex.com site", false), // no spam for good urls
-            array("Hello. \nDolphin lives on <a href=\"http://www.boonex.com\">BoonEx</a> site", false), // no spam for good urls
-            array("Hello. \nDolphin lives on <a href='http://www.boonex.com'>BoonEx</a> site", false), // no spam for good urls
-            array("Hello. \nDolphin lives on <a href=http://www.boonex.com>BoonEx</a> site", false), // no spam for good urls
+            array("Hello. \nTrident can be found on http://www.boonex.com site", false), // no spam for good urls
+            array("Hello. \nTrident can be found on <a href=\"http://www.boonex.com\">BoonEx</a> site", false), // no spam for good urls
+            array("Hello. \nTrident can be found on <a href='http://www.boonex.com'>BoonEx</a> site", false), // no spam for good urls
+            array("Hello. \nTrident can be found on <a href=http://www.boonex.com>BoonEx</a> site", false), // no spam for good urls
             array("Hello. \nThere is spam on http://surbl-org-permanent-test-point.com site", true), // text with spammer URL
             array("Hello. \nThere is spam on <a href=\"http://surbl-org-permanent-test-point.com\">test point</a> site", true), // text with spammer URL
             array("Hello. \nThere is spam on <a href='http://surbl-org-permanent-test-point.com'>test point</a> site", true), // text with spammer URL

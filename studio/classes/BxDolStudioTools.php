@@ -38,6 +38,11 @@ class BxDolStudioTools extends BxDolIO
             defined('BX_SYSTEM_FFMPEG') ? bx_ltrim_str(BX_SYSTEM_FFMPEG, BX_DIRECTORY_PATH_ROOT) : 'plugins/ffmpeg/ffmpeg.exe',
         );
 
+        // remove 'inc' folder if script is already installed
+        if (defined('BX_DOL'))
+            array_shift($this->aInstallPermissions);
+
+
         $this->aPostInstallPermissions = array(
         );
 

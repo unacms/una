@@ -32,7 +32,7 @@ define('BX_DOL_SEARCH_KEYWORD_PAGE', 'site-search-page');
  *
  * For using this class you should have unit of BxDolSearchResult class (see description below) with method processing which is responsible for processing of search request.
  *
- * Example of usage can be seen in the default Dolphin's modules (photos, sounds, events, sites, etc).
+ * Example of usage can be seen in the BoonEx modules, for example: Posts
  *
  * Memberships/ACL:
  * Doesn't depend on user's membership.

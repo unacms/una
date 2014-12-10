@@ -1,6 +1,6 @@
 <div class="bx-install-initial">
 
-    <img class="bx-def-margin-bottom bx-install-dolphin" src="img/dolphin.png" alt="Dolphin U" />
+    <img class="bx-def-margin-bottom bx-install-img" src="img/trident.png" alt="Trident" />
 
     <?php include('lang_swither.php'); ?>
 

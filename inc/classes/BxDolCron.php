@@ -8,9 +8,9 @@
  */
 
 /**
- * BxDolCron is parent class for all Dolphin cron jobs, except the cases when the code is evaluated directly.
+ * BxDolCron is parent class for all cron jobs, except the cases when the code is evaluated directly.
  *
- * periodic/cron.php file is used for cron jobs. It is started every minute and runs Dolphin cron jobs.
+ * periodic/cron.php file is used for cron jobs. It is started every minute and run cron jobs.
  * The file runs jobs at regular intervals, the jobs are listed in `sys_cron_jobs` table.
  *
  * Fields shark_cron_jobs table:

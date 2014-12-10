@@ -14,7 +14,7 @@
  *
  *
  * Example of usage:
- * @see any module included in the default Dolphin's package.
+ * refer to any BoonEx module
  *
  *
  * Memberships/ACL:

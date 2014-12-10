@@ -18,7 +18,7 @@
 $GLOBALS['bxDolClasses'] = array();
 
 /**
- * Base class for all Dolphin classes
+ * Base class for all classes
  */
 class BxDol
 {

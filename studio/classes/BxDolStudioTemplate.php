@@ -106,16 +106,6 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton
                 bx_import('BxTemplStudioMenuTop');
                 $sRet = BxTemplStudioMenuTop::getInstance()->getCode();
                 break;
-            case 'boonex_promo':
-                if (getParam('enable_dolphin_footer'))
-                    $sRet = $this->parseHtmlByName('boonex_promo.html', array());
-                break;
-            case 'promo_code':
-                if (defined('BX_PROMO_CODE'))
-                    $sRet = BX_PROMO_CODE;
-                else
-                    $sRet = ' ';
-                break;
             case 'copyright':
                 $sRet = _t( '_copyright',   date('Y') ) . getVersionComment();
                 break;

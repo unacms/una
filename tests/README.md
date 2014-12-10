@@ -1,7 +1,7 @@
 ABOUT
 =====
 
-Unit test for Dolphin.
+Unit test for Trident.
 
 INSTALLATION
 ============
@@ -22,7 +22,7 @@ or:
 composer install
 ```
 
-Alternatively run the following from Dolphin root folder:
+Alternatively run the following from the script root folder:
 ```
 phing install
 ```
@@ -40,7 +40,7 @@ or:
 /path/to/bin/php ./vendor/bin/phpunit
 ```
 
-Alternatively run the following from Dolphin root folder:
+Alternatively run the following from the script root folder:
 ```
 phing test
 ```

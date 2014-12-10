@@ -33,7 +33,7 @@ class BxDolFtp extends BxDolFile
         return @ftp_login($this->_rStream, $this->_sLogin, $this->_sPassword);
     }
 
-    function isDolphin()
+    function isTrident()
     {
         return @ftp_size($this->_rStream, $this->_sPathTo . 'inc/header.inc.php') > 0;
     }

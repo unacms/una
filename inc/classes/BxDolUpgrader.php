@@ -89,6 +89,15 @@ class BxDolUpgrader extends BxDol
         return $this->getError() ? false : true;
     }
 
+    public function getLatestVersionNumber ()
+    {
+        $a = $this->getVersionUpdateInfo ();
+        if (!$a)
+            return false;
+
+        return $a['latest_version'];
+    }
+
     public function getVersionUpdateInfo ()
     {
         $s = bx_file_get_contents($this->_sUrlVersionCheck, array ('v' => bx_get_ver()));
