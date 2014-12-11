@@ -68,6 +68,11 @@ class BxDolUpgradeCron extends BxDolCron
 
             // disable auto-upgrade if it is failed
             setParam('sys_autoupdate_system', '');
+        } 
+        elseif ('on' == getParam('sys_autoupdate_modules')) { // run modules update after successful system upgrade
+
+            bx_import('BxDolCronQuery');
+            BxDolCronQuery::getInstance()->addTransientJobClass('sys_perform_upgrade_modules', 'BxDolCronUpgradeModulesCheck', 'inc/classes/BxDolCronUpgradeModulesCheck.php');
         }
     }
 }
