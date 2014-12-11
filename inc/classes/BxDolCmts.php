@@ -547,7 +547,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
             $oQuery->deleteAll($aSystem['system_id'], $aFiles, $aCmtIds);
 
             // delete meta info
-            $this->deleteMetaInfo($aCmtIds);
+            $o->deleteMetaInfo($aCmtIds);
 
             // delete files
             $oStorage = BxDolStorage::getObjectInstance($o->getStorageObjectName());
