@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    DolphinCore Dolphin Core
+ * @defgroup    TridentCore Trident Core
  * @{
  */
 
@@ -18,7 +18,7 @@
 $GLOBALS['bxDolClasses'] = array();
 
 /**
- * Base class for all Dolphin classes
+ * Base class for all classes
  */
 class BxDol
 {

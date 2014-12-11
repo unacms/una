@@ -1,10 +1,11 @@
-<?php
+<?php defined('BX_DOL') or defined('BX_DOL_INSTALL') or die('hack attempt');
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    TridentCore Trident Core
+ * @{
  */
-defined('BX_DOL') or die('hack attempt');
 
 /**
  * Alert/Handler engine.
@@ -155,3 +156,5 @@ class BxDolAlertsResponse extends BxDol
 
     public function response($oAlert) {}
 }
+
+/** @} */

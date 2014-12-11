@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    DolphinCore Dolphin Core
+ * @defgroup    TridentCore Trident Core
  * @{
  */
 
@@ -30,7 +30,7 @@ bx_import('BxDolTranscoderVideoQuery');
  * or set it to fairly big value, since video transcoding is not performed on the fly and takes some time. 
  *
  * Video conversion can be performed on separate server or multiple servers, to do it:
- * - install dolphin on separate server(s), but connect to the same DB which your main site is using
+ * - install the script on separate server(s), but connect to the same DB which your main site is using
  * - enable 'sys_transcoder_queue_files' option (when it is enabled it takes a little longer to convert videos)
  * - add the following code to the begining of inc/header.inc.php file on the main site, where your actual site in installed:
  *   @code

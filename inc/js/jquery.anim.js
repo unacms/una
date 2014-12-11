@@ -1,7 +1,9 @@
 /**
- * @package     Dolphin Core
- * @copyright   Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
+ * CC-BY License - http://creativecommons.org/licenses/by/3.0/
+ *
+ * @defgroup    TridentCore Trident Core
+ * @{
  */
 
 $.fn.bx_anim = function(action, effect, speed, h) {
@@ -90,3 +92,4 @@ $.fn.bx_message_box = function(sMessage, iTimer, onClose) {
     });
 };
 
+/** @} */

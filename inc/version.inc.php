@@ -3,10 +3,10 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    DolphinCore Dolphin Core
+ * @defgroup    TridentCore Trident Core
  * @{
  */
 
-define('BX_DOL_VERSION', '8.0.0-DEV9'); ///< Dolphin system files version, for DB version @see bx_get_ver, DB and files version must match
+define('BX_DOL_VERSION', '8.0.0-DEV9'); ///< system files version, for DB version @see bx_get_ver, DB and files version must match
 
 /** @} */

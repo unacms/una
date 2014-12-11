@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Dolphin" basedir="." default="test">
+<project name="Trident" basedir="." default="test">
 
     <property file="${project.basedir}/build.properties" override="true" />
     <property name="build" value="0" override="yes" />
@@ -97,7 +97,7 @@
     <!-- ============================================  -->
     <target name="package" depends="clean">
         <tstamp />
-        <property name="package_name" value="Dolphin-${DSTAMP}-${build}" override="yes" />
+        <property name="package_name" value="Trident-${DSTAMP}-${build}" override="yes" />
         <property name="package_file" value="${package_name}.zip" />
         <echo msg="Packaging ${package_file} file..." />
 
@@ -124,7 +124,7 @@
         <tstamp />
         <propertyprompt propertyName="version_from" promptText="Enter version to upgrade from" />
         <propertyprompt propertyName="version_to" promptText="Enter version to upgrade to" />
-        <property name="package_name" value="Dolphin-Patch-v.${version_from}-to-v.${version_to}" override="yes" />
+        <property name="package_name" value="Trident-Patch-v.${version_from}-to-v.${version_to}" override="yes" />
         <property name="package_file" value="${package_name}.zip" />
         <echo msg="Packaging ${package_file} file..." />
 

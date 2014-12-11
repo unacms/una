@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    DolphinStudio Dolphin Studio
+ * @defgroup    TridentStudio Trident Studio
  * @{
  */
 
@@ -25,7 +25,7 @@ class BxDolStudioToolsAudit extends BxDol
     protected $sMinMysqlVer;
     protected $aMysqlOptimizationSettings;
 
-    protected $aDolphinOptimizationSettings;
+    protected $aOptimizationSettings;
 
     protected $aRequiredApacheModules;
 
@@ -84,7 +84,7 @@ class BxDolStudioToolsAudit extends BxDol
             'thread_cache_size ' => array('op' => '>', 'val' => 0),
         );
 
-        $this->aDolphinOptimizationSettings = array (
+        $this->aOptimizationSettings = array (
             'DB cache' => array('enabled' => 'sys_db_cache_enable', 'cache_engine' => 'sys_db_cache_engine', 'check_accel' => true),
             'Page blocks cache' => array('enabled' => 'sys_pb_cache_enable', 'cache_engine' => 'sys_pb_cache_engine', 'check_accel' => true),
             'Member menu cache' => array('enabled' => 'always_on', 'cache_engine' => 'sys_mm_cache_engine', 'check_accel' => true),
@@ -199,7 +199,7 @@ class BxDolStudioToolsAudit extends BxDol
     }
 
     /**
-     * Check minimal Dolphin requirements
+     * Check minimal requirements
      * @param $sType - BX_DOL_AUDIT_FAIL, BX_DOL_AUDIT_WARN, BX_DOL_AUDIT_UNDEF or BX_DOL_AUDIT_OK
      * @param $sFunc - requirementsPHP, requirementsMySQL or requirementsWebServer
      * @return array of FAIL, WARN, UNDEF or OK items, if array is empty then no specified items are found
@@ -341,26 +341,28 @@ class BxDolStudioToolsAudit extends BxDol
 
     protected function siteSetup()
     {
-        $sDolphinPath = defined('BX_DIRECTORY_PATH_ROOT') ? BX_DIRECTORY_PATH_ROOT : BX_INSTALL_DIR_ROOT;
+        $sFfmpegPath = defined('BX_SYSTEM_FFMPEG') ? BX_SYSTEM_FFMPEG : BX_DIRECTORY_PATH_PLUGINS . 'ffmpeg/ffmpeg.exe';
 
         $sEmailToCkeckMailSending = class_exists('BxDolDb') && BxDolDb::getInstance() ? BxDolDb::getInstance()->getParam('site_email') : '';
 
-        $sLatestDolphinVer = file_get_contents("http://rss.boonex.com/");
-        if (preg_match ('#<dolphin>([\.0-9]+)</dolphin>#', $sLatestDolphinVer, $m))
-            $sLatestDolphinVer = $m[1];
-        else
-            $sLatestDolphinVer = 'undefined';
+        bx_import('BxDolUpgrader');
+        $oUpgrader = new BxDolUpgrader();
+        if (!($sLatestVer = $oUpgrader->getLatestVersionNumber()))
+            $sLatestVer = 'undefined';
 
-        $sDolphinVer = bx_get_ver();
+        $sVer = bx_get_ver();
         $aMessage = array('type' => BX_DOL_AUDIT_OK);
-        if (!version_compare($sDolphinVer, $sLatestDolphinVer, '>='))
-            $aMessage = array('type' => BX_DOL_AUDIT_WARN, 'msg' => _t('_sys_audit_msg_version_is_outdated', $sLatestDolphinVer));
+        if (!version_compare($sVer, $sLatestVer, '>='))
+            $aMessage = array('type' => BX_DOL_AUDIT_WARN, 'msg' => _t('_sys_audit_msg_version_is_outdated', $sLatestVer));
 
-        $s = '';
-        $s .= $this->getBlock(_t('_sys_audit_version_dolphin'), $sDolphinVer, $this->getMsgHTML(_t('_sys_audit_version_dolphin'), $aMessage));
-        //$s .= $this->getBlock(_t('_sys_audit_permissions'), '', _t('_sys_audit_msg_permissions'));
-        //$s .= $this->getBlock('ffmpeg', '', _t('_sys_audit_msg_ffmpeg', `{$sDolphinPath}flash/modules/global/app/ffmpeg.exe 2>&1`));
+        $s = $this->getBlock(_t('_sys_audit_version_script'), $sVer, $this->getMsgHTML(_t('_sys_audit_version_script'), $aMessage));
+
+        $s .= $this->getBlock(_t('_sys_audit_permissions'), '', _t('_sys_audit_msg_permissions'));
+
+        $s .= $this->getBlock('ffmpeg', '', _t('_sys_audit_msg_ffmpeg', `{$sFfmpegPath} 2>&1`));
+
         $s .= $this->getBlock(_t('_sys_audit_mail_sending'), '', _t('_sys_audit_msg_mail_sending'));
+
         $s .= $this->getBlock(_t('_sys_audit_cron_jobs'), '', _t('_sys_audit_msg_cron_jobs', `crontab -l 2>&1`));
 
         echo '<h1>' . _t('_sys_audit_header_site_setup') . '</h1>';
@@ -379,7 +381,7 @@ class BxDolStudioToolsAudit extends BxDol
         $this->optimizationWebServer();
 
         if (!defined('BX_DOL_INSTALL'))
-            $this->optimizationDolphin();
+            $this->optimizationScript();
     }
 
     protected function optimizationPhp()
@@ -435,26 +437,26 @@ class BxDolStudioToolsAudit extends BxDol
         echo $this->getSection(_t('_sys_audit_section_webserver'), '', $s);
     }
 
-    protected function optimizationDolphin()
+    protected function optimizationScript()
     {
         $s = '';
-        foreach ($this->aDolphinOptimizationSettings as $sName => $a) {
+        foreach ($this->aOptimizationSettings as $sName => $a) {
 
             $sVal = ('always_on' == $a['enabled'] || getParam($a['enabled'])) ? 'On' : 'Off';
             if ($a['cache_engine'])
-                $sVal .= _t('_sys_audit_msg_dolphin_x_based_cache_engine', getParam($a['cache_engine']));
+                $sVal .= _t('_sys_audit_msg_x_based_cache_engine', getParam($a['cache_engine']));
 
             if ('always_on' != $a['enabled'] && !getParam($a['enabled']))
-                $aMessage = array('type' => BX_DOL_AUDIT_FAIL, 'msg' => _t('_sys_audit_msg_dolphin_optimization_fail'));
+                $aMessage = array('type' => BX_DOL_AUDIT_FAIL, 'msg' => _t('_sys_audit_msg_optimization_fail'));
             elseif ($a['check_accel'] && !$this->getPhpAccelerator() && 'File' == getParam($a['cache_engine']))
-                $aMessage = array('type' => BX_DOL_AUDIT_WARN, 'msg' => _t('_sys_audit_msg_dolphin_optimization_warn'));
+                $aMessage = array('type' => BX_DOL_AUDIT_WARN, 'msg' => _t('_sys_audit_msg_optimization_warn'));
             else
                 $aMessage = array('type' => BX_DOL_AUDIT_OK);
 
             $s .= $this->getBlock($sName, $sVal, $this->getMsgHTML($sName, $aMessage));
         }
 
-        echo $this->getSection('Dolphin', '', $s);
+        echo $this->getSection('Trident', '', $s);
     }
 
     protected function manualCheck()

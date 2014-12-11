@@ -4,7 +4,7 @@
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
  * @defgroup    Notifications Notifications
- * @ingroup     DolphinModules
+ * @ingroup     TridentModules
  *
  * @{
  */

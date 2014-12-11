@@ -3,8 +3,8 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    DolphinView Dolphin Studio Representation classes
- * @ingroup     DolphinStudio
+ * @defgroup    TridentView Trident Studio Representation classes
+ * @ingroup     TridentStudio
  * @{
  */
 
@@ -70,7 +70,7 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
 			return '';
 
     	if($sVersionAvailable !== false)
-    		$sVersionAvailable = _t('_adm_dbd_txt_dolphin_n_available', $sVersionAvailable);
+    		$sVersionAvailable = _t('_adm_dbd_txt_version_n_available', $sVersionAvailable);
 
 		return BxDolStudioTemplate::getInstance()->parseHtmlByName('dbd_versions_upgrade.html', array(
 			'bx_if:show_version_available' => array(
@@ -197,7 +197,13 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
 				'name' => 'audit', 
 				'title' => _t('_sys_inst_server_audit'), 
 				'link' => 'javascript:void(0)',
-				'onclick' => $sJsObject . '.serverAudit()'
+                'onclick' => $sJsObject . '.serverAudit()',
+            ),
+			array(
+				'name' => 'permissions',
+				'title' => _t('_sys_audit_permissions'), 
+				'link' => 'javascript:void(0)',
+				'onclick' => $sJsObject . '.permissions()'
 			)
 		);
 

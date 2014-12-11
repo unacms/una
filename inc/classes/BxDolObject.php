@@ -3,12 +3,12 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    DolphinCore Dolphin Core
+ * @defgroup    TridentCore Trident Core
  * @{
  */
 
 /**
- * Base class for all Dolphin Object classes.
+ * Base class for all "Object" classes.
  * Child classes usually represents high level programming constructions to generate ready 'objects' functionality, like Comments, Votings, Forms.
  */
 class BxDolObject extends BxDol

@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    DolphinStudio Dolphin Studio
+ * @defgroup    TridentStudio Trident Studio
  * @{
  */
 
@@ -105,16 +105,6 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton
             case 'menu_top':
                 bx_import('BxTemplStudioMenuTop');
                 $sRet = BxTemplStudioMenuTop::getInstance()->getCode();
-                break;
-            case 'boonex_promo':
-                if (getParam('enable_dolphin_footer'))
-                    $sRet = $this->parseHtmlByName('boonex_promo.html', array());
-                break;
-            case 'promo_code':
-                if (defined('BX_PROMO_CODE'))
-                    $sRet = BX_PROMO_CODE;
-                else
-                    $sRet = ' ';
                 break;
             case 'copyright':
                 $sRet = _t( '_copyright',   date('Y') ) . getVersionComment();

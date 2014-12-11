@@ -4,7 +4,7 @@
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
  * @defgroup    BaseProfile Base classes for profile modules
- * @ingroup     DolphinModules
+ * @ingroup     TridentModules
  *
  * @{
  */

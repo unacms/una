@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    DolphinCore Dolphin Core
+ * @defgroup    TridentCore Trident Core
  * @{
  */
 
@@ -87,6 +87,15 @@ class BxDolUpgrader extends BxDol
         umask($iUmaskSave);
 
         return $this->getError() ? false : true;
+    }
+
+    public function getLatestVersionNumber ()
+    {
+        $a = $this->getVersionUpdateInfo ();
+        if (!$a)
+            return false;
+
+        return $a['latest_version'];
     }
 
     public function getVersionUpdateInfo ()

@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    DolphinCore Dolphin Core
+ * @defgroup    TridentCore Trident Core
  * @{
  */
 
@@ -521,7 +521,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
             $oQuery->deleteAuthorComments($iAuthorId, $aFiles, $aCmtIds);
 
             // delete meta info
-            $this->deleteMetaInfo($aCmtIds);
+            $o->deleteMetaInfo($aCmtIds);
     
             // delete files
             $oStorage = BxDolStorage::getObjectInstance($o->getStorageObjectName());
@@ -561,7 +561,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         return true;
     }
 
-    function deleteMetaInfo ($mixedCmtId)
+    public function deleteMetaInfo ($mixedCmtId)
     {
         if (!$this->_sMetatagsObj)
             return;

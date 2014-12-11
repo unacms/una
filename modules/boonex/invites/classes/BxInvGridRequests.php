@@ -4,7 +4,7 @@
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
  * @defgroup    Invites Invites
- * @ingroup     DolphinModules
+ * @ingroup     TridentModules
  * 
  * @{
  */

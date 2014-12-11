@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    DolphinStudio Dolphin Studio
+ * @defgroup    TridentStudio Trident Studio
  * @{
  */
 
@@ -60,7 +60,7 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
                 'result' => false
             ));
 
-		//--- Check Dolphin version compatibility ---//
+		//--- Check version compatibility ---//
         if(!$this->_isCompatibleWith())
             return array(
                 'message' => $this->_displayResult('check_script_version', false, _t('_adm_err_modules_wrong_version_script_update', $aModuleInfo['title']), $bHtmlResponce),

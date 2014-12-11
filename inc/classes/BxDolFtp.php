@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    DolphinCore Dolphin Core
+ * @defgroup    TridentCore Trident Core
  * @{
  */
 
@@ -33,7 +33,7 @@ class BxDolFtp extends BxDolFile
         return @ftp_login($this->_rStream, $this->_sLogin, $this->_sPassword);
     }
 
-    function isDolphin()
+    function isTrident()
     {
         return @ftp_size($this->_rStream, $this->_sPathTo . 'inc/header.inc.php') > 0;
     }

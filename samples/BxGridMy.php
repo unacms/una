@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    DolphinCore Samples
+ * @defgroup    TridentCore Samples
  * @{
  */
 
@@ -75,8 +75,8 @@ INSERT INTO `sample_grid_data` VALUES
 (35, 'MrTwister', 'mr@twister.com', 'Active', 1, '', '', '', '', 'Mumbai', '0000-00-00', '', 6),
 (42, 'kokoko', 'okokok@ok.com', 'Unconfirmed', 1, '', '', '', '', 'Ok', '0000-00-00', '', 10),
 (34, 'uno', 'uno@boonex.com', 'Active', 1, '', '', '', '', 'Sydney', '0000-00-00', '', 9),
-(41, 'Dolphin User', 'user@dolphin.co', 'Active', 1, '', '', '', '', 'Seashore', '0000-00-00', '', 2),
-(10, 'Andrew5', 'uno5@boonex.com', 'Active', 1, 'male', 'Unite People!', '<p>This is a demo profile that you may find on <a href="http://www.boonex.com/dolphin">BoonEx Dolphin</a> demo sites or some default Dolphin installations. This and other demo profiles are used to post sample media content, messages and friend requests.</p>\r\n<p> </p>\r\n<p>Dolphin is a free, open-source social networking and online dating platform by <a href="http://www.boonex.com">BoonEx Community Software Experts</a>.</p>\r\n<p> </p>\r\n<p>BoonEx mission is to Unite People and thus make the world a better place.</p>', 'AU', 'Castle Hill', '1981-03-31', 'boonex, dolphin, community, unite, people', 10),
+(41, 'Super User', 'user@super.co', 'Active', 1, '', '', '', '', 'Seashore', '0000-00-00', '', 2),
+(10, 'Andrew5', 'uno5@boonex.com', 'Active', 1, 'male', 'Unite People!', '<p>This is a demo profile that you may find on <a href="http://www.boonex.com/">BoonEx</a>.<p>BoonEx mission is to Unite People and thus make the world a better place.</p>', 'AU', 'Castle Hill', '1981-03-31', 'boonex, community, unite, people', 10),
 (47, 'Bimbo', 'bambi@bumba.com', 'Unconfirmed', 1, '', '', '', '', 'Bomba', '0000-00-00', '', 3),
 (50, 'X-Man', 'x@man.me', 'Unconfirmed', 1, '', '', '', '', 'Movie City', '0000-00-00', '', 10);
 

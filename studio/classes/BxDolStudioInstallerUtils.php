@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    DolphinStudio Dolphin Studio
+ * @defgroup    TridentStudio Trident Studio
  * @{
  */
 
@@ -506,7 +506,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 	        if(!$oFile->connect())
 	            return _t('_adm_str_err_cannot_connect_to_ftp');
 	
-	        if(!$oFile->isDolphin())
+	        if(!$oFile->isTrident())
 	            return _t('_adm_str_err_destination_not_valid');
         }
         else {

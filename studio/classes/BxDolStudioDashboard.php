@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    DolphinStudio Dolphin Studio
+ * @defgroup    TridentStudio Trident Studio
  * @{
  */
 
@@ -119,9 +119,20 @@ class BxDolStudioDashboard extends BxTemplStudioPage
 
 					break;
 
+				case 'permissions':                    
+					bx_import('BxDolStudioTools');
+                    $oAdmTools = new BxDolStudioTools();
+
+                    header( 'Content-type: text/html; charset=utf-8' );
+                    echo $oAdmTools->generateStyles();
+                    $oAdmTools->checkPermissions();
+                    exit;
+
 				case 'server_audit':
 					bx_import('BxDolStudioToolsAudit');
 					$oAudit = new BxDolStudioToolsAudit();
+            
+                    header( 'Content-type: text/html; charset=utf-8' );
 					echo $oAudit->generate();
 					exit;
             }

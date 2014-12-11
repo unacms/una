@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    DolphinCore Dolphin Core
+ * @defgroup    TridentCore Trident Core
  * @{
  */
 
@@ -22,7 +22,7 @@
  *
  *
  * Example of usage:
- * @see any module included in the default Dolphin's package.
+ * refer to any BoonEx module
  *
  *
  * Static Methods:

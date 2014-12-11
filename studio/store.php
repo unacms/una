@@ -3,8 +3,8 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    DolphinEndAdmin Dolphin Studio End Admin Pages
- * @ingroup     DolphinStudio
+ * @defgroup    TridentEndAdmin Trident Studio End Admin Pages
+ * @ingroup     TridentStudio
  * @{
  */
 

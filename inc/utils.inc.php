@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    DolphinCore Dolphin Core
+ * @defgroup    TridentCore Trident Core
  * @{
  */
 
@@ -1090,7 +1090,7 @@ function bx_trigger_error ($sMsg, $iNumLevelsBack = 0)
 }
 
 /**
- * Get Dolphin system DB version, for files version @see BX_DOL_VERSION, these versions must match
+ * Get system DB version, for files version @see BX_DOL_VERSION, these versions must match
  */
 function bx_get_ver ($bInvalidateCache = false)
 {
@@ -1106,7 +1106,7 @@ function bx_get_ver ($bInvalidateCache = false)
 
 /**
  * Check if site maintetance mode is enabled.
- * Maintetance mode is enabled when '.bx_maintenance' file exists in Dolphin root folder, 
+ * Maintetance mode is enabled when '.bx_maintenance' file exists in the script root folder, 
  * please note that this is hidden file and some file managers don't show it.
  * @param $bShowHttpError show 503 HTTP error if site is in mainenance mode
  * @return true if site is in maintenance mode, or false otherwise
@@ -1123,13 +1123,13 @@ function bx_check_maintenance_mode ($bShowHttpError = false)
 
 /**
  * Check for minimal requirements.
- * if DISABLE_DOLPHIN_REQUIREMENTS_CHECK is defined then this requirements checking is skipped.
+ * if BX_DISABLE_REQUIREMENTS_CHECK is defined then this requirements checking is skipped.
  * @param $bShowHttpError show 503 HTTP error if site doesn't meet minimal requirements
  * @return false if requirements are met, or array of errors of requirements aren't met
  */
 function bx_check_minimal_requirements ($bShowHttpError = false)
 {
-    if (defined('DISABLE_DOLPHIN_REQUIREMENTS_CHECK'))
+    if (defined('BX_DISABLE_REQUIREMENTS_CHECK'))
         return false;
 
     $aErrors = array();
@@ -1137,7 +1137,7 @@ function bx_check_minimal_requirements ($bShowHttpError = false)
     $aErrors[] = (ini_get('register_globals') == 0) ? '' : '<b>register_globals</b> is on (you need to disable it, or your site will be unsafe)';
     $aErrors[] = (ini_get('safe_mode') == 0) ? '' : '<b>safe_mode</b> is on (you need to disable it)';
     $aErrors[] = (version_compare(PHP_VERSION, '5.3.0', '<')) ? 'PHP version is too old (please update to <b>PHP 5.3.0</b> at least)' : '';
-    $aErrors[] = (!extension_loaded( 'mbstring')) ? '<b>mbstring</b> extension not installed (Dolphin cannot work without it)' : '';
+    $aErrors[] = (!extension_loaded( 'mbstring')) ? '<b>mbstring</b> extension not installed (the script cannot work without it)' : '';
     $aErrors[] = (ini_get('allow_url_include') == 0) ? '' : '<b>allow_url_include</b> is on (you need to disable it, or your site will be unsafe)';
 
     $aErrors = array_diff($aErrors, array('')); // delete empty

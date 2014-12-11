@@ -4,7 +4,7 @@
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
  * @defgroup    Uni Uni template
- * @ingroup     DolphinModules
+ * @ingroup     TridentModules
  *
  * @{
  */

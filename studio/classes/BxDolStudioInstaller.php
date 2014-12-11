@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    DolphinStudio Dolphin Studio
+ * @defgroup    TridentStudio Trident Studio
  * @{
  */
 
@@ -16,12 +16,12 @@ define("BX_DOL_STUDIO_INSTALLER_FAILED", 1);
  * Base class for Installer classes in modules engine.
  *
  * The class contains different check functions which are used during the installation process.
- * An object of the class is created automatically with Dolphin's modules installer.
+ * An object of the class is created automatically with modules installer.
  * Installation/Uninstallation process can be controlled with config.php file located in  [module]/install/ folder.
  *
  *
  * Example of usage:
- * @see any module included in the default Dolphin's package.
+ * refer to the BoonEx modules
  *
  *
  * Memberships/ACL:
@@ -884,7 +884,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             if(!$oFile->connect())
                 return null;
 
-            if(!$oFile->isDolphin())
+            if(!$oFile->isTrident())
                 return null;
         }
         else {

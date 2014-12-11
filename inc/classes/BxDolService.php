@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    DolphinCore Dolphin Core
+ * @defgroup    TridentCore Trident Core
  * @{
  */
 
@@ -12,13 +12,12 @@ bx_import('BxDolRequest');
 /**
  * Service calls to modules' methods.
  *
- * The class has one static method is needed to make service calls
- * to module's methods from the Dolphin's core or the other modules.
+ * The class has one static method to make service calls to the module's methods
  *
  *
  * Example of usage:
  * @code
- * BxDolService::call('payment', 'get_add_to_cart_link', array($iVendorId, $mixedModuleId, $iItemId, $iItemCount));
+ * $isSpam = BxDolService::call('bx_antispam', 'is_spam', array($sText));
  * @endcode
  *
  *

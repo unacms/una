@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    DolphinCore Dolphin Core
+ * @defgroup    TridentCore Trident Core
  * @{
  */
 
@@ -37,18 +37,20 @@ define('BX_DOL_PG_DEFAULT', BX_DOL_PG_ALL);
  * 2. Add one privacy field(with INT type) in the table with your items for each action.
  *    For example, for action 'comment', the field name should be 'allow_comment_to'.
  * 3. Add group choosers for necessary actions in the form, which is used to add new items.
- *
+ * @code
  *    $oPrivacy = new BxDolPrivacy();
  *    $oPrivacy->getGroupChooser($iItemOwnerId, $sModuleUri, $sModuleAction);
+ * @endcode
  *
  * 4. Check privacy when any user tries to view an item.
- *
+ * @code
  *    $oPrivacy = new BxDolPrivacy($sTable, $sFieldId, $sFieldOwnerId);
  *    if($oPrivacy->check($sAction, $iObjectId, $iViewerId)) {
  *     //show necessary content
  *    }
+ * @endcode
  *
- *    @see an example of integration in the default Dolphin's modules(feedback, events, sites, etc)
+ *    @see an example of integration in BoonEx modules, for example: Posts
  *
  *
  * Memberships/ACL:

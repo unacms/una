@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    DolphinInstall Dolphin Install
+ * @defgroup    TridentInstall Trident Install
  * @{
  *
 
@@ -38,11 +38,11 @@ class BxDolInstallCmd
             'db_name' => 'test',
             'db_user' => 'root',
             'db_password' => 'root',
-            'site_title' => 'Dolphin U Test',
+            'site_title' => 'Trident Test',
             'site_email' => 'no-reply@example.com',
             'admin_email' => 'admin@example.com',
             'admin_username' => 'admin',
-            'admin_password' => 'dolphin',
+            'admin_password' => 'trident',
             'language' => 'en',
         );
 

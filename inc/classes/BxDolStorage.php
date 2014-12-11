@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    DolphinCore Dolphin Core
+ * @defgroup    TridentCore Trident Core
  * @{
  */
 
@@ -83,7 +83,7 @@ bx_import('BxDolStorageQuery');
  * - object - your storage object name, usually it is in the following format - vendor prefix, underscore, module prefix;
  *   for example for BoonEx Forum module it can be bx_forum.
  * - engine - storage engine, for now the following engines are supported:
- *     1. Local - local storage, by default files are stored in /storage/ subfolder in Dolphin root directory
+ *     1. Local - local storage, by default files are stored in /storage/ subfolder 
  *     2. S3 - Amazon S3 storage, files are stored on Amazon S3 storage, you need to point AWS Access Key, AWS Secret Key and AWS Bucket in the settings
  * - params - custom storage engine params as php serialized string
  * - token_life - life of the security token in seconds for private files
