@@ -22,6 +22,7 @@ class BxBaseModGeneralMenuManageTools extends BxTemplMenu
     {
         parent::__construct($aObject, $oTemplate);
 
+        bx_import('BxDolModule');
         $this->_oModule = BxDolModule::getInstance($this->MODULE);
 
         $iContentId = 0;
