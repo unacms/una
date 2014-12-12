@@ -32,7 +32,7 @@ CREATE TABLE `sample_transcoder_video_orig` (
 );
 
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
-('sample_transcoder_video_orig', 'Local', '', 360, 2592000, 0, 'sample_transcoder_video_orig', 'allow-deny', 'avi,flv,mpg,mpeg,wmv,mp4,m4v,mov,divx,xvid,3gp,webm', '', 0, 0, 0, 0, 0, 0);
+('sample_transcoder_video_orig', 'Local', '', 360, 2592000, 0, 'sample_transcoder_video_orig', 'allow-deny', 'avi,flv,mpg,mpeg,wmv,mp4,m4v,mov,qt,divx,xvid,3gp,3g2,webm,mkv,ogv,ogg,rm,rmvb,asf,drc', '', 0, 0, 0, 0, 0, 0);
 
 CREATE TABLE `sample_transcoder_video` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -51,7 +51,7 @@ CREATE TABLE `sample_transcoder_video` (
 );
 
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
-('sample_transcoder_video', 'Local', '', 360, 2592000, 0, 'sample_transcoder_video', 'allow-deny', 'avi,flv,mpg,mpeg,wmv,mp4,m4v,mov,divx,xvid,3gp,webm,jpg', '', 0, 0, 0, 0, 0, 0);
+('sample_transcoder_video', 'Local', '', 360, 2592000, 0, 'sample_transcoder_video', 'allow-deny', 'avi,flv,mpg,mpeg,wmv,mp4,m4v,mov,qt,divx,xvid,3gp,3g2,webm,mkv,ogv,ogg,rm,rmvb,asf,drc,jpg', '', 0, 0, 0, 0, 0, 0);
 
 INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`, `override_class_name`, `override_class_file`) VALUES
 ('sample_video_poster', 'sample_transcoder_video', 'Storage', 'a:1:{s:6:"object";s:28:"sample_transcoder_video_orig";}', 'no', 0, 0, 0, 'BxDolTranscoderVideo', ''),

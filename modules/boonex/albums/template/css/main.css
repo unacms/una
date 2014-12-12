@@ -1,0 +1,21 @@
+
+@import url(../../../../base/text/template/css/main.css);
+
+.bx-albums-unit-images-cont {
+    height:12.5rem;
+    overflow:hidden;
+}
+
+.bx-albums-unit-images {
+    white-space:nowrap;
+    width:100%;
+    height:16rem;
+    overflow-y:hidden;
+    overflow-x:scroll;
+}
+
+.bx-albums-unit-images img {
+    display:inline-block;
+    margin-right:0.125rem;
+    height:12.5rem;
+}

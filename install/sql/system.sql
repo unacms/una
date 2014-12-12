@@ -2976,7 +2976,7 @@ CREATE TABLE IF NOT EXISTS `sys_objects_transcoder` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `object` varchar(64) NOT NULL,
   `storage_object` varchar(64) NOT NULL,
-  `source_type` enum('Folder','Storage') NOT NULL,
+  `source_type` enum('Folder','Storage','Proxy') NOT NULL,
   `source_params` text NOT NULL,
   `private` enum('auto','yes','no') NOT NULL,
   `atime_tracking` int(11) NOT NULL,

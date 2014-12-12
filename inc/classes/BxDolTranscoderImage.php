@@ -119,16 +119,25 @@ class BxDolTranscoderImage extends BxDolTranscoder implements iBxDolFactoryObjec
         $o = BxDolImageResize::getInstance();
         $o->removeCropOptions ();
 
+        // if only one dimension specified - automatically calculate another dimension 
+        if ((isset($aParams['w']) && !isset($aParams['h'])) || (isset($aParams['h']) && !isset($aParams['w']))) {
+            $a = $o->getImageSize ($sFile);
+            $fRatio = $a['w'] / $a['h'];
+            if (isset($aParams['w']))
+                $aParams['h'] = round($aParams['w'] / $fRatio);
+            else
+                $aParams['w'] = round($aParams['h'] * $fRatio);
+        }
+
         if (isset($aParams['w']) && isset($aParams['h']))
             $o->setSize ($aParams['w'] * $this->getDevicePixelRatio(), $aParams['h'] * $this->getDevicePixelRatio());
 
-        if (isset($aParams['crop_resize']) && $aParams['crop_resize']) {
+        if (isset($aParams['crop_resize']) && $aParams['crop_resize'])
             $o->setAutoCrop (true);
-        } elseif (isset($aParams['square_resize']) && $aParams['square_resize']) {
+        elseif (isset($aParams['square_resize']) && $aParams['square_resize'])
             $o->setSquareResize (true);
-        } else {
+        else
             $o->setSquareResize (false);
-        }
 
         $this->_checkForceType ($o, $aParams);
 

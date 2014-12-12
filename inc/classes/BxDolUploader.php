@@ -327,7 +327,14 @@ abstract class BxDolUploader extends BxDol
         $a = '';
         $aGhosts = $oStorage->getGhosts($iProfileId, $iContentId);
         foreach ($aGhosts as $aFile) {
-            $sFileIcon = $oImagesTranscoder && 0 == strncmp($aFile['mime_type'], 'image/', 6) ? $oImagesTranscoder->getFileUrl($aFile['id']) : $this->_oTemplate->getIconUrl($oStorage->getIconNameByFileName($aFile['file_name']));
+            $sFileIcon = '';
+
+            if ($oImagesTranscoder && (0 == strncmp($aFile['mime_type'], 'image/', 6) || 0 == strncmp($aFile['mime_type'], 'video/', 6)))
+                $sFileIcon = $oImagesTranscoder->getFileUrl($aFile['id']);
+
+            if (!$sFileIcon)
+                $sFileIcon = $this->_oTemplate->getIconUrl($oStorage->getIconNameByFileName($aFile['file_name']));
+
             $a[$aFile['id']] = array (
                 'file_id' => $aFile['id'],
                 'file_name' => $aFile['file_name'],

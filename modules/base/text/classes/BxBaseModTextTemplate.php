@@ -26,12 +26,8 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         $oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$oModule->_oConfig->CNF;
 
-        if ($isCheckPrivateContent && CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $oModule->checkAllowedView($aData))) {
-            $aVars = array (
-                'summary' => $sMsg,
-            );
-            return $this->parseHtmlByName('unit_private.html', $aVars);
-        }
+        if ($s = $this->checkPrivacy ($aData, $isCheckPrivateContent, $oModule))
+            return $s;
 
         // get thumb url
         $sPhotoThumb = '';
@@ -103,6 +99,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             bx_import('BxDolMetatags');
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
             $aVars['text'] = $oMetatags->keywordsParse($aData[$CNF['FIELD_ID']], $aVars['text']);
+            $aVars['location'] = $oMetatags->locationsString($aData[$CNF['FIELD_ID']], $aVars['text']);
         }
 
         return $this->parseHtmlByName($sTemplateName, $aVars);
@@ -170,7 +167,8 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
         foreach ($aGhostFiles as $k => $a) {
 
-            $isImage = $oTranscoder && (0 == strncmp('image/', $a['mime_type'], 6)); // preview for images only and transcoder object for preview must be defined
+            $isImage = $oTranscoder && (0 == strncmp('image/', $a['mime_type'], 6)); // preview for images and transcoder object for preview must be defined
+            $isVideo = $oTranscoder && (0 == strncmp('video/', $a['mime_type'], 6)); // preview for videos and transcoder object for preview must be defined
             $sUrlOriginal = $oStorage->getFileUrlById($a['id']);
             $sImgPopupId = 'bx-messages-atachment-popup-' . $a['id'];
 
@@ -201,6 +199,18 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             'bx_repeat:attachments' => $aGhostFiles,
         );
         return $this->parseHtmlByName('attachments.html', $aVars);
+    }
+
+    protected function checkPrivacy ($aData, $isCheckPrivateContent, $oModule)
+    {
+        if ($isCheckPrivateContent && CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $oModule->checkAllowedView($aData))) {
+            $aVars = array (
+                'summary' => $sMsg,
+            );
+            return $this->parseHtmlByName('unit_private.html', $aVars);
+        }
+
+        return '';
     }
 }
 

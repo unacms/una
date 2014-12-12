@@ -5,8 +5,12 @@
     float:left;
 }
 
+.bx-uploader-ghost .bx-base-text-icon-wrapper img {
+    max-height:12.5rem;
+}
+
 .bx-base-text-uploader-ghost input.bx-form-input-text {
-    width:300px;
+    width:18.75rem;
 }
 
 .bx-base-text-use-as-thumb input,
