@@ -963,7 +963,7 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject
 
     protected function genRandName($isCheckForUniq = true)
     {
-        $sRandName = genRndPwd(32, false);
+        $sRandName = strtolower(genRndPwd(32, false));
         if ($isCheckForUniq) {
             $iTries = 10;
             do {
