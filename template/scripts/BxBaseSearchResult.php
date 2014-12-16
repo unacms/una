@@ -61,7 +61,7 @@ class BxBaseSearchResult extends BxDolSearchResult
                 $sCode .= "
                     <script>
                         $(document).ready(function() {
-                            bx_center_content('#{$sSearchResultBlockId}', '{$this->sCenterContentUnitSelector}');
+                            bx_center_content('#{$sSearchResultBlockId}', '{$this->sCenterContentUnitSelector}', true);
                         });
                     </script>";
             }

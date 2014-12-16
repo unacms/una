@@ -160,6 +160,14 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
         $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
         $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);
+        $aTranscodersVideo = false;
+
+        if ($CNF['OBJECT_VIDEOS_TRANSCODERS'])
+            $aTranscodersVideo = array (
+                'poster' => BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']),
+                'mp4' => BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']),
+                'webm' => BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['webm']),
+            );
 
         $aGhostFiles = $oStorage->getGhosts ($aData[$CNF['FIELD_AUTHOR']], $aData[$CNF['FIELD_ID']]);
         if (!$aGhostFiles)
@@ -167,8 +175,8 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
         foreach ($aGhostFiles as $k => $a) {
 
-            $isImage = $oTranscoder && (0 == strncmp('image/', $a['mime_type'], 6)); // preview for images and transcoder object for preview must be defined
-            $isVideo = $oTranscoder && (0 == strncmp('video/', $a['mime_type'], 6)); // preview for videos and transcoder object for preview must be defined
+            $isImage = $oTranscoder && (0 == strncmp('image/', $a['mime_type'], 6)); // preview for images, transcoder object for preview must be defined
+            $isVideo = $aTranscodersVideo && (0 == strncmp('video/', $a['mime_type'], 6)); // preview for videos, transcoder object for video must be defined
             $sUrlOriginal = $oStorage->getFileUrlById($a['id']);
             $sImgPopupId = 'bx-messages-atachment-popup-' . $a['id'];
 
@@ -184,9 +192,22 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
                 ),
             );
 
+            // videos are displayed inline
+            $aGhostFiles[$k]['bx_if:video'] = array (
+                'condition' => $isVideo,
+                'content' => array (
+                    'video' => $aTranscodersVideo ? BxTemplFunctions::getInstance()->videoPlayer(
+                        $aTranscodersVideo['poster']->getFileUrl($a['id']), 
+                        $aTranscodersVideo['mp4']->getFileUrl($a['id']), 
+                        $aTranscodersVideo['webm']->getFileUrl($a['id']),
+                        false, ''
+                    ) : '',
+                ),
+            );
+
             // non-images are displayed as text links to original file
             $aGhostFiles[$k]['bx_if:not_image'] = array (
-                'condition' => !$isImage,
+                'condition' => !$isImage && !$isVideo,
                 'content' => array (
                     'url_original' => $sUrlOriginal,
                     'attr_file_name' => bx_html_attribute($a['file_name']),

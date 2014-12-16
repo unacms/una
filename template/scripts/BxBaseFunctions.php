@@ -380,7 +380,7 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
      * @param $aAttrs custom attributes, defaults are: controls="" preload="none" autobuffer=""
      * @param $sStyles custom styles, defaults are: width:100%; height:auto;
      */
-    function videoPlayer ($sUrlPoster, $sUrlMP4, $sUrlWebM = '', $aAttrs = false, $sStyles = '')
+    function videoPlayer ($sUrlPoster, $sUrlMP4, $sUrlWebM = '', $aAttrs = false, $sStyles = 'width:100%; height:auto;')
     {
         $aAttrsDefaults = array(
             'controls' => '',
@@ -388,7 +388,7 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
             'autobuffer' => '', 
         );
         $aAttrs = array_merge($aAttrsDefaults, is_array($aAttrs) ? $aAttrs : array());
-        $sAttrs = bx_convert_array2attrs($aAttrs, '', 'width:100%; height:auto;' . trim($sStyles));
+        $sAttrs = bx_convert_array2attrs($aAttrs, '', $sStyles);
 
         return '<video ' . $sAttrs . ' poster="' . $sUrlPoster . '">
                     ' . ($sUrlWebM ? '<source type="video/webm; codecs="vp8, vorbis" src="' . $sUrlWebM . '" />' : '') . '

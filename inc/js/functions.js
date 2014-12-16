@@ -252,9 +252,15 @@ function bx_loading (elem, b) {
  * sSel - jQuery selector of content to be centered
  * sBlockSel - jquery selector of blocks
  */
-function bx_center_content (sSel, sBlockStyle) {
-    var sId = 'id' + (new Date()).getTime();
-    $(sSel).wrap('<div id="'+sId+'"></div>');
+function bx_center_content (sSel, sBlockStyle, bListenOnResize) {
+
+    var sId;
+    if ($(sSel).parent().hasClass('bx-center-content-wrapper')) {
+        sId = $(sSel).parent().attr('id');
+    } else {
+        sId = 'id' + (new Date()).getTime();
+        $(sSel).wrap('<div id="'+sId+'" class="bx-center-content-wrapper"></div>');
+    }
 
     var eCenter = $('#' + sId);
     var iAll = $('#' + sId + ' ' + sBlockStyle).size();
@@ -265,6 +271,12 @@ function bx_center_content (sSel, sBlockStyle) {
 
     if (iWidthUnit > iWidthContainer)
         return;
+
+    if ('undefined' != typeof(bListenOnResize) && bListenOnResize) {
+        $(window).on('resize.bx-center-content', function () {
+            bx_center_content(sSel, sBlockStyle);
+        });
+    }
 
     eCenter.css("padding-left", iLeft);
 }

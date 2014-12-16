@@ -8,6 +8,9 @@
                 </a>
                 __popup__
             </bx_if:image>
+            <bx_if:video>
+                __video__
+            </bx_if:video>
             <bx_if:not_image>
                 <a target="_blank" href="__url_original__" title="__attr_file_name__">
                     <div class="bx-def-round-corners bx-def-padding-sec">__file_name__</div>
@@ -16,5 +19,11 @@
             </a>
         </div>
     </bx_repeat:attachments>
+
+    <script>
+        $(document).ready(function() {
+            bx_center_content('.bx-base-text-attachments', '.bx-base-text-attachment', true);
+        });
+    </script>
 
 </div>

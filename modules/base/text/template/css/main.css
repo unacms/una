@@ -70,3 +70,8 @@
 	float: left;
 }
 
+.bx-base-text-attachments .bx-base-text-attachment video,
+.bx-base-text-attachments .bx-base-text-attachment {
+    width:18.75rem;
+    height:12.5rem;
+}
