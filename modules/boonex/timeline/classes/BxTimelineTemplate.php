@@ -596,6 +596,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sStylePrefix = $this->_oConfig->getPrefix('style');
         $sJsObject = $this->_oConfig->getJsObject('view');
 
+        $bBrowseItem = isset($aBrowseParams['type']) && $aBrowseParams['type'] == BX_TIMELINE_TYPE_ITEM;
+
         //--- Process Text ---//
         $sUrl = isset($aContent['url']) ? bx_html_attribute($aContent['url']) : '';
         $sTitle = $sTitleAttr = '';
@@ -614,15 +616,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'content' => $sTitle
             ));
 
-        $sText = isset($aContent['text']) ? strip_tags($aContent['text'], '<p><br>') : '';
+        $sText = isset($aContent['text']) ? strip_tags($aContent['text'], $bBrowseItem ? '<br><p>' : '') : '';
         $sTextMore = '';
 
         $iMaxLength = $this->_oConfig->getCharsDisplayMax();
-        if(strlen($sText) > $iMaxLength) {
+        if(!$bBrowseItem && strlen($sText) > $iMaxLength) {
             $iLength = strpos($sText, ' ', $iMaxLength);
 
-            $sTextMore = trim(substr($sText, $iLength));
-            $sText = trim(substr($sText, 0, $iLength));
+            $sTextMore = nl2br(trim(substr($sText, $iLength)));
+            $sText = nl2br(trim(substr($sText, 0, $iLength)));
         }
 
         $sText = $this->_prepareTextForOutput($sText, $aEvent['id']);
@@ -659,8 +661,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         //--- Process Photos ---//
         $aTmplVarsImages = array();
         if(!empty($aContent['images'])) {
-            $bBrowseItem = isset($aBrowseParams['type']) && $aBrowseParams['type'] == BX_TIMELINE_TYPE_ITEM;
-
             foreach($aContent['images'] as $aImage) {
                 $sImage = '';
                 if(!empty($aImage['src']))
@@ -930,26 +930,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     protected function _prepareTextForOutput($s, $iEventId = 0)
     {
-    	$oTemplate = &$this;
-
-        $sPattern = $this->_oConfig->getPregPattern('url');
-        $bAddNofollow = $this->_oDb->getParam('sys_add_nofollow') == 'on';
-
-        $s = bx_process_output($s, BX_DATA_TEXT_MULTILINE);
-        $s = preg_replace_callback($sPattern, function($aMatches) use($oTemplate, $bAddNofollow) {
-        	$aLinkAttrs = array(
-        		array('key' => 'target', 'value' => '_blank')
-        	);
-	        if($bAddNofollow && strncmp(BX_DOL_URL_ROOT, $aMatches[0], strlen(BX_DOL_URL_ROOT)) != 0)
-	        	$aLinkAttrs[] = array('key' => 'rel', 'value' => 'nofollow');
-
-        	return $oTemplate->parsePageByName('bx_a.html', array(
-        		'href' => (empty($aMatches[1]) ? 'http://' : '') . $aMatches[0],
-        		'title' => $aMatches[0],
-        		'bx_repeat:attrs' => $aLinkAttrs,
-        		'content' => $aMatches[0],
-        	));
-        }, $s);
+    	$s = bx_process_output($s, BX_DATA_HTML);
+        $s = bx_convert_links($s);
 
         bx_import('BxDolMetatags');
         $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
