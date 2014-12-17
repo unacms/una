@@ -841,7 +841,19 @@ function genRndSalt()
 // Encrypt User Password
 function encryptUserPwd($sPwd, $sSalt)
 {
-    return sha1(md5($sPwd) . $sSalt);
+	$sAlgo = defined('BX_PWD_ALGO') ? BX_PWD_ALGO : '';
+
+    switch ($sAlgo) {
+    	case 'crypt':
+            return crypt($sPwd, BX_PWD_ALGO_SALT);
+
+        case 'sha1_crypt_salt':
+            return sha1(crypt($sPwd, BX_PWD_ALGO_SALT) . $sSalt);
+
+        case 'sha1_md5_salt':
+        default:
+            return sha1(md5($sPwd) . $sSalt);
+    }
 }
 
 function bx_get ($sName, $sMethod = false)
@@ -960,6 +972,39 @@ function bx_ltrim_str ($sString, $sPrefix, $sReplace = '')
     if (substr($sString, 0, strlen($sPrefix)) == $sPrefix)
         return $sReplace . substr($sString, strlen($sPrefix));
     return $sString;
+}
+
+function bx_convert_links($s)
+{
+	bx_import('BxDolTemplate');
+	$oTemplate = BxDolTemplate::getInstance();
+
+	$bAddNofollow = getParam('sys_add_nofollow') == 'on';
+
+	$aRegExp = array(
+//		"/((https?|ftp|news):\/\/)?(www\.)?([a-z]([a-z0-9\-]*\.)+(aero|arpa|biz|com|coop|edu|gov|info|int|jobs|mil|museum|name|nato|net|org|pro|travel|[a-z]{2}))(\/[a-z0-9_\-\.~'\s]+)*(\/([a-z0-9_\-\.]*)(\?[a-z0-9+_\-\.%=&amp;]*)?)?(#[a-z][a-z0-9_]*)?/" => array('link' => 0, 'protocol' => 1),
+		"/(([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?/" => array('link' => 0, 'protocol' => 2)
+	);
+
+	foreach($aRegExp as $sRegExp => $aIndexes)
+		$s = preg_replace_callback($sRegExp, function($aMatches) use($oTemplate, $bAddNofollow, $aIndexes) {
+        	$aLinkAttrs = array(
+        		array('key' => 'target', 'value' => '_blank')
+        	);
+
+        	$sLink = $aMatches[$aIndexes['link']];
+	        if($bAddNofollow && strncmp(BX_DOL_URL_ROOT, $sLink, strlen(BX_DOL_URL_ROOT)) != 0)
+	        	$aLinkAttrs[] = array('key' => 'rel', 'value' => 'nofollow');
+
+        	return $oTemplate->parsePageByName('bx_a.html', array(
+        		'href' => (empty($aMatches[$aIndexes['protocol']]) ? 'http://' : '') . $sLink,
+        		'title' => $sLink,
+        		'bx_repeat:attrs' => $aLinkAttrs,
+        		'content' => $sLink,
+        	));
+        }, $s);
+
+	return $s;
 }
 
 /**
