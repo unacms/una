@@ -97,6 +97,7 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 -- EMAIL TEMPLATES
 INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `Body`) VALUES 
 (@sName, '_bx_invites_et_invite_form_message', 'bx_invites_invite_form_message', '_bx_invites_et_invite_form_message_subject', '_bx_invites_et_invite_form_message_body'),
+(@sName, '_bx_invites_et_invite_by_request_message', 'bx_invites_invite_by_request_message', '_bx_invites_et_invite_by_request_message_subject', '_bx_invites_et_invite_by_request_message_body'),
 (@sName, '_bx_invites_et_request_form_message', 'bx_invites_request_form_message', '_bx_invites_et_request_form_message_subject', '_bx_invites_et_request_form_message_body');
 
 

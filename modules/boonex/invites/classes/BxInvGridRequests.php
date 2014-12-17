@@ -44,17 +44,22 @@ class BxInvGridRequests extends BxTemplGrid
 
         $sText = _t('_bx_invites_msg_invitation');
 
+		bx_import('BxDolForm');
+        $oForm = BxDolForm::getObjectInstance($this->_oModule->_oConfig->getObject('form_request'), $this->_oModule->_oConfig->getObject('form_display_request_send'));
+
         $aIdsAffected = array ();
         foreach($aIds as $iId) {
 			$aRequest = $this->_oModule->_oDb->getRequests(array('type' => 'by_id', 'value' => $iId));
 			if(empty($aRequest) || !is_array($aRequest))
 				continue;
 
-        	$mixedResult = $this->_oModule->invite($aRequest['email'], $sText);
+        	$mixedResult = $this->_oModule->invite(BX_INV_TYPE_FROM_SYSTEM, $aRequest['email'], $sText);
         	if($mixedResult === false)
         		continue;
 
 			$this->_oModule->isAllowedInvite($iProfileId, true);
+
+			$oForm->delete($iId);
 
             $aIdsAffected[] = $iId;
             $iAffected++;

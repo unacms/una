@@ -84,6 +84,14 @@
 <p>Click the following link to join: <a href="{join_url}">{join_url}</a></p>
 <bx_include_auto:_email_footer.html />]]></string>
 
+	<string name="_bx_invites_et_invite_by_request_message"><![CDATA[Invite by request message.]]></string>
+	<string name="_bx_invites_et_invite_by_request_message_subject"><![CDATA[Invitation from {site_name}.]]></string>
+	<string name="_bx_invites_et_invite_by_request_message_body"><![CDATA[<bx_include_auto:_email_header.html />
+<p><b>Dear Friend</b>,</p>
+<p>You are welcome to join <a href="{site_url}">{site_name}</a> community site.</p>
+<p>Click the following link to join: <a href="{join_url}">{join_url}</a></p>
+<bx_include_auto:_email_footer.html />]]></string>
+
 	<string name="_bx_invites_et_request_form_message"><![CDATA[Request Invitation form message.]]></string>
 	<string name="_bx_invites_et_request_form_message_subject"><![CDATA[Request invitation.]]></string>
 	<string name="_bx_invites_et_request_form_message_body"><![CDATA[<bx_include_auto:_email_header.html />

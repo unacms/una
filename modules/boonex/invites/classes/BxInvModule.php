@@ -11,6 +11,9 @@
 
 bx_import('BxDolModule');
 
+define('BX_INV_TYPE_FROM_MEMBER', 'from_member');
+define('BX_INV_TYPE_FROM_SYSTEM', 'from_system');
+
 class BxInvModule extends BxDolModule
 {
     /**
@@ -71,7 +74,7 @@ class BxInvModule extends BxDolModule
         	$sEmails = bx_process_input($oForm->getCleanValue('emails'));
         	$sText = bx_process_pass($oForm->getCleanValue('text'));
 
-        	$mixedResult = $this->invite($sEmails, $sText, $iInvites, $oForm);
+        	$mixedResult = $this->invite(BX_INV_TYPE_FROM_MEMBER, $sEmails, $sText, $iInvites, $oForm);
         	if($mixedResult !== false)
         		$sResult = _t('_bx_invites_msg_invitation_sent', (int)$mixedResult);
         	else
@@ -153,18 +156,29 @@ class BxInvModule extends BxDolModule
         return $this->_oDb->getRequests(array('type' => 'count_all'));
 	}
 
-	public function invite($sEmails, $sText, $iLimit = false, $oForm = null)
+	public function invite($sType, $sEmails, $sText, $iLimit = false, $oForm = null)
 	{
 		$iProfileId = $this->getProfileId();
 		$iAccountId = $this->getAccountId($iProfileId);
 
 		bx_import('BxDolKey');
 		$oKeys = BxDolKey::getInstance();
-		if(!$oKeys)
+		if(!$oKeys || !in_array($sType, array(BX_INV_TYPE_FROM_MEMBER, BX_INV_TYPE_FROM_SYSTEM)))
 			return false;
 
 		$sKeyCode = $this->_oConfig->getKeyCode();
 		$iKeyLifetime = $this->_oConfig->getKeyLifetime();
+
+		$sEmailTemplate = '';
+		switch($sType) {
+			case BX_INV_TYPE_FROM_MEMBER:
+				$sEmailTemplate = 'bx_invites_invite_form_message';
+				break;
+
+			case BX_INV_TYPE_FROM_SYSTEM:
+				$sEmailTemplate = 'bx_invites_invite_by_request_message';
+				break;
+		}
 
 		if(empty($oForm))
 			$oForm = $this->getFormObjectInvite();
@@ -173,7 +187,7 @@ class BxInvModule extends BxDolModule
 		$sJoinUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account');
 
 		bx_import('BxDolEmailTemplates');
-		$aMessage = BxDolEmailTemplates::getInstance()->parseTemplate('bx_invites_invite_form_message', array(
+		$aMessage = BxDolEmailTemplates::getInstance()->parseTemplate($sEmailTemplate, array(
 			'text' => $sText
 		), $iAccountId, $iProfileId);
 
