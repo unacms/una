@@ -32,3 +32,7 @@ DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_albums';
 DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_albums_administration', 'bx_albums_moderation', 'bx_albums_common');
 DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_albums_administration', 'bx_albums_moderation', 'bx_albums_common');
 DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_albums_administration', 'bx_albums_moderation', 'bx_albums_common');
+
+-- UPLOADERS
+DELETE FROM `sys_objects_uploader` WHERE `object` IN('bx_albums_simple', 'bx_albums_html5');
+

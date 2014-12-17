@@ -311,7 +311,11 @@ abstract class BxDolUploader extends BxDol
 
     /**
      * Display uploaded, but not saved files - ghosts
-     * @return HTML or JSON string
+     * @param $iProfileId - profile id to get orphaned files from
+     * @param $sFormat - output format, only 'json' output formt is supported
+     * @param $sImagesTranscoder - transcoder object for files preview for images and videos, false by default - no preview
+     * @param $iContentId - content id to get orphaned files from, false by default
+     * @return JSON string
      */
     public function getGhosts($iProfileId, $sFormat, $sImagesTranscoder = false, $iContentId = false)
     {
@@ -335,7 +339,7 @@ abstract class BxDolUploader extends BxDol
             if (!$sFileIcon)
                 $sFileIcon = $this->_oTemplate->getIconUrl($oStorage->getIconNameByFileName($aFile['file_name']));
 
-            $a[$aFile['id']] = array (
+            $aVars = array (
                 'file_id' => $aFile['id'],
                 'file_name' => $aFile['file_name'],
                 'file_title' => $oStorage->getFileTitle($aFile['file_name']),
@@ -343,6 +347,8 @@ abstract class BxDolUploader extends BxDol
                 'file_url' => $oStorage->getFileUrlById($aFile['id']),
                 'js_instance_name' => $this->_sUploaderJsInstance,
             );
+
+            $a[$aFile['id']] = array_merge($aVars, $this->getGhostTemplateVars($aFile, $iProfileId, $iContentId, $oStorage, $oImagesTranscoder));
         }
 
         if ('json' == $sFormat) {
@@ -415,6 +421,11 @@ abstract class BxDolUploader extends BxDol
             $sTextRestrictions .= '<div class="bx-uploader-msg-info bx-def-font-grayed">' . $s . '</div>';
 
         return $sTextRestrictions;
+    }
+
+    protected function getGhostTemplateVars($aFile, $iProfileId, $iContentId, $oStorage, $oImagesTranscoder)
+    {
+        return array();
     }
 }
 

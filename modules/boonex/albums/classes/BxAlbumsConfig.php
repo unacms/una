@@ -21,6 +21,7 @@ class BxAlbumsConfig extends BxBaseModTextConfig
 
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'albums',
+            'TABLE_FILES2ENTRIES' => $aModule['db_prefix'] . 'files2albums',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -78,6 +79,7 @@ class BxAlbumsConfig extends BxBaseModTextConfig
             'OBJECT_GRID_ADMINISTRATION' => 'bx_albums_administration',
         	'OBJECT_GRID_MODERATION' => 'bx_albums_moderation',
         	'OBJECT_GRID_COMMON' => 'bx_albums_common',
+        	'OBJECT_UPLOADERS' => array('bx_albums_simple', 'bx_albums_html5'),
 
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (
