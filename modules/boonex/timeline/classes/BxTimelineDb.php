@@ -36,6 +36,40 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         );
     }
 
+    public function deleteModuleEvents($aData)
+    {
+    	foreach($aData['handlers'] as $aHandler) {
+    		//Delete system events.
+            $this->deleteEvent(array('type' => $aHandler['alert_unit'], 'action' => $aHandler['alert_action']));
+
+            //Delete shared events.
+    		$aEvents = $this->getEvents(array('browse' => 'shared_by_descriptor', 'type' => $aHandler['alert_unit'], 'action' => $aHandler['alert_action']));
+			foreach($aEvents as $aEvent) {
+				$aContent = unserialize($aEvent['content']);
+				if(isset($aContent['type']) && $aContent['type'] == $aHandler['alert_unit'] && isset($aContent['action']) && $aContent['action'] == $aHandler['alert_action'])
+					$this->deleteEvent(array('id' => (int)$aEvent['id']));
+			}
+    	}
+    }
+
+	public function activateModuleEvents($aData, $bActivate = true)
+    {
+    	$iActivate = $bActivate ? 1 : 0;
+
+    	foreach($aData['handlers'] as $aHandler) {
+    		//Activate (deactivate) system events.
+            $this->updateEvent(array('active' => $iActivate), array('type' => $aHandler['alert_unit'], 'action' => $aHandler['alert_action']));
+
+			//Activate (deactivate) shared events.
+			$aEvents = $this->getEvents(array('browse' => 'shared_by_descriptor', 'type' => $aHandler['alert_unit'], 'action' => $aHandler['alert_action']));
+			foreach($aEvents as $aEvent) {
+				$aContent = unserialize($aEvent['content']);
+				if(isset($aContent['type']) && $aContent['type'] == $aHandler['alert_unit'] && isset($aContent['action']) && $aContent['action'] == $aHandler['alert_action'])
+					$this->updateEvent(array('active' => $iActivate), array('id' => (int)$aEvent['id']));
+			}
+    	}
+    }
+
     public function getMaxDuration($aParams)
     {
         $aParams['browse'] = 'last';
