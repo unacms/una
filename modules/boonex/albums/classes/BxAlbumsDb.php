@@ -20,6 +20,24 @@ class BxAlbumsDb extends BxBaseModTextDb
     {
         parent::__construct($oConfig);
     }
+
+    public function associateFileWithContent($iContentId, $iFileId, $sTitle)
+    {
+        $sQuery = $this->prepare ("INSERT INTO `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` SET `content_id` = ?, `file_id` = ?, `title` = ? ON DUPLICATE KEY UPDATE `title` = ?", $iContentId, $iFileId, $sTitle, $sTitle);
+        return $this->query($sQuery);
+    }
+
+    public function deassociateFileWithContent($iContentId, $iFileId)
+    {
+        $sQuery = $this->prepare ("DELETE FROM `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` WHERE `content_id` = ? AND `file_id` = ?", $iContentId, $iFileId);
+        return $this->query($sQuery);
+    }
+
+    public function getFileTitle($iFileId)
+    {
+        $sQuery = $this->prepare ("SELECT `title` FROM `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` WHERE `file_id` = ?", $iFileId);
+        return $this->getOne($sQuery);
+    }
 }
 
 /** @} */

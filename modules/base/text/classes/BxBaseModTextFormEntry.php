@@ -31,7 +31,7 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
 
         if (isset($this->aInputs[$CNF['FIELD_PHOTO']])) {
             $this->aInputs[$CNF['FIELD_PHOTO']]['storage_object'] = $CNF['OBJECT_STORAGE'];
-            $this->aInputs[$CNF['FIELD_PHOTO']]['uploaders'] = array('sys_simple', 'sys_html5');
+            $this->aInputs[$CNF['FIELD_PHOTO']]['uploaders'] = $CNF['OBJECT_UPLOADERS'];
             $this->aInputs[$CNF['FIELD_PHOTO']]['images_transcoder'] = $CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW'];
             $this->aInputs[$CNF['FIELD_PHOTO']]['multiple'] = true;
             $this->aInputs[$CNF['FIELD_PHOTO']]['content_id'] = 0;
@@ -101,8 +101,10 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
                 $aValsToAdd[$CNF['FIELD_THUMB']] = $iFileThumb;
         }
 
-        if ($iRet = parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges))
-            $this->_processFiles ($this->getCleanValue($CNF['FIELD_PHOTO']), $iContentId, true);
+        $iRet = parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
+        
+        $this->_processFiles ($this->getCleanValue($CNF['FIELD_PHOTO']), $iContentId, false);
+        
         return $iRet;
     }
 
@@ -155,14 +157,15 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
         $iProfileId = bx_get_logged_profile_id();
 
         $aGhostFiles = $oStorage->getGhosts ($iProfileId, $isAssociateWithContent ? 0 : $iContentId);
+
         if (!$aGhostFiles)
             return true;
 
         foreach ($aGhostFiles as $aFile) {
             if ($aFile['private'])
                 $oStorage->setFilePrivate ($aFile['id'], 0);
-            if ($isAssociateWithContent && $iContentId)
-                $oStorage->updateGhostsContentId ($aFile['id'], $iProfileId, $iContentId);
+            if ($iContentId)
+                $this->_associalFileWithContent($oStorage, $aFile['id'], $iProfileId, $iContentId);
         }
 
         return true;
@@ -197,6 +200,10 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
         return parent::addCssJs ();
     }
 
+    protected function _associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId)
+    {
+        $oStorage->updateGhostsContentId ($aFile['id'], $iProfileId, $iContentId);
+    }
 }
 
 /** @} */

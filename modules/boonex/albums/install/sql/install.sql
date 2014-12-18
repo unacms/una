@@ -53,6 +53,15 @@ CREATE TABLE IF NOT EXISTS `bx_albums_photos_resized` (
   UNIQUE KEY `remote_id` (`remote_id`)
 );
 
+CREATE TABLE IF NOT EXISTS `bx_albums_files2albums` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `content_id` int(10) unsigned NOT NULL,
+  `file_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `file_content` (`file_id`,`content_id`)
+);
+
 -- TABLE: comments
 
 CREATE TABLE IF NOT EXISTS `bx_albums_cmts` (

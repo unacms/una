@@ -328,3 +328,9 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_albums_common', 'single', 'edit', '_bx_albums_grid_action_title_adm_edit', 'pencil', 1, 0, 1),
 ('bx_albums_common', 'single', 'delete', '_bx_albums_grid_action_title_adm_delete', 'remove', 1, 1, 2),
 ('bx_albums_common', 'single', 'settings', '_bx_albums_grid_action_title_adm_more_actions', 'cog', 1, 0, 3);
+
+-- UPLOADERS
+INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
+('bx_albums_simple', 1, 'BxAlbumsUploaderSimple', 'modules/boonex/albums/classes/BxAlbumsUploaderSimple.php'),
+('bx_albums_html5', 1, 'BxAlbumsUploaderHTML5', 'modules/boonex/albums/classes/BxAlbumsUploaderHTML5.php');
+

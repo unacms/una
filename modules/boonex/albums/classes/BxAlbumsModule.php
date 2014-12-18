@@ -20,6 +20,11 @@ class BxAlbumsModule extends BxBaseModTextModule
     {
         parent::__construct($aModule);
     }
+
+    public function checkAllowedSetThumb ()
+    {
+        return CHECK_ACTION_RESULT_NOT_ALLOWED;
+    }
 }
 
 /** @} */
