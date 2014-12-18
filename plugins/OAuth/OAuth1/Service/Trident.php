@@ -19,7 +19,7 @@ use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Exception\Exception;
 
-class Dolphin extends AbstractService
+class Trident extends AbstractService
 {
     public function __construct(CredentialsInterface $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, SignatureInterface $signature, UriInterface $baseApiUri = null) {
         parent::__construct($credentials, $httpClient, $storage, $signature, $baseApiUri);

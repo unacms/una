@@ -8,7 +8,7 @@
  */
 
 use OAuth\ServiceFactory;
-use OAuth\OAuth1\Service\Dolphin;
+use OAuth\OAuth1\Service\Trident;
 use OAuth\Common\Http\Uri\Uri;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Storage\Session;
@@ -35,7 +35,7 @@ class BxDolStudioOAuthPlugin extends BxDolStudioOAuth implements iBxDolSingleton
         $this->sSecret = getParam('sys_oauth_secret');
         $this->sDataRetrieveMethod = 'POST';
 
-        $this->sService = 'Dolphin';
+        $this->sService = 'Trident';
     }
 
     public function __clone()
