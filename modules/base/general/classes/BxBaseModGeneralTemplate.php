@@ -41,6 +41,22 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
 
         return !$bWrap ? $sContent : $this->_wrapInTagJsCode($sContent);
     }
+
+    function entryLocation ($iContentId)
+    {
+        $oModule = BxDolModule::getInstance($this->MODULE);
+        $CNF = &$oModule->_oConfig->CNF;
+
+        if (empty($CNF['OBJECT_METATAGS']))
+            return '';
+
+        bx_import('BxDolMetatags');
+        $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
+        $aVars = array (
+            'location' => $oMetatags->locationsString($iContentId)
+        );
+        return $this->parseHtmlByName('entry-location.html', $aVars);
+    }
 }
 
 /** @} */

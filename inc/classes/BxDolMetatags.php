@@ -47,6 +47,10 @@ define('BX_METATAGS_KEYWORDS_MAX', 9);
  * - override_class_name: class name to override  
  * - override_class_file: class file path to override
  *
+ * To simplify operations with metatags in modules which are derived from some 'base' modules, specify it in module config class in 'CNF' array: 
+ * - FIELDS_WITH_KEYWORDS: array or comma separated list of field names with keywords support, or 'auto' to automatically use all 'textarea' fields
+ * - OBJECT_METATAGS: metatags object name
+ *
  *
  *
  * @section metatags_locations Location
@@ -96,6 +100,8 @@ define('BX_METATAGS_KEYWORDS_MAX', 9);
  * @endcode
  *
  * Upon page display call BxDolMetatags::metaAdd to add keywords (and all other, including content image) meta information to the page header.
+ *
+ * To be able to search by tags metatgs object must be specified in *SearchResult class as 'object_metatags' in 'aCurrent' array.
  *
  *
  *
@@ -211,6 +217,49 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
     }
 
     /**
+     * Add #keywords from the content fields
+     * @param $iId content id
+     * @param $s string with #keywords
+     * @return number of found keywords
+     */
+    public function keywordsAddAuto($iId, $aContentInfo, $CNF, $sFormDisplay) 
+    {
+        $aFields = $this->keywordsFields($aContentInfo, $CNF, $sFormDisplay); 
+        $sTextWithKeywords = '';
+        foreach ($aFields as $sField)
+            $sTextWithKeywords .= $aContentInfo[$sField];
+
+        return $this->keywordsAdd($iId, $sTextWithKeywords);
+    }
+
+    /**
+     * Get field names which are subject to parse keywords
+     */
+    public function keywordsFields($aContentInfo, $CNF, $sFormDisplay)
+    {
+        $aFields = array();
+        if (empty($CNF['FIELDS_WITH_KEYWORDS'])) {
+            return array();
+        }
+        elseif (is_string($CNF['FIELDS_WITH_KEYWORDS']) && 'auto' == $CNF['FIELDS_WITH_KEYWORDS']) {
+            if (!($oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $sFormDisplay)))
+                return array();
+
+            foreach ($oForm->aInputs as $k => $a)
+                if ('textarea' == $a['type'])
+                    $aFields[] = $a['name'];
+        } 
+        elseif (is_array($CNF['FIELDS_WITH_KEYWORDS'])) {
+            $aFields = $CNF['FIELDS_WITH_KEYWORDS'];
+        } 
+        elseif (is_string($CNF['FIELDS_WITH_KEYWORDS'])) {
+            $aFields = explode(',', $CNF['FIELDS_WITH_KEYWORDS']);
+        }
+
+        return $aFields;
+    }
+
+    /**
      * Add links to the #keywords in the string
      * @param $iId content id
      * @param $s string with #keywords
@@ -264,6 +313,7 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
             'type' => 'INNER',
             'table' => $this->_aObject['table_keywords'],
             'mainField' => $oSearchResult->aCurrent['ident'],
+            'mainTable' => !empty($oSearchResult->aCurrent['tableSearch']) ? $oSearchResult->aCurrent['tableSearch'] : $oSearchResult->aCurrent['table'],
             'onField' => 'object_id',
             'joinFields' => array(),
         );
@@ -299,6 +349,9 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
      */
     public function locationsAddFromForm($iId, $sPrefix = '', $oForm = null)
     {
+        if (empty($this->_aObject['table_locations']))
+            return;
+
         if ($sPrefix)
             $sPrefix .= '_';
         if (!$oForm)
@@ -364,6 +417,7 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
             'type' => 'INNER',
             'table' => $this->_aObject['table_locations'],
             'mainField' => $oSearchResult->aCurrent['ident'],
+            'mainTable' => !empty($oSearchResult->aCurrent['tableSearch']) ? $oSearchResult->aCurrent['tableSearch'] : $oSearchResult->aCurrent['table'],
             'onField' => 'object_id',
             'joinFields' => array(),
         );
@@ -377,6 +431,9 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
      */
     public function locationGet($iId, $sPrefix = '')
     {
+        if (empty($this->_aObject['table_locations']))
+            return array();
+
         $a = $this->_oQuery->locationGet($iId);
         if (!$sPrefix)
             return $a;

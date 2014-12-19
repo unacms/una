@@ -98,27 +98,17 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         if (!empty($CNF['OBJECT_METATAGS'])) {
             bx_import('BxDolMetatags');
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
-            $aVars['text'] = $oMetatags->keywordsParse($aData[$CNF['FIELD_ID']], $aVars['text']);
-            $aVars['location'] = $oMetatags->locationsString($aData[$CNF['FIELD_ID']], $aVars['text']);
+    
+            // keywords
+            $aFields = $oMetatags->keywordsFields($aData, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_VIEW']);
+            foreach ($aFields as $sField)
+                $aVars[$sField] = $oMetatags->keywordsParse($aData[$CNF['FIELD_ID']], $aVars[$sField]);
+
+            // location
+            $aVars['location'] = $oMetatags->locationsString($aData[$CNF['FIELD_ID']]);
         }
 
         return $this->parseHtmlByName($sTemplateName, $aVars);
-    }
-
-    function entryLocation ($iContentId)
-    {
-        $oModule = BxDolModule::getInstance($this->MODULE);
-        $CNF = &$oModule->_oConfig->CNF;
-
-        if (empty($CNF['OBJECT_METATAGS']))
-            return '';
-
-        bx_import('BxDolMetatags');
-        $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
-        $aVars = array (
-            'location' => $oMetatags->locationsString($iContentId)
-        );
-        return $this->parseHtmlByName('entry-location.html', $aVars);
     }
 
     function entryAuthor ($aData, $sTemplateName = 'author.html')

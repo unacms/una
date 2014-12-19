@@ -25,6 +25,9 @@ DELETE FROM `sys_acl_actions` WHERE `Module` = 'bx_persons';
 -- VIEWS
 DELETE FROM `sys_objects_view` WHERE `Name` = 'bx_persons';
 
+-- METATAGS
+DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_persons';
+
 -- SEARCH
 DELETE FROM `sys_objects_search` WHERE `ObjectName` = 'bx_persons';
 

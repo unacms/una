@@ -56,6 +56,15 @@ CREATE TABLE `bx_persons_views_track` (
   KEY `id` (`object_id`,`viewer_id`,`viewer_nip`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- TABLE: metas
+
+CREATE TABLE `bx_persons_meta_keywords` (
+  `object_id` int(10) unsigned NOT NULL,
+  `keyword` varchar(255) NOT NULL,
+  KEY `object_id` (`object_id`),
+  KEY `keyword` (`keyword`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 -- STORAGES & TRANSCODERS
 
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
