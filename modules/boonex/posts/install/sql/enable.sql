@@ -49,9 +49,9 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_posts_view_entry', '_bx_posts_page_title_sys_view_entry', '_bx_posts_page_title_view_entry', 'bx_posts', 10, 2147483647, 1, 'view-post', '', '', '', '', 0, 1, 0, 'BxPostsPageEntry', 'modules/boonex/posts/classes/BxPostsPageEntry.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_posts_view_entry', 3, 'bx_posts', '_bx_posts_page_block_title_entry_location', 3, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_posts\";s:6:\"method\";s:15:\"entity_location\";}', 0, 0, 1, 0),
-('bx_posts_view_entry', 2, 'bx_posts', '_bx_posts_page_block_title_entry_author', 3, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_posts\";s:6:\"method\";s:13:\"entity_author\";}', 0, 0, 1, 0),
-('bx_posts_view_entry', 1, 'bx_posts', '_bx_posts_page_block_title_entry_actions', 3, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_posts\";s:6:\"method\";s:14:\"entity_actions\";}', 0, 0, 1, 0),
+('bx_posts_view_entry', 3, 'bx_posts', '_bx_posts_page_block_title_entry_location', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_posts\";s:6:\"method\";s:15:\"entity_location\";}', 0, 0, 1, 0),
+('bx_posts_view_entry', 2, 'bx_posts', '_bx_posts_page_block_title_entry_author', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_posts\";s:6:\"method\";s:13:\"entity_author\";}', 0, 0, 1, 0),
+('bx_posts_view_entry', 1, 'bx_posts', '_bx_posts_page_block_title_entry_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_posts\";s:6:\"method\";s:14:\"entity_actions\";}', 0, 0, 1, 0),
 ('bx_posts_view_entry', 4, 'bx_posts', '_bx_posts_page_block_title_entry_text', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_posts\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 0),
 ('bx_posts_view_entry', 4, 'bx_posts', '_bx_posts_page_block_title_entry_social_sharing', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_posts\";s:6:\"method\";s:21:\"entity_social_sharing\";}', 0, 0, 1, 1),
 ('bx_posts_view_entry', 4, 'bx_posts', '_bx_posts_page_block_title_entry_comments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_posts\";s:6:\"method\";s:15:\"entity_comments\";}', 0, 0, 1, 2);
@@ -86,11 +86,12 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 
 -- PAGE: module home
 
-INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_posts_home', '_bx_posts_page_title_sys_home', '_bx_posts_page_title_home', 'bx_posts', 5, 2147483647, 1, 'posts-home', 'page.php?i=posts-home', '', '', '', 0, 1, 0, 'BxPostsPageBrowse', 'modules/boonex/posts/classes/BxPostsPageBrowse.php');
+INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_posts_home', 'posts-home', '_bx_posts_page_title_sys_home', '_bx_posts_page_title_home', 'bx_posts', 2, 2147483647, 1, 'page/posts-home', '', '', '', 0, 1, 0, 'BxPostsPageBrowse', 'modules/boonex/posts/classes/BxPostsPageBrowse.php');
 
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_posts_home', 1, 'bx_posts', '_bx_posts_page_block_title_recent_entries', 0, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_posts\";s:6:\"method\";s:13:\"browse_public\";}', 0, 1, 0);
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_posts_home', 1, 'bx_posts', '_bx_posts_page_block_title_recent_entries', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_posts\";s:6:\"method\";s:13:\"browse_public\";}', 0, 1, 1, 0),
+('bx_posts_home', 2, 'bx_posts', '_bx_posts_page_block_title_popular_keywords', 11, 2147483647, 'service', 'a:4:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:14:\"keywords_cloud\";s:6:\"params\";a:1:{i:0;s:8:\"bx_posts\";}s:5:\"class\";s:20:\"TemplServiceMetatags\";}', 0, 1, 1, 0);
 
 -- PAGE: module manage
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 

@@ -75,6 +75,7 @@
 	<string name="_bx_posts_page_title_sys_manage"><![CDATA[Manage Posts]]></string>
 	<string name="_bx_posts_page_title_manage"><![CDATA[Manage Posts]]></string>
 	<string name="_bx_posts_page_block_title_manage"><![CDATA[Manage Posts]]></string>    
+	<string name="_bx_posts_page_block_title_popular_keywords"><![CDATA[Popular Keywords]]></string>
 
     <string name="_bx_posts_menu_set_title_view_entry"><![CDATA[View Post]]></string>
     <string name="_bx_posts_menu_title_view_entry"><![CDATA[View Post]]></string>
