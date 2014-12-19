@@ -76,18 +76,16 @@ class BxDolFile extends BxDol implements iBxDolSingleton
 
         //--- Copy file to file/folder
         if(is_file($sFilePathFrom)) {
-            if($this->_isFile($sFilePathTo)) {
+        	if(is_dir($sFilePathTo)) {
+                $aFileParts = $this->_parseFile($sFilePathFrom);
+				return @copy($sFilePathFrom, $this->_validatePath($sFilePathTo) . $aFileParts[1]);
+            }
+            else {
                 $aFileParts = $this->_parseFile($sFilePathTo);
                 if(isset($aFileParts[0]))
                     $this->_mkDirR($aFileParts[0]);
 
                 return @copy($sFilePathFrom, $sFilePathTo);
-            }
-            else {
-                $this->_mkDirR($sFilePathTo);
-
-                $aFileParts = $this->_parseFile($sFilePathFrom);
-				return @copy($sFilePathFrom, $this->_validatePath($sFilePathTo) . $aFileParts[1]);
             }
         }
 
@@ -98,7 +96,7 @@ class BxDolFile extends BxDol implements iBxDolSingleton
             $bResult = true;
             $aInnerFiles = $this->_readDirectory($sFilePathFrom);
             foreach($aInnerFiles as $sFile)
-                $bResult = $bResult && $this->_copyFile($this->_validatePath($sFilePathFrom) . $sFile, $this->_validatePath($sFilePathTo) . $sFile);
+                $bResult = $bResult && $this->_copyFile($this->_validatePath($sFilePathFrom, false) . $sFile, $this->_validatePath($sFilePathTo) . $sFile);
 
 			return $bResult;
         }
@@ -127,8 +125,8 @@ class BxDolFile extends BxDol implements iBxDolSingleton
         if(!file_exists($sPath))
             return true;
 
-        if($this->_isDirectory($sPath)) {
-        	$sPath = $this->_validatePath($sPath);
+        if(is_dir($sPath)) {
+        	$sPath = $this->_validatePath($sPath, false);
 
             $aFiles = $this->_readDirectory($sPath);
             if(is_array($aFiles) && !empty($aFiles))
@@ -143,9 +141,9 @@ class BxDolFile extends BxDol implements iBxDolSingleton
         return true;
     }
 
-    protected function _validatePath($sPath)
+    protected function _validatePath($sPath, $bAbstract = true)
     {
-        return $sPath . ($sPath && !$this->_isEndWithSlash($sPath) && $this->_isDirectory($sPath) ? '/' : '');
+        return $sPath . ($sPath && !$this->_isEndWithSlash($sPath) && ($bAbstract ? $this->_isDirectory($sPath) : is_dir($sPath)) ? '/' : '');
     }
 
     protected function _parseFile($sFilePath)
