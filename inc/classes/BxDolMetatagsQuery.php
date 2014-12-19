@@ -58,6 +58,12 @@ class BxDolMetatagsQuery extends BxDolDb
         return $this->getColumn($sQuery);
     }
 
+    public function keywordsPopularList($iLimit)
+    {
+        $sQuery = $this->prepare("SELECT `keyword`, COUNT(*) as `count` FROM `{$this->_aObject['table_keywords']}` GROUP BY `keyword` ORDER BY `count` DESC LIMIT ?", $iLimit);
+        return $this->getPairs($sQuery, 'keyword', 'count');
+    }    
+
 
 
     public function locationsAdd($mixedContentId, $fLat, $fLng, $sCountryCode, $sState, $sCity, $sZip)

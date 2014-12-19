@@ -269,6 +269,10 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
         );
     }
 
+    public function keywordsPopularList($iLimit)
+    {
+        return $this->_oQuery->keywordsPopularList($iLimit);
+    }
 
 
     /**
