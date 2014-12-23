@@ -168,8 +168,10 @@ class BxBaseServiceProfiles extends BxDol
         }
 
         if (!$aVars['bx_repeat:row'])
+            bx_import('BxDolMenu');
+            $oMenu = BxDolMenu::getObjectInstance('sys_add_profile');
             return array(
-                'content' => MsgBox(_t('_sys_txt_empty')),
+                'content' => $oMenu ? $oMenu->getCode() : MsgBox(_t('_sys_txt_empty')),
                 'menu' => 'sys_add_profile',
             );
 
