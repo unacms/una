@@ -50,10 +50,13 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         if (empty($CNF['OBJECT_METATAGS']))
             return '';
 
+        if (!($sLocationString = $oMetatags->locationsString($iContentId)))
+            return '';
+
         bx_import('BxDolMetatags');
         $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
         $aVars = array (
-            'location' => $oMetatags->locationsString($iContentId)
+            'location' => $sLocationString
         );
         return $this->parseHtmlByName('entry-location.html', $aVars);
     }
