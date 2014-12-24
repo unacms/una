@@ -616,7 +616,7 @@ class BxDolTranscoder extends BxDol implements iBxDolFactoryObject
             $oStorageOriginal = BxDolStorage::getObjectInstance($this->_aObject['source_params']['object']);
             if ($oStorageOriginal) {
                 $aFileOriginal = $oStorageOriginal->getFile($mixedHandlerOrig);
-                if (!$aFileOriginal || $aFileOriginal['modified'] > $aFile['modified'] || $this->_aObject['ts'] > $aFile['modified']) { // if original file was changed OR we changed transcoder object params
+                if (!$aFileOriginal || $aFileOriginal['modified'] > $aFile['modified'] || $this->_aObject['ts'] >= $aFile['modified']) { // if original file was changed OR we changed transcoder object params
                     // delete file, so it will be recreated next time
                     if ($this->_oStorage->deleteFile($aFile['id']))
                         return false;
@@ -745,8 +745,7 @@ class BxDolTranscoder extends BxDol implements iBxDolFactoryObject
         $aFilters = $this->_oDb->getTranscoderFilters();
         $this->_aObject['filters'] = array();
         foreach ($aFilters as $aFilter) {
-            if ($aFilter['filter_params'])
-                $aFilter['filter_params'] = unserialize($aFilter['filter_params']);
+            $aFilter['filter_params'] = $aFilter['filter_params'] ? unserialize($aFilter['filter_params']) : array();
             $this->_aObject['filters'][] = $aFilter;
         }
 
@@ -780,6 +779,20 @@ class BxDolTranscoder extends BxDol implements iBxDolFactoryObject
             if ($oTranscoder)
                 $oTranscoder->$sFunc();
         }
+    }
+
+    /**
+     * Get filter params
+     * @param $sName filter name
+     * @return array of filter params if filter was found, or false if given filter isn't enabled for the transcoder
+     */
+    protected function getFilterParams ($sName)
+    {
+        $this->initFilters ();
+        foreach ($this->_aObject['filters'] as $aParams)
+            if ($sName == $aParams['filter'])
+                return $aParams['filter_params'];
+        return false;
     }
 }
 

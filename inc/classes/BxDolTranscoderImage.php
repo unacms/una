@@ -99,6 +99,50 @@ class BxDolTranscoderImage extends BxDolTranscoder implements iBxDolFactoryObjec
         return BX_DOL_URL_ROOT . 'image_transcoder.php?o=' . $this->_aObject['object'] . '&h=' . $mixedHandler . '&dpx=' . $this->getDevicePixelRatio() . '&t=' . time();
     }
 
+    public function isFileReady ($mixedHandler, $isCheckOutdated = true)
+    {
+        if (false !== $this->getFilterParams('ResizeVar')) {
+            $aTranscodedFileData = $this->_oDb->getTranscodedFileData ($mixedHandler);
+            $x = $this->getCustomResizeDimension ('x');
+            $y = $this->getCustomResizeDimension ('y');
+
+            // if new sizes are provided - delete old image, so new one will be created
+            if (($x && (!isset($aTranscodedFileData['x']) || $x != $aTranscodedFileData['x'])) || ($y && (!isset($aTranscodedFileData['y']) || $y != $aTranscodedFileData['y']))) {                
+                if (!($iFileId = $this->_oDb->getFileIdByHandler($mixedHandler)))
+                    return false;
+
+                if (!($aFile = $this->_oStorage->getFile($iFileId)))
+                    return false;
+
+                if (!$this->_oStorage->deleteFile($aFile['id']))
+                    return false;
+            }
+        }
+        return parent::isFileReady ($mixedHandler, $isCheckOutdated);
+    }
+
+    protected function getCustomResizeDimension ($sName)
+    {
+        $i = (int)bx_get($sName);
+        if ($i > 2048) $i = 2048;
+        if ($i && $i < 16) $i = 16;
+        return $i;
+    }
+
+    public function transcode ($mixedHandler, $iProfileId = 0)
+    {
+        if (!($bRet = parent::transcode ($mixedHandler, $iProfileId)))
+            return $bRet;
+
+        $x = $this->getCustomResizeDimension ('x');
+        $y = $this->getCustomResizeDimension ('y');
+
+        if ($x || $y)
+            $this->_oDb->updateTranscodedFileData($mixedHandler, array('x' => $x, 'y' => $y));
+
+        return $bRet;
+    }
+
     protected function applyFilter_Grayscale ($sFile, $aParams)
     {
         bx_import ('BxDolImageResize');
@@ -111,6 +155,17 @@ class BxDolTranscoderImage extends BxDolTranscoder implements iBxDolFactoryObjec
             return true;
 
         return false;
+    }
+
+    protected function applyFilter_ResizeVar ($sFile, $aParams)
+    {
+        $aParams['w'] = $this->getCustomResizeDimension ('x');
+        $aParams['h'] = $this->getCustomResizeDimension ('y');
+
+        if (!$aParams['w'] && !$aParams['h'])
+            return true;
+
+        return $this->applyFilter_Resize ($sFile, $aParams);
     }
 
     protected function applyFilter_Resize ($sFile, $aParams)

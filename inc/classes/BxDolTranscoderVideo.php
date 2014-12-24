@@ -98,7 +98,7 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
      */
     public function getFileUrlNotReady($mixedHandler)
     {
-        return $this->_isPosterFilter() ? BxDolTemplate::getInstance()->getImageUrl('video-na.png') : '';
+        return false === $this->getFilterParams('Poster') ? '' : BxDolTemplate::getInstance()->getImageUrl('video-na.png');
     }
 
     /**
@@ -272,18 +272,6 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
             return  $aParams['w'] . 'x' . round($aParams['w'] / $fRatio / 2) * 2;
 
         return '640x360'; // should never happen
-    }
-
-    /**
-     * Checks if 'Poster' filter is enabled for curent transcoder
-     */
-    protected function _isPosterFilter ()
-    {
-        $this->initFilters ();
-        foreach ($this->_aObject['filters'] as $aParams)
-            if ('Poster' == $aParams['filter'])
-                return true;
-        return false;
     }
 }
 
