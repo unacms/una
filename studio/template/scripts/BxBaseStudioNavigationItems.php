@@ -82,7 +82,10 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
 
             $sSubmenu = $oForm->getCleanValue('submenu_object');
             if(!empty($sSubmenu)) {
-                BxDolForm::setSubmittedValue('link', 'javascript:void(0)', $oForm->aFormAttrs['method']);
+            	$sLink = $oForm->getCleanValue('link');
+            	if(empty($sLink))
+                	BxDolForm::setSubmittedValue('link', 'javascript:void(0)', $oForm->aFormAttrs['method']);
+
                 BxDolForm::setSubmittedValue('target', '', $oForm->aFormAttrs['method']);
                 BxDolForm::setSubmittedValue('onclick', 'bx_menu_popup(\'' . $sSubmenu . '\', this);', $oForm->aFormAttrs['method']);
             }
@@ -159,7 +162,10 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
 
             $sSubmenu = $oForm->getCleanValue('submenu_object');
             if(!empty($sSubmenu)) {
-                BxDolForm::setSubmittedValue('link', 'javascript:void(0)', $oForm->aFormAttrs['method']);
+            	$sLink = $oForm->getCleanValue('link');
+            	if(empty($sLink))
+                	BxDolForm::setSubmittedValue('link', 'javascript:void(0)', $oForm->aFormAttrs['method']);
+
                 BxDolForm::setSubmittedValue('target', '', $oForm->aFormAttrs['method']);
                 BxDolForm::setSubmittedValue('onclick', 'bx_menu_popup(\'' . $sSubmenu . '\', this);', $oForm->aFormAttrs['method']);
             } else {

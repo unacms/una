@@ -233,7 +233,7 @@ class BxBaseVote extends BxDolVote
 			$sClass = 'bx-btn bx-btn-small';
 
 		if($bDisabled)
-			$sClass .= ' bx-btn-disabled';
+			$sClass .= $bShowDoVoteAsButton || $bShowDoVoteAsButtonSmall ? ' bx-btn-disabled' : 'bx-vote-disabled';
 
         return BxDolTemplate::getInstance()->parseHtmlByName($this->_sTmplNameDoVoteLikes, array(
             'style_prefix' => $this->_sStylePrefix,
