@@ -25,6 +25,9 @@ DELETE FROM `sys_acl_actions` WHERE `Module` = 'bx_organizations';
 -- VIEWS
 DELETE FROM `sys_objects_view` WHERE `Name` = 'bx_organizations';
 
+-- METATAGS
+DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_organizations';
+
 -- SEARCH
 DELETE FROM `sys_objects_search` WHERE `ObjectName` = 'bx_organizations';
 

@@ -45,6 +45,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'FIELD_COVER' => 'cover',
             'FIELD_COVER_PREVIEW' => 'cover_preview',
             'FIELDS_QUICK_SEARCH' => array('fullname'),
+            'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
 
             // page URIs
             'URI_VIEW_ENTRY' => 'view-persons-profile',
@@ -73,6 +74,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'OBJECT_IMAGES_TRANSCODER_COVER' => 'bx_persons_cover',
             'OBJECT_IMAGES_TRANSCODER_COVER_THUMB' => 'bx_persons_cover_thumb',
             'OBJECT_VIEWS' => 'bx_persons',
+            'OBJECT_METATAGS' => 'bx_persons',
             'OBJECT_FORM_ENTRY' => 'bx_person',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_person_view',
             'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_person_add',

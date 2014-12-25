@@ -53,6 +53,13 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
                 return MsgBox(_t('_sys_txt_error_entry_creation'));
         }
 
+        if (!empty($CNF['OBJECT_METATAGS'])) {
+            bx_import('BxDolMetatags');
+            $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
+            $oMetatags->keywordsAdd($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD']);
+            $oMetatags->locationsAddFromForm($aContentInfo[$CNF['FIELD_ID']], $CNF['FIELD_LOCATION_PREFIX']);
+        }
+
         $sResult = $this->onDataAddAfter ($iContentId);
         if ($sResult)
             return $sResult;
@@ -85,11 +92,11 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         if (!$oForm)
             return MsgBox(_t('_sys_txt_error_occured'));
 
-        $aSpecificValues = array();
-        bx_import('BxDolMetatags');
+        $aSpecificValues = array();        
         if (!empty($CNF['OBJECT_METATAGS'])) {
+            bx_import('BxDolMetatags');
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
-            $aSpecificValues = $oMetatags->locationGet($iContentId, $CNF['FIELD_LOCATION_PREFIX']);
+            $aSpecificValues = $oMetatags->locationGet($iContentId, empty($CNF['FIELD_LOCATION_PREFIX']) ? '' : $CNF['FIELD_LOCATION_PREFIX']);
         }
         $oForm->initChecker($aContentInfo, $aSpecificValues);
 
@@ -106,6 +113,13 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
                 return $oForm->getCode();
             else
                 return MsgBox(_t('_sys_txt_error_entry_update'));
+        }
+
+        if (!empty($CNF['OBJECT_METATAGS'])) { // && isset($aTrackTextFieldsChanges['changed_fields'][$CNF['FIELD_TEXT']])) { // TODO: check if aTrackTextFieldsChanges works 
+            bx_import('BxDolMetatags');
+            $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
+            $oMetatags->keywordsAddAuto($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $CNF, $sDisplay);
+            $oMetatags->locationsAddFromForm($aContentInfo[$CNF['FIELD_ID']], empty($CNF['FIELD_LOCATION_PREFIX']) ? '' : $CNF['FIELD_LOCATION_PREFIX']);
         }
 
         $sResult = $this->onDataEditAfter ($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $aTrackTextFieldsChanges, $oProfile);
@@ -213,11 +227,18 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         if (!$oForm)
             return MsgBox(_t('_sys_txt_error_occured'));
 
+
+        if (!empty($CNF['OBJECT_METATAGS'])) {
+            bx_import('BxDolMetatags');
+            $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
+            $aFields = $oMetatags->keywordsFields($aContentInfo, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_VIEW']);
+            $oForm->setMetatagsKeywordsData($iContentId, $aFields, $oMetatags);
+        }        
+
         // display profile
         $oForm->initChecker($aContentInfo);
         return $oForm->getCode();
     }
-
 }
 
 /** @} */

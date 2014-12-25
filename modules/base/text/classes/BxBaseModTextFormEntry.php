@@ -108,40 +108,6 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
         return $iRet;
     }
 
-    function delete ($iContentId, $aContentInfo = array())
-    {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
-        // delete associated files
-
-        bx_import('BxDolStorage');
-        $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
-        if ($oStorage)
-            $oStorage->queueFilesForDeletionFromGhosts($aContentInfo[$CNF['FIELD_AUTHOR']], $iContentId);
-
-        // delete associated objects data
-
-        bx_import('BxDolView');
-        $o = BxDolView::getObjectInstance($CNF['OBJECT_VIEWS'], $iContentId);
-        if ($o) $o->onObjectDelete();
-
-        bx_import('BxDolVote');
-        $o = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $iContentId);
-        if ($o) $o->onObjectDelete();
-
-        bx_import('BxDolCmts');
-        $o = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $iContentId);
-        if ($o) $o->onObjectDelete();
-
-        bx_import('BxDolMetatags');
-        $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
-        $oMetatags->onDeleteContent($iContentId);
-
-        // delete db record
-
-        return parent::delete($iContentId);
-    }
-
     function _processFiles ($mixedFileIds, $iContentId = 0, $isAssociateWithContent = false)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;

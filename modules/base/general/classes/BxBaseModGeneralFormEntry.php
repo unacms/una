@@ -20,6 +20,10 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
 
     protected $_oModule;
 
+    protected $_aMetatagsFieldsWithKeywords = array();
+    protected $_oMetatagsObject = null;
+    protected $_oMetatagsContentId = 0;
+
     public function __construct($aInfo, $oTemplate = false)
     {
         parent::__construct($aInfo, $oTemplate);
@@ -51,6 +55,50 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
             $aValsToAdd[$CNF['FIELD_CHANGED']] = time();
 
         return parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
+    }
+
+    function delete ($iContentId, $aContentInfo = array())
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        // delete associated files
+
+        if (!empty($CNF['OBJECT_STORAGE'])) {
+            bx_import('BxDolStorage');
+            $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
+            if ($oStorage)
+                $oStorage->queueFilesForDeletionFromGhosts($aContentInfo[$CNF['FIELD_AUTHOR']], $iContentId);
+        }
+
+        // delete associated objects data
+
+        if (!empty($CNF['OBJECT_VIEWS'])) {
+            bx_import('BxDolView');
+            $o = BxDolView::getObjectInstance($CNF['OBJECT_VIEWS'], $iContentId);
+            if ($o) $o->onObjectDelete();
+        }
+
+        if (!empty($CNF['OBJECT_VOTES'])) {
+            bx_import('BxDolVote');
+            $o = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $iContentId);
+            if ($o) $o->onObjectDelete();
+        }
+
+        if (!empty($CNF['OBJECT_COMMENTS'])) {
+            bx_import('BxDolCmts');
+            $o = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $iContentId);
+            if ($o) $o->onObjectDelete();
+        }
+
+        if (!empty($CNF['OBJECT_METATAGS'])) {
+            bx_import('BxDolMetatags');
+            $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
+            $oMetatags->onDeleteContent($iContentId);
+        }
+
+        // delete db record
+
+        return parent::delete($iContentId);
     }
 
     protected function genCustomInputLocation ($aInput) 
@@ -96,6 +144,23 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         }
 
         return parent::addCssJs ();
+    }
+
+    function genViewRowValue(&$aInput)
+    {
+        $s = parent::genViewRowValue($aInput);
+
+        if ($this->_oMetatagsObject && in_array($aInput['name'], $this->_aMetatagsFieldsWithKeywords))
+            $s = $this->_oMetatagsObject->keywordsParse($this->_oMetatagsContentId, $s);
+
+        return $s;
+    }
+
+    function setMetatagsKeywordsData($iId, $a, $o)
+    {
+        $this->_oMetatagsContentId = $iId;
+        $this->_aMetatagsFieldsWithKeywords = $a;
+        $this->_oMetatagsObject = $o;
     }
 
 }

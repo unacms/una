@@ -19,6 +19,7 @@ class BxPersonsSearchResult extends BxBaseModProfileSearchResult
 
         $this->aCurrent =  array(
             'name' => 'bx_persons',
+            'object_metatags' => 'bx_persons',
             'title' => _t('_bx_persons_page_title_browse'),
             'table' => 'sys_profiles',
             'tableSearch' => 'bx_persons_data',

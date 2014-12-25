@@ -73,6 +73,12 @@ class BxDolTranscoderQuery extends BxDolDb
         return $this->getOne($sQuery);
     }
 
+    public function updateObjectModificationTime($iTime = 0)
+    {
+        $sQuery = $this->prepare("UPDATE `sys_objects_transcoder` SET `ts` = ? WHERE `object` = ?", $iTime ? $iTime : time(), $this->_aObject['object']);
+        return $this->res($sQuery);
+    }
+
     public function updateAccessTime($mixedHandler)
     {
         $iTime = time();
@@ -251,6 +257,23 @@ class BxDolTranscoderQuery extends BxDolDb
     {
         $sQuery = $this->prepare("SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = ?", $sHandlerName);
         return $this->getOne($sQuery);
+    }
+
+    public function getTranscodedFileData($mixedHandler)
+    {
+        $sQuery = $this->prepare("SELECT `data` FROM {$this->_sTableFiles} WHERE `transcoder_object` = ? AND `handler` = ?", $this->_aObject['object'], $mixedHandler);
+        $s = $this->getOne($sQuery);
+        if (!$s)
+            return false;
+        return unserialize($s);
+    }
+
+    public function updateTranscodedFileData($mixedHandler, $mixedData)
+    {
+        $sData = $mixedData ? serialize($mixedData) : '';
+        $sQuery = $this->prepare("UPDATE {$this->_sTableFiles} SET `data` = ? WHERE `transcoder_object` = ? AND `handler` = ?", $sData, $this->_aObject['object'], $mixedHandler);
+
+        return $this->res($sQuery);
     }
 }
 

@@ -45,6 +45,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'FIELD_COVER' => 'cover',
             'FIELD_COVER_PREVIEW' => 'cover_preview',
             'FIELDS_QUICK_SEARCH' => array('org_name'),
+            'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
 
             // page URIs
             'URI_VIEW_ENTRY' => 'view-organization-profile',
@@ -73,6 +74,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'OBJECT_IMAGES_TRANSCODER_COVER' => 'bx_organizations_cover',
             'OBJECT_IMAGES_TRANSCODER_COVER_THUMB' => 'bx_organizations_cover_thumb',
             'OBJECT_VIEWS' => 'bx_organizations',
+            'OBJECT_METATAGS' => 'bx_organizations',
             'OBJECT_FORM_ENTRY' => 'bx_organization',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_organization_view',
             'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_organization_add',

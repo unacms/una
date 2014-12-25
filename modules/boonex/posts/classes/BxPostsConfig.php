@@ -35,6 +35,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             'FIELD_THUMB' => 'thumb',
             'FIELD_COMMENTS' => 'comments',
             'FIELD_LOCATION_PREFIX' => 'location',
+            'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
 
             // page URIs
             'URI_VIEW_ENTRY' => 'view-post',
