@@ -54,6 +54,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         }
 
         if (!empty($CNF['OBJECT_METATAGS'])) {
+            list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
             bx_import('BxDolMetatags');
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
             $oMetatags->keywordsAdd($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD']);

@@ -168,7 +168,7 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
 
     protected function _associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId)
     {
-        $oStorage->updateGhostsContentId ($aFile['id'], $iProfileId, $iContentId);
+        $oStorage->updateGhostsContentId ($iFileId, $iProfileId, $iContentId);
     }
 }
 
