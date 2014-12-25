@@ -7,13 +7,13 @@
  * @{
  */
 
-bx_import('BxTemplMenu');
+bx_import('BxTemplMenuCustom');
 
 /**
  * Menu representation.
  * @see BxDolMenu
  */
-class BxBaseCmtsMenu extends BxTemplMenu
+class BxBaseCmtsMenu extends BxTemplMenuCustom
 {
     protected $_oCmts;
     protected $_aCmt;
@@ -31,20 +31,23 @@ class BxBaseCmtsMenu extends BxTemplMenu
         $this->_oCmts = $oCmts;
         $this->_aCmt = $oCmts->getCommentRow($iCmtId);
 
-        $sVotesOnclick = '';
-        $oVote = $this->_oCmts->getVoteObject($iCmtId);
-        if($oVote !== false)
-            $sVotesOnclick = $oVote->getJsClick();
-
         $sJsObject = $oCmts->getJsObjectName();
         $this->addMarkers(array(
             'js_object' => $sJsObject,
             'cmt_system' => $this->_oCmts->getSystemName(),
             'cmt_id' => $this->_oCmts->getId(),
             'content_id' => $iCmtId,
-            'vote_onclick' => $sVotesOnclick,
             'reply_onclick' => $sJsObject . '.toggleReply(this, ' . $iCmtId . ')'
         ));
+    }
+
+    protected function _getMenuItemItemVote($aItem)
+    {
+        $oVote = $this->_oCmts->getVoteObject($this->_aCmt['cmt_unique_id']);
+        if(!$oVote)
+        	return false;
+
+    	return $oVote->getElementInline();
     }
 
     /**

@@ -182,7 +182,7 @@ class BxDolCmtsQuery extends BxDolDb
 
         $oVote = $this->_oMain->getVoteObject($iCmtId);
         if($oVote !== false) {
-            $aSql = $oVote->getSqlParts($this->_sTable, 'cmt_id');
+            $aSql = $oVote->getSqlParts($this->_sTableIds, 'id');
 
             $sFields .= $aSql['fields'];
             $sJoin .= $aSql['join'];
@@ -190,6 +190,7 @@ class BxDolCmtsQuery extends BxDolDb
 
         $sQuery = $this->prepare("SELECT
                 `{$this->_sTable}`.`cmt_id`,
+                `{$this->_sTableIds}`.`id` AS `cmt_unique_id`,
                 `{$this->_sTable}`.`cmt_parent_id`,
                 `{$this->_sTable}`.`cmt_vparent_id`,
                 `{$this->_sTable}`.`cmt_object_id`,
@@ -200,9 +201,10 @@ class BxDolCmtsQuery extends BxDolDb
                 `{$this->_sTable}`.`cmt_time`
                 $sFields
             FROM `{$this->_sTable}`
+            LEFT JOIN `{$this->_sTableIds}` ON (`{$this->_sTable}`.`cmt_id` = `{$this->_sTableIds}`.`cmt_id` AND `{$this->_sTableIds}`.`system_id` = ?)
             $sJoin
             WHERE `{$this->_sTable}`.`cmt_object_id` = ? AND `{$this->_sTable}`.`cmt_id` = ?
-            LIMIT 1", $iId, $iCmtId);
+            LIMIT 1", $this->_oMain->getSystemId(), $iId, $iCmtId);
         return $this->getRow($sQuery);
     }
 

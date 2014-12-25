@@ -410,11 +410,11 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
     public function getVoteObject($iId)
     {
         if(empty($this->_aSystem['object_vote']))
-            return false;
+        	$this->_aSystem['object_vote'] = 'sys_cmts';
 
         bx_import('BxDolVote');
         $oVote = BxDolVote::getObjectInstance($this->_aSystem['object_vote'], $iId);
-        if(!$oVote->isEnabled())
+        if(!$oVote || !$oVote->isEnabled())
             return false;
 
         return $oVote;
