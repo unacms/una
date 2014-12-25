@@ -90,7 +90,7 @@ BxDolVote.prototype.vote = function (oLink, iValue)
 	    		}
 
 	    		if(oData && oData.disabled)
-	    			$(oLink).removeAttr('onclick').addClass('bx-btn-disabled');
+	    			$(oLink).removeAttr('onclick').addClass($(oLink).hasClass('bx-btn') ? 'bx-btn-disabled' : 'bx-vote-disabled');
     		}
 
     		if(!$this._iLikeMode)
