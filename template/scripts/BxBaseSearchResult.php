@@ -26,6 +26,8 @@ class BxBaseSearchResult extends BxDolSearchResult
 
     protected $sCenterContentUnitSelector = false;
 
+    protected $aContainerClasses = array('bx-search-result-block', 'bx-def-margin-bottom', 'bx-clearfix');
+
     function __construct($oFunctions = false)
     {
         parent::__construct();
@@ -55,7 +57,8 @@ class BxBaseSearchResult extends BxDolSearchResult
                 $sCode .= $this->displaySearchUnit($aValue);
 
             $sSearchResultBlockId = 'bx-search-result-block-' . rand(0, PHP_INT_MAX);
-            $sCode = '<div id="' . $sSearchResultBlockId . '" class="bx-search-result-block bx-def-margin-bottom bx-clearfix">' . $sCode . '</div>';
+            $sClasses = implode(' ', $this->aContainerClasses);
+            $sCode = '<div id="' . $sSearchResultBlockId . '" class="' . $sClasses . '">' . $sCode . '</div>';
 
             if (!$this->_bLiveSearch && $this->sCenterContentUnitSelector) {
                 $sCode .= "
@@ -77,7 +80,7 @@ class BxBaseSearchResult extends BxDolSearchResult
         if ($this->id) {
             $sTitle = _t($this->aCurrent['title']);
         	$sCode = $this->oFunctions->designBoxContent($sTitle, $sContent, $this->iDesignBoxTemplate, $sMenu);
-            return '<div class="bx-page-block-container bx-def-padding-topbottom bx-clearfix" id="bx-page-block-' . $this->id . '">' . $sCode . '</div>';
+            return '<div class="bx-page-block-container bx-search-results bx-def-padding-topbottom bx-clearfix" id="bx-page-block-' . $this->id . '">' . $sCode . '</div>';
         }
 
         return array(        	
@@ -292,6 +295,34 @@ class BxBaseSearchResult extends BxDolSearchResult
     function setDesignBoxTemplateId ($i)
     {
         $this->iDesignBoxTemplate = $i;
+    }
+
+    /**
+     * Add class to search result container 
+     * @param $mixed CSS class name string or array of classes
+     */
+    function addContainerClass ($mixed)
+    {
+        if (!is_array($mixed))
+            $mixed = array($mixed);
+
+        foreach ($mixed as $s)
+            if (false === array_search($s, $this->aContainerClasses))
+                $this->aContainerClasses[] = $s;
+    }
+
+    /**
+     * Remove class from search result container 
+     * @param $mixed CSS class name string or array of classes
+     */
+    function removeContainerClass ($mixed)
+    {
+        if (!is_array($mixed))
+            $mixed = array($mixed);
+
+        foreach ($mixed as $s)
+            if (false !== ($i = array_search($s, $this->aContainerClasses)))
+                unset($this->aContainerClasses[$i]);
     }
 }
 

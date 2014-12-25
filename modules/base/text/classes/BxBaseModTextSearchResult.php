@@ -25,6 +25,9 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
         $this->sUnitTemplate = $this->aUnitViews[$this->sUnitViewDefault];
         if (isset($this->aUnitViews[bx_get($this->sUnitViewParamName)]))
             $this->sUnitTemplate = $this->aUnitViews[bx_get($this->sUnitViewParamName)];
+
+        if ('unit_gallery.html' == $this->sUnitTemplate)
+            $this->addContainerClass (array('bx-def-margin-neg', 'bx-base-text-unit-gallery-wrapper'));
     }
 
     function getDesignBoxMenu ()

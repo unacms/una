@@ -72,6 +72,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
                     'summary_attr' => bx_html_attribute($sSummaryPlain),
                     'content_url' => $sUrl,
                     'thumb_url' => $sPhotoThumb ? $sPhotoThumb : '',
+                    'strecher' => str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ', 40),
                 ),
             ),
             'bx_if:no_thumb' => array (
@@ -79,6 +80,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
                 'content' => array (
                     'content_url' => $sUrl,
                     'summary_plain' => $sSummaryPlain,
+                    'strecher' => mb_strlen($sSummaryPlain) > 240 ? '' : str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ', round((240 - mb_strlen($sSummaryPlain)) / 6)),
                 ),
             ),
         );

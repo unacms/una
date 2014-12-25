@@ -8,9 +8,9 @@ DROP TABLE IF EXISTS `bx_posts_posts`, `bx_posts_files`, `bx_posts_photos_resize
 DELETE FROM `sys_objects_storage` WHERE `object` = 'bx_posts_files' OR `object` = 'bx_posts_photos_resized';
 DELETE FROM `sys_storage_tokens` WHERE `object` = 'bx_posts_files' OR `object` = 'bx_posts_photos_resized';
 
-DELETE FROM `sys_objects_transcoder` WHERE `object` = 'bx_posts_preview';
-DELETE FROM `sys_transcoder_filters` WHERE `transcoder_object` = 'bx_posts_preview';
-DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` = 'bx_posts_preview';
+DELETE FROM `sys_objects_transcoder` WHERE `object` IN('bx_posts_preview', 'bx_posts_gallery');
+DELETE FROM `sys_transcoder_filters` WHERE `transcoder_object` IN('bx_posts_preview', 'bx_posts_gallery');
+DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_posts_preview', 'bx_posts_gallery');
 
 -- FORMS
 

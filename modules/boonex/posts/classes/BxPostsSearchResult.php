@@ -119,13 +119,6 @@ class BxPostsSearchResult extends BxBaseModTextSearchResult
         $this->setProcessPrivateContent(false);
     }
 
-    function displayResultBlock ()
-    {
-        $s = parent::displayResultBlock ();
-        $s = '<div class="bx-posts-wrapper ' . ('unit_gallery.html' == $this->sUnitTemplate ? 'bx-def-margin-neg bx-clearfix' : '') . '">' . $s . '</div>';
-        return $s;
-    }
-
     function getAlterOrder()
     {
         $aSql = array();

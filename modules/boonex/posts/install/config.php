@@ -58,7 +58,8 @@ $aConfig = array(
      * Transcoders.
      */
     'transcoders' => array(
-		'bx_posts_preview'
+		'bx_posts_preview',
+        'bx_posts_gallery',
     ),
 
     /**

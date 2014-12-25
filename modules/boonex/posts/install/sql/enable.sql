@@ -12,7 +12,7 @@ SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
 ('bx_posts_summary_chars', '700', @iCategId, '_bx_posts_option_summary_chars', 'digit', '', '', '', 1),
-('bx_posts_plain_summary_chars', '200', @iCategId, '_bx_posts_option_plain_summary_chars', 'digit', '', '', '', 2),
+('bx_posts_plain_summary_chars', '240', @iCategId, '_bx_posts_option_plain_summary_chars', 'digit', '', '', '', 2),
 ('bx_posts_per_page_browse', '12', @iCategId, '_bx_posts_option_per_page_browse', 'digit', '', '', '', 10),
 ('bx_posts_rss_num', '10', @iCategId, '_bx_posts_option_rss_num', 'digit', '', '', '', 20);
 
