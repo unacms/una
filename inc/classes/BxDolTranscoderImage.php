@@ -101,7 +101,7 @@ class BxDolTranscoderImage extends BxDolTranscoder implements iBxDolFactoryObjec
 
     public function isFileReady ($mixedHandler, $isCheckOutdated = true)
     {
-        if (false !== $this->getFilterParams('ResizeVar')) {
+        if (isAdmin() && false !== $this->getFilterParams('ResizeVar')) { // only operators can apply new image size
             $aTranscodedFileData = $this->_oDb->getTranscodedFileData ($mixedHandler);
             $x = $this->getCustomResizeDimension ('x');
             $y = $this->getCustomResizeDimension ('y');
