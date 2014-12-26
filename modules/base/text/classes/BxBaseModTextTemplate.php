@@ -31,11 +31,19 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
         // get thumb url
         $sPhotoThumb = '';
+        $sPhotoGallery = '';
         if ($aData[$CNF['FIELD_THUMB']]) {
             bx_import('BxDolTranscoderImage');
+
             $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);
             if ($oImagesTranscoder)
                 $sPhotoThumb = $oImagesTranscoder->getFileUrl($aData[$CNF['FIELD_THUMB']]);
+
+            $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY']);
+            if ($oImagesTranscoder)
+                $sPhotoGallery = $oImagesTranscoder->getFileUrl($aData[$CNF['FIELD_THUMB']]);
+            else
+                $sPhotoGallery = $sPhotoThumb;
         }
 
         // get entry url
@@ -72,6 +80,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
                     'summary_attr' => bx_html_attribute($sSummaryPlain),
                     'content_url' => $sUrl,
                     'thumb_url' => $sPhotoThumb ? $sPhotoThumb : '',
+                    'gallery_url' => $sPhotoGallery ? $sPhotoGallery : '',
                     'strecher' => str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ', 40),
                 ),
             ),

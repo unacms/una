@@ -51,6 +51,7 @@ class BxCnvConfig extends BxBaseModTextConfig
             'OBJECT_GRID' => 'bx_convos',
             'OBJECT_STORAGE' => 'bx_convos_files',
             'OBJECT_IMAGES_TRANSCODER_PREVIEW' => 'bx_convos_preview',
+            'OBJECT_IMAGES_TRANSCODER_GALLERY' => '',
             'OBJECT_VIDEOS_TRANSCODERS' => array(),
             'OBJECT_VIEWS' => 'bx_convos',
             'OBJECT_VOTES' => '',
