@@ -1497,6 +1497,9 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
     protected function onBlockDelete($aBlock)
     {
+    	if($aBlock['module'] != BX_DOL_STUDIO_MODULE_CUSTOM)
+    		return;
+
         bx_import('BxDolStudioLanguagesUtils');
         BxDolStudioLanguagesUtils::getInstance()->deleteLanguageString($aBlock['title']);
 
