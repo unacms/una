@@ -521,6 +521,7 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton
                 if (!isset($this->gdInfoArray['PNG Support']) || !$this->gdInfoArray['PNG Support'])
                     return ($iErr = IMAGE_ERROR_GD_TYPE_NOT_SUPPORTED);
                 $r = imagecreatefrompng( $s );
+                imagesavealpha($r, true);
                 return $r;
             default:
                 return ($iErr = IMAGE_ERROR_WRONG_TYPE);

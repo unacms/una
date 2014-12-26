@@ -75,11 +75,24 @@ class BxBaseStudioFormView extends BxDolStudioForm
         );
 
         if(($iId = (int)$aInput['value']) != 0) {
-            bx_import('BxDolStorage');
-            $sStorage = isset($aInput['storage_object']) && $aInput['storage_object'] != '' ? $aInput['storage_object'] : BX_DOL_STORAGE_OBJ_IMAGES;
-            $oStorage = BxDolStorage::getObjectInstance($sStorage);
 
-            $sFileUrl = $oStorage->getFileUrlById($iId);
+            $sFileUrl = false;
+            if (!empty($aInput['transcoder_object'])) {
+                bx_import('BxDolTranscoderImage');
+                $oTranscoder = BxDolTranscoderImage::getObjectInstance($aInput['transcoder_object']);
+                $sFileUrl = $oTranscoder->getFileUrlNotReady($iId);
+                if (isset($aInput['transcoder_image_width']) && $aInput['transcoder_image_width'] > 0)
+                    $sFileUrl = bx_append_url_params($sFileUrl, array('x' => $aInput['transcoder_image_width']));
+                if (isset($aInput['transcoder_image_height']) && $aInput['transcoder_image_height'] > 0)
+                    $sFileUrl = bx_append_url_params($sFileUrl, array('y' => $aInput['transcoder_image_height']));
+            } 
+            else {
+                bx_import('BxDolStorage');
+                $sStorage = isset($aInput['storage_object']) && $aInput['storage_object'] != '' ? $aInput['storage_object'] : BX_DOL_STORAGE_OBJ_IMAGES;
+                $oStorage = BxDolStorage::getObjectInstance($sStorage);
+                $sFileUrl = $oStorage->getFileUrlById($iId);
+            }
+
             if($sFileUrl !== false) {
                 $aTmplVarsPreview['bx_if:show_empty']['condition'] = false;
                 $aTmplVarsPreview['bx_if:show_image'] = array(
