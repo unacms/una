@@ -1764,6 +1764,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_item_title_more"><![CDATA[More]]></string>
 	<string name="_sys_menu_item_title_profile"><![CDATA[Profile]]></string>
 	<string name="_sys_menu_item_title_set_acl_level"><![CDATA[Set membership]]></string>
+	<string name="_sys_menu_item_title_studio"><![CDATA[Studio]]></string>
 	<string name="_sys_menu_item_title_system_about"><![CDATA[About]]></string>
 	<string name="_sys_menu_item_title_system_switch_language"><![CDATA[Language]]></string>
 	<string name="_sys_menu_item_title_system_switch_template"><![CDATA[Template]]></string>
@@ -1789,6 +1790,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_item_title_system_profile"><![CDATA[Profile]]></string>
 	<string name="_sys_menu_item_title_system_search"><![CDATA[Search]]></string>
 	<string name="_sys_menu_item_title_system_set_acl_level"><![CDATA[Set membership]]></string>
+	<string name="_sys_menu_item_title_system_studio"><![CDATA[Studio]]></string>
 	<string name="_sys_menu_set_title_account"><![CDATA[Account]]></string>
 	<string name="_sys_menu_set_title_account_dashboard_manage_tools"><![CDATA[Account Dashboard Manage Tools]]></string>
 	<string name="_sys_menu_set_title_account_settings"><![CDATA[Account Settings]]></string>
