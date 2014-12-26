@@ -112,10 +112,6 @@ class BxDolMenu extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
         $this->_oQuery = new BxDolMenuQuery($this->_aObject);
         $this->_oPermalinks = BxDolPermalinks::getInstance();
 
-        $this->addMarkers(array(
-        	'studio_url' => BX_DOL_URL_STUDIO
-        ));
-
         if (isLogged()) {
             bx_import('BxDolProfile');
             $oProfile = BxDolProfile::getInstance();
