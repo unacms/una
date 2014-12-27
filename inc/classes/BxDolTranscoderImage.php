@@ -162,6 +162,11 @@ class BxDolTranscoderImage extends BxDolTranscoder implements iBxDolFactoryObjec
         $aParams['w'] = $this->getCustomResizeDimension ('x');
         $aParams['h'] = $this->getCustomResizeDimension ('y');
 
+        if (!$aParams['w'])
+            unset($aParams['w']);
+        if (!$aParams['h'])
+            unset($aParams['h']);
+
         if (!$aParams['w'] && !$aParams['h'])
             return true;
 
