@@ -310,7 +310,7 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
         $sLogo = $sAlt;
 
         if ($sFileUrl = $this->getMainLogoUrl())
-            $sLogo = '<img src="' . $sFileUrl . '" id="bx-logo" class="bx-def-margin-sec" alt="' . bx_html_attribute($sAlt, BX_ESCAPE_STR_QUOTE) . '" />';
+            $sLogo = '<img style="max-width:' . getParam('sys_site_logo_width') . 'px; max-height:' . getParam('sys_site_logo_height') . 'px" src="' . $sFileUrl . '" id="bx-logo" class="bx-def-margin-sec" alt="' . bx_html_attribute($sAlt, BX_ESCAPE_STR_QUOTE) . '" />';
 
         return '<a class="bx-def-font-contrasted" href="' . BX_DOL_URL_ROOT . '" title="' . bx_html_attribute($sAlt, BX_ESCAPE_STR_QUOTE) . '">' . $sLogo . '</a>';
     }
