@@ -124,13 +124,13 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 
 SET @iSiteMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_site' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_site', 'bx_albums', 'albums-home', '_bx_albums_menu_item_title_system_entries_home', '_bx_albums_menu_item_title_entries_home', 'page.php?i=albums-home', '', '', 'camera col-blue1', 'bx_albums_submenu', 2147483647, 1, 1, IFNULL(@iSiteMenuOrder, 0) + 1);
+('sys_site', 'bx_albums', 'albums-home', '_bx_albums_menu_item_title_system_entries_home', '_bx_albums_menu_item_title_entries_home', 'page.php?i=albums-home', '', '', 'picture-o col-blue1', 'bx_albums_submenu', 2147483647, 1, 1, IFNULL(@iSiteMenuOrder, 0) + 1);
 
 -- MENU: add to "add content" menu
 
 SET @iAddMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_add_content_links' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_add_content_links', 'bx_albums', 'create-album', '_bx_albums_menu_item_title_system_create_entry', '_bx_albums_menu_item_title_create_entry', 'page.php?i=create-album', '', '', 'camera col-blue1', '', 2147483647, 1, 1, IFNULL(@iAddMenuOrder, 0) + 1);
+('sys_add_content_links', 'bx_albums', 'create-album', '_bx_albums_menu_item_title_system_create_entry', '_bx_albums_menu_item_title_create_entry', 'page.php?i=create-album', '', '', 'picture-o col-blue1', '', 2147483647, 1, 1, IFNULL(@iAddMenuOrder, 0) + 1);
 
 
 -- MENU: actions menu for view entry 
@@ -186,7 +186,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 -- MENU: profile stats
 SET @iNotifMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_profile_stats' AND `active` = 1 LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
-('sys_profile_stats', 'bx_albums', 'profile-stats-manage-albums', '_bx_albums_menu_item_title_system_manage_my_albums', '_bx_albums_menu_item_title_manage_my_albums', 'page.php?i=albums-manage', '', '_self', 'camera col-blue1', 'a:2:{s:6:"module";s:9:"bx_albums";s:6:"method";s:41:"get_menu_addon_manage_tools_profile_stats";}', '', 2147483646, 1, 0, @iNotifMenuOrder + 1);
+('sys_profile_stats', 'bx_albums', 'profile-stats-manage-albums', '_bx_albums_menu_item_title_system_manage_my_albums', '_bx_albums_menu_item_title_manage_my_albums', 'page.php?i=albums-manage', '', '_self', 'picture-o col-blue1', 'a:2:{s:6:"module";s:9:"bx_albums";s:6:"method";s:41:"get_menu_addon_manage_tools_profile_stats";}', '', 2147483646, 1, 0, @iNotifMenuOrder + 1);
 
 -- MENU: manage tools submenu
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
