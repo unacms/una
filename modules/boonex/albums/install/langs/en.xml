@@ -38,9 +38,9 @@
 	<string name="_bx_albums_acl_action_set_thumb"><![CDATA[Set Album Cover]]></string>
 	<string name="_bx_albums_acl_action_edit_any_entry"><![CDATA[Edit Any Album]]></string>
 
-	<string name="_bx_albums_page_title_sys_create_entry"><![CDATA[Create Album]]></string>
-	<string name="_bx_albums_page_title_create_entry"><![CDATA[Create Album]]></string>
-	<string name="_bx_albums_page_block_title_create_entry"><![CDATA[Create Album]]></string>
+	<string name="_bx_albums_page_title_sys_create_entry"><![CDATA[New Album]]></string>
+	<string name="_bx_albums_page_title_create_entry"><![CDATA[New Album]]></string>
+	<string name="_bx_albums_page_block_title_create_entry"><![CDATA[New Album]]></string>
 	<string name="_bx_albums_page_title_sys_edit_entry"><![CDATA[Edit Album]]></string>
 	<string name="_bx_albums_page_title_edit_entry"><![CDATA[Edit Album]]></string>
 	<string name="_bx_albums_page_block_title_edit_entry"><![CDATA[Edit Album]]></string>
@@ -82,8 +82,8 @@
     <string name="_bx_albums_menu_title_view_entry"><![CDATA[View Album]]></string>
     <string name="_bx_albums_menu_title_submenu"><![CDATA[Albums Submenu]]></string>
     <string name="_bx_albums_menu_set_title_submenu"><![CDATA[Albums Submenu]]></string>
-    <string name="_bx_albums_menu_item_title_system_create_entry"><![CDATA[Create Album]]></string>
-    <string name="_bx_albums_menu_item_title_create_entry"><![CDATA[Create Album]]></string>
+    <string name="_bx_albums_menu_item_title_system_create_entry"><![CDATA[New Album]]></string>
+    <string name="_bx_albums_menu_item_title_create_entry"><![CDATA[New Album]]></string>
     <string name="_bx_albums_menu_item_title_system_edit_entry"><![CDATA[Edit Album]]></string>
     <string name="_bx_albums_menu_item_title_edit_entry"><![CDATA[Edit Album]]></string>
     <string name="_bx_albums_menu_item_title_system_delete_entry"><![CDATA[Delete Album]]></string>
