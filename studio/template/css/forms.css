@@ -15,8 +15,8 @@ select.bx-form-field-type option {
  */
 div.bx-form-input-preview {}
 div.bx-form-input-preview img {
-    max-width: 128px; 
-    max-height: 128px;
+    max-width: 768px; 
+    max-height: 256px;
 }
 div.bx-form-input-preview-empty {}
 
