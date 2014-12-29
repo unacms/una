@@ -275,6 +275,30 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
     }
 
     /**
+     * Get logo URL.
+     * @return string
+     */
+    function getMainLogoUrl()
+    {
+        $iFileId = (int)getParam('sys_site_logo');
+        if (!$iFileId) 
+            return false;
+
+        bx_import('BxDolTranscoder');
+        $oStorage = BxDolTranscoder::getObjectInstance('sys_custom_images');
+        $sFileUrl = $oStorage->getFileUrl($iFileId);
+        if (!$sFileUrl) 
+            return false;
+
+        if (getParam('sys_site_logo_width') > 0)
+            $sFileUrl = bx_append_url_params($sFileUrl, array('x' => getParam('sys_site_logo_width')));
+        if (getParam('sys_site_logo_height') > 0)
+            $sFileUrl = bx_append_url_params($sFileUrl, array('y' => getParam('sys_site_logo_height')));
+
+        return $sFileUrl;
+    }
+
+    /**
      * Get logo HTML.
      * @return string
      */
@@ -285,13 +309,10 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
         $sAlt = getParam('sys_site_logo_alt') ? getParam('sys_site_logo_alt') : getParam('site_title');
         $sLogo = $sAlt;
 
-        $iFileId = (int)getParam('sys_site_logo');
-        if ($iFileId) {
-            bx_import('BxDolStorage');
-            $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
-            $sFileUrl = $oStorage->getFileUrlById($iFileId);
-            if ($sFileUrl)
-                $sLogo = '<img src="' . $sFileUrl . '" id="bx-logo" class="bx-def-margin-sec" alt="' . bx_html_attribute($sAlt, BX_ESCAPE_STR_QUOTE) . '" />';
+        if ($sFileUrl = $this->getMainLogoUrl()) {
+            $sMaxWidth = getParam('sys_site_logo_width') > 0 ? 'max-width:' . round(getParam('sys_site_logo_width')/16, 3) . 'rem;' : '';
+            $sMaxHeight = getParam('sys_site_logo_height') > 0 ? 'max-height:' . round(getParam('sys_site_logo_height')/16, 3) . 'rem;' : '';
+            $sLogo = '<img style="' . $sMaxWidth . $sMaxHeight . '" src="' . $sFileUrl . '" id="bx-logo" alt="' . bx_html_attribute($sAlt, BX_ESCAPE_STR_QUOTE) . '" />';
         }
 
         return '<a class="bx-def-font-contrasted" href="' . BX_DOL_URL_ROOT . '" title="' . bx_html_attribute($sAlt, BX_ESCAPE_STR_QUOTE) . '">' . $sLogo . '</a>';

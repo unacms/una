@@ -125,8 +125,6 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
     {
         $oTemplate = BxDolStudioTemplate::getInstance();
 
-        $sAlt = getParam('sys_site_logo_alt');
-
         $aForm = array(
             'form_attrs' => array(
                 'id' => $this->sLogoFormId,
@@ -157,14 +155,36 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
                     'caption' => _t('_adm_dsg_txt_upload_image'),
                     'caption_preview' => _t('_adm_dsg_txt_upload_image_preview'),
                     'ajax_action_delete' => $this->getPageJsObject() . '.deleteLogo()',
-                    'value' => (int)getParam('sys_site_logo')
+                    'storage_object' => 'sys_images_custom',
+                    'transcoder_object' => 'sys_custom_images',
+                    'transcoder_image_width' => getParam('sys_site_logo_width'),
+                    'transcoder_image_height' => getParam('sys_site_logo_height'),
+                    'value' => (int)getParam('sys_site_logo'),
+                ),
+                'width' => array(
+                    'type' => 'text',
+                    'name' => 'width',
+                    'caption' => _t('_adm_stg_cpt_option_sys_site_logo_width'),
+                    'value' => getParam('sys_site_logo_width'),
+                    'db' => array (
+                        'pass' => 'Int',
+                    ),
+                ),
+                'height' => array(
+                    'type' => 'text',
+                    'name' => 'height',
+                    'caption' => _t('_adm_stg_cpt_option_sys_site_logo_height'),
+                    'value' => getParam('sys_site_logo_height'),
+                    'db' => array (
+                        'pass' => 'Int',
+                    ),
                 ),
                 'alt' => array(
                     'type' => 'text',
                     'name' => 'alt',
                     'caption' => _t('_adm_dsg_txt_alt_text'),
                     'info' => _t('_adm_dsg_dsc_alt_text'),
-                    'value' => $sAlt,
+                    'value' => getParam('sys_site_logo_alt'),
                     'checker' => array(
                         'func' => '',
                         'params' => array(),

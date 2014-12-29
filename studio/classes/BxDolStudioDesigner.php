@@ -80,7 +80,8 @@ class BxDolStudioDesigner extends BxTemplStudioPage
 
         if(!empty($_FILES['image']['tmp_name'])) {
             bx_import('BxDolStorage');
-            $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
+
+            $oStorage = BxDolStorage::getObjectInstance('sys_images_custom');
 
             if(!$this->deleteLogo())
                 return $this->getJsResult('_adm_dsg_err_remove_old_logo');
@@ -96,6 +97,8 @@ class BxDolStudioDesigner extends BxTemplStudioPage
         }
 
         $this->oDb->setParam('sys_site_logo_alt', $oForm->getCleanValue('alt'));
+        $this->oDb->setParam('sys_site_logo_width', $oForm->getCleanValue('width'));
+        $this->oDb->setParam('sys_site_logo_height', $oForm->getCleanValue('height'));
         return $this->getJsResult('_adm_dsg_scs_save', true, true, BX_DOL_URL_STUDIO . 'designer.php?page=' . BX_DOL_STUDIO_DSG_TYPE_LOGO);
     }
 
@@ -104,7 +107,7 @@ class BxDolStudioDesigner extends BxTemplStudioPage
         $iProfileId = getLoggedId();
 
         bx_import('BxDolStorage');
-        $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
+        $oStorage = BxDolStorage::getObjectInstance('sys_images_custom');
 
         $iId = (int)getParam('sys_site_logo');
         if($iId != 0 && !$oStorage->deleteFile($iId, $iProfileId))

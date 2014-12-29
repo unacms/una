@@ -37,9 +37,9 @@
 	<string name="_bx_posts_acl_action_set_thumb"><![CDATA[Set Post Thumbnail]]></string>
 	<string name="_bx_posts_acl_action_edit_any_entry"><![CDATA[Edit Any Post]]></string>
 
-	<string name="_bx_posts_page_title_sys_create_entry"><![CDATA[Create Post]]></string>
-	<string name="_bx_posts_page_title_create_entry"><![CDATA[Create Post]]></string>
-	<string name="_bx_posts_page_block_title_create_entry"><![CDATA[Create Post]]></string>
+	<string name="_bx_posts_page_title_sys_create_entry"><![CDATA[New Post]]></string>
+	<string name="_bx_posts_page_title_create_entry"><![CDATA[New Post]]></string>
+	<string name="_bx_posts_page_block_title_create_entry"><![CDATA[New Post]]></string>
 	<string name="_bx_posts_page_title_sys_edit_entry"><![CDATA[Edit Post]]></string>
 	<string name="_bx_posts_page_title_edit_entry"><![CDATA[Edit Post]]></string>
 	<string name="_bx_posts_page_block_title_edit_entry"><![CDATA[Edit Post]]></string>
@@ -81,8 +81,8 @@
     <string name="_bx_posts_menu_title_view_entry"><![CDATA[View Post]]></string>
     <string name="_bx_posts_menu_title_submenu"><![CDATA[Posts Submenu]]></string>
     <string name="_bx_posts_menu_set_title_submenu"><![CDATA[Posts Submenu]]></string>
-    <string name="_bx_posts_menu_item_title_system_create_entry"><![CDATA[Create Post]]></string>
-    <string name="_bx_posts_menu_item_title_create_entry"><![CDATA[Create Post]]></string>
+    <string name="_bx_posts_menu_item_title_system_create_entry"><![CDATA[New Post]]></string>
+    <string name="_bx_posts_menu_item_title_create_entry"><![CDATA[New Post]]></string>
     <string name="_bx_posts_menu_item_title_system_edit_entry"><![CDATA[Edit Post]]></string>
     <string name="_bx_posts_menu_item_title_edit_entry"><![CDATA[Edit Post]]></string>
     <string name="_bx_posts_menu_item_title_system_delete_entry"><![CDATA[Delete Post]]></string>
