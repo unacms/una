@@ -243,17 +243,15 @@ class BxDolAccount extends BxDol
     /**
      * Delete profile.
      */
-    function delete($iAccountId = false)
+    function delete()
     {
-        $ID = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
-
-        $aAccountInfo = $this->_oQuery->getInfoById($ID);
+        $aAccountInfo = $this->_oQuery->getInfoById($this->_iAccountID);
         if (!$aAccountInfo)
             return false;
 
         // create system event before deletion
         $isStopDeletion = false;
-        bx_alert('account', 'before_delete', $ID, 0, array('stop_deletion' => &$isStopDeletion));
+        bx_alert('account', 'before_delete', $this->_iAccountID, 0, array('stop_deletion' => &$isStopDeletion));
         if ($isStopDeletion)
             return false;
 
@@ -262,7 +260,7 @@ class BxDolAccount extends BxDol
 
         bx_import('BxDolProfile');
         $oProfileQuery = BxDolProfileQuery::getInstance();
-        $aProfiles = $oProfileQuery->getProfilesByAccount($ID);
+        $aProfiles = $oProfileQuery->getProfilesByAccount($this->_iAccountID);
         foreach ($aProfiles as $iProfileId => $aRow) {
             $oProfile = BxDolProfile::getInstance($iProfileId);
             if (!$oProfile)
@@ -271,15 +269,15 @@ class BxDolAccount extends BxDol
         }
 
         // delete profile
-        if (!$oAccountQuery->delete($ID))
+        if (!$oAccountQuery->delete($this->_iAccountID))
             return false;
 
         // create system event
-        bx_alert('account', 'delete', $ID);
+        bx_alert('account', 'delete', $this->_iAccountID);
 
         // unset class instance to prevent creating the instance again
         $this->_iAccountID = 0;
-        $sClass = get_class($this) . '_' . $ID;
+        $sClass = get_class($this) . '_' . $this->_iAccountID;
         unset($GLOBALS['bxDolClasses'][$sClass]);
 
         return true;
