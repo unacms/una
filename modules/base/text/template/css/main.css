@@ -159,3 +159,10 @@
     width:18.75rem;
     height:12.5rem;
 }
+
+.bx-base-text-attachments {
+    margin:-1px;
+}
+.bx-base-text-attachment {
+    margin:1px;
+}
