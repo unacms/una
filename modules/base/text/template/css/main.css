@@ -36,6 +36,7 @@
     float:none;
     line-height:1.25em;
     background-size:cover;
+    background-repeat:no-repeat;
     background-position:center center;
     display:table;
     width:100%;
