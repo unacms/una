@@ -16,9 +16,9 @@
 	<string name="_bx_albums_form_entry_display_view"><![CDATA[View Album]]></string>
 	<string name="_bx_albums_form_entry_input_sys_do_submit"><![CDATA[Submit]]></string>
 	<string name="_bx_albums_form_entry_input_do_submit"><![CDATA[Submit]]></string>
-	<string name="_bx_albums_form_entry_input_sys_title"><![CDATA[Title]]></string>
-	<string name="_bx_albums_form_entry_input_title"><![CDATA[Title]]></string>
-	<string name="_bx_albums_form_entry_input_title_err"><![CDATA[Title is essential. Please, fill in this field]]></string>
+	<string name="_bx_albums_form_entry_input_sys_title"><![CDATA[Caption]]></string>
+	<string name="_bx_albums_form_entry_input_title"><![CDATA[Caption]]></string>
+	<string name="_bx_albums_form_entry_input_title_err"><![CDATA[Caption is essential. Please, fill in this field]]></string>
 	<string name="_bx_albums_form_entry_input_sys_text"><![CDATA[Album Description]]></string>
 	<string name="_bx_albums_form_entry_input_text"><![CDATA[Album Description]]></string>
 	<string name="_bx_albums_form_entry_input_sys_delete_confirm"><![CDATA[Delete confirmation]]></string>
@@ -118,7 +118,7 @@
 	<string name="_bx_albums_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
 	<string name="_bx_albums_grid_filter_item_title_adm_hidden"><![CDATA[Hidden]]></string>
 	<string name="_bx_albums_grid_column_title_adm_active"><![CDATA[Active]]></string>
-    <string name="_bx_albums_grid_column_title_adm_title"><![CDATA[Title]]></string>
+    <string name="_bx_albums_grid_column_title_adm_title"><![CDATA[Caption]]></string>
     <string name="_bx_albums_grid_column_title_adm_added"><![CDATA[Added]]></string>
     <string name="_bx_albums_grid_column_title_adm_author"><![CDATA[Author]]></string>
     <string name="_bx_albums_grid_action_title_adm_edit"><![CDATA[Edit]]></string>
