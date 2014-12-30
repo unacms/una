@@ -18,6 +18,7 @@
     <string name="_bx_accnt_menu_item_title_delete_with_content"><![CDATA[Delete With Content]]></string>
 	<string name="_bx_accnt_menu_item_title_system_admt_accounts"><![CDATA[Accounts]]></string>
 	<string name="_bx_accnt_menu_item_title_admt_accounts"><![CDATA[Accounts - {addon} unconfirmed]]></string>
+	<string name="_bx_accnt_menu_item_title_manage"><![CDATA[Manage]]></string>
 
 	<string name="_bx_accnt_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
 	<string name="_bx_accnt_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
