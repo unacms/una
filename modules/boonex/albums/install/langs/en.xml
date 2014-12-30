@@ -19,9 +19,8 @@
 	<string name="_bx_albums_form_entry_input_sys_title"><![CDATA[Title]]></string>
 	<string name="_bx_albums_form_entry_input_title"><![CDATA[Title]]></string>
 	<string name="_bx_albums_form_entry_input_title_err"><![CDATA[Title is essential. Please, fill in this field]]></string>
-	<string name="_bx_albums_form_entry_input_sys_text"><![CDATA[Text]]></string>
-	<string name="_bx_albums_form_entry_input_text"><![CDATA[Text]]></string>
-	<string name="_bx_albums_form_entry_input_text_err"><![CDATA[Text field can't be empty]]></string>
+	<string name="_bx_albums_form_entry_input_sys_text"><![CDATA[Album Description]]></string>
+	<string name="_bx_albums_form_entry_input_text"><![CDATA[Album Description]]></string>
 	<string name="_bx_albums_form_entry_input_sys_delete_confirm"><![CDATA[Delete confirmation]]></string>
 	<string name="_bx_albums_form_entry_input_delete_confirm"><![CDATA[I am sure I want to delete this album]]></string>
 	<string name="_bx_albums_form_entry_input_delete_confirm_info"><![CDATA[This action can not be undone]]></string>
@@ -50,7 +49,7 @@
 	<string name="_bx_albums_page_title_sys_view_entry"><![CDATA[View Album]]></string>
 	<string name="_bx_albums_page_title_view_entry"><![CDATA[{title}]]></string>
 	<string name="_bx_albums_page_block_title_entry_attachments"><![CDATA[Attachments]]></string>
-	<string name="_bx_albums_page_block_title_entry_text"><![CDATA[Album Text]]></string>
+	<string name="_bx_albums_page_block_title_entry_text"><![CDATA[Album Description]]></string>
 	<string name="_bx_albums_page_title_browse"><![CDATA[Albums]]></string>
 	<string name="_bx_albums_page_title_search_results"><![CDATA[Albums matching "{0}"]]></string>
 	<string name="_bx_albums_page_title_browse_by_author"><![CDATA[{display_name}'s Albums]]></string>
