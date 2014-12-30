@@ -7,6 +7,6 @@
  * @{
  */
 
-$sTemplName = 'UNI';
+$sTemplName = 'Lagoon';
 
 /** @} */
