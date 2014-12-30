@@ -28,7 +28,7 @@ class BxBaseServiceMetatags extends BxDol
      * @param $iMaxCount number of tags in keywords cloud, by default @see BX_METATAGS_KEYWORDS_IN_CLOUD
      * @return tags cloud HTML string
      */
-    public function serviceKeywordsCloud ($sObject, $iMaxCount = BX_METATAGS_KEYWORDS_IN_CLOUD)
+    public function serviceKeywordsCloud ($sObject, $sSection, $iMaxCount = BX_METATAGS_KEYWORDS_IN_CLOUD)
     {
         bx_import('BxDolMetatags');
         $o = BxDolMetatags::getObjectInstance($sObject);
@@ -49,7 +49,7 @@ class BxBaseServiceMetatags extends BxDol
         foreach($aKeywords as $sKeyword => $iCount) {
             $aUnits[] = array(
                 'size' => $this->_iKeywordsCloudFontSizeMin + floor($iFontDiff * (($iCount - $iMinRating) / $iRatingDiff)),
-                'href' => BX_DOL_URL_ROOT . 'searchKeyword.php?type=keyword&keyword=' . rawurlencode($sKeyword),
+                'href' => BX_DOL_URL_ROOT . 'searchKeyword.php?type=keyword&keyword=' . rawurlencode($sKeyword) . '&section[]=' . $sSection,
                 'count' => $iCount,
                 'keyword' => htmlspecialchars_adv($sKeyword),
             );

@@ -91,7 +91,7 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('bx_posts_home', 1, 'bx_posts', '_bx_posts_page_block_title_recent_entries', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_posts\";s:6:\"method\";s:13:\"browse_public\";}', 0, 1, 1, 0),
-('bx_posts_home', 2, 'bx_posts', '_bx_posts_page_block_title_popular_keywords', 11, 2147483647, 'service', 'a:4:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:14:\"keywords_cloud\";s:6:\"params\";a:1:{i:0;s:8:\"bx_posts\";}s:5:\"class\";s:20:\"TemplServiceMetatags\";}', 0, 1, 1, 0);
+('bx_posts_home', 2, 'bx_posts', '_bx_posts_page_block_title_popular_keywords', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:14:"keywords_cloud";s:6:"params";a:2:{i:0;s:8:"bx_posts";i:1;s:8:"bx_posts";}s:5:"class";s:20:"TemplServiceMetatags";}', 0, 1, 1, 0);
 
 -- PAGE: module manage
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
