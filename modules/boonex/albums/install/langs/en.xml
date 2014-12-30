@@ -105,12 +105,12 @@
     <string name="_bx_albums_menu_item_title_view_entries_author"><![CDATA[Albums]]></string>
     <string name="_bx_albums_menu_title_entries_my"><![CDATA[My Albums Action Menu]]></string>
     <string name="_bx_albums_menu_set_title_entries_my"><![CDATA[My Albums Menu]]></string>
-	<string name="_bx_albums_menu_item_title_system_manage_my_posts"><![CDATA[My albums]]></string>
-    <string name="_bx_albums_menu_item_title_manage_my_posts"><![CDATA[{addon} albums]]></string>
+	<string name="_bx_albums_menu_item_title_system_manage_my_albums"><![CDATA[My albums]]></string>
+    <string name="_bx_albums_menu_item_title_manage_my_albums"><![CDATA[{addon} albums]]></string>
     <string name="_bx_albums_menu_set_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_albums_menu_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
-	<string name="_bx_albums_menu_item_title_system_admt_posts"><![CDATA[Albums]]></string>
-	<string name="_bx_albums_menu_item_title_admt_posts"><![CDATA[Albums - {addon} hidden]]></string>
+	<string name="_bx_albums_menu_item_title_system_admt_albums"><![CDATA[Albums]]></string>
+	<string name="_bx_albums_menu_item_title_admt_albums"><![CDATA[Albums - {addon} hidden]]></string>
 	<string name="_bx_albums_menu_item_title_manage_my"><![CDATA[My Albums]]></string>
 	<string name="_bx_albums_menu_item_title_manage_all"><![CDATA[All Albums]]></string>
 

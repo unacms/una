@@ -70,25 +70,29 @@ class BxBaseModGeneralModule extends BxDolModule
 			bx_import('BxDolPermalinks');
 			$oPermalink = BxDolPermalinks::getInstance();
 
-			$aMenuItems = array(
-				array('id' => 'manage-common', 'name' => 'manage-common', 'class' => '', 'link' => $oPermalink->permalink($CNF['URL_MANAGE_COMMON']), 'target' => '_self', 'title' => _t($CNF['T']['menu_item_manage_my']), 'active' => 1)
-			);
-			if($oAcl->isMemberLevelInSet(64))
+			$aMenuItems = array();
+			if(!empty($CNF['OBJECT_GRID_COMMON']) && !empty($CNF['T']['menu_item_manage_my']))
+				$aMenuItems[] = array('id' => 'manage-common', 'name' => 'manage-common', 'class' => '', 'link' => $oPermalink->permalink($CNF['URL_MANAGE_COMMON']), 'target' => '_self', 'title' => _t($CNF['T']['menu_item_manage_my']), 'active' => 1);
+			if(!empty($CNF['OBJECT_GRID_MODERATION']) && !empty($CNF['T']['menu_item_manage_all']) && $oAcl->isMemberLevelInSet(64))
 				$aMenuItems[] = array('id' => 'manage-moderation', 'name' => 'manage-moderation', 'class' => '', 'link' => $oPermalink->permalink($CNF['URL_MANAGE_MODERATION']), 'target' => '_self', 'title' => _t($CNF['T']['menu_item_manage_all']), 'active' => 1);
-			if($oAcl->isMemberLevelInSet(128))
+			if(!empty($CNF['OBJECT_GRID_ADMINISTRATION']) && !empty($CNF['T']['menu_item_manage_all']) && $oAcl->isMemberLevelInSet(128))
 				$aMenuItems[] = array('id' => 'manage-administration', 'name' => 'manage-administration', 'class' => '', 'link' => $oPermalink->permalink($CNF['URL_MANAGE_ADMINISTRATION']), 'target' => '_self', 'title' => _t($CNF['T']['menu_item_manage_all']), 'active' => 1);
 
-			bx_import('BxTemplMenu');
-            $oMenu = new BxTemplMenu(array(
-            	'template' => 'menu_vertical.html', 
-            	'menu_items' => $aMenuItems
-            ), $this->_oTemplate);
-            $oMenu->setSelected($this->_aModule['name'], 'manage-' . $sType);
-            $sMenu = $oMenu->getCode();
+			if(count($aMenuItems) > 1) {
+				bx_import('BxTemplMenu');
+	            $oMenu = new BxTemplMenu(array(
+	            	'template' => 'menu_vertical.html', 
+	            	'menu_items' => $aMenuItems
+	            ), $this->_oTemplate);
+	            $oMenu->setSelected($this->_aModule['name'], 'manage-' . $sType);
+	            $sMenu = $oMenu->getCode();
+			}
 		}
 
-		bx_import('BxTemplMenu');
-		BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SUBMENU'])->setSelected($this->_aModule['name'], $CNF['URI_MANAGE_COMMON']);
+		if(!empty($CNF['OBJECT_MENU_SUBMENU'])) {
+			bx_import('BxTemplMenu');
+			BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SUBMENU'])->setSelected($this->_aModule['name'], $CNF['URI_MANAGE_COMMON']);
+		}
 
         $this->_oTemplate->addCss(array('manage_tools.css'));
         $this->_oTemplate->addJs(array('manage_tools.js'));
