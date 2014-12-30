@@ -33,20 +33,20 @@
 /* layout bar left */
 
 .bx-layout-bar-left-bar {
-    width:25%;
+    width:34%;
 }
 
 .bx-layout-bar-left-content {
-    width:75%;
+    width:66%;
 }
 
 /* layout bar right */
 
 .bx-layout-bar-right-bar {
-    width:25%;
+    width:34%;
 }
 
 .bx-layout-bar-right-content {
-    width:75%;
+    width:66%;
 }
 
