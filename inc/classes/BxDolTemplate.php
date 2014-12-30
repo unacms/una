@@ -1971,6 +1971,12 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
     }
     function _getAbsoluteLocationCss($sType, $sName)
     {
+    	$sNameLess = str_replace('.css', '.less', $sName);
+
+    	$sResult = $this->_getAbsoluteLocation($sType, $this->_sFolderCss, $sNameLess);
+    	if(!empty($sResult))
+    		return $sResult;
+
         return $this->_getAbsoluteLocation($sType, $this->_sFolderCss, $sName);
     }
     /**
