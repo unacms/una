@@ -232,6 +232,7 @@ div.bx-std-widget-caption {
     height: 50px;
     line-height: 50px;
     text-align: center; 
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 
