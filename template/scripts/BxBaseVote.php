@@ -132,9 +132,6 @@ class BxBaseVote extends BxDolVote
 
     public function getElement($aParams = array())
     {
-        if(!$this->isAllowedVote())
-            return '';
-
         $bLike =  $this->isLikeMode();
         $sType = $bLike ? BX_DOL_VOTE_TYPE_LIKES : BX_DOL_VOTE_TYPE_STARS;
 
@@ -148,6 +145,9 @@ class BxBaseVote extends BxDolVote
 		$iObjectId = $this->getId();
 		$iAuthorId = $this->_getAuthorId();
         $aVote = $this->_oQuery->getVote($iObjectId);
+
+        if(!$this->isAllowedVote() && (int)$aVote['count'] == 0)
+            return '';
 
         $aParams = array_merge($this->_aElementDefaults[$sType], $aParams);
         $aParams['is_voted'] = $this->_oQuery->isVoted($iObjectId, $iAuthorId) ? true : false;
@@ -177,6 +177,10 @@ class BxBaseVote extends BxDolVote
 
     protected function _getDoVoteStars($aParams = array())
     {
+    	//TODO: Add 'disabled' appearance for this type of votes.
+    	if(!$this->isAllowedVote())
+            return '';
+
         $sJsObject = $this->getJsObjectName();
         $iMinValue = $this->getMinValue();
         $iMaxValue = $this->getMaxValue();
@@ -224,7 +228,7 @@ class BxBaseVote extends BxDolVote
     	$bVoted = isset($aParams['is_voted']) && $aParams['is_voted'] === true;
         $bShowDoVoteAsButtonSmall = isset($aParams['show_do_vote_as_button_small']) && $aParams['show_do_vote_as_button_small'] == true;
         $bShowDoVoteAsButton = !$bShowDoVoteAsButtonSmall && isset($aParams['show_do_vote_as_button']) && $aParams['show_do_vote_as_button'] == true;
-		$bDisabled = $bVoted && !$this->isUndo();
+		$bDisabled = !$this->isAllowedVote() || ($bVoted && !$this->isUndo());
 
         $sClass = '';
 		if($bShowDoVoteAsButton)

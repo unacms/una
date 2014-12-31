@@ -654,14 +654,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $oVote = $this->getVoteObject($sSystem, $iObjectId);
         $oVote->addCssJs();
 
-        $iUserId = (int)$this->getUserId();
-        if($iUserId == 0)
-            return false;
-
         if(isAdmin())
             return true;
 
-        return $oVote->isAllowedVote($bPerform);
+        return true;
     }
 
     public function isAllowedShare($aEvent, $bPerform = false)
