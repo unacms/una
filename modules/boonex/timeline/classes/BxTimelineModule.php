@@ -638,14 +638,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $oCmts = $this->getCmtsObject($sSystem, $iObjectId);
         $oCmts->addCssJs();
 
-        $iUserId = (int)$this->getUserId();
-        if($iUserId == 0)
-            return false;
-
         if(isAdmin())
             return true;
 
-        return $oCmts->isPostReplyAllowed($bPerform);
+        return true;
     }
 
     public function isAllowedVote($aEvent, $bPerform = false)
