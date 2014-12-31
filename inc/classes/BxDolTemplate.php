@@ -1440,7 +1440,15 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
             $sPathRoot = realpath(BX_DIRECTORY_PATH_ROOT);
             $sFile = $this->_sLessCachePrefix . trim(str_replace(array('.' . $aInfoFile['extension'], DIRECTORY_SEPARATOR), array('', '_'), bx_ltrim_str($sPathFile, $sPathRoot)), '_') . '.css';
 
+            $sPathDirectory = $aInfoFile['dirname'] . DIRECTORY_SEPARATOR;
+            $oLess->registerFunction('bx_real_path', function($aArg) use($sPathDirectory) {
+			    list($sType, $sValue, $aUnit) = $aArg;
+
+			    return array($sType, $sValue, array(realpath($sPathDirectory . $aUnit[0])));
+			});
             $oLess->checkedCompile($mixed['path'], $this->_sCachePublicFolderPath . $sFile);
+            $oLess->unregisterFunction('bx_real_path');
+
             return array('url' => $this->_sCachePublicFolderUrl . $sFile, 'path' => $this->_sCachePublicFolderPath . $sFile);
         }
 
