@@ -34,7 +34,12 @@ class BxBaseSearch extends BxDolSearch
             $sTitle = _t( "_Search");
 
         $aValues = $this->getKeyTitlesPairs ();
-        $aValue = isset($_GET['type']) ? bx_process_input($_GET['type']) : array_keys($aValues);
+        if (bx_get('type'))
+            $aValue = bx_process_input(bx_get('type'));
+        elseif (bx_get('section'))
+            $aValue = bx_process_input(bx_get('section'));
+        else
+            $aValue = array_keys($aValues);
 
         $sIdForm = $this->_sIdForm . ($this->_bLiveSearch ? $this->_sSuffixLiveSearch : '');
         $sIdResults = $this->_sIdResults . ($this->_bLiveSearch ? $this->_sSuffixLiveSearch : '');

@@ -36,6 +36,7 @@
     float:none;
     line-height:1.25em;
     background-size:cover;
+    background-repeat:no-repeat;
     background-position:center center;
     display:table;
     width:100%;
@@ -158,4 +159,11 @@
 .bx-base-text-attachments .bx-base-text-attachment {
     width:18.75rem;
     height:12.5rem;
+}
+
+.bx-base-text-attachments {
+    margin:-1px;
+}
+.bx-base-text-attachment {
+    margin:1px;
 }
