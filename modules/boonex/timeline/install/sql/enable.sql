@@ -51,7 +51,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES 
 ('bx_timeline_menu_item_actions', 'bx_timeline', 'item-comment', '_bx_timeline_menu_item_title_system_item_comment', '_bx_timeline_menu_item_title_item_comment', 'javascript:void(0)', 'javascript:{comment_onclick}', '_self', 'comment', 'a:3:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:27:"get_menu_item_addon_comment";s:6:"params";a:2:{i:0;s:16:"{comment_system}";i:1;s:16:"{comment_object}";}}', '', 2147483647, 1, 0, 1, 1),
 ('bx_timeline_menu_item_actions', 'bx_timeline', 'item-vote', '_bx_timeline_menu_item_title_system_item_vote', '', 'javascript:void(0)', '', '', '', '', '', 2147483647, 1, 0, 0, 2),
-('bx_timeline_menu_item_actions', 'bx_timeline', 'item-share', '_bx_timeline_menu_item_title_system_item_share', '_bx_timeline_menu_item_title_item_share', 'javascript:void(0)', 'javascript:{share_onclick}', '_self', 'share', 'a:3:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:25:"get_menu_item_addon_share";s:6:"params";a:3:{i:0;s:12:"{share_type}";i:1;s:14:"{share_action}";i:2;s:14:"{share_object}";}}', '', 2147483647, 1, 0, 1, 3);
+('bx_timeline_menu_item_actions', 'bx_timeline', 'item-share', '_bx_timeline_menu_item_title_system_item_share', '', 'javascript:void(0)', '', '', '', '', '', 2147483647, 1, 0, 0, 3);
 
 -- MENU: Post form attachments (Link, Photo, Video)
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 

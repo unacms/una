@@ -269,8 +269,12 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if(empty($aShared) || !is_array($aShared))
             return '';
 
-        if($this->getModule()->isAllowedShare($aShared) !== true)
+		$bDisabled = $this->getModule()->isAllowedShare($aShared) !== true;
+		if($bDisabled && (int)$aShared['shares'] == 0)
             return '';
+
+		$sStylePrefix = $this->_oConfig->getPrefix('style');
+        $sStylePrefixShare = $sStylePrefix . '-share-';
 
         $bShowDoShareAsButtonSmall = isset($aParams['show_do_share_as_button_small']) && $aParams['show_do_share_as_button_small'] == true;
         $bShowDoShareAsButton = !$bShowDoShareAsButtonSmall && isset($aParams['show_do_share_as_button']) && $aParams['show_do_share_as_button'] == true;
@@ -279,31 +283,51 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $bShowDoShareLabel = isset($aParams['show_do_share_label']) && $aParams['show_do_share_label'] == true;
         $bShowCounter = isset($aParams['show_counter']) && $aParams['show_counter'] === true;
 
-        $sDoShare = '';
+        //--- Do share link ---//
+		$sClass = $sStylePrefixShare . 'do-share';
+		if($bShowDoShareAsButton)
+			$sClass .= ' bx-btn';
+		else if($bShowDoShareAsButtonSmall)
+			$sClass .= ' bx-btn bx-btn-small';
+
+		$sOnClick = '';
+		if(!$bDisabled) {
+			$sCommonPrefix = $this->_oConfig->getPrefix('common_post');
+			if(str_replace($sCommonPrefix, '', $sType) == BX_TIMELINE_PARSE_TYPE_SHARE) {
+				$aSharedData = $this->_getCommonData($aShared);
+	
+	            $sOnClick = $this->getShareJsClick($iOwnerId, $aSharedData['content']['type'], $aSharedData['content']['action'], $aSharedData['content']['object_id']);
+			}
+			else
+				$sOnClick = $this->getShareJsClick($iOwnerId, $sType, $sAction, $iObjectId);
+		}
+		else
+			$sClass .= $bShowDoShareAsButton || $bShowDoShareAsButtonSmall ? ' bx-btn-disabled' : ' ' . $sStylePrefixShare . 'disabled';
+
+		$aOnClickAttrs = array();
+		if(!empty($sClass))
+			$aOnClickAttrs[] = array('key' => 'class', 'value' => $sClass);
+		if(!empty($sOnClick))
+			$aOnClickAttrs[] = array('key' => 'onclick', 'value' => $sOnClick);
+
+		$sDoShare = '';
         if($bShowDoShareIcon)
             $sDoShare .= $this->parseHtmlByName('bx_icon.html', array('name' => 'share'));
 
         if($bShowDoShareLabel)
             $sDoShare .= ($sDoShare != '' ? ' ' : '') . _t('_bx_timeline_txt_do_share');
 
-        $sDoShare = $this->parseHtmlByName('bx_a.html', array(
-            'href' => 'javascript:void(0)',
-            'title' => _t('_bx_timeline_txt_do_share'),
-            'bx_repeat:attrs' => array(
-                array('key' => 'class', 'value' => ($bShowDoShareAsButton ? 'bx-btn' : '') . ($bShowDoShareAsButtonSmall ? 'bx-btn bx-btn-small' : '')),
-                array('key' => 'onclick', 'value' => $this->getShareJsClick($iOwnerId, $sType, $sAction, $iObjectId))
-            ),
-            'content' => $sDoShare
-        ));
-
-        $sStylePrefix = $this->_oConfig->getPrefix('style');
-        $sStylePrefixShare = $sStylePrefix . '-share-';
         return $this->parseHtmlByName('share_element_block.html', array(
             'style_prefix' => $sStylePrefix,
             'html_id' => $this->_oConfig->getHtmlIds('share', 'main') . $aShared['id'],
             'class' => ($bShowDoShareAsButton ? $sStylePrefixShare . 'button' : '') . ($bShowDoShareAsButtonSmall ? $sStylePrefixShare . 'button-small' : ''),
             'count' => $aShared['shares'],
-            'do_share' => $sDoShare,
+            'do_share' => $this->parseHtmlByName('bx_a.html', array(
+	            'href' => 'javascript:void(0)',
+	            'title' => _t('_bx_timeline_txt_do_share'),
+	            'bx_repeat:attrs' => $aOnClickAttrs,
+	            'content' => $sDoShare
+	        )),
             'bx_if:show_counter' => array(
                 'condition' => $bShowCounter,
                 'content' => array(

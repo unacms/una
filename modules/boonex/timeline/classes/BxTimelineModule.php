@@ -423,14 +423,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         ));
     }
 
-    public function serviceGetMenuItemAddonShare($sType, $sAction, $iObjectId)
-    {
-        if(empty($sType) || empty($iObjectId))
-            return '';
-
-        return $this->serviceGetShareCounter($sType, $sAction, $iObjectId);
-    }
-
     public function serviceGetSettingsCheckerHelper()
     {
         bx_import('FormCheckerHelper', $this->_aModule);
