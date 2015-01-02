@@ -51,7 +51,7 @@ class BxDolCmtsQuery extends BxDolDb
         return $this->_sTable;
     }
 
-    function getCommentsCount ($iId, $iCmtVParentId = 0, $iAuthorId = 0, $sFilter = '')
+    function getCommentsCount ($iId, $iCmtVParentId = -1, $iAuthorId = 0, $sFilter = '')
     {
         $sWhereClause = '';
         if((int)$iCmtVParentId >= 0)
