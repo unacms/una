@@ -300,9 +300,14 @@ BxDolCmts.prototype.showLiveUpdate = function(oData)
 
     oNotification.prependTo('body').dolPopup({
     	position: 'fixed',
-    	top: ($(window).height() - oNotification.height()) + 'px',
-    	left: ($(window).width() - oNotification.width())/2 + 'px',
-    	fog: false
+    	top: '0px',
+    	fog: false,
+    	onBeforeShow: function() {
+    		$('body').addClass('cmt-notification-holder');
+    	},
+    	onBeforeHide: function() {
+    		$('body').removeClass('cmt-notification-holder');
+    	}
     });
 };
 BxDolCmts.prototype.showReplacement = function(iCmtId)

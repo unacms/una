@@ -423,14 +423,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         ));
     }
 
-    public function serviceGetMenuItemAddonShare($sType, $sAction, $iObjectId)
-    {
-        if(empty($sType) || empty($iObjectId))
-            return '';
-
-        return $this->serviceGetShareCounter($sType, $sAction, $iObjectId);
-    }
-
     public function serviceGetSettingsCheckerHelper()
     {
         bx_import('FormCheckerHelper', $this->_aModule);
@@ -638,14 +630,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $oCmts = $this->getCmtsObject($sSystem, $iObjectId);
         $oCmts->addCssJs();
 
-        $iUserId = (int)$this->getUserId();
-        if($iUserId == 0)
-            return false;
-
         if(isAdmin())
             return true;
 
-        return $oCmts->isPostReplyAllowed($bPerform);
+        return true;
     }
 
     public function isAllowedVote($aEvent, $bPerform = false)
@@ -658,14 +646,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $oVote = $this->getVoteObject($sSystem, $iObjectId);
         $oVote->addCssJs();
 
-        $iUserId = (int)$this->getUserId();
-        if($iUserId == 0)
-            return false;
-
         if(isAdmin())
             return true;
 
-        return $oVote->isAllowedVote($bPerform);
+        return true;
     }
 
     public function isAllowedShare($aEvent, $bPerform = false)

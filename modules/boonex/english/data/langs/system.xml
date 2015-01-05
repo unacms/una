@@ -1296,7 +1296,8 @@
 	<string name="_cmt_err_cannot_perform_action"><![CDATA[Cannot perform action. Please report.]]></string>
 	<string name="_cmt_page_view_header"><![CDATA[Comment to {0}]]></string>
 	<string name="_cmt_page_view_title"><![CDATA[Comment to <a href="{0}">{1}</a>]]></string>
-	<string name="_cmt_txt_n_new_comments"><![CDATA[<span>{0}</span> new comment(s).]]></string>
+	<string name="_cmt_txt_n_new_comments"><![CDATA[<span>{0}</span> new comment(s) posted. {1} to see them.]]></string>
+	<string name="_cmt_txt_reload_page"><![CDATA[Reload page]]></string>
 	<string name="_cmt_view_attached_image"><![CDATA[View image]]></string>
 	<string name="_cmt_load_more_comments_head"><![CDATA[See newer comments...]]></string>
 	<string name="_cmt_load_more_comments_tail"><![CDATA[See older comments...]]></string>

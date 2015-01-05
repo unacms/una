@@ -1255,7 +1255,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
             return '';
 
         $sUrl = bx_ltrim_str($sPath, realpath(BX_DIRECTORY_PATH_ROOT), BX_DOL_URL_ROOT);
-        $sUrl = str_replace(DIRECTORY_SEPARATOR, '/', $sPath);
+        $sUrl = str_replace(DIRECTORY_SEPARATOR, '/', $sUrl);
 
         $sContent = "\r\n/*--- BEGIN: " . $sUrl . $sName . "---*/\r\n" . $sContent . ";\r\n/*--- END: " . $sUrl . $sName . "---*/\r\n";
         $sContent = str_replace(array("\n\r", "\r\n", "\r"), "\n", $sContent);
@@ -1369,7 +1369,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
             return '';
 
         $sUrl = bx_ltrim_str($sPath, realpath(BX_DIRECTORY_PATH_ROOT), BX_DOL_URL_ROOT);
-        $sUrl = str_replace(DIRECTORY_SEPARATOR, '/', $sPath);
+        $sUrl = str_replace(DIRECTORY_SEPARATOR, '/', $sUrl);
 
         $sContent = "\r\n/*--- BEGIN: " . $sUrl . $sName . "---*/\r\n" . $sContent . "\r\n/*--- END: " . $sUrl . $sName . "---*/\r\n";
         $aIncluded[$sAbsolutePath] = 1;
@@ -1438,9 +1438,20 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
                 return $mixed;
 
             $sPathRoot = realpath(BX_DIRECTORY_PATH_ROOT);
+            $sPathDirectory = $aInfoFile['dirname'] . DIRECTORY_SEPARATOR;
             $sFile = $this->_sLessCachePrefix . trim(str_replace(array('.' . $aInfoFile['extension'], DIRECTORY_SEPARATOR), array('', '_'), bx_ltrim_str($sPathFile, $sPathRoot)), '_') . '.css';
 
+            $oLess->registerFunction('bx_url', function($aArg) use($sPathRoot, $sPathDirectory) {
+			    list($sType, $sValue, $aUnit) = $aArg;
+
+			    $aUnit[0] = bx_ltrim_str(realpath($sPathDirectory . $aUnit[0]), $sPathRoot . DIRECTORY_SEPARATOR, BX_DOL_URL_ROOT);
+        		$aUnit[0] = str_replace(DIRECTORY_SEPARATOR, '/', $aUnit[0]);
+
+			    return array($sType, $sValue, $aUnit);
+			});
             $oLess->checkedCompile($mixed['path'], $this->_sCachePublicFolderPath . $sFile);
+            $oLess->unregisterFunction('bx_url');
+
             return array('url' => $this->_sCachePublicFolderUrl . $sFile, 'path' => $this->_sCachePublicFolderPath . $sFile);
         }
 

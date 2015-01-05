@@ -13,7 +13,7 @@ bx_import('BxTemplMenuCustom');
  * Menu representation.
  * @see BxDolMenu
  */
-class BxBaseCmtsMenu extends BxTemplMenuCustom
+class BxBaseCmtsMenuActions extends BxTemplMenuCustom
 {
     protected $_oCmts;
     protected $_aCmt;
@@ -63,18 +63,6 @@ class BxBaseCmtsMenu extends BxTemplMenuCustom
         $sCheckFuncName = '';
         $aCheckFuncParams = array();
         switch ($a['name']) {
-            case 'item-edit':
-                $sCheckFuncName = 'isEditAllowed';
-                if(!empty($this->_aCmt))
-                    $aCheckFuncParams = array($this->_aCmt);
-                break;
-
-            case 'item-delete':
-                $sCheckFuncName = 'isRemoveAllowed';
-                if(!empty($this->_aCmt))
-                    $aCheckFuncParams = array($this->_aCmt);
-                break;
-
             case 'item-vote':
                 $sCheckFuncName = 'isVoteAllowed';
                 if(!empty($this->_aCmt))

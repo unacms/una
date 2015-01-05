@@ -45,34 +45,12 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
             $sCommentsOnclick = $this->_oModule->_oConfig->getJsObject('view') . ".commentItem(this, '" . $sCommentsSystem . "', " . $iCommentsObject . ")";
         }
 
-        $iOwnerId = $this->_oModule->getUserId(); //--- in whose timeline the content will be shared
-        $sShareType = $sReshareType = $aEvent['type'];
-        $sShareAction = $sReshareAction = $aEvent['action'];
-
-        if($this->_oModule->_oConfig->isSystem($sShareType, $sShareAction))
-            $iShareObject = $iReshareObject = $aEvent['object_id'];
-        else {
-            $iShareObject = $iReshareObject = $aEvent['id'];
-
-            $sCommonPrefix = $this->_oModule->_oConfig->getPrefix('common_post');
-            if(str_replace($sCommonPrefix, '', $sShareType) == BX_TIMELINE_PARSE_TYPE_SHARE) {
-                $sReshareType = $aEvent['content']['type'];
-                $sReshareAction = $aEvent['content']['action'];
-                $iReshareObject = $aEvent['content']['object_id'];
-            }
-        }
-
         $this->addMarkers(array(
             'content_id' => $aEvent['id'],
 
             'comment_system' => $sCommentsSystem,
             'comment_object' => $iCommentsObject,
             'comment_onclick' => $sCommentsOnclick,
-
-            'share_type' => $sShareType,
-            'share_action' => $sShareAction,
-            'share_object' => $iShareObject,
-            'share_onclick' => $this->_oModule->serviceGetShareJsClick($iOwnerId, $sReshareType, $sReshareAction, $iReshareObject),
         ));
     }
 
@@ -103,6 +81,16 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
     	return $this->_oModule->getVoteObject($sVotesSystem, $iVotesObject)->getElementInline();
     }
 
+	protected function _getMenuItemItemShare($aItem)
+    {
+		$iOwnerId = $this->_oModule->getUserId(); //--- in whose timeline the content will be shared
+        $sType = $this->_aEvent['type'];
+        $sAction = $this->_aEvent['action'];
+        $iObjectId = $this->_oModule->_oConfig->isSystem($sType, $sAction) ? $this->_aEvent['object_id'] : $this->_aEvent['id'];
+
+        return $this->_oModule->serviceGetShareElementBlock($iOwnerId, $sType, $sAction, $iObjectId);
+    }
+
     /**
      * Check if menu items is visible.
      * @param $a menu item array
@@ -124,12 +112,6 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
 
             case 'item-vote':
                 $sCheckFuncName = 'isAllowedVote';
-                if(!empty($this->_aEvent))
-                    $aCheckFuncParams = array($this->_aEvent);
-                break;
-
-            case 'item-share':
-                $sCheckFuncName = 'isAllowedShare';
                 if(!empty($this->_aEvent))
                     $aCheckFuncParams = array($this->_aEvent);
                 break;
