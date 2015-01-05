@@ -244,7 +244,9 @@ class BxBaseCmts extends BxDolCmts
         if((int)$aCmt['cmt_replies'] > 0 && !empty($aDp) && $aDp['type'] == BX_CMT_DISPLAY_THREADED)
             $sReplies = $this->getComments(array('parent_id' => $aCmt['cmt_id'], 'vparent_id' => $aCmt['cmt_id'], 'type' => $aBp['type']), $aDp);
 
+		$sAgo = bx_time_js($aCmt['cmt_time']);
         $bAuthorIcon = !empty($sAuthorIcon);
+        $bObjectTitle = !empty($this->_aSystem['trigger_field_title']);
         return $oTemplate->parseHtmlByName('comment.html', array(
             'system' => $this->_sSystem,
             'style_prefix' => $this->_sStylePrefix,
@@ -277,6 +279,20 @@ class BxBaseCmts extends BxDolCmts
             'bx_if:show_reply_to' => array(
                 'condition' => !empty($aTmplReplyTo),
                 'content' => $aTmplReplyTo
+            ),
+            'bx_if:show_ago_link' => array(
+                'condition' => $bObjectTitle,
+                'content' => array(
+                    'style_prefix' => $this->_sStylePrefix,
+                    'view_link' => $this->getViewUrl($aCmt['cmt_id']),
+                    'ago' => $sAgo
+                )
+            ),
+            'bx_if:show_ago_text' => array(
+                'condition' => !$bObjectTitle,
+                'content' => array(
+                    'ago' => $sAgo
+                )
             ),
             'text' => $sText,
             'bx_if:show_more' => array(
@@ -498,26 +514,10 @@ class BxBaseCmts extends BxDolCmts
 	        }
 		}
 
-        $sAgo = bx_time_js($aCmt['cmt_time']);
-        $bObjectTitle = !empty($this->_aSystem['trigger_field_title']);
         return $oTemplate->parseHtmlByName('comment_actions.html', array(
             'id' => $aCmt['cmt_id'],
             'js_object' => $this->_sJsObjName,
             'style_prefix' => $this->_sStylePrefix,
-            'bx_if:show_ago_link' => array(
-                'condition' => $bObjectTitle,
-                'content' => array(
-                    'style_prefix' => $this->_sStylePrefix,
-                    'view_link' => $this->getViewUrl($aCmt['cmt_id']),
-                    'ago' => $sAgo
-                )
-            ),
-            'bx_if:show_ago_text' => array(
-                'condition' => !$bObjectTitle,
-                'content' => array(
-                    'ago' => $sAgo
-                )
-            ),
             'menu_actions' => $sMenuActions,
 /*
             'bx_if:hide_rate_count' => array(
