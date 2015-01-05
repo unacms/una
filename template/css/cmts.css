@@ -212,22 +212,42 @@
     }
 
     /*--- Live Update Notification Styles ---*/
+	.cmt-notification-holder {
+		padding-top: 30px;
+    	padding-top: 1.875rem;
+    }
+
     div.cmt-notification {
-    	border-color: #616161;
-		border-bottom: none;
+    	position: relative;
 
-    	border-bottom-right-radius: 0px;
-    	border-bottom-left-radius: 0px;
+    	width: 100%;
+    	height: 30px;
+    	height: 1.875rem;
 
-    	background-color: rgba(97, 97, 97, .5);
+    	border-color: #000000;
+    	background-color: rgba(85, 85, 85, .9);
+
+    	line-height: 30px;
+    	line-height: 1.875rem;
+    	text-align: center;
+
+    	color: #ffffff;
     }
-    div.cmt-notification div.cmt-cnt {
-		padding-left: 80px;
-    	padding-left: 5rem;
-    	padding-right: 80px;     	
-    	padding-right: 5rem;
+    div.cmt-actions {
+		position: absolute;
+    	height: 100%;
+    	top: 0px;
+    	right: 0px;
     }
-    div.cmt-notification a {
+    div.cmt-actions a {
+    	text-decoration: none;
+		color: #9c9c9c;
+    }
+    div.cmt-notification div.cmt-cnt a {
+    	text-decoration: underline;
 		color: #ffffff;
-    	font-weight: bold;
     }
+    div.cmt-notification div.cmt-cnt a:hover,
+    div.cmt-notification div.cmt-cnt a:active {
+    	text-decoration: none;
+	}

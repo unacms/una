@@ -370,17 +370,24 @@ class BxBaseCmts extends BxDolCmts
     	}
 
     	bx_import('BxDolTemplate');
-    	$sContent = BxDolTemplate::getInstance()->parseHtmlByName('comments_notification.html', array(
+    	$oTemplate = BxDolTemplate::getInstance();
+
+    	$sReloadLinkContent = _t('_cmt_txt_reload_page');
+    	$aReloadLinkAttrs = array();
+    	if(!empty($sOnClick))
+    		$aReloadLinkAttrs[] = array('key' => 'onclick', 'value' => $sOnClick);
+
+    	$sReloadLink = $oTemplate->parseHtmlByName('bx_a.html', array(
+    		'href' => $sUrl,
+    		'title' => $sReloadLinkContent,
+    		'bx_repeat:attrs' => $aReloadLinkAttrs,
+    		'content' => $sReloadLinkContent,
+    	));
+
+    	$sContent = $oTemplate->parseHtmlByName('comments_notification.html', array(
     		'html_id' => 'cmts-notification-' . $this->_sSystem . '-' + $this->_iId,
 			'style_prefix' => $this->_sStylePrefix,
-    		'url' => $sUrl,
-    		'bx_if:show_onclick' => array(
-    			'condition' => !empty($sOnClick),
-    			'content' => array(
-    				'onclick' => $sOnClick
-    			)
-    		),
-			'message' => _t('_cmt_txt_n_new_comments', (int)$iCountNew - (int)$iCountOld)
+			'message' => _t('_cmt_txt_n_new_comments', (int)$iCountNew - (int)$iCountOld, $sReloadLink)
 		));
 
 		return $sContent;
