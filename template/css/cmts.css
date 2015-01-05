@@ -234,14 +234,10 @@
     	color: #ffffff;
     }
     div.cmt-actions {
-		position: absolute;
-    	height: 100%;
-    	top: 0px;
-    	right: 0px;
+		position: relative;
     }
     div.cmt-actions a {
     	text-decoration: none;
-		color: #9c9c9c;
     }
     div.cmt-notification div.cmt-cnt a {
     	text-decoration: underline;
