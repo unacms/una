@@ -400,6 +400,15 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
      */
     public function locationsSetSearchCondition($oSearchResult, $sCountry, $sState = false, $sCity = false, $sZip = false)
     {
+        if (empty($this->_aObject['table_locations'])) {
+            $oSearchResult->aCurrent['restriction']['meta_location'] = array(
+                'operator' => 'nothing',
+                'field' => 'nofield',
+                'value' => 'novalue',
+            );
+            return;
+        }
+
         $a = array('country' => 'sCountry', 'state' => 'sState', 'city' => 'sCity', 'zip' => 'sZip');
         foreach ($a as $sIndex => $sVar) {
             if (!$$sVar)
@@ -413,7 +422,7 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
             );
         }
 
-        $oSearchResult->aCurrent['join']['meta_keyword'] = array(
+        $oSearchResult->aCurrent['join']['meta_location'] = array(
             'type' => 'INNER',
             'table' => $this->_aObject['table_locations'],
             'mainField' => $oSearchResult->aCurrent['ident'],

@@ -592,7 +592,7 @@ class BxDolSearchResult implements iBxDolReplaceable
         // meta info
         if ($this->_sMetaType && !empty($this->aCurrent['object_metatags'])) {
             bx_import('BxDolMetatags');
-            $o = BxDolMetatags::getObjectInstance($this->aCurrent['object_metatags']);            
+            $o = BxDolMetatags::getObjectInstance($this->aCurrent['object_metatags']);
             if ($o) {
                 unset($this->aCurrent['restriction']['keyword']);
                 switch ($this->_sMetaType) {
@@ -648,6 +648,9 @@ class BxDolSearchResult implements iBxDolReplaceable
                    $sFieldTable = isset($aValue['table']) ? $aValue['table'] : $this->aCurrent['table'];
                    $sqlCondition = "`{$sFieldTable}`.`{$aValue['field']}` ";
                    switch ($aValue['operator']) {
+                       case 'nothing':
+                            $sqlCondition = " 0 ";
+                            break;
                        case 'against':
                             $aCond = isset($aValue['field']) && strlen($aValue['field']) > 0 ? $aValue['field'] : $this->aCurrent['searchFields'];
                             $sqlCondition = !empty($aCond) ? $this->getSearchFieldsCond($aCond, $aValue['value']) : "";
