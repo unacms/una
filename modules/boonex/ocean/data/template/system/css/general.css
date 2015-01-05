@@ -28,8 +28,8 @@
 
 /* --------------- content */
 #bx-content-wrapper {
-	padding-bottom: 100px;
-	padding-bottom: 6.25rem;
+	padding-bottom: 120px;
+	padding-bottom: 7.5rem;
 
 	background-image: url(../images/bg-page.png);
 	background-repeat: repeat-x;
