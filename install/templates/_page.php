@@ -60,8 +60,7 @@
 <div class="bx-install-footer">
     <div class="bx-def-centered bx-def-padding-sec-left bx-def-padding-sec-right bx-def-page-width">
         <div id="bx-content-container" class="bx-def-padding-sec-left bx-def-padding-sec-right bx-clearfix">
-            <div class="bx-install-footer-text">BoonEx - Community Software Experts</div>
-            <div class="bx-install-footer-copyright">&copy; BoonEx Pty Ltd</div>
+            &nbsp;
         </div>
     </div>
 </div>
