@@ -81,17 +81,20 @@ class BxDolLiveUpdates extends BxDol
 		$aResult = array();
 		$bUpdateCache = false;
 		foreach($aRequested as $sName => $aData) {
-			if(isset($aCached[$sName]) && (int)$aCached[$sName] == (int)$aData['count'])
+			$bCached = isset($aCached[$sName]); 
+			if($bCached && (int)$aCached[$sName] == (int)$aData['count'])
 				continue;
 
-			$aResultData = array('count_new' => $aData['count'], 'count_old' => $aCached[$sName]);
-			if(isset($aData['data']))
-				$aResultData = array_merge($aResultData, $aData['data']);
-
-			$aResult[] = array(
-				'data' => $aResultData,
-				'method' => $aData['method']
-			);
+			if($bCached) {
+				$aResultData = array('count_new' => $aData['count'], 'count_old' => $aCached[$sName]);
+				if(isset($aData['data']))
+					$aResultData = array_merge($aResultData, $aData['data']);
+	
+				$aResult[] = array(
+					'data' => $aResultData,
+					'method' => $aData['method']
+				);
+			}
 
 			$aCached[$sName] = $aData['count'];
 			$bUpdateCache = true;
