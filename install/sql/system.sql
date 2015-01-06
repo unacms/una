@@ -229,7 +229,6 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_site_icon', '', '0', 'digit', '', '', '', 22),
 (@iCategoryId, 'sys_site_logo_width', '_adm_stg_cpt_option_sys_site_logo_width', '240', 'digit', '', '', '', 23),
 (@iCategoryId, 'sys_site_logo_height', '_adm_stg_cpt_option_sys_site_logo_height', '48', 'digit', '', '', '', 24),
-(@iCategoryId, 'main_div_width', '', '1000px', 'digit', '', '', '', 25),
 
 (@iCategoryId, 'sys_template_cache_image_enable', '', '', 'checkbox', '', '', '', 30),
 (@iCategoryId, 'sys_template_cache_image_max_size', '', '5', 'digit', '', '', '', 31),
@@ -267,10 +266,7 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `or
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'template', '_adm_stg_cpt_option_template', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:13:"get_templates";s:5:"class";s:21:"TemplTemplateServices";}', 'Template', '_adm_stg_err_option_template', 1),
-
-(@iCategoryId, 'sys_template_page_width_min', '_adm_stg_cpt_option_sys_template_page_width_min', '774', 'digit', '', '', '', 2),
-(@iCategoryId, 'sys_template_page_width_max', '_adm_stg_cpt_option_sys_template_page_width_max', '1600', 'digit', '', '', '', 3);
+(@iCategoryId, 'template', '_adm_stg_cpt_option_template', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:13:"get_templates";s:5:"class";s:21:"TemplTemplateServices";}', 'Template', '_adm_stg_err_option_template', 1);
 
 
 --

@@ -15,6 +15,9 @@ class BxTemplConfig extends BxBaseConfig
     {
         parent::__construct();
 
+		if(class_exists('BxDolDb') && BxDolDb::getInstance())
+			$this->_aConfig['aLessConfig']['bx-page-width'] = getParam('bx_lagoon_page_width') . 'px';
+
         bx_import('BxDolTemplate');
         $sCode = BxDolTemplate::getInstance()->getCode();
         $sStaticImages = BX_DOL_URL_ROOT . 'templates/tmpl_' . $sCode . '/images/';
