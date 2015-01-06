@@ -194,7 +194,7 @@
                 
                 setTimeout(function () {
                     o.onShow();                    
-                    $el.find('input[type=text]').focus(); // put cursor to the first input element
+                    $el.find('input[type=text]:first').focus(); // put cursor to the first input element
                 }, o.speed);
 
             }, 100);
@@ -484,7 +484,7 @@
             } else if (o.position == 'centered') {
 
                 $el.position({
-                    of: window,
+                    of: window,                    
                     my: 'center center+' + ($el.outerHeight() > $(window).height() ? parseInt(($el.outerHeight() - $(window).height()) / 2) : '0'),
                     at: 'center center',
                     collision: 'none none'

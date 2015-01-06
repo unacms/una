@@ -1,6 +1,7 @@
 html,
 body {
-	height: 100%;
+	min-height: 100%;
+    min-height: 100vh;
 }
 iframe.bx-std-hidden {
 	display: none;
@@ -20,6 +21,7 @@ div.bx-std-cb {
 div.bx-std-page-real {
 	width: 100%;
 	min-height: 100%;
+    min-height: 100vh;
 	overflow: hidden;
 }
 div.bx-std-page-wide {

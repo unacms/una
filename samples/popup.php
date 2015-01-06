@@ -56,6 +56,17 @@ function PageCompMainCode()
     echo '<div class="bx-clear"></div>';
     echo '<hr class="bx-def-hr" />';
 
+    // transBox    
+    echo BxTemplFunctions::getInstance()->transBox('bx-sample-popup-transbox-scrolled', '<div class="bx-def-padding">' . str_repeat('transBox transBox transBox <br />', 100) . '</div>', true);
+    echo '<div></div><button class="bx-btn bx-def-margin-sec" onclick="$(\'#bx-sample-popup-transbox-scrolled\').dolPopup()">transBox scrolled</button>';
+
+    // popupBox
+    echo BxTemplFunctions::getInstance()->popupBox('bx-sample-popup-box-scrolled', 'popupBox', str_repeat('popupBox ', 1000), true);
+    echo '<button class="bx-btn bx-def-margin-sec" onclick="$(\'#bx-sample-popup-box-scrolled\').dolPopup()">popupBox scrolled</button>';
+
+    echo '<div class="bx-clear"></div>';
+    echo '<hr class="bx-def-hr" />';
+
     // transBox with pointer
     echo BxTemplFunctions::getInstance()->transBox('bx-sample-popup-transbox-with-pointer', '<div class="bx-def-padding">transBox with pointer</div>', true);
     echo '<button class="bx-btn bx-def-margin-sec" onclick="$(\'#bx-sample-popup-transbox-with-pointer\').dolPopup({pointer:{el:$(this)}})">transBox with pointer</button>';
@@ -79,6 +90,8 @@ function PageCompMainCode()
     echo '<button class="bx-btn bx-def-margin-sec" onclick="$(\'#bx-sample-popup-image\').dolPopupImage(\'samples/img/portrate_thin.jpg\', this)">popupImage (portrate thin)</button>';
     echo '<button class="bx-btn bx-def-margin-sec" onclick="$(\'#bx-sample-popup-image\').dolPopupImage(\'samples/img/small.jpg\', this)">popupImage (small)</button>';
     echo '<button class="bx-btn bx-def-margin-sec" onclick="$(\'#bx-sample-popup-image\').dolPopupImage(\'samples/img/square.jpg\', this)">popupImage (square)</button>';
+
+    echo str_repeat('&nbsp; <br />', 100);
 
     return DesignBoxContent("Sample popup", ob_get_clean(), BX_DB_PADDING_DEF);
 }
