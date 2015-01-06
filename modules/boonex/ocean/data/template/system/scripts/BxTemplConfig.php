@@ -28,6 +28,9 @@ class BxTemplConfig extends BxBaseConfig
         	'bx-border-color' => '#00a0ce',
         ));
 
+        if(class_exists('BxDolDb') && BxDolDb::getInstance())
+			$this->_aConfig['aLessConfig']['bx-page-width'] = getParam('bx_ocean_page_width') . 'px';
+
         bx_import('BxDolTemplate');
         $sCode = BxDolTemplate::getInstance()->getCode();
         $sStaticImages = BX_DOL_URL_ROOT . 'templates/tmpl_' . $sCode . '/images/';

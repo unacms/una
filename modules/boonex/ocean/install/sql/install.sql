@@ -10,7 +10,8 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALU
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_switcher_title'), '_bx_ocean_stg_cpt_option_switcher_name', 'Ocean', 'digit', '', '', '', 1);
+(@iCategoryId, CONCAT(@sName, '_switcher_title'), '_bx_ocean_stg_cpt_option_switcher_name', 'Ocean', 'digit', '', '', '', 1),
+(@iCategoryId, CONCAT(@sName, '_page_width'), '_bx_ocean_stg_cpt_option_page_width', '1000', 'digit', '', '', '', 2);
 
 
 -- STUDIO PAGE & WIDGET

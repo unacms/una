@@ -4,4 +4,5 @@
 	<string name="_bx_lagoon_stg_cpt_type"><![CDATA[Lagoon]]></string>
 	<string name="_bx_lagoon_stg_cpt_category_system"><![CDATA[General]]></string>
 	<string name="_bx_lagoon_stg_cpt_option_switcher_name"><![CDATA[Name In Template Switcher]]></string>
+	<string name="_bx_lagoon_stg_cpt_option_page_width"><![CDATA[Page Width]]></string>
 </resources>

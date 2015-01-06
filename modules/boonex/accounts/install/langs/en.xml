@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="en" flag="gb" title="English">
-	<string name="_bx_accnt"><![CDATA[Manage Accounts]]></string>
+	<string name="_bx_accnt"><![CDATA[Accounts]]></string>
 
 	<string name="_bx_accnt_page_title_sys_manage"><![CDATA[Manage Accounts]]></string>
 	<string name="_bx_accnt_page_title_manage"><![CDATA[Manage Accounts]]></string>

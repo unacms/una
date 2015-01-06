@@ -45,6 +45,12 @@ class BxDolStudioMenuTop extends BxDol
                 'onclick' => $this->getJsObject() . '.clickFavorite(this);',
                 'title' => '_adm_tmi_cpt_favorite'
             ),
+            'extensions' => array(
+                'name' => 'extensions',
+                'icon' => 'plus',
+                'link' => BX_DOL_URL_STUDIO . 'store.php?page=goodies',
+                'title' => '_adm_tmi_cpt_extensions'
+            ),
         );
 
         $aMatch = array();
