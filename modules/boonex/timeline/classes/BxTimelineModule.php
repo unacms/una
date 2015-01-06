@@ -92,6 +92,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
     public function actionShare()
     {
+    	$iAuthorId = $this->getUserId();
+
         $iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
         $aContent = array(
             'type' => bx_process_input(bx_get('type'), BX_DATA_TEXT),
@@ -111,11 +113,17 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             return;
         }
 
+        $bShared = $this->_oDb->isShared($aShared['id'], $iOwnerId, $iAuthorId);
+		if($bShared) {
+        	$this->_echoResultJson(array('code' => 3, 'msg' => _t('_bx_timeline_txt_err_already_shared')));
+            return;
+        }
+
         $iId = $this->_oDb->insertEvent(array(
             'owner_id' => $iOwnerId,
             'type' => $this->_oConfig->getPrefix('common_post') . 'share',
             'action' => '',
-            'object_id' => $this->getUserId(),
+            'object_id' => $iAuthorId,
             'object_privacy_view' => $this->_oConfig->getPrivacyViewDefault(),
             'content' => serialize($aContent),
             'title' => '',
@@ -123,7 +131,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         ));
 
         if(empty($iId)) {
-	        $this->_echoResultJson(array('code' => 3, 'msg' => _t('_bx_timeline_txt_err_cannot_share')));        
+	        $this->_echoResultJson(array('code' => 4, 'msg' => _t('_bx_timeline_txt_err_cannot_share')));        
 	        return;
         }
 
@@ -136,7 +144,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 			'code' => 0, 
 			'msg' => _t('_bx_timeline_txt_msg_success_share'), 
 			'count' => $aShared['shares'], 
-			'counter' => $sCounter
+			'counter' => $sCounter,
+			'disabled' => !$bShared
 		));
     }
 

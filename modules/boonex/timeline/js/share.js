@@ -38,6 +38,9 @@ BxTimelineShare.prototype.shareItem = function(oLink, iOwnerId, sType, sAction, 
         		$('#' + sCounter).replaceWith(oData.counter);
         		$('#' + sCounter).parents('.' + $this.sSP + '-share-counter-holder:first').bx_anim(oData.count > 0 ? 'show' : 'hide');
         	}
+
+        	if(oData && oData.disabled)
+    			$(oLink).removeAttr('onclick').addClass($(oLink).hasClass('bx-btn') ? 'bx-btn-disabled' : $this.sSP + '-share-disabled');
         },
         'json'
     );

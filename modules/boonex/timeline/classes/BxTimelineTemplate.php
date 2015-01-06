@@ -269,7 +269,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if(empty($aShared) || !is_array($aShared))
             return '';
 
-		$bDisabled = $this->getModule()->isAllowedShare($aShared) !== true;
+		$oModule = $this->getModule();
+		$bDisabled = $oModule->isAllowedShare($aShared) !== true || $this->_oDb->isShared($aShared['id'], $iOwnerId, $oModule->getUserId());
 		if($bDisabled && (int)$aShared['shares'] == 0)
             return '';
 
@@ -312,7 +313,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
 		$sDoShare = '';
         if($bShowDoShareIcon)
-            $sDoShare .= $this->parseHtmlByName('bx_icon.html', array('name' => 'share'));
+            $sDoShare .= $this->parseHtmlByName('bx_icon.html', array('name' => 'repeat'));
 
         if($bShowDoShareLabel)
             $sDoShare .= ($sDoShare != '' ? ' ' : '') . _t('_bx_timeline_txt_do_share');

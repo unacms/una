@@ -139,6 +139,17 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         return $this->getColumn($sQuery);
     }
 
+    function isShared($iSharedId, $iOwnerId, $iAuthorId)
+    {
+    	$sQuery = $this->prepare("SELECT 
+    			`te`.`id`
+    		FROM `{$this->_sTableSharesTrack}` AS `tst` 
+    		LEFT JOIN `{$this->_sTable}` AS `te` ON `tst`.`event_id`=`te`.`id` 
+    		WHERE `tst`.`author_id`=? AND `tst`.`shared_id`=? AND `te`.`owner_id`=?", $iAuthorId, $iSharedId, $iOwnerId);
+
+    	return (int)$this->getOne($sQuery) > 0;
+    }
+
     //--- Photo uploader related methods ---//
     public function saveMedia($sType, $iEventId, $iItemId)
     {
