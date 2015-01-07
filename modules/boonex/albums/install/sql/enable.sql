@@ -334,3 +334,12 @@ INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `
 ('bx_albums_simple', 1, 'BxAlbumsUploaderSimple', 'modules/boonex/albums/classes/BxAlbumsUploaderSimple.php'),
 ('bx_albums_html5', 1, 'BxAlbumsUploaderHTML5', 'modules/boonex/albums/classes/BxAlbumsUploaderHTML5.php');
 
+-- ALERTS
+
+INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALUES 
+('bx_albums', 'BxAlbumsAlertsResponse', 'modules/boonex/albums/classes/BxAlbumsAlertsResponse.php', '');
+SET @iHandler := LAST_INSERT_ID();
+
+INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
+('profile', 'delete', @iHandler);
+

@@ -62,12 +62,11 @@ class BxDolViewQuery extends BxDolDb
         }
     }
 
-    function deleteObjectViews($iObjectId)
+    public function deleteObjectViews($iObjectId)
     {
         $sQuery = $this->prepare("DELETE FROM {$this->_sTableTrack} WHERE `object_id` = ?", $iObjectId);
-        $this->query ($sQuery);
-
-        $this->query ("OPTIMIZE TABLE {$this->_sTableTrack}");
+        if ($this->query ($sQuery))
+            $this->query ("OPTIMIZE TABLE {$this->_sTableTrack}");
     }
 
     public function updateTriggerTable($iObjectId)

@@ -202,6 +202,24 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
         return $oMenu ? $oMenu->getCode() : false;
     }
 
+    /**
+     * Delete all content by profile 
+     * @param $iProfileId profile id 
+     * @return number of deleted items
+     */
+    public function serviceDeleteEntitiesByAuthor ($iProfileId)
+    {
+        $a = $this->_oDb->getEntriesByAuthor((int)$iProfileId);
+        if (!$a)
+            return 0;
+
+        $iCount = 0;
+        foreach ($a as $aContentInfo)
+            $iCount += ('' == $this->serviceDeleteEntity($aContentInfo[$this->_oConfig->CNF['FIELD_ID']]) ? 1 : 0);
+
+        return $iCount;
+    }
+
 	/**
      * Data for Notification
      */

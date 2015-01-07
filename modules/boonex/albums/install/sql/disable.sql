@@ -36,3 +36,8 @@ DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_albums_administration', 'b
 -- UPLOADERS
 DELETE FROM `sys_objects_uploader` WHERE `object` IN('bx_albums_simple', 'bx_albums_html5');
 
+-- ALERTS
+SET @iHandler := (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = 'bx_albums' LIMIT 1);
+DELETE FROM `sys_alerts` WHERE `handler_id` = @iHandler;
+DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandler;
+

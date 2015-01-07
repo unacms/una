@@ -242,8 +242,9 @@ class BxDolAccount extends BxDol
 
     /**
      * Delete profile.
+     * @param $bDeleteWithContent - delete associated profiles with all its contents
      */
-    function delete()
+    function delete($bDeleteWithContent = false)
     {
         $aAccountInfo = $this->_oQuery->getInfoById($this->_iAccountID);
         if (!$aAccountInfo)
@@ -251,7 +252,7 @@ class BxDolAccount extends BxDol
 
         // create system event before deletion
         $isStopDeletion = false;
-        bx_alert('account', 'before_delete', $this->_iAccountID, 0, array('stop_deletion' => &$isStopDeletion));
+        bx_alert('account', 'before_delete', $this->_iAccountID, 0, array('delete_with_content' => $bDeleteWithContent, 'stop_deletion' => &$isStopDeletion));
         if ($isStopDeletion)
             return false;
 
@@ -265,7 +266,7 @@ class BxDolAccount extends BxDol
             $oProfile = BxDolProfile::getInstance($iProfileId);
             if (!$oProfile)
                 continue;
-            $oProfile->delete(false, true);
+            $oProfile->delete(false, $bDeleteWithContent, true);
         }
 
         // delete profile
@@ -273,7 +274,7 @@ class BxDolAccount extends BxDol
             return false;
 
         // create system event
-        bx_alert('account', 'delete', $this->_iAccountID);
+        bx_alert('account', 'delete', $this->_iAccountID, 0, array ('delete_with_content' => $bDeleteWithContent));
 
         // unset class instance to prevent creating the instance again
         $this->_iAccountID = 0;

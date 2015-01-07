@@ -329,3 +329,13 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_posts_common', 'single', 'edit', '_bx_posts_grid_action_title_adm_edit', 'pencil', 1, 0, 1),
 ('bx_posts_common', 'single', 'delete', '_bx_posts_grid_action_title_adm_delete', 'remove', 1, 1, 2),
 ('bx_posts_common', 'single', 'settings', '_bx_posts_grid_action_title_adm_more_actions', 'cog', 1, 0, 3);
+
+-- ALERTS
+
+INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALUES 
+('bx_posts', 'BxPostsAlertsResponse', 'modules/boonex/posts/classes/BxPostsAlertsResponse.php', '');
+SET @iHandler := LAST_INSERT_ID();
+
+INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
+('profile', 'delete', @iHandler);
+

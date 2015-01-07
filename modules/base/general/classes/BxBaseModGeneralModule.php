@@ -141,6 +141,19 @@ class BxBaseModGeneralModule extends BxDolModule
     }
 
     /**
+     * Delete content entry
+     * @param $iContentId content id 
+     * @return error message or empty string on success
+     */
+    public function serviceDeleteEntity ($iContentId, $sFuncDelete = 'deleteData')
+    {
+        bx_import('FormsEntryHelper', $this->_aModule);
+        $sClass = $this->_oConfig->getClassPrefix() . 'FormsEntryHelper';
+        $oFormsHelper = new $sClass($this);
+        return $oFormsHelper->$sFuncDelete($iContentId);
+    }
+
+    /**
      * Entry actions block
      */
     public function serviceEntityActions ($iContentId = 0)

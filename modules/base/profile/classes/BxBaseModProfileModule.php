@@ -229,6 +229,14 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         return $s;
     }
 
+    /**
+     * For internal usage only.
+     */
+    public function serviceDeleteEntityService ($iContentId, $bDeleteWithContent = false)
+    {
+        return parent::serviceDeleteEntity ($iContentId, 'deleteDataService');
+    }
+
     // ====== PERMISSION METHODS
 
     /**

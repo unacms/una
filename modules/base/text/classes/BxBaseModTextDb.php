@@ -23,8 +23,14 @@ class BxBaseModTextDb extends BxBaseModGeneralDb
 
     public function getContentInfoById ($iContentId)
     {
-        $sQuery = $this->prepare ("SELECT `c`.* FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` WHERE `c`.`id` = ?", $iContentId);
+        $sQuery = $this->prepare ("SELECT * FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` WHERE `" . $this->_oConfig->CNF['FIELD_ID'] . "` = ?", $iContentId);
         return $this->getRow($sQuery);
+    }
+
+    public function getEntriesByAuthor ($iProfileId)
+    {
+        $sQuery = $this->prepare ("SELECT * FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` WHERE `" . $this->_oConfig->CNF['FIELD_AUTHOR'] . "` = ?", $iProfileId);
+        return $this->getAll($sQuery);
     }
 }
 

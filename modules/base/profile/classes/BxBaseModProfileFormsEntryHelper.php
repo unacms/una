@@ -40,13 +40,23 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         return array ($oProfile, $aContentInfo);
     }
 
-    protected function onDataDeleteAfter ($iContentId, $aContentInfo, $oProfile)
+    public function deleteData ($iContentId, $aContentInfo = false, $oProfile = null, $oForm = null)
     {
+        if (!$aContentInfo)
+            list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
+
         // delete profile
-        if (!$oProfile->delete($aContentInfo['profile_id']))
+        bx_import('BxDolProfile');
+        $oProfile = BxDolProfile::getInstance($aContentInfo['profile_id']);
+        if (!$oProfile->delete())
             return _t('_sys_txt_error_entry_delete');
 
         return '';
+    }
+
+    public function deleteDataService ($iContentId, $aContentInfo = false, $oProfile = null, $oForm = null)
+    {
+        return parent::deleteData ($iContentId, $aContentInfo, $oProfile, $oForm);
     }
 
     protected function onDataEditBefore ($iContentId, $aContentInfo, &$aTrackTextFieldsChanges)
