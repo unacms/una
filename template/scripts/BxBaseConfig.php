@@ -86,6 +86,17 @@ class BxBaseConfig extends BxDol implements iBxDolSingleton
         return isset($this->_aConfig[$sName]);
     }
 
+    protected function setPageWidth($sParamName)
+    {
+    	if(!class_exists('BxDolDb') || !BxDolDb::getInstance() || empty($sParamName)) 
+    		return;
+
+		$mixedWidth = getParam($sParamName);
+		if(is_numeric($mixedWidth))
+			$mixedWidth .= 'px';
+
+		$this->_aConfig['aLessConfig']['bx-page-width'] = $mixedWidth;
+    }
 }
 
 /** @} */
