@@ -464,7 +464,7 @@ function echoDbgLog($mWhat, $sDesc = '', $sFileName = 'debug.log')
         $sDesc . "\n" .
         print_r($mWhat, true) . "\n\n\n";
 
-    $rFile = fopen(BxDolConfig::getInstance()->get('path_dynamic', 'tmp') . $sFileName, 'a');
+    $rFile = fopen(BX_DIRECTORY_PATH_LOGS . $sFileName, 'a');
     fwrite($rFile, $sCont);
     fclose($rFile);
 }

@@ -304,8 +304,6 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
      */
     function getMainLogo()
     {
-        bx_import('BxDolConfig');
-
         $sAlt = getParam('sys_site_logo_alt') ? getParam('sys_site_logo_alt') : getParam('site_title');
         $sLogo = $sAlt;
 
