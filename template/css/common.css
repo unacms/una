@@ -37,6 +37,12 @@ blockquote {
     padding-left: 10px;
 }
 
+.bx-main {
+	position: relative;
+	min-height: 100%;
+	min-height: 100vh;
+}
+
 .bx-clear {
     clear:both;
     float:none;

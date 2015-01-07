@@ -1,10 +1,4 @@
 
-.bx-main {
-	position: relative;
-	min-height: 100%;
-	min-height: 100vh;
-}
-
 .bx-page-image-container img,
 .bx-page-html-container img {
     max-width:100%;
