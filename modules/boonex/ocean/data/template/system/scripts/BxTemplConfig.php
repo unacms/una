@@ -28,19 +28,7 @@ class BxTemplConfig extends BxBaseConfig
         	'bx-border-color' => '#00a0ce',
         ));
 
-        if(class_exists('BxDolDb') && BxDolDb::getInstance())
-			$this->_aConfig['aLessConfig']['bx-page-width'] = getParam('bx_ocean_page_width') . 'px';
-
-        bx_import('BxDolTemplate');
-        $sCode = BxDolTemplate::getInstance()->getCode();
-        $sStaticImages = BX_DOL_URL_ROOT . 'templates/tmpl_' . $sCode . '/images/';
-
-        bx_import('BxDolConfig');
-        $oSysConfig = BxDolConfig::getInstance();
-        $oSysConfig->set('url_static', 'images', $sStaticImages);
-        $oSysConfig->set('url_static', 'icons', $sStaticImages . 'icons/');
-
-        $oSysConfig->set('path_static', 'css', BX_DIRECTORY_PATH_ROOT . 'templates/tmpl_' . $sCode . '/css/');
+        $this->setPageWidth('bx_ocean_page_width');
     }
 }
 

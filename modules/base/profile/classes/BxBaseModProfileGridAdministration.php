@@ -65,10 +65,7 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
 		if(count($aIdsResult) == 1)
 			$aIdsResult = $aIdsResult[0];
 
-		$sContent = $this->_oTemplate->parseHtmlByName('bx_div.html', array(
-			'bx_repeat:attrs' => array(
-				array('key' => 'class', 'value' => 'bx-def-padding')
-			),
+		$sContent = $this->_oTemplate->parseHtmlByName('set_acl_popup.html', array(
 			'content' => $oMenu->getCode($aIdsResult)
 		));
 

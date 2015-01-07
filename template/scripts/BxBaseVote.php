@@ -262,19 +262,20 @@ class BxBaseVote extends BxDolVote
     protected function _getLabelDoLike($aParams = array())
     {
     	$bVoted = isset($aParams['is_voted']) && $aParams['is_voted'] === true;
-    	$oTemplate = BxDolTemplate::getInstance();
-
-        $sResult = '';
-        if(isset($aParams['show_do_vote_icon']) && $aParams['show_do_vote_icon'] == true)
-            $sResult .= $oTemplate->parseHtmlByName('bx_icon.html', array('name' => $this->_getIconDoLike($bVoted)));
-
-        if(isset($aParams['show_do_vote_label']) && $aParams['show_do_vote_label'] == true)
-            $sResult .= ($sResult != '' ? ' ' : '') . $oTemplate->parseHtmlByName('bx_span.html', array(
-            	'bx_repeat:attrs' => array(),
-            	'content' => _t($this->_getTitleDoLike($bVoted))
-            ));
-
-        return $sResult;
+        return BxDolTemplate::getInstance()->parseHtmlByName('vote_do_vote_likes_label.html', array(
+        	'bx_if:show_icon' => array(
+        		'condition' => isset($aParams['show_do_vote_icon']) && $aParams['show_do_vote_icon'] == true,
+        		'content' => array(
+        			'name' => $this->_getIconDoLike($bVoted)
+        		)
+        	),
+        	'bx_if:show_text' => array(
+        		'condition' => isset($aParams['show_do_vote_label']) && $aParams['show_do_vote_label'] == true,
+        		'content' => array(
+        			'text' => _t($this->_getTitleDoLike($bVoted))
+        		)
+        	)
+        ));
     }
 
     protected function _getVotedBy()

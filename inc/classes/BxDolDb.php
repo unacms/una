@@ -532,7 +532,6 @@ EOJ;
             }
         }
 
-        bx_import('BxDolConfig');
         if (defined('BX_DB_FULL_VISUAL_PROCESSING') && BX_DB_FULL_VISUAL_PROCESSING) {
 
             ob_start();
@@ -800,7 +799,7 @@ EOJ;
 
     function log ($s)
     {
-        return file_put_contents(BX_DIRECTORY_PATH_ROOT . 'logs/db.err.log', date('Y-m-d H:i:s') . "\t" . $s . "\n", FILE_APPEND);
+        return file_put_contents(BX_DIRECTORY_PATH_LOGS . 'db.err.log', date('Y-m-d H:i:s') . "\t" . $s . "\n", FILE_APPEND);
     }
 
     function executeSQL($sPath, $aReplace = array (), $isBreakOnError = true)

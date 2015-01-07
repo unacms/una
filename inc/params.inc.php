@@ -28,6 +28,7 @@ define('BX_DIRECTORY_PATH_PLUGINS', BX_DIRECTORY_PATH_ROOT . 'plugins/');
 define('BX_DIRECTORY_PATH_PLUGINS_PUBLIC', BX_DIRECTORY_PATH_ROOT . 'plugins_public/');
 define('BX_DIRECTORY_PATH_MODULES', BX_DIRECTORY_PATH_ROOT . 'modules/');
 define('BX_DIRECTORY_PATH_TMP', BX_DIRECTORY_PATH_ROOT . 'tmp/');
+define('BX_DIRECTORY_PATH_LOGS', BX_DIRECTORY_PATH_ROOT . 'logs/');
 define('BX_DIRECTORY_STORAGE', BX_DIRECTORY_PATH_ROOT . 'storage/');
 
 //--- System settings ---//
@@ -81,7 +82,6 @@ require_once(BX_DIRECTORY_PATH_CLASSES . 'BxDol.php');
 require_once(BX_DIRECTORY_PATH_INC . 'utils.inc.php');
 require_once(BX_DIRECTORY_PATH_INC . 'version.inc.php');
 
-bx_import('BxDolConfig');
 bx_import('BxDolService');
 bx_import('BxDolAlerts');
 bx_import('BxDolDb');
