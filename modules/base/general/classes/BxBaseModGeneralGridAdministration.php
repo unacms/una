@@ -21,10 +21,12 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
 
     public function __construct ($aOptions, $oTemplate = false)
     {
+    	$this->_oModule = BxDolModule::getInstance($this->MODULE);
+    	if(!$oTemplate)
+			$oTemplate = $this->_oModule->_oTemplate;
+
         parent::__construct ($aOptions, $oTemplate);
 
-        $this->_oModule = BxDolModule::getInstance($this->MODULE);
-        
         $this->_sManageType = 'administration';
         $this->_sParamsDivider = '#-#';
     }
