@@ -66,6 +66,14 @@ div.bx-tl-owner-avatar {
 	top: 0px;
 	left: 0px;
 }
+div.bx-tl-owner-info {
+	white-space: nowrap;
+}
+div.bx-tl-owner-name,
+div.bx-tl-item-info {
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
 
 /*+++ Item Text +++*/
 div.bx-tl-item-text {}

@@ -508,6 +508,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'content' => array()
             ),
             'item_owner_url' => $sAuthorUrl,
+            'item_owner_title' => bx_html_attribute($sAuthorName),
             'item_owner_name' => $sAuthorName,
             'bx_if:show_timeline_owner' => array(
                 'condition' => !empty($aTmplVarsTimelineOwner),
