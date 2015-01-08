@@ -97,11 +97,9 @@
 		white-space: nowrap;
 		overflow: hidden;
 	}
-    div.cmt-reply-to a.cmt-points span {
-		display: inline;
-    	float: none;
+    span.cmt-reply-to a {
+		text-decoration: none;
     }
-    
     span.cmt-posted-ago {
         text-transform: lovercase;
     }
