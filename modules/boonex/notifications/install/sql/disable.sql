@@ -22,6 +22,7 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 
 -- ALERTS
 SET @iHandlerId = (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = @sName LIMIT 1);
+DELETE FROM `sys_alerts` WHERE `handler_id` = @iHandlerId;
 DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandlerId LIMIT 1;
 
 

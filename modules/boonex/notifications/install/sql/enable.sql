@@ -43,6 +43,10 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 -- ALERTS
 INSERT INTO `sys_alerts_handlers`(`name`, `class`, `file`, `service_call`) VALUES 
 (@sName, 'BxNtfsResponse', 'modules/boonex/notifications/classes/BxNtfsResponse.php', '');
+SET @iHandler := LAST_INSERT_ID();
+
+INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
+('profile', 'delete', @iHandler);
 
 
 -- MODULES' CONNECTIONS

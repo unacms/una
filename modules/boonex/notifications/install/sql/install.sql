@@ -32,6 +32,8 @@ CREATE TABLE IF NOT EXISTS `bx_notifications_handlers` (
   UNIQUE `handler` (`alert_unit`, `alert_action`)
 );
 
+INSERT INTO `bx_notifications_handlers`(`type`, `alert_unit`, `alert_action`, `content`) VALUES
+('delete', 'profile', 'delete', '');
 
 -- STUDIO PAGE & WIDGET
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES

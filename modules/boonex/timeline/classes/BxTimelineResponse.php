@@ -28,15 +28,7 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
      */
     public function response($oAlert)
     {
-        if(is_array($oAlert->aExtras) && isset($oAlert->aExtras['from_wall']) && (int)$oAlert->aExtras['from_wall'] == 1)
-            $this->_responseInner($oAlert);
-        else
-            $this->_responseOuter($oAlert);
-    }
-
-    protected function _responseOuter($oAlert)
-    {
-        $iPrivacyView = $this->_getPrivacyView($oAlert->aExtras);
+    	$iPrivacyView = $this->_getPrivacyView($oAlert->aExtras);
         if($iPrivacyView == BX_DOL_PG_HIDDEN)
             return;
 
@@ -70,7 +62,7 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                 break;
 
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_DELETE:
-            	if($oAlert->sUnit == 'profile' && $oAlert->sAction == 'delete') {
+            	if($oAlert->sUnit == 'profile' && $oAlert->sAction == 'delete' && isset($oAlert->aExtras['delete_with_content']) && $oAlert->aExtras['delete_with_content']) {
             		$aEvents = $this->_oModule->_oDb->getEvents(array('browse' => 'owner_id', 'value' => $oAlert->iObject));
             		foreach($aEvents as $aEvent)
             			$this->_oModule->deleteEvent($aEvent);
@@ -85,33 +77,6 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
             	$this->_oModule->deleteEvent($aEvent);
                 break;
         }
-    }
-
-    //TODO: Remove if it's not used.
-    protected function _responseInner($oAlert)
-    {
-        $this->_oModule->_iOwnerId = (int)$oAlert->aExtras['owner_id'];
-        $sMedia = strtolower(str_replace('bx_', '', $oAlert->sUnit));
-        $aMediaInfo = $this->_oModule->_oTemplate->getCommonMedia($sMedia, $oAlert->iObject);
-
-        $iId = $this->_oModule->_oDb->insertEvent(array(
-            'owner_id' => $this->_oModule->_iOwnerId,
-            'type' => $this->_oModule->_oConfig->getPrefix('common_post') . $sMedia,
-            'action' => '',
-            'object_id' => $this->_oModule->_getUserId(),
-            'object_privacy_view' => $this->_getPrivacyView($oAlert->aExtras),
-            'content' => serialize(array(
-                'type' => $sMedia,
-                'id' => $oAlert->iObject,
-            )),
-            'title' => bx_process_input($aMediaInfo['title']),
-            'description' => bx_process_input($aMediaInfo['description'])
-        ));
-
-        if(!empty($iId))
-            $this->_oModule->onPost($iId);
-
-        echo $this->_oModule->_oTemplate->_wrapInTagJsCode("parent." . $this->_oModule->_sJsPostObject . "._getPost(null, " . $iId . ");");
     }
 }
 

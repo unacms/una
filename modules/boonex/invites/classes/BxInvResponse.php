@@ -32,9 +32,6 @@ class BxInvResponse extends BxDolAlertsResponse
      */
     public function response($oAlert)
     {
-    	if($oAlert->sUnit != 'account' || !in_array($oAlert->sAction, array('add_form', 'added')))
-    		return;
-
 		$sMethod = '_process' . bx_gen_method_name($oAlert->sUnit . '_' . $oAlert->sAction);
 		if(!method_exists($this, $sMethod))
 			return;
@@ -79,6 +76,14 @@ class BxInvResponse extends BxDolAlertsResponse
     		$oKeys->removeKey($sKey);
 
     	return;
+    }
+
+    protected function _processProfileDelete($oAlert)
+    {
+    	if(!isset($oAlert->aExtras['delete_with_content']) || !$oAlert->aExtras['delete_with_content'])
+    		return; 
+
+    	$this->_oModule->_oDb->deleteInvites(array('profile_id' => $oAlert->iObject));
     }
 }
 

@@ -58,6 +58,12 @@ class BxInvDb extends BxDolModuleDb
 		return array($aEntries, (int)$this->getOne("SELECT FOUND_ROWS()"));
     }
 
+	public function deleteInvites($aParams)
+    {
+        $sSql = "DELETE FROM `{$this->_sTableInvites}` WHERE " . $this->arrayToSQL($aParams, " AND ");
+        return $this->query($sSql);
+    }
+
 	public function getRequests($aParams, $bReturnCount = false)
     {
     	$sMethod = 'getAll';

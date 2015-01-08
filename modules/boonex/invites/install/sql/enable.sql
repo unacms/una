@@ -108,4 +108,5 @@ SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('account', 'add_form', @iHandler),
-('account', 'added', @iHandler);
+('account', 'added', @iHandler),
+('profile', 'delete', @iHandler);
