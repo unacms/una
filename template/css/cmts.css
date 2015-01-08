@@ -91,17 +91,12 @@
     	background-color: rgb(255, 244, 213);
     	background-color: rgba(255, 234, 193, 0.5);
     }
-	div.cmt-head div.cmt-username,
-	div.cmt-head div.cmt-username,
-	div.cmt-head div.cmt-ago,
-	div.cmt-head div.cmt-reply-to,
-	div.cmt-head div.bullet {
-		display: inline-block;
+	div.cmt-head,
+	div.cmt-subhead {
+    	text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
 	}
-	div.cmt-head div.bullet {
-		padding: 0px;
-	}
-
     div.cmt-reply-to a.cmt-points span {
 		display: inline;
     	float: none;

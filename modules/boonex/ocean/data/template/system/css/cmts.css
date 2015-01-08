@@ -1,5 +1,5 @@
 @import url(../../../../../../../template/css/cmts.css);
 
-div.cmt-head div.cmt-username {
+div.cmt-head .cmt-username {
 	font-weight: bold;
 }
