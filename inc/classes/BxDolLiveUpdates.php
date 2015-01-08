@@ -20,12 +20,11 @@ class BxDolLiveUpdates extends BxDol
 {
 	protected $_oQuery;
     protected $_aSystems;
+    protected $_aSystemsActive;
 
     protected $_iInterval;
 
-    protected $_sSessionKey;
-
-	protected $_iCacheTTL; // Note. Non-zero value may lead to cache destroying in wrong time.  
+	protected $_iCacheTTL;  
 	protected $_sCacheKey;
 
     protected $_sJsClass;
@@ -36,17 +35,17 @@ class BxDolLiveUpdates extends BxDol
         parent::__construct();
 
         $this->_oQuery = new BxDolLiveUpdatesQuery();
-        $this->_aSystems = $this->_oQuery->getSystems();
 
         $this->_iInterval = (int)$this->_oQuery->getParam('sys_live_updates_interval');
 
-        $this->_sSessionKey = 'bx_lu_index';
-        
-        $this->_iCacheTTL = 0;
+        $this->_iCacheTTL = 86400;
         $this->_sCacheKey = 'sys_live_updates_' . bx_get_logged_profile_id();
 
         $this->_sJsClass = 'BxDolLiveUpdates';
     	$this->_sJsObject = 'oLiveUpdates';
+
+    	$this->_aSystemsActive = array();
+    	$this->_aSystems = $this->_getCachedSystems();
     }
 
     /**
@@ -69,7 +68,11 @@ class BxDolLiveUpdates extends BxDol
      */
     public function perform()
     {
-		$iIndex = $this->_getIndex();
+		$iIndex = (int)bx_get('index');
+
+		$mixedSystemsActive = bx_get('systems_active');
+		if($mixedSystemsActive !== false)
+			$this->_aSystemsActive = $mixedSystemsActive;
 
 		$this->_aSystems = $this->_getCachedSystems();
     	if(empty($this->_aSystems) || !is_array($this->_aSystems))
@@ -116,30 +119,28 @@ class BxDolLiveUpdates extends BxDol
      */
     public function add($sName, $iFrequency, $sServiceCall, $bActive = true)
     {
-    	if(isset($this->_aSystems[$sName]))
-    		return false;
+    	if(!in_array($sName, $this->_aSystemsActive))
+    		$this->_aSystemsActive[] = $sName;
 
-    	$this->_aSystems[$sName] = array(
-    		'name' => $sName,
-    		'frequency' => $iFrequency,
-    		'service_call' => $sServiceCall,
-    		'active' => $bActive ? 1 : 0
-    	);
+    	if(empty($this->_aSystems[$sName])) {
+	    	$this->_aSystems[$sName] = array(
+	    		'name' => $sName,
+	    		'frequency' => $iFrequency,
+	    		'service_call' => $sServiceCall,
+	    		'active' => $bActive ? 1 : 0
+	    	);
 
-    	$this->_updateCached('systems', $this->_aSystems);
+	    	$this->_updateCached('systems', $this->_aSystems);
+    	}
+
+    	$mixedResponce = $this->_getRequestedDataBySystem($this->_aSystems[$sName]);
+    	if($mixedResponce !== false) {
+    		$aCachedData = $this->_getCachedData();
+    		$aCachedData[$sName] = $mixedResponce['count'];
+    		$this->_updateCached('data', $aCachedData);
+    	}
 
     	return true;
-    }
-
-    protected function _getIndex()
-    {
-		bx_import('BxDolSession');
-    	$oSession = BxDolSession::getInstance();
-
-		$iIndex = (int)$oSession->getValue($this->_sSessionKey);
-		$oSession->setValue($this->_sSessionKey, ($iIndex + 1));
-
-		return $iIndex;
     }
 
     protected function _getCacheInfo()
@@ -178,7 +179,11 @@ class BxDolLiveUpdates extends BxDol
 
 	protected function _getCachedSystems()
     {
-    	return $this->_getCached('systems');
+    	$aSystems = $this->_getCached('systems');
+    	if(!empty($aSystems) && !empty($this->_aSystemsActive))
+    		$aSystems = array_intersect_key($aSystems, array_flip($this->_aSystemsActive));
+
+    	return $aSystems;
     }
 
     protected function _getCachedData()
@@ -200,28 +205,33 @@ class BxDolLiveUpdates extends BxDol
     {
     	$aResult = array();
 
-    	foreach($this->_aSystems as $aSystem) {
+    	foreach($this->_aSystems as $sName => $aSystem) {
     		if(empty($aSystem) || !is_array($aSystem) || (int)$aSystem['active'] != 1)
     			continue;
 
 			if($bIndexCheck && $iIndex % (int)$aSystem['frequency'] != 0)
 				continue;
 
-			if(!BxDolService::isSerializedService($aSystem['service_call']))
+			$mixedResponce = $this->_getRequestedDataBySystem($aSystem, (!empty($aCachedData) && isset($aCachedData[$sName]) ? (int)$aCachedData[$sName] : 0));
+			if($mixedResponce === false)
 				continue;
 
-			$aMarkers = array();
-			if(!empty($aCachedData) && isset($aCachedData[$aSystem['name']]))
-				$aMarkers = array('count' => (int)$aCachedData[$aSystem['name']]);
-
-			$aResponce = BxDolService::callSerialized($aSystem['service_call'], $aMarkers);
-			if(empty($aResponce) || !is_array($aResponce) || !isset($aResponce['count'], $aResponce['method']))
-				continue;
-
-			$aResult[$aSystem['name']] = $aResponce;
+			$aResult[$sName] = $mixedResponce;
     	}
 
     	return $aResult;
+    }
+
+    protected function _getRequestedDataBySystem($aSystem, $iCachedData = 0)
+    {
+		if(!BxDolService::isSerializedService($aSystem['service_call']))
+			return false;
+
+		$aResponce = BxDolService::callSerialized($aSystem['service_call'], array('count' => (int)$iCachedData));
+		if(empty($aResponce) || !is_array($aResponce) || !isset($aResponce['count'], $aResponce['method']))
+			return false;
+
+		return $aResponce;
     }
 }
 

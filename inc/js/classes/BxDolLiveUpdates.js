@@ -11,8 +11,10 @@ function BxDolLiveUpdates(oOptions)
 	this._sActionsUrl = oOptions.sActionsUrl == undefined ? sUrlRoot + 'live_updates.php' : oOptions.sActionsUrl;
 	this._sObjName = oOptions.sObjName == undefined ? 'oLiveUpdates' : oOptions.sObjName;
 	this._iInterval = oOptions.iInterval == undefined ? 3000 : oOptions.iInterval;
-	this._bServerRequesting = oOptions.bServerRequesting == undefined ? {} : oOptions.bServerRequesting;
+	this._aSystemsActive = oOptions.aSystemsActive == undefined ? {} : oOptions.aSystemsActive;
+	this._bServerRequesting = oOptions.bServerRequesting == undefined ? false : oOptions.bServerRequesting;
 
+	this._iIndex = 0;
 	this._iHandler = 0;
 	this._bBusy = false;
 
@@ -45,10 +47,12 @@ BxDolLiveUpdates.prototype.perform = function() {
 	var oDate = new Date();
 
 	this._bBusy = true;
-	
-    $.get(
+
+    $.post(
     	this._sActionsUrl,
         {
+    		systems_active: this._aSystemsActive,
+    		index: this._iIndex,
     		_t: oDate.getTime()
         },
         function(aData) {
@@ -65,6 +69,8 @@ BxDolLiveUpdates.prototype.perform = function() {
         },
         'json'
     );
+
+    this._iIndex += 1;
 };
 
 /** @} */

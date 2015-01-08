@@ -25,6 +25,7 @@ class BxBaseLiveUpdates extends BxDolLiveUpdates
         	'sActionsUrl' => BX_DOL_URL_ROOT . 'live_updates.php',
         	'sObjName' => $this->_sJsObject,
         	'iInterval' => $this->_iInterval,
+        	'aSystemsActive' => $this->_aSystemsActive,
         	'bServerRequesting' => !empty($this->_aSystems)
         ), $aParams);
 
