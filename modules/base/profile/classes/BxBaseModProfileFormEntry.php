@@ -135,10 +135,7 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
                 $this->_deleteFile ($aContentInfo[$sField], $aVals['storage_object']);
         }
 
-        bx_import('BxDolView');
-        BxDolView::getObjectInstance($CNF['OBJECT_VIEWS'], $iContentId)->onObjectDelete();
-
-        return parent::delete($iContentId);
+        return parent::delete($iContentId, $aContentInfo);
     }
 
     function _processFile ($sField, $iFileIdOld, &$sErrorString)

@@ -48,17 +48,13 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
             exit;
         }
 
-        bx_import('FormsEntryHelper', $this->_oModule->_aModule);
-        $sClass = $this->_oModule->_oConfig->getClassPrefix() . 'FormsEntryHelper';
-        $oFormsHelper = new $sClass($this->_oModule);
-
         $aIdsAffected = array ();
         foreach($aIds as $iId) {
 			$aContentInfo = $this->_oModule->_oDb->getContentInfoById($iId);
 	    	if($this->_oModule->checkAllowedDelete($aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED)
 	    		continue;
 
-        	if($oFormsHelper->deleteData($iId) != '')
+        	if($this->_oModule->serviceDeleteEntity($iId) != '')
                 continue;
 
 			if(!$this->_onDelete($iId, $aParams))

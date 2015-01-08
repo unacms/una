@@ -242,10 +242,11 @@ class BxDolProfile extends BxDol implements iBxDolProfile
     /**
      * Delete profile.
      * @param $ID - optional profile id to delete
+     * @param $bDeleteWithContent - delete profile with all its contents
      * @param $bForceDelete - force deletetion is case of account profile deletion
      * @return false on error, or true on success
      */
-    function delete($ID = false, $bForceDelete = false)
+    function delete($ID = false, $bDeleteWithContent = true /*false*/, $bForceDelete = false)
     {
         $ID = (int)$ID;
         if (!$ID)
@@ -259,6 +260,10 @@ class BxDolProfile extends BxDol implements iBxDolProfile
         if (!$bForceDelete && 'system' == $aProfileInfo['type'])
             return false;
 
+        // delete actual profile
+        if ($sErrorMsg = BxDolService::call($aProfileInfo['type'] , 'delete_entity_service', array($aProfileInfo['content_id'], $bDeleteWithContent)))
+            return false;
+
         // switch profile context if deleted profile is active profile context
         bx_import('BxDolAccount');
         $oAccount = BxDolAccount::getInstance ($aProfileInfo['account_id']);
@@ -270,7 +275,7 @@ class BxDolProfile extends BxDol implements iBxDolProfile
 
         // create system event before deletion
         $isStopDeletion = false;
-        bx_alert('profile', 'before_delete', $ID, 0, array('stop_deletion' => &$isStopDeletion));
+        bx_alert('profile', 'before_delete', $ID, 0, array('delete_with_content' => $bDeleteWithContent, 'stop_deletion' => &$isStopDeletion));
         if ($isStopDeletion)
             return false;
 
@@ -295,7 +300,7 @@ class BxDolProfile extends BxDol implements iBxDolProfile
             return false;
 
         // create system event
-        bx_alert('profile', 'delete', $ID);
+        bx_alert('profile', 'delete', $ID, 0, array('delete_with_content' => $bDeleteWithContent));
 
         // unset class instance to prevent creating the instance again
         $this->_iProfileID = 0;

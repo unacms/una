@@ -240,6 +240,25 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         $oForm->initChecker($aContentInfo);
         return $oForm->getCode();
     }
+
+    protected function onDataDeleteAfter ($iContentId, $aContentInfo, $oProfile)
+    {
+        return '';
+    }
+
+    protected function onDataEditBefore ($iContentId, $aContentInfo, &$aTrackTextFieldsChanges)
+    {
+    }
+
+    protected function onDataEditAfter ($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile)
+    {
+        return '';
+    }
+
+    protected function onDataAddAfter ($iContentId)
+    {
+        return '';
+    }
 }
 
 /** @} */

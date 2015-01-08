@@ -32,3 +32,8 @@ DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_posts';
 DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_posts_administration', 'bx_posts_moderation', 'bx_posts_common');
 DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_posts_administration', 'bx_posts_moderation', 'bx_posts_common');
 DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_posts_administration', 'bx_posts_moderation', 'bx_posts_common');
+
+-- ALERTS
+SET @iHandler := (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = 'bx_posts' LIMIT 1);
+DELETE FROM `sys_alerts` WHERE `handler_id` = @iHandler;
+DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandler;

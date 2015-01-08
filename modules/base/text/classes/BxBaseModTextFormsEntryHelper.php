@@ -81,15 +81,6 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         return array ($oProfile, $aContentInfo);
     }
 
-    protected function onDataDeleteAfter ($iContentId, $aContentInfo, $oProfile)
-    {
-        return '';
-    }
-
-    protected function onDataEditBefore ($iContentId, $aContentInfo, &$aTrackTextFieldsChanges)
-    {
-    }
-
     protected function onDataEditAfter ($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
