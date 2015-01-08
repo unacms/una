@@ -92,8 +92,13 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
 
     protected function _enable ($mixedId, $isChecked)
     {
-    	$iAction = BX_PROFILE_ACTION_MANUAL;
     	$oProfile = $this->_getProfileObject($mixedId);
+
+    	bx_import('BxDolProfileUndefined');
+    	if($oProfile instanceof BxDolProfileUndefined)
+    		return false;
+
+		$iAction = BX_PROFILE_ACTION_MANUAL;
     	return $isChecked ? $oProfile->activate($iAction) : $oProfile->suspend($iAction);
     }
 
@@ -151,15 +156,20 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
     	return $this->_getProfileObject($iId)->id();
     }
 
-    protected function _onDelete($iId, $aParams = array())
+	protected function _doDelete($iId, $aParams = array())
     {
-    	if(isset($aParams['with_content']) && $aParams['with_content'] === true)	{
-			//TODO: delete content after profile deletion
-		}
+    	if(isset($aParams['with_content']) && $aParams['with_content'] === true) {
+    		$oProfile = $this->_getProfileObject($iId);
 
-		return parent::_onDelete($iId, $aParams);
+    		bx_import('BxDolProfileUndefined');
+    		if($oProfile instanceof BxDolProfileUndefined)
+    			return false;
+
+	    	return $oProfile->delete($oProfile->id(), true);
+    	}
+
+    	return parent::_doDelete($iId, $aParams);
     }
-    
 }
 
 /** @} */

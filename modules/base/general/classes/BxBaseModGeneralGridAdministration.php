@@ -35,12 +35,6 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
-    	//TODO: remove this check when 'delete with content' feature will be realized in onDelete method.
-    	if(isset($aParams['with_content']) && $aParams['with_content'] === true) {
-			$this->_echoResultJson(array('msg' => 'TODO: delete with content'));
-	    	return;
-    	}
-
         $iAffected = 0;
         $aIds = bx_get('ids');
         if(!$aIds || !is_array($aIds)) {
@@ -50,11 +44,11 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
 
         $aIdsAffected = array ();
         foreach($aIds as $iId) {
-			$aContentInfo = $this->_oModule->_oDb->getContentInfoById($iId);
+			$aContentInfo = $this->_getContentInfo($iId);
 	    	if($this->_oModule->checkAllowedDelete($aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED)
 	    		continue;
 
-        	if($this->_oModule->serviceDeleteEntity($iId) != '')
+        	if(!$this->_doDelete($iId, $aParams))
                 continue;
 
 			if(!$this->_onDelete($iId, $aParams))
@@ -130,6 +124,16 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
 		bx_import('BxTemplFormView');
         $oForm = new BxTemplFormView(array());
         return $oForm->genRow($aInputSearch);
+    }
+
+	protected function _getContentInfo($iId)
+    {
+    	return $this->_oModule->_oDb->getContentInfoById($iId);
+    }
+
+	protected function _doDelete($iId, $aParams = array())
+    {
+    	return $this->_oModule->serviceDeleteEntity($iId) == '';
     }
 
     protected function _onDelete($iId, $aParams = array())

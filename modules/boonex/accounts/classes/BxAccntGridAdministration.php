@@ -54,48 +54,6 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
 		$this->_echoResultJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t($CNF['T']['grid_action_err_perform'])));
     }
 
-    public function performActionDelete($aParams = array())
-    {
-    	$CNF = &$this->_oModule->_oConfig->CNF;
-
-    	//TODO: remove this check when 'delete with content' feature will be realized in onDelete method.
-    	if(isset($aParams['with_content']) && $aParams['with_content'] === true) {
-			$this->_echoResultJson(array('msg' => 'TODO: delete with content'));
-	    	return;
-    	}
-
-        $aIds = bx_get('ids');
-        if(!$aIds || !is_array($aIds)) {
-            $this->_echoResultJson(array());
-            exit;
-        }
-
-        bx_import('BxDolAccount');        
-
-        $iAffected = 0;
-        $aIdsAffected = array ();
-        foreach($aIds as $iId) {
-        	$oAccount = BxDolAccount::getInstance($iId);
-
-			$aAccount = $oAccount->getInfo();
-	    	if($this->_oModule->checkAllowedDelete($aAccount) !== CHECK_ACTION_RESULT_ALLOWED)
-	    		continue;
-
-        	if(!$oAccount->delete())
-                continue;
-
-			if(!$this->_onDelete($iId, $aParams))
-				continue;
-
-			$this->_oModule->checkAllowedDelete($aAccount, true);
-
-            $aIdsAffected[] = $iId;
-            $iAffected++;
-        }
-
-        $this->_echoResultJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t($CNF['T']['grid_action_err_delete'])));
-    }
-
 	protected function _performActionEnable($isChecked)
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
@@ -148,13 +106,16 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
         return false;
     }
 
-	protected function _onDelete($iId, $aParams = array())
+	protected function _getContentInfo($iId)
     {
-    	if(isset($aParams['with_content']) && $aParams['with_content'] === true)	{
-			//TODO: delete content after profile deletion
-		}
+    	bx_import('BxDolAccount');
+    	return BxDolAccount::getInstance($iId)->getInfo();
+    }
 
-		return parent::_onDelete($iId, $aParams);
+	protected function _doDelete($iId, $aParams = array())
+    {
+    	bx_import('BxDolAccount');
+    	return BxDolAccount::getInstance($iId)->delete(isset($aParams['with_content']) && $aParams['with_content'] === true);
     }
 }
 
