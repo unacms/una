@@ -94,7 +94,7 @@ class BxCnvModule extends BxBaseModTextModule
     }
 
     /**
-     * Delete conversation for current user by content id
+     * Delete conversation for current user by content id, before deletetion it checks user permission to delete convos
      * @return error string on error, or empty string on success
      */
     public function deleteConvo ($iContentId)
@@ -107,6 +107,18 @@ class BxCnvModule extends BxBaseModTextModule
             return $sMsg;
 
         if (!$this->_oDb->moveConvo((int)$iContentId, bx_get_logged_profile_id(), BX_CNV_FOLDER_TRASH))
+            return _t('_error occured');
+
+        return '';
+    }
+
+    /**
+     * Delete whole conversation for all users by content id
+     * @return error string on error, or empty string on success
+     */
+    public function deleteConvoForever ($iContentId)
+    {
+        if (!$this->_oDb->deleteConvo((int)$iContentId))
             return _t('_error occured');
 
         return '';

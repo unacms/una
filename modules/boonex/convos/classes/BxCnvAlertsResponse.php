@@ -9,30 +9,22 @@
  * @{
  */
 
-/**
- * alerts handler
- */
-class BxCnvAlertsResponse extends BxDolAlertsResponse
-{
-    protected $MODULE;
+bx_import('BxBaseModTextAlertsResponse');
 
+class BxCnvAlertsResponse extends BxBaseModTextAlertsResponse
+{
     public function __construct()
     {
-        parent::__construct();
         $this->MODULE = 'bx_convos';
+        parent::__construct();        
     }
 
     public function response($oAlert)
     {
-        if ($this->MODULE == $oAlert->sUnit) {
+        if ($this->MODULE == $oAlert->sUnit && 'commentPost' == $oAlert->sAction)
+            BxDolService::call($this->MODULE, 'trigger_comment_post', array($oAlert->iObject, $oAlert->aExtras['comment_author_id'], $oAlert->aExtras['comment_id']));
 
-            switch ($oAlert->sAction) {
-                case 'commentPost':
-                    BxDolService::call($this->MODULE, 'trigger_comment_post', array($oAlert->iObject, $oAlert->aExtras['comment_author_id'], $oAlert->aExtras['comment_id']));
-                    break;
-            }
-
-        }
+        parent::response($oAlert);
     }
 }
 

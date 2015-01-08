@@ -189,5 +189,6 @@ SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('bx_convos', 'commentPost', @iHandler),
-('bx_convos', 'commentRemoved', @iHandler);
+('bx_convos', 'commentRemoved', @iHandler),
+('profile', 'delete', @iHandler);
 
