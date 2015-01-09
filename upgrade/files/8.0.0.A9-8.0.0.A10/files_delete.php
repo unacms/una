@@ -9,6 +9,8 @@ $aFilesDelete = array(
     'studio/template/register.html',
     'template/scripts/BxBaseCmtsMenu.php',
     'template/bx_div.html',
-    'template/bx_span.html',    
+    'template/bx_span.html',
+    'plugins/lessphp/LICENSE',
+    'plugins/lessphp/lessc.inc.php',
 );
 

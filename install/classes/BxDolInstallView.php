@@ -93,7 +93,7 @@ class BxDolInstallView
 
     protected function _getInlineCSS()
     {
-        require_once($this->_sDirPlugins . 'less.php/Less.php');
+        require_once($this->_sDirPlugins . 'lessphp/Less.php');
         $oLessParser = new Less_Parser();
 
         $oConfigBase = new BxBaseConfig();

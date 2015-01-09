@@ -1427,7 +1427,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
      */
     function _lessCss($mixed)
     {
-    	require_once(BX_DIRECTORY_PATH_PLUGINS . 'less.php/Less.php');
+    	require_once(BX_DIRECTORY_PATH_PLUGINS . 'lessphp/Less.php');
 
         if(is_array($mixed) && isset($mixed['url']) && isset($mixed['path'])) {
             $sPathFile = realpath($mixed['path']);
@@ -1435,7 +1435,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
             if (!isset($aInfoFile['extension']) || $aInfoFile['extension'] != 'less')
                 return $mixed;
 
-            require_once(BX_DIRECTORY_PATH_PLUGINS . 'less.php/Cache.php');
+            require_once(BX_DIRECTORY_PATH_PLUGINS . 'lessphp/Cache.php');
         	$aFiles = array($mixed['path'] => $mixed['url']);
         	$aOptions = array('cache_dir' => $this->_sCachePublicFolderPath);
         	$sFile = Less_Cache::Get($aFiles, $aOptions, $this->_oConfigTemplate->aLessConfig);
