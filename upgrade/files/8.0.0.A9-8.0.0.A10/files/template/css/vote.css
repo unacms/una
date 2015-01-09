@@ -1,0 +1,94 @@
+/*--- Comment Plused By ---*/
+div.bx-vote-by-list {}
+div.bx-vote-by-list-cnt {
+	max-height: 200px;
+	max-height: 12.5rem;
+	min-width: 220px;
+	min-width: 13.75rem;
+	overflow: auto;
+}
+div.bx-vote-by-list div.bx-persons-unit {
+	float: none;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+
+/*--- Vote Element Styles ---*/
+div.bx-vote div.bx-vote-element-holder,
+div.bx-vote div.bx-vote-counter-holder {
+	position: relative;
+	float: left;
+}
+
+/*--- Likes based Element Styles ---*/
+.bx-vote-likes .bx-vote-element-holder,
+.bx-vote-likes .bx-vote-counter-holder {
+	line-height: 20px;
+	line-height: 1.25rem;
+}
+
+.bx-vote-likes-button .bx-vote-element-holder,
+.bx-vote-likes-button .bx-vote-counter-holder {
+	line-height: 36px;
+	line-height: 2.2rem;
+}
+
+.bx-vote-likes-button-small .bx-vote-element-holder,
+.bx-vote-likes-button-small .bx-vote-counter-holder {
+	line-height: 24px;
+	line-height: 1.6rem;
+}
+
+.bx-vote-likes .bx-vote-element-holder .bx-vote-do-vote.bx-vote-disabled {
+	color: #ddd;
+}
+
+.bx-vote-likes-button .bx-vote-counter-holder,
+.bx-vote-likes-button-small .bx-vote-counter-holder {
+	font-size: 1.5rem;
+}
+
+/*--- Stars based Element Styles ---*/
+.bx-vote-stars .bx-vote-element-holder,
+.bx-vote-stars .bx-vote-counter-holder {
+	line-height: 16px;
+	line-height: 1rem;
+}
+
+/*--- Stars Styles ---*/
+div.bx-vote-element {
+	position: relative;
+}
+span.bx-vote-stars div.bx-vote-element {
+	display: inline-block;
+}
+div.bx-vote-underlay {}
+div.bx-vote-slider {
+    position: absolute;
+	z-index: 1;
+    top: 0px;
+    left: 0px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+i.bx-vote-star,
+span.bx-vote-star {
+	display: inline-block;
+	height: 16px;
+	height: 1rem;
+	width: 16px;
+    width: 1rem;	
+    margin: 0;
+    padding: 0;
+    text-align: center;
+	color: #3e8685;
+}
+div.bx-vote-buttons {
+    position: absolute;
+	z-index: 2;
+	top: 0px;
+	left: 0px;
+}
+div.bx-vote-buttons a:hover {
+	text-decoration: none;
+}

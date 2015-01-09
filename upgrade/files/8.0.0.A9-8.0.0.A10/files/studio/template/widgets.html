@@ -1,0 +1,45 @@
+<bx_repeat:widgets>
+    <div id="bx-std-widget-__id__" class="bx-std-widget __widget_disabled_class__ __widget_bookmarked_class__" style="__widget_styles__">
+        <div class="bx-std-widget-icon bx-std-widget-icon-trans">
+            <div class="bx-std-widget-shadow bx-std-widget-icon-trans"></div>
+            <bx_if:show_notice>
+                <div class="bx-std-widget-notices">
+                    __content__
+                </div>
+            </bx_if:show_notice>
+            <a class="bx-std-widget-link" href="__url__" <bx_if:show_click_icon>onClick="__content__"</bx_if:show_click_icon>>
+                <bx_if:icon>
+                    <img src="<bx_icon_url:wi-empty.png />" />
+                    <i class="sys-icon __icon__"></i>
+                </bx_if:icon>
+                <bx_if:image><img src="__icon_url__" /></bx_if:image>
+            </a>
+        </div>
+
+        <bx_if:show_actions>
+            <div class="bx-std-widget-actions">
+                <bx_repeat:actions>
+                    <div class="bx-std-widget-action">
+                        <a class="bx-std-widget-action" href="__url__" <bx_if:show_click>onClick="__content__"</bx_if:show_click> title="__caption__">
+	                        <bx_if:action_icon><i class="sys-icon __icon__" alt="__caption__"></i></bx_if:action_icon>
+			                <bx_if:action_image><img src="__icon_url__"  alt="__caption__" /></bx_if:action_image>
+                        </a>
+                    </div>
+                </bx_repeat:actions>
+                <div class="bx-std-cb"></div>
+            </div>
+        </bx_if:show_actions>
+
+        <div class="bx-std-widget-icon-jitter" style="display:none">
+            <img src="<bx_image_url:bx-std-spacer.gif />" />
+        </div>
+
+        <div class="bx-std-widget-loading">
+        </div>
+
+        <div class="bx-std-widget-caption">
+            <a class="bx-std-widget-link" href="__url__" <bx_if:show_click_link>onClick="__content__"</bx_if:show_click_link>>__caption__</a>
+            <div class="bx-std-widget-caption-jitter" style="display:none"></div>
+        </div>
+    </div>
+</bx_repeat:widgets>

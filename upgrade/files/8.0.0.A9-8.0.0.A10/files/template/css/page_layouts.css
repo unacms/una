@@ -1,0 +1,52 @@
+
+/* common styles */
+
+.bx-layout-col {
+    float:left;
+}
+
+/* layout 1 column */
+
+.bx-layout-1-column-column1 {
+    float:none;
+}
+
+/* layout 3 columns */
+
+.bx-layout-3-columns-column3,
+.bx-layout-3-columns-column1 {
+    width:33.3%;
+}
+.bx-layout-3-columns-column2 {
+    width:33.4%;
+}
+
+/* layout 2 columns */
+
+.bx-layout-2-columns-column1 {
+    width:50%;
+}
+.bx-layout-2-columns-column2 {
+    width:50%;
+}
+
+/* layout bar left */
+
+.bx-layout-bar-left-bar {
+    width:34%;
+}
+
+.bx-layout-bar-left-content {
+    width:66%;
+}
+
+/* layout bar right */
+
+.bx-layout-bar-right-bar {
+    width:34%;
+}
+
+.bx-layout-bar-right-content {
+    width:66%;
+}
+

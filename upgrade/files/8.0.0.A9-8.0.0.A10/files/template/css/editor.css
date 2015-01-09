@@ -1,0 +1,35 @@
+@import url(default.less);
+
+/* NOTE: copied from "fonts" section from default.css */
+
+body, td, pre {
+    font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+    font-weight: 400;
+	font-size: 18px;
+	font-size: 1.125rem;
+    color:#333;
+}
+
+h1 {
+	font-size: 28px;
+	font-size: 1.75rem;
+	font-weight: 500;
+}
+
+h2 {
+	font-size: 24px;
+	font-size: 1.5rem;
+	font-weight: 500;
+}
+
+h3 {
+	font-size: 18px;
+	font-size: 1.125rem;
+	font-weight: 500;
+}
+
+blockquote {
+    /* NOTE: copied from common.css */
+    border-left: 2px solid #ccc;
+    padding-left: 10px;
+}
