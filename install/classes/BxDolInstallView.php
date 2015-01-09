@@ -93,18 +93,19 @@ class BxDolInstallView
 
     protected function _getInlineCSS()
     {
-        $s = '';
-        require_once($this->_sDirPlugins . 'lessphp/lessc.inc.php');
-        $oLess = new lessc();
+        require_once($this->_sDirPlugins . 'less.php/Less.php');
+        $oLessParser = new Less_Parser();
+
         $oConfigBase = new BxBaseConfig();
-        $oLess->setVariables($oConfigBase->aLessConfig);
+        $oLessParser->ModifyVars($oConfigBase->aLessConfig);
+
         foreach ($this->_aFilesCss as $sFile) {
             if (substr($sFile, -5) !== '.less')
                 continue;
 
-            $s .= $oLess->compileFile($this->_sPathCss . $sFile) . "\n";
+            $oLessParser->parseFile($this->_sPathCss . $sFile, $this->_sUrlCss);
         }
-        return $s;
+        return $oLessParser->getCss();
     }
 }
 
