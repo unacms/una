@@ -51,7 +51,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
             return '';
 
         bx_import('BxDolMetatags');
-        $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
+        $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);        
 
         if (!($sLocationString = $oMetatags->locationsString($iContentId)))
             return '';

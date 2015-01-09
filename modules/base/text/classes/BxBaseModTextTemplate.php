@@ -111,12 +111,14 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
     
             // keywords
-            $aFields = $oMetatags->keywordsFields($aData, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_VIEW']);
-            foreach ($aFields as $sField)
-                $aVars[$sField] = $oMetatags->keywordsParse($aData[$CNF['FIELD_ID']], $aVars[$sField]);
+            if ($oMetatags->keywordsIsEnabled()) {
+                $aFields = $oMetatags->keywordsFields($aData, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_VIEW']);
+                foreach ($aFields as $sField)
+                    $aVars[$sField] = $oMetatags->keywordsParse($aData[$CNF['FIELD_ID']], $aVars[$sField]);
+            }
 
             // location
-            $aVars['location'] = $oMetatags->locationsString($aData[$CNF['FIELD_ID']]);
+            $aVars['location'] = $oMetatags->locationsIsEnabled() ? $oMetatags->locationsString($aData[$CNF['FIELD_ID']]) : '';
         }
 
         return $this->parseHtmlByName($sTemplateName, $aVars);

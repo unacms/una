@@ -196,6 +196,13 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
     }
 
 
+    /**
+     * Checks if keywords enabled for current metatags object
+     */
+    public function keywordsIsEnabled() 
+    {
+        return empty($this->_aObject['table_keywords']) ? false : true;
+    }
 
     /**
      * Add #keywords from the string
@@ -326,6 +333,14 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
 
 
     /**
+     * Checks if locations enabled for current metatags object
+     */
+    public function locationsIsEnabled() 
+    {
+        return empty($this->_aObject['table_locations']) ? false : true;
+    }
+
+    /**
      * Add location for the content
      * @param $iId content id
      * @param $sLatitude latitude
@@ -349,7 +364,7 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
      */
     public function locationsAddFromForm($iId, $sPrefix = '', $oForm = null)
     {
-        if (empty($this->_aObject['table_locations']))
+        if (!$this->locationsIsEnabled())
             return;
 
         if ($sPrefix)
@@ -440,8 +455,8 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
      */
     public function locationGet($iId, $sPrefix = '')
     {
-        if (empty($this->_aObject['table_locations']))
-            return array();
+        if (!$this->locationsIsEnabled())
+            return;
 
         $a = $this->_oQuery->locationGet($iId);
         if (!$sPrefix)
@@ -451,6 +466,14 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
         foreach ($a as $sKey => $sVal)
             $aRet[$sPrefix . '_' . $sKey] = $sVal;
         return $aRet;
+    }
+
+    /**
+     * Checks if mentions enabled for current metatags object
+     */
+    public function mentionsIsEnabled() 
+    {
+        return empty($this->_aObject['table_mentions']) ? false : true;
     }
 
     /**
