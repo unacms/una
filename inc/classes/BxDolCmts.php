@@ -1005,6 +1005,10 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 
         $oProfile = $this->_getAuthorObject($aCmtParent['cmt_author_id']);
 
+        bx_import('BxDolProfileUndefined');
+        if($oProfile instanceof BxDolProfileUndefined)
+        	return;
+
         bx_import('BxDolAccount');
         $iAccount = $oProfile->getAccountId();
         $aAccount = BxDolAccount::getInstance($iAccount)->getInfo();

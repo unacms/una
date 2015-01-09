@@ -242,8 +242,10 @@ class BxBaseCmts extends BxDolCmts
         }
 
         $sReplies = '';
-        if((int)$aCmt['cmt_replies'] > 0 && !empty($aDp) && $aDp['type'] == BX_CMT_DISPLAY_THREADED)
+        if((int)$aCmt['cmt_replies'] > 0 && !empty($aDp) && $aDp['type'] == BX_CMT_DISPLAY_THREADED) {
+        	$aDp['show_empty'] = false;
             $sReplies = $this->getComments(array('parent_id' => $aCmt['cmt_id'], 'vparent_id' => $aCmt['cmt_id'], 'type' => $aBp['type']), $aDp);
+        }
 
 		$sAgo = bx_time_js($aCmt['cmt_time']);
         $bAuthorIcon = !empty($sAuthorIcon);
