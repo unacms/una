@@ -15,7 +15,7 @@ class BxBaseModTextAlertsResponse extends BxDolAlertsResponse
 
     public function response($oAlert)
     {
-        if ('profile' != $oAlert->sUnit || 'delete' != $oAlert->sAction || !$oAlert->aExtras['delete_with_content'])
+        if ('profile' != $oAlert->sUnit || 'delete' != $oAlert->sAction || !isset($oAlert->aExtras['delete_with_content']) || !$oAlert->aExtras['delete_with_content'])
             return;
 
         BxDolService::call($this->MODULE, 'delete_entities_by_author', array($oAlert->iObject));

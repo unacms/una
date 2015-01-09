@@ -194,6 +194,12 @@ ul.bx-menu-main {
     color:#000;
 }
 
+#bx-menu-main li {
+    max-width:12rem;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
 /* --------------- toolbar menu */
 
 #bx-menu-toolbar-1-container .bx-menu-toolbar {

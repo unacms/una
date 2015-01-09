@@ -20,6 +20,22 @@ class BxCnvFormsEntryHelper extends BxBaseModTextFormsEntryHelper
     {
         parent::__construct($oModule);
     }
+
+    public function deleteData ($iContentId, $aContentInfo = false, $oProfile = null, $oForm = null)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if ($sErrorMsg = $this->_oModule->deleteConvoForever ($iContentId))
+            return $sErrorMsg;
+
+        if ($sResult = $this->onDataDeleteAfter ($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $oProfile))
+            return $sResult;
+
+        // create an alert
+        bx_alert($this->_oModule->getName(), 'deleted', $aContentInfo[$CNF['FIELD_ID']]);
+
+        return '';
+    }
 }
 
 /** @} */

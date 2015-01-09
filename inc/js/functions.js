@@ -380,11 +380,16 @@ function bx_menu_slide (jSel, e, sPosition) {
 
     if ($(jSel + ':visible').length) {
         fClose();
+
         $(document).off('click.bx-sliding-menu touchend.bx-sliding-menu');
         $(window).off('resize.bx-sliding-menu');
-    } 
+    }
     else {
         fCloseAllOpened();
+
+        $(document).off('click.bx-sliding-menu touchend.bx-sliding-menu');
+        $(window).off('resize.bx-sliding-menu');
+
         fOpen();
         eSlider.find('a').each(function () {
             $(this).off('click.bx-sliding-menu');
