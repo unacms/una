@@ -280,8 +280,10 @@ class BxDolProfile extends BxDol implements iBxDolProfile
             return false;
 
         // delete associated comments
-        bx_import('BxDolCmts');
-        BxDolCmts::onAuthorDelete($ID);
+        if($bDeleteWithContent) {
+	        bx_import('BxDolCmts');
+	        BxDolCmts::onAuthorDelete($ID);
+        }
 
         // delete connections
         bx_import('BxDolConnection');

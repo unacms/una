@@ -80,9 +80,6 @@ class BxInvResponse extends BxDolAlertsResponse
 
     protected function _processProfileDelete($oAlert)
     {
-    	if(!isset($oAlert->aExtras['delete_with_content']) || !$oAlert->aExtras['delete_with_content'])
-    		return; 
-
     	$this->_oModule->_oDb->deleteInvites(array('profile_id' => $oAlert->iObject));
     }
 }

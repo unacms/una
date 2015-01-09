@@ -62,14 +62,16 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                 break;
 
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_DELETE:
-            	if($oAlert->sUnit == 'profile' && $oAlert->sAction == 'delete' && isset($oAlert->aExtras['delete_with_content']) && $oAlert->aExtras['delete_with_content']) {
+            	if($oAlert->sUnit == 'profile' && $oAlert->sAction == 'delete') {
             		$aEvents = $this->_oModule->_oDb->getEvents(array('browse' => 'owner_id', 'value' => $oAlert->iObject));
             		foreach($aEvents as $aEvent)
             			$this->_oModule->deleteEvent($aEvent);
 
-					$aEvents = $this->_oModule->_oDb->getEvents(array('browse' => 'common_by_object', 'value' => $oAlert->iObject));
-					foreach($aEvents as $aEvent)
-            			$this->_oModule->deleteEvent($aEvent);
+            		if(isset($oAlert->aExtras['delete_with_content']) && $oAlert->aExtras['delete_with_content']) {
+						$aEvents = $this->_oModule->_oDb->getEvents(array('browse' => 'common_by_object', 'value' => $oAlert->iObject));
+						foreach($aEvents as $aEvent)
+	            			$this->_oModule->deleteEvent($aEvent);
+            		}
             		break;
             	}
 

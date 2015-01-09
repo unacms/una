@@ -54,7 +54,7 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
                 break;
 
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_DELETE:
-        		if($oAlert->sUnit == 'profile' && $oAlert->sAction == 'delete' && isset($oAlert->aExtras['delete_with_content']) && $oAlert->aExtras['delete_with_content']) {
+        		if($oAlert->sUnit == 'profile' && $oAlert->sAction == 'delete') {
         			$this->_oModule->_oDb->deleteEvent(array('owner_id' => $oAlert->iObject));
 					break;
             	}
