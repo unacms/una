@@ -246,7 +246,7 @@ class BxDolProfile extends BxDol implements iBxDolProfile
      * @param $bForceDelete - force deletetion is case of account profile deletion
      * @return false on error, or true on success
      */
-    function delete($ID = false, $bDeleteWithContent = true /*false*/, $bForceDelete = false)
+    function delete($ID = false, $bDeleteWithContent = false, $bForceDelete = false)
     {
         $ID = (int)$ID;
         if (!$ID)
