@@ -45,7 +45,22 @@ span.bx-std-pc-version,
 span.bx-std-pc-versions {
 	font-weight: bold;
 }
-div.bx-std-pc-action {}
+div.bx-std-pc-action div.bx-std-pc-buttons {
+	margin-top: -2px;
+	margin-top: -0.125rem;
+	margin-bottom: -2px;
+	margin-bottom: -0.125rem;
+}
+div.bx-std-pc-action div.bx-std-pc-buttons .bx-btn {
+	margin-top: 2px;
+	margin-top: 0.125rem;
+	margin-bottom: 2px;
+	margin-bottom: 0.125rem;
+}
+div.bx-std-pc-action div.bx-std-pc-buttons .bx-btn:first-child {
+	margin-left: 5px;
+	margin-left: 0.625rem;
+}
 
 /*--- Product's Files style ---*/
 div.bx-std-file .bx-btn {

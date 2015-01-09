@@ -14,21 +14,21 @@
         </div>
         <div class="bx-std-pc-vendor bx-def-margin-thd-top bx-def-font-small">__vendor__ &bull; <span class="bx-std-pc-version">__version__</span></div>
         <div class="bx-std-pc-action bx-def-margin-thd-top">
-        	<div class="bx-std-pc-buttons bx-std-pcb-install bx-clearfix" <bx_if:hide_install>style="display:none"</bx_if:hide_install>>
-        		<button class="bx-btn bx-btn-small bx-def-margin-sec-left-auto" type="button" onclick="javascript:__js_object__.install('__dir__', this)">
+        	<div class="bx-std-pc-buttons bx-std-pcb-install bx-def-margin-thd-leftright-neg bx-clearfix" <bx_if:hide_install>style="display:none"</bx_if:hide_install>>
+        		<button class="bx-btn bx-btn-small bx-def-margin-thd-leftright" type="button" onclick="javascript:__js_object__.install('__dir__', this)">
         			<bx_text:_adm_btn_install_submit />
         		</button>
-        		<button class="bx-btn bx-btn-small bx-def-margin-sec-left-auto" type="button" onclick="javascript:__js_object__.remove('__dir__', this)">
+        		<button class="bx-btn bx-btn-small bx-def-margin-thd-leftright" type="button" onclick="javascript:__js_object__.remove('__dir__', this)">
         			<bx_text:_adm_btn_delete_submit />
         		</button>
         	</div>
-        	<div class="bx-std-pc-buttons bx-std-pcb-queued bx-clearfix" <bx_if:hide_queued>style="display:none"</bx_if:hide_queued>>
-            	<button class="bx-btn bx-btn-small bx-btn-disabled" type="button">
+        	<div class="bx-std-pc-buttons bx-std-pcb-queued bx-def-margin-thd-leftright-neg bx-clearfix" <bx_if:hide_queued>style="display:none"</bx_if:hide_queued>>
+            	<button class="bx-btn bx-btn-small bx-def-margin-thd-leftright bx-btn-disabled" type="button">
             		<bx_text:_adm_btn_queued_submit />
             	</button>
             </div>
-            <div class="bx-std-pc-buttons bx-std-pcb-installed bx-clearfix" <bx_if:hide_installed>style="display:none"</bx_if:hide_installed>>
-            	<button class="bx-btn bx-btn-small bx-btn-disabled" type="button">
+            <div class="bx-std-pc-buttons bx-std-pcb-installed bx-def-margin-thd-leftright-neg bx-clearfix" <bx_if:hide_installed>style="display:none"</bx_if:hide_installed>>
+            	<button class="bx-btn bx-btn-small bx-def-margin-thd-leftright bx-btn-disabled" type="button">
             		<bx_text:_adm_btn_installed_submit />
             	</button>
             </div>
