@@ -1427,7 +1427,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
      */
     function _lessCss($mixed)
     {
-    	require_once(BX_DIRECTORY_PATH_PLUGINS . 'less.php/Less.php');
+    	require_once(BX_DIRECTORY_PATH_PLUGINS . 'lessphp/Less.php');
 
         if(is_array($mixed) && isset($mixed['url']) && isset($mixed['path'])) {
             $sPathFile = realpath($mixed['path']);
@@ -1435,7 +1435,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
             if (!isset($aInfoFile['extension']) || $aInfoFile['extension'] != 'less')
                 return $mixed;
 
-            require_once(BX_DIRECTORY_PATH_PLUGINS . 'less.php/Cache.php');
+            require_once(BX_DIRECTORY_PATH_PLUGINS . 'lessphp/Cache.php');
         	$aFiles = array($mixed['path'] => $mixed['url']);
         	$aOptions = array('cache_dir' => $this->_sCachePublicFolderPath);
         	$sFile = Less_Cache::Get($aFiles, $aOptions, $this->_oConfigTemplate->aLessConfig);
@@ -1448,40 +1448,6 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
         $oLess->parse($mixed);
         return $oLess->getCss();
     }
-    /*
-    function _lessCss($mixed)
-    {
-        require_once(BX_DIRECTORY_PATH_PLUGINS . 'lessphp/lessc.inc.php');
-        $oLess = new lessc();
-        $oLess->setVariables($this->_oConfigTemplate->aLessConfig);
-
-        if(is_array($mixed) && isset($mixed['url']) && isset($mixed['path'])) {
-            $sPathFile = realpath($mixed['path']);
-            $aInfoFile = pathinfo($sPathFile);
-            if (!isset($aInfoFile['extension']) || $aInfoFile['extension'] != 'less')
-                return $mixed;
-
-            $sPathRoot = realpath(BX_DIRECTORY_PATH_ROOT);
-            $sPathDirectory = $aInfoFile['dirname'] . DIRECTORY_SEPARATOR;
-            $sFile = $this->_sLessCachePrefix . trim(str_replace(array('.' . $aInfoFile['extension'], DIRECTORY_SEPARATOR), array('', '_'), bx_ltrim_str($sPathFile, $sPathRoot)), '_') . '.css';
-
-            $oLess->registerFunction('bx_url', function($aArg) use($sPathRoot, $sPathDirectory) {
-			    list($sType, $sValue, $aUnit) = $aArg;
-
-			    $aUnit[0] = bx_ltrim_str(realpath($sPathDirectory . $aUnit[0]), $sPathRoot . DIRECTORY_SEPARATOR, BX_DOL_URL_ROOT);
-        		$aUnit[0] = str_replace(DIRECTORY_SEPARATOR, '/', $aUnit[0]);
-
-			    return array($sType, $sValue, $aUnit);
-			});
-            $oLess->checkedCompile($mixed['path'], $this->_sCachePublicFolderPath . $sFile);
-            $oLess->unregisterFunction('bx_url');
-
-            return array('url' => $this->_sCachePublicFolderUrl . $sFile, 'path' => $this->_sCachePublicFolderPath . $sFile);
-        }
-
-        return $oLess->compile($mixed);
-    }
-    */
 
     /**
      * Minify CSS
