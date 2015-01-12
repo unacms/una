@@ -1,7 +1,6 @@
 <?php
 
 $aFilesDelete = array(
-    'inc/classes/BxDolConfig.php',
     'inc/js/editor.cleditor.js',
     'modules/base/text/template/entry-location.html',
     'plugins/OAuth/OAuth1/Service/Dolphin.php',
