@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_bx_timeline_txt_err_already_shared"><![CDATA[You already reposted the item.]]></string_add>
+
+	<string_upd name="_bx_timeline_acl_action_share"><![CDATA[Repost]]></string_upd>
+	<string_upd name="_bx_timeline_menu_item_title_system_item_share"><![CDATA[Repost]]></string_upd>
+	<string_upd name="_bx_timeline_alert_module_timeline_common_share"><![CDATA[Timeline (repost)]]></string_upd>
+	<string_upd name="_bx_timeline_txt_user_shared_sample"><![CDATA[{0} reposted {1}'s {2}]]></string_upd>
+	<string_upd name="_bx_timeline_txt_do_share"><![CDATA[Repost]]></string_upd>
+	<string_upd name="_bx_timeline_txt_shared"><![CDATA[Reposted {0}'s {1}.]]></string_upd>
+	<string_upd name="_bx_timeline_txt_shared_by"><![CDATA[Reposted by]]></string_upd>
+	<string_upd name="_bx_timeline_txt_err_cannot_share"><![CDATA[Cannot repost. Please report.]]></string_upd>
+
+	<string_del name="_bx_timeline_menu_item_title_item_share" />
+</resources>

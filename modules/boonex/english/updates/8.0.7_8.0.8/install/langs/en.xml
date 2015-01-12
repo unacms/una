@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_adm_dbd_txt_version_n_available"><![CDATA[Trident {0} is available!]]></string_add>
+	<string_add name="_adm_dbd_txt_script_on"><![CDATA[Trident on]]></string_add>
+	<string_add name="_adm_stg_cpt_option_sys_site_logo_height"><![CDATA[Logo Height]]></string_add>
+	<string_add name="_adm_stg_cpt_option_sys_site_logo_width"><![CDATA[Logo Width]]></string_add>
+	<string_add name="_adm_tmi_cpt_extensions"><![CDATA[Add Extensions]]></string_add>
+	<string_add name="_cmt_txt_reload_page"><![CDATA[Reload page]]></string_add>
+	<string_add name="_sys_audit_msg_optimization_fail"><![CDATA[please enable this cache in Studio &gt; Settings &gt; Cache]]></string_add>
+	<string_add name="_sys_audit_msg_optimization_warn"><![CDATA[installing PHP accelerator will speed-up file cache]]></string_add>
+	<string_add name="_sys_audit_msg_x_based_cache_engine"><![CDATA[ ({0} based cache engine)]]></string_add>
+	<string_add name="_sys_audit_version_script"><![CDATA[Trident version]]></string_add>
+	<string_add name="_sys_menu_item_title_studio"><![CDATA[Studio]]></string_add>
+	<string_add name="_sys_menu_item_title_system_studio"><![CDATA[Studio]]></string_add>
+
+	<string_upd name="_adm_err_modules_wrong_version_script"><![CDATA[The module is not compatible with your version of Trident]]></string_upd>
+	<string_upd name="_adm_err_modules_wrong_version_script_update"><![CDATA[The new version of {0} module isn't compatible with your version of Trident. Please upgrade Trident first (Studio &gt; Dashboard &gt; Version) and then try to upgrade the module.]]></string_upd>
+	<string_upd name="_adm_stg_cpt_option_sys_ftp_dir"><![CDATA[Path to the script on FTP server]]></string_upd>
+	<string_upd name="_adm_str_err_destination_not_valid"><![CDATA[Destination FTP folder doesn't look like a valid the script root folder.]]></string_upd>
+	<string_upd name="_adm_txt_modules_check_script_version"><![CDATA[Check the script version for compatibility:]]></string_upd>
+	<string_upd name="_cmt_txt_n_new_comments"><![CDATA[<span>{0}</span> new comment(s) posted. {1} to see them.]]></string_upd>
+	<string_upd name="_in_reply_to"><![CDATA[In reply to {0}]]></string_upd>
+	<string_upd name="_sys_audit_msg_permissions"><![CDATA[please <a href="javascript:void(0);" onclick="oBxDolStudioDashboard.permissions()">click here</a> to find out if permissions are correct.]]></string_upd>
+	<string_upd name="_sys_audit_msg_php_accelerator_missing"><![CDATA[The script can be much faster if you install some PHP accelerator]]></string_upd>
+	<string_upd name="_sys_audit_msg_version_is_incompatible"><![CDATA[your version is incompatible with Trident, must be at least {0}]]></string_upd>
+	<string_upd name="_sys_inst_conf_desc_oauth_key_secret"><![CDATA[<a target="_blank" href="http://www.boonex.com/oauth/key_and_secret">Get BoonEx Key & Secret</a>]]></string_upd>
+	<string_upd name="_sys_inst_conf_desc_root_dir"><![CDATA[Path to directory where Trident files are stored.]]></string_upd>
+	<string_upd name="_sys_inst_msg_finish_delete_install_folder"><![CDATA[Remove <b>/install/</b> folder from the script root folder.]]></string_upd>
+	<string_upd name="_sys_inst_title"><![CDATA[Trident {0} Installation]]></string_upd>
+	<string_upd name="_sys_location_undefined"><![CDATA[Location off]]></string_upd>
+	<string_upd name="_sys_page_lang_block_about"><![CDATA[This site is powered by BoonEx Trident. The rest is a mystery.]]></string_upd>
+	<string_upd name="_sys_txt_my_profiles"><![CDATA[<b>@</b> my profiles...</a>]]></string_upd>
+
+	<string_del name="_adm_dbd_txt_dolphin_n_available" />
+	<string_del name="_adm_dbd_txt_dolphin_on" />
+	<string_del name="_adm_reg_desciption" />
+	<string_del name="_adm_reg_license" />
+	<string_del name="_adm_reg_title" />
+	<string_del name="_adm_stg_cpt_option_sys_template_page_width_max" />
+	<string_del name="_adm_stg_cpt_option_sys_template_page_width_min" />
+	<string_del name="_adm_txt_modules_path_to_dolphin" />
+	<string_del name="_sys_audit_msg_dolphin_optimization_fail" />
+	<string_del name="_sys_audit_msg_dolphin_optimization_warn" />
+	<string_del name="_sys_audit_msg_dolphin_x_based_cache_engine" />
+	<string_del name="_sys_audit_version_dolphin" />
+</resources>

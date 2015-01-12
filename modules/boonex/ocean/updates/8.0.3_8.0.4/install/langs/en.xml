@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_bx_ocean_stg_cpt_option_page_width"><![CDATA[Page Width]]></string_add>
+</resources>

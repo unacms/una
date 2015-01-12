@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_bx_posts_page_block_title_popular_keywords"><![CDATA[Popular Hashtags]]></string_add>
+
+	<string_upd name="_bx_posts_page_title_sys_create_entry"><![CDATA[New Post]]></string_upd>
+	<string_upd name="_bx_posts_page_title_create_entry"><![CDATA[New Post]]></string_upd>
+	<string_upd name="_bx_posts_page_block_title_create_entry"><![CDATA[New Post]]></string_upd>
+	<string_upd name="_bx_posts_menu_item_title_system_create_entry"><![CDATA[New Post]]></string_upd>
+    <string_upd name="_bx_posts_menu_item_title_create_entry"><![CDATA[New Post]]></string_upd>
+</resources>

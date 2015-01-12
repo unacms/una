@@ -1,0 +1,31 @@
+.bx-tl-share .bx-tl-share-element-holder .bx-tl-share-do-share.bx-tl-share-disabled {
+	color: #ddd;
+}
+.bx-tl-share .bx-tl-share-counter-holder {
+	margin-left: 5px;
+	margin-left: 0.3125rem;
+}
+.bx-tl-share-button .bx-tl-share-element-holder,
+.bx-tl-share-button .bx-tl-share-counter-holder {
+	line-height: 36px;
+	line-height: 2.2rem;
+}
+.bx-tl-share.bx-tl-share-button .bx-tl-share-counter-holder {
+	margin-left: 10px;
+	margin-left: 0.625rem;
+}
+.bx-tl-share-button-small .bx-tl-share-element-holder,
+.bx-tl-share-button-small .bx-tl-share-counter-holder {
+	line-height: 24px;
+	line-height: 1.6rem;
+}
+.bx-tl-share-button .bx-tl-share-counter-holder,
+.bx-tl-share-button-small .bx-tl-share-counter-holder {
+	font-size: 1.5rem;
+}
+
+div.bx-tl-share div.bx-tl-share-element-holder,
+div.bx-tl-share div.bx-tl-share-counter-holder {
+	position: relative;
+	float: left;
+}

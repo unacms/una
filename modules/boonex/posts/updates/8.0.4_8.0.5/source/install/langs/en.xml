@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+
+	<string name="_bx_posts"><![CDATA[Posts]]></string>
+	<string name="_bx_posts_cmts"><![CDATA[Posts' Comments]]></string>
+
+	<string name="_bx_posts_option_summary_chars"><![CDATA[Number of characters in auto-cropped post summary]]></string>
+	<string name="_bx_posts_option_plain_summary_chars"><![CDATA[Number of characters in plain post description when post hasn't thumb]]></string>
+	<string name="_bx_posts_option_per_page_browse"><![CDATA[Number of items per page]]></string>
+	<string name="_bx_posts_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
+
+	<string name="_bx_posts_form_entry"><![CDATA[Posts]]></string>
+	<string name="_bx_posts_form_entry_display_add"><![CDATA[Add Post]]></string>
+	<string name="_bx_posts_form_entry_display_edit"><![CDATA[Edit Post]]></string>
+	<string name="_bx_posts_form_entry_display_delete"><![CDATA[Delete Post]]></string>
+	<string name="_bx_posts_form_entry_display_view"><![CDATA[View Post]]></string>
+	<string name="_bx_posts_form_entry_input_sys_do_submit"><![CDATA[Submit]]></string>
+	<string name="_bx_posts_form_entry_input_do_submit"><![CDATA[Submit]]></string>
+	<string name="_bx_posts_form_entry_input_sys_title"><![CDATA[Title]]></string>
+	<string name="_bx_posts_form_entry_input_title"><![CDATA[Title]]></string>
+	<string name="_bx_posts_form_entry_input_title_err"><![CDATA[Title is essential. Please, fill in this field]]></string>
+	<string name="_bx_posts_form_entry_input_sys_text"><![CDATA[Text]]></string>
+	<string name="_bx_posts_form_entry_input_text"><![CDATA[Text]]></string>
+	<string name="_bx_posts_form_entry_input_text_err"><![CDATA[Text field can't be empty]]></string>
+	<string name="_bx_posts_form_entry_input_sys_delete_confirm"><![CDATA[Delete confirmation]]></string>
+	<string name="_bx_posts_form_entry_input_delete_confirm"><![CDATA[I am sure I want to delete this post]]></string>
+	<string name="_bx_posts_form_entry_input_delete_confirm_info"><![CDATA[This action can not be undone]]></string>
+	<string name="_bx_posts_form_entry_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete the post]]></string>
+	<string name="_bx_posts_form_entry_input_sys_pictures"><![CDATA[Pictures]]></string>
+	<string name="_bx_posts_form_entry_input_pictures"><![CDATA[Pictures]]></string>
+    <string name="_bx_posts_form_entry_input_sys_allow_view_to"><![CDATA[Visibility]]></string>
+    <string name="_bx_posts_form_entry_input_allow_view_to"><![CDATA[Visibility]]></string>
+
+	<string name="_bx_posts_acl_action_create_entry"><![CDATA[Create Post]]></string>
+	<string name="_bx_posts_acl_action_delete_entry"><![CDATA[Delete Post]]></string>
+	<string name="_bx_posts_acl_action_view_entry"><![CDATA[View Post]]></string>
+	<string name="_bx_posts_acl_action_set_thumb"><![CDATA[Set Post Thumbnail]]></string>
+	<string name="_bx_posts_acl_action_edit_any_entry"><![CDATA[Edit Any Post]]></string>
+
+	<string name="_bx_posts_page_title_sys_create_entry"><![CDATA[New Post]]></string>
+	<string name="_bx_posts_page_title_create_entry"><![CDATA[New Post]]></string>
+	<string name="_bx_posts_page_block_title_create_entry"><![CDATA[New Post]]></string>
+	<string name="_bx_posts_page_title_sys_edit_entry"><![CDATA[Edit Post]]></string>
+	<string name="_bx_posts_page_title_edit_entry"><![CDATA[Edit Post]]></string>
+	<string name="_bx_posts_page_block_title_edit_entry"><![CDATA[Edit Post]]></string>
+    <string name="_bx_posts_page_title_sys_delete_entry"><![CDATA[Delete Post]]></string>
+    <string name="_bx_posts_page_title_delete_entry"><![CDATA[Delete Post]]></string>
+    <string name="_bx_posts_page_block_title_delete_entry"><![CDATA[Delete Post]]></string>
+	<string name="_bx_posts_page_title_sys_view_entry"><![CDATA[View Post]]></string>
+	<string name="_bx_posts_page_title_view_entry"><![CDATA[{title}]]></string>
+	<string name="_bx_posts_page_block_title_entry_text"><![CDATA[Post Text]]></string>
+	<string name="_bx_posts_page_title_browse"><![CDATA[Posts]]></string>
+	<string name="_bx_posts_page_title_search_results"><![CDATA[Posts matching "{0}"]]></string>
+	<string name="_bx_posts_page_title_browse_by_author"><![CDATA[Posts of {display_name}]]></string>
+    <string name="_bx_posts_page_title_browse_recent"><![CDATA[Recent Posts]]></string>
+    <string name="_bx_posts_page_title_browse_popular"><![CDATA[Popular Posts]]></string>
+    <string name="_bx_posts_page_title_sys_home"><![CDATA[Posts Home]]></string>
+    <string name="_bx_posts_page_title_home"><![CDATA[Posts]]></string>
+    <string name="_bx_posts_page_block_title_recent_entries"><![CDATA[Recent Posts]]></string>
+    <string name="_bx_posts_page_block_title_entry_social_sharing"><![CDATA[Share]]></string>
+    <string name="_bx_posts_page_block_title_entry_author"><![CDATA[Author]]></string>
+    <string name="_bx_posts_page_block_title_entry_actions"><![CDATA[Actions]]></string>
+    <string name="_bx_posts_page_block_title_entry_comments"><![CDATA[Comments]]></string>
+    <string name="_bx_posts_page_block_title_entry_location"><![CDATA[Location]]></string>
+    <string name="_bx_posts_page_title_sys_entries_popular"><![CDATA[Popular Posts]]></string>
+    <string name="_bx_posts_page_title_entries_popular"><![CDATA[Popular Posts]]></string>
+    <string name="_bx_posts_page_block_title_popular_entries"><![CDATA[Popular Posts]]></string>
+    <string name="_bx_posts_page_title_sys_view_entry_comments"><![CDATA[Post Comments]]></string>
+    <string name="_bx_posts_page_title_view_entry_comments"><![CDATA[Post Comments]]></string>
+    <string name="_bx_posts_page_title_sys_entries_of_author"><![CDATA[Posts of author]]></string>
+    <string name="_bx_posts_page_title_entries_of_author"><![CDATA[Posts of {display_name}]]></string>
+    <string name="_bx_posts_page_block_title_entries_of_author"><![CDATA[Posts of author]]></string>   
+    <string name="_bx_posts_page_block_title_entries_actions"><![CDATA[Posts actions]]></string>
+    <string name="_bx_posts_page_block_title_browse_cmts"><![CDATA[Posts' Comments]]></string>
+	<string name="_bx_posts_page_title_sys_manage"><![CDATA[Manage Posts]]></string>
+	<string name="_bx_posts_page_title_manage"><![CDATA[Manage Posts]]></string>
+	<string name="_bx_posts_page_block_title_manage"><![CDATA[Manage Posts]]></string>    
+	<string name="_bx_posts_page_block_title_popular_keywords"><![CDATA[Popular Hashtags]]></string>
+
+    <string name="_bx_posts_menu_set_title_view_entry"><![CDATA[View Post]]></string>
+    <string name="_bx_posts_menu_title_view_entry"><![CDATA[View Post]]></string>
+    <string name="_bx_posts_menu_title_submenu"><![CDATA[Posts Submenu]]></string>
+    <string name="_bx_posts_menu_set_title_submenu"><![CDATA[Posts Submenu]]></string>
+    <string name="_bx_posts_menu_item_title_system_create_entry"><![CDATA[New Post]]></string>
+    <string name="_bx_posts_menu_item_title_create_entry"><![CDATA[New Post]]></string>
+    <string name="_bx_posts_menu_item_title_system_edit_entry"><![CDATA[Edit Post]]></string>
+    <string name="_bx_posts_menu_item_title_edit_entry"><![CDATA[Edit Post]]></string>
+    <string name="_bx_posts_menu_item_title_system_delete_entry"><![CDATA[Delete Post]]></string>
+    <string name="_bx_posts_menu_item_title_delete_entry"><![CDATA[Delete Post]]></string>
+    <string name="_bx_posts_menu_item_title_system_view_entry"><![CDATA[View Post]]></string>
+    <string name="_bx_posts_menu_item_title_system_entries_home"><![CDATA[Posts]]></string>
+    <string name="_bx_posts_menu_item_title_entries_home"><![CDATA[Posts]]></string>
+    <string name="_bx_posts_menu_item_title_system_entries_public"><![CDATA[Public]]></string>
+    <string name="_bx_posts_menu_item_title_entries_public"><![CDATA[Public]]></string>
+    <string name="_bx_posts_menu_item_title_system_entries_manage"><![CDATA[Manage]]></string>
+    <string name="_bx_posts_menu_item_title_entries_manage"><![CDATA[Manage]]></string>
+    <string name="_bx_posts_menu_item_title_system_entries_popular"><![CDATA[Popular]]></string>
+    <string name="_bx_posts_menu_item_title_entries_popular"><![CDATA[Popular]]></string>
+    <string name="_bx_posts_menu_title_view_entry_submenu"><![CDATA[View Post Submenu]]></string>
+    <string name="_bx_posts_menu_set_title_view_entry_submenu"><![CDATA[View Post Submenu]]></string>
+    <string name="_bx_posts_menu_item_title_view_entry_submenu_entry"><![CDATA[Post]]></string>
+    <string name="_bx_posts_menu_item_title_view_entry_submenu_comments"><![CDATA[Comments]]></string>
+    <string name="_bx_posts_menu_item_title_system_view_entry_comments"><![CDATA[Post Comments]]></string>
+    <string name="_bx_posts_menu_item_title_system_view_entries_author"><![CDATA[Posts]]></string>
+    <string name="_bx_posts_menu_item_title_view_entries_author"><![CDATA[Posts]]></string>
+    <string name="_bx_posts_menu_title_entries_my"><![CDATA[My Posts Action Menu]]></string>
+    <string name="_bx_posts_menu_set_title_entries_my"><![CDATA[My Posts Menu]]></string>
+	<string name="_bx_posts_menu_item_title_system_manage_my_posts"><![CDATA[My posts]]></string>
+    <string name="_bx_posts_menu_item_title_manage_my_posts"><![CDATA[{addon} posts]]></string>
+    <string name="_bx_posts_menu_set_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
+    <string name="_bx_posts_menu_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
+	<string name="_bx_posts_menu_item_title_system_admt_posts"><![CDATA[Posts]]></string>
+	<string name="_bx_posts_menu_item_title_admt_posts"><![CDATA[Posts - {addon} hidden]]></string>
+	<string name="_bx_posts_menu_item_title_manage_my"><![CDATA[My Posts]]></string>
+	<string name="_bx_posts_menu_item_title_manage_all"><![CDATA[All Posts]]></string>
+
+	<string name="_bx_posts_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
+	<string name="_bx_posts_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
+	<string name="_bx_posts_grid_filter_item_title_adm_hidden"><![CDATA[Hidden]]></string>
+	<string name="_bx_posts_grid_column_title_adm_active"><![CDATA[Active]]></string>
+    <string name="_bx_posts_grid_column_title_adm_title"><![CDATA[Title]]></string>
+    <string name="_bx_posts_grid_column_title_adm_added"><![CDATA[Added]]></string>
+    <string name="_bx_posts_grid_column_title_adm_author"><![CDATA[Author]]></string>
+    <string name="_bx_posts_grid_action_title_adm_edit"><![CDATA[Edit]]></string>
+    <string name="_bx_posts_grid_action_title_adm_delete"><![CDATA[Delete]]></string>
+    <string name="_bx_posts_grid_action_title_adm_more_actions"><![CDATA[More Actions]]></string>
+    <string name="_bx_posts_grid_action_err_delete"><![CDATA[Cannot delete the selected post(s).]]></string>
+    
+
+    <string name="_bx_posts_txt_sample_single"><![CDATA[post]]></string>
+    <string name="_bx_posts_txt_sample_comment_single"><![CDATA[post's comment]]></string>
+</resources>
