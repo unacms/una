@@ -14,7 +14,7 @@ $aConfig = array(
     'vendor' => 'BoonEx',
 
 	'compatible_with' => array(
-        '8.0.x'
+        '8.0.0.A10'
     ),
 
     /**
