@@ -50,21 +50,21 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
 	}
 
     /**
-     * Display pablic entries
+     * Display public entries
      * @return HTML string
      */
-    public function serviceBrowsePublic ($sUnitView = false)
+    public function serviceBrowsePublic ($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
     {   
-        return $this->_serviceBrowse ('public', $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, true);
+        return $this->_serviceBrowse ('public', $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
     }
 
     /**
      * Display featured entries
      * @return HTML string
      */
-    public function serviceBrowsePopular ($sUnitView = false)
+    public function serviceBrowsePopular ($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
     {
-        return $this->_serviceBrowse ('popular', $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, true);
+        return $this->_serviceBrowse ('popular', $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
     }
 
     /**
