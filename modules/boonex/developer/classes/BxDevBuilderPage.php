@@ -235,6 +235,7 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage
         $aForm['inputs'] = bx_array_insert_before($aUri, $aForm['inputs'], 'url');
 
         $aForm['inputs']['url']['caption'] = _t('_bx_dev_bp_txt_page_url');
+        $aForm['inputs']['url']['value'] = isset($aPage['url']) ? $aPage['url'] : '';
         $aForm['inputs']['url']['db'] = array (
             'pass' => 'Xss',
         );
