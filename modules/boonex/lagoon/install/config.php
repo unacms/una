@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_lagoon',
     'title' => 'Lagoon',
     'note' => 'Design template',
-    'version' => '8.0.4.DEV',
+    'version' => '8.0.5.DEV',
     'vendor' => 'Boonex',
 	'help_url' => 'http://feed.boonex.com/?section={module_name}',
 

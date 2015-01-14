@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_developer',
     'title' => 'Developer',
     'note' => 'Developer tools...',
-    'version' => '8.0.5.DEV',
+    'version' => '8.0.6.DEV',
     'vendor' => 'BoonEx',
 	'help_url' => 'http://feed.boonex.com/?section={module_name}',
 
