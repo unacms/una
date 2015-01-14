@@ -752,6 +752,19 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
         $this->aPage['image'] = $sImageUrl;
     }
     /**
+     * Set page rss link.
+     *
+     * @param $sTitle - rss feed title
+     * @param $sUrl - rss feed URL
+     */
+    function addPageRssLink($sTitle, $sUrl)
+    {
+        if (!isset($this->aPage['rss']))
+            $this->aPage['rss'] = array('title' => $sTitle, 'url' => $sUrl);
+        else
+            $this->aPage['rss'] = false;
+    }
+    /**
      * Returns page meta info, like meta keyword, meta description, location, etc
      */
     function getMetaInfo()
@@ -776,6 +789,9 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
             bx_import('BxTemplFunctions');
             $sRet .= BxTemplFunctions::getInstance()->getMetaIcons();
         }
+
+        if (!empty($this->aPage['rss']) && !empty($this->aPage['rss']['url']))
+            $sRet .= '<link rel="alternate" type="application/rss+xml" title="' . bx_html_attribute($this->aPage['rss']['title'], BX_ESCAPE_STR_QUOTE) . '" href="' . $this->aPage['rss']['url'] . '" />';
 
         return $sRet;
     }

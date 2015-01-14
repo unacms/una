@@ -16,7 +16,10 @@ class BxAlbumsSearchResult extends BxBaseModTextSearchResult
     function __construct($sMode = '', $aParams = array())
     {
         $this->aUnitViews = array('extended' => 'unit.html');
-        $this->sUnitViewDefault = 'extended';
+    
+        if (empty($aParams['unit_view']))
+            $aParams['unit_view'] = 'extended';
+
         parent::__construct($sMode, $aParams);
 
         $this->aCurrent = array(
@@ -101,9 +104,9 @@ class BxAlbumsSearchResult extends BxBaseModTextSearchResult
 
         // add replaceable markers and replace them
         if ($oProfileAuthor) {
-            $this->addMarkers($oProfileAuthor->getInfo()); // profile info is replacable
-            $this->addMarkers(array('profile_id' => $oProfileAuthor->id())); // profile id is replacable
-            $this->addMarkers(array('display_name' => $oProfileAuthor->getDisplayName())); // profile display name is replacable
+            $this->addMarkers($oProfileAuthor->getInfo()); // profile info is replaceable
+            $this->addMarkers(array('profile_id' => $oProfileAuthor->id())); // profile id is replaceable
+            $this->addMarkers(array('display_name' => $oProfileAuthor->getDisplayName())); // profile display name is replaceable
         }
 
         $this->sBrowseUrl = $this->_replaceMarkers($this->sBrowseUrl);

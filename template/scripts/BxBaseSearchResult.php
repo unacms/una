@@ -83,6 +83,8 @@ class BxBaseSearchResult extends BxDolSearchResult
             return '<div class="bx-page-block-container bx-search-results bx-def-padding-topbottom bx-clearfix" id="bx-page-block-' . $this->id . '">' . $sCode . '</div>';
         }
 
+        $this->addPageRssLink ();
+
         return array(        	
         	'content' => $sContent,
         	'menu' => $sMenu,
@@ -97,12 +99,19 @@ class BxBaseSearchResult extends BxDolSearchResult
 
     function getDesignBoxMenu ()
     {
-        if (false === ($sLink = $this->getRssPageUrl ()))
-            return false;
+        return array();
+    }
 
-        return array(
-            array('name' => 'rss', 'title' => _t('_sys_menu_title_rss'), 'link' => $sLink, 'icon' => 'rss')
-        );
+    protected function addPageRssLink ()
+    {
+        if (false === ($sLink = $this->getRssPageUrl ()))
+            return;
+
+        bx_import('BxDolTemplate');
+        if (!($oTemplate = BxDolTemplate::getInstance()))
+            return;
+
+        $oTemplate->addPageRssLink($this->aCurrent['title'], $sLink);
     }
 
     function getRssPageUrl ()

@@ -1832,8 +1832,6 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_title_add_profile"><![CDATA[Add Profile Menu]]></string>
 	<string name="_sys_menu_title_cmts_item_actions"><![CDATA[Comment Actions]]></string>
 	<string name="_sys_menu_title_cmts_item_manage"><![CDATA[Manage Comment]]></string>
-	<string name="_sys_menu_title_extended"><![CDATA[Extended view]]></string>
-	<string name="_sys_menu_title_gallery"><![CDATA[Gallery view]]></string>
 	<string name="_sys_menu_title_footer"><![CDATA[Footer Links]]></string>
 	<string name="_sys_menu_title_main"><![CDATA[Site Navigation]]></string>
 	<string name="_sys_menu_title_profiles_create"><![CDATA[Create Profiles]]></string>
