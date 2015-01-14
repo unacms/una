@@ -9,7 +9,7 @@
 
 class BxDolUpgrader extends BxDol
 {
-    protected $_sUrlVersionCheck = 'http://rss.boonex.com/u/';
+    protected $_sUrlVersionCheck = 'http://rss.boonex.com/trident/';
     protected $_sError = false;
 
     /**
