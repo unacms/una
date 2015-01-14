@@ -90,13 +90,18 @@ class BxDolFile extends BxDol implements iBxDolSingleton
         }
 
         //--- Copy directory to directory
-        if(is_dir($sFilePathFrom) && $this->_isDirectory($sFilePathTo)) {      	
-            $this->_mkDirR($sFilePathTo);
+        if(is_dir($sFilePathFrom)) {
+        	$bFilePathTo = file_exists($sFilePathTo);
+        	if($bFilePathTo && !is_dir($sFilePathTo))
+        		return false;
+
+        	if(!$bFilePathTo && !$this->_mkDirR($sFilePathTo))
+            	return false;
 
             $bResult = true;
             $aInnerFiles = $this->_readDirectory($sFilePathFrom);
             foreach($aInnerFiles as $sFile)
-                $bResult = $bResult && $this->_copyFile($this->_validatePath($sFilePathFrom, false) . $sFile, $this->_validatePath($sFilePathTo) . $sFile);
+                $bResult = $bResult && $this->_copyFile($this->_validatePath($sFilePathFrom, false) . $sFile, $this->_validatePath($sFilePathTo, false) . $sFile);
 
 			return $bResult;
         }
