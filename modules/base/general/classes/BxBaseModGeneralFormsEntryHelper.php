@@ -174,8 +174,8 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         // redirect
         bx_import('BxDolPermalinks');
         $this->_redirectAndExit($CNF['URL_HOME'], true, array(
-            'account_id' => $oProfile->getAccountId(),
-            'profile_id' => $oProfile->id(),
+            'account_id' => method_exists($oProfile, 'getAccountId') ? $oProfile->getAccountId() : getLoggedId(),
+            'profile_id' => $oProfile->id() ? $oProfile->id() : bx_get_logged_profile_id(),
         ));
     }
 

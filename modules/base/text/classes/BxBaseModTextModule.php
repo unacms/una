@@ -50,34 +50,34 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
 	}
 
     /**
-     * Display pablic entries
+     * Display public entries
      * @return HTML string
      */
-    public function serviceBrowsePublic ()
-    {
-        return $this->_serviceBrowse ('public', false, BX_DB_PADDING_DEF, true);
+    public function serviceBrowsePublic ($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
+    {   
+        return $this->_serviceBrowse ('public', $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
     }
 
     /**
      * Display featured entries
      * @return HTML string
      */
-    public function serviceBrowsePopular ()
+    public function serviceBrowsePopular ($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
     {
-        return $this->_serviceBrowse ('popular', false, BX_DB_PADDING_DEF, true);
+        return $this->_serviceBrowse ('popular', $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
     }
 
     /**
      * Display entries of the author
      * @return HTML string
      */
-    public function serviceBrowseAuthor ($iProfileId = 0)
+    public function serviceBrowseAuthor ($iProfileId = 0, $sUnitView = false)
     {
         if (!$iProfileId)
             $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
         if (!$iProfileId)
             return '';
-        return $this->_serviceBrowse ('author', array('author' => $iProfileId), BX_DB_PADDING_DEF, true);
+        return $this->_serviceBrowse ('author', array('author' => $iProfileId, 'unit_view' => $sUnitView ? $sUnitView : ''), BX_DB_PADDING_DEF, true);
     }
 
     /**

@@ -21,6 +21,9 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
     {
         parent::__construct($sMode, $aParams);
 
+        if (!empty($aParams['unit_view']))
+            $this->sUnitViewDefault = $aParams['unit_view'];
+
         $this->aGetParams = array($this->sUnitViewParamName);
         $this->sUnitTemplate = $this->aUnitViews[$this->sUnitViewDefault];
         if (isset($this->aUnitViews[bx_get($this->sUnitViewParamName)]))
@@ -28,31 +31,6 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
 
         if ('unit_gallery.html' == $this->sUnitTemplate)
             $this->addContainerClass (array('bx-def-margin-sec-neg', 'bx-base-text-unit-gallery-wrapper'));
-    }
-
-    function getDesignBoxMenu ()
-    {
-        $aMenu = parent::getDesignBoxMenu ();
-        if (!$aMenu)
-            return false;
-
-        return array_merge(
-            array(
-                array(
-                    'name' => 'gallery', 
-                    'title' => _t('_sys_menu_title_gallery'), 
-                    'link' => $this->getCurrentUrl(array($this->sUnitViewParamName => 'gallery')), 
-                    'onclick' => $this->getCurrentOnclick(array($this->sUnitViewParamName => 'gallery')), 
-                    'icon' => 'th'),
-                array(
-                    'name' => 'extended', 
-                    'title' => _t('_sys_menu_title_extended'), 
-                    'link' => $this->getCurrentUrl(array($this->sUnitViewParamName => 'extended')), 
-                    'onclick' => $this->getCurrentOnclick(array($this->sUnitViewParamName => 'extended')), 
-                    'icon' => 'list'),
-            ),
-            $aMenu
-        );
     }
 
     protected function getCurrentOnclick($aAdditionalParams = array(), $bReplacePagesParams = true) 
