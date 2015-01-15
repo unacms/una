@@ -34,7 +34,7 @@ class BxBaseCaptchaReCAPTCHANew extends BxTemplCaptchaReCAPTCHA
         $sCode = '';
         $aApiParams = array();
         if($bDynamicMode)  {
-        	$sPostfix = time() . rand(0, PHP_INT_MAX);
+        	$sPostfix = $this->_sObject; //time() . rand(0, PHP_INT_MAX);
         	$sId = 'sys-captcha-' . $sPostfix;
 
         	$sOnLoadFunction = 'onLoadCallback' . $sPostfix;
@@ -65,8 +65,9 @@ class BxBaseCaptchaReCAPTCHANew extends BxTemplCaptchaReCAPTCHA
 
         bx_import('BxDolLanguages');
         $aApiParams['hl'] = BxDolLanguages::getInstance()->getCurrentLanguage();
+        $sCodeJs = $this->_oTemplate->addJs(bx_append_url_params($this->sApiUrl, $aApiParams), $bDynamicMode);
 
-        return $this->_oTemplate->addJs(bx_append_url_params($this->sApiUrl, $aApiParams), $bDynamicMode) . $sCode;
+        return ($bDynamicMode ? $sCodeJs : '') . $sCode;
     }
 
     /**
