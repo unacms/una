@@ -762,6 +762,11 @@ function bx_file_get_contents($sFileUrl, $aParams = array(), $bChangeTimeout = f
         curl_setopt($rConnect, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($rConnect, CURLOPT_FOLLOWLOCATION, 1);
 
+        if(bx_mb_strpos($sFileUrl, 'https') !== false) {
+	        curl_setopt($rConnect, CURLOPT_SSL_VERIFYPEER, 0);
+			curl_setopt($rConnect, CURLOPT_SSL_VERIFYHOST, 0);
+        }
+
         if ($bChangeTimeout) {
             curl_setopt($rConnect, CURLOPT_CONNECTTIMEOUT, 3);
             curl_setopt($rConnect, CURLOPT_TIMEOUT, 3);
