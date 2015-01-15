@@ -26,6 +26,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('bx_contact_contact', @sName, 'email', '', '', 0, 'text', '_bx_contact_form_contact_input_sys_email', '_bx_contact_form_contact_input_email', '', 1, 0, 0, '', '', '', 'Email', '', '_bx_contact_form_contact_input_email_err', 'Xss', '', 0, 0),
 ('bx_contact_contact', @sName, 'subject', '', '', 0, 'text', '_bx_contact_form_contact_input_sys_subject', '_bx_contact_form_contact_input_subject', '', 1, 0, 0, '', '', '', 'Length', 'a:2:{s:3:"min";i:5;s:3:"max";i:250;}', '_bx_contact_form_contact_input_subject_err', 'Xss', '', 0, 0),
 ('bx_contact_contact', @sName, 'body', '', '', 0, 'textarea', '_bx_contact_form_contact_input_sys_body', '_bx_contact_form_contact_input_body', '', 1, 0, 0, '', '', '', 'Length', 'a:2:{s:3:"min";i:10;s:3:"max";i:5000;}', '_bx_contact_form_contact_input_body_err', 'Xss', '', 0, 0),
+('bx_contact_contact', @sName, 'captcha', '', '', 0, 'captcha', '_bx_contact_form_contact_input_sys_captcha', '_bx_contact_form_contact_input_captcha', '', 1, 0, 0, '', '', '', 'Captcha', '', '_bx_contact_form_contact_input_captcha_err', '', '', 0, 0),
 ('bx_contact_contact', @sName, 'do_submit', '_bx_contact_form_contact_input_do_submit', '', 0, 'submit', '_bx_contact_form_contact_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
 
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
@@ -33,7 +34,8 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_contact_contact_send', 'email', 2147483647, 1, 2),
 ('bx_contact_contact_send', 'subject', 2147483647, 1, 3),
 ('bx_contact_contact_send', 'body', 2147483647, 1, 4),
-('bx_contact_contact_send', 'do_submit', 2147483647, 1, 5);
+('bx_contact_contact_send', 'captcha', 2147483647, 1, 5),
+('bx_contact_contact_send', 'do_submit', 2147483647, 1, 6);
 
 
 -- STUDIO PAGE & WIDGET
