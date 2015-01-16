@@ -62,12 +62,23 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         $sSummary = strmaxtextlen($aData[$CNF['FIELD_TEXT']], (int)getParam($CNF['PARAM_CHARS_SUMMARY']), $sLinkMore);
         $sSummaryPlain = BxTemplFunctions::getInstance()->getStringWithLimitedLength(strip_tags($sSummary), (int)getParam($CNF['PARAM_CHARS_SUMMARY_PLAIN']));
 
+        $sText = $aData[$CNF['FIELD_TEXT']];
+        if (!empty($CNF['OBJECT_METATAGS'])) {
+            bx_import('BxDolMetatags');
+            $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
+    
+            // keywords
+            if ($oMetatags->keywordsIsEnabled())
+                $sText = $oMetatags->keywordsParse($aData[$CNF['FIELD_ID']], $sText);
+        }
+
         // generate html
         $aVars = array (
             'id' => $aData[$CNF['FIELD_ID']],
             'content_url' => $sUrl,
             'title' => bx_process_output($aData[$CNF['FIELD_TITLE']]),
             'summary' => $sSummary,
+            'text' => $sText,
             'author' => $oProfile->getDisplayName(),
             'author_url' => $oProfile->getUrl(),
             'entry_posting_date' => bx_time_js($aData[$CNF['FIELD_ADDED']], BX_FORMAT_DATE),
