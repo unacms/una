@@ -1556,7 +1556,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_et_txt_unsubscribe"><![CDATA[Unsubscribe]]></string>
 	<string name="_sys_form_account"><![CDATA[Account]]></string>
 	<string name="_sys_form_account_input_captcha"><![CDATA[Security Image]]></string>
-	<string name="_sys_form_account_input_captcha_error"><![CDATA[Security image input failed. Please, try to enter letters shown on the image again.]]></string>
+	<string name="_sys_form_account_input_captcha_error"><![CDATA[Security image input failed. Please, try again.]]></string>
 	<string name="_sys_form_account_input_delete_confirm"><![CDATA[I'm sure that I want to delete my account and my content.]]></string>
 	<string name="_sys_form_account_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete your account and your content.]]></string>
 	<string name="_sys_form_account_input_delete_confirm_info"><![CDATA[This action can not be undone.]]></string>
@@ -1822,6 +1822,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_template_title_toolbar"><![CDATA[Toolbar Buttons]]></string>
 	<string name="_sys_menu_template_title_ver"><![CDATA[Vertical Links]]></string>
 	<string name="_sys_menu_template_title_ver_lite"><![CDATA[Vertical Links (lite)]]></string>
+	<string name="_sys_menu_template_title_account_notifications"><![CDATA[Account notifications]]></string>
 	<string name="_sys_menu_template_title_account_popup"><![CDATA[Account popup]]></string>
 	<string name="_sys_menu_template_title_custom"><![CDATA[Custom menu items]]></string>
 	<string name="_sys_menu_title_account"><![CDATA[Account Menu]]></string>

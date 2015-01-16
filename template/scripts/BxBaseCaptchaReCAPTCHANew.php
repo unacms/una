@@ -34,7 +34,7 @@ class BxBaseCaptchaReCAPTCHANew extends BxTemplCaptchaReCAPTCHA
         $sCode = '';
         $aApiParams = array();
         if($bDynamicMode)  {
-        	$sPostfix = $this->_sObject; //time() . rand(0, PHP_INT_MAX);
+        	$sPostfix = $this->_sObject;
         	$sId = 'sys-captcha-' . $sPostfix;
 
         	$sOnLoadFunction = 'onLoadCallback' . $sPostfix;
