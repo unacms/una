@@ -148,6 +148,7 @@ class BxInvModule extends BxDolModule
         if(!$oGrid)
             return '';
 
+		$this->_oTemplate->addCss(array('main.css'));
 		return $oGrid->getCode();
     }
 

@@ -24,7 +24,25 @@ class BxInvGridRequests extends BxTemplGrid
 		$this->_sModule = 'bx_invites';
 		$this->_oModule = BxDolModule::getInstance($this->_sModule);
     }
+    public function performActionInfo()
+    {
+    	$aIds = bx_get('ids');
+        if(!$aIds || !is_array($aIds)) {
+            $this->_echoResultJson(array());
+            exit;
+        }
 
+        $aRequest = $this->_oModule->_oDb->getRequests(array('type' => 'by_id', 'value' => (int)array_shift($aIds)));
+		if(empty($aRequest) || !is_array($aRequest)){
+            $this->_echoResultJson(array());
+            exit;
+        }
+
+        bx_import('BxTemplFunctions');
+		$sContent = BxTemplFunctions::getInstance()->transBox('bx-invites-info-popup', $this->_oModule->_oTemplate->getBlockRequestText($aRequest));
+
+		$this->_echoResultJson(array('popup' => array('html' => $sContent)), true);
+    }
 	public function performActionInvite($aParams = array())
     {
     	$iProfileId = $this->_oModule->getProfileId();
