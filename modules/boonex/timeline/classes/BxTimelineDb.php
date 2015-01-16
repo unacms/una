@@ -115,8 +115,20 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
 		$aShared = $this->getEvents($aParams);
 		if($bSystem && (empty($aShared) || !is_array($aShared))) {
+			$iOwnerId = 0;
+			$iDate = 0;
+			$iHidden = 1;
+
+			$mixedResult = $this->_oConfig->getSystemDataByDescriptor($sType, $sAction, $iObjectId);
+			if(is_array($mixedResult)) {
+				$iOwnerId = !empty($mixedResult['owner_id']) ? (int)$mixedResult['owner_id'] : 0;
+				$iDate = !empty($mixedResult['date']) ? (int)$mixedResult['date'] : 0;
+				if(!empty($iOwnerId) && !empty($iDate))
+					$iHidden = 0;
+			}
+
 			$iId = $this->insertEvent(array(
-				'owner_id' => 0,
+				'owner_id' => $iOwnerId,
 				'type' => $sType,
 				'action' => $sAction,
 				'object_id' => $iObjectId,
@@ -124,7 +136,8 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 				'content' => '',
 				'title' => '',
 				'description' => '',
-				'hidden' => 1
+				'date' => $iDate,
+				'hidden' => $iHidden
 			));
 
 			$aShared = $this->getEvents(array('browse' => 'id', 'value' => $iId));
@@ -315,7 +328,8 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
     protected function _getSqlPartsEventsList($aParams)
     {
-    	$sJoinClause = $sWhereClause = "";
+    	$sJoinClause = "";
+    	$sWhereClause = "AND `{$this->_sTable}`.`hidden`='0' ";
 
 		if(isset($aParams['active']))
         	$sWhereClause .= $this->prepare("AND `{$this->_sTable}`.`active`=? ", (int)$aParams['active']);

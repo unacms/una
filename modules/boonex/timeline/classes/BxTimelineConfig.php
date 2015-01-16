@@ -240,6 +240,28 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $sPrefix = $this->getPrefix('common_post');
         return strpos($sType, $sPrefix) === false && !empty($sAction);
     }
+    public function getSystemData(&$aEvent)
+    {
+		$sHandler = $aEvent['type'] . '_' . $aEvent['action'];
+        if(!$this->isHandler($sHandler))
+            return false;
+
+        $aHandler = $this->getHandlers($sHandler);
+        if(empty($aHandler['module_name']) || empty($aHandler['module_class']) || empty($aHandler['module_method']))
+        	return false; 
+
+		$aEvent['js_mode'] = $this->getJsMode();
+		return BxDolService::call($aHandler['module_name'], $aHandler['module_method'], array($aEvent), $aHandler['module_class']);
+    }
+    public function getSystemDataByDescriptor($sType, $sAction, $iObjectId)
+    {
+    	$aDescriptor = array(
+    		'type' => $sType, 
+    		'action' => $sAction,
+    		'object_id' => $iObjectId
+    	);
+    	return $this->getSystemData($aDescriptor);
+    }
 }
 
 /** @} */

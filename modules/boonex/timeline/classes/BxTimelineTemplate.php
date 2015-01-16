@@ -818,17 +818,11 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     protected function _getSystemData(&$aEvent)
     {
-        $sHandler = $aEvent['type'] . '_' . $aEvent['action'];
-        if(!$this->_oConfig->isHandler($sHandler))
-            return '';
+        $mixedResult = $this->_oConfig->getSystemData($aEvent);
+		if($mixedResult !== false)
+			return $mixedResult;
 
-        $aHandler = $this->_oConfig->getHandlers($sHandler);
-        if(!empty($aHandler['module_name']) && !empty($aHandler['module_class']) && !empty($aHandler['module_method'])) {
-        	$aEvent['js_mode'] = $this->_oConfig->getJsMode();
-            return BxDolService::call($aHandler['module_name'], $aHandler['module_method'], array($aEvent), $aHandler['module_class']);
-        }
-
-		$sMethod = 'display' . bx_gen_method_name($aHandler['alert_unit'] . '_' . $aHandler['alert_action']);
+		$sMethod = 'display' . bx_gen_method_name($aEvent['type'] . '_' . $aEvent['action']);
 		if(!method_exists($this, $sMethod))
         	return '';
 
