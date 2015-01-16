@@ -18,6 +18,14 @@ class BxInvTemplate extends BxDolModuleTemplate
         parent::__construct($oConfig, $oDb);
     }
 
+    public function getBlockRequestText($aRequest)
+    {
+    	return $this->parseHtmlByName('request_text.html', array(
+			'style_prefix' => $this->_oConfig->getPrefix('style'),
+			'text' => bx_process_output(nl2br($aRequest['text']), BX_DATA_TEXT_MULTILINE),
+		));
+    }
+
     public function getBlockInvite($iAccountId, $iProfileId)
     {
     	$iInvites = $this->_oConfig->getCountPerUser();

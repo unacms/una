@@ -9,3 +9,10 @@ div.bx-inv-invite-btn .bx-btn {
 
 /*--- Request Invite block ---*/
 div.bx-inv-request-btn  {}
+
+
+/*--- Manage Requests page ---*/
+div.bx-inv-request-text {
+	max-width: 400px;
+	max-width: 25rem;
+}
