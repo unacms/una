@@ -114,7 +114,7 @@ INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`,
 ('bx_convos_preview', 'bx_convos_photos_resized', 'Storage', 'a:1:{s:6:"object";s:15:"bx_convos_files";}', 'no', '1', '2592000', '0');
 
 INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_params`, `order`) VALUES 
-('bx_convos_preview', 'Resize', 'a:4:{s:1:"w";s:3:"300";s:1:"h";s:3:"200";s:11:"crop_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}', '0');
+('bx_convos_preview', 'Resize', 'a:3:{s:1:"w";s:3:"300";s:1:"h";s:3:"200";s:11:"crop_resize";s:1:"1";}', '0');
 
 -- FORMS
 
