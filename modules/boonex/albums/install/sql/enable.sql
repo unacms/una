@@ -284,9 +284,10 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
 
 -- SEARCH
-INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `ClassName`, `ClassPath`) VALUES
-('bx_albums', '_bx_albums', 'BxAlbumsSearchResult', 'modules/boonex/albums/classes/BxAlbumsSearchResult.php'),
-('bx_albums_cmts', '_bx_albums_cmts', 'BxAlbumsCmtsSearchResult', 'modules/boonex/albums/classes/BxAlbumsCmtsSearchResult.php');
+SET @iSearchOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_objects_search`);
+INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `ClassPath`) VALUES
+('bx_albums', '_bx_albums', @iSearchOrder + 1, 'BxAlbumsSearchResult', 'modules/boonex/albums/classes/BxAlbumsSearchResult.php'),
+('bx_albums_cmts', '_bx_albums_cmts', @iSearchOrder + 2, 'BxAlbumsCmtsSearchResult', 'modules/boonex/albums/classes/BxAlbumsCmtsSearchResult.php');
 
 -- METATAGS
 INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES

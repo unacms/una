@@ -283,8 +283,9 @@ INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations
 ('bx_organizations', 'bx_organizations_meta_keywords', '', '', '', '');
 
 -- SEARCH
-INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `ClassName`, `ClassPath`) VALUES
-('bx_organizations', '_bx_orgs', 'BxOrgsSearchResult', 'modules/boonex/organizations/classes/BxOrgsSearchResult.php');
+SET @iSearchOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_objects_search`);
+INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `ClassPath`) VALUES
+('bx_organizations', '_bx_orgs', @iSearchOrder + 1, 'BxOrgsSearchResult', 'modules/boonex/organizations/classes/BxOrgsSearchResult.php');
 
 -- GRIDS: administration
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `override_class_name`, `override_class_file`) VALUES

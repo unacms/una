@@ -63,7 +63,8 @@ class BxDolSearch extends BxDol
                    `ClassName` as `class`,
                    `ClassPath` as `file`,
                    `ObjectName`
-            FROM `sys_objects_search`', 'ObjectName'
+            FROM `sys_objects_search`
+            ORDER BY `Order` ASC', 'ObjectName'
         );
 
         if (is_array($aChoice) && !empty($aChoice)) {
