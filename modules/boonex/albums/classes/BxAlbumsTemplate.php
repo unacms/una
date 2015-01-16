@@ -69,6 +69,27 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
             'module_name' => _t($CNF['T']['txt_sample_single']),
             'ts' => $aData[$CNF['FIELD_ADDED']],
             'bx_repeat:browse' => $aBrowseUnits,
+
+            'bx_if:thumb' => array (
+                'condition' => $aBrowseUnits,
+                'content' => array (
+                    'title' => bx_process_output($aData[$CNF['FIELD_TITLE']]),
+                    'summary_attr' => '',
+                    'content_url' => $sUrl,
+                    'thumb_url' => $aBrowseUnits ? $aBrowseUnits[0]['url'] : '',
+                    'gallery_url' => '',
+                    'strecher' => '',
+                ),
+            ),
+            'bx_if:no_thumb' => array (
+                'condition' => !$aBrowseUnits,
+                'content' => array (
+                    'content_url' => $sUrl,
+                    'summary_plain' => '',
+                    'strecher' => '',
+                ),
+            ),
+
         );
 
         return $this->parseHtmlByName($sTemplateName, $aVars);
