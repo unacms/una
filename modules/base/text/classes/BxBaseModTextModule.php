@@ -343,6 +343,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
                 'text' => $aContentInfo[$CNF['FIELD_TEXT']],
                 'images' => $aImages,
             ), //a string to display or array to parse default template before displaying.
+            'date' => $aContentInfo[$CNF['FIELD_ADDED']],
             'votes' => $aVotes,
             'comments' => $aComments,
             'title' => '', //may be empty.
