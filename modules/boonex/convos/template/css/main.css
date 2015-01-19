@@ -30,9 +30,14 @@
     overflow:hidden;
 }
 
-.bx-cnv-preview .bx-def-unit-alert-middle {
-    bottom:auto;
-    top:0;
+.bx-cnv-grid-field-label {
+    display:inline-block;
+}
+
+.bx-cnv-preview .bx-cnv-grid-field-label {
+    position: absolute;
+    right: 0;
+    top: 0;
 }
 
 .bx-cnv-grid-field-messages .bx-def-unit-alert-middle {

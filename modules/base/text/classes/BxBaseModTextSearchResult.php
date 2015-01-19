@@ -13,7 +13,7 @@ bx_import('BxBaseModGeneralSearchResult');
 
 class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
 {
-    protected $aUnitViews = array('extended' => 'unit.html', 'gallery' => 'unit_gallery.html');
+    protected $aUnitViews = array('extended' => 'unit.html', 'gallery' => 'unit_gallery.html', 'full' => 'unit_full.html');
     protected $sUnitViewDefault = 'gallery';
     protected $sUnitViewParamName = 'unit_view';
 

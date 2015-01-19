@@ -291,6 +291,21 @@ class BxCnvModule extends BxBaseModTextModule
     }
 
     /**
+     * Conversations can be deleted by author and/or collaborators only.
+     * Admins can't delete conversations, since it's designed for participant only, it's moved to trash actually, also it's private content.
+     */
+    public function checkAllowedDelete (&$aDataEntry, $isPerformAction = false)
+    {
+        if ($aDataEntry[$this->_oConfig->CNF['FIELD_AUTHOR']] == $this->_iProfileId || $this->isCollaborator($aDataEntry, bx_get_logged_profile_id()))
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+        if ($this->_isModerator($isPerformAction))
+            return _t('_sys_txt_access_denied');
+
+        return parent::checkAllowedDelete ($aDataEntry, $isPerformAction);
+    }
+
+    /**
      * Only collaborators can view convo
      */
     public function checkAllowedView ($aDataEntry, $isPerformAction = false)
@@ -298,8 +313,14 @@ class BxCnvModule extends BxBaseModTextModule
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = parent::checkAllowedView ($aDataEntry, $isPerformAction)))
             return $sMsg;
 
+        return $this->isCollaborator($aDataEntry, bx_get_logged_profile_id()) ? CHECK_ACTION_RESULT_ALLOWED : _t('_sys_txt_access_denied');
+    }
+
+
+    protected function isCollaborator($aDataEntry, $iProfileId)
+    {
         $aCollaborators = $this->_oDb->getCollaborators($aDataEntry[$this->_oConfig->CNF['FIELD_ID']]);
-        return isset($aCollaborators[bx_get_logged_profile_id()]) ? CHECK_ACTION_RESULT_ALLOWED : _t('_sys_txt_access_denied');
+        return isset($aCollaborators[$iProfileId]);
     }
 }
 
