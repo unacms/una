@@ -1015,7 +1015,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 
         $aPlus = array();
         $aPlus['reply_text'] = bx_process_output($aCmt['cmt_text']);
-        $aPlus['comment_url'] = sprintf('%scmts.php?sys=%s&id=1&cmt_id=%d', BX_DOL_URL_ROOT, $this->_sSystem, $iCmtParentId);
+        $aPlus['comment_url'] = sprintf('%scmts.php?sys=%s&id=%d&cmt_id=%d', BX_DOL_URL_ROOT, $this->_sSystem, $this->_iId, $iCmtParentId);
 
         bx_import('BxDolEmailTemplates');
         $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_CommentReplied', $aPlus);
