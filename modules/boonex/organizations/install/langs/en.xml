@@ -60,7 +60,9 @@
 	<string name="_bx_orgs_page_title_profile_info"><![CDATA[Info about {display_name}]]></string>
 	<string name="_bx_orgs_page_title_sys_home"><![CDATA[Organizations Home]]></string>
 	<string name="_bx_orgs_page_title_home"><![CDATA[Organizations]]></string>
-	<string name="_bx_orgs_page_title_sys_manage"><![CDATA[Manage Organizations]]></string>
+	<string name="_bx_orgs_page_title_sys_manage"><![CDATA[Manage Own Organizations]]></string>
+	<string name="_bx_orgs_page_title_sys_manage_moderation"><![CDATA[Manage Organizations For Moderator]]></string>
+	<string name="_bx_orgs_page_title_sys_manage_administration"><![CDATA[Manage Organizations For Administrator]]></string>
 	<string name="_bx_orgs_page_title_manage"><![CDATA[Manage Organizations]]></string>
 
 	<string name="_bx_orgs_page_block_title_create_profile"><![CDATA[Create Organization's Profile]]></string>
@@ -72,6 +74,9 @@
 	<string name="_bx_orgs_page_block_title_profile_cover"><![CDATA[Profile Cover]]></string>
 	<string name="_bx_orgs_page_block_title_profile_actions"><![CDATA[Actions]]></string>
 	<string name="_bx_orgs_page_block_title_latest_profiles"><![CDATA[Recent Organizations]]></string>
+	<string name="_bx_orgs_page_block_title_system_manage"><![CDATA[Manage Own Organizations]]></string>
+	<string name="_bx_orgs_page_block_title_system_manage_moderation"><![CDATA[Manage Organizations For Moderator]]></string>
+	<string name="_bx_orgs_page_block_title_system_manage_administration"><![CDATA[Manage Organizations For Administrator]]></string>
 	<string name="_bx_orgs_page_block_title_manage"><![CDATA[Manage Organizations]]></string>
 
     <string name="_bx_orgs_menu_title_submenu"><![CDATA[Organizations Submenu]]></string>

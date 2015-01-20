@@ -2,10 +2,13 @@
 <resources name="en" flag="gb" title="English">
 	<string name="_bx_accnt"><![CDATA[Accounts]]></string>
 
-	<string name="_bx_accnt_page_title_sys_manage"><![CDATA[Manage Accounts]]></string>
+	<string name="_bx_accnt_page_title_sys_manage_moderation"><![CDATA[Manage Accounts For Moderator]]></string>
+	<string name="_bx_accnt_page_title_sys_manage_administration"><![CDATA[Manage Accounts For Administrator]]></string>
 	<string name="_bx_accnt_page_title_manage"><![CDATA[Manage Accounts]]></string>
 	<string name="_bx_accnt_page_title_browse"><![CDATA[Accounts]]></string>
 
+	<string name="_bx_accnt_page_block_title_system_manage_moderation"><![CDATA[Manage Accounts For Moderator]]></string>
+	<string name="_bx_accnt_page_block_title_system_manage_administration"><![CDATA[Manage Accounts For Administrator]]></string>
 	<string name="_bx_accnt_page_block_title_manage"><![CDATA[Manage Accounts]]></string>
 
 	<string name="_bx_accnt_menu_set_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
