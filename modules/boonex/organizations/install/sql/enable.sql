@@ -284,7 +284,7 @@ INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations
 ('bx_organizations', 'bx_organizations_meta_keywords', '', '', '', '');
 
 -- SEARCH
-SET @iSearchOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_objects_search`);
+SET @iSearchOrder = (SELECT IFNULL(MAX(`Order`), 0) FROM `sys_objects_search`);
 INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `ClassPath`) VALUES
 ('bx_organizations', '_bx_orgs', @iSearchOrder + 1, 'BxOrgsSearchResult', 'modules/boonex/organizations/classes/BxOrgsSearchResult.php');
 

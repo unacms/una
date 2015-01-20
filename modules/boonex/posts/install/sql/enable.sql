@@ -293,7 +293,7 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
 
 -- SEARCH
-SET @iSearchOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_objects_search`);
+SET @iSearchOrder = (SELECT IFNULL(MAX(`Order`), 0) FROM `sys_objects_search`);
 INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `ClassPath`) VALUES
 ('bx_posts', '_bx_posts', @iSearchOrder + 1, 'BxPostsSearchResult', 'modules/boonex/posts/classes/BxPostsSearchResult.php'),
 ('bx_posts_cmts', '_bx_posts_cmts', @iSearchOrder + 2, 'BxPostsCmtsSearchResult', 'modules/boonex/posts/classes/BxPostsCmtsSearchResult.php');
