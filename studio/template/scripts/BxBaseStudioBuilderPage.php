@@ -143,7 +143,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
                 $aTmplVarsCell = array('id' => $i, 'bx_repeat:blocks' => array());
                 foreach($aBlocks as $aBlock) {
-                	$sTitle = $oPage->getBlockTitle($aBlock);
+                	$sTitle = !empty($aBlock['title_system']) ? _t($aBlock['title_system']) : $oPage->getBlockTitle($aBlock);
                 	list($sIcon, $sIconUrl) = $this->getBlockIcon($aBlock);
 
                     $aTmplVarsCell['bx_repeat:blocks'][] = array(
@@ -1466,7 +1466,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                 'bx_if:show_text' => array(
                     'condition' => true,
                     'content' => array(
-                        'title' => _t($aBlock['title']),
+                        'title' => _t(!empty($aBlock['title_system']) ? $aBlock['title_system'] : $aBlock['title']),
                     )
                 ),
                 'bx_if:image' => array (

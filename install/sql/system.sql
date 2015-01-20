@@ -3199,6 +3199,7 @@ CREATE TABLE IF NOT EXISTS `sys_pages_blocks` (
   `object` varchar(64) NOT NULL,
   `cell_id` int(11) NOT NULL DEFAULT '1',
   `module` varchar(32) NOT NULL,
+  `title_system` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
   `designbox_id` int(11) NOT NULL DEFAULT '11',
   `visible_for_levels` int(11) NOT NULL DEFAULT '2147483647',

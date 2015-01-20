@@ -490,6 +490,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('bx_developer_bp_block', @sName, 'id', '0', '', 0, 'hidden', '_bx_dev_bp_txt_sys_block_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('bx_developer_bp_block', @sName, 'object', '', '', 0, 'text', '_bx_dev_bp_txt_sys_block_object', '_bx_dev_bp_txt_block_object', '', 1, 0, 0, '', '', '', 'Length', 'a:2:{s:3:"min";i:6;s:3:"max";i:100;}', '_bx_dev_bp_err_block_object', 'Xss', '', 0, 0),
 ('bx_developer_bp_block', @sName, 'module', '', '', 0, 'select', '_bx_dev_bp_txt_sys_block_module', '_bx_dev_bp_txt_block_module', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_dev_bp_err_block_module', 'Xss', '', 0, 0),
+('bx_developer_bp_block', @sName, 'title_system', '', '', 0, 'text', '_bx_dev_bp_txt_sys_block_title_system', '_bx_dev_bp_txt_block_title_system', '', 1, 0, 0, '', '', '', 'Length', 'a:2:{s:3:"min";i:6;s:3:"max";i:100;}', '_bx_dev_bp_err_block_title_system', 'Xss', '', 0, 0),
 ('bx_developer_bp_block', @sName, 'title', '', '', 0, 'text', '_bx_dev_bp_txt_sys_block_title', '_bx_dev_bp_txt_block_title', '', 1, 0, 0, '', '', '', 'Length', 'a:2:{s:3:"min";i:6;s:3:"max";i:100;}', '_bx_dev_bp_err_block_title', 'Xss', '', 0, 0),
 ('bx_developer_bp_block', @sName, 'designbox_id', '', '', 0, 'select', '_bx_dev_bp_txt_sys_block_designbox_id', '_bx_dev_bp_txt_block_designbox_id', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_dev_bp_err_block_designbox_id', 'Xss', '', 0, 0),
 ('bx_developer_bp_block', @sName, 'visible_for', '', '', 0, 'select', '_bx_dev_bp_txt_sys_block_visible_for', '_bx_dev_bp_txt_block_visible_for', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
@@ -506,17 +507,18 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_developer_bp_block_edit', 'id', 2147483647, 1, 1),
 ('bx_developer_bp_block_edit', 'object', 2147483647, 1, 2),
 ('bx_developer_bp_block_edit', 'module', 2147483647, 1, 3),
-('bx_developer_bp_block_edit', 'title', 2147483647, 1, 4),
-('bx_developer_bp_block_edit', 'designbox_id', 2147483647, 1, 5),
-('bx_developer_bp_block_edit', 'visible_for', 2147483647, 1, 6),
-('bx_developer_bp_block_edit', 'visible_for_levels', 2147483647, 1, 7),
-('bx_developer_bp_block_edit', 'deletable', 2147483647, 1, 8),
-('bx_developer_bp_block_edit', 'copyable', 2147483647, 1, 9),
-('bx_developer_bp_block_edit', 'active', 2147483647, 1, 10),
-('bx_developer_bp_block_edit', 'controls', 2147483647, 1, 11),
-('bx_developer_bp_block_edit', 'do_submit', 2147483647, 1, 12),
-('bx_developer_bp_block_edit', 'cancel', 2147483647, 1, 13),
-('bx_developer_bp_block_edit', 'delete', 2147483647, 1, 14);
+('bx_developer_bp_block_edit', 'title_system', 2147483647, 1, 4),
+('bx_developer_bp_block_edit', 'title', 2147483647, 1, 5),
+('bx_developer_bp_block_edit', 'designbox_id', 2147483647, 1, 6),
+('bx_developer_bp_block_edit', 'visible_for', 2147483647, 1, 7),
+('bx_developer_bp_block_edit', 'visible_for_levels', 2147483647, 1, 8),
+('bx_developer_bp_block_edit', 'deletable', 2147483647, 1, 9),
+('bx_developer_bp_block_edit', 'copyable', 2147483647, 1, 10),
+('bx_developer_bp_block_edit', 'active', 2147483647, 1, 11),
+('bx_developer_bp_block_edit', 'controls', 2147483647, 1, 12),
+('bx_developer_bp_block_edit', 'do_submit', 2147483647, 1, 13),
+('bx_developer_bp_block_edit', 'cancel', 2147483647, 1, 14),
+('bx_developer_bp_block_edit', 'delete', 2147483647, 1, 15);
 
 --
 -- Polyglot -> Grid descriptors
