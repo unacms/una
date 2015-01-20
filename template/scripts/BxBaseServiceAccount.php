@@ -54,8 +54,11 @@ class BxBaseServiceAccount extends BxDol
 
     public function serviceAccountSettingsDelAccount ($iAccountId = false)
     {
-        if (false === $iAccountId)
+        if (!$iAccountId)
+        	$iAccountId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if (!$iAccountId)
             $iAccountId = getLoggedId();
+
         return $this->_oAccountForms->deleteAccountForm($iAccountId);
     }
 
