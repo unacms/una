@@ -144,6 +144,7 @@
     <string name="_bx_persons_grid_action_title_adm_set_acl_level"><![CDATA[Set Membership]]></string>
     <string name="_bx_persons_grid_action_title_adm_more_actions"><![CDATA[More Actions]]></string>
     <string name="_bx_persons_grid_action_err_delete"><![CDATA[Cannot delete the selected person(s).]]></string>
+    <string name="_bx_persons_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
 
     <string name="_bx_persons_txt_account_pending"><![CDATA[This profile is pending approval, please wait until it is activated.]]></string>
     <string name="_bx_persons_txt_account_suspended"><![CDATA[This profile is suspended.]]></string>

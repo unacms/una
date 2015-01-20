@@ -99,6 +99,7 @@ class BxAlbumsConfig extends BxBaseModTextConfig
                 'txt_sample_single' => '_bx_albums_txt_sample_single',
             	'txt_sample_comment_single' => '_bx_albums_txt_sample_comment_single',
             	'grid_action_err_delete' => '_bx_albums_grid_action_err_delete',
+            	'grid_txt_account_manager' => '_bx_albums_grid_txt_account_manager',
 				'filter_item_active' => '_bx_albums_grid_filter_item_title_adm_active',
             	'filter_item_hidden' => '_bx_albums_grid_filter_item_title_adm_hidden',
             	'filter_item_select_one_filter1' => '_bx_albums_grid_filter_item_title_adm_select_one_filter1',

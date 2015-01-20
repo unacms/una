@@ -113,6 +113,8 @@
     <string name="_bx_posts_menu_item_title_manage_my_posts"><![CDATA[{addon} posts]]></string>
     <string name="_bx_posts_menu_set_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_posts_menu_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
+    <string name="_bx_posts_menu_item_title_system_manage_account"><![CDATA[Manage account]]></string>
+    <string name="_bx_posts_menu_item_title_manage_account"><![CDATA[Manage account]]></string>
 	<string name="_bx_posts_menu_item_title_system_admt_posts"><![CDATA[Posts]]></string>
 	<string name="_bx_posts_menu_item_title_admt_posts"><![CDATA[Posts - {addon} hidden]]></string>
 	<string name="_bx_posts_menu_item_title_manage_my"><![CDATA[My Posts]]></string>
@@ -129,7 +131,7 @@
     <string name="_bx_posts_grid_action_title_adm_delete"><![CDATA[Delete]]></string>
     <string name="_bx_posts_grid_action_title_adm_more_actions"><![CDATA[More Actions]]></string>
     <string name="_bx_posts_grid_action_err_delete"><![CDATA[Cannot delete the selected post(s).]]></string>
-    
+    <string name="_bx_posts_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
 
     <string name="_bx_posts_txt_sample_single"><![CDATA[post]]></string>
     <string name="_bx_posts_txt_sample_comment_single"><![CDATA[post's comment]]></string>

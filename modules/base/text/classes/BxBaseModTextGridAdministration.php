@@ -72,10 +72,9 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
         bx_import('BxDolPermalinks');
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aRow[$CNF['FIELD_ID']]);
 
-        $mixedValue = $this->_oTemplate->parseHtmlByName('bx_a.html', array(
+        $mixedValue = $this->_oTemplate->parseHtmlByName('title_link.html', array(
             'href' => $sUrl,
             'title' => $mixedValue,
-            'bx_repeat:attrs' => array(),
             'content' => $mixedValue
         ));
 
@@ -89,14 +88,32 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
 
     protected function _getCellAuthor($mixedValue, $sKey, $aField, $aRow)
     {
+    	bx_import('BxDolProfile');
     	$oProfile = $this->_getProfileObject($aRow['author']);
     	$sProfile = $oProfile->getDisplayName();
 
-        $mixedValue = $this->_oTemplate->parseHtmlByName('bx_a.html', array(
+    	bx_import('BxDolAcl');
+		$oAcl = BxDolAcl::getInstance();
+
+    	$sAccountEmail = '';
+    	$sManageAccountUrl = '';
+    	if($oProfile && $oProfile instanceof BxDolProfile && $oAcl->isMemberLevelInSet(128)) {
+    		$sAccountEmail = $oProfile->getAccountObject()->getEmail();
+	    	$sManageAccountUrl = $this->_getManageAccountUrl($sAccountEmail);
+    	}
+
+        $mixedValue = $this->_oTemplate->parseHtmlByName('author_link.html', array(
             'href' => $oProfile->getUrl(),
             'title' => $sProfile,
-            'bx_repeat:attrs' => array(),
-            'content' => $sProfile
+            'content' => $sProfile,
+        	'bx_if:show_account' => array(
+        		'condition' => !empty($sManageAccountUrl), 
+        		'content' => array(
+        			'href' => $sManageAccountUrl,
+		        	'title' => _t($this->_oModule->_oConfig->CNF['T']['grid_txt_account_manager']),
+		        	'content' => $sAccountEmail
+        		)
+        	)
         ));
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);

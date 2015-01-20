@@ -125,10 +125,9 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
     {
     	$oProfile = $this->_getProfileObject($aRow['id']);
 
-        $mixedValue = $this->_oTemplate->parseHtmlByName('bx_a.html', array(
+        $mixedValue = $this->_oTemplate->parseHtmlByName('name_link.html', array(
             'href' => $oProfile->getUrl(),
             'title' => $mixedValue,
-            'bx_repeat:attrs' => array(),
             'content' => $mixedValue
         ));
 
@@ -138,6 +137,20 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
     protected function _getCellLastOnline($mixedValue, $sKey, $aField, $aRow)
     {
         return parent::_getCellDefault(bx_time_js($mixedValue), $sKey, $aField, $aRow);
+    }
+
+	protected function _getCellAccount($mixedValue, $sKey, $aField, $aRow)
+    {
+    	$sManageAccountUrl = $this->_getManageAccountUrl($mixedValue);
+    	if(!empty($sManageAccountUrl)) {
+    		$mixedValue = $this->_oTemplate->parseHtmlByName('account_link.html', array(
+    			'href' => $sManageAccountUrl,
+    			'title' => _t($this->_oModule->_oConfig->CNF['T']['grid_txt_account_manager']),
+    			'content' => $mixedValue, 
+    		));
+    	}
+
+        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 
     protected function _getProfileObject($iId)
