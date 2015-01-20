@@ -115,6 +115,10 @@ div.bx-std-pmen-item {
 }
 div.bx-std-pmen-item-cnt {
 	padding-left: 66px;    
+
+	white-space: nowrap;
+    text-overflow: ellipsis;
+	overflow: hidden;
 }
 
 span.bx-std-pmen-item-counter {}
