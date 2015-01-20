@@ -85,7 +85,7 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
 
     	$a['attr'] = array_merge($a['attr'], array(
     		"bx-popup-id" => $sMenuName . "-" . $aRow['id'],
-    		"onclick" => "$(this).off('click'); " . $sJsObject . ".onClickSettings('" . $this->_sManageType . "', '" . $sMenuName . "', this);"
+    		"onclick" => "$(this).off('click'); " . $sJsObject . ".onClickSettings('" . $sMenuName . "', this);"
     	));
 
     	return $this->_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
