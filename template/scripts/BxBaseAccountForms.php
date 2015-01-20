@@ -141,7 +141,8 @@ class BxBaseAccountForms extends BxDolProfileForms
             return MsgBox(_t('_sys_txt_error_account_delete'));
 
         // logout from deleted account
-        bx_logout();
+        if($iAccountId == getLoggedId())
+        	bx_logout();
 
         // redirect to homepage
         $this->_redirectAndExit('', false);

@@ -90,6 +90,8 @@
     <string name="_bx_orgs_menu_item_title_edit_profile"><![CDATA[Edit Profile]]></string>
     <string name="_bx_orgs_menu_item_title_system_delete_profile"><![CDATA[Delete Organization]]></string>
     <string name="_bx_orgs_menu_item_title_delete_profile"><![CDATA[Delete Profile]]></string>
+    <string name="_bx_orgs_menu_item_title_system_delete_account"><![CDATA[Delete Account]]></string>
+    <string name="_bx_orgs_menu_item_title_delete_account"><![CDATA[Delete Account]]></string>
     <string name="_bx_orgs_menu_item_title_system_profile_type"><![CDATA[Organization]]></string>
     <string name="_bx_orgs_menu_item_title_profile_type"><![CDATA[Organization]]></string>
     <string name="_bx_orgs_menu_item_title_system_create_profile"><![CDATA[Create Organization]]></string>
