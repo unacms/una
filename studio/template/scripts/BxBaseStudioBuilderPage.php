@@ -486,7 +486,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                 $aMenu[$sName] = array_merge($aMenu[$sName], $aModule);
             else
                 $aMenu[$sName] = $aModule;
-                
+
 			if(empty($aMenu[$sName]['icon']))
 				$aMenu[$sName]['icon'] = BxDolStudioUtils::getModuleIcon($aModule, 'menu', false); 
         }
