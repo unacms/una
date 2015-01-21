@@ -79,7 +79,10 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
     	$sMenuName = $this->_oModule->_oConfig->CNF['OBJECT_MENU_MANAGE_TOOLS'];
 
     	bx_import('BxDolMenu');
-    	$sMenu = BxDolMenu::getObjectInstance($sMenuName)->getCode();
+    	$oMenu = BxDolMenu::getObjectInstance($sMenuName);
+    	$oMenu->setContentId($aRow['id']);
+
+    	$sMenu = $oMenu->getCode();
     	if(empty($sMenu))
     		return '';
 

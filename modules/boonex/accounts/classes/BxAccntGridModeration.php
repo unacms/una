@@ -17,6 +17,8 @@ class BxAccntGridModeration extends BxAccntGridAdministration
     {
     	$this->MODULE = 'bx_accounts';
         parent::__construct ($aOptions, $oTemplate);
+
+        $this->_sManageType = 'moderation';
     }
 }
 

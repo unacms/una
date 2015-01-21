@@ -109,7 +109,7 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
 	protected function _getContentInfo($iId)
     {
     	bx_import('BxDolAccount');
-    	return BxDolAccount::getInstance($iId)->getInfo();
+    	return BxDolAccountQuery::getInstance()->getInfoById($iId);
     }
 
 	protected function _doDelete($iId, $aParams = array())

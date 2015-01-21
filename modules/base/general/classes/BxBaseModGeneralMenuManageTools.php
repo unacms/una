@@ -17,6 +17,7 @@ bx_import('BxTemplMenu');
 class BxBaseModGeneralMenuManageTools extends BxTemplMenu
 {
 	protected $_oModule;
+	protected $_iContentId;
 
     public function __construct($aObject, $oTemplate = false)
     {
@@ -25,14 +26,19 @@ class BxBaseModGeneralMenuManageTools extends BxTemplMenu
         bx_import('BxDolModule');
         $this->_oModule = BxDolModule::getInstance($this->MODULE);
 
-        $iContentId = 0;
+        $this->_iContentId = 0;
         if(bx_get('content_id') !== false)
-        	$iContentId = (int)bx_get('content_id');
+        	$this->_iContentId = (int)bx_get('content_id');
 
 		$this->addMarkers(array(
 			'js_object' => $this->_oModule->_oConfig->getJsObject('manage_tools'),
-			'content_id' => $iContentId
+			'content_id' => $this->_iContentId
 		));
+    }
+
+    public function setContentId($iContentId)
+    {
+    	$this->_iContentId = (int)$iContentId;
     }
 }
 
