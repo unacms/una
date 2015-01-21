@@ -16,30 +16,31 @@ bx_import('BxTemplMenu');
  */
 class BxTimelineMenuItemManage extends BxTemplMenu
 {
-    protected $_aEvent;
+	protected $_iEvent;
     protected $_oModule;
+
 
     public function __construct($aObject, $oTemplate = false)
     {
         parent::__construct($aObject, $oTemplate);
 
+        bx_import('BxDolModule');
         $this->_oModule = BxDolModule::getInstance('bx_timeline');
+
+        $this->_iEvent = 0;
+        if(bx_get('content_id') !== false)
+        	$this->_iEvent = (int)bx_get('content_id');
 
         $this->addMarkers(array(
             'js_object_view' => $this->_oModule->_oConfig->getJsObject('view'),
+
+        	'content_id' => $this->_iEvent,
         ));
     }
 
-    public function setEvent($aEvent)
+    public function setEventId($iEventId)
     {
-        if(empty($aEvent) || !is_array($aEvent))
-            return;
-
-        $this->_aEvent = $aEvent;
-
-        $this->addMarkers(array(
-            'content_id' => $aEvent['id'],
-        ));
+    	$this->_iEvent = $iEventId;
     }
 
     public function isVisible()
@@ -69,13 +70,16 @@ class BxTimelineMenuItemManage extends BxTemplMenu
         if(!parent::_isVisible($a))
             return false;
 
+		$aEvent = $this->_oModule->_oDb->getEvents(array('browse' => 'id', 'value' => $this->_iEvent));
+		if(empty($aEvent) || !is_array($aEvent))
+			return false;
+
         $sCheckFuncName = '';
         $aCheckFuncParams = array();
         switch ($a['name']) {
             case 'item-delete':
                 $sCheckFuncName = 'isAllowedDelete';
-                if(!empty($this->_aEvent))
-                    $aCheckFuncParams = array($this->_aEvent);
+				$aCheckFuncParams = array($aEvent);
                 break;
         }
 

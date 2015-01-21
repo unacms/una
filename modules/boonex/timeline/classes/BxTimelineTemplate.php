@@ -489,14 +489,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'js_object' => $sJsObject,
         	'html_id' => $this->_oConfig->getHtmlIds('view', 'item') . $aEvent['id'],
             'class' => $bBrowseItem ? 'bx-tl-view-sizer' : 'bx-tl-grid-sizer',
-            'bx_if:show_menu_item_manage' => array(
-                'condition' => $oModule->getManageMenuObject($aEvent)->isVisible(),
-                'content' => array(
-        			'style_prefix' => $sStylePrefix,
-		            'js_object' => $sJsObject,
-		        	'id' => $aEvent['id'],
-        		)
-            ),
             'bx_if:show_icon' => array(
                 'condition' => $bAuthorIcon,
                 'content' => array(

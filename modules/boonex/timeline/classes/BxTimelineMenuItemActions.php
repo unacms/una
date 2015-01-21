@@ -98,23 +98,23 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
      */
     protected function _isVisible ($a)
     {
-        if(!parent::_isVisible($a))
+        if(!parent::_isVisible($a) || empty($this->_aEvent))
             return false;
 
         $sCheckFuncName = '';
-        $aCheckFuncParams = array();
+        $aCheckFuncParams = array($this->_aEvent);
         switch ($a['name']) {
             case 'item-comment':
                 $sCheckFuncName = 'isAllowedComment';
-                if(!empty($this->_aEvent))
-                    $aCheckFuncParams = array($this->_aEvent);
                 break;
 
             case 'item-vote':
                 $sCheckFuncName = 'isAllowedVote';
-                if(!empty($this->_aEvent))
-                    $aCheckFuncParams = array($this->_aEvent);
                 break;
+
+            case 'item-more':
+            	$sCheckFuncName = 'isAllowedMore';
+            	break;
         }
 
         if(!$sCheckFuncName || !method_exists($this->_oModule, $sCheckFuncName))

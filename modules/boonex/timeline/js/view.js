@@ -87,21 +87,6 @@ BxTimelineView.prototype.showMoreContent = function(oLink) {
 	this.reloadMasonry();
 };
 
-BxTimelineView.prototype.showManageMenu = function(oLink, iId) {
-	var oData = this._getDefaultData();    
-    oData['id'] = iId;
-
-    $(this.sIdView).dolPopupAjax({
-		id: this._aHtmlIds['menu_popup'] + iId,
-		url: bx_append_url_params(this._sActionsUri + 'get_manage_menu_popup/', oData),
-		pointer:{
-			el:$(oLink)
-		}
-	});
-
-	return false;
-};
-
 BxTimelineView.prototype.showPhoto = function(oLink, sUrl) {
 	$('#' + this._aHtmlIds['photo_popup']).dolPopupImage(sUrl, $(oLink).parent());
 };
