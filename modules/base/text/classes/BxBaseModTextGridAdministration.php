@@ -121,6 +121,9 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
 
     protected function _getActionEdit($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
+    	if($this->_sManageType == BX_DOL_MANAGE_TOOLS_ADMINISTRATION && $this->_oModule->checkAllowedEditAnyEntry() !== CHECK_ACTION_RESULT_ALLOWED)
+			return '';
+
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
 		bx_import('BxDolPermalinks');
