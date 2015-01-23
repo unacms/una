@@ -79,7 +79,6 @@ class BxAlbumsConfig extends BxBaseModTextConfig
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'albums-home', // first item in view entry submenu from main module submenu
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_albums_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_GRID_ADMINISTRATION' => 'bx_albums_administration',
-        	'OBJECT_GRID_MODERATION' => 'bx_albums_moderation',
         	'OBJECT_GRID_COMMON' => 'bx_albums_common',
         	'OBJECT_UPLOADERS' => array('bx_albums_simple', 'bx_albums_html5'),
 
@@ -118,7 +117,6 @@ class BxAlbumsConfig extends BxBaseModTextConfig
 
         $this->_aGridObjects = array(
         	'common' => $this->CNF['OBJECT_GRID_COMMON'],
-        	'moderation' => $this->CNF['OBJECT_GRID_MODERATION'],
         	'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
         	
         );

@@ -89,7 +89,6 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_organizations_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_PAGE_VIEW_ENTRY' => 'bx_organizations_view_profile',
             'OBJECT_GRID_ADMINISTRATION' => 'bx_organizations_administration',
-        	'OBJECT_GRID_MODERATION' => 'bx_organizations_moderation',
         	'OBJECT_GRID_COMMON' => 'bx_organizations_common',
 
         	'TRIGGER_PAGE_VIEW_ENTRY' => 'trigger_page_organizations_view_entry',
@@ -142,7 +141,6 @@ class BxOrgsConfig extends BxBaseModProfileConfig
 
         $this->_aGridObjects = array(
         	'common' => $this->CNF['OBJECT_GRID_COMMON'],
-        	'moderation' => $this->CNF['OBJECT_GRID_MODERATION'],
         	'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
         	
         );

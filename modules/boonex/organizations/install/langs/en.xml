@@ -61,8 +61,7 @@
 	<string name="_bx_orgs_page_title_sys_home"><![CDATA[Organizations Home]]></string>
 	<string name="_bx_orgs_page_title_home"><![CDATA[Organizations]]></string>
 	<string name="_bx_orgs_page_title_sys_manage"><![CDATA[Manage Own Organizations]]></string>
-	<string name="_bx_orgs_page_title_sys_manage_moderation"><![CDATA[Manage Organizations For Moderator]]></string>
-	<string name="_bx_orgs_page_title_sys_manage_administration"><![CDATA[Manage Organizations For Administrator]]></string>
+		<string name="_bx_orgs_page_title_sys_manage_administration"><![CDATA[Manage All Organizations]]></string>
 	<string name="_bx_orgs_page_title_manage"><![CDATA[Manage Organizations]]></string>
 
 	<string name="_bx_orgs_page_block_title_create_profile"><![CDATA[Create Organization's Profile]]></string>
@@ -75,8 +74,7 @@
 	<string name="_bx_orgs_page_block_title_profile_actions"><![CDATA[Actions]]></string>
 	<string name="_bx_orgs_page_block_title_latest_profiles"><![CDATA[Recent Organizations]]></string>
 	<string name="_bx_orgs_page_block_title_system_manage"><![CDATA[Manage Own Organizations]]></string>
-	<string name="_bx_orgs_page_block_title_system_manage_moderation"><![CDATA[Manage Organizations For Moderator]]></string>
-	<string name="_bx_orgs_page_block_title_system_manage_administration"><![CDATA[Manage Organizations For Administrator]]></string>
+	<string name="_bx_orgs_page_block_title_system_manage_administration"><![CDATA[Manage All Organizations]]></string>
 	<string name="_bx_orgs_page_block_title_manage"><![CDATA[Manage Organizations]]></string>
 
     <string name="_bx_orgs_menu_title_submenu"><![CDATA[Organizations Submenu]]></string>
@@ -89,6 +87,8 @@
     <string name="_bx_orgs_menu_title_view_profile_submenu"><![CDATA[View Organization Submenu]]></string>
 	<string name="_bx_orgs_menu_set_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
     <string name="_bx_orgs_menu_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
+    <string name="_bx_orgs_menu_item_title_system_delete"><![CDATA[Delete]]></string>
+    <string name="_bx_orgs_menu_item_title_delete"><![CDATA[Delete]]></string>
     <string name="_bx_orgs_menu_item_title_system_delete_with_content"><![CDATA[Delete With Content]]></string>
     <string name="_bx_orgs_menu_item_title_delete_with_content"><![CDATA[Delete With Content]]></string>
     <string name="_bx_orgs_menu_item_title_system_edit_profile"><![CDATA[Edit Organization]]></string>

@@ -54,6 +54,15 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
 		$this->_echoResultJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t($CNF['T']['grid_action_err_perform'])));
     }
 
+    public function resetQueryParams()
+    {
+        $aKeys = array('order_field', 'order_dir', $this->_aOptions['paginate_get_start'], $this->_aOptions['paginate_get_per_page']);
+        foreach ($aKeys as $sKey) {
+            unset($_GET[$sKey]);
+            unset($_POST[$sKey]);
+        }
+    }
+
 	protected function _performActionEnable($isChecked)
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;

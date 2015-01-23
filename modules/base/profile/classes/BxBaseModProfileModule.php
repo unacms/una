@@ -350,6 +350,20 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         return $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, 'sys_profiles_subscriptions', false, true);
     }
 
+    public function checkMyself($iContentId)
+    {
+		$iLogged = (int)bx_get_logged_profile_id();
+    	if(empty($iLogged))
+    		return false;
+
+    	bx_import('BxDolProfile');
+    	$oProfile = BxDolProfile::getInstanceByContentAndType((int)$iContentId, $this->_oConfig->getName());
+    	if(!$oProfile)
+    		return false;
+
+		return $oProfile->id() == $iLogged;
+    }
+
     // ====== PROTECTED METHODS
 
     protected function _checkAllowedConnect (&$aDataEntry, $isPerformAction, $sObjConnection, $isMutual, $isInvertResult, $isSwap = false)
