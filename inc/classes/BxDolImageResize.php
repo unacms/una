@@ -175,7 +175,7 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton
         return $this->_isUseGD;
     }
 
-    function getImageSize($sPath)
+    static function getImageSize($sPath)
     {
         $aSize = getimagesize($sPath);
         return array ('w' => $aSize[0], 'h' => $aSize[1]);

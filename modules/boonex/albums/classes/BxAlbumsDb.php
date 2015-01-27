@@ -21,16 +21,23 @@ class BxAlbumsDb extends BxBaseModTextDb
         parent::__construct($oConfig);
     }
 
-    public function associateFileWithContent($iContentId, $iFileId, $sTitle)
+    public function associateFileWithContent($iContentId, $iFileId, $sTitle, $sData = '')
     {
-        $sQuery = $this->prepare ("INSERT INTO `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` SET `content_id` = ?, `file_id` = ?, `title` = ? ON DUPLICATE KEY UPDATE `title` = ?", $iContentId, $iFileId, $sTitle, $sTitle);
+        $sQuery = $this->prepare ("INSERT INTO `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` SET `content_id` = ?, `file_id` = ?, `title` = ?, `data` = ? ON DUPLICATE KEY UPDATE `title` = ?, `data` = ?", $iContentId, $iFileId, $sTitle, $sData, $sTitle, $sData);
         return $this->query($sQuery);
     }
 
     public function deassociateFileWithContent($iContentId, $iFileId)
     {
-        $sQuery = $this->prepare ("DELETE FROM `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` WHERE `content_id` = ? AND `file_id` = ?", $iContentId, $iFileId);
-        return $this->query($sQuery);
+        $sWhere = '';
+        if ($iContentId)
+            $sWhere .= $this->prepare (" AND `content_id` = ? ", $iContentId);
+
+        if ($iFileId)
+            $sWhere .= $this->prepare (" AND `file_id` = ? ", $iFileId);
+
+        $sQuery = "DELETE FROM `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` WHERE 1 ";
+        return $this->query($sQuery . $sWhere);
     }
 
     public function getFileTitle($iFileId)
@@ -38,6 +45,13 @@ class BxAlbumsDb extends BxBaseModTextDb
         $sQuery = $this->prepare ("SELECT `title` FROM `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` WHERE `file_id` = ?", $iFileId);
         return $this->getOne($sQuery);
     }
+
+    public function getMediaInfoById($iMediaId)
+    {
+        $sQuery = $this->prepare ("SELECT `f2e`.*, `f`.`added`, `e`.`views` FROM `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` AS `f2e` INNER JOIN `" . $this->_oConfig->CNF['TABLE_FILES'] . "` AS `f` ON (`f`.`id` = `f2e`.`file_id`) INNER JOIN `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `e` ON (`e`.`id` = `f2e`.`content_id`) WHERE `f2e`.`id` = ?", $iMediaId);
+        return $this->getRow($sQuery);
+    }
+
 }
 
 /** @} */

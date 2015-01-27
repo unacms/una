@@ -58,6 +58,7 @@ CREATE TABLE IF NOT EXISTS `bx_albums_files2albums` (
   `content_id` int(10) unsigned NOT NULL,
   `file_id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
+  `data` text COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `file_content` (`file_id`,`content_id`)
 );

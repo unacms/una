@@ -672,7 +672,7 @@ class BxDolSearchResult implements iBxDolReplaceable
                 if (strlen($sqlCondition) > 0)
                     $aWhere[] = $sqlCondition;
             }
-            $sqlWhere .= "WHERE ". implode(' AND ', $aWhere);
+            $sqlWhere .= "WHERE ". implode(' AND ', $aWhere) . (isset($this->aCurrent['restriction_sql']) ? $this->aCurrent['restriction_sql'] : '');
         }
         return $sqlWhere;
     }

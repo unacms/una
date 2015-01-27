@@ -18,6 +18,14 @@ class BxAlbumsAlertsResponse extends BxBaseModTextAlertsResponse
         $this->MODULE = 'bx_albums';
         parent::__construct();
     }
+
+    public function response($oAlert)
+    {
+        if ('bx_albums_files' == $oAlert->sUnit && 'file_deleted' == $oAlert->sAction)
+            BxDolService::call($this->MODULE, 'delete_file_associations', array($oAlert->iObject));
+
+        parent::response($oAlert);
+    }
 }
 
 /** @} */

@@ -19,3 +19,32 @@
     margin-right:0.125rem;
     height:12.5rem;
 }
+
+.bx-albums-media-file {
+    text-align:center;    
+}
+
+.bx-albums-media-file img,
+.bx-albums-media-file video {
+    max-width:100%;
+}
+
+.bx-albums-media-title {
+    position:relative;
+    padding-right:6rem;
+}
+
+.bx-albums-media-title h1, 
+.bx-albums-media-title p {
+    margin:0;
+}
+
+.bx-albums-media-controls {
+    position:absolute;
+    top:0;
+    right:0;
+}
+
+.pswp__caption .pswp__caption__center {
+    text-align:center;
+}

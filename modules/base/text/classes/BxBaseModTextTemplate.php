@@ -21,7 +21,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         parent::__construct($oConfig, $oDb);
     }
 
-    function unit ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html')
+    function unit ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html', $aParams = array())
     {
         $oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$oModule->_oConfig->CNF;

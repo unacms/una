@@ -9,6 +9,10 @@
  * @{
  */
 
+bx_import('BxDolPermalinks');
+bx_import('BxTemplFunctions');
+bx_import('BxDolStorage');
+bx_import('BxDolTranscoderImage');
 bx_import('BxBaseModTextTemplate');
 
 /*
@@ -25,16 +29,18 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
         parent::__construct($oConfig, $oDb);
     }
 
-    function unit ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html')
+    function unit ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html', $aParams = array())
     {
+        if ('unit_media.html' == $sTemplateName)
+            return $this->unitMedia($aData, $isCheckPrivateContent, $sTemplateName, $aParams);
+
         $oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$oModule->_oConfig->CNF;
 
         if ($s = $this->checkPrivacy ($aData, $isCheckPrivateContent, $oModule))
             return $s;
 
-        // get entry url
-        bx_import('BxDolPermalinks');
+        // get entry url        
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
 
         bx_import('BxDolProfile');
@@ -42,10 +48,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
         if (!$oProfile) {
             bx_import('BxDolProfileUndefined');
             $oProfile = BxDolProfileUndefined::getInstance();
-        } 
-
-        bx_import('BxDolStorage');
-        bx_import('BxDolTranscoderImage');
+        }  
 
         $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
         $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_TRANSCODER_BROWSE']);
@@ -93,6 +96,157 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
         );
 
         return $this->parseHtmlByName($sTemplateName, $aVars);
+    }
+
+    function unitMedia ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html', $aParams = array())
+    {
+        $oModule = BxDolModule::getInstance($this->MODULE);
+        $CNF = &$oModule->_oConfig->CNF;
+
+        if (!($aMediaInfo = $oModule->_oDb->getMediaInfoById($aData['id'])))
+            return '';
+
+        $aVars = $this->mediaVars($aMediaInfo, $CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW'], $aParams);
+
+        return $this->parseHtmlByName($sTemplateName, $aVars);
+    }
+
+    function entryMediaView ($iMediaId, $mixedContext = false)
+    {
+        $oModule = BxDolModule::getInstance($this->MODULE);
+        $CNF = &$oModule->_oConfig->CNF;
+
+        if (!($aMediaInfo = $oModule->_oDb->getMediaInfoById($iMediaId)))
+            return '';
+
+        if (!($aAlbumInfo = $oModule->_oDb->getContentInfoById($aMediaInfo['content_id'])))
+            return '';        
+
+        $sUrlAlbum = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aAlbumInfo[$CNF['FIELD_ID']]);
+         
+        $aVars = array(
+            'title' => bx_process_output($aMediaInfo['title']),
+            'album' => _t('_bx_albums_txt_media_album_link', $sUrlAlbum,  bx_process_output($aAlbumInfo[$CNF['FIELD_TITLE']])),
+        );
+
+        $aNextPrev = array (
+            'next' => $this->getNextPrevMedia($aMediaInfo, true, $mixedContext),
+            'prev' => $this->getNextPrevMedia($aMediaInfo, false, $mixedContext),
+        );
+
+        foreach ($aNextPrev as $k => $a) {
+            $aVars['bx_if:' . $k] = array (
+                'condition' => $a,
+                'content' => $a,
+            );
+            $aVars['bx_if:' . $k . '-na'] = array (
+                'condition' => !$a,
+                'content' => array(),
+            );
+        }
+
+        $aVars = array_merge($aVars, $this->mediaVars($aMediaInfo, false, array('context' => $mixedContext)));
+
+        return $this->parseHtmlByName('media-view.html', $aVars);
+    }
+
+    protected function mediaVars ($aMediaInfo, $sImageTranscoder = false, $aParams = array())
+    {
+        $oModule = BxDolModule::getInstance($this->MODULE);
+        $CNF = &$oModule->_oConfig->CNF;
+
+        $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
+        $oTranscoder = BxDolTranscoderImage::getObjectInstance($sImageTranscoder);
+        $aTranscodersVideo = false;
+
+        if ($CNF['OBJECT_VIDEOS_TRANSCODERS'])
+            $aTranscodersVideo = array (
+                'poster' => BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']),
+                'mp4' => BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']),
+                'webm' => BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['webm']),
+            );
+        
+        $aFileInfo = $oStorage->getFile ($aMediaInfo['file_id']);
+        if (!$aFileInfo)
+            return '';
+
+        $isImage = 0 == strncmp('image/', $aFileInfo['mime_type'], 6); // preview for images, transcoder object for preview must be defined
+        $isVideo = $aTranscodersVideo && (0 == strncmp('video/', $aFileInfo['mime_type'], 6)); // preview for videos, transcoder object for video must be defined
+
+        $sMediaTitle = bx_process_output($aMediaInfo['title']);
+        $sMediaTitleAttr = bx_html_attribute($aMediaInfo['title']);
+        $mixedContext = isset($aParams['context']) ? $aParams['context'] : '';
+        $sUrl = $this->getViewMediaUrl($CNF, $aMediaInfo['id'], $mixedContext);
+        $aSize = $aMediaInfo['data'] ? explode('x', $aMediaInfo['data']) : array(0, 0);
+
+        $aVars = array(
+            'bx_if:image' => array (
+                'condition' => $isImage,
+                'content' => array (
+                    'title_attr' => $sMediaTitleAttr,
+                    'title' => $sMediaTitle,
+                    'url' => $sUrl,
+                    'url_img' => $oTranscoder ? $oTranscoder->getFileUrl($aFileInfo['id']) : $oStorage->getFileUrlById($aFileInfo['id']),
+                    'media_id' => $aMediaInfo['id'],
+                    'w' => $aSize[0],
+                    'h' => $aSize[1],
+                    'context' => $mixedContext,
+                ),
+            ),
+            'bx_if:video' => array (
+                'condition' => $isVideo,
+                'content' => array (
+                    'title_attr' => $sMediaTitleAttr,
+                    'title' => $sMediaTitle,
+                    'url' => $sUrl,
+                    'url_img' => $aTranscodersVideo['poster']->getFileUrl($aMediaInfo['file_id']),
+                    'video' => $aTranscodersVideo ? BxTemplFunctions::getInstance()->videoPlayer(
+                        $aTranscodersVideo['poster']->getFileUrl($aMediaInfo['file_id']), 
+                        $aTranscodersVideo['mp4']->getFileUrl($aMediaInfo['file_id']), 
+                        $aTranscodersVideo['webm']->getFileUrl($aMediaInfo['file_id']),
+                        false, ''
+                    ) : '',
+                ),
+            ),
+        );
+
+        return $aVars;
+    }
+
+    protected function getViewMediaUrl($CNF, $iMediaId, $sContext)
+    {
+        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_MEDIA'] . '&id=' . $iMediaId . (!empty($sContext) ? '&context=' . $sContext : ''));
+    }
+
+    public function getNextPrevMedia($aMediaInfo, $isNext, $sContext, $aParamsSearchResult = array())
+    {
+        $oModule = BxDolModule::getInstance($this->MODULE);
+        $CNF = &$oModule->_oConfig->CNF;
+
+        bx_import('SearchResultMedia', $oModule->_aModule);
+        $sClass = $oModule->_aModule['class_prefix'] . 'SearchResultMedia';
+        $o = new $sClass($sContext, $aParamsSearchResult);
+        if ($o->isError)
+            return false;
+
+        $o->setUnitParams(array('context' => $sContext));
+
+        $a = $o->getNextPrevItem($aMediaInfo, $isNext);
+    
+        if ($a) {
+
+            $aVars = $this->mediaVars($a, false, array('context' => $sContext));
+            $aMedia = $aVars['bx_if:image']['condition'] ? $aVars['bx_if:image']['content'] : $aVars['bx_if:video']['content'];
+
+            $a['url'] = $aMedia['url'];
+            $a['url_img'] = $aMedia['url_img'];
+            $a['title_attr'] = $aMedia['title_attr'];
+            $a['title_js_string'] = bx_js_string($aMedia['title']);
+            $a['w'] = $aVars['bx_if:image']['condition'] ? $aVars['bx_if:image']['content']['w'] : 0;
+            $a['h'] = $aVars['bx_if:image']['condition'] ? $aVars['bx_if:image']['content']['h'] : 0;
+        }
+
+        return $a;
     }
 }
 

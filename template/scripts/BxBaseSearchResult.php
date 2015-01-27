@@ -28,6 +28,8 @@ class BxBaseSearchResult extends BxDolSearchResult
 
     protected $aContainerClasses = array('bx-search-result-block', 'bx-def-margin-bottom', 'bx-clearfix');
 
+    protected $aUnitParams = array(); ///< additional params array to pass to unit display function
+
     function __construct($oFunctions = false)
     {
         parent::__construct();
@@ -94,7 +96,7 @@ class BxBaseSearchResult extends BxDolSearchResult
     function displaySearchUnit ($aData)
     {
         $oMain = $this->getMain();
-        return $oMain->_oTemplate->unit($aData, $this->bProcessPrivateContent, $this->_bLiveSearch ? $this->sUnitTemplateLiveSearch : $this->sUnitTemplate);
+        return $oMain->_oTemplate->unit($aData, $this->bProcessPrivateContent, $this->_bLiveSearch ? $this->sUnitTemplateLiveSearch : $this->sUnitTemplate, $this->aUnitParams);
     }
 
     function getDesignBoxMenu ()
@@ -332,6 +334,14 @@ class BxBaseSearchResult extends BxDolSearchResult
         foreach ($mixed as $s)
             if (false !== ($i = array_search($s, $this->aContainerClasses)))
                 unset($this->aContainerClasses[$i]);
+    }
+
+    public function setUnitParams ($aParamsAdd = array(), $aParamsRemove = array())
+    {
+        if ($aParamsAdd)
+            $this->aUnitParams = array_merge($this->aUnitParams, $aParamsAdd);
+        if ($aParamsRemove)
+            $this->aUnitParams = array_diff_key($this->aUnitParams, $aParamsRemove);
     }
 }
 

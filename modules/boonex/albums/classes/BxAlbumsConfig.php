@@ -22,6 +22,7 @@ class BxAlbumsConfig extends BxBaseModTextConfig
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'albums',
             'TABLE_FILES2ENTRIES' => $aModule['db_prefix'] . 'files2albums',
+            'TABLE_FILES' => $aModule['db_prefix'] . 'files',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -40,6 +41,7 @@ class BxAlbumsConfig extends BxBaseModTextConfig
 
             // page URIs
             'URI_VIEW_ENTRY' => 'view-album',
+            'URI_VIEW_MEDIA' => 'view-media',
             'URI_AUTHOR_ENTRIES' => 'albums-author',
             'URI_ADD_ENTRY' => 'create-album',
         	'URI_EDIT_ENTRY' => 'edit-album',
@@ -47,6 +49,7 @@ class BxAlbumsConfig extends BxBaseModTextConfig
 
             'URL_HOME' => 'page.php?i=albums-home',
             'URL_POPULAR' => 'page.php?i=albums-popular',
+            'URL_POPULAR_MEDIA' => 'page.php?i=media-popular',
         	'URL_MANAGE_COMMON' => 'page.php?i=albums-manage',
         	'URL_MANAGE_MODERATION' => 'page.php?i=albums-moderation',
         	'URL_MANAGE_ADMINISTRATION' => 'page.php?i=albums-administration',

@@ -26,7 +26,15 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
     {
         parent::_associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId);
 
-        $this->_oModule->_oDb->associateFileWithContent ($iContentId, $iFileId, $this->getCleanValue('title-' . $iFileId));
+        $sData = '';
+        $aFile = $oStorage->getFile($iFileId);
+        if (0 == strncmp('image/', $aFile['mime_type'], 6)) {
+            bx_import('BxDolImageResize');
+            $a = BxDolImageResize::getImageSize($oStorage->getFileUrlById($iFileId));
+            $sData = isset($a['w']) && isset($a['h']) ? $a['w'] . 'x' . $a['h'] : '';
+        }
+        
+        $this->_oModule->_oDb->associateFileWithContent ($iContentId, $iFileId, $this->getCleanValue('title-' . $iFileId), $sData);
     }
 
     function _deleteFile ($iFileId)
@@ -34,9 +42,16 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
         if (!($bRet = parent::_deleteFile ($iFileId)))
             return false;
 
-        $this->_oModule->_oDb->deassociateFileWithContent ($iFileId);
+        $this->_oModule->_oDb->deassociateFileWithContent (0, $iFileId);
 
         return true;
+    }
+
+    function delete ($iContentId, $aContentInfo = array())
+    {
+        if ($bRet = parent::delete ($iContentId, $aContentInfo))
+            $this->_oModule->_oDb->deassociateFileWithContent ($iContentId, 0);
+        return $bRet;
     }
 }
 
