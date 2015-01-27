@@ -2,10 +2,11 @@
 <resources name="en" flag="gb" title="English">
 	<string name="_bx_accnt"><![CDATA[Accounts]]></string>
 
-	<string name="_bx_accnt_page_title_sys_manage"><![CDATA[Manage Accounts]]></string>
+	<string name="_bx_accnt_page_title_sys_manage_administration"><![CDATA[Manage All Accounts]]></string>
 	<string name="_bx_accnt_page_title_manage"><![CDATA[Manage Accounts]]></string>
 	<string name="_bx_accnt_page_title_browse"><![CDATA[Accounts]]></string>
 
+	<string name="_bx_accnt_page_block_title_system_manage_administration"><![CDATA[Manage All Accounts]]></string>
 	<string name="_bx_accnt_page_block_title_manage"><![CDATA[Manage Accounts]]></string>
 
 	<string name="_bx_accnt_menu_set_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
@@ -19,6 +20,8 @@
 	<string name="_bx_accnt_menu_item_title_system_admt_accounts"><![CDATA[Accounts]]></string>
 	<string name="_bx_accnt_menu_item_title_admt_accounts"><![CDATA[Accounts - {addon} unconfirmed]]></string>
 	<string name="_bx_accnt_menu_item_title_manage"><![CDATA[Manage]]></string>
+
+	<string name="_bx_accnt_acl_action_edit_any_account"><![CDATA[Edit Any Account]]></string>
 
 	<string name="_bx_accnt_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
 	<string name="_bx_accnt_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>

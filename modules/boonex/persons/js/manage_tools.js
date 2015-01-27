@@ -42,6 +42,12 @@ BxPersonsManageTools.prototype.onClickSettings = function(sMenuObject, oButton) 
 	});
 };
 
+BxPersonsManageTools.prototype.onClickDelete = function(iContentId) {
+	$('.bx-popup-applied:visible').dolPopupHide();
+
+	glGrids[this._sObjNameGrid].actionWithId(iContentId, 'delete', {}, '', false, 1);
+};
+
 BxPersonsManageTools.prototype.onClickDeleteWithContent = function(iContentId) {
 	$('.bx-popup-applied:visible').dolPopupHide();
 

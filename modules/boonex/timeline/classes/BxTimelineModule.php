@@ -195,15 +195,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $this->_echoResultJson(array('content' => $sComments));
     }
 
-    public function actionGetManageMenuPopup()
-    {
-        $iItemId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        if(!$iItemId)
-            return;
-
-        echo $this->getManageMenuObject($iItemId)->getCode();
-    }
-
     public function actionAddAttachLink()
     {
         $aResult = $this->getFormAttachLink();
@@ -591,15 +582,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         return $oMenu;
     }
 
-    public function getManageMenuObject($mixedEvent)
+    public function getManageMenuObject()
     {
-    	if(!is_array($mixedEvent))
-    		$mixedEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => (int)$mixedEvent));
-
         bx_import('BxDolMenu');
-        $oMenu = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_manage'), $this->_oTemplate);
-        $oMenu->setEvent($mixedEvent);
-        return $oMenu;
+        return BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_manage'), $this->_oTemplate);
     }
 
     //--- Check permissions methods ---//
@@ -672,6 +658,13 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
         $aCheckResult = checkActionModule($iUserId, 'share', $this->getName(), $bPerform);
         return $aCheckResult[CHECK_ACTION_RESULT] != CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
+    }
+
+    public function isAllowedMore($aEvent, $bPerform = false)
+    {
+    	$oMoreMenu = $this->getManageMenuObject();
+    	$oMoreMenu->setEventId($aEvent['id']);
+    	return $oMoreMenu->isVisible();
     }
 
     public function onPost($iId)

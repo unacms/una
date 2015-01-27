@@ -1,14 +1,14 @@
-@import url(../../../../../timeline/template/css/view.css);
+@import (reference) '../../system/css/default.less';
+@import '../../../../../timeline/template/css/view.css';
 
-div.bx-tl-activity div.bx-tl-item-actions,
-div.bx-tl-activity div.bx-tl-item-menu {
-	margin-left: 10px;
-	margin-left: 0.625rem;
+div.bx-tl-activity ul.bx-menu-object-bx_timeline_menu_item_actions {
+	.bx-def-margin-thd-leftright-neg;
+
+	.margin-top(-@bx-margin-thd);
 }
 
-div.bx-tl-activity div.bx-tl-item-actions:first-child,
-div.bx-tl-activity div.bx-tl-item-menu:first-child {
-	margin-left: 0px;
+div.bx-tl-activity ul.bx-menu-object-bx_timeline_menu_item_actions li  {
+	.bx-def-margin-thd;
 }
 
 /*+++ Item Menu +++*/

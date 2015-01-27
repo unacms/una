@@ -17,7 +17,7 @@ class BxBaseModTextGridCommon extends BxBaseModTextGridAdministration
     {
         parent::__construct ($aOptions, $oTemplate);
 
-        $this->_sManageType = 'common';
+        $this->_sManageType = BX_DOL_MANAGE_TOOLS_COMMON;
     }
 
     protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)

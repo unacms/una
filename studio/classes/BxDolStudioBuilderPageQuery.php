@@ -235,6 +235,7 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
                 `tpb`.`object` AS `object`,
                 `tpb`.`cell_id` AS `cell_id`,
                 `tpb`.`module` AS `module`,
+                `tpb`.`title_system` AS `title_system`,
                 `tpb`.`title` AS `title`,
                 `tpb`.`designbox_id` AS `designbox_id`,
                 `tpb`.`visible_for_levels` AS `visible_for_levels`,

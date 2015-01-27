@@ -80,9 +80,12 @@
     <string name="_bx_albums_page_block_title_entries_of_author"><![CDATA[Albums of author]]></string>   
     <string name="_bx_albums_page_block_title_entries_actions"><![CDATA[Albums actions]]></string>
     <string name="_bx_albums_page_block_title_browse_cmts"><![CDATA[Albums' Comments]]></string>
-	<string name="_bx_albums_page_title_sys_manage"><![CDATA[Manage Albums]]></string>
+	<string name="_bx_albums_page_title_sys_manage"><![CDATA[Manage Own Albums]]></string>
+	<string name="_bx_albums_page_title_sys_manage_administration"><![CDATA[Manage All Albums]]></string>
 	<string name="_bx_albums_page_title_manage"><![CDATA[Manage Albums]]></string>
-	<string name="_bx_albums_page_block_title_manage"><![CDATA[Manage Albums]]></string>    
+	<string name="_bx_albums_page_block_title_system_manage"><![CDATA[Manage Own Albums]]></string>
+	<string name="_bx_albums_page_block_title_system_manage_administration"><![CDATA[Manage All Albums]]></string>
+	<string name="_bx_albums_page_block_title_manage"><![CDATA[Manage Albums]]></string>
 
     <string name="_bx_albums_menu_set_title_view_entry"><![CDATA[View Album]]></string>
     <string name="_bx_albums_menu_title_view_entry"><![CDATA[View Album]]></string>

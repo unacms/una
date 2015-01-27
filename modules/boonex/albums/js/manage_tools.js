@@ -42,4 +42,10 @@ BxAlbumsManageTools.prototype.onClickSettings = function(sMenuObject, oButton) {
 	});
 };
 
+BxAlbumsManageTools.prototype.onClickDelete = function(iContentId) {
+	$('.bx-popup-applied:visible').dolPopupHide();
+
+	glGrids[this._sObjNameGrid].actionWithId(iContentId, 'delete', {}, '', false, 1);
+};
+
 /** @} */

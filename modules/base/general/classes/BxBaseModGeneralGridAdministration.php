@@ -11,6 +11,9 @@
 bx_import('BxDolModule');
 bx_import('BxTemplGrid');
 
+define('BX_DOL_MANAGE_TOOLS_ADMINISTRATION', 'administration');
+define('BX_DOL_MANAGE_TOOLS_COMMON', 'common');
+
 class BxBaseModGeneralGridAdministration extends BxTemplGrid
 {
 	protected $MODULE;
@@ -18,9 +21,6 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
 
 	protected $_sManageType;
 	protected $_sParamsDivider;
-
-	protected $_sFilterName;
-	protected $_sFilterValue;
 
     public function __construct ($aOptions, $oTemplate = false)
     {
@@ -30,15 +30,10 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
 
         parent::__construct ($aOptions, $oTemplate);
 
-        $this->_sManageType = 'administration';
+        $this->_sManageType = BX_DOL_MANAGE_TOOLS_ADMINISTRATION;
         $this->_sParamsDivider = '#-#';
 
         $this->_sDefaultSortingOrder = 'DESC';
-
-        $this->_sFilterName = 'filter';
-        $sFilter = bx_get($this->_sFilterName);
-        if(!empty($sFilter))
-        	$this->_sFilterValue = bx_process_input($sFilter);
     }
 
 	public function performActionDelete($aParams = array())
@@ -73,13 +68,24 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
         $this->_echoResultJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t($CNF['T']['grid_action_err_delete'])));
     }
 
+    protected function _getActionDelete($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
+		if($this->_sManageType == BX_DOL_MANAGE_TOOLS_ADMINISTRATION && $this->_oModule->checkAllowedEditAnyEntry() !== CHECK_ACTION_RESULT_ALLOWED)
+			return '';
+
+    	return $this->_getActionDefault($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+    }
+
     protected function _getActionSettings($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
     	$sJsObject = $this->_oModule->_oConfig->getJsObject('manage_tools');
     	$sMenuName = $this->_oModule->_oConfig->CNF['OBJECT_MENU_MANAGE_TOOLS'];
 
     	bx_import('BxDolMenu');
-    	$sMenu = BxDolMenu::getObjectInstance($sMenuName)->getCode();
+    	$oMenu = BxDolMenu::getObjectInstance($sMenuName);
+    	$oMenu->setContentId($aRow['id']);
+
+    	$sMenu = $oMenu->getCode();
     	if(empty($sMenu))
     		return '';
 
@@ -88,15 +94,7 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
     		"onclick" => "$(this).off('click'); " . $sJsObject . ".onClickSettings('" . $sMenuName . "', this);"
     	));
 
-    	return $this->_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
-    }
-
-    protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
-    {
-    	if(empty($sFilter) && !empty($this->_sFilterValue))
-    		$sFilter = $this->_sFilterValue;
-
-		return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
+    	return $this->_getActionDefault($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
     protected function _getFilterSelectOne($sFilterName, $sFilterValue, $aFilterValues)

@@ -62,20 +62,16 @@ class BxBaseModGeneralModule extends BxDolModule
 
 		$CNF = &$this->_oConfig->CNF;
 
-		bx_import('BxDolAcl');
-		$oAcl = BxDolAcl::getInstance();
-
 		$sMenu = '';
-		if($oAcl->isMemberLevelInSet(192)) {
+		bx_import('BxDolAcl');
+		if(BxDolAcl::getInstance()->isMemberLevelInSet(192)) {
 			bx_import('BxDolPermalinks');
 			$oPermalink = BxDolPermalinks::getInstance();
 
 			$aMenuItems = array();
 			if(!empty($CNF['OBJECT_GRID_COMMON']) && !empty($CNF['T']['menu_item_manage_my']))
 				$aMenuItems[] = array('id' => 'manage-common', 'name' => 'manage-common', 'class' => '', 'link' => $oPermalink->permalink($CNF['URL_MANAGE_COMMON']), 'target' => '_self', 'title' => _t($CNF['T']['menu_item_manage_my']), 'active' => 1);
-			if(!empty($CNF['OBJECT_GRID_MODERATION']) && !empty($CNF['T']['menu_item_manage_all']) && $oAcl->isMemberLevelInSet(64))
-				$aMenuItems[] = array('id' => 'manage-moderation', 'name' => 'manage-moderation', 'class' => '', 'link' => $oPermalink->permalink($CNF['URL_MANAGE_MODERATION']), 'target' => '_self', 'title' => _t($CNF['T']['menu_item_manage_all']), 'active' => 1);
-			if(!empty($CNF['OBJECT_GRID_ADMINISTRATION']) && !empty($CNF['T']['menu_item_manage_all']) && $oAcl->isMemberLevelInSet(128))
+			if(!empty($CNF['OBJECT_GRID_ADMINISTRATION']) && !empty($CNF['T']['menu_item_manage_all']))
 				$aMenuItems[] = array('id' => 'manage-administration', 'name' => 'manage-administration', 'class' => '', 'link' => $oPermalink->permalink($CNF['URL_MANAGE_ADMINISTRATION']), 'target' => '_self', 'title' => _t($CNF['T']['menu_item_manage_all']), 'active' => 1);
 
 			if(count($aMenuItems) > 1) {
@@ -260,6 +256,18 @@ class BxBaseModGeneralModule extends BxDolModule
             return $aCheck[CHECK_ACTION_MESSAGE];
 
         return CHECK_ACTION_RESULT_ALLOWED;
+    }
+
+    /**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
+     */
+    public function checkAllowedEditAnyEntry ($isPerformAction = false)
+    {
+    	$aCheck = checkActionModule($this->_iProfileId, 'edit any entry', $this->getName(), $isPerformAction);
+    	if($aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED)
+    		return CHECK_ACTION_RESULT_ALLOWED;
+
+    	return _t('_sys_txt_access_denied');
     }
 
     // ====== PROTECTED METHODS

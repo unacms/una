@@ -38,12 +38,15 @@ class BxAccntModule extends BxBaseModGeneralModule
 
     public function checkAllowedDelete(&$aDataEntry, $isPerformAction = false)
     {
+    	if(isAdmin() && (int)$aDataEntry['id'] == getLoggedId())
+    		return _t('_sys_txt_access_denied');
+
         // check ACL
         $aCheck = checkActionModule($this->_iProfileId, 'delete account', 'system', $isPerformAction);
-        if($aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED)
-            return CHECK_ACTION_RESULT_ALLOWED;
+        if($aCheck[CHECK_ACTION_RESULT] != CHECK_ACTION_RESULT_ALLOWED)
+            return $aCheck[CHECK_ACTION_MESSAGE];
 
-        return _t('_sys_txt_access_denied');
+        return CHECK_ACTION_RESULT_ALLOWED;
     }
 }
 

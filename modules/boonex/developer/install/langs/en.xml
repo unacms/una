@@ -336,6 +336,9 @@
     <string name="_bx_dev_bp_txt_sys_block_module"><![CDATA[Module]]></string>
     <string name="_bx_dev_bp_txt_block_module"><![CDATA[Module]]></string>
     <string name="_bx_dev_bp_err_block_module"><![CDATA[You need to select a module]]></string>
+	<string name="_bx_dev_bp_txt_sys_block_title_system"><![CDATA[Title System]]></string>
+    <string name="_bx_dev_bp_txt_block_title_system"><![CDATA[Title System]]></string>
+    <string name="_bx_dev_bp_err_block_title_system"><![CDATA[You need to enter a value here]]></string>
     <string name="_bx_dev_bp_txt_sys_block_title"><![CDATA[Title]]></string>
     <string name="_bx_dev_bp_txt_block_title"><![CDATA[Title]]></string>
     <string name="_bx_dev_bp_err_block_title"><![CDATA[You need to enter a value here]]></string>

@@ -42,21 +42,6 @@ div.bx-tl-item-cnt {
 	overflow: hidden;
 }
 
-/*+++ Item Menu +++*/
-div.bx-tl-item-menu {
-	float: left;
-}
-div.bx-tl-item-menu .bx-menu-ver li {
-	white-space: nowrap;
-}
-div.bx-tl-item-menu-button {
-	text-align: center;
-}
-
-div.bx-tl-item-menu-button i.sys-icon {
-	display: inline-block;
-}
-
 /*+++ Item Owner +++*/
 div.bx-tl-item-owner {
 	position: relative;
@@ -109,12 +94,6 @@ div.bx-tl-shared div.bx-tl-content {
 	font-size: 0.875rem;
 	color: #999999;
 }
-
-/*+++ Item Actions +++*/
-div.bx-tl-item-actions {
-	float: left;
-}
-
 
 /*--- Empty Style ---*/
 div.bx-tl-empty div.bx-msg-box-container {

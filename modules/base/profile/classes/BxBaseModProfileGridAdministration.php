@@ -80,7 +80,23 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
     	$this->performActionDelete(array('with_content' => true));
     }
 
-	protected function _switcherChecked2State($isChecked)
+    protected function _getActionSetAclLevel($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
+    	if($this->_sManageType == BX_DOL_MANAGE_TOOLS_ADMINISTRATION && $this->_oModule->checkAllowedSetMembership($aRow) !== CHECK_ACTION_RESULT_ALLOWED)
+			return '';
+
+		return $this->_getActionDefault($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);	
+    }
+
+	protected function _getActionDeleteWithContent($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
+		if($this->_sManageType == BX_DOL_MANAGE_TOOLS_ADMINISTRATION && $this->_oModule->checkAllowedEditAnyEntry() !== CHECK_ACTION_RESULT_ALLOWED)
+			return '';
+
+    	return $this->_getActionDefault($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+    }
+    
+    protected function _switcherChecked2State($isChecked)
     {
         return $isChecked ? 'active' : 'suspended';
     }
@@ -171,6 +187,9 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
 
 	protected function _doDelete($iId, $aParams = array())
     {
+    	if($this->_oModule->checkMyself($iId))
+    		return false;
+
     	if(isset($aParams['with_content']) && $aParams['with_content'] === true) {
     		$oProfile = $this->_getProfileObject($iId);
 
