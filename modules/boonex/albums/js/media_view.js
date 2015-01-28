@@ -19,13 +19,21 @@ Array.prototype.indexOfMediaObject = function (o) {
 
 function bx_albums_open_gallery(e, sContext) {
 
-    var gallery;
-    var pswpElement = document.querySelectorAll('.pswp')[0];
+    var ePswp = document.querySelectorAll('.pswp')[0];
     var $e = $(e);
     var aItems = []; // more items are added dynamically
     var oItem = {};
     var iCount = 0;
+    var options = {
+        bx_albums_context: sContext,
+        shareEl: false,
+        counterEl: true,
+        history: false,
+        loop: false,
+        index: 0
+    };
 
+    // get data for initial item from the attributes of the item which was clicked
     $.each(e.attributes, function(i, attr) {
         var sName = attr.name;
         if (sName.indexOf('data-') !== 0)
@@ -40,109 +48,107 @@ function bx_albums_open_gallery(e, sContext) {
 
     aItems.push(oItem);
 
-    var options = {
-        bx_albums_context: sContext,
-        shareEl: false,
-        counterEl: false,
-        history: false,
-        loop: false,
-        index: 0
+    fnConverMedia = function (oMedia) {
+        var oMap = {
+            'id': 'media-id',
+            'url': 'url',
+            'url_img' : 'src',
+            'w': 'w',
+            'h': 'h',
+            'title': 'title',
+        };
+        var o = {};
+        for (var i in oMap)
+            o[oMap[i]] = oMedia[i];
+        return o;
+    };
+
+    fnDisableArrows = function (oItem) {
+
+        // disable prev item and action if we are on the first item
+        if (0 == aItems.indexOfMediaObject(oItem)) {
+            $('.pswp__button--arrow--left').hide();
+            glBxAlbumsPrevFn = glBxAlbumsGallery.prev;
+            glBxAlbumsGallery.prev = function () { };
+        } else {
+            $('.pswp__button--arrow--left').show();
+            if ('undefined' !== typeof(glBxAlbumsPrevFn))
+                glBxAlbumsGallery.prev = glBxAlbumsPrevFn;
+        }
+
+        // disable next item and action when we are in the last item
+        if ((aItems.length-1) == aItems.indexOfMediaObject(oItem)) {
+            $('.pswp__button--arrow--right').hide();
+            glBxAlbumsNextFn = glBxAlbumsGallery.next;
+            glBxAlbumsGallery.next = function () { };
+        } else {
+            $('.pswp__button--arrow--right').show();
+            if ('undefined' !== typeof(glBxAlbumsNextFn))
+                glBxAlbumsGallery.next = glBxAlbumsNextFn;
+        }
     };
 
     fnLoadMoreItem = function (oItemCurrent, bFirstLoad) {
 
-        if (0 != aItems.indexOfMediaObject(oItemCurrent) && (aItems.length-1) != aItems.indexOfMediaObject(oItemCurrent)) // load addutional items only for items on the border
+        // load addutional items only for items on the border
+        if (0 != aItems.indexOfMediaObject(oItemCurrent) && (aItems.length-1) != aItems.indexOfMediaObject(oItemCurrent))
             return;
 
         var sUrl = sUrlRoot + 'modules/index.php?r=albums/get_sibling_media/' + oItemCurrent['media-id'] + '/' + sContext;
         $.getJSON(sUrl, function(oData) {
 
             if ('undefined' !== typeof(oData.error)) {
-                console.log(oData.error);
+                if ('undefined' !== typeof(console))
+                    console.log(oData.error);
                 return;
             }
 
             var l = aItems.length;
 
             if (0 == aItems.indexOfMediaObject(oItemCurrent) && 'undefined' !== typeof(oData.prev.url)) {
-                aItems.unshift(bx_albums_convert_media(oData.prev));
+                aItems.unshift(fnConverMedia(oData.prev));
                 if (bFirstLoad)
                     options.index = 1;
                 else
-                    gallery.goTo(gallery.getCurrentIndex() + 1);
+                    glBxAlbumsGallery.goTo(glBxAlbumsGallery.getCurrentIndex() + 1);
             }
     
             if ((aItems.length - 1) == aItems.indexOfMediaObject(oItemCurrent) && 'undefined' !== typeof(oData.next.url))
-                aItems.push(bx_albums_convert_media(oData.next));
+                aItems.push(fnConverMedia(oData.next));
 
             if (!bFirstLoad && l != aItems.length) {
-                gallery.invalidateCurrItems();
-                gallery.updateSize(true);
+                glBxAlbumsGallery.invalidateCurrItems();
+                glBxAlbumsGallery.updateSize(true);
             }
 
             if (bFirstLoad) {
-                gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, aItems, options);
-                gallery.init();
+                glBxAlbumsGallery = new PhotoSwipe(ePswp, PhotoSwipeUI_Default, aItems, options);
+                glBxAlbumsGallery.init();
 
-                gallery.listen('beforeChange', function() { 
+                glBxAlbumsGallery.listen('beforeChange', function() { 
                     // load more items if we are on first or on the last item
-                    fnLoadMoreItem(gallery.currItem, false);
+                    fnLoadMoreItem(glBxAlbumsGallery.currItem, false);
                 });
 
-                gallery.listen('afterChange', function() { 
-                    var oItem = gallery.currItem;
-                    
-                    // refresh url when we navigate to next/prev item
-                    bx_albums_reload_page(oItem.url, oItem.title, true, false);
+                glBxAlbumsGallery.listen('afterChange', function() {
+                    var bChangeHistory = 'undefined' !== typeof(glBxAlbumsGallery._bx_albums_skip_history) && glBxAlbumsGallery._bx_albums_skip_history ? false : true;
+                    bx_albums_reload_page(glBxAlbumsGallery.currItem.url, glBxAlbumsGallery.currItem.title, bChangeHistory, false); // refresh url when we navigate to next/prev item
+                    glBxAlbumsGallery._bx_albums_skip_history = false;
 
-                    // disable prev item and action if we are on the first item
-                    if (0 == aItems.indexOfMediaObject(oItem)) {
-                        $('.pswp__button--arrow--left').hide();
-                        glBxAlbumsPrevFn = gallery.prev;
-                        gallery.prev = function () { };
-                    } else {
-                        $('.pswp__button--arrow--left').show();
-                        if ('undefined' !== typeof(glBxAlbumsPrevFn))
-                            gallery.prev = glBxAlbumsPrevFn;
-                    }
-
-                    // disable next item and action when we are in the last item
-                    if ((aItems.length-1) == aItems.indexOfMediaObject(oItem)) {
-                        $('.pswp__button--arrow--right').hide();
-                        glBxAlbumsNextFn = gallery.next;
-                        gallery.next = function () { };
-                    } else {
-                        $('.pswp__button--arrow--right').show();
-                        if ('undefined' !== typeof(glBxAlbumsNextFn))
-                            gallery.next = glBxAlbumsNextFn;
-                    }
+                    fnDisableArrows(glBxAlbumsGallery.currItem);
                 });
 
-                gallery.listen('close', function() {
+                glBxAlbumsGallery.listen('close', function() {
                     // upon gallery close reload page via AJAX, since url was changes when we navigate through items in the gallery
-                    bx_albums_reload_page(gallery.currItem.url, gallery.currItem.title, false, true);
+                    bx_albums_reload_page(glBxAlbumsGallery.currItem.url, glBxAlbumsGallery.currItem.title, false, true);
                 });
 
+                fnDisableArrows(glBxAlbumsGallery.currItem);
             }
         });
     };
 
     fnLoadMoreItem(oItem, true);
-}
-
-function bx_albums_convert_media(oMedia) {
-    var oMap = {
-        'id': 'media-id',
-        'url': 'url',
-        'url_img' : 'src',
-        'w': 'w',
-        'h': 'h',
-        'title': 'title',
-    };
-    var o = {};
-    for (var i in oMap)
-        o[oMap[i]] = oMedia[i];
-    return o;
 }
 
 function bx_albums_reload_page(sUrl, sTitle, bChangeHistory, bChangeContent) {
@@ -160,6 +166,9 @@ function bx_albums_reload_page(sUrl, sTitle, bChangeHistory, bChangeContent) {
         });
     }
 
+    if (glBxAlbumsActualUrl == sUrl)
+        return false;
+
     // remember actual url, to not load it twice
     glBxAlbumsActualUrl = sUrl;
 
@@ -173,17 +182,29 @@ function bx_albums_reload_page(sUrl, sTitle, bChangeHistory, bChangeContent) {
     return false; // when onclick returns false, href attr isn't used
 }
 
-function bx_albums_replace_url(sUrl) {
-
-}
-
 $(document).ready(function () {
     glBxAlbumsActualUrl = location.href;    
     // listen when we press back and forward buttons in browser
     History.Adapter.bind(window, 'statechange', function(event) { 
         var oState = History.getState();        
-        if ('undefined' !== typeof(oState) && glBxAlbumsActualUrl != oState.url)
-           bx_albums_reload_page(oState.url, oState.title, false);
+        if ('undefined' === typeof(oState) || glBxAlbumsActualUrl == oState.url)
+            return;
+
+        if ($('.pswp:visible').length && 'undefined' !== typeof(glBxAlbumsGallery)) {
+            var a = /id=(\d+)/.exec(document.location);
+            if (a && a.length > 0 && a[1]) {
+                for (var i in glBxAlbumsGallery.items) {
+                    if (glBxAlbumsGallery.items[i]['media-id'] != a[1])
+                        continue;
+                    glBxAlbumsGallery._bx_albums_skip_history = true;
+                    glBxAlbumsGallery.goTo(i);
+                    break;
+                }
+                        
+            }
+        } else {
+            bx_albums_reload_page(oState.url, oState.title, false);
+        }
     });
 });
 

@@ -21,19 +21,6 @@ class BxAlbumsPageEntry extends BxBaseModTextPageEntry
         $this->MODULE = 'bx_albums';
         parent::__construct($aObject, $oTemplate);
     }
-
-    protected function _addJsCss()
-    {
-        $this->_oTemplate->addCss(array(
-            BX_DOL_URL_PLUGINS_PUBLIC . 'photo-swipe/photoswipe.css',
-            BX_DOL_URL_PLUGINS_PUBLIC . 'photo-swipe/default-skin/default-skin.css',
-        ));
-
-        $this->_oTemplate->addJs(array(
-            'photo-swipe/photoswipe.min.js',
-            'photo-swipe/photoswipe-ui-default.min.js',
-        ));
-    }
 }
 
 /** @} */
