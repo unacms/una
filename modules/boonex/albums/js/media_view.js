@@ -17,8 +17,7 @@ Array.prototype.indexOfMediaObject = function (o) {
     return -1;
 }
 
-function bx_albums_open_gallery(e, sContext) {
-
+function bx_albums_open_gallery(eve, e, sContext) {
     var ePswp = document.querySelectorAll('.pswp')[0];
     var $e = $(e);
     var aItems = []; // more items are added dynamically
@@ -27,11 +26,20 @@ function bx_albums_open_gallery(e, sContext) {
     var options = {
         bx_albums_context: sContext,
         shareEl: false,
-        counterEl: true,
+        counterEl: false,
         history: false,
         loop: false,
-        index: 0
+        showHideOpacity: true,
+        index: 0,
+        getThumbBoundsFn: function(index) {
+            var e = $('a[data-media-id] img');
+            if (!e.length)
+                return false;
+            return {x:e.offset().left, y:e.offset().top, w:e.width()};
+        }
     };
+
+    eve.preventDefault ? eve.preventDefault() : eve.returnValue = false;
 
     // get data for initial item from the attributes of the item which was clicked
     $.each(e.attributes, function(i, attr) {
@@ -40,11 +48,14 @@ function bx_albums_open_gallery(e, sContext) {
             return;
         sName = sName.replace('data-', '');
         oItem[sName] = attr.value;
+
+        oItem.msrc = oItem.src;
+
         ++iCount;
     });
 
     if (!iCount) // no image - no concert!
-        return;
+        return false;
 
     aItems.push(oItem);
 
@@ -55,8 +66,12 @@ function bx_albums_open_gallery(e, sContext) {
             'url_img' : 'src',
             'w': 'w',
             'h': 'h',
-            'title': 'title',
+            'title': 'title'
         };
+
+        if ('undefined' !== typeof(oMedia.html) && oMedia.html.length)
+            return {'media-id': oMedia['id'], 'title': oMedia['title'], 'html': oMedia['html'], 'url': oMedia['url']};
+
         var o = {};
         for (var i in oMap)
             o[oMap[i]] = oMedia[i];
@@ -149,6 +164,8 @@ function bx_albums_open_gallery(e, sContext) {
     };
 
     fnLoadMoreItem(oItem, true);
+
+    return false;
 }
 
 function bx_albums_reload_page(sUrl, sTitle, bChangeHistory, bChangeContent) {

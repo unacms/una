@@ -204,7 +204,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
                         $aTranscodersVideo['poster']->getFileUrl($aMediaInfo['file_id']), 
                         $aTranscodersVideo['mp4']->getFileUrl($aMediaInfo['file_id']), 
                         $aTranscodersVideo['webm']->getFileUrl($aMediaInfo['file_id']),
-                        false, ''
+                        false, 'height:' . $CNF['OBJECT_VIDEO_TRANSCODER_HEIGHT']
                     ) : '',
                 ),
             ),
@@ -244,6 +244,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
             $a['title_js_string'] = bx_js_string($aMedia['title']);
             $a['w'] = $aVars['bx_if:image']['condition'] ? $aVars['bx_if:image']['content']['w'] : 0;
             $a['h'] = $aVars['bx_if:image']['condition'] ? $aVars['bx_if:image']['content']['h'] : 0;
+            $a['html'] = $aVars['bx_if:video']['condition'] ? '<div class="pswp__video">' . $aVars['bx_if:video']['content']['video'] . '</div>': 0;
         }
 
         return $a;

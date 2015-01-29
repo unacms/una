@@ -64,6 +64,7 @@ class BxAlbumsConfig extends BxBaseModTextConfig
             'OBJECT_IMAGES_TRANSCODER_PREVIEW' => 'bx_albums_proxy_preview',
             'OBJECT_IMAGES_TRANSCODER_GALLERY' => '',
             'OBJECT_VIDEOS_TRANSCODERS' => array('poster' => 'bx_albums_video_poster', 'mp4' => 'bx_albums_video_mp4', 'webm' => 'bx_albums_video_webm'),
+            'OBJECT_VIDEO_TRANSCODER_HEIGHT' => '480px',
             'OBJECT_TRANSCODER_BROWSE' => 'bx_albums_proxy_browse',
             'OBJECT_VIEWS' => 'bx_albums',
             'OBJECT_VOTES' => 'bx_albums',
