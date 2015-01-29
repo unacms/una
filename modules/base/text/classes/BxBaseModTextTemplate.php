@@ -201,7 +201,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
                     'url_original' => $sUrlOriginal,
                     'attr_file_name' => bx_html_attribute($a['file_name']),
                     'popup_id' => $sImgPopupId,
-                    'url_preview' => $oTranscoder->getFileUrl($a['id']),
+                    'url_preview' => $isImage ? $oTranscoder->getFileUrl($a['id']) : '',
                     'popup' =>  BxTemplFunctions::getInstance()->transBox($sImgPopupId, '<img src="' . $sUrlOriginal . '" />', true, true),
                 ),
             );
@@ -210,7 +210,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             $aGhostFiles[$k]['bx_if:video'] = array (
                 'condition' => $isVideo,
                 'content' => array (
-                    'video' => $aTranscodersVideo ? BxTemplFunctions::getInstance()->videoPlayer(
+                    'video' => $isVideo && $aTranscodersVideo ? BxTemplFunctions::getInstance()->videoPlayer(
                         $aTranscodersVideo['poster']->getFileUrl($a['id']), 
                         $aTranscodersVideo['mp4']->getFileUrl($a['id']), 
                         $aTranscodersVideo['webm']->getFileUrl($a['id']),
