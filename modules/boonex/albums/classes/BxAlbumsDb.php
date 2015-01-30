@@ -23,7 +23,10 @@ class BxAlbumsDb extends BxBaseModTextDb
 
     public function associateFileWithContent($iContentId, $iFileId, $sTitle, $sData = '')
     {
-        $sQuery = $this->prepare ("INSERT INTO `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` SET `content_id` = ?, `file_id` = ?, `title` = ?, `data` = ? ON DUPLICATE KEY UPDATE `title` = ?, `data` = ?", $iContentId, $iFileId, $sTitle, $sData, $sTitle, $sData);
+        $sQuery = $this->prepare ("SELECT MAX(`order`) FROM `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` WHERE `content_id` = ?", $$iContentId);
+        $iOrder = 1 + (int)$this->getOne($sQuery);
+        
+        $sQuery = $this->prepare ("INSERT INTO `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` SET `content_id` = ?, `file_id` = ?, `title` = ?, `data` = ?, `order` = ? ON DUPLICATE KEY UPDATE `title` = ?, `data` = ?", $iContentId, $iFileId, $sTitle, $sData, $iOrder, $sTitle, $sData);
         return $this->query($sQuery);
     }
 
@@ -50,6 +53,12 @@ class BxAlbumsDb extends BxBaseModTextDb
     {
         $sQuery = $this->prepare ("SELECT `f2e`.*, `f`.`added`, `e`.`views` FROM `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` AS `f2e` INNER JOIN `" . $this->_oConfig->CNF['TABLE_FILES'] . "` AS `f` ON (`f`.`id` = `f2e`.`file_id`) INNER JOIN `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `e` ON (`e`.`id` = `f2e`.`content_id`) WHERE `f2e`.`id` = ?", $iMediaId);
         return $this->getRow($sQuery);
+    }
+
+    public function getMediaListByContentId($iContentId)
+    {
+        $sQuery = $this->prepare ("SELECT * FROM `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` WHERE `content_id` = ? ORDER BY `order`", $iContentId);
+        return $this->getAll($sQuery);
     }
 
 }

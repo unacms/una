@@ -59,8 +59,10 @@ CREATE TABLE IF NOT EXISTS `bx_albums_files2albums` (
   `file_id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `data` text COLLATE utf8_unicode_ci NOT NULL,
+  `order` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `file_content` (`file_id`,`content_id`)
+  UNIQUE KEY `file_content` (`file_id`,`content_id`),
+  KEY `content_id` (`content_id`)
 );
 
 -- TABLE: comments

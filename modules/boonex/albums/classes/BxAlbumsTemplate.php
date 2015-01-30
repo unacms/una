@@ -50,14 +50,15 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
             $oProfile = BxDolProfileUndefined::getInstance();
         }  
 
-        $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
         $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_TRANSCODER_BROWSE']);
 
         $aBrowseUnits = array ();
-        $aGhostFiles = $oStorage->getGhosts ($aData[$CNF['FIELD_AUTHOR']], $aData[$CNF['FIELD_ID']]);
-        foreach ($aGhostFiles as $k => $a) {
+        $aMediaList = $oModule->_oDb->getMediaListByContentId($aData[$CNF['FIELD_ID']]);
+        foreach ($aMediaList as $k => $a) {
             $aBrowseUnits[] = array (
-                'url' => $oTranscoder->getFileUrl($a['id']),
+                'img_url' => $oTranscoder->getFileUrl($a['file_id']),
+                'url' => $this->getViewMediaUrl($CNF, $a['id']),
+                'title_attr' => bx_html_attribute($a['title']),
             );
         }
 
@@ -213,13 +214,18 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
         return $aVars;
     }
 
-    protected function getViewMediaUrl($CNF, $iMediaId, $sContext)
+    protected function getViewMediaUrl($CNF, $iMediaId, $sContext = '')
     {
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_MEDIA'] . '&id=' . $iMediaId . (!empty($sContext) ? '&context=' . $sContext : ''));
     }
 
     public function getNextPrevMedia($aMediaInfo, $isNext, $sContext, $aParamsSearchResult = array())
     {
+        if (!$sContext) {
+            $sContext = 'album';
+            $aParamsSearchResult = array('album_id' => $aMediaInfo['content_id']);
+        }
+
         $oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$oModule->_oConfig->CNF;
 
