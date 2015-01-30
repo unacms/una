@@ -145,7 +145,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
             );
         }
 
-        $aVars = array_merge($aVars, $this->mediaVars($aMediaInfo, false, array('context' => $mixedContext)));
+        $aVars = array_merge($aVars, $this->mediaVars($aMediaInfo, $CNF['OBJECT_IMAGES_TRANSCODER_BIG'], array('context' => $mixedContext)));
 
         return $this->parseHtmlByName('media-view.html', $aVars);
     }
@@ -235,7 +235,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
     
         if ($a) {
 
-            $aVars = $this->mediaVars($a, false, array('context' => $sContext));
+            $aVars = $this->mediaVars($a, $CNF['OBJECT_IMAGES_TRANSCODER_BIG'], array('context' => $sContext));
             $aMedia = $aVars['bx_if:image']['condition'] ? $aVars['bx_if:image']['content'] : $aVars['bx_if:video']['content'];
 
             $a['url'] = $aMedia['url'];

@@ -38,8 +38,18 @@ function bx_albums_open_gallery(eve, e, sContext) {
             return {x:e.offset().left, y:e.offset().top, w:e.width()};
         }
     };
+    var fnProcessRetina = function (o) {
+        var dpr = ((window.glBxDisableRetina !== undefined && window.glBxDisableRetina) || window.devicePixelRatio === undefined ? 1 : window.devicePixelRatio);
+        if (dpr < 2)
+            return o;
+        o.w *= 2;
+        o.h *= 2;
+        return o;
+    }
 
     eve.preventDefault ? eve.preventDefault() : eve.returnValue = false;
+
+    
 
     // get data for initial item from the attributes of the item which was clicked
     $.each(e.attributes, function(i, attr) {
@@ -47,19 +57,20 @@ function bx_albums_open_gallery(eve, e, sContext) {
         if (sName.indexOf('data-') !== 0)
             return;
         sName = sName.replace('data-', '');
-        oItem[sName] = attr.value;
-
-        oItem.msrc = oItem.src;
+        oItem[sName] = attr.value;        
 
         ++iCount;
     });
+
+    oItem.msrc = oItem.src;
+    oItem = fnProcessRetina(oItem);
 
     if (!iCount) // no image - no concert!
         return false;
 
     aItems.push(oItem);
 
-    fnConverMedia = function (oMedia) {
+    var fnConverMedia = function (oMedia) {
         var oMap = {
             'id': 'media-id',
             'url': 'url',
@@ -75,10 +86,10 @@ function bx_albums_open_gallery(eve, e, sContext) {
         var o = {};
         for (var i in oMap)
             o[oMap[i]] = oMedia[i];
-        return o;
+        return fnProcessRetina(o);
     };
 
-    fnDisableArrows = function (oItem) {
+    var fnDisableArrows = function (oItem) {
 
         // disable prev item and action if we are on the first item
         if (0 == aItems.indexOfMediaObject(oItem)) {
@@ -103,7 +114,7 @@ function bx_albums_open_gallery(eve, e, sContext) {
         }
     };
 
-    fnLoadMoreItem = function (oItemCurrent, bFirstLoad) {
+    var fnLoadMoreItem = function (oItemCurrent, bFirstLoad) {
 
         // load addutional items only for items on the border
         if (0 != aItems.indexOfMediaObject(oItemCurrent) && (aItems.length-1) != aItems.indexOfMediaObject(oItemCurrent))

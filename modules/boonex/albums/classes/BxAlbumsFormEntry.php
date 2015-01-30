@@ -29,8 +29,10 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
         $sData = '';
         $aFile = $oStorage->getFile($iFileId);
         if (0 == strncmp('image/', $aFile['mime_type'], 6)) {
+            bx_import('BxDolTranscoderImage');
             bx_import('BxDolImageResize');
-            $a = BxDolImageResize::getImageSize($oStorage->getFileUrlById($iFileId));
+            $oTranscoder = BxDolTranscoderImage::getObjectInstance($this->_oModule->_oConfig->CNF['OBJECT_IMAGES_TRANSCODER_BIG']);
+            $a = BxDolImageResize::getImageSize($oTranscoder->getFileUrl($iFileId));
             $sData = isset($a['w']) && isset($a['h']) ? $a['w'] . 'x' . $a['h'] : '';
         }
         

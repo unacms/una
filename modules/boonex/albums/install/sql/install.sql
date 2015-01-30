@@ -141,6 +141,7 @@ INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `
 INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`, `override_class_name`, `override_class_file`) VALUES
 ('bx_albums_preview', 'bx_albums_photos_resized', 'Storage', 'a:1:{s:6:"object";s:15:"bx_albums_files";}', 'no', '1', '2592000', '0', '', ''),
 ('bx_albums_browse', 'bx_albums_photos_resized', 'Storage', 'a:1:{s:6:"object";s:15:"bx_albums_files";}', 'no', '1', '2592000', '0', '', ''),
+('bx_albums_big', 'bx_albums_photos_resized', 'Storage', 'a:1:{s:6:"object";s:15:"bx_albums_files";}', 'no', '1', '2592000', '0', '', ''),
 ('bx_albums_video_poster', 'bx_albums_photos_resized', 'Storage', 'a:1:{s:6:"object";s:15:"bx_albums_files";}', 'no', 0, 0, 0, 'BxDolTranscoderVideo', ''),
 ('bx_albums_video_mp4', 'bx_albums_photos_resized', 'Storage', 'a:1:{s:6:"object";s:15:"bx_albums_files";}', 'no', 0, 0, 0, 'BxDolTranscoderVideo', ''),
 ('bx_albums_video_webm', 'bx_albums_photos_resized', 'Storage', 'a:1:{s:6:"object";s:15:"bx_albums_files";}', 'no', 0, 0, 0, 'BxDolTranscoderVideo', ''),
@@ -150,6 +151,7 @@ INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`,
 INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_params`, `order`) VALUES 
 ('bx_albums_preview', 'Resize', 'a:3:{s:1:"w";s:3:"300";s:1:"h";s:3:"200";s:11:"crop_resize";s:1:"1";}', '0'),
 ('bx_albums_browse', 'Resize', 'a:1:{s:1:"h";s:3:"200";}', '0'),
+('bx_albums_big', 'Resize', 'a:2:{s:1:"w";s:4:"1280";s:1:"h";s:4:"1280";}', '0'),
 ('bx_albums_video_poster', 'Poster', 'a:2:{s:1:"h";s:3:"200";s:10:"force_type";s:3:"jpg";}', 0),
 ('bx_albums_video_mp4', 'Mp4', 'a:2:{s:1:"h";s:3:"480";s:10:"force_type";s:3:"mp4";}', 0),
 ('bx_albums_video_webm', 'Webm', 'a:2:{s:1:"h";s:3:"480";s:10:"force_type";s:4:"webm";}', 0);

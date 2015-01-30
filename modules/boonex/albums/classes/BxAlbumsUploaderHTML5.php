@@ -24,7 +24,12 @@ class BxAlbumsUploaderHTML5 extends BxTemplUploaderHTML5
 
     protected function getGhostTemplateVars($aFile, $iProfileId, $iContentId, $oStorage, $oImagesTranscoder)
     {
-        return array('file_title' => $this->_oModule->_oDb->getFileTitle($aFile['id']));
+        $sTitle = $this->_oModule->_oDb->getFileTitle($aFile['id']);
+        $a = array(
+            'file_title' => $sTitle ? $sTitle : $aFile['file_name']
+        );
+        $a['file_title_attr'] = bx_html_attribute($a['file_title']);
+        return $a;
     }
 }
 
