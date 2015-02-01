@@ -52,7 +52,7 @@ class BxBaseUploaderHTML5 extends BxDolUploader
      * Show uploader form.
      * @return HTML string
      */
-    public function getUploaderForm($isMultiple = true, $iContentId = false)
+    public function getUploaderForm($isMultiple = true, $iContentId = false, $isPrivate = true)
     {
         return $this->_oTemplate->parseHtmlByName('uploader_form_html5.html', array(
             'form_container_id' => $this->_sFormContainerId,
@@ -61,6 +61,7 @@ class BxBaseUploaderHTML5 extends BxDolUploader
             'restrictions_text' => $this->getRestrictionsText(),
             'div_id' => $this->_sDivId,
             'content_id' => $iContentId,
+            'storage_private' => $isPrivate,
         ));
     }
 
@@ -69,7 +70,7 @@ class BxBaseUploaderHTML5 extends BxDolUploader
      * @param $mixedFiles as usual $_FILES['some_name'] array, but maybe some other params depending on the uploader
      * @return nothing, but if some files failed to upload, the actual error message can be determined by calling BxDolUploader::getUploadErrorMessages()
      */
-    public function handleUploads ($iProfileId, $mixedFiles, $isMultiple = true, $iContentId = false)
+    public function handleUploads ($iProfileId, $mixedFiles, $isMultiple = true, $iContentId = false, $bPrivate = true)
     {
         bx_import('BxDolStorage');
         $oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
@@ -80,9 +81,9 @@ class BxBaseUploaderHTML5 extends BxDolUploader
             $this->cleanupGhostsForProfile($iProfileId, $iContentId);
 
         if (bx_get('qqfile'))
-            $iId = $oStorage->storeFileFromXhr(bx_get('qqfile'), true, $iProfileId, $iContentId);
+            $iId = $oStorage->storeFileFromXhr(bx_get('qqfile'), $bPrivate, $iProfileId, $iContentId);
         else
-            $iId = $oStorage->storeFileFromForm($_FILES['qqfile'], true, $iProfileId, $iContentId);
+            $iId = $oStorage->storeFileFromForm($_FILES['qqfile'], $bPrivate, $iProfileId, $iContentId);
 
         if ($iId) {
             $aResponse = array ('success' => 1);

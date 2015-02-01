@@ -33,6 +33,7 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
             $this->aInputs[$CNF['FIELD_PHOTO']]['storage_object'] = $CNF['OBJECT_STORAGE'];
             $this->aInputs[$CNF['FIELD_PHOTO']]['uploaders'] = $CNF['OBJECT_UPLOADERS'];
             $this->aInputs[$CNF['FIELD_PHOTO']]['images_transcoder'] = $CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW'];
+            $this->aInputs[$CNF['FIELD_PHOTO']]['storage_private'] = 0;
             $this->aInputs[$CNF['FIELD_PHOTO']]['multiple'] = true;
             $this->aInputs[$CNF['FIELD_PHOTO']]['content_id'] = 0;
             $this->aInputs[$CNF['FIELD_PHOTO']]['ghost_template'] = '';

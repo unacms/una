@@ -214,7 +214,7 @@ abstract class BxDolUploader extends BxDol
      * @param $mixedFiles as usual $_FILES['some_name'] array, but maybe some other params depending on the uploader
      * @return nothing, but if some files failed to upload, the actual error message can be determined by calling BxDolUploader::getUploadErrorMessages()
      */
-    public function handleUploads ($iProfileId, $mixedFiles, $isMultiple = true, $iContentId = false)
+    public function handleUploads ($iProfileId, $mixedFiles, $isMultiple = true, $iContentId = false, $bPrivate = true)
     {
         bx_import('BxDolStorage');
         $oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
@@ -227,7 +227,7 @@ abstract class BxDolUploader extends BxDol
 
         foreach ($aMultipleFiles as $aFile) {
 
-            $iId = $oStorage->storeFileFromForm($aFile, true, $iProfileId, $iContentId);
+            $iId = $oStorage->storeFileFromForm($aFile, $bPrivate, $iProfileId, $iContentId);
             if (!$iId)
                 $this->appendUploadErrorMessage(_t('_sys_uploader_err_msg', $aFile['name'], $oStorage->getErrorString()));
 
@@ -273,6 +273,7 @@ abstract class BxDolUploader extends BxDol
             'uniq_id' => $this->_sUniqId,
             'template_ghost' => $sJsValue,
             'multiple' => $isMultiple ? 1 : 0,
+            'storage_private' => isset($aParams['storage_private']) ? $aParams['storage_private'] : 1,
         );
         $aParams = array_merge($aParamsDefault, $aParams);
         return $this->_oTemplate->parseHtmlByName($this->_sButtonTemplate, $aParams);
@@ -304,7 +305,7 @@ abstract class BxDolUploader extends BxDol
      * Show uploader form.
      * @return HTML string
      */
-    public function getUploaderForm($isMultiple = true, $iContentId = false)
+    public function getUploaderForm($isMultiple = true, $iContentId = false, $isPrivate = true)
     {
         // it is overrided in child classes
     }

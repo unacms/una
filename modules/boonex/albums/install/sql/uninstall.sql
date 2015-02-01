@@ -8,9 +8,9 @@ DROP TABLE IF EXISTS `bx_albums_albums`, `bx_albums_files`, `bx_albums_photos_re
 DELETE FROM `sys_objects_storage` WHERE `object` = 'bx_albums_files' OR `object` = 'bx_albums_photos_resized';
 DELETE FROM `sys_storage_tokens` WHERE `object` = 'bx_albums_files' OR `object` = 'bx_albums_photos_resized';
 
-DELETE FROM `sys_objects_transcoder` WHERE `object` IN('bx_albums_preview', 'bx_albums_browse', 'bx_albums_big', 'bx_albums_video_poster', 'bx_albums_video_mp4', 'bx_albums_video_webm', 'bx_albums_proxy_preview', 'bx_albums_proxy_browse');
-DELETE FROM `sys_transcoder_filters` WHERE `transcoder_object` IN('bx_albums_preview', 'bx_albums_browse', 'bx_albums_big', 'bx_albums_video_poster', 'bx_albums_video_mp4', 'bx_albums_video_webm');
-DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_albums_preview', 'bx_albums_browse', 'bx_albums_big', 'bx_albums_video_poster', 'bx_albums_video_mp4', 'bx_albums_video_webm');
+DELETE FROM `sys_objects_transcoder` WHERE `object` IN('bx_albums_preview', 'bx_albums_browse', 'bx_albums_big', 'bx_albums_video_poster_browse', 'bx_albums_video_poster_preview', 'bx_albums_video_poster_big', 'bx_albums_video_mp4', 'bx_albums_video_webm', 'bx_albums_proxy_preview', 'bx_albums_proxy_browse');
+DELETE FROM `sys_transcoder_filters` WHERE `transcoder_object` IN('bx_albums_preview', 'bx_albums_browse', 'bx_albums_big', 'bx_albums_video_poster_browse', 'bx_albums_video_poster_preview', 'bx_albums_video_poster_big', 'bx_albums_video_mp4', 'bx_albums_video_webm');
+DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_albums_preview', 'bx_albums_browse', 'bx_albums_big', 'bx_albums_video_poster_browse', 'bx_albums_video_poster_preview', 'bx_albums_video_poster_big', 'bx_albums_video_mp4', 'bx_albums_video_webm');
 
 -- FORMS
 

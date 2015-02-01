@@ -41,7 +41,7 @@ class BxBaseUploaderSimple extends BxDolUploader
      * Show uploader form.
      * @return HTML string
      */
-    public function getUploaderForm($isMultiple = true, $iContentId = false)
+    public function getUploaderForm($isMultiple = true, $iContentId = false, $isPrivate = true)
     {
         return $this->_oTemplate->parseHtmlByName('uploader_form_simple.html', array(
             'form_container_id' => $this->_sFormContainerId,
@@ -54,6 +54,7 @@ class BxBaseUploaderSimple extends BxDolUploader
             'uniq_id' => $this->_sUniqId,
             'multiple' => $isMultiple,
             'content_id' => $iContentId,
+            'storage_private' => $isPrivate,
         ));
     }
 

@@ -149,7 +149,7 @@ class BxDolTranscoderImage extends BxDolTranscoder implements iBxDolFactoryObjec
         $o = BxDolImageResize::getInstance();
         $o->removeCropOptions ();
 
-        $this->_checkForceType ($o, $aParams);
+        $this->_checkForceImageType ($o, $aParams);
 
         if (IMAGE_ERROR_SUCCESS == $o->grayscale($sFile))
             return true;
@@ -171,62 +171,6 @@ class BxDolTranscoderImage extends BxDolTranscoder implements iBxDolFactoryObjec
             return true;
 
         return $this->applyFilter_Resize ($sFile, $aParams);
-    }
-
-    protected function applyFilter_Resize ($sFile, $aParams)
-    {
-        bx_import ('BxDolImageResize');
-        $o = BxDolImageResize::getInstance();
-        $o->removeCropOptions ();
-
-        // if only one dimension specified - automatically calculate another dimension 
-        if ((isset($aParams['w']) && !isset($aParams['h'])) || (isset($aParams['h']) && !isset($aParams['w']))) {
-            $a = $o->getImageSize ($sFile);
-            $fRatio = $a['w'] / $a['h'];
-            if (isset($aParams['w']))
-                $aParams['h'] = round($aParams['w'] / $fRatio);
-            else
-                $aParams['w'] = round($aParams['h'] * $fRatio);
-        }
-
-        if (isset($aParams['w']) && isset($aParams['h']))
-            $o->setSize ($aParams['w'] * $this->getDevicePixelRatio(), $aParams['h'] * $this->getDevicePixelRatio());
-
-        if (isset($aParams['crop_resize']) && $aParams['crop_resize'])
-            $o->setAutoCrop (true);
-        elseif (isset($aParams['square_resize']) && $aParams['square_resize'])
-            $o->setSquareResize (true);
-        else
-            $o->setSquareResize (false);
-
-        $this->_checkForceType ($o, $aParams);
-
-        if (IMAGE_ERROR_SUCCESS == $o->resize($sFile))
-            return true;
-
-        return false;
-    }
-
-    protected function _checkForceType ($oImageProcessor, $aParams)
-    {
-        if (empty($aParams['force_type']))
-            $aParams['force_type'] = false;
-
-        switch ($aParams['force_type']) {
-            case 'jpeg':
-            case 'jpg':
-                $oImageProcessor->setOutputType(IMAGE_TYPE_JPG);
-                break;
-            case 'png':
-                $oImageProcessor->setOutputType(IMAGE_TYPE_PNG);
-                break;
-            case 'gif':
-                $oImageProcessor->setOutputType(IMAGE_TYPE_GIF);
-                break;
-            default:
-                $oImageProcessor->setOutputType(false);
-                break;
-        }
     }
 }
 

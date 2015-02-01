@@ -79,36 +79,13 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
         $CNF = &$this->oModule->_oConfig->CNF;
 
         switch ($sMode) {
-/*
-            case 'author':
-                bx_import('BxDolProfile');
-                $oProfileAuthor = BxDolProfile::getInstance((int)$aParams['author']);
-                if (!$oProfileAuthor) {
-                    $this->isError = true;
-                    break;
-                }
-
-                $this->aCurrent['restriction']['author']['value'] = $oProfileAuthor->id();
-
-                $this->sBrowseUrl = 'page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id={profile_id}';
-                $this->aCurrent['title'] = _t('_bx_albums_page_title_browse_by_author');
-                $this->aCurrent['rss']['link'] = 'modules/?r=albums/rss/' . $sMode . '/' . $oProfileAuthor->id();
-                break;
-
-            case 'public':
-                bx_import('BxDolPermalinks');
-                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']);
-                $this->aCurrent['title'] = _t('_bx_albums_page_title_browse_recent');
-                $this->aCurrent['rss']['link'] = 'modules/?r=albums/rss/' . $sMode;
-                break;
-*/
-
             case 'album':
                 $this->aCurrent['restriction']['album']['value'] = $aParams['album_id'];
                 //$this->sBrowseUrl = 'page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id={profile_id}';
                 //$this->aCurrent['title'] = _t('_bx_albums_page_title_browse_media_in_album');
                 //$this->aCurrent['rss']['link'] = 'modules/?r=albums/rss/' . $sMode . '/' . $oProfileAuthor->id();
                 $this->aCurrent['sorting'] = 'order';
+                $this->sOrderDirection = 'ASC';
                 break;
 
             case 'popular':

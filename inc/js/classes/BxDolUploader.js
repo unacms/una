@@ -44,6 +44,8 @@ BxDolUploaderSimple.prototype.init = function (sUploaderObject, sStorageObject, 
 
     this._sImagesTranscoder = options.images_transcoder ? options.images_transcoder : '';
 
+    this._isPrivate = undefined == options.storage_private || parseInt(options.storage_private) ? 1 : 0;
+
     this._isErrorShown = false;
 }
 
@@ -57,7 +59,7 @@ BxDolUploaderSimple.prototype.getCurrentFilesCount = function () {
 
 BxDolUploaderSimple.prototype.showUploaderForm = function () {    
     var $this = this;
-    var sUrl = this._getUrlWithStandardParams() + '&a=show_uploader_form&m=' + (this._isMultiple ? 1 : 0) + '&c=' + this._iContentId + '&_t=' + escape(new Date());
+    var sUrl = this._getUrlWithStandardParams() + '&a=show_uploader_form&m=' + (this._isMultiple ? 1 : 0) + '&c=' + this._iContentId + '&p=' + this._isPrivate + '&_t=' + escape(new Date());
 
     $(window).dolPopupAjax({
         url: sUrl,
@@ -250,6 +252,7 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
                 uid: this._sUniqId,
                 m: this._isMultiple ? 1 : 0,
                 c: this._iContentId,
+                p: this._isPrivate,
                 a: "upload"
             },
             onSubmit: function(id, fileName){

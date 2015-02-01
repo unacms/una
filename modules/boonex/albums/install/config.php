@@ -60,7 +60,10 @@ $aConfig = array(
     'transcoders' => array(
 		'bx_albums_preview',
         'bx_albums_browse',
-        'bx_albums_video_poster',
+        'bx_albums_big',
+        'bx_albums_video_poster_browse',
+        'bx_albums_video_poster_preview',
+        'bx_albums_video_poster_big',
         'bx_albums_video_mp4',
         'bx_albums_video_webm',
     ),

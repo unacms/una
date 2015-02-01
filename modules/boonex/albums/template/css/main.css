@@ -1,6 +1,14 @@
 
 @import url(../../../../base/text/template/css/main.css);
 
+.bx-albums-unit-size {
+    width: 300px;
+    width: 18.75rem;
+    height: 300px;
+    height: 18.75rem;
+    object-fit: cover;
+}
+
 .bx-albums-unit-images-cont {
     height:12.5rem;
     overflow:hidden;

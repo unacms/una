@@ -270,9 +270,7 @@ class BxBaseModGeneralModule extends BxDolModule
     	return _t('_sys_txt_access_denied');
     }
 
-    // ====== PROTECTED METHODS
-
-    protected function _serviceBrowse ($sMode, $aParams = false, $iDesignBox = BX_DB_PADDING_DEF, $bDisplayEmptyMsg = false, $bAjaxPaginate = true, $sClassSearchResult = 'SearchResult')
+    public function _serviceBrowse ($sMode, $aParams = false, $iDesignBox = BX_DB_PADDING_DEF, $bDisplayEmptyMsg = false, $bAjaxPaginate = true, $sClassSearchResult = 'SearchResult')
     {
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->checkAllowedBrowse()))
             return MsgBox($sMsg);
@@ -294,6 +292,8 @@ class BxBaseModGeneralModule extends BxDolModule
         else
             return '';
     }
+
+    // ====== PROTECTED METHODS
 
     protected function _isModerator ($isPerformAction = false)
     {

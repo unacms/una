@@ -848,6 +848,7 @@ BLAH;
             $aParams = array(
                 'button_title' => bx_js_string($oUploader->getUploaderButtonTitle(isset($aInput['upload_buttons_titles']) ? $aInput['upload_buttons_titles'] : false)),
                 'content_id' => isset($aInput['content_id']) ? $aInput['content_id'] : '',
+                'storage_private' => isset($aInput['storage_private']) ? $aInput['storage_private'] : '1',
             );
             if (isset($aInput['images_transcoder']) && $aInput['images_transcoder'])
                 $aParams['images_transcoder'] = bx_js_string($aInput['images_transcoder']);

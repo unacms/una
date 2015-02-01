@@ -460,7 +460,7 @@ function echoDbg( $what, $desc = '' )
 function echoDbgLog($mWhat, $sDesc = '', $sFileName = 'debug.log')
 {
     $sCont =
-        '--- ' . date('r') . ' (' . BX_DOL_START_TIME . ") ---\n" .
+        '--- ' . date('r') . ' (' . BX_DOL_START . ") ---\n" .
         $sDesc . "\n" .
         print_r($mWhat, true) . "\n\n\n";
 

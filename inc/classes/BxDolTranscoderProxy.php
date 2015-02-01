@@ -58,8 +58,9 @@ class BxDolTranscoderProxy extends BxDolTranscoder implements iBxDolFactoryObjec
             if (empty($this->_aObject['source_params']['video']))
                 continue;
 
+            bx_import('BxDolTranscoderVideo');
             foreach ($this->_aObject['source_params']['video'] as $sVideoTranscoder) {
-                if (!($oTranscoder = BxDolTranscoderImage::getObjectInstance($sVideoTranscoder)))
+                if (!($oTranscoder = BxDolTranscoderVideo::getObjectInstance($sVideoTranscoder)))
                     continue;
                 
                 $oTranscoder->getFileUrl($mixedHandler);                

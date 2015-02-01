@@ -23,7 +23,7 @@ class BxAlbumsDb extends BxBaseModTextDb
 
     public function associateFileWithContent($iContentId, $iFileId, $sTitle, $sData = '')
     {
-        $sQuery = $this->prepare ("SELECT MAX(`order`) FROM `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` WHERE `content_id` = ?", $$iContentId);
+        $sQuery = $this->prepare ("SELECT MAX(`order`) FROM `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` WHERE `content_id` = ?", $iContentId);
         $iOrder = 1 + (int)$this->getOne($sQuery);
         
         $sQuery = $this->prepare ("INSERT INTO `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` SET `content_id` = ?, `file_id` = ?, `title` = ?, `data` = ?, `order` = ? ON DUPLICATE KEY UPDATE `title` = ?, `data` = ?", $iContentId, $iFileId, $sTitle, $sData, $iOrder, $sTitle, $sData);

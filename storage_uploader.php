@@ -27,6 +27,8 @@ else
 if (!$sUploaderObject || !$sStorageObject || !$sUniqId)
     exit;
 
+$isPrivate = (int)bx_get('p') ? 1 : 0;
+
 bx_import('BxDolUploader');
 $oUploader = BxDolUploader::getObjectInstance($sUploaderObject, $sStorageObject, $sUniqId);
 if (!$oUploader) {
@@ -45,7 +47,7 @@ switch ($sAction) {
 
         bx_import('BxDolLanguages');
 
-        echo $oUploader->getUploaderForm($isMultiple, $iContentId);
+        echo $oUploader->getUploaderForm($isMultiple, $iContentId, $isPrivate);
         break;
 
     case 'restore_ghosts':
@@ -65,7 +67,7 @@ switch ($sAction) {
 
         bx_import('BxDolLanguages');
 
-        $oUploader->handleUploads(bx_get_logged_profile_id(), isset($_FILES['f']) ? $_FILES['f'] : null, $isMultiple, $iContentId);
+        $oUploader->handleUploads(bx_get_logged_profile_id(), isset($_FILES['f']) ? $_FILES['f'] : null, $isMultiple, $iContentId, $isPrivate);
         break;
 
 }
