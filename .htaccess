@@ -13,3 +13,4 @@ Options -MultiViews -Indexes
     RewriteRule ^storage/([a-zA-Z0-9]+)/([a-zA-Z0-9\.]+)  storage.php?o=$1&f=$2   [QSA,L]
 </IfModule>
 
+AddType image/svg+xml svg
