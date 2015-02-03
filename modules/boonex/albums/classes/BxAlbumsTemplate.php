@@ -205,7 +205,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
                         $aTranscodersVideo['poster']->getFileUrl($aMediaInfo['file_id']), 
                         $aTranscodersVideo['mp4']->getFileUrl($aMediaInfo['file_id']), 
                         $aTranscodersVideo['webm']->getFileUrl($aMediaInfo['file_id']),
-                        false, 'height:' . $CNF['OBJECT_VIDEO_TRANSCODER_HEIGHT']
+                        false, 'max-height:' . $CNF['OBJECT_VIDEO_TRANSCODER_HEIGHT']
                     ) : '',
                 ),
             ),

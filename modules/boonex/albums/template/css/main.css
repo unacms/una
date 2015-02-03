@@ -9,6 +9,13 @@
     object-fit: cover;
 }
 
+@media (max-width:520px) {
+    .bx-albums-unit-size {
+        width: 100%;
+        height: auto;
+    }
+}
+
 .bx-albums-unit-images-cont {
     height:12.5rem;
     overflow:hidden;
