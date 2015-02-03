@@ -95,41 +95,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
 
         $CNF = &$this->_oConfig->CNF;
 
-        bx_import('BxDolPermalinks');
-        $sUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
-
-        $aCustomParams = false;
-        if ($aContentInfo[$CNF['FIELD_THUMB']]) {
-            bx_import('BxDolStorage');
-            $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
-            if ($oStorage && ($sImgUrl = $oStorage->getFileUrlById($aContentInfo[$CNF['FIELD_THUMB']]))) {
-                $aCustomParams = array (
-                    'img_url' => $sImgUrl,
-                    'img_url_encoded' => rawurlencode($sImgUrl),
-                );
-            }
-        }
-
-        //TODO: Rebuild using menus engine when it will be ready for such elements like Vote, Share, etc.
-        $sVotes = '';
-        bx_import('BxDolVote');
-        $oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $aContentInfo[$CNF['FIELD_ID']]);
-        if ($oVotes)
-            $sVotes = $oVotes->getElementBlock(array('show_do_vote_as_button' => true));
-
-        $sShare = '';
-        if (BxDolRequest::serviceExists('bx_timeline', 'get_share_element_block'))
-            $sShare = BxDolService::call('bx_timeline', 'get_share_element_block', array(bx_get_logged_profile_id(), $this->_aModule['name'], 'added', $aContentInfo[$CNF['FIELD_ID']], array('show_do_share_as_button' => true)));
-
-        bx_import('BxTemplSocialSharing');
-        $sSocial = BxTemplSocialSharing::getInstance()->getCode($iContentId, $this->_aModule['name'], BX_DOL_URL_ROOT . $sUrl, $aContentInfo[$CNF['FIELD_TITLE']], $aCustomParams);
-
-        return $this->_oTemplate->parseHtmlByName('entry-share.html', array(
-            'vote' => $sVotes,
-            'share' => $sShare,
-            'social' => $sSocial,
-        ));
-        //TODO: Rebuild using menus engine when it will be ready for such elements like Vote, Share, etc.
+        return $this->_entitySocialSharing ($iContentId, $iContentId, $aContentInfo[$CNF['FIELD_THUMB']], $aContentInfo[$CNF['FIELD_TITLE']], $CNF['OBJECT_STORAGE'], false, $CNF['OBJECT_VOTES'], $CNF['URI_VIEW_ENTRY']);
     }
 
     /**
@@ -158,17 +124,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
      */
     public function serviceEntityComments ($iContentId = 0)
     {
-        if (!$iContentId)
-            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        if (!$iContentId)
-            return false;
-
-        bx_import('BxDolCmts');
-        $oCmts = BxDolCmts::getObjectInstance($this->_oConfig->CNF['OBJECT_COMMENTS'], $iContentId);
-        if (!$oCmts || !$oCmts->isEnabled())
-            return false;
-
-        return $oCmts->getCommentsBlock(0, 0, false);
+        return $this->_entityComments($this->_oConfig->CNF['OBJECT_COMMENTS'], $iContentId);
     }
 
     /**
@@ -378,6 +334,66 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
         }
 
         return $aParams;
+    }
+
+    protected function _entityComments ($sObject, $iId = 0)
+    {
+        if (!$iId)
+            $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if (!$iId)
+            return false;
+
+        bx_import('BxDolCmts');
+        $oCmts = BxDolCmts::getObjectInstance($sObject, $iId);
+        if (!$oCmts || !$oCmts->isEnabled())
+            return false;
+
+        return $oCmts->getCommentsBlock(0, 0, false);
+    }
+
+    protected function _entitySocialSharing ($iId, $iIdForTimeline, $iIdThumb, $sTitle, $sObjectStorage, $sObjectTranscoder, $sObjectVote, $sUriViewEntry)
+    {
+        bx_import('BxDolPermalinks');
+        $sUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=' . $sUriViewEntry . '&id=' . $iId);
+
+        $aCustomParams = false;
+        if ($iIdThumb) {
+            if ($sObjectTranscoder) {
+                bx_import('BxDolTranscoder');
+                $o = BxDolTranscoder::getObjectInstance($sObjectTranscoder);
+            } 
+            else {
+                bx_import('BxDolStorage');
+                $o = BxDolStorage::getObjectInstance($sObjectStorage);
+            }
+            if ($sImgUrl = $o->getFileUrlById($iIdThumb)) {
+                $aCustomParams = array (
+                    'img_url' => $sImgUrl,
+                    'img_url_encoded' => rawurlencode($sImgUrl),
+                );
+            }
+        }
+
+        //TODO: Rebuild using menus engine when it will be ready for such elements like Vote, Share, etc.
+        $sVotes = '';
+        bx_import('BxDolVote');
+        $oVotes = BxDolVote::getObjectInstance($sObjectVote, $iId);
+        if ($oVotes)
+            $sVotes = $oVotes->getElementBlock(array('show_do_vote_as_button' => true));
+
+        $sShare = '';
+        if (BxDolRequest::serviceExists('bx_timeline', 'get_share_element_block'))
+            $sShare = BxDolService::call('bx_timeline', 'get_share_element_block', array(bx_get_logged_profile_id(), $this->_aModule['name'], 'added', $iIdForTimeline, array('show_do_share_as_button' => true)));
+
+        bx_import('BxTemplSocialSharing');
+        $sSocial = BxTemplSocialSharing::getInstance()->getCode($iId, $this->_aModule['name'], BX_DOL_URL_ROOT . $sUrl, $sTitle, $aCustomParams);
+
+        return $this->_oTemplate->parseHtmlByName('entry-share.html', array(
+            'vote' => $sVotes,
+            'share' => $sShare,
+            'social' => $sSocial,
+        ));
+        //TODO: Rebuild using menus engine when it will be ready for such elements like Vote, Share, etc.
     }
 }
 

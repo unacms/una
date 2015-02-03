@@ -349,6 +349,14 @@ class BxDolTranscoder extends BxDol implements iBxDolFactoryObject
     }
 
     /**
+     * alias for @see getFileUrl
+     */
+    public function getFileUrlById($mixedHandler)
+    {
+        return $this->getFileUrl($mixedHandler);
+    }
+
+    /**
      * Check if transcoded data is available. No need to call it directly, it is called automatically when it is needed.
      * @params $mixedHandler - file handler
      * @params $isCheckOutdated - check if transcoded file is outdated

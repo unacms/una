@@ -25,8 +25,8 @@ class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         // select view entry submenu
-        $oMenuSumbemu = BxDolMenu::getObjectInstance('sys_site_submenu');
-        $oMenuSumbemu->setObjectSubmenu($CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY'], $CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION']);
+        $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
+        $oMenuSubmenu->setObjectSubmenu($CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY'], $CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION']);
 
         $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
         if ($iContentId)

@@ -315,14 +315,14 @@ class BxBaseModGeneralModule extends BxDolModule
         return $oFormsHelper->$sFormMethod((int)$iContentId, $sDisplay);
     }
 
-    protected function _serviceTemplateFunc ($sFunc, $iContentId)
+    protected function _serviceTemplateFunc ($sFunc, $iContentId, $sFuncGetContent = 'getContentInfoById')
     {
         if (!$iContentId)
             $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
         if (!$iContentId)
             return false;
 
-        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        $aContentInfo = $this->_oDb->$sFuncGetContent($iContentId);
         if (!$aContentInfo)
             return false;
 

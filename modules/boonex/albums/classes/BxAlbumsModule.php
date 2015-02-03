@@ -24,8 +24,59 @@ class BxAlbumsModule extends BxBaseModTextModule
     }
 
     public function serviceDeleteFileAssociations($iFileId)
+    {        
+        $CNF = &$this->_oConfig->CNF;
+
+        if (!($aMediaInfo = $this->_oDb->getMediaInfoSimpleByFileId($iFileId))) // file is already deleted
+            return true; 
+    
+        if (!$this->_oDb->deassociateFileWithContent(0, $iFileId))
+            return false;
+
+        if (!empty($CNF['OBJECT_VIEWS_MEDIA'])) {
+            bx_import('BxDolView');
+            $o = BxDolView::getObjectInstance($CNF['OBJECT_VIEWS_MEDIA'], $aMediaInfo['id']);
+            if ($o) $o->onObjectDelete();
+        }
+
+        if (!empty($CNF['OBJECT_VOTES_MEDIA'])) {
+            bx_import('BxDolVote');
+            $o = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES_MEDIA'], $aMediaInfo['id']);
+            if ($o) $o->onObjectDelete();
+        }
+
+        if (!empty($CNF['OBJECT_COMMENTS_MEDIA'])) {
+            bx_import('BxDolCmts');
+            $o = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS_MEDIA'], $aMediaInfo['id']);
+            if ($o) $o->onObjectDelete();
+        }
+
+        return true;
+    }
+
+    public function serviceMediaComments ($iMediaId = 0)
     {
-        return $this->_oDb->deassociateFileWithContent(0, $iFileId);
+        return $this->_entityComments($this->_oConfig->CNF['OBJECT_COMMENTS_MEDIA'], $iMediaId);
+    }
+
+    public function serviceMediaAuthor ($iMediaId = 0)
+    {
+        return $this->_serviceTemplateFunc ('mediaAuthor', $iMediaId, 'getMediaInfoById');
+    }
+
+    public function serviceMediaSocialSharing ($iMediaId = 0)
+    {
+        if (!$iMediaId)
+            $iMediaId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if (!$iMediaId)
+            return false;
+        $aMediaInfo = $this->_oDb->getMediaInfoById($iMediaId);
+        if (!$aMediaInfo)
+            return false;
+
+        $CNF = &$this->_oConfig->CNF;
+
+        return $this->_entitySocialSharing ($iMediaId, $aMediaInfo['content_id'], $aMediaInfo['file_id'], $iMediaId['title'], false, $CNF['OBJECT_IMAGES_TRANSCODER_BIG'], $CNF['OBJECT_VOTES_MEDIA'], $CNF['URI_VIEW_MEDIA']);
     }
 
     public function serviceMediaView ($iMediaId = 0, $mixedContext = false)

@@ -46,6 +46,7 @@
     line-height:1.25em;
     max-height:3.75em;
     overflow:hidden; 
+    margin-bottom:0;
 }
 
 .bx-base-text-wrapper {

@@ -44,7 +44,7 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
         if (!($bRet = parent::_deleteFile ($iFileId)))
             return false;
 
-        $this->_oModule->_oDb->deassociateFileWithContent (0, $iFileId);
+        $this->_oModule->serviceDeleteFileAssociations ($iFileId);
 
         return true;
     }

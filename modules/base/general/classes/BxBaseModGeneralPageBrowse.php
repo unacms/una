@@ -29,8 +29,8 @@ class BxBaseModGeneralPageBrowse extends BxTemplPage
 
         // select module submenu
         bx_import('BxDolMenu');
-        $oMenuSumbemu = BxDolMenu::getObjectInstance('sys_site_submenu');
-        $oMenuSumbemu->setObjectSubmenu($this->_oModule->_oConfig->CNF['OBJECT_MENU_SUBMENU']);
+        $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
+        $oMenuSubmenu->setObjectSubmenu($this->_oModule->_oConfig->CNF['OBJECT_MENU_SUBMENU']);
     }
 
 }

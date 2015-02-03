@@ -20,6 +20,14 @@ class BxAlbumsMenuView extends BxBaseModTextMenuView
     {
         $this->MODULE = 'bx_albums';
         parent::__construct($aObject, $oTemplate);
+
+        $sURI = bx_process_input(bx_get('i'));
+        if ($sURI == 'view-album-media') {
+            $aMediaInfo = $this->_oModule->_oDb->getMediaInfoById((int)bx_get('id'));
+            $this->_aContentInfo = $aMediaInfo ? $this->_oModule->_oDb->getContentInfoById($aMediaInfo['content_id']) : false;
+            if ($this->_aContentInfo)
+                $this->addMarkers(array('content_id' => (int)$aMediaInfo['content_id']));
+        }
     }
 }
 

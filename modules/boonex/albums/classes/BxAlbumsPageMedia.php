@@ -9,8 +9,9 @@
  * @{
  */
 
-bx_import('BxDolModule');
 bx_import('BxTemplPage');
+bx_import('BxDolModule');
+bx_import('BxDolMenu');
 
 /**
  * Entry create/edit pages
@@ -29,6 +30,10 @@ class BxAlbumsPageMedia extends BxTemplPage
         $this->MODULE = 'bx_albums';
         $this->_oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$this->_oModule->_oConfig->CNF;
+
+        // select view entry submenu
+        $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
+        $oMenuSubmenu->setObjectSubmenu($CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY'], $CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION']);
 
         $iMediaId = bx_process_input(bx_get('id'), BX_DATA_INT);
         if ($iMediaId)
@@ -59,6 +64,14 @@ class BxAlbumsPageMedia extends BxTemplPage
             exit;
         }
         $this->_oModule->checkAllowedView($this->_aAlbumInfo, true);
+
+        // count views
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        if (!empty($CNF['OBJECT_VIEWS_MEDIA'])) {
+            bx_import('BxDolView');
+            BxDolView::getObjectInstance($CNF['OBJECT_VIEWS_MEDIA'], $this->_aMediaInfo['id'])->doView();
+        }
+
 /* TODO:
         // add content metatags
         if (!empty($CNF['OBJECT_METATAGS'])) {
@@ -81,6 +94,8 @@ class BxAlbumsPageMedia extends BxTemplPage
 
     protected function _addJsCss()
     {
+        parent::_addJsCss();
+
         $this->_oModule->_oTemplate->addCss(array(
             BX_DOL_URL_PLUGINS_PUBLIC . 'photo-swipe/photoswipe.css',
             BX_DOL_URL_PLUGINS_PUBLIC . 'photo-swipe/default-skin/default-skin.css',

@@ -135,12 +135,15 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         return $this->parseHtmlByName($sTemplateName, $aVars);
     }
 
-    function entryAuthor ($aData, $sTemplateName = 'author.html')
+    function entryAuthor ($aData, $iProfileId = false, $sFuncAuthorDesc = 'getAuthorDesc', $sTemplateName = 'author.html')
     {
         $oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$oModule->_oConfig->CNF;
 
-        $oProfile = BxDolProfile::getInstance($aData[$CNF['FIELD_AUTHOR']]);
+        if (!$iProfileId)
+            $iProfileId = $aData[$CNF['FIELD_AUTHOR']];
+
+        $oProfile = BxDolProfile::getInstance($iProfileId);
         if (!$oProfile) {
             bx_import('BxDolProfileUndefined');
             $oProfile = BxDolProfileUndefined::getInstance();
@@ -152,7 +155,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             'author_url' => $oProfile->getUrl(),
             'author_thumb_url' => $oProfile->getThumb(),
             'author_title' => $oProfile->getDisplayName(),
-            'author_desc' => $this->getAuthorDesc($aData),
+            'author_desc' => $sFuncAuthorDesc ? $this->$sFuncAuthorDesc($aData) : '',
         );
         return $this->parseHtmlByName($sTemplateName, $aVars);
     }

@@ -55,6 +55,12 @@ class BxAlbumsDb extends BxBaseModTextDb
         return $this->getRow($sQuery);
     }
 
+    public function getMediaInfoSimpleByFileId($iFileId)
+    {
+        $sQuery = $this->prepare ("SELECT * FROM `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` WHERE `file_id` = ?", $iFileId);
+        return $this->getRow($sQuery);
+    }
+
     public function getMediaListByContentId($iContentId)
     {
         $sQuery = $this->prepare ("SELECT * FROM `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` WHERE `content_id` = ? ORDER BY `order`", $iContentId);
