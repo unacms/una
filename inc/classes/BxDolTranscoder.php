@@ -253,6 +253,9 @@ class BxDolTranscoder extends BxDol implements iBxDolFactoryObject
      */
     public function onDeleteFileOrig($mixedHandler)
     {
+        // deleted files queued for transcoding
+        $this->_oDb->deleteFromQueue ($mixedHandler);
+
         // delete main file
         $iFileId = $this->_oDb->getFileIdByHandler($mixedHandler);
         if (!$iFileId)
