@@ -27,6 +27,7 @@
     height:16rem;
     overflow-y:hidden;
     overflow-x:scroll;
+    -webkit-overflow-scrolling:touch;
 }
 
 .bx-albums-unit-images img {

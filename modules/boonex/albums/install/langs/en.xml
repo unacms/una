@@ -29,7 +29,7 @@
 	<string name="_bx_albums_form_entry_input_pictures"><![CDATA[Pictures]]></string>
     <string name="_bx_albums_form_entry_input_sys_allow_view_to"><![CDATA[Visibility]]></string>
     <string name="_bx_albums_form_entry_input_allow_view_to"><![CDATA[Visibility]]></string>
-	<string name="_bx_albums_form_entry_file_title"><![CDATA[Title]]></string>
+	<string name="_bx_albums_form_entry_file_title"><![CDATA[Caption]]></string>
 
 	<string name="_bx_albums_acl_action_create_entry"><![CDATA[Create Album]]></string>
 	<string name="_bx_albums_acl_action_delete_entry"><![CDATA[Delete Album]]></string>

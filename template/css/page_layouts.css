@@ -23,9 +23,7 @@
 
 /* layout 2 columns */
 
-.bx-layout-2-columns-column1 {
-    width:50%;
-}
+.bx-layout-2-columns-column1,
 .bx-layout-2-columns-column2 {
     width:50%;
 }
