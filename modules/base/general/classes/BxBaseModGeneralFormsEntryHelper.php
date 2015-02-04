@@ -120,6 +120,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         }
 
         if (!empty($CNF['OBJECT_METATAGS'])) { // && isset($aTrackTextFieldsChanges['changed_fields'][$CNF['FIELD_TEXT']])) { // TODO: check if aTrackTextFieldsChanges works 
+            list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
             bx_import('BxDolMetatags');
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
             if ($oMetatags->keywordsIsEnabled())
