@@ -166,6 +166,13 @@ CREATE TABLE `bx_albums_meta_keywords` (
   KEY `keyword` (`keyword`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+CREATE TABLE `bx_albums_meta_keywords_media` (
+  `object_id` int(10) unsigned NOT NULL,
+  `keyword` varchar(255) NOT NULL,
+  KEY `object_id` (`object_id`),
+  KEY `keyword` (`keyword`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 CREATE TABLE `bx_albums_meta_locations` (
   `object_id` int(10) unsigned NOT NULL,
   `lat` double NOT NULL,
@@ -250,8 +257,8 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_albums_entry_view', 'delete_confirm', 2147483647, 0, 0),
 ('bx_albums_entry_view', 'allow_view_to', 2147483647, 0, 0),
 ('bx_albums_entry_view', 'do_submit', 2147483647, 0, 0),
-('bx_albums_entry_view', 'text', 2147483647, 0, 0),
-('bx_albums_entry_view', 'title', 2147483647, 0, 0),
+('bx_albums_entry_view', 'text', 2147483647, 1, 0),
+('bx_albums_entry_view', 'title', 2147483647, 1, 0),
 ('bx_albums_entry_view', 'pictures', 2147483647, 0, 0),
 
 ('bx_albums_entry_delete', 'delete_confirm', 2147483647, 1, 1),

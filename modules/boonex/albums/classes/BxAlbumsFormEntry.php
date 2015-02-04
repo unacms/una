@@ -26,17 +26,29 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
     {
         parent::_associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId);
 
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
         $sData = '';
         $aFile = $oStorage->getFile($iFileId);
         if (0 == strncmp('image/', $aFile['mime_type'], 6)) {
             bx_import('BxDolTranscoderImage');
             bx_import('BxDolImageResize');
-            $oTranscoder = BxDolTranscoderImage::getObjectInstance($this->_oModule->_oConfig->CNF['OBJECT_IMAGES_TRANSCODER_BIG']);
+            $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_BIG']);
             $a = BxDolImageResize::getImageSize($oTranscoder->getFileUrl($iFileId));
             $sData = isset($a['w']) && isset($a['h']) ? $a['w'] . 'x' . $a['h'] : '';
         }
         
-        $this->_oModule->_oDb->associateFileWithContent ($iContentId, $iFileId, $this->getCleanValue('title-' . $iFileId), $sData);
+        if (!$this->_oModule->_oDb->associateFileWithContent ($iContentId, $iFileId, $this->getCleanValue('title-' . $iFileId), $sData))
+            return;
+
+        if (!empty($CNF['OBJECT_METATAGS_MEDIA'])) {
+            $aMediaInfo = $this->_oModule->_oDb->getMediaInfoSimpleByFileId($iFileId);
+            bx_import('BxDolMetatags');
+            $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS_MEDIA']);
+
+            if ($aMediaInfo && $oMetatags->keywordsIsEnabled())
+                $oMetatags->keywordsAdd($aMediaInfo['id'], $aMediaInfo['title']);
+        }        
     }
 
     function _deleteFile ($iFileId)

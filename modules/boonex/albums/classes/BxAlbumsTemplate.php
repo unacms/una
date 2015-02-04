@@ -125,8 +125,17 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
 
         $sUrlAlbum = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aAlbumInfo[$CNF['FIELD_ID']]);
          
+        $sText = bx_process_output($aMediaInfo['title']);
+        if (!empty($CNF['OBJECT_METATAGS_MEDIA'])) {
+            bx_import('BxDolMetatags');
+            $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS_MEDIA']);
+    
+            if ($oMetatags->keywordsIsEnabled())
+                $sText = $oMetatags->keywordsParse($iMediaId, $sText);
+        }
+
         $aVars = array(
-            'title' => bx_process_output($aMediaInfo['title']),
+            'title' => $sText,
             'album' => _t('_bx_albums_txt_media_album_link', $sUrlAlbum,  bx_process_output($aAlbumInfo[$CNF['FIELD_TITLE']])),
         );
 

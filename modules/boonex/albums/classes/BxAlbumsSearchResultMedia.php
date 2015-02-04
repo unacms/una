@@ -28,8 +28,8 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
 
         $this->aCurrent = array(
             'name' => 'bx_albums',
-            'object_metatags' => 'bx_albums',
-            'title' => _t('_bx_albums_page_title_browse'),
+            'object_metatags' => 'bx_albums_media',
+            'title' => _t('_bx_albums_media'),
             'table' => 'bx_albums_files2albums',
             'ownFields' => array('id', 'title', 'data', 'content_id', 'file_id', 'order'),
             'searchFields' => array('title'),

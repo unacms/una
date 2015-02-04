@@ -185,10 +185,18 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
         }
 
         if ($mixedImage && is_array($mixedImage)) {
-            bx_import('BxDolStorage');
-            $oStorage = BxDolStorage::getObjectInstance($mixedImage['object']);
-            $mixedImage = $oStorage ? $oStorage->getFileUrlById($mixedImage['id']) : false;
+            
+            if (!empty($mixedImage['object'])) {
+                bx_import('BxDolStorage');
+                $o = BxDolStorage::getObjectInstance($mixedImage['object']);
+            } 
+            elseif (!empty($mixedImage['transcoder'])) {
+                bx_import('BxDolTranscoder');
+                $o = BxDolTranscoder::getObjectInstance($mixedImage['transcoder']);
+            }
+            $mixedImage = $o ? $o->getFileUrlById($mixedImage['id']) : false;
         }
+
         if ($mixedImage) 
             BxDolTemplate::getInstance()->addPageMetaImage($mixedImage);
 

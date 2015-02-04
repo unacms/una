@@ -51,6 +51,12 @@ class BxAlbumsModule extends BxBaseModTextModule
             if ($o) $o->onObjectDelete();
         }
 
+        if (!empty($CNF['OBJECT_METATAGS_MEDIA'])) {
+            bx_import('BxDolMetatags');
+            $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS_MEDIA']);
+            $oMetatags->onDeleteContent($aMediaInfo['id']);
+        }
+
         return true;
     }
 

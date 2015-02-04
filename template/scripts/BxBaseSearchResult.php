@@ -309,6 +309,14 @@ class BxBaseSearchResult extends BxDolSearchResult
     }
 
     /**
+     * Set unit class selector for content centering 
+     */
+    function setCenterContentUnitSelector ($s)
+    {
+        $this->sCenterContentUnitSelector = $s;
+    }
+
+    /**
      * Add class to search result container 
      * @param $mixed CSS class name string or array of classes
      */

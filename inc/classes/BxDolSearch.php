@@ -99,6 +99,7 @@ class BxDolSearch extends BxDol
             $oEx->setId($aValue['id']);
             $oEx->setLiveSearch($this->_bLiveSearch);
             $oEx->setMetaType($this->_sMetaType);
+            $oEx->setCenterContentUnitSelector(false);
             $sCode .= $oEx->processing();
         }
 

@@ -23,10 +23,10 @@ DELETE `sys_acl_actions`, `sys_acl_matrix` FROM `sys_acl_actions`, `sys_acl_matr
 DELETE FROM `sys_acl_actions` WHERE `Module` = 'bx_albums';
 
 -- SEARCH
-DELETE FROM `sys_objects_search` WHERE `ObjectName` IN ('bx_albums', 'bx_albums_cmts');
+DELETE FROM `sys_objects_search` WHERE `ObjectName` IN ('bx_albums', 'bx_albums_cmts', 'bx_albums_media', 'bx_albums_media_cmts');
 
 -- METATAGS
-DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_albums';
+DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_albums' OR `object` = 'bx_albums_media';
 
 -- GRIDS
 DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_albums_administration', 'bx_albums_common');

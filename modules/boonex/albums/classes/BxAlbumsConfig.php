@@ -72,6 +72,7 @@ class BxAlbumsConfig extends BxBaseModTextConfig
             'OBJECT_VOTES' => 'bx_albums',
             'OBJECT_VOTES_MEDIA' => 'bx_albums_media',
             'OBJECT_METATAGS' => 'bx_albums',
+            'OBJECT_METATAGS_MEDIA' => 'bx_albums_media',
             'OBJECT_COMMENTS' => 'bx_albums',
             'OBJECT_COMMENTS_MEDIA' => 'bx_albums_media',
             'OBJECT_PRIVACY_VIEW' => 'bx_albums_allow_view_to',

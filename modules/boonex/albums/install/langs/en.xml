@@ -3,6 +3,8 @@
 
 	<string name="_bx_albums"><![CDATA[Albums]]></string>
 	<string name="_bx_albums_cmts"><![CDATA[Albums' Comments]]></string>
+	<string name="_bx_albums_media"><![CDATA[Images]]></string>
+	<string name="_bx_albums_media_cmts"><![CDATA[Images' Comments]]></string>
 
 	<string name="_bx_albums_option_summary_chars"><![CDATA[Number of characters in auto-cropped album summary]]></string>
 	<string name="_bx_albums_option_plain_summary_chars"><![CDATA[Number of characters in plain album description when album hasn't thumb]]></string>
@@ -80,6 +82,7 @@
     <string name="_bx_albums_page_block_title_entries_of_author"><![CDATA[Albums of author]]></string>   
     <string name="_bx_albums_page_block_title_entries_actions"><![CDATA[Albums actions]]></string>
     <string name="_bx_albums_page_block_title_browse_cmts"><![CDATA[Albums' Comments]]></string>
+    <string name="_bx_albums_page_block_title_browse_cmts_media"><![CDATA[Images Comments]]></string>
 	<string name="_bx_albums_page_title_sys_manage"><![CDATA[Manage Own Albums]]></string>
 	<string name="_bx_albums_page_title_sys_manage_administration"><![CDATA[Manage All Albums]]></string>
 	<string name="_bx_albums_page_title_manage"><![CDATA[Manage Albums]]></string>

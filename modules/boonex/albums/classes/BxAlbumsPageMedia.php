@@ -72,19 +72,17 @@ class BxAlbumsPageMedia extends BxTemplPage
             BxDolView::getObjectInstance($CNF['OBJECT_VIEWS_MEDIA'], $this->_aMediaInfo['id'])->doView();
         }
 
-/* TODO:
         // add content metatags
-        if (!empty($CNF['OBJECT_METATAGS'])) {
+        if (!empty($CNF['OBJECT_METATAGS_MEDIA'])) {
             bx_import('BxDolMetatags');
-            $o = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
+            $o = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS_MEDIA']);
             if ($o) {
                 $aThumb = false;
-                if (!empty($CNF['FIELD_THUMB']) && !empty($this->_aContentInfo[$CNF['FIELD_THUMB']]) && !empty($CNF['OBJECT_STORAGE']))
-                    $aThumb = array('id' => $this->_aContentInfo[$CNF['FIELD_THUMB']], 'object' => $CNF['OBJECT_STORAGE']);
-                $o->metaAdd($this->_aContentInfo[$CNF['FIELD_ID']], $aThumb);
+                if (!empty($this->_aMediaInfo['file_id']) && !empty($CNF['OBJECT_IMAGES_TRANSCODER_BIG']))
+                    $aThumb = array('id' => $this->_aMediaInfo['file_id'], 'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_BIG']);
+                $o->metaAdd($this->_aMediaInfo['id'], $aThumb);
             }
         }
-*/
 
         $aVars = array();
         $this->_oTemplate->addInjection ('injection_footer', 'text', $this->_oModule->_oTemplate->parseHtmlByName('photoswipe.html', $aVars));
