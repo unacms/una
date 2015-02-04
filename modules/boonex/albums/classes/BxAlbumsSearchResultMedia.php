@@ -10,6 +10,7 @@
  */
 
 bx_import('BxBaseModTextSearchResult');
+bx_import('BxDolPermalinks');
 
 class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
 {
@@ -67,7 +68,7 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
                     'Link' => 'link',
                     'Title' => 'title',
                     'DateTimeUTS' => 'added',
-                    'Desc' => 'text',
+                    'Desc' => 'title',
                 ),
             ),
             'ident' => 'id',
@@ -82,41 +83,39 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
 
         switch ($sMode) {
             case 'album':
-                $this->aCurrent['restriction']['album']['value'] = $aParams['album_id'];
-                //$this->sBrowseUrl = 'page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id={profile_id}';
-                //$this->aCurrent['title'] = _t('_bx_albums_page_title_browse_media_in_album');
-                //$this->aCurrent['rss']['link'] = 'modules/?r=albums/rss/' . $sMode . '/' . $oProfileAuthor->id();
+                $this->aCurrent['restriction']['album']['value'] = (int)$aParams['album_id'];
+                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . (int)$aParams['album_id']);
+                $this->aCurrent['title'] = _t('_bx_albums_page_title_browse_media_in_album');
+                $this->aCurrent['rss']['link'] = 'modules/?r=albums/rss_media/' . $sMode . '/' . (int)$aParams['album_id'];
                 $this->aCurrent['sorting'] = 'order';
                 $this->sOrderDirection = 'ASC';
                 break;
 
+            case 'recent':
+                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_RECENT_MEDIA']);
+                $this->aCurrent['title'] = _t('_bx_albums_page_title_browse_recent_media');
+                $this->aCurrent['rss']['link'] = 'modules/?r=albums/rss_media/' . $sMode; 
+                $this->aCurrent['sorting'] = 'last';
+                break;
+
             case 'popular':
-                bx_import('BxDolPermalinks');
                 $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_POPULAR_MEDIA']);
                 $this->aCurrent['title'] = _t('_bx_albums_page_title_browse_popular_media');
-                $this->aCurrent['rss']['link'] = 'modules/?r=albums/rss/' . $sMode; // TODO: refer to another search class in 'rss' method for this rss feed
+                $this->aCurrent['rss']['link'] = BxDolPermalinks::getInstance()->permalink('modules/?r=albums/rss_media/' . $sMode);
                 $this->aCurrent['sorting'] = 'popular';
                 break;
-/* TODO: add to search
+
             case '': // search results
                 $this->sBrowseUrl = BX_DOL_SEARCH_KEYWORD_PAGE;
-                $this->aCurrent['title'] = _t('_bx_albums');
                 $this->aCurrent['paginate']['perPage'] = 3;
                 unset($this->aCurrent['rss']);
                 break;
-*/
+
             default:
                 $sMode = '';
                 $this->isError = true;
         }
-/*
-        // add replaceable markers and replace them
-        if ($oProfileAuthor) {
-            $this->addMarkers($oProfileAuthor->getInfo()); // profile info is replaceable
-            $this->addMarkers(array('profile_id' => $oProfileAuthor->id())); // profile id is replaceable
-            $this->addMarkers(array('display_name' => $oProfileAuthor->getDisplayName())); // profile display name is replaceable
-        }
-*/
+
         $this->sBrowseUrl = $this->_replaceMarkers($this->sBrowseUrl);
         $this->aCurrent['title'] = $this->_replaceMarkers($this->aCurrent['title']);
 
@@ -143,7 +142,7 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
                 $aSql['order'] = " ORDER BY `f`.`added` {$this->sOrderDirection}, `{$this->aCurrent['table']}`.`id` {$this->sOrderDirection} ";
                 break;
             case 'popular':
-                $aSql['order'] = " ORDER BY `bx_albums_albums`.`views` {$this->sOrderDirection}, `{$this->aCurrent['table']}`.`id` {$this->sOrderDirection}";
+                $aSql['order'] = " ORDER BY `{$this->aCurrent['table']}`.`views` {$this->sOrderDirection}, `{$this->aCurrent['table']}`.`id` {$this->sOrderDirection}";
                 break;
         }
         return $aSql;
@@ -167,7 +166,7 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
                 $this->aCurrent['restriction_sql'] = " AND (`f`.`added` {$sOper} {$aMediaInfo['added']} OR (`f`.`added` = {$aMediaInfo['added']} AND `{$this->aCurrent['table']}`.`id` {$sOper} {$aMediaInfo['id']})) ";
                 break;
             case 'popular':
-                $this->aCurrent['restriction_sql'] = " AND (`bx_albums_albums`.`views` {$sOper} {$aMediaInfo['views']} OR (`bx_albums_albums`.`views` = {$aMediaInfo['views']} AND `{$this->aCurrent['table']}`.`id` {$sOper} {$aMediaInfo['id']})) ";
+                $this->aCurrent['restriction_sql'] = " AND (`{$this->aCurrent['table']}`.`views` {$sOper} {$aMediaInfo['views']} OR (`{$this->aCurrent['table']}`.`views` = {$aMediaInfo['views']} AND `{$this->aCurrent['table']}`.`id` {$sOper} {$aMediaInfo['id']})) ";
                 break;
         }
 
@@ -176,6 +175,12 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
             return array_shift($aData);
 
         return false;
+    }
+
+    function getRssUnitLink (&$a)
+    {
+        bx_import('BxDolPermalinks');
+        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->oModule->_oConfig->CNF['URI_VIEW_MEDIA'] . '&id=' . $a['id']);
     }
 }
 

@@ -61,6 +61,8 @@
     <string name="_bx_albums_page_title_browse_recent"><![CDATA[Recent Albums]]></string>
     <string name="_bx_albums_page_title_browse_popular"><![CDATA[Popular Albums]]></string>
     <string name="_bx_albums_page_title_browse_popular_media"><![CDATA[Popular Images]]></string>
+    <string name="_bx_albums_page_title_browse_recent_media"><![CDATA[Recent Images]]></string>
+    <string name="_bx_albums_page_title_browse_media_in_album"><![CDATA[Images]]></string>
     <string name="_bx_albums_page_title_sys_home"><![CDATA[Albums Home]]></string>
     <string name="_bx_albums_page_title_home"><![CDATA[Albums]]></string>
     <string name="_bx_albums_page_block_title_recent_entries"><![CDATA[Recent Albums]]></string>

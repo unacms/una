@@ -138,6 +138,27 @@ class BxAlbumsModule extends BxBaseModTextModule
         header('Content-type: text/html; charset=utf-8');
         echo $s;
     }
+
+    public function actionRssMedia ()
+    {
+        $aArgs = func_get_args();
+        $this->_rss($aArgs, 'SearchResultMedia');
+    }
+
+    protected function _buildRssParams($sMode, $aArgs)
+    {        
+        if ($aParams = parent::_buildRssParams($sMode, $aArgs))
+            return $aParams;
+
+        $sMode = bx_process_input($sMode);
+        switch ($sMode) {
+            case 'album':
+                $aParams = array('album_id' => isset($aArgs[0]) ? (int)$aArgs[0] : '');
+                break;
+        }
+
+        return $aParams;
+    }
 }
 
 /** @} */

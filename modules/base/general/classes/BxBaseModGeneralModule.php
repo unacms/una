@@ -26,29 +26,10 @@ class BxBaseModGeneralModule extends BxDolModule
 
     // ====== ACTIONS METHODS
 
-    public function actionRss ($sMode = '')
+    public function actionRss ()
     {
         $aArgs = func_get_args();
-        $sMode = array_shift($aArgs);
-
-        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->checkAllowedBrowse())) {
-            $this->_oTemplate->displayAccessDenied ($sMsg);
-            exit;
-        }
-
-        $aParams = $this->_buildRssParams($sMode, $aArgs);
-
-        bx_import ('SearchResult', $this->_aModule);
-        $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
-        $o = new $sClass($sMode, $aParams);
-
-        if ($o->isError) {
-            $this->_oTemplate->displayPageNotFound ();
-            exit;
-        }
-
-        $o->outputRSS();
-        exit;
+        $this->_rss($aArgs);
     }
 
     // ====== SERVICE METHODS
@@ -327,6 +308,29 @@ class BxBaseModGeneralModule extends BxDolModule
             return false;
 
         return $this->_oTemplate->$sFunc($aContentInfo);
+    }
+
+    protected function _rss ($aArgs, $sClass = 'SearchResult')
+    {
+        $sMode = array_shift($aArgs);
+
+        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->checkAllowedBrowse())) {
+            $this->_oTemplate->displayAccessDenied ($sMsg);
+            exit;
+        }
+
+        $aParams = $this->_buildRssParams($sMode, $aArgs);
+
+        bx_import ($sClass, $this->_aModule);
+        $sClass = $this->_aModule['class_prefix'] . $sClass;
+        $o = new $sClass($sMode, $aParams);
+
+        if ($o->isError)
+            $this->_oTemplate->displayPageNotFound ();
+        else
+            $o->outputRSS();
+
+        exit;
     }
 }
 
