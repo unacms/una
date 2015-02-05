@@ -223,7 +223,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
         return $aVars;
     }
 
-    protected function getViewMediaUrl($CNF, $iMediaId, $sContext = '')
+    public function getViewMediaUrl($CNF, $iMediaId, $sContext = '')
     {
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_MEDIA'] . '&id=' . $iMediaId . (!empty($sContext) ? '&context=' . $sContext : ''));
     }

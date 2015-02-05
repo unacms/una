@@ -159,6 +159,27 @@ class BxAlbumsModule extends BxBaseModTextModule
 
         return $aParams;
     }
+
+    protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if (!($aMediaList = $this->_oDb->getMediaListByContentId($aContentInfo[$CNF['FIELD_ID']])))
+            return array();
+
+        bx_import('BxDolTranscoderImage');
+        $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);
+        $aMediaList = array_slice($aMediaList, 0, 5);
+        $aOutput = array();
+        foreach ($aMediaList as $aMedia) {
+            $aOutput[] = array (
+                'url' => $this->_oTemplate->getViewMediaUrl($CNF, $aMedia['id']), 
+                'src' => $oTranscoder->getFileUrl($aMedia['file_id']),
+            );
+        }
+
+        return $aOutput;
+    }
 }
 
 /** @} */

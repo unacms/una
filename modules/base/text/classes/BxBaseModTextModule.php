@@ -252,19 +252,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
 
         //--- Image(s)
-        $sImage = '';
-        if (isset($aContentInfo[$CNF['FIELD_THUMB']]) && $aContentInfo[$CNF['FIELD_THUMB']]) {
-            bx_import('BxDolStorage');
-            $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
-            if($oStorage)
-                $sImage = $oStorage->getFileUrlById($aContentInfo[$CNF['FIELD_THUMB']]);
-        }
-
-        $aImages = array();
-        if(!empty($sImage))
-        	$aImages = array(
-				array('url' => $sUrl, 'src' => $sImage)
-			);
+        $aImages = $this->_getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl);
 
         //--- Votes
         bx_import('BxDolVote');
@@ -322,6 +310,26 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
     }
 
     // ====== PROTECTED METHODS
+
+    protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sImage = '';
+        if (isset($aContentInfo[$CNF['FIELD_THUMB']]) && $aContentInfo[$CNF['FIELD_THUMB']]) {
+            bx_import('BxDolStorage');
+            $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
+            if($oStorage)
+                $sImage = $oStorage->getFileUrlById($aContentInfo[$CNF['FIELD_THUMB']]);
+        }
+
+        if (empty($sImage))
+            return array();
+
+        return array(
+		    array('url' => $sUrl, 'src' => $sImage),
+		);
+    }
 
     protected function _buildRssParams($sMode, $aArgs)
     {
