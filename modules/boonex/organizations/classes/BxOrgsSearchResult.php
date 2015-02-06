@@ -24,7 +24,7 @@ class BxOrgsSearchResult extends BxBaseModProfileSearchResult
             'table' => 'sys_profiles',
             'tableSearch' => 'bx_organizations_data',
             'ownFields' => array(),
-            'searchFields' => array('org_name'),
+            'searchFields' => array('org_name', 'org_desc'),
             'restriction' => array(
         		'account_id' => array('value' => '', 'field' => 'account_id', 'operator' => '='),
                 'perofileStatus' => array('value' => 'active', 'field' => 'status', 'operator' => '='),

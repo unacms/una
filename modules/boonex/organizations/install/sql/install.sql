@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS `bx_organizations_data` (
   `cover` int(11) NOT NULL,
   `org_name` varchar(255) NOT NULL,
   `org_cat` int(11) NOT NULL,
+  `org_desc` text NOT NULL,
   `views` int(11) NOT NULL default '0',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `org_name` (`org_name`)
@@ -103,10 +104,11 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_organization', 'bx_organizations', 'cover_preview', '', '', 0, 'custom', '_bx_orgs_form_profile_input_sys_cover_preview', '_bx_orgs_form_profile_input_cover_preview', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_organization', 'bx_organizations', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_orgs_form_profile_input_sys_delete_confirm', '_bx_orgs_form_profile_input_delete_confirm', '_bx_orgs_form_profile_input_delete_confirm_info', 1, 0, 0, '', '', '', 'avail', '', '_bx_orgs_form_profile_input_delete_confirm_error', '', '', 1, 0),
 ('bx_organization', 'bx_organizations', 'do_submit', '_sys_form_account_input_submit', '', 0, 'submit', '_bx_orgs_form_profile_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_organization', 'bx_organizations', 'org_desc', '', '', 0, 'textarea', '_bx_orgs_form_profile_input_sys_org_desc', '_bx_orgs_form_profile_input_org_desc', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 1),
+('bx_organization', 'bx_organizations', 'org_cat', '', '#!bx_organizations_cats', 0, 'select', '_bx_orgs_form_profile_input_sys_org_cat', '_bx_orgs_form_profile_input_org_cat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_orgs_form_profile_input_org_cat_err', 'Xss', '', 1, 1),
 ('bx_organization', 'bx_organizations', 'org_name', '', '', 0, 'text', '_bx_orgs_form_profile_input_sys_org_name', '_bx_orgs_form_profile_input_org_name', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_orgs_form_profile_input_org_name_err', 'Xss', '', 1, 0),
 ('bx_organization', 'bx_organizations', 'picture', '', '', 0, 'file', '_bx_orgs_form_profile_input_sys_picture', '_bx_orgs_form_profile_input_picture', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_orgs_form_profile_input_picture_err', 'Int', '', 1, 0),
-('bx_organization', 'bx_organizations', 'picture_preview', '', '', 0, 'custom', '_bx_orgs_form_profile_input_sys_picture_preview', '_bx_orgs_form_profile_input_picture_preview', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_organization', 'bx_organizations', 'org_cat', '', '#!bx_organizations_cats', 0, 'select', '_bx_orgs_form_profile_input_sys_org_cat', '_bx_orgs_form_profile_input_org_cat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_orgs_form_profile_input_org_cat_err', 'Xss', '', 1, 1);
+('bx_organization', 'bx_organizations', 'picture_preview', '', '', 0, 'custom', '_bx_orgs_form_profile_input_sys_picture_preview', '_bx_orgs_form_profile_input_picture_preview', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
 ('bx_organization_add', 'cover_preview', 2147483647, 0, 1),
@@ -116,12 +118,13 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_organization_add', 'picture', 2147483647, 1, 5),
 ('bx_organization_add', 'org_name', 2147483647, 1, 6),
 ('bx_organization_add', 'org_cat', 2147483647, 1, 7),
-('bx_organization_add', 'do_submit', 2147483647, 1, 8),
+('bx_organization_add', 'org_desc', 2147483647, 1, 8),
+('bx_organization_add', 'do_submit', 2147483647, 1, 9),
 ('bx_organization_delete', 'cover_preview', 2147483647, 0, 0),
-('bx_organization_delete', 'picture_preview', 2147483647, 0, 0),
-('bx_organization_delete', 'delete_confirm', 2147483647, 1, 0),
-('bx_organization_delete', 'cover', 2147483647, 0, 0),
 ('bx_organization_delete', 'picture', 2147483647, 0, 0),
+('bx_organization_delete', 'delete_confirm', 2147483647, 1, 0),
+('bx_organization_delete', 'picture_preview', 2147483647, 0, 0),
+('bx_organization_delete', 'cover', 2147483647, 0, 0),
 ('bx_organization_delete', 'do_submit', 2147483647, 1, 1),
 ('bx_organization_delete', 'org_name', 2147483647, 0, 2),
 ('bx_organization_delete', 'org_cat', 2147483647, 0, 3),
@@ -132,7 +135,8 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_organization_edit', 'picture', 2147483647, 1, 5),
 ('bx_organization_edit', 'org_name', 2147483647, 1, 6),
 ('bx_organization_edit', 'org_cat', 2147483647, 1, 7),
-('bx_organization_edit', 'do_submit', 2147483647, 1, 8),
+('bx_organization_edit', 'org_desc', 2147483647, 1, 8),
+('bx_organization_edit', 'do_submit', 2147483647, 1, 9),
 ('bx_organization_edit_cover', 'delete_confirm', 2147483647, 0, 1),
 ('bx_organization_edit_cover', 'org_name', 2147483647, 0, 2),
 ('bx_organization_edit_cover', 'picture', 2147483647, 0, 3),
@@ -148,9 +152,11 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_organization_view', 'cover', 2147483647, 0, 5),
 ('bx_organization_view', 'do_submit', 2147483647, 0, 6),
 ('bx_organization_view', 'org_name', 2147483647, 1, 7),
-('bx_organization_view', 'org_cat', 2147483647, 1, 8);
+('bx_organization_view', 'org_cat', 2147483647, 1, 8),
+('bx_organization_view', 'org_desc', 2147483647, 1, 9);
 
 -- PRE-VALUES
+
 INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES
 ('bx_organizations_cats', '_bx_orgs_pre_lists_cats', 'bx_organizations', '0');
 
