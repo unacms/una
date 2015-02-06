@@ -53,6 +53,10 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
                 return MsgBox(_t('_sys_txt_error_entry_creation'));
         }
 
+        $sResult = $this->onDataAddAfter ($iContentId);
+        if ($sResult)
+            return $sResult;
+
         if (!empty($CNF['OBJECT_METATAGS'])) {
             list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
             bx_import('BxDolMetatags');
@@ -62,10 +66,6 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             if ($oMetatags->locationsIsEnabled())
                 $oMetatags->locationsAddFromForm($aContentInfo[$CNF['FIELD_ID']], $CNF['FIELD_LOCATION_PREFIX']);
         }
-
-        $sResult = $this->onDataAddAfter ($iContentId);
-        if ($sResult)
-            return $sResult;
 
         // perform action
         $this->_oModule->checkAllowedAdd(true);
@@ -119,6 +119,10 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
                 return MsgBox(_t('_sys_txt_error_entry_update'));
         }
 
+        $sResult = $this->onDataEditAfter ($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $aTrackTextFieldsChanges, $oProfile);
+        if ($sResult)
+            return $sResult;
+
         if (!empty($CNF['OBJECT_METATAGS'])) { // && isset($aTrackTextFieldsChanges['changed_fields'][$CNF['FIELD_TEXT']])) { // TODO: check if aTrackTextFieldsChanges works 
             list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
             bx_import('BxDolMetatags');
@@ -128,10 +132,6 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             if ($oMetatags->locationsIsEnabled())
                 $oMetatags->locationsAddFromForm($aContentInfo[$CNF['FIELD_ID']], empty($CNF['FIELD_LOCATION_PREFIX']) ? '' : $CNF['FIELD_LOCATION_PREFIX']);
         }
-
-        $sResult = $this->onDataEditAfter ($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $aTrackTextFieldsChanges, $oProfile);
-        if ($sResult)
-            return $sResult;
 
         // perform action
         $this->_oModule->checkAllowedEdit($aContentInfo, true);
