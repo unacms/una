@@ -228,7 +228,7 @@ class BxBaseModGeneralModule extends BxDolModule
     public function checkAllowedSetMembership (&$aDataEntry, $isPerformAction = false)
     {
         // admin always has access
-        if (isAdmin($this->_iProfileId))
+        if (isAdmin())
             return CHECK_ACTION_RESULT_ALLOWED;
 
         // check ACL
@@ -278,9 +278,7 @@ class BxBaseModGeneralModule extends BxDolModule
 
     protected function _isModerator ($isPerformAction = false)
     {
-        // check moderator ACL
-        $aCheck = checkActionModule($this->_iProfileId, 'edit any entry', $this->getName(), $isPerformAction);
-        return $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED;
+        return CHECK_ACTION_RESULT_ALLOWED == $this->checkAllowedEditAnyEntry ($isPerformAction);
     }
 
     protected function _serviceEntityForm ($sFormMethod, $iContentId = 0, $sDisplay = false)
