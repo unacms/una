@@ -143,28 +143,35 @@ INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attr
 
 INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`, `title`) VALUES 
 ('bx_posts', 'bx_posts_entry_add', 'bx_posts', 0, '_bx_posts_form_entry_display_add'),
-('bx_posts', 'bx_posts_entry_edit', 'bx_posts', 0, '_bx_posts_form_entry_display_edit'),
 ('bx_posts', 'bx_posts_entry_delete', 'bx_posts', 0, '_bx_posts_form_entry_display_delete'),
+('bx_posts', 'bx_posts_entry_edit', 'bx_posts', 0, '_bx_posts_form_entry_display_edit'),
 ('bx_posts', 'bx_posts_entry_view', 'bx_posts', 1, '_bx_posts_form_entry_display_view');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
-('bx_posts', 'bx_posts', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_posts_form_entry_input_sys_delete_confirm', '_bx_posts_form_entry_input_delete_confirm', '_bx_posts_form_entry_input_delete_confirm_info', 1, 0, 0, '', '', '', 'Avail', '', '_bx_posts_form_entry_input_delete_confirm_error', '', '', 1, 0),
-('bx_posts', 'bx_posts', 'do_submit', '_bx_posts_form_entry_input_do_submit', '', 0, 'submit', '_bx_posts_form_entry_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_posts', 'bx_posts', 'title', '', '', 0, 'text', '_bx_posts_form_entry_input_sys_title', '_bx_posts_form_entry_input_title', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_posts_form_entry_input_title_err', 'Xss', '', 1, 0),
-('bx_posts', 'bx_posts', 'text', '', '', 0, 'textarea', '_bx_posts_form_entry_input_sys_text', '_bx_posts_form_entry_input_text', '', 1, 0, 2, '', '', '', 'Avail', '', '_bx_posts_form_entry_input_text_err', 'XssHtml', '', 1, 0),
-('bx_posts', 'bx_posts', 'pictures', '', '', 0, 'files', '_bx_posts_form_entry_input_sys_pictures', '_bx_posts_form_entry_input_pictures', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_posts', 'bx_posts', 'allow_view_to', '', '', 0, 'custom', '_bx_posts_form_entry_input_sys_allow_view_to', '_bx_posts_form_entry_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
-('bx_posts', 'bx_posts', 'location', '', '', 0, 'custom', '_sys_form_input_sys_location', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
+('bx_posts', 'bx_posts', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_posts_form_entry_input_sys_delete_confirm', '_bx_posts_form_entry_input_delete_confirm', '_bx_posts_form_entry_input_delete_confirm_info', 1, 0, 0, '', '', '', 'Avail', '', '_bx_posts_form_entry_input_delete_confirm_error', '', '', 1, 0),
+('bx_posts', 'bx_posts', 'do_publish', '_bx_posts_form_entry_input_do_publish', '', 0, 'submit', '_bx_posts_form_entry_input_sys_do_publish', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_posts', 'bx_posts', 'do_submit', '_bx_posts_form_entry_input_do_submit', '', 0, 'submit', '_bx_posts_form_entry_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_posts', 'bx_posts', 'location', '', '', 0, 'custom', '_sys_form_input_sys_location', '', '_sys_form_input_info_1417687630', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_posts', 'bx_posts', 'pictures', '', '', 0, 'files', '_bx_posts_form_entry_input_sys_pictures', '_bx_posts_form_entry_input_pictures', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_posts', 'bx_posts', 'text', '', '', 0, 'textarea', '_bx_posts_form_entry_input_sys_text', '_bx_posts_form_entry_input_text', '', 1, 0, 2, '', '', '', 'Avail', '', '_bx_posts_form_entry_input_text_err', 'XssHtml', '', 1, 0),
+('bx_posts', 'bx_posts', 'title', '', '', 0, 'text', '_bx_posts_form_entry_input_sys_title', '_bx_posts_form_entry_input_title', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_posts_form_entry_input_title_err', 'Xss', '', 1, 0);
 
-INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
+INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
 ('bx_posts_entry_add', 'delete_confirm', 2147483647, 0, 1),
 ('bx_posts_entry_add', 'title', 2147483647, 1, 2),
 ('bx_posts_entry_add', 'text', 2147483647, 1, 3),
 ('bx_posts_entry_add', 'pictures', 2147483647, 1, 4),
 ('bx_posts_entry_add', 'allow_view_to', 2147483647, 1, 5),
 ('bx_posts_entry_add', 'location', 2147483647, 1, 6),
-('bx_posts_entry_add', 'do_submit', 2147483647, 1, 7),
-
+('bx_posts_entry_add', 'do_submit', 2147483647, 0, 7),
+('bx_posts_entry_add', 'do_publish', 2147483647, 1, 8),
+('bx_posts_entry_delete', 'allow_view_to', 2147483647, 0, 0),
+('bx_posts_entry_delete', 'title', 2147483647, 0, 0),
+('bx_posts_entry_delete', 'text', 2147483647, 0, 0),
+('bx_posts_entry_delete', 'pictures', 2147483647, 0, 0),
+('bx_posts_entry_delete', 'delete_confirm', 2147483647, 1, 1),
+('bx_posts_entry_delete', 'do_submit', 2147483647, 1, 2),
 ('bx_posts_entry_edit', 'delete_confirm', 2147483647, 0, 1),
 ('bx_posts_entry_edit', 'title', 2147483647, 1, 2),
 ('bx_posts_entry_edit', 'text', 2147483647, 1, 3),
@@ -172,20 +179,13 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_posts_entry_edit', 'allow_view_to', 2147483647, 1, 5),
 ('bx_posts_entry_edit', 'location', 2147483647, 1, 6),
 ('bx_posts_entry_edit', 'do_submit', 2147483647, 1, 7),
-
-('bx_posts_entry_view', 'delete_confirm', 2147483647, 0, 0),
-('bx_posts_entry_view', 'allow_view_to', 2147483647, 0, 0),
-('bx_posts_entry_view', 'do_submit', 2147483647, 0, 0),
-('bx_posts_entry_view', 'text', 2147483647, 0, 0),
-('bx_posts_entry_view', 'title', 2147483647, 0, 0),
+('bx_posts_entry_view', 'text', 2147483647, 1, 0),
 ('bx_posts_entry_view', 'pictures', 2147483647, 0, 0),
-
-('bx_posts_entry_delete', 'delete_confirm', 2147483647, 1, 1),
-('bx_posts_entry_delete', 'do_submit', 2147483647, 1, 2),
-('bx_posts_entry_delete', 'allow_view_to', 2147483647, 0, 0),
-('bx_posts_entry_delete', 'pictures', 2147483647, 0, 0),
-('bx_posts_entry_delete', 'text', 2147483647, 0, 0),
-('bx_posts_entry_delete', 'title', 2147483647, 0, 0);
+('bx_posts_entry_view', 'location', 2147483647, 0, 0),
+('bx_posts_entry_view', 'delete_confirm', 2147483647, 0, 0),
+('bx_posts_entry_view', 'do_submit', 2147483647, 0, 0),
+('bx_posts_entry_view', 'allow_view_to', 2147483647, 0, 0),
+('bx_posts_entry_view', 'title', 2147483647, 0, 0);
 
 -- COMMENTS
 
