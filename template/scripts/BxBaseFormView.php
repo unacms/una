@@ -338,11 +338,14 @@ EOS;
             break;
 
             case 'textarea':
-                $sValue = isset($aInput['value']) ? $aInput['value'] : null;
+                if (isset($aInput['value']) && '' !== $aInput['value']) 
+                    $sValue = isset($aInput['html']) && $aInput['html'] ? $aInput['value'] : nl2br(bx_process_output($aInput['value']));
+                else
+                    $sValue = null;
             break;
 
             default:
-                $sValue = isset($aInput['value']) ? bx_process_output($aInput['value']) : null;
+                $sValue = isset($aInput['value']) && '' !== $aInput['value'] ? bx_process_output($aInput['value']) : null;
         }
 
         return $sValue;
