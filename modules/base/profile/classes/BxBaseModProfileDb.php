@@ -29,8 +29,13 @@ class BxBaseModProfileDb extends BxBaseModGeneralDb
 
     public function updateContentPictureById($iContentId, $iProfileId, $iPictureId, $sFieldPicture)
     {
-        $sQuery = $this->prepare ("UPDATE `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` SET `" . $sFieldPicture . "` = ? WHERE `id` = ? AND `author` = ?", $iPictureId, $iContentId, $iProfileId);
-        return $this->res($sQuery);
+        $sWhere = '';
+        if ($iProfileId)
+            $sWhere = $this->prepare (" AND `author` = ? ", $iProfileId);
+
+        $sQuery = $this->prepare ("UPDATE `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` SET `" . $sFieldPicture . "` = ? WHERE `id` = ?", $iPictureId, $iContentId);
+
+        return $this->res($sQuery . $sWhere);
     }
 
     public function searchByTerm($sTerm, $iLimit)

@@ -278,7 +278,7 @@ class BxBaseModGeneralModule extends BxDolModule
 
     protected function _isModerator ($isPerformAction = false)
     {
-        return CHECK_ACTION_RESULT_ALLOWED == $this->checkAllowedEditAnyEntry ($isPerformAction);
+        return CHECK_ACTION_RESULT_ALLOWED === $this->checkAllowedEditAnyEntry ($isPerformAction);
     }
 
     protected function _serviceEntityForm ($sFormMethod, $iContentId = 0, $sDisplay = false)

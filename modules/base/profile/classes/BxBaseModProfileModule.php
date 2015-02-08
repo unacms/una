@@ -25,6 +25,31 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         $this->_iAccountId = getLoggedId();
     }
 
+    public function actionDeleteProfileImg($iFileId, $iContentId, $sFieldPicture) 
+    {
+        $aResult = array();
+        $CNF = &$this->_oConfig->CNF;
+
+        bx_import('BxDolStorage');
+        $oSrorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
+        if (!($aFile = $oSrorage->getFile((int)$iFileId)) || !($aContentInfo = $this->_oDb->getContentInfoById($iContentId)) || $aContentInfo[$sFieldPicture] != (int)$iFileId)
+            $aResult = array('error' => 1, 'msg' => _t('_sys_storage_err_file_not_found'));
+
+        if ((!$aResult && !isLogged()) || (!$aResult && $aFile['profile_id'] != bx_get_logged_profile_id() && !$this->_isModerator()))           
+            $aResult = array('error' => 2, 'msg' => _t('_Access denied'));
+
+        bx_import('BxDolForm');
+        $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'], $this->_oTemplate);
+
+        if (!$aResult && !$oForm->_deleteFile($iContentId, $sFieldPicture, (int)$iFileId, true))
+            $aResult = array('error' => 3, 'msg' => _t('_Failed'));
+        elseif (!$aResult)            
+            $aResult = array('error' => 0, 'msg' => '');
+
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode($aResult);
+    }
+
     // ====== SERVICE METHODS
 	public function serviceGetMenuAddonManageTools()
 	{

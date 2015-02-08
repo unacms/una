@@ -67,7 +67,7 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
                 $this->aInputs[$sField]['content_id'] = $aValues[$CNF['FIELD_ID']];
 
             $sErrorString = '';
-            $this->aInputs[$sField]['file_id'] = $this->_processFile ($sField, isset($aValues[$sField]) ? $aValues[$sField] : 0, $sErrorString);
+            $this->aInputs[$sField]['file_id'] = $this->_processFile (!empty($aValues[$CNF['FIELD_ID']]) ? $aValues[$CNF['FIELD_ID']] : 0, $sField, isset($aValues[$sField]) ? $aValues[$sField] : 0, $sErrorString);
             if ($sErrorString) {
                 $this->aInputs[$sField]['error'] = $sErrorString;
                 $this->setValid(false);
@@ -88,6 +88,10 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
                 'bx_if:no_picture' => array (
                     'condition' => !$oTranscoder || !isset($aValues[$sField]) || !$aValues[$sField] ? true : false,
                     'content' => array (),
+                ),
+                'bx_if:delete' => array (
+                    'condition' => $oTranscoder && isset($aValues[$sField]) && $aValues[$sField] && $sField == $CNF['FIELD_COVER'] ? true : false,
+                    'content' => array ('action_ajax' => isset($aValues[$sField]) ? BX_DOL_URL_ROOT . $this->_oModule->_oConfig->getBaseUri() . 'delete_profile_img/' . $aValues[$sField] . '/' . (!empty($aValues[$CNF['FIELD_ID']]) ? $aValues[$CNF['FIELD_ID']] : 0) . '/' . $sField : ''),
                 ),
             );
             $this->aInputs[$aVals['field_preview']]['content'] = $this->_oModule->_oTemplate->parseHtmlByName('picture_preview.html', $aVars);
@@ -132,13 +136,13 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
 
         foreach ($this->_aImageFields as $sField => $aVals) {
             if (isset($aContentInfo[$sField]) && $aContentInfo[$sField])
-                $this->_deleteFile ($aContentInfo[$sField], $aVals['storage_object']);
+                $this->_deleteFile ($iContentId, $sField, $aContentInfo[$sField]);
         }
 
         return parent::delete($iContentId, $aContentInfo);
     }
 
-    function _processFile ($sField, $iFileIdOld, &$sErrorString)
+    function _processFile ($iContentId, $sField, $iFileIdOld, &$sErrorString)
     {
         if (empty($_FILES[$sField]['tmp_name']))
             return $iFileIdOld;
@@ -148,7 +152,7 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
             return $iFileIdOld;
 
         // delete previous file
-        $this->_deleteFile($iFileIdOld, $this->_aImageFields[$sField]['storage_object']);
+        $this->_deleteFile($iContentId, $sField, $iFileIdOld);
 
         // process new file and return new file id
         if (!($iFileId = $oStorage->storeFileFromForm($_FILES[$sField], false, $this->_iAccountProfileId))) {
@@ -159,18 +163,25 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
         return $iFileId;
     }
 
-    function _deleteFile ($iFileId, $sStorageObject)
+    function _deleteFile ($iContentId, $sFieldPicture, $iFileId, $bForceFieldUpdate = false)
     {
         if (!$iFileId)
             return true;
 
-        if (!($oStorage = BxDolStorage::getObjectInstance($sStorageObject)))
+        if (!$this->_aImageFields[$sFieldPicture]['storage_object'])
+            return false;
+
+        if (!($oStorage = BxDolStorage::getObjectInstance($this->_aImageFields[$sFieldPicture]['storage_object'])))
             return false;
 
         if (!$oStorage->getFile($iFileId))
             return true;
 
-        return $oStorage->deleteFile($iFileId, $this->_iAccountProfileId);
+        if (($bRet = $oStorage->deleteFile($iFileId, $this->_iAccountProfileId)) && $bForceFieldUpdate) {
+            $this->_oModule->_oDb->updateContentPictureById($iContentId, 0, 0, $sFieldPicture);
+        }
+
+        return $bRet;
     }
 
 }
