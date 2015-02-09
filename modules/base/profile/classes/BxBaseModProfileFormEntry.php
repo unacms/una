@@ -55,9 +55,14 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
 
     function initChecker ($aValues = array (), $aSpecificValues = array())
     {
-        parent::initChecker($aValues, $aSpecificValues);
-
         $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if (!empty($aValues[$CNF['FIELD_PICTURE']]) && $aValues[$CNF['FIELD_PICTURE']] && isset($this->aInputs[$CNF['FIELD_PICTURE']]) && $this->aInputs[$CNF['FIELD_PICTURE']]) {
+            $this->aInputs[$CNF['FIELD_PICTURE']]['required'] = false;
+            unset($this->aInputs[$CNF['FIELD_PICTURE']]['checker']);
+        }
+
+        parent::initChecker($aValues, $aSpecificValues);
 
         foreach ($this->_aImageFields as $sField => $aVals) {
             if (!isset($this->aInputs[$sField]))
