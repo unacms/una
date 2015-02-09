@@ -64,10 +64,12 @@ class BxBaseServiceProfiles extends BxDol
     {
         if (getParam('sys_db_cache_enable')) { // get list of profiles  modules from db cache, cache is invalidated when new module is installed
 
-            $oCache = $this->getDbCacheObject ();
+            $oDb = BxDolDb::getInstance();
 
-            $sKey = $this->genDbCacheKey('profiles_modules_array');
-            $sKeyTs = $this->genDbCacheKey('profiles_modules_ts');
+            $oCache = $oDb->getDbCacheObject ();
+
+            $sKey = $oDb->genDbCacheKey('profiles_modules_array');
+            $sKeyTs = $oDb->genDbCacheKey('profiles_modules_ts');
 
             $mixedRetTs = $oCache->getData($sKeyTs);
             $mixedRet = $oCache->getData($sKey);
