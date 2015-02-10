@@ -179,11 +179,15 @@
                 o.onBeforeShow();
 
                 // transition effect
-                $el.addClass('bx-popup-inactive');
-                setTimeout(function () {
-                    $el.addClass('bx-popup-transitions bx-popup-active');
-                }, 10);
-    
+
+                if (o.moveToDocRoot) { 
+                    // we need to disable classes with "max-height:100%", since popup isn't in the root element, so animation will not work when moveToDocRoot option is set 
+                    $el.addClass('bx-popup-inactive');
+                    setTimeout(function () {
+                        $el.addClass('bx-popup-transitions bx-popup-active');
+                    }, 10);
+                }
+
                 // show popup
                 $el.css({display: 'block', visibility: 'visible'});
                 if (o.fog) {
