@@ -231,7 +231,7 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
                             unset($aForm['inputs']['checker_func']['tr_attrs']['style'], $aForm['inputs']['checker_error']['tr_attrs']['style']);
                         break;
                     case 'checker_func':
-                        $aForm['inputs'][$sKey]['value'] = $this->aField[$sKey];
+                        $aForm['inputs'][$sKey]['value'] = strtolower($this->aField[$sKey]);
                         switch($aForm['inputs'][$sKey]['value']) {
                             case 'length':
                                 unset($aForm['inputs']['checker_params_length_min']['tr_attrs']['style'], $aForm['inputs']['checker_params_length_max']['tr_attrs']['style']);

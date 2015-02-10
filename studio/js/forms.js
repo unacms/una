@@ -44,9 +44,10 @@ function fvtTogglePopup(sName, oLink) {
     }
 
     oPopup.dolPopup({
+    	moveToDocRoot: false,
         pointer:{
             el:$(oLink)
-        },
+        }
     });
 };
 
@@ -56,11 +57,12 @@ function fvtSelectLanguage(sName, sLangName, oLink) {
     $(oLink).parent().siblings('.active:visible').hide().siblings('.not-active:hidden').show().siblings(sId + '-pas:visible').hide().siblings(sId + '-act:hidden').show();
 
     //--- Update current language
-    $(oLink).parents('.bx-form-input-translator:first').find('.bx-form-input-language-current').css('background-image', $(oLink).parent('.bx-form-input-language').css('background-image')).find('a').html($(oLink).html());
+    var sIdElement = '#bx-form-element-' + sName;
+    $(sIdElement).find('.bx-form-input-language-current').css('background-image', $(oLink).parent('.bx-form-input-language').css('background-image')).find('a').html($(oLink).html());
 
     //--- Update inputs
-    var sId = '#bx-form-input-' + sName + '-' + sLangName;
-    $(oLink).parents('.bx-form-input-wrapper:first').find('.bx-form-input-text:visible, .bx-form-input-textarea:visible').hide().siblings(sId + ':hidden').show();
+    var sIdInput = '#bx-form-input-' + sName + '-' + sLangName;
+    $(sIdElement).find('.bx-form-input-text:visible, .bx-form-input-textarea:visible').hide().siblings(sIdInput + ':hidden').show();
 
     //--- Close selector
     $('#bx-form-field-translator-popup-' + sName).dolPopupHide();
