@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolDb');
-
 class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
 {
     function __construct()

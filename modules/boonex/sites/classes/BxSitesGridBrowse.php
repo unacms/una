@@ -11,8 +11,6 @@
 
 require_once(BX_DIRECTORY_PATH_INC . 'design.inc.php');
 
-bx_import('BxTemplGrid');
-
 class BxSitesGridBrowse extends BxTemplGrid
 {
     protected $_oModule;
@@ -23,10 +21,8 @@ class BxSitesGridBrowse extends BxTemplGrid
     {
         parent::__construct ($aOptions, $oTemplate);
 
-        bx_import('BxDolModule');
         $this->_oModule = BxDolModule::getInstance('bx_sites');
 
-        bx_import('BxDolPermalinks');
         $this->_oPermalinks = BxDolPermalinks::getInstance();
 
         $this->_iProfileId = bx_get_logged_profile_id();
@@ -42,7 +38,6 @@ class BxSitesGridBrowse extends BxTemplGrid
             return;
         }
 
-        bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance('bx_sites', 'bx_sites_site_add');
         if(!$oForm) {
             $this->_echoResultJson(array('msg' => _t('_sys_txt_error_occured')), true);
@@ -53,7 +48,6 @@ class BxSitesGridBrowse extends BxTemplGrid
         $oForm->initChecker();
 
         if(!$oForm->isSubmittedAndValid()) {
-            bx_import('BxTemplFunctions');
             $sContent = BxTemplFunctions::getInstance()->popupBox('bx-sites-site-create-popup', _t('_bx_sites_grid_browse_popup_create'), $this->_oModule->_oTemplate->parseHtmlByName('block_create.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
                 'form' => $oForm->getCode(true),
@@ -112,7 +106,6 @@ class BxSitesGridBrowse extends BxTemplGrid
         parent::_addJsCss();
         $this->_oTemplate->addJs(array('jquery.form.min.js'));
 
-        bx_import('BxTemplFormView');
         $oForm = new BxTemplFormView(array());
         $oForm->addCssJs();
     }

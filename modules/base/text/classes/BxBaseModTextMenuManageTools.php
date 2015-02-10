@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModGeneralMenuManageTools');
-
 /**
  * Manage tools submenu
  */

@@ -9,9 +9,6 @@
  * @{
  */
 
-bx_import('BxDolModule');
-bx_import('BxTemplStudioNavigationMenus');
-
 class BxDevNavigationMenus extends BxTemplStudioNavigationMenus
 {
     protected $oModule;
@@ -32,7 +29,6 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus
         $sFormObject = $this->oModule->_oConfig->getObject('form_nav_menu');
         $sFormDisplay = $this->oModule->_oConfig->getObject('form_display_nav_menu_add');
 
-        bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction;
         $this->fillInSelects($oForm->aInputs);
@@ -49,7 +45,6 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus
 
             $this->_echoResultJson($aRes, true);
         } else {
-            bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-nav-menu-create-popup', _t('_bx_dev_nav_txt_menus_create_popup'), $this->oModule->_oTemplate->parseHtmlByName('nav_add_menu.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
                 'form' => $oForm->getCode(true),
@@ -73,7 +68,6 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus
             exit;
         }
 
-        bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction;
         $oForm->aInputs['controls'][0]['value'] = _t('_bx_dev_nav_btn_menus_save');
@@ -88,7 +82,6 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus
 
             $this->_echoResultJson($aRes, true);
         } else {
-            bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-nav-menu-edit-popup', _t('_bx_dev_nav_txt_menus_edit_popup', _t($aMenu['title'])), $this->oModule->_oTemplate->parseHtmlByName('nav_add_menu.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
                 'form' => $oForm->getCode(true),
@@ -150,7 +143,6 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus
         );
         $oForm = new BxTemplStudioFormView($aFormStructure);
 
-        bx_import('BxTemplStudioFunctions');
         $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-nav-menu-export-popup', _t('_bx_dev_nav_txt_menus_export_popup', _t($aMenu['title'])), $this->oModule->_oTemplate->parseHtmlByName('nav_export.html', array(
             'content' => $oForm->getCode()
         )));

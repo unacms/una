@@ -77,7 +77,6 @@ class BxSitesPaypal
         $this->iBillingCyclesTrial = $this->_oModule->_oConfig->getPaymentBillingCycles(BX_SITES_PP_PERIOD_TRIAL);
         $this->iBillingCyclesRegular = $this->_oModule->_oConfig->getPaymentBillingCycles(BX_SITES_PP_PERIOD_REGULAR);
 
-        bx_import('BxDolPermalinks');
         $oPermalinks = BxDolPermalinks::getInstance();
         $this->sUrlReturn = BX_DOL_URL_ROOT . $oPermalinks->permalink('page.php?i=site-subscribe');
         $this->sUrlCancel = BX_DOL_URL_ROOT . $oPermalinks->permalink('page.php?i=site-create');

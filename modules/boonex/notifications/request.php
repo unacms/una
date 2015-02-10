@@ -12,7 +12,6 @@
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
 bx_import('BxDolLanguages');
-bx_import('BxDolRequest');
 
 BxDolRequest::processAsAction($GLOBALS['aModule'], $GLOBALS['aRequest']);
 

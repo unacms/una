@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolPageQuery');
-
 /**
  * @page objects
  * @section page Page
@@ -111,7 +109,6 @@ bx_import('BxDolPageQuery');
  * 3. Display Page.
  * Use the following sample code to display page:
  * @code
- *     bx_import('BxDolPage');
  *     $oPage = BxDolPage::getObjectInstance('sample'); // 'sample' is 'object' field from 'sys_objects_page' table, it automatically creates instance of default or custom class by object name
  *     if ($oPage)
  *         echo $oPage->getCode(); // print page
@@ -163,14 +160,11 @@ class BxDolPage extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
         if (!$aObject || !is_array($aObject))
             return false;
 
-        bx_import('BxTemplPage');
         $sClass = 'BxTemplPage';
         if (!empty($aObject['override_class_name'])) {
             $sClass = $aObject['override_class_name'];
             if (!empty($aObject['override_class_file']))
                 require_once(BX_DIRECTORY_PATH_ROOT . $aObject['override_class_file']);
-            else
-                bx_import($sClass);
         }
 
         $o = new $sClass($aObject);
@@ -189,7 +183,6 @@ class BxDolPage extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
     static public function processPageTrigger ($sPageTriggerName)
     {
         // get list of active modules
-        bx_import('BxDolModuleQuery');
         $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array(
             'type' => 'modules',
             'active' => 1,
@@ -244,7 +237,6 @@ class BxDolPage extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
      */
     protected function _isVisibleBlock ($a)
     {
-        bx_import('BxDolAcl');
         return BxDolAcl::getInstance()->isMemberLevelInSet($a['visible_for_levels']);
     }
 
@@ -253,7 +245,6 @@ class BxDolPage extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
      */
     protected function _isVisiblePage ($a)
     {
-        bx_import('BxDolAcl');
         return BxDolAcl::getInstance()->isMemberLevelInSet($a['visible_for_levels']);
     }
 

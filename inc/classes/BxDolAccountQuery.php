@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolDb');
-
 /**
  * All queries related to account
  */

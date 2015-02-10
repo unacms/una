@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModTextPageBrowse');
-
 /**
  * Browse entries pages.
  */

@@ -9,8 +9,6 @@
  */
 defined('BX_DOL') or die('hack attempt');
 
-bx_import('BxBaseStudioNavigationImport');
-
 class BxTemplStudioNavigationImport extends BxBaseStudioNavigationImport
 {
     function __construct($aOptions, $oTemplate = false)

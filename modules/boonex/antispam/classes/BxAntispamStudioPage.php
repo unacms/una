@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxTemplStudioModule');
-
 class BxAntispamStudioPage extends BxTemplStudioModule
 {
     protected $oModule;
@@ -19,10 +17,7 @@ class BxAntispamStudioPage extends BxTemplStudioModule
     {
         parent::__construct($sModule, $sPage);
 
-        bx_import('BxDolModule');
         $this->oModule = BxDolModule::getInstance('bx_antispam');
-
-        bx_import('BxDolPermalinks');
 
         $this->aMenuItems = array(
             array('name' => 'settings', 'icon' => 'cogs', 'title' => '_adm_lmi_cpt_settings'),

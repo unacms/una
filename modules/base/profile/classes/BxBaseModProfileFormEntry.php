@@ -9,9 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModGeneralFormEntry');
-bx_import('BxDolTranscoderImage');
-
 /**
  * Create/edit profile form.
  */

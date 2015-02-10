@@ -9,9 +9,6 @@
  * @{
  */
 
-bx_import('BxDolProfileForms');
-bx_import('BxDolForm');
-
 /**
  * Entry forms helper functions
  */
@@ -59,7 +56,6 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
 
         if (!empty($CNF['OBJECT_METATAGS'])) {
             list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
-            bx_import('BxDolMetatags');
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
             if ($oMetatags->keywordsIsEnabled())
                 $oMetatags->keywordsAddAuto($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD']);
@@ -97,7 +93,6 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
 
         $aSpecificValues = array();        
         if (!empty($CNF['OBJECT_METATAGS'])) {
-            bx_import('BxDolMetatags');
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
             if ($oMetatags->locationsIsEnabled())
                 $aSpecificValues = $oMetatags->locationGet($iContentId, empty($CNF['FIELD_LOCATION_PREFIX']) ? '' : $CNF['FIELD_LOCATION_PREFIX']);
@@ -125,7 +120,6 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
 
         if (!empty($CNF['OBJECT_METATAGS'])) { // && isset($aTrackTextFieldsChanges['changed_fields'][$CNF['FIELD_TEXT']])) { // TODO: check if aTrackTextFieldsChanges works 
             list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
-            bx_import('BxDolMetatags');
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
             if ($oMetatags->keywordsIsEnabled())
                 $oMetatags->keywordsAddAuto($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $CNF, $sDisplay);
@@ -173,7 +167,6 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         $this->_oModule->checkAllowedDelete($aContentInfo, true);
 
         // redirect
-        bx_import('BxDolPermalinks');
         $this->_redirectAndExit($CNF['URL_HOME'], true, array(
             'account_id' => getLoggedId(),
             'profile_id' => bx_get_logged_profile_id(),
@@ -236,7 +229,6 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
 
         // process metatags
         if (!empty($CNF['OBJECT_METATAGS'])) {
-            bx_import('BxDolMetatags');
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
             if ($oMetatags->keywordsIsEnabled()) {
                 $aFields = $oMetatags->keywordsFields($aContentInfo, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_VIEW']);

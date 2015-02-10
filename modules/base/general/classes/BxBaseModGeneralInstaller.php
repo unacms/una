@@ -9,9 +9,6 @@
  * @{
  */
 
-bx_import('BxDolStudioInstaller');
-bx_import('BxDolService');
-
 class BxBaseModGeneralInstaller extends BxDolStudioInstaller
 {
     function __construct($aConfig)

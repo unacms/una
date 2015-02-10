@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModTextPageEntry');
-
 /**
  * Entry create/edit pages
  */
@@ -27,7 +25,6 @@ class BxCnvPageEntry extends BxBaseModTextPageEntry
 
         $iFolder = $this->_oModule->_oDb->getConversationFolder($this->_aContentInfo[$CNF['FIELD_ID']], bx_get_logged_profile_id());
         if (BX_CNV_FOLDER_DRAFTS == $iFolder) { // if draft is opened - redirect to compose page
-            bx_import('BxDolPermalinks');
             $sUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_ADD_ENTRY']);
             $sUrl = bx_append_url_params($sUrl, array(
                 'draft_id' => $this->_aContentInfo[$CNF['FIELD_ID']],

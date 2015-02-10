@@ -9,15 +9,12 @@
  * @{
  */
 
-bx_import('BxTemplStudioModule');
-
 class BxInvStudioPage extends BxTemplStudioModule
 {
     function __construct($sModule = "", $sPage = "")
     {
         parent::__construct($sModule, $sPage);
 
-        bx_import('BxDolPermalinks');
         $oPermalink = BxDolPermalinks::getInstance();
 
         $this->aMenuItems = array(

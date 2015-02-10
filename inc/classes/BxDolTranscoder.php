@@ -7,10 +7,6 @@
  * @{
  */
 
-bx_import('BxDolStorage');
-bx_import('BxDolTranscoder');
-bx_import('BxDolTranscoderQuery');
-
 define('BX_DOL_QUEUE_PENDING', 'pending'); ///< file is pending for processing
 define('BX_DOL_QUEUE_PROCESSING', 'processing'); ///< file is in the process
 define('BX_DOL_QUEUE_COMPLETE', 'complete'); ///< file is already processed
@@ -70,8 +66,6 @@ class BxDolTranscoder extends BxDol implements iBxDolFactoryObject
         $sClass = $aObject['override_class_name'] ? $aObject['override_class_name'] : 'BxDolTranscoderImage';
         if (!empty($aObject['override_class_file']))
             require_once(BX_DIRECTORY_PATH_ROOT . $aObject['override_class_file']);
-        else
-            bx_import($sClass);
 
         $o = new $sClass ($aObject, $oStorage);
 
@@ -590,7 +584,6 @@ class BxDolTranscoder extends BxDol implements iBxDolFactoryObject
 
     protected function applyFilter_Resize ($sFile, $aParams)
     {
-        bx_import ('BxDolImageResize');
         $o = BxDolImageResize::getInstance();
         $o->removeCropOptions ();
 

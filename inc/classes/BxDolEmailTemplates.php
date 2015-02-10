@@ -7,9 +7,6 @@
  * @{
  */
 
-bx_import('BxDolLanguages');
-bx_import('BxDolEmailTemplatesQuery');
-
 /**
  * @page objects
  * @section email_templates Email Templates
@@ -44,7 +41,6 @@ bx_import('BxDolEmailTemplatesQuery');
  *     $aPlus['conf_link'] = BX_DOL_URL_ROOT . 'page.php?i=confirm-email&code=123456';
  *     $aPlus['conf_form_link'] = BX_DOL_URL_ROOT . 'page.php?i=confirm-email';
  *
- *     bx_import('BxDolEmailTemplates'); // import class
  *     $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_Confirmation', $aPlus); // get class instance and parse template
  *
  *     if ($aTemplate && sendMail('ktoto@example.com', $aTemplate['Subject'], $aTemplate['Body'])) // send email if template exists
@@ -77,7 +73,6 @@ class BxDolEmailTemplates extends BxDol implements iBxDolSingleton
         $this->iDefaultLangId = $oLang->getCurrentLangId();
         $this->iFallbackLangId = $oLang->getLangId('en');
 
-        bx_import('BxDolPermalinks');
         $sAboutUsLink = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=about');
 
         $this->aDefaultKeys = array(
@@ -120,7 +115,6 @@ class BxDolEmailTemplates extends BxDol implements iBxDolSingleton
     {
         $iUseLang = $this->iDefaultLangId;
         if ($iAccountId) {
-            bx_import('BxDolAccount');
             $oAccount = BxDolAccount::getInstance($iAccountId);
             if ($oAccount) {
                 $aAccountInfo = $oAccount->getInfo();
@@ -156,7 +150,6 @@ class BxDolEmailTemplates extends BxDol implements iBxDolSingleton
         $aResultKeys = $this->aDefaultKeys;
 
         if ($iAccountId) {
-            bx_import('BxDolAccount');
             $oAccount = BxDolAccount::getInstance($iAccountId);
             if ($oAccount && ($aAccountInfo = $oAccount->getInfo())) {
                 $aResultKeys = array_merge($aResultKeys, array(
@@ -168,7 +161,6 @@ class BxDolEmailTemplates extends BxDol implements iBxDolSingleton
         }
 
         if ($iProfileId) {
-            bx_import('BxDolProfile');
             $oProfile = BxDolProfile::getInstance($iProfileId);
             if ($oProfile && ($aProfileInfo = $oProfile->getInfo())) {
                 $aResultKeys = array_merge($aResultKeys, array(
@@ -188,7 +180,6 @@ class BxDolEmailTemplates extends BxDol implements iBxDolSingleton
         if (is_array($aKeys))
             $aResultKeys = array_merge($aResultKeys, $aKeys);
 
-        bx_import('BxDolTemplate');
         return BxDolTemplate::getInstance()->parseHtmlByContent($sContent, $aResultKeys, array('{', '}'));
     }
 }

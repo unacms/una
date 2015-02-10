@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxTemplStudioForms');
-
 class BxDevForms extends BxTemplStudioForms
 {
     protected $oModule;
@@ -24,7 +22,6 @@ class BxDevForms extends BxTemplStudioForms
         $this->aParams = $aParams;
         $this->sSubpageUrl = $this->aParams['url'] . '&form_page=';
 
-        bx_import('BxDolModule');
         $this->oModule = BxDolModule::getInstance('bx_developer');
 
         $this->aGridObjects = array(

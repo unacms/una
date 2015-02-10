@@ -9,10 +9,6 @@
  * @{
  */
 
-bx_import('BxTemplPage');
-bx_import('BxDolMenu');
-bx_import('BxDolProfile');
-
 /**
  * Profile's entries page.
  */

@@ -16,7 +16,6 @@ $sObj = bx_get('obj') ? bx_get('obj') : '';
 $sAct = bx_get('act') && preg_match ('/^[A-Za-z_]+$/', bx_get('act')) ? bx_get('act') : '';
 $sFmt = bx_get('fmt') ? bx_get('fmt') : 'json';
 
-bx_import('BxDolConnection');
 $oConn = BxDolConnection::getObjectInstance($sObj);
 
 $sMethod = 'action' . $sAct;
@@ -26,9 +25,6 @@ if ($oConn && $sAct && method_exists($oConn, $sMethod)) {
     exit;
 
 } else {
-
-    bx_import('BxDolLanguages');
-    bx_import('BxDolTemplate');
 
     $oTemplate = BxDolTemplate::getInstance();
     $oTemplate->displayPageNotFound();

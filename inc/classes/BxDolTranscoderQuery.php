@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolDb');
-
 define('BX_DOL_QUEUE_PRUNE_FAILED', 604800); ///< timeout in seconds when 'failed' items are deleted
 define('BX_DOL_QUEUE_PRUNE_PROCESSING', 86400); ///< timeout in seconds when 'processing' items are deleted, in case when something went wrong during processing
 

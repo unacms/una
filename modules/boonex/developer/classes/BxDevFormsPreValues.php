@@ -9,9 +9,6 @@
  * @{
  */
 
-bx_import('BxDolModule');
-bx_import('BxTemplStudioFormsPreValues');
-
 class BxDevFormsPreValues extends BxTemplStudioFormsPreValues
 {
     function __construct($aOptions, $oTemplate = false)
@@ -40,7 +37,6 @@ class BxDevFormsPreValues extends BxTemplStudioFormsPreValues
         $sFormObject = $this->oModule->_oConfig->getObject('form_forms_prevalue');
         $sFormDisplay = $this->oModule->_oConfig->getObject('form_display_forms_prevalue_add');
 
-        bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&list=' . $this->sList;
 
@@ -58,7 +54,6 @@ class BxDevFormsPreValues extends BxTemplStudioFormsPreValues
 
             $this->_echoResultJson($aRes, true);
         } else {
-            bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-frm-prevalue-create-popup', _t('_bx_dev_frm_txt_prevalues_create_popup'), $this->oModule->_oTemplate->parseHtmlByName('form_add_value.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
                 'form' => $oForm->getCode(true),
@@ -82,7 +77,6 @@ class BxDevFormsPreValues extends BxTemplStudioFormsPreValues
             exit;
         }
 
-        bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&list=' . $this->sList;
 
@@ -98,7 +92,6 @@ class BxDevFormsPreValues extends BxTemplStudioFormsPreValues
 
             $this->_echoResultJson($aRes, true);
         } else {
-            bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-frm-prevalue-edit-popup', _t('_bx_dev_frm_txt_prevalues_edit_popup', _t($aValue['lkey'])), $this->oModule->_oTemplate->parseHtmlByName('form_add_value.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
                 'form' => $oForm->getCode(true),

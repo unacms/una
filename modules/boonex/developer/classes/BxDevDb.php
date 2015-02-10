@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxDolModuleDb');
-
 class BxDevDb extends BxDolModuleDb
 {
     function __construct(&$oConfig)

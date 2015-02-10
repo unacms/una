@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolDb');
-
 /**
  * All queries related to profiles
  */
@@ -49,7 +47,6 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
      */
     public function getProfilesByAccount ($iAccountId)
     {
-        bx_import('BxDolAccountQuery');
         $oAccountQuery = BxDolAccountQuery::getInstance();
         $aAccountInfo = $oAccountQuery->getInfoById($iAccountId);
 
@@ -123,7 +120,6 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
             if (!$iProfileId)
                 return false;
 
-            bx_import('BxDolAccountQuery');
             if (!BxDolAccountQuery::getInstance()->updateCurrentProfile($iAccountId, $iProfileId))
                 return false;
         }

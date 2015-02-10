@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxBaseLiveUpdates');
-
 /**
  * @see BxDolView
  */

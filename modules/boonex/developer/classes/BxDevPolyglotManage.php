@@ -9,9 +9,6 @@
  * @{
  */
 
-bx_import('BxDolModule');
-bx_import('BxTemplStudioGrid');
-
 class BxDevPolyglotManage extends BxTemplStudioGrid
 {
     private $sAllUri = 'all';
@@ -29,7 +26,6 @@ class BxDevPolyglotManage extends BxTemplStudioGrid
 
         $this->oModule = BxDolModule::getInstance('bx_developer');
 
-        bx_import('BxDolLanguages');
         $this->aLanguages = BxDolLanguages::getInstance()->getLanguages();
 
         $iWidth = floor(100 / (count($this->aLanguages) + 1));
@@ -46,7 +42,6 @@ class BxDevPolyglotManage extends BxTemplStudioGrid
 
     public function performActionRecompile()
     {
-        bx_import('BxDolStudioLanguagesUtils');
         $aResult = array('msg' => _t(BxDolStudioLanguagesUtils::getInstance()->compileLanguage() ? '_adm_pgt_scs_recompiled' : '_adm_pgt_err_cannot_recompile_lang'));
 
         $this->_echoResultJson($aResult, true);
@@ -54,7 +49,6 @@ class BxDevPolyglotManage extends BxTemplStudioGrid
 
     public function performActionRestore()
     {
-        bx_import('BxDolStudioLanguagesUtils');
         $aResult = array('msg' => _t(BxDolStudioLanguagesUtils::getInstance()->restoreLanguage() ? '_adm_pgt_scs_restored' : '_adm_pgt_err_cannot_restore_lang'));
 
         $this->_echoResultJson($aResult, true);

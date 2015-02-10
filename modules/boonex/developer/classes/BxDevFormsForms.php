@@ -9,9 +9,6 @@
  * @{
  */
 
-bx_import('BxDolModule');
-bx_import('BxTemplStudioFormsForms');
-
 class BxDevFormsForms extends BxTemplStudioFormsForms
 {
     protected $oModule;
@@ -32,7 +29,6 @@ class BxDevFormsForms extends BxTemplStudioFormsForms
         $sFormObject = $this->oModule->_oConfig->getObject('form_forms_form');
         $sFormDisplay = $this->oModule->_oConfig->getObject('form_display_forms_form_add');
 
-        bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction;
         $oForm->aInputs['module']['values'] = array_merge(array('' => _t('_bx_dev_frm_txt_select_module')), BxDolStudioUtils::getModules());
@@ -49,7 +45,6 @@ class BxDevFormsForms extends BxTemplStudioFormsForms
 
             $this->_echoResultJson($aRes, true);
         } else {
-            bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-frm-form-create-popup', _t('_bx_dev_frm_txt_forms_create_popup'), $this->oModule->_oTemplate->parseHtmlByName('form_add_form.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
                 'form' => $oForm->getCode(true),
@@ -87,7 +82,6 @@ class BxDevFormsForms extends BxTemplStudioFormsForms
             exit;
         }
 
-        bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction;
         $oForm->aInputs['module']['values'] = array_merge(array('' => _t('_bx_dev_frm_txt_select_module')), BxDolStudioUtils::getModules());
@@ -113,7 +107,6 @@ class BxDevFormsForms extends BxTemplStudioFormsForms
 
             $this->_echoResultJson($aRes, true);
         } else {
-            bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-frm-form-edit-popup', _t('_bx_dev_frm_txt_forms_edit_popup', _t($aForm['title'])), $this->oModule->_oTemplate->parseHtmlByName('form_add_form.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
                 'form' => $oForm->getCode(true),
@@ -180,7 +173,6 @@ class BxDevFormsForms extends BxTemplStudioFormsForms
         );
         $oForm = new BxTemplStudioFormView($aFormStructure);
 
-        bx_import('BxTemplStudioFunctions');
         $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-frm-form-export-popup', _t('_bx_dev_frm_txt_forms_export_popup', _t($aForm['title'])), $this->oModule->_oTemplate->parseHtmlByName('form_export.html', array(
             'content' => $oForm->getCode()
         )));

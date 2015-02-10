@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolDb');
-
 /**
  * Database queries for grid.
  * @see BxDolGrid

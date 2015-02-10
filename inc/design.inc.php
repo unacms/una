@@ -69,7 +69,6 @@ define('BX_FORMAT_DATE_TIME', 'sys_format_datetime'); ///< datetime format ident
  */
 function DesignBoxContent ($sTitle, $sContent, $iTemplateNum = BX_DB_DEF, $mixedMenu = false)
 {
-    bx_import('BxTemplFunctions');
     return BxTemplFunctions::getInstance()->designBoxContent ($sTitle, $sContent, $iTemplateNum, $mixedMenu);
 }
 
@@ -88,13 +87,11 @@ function send_headers_page_changed()
 
 function MsgBox($sText, $iTimer = 0)
 {
-    bx_import('BxTemplFunctions');
     return BxTemplFunctions::getInstance()->msgBox($sText, $iTimer);
 }
 
 function PopupBox($sName, $sTitle, $sContent, $isHiddenByDefault = false)
 {
-    bx_import('BxTemplFunctions');
     return BxTemplFunctions::getInstance()->popupBox($sName, $sTitle, $sContent, $isHiddenByDefault);
 }
 
@@ -139,7 +136,6 @@ function getSiteStatUser()
  */
 function bx_time_js ($iUnixTimestamp, $sFormatIdentifier = BX_FORMAT_DATE, $bForceFormat = false)
 {
-    bx_import('BxTemplFunctions');
     return BxTemplFunctions::getInstance()->timeForJs ($iUnixTimestamp, $sFormatIdentifier, $bForceFormat);
 }
 
@@ -153,7 +149,6 @@ function bx_time_utc ($iUnixTimestamp)
     return gmdate(DATE_ISO8601, (int)$iUnixTimestamp);
 }
 
-bx_import('BxDolAlerts');
 $oZ = new BxDolAlerts('system', 'design_included', 0);
 $oZ->alert();
 

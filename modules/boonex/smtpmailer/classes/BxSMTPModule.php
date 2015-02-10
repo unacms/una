@@ -9,10 +9,6 @@
  * @{
  */
 
-bx_import('BxDolModule');
-bx_import('BxDolPaginate');
-bx_import('BxDolAlerts');
-
 require_once (BX_DIRECTORY_PATH_PLUGINS . "phpmailer/class.phpmailer.php");
 require_once (BX_DIRECTORY_PATH_PLUGINS . "phpmailer/class.smtp.php");
 
@@ -170,7 +166,6 @@ class BxSMTPModule extends BxDolModule
             )
         );
 
-        bx_import('BxTemplFormView');
         $oForm = new BxTemplFormView($aForm);
         return $sMsg . $oForm->getCode();
     }

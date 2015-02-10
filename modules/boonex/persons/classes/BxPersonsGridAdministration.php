@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModProfileGridAdministration');
-
 class BxPersonsGridAdministration extends BxBaseModProfileGridAdministration
 {
     public function __construct ($aOptions, $oTemplate = false)

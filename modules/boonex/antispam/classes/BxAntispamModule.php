@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxDolModule');
-
 class BxAntispamModule extends BxDolModule
 {
     public function __construct(&$aModule)
@@ -28,7 +26,6 @@ class BxAntispamModule extends BxDolModule
 
     public function serviceDnsblList ()
     {
-        bx_import('BxTemplFunctions');
         $s = _t('_bx_antispam_dnsbl_status',
              BxTemplFunctions::getInstance()->statusOnOff((bool)$this->_oConfig->getAntispamOption('dnsbl_enable'), true),
              BxTemplFunctions::getInstance()->statusOnOff((bool)$this->_oConfig->getAntispamOption('uridnsbl_enable'), true),
@@ -98,7 +95,6 @@ class BxAntispamModule extends BxDolModule
                 'SpamContent' => htmlspecialchars_adv($sContent),
             );
 
-            bx_import('BxDolEmailTemplates');
             $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('bx_antispam_spam_report', $aPlus);
             if (!$aTemplate)
                 trigger_error('Email template or translation missing: bx_antispam_spam_report', E_USER_ERROR);
@@ -279,7 +275,6 @@ class BxAntispamModule extends BxDolModule
 
     protected function _grid ($sObjectGrid)
     {
-        bx_import('BxDolGrid');
         $oGrid = BxDolGrid::getObjectInstance($sObjectGrid);
         return $oGrid ? $oGrid->getCode() : '';
     }

@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxDolStudioInstaller');
-
 class BxRsnInstaller extends BxDolStudioInstaller
 {
     function __construct($aConfig)

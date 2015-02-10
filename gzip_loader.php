@@ -9,8 +9,6 @@
 
 require_once('./inc/header.inc.php');
 
-bx_import('BxDolGzip');
-
 $sFile = bx_process_input($_GET['file']);
 BxDolGzip::load($sFile);
 

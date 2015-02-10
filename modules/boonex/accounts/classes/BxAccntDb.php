@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModGeneralDb');
-
 class BxAccntDb extends BxBaseModGeneralDb
 {
     /*

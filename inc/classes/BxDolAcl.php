@@ -7,9 +7,6 @@
  * @{
  */
 
-bx_import('BxDol');
-bx_import('BxDolAclQuery');
-
 /**
  * Message constants passed to _t_ext() function by checkAction()
  *
@@ -116,10 +113,8 @@ class BxDolAcl extends BxDol implements iBxDolSingleton
      */
     public static function getInstance()
     {
-        if(!isset($GLOBALS['bxDolClasses'][__CLASS__])) {
-            bx_import('BxTemplAcl');
+        if(!isset($GLOBALS['bxDolClasses'][__CLASS__]))
             $GLOBALS['bxDolClasses'][__CLASS__] = new BxTemplAcl();
-        }
 
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
@@ -139,7 +134,6 @@ class BxDolAcl extends BxDol implements iBxDolSingleton
             return true;
 
         if (false === $iProfileId) {
-            bx_import('BxDolProfile');
             $oProfile = BxDolProfile::getInstance();
             $iProfileId = $oProfile ? $oProfile->id() : 0;
         }
@@ -493,7 +487,6 @@ class BxDolAcl extends BxDol implements iBxDolSingleton
             $sTransactionId = 'NULL';
 
         // check if profile exists
-        bx_import('BxDolProfileQuery');
         if(($sProfileEmail = BxDolProfileQuery::getInstance()->getEmailById($iProfileId)) === false)
             return false;
 
@@ -537,12 +530,10 @@ class BxDolAcl extends BxDol implements iBxDolSingleton
            return false;
 
         // raise membership alert
-        bx_import('BxDolAlerts');
         $oZ = new BxDolAlerts('profile', 'set_membership', '', $iProfileId, array('mlevel'=> $iLevelId, 'days' => $iDays, 'starts_now' => $bStartsNow, 'txn_id' => $sTransactionId));
         $oZ->alert();
 
         // Send notification
-        bx_import('BxDolEmailTemplates');
         $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_MemChanged', array('membership_level' => _t($aLevel['name'])), 0, $iProfileId);
         if ($aTemplate)
             sendMail($sProfileEmail, $aTemplate['Subject'], $aTemplate['Body']);
@@ -599,7 +590,6 @@ class BxDolAcl extends BxDol implements iBxDolSingleton
         if(!$iProfileId)
             return false;
 
-        bx_import('BxDolProfileQuery');
         $oProfileQuery = BxDolProfileQuery::getInstance();
         $sProfileEmail = $oProfileQuery->getEmailById($iProfileId);
 
@@ -608,7 +598,6 @@ class BxDolAcl extends BxDol implements iBxDolSingleton
             'expire_days' => $iLevelExpireDays
         );
 
-        bx_import('BxDolEmailTemplates');
         $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_MemExpiration', $aPlus, 0, $iProfileId);
 
         $iResult = $aTemplate && sendMail($sProfileEmail, $aTemplate['Subject'], $aTemplate['Body'], $iProfileId, $aPlus);
@@ -629,7 +618,6 @@ class BxDolAcl extends BxDol implements iBxDolSingleton
         $aMemLevel = false;
 
         // get profile status
-        bx_import('BxDolProfile');
         $oProfile = BxDolProfile::getInstance($iProfileId);
         $aProfileInfo = $oProfile ? $oProfile->getInfo() : false;
         $sProfileStatus = $aProfileInfo ? $aProfileInfo['status'] : false;
@@ -646,7 +634,6 @@ class BxDolAcl extends BxDol implements iBxDolSingleton
 
         // profile is not active, so return standard memberships according to profile status
         if (BX_PROFILE_STATUS_ACTIVE != $sProfileStatus) {
-            bx_import('BxDolAccount');
             $oAccount = $aProfileInfo ? BxDolAccount::getInstance($aProfileInfo['account_id']) : false;
             if ($oAccount && !$oAccount->isConfirmed())
                 $iLevelId = MEMBERSHIP_ID_UNCONFIRMED; // every account's profile is unconfirmed if account is unconfirmed

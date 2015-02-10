@@ -9,9 +9,6 @@
  * @{
  */
 
-bx_import ('BxTemplUploaderHTML5');
-bx_import('BxDolModule');
-
 class BxAlbumsUploaderHTML5 extends BxTemplUploaderHTML5
 {
     protected $_oModule;

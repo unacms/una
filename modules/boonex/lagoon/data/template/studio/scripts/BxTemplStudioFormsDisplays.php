@@ -9,8 +9,6 @@
  */
 defined('BX_DOL') or die('hack attempt');
 
-bx_import('BxBaseStudioFormsDisplays');
-
 class BxTemplStudioFormsDisplays extends BxBaseStudioFormsDisplays
 {
     function __construct($aOptions, $oTemplate = false)

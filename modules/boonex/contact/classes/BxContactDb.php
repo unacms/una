@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxDolModuleDb');
-
 class BxContactDb extends BxDolModuleDb
 {
     protected $_oConfig;

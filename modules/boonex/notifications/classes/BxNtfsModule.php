@@ -10,7 +10,6 @@ defined('BX_DOL') or die('hack attempt');
  * @{
  */
 
-bx_import('BxDolAcl');
 bx_import('BxBaseModNotificationsModule');
 
 define('BX_NTFS_TYPE_DEFAULT', BX_BASE_MOD_NTFS_TYPE_CONNECTIONS);
@@ -80,14 +79,12 @@ class BxNtfsModule extends BxBaseModNotificationsModule
      */
     public function setSubmenu($sSelected)
     {
-    	bx_import('BxDolMenu');
     	$oSubmenuSystem = BxDolMenu::getObjectInstance('sys_site_submenu');
         if(!$oSubmenuSystem)
 			return;
 
 		$CNF = &$this->_oConfig->CNF;
 
-		bx_import('BxDolPermalinks');
         $oSubmenuSystem->setObjectSubmenu($CNF['OBJECT_MENU_SUBMENU'], array (
             'title' => _t('_bx_ntfs'),
             'link' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']),
@@ -102,7 +99,6 @@ class BxNtfsModule extends BxBaseModNotificationsModule
     public function onPost($iId)
     {
     	//--- Event -> Post for Alerts Engine ---//
-        bx_import('BxDolAlerts');
         $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'post', $iId);
         $oAlert->alert();
         //--- Event -> Post for Alerts Engine ---//

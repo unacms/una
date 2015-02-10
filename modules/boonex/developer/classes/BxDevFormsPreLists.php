@@ -9,9 +9,6 @@
  * @{
  */
 
-bx_import('BxDolModule');
-bx_import('BxTemplStudioFormsPreLists');
-
 class BxDevFormsPreLists extends BxTemplStudioFormsPreLists
 {
     protected $oModule;
@@ -30,7 +27,6 @@ class BxDevFormsPreLists extends BxTemplStudioFormsPreLists
         $sFormObject = $this->oModule->_oConfig->getObject('form_forms_prelist');
         $sFormDisplay = $this->oModule->_oConfig->getObject('form_display_forms_prelist_add');
 
-        bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction;
         $oForm->aInputs['module']['values'] = array_merge(array('' => _t('_bx_dev_frm_txt_select_module')), BxDolStudioUtils::getModules());
@@ -47,7 +43,6 @@ class BxDevFormsPreLists extends BxTemplStudioFormsPreLists
 
             $this->_echoResultJson($aRes, true);
         } else {
-            bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-frm-prelist-create-popup', _t('_bx_dev_frm_txt_prelists_create_popup'), $this->oModule->_oTemplate->parseHtmlByName('form_add_list.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
                 'form' => $oForm->getCode(true),
@@ -71,7 +66,6 @@ class BxDevFormsPreLists extends BxTemplStudioFormsPreLists
             exit;
         }
 
-        bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction;
         $oForm->aInputs['module']['values'] = array_merge(array('' => _t('_bx_dev_frm_txt_select_module')), BxDolStudioUtils::getModules());
@@ -86,7 +80,6 @@ class BxDevFormsPreLists extends BxTemplStudioFormsPreLists
 
             $this->_echoResultJson($aRes, true);
         } else {
-            bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-frm-prelist-edit-popup', _t('_bx_dev_frm_txt_prelists_edit_popup', _t($aList['title'])), $this->oModule->_oTemplate->parseHtmlByName('form_add_list.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
                 'form' => $oForm->getCode(true),
@@ -157,7 +150,6 @@ class BxDevFormsPreLists extends BxTemplStudioFormsPreLists
         );
         $oForm = new BxTemplStudioFormView($aFormStructure);
 
-        bx_import('BxTemplStudioFunctions');
         $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-frm-prelist-export-popup', _t('_bx_dev_frm_txt_prelists_export_popup', _t($aList['title'])), $this->oModule->_oTemplate->parseHtmlByName('form_export.html', array(
             'content' => $oForm->getCode()
         )));

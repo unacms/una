@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import ('BxBaseModTextModule');
-
 /**
  * Posts module
  */

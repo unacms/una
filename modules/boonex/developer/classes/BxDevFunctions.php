@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxDolStudioUtils');
-
 class BxDevFunctions
 {
     function __construct() {}

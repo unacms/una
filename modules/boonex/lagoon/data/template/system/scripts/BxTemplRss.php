@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxBaseRss');
-
 /**
  * @see BxDolGrid
  */

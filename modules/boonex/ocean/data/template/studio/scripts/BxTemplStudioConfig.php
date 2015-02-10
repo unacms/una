@@ -9,8 +9,6 @@
  */
 defined('BX_DOL') or die('hack attempt');
 
-bx_import('BxBaseStudioConfig');
-
 class BxTemplStudioConfig extends BxBaseStudioConfig
 {
     function __construct()

@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxDolModuleTemplate');
-
 class BxInvTemplate extends BxDolModuleTemplate
 {
     function __construct(&$oConfig, &$oDb)
@@ -31,7 +29,6 @@ class BxInvTemplate extends BxDolModuleTemplate
     	$iInvites = $this->_oConfig->getCountPerUser();
         $iInvited = $this->_oDb->getInvites(array('type' => 'count_by_account', 'value' => $iAccountId));
 
-    	bx_import('BxDolPermalinks');
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($this->_oConfig->CNF['URL_INVITE']);
 
         $this->addCss(array('main.css'));
@@ -44,7 +41,6 @@ class BxInvTemplate extends BxDolModuleTemplate
 
     public function getBlockRequest()
     {
-    	bx_import('BxDolPermalinks');
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($this->_oConfig->CNF['URL_REQUEST']);
 
     	$this->addCss(array('main.css'));

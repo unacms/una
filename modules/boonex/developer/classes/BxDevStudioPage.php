@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxTemplStudioModule');
-
 class BxDevStudioPage extends BxTemplStudioModule
 {
     protected $oModule;
@@ -20,7 +18,6 @@ class BxDevStudioPage extends BxTemplStudioModule
     {
         parent::__construct($sModule, $sPage);
 
-        bx_import('BxDolModule');
         $this->oModule = BxDolModule::getInstance($this->sModule);
 
         $this->sUrl = BX_DOL_URL_STUDIO . 'module.php?name=%s&page=%s';
@@ -38,14 +35,12 @@ class BxDevStudioPage extends BxTemplStudioModule
                 'selected' => $aTool['name'] == $this->sPage
             );
 
-        bx_import('BxTemplStudioMenu');
         $oMenu = new BxTemplStudioMenu(array('template' => 'menu_main.html', 'menu_items' => $this->aMenuItems), $this->oModule->_oTemplate);
         return $oMenu->getCode();
     }
 
     protected function getSettings()
     {
-        bx_import('BxTemplStudioSettings');
         $oContent = new BxTemplStudioSettings($this->sModule);
 
         return $this->oModule->_oTemplate->displayPageContent($this->sPage, $oContent);

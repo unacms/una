@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import ('BxDolModule');
-
 /**
  * Base module class.
  */
@@ -36,7 +34,6 @@ class BxBaseModGeneralModule extends BxDolModule
 
 	public function serviceManageTools($sType = 'common')
     {
-    	bx_import('BxDolGrid');
         $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->getGridObject($sType));
         if(!$oGrid)
             return '';
@@ -44,9 +41,7 @@ class BxBaseModGeneralModule extends BxDolModule
 		$CNF = &$this->_oConfig->CNF;
 
 		$sMenu = '';
-		bx_import('BxDolAcl');
 		if(BxDolAcl::getInstance()->isMemberLevelInSet(192)) {
-			bx_import('BxDolPermalinks');
 			$oPermalink = BxDolPermalinks::getInstance();
 
 			$aMenuItems = array();
@@ -56,7 +51,6 @@ class BxBaseModGeneralModule extends BxDolModule
 				$aMenuItems[] = array('id' => 'manage-administration', 'name' => 'manage-administration', 'class' => '', 'link' => $oPermalink->permalink($CNF['URL_MANAGE_ADMINISTRATION']), 'target' => '_self', 'title' => _t($CNF['T']['menu_item_manage_all']), 'active' => 1);
 
 			if(count($aMenuItems) > 1) {
-				bx_import('BxTemplMenu');
 	            $oMenu = new BxTemplMenu(array(
 	            	'template' => 'menu_vertical.html', 
 	            	'menu_items' => $aMenuItems
@@ -67,7 +61,6 @@ class BxBaseModGeneralModule extends BxDolModule
 		}
 
 		if(!empty($CNF['OBJECT_MENU_SUBMENU'])) {
-			bx_import('BxTemplMenu');
 			BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SUBMENU'])->setSelected($this->_aModule['name'], $CNF['URI_MANAGE_COMMON']);
 		}
 
@@ -140,7 +133,6 @@ class BxBaseModGeneralModule extends BxDolModule
         if (!$iContentId)
             return false;
 
-        bx_import('BxTemplMenu');
         $oMenu = BxTemplMenu::getObjectInstance($this->_oConfig->CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY']);
         return $oMenu ? $oMenu->getCode() : false;
     }
@@ -173,7 +165,6 @@ class BxBaseModGeneralModule extends BxDolModule
 
         // check privacy
         if (!empty($CNF['OBJECT_PRIVACY_VIEW'])) {
-            bx_import('BxDolPrivacy');
             $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
             if ($oPrivacy && !$oPrivacy->check($aDataEntry[$CNF['FIELD_ID']]))
                 return _t('_sys_access_denied_to_private_content');

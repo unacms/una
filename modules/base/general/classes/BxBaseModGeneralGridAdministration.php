@@ -8,9 +8,6 @@
  * @{
  */
 
-bx_import('BxDolModule');
-bx_import('BxTemplGrid');
-
 define('BX_DOL_MANAGE_TOOLS_ADMINISTRATION', 'administration');
 define('BX_DOL_MANAGE_TOOLS_COMMON', 'common');
 
@@ -81,7 +78,6 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
     	$sJsObject = $this->_oModule->_oConfig->getJsObject('manage_tools');
     	$sMenuName = $this->_oModule->_oConfig->CNF['OBJECT_MENU_MANAGE_TOOLS'];
 
-    	bx_import('BxDolMenu');
     	$oMenu = BxDolMenu::getObjectInstance($sMenuName);
     	$oMenu->setContentId($aRow['id']);
 
@@ -119,7 +115,6 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
             'values' => array_merge(array('' => _t($CNF['T']['filter_item_select_one_' . $sFilterName])), $aFilterValues)
         );
 
-        bx_import('BxTemplFormView');
         $oForm = new BxTemplFormView(array());
         return $oForm->genRow($aInputModules);
     }
@@ -137,7 +132,6 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
             )
         );
 
-		bx_import('BxTemplFormView');
         $oForm = new BxTemplFormView(array());
         return $oForm->genRow($aInputSearch);
     }
@@ -160,7 +154,6 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
 
 		$sLink = $oModuleAccounts->_oConfig->CNF['URL_MANAGE_' . $sTypeUpc];
 
-		bx_import('BxDolPermalinks');
 		$sLink = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($sLink);
 		
 		if(!empty($sFilter))

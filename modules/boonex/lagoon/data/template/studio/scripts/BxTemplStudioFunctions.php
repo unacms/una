@@ -9,8 +9,6 @@
  */
 defined('BX_DOL') or die('hack attempt');
 
-bx_import('BxBaseStudioFunctions');
-
 class BxTemplStudioFunctions extends BxBaseStudioFunctions
 {
     function __construct()

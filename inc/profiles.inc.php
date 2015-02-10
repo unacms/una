@@ -12,7 +12,6 @@
  */
 function bx_get_logged_profile_id ()
 {
-    bx_import('BxDolProfile');
     $o = BxDolProfile::getInstance();
     return $o ? $o->id() : false;
 }
@@ -72,7 +71,6 @@ function isRole($iRole, $iId = 0)
     if (!(int)$iId)
         $iId = getLoggedId();
 
-    bx_import('BxDolAccount');
     $oAccount = BxDolAccount::getInstance($iId);
     if (!$oAccount)
         return false;
@@ -95,7 +93,6 @@ function isRole($iRole, $iId = 0)
  */
 function bx_login($iId, $bRememberMe = false)
 {
-    bx_import('BxDolAccountQuery');
     $oAccountQuery = BxDolAccountQuery::getInstance();
 
     $sPassword = $oAccountQuery->getPassword($iId);
@@ -111,7 +108,6 @@ function bx_login($iId, $bRememberMe = false)
     setcookie("memberPassword", $sPassword, $iCookieTime, $sPath, $sHost, false, true /* http only */);
     $_COOKIE['memberPassword'] = $sPassword;
 
-    bx_import('BxDolSession');
     BxDolSession::getInstance()->setUserId($iId);
 
     $oAccountQuery->updateLoggedIn($iId);
@@ -138,7 +134,6 @@ function bx_logout($bNotify = true)
     unset($_COOKIE['memberID']);
     unset($_COOKIE['memberPassword']);
 
-    bx_import('BxDolSession');
     BxDolSession::getInstance()->destroy();
 }
 
@@ -173,7 +168,6 @@ function check_logged()
  */
 function bx_check_password($sLogin, $sPassword, $iRole = BX_DOL_ROLE_MEMBER)
 {
-    bx_import('BxDolAccount');
     $oAccount = BxDolAccount::getInstance($sLogin);
     if (!$oAccount) {
         bx_import('BxDolLanguages');
@@ -202,7 +196,6 @@ function bx_check_password($sLogin, $sPassword, $iRole = BX_DOL_ROLE_MEMBER)
  */
 function bx_check_login($iID, $sPassword, $iRole = BX_DOL_ROLE_MEMBER)
 {
-    bx_import('BxDolAccount');
     $oAccount = BxDolAccount::getInstance((int)$iID);
 
     // If no such account available
@@ -258,7 +251,6 @@ function bx_require_authentication ($bStudio = false)
 function bx_login_form($bStudio = false, $bAjaxMode = false)
 {
     if ($bStudio == 1) {
-        bx_import("BxTemplStudioFunctions");
         BxTemplStudioFunctions::getInstance()->getLoginForm();
         exit;
     }

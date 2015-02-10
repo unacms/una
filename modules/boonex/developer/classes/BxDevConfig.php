@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModGeneralConfig');
-
 class BxDevConfig extends BxBaseModGeneralConfig
 {
     protected $aJsClasses;

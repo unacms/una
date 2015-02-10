@@ -9,8 +9,6 @@
  */
 defined('BX_DOL') or die('hack attempt');
 
-bx_import('BxBaseStudioPage');
-
 class BxTemplStudioPage extends BxBaseStudioPage
 {
     function __construct($mixedPageName)

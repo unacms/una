@@ -14,7 +14,6 @@ bx_import('BxDolLanguages');
 
 if (isset($_POST['ID'])) { // login form is submitted
 
-    bx_import ('BxDolForm');
     $oForm = BxDolForm::getObjectInstance('sys_login', 'sys_login');
 
     bx_alert('account', 'before_login', 0, 0, array('form' => $oForm));
@@ -32,7 +31,6 @@ if (isset($_POST['ID'])) { // login form is submitted
 
     } elseif ($bLoginSuccess) {
 
-        bx_import('BxDolAccount');
         $oAccount = BxDolAccount::getInstance($oForm->getCleanValue('ID'));
         $aAccount = bx_login($oAccount->id(), ($oForm->getCleanValue('rememberMe') ? true : false));
 
@@ -40,7 +38,6 @@ if (isset($_POST['ID'])) { // login form is submitted
         if (!$sUrlRelocate || 0 != strncmp($sUrlRelocate, BX_DOL_URL_ROOT, strlen(BX_DOL_URL_ROOT)))
             $sUrlRelocate = BX_DOL_ROLE_ADMIN == $oForm->getRole() ? BX_DOL_URL_STUDIO . 'launcher.php' : BX_DOL_URL_ROOT . 'member.php';
 
-        bx_import('BxDolTemplate');
         BxDolTemplate::getInstance()->setPageNameIndex (BX_PAGE_TRANSITION);
         BxDolTemplate::getInstance()->setPageHeader (_t('_Please Wait'));
         BxDolTemplate::getInstance()->setPageContent ('page_main_code', MsgBox(_t('_Please Wait')));
@@ -54,7 +51,6 @@ if (isset($_POST['ID'])) { // login form is submitted
 
 bx_require_authentication();
 
-bx_import('BxDolPermalinks');
 header('Location: ' . BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=account-profile-switcher'));
 
 /** @} */

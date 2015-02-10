@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxBaseMenuAccountPopup');
-
 /**
  * @see BxDolMenu
  */

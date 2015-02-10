@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolDb');
-
 /**
  * @see BxDolView
  */

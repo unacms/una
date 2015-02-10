@@ -9,7 +9,7 @@
  * @{
  */
 
-bx_import('BxTemplPage');
+bx_import('BxDolAcl');
 
 /**
  * Entry create/edit pages
@@ -45,13 +45,11 @@ class BxBaseModGeneralPageEntry extends BxTemplPage
         // count views
         $CNF = &$this->_oModule->_oConfig->CNF;
         if (!empty($CNF['OBJECT_VIEWS'])) {
-            bx_import('BxDolView');
             BxDolView::getObjectInstance($CNF['OBJECT_VIEWS'], $this->_aContentInfo[$CNF['FIELD_ID']])->doView();
         }
 
         // add content metatags
         if (!empty($CNF['OBJECT_METATAGS'])) {
-            bx_import('BxDolMetatags');
             $o = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
             if ($o) {
                 $aThumb = false;

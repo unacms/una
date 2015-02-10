@@ -9,8 +9,6 @@
  */
 defined('BX_DOL') or die('hack attempt');
 
-bx_import('BxBaseStudioPermissionsLevels');
-
 class BxTemplStudioPermissionsLevels extends BxBaseStudioPermissionsLevels
 {
     function __construct($aOptions, $oTemplate = false)

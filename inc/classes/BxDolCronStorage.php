@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolCron');
-
 class BxDolCronStorage extends BxDolCron
 {
     public function processing()
@@ -16,11 +14,8 @@ class BxDolCronStorage extends BxDolCron
         set_time_limit(36000);
         ignore_user_abort();
 
-        bx_import('BxDolStorage');
-        if (BxDolStorage::pruneDeletions()) { // if any files were deleted
-            bx_import('BxDolInstallerUtils');
+        if (BxDolStorage::pruneDeletions()) // if any files were deleted
             BxDolInstallerUtils::checkModulesPendingUninstall(); // try to uninstall modules pending for uninstall
-        }
     }
 }
 

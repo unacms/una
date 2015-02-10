@@ -9,9 +9,6 @@
  * @{
  */
 
-bx_import('BxTemplMenu');
-bx_import('BxDolModule');
-
 /**
  * View entry menu
  */
@@ -37,7 +34,6 @@ class BxBaseModGeneralMenuView extends BxTemplMenu
     protected function _isVisible ($a)
     {
         // default visible settings
-        bx_import('BxDolAcl');
         if (!BxDolAcl::getInstance()->isMemberLevelInSet($a['visible_for_levels']))
             return false;
 

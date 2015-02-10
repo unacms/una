@@ -9,10 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModProfileFormEntry');
-bx_import('BxDolProfile');
-bx_import('BxDolStorage');
-
 /**
  * Create/Edit Organization Form.
  */

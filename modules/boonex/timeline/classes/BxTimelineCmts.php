@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxTemplCmts');
-
 class BxTimelineCmts extends BxTemplCmts
 {
     function __construct($sSystem, $iId, $iInit = 1)

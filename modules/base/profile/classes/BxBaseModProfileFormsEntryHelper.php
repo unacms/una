@@ -9,9 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModGeneralFormsEntryHelper');
-bx_import('BxDolProfile');
-
 /**
  * Profile forms helper functions
  */
@@ -32,10 +29,8 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
             return array (false, false);
 
         $oProfile = BxDolProfile::getInstance($aContentInfo['profile_id']);
-        if (!$oProfile) {
-            bx_import('BxDolProfileUndefined');
+        if (!$oProfile) 
             $oProfile = BxDolProfileUndefined::getInstance();
-        }
 
         return array ($oProfile, $aContentInfo);
     }
@@ -46,7 +41,6 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
             list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
 
         // delete profile
-        bx_import('BxDolProfile');
         $oProfile = BxDolProfile::getInstance($aContentInfo['profile_id']);
         if (!$oProfile->delete())
             return _t('_sys_txt_error_entry_delete');
@@ -101,7 +95,6 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
             $oProfile->approve(BX_PROFILE_ACTION_AUTO);
 
         // set created profile some default membership
-        bx_import('BxDolAcl');
         $iAclLevel = isAdmin() ? MEMBERSHIP_ID_ADMINISTRATOR : getParam($CNF['PARAM_DEFAULT_ACL_LEVEL']);
         BxDolAcl::getInstance()->setMembership($iProfileId, $iAclLevel, 0, true);
 
@@ -109,7 +102,6 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         bx_alert($this->_oModule->getName(), 'added', $iContentId);
 
         // switch context to the created profile
-        bx_import('BxDolAccount');
         $oAccount = BxDolAccount::getInstance();
         $oAccount->updateProfileContext($iProfileId);
 

@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolCacheFile');
-
 class BxDolCacheFileHtml extends BxDolCacheFile
 {
     /**

@@ -275,19 +275,15 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
         if (isset($GLOBALS['bxDolClasses']['BxDolGrid!'.$sObject]))
             return $GLOBALS['bxDolClasses']['BxDolGrid!'.$sObject];
 
-        bx_import('BxDolGridQuery');
         $aObject = BxDolGridQuery::getGridObject($sObject);
         if (!$aObject || !is_array($aObject))
             return false;
 
-        bx_import('BxTemplGrid');
         $sClass = 'BxTemplGrid';
         if (!empty($aObject['override_class_name'])) {
             $sClass = $aObject['override_class_name'];
             if (!empty($aObject['override_class_file']))
                 require_once(BX_DIRECTORY_PATH_ROOT . $aObject['override_class_file']);
-            else
-                bx_import($sClass);
         }
 
         $o = new $sClass($aObject);
@@ -483,7 +479,6 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
             if (is_array($this->_aOptions['sorting_fields_translatable']) && in_array($sOrderField, $this->_aOptions['sorting_fields_translatable'])) {
 
                 // translatable fields
-                bx_import('BxDolLanguages');
                 $iLang = BxDolLanguages::getInstance()->getCurrentLangId();
                 $oDb = BxDolDb::getInstance();
                 $sOrderClause = $oDb->prepare("ORDER BY (SELECT `s`.`string` FROM `sys_localization_strings` AS `s` INNER JOIN `sys_localization_keys` AS `k` ON (`k`.`ID` = `s`.`IDKey`) WHERE `k`.`KEY` = `$sOrderField` AND `s`.`IDLanguage` = ? LIMIT 1) ", $iLang) . $sDir;
@@ -545,7 +540,6 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
 
     protected function _isVisibleGrid ($a)
     {
-        bx_import('BxDolAcl');
         if (!isset($a['visible_for_levels']))
             return true;
         return BxDolAcl::getInstance()->isMemberLevelInSet($a['visible_for_levels']);

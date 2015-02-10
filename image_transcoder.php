@@ -24,7 +24,6 @@ require_once('./inc/header.inc.php');
 $sTranscoderObject = bx_process_input(bx_get('o'));
 $sHandler = bx_process_input(bx_get('h'));
 
-bx_import('BxDolTranscoderImage');
 $oTranscoder = BxDolTranscoderImage::getObjectInstance($sTranscoderObject);
 
 if (!$oTranscoder) {
@@ -53,8 +52,6 @@ exit;
 function bx_transcoder_error_occured($sMethod = 'displayPageNotFound')
 {
     require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
-    bx_import('BxDolLanguages');
-    bx_import('BxDolTemplate');
     $oTemplate = BxDolTemplate::getInstance();
     $oTemplate->$sMethod ();
 }

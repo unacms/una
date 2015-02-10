@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModGeneralTemplate');
-
 class BxAccntTemplate extends BxBaseModGeneralTemplate
 {
     function __construct(&$oConfig, &$oDb)
@@ -21,8 +19,6 @@ class BxAccntTemplate extends BxBaseModGeneralTemplate
 
     public function getProfilesByAccount($aContentInfo, $iMaxVisible = 2)
     {
-    	bx_import('BxDolProfile');
-		bx_import('BxDolProfileQuery');
         $oProfilesQuery = BxDolProfileQuery::getInstance();
 
         $aProfiles = $oProfilesQuery->getProfilesByAccount($aContentInfo['id']);
@@ -75,7 +71,6 @@ class BxAccntTemplate extends BxBaseModGeneralTemplate
         }
 
         if($aTmplVarsPopup['bx_repeat:profiles']) {
-            bx_import('BxTemplFunctions');
             $aTmplVars['bx_if:profiles_more']['content']['popup'] = BxTemplFunctions::getInstance()->transBox('', $this->parseHtmlByName('profiles.html', $aTmplVarsPopup));
         }
 

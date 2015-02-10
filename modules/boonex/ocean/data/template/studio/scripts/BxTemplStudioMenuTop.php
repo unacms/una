@@ -9,8 +9,6 @@
  */
 defined('BX_DOL') or die('hack attempt');
 
-bx_import('BxBaseStudioMenuTop');
-
 class BxTemplStudioMenuTop extends BxBaseStudioMenuTop
 {
     function __construct()

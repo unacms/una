@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxTemplStudioFormView');
-
 class BxDevFormView extends BxTemplStudioFormView
 {
     function __construct($aInfo, $oTemplate = false)

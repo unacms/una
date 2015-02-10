@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolDb');
-
 /**
  * @see BxDolCmts
  */
@@ -61,7 +59,6 @@ class BxDolCmtsQuery extends BxDolDb
         switch($sFilter) {
         	case BX_CMT_FILTER_FRIENDS:
         	case BX_CMT_FILTER_SUBSCRIPTIONS:
-	            bx_import('BxDolConnection');
 	            $oConnection = BxDolConnection::getObjectInstance($this->_oMain->getConnectionObject($sFilter));
 	
 	            $aQueryParts = $oConnection->getConnectedContentAsSQLParts($this->_sTable, 'cmt_author_id', $iAuthorId);
@@ -99,7 +96,6 @@ class BxDolCmtsQuery extends BxDolDb
             $sWhereParent = $this->prepare(" AND `{$this->_sTable}`.`cmt_vparent_id` = ?", $iCmtVParentId);
 
         if(in_array($sFilter, array(BX_CMT_FILTER_FRIENDS, BX_CMT_FILTER_SUBSCRIPTIONS))) {
-            bx_import('BxDolConnection');
             $oConnection = BxDolConnection::getObjectInstance($this->_oMain->getConnectionObject($sFilter));
 
             $aQueryParts = $oConnection->getConnectedContentAsSQLParts($this->_sTable, 'cmt_author_id', $iAuthorId);

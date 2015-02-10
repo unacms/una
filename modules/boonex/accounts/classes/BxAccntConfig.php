@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModGeneralConfig');
-
 class BxAccntConfig extends BxBaseModGeneralConfig
 {
     protected $_oDb;

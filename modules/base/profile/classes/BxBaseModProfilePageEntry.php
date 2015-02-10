@@ -9,12 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModGeneralPageEntry');
-bx_import('BxDolModule');
-bx_import('BxDolMenu');
-bx_import('BxDolProfile');
-bx_import('BxDolInformer');
-
 /**
  * Profile create/edit/delete pages.
  */

@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModProfileTemplate');
-
 /*
  * Persons module representation.
  */

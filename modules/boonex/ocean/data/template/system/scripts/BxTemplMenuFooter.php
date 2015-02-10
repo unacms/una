@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxBaseMenuFooter');
-
 /**
  * @see BxDolMenu
  */

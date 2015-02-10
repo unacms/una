@@ -11,8 +11,6 @@ require_once('./inc/header.inc.php');
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
 bx_import('BxDolLanguages');
-bx_import('BxDolTemplate');
-bx_import('BxDolPage');
 
 check_logged();
 

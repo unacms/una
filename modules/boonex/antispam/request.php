@@ -11,7 +11,6 @@
 
 check_logged();
 
-bx_import('BxDolRequest');
 BxDolRequest::processAsAction($GLOBALS['aModule'], $GLOBALS['aRequest']);
 
 /** @} */

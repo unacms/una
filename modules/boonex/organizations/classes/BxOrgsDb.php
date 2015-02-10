@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModProfileDb');
-
 /*
  * Organizations module database queries
  */

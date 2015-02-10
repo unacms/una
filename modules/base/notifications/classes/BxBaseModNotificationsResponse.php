@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxDolAlertsResponse');
-
 class BxBaseModNotificationsResponse extends BxDolAlertsResponse
 {
     protected $_oModule;

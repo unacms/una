@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import ('BxDolModule');
-
 define('BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT', 'insert');
 define('BX_BASE_MOD_NTFS_HANDLER_TYPE_UPDATE', 'update');
 define('BX_BASE_MOD_NTFS_HANDLER_TYPE_DELETE', 'delete');
@@ -97,12 +95,9 @@ class BxBaseModNotificationsModule extends BxDolModule
 
     public function getUserInfo($iUserId = 0)
     {
-        bx_import('BxDolProfile');
         $oProfile = BxDolProfile::getInstance($iUserId);
-        if (!$oProfile) {
-            bx_import('BxDolProfileUndefined');
+        if (!$oProfile)
             $oProfile = BxDolProfileUndefined::getInstance();
-        }
 
         return array(
             $oProfile->getDisplayName(),

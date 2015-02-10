@@ -9,15 +9,12 @@
  * @{
  */
 
-bx_import('BxBaseModNotificationsResponse');
-
 class BxNtfsResponse extends BxBaseModNotificationsResponse
 {
     public function __construct()
     {
         parent::__construct();
 
-        bx_import('BxDolModule');
         $this->_oModule = BxDolModule::getInstance('bx_notifications');
     }
 

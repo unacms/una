@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModTextInstaller');
-
 class BxPostsInstaller extends BxBaseModTextInstaller
 {
     function __construct($aConfig)

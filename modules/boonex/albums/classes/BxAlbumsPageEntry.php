@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModTextPageEntry');
-
 /**
  * Entry create/edit pages
  */

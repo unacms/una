@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplRss');
-
 class BxDolRssPageBlock extends BxTemplRss
 {
     function __construct($aObject)
@@ -17,7 +15,6 @@ class BxDolRssPageBlock extends BxTemplRss
     }
 
     public function getUrl($mixedId) {
-    	bx_import('BxDolPageQuery');
 	    $oPageQuery = new BxDolPageQuery(array());
 
 	    $sContent = $oPageQuery->getPageBlockContent($mixedId);

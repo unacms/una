@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolDb');
-
 class BxDolRssQuery extends BxDolDb
 {
 

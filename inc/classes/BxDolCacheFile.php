@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolCache');
-
 class BxDolCacheFile extends BxDolCache
 {
     protected $sPath;

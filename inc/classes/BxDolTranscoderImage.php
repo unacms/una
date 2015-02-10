@@ -7,9 +7,6 @@
  * @{
  */
 
-bx_import('BxDolTranscoder');
-bx_import('BxDolTranscoderImageQuery');
-
 /**
  * @page objects
  * @section transcoder_images Images Transcoder
@@ -74,7 +71,6 @@ bx_import('BxDolTranscoderImageQuery');
  *
  * Example of usage:
  * @code
- * bx_import('BxDolTranscoderImage');
  * $oTranscoder = BxDolTranscoderImage::getObjectInstance('bx_images_thumb'); // change images transcode object name to your own
  * $oTranscoder->registerHandlers(); // make sure to call it only once! before the first usage, no need to call it every time
  * $sTranscodedImageUrl = $oTranscoder->getFileUrl('my_dog.jpg'); // the name of file, in the case of 'Folder' storage type this is file name
@@ -145,7 +141,6 @@ class BxDolTranscoderImage extends BxDolTranscoder implements iBxDolFactoryObjec
 
     protected function applyFilter_Grayscale ($sFile, $aParams)
     {
-        bx_import ('BxDolImageResize');
         $o = BxDolImageResize::getInstance();
         $o->removeCropOptions ();
 

@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModNotificationsDb');
-
 class BxNtfsDb extends BxBaseModNotificationsDb
 {
     protected $_sTableEvt2Usr;
@@ -66,7 +64,6 @@ class BxNtfsDb extends BxBaseModNotificationsDb
 					break;
 
 				case BX_BASE_MOD_NTFS_TYPE_CONNECTIONS:
-					bx_import('BxDolConnection');
 					$oConnection = BxDolConnection::getObjectInstance($this->_oConfig->getObject('conn_subscriptions'));
 
 					$aQueryParts = $oConnection->getConnectedContentAsSQLParts($this->_sPrefix . "events", 'owner_id', $aParams['owner_id']);

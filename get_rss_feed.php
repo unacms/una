@@ -13,7 +13,6 @@ $sObject = bx_process_input(bx_get('object'));
 $mixedId = bx_process_input(bx_get('id'));
 $iUserId = bx_process_input(bx_get('member'), BX_DATA_INT);
 
-bx_import('BxDolRss');
 $oRss = BxDolRss::getObjectInstance($sObject);
 
 if ($oRss && ($s = $oRss->getFeed($mixedId, $iUserId))) {
@@ -23,8 +22,6 @@ if ($oRss && ($s = $oRss->getFeed($mixedId, $iUserId))) {
 
 } else {
 
-    bx_import('BxDolLanguages');
-    bx_import('BxDolTemplate');
     BxDolTemplate::getInstance()->displayPageNotFound();
     
 }

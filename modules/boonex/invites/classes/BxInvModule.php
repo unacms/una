@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxDolModule');
-
 define('BX_INV_TYPE_FROM_MEMBER', 'from_member');
 define('BX_INV_TYPE_FROM_SYSTEM', 'from_system');
 
@@ -103,7 +101,6 @@ class BxInvModule extends BxDolModule
 
     	$sResult = '';
 
-        bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject('form_request'), $this->_oConfig->getObject('form_display_request_send'));
 
         $oForm->initChecker();
@@ -118,10 +115,8 @@ class BxInvModule extends BxDolModule
 			if($iId !== false) {
 				$sRequestsEmail = $this->_oConfig->getRequestsEmail();
 				if(!empty($sRequestsEmail)) {
-					bx_import('BxDolPermalinks');
 					$sManageUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=invites-requests');
 
-					bx_import('BxDolEmailTemplates');
 					$aMessage = BxDolEmailTemplates::getInstance()->parseTemplate('bx_invites_request_form_message', array(
 						'sender_name' => bx_process_output($oForm->getCleanValue('name')),
 						'sender_email' => bx_process_output($oForm->getCleanValue('email')),
@@ -143,7 +138,6 @@ class BxInvModule extends BxDolModule
 
     public function serviceGetBlockManageRequests()
     {
-    	bx_import('BxDolGrid');
         $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->getObject('grid_requests'));
         if(!$oGrid)
             return '';
@@ -162,7 +156,6 @@ class BxInvModule extends BxDolModule
 		$iProfileId = $this->getProfileId();
 		$iAccountId = $this->getAccountId($iProfileId);
 
-		bx_import('BxDolKey');
 		$oKeys = BxDolKey::getInstance();
 		if(!$oKeys || !in_array($sType, array(BX_INV_TYPE_FROM_MEMBER, BX_INV_TYPE_FROM_SYSTEM)))
 			return false;
@@ -184,10 +177,8 @@ class BxInvModule extends BxDolModule
 		if(empty($oForm))
 			$oForm = $this->getFormObjectInvite();
 
-		bx_import('BxDolPermalinks');
 		$sJoinUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account');
 
-		bx_import('BxDolEmailTemplates');
 		$aMessage = BxDolEmailTemplates::getInstance()->parseTemplate($sEmailTemplate, array(
 			'text' => $sText
 		), $iAccountId, $iProfileId);
@@ -249,12 +240,9 @@ class BxInvModule extends BxDolModule
 
     public function getProfileObject($iProfileId = 0)
     {
-    	bx_import('BxDolProfile');
         $oProfile = BxDolProfile::getInstance($iProfileId);
-        if (!$oProfile) {
-            bx_import('BxDolProfileUndefined');
+        if (!$oProfile)
             $oProfile = BxDolProfileUndefined::getInstance();
-        }
 
         return $oProfile;
     }
@@ -273,7 +261,6 @@ class BxInvModule extends BxDolModule
         $this->isAllowedInvite($iProfileId, true);
 
         //--- Event -> Invite for Alerts Engine ---//
-        bx_import('BxDolAlerts');
         $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'invite', 0, $iProfileId);
         $oAlert->alert();
         //--- Event -> Invite for Alerts Engine ---//
@@ -282,7 +269,6 @@ class BxInvModule extends BxDolModule
 	protected function onRequest()
     {
         //--- Event -> Request for Alerts Engine ---//
-        bx_import('BxDolAlerts');
         $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'request');
         $oAlert->alert();
         //--- Event -> Request for Alerts Engine ---//
@@ -293,7 +279,6 @@ class BxInvModule extends BxDolModule
     	if(empty($sDisplay))
     		$sDisplay = $this->_oConfig->getObject('form_display_invite_send');
 
-    	bx_import('BxDolForm');
         bx_import('FormCheckerHelper', $this->_aModule);
         return BxDolForm::getObjectInstance($this->_oConfig->getObject('form_invite'), $sDisplay);
     }

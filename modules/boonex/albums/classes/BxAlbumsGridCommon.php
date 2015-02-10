@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModTextGridCommon');
-
 class BxAlbumsGridCommon extends BxBaseModTextGridCommon
 {
     public function __construct ($aOptions, $oTemplate = false)

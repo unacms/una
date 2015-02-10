@@ -46,7 +46,6 @@ class BxAntispamDNSURIBlacklists extends BxDol
         if (!$aURIs)
             return false;
 
-        bx_import('BxDolModule');
         $oModule = BxDolModule::getInstance('bx_antispam');
         $o = bx_instance('BxAntispamDNSBlacklists', array(), $oModule->_aModule);
         foreach ($aURIs as $sURI) {
@@ -130,7 +129,6 @@ class BxAntispamDNSURIBlacklists extends BxDol
 
     public function onPositiveDetection ($sExtraData = '')
     {
-        bx_import('BxDolModule');
         $oModule = BxDolModule::getInstance('bx_antispam');
         $o = bx_instance('BxAntispamDNSBlacklists', array(), $oModule->_aModule);
 

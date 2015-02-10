@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxDolStudioInstaller');
-
 class BxAntispamInstaller extends BxDolStudioInstaller
 {
     function __construct($aConfig)

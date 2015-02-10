@@ -9,7 +9,6 @@
  * @{
  */
 
-bx_import('BxDolAcl');
 bx_import('BxBaseModNotificationsModule');
 
 define('BX_TIMELINE_TYPE_ITEM', 'view_item');
@@ -254,7 +253,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             );
         }
 
-        bx_import('BxDolRssFactory');
         $oRss = new BxDolRssFactory();
 
         header('Content-Type: application/xml; charset=utf-8');
@@ -329,7 +327,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             array('id' => 'timeline-get-rss', 'name' => 'timeline-get-rss', 'class' => '', 'link' => BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'rss/' . $iProfileId . '/', 'target' => '_blank', 'title' => _t('_bx_timeline_menu_item_get_rss')),
         );
 
-        bx_import('BxTemplMenuInteractive');
         $oMenu = new BxTemplMenuInteractive(array('template' => 'menu_interactive_vertical.html', 'menu_id'=> 'timeline-view-all', 'menu_items' => $aMenu));
         $oMenu->setSelected('', 'timeline-view-all');
 
@@ -445,7 +442,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule
     {
         $iUserId = $this->getUserId();
 
-        bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject('form_attach_link'), $this->_oConfig->getObject('form_display_attach_link_add'), $this->_oTemplate);
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'add_attach_link/';
         $oForm->aInputs['url']['checker']['params']['preg'] = $this->_oConfig->getPregPattern('url');
@@ -481,7 +477,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule
     {
         $iUserId = $this->getUserId();
 
-        bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject('form_post'), $this->_oConfig->getObject('form_display_post_add'), $this->_oTemplate);
 
         $oForm->initChecker();
@@ -520,7 +515,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             ));
 
             if(!empty($iId)) {
-            	bx_import('BxDolMetatags');
             	$oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
  				$oMetatags->keywordsAdd($iId, $aContent['text']);
  				$oMetatags->locationsAddFromForm($iId, $this->_oConfig->CNF['FIELD_LOCATION_PREFIX']);
@@ -550,7 +544,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         if(empty($sSystem) || (int)$iId == 0)
             return false;
 
-        bx_import('BxDolCmts');
         $oCmts = BxDolCmts::getObjectInstance($sSystem, $iId);
         if(!$oCmts->isEnabled())
             return false;
@@ -563,7 +556,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         if(empty($sSystem) || (int)$iId == 0)
             return false;
 
-        bx_import('BxDolVote');
         $oVote = BxDolVote::getObjectInstance($sSystem, $iId);
         if(!$oVote->isEnabled())
             return false;
@@ -573,7 +565,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
     public function getAttachmentsMenuObject()
     {
-		bx_import('BxDolMenu');
         $oMenu = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_post_attachments'), $this->_oTemplate);
         $oMenu->addMarkers(array(
             'js_object' => $this->_oConfig->getJsObject('post'),
@@ -584,7 +575,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
     public function getManageMenuObject()
     {
-        bx_import('BxDolMenu');
         return BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_manage'), $this->_oTemplate);
     }
 
@@ -680,7 +670,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         }
 
         //--- Event -> Post for Alerts Engine ---//
-        bx_import('BxDolAlerts');
         $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'post_' . $sPostType, $iId, $iSenderId);
         $oAlert->alert();
         //--- Event -> Post for Alerts Engine ---//
@@ -703,7 +692,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $this->_oDb->updateShareCounter($aShared['id'], $aShared['shares']);
 
         //--- Timeline -> Update for Alerts Engine ---//
-        bx_import('BxDolAlerts');
         $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'share', $aShared['id'], $iUserId);
         $oAlert->alert();
         //--- Timeline -> Update for Alerts Engine ---//
@@ -741,12 +729,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 		}
 
 		//--- Delete associated meta.
-		bx_import('BxDolMetatags');
         $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
         $oMetatags->onDeleteContent($aEvent['id']);
 
         //--- Event -> Delete for Alerts Engine ---//
-        bx_import('BxDolAlerts');
         $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'delete', $aEvent['id'], $this->getUserId());
         $oAlert->alert();
         //--- Event -> Delete for Alerts Engine ---//
@@ -787,7 +773,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
     	$iUserId = $this->getUserId();
 
-		bx_import('BxDolStorage');
 		$oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage_' . strtolower($sType) . 's'));
 
 		foreach($aItemIds as $iItemId)
@@ -801,7 +786,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 	    if(empty($aItems) || !is_array($aItems))
 	    	return;
 
-		bx_import('BxDolStorage');
 		$oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage_' . strtolower($sType) . 's'));
 
 		foreach($aItems as $iItemId)

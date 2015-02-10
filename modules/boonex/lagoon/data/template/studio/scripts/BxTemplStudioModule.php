@@ -9,8 +9,6 @@
  */
 defined('BX_DOL') or die('hack attempt');
 
-bx_import('BxBaseStudioModule');
-
 class BxTemplStudioModule extends BxBaseStudioModule
 {
     function __construct($sModule = "", $sPage = "")

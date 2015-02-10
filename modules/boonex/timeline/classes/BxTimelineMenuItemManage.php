@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxTemplMenu');
-
 /**
  * 'Item' menu.
  */
@@ -24,7 +22,6 @@ class BxTimelineMenuItemManage extends BxTemplMenu
     {
         parent::__construct($aObject, $oTemplate);
 
-        bx_import('BxDolModule');
         $this->_oModule = BxDolModule::getInstance('bx_timeline');
 
         $this->_iEvent = 0;

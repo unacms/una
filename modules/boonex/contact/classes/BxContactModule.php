@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxDolModule');
-
 class BxContactModule extends BxDolModule
 {
     /**
@@ -38,7 +36,6 @@ class BxContactModule extends BxDolModule
 
         $sResult = '';
 
-        bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject('form_contact'), $this->_oConfig->getObject('form_display_contact_send'), $this->_oTemplate);
 
         $oForm->initChecker();
@@ -68,7 +65,6 @@ class BxContactModule extends BxDolModule
                 );
                 $aTemplateKeys = array_merge($aTemplateKeys, $aCustomFields);
 
-                bx_import('BxDolEmailTemplates');
                 $aMessage = BxDolEmailTemplates::getInstance()->parseTemplate('bx_contact_contact_form_message', $aTemplateKeys);
 
                 $sResult = '';
@@ -94,7 +90,6 @@ class BxContactModule extends BxDolModule
         //if (true !== $this->isAllowedContact())
         //    return false;
 
-        bx_import('BxDolPermalinks');
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=contact');
     }
 
@@ -113,7 +108,6 @@ class BxContactModule extends BxDolModule
         $this->isAllowedContact(true);
 
         //--- Event -> Contact for Alerts Engine ---//
-        bx_import('BxDolAlerts');
         $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'contact', 0, $iUserId);
         $oAlert->alert();
         //--- Event -> Contact for Alerts Engine ---//

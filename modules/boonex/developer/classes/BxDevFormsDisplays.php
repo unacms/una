@@ -9,9 +9,6 @@
  * @{
  */
 
-bx_import('BxDolModule');
-bx_import('BxTemplStudioFormsDisplays');
-
 class BxDevFormsDisplays extends BxTemplStudioFormsDisplays
 {
     protected $oModule;
@@ -43,7 +40,6 @@ class BxDevFormsDisplays extends BxTemplStudioFormsDisplays
         $sFormObject = $this->oModule->_oConfig->getObject('form_forms_display');
         $sFormDisplay = $this->oModule->_oConfig->getObject('form_display_forms_display_add');
 
-        bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
         $this->_fillDisplayForm($oForm, $sAction);
 
@@ -59,7 +55,6 @@ class BxDevFormsDisplays extends BxTemplStudioFormsDisplays
 
             $this->_echoResultJson($aRes, true);
         } else {
-            bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-frm-display-create-popup', _t('_bx_dev_frm_txt_displays_create_popup'), $this->_oTemplate->parseHtmlByName('form_add_display.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
                 'form' => $oForm->getCode(true),
@@ -97,7 +92,6 @@ class BxDevFormsDisplays extends BxTemplStudioFormsDisplays
             exit;
         }
 
-        bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
 
         $this->_fillDisplayForm($oForm, $sAction);
@@ -112,7 +106,6 @@ class BxDevFormsDisplays extends BxTemplStudioFormsDisplays
 
             $this->_echoResultJson($aRes, true);
         } else {
-            bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-frm-display-edit-popup', _t('_bx_dev_frm_txt_displays_edit_popup', _t($aDisplay['title'])), $this->_oTemplate->parseHtmlByName('form_add_display.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
                 'form' => $oForm->getCode(true),

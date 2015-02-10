@@ -11,9 +11,6 @@
 
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
-bx_import('BxDolProfile');
-bx_import('BxTemplGrid');
-
 class BxAntispamGridBlockLog extends BxTemplGrid
 {
     public function __construct ($aOptions, $oTemplate = false)

@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import ('BxBaseModTextModule');
-
 define('BX_CNV_FOLDER_INBOX', 1);
 define('BX_CNV_FOLDER_DRAFTS', 2);
 define('BX_CNV_FOLDER_SPAM', 3);
@@ -58,7 +56,6 @@ class BxCnvModule extends BxBaseModTextModule
             BX_CNV_FOLDER_TRASH => 'convos-trash',
         );
 
-        bx_import('BxDolMenu');
         $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
         if (!$oMenuSubmenu)
             return;
@@ -157,7 +154,6 @@ class BxCnvModule extends BxBaseModTextModule
     {
         $oTemplate = BxDolTemplate::getInstance();
 
-        bx_import('BxDolPage');
         $aFolder = $this->_oDb->getFolder((int)$iFolderId);
         $oPage = BxDolPage::getObjectInstance('bx_convos_home');
 
@@ -195,7 +191,6 @@ class BxCnvModule extends BxBaseModTextModule
 
     public function serviceConversationsInFolder ($iFolderId = BX_CNV_FOLDER_INBOX)
     {
-        bx_import('BxDolGrid');
         $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->CNF['OBJECT_GRID']);
         if (!$oGrid)
             return false;

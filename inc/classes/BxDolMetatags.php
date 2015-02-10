@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolMetatagsQuery');
-
 define('BX_METATAGS_KEYWORDS_MAX', 9);
 
 /**
@@ -164,8 +162,6 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
         $sClass = $aObject['override_class_name'] ? $aObject['override_class_name'] : 'BxDolMetatags';
         if (!empty($aObject['override_class_file']))
             require_once(BX_DIRECTORY_PATH_ROOT . $aObject['override_class_file']);
-        else
-            bx_import($sClass);
 
         $o = new $sClass($aObject);
 
@@ -186,14 +182,11 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
 
         if ($mixedImage && is_array($mixedImage)) {
             
-            if (!empty($mixedImage['object'])) {
-                bx_import('BxDolStorage');
+            if (!empty($mixedImage['object']))
                 $o = BxDolStorage::getObjectInstance($mixedImage['object']);
-            } 
-            elseif (!empty($mixedImage['transcoder'])) {
-                bx_import('BxDolTranscoder');
+            elseif (!empty($mixedImage['transcoder']))
                 $o = BxDolTranscoder::getObjectInstance($mixedImage['transcoder']);
-            }
+
             $mixedImage = $o ? $o->getFileUrlById($mixedImage['id']) : false;
         }
 
@@ -390,7 +383,6 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
     public function locationsString($iId)
     {
         bx_import('BxDolForm');
-        bx_import('BxDolFormQuery');
         $aCountries = BxDolFormQuery::getDataItems('Country');
         $aLocation = $this->locationGet($iId);
         if (!$aLocation || !$aLocation['country'] || !isset($aCountries[$aLocation['country']]))

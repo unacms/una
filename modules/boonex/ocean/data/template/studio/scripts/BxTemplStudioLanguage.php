@@ -9,8 +9,6 @@
  */
 defined('BX_DOL') or die('hack attempt');
 
-bx_import('BxBaseStudioLanguage');
-
 class BxTemplStudioLanguage extends BxBaseStudioLanguage
 {
     function __construct($sLanguage="", $sPage = "")

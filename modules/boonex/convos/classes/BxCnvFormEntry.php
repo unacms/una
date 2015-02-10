@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModTextFormEntry');
-
 /**
  * Create/Edit entry form
  */
@@ -65,8 +63,6 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
             exit;
 
         } else {
-
-            bx_import('BxDolProfile');
 
             // check for spam
             $bSpam = false;

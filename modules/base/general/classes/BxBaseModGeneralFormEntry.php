@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxTemplFormView');
-
 /**
  * Create/edit entry form
  */
@@ -64,7 +62,6 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         // delete associated files
 
         if (!empty($CNF['OBJECT_STORAGE'])) {
-            bx_import('BxDolStorage');
             $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
             if ($oStorage)
                 $oStorage->queueFilesForDeletionFromGhosts($aContentInfo[$CNF['FIELD_AUTHOR']], $iContentId);
@@ -73,25 +70,21 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         // delete associated objects data
 
         if (!empty($CNF['OBJECT_VIEWS'])) {
-            bx_import('BxDolView');
             $o = BxDolView::getObjectInstance($CNF['OBJECT_VIEWS'], $iContentId);
             if ($o) $o->onObjectDelete();
         }
 
         if (!empty($CNF['OBJECT_VOTES'])) {
-            bx_import('BxDolVote');
             $o = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $iContentId);
             if ($o) $o->onObjectDelete();
         }
 
         if (!empty($CNF['OBJECT_COMMENTS'])) {
-            bx_import('BxDolCmts');
             $o = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $iContentId);
             if ($o) $o->onObjectDelete();
         }
 
         if (!empty($CNF['OBJECT_METATAGS'])) {
-            bx_import('BxDolMetatags');
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
             $oMetatags->onDeleteContent($iContentId);
         }

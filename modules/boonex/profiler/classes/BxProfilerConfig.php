@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxDolModuleConfig');
-
 class BxProfilerConfig extends BxDolModuleConfig
 {
     function __construct($aModule)

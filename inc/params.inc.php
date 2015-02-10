@@ -82,9 +82,7 @@ require_once(BX_DIRECTORY_PATH_CLASSES . 'BxDol.php');
 require_once(BX_DIRECTORY_PATH_INC . 'utils.inc.php');
 require_once(BX_DIRECTORY_PATH_INC . 'version.inc.php');
 
-bx_import('BxDolService');
-bx_import('BxDolAlerts');
-bx_import('BxDolDb');
+spl_autoload_register('bx_autoload');
 
 require_once(BX_DIRECTORY_PATH_INC . 'profiles.inc.php');
 

@@ -15,7 +15,6 @@ $sStorageObject = bx_process_input(bx_get('o'));
 $sFile = bx_process_input(bx_get('f'));
 $sToken = bx_process_input(bx_get('t'));
 
-bx_import('BxDolStorage');
 $oStorage = BxDolStorage::getObjectInstance($sStorageObject);
 
 if (!$oStorage || !method_exists($oStorage, 'download')) {
@@ -52,9 +51,6 @@ if (!$oStorage->download($sRemoteId, $sToken)) {
 function bx_storage_download_error_occured($sMethod = 'displayPageNotFound')
 {
     require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
-
-    bx_import('BxDolLanguages');
-    bx_import('BxDolTemplate');
 
     $oTemplate = BxDolTemplate::getInstance();
     $oTemplate->$sMethod ();

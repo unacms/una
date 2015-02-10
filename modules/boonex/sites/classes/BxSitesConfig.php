@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxDolModuleConfig');
-
 class BxSitesConfig extends BxDolModuleConfig
 {
     public static $FIELD_AUTHOR = 'owner_id';

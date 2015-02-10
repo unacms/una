@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModTextTemplate');
-
 /*
  * Module representation.
  */
@@ -29,8 +27,6 @@ class BxCnvTemplate extends BxBaseModTextTemplate
     {
         $oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$oModule->_oConfig->CNF;
-
-        bx_import('BxDolProfile');
 
         $aCollaborators = $this->_oDb->getCollaborators($aContentInfo[$CNF['FIELD_ID']]);
         //unset($aCollaborators[$aContentInfo[$CNF['FIELD_AUTHOR']]]);
@@ -106,7 +102,6 @@ class BxCnvTemplate extends BxBaseModTextTemplate
         }
 
         if ($aVarsPopup['bx_repeat:collaborators']) {
-            bx_import('BxTemplFunctions');
             $aVars['bx_if:collaborators_more']['content']['popup'] = BxTemplFunctions::getInstance()->transBox('', '<div class="bx-def-padding">' . $this->parseHtmlByName('collaborators.html', $aVarsPopup) . '</div>');
         }
 
@@ -171,10 +166,6 @@ class BxCnvTemplate extends BxBaseModTextTemplate
     {
         if (empty($a))
             return MsgBox(_t('_Empty'));
-
-        bx_import('BxDolProfile');
-        bx_import('BxDolProfileUndefined');
-        bx_import('BxDolPermalinks');
 
         $oModule = BxDolModule::getInstance($this->MODULE);
 

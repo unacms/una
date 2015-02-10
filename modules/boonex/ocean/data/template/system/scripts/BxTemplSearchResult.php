@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxBaseSearchResult');
-
 class BxTemplSearchResult extends BxBaseSearchResult
 {
     function __construct($oFunctions = false)

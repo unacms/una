@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxDolModuleDb');
-
 /*
  * Module database queries
  */

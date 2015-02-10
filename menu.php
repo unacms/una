@@ -16,7 +16,6 @@ $sObject = bx_process_input(bx_get('o'));
 if (!$sObject)
     exit;
 
-bx_import('BxDolMenu');
 $oMenu = BxDolMenu::getObjectInstance($sObject);
 if (!$oMenu)
     exit;

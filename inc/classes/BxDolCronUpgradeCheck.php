@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolCron');
-
 class BxDolCronUpgradeCheck extends BxDolCron
 {
     public function processing()

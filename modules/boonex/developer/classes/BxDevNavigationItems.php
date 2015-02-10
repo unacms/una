@@ -9,9 +9,6 @@
  * @{
  */
 
-bx_import('BxDolModule');
-bx_import('BxTemplStudioNavigationItems');
-
 class BxDevNavigationItems extends BxTemplStudioNavigationItems
 {
     protected $oModule;
@@ -43,7 +40,6 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems
         $sFormObject = $this->oModule->_oConfig->getObject('form_nav_item');
         $sFormDisplay = $this->oModule->_oConfig->getObject('form_display_nav_item_add');
 
-        bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&set=' . $this->sSet;
         $this->fillInSelects($oForm->aInputs);
@@ -57,7 +53,6 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems
 
             $this->_echoResultJson($aRes, true);
         } else {
-            bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-nav-item-create-popup', _t('_bx_dev_nav_txt_items_create_popup'), $this->_oTemplate->parseHtmlByName('nav_add_item.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
                 'form' => $oForm->getCode(true),
@@ -81,7 +76,6 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems
             exit;
         }
 
-        bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&set=' . $this->sSet;
         $oForm->aInputs['controls'][0]['value'] = _t('_bx_dev_nav_btn_items_save');
@@ -96,7 +90,6 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems
 
             $this->_echoResultJson($aRes, true);
         } else {
-            bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-nav-item-edit-popup', _t('_bx_dev_nav_txt_items_edit_popup', _t($aItem['title_system'])), $this->oModule->_oTemplate->parseHtmlByName('nav_add_item.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
                 'form' => $oForm->getCode(true),

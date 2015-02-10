@@ -11,8 +11,6 @@
 
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
-bx_import('BxTemplGrid');
-
 class BxCnvGrid extends BxTemplGrid
 {
     protected $MODULE;
@@ -32,11 +30,9 @@ class BxCnvGrid extends BxTemplGrid
 
     public function performActionCompose()
     {
-        bx_import('BxDolModule');
         $oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$oModule->_oConfig->CNF;
 
-        bx_import('BxDolPermalinks');
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_ADD_ENTRY']);
 
         header('Location:' . $sUrl);
@@ -44,11 +40,9 @@ class BxCnvGrid extends BxTemplGrid
 
     protected function _getActionAdd ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
-        bx_import('BxDolModule');
         $oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$oModule->_oConfig->CNF;
 
-        bx_import('BxDolPermalinks');
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_ADD_ENTRY']);
 
         $a['attr']['onclick'] = "document.location='$sUrl'";
@@ -70,7 +64,6 @@ class BxCnvGrid extends BxTemplGrid
 
     protected function _getCellLastReplyTimestamp ($mixedValue, $sKey, $aField, $aRow)
     {
-        bx_import('BxDolModule');
         $oModule = BxDolModule::getInstance($this->MODULE);
         $s = $oModule->_oTemplate->entryMessagePreviewInGrid ($aRow);
         return parent::_getCellDefault ($s, $sKey, $aField, $aRow);
@@ -78,7 +71,6 @@ class BxCnvGrid extends BxTemplGrid
 
     protected function _getCellCollaborators ($mixedValue, $sKey, $aField, $aRow)
     {
-        bx_import('BxDolModule');
         $oModule = BxDolModule::getInstance($this->MODULE);
         $s = $oModule->_oTemplate->entryCollaborators ($aRow);
         return parent::_getCellDefault ($s, $sKey, $aField, $aRow);
@@ -86,7 +78,6 @@ class BxCnvGrid extends BxTemplGrid
 
     protected function _getCellComments ($mixedValue, $sKey, $aField, $aRow)
     {
-        bx_import('BxDolModule');
         $oModule = BxDolModule::getInstance($this->MODULE);
         $s = $oModule->_oTemplate->getMessageLabel ($aRow);
         return parent::_getCellDefault ('<div class="bx-cnv-grid-field-messages"><span>' . (1 + $mixedValue) . '</span>' . $s . '</div>', $sKey, $aField, $aRow);
@@ -94,7 +85,6 @@ class BxCnvGrid extends BxTemplGrid
 
     protected function _delete ($mixedId)
     {
-        bx_import('BxDolModule');
         $oModule = BxDolModule::getInstance($this->MODULE);
 
         if ($sErrorMsg = $oModule->deleteConvo ($mixedId))
@@ -106,7 +96,6 @@ class BxCnvGrid extends BxTemplGrid
     protected function _addJsCss()
     {
         parent::_addJsCss();
-        bx_import('BxDolModule');
         $oModule = BxDolModule::getInstance($this->MODULE);
         $oModule->_oTemplate->addJs('main.js');
         $oModule->_oTemplate->addCss(array('main-media-tablet.css', 'main-media-desktop.css'));

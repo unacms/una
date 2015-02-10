@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModProfileGridCommon');
-
 class BxOrgsGridCommon extends BxBaseModProfileGridCommon
 {
     public function __construct ($aOptions, $oTemplate = false)

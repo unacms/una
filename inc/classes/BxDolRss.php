@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolRssQuery');
-
 /**
  * @page objects
  * @section rss Rss
@@ -41,7 +39,6 @@ bx_import('BxDolRssQuery');
  * Step 2:
  * Get an RSS placeholder to display somewhere on a page
  * @code
- *  bx_import('BxDolRss');
  *  BxDolRss::getObjectInstance('my_module_rss_object')->getHolder($mixedRssId, $iRssNum);
  * @endcode
  *
@@ -78,19 +75,15 @@ class BxDolRss extends BxDol implements iBxDolFactoryObject
         if(isset($GLOBALS['bxDolClasses']['BxDolRss!' . $sObject]))
             return $GLOBALS['bxDolClasses']['BxDolRss!' . $sObject];
 
-        bx_import('BxDolRssQuery');
         $aObject = BxDolRssQuery::getRssObject($sObject);
         if(!$aObject || !is_array($aObject))
             return false;
 
-        bx_import('BxTemplRss');
         $sClass = 'BxTemplRss';
         if(!empty($aObject['class_name'])) {
             $sClass = $aObject['class_name'];
             if(!empty($aObject['class_file']))
                 require_once(BX_DIRECTORY_PATH_ROOT . $aObject['class_file']);
-            else
-                bx_import($sClass);
         }
 
         $o = new $sClass($aObject);

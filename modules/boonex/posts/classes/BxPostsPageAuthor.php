@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModTextPageAuthor');
-
 /**
  * Profile's entries page.
  */

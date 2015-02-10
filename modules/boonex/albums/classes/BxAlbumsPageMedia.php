@@ -9,9 +9,7 @@
  * @{
  */
 
-bx_import('BxTemplPage');
-bx_import('BxDolModule');
-bx_import('BxDolMenu');
+bx_import('BxDolAcl');
 
 /**
  * Entry create/edit pages
@@ -67,14 +65,11 @@ class BxAlbumsPageMedia extends BxTemplPage
 
         // count views
         $CNF = &$this->_oModule->_oConfig->CNF;
-        if (!empty($CNF['OBJECT_VIEWS_MEDIA'])) {
-            bx_import('BxDolView');
+        if (!empty($CNF['OBJECT_VIEWS_MEDIA']))
             BxDolView::getObjectInstance($CNF['OBJECT_VIEWS_MEDIA'], $this->_aMediaInfo['id'])->doView();
-        }
 
         // add content metatags
         if (!empty($CNF['OBJECT_METATAGS_MEDIA'])) {
-            bx_import('BxDolMetatags');
             $o = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS_MEDIA']);
             if ($o) {
                 $aThumb = false;

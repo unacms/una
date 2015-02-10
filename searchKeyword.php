@@ -10,9 +10,6 @@
 require_once('./inc/header.inc.php');
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
-bx_import('BxTemplSearch');
-bx_import('BxDolTemplate');
-
 $oSearch = new BxTemplSearch(bx_get('section'));
 $oSearch->setLiveSearch(bx_get('live_search') ? 1 : 0);
 $oSearch->setMetaType(bx_process_input(bx_get('type')));

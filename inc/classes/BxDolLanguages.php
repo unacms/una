@@ -7,9 +7,6 @@
  * @{
  */
 
-bx_import('BxDol');
-bx_import('BxDolLanguagesQuery');
-
 define('BX_DOL_LANGUAGE_DEFAULT', 'en');
 
 define('BX_DOL_LANGUAGE_CATEGORY_SYSTEM', 1);
@@ -209,17 +206,14 @@ class BxDolLanguages extends BxDol implements iBxDolSingleton
         $GLOBALS['sCurrentLanguage'] = $GLOBALS['bxDolClasses'][__CLASS__]->getCurrentLangName(false);
         if($GLOBALS['sCurrentLanguage'] != '') {
             $sPath = BX_DIRECTORY_PATH_CACHE . 'lang-' . $GLOBALS['sCurrentLanguage'] . '.php';
-            if(!file_exists($sPath)) {
-                bx_import('BxDolStudioLanguagesUtils');
+            if(!file_exists($sPath))
                 BxDolStudioLanguagesUtils::getInstance()->compileLanguage();
-            }
 
             require($sPath);
         }
 
         $GLOBALS['bxDolClasses'][__CLASS__]->getCurrentLangName(true);
         if(isset($_GET['lang'])) {
-            bx_import('BxDolPermalinks');
             if(BxDolPermalinks::getInstance()->redirectIfNecessary(array('lang')))
                 exit;
         }
@@ -284,7 +278,6 @@ class BxDolLanguages extends BxDol implements iBxDolSingleton
         if(file_exists( BX_DIRECTORY_PATH_CACHE . "lang-{$sLang}.php"))
             return true;
 
-        bx_import('BxDolStudioLanguagesUtils');
         if(BxDolStudioLanguagesUtils::getInstance()->compileLanguage($iLangId))
             return true;
 
@@ -301,7 +294,6 @@ class BxDolLanguages extends BxDol implements iBxDolSingleton
                 $iLangId = 0;
 
             $iAccountId = getLoggedId();
-            bx_import('BxDolAccountQuery');
             $oAccountQuery = BxDolAccountQuery::getInstance();
             $oAccountQuery->updateLanguage($iAccountId, $iLangId);
         }

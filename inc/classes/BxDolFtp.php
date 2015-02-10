@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolFile');
-
 class BxDolFtp extends BxDolFile
 {
     protected $_sHost;

@@ -7,9 +7,6 @@
  * @{
  */
 
-bx_import('BxDolMenuQuery');
-bx_import('BxDolPermalinks');
-
 /**
  * @page objects
  * @section menu Menu
@@ -75,7 +72,6 @@ bx_import('BxDolPermalinks');
  * 4. Display Menu.
  * Use the following sample code to display menu:
  * @code
- *     bx_import('BxTemplMenu');
  *     $oMenu = BxTemplMenu::getObjectInstance('sample_menu'); // 'sample_menu' is 'object' field from 'sys_objects_menu' table.
  *     if ($oMenu)
  *         echo $oMenu->getCode; // display menu
@@ -113,7 +109,6 @@ class BxDolMenu extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
         $this->_oPermalinks = BxDolPermalinks::getInstance();
 
         if (isLogged()) {
-            bx_import('BxDolProfile');
             $oProfile = BxDolProfile::getInstance();
             if ($oProfile) {
                 $this->addMarkers(array(
@@ -139,14 +134,11 @@ class BxDolMenu extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
         if (!$aObject || !is_array($aObject))
             return false;
 
-        bx_import('BxTemplMenu');
         $sClass = 'BxTemplMenu';
         if (!empty($aObject['override_class_name'])) {
             $sClass = $aObject['override_class_name'];
             if (!empty($aObject['override_class_file']))
                 require_once(BX_DIRECTORY_PATH_ROOT . $aObject['override_class_file']);
-            else
-                bx_import($sClass);
         }
 
         $o = new $sClass($aObject, $oTemplate);
@@ -176,7 +168,6 @@ class BxDolMenu extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
     static public function processMenuTrigger ($sMenuTriggerName)
     {
         // get list of active modules
-        bx_import('BxDolModuleQuery');
         $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array(
             'type' => 'modules',
             'active' => 1,
@@ -254,7 +245,6 @@ class BxDolMenu extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
      */
     protected function _isVisible ($a)
     {
-        bx_import('BxDolAcl');
         return BxDolAcl::getInstance()->isMemberLevelInSet($a['visible_for_levels']);
     }
 

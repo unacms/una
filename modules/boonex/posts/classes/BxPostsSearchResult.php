@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModTextSearchResult');
-
 class BxPostsSearchResult extends BxBaseModTextSearchResult
 {
     function __construct($sMode = '', $aParams = array())
@@ -56,7 +54,6 @@ class BxPostsSearchResult extends BxBaseModTextSearchResult
         switch ($sMode) {
 
             case 'author':
-                bx_import('BxDolProfile');
                 $oProfileAuthor = BxDolProfile::getInstance((int)$aParams['author']);
                 if (!$oProfileAuthor) {
                     $this->isError = true;
@@ -71,14 +68,12 @@ class BxPostsSearchResult extends BxBaseModTextSearchResult
                 break;
 
             case 'public':
-                bx_import('BxDolPermalinks');
                 $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']);
                 $this->aCurrent['title'] = _t('_bx_posts_page_title_browse_recent');
                 $this->aCurrent['rss']['link'] = 'modules/?r=posts/rss/' . $sMode;
                 break;
 
             case 'popular':
-                bx_import('BxDolPermalinks');
                 $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_POPULAR']);
                 $this->aCurrent['title'] = _t('_bx_posts_page_title_browse_popular');
                 $this->aCurrent['rss']['link'] = 'modules/?r=posts/rss/' . $sMode;
@@ -108,7 +103,6 @@ class BxPostsSearchResult extends BxBaseModTextSearchResult
         $this->aCurrent['title'] = $this->_replaceMarkers($this->aCurrent['title']);
 
         // add conditions for private content
-        bx_import('BxDolPrivacy');
         $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
         $a = $oPrivacy ? $oPrivacy->getContentPublicAsCondition($oProfileAuthor ? $oProfileAuthor->id() : 0) : array();
         if (isset($a['restriction']))

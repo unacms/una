@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolRequest');
-
 /**
  * Service calls to modules' methods.
  *
@@ -41,7 +39,6 @@ class BxDolService extends BxDol
      */
     public static function call($mixed, $sMethod, $aParams = array(), $sClass = 'Module')
     {
-        bx_import('BxDolModuleQuery');
         $oDb = BxDolModuleQuery::getInstance();
 
         $aModule = array();

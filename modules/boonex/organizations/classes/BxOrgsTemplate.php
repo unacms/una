@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModProfileTemplate');
-
 /*
  * Organizations module representation.
  */

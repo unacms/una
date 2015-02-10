@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModProfilePageEntry');
-
 /**
  * Profile create/edit/delete pages.
  */

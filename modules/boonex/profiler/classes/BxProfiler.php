@@ -22,7 +22,6 @@ $GLOBALS['bx_profiler_module'] = array (
     'db_prefix' => $aConfig['db_prefix'],
 );
 
-bx_import('BxDolStudioTemplate');
 bx_import('Template', $GLOBALS['bx_profiler_module']);
 bx_import('Config', $GLOBALS['bx_profiler_module']);
 

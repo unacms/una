@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxBaseFormConfirmEmail');
-
 /**
  * @see BxBaseFormConfirmEmail
  */

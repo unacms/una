@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModProfileDb');
-
 /*
  * Persons module database queries
  */

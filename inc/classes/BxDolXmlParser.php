@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDol');
-
 class BxDolXmlParser extends BxDol implements iBxDolSingleton
 {
     protected $rParser;

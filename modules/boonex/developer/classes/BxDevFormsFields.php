@@ -9,9 +9,6 @@
  * @{
  */
 
-bx_import('BxDolModule');
-bx_import('BxTemplStudioFormsFields');
-
 require_once('BxDevFormsField.php');
 
 class BxDevFormsFields extends BxTemplStudioFormsFields

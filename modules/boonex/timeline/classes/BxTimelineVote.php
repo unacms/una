@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxTemplVote');
-
 class BxTimelineVote extends BxTemplVote
 {
     function __construct($sSystem, $iId, $iInit = 1)

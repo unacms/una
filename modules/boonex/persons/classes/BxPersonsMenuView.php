@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModProfileMenuView');
-
 /**
  * 'View person' menu.
  */

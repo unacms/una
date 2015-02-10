@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxTemplPage');
-
 /**
  * Antispam module pages.
  */
