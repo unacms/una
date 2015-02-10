@@ -16,6 +16,7 @@
         pointer: false, // {el:(string_id|jquery_object), align: (left|right|center)},
         left: 0, // only for fixed or absolute
         top: 0, // only for fixed
+        moveToDocRoot: true,
         onBeforeShow: function () {},
         onShow: function () {},
         onBeforeHide: function () {},
@@ -127,8 +128,8 @@
                 left: 0
             });
 
-            $el.detach().appendTo('body');
-
+            if (o.moveToDocRoot)
+                $el.detach().appendTo('body');
 
             setTimeout(function() { // timeout is needed for some browsers to render element
 
