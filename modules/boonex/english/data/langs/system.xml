@@ -964,7 +964,7 @@
 	<string name="_adm_page_cpt_login"><![CDATA[Login]]></string>
 	<string name="_adm_page_cpt_polyglot"><![CDATA[Polyglot]]></string>
 	<string name="_adm_page_cpt_settings"><![CDATA[Settings]]></string>
-	<string name="_adm_page_cpt_store"><![CDATA[Extensions]]></string>
+	<string name="_adm_page_cpt_store"><![CDATA[Apps]]></string>
 	<string name="_adm_pgt_btn_add_new_key"><![CDATA[Create New Key]]></string>
 	<string name="_adm_pgt_btn_delete"><![CDATA[Delete]]></string>
 	<string name="_adm_pgt_btn_delete_title"><![CDATA[Delete key]]></string>
@@ -1123,7 +1123,7 @@
 	<string name="_adm_stg_cpt_option_sys_account_autoapproval"><![CDATA[Automatic account activation after creation]]></string>
 	<string name="_adm_stg_cpt_option_sys_add_nofollow"><![CDATA[Add "nofollow" attribute for external links]]></string>
 	<string name="_adm_stg_cpt_option_sys_autoupdate_force_modified_files"><![CDATA[Force site and module auto-update, even if some files were modified]]></string>
-	<string name="_adm_stg_cpt_option_sys_autoupdate_modules"><![CDATA[Extensions auto-update]]></string>
+	<string name="_adm_stg_cpt_option_sys_autoupdate_modules"><![CDATA[Apps auto-update]]></string>
 	<string name="_adm_stg_cpt_option_sys_autoupdate_system"><![CDATA[System files auto-update]]></string>
 	<string name="_adm_stg_cpt_option_sys_cache_memcache_host"><![CDATA[Memcached server host]]></string>
 	<string name="_adm_stg_cpt_option_sys_cache_memcache_port"><![CDATA[Memcached server port]]></string>
@@ -1179,10 +1179,10 @@
 	<string name="_adm_str_err_no_product_info"><![CDATA[Cannot load product info. Try again later.]]></string>
 	<string name="_adm_str_err_wrong_package_format"><![CDATA[Wrong package format.]]></string>
 	<string name="_adm_str_err_zip_not_available"><![CDATA[ZIP library is not available.]]></string>
-	<string name="_adm_str_msg_download_scheduled"><![CDATA[Download was scheduled. In a few minutes downloaded package will be available to install via Extensions -> Downloaded.]]></string>
-	<string name="_adm_str_msg_download_and_install_scheduled"><![CDATA[Download and subsequent installation were scheduled. It may take a few minutes.]]></string>
-	<string name="_adm_str_msg_download_successfully"><![CDATA[Download was successfully finished. You may install it via Extensions -> Downloaded.]]></string>
-	<string name="_adm_str_msg_download_and_install_successfully"><![CDATA[Download and subsequent installation were successfully finished.]]></string>
+	<string name="_adm_str_msg_download_scheduled"><![CDATA[Download was scheduled, in a few minutes downloaded package will be available to install via Apps &gt; Downloaded]]></string>
+	<string name="_adm_str_msg_download_and_install_scheduled"><![CDATA[Download and subsequent installation were scheduled, it may take a few minutes]]></string>
+	<string name="_adm_str_msg_download_successfully"><![CDATA[Download was successfully finished, you may install it via Apps &gt; Downloaded]]></string>
+	<string name="_adm_str_msg_download_and_install_successfully"><![CDATA[Download and subsequent installation were successfully finished]]></string>
 	<string name="_adm_str_txt_discount_csign"><![CDATA[({0}{1} for Premium)]]></string>
 	<string name="_adm_str_txt_items_by"><![CDATA[item(s) by]]></string>
 	<string name="_adm_str_txt_price_csign"><![CDATA[{0}{1}]]></string>
@@ -1205,7 +1205,7 @@
 	<string name="_adm_str_txt_pv_version_mask"><![CDATA[{0} ({1} is available)]]></string>
 	<string name="_adm_str_txt_update_from_to"><![CDATA[{0} - {1}]]></string>
 	<string name="_adm_tmi_cpt_edit"><![CDATA[Manage Launcher]]></string>
-	<string name="_adm_tmi_cpt_extensions"><![CDATA[Add Extensions]]></string>
+	<string name="_adm_tmi_cpt_extensions"><![CDATA[Add Apps]]></string>
 	<string name="_adm_tmi_cpt_favorite"><![CDATA[Show Favorite Only]]></string>
 	<string name="_adm_tmi_cpt_logout"><![CDATA[Sign out]]></string>
 	<string name="_adm_tmi_cpt_site"><![CDATA[Go To Site]]></string>
@@ -1280,7 +1280,7 @@
 	<string name="_adm_wgt_cpt_designer"><![CDATA[Designer]]></string>
 	<string name="_adm_wgt_cpt_polyglot"><![CDATA[Polyglot]]></string>
 	<string name="_adm_wgt_cpt_settings"><![CDATA[Settings]]></string>
-	<string name="_adm_wgt_cpt_store"><![CDATA[Extensions]]></string>
+	<string name="_adm_wgt_cpt_store"><![CDATA[Apps]]></string>
 	<string name="_are you sure?"><![CDATA[Are you sure?]]></string>
 	<string name="_bottom_text"><![CDATA[2002-{0}. Product of <a class="bottom_text" href="http://www.boonex.com/">BoonEx Group</a>.]]></string>
 	<string name="_cmt_block_comments_title"><![CDATA[Comments ({0})]]></string>
