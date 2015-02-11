@@ -23,10 +23,8 @@ $sName = $sName !== false ? bx_process_input($sName) : '';
 $sPage = bx_get('page');
 $sPage = $sPage !== false ? bx_process_input($sPage) : '';
 
-bx_import('BxTemplStudioLanguage');
 $oPage = new BxTemplStudioLanguage($sName, $sPage);
 
-bx_import('BxDolStudioTemplate');
 $oTemplate = BxDolStudioTemplate::getInstance();
 $oTemplate->setPageNameIndex($oPage->getPageIndex());
 $oTemplate->setPageHeader($oPage->getPageHeader());

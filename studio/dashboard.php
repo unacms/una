@@ -15,10 +15,8 @@ bx_import('BxDolLanguages');
 
 bx_require_authentication(true);
 
-bx_import('BxTemplStudioDashboard');
 $oPage = new BxTemplStudioDashboard();
 
-bx_import('BxDolStudioTemplate');
 $oTemplate = BxDolStudioTemplate::getInstance();
 $oTemplate->setPageNameIndex($oPage->getPageIndex());
 $oTemplate->setPageHeader($oPage->getPageHeader());

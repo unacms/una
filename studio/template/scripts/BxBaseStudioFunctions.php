@@ -8,9 +8,6 @@
  * @{
  */
 
-bx_import('BxDolStudioTemplate');
-bx_import('BxBaseFunctions');
-
 class BxBaseStudioFunctions extends BxBaseFunctions implements iBxDolSingleton
 {
     function __construct($oTemplate = false)
@@ -87,9 +84,6 @@ class BxBaseStudioFunctions extends BxBaseFunctions implements iBxDolSingleton
 
     function getLoginForm()
     {
-        bx_import('BxDolPermalinks');
-        bx_import('BxDolForm');
-
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         $sUrlRelocate = bx_get('relocate');

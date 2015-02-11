@@ -8,8 +8,6 @@
  * @{
  */
 
-bx_import('BxDolStudioForm');
-
 class BxBaseStudioFormView extends BxDolStudioForm
 {
     function __construct($aInfo, $oTemplate)
@@ -78,7 +76,6 @@ class BxBaseStudioFormView extends BxDolStudioForm
 
             $sFileUrl = false;
             if (!empty($aInput['transcoder_object'])) {
-                bx_import('BxDolTranscoderImage');
                 $oTranscoder = BxDolTranscoderImage::getObjectInstance($aInput['transcoder_object']);
                 $sFileUrl = $oTranscoder->getFileUrlNotReady($iId);
                 if (isset($aInput['transcoder_image_width']) && $aInput['transcoder_image_width'] > 0)
@@ -87,7 +84,6 @@ class BxBaseStudioFormView extends BxDolStudioForm
                     $sFileUrl = bx_append_url_params($sFileUrl, array('y' => $aInput['transcoder_image_height']));
             } 
             else {
-                bx_import('BxDolStorage');
                 $sStorage = isset($aInput['storage_object']) && $aInput['storage_object'] != '' ? $aInput['storage_object'] : BX_DOL_STORAGE_OBJ_IMAGES;
                 $oStorage = BxDolStorage::getObjectInstance($sStorage);
                 $sFileUrl = $oStorage->getFileUrlById($iId);
@@ -135,10 +131,8 @@ class BxBaseStudioFormView extends BxDolStudioForm
         $sInputName = $aInput['name'];
         $aInputAttrs = isset($aInput['attrs']) && is_array($aInput['attrs']) ? $aInput['attrs'] : array();
 
-        bx_import('BxTemplStudioFunctions');
         $oFunctions = BxTemplStudioFunctions::getInstance();
 
-        bx_import('BxDolStudioLanguagesUtils');
         $oLanguage = BxDolStudioLanguagesUtils::getInstance();
         $sLanguage = $oLanguage->getCurrentLangName(false);
         $aLanguages = $oLanguage->getLanguagesInfo();

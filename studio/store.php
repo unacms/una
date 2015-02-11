@@ -18,10 +18,8 @@ bx_require_authentication(true);
 $sPage = bx_get('page');
 $sPage = $sPage !== false ? bx_process_input($sPage) : '';
 
-bx_import('BxTemplStudioStore');
 $oPage = new BxTemplStudioStore($sPage);
 
-bx_import('BxDolStudioTemplate');
 $oTemplate = BxDolStudioTemplate::getInstance();
 $oTemplate->setPageNameIndex($oPage->getPageIndex());
 $oTemplate->setPageHeader($oPage->getPageHeader());

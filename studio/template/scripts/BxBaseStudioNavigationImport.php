@@ -8,8 +8,6 @@
  * @{
  */
 
-bx_import('BxDolStudioNavigationImport');
-
 class BxBaseStudioNavigationImport extends BxDolStudioNavigationImport
 {
     function __construct($aOptions, $oTemplate = false)
@@ -37,7 +35,6 @@ class BxBaseStudioNavigationImport extends BxDolStudioNavigationImport
 
             $mixedIcon = 0;
             if(is_numeric($aItem['icon']) && (int)$aItem['icon'] != 0) {
-                bx_import('BxDolStorage');
                 $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
 
                 if(($mixedIcon = $oStorage->storeFileFromStorage(array('id' => (int)$aItem['icon']), false, 0)) === false) {
@@ -62,7 +59,6 @@ class BxBaseStudioNavigationImport extends BxDolStudioNavigationImport
             if(($iIdAdded = (int)$this->oDb->addItem($aItem)) == 0)
                 continue;
 
-            bx_import('BxDolStudioLanguagesUtils');
             BxDolStudioLanguagesUtils::getInstance()->addLanguageString($aItem['title'], _t($sTitleKey));
 
             $aIdsImported[] = $iIdImported;
@@ -121,7 +117,6 @@ class BxBaseStudioNavigationImport extends BxDolStudioNavigationImport
     {
         parent::_getFilterControls();
 
-        bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
 
         $aInputSets = array(

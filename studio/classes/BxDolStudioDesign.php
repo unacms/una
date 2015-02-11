@@ -7,14 +7,8 @@
  * @{
  */
 
-bx_import('BxDolModuleQuery');
-bx_import('BxTemplStudioPage');
-bx_import('BxDolStudioDesignsQuery');
-
 define('BX_DOL_STUDIO_TEMPL_DEFAULT', 'basic');
-
 define('BX_DOL_STUDIO_TEMPL_TYPE_SETTINGS', 'settings');
-
 define('BX_DOL_STUDIO_TEMPL_TYPE_DEFAULT', BX_DOL_STUDIO_TEMPL_TYPE_SETTINGS);
 
 class BxDolStudioDesign extends BxTemplStudioPage
@@ -87,14 +81,12 @@ class BxDolStudioDesign extends BxTemplStudioPage
         if($aTemplate['uri'] == $sTemplateDefault)
             return array('code' => 2, 'message' => _t('_adm_dsg_err_deactivate_default'));
 
-        bx_import('BxDolStudioInstallerUtils');
         $oInstallerUtils = BxDolStudioInstallerUtils::getInstance();
 
         $aResult = (int)$aTemplate['enabled'] == 0 ? $oInstallerUtils->perform($aTemplate['path'], 'enable') : $oInstallerUtils->perform($aTemplate['path'], 'disable');
         if($aResult['code'] != 0)
             return $aResult;
 
-        bx_import('BxDolStudioTemplate');
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         $aResult = array('code' => 0, 'message' => _t('_adm_scs_operation_done'));

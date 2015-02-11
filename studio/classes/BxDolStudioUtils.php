@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDol');
-
 define('BX_DOL_STUDIO_MODULE_SYSTEM', 'system');
 define('BX_DOL_STUDIO_MODULE_CUSTOM', 'custom');
 
@@ -62,10 +60,8 @@ class BxDolStudioUtils extends BxDol
     {
         $aType2Prefix = array('menu' => 'mi', 'page' => 'pi', 'store' => 'si');
 
-        if(!is_array($mixedModule)) {
-	        bx_import('BxDolModuleQuery');
+        if(!is_array($mixedModule))
 	        $aModule = BxDolModuleQuery::getInstance()->getModuleByName($mixedModule);
-        }
         else 
         	$aModule = $mixedModule;
 
@@ -90,7 +86,6 @@ class BxDolStudioUtils extends BxDol
         if(in_array($sName, array(BX_DOL_STUDIO_MODULE_SYSTEM, BX_DOL_STUDIO_MODULE_CUSTOM)))
             return _t($sPrefix . $sName);
 
-        bx_import('BxDolModuleQuery');
         $aModule = BxDolModuleQuery::getInstance()->getModuleByName($sName);
         if(!empty($aModule))
             return $aModule['title'];
@@ -108,7 +103,6 @@ class BxDolStudioUtils extends BxDol
         if($bShowCustom)
             $aResult[BX_DOL_STUDIO_MODULE_CUSTOM] = self::getModuleTitle(BX_DOL_STUDIO_MODULE_CUSTOM);
 
-        bx_import('BxDolModuleQuery');
         $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules', 'active' => 1));
         foreach($aModules as $aModule)
             $aResult[$aModule['name']] = $aModule['title'];
@@ -122,7 +116,6 @@ class BxDolStudioUtils extends BxDol
         $sResult = "";
         switch($iCount) {
             case 1:
-                bx_import('BxDolAcl');
                 $aLevel = BxDolAcl::getInstance()->getMembershipInfo(log($iValue, 2) + 1);
                 $sResult = _t($aLevel['name']);
                 break;
@@ -149,7 +142,6 @@ class BxDolStudioUtils extends BxDol
         else if($iValue == BX_DOL_INT_MAX)
             return -1;
 
-        bx_import('BxDolAcl');
         $aLevels = BxDolAcl::getInstance()->getMemberships(false, true);
 
         $iIndex = 1;
@@ -176,7 +168,6 @@ class BxDolStudioUtils extends BxDol
 
     public static function getVisibilityValues($iValue, &$aValuesAll, &$aValuesSelected)
     {
-        bx_import('BxDolAcl');
         $aLevels = BxDolAcl::getInstance()->getMemberships(false, true);
         foreach($aLevels as $iKey => $sValue) {
             if(((int)$iValue & pow(2, (int)$iKey - 1)) != 0)

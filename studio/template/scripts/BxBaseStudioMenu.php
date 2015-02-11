@@ -8,8 +8,6 @@
  * @{
  */
 
-bx_import('BxDolStudioMenu');
-
 class BxBaseStudioMenu extends BxDolStudioMenu
 {
     public function __construct ($aObject, $oTemplate)

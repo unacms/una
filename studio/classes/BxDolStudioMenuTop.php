@@ -7,9 +7,6 @@
  * @{
  */
 
-bx_import('BxDol');
-bx_import('BxBaseStudioLauncher');
-
 define('BX_DOL_STUDIO_MT_LEFT', 'left');
 define('BX_DOL_STUDIO_MT_CENTER', 'center');
 define('BX_DOL_STUDIO_MT_RIGHT', 'right');

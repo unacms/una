@@ -8,9 +8,6 @@
  * @{
  */
 
-bx_import('BxDolStudioNavigationMenus');
-bx_import('BxTemplStudioFormView');
-
 class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus
 {
     private $sCreateNew = 'sys_create_new';
@@ -36,7 +33,6 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
-            bx_import('BxDolStudioLanguagesUtils');
             $oLanguage = BxDolStudioLanguagesUtils::getInstance();
             $sLanguage = $oLanguage->getCurrentLangName(false);
 
@@ -64,8 +60,8 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus
                 $aRes = array('msg' => _t('_adm_nav_err_menus_create'));
 
             $this->_echoResultJson($aRes, true);
-        } else {
-            bx_import('BxTemplStudioFunctions');
+        }
+        else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-nav-menu-create-popup', _t('_adm_nav_txt_menus_create_popup'), $this->_oTemplate->parseHtmlByName('nav_add_menu.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
                 'form' => $oForm->getCode(true),
@@ -100,7 +96,6 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus
                 $sSetTitleKey = '_adm_nav_txt_set_' . $sSetName;
 
                 if($this->oDb->addSet(array('set_name' => $sSetName, 'module' => BX_DOL_STUDIO_MODULE_CUSTOM, 'title' => $sSetTitleKey, 'deletable' => 1))) {
-                    bx_import('BxDolStudioLanguagesUtils');
                     BxDolStudioLanguagesUtils::getInstance()->addLanguageString($sSetTitleKey, $sSetTitleValue);
 
                     BxDolForm::setSubmittedValue('set_name', $sSetName, $oForm->aFormAttrs['method']);
@@ -114,8 +109,8 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus
                 $aRes = array('msg' => _t('_adm_nav_err_menus_edit'));
 
             $this->_echoResultJson($aRes, true);
-        } else {
-            bx_import('BxTemplStudioFunctions');
+        }
+        else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-nav-menu-edit-popup', _t('_adm_nav_txt_menus_edit_popup', _t($aMenu['title'])), $this->_oTemplate->parseHtmlByName('nav_add_menu.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
                 'form' => $oForm->getCode(true),
@@ -149,7 +144,6 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus
             if((int)$this->_delete($iId) <= 0)
                 continue;
 
-            bx_import('BxDolStudioLanguagesUtils');
             BxDolStudioLanguagesUtils::getInstance()->deleteLanguageString($aMenu['title']);
 
             $aIdsAffected[] = $iId;
@@ -179,7 +173,6 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus
         parent::_addJsCss();
         $this->_oTemplate->addJs(array('jquery.form.min.js', 'navigation_menus.js'));
 
-        bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
         $oForm->addCssJs();
     }

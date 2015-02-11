@@ -8,8 +8,6 @@
  * @{
  */
 
-bx_import('BxDolStudioPolyglot');
-
 class BxBaseStudioPolyglot extends BxDolStudioPolyglot
 {
     protected $sSubpageUrl;
@@ -85,9 +83,6 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot
 
     protected function getSettings()
     {
-        $oTemplate = BxDolStudioTemplate::getInstance();
-
-        bx_import('BxTemplStudioSettings');
         $oPage = new BxTemplStudioSettings(BX_DOL_STUDIO_STG_TYPE_DEFAULT, BX_DOL_STUDIO_STG_CATEGORY_LANGUAGES);
 
         $aTmplVars = array(
@@ -99,7 +94,7 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot
             )
         );
 
-        return $oTemplate->parseHtmlByName('polyglot.html', $aTmplVars);
+        return BxDolStudioTemplate::getInstance()->parseHtmlByName('polyglot.html', $aTmplVars);
     }
 
     protected function getKeys()
@@ -114,9 +109,6 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot
 
     protected function getGrid($sObjectName)
     {
-        $oTemplate = BxDolStudioTemplate::getInstance();
-
-        bx_import('BxDolGrid');
         $oGrid = BxDolGrid::getObjectInstance($sObjectName);
         if(!$oGrid)
             return '';
@@ -132,7 +124,7 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot
             )
         );
 
-        return $oTemplate->parseHtmlByName('polyglot.html', $aTmplVars);
+        return BxDolStudioTemplate::getInstance()->parseHtmlByName('polyglot.html', $aTmplVars);
     }
 }
 

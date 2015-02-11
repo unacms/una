@@ -8,8 +8,6 @@
  */
 
 bx_import('BxDolLanguages');
-bx_import('BxDolXmlParser');
-bx_import('BxDolStudioLanguagesUtilsQuery');
 
 class BxDolStudioLanguagesUtils extends BxDolLanguages implements iBxDolSingleton
 {
@@ -48,7 +46,6 @@ class BxDolStudioLanguagesUtils extends BxDolLanguages implements iBxDolSingleto
         $aLanguage = array();
         $this->oDb->getLanguagesBy(array('type' => 'by_name', 'value' => $sName), $aLanguage, false);
 
-        bx_import('BxDolStudioTemplate');
         if(!empty($aLanguage))
             $aLanguage['icon'] = BxDolStudioTemplate::getInstance()->getIconUrl('sys_fl_' . $aLanguage['flag'] . '.gif');
 
@@ -62,7 +59,6 @@ class BxDolStudioLanguagesUtils extends BxDolLanguages implements iBxDolSingleto
         if(!is_array($aLanguages) || empty($aLanguages))
             return $aLanguages;
 
-        bx_import('BxDolStudioTemplate');
         $oTemplate  = BxDolStudioTemplate::getInstance();
         foreach($aLanguages as $iKey => $aLanguage)
             $aLanguages[$iKey]['icon'] = $oTemplate->getIconUrl('sys_fl_' . $aLanguage['flag'] . '.gif');
@@ -131,7 +127,6 @@ class BxDolStudioLanguagesUtils extends BxDolLanguages implements iBxDolSingleto
         if($iLanguages == 0)
             return false;
 
-        bx_import('BxDolFile');
         $oFile = BxDolFile::getInstance();
 
         $sNewLine = "\r\n";
@@ -217,7 +212,6 @@ class BxDolStudioLanguagesUtils extends BxDolLanguages implements iBxDolSingleto
             if(empty($aLanguage) || !is_array($aLanguage))
                 continue;
 
-            bx_import('BxDolModuleQuery');
             $oModuleQuery = BxDolModuleQuery::getInstance();
 
             $aLanguageModule = $oModuleQuery->getModuleByUri($aLanguage['name']);

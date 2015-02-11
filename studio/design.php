@@ -27,12 +27,10 @@ $sCustomTemplateClass = BX_DIRECTORY_PATH_ROOT . 'templates/tmpl_' . $sName . '/
 if(file_exists($sCustomTemplateClass)) {
     require_once($sCustomTemplateClass);
     $oPage = new BxTemplDesign($sName, $sPage);
-} else {
-    bx_import('BxTemplStudioDesign');
-    $oPage = new BxTemplStudioDesign($sName, $sPage);
 }
+else
+	$oPage = new BxTemplStudioDesign($sName, $sPage);
 
-bx_import('BxDolStudioTemplate');
 $oTemplate = BxDolStudioTemplate::getInstance();
 $oTemplate->setPageNameIndex($oPage->getPageIndex());
 $oTemplate->setPageHeader($oPage->getPageHeader());

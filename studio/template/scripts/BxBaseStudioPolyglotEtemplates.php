@@ -8,9 +8,6 @@
  * @{
  */
 
-bx_import('BxDolStudioPolyglotEtemplates');
-bx_import('BxTemplStudioFormView');
-
 class BxBaseStudioPolyglotEtemplates extends BxDolStudioPolyglotEtemplates
 {
     function __construct($aOptions, $oTemplate = false)
@@ -147,8 +144,8 @@ class BxBaseStudioPolyglotEtemplates extends BxDolStudioPolyglotEtemplates
                 $aRes = array('msg' => _t('_adm_pgt_err_etemplates_edit'));
 
             $this->_echoResultJson($aRes, true);
-        } else {
-            bx_import('BxTemplStudioFunctions');
+        }
+        else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-pgt-etemplate-edit-popup', _t('_adm_pgt_txt_etemplates_edit_popup', _t($aEtemplate['name_system'])), $this->_oTemplate->parseHtmlByName('pgt_new_etemplate.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
                 'form' => $oForm->getCode(true),
@@ -179,7 +176,6 @@ class BxBaseStudioPolyglotEtemplates extends BxDolStudioPolyglotEtemplates
         parent::_addJsCss();
         $this->_oTemplate->addJs(array('jquery.form.min.js', 'polyglot_etemplates.js'));
 
-        bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
         $oForm->addCssJs();
     }
@@ -196,7 +192,6 @@ class BxBaseStudioPolyglotEtemplates extends BxDolStudioPolyglotEtemplates
 
         $sContent = "";
 
-        bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
 
         $aInputModules = array(

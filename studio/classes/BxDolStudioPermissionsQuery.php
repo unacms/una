@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolAclQuery');
-
 class BxDolStudioPermissionsQuery extends BxDolAclQuery
 {
     function __construct()

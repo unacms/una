@@ -8,8 +8,6 @@
  * @{
  */
 
-bx_import('BxDolStudioPermissions');
-
 class BxBaseStudioPermissions extends BxDolStudioPermissions
 {
     protected $sSubpageUrl;
@@ -79,9 +77,6 @@ class BxBaseStudioPermissions extends BxDolStudioPermissions
 
     protected function getGrid($sObjectName)
     {
-        $oTemplate = BxDolStudioTemplate::getInstance();
-
-        bx_import('BxDolGrid');
         $oGrid = BxDolGrid::getObjectInstance($sObjectName);
         if(!$oGrid)
             return '';
@@ -98,7 +93,7 @@ class BxBaseStudioPermissions extends BxDolStudioPermissions
             )
         );
 
-        return $oTemplate->parseHtmlByName('permissions.html', $aTmplVars);
+        return BxDolStudioTemplate::getInstance()->parseHtmlByName('permissions.html', $aTmplVars);
     }
 }
 

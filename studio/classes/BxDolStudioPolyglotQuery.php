@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolStudioLanguagesUtilsQuery');
-
 class BxDolStudioPolyglotQuery extends BxDolStudioLanguagesUtilsQuery
 {
     function __construct()

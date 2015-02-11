@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolStudioModulesQuery');
-
 class BxDolStudioStoreQuery extends BxDolStudioModulesQuery
 {
     function __construct()
@@ -18,8 +16,6 @@ class BxDolStudioStoreQuery extends BxDolStudioModulesQuery
 
     public function isQueued($sAction, $sName)
     {
-    	bx_import('BxDolStudioInstallerUtils');
-
     	$sJobName = '';
     	switch($sAction) {
     		case 'download':

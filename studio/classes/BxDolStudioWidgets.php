@@ -7,9 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplStudioPage');
-bx_import('BxDolStudioWidgetsQuery');
-
 define('BX_DOL_STUDIO_WS_ENABLED', 1);
 define('BX_DOL_STUDIO_WS_DISABLED', 2);
 

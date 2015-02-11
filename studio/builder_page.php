@@ -26,11 +26,9 @@ if($sPage === false)
     $sPage = bx_get('bp_page');
 $sPage = $sPage !== false ? bx_process_input($sPage) : '';
 
-bx_import('BxTemplStudioBuilderPage');
 $oPage = new BxTemplStudioBuilderPage($sType, $sPage);
 $oPage->init();
 
-bx_import('BxDolStudioTemplate');
 $oTemplate = BxDolStudioTemplate::getInstance();
 $oTemplate->setPageNameIndex($oPage->getPageIndex());
 $oTemplate->setPageHeader($oPage->getPageHeader());

@@ -7,9 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplStudioPage');
-bx_import('BxDolStudioPermissionsQuery');
-
 define('BX_DOL_STUDIO_PRM_TYPE_LEVELS', 'levels');
 define('BX_DOL_STUDIO_PRM_TYPE_ACTIONS', 'actions');
 

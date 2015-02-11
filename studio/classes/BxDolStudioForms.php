@@ -7,9 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplStudioPage');
-bx_import('BxDolStudioFormsQuery');
-
 define('BX_DOL_STUDIO_FORM_TYPE_FORMS', 'forms');
 define('BX_DOL_STUDIO_FORM_TYPE_DISPLAYS', 'displays');
 define('BX_DOL_STUDIO_FORM_TYPE_FIELDS', 'fields');

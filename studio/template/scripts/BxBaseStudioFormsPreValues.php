@@ -8,9 +8,6 @@
  * @{
  */
 
-bx_import('BxDolStudioFormsPreValues');
-bx_import('BxTemplStudioFormView');
-
 class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
 {
     protected $sUrlPage;
@@ -137,8 +134,8 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
                 $aRes = array('msg' => _t('_adm_form_err_pre_values_create'));
 
             $this->_echoResultJson($aRes, true);
-        } else {
-            bx_import('BxTemplStudioFunctions');
+        }
+        else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-form-pre-value-create-popup', _t('_adm_form_txt_pre_values_create_popup'), $this->_oTemplate->parseHtmlByName('form_add_value.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
                 'form' => $oForm->getCode(true),
@@ -264,8 +261,8 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
                 $aRes = array('msg' => _t('_adm_form_err_pre_values_edit'));
 
             $this->_echoResultJson($aRes, true);
-        } else {
-            bx_import('BxTemplStudioFunctions');
+        } 
+        else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-form-pre-value-edit-popup', _t('_adm_form_txt_pre_values_edit_popup', _t($aValue['lkey'])), $this->_oTemplate->parseHtmlByName('form_add_value.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
                 'form' => $oForm->getCode(true),
@@ -288,8 +285,6 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
             exit;
         }
 
-        bx_import('BxDolForm');
-        bx_import('BxDolStudioLanguagesUtils');
         $oLanguage = BxDolStudioLanguagesUtils::getInstance();
 
         $aList = array();
@@ -335,7 +330,6 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
 
     function getListsSelector($sModule = '')
     {
-        bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
 
         $aInputLists = array(
@@ -385,7 +379,6 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
         parent::_addJsCss();
         $this->_oTemplate->addJs(array('jquery.form.min.js', 'forms_values.js'));
 
-        bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
         $oForm->addCssJs();
     }
@@ -404,7 +397,6 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
 
         $sContent = $this->getModulesSelectOne('getValues') . $this->getListsSelector($this->sModule);
 
-        bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
 
         $aInputSearch = array(

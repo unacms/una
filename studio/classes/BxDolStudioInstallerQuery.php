@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolModuleQuery');
-
 class BxDolStudioInstallerQuery extends BxDolModuleQuery
 {
     function __construct()

@@ -7,10 +7,6 @@
  * @{
  */
 
-bx_import('BxDol');
-bx_import('BxDolStudioUtils');
-bx_import('BxDolStudioPageQuery');
-
 define('BX_DOL_STUDIO_PAGE_HOME', 'home');
 define('BX_DOL_STUDIO_PAGE_JS_OBJECT', 'oBxDolStudioPage');
 
@@ -127,7 +123,6 @@ class BxDolStudioPage extends BxDol
         if(!$bResult)
             return array('code' => 1, 'message' => _t('_adm_err_operation_failed'));
 
-        bx_import('BxDolStudioTemplate');
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         return array('code' => 0, 'message' => _t('_adm_scs_operation_done'));

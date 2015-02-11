@@ -7,10 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplStudioGridNavigation');
-bx_import('BxDolStudioTemplate');
-bx_import('BxDolStudioNavigationQuery');
-
 class BxDolStudioNavigationMenus extends BxTemplStudioGridNavigation
 {
     public function __construct ($aOptions, $oTemplate = false)

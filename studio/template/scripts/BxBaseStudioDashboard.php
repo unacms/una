@@ -8,8 +8,6 @@
  * @{
  */
 
-bx_import('BxDolStudioDashboard');
-
 class BxBaseStudioDashboard extends BxDolStudioDashboard
 {
     function __construct()
@@ -58,7 +56,6 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
 
     function getPageCode($bHidden = false)
     {
-    	bx_import('BxDolPage');
     	$oPage = BxDolPage::getObjectInstance('sys_std_dashboard');
     	return $oPage->getCode();
     }
@@ -97,7 +94,6 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
     		$iResult += 1;
 
     	//--- Check Host Requirements
-    	bx_import('BxDolStudioToolsAudit');
 		$oAudit = new BxDolStudioToolsAudit();
 
     	foreach($this->aItemsHTools as $sTitle => $sFunc) {
@@ -144,7 +140,6 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
 	    		$aItems[] = array('label' => '_adm_dbd_txt_su_system', 'value' => $iSizeDiskTotal - $iSizeDiskMedia);
 	    	}
 
-	    	bx_import('BxDolModuleQuery');
 	    	$aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'all'));
 	    	foreach($aModules as $aModule) {
 	    		$sName = $aModule['name'];
@@ -207,13 +202,11 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
 			)
 		);
 
-		bx_import('BxDolStudioToolsAudit');
 		$oAudit = new BxDolStudioToolsAudit();
 
 		$aTmplVarsItems = array();
 		if(!$bDynamic) {
 
-	        bx_import('BxTemplFunctions');
 	        $oFunc = BxTemplFunctions::getInstance();
 
 	        $aLevels = array (BX_DOL_AUDIT_FAIL, BX_DOL_AUDIT_WARN, BX_DOL_AUDIT_UNDEF);

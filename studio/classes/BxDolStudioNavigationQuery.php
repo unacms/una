@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolDb');
-
 class BxDolStudioNavigationQuery extends BxDolDb
 {
     function __construct()

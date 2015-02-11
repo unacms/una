@@ -8,8 +8,6 @@
  * @{
  */
 
-bx_import('BxDolStudioPolyglotKeys');
-
 class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys
 {
     function __construct($aOptions, $oTemplate = false)
@@ -108,7 +106,6 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys
             )
         ));
 
-        bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView($aForm);
         $oForm->initChecker();
 
@@ -121,8 +118,8 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys
                 $aRes = array('msg' => $mixedResult);
 
             $this->_echoResultJson($aRes, true);
-        } else {
-            bx_import('BxTemplStudioFunctions');
+        }
+        else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-lang-new-key-popup', _t('_adm_pgt_txt_nkp_add_popup'), $this->_oTemplate->parseHtmlByName('pgt_new_key.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
                 'form' => $oForm->getCode(true),
@@ -225,7 +222,6 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys
             )
         ));
 
-        bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView($aForm);
         $oForm->initChecker();
 
@@ -238,8 +234,8 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys
                 $aRes = array('msg' => $mixedResult);
 
             $this->_echoResultJson($aRes, true);
-        } else {
-            bx_import('BxTemplStudioFunctions');
+        }
+        else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-lang-edit-key-popup', _t('_adm_pgt_txt_nkp_edit_popup', $aKey['key']), $this->_oTemplate->parseHtmlByName('pgt_new_key.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
                 'form' => $oForm->getCode(true),
@@ -259,8 +255,6 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys
             $this->_echoResultJson(array());
             exit;
         }
-
-        bx_import('BxDolStudioLanguagesUtils');
 
         $aIdsAffected = array ();
         foreach($aIds as $iId) {
@@ -293,7 +287,6 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys
         parent::_addJsCss();
         $this->_oTemplate->addJs(array('jquery.form.min.js', 'polyglot_keys.js'));
 
-        bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
         $oForm->addCssJs();
     }
@@ -304,7 +297,6 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys
 
         $sContent = "";
 
-        bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
 
         $aInputModules = array(

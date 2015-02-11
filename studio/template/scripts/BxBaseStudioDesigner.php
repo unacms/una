@@ -8,10 +8,6 @@
  * @{
  */
 
-bx_import('BxTemplPaginate');
-bx_import('BxDolStudioDesigner');
-bx_import('BxTemplStudioFormView');
-
 class BxBaseStudioDesigner extends BxDolStudioDesigner
 {
     protected $sLogoFormId = 'adm-dsg-logo-form';
@@ -239,7 +235,6 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
                 BX_DOL_TRANSCODER_OBJ_ICON_FAVICON => '_adm_dsg_txt_icon_favicon'
             );
 
-            bx_import('BxDolTranscoderImage');
             foreach($aTranscoders as $sTranscoder => $sTitle) {
                 $oTranscoder = BxDolTranscoderImage::getObjectInstance($sTranscoder);
 
@@ -325,9 +320,6 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
 
     protected function getSettings()
     {
-        $oTemplate = BxDolStudioTemplate::getInstance();
-
-        bx_import('BxTemplStudioSettings');
         $oPage = new BxTemplStudioSettings(BX_DOL_STUDIO_STG_TYPE_SYSTEM, BX_DOL_STUDIO_STG_CATEGORY_TEMPLATES);
 
         $aTmplVars = array(
@@ -335,7 +327,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
             'bx_repeat:blocks' => $oPage->getPageCode(),
         );
 
-        return $oTemplate->parseHtmlByName('designer.html', $aTmplVars);
+        return BxDolStudioTemplate::getInstance()->parseHtmlByName('designer.html', $aTmplVars);
     }
 }
 

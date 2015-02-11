@@ -7,10 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplStudioGrid');
-bx_import('BxDolStudioTemplate');
-bx_import('BxDolStudioPermissionsQuery');
-
 class BxDolStudioPermissionsActions extends BxTemplStudioGrid
 {
     protected $iLevel = 0;

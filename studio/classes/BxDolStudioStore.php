@@ -7,10 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplStudioPage');
-bx_import('BxDolStudioStoreQuery');
-bx_import('BxDolStudioInstallerUtils');
-
 define('BX_DOL_STUDIO_STR_TYPE_DEFAULT', 'downloaded');
 
 class BxDolStudioStore extends BxTemplStudioPage
@@ -42,7 +38,6 @@ class BxDolStudioStore extends BxTemplStudioPage
         if(is_string($sPage) && !empty($sPage))
             $this->sPage = $sPage;
 
-		bx_import('BxDolStudioOAuth');
         $this->iClient = BxDolStudioOAuth::getAuthorizedClient();
 
         //--- Check actions ---//
@@ -101,7 +96,6 @@ class BxDolStudioStore extends BxTemplStudioPage
                         break;
                     }
 
-                    bx_import('BxDolStudioCart');
                     BxDolStudioCart::getInstance()->add($sVendor, $iItem, $iItemCount);
                     $aResult = array('code' => BX_DOL_STUDIO_IU_RC_SUCCESS, 'message' => _t('_adm_msg_modules_success_added_to_cart'));
                     break;
@@ -115,7 +109,6 @@ class BxDolStudioStore extends BxTemplStudioPage
                         break;
                     }
 
-                    bx_import('BxDolStudioCart');
                     BxDolStudioCart::getInstance()->delete($sVendor, $iItem);
                     $aResult = array('code' => BX_DOL_STUDIO_IU_RC_SUCCESS, 'message' => '');
                     break;
@@ -157,10 +150,7 @@ class BxDolStudioStore extends BxTemplStudioPage
             }
 
             if(!empty($aResult['message'])) {
-                bx_import('BxDolStudioTemplate');
                 $aResult['message'] = BxDolStudioTemplate::getInstance()->parseHtmlByName('mod_action_result.html', array('content' => $aResult['message']));
-
-                bx_import('BxTemplStudioFunctions');
                 $aResult['message'] = BxTemplStudioFunctions::getInstance()->transBox('', $aResult['message']);
             }
 
@@ -175,7 +165,6 @@ class BxDolStudioStore extends BxTemplStudioPage
         $aProducts = array();
         $sJsObject = $this->getPageJsObject();
 
-        bx_import('BxDolStudioJson');
         $oJson = BxDolStudioJson::getInstance();
 
         // Load featured
@@ -220,13 +209,11 @@ class BxDolStudioStore extends BxTemplStudioPage
 
     protected function loadFeatured($iStart, $iPerPage)
     {
-        bx_import('BxDolStudioJson');
         return BxDolStudioJson::getInstance()->load(BX_DOL_UNITY_URL_MARKET . 'json_browse_featured', array('start' => $iStart, 'per_page' => $iPerPage, 'client' => $this->iClient));
     }
 
     protected function loadTag($sTag, $iStart, $iPerPage)
     {
-        bx_import('BxDolStudioJson');
         return BxDolStudioJson::getInstance()->load(BX_DOL_UNITY_URL_MARKET . 'json_browse_by_tag', array('value' => $this->aliasToNameTag($sTag), 'start' => $iStart, 'per_page' => $iPerPage, 'client' => $this->iClient));
     }
 
@@ -242,10 +229,8 @@ class BxDolStudioStore extends BxTemplStudioPage
 
     protected function loadCheckout()
     {
-        bx_import('BxDolStudioJson');
         $oJson = BxDolStudioJson::getInstance();
 
-        bx_import('BxDolStudioCart');
         $aVendors = BxDolStudioCart::getInstance()->parseByVendor();
 
         $aResult = array();
@@ -280,7 +265,6 @@ class BxDolStudioStore extends BxTemplStudioPage
 
     protected function loadProduct($sModuleName)
     {
-        bx_import('BxDolStudioJson');
         $oJson = BxDolStudioJson::getInstance();
 
         return $oJson->load(BX_DOL_UNITY_URL_MARKET . 'json_get_product_by_name', array('value' => $sModuleName, 'client' => $this->iClient));
@@ -304,7 +288,6 @@ class BxDolStudioStore extends BxTemplStudioPage
 
     private function checkoutCart($sVendor)
     {
-        bx_import('BxDolStudioCart');
         $oCart = BxDolStudioCart::getInstance();
 
         $aItems = $oCart->getByVendor($sVendor);

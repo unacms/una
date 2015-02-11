@@ -8,7 +8,6 @@
  * @{
  */
 
-bx_import('BxDolStudioFormsFields');
 bx_import('BxTemplStudioFormsField');
 
 define('BX_DOL_STUDIO_FORMS_FIELDS_JS_OBJECT', 'oBxDolStudioFormsFields');
@@ -128,7 +127,6 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields
 
             $oClass->alterRemove($aField['name']);
 
-            bx_import('BxDolStudioLanguagesUtils');
             $oLanguage = BxDolStudioLanguagesUtils::getInstance();
             if(!empty($aField['caption']))
                 $oLanguage->deleteLanguageString($aField['caption']);
@@ -247,7 +245,6 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields
 
         BxDolStudioUtils::getVisibilityValues($aField['visible_for_levels'], $aForm['inputs']['visible_for_levels']['values'], $aForm['inputs']['visible_for_levels']['value']);
 
-        bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView($aForm);
         $oForm->initChecker();
 
@@ -258,8 +255,8 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields
                 $aRes = array('msg' => _t('_adm_form_err_field_show_to'));
 
             $this->_echoResultJson($aRes, true);
-        } else {
-            bx_import('BxTemplStudioFunctions');
+        } 
+        else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-form-field-show-to-popup', _t('_adm_form_txt_field_show_to_popup', _t($aField['caption_system'])), $this->_oTemplate->parseHtmlByName('form_add_field.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
                 'form' => $oForm->getCode(true),
@@ -278,7 +275,6 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields
 
     function getDisplaysSelector($sModule = '')
     {
-        bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
 
         $aInputDisplays = array(
@@ -344,7 +340,6 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields
         $this->_oTemplate->addCss(array('menu.css'));
         $this->_oTemplate->addJs(array('jquery.form.min.js', 'forms_fields.js'));
 
-        bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
         $oForm->addCssJs();
     }
@@ -427,7 +422,6 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields
 
         $sContent = $this->getModulesSelectOne('getInputs') . $this->getDisplaysSelector($this->sModule);
 
-        bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
 
         $aInputSearch = array(

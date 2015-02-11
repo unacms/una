@@ -8,10 +8,6 @@
  * @{
  */
 
-bx_import('BxDolStudioUtils');
-bx_import('BxDolStudioBuilderPage');
-bx_import('BxTemplStudioFormView');
-
 class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 {
     protected $sParamsDivider = '#';
@@ -98,7 +94,6 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             )
         );
 
-        bx_import('BxDolModuleQuery');
         $aModulesDb = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules'));
         foreach($aModulesDb as $aModuleDb) {
         	$sName = $aModuleDb['name'];
@@ -127,7 +122,6 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
     function getPageCode($bHidden = false)
     {
-        bx_import('BxTemplPage');
         $oPage = BxTemplPage::getObjectInstance($this->sPage);
 
         $oTemplate = BxDolStudioTemplate::getInstance();
@@ -190,7 +184,6 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             $sContent = $oTemplate->parseHtmlByName($this->aPageRebuild['layout_template'], $aTmplVars);
         }
 
-        bx_import('BxDolStudioLanguagesUtils');
         $aLanguages = BxDolStudioLanguagesUtils::getInstance()->getLanguages();
 
         $aTmplVars = array(
@@ -281,7 +274,6 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             foreach($this->aPageSettings as $aSetting)
                 $oForm->aInputs = array_merge($oForm->aInputs, $this->{'getSettings' . $this->getClassName($aSetting['name']) . 'Fields'}());
 
-        	bx_import('BxDolStudioLanguagesUtils');
             $sLanguage = BxDolStudioLanguagesUtils::getInstance()->getCurrentLangName(false);
 
             $sObject = BxDolForm::getSubmittedValue('title-' . $sLanguage, $aForm['form_attrs']['method']);
@@ -300,7 +292,6 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                 return array('msg' => _t('_adm_bp_err_page_create'));
         }
 
-        bx_import('BxTemplStudioFunctions');
         $sContent = BxTemplStudioFunctions::getInstance()->popupBox($this->aHtmlIds['add_popup_id'], _t('_adm_bp_txt_create_popup'), $oTemplate->parseHtmlByName('bp_add_page.html', array(
             'form_id' => $aForm['form_attrs']['id'],
             'form' => $oForm->getCode(true)
@@ -370,7 +361,6 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                 return array('msg' => _t('_adm_bp_err_save'));
         }
 
-        bx_import('BxTemplStudioFunctions');
         $sContent = BxTemplStudioFunctions::getInstance()->popupBox($this->aHtmlIds['edit_popup_id'], _t('_adm_bp_txt_settings_popup'), $oTemplate->parseHtmlByName('bp_edit_page.html', array(
             'form_id' => $aForm['form_attrs']['id'],
             'form' => $oForm->getCode(true)
@@ -384,10 +374,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         if(empty($this->sPage) || empty($this->aPageRebuild) || !is_array($this->aPageRebuild))
             return array('msg' => _t('_adm_bp_err_page_delete'));
 
-        bx_import('BxDolStudioLanguagesUtils');
         $oLangauge = BxDolStudioLanguagesUtils::getInstance();
-
-        bx_import('BxDolStorage');
         $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
 
         $aBlocks = array();
@@ -474,7 +461,6 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             )
         );
 
-        bx_import('BxDolModuleQuery');
         $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules'));
         $aModulesWithBlocks = $this->oDb->getModulesWithCopyableBlocks();
         foreach($aModules as $aModule) {
@@ -494,7 +480,6 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         foreach($aMenu as $sKey => $aItem)
             $aMenu[$sKey]['onclick'] =  $sJsObject . '.onChangeModule(\'' . $aItem['name'] . '\', this);';
 
-        bx_import('BxTemplStudioMenu');
         $oMenu = new BxTemplStudioMenu(array('template' => 'menu_side.html', 'menu_items' => $aMenu));
 
         $aTmplParams = array(
@@ -514,10 +499,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             $aBlocks = array();
             $this->oDb->getBlocks(array('type' => 'by_ids', 'value' => $aIds), $aBlocks, false);
 
-            bx_import('BxDolStudioLanguagesUtils');
             $oLanguage = BxDolStudioLanguagesUtils::getInstance();
-
-            bx_import('BxDolStorage');
             $oStorege = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
 
             $bResult = true;
@@ -573,7 +555,6 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                 return array('msg' => _t('_adm_bp_err_block_added'));
         }
 
-        bx_import('BxTemplStudioFunctions');
         $sContent = BxTemplStudioFunctions::getInstance()->popupBox($this->aHtmlIds['create_block_popup_id'], _t('_adm_bp_txt_new_block_popup'), $oTemplate->parseHtmlByName('bp_add_block.html', array(
         	'action' => 'create',
             'form_id' => $aForm['form_attrs']['id'],
@@ -752,7 +733,6 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                 return array('msg' => _t('_adm_bp_err_block_edit'));
         }
 
-        bx_import('BxTemplStudioFunctions');
         $sContent = BxTemplStudioFunctions::getInstance()->popupBox($this->aHtmlIds['edit_block_popup_id'], _t('_adm_bp_txt_edit_block_popup', _t($aBlock['title'])), $oTemplate->parseHtmlByName('bp_add_block.html', array(
         	'action' => 'edit',
             'form_id' => $aForm['form_attrs']['id'],
@@ -797,7 +777,6 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             list($iImageId, $sImageAlign) = explode($this->sParamsDivider, $aBlock['content']);
 
         if(is_numeric($iImageId) && (int)$iImageId != 0) {
-            bx_import('BxDolStorage');
             if(!BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES)->deleteFile((int)$iImageId, 0))
                 return array('msg' => _t('_adm_bp_err_block_content_image_preview_delete'));
 
@@ -809,7 +788,6 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
     protected function actionUriGet()
     {
-        bx_import('BxDolStudioLanguagesUtils');
         $oLanguage = BxDolStudioLanguagesUtils::getInstance();
         $aLanguages = $oLanguage->getLanguages();
 
@@ -838,8 +816,6 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                 }
 
         $sUri = $sUri != "" ? uriGenerate($sUri, 'sys_objects_page', 'uri') : "";
-
-        bx_import('BxDolPermalinks');
         $sUrl = BxDolPermalinks::getInstance()->permalink($this->sPageBaseUrl . $sUri);
 
         return array('eval' => $this->getPageJsObject() . '.onGetUri(oData)', 'uri' => $sUri, 'url' => $sUrl);
@@ -847,8 +823,6 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
     protected function getSettingsOptions($aPage = array(), $bCreate = true, $bInputsOnly = false)
     {
-    	bx_import('BxDolPermalinks');
-
         $aForm = array(
             'form_attrs' => array(
                 'id' => 'adm-bp-settings-seo',
@@ -1500,7 +1474,6 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
     	if($aBlock['module'] != BX_DOL_STUDIO_MODULE_CUSTOM)
     		return;
 
-        bx_import('BxDolStudioLanguagesUtils');
         BxDolStudioLanguagesUtils::getInstance()->deleteLanguageString($aBlock['title']);
 
         //--- Process Lang block
@@ -1512,10 +1485,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             $iImageId = $sImageAlign = '';
             list($iImageId, $sImageAlign) = explode($this->sParamsDivider, $aBlock['content']);
 
-            if(is_numeric($iImageId) && (int)$iImageId != 0) {
-                bx_import('BxDolStorage');
+            if(is_numeric($iImageId) && (int)$iImageId != 0)
                 BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES)->deleteFile((int)$iImageId, 0);
-            }
         }
     }
 
@@ -1570,7 +1541,6 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
     {
         $sJsObject = $this->getPageJsObject();
 
-        bx_import('BxDolPermalinks');
         $oPermalinks = BxDolPermalinks::getInstance();
 
         return array(
@@ -1618,7 +1588,6 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             );
         }
 
-        bx_import('BxTemplStudioMenu');
         $oMenu = new BxTemplStudioMenu(array('template' => 'menu_side.html', 'menu_items' => $aTmplParams['menu']));
         $aTmplParams['menu'] = $oMenu->getCode();
 

@@ -7,12 +7,6 @@
  * @{
  */
 
-bx_import('BxDolModuleQuery');
-bx_import('BxTemplStudioWidgets');
-bx_import('BxTemplStudioDesigns');
-bx_import('BxTemplStudioLanguages');
-bx_import('BxTemplStudioModules');
-
 class BxDolStudioLauncher extends BxTemplStudioWidgets
 {
     protected $aIncludes;

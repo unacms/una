@@ -7,9 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplStudioPage');
-bx_import('BxDolStudioDashboardQuery');
-
 class BxDolStudioDashboard extends BxTemplStudioPage
 {
 	protected $aBlocks;
@@ -81,7 +78,6 @@ class BxDolStudioDashboard extends BxTemplStudioPage
 
 					$sValue = bx_process_input($sValue);
 
-					bx_import('BxDolCacheUtilities');
 					$oCacheUtilities = BxDolCacheUtilities::getInstance();
 
 					switch ($sValue) {
@@ -120,7 +116,6 @@ class BxDolStudioDashboard extends BxTemplStudioPage
 					break;
 
 				case 'permissions':                    
-					bx_import('BxDolStudioTools');
                     $oAdmTools = new BxDolStudioTools();
 
                     header( 'Content-type: text/html; charset=utf-8' );
@@ -129,7 +124,6 @@ class BxDolStudioDashboard extends BxTemplStudioPage
                     exit;
 
 				case 'server_audit':
-					bx_import('BxDolStudioToolsAudit');
 					$oAudit = new BxDolStudioToolsAudit();
             
                     header( 'Content-type: text/html; charset=utf-8' );
@@ -138,10 +132,7 @@ class BxDolStudioDashboard extends BxTemplStudioPage
             }
 
             if(!empty($aResult['message'])) {
-                bx_import('BxDolStudioTemplate');
                 $aResult['message'] = BxDolStudioTemplate::getInstance()->parseHtmlByName('page_action_result.html', array('content' => $aResult['message']));
-
-                bx_import('BxTemplStudioFunctions');
                 $aResult['message'] = BxTemplStudioFunctions::getInstance()->transBox('', $aResult['message']);
             }
 
@@ -181,7 +172,6 @@ class BxDolStudioDashboard extends BxTemplStudioPage
 
     protected function getCacheChartData($bAsString = true)
     {
-		bx_import('BxDolCacheUtilities');
 		$oCacheUtilities = BxDolCacheUtilities::getInstance();
 
     	$aChartData = array();

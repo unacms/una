@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolIO');
-
 define('BX_DOL_PERM_FILE', 'file');
 define('BX_DOL_PERM_DIR', 'dir');
 define('BX_DOL_PERM_EXE', 'exe');
@@ -197,9 +195,6 @@ EOF;
 
     function GenAuditPage()
     {
-        if (!class_exists('BxDolStudioToolsAudit'))
-            bx_import('BxDolStudioToolsAudit');
-
         $oAudit = new BxDolStudioToolsAudit();
         return $oAudit->generate();
     }
@@ -262,7 +257,6 @@ EOF;
     protected function _checkPermissionsModules(&$aMessages)
     {
         $bRet = true;
-        bx_import('BxDolModuleDb');
         $oDbModules = new BxDolModuleDb();
         $aModules = $oDbModules->getModules();
         foreach ($aModules as $a) {

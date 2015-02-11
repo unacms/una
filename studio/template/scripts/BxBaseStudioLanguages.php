@@ -8,9 +8,6 @@
  * @{
  */
 
-bx_import('BxDolStudioLanguages');
-bx_import('BxTemplStudioFunctions');
-
 class BxBaseStudioLanguages extends BxDolStudioLanguages
 {
     function __construct()

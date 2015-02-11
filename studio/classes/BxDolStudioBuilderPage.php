@@ -7,11 +7,9 @@
  * @{
  */
 
-bx_import('BxTemplStudioPage');
-bx_import('BxDolStudioBuilderPageQuery');
+bx_import('BxDolStudioUtils');
 
 define('BX_DOL_STUDIO_BP_SKELETONS', 'skeletons');
-
 define('BX_DOL_STUDIO_BP_TYPE_DEFAULT', BX_DOL_STUDIO_MODULE_SYSTEM);
 
 define('BX_DOL_STUDIO_BP_BLOCK_RAW', 'raw');
@@ -102,7 +100,6 @@ class BxDolStudioBuilderPage extends BxTemplStudioPage
 
         //--- Process Lang fields
         if($aBlock['type'] == BX_DOL_STUDIO_BP_BLOCK_LANG && isset($oForm->aInputs['content'])) {
-            bx_import('BxDolStudioLanguagesUtils');
             $oLanguage = BxDolStudioLanguagesUtils::getInstance();
 
             $sContentKey = '';
@@ -147,7 +144,6 @@ class BxDolStudioBuilderPage extends BxTemplStudioPage
 
     protected function addInArray($aInput, $sKey, $aValues)
     {
-        bx_import('BxDolStudioUtils');
         return BxDolStudioUtils::addInArray($aInput, $sKey, $aValues);
     }
 

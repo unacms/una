@@ -7,10 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplStudioGrid');
-bx_import('BxDolStudioTemplate');
-bx_import('BxDolStudioPermissionsQuery');
-
 define('BX_DOL_STUDIO_PERMISSIONS_LEVEL_ID_INT_MAX', round(log(BX_DOL_INT_MAX, 2)));
 
 class BxDolStudioPermissionsLevels extends BxTemplStudioGrid
@@ -33,12 +29,10 @@ class BxDolStudioPermissionsLevels extends BxTemplStudioGrid
             return false;
 
         if(is_numeric($aLevel['icon'])) {
-            bx_import('BxDolStorage');
             if(!BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES)->deleteFile((int)$aLevel['icon'], 0))
                 return false;
         }
 
-        bx_import('BxDolStudioLanguagesUtils');
         $oLanguage = BxDolStudioLanguagesUtils::getInstance();
         $oLanguage->deleteLanguageString($aLevel['name']);
         $oLanguage->deleteLanguageString($aLevel['description']);

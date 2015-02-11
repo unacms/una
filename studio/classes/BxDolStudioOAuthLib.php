@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolStudioOAuth');
-
 class BxDolStudioOAuthLib extends BxDolStudioOAuth implements iBxDolSingleton
 {
     public function __construct()

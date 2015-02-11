@@ -7,10 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplStudioGrid');
-bx_import('BxDolStudioTemplate');
-bx_import('BxDolStudioPolyglotQuery');
-
 class BxDolStudioPolyglotEtemplates extends BxTemplStudioGrid
 {
     public function __construct ($aOptions, $oTemplate = false)

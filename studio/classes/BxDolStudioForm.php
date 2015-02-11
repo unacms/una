@@ -7,9 +7,6 @@
  * @{
  */
 
-bx_import('BxBaseFormView');
-bx_import('BxDolStudioTemplate');
-
 define('BX_DOL_STUDIO_METHOD_DEFAULT', 'post');
 
 class BxDolStudioForm extends BxBaseFormView
@@ -71,7 +68,6 @@ class BxDolStudioForm extends BxBaseFormView
         if(!empty($_FILES[$sName]['tmp_name'])) {
             $iProfileId = getLoggedId();
 
-            bx_import('BxDolStorage');
             $sStorage = isset($aInput['storage_object']) && $aInput['storage_object'] != '' ? $aInput['storage_object'] : BX_DOL_STORAGE_OBJ_IMAGES;
             $oStorage = BxDolStorage::getObjectInstance($sStorage);
 
@@ -106,7 +102,6 @@ class BxDolStudioForm extends BxBaseFormView
             'update' => 'updateLanguageString'
         );
 
-        bx_import('BxDolStudioLanguagesUtils');
         $oLanguage = BxDolStudioLanguagesUtils::getInstance();
         $aLanguages = $oLanguage->getLanguagesInfo();
 
@@ -123,7 +118,6 @@ class BxDolStudioForm extends BxBaseFormView
 
     protected function processTranslationsKey($sType = 'insert')
     {
-        bx_import('BxDolStudioLanguagesUtils');
         $sLanguage = BxDolStudioLanguagesUtils::getInstance()->getCurrentLangName(false);
 
         foreach($this->aInputs as $sName => $aInput)
@@ -135,7 +129,6 @@ class BxDolStudioForm extends BxBaseFormView
 
     protected function processTranslationsValue ()
     {
-        bx_import('BxDolStudioLanguagesUtils');
         $aLanguages = BxDolStudioLanguagesUtils::getInstance()->getLanguages();
 
         foreach($this->aInputs as $sName => $aInput)
@@ -154,7 +147,6 @@ class BxDolStudioForm extends BxBaseFormView
         $sResult = '';
         switch($sType) {
             case 'insert':
-                bx_import('BxDolStudioUtils');
                 $sValue = !empty($sValue) ? BxDolStudioUtils::getSystemName($sValue) : $sPrefixDefault;
                 $sResult = $sValue . '_' . $sName . '_' . $iRand;
             break;
@@ -175,7 +167,6 @@ class BxDolStudioFormCheckerHelper extends BxDolFormCheckerHelper
         if(empty($sMethod) || empty($aName))
             return false;
 
-        bx_import('BxDolStudioLanguagesUtils');
         $aLanguages = BxDolStudioLanguagesUtils::getInstance()->getLanguages();
 
         foreach($aLanguages as $sLangName => $sLangTitle) {
@@ -196,7 +187,6 @@ class BxDolStudioFormCheckerHelper extends BxDolFormCheckerHelper
         if(empty($sMethod) || empty($aName))
             return false;
 
-        bx_import('BxDolStudioLanguagesUtils');
         $aLanguages = BxDolStudioLanguagesUtils::getInstance()->getLanguages();
 
         foreach($aLanguages as $sLangName => $sLangTitle) {
@@ -214,7 +204,6 @@ class BxDolStudioFormCheckerHelper extends BxDolFormCheckerHelper
 
     function checkTemplate($sVal)
     {
-        bx_import('BxDolModuleQuery');
         return strlen($sVal) > 0 && BxDolModuleQuery::getInstance()->isEnabled($sVal);
     }
 }

@@ -38,6 +38,9 @@
  * no alerts available
  *
  */
+
+bx_import('BxDolDb');
+
 class BxDolAlerts extends BxDol
 {
     public $sUnit;

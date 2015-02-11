@@ -7,10 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplStudioGrid');
-bx_import('BxDolStudioTemplate');
-bx_import('BxDolStudioNavigationQuery');
-
 class BxDolStudioNavigationItems extends BxTemplStudioGrid
 {
     protected $sModule = '';
@@ -50,7 +46,6 @@ class BxDolStudioNavigationItems extends BxTemplStudioGrid
     function deleteByItem(&$aItem)
     {
         if(is_numeric($aItem['icon']) && (int)$aItem['icon'] != 0) {
-            bx_import('BxDolStorage');
             if(!BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES)->deleteFile((int)$aItem['icon'], 0))
                 return false;
         }
@@ -58,7 +53,6 @@ class BxDolStudioNavigationItems extends BxTemplStudioGrid
         if((int)$this->_delete($aItem['id']) <= 0)
             return false;
 
-        bx_import('BxDolStudioLanguagesUtils');
         $oLanguage = BxDolStudioLanguagesUtils::getInstance();
         $oLanguage->deleteLanguageString($aItem['title_system']);
         $oLanguage->deleteLanguageString($aItem['title']);

@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplRss');
-
 class BxDolStudioRssModuleHelp extends BxTemplRss
 {
     function __construct($aObject)
@@ -18,7 +16,6 @@ class BxDolStudioRssModuleHelp extends BxTemplRss
 
     public function getUrl($mixedId)
     {
-    	bx_import('BxDolStudioModule');
 		return BxDolStudioModule::getObjectInstance($mixedId)->getRssHelpUrl();
     }
 }

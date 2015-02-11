@@ -8,9 +8,6 @@
  * @{
  */
 
-bx_import('BxDolStudioNavigationSets');
-bx_import('BxTemplStudioFormView');
-
 class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets
 {
     protected $sUrlViewItems;
@@ -94,7 +91,6 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
-            bx_import('BxDolStudioLanguagesUtils');
             $sLanguage = BxDolStudioLanguagesUtils::getInstance()->getCurrentLangName(false);
 
             $sName = BxDolForm::getSubmittedValue('title-' . $sLanguage, $aForm['form_attrs']['method']);
@@ -106,8 +102,8 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets
                 $aRes = array('msg' => _t('_adm_nav_err_sets_create'));
 
             $this->_echoResultJson($aRes, true);
-        } else {
-            bx_import('BxTemplStudioFunctions');
+        }
+        else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-nav-set-create-popup', _t('_adm_nav_txt_sets_create_popup'), $this->_oTemplate->parseHtmlByName('nav_add_set.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
                 'form' => $oForm->getCode(true),
@@ -204,7 +200,6 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets
             )
         );
 
-        bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView($aForm);
         $oForm->initChecker();
 
@@ -215,8 +210,8 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets
                 $aRes = array('msg' => _t('_adm_nav_err_sets_edit'));
 
             $this->_echoResultJson($aRes, true);
-        } else {
-            bx_import('BxTemplStudioFunctions');
+        }
+        else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-nav-set-edit-popup', _t('_adm_nav_txt_sets_edit_popup', _t($aSet['title'])), $this->_oTemplate->parseHtmlByName('nav_add_set.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
                 'form' => $oForm->getCode(true),
@@ -268,7 +263,6 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets
                 foreach($aItems as $aItem)
                     $oGridItems->deleteByItem($aItem);
 
-            bx_import('BxDolStudioLanguagesUtils');
             BxDolStudioLanguagesUtils::getInstance()->deleteLanguageString($aSet['title']);
 
             $aIdsAffected[] = $sId;
@@ -298,7 +292,6 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets
         parent::_addJsCss();
         $this->_oTemplate->addJs(array('jquery.form.min.js', 'navigation_sets.js'));
 
-        bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
         $oForm->addCssJs();
     }

@@ -8,10 +8,6 @@
  * @{
  */
 
-bx_import('BxDolStudioPage');
-bx_import('BxDolStudioTemplate');
-bx_import('BxTemplStudioFunctions');
-
 class BxBaseStudioPage extends BxDolStudioPage
 {
     function __construct($mixedPageName)
@@ -113,7 +109,6 @@ class BxBaseStudioPage extends BxDolStudioPage
             )
         );
 
-        bx_import('BxTemplStudioMenu');
         $oMenu = new BxTemplStudioMenu(array('template' => 'menu_top_toolbar.html', 'menu_items' => $aItems));
         $sMenuLeft = $oMenu->getCode();
 
@@ -151,7 +146,6 @@ class BxBaseStudioPage extends BxDolStudioPage
 
     public function getPageMenu($aMenu, $aMarkers = array())
     {
-        bx_import('BxTemplStudioMenu');
         $oMenu = new BxTemplStudioMenu(array('template' => 'menu_side.html', 'menu_items' => $aMenu));
         if(!empty($aMarkers))
             $oMenu->addMarkers($aMarkers);
@@ -163,7 +157,6 @@ class BxBaseStudioPage extends BxDolStudioPage
 
     protected function getPageCaptionHelp()
     {
-    	bx_import('BxDolRss');
     	$sContent = BxDolRss::getObjectInstance($this->sPageRssHelpObject)->getHolder($this->sPageRssHelpId, $this->iPageRssHelpLength, 0, false);
 
         $oTemplate = BxDolStudioTemplate::getInstance();
@@ -207,7 +200,6 @@ class BxBaseStudioPage extends BxDolStudioPage
             $aForm['inputs'][$aInput['name']] = $aInput;
         }
 
-        bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView($aForm);
 
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('page_caption_actions.html', array('content' => $oForm->getCode()));

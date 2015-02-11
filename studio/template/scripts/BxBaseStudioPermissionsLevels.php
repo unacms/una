@@ -8,9 +8,6 @@
  * @{
  */
 
-bx_import('BxDolStudioPermissionsLevels');
-bx_import('BxTemplStudioFormView');
-
 class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
 {
     public static $iBinMB = 1048576;
@@ -42,7 +39,6 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
 
             $mixedIcon = '';
             if(!empty($_FILES['Icon_image']['tmp_name'])) {
-                bx_import('BxDolStorage');
                 $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
 
                 $mixedIcon = $oStorage->storeFileFromForm($_FILES['Icon_image'], false, 0);
@@ -75,8 +71,8 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
                 $aRes = array('msg' => _t('_adm_prm_err_level_create'));
 
             $this->_echoResultJson($aRes, true);
-        } else {
-            bx_import('BxTemplStudioFunctions');
+        }
+        else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-prm-level-create-popup', _t('_adm_prm_txt_level_create_popup'), $this->_oTemplate->parseHtmlByName('prm_add_level.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
                 'form' => $oForm->getCode(true),
@@ -123,7 +119,6 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
             $bIconFont = !empty($sIconFont);
 
             if($bIconImageCur && ($bIconImageNew || $bIconFont)) {
-                bx_import('BxDolStorage');
                 $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
                 if(!$oStorage->deleteFile((int)$aLevel['icon'], 0)) {
                     $this->_echoResultJson(array('msg' => _t('_adm_prm_err_level_icon_image_remove')), true);
@@ -133,7 +128,6 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
 
             $sIcon = $sIconFont;
             if($bIconImageNew) {
-                bx_import('BxDolStorage');
                 $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
                 $sIcon = $oStorage->storeFileFromForm($_FILES['Icon_image'], false, 0);
                 if($sIcon === false) {
@@ -159,8 +153,8 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
                 $aRes = array('msg' => _t('_adm_prm_err_level_edit'));
 
             $this->_echoResultJson($aRes, true);
-        } else {
-            bx_import('BxTemplStudioFunctions');
+        }
+        else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-prm-level-edit-popup', _t('_adm_prm_txt_level_edit_popup', _t($aLevel['name'])), $this->_oTemplate->parseHtmlByName('prm_add_level.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
                 'form' => $oForm->getCode(true),
@@ -212,13 +206,11 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
             exit;
         }
 
-        if(is_numeric($aLevel['icon']) && (int)$aLevel['icon'] != 0) {
-            bx_import('BxDolStorage');
+        if(is_numeric($aLevel['icon']) && (int)$aLevel['icon'] != 0)
             if(!BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES)->deleteFile((int)$aLevel['icon'], 0)) {
                 $this->_echoResultJson(array());
                 exit;
             }
-        }
 
         if($this->oDb->updateLevels($aLevel['id'], array('icon' => '')) !== false)
             $this->_echoResultJson(array('grid' => $this->getCode(false), 'blink' => $iId, 'preview' => $this->_getIconPreview($aLevel['id']), 'eval' => $this->getJsObject() . ".onDeleteIcon(oData)"), true);
@@ -245,13 +237,11 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
         parent::_addJsCss();
         $this->_oTemplate->addJs(array('jquery.form.min.js', 'permissions_levels.js'));
 
-        bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
         $oForm->addCssJs();
     }
     protected function _getCellSwitcher ($mixedValue, $sKey, $aField, $aRow)
     {
-        bx_import('BxDolAcl');
         if(in_array($aRow['ID'], array(MEMBERSHIP_ID_NON_MEMBER, MEMBERSHIP_ID_ACCOUNT, MEMBERSHIP_ID_STANDARD, MEMBERSHIP_ID_UNCONFIRMED, MEMBERSHIP_ID_PENDING, MEMBERSHIP_ID_SUSPENDED)))
             return parent::_getCellDefault('', $sKey, $aField, $aRow);;
 
@@ -530,7 +520,6 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
                 $sIconImage = $sIconFont = "";
                 if(!empty($aLevel['icon'])) {
                     if(is_numeric($aLevel['icon']) && (int)$aLevel['icon'] != 0) {
-                        bx_import('BxDolStorage');
                         $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
 
                         $sIconImage = $oStorage->getFileUrlById((int)$aLevel['icon']);

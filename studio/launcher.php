@@ -19,10 +19,8 @@ bx_import('BxTemplStudioMenuTop');
 $oTopMenu = BxTemplStudioMenuTop::getInstance();
 $oTopMenu->setVisibleAll();
 
-bx_import('BxTemplStudioLauncher');
 $oPage = new BxTemplStudioLauncher();
 
-bx_import('BxDolStudioTemplate');
 $oTemplate = BxDolStudioTemplate::getInstance();
 $oTemplate->setPageNameIndex($oPage->getPageIndex());
 $oTemplate->setPageHeader($oPage->getPageHeader());

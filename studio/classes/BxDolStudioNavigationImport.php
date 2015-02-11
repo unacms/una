@@ -7,10 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplStudioGridNavigation');
-bx_import('BxDolStudioTemplate');
-bx_import('BxDolStudioNavigationQuery');
-
 class BxDolStudioNavigationImport extends BxTemplStudioGridNavigation
 {
     protected $sSet;

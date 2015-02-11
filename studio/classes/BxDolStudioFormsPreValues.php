@@ -7,10 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplStudioGrid');
-bx_import('BxDolStudioTemplate');
-bx_import('BxDolStudioFormsQuery');
-
 define('BX_DOL_STUDIO_FIELD_PRE_VALUE_INT_MAX', round(log(BX_DOL_INT_MAX, 2)));
 
 class BxDolStudioFormsPreValues extends BxTemplStudioGrid

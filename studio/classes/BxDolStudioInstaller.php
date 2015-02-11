@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolInstallerUtils');
-
 define("BX_DOL_STUDIO_INSTALLER_SUCCESS", 0);
 define("BX_DOL_STUDIO_INSTALLER_FAILED", 1);
 
@@ -201,15 +199,12 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 
             $iModuleId = $this->oDb->insertModule($this->_aConfig);
 
-            bx_import('BxDolModule');
             $sTitleKey = BxDolModule::getTitleKey($this->_aConfig['home_uri']);
 
-            bx_import('BxDolStudioLanguagesUtils');
             $oLanguages = BxDolStudioLanguagesUtils::getInstance();
             $oLanguages->addLanguageString($sTitleKey, $this->_aConfig['title']);
             $oLanguages->compileLanguage();
 
-            bx_import('BxDolStudioInstallerUtils');
             BxDolStudioInstallerUtils::getInstance()->checkModules();
 
             $aFiles = array();
@@ -286,10 +281,8 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         if($aResult['result']) {
             $iModuleId = $this->oDb->deleteModule($this->_aConfig);
 
-            bx_import('BxDolModule');
             $sTitleKey = BxDolModule::getTitleKey($this->_aConfig['home_uri']);
 
-            bx_import('BxDolStudioLanguagesUtils');
             $oLanguages = BxDolStudioLanguagesUtils::getInstance();
             $oLanguages->deleteLanguageString($sTitleKey);
             $oLanguages->compileLanguage();
@@ -337,7 +330,6 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 
     public function recompile($aParams)
     {
-        bx_import('BxDolStudioLanguagesUtils');
         $oLanguages = BxDolStudioLanguagesUtils::getInstance();
 
         $aResult = array('message' => '', 'result' => false);
@@ -574,7 +566,6 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
     }
     protected function actionInstallLanguage($sOperation)
     {
-        bx_import('BxDolStudioLanguagesUtils');
         $oLanguages = BxDolStudioLanguagesUtils::getInstance();
 
         $sLanguage = isset($this->_aConfig['home_uri']) ? $this->_aConfig['home_uri'] : '';
@@ -590,7 +581,6 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         if(!isset($this->_aConfig['language_category']) || empty($this->_aConfig['language_category']))
             return BX_DOL_STUDIO_INSTALLER_FAILED;
 
-        bx_import('BxDolStudioLanguagesUtils');
         $oLanguages = BxDolStudioLanguagesUtils::getInstance();
 
         $bResult = true;
@@ -652,7 +642,6 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 		if(!in_array($sOperation, array('uninstall')) || empty($this->_aConfig['connections'])) 
         	return BX_DOL_STUDIO_INSTALLER_FAILED;
 
-    	bx_import('BxDolConnection');
 		foreach($this->_aConfig['connections'] as $sObjectConnections => $a) {
 			$o = BxDolConnection::getObjectInstance($sObjectConnections);
 			if(!$o)
@@ -687,7 +676,6 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 		if(empty($this->_aConfig['menu_triggers'])) 
         	return BX_DOL_STUDIO_INSTALLER_FAILED;
 
-		bx_import('BxDolMenu');
 		foreach($this->_aConfig['menu_triggers'] as $sMenuTriggerName)
 			BxDolMenu::processMenuTrigger($sMenuTriggerName);
 
@@ -705,7 +693,6 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
     	if(empty($this->_aConfig['page_triggers'])) 
         	return BX_DOL_STUDIO_INSTALLER_FAILED;
 
-		bx_import('BxDolPage');
         foreach($this->_aConfig['page_triggers'] as $sPageTriggerName)
 			BxDolPage::processPageTrigger($sPageTriggerName);
 
@@ -717,7 +704,6 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         if(!in_array($sOperation, array('install', 'uninstall', 'enable', 'disable'))) 
         	return BX_DOL_STUDIO_INSTALLER_FAILED;
 
-        bx_import('BxDolProfileQuery');
         $o = BxDolProfileQuery::getInstance();
         $o->processDeletedProfiles();
 
@@ -745,14 +731,12 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 		$bSetModulePendingUninstall = false;
 
         // queue for deletion storage files        
-        bx_import('BxDolStorage');
         foreach($this->_aConfig['storages'] as $s)
 			if(($o = BxDolStorage::getObjectInstance($s)) && $o->queueFilesForDeletionFromObject())
                 $bSetModulePendingUninstall = true;
 
         // delete comments and queue for deletion comments attachments
         $iFiles = 0;
-        bx_import('BxDolCmts');
         BxDolCmts::onModuleUninstall($this->_aConfig['name'], $iFiles);
         if($iFiles)
 			$bSetModulePendingUninstall = true;
@@ -788,7 +772,6 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
     	if(empty($this->_aConfig['transcoders'])) 
         	return BX_DOL_STUDIO_INSTALLER_FAILED;
 
-		bx_import('BxDolTranscoderImage');
 		BxDolTranscoderImage::registerHandlersArray($this->_aConfig['transcoders']);
 
 		return BX_DOL_STUDIO_INSTALLER_SUCCESS;
@@ -805,7 +788,6 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
     	if(empty($this->_aConfig['transcoders'])) 
         	return BX_DOL_STUDIO_INSTALLER_FAILED;
 
-		bx_import('BxDolTranscoderImage');
 		BxDolTranscoderImage::unregisterHandlersArray($this->_aConfig['transcoders']);
         BxDolTranscoderImage::cleanupObjectsArray($this->_aConfig['transcoders']);
 
@@ -865,7 +847,6 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 		if(!$bHtmlResponse)
 			return $sTitle . $sContent;
 
-		bx_import('BxDolStudioTemplate');
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('mod_action_result_step.html', array(
         	'color' => $bResult ? 'green' : 'red',
             'title' => $sTitle,
@@ -878,7 +859,6 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         $oFile = null;
 
         if($this->_bUseFtp) {
-            bx_import('BxDolFtp');
             $oFile = new BxDolFtp(isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost', getParam('sys_ftp_login'), getParam('sys_ftp_password'), getParam('sys_ftp_dir'));
 
             if(!$oFile->connect())
@@ -887,10 +867,8 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             if(!$oFile->isTrident())
                 return null;
         }
-        else {
-            bx_import('BxDolFile');
+        else
             $oFile = BxDolFile::getInstance();
-        }
 
         return $oFile;
     }

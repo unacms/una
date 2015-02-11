@@ -345,7 +345,6 @@ class BxDolStudioToolsAudit extends BxDol
 
         $sEmailToCkeckMailSending = class_exists('BxDolDb') && BxDolDb::getInstance() ? BxDolDb::getInstance()->getParam('site_email') : '';
 
-        bx_import('BxDolUpgrader');
         $oUpgrader = new BxDolUpgrader();
         if (!($sLatestVer = $oUpgrader->getLatestVersionNumber()))
             $sLatestVer = 'undefined';

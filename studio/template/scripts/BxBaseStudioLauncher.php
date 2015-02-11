@@ -10,9 +10,6 @@
 
 define('BX_DOL_STUDIO_LAUNCHER_JS_OBJECT', 'oBxDolStudioLauncher');
 
-bx_import('BxDolStudioLauncher');
-bx_import('BxDolStudioTemplate');
-
 class BxBaseStudioLauncher extends BxDolStudioLauncher
 {
     public function __construct()

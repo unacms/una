@@ -7,10 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplStudioGrid');
-bx_import('BxDolStudioTemplate');
-bx_import('BxDolStudioFormsQuery');
-
 class BxDolStudioFormsDisplays extends BxTemplStudioGrid
 {
     protected $sModule = '';

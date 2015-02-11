@@ -8,9 +8,6 @@
  * @{
  */
 
-bx_import('BxDolStudioModules');
-bx_import('BxDolStudioTemplate');
-
 class BxBaseStudioModules extends BxDolStudioModules
 {
     function __construct()

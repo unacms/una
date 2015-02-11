@@ -8,8 +8,6 @@
  * @{
  */
 
-bx_import('BxTemplStudioGrid');
-
 class BxBaseStudioGridNavigation extends BxTemplStudioGrid
 {
     function __construct($aOptions, $oTemplate = false)
@@ -22,7 +20,6 @@ class BxBaseStudioGridNavigation extends BxTemplStudioGrid
         if(empty($sGetItemsMethod))
             return '';
 
-        bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
 
         $aInputModules = array(
@@ -48,7 +45,6 @@ class BxBaseStudioGridNavigation extends BxTemplStudioGrid
 
     public function getSearchInput()
     {
-        bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
 
         $aInputSearch = array(

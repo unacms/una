@@ -7,9 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplStudioPage');
-bx_import('BxDolStudioDesignerQuery');
-
 define('BX_DOL_STUDIO_DSG_TYPE_GENERAL', 'general');
 define('BX_DOL_STUDIO_DSG_TYPE_LOGO', 'logo');
 define('BX_DOL_STUDIO_DSG_TYPE_ICON', 'icon');
@@ -79,8 +76,6 @@ class BxDolStudioDesigner extends BxTemplStudioPage
         $iProfileId = getLoggedId();
 
         if(!empty($_FILES['image']['tmp_name'])) {
-            bx_import('BxDolStorage');
-
             $oStorage = BxDolStorage::getObjectInstance('sys_images_custom');
 
             if(!$this->deleteLogo())
@@ -106,7 +101,6 @@ class BxDolStudioDesigner extends BxTemplStudioPage
     {
         $iProfileId = getLoggedId();
 
-        bx_import('BxDolStorage');
         $oStorage = BxDolStorage::getObjectInstance('sys_images_custom');
 
         $iId = (int)getParam('sys_site_logo');
@@ -121,7 +115,6 @@ class BxDolStudioDesigner extends BxTemplStudioPage
     {
         $iProfileId = getLoggedId();
 
-        bx_import('BxDolStorage');
         $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
 
         $iId = (int)getParam('sys_site_icon');

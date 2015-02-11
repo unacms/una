@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplRss');
-
 class BxDolStudioRssPageHelp extends BxTemplRss
 {
     function __construct($aObject)
@@ -18,7 +16,6 @@ class BxDolStudioRssPageHelp extends BxTemplRss
 
     public function getUrl($mixedId)
     {
-    	bx_import('BxDolStudioPage');
     	$oPage = new BxDolStudioPage($mixedId);
 		return $oPage->getRssHelpUrl();
     }

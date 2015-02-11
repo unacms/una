@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolStudioPageQuery');
-
 class BxDolStudioDesignerQuery extends BxDolStudioPageQuery
 {
     function __construct()

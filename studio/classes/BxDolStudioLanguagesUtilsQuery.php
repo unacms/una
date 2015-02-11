@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolLanguagesQuery');
-
 class BxDolStudioLanguagesUtilsQuery extends BxDolLanguagesQuery
 {
     function __construct()

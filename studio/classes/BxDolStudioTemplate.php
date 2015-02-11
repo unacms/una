@@ -8,10 +8,7 @@
  */
 
 define('BX_DOL_STUDIO_TEMPLATE_DEFAULT_CODE', 'uni');
-
 define('BX_PAGE_COLUMN_DUAL', 3); ///< page, with 2 columns
-
-bx_import('BxDolTemplate');
 
 class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton
 {
@@ -79,7 +76,6 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton
             'jquery.dolPopup.js',
         ));
 
-        bx_import('BxTemplStudioConfig');
         $this->_oConfigTemplate = BxTemplStudioConfig::getInstance();
     }
 
@@ -103,7 +99,6 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton
                 $sRet = $this->_processJsOptions();
                 break;
             case 'menu_top':
-                bx_import('BxTemplStudioMenuTop');
                 $sRet = BxTemplStudioMenuTop::getInstance()->getCode();
                 break;
             case 'copyright':
@@ -166,11 +161,9 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton
         $aType2Method = array('image' => 'getImageUrl', 'icon' => 'getIconUrl');
 
         //--- Check in System Storage.
-        if(is_numeric($mixedId) && (int)$mixedId > 0) {
-            bx_import('BxDolStorage');
+        if(is_numeric($mixedId) && (int)$mixedId > 0)
             if(($sResult = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES)->getFileUrlById((int)$mixedId)) !== false)
                 $sUrl = $sResult;
-        }
 
         //--- Check in template folders.
         if($sUrl == "" && is_string($mixedId) && strpos($mixedId, '.') !== false)

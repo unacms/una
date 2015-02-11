@@ -8,9 +8,6 @@
  * @{
  */
 
-bx_import('BxDolStudioStore');
-bx_import('BxTemplStudioFunctions');
-
 class BxBaseStudioStore extends BxDolStudioStore
 {
     protected $iPerPageDefault = 24;
@@ -59,7 +56,6 @@ class BxBaseStudioStore extends BxDolStudioStore
                 'selected' => $sMenuItem == $this->sPage
             );
 
-        bx_import('BxDolStudioCart');
         $iCounter = BxDolStudioCart::getInstance()->getCount();
 
         $aMarkers = array(
@@ -147,7 +143,6 @@ class BxBaseStudioStore extends BxDolStudioStore
 
 	        $aProducts = $this->loadFeatured($iStart, $iPerPage + 1);
 
-	        bx_import('BxTemplPaginate');
 	        $oPaginate = new BxTemplPaginate(array(
 	            'start' => $iStart,
 	            'per_page' => $iPerPage,
@@ -206,7 +201,6 @@ class BxBaseStudioStore extends BxDolStudioStore
 
         $aProducts = $this->loadTag($sTag, $iStart, $iPerPage + 1);
 
-        bx_import('BxTemplPaginate');
         $oPaginate = new BxTemplPaginate(array(
             'start' => $iStart,
             'per_page' => $iPerPage,
@@ -288,7 +282,6 @@ class BxBaseStudioStore extends BxDolStudioStore
         $mixedVendor = bx_get('vendor');
         $mixedProducts = bx_get('products');
         if($mixedVendor !== false && $mixedProducts !== false) {
-            bx_import('BxDolStudioCart');
             $oCart = BxDolStudioCart::getInstance();
 
             $aProducts = explode(',', base64_decode($mixedProducts));
@@ -702,7 +695,6 @@ class BxBaseStudioStore extends BxDolStudioStore
 
     private function getDownloadedModules($bNamesOnly = true)
     {
-		bx_import('BxDolStudioInstallerUtils');
 		$aModules = BxDolStudioInstallerUtils::getInstance()->getModules(false);
 
         return $bNamesOnly ? array_keys($aModules) : $aModules;

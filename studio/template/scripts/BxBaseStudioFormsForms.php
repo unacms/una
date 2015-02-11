@@ -8,9 +8,6 @@
  * @{
  */
 
-bx_import('BxDolStudioFormsForms');
-bx_import('BxTemplStudioFormView');
-
 class BxBaseStudioFormsForms extends BxDolStudioFormsForms
 {
     protected $sUrlViewDisplays;
@@ -119,8 +116,8 @@ class BxBaseStudioFormsForms extends BxDolStudioFormsForms
                 $aRes = array('msg' => _t('_adm_form_err_forms_edit'));
 
             $this->_echoResultJson($aRes, true);
-        } else {
-            bx_import('BxTemplStudioFunctions');
+        }
+        else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-form-forms-edit-popup', _t('_adm_form_txt_forms_edit_popup', _t($aFormData['title'])), $this->_oTemplate->parseHtmlByName('form_add_form.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
                 'form' => $oForm->getCode(true),
@@ -152,7 +149,6 @@ class BxBaseStudioFormsForms extends BxDolStudioFormsForms
         parent::_addJsCss();
         $this->_oTemplate->addJs(array('jquery.form.min.js', 'forms_forms.js'));
 
-        bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
         $oForm->addCssJs();
     }
@@ -184,7 +180,6 @@ class BxBaseStudioFormsForms extends BxDolStudioFormsForms
 
         $sContent = "";
 
-        bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
 
         $aInputModules = array(

@@ -8,8 +8,6 @@
  * @{
  */
 
-bx_import('BxDolStudioGrid');
-
 class BxBaseStudioGrid extends BxDolStudioGrid
 {
     function __construct($aOptions, $oTemplate = false)
@@ -27,7 +25,6 @@ class BxBaseStudioGrid extends BxDolStudioGrid
         if(empty($sGetItemsMethod))
             return '';
 
-        bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
 
         $aInputModules = array(

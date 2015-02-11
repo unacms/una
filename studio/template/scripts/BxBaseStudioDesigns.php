@@ -8,10 +8,6 @@
  * @{
  */
 
-bx_import('BxDolStudioDesigns');
-bx_import('BxTemplStudioFormView');
-bx_import('BxTemplStudioFunctions');
-
 class BxBaseStudioDesigns extends BxDolStudioDesigns
 {
     function __construct()

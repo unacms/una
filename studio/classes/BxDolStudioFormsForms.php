@@ -7,10 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplStudioGrid');
-bx_import('BxDolStudioTemplate');
-bx_import('BxDolStudioFormsQuery');
-
 class BxDolStudioFormsForms extends BxTemplStudioGrid
 {
     public function __construct ($aOptions, $oTemplate = false)

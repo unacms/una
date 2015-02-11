@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolStudioPageQuery');
-
 class BxDolStudioWidgetsQuery extends BxDolStudioPageQuery implements iBxDolSingleton
 {
     function __construct()

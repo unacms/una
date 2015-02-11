@@ -7,9 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplStudioPage');
-bx_import('BxDolStudioPolyglotQuery');
-
 define('BX_DOL_STUDIO_PGT_TYPE_SETTINGS', 'settings');
 define('BX_DOL_STUDIO_PGT_TYPE_KEYS', 'keys');
 define('BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES', 'etemplates');
@@ -38,7 +35,6 @@ class BxDolStudioPolyglot extends BxTemplStudioPage
 
 		$sAction = bx_process_input($sAction);
 
-		bx_import('BxDolStudioLanguagesUtils');
 		$oLanguages = BxDolStudioLanguagesUtils::getInstance();
 
 		$aResult = array('code' => 1, 'message' => _t('_adm_pgt_err_cannot_process_action'));

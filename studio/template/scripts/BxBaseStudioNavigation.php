@@ -8,8 +8,6 @@
  * @{
  */
 
-bx_import('BxDolStudioNavigation');
-
 class BxBaseStudioNavigation extends BxDolStudioNavigation
 {
     protected $sSubpageUrl;
@@ -100,7 +98,6 @@ class BxBaseStudioNavigation extends BxDolStudioNavigation
 
     protected function getGridObject($sObjectName)
     {
-        bx_import('BxDolGrid');
         $oGrid = BxDolGrid::getObjectInstance($sObjectName);
         if(!$oGrid)
             return '';
@@ -110,9 +107,6 @@ class BxBaseStudioNavigation extends BxDolStudioNavigation
 
     protected function getGrid($sObjectName)
     {
-        $oTemplate = BxDolStudioTemplate::getInstance();
-
-        bx_import('BxDolGrid');
         $oGrid = BxDolGrid::getObjectInstance($sObjectName);
         if(!$oGrid)
             return '';
@@ -129,7 +123,7 @@ class BxBaseStudioNavigation extends BxDolStudioNavigation
             )
         );
 
-        return $oTemplate->parseHtmlByName('navigation.html', $aTmplVars);
+        return BxDolStudioTemplate::getInstance()->parseHtmlByName('navigation.html', $aTmplVars);
     }
 }
 

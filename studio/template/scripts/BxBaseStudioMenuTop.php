@@ -8,8 +8,6 @@
  * @{
  */
 
-bx_import('BxDolStudioMenuTop');
-
 class BxBaseStudioMenuTop extends BxDolStudioMenuTop implements iBxDolSingleton
 {
     function __construct()
@@ -45,8 +43,6 @@ class BxBaseStudioMenuTop extends BxDolStudioMenuTop implements iBxDolSingleton
 
     function getCode()
     {
-        bx_import('BxTemplStudioMenu');
-
         $aTmplVars = array();
         foreach($this->aItems as $sPosition => $mixedItems) {
             if(!$this->aVisible[$sPosition])

@@ -7,9 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplStudioPage');
-bx_import('BxDolStudioNavigationQuery');
-
 define('BX_DOL_STUDIO_NAV_TYPE_MENUS', 'menus');
 define('BX_DOL_STUDIO_NAV_TYPE_SETS', 'sets');
 define('BX_DOL_STUDIO_NAV_TYPE_ITEMS', 'items');

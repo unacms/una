@@ -7,10 +7,6 @@
  * @{
  */
 
-bx_import('BxDol');
-bx_import('BxDolGrid');
-bx_import('BxDolStudioFormsQuery');
-
 class BxDolStudioFormsField extends BxDol
 {
     protected $oDb;
@@ -81,19 +77,16 @@ class BxDolStudioFormsField extends BxDol
 
     protected function getSystemName($sValue)
     {
-        bx_import('BxDolStudioUtils');
         return BxDolStudioUtils::getSystemName($sValue);
     }
 
     protected function getClassName($sValue)
     {
-        bx_import('BxDolStudioUtils');
         return BxDolStudioUtils::getClassName($sValue);
     }
 
     protected function addInArray($aInput, $sKey, $aValues)
     {
-        bx_import('BxDolStudioUtils');
         return BxDolStudioUtils::addInArray($aInput, $sKey, $aValues);
     }
 }

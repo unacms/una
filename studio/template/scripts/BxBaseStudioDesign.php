@@ -8,9 +8,6 @@
  * @{
  */
 
-bx_import('BxDolStudioTemplate');
-bx_import('BxDolStudioDesign');
-
 class BxBaseStudioDesign extends BxDolStudioDesign
 {
     protected $aMenuItems = array(
@@ -80,15 +77,12 @@ class BxBaseStudioDesign extends BxDolStudioDesign
 
     protected function getSettings()
     {
-        $oTemplate = BxDolStudioTemplate::getInstance();
-
-        bx_import('BxTemplStudioSettings');
         $oPage = new BxTemplStudioSettings($this->sTemplate);
 
         $aTmplVars = array(
             'bx_repeat:blocks' => $oPage->getPageCode(),
         );
-        return $oTemplate->parseHtmlByName('design.html', $aTmplVars);
+        return BxDolStudioTemplate::getInstance()->parseHtmlByName('design.html', $aTmplVars);
     }
 }
 

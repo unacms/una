@@ -8,7 +8,6 @@
  */
 
 bx_import('BxDolLanguages');
-bx_import('BxDolInstallerUtils');
 
 define('BX_DOL_UNITY_URL_ROOT', 'http://www.boonex.com/');
 define('BX_DOL_UNITY_URL_MARKET', BX_DOL_UNITY_URL_ROOT . 'market/');
@@ -139,7 +138,6 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
     {
         $aUpdates = array();
 
-        bx_import('BxDolStudioTemplate');
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         $aInstalledInfo = $this->getInstalledInfo();
@@ -177,10 +175,8 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
     {
     	$aResult = array();
 
-    	if(!is_array($mixedModule)) {
-    		bx_import('BxDolModuleQuery');
+    	if(!is_array($mixedModule))
 			$mixedModule = BxDolModuleQuery::getInstance()->{is_numeric($mixedModule) ? 'getModuleById' : 'getModuleByName'}($mixedModule); 
-    	}
 
     	if(empty($mixedModule) || !is_array($mixedModule))
     		return $aResult;
@@ -295,7 +291,6 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
     	else
 			$aProducts = $this->getAccessObject(false)->load(BX_DOL_UNITY_URL_MARKET . 'json_browse_purchased', array('key' => getParam('sys_oauth_key')));
 
-    	bx_import('BxDolModuleQuery');
     	$oModuleDb = BxDolModuleQuery::getInstance();
 
     	$oModuleDb->updateModule(array('hash' => ''));
@@ -308,7 +303,6 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
     public function checkUpdates($bAuthorizedAccess = false)
     {
-		bx_import('BxDolModuleQuery');
 		$aModules = BxDolModuleQuery::getInstance()->getModules();
 
         $aProducts = array();
@@ -343,7 +337,6 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
     public function downloadUpdatePublic($sModuleName, $bAutoUpdate = false)
     {
-    	bx_import('BxDolModuleQuery');
 		$aModule = BxDolModuleQuery::getInstance()->getModuleByName($sModuleName);
 
 		$aItem = $this->getAccessObject(false)->load(BX_DOL_UNITY_URL_MARKET . 'json_download_update', array(
@@ -500,7 +493,6 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 	        if(empty($sLogin) || empty($sPassword) || empty($sPath))
 	            return _t('_adm_str_err_no_ftp_info');
 	
-	        bx_import('BxDolFtp');
 	        $oFile = new BxDolFtp($_SERVER['HTTP_HOST'], $sLogin, $sPassword, $sPath);
 	
 	        if(!$oFile->connect())
@@ -509,10 +501,8 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 	        if(!$oFile->isTrident())
 	            return _t('_adm_str_err_destination_not_valid');
         }
-        else {
-        	bx_import('BxDolFile');
+        else
         	$oFile = BxDolFile::getInstance();
-        }
 
         $aConfig = self::getModuleConfig($sPackagePath . 'install/config.php');
         if(empty($aConfig) || !is_array($aConfig) || empty($aConfig['home_dir']))
@@ -574,7 +564,6 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
     private function getInstalledInfo()
     {
-        bx_import('BxDolModuleQuery');
         $aModules = BxDolModuleQuery::getInstance()->getModules();
 
         $aInstalledInfo = array();
@@ -586,7 +575,6 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
     private function addTransientJob($sName, $sAction, $aParams)
     {
-		bx_import('BxDolCronQuery');
 		if(BxDolCronQuery::getInstance()->addTransientJobService($sName, array('system', $sAction, $aParams, 'DolStudioInstallerUtils')))
 			return true;
 
@@ -602,7 +590,6 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
     private function emailNotifyModulesUpgrade($sResult, $aData)
     {
-    	bx_import('BxDolModuleQuery');
 		$oModuleQuery = BxDolModuleQuery::getInstance();
 
     	$sConclusion = '';

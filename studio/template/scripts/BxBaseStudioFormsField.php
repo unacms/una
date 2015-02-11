@@ -8,12 +8,6 @@
  * @{
  */
 
-bx_import('BxDolStudioTemplate');
-bx_import('BxDolStudioFormsField');
-bx_import('BxDolStudioLanguagesUtils');
-bx_import('BxTemplStudioFormView');
-bx_import('BxTemplStudioFunctions');
-
 class BxBaseStudioFormsField extends BxDolStudioFormsField
 {
     protected $aForm;
@@ -79,7 +73,6 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
                 'title' => $sTitle
             );
 
-        bx_import('BxTemplStudioMenu');
         $oMenu = new BxTemplStudioMenu(array('template' => 'menu_vertical.html', 'menu_items' => $aMenu));
         $this->aForm['inputs']['type']['content'] = $oMenu->getCode();
     }
@@ -111,7 +104,6 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
             $sInputObject = $oForm->getCleanValue('object');
 
             //--- Process field name.
-            bx_import('BxDolStudioLanguagesUtils');
             $sLanguage = BxDolStudioLanguagesUtils::getInstance()->getCurrentLangName(false);
             $sCaption = BxDolForm::getSubmittedValue('caption-' . $sLanguage, $aForm['form_attrs']['method']);
 

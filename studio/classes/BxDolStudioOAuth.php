@@ -7,7 +7,6 @@
  * @{
  */
 
-bx_import('BxDolSession');
 bx_import('BxDolStudioInstallerUtils');
 
 define('BX_DOL_OAUTH_URL_BASE', BX_DOL_UNITY_URL_ROOT . 'scripts_public/');

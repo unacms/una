@@ -8,8 +8,6 @@
  * @{
  */
 
-bx_import('BxDolStudioWidgets');
-
 class BxBaseStudioWidgets extends BxDolStudioWidgets
 {
     public function __construct($mixedPageName)
@@ -163,10 +161,8 @@ class BxBaseStudioWidgets extends BxDolStudioWidgets
 
         $sUrl = $oTemplate->getIconUrl($aWidget['icon']);
         if(empty($sUrl)) {
-        	bx_import('BxDolModuleQuery');
 	        $aModule = BxDolModuleQuery::getInstance()->getModuleByName($aWidget['module']);
 
-        	bx_import('BxDolStudioUtils');
             $sUrl = BxDolStudioUtils::getIconDefault($aModule['type']);
         }
 

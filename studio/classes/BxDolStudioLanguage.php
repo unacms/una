@@ -7,14 +7,8 @@
  * @{
  */
 
-bx_import('BxDolModuleQuery');
-bx_import('BxTemplStudioPage');
-bx_import('BxDolStudioLanguagesQuery');
-
 define('BX_DOL_STUDIO_LANG_DEFAULT', BX_DOL_LANGUAGE_DEFAULT);
-
 define('BX_DOL_STUDIO_LANG_TYPE_SETTINGS', 'settings');
-
 define('BX_DOL_STUDIO_LANG_TYPE_DEFAULT', BX_DOL_STUDIO_LANG_TYPE_SETTINGS);
 
 class BxDolStudioLanguage extends BxTemplStudioPage
@@ -87,14 +81,12 @@ class BxDolStudioLanguage extends BxTemplStudioPage
         if($aLanguage['uri'] == $sLanguageDefault)
             return array('code' => 2, 'message' => _t('_adm_pgt_err_deactivate_default'));
 
-        bx_import('BxDolStudioInstallerUtils');
         $oInstallerUtils = BxDolStudioInstallerUtils::getInstance();
 
         $aResult = (int)$aLanguage['enabled'] == 0 ? $oInstallerUtils->perform($aLanguage['path'], 'enable') : $oInstallerUtils->perform($aLanguage['path'], 'disable');
         if($aResult['code'] != 0)
             return $aResult;
 
-        bx_import('BxDolStudioTemplate');
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         $aResult = array('code' => 0, 'message' => _t('_adm_scs_operation_done'));

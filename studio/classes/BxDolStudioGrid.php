@@ -7,9 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplGrid');
-bx_import('BxDolStudioUtils');
-
 define('BX_DOL_STUDIO_GRID_PARAMS_DIVIDER', '#-#');
 
 class BxDolStudioGrid extends BxTemplGrid

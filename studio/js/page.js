@@ -64,7 +64,7 @@ BxDolStudioPage.prototype.togglePopup = function(sName, oLink) {
 		case 'help':
 			oPopupOptions = $.extend({}, oPopupOptions, {
 				onShow: function() {
-					var oPopup = $(this);
+					var oPopup = $(sId);
 					var oPopupRss = oPopup.find('.RSSAggrCont');
 					if(!oPopupRss.find('.bx-loading-ajax').length)
 						return;

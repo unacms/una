@@ -7,10 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplStudioGrid');
-bx_import('BxDolStudioTemplate');
-bx_import('BxDolStudioPolyglotQuery');
-
 define('BX_DOL_STUDIO_PK_PREVIEW', 100);
 
 class BxDolStudioPolyglotKeys extends BxTemplStudioGrid
@@ -38,7 +34,6 @@ class BxDolStudioPolyglotKeys extends BxTemplStudioGrid
         foreach($aLanguages as $iLanguageId)
             $aStrings[$iLanguageId] = $oForm->getCleanValue('language_' . $iLanguageId);
 
-        bx_import('BxDolStudioLanguagesUtils');
         $mixedResult = BxDolStudioLanguagesUtils::getInstance()->addLanguageString($sKey, $aStrings, 0, $iCategoryId);
         if($mixedResult === false)
             return _t('_adm_pgt_err_create_key');
@@ -57,7 +52,6 @@ class BxDolStudioPolyglotKeys extends BxTemplStudioGrid
         foreach($aLanguages as $iLanguageId)
             $aStrings[$iLanguageId] = $oForm->getCleanValue('language_' . $iLanguageId);
 
-        bx_import('BxDolStudioLanguagesUtils');
         if(!BxDolStudioLanguagesUtils::getInstance()->updateLanguageStringById($iId, $aStrings))
             return _t('_adm_pgt_err_save');
 

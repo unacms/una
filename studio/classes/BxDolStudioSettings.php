@@ -7,9 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplStudioPage');
-bx_import('BxDolStudioSettingsQuery');
-
 define('BX_DOL_STUDIO_STG_TYPE_SYSTEM', 'system');
 define('BX_DOL_STUDIO_STG_TYPE_DEFAULT', BX_DOL_STUDIO_STG_TYPE_SYSTEM);
 

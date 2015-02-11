@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolStudioInstaller');
-
 class BxDolStudioUpdater extends BxDolStudioInstaller
 {
     public function __construct($aConfig)
@@ -158,7 +156,6 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
         if(empty($aConfig) || !is_array($aConfig))
             return BX_DOL_STUDIO_INSTALLER_FAILED;
 
-    	bx_import('BxDolStudioLanguagesUtils');
         $oLanguages = BxDolStudioLanguagesUtils::getInstance();
         $aLanguages = $oLanguages->getLanguages();
 
@@ -182,7 +179,6 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
         if(empty($aConfig) || !is_array($aConfig) || empty($aConfig['module_uri']))
             return BX_DOL_STUDIO_INSTALLER_FAILED;
 
-		bx_import('BxDolStudioLanguagesUtils');
         $oLanguages = BxDolStudioLanguagesUtils::getInstance();
         $aLanguages = $oLanguages->getLanguages();
 

@@ -8,8 +8,6 @@
  * @{
  */
 
-bx_import('BxDolStudioForms');
-
 class BxBaseStudioForms extends BxDolStudioForms
 {
     protected $sSubpageUrl;
@@ -147,7 +145,6 @@ class BxBaseStudioForms extends BxDolStudioForms
 
     protected function getGridObject($sObjectName)
     {
-        bx_import('BxDolGrid');
         $oGrid = BxDolGrid::getObjectInstance($sObjectName);
         if(!$oGrid)
             return '';
@@ -157,9 +154,6 @@ class BxBaseStudioForms extends BxDolStudioForms
 
     protected function getGrid($sObjectName)
     {
-        $oTemplate = BxDolStudioTemplate::getInstance();
-
-        bx_import('BxDolGrid');
         $oGrid = BxDolGrid::getObjectInstance($sObjectName);
         if(!$oGrid)
             return '';
@@ -176,7 +170,7 @@ class BxBaseStudioForms extends BxDolStudioForms
             )
         );
 
-        return $oTemplate->parseHtmlByName('forms.html', $aTmplVars);
+        return BxDolStudioTemplate::getInstance()->parseHtmlByName('forms.html', $aTmplVars);
     }
 
     protected function actionValuesList()
@@ -187,7 +181,6 @@ class BxBaseStudioForms extends BxDolStudioForms
         $sList = bx_process_input($sList);
         $bUseForSets = (int)bx_get('form_use_for_sets') == 1;
 
-        bx_import('BxDolForm');
         $aValues = BxDolForm::getDataItems(trim($sList, BX_DATA_LISTS_KEY_PREFIX . ' '), $bUseForSets);
 
         $aTmplVars = array();

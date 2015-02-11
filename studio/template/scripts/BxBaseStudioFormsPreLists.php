@@ -8,9 +8,6 @@
  * @{
  */
 
-bx_import('BxDolStudioFormsPreLists');
-bx_import('BxTemplStudioFormView');
-
 class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists
 {
     protected $sUrlViewValues;
@@ -102,7 +99,6 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
-            bx_import('BxDolStudioLanguagesUtils');
             $oLanguage = BxDolStudioLanguagesUtils::getInstance();
             $sLanguage = $oLanguage->getCurrentLangName(false);
 
@@ -116,8 +112,8 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists
                 $aRes = array('msg' => _t('_adm_form_err_pre_lists_create'));
 
             $this->_echoResultJson($aRes, true);
-        } else {
-            bx_import('BxTemplStudioFunctions');
+        } 
+        else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-form-pre-list-create-popup', _t('_adm_form_txt_pre_lists_create_popup'), $this->_oTemplate->parseHtmlByName('form_add_list.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
                 'form' => $oForm->getCode(true),
@@ -210,8 +206,8 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists
                 $aRes = array('msg' => _t('_adm_form_err_pre_lists_edit'));
 
             $this->_echoResultJson($aRes, true);
-        } else {
-            bx_import('BxTemplStudioFunctions');
+        }
+        else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-form-pre-list-edit-popup', _t('_adm_form_txt_pre_lists_edit_popup', _t($aList['title'])), $this->_oTemplate->parseHtmlByName('form_add_list.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
                 'form' => $oForm->getCode(true),
@@ -247,7 +243,6 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists
             if(!$this->oDb->deleteValues(array('type' => 'by_key', 'value' => $aList['key'])) || (int)$this->_delete($iId) <= 0)
                 continue;
 
-            bx_import('BxDolStudioLanguagesUtils');
             BxDolStudioLanguagesUtils::getInstance()->deleteLanguageString($aList['title']);
 
             $aIdsAffected[] = $iId;
@@ -277,7 +272,6 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists
         parent::_addJsCss();
         $this->_oTemplate->addJs(array('jquery.form.min.js', 'forms_lists.js'));
 
-        bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
         $oForm->addCssJs();
     }
@@ -321,7 +315,6 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists
     {
         $sContent = parent::_getFilterControls();
 
-        bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
 
         $aInputModules = array(

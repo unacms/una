@@ -7,9 +7,6 @@
  * @{
  */
 
-bx_import('BxDol');
-bx_import('BxDolStudioModulesQuery');
-
 class BxDolStudioModules extends BxDol
 {
     protected $sJsObject;
@@ -51,7 +48,6 @@ class BxDolStudioModules extends BxDol
                     if(empty($sPageName))
                         break;
 
-                    bx_import('BxDolModuleQuery');
                     $aModule = BxDolModuleQuery::getInstance()->getModuleByName($sPageName);
                     if(empty($aModule) || !is_array($aModule))
                         break;
@@ -61,17 +57,14 @@ class BxDolStudioModules extends BxDol
                         break;
                     }
 
-                    bx_import('BxDolStudioInstallerUtils');
                     $aResult = BxDolStudioInstallerUtils::getInstance()->perform($aModule['path'], 'uninstall', array('html_response' => true));
                     if(!empty($aResult['message']))
                         $aResult['message'] = $this->getPopupResult($aResult['message']);
                     break;
             }
 
-            if(!empty($aResult['message'])) {
-                bx_import('BxTemplStudioFunctions');
+            if(!empty($aResult['message']))
                 $aResult['message'] = BxTemplStudioFunctions::getInstance()->transBox('', $aResult['message']);
-            }
 
             echo json_encode($aResult);
             exit;

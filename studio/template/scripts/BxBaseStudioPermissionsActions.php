@@ -8,9 +8,6 @@
  * @{
  */
 
-bx_import('BxDolStudioPermissionsActions');
-bx_import('BxTemplStudioFormView');
-
 class BxBaseStudioPermissionsActions extends BxDolStudioPermissionsActions
 {
     function __construct($aOptions, $oTemplate = false)
@@ -189,8 +186,8 @@ class BxBaseStudioPermissionsActions extends BxDolStudioPermissionsActions
                     $aUpdate[$sName] = null;
             }
             $this->oDb->updateOptions((int)$oForm->getCleanValue('IDLevel'), (int)$oForm->getCleanValue('IDAction'), $aUpdate);
-        } else {
-            bx_import('BxTemplStudioFunctions');
+        }
+        else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-prm-action-options-popup', _t('_adm_prm_txt_actions_options_popup', _t($aOption['action_title'])), $this->_oTemplate->parseHtmlByName('prm_edit_option.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
                 'form' => $oForm->getCode(true),
@@ -222,7 +219,6 @@ class BxBaseStudioPermissionsActions extends BxDolStudioPermissionsActions
         parent::_addJsCss();
         $this->_oTemplate->addJs(array('jquery.form.min.js', 'permissions_actions.js'));
 
-        bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
         $oForm->addCssJs();
     }
@@ -261,7 +257,6 @@ class BxBaseStudioPermissionsActions extends BxDolStudioPermissionsActions
 
         $sContent = "";
 
-        bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
 
         $aInputLevels = array(

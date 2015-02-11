@@ -7,11 +7,7 @@
  * @{
  */
 
-bx_import('BxTemplStudioPage');
-bx_import('BxDolStudioModulesQuery');
-
 define('BX_DOL_STUDIO_MOD_TYPE_SETTINGS', 'settings');
-
 define('BX_DOL_STUDIO_MOD_TYPE_DEFAULT', BX_DOL_STUDIO_MOD_TYPE_SETTINGS);
 
 class BxDolStudioModule extends BxTemplStudioPage
@@ -39,10 +35,8 @@ class BxDolStudioModule extends BxTemplStudioPage
 
 	public static function getObjectInstance($sModule = "", $sPage = "", $bInit = true)
 	{
-	    bx_import('BxDolModuleQuery');
 	    $oModuleDb = BxDolModuleQuery::getInstance();
 
-	    bx_import('BxTemplStudioModule');
         $sClass = 'BxTemplStudioModule';
 	    if($sModule != '' && $oModuleDb->isModuleByName($sModule)) {
 	        $aModule = $oModuleDb->getModuleByName($sModule);
@@ -109,12 +103,10 @@ class BxDolStudioModule extends BxTemplStudioPage
         if(empty($aModule) || !is_array($aModule))
             return array('code' => 1, 'message' => _t('_adm_err_operation_failed'));
 
-        bx_import('BxDolStudioInstallerUtils');
         $aResult = BxDolStudioInstallerUtils::getInstance()->perform($aModule['path'], ((int)$aModule['enabled'] == 0 ? 'enable' : 'disable'), array('html_response' => true));
         if($aResult['code'] != 0)
             return $aResult;
 
-        bx_import('BxDolStudioTemplate');
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         $aResult = array('code' => 0, 'message' => _t('_adm_scs_operation_done'));

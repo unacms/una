@@ -8,10 +8,6 @@
  * @{
  */
 
-bx_import('BxDolStudioTemplate');
-bx_import('BxDolStudioSettings');
-bx_import('BxTemplStudioFormView');
-
 class BxBaseStudioSettings extends BxDolStudioSettings
 {
     public function __construct($sType = '', $sCategory = '')
@@ -250,7 +246,6 @@ class BxBaseStudioSettings extends BxDolStudioSettings
     }
     protected function getMenuIcon($sGroup, &$aType)
     {
-        bx_import('BxDolStudioUtils');
         if(empty($aType['icon']) || ($sUrl = BxDolStudioTemplate::getInstance()->getIconUrl($aType['icon'])) == "")
             switch($sGroup) {
                 case BX_DOL_STUDIO_STG_GROUP_MODULES:
