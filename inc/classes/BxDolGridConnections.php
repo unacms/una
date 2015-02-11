@@ -9,8 +9,6 @@
 
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
-bx_import('BxTemplGrid');
-
 class BxDolGridConnections extends BxTemplGrid
 {
     protected $_bOwner = false;
@@ -26,12 +24,10 @@ class BxDolGridConnections extends BxTemplGrid
         if (!$iProfileId)
             return;
 
-        bx_import('BxDolProfile');
         $oProfile = BxDolProfile::getInstance($iProfileId);
         if (!$oProfile)
             return;
 
-        bx_import('BxDolConnection');
         $oConnection = BxDolConnection::getObjectInstance($this->_sObjectConnections);
         if (!$oConnection)
             return;
@@ -63,7 +59,6 @@ class BxDolGridConnections extends BxTemplGrid
             exit;
         }
 
-        bx_import('BxDolConnection');
         $oConn = BxDolConnection::getObjectInstance($this->_sObjectConnections);
 
         $a = $oConn->actionAdd($iId);
@@ -83,7 +78,6 @@ class BxDolGridConnections extends BxTemplGrid
 
     protected function _delete ($mixedId)
     {
-        bx_import('BxDolConnection');
         $oConn = BxDolConnection::getObjectInstance($this->_sObjectConnections);
 
         if ($oConn->isConnected(bx_get_logged_profile_id(), (int)$mixedId, true))
@@ -96,7 +90,6 @@ class BxDolGridConnections extends BxTemplGrid
 
     protected function _getCellName ($mixedValue, $sKey, $aField, $aRow)
     {
-        bx_import('BxDolProfile');
         $oProfile = BxDolProfile::getInstance($aRow['id']);
         if (!$oProfile)
             return _t('_sys_txt_error_occured');
@@ -107,7 +100,6 @@ class BxDolGridConnections extends BxTemplGrid
     protected function _getCellInfo ($mixedValue, $sKey, $aField, $aRow)
     {
         $s = '';
-        bx_import('BxDolConnection');
         $oConn = BxDolConnection::getObjectInstance($this->_sObjectConnections);
 
         // for friend requests display mutual friends
@@ -116,7 +108,6 @@ class BxDolGridConnections extends BxTemplGrid
             $i = count($a);
             if (1 == $i) {
                 $iProfileId = array_pop($a);
-                bx_import('BxDolProfile');
                 $oProfile = BxDolProfile::getInstance($iProfileId);
                 $s = _t('_sys_txt_one_mutual_friend', $oProfile->getUrl(), $oProfile->getDisplayName());
             } elseif ($i) {
@@ -154,7 +145,6 @@ class BxDolGridConnections extends BxTemplGrid
         if ($this->_bOwner || $aRow['id'] == bx_get_logged_profile_id())
             return '';
 
-        bx_import('BxDolConnection');
         $oConn = BxDolConnection::getObjectInstance($this->_sObjectConnections);
         if ($oConn->isConnected($aRow['id'], bx_get_logged_profile_id()) || $oConn->isConnected(bx_get_logged_profile_id(), $aRow['id']))
             return '';

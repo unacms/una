@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModGeneralModule');
-
 class BxAccntModule extends BxBaseModGeneralModule
 {
     /**

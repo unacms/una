@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolProfileQuery');
-
 define('BX_PROFILE_ACTION_AUTO', 0); ///< automatic action without any checking
 define('BX_PROFILE_ACTION_MANUAL', 1); ///< manual action performed by human
 define('BX_PROFILE_ACTION_ROBOT', 2); ///< action peformed by some robot based on some conditions
@@ -127,7 +125,6 @@ class BxDolProfile extends BxDol implements iBxDolProfile
      */
     public function getAccountObject()
     {
-        bx_import('BxDolAccount');
         return BxDolAccount::getInstance($this->getAccountId());
     }
 
@@ -265,7 +262,6 @@ class BxDolProfile extends BxDol implements iBxDolProfile
             return false;
 
         // switch profile context if deleted profile is active profile context
-        bx_import('BxDolAccount');
         $oAccount = BxDolAccount::getInstance ($aProfileInfo['account_id']);
         $aAccountInfo = $oAccount->getInfo();
         if (!$bForceDelete && $ID == $aAccountInfo['profile_id']) {
@@ -280,13 +276,10 @@ class BxDolProfile extends BxDol implements iBxDolProfile
             return false;
 
         // delete associated comments
-        if($bDeleteWithContent) {
-	        bx_import('BxDolCmts');
+        if($bDeleteWithContent)
 	        BxDolCmts::onAuthorDelete($ID);
-        }
 
         // delete connections
-        bx_import('BxDolConnection');
         $oConn = BxDolConnection::getObjectInstance('sys_profiles_friends');
         $oConn->onDeleteInitiatorAndContent($ID);
 
@@ -294,7 +287,6 @@ class BxDolProfile extends BxDol implements iBxDolProfile
         $oConn->onDeleteInitiatorAndContent($ID);
 
         // delete profile's acl levels
-        bx_import('BxDolAcl');
         BxDolAcl::getInstance()->onProfileDelete($ID);
 
         // delete profile
@@ -402,8 +394,6 @@ class BxDolProfile extends BxDol implements iBxDolProfile
         if ($iViewerAccountId != $this->getAccountId() ||  $iViewerProfileId == $this->id())
             return;
 
-        bx_import('BxDolInformer');
-        bx_import('BxDolPermalinks');
         $oInformer = BxDolInformer::getInstance($oTemplate);
         if ($oInformer)
             $oInformer->add('sys-switch-profile-context', _t('_sys_txt_account_profile_context_change_suggestion', BxDolPermalinks::getInstance()->permalink('page.php?i=account-profile-switcher', array('switch_to_profile' => $this->id()))), BX_INFORMER_INFO);
@@ -419,7 +409,6 @@ class BxDolProfile extends BxDol implements iBxDolProfile
     	$aProfiles = $this->_oQuery->getProfilesByAccount($aInfo['account_id']);
 
         if ($aInfo['type'] == 'system' && count($aProfiles) == 1) {
-            bx_import('BxDolPermalinks');
             $sUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=account-profile-switcher');
 
             $oInformer->add('sys-account-profile-system', _t('_sys_txt_account_profile_system', $sUrl), BX_INFORMER_ALERT);

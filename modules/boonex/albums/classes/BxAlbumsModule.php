@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import ('BxBaseModTextModule');
-
 /**
  * Albums module
  */
@@ -34,25 +32,21 @@ class BxAlbumsModule extends BxBaseModTextModule
             return false;
 
         if (!empty($CNF['OBJECT_VIEWS_MEDIA'])) {
-            bx_import('BxDolView');
             $o = BxDolView::getObjectInstance($CNF['OBJECT_VIEWS_MEDIA'], $aMediaInfo['id']);
             if ($o) $o->onObjectDelete();
         }
 
         if (!empty($CNF['OBJECT_VOTES_MEDIA'])) {
-            bx_import('BxDolVote');
             $o = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES_MEDIA'], $aMediaInfo['id']);
             if ($o) $o->onObjectDelete();
         }
 
         if (!empty($CNF['OBJECT_COMMENTS_MEDIA'])) {
-            bx_import('BxDolCmts');
             $o = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS_MEDIA'], $aMediaInfo['id']);
             if ($o) $o->onObjectDelete();
         }
 
         if (!empty($CNF['OBJECT_METATAGS_MEDIA'])) {
-            bx_import('BxDolMetatags');
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS_MEDIA']);
             $oMetatags->onDeleteContent($aMediaInfo['id']);
         }
@@ -167,7 +161,6 @@ class BxAlbumsModule extends BxBaseModTextModule
         if (!($aMediaList = $this->_oDb->getMediaListByContentId($aContentInfo[$CNF['FIELD_ID']])))
             return array();
 
-        bx_import('BxDolTranscoderImage');
         $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);
         $aMediaList = array_slice($aMediaList, 0, 5);
         $aOutput = array();

@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModTextTemplate');
-
 /*
  * Module representation.
  */

@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolDb');
-
 /**
  * Database queries for captcha objects.
  * @see BxDolCaptcha

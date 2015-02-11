@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModTextDb');
-
 /*
  * Module database queries
  */
@@ -87,7 +85,6 @@ class BxCnvDb extends BxBaseModTextDb
         $sQuery = $this->prepare("SELECT `id` FROM `" . $this->getPrefix() . "conv2folder` WHERE `conv_id` = ?", $iConversationId);
         if (!$this->getOne($sQuery)) {
             $CNF = &$this->_oConfig->CNF;
-            bx_import('BxDolForm');
             $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD']);
             return $oForm->delete((int)$iConversationId, $aContentInfo);
         }

@@ -9,9 +9,6 @@
  * @{
  */
 
-bx_import ('BxBaseModGeneralModule');
-bx_import ('BxDolAcl');
-
 /**
  * Base class for profile modules.
  */
@@ -30,7 +27,6 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         $aResult = array();
         $CNF = &$this->_oConfig->CNF;
 
-        bx_import('BxDolStorage');
         $oSrorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
         if (!($aFile = $oSrorage->getFile((int)$iFileId)) || !($aContentInfo = $this->_oDb->getContentInfoById($iContentId)) || $aContentInfo[$sFieldPicture] != (int)$iFileId)
             $aResult = array('error' => 1, 'msg' => _t('_sys_storage_err_file_not_found'));
@@ -38,7 +34,6 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         if ((!$aResult && !isLogged()) || (!$aResult && $aFile['profile_id'] != bx_get_logged_profile_id() && !$this->_isModerator()))           
             $aResult = array('error' => 2, 'msg' => _t('_Access denied'));
 
-        bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'], $this->_oTemplate);
 
         if (!$aResult && !$oForm->_deleteFile($iContentId, $sFieldPicture, (int)$iFileId, true))
@@ -116,7 +111,6 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
 
     public function serviceProfileEditUrl ($iContentId)
     {
-        bx_import('BxDolPermalinks');
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->_oConfig->CNF['URI_EDIT_ENTRY'] . '&id=' . $iContentId);
     }
 
@@ -148,7 +142,6 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         if (!$aContentInfo)
             return false;
         $CNF = $this->_oConfig->CNF;
-        bx_import('BxDolPermalinks');
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
     }
 
@@ -174,7 +167,6 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
     public function serviceBrowseConnectionsQuick ($iProfileId, $sObjectConnections = 'sys_profiles_friends', $sConnectionsType = 'content', $iMutual = false, $iProfileId2 = 0)
     {
         // get connections object
-        bx_import('BxDolConnection');
         $oConnection = BxDolConnection::getObjectInstance($sObjectConnections);
         if (!$oConnection)
             return '';
@@ -191,7 +183,6 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
             return '';
 
         // get paginate object
-        bx_import('BxTemplPaginate');
         $oPaginate = new BxTemplPaginate(array(
             'on_change_page' => "return !loadDynamicBlockAutoPaginate(this, '{start}', '{per_page}');",
             'num' => count($a),
@@ -204,7 +195,6 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
             array_pop($a);
 
         // get profiles HTML
-        bx_import('BxDolProfile');
         $s = '';
         foreach ($a as $iProfileId) {
             if (!($o = BxDolProfile::getInstance($iProfileId))) {
@@ -247,7 +237,6 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         if (!$aContentInfo)
             return false;
 
-        bx_import('BxDolConnection');
         $s = $this->serviceBrowseConnectionsQuick ($aContentInfo['profile_id'], 'sys_profiles_friends', BX_CONNECTIONS_CONTENT_TYPE_CONTENT, true);
         if (!$s)
             return MsgBox(_t('_sys_txt_empty'));
@@ -274,7 +263,6 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
             return CHECK_ACTION_RESULT_ALLOWED;
 
         // owner (checked by account! not as profile as ususal) always have access
-        bx_import('BxDolProfile');
         $oProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $this->_aModule['name']);
         if (!$oProfile)
             return _t('_sys_txt_error_occured');
@@ -295,7 +283,6 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
             return CHECK_ACTION_RESULT_ALLOWED;
 
         // owner (checked by account! not as profile as ususal) always have access
-        bx_import('BxDolProfile');
         $oProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $this->_aModule['name']);
         if (!$oProfile)
             return _t('_sys_txt_error_occured');
@@ -318,7 +305,6 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         // check ACL and owner (checked by account! not as profile as ususal)
         $aCheck = checkActionModule($this->_iProfileId, 'delete entry', $this->getName(), $isPerformAction);
 
-        bx_import('BxDolProfile');
         $oProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $this->_aModule['name']);
         if (!$oProfile)
             return _t('_sys_txt_error_occured');
@@ -334,7 +320,6 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
      */
     public function checkAllowedViewMoreMenu (&$aDataEntry, $isPerformAction = false)
     {
-        bx_import('BxTemplMenu');
         $oMenu = BxTemplMenu::getObjectInstance($this->_oConfig->CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE']);
         if (!$oMenu || !$oMenu->getCode())
             return _t('_sys_txt_access_denied');
@@ -381,7 +366,6 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
     	if(empty($iLogged))
     		return false;
 
-    	bx_import('BxDolProfile');
     	$oProfile = BxDolProfile::getInstanceByContentAndType((int)$iContentId, $this->_oConfig->getName());
     	if(!$oProfile)
     		return false;
@@ -403,7 +387,6 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         if (!$oProfile || $oProfile->id() == $this->_iProfileId)
             return _t('_sys_txt_access_denied');
 
-        bx_import('BxDolConnection');
         $oConn = BxDolConnection::getObjectInstance($sObjConnection);
         if ($isSwap)
             $isConnected = $oConn->isConnected($oProfile->id(), $this->_iProfileId, $isMutual);

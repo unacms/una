@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModTextMenu');
-
 /**
  * General class for module menu.
  */

@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolCache');
-
 class BxDolCacheMemcache extends BxDolCache
 {
     protected $iTTL = 3600;

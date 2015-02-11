@@ -22,10 +22,9 @@ class BxDolProfileForms extends BxDol
 
     protected function _redirectAndExit ($sUrl, $isPermalink = true, $aMarkers = false)
     {
-        if ($isPermalink) {
-            bx_import('BxDolPermalinks');
+        if ($isPermalink)
             $sUrl = BxDolPermalinks::getInstance()->permalink($sUrl);
-        }
+
         header('Location: ' . BX_DOL_URL_ROOT . $this->_replaceMarkers($sUrl, $aMarkers));
         exit;
     }

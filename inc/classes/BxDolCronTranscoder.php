@@ -7,16 +7,12 @@
  * @{
  */
 
-bx_import('BxDolCron');
-
 class BxDolCronTranscoder extends BxDolCron
 {
     public function processing()
     {
         set_time_limit(10800);
         ignore_user_abort();
-
-        bx_import('BxDolTranscoder');
 
         if (!defined('BX_TRANSCODER_NO_TRANSCODING'))
             BxDolTranscoder::processQueue();

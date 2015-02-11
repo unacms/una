@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolAccountQuery');
-
 class BxDolAccount extends BxDol
 {
     protected $_iAccountID;
@@ -137,11 +135,9 @@ class BxDolAccount extends BxDol
     {
         $sEmail = $this->getEmail($iAccountId);
 
-        bx_import('BxDolKey');
         $oKey = BxDolKey::getInstance();
         $sConfirmationCode = $oKey->getNewKey(array('account_id' => $iAccountId));
 
-        bx_import('BxDolPermalinks');
         $sConfirmationLink = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=confirm-email') . '&code=' . urlencode($sConfirmationCode);
 
         $aPlus = array();
@@ -150,7 +146,6 @@ class BxDolAccount extends BxDol
         $aPlus['conf_link'] = $sConfirmationLink;
         $aPlus['conf_form_link'] = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=confirm-email');
 
-        bx_import('BxDolEmailTemplates');
         $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_Confirmation', $aPlus);
         return $aTemplate && sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, array(), BX_EMAIL_SYSTEM);
     }
@@ -256,10 +251,8 @@ class BxDolAccount extends BxDol
         if ($isStopDeletion)
             return false;
 
-        bx_import('BxDolAccountQuery');
         $oAccountQuery = BxDolAccountQuery::getInstance();
 
-        bx_import('BxDolProfile');
         $oProfileQuery = BxDolProfileQuery::getInstance();
         $aProfiles = $oProfileQuery->getProfilesByAccount($this->_iAccountID);
         foreach ($aProfiles as $iProfileId => $aRow) {
@@ -290,7 +283,6 @@ class BxDolAccount extends BxDol
     public function addInformerPermanentMessages ($oInformer)
     {
         if (!$this->isConfirmed()) {
-            bx_import('BxDolPermalinks');
             $sUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=confirm-email') . '&resend=1';
             $aAccountInfo = $this->getInfo();
             $oInformer->add('sys-account-unconfirmed', _t('_sys_txt_account_unconfirmed', $sUrl, $aAccountInfo['email']), BX_INFORMER_ALERT);
@@ -303,7 +295,6 @@ class BxDolAccount extends BxDol
     public function getUnsubscribeLink($iEmailType, $iAccountId = false)
     {
         $iAccountId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
-        bx_import('BxDolPermalinks');
         $sUrl = '';
         switch ($iEmailType) {
             case BX_EMAIL_NOTIFY:
@@ -341,7 +332,6 @@ class BxDolAccount extends BxDol
      */
     static public function isAllowedEdit ($iProfileId, $aContentInfo, $isPerformAction = false)
     {
-        bx_import('BxDolProfile');
         $oProfile = BxDolProfile::getInstance($iProfileId);
         if (!$oProfile)
             return _t('_sys_txt_access_denied');

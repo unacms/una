@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxDolProfile');
-bx_import('BxBaseModProfileGridAdministration');
 
 class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
 {
@@ -40,7 +38,6 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
             return;
         }
 
-        bx_import('BxDolAccount');
         $oAccount = BxDolAccount::getInstance();
 
         $iAffected = 0;
@@ -117,13 +114,11 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
 
 	protected function _getContentInfo($iId)
     {
-    	bx_import('BxDolAccount');
     	return BxDolAccountQuery::getInstance()->getInfoById($iId);
     }
 
 	protected function _doDelete($iId, $aParams = array())
     {
-    	bx_import('BxDolAccount');
     	return BxDolAccount::getInstance($iId)->delete(isset($aParams['with_content']) && $aParams['with_content'] === true);
     }
 }

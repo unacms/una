@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModGeneralFormEntry');
-
 /**
  * Create/Edit entry form
  */
@@ -39,10 +37,8 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
             $this->aInputs[$CNF['FIELD_PHOTO']]['ghost_template'] = '';
         }
 
-        if (isset($this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']])) {
-            bx_import('BxDolPrivacy');
+        if (isset($this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']]))
             $this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']] = BxDolPrivacy::getGroupChooser($CNF['OBJECT_PRIVACY_VIEW']);
-        }
 
         if (isset($this->aInputs['do_publish']) && !isset($this->aInputs['do_submit']))
             $this->aParams['db']['submit_name'] = 'do_publish';
@@ -119,7 +115,6 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
         if (!$mixedFileIds)
             return true;
 
-        bx_import('BxDolStorage');
         $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
         if (!$oStorage)
             return false;
@@ -148,7 +143,6 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
         if (!$iFileId)
             return true;
 
-        bx_import('BxDolStorage');
         if (!($oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE'])))
             return false;
 

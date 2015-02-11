@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModTextFormsEntryHelper');
-
 /**
  * Entry forms helper functions
  */

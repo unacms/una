@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxBaseCmtsServices');
-
 /**
  * @see BxBaseCmtsServices
  */

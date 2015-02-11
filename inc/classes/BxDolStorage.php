@@ -57,8 +57,6 @@ define('BX_DOL_STORAGE_DEFAULT_ICON', 'mime-type-any.png'); ///< default icon if
 
 define('BX_DOL_STORAGE_QUEUED_DELETIONS_PER_RUN', 200); ///< max number of file deletions per one cron run, @see BxDolStorage::pruneDeletions
 
-bx_import('BxDolStorageQuery');
-
 /**
  * @page objects
  * @section storage Storage
@@ -150,7 +148,6 @@ bx_import('BxDolStorageQuery');
  * require_once('./inc/header.inc.php');
  * require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
  *
- * bx_import('BxDolStorage');
  * BxDolStorage::pruning(); // pruning is needed to clear expired security tokens, you can call it on cron when your server is not busy
  * $oStorage = BxDolStorage::getObjectInstance('my_module'); // create storage object instance, 'my_module' is value of 'object' field in 'sys_objects_storage' table
  *
@@ -180,7 +177,6 @@ bx_import('BxDolStorageQuery');
  * require_once('./inc/header.inc.php');
  * require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
  *
- * bx_import('BxDolStorage');
  * $oStorage = BxDolStorage::getObjectInstance('my_module');
  *
  * $iId = 1234; // since you've saved it somewhere in the previous step, you can retrieve it here
@@ -229,7 +225,6 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject
             return false;
 
         $sClass = 'BxDolStorage' . $aObject['engine'];
-        bx_import($sClass);
         $o = new $sClass($aObject);
 
         if (!$o->isInstalled() || !$o->isAvailable())

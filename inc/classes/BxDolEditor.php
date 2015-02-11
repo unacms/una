@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolEditorQuery');
-
 /**
  * Standard WYSIWYG editor view.
  * @see BxDolEditor::attachEditor
@@ -59,7 +57,6 @@ define('BX_EDITOR_MINI', 3);
  * @code
  *  echo '<textarea id="my_textarea" rows="20" cols="80">some text here</textarea>'; // print text area element
  *
- *  bx_import('BxDolEditor'); // import editor class
  *  $oEditor = BxDolEditor::getObjectInstance(); // get default editor object instance
  *  if ($oEditor) // check if editor is available for using
  *      echo $oEditor->attachEditor ('#my_textarea', BX_EDITOR_STANDARD); // output HTML which will automatically apply editor to textarea element by its id
@@ -106,8 +103,6 @@ class BxDolEditor extends BxDol implements iBxDolFactoryObject
         $sClass = $aObject['override_class_name'];
         if (!empty($aObject['override_class_file']))
             require_once(BX_DIRECTORY_PATH_ROOT . $aObject['override_class_file']);
-        else
-            bx_import($sClass);
 
         $o = new $sClass($aObject);
 

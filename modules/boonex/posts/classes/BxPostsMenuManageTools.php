@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModTextMenuManageTools');
-
 /**
  * 'Posts manage tools' menu.
  */

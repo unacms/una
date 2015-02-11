@@ -83,10 +83,8 @@ class BxSitesAccount extends BxDol
                 $aUpdateParams['paid'] += $this->_oModule->_oConfig->getTrialDuration();
                 $aUpdateParams['status'] = BX_SITES_ACCOUNT_STATUS_TRIAL;
 
-                bx_import('BxDolPermalinks');
                 $oPermalinks = BxDolPermalinks::getInstance();
 
-                bx_import('BxDolEmailTemplates');
                 $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('bx_sites_site_created',  array(
                     'RealName' => $sFirstName . (!empty($sFirstName) && !empty($sLastName) ? ' ' . $sLastName : ''),
                     'Domain' => $this->_oModule->getDomain($aAccount['domain']),
@@ -124,7 +122,6 @@ class BxSitesAccount extends BxDol
             $sFirstName = bx_process_input($aData['first_name']);
             $sLastName = bx_process_input($aData['last_name']);
 
-            bx_import('BxDolEmailTemplates');
             $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('bx_sites_site_canceled',  array(
                 'RealName' => $sFirstName . (!empty($sFirstName) && !empty($sLastName) ? ' ' . $sLastName : ''),
                 'Domain' => $this->_oModule->getDomain($aAccount['domain']),
@@ -193,10 +190,8 @@ class BxSitesAccount extends BxDol
 
             /*--- Site was created and paid ---*/
             if($aAccount['status'] == BX_SITES_ACCOUNT_STATUS_PENDING && in_array($sActStatus, array(BX_SITES_ACCOUNT_STATUS_TRIAL, BX_SITES_ACCOUNT_STATUS_ACTIVE))) {
-                bx_import('BxDolPermalinks');
                 $oPermalinks = BxDolPermalinks::getInstance();
 
-                bx_import('BxDolEmailTemplates');
                 $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('bx_sites_site_created_and_paid',  array(
                     'RealName' => $sFirstName . (!empty($sFirstName) && !empty($sLastName) ? ' ' . $sLastName : ''),
                     'Domain' => $this->_oModule->getDomain($aAccount['domain']),
@@ -209,7 +204,6 @@ class BxSitesAccount extends BxDol
             }
             /*--- Payment was received ---*/
             else {
-                bx_import('BxDolEmailTemplates');
                 $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('bx_sites_payment_received',  array(
                     'RealName' => $sFirstName . (!empty($sFirstName) && !empty($sLastName) ? ' ' . $sLastName : ''),
                     'Amount' => $fAmount . ' ' . $this->_oModule->_oConfig->getCurrencyCode(),

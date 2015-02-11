@@ -219,7 +219,6 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
             $this->_sSubPath = 'boonex/uni/';
 
         if(isset($_GET[$this->_sCodeKey])) {
-            bx_import('BxDolPermalinks');
             if(BxDolPermalinks::getInstance()->redirectIfNecessary(array($this->_sCodeKey)))
                 exit;
         }
@@ -378,7 +377,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
 
         $this->aPage['injections'] = $aInjections;
 
-        bx_import('BxTemplConfig');
+        bx_import('BxTemplConfig'); // TODO: for some reason autoloader isn't working here....
         $this->_oConfigTemplate = BxTemplConfig::getInstance();
     }
 
@@ -518,12 +517,10 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
         if(empty($sCode) || !preg_match('/^[A-Za-z0-9_-]+$/', $sCode))
             return;
 
-        bx_import('BxDolModuleQuery');
         $aModule = BxDolModuleQuery::getInstance()->getModuleByUri($sCode);
         if(empty($aModule) || !is_array($aModule) || (int)$aModule['enabled'] != 1 || !file_exists($this->_sRootPath . 'modules/' . $aModule['path'] . 'data/template/'))
             return;
 
-        bx_import('BxDolModuleConfig');
         $oConfig = new BxDolModuleConfig($aModule);
 
         $this->_sCode = $oConfig->getUri();
@@ -783,12 +780,10 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
                 <meta name="geo.position" content="' . $this->aPage['location']['lat'] . ';' . $this->aPage['location']['lng'] . '" />
                 <meta name="geo.region" content="' . bx_html_attribute($this->aPage['location']['country']) . '" />';
 
-        if (!empty($this->aPage['image'])) {
+        if (!empty($this->aPage['image']))
             $sRet .= '<meta property="og:image" content="' . $this->aPage['image'] . '" />';
-        } else {
-            bx_import('BxTemplFunctions');
+        else
             $sRet .= BxTemplFunctions::getInstance()->getMetaIcons();
-        }
 
         if (!empty($this->aPage['rss']) && !empty($this->aPage['rss']['url']))
             $sRet .= '<link rel="alternate" type="application/rss+xml" title="' . bx_html_attribute($this->aPage['rss']['title'], BX_ESCAPE_STR_QUOTE) . '" href="' . $this->aPage['rss']['url'] . '" />';
@@ -888,7 +883,6 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
      */
     function getMenu ($s)
     {
-        bx_import('BxDolMenu');
         $oMenu = BxDolMenu::getObjectInstance($s);
         return $oMenu ? $oMenu->getCode () : '';
     }
@@ -1033,11 +1027,9 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
                     $sRet = bx_process_output($this->aPage['header_text']);
                 break;
             case 'popup_loading':
-                bx_import('BxTemplFunctions');
                 $s = $this->parsePageByName('popup_loading.html', array());
                 $sRet = BxTemplFunctions::getInstance()->transBox('bx-popup-loading', $s, true);
 
-                bx_import('BxTemplSearch');
                 $oSearch = new BxTemplSearch();
                 $oSearch->setLiveSearch(true);
                 $sRet .= $this->parsePageByName('search.html', array(
@@ -1053,11 +1045,9 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
                 $sRet = bx_lang_name();
                 break;
             case 'main_logo':
-                bx_import('BxTemplFunctions');
                 $sRet = BxTemplFunctions::getInstance()->getMainLogo();
                 break;
             case 'informer':
-                bx_import('BxDolInformer');
                 $oInformer = BxDolInformer::getInstance($this);
                 $sRet = $oInformer ? $oInformer->display() : '';
                 break;
@@ -1084,7 +1074,6 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
                 break;
 
             default:
-                bx_import('BxTemplFunctions');
                 $sRet = ($sTemplAdd = BxTemplFunctions::getInstance()->TemplPageAddComponent($sKey)) !== false ? $sTemplAdd : $aKeyWrappers['left'] . $sKey . $aKeyWrappers['right'];
         }
 
@@ -2137,21 +2126,25 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
      */
     function displayAccessDenied ($sMsg = '')
     {
+        bx_import('BxDolLanguages');
         header("HTTP/1.0 403 Forbidden");
         $this->displayMsg($sMsg ? $sMsg : _t('_Access denied'));
     }
     function displayNoData ($sMsg = '')
     {
+        bx_import('BxDolLanguages');
         header("HTTP/1.0 204 No Content");
         $this->displayMsg($sMsg ? $sMsg : _t('_Empty'));
     }
     function displayErrorOccured ($sMsg = '')
     {
+        bx_import('BxDolLanguages');
         header("HTTP/1.0 500 Internal Server Error");
         $this->displayMsg($sMsg ? $sMsg : _t('_error occured'));
     }
     function displayPageNotFound ($sMsg = '')
     {
+        bx_import('BxDolLanguages');
         header("HTTP/1.0 404 Not Found");
         $this->displayMsg($sMsg ? $sMsg : _t('_sys_request_page_not_found_cpt'));
     }

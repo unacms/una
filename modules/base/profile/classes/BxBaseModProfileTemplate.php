@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModGeneralTemplate');
-
 /*
  * Profile based modules representation.
  */
@@ -31,7 +29,6 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         // TODO: add privacy checking here
 
         // get profile's url
-        bx_import('BxDolPermalinks');
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
 
         // generate html
@@ -54,8 +51,6 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     {
         $CNF = &$this->_oConfig->CNF;
 
-        bx_import('BxDolPermalinks');
-
         $oModule = BxDolModule::getInstance($this->MODULE);
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
 
@@ -69,7 +64,6 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         $sCoverPopup = '';
         $sCoverPopupId = $this->MODULE . '-popup-cover';
         if ($aData[$CNF['FIELD_COVER']]) {
-            bx_import('BxTemplFunctions');
             $sCoverPopup = BxTemplFunctions::getInstance()->transBox($sCoverPopupId, $this->parseHtmlByName('image_popup.html', array (
                 'image_url' => $sUrlCover,
                 'bx_if:owner' => array (
@@ -84,7 +78,6 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         $sPicturePopup = '';
         $sPicturePopupId = $this->MODULE . '-popup-picture';
         if ($aData[$CNF['FIELD_PICTURE']]) {
-            bx_import('BxTemplFunctions');
             $sPicturePopup = BxTemplFunctions::getInstance()->transBox($sPicturePopupId, $this->parseHtmlByName('image_popup.html', array (
                 'image_url' => $sUrlPicture,
                 'bx_if:owner' => array (
@@ -169,7 +162,6 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     {
         $sImageUrl = false;
         if ($aData[$sField]) {
-            bx_import('BxDolTranscoderImage');
             $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($sTranscodeObject);
             if ($oImagesTranscoder)
                 $sImageUrl = $oImagesTranscoder->getFileUrl($aData[$sField]);

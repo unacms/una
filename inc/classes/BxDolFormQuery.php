@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolDb');
-
 /**
  * Database queries for forms.
  * @see BxDolForm
@@ -62,10 +60,8 @@ class BxDolFormQuery extends BxDolDb
         $aForm['form_attrs'] = array_merge($aDefaultsFormAttrs, !empty($aAddFormAttrs) && is_array($aAddFormAttrs) ? $aAddFormAttrs : array());
 
         // form action
-        if (!empty($aForm['form_attrs']['action']) && 0 != strncasecmp($aForm['form_attrs']['action'], 'http://', 7) && 0 != strncasecmp($aForm['form_attrs']['action'], 'https://', 8)) {
-            bx_import('BxDolPermalinks');
+        if (!empty($aForm['form_attrs']['action']) && 0 != strncasecmp($aForm['form_attrs']['action'], 'http://', 7) && 0 != strncasecmp($aForm['form_attrs']['action'], 'https://', 8))
             $aForm['form_attrs']['action'] = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($aForm['form_attrs']['action']);
-        }
 
         // params
         if (!empty($aObject['params']))

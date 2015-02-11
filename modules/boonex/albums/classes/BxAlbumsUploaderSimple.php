@@ -9,9 +9,6 @@
  * @{
  */
 
-bx_import ('BxTemplUploaderSimple');
-bx_import('BxDolModule');
-
 class BxAlbumsUploaderSimple extends BxTemplUploaderSimple
 {
     protected $_oModule;

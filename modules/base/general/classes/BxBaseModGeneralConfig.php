@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxDolModuleConfig');
-
 class BxBaseModGeneralConfig extends BxDolModuleConfig
 {
     public $CNF;

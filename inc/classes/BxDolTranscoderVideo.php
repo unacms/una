@@ -7,9 +7,6 @@
  * @{
  */
 
-bx_import('BxDolTranscoder');
-bx_import('BxDolTranscoderVideoQuery');
-
 /**
  * @page objects
  * @section transcoder_videos Videos Transcoder
@@ -56,8 +53,6 @@ bx_import('BxDolTranscoderVideoQuery');
  *
  * Example of usage:
  * @code
- * bx_import('BxDolTranscoder');
- *
  * // transcoder objects which generate .mp4, .webm videos and image poster
  * $oTranscoderMp4 = BxDolTranscoder::getObjectInstance('bx_video_mp4'); 
  * $oTranscoderWebm = BxDolTranscoder::getObjectInstance('bx_video_webm');
@@ -106,7 +101,6 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
      */
     protected function applyFilter_Poster ($sFile, $aParams)
     {
-	    bx_import('BxDolImageResize');
     	$oImage = BxDolImageResize::getInstance();
 
         $sFileOut = $this->getTmpFilename('.jpg');
@@ -232,7 +226,6 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
             return false;
         }
 
-	    bx_import('BxDolImageResize');
     	$oImage = BxDolImageResize::getInstance();
         $aSize = $oImage->getImageSize($sFileOut);
 

@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModGeneralTemplate');
-
 /**
  * Module representation.
  */
@@ -33,7 +31,6 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         $sPhotoThumb = '';
         $sPhotoGallery = '';
         if ($aData[$CNF['FIELD_THUMB']]) {
-            bx_import('BxDolTranscoderImage');
 
             $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);
             if ($oImagesTranscoder)
@@ -47,15 +44,11 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         }
 
         // get entry url
-        bx_import('BxDolPermalinks');
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
 
-        bx_import('BxDolProfile');
         $oProfile = BxDolProfile::getInstance($aData[$CNF['FIELD_AUTHOR']]);
-        if (!$oProfile) {
-            bx_import('BxDolProfileUndefined');
+        if (!$oProfile) 
             $oProfile = BxDolProfileUndefined::getInstance();
-        }
 
         // get summary
         $sLinkMore = ' <a title="' . bx_html_attribute(_t('_sys_read_more', $aData[$CNF['FIELD_TITLE']])) . '" href="' . $sUrl . '"><i class="sys-icon ellipsis-h"></i></a>';
@@ -64,7 +57,6 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
         $sText = $aData[$CNF['FIELD_TEXT']];
         if (!empty($CNF['OBJECT_METATAGS'])) {
-            bx_import('BxDolMetatags');
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
     
             // keywords
@@ -118,7 +110,6 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         $aVars['entry_text'] = $aData[$CNF['FIELD_TEXT']];
 
         if (!empty($CNF['OBJECT_METATAGS'])) {
-            bx_import('BxDolMetatags');
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
     
             // keywords
@@ -144,10 +135,9 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             $iProfileId = $aData[$CNF['FIELD_AUTHOR']];
 
         $oProfile = BxDolProfile::getInstance($iProfileId);
-        if (!$oProfile) {
-            bx_import('BxDolProfileUndefined');
+        if (!$oProfile) 
             $oProfile = BxDolProfileUndefined::getInstance();
-        }
+
         if (!$oProfile)
             return '';
 
@@ -170,10 +160,6 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
     {
         $oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$oModule->_oConfig->CNF;
-
-        bx_import('BxTemplFunctions');
-        bx_import('BxDolStorage');
-        bx_import('BxDolTranscoderImage');
 
         $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
         $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);

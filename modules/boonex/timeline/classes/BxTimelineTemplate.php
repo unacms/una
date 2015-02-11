@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModNotificationsTemplate');
-
 class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 {
     function __construct(&$oConfig, &$oDb)
@@ -480,7 +478,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $bBrowseItem = isset($aBrowseParams['type']) && $aBrowseParams['type'] == BX_TIMELINE_TYPE_ITEM;
 
-        bx_import('BxDolMetatags');
         $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
  		$sLocation = $oMetatags->locationsString($aEvent['id']);
  
@@ -570,13 +567,11 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     		'image_url' => ''
     	));
 
-    	bx_import('BxTemplFunctions');
     	return BxTemplFunctions::getInstance()->transBox($sViewImagePopupId, $sViewImagePopupContent, true);
     }
 
     protected function _getTmplVarsMenuItemActions(&$aEvent)
     {
-        bx_import('BxDolMenu');
         $oMenu = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_actions'));
         $oMenu->setEvent($aEvent);
 
@@ -857,10 +852,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
                 $aPhotos = $this->_oDb->getMedia(BX_TIMELINE_MEDIA_PHOTO, $aEvent['id']);
                 if(!empty($aPhotos) && is_array($aPhotos)) {
-                    bx_import('BxDolStorage');
                     $oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage_photos'));
 
-                    bx_import('BxDolTranscoderImage');
                     $oTranscoder = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_view'));
 
                     foreach($aPhotos as $iPhotoId) {
@@ -877,7 +870,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
                 $aVideos = $this->_oDb->getMedia(BX_TIMELINE_MEDIA_VIDEO, $aEvent['id']);
                 if(!empty($aVideos) && is_array($aVideos)) {
-                	bx_import('BxDolTranscoderVideo');
                     $oTranscoderPoster = BxDolTranscoderVideo::getObjectInstance($this->_oConfig->getObject('transcoder_videos_poster'));
                     $oTranscoderMp4 = BxDolTranscoderVideo::getObjectInstance($this->_oConfig->getObject('transcoder_videos_mp4'));
                     $oTranscoderWebm = BxDolTranscoderVideo::getObjectInstance($this->_oConfig->getObject('transcoder_videos_webm'));
@@ -945,7 +937,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     	$s = bx_process_output($s, BX_DATA_HTML);
         $s = bx_convert_links($s);
 
-        bx_import('BxDolMetatags');
         $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
 		$s = $oMetatags->keywordsParse($iEventId, $s);
 

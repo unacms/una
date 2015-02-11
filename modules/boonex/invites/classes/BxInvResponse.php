@@ -9,9 +9,6 @@
  * @{
  */
 
-bx_import('BxDolModule');
-bx_import('BxDolAlertsResponse');
-
 class BxInvResponse extends BxDolAlertsResponse
 {
 	protected $_sModule;
@@ -41,14 +38,12 @@ class BxInvResponse extends BxDolAlertsResponse
 
     protected function _processAccountAddForm($oAlert)
     {
-    	bx_import('BxDolSession');
     	$oSession = BxDolSession::getInstance();
 
 		$sKeyCode = $this->_oModule->_oConfig->getKeyCode();
 		if(bx_get($sKeyCode) !== false) {
 			$sKey = bx_process_input(bx_get($sKeyCode));
 
-			bx_import('BxDolKey');
         	$oKeys = BxDolKey::getInstance();
         	if($oKeys && $oKeys->isKeyExists($sKey))
 		    	$oSession->setValue($sKeyCode, $sKey);
@@ -65,12 +60,10 @@ class BxInvResponse extends BxDolAlertsResponse
     {
     	$sKeyCode = $this->_oModule->_oConfig->getKeyCode();
 
-    	bx_import('BxDolSession');
     	$sKey = BxDolSession::getInstance()->getUnsetValue($sKeyCode);
     	if($sKey === false)
     		return;
 
-		bx_import('BxDolKey');
 		$oKeys = BxDolKey::getInstance();
     	if($oKeys && $oKeys->isKeyExists($sKey))
     		$oKeys->removeKey($sKey);

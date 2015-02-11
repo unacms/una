@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModProfileMenuManageTools');
-
 /**
  * 'Persons manage tools' menu.
  */

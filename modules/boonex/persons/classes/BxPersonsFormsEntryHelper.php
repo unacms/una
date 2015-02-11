@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModProfileFormsEntryHelper');
-
 /**
  * Person profile forms functions
  */

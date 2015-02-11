@@ -119,7 +119,6 @@ function runJob($aJob)
         BxDolService::callSerialized($aJob['service_call']);
 }
 
-bx_import('BxDolCronQuery');
 $oDb = BxDolCronQuery::getInstance();
 
 // run one time transient jobs

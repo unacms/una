@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolConnectionQuery');
-
 /**
  * Default limit for connections lists
  */
@@ -99,7 +97,6 @@ define('BX_CONNECTIONS_CONTENT_TYPE_COMMON', 'common');
  *
  * Check if two profiles are friends:
  * @code
- *   bx_import('BxDolConnection'); // import connection class
  *   $oConnectionFriends = BxDolConnection::getObjectInstance('bx_profiles_friends'); // get friends connections object
  *   if ($oConnectionFriends) // check if connections is available for using
  *      echo $oConnectionFriends->isConnected (100, 200, true) ? "100 and 200 are friends" : "100 and 200 aren't friends"; // check if profiles with IDs 100 and 200 have mutual connections
@@ -107,7 +104,6 @@ define('BX_CONNECTIONS_CONTENT_TYPE_COMMON', 'common');
  *
  * Get mutual content IDs (friends IDs)
  * @code
- *   bx_import('BxDolConnection'); // import connection class
  *   $oConnectionFriends = BxDolConnection::getObjectInstance('bx_profiles_friends'); // get friends connections object
  *   if ($oConnectionFriends) // check if connections is available for using
  *       print_r($oConnection->getConnectedContent(100, 1)); // print array of friends IDs of 100's profile
@@ -156,8 +152,6 @@ class BxDolConnection extends BxDol implements iBxDolFactoryObject
         $sClass = empty($aObject['override_class_name']) ? 'BxDolConnection' : $aObject['override_class_name'];
         if (!empty($aObject['override_class_file']))
             require_once(BX_DIRECTORY_PATH_ROOT . $aObject['override_class_file']);
-        else
-            bx_import($sClass);
 
         $o = new $sClass($aObject);
 
@@ -209,8 +203,6 @@ class BxDolConnection extends BxDol implements iBxDolFactoryObject
 
     protected function _action ($iInitiator, $iContent, $sMethod, $sErrorKey, $isMutual = false)
     {
-        bx_import('BxDolLanguages');
-
         if (!$iContent || !$iInitiator)
             return array ('err' => true, 'msg' => _t('_sys_conn_err_input_data_is_not_defined'));
 

@@ -9,8 +9,6 @@
  */
 defined('BX_DOL') or die('hack attempt');
 
-bx_import('BxBaseStudioPolyglot');
-
 class BxTemplStudioPolyglot extends BxBaseStudioPolyglot
 {
     function __construct($sPage = '')

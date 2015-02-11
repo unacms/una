@@ -13,12 +13,9 @@
  * @section example Example of usage
  *
  * @code
- * bx_import('BxDolProfile');
  * $oProfile = BxDolProfile::getInstance($iId);
- * if (!$oProfile) {
- *     bx_import('BxDolProfileUndefined');
+ * if (!$oProfile)
  *     $oProfile = BxDolProfileUndefined::getInstance();
- * }
  * @endcode
  */
 class BxDolProfileUndefined extends BxDol implements iBxDolSingleton, iBxDolProfile

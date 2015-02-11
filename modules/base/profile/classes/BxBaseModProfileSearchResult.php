@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModGeneralSearchResult');
-
 class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
 {
     public function __construct($sMode = '', $aParams = array())
@@ -21,7 +19,6 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
 
     protected function _setConnectionsConditions ($aParams)
     {
-        bx_import('BxDolConnection');
         $oConnection = isset($aParams['object']) ? BxDolConnection::getObjectInstance($aParams['object']) : false;
         if (!$oConnection || !isset($aParams['profile']) || !(int)$aParams['profile'])
             return false;

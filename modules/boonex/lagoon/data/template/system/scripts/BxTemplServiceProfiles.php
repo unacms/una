@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxBaseServiceProfiles');
-
 /**
  * @see BxBaseServiceProfiles
  */

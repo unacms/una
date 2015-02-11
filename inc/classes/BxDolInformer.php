@@ -27,7 +27,6 @@ define('BX_INFORMER_ERROR', 3);
  * Adding message to informer:
  *
  * @code
- *  bx_import('BxDolInformer'); // import informer class
  *  $oInformer = BxDolInformer::getInstance(); // get object instance
  *  if ($oInformer) // check if Informer is available for using
  *      echo $oInformer->add ('my_id', 'Some important information here', BX_INFORMER_ALERT); // add an alert message
@@ -67,7 +66,6 @@ class BxDolInformer extends BxDol
         if (isset($GLOBALS['bxDolClasses']['BxDolInformer']))
             return $GLOBALS['bxDolClasses']['BxDolInformer'];
 
-        bx_import('BxTemplInformer');
         $o = new BxTemplInformer($oTemplate);
 
         return ($GLOBALS['bxDolClasses']['BxDolInformer'] = $o);
@@ -104,12 +102,10 @@ class BxDolInformer extends BxDol
     {
         // add account & profile related permament messages
         if (isLogged()) {
-            bx_import('BxDolAccount');
             $oAccount = BxDolAccount::getInstance();
             if ($oAccount)
                 $oAccount->addInformerPermanentMessages($this);
                 
-			bx_import('BxDolProfile');
             $oProfile = BxDolProfile::getInstance();
             if ($oProfile)
                 $oProfile->addInformerPermanentMessages($this);

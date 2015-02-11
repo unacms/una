@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModGeneralGridAdministration');
-
 class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministration
 {
 	protected $_sFilter1Name;
@@ -39,7 +37,6 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
 
     public function performActionSetAclLevel()
     {
-    	bx_import('BxDolMenu');
     	$oMenu = BxDolMenu::getObjectInstance('sys_set_acl_level');
 
     	$aIds = bx_get('ids');
@@ -69,7 +66,6 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
 			'content' => $oMenu->getCode($aIdsResult)
 		));
 
-    	bx_import('BxTemplFunctions');
 		$sContent = BxTemplFunctions::getInstance()->transBox($this->_oModule->_oConfig->getName() . 'set_acl_level_popup', $sContent);
 
     	$this->_echoResultJson(array('popup' => $sContent), true);
@@ -110,7 +106,6 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
     {
     	$oProfile = $this->_getProfileObject($mixedId);
 
-    	bx_import('BxDolProfileUndefined');
     	if($oProfile instanceof BxDolProfileUndefined)
     		return false;
 
@@ -171,12 +166,10 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
 
     protected function _getProfileObject($iId)
     {
-    	bx_import('BxDolProfile');
     	$oProfile = BxDolProfile::getInstanceByContentAndType((int)$iId, $this->_oModule->_oConfig->getName());
-        if (!$oProfile) {
-            bx_import('BxDolProfileUndefined');
+        if (!$oProfile) 
             $oProfile = BxDolProfileUndefined::getInstance();
-        }
+
         return $oProfile;
     }
 
@@ -193,7 +186,6 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
     	if(isset($aParams['with_content']) && $aParams['with_content'] === true) {
     		$oProfile = $this->_getProfileObject($iId);
 
-    		bx_import('BxDolProfileUndefined');
     		if($oProfile instanceof BxDolProfileUndefined)
     			return false;
 

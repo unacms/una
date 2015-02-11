@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModNotificationsDb');
-
 class BxTimelineDb extends BxBaseModNotificationsDb
 {
     protected $_sTablesShareTrack;
@@ -370,7 +368,6 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 				if(empty($aParams['owner_id']))
 					break;
 
-				bx_import('BxDolConnection');
 				$oConnection = BxDolConnection::getObjectInstance($this->_oConfig->getObject('conn_subscriptions'));
 
 				$aQueryParts = $oConnection->getConnectedContentAsSQLParts($this->_sPrefix . "events", 'owner_id', $aParams['owner_id']);

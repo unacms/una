@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxDolModuleConfig');
-
 class BxSMTPConfig extends BxDolModuleConfig
 {
     function __construct($aModule)

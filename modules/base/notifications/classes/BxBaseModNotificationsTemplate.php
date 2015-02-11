@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModGeneralTemplate');
-
 class BxBaseModNotificationsTemplate extends BxBaseModGeneralTemplate
 {
 	function __construct(&$oConfig, &$oDb)

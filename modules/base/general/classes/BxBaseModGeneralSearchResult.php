@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxTemplSearchResult');
-
 class BxBaseModGeneralSearchResult extends BxTemplSearchResult
 {
     protected $oModule;
@@ -22,7 +20,6 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
 
     function getMain()
     {
-        bx_import('BxDolModule');
         return BxDolModule::getInstance($this->aCurrent['name']);
     }
 
@@ -30,7 +27,6 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
     {
         $CNF = &$this->oModule->_oConfig->CNF;
 
-        bx_import('BxDolPermalinks');
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $a[$CNF['FIELD_ID']]);
     }
 
@@ -39,7 +35,6 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
         if (false === parent::getRssPageUrl())
             return false;
 
-        bx_import('BxDolPermalinks');
         $oPermalinks = BxDolPermalinks::getInstance();
         return BX_DOL_URL_ROOT . $oPermalinks->permalink($this->aCurrent['rss']['link']);
     }

@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModTextAlertsResponse');
-
 class BxAlbumsAlertsResponse extends BxBaseModTextAlertsResponse
 {
     public function __construct()

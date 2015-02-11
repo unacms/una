@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModTextGridAdministration');
-
 class BxAlbumsGridAdministration extends BxBaseModTextGridAdministration
 {
     public function __construct ($aOptions, $oTemplate = false)

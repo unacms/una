@@ -9,10 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModGeneralPageEntry');
-bx_import('BxDolModule');
-bx_import('BxDolMenu');
-
 /**
  * Entry create/edit pages
  */

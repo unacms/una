@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModTextConfig');
-
 class BxAlbumsConfig extends BxBaseModTextConfig
 {
     function __construct($aModule)

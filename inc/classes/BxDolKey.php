@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolKeyQuery');
-
 /**
  * @page objects
  * @section key Keys
@@ -23,7 +21,6 @@ bx_import('BxDolKeyQuery');
  * Generate new hashed key:
  *
  * @code
- *  bx_import('BxDolKey'); // import class
  *  $oKeys = BxDolKey::getInstance(); // get object instance
  *  if ($oKeys) // check if object is available for using
  *      echo $oKeys->getNewKey (false, 3600); // get new hashed key, which will be automatically deleted after 1 hour
@@ -32,7 +29,6 @@ bx_import('BxDolKeyQuery');
  * Check if hashed key exists:
  *
  * @code
- *  bx_import('BxDolKey'); // import class
  *  $oKeys = BxDolKey::getInstance(); // get object instance
  *  if ($oKeys && $oKeys->isKeyExists ($sKey)) // check key exists
  *      echo 'key exists';

@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxTemplStudioPermissions');
-
 class BxDevPermissions extends BxTemplStudioPermissions
 {
     protected $aParams;

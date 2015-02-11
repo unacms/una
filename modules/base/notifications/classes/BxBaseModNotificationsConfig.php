@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModGeneralConfig');
-
 class BxBaseModNotificationsConfig extends BxBaseModGeneralConfig
 {
 	protected $_oDb;

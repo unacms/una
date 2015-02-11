@@ -10,7 +10,6 @@
  */
 
 bx_import('BxDolPrivacy');
-bx_import('BxBaseModGeneralConfig');
 
 class BxContactConfig extends BxBaseModGeneralConfig
 {

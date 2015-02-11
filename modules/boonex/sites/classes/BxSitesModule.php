@@ -9,9 +9,6 @@
  * @{
  */
 
-bx_import ('BxDolModule');
-bx_import ('BxDolAcl');
-
 define('BX_SITES_ACCOUNT_STATUS_UNCONFIRMED', 'unconfirmed');
 define('BX_SITES_ACCOUNT_STATUS_PENDING', 'pending');
 define('BX_SITES_ACCOUNT_STATUS_TRIAL', 'trial');
@@ -62,7 +59,6 @@ class BxSitesModule extends BxDolModule
 
     public function serviceBrowse()
     {
-        bx_import('BxDolGrid');
         $oGrid = BxDolGrid::getObjectInstance('bx_sites_browse');
         if(!$oGrid)
             return '';
@@ -104,7 +100,6 @@ class BxSitesModule extends BxDolModule
         if($sMsg !== CHECK_ACTION_RESULT_ALLOWED)
             return MsgBox($sMsg);
 
-        bx_import('BxDolGrid');
         $oGrid = BxDolGrid::getObjectInstance('bx_sites_overview');
         if(!$oGrid)
             return '';

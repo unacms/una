@@ -256,15 +256,10 @@ function htmlspecialchars_adv( $string )
  */
 function sendMailTemplate($sTemplateName, $iAccountId = 0, $iProfileId = 0, $aReplaceVars = array(), $iEmailType = BX_EMAIL_NOTIFY)
 {
-    bx_import('BxDolLanguages');
-
-    bx_import('BxDolAccount');
     $oAccount = BxDolAccount::getInstance($iAccountId);
 
-    bx_import('BxDolProfile');
     $oProfile = BxDolProfile::getInstance($iProfileId);
 
-    bx_import('BxDolEmailTemplates');
     $oEmailTemplates = BxDolEmailTemplates::getInstance();
 
     if (!$oAccount || !$oProfile || !$oEmailTemplates)
@@ -282,9 +277,6 @@ function sendMailTemplate($sTemplateName, $iAccountId = 0, $iProfileId = 0, $aRe
  */
 function sendMailTemplateSystem($sTemplateName, $aReplaceVars = array(), $iEmailType = BX_EMAIL_SYSTEM)
 {
-    bx_import('BxDolLanguages');
-
-    bx_import('BxDolEmailTemplates');
     $oEmailTemplates = BxDolEmailTemplates::getInstance();
 
     if (!$oEmailTemplates)
@@ -314,7 +306,6 @@ function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0
         return false;
 
     // get recipient account
-    bx_import('BxDolAccount');
     $oAccount = BxDolAccount::getInstance($sRecipientEmail);
     $aAccountInfo = $oAccount ? $oAccount->getInfo() : false;
 
@@ -329,7 +320,6 @@ function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0
     // if profile id is provided - get profile's info
     $aRecipientInfo = false;
     if ($iRecipientID) {
-        bx_import('BxDolProfile');
         $oProfile = BxDolProfile::getInstance($iRecipientID);
         if ($oProfile)
             $aRecipientInfo = $oProfile->getInfo();
@@ -350,7 +340,6 @@ function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0
     if ($aPlus || $iRecipientID) {
         if(!is_array($aPlus))
             $aPlus = array();
-        bx_import('BxDolEmailTemplates');
         $oEmailTemplates = BxDolEmailTemplates::getInstance();
         $sMailSubject = $oEmailTemplates->parseContent($sMailSubject, $aPlus, $iRecipientID);
         $sMailBody = $oEmailTemplates->parseContent($sMailBody, $aPlus, $iRecipientID);
@@ -405,7 +394,6 @@ function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0
  */
 function get_templates_array($bEnabledOnly = true, $bShortInfo = true)
 {
-    bx_import('BxDolDb');
     $oDb = BxDolDb::getInstance();
 
     $sWhereAddon = $bEnabledOnly ? " AND `enabled`='1'" : "";
@@ -443,7 +431,6 @@ function genFlag( $country )
 
 function genFlagUrl($country)
 {
-    bx_import('BxDolTemplate');
     return BxDolTemplate::getInstance()->getIconUrl('sys_fl_' . strtolower($country) . '.gif');
 }
 
@@ -534,7 +521,6 @@ function uriGenerate ($s, $sTable, $sField, $sEmpty = '-')
 
 function uriFilter ($s, $sEmpty = '-')
 {
-    bx_import('BxTemplConfig');
     if (BxTemplConfig::getInstance()->bAllowUnicodeInPreg)
         $s = get_mb_replace ('/[^\pL^\pN]+/u', '-', $s); // unicode characters
     else
@@ -548,7 +534,6 @@ function uriFilter ($s, $sEmpty = '-')
 
 function uriCheckUniq ($s, $sTable, $sField)
 {
-    bx_import('BxDolDb');
     $oDb = BxDolDb::getInstance();
 
     $sSql = $oDb->prepare("SELECT 1 FROM `$sTable` WHERE `$sField`=? LIMIT 1", $s);
@@ -588,7 +573,7 @@ function bx_mb_strpos ($s, $sReplacement, $iStart = 0)
  */
 function bx_import($sClassName, $mixedModule = array())
 {
-    if (class_exists($sClassName))
+    if (class_exists($sClassName, false))
         return;
 
     $aModule = false;
@@ -596,7 +581,6 @@ function bx_import($sClassName, $mixedModule = array())
         if (is_array($mixedModule)) {
             $aModule = $mixedModule;
         } elseif (is_string($mixedModule)) {
-            bx_import('BxDolModule');
             $o = BxDolModule::getInstance($mixedModule);
             $aModule = $o->_aModule;
         } elseif (is_bool($mixedModule) && true === $mixedModule) {
@@ -605,7 +589,7 @@ function bx_import($sClassName, $mixedModule = array())
     }
 
     if ($aModule) {
-        if (class_exists($aModule['class_prefix'] . $sClassName))
+        if (class_exists($aModule['class_prefix'] . $sClassName, false))
             return;
         require_once (BX_DIRECTORY_PATH_MODULES . $aModule['path'] . 'classes/' . $aModule['class_prefix'] . $sClassName . '.php');
         return;
@@ -635,12 +619,10 @@ function bx_import($sClassName, $mixedModule = array())
         }
     }
 
-    if (0 == strncmp($sClassName, 'BxTempl', 7) && !class_exists($sClassName)) {
+    if (0 == strncmp($sClassName, 'BxTempl', 7)) {
         if(0 == strncmp($sClassName, 'BxTemplStudio', 13)) {
-            bx_import('BxDolStudioTemplate');
             $sPath = BX_DIRECTORY_PATH_MODULES . BxDolStudioTemplate::getInstance()->getPath() . 'data/template/studio/scripts/' . $sClassName . '.php';
         } else {
-            bx_import('BxDolTemplate');
             $sPath = BX_DIRECTORY_PATH_MODULES . BxDolTemplate::getInstance()->getPath() . 'data/template/system/scripts/' . $sClassName . '.php';
         }
 
@@ -651,6 +633,15 @@ function bx_import($sClassName, $mixedModule = array())
 
         trigger_error ("bx_import fatal error: class (" . $sClassName . ") wasn't found", E_USER_ERROR);
     }
+}
+
+/**
+ * used in spl_autoload_register() function, so no need to call bx_import for system classes
+ */
+function bx_autoload($sClassName)
+{
+    if (0 == strncmp($sClassName, 'BxDol', 5) || 0 == strncmp($sClassName, 'BxBase', 6) || 0 == strncmp($sClassName, 'BxTempl', 7))
+        bx_import($sClassName);
 }
 
 /**
@@ -666,14 +657,14 @@ function bx_instance($sClassName, $aParams = array(), $aModule = array())
     if(isset($GLOBALS['bxDolClasses'][$sClassName]))
         return $GLOBALS['bxDolClasses'][$sClassName];
 
-    bx_import((empty($aModule) ? $sClassName : str_replace($aModule['class_prefix'], '', $sClassName)), $aModule);
+    if ($aModule)
+        bx_import((empty($aModule) ? $sClassName : str_replace($aModule['class_prefix'], '', $sClassName)), $aModule);
 
     $oClass = new ReflectionClass($sClassName);
 
     $GLOBALS['bxDolClasses'][$sClassName] = empty($aParams) ? $oClass->newInstance() : $oClass->newInstanceArgs($aParams);
 
     return $GLOBALS['bxDolClasses'][$sClassName];
-
 }
 
 
@@ -981,7 +972,6 @@ function bx_ltrim_str ($sString, $sPrefix, $sReplace = '')
 
 function bx_convert_links($s)
 {
-	bx_import('BxDolTemplate');
 	$oTemplate = BxDolTemplate::getInstance();
 
 	$bAddNofollow = getParam('sys_add_nofollow') == 'on';
@@ -1144,7 +1134,6 @@ function bx_trigger_error ($sMsg, $iNumLevelsBack = 0)
  */
 function bx_get_ver ($bInvalidateCache = false)
 {
-    bx_import('BxDolDb');
     $oDb = BxDolDb::getInstance();
 
     if ($bInvalidateCache)

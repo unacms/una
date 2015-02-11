@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModNotificationsTemplate');
-
 class BxNtfsTemplate extends BxBaseModNotificationsTemplate
 {
     function __construct(&$oConfig, &$oDb)
@@ -48,7 +46,6 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         if(empty($aEvents))
         	return $this->getEmpty();
 
-        bx_import('BxTemplPaginate');
         $oPaginate = new BxTemplPaginate(array(
         	'start' => $aParams['start'],
             'per_page' => $aParams['per_page'],

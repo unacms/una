@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolCron');
-
 class BxDolCronPruning extends BxDolCron
 {
     protected function start()
@@ -25,7 +23,6 @@ class BxDolCronPruning extends BxDolCron
         if (!($sOutput = ob_get_clean()))
             return;
 
-        bx_import('BxDolEmailTemplates');
         $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_Pruning', array('pruning_output' => $sOutput, 'site_title' => getParam('site_title')), 0, 0);
         if ($aTemplate)
             sendMail(getParam('site_email'), $aTemplate['Subject'], $aTemplate['Body'], 0, array(), BX_EMAIL_NOTIFY);
@@ -37,34 +34,27 @@ class BxDolCronPruning extends BxDolCron
     protected function cleanDatabase()
     {
         // clean expired membership levels
-        bx_import('BxDolAcl');
         $oAcl = BxDolAcl::getInstance();
         $iDeleteMemLevels = $oAcl ? $oAcl->maintenance() : 0;
 
         //--- Clean sessions ---//
-        bx_import('BxDolSession');
         $oSession = BxDolSession::getInstance();
         $iSessions = $oSession ? $oSession->maintenance() : 0;
 
         // clean old views
-        bx_import('BxDolView');
         $iDeletedViews = BxDolView::maintenance ();
 
         // clean storage engine expired private file tokens
-        bx_import('BxDolStorage');
         $iDeletedExpiredTokens = BxDolStorage::pruning();
 
         // clean outdated transcoded images
-        bx_import('BxDolTranscoderImage');
         $iDeletedTranscodedImages = BxDolTranscoderImage::pruning();
 
         // clean expired keys
-        bx_import('BxDolKey');
         $oKey = BxDolKey::getInstance();
         $iDeletedKeys = $oKey ? $oKey->prune() : 0;
 
         // clean old votes
-        bx_import('BxDolVote');
         $iDeletedVotes = BxDolVote::maintenance();
 
         echo _t('_sys_pruning_db', $iDeleteMemLevels, $iSessions, $iDeletedViews, $iDeletedVotes, $iDeletedKeys, $iDeletedExpiredTokens, $iDeletedTranscodedImages);

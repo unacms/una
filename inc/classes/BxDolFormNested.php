@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplFormView');
-
 /**
  * Nested form. It is used in file uploaders to show uploaded file as nested form.
  * @see BxDolUploader

@@ -85,7 +85,6 @@ class BxDolAlerts extends BxDol
         $this->iObject = (int)$iObjectId;
         $this->aExtras = $aExtras;
         if (false === $iSender) {
-            bx_import('BxDolProfile');
             $oProfile = BxDolProfile::getInstance();
             $this->iSender = $oProfile ? $oProfile->id() : 0;
         } else {

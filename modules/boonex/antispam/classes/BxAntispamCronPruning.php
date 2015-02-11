@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxDolCron');
-
 class BxAntispamCronPruning extends BxDolCron
 {
     function processing()

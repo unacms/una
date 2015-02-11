@@ -9,9 +9,6 @@
  * @{
  */
 
-bx_import('BxDolCmts');
-bx_import('BxBaseModGeneralSearchResult');
-
 class BxBaseModGeneralCmtsSearchResult extends BxBaseModGeneralSearchResult
 {
 	protected $sModule;
@@ -42,7 +39,6 @@ class BxBaseModGeneralCmtsSearchResult extends BxBaseModGeneralSearchResult
 
     function getMain()
     {
-        bx_import('BxDolModule');
         return BxDolModule::getInstance($this->sModule);
     }
 

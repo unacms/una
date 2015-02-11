@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxTemplCmts');
-
 class BxCnvCmts extends BxTemplCmts
 {
     /**
@@ -21,7 +19,6 @@ class BxCnvCmts extends BxTemplCmts
         if (!parent::isEnabled ())
             return false;
 
-        bx_import('BxDolModule');
         $oModule = BxDolModule::getInstance('bx_convos');
         if (!$oModule->_oDb->getContentInfoById((int)$this->getId()))
             return false;

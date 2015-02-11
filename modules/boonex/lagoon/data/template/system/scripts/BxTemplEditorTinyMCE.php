@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxBaseEditorTinyMCE');
-
 /**
  * @see BxDolEditor
  */

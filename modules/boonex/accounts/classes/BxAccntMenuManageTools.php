@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModGeneralMenuManageTools');
-
 /**
  * 'Persons manage tools' menu.
  */
@@ -33,7 +31,6 @@ class BxAccntMenuManageTools extends BxBaseModGeneralMenuManageTools
         if(!parent::_isVisible($a))
             return false;
 
-        bx_import('BxDolAccountQuery');
         $aDataEntry = BxDolAccountQuery::getInstance()->getInfoById($this->_iContentId);
         if(empty($aDataEntry) || !is_array($aDataEntry))
         	return false;

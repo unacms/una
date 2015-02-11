@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxBasePageAccount');
-
 /**
  * @see BxBasePageAccount
  */

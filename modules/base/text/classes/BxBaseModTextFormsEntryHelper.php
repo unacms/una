@@ -9,9 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModGeneralFormsEntryHelper');
-bx_import('BxDolProfile');
-
 /**
  * Entry forms helper functions
  */
@@ -73,10 +70,8 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
             return array (false, false);
 
         $oProfile = BxDolProfile::getInstance($aContentInfo[$CNF['FIELD_AUTHOR']]);
-        if (!$oProfile) {
-            bx_import('BxDolProfileUndefined');
+        if (!$oProfile) 
             $oProfile = BxDolProfileUndefined::getInstance();
-        }
 
         return array ($oProfile, $aContentInfo);
     }
@@ -93,7 +88,6 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
             $oProfile->disapprove(BX_PROFILE_ACTION_AUTO);
 
         // create an alert
-        bx_import('BxDolPrivacy');
         bx_alert($this->_oModule->getName(), 'edited', $aContentInfo[$CNF['FIELD_ID']], false, array('privacy_view' => $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]));
 
         return '';
@@ -107,7 +101,6 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
             return MsgBox(_t('_sys_txt_error_occured'));
 
         // alert
-        bx_import('BxDolPrivacy');
         $aParams = isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) ? array('privacy_view' => $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) : array();
         bx_alert($this->_oModule->getName(), 'added', $iContentId, false, $aParams);
 

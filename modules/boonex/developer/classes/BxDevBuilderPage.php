@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxTemplStudioBuilderPage');
-
 class BxDevBuilderPage extends BxTemplStudioBuilderPage
 {
     protected $sActionPageExport = 'page_export';
@@ -27,7 +25,6 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage
         $this->sTypeUrl = $this->sBaseUrl . '&bp_type=%s';
         $this->sPageUrl = $this->sTypeUrl . '&bp_page=%s';
 
-        bx_import('BxDolModule');
         $this->oModule = BxDolModule::getInstance('bx_developer');
 
         $this->oModule->_oTemplate->addStudioCss(array('builder_page.css'));
@@ -45,7 +42,6 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage
     	$sFormObject = $this->oModule->_oConfig->getObject('form_bp_page');
         $sFormDisplay = $this->oModule->_oConfig->getObject('form_display_bp_page_add');
 
-        bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
         $oForm->aFormAttrs['action'] = sprintf($this->sPageUrl, $this->sType, $this->sPage) . '&bp_action=' . $this->sActionPageCreate;
         $oForm->aInputs['module']['values'] = array_merge(array('' => _t('_bx_dev_bp_txt_select_module')), BxDolStudioUtils::getModules());
@@ -70,7 +66,6 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage
                 return array('msg' => _t('_bx_dev_bp_err_page_create'));
         }
 
-        bx_import('BxTemplStudioFunctions');
         $sContent = BxTemplStudioFunctions::getInstance()->popupBox($this->aHtmlIds['add_popup_id'], _t('_bx_dev_bp_txt_page_create_popup'), $this->oModule->_oTemplate->parseHtmlByName('bp_add_page.html', array(
             'form_id' => $oForm->aFormAttrs['id'],
             'form' => $oForm->getCode(true)
@@ -123,7 +118,6 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage
         );
         $oForm = new BxTemplStudioFormView($aForm);
 
-        bx_import('BxTemplStudioFunctions');
         $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-bp-page-export-popup', _t('_bx_dev_bp_txt_page_export_popup', _t($aPage['title'])), $this->oModule->_oTemplate->parseHtmlByName('bp_export.html', array(
             'content' => $oForm->getCode()
         )));
@@ -145,7 +139,6 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage
         if(empty($aBlock) || !is_array($aBlock))
             return array('msg' => _t('_bx_dev_bp_err_block_not_found'));
 
-        bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
 
         $this->onLoadBlock($oForm, $aBlock);
@@ -160,7 +153,6 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage
                 return array('msg' => _t('_bx_dev_bp_err_block_edit'));
         }
 
-        bx_import('BxTemplStudioFunctions');
         $sContent = BxTemplStudioFunctions::getInstance()->popupBox($this->aHtmlIds['edit_block_popup_id'], _t('_bx_dev_bp_txt_block_edit_popup', _t($aBlock['title'])), $this->oModule->_oTemplate->parseHtmlByName('bp_add_block.html', array(
             'form_id' => $oForm->aFormAttrs['id'],
             'form' => $oForm->getCode(true)
@@ -416,7 +408,6 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage
     {
         $sJsObject = $this->getPageJsObject();
 
-        bx_import('BxDolPermalinks');
         $oPermalinks = BxDolPermalinks::getInstance();
 
         return array(

@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolCaptchaQuery');
-
 /**
  * @page objects
  * @section captcha CAPTCHA
@@ -36,7 +34,6 @@ bx_import('BxDolCaptchaQuery');
  * Display captcha:
  *
  * @code
- *  bx_import('BxDolCaptcha'); // import captcha class
  *  $oCaptcha = BxDolCaptcha::getObjectInstance(); // get default captcha object instance
  *  if ($oCaptcha) // check if captcha is available for using
  *      echo $oCaptcha->display (); // output HTML which will automatically show captcha
@@ -45,7 +42,6 @@ bx_import('BxDolCaptchaQuery');
  * Check captcha:
  *
  * @code
- *  bx_import('BxDolCaptcha'); // import captcha class
  *  $oCaptcha = BxDolCaptcha::getObjectInstance(); // get default captcha object instance
  *  if ($oCaptcha && $oCaptcha->check ()) // check if captcha is correct
  *      echo 'captcha is OK';
@@ -93,8 +89,6 @@ class BxDolCaptcha extends BxDol implements iBxDolFactoryObject
         $sClass = $aObject['override_class_name'];
         if (!empty($aObject['override_class_file']))
             require_once(BX_DIRECTORY_PATH_ROOT . $aObject['override_class_file']);
-        else
-            bx_import($sClass);
 
         $o = new $sClass($aObject);
         if (!$o->isAvailable())

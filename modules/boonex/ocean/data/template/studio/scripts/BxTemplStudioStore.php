@@ -9,8 +9,6 @@
  */
 defined('BX_DOL') or die('hack attempt');
 
-bx_import('BxBaseStudioStore');
-
 class BxTemplStudioStore extends BxBaseStudioStore
 {
     function __construct($sPage = "")

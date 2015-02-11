@@ -7,9 +7,6 @@
  * @{
  */
 
-bx_import('BxDol');
-bx_import('BxDolLiveUpdatesQuery');
-
 /**
  * @page objects
  * @section live updates Live Updates
@@ -54,10 +51,8 @@ class BxDolLiveUpdates extends BxDol
      */
     public static function getInstance()
     {
-		if(!isset($GLOBALS['bxDolClasses'][__CLASS__])) {
-			bx_import('BxTemplLiveUpdates');
+		if(!isset($GLOBALS['bxDolClasses'][__CLASS__]))
 			$GLOBALS['bxDolClasses'][__CLASS__] = new BxTemplLiveUpdates();
-		}
 
 		return $GLOBALS['bxDolClasses'][__CLASS__];
     }

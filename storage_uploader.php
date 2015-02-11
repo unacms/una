@@ -29,7 +29,6 @@ if (!$sUploaderObject || !$sStorageObject || !$sUniqId)
 
 $isPrivate = (int)bx_get('p') ? 1 : 0;
 
-bx_import('BxDolUploader');
 $oUploader = BxDolUploader::getObjectInstance($sUploaderObject, $sStorageObject, $sUniqId);
 if (!$oUploader) {
     // no such uploader available

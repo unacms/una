@@ -9,9 +9,6 @@
  * @{
  */
 
-bx_import('BxDolModule');
-bx_import('BxTemplGrid');
-
 class BxInvGridRequests extends BxTemplGrid
 {
 	protected $_sModule;
@@ -38,7 +35,6 @@ class BxInvGridRequests extends BxTemplGrid
             exit;
         }
 
-        bx_import('BxTemplFunctions');
 		$sContent = BxTemplFunctions::getInstance()->transBox('bx-invites-info-popup', $this->_oModule->_oTemplate->getBlockRequestText($aRequest));
 
 		$this->_echoResultJson(array('popup' => array('html' => $sContent)), true);
@@ -62,7 +58,6 @@ class BxInvGridRequests extends BxTemplGrid
 
         $sText = _t('_bx_invites_msg_invitation');
 
-		bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance($this->_oModule->_oConfig->getObject('form_request'), $this->_oModule->_oConfig->getObject('form_display_request_send'));
 
         $aIdsAffected = array ();
@@ -102,7 +97,6 @@ class BxInvGridRequests extends BxTemplGrid
             exit;
         }
 
-        bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance($this->_oModule->_oConfig->getObject('form_request'), $this->_oModule->_oConfig->getObject('form_display_request_send'));
 
         $aIdsAffected = array ();

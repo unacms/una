@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxTemplGrid');
-
 class BxAntispamGridDNSBL extends BxTemplGrid
 {
     public function __construct ($aOptions, $oTemplate = false)
@@ -27,7 +25,6 @@ class BxAntispamGridDNSBL extends BxTemplGrid
 
         $this->_oTemplate->addJs('jquery.form.min.js');
 
-        bx_import('BxTemplFormView');
         $oForm = new BxTemplFormView(array());
         $oForm->addCssJs();
     }
@@ -37,8 +34,6 @@ class BxAntispamGridDNSBL extends BxTemplGrid
      */
     public function performActionHelp()
     {
-        bx_import('BxTemplFunctions');
-
         $s = BxTemplFunctions::getInstance()->popupBox(
             'bx_antispam_poppup_help',
             _t('_bx_antispam_popup_help'),
@@ -53,7 +48,6 @@ class BxAntispamGridDNSBL extends BxTemplGrid
      */
     public function performActionLog()
     {
-        bx_import('BxDolModule');
         $oModule = BxDolModule::getInstance('bx_antispam');
         $sGrid = $oModule->serviceBlockLog();
 
@@ -62,7 +56,6 @@ class BxAntispamGridDNSBL extends BxTemplGrid
             exit;
         }
 
-        bx_import('BxTemplFunctions');
         $s = BxTemplFunctions::getInstance()->popupBox(
             'bx_antispam_popup_block_log',
             _t('_bx_antispam_popup_block_log'),
@@ -78,7 +71,6 @@ class BxAntispamGridDNSBL extends BxTemplGrid
      */
     public function performActionRecheckItem()
     {
-        bx_import('BxDolModule');
         $oModule = BxDolModule::getInstance('bx_antispam');
         $o = bx_instance('BxAntispamDNSBlacklists', array(), $oModule->_aModule);
 
@@ -120,7 +112,6 @@ class BxAntispamGridDNSBL extends BxTemplGrid
      */
     public function performActionRecheck()
     {
-        bx_import('BxDolModule');
         $oModule = BxDolModule::getInstance('bx_antispam');
         $oDNSBlacklists = bx_instance('BxAntispamDNSBlacklists', array(), $oModule->_aModule);
 
@@ -172,7 +163,6 @@ class BxAntispamGridDNSBL extends BxTemplGrid
             ),
         );
 
-        bx_import('BxTemplFormView');
         $oForm = new BxTemplFormView($aForm);
 
         $s = $oModule->_oTemplate->parseHtmlByName('recheck.html', array (
@@ -181,7 +171,6 @@ class BxAntispamGridDNSBL extends BxTemplGrid
             'bx_repeat:items' => $oDNSBlacklists->getRules(array(BX_DOL_DNSBL_CHAIN_SPAMMERS, BX_DOL_DNSBL_CHAIN_WHITELIST, BX_DOL_DNSBL_CHAIN_URIDNS)),
         ));
 
-        bx_import('BxTemplFunctions');
         $s = BxTemplFunctions::getInstance()->popupBox($oForm->getId() . '_form', _t('_bx_antispam_popup_dnsbl_recheck'), $s);
 
         $this->_echoResultJson(array('popup' => array('html' => $s, 'options' => array('closeOnOuterClick' => false))), true);
@@ -192,8 +181,6 @@ class BxAntispamGridDNSBL extends BxTemplGrid
      */
     public function performActionAdd()
     {
-        bx_import('BxTemplFormView');
-
         $aForm = array(
             'form_attrs' => array(
                 'id' => 'bx_antispam_form_dnsbl_add',
@@ -269,7 +256,6 @@ class BxAntispamGridDNSBL extends BxTemplGrid
 
         } else { // if form is not submitted or some fields are invalid, display popup with form
 
-            bx_import('BxTemplFunctions');
             $s = BxTemplFunctions::getInstance()->popupBox($oForm->getId() . '_form', _t('_bx_antispam_popup_dnsbl_add'), $oForm->getCode() . '
                 <script>
                     $(document).ready(function () {

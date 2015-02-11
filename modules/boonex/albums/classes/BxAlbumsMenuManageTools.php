@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModTextMenuManageTools');
-
 /**
  * 'Albums manage tools' menu.
  */

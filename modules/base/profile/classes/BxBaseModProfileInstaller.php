@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModGeneralInstaller');
-
 class BxBaseModProfileInstaller extends BxBaseModGeneralInstaller
 {
     function __construct($aConfig)

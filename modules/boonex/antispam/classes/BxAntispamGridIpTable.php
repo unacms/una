@@ -11,8 +11,6 @@
 
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
-bx_import('BxTemplGrid');
-
 class BxAntispamGridIpTable extends BxTemplGrid
 {
     public function __construct ($aOptions, $oTemplate = false)
@@ -29,7 +27,6 @@ class BxAntispamGridIpTable extends BxTemplGrid
 
         $this->_oTemplate->addJs('jquery.form.min.js');
 
-        bx_import('BxTemplFormView');
         $oForm = new BxTemplFormView(array());
         $oForm->addCssJs();
     }
@@ -64,7 +61,6 @@ class BxAntispamGridIpTable extends BxTemplGrid
 
     protected function _performAction($sAction, $sDisplay, $iId = 0)
     {
-        bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance('bx_antispam_ip_table_form', $sDisplay); // get form instance for specified form object and display
         if (!$oForm) {
             $this->_echoResultJson(array('msg' => _t('_sys_txt_error_occured')), true);
@@ -78,7 +74,6 @@ class BxAntispamGridIpTable extends BxTemplGrid
 
         $aIpTableDirective = array();
         if ($iId) {
-            bx_import('BxDolModule');
             $oModule = BxDolModule::getInstance('bx_antispam');
             $oAntispamIp = bx_instance('BxAntispamIP', array(), $oModule->_aModule);
             $aIpTableDirective = $oAntispamIp->getIpTableDirective($iId);
@@ -110,7 +105,6 @@ class BxAntispamGridIpTable extends BxTemplGrid
 
         } else { // if form is not submitted or some fields are invalid, display popup with form
 
-            bx_import('BxTemplFunctions');
             $s = BxTemplFunctions::getInstance()->popupBox($oForm->getId() . '_form', _t('_bx_antispam_form_ip_table_add'), $oForm->getCode() . '
                 <script>
                     $(document).ready(function () {

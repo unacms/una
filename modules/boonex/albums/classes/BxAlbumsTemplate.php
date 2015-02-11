@@ -9,12 +9,6 @@
  * @{
  */
 
-bx_import('BxDolPermalinks');
-bx_import('BxTemplFunctions');
-bx_import('BxDolStorage');
-bx_import('BxDolTranscoderImage');
-bx_import('BxBaseModTextTemplate');
-
 /*
  * Module representation.
  */
@@ -43,12 +37,9 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
         // get entry url        
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
 
-        bx_import('BxDolProfile');
         $oProfile = BxDolProfile::getInstance($aData[$CNF['FIELD_AUTHOR']]);
-        if (!$oProfile) {
-            bx_import('BxDolProfileUndefined');
+        if (!$oProfile) 
             $oProfile = BxDolProfileUndefined::getInstance();
-        }  
 
         $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_TRANSCODER_BROWSE']);
 
@@ -127,7 +118,6 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
          
         $sText = bx_process_output($aMediaInfo['title']);
         if (!empty($CNF['OBJECT_METATAGS_MEDIA'])) {
-            bx_import('BxDolMetatags');
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS_MEDIA']);
     
             if ($oMetatags->keywordsIsEnabled())

@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolTemplate');
-
 class BxDolModuleTemplate extends BxDolTemplate
 {
     protected $_oDb;
@@ -50,13 +48,11 @@ class BxDolModuleTemplate extends BxDolTemplate
 
     function addStudioCss($mixedFiles, $bDynamic = false, $bSearchInModule = true)
     {
-        bx_import('BxDolStudioTemplate');
         return $this->_addFiles(BxDolStudioTemplate::getInstance(), 'addCss', 'addLocation', 'removeLocation', '', $mixedFiles, $bDynamic, $bSearchInModule);
     }
 
     function addStudioJs($mixedFiles, $bDynamic = false, $bSearchInModule = true)
     {
-        bx_import('BxDolStudioTemplate');
         return $this->_addFiles(BxDolStudioTemplate::getInstance(), 'addJs', 'addLocationJs', 'removeLocationJs', 'js/', $mixedFiles, $bDynamic, $bSearchInModule);
     }
 
@@ -72,7 +68,6 @@ class BxDolModuleTemplate extends BxDolTemplate
 
     function addStudioInjection($sKey, $sType, $sData, $iReplace = 0)
     {
-        bx_import('BxDolStudioTemplate');
         BxDolStudioTemplate::getInstance()->aPage['injections']['page_0'][$sKey][] = array(
             'page_index' => 0,
             'key' => $sKey,

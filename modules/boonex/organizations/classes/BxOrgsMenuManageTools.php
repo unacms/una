@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModProfileMenuManageTools');
-
 /**
  * 'Organizations manage tools' menu.
  */

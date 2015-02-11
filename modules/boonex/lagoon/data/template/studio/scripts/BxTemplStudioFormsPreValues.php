@@ -9,8 +9,6 @@
  */
 defined('BX_DOL') or die('hack attempt');
 
-bx_import('BxBaseStudioFormsPreValues');
-
 class BxTemplStudioFormsPreValues extends BxBaseStudioFormsPreValues
 {
     function __construct($aOptions, $oTemplate = false)

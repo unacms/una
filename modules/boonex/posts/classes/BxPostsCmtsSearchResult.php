@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModGeneralCmtsSearchResult');
-
 class BxPostsCmtsSearchResult extends BxBaseModGeneralCmtsSearchResult
 {
     function __construct($sMode = '', $aParams = array())

@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModNotificationsSearchResult');
-
 class BxTimelineSearchResult extends BxBaseModNotificationsSearchResult
 {
     function __construct($sMode = '', $aParams = array())

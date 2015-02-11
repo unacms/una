@@ -10,7 +10,6 @@
  */
 
 bx_import('BxDolLanguages');
-bx_import('BxDolRequest');
 
 class BxBaseModGeneralRequest extends BxDolRequest
 {

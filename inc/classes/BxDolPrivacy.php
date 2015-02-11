@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolPrivacyQuery');
-
 define('BX_DOL_PG_HIDDEN', '1');
 define('BX_DOL_PG_MEONLY', '2');
 define('BX_DOL_PG_ALL', '3');
@@ -91,19 +89,15 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
         if(isset($GLOBALS['bxDolClasses']['BxDolPrivacy!' . $sObject]))
             return $GLOBALS['bxDolClasses']['BxDolPrivacy!' . $sObject];
 
-        bx_import('BxDolPrivacyQuery');
         $aObject = BxDolPrivacyQuery::getPrivacyObject($sObject);
         if(!$aObject || !is_array($aObject))
             return false;
 
-        bx_import('BxTemplPrivacy');
         $sClass = 'BxTemplPrivacy';
         if(!empty($aObject['override_class_name'])) {
             $sClass = $aObject['override_class_name'];
             if(!empty($aObject['override_class_file']))
                 require_once(BX_DIRECTORY_PATH_ROOT . $aObject['override_class_file']);
-            else
-                bx_import($sClass);
         }
 
         $o = new $sClass($aObject);
@@ -281,7 +275,6 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
 
     public function checkConnections($iOwnerId, $iViewerId)
     {
-        bx_import('BxDolConnection');
         return BxDolConnection::getObjectInstance('sys_profiles_friends')->isConnected($iOwnerId, $iViewerId, true);
     }
 

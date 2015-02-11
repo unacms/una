@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModGeneralRequest');
-
 class BxBaseModProfileRequest extends BxBaseModGeneralRequest
 {
     function __construct()

@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxBaseCaptchaReCAPTCHANew');
-
 /**
  * @see BxDolCaptcha
  */

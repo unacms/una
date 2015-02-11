@@ -9,8 +9,6 @@
  */
 defined('BX_DOL') or die('hack attempt');
 
-bx_import('BxBaseStudioNavigation');
-
 class BxTemplStudioNavigation extends BxBaseStudioNavigation
 {
     function __construct($sPage = '')

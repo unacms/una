@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxDolModule');
-
 /**
  * Profiler module by BoonEx
  *

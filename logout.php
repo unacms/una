@@ -17,7 +17,6 @@ bx_import('BxDolLanguages');
 if (isset($_COOKIE['memberID']) && isset($_COOKIE['memberPassword']))
     bx_logout();
 
-bx_import('BxDolTemplate');
 $oTemplate = BxDolTemplate::getInstance();
 $oTemplate->setPageNameIndex (BX_PAGE_TRANSITION);
 $oTemplate->setPageHeader (_t('_Please Wait'));

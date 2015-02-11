@@ -9,9 +9,6 @@
  * @{
  */
 
-bx_import('BxDolModule');
-bx_import('BxTemplPage');
-
 /**
  * Browse entries pages.
  */
@@ -28,7 +25,6 @@ class BxBaseModGeneralPageBrowse extends BxTemplPage
         $this->_oModule = BxDolModule::getInstance($this->MODULE);
 
         // select module submenu
-        bx_import('BxDolMenu');
         $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
         $oMenuSubmenu->setObjectSubmenu($this->_oModule->_oConfig->CNF['OBJECT_MENU_SUBMENU']);
     }

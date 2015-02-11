@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModGeneralDb');
-
 /*
  * Profile based module database queries
  */

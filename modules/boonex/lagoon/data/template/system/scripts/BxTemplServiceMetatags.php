@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxBaseServiceMetatags');
-
 /**
  * @see BxBaseServiceMetatags
  */

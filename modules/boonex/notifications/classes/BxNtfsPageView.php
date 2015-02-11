@@ -9,10 +9,6 @@
  * @{
  */
 
-bx_import('BxDolMenu');
-bx_import('BxDolModule');
-bx_import('BxTemplPage');
-
 class BxNtfsPageView extends BxTemplPage
 {
 	protected $_sModule;

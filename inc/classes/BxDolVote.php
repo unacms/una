@@ -7,9 +7,6 @@
  * @{
  */
 
-bx_import('BxDolObject');
-bx_import('BxDolVoteQuery');
-
 define('BX_DOL_VOTE_OLD_VOTES', 365 * 86400); ///< votes older than this number of seconds will be deleted automatically
 
 define('BX_DOL_VOTE_TYPE_STARS', 'stars');
@@ -63,7 +60,6 @@ define('BX_DOL_VOTE_USAGE_DEFAULT', BX_DOL_VOTE_USAGE_BLOCK);
  * for MinValue and MaxValue (for example 1) and IsUndo should be equal to 1. After filling the other
  * paramenters in the table you can show vote in any place, using the following code:
  * @code
- * bx_import('BxDolVote');
  * $o = BxDolVote::getObjectInstance('system object name', $iYourEntryId);
  * if (!$o->isEnabled()) return '';
  *     echo $o->getElementBlock();
@@ -113,14 +109,11 @@ class BxDolVote extends BxDolObject
         if(!isset($aSystems[$sSys]))
             return null;
 
-        bx_import('BxTemplVote');
         $sClassName = 'BxTemplVote';
         if(!empty($aSystems[$sSys]['class_name'])) {
             $sClassName = $aSystems[$sSys]['class_name'];
             if(!empty($aSystems[$sSys]['class_file']))
                 require_once(BX_DIRECTORY_PATH_ROOT . $aSystems[$sSys]['class_file']);
-            else
-                bx_import($sClassName);
         }
 
         $o = new $sClassName($sSys, $iId, $iInit);
@@ -360,12 +353,9 @@ class BxDolVote extends BxDolObject
 
     protected function _getAuthorObject($iAuthorId = 0)
     {
-        bx_import('BxDolProfile');
         $oProfile = BxDolProfile::getInstance($iAuthorId);
-        if (!$oProfile) {
-            bx_import('BxDolProfileUndefined');
+        if (!$oProfile)
             $oProfile = BxDolProfileUndefined::getInstance();
-        }
 
         return $oProfile;
     }

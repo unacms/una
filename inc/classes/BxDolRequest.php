@@ -111,8 +111,7 @@ class BxDolRequest extends BxDol
                 return false;
 
             require_once($sFile);
-        } else
-            bx_import($sClass);
+        } 
 
         if(!class_exists($sClass))
             return false;
@@ -123,10 +122,8 @@ class BxDolRequest extends BxDol
     protected static function _methodExists($mixedModule, $sMethodType, $sMethodName, $sClass = "Module")
     {
         $aModule = $mixedModule;
-        if(is_string($mixedModule)) {
-            bx_import('BxDolModuleQuery');
+        if(is_string($mixedModule)) 
             $aModule = BxDolModuleQuery::getInstance()->getModuleByName($mixedModule);
-        }
 
         if (!$aModule)
             return false;
@@ -144,7 +141,6 @@ class BxDolRequest extends BxDol
         header('HTTP/1.0 404 Not Found');
 
         require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
-        bx_import('BxDolTemplate');
         bx_import('BxDolLanguages');
         $oTemplate = BxDolTemplate::getInstance();
         $oTemplate->setPageNameIndex(BX_PAGE_DEFAULT);

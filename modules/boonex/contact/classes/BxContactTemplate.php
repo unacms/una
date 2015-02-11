@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxDolModuleTemplate');
-
 class BxContactTemplate extends BxDolModuleTemplate
 {
     function __construct(&$oConfig, &$oDb)

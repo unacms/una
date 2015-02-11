@@ -9,8 +9,6 @@
  */
 defined('BX_DOL') or die('hack attempt');
 
-bx_import('BxBaseStudioFormsField');
-
 class BxTemplStudioFormsField extends BxBaseStudioFormsField
 {
     function __construct($aParams = array(), $aField = array())

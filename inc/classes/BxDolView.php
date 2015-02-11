@@ -7,9 +7,6 @@
  * @{
  */
 
-bx_import('BxDolObject');
-bx_import('BxDolViewQuery');
-
 define ('BX_DOL_VIEW_OLD_VIEWS', 3 * 86400); ///< views older than this number of seconds will be deleted automatically
 
 /**
@@ -83,14 +80,11 @@ class BxDolView extends BxDolObject
         if(!isset($aSystems[$sSys]))
             return null;
 
-        bx_import('BxTemplView');
         $sClassName = 'BxTemplView';
         if(!empty($aSystems[$sSys]['class_name'])) {
             $sClassName = $aSystems[$sSys]['class_name'];
             if(!empty($aSystems[$sSys]['class_file']))
                 require_once(BX_DIRECTORY_PATH_ROOT . $aSystems[$sSys]['class_file']);
-            else
-                bx_import($sClassName);
         }
 
         $o = new $sClassName($sSys, $iId, $iInit);

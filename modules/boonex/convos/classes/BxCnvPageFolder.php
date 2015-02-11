@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxTemplPage');
-
 /**
  * Display conversations in the folder
  */

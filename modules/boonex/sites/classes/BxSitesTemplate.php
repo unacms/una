@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxDolModuleTemplate');
-
 class BxSitesTemplate extends BxDolModuleTemplate
 {
     /**

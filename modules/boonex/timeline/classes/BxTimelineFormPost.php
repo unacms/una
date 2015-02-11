@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModGeneralFormEntry');
-
 /**
  * Create/Edit entry form
  */
@@ -39,7 +37,6 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
                 'inputs' => array(),
             );
 
-            bx_import('BxDolFormNested');
             $oFormNested = new BxDolFormNested('photo', $aFormNested, 'do_submit', $this->_oModule->_oTemplate);
 
             $this->aInputs['photo']['storage_object'] = $this->_oModule->_oConfig->getObject('storage_photos');
@@ -58,7 +55,6 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
                 'inputs' => array(),
             );
 
-            bx_import('BxDolFormNested');
             $oFormNested = new BxDolFormNested('video', $aFormNested, 'do_submit', $this->_oModule->_oTemplate);
 
             $this->aInputs['video']['storage_object'] = $this->_oModule->_oConfig->getObject('storage_videos');

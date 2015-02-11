@@ -17,7 +17,6 @@ $sObject = bx_process_input(bx_get('o'));
 if (!$sObject)
     exit;
 
-bx_import('BxDolGrid');
 $oGrid = BxDolGrid::getObjectInstance($sObject);
 if (!$oGrid) {
     // no such grid object available

@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxTemplMenuCustom');
-
 /**
  * 'Item' menu.
  */

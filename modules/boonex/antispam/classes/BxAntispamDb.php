@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxDolModuleDb');
-
 class BxAntispamDb extends BxDolModuleDb
 {
     function __construct(&$oConfig)

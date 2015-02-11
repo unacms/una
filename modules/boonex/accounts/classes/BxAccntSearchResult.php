@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModGeneralSearchResult');
-
 class BxAccntSearchResult extends BxBaseModGeneralSearchResult
 {
     function __construct($sMode = '', $aParams = false)

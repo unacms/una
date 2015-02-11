@@ -6,7 +6,6 @@
  * @defgroup    TridentCore Trident Core
  * @{
  */
-bx_import('BxDolIO');
 
 define('BX_FORCE_AUTOUPDATE_MAX_CHANGED_FILES_PERCENT', 0.05);
 define('BX_FORCE_USE_FTP_FILE_TRANSFER', false);
@@ -49,7 +48,6 @@ class BxDolInstallerUtils extends BxDolIO
 
     static public function isModuleInstalled($sUri)
     {
-        bx_import('BxDolModuleQuery');
         return BxDolModuleQuery::getInstance()->isModule($sUri);
     }
 
@@ -58,7 +56,6 @@ class BxDolInstallerUtils extends BxDolIO
      */
     static public function setModulePendingUninstall($sUri, $bPendingUninstall = true)
     {
-        bx_import('BxDolModuleQuery');
         return BxDolModuleQuery::getInstance()->setModulePendingUninstall($sUri, $bPendingUninstall);
     }
 
@@ -67,7 +64,6 @@ class BxDolInstallerUtils extends BxDolIO
      */
     static public function isModulePendingUninstall($sUri)
     {
-        bx_import('BxDolModuleQuery');
         $a = BxDolModuleQuery::getInstance()->getModuleByUri($sUri);
         return $a['pending_uninstall'];
     }
@@ -77,7 +73,6 @@ class BxDolInstallerUtils extends BxDolIO
      */
     static public function checkModulesPendingUninstall()
     {
-        bx_import('BxDolModuleQuery');
         $a = BxDolModuleQuery::getInstance()->getModules();
         foreach ($a as $aModule) {
 
@@ -89,7 +84,6 @@ class BxDolInstallerUtils extends BxDolIO
             self::setModulePendingUninstall($aModule['uri'], false);
 
             // perform uninstallation
-            bx_import('BxDolStudioInstallerUtils');
             $aResult = BxDolStudioInstallerUtils::getInstance()->perform($aModule['path'], 'uninstall');
 
             // send email nofitication
@@ -104,7 +98,6 @@ class BxDolInstallerUtils extends BxDolIO
                 $aTemplateKeys['Message'] = $aResult['message'];
             }
 
-            bx_import('BxDolEmailTemplates');
             $aMessage = BxDolEmailTemplates::getInstance()->parseTemplate('t_DelayedModuleUninstall', $aTemplateKeys);
             sendMail (getParam('site_email'), $aMessage['Subject'], $aMessage['Body'], 0, array(), BX_EMAIL_SYSTEM);
         }

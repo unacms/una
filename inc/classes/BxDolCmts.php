@@ -7,9 +7,6 @@
  * @{
  */
 
-bx_import('BxDolPermalinks');
-bx_import('BxDolCmtsQuery');
-
 define('BX_CMT_OLD_VOTES', 365*86400); ///< comment votes older than this number of seconds will be deleted automatically
 
 define('BX_CMT_ACTION_POST', 'post');
@@ -84,7 +81,6 @@ define('BX_CMT_RATE_VALUE_MINUS', -1);
  * After filling in the table you can show comments section in any place, using the following code:
  *
  * @code
- * bx_import ('BxTemplCmts');
  * $o = new BxTemplCmts('value of ObjectName field', $iYourEntryId);
  * if ($o->isEnabled())
  *     echo $o->getCommentsFirst ();
@@ -253,14 +249,11 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         if (!isset($aSystems[$sSys]))
             return null;
 
-        bx_import('BxTemplCmts');
         $sClassName = 'BxTemplCmts';
         if(!empty($aSystems[$sSys]['class_name'])) {
             $sClassName = $aSystems[$sSys]['class_name'];
             if(!empty($aSystems[$sSys]['class_file']))
                 require_once(BX_DIRECTORY_PATH_ROOT . $aSystems[$sSys]['class_file']);
-            else
-                bx_import($sClassName);
         }
 
         $o = new $sClassName($sSys, $iId, $iInit);
@@ -412,7 +405,6 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         if(empty($this->_aSystem['object_vote']))
         	$this->_aSystem['object_vote'] = 'sys_cmts';
 
-        bx_import('BxDolVote');
         $oVote = BxDolVote::getObjectInstance($this->_aSystem['object_vote'], $iId);
         if(!$oVote || !$oVote->isEnabled())
             return false;
@@ -501,7 +493,6 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 
         // delete files
         if ($aFiles) {
-            bx_import('BxDolStorage');
             $oStorage = BxDolStorage::getObjectInstance($this->getStorageObjectName());
             if ($oStorage)
                 $oStorage->queueFilesForDeletion($aFiles);
@@ -510,7 +501,6 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 
     public static function onAuthorDelete ($iAuthorId)
     {
-        bx_import('BxDolStorage');
         $aSystems = self::getSystems();
         foreach($aSystems as $sSystem => $aSystem) {
             $o = self::getObjectInstance($sSystem, 0);
@@ -533,7 +523,6 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 
     public static function onModuleUninstall ($sModuleName, &$iFiles = null)
     {
-        bx_import('BxDolStorage');
         $aSystems = self::getSystems();
         foreach($aSystems as $sSystem => $aSystem) {
             if (0 != strncasecmp($sModuleName, $sSystem, strlen($sModuleName)))
@@ -569,7 +558,6 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         if (!is_array($mixedCmtId))
             $mixedCmtId = array($mixedCmtId);
 
-        bx_import('BxDolMetatags');
         $oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj);
 
         foreach ($mixedCmtId as $iCmtId) {
@@ -769,7 +757,6 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         if($this->_oQuery->removeComment ($this->getId(), $aCmt['cmt_id'], $aCmt['cmt_parent_id'])) {
             $this->_triggerComment();
 
-            bx_import('BxDolStorage');
             $oStorage = BxDolStorage::getObjectInstance($this->getStorageObjectName());
 
             $aImages = $this->_oQuery->getImages($this->_aSystem['system_id'], $aCmt['cmt_id']);
@@ -782,7 +769,6 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 
             $this->deleteMetaInfo ($aCmt['cmt_id']);
 
-            bx_import('BxDolAlerts');
             $oZ = new BxDolAlerts($this->_sSystem, 'commentRemoved', $this->getId(), $iCmtAuthorId, array('comment_id' => $aCmt['cmt_id'], 'comment_author_id' => $aCmt['cmt_author_id']));
             $oZ->alert();
 
@@ -826,12 +812,9 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 
     protected function _getAuthorObject($iAuthorId = 0)
     {
-        bx_import('BxDolProfile');
         $oProfile = BxDolProfile::getInstance($iAuthorId);
-        if (!$oProfile) {
-            bx_import('BxDolProfileUndefined');
+        if (!$oProfile)
             $oProfile = BxDolProfileUndefined::getInstance();
-        }
 
         return $oProfile;
     }
@@ -840,7 +823,6 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
     {
         $sDisplayName = '_sFormDisplay' . ucfirst($sAction);
 
-        bx_import('BxDolForm');
         return BxDolForm::getObjectInstance($this->_sFormObject, $this->$sDisplayName);
     }
 
@@ -876,7 +858,6 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
     	$s = bx_convert_links($s);
 
         if ($this->_sMetatagsObj && $iCmtId) {
-            bx_import('BxDolMetatags');
             $oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj);
             $s = $oMetatags->keywordsParse($this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId), $s);
         }
@@ -966,7 +947,6 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 
         $iUserId = $this->_getAuthorId();
 
-        bx_import('BxDolSession');
         $oSession = BxDolSession::getInstance();
 
         $mixedDp = $oSession->getValue($this->_sDpSessionKey . $iUserId);
@@ -983,7 +963,6 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 
         $iUserId = $this->_getAuthorId();
 
-        bx_import('BxDolSession');
         $oSession = BxDolSession::getInstance();
 
         if(!empty($sDp))
@@ -1005,11 +984,9 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 
         $oProfile = $this->_getAuthorObject($aCmtParent['cmt_author_id']);
 
-        bx_import('BxDolProfileUndefined');
         if($oProfile instanceof BxDolProfileUndefined)
         	return;
 
-        bx_import('BxDolAccount');
         $iAccount = $oProfile->getAccountId();
         $aAccount = BxDolAccount::getInstance($iAccount)->getInfo();
 
@@ -1017,7 +994,6 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         $aPlus['reply_text'] = bx_process_output($aCmt['cmt_text']);
         $aPlus['comment_url'] = sprintf('%scmts.php?sys=%s&id=%d&cmt_id=%d', BX_DOL_URL_ROOT, $this->_sSystem, $this->_iId, $iCmtParentId);
 
-        bx_import('BxDolEmailTemplates');
         $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_CommentReplied', $aPlus);
         return $aTemplate && sendMail($aAccount['email'], $aTemplate['Subject'], $aTemplate['Body']);
     }

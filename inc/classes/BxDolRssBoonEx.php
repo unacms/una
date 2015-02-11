@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplRss');
-
 class BxDolRssBoonEx extends BxTemplRss
 {
 	protected $aFeeds;

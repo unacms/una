@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolDb');
-
 /**
  * Database queries for File storage class.
  * @see BxDolStorage
@@ -92,7 +90,6 @@ class BxDolStorageQuery extends BxDolDb
             $a = array ('current_size' => 0, 'current_number' => 0, 'quota_size' => 0, 'quota_number' => 0, 'max_file_size' => 0);
 
         // get quota_number and quota_size from user's acl/membership
-        bx_import('BxDolAcl');
         $aMembershipInfo = BxDolAcl::getInstance()->getMemberMembershipInfo($iProfileId);
         if ($aMembershipInfo) {
             if (isset($aMembershipInfo['quota_size']))

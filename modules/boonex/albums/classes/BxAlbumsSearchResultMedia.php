@@ -9,9 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModTextSearchResult');
-bx_import('BxDolPermalinks');
-
 class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
 {
     protected $sOrderDirection = 'DESC';
@@ -120,7 +117,6 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
         $this->aCurrent['title'] = $this->_replaceMarkers($this->aCurrent['title']);
 
         // add conditions for private content
-        bx_import('BxDolPrivacy');
         $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
         $a = $oPrivacy ? $oPrivacy->getContentPublicAsCondition($oProfileAuthor ? $oProfileAuthor->id() : 0) : array();
         if (isset($a['restriction']))
@@ -179,7 +175,6 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
 
     function getRssUnitLink (&$a)
     {
-        bx_import('BxDolPermalinks');
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->oModule->_oConfig->CNF['URI_VIEW_MEDIA'] . '&id=' . $a['id']);
     }
 }

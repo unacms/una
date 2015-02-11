@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxBasePageHome');
-
 /**
  * @see BxBasePageHome
  */

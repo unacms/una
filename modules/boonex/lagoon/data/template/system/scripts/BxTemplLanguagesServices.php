@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxBaseLanguagesServices');
-
 /**
  * @see BxBaseLanguagesServices
  */

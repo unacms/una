@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxTemplStudioPolyglot');
-
 class BxDevPolyglot extends BxTemplStudioPolyglot
 {
     protected $oModule;
@@ -25,7 +23,6 @@ class BxDevPolyglot extends BxTemplStudioPolyglot
         $this->aParams = $aParams;
         $this->sSubpageUrl = $this->aParams['url'] . '&pgt_page=';
 
-        bx_import('BxDolModule');
         $this->oModule = BxDolModule::getInstance('bx_developer');
 
         $this->aMenuItems = array();

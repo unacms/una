@@ -113,7 +113,6 @@ class BxDolModuleConfig extends BxDol
      */
     function getBaseUri()
     {
-        bx_import('BxDolPermalinks');
         return BxDolPermalinks::getInstance()->permalink('modules/?r=' . $this->_sUri . '/');
     }
     /**

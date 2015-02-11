@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModGeneralGridAdministration');
-
 class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
 {
 	protected $_sFilter1Name;
@@ -69,7 +67,6 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
-        bx_import('BxDolPermalinks');
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aRow[$CNF['FIELD_ID']]);
 
         $mixedValue = $this->_oTemplate->parseHtmlByName('title_link.html', array(
@@ -88,11 +85,9 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
 
     protected function _getCellAuthor($mixedValue, $sKey, $aField, $aRow)
     {
-    	bx_import('BxDolProfile');
     	$oProfile = $this->_getProfileObject($aRow['author']);
     	$sProfile = $oProfile->getDisplayName();
 
-    	bx_import('BxDolAcl');
 		$oAcl = BxDolAcl::getInstance();
 
     	$sAccountEmail = '';
@@ -126,7 +121,6 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
 
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
-		bx_import('BxDolPermalinks');
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_EDIT_ENTRY'] . '&id=' . $aRow[$CNF['FIELD_ID']]);
 
     	$a['attr'] = array_merge($a['attr'], array(
@@ -138,12 +132,10 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
 
     protected function _getProfileObject($iId)
     {
-    	bx_import('BxDolProfile');
         $oProfile = BxDolProfile::getInstance($iId);
-        if (!$oProfile) {
-            bx_import('BxDolProfileUndefined');
+        if (!$oProfile) 
             $oProfile = BxDolProfileUndefined::getInstance();
-        }
+
         return $oProfile;
     }
 }

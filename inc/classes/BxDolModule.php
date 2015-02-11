@@ -82,7 +82,6 @@ class BxDolModule extends BxDol
         if (empty($sName))
             return null;
 
-        bx_import('BxDolModuleQuery');
         $aModule = BxDolModuleQuery::getInstance()->getModuleByName($sName);
         if (empty($aModule) || !is_array($aModule))
             return null;

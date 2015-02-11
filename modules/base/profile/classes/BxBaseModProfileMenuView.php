@@ -9,9 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModGeneralMenuView');
-bx_import('BxDolProfile');
-
 /**
  * View profile entry menu
  */
@@ -43,7 +40,6 @@ class BxBaseModProfileMenuView extends BxBaseModGeneralMenuView
             $this->addMarkers(array('profile_id' => $this->_oProfile->id()));
 
             if (isLogged()) {
-                bx_import('BxDolConnection');
                 $oConn = BxDolConnection::getObjectInstance('sys_profiles_friends');
                 if ($oConn->isConnectedNotMutual(bx_get_logged_profile_id(), $this->_oProfile->id())) {
                     $this->addMarkers(array(

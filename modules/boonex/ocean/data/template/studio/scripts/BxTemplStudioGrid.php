@@ -9,8 +9,6 @@
  */
 defined('BX_DOL') or die('hack attempt');
 
-bx_import('BxBaseStudioGrid');
-
 class BxTemplStudioGrid extends BxBaseStudioGrid
 {
     function __construct($aOptions, $oTemplate = false)

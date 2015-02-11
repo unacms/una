@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxTemplStudioNavigation');
-
 class BxDevNavigation extends BxTemplStudioNavigation
 {
     protected $oModule;
@@ -24,7 +22,6 @@ class BxDevNavigation extends BxTemplStudioNavigation
         $this->aParams = $aParams;
         $this->sSubpageUrl = $this->aParams['url'] . '&nav_page=';
 
-        bx_import('BxDolModule');
         $this->oModule = BxDolModule::getInstance('bx_developer');
 
         $this->aGridObjects = array(

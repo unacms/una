@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxBaseSearch');
-
 class BxTemplSearch extends BxBaseSearch
 {
     public function __construct ($aChoice = '', $oTemplate = false)

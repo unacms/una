@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolDb');
-
 class BxDolPrivacyQuery extends BxDolDb
 {
     protected $_aObject;

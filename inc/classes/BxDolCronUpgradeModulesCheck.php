@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolCron');
-
 class BxDolCronUpgradeModulesCheck extends BxDolCron
 {
     public function processing()
@@ -16,7 +14,6 @@ class BxDolCronUpgradeModulesCheck extends BxDolCron
         if('on' != getParam('sys_autoupdate_modules'))
             return;
 
-		bx_import('BxDolStudioInstallerUtils');
 		BxDolStudioInstallerUtils::getInstance()->performModulesUpgrade();
     }
 }

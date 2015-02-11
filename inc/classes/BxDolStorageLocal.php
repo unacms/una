@@ -10,8 +10,6 @@
 define ('BX_DOL_STORAGE_DIR_RIGHTS', BX_DOL_DIR_RIGHTS);
 define ('BX_DOL_STORAGE_FILE_RIGHTS', BX_DOL_FILE_RIGHTS);
 
-bx_import('BxDolStorage');
-
 /**
  * File storage in local folder.
  * @see BxDolStorage
@@ -126,7 +124,6 @@ class BxDolStorageLocal extends BxDolStorage
 
     protected function getObjectBaseUrl ($isPrivate = false)
     {
-        bx_import('BxDolPermalinks');
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('storage.php?o=' . $this->_aObject['object'] . '&f=');
     }
 

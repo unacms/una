@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolSocialSharingQuery');
-
 /**
  * @page objects
  * @section social_sharing Social Sharing Buttons
@@ -24,7 +22,6 @@ bx_import('BxDolSocialSharingQuery');
  * @section example Example of usage:
  *
  * @code
- * bx_import('BxTemplSocialSharing');
  * echo BxTemplSocialSharing::getInstance()->getCode($iId, $sModuleName, $sUrl, $sTitle);
  * @endcode
  *
@@ -64,7 +61,6 @@ class BxDolSocialSharing extends BxDol implements iBxDolSingleton
         if (isset($GLOBALS['bxDolClasses']['BxDolSocialSharing']))
             return $GLOBALS['bxDolClasses']['BxDolSocialSharing'];
 
-        bx_import('BxTemplSocialSharing');
         $o = new BxTemplSocialSharing();
 
         return ($GLOBALS['bxDolClasses']['BxDolSocialSharing'] = $o);

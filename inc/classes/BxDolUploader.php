@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolUploaderQuery');
-
 /**
  * @page objects
  * @section uploader Uploader
@@ -89,7 +87,6 @@ bx_import('BxDolUploaderQuery');
  * to create instance use the same form array as in the previous variant, for example:
  *
  * @code
- * bx_import('BxDolFormNested');
  * $oFormNested = new BxDolFormNested('attachment', $aFormNested, 'do_submit');
  * @endcode
  *
@@ -155,8 +152,6 @@ abstract class BxDolUploader extends BxDol
         $sClass = $aObject['override_class_name'];
         if (!empty($aObject['override_class_file']))
             require_once(BX_DIRECTORY_PATH_ROOT . $aObject['override_class_file']);
-        else
-            bx_import($sClass);
 
         $o = new $sClass($aObject, $sStorageObject, $sResultContainerId);
 
@@ -216,7 +211,6 @@ abstract class BxDolUploader extends BxDol
      */
     public function handleUploads ($iProfileId, $mixedFiles, $isMultiple = true, $iContentId = false, $bPrivate = true)
     {
-        bx_import('BxDolStorage');
         $oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
 
         if (false == ($aMultipleFiles = $oStorage->convertMultipleFilesArray($mixedFiles)))
@@ -320,14 +314,11 @@ abstract class BxDolUploader extends BxDol
      */
     public function getGhosts($iProfileId, $sFormat, $sImagesTranscoder = false, $iContentId = false)
     {
-        bx_import('BxDolStorage');
         $oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
 
         $oImagesTranscoder = false;
-        if ($sImagesTranscoder) {
-            bx_import('BxDolTranscoderImage');
+        if ($sImagesTranscoder)
             $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($sImagesTranscoder);
-        }
 
         $a = '';
         $aGhosts = $oStorage->getGhosts($iProfileId, $iContentId);
@@ -365,7 +356,6 @@ abstract class BxDolUploader extends BxDol
      */
     public function deleteGhost($iFileId, $iProfileId)
     {
-        bx_import('BxDolStorage');
         $oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
 
         $aFile = $oStorage->getFile ($iFileId);
@@ -389,7 +379,6 @@ abstract class BxDolUploader extends BxDol
     {
         $iCount = 0;
 
-        bx_import('BxDolStorage');
         $oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
 
         $aGhosts = $oStorage->getGhosts($iProfileId, $iContentId);
@@ -412,7 +401,6 @@ abstract class BxDolUploader extends BxDol
     protected function getRestrictionsText ()
     {
         $sTextRestrictions = '';
-        bx_import('BxDolStorage');
         $oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
         if (!$oStorage)
             return '';

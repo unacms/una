@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModTextMenu');
-
 /**
  * View entry menu
  */

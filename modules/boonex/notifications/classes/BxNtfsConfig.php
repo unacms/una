@@ -10,7 +10,6 @@
  */
 
 bx_import('BxDolPrivacy');
-bx_import('BxBaseModNotificationsConfig');
 
 class BxNtfsConfig extends BxBaseModNotificationsConfig
 {  
@@ -69,7 +68,6 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
      */
     public function getViewUrl()
     {
-        bx_import('BxDolPermalinks');
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=notifications-view');
     }
 }

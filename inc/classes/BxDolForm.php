@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolSession');
-
 define('BX_DOL_FORM_METHOD_GET', 'get');
 define('BX_DOL_FORM_METHOD_POST', 'post');
 define('BX_DOL_FORM_METHOD_SPECIFIC', 'specific');
@@ -553,7 +551,6 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  * Printing the form for adding new record to the database:
  *
  * @code
- *      bx_import('BxDolForm');
  *      $oForm = BxDolForm::getObjectInstance('sample_form_objects', 'sample_form_objects_add'); // get form instance for specified form object and display
  *      if (!$oForm)
  *          die('"sample_form_objects_add" form object or "sample_form_objects_add" display is not defined');
@@ -573,7 +570,6 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  *      if (!$aRecord)
  *          die("$iEditId record wasn't found.");
  *
- *      bx_import('BxDolForm');
  *      $oForm = BxDolForm::getObjectInstance('sample_form_objects', 'sample_form_objects_edit'); // get form instance for specified form object and display
  *      if (!$oForm)
  *          die('"sample_form_objects_edit" form object or "sample_form_objects_edit" display is not defined');
@@ -586,8 +582,6 @@ define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for dat
  * Example of custom form class and custom checking helper class:
  *
  * @code
- *      bx_import('BxTemplFormView');
- *
  *      class BxSampleForm extends BxTemplFormView {
  *
  *          public function __construct ($aInfo, $oTemplate = false) {
@@ -772,19 +766,15 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
         if (isset($GLOBALS['bxDolClasses']['BxDolForm!'.$sObject.'!'.$sDisplayName]))
             return $GLOBALS['bxDolClasses']['BxDolForm!'.$sObject.'!'.$sDisplayName];
 
-        bx_import('BxDolFormQuery');
         $aObject = BxDolFormQuery::getFormArray($sObject, $sDisplayName);
         if (!$aObject || !is_array($aObject))
             return false;
 
-        bx_import('BxTemplFormView');
         $sClass = 'BxTemplFormView';
         if (!empty($aObject['override_class_name'])) {
             $sClass = $aObject['override_class_name'];
             if (!empty($aObject['override_class_file']))
                 require_once(BX_DIRECTORY_PATH_ROOT . $aObject['override_class_file']);
-            else
-                bx_import($sClass);
         }
 
         $o = new $sClass($aObject, $oTemplate);
@@ -801,7 +791,6 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
      */
     public static function getDataItems($sKey, $isUseForSet = false, $sUseValues = BX_DATA_VALUES_DEFAULT)
     {
-        bx_import('BxDolFormQuery');
         return BxDolFormQuery::getDataItems($sKey, $isUseForSet, $sUseValues);
     }
 
@@ -998,7 +987,6 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
             if ((isset($aInput['type']) && $aInput['type'] != 'files') || !isset($aInput['ghost_template']))
                 continue;
 
-            bx_import('BxDolFormNested');
             if (!(is_array($aInput['ghost_template']) && isset($aInput['ghost_template']['inputs'])) && !(is_object($aInput['ghost_template']) && $aInput['ghost_template'] instanceof BxDolFormNested))
                 continue;
 
@@ -1050,7 +1038,6 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
      */
     protected function _isVisible ($aInput)
     {
-        bx_import('BxDolAcl');
         return BxDolAcl::getInstance()->isMemberLevelInSet($aInput['visible_for_levels']);
     }
 
@@ -1359,7 +1346,6 @@ class BxDolFormCheckerHelper
     }
     static public function checkCaptcha($s)
     {
-        bx_import('BxDolCaptcha');
         $oCaptcha = BxDolCaptcha::getObjectInstance();
         if (!$oCaptcha)
             return true;

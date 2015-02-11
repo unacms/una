@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolTemplate');
-
 define('BX_DOL_PAGINATE_PER_PAGE_DEFAULT', 10);
 
 /**

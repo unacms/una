@@ -23,7 +23,6 @@ class BxSitesResponse extends BxDolAlertsResponse
     {
         parent::__construct();
 
-        bx_import('BxDolModule');
         $this->_oModule = BxDolModule::getInstance('bx_sites');
     }
 
@@ -37,7 +36,6 @@ class BxSitesResponse extends BxDolAlertsResponse
         if($oAlert->sUnit != 'account' || !in_array($oAlert->sAction, array('login')))
             return;
 
-        bx_import('BxDolSession');
         $sDomain = BxDolSession::getInstance()->getUnsetValue('bx_sites_domain');
         if($sDomain === false)
             return;

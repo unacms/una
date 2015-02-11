@@ -9,8 +9,6 @@
  */
 defined('BX_DOL') or die('hack attempt');
 
-bx_import('BxBaseStudioLauncher');
-
 class BxTemplStudioLauncher extends BxBaseStudioLauncher
 {
     function __construct()

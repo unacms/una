@@ -11,10 +11,6 @@
 
 require_once(BX_DIRECTORY_PATH_INC . 'design.inc.php');
 
-bx_import('BxTemplGrid');
-bx_import('BxDolForm');
-bx_import('BxDolPermalinks');
-
 class BxSitesGridOverview extends BxTemplGrid
 {
     protected $_oModule;
@@ -24,7 +20,6 @@ class BxSitesGridOverview extends BxTemplGrid
     {
         parent::__construct ($aOptions, $oTemplate);
 
-        bx_import('BxDolModule');
         $this->_oModule = BxDolModule::getInstance('bx_sites');
     }
 
@@ -78,7 +73,6 @@ class BxSitesGridOverview extends BxTemplGrid
     {
         $sAction = 'active';
 
-        bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance('bx_sites', 'bx_sites_site_cancel');
         if(!$oForm) {
             $this->_echoResultJson(array('msg' => _t('_sys_txt_error_occured')), true);
@@ -99,7 +93,6 @@ class BxSitesGridOverview extends BxTemplGrid
             return;
         }
 
-        bx_import('BxDolPermalinks');
         $oPermalinks = BxDolPermalinks::getInstance();
 
         $sUrl = BX_DOL_URL_ROOT . $oPermalinks->permalink('page.php?i=site-view&id=' . $aAccount['id']);
@@ -110,7 +103,6 @@ class BxSitesGridOverview extends BxTemplGrid
     {
         $sAction = 'canceled';
 
-        bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance('bx_sites', 'bx_sites_site_reactivate');
         if(!$oForm) {
             $this->_echoResultJson(array('msg' => _t('_sys_txt_error_occured')), true);
@@ -155,7 +147,6 @@ class BxSitesGridOverview extends BxTemplGrid
         $this->_oTemplate->addJs(array('jquery.form.min.js'));
         $this->_oTemplate->addJsTranslation(array('_bx_sites_form_site_input_do_cancel_confirm'));
 
-        bx_import('BxTemplFormView');
         $oForm = new BxTemplFormView(array());
         $oForm->addCssJs();
     }
@@ -269,7 +260,6 @@ class BxSitesGridOverview extends BxTemplGrid
 
         $oForm->initChecker();
         if(!$oForm->isSubmittedAndValid()) {
-            bx_import('BxTemplFunctions');
             $sContent = BxTemplFunctions::getInstance()->popupBox('bx-sites-site-' . $sAction . '-popup', _t('_bx_sites_grid_overview_popup_' . $sAction), $this->_oModule->_oTemplate->parseHtmlByName('block_' . $sAction . '.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
                 'form' => $oForm->getCode(true),

@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxDolModule');
-
 require_once('BxDevFunctions.php');
 
 define('BX_DEV_TOOLS_SETTINGS', 'settings');
@@ -57,9 +55,6 @@ class BxDevModule extends BxDolModule
     			break;
 
     		case 'modules':
-    			bx_import('BxDolInstallerUtils');
-
-				bx_import('BxDolModuleQuery');
 				$aModules = BxDolModuleQuery::getInstance()->getModules();
 
 				$aTmplVarsModules = array();

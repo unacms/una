@@ -9,9 +9,6 @@
  * @{
  */
 
-bx_import ('BxTemplUploaderSimple');
-bx_import('BxDolModule');
-
 class BxTimelineUploaderSimplePhoto extends BxTemplUploaderSimple
 {
     public function __construct ($aObject, $sStorageObject, $sUniqId)

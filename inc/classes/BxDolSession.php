@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolSessionQuery');
-
 define('BX_DOL_SESSION_LIFETIME', 3600);
 define('BX_DOL_SESSION_COOKIE', 'memberSession');
 

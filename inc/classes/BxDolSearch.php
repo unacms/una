@@ -82,8 +82,6 @@ class BxDolSearch extends BxDol
      */
     public function response ()
     {
-    	bx_import('BxTemplSearchResult');		
-
         $sCode = '';
         foreach ($this->aChoice as $sKey => $aValue) {
         	$sClassName = 'BxTemplSearchResult';
@@ -91,8 +89,6 @@ class BxDolSearch extends BxDol
 	            $sClassName = $aValue['class'];
 	            if(!empty($aValue['file']))
 	                require_once(BX_DIRECTORY_PATH_ROOT . $aValue['file']);
-	            else
-	                bx_import($sClassName);
 	        }
 
             $oEx = new $sClassName();
@@ -369,7 +365,6 @@ class BxDolSearchResult implements iBxDolReplaceable
                 $aData[$k][$f['Link']] = $this->getRssUnitLink ($a);
         }
 
-        bx_import('BxDolRssFactory');
         $oRss = new BxDolRssFactory ();
 
         return $oRss->GenRssByCustomData(
@@ -593,7 +588,6 @@ class BxDolSearchResult implements iBxDolReplaceable
         
         // meta info
         if ($this->_sMetaType && !empty($this->aCurrent['object_metatags'])) {
-            bx_import('BxDolMetatags');
             $o = BxDolMetatags::getObjectInstance($this->aCurrent['object_metatags']);
             if ($o) {
                 unset($this->aCurrent['restriction']['keyword']);

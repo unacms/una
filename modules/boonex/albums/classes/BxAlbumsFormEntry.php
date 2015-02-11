@@ -9,8 +9,6 @@
  * @{
  */
 
-bx_import('BxBaseModTextFormEntry');
-
 /**
  * Create/Edit entry form
  */
@@ -31,8 +29,6 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
         $sData = '';
         $aFile = $oStorage->getFile($iFileId);
         if (0 == strncmp('image/', $aFile['mime_type'], 6)) {
-            bx_import('BxDolTranscoderImage');
-            bx_import('BxDolImageResize');
             $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_BIG']);
             $a = BxDolImageResize::getImageSize($oTranscoder->getFileUrl($iFileId));
             $sData = isset($a['w']) && isset($a['h']) ? $a['w'] . 'x' . $a['h'] : '';
@@ -43,7 +39,6 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
 
         if (!empty($CNF['OBJECT_METATAGS_MEDIA'])) {
             $aMediaInfo = $this->_oModule->_oDb->getMediaInfoSimpleByFileId($iFileId);
-            bx_import('BxDolMetatags');
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS_MEDIA']);
 
             if ($aMediaInfo && $oMetatags->keywordsIsEnabled())

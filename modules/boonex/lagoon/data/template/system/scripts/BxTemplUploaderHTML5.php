@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import ('BxBaseUploaderHTML5');
-
 /**
  * @see BxDolUploader
  */
