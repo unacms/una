@@ -1,8 +1,8 @@
 
 @font-face {
   font-family: 'sys-user';
-  src: url('../fonts/fontawesome-webfont.eot?v=4.1.0');
-  src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.1.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff?v=4.1.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.1.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.1.0#fontawesomeregular') format('svg');
+  src: url('../fonts/fontawesome-webfont.eot?v=4.3.0');
+  src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.3.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff2?v=4.3.0') format('woff2'), url('../fonts/fontawesome-webfont.woff?v=4.3.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.3.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.3.0#fontawesomeregular') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -53,6 +53,7 @@
   content: "\f00c";
 }
 .sys-icon.remove:before,
+.sys-icon.close:before,
 .sys-icon.times:before {
   content: "\f00d";
 }
@@ -383,7 +384,8 @@
 .sys-icon.arrows-h:before {
   content: "\f07e";
 }
-.sys-icon.bar-chart-o:before {
+.sys-icon.bar-chart-o:before,
+.sys-icon.bar-chart:before {
   content: "\f080";
 }
 .sys-icon.twitter-square:before {
@@ -459,6 +461,7 @@
 .sys-icon.twitter:before {
   content: "\f099";
 }
+.sys-icon.facebook-f:before,
 .sys-icon.facebook:before {
   content: "\f09a";
 }
@@ -1108,7 +1111,8 @@
 .sys-icon.male:before {
   content: "\f183";
 }
-.sys-icon.gittip:before {
+.sys-icon.gittip:before,
+.sys-icon.gratipay:before {
   content: "\f184";
 }
 .sys-icon.sun-o:before {
@@ -1212,7 +1216,6 @@
 .sys-icon.digg:before {
   content: "\f1a6";
 }
-.sys-icon.pied-piper-square:before,
 .sys-icon.pied-piper:before {
   content: "\f1a7";
 }
@@ -1329,6 +1332,7 @@
   content: "\f1cc";
 }
 .sys-icon.life-bouy:before,
+.sys-icon.life-buoy:before,
 .sys-icon.life-saver:before,
 .sys-icon.support:before,
 .sys-icon.life-ring:before {
@@ -1375,6 +1379,7 @@
 .sys-icon.history:before {
   content: "\f1da";
 }
+.sys-icon.genderless:before,
 .sys-icon.circle-thin:before {
   content: "\f1db";
 }
@@ -1395,4 +1400,248 @@
 }
 .sys-icon.bomb:before {
   content: "\f1e2";
+}
+.sys-icon.soccer-ball-o:before,
+.sys-icon.futbol-o:before {
+  content: "\f1e3";
+}
+.sys-icon.tty:before {
+  content: "\f1e4";
+}
+.sys-icon.binoculars:before {
+  content: "\f1e5";
+}
+.sys-icon.plug:before {
+  content: "\f1e6";
+}
+.sys-icon.slideshare:before {
+  content: "\f1e7";
+}
+.sys-icon.twitch:before {
+  content: "\f1e8";
+}
+.sys-icon.yelp:before {
+  content: "\f1e9";
+}
+.sys-icon.newspaper-o:before {
+  content: "\f1ea";
+}
+.sys-icon.wifi:before {
+  content: "\f1eb";
+}
+.sys-icon.calculator:before {
+  content: "\f1ec";
+}
+.sys-icon.paypal:before {
+  content: "\f1ed";
+}
+.sys-icon.google-wallet:before {
+  content: "\f1ee";
+}
+.sys-icon.cc-visa:before {
+  content: "\f1f0";
+}
+.sys-icon.cc-mastercard:before {
+  content: "\f1f1";
+}
+.sys-icon.cc-discover:before {
+  content: "\f1f2";
+}
+.sys-icon.cc-amex:before {
+  content: "\f1f3";
+}
+.sys-icon.cc-paypal:before {
+  content: "\f1f4";
+}
+.sys-icon.cc-stripe:before {
+  content: "\f1f5";
+}
+.sys-icon.bell-slash:before {
+  content: "\f1f6";
+}
+.sys-icon.bell-slash-o:before {
+  content: "\f1f7";
+}
+.sys-icon.trash:before {
+  content: "\f1f8";
+}
+.sys-icon.copyright:before {
+  content: "\f1f9";
+}
+.sys-icon.at:before {
+  content: "\f1fa";
+}
+.sys-icon.eyedropper:before {
+  content: "\f1fb";
+}
+.sys-icon.paint-brush:before {
+  content: "\f1fc";
+}
+.sys-icon.birthday-cake:before {
+  content: "\f1fd";
+}
+.sys-icon.area-chart:before {
+  content: "\f1fe";
+}
+.sys-icon.pie-chart:before {
+  content: "\f200";
+}
+.sys-icon.line-chart:before {
+  content: "\f201";
+}
+.sys-icon.lastfm:before {
+  content: "\f202";
+}
+.sys-icon.lastfm-square:before {
+  content: "\f203";
+}
+.sys-icon.toggle-off:before {
+  content: "\f204";
+}
+.sys-icon.toggle-on:before {
+  content: "\f205";
+}
+.sys-icon.bicycle:before {
+  content: "\f206";
+}
+.sys-icon.bus:before {
+  content: "\f207";
+}
+.sys-icon.ioxhost:before {
+  content: "\f208";
+}
+.sys-icon.angellist:before {
+  content: "\f209";
+}
+.sys-icon.cc:before {
+  content: "\f20a";
+}
+.sys-icon.shekel:before,
+.sys-icon.sheqel:before,
+.sys-icon.ils:before {
+  content: "\f20b";
+}
+.sys-icon.meanpath:before {
+  content: "\f20c";
+}
+.sys-icon.buysellads:before {
+  content: "\f20d";
+}
+.sys-icon.connectdevelop:before {
+  content: "\f20e";
+}
+.sys-icon.dashcube:before {
+  content: "\f210";
+}
+.sys-icon.forumbee:before {
+  content: "\f211";
+}
+.sys-icon.leanpub:before {
+  content: "\f212";
+}
+.sys-icon.sellsy:before {
+  content: "\f213";
+}
+.sys-icon.shirtsinbulk:before {
+  content: "\f214";
+}
+.sys-icon.simplybuilt:before {
+  content: "\f215";
+}
+.sys-icon.skyatlas:before {
+  content: "\f216";
+}
+.sys-icon.cart-plus:before {
+  content: "\f217";
+}
+.sys-icon.cart-arrow-down:before {
+  content: "\f218";
+}
+.sys-icon.diamond:before {
+  content: "\f219";
+}
+.sys-icon.ship:before {
+  content: "\f21a";
+}
+.sys-icon.user-secret:before {
+  content: "\f21b";
+}
+.sys-icon.motorcycle:before {
+  content: "\f21c";
+}
+.sys-icon.street-view:before {
+  content: "\f21d";
+}
+.sys-icon.heartbeat:before {
+  content: "\f21e";
+}
+.sys-icon.venus:before {
+  content: "\f221";
+}
+.sys-icon.mars:before {
+  content: "\f222";
+}
+.sys-icon.mercury:before {
+  content: "\f223";
+}
+.sys-icon.transgender:before {
+  content: "\f224";
+}
+.sys-icon.transgender-alt:before {
+  content: "\f225";
+}
+.sys-icon.venus-double:before {
+  content: "\f226";
+}
+.sys-icon.mars-double:before {
+  content: "\f227";
+}
+.sys-icon.venus-mars:before {
+  content: "\f228";
+}
+.sys-icon.mars-stroke:before {
+  content: "\f229";
+}
+.sys-icon.mars-stroke-v:before {
+  content: "\f22a";
+}
+.sys-icon.mars-stroke-h:before {
+  content: "\f22b";
+}
+.sys-icon.neuter:before {
+  content: "\f22c";
+}
+.sys-icon.facebook-official:before {
+  content: "\f230";
+}
+.sys-icon.pinterest-p:before {
+  content: "\f231";
+}
+.sys-icon.whatsapp:before {
+  content: "\f232";
+}
+.sys-icon.server:before {
+  content: "\f233";
+}
+.sys-icon.user-plus:before {
+  content: "\f234";
+}
+.sys-icon.user-times:before {
+  content: "\f235";
+}
+.sys-icon.hotel:before,
+.sys-icon.bed:before {
+  content: "\f236";
+}
+.sys-icon.viacoin:before {
+  content: "\f237";
+}
+.sys-icon.train:before {
+  content: "\f238";
+}
+.sys-icon.subway:before {
+  content: "\f239";
+}
+.sys-icon.medium:before {
+  content: "\f23a";
 }
