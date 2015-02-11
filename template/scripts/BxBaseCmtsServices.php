@@ -19,7 +19,6 @@ class BxBaseCmtsServices extends BxDol
 
     public function serviceGetMenuItemAddonVote($sSystem, $iId, $iCmtId)
     {
-        bx_import('BxDolCmts');
         $oCmts = BxDolCmts::getObjectInstance($sSystem, $iId);
 
         $oVote = $oCmts->getVoteObject($iCmtId);
@@ -31,7 +30,6 @@ class BxBaseCmtsServices extends BxDol
 
     public function serviceGetLiveUpdatesComments($sSystem, $iContentId, $iProfileId, $iCount = 0)
     {
-    	bx_import('BxDolCmts');
         $oCmts = BxDolCmts::getObjectInstance($sSystem, $iContentId);
         if(!$oCmts || !$oCmts->isEnabled())
             return false;

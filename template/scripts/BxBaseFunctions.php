@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolTemplate');
-
 class BxBaseFunctions extends BxDol implements iBxDolSingleton
 {
     protected $_oTemplate;
@@ -219,7 +217,6 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
 
             if (is_string($mixedMenu)) {
 
-                bx_import('BxTemplMenu');
                 $oMenu = BxTemplMenu::getObjectInstance($mixedMenu);
                 $sMenu = $oMenu ? $oMenu->getCode () : $mixedMenu;
 
@@ -233,7 +230,7 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
                     $aMenu = $mixedMenu;
                 else
                     $aMenu = array ('template' => 'menu_vertical.html', 'menu_items' => $mixedMenu);
-                bx_import('BxTemplMenu');
+
                 $oMenu = new BxTemplMenu($aMenu, $this->_oTemplate);
                 $sMenu = $oMenu->getCode ();
             }
@@ -284,7 +281,6 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
         if (!$iFileId) 
             return false;
 
-        bx_import('BxDolTranscoder');
         $oStorage = BxDolTranscoder::getObjectInstance('sys_custom_images');
         $sFileUrl = $oStorage->getFileUrl($iFileId);
         if (!$sFileUrl) 
@@ -326,7 +322,6 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
         $sImageUrlFav = $sImageUrlFcb = $sImageUrlApl = '';
 
         if(!empty($iId)) {
-            bx_import('BxDolTranscoderImage');
 
             // favicon icon
             $oTranscoder = BxDolTranscoderImage::getObjectInstance(BX_DOL_TRANSCODER_OBJ_ICON_FAVICON);

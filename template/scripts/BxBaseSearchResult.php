@@ -34,12 +34,10 @@ class BxBaseSearchResult extends BxDolSearchResult
     {
         parent::__construct();
 
-        if ($oFunctions) {
+        if ($oFunctions)
             $this->oFunctions = $oFunctions;
-        } else {
-            bx_import('BxTemplFunctions');
+        else
             $this->oFunctions = BxTemplFunctions::getInstance();
-        }
     }
 
     function getMain()
@@ -109,7 +107,6 @@ class BxBaseSearchResult extends BxDolSearchResult
         if (false === ($sLink = $this->getRssPageUrl ()))
             return;
 
-        bx_import('BxDolTemplate');
         if (!($oTemplate = BxDolTemplate::getInstance()))
             return;
 
@@ -121,7 +118,6 @@ class BxBaseSearchResult extends BxDolSearchResult
         if (!isset($this->aCurrent['rss']) || !$this->aCurrent['rss']['link'])
             return false;
 
-        bx_import('BxDolPermalinks');
         $oPermalinks = BxDolPermalinks::getInstance();
         return BX_DOL_URL_ROOT . bx_append_url_params($oPermalinks->permalink($this->aCurrent['rss']['link']), 'rss=1');
     }
@@ -186,7 +182,6 @@ class BxBaseSearchResult extends BxDolSearchResult
         $sPageUrl = $this->getCurrentUrl(array(), false);
         $sOnClick = $this->getCurrentOnclick(array(), false);
 
-        bx_import('BxTemplPaginate');
         $oPaginate = new BxTemplPaginate(array(
             'page_url' => $sPageUrl,
             'on_change_page' => $sOnClick,
@@ -209,7 +204,6 @@ class BxBaseSearchResult extends BxDolSearchResult
         if (BX_DOL_SEARCH_KEYWORD_PAGE === $this->sBrowseUrl || $this->bForceAjaxPaginate)
             return 'javascript:void(0);';
 
-        bx_import('BxDolPermalinks');
         $oPermalinks = BxDolPermalinks::getInstance();
 
         $sUrlStart = BX_DOL_URL_ROOT . $oPermalinks->permalink($this->sBrowseUrl);

@@ -10,9 +10,6 @@
 require_once('./../inc/header.inc.php');
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
-bx_import('BxDolLanguages');
-bx_import('BxDolTemplate');
-
 $oTemplate = BxDolTemplate::getInstance();
 $oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);
 $oTemplate->setPageHeader ("Sample form");
@@ -199,7 +196,6 @@ function PageCompMainCode()
         ),
     );
 
-    bx_import('BxTemplFormView');
     $oForm = new BxTemplFormView($aForm);
     $oForm->initChecker();
     if ( $oForm->isSubmittedAndValid() ) {

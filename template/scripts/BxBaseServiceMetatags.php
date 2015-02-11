@@ -30,7 +30,6 @@ class BxBaseServiceMetatags extends BxDol
      */
     public function serviceKeywordsCloud ($sObject, $sSection, $iMaxCount = BX_METATAGS_KEYWORDS_IN_CLOUD)
     {
-        bx_import('BxDolMetatags');
         $o = BxDolMetatags::getObjectInstance($sObject);
         $aKeywords = $o->keywordsPopularList($iMaxCount);
         if (!$aKeywords)

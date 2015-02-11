@@ -7,9 +7,6 @@
  * @{
  */
 
-bx_import('BxDolVote');
-bx_import('BxDolTemplate');
-
 /**
  * @see BxDolVote
  */

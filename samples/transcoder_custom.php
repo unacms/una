@@ -15,10 +15,6 @@
 require_once('./../inc/header.inc.php');
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
-bx_import('BxDolLanguages');
-bx_import('BxDolTemplate');
-bx_import('BxTemplFunctions');
-
 $oTemplate = BxDolTemplate::getInstance();
 $oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);
 $oTemplate->setPageHeader ("Custom images transcoder");
@@ -41,7 +37,6 @@ function PageCompMainCode()
         exit;
     }
 
-    bx_import('BxDolTranscoderImage');
     $iPrunedFiles = BxDolTranscoder::pruning();
     if ($iPrunedFiles) {
         echo "iPrunedFiles: $iPrunedFiles";
@@ -54,8 +49,6 @@ function PageCompMainCode()
     }
     //echo "registerHandlers: [" . $oTranscoderObject->registerHandlers() . "] <br />\n";
 
-
-    bx_import('BxDolStorage');
     $oStorageOrig = BxDolStorage::getObjectInstance($sStorageObjectOrig);
     if (!$oStorageOrig) {
         echo "Storage object is not available: " . $sStorageObjectOrig;

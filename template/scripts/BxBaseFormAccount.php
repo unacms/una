@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplFormView');
-
 class BxFormAccountCheckerHelper extends BxDolFormCheckerHelper
 {
     /**
@@ -24,8 +22,6 @@ class BxFormAccountCheckerHelper extends BxDolFormCheckerHelper
      */
     function checkPasswordCurrent ($s)
     {
-
-        bx_import('BxDolAccount');
         $oAccount = BxDolAccount::getInstance();
         if (!$oAccount)
             return false;
@@ -42,9 +38,6 @@ class BxFormAccountCheckerHelper extends BxDolFormCheckerHelper
     {
         if (!$this->checkEmail($s))
             return false;
-
-        bx_import('BxDolAccount');
-        bx_import('BxDolPermalinks');
 
         $oAccount = BxDolAccount::getInstance();
         if ($oAccount) { // user is logged in

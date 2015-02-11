@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolInformer');
-
 /**
  * Informer representation.
  * @see BxDolInformer

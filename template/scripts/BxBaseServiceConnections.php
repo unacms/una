@@ -22,7 +22,6 @@ class BxBaseServiceConnections extends BxDol
      */
     public function serviceConnectionsTable ()
     {
-        bx_import('BxDolGrid');
         $oGrid = BxDolGrid::getObjectInstance('sys_grid_connections');
         if (!$oGrid)
             return false;
@@ -38,7 +37,6 @@ class BxBaseServiceConnections extends BxDol
      */
     public function serviceGetUnconfirmedConnectionsNum ($sConnectionsObject, $mixedId = 0)
     {
-        bx_import('BxDolConnection');
         $oConnection = BxDolConnection::getObjectInstance($sConnectionsObject);
         if (!$oConnection)
             return 0;

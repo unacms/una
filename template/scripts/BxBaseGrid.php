@@ -7,9 +7,6 @@
  * @{
  */
 
-bx_import('BxDolGrid');
-bx_import('BxDolPaginate');
-
 /**
  * Grid representation.
  * @see BxDolGrid
@@ -155,7 +152,6 @@ class BxBaseGrid extends BxDolGrid
                 'page_url' =>  $sPageUrl ? $sPageUrl : "javascript:glGrids." . $this->_sObject . ".reload('{start}'); void(0);",
             );
 
-            bx_import('BxTemplPaginate');
             $oPaginate = new BxTemplPaginate($aPaginateParams, $this->_oTemplate);
             $oPaginate->setNumFromDataArray($aData);
 
@@ -437,7 +433,6 @@ class BxBaseGrid extends BxDolGrid
             isset($aField['width']) ? 'width:' . $aField['width'] : false  // add default styles
         );
 
-        bx_import('BxTemplFormView');
         $oForm = new BxTemplFormView(array(), $this->_oTemplate);
         $oForm->addCssJs();
         $aInput = array(
@@ -545,7 +540,6 @@ class BxBaseGrid extends BxDolGrid
 
     protected function _getFilterControls ()
     {
-        bx_import('BxTemplStudioFormView');
         $oForm = new BxTemplStudioFormView(array());
 
         $aInput = array(
@@ -562,10 +556,8 @@ class BxBaseGrid extends BxDolGrid
 
     protected function _limitMaxLength ($mixedValue, $sKey, $aField, $aRow, $isDisplayPopupOnTextOverflow, $bReturnString = true)
     {
-        if ($aField['chars_limit'] > 0) {
-            bx_import('BxTemplFunctions');
+        if ($aField['chars_limit'] > 0)
             $mixedValue = BxTemplFunctions::getInstance()->getStringWithLimitedLength($mixedValue, $aField['chars_limit'], $isDisplayPopupOnTextOverflow, $bReturnString);
-        }
         return $mixedValue;
     }
 

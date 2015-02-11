@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplMenu');
-
 /**
  * Menu representation.
  * @see BxDolMenu
@@ -31,7 +29,6 @@ class BxBaseMenuToolbar extends BxTemplMenu
             if ('account' != $r['name'])
                 continue;
 
-            bx_import('BxDolProfile');
             $oProfile = BxDolProfile::getInstance(bx_get_logged_profile_id ());
             $sUrlIcon = $oProfile->getThumb();
             if (!$sUrlIcon)

@@ -19,7 +19,6 @@ class BxBaseAclServices extends BxDol
 
     public function serviceGetMemberships($bPurchasableOnly = false, $bActiveOnly = false, $isTranslate = true)
     {
-        bx_import('BxDolAcl');
         return BxDolAcl::getInstance()->getMemberships($bPurchasableOnly, $bActiveOnly, $isTranslate);
     }
 }

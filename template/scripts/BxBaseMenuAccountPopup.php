@@ -7,9 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplMenu');
-bx_import('BxDolPermalinks');
-
 /**
  * Menu representation.
  * @see BxDolMenu

@@ -19,7 +19,6 @@ class BxBaseLiveUpdatesServices extends BxDol
 
     public function serviceInit()
     {
-        bx_import('BxDolLiveUpdates');
         return BxDolLiveUpdates::getInstance()->init();
     }
 }

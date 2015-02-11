@@ -7,9 +7,6 @@
  * @{
  */
 
-bx_import('BxDolAccountQuery');
-bx_import('BxTemplAccountForms');
-
 /**
  * System service for creating system profile functionality.
  */
@@ -85,7 +82,6 @@ class BxBaseServiceAccount extends BxDol
 
         // validate input params
 
-        bx_import('BxDolAccount');
         $oAccount = BxDolAccount::getInstance($iAccountId);
         if (!$oAccount)
             return MsgBox(_t('_sys_txt_unsubscribe_wrong_link'));
@@ -93,7 +89,6 @@ class BxBaseServiceAccount extends BxDol
         if ($sCode != $oAccount->getEmailHash())
             return MsgBox(_t('_sys_txt_unsubscribe_wrong_link'));
 
-        bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance('sys_unsubscribe', $sDisplay);
         if (!$oForm)
             return MsgBox(_t('_sys_txt_unsubscribe_error_occured'));
@@ -122,7 +117,6 @@ class BxBaseServiceAccount extends BxDol
     {
         // if user is logged in and email is confirmed then just display a message
         if (isLogged()) {
-            bx_import('BxDolAccount');
             $oAccount = BxDolAccount::getInstance();
             if ($oAccount->isConfirmed())
                 return MsgBox(_t("_sys_txt_confirm_email_already_confirmed"));
@@ -134,7 +128,6 @@ class BxBaseServiceAccount extends BxDol
 
         // if user requested to resend verification letter then send letter and display message
         if (bx_process_input(bx_get('resend')) && isLogged()) {
-            bx_import('BxDolAccount');
             $oAccount = BxDolAccount::getInstance();
             if ($oAccount->sendConfirmationEmail())
                 $sMsg = _t('_sys_txt_confirm_email_sent');
@@ -145,7 +138,6 @@ class BxBaseServiceAccount extends BxDol
 
         // show and process code verification form
 
-        bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance('sys_confirm_email', 'sys_confirm_email');
         if (!$oForm)
             return MsgBox(_t("_sys_txt_confirm_email_error_occured"));
@@ -154,7 +146,6 @@ class BxBaseServiceAccount extends BxDol
 
         if ($oForm->isSubmittedAndValid()) {
 
-            bx_import('BxDolKey');
             $oKey = BxDolKey::getInstance();
             if (!$oKey)
                 return MsgBox(_t("_sys_txt_confirm_email_error_occured"));
@@ -172,7 +163,6 @@ class BxBaseServiceAccount extends BxDol
     public function confirmEmail($sKey)
     {
         // check if key exists
-        bx_import('BxDolKey');
         $oKey = BxDolKey::getInstance();
         if (!$oKey || !$oKey->isKeyExists($sKey))
             return MsgBox(_t("_sys_txt_confirm_email_error_occured"));
@@ -198,8 +188,6 @@ class BxBaseServiceAccount extends BxDol
         bx_login($aData['account_id']);
 
         // redirect with success message
-        bx_import('BxDolPermalinks');
-        bx_import('BxDolTemplate');
         $oTemplate = BxDolTemplate::getInstance();
         $oTemplate->setPageNameIndex (BX_PAGE_TRANSITION);
         $oTemplate->setPageHeader (_t('_sys_txt_confirm_email_success'));
@@ -218,7 +206,6 @@ class BxBaseServiceAccount extends BxDol
         if (bx_get('key'))
             return $this->resetPassword();
 
-        bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance('sys_forgot_password', 'sys_forgot_password');
         if (!$oForm)
             return '';
@@ -227,7 +214,6 @@ class BxBaseServiceAccount extends BxDol
 
         if ( $oForm->isSubmittedAndValid() ) {
 
-            bx_import('BxDolKey');
             $oKey = BxDolKey::getInstance();
             if (!$oKey) {
 
@@ -238,11 +224,9 @@ class BxBaseServiceAccount extends BxDol
                 $sEmail = $oForm->getCleanValue('email');
                 $iAccountId = $this->_oAccountQuery->getIdByEmail($sEmail);
 
-                bx_import('BxDolPermalinks');
                 $aPlus['key'] = $oKey->getNewKey(array('email' => $sEmail));
                 $aPlus['forgot_password_url'] = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password') . '&key=' . $aPlus['key'];
 
-                bx_import('BxDolEmailTemplates');
                 $aTemplate = BxDolEmailTemplates::getInstance() -> parseTemplate('t_Forgot', $aPlus, $iAccountId);
 
                 if ($aTemplate && sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, $aPlus, BX_EMAIL_SYSTEM))
@@ -272,11 +256,9 @@ class BxBaseServiceAccount extends BxDol
         $sKey = bx_process_input(bx_get('key'));
 
         // get link to forgot password page for error message
-        bx_import('BxDolPermalinks');
         $sUrlForgotPassword = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password');
 
         // check if key exists
-        bx_import('BxDolKey');
         $oKey = BxDolKey::getInstance();
         if (!$oKey || !$oKey->isKeyExists($sKey))
             return _t("_sys_txt_reset_pasword_error_occured", $sUrlForgotPassword);
@@ -300,7 +282,6 @@ class BxBaseServiceAccount extends BxDol
         // send email with new password and display result message
         $aPlus = array ('password' => $sPassword);
 
-        bx_import('BxDolEmailTemplates');
         $aTemplate = BxDolEmailTemplates::getInstance() -> parseTemplate('t_PasswordReset', $aPlus, $iAccountId);
 
         if ($aTemplate && sendMail($aData['email'], $aTemplate['Subject'], $aTemplate['Body'], 0, $aPlus, BX_EMAIL_SYSTEM))

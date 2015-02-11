@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplMenu');
-
 /**
  * Site main menu representation.
  */
@@ -28,7 +26,6 @@ class BxBaseMenuSwitchLanguage extends BxTemplMenu
 
     protected function loadData()
     {
-        bx_import('BxDolLanguages');
         $sLanguage = BxDolLanguages::getInstance()->getCurrentLangName();
 
         $this->setSelected('', $sLanguage);
@@ -39,7 +36,6 @@ class BxBaseMenuSwitchLanguage extends BxTemplMenu
         if(!empty($aPage[1]))
             parse_str($aPage[1], $aPageParams);
 
-        bx_import('BxDolLanguagesQuery');
         $aLanguages = BxDolLanguagesQuery::getInstance()->getLanguages(false, true);
 
         $aItems = array();

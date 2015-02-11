@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplMenuAccountNotifications');
-
 /**
  * Menu representation.
  * @see BxDolMenu

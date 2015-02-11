@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplMenu');
-
 /**
  * Menu representation.
  * @see BxDolMenu
@@ -48,7 +46,6 @@ class BxBaseMenuSubmenu extends BxTemplMenu
         if (!$this->_sObjectSubmenu && $aMenuItemSelected['submenu_object'])
             $this->_sObjectSubmenu = $aMenuItemSelected['submenu_object'];
 
-        bx_import('BxDolPermalinks');
         $oPermalinks = BxDolPermalinks::getInstance();
 
         $aVars = array (

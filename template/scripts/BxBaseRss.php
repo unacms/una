@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolRss');
-
 /**
  * Privacy representation.
  * @see BxDolPrivacy
@@ -34,12 +32,9 @@ class BxBaseRss extends BxDolRss
     	$aMarkers = array('SiteUrl' => BX_DOL_URL_ROOT);
 
     	if($iUserId) {
-	    	bx_import('BxDolProfile');
 	        $oProfile = BxDolProfile::getInstance($iUserId);
-	        if(!$oProfile) {
-	            bx_import('BxDolProfileUndefined');
+	        if(!$oProfile)
 	            $oProfile = BxDolProfileUndefined::getInstance();
-	        }
 
 	        $aMarkers['NickName'] =  $oProfile->getDisplayName();
 		}

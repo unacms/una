@@ -16,9 +16,6 @@ $aPathInfo = pathinfo(__FILE__);
 require_once ($aPathInfo['dirname'] . '/../inc/header.inc.php');
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
-bx_import('BxDolLanguages');
-bx_import('BxDolTemplate');
-
 $oTemplate = BxDolTemplate::getInstance();
 $oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);
 $oTemplate->setPageContent ('page_main_code', PageCompMainCode());
@@ -43,7 +40,6 @@ function PageCompMainCode()
 
     $s .= DesignBoxContent("Design box - BX_DB_DEF-".BX_DB_DEF, $sContent . ' BX_DB_DEF-'.BX_DB_DEF.' / menu - string', BX_DB_DEF, 'sys_site');
 
-    bx_import('BxTemplMenu');
     $oMenuSite = BxTemplMenu::getObjectInstance('sys_toolbar_member');
     $s .= DesignBoxContent("Design box - BX_DB_DEF-".BX_DB_DEF, $sContent . ' BX_DB_DEF-'.BX_DB_DEF.' / menu - object', BX_DB_DEF, $oMenuSite);
 

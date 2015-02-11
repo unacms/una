@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import ('BxDolUploader');
-
 /**
  * Upload files using AJAX uploader with multiple files selection support (without flash),
  * it works in Firefox and WebKit(Safari, Chrome) browsers only, but has fallback for other browsers (IE, Opera).
@@ -72,7 +70,6 @@ class BxBaseUploaderHTML5 extends BxDolUploader
      */
     public function handleUploads ($iProfileId, $mixedFiles, $isMultiple = true, $iContentId = false, $bPrivate = true)
     {
-        bx_import('BxDolStorage');
         $oStorage = BxDolStorage::getObjectInstance($this->_sStorageObject);
 
         $iProfileId = bx_get_logged_profile_id();

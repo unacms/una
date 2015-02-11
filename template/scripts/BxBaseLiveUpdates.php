@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolLiveUpdates');
-
 /**
  * @see BxDolLiveUpdates
  */
@@ -31,7 +29,6 @@ class BxBaseLiveUpdates extends BxDolLiveUpdates
 
 		$sContent = "var " . $this->_sJsObject . " = new " . $this->_sJsClass . "(" . json_encode($aParams) . ");";
 
-		bx_import('BxDolTemplate');
 		$oTemplate = BxDolTemplate::getInstance();
 
 		$oTemplate->addJs(array('BxDolLiveUpdates.js'));

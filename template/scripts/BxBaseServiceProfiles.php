@@ -22,10 +22,8 @@ class BxBaseServiceProfiles extends BxDol
         if (!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
 
-        bx_import('BxDolMenu');
         $oMenu = BxDolMenu::getObjectInstance('sys_profile_stats');
 
-        bx_import('BxDolProfile');
         $oProfile = BxDolProfile::getInstance($iProfileId);
 
         $aVars = array(
@@ -47,7 +45,6 @@ class BxBaseServiceProfiles extends BxDol
         if (!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
 
-        bx_import('BxDolMenu');
         $oMenu = BxDolMenu::getObjectInstance('sys_account_notifications');
 
         $iNum = 0;
@@ -121,7 +118,6 @@ class BxBaseServiceProfiles extends BxDol
 
     public function serviceProfilesList ($iAccountId = 0)
     {
-        bx_import('BxDolProfileQuery');
         $oProfilesQuery = BxDolProfileQuery::getInstance();
 
         $aProfiles = $oProfilesQuery->getProfilesByAccount($iAccountId ? $iAccountId : getLoggedId());
@@ -141,7 +137,6 @@ class BxBaseServiceProfiles extends BxDol
 
     public function serviceAccountProfileSwitcher ($iAccountId = false)
     {
-        bx_import('BxDolProfileQuery');
         $oProfilesQuery = BxDolProfileQuery::getInstance();
 
         $aProfiles = $oProfilesQuery->getProfilesByAccount($iAccountId ? $iAccountId : getLoggedId());
@@ -170,7 +165,6 @@ class BxBaseServiceProfiles extends BxDol
         }
 
         if (!$aVars['bx_repeat:row']) {
-            bx_import('BxDolMenu');
             $oMenu = BxDolMenu::getObjectInstance('sys_add_profile');
             return array(
                 'content' => $oMenu ? $oMenu->getCode() : MsgBox(_t('_sys_txt_empty')),
@@ -178,7 +172,6 @@ class BxBaseServiceProfiles extends BxDol
             );
         }
 
-        bx_import('BxDolTemplate');
         $oTemplate = BxDolTemplate::getInstance();
         $oTemplate->addCss('account.css');
 
@@ -190,7 +183,6 @@ class BxBaseServiceProfiles extends BxDol
 
     protected function _getLatestModuleTimestamp ()
     {
-        bx_import('BxDolModuleQuery');
         $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules', 'active' => 1, 'order_by' => '`date` ASC'));
         if (empty($aModules))
             return 0;
@@ -201,7 +193,6 @@ class BxBaseServiceProfiles extends BxDol
     protected function _getProfilesModules ()
     {
         $aRet = array();
-        bx_import('BxDolModuleQuery');
         $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules', 'active' => 1));
         foreach ($aModules as $aModule) {
             $oModule = BxDolModule::getInstance($aModule['name']);

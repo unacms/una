@@ -16,9 +16,6 @@ $aPathInfo = pathinfo(__FILE__);
 require_once ($aPathInfo['dirname'] . '/../inc/header.inc.php');
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
-bx_import('BxDolLanguages');
-bx_import('BxTemplFunctions');
-
 $oTemplate = BxDolTemplate::getInstance();
 $oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);
 $oTemplate->setPageHeader ("Permalinks");
@@ -32,7 +29,6 @@ function PageCompMainCode()
 {
     ob_start();
 
-    bx_import('BxDolPermalinks');
     $oPermalinks = BxDolPermalinks::getInstance();
 
     $a = array (

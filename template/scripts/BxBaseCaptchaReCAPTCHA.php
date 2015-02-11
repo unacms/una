@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolCaptcha');
-
 /**
  * reCAPTCHA representation.
  * @see BxDolCaptcha
@@ -42,8 +40,6 @@ class BxBaseCaptchaReCAPTCHA extends BxDolCaptcha
     public function display ($bDynamicMode = false)
     {
         // TODO: captcha don't display error in javascript mode, try to find the way on how to pass error code in this mode
-
-        bx_import('BxDolLanguages');
 
         $sId = 'sys-captcha-' . time() . rand(0, PHP_INT_MAX);
         $sInit = "

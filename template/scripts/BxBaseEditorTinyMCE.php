@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolEditor');
-
 /**
  * TinyMCE editor representation.
  * @see BxDolEditor
@@ -154,7 +152,6 @@ class BxBaseEditorTinyMCE extends BxDolEditor
         }
 
         // detect language
-        bx_import('BxDolLanguages');
         $sLang = BxDolLanguages::getInstance()->detectLanguageFromArray (self::$CONF_LANGS);
 
         // initialize editor

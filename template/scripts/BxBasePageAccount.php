@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplPage');
-
 /**
  * Account page.
  */
@@ -23,7 +21,6 @@ class BxBasePageAccount extends BxTemplPage
     {
         parent::__construct($aObject, $oTemplate);
 
-        bx_import('BxDolProfile');
         $oProfile = BxDolProfile::getInstance();
         $aProfileInfo = $oProfile ? $oProfile->getInfo() : false;
 
@@ -35,7 +32,6 @@ class BxBasePageAccount extends BxTemplPage
         ));
 
         // set settings submenu
-        bx_import('BxDolMenu');
         $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
         if ($oMenuSubmenu) {
             $oMenuSubmenu->setObjectSubmenu('sys_account_settings_submenu', array (
@@ -49,7 +45,6 @@ class BxBasePageAccount extends BxTemplPage
         if ($oProfile) {
             $sStatus = $oProfile->getStatus();
             if (isset($this->_aMapStatus2LangKey[$sStatus])) {
-                bx_import('BxDolInformer');
                 $oInformer = BxDolInformer::getInstance($this->_oTemplate);
                 if ($oInformer)
                     $oInformer->add('sys-account-status-not-active', _t($this->_aMapStatus2LangKey[$sStatus]), BX_INFORMER_ALERT);
@@ -58,13 +53,11 @@ class BxBasePageAccount extends BxTemplPage
 
         // switch profile context
         if ($iSwitchToProfileId = (int)bx_get('switch_to_profile')) {
-            bx_import('BxDolInformer');
             $oInformer = BxDolInformer::getInstance($this->_oTemplate);
             $oProfile = BxDolProfile::getInstance($iSwitchToProfileId);
             $sInformerMsg = '';
 
             if ($oProfile && $oProfile->getAccountId() == getLoggedId()) {
-                bx_import('BxDolProfile');
                 $oAccount = BxDolAccount::getInstance();
                 if ($oAccount->updateProfileContext($iSwitchToProfileId))
                     $sInformerMsg = _t('_sys_txt_account_profile_context_changed_success', $oProfile->getDisplayName());

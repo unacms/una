@@ -9,8 +9,6 @@
 
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
-bx_import('BxDolSearch');
-
 class BxBaseSearch extends BxDolSearch
 {
     protected $_oTemplate;
@@ -91,12 +89,10 @@ class BxBaseSearch extends BxDolSearch
             $aForm['inputs']['keyword']['attrs']['onpaste'] = $aForm['inputs']['keyword']['attrs']['onkeypress'];
         }
 
-        bx_import('BxTemplFormView');
         $oForm = new BxTemplFormView($aForm);
         $sForm = $oForm->getCode();
 
         if (!$this->_bLiveSearch) {
-            bx_import('BxTemplPaginate');
             $o = new BxTemplPaginate(array());
             $o->addCssJs();
         }

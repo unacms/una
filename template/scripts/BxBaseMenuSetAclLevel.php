@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplMenu');
-
 /**
  * Menu to set acl level for profile
  */
@@ -50,7 +48,6 @@ class BxBaseMenuSetAclLevel extends BxTemplMenu
     	if(bx_get('profile_id') !== false)
         	$mixedProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
 
-        bx_import('BxDolAcl');
         $oAcl = BxDolAcl::getInstance();
         if (!$oAcl)
             return;

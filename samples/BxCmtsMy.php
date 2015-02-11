@@ -84,8 +84,6 @@ INSERT INTO `sys_objects_privacy`(`object`, `module`, `action`, `title`, `defaul
 
 require_once(BX_DOL_DIR_STUDIO_INC . "utils.inc.php");
 
-bx_import('BxTemplCmts');
-
 class BxCmtsMy extends BxTemplCmts
 {
     function BxCmtsMy( $sSystem, $iId, $iInit = 1 )
@@ -97,7 +95,6 @@ class BxCmtsMy extends BxTemplCmts
     {
         $iCmtId = is_array($mixedCmt) ? (int)$mixedCmt['cmt_id'] : (int)$mixedCmt;
 
-        bx_import('BxDolPrivacy');
         $oPrivacy = BxDolPrivacy::getObjectInstance('comments_view');
         if(!$oPrivacy->check($iCmtId))
             return '';
@@ -109,7 +106,6 @@ class BxCmtsMy extends BxTemplCmts
     {
         $oForm = parent::_getFormObject($sAction, $iId);
 
-        bx_import('BxDolPrivacy');
         $sFieldName = BxDolPrivacy::getFieldName('view');
         $aFieldDescriptor = BxDolPrivacy::getGroupChooser('comments_view');
         $aFieldDescriptor['caption'] = '';

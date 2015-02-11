@@ -129,8 +129,6 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 
 */
 
-bx_import('BxTemplFormView');
-
 class BxSampleForm extends BxTemplFormView
 {
     public function __construct ($aInfo, $oTemplate = false)

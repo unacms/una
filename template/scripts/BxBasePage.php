@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolPage');
-
 /**
  * Page representation.
  * @see BxDolPage
@@ -196,7 +194,6 @@ class BxBasePage extends BxDolPage
      */
     protected function _selectMenu ()
     {
-        bx_import('BxDolMenu');
         BxDolMenu::setSelectedGlobal ($this->_aObject['module'], $this->_aObject['uri']);
     }
 
@@ -241,7 +238,6 @@ class BxBasePage extends BxDolPage
         if (!$iFileId)
             return false;
 
-        bx_import('BxDolStorage');
         $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
         if (!$oStorage)
             return false;
@@ -269,7 +265,6 @@ class BxBasePage extends BxDolPage
         list( $sUrl, $iNum ) = explode('#', $aBlock['content']);
         $iNum = (int)$iNum;
 
-        bx_import('BxDolRss');
         return BxDolRss::getObjectInstance('sys_page_block')->getHolder($aBlock['id'], $iNum);
     }
 
@@ -279,7 +274,6 @@ class BxBasePage extends BxDolPage
      */
     protected function _getBlockMenu ($aBlock)
     {
-        bx_import('BxTemplMenu');
         $oMenu = BxTemplMenu::getObjectInstance($aBlock['content']);
         return $oMenu ? $oMenu->getCode () : '';
     }

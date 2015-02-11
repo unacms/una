@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplMenu');
-
 /**
  * Menu representation.
  * @see BxDolMenu
@@ -28,7 +26,6 @@ class BxBaseMenuAccountNotifications extends BxTemplMenu
     protected function _isVisible ($a)
     {
         // default visible settings
-        bx_import('BxDolAcl');
         if (!BxDolAcl::getInstance()->isMemberLevelInSet($a['visible_for_levels']))
             return false;
 

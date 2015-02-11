@@ -7,9 +7,6 @@
  * @{
  */
 
-bx_import('BxDolMenu');
-bx_import('BxDolPaginate');
-
 /**
  * Menu representation.
  * @see BxDolMenu
@@ -140,7 +137,6 @@ class BxBaseMenu extends BxDolMenu
         $sIconUrl = false;
         if (!empty($a['icon'])) {
             if ((int)$a['icon'] > 0 ) {
-                bx_import('BxDolStorage');
                 $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
                 $sIconUrl = $oStorage ? $oStorage->getFileUrlById((int)$a['icon']) : false;
             } else {

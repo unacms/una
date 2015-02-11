@@ -19,7 +19,6 @@ class BxFormForgotPasswordCheckerHelper extends BxDolFormCheckerHelper
         if (!$this->checkEmail($s))
             return false;
 
-        bx_import('BxDolAccountQuery');
         return BxDolAccountQuery::getInstance()->getIdByEmail($s) ? true : _t('_sys_form_forgot_password_email_not_recognized');
     }
 

@@ -19,7 +19,6 @@ class BxBaseLanguagesServices extends BxDol
 
     public function serviceGetLanguages($bIdAsKey = false, $bActiveOnly = false)
     {
-        bx_import('BxDolLanguages');
         $aValues = BxDolLanguages::getInstance()->getLanguages($bIdAsKey, $bActiveOnly);
 
         $aResult = array();

@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplMenu');
-
 /**
  * Site main menu representation.
  */
@@ -25,7 +23,6 @@ class BxBaseMenuFooter extends BxTemplMenu
         foreach($aItems as $iKey => $aItem)
             switch($aItem['name']) {
                 case 'switch_language':
-                    bx_import('BxDolLanguages');
                     $sLanguage = BxDolLanguages::getInstance()->getCurrentLangName();
 
                     $sIcon = $this->_oTemplate->parseHtmlByName('bx_img.html', array(
@@ -55,7 +52,6 @@ class BxBaseMenuFooter extends BxTemplMenu
         $bResult = true;
         switch ($a['name']) {
             case 'switch_language':
-                bx_import('BxDolLanguagesQuery');
                 $aLanguages = BxDolLanguagesQuery::getInstance()->getLanguages(false, true);
                 if(count($aLanguages) <= 1)
                     $bResult = false;

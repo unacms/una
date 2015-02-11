@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolSocialSharing');
-
 /**
  * @see BxDolSocialSharing
  */
@@ -28,7 +26,6 @@ class BxBaseSocialSharing extends BxDolSocialSharing
     public function getCode ($sContentId, $sModuleName, $sUrl, $sTitle, $aCustomVars = false)
     {
         // define markers for replacments
-        bx_import('BxDolLanguages');
         $sLang = BxDolLanguages::getInstance()->getCurrentLanguage();
         $aMarkers = array (
             'id' => $sContentId,
@@ -46,7 +43,6 @@ class BxBaseSocialSharing extends BxDolSocialSharing
 
         // alert
         $sOverrideOutput = null;
-        bx_import('BxDolAlerts');
         $oAlert = new BxDolAlerts('system', 'social_sharing_display', '', '', array (
             'buttons' => &$this->_aSocialButtons,
             'markers' => &$aMarkers,

@@ -16,9 +16,6 @@ $aPathInfo = pathinfo(__FILE__);
 require_once ($aPathInfo['dirname'] . '/../inc/header.inc.php');
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
-bx_import('BxDolLanguages');
-bx_import('BxTemplFunctions');
-
 $oTemplate = BxDolTemplate::getInstance();
 $oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);
 $oTemplate->setPageHeader ("Visual editor");
@@ -40,7 +37,6 @@ function PageCompMainCode()
     echo '<input type="submit" value="Submit" class="bx-btn bx-def-margin-sec-top" style="float:none;" />';
     echo '</form>';
 
-    bx_import('BxDolEditor'); // import editor class
     $oEditor = BxDolEditor::getObjectInstance(); // get default editor object instance
     if ($oEditor) // check if editor is available for using
         echo $oEditor->attachEditor ('#my_textarea'); // output HTML which will automatically apply editor to textarea element by its id

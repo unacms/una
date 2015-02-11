@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import ('BxDolUploader');
-
 /**
  * Upload files using standard HTML forms.
  * @see BxDolUploader

@@ -20,9 +20,6 @@ $aPathInfo = pathinfo(__FILE__);
 require_once ($aPathInfo['dirname'] . '/../inc/header.inc.php');
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
-bx_import('BxDolLanguages');
-bx_import('BxTemplFunctions');
-
 $GLOBALS['SAMPLE_TEXT'] = 'Lorem ipsum dolor sit amet, <b>vitae tractatos philosophia ius ei</b>, per id causae integre voluptatibus. An iusto <a href="javascript:void(0);">rationibus concludaturque vix</a>, ei dicat admodum minimum vix. Vim ne eruditi scripserit. Nonumy dolorem ex eum, <i>te quo aliquid mnesarchum</i>, ea mel dico populo. Accumsan platonem salutandi te mei, nostro epicurei per ea. Sed ut nonumy sapientem, <u>stet postea periculis eu nec</u>, et purto erat facilisis sed.
 ';
 
@@ -142,7 +139,7 @@ function PageCompMainCode()
     }
     $sMenu .= '</ul>';
 
-    return DesignBoxContent("Interface elements", $sMenu . $s, BX_DB_NO_CAPTION);
+    return DesignBoxContent("Interface elements", $sMenu . $s, BX_DB_PADDING_NO_CAPTION);
 }
 
 function Samples_Buttons()

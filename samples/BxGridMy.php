@@ -82,8 +82,6 @@ INSERT INTO `sample_grid_data` VALUES
 
 */
 
-bx_import('BxTemplGrid');
-
 class BxGridMy extends BxTemplGrid
 {
     public function __construct ($aOptions, $oTemplate = false)
@@ -99,7 +97,6 @@ class BxGridMy extends BxTemplGrid
         parent::_addJsCss();
         $this->_oTemplate->addJs('jquery.form.min.js');
 
-        bx_import('BxTemplFormView');
         $oForm = new BxTemplFormView(array());
         $oForm->addCssJs();
     }
@@ -188,7 +185,6 @@ class BxGridMy extends BxTemplGrid
             ),
         );
 
-        bx_import('BxTemplFormView');
         $oForm = new BxTemplFormView($aForm);
         $oForm->initChecker();
 
@@ -204,7 +200,6 @@ class BxGridMy extends BxTemplGrid
 
         } else { // if form is not submitted or some fields are invalid, display popup with form
 
-            bx_import('BxTemplFunctions');
             // we need to use 'transBox' function to properly display 'popup'
             $s = BxTemplFunctions::getInstance()->transBox('', '
                 <div class="bx-def-padding-top bx-def-padding-left bx-def-padding-right bx-def-color-bg-block" style="width:300px;">' . $oForm->getCode() . '</div>

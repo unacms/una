@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplCaptchaReCAPTCHA');
-
 /**
  * reCAPTCHA representation.
  * @see BxDolCaptcha
@@ -63,7 +61,6 @@ class BxBaseCaptchaReCAPTCHANew extends BxTemplCaptchaReCAPTCHA
         	$sCode .= '<div class="g-recaptcha" data-sitekey="' . $this->_sKeyPublic . '" data-theme="' . $this->_sSkin . '"></div>';
         }
 
-        bx_import('BxDolLanguages');
         $aApiParams['hl'] = BxDolLanguages::getInstance()->getCurrentLanguage();
         $sCodeJs = $this->_oTemplate->addJs(bx_append_url_params($this->sApiUrl, $aApiParams), $bDynamicMode);
 

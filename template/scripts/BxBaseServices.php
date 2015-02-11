@@ -29,7 +29,6 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
 
     public function serviceProfileEditUrl ($iContentId)
     {
-        bx_import('BxDolPermalinks');
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=account-settings-info');
     }
 
@@ -55,7 +54,6 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
 
     public function serviceProfilesSearch ($sTerm, $iLimit)
     {
-        bx_import('BxDolAccountQuery');
         $oDb = BxDolAccountQuery::getInstance();
         $aRet = array();
         $a = $oDb->searchByTerm($sTerm, $iLimit);
@@ -68,7 +66,6 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
     {
         if (!$iContentId)
             return false;
-        bx_import('BxDolAccount');
         if (!($oAccount = BxDolAccount::getInstance($iContentId)))
             return false;
         return $oAccount->$sFunc();

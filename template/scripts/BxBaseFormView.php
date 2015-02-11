@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolForm');
-
 class BxBaseFormView extends BxDolForm
 {
     protected static $_isToggleJsAdded = false;
@@ -769,7 +767,6 @@ BLAH;
 
     function addHtmlEditor($iViewMode, &$aInput)
     {
-        bx_import('BxDolEditor');
         $oEditor = BxDolEditor::getObjectInstance();
         if (!$oEditor)
             return false;
@@ -811,8 +808,6 @@ BLAH;
      */
     function genInputFiles(&$aInput, $sInfo = '', $sError = '')
     {
-        bx_import('BxDolUploader');
-
         $sUniqId = genRndPwd (8, false);
         $sUploaders = '';
         $oUploader = null;
@@ -830,13 +825,11 @@ BLAH;
 
             } elseif (isset($aInput['ghost_template']) && is_array($aInput['ghost_template']) && isset($aInput['ghost_template']['inputs'])) { // form is not submitted and ghost template is form array
 
-                bx_import('BxDolFormNested');
                 $oFormNested = new BxDolFormNested($aInput['name'], $aInput['ghost_template'], $this->aParams['db']['submit_name'], $this->oTemplate);
                 $sGhostTemplate = $oFormNested->getCode();
 
             } elseif (isset($aInput['ghost_template']) && is_array($aInput['ghost_template']) && $aInput['ghost_template']) { // form is submitted and ghost template is array of BxDolFormNested objects
 
-                bx_import('BxDolFormNested');
                 $sGhostTemplate = array ();
                 foreach ($aInput['ghost_template'] as $iFileId => $oFormNested)
                     if (is_object($oFormNested) && $oFormNested instanceof BxDolFormNested)
@@ -1056,7 +1049,6 @@ BLAH;
 
         $sAttrs = bx_convert_array2attrs($aAttrs, "bx-form-input-{$aInput['type']}");
 
-        bx_import('BxDolCaptcha');
         $oCaptcha = BxDolCaptcha::getObjectInstance();
 
         return "<div $sAttrs>" . ($oCaptcha ? $oCaptcha->display($this->_bDynamicMode) : _t('_sys_txt_captcha_not_available')) . "</div>";
@@ -1199,7 +1191,6 @@ BLAH;
 
             $aCalendarLangs = array ('af' => 1, 'am' => 1, 'bg' => 1, 'ca' => 1, 'cs' => 1, 'da' => 1, 'de' => 1, 'el' => 1, 'es' => 1, 'et' => 1, 'eu' => 1, 'fi' => 1, 'fr' => 1, 'gl' => 1, 'he' => 1, 'hr' => 1, 'hu' => 1, 'id' => 1, 'it' => 1, 'ja' => 1, 'ko' => 1, 'lt' => 1, 'nl' => 1, 'no' => 1, 'pl' => 1, 'pt-BR' => 1, 'pt' => 1, 'ro' => 1, 'ru' => 1, 'sk' => 1, 'sr-RS' => 1, 'sr-YU' => 1, 'sv' => 1, 'th' => 1, 'tr' => 1, 'uk' => 1, 'vi' => 1, 'zh-CN' => 1, 'zh-TW' => 1);
 
-            bx_import('BxDolLanguages');
             $sCalendarLang = BxDolLanguages::getInstance()->detectLanguageFromArray ($aCalendarLangs);
             $sUiLang = BxDolLanguages::getInstance()->detectLanguageFromArray ($aUiLangs);
 
@@ -1223,7 +1214,6 @@ BLAH;
                 if (!isset($aInput['type']) || 'files' != $aInput['type'] || !isset($aInput['uploaders']))
                     continue;
 
-                bx_import('BxDolUploader');
                 foreach ($aInput['uploaders'] as $sUploaderObject) {
                     $oUploader = BxDolUploader::getObjectInstance($sUploaderObject, $aInput['storage_object'], '');
                     if ($oUploader)

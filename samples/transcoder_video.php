@@ -70,10 +70,6 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 require_once('./../inc/header.inc.php');
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
-bx_import('BxDolLanguages');
-bx_import('BxDolTemplate');
-bx_import('BxTemplFunctions');
-
 $oTemplate = BxDolTemplate::getInstance();
 $oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);
 $oTemplate->setPageHeader ("Sample video transcoder");
@@ -98,7 +94,6 @@ function PageCompMainCode()
         exit;
     }
 
-    bx_import('BxDolTranscoderVideo');
     $iPrunedFiles = BxDolTranscoder::pruning();
     if ($iPrunedFiles) {
         echo "iPrunedFiles: $iPrunedFiles";
@@ -115,8 +110,6 @@ function PageCompMainCode()
     echo "registerHandlers mp4: [" . $oTranscoderMP4->registerHandlers() . "] <br />\n";
     echo "registerHandlers webm: [" . $oTranscoderWebM->registerHandlers() . "] <hr class='bx-def-hr' />\n";
 
-
-    bx_import('BxDolStorage');
     $oStorageOrig = BxDolStorage::getObjectInstance($sStorageObjectOrig);
     if (!$oStorageOrig) {
         echo "Storage object is not available: " . $sStorageObjectOrig;

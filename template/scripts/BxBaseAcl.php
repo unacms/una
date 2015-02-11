@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolAcl');
-
 /**
  * Acl representation.
  * @see BxDolAcl

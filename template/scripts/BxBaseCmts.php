@@ -7,10 +7,6 @@
  * @{
  */
 
-bx_import('BxDolCmts');
-bx_import('BxDolProfile');
-bx_import('BxTemplPaginate');
-
 /**
  * @see BxDolCmts
  */
@@ -41,7 +37,6 @@ class BxBaseCmts extends BxDolCmts
         $oTemplate->addCss(array('cmts.css'));
         $oTemplate->addJs(array('jquery.anim.js', 'jquery.form.min.js', 'BxDolCmts.js'));
 
-        bx_import('BxDolForm');
         $oForm = BxDolForm::getObjectInstance($this->_sFormObject, $this->_sFormDisplayPost);
         $oForm->addCssJs();
     }
@@ -89,7 +84,6 @@ class BxBaseCmts extends BxDolCmts
 		//add live update
 		$sServiceCall = BxDolService::getSerializedService('system', 'get_live_updates_comments', array($this->_sSystem, $this->_iId, $this->_getAuthorId(), '{count}'), 'TemplCmtsServices');
 
-		bx_import('BxDolLiveUpdates');
 		BxDolLiveUpdates::getInstance()->add($this->_sSystem . '_live_updates_cmts_' . $this->_iId, 1, $sServiceCall);
 		//add live update
 
@@ -225,10 +219,8 @@ class BxBaseCmts extends BxDolCmts
         if($this->isAttachImageEnabled()) {
             $aImages = $this->_oQuery->getImages($this->_aSystem['system_id'], $aCmt['cmt_id']);
             if(!empty($aImages) && is_array($aImages)) {
-                bx_import('BxDolStorage');
         		$oStorage = BxDolStorage::getObjectInstance($this->getStorageObjectName());
 
-            	bx_import('BxDolTranscoderImage');
                 $oTranscoder = BxDolTranscoderImage::getObjectInstance($this->getTranscoderPreviewName());
 
                 foreach($aImages as $aImage)
@@ -389,7 +381,6 @@ class BxBaseCmts extends BxDolCmts
     		}
     	}
 
-    	bx_import('BxDolTemplate');
     	$oTemplate = BxDolTemplate::getInstance();
 
     	$sReloadLinkContent = _t('_cmt_txt_reload_page');
@@ -427,7 +418,6 @@ class BxBaseCmts extends BxDolCmts
                 array('id' => $this->_sSystem . '-threaded', 'name' => $this->_sSystem . '-threaded', 'class' => '', 'title' => '_cmt_display_threaded', 'target' => '_self', 'onclick' => 'javascript:' . $this->_sJsObjName . '.cmtChangeDisplay(this, \'threaded\');')
             );
 
-            bx_import('BxTemplMenuInteractive');
             $oMenu = new BxTemplMenuInteractive(array('template' => 'menu_interactive_vertical.html', 'menu_id'=> $this->_sSystem . '-display', 'menu_items' => $aDisplayLinks));
             $oMenu->setSelected('', $this->_sSystem . '-' . $this->_sDisplayType);
             $sDisplay = $oMenu->getCode();
@@ -442,7 +432,6 @@ class BxBaseCmts extends BxDolCmts
                 array('id' => $this->_sSystem . '-popular', 'name' => $this->_sSystem . '-popular', 'class' => '', 'title' => '_cmt_browse_popular', 'target' => '_self', 'onclick' => 'javascript:' . $this->_sJsObjName . '.cmtChangeBrowse(this, \'popular\');'),
             );
 
-            bx_import('BxTemplMenuInteractive');
             $oMenu = new BxTemplMenuInteractive(array('template' => 'menu_interactive_vertical.html', 'menu_id'=> $this->_sSystem . '-browse', 'menu_items' => $aBrowseLinks));
             $oMenu->setSelected('', $this->_sSystem . '-' . $this->_sBrowseType);
             $sBrowseType = $oMenu->getCode();
@@ -492,7 +481,6 @@ class BxBaseCmts extends BxDolCmts
 
 		if(!$bViewOnly) {
 	        //--- Actions Menu
-	        bx_import('BxDolMenu');
 	        $oMenuActions = BxDolMenu::getObjectInstance($this->_sMenuObjActions);
 	        $oMenuActions->setCmtsData($this, $aCmt['cmt_id']);
 	        $sMenuActions = $oMenuActions->getCode();
@@ -513,7 +501,6 @@ class BxBaseCmts extends BxDolCmts
 	                'content' => $sMenuManage
 	            ));
 	
-	            bx_import('BxTemplFunctions');
 	            $sMenuManage = BxTemplFunctions::getInstance()->transBox($this->_sSystem . '-manage-' . $aCmt['cmt_id'], $sMenuManage, true);
 	        }
 		}
@@ -598,7 +585,6 @@ class BxBaseCmts extends BxDolCmts
                 if($this->isAttachImageEnabled()) {
                     $aImages = $oForm->getCleanValue('cmt_image');
                     if(!empty($aImages) && is_array($aImages)) {
-                        bx_import('BxDolStorage');
                         $oStorage = BxDolStorage::getObjectInstance($this->getStorageObjectName());
 
                         foreach($aImages as $iImageId)
@@ -618,12 +604,10 @@ class BxBaseCmts extends BxDolCmts
                 $this->isPostReplyAllowed(true);
 
                 if ($this->_sMetatagsObj) {
-                    bx_import('BxDolMetatags');
                     $oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj);
                     $oMetatags->keywordsAdd($this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId), $sCmtText);
                 }
 
-                bx_import('BxDolAlerts');
                 $oZ = new BxDolAlerts($this->_sSystem, 'commentPost', $this->getId(), $iCmtAuthorId, array('comment_id' => $iCmtId, 'comment_author_id' => $iCmtAuthorId));
                 $oZ->alert();
 
@@ -660,12 +644,10 @@ class BxBaseCmts extends BxDolCmts
                 $this->isEditAllowed(true);
 
                 if ($this->_sMetatagsObj) {
-                    bx_import('BxDolMetatags');
                     $oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj);
                     $oMetatags->keywordsAdd($this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId), $sCmtText);
                 }
 
-                bx_import('BxDolAlerts');
                 $oZ = new BxDolAlerts($this->_sSystem, 'commentUpdated', $this->getId(), $iCmtAuthorId, array('comment_id' => $aCmt['cmt_id'], 'comment_author_id' => $aCmt['cmt_author_id']));
                 $oZ->alert();
 
@@ -776,7 +758,6 @@ class BxBaseCmts extends BxDolCmts
     		'image_url' => ''
     	));
 
-    	bx_import('BxTemplFunctions');
     	return BxTemplFunctions::getInstance()->transBox($sViewImagePopupId, $sViewImagePopupContent, true);
     }
     protected function _echoResultJson($a, $isAutoWrapForFormFileSubmit = false)

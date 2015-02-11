@@ -7,10 +7,6 @@
  * @{
  */
 
-bx_import('BxDolProfileForms');
-bx_import('BxDolForm');
-bx_import('BxDolAccount');
-
 /**
  * System profile(account) forms functions
  * @see BxDolProfileForms
@@ -69,7 +65,6 @@ class BxBaseAccountForms extends BxDolProfileForms
             $oAccount->sendConfirmationEmail($iAccountId);
 
         // add account and content association
-        bx_import('BxDolProfile');
         $iProfileId = BxDolProfile::add(BX_PROFILE_ACTION_MANUAL, $iAccountId, $iAccountId, BX_PROFILE_STATUS_PENDING, 'system');
         $oProfile = BxDolProfile::getInstance($iProfileId);
 
@@ -196,7 +191,6 @@ class BxBaseAccountForms extends BxDolProfileForms
         // check if other text info was changed - if auto-appproval is off
         $isAutoApprove = $oForm->isSetPendingApproval() ? false : true;
         if (!$isAutoApprove) {
-            bx_import('BxDolProfile');
             $oProfile = BxDolProfile::getInstanceAccountProfile($aAccountInfo['id']); // get profile associated with account, not current porfile
             $aProfileInfo = $oProfile->getInfo();
             unset($aTrackTextFieldsChanges['changed_fields']['email']); // email confirmation is automatic and separate, don't need to deactivate whole profile if email is changed

@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxTemplFormView');
-
 class BxBaseCmtsForm extends BxTemplFormView
 {
 	protected $_sStorageObject;
@@ -32,7 +30,6 @@ class BxBaseCmtsForm extends BxTemplFormView
                 'inputs' => array(),
             );
 
-            bx_import('BxDolFormNested');
             $oFormNested = new BxDolFormNested('cmt_image', $aFormNested, 'cmt_submit');
 
             $this->aInputs['cmt_image']['storage_object'] = $this->_sStorageObject;

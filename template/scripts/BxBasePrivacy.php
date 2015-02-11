@@ -7,8 +7,6 @@
  * @{
  */
 
-bx_import('BxDolPrivacy');
-
 /**
  * Privacy representation.
  * @see BxDolPrivacy
