@@ -135,9 +135,6 @@ class BxDolAcl extends BxDol implements iBxDolSingleton
         if (!$iPermissions)
             return false;
 
-        if (false === $iProfileId && ($iPermissions&(pow(2, MEMBERSHIP_ID_ADMINISTRATOR - 1))) && isAdmin())
-            return true;
-
         if (false === $iProfileId) {
             bx_import('BxDolProfile');
             $oProfile = BxDolProfile::getInstance();
