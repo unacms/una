@@ -144,8 +144,6 @@ class BxDolTranscoderImage extends BxDolTranscoder implements iBxDolFactoryObjec
         $o = BxDolImageResize::getInstance();
         $o->removeCropOptions ();
 
-        $this->_checkForceImageType ($o, $aParams);
-
         if (IMAGE_ERROR_SUCCESS == $o->grayscale($sFile))
             return true;
 

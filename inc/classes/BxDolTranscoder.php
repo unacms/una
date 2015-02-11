@@ -409,18 +409,18 @@ class BxDolTranscoder extends BxDol implements iBxDolFactoryObject
                         $sExtChange = $aParams['filter_params']['force_type'];
                 }
             }
-        }
 
-        if ($sExtChange) {
-            $iDotPos = strrpos($sTmpFile, '.');
-            $sExtOld = false === $iDotPos ? '' : substr($sTmpFile, $iDotPos+1);
-            if ($sExtOld != $sExtChange) {
-                $sTmpFileOld = $sTmpFile;
-                $sTmpFile = false === $iDotPos ? $sTmpFile . '.' . $sExtChange : substr_replace($sTmpFile, $sExtChange, $iDotPos+1, strlen($sExtOld));
-                if (!rename($sTmpFileOld, $sTmpFile)) {
-                    @unlink($sTmpFileOld);
-                    $this->_oDb->updateQueueStatus($mixedHandler, BX_DOL_QUEUE_FAILED, "change file extension failed: $sTmpFileOld => $sTmpFile");
-                    return false;
+            if ($sExtChange) {
+                $iDotPos = strrpos($sTmpFile, '.');
+                $sExtOld = false === $iDotPos ? '' : substr($sTmpFile, $iDotPos+1);
+                if ($sExtOld != $sExtChange) {
+                    $sTmpFileOld = $sTmpFile;
+                    $sTmpFile = false === $iDotPos ? $sTmpFile . '.' . $sExtChange : substr_replace($sTmpFile, $sExtChange, $iDotPos+1, strlen($sExtOld));
+                    if (!rename($sTmpFileOld, $sTmpFile)) {
+                        @unlink($sTmpFileOld);
+                        $this->_oDb->updateQueueStatus($mixedHandler, BX_DOL_QUEUE_FAILED, "change file extension failed: $sTmpFileOld => $sTmpFile");
+                        return false;
+                    }
                 }
             }
         }
@@ -587,18 +587,7 @@ class BxDolTranscoder extends BxDol implements iBxDolFactoryObject
         $o = BxDolImageResize::getInstance();
         $o->removeCropOptions ();
 
-        // if only one dimension specified - automatically calculate another dimension 
-        if ((isset($aParams['w']) && !isset($aParams['h'])) || (isset($aParams['h']) && !isset($aParams['w']))) {
-            $a = $o->getImageSize ($sFile);
-            $fRatio = $a['w'] / $a['h'];
-            if (isset($aParams['w']))
-                $aParams['h'] = round($aParams['w'] / $fRatio);
-            else
-                $aParams['w'] = round($aParams['h'] * $fRatio);
-        }
-
-        if (isset($aParams['w']) && isset($aParams['h']))
-            $o->setSize ($aParams['w'] * $this->getDevicePixelRatio(), $aParams['h'] * $this->getDevicePixelRatio());
+        $o->setSize (isset($aParams['w']) ? round($aParams['w'] * $this->getDevicePixelRatio()) : null, isset($aParams['h']) ? round($aParams['h'] * $this->getDevicePixelRatio()) : null);
 
         if (isset($aParams['crop_resize']) && $aParams['crop_resize'])
             $o->setAutoCrop (true);
@@ -607,34 +596,10 @@ class BxDolTranscoder extends BxDol implements iBxDolFactoryObject
         else
             $o->setSquareResize (false);
 
-        $this->_checkForceImageType ($o, $aParams);
-
         if (IMAGE_ERROR_SUCCESS == $o->resize($sFile))
             return true;
 
         return false;
-    }
-
-    protected function _checkForceImageType ($oImageProcessor, $aParams)
-    {
-        if (empty($aParams['force_type']))
-            $aParams['force_type'] = false;
-
-        switch ($aParams['force_type']) {
-            case 'jpeg':
-            case 'jpg':
-                $oImageProcessor->setOutputType(IMAGE_TYPE_JPG);
-                break;
-            case 'png':
-                $oImageProcessor->setOutputType(IMAGE_TYPE_PNG);
-                break;
-            case 'gif':
-                $oImageProcessor->setOutputType(IMAGE_TYPE_GIF);
-                break;
-            default:
-                $oImageProcessor->setOutputType(false);
-                break;
-        }
     }
 
     protected function isFileReady_Folder ($mixedHandlerOrig, $isCheckOutdated = true)
