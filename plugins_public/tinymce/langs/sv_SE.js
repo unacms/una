@@ -138,7 +138,7 @@ tinymce.addI18n('sv_SE',{
 "Border color": "Ramf\u00e4rg",
 "Column group": "Kolumngrupp",
 "Row": "Rad",
-"Insert column before": "Infoga kollumn f\u00f6re",
+"Insert column before": "Infoga kolumn f\u00f6re",
 "Split cell": "Bryt is\u00e4r celler",
 "Cell padding": "Cellpaddning",
 "Cell spacing": "Cellmellanrum",

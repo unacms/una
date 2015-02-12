@@ -82,7 +82,7 @@ tinymce.addI18n('fo',{
 "Image description": "L\u00fdsing av mynd",
 "Style": "St\u00edlur",
 "Dimensions": "St\u00f8dd",
-"Insert image": "Insert image",
+"Insert image": "Innset mynd",
 "Insert date\/time": "Innset dag\/t\u00ed\u00f0",
 "Remove link": "Remove link",
 "Url": "Url",
