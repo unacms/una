@@ -7,6 +7,8 @@
  * @{
  */
 
+bx_import('BxDolAcl');
+
 define('BX_CMT_OLD_VOTES', 365*86400); ///< comment votes older than this number of seconds will be deleted automatically
 
 define('BX_CMT_ACTION_POST', 'post');
