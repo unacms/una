@@ -7,6 +7,8 @@
  * @{
  */
 
+bx_import('BxDolStudioForm');
+
 class BxDolStudioFormsField extends BxDol
 {
     protected $oDb;
