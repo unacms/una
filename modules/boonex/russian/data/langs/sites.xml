@@ -1,195 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="ru" flag="ru" title="Russian">
 
-	<string name="_bx_sites"><![CDATA[Sites]]></string>
+	<string name="_bx_sites"><![CDATA[Сайты]]></string>
 
-	<string name="_bx_sites_option_payment_trial_max_number"><![CDATA[Max number of allowed Trials (0 - unlimited)]]></string>
-	<string name="_bx_sites_option_payment_trial_price"><![CDATA[Trial Price]]></string>
-	<string name="_bx_sites_option_payment_trial_period"><![CDATA[Trial Period]]></string>
-	<string name="_bx_sites_option_payment_trial_frequency"><![CDATA[Trial Frequency]]></string>
-	<string name="_bx_sites_option_payment_regular_price"><![CDATA[Regular Price]]></string>
-	<string name="_bx_sites_option_payment_regular_period"><![CDATA[Regular Period]]></string>
-	<string name="_bx_sites_option_payment_regular_frequency"><![CDATA[Regular Frequency]]></string>
-	<string name="_bx_sites_option_payment_email_business"><![CDATA[Business email]]></string>
-	<string name="_bx_sites_option_payment_email_sandbox"><![CDATA[Sandbox email]]></string>
-	<string name="_bx_sites_option_payment_demo_mode"><![CDATA[Demo mode]]></string>
-	<string name="_bx_sites_option_payment_currency_code"><![CDATA[Currency code]]></string>
-	<string name="_bx_sites_option_payment_currency_sign"><![CDATA[Currency sign]]></string>
+	<string name="_bx_sites_option_payment_trial_max_number"><![CDATA[Максимальное число разрешённых Тестовых периодов (0 - бесконечно)]]></string>
+	<string name="_bx_sites_option_payment_trial_price"><![CDATA[Тестовая цена]]></string>
+	<string name="_bx_sites_option_payment_trial_period"><![CDATA[Тестовый период]]></string>
+	<string name="_bx_sites_option_payment_trial_frequency"><![CDATA[Тестовый период - Частота]]></string>
+	<string name="_bx_sites_option_payment_regular_price"><![CDATA[Основная цена]]></string>
+	<string name="_bx_sites_option_payment_regular_period"><![CDATA[Основной период]]></string>
+	<string name="_bx_sites_option_payment_regular_frequency"><![CDATA[Основная частота]]></string>
+	<string name="_bx_sites_option_payment_email_business"><![CDATA[Бизнес-имейл]]></string>
+	<string name="_bx_sites_option_payment_email_sandbox"><![CDATA[Тестовый email]]></string>
+	<string name="_bx_sites_option_payment_demo_mode"><![CDATA[Демо режим]]></string>
+	<string name="_bx_sites_option_payment_currency_code"><![CDATA[Код валюты]]></string>
+	<string name="_bx_sites_option_payment_currency_sign"><![CDATA[Знак валюты]]></string>
 
-	<string name="_bx_sites_form_site"><![CDATA[Sites]]></string>
-	<string name="_bx_sites_form_site_display_add"><![CDATA[Add Site]]></string>
-	<string name="_bx_sites_form_site_display_edit"><![CDATA[Edit Site]]></string>
-	<string name="_bx_sites_form_site_display_confirm"><![CDATA[Confirm Site]]></string>
-	<string name="_bx_sites_form_site_display_pending"><![CDATA[Pending Site]]></string>
-	<string name="_bx_sites_form_site_display_cancel"><![CDATA[Cancel Site]]></string>
-	<string name="_bx_sites_form_site_display_reactivate"><![CDATA[Reactivate Site]]></string>
-	<string name="_bx_sites_form_site_display_suspended"><![CDATA[Suspended Site]]></string>
-	<string name="_bx_sites_form_site_display_delete"><![CDATA[Delete Site]]></string>
-	<string name="_bx_sites_form_site_display_view"><![CDATA[View Site]]></string>
+	<string name="_bx_sites_form_site"><![CDATA[Сайты]]></string>
+	<string name="_bx_sites_form_site_display_add"><![CDATA[Добавить сайт]]></string>
+	<string name="_bx_sites_form_site_display_edit"><![CDATA[Редактировать сайт]]></string>
+	<string name="_bx_sites_form_site_display_confirm"><![CDATA[Подтвердить сайт]]></string>
+	<string name="_bx_sites_form_site_display_pending"><![CDATA[Ожидающий сайт]]></string>
+	<string name="_bx_sites_form_site_display_cancel"><![CDATA[Отменить сайт]]></string>
+	<string name="_bx_sites_form_site_display_reactivate"><![CDATA[Заново активировать сайт]]></string>
+	<string name="_bx_sites_form_site_display_suspended"><![CDATA[Заблокировать сайт]]></string>
+	<string name="_bx_sites_form_site_display_delete"><![CDATA[Удалить сайт]]></string>
+	<string name="_bx_sites_form_site_display_view"><![CDATA[Просмотреть сайт]]></string>
 	<string name="_bx_sites_form_site_input_sys_id"><![CDATA[ID]]></string>
-	<string name="_bx_sites_form_site_input_sys_domain"><![CDATA[Domain]]></string>
-	<string name="_bx_sites_form_site_input_domain"><![CDATA[Domain]]></string>
-	<string name="_bx_sites_form_site_input_domain_info"><![CDATA[For example, my-first-site. Your domain will be 'my-first-site.online.me']]></string>
-	<string name="_bx_sites_form_site_input_domain_err"><![CDATA[Domain is essential. Please, fill in this field]]></string>
-	<string name="_bx_sites_form_site_input_sys_email"><![CDATA[Email]]></string>
-	<string name="_bx_sites_form_site_input_email"><![CDATA[Email]]></string>
-	<string name="_bx_sites_form_site_input_email_err"><![CDATA[Email is essential. Please, fill in this field]]></string>
-	<string name="_bx_sites_form_site_input_sys_title"><![CDATA[Title]]></string>
-	<string name="_bx_sites_form_site_input_title"><![CDATA[Title]]></string>
-	<string name="_bx_sites_form_site_input_title_err"><![CDATA[Title is essential. Please, fill in this field]]></string>
-	<string name="_bx_sites_form_site_input_sys_delete_confirm"><![CDATA[Delete confirmation]]></string>
-	<string name="_bx_sites_form_site_input_delete_confirm"><![CDATA[I am sure I want to delete this site]]></string>
-	<string name="_bx_sites_form_site_input_delete_confirm_info"><![CDATA[This action can not be undone]]></string>
-	<string name="_bx_sites_form_site_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete the site]]></string>
-	<string name="_bx_sites_form_site_input_sys_info"><![CDATA[Custom info]]></string>
-	<string name="_bx_sites_form_site_input_info_unconfirmed"><![CDATA[<b>Unconfirmed</b> status means that the subscription wasn't confirmed, you may confirm it or delete the domain.]]></string>
-	<string name="_bx_sites_form_site_input_info_pending"><![CDATA[<b>Pending</b> status means that it is pending for result from the merchant provider, it may take several minutes if everything is ok, or several days in case of eCheck clearance procedure. You'll be notified about any updates via email, please wait.]]></string>
-	<string name="_bx_sites_form_site_input_info_active"><![CDATA[<b>Trial</b> or <b>Active</b> status means that you have a live subscription and payments will be processed automatically.]]></string>
-	<string name="_bx_sites_form_site_input_info_canceled"><![CDATA[<b>Canceled</b> status means that you have canceled the subscription and domain will be removed.]]></string>
-	<string name="_bx_sites_form_site_input_info_suspended"><![CDATA[<b>Suspended</b> status means that your site was closed. Contact with administrator to found out the reason.]]></string>
-	<string name="_bx_sites_form_site_input_cancel_block"><![CDATA[Cancel block]]></string>
-	<string name="_bx_sites_form_site_input_submit_block"><![CDATA[Submit block]]></string>
-	<string name="_bx_sites_form_site_input_confirm_block"><![CDATA[Confirm block]]></string>
-	<string name="_bx_sites_form_site_input_reactivate_block"><![CDATA[Reactivate block]]></string>
-	<string name="_bx_sites_form_site_input_sys_do_cancel"><![CDATA[Cancel subscription]]></string>
-	<string name="_bx_sites_form_site_input_do_cancel"><![CDATA[Cancel subscription]]></string>
-	<string name="_bx_sites_form_site_input_do_cancel_confirm"><![CDATA[Are you sure you want to cancel subscription?]]></string>
-	<string name="_bx_sites_form_site_input_sys_do_submit"><![CDATA[Submit]]></string>
-	<string name="_bx_sites_form_site_input_do_submit"><![CDATA[Submit]]></string>
-	<string name="_bx_sites_form_site_input_sys_do_confirm"><![CDATA[Confirm]]></string>
-	<string name="_bx_sites_form_site_input_do_confirm"><![CDATA[Confirm]]></string>
-	<string name="_bx_sites_form_site_input_sys_do_delete"><![CDATA[Delete domain]]></string>
-	<string name="_bx_sites_form_site_input_do_delete"><![CDATA[Delete domain]]></string>
-	<string name="_bx_sites_form_site_input_sys_do_reactivate"><![CDATA[Activate subscription]]></string>
-	<string name="_bx_sites_form_site_input_do_reactivate"><![CDATA[Activate subscription]]></string>
-	<string name="_bx_sites_form_site_input_sys_do_close"><![CDATA[Close window]]></string>
-	<string name="_bx_sites_form_site_input_do_close"><![CDATA[Close window]]></string>
+	<string name="_bx_sites_form_site_input_sys_domain"><![CDATA[Домен]]></string>
+	<string name="_bx_sites_form_site_input_domain"><![CDATA[Домен]]></string>
+	<string name="_bx_sites_form_site_input_domain_info"><![CDATA[Например, my-first-сайт. Вашим доменом будет 'my-first-сайт.online.me']]></string>
+	<string name="_bx_sites_form_site_input_domain_err"><![CDATA[Домен обязателен. Пожалуйста, заполните это поле]]></string>
+	<string name="_bx_sites_form_site_input_sys_email"><![CDATA[Имейл]]></string>
+	<string name="_bx_sites_form_site_input_email"><![CDATA[Имейл]]></string>
+	<string name="_bx_sites_form_site_input_email_err"><![CDATA[Имейл обязателен. Пожалуйста, заполните это поле]]></string>
+	<string name="_bx_sites_form_site_input_sys_title"><![CDATA[Заголовок]]></string>
+	<string name="_bx_sites_form_site_input_title"><![CDATA[Заголовок]]></string>
+	<string name="_bx_sites_form_site_input_title_err"><![CDATA[Заголовок обязателен. Пожалуйста, заполните это поле]]></string>
+	<string name="_bx_sites_form_site_input_sys_delete_confirm"><![CDATA[Удалить подтверждение]]></string>
+	<string name="_bx_sites_form_site_input_delete_confirm"><![CDATA[Я уверен(а), что хочу удалить этот сайт]]></string>
+	<string name="_bx_sites_form_site_input_delete_confirm_info"><![CDATA[Это действие не может быть отменено]]></string>
+	<string name="_bx_sites_form_site_input_delete_confirm_error"><![CDATA[Пожалуйста, отметьте этот флажок, если действительно хотите удалить сайт]]></string>
+	<string name="_bx_sites_form_site_input_sys_info"><![CDATA[Дополнительное инфо]]></string>
+	<string name="_bx_sites_form_site_input_info_unconfirmed"><![CDATA[Статус <b>Неподтверждён</b> означает, что подписка не была подтверждена. Вы можете подтвердить её или удалить домен.]]></string>
+	<string name="_bx_sites_form_site_input_info_pending"><![CDATA[Статус<b>В ожидании</b> означает, что ожидается результат от провайдера продавца. Это может занять несколько минут, если нет проблем, или несколько дней в случае клиринговой процедуры для eCheck. Вы будете уведомлены о любых изменениях по эл. почте, просим подождать.]]></string>
+	<string name="_bx_sites_form_site_input_info_active"><![CDATA[<b>Тестовый</b> or <b>Активный</b> статус означает, что оплата через Вашего провайдера будет проходить автоматически.]]></string>
+	<string name="_bx_sites_form_site_input_info_canceled"><![CDATA[Статус <b>Отменён</b> означает, что Вы отменили подписку, и домен будет удалён.]]></string>
+	<string name="_bx_sites_form_site_input_info_suspended"><![CDATA[Статус <b>Заблокирован</b> означает, что Ваш сайт был закрыт. Свяжитесь с администратором для выявления причины.]]></string>
+	<string name="_bx_sites_form_site_input_cancel_block"><![CDATA[Блок Отменить]]></string>
+	<string name="_bx_sites_form_site_input_submit_block"><![CDATA[Блок Выполнить]]></string>
+	<string name="_bx_sites_form_site_input_confirm_block"><![CDATA[Блок Подтвердить]]></string>
+	<string name="_bx_sites_form_site_input_reactivate_block"><![CDATA[Блок Реактивировать]]></string>
+	<string name="_bx_sites_form_site_input_sys_do_cancel"><![CDATA[Отменить подписку]]></string>
+	<string name="_bx_sites_form_site_input_do_cancel"><![CDATA[Отменить подписку]]></string>
+	<string name="_bx_sites_form_site_input_do_cancel_confirm"><![CDATA[Вы уверены, что хотите отменить подписку?]]></string>
+	<string name="_bx_sites_form_site_input_sys_do_submit"><![CDATA[Выполнить]]></string>
+	<string name="_bx_sites_form_site_input_do_submit"><![CDATA[Выполнить]]></string>
+	<string name="_bx_sites_form_site_input_sys_do_confirm"><![CDATA[Подтвердить]]></string>
+	<string name="_bx_sites_form_site_input_do_confirm"><![CDATA[Подтвердить]]></string>
+	<string name="_bx_sites_form_site_input_sys_do_delete"><![CDATA[Удалить домен]]></string>
+	<string name="_bx_sites_form_site_input_do_delete"><![CDATA[Удалить домен]]></string>
+	<string name="_bx_sites_form_site_input_sys_do_reactivate"><![CDATA[Активировать подписку]]></string>
+	<string name="_bx_sites_form_site_input_do_reactivate"><![CDATA[Активировать подписку]]></string>
+	<string name="_bx_sites_form_site_input_sys_do_close"><![CDATA[Закрыть окно]]></string>
+	<string name="_bx_sites_form_site_input_do_close"><![CDATA[Закрыть окно]]></string>
 
-	<string name="_bx_sites_acl_action_create_site"><![CDATA[Create Site]]></string>
-	<string name="_bx_sites_acl_action_manage_sites"><![CDATA[Manage Sites]]></string>
+	<string name="_bx_sites_acl_action_create_site"><![CDATA[Создать сайт]]></string>
+	<string name="_bx_sites_acl_action_manage_sites"><![CDATA[Управление Сайтами]]></string>
 
-    <string name="_bx_sites_page_title_sys_sites_home"><![CDATA[Sites Home]]></string>
-    <string name="_bx_sites_page_title_sites_home"><![CDATA[Sites]]></string>
-	<string name="_bx_sites_page_title_sys_create_site"><![CDATA[Create Site]]></string>
-	<string name="_bx_sites_page_title_create_site"><![CDATA[Create Site]]></string>
-	<string name="_bx_sites_page_block_title_create_site"><![CDATA[Create Site]]></string>
-	<string name="_bx_sites_page_title_sys_subscribe"><![CDATA[Subscribe]]></string>
-	<string name="_bx_sites_page_title_subscribe"><![CDATA[Subscribe]]></string>
-	<string name="_bx_sites_page_block_title_subscribe"><![CDATA[Subscribe]]></string>
-	<string name="_bx_sites_page_title_sys_site_view"><![CDATA[Site Overview]]></string>
-	<string name="_bx_sites_page_title_site_view"><![CDATA[Site Overview]]></string>
-	<string name="_bx_sites_page_title_sys_site_edit"><![CDATA[Manage Site]]></string>
-	<string name="_bx_sites_page_title_site_edit"><![CDATA[Manage Site]]></string>
-    <string name="_bx_sites_page_title_sys_site_delete"><![CDATA[Delete Site]]></string>
-    <string name="_bx_sites_page_title_site_delete"><![CDATA[Delete Site]]></string>
-	<string name="_bx_sites_page_block_title_sites_home"><![CDATA[Sites]]></string>
-	<string name="_bx_sites_page_block_title_site_menu"><![CDATA[Menu]]></string>
-	<string name="_bx_sites_page_block_title_site_overview"><![CDATA[Overview]]></string>
-	<string name="_bx_sites_page_block_title_site_manage"><![CDATA[Manage]]></string>
-	<string name="_bx_sites_page_block_title_site_delete"><![CDATA[Delete]]></string>
+    <string name="_bx_sites_page_title_sys_sites_home"><![CDATA[Сайты - Домой]]></string>
+    <string name="_bx_sites_page_title_sites_home"><![CDATA[Сайты]]></string>
+	<string name="_bx_sites_page_title_sys_create_site"><![CDATA[Создать сайт]]></string>
+	<string name="_bx_sites_page_title_create_site"><![CDATA[Создать сайт]]></string>
+	<string name="_bx_sites_page_block_title_create_site"><![CDATA[Создать сайт]]></string>
+	<string name="_bx_sites_page_title_sys_subscribe"><![CDATA[Подписаться]]></string>
+	<string name="_bx_sites_page_title_subscribe"><![CDATA[Подписаться]]></string>
+	<string name="_bx_sites_page_block_title_subscribe"><![CDATA[Подписаться]]></string>
+	<string name="_bx_sites_page_title_sys_site_view"><![CDATA[Обзор сайта]]></string>
+	<string name="_bx_sites_page_title_site_view"><![CDATA[Обзор сайта]]></string>
+	<string name="_bx_sites_page_title_sys_site_edit"><![CDATA[Управление сайтом]]></string>
+	<string name="_bx_sites_page_title_site_edit"><![CDATA[Управление сайтом]]></string>
+    <string name="_bx_sites_page_title_sys_site_delete"><![CDATA[Удалить сайт]]></string>
+    <string name="_bx_sites_page_title_site_delete"><![CDATA[Удалить сайт]]></string>
+	<string name="_bx_sites_page_block_title_sites_home"><![CDATA[Сайты]]></string>
+	<string name="_bx_sites_page_block_title_site_menu"><![CDATA[Меню]]></string>
+	<string name="_bx_sites_page_block_title_site_overview"><![CDATA[Обзор]]></string>
+	<string name="_bx_sites_page_block_title_site_manage"><![CDATA[Управление]]></string>
+	<string name="_bx_sites_page_block_title_site_delete"><![CDATA[Удалить]]></string>
 
-    <string name="_bx_sites_menu_set_title_view_site"><![CDATA[View Site]]></string>
-    <string name="_bx_sites_menu_title_view_site"><![CDATA[View Site]]></string>
-    <string name="_bx_sites_menu_item_title_system_create_site"><![CDATA[Create Site]]></string>
-    <string name="_bx_sites_menu_item_title_create_site"><![CDATA[Create Site]]></string>
-    <string name="_bx_sites_menu_item_title_system_view_site"><![CDATA[View Site]]></string>
-    <string name="_bx_sites_menu_item_title_view_site"><![CDATA[Overview]]></string>
-    <string name="_bx_sites_menu_item_title_system_edit_site"><![CDATA[Edit Site]]></string>
-    <string name="_bx_sites_menu_item_title_edit_site"><![CDATA[Manage]]></string>
-    <string name="_bx_sites_menu_item_title_system_delete_site"><![CDATA[Delete Site]]></string>
-    <string name="_bx_sites_menu_item_title_delete_site"><![CDATA[Delete]]></string>
-    <string name="_bx_sites_menu_item_title_system_sites_home"><![CDATA[Sites]]></string>
-    <string name="_bx_sites_menu_item_title_sites_home"><![CDATA[Sites]]></string>
+    <string name="_bx_sites_menu_set_title_view_site"><![CDATA[Просмотреть сайт]]></string>
+    <string name="_bx_sites_menu_title_view_site"><![CDATA[Просмотреть сайт]]></string>
+    <string name="_bx_sites_menu_item_title_system_create_site"><![CDATA[Создать сайт]]></string>
+    <string name="_bx_sites_menu_item_title_create_site"><![CDATA[Создать сайт]]></string>
+    <string name="_bx_sites_menu_item_title_system_view_site"><![CDATA[Просмотреть сайт]]></string>
+    <string name="_bx_sites_menu_item_title_view_site"><![CDATA[Обзор]]></string>
+    <string name="_bx_sites_menu_item_title_system_edit_site"><![CDATA[Редактировать сайт]]></string>
+    <string name="_bx_sites_menu_item_title_edit_site"><![CDATA[Управление]]></string>
+    <string name="_bx_sites_menu_item_title_system_delete_site"><![CDATA[Удалить сайт]]></string>
+    <string name="_bx_sites_menu_item_title_delete_site"><![CDATA[Удалить]]></string>
+    <string name="_bx_sites_menu_item_title_system_sites_home"><![CDATA[Сайты]]></string>
+    <string name="_bx_sites_menu_item_title_sites_home"><![CDATA[Сайты]]></string>
 
-    <string name="_bx_sites_grid_browse_popup_create"><![CDATA[Create New Site]]></string>
-    <string name="_bx_sites_grid_browse_lbl_domain"><![CDATA[Site]]></string>
-    <string name="_bx_sites_grid_browse_lnk_title_domain"><![CDATA[Get more details]]></string>
-    <string name="_bx_sites_grid_browse_lbl_created"><![CDATA[Created]]></string>
-    <string name="_bx_sites_grid_browse_lbl_status"><![CDATA[Status]]></string>
-    <string name="_bx_sites_grid_browse_btn_add"><![CDATA[Create New Site]]></string>
-    <string name="_bx_sites_grid_browse_btn_title_view"><![CDATA[View site]]></string>
-    <string name="_bx_sites_grid_overview_lbl_type"><![CDATA[Type]]></string>
-    <string name="_bx_sites_grid_overview_lbl_transaction"><![CDATA[Order]]></string>
-    <string name="_bx_sites_grid_overview_lbl_when"><![CDATA[Date]]></string>
-    <string name="_bx_sites_grid_overview_lbl_amount"><![CDATA[Amount]]></string>
-    <string name="_bx_sites_grid_overview_txt_payment_last"><![CDATA[Last payment]]></string>
-    <string name="_bx_sites_grid_overview_txt_payment_next"><![CDATA[Next payment]]></string>
-    <string name="_bx_sites_grid_overview_popup_unconfirmed"><![CDATA[Unconfirmed status]]></string>
-    <string name="_bx_sites_grid_overview_btn_unconfirmed"><![CDATA[Unconfirmed]]></string>
-    <string name="_bx_sites_grid_overview_popup_pending"><![CDATA[Pending status]]></string>
-    <string name="_bx_sites_grid_overview_btn_pending"><![CDATA[Pending]]></string>
-    <string name="_bx_sites_grid_overview_popup_active"><![CDATA[Trial or Active status]]></string>
-    <string name="_bx_sites_grid_overview_btn_active"><![CDATA[Active]]></string>
-    <string name="_bx_sites_grid_overview_popup_canceled"><![CDATA[Canceled status]]></string>
-    <string name="_bx_sites_grid_overview_btn_canceled"><![CDATA[Canceled]]></string>
-    <string name="_bx_sites_grid_overview_popup_suspended"><![CDATA[Suspended status]]></string>
-    <string name="_bx_sites_grid_overview_btn_suspended"><![CDATA[Suspended]]></string>
+    <string name="_bx_sites_grid_browse_popup_create"><![CDATA[Создать Новый сайт]]></string>
+    <string name="_bx_sites_grid_browse_lbl_domain"><![CDATA[сайт]]></string>
+    <string name="_bx_sites_grid_browse_lnk_title_domain"><![CDATA[Подробнее]]></string>
+    <string name="_bx_sites_grid_browse_lbl_created"><![CDATA[Создан]]></string>
+    <string name="_bx_sites_grid_browse_lbl_status"><![CDATA[Статус]]></string>
+    <string name="_bx_sites_grid_browse_btn_add"><![CDATA[Создать Новый сайт]]></string>
+    <string name="_bx_sites_grid_browse_btn_title_view"><![CDATA[Просмотреть сайт]]></string>
+    <string name="_bx_sites_grid_overview_lbl_type"><![CDATA[Тип]]></string>
+    <string name="_bx_sites_grid_overview_lbl_transaction"><![CDATA[Порядок]]></string>
+    <string name="_bx_sites_grid_overview_lbl_when"><![CDATA[Дата]]></string>
+    <string name="_bx_sites_grid_overview_lbl_amount"><![CDATA[Количество]]></string>
+    <string name="_bx_sites_grid_overview_txt_payment_last"><![CDATA[Последняя оплата]]></string>
+    <string name="_bx_sites_grid_overview_txt_payment_next"><![CDATA[Следующая оплата]]></string>
+    <string name="_bx_sites_grid_overview_popup_unconfirmed"><![CDATA[Неподтверждённый статус]]></string>
+    <string name="_bx_sites_grid_overview_btn_unconfirmed"><![CDATA[Неподтверждённый]]></string>
+    <string name="_bx_sites_grid_overview_popup_pending"><![CDATA[Отложенный статус]]></string>
+    <string name="_bx_sites_grid_overview_btn_pending"><![CDATA[Отложено]]></string>
+    <string name="_bx_sites_grid_overview_popup_active"><![CDATA[Тестовый или Активный статус]]></string>
+    <string name="_bx_sites_grid_overview_btn_active"><![CDATA[Активные]]></string>
+    <string name="_bx_sites_grid_overview_popup_canceled"><![CDATA[Отменённый статус]]></string>
+    <string name="_bx_sites_grid_overview_btn_canceled"><![CDATA[Отменённый]]></string>
+    <string name="_bx_sites_grid_overview_popup_suspended"><![CDATA[Заблокированный статус]]></string>
+    <string name="_bx_sites_grid_overview_btn_suspended"><![CDATA[Заблокированный]]></string>
 
 	
 	
 
-	<string name="_bx_sites_txt_err_site_exists"><![CDATA[The domain name is already used. Try to select another one.]]></string>
-	<string name="_bx_sites_txt_err_site_creation"><![CDATA[Site creation failed. Please report.]]></string>
-	<string name="_bx_sites_txt_err_site_update"><![CDATA[Site update failed]]></string>
-	<string name="_bx_sites_txt_err_site_delete"><![CDATA[Site delete failed]]></string>
-	<string name="_bx_sites_txt_err_site_is_not_defined"><![CDATA[Site isn't defined]]></string>
-	<string name="_bx_sites_txt_err_cannot_perform"><![CDATA[Cannot perform action. Please report.]]></string>
+	<string name="_bx_sites_txt_err_site_exists"><![CDATA[Имя домена уже используется. Выберите другое имя.]]></string>
+	<string name="_bx_sites_txt_err_site_creation"><![CDATA[Невозможно создать сайт. Пожалуйста, уведомите нас.]]></string>
+	<string name="_bx_sites_txt_err_site_update"><![CDATA[Невозможно обновить сайт]]></string>
+	<string name="_bx_sites_txt_err_site_delete"><![CDATA[Невозможно удалить сайт]]></string>
+	<string name="_bx_sites_txt_err_site_is_not_defined"><![CDATA[Сайт неопределён]]></string>
+	<string name="_bx_sites_txt_err_cannot_perform"><![CDATA[Невозможно выполнить действие. Пожалуйста, уведомите нас.]]></string>
 
-    <string name="_bx_sites_txt_status_unconfirmed"><![CDATA[Unconfirmed]]></string>
-	<string name="_bx_sites_txt_status_pending"><![CDATA[Pending]]></string>
-	<string name="_bx_sites_txt_status_trial"><![CDATA[Trial]]></string>
-	<string name="_bx_sites_txt_status_active"><![CDATA[Active]]></string>
-	<string name="_bx_sites_txt_status_canceled"><![CDATA[Canceled]]></string>
-	<string name="_bx_sites_txt_status_suspended"><![CDATA[Suspended]]></string>
-	<string name="_bx_sites_txt_payment_type_init"><![CDATA[Init]]></string>
-	<string name="_bx_sites_txt_payment_type_trial"><![CDATA[Trial]]></string>
-	<string name="_bx_sites_txt_payment_type_regular"><![CDATA[Regular]]></string>
-	<string name="_bx_sites_txt_subscription"><![CDATA[Subscription staus]]></string>
-	<string name="_bx_sites_btn_reactivate"><![CDATA[Activate Subscription]]></string>
+    <string name="_bx_sites_txt_status_unconfirmed"><![CDATA[Неподтверждённый]]></string>
+	<string name="_bx_sites_txt_status_pending"><![CDATA[В ожидании]]></string>
+	<string name="_bx_sites_txt_status_trial"><![CDATA[Тестовые]]></string>
+	<string name="_bx_sites_txt_status_active"><![CDATA[Активные]]></string>
+	<string name="_bx_sites_txt_status_canceled"><![CDATA[Отменённые]]></string>
+	<string name="_bx_sites_txt_status_suspended"><![CDATA[Заблокированные]]></string>
+	<string name="_bx_sites_txt_payment_type_init"><![CDATA[Начальный]]></string>
+	<string name="_bx_sites_txt_payment_type_trial"><![CDATA[Тестовый]]></string>
+	<string name="_bx_sites_txt_payment_type_regular"><![CDATA[Основной]]></string>
+	<string name="_bx_sites_txt_subscription"><![CDATA[Статус подписки]]></string>
+	<string name="_bx_sites_btn_reactivate"><![CDATA[Активировать подписку]]></string>
 
-	<string name="_bx_sites_et_site_created"><![CDATA[Site was created.]]></string>
-	<string name="_bx_sites_et_site_created_subject"><![CDATA[Site was created.]]></string>
+	<string name="_bx_sites_et_site_created"><![CDATA[Сайт был создан.]]></string>
+	<string name="_bx_sites_et_site_created_subject"><![CDATA[Сайт был создан.]]></string>
 	<string name="_bx_sites_et_site_created_body"><![CDATA[<bx_include_auto:_email_header.html />
-<p><b>Dear {RealName}</b>,</p>
-<p>Site was activated.</p>
-<p>Your domain: {Domain}</p>
-<p>Your E-mail: {Email}</p>
-<p>Subscription status: {Status}</p>
-<p>Next payment date: {NextPaymentDate}</p>
-<p>Now you may fill in a site details form <a href="{DetailsFormUrl}">here</a>.</p>
+<p><b>Дорогой {RealName}</b>,</p>
+<p>сайт активирован.</p>
+<p>Ваш домен: {Domain}</p>
+<p>Ваш E-mail: {Email}</p>
+<p>Статус подписки: {Status}</p>
+<p>Дата следующей оплаты: {NextPaymentDate}</p>
+<p>Теперь можно заполнить детализированную форму сайта <a href="{DetailsFormUrl}">здесь</a>.</p>
 <bx_include_auto:_email_footer.html />]]></string>
-	<string name="_bx_sites_et_site_created_and_paid"><![CDATA[Site was created and paid.]]></string>
-	<string name="_bx_sites_et_site_created_and_paid_subject"><![CDATA[Site was created and paid.]]></string>
+	<string name="_bx_sites_et_site_created_and_paid"><![CDATA[Сайт был создан и оплачен.]]></string>
+	<string name="_bx_sites_et_site_created_and_paid_subject"><![CDATA[Сайт был создан и оплачен.]]></string>
 	<string name="_bx_sites_et_site_created_and_paid_body"><![CDATA[<bx_include_auto:_email_header.html />
-<p><b>Dear {RealName}</b>,</p>
-<p>A payment ({Amount}) was received from you and site was activated.</p>
-<p>Your domain: {Domain}</p>
-<p>Your E-mail: {Email}</p>
-<p>Subscription status: {Status}</p>
-<p>Next payment date: {NextPaymentDate}</p>
-<p>Now you may fill in a site details form <a href="{DetailsFormUrl}">here</a>.</p>
+<p><b>Дорогой {RealName}</b>,</p>
+<p>Оплата в количестве ({Amount}) была от Вас получена, и сайт был активирован.</p>
+<p>Ваш домен: {Domain}</p>
+<p>Ваш E-mail: {Email}</p>
+<p>Статус подписки: {Status}</p>
+<p>Дата следующей оплаты: {NextPaymentDate}</p>
+<p>Теперь можно заполнить детализированную форму сайта <a href="{DetailsFormUrl}">здесь</a>.</p>
 <bx_include_auto:_email_footer.html />]]></string>
-	<string name="_bx_sites_et_payment_received"><![CDATA[Payment received.]]></string>
-	<string name="_bx_sites_et_payment_received_subject"><![CDATA[Payment Received.]]></string>
+	<string name="_bx_sites_et_payment_received"><![CDATA[Оплата получена.]]></string>
+	<string name="_bx_sites_et_payment_received_subject"><![CDATA[Оплата получена.]]></string>
 	<string name="_bx_sites_et_payment_received_body"><![CDATA[<bx_include_auto:_email_header.html />
-<p><b>Dear {RealName}</b>,</p>
-<p>We received a payment ({Amount}) from you. Your site was prolonged up to {NextPaymentDate}.</p>
+<p><b>Дорогой {RealName}</b>,</p>
+<p>Оплата в количестве ({Amount}) была от Вас получена. Ваш сайт был продлён до {NextPaymentDate}.</p>
 <bx_include_auto:_email_footer.html />]]></string>
-	<string name="_bx_sites_et_site_canceled"><![CDATA[Site was canceled.]]></string>
-	<string name="_bx_sites_et_site_canceled_subject"><![CDATA[Site was canceled.]]></string>
+	<string name="_bx_sites_et_site_canceled"><![CDATA[Сайт был отменён.]]></string>
+	<string name="_bx_sites_et_site_canceled_subject"><![CDATA[Сайт was отменён.]]></string>
 	<string name="_bx_sites_et_site_canceled_body"><![CDATA[<bx_include_auto:_email_header.html />
-<p><b>Dear {RealName}</b>,</p>
-<p>Subscription for {Domain} site was canceled.</p>
+<p><b>Дорогой {RealName}</b>,</p>
+<p>Подписка для домена {Domain} была отменена.</p>
 <bx_include_auto:_email_footer.html />]]></string>
 
-	<string name="_bx_sites_paypal_product_description"><![CDATA[{0} recurring payment {1} {2} with single trial period {3} {4}]]></string>
-	<string name="_bx_sites_paypal_product_description_free_trial"><![CDATA[{0} recurring payment {1} {2} with FREE trial period]]></string>
-	<string name="_bx_sites_paypal_product_description_wo_trial"><![CDATA[{0} recurring payment {1} {2}]]></string>
-	<string name="_bx_sites_paypal_duration_year"><![CDATA[Yearly]]></string>
-	<string name="_bx_sites_paypal_duration_month"><![CDATA[Monthly]]></string>
-	<string name="_bx_sites_paypal_duration_week"><![CDATA[Weekly]]></string>
-	<string name="_bx_sites_paypal_duration_day"><![CDATA[Daily]]></string>
-	<string name="_bx_sites_paypal_err_token_not_found"><![CDATA[An error occured. Token was not found.]]></string>
-	<string name="_bx_sites_paypal_err_subscribe"><![CDATA[An error occured during subscription process. Please report.]]></string>
-	<string name="_bx_sites_paypal_msg_subscribe"><![CDATA[Site was successfully created. You will receive a message with father instructions shortly.]]></string>
+	<string name="_bx_sites_paypal_product_description"><![CDATA[{0} периодический платёж {1} {2} с одним тестовым периодом {3} {4}]]></string>
+	<string name="_bx_sites_paypal_product_description_free_trial"><![CDATA[{0} периодический платёж {1} {2} с бесплатным тестовым периодом]]></string>
+	<string name="_bx_sites_paypal_product_description_wo_trial"><![CDATA[{0} периодический платёж {1} {2}]]></string>
+	<string name="_bx_sites_paypal_duration_year"><![CDATA[Ежегодно]]></string>
+	<string name="_bx_sites_paypal_duration_month"><![CDATA[Ежемесячно]]></string>
+	<string name="_bx_sites_paypal_duration_week"><![CDATA[Еженедельно]]></string>
+	<string name="_bx_sites_paypal_duration_day"><![CDATA[Ежедневно]]></string>
+	<string name="_bx_sites_paypal_err_token_not_found"><![CDATA[Произошла ошибка. Токен не найден.]]></string>
+	<string name="_bx_sites_paypal_err_subscribe"><![CDATA[Произошла ошибка в процессе подписки. Пожалуйста, уведомите нас.]]></string>
+	<string name="_bx_sites_paypal_msg_subscribe"><![CDATA[Сайт был удачно создан. Скоро Вы получите сообщение с дальнейшими инструкциями.]]></string>
 </resources>
