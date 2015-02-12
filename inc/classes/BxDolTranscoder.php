@@ -129,7 +129,10 @@ class BxDolTranscoder extends BxDol implements iBxDolFactoryObject
 
         foreach ($a as $aQueue) {
             $o = self::getObjectInstance($aQueue['transcoder_object']);
-            $o->deleteFromQueue($aQueue['file_id_source']);
+            if ($o)
+                $o->deleteFromQueue($aQueue['file_id_source']);
+            else
+                echoDbgLog('Transcoder object undefined - ' . $aQueue['transcoder_object']);
         }
     }
 
