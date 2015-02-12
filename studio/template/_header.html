@@ -32,16 +32,16 @@
                 hwaccel: false, // Whether to use hardware acceleration
                 className: 'bx-sys-spinner', // The CSS class to assign to the spinner
                 zIndex: 2e9, // The z-index (defaults to 2000000000)
-                top: '10px', // Top position relative to parent in px
-                left: '10px' // Left position relative to parent in px
+                top: '50%', // Top position relative to parent in px
+                left: '50%' // Left position relative to parent in px
             };
             var aSpinnerSmallOpts = $.extend({}, aSpinnerOpts, {
                 lines: 6,
                 width: 6,
                 radius: 4,
                 color: '#333',
-                top: 'auto',
-                left: 'auto'
+                top: '50%',
+                left: 'calc(100% - 20px)'
             }); 
 
 			$(document).ready(function () {
