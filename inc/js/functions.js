@@ -474,9 +474,9 @@ function bx_time(sLang, isAutoupdate, sRootSel) {
             iSecondsDiff = -iSecondsDiff;
 
         if (iSecondsDiff < $(this).attr('data-bx-autoformat'))
-            s = moment(sTime).lang(sLang).fromNow(); // 'time ago' format
+            s = moment(sTime).locale(sLang).fromNow(); // 'time ago' format
         else
-            s = moment(sTime).lang(sLang).format($(this).attr('data-bx-format')); // custom format
+            s = moment(sTime).locale(sLang).format($(this).attr('data-bx-format')); // custom format
 
         if (iSecondsDiff < iAutoupdate)
             $(this).addClass('bx-time-autoupdate');

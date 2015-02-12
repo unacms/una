@@ -345,7 +345,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
             'spin.min.js',
             'jquery.easing.js',
             'jquery.cookie.min.js',
-            'moment-with-langs.js',
+            'moment-with-locales.min.js',
             'functions.js',
             'jquery.webForms.js',
             'jquery.dolPopup.js',
