@@ -9,6 +9,8 @@
  * @{
  */
 
+bx_import('BxDolAcl');
+
 /**
  * Base module class.
  */

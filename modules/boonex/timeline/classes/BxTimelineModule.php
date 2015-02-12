@@ -9,6 +9,7 @@
  * @{
  */
 
+bx_import('BxDolAcl');
 bx_import('BxBaseModNotificationsModule');
 
 define('BX_TIMELINE_TYPE_ITEM', 'view_item');

@@ -9,6 +9,8 @@
  * @{
  */
 
+bx_import('BxDolAcl');
+
 define('BX_INV_TYPE_FROM_MEMBER', 'from_member');
 define('BX_INV_TYPE_FROM_SYSTEM', 'from_system');
 

@@ -9,6 +9,8 @@
  * @{
  */
 
+bx_import('BxDolAcl');
+
 define('BX_SITES_ACCOUNT_STATUS_UNCONFIRMED', 'unconfirmed');
 define('BX_SITES_ACCOUNT_STATUS_PENDING', 'pending');
 define('BX_SITES_ACCOUNT_STATUS_TRIAL', 'trial');
