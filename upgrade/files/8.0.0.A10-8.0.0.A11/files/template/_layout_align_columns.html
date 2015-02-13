@@ -1,0 +1,10 @@
+<script>
+    $(document).ready(function () {
+        if (1 == $('#bx-layout-cell-3 > div').length && 1 == $('#bx-layout-cell-2 > div').length) {
+            if ($('#bx-layout-cell-2 .bx-db-container').height() > $('#bx-layout-cell-3 .bx-db-container').height())
+                $('#bx-layout-cell-3 .bx-db-container').css('height', $('#bx-layout-cell-2 .bx-db-container').height());
+            else
+                $('#bx-layout-cell-2 .bx-db-container').css('height', $('#bx-layout-cell-3 .bx-db-container').height());
+        }
+    });
+</script>

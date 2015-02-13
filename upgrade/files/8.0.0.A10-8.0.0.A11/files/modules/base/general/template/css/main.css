@@ -1,0 +1,19 @@
+
+/* unit */
+
+.bx-def-unit-live-search {
+    width:236px;
+    width:14.75;
+    overflow:hidden;
+}
+
+.bx-def-unit-live-search .bx-def-unit-info {
+    width:188px;
+    width:11.75;
+}
+
+.bx-def-unit-live-search .bx-def-unit-img {
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-position:center center;
+}
