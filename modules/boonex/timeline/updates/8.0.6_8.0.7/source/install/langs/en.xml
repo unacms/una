@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+
+	<string name="_bx_timeline"><![CDATA[Timeline]]></string>
+	<string name="_bx_timeline_cmts"><![CDATA[Timelines' Comments]]></string>
+
+	<string name="_bx_timeline_option_enable_delete"><![CDATA[Allow Timeline owner to remove items]]></string>
+	<string name="_bx_timeline_option_events_per_page_profile"><![CDATA[Number of events are displayed on Profile page]]></string>
+	<string name="_bx_timeline_option_events_per_page_account"><![CDATA[Number of events are displayed on Account page]]></string>
+	<string name="_bx_timeline_option_events_per_page_home"><![CDATA[Number of events are displayed on Home page]]></string>
+	<string name="_bx_timeline_option_events_per_page"><![CDATA[Number of events per page]]></string>
+	<string name="_bx_timeline_option_rss_length"><![CDATA[The length of RSS feed]]></string>
+	<string name="_bx_timeline_option_events_hide"><![CDATA[Show events in Timeline]]></string>
+	<string name="_bx_timeline_option_chars_display_max"><![CDATA[Max number of displayed character in text post]]></string>
+	<string name="_bx_timeline_option_err_chars_display_max"><![CDATA[Enter the number which should be greater then 150.]]></string>
+
+	<string name="_bx_timeline_form_post"><![CDATA[Post]]></string>
+	<string name="_bx_timeline_form_post_display_add"><![CDATA[Write Post]]></string>
+	<string name="_bx_timeline_form_post_input_sys_owner_id"><![CDATA[Owner ID]]></string>
+	<string name="_bx_timeline_form_post_input_sys_action"><![CDATA[Action]]></string>
+	<string name="_bx_timeline_form_post_input_sys_type"><![CDATA[Type]]></string>
+	<string name="_bx_timeline_form_post_input_sys_text"><![CDATA[Content]]></string>
+	<string name="_bx_timeline_form_post_input_text"><![CDATA[]]></string>
+	<string name="_bx_timeline_form_post_input_sys_link"><![CDATA[Link]]></string>
+	<string name="_bx_timeline_form_post_input_link_alt"><![CDATA[Add Link]]></string>
+	<string name="_bx_timeline_form_post_input_link_err_delete"><![CDATA[Cannot remove the link. Please report.]]></string>
+	<string name="_bx_timeline_form_post_input_sys_photo"><![CDATA[Photo]]></string>
+	<string name="_bx_timeline_form_post_input_photo"><![CDATA[]]></string>
+	<string name="_bx_timeline_form_post_input_photo_alt"><![CDATA[Add Photo]]></string>
+	<string name="_bx_timeline_form_post_input_sys_video"><![CDATA[Video]]></string>
+	<string name="_bx_timeline_form_post_input_video"><![CDATA[]]></string>
+	<string name="_bx_timeline_form_post_input_video_alt"><![CDATA[Add Video]]></string>
+	<string name="_bx_timeline_form_post_input_sys_attachments"><![CDATA[Attachments]]></string>
+	<string name="_bx_timeline_form_post_input_sys_do_submit"><![CDATA[Post]]></string>
+	<string name="_bx_timeline_form_post_input_do_submit"><![CDATA[Post]]></string>
+
+	<string name="_bx_timeline_form_attach_link"><![CDATA[Attach Link]]></string>
+	<string name="_bx_timeline_form_attach_link_display_add"><![CDATA[Attach Link]]></string>
+	<string name="_bx_timeline_form_attach_link_input_sys_url"><![CDATA[Url]]></string>
+	<string name="_bx_timeline_form_attach_link_input_url"><![CDATA[Add Link]]></string>
+	<string name="_bx_timeline_form_attach_link_input_url_err"><![CDATA[Correct Link is essential. Please, fill in this field.]]></string>
+	<string name="_bx_timeline_form_attach_link_input_sys_do_submit"><![CDATA[Add]]></string>
+	<string name="_bx_timeline_form_attach_link_input_do_submit"><![CDATA[Add]]></string>
+	<string name="_bx_timeline_form_attach_link_input_do_cancel"><![CDATA[Close]]></string>
+
+	<string name="_bx_timeline_acl_action_post"><![CDATA[Post]]></string>
+	<string name="_bx_timeline_acl_action_delete"><![CDATA[Delete]]></string>
+	<string name="_bx_timeline_acl_action_vote"><![CDATA[Vote]]></string>
+	<string name="_bx_timeline_acl_action_share"><![CDATA[Repost]]></string>
+
+	<string name="_bx_timeline_page_title_sys_view"><![CDATA[Timeline]]></string>
+	<string name="_bx_timeline_page_title_view"><![CDATA[Timeline]]></string>
+	<string name="_bx_timeline_page_title_sys_item"><![CDATA[Timeline Item]]></string>
+	<string name="_bx_timeline_page_title_item"><![CDATA[Timeline Item]]></string>
+	<string name="_bx_timeline_page_title_sys_account"><![CDATA[Timeline]]></string>
+	<string name="_bx_timeline_page_title_account"><![CDATA[Timeline]]></string>
+	<string name="_bx_timeline_page_block_title_post"><![CDATA[Post to Timeline]]></string>
+	<string name="_bx_timeline_page_block_title_view"><![CDATA[Timeline]]></string>
+	<string name="_bx_timeline_page_block_title_post_profile_persons"><![CDATA[Post to Timeline]]></string>
+	<string name="_bx_timeline_page_block_title_post_profile_organizations"><![CDATA[Post to Timeline]]></string>
+	<string name="_bx_timeline_page_block_title_view_profile_persons"><![CDATA[Timeline]]></string>
+	<string name="_bx_timeline_page_block_title_view_profile_organizations"><![CDATA[Timeline]]></string>
+	<string name="_bx_timeline_page_block_title_item"><![CDATA[Item]]></string>
+	<string name="_bx_timeline_page_block_title_view_account"><![CDATA[Subscriptions Timeline]]></string>
+	<string name="_bx_timeline_page_block_title_view_home"><![CDATA[Outline]]></string>
+	<string name="_bx_timeline_page_block_title_browse_cmts"><![CDATA[Timelines' Comments]]></string>
+
+    <string name="_bx_timeline_menu_item_view_all"><![CDATA[All posts]]></string>
+    <string name="_bx_timeline_menu_item_view_owner"><![CDATA[Posts by {0}]]></string>
+    <string name="_bx_timeline_menu_item_view_other"><![CDATA[Posts by others]]></string>
+    <string name="_bx_timeline_menu_item_get_rss"><![CDATA[RSS]]></string>
+
+    <string name="_bx_timeline_menu_title_item_manage"><![CDATA[Manage Item]]></string>
+    <string name="_bx_timeline_menu_set_title_item_manage"><![CDATA[Manage Item]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_delete"><![CDATA[Delete]]></string>
+    <string name="_bx_timeline_menu_item_title_item_delete"><![CDATA[Delete]]></string>
+
+	<string name="_bx_timeline_menu_title_item_actions"><![CDATA[Item Actions]]></string>
+    <string name="_bx_timeline_menu_set_title_item_actions"><![CDATA[Item Actions]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_comment"><![CDATA[Comment]]></string>
+    <string name="_bx_timeline_menu_item_title_item_comment"><![CDATA[Comment]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_vote"><![CDATA[Vote]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_share"><![CDATA[Repost]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_more"><![CDATA[More]]></string>
+
+	<string name="_bx_timeline_menu_title_post_attachments"><![CDATA[Form Attachments]]></string>
+    <string name="_bx_timeline_menu_set_title_post_attachments"><![CDATA[Form Attachments]]></string>
+    <string name="_bx_timeline_menu_item_title_system_add_link"><![CDATA[Add Link]]></string>
+    <string name="_bx_timeline_menu_item_title_add_link"><![CDATA[Add Link]]></string>
+    <string name="_bx_timeline_menu_item_title_system_add_photo"><![CDATA[Add Photo]]></string>
+    <string name="_bx_timeline_menu_item_title_add_photo"><![CDATA[Add Photo]]></string>
+    <string name="_bx_timeline_menu_item_title_system_add_video"><![CDATA[Add Video]]></string>
+    <string name="_bx_timeline_menu_item_title_add_video"><![CDATA[Add Video]]></string>
+
+    <string name="_bx_timeline_menu_item_title_system_timeline"><![CDATA[Timeline]]></string>
+    <string name="_bx_timeline_menu_item_title_timeline"><![CDATA[Timeline]]></string>
+
+	<string name="_bx_timeline_alert_module_timeline_common_post"><![CDATA[Timeline (post)]]></string>
+	<string name="_bx_timeline_alert_module_timeline_common_share"><![CDATA[Timeline (repost)]]></string>
+	<string name="_bx_timeline_alert_action_added"><![CDATA[add]]></string>
+
+	<string name="_bx_timeline_txt_msg_no_results"><![CDATA[Empty]]></string>
+	<string name="_bx_timeline_txt_err_cannot_perform_action"><![CDATA[Cannot perform action. Please report.]]></string>
+
+	<string name="_bx_timeline_txt_load_more"><![CDATA[Load More]]></string>
+	<string name="_bx_timeline_txt_or_jump_to"><![CDATA[... or jump to:]]></string>
+	<string name="_bx_timeline_txt_jump_to_n_year"><![CDATA[Jump to {0} year]]></string>
+	<string name="_bx_timeline_txt_jump_to_recent"><![CDATA[Jump to recent posts]]></string>
+
+	<string name="_bx_timeline_txt_rss_caption"><![CDATA[{0}'s timeline]]></string>
+	<string name="_bx_timeline_txt_user_added_sample"><![CDATA[{0} added {1}]]></string>
+	<string name="_bx_timeline_txt_user_shared_sample"><![CDATA[{0} reposted {1}'s {2}]]></string>
+	<string name="_bx_timeline_txt_sample"><![CDATA[post]]></string>
+	<string name="_bx_timeline_txt_sample_ext"><![CDATA[timeline post]]></string>
+	<string name="_bx_timeline_txt_sample_comment_single"><![CDATA[timeline post's comment]]></string>
+
+	<string name="_bx_timeline_txt_do_share"><![CDATA[Repost]]></string>
+	<string name="_bx_timeline_txt_shared"><![CDATA[Reposted {0}'s {1}.]]></string>
+	<string name="_bx_timeline_txt_shared_by"><![CDATA[Reposted by]]></string>
+	<string name="_bx_timeline_txt_err_cannot_share"><![CDATA[Cannot repost. Please report.]]></string>
+	<string name="_bx_timeline_txt_err_already_shared"><![CDATA[You already reposted the item.]]></string>
+	<string name="_bx_timeline_txt_msg_success_share"><![CDATA[]]></string>	
+</resources>

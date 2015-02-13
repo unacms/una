@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_bx_accnt_page_title_sys_manage_administration"><![CDATA[Manage All Accounts]]></string_add>
+	<string_add name="_bx_accnt_page_block_title_system_manage_administration"><![CDATA[Manage All Accounts]]></string_add>
+	<string_add name="_bx_accnt_acl_action_edit_any_account"><![CDATA[Edit Any Account]]></string_add>
+
+	<string_del name="_bx_accnt_page_title_sys_manage" />
+</resources>

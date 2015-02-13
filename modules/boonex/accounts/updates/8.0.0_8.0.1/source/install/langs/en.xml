@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string name="_bx_accnt"><![CDATA[Accounts]]></string>
+
+	<string name="_bx_accnt_page_title_sys_manage_administration"><![CDATA[Manage All Accounts]]></string>
+	<string name="_bx_accnt_page_title_manage"><![CDATA[Manage Accounts]]></string>
+	<string name="_bx_accnt_page_title_browse"><![CDATA[Accounts]]></string>
+
+	<string name="_bx_accnt_page_block_title_system_manage_administration"><![CDATA[Manage All Accounts]]></string>
+	<string name="_bx_accnt_page_block_title_manage"><![CDATA[Manage Accounts]]></string>
+
+	<string name="_bx_accnt_menu_set_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
+    <string name="_bx_accnt_menu_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
+    <string name="_bx_accnt_menu_item_title_system_resend_cemail"><![CDATA[Confirm Email]]></string>
+    <string name="_bx_accnt_menu_item_title_resend_cemail"><![CDATA[Confirm Email]]></string>
+    <string name="_bx_accnt_menu_item_title_system_delete"><![CDATA[Delete]]></string>
+    <string name="_bx_accnt_menu_item_title_delete"><![CDATA[Delete]]></string>
+    <string name="_bx_accnt_menu_item_title_system_delete_with_content"><![CDATA[Delete With Content]]></string>
+    <string name="_bx_accnt_menu_item_title_delete_with_content"><![CDATA[Delete With Content]]></string>
+	<string name="_bx_accnt_menu_item_title_system_admt_accounts"><![CDATA[Accounts]]></string>
+	<string name="_bx_accnt_menu_item_title_admt_accounts"><![CDATA[Accounts - {addon} unconfirmed]]></string>
+	<string name="_bx_accnt_menu_item_title_manage"><![CDATA[Manage]]></string>
+
+	<string name="_bx_accnt_acl_action_edit_any_account"><![CDATA[Edit Any Account]]></string>
+
+	<string name="_bx_accnt_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
+	<string name="_bx_accnt_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
+	<string name="_bx_accnt_grid_filter_item_title_adm_pending"><![CDATA[Pending]]></string>
+	<string name="_bx_accnt_grid_filter_item_title_adm_suspended"><![CDATA[Suspended]]></string>
+	<string name="_bx_accnt_grid_column_title_adm_active"><![CDATA[Active]]></string>
+    <string name="_bx_accnt_grid_column_title_adm_name"><![CDATA[Name]]></string>
+    <string name="_bx_accnt_grid_column_title_adm_email"><![CDATA[Email]]></string>
+    <string name="_bx_accnt_grid_column_title_adm_email_confirmed"><![CDATA[Email Confirmed]]></string>
+    <string name="_bx_accnt_grid_column_title_adm_profiles"><![CDATA[Profiles]]></string>
+    <string name="_bx_accnt_grid_column_title_adm_logged"><![CDATA[Last Online]]></string>
+    <string name="_bx_accnt_grid_action_title_adm_activate"><![CDATA[Activate]]></string>
+	<string name="_bx_accnt_grid_action_title_adm_suspend"><![CDATA[Suspend]]></string>
+    <string name="_bx_accnt_grid_action_title_adm_resend_cemail"><![CDATA[Confirm Email]]></string>
+    <string name="_bx_accnt_grid_action_title_adm_delete"><![CDATA[Delete]]></string>
+    <string name="_bx_accnt_grid_action_title_adm_delete_with_content"><![CDATA[Delete With Content]]></string>
+    <string name="_bx_accnt_grid_action_title_adm_more_actions"><![CDATA[More Actions]]></string>
+    <string name="_bx_accnt_grid_action_err_delete"><![CDATA[Cannot delete the selected account(s).]]></string>
+    <string name="_bx_accnt_grid_action_err_perform"><![CDATA[Cannot perform the action for selected account(s).]]></string>
+
+	<string name="_bx_accnt_txt_more"><![CDATA[{0} more]]></string>
+	<string name="_bx_accnt_txt_see_more"><![CDATA[See more]]></string>
+</resources>
