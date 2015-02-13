@@ -7,6 +7,8 @@
  * @{
  */
 
+bx_import('BxDolPermalinks');
+
 /**
  * @page objects
  * @section email_templates Email Templates
