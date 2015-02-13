@@ -1,0 +1,45 @@
+@import url(../../../../../../../template/css/menu.css);
+
+/* --------------- menu header */
+#bx-menu-main-container-scroller {
+	text-align: center;
+}
+
+/* --------------- toolbar menu */
+ul.bx-menu-toolbar li a {
+    min-width: 64px;
+    min-width: 4rem;
+    height: 64px;
+    height: 4rem;
+
+    line-height: 64px;
+    line-height: 4rem;
+}
+
+ul.bx-menu-toolbar li a img {
+	margin-top: 8px;
+    margin-top: 0.5rem;
+}
+
+.bx-menu-toolbar-item-title {
+	font-weight: bold;
+}
+
+ul.bx-menu-toolbar li a .sys-icon-a {
+    margin-top:1rem;
+}
+
+/* --------------- floating blocks menu */
+
+.bx-sliding-menu-fullheight {
+    height:calc(100% - 4rem);
+}
+
+.bx-menu-account-popup-profile-switcher-link b {
+    vertical-align:baseline;
+}
+
+/* --------------- account popup menu */
+.bx-menu-account-popup-profile {
+	font-weight: bold;
+}

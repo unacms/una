@@ -1,0 +1,2 @@
+-- STORAGES & TRANSCODERS
+UPDATE `sys_transcoder_filters` SET `filter_params`='a:3:{s:1:"w";s:3:"300";s:1:"h";s:3:"200";s:11:"crop_resize";s:1:"1";}' WHERE `transcoder_object`='bx_convos_preview' AND `filter`='Resize';

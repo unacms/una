@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_bx_invites_form_request_input_sys_text"><![CDATA[Text]]></string_add>
+	<string_add name="_bx_invites_form_request_input_text"><![CDATA[Why do you want to join?]]></string_add>
+	<string_add name="_bx_invites_form_request_input_text_err"><![CDATA[You need to briefly describe why you want to join our site.]]></string_add>
+	<string_add name="_bx_invites_grid_action_title_adm_info"><![CDATA[Info]]></string_add>
+	<string_add name="_bx_invites_menu_item_title_requests"><![CDATA[Requests]]></string_add>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_bx_dev_bp_txt_sys_block_title_system"><![CDATA[Title System]]></string_add>
+    <string_add name="_bx_dev_bp_txt_block_title_system"><![CDATA[Title System]]></string_add>
+    <string_add name="_bx_dev_bp_err_block_title_system"><![CDATA[You need to enter a value here]]></string_add>
+</resources>

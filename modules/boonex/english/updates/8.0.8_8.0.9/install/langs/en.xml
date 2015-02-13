@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_sys_menu_template_title_account_notifications"><![CDATA[Account notifications]]></string_add>
+
+	<string_upd name="_adm_page_cpt_store"><![CDATA[Apps]]></string_upd>
+	<string_upd name="_adm_stg_cpt_option_sys_autoupdate_modules"><![CDATA[Apps auto-update]]></string_upd>
+	<string_upd name="_adm_str_msg_download_scheduled"><![CDATA[Download was scheduled, in a few minutes downloaded package will be available to install via Apps &gt; Downloaded]]></string_upd>
+	<string_upd name="_adm_str_msg_download_and_install_scheduled"><![CDATA[Download and subsequent installation were scheduled, it may take a few minutes]]></string_upd>
+	<string_upd name="_adm_str_msg_download_successfully"><![CDATA[Download was successfully finished, you may install it via Apps &gt; Downloaded]]></string_upd>
+	<string_upd name="_adm_str_msg_download_and_install_successfully"><![CDATA[Download and subsequent installation were successfully finished]]></string_upd>
+	<string_upd name="_adm_tmi_cpt_extensions"><![CDATA[Add Apps]]></string_upd>
+	<string_upd name="_adm_wgt_cpt_store"><![CDATA[Apps]]></string_upd>
+	<string_upd name="_sys_form_account_input_captcha_error"><![CDATA[Security image input failed. Please, try again.]]></string_upd>
+	<string_upd name="_sys_form_account_input_delete_confirm"><![CDATA[I'm sure that I want to delete the account with content.]]></string_upd>
+
+	<string_del name="_sys_menu_title_extended" />
+	<string_del name="_sys_menu_title_gallery" />
+</resources>

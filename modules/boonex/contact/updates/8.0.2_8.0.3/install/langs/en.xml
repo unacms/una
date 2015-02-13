@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_bx_contact_form_contact_input_sys_captcha"><![CDATA[Captcha]]></string_add>
+	<string_add name="_bx_contact_form_contact_input_captcha"><![CDATA[Security Image]]></string_add>
+	<string_add name="_bx_contact_form_contact_input_captcha_err"><![CDATA[Security image input failed. Please, try again.]]></string_add>
+</resources>
