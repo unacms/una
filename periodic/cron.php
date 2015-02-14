@@ -110,7 +110,7 @@ function checkCronJob($sPeriods, $aDate = array())
 function runJob($aJob)
 {
     if (!empty($aJob['file']) && !empty($aJob['class']) && file_exists(BX_DIRECTORY_PATH_ROOT . $aJob['file'])) {
-        if (!class_exists($aJob['class']))
+        if (!class_exists($aJob['class'], false))
             require_once(BX_DIRECTORY_PATH_ROOT . $aJob['file']);
 
         $oHandler = new $aJob['class']();

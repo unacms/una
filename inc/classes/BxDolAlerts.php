@@ -110,7 +110,7 @@ class BxDolAlerts extends BxDol
                 $aHandler = $this->_aHandlers[$iHandlerId];
 
                 if (!empty($aHandler['file']) && !empty($aHandler['class']) && file_exists(BX_DIRECTORY_PATH_ROOT . $aHandler['file'])) {
-                    if(!class_exists($aHandler['class']))
+                    if(!class_exists($aHandler['class'], false))
                         require_once(BX_DIRECTORY_PATH_ROOT . $aHandler['file']);
 
                     $oHandler = new $aHandler['class']();
