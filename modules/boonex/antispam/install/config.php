@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_antispam',
     'title' => 'Antispam',
     'note' => 'Antispam tools',
-    'version' => '8.0.3.DEV',
+    'version' => '8.0.4.DEV',
     'vendor' => 'BoonEx',
 	'help_url' => 'http://feed.boonex.com/?section={module_name}',
 
