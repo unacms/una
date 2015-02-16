@@ -1,0 +1,240 @@
+/*--- Panel Top style ---*/
+div.bx-std-pt-pages {
+	position: relative;
+    float: left;
+}
+div.bx-std-pt-pages div.bx-form-element-wrapper {
+	width: 165px;
+}
+div.bx-std-pt-buttons {
+	float: right;
+}
+
+/*--- Main section style ---*/
+div.adm-bp-cell {
+	background-color: rgba(255,255,255,0.8);
+}
+div.adm-bp-cell-cnt {
+	padding: 3px 6px 50px 6px;
+}
+div.adm-bp-blocks {
+	position: relative;
+}
+div.adm-bp-block {
+	position: relative;
+    overflow: hidden;
+	margin: 3px 0px;
+
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 5px 5px 5px 5px;
+
+	box-shadow: 0 0 1px rgba(51, 51, 51, 0.3);
+
+	background-color: #ececec;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#ececec));
+    background-image: -webkit-linear-gradient(top, #fff, #ececec); 
+    background-image: -moz-linear-gradient(top, #fff, #ececec); 
+    background-image: -ms-linear-gradient(top, #fff, #ececec); 
+    background-image: -o-linear-gradient(top, #fff, #ececec); 
+    background-image: linear-gradient(top, #fff, #ececec);	
+}
+div.adm-bpb-inactive {
+	opacity: 0.5;
+}
+div.adm-bp-block-empty {
+    height: 42px;
+	border-style: dashed;
+	box-shadow: none;
+}
+div.adm-bp-block-dragging {}
+div.adm-bpb-content {
+	position: relative;
+	padding: 5px;
+}
+div.adm-bpb-icon {
+	position: absolute;
+	width: 32px;
+	height: 32px;
+}
+div.adm-bpb-icon img {
+    width: 32px;
+    height: 32px;
+}
+div.adm-bpb-icon i.sys-icon {
+	position: absolute;
+    width:32px;
+	height: 32px;
+	top: 0px;
+	left: 0px;
+
+    color:white;
+    font-size:20px;
+    text-align:center;
+    text-shadow:none;
+	line-height: 32px;
+}
+div.adm-bpb-info {
+	min-height: 32px;
+	padding-left: 40px; 
+}
+div.adm-bpb-title {
+	padding-right: 20px;
+
+	white-space: nowrap;
+    text-overflow: ellipsis;
+	overflow: hidden;
+
+	font-weight: bold;
+}
+div.adm-bpb-description {
+	font-size: 11px;
+}
+div.adm-bpb-checkbox {
+	position: absolute;
+	top: 11px;
+	right: 5px;
+}
+div.adm-bpb-drag-handle {
+	position: absolute;
+    top: 14px;
+    left: 10px;
+	cursor: move;
+	color:#666666;
+    font-size:14px;
+}
+div.adm-bp-cell div.adm-bpb-icon {
+	left: 36px;
+}
+div.adm-bp-cell div.adm-bpb-info {
+	padding-left: 75px; 
+}
+
+/*--- Add Block popup style ---*/
+div#adm-bp-create-block-popup div.bx-popup-width {
+	width: 620px;
+}
+div#adm-bp-create-block-popup div.bx-popup-content {
+	padding-left: 0px;
+	padding-right: 0px; 
+}
+
+div.adm-bp-create-block-form {}
+
+div.adm-bp-create-block-form-cnt {}
+
+div.adm-bp-create-block-form fieldset.bx-form-section {
+	padding-bottom: 0px;
+}
+div.adm-bp-create-block-form div.adm-bp-block:first-child {
+	margin-top: 0px;
+}
+div.adm-bp-cbf-left {
+	position: absolute;
+    top: 0px;
+    left: 0px;
+	width: 179px;
+	height: 300px;
+	border-style: solid;
+	border-width: 1px 1px 0px 0px;
+	overflow-y: auto; 
+}
+div.adm-bp-cbf-left-cnt {}
+div.adm-bp-cbf-right {
+	position: relative;
+	width: 440px;
+	height: 300px;
+	margin-left: 180px;
+	border-style: solid;
+	border-width: 1px 0px 0px 0px;
+	overflow-y: auto;
+}
+div.adm-bp-cbf-right-cnt {}
+div.adm-bp-cbf-controls {
+	border-style: solid;
+	border-width: 1px 0px 0px 0px;
+}
+div.adm-bp-cbf-counter {
+	position: relative;
+	float: right;
+	line-height: 38px;
+	color: #b5b5b5;
+}
+
+/*--- Edit Block popup style ---*/
+div.adm-bp-edit-block-form {
+	margin-top: 0px;
+}
+
+/*--- Page Settings popups style ---*/
+div#adm-bp-add-popup div.bx-popup-width,
+div#adm-bp-edit-popup div.bx-popup-width {
+    width: 560px;
+}
+div#adm-bp-add-popup div.bx-popup-content,
+div#adm-bp-edit-popup div.bx-popup-content {
+    padding-left: 0px;
+    padding-right: 0px; 
+}
+
+div.adm-bp-add-form {}
+div.adm-bp-add-form-cnt {}
+
+div.adm-bp-edit-form {}
+div.adm-bp-edit-form-cnt {}
+
+div.adm-bp-add-form fieldset.bx-form-section,
+div.adm-bp-edit-form fieldset.bx-form-section {
+    padding-bottom: 0px;
+}
+div.adm-bp-add-form div.bx-std-pmen-item-cnt, 
+div.adm-bp-edit-form div.bx-std-pmen-item-cnt {
+	padding-left: 20px;
+}
+div.adm-bp-add-form div.bx-form-input-wrapper-custom, 
+div.adm-bp-edit-form div.bx-form-input-wrapper-custom {
+	position: relative;
+}
+div.adm-bp-epf-left {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+    width: 179px;
+    height: 310px;
+	border-style: solid;
+	border-width: 1px 1px 0px 0px;
+    overflow-y: auto; 
+}
+div.adm-bp-epf-left-cnt {}
+div.adm-bp-epf-right {
+    position: relative;
+    width: 380px;
+    height: 310px;
+	margin-left: 180px;
+	border-style: solid;
+	border-width: 1px 0px 0px 0px;
+    overflow-y: auto;
+}
+div.adm-bp-epf-right-cnt {}
+div.adm-bp-epf-controls {
+	border-style: solid;
+	border-width: 1px 0px 0px 0px;
+}
+div#adm-bp-settings-group-layout {
+    margin: 0px -10px;
+}
+div.adm-bp-layout {
+	position: relative;
+	float: left;
+	width: 66px;
+	height: 66px;
+	margin-left: 10px;
+	margin-right: 10px; 
+	border: 2px solid transparent;
+}
+div.adm-bp-layout-active {
+	border-color: #9999cc;
+}
+div.adm-bp-layout-cnt {
+	padding: 1px;
+}
