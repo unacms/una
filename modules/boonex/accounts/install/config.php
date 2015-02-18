@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_accounts',
     'title' => 'Accounts Manager',
     'note' => 'Accounts Manager module.',
-    'version' => '8.0.1.DEV',
+    'version' => '8.0.2.DEV',
     'vendor' => 'BoonEx',
 	'help_url' => 'http://feed.boonex.com/?section={module_name}',
     
