@@ -245,6 +245,8 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 		if(!$aResult['result'] && $bTransient)
 			$this->emailNotify($aResult['message']);
 
+        BxDolDb::getInstance()->cleanMemory ('sys_modules_modules');
+
         return array('code' => $aResult['result'] ? BX_DOL_STUDIO_IU_RC_SUCCESS : BX_DOL_STUDIO_IU_RC_FAILED, 'message' => $aResult['message']);
     }
 
