@@ -213,9 +213,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             foreach($aFiles as $aFile)
                 $this->oDb->insertModuleTrack($iModuleId, $aFile);
 
-            $this->oDb->cleanMemory('sys_modules_' . $this->_aConfig['home_uri']);
-            $this->oDb->cleanMemory('sys_modules_' . $iModuleId);
-            $this->oDb->cleanMemory('sys_modules');
+            $this->cleanupMemoryAfterAction($this->_aConfig['home_uri'], $iModuleId);
 
             if(!empty($this->_aConfig['install_success']))
             	$this->_perform('install_success', $aParams);
@@ -287,9 +285,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             $oLanguages->deleteLanguageString($sTitleKey);
             $oLanguages->compileLanguage();
 
-            $this->oDb->cleanMemory ('sys_modules_' . $this->_aConfig['home_uri']);
-            $this->oDb->cleanMemory ('sys_modules_' . $iModuleId);
-            $this->oDb->cleanMemory ('sys_modules');
+            $this->cleanupMemoryAfterAction($this->_aConfig['home_uri'], $iModuleId);
 
             if(!empty($this->_aConfig['uninstall_success']))
             	$this->_perform('uninstall_success', $aParams);
@@ -377,9 +373,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         if($aResult['result']) {
             $this->oDb->enableModuleByUri($aModule['uri']);
 
-            $this->oDb->cleanMemory('sys_modules_' . $aModule['uri']);
-            $this->oDb->cleanMemory('sys_modules_' . $aModule['id']);
-            $this->oDb->cleanMemory('sys_modules');
+            $this->cleanupMemoryAfterAction($aModule['uri'], $aModule['id']);
 
             if(!empty($this->_aConfig['enable_success']))
             	$this->_perform('enable_success', $aParams);
@@ -439,9 +433,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         if($aResult['result']) {
             $this->oDb->disableModuleByUri($aModule['uri']);
 
-            $this->oDb->cleanMemory('sys_modules_' . $aModule['uri']);
-            $this->oDb->cleanMemory('sys_modules_' . $aModule['id']);
-            $this->oDb->cleanMemory('sys_modules');
+            $this->cleanupMemoryAfterAction($aModule['uri'], $aModule['id']);
 
             if(!empty($this->_aConfig['disable_success']))
             	$this->_perform('disable_success', $aParams);
@@ -896,6 +888,15 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             'from' => array('{db_name}'),
             'to' => array(defined('BX_DATABASE_NAME') ? BX_DATABASE_NAME : ''),
         );
+    }
+
+    protected function cleanupMemoryAfterAction($sModuleUri, $iModuleId)
+    {
+        $this->oDb->cleanMemory('sys_modules_' . $sModuleUri);
+        $this->oDb->cleanMemory('sys_modules_' . $iModuleId);
+        $this->oDb->cleanMemory('sys_modules');
+        $this->oDb->cleanMemory('sys_modules_modules');
+        $this->oDb->cleanMemory('sys_modules_modules_active');
     }
 }
 
