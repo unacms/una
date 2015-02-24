@@ -309,7 +309,7 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_posts_administration', 'author', '_bx_posts_grid_column_title_adm_author', '25%', 0, '25', '', 5),
 ('bx_posts_administration', 'actions', '', '20%', 0, '', '', 6),
 ('bx_posts_common', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
-('bx_posts_common', 'switcher', '', '8%', 0, '', '', 2),
+('bx_posts_common', 'switcher', '_bx_posts_grid_column_title_adm_active', '8%', 0, '', '', 2),
 ('bx_posts_common', 'title', '_bx_posts_grid_column_title_adm_title', '40%', 0, '', '', 3),
 ('bx_posts_common', 'added', '_bx_posts_grid_column_title_adm_added', '30%', 1, '25', '', 4),
 ('bx_posts_common', 'actions', '', '20%', 0, '', '', 5);
