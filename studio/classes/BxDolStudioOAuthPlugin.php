@@ -75,10 +75,6 @@ class BxDolStudioOAuthPlugin extends BxDolStudioOAuth implements iBxDolSingleton
             if($bToken && $mixedSecret !== false)
             	return $this->getAccessToken(bx_get('oauth_token'), bx_get('oauth_verifier'), (int)bx_get('oauth_user'), $oService);
         }
-        catch(TokenResponseException $e) {
-        	$this->unsetAuthorizedUser();
-            return $this->getRequestToken();
-        }
         catch(TokenNotFoundException $e) {
         	$this->unsetAuthorizedUser();
             return $this->getRequestToken();
@@ -92,9 +88,20 @@ class BxDolStudioOAuthPlugin extends BxDolStudioOAuth implements iBxDolSingleton
     	if(empty($oService))
     		$oService = $this->getServiceObject();
 
-		$oToken = $oService->requestRequestToken();
+    	$sError = _t('_adm_err_oauth_cannot_get_token');
+    	try {
+			$oToken = $oService->requestRequestToken();
+    	}
+    	catch (TokenResponseException $e) {
+    		if(!$this->isAuthorized())
+    			return $sError;
+
+			$this->unsetAuthorizedUser();
+            return $this->getRequestToken($oService);
+    	}
+
 		if(empty($oToken))
-			return _t('_adm_err_oauth_cannot_get_token');
+			return $sError;
 
 		$this->oSession->setValue('sys_oauth_secret', $oToken->getRequestTokenSecret());
 
@@ -105,9 +112,21 @@ class BxDolStudioOAuthPlugin extends BxDolStudioOAuth implements iBxDolSingleton
     protected function getAccessToken($sToken, $sVerifier, $iUser,  $oService)
     {
 		$oToken = $this->oStorage->retrieveAccessToken($this->sService);
-		$oAccessToken = $oService->requestAccessToken($sToken, $sVerifier, $oToken->getRequestTokenSecret());
+
+		$sError = _t('_adm_err_oauth_cannot_get_token');
+    	try {
+			$oAccessToken = $oService->requestAccessToken($sToken, $sVerifier, $oToken->getRequestTokenSecret());
+    	}
+    	catch (TokenResponseException $e) {
+    		if(!$this->isAuthorized())
+    			return $sError;
+
+			$this->unsetAuthorizedUser();
+            return $this->getRequestToken($oService);
+    	}
+
 		if(empty($oAccessToken))
-			return _t('_adm_err_oauth_cannot_get_token');
+			return $sError;
 
 		$this->oSession->setValue('sys_oauth_token', $oAccessToken->getAccessToken());
 		$this->oSession->setValue('sys_oauth_secret', $oAccessToken->getAccessTokenSecret());
