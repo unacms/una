@@ -7,6 +7,8 @@
  * @{
  */
 
+bx_import('BxDolAcl');
+
 class BxDolAccount extends BxDol
 {
     protected $_iAccountID;

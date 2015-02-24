@@ -1533,6 +1533,7 @@
 	<string name="_sys_et_txt_name_profile_change_status_suspended"><![CDATA[Статус профиля изменён на Заблокированный]]></string>
 	<string name="_sys_et_txt_name_system_pruning"><![CDATA[Результат очистки]]></string>
 	<string name="_sys_et_txt_name_upgrade_failed"><![CDATA[Обновление не удалось]]></string>
+	<string name="_sys_et_txt_name_upgrade_modules_failed"><![CDATA[Обновление модулей не удалось]]></string>
 	<string name="_sys_et_txt_name_upgrade_success"><![CDATA[Обновление сайта прошло удачно]]></string>
 	<string name="_sys_et_txt_name_upgrade_modules_success"><![CDATA[Обновление модулей прошло удачно]]></string>
 	<string name="_sys_et_txt_name_bg_operation_failed"><![CDATA[Фоновая операция не удалась]]></string>

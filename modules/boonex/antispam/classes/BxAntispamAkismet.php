@@ -46,7 +46,7 @@ class BxAntispamAkismet extends BxDol
 
     public function onPositiveDetection ($sExtraData = '')
     {
-        $o = bx_instance('BxDolDNSBlacklists');
+        $o = bx_instance('BxAntispamDNSBlacklists', array(), 'bx_antispam');
         $o->onPositiveDetection (getVisitorIP(), $sExtraData, 'akismet');
     }
 }

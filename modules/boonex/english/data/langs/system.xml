@@ -1533,6 +1533,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_et_txt_name_profile_change_status_suspended"><![CDATA[Profile status changed to suspended]]></string>
 	<string name="_sys_et_txt_name_system_pruning"><![CDATA[Pruning result]]></string>
 	<string name="_sys_et_txt_name_upgrade_failed"><![CDATA[Upgrade failed]]></string>
+	<string name="_sys_et_txt_name_upgrade_modules_failed"><![CDATA[Modules upgrade failed]]></string>
 	<string name="_sys_et_txt_name_upgrade_success"><![CDATA[Site upgrade success]]></string>
 	<string name="_sys_et_txt_name_upgrade_modules_success"><![CDATA[Modules upgrade success]]></string>
 	<string name="_sys_et_txt_name_bg_operation_failed"><![CDATA[Background operation failed]]></string>
@@ -1914,7 +1915,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_private"><![CDATA[Private]]></string>
     <string name="_sys_pruning_db"><![CDATA[<h3>Database pruning:</h3>
         <ul>
-            <li><b>{0}</b> deleted expired memberhsip levels</li>
+            <li><b>{0}</b> deleted expired membership levels</li>
             <li><b>{1}</b> deleted expired sessions</li>
             <li><b>{2}</b> deleted expired views</li>
             <li><b>{3}</b> deleted expired votes</li>

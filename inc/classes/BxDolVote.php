@@ -7,6 +7,8 @@
  * @{
  */
 
+bx_import('BxDolAcl');
+
 define('BX_DOL_VOTE_OLD_VOTES', 365 * 86400); ///< votes older than this number of seconds will be deleted automatically
 
 define('BX_DOL_VOTE_TYPE_STARS', 'stars');

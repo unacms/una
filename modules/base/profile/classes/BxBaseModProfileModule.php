@@ -178,6 +178,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         $iStart = (int)bx_get('start');
 
         // get connections array
+        bx_import('BxDolConnection');
         $a = $oConnection->getConnectionsAsArray ($sConnectionsType, $iProfileId, $iProfileId2, $iMutual, (int)bx_get('start'), $iLimit + 1, BX_CONNECTIONS_ORDER_ADDED_DESC);
         if (!$a)
             return '';
@@ -237,6 +238,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         if (!$aContentInfo)
             return false;
 
+        bx_import('BxDolConnection');
         $s = $this->serviceBrowseConnectionsQuick ($aContentInfo['profile_id'], 'sys_profiles_friends', BX_CONNECTIONS_CONTENT_TYPE_CONTENT, true);
         if (!$s)
             return MsgBox(_t('_sys_txt_empty'));
