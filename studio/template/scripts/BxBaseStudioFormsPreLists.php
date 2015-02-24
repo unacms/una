@@ -26,6 +26,9 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists
     {
         $sAction = 'add';
 
+        bx_import('BxDolStudioUtils');
+        bx_import('BxTemplStudioFormView');
+
         $aForm = array(
             'form_attrs' => array(
                 'id' => 'adm-form-pre-list-create',
@@ -134,6 +137,8 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists
             $this->_echoResultJson(array());
             exit;
         }
+
+        bx_import('BxTemplStudioFormView');
 
         $aForm = array(
             'form_attrs' => array(

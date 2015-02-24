@@ -41,6 +41,8 @@ class BxBaseStudioPolyglotEtemplates extends BxDolStudioPolyglotEtemplates
             exit;
         }
 
+        bx_import('BxTemplStudioFormView');
+
         $aForm = array(
             'form_attrs' => array(
                 'id' => 'adm-pgt-etemplate-edit',

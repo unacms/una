@@ -26,6 +26,8 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets
     {
         $sAction = 'add';
 
+        bx_import('BxTemplStudioFormView');
+
         $aForm = array(
             'form_attrs' => array(
                 'id' => 'adm-nav-set-create',
@@ -138,6 +140,8 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets
             $this->_echoResultJson(array());
             exit;
         }
+
+        bx_import('BxTemplStudioFormView');
 
         $aForm = array(
             'form_attrs' => array(

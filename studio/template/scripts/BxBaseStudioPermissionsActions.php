@@ -70,6 +70,8 @@ class BxBaseStudioPermissionsActions extends BxDolStudioPermissionsActions
             exit;
         }
 
+        bx_import('BxTemplStudioFormView');
+
         $aForm = array(
             'form_attrs' => array(
                 'id' => 'adm-prm-action-options',
