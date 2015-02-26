@@ -22,6 +22,7 @@ class BxAlbumsSearchResult extends BxBaseModTextSearchResult
 
         $this->aCurrent = array(
             'name' => 'bx_albums',
+            'module_name' => 'bx_albums',
             'object_metatags' => 'bx_albums',
             'title' => _t('_bx_albums_page_title_browse'),
             'table' => 'bx_albums_albums',

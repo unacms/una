@@ -23,6 +23,7 @@ class BxBaseModGeneralCmtsSearchResult extends BxBaseModGeneralSearchResult
 
         $this->aCurrent = array(
         	'name' => $this->oModule->_oConfig->getName() . '_cmts',
+        	'module_name' => $this->oModule->_oConfig->getName(),
         	'title' => '',
             'table' => $this->oModule->_oConfig->getDbPrefix() . 'cmts',
             'ownFields' => array('cmt_id', 'cmt_object_id', 'cmt_author_id', 'cmt_text', 'cmt_time'),

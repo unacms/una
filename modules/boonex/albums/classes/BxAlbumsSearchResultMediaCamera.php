@@ -17,6 +17,7 @@ class BxAlbumsSearchResultMediaCamera extends BxAlbumsSearchResultMedia
     function __construct($sMode = '', $aParams = array())
     {
         parent::__construct($sMode, $aParams);
+        $this->aCurrent['name'] = 'bx_albums_media_camera';
         $this->aCurrent['object_metatags'] = 'bx_albums_media_camera';
     }
 }

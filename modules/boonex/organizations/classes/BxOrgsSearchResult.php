@@ -17,6 +17,7 @@ class BxOrgsSearchResult extends BxBaseModProfileSearchResult
 
         $this->aCurrent =  array(
             'name' => 'bx_organizations',
+            'module_name' => 'bx_organizations',
             'object_metatags' => 'bx_organizations',
             'title' => _t('_bx_orgs_page_title_browse'),
             'table' => 'sys_profiles',

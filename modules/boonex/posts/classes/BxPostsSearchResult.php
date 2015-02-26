@@ -17,6 +17,7 @@ class BxPostsSearchResult extends BxBaseModTextSearchResult
 
         $this->aCurrent = array(
             'name' => 'bx_posts',
+            'module_name' => 'bx_posts',
             'object_metatags' => 'bx_posts',
             'title' => _t('_bx_posts_page_title_browse'),
             'table' => 'bx_posts_posts',

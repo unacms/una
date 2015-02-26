@@ -17,6 +17,7 @@ class BxAccntSearchResult extends BxBaseModGeneralSearchResult
 
         $this->aCurrent =  array(
             'name' => 'bx_accounts',
+            'module_name' => 'bx_accounts',
             'object_metatags' => '',
             'title' => _t('_bx_accnt_page_title_browse'),
             'table' => 'sys_accounts',

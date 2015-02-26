@@ -14,6 +14,8 @@ bx_import('BxDolLanguages');
 
 $o = new BxDolSearch(bx_get('section'));
 $o->setLiveSearch(bx_get('live_search') ? 1 : 0);
+$o->setMetaType(bx_process_input(bx_get('type')));
+
 $s = $o->response();
 if (!$s)
     $s = $o->getEmptyResult();

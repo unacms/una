@@ -17,6 +17,7 @@ class BxTimelineSearchResult extends BxBaseModNotificationsSearchResult
 
         $this->aCurrent = array(
             'name' => 'bx_timeline',
+            'module_name' => 'bx_timeline',
             'title' => _t('_bx_timeline_page_title_browse'),
             'table' => 'bx_timeline_events',
             'ownFields' => array('id', 'owner_id', 'type', 'action', 'object_id', 'object_privacy_view', 'content', 'title', 'description', 'rate', 'votes', 'comments', 'shares', 'date', 'active', 'hidden'),

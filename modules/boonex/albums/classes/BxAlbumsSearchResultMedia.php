@@ -25,7 +25,8 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
         parent::__construct($sMode, $aParams);
 
         $this->aCurrent = array(
-            'name' => 'bx_albums',
+            'name' => 'bx_albums_media',
+            'module_name' => 'bx_albums',
             'object_metatags' => 'bx_albums_media',
             'title' => _t('_bx_albums_media'),
             'table' => 'bx_albums_files2albums',

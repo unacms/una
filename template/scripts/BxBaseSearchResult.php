@@ -244,6 +244,7 @@ class BxBaseSearchResult extends BxDolSearchResult
     {
         if ($bAddPaginateParams) { // add pages params
             $sUrl = bx_append_url_params($sUrl, array (
+                'type' => $this->_sMetaType,
                 'start' => $bReplacePagesParams ? (int)$this->aCurrent['paginate']['start'] : '{start}',
                 'per_page' => $bReplacePagesParams ? (int)$this->aCurrent['paginate']['perPage'] : '{per_page}',
             ));

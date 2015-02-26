@@ -20,7 +20,7 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
 
     function getMain()
     {
-        return BxDolModule::getInstance($this->aCurrent['name']);
+        return BxDolModule::getInstance($this->aCurrent['module_name']);
     }
 
     function getRssUnitLink (&$a)
