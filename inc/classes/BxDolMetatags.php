@@ -220,7 +220,7 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
                 $sModel = mb_substr($sModel, mb_strlen($sMake));
         }
 
-        return $sMake . ' ' . $sModel;
+        return $sMake . ' ' . trim($sModel);
     }
 
     /**
