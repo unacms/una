@@ -65,7 +65,8 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 ('bx_albums_view_media', 2, 'bx_albums', '_bx_albums_page_block_title_entry_author', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:12:\"media_author\";}', 0, 0, 1, 0),
 ('bx_albums_view_media', 3, 'bx_albums', '_bx_albums_page_block_title_entry_social_sharing', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:20:\"media_social_sharing\";}', 0, 0, 1, 0),
 ('bx_albums_view_media', 1, 'bx_albums', '_bx_albums_page_block_title_entry_view_media', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:10:\"media_view\";}', 0, 0, 1, 0),
-('bx_albums_view_media', 1, 'bx_albums', '_bx_albums_page_block_title_entry_comments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:14:\"media_comments\";}', 0, 0, 1, 1);
+('bx_albums_view_media', 1, 'bx_albums', '_bx_albums_page_block_title_entry_view_media_exif', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_albums";s:6:"method";s:10:"media_exif";}', 0, 0, 1, 1),
+('bx_albums_view_media', 1, 'bx_albums', '_bx_albums_page_block_title_entry_comments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:14:\"media_comments\";}', 0, 0, 1, 2);
 
 -- PAGE: view entry comments
 
