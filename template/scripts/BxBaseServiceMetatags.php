@@ -25,10 +25,11 @@ class BxBaseServiceMetatags extends BxDol
     /**
      * Get keywords cloud.
      * @param $sObject metatgs object to get keywords cloud for
+     * @param $mixedSection search section to refer when keyword is clicked, set the same as $sObject to show content withing the module only, it can be one value or array of values, leave empty to show all possible content upon keyword click
      * @param $iMaxCount number of tags in keywords cloud, by default @see BX_METATAGS_KEYWORDS_IN_CLOUD
      * @return tags cloud HTML string
      */
-    public function serviceKeywordsCloud ($sObject, $sSection, $iMaxCount = BX_METATAGS_KEYWORDS_IN_CLOUD)
+    public function serviceKeywordsCloud ($sObject, $mixedSection, $iMaxCount = BX_METATAGS_KEYWORDS_IN_CLOUD)
     {
         $o = BxDolMetatags::getObjectInstance($sObject);
         $aKeywords = $o->keywordsPopularList($iMaxCount);
@@ -44,11 +45,17 @@ class BxBaseServiceMetatags extends BxDol
         $iRatingDiff = $iMaxRating - $iMinRating;
         $iRatingDiff = $iRatingDiff == 0 ? 1 : $iRatingDiff;
 
+        $sSectionPart = '';
+        if (is_array($mixedSection))
+            $sSectionPart = '&section[]=' . implode('&section[]=', $mixedSection);
+        elseif (is_string($mixedSection))
+            $sSectionPart = '&section[]=' . $mixedSection;
+
         $aUnits = array();
         foreach($aKeywords as $sKeyword => $iCount) {
             $aUnits[] = array(
                 'size' => $this->_iKeywordsCloudFontSizeMin + floor($iFontDiff * (($iCount - $iMinRating) / $iRatingDiff)),
-                'href' => BX_DOL_URL_ROOT . 'searchKeyword.php?type=keyword&keyword=' . rawurlencode($sKeyword) . '&section[]=' . $sSection,
+                'href' => BX_DOL_URL_ROOT . 'searchKeyword.php?type=keyword&keyword=' . rawurlencode($sKeyword) . $sSectionPart,
                 'count' => $iCount,
                 'keyword' => htmlspecialchars_adv($sKeyword),
             );

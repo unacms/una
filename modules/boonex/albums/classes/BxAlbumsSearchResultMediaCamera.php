@@ -9,7 +9,7 @@
  * @{
  */
 
-bx_import('BxAlbumsSearchResultMedia', 'bx_albums');
+bx_import('SearchResultMedia', 'bx_albums');
 
 class BxAlbumsSearchResultMediaCamera extends BxAlbumsSearchResultMedia
 {
