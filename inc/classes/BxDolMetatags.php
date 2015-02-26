@@ -225,6 +225,20 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
     }
 
     /**
+     * Add keyword from the whole string
+     * @param $iId content id
+     * @param $s keyword 
+     * @return number of added keywords, should be 1
+     */
+    public function keywordsAddOne($iId, $s, $bDeletePreviousKeywords = true)
+    {
+        if ($bDeletePreviousKeywords)
+            $this->_oQuery->keywordsDelete($iId);
+
+        return $this->_oQuery->keywordsAdd($iId, array($s));
+    }
+
+    /**
      * Add #keywords from the content fields
      * @param $iId content id
      * @param $s string with #keywords
@@ -281,6 +295,25 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
     
         foreach ($a as $sKeyword)
             $s = str_ireplace('#' . $sKeyword, '<a rel="tag" href="' . BX_DOL_URL_ROOT . 'searchKeyword.php?type=keyword&keyword=' . rawurlencode($sKeyword) . '"><s>#</s><b>' . $sKeyword . '</b></a>', $s);
+
+        return $s;
+    }
+
+    /**
+     * Add link to the provided keyword
+     * @param $iId content id
+     * @param $s keyword 
+     * @return modified string where provided keyword is transformed to link with rel="tag" attribute
+     */
+    public function keywordsParseOne($iId, $s) 
+    {   
+        $a = $this->keywordsGet($iId);
+        if (empty($a))
+            return $s;
+    
+        foreach ($a as $sKeyword)
+            if (0 == strcasecmp(mb_strtolower($s), mb_strtolower($sKeyword)))
+                $s = '<a rel="tag" href="' . BX_DOL_URL_ROOT . 'searchKeyword.php?type=keyword&keyword=' . rawurlencode($sKeyword) . '">' . $sKeyword . '</a>';
 
         return $s;
     }

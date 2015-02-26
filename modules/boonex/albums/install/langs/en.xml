@@ -53,6 +53,7 @@
 	<string name="_bx_albums_page_title_sys_view_media"><![CDATA[View Image]]></string>
 	<string name="_bx_albums_page_title_view_media"><![CDATA[{title}]]></string>
 	<string name="_bx_albums_page_block_title_entry_view_media"><![CDATA[View Image]]></string>
+	<string name="_bx_albums_page_block_title_entry_view_media_exif"><![CDATA[EXIF]]></string>
 	<string name="_bx_albums_page_block_title_entry_attachments"><![CDATA[Attachments]]></string>
 	<string name="_bx_albums_page_block_title_entry_text"><![CDATA[Album Description]]></string>
 	<string name="_bx_albums_page_title_browse"><![CDATA[Albums]]></string>
@@ -149,4 +150,11 @@
     <string name="_bx_albums_txt_sample_comment_single"><![CDATA[album's comment]]></string>
 	<string name="_bx_albums_txt_media_title_alt"><![CDATA[{0}'s media]]></string>
 	<string name="_bx_albums_txt_media_album_link"><![CDATA[Album: <a href="{0}">{1}</a>]]></string>
+	<string name="_bx_albums_txt_media_album_camera"><![CDATA[Camera]]></string>
+	<string name="_bx_albums_txt_media_album_focal_length"><![CDATA[Focal length]]></string>
+	<string name="_bx_albums_txt_media_album_focal_length_value"><![CDATA[{0}mm]]></string>
+	<string name="_bx_albums_txt_media_album_aperture"><![CDATA[Aperture]]></string>
+	<string name="_bx_albums_txt_media_album_shutter_speed"><![CDATA[Exposure time]]></string>
+	<string name="_bx_albums_txt_media_album_shutter_speed_value"><![CDATA[{0}s]]></string>
+	<string name="_bx_albums_txt_media_album_iso"><![CDATA[ISO]]></string>
 </resources>

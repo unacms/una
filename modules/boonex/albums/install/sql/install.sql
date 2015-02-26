@@ -63,6 +63,7 @@ CREATE TABLE IF NOT EXISTS `bx_albums_files2albums` (
   `votes` int(11) NOT NULL,
   `comments` int(11) NOT NULL,
   `data` text NOT NULL,
+  `exif` text NOT NULL,
   `order` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `file_content` (`file_id`,`content_id`),
@@ -167,6 +168,13 @@ CREATE TABLE `bx_albums_meta_keywords` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `bx_albums_meta_keywords_media` (
+  `object_id` int(10) unsigned NOT NULL,
+  `keyword` varchar(255) NOT NULL,
+  KEY `object_id` (`object_id`),
+  KEY `keyword` (`keyword`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE `bx_albums_meta_keywords_media_camera` (
   `object_id` int(10) unsigned NOT NULL,
   `keyword` varchar(255) NOT NULL,
   KEY `object_id` (`object_id`),

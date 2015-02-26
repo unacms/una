@@ -34,9 +34,11 @@ class BxDolMetatagsQuery extends BxDolDb
 
 
 
-    public function keywordsAdd($mixedContentId, $aKeywords)
+    public function keywordsAdd($mixedContentId, $aKeywords, $bDeletePreviousKeywords = true)
     {
-        $this->keywordsDelete($mixedContentId);
+        if ($bDeletePreviousKeywords)
+            $this->keywordsDelete($mixedContentId);
+
         $i = 0;
         foreach ($aKeywords as $sKeyword) {
             $sQuery = $this->prepare("INSERT INTO `{$this->_aObject['table_keywords']}` SET `object_id` = ?, `keyword` = ?", $mixedContentId, trim($sKeyword, '#'));

@@ -304,12 +304,14 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `
 ('bx_albums', '_bx_albums', @iSearchOrder + 1, 'BxAlbumsSearchResult', 'modules/boonex/albums/classes/BxAlbumsSearchResult.php'),
 ('bx_albums_cmts', '_bx_albums_cmts', @iSearchOrder + 2, 'BxAlbumsCmtsSearchResult', 'modules/boonex/albums/classes/BxAlbumsCmtsSearchResult.php'),
 ('bx_albums_media', '_bx_albums_media', @iSearchOrder + 3, 'BxAlbumsSearchResultMedia', 'modules/boonex/albums/classes/BxAlbumsSearchResultMedia.php'),
-('bx_albums_media_cmts', '_bx_albums_media_cmts', @iSearchOrder + 4, 'BxAlbumsCmtsSearchResultMedia', 'modules/boonex/albums/classes/BxAlbumsCmtsSearchResultMedia.php');
+('bx_albums_media_cmts', '_bx_albums_media_cmts', @iSearchOrder + 4, 'BxAlbumsCmtsSearchResultMedia', 'modules/boonex/albums/classes/BxAlbumsCmtsSearchResultMedia.php'),
+('bx_albums_media_camera', '_bx_albums_media', @iSearchOrder + 5, 'BxAlbumsSearchResultMediaCamera', 'modules/boonex/albums/classes/BxAlbumsSearchResultMediaCamera.php');
 
 -- METATAGS
 INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
 ('bx_albums', 'bx_albums_meta_keywords', 'bx_albums_meta_locations', '', '', ''),
-('bx_albums_media', 'bx_albums_meta_keywords_media', '', '', '', '');
+('bx_albums_media', 'bx_albums_meta_keywords_media', '', '', '', ''),
+('bx_albums_media_camera', 'bx_albums_meta_keywords_media_camera', '', '', '', '');
 
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `override_class_name`, `override_class_file`) VALUES

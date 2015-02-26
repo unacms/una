@@ -53,7 +53,17 @@ class BxAlbumsModule extends BxBaseModTextModule
             $oMetatags->onDeleteContent($aMediaInfo['id']);
         }
 
+        if (!empty($CNF['OBJECT_METATAGS_MEDIA_CAMERA'])) {
+            $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS_MEDIA_CAMERA']);
+            $oMetatags->onDeleteContent($aMediaInfo['id']);
+        }
+
         return true;
+    }
+
+    public function serviceMediaExif ($iMediaId = 0)
+    {
+        return $this->_serviceTemplateFunc ('mediaExif', $iMediaId, 'getMediaInfoById');
     }
 
     public function serviceMediaComments ($iMediaId = 0)

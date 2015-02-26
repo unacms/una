@@ -175,6 +175,32 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton
         return array ('w' => $o->width(), 'h' => $o->height());
     }
 
+    function getExifInfo($sSrcImage, $bCreateLocalFileIfUrl = true)
+    {
+        $this->_sError = '';
+        $sTmpFileName = false;
+        $mixedRet = false;
+
+        if ($bCreateLocalFileIfUrl && preg_match('/^https?:\/\//', $sSrcImage)) {
+            $sTmpFileName = tempnam(BX_DIRECTORY_PATH_TMP, '');
+            file_put_contents($sTmpFileName, file_get_contents($sSrcImage));
+        }
+
+        try {
+            $mixedRet = $this->_oManager
+                ->make($sTmpFileName ? $sTmpFileName : $sSrcImage)
+                ->exif();
+        }
+        catch (Exception $e) {
+            $this->_sError = $e->getMessage();
+        }
+
+        if ($sTmpFileName)
+            @unlink($sTmpFileName);
+
+        return $mixedRet;
+    }
+
     function getAverageColor($sSrcImage)
     {
         $this->_sError = '';

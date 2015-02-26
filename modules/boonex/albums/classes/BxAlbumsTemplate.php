@@ -263,7 +263,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
         return $oModule->_serviceBrowse ('album', array('unit_view' => 'gallery', 'album_id' => $aData[$CNF['FIELD_ID']]), BX_DB_PADDING_DEF, true, true, 'SearchResultMedia');
     }
 
-    function mediaAuthor ($aMediaInfo, $iProfileId = false, $sFuncAuthorDesc = 'getAuthorDesc', $sTemplateName = 'author.html') 
+    function mediaAuthor ($aMediaInfo, $iProfileId = false, $sFuncAuthorDesc = '', $sTemplateName = '') 
     {
         $oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$oModule->_oConfig->CNF;
@@ -272,6 +272,61 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
             return '';
 
         return $this->entryAuthor ($aMediaInfo, $aAlbumInfo[$CNF['FIELD_AUTHOR']], '');
+    }
+
+    function mediaExif ($aMediaInfo, $iProfileId = false, $sFuncAuthorDesc = '', $sTemplateName = 'media-exif.html') 
+    {
+        if (!$aMediaInfo['exif'])
+            return '';
+
+        $a = unserialize($aMediaInfo['exif']);
+
+        $s = '';
+        if (isset($a['Make'])) {
+            $oModule = BxDolModule::getInstance($this->MODULE);
+            $CNF = &$oModule->_oConfig->CNF;
+
+            $sCamera = $a['Make'] . (isset($a['Model']) ? ' ' . $a['Model'] : '');
+            if (!empty($CNF['OBJECT_METATAGS_MEDIA_CAMERA'])) {
+                $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS_MEDIA_CAMERA']);
+                if ($oMetatags->keywordsIsEnabled()) {
+                    $sCamera = $oMetatags->keywordsParseOne($aMediaInfo['id'], $sCamera);
+                }
+            }       
+            $s .= $this->parseHtmlByName('media-exif-value.html', array(
+                'key' => _t('_bx_albums_txt_media_album_camera'), 
+                'val' => $sCamera,
+            ));
+        }
+
+        if (isset($a['FocalLength']))
+            $s .= $this->parseHtmlByName('media-exif-value.html', array(
+                'key' => _t('_bx_albums_txt_media_album_focal_length'),
+                'val' => _t('_bx_albums_txt_media_album_focal_length_value', $a['FocalLength']),
+            ));
+
+        if (isset($a['COMPUTED']['ApertureFNumber']))
+            $s .= $this->parseHtmlByName('media-exif-value.html', array(
+                'key' => _t('_bx_albums_txt_media_album_aperture'),
+                'val' => $a['COMPUTED']['ApertureFNumber'],
+            ));
+
+        if (isset($a['ShutterSpeedValue']))
+            $s .= $this->parseHtmlByName('media-exif-value.html', array(
+                'key' => _t('_bx_albums_txt_media_album_shutter_speed'),
+                'val' => _t('_bx_albums_txt_media_album_shutter_speed_value', $a['ShutterSpeedValue']),
+            ));
+
+        if (isset($a['ISOSpeedRatings']))
+            $s .= $this->parseHtmlByName('media-exif-value.html', array(
+                'key' => _t('_bx_albums_txt_media_album_iso'),
+                'val' => $a['ISOSpeedRatings'],
+            ));
+
+        if (empty($s))
+            return '';
+
+        return $this->parseHtmlByName($sTemplateName, array('content' => $s));
     }
 
 }

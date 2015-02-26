@@ -19,12 +19,12 @@ class BxAlbumsDb extends BxBaseModTextDb
         parent::__construct($oConfig);
     }
 
-    public function associateFileWithContent($iContentId, $iFileId, $sTitle, $sData = '')
+    public function associateFileWithContent($iContentId, $iFileId, $sTitle, $sData = '', $sExif = '')
     {
         $sQuery = $this->prepare ("SELECT MAX(`order`) FROM `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` WHERE `content_id` = ?", $iContentId);
         $iOrder = 1 + (int)$this->getOne($sQuery);
         
-        $sQuery = $this->prepare ("INSERT INTO `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` SET `content_id` = ?, `file_id` = ?, `title` = ?, `data` = ?, `order` = ? ON DUPLICATE KEY UPDATE `title` = ?, `data` = ?", $iContentId, $iFileId, $sTitle, $sData, $iOrder, $sTitle, $sData);
+        $sQuery = $this->prepare ("INSERT INTO `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` SET `content_id` = ?, `file_id` = ?, `title` = ?, `data` = ?, `exif` = ?, `order` = ? ON DUPLICATE KEY UPDATE `title` = ?, `data` = ?, `exif` = ?", $iContentId, $iFileId, $sTitle, $sData, $sExif, $iOrder, $sTitle, $sData, $sExif);
         return $this->query($sQuery);
     }
 
