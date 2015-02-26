@@ -38,7 +38,7 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
             $sData = isset($a['w']) && isset($a['h']) ? $a['w'] . 'x' . $a['h'] : '';
 
             if ($aExif = $oImageReize->getExifInfo($oStorage->getFileUrlById($iFileId))) {
-                $a = array('Make', 'Model', 'FocalLength', 'ShutterSpeedValue', 'ISOSpeedRatings', 'COMPUTED', 'GPSLatitudeRef', 'GPSLatitude', 'GPSLongitudeRef', 'GPSLongitude', 'GPSAltitudeRef', 'GPSAltitude', 'GPSTimeStamp', 'GPSImgDirectionRef', 'GPSImgDirection', 'GPSDateStamp');
+                $a = array('Make', 'Model', 'FocalLength', 'ShutterSpeedValue', 'ExposureTime', 'ISOSpeedRatings', 'Orientation', 'Artist', 'Copyright', 'Flash', 'WhiteBalance', 'DateTimeOriginal', 'DateTimeDigitized', 'ExifVersion', 'COMPUTED', 'GPSLatitudeRef', 'GPSLatitude', 'GPSLongitudeRef', 'GPSLongitude', 'GPSAltitudeRef', 'GPSAltitude', 'GPSTimeStamp', 'GPSImgDirectionRef', 'GPSImgDirection', 'GPSDateStamp');
                 $aExifFiltered = array();
                 foreach ($a as $sIndex)
                     if (isset($aExif[$sIndex]))

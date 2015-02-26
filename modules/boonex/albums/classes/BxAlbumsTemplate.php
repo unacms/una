@@ -311,10 +311,10 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
                 'val' => $a['COMPUTED']['ApertureFNumber'],
             ));
 
-        if (isset($a['ShutterSpeedValue']))
+        if (isset($a['ExposureTime']))
             $s .= $this->parseHtmlByName('media-exif-value.html', array(
                 'key' => _t('_bx_albums_txt_media_album_shutter_speed'),
-                'val' => _t('_bx_albums_txt_media_album_shutter_speed_value', $a['ShutterSpeedValue']),
+                'val' => _t('_bx_albums_txt_media_album_shutter_speed_value', $a['ExposureTime']),
             ));
 
         if (isset($a['ISOSpeedRatings']))
