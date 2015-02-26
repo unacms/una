@@ -45,6 +45,8 @@ class BxBaseStudioFormsForms extends BxDolStudioFormsForms
             exit;
         }
 
+        bx_import('BxTemplStudioFormView');
+
         $aForm = array(
             'form_attrs' => array(
                 'id' => 'adm-form-form-edit',

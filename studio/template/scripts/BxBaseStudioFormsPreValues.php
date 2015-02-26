@@ -31,6 +31,8 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
 
         $bUseInSets = (int)$aList['use_for_sets'] == 1;
 
+        bx_import('BxTemplStudioFormView');
+
         $aForm = array(
             'form_attrs' => array(
                 'id' => 'adm-form-pre-value-create',
@@ -160,6 +162,8 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
         $aList = array();
         $this->oDb->getLists(array('type' => 'by_key', 'value' => $this->sList), $aList, false);
         $bUseInSets = (int)$aList['use_for_sets'] == 1;
+
+        bx_import('BxTemplStudioFormView');
 
         $aForm = array(
             'form_attrs' => array(

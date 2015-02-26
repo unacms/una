@@ -536,6 +536,8 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
 
     protected function _getFormObject($sAction, $aItem = array())
     {
+		bx_import('BxTemplStudioFormView');
+
         $aForm = array(
             'form_attrs' => array(
                 'id' => 'adm-nav-item-',

@@ -321,6 +321,8 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
 
     protected function _getFormObject($sAction, $aLevel = array())
     {
+    	bx_import('BxTemplStudioFormView');
+
         $aForm = array(
             'form_attrs' => array(
                 'id' => 'adm-prm-level-create',

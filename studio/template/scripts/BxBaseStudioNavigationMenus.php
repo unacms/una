@@ -231,6 +231,8 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus
 
     protected function _getFormObject($sAction, $aMenu = array())
     {
+    	bx_import('BxTemplStudioFormView');
+
         $aForm = array(
             'form_attrs' => array(
                 'id' => 'adm-nav-menu-',
