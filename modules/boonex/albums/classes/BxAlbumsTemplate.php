@@ -286,7 +286,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
             $oModule = BxDolModule::getInstance($this->MODULE);
             $CNF = &$oModule->_oConfig->CNF;
 
-            $sCamera = $a['Make'] . (isset($a['Model']) ? ' ' . $a['Model'] : '');
+            $sCamera = BxDolMetatags::keywordsCameraModel($a);
             if (!empty($CNF['OBJECT_METATAGS_MEDIA_CAMERA'])) {
                 $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS_MEDIA_CAMERA']);
                 if ($oMetatags->keywordsIsEnabled()) {

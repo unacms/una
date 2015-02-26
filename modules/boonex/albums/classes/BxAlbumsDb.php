@@ -25,7 +25,7 @@ class BxAlbumsDb extends BxBaseModTextDb
         $iOrder = 1 + (int)$this->getOne($sQuery);
         
         $sQuery = $this->prepare ("INSERT INTO `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` SET `content_id` = ?, `file_id` = ?, `title` = ?, `data` = ?, `exif` = ?, `order` = ? ON DUPLICATE KEY UPDATE `title` = ?, `data` = ?, `exif` = ?", $iContentId, $iFileId, $sTitle, $sData, $sExif, $iOrder, $sTitle, $sData, $sExif);
-        return $this->query($sQuery);
+        return $this->res($sQuery);
     }
 
     public function deassociateFileWithContent($iContentId, $iFileId)

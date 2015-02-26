@@ -47,7 +47,7 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
             }
         }
         
-        if (!$this->_oModule->_oDb->associateFileWithContent ($iContentId, $iFileId, $this->getCleanValue('title-' . $iFileId), $sData, $sExif))
+        if (false === $this->_oModule->_oDb->associateFileWithContent ($iContentId, $iFileId, $this->getCleanValue('title-' . $iFileId), $sData, $sExif))
             return;
 
         $aMediaInfo = $this->_oModule->_oDb->getMediaInfoSimpleByFileId($iFileId);
@@ -61,7 +61,7 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
         if ($aMediaInfo && isset($aExif['Make']) && !empty($CNF['OBJECT_METATAGS_MEDIA_CAMERA'])) {
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS_MEDIA_CAMERA']);
             if ($oMetatags->keywordsIsEnabled())
-                $oMetatags->keywordsAddOne($aMediaInfo['id'], $aExif['Make'] . (isset($aExif['Model']) ? ' ' . $aExif['Model'] : ''));
+                $oMetatags->keywordsAddOne($aMediaInfo['id'], $oMetatags->keywordsCameraModel($aExif));
         }
     }
 

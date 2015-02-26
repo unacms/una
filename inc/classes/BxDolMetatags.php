@@ -206,6 +206,24 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
     }
 
     /**
+     * This function is specifically for formatting "Photo Camera" string, when "Photo Camera" is used as image hashtag
+     */
+    static public function keywordsCameraModel($aExif) 
+    {
+        if (!isset($aExif['Make']))
+            return '';
+
+        $sMake = trim($aExif['Make']);
+        if (isset($aExif['Model'])) {
+            $sModel = trim($aExif['Model']);
+            if (0 === mb_strpos($sModel, $sMake))
+                $sModel = mb_substr($sModel, mb_strlen($sMake));
+        }
+
+        return $sMake . ' ' . $sModel;
+    }
+
+    /**
      * Add #keywords from the string
      * @param $iId content id
      * @param $s string with #keywords
