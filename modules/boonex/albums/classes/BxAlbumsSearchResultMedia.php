@@ -18,6 +18,8 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
         $this->sCenterContentUnitSelector = '.bx-albums-unit-size';
 
         $this->aUnitViews = array('gallery' => 'unit_media.html');
+
+        $this->sUnitTemplateLiveSearch = 'unit_media_live_search.html';
     
         if (empty($aParams['unit_view']))
             $aParams['unit_view'] = 'gallery';
@@ -169,6 +171,12 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
     function getRssUnitLink (&$a)
     {
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->oModule->_oConfig->CNF['URI_VIEW_MEDIA'] . '&id=' . $a['id']);
+    }
+
+    function displaySearchUnit ($aData)
+    {
+        $oMain = $this->getMain();
+        return $oMain->_oTemplate->unit($aData, $this->bProcessPrivateContent, $this->_bLiveSearch ? $this->sUnitTemplateLiveSearch : $this->sUnitTemplate, $this->aUnitParams);
     }
 }
 

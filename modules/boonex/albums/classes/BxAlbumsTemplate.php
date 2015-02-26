@@ -25,7 +25,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
 
     function unit ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html', $aParams = array())
     {
-        if ('unit_media.html' == $sTemplateName)
+        if ('unit_media.html' == $sTemplateName || 'unit_media_live_search.html' == $sTemplateName)
             return $this->unitMedia($aData, $isCheckPrivateContent, $sTemplateName, $aParams);
 
         $oModule = BxDolModule::getInstance($this->MODULE);
@@ -71,7 +71,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
                     'title' => bx_process_output($aData[$CNF['FIELD_TITLE']]),
                     'summary_attr' => '',
                     'content_url' => $sUrl,
-                    'thumb_url' => $aBrowseUnits ? $aBrowseUnits[0]['url'] : '',
+                    'thumb_url' => $aBrowseUnits ? $aBrowseUnits[0]['img_url'] : '',
                     'gallery_url' => '',
                     'strecher' => '',
                 ),
@@ -98,7 +98,36 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
         if (!($aMediaInfo = $oModule->_oDb->getMediaInfoById($aData['id'])))
             return '';
 
+        $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
+        if (!($aFile = $oStorage->getFile($aMediaInfo['file_id'])))
+            return '';
+
         $aVars = $this->mediaVars($aMediaInfo, $CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW'], $CNF['OBJECT_VIDEOS_TRANSCODERS']['poster_preview'], $aParams);
+    
+        $aVarsTmp = $aVars['bx_if:image']['condition'] ? $aVars['bx_if:image']['content'] : $aVars['bx_if:video']['content'];
+
+        $aVars = array_merge($aVars, array (
+            'title' => bx_process_output($aData['title']),
+            'module_name' => _t($CNF['T']['txt_media_single']),
+            'content_url' => $aVarsTmp['url'],
+            'ts' => $aFile['added'],
+            'bx_if:thumb' => array (
+                'condition' => $aData['file_id'],
+                'content' => array (
+                    'title' => bx_process_output($aData['title']),
+                    'summary_attr' => '',
+                    'content_url' => $aVarsTmp['url'],
+                    'thumb_url' => $aVarsTmp['url_img'],
+                    'gallery_url' => '',
+                    'strecher' => '',
+                ),
+            ),
+            'bx_if:no_thumb' => array (
+                'condition' => false,
+                'content' => array (),
+            ),
+
+        ));
 
         return $this->parseHtmlByName($sTemplateName, $aVars);
     }
