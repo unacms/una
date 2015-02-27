@@ -27,7 +27,7 @@ class BxAlbumsPageEntry extends BxBaseModTextPageEntry
         if (!($aMediaList = $this->_oModule->_oDb->getMediaListByContentId($this->_aContentInfo[$CNF['FIELD_ID']])))
             return false;
 
-        $aMedia = array_unshift($aMediaList);
+        $aMedia = array_shift($aMediaList);
 
         return array('id' => $aMedia['file_id'], 'object' => $CNF['OBJECT_STORAGE']);
     }
