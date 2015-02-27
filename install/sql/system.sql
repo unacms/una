@@ -700,6 +700,7 @@ CREATE TABLE `sys_objects_search` (
   `ObjectName` varchar(64) NOT NULL  default '',
   `Title` varchar(50) NOT NULL default '',
   `Order` int(11) NOT NULL,
+  `GlobalSearch` tinyint(4) NOT NULL DEFAULT '1',
   `ClassName` varchar(50) NOT NULL  default '',
   `ClassPath` varchar(100) NOT NULL  default '',
   PRIMARY KEY  (`ID`)

@@ -62,7 +62,8 @@ class BxDolSearch extends BxDol
                    `Title` as `title`,
                    `ClassName` as `class`,
                    `ClassPath` as `file`,
-                   `ObjectName`
+                   `ObjectName`,
+                   `GlobalSearch`
             FROM `sys_objects_search`
             ORDER BY `Order` ASC', 'ObjectName'
         );
@@ -84,6 +85,9 @@ class BxDolSearch extends BxDol
     {
         $sCode = '';
         foreach ($this->aChoice as $sKey => $aValue) {
+            if (!$this->_sMetaType && !$aValue['GlobalSearch'])
+                continue;
+
         	$sClassName = 'BxTemplSearchResult';
 	        if(!empty($aValue['class'])) {
 	            $sClassName = $aValue['class'];
@@ -112,7 +116,8 @@ class BxDolSearch extends BxDol
     {
         $a = array();
         foreach ($this->aChoice as $sKey => $r)
-            $a[$sKey] = _t($r['title']);
+            if ($this->_sMetaType || $r['GlobalSearch'])
+                $a[$sKey] = _t($r['title']);
         return $a;
     }
 

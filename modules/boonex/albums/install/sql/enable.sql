@@ -305,12 +305,12 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
 -- SEARCH
 SET @iSearchOrder = (SELECT IFNULL(MAX(`Order`), 0) FROM `sys_objects_search`);
-INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `ClassPath`) VALUES
-('bx_albums', '_bx_albums', @iSearchOrder + 1, 'BxAlbumsSearchResult', 'modules/boonex/albums/classes/BxAlbumsSearchResult.php'),
-('bx_albums_cmts', '_bx_albums_cmts', @iSearchOrder + 2, 'BxAlbumsCmtsSearchResult', 'modules/boonex/albums/classes/BxAlbumsCmtsSearchResult.php'),
-('bx_albums_media', '_bx_albums_media', @iSearchOrder + 3, 'BxAlbumsSearchResultMedia', 'modules/boonex/albums/classes/BxAlbumsSearchResultMedia.php'),
-('bx_albums_media_cmts', '_bx_albums_media_cmts', @iSearchOrder + 4, 'BxAlbumsCmtsSearchResultMedia', 'modules/boonex/albums/classes/BxAlbumsCmtsSearchResultMedia.php'),
-('bx_albums_media_camera', '_bx_albums_media', @iSearchOrder + 5, 'BxAlbumsSearchResultMediaCamera', 'modules/boonex/albums/classes/BxAlbumsSearchResultMediaCamera.php');
+INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `GlobalSearch`, `ClassName`, `ClassPath`) VALUES
+('bx_albums', '_bx_albums', @iSearchOrder + 1, 1, 'BxAlbumsSearchResult', 'modules/boonex/albums/classes/BxAlbumsSearchResult.php'),
+('bx_albums_cmts', '_bx_albums_cmts', @iSearchOrder + 2, 1, 'BxAlbumsCmtsSearchResult', 'modules/boonex/albums/classes/BxAlbumsCmtsSearchResult.php'),
+('bx_albums_media', '_bx_albums_media', @iSearchOrder + 3, 1, 'BxAlbumsSearchResultMedia', 'modules/boonex/albums/classes/BxAlbumsSearchResultMedia.php'),
+('bx_albums_media_cmts', '_bx_albums_media_cmts', @iSearchOrder + 4, 1, 'BxAlbumsCmtsSearchResultMedia', 'modules/boonex/albums/classes/BxAlbumsCmtsSearchResultMedia.php'),
+('bx_albums_media_camera', '_bx_albums_media', @iSearchOrder + 5, 0, 'BxAlbumsSearchResultMediaCamera', 'modules/boonex/albums/classes/BxAlbumsSearchResultMediaCamera.php');
 
 -- METATAGS
 INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
