@@ -51,15 +51,20 @@ class BxBaseModGeneralPageEntry extends BxTemplPage
         // add content metatags
         if (!empty($CNF['OBJECT_METATAGS'])) {
             $o = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
-            if ($o) {
-                $aThumb = false;
-                if (!empty($CNF['FIELD_THUMB']) && !empty($this->_aContentInfo[$CNF['FIELD_THUMB']]) && !empty($CNF['OBJECT_STORAGE']))
-                    $aThumb = array('id' => $this->_aContentInfo[$CNF['FIELD_THUMB']], 'object' => $CNF['OBJECT_STORAGE']);
-                $o->metaAdd($this->_aContentInfo[$CNF['FIELD_ID']], $aThumb);
-            }
+            if ($o)
+                $o->metaAdd($this->_aContentInfo[$CNF['FIELD_ID']], $this->_getThumbForMetaObject());
         }
 
         return parent::getCode ();
+    }
+
+    protected function _getThumbForMetaObject ()
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        if (empty($CNF['FIELD_THUMB']) || empty($this->_aContentInfo[$CNF['FIELD_THUMB']]) || empty($CNF['OBJECT_STORAGE']))
+            return false;
+
+        return array('id' => $this->_aContentInfo[$CNF['FIELD_THUMB']], 'object' => $CNF['OBJECT_STORAGE']);
     }
 
     protected function _getPageCacheParams ()

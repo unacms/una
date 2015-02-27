@@ -19,6 +19,18 @@ class BxAlbumsPageEntry extends BxBaseModTextPageEntry
         $this->MODULE = 'bx_albums';
         parent::__construct($aObject, $oTemplate);
     }
+
+    protected function _getThumbForMetaObject ()
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if (!($aMediaList = $this->_oModule->_oDb->getMediaListByContentId($this->_aContentInfo[$CNF['FIELD_ID']])))
+            return false;
+
+        $aMedia = array_unshift($aMediaList);
+
+        return array('id' => $aMedia['file_id'], 'object' => $CNF['OBJECT_STORAGE']);
+    }
 }
 
 /** @} */
