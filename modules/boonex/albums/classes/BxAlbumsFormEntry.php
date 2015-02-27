@@ -77,8 +77,15 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
 
     function delete ($iContentId, $aContentInfo = array())
     {
-        if ($bRet = parent::delete ($iContentId, $aContentInfo))
-            $this->_oModule->_oDb->deassociateFileWithContent ($iContentId, 0);
+        if (!($bRet = parent::delete ($iContentId, $aContentInfo)))
+            return $bRet;
+
+        if (!($aMediaList = $this->_oModule->_oDb->getMediaListByContentId($iContentId)))
+            return $bRet;
+
+        foreach ($aMediaList as $aMediaInfo)
+            $this->_oModule->serviceDeleteFileAssociations($aMediaInfo['file_id']);
+
         return $bRet;
     }
 }
