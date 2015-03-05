@@ -3,10 +3,12 @@
 
 /* unit */
 
+.bx-base-text-unit:first-child h2,
 .bx-base-text-unit:first-child h1 {
     padding-top:0;
 }
 
+.bx-base-text-unit h2,
 .bx-base-text-unit h1 {
     margin:0;
 }
@@ -140,11 +142,13 @@
 /* view page */
 
 .bx-base-text-entity-content p:first-child,
+.bx-base-text-entity-content h2:first-child,
 .bx-base-text-entity-content h1:first-child {
     margin-top:0;
 }
 
 .bx-base-text-entity-content p:last-child,
+.bx-base-text-entity-content h2:last-child,
 .bx-base-text-entity-content h1:last-child {
     margin-bottom:0;
 }
