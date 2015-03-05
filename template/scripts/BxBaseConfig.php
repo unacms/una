@@ -46,7 +46,7 @@ class BxBaseConfig extends BxDol implements iBxDolSingleton
             'bx-font-size-small' => '14px',
             'bx-font-size-middle' => '16px',
             'bx-font-size-large' => '22px',
-            'bx-font-size-h1' => '28px',
+            'bx-font-size-h1' => '38px',
             'bx-font-size-h2' => '24px',
             'bx-font-size-h3' => '18px',
 
