@@ -1397,6 +1397,19 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
         	try {
         		$oTemplate = &$this;
 
+        		/* Match URL based imports like the following:
+        		 * @import 'http://[domain]/modules/[vendor]/[module]/template/css/view.css';
+        		 * Is mainly needed for CSS files which are gotten from LESS compiler.
+        		 */
+        		$sContent = preg_replace_callback(
+	                "'@import\s+[\'|\"]*\s*" . str_replace("/", "\/", BX_DOL_URL_ROOT) . "([a-zA-Z0-9\.\/_-]+)\s*[\'|\"]*\s*;'", function ($aMatches)  use($oTemplate, $sPath, $aIncluded) {
+	                	return $oTemplate->_compileCss(realpath(BX_DIRECTORY_PATH_ROOT . $aMatches[1]), $aIncluded);
+	                }, $sContent);
+
+				/* Match relative path based imports like the following:
+				 * @import url(../../../../../../base/profile/template/css/main.css);
+				 * Is mainly needed for default CSS files.
+				 */
 	            $sContent = preg_replace_callback(
 	                "'@import\s+url\s*\(\s*[\'|\"]*\s*([a-zA-Z0-9\.\/_-]+)\s*[\'|\"]*\s*\)\s*;'", function ($aMatches)  use($oTemplate, $sPath, $aIncluded) {
 	                	return $oTemplate->_compileCss(realpath($sPath . dirname($aMatches[1])) . DIRECTORY_SEPARATOR . basename($aMatches[1]), $aIncluded);

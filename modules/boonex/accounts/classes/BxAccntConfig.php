@@ -23,8 +23,6 @@ class BxAccntConfig extends BxBaseModGeneralConfig
 
         $this->CNF = array (
         	// page URIs
-        	'URL_MANAGE_COMMON' => 'page.php?i=accounts-manage',
-        	'URL_MANAGE_MODERATION' => 'page.php?i=accounts-moderation',
         	'URL_MANAGE_ADMINISTRATION' => 'page.php?i=accounts-administration',
 
 	        // objects
