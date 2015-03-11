@@ -159,10 +159,22 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
         $oLanguages = BxDolStudioLanguagesUtils::getInstance();
         $aLanguages = $oLanguages->getLanguages();
 
-        $iCategoryId = !empty($aConfig['language_category']) ? $oLanguages->getLanguageCategory($aConfig['language_category']) : 0;
+        $aCategories = array();
+        if(!empty($aConfig['language_category']) && is_array($aConfig['language_category'])) {
+        	$aCategories = $aConfig['language_category'];
+        	foreach($aCategories as $iIndex => $aCategory)
+				$aCategories[$iIndex]['id'] = !empty($aCategory['name']) ? $oLanguages->getLanguageCategory($aCategory['name']) : 0;
+        }
+		else
+			$aCategories[] = array(
+				'id' => !empty($aConfig['language_category']) ? $oLanguages->getLanguageCategory($aConfig['language_category']) : 0,
+				'name' => $aConfig['language_category'],
+				'path' => ''
+			);
 
         foreach($aLanguages as $sName => $sTitle)
-            $this->_updateLanguage($bInstall, $sName, $iCategoryId);
+        	foreach($aCategories as $iIndex => $aCategory)
+            	$this->_updateLanguage($bInstall, $sName, $aCategory['id'], $aCategory['path']);
 
         return $oLanguages->compileLanguage(0, true) ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
@@ -189,12 +201,12 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
         return $bResult ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
 
-    protected function _updateLanguage($bInstall, $sLanguage, $iCategory = 0)
+    protected function _updateLanguage($bInstall, $sLanguage, $iCategory = 0, $sPath = '')
     {
         $oLanguages = BxDolStudioLanguagesUtils::getInstance();
 
-        $sPath = $this->_sHomePath . 'install/langs/' . $sLanguage . '.xml';
-        $aLanguageInfo = $oLanguages->readLanguage($sPath, 'update');
+        $sPathAbsolute = $this->_sHomePath . 'install/langs/' . $sPath . $sLanguage . '.xml';
+        $aLanguageInfo = $oLanguages->readLanguage($sPathAbsolute, 'update');
         if(empty($aLanguageInfo))
             return false;
 
