@@ -274,6 +274,10 @@ INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigg
 INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
 ('bx_organizations', 'bx_organizations_meta_keywords', '', '', '', '');
 
+-- CATEGORY
+INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `list_name`, `table`, `field`, `override_class_name`, `override_class_file`) VALUES
+('bx_organizations_cats', 'bx_organizations', 'bx_organization', 'bx_organizations_cats', 'bx_organizations_data', 'org_cat', '', '');
+
 -- SEARCH
 SET @iSearchOrder = (SELECT IFNULL(MAX(`Order`), 0) FROM `sys_objects_search`);
 INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `ClassPath`) VALUES
