@@ -48,6 +48,7 @@ class BxDolSearch extends BxDol
 
     protected $_bLiveSearch = false;
     protected $_sMetaType = '';
+    protected $_sCategoryObject = '';
 
     /**
      * Constructor
@@ -99,6 +100,7 @@ class BxDolSearch extends BxDol
             $oEx->setId($aValue['id']);
             $oEx->setLiveSearch($this->_bLiveSearch);
             $oEx->setMetaType($this->_sMetaType);
+            $oEx->setCategoryObject($this->_sCategoryObject);
             $oEx->setCenterContentUnitSelector(false);
             $sCode .= $oEx->processing();
         }
@@ -133,6 +135,10 @@ class BxDolSearch extends BxDol
             $this->_sMetaType = $s;
     }
 
+    public function setCategoryObject($s)
+    {
+        $this->_sCategoryObject = $s;
+    }
 }
 
 /*
@@ -255,6 +261,7 @@ class BxDolSearchResult implements iBxDolReplaceable
 
     protected $_bLiveSearch = false;
     protected $_sMetaType = '';
+    protected $_sCategoryObject = '';
 
     protected $_aMarkers = array (); ///< markers to replace somewhere, usually title and browse url (defined in custom class)
 
@@ -291,6 +298,11 @@ class BxDolSearchResult implements iBxDolReplaceable
     public function setMetaType($s)
     {
         $this->_sMetaType = $s;
+    }
+
+    public function setCategoryObject($s)
+    {
+        $this->_sCategoryObject = $s;
     }
 
     /**
@@ -611,6 +623,12 @@ class BxDolSearchResult implements iBxDolReplaceable
                         break;
                 }
             }
+        }
+
+        // category
+        if ($this->_sCategoryObject && $o = BxDolCategory::getObjectInstance($this->_sCategoryObject)) {
+            unset($this->aCurrent['restriction']['keyword']);
+            $o->setSearchCondition($this, $sKeyword);
         }
 
         $this->setPaginate();

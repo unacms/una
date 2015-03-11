@@ -116,6 +116,7 @@ class BxDolFormQuery extends BxDolDb
 
             if (!empty($a['values'])) {
                 if (0 == strncmp(BX_DATA_LISTS_KEY_PREFIX, $a['values'], 2)) {
+                    $aInput['values_list_name'] = trim($a['values'], BX_DATA_LISTS_KEY_PREFIX . ' ');
                     $aInput['values'] = self::getDataItems(trim($a['values'], BX_DATA_LISTS_KEY_PREFIX . ' '), isset(self::$TYPES_SET[$aInput['type']]));
                 } else {
                     $aInput['values'] = unserialize($a['values']);
