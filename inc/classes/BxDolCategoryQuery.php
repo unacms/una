@@ -42,6 +42,13 @@ class BxDolCategoryQuery extends BxDolDb
 
         return $aObject;
     }
+
+    static public function getItemsNumInCategory ($aObject, $sCategoryValue)
+    {
+        $oDb = BxDolDb::getInstance();
+        $sQuery = $oDb->prepare("SELECT COUNT(*) FROM `" . $aObject['table'] . "` " . $aObject['join'] . " WHERE `" . $aObject['field'] . "` = ? " . $aObject['where'], $sCategoryValue);
+        return $oDb->getOne($sQuery);
+    }
 }
 
 /** @} */

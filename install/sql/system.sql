@@ -3292,6 +3292,8 @@ CREATE TABLE `sys_objects_category` (
   `list_name` varchar(255) NOT NULL,
   `table` varchar(255) NOT NULL,
   `field` varchar(255) NOT NULL,
+  `join` varchar(255) NOT NULL,
+  `where` varchar(255) NOT NULL,
   `override_class_name` varchar(255) NOT NULL,
   `override_class_file` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),

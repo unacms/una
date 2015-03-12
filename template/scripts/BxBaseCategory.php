@@ -25,9 +25,9 @@ class BxBaseCategory extends BxDolCategory
             $this->_oTemplate = BxDolTemplate::getInstance();
     }
 
-    public function getCategoryUrl($sName, $sValue, $sCategoryObject)
+    public function getCategoryUrl($sName, $sValue)
     {
-        $sUrl = BX_DOL_URL_ROOT . 'searchKeyword.php?cat=' . rawurlencode($sCategoryObject) . '&keyword=' . rawurlencode($sValue);
+        $sUrl = BX_DOL_URL_ROOT . 'searchKeyword.php?cat=' . rawurlencode($this->getObjectName()) . '&keyword=' . rawurlencode($sValue);
         if ($this->_aObject['search_object'])
             $sUrl .= '&section[]=' . rawurlencode($this->_aObject['search_object']);
         return $sUrl;
@@ -35,19 +35,43 @@ class BxBaseCategory extends BxDolCategory
 
     /**
      * Get link to list all items with the same category
+     * @param $sName category title
+     * @param $sValue category value
+     * @return category name wrapped with A tag
      */
-    public function getCategoryLink($sName, $sValue, $sCategoryObject)
+    public function getCategoryLink($sName, $sValue)
     {
-        $sUrl = $this->getCategoryUrl($sName, $sValue, $sCategoryObject);
-        return '<a href="' . $sUrl . '">' . $sName . '</a>';
+        $sUrl = $this->getCategoryUrl($sName, $sValue);
+        return '<a class="bx-category-link" href="' . $sUrl . '">' . $sName . '</a>';
     }
 
     /**
      * Get all categories list
+     * @param $bDisplayEmptyCats display categories with no items, true by default
+     * @return categories list html
      */
-    public function getCategoriesList()
+    public function getCategoriesList($bDisplayEmptyCats = true)
     {
-        // TODO:
+        $a = BxDolForm::getDataItems($this->_aObject['list_name']);
+        if (!$a)
+            return '';
+
+        $aVars = array('bx_repeat:cats' => array());
+        foreach ($a as $sValue => $sName) {
+            if (!$sValue)
+                continue;
+            $iNum = $this->getItemsNum($sValue);
+            if (!$bDisplayEmptyCats && !$iNum)
+                continue;
+            $aVars['bx_repeat:cats'][] = array(
+                'url' => $this->getCategoryUrl($sName, $sValue),
+                'name' => $sName,
+                'value' => $sValue,
+                'num' => $iNum,
+            );
+        }
+
+        return $this->_oTemplate->parseHtmlByName('category_list.html', $aVars);
     }
 }
 

@@ -14,7 +14,25 @@
  */
 
 /**
- * Categories object, make to look form lists as categories by making it clickable and display search results with all contents with the same category
+ * Category object, it can make regular form lists to act as categories by making it clickable and display search results with all contents with the same category.
+ * Also it provides services to list all categories with number if items in each category.
+ *
+ * @section editor_create Creating the Category object:
+ *
+ *
+ * Add record to 'sys_objects_category' table:
+ *
+ * - object: name of the category object, in the format: vendor prefix, underscore, module prefix, underscore, internal identifier or nothing; 
+ * - search_object: associated search object to display search results in 
+ * - form_object: form object which displays this category, so category will be transformed to the clickable url
+ * - list_name: form list name which values are used to populate categories from
+ * - table: table where category value is stores
+ * - field: table field name where category value is stored
+ * - join: custom SQL JOIN to use when getting number of items in the particular category (filter inactive items here)
+ * - where: custom SQL WHERE to use when getting number of items in the particular category (filter inactive items here)
+ * - override_class_name: user defined class name which is derived from 'Templ' class.
+ * - override_class_file: the location of the user defined class, leave it empty if class is located in system folders.
+ *
  */
 class BxDolCategory extends BxDol implements iBxDolFactoryObject
 {
@@ -91,6 +109,16 @@ class BxDolCategory extends BxDol implements iBxDolFactoryObject
             'operator' => '=',
             'table' => $this->_aObject['table'],
         );
+    }
+
+    /**
+     * Get number of items in the specified category
+     * @param $sCategoryValue category value
+     * @return number
+     */
+    public function getItemsNum($sCategoryValue)
+    {
+        return BxDolCategoryQuery::getItemsNumInCategory ($this->_aObject, $sCategoryValue);
     }
 }
 
