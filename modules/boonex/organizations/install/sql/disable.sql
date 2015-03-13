@@ -28,6 +28,9 @@ DELETE FROM `sys_objects_view` WHERE `Name` = 'bx_organizations';
 -- METATAGS
 DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_organizations';
 
+-- CATEGORY
+DELETE FROM `sys_objects_category` WHERE `object` = 'bx_organizations_cats';
+
 -- SEARCH
 DELETE FROM `sys_objects_search` WHERE `ObjectName` = 'bx_organizations';
 

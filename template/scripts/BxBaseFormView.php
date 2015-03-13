@@ -306,7 +306,7 @@ EOS;
 
             case 'select':
             case 'radio_set':
-                $sValue = isset($aInput['value']) && isset($aInput['values'][$aInput['value']]) ? $aInput['values'][$aInput['value']] : null;
+                $sValue = $this->genViewRowValueForSelect($aInput);
             break;
 
             case 'datepicker':
@@ -347,6 +347,14 @@ EOS;
         }
 
         return $sValue;
+    }
+
+    function genViewRowValueForSelect(&$aInput)
+    {
+        $s = isset($aInput['value']) && isset($aInput['values'][$aInput['value']]) ? $aInput['values'][$aInput['value']] : null;
+        if (isset($aInput['values_list_name'])  && ($oCategory = BxDolCategory::getObjectInstanceByFormAndList($this->aFormAttrs['name'], $aInput['values_list_name'])))
+            return $oCategory->getCategoryLink($s, $aInput['value']);
+        return $s;
     }
 
     /**

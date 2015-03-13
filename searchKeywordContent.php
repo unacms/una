@@ -15,6 +15,7 @@ bx_import('BxDolLanguages');
 $o = new BxDolSearch(bx_get('section'));
 $o->setLiveSearch(bx_get('live_search') ? 1 : 0);
 $o->setMetaType(bx_process_input(bx_get('type')));
+$o->setCategoryObject(bx_process_input(bx_get('cat')));
 
 $s = $o->response();
 if (!$s)

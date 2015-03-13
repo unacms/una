@@ -78,6 +78,7 @@
 	<string name="_bx_orgs_page_block_title_system_manage"><![CDATA[Manage Own Organizations]]></string>
 	<string name="_bx_orgs_page_block_title_system_manage_administration"><![CDATA[Manage All Organizations]]></string>
 	<string name="_bx_orgs_page_block_title_manage"><![CDATA[Manage Organizations]]></string>
+    <string name="_bx_orgs_page_block_title_categories"><![CDATA[Organization categories]]></string>
 
     <string name="_bx_orgs_menu_title_submenu"><![CDATA[Organizations Submenu]]></string>
     <string name="_bx_orgs_menu_set_title_submenu"><![CDATA[Organizations Submenu]]></string>

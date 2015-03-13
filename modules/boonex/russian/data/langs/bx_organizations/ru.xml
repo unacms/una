@@ -63,8 +63,9 @@
 	<string name="_bx_orgs_page_title_sys_home"><![CDATA[Организации - Домой]]></string>
 	<string name="_bx_orgs_page_title_home"><![CDATA[Организации]]></string>
 	<string name="_bx_orgs_page_title_sys_manage"><![CDATA[Управление собственными организациями]]></string>
-		<string name="_bx_orgs_page_title_sys_manage_administration"><![CDATA[Управление всеми организациями]]></string>
+	<string name="_bx_orgs_page_title_sys_manage_administration"><![CDATA[Управление всеми организациями]]></string>
 	<string name="_bx_orgs_page_title_manage"><![CDATA[Управление организациями]]></string>
+    <string name="_bx_orgs_page_block_title_categories"><![CDATA[Категории организаций]]></string>
 
 	<string name="_bx_orgs_page_block_title_create_profile"><![CDATA[Создать профиль организации]]></string>
 	<string name="_bx_orgs_page_block_title_edit_profile"><![CDATA[Редактировать профиль]]></string>
