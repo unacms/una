@@ -31,7 +31,7 @@ class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry
         if ($this->_aContentInfo) {
             $this->addMarkers($this->_aContentInfo); // every field can be used as marker
             $this->addMarkers(array(
-                'title' => strmaxtextlen($this->_aContentInfo[$CNF['FIELD_TEXT']], 20, '...'),
+                'title' => isset($this->_aContentInfo[$CNF['FIELD_TITLE']]) ? $this->_aContentInfo[$CNF['FIELD_TITLE']] : strmaxtextlen($this->_aContentInfo[$CNF['FIELD_TEXT']], 20, '...'),
             ));
         }
     }
