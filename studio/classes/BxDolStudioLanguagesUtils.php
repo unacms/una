@@ -183,13 +183,18 @@ class BxDolStudioLanguagesUtils extends BxDolLanguages implements iBxDolSingleto
         if(!($rHandler = opendir($sPath)))
             return false;
 
+		$oModuleQuery = BxDolModuleQuery::getInstance();
+
         $bResult = false;
         while(($sFileName = readdir($rHandler)) !== false) {
-            if(substr($sFileName, -3) != 'xml')
-                continue;
+        	if($sFileName == '.' || $sFileName == '..')
+				continue;
 
-            $sModule = substr($sFileName, 0, -4);
-            $bResult |= $this->_restoreLanguageByModule($aLanguage, $sPath, $sModule);
+			$aModule = $oModuleQuery->getModuleByName($sFileName);
+            if(empty($aModule) || !is_array($aModule))
+            	continue;
+
+			$bResult |= $this->_restoreLanguageByModule($aLanguage, $sPath, $aModule);
         }
         closedir($rHandler);
 
@@ -422,10 +427,10 @@ class BxDolStudioLanguagesUtils extends BxDolLanguages implements iBxDolSingleto
             $aModule = BxDolModuleQuery::getInstance()->$sMethod($mixedModule);
         }
 
-        if(empty($aModule) || !is_array($aModule) || !$aModule['uri'] || !$aModule['lang_category'])
+        if(empty($aModule) || !is_array($aModule) || !$aModule['name'] || !$aModule['lang_category'])
             return true;
 
-        $sPath = $sPath . $aModule['uri'] . '.xml';
+		$sPath = $sPath . $aModule['name'] . '/' . $aLanguage['name'] . '.xml';
         if(!file_exists($sPath) && isset($aModule['path'])) {
             $sPath = BX_DIRECTORY_PATH_MODULES . $aModule['path'] . 'install/langs/' . $aLanguage['name'] . '.xml';
             if(!file_exists($sPath))

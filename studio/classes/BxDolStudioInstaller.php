@@ -564,7 +564,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 
         $bResult = true;
         if($sOperation == 'install')
-            $bResult = $oLanguages->installLanguage(array('path' => $this->_aConfig['home_dir'], 'uri' => $this->_aConfig['home_uri'], 'lang_category' => $this->_aConfig['language_category']),false);
+            $bResult = $oLanguages->installLanguage(array('name' => $this->_aConfig['name'], 'path' => $this->_aConfig['home_dir'], 'uri' => $this->_aConfig['home_uri'], 'lang_category' => $this->_aConfig['language_category']), false);
 
         return $bResult && $oLanguages->compileLanguage(0, true) ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
@@ -584,6 +584,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 
         //--- Process languages' key=>value pears ---//
         $aModule = array(
+        	'name' => $this->_aConfig['name'],
             'path' => $this->_aConfig['home_dir'],
             'uri' => $this->_aConfig['home_uri'],
             'lang_category' => $this->_aConfig['language_category']

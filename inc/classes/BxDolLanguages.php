@@ -271,7 +271,7 @@ class BxDolLanguages extends BxDol implements iBxDolSingleton
         if(!preg_match('/^[A-Za-z0-9_]+$/', $sLang))
             return false;
 
-        $iLangId = $this->oDb->getLanguageId($sLang);
+        $iLangId = $this->oDb->getLanguageId($sLang, false);
         if(!$iLangId)
             return false;
 
