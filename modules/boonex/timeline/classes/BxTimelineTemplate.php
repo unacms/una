@@ -629,15 +629,21 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'content' => $sTitle
             ));
 
-        $sText = isset($aContent['text']) ? strip_tags($aContent['text'], $bBrowseItem ? '<br><p>' : '') : '';
+        $sText = isset($aContent['text']) ? strip_tags($aContent['text'], $bBrowseItem ? '<br><br/><p>' : '') : '';
         $sTextMore = '';
 
-        $iMaxLength = $this->_oConfig->getCharsDisplayMax();
-        if(!$bBrowseItem && strlen($sText) > $iMaxLength) {
-            $iLength = strpos($sText, ' ', $iMaxLength);
+        if(!$bBrowseItem) {
+        	$iMaxLength = $this->_oConfig->getCharsDisplayMax();
 
-            $sTextMore = nl2br(trim(substr($sText, $iLength)));
-            $sText = nl2br(trim(substr($sText, 0, $iLength)));
+        	if(strlen($sText) > $iMaxLength) {
+            	$iLength = strpos($sText, ' ', $iMaxLength);
+
+            	$sTextMore = trim(substr($sText, $iLength));
+            	$sText = trim(substr($sText, 0, $iLength));
+        	}
+
+            $sTextMore = nl2br($sTextMore);
+            $sText = nl2br($sText);
         }
 
         $sText = $this->_prepareTextForOutput($sText, $aEvent['id']);
