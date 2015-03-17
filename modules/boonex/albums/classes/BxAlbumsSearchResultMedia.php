@@ -32,7 +32,7 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
             'object_metatags' => 'bx_albums_media',
             'title' => _t('_bx_albums_media'),
             'table' => 'bx_albums_files2albums',
-            'ownFields' => array('id', 'title', 'data', 'content_id', 'file_id', 'order'),
+            'ownFields' => array('id', 'title', 'data', 'content_id', 'file_id', 'order', 'views'),
             'searchFields' => array('title'),
             'restriction_sql' => '',
             'restriction' => array(
@@ -45,7 +45,7 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
                     'table' => 'bx_albums_albums',
                     'mainField' => 'content_id',
                     'onField' => 'id',
-                    'joinFields' => array('views'),
+                    'joinFields' => array(),
                 ),
                 'files' => array(
                     'type' => 'INNER',

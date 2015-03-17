@@ -121,6 +121,7 @@ class BxAlbumsSearchResult extends BxBaseModTextSearchResult
                 $aSql['order'] = ' ORDER BY `bx_albums_albums`.`views` DESC';
                 break;
         }
+
         return $aSql;
     }
 
