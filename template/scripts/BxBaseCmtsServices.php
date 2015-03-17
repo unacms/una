@@ -34,8 +34,14 @@ class BxBaseCmtsServices extends BxDol
         if(!$oCmts || !$oCmts->isEnabled())
             return false;
 
+		$sKey = $oCmts->getNotificationId();
+
+		bx_import('BxDolSession');
+    	if((int)BxDolSession::getInstance()->getValue($sKey) == 1)
+    		return false;
+    	
 		$iCountNew = $oCmts->getCommentsCount($iContentId, 0, BX_CMT_FILTER_OTHERS);
-		if($iCountNew < $iCount)
+		if($iCountNew <= $iCount)
 			return false;
 
     	return array(

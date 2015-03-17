@@ -1295,8 +1295,6 @@
 	<string name="_cmt_err_cannot_perform_action"><![CDATA[Невозможно выполнить действие. Пожалуйста, оповестите нас об этой проблеме.]]></string>
 	<string name="_cmt_page_view_header"><![CDATA[Комментировать {0}]]></string>
 	<string name="_cmt_page_view_title"><![CDATA[Комментировать <a href="{0}">{1}</a>]]></string>
-	<string name="_cmt_txt_n_new_comments"><![CDATA[<span>{0}</span> новых комментариев. {1}, чтобы их увидеть.]]></string>
-	<string name="_cmt_txt_reload_page"><![CDATA[Перегрузить страницу]]></string>
 	<string name="_cmt_view_attached_image"><![CDATA[Просмотреть изображение]]></string>
 	<string name="_cmt_load_more_comments_head"><![CDATA[Увидеть новые комментарии...]]></string>
 	<string name="_cmt_load_more_comments_tail"><![CDATA[Увидеть старые комментарии...]]></string>
@@ -1304,6 +1302,9 @@
 	<string name="_cmt_load_more_replies_head"><![CDATA[Увидеть новые ответы...]]></string>
 	<string name="_cmt_load_more_replies_tail"><![CDATA[Увидеть старые ответы...]]></string>
 	<string name="_cmt_load_more_replies_popular"><![CDATA[Увидеть ещё ответы...]]></string>
+	<string name="_cmt_txt_link_show"><![CDATA[Прочитать]]></string>
+	<string name="_cmt_txt_link_reply"><![CDATA[Ответить]]></string>
+	<string name="_cmt_txt_or"><![CDATA[или]]></string>	
 	<string name="_copyright"><![CDATA[&copy; {0} Компания]]></string>
 	<string name="_delete"><![CDATA[удалить]]></string>
 	<string name="_error occured"><![CDATA[Произошла ошибка]]></string>

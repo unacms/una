@@ -414,6 +414,11 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         return $oVote;
     }
 
+	public function getNotificationId()
+	{
+		return 'cmts-notification-' . $this->_sSystem . '-' . $this->_iId;
+	}
+
     public function isNl2br ()
     {
         return $this->_aSystem['nl2br'];
@@ -781,6 +786,22 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         $this->_echoResultJson(array('msg' => _t('_cmt_err_cannot_perform_action')));
     }
 
+    public function actionResumeLiveUpdate()
+    {
+    	$sKey = $this->getNotificationId();
+
+    	bx_import('BxDolSession');
+    	BxDolSession::getInstance()->unsetValue($sKey);
+    }
+
+	public function actionPauseLiveUpdate()
+    {
+    	$sKey = $this->getNotificationId();
+
+    	bx_import('BxDolSession');
+    	BxDolSession::getInstance()->setValue($sKey, 1);
+    }
+
     /**
      * Internal functions
      */
@@ -976,7 +997,6 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         if(!empty($sBpFilter))
             $oSession->setValue($this->_sBpSessionKeyFilter . $iUserId, $sBpFilter);
     }
-
     protected function _sendNotificationEmail($iCmtId, $iCmtParentId)
     {
         $aCmt = $this->getCommentRow($iCmtId);

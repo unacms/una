@@ -205,38 +205,88 @@
     }
 
     /*--- Live Update Notification Styles ---*/
-	.cmt-notification-holder {
-		padding-top: 30px;
-    	padding-top: 1.875rem;
+	.cmt-notif-holder {
+		padding-top: 70px;
+    	padding-top: 4.375rem;
     }
+    div.cmt-notifs {
+		position: relative;
 
-    div.cmt-notification {
+    	width: 100%;
+    }
+    div.cmt-notif {
     	position: relative;
 
     	width: 100%;
-    	height: 30px;
-    	height: 1.875rem;
+    	height: 68px;
+    	height: 4.25rem;
 
     	border-color: #000000;
     	background-color: rgba(85, 85, 85, .9);
 
-    	line-height: 30px;
-    	line-height: 1.875rem;
-    	text-align: center;
-
     	color: #ffffff;
     }
-    div.cmt-actions {
+    div.cmt-notif-cnt {
 		position: relative;
+    	padding: 0px 50px;
+    	padding: 0px 3.125rem;
     }
-    div.cmt-actions a {
+    div.cmt-notif-actions {
+		position: absolute;
+    	height: 100%;
+    	top: 0px;
+
+    	line-height: 68px;
+    	line-height: 4.25rem;
+    }
+	div.cmt-na-left {
+    	left: 0px;
+	}
+    div.cmt-na-right {
+    	right: 0px;
+	}
+    div.cmt-notif-actions a {
+    	line-height: initial;
     	text-decoration: none;
+    	font-size: 28px;
+    	font-size: 1.75rem;
+    	color: #9c9c9c;
     }
-    div.cmt-notification div.cmt-cnt a {
-    	text-decoration: underline;
+
+    /*--- Comment Styles in Live Update Notification ---*/
+	div.cmt-notif-comment {
+		position: relative;
+		width: 80%;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	div.cmt-notif-avatar {
+		position: absolute;
+		top: 0px;
+		left: 0px;
+    	text-align: center;
+    }
+    div.cmt-notif-avatar .sys-icon {
+    	font-size: 60px;
+		font-size: 3.75rem;
+    }
+    div.cmt-notif-info {
+    	position: realtive;
+	}
+	div.cmt-notifi-username {
+		line-height: 24px;
+		line-height: 1.5rem;
+
+		white-space: nowrap;
+		text-overflow: ellipsis;
+    	overflow: hidden;
+	}
+	div.cmt-notifi-actions a {
+		text-decoration: underline;
+		color: #ffffff;
+	}
+	div.cmt-notifi-actions a:hover,
+    div.cmt-notifi-actions a:active {
+    	text-decoration: none;
 		color: #ffffff;
     }
-    div.cmt-notification div.cmt-cnt a:hover,
-    div.cmt-notification div.cmt-cnt a:active {
-    	text-decoration: none;
-	}

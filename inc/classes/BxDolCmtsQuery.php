@@ -157,9 +157,10 @@ class BxDolCmtsQuery extends BxDolDb
         	$sWhereClause .= $this->prepare(" AND `{$this->_sTable}`.`cmt_object_id` = ?" , (int)$aParams['object_id']);
 
         switch($aParams['type']) {
-            case 'latest_ids':
-            	$aMethod['name'] = 'getColumn';
-				$sSelectClause = "`{$this->_sTable}`.`cmt_id`";
+            case 'latest':
+            	if(!empty($aParams['author']))
+            		$sWhereClause .= $this->prepare(" AND `{$this->_sTable}`.`cmt_author_id` " . (isset($aParams['others']) && (int)$aParams['others'] == 1 ? "<>" : "=") . " ?", (int)$aParams['author']);
+
                 $sOrderClause = "ORDER BY `{$this->_sTable}`.`cmt_time` DESC";
                 $sLimitClause = isset($aParams['per_page']) ? "LIMIT " . $aParams['start'] . ", " . $aParams['per_page'] : "";
                 break;
