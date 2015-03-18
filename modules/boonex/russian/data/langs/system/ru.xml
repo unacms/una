@@ -1809,6 +1809,7 @@
 	<string name="_sys_menu_set_title_profile_create_links"><![CDATA[Создать Ссылки Профиля]]></string>
 	<string name="_sys_menu_set_title_profile_stats"><![CDATA[Статистика Профиля]]></string>
 	<string name="_sys_menu_set_title_site"><![CDATA[Сайт]]></string>
+	<string name="_sys_menu_set_title_homepage"><![CDATA[Модули с содержимым]]></string>
 	<string name="_sys_menu_set_title_toolbar_member"><![CDATA[Панель Инструментов - Пользователь]]></string>
 	<string name="_sys_menu_set_title_toolbar_site"><![CDATA[Панель Инструментов - Сайт]]></string>
 	<string name="_sys_menu_template_title_buttons_hor"><![CDATA[Горизонтальные Кнопки]]></string>
@@ -1836,6 +1837,7 @@
 	<string name="_sys_menu_title_cmts_item_manage"><![CDATA[Управление Комментарием]]></string>
 	<string name="_sys_menu_title_footer"><![CDATA[Футер - Ссылки]]></string>
 	<string name="_sys_menu_title_main"><![CDATA[Сайт - Навигация]]></string>
+	<string name="_sys_menu_title_homepage"><![CDATA[Меню на главной странице]]></string>
 	<string name="_sys_menu_title_profiles_create"><![CDATA[Создать Профили]]></string>
 	<string name="_sys_menu_title_profile_stats"><![CDATA[Профиль - Статистика]]></string>
 	<string name="_sys_menu_title_rss"><![CDATA[RSS]]></string>
@@ -1866,6 +1868,7 @@
 	<string name="_sys_page_block_title_confirm_email"><![CDATA[Имейл - Подтверждение]]></string>
 	<string name="_sys_page_block_title_create_account"><![CDATA[Создать Аккаунт]]></string>
 	<string name="_sys_page_block_title_dashboard"><![CDATA[Панель]]></string>
+    <string name="_sys_page_block_title_homepage_menu"><![CDATA[Меню модулей с содержимым]]></string>
 	<string name="_sys_page_block_title_forgot_password"><![CDATA[Забыли Пароль]]></string>
 	<string name="_sys_page_block_title_login"><![CDATA[Вход]]></string>
 	<string name="_sys_page_block_title_manage_tools"><![CDATA[Управление]]></string>

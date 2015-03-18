@@ -129,6 +129,12 @@ SET @iSiteMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = '
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('sys_site', 'bx_posts', 'posts-home', '_bx_posts_menu_item_title_system_entries_home', '_bx_posts_menu_item_title_entries_home', 'page.php?i=posts-home', '', '', 'file-text col-red3', 'bx_posts_submenu', 2147483647, 1, 1, IFNULL(@iSiteMenuOrder, 0) + 1);
 
+-- MENU: add to homepage menu
+
+SET @iHomepageMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_homepage' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
+INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('sys_homepage', 'bx_posts', 'posts-home', '_bx_posts_menu_item_title_system_entries_home', '_bx_posts_menu_item_title_entries_home', 'page.php?i=posts-home', '', '', 'file-text col-red3', 'bx_posts_submenu', 2147483647, 1, 1, IFNULL(@iHomepageMenuOrder, 0) + 1);
+
 -- MENU: add to "add content" menu
 
 SET @iAddMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_add_content_links' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);

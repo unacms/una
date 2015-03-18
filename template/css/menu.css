@@ -130,6 +130,10 @@ ul.bx-menu-ver {
 
 /* --------------- main menu */
 
+#bx-homepage-menu-sys_homepage {
+    text-align:center;
+}
+
 #bx-menu-main-container {
     height:40px;
     height:2.5rem;
