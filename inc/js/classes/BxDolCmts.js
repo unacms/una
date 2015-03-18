@@ -34,6 +34,8 @@ function BxDolCmts (options) {
 
     // blink (highlight) necessary comments
     this._cmtsBlink($(this._sRootId));
+
+    this._bLiveUpdatePaused = false;
 }
 
 /*--- Main layout functionality ---*/
@@ -286,30 +288,7 @@ BxDolCmts.prototype.cmtChangeFilter = function(oLink, sType)
 		$this._cmtsReplaceContent($(sListId), sContent);
 	});
 };
-BxDolCmts.prototype.showLiveUpdate = function(oData)
-{
-	/*
-	 * Note. oData.count_old and oData.count_new are also available and can be checked or used in notification popup.  
-	 */
-	if(!oData.code)
-		return;
 
-	var oNotification = $(oData.code);
-	var sId = oNotification.attr('id');
-	$('#' + sId).remove();
-
-    oNotification.prependTo('body').dolPopup({
-    	position: 'fixed',
-    	top: '0px',
-    	fog: false,
-    	onBeforeShow: function() {
-    		$('body').addClass('cmt-notification-holder');
-    	},
-    	onBeforeHide: function() {
-    		$('body').removeClass('cmt-notification-holder');
-    	}
-    });
-};
 BxDolCmts.prototype.showReplacement = function(iCmtId)
 {
     $('#cmt' + iCmtId + '-hidden').bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function(){
@@ -374,7 +353,7 @@ BxDolCmts.prototype.toggleManagePopup = function(oLink, iCmtId) {
 	});
 };
 
-BxDolCmts.prototype.goTo = function(oLink, sGoToId, sBlinkIds)
+BxDolCmts.prototype.goTo = function(oLink, sGoToId, sBlinkIds, onLoad)
 {
 	$(oLink).parents('.bx-popup-applied:first:visible').dolPopupHide();
 
@@ -388,10 +367,124 @@ BxDolCmts.prototype.goTo = function(oLink, sGoToId, sBlinkIds)
 	}, function(sListId, sContent) {
 		$this._cmtsReplaceContent($(sListId), sContent, function() {
 			location.hash = sGoToId;
+
+			if(typeof onLoad == 'function')
+				onLoad();
 		});
 	});
 };
 
+BxDolCmts.prototype.goToAndReply = function(oLink, sGoToId, sBlinkIds)
+{
+	var $this = this;
+	this.goTo(oLink, sGoToId, sBlinkIds, function() {
+		var aBlinkIds = sBlinkIds.split(",");
+		$.each(aBlinkIds, function(iIndex, iValue) {
+			$this.toggleReply(null, iValue);
+		});
+	});
+};
+
+/*----------------------------*/
+/*--- Live Updates methods ---*/
+/*----------------------------*/
+BxDolCmts.prototype.showLiveUpdate = function(oData)
+{
+	/*
+	 * Note. oData.count_old and oData.count_new are also available and can be checked or used in notification popup.  
+	 */
+	if(!oData.code)
+		return;
+
+	var $this = this;
+
+	var oNotifs = $(oData.code);
+	var sId = oNotifs.attr('id');
+	$('#' + sId).remove();
+
+	oNotifs.prependTo('body').dolPopup({
+    	position: 'fixed',
+    	top: '0px',
+    	fog: false,
+    	onBeforeShow: function() {
+    		$('body').addClass('cmt-notif-holder');
+    	},
+    	onBeforeHide: function() {
+    		$('body').removeClass('cmt-notif-holder');
+    	},
+    	onHide: function() {
+    		$this.resumeLiveUpdates();
+    	}
+    });
+};
+
+BxDolCmts.prototype.previousLiveUpdate = function(oLink)
+{
+	var fPrevious = function() {
+		var sClass = 'cmt-notif';
+		$(oLink).parents('.' + sClass + ':first').hide().prev('.' + sClass).show();
+	};
+
+	if(!this.pauseLiveUpdates(fPrevious));
+		fPrevious();
+};
+
+BxDolCmts.prototype.hideLiveUpdate = function(oLink)
+{
+	$(oLink).parents('.bx-popup-applied:visible:first').dolPopupHide();
+};
+
+BxDolCmts.prototype.resumeLiveUpdates = function(onLoad)
+{
+	if(!this._bLiveUpdatePaused)
+		return false;
+
+	var $this = this;
+	this.changeLiveUpdates('ResumeLiveUpdate', function() {
+		$this._bLiveUpdatePaused = false;
+
+		if(typeof onLoad == 'function')
+			onLoad();
+	});
+
+	return true;
+};
+
+BxDolCmts.prototype.pauseLiveUpdates = function(onLoad)
+{
+	if(this._bLiveUpdatePaused)
+		return false;
+
+	var $this = this;
+	this.changeLiveUpdates('PauseLiveUpdate', function() {
+		$this._bLiveUpdatePaused = true;
+
+		if(typeof onLoad == 'function')
+			onLoad();
+	});
+
+	return true;
+};
+
+BxDolCmts.prototype.changeLiveUpdates = function(sAction, onLoad)
+{
+	var $this = this;
+    var oParams = this._getDefaultActions();
+    oParams['action'] = sAction;
+
+	jQuery.get(
+	    this._sActionsUrl,
+	    oParams,
+	    function() {
+	    	if(typeof onLoad == 'function')
+				onLoad();
+	    }
+	);
+};
+
+/*----------------------------------*/
+/*--- Methods for internal usage ---*/
+/*----------------------------------*/
 BxDolCmts.prototype._getCmt = function (e, iCmtId)
 {
     var $this = this;

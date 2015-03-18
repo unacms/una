@@ -82,8 +82,9 @@ class BxBaseCmts extends BxDolCmts
         $aDp['show_empty'] = true;
 
 		//add live update
-		$sServiceCall = BxDolService::getSerializedService('system', 'get_live_updates_comments', array($this->_sSystem, $this->_iId, $this->_getAuthorId(), '{count}'), 'TemplCmtsServices');
+		$this->actionResumeLiveUpdate();
 
+		$sServiceCall = BxDolService::getSerializedService('system', 'get_live_updates_comments', array($this->_sSystem, $this->_iId, $this->_getAuthorId(), '{count}'), 'TemplCmtsServices');
 		BxDolLiveUpdates::getInstance()->add($this->_sSystem . '_live_updates_cmts_' . $this->_iId, 1, $sServiceCall);
 		//add live update
 
@@ -188,20 +189,6 @@ class BxBaseCmts extends BxDolCmts
 
         $sActions = $this->_getActionsBox($aCmt, $aDp);
 
-        $sText = $aCmt['cmt_text'];
-        $sTextMore = '';
-
-        $iMaxLength = (int)$this->_aSystem['chars_display_max'];
-        if(strlen($sText) > $iMaxLength) {
-            $iLength = strpos($sText, ' ', $iMaxLength);
-
-            $sTextMore = trim(substr($sText, $iLength));
-            $sText = trim(substr($sText, 0, $iLength));
-        }
-
-        $sText = $this->_prepareTextForOutput($sText, $aCmt['cmt_id']);
-        $sTextMore = $this->_prepareTextForOutput($sTextMore, $aCmt['cmt_id']);
-
         $aTmplReplyTo = array();
         if((int)$aCmt['cmt_parent_id'] != 0) {
             $aParent = $this->getCommentRow($aCmt['cmt_parent_id']);
@@ -240,38 +227,13 @@ class BxBaseCmts extends BxDolCmts
         }
 
 		$sAgo = bx_time_js($aCmt['cmt_time']);
-        $bAuthorIcon = !empty($sAuthorIcon);
         $bObjectTitle = !empty($this->_aSystem['trigger_field_title']);
-        return $oTemplate->parseHtmlByName('comment.html', array(
+        return $oTemplate->parseHtmlByName('comment.html', array_merge(array(
             'system' => $this->_sSystem,
             'style_prefix' => $this->_sStylePrefix,
             'js_object' => $this->_sJsObjName,
             'id' => $aCmt['cmt_id'],
             'class' => $sClass,
-            'bx_if:show_icon' => array(
-                'condition' => $bAuthorIcon,
-                'content' => array(
-                    'author_icon' => $sAuthorIcon
-                )
-            ),
-            'bx_if:show_icon_empty' => array(
-                'condition' => !$bAuthorIcon,
-                'content' => array()
-            ),
-            'bx_if:show_author_link' => array(
-                'condition' => !empty($sAuthorLink),
-                'content' => array(
-                    'author_link' => $sAuthorLink,
-            		'author_title' => bx_html_attribute($sAuthorName),
-                    'author_name' => $sAuthorName
-                )
-            ),
-            'bx_if:show_author_text' => array(
-                'condition' => empty($sAuthorLink),
-                'content' => array(
-                    'author_name' => $sAuthorName
-                )
-            ),
             'bx_if:show_reply_to' => array(
                 'condition' => !empty($aTmplReplyTo),
                 'content' => $aTmplReplyTo
@@ -290,15 +252,6 @@ class BxBaseCmts extends BxDolCmts
                     'ago' => $sAgo
                 )
             ),
-            'text' => $sText,
-            'bx_if:show_more' => array(
-                'condition' => !empty($sTextMore),
-                'content' => array(
-                    'style_prefix' => $this->_sStylePrefix,
-                    'js_object' => $this->_sJsObjName,
-                    'text_more' => $sTextMore
-                )
-            ),
             'bx_if:show_attached' => array(
                 'condition' => !empty($aTmplImages),
                 'content' => array(
@@ -308,7 +261,7 @@ class BxBaseCmts extends BxDolCmts
             ),
             'actions' => $sActions,
             'replies' =>  $sReplies
-        ));
+        ), $this->_getTmplVarsAuthor($aCmt), $this->_getTmplVarsText($aCmt)));
     }
 
 	/**
@@ -366,43 +319,50 @@ class BxBaseCmts extends BxDolCmts
 
     function getNotification($iCountOld = 0, $iCountNew = 0)
     {
-    	$sUrl = $this->getBaseUrl();
-    	$sOnClick = '';
-
     	$iCount = (int)$iCountNew - (int)$iCountOld;
-    	if($iCount > 0) {
-    		$aCommentsIds = $this->_oQuery->getCommentsBy(array('type' => 'latest_ids', 'object_id' => $this->_iId, 'start' => '0', 'per_page' => $iCount));
-    		if(!empty($aCommentsIds) && is_array($aCommentsIds)) {
-    			$sBlink = implode(',', $aCommentsIds);
-    			$iCommentId = array_pop($aCommentsIds);
 
-				$sUrl = "javascript:void(0)";
-				$sOnClick = "javascript:" . $this->getJsObjectName() . ".goTo(this, '" . $this->_sSystem . $iCommentId . "', '" . $sBlink . "');";
-    		}
-    	}
+		$aComments = $this->_oQuery->getCommentsBy(array('type' => 'latest', 'object_id' => $this->_iId, 'author' => $this->_getAuthorId(), 'others' => 1, 'start' => '0', 'per_page' => $iCount));
+		if(empty($aComments) || !is_array($aComments))
+			return '';
 
-    	$oTemplate = BxDolTemplate::getInstance();
+		$sJsObject = $this->getJsObjectName();
 
-    	$sReloadLinkContent = _t('_cmt_txt_reload_page');
-    	$aReloadLinkAttrs = array();
-    	if(!empty($sOnClick))
-    		$aReloadLinkAttrs[] = array('key' => 'onclick', 'value' => $sOnClick);
+		$aComments = array_reverse($aComments);
+		$iComments = count($aComments);
 
-    	$sReloadLink = $oTemplate->parseHtmlByName('bx_a.html', array(
-    		'href' => $sUrl,
-    		'title' => $sReloadLinkContent,
-    		'bx_repeat:attrs' => $aReloadLinkAttrs,
-    		'content' => $sReloadLinkContent,
-    	));
+		$aTmplVarsNotifs = array();
+		foreach($aComments as $iIndex => $aComment) {
+			$iCommentId = $aComment['cmt_id'];
 
-    	$sContent = $oTemplate->parseHtmlByName('comments_notification.html', array(
-    		'html_id' => 'cmts-notification-' . $this->_sSystem . '-' + $this->_iId,
+			$sShowOnClick = "javascript:" . $sJsObject . ".goTo(this, '" . $this->_sSystem . $iCommentId . "', '" . $iCommentId . "');";
+			$sReplyOnClick = "javascript:" . $sJsObject . ".goToAndReply(this, '" . $this->_sSystem . $iCommentId . "', '" . $iCommentId . "');";
+
+	    	$aTmplVarsNotifs[] = array_merge(array(
+	    		'style_prefix' => $this->_sStylePrefix,
+	    		'js_object' => $sJsObject,
+	    		'bx_if:show_as_hidden' => array(
+	    			'condition' => $iIndex < ($iComments - 1),
+	    			'content' => array(),
+	    		),
+				'show_onclick' => $sShowOnClick,
+	    		'reply_onclick' => $sReplyOnClick,
+	    		'bx_if:show_previous' => array(
+	    			'condition' => $iIndex > 0,
+	    			'content' => array(
+	    				'style_prefix' => $this->_sStylePrefix,
+	    				'js_object' => $sJsObject
+	    			)
+	    		)
+			), $this->_getTmplVarsAuthor($aComment), $this->_getTmplVarsText($aComment));
+		}
+
+		return BxDolTemplate::getInstance()->parseHtmlByName('comments_notification.html', array(
+			'html_id' => $this->getNotificationId(),
 			'style_prefix' => $this->_sStylePrefix,
-			'message' => _t('_cmt_txt_n_new_comments', (int)$iCountNew - (int)$iCountOld, $sReloadLink)
+			'bx_repeat:notifs' => $aTmplVarsNotifs
 		));
-
-		return $sContent;
     }
+
     /**
      * private functions
      */
@@ -759,6 +719,67 @@ class BxBaseCmts extends BxDolCmts
     	));
 
     	return BxTemplFunctions::getInstance()->transBox($sViewImagePopupId, $sViewImagePopupContent, true);
+    }
+
+    protected function _getTmplVarsAuthor($aCmt)
+    {
+    	list($sAuthorName, $sAuthorLink, $sAuthorIcon) = $this->_getAuthorInfo($aCmt['cmt_author_id']);
+    	$bAuthorIcon = !empty($sAuthorIcon);
+
+    	return array(
+    		'bx_if:show_icon' => array(
+                'condition' => $bAuthorIcon,
+                'content' => array(
+                    'author_icon' => $sAuthorIcon
+                )
+            ),
+            'bx_if:show_icon_empty' => array(
+                'condition' => !$bAuthorIcon,
+                'content' => array()
+            ),
+            'bx_if:show_author_link' => array(
+                'condition' => !empty($sAuthorLink),
+                'content' => array(
+                    'author_link' => $sAuthorLink,
+            		'author_title' => bx_html_attribute($sAuthorName),
+                    'author_name' => $sAuthorName
+                )
+            ),
+            'bx_if:show_author_text' => array(
+                'condition' => empty($sAuthorLink),
+                'content' => array(
+                    'author_name' => $sAuthorName
+                )
+            ),
+    	);
+    }
+    protected function _getTmplVarsText($aCmt)
+    {
+    	$sText = $aCmt['cmt_text'];
+        $sTextMore = '';
+
+        $iMaxLength = (int)$this->_aSystem['chars_display_max'];
+        if(strlen($sText) > $iMaxLength) {
+            $iLength = strpos($sText, ' ', $iMaxLength);
+
+            $sTextMore = trim(substr($sText, $iLength));
+            $sText = trim(substr($sText, 0, $iLength));
+        }
+
+        $sText = $this->_prepareTextForOutput($sText, $aCmt['cmt_id']);
+        $sTextMore = $this->_prepareTextForOutput($sTextMore, $aCmt['cmt_id']);
+
+        return array(
+			'text' => $sText,
+            'bx_if:show_more' => array(
+                'condition' => !empty($sTextMore),
+                'content' => array(
+                    'style_prefix' => $this->_sStylePrefix,
+                    'js_object' => $this->_sJsObjName,
+                    'text_more' => $sTextMore
+                )
+            ),
+        );
     }
     protected function _echoResultJson($a, $isAutoWrapForFormFileSubmit = false)
     {
