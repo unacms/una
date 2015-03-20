@@ -4,7 +4,7 @@
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  */
 
-class BxSMTPUpdater extends BxDolStudioUpdater
+class BxAccntUpdater extends BxDolStudioUpdater
 {
     function __construct($aConfig)
 	{
