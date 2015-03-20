@@ -1,3 +1,10 @@
 
 @import url(../../../../base/text/template/css/main.css);
 
+.bx-base-text-entity-actions-all .bx-menu-btns-hor {
+    display:inline-block;
+}
+
+.bx-base-text-entity-actions-all .bx-base-text-entity-share {
+    display:inline-block;
+}

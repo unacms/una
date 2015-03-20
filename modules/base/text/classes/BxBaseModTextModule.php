@@ -95,6 +95,11 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
         return $this->_entitySocialSharing ($iContentId, $iContentId, $aContentInfo[$CNF['FIELD_THUMB']], $aContentInfo[$CNF['FIELD_TITLE']], $CNF['OBJECT_STORAGE'], false, $CNF['OBJECT_VOTES'], $CNF['URI_VIEW_ENTRY']);
     }
 
+    public function serviceEntityAllActions ($iContentId = 0)
+    {
+        return $this->_oTemplate->entryAllActions($this->serviceEntityActions($iContentId), $this->serviceEntitySocialSharing($iContentId));
+    }
+
     /**
      * Entry text with some additional controls
      */
