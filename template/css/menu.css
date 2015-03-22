@@ -189,8 +189,11 @@ ul.bx-menu-main {
     font-size:1.2rem;
 }
 .bx-menu-main li .sys-icon {
-    font-size:32px;
-    font-size:2rem;
+    display:inline-block;
+    min-width:1.5rem;
+    font-size:1.5rem;
+    vertical-align:baseline;
+    text-align:center;
 }
 
 .bx-menu-main-submenu li.bx-menu-tab-active a,
