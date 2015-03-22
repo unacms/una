@@ -90,6 +90,9 @@ class BxBaseMenuSubmenu extends BxTemplMenu
             );
         }
 
+        if (!$aVars['bx_repeat:menus'])
+            return '';
+
         $sMenu = $this->_oTemplate->parseHtmlByName($this->_aObject['template'], $aVars);
 
         return $this->_oTemplate->parseHtmlByName('menu_main_submenu_wrapper.html', array('menu' => $sMenu));
