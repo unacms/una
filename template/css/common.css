@@ -238,6 +238,7 @@ body > .bx-popup-wrapper {
     top:0;
     right:0;
     text-decoration:none;
+    line-height:1.8rem;
 }
 
 .bx-popup-slide-wrapper {
@@ -250,9 +251,7 @@ body > .bx-popup-wrapper {
 }
 
 .bx-popup-image-wrapper .bx-popup-close-wrapper,
-.bx-popup-image-wrapper .bx-popup-element-close,
-.bx-popup-with-pointer .bx-popup-close-wrapper,
-.bx-popup-with-pointer .bx-popup-element-close {
+.bx-popup-image-wrapper .bx-popup-element-close {
     display:none;
 }
 
