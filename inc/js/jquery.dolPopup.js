@@ -116,8 +116,8 @@
                 return true;
             } 
 
-            if (false != o.pointer) // all popups without pointer are responsive
-                $el.removeClass('bx-popup-responsive').addClass('bx-popup-with-pointer');
+            if (false != o.pointer)
+                $el.addClass('bx-popup-with-pointer'); // to make all popups with pointer not responsive add: .removeClass('bx-popup-responsive')
 
             // default style for correct positioning
             $el.css({

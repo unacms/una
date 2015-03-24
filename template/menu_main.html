@@ -1,3 +1,8 @@
 <ul id="bx-menu-main" class="bx-menu-main bx-menu-object-__object__ bx-clearfix">
-    <li class="bx-def-padding-sec-right bx-def-padding-sec-left bx-def-color-bg-hl-hover"><a href="__link__">__title__</a></li>
+    <li class="bx-def-color-bg-hl-hover"><a class="bx-def-padding-sec-leftright" href="__link__">__title__</a></li>
+    <li class="bx-def-font-grayed">|</li>
+    <bx_repeat:menus>
+        <li class="bx-def-color-bg-hl-hover"><a class="bx-def-padding-sec-leftright" href="javascript:void(0);" onclick="$('#__id__').dolPopup({pointer:{el:$(this)}})"><i class="sys-icon __icon__"></i></a></li>
+        __popup__
+    </bx_repeat:menus>
 </ul>

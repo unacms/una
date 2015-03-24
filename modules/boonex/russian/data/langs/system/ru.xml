@@ -2032,6 +2032,7 @@
     <string name="_sys_txt_my_profiles"><![CDATA[<b>@</b> мои профили...</a>]]></string>
     <string name="_sys_txt_new_picture"><![CDATA[Новая Картинка]]></string>
     <string name="_sys_txt_no_picture_uploaded"><![CDATA[Картинка не загружена]]></string>
+    <string name="_sys_txt_n_by"><![CDATA[{0}]]></string>
     <string name="_sys_txt_n_friends"><![CDATA[{0} друзей]]></string>
     <string name="_sys_txt_n_mutual_friends"><![CDATA[{0} общих друзей]]></string>
     <string name="_sys_txt_one_mutual_friend"><![CDATA[<a href="{0}">{1}</a> общий друг]]></string>

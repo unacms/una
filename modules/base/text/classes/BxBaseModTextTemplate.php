@@ -153,7 +153,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
     function getAuthorDesc ($aData)
     {
         $oModule = BxDolModule::getInstance($this->MODULE);
-        return bx_time_js($aData[$oModule->_oConfig->CNF['FIELD_ADDED']], BX_FORMAT_DATE);
+        return _t('_sys_txt_n_by', bx_time_js($aData[$oModule->_oConfig->CNF['FIELD_ADDED']], BX_FORMAT_DATE));
     }
 
     function entryAttachments ($aData)
@@ -223,6 +223,15 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             'bx_repeat:attachments' => $aGhostFiles,
         );
         return $this->parseHtmlByName('attachments.html', $aVars);
+    }
+
+    function entryAllActions ($sActionsEntity, $sActionsSocial)
+    {
+        $aVars = array (
+            'actions_entity' => $sActionsEntity,
+            'actions_social' => $sActionsSocial,
+        );
+        return $this->parseHtmlByName('entry-all-actions.html', $aVars);
     }
 
     protected function checkPrivacy ($aData, $isCheckPrivateContent, $oModule)
