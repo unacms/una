@@ -24,6 +24,7 @@ BxTimelinePost.prototype.initFormPost = function(sFormId)
 	var $this = this;
 	var oForm = $('#' + sFormId);
 
+	oForm.find('textarea').autosize();
 	oForm.ajaxForm({
         dataType: "json",
         beforeSubmit: function (formData, jqForm, options) {
@@ -73,6 +74,7 @@ BxTimelinePost.prototype.initFormAttachLink = function(sFormId)
 
 	oForm.ajaxForm({
         dataType: "json",
+        clearForm: true,
         beforeSubmit: function (formData, jqForm, options) {
         	window[$this._sObjName].beforeFormAttachLinkSubmit(oForm);
         },
@@ -89,13 +91,16 @@ BxTimelinePost.prototype.beforeFormAttachLinkSubmit = function(oForm)
 
 BxTimelinePost.prototype.afterFormAttachLinkSubmit = function (oForm, oData)
 {
-	this.loadingInButton($(oForm).children().find(':submit'), false);
+	oForm = $(oForm);
+	this.loadingInButton(oForm.find(':submit'), false);
 
 	if(oData && oData.msg != undefined)
         alert(oData.msg);
 
 	if(oData && oData.item != undefined) {
-		$('#' + this._aHtmlIds['attach_link_popup']).dolPopupHide();
+		$('#' + this._aHtmlIds['attach_link_popup']).dolPopupHide({onHide: function() {
+			oForm.find('.bx-form-warn').hide();
+		}});
 
 		if(!$.trim(oData.item).length)
 			return;

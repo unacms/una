@@ -505,7 +505,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             $bResult = true;
             foreach($aBlocks as $aBlock) {
                 $sTitleKey = $this->getSystemName($aBlock['title'] . '_' . time());
-                $sTitleValue = _t($aBlock['title']);
+                $aTitleValues = $oLanguage->getLanguageString($aBlock['title']);
 
                 unset($aBlock['id']);
                 $aBlock['object'] = $this->sPage;
@@ -546,7 +546,9 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                     break;
                 }
 
-                $oLanguage->addLanguageString($sTitleKey, $sTitleValue);
+                //--- Process Title copy
+                foreach($aTitleValues as $iLangId => $aTitleValue)
+                	$oLanguage->addLanguageString($sTitleKey, $aTitleValue['string'], $iLangId);
             }
 
             if($bResult)
