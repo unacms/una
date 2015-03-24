@@ -43,12 +43,16 @@ class BxBaseInformer extends BxDolInformer
         if (!$this->_aMessages)
             return '';
 
-        foreach ($this->_aMessages as $sId => $a)
-            $this->_aMessages[$sId]['class'] = $this->_aMapType2Class[$a['type']];
+		$aTmplVarsMessages = array();
+        foreach ($this->_aMessages as $sId => $a) {
+        	$a['class'] = $this->_aMapType2Class[$a['type']];
+
+        	$aTmplVarsMessages[] = $a;
+        }
 
         $this->_addJsCss();
         return $this->_oTemplate->parseHtmlByName('informer.html', array(
-            'bx_repeat:messages' => $this->_aMessages,
+            'bx_repeat:messages' => $aTmplVarsMessages,
         ));
     }
 
