@@ -148,7 +148,7 @@ class BxBaseModNotificationsDb extends BxDolModuleDb
         foreach($aParamsSet as $sKey => $sValue)
            $aSet[] = $this->prepare("`" . $sKey . "`=?", $sValue);
 
-		if(empty($aParamsSet['date']))
+		if(!isset($aParamsSet['date']))
 			$aSet[] = "`date`=UNIX_TIMESTAMP()";
 
         if((int)$this->query("INSERT INTO `{$this->_sTable}` SET " . implode(", ", $aSet)) <= 0)
