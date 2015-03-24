@@ -24,4 +24,4 @@ tests/vendor
 tests/composer.phar
 
 # Exclude custom modules
-modules/boonex/air/*
+modules/boonex/air*
