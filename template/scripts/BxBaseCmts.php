@@ -79,7 +79,7 @@ class BxBaseCmts extends BxDolCmts
 
         $aBp['parent_id'] = $iParentId;
         $aBp['vparent_id'] = $iVParentId;
-        $aDp['show_empty'] = true;
+        $aDp['show_empty'] = false;
 
 		//add live update
 		$this->actionResumeLiveUpdate();

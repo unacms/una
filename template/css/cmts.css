@@ -21,9 +21,6 @@
     li.cmt-err {
         color: red;
     }
-    li.cmt-no    {
-        padding: 10px;
-    }
     li.cmt-hidden {
        display: none;
     }
