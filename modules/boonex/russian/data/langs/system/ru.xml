@@ -1830,6 +1830,8 @@
 	<string name="_sys_menu_template_title_custom"><![CDATA[Индивидуальные элементы меню]]></string>
 	<string name="_sys_menu_title_account"><![CDATA[Аккаунт - Меню]]></string>
 	<string name="_sys_menu_title_account_dashboard_manage_tools"><![CDATA[Аккаунт Панель - Управление Меню Инструментов]]></string>
+    <string name="_sys_menu_title_account_notifications"><![CDATA[Меню с уведомлениями]]></string>
+    <string name="_sys_menu_title_account_popup"><![CDATA[Аккаунт - Всплывающее Меню]]></string>
 	<string name="_sys_menu_title_account_settings"><![CDATA[Аккаунт - Меню Настроек]]></string>
 	<string name="_sys_menu_title_account_settings_more"><![CDATA[Аккаунт - Меню Дополнительных Настроек]]></string>
 	<string name="_sys_menu_title_add_content"><![CDATA[Добавить Меню Содержимого]]></string>
@@ -1842,6 +1844,7 @@
 	<string name="_sys_menu_title_profiles_create"><![CDATA[Создать Профили]]></string>
 	<string name="_sys_menu_title_profile_stats"><![CDATA[Профиль - Статистика]]></string>
 	<string name="_sys_menu_title_rss"><![CDATA[RSS]]></string>
+	<string name="_sys_menu_title_set_acl_level"><![CDATA[Уровни доступа]]></string>
 	<string name="_sys_menu_title_submenu"><![CDATA[Подменю Сайта]]></string>
 	<string name="_sys_menu_title_toolbar_member"><![CDATA[Пользователь - Панель Инструментов]]></string>
 	<string name="_sys_menu_title_toolbar_site"><![CDATA[Сайт - Панель Инструментов]]></string>
