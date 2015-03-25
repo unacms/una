@@ -17,7 +17,7 @@
 }
 
 .bx-albums-unit-images-cont {
-    height:12.5rem;
+    height:11.25rem;
     overflow:hidden;
 }
 
@@ -33,7 +33,7 @@
 .bx-albums-unit-images img {
     display:inline-block;
     margin-right:0.125rem;
-    height:12.5rem;
+    height:11.25rem;
 }
 
 .bx-albums-media-file {

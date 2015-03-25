@@ -145,6 +145,7 @@ ul.bx-menu-ver {
     height:60px;
     height:4rem;
     overflow:auto;
+    text-align:right;
     /* -webkit-overflow-scrolling:touch; */
 }
 

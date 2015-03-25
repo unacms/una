@@ -172,3 +172,9 @@
 .bx-base-text-attachment {
     margin:1px;
 }
+
+.bx-base-text-entity-actions-all .bx-base-text-entity-share,
+.bx-base-text-entity-actions-all .bx-menu-btns-hor {
+    display:inline-block;
+    vertical-align:top;
+}
