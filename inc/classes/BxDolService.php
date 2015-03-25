@@ -72,7 +72,7 @@ class BxDolService extends BxDol
         if (false === $a || !is_array($a))
             return '';
 
-        if (isset($a[$sReplaceIn]))
+        if (isset($a[$sReplaceIn]) && $aMarkers)
             $a[$sReplaceIn] = bx_replace_markers($a[$sReplaceIn], $aMarkers);
 
         return self::call($a['module'], $a['method'], isset($a['params']) ? $a['params'] : array(), isset($a['class']) ? $a['class'] : 'Module');
