@@ -51,11 +51,25 @@
         });
 
         $(document).ready(function () {
-            bx_time('__lang__');
+            bx_time('__lang__');            
+
+            bx_activate_anim_icons('#3e8685');
 
             $('#bx-toolbar').css({opacity: 0.9});
 
-            bx_activate_anim_icons('#3e8685');
+            // hide toolbar on scrolldown, show - on scroll up
+            new Headroom($('#bx-toolbar').get(0), {
+                tolerance: {
+                  down: 10,
+                  up: 20
+                },
+                offset: 200,
+                classes: {
+                  initial: "bx-toolbar-anim",
+                  pinned: "bx-toolbar-reset",
+                  unpinned: "bx-toolbar-up"
+                }
+            }).init();
         });
 
         (function(w) {
@@ -65,6 +79,7 @@
             $.cookie('devicePixelRatio', dpr, {expires: 365, path: '/'});
             window.location.reload();
         })(window);
+
 
     </script>
     __extra_js__

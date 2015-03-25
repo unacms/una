@@ -10,6 +10,25 @@
 
 /* --------------- toolbar */
 
+.bx-toolbar-anim {
+    -webkit-transition: all .25s ease-in-out;
+    -moz-transition: all .25s ease-in-out;
+    -o-transition: all .25s ease-in-out;
+    transition: all .25s ease-in-out
+}
+
+.bx-toolbar-reset {
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0)
+}
+
+.bx-toolbar-up {
+    -webkit-transform: translateY(-100%);
+    -ms-transform: translateY(-100%);
+    transform: translateY(-100%)
+}
+
 #bx-toolbar {
     position:fixed;
     width:100%;
@@ -19,9 +38,6 @@
     background-color:#3B8686;
 
     opacity:0;
-
-    -webkit-transition: opacity .2s;
-    transition: opacity .2s;
 }
 
 #bx-toolbar-content {

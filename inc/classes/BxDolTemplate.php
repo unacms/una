@@ -350,6 +350,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
             'jquery.webForms.js',
             'jquery.dolPopup.js',
             'marka/marka.min.js',
+            'headroom.min.js',
         ));
 
         //--- Load default JS ---//
