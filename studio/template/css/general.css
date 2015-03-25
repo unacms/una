@@ -179,9 +179,10 @@ div.bx-std-bcap-action-div:first-child {
 }
 div.bx-std-block-panel-top {}
 div.bx-std-block-content {}
-div.bx-std-block-panel-bottom {
-	margin: 10px 0px 0px 0px;
+div.bx-std-block-content div.bx-grid-header {
+	margin-top: 0px;
 }
+div.bx-std-block-panel-bottom {}
 
 /**
  * Footer

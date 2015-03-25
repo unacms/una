@@ -1,3 +1,8 @@
+/*--- General style ---*/
+div.bx-std-block div.bx-std-block-panel-bottom ul.bx-menu-btns-hor {
+	text-align: left;
+}
+
 /*--- Product's Snippet style ---*/
 div.bx-std-products {
 	position: relative;
@@ -11,6 +16,9 @@ div.bx-std-product {
 	position: relative;
     float: left;
 	width: 100%;
+}
+div.bx-std-product-cnt {
+	position: relative;
 }
 div.bx-stdp-icon {
 	position: absolute;

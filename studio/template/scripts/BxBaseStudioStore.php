@@ -94,39 +94,30 @@ class BxBaseStudioStore extends BxDolStudioStore
         $sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
 
-		$aTmplVars = array(
-            'js_object' => $sJsObject,
-            'bx_repeat:blocks' => array()
-        );
-
         $mixedResult = BxDolStudioInstallerUtils::getInstance()->getAccessObject(true)->doAuthorize();
         if($mixedResult === true) {
 	        $aProducts = $this->loadGoodies();
 
-	        $sActions = "";
+	        $sContent = "";
 	        foreach($aProducts as $aBlock) {
-	            $sItems = $oTemplate->parseHtmlByName('str_products.html', array(
+	            $aBlock['items'] = $oTemplate->parseHtmlByName('str_products.html', array(
 	                'list' => $this->displayProducts($aBlock['items']),
 	                'paginate' => ''
 	            ));
 
-	            $aTmplVars['bx_repeat:blocks'][] = array(
-	                'caption' => $this->getBlockCaption($aBlock),
-	                'panel_top' => '',
-	                'items' => $sItems,
-	                'panel_bottom' => ''
-	            );
+	            $sContent .= $this->getBlockCode($aBlock);
 	        }
         }
         else 
-        	$aTmplVars['bx_repeat:blocks'][] = array(
-                'caption' => $this->getBlockCaption(array('caption' => _t('_adm_block_cpt_goodies'), 'actions' => array())),
-                'panel_top' => '',
+        	$sContent = $this->getBlockCode(array(
+                'caption' => '_adm_block_cpt_goodies',
                 'items' => $mixedResult,
-                'panel_bottom' => ''
-            );
+            ));
 
-        return $oTemplate->parseHtmlByName('store.html', $aTmplVars);
+        return $oTemplate->parseHtmlByName('store.html', array(
+            'js_object' => $sJsObject,
+            'content' => $sContent
+        ));
     }
 
     protected function getFeaturedList($bWrapInBlock = true)
@@ -163,14 +154,10 @@ class BxBaseStudioStore extends BxDolStudioStore
 
         return $oTemplate->parseHtmlByName('store.html', array(
             'js_object' => $sJsObject,
-            'bx_repeat:blocks' => array(
-                array(
-                    'caption' => $this->getBlockCaption(array('caption' => _t('_adm_block_cpt_featured'), 'actions' => array())),
-                    'panel_top' => '',
-                    'items' => $sContent,
-                    'panel_bottom' => ''
-                )
-            )
+            'content' => $this->getBlockCode(array(
+				'caption' => '_adm_block_cpt_featured',
+				'items' => $sContent
+			))
         ));
     }
 
@@ -218,59 +205,45 @@ class BxBaseStudioStore extends BxDolStudioStore
 
         return $oTemplate->parseHtmlByName('store.html', array(
             'js_object' => $sJsObject,
-            'bx_repeat:blocks' => array(
-                array(
-                    'caption' => $this->getBlockCaption(array('caption' => _t('_adm_block_cpt_' . $sTag), 'actions' => array())),
-                    'panel_top' => '',
-                    'items' => $sContent,
-                    'panel_bottom' => ''
-                )
-            )
+            'content' => $this->getBlockCode(array(
+				'caption' => '_adm_block_cpt_' . $sTag,
+				'items' => $sContent,
+			))
         ));
     }
 
     protected function getPurchasesList()
     {
-        $sJsObject = $this->getPageJsObject();
-        $oTemplate = BxDolStudioTemplate::getInstance();
+    	$oTemplate = BxDolStudioTemplate::getInstance();
 
         $aProducts = $this->loadPurchases();
-
-        $aTmplVars = array(
-            'js_object' => $sJsObject,
-            'bx_repeat:blocks' => array(
-                array(
-                    'caption' => $this->getBlockCaption(array('caption' => _t('_adm_block_cpt_purchases'), 'actions' => array())),
-                    'panel_top' => '',
-                    'items' => $this->displayProducts($aProducts),
-                    'panel_bottom' => ''
-                )
-            )
-        );
-
-        return $oTemplate->parseHtmlByName('store.html', $aTmplVars);
+        return $oTemplate->parseHtmlByName('store.html', array(
+            'js_object' => $this->getPageJsObject(),
+            'content' => $this->getBlockCode(array(
+				'caption' => '_adm_block_cpt_purchases',
+				'items' => $oTemplate->parseHtmlByName('str_products.html', array(
+		            'list' => $this->displayProducts($aProducts),
+		            'paginate' => ''
+		        ))
+			))
+        ));
     }
 
     protected function getUpdatesList()
     {
-        $sJsObject = $this->getPageJsObject();
-        $oTemplate = BxDolStudioTemplate::getInstance();
+    	$oTemplate = BxDolStudioTemplate::getInstance();
 
         $aUpdates = $this->loadUpdates();
-
-        $aTmplVars = array(
-            'js_object' => $sJsObject,
-            'bx_repeat:blocks' => array(
-                array(
-                    'caption' => $this->getBlockCaption(array('caption' => _t('_adm_block_cpt_updates'), 'actions' => array())),
-                    'panel_top' => '',
-                    'items' => $this->displayUpdates($aUpdates),
-                    'panel_bottom' => '',
-                )
-            )
-        );
-
-        return $oTemplate->parseHtmlByName('store.html', $aTmplVars);
+        return $oTemplate->parseHtmlByName('store.html', array(
+            'js_object' => $this->getPageJsObject(),
+            'content' => $this->getBlockCode(array(
+				'caption' => '_adm_block_cpt_updates',
+				'items' => $oTemplate->parseHtmlByName('str_products.html', array(
+		            'list' => $this->displayUpdates($aUpdates),
+		            'paginate' => ''
+		        ))
+			))
+        ));
     }
 
     protected function getCheckoutList()
@@ -292,8 +265,10 @@ class BxBaseStudioStore extends BxDolStudioStore
         }
 
         $aVendors = $this->loadCheckout();
+        if(empty($aVendors))
+            return $this->getMessage('_adm_block_cpt_checkout', '_Empty');        
 
-        $aTmplVarsBlocks = array();
+        $sContent = '';
         foreach($aVendors as $sName => $aInfo) {
             $fTotal = 0;
             $sCurrency = '';
@@ -305,25 +280,25 @@ class BxBaseStudioStore extends BxDolStudioStore
                     $sCurrency = $aProduct['currency_sign'];
             }
 
-            $aActions = array(
-                array('name' => 'checkout-' . $sName, 'caption' => '_adm_action_cpt_checkout', 'url' => 'javascript:void(0)', 'onclick' => $sJsObject . ".checkoutCart('" . $sName . "', this);"),
-                array('name' => 'delete-all-' . $sName, 'caption' => '_adm_action_cpt_delete_all', 'url' => 'javascript:void(0)', 'onclick' => $sJsObject . ".deleteAllFromCart('" . $sName . "', this)")
+            $aMenu = array(
+                array('id' => 'checkout-' . $sName, 'name' => 'checkout-' . $sName, 'link' => 'javascript:void(0)', 'onclick' => $sJsObject . ".checkoutCart('" . $sName . "', this);", 'target' => '_self', 'title' => '_adm_action_cpt_checkout', 'active' => 1),
+                array('id' => 'delete-all-' . $sName, 'name' => 'delete-all-' . $sName, 'link' => 'javascript:void(0)', 'onclick' => $sJsObject . ".deleteAllFromCart('" . $sName . "', this)", 'target' => '_self', 'title' => '_adm_action_cpt_delete_all', 'active' => 1)
             );
+	        $oMenu = new BxTemplMenuInteractive(array('template' => 'menu_buttons_hor.html', 'menu_id'=> 'timeline-view-all', 'menu_items' => $aMenu));
 
-            $aTmplVarsBlocks[] = array(
-                'caption' => $this->getBlockCaption(array('caption' => _t('_adm_block_cpt_checkout_by_vendor_csign', $sName, $sCurrency, $fTotal), 'actions' => $aActions)),
-                'panel_top' => '',
-                'items' => $this->displayProducts($aInfo['products'], array('is_shopping_cart' => true, 'counts' => $aInfo['counts'])),
-                'panel_bottom' => ''
-            );
+	        $sContent .= $this->getBlockCode(array(
+                'caption' => _t('_adm_block_cpt_checkout_by_vendor_csign', $sName, $sCurrency, $fTotal),
+                'items' => $oTemplate->parseHtmlByName('str_products.html', array(
+		            'list' => $this->displayProducts($aInfo['products'], array('is_shopping_cart' => true, 'counts' => $aInfo['counts'])),
+		            'paginate' => ''
+		        )),
+                'panel_bottom' => $oMenu->getCode()
+            ));
         }
-
-        if(empty($aTmplVarsBlocks))
-            return $this->getMessage('_adm_block_cpt_checkout', '_Empty');
 
         return $oTemplate->parseHtmlByName('store.html', array(
             'js_object' => $sJsObject,
-            'bx_repeat:blocks' => $aTmplVarsBlocks
+            'content' => $sContent
         ));
     }
 
@@ -332,7 +307,7 @@ class BxBaseStudioStore extends BxDolStudioStore
         $sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
 
-        $sModules = $sUpdates = "";
+        $sContent = $sModules = $sUpdates = "";
         $aProducts = $this->loadDownloaded();
 
         //--- Prepare modules.
@@ -397,44 +372,39 @@ class BxBaseStudioStore extends BxDolStudioStore
             ));
         }
 
-        $aTmplVars = array(
-            'js_object' => $sJsObject,
-            'bx_repeat:blocks' => array(
-                array(
-                    'caption' => $this->getBlockCaption(array('caption' => _t('_adm_block_cpt_downloaded_modules'), 'actions' => array())),
-                    'panel_top' => '',
-                    'items' => $sModules,
-                    'panel_bottom' => ''
-                )
-            )
-        );
+        if(!empty($sModules))
+        	$sContent .= $this->getBlockCode(array(
+				'caption' => '_adm_block_cpt_downloaded_modules',
+				'items' => $oTemplate->parseHtmlByName('str_products.html', array(
+		            'list' => $sModules,
+		            'paginate' => ''
+		        )),
+			));
 
         if(!empty($sUpdates))
-            $aTmplVars['bx_repeat:blocks'][] = array(
-                'caption' => $this->getBlockCaption(array('caption' => _t('_adm_block_cpt_downloaded_updates'), 'actions' => array())),
-                'panel_top' => '',
-                'items' => $sUpdates,
-                'panel_bottom' => ''
-            );
+            $sContent .= $this->getBlockCode(array(
+				'caption' => '_adm_block_cpt_downloaded_updates',
+				'items' => $oTemplate->parseHtmlByName('str_products.html', array(
+		            'list' => $sUpdates,
+		            'paginate' => ''
+		        )),
+			));
 
-        return $oTemplate->parseHtmlByName('store.html', $aTmplVars);
+        return $oTemplate->parseHtmlByName('store.html', array(
+            'js_object' => $sJsObject,
+        	'content' => $sContent
+        ));
     }
 
     protected function getMessage($sCaption, $sContent, $aActions = array())
     {
-        $sJsObject = $this->getPageJsObject();
-        $oTemplate = BxDolStudioTemplate::getInstance();
-
-        return $oTemplate->parseHtmlByName('store.html', array(
-            'js_object' => $sJsObject,
-            'bx_repeat:blocks' => array(
-                array(
-                    'caption' => $this->getBlockCaption(array('caption' => _t($sCaption), 'actions' => $aActions)),
-                	'panel_top' => '',
-                    'items' => MsgBox(_t($sContent)),
-                	'panel_bottom' => ''
-                )
-            )
+        return BxDolStudioTemplate::getInstance()->parseHtmlByName('store.html', array(
+            'js_object' => $this->getPageJsObject(),
+            'content' => $this->getBlockCode(array(
+				'caption' => $sCaption,
+        		'actions' => $aActions,
+				'items' => MsgBox(_t($sContent))
+			))
         ));
     }
 
