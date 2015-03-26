@@ -69,6 +69,14 @@ class BxDolStudioFormsField extends BxDol
         return $this->oDb->alterAdd($this->aParams['table'], $sName, $this->aParams['table_field_type']);
     }
 
+	function alterChange($sNameOld, $sNameNews)
+    {
+        if(!isset($this->aParams['table'], $this->aParams['table_alter'], $this->aParams['table_field_type']) || $this->aParams['table_alter'] !== true)
+            return '';
+
+        return $this->oDb->alterChange($this->aParams['table'], $sNameOld, $sNameNews, $this->aParams['table_field_type']);
+    }
+
     function alterRemove($sName)
     {
         if(!isset($this->aParams['table'], $this->aParams['table_alter']) || $this->aParams['table_alter'] !== true)

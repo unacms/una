@@ -268,6 +268,9 @@ class BxDolStudioFormsQuery extends BxDolDb
         if(empty($aDisplay) || !is_array($aDisplay))
             return false;
 
+		$sSql = $this->prepare("DELETE FROM `tdi` USING `sys_form_display_inputs` AS `tdi` LEFT JOIN `sys_form_inputs` AS `ti` ON `tdi`.`input_name`=`ti`.`name` WHERE 1 AND `tdi`.`display_name`=? AND `ti`.`id` IS NULL", $sDisplayName);
+		$this->query($sSql);
+
         $sSql = $this->prepare("INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`) SELECT ? AS `display_name`,`ti`.`name` AS `input_name` FROM `sys_form_inputs` AS `ti` LEFT JOIN `sys_form_display_inputs` AS `tdi` ON  `ti`.`name`=`tdi`.`input_name` AND `tdi`.`display_name`=? WHERE 1 AND `ti`.`object`=? AND `tdi`.`id` IS NULL", $sDisplayName, $sDisplayName, $sObject);
         return (int)$this->query($sSql) > 0;
     }
@@ -442,6 +445,12 @@ class BxDolStudioFormsQuery extends BxDolDb
     function alterAdd($sTable, $sField, $sType)
     {
         $sSql = "ALTER TABLE `" . $sTable . "` ADD `" . $sField . "` " . $sType;
+        $this->query($sSql);
+    }
+
+    function alterChange($sTable, $sFieldOld, $sFieldNew, $sTypeNew)
+    {
+        $sSql = "ALTER TABLE `" . $sTable . "` CHANGE `" . $sFieldOld . "` `" . $sFieldNew . "` " . $sTypeNew;
         $this->query($sSql);
     }
 

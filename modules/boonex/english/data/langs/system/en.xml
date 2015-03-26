@@ -633,7 +633,7 @@
 	<string name="_adm_form_dsc_field_attrs_step"><![CDATA[Enter numeric value]]></string>
 	<string name="_adm_form_dsc_field_caption"><![CDATA[Item name displayed on site]]></string>
 	<string name="_adm_form_dsc_field_caption_block_header"><![CDATA[Title for the group of fields]]></string>
-	<string name="_adm_form_dsc_field_caption_system"><![CDATA[Field name, displayed in Studio only.]]></string>
+	<string name="_adm_form_dsc_field_caption_system"><![CDATA[Field title, displayed in Studio only.]]></string>
 	<string name="_adm_form_dsc_field_checker_error_captcha"><![CDATA[Error message to display if text doesn't match with text on the image]]></string>
 	<string name="_adm_form_dsc_field_checker_params_preg"><![CDATA[Use standard <a href="http://en.wikipedia.org/wiki/Regular_expression" target="_blank">regular expression</a>. Example: ^[A-Za-z0-9]{3,16}$]]></string>
 	<string name="_adm_form_dsc_field_collapsed"><![CDATA[Pack down the group of this field by default]]></string>
@@ -691,7 +691,7 @@
 	<string name="_adm_form_txt_field_attrs_src"><![CDATA[Image Source]]></string>
 	<string name="_adm_form_txt_field_attrs_step"><![CDATA[Step]]></string>
 	<string name="_adm_form_txt_field_caption"><![CDATA[Title]]></string>
-	<string name="_adm_form_txt_field_caption_system"><![CDATA[System Name]]></string>
+	<string name="_adm_form_txt_field_caption_system"><![CDATA[System Title]]></string>
 	<string name="_adm_form_txt_field_checked"><![CDATA[Checked by default]]></string>
 	<string name="_adm_form_txt_field_checked_switcher"><![CDATA[Enabled by default]]></string>
 	<string name="_adm_form_txt_field_checker_avail"><![CDATA[Data Availability (something must be entered) ]]></string>
@@ -717,6 +717,7 @@
 	<string name="_adm_form_txt_field_html_standard"><![CDATA[Standard]]></string>
 	<string name="_adm_form_txt_field_info"><![CDATA[Description]]></string>
 	<string name="_adm_form_txt_field_module"><![CDATA[Module]]></string>
+	<string name="_adm_form_txt_field_name"><![CDATA[Name]]></string>
 	<string name="_adm_form_txt_field_object"><![CDATA[Form]]></string>
 	<string name="_adm_form_txt_field_required"><![CDATA[Mandatory]]></string>
 	<string name="_adm_form_txt_field_show_to_popup"><![CDATA[Show "{0}" form field to: ]]></string>

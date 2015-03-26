@@ -24,15 +24,21 @@ class BxDevFunctions
         $aInputs['module']['values'] = array_merge(array('' => _t('_bx_dev_frm_txt_select_module')), BxDolStudioUtils::getModules());
         $aInputs['module']['value'] = $aParams['module'];
 
-        $aForms = array();
-        $oDb->getForms(array('type' => 'by_module', 'value' => $aParams['module']), $aForms, false);
-        foreach($aForms as $aForm)
-            $aInputs['object']['values'][$aForm['object']] = _t($aForm['title']);
-        asort($aInputs['object']['values']);
-
         $aInputs['object']['type'] = 'select';
-        $aInputs['object']['values'] = array_merge(array('' => _t('_bx_dev_frm_txt_select_object')), $aInputs['object']['values']);
         $aInputs['object']['value'] = $aParams['object'];
+        $aInputs['object']['values'] = array();
+
+    	$aForms = array();
+        $oDb->getForms(array('type' => 'by_module', 'value' => $aParams['module']), $aForms, false);
+        if(!empty($aForms) && is_array($aForms)) {
+	        foreach($aForms as $aForm)
+	            $aInputs['object']['values'][$aForm['object']] = _t($aForm['title']);
+
+	        asort($aInputs['object']['values']);
+        }
+        $aInputs['object']['values'] = array_merge(array('' => _t('_bx_dev_frm_txt_select_object')), $aInputs['object']['values']);
+
+        $aInputs['name']['type'] = 'text';
 
         $sTrlTypePostfix = '_translatable';
         $sTrlCheckFuncPostfix = 'Translatable';

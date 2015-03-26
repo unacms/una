@@ -633,7 +633,7 @@
 	<string name="_adm_form_dsc_field_attrs_step"><![CDATA[Введите числовое значение]]></string>
 	<string name="_adm_form_dsc_field_caption"><![CDATA[Название элемента, отображаемое на сайте]]></string>
 	<string name="_adm_form_dsc_field_caption_block_header"><![CDATA[Заголовок для группы полей]]></string>
-	<string name="_adm_form_dsc_field_caption_system"><![CDATA[Название поля, отображается только в Студии.]]></string>
+	<string name="_adm_form_dsc_field_caption_system"><![CDATA[Заголовок поля, отображается только в Студии.]]></string>
 	<string name="_adm_form_dsc_field_checker_error_captcha"><![CDATA[Сообщение об ошибке, когда текст на картинке не соответствует введённому тексту]]></string>
 	<string name="_adm_form_dsc_field_checker_params_preg"><![CDATA[Используйте стандартные <a href="http://en.wikipedia.org/wiki/Regular_expression" target="_blank">регулярные выражения</a>. Например: ^[A-Za-z0-9]{3,16}$]]></string>
 	<string name="_adm_form_dsc_field_collapsed"><![CDATA[Упаковать группу данного поля по умолчанию]]></string>
@@ -691,7 +691,7 @@
 	<string name="_adm_form_txt_field_attrs_src"><![CDATA[Адрес Картинки]]></string>
 	<string name="_adm_form_txt_field_attrs_step"><![CDATA[Шаг]]></string>
 	<string name="_adm_form_txt_field_caption"><![CDATA[Заголовок]]></string>
-	<string name="_adm_form_txt_field_caption_system"><![CDATA[Системное имя]]></string>
+	<string name="_adm_form_txt_field_caption_system"><![CDATA[Системный Заголовок]]></string>
 	<string name="_adm_form_txt_field_checked"><![CDATA[Отмечено по умолчанию]]></string>
 	<string name="_adm_form_txt_field_checked_switcher"><![CDATA[Включено по умолчанию]]></string>
 	<string name="_adm_form_txt_field_checker_avail"><![CDATA[Доступность данных (нужно ввести значение) ]]></string>
@@ -717,6 +717,7 @@
 	<string name="_adm_form_txt_field_html_standard"><![CDATA[Стандартный]]></string>
 	<string name="_adm_form_txt_field_info"><![CDATA[Описание]]></string>
 	<string name="_adm_form_txt_field_module"><![CDATA[Модуль]]></string>
+	<string name="_adm_form_txt_field_name"><![CDATA[Имя]]></string>
 	<string name="_adm_form_txt_field_object"><![CDATA[Форма]]></string>
 	<string name="_adm_form_txt_field_required"><![CDATA[Необходимый]]></string>
 	<string name="_adm_form_txt_field_show_to_popup"><![CDATA[Показывать "{0}" поле формы для: ]]></string>

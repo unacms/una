@@ -133,6 +133,16 @@ class BxDevFormsFieldFile extends BxTemplStudioFormsFieldFile
     }
 }
 
+class BxDevFormsFieldFiles extends BxTemplStudioFormsFieldFiles
+{
+    function __construct($aParams = array(), $aField = array())
+    {
+        parent::__construct($aParams, $aField);
+
+        BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
+    }
+}
+
 class BxDevFormsFieldSlider extends BxTemplStudioFormsFieldSlider
 {
     function __construct($aParams = array(), $aField = array())

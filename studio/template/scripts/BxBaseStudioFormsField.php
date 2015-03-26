@@ -101,20 +101,23 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
-            $sInputObject = $oForm->getCleanValue('object');
-
             //--- Process field name.
-            $sLanguage = BxDolStudioLanguagesUtils::getInstance()->getCurrentLangName(false);
-            $sCaption = BxDolForm::getSubmittedValue('caption-' . $sLanguage, $aForm['form_attrs']['method']);
+            $sInputName = $oForm->getCleanValue('name');
+            if(empty($sInputName)) {
+            	$sInputObject = $oForm->getCleanValue('object');
 
-            $sName = $this->getFieldName($sInputObject, $sCaption);
-            BxDolForm::setSubmittedValue('name', $sName, $oForm->aFormAttrs['method']);
+	            $sLanguage = BxDolStudioLanguagesUtils::getInstance()->getCurrentLangName(false);
+	            $sInputCaption = BxDolForm::getSubmittedValue('caption-' . $sLanguage, $aForm['form_attrs']['method']);
+	
+	            $sInputName = $this->getFieldName($sInputObject, $sInputCaption);
+	            BxDolForm::setSubmittedValue('name', $sInputName, $oForm->aFormAttrs['method']);
+            }
 
             $this->onSubmitField($oForm);
             if(($iId = $oForm->insert()) === false)
                 return false;
 
-            $this->alterAdd($sName);
+            $this->alterAdd($sInputName);
             return true;
         } else
             return BxTemplStudioFunctions::getInstance()->popupBox('adm-form-field-add-' . $this->aParams['display'] . '-popup', _t('_adm_form_txt_field_add_popup'), BxDolStudioTemplate::getInstance()->parseHtmlByName('form_add_field.html', array(
@@ -135,13 +138,15 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
-            $sInputObject = $oForm->getCleanValue('object');
-            $sInputName = $oForm->getCleanValue('name');
+        	$sInputNameOld = $this->aField['name'];
+            $sInputNameNew = $oForm->getCleanValue('name');
 
             $this->onSubmitField($oForm);
             if($oForm->update((int)$this->aField['id']) === false)
                 return false;
 
+			if(strcmp($sInputNameOld, $sInputNameNew) != 0)
+				$this->alterChange($sInputNameOld, $sInputNameNew);
             return true;
         } else
             return BxTemplStudioFunctions::getInstance()->popupBox('adm-form-field-edit-' . $this->aField['type'] . '-popup', _t('_adm_form_txt_field_edit_popup', _t($this->aField['caption'])), BxDolStudioTemplate::getInstance()->parseHtmlByName('form_add_field.html', array(
@@ -174,7 +179,7 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
             if(!in_array($sKey, array('type_display', 'controls')))
                 switch($sKey) {
                     case 'value':
-                        $aForm['inputs'][$sKey]['value'] = $this->aField[$sKey];;
+                        $aForm['inputs'][$sKey]['value'] = $this->aField[$sKey];
 
                         if(in_array($aForm['inputs']['type']['value'], array('select', 'select_multiple', 'radio_set', 'checkbox_set'))) {
                             $sList = trim($this->getFieldValues($this->aField), BX_DATA_LISTS_KEY_PREFIX . ' ');
@@ -633,6 +638,7 @@ class BxBaseStudioFormsFieldBlockHeader extends BxBaseStudioFormsField
                 'name' => array(
                     'type' => 'hidden',
                     'name' => 'name',
+                	'caption' => _t('_adm_form_txt_field_name'),
                     'value' => '',
                     'db' => array (
                         'pass' => 'Xss',
