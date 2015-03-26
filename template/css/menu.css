@@ -494,3 +494,10 @@ ul.bx-menu-btns-hor li {
 .bx-menu-account-popup-profile-switcher-link a {
     text-decoration:none;
 }
+
+/* --------------- custom menu */
+
+.bx-menu-custom > li > span,
+.bx-menu-custom > li > a {
+    display:inline-block;
+}
