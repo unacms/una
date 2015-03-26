@@ -72,6 +72,7 @@ class BxDolStudioToolsAudit extends BxDol
             'php module: fileinfo' => array('op' => 'module', 'val' => 'fileinfo'),
             'php module: zip' => array('op' => 'module', 'val' => 'zip'),
             'php module: openssl' => array('op' => 'module', 'val' => 'openssl'),
+            'php module: exif' => array('op' => 'module', 'val' => 'exif'),
         );
 
         $this->sMinMysqlVer = '4.1.2';
