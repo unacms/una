@@ -1359,8 +1359,17 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
 
         $bExternal = strpos($sAbsolutePath, "http://") !== false || strpos($sAbsolutePath, "https://") !== false;
         if($bExternal) {
-            $sPath = $sAbsolutePath;
+        	$sPath = $sAbsolutePath;
             $sName = '';
+
+        	$aAPUrl = parse_url($sAbsolutePath);
+        	if(!empty($aAPUrl['path'])) {
+        		$aAPPath = pathinfo($aAPUrl['path']);
+        		if(!empty($aAPPath['basename'])) {
+        			$sPath = str_replace($aAPPath['basename'], '', $sAbsolutePath);
+        			$sName = $aAPPath['basename'];
+        		}
+        	}
 
             $sContent = bx_file_get_contents($sAbsolutePath);
         } else {
@@ -1389,7 +1398,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
                 ),
                 array(
                     "",
-                    "'url('" . $sPath . "'\\1)'"
+                    "url(" . $sPath . "\\1)"
                 ),
                 $sContent
             );
