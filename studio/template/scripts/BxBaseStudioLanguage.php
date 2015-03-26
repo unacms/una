@@ -81,10 +81,9 @@ class BxBaseStudioLanguage extends BxDolStudioLanguage
     {
         $oPage = new BxTemplStudioSettings($this->sLanguage);
 
-        $aTmplVars = array(
-            'bx_repeat:blocks' => $oPage->getPageCode(),
-        );
-        return BxDolStudioTemplate::getInstance()->parseHtmlByName('language.html', $aTmplVars);
+        return BxDolStudioTemplate::getInstance()->parseHtmlByName('language.html', array(
+            'content' => $oPage->getPageCode()
+        ));
     }
 }
 

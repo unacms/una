@@ -30,7 +30,7 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage
         $this->oModule->_oTemplate->addStudioCss(array('builder_page.css'));
     }
 
-    function getBlockPanelTop($aParams = array())
+    function getBlockPanelTop($aBlock)
     {
          return BxBaseStudioPage::getBlockPanelTop(
             array('panel_top' => $this->oModule->_oTemplate->parseHtmlByName('bp_block_panel_top.html', $this->_getTmplVarsBlockPanelTop()))

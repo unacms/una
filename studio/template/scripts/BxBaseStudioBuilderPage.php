@@ -194,14 +194,9 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             'page' => $this->sPage,
             'html_ids' => json_encode($this->aHtmlIds),
             'languahes' => json_encode($aLanguages),
-            'bx_repeat:blocks' => array(
-                array(
-                    'caption' => '',
-                    'panel_top' => $this->getBlockPanelTop(),
-                    'items' => $sContent,
-                    'panel_bottom' => ''
-                )
-            )
+            'content' => $this->getBlockCode(array(
+				'items' => $sContent
+			))
         );
 
         $oTemplate->addJsTranslation(array(
@@ -211,12 +206,10 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         return $oTemplate->parseHtmlByName('builder_page.html', $aTmplVars);
     }
 
-    function getBlockPanelTop($aParams = array())
+    function getBlockPanelTop($aBlock)
     {
-        $oTemplate = BxDolStudioTemplate::getInstance();
-
         return parent::getBlockPanelTop(
-            array('panel_top' => $oTemplate->parseHtmlByName('bp_block_panel_top.html', $this->_getTmplVarsBlockPanelTop()))
+            array('panel_top' => BxDolStudioTemplate::getInstance()->parseHtmlByName('bp_block_panel_top.html', $this->_getTmplVarsBlockPanelTop()))
         );
     }
 

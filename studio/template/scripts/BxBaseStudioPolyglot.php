@@ -85,16 +85,9 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot
     {
         $oPage = new BxTemplStudioSettings(BX_DOL_STUDIO_STG_TYPE_DEFAULT, BX_DOL_STUDIO_STG_CATEGORY_LANGUAGES);
 
-        $aTmplVars = array(
-            'js_object' => $this->getPageJsObject(),
-            'bx_repeat:blocks' => $oPage->getPageCode(),
-            'bx_if:show_new_key_popup' => array(
-                'condition' => false,
-                'content' => array()
-            )
-        );
-
-        return BxDolStudioTemplate::getInstance()->parseHtmlByName('polyglot.html', $aTmplVars);
+        return BxDolStudioTemplate::getInstance()->parseHtmlByName('polyglot.html', array(
+            'content' => $oPage->getPageCode()
+        ));
     }
 
     protected function getKeys()
@@ -113,18 +106,11 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot
         if(!$oGrid)
             return '';
 
-        $aTmplVars = array(
-            'bx_repeat:blocks' => array(
-                array(
-                    'caption' => '',
-                    'panel_top' => '',
-                    'items' => $oGrid->getCode(),
-                    'panel_bottom' => ''
-                )
-            )
-        );
-
-        return BxDolStudioTemplate::getInstance()->parseHtmlByName('polyglot.html', $aTmplVars);
+        return BxDolStudioTemplate::getInstance()->parseHtmlByName('polyglot.html', array(
+            'content' => $this->getBlockCode(array(
+				'items' => $oGrid->getCode()
+			))
+        ));
     }
 }
 

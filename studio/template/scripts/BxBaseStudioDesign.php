@@ -79,10 +79,9 @@ class BxBaseStudioDesign extends BxDolStudioDesign
     {
         $oPage = new BxTemplStudioSettings($this->sTemplate);
 
-        $aTmplVars = array(
-            'bx_repeat:blocks' => $oPage->getPageCode(),
-        );
-        return BxDolStudioTemplate::getInstance()->parseHtmlByName('design.html', $aTmplVars);
+        return BxDolStudioTemplate::getInstance()->parseHtmlByName('design.html', array(
+            'content' => $oPage->getPageCode()
+        ));
     }
 }
 

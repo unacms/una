@@ -81,19 +81,12 @@ class BxBaseStudioPermissions extends BxDolStudioPermissions
         if(!$oGrid)
             return '';
 
-        $aTmplVars = array(
+        return BxDolStudioTemplate::getInstance()->parseHtmlByName('permissions.html', array(
             'js_object' => $this->getPageJsObject(),
-            'bx_repeat:blocks' => array(
-                array(
-                    'caption' => '',
-                    'panel_top' => '',
-                    'items' => $oGrid->getCode(),
-                    'panel_bottom' => ''
-                )
-            )
-        );
-
-        return BxDolStudioTemplate::getInstance()->parseHtmlByName('permissions.html', $aTmplVars);
+            'content' => $this->getBlockCode(array(
+				'items' => $oGrid->getCode()
+        	))
+        ));
     }
 }
 

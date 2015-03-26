@@ -86,10 +86,9 @@ class BxBaseStudioModule extends BxDolStudioModule
     {
         $oPage = new BxTemplStudioSettings($this->sModule);
 
-        $aTmplVars = array(
-            'bx_repeat:blocks' => $oPage->getPageCode(),
-        );
-        return BxDolStudioTemplate::getInstance()->parseHtmlByName('module.html', $aTmplVars);
+        return BxDolStudioTemplate::getInstance()->parseHtmlByName('module.html', array(
+            'content' => $oPage->getPageCode(),
+        ));
     }
 }
 

@@ -111,19 +111,12 @@ class BxBaseStudioNavigation extends BxDolStudioNavigation
         if(!$oGrid)
             return '';
 
-        $aTmplVars = array(
+        return BxDolStudioTemplate::getInstance()->parseHtmlByName('navigation.html', array(
             'js_object' => $this->getPageJsObject(),
-            'bx_repeat:blocks' => array(
-                array(
-                    'caption' => '',
-                    'panel_top' => '',
-                    'items' => $oGrid->getCode(),
-                    'panel_bottom' => ''
-                )
-            )
-        );
-
-        return BxDolStudioTemplate::getInstance()->parseHtmlByName('navigation.html', $aTmplVars);
+            'content' => $this->getBlockCode(array(
+				'items' => $oGrid->getCode()
+			))
+        ));
     }
 }
 

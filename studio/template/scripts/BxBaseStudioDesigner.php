@@ -109,12 +109,10 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
             'bx_repeat:templates' => $aTmplVarsTemplates,
         ));
 
-        $aTmplVars = array(
+        return $oTemplate->parseHtmlByName('designer.html', array(
             'js_object' => $this->getPageJsObject(),
-            'bx_repeat:blocks' => $sContent,
-        );
-
-        return $oTemplate->parseHtmlByName('designer.html', $aTmplVars);
+            'content' => $sContent,
+        ));
     }
 
     protected function getLogo()
@@ -206,19 +204,12 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
             exit;
         }
 
-        $aTmplVars = array(
+        return $oTemplate->parseHtmlByName('designer.html', array(
             'js_object' => $this->getPageJsObject(),
-            'bx_repeat:blocks' => array(
-                array(
-                    'caption' => '',
-                    'panel_top' => '',
-                    'items' => $oTemplate->parseHtmlByName('dsr_logo.html', array('logo_iframe_id' => $this->sLogoIframeId, 'form' => $oForm->getCode())),
-                    'panel_bottom' => ''
-                )
-            )
-        );
-
-        return $oTemplate->parseHtmlByName('designer.html', $aTmplVars);
+            'content' => $this->getBlockCode(array(
+				'items' => $oTemplate->parseHtmlByName('dsr_logo.html', array('logo_iframe_id' => $this->sLogoIframeId, 'form' => $oForm->getCode())),
+			))
+        ));
     }
 
     protected function getIcon()
@@ -303,31 +294,22 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
             exit;
         }
 
-        $aTmplVars = array(
+        return $oTemplate->parseHtmlByName('designer.html', array(
             'js_object' => $this->getPageJsObject(),
-            'bx_repeat:blocks' => array(
-                array(
-                    'caption' => '',
-                    'panel_top' => '',
-                    'items' => $oTemplate->parseHtmlByName('dsr_icon.html', array('icon_iframe_id' => $this->sIconIframeId, 'form' => $oForm->getCode())),
-                    'panel_bottom' => ''
-                )
-            )
-        );
-
-        return $oTemplate->parseHtmlByName('designer.html', $aTmplVars);
+            'content' => $this->getBlockCode(array(
+				'items' => $oTemplate->parseHtmlByName('dsr_icon.html', array('icon_iframe_id' => $this->sIconIframeId, 'form' => $oForm->getCode())),
+			))
+        ));
     }
 
     protected function getSettings()
     {
         $oPage = new BxTemplStudioSettings(BX_DOL_STUDIO_STG_TYPE_SYSTEM, BX_DOL_STUDIO_STG_CATEGORY_TEMPLATES);
 
-        $aTmplVars = array(
+        return BxDolStudioTemplate::getInstance()->parseHtmlByName('designer.html', array(
             'js_object' => $this->getPageJsObject(),
-            'bx_repeat:blocks' => $oPage->getPageCode(),
-        );
-
-        return BxDolStudioTemplate::getInstance()->parseHtmlByName('designer.html', $aTmplVars);
+            'content' => $oPage->getPageCode()
+        ));
     }
 }
 
