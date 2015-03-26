@@ -99,7 +99,7 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 ('bx_albums_author', 'albums-author', '_bx_albums_page_title_sys_entries_of_author', '_bx_albums_page_title_entries_of_author', 'bx_albums', 5, 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxAlbumsPageAuthor', 'modules/boonex/albums/classes/BxAlbumsPageAuthor.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_albums_author', 1, 'bx_albums', '_bx_albums_page_block_title_entries_actions', 3, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:18:\"my_entries_actions\";}', 0, 0, 0),
+('bx_albums_author', 1, 'bx_albums', '_bx_albums_page_block_title_entries_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:18:\"my_entries_actions\";}', 0, 0, 0),
 ('bx_albums_author', 1, 'bx_albums', '_bx_albums_page_block_title_entries_of_author', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:13:\"browse_author\";}', 0, 0, 1);
 
 -- PAGE: module home

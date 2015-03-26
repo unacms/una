@@ -84,7 +84,7 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 ('bx_posts_author', 'posts-author', '_bx_posts_page_title_sys_entries_of_author', '_bx_posts_page_title_entries_of_author', 'bx_posts', 5, 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxPostsPageAuthor', 'modules/boonex/posts/classes/BxPostsPageAuthor.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_posts_author', 1, 'bx_posts', '_bx_posts_page_block_title_entries_actions', 3, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_posts\";s:6:\"method\";s:18:\"my_entries_actions\";}', 0, 0, 0),
+('bx_posts_author', 1, 'bx_posts', '_bx_posts_page_block_title_entries_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_posts\";s:6:\"method\";s:18:\"my_entries_actions\";}', 0, 0, 0),
 ('bx_posts_author', 1, 'bx_posts', '_bx_posts_page_block_title_entries_of_author', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_posts\";s:6:\"method\";s:13:\"browse_author\";}', 0, 0, 1);
 
 -- PAGE: module home
