@@ -203,6 +203,8 @@ class BxDolConnection extends BxDol implements iBxDolFactoryObject
 
     protected function _action ($iInitiator, $iContent, $sMethod, $sErrorKey, $isMutual = false)
     {
+        bx_import('BxDolLanguages');
+
         if (!$iContent || !$iInitiator)
             return array ('err' => true, 'msg' => _t('_sys_conn_err_input_data_is_not_defined'));
 
