@@ -1831,6 +1831,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_template_title_custom"><![CDATA[Custom menu items]]></string>
 	<string name="_sys_menu_title_account"><![CDATA[Account Menu]]></string>
 	<string name="_sys_menu_title_account_dashboard_manage_tools"><![CDATA[Account Dashboard Manage Tools Menu]]></string>
+	<string name="_sys_menu_title_account_notifications"><![CDATA[Notifications Items]]></string>
+	<string name="_sys_menu_title_account_popup"><![CDATA[Account Popup]]></string>
 	<string name="_sys_menu_title_account_settings"><![CDATA[Account Settings Menu]]></string>
 	<string name="_sys_menu_title_account_settings_more"><![CDATA[Account Settings More Menu]]></string>
 	<string name="_sys_menu_title_add_content"><![CDATA[Add Content Menu]]></string>
@@ -1843,6 +1845,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_title_profiles_create"><![CDATA[Create Profiles]]></string>
 	<string name="_sys_menu_title_profile_stats"><![CDATA[Profile Stats]]></string>
 	<string name="_sys_menu_title_rss"><![CDATA[RSS]]></string>
+	<string name="_sys_menu_title_set_acl_level"><![CDATA[ACL Levels]]></string>
 	<string name="_sys_menu_title_submenu"><![CDATA[Site Submenu]]></string>
 	<string name="_sys_menu_title_toolbar_member"><![CDATA[Member Toolbar]]></string>
 	<string name="_sys_menu_title_toolbar_site"><![CDATA[Site Toolbar]]></string>
