@@ -67,8 +67,12 @@
 	<string name="_bx_persons_page_block_title_edit_profile"><![CDATA[Редактировать профиль]]></string>
 	<string name="_bx_persons_page_block_title_edit_profile_cover"><![CDATA[Редактировать обложку]]></string>
 	<string name="_bx_persons_page_block_title_delete_profile"><![CDATA[Удалить профиль]]></string>
+	<string name="_bx_persons_page_block_title_profile_info_link"><![CDATA[<a href="{profile_link}">{display_name}</a> - Инфо]]></string>
 	<string name="_bx_persons_page_block_title_profile_info"><![CDATA[Инфо]]></string>
+	<string name="_bx_persons_page_block_title_system_profile_info"><![CDATA[Инфо]]></string>
+	<string name="_bx_persons_page_block_title_profile_friends_link"><![CDATA[<a href="{profile_link}">{display_name}</a> - Друзья]]></string>
 	<string name="_bx_persons_page_block_title_profile_friends"><![CDATA[Друзья]]></string>
+	<string name="_bx_persons_page_block_title_system_profile_friends"><![CDATA[Друзья]]></string>
 	<string name="_bx_persons_page_block_title_profile_cover"><![CDATA[Обложка профиля]]></string>
 	<string name="_bx_persons_page_block_title_profile_actions"><![CDATA[Действия]]></string>
 	<string name="_bx_persons_page_block_title_latest_profiles"><![CDATA[Недавние люди]]></string>
