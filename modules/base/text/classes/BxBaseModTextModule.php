@@ -314,9 +314,10 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
 
         $sImage = '';
         if (isset($aContentInfo[$CNF['FIELD_THUMB']]) && $aContentInfo[$CNF['FIELD_THUMB']]) {
-            $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
-            if($oStorage)
-                $sImage = $oStorage->getFileUrlById($aContentInfo[$CNF['FIELD_THUMB']]);
+        	
+        	$oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY']);
+        	if($oTranscoder)
+                $sImage = $oTranscoder->getFileUrl($aContentInfo[$CNF['FIELD_THUMB']]);
         }
 
         if (empty($sImage))
