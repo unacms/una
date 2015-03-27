@@ -76,8 +76,9 @@
     <string name="_bx_posts_page_title_sys_view_entry_comments"><![CDATA[Post Comments]]></string>
     <string name="_bx_posts_page_title_view_entry_comments"><![CDATA[Post Comments]]></string>
     <string name="_bx_posts_page_title_sys_entries_of_author"><![CDATA[Posts of author]]></string>
-    <string name="_bx_posts_page_title_entries_of_author"><![CDATA[Posts of {display_name}]]></string>
-    <string name="_bx_posts_page_block_title_entries_of_author"><![CDATA[Posts of author]]></string>   
+    <string name="_bx_posts_page_title_entries_of_author"><![CDATA[Posts by {display_name}]]></string>
+    <string name="_bx_posts_page_block_title_entries_of_author"><![CDATA[Posts by <a href="{profile_link}">{display_name}</a>]]></string>
+    <string name="_bx_posts_page_block_title_sys_entries_of_author"><![CDATA[Posts of author]]></string>   
     <string name="_bx_posts_page_block_title_entries_actions"><![CDATA[Posts actions]]></string>
     <string name="_bx_posts_page_block_title_browse_cmts"><![CDATA[Posts' Comments]]></string>
 	<string name="_bx_posts_page_title_sys_manage"><![CDATA[Manage Own Posts]]></string>

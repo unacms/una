@@ -76,8 +76,9 @@
     <string name="_bx_posts_page_title_sys_view_entry_comments"><![CDATA[Публикации - Комментарии]]></string>
     <string name="_bx_posts_page_title_view_entry_comments"><![CDATA[Публикации Комментарии]]></string>
     <string name="_bx_posts_page_title_sys_entries_of_author"><![CDATA[Публикации автора]]></string>
-    <string name="_bx_posts_page_title_entries_of_author"><![CDATA[Публикации {display_name}]]></string>
-    <string name="_bx_posts_page_block_title_entries_of_author"><![CDATA[Публикации автора]]></string>   
+    <string name="_bx_posts_page_title_entries_of_author"><![CDATA[{display_name} - Публикации]]></string>
+    <string name="_bx_posts_page_block_title_entries_of_author"><![CDATA[<a href="{profile_link}">{display_name}</a> - Публикации]]></string>   
+    <string name="_bx_posts_page_block_title_sys_entries_of_author"><![CDATA[Публикации автора]]></string>   
     <string name="_bx_posts_page_block_title_entries_actions"><![CDATA[Публикации - Действия]]></string>
     <string name="_bx_posts_page_block_title_browse_cmts"><![CDATA[Публикации - Комментарии]]></string>
 	<string name="_bx_posts_page_title_sys_manage"><![CDATA[Управление собственными Публикациями]]></string>

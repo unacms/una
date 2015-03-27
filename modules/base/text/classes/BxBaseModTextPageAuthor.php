@@ -43,8 +43,9 @@ class BxBaseModTextPageAuthor extends BxTemplPage
 
         // add replaceable markers
         $this->addMarkers($this->_aProfileInfo); // every profile field can be used as marker
-        $this->addMarkers(array('profile_id' => $this->_oProfile->id())); // profile id field is also suported
-        $this->addMarkers(array('display_name' => $this->_oProfile->getDisplayName())); // profile display name is also suported
+        $this->addMarkers(array('profile_id' => $this->_oProfile->id())); // profile id 
+        $this->addMarkers(array('display_name' => $this->_oProfile->getDisplayName())); // profile display name 
+        $this->addMarkers(array('profile_link' => $this->_oProfile->getUrl())); // profile link
     }
 
 }
