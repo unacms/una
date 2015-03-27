@@ -8,6 +8,7 @@
  */
 
 require_once('./inc/header.inc.php');
+require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
 $sObject = bx_process_input(bx_get('object'));
 $mixedId = bx_process_input(bx_get('id'));
