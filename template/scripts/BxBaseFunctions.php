@@ -96,27 +96,32 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
      */
     function transBox($sName, $sContent, $isHiddenByDefault = false, $isPlaceInCenter = false)
     {
-        $iId = !empty($sName) ? $sName : time();
-
-        return
-            ($isPlaceInCenter ? '<div class="login_ajax_wrap">' : '') .
-                $this->_oTemplate->parseHtmlByName('popup_trans.html', array(
-                    'id' => $iId,
-                    'wrapper_style' => $isHiddenByDefault ? 'display:none;' : '',
-                    'content' => $sContent
-                )) .
-            ($isPlaceInCenter ? '</div>' : '');
+    	return $this->simpleBox($sName, $sContent, $isHiddenByDefault, $isPlaceInCenter, 'popup_trans.html');
     }
 
     function slideBox($sName, $sContent, $isHiddenByDefault = false)
     {
-        $iId = !empty($sName) ? $sName : time();
+    	return $this->simpleBox($sName, $sContent, $isHiddenByDefault, false, 'popup_slide.html');
+    }
 
-        return $this->_oTemplate->parseHtmlByName('popup_slide.html', array(
+	function inlineBox($sName, $sContent, $isHiddenByDefault = false)
+    {
+        return $this->simpleBox($sName, $sContent, $isHiddenByDefault, false, 'popup_inline.html');
+    }
+
+    protected function simpleBox($sName, $sContent, $isHiddenByDefault, $isPlaceInCenter, $sTemplate) {
+    	$iId = !empty($sName) ? $sName : time();
+
+		$sContent = $this->_oTemplate->parseHtmlByName($sTemplate, array(
             'id' => $iId,
             'wrapper_style' => $isHiddenByDefault ? 'display:none;' : '',
             'content' => $sContent
         ));
+
+        if($isPlaceInCenter)
+        	$sContent = '<div class="login_ajax_wrap">' . $sContent . '</div>';
+
+        return $sContent;
     }
 
     function getTemplateIcon($sName)

@@ -33,7 +33,7 @@ BxDolStudioStore.prototype.addToCart = function(sVendor, iProduct, oButton) {
 		function(oData) {
 			bx_loading($this.sIdPageContent, false);
 
-			$this.showPopup($this.sIdPopupFile, oData.message, oButton);
+			$this.showNotification(oData.message);
 
 			if(parseInt(oData.code) == 0) {
 				var oCounter = $('#bx-std-pmi-checkout .bx-std-pmen-item-counter span');
@@ -64,7 +64,7 @@ BxDolStudioStore.prototype.deleteFromCart = function(sVendor, iProduct, oButton)
 			bx_loading($this.sIdPageContent, false);
 
 			if(oData.message.length > 0)
-				$this.showPopup($this.sIdPopupFile, oData.message, iProduct != 0 ? oButton : null);
+				$this.showNotification(oData.message);
 
 			var iCode = parseInt(oData.code);
 			var oCounter = $('#bx-std-pmi-checkout .bx-std-pmen-item-counter span');
@@ -117,7 +117,7 @@ BxDolStudioStore.prototype.checkoutCart = function(sVendor, oButton) {
 			bx_loading($this.sIdPageContent, false);
 
 			if(oData.message.length > 0)
-				$this.showPopup($this.sIdPopupFile, oData.message, oButton);
+				$this.showNotification(oData.message);
 
 			if(parseInt(oData.code) == 0 && oData.redirect.length > 0)
 				document.location=oData.redirect;
@@ -408,5 +408,11 @@ BxDolStudioStore.prototype.showPopup = function(sId, sContent, mixedPointer) {
     	};
 
     $('#' + sId).dolPopup(oParams);
+};
+
+BxDolStudioStore.prototype.showNotification = function(sContent) {
+	$(sContent).appendTo('body').dolPopupInline({
+		removeOnClose: true
+	});   
 };
 /** @} */

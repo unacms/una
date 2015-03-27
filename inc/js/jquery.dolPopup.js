@@ -176,7 +176,7 @@
                     }
                 }
 
-                o.onBeforeShow();
+                o.onBeforeShow($el);
 
                 // transition effect
 
@@ -198,12 +198,47 @@
                 }
                 
                 setTimeout(function () {
-                    o.onShow();                    
+                    o.onShow($el);                    
                     $el.find('input[type=text]:first').focus(); // put cursor to the first input element
                 }, o.speed);
 
             }, 100);
         });
+    };
+
+    $.fn.dolPopupInline = function(oOptionsCustom) {
+    	if(typeof(oOptionsCustom) == 'undefined' || typeof(oOptionsCustom) != 'object')
+            oOptionsCustom = {};
+
+    	var oOptionsTotal = $.extend({}, oOptionsCustom, {
+        	position: 'fixed',
+        	top: '0px',
+        	fog: false,
+        	closeElement: '.bx-popup-close',
+        	onBeforeShow: function(oPopup) {
+        		if(typeof(oOptionsCustom.onBeforeShow) == 'function')
+        			oOptionsCustom.onBeforeShow(oPopup);
+
+        		$('body').addClass('bx-popup-inline-holder');
+        	},
+        	onBeforeHide: function(oPopup) {
+        		if(typeof(oOptionsCustom.onBeforeHide) == 'function')
+        			oOptionsCustom.onBeforeHide(oPopup);
+
+        		$('body').removeClass('bx-popup-inline-holder');
+        	},
+        	onHide: function(oPopup) {
+        		if(typeof(oOptionsCustom.onHide) == 'function')
+        			oOptionsCustom.onHide(oPopup);
+
+        		if(oOptionsCustom.removeOnClose == true)
+        			$(oPopup).remove();
+        	}
+        });
+
+    	return this.each(function() {
+    		$(this).addClass('bx-popup-inline').dolPopup(oOptionsTotal);
+    	});
     };
 
     $.fn.dolPopupHide = function(options) { 
@@ -229,7 +264,7 @@
             $(window).off('resize.popupPointer');
             $(window).off('resize.popupFog');
 
-            o.onBeforeHide();
+            o.onBeforeHide($el);
 
             $el.removeClass('bx-popup-active').addClass('bx-popup-inactive');
 
@@ -240,7 +275,7 @@
 
                 setTimeout(function () {
                     $el.hide();
-                    o.onHide();
+                    o.onHide($el);
                 }, o.speed);
 
             } else {
@@ -248,7 +283,9 @@
                 if (o.fog)
                     $('#bx-popup-fog').hide();
 
-                $el.hide(o.onHide);
+                $el.hide(function() {
+                	o.onHide($el);
+                });
             }
             
             _dolPopupLockScreen(false);

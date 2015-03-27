@@ -255,6 +255,64 @@ body > .bx-popup-wrapper {
     display:none;
 }
 
+/* --------------- notification boxes */
+.bx-popup-inline-holder {
+	padding-top: 70px;
+   	padding-top: 4.375rem;
+}
+.bx-popup-inline {
+	width: 100%;
+}
+.bx-popup-inline .bx-popup {
+	position: relative;
+
+	width: 100%;
+	height: 68px;
+    height: 4.25rem;
+
+    border-width: 1px 0px 1px 0px;
+	border-color: #000000;
+	border-radius: 0px;
+
+	background-color: rgba(85, 85, 85, .9);
+
+	color: #ffffff;
+}
+.bx-popup-inline .bx-popup .bx-popup-content {
+	position: relative;
+	display: flex;
+
+	height: 100%;
+
+	padding: 0px 60px;
+	padding: 0px 3.75rem;
+
+	align-items: center; 
+}
+.bx-popup-inline .bx-popup .bx-popup-content > * {
+	max-height: 100%; 
+}
+.bx-popup-inline .bx-popup .bx-popup-actions {
+	position: absolute;
+	display: flex;
+
+	height: 100%;
+	top: 0px;
+
+	align-items: center;
+}
+.bx-popup-inline .bx-popup .bx-pa-left {
+	left: 0px;
+}
+.bx-popup-inline .bx-popup .bx-pa-right {
+	right: 0px;
+}
+.bx-popup-inline .bx-popup .bx-popup-actions a {
+	text-decoration: none;
+	font-size: 28px;
+	font-size: 1.75rem;
+	color: #9c9c9c;
+}
 /* --------------- message box */
 
 .bx-msg-box-container {
