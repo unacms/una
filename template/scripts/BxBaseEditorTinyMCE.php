@@ -23,7 +23,8 @@ class BxBaseEditorTinyMCE extends BxDolEditor
                         skin_url: '{bx_url_tinymce}skins/{bx_var_skin}/',
                         language_url: '{bx_url_tinymce}langs/{bx_var_lang}.js',
                         content_css: '{bx_var_css_path}',
-                        entity_encoding: 'raw'
+                        entity_encoding: 'raw',
+                        browser_spellcheck: true
                     });
     ";
 
@@ -82,7 +83,6 @@ class BxBaseEditorTinyMCE extends BxDolEditor
                             autosave: '{bx_url_tinymce}plugins/autosave/plugin.min.js',
                             charmap: '{bx_url_tinymce}plugins/charmap/plugin.min.js',
                             code: '{bx_url_tinymce}plugins/code/plugin.min.js',
-                            contextmenu: '{bx_url_tinymce}plugins/contextmenu/plugin.min.js',
                             emoticons: '{bx_url_tinymce}plugins/emoticons/plugin.min.js',
                             hr: '{bx_url_tinymce}plugins/hr/plugin.min.js',
                             image: '{bx_url_tinymce}plugins/image/plugin.min.js',
