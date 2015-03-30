@@ -85,6 +85,14 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_albums_popular', 1, 'bx_albums', '_bx_albums_page_block_title_popular_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_albums";s:6:"method";s:14:"browse_popular";s:6:"params";a:3:{s:9:"unit_view";s:8:"extended";s:13:"empty_message";b:1;s:13:"ajax_paginate";b:0;}}', 0, 1, 1);
 
+-- PAGE: updated albums
+
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_albums_updated', '_bx_albums_page_title_sys_entries_updated', '_bx_albums_page_title_entries_updated', 'bx_albums', 5, 2147483647, 1, 'albums-updated', 'page.php?i=albums-updated', '', '', '', 0, 1, 0, 'BxAlbumsPageBrowse', 'modules/boonex/albums/classes/BxAlbumsPageBrowse.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
+('bx_albums_updated', 1, 'bx_albums', '_bx_albums_page_block_title_updated_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_albums";s:6:"method";s:14:"browse_updated";s:6:"params";a:3:{s:9:"unit_view";s:8:"extended";s:13:"empty_message";b:1;s:13:"ajax_paginate";b:0;}}', 0, 1, 1);
+
 -- PAGE: popular media
 
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -193,10 +201,11 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_albums_submenu', 'bx_albums', '_bx_albums_menu_set_title_submenu', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_albums_submenu', 'bx_albums', 'albums-home', '_bx_albums_menu_item_title_system_entries_public', '_bx_albums_menu_item_title_entries_public', 'page.php?i=albums-home', '', '', '', '', 2147483647, 1, 1, 1),
+('bx_albums_submenu', 'bx_albums', 'albums-home', '_bx_albums_menu_item_title_system_entries_recent', '_bx_albums_menu_item_title_entries_recent', 'page.php?i=albums-home', '', '', '', '', 2147483647, 1, 1, 1),
 ('bx_albums_submenu', 'bx_albums', 'albums-popular', '_bx_albums_menu_item_title_system_entries_popular', '_bx_albums_menu_item_title_entries_popular', 'page.php?i=albums-popular', '', '', '', '', 2147483647, 1, 1, 2),
-('bx_albums_submenu', 'bx_albums', 'albums-popular-media', '_bx_albums_menu_item_title_system_entries_popular_media', '_bx_albums_menu_item_title_entries_popular_media', 'page.php?i=albums-popular-media', '', '', '', '', 2147483647, 1, 1, 3),
-('bx_albums_submenu', 'bx_albums', 'albums-manage', '_bx_albums_menu_item_title_system_entries_manage', '_bx_albums_menu_item_title_entries_manage', 'page.php?i=albums-manage', '', '', '', '', 2147483646, 1, 1, 4);
+('bx_albums_submenu', 'bx_albums', 'albums-updated', '_bx_albums_menu_item_title_system_entries_updated', '_bx_albums_menu_item_title_entries_updated', 'page.php?i=albums-updated', '', '', '', '', 2147483647, 1, 1, 3),
+('bx_albums_submenu', 'bx_albums', 'albums-popular-media', '_bx_albums_menu_item_title_system_entries_popular_media', '_bx_albums_menu_item_title_entries_popular_media', 'page.php?i=albums-popular-media', '', '', '', '', 2147483647, 1, 1, 4),
+('bx_albums_submenu', 'bx_albums', 'albums-manage', '_bx_albums_menu_item_title_system_entries_manage', '_bx_albums_menu_item_title_entries_manage', 'page.php?i=albums-manage', '', '', '', '', 2147483646, 1, 1, 5);
 
 -- MENU: sub-menu for view entry
 

@@ -81,6 +81,13 @@ class BxPostsSearchResult extends BxBaseModTextSearchResult
                 $this->aCurrent['sorting'] = 'popular';
                 break;
 
+            case 'updated':
+                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_UPDATED']);
+                $this->aCurrent['title'] = _t('_bx_posts_page_title_browse_updated');
+                $this->aCurrent['rss']['link'] = 'modules/?r=posts/rss/' . $sMode;
+                $this->aCurrent['sorting'] = 'updated';
+                break;
+
             case '': // search results
                 $this->sBrowseUrl = BX_DOL_SEARCH_KEYWORD_PAGE;
                 $this->aCurrent['title'] = _t('_bx_posts');
@@ -104,6 +111,9 @@ class BxPostsSearchResult extends BxBaseModTextSearchResult
         switch ($this->aCurrent['sorting']) {
             case 'last':
                 $aSql['order'] = ' ORDER BY `bx_posts_posts`.`added` DESC';
+                break;
+            case 'updated':
+                $aSql['order'] = ' ORDER BY `bx_posts_posts`.`changed` DESC';
                 break;
             case 'popular':
                 $aSql['order'] = ' ORDER BY `bx_posts_posts`.`views` DESC';
