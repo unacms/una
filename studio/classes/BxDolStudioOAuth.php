@@ -59,7 +59,7 @@ class BxDolStudioOAuth extends BxDol
         if(is_null($aItems))
             return _t('_adm_err_oauth_cannot_read_answer');
         else if(empty($aItems))
-            return MsgBox(_t('_Empty'));
+            return _t('_Empty');
 
         return $aItems;
     }

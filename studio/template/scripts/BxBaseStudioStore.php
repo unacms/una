@@ -537,10 +537,10 @@ class BxBaseStudioStore extends BxDolStudioStore
         	return array_merge(array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_str_err_download_failed')), $mixedResult);
     }
 
-    protected function displayProducts($aItems, $aParams = array())
+    protected function displayProducts($mixedItems, $aParams = array())
     {
-        if(!is_array($aItems))
-            return $aItems;
+        if(!is_array($mixedItems))
+            return MsgBox($mixedItems);
 
         $sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
@@ -549,7 +549,7 @@ class BxBaseStudioStore extends BxDolStudioStore
         $bShoppingCart = isset($aParams['is_shopping_cart']) && $aParams['is_shopping_cart'];
 
         $sResult = '';
-        foreach($aItems as $aItem) {
+        foreach($mixedItems as $aItem) {
             $bFree = (int)$aItem['is_free'] == 1;
             $bPurchased = (int)$aItem['is_purchased'] == 1;
             $bPurchase = !$bShoppingCart && !$bFree && !$bPurchased;
@@ -646,19 +646,19 @@ class BxBaseStudioStore extends BxDolStudioStore
         return $sResult;
     }
 
-    protected function displayUpdates($aItems, $aParams = array())
+    protected function displayUpdates($mixedItems, $aParams = array())
     {
-        if(!is_array($aItems))
-            return $aItems;
+        if(!is_array($mixedItems))
+            return MsgBox($mixedItems);
 
-		if(empty($aItems))
+		if(empty($mixedItems))
 			return MsgBox(_t('_Empty'));
 
         $sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
 
         $sResult = '';
-        foreach($aItems as $aItem) {
+        foreach($mixedItems as $aItem) {
             $bDownloadable = (int)$aItem['is_file'] == 1;
 
             $sIcon = !empty($aItem['thumbnail']['big']) ? $aItem['thumbnail']['big'] : BxDolStudioUtils::getIconDefault(BX_DOL_MODULE_TYPE_MODULE);
