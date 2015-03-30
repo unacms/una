@@ -519,6 +519,7 @@
 	<string name="_adm_bp_wrn_page_delete"><![CDATA[Вы уверены, что хотите удалить эту страницу?]]></string>
 	<string name="_adm_bp_wrn_page_block_delete"><![CDATA[Вы уверены, что хотите удалить этот блок?]]></string>
 	<string name="_adm_btn_cancel_submit"><![CDATA[Отменить]]></string>
+	<string name="_adm_btn_checkout_submit"><![CDATA[Оплатить]]></string>
 	<string name="_adm_btn_delete_submit"><![CDATA[Удалить]]></string>
 	<string name="_adm_btn_designer_submit"><![CDATA[Выполнить]]></string>
 	<string name="_adm_btn_download_submit"><![CDATA[Скачать]]></string>

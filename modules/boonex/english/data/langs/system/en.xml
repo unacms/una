@@ -519,6 +519,7 @@
 	<string name="_adm_bp_wrn_page_delete"><![CDATA[Are you sure you want to delete the page?]]></string>
 	<string name="_adm_bp_wrn_page_block_delete"><![CDATA[Are you sure you want to delete the block?]]></string>
 	<string name="_adm_btn_cancel_submit"><![CDATA[Cancel]]></string>
+	<string name="_adm_btn_checkout_submit"><![CDATA[Checkout]]></string>
 	<string name="_adm_btn_delete_submit"><![CDATA[Delete]]></string>
 	<string name="_adm_btn_designer_submit"><![CDATA[Submit]]></string>
 	<string name="_adm_btn_download_submit"><![CDATA[Download]]></string>

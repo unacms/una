@@ -421,6 +421,9 @@ class BxBaseStudioStore extends BxDolStudioStore
 
         $bFree = (int)$aProduct['is_free'] == 1;
         $bPurchased = (int)$aProduct['is_purchased'] == 1;
+        $bPurchase = !$bFree && !$bPurchased;
+
+		$bInCart = $bPurchase && BxDolStudioCart::getInstance()->exists($aProduct['author_name'], $aProduct['id']);
 
         $bDownloadable = (int)$aProduct['is_file'] == 1;
         $bDownloaded = array_key_exists($sModuleName, $aDownloaded);
@@ -473,13 +476,25 @@ class BxBaseStudioStore extends BxDolStudioStore
                 )
             ),
             'bx_if:show_purchase' => array(
-                'condition' => !$bFree && !$bPurchased,
+                'condition' => $bPurchase && !$bInCart,
                 'content' => array(
                     'js_object' => $sJsObject,
                     'id' => $aProduct['id'],
                     'vendor' => $aProduct['author_name'],
                 )
             ),
+            'bx_if:show_checkout' => array(
+                    'condition' => $bPurchase,
+                    'content' => array(
+                        'js_object' => $sJsObject,
+                        'id' => $aProduct['id'],
+                        'vendor' => $aProduct['author_name'],
+                		'bx_if:show_as_hidden' => array(
+                			'condition' => !$bInCart,
+                			'content' => array()
+                		)
+                    )
+                ),
             'bx_if:show_download' => array(
                 'condition' => $bDownload && !$bDownloaded,
                 'content' => array(
@@ -537,6 +552,9 @@ class BxBaseStudioStore extends BxDolStudioStore
         foreach($aItems as $aItem) {
             $bFree = (int)$aItem['is_free'] == 1;
             $bPurchased = (int)$aItem['is_purchased'] == 1;
+            $bPurchase = !$bShoppingCart && !$bFree && !$bPurchased;
+
+            $bInCart = $bPurchase && BxDolStudioCart::getInstance()->exists($aItem['author'], $aItem['id']);
 
             $bDownloadable = (int)$aItem['is_file'] == 1;
             $bDownloaded = in_array($aItem['name'], $aDownloaded);
@@ -580,11 +598,23 @@ class BxBaseStudioStore extends BxDolStudioStore
                     )
                 ),
                 'bx_if:show_purchase' => array(
-                    'condition' => !$bShoppingCart && !$bFree && !$bPurchased,
+                    'condition' => $bPurchase && !$bInCart,
                     'content' => array(
                         'js_object' => $sJsObject,
                         'id' => $aItem['id'],
                         'vendor' => $aItem['author']
+                    )
+                ),
+                'bx_if:show_checkout' => array(
+                    'condition' => $bPurchase,
+                    'content' => array(
+                        'js_object' => $sJsObject,
+                        'id' => $aItem['id'],
+                        'vendor' => $aItem['author'],
+                		'bx_if:show_as_hidden' => array(
+                			'condition' => !$bInCart,
+                			'content' => array()
+                		)
                     )
                 ),
                 'bx_if:show_download' => array(

@@ -66,10 +66,17 @@ class BxDolStudioCart extends BxDol implements iBxDolSingleton
         return $aResult;
     }
 
+	public function exists($sVendor, $iItemId)
+	{
+		$sDiv = BxDolStudioCart::$sPDiv;
+
+		$sCartItems = $this->getItems();
+		return strpos($sCartItems, $sVendor . $sDiv . $iItemId . $sDiv) !== false;
+	}
+
     public function add($sVendor, $iItemId, $iItemCount)
     {
         $sDiv = BxDolStudioCart::$sPDiv;
-        $oSession = BxDolSession::getInstance();
 
         $sCartItem = $sVendor . $sDiv . $iItemId . $sDiv . $iItemCount;
         $sCartItems = $this->getItems();
@@ -124,14 +131,12 @@ class BxDolStudioCart extends BxDol implements iBxDolSingleton
 
     protected function getItems()
     {
-        $oSession = BxDolSession::getInstance();
-        return $oSession->getValue($this->sSessionKey);
+        return BxDolSession::getInstance()->getValue($this->sSessionKey);
     }
 
     protected function setItems($sItems)
     {
-        $oSession = BxDolSession::getInstance();
-        $oSession->setValue($this->sSessionKey, $sItems);
+        BxDolSession::getInstance()->setValue($this->sSessionKey, $sItems);
     }
 
     protected function parseBy($aItems, $sKey)

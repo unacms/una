@@ -92,12 +92,12 @@ class BxDolStudioStore extends BxTemplStudioPage
                     $iItemCount = 1;
 
                     if(empty($sVendor) || empty($iItem)) {
-                        $aResult = array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_err_modules_cannot_add_to_cart'), 'message_inline' => true);
+                        $aResult = array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_err_modules_cannot_add_to_cart'));
                         break;
                     }
 
                     BxDolStudioCart::getInstance()->add($sVendor, $iItem, $iItemCount);
-                    $aResult = array('code' => BX_DOL_STUDIO_IU_RC_SUCCESS, 'message' => _t('_adm_msg_modules_success_added_to_cart'), 'message_inline' => true);
+                    $aResult = array('code' => BX_DOL_STUDIO_IU_RC_SUCCESS, 'message' => _t('_adm_msg_modules_success_added_to_cart'));
                     break;
 
                 case 'delete-from-cart':
@@ -105,7 +105,7 @@ class BxDolStudioStore extends BxTemplStudioPage
                     $iItem = (int)bx_get('str_item');
 
                     if(empty($sVendor)) {
-                        $aResult = array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_err_modules_cannot_delete_from_cart'), 'message_inline' => true);
+                        $aResult = array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_err_modules_cannot_delete_from_cart'));
                         break;
                     }
 
@@ -116,7 +116,7 @@ class BxDolStudioStore extends BxTemplStudioPage
                 case 'checkout-cart':
                     $sVendor = bx_process_input(bx_get('str_vendor'));
                     if(empty($sVendor)) {
-                        $aResult = array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_err_modules_cannot_checkout_empty_vendor'), 'message_inline' => true);
+                        $aResult = array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_err_modules_cannot_checkout_empty_vendor'));
                         break;
                     }
 
@@ -149,15 +149,8 @@ class BxDolStudioStore extends BxTemplStudioPage
                     break;
             }
 
-            if(!empty($aResult['message'])) {
-            	$oTemplate = BxDolStudioTemplate::getInstance();
-            	$oFunctions = BxTemplStudioFunctions::getInstance();
-
-            	if(isset($aResult['message_inline']) && $aResult['message_inline'] === true)
-            		$aResult['message'] = $oFunctions->inlineBox('', $oTemplate->parseHtmlByName('mod_action_result_inline.html', array('content' => $aResult['message'])), true);
-            	else
-            		$aResult['message'] = $oFunctions->transBox('', $oTemplate->parseHtmlByName('mod_action_result.html', array('content' => $aResult['message'])));
-            }
+            if(!empty($aResult['message']))
+				$aResult['message'] = BxTemplStudioFunctions::getInstance()->inlineBox('', BxDolStudioTemplate::getInstance()->parseHtmlByName('mod_action_result_inline.html', array('content' => $aResult['message'])), true);
 
             echo json_encode($aResult);
             exit;

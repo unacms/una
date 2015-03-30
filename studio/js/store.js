@@ -13,8 +13,6 @@ function BxDolStudioStore(oOptions) {
 
     this.sIdPageContent = 'bx-std-pc-content';
     this.sIdPopupProduct = 'bx-std-str-popup-product';
-    this.sIdPopupFiles = 'bx-std-str-popup-files';
-    this.sIdPopupFile = 'bx-std-str-popup-file';
 }
 
 BxDolStudioStore.prototype.addToCart = function(sVendor, iProduct, oButton) {
@@ -41,6 +39,8 @@ BxDolStudioStore.prototype.addToCart = function(sVendor, iProduct, oButton) {
 
 				if(parseInt(oCounter.html()) > 0)
 					oCounter.parent('.bx-std-pmen-item-counter').show();
+
+				$(oButton).hide().next('.bx-std-pc-checkout').show();
 			}
 		},
 		'json'
@@ -188,7 +188,7 @@ BxDolStudioStore.prototype._onGetFile = function(oData, oButton) {
 	}
 
 	if(oData.message)
-		this.showPopup(this.sIdPopupFile, oData.message, oButton);
+		this.showNotification(oData.message);
 };
 
 BxDolStudioStore.prototype.info = function(sModuleName, oLink) {
@@ -217,7 +217,7 @@ BxDolStudioStore.prototype.info = function(sModuleName, oLink) {
 				});
 			}
 			else
-				$this.showPopup(sId, oData.message, oLink);
+				$this.showNotification(oData.message);
 		},
 		'json'
 	);
@@ -321,7 +321,7 @@ BxDolStudioStore.prototype.perform = function(sType, sValue, onSuccess, oInput) 
     		bx_loading_btn(oInput, false);
 
     		if(oData.message.length > 0)
-    			$this.showPopup('bx-std-str-popup-' + sType, oData.message);
+    			$this.showNotification(oData.message);
 
     		switch(parseInt(oData.code)) {
 	    		case 0:
@@ -351,7 +351,7 @@ BxDolStudioStore.prototype.changePage = function(sType) {
 		},
 		function(oData) {
 			if(oData.code != 0) {
-				$this.showPopup('bx-std-str-popup-browsing', oData.message);
+				$this.showNotification(oData.message);
 				return;
 			}
 
@@ -383,7 +383,7 @@ BxDolStudioStore.prototype.changePagePaginate = function(oButton, sType, iStart,
 		},
 		function(oData) {
 			if(oData.code != 0) {
-				$this.showPopup('bx-std-str-popup-browsing', oData.message);
+				$this.showNotification(oData.message);
 				return;
 			}
 
@@ -397,6 +397,15 @@ BxDolStudioStore.prototype.changePagePaginate = function(oButton, sType, iStart,
 	return true;
 };
 
+BxDolStudioStore.prototype.showNotification = function(sContent) {
+	$(sContent).appendTo('body').dolPopupInline({
+		removeOnClose: true
+	});   
+};
+
+/**
+ * It isn't used anywhere for now.
+ */
 BxDolStudioStore.prototype.showPopup = function(sId, sContent, mixedPointer) {
     $('#' + sId).remove();
     $('<div id="' + sId + '" style="display: none;"></div>').appendTo('body').html(sContent);
@@ -408,11 +417,5 @@ BxDolStudioStore.prototype.showPopup = function(sId, sContent, mixedPointer) {
     	};
 
     $('#' + sId).dolPopup(oParams);
-};
-
-BxDolStudioStore.prototype.showNotification = function(sContent) {
-	$(sContent).appendTo('body').dolPopupInline({
-		removeOnClose: true
-	});   
 };
 /** @} */
