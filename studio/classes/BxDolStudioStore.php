@@ -15,6 +15,7 @@ class BxDolStudioStore extends BxTemplStudioPage
     protected $aContent;
 
     protected $iClient;
+    protected $sClientKey; 
 
     protected $aAlias;
     protected $bAuthAccessUpdates;
@@ -39,6 +40,8 @@ class BxDolStudioStore extends BxTemplStudioPage
             $this->sPage = $sPage;
 
         $this->iClient = BxDolStudioOAuth::getAuthorizedClient();
+        if(!empty($this->iClient))
+        	$this->sClientKey = $this->oDb->getParam('sys_oauth_key');
 
         //--- Check actions ---//
         if(($sAction = bx_get('str_action')) !== false) {
@@ -171,7 +174,7 @@ class BxDolStudioStore extends BxTemplStudioPage
             'actions' => array(
                 array('name' => 'featured', 'caption' => '_adm_action_cpt_see_all_featured', 'url' => 'javascript:void(0)', 'onclick' => $sJsObject . ".changePage('featured', this)")
             ),
-            'items' => $oJson->load(BX_DOL_UNITY_URL_MARKET . 'json_browse_featured', array('start' => 0, 'per_page' => $iPerPage, 'client' => $this->iClient))
+            'items' => $oJson->load(BX_DOL_UNITY_URL_MARKET . 'json_browse_featured', array('start' => 0, 'per_page' => $iPerPage, 'client' => $this->iClient, 'key' => $this->sClientKey))
         );
 
 
@@ -181,7 +184,7 @@ class BxDolStudioStore extends BxTemplStudioPage
             'actions' => array(
                 array('name' => 'modules', 'caption' => '_adm_action_cpt_see_all_modules', 'url' => 'javascript:void(0)', 'onclick' => $sJsObject . ".changePage('modules', this)")
             ),
-            'items' => $oJson->load(BX_DOL_UNITY_URL_MARKET . 'json_browse_by_tag', array('value' => 'extensions', 'start' => 0, 'per_page' => $iPerPage, 'client' => $this->iClient))
+            'items' => $oJson->load(BX_DOL_UNITY_URL_MARKET . 'json_browse_by_tag', array('value' => 'extensions', 'start' => 0, 'per_page' => $iPerPage, 'client' => $this->iClient, 'key' => $this->sClientKey))
         );
 
         // Load templates
@@ -190,7 +193,7 @@ class BxDolStudioStore extends BxTemplStudioPage
             'actions' => array(
                 array('name' => 'templates', 'caption' => '_adm_action_cpt_see_all_templates', 'url' => 'javascript:void(0)', 'onclick' => $sJsObject . ".changePage('templates', this)")
             ),
-            'items' => $oJson->load(BX_DOL_UNITY_URL_MARKET . 'json_browse_by_tag', array('value' => 'templates', 'start' => 0, 'per_page' => $iPerPage, 'client' => $this->iClient))
+            'items' => $oJson->load(BX_DOL_UNITY_URL_MARKET . 'json_browse_by_tag', array('value' => 'templates', 'start' => 0, 'per_page' => $iPerPage, 'client' => $this->iClient, 'key' => $this->sClientKey))
         );
 
         // Load languages
@@ -199,7 +202,7 @@ class BxDolStudioStore extends BxTemplStudioPage
             'actions' => array(
                 array('name' => 'languages', 'caption' => '_adm_action_cpt_see_all_languages', 'url' => 'javascript:void(0)', 'onclick' => $sJsObject . ".changePage('languages', this)")
             ),
-            'items' => $oJson->load(BX_DOL_UNITY_URL_MARKET . 'json_browse_by_tag', array('value' => 'translations', 'start' => 0, 'per_page' => $iPerPage, 'client' => $this->iClient))
+            'items' => $oJson->load(BX_DOL_UNITY_URL_MARKET . 'json_browse_by_tag', array('value' => 'translations', 'start' => 0, 'per_page' => $iPerPage, 'client' => $this->iClient, 'key' => $this->sClientKey))
         );
 
         return $aProducts;
@@ -207,12 +210,12 @@ class BxDolStudioStore extends BxTemplStudioPage
 
     protected function loadFeatured($iStart, $iPerPage)
     {
-        return BxDolStudioJson::getInstance()->load(BX_DOL_UNITY_URL_MARKET . 'json_browse_featured', array('start' => $iStart, 'per_page' => $iPerPage, 'client' => $this->iClient));
+        return BxDolStudioJson::getInstance()->load(BX_DOL_UNITY_URL_MARKET . 'json_browse_featured', array('start' => $iStart, 'per_page' => $iPerPage, 'client' => $this->iClient, 'key' => $this->sClientKey));
     }
 
     protected function loadTag($sTag, $iStart, $iPerPage)
     {
-        return BxDolStudioJson::getInstance()->load(BX_DOL_UNITY_URL_MARKET . 'json_browse_by_tag', array('value' => $this->aliasToNameTag($sTag), 'start' => $iStart, 'per_page' => $iPerPage, 'client' => $this->iClient));
+        return BxDolStudioJson::getInstance()->load(BX_DOL_UNITY_URL_MARKET . 'json_browse_by_tag', array('value' => $this->aliasToNameTag($sTag), 'start' => $iStart, 'per_page' => $iPerPage, 'client' => $this->iClient, 'key' => $this->sClientKey));
     }
 
     protected function loadPurchases()
@@ -265,7 +268,7 @@ class BxDolStudioStore extends BxTemplStudioPage
     {
         $oJson = BxDolStudioJson::getInstance();
 
-        return $oJson->load(BX_DOL_UNITY_URL_MARKET . 'json_get_product_by_name', array('value' => $sModuleName, 'client' => $this->iClient));
+        return $oJson->load(BX_DOL_UNITY_URL_MARKET . 'json_get_product_by_name', array('value' => $sModuleName, 'client' => $this->iClient, 'key' => $this->sClientKey));
     }
 
     /*
