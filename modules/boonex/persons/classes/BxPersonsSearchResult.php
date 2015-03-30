@@ -38,6 +38,13 @@ class BxPersonsSearchResult extends BxBaseModProfileSearchResult
                     'onField' => 'id',
                     'joinFields' => array('id', 'fullname', 'picture', 'added'),
                 ),
+                'account' => array(
+                    'type' => 'INNER',
+                    'table' => 'sys_accounts',
+                    'mainField' => 'account_id',
+                    'onField' => 'id',
+                    'joinFields' => array(),
+                ),
             ),
             'paginate' => array('perPage' => 20, 'start' => 0),
             'sorting' => 'none',
@@ -80,7 +87,15 @@ class BxPersonsSearchResult extends BxBaseModProfileSearchResult
             case 'recent':
                 $this->aCurrent['rss']['link'] = 'modules/?r=persons/rss/' . $sMode;
                 $this->aCurrent['title'] = _t('_bx_persons_page_title_browse_recent');
+                $this->aCurrent['sorting'] = 'last';
                 $this->sBrowseUrl = 'page.php?i=persons-home';
+                break;
+
+            case 'active':
+                $this->aCurrent['rss']['link'] = 'modules/?r=persons/rss/' . $sMode;
+                $this->aCurrent['title'] = _t('_bx_persons_page_title_browse_active');
+                $this->aCurrent['sorting'] = 'active';
+                $this->sBrowseUrl = 'page.php?i=persons-active';
                 break;
 
             case '': // search results
@@ -102,11 +117,11 @@ class BxPersonsSearchResult extends BxBaseModProfileSearchResult
         switch ($this->aCurrent['sorting']) {
         case 'none':
             return array();
+        case 'active':
+            return array('order' => ' ORDER BY `sys_accounts`.`logged` DESC ');
         case 'last':
         default:
-            $aSql = array();
-            $aSql['order'] = " ORDER BY `bx_persons_data`.`added` DESC";
-            return $aSql;
+            return array('order' => ' ORDER BY `bx_persons_data`.`added` DESC ');
         }
     }
 

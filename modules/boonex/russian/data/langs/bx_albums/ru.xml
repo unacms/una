@@ -82,8 +82,9 @@
     <string name="_bx_albums_page_title_sys_view_entry_comments"><![CDATA[Комментарии к альбому]]></string>
     <string name="_bx_albums_page_title_view_entry_comments"><![CDATA[Комментарии к альбому]]></string>
     <string name="_bx_albums_page_title_sys_entries_of_author"><![CDATA[Альбомы автора]]></string>
-    <string name="_bx_albums_page_title_entries_of_author"><![CDATA[Альбомы автора {display_name}]]></string>
-    <string name="_bx_albums_page_block_title_entries_of_author"><![CDATA[Альбомы автора]]></string>   
+    <string name="_bx_albums_page_title_entries_of_author"><![CDATA[{display_name} - Альбомы]]></string>
+    <string name="_bx_albums_page_block_title_entries_of_author"><![CDATA[<a href="{profile_link}">{display_name}</a> - Альбомы]]></string>
+    <string name="_bx_albums_page_block_title_sys_entries_of_author"><![CDATA[Альбомы автора]]></string>
     <string name="_bx_albums_page_block_title_entries_actions"><![CDATA[Альбомы - Действия]]></string>
     <string name="_bx_albums_page_block_title_browse_cmts"><![CDATA[Комментарии к альбому]]></string>
     <string name="_bx_albums_page_block_title_browse_cmts_media"><![CDATA[Комментарии к изображениям]]></string>
