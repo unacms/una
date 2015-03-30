@@ -162,7 +162,7 @@ class BxDolStudioStore extends BxTemplStudioPage
 
     protected function loadGoodies()
     {
-        $iPerPage = 5;
+        $iPerPage = 6;
         $aProducts = array();
         $sJsObject = $this->getPageJsObject();
 
