@@ -836,7 +836,7 @@
 	<string name="_adm_mod_err_process_operation_failed"><![CDATA[Невозможно {0} модуль из "{1}" директории]]></string>
 	<string name="_adm_mod_msg_process_operation_scheduled"><![CDATA[Операция добавлена в очередь и будет выполнена через несколько минут. Пожалуйста, подождите.]]></string>
 	<string name="_adm_msg_modules_success_added_to_cart"><![CDATA[Товар был успешно добавлен в корзину.]]></string>
-	<string name="_adm_msg_modules_success_checkouted"><![CDATA[Оплата успешно принята и будет автоматически обработана через несколько минут. Затем приобретённые товары будут доступны в меню Магазин -> Покупки.<br />Внимание. Если по какой-то причине этого не произошло, Вам нужно связаться с продавцом товара и указать детали транзакции. Он сможет вручную обработать транзакцию, если оплата была получена.]]></string>
+	<string name="_adm_msg_modules_success_checkouted"><![CDATA[Оплата успешно принята и будет автоматически обработана через несколько минут. Затем приобретённые товары будут доступны в меню Расширения -> Покупки. Если по какой-то причине этого не произошло, пожалуйста свяжитесь с продавцом товара, предоставив ему детали транзакции.]]></string>
 	<string name="_adm_msg_modules_success_delete"><![CDATA[Пакет удачно удалён]]></string>
 	<string name="_adm_msg_modules_success_disable"><![CDATA[Пакет удачно отключён]]></string>
 	<string name="_adm_msg_modules_success_enable"><![CDATA[Пакет удачно подключён]]></string>
