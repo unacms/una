@@ -970,6 +970,15 @@ function bx_ltrim_str ($sString, $sPrefix, $sReplace = '')
     return $sString;
 }
 
+function bx_rtrim_str ($sString, $sPrefix, $sReplace = '')
+{
+    if ($sReplace && substr($sString, -strlen($sReplace)) == $sReplace)
+        return $sString;
+    if (substr($sString, -strlen($sPrefix)) == $sPrefix)
+        return substr($sString, 0, -strlen($sPrefix)) . $sReplace;
+    return $sString;
+}
+
 function bx_convert_links($s)
 {
 	$oTemplate = BxDolTemplate::getInstance();

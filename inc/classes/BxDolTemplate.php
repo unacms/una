@@ -1366,7 +1366,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
         	if(!empty($aAPUrl['path'])) {
         		$aAPPath = pathinfo($aAPUrl['path']);
         		if(!empty($aAPPath['basename'])) {
-        			$sPath = str_replace($aAPPath['basename'], '', $sAbsolutePath);
+        			$sPath = bx_rtrim_str($sAbsolutePath, $aAPPath['basename']);
         			$sName = $aAPPath['basename'];
         		}
         	}
