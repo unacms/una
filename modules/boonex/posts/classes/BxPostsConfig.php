@@ -44,6 +44,7 @@ class BxPostsConfig extends BxBaseModTextConfig
 
             'URL_HOME' => 'page.php?i=posts-home',
             'URL_POPULAR' => 'page.php?i=posts-popular',
+            'URL_UPDATED' => 'page.php?i=posts-updated',
         	'URL_MANAGE_COMMON' => 'page.php?i=posts-manage',
         	'URL_MANAGE_ADMINISTRATION' => 'page.php?i=posts-administration',
 

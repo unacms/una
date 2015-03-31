@@ -33,8 +33,19 @@ class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry
             $this->addMarkers(array(
                 'title' => isset($this->_aContentInfo[$CNF['FIELD_TITLE']]) ? $this->_aContentInfo[$CNF['FIELD_TITLE']] : strmaxtextlen($this->_aContentInfo[$CNF['FIELD_TEXT']], 20, '...'),
             ));
+            $this->addMarkers(array('entry_link' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $this->_aContentInfo[$CNF['FIELD_ID']]))); // entry link
         }
     }
+
+    protected function _getBlockService ($aBlock)
+    {
+        $a = parent::_getBlockService ($aBlock);
+        $sTest = '_view_entry_comments';
+        if (false !== strpos($aBlock['content'], 'entity_comments') && substr_compare($this->_sObject, $sTest, strlen($this->_sObject) - strlen($sTest), strlen($sTest)) === 0)
+            unset($a['title']);            
+        return $a;
+    }    
+
 }
 
 /** @} */

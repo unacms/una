@@ -72,6 +72,7 @@
     <string name="_bx_albums_page_block_title_entry_author"><![CDATA[Author]]></string>
     <string name="_bx_albums_page_block_title_entry_actions"><![CDATA[Actions]]></string>
     <string name="_bx_albums_page_block_title_entry_comments"><![CDATA[Comments]]></string>
+    <string name="_bx_albums_page_block_title_entry_comments_link"><![CDATA[Comments to <a href="{entry_link}">{title}</a>]]></string>
     <string name="_bx_albums_page_block_title_entry_location"><![CDATA[Location]]></string>
     <string name="_bx_albums_page_title_sys_entries_popular"><![CDATA[Popular Albums]]></string>
     <string name="_bx_albums_page_title_entries_popular"><![CDATA[Popular Albums]]></string>
