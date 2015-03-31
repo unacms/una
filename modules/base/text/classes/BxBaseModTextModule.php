@@ -56,12 +56,21 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
     }
 
     /**
-     * Display featured entries
+     * Display popular entries
      * @return HTML string
      */
     public function serviceBrowsePopular ($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
     {
         return $this->_serviceBrowse ('popular', $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
+    }
+
+    /**
+     * Display recently updated entries
+     * @return HTML string
+     */
+    public function serviceBrowseUpdated ($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
+    {
+        return $this->_serviceBrowse ('updated', $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
     }
 
     /**
