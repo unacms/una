@@ -82,6 +82,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE' => 'bx_persons_view_actions_more', // actions menu on view entry page for "more" popup
             'OBJECT_MENU_SUBMENU' => 'bx_persons_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_persons_view_submenu',  // view entry submenu
+            'OBJECT_MENU_SUBMENU_VIEW_ENTRY_COVER' => 'bx_persons_view_submenu_cover',  // view entry submenu displayed in cover
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'persons-home', // first item in view entry submenu from main module submenu
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_persons_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_PAGE_VIEW_ENTRY' => 'bx_persons_view_profile',

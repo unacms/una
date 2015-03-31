@@ -226,7 +226,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 -- MENU: add menu item to profiles modules (trigger* menu sets are processed separately upon modules enable/disable)
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('trigger_profile_view_submenu', 'bx_posts', 'posts-author', '_bx_posts_menu_item_title_system_view_entries_author', '_bx_posts_menu_item_title_view_entries_author', 'page.php?i=posts-author&profile_id={profile_id}', '', '', '', '', 2147483647, 1, 0, 0);
+('trigger_profile_view_submenu', 'bx_posts', 'posts-author', '_bx_posts_menu_item_title_system_view_entries_author', '_bx_posts_menu_item_title_view_entries_author', 'page.php?i=posts-author&profile_id={profile_id}', '', '', 'file-text col-red3', '', 2147483647, 1, 0, 0);
 
 
 -- PRIVACY 

@@ -16,6 +16,14 @@
 
 /* profile cover */
 
+.bx-base-pofile-cover-wrapper {
+    overflow:hidden;
+}
+
+.bx-base-pofile-menu {
+    text-align:center;
+}
+
 .bx-base-pofile-cover {
     position:relative;
     height:320px;
