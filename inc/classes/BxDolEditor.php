@@ -85,7 +85,7 @@ class BxDolEditor extends BxDol implements iBxDolFactoryObject
      * @param $sObject object name
      * @return object instance or false on error
      */
-    static public function getObjectInstance($sObject = false)
+    static public function getObjectInstance($sObject = false, $oTemplate = false)
     {
         if (!$sObject)
             $sObject = getParam('sys_editor_default');
@@ -104,7 +104,7 @@ class BxDolEditor extends BxDol implements iBxDolFactoryObject
         if (!empty($aObject['override_class_file']))
             require_once(BX_DIRECTORY_PATH_ROOT . $aObject['override_class_file']);
 
-        $o = new $sClass($aObject);
+        $o = new $sClass($aObject, $oTemplate);
 
         return ($GLOBALS['bxDolClasses']['BxDolEditor!'.$sObject] = $o);
     }

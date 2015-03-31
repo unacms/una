@@ -775,7 +775,7 @@ BLAH;
 
     function addHtmlEditor($iViewMode, &$aInput)
     {
-        $oEditor = BxDolEditor::getObjectInstance();
+        $oEditor = BxDolEditor::getObjectInstance(false, $this->oTemplate);
         if (!$oEditor)
             return false;
 
