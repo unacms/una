@@ -79,7 +79,7 @@
     <string name="_bx_posts_page_block_title_popular_entries_view_full"><![CDATA[Популярные Публикации (Полный просмотр)]]></string>
     <string name="_bx_posts_page_block_title_updated_entries"><![CDATA[Обновленные Публикации]]></string>
     <string name="_bx_posts_page_title_sys_view_entry_comments"><![CDATA[Комментарии к публикации]]></string>
-    <string name="_bx_posts_page_title_view_entry_comments"><![CDATA[Публикации Комментарии]]></string>
+    <string name="_bx_posts_page_title_view_entry_comments"><![CDATA[Комментарии к {title}]]></string>
     <string name="_bx_posts_page_title_sys_entries_of_author"><![CDATA[Публикации автора]]></string>
     <string name="_bx_posts_page_title_entries_of_author"><![CDATA[{display_name} - Публикации]]></string>
     <string name="_bx_posts_page_block_title_entries_of_author"><![CDATA[<a href="{profile_link}">{display_name}</a> - Публикации]]></string>   
