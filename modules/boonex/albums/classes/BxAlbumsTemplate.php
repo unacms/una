@@ -153,9 +153,14 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
                 $sText = $oMetatags->keywordsParse($iMediaId, $sText);
         }
 
+        $iProfileId = $aAlbumInfo[$CNF['FIELD_AUTHOR']];
+        $oProfile = BxDolProfile::getInstance($iProfileId);
+        if (!$oProfile) 
+            $oProfile = BxDolProfileUndefined::getInstance();
+
         $aVars = array(
             'title' => $sText,
-            'album' => _t('_bx_albums_txt_media_album_link', $sUrlAlbum,  bx_process_output($aAlbumInfo[$CNF['FIELD_TITLE']])),
+            'album' => _t('_bx_albums_txt_media_album_link', $sUrlAlbum,  bx_process_output($aAlbumInfo[$CNF['FIELD_TITLE']]), $oProfile->getUrl(), $oProfile->getDisplayName()),
         );
 
         $aNextPrev = array (
