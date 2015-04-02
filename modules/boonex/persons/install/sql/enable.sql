@@ -180,7 +180,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 -- MENU: view submenu
 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_persons_view_submenu', '_bx_persons_menu_title_view_profile_submenu', 'bx_persons_view_submenu', 'bx_persons', 8, 0, 1, 'BxPersonsMenuView', 'modules/boonex/persons/classes/BxPersonsMenuView.php'),
+('bx_persons_view_submenu', '_bx_persons_menu_title_view_profile_submenu', 'bx_persons_view_submenu', 'bx_persons', 6, 0, 1, 'BxPersonsMenuView', 'modules/boonex/persons/classes/BxPersonsMenuView.php'),
 ('bx_persons_view_submenu_cover', '_bx_persons_menu_title_view_profile_submenu_cover', 'bx_persons_view_submenu', 'bx_persons', 14, 0, 1, 'BxPersonsMenuView', 'modules/boonex/persons/classes/BxPersonsMenuView.php');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
