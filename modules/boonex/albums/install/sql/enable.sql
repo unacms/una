@@ -57,17 +57,19 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 ('bx_albums_view_entry', 2, 'bx_albums', '_bx_albums_page_block_title_entry_author', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:13:\"entity_author\";}', 0, 0, 1, 0),
 ('bx_albums_view_entry', 3, 'bx_albums', '_bx_albums_page_block_title_entry_social_sharing', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:21:\"entity_social_sharing\";}', 0, 0, 1, 0);
 
+
 -- PAGE: view media
 
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_albums_view_media', 'view-album-media', '_bx_albums_page_title_sys_view_media', '_bx_albums_page_title_view_media', 'bx_albums', 11, 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxAlbumsPageMedia', 'modules/boonex/albums/classes/BxAlbumsPageMedia.php');
+('bx_albums_view_media', 'view-album-media', '_bx_albums_page_title_sys_view_media', '_bx_albums_page_title_view_media', 'bx_albums', 10, 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxAlbumsPageMedia', 'modules/boonex/albums/classes/BxAlbumsPageMedia.php');
 
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_albums_view_media', 2, 'bx_albums', '_bx_albums_page_block_title_entry_author', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:12:\"media_author\";}', 0, 0, 1, 0),
-('bx_albums_view_media', 3, 'bx_albums', '_bx_albums_page_block_title_entry_social_sharing', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:20:\"media_social_sharing\";}', 0, 0, 1, 0),
-('bx_albums_view_media', 1, 'bx_albums', '_bx_albums_page_block_title_entry_view_media', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:10:\"media_view\";}', 0, 0, 1, 0),
-('bx_albums_view_media', 1, 'bx_albums', '_bx_albums_page_block_title_entry_view_media_exif', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_albums";s:6:"method";s:10:"media_exif";}', 0, 0, 1, 1),
-('bx_albums_view_media', 1, 'bx_albums', '_bx_albums_page_block_title_entry_comments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:14:\"media_comments\";}', 0, 0, 1, 2);
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_albums_view_media', 1, 'bx_albums', '', '_bx_albums_page_block_title_entry_view_media', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:10:\"media_view\";}', 0, 0, 1, 0),
+('bx_albums_view_media', 2, 'bx_albums', '', '_bx_albums_page_block_title_entry_author', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:12:\"media_author\";}', 0, 0, 1, 0),
+('bx_albums_view_media', 3, 'bx_albums', '', '_bx_albums_page_block_title_entry_social_sharing', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:20:\"media_social_sharing\";}', 0, 0, 1, 0),
+('bx_albums_view_media', 4, 'bx_albums', '', '_bx_albums_page_block_title_entry_comments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:14:\"media_comments\";}', 0, 0, 1, 0),
+('bx_albums_view_media', 4, 'bx_albums', '', '_bx_albums_page_block_title_entry_view_media_exif', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_albums\";s:6:\"method\";s:10:\"media_exif\";}', 0, 0, 1, 1);
+
 
 -- PAGE: view entry comments
 
