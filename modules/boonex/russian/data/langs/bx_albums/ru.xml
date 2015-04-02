@@ -158,6 +158,7 @@
     <string name="_bx_albums_grid_action_err_delete"><![CDATA[Невозможно удалить выбранный(ные) альбом(ы).]]></string>
     <string name="_bx_albums_grid_txt_account_manager"><![CDATA[Перенаправить в управление аккаунтом.]]></string>
 
+    <string name="_bx_albums_txt_all_entries_by"><![CDATA[<a href="{0}">Все альбомы от {1} ({2})</a>]]></string>
     <string name="_bx_albums_txt_sample_single"><![CDATA[альбом]]></string>
     <string name="_bx_albums_txt_sample_comment_single"><![CDATA[комментарий к альбому]]></string>
     <string name="_bx_albums_txt_media_single"><![CDATA[изображение]]></string>

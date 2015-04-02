@@ -146,6 +146,7 @@
     <string name="_bx_posts_grid_action_err_delete"><![CDATA[Невозможно удалить выбранную(ные) публикацию(ции).]]></string>
     <string name="_bx_posts_grid_txt_account_manager"><![CDATA[Перенаправить в Управление аккаунтом.]]></string>
 
+    <string name="_bx_posts_txt_all_entries_by"><![CDATA[<a href="{0}">Все публикации от {1} ({2})</a>]]></string>
     <string name="_bx_posts_txt_sample_single"><![CDATA[публикация]]></string>
-    <string name="_bx_posts_txt_sample_comment_single"><![CDATA[комментарии к публикации]]></string>
+    <string name="_bx_posts_txt_sample_comment_single"><![CDATA[комментарии к публикации]]></string>    
 </resources>

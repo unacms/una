@@ -126,7 +126,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         return $this->parseHtmlByName($sTemplateName, $aVars);
     }
 
-    function entryAuthor ($aData, $iProfileId = false, $sFuncAuthorDesc = 'getAuthorDesc', $sTemplateName = 'author.html')
+    function entryAuthor ($aData, $iProfileId = false, $sFuncAuthorDesc = 'getAuthorDesc', $sTemplateName = 'author.html', $sFuncAuthorAddon = 'getAuthorAddon')
     {
         $oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$oModule->_oConfig->CNF;
@@ -141,11 +141,19 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         if (!$oProfile)
             return '';
 
+        $sAddon = $sFuncAuthorAddon ? $this->$sFuncAuthorAddon($aData, $oProfile) : '';
+
         $aVars = array (
             'author_url' => $oProfile->getUrl(),
             'author_thumb_url' => $oProfile->getThumb(),
             'author_title' => $oProfile->getDisplayName(),
             'author_desc' => $sFuncAuthorDesc ? $this->$sFuncAuthorDesc($aData) : '',
+            'bx_if:addon' => array (
+                'condition' => (bool)$sAddon,
+                'content' => array (
+                    'content' => $sAddon,
+                ),
+            ),
         );
         return $this->parseHtmlByName($sTemplateName, $aVars);
     }
@@ -154,6 +162,15 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
     {
         $oModule = BxDolModule::getInstance($this->MODULE);
         return _t('_sys_txt_n_by', bx_time_js($aData[$oModule->_oConfig->CNF['FIELD_ADDED']], BX_FORMAT_DATE));
+    }
+
+    function getAuthorAddon ($aData, $oProfile)
+    {
+        $oModule = BxDolModule::getInstance($this->MODULE);
+        $CNF = &$oModule->_oConfig->CNF;
+        $sUrl = 'page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id=' . $oProfile->id();
+        $sUrl = BxDolPermalinks::getInstance()->permalink($sUrl);
+        return _t($CNF['T']['txt_all_entries_by'], $sUrl, $oProfile->getDisplayName(), $oModule->_oDb->getEntriesNumByAuthor($oProfile->id()));
     }
 
     function entryAttachments ($aData)

@@ -146,6 +146,7 @@
     <string name="_bx_posts_grid_action_err_delete"><![CDATA[Cannot delete the selected post(s).]]></string>
     <string name="_bx_posts_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
 
+    <string name="_bx_posts_txt_all_entries_by"><![CDATA[<a href="{0}">All Posts by {1} ({2})</a>]]></string>
     <string name="_bx_posts_txt_sample_single"><![CDATA[post]]></string>
-    <string name="_bx_posts_txt_sample_comment_single"><![CDATA[post's comment]]></string>
+    <string name="_bx_posts_txt_sample_comment_single"><![CDATA[post's comment]]></string>    
 </resources>
