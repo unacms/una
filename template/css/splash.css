@@ -12,6 +12,10 @@
 }
 
 /*--- Splash ---*/
+.bx-splash {
+	position: relative;
+}
+
 .bx-spl-preload {
 	position: absolute;
 
@@ -50,6 +54,15 @@
 
 .bx-spl-content {
 	position: relative;
+}
+
+.bx-spl-slide .bx-spl-content h1 {
+	font-size: 36px;
+	font-size: 2.25rem;
+}
+.bx-spl-slide .bx-spl-content h3 {
+	font-size: 24px;
+	font-size: 1.5rem;
 }
 
 /*--- Slide 1 ---*/
@@ -96,13 +109,13 @@
 #bx-spl-slide03 .bx-spl-content h3,
 #bx-spl-slide03 .bx-spl-content .bx-spl-join a,
 #bx-spl-slide04 .bx-spl-content h3  {
-	font-size: 32px;
-	font-size: 2rem;
 	color: #ffffff;	
 }
 #bx-spl-slide01 .bx-spl-content .bx-spl-join,
 #bx-spl-slide03 .bx-spl-content .bx-spl-join {
 	display: inline-block;
+	padding-left: 60px;
+	padding-right: 60px;
 	border-color: #ffffff;
 }
 
@@ -111,6 +124,9 @@
 	background-color: #ffffff;
 }
 #bx-spl-slide02 .bx-spl-image {
+	position: relative;
+	bottom: -100%;
+	left: 0px;
 	width: 50%;
 	text-align: center;
 }

@@ -13,11 +13,11 @@
 			</video>
 		</div>
 		<div class="bx-spl-container">
-			<div class="bx-spl-content">
-				<h1>Connect with people that share your passion.</h1>
-				<h3>Stories, ideas, photos, videos, questions, jokes, discussions, anythins.<br />Follow inspiring people and inspire your followers.</h3>
-				<div class="bx-spl-join bx-def-margin-topbottom bx-def-padding-leftright bx-def-padding-sec-topbottom bx-def-border bx-def-round-corners">
-					<a class="bx-def-font-h3" href="__join_link__">Join Now</a>
+			<div class="bx-spl-content" data-top="opacity:1" data-top-bottom="opacity:0">
+				<h1 class="bx-def-font-semibold">Connect with people that share your passion.</h1>
+				<h3 class="bx-def-font-light">Stories, ideas, photos, videos, questions, jokes, discussions, anythins.<br />Follow inspiring people and inspire your followers.</h3>
+				<div class="bx-spl-join bx-def-margin-topbottom bx-def-padding-sec-topbottom bx-def-border bx-def-round-corners">
+					<a class="bx-def-font-h3 bx-def-font-light" href="__join_link__">Join Now</a>
 				</div>
 			</div>
 		</div>
@@ -26,11 +26,11 @@
 	<div id="bx-spl-slide02" class="bx-spl-slide">
 		<div class="bx-spl-bg">
 			<div class="bx-spl-container">
-				<div class="bx-spl-image">
+				<div class="bx-spl-image" data-bottom-top="bottom:-50%" data-bottom="bottom:0%">
 					<img src="<bx_image_url:cover02.jpg />" />
 				</div>
 				<div class="bx-spl-content" data-bottom-top="right:-50%;" data-bottom="right:0%;">
-					<h3>"Pull up a chair. Take a taste.<br />Come join us. Life is so endlessly<br />delicious."</h3>
+					<h3 class="bx-def-font-light">"Pull up a chair. Take a taste.<br />Come join us. Life is so endlessly<br />delicious."</h3>
 				</div>
 			</div>
 		</div>
@@ -42,9 +42,9 @@
 		</div>
 		<div class="bx-spl-container" data-anchor-target="#bx-spl-slide03 .bx-spl-bg" data-0="@class:!bx-spl-container bx-splc-init" data-top="@class:!bx-spl-container bx-splc-start" data-bottom="@class:!bx-spl-container bx-splc-stop">
 			<div class="bx-spl-content">
-				<h3>"The only way to have a friend is to be one."</h3>
-				<div class="bx-spl-join bx-def-margin-topbottom bx-def-padding-leftright bx-def-padding-sec-topbottom bx-def-border bx-def-round-corners">
-					<a class="bx-def-font-h3" href="__join_link__">Join Now</a>
+				<h3 class="bx-def-font-light">"The only way to have a friend is to be one."</h3>
+				<div class="bx-spl-join bx-def-margin-topbottom bx-def-padding-sec-topbottom bx-def-border bx-def-round-corners">
+					<a class="bx-def-font-h3 bx-def-font-light" href="__join_link__">Join Now</a>
 				</div>
 			</div>
 		</div>
@@ -54,7 +54,7 @@
 		<div class="bx-spl-bg">
 			<div class="bx-spl-container">
 				<div class="bx-spl-content">
-					<h3>Already one of us?</h3>
+					<h3 class="bx-def-font-light">Already one of us?</h3>
 					<div class="bx-spl-login">__login_form__</div>
 				</div>
 			</div>
@@ -63,9 +63,21 @@
 
 	<script type="text/javascript">
 		$(document).ready(function () {
+			$(window).resize(function() {
+				var fMuxWnd = 0.80;
+				var iHeightWnd = $(window).height();
+
+				var iHeightSld = ($('#bx-spl-slide01').width() / 1280) * 720;
+				iHeightSld = fMuxWnd * iHeightWnd < iHeightSld ? fMuxWnd * iHeightWnd : iHeightSld;
+				$('#bx-spl-slide01').height(iHeightSld);
+
+				var iHeightImg = ($('#bx-spl-slide02 .bx-spl-image').width() / 1024) * 523;
+				$('#bx-spl-slide02').height(iHeightImg);
+
+				$('#bx-spl-slide03 .bx-spl-container, #bx-spl-slide04').height(iHeightWnd);
+			}).resize();
+
 			skrollr.init();
-			
-			$('#bx-spl-slide03 .bx-spl-container, #bx-spl-slide04').height($(window).height());
 		});
 	</script>
 </div>
