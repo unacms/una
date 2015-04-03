@@ -46,9 +46,9 @@ class BxBaseMenuSwitchLanguage extends BxTemplMenu
                 'id' => $sName,
                 'name' => $sName,
                 'class' => '',
-                'title' => $sLang,
+                'title' => genFlag($sName) . ' ' . $sLang,
                 'target' => '_self',
-                'icon' => 'sys_fl_' . $sName . '.gif',
+                'icon' => '',
                 'link' => bx_html_attribute(bx_append_url_params($aPage[0], $aPageParams)),
                 'onclick' => ''
             );

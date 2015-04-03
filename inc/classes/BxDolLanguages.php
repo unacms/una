@@ -85,6 +85,13 @@ class BxDolLanguages extends BxDol implements iBxDolSingleton
         return $this->oDb->getLanguageId($sLang);
     }
 
+    function getLangFlag($sLang = '')
+    {
+        if (!$sLang)
+            $sLang = $this->getCurrentLanguage();
+        return $this->oDb->getLanguageFlag($sLang);
+    }
+
     function getDefaultLangName()
     {
         return getParam('lang_default');
