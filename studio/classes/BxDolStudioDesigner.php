@@ -137,8 +137,7 @@ class BxDolStudioDesigner extends BxTemplStudioPage
     function submitCover(&$oForm)
     {
     	$this->oDb->setParam('sys_site_cover_code', $oForm->getCleanValue('code'));
-        $this->oDb->setParam('sys_site_cover_visibility', $oForm->getCleanValue('visibility'));
-        $this->oDb->setParam('sys_site_cover_logged', $oForm->getCleanValue('logged') == 'on' ? 'on' : '');
+        $this->oDb->setParam('sys_site_cover_enabled', $oForm->getCleanValue('enabled') == 'on' ? 'on' : '');
 
         return $this->getJsResult('_adm_dsg_scs_save', true, true, BX_DOL_URL_STUDIO . 'designer.php?page=' . BX_DOL_STUDIO_DSG_TYPE_COVER);
     }

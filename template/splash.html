@@ -1,40 +1,71 @@
 <div class="bx-splash bx-def-color-bg-page">
-	<div class="bx-spl-image">
-		<img src="<bx_image_url:splash.png />" />
+	<div id="bx-spl-preload" class="bx-spl-preload">
+		<img src="<bx_image_url:cover01.jpg />">
+		<img src="<bx_image_url:cover02.jpg />">
+		<img src="<bx_image_url:cover03.jpg />">
 	</div>
-	<div class="bx-spl-slogan bx-def-font-h1">
-		<bx_text:_sys_splash_slogan />
+
+	<div id="bx-spl-slide01" class="bx-spl-slide">
+		<div class="bx-spl-bg">
+			<video class="bx-spl-slide-video" poster="<bx_image_url:cover01.jpg />" loop autoplay muted>
+				<source src="<bx_image_url:cover01.mp4 />" type="video/mp4">
+				<source src="<bx_image_url:cover01.webm />" type="video/webm">
+			</video>
+		</div>
+		<div class="bx-spl-container">
+			<div class="bx-spl-content">
+				<h1>Connect with people that share your passion.</h1>
+				<h3>Stories, ideas, photos, videos, questions, jokes, discussions, anythins.<br />Follow inspiring people and inspire your followers.</h3>
+				<div class="bx-spl-join bx-def-margin-topbottom bx-def-padding-leftright bx-def-padding-sec-topbottom bx-def-border bx-def-round-corners">
+					<a class="bx-def-font-h3" href="__join_link__">Join Now</a>
+				</div>
+			</div>
+		</div>
 	</div>
-	<div class="bx-spl-form">
-		__form__
-		<script type="text/javascript">
-            $(document).ready(function () {
-                $("#__form_id__").ajaxForm({ 
-                    dataType: "json",
-                    beforeSubmit: function (formData, jqForm, options) {
-                    	var oForm = $("#__form_id__");
-                    	oForm.find('.bx-form-warn').hide();
 
-                        bx_loading(oForm, true);
-                    },
-                    success: function (oData) {
-                    	bx_loading($("#__form_id__"), false);
-
-                    	if (oData && oData.msg != undefined) {
-                            alert(oData.msg);
-                        }
-
-                    	if (oData && oData.err != undefined) {
-                            for(var sKey in oData.err)
-                            	$('#bx-form-element-' + sKey + ' .bx-form-warn').html(oData.err[sKey]).show();
-                        }
-
-                    	if (oData && oData.eval != undefined) {
-                            eval(oData.eval);
-                        }
-                    }
-                });
-            });
-        </script>
+	<div id="bx-spl-slide02" class="bx-spl-slide">
+		<div class="bx-spl-bg">
+			<div class="bx-spl-container">
+				<div class="bx-spl-image">
+					<img src="<bx_image_url:cover02.jpg />" />
+				</div>
+				<div class="bx-spl-content" data-bottom-top="right:-50%;" data-bottom="right:0%;">
+					<h3>"Pull up a chair. Take a taste.<br />Come join us. Life is so endlessly<br />delicious."</h3>
+				</div>
+			</div>
+		</div>
 	</div>
+
+	<div id="bx-spl-slide03" class="bx-spl-slide">
+		<div class="bx-spl-bg">
+			<img src="<bx_image_url:cover03.jpg />" />
+		</div>
+		<div class="bx-spl-container" data-anchor-target="#bx-spl-slide03 .bx-spl-bg" data-0="@class:!bx-spl-container bx-splc-init" data-top="@class:!bx-spl-container bx-splc-start" data-bottom="@class:!bx-spl-container bx-splc-stop">
+			<div class="bx-spl-content">
+				<h3>"The only way to have a friend is to be one."</h3>
+				<div class="bx-spl-join bx-def-margin-topbottom bx-def-padding-leftright bx-def-padding-sec-topbottom bx-def-border bx-def-round-corners">
+					<a class="bx-def-font-h3" href="__join_link__">Join Now</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="bx-spl-slide04" class="bx-spl-slide">
+		<div class="bx-spl-bg">
+			<div class="bx-spl-container">
+				<div class="bx-spl-content">
+					<h3>Already one of us?</h3>
+					<div class="bx-spl-login">__login_form__</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+			skrollr.init();
+			
+			$('#bx-spl-slide03 .bx-spl-container, #bx-spl-slide04').height($(window).height());
+		});
+	</script>
 </div>

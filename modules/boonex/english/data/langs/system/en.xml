@@ -564,11 +564,7 @@
 	<string name="_adm_dsg_err_save"><![CDATA[Cannot save: ]]></string>
 	<string name="_adm_dsg_scs_save"><![CDATA[The changes were successfully saved]]></string>
 	<string name="_adm_dsg_txt_alt_text"><![CDATA[Logo Text]]></string>
-	<string name="_adm_dsg_txt_cover_logged"><![CDATA[Hide for logged in users]]></string>
-	<string name="_adm_dsg_txt_cover_visibility"><![CDATA[Visibility]]></string>
-	<string name="_adm_dsg_txt_cover_visibility_all"><![CDATA[show on all pages]]></string>
-	<string name="_adm_dsg_txt_cover_visibility_disable"><![CDATA[disable]]></string>
-	<string name="_adm_dsg_txt_cover_visibility_index"><![CDATA[show on homepage]]></string>
+	<string name="_adm_dsg_txt_cover_enabled"><![CDATA[Enable cover page]]></string>
 	<string name="_adm_dsg_txt_default"><![CDATA[default]]></string>
 	<string name="_adm_dsg_txt_icon_apple"><![CDATA[Apple Touch Devices (152x152)]]></string>
 	<string name="_adm_dsg_txt_icon_facebook"><![CDATA[Facebook Share (100x100)]]></string>

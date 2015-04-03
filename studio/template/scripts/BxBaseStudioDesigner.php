@@ -344,26 +344,12 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
                         'pass' => 'XssHtml',
                     ),
 				),
-				'visibility' => array(
-					'type' => 'radio_set',
-					'name' => 'visibility',
-					'caption' => _t('_adm_dsg_txt_cover_visibility'),
-					'value' =>  getParam('sys_site_cover_visibility'),
-					'values' => array(
-						'disable' => _t('_adm_dsg_txt_cover_visibility_disable'),
-						'index' => _t('_adm_dsg_txt_cover_visibility_index'),
-						'all' => _t('_adm_dsg_txt_cover_visibility_all')
-					),
-					'db' => array (
-                        'pass' => 'Xss',
-                    ),
-				),
-				'logged' => array(
+				'enabled' => array(
 					'type' => 'checkbox',
-					'name' => 'logged',
-					'caption' => _t('_adm_dsg_txt_cover_logged'),
+					'name' => 'enabled',
+					'caption' => _t('_adm_dsg_txt_cover_enabled'),
 					'value' => 'on',
-					'checked' => getParam('sys_site_cover_logged') == 'on',
+					'checked' => getParam('sys_site_cover_enabled') == 'on',
 					'db' => array (
                         'pass' => 'Xss',
                     ),

@@ -50,8 +50,11 @@
 }
 
 /* --------------- menu bottom */
+#bx-menu-bottom,
+#bx-footer-copyright {
+	line-height: 24px;
+	line-height: 1.5rem;
+}
 #bx-menu-bottom {
 	float: left;
 }
-
-

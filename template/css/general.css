@@ -114,8 +114,8 @@
 	height: 6.25rem;
 	bottom: 0;
 }
-#bx-footer {
-    padding-bottom:60px;
+#bx-footer-wrapper .bx-def-hr {
+	margin-top: 0px;
 }
 #bx-menu-bottom {
 	float: left;
