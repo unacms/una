@@ -44,6 +44,7 @@ class BxPostsConfig extends BxBaseModTextConfig
 
             'URL_HOME' => 'page.php?i=posts-home',
             'URL_POPULAR' => 'page.php?i=posts-popular',
+            'URL_UPDATED' => 'page.php?i=posts-updated',
         	'URL_MANAGE_COMMON' => 'page.php?i=posts-manage',
         	'URL_MANAGE_ADMINISTRATION' => 'page.php?i=posts-administration',
 
@@ -99,6 +100,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             	'filter_item_select_one_filter1' => '_bx_posts_grid_filter_item_title_adm_select_one_filter1',
             	'menu_item_manage_my' => '_bx_posts_menu_item_title_manage_my',
             	'menu_item_manage_all' => '_bx_posts_menu_item_title_manage_all',
+                'txt_all_entries_by' => '_bx_posts_txt_all_entries_by',
             ),
         );
 

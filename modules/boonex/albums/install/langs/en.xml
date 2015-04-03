@@ -72,6 +72,7 @@
     <string name="_bx_albums_page_block_title_entry_author"><![CDATA[Author]]></string>
     <string name="_bx_albums_page_block_title_entry_actions"><![CDATA[Actions]]></string>
     <string name="_bx_albums_page_block_title_entry_comments"><![CDATA[Comments]]></string>
+    <string name="_bx_albums_page_block_title_entry_comments_link"><![CDATA[Comments to <a href="{entry_link}">{title}</a>]]></string>
     <string name="_bx_albums_page_block_title_entry_location"><![CDATA[Location]]></string>
     <string name="_bx_albums_page_title_sys_entries_popular"><![CDATA[Popular Albums]]></string>
     <string name="_bx_albums_page_title_entries_popular"><![CDATA[Popular Albums]]></string>
@@ -84,7 +85,7 @@
     <string name="_bx_albums_page_block_title_recent_media"><![CDATA[Recent Images]]></string>
     <string name="_bx_albums_page_block_title_updated_entries"><![CDATA[Updated Albums]]></string>
     <string name="_bx_albums_page_title_sys_view_entry_comments"><![CDATA[Album Comments]]></string>
-    <string name="_bx_albums_page_title_view_entry_comments"><![CDATA[Album Comments]]></string>
+    <string name="_bx_albums_page_title_view_entry_comments"><![CDATA[Comments to {title}]]></string>
     <string name="_bx_albums_page_title_sys_entries_of_author"><![CDATA[Albums of author]]></string>
     <string name="_bx_albums_page_title_entries_of_author"><![CDATA[{display_name}'s albums]]></string>
     <string name="_bx_albums_page_block_title_entries_of_author"><![CDATA[Albums by <a href="{profile_link}">{display_name}</a>]]></string>   
@@ -156,12 +157,13 @@
     <string name="_bx_albums_grid_action_err_delete"><![CDATA[Cannot delete the selected album(s).]]></string>
     <string name="_bx_albums_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
 
+    <string name="_bx_albums_txt_all_entries_by"><![CDATA[<a href="{0}">All Albums by {1} ({2})</a>]]></string>
     <string name="_bx_albums_txt_sample_single"><![CDATA[album]]></string>
-    <string name="_bx_albums_txt_sample_comment_single"><![CDATA[album's comment]]></string>
+    <string name="_bx_albums_txt_sample_comment_single"><![CDATA[album's comment]]></string>    
     <string name="_bx_albums_txt_media_single"><![CDATA[image]]></string>
     <string name="_bx_albums_txt_media_comment_single"><![CDATA[image's comment]]></string>
 	<string name="_bx_albums_txt_media_title_alt"><![CDATA[{0}'s media]]></string>
-	<string name="_bx_albums_txt_media_album_link"><![CDATA[Album: <a href="{0}">{1}</a>]]></string>
+	<string name="_bx_albums_txt_media_album_link"><![CDATA[<a href="{0}">{1}</a> album by <a href="{2}">{3}</a>]]></string>
 	<string name="_bx_albums_txt_media_album_camera"><![CDATA[Camera]]></string>
 	<string name="_bx_albums_txt_media_album_focal_length"><![CDATA[Focal length]]></string>
 	<string name="_bx_albums_txt_media_album_focal_length_value"><![CDATA[{0}mm]]></string>

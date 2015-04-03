@@ -72,6 +72,7 @@
     <string name="_bx_albums_page_block_title_entry_author"><![CDATA[Автор]]></string>
     <string name="_bx_albums_page_block_title_entry_actions"><![CDATA[Действия]]></string>
     <string name="_bx_albums_page_block_title_entry_comments"><![CDATA[Комментарии]]></string>
+    <string name="_bx_albums_page_block_title_entry_comments_link"><![CDATA[Комментарии к <a href="{entry_link}">{title}</a>]]></string>
     <string name="_bx_albums_page_block_title_entry_location"><![CDATA[Расположение]]></string>
     <string name="_bx_albums_page_title_sys_entries_popular"><![CDATA[Популярные альбомы]]></string>
     <string name="_bx_albums_page_title_entries_popular"><![CDATA[Популярные альбомы]]></string>
@@ -84,7 +85,7 @@
     <string name="_bx_albums_page_block_title_recent_media"><![CDATA[Последние изображения]]></string>
     <string name="_bx_albums_page_block_title_updated_entries"><![CDATA[Обновлённые альбомы]]></string>
     <string name="_bx_albums_page_title_sys_view_entry_comments"><![CDATA[Комментарии к альбому]]></string>
-    <string name="_bx_albums_page_title_view_entry_comments"><![CDATA[Комментарии к альбому]]></string>
+    <string name="_bx_albums_page_title_view_entry_comments"><![CDATA[Комментарии к {title}]]></string>
     <string name="_bx_albums_page_title_sys_entries_of_author"><![CDATA[Альбомы автора]]></string>
     <string name="_bx_albums_page_title_entries_of_author"><![CDATA[{display_name} - Альбомы]]></string>
     <string name="_bx_albums_page_block_title_entries_of_author"><![CDATA[<a href="{profile_link}">{display_name}</a> - Альбомы]]></string>
@@ -157,12 +158,13 @@
     <string name="_bx_albums_grid_action_err_delete"><![CDATA[Невозможно удалить выбранный(ные) альбом(ы).]]></string>
     <string name="_bx_albums_grid_txt_account_manager"><![CDATA[Перенаправить в управление аккаунтом.]]></string>
 
+    <string name="_bx_albums_txt_all_entries_by"><![CDATA[<a href="{0}">Все альбомы от {1} ({2})</a>]]></string>
     <string name="_bx_albums_txt_sample_single"><![CDATA[альбом]]></string>
     <string name="_bx_albums_txt_sample_comment_single"><![CDATA[комментарий к альбому]]></string>
     <string name="_bx_albums_txt_media_single"><![CDATA[изображение]]></string>
     <string name="_bx_albums_txt_media_comment_single"><![CDATA[комментарий к изображению]]></string>
 	<string name="_bx_albums_txt_media_title_alt"><![CDATA[медиа-файлы автора {0}]]></string>
-	<string name="_bx_albums_txt_media_album_link"><![CDATA[Альбом: <a href="{0}">{1}</a>]]></string>
+	<string name="_bx_albums_txt_media_album_link"><![CDATA[<a href="{0}">{1}</a> альбом от <a href="{2}">{3}</a>]]></string>
 	<string name="_bx_albums_txt_media_album_camera"><![CDATA[Камера]]></string>
 	<string name="_bx_albums_txt_media_album_focal_length"><![CDATA[Фокусное расстояние]]></string>
 	<string name="_bx_albums_txt_media_album_focal_length_value"><![CDATA[{0} мм]]></string>

@@ -66,6 +66,7 @@
     <string name="_bx_posts_page_block_title_entry_author"><![CDATA[Author]]></string>
     <string name="_bx_posts_page_block_title_entry_actions"><![CDATA[Actions]]></string>
     <string name="_bx_posts_page_block_title_entry_comments"><![CDATA[Comments]]></string>
+    <string name="_bx_posts_page_block_title_entry_comments_link"><![CDATA[Comments to <a href="{entry_link}">{title}</a>]]></string>
     <string name="_bx_posts_page_block_title_entry_location"><![CDATA[Location]]></string>
     <string name="_bx_posts_page_block_title_entry_attachments"><![CDATA[Attachments]]></string>
     <string name="_bx_posts_page_block_title_entry_all_actions"><![CDATA[All Actions]]></string>
@@ -78,7 +79,7 @@
     <string name="_bx_posts_page_block_title_popular_entries_view_full"><![CDATA[Popular Posts (Full View)]]></string>
     <string name="_bx_posts_page_block_title_updated_entries"><![CDATA[Updated Posts]]></string>
     <string name="_bx_posts_page_title_sys_view_entry_comments"><![CDATA[Post Comments]]></string>
-    <string name="_bx_posts_page_title_view_entry_comments"><![CDATA[Post Comments]]></string>
+    <string name="_bx_posts_page_title_view_entry_comments"><![CDATA[Comments to {title}]]></string>
     <string name="_bx_posts_page_title_sys_entries_of_author"><![CDATA[Posts of author]]></string>
     <string name="_bx_posts_page_title_entries_of_author"><![CDATA[Posts by {display_name}]]></string>
     <string name="_bx_posts_page_block_title_entries_of_author"><![CDATA[Posts by <a href="{profile_link}">{display_name}</a>]]></string>
@@ -145,6 +146,7 @@
     <string name="_bx_posts_grid_action_err_delete"><![CDATA[Cannot delete the selected post(s).]]></string>
     <string name="_bx_posts_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
 
+    <string name="_bx_posts_txt_all_entries_by"><![CDATA[<a href="{0}">All Posts by {1} ({2})</a>]]></string>
     <string name="_bx_posts_txt_sample_single"><![CDATA[post]]></string>
-    <string name="_bx_posts_txt_sample_comment_single"><![CDATA[post's comment]]></string>
+    <string name="_bx_posts_txt_sample_comment_single"><![CDATA[post's comment]]></string>    
 </resources>

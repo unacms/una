@@ -94,6 +94,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             'id' => $aData[$CNF['FIELD_ID']],
             'content_url' => $sUrl,
             'title' => $aData[$CNF['FIELD_NAME']],
+            'menu' => BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY_COVER'])->getCode(),
 
             'picture_avatar_url' => $sUrlAvatar,
             'picture_popup' => $sPicturePopup,

@@ -153,9 +153,14 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
                 $sText = $oMetatags->keywordsParse($iMediaId, $sText);
         }
 
+        $iProfileId = $aAlbumInfo[$CNF['FIELD_AUTHOR']];
+        $oProfile = BxDolProfile::getInstance($iProfileId);
+        if (!$oProfile) 
+            $oProfile = BxDolProfileUndefined::getInstance();
+
         $aVars = array(
             'title' => $sText,
-            'album' => _t('_bx_albums_txt_media_album_link', $sUrlAlbum,  bx_process_output($aAlbumInfo[$CNF['FIELD_TITLE']])),
+            'album' => _t('_bx_albums_txt_media_album_link', $sUrlAlbum,  bx_process_output($aAlbumInfo[$CNF['FIELD_TITLE']]), $oProfile->getUrl(), $oProfile->getDisplayName()),
         );
 
         $aNextPrev = array (
@@ -300,7 +305,12 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
         if (!($aAlbumInfo = $oModule->_oDb->getContentInfoById($aMediaInfo['content_id'])))
             return '';
 
-        return $this->entryAuthor ($aMediaInfo, $aAlbumInfo[$CNF['FIELD_AUTHOR']], '');
+        return $this->entryAuthor ($aMediaInfo, $aAlbumInfo[$CNF['FIELD_AUTHOR']], 'getMediaDesc');
+    }
+
+    function getMediaDesc ($aData)
+    {
+        return _t('_sys_txt_n_by', bx_time_js($aData['added'], BX_FORMAT_DATE));
     }
 
     function mediaExif ($aMediaInfo, $iProfileId = false, $sFuncAuthorDesc = '', $sTemplateName = 'media-exif.html') 
