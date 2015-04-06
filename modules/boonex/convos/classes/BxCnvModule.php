@@ -270,6 +270,14 @@ class BxCnvModule extends BxBaseModTextModule
     }
 
     /**
+     * No social sharing for private conversations
+     */
+    public function serviceEntitySocialSharing ($iContentId = 0)
+    {
+        return '';
+    }
+
+    /**
      * No moderators for personal convos
      */
     protected function _isModerator ($isPerformAction = false)

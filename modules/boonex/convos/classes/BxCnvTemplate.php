@@ -240,6 +240,10 @@ class BxCnvTemplate extends BxBaseModTextTemplate
         return $this->parseHtmlByName('message_preview_in_grid.html', $aVars);
     }
 
+    function getAuthorAddon ($aData, $oProfile)
+    {
+        return '';
+    }
 }
 
 /** @} */

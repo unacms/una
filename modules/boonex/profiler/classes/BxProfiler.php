@@ -40,6 +40,9 @@ class BxProfiler extends BxDol
     protected $_aModulesNames = array();
     protected $_aModulesLevel = 0;
 
+    protected $_aAlerts = array();
+    protected $_iAlertsLevel = 0;
+
     protected $_aInjections = array();
     protected $_sInjectionIndex = 0;
 
@@ -112,6 +115,7 @@ class BxProfiler extends BxDol
             echo $this->_plankPagesBlocks ();
             echo $this->_plankSql ();
             echo $this->_plankModules ();
+            echo $this->_plankAlerts ();
         }
     }
 
@@ -199,6 +203,30 @@ class BxProfiler extends BxDol
         $this->_aModules[$sHash]['raw_time'] = $iTime;
         if (isset($this->aConf['long_module']) && $iTime > $this->aConf['long_module'])
             $this->logModuleQuery ($iTime, $this->_aModules[$sHash]);
+    }
+
+    function beginAlert($sUnit, $sAction, $sHandler)
+    {
+        $sHash = md5($sUnit . $sAction . $sHandler);
+        ++$this->_iAlertsLevel;
+        $this->_aAlerts[$sHash] = array (
+            'name' => str_repeat("--", $this->_iAlertsLevel-1) . $sHandler,
+            'unit' => $sUnit,
+            'action' => $sAction,
+            'handler' => $sHandler,
+            'begin' => microtime (),
+            'time' => -1,
+        );
+    }
+
+    function endAlert($sUnit, $sAction, $sHandler)
+    {
+        $sHash = md5($sUnit . $sAction . $sHandler);
+        --$this->_iAlertsLevel;
+        $iTime = $this->_calcTime ($this->_aAlerts[$sHash]['begin']);
+        unset ($this->_aAlerts[$sHash]['begin']);
+        $this->_aAlerts[$sHash]['time'] = $this->_formatTime($iTime, 5);
+        $this->_aAlerts[$sHash]['raw_time'] = $iTime;
     }
 
     function beginInjection ($sId)
@@ -523,6 +551,27 @@ class BxProfiler extends BxDol
             $this->oTemplate->nameValue('Modules:', $sModules) .
             $this->oTemplate->nameValue('Modules Queries:', $sModulesQueries),
             $this->oTemplate->table($GLOBALS['bx_profiler']->_aModules)
+        );
+    }
+
+    function _plankAlerts ()
+    {
+        if (empty($GLOBALS['bx_profiler']->_aAlerts))
+            return;
+
+        $iTimeAlerts = 0;
+        foreach ($GLOBALS['bx_profiler']->_aAlerts as $k => $r) {
+            if (!isset($r['raw_time']))
+                continue;
+            $iTimeAlerts += $r['raw_time'];
+            unset ($GLOBALS['bx_profiler']->_aAlerts[$k]['raw_time']);
+        }
+
+        $sAlerts = count($GLOBALS['bx_profiler']->_aAlerts) . ' alerts responses (' . $this->_formatTime($iTimeAlerts, 3) . ')';
+
+        return $this->oTemplate->plank(
+            $this->oTemplate->nameValue('Alerts:', $sAlerts) .
+            $this->oTemplate->table($GLOBALS['bx_profiler']->_aAlerts)
         );
     }
 

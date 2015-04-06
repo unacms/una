@@ -23,14 +23,7 @@ class BxBaseMenuFooter extends BxTemplMenu
         foreach($aItems as $iKey => $aItem)
             switch($aItem['name']) {
                 case 'switch_language':
-                    $sLanguage = BxDolLanguages::getInstance()->getCurrentLangName();
-
-                    $sIcon = $this->_oTemplate->parseHtmlByName('bx_img.html', array(
-                        'src' => $this->_oTemplate->getIconUrl('sys_fl_' . $sLanguage . '.gif'),
-                        'bx_repeat:attrs' => array()
-                    ));
-
-                    $aItems[$iKey]['title'] = _t('_sys_menu_item_title_switch_language_mask', $aItems[$iKey]['title'], $sIcon);
+                    $aItems[$iKey]['title'] = _t('_sys_menu_item_title_switch_language_mask', $aItems[$iKey]['title'], genFlag());
                     break;
 
                 case 'switch_template':

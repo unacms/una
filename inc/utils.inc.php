@@ -424,14 +424,13 @@ function getVisitorIP()
     return $ip;
 }
 
-function genFlag( $country )
+function genFlag($sLang = '', $oTemplate = null)
 {
-    return '<img src="' . genFlagUrl($country) . '" />';
-}
-
-function genFlagUrl($country)
-{
-    return BxDolTemplate::getInstance()->getIconUrl('sys_fl_' . strtolower($country) . '.gif');
+    if (!$oTemplate)
+        $oTemplate = BxDolTemplate::getInstance();
+    $oTemplate->addCss(BX_DOL_URL_PLUGINS_PUBLIC . 'flag-icon-css/css/flag-icon.min.css');
+    $sFlag = BxDolLanguages::getInstance()->getLangFlag($sLang);
+    return '<span title="' . $sFlag . '" class="flag-icon flag-icon-' . $sFlag . '"></span>';
 }
 
 // print debug information ( e.g. arrays )

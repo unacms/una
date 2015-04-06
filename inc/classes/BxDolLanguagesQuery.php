@@ -39,17 +39,33 @@ class BxDolLanguagesQuery extends BxDolDb implements iBxDolSingleton
 
     function getLanguageId($sName, $bFromCache = true)
     {
-        $sSql = $this->prepare("SELECT `ID` FROM `sys_localization_languages` WHERE `Name`=? AND `Enabled`='1' LIMIT 1", $sName);
+        return (int)$this->getLanguageField($sName, 'ID', $bFromCache);
+    }
+
+    function getLanguageFlag($sName, $bFromCache = true)
+    {
+        return $this->getLanguageField($sName, 'Flag', $bFromCache);
+    }
+
+    protected function getLanguageField($sName, $sField, $bFromCache = true)
+    {
+        $sSql = $this->prepare("SELECT `" . $sField . "` FROM `sys_localization_languages` WHERE `Name`=? AND `Enabled`='1' LIMIT 1", $sName);
 
         if($bFromCache)
-            return (int)$this->fromCache('checkLangExists_' . $sName, 'getOne', $sSql);
+            return $this->fromCache('checkLangExists_' . $sName . '_' . $sField, 'getOne', $sSql);
         else
-            return (int)$this->getOne($sSql);
+            return $this->getOne($sSql);
     }
+
     function getLanguages($bIdAsKey = false, $bActiveOnly = false)
     {
+        return $this->getLanguagesWithKey($bIdAsKey ? 'ID' : 'Name', $bActiveOnly);
+    }
+
+    function getLanguagesWithKey($sKey = 'Name', $bActiveOnly = false)
+    {
         $sSql = "SELECT * FROM `sys_localization_languages` WHERE 1 " . ($bActiveOnly ? " AND `Enabled`='1'" : "") . " ORDER BY `Title` ASC";
-        return $this->getPairs($sSql, $bIdAsKey ? 'ID' : 'Name', 'Title');
+        return $this->getPairs($sSql, $sKey, 'Title');
     }
 
     function getLanguagesBy($aParams, &$aItems, $bReturnCount = true)
