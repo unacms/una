@@ -22,6 +22,10 @@ class BxBaseStudioFormView extends BxDolStudioForm
         $this->oTemplate->addJs(array(
             'forms.js'
         ));
+
+        $this->oTemplate->addCss(array(
+        	BX_DOL_URL_PLUGINS_PUBLIC . 'flag-icon-css/css/flag-icon.min.css'
+        ));
     }
 
     function genRow(&$aInput)
