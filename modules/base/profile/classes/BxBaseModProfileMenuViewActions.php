@@ -10,32 +10,13 @@
  */
 
 /**
- * View profile entry actions menu n popup
+ * View entry actions menu in popup
  */
 class BxBaseModProfileMenuViewActions extends BxBaseModProfileMenuView
 {
     protected function getMenuItemsRaw ()
     {
-        // combile values from ACTIONS_VIEW_ENTRY and ACTIONS_VIEW_ENTRY_MORE menus
-        $CNF = $this->_oModule->_oConfig->CNF;
-
-        if (empty($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY']))
-            return array();
-
-        $aItems = $this->_oQuery->getMenuItemsFromSet($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY']);
-        
-        if (empty($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE']))
-            return $aItems;
-
-        $aItemsMore = $this->_oQuery->getMenuItemsFromSet($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE']);
-        
-        // remove "more" item from ACTIONS_VIEW_ENTRY
-        $aItems = array_filter ($aItems, function ($aItem) {
-            return $aItem['order'] != BX_MENU_LAST_ITEM_ORDER;
-        });
-
-        // return combined array
-        return array_merge($aItems, $aItemsMore);
+        return $this->_getMenuItemsCombined ();
     }
 }
 
