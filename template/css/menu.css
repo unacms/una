@@ -462,6 +462,7 @@ li.bx-menu-inter-hidden {
 
 /* --------------- horizontal buttons menu */
 
+ul.bx-menu-btns-ver,
 ul.bx-menu-btns-hor {
 	padding:0;
     margin:0;
@@ -472,6 +473,13 @@ ul.bx-menu-btns-hor li {
     display:inline;
     display:inline-block;
 	vertical-align: bottom;
+}
+ul.bx-menu-btns-ver li {
+    text-align:center;
+}
+ul.bx-menu-btns-ver li .bx-btn {
+    float:none;
+    display:inline-block;
 }
 
 /* --------------- account popup menu */
