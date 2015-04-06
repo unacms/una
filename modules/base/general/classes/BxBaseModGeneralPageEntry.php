@@ -58,8 +58,8 @@ class BxBaseModGeneralPageEntry extends BxTemplPage
         $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
 
         // add actions menu to submenu
-        if (isset($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY']))
-            $oMenuSubmenu->setObjectActionsMenu($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY']);
+        if (isset($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_POPUP']))
+            $oMenuSubmenu->setObjectActionsMenu($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_POPUP']);
 
         // add social sharing menu to submenu
         $oMenuSubmenu->setServiceSocialSharing(array(

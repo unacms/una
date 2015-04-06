@@ -66,7 +66,7 @@ class BxBaseMenu extends BxDolMenu
     public function getMenuItems ()
     {
         if (!isset($this->_aObject['menu_items']))
-            $this->_aObject['menu_items'] = $this->_oQuery->getMenuItems();
+            $this->_aObject['menu_items'] = $this->getMenuItemsRaw ();
 
 		$aItems = array();
         foreach ($this->_aObject['menu_items'] as $aItem) {
@@ -76,6 +76,16 @@ class BxBaseMenu extends BxDolMenu
         }
 
         return $aItems;
+    }
+
+    /**
+     * Get menu items array, this is just a wrapper for DB function for make it easier to override.
+     * It is used in @see BxBaseMenu::getMenuItems
+     * @return array
+     */
+    protected function getMenuItemsRaw ()
+    {
+        return $this->_oQuery->getMenuItems();
     }
 
 	protected function _getMenuItem ($a)
