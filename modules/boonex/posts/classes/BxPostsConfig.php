@@ -15,6 +15,11 @@ class BxPostsConfig extends BxBaseModTextConfig
     {
         parent::__construct($aModule);
 
+        $aMenuItems2Methods = array (
+            'edit-post' => 'checkAllowedEdit',
+            'delete-post' => 'checkAllowedDelete',
+        );
+
         $this->CNF = array (
 
             // database tables
@@ -69,6 +74,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => 'bx_posts_entry_edit',
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_posts_entry_delete',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_posts_view', // actions menu on view entry page
+            'OBJECT_MENU_ACTIONS_VIEW_ENTRY_POPUP' => 'bx_posts_view_popup', // actions menu popup on view entry page
             'OBJECT_MENU_ACTIONS_MY_ENTRIES' => 'bx_posts_my', // actions menu on my entries page
             'OBJECT_MENU_SUBMENU' => 'bx_posts_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_posts_view_submenu', // view entry submenu
@@ -83,10 +89,8 @@ class BxPostsConfig extends BxBaseModTextConfig
                 'bx_posts_my' => array (
                     'create-post' => 'checkAllowedAdd',
                 ),
-                'bx_posts_view' => array (
-                    'edit-post' => 'checkAllowedEdit',
-                    'delete-post' => 'checkAllowedDelete',
-                ),
+                'bx_posts_view' => $aMenuItems2Methods,
+                'bx_posts_view_popup' => $aMenuItems2Methods,
             ),
 
             // some language keys

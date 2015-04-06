@@ -173,7 +173,8 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 -- MENU: actions menu for view entry 
 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_albums_view', '_bx_albums_menu_title_view_entry', 'bx_albums_view', 'bx_albums', 9, 0, 1, 'BxAlbumsMenuView', 'modules/boonex/albums/classes/BxAlbumsMenuView.php');
+('bx_albums_view', '_bx_albums_menu_title_view_entry', 'bx_albums_view', 'bx_albums', 9, 0, 1, 'BxAlbumsMenuView', 'modules/boonex/albums/classes/BxAlbumsMenuView.php'),
+('bx_albums_view_popup', '_bx_albums_menu_title_view_entry_popup', '', 'bx_albums', 16, 0, 1, 'BxAlbumsMenuViewActions', 'modules/boonex/albums/classes/BxAlbumsMenuViewActions.php');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_albums_view', 'bx_albums', '_bx_albums_menu_set_title_view_entry', 0);

@@ -94,8 +94,9 @@
 	<string name="_bx_posts_page_block_title_manage"><![CDATA[Manage Posts]]></string>    
 	<string name="_bx_posts_page_block_title_popular_keywords"><![CDATA[Popular Hashtags]]></string>
 
-    <string name="_bx_posts_menu_set_title_view_entry"><![CDATA[View Post]]></string>
-    <string name="_bx_posts_menu_title_view_entry"><![CDATA[View Post]]></string>
+    <string name="_bx_posts_menu_set_title_view_entry"><![CDATA[Post Actions]]></string>
+    <string name="_bx_posts_menu_title_view_entry"><![CDATA[Post Actions]]></string>
+    <string name="_bx_posts_menu_title_view_entry_popup"><![CDATA[Post Popup Actions]]></string>
     <string name="_bx_posts_menu_title_submenu"><![CDATA[Posts Submenu]]></string>
     <string name="_bx_posts_menu_set_title_submenu"><![CDATA[Posts Submenu]]></string>
     <string name="_bx_posts_menu_item_title_system_create_entry"><![CDATA[New Post]]></string>

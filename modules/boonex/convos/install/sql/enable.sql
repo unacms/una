@@ -54,7 +54,8 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 -- MENU: actions menu for view entry 
 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_convos_view', '_bx_cnv_menu_title_view_entry', 'bx_convos_view', 'bx_convos', 9, 0, 1, 'BxCnvMenuView', 'modules/boonex/convos/classes/BxCnvMenuView.php');
+('bx_convos_view', '_bx_cnv_menu_title_view_entry', 'bx_convos_view', 'bx_convos', 9, 0, 1, 'BxCnvMenuView', 'modules/boonex/convos/classes/BxCnvMenuView.php'),
+('bx_convos_view_popup', '_bx_cnv_menu_title_view_entry_popup', '', 'bx_convos', 16, 0, 1, 'BxCnvMenuViewActions', 'modules/boonex/convos/classes/BxCnvMenuViewActions.php');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_convos_view', 'bx_convos', '_bx_cnv_menu_set_title_view_entry', 0);
