@@ -47,7 +47,7 @@ class BxDolStudioLanguagesUtils extends BxDolLanguages implements iBxDolSingleto
         $this->oDb->getLanguagesBy(array('type' => 'by_name', 'value' => $sName), $aLanguage, false);
 
         if(!empty($aLanguage))
-            $aLanguage['icon'] = BxDolStudioTemplate::getInstance()->getIconUrl('sys_fl_' . $aLanguage['flag'] . '.gif');
+            $aLanguage['icon'] = genFlag($aLanguage['name'], BxDolStudioTemplate::getInstance());
 
         return $aLanguage;
     }
@@ -61,7 +61,7 @@ class BxDolStudioLanguagesUtils extends BxDolLanguages implements iBxDolSingleto
 
         $oTemplate  = BxDolStudioTemplate::getInstance();
         foreach($aLanguages as $iKey => $aLanguage)
-            $aLanguages[$iKey]['icon'] = $oTemplate->getIconUrl('sys_fl_' . $aLanguage['flag'] . '.gif');
+            $aLanguages[$iKey]['icon'] = genFlag($aLanguage['name'], $oTemplate);
 
         return $aLanguages;
     }

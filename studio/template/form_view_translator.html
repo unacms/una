@@ -1,7 +1,7 @@
 <div class="bx-def-padding-sec-leftright bx-def-color-bg-block">
     <bx_repeat:languages>
-        <div id="bx-form-language-__name__-__lang_name__-act" class="bx-form-input-language bx-def-margin-sec-topbottom active" style="background-image:url(__lang_flag__);<bx_if:hide_active> display:none;</bx_if:hide_active>">
-            __lang_title__: 
+        <div id="bx-form-language-__name__-__lang_name__-act" class="bx-form-input-language bx-def-margin-sec-topbottom active" style="<bx_if:hide_active> display:none;</bx_if:hide_active>">
+            __lang_flag__ __lang_title__: 
             <bx_if:act_value>
                 <span class="bx-form-input-language-value">__value__</span>
             </bx_if:act_value>
@@ -11,8 +11,8 @@
                 </span>
             </bx_if:act_missing>
         </div>
-        <div id="bx-form-language-__name__-__lang_name__-pas" class="bx-form-input-language bx-def-margin-sec-topbottom not-active" style="background-image:url(__lang_flag__);<bx_if:hide_passive> display:none;</bx_if:hide_passive>">
-            <a href="javascript:void(0)" onclick="javascript:fvtSelectLanguage('__name__', '__lang_name__', this);">__lang_title__</a>: 
+        <div id="bx-form-language-__name__-__lang_name__-pas" class="bx-form-input-language bx-def-margin-sec-topbottom not-active" style="<bx_if:hide_passive> display:none;</bx_if:hide_passive>">
+            <a href="javascript:void(0)" onclick="javascript:fvtSelectLanguage('__name__', '__lang_name__', this);">__lang_flag__ __lang_title__</a>: 
             <bx_if:pas_value>
                 <span class="bx-form-input-language-value">__value__</span>
             </bx_if:pas_value>

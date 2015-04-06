@@ -160,6 +160,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
     protected $_iDpMaxLevel = 0;
 
     protected $_sBrowseType = '';
+    protected $_bBrowseFilter = false;
     protected $_sBrowseFilter = '';
     protected $_sBpSessionKeyType = '';
     protected $_sBpSessionKeyFilter = '';
@@ -189,6 +190,8 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         $this->_aSystem['table_images2entries'] = 'sys_cmts_images2entries';
 
         $this->_aSystem['table_ids'] = 'sys_cmts_ids';
+
+        $this->_aSystem['is_browse_filter'] = (int)$this->_bBrowseFilter;
 
         $this->_iDpMaxLevel = (int)$this->_aSystem['number_of_levels'];
         $this->_sDisplayType = $this->_iDpMaxLevel == 0 ? BX_CMT_DISPLAY_FLAT : BX_CMT_DISPLAY_THREADED;

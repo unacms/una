@@ -38,9 +38,6 @@ div.bx-form-input-language,
 div.bx-form-input-language-current{
 	position: relative;
 	height: 17px;
-	padding-left: 22px;
-	background-repeat: no-repeat;
-	background-position: 0px center;
 	line-height: 17px;
 }
 

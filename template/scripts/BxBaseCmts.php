@@ -397,7 +397,7 @@ class BxBaseCmts extends BxDolCmts
         }
 
         $sBrowseFilter = '';
-        $bBrowseFilter = $bBrowseType;
+        $bBrowseFilter = (int)$this->_aSystem['is_browse_filter'] == 1;
         if($bBrowseFilter) {
             $aFilterLinks = array(
                 array('id' => $this->_sSystem . '-all', 'name' => $this->_sSystem . '-all', 'class' => '', 'title' => '_cmt_browse_all', 'target' => '_self', 'onclick' => 'javascript:' . $this->_sJsObjName . '.cmtChangeFilter(this, \'all\');'),
