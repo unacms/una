@@ -156,7 +156,8 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 -- MENU: actions menu for view entry 
 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_posts_view', '_bx_posts_menu_title_view_entry', 'bx_posts_view', 'bx_posts', 9, 0, 1, 'BxPostsMenuView', 'modules/boonex/posts/classes/BxPostsMenuView.php');
+('bx_posts_view', '_bx_posts_menu_title_view_entry', 'bx_posts_view', 'bx_posts', 9, 0, 1, 'BxPostsMenuView', 'modules/boonex/posts/classes/BxPostsMenuView.php'),
+('bx_posts_view_popup', '_bx_posts_menu_title_view_entry_popup', '', 'bx_posts', 16, 0, 1, 'BxPostsMenuViewActions', 'modules/boonex/posts/classes/BxPostsMenuViewActions.php');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_posts_view', 'bx_posts', '_bx_posts_menu_set_title_view_entry', 0);

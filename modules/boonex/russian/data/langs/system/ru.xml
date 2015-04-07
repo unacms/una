@@ -1819,6 +1819,7 @@
 	<string name="_sys_menu_set_title_toolbar_member"><![CDATA[Панель Инструментов - Пользователь]]></string>
 	<string name="_sys_menu_set_title_toolbar_site"><![CDATA[Панель Инструментов - Сайт]]></string>
 	<string name="_sys_menu_template_title_buttons_hor"><![CDATA[Горизонтальные Кнопки]]></string>
+	<string name="_sys_menu_template_title_buttons_ver"><![CDATA[Вертикальные Кнопки]]></string>
 	<string name="_sys_menu_template_title_floating_blocks"><![CDATA[Подвесные Блоки]]></string>
 	<string name="_sys_menu_template_title_floating_blocks_big"><![CDATA[Подвесные Блоки - Большие]]></string>
 	<string name="_sys_menu_template_title_footer"><![CDATA[Футер - Ссылки]]></string>

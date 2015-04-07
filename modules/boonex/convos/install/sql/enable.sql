@@ -54,7 +54,8 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 -- MENU: actions menu for view entry 
 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_convos_view', '_bx_cnv_menu_title_view_entry', 'bx_convos_view', 'bx_convos', 9, 0, 1, 'BxCnvMenuView', 'modules/boonex/convos/classes/BxCnvMenuView.php');
+('bx_convos_view', '_bx_cnv_menu_title_view_entry', 'bx_convos_view', 'bx_convos', 9, 0, 1, 'BxCnvMenuView', 'modules/boonex/convos/classes/BxCnvMenuView.php'),
+('bx_convos_view_popup', '_bx_cnv_menu_title_view_entry_popup', '', 'bx_convos', 16, 0, 1, 'BxCnvMenuViewActions', 'modules/boonex/convos/classes/BxCnvMenuViewActions.php');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_convos_view', 'bx_convos', '_bx_cnv_menu_set_title_view_entry', 0);
@@ -105,7 +106,7 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 -- MENU: add menu item to profiles modules actions menu (trigger* menu sets are processed separately upon modules enable/disable)
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('trigger_profile_view_actions', 'bx_convos', 'convos-compose', '_bx_cnv_menu_item_title_system_message', '_bx_cnv_menu_item_title_message', 'page.php?i=start-convo&profiles={profile_id}', '', '', 'envelope', '', 2147483647, 1, 0, 0);
+('trigger_profile_view_actions', 'bx_convos', 'convos-compose', '_bx_cnv_menu_item_title_system_message', '_bx_cnv_menu_item_title_message', 'page.php?i=start-convo&profiles={profile_id}', '', '', 'envelope', '', 2147483646, 1, 0, 0);
 
 -- GRID
 

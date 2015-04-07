@@ -7,6 +7,8 @@
  * @{
  */
 
+define('BX_MENU_LAST_ITEM_ORDER', 9999);
+
 /**
  * Database queries for menus.
  * @see BxDolMenu
@@ -47,7 +49,7 @@ class BxDolMenuQuery extends BxDolDb
             return false;
 
         if (empty($aMenuItem['order'])) {
-            $sQuery = $oDb->prepare("SELECT `order` FROM `sys_menu_items` WHERE `set_name` = ? AND `active` = 1 AND `order` != 9999 ORDER BY `order` DESC LIMIT 1", $aMenuItem['set_name']);
+            $sQuery = $oDb->prepare("SELECT `order` FROM `sys_menu_items` WHERE `set_name` = ? AND `active` = 1 AND `order` != ? ORDER BY `order` DESC LIMIT 1", $aMenuItem['set_name'], BX_MENU_LAST_ITEM_ORDER);
             $iProfileMenuOrder = (int)$oDb->getOne($sQuery);
             $aMenuItem['order'] = $iProfileMenuOrder + 1;
         }
@@ -61,10 +63,14 @@ class BxDolMenuQuery extends BxDolDb
 
     public function getMenuItems()
     {
-        $sQuery = $this->prepare("SELECT * FROM `sys_menu_items` WHERE `set_name` = ? ORDER BY `order` ASC", $this->_aObject['set_name']);
-        return $this->getAll($sQuery);
+        return $this->getMenuItemsFromSet($this->_aObject['set_name']);
     }
 
+    public function getMenuItemsFromSet($sSetName)
+    {
+        $sQuery = $this->prepare("SELECT * FROM `sys_menu_items` WHERE `set_name` = ? ORDER BY `order` ASC", $sSetName);
+        return $this->getAll($sQuery);
+    }
 }
 
 /** @} */
