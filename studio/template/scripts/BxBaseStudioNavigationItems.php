@@ -222,6 +222,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
             exit;
         }
 
+		bx_import('BxDolStudioUtils');
         $aForm = array(
             'form_attrs' => array(
                 'id' => 'adm-nav-item-create',

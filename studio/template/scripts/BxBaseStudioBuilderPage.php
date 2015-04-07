@@ -573,6 +573,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         if(empty($aBlock) || !is_array($aBlock))
             return array('msg' => _t('_adm_bp_err_block_not_found'));
 
+		bx_import('BxDolStudioUtils');
         $aForm = array(
             'form_attrs' => array(
                 'id' => 'adm-bp-block-edit',
@@ -994,6 +995,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                 )
             );
         else
+        	bx_import('BxDolStudioUtils');
             $aInputs = array(
                 'visible_for' => array(
                     'type' => 'select',

@@ -166,6 +166,7 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields
             exit;
         }
 
+        bx_import('BxDolStudioUtils');
         $aForm = array(
             'form_attrs' => array(
                 'id' => 'adm-form-field-visibility',

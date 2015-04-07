@@ -175,7 +175,7 @@ BxDolStudioBuilderPage.prototype.deleteBlockImage = function(iId) {
 };
 
 BxDolStudioBuilderPage.prototype.onChangeVisibleFor = function(oSelect) {
-	$('#bx-form-element-visible_for_levels').bx_anim($(oSelect).val() == 'all' ? 'hide' : 'show', this.sAnimationEffect, this.iAnimationSpeed);
+	$(oSelect).parents('form:first').find('#bx-form-element-visible_for_levels').bx_anim($(oSelect).val() == 'all' ? 'hide' : 'show', this.sAnimationEffect, this.iAnimationSpeed);
 };
 
 BxDolStudioBuilderPage.prototype.onEditBlock = function(oData) {
