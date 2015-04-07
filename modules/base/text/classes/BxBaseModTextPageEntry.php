@@ -20,20 +20,26 @@ class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry
 
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        // select view entry submenu
-        $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
-        $oMenuSubmenu->setObjectSubmenu($CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY'], $CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION']);
-
         $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
         if ($iContentId)
             $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
 
         if ($this->_aContentInfo) {
+            $sTitle = isset($this->_aContentInfo[$CNF['FIELD_TITLE']]) ? $this->_aContentInfo[$CNF['FIELD_TITLE']] : strmaxtextlen($this->_aContentInfo[$CNF['FIELD_TEXT']], 20, '...');
+            $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $this->_aContentInfo[$CNF['FIELD_ID']]);
             $this->addMarkers($this->_aContentInfo); // every field can be used as marker
             $this->addMarkers(array(
-                'title' => isset($this->_aContentInfo[$CNF['FIELD_TITLE']]) ? $this->_aContentInfo[$CNF['FIELD_TITLE']] : strmaxtextlen($this->_aContentInfo[$CNF['FIELD_TEXT']], 20, '...'),
+                'title' => $sTitle,
+                'entry_link' => $sUrl,
             ));
-            $this->addMarkers(array('entry_link' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $this->_aContentInfo[$CNF['FIELD_ID']]))); // entry link
+
+            // select view entry submenu
+            $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
+            $oMenuSubmenu->setObjectSubmenu($CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY'], array (
+                'title' => $sTitle,
+                'link' => $sUrl,
+                'icon' => $CNF['ICON'],
+            ));
         }
     }
 

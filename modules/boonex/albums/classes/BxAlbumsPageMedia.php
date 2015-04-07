@@ -29,10 +29,6 @@ class BxAlbumsPageMedia extends BxTemplPage
         $this->_oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        // select view entry submenu
-        $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
-        $oMenuSubmenu->setObjectSubmenu($CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY'], $CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION']);
-
         $iMediaId = bx_process_input(bx_get('id'), BX_DATA_INT);
         if ($iMediaId)
             $this->_aMediaInfo = $this->_oModule->_oDb->getMediaInfoById($iMediaId);
@@ -44,6 +40,17 @@ class BxAlbumsPageMedia extends BxTemplPage
             $this->addMarkers(array_merge($this->_aAlbumInfo, $this->_aMediaInfo)); // every field can be used as marker
             $this->addMarkers(array(
                 'title' => !empty($this->_aMediaInfo['title']) ? $this->_aMediaInfo['title'] : _t('_bx_albums_txt_media_title_alt', $this->_aAlbumInfo[$CNF['FIELD_TITLE']]),
+            ));
+
+            $sTitle = isset($this->_aAlbumInfo[$CNF['FIELD_TITLE']]) ? $this->_aAlbumInfo[$CNF['FIELD_TITLE']] : strmaxtextlen($this->_aAlbumInfo[$CNF['FIELD_TEXT']], 20, '...');
+            $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $this->_aAlbumInfo[$CNF['FIELD_ID']]);
+
+            // select view entry submenu
+            $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
+            $oMenuSubmenu->setObjectSubmenu($CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY'], array (
+                'title' => $sTitle,
+                'link' => $sUrl,
+                'icon' => $CNF['ICON'],
             ));
         }
     }
