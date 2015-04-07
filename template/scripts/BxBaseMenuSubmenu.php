@@ -59,7 +59,7 @@ class BxBaseMenuSubmenu extends BxTemplMenu
     public function getCode ()
     {
         $aMenuItemSelected = $this->_getSelectedMenuItem ();
-        if ('sys_site' == $aMenuItemSelected['set_name'] && 'home' == $aMenuItemSelected['name'])
+        if (isset($aMenuItemSelected['set_name']) && 'sys_site' == $aMenuItemSelected['set_name'] && 'home' == $aMenuItemSelected['name'])
             return '';
 
         $this->_addJsCss();
