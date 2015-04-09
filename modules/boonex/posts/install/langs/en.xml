@@ -62,8 +62,8 @@
     <string name="_bx_posts_page_title_browse_updated"><![CDATA[Updated Posts]]></string>
     <string name="_bx_posts_page_title_sys_home"><![CDATA[Posts Home]]></string>
     <string name="_bx_posts_page_title_home"><![CDATA[Posts]]></string>
-    <string name="_bx_posts_page_block_title_recent_entries"><![CDATA[Recent Posts]]></string>
-    <string name="_bx_posts_page_block_title_recent_entries_view_extended"><![CDATA[Recent Posts (Extended View)]]></string>
+    <string name="_bx_posts_page_block_title_recent_entries"><![CDATA[Recent Posts (Gallery View)]]></string>
+    <string name="_bx_posts_page_block_title_recent_entries_view_extended"><![CDATA[Recent Posts]]></string>
     <string name="_bx_posts_page_block_title_recent_entries_view_full"><![CDATA[Recent Posts (Full View)]]></string>
     <string name="_bx_posts_page_block_title_entry_social_sharing"><![CDATA[Share]]></string>
     <string name="_bx_posts_page_block_title_entry_author"><![CDATA[Author]]></string>

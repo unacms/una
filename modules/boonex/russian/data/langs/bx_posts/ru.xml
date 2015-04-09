@@ -62,8 +62,8 @@
     <string name="_bx_posts_page_title_browse_updated"><![CDATA[Обновлённые Публикации]]></string>
     <string name="_bx_posts_page_title_sys_home"><![CDATA[Публикации - Домой]]></string>
     <string name="_bx_posts_page_title_home"><![CDATA[Публикации]]></string>
-    <string name="_bx_posts_page_block_title_recent_entries"><![CDATA[Недавние Публикации]]></string>
-    <string name="_bx_posts_page_block_title_recent_entries_view_extended"><![CDATA[Недавние Публикации (Дополнительный просмотр)]]></string>
+    <string name="_bx_posts_page_block_title_recent_entries"><![CDATA[Новые Публикации (Галерея)]]></string>
+    <string name="_bx_posts_page_block_title_recent_entries_view_extended"><![CDATA[Новые Публикации]]></string>
     <string name="_bx_posts_page_block_title_recent_entries_view_full"><![CDATA[Недавние Публикации (Полный просмотр)]]></string>
     <string name="_bx_posts_page_block_title_entry_social_sharing"><![CDATA[Поделиться]]></string>
     <string name="_bx_posts_page_block_title_entry_author"><![CDATA[Автор]]></string>
