@@ -168,7 +168,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 -- MENU: module sub-menu
 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_persons_submenu', '_bx_persons_menu_title_submenu', 'bx_persons_submenu', 'bx_persons', 8, 0, 1, '', '');
+('bx_persons_submenu', '_bx_persons_menu_title_submenu', 'bx_persons_submenu', 'bx_persons', 6, 0, 1, '', '');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_persons_submenu', 'bx_persons', '_bx_persons_menu_set_title_submenu', 0);

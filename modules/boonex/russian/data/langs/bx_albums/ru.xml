@@ -130,8 +130,7 @@
     <string name="_bx_albums_menu_title_view_entry_submenu"><![CDATA[Просмотреть подменю альбомов]]></string>
     <string name="_bx_albums_menu_set_title_view_entry_submenu"><![CDATA[Просмотреть подменю альбомов]]></string>
     <string name="_bx_albums_menu_item_title_view_entry_submenu_entry"><![CDATA[Альбом]]></string>
-    <string name="_bx_albums_menu_item_title_view_entry_submenu_comments"><![CDATA[Комментарии]]></string>
-    <string name="_bx_albums_menu_item_title_view_entry_submenu_comments"><![CDATA[Комментарии]]></string>
+    <string name="_bx_albums_menu_item_title_view_entry_submenu_comments"><![CDATA[Комментарии к альбому]]></string>
     <string name="_bx_albums_menu_item_title_system_view_entry_comments"><![CDATA[Комментарии к альбому]]></string>
     <string name="_bx_albums_menu_item_title_system_view_entries_author"><![CDATA[Альбомы]]></string>
     <string name="_bx_albums_menu_item_title_view_entries_author"><![CDATA[Альбомы]]></string>

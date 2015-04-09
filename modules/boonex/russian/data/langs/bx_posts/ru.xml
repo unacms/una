@@ -108,12 +108,12 @@
     <string name="_bx_posts_menu_item_title_system_view_entry"><![CDATA[Просмотреть публикацию]]></string>
     <string name="_bx_posts_menu_item_title_system_entries_home"><![CDATA[Публикации]]></string>
     <string name="_bx_posts_menu_item_title_entries_home"><![CDATA[Публикации]]></string>
-    <string name="_bx_posts_menu_item_title_system_entries_public"><![CDATA[Публичные]]></string>
-    <string name="_bx_posts_menu_item_title_entries_public"><![CDATA[Публичные]]></string>
+    <string name="_bx_posts_menu_item_title_system_entries_public"><![CDATA[Публичные публикации]]></string>
+    <string name="_bx_posts_menu_item_title_entries_public"><![CDATA[Публичные публикации]]></string>
     <string name="_bx_posts_menu_item_title_system_entries_manage"><![CDATA[Управление]]></string>
     <string name="_bx_posts_menu_item_title_entries_manage"><![CDATA[Управление]]></string>
-    <string name="_bx_posts_menu_item_title_system_entries_popular"><![CDATA[Популярные]]></string>
-    <string name="_bx_posts_menu_item_title_entries_popular"><![CDATA[Популярные]]></string>
+    <string name="_bx_posts_menu_item_title_system_entries_popular"><![CDATA[Популярные публикации]]></string>
+    <string name="_bx_posts_menu_item_title_entries_popular"><![CDATA[Популярные публикации]]></string>
     <string name="_bx_posts_menu_title_view_entry_submenu"><![CDATA[Просмотреть публикацию - Подменю]]></string>
     <string name="_bx_posts_menu_set_title_view_entry_submenu"><![CDATA[Просмотреть публикацию - Подменю]]></string>
     <string name="_bx_posts_menu_item_title_view_entry_submenu_entry"><![CDATA[публикацию]]></string>

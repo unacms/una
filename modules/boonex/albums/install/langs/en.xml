@@ -130,7 +130,7 @@
     <string name="_bx_albums_menu_title_view_entry_submenu"><![CDATA[View Album Submenu]]></string>
     <string name="_bx_albums_menu_set_title_view_entry_submenu"><![CDATA[View Album Submenu]]></string>
     <string name="_bx_albums_menu_item_title_view_entry_submenu_entry"><![CDATA[Album]]></string>
-    <string name="_bx_albums_menu_item_title_view_entry_submenu_comments"><![CDATA[Comments]]></string>
+    <string name="_bx_albums_menu_item_title_view_entry_submenu_comments"><![CDATA[Album Comments]]></string>
     <string name="_bx_albums_menu_item_title_system_view_entry_comments"><![CDATA[Album Comments]]></string>
     <string name="_bx_albums_menu_item_title_system_view_entries_author"><![CDATA[Albums]]></string>
     <string name="_bx_albums_menu_item_title_view_entries_author"><![CDATA[Albums]]></string>
