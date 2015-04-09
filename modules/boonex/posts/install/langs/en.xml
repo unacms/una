@@ -110,8 +110,8 @@
     <string name="_bx_posts_menu_item_title_entries_home"><![CDATA[Posts]]></string>
     <string name="_bx_posts_menu_item_title_system_entries_public"><![CDATA[Public Posts]]></string>
     <string name="_bx_posts_menu_item_title_entries_public"><![CDATA[Public Posts]]></string>
-    <string name="_bx_posts_menu_item_title_system_entries_manage"><![CDATA[Manage]]></string>
-    <string name="_bx_posts_menu_item_title_entries_manage"><![CDATA[Manage]]></string>
+    <string name="_bx_posts_menu_item_title_system_entries_manage"><![CDATA[Manage Posts]]></string>
+    <string name="_bx_posts_menu_item_title_entries_manage"><![CDATA[Manage Posts]]></string>
     <string name="_bx_posts_menu_item_title_system_entries_popular"><![CDATA[Popular Posts]]></string>
     <string name="_bx_posts_menu_item_title_entries_popular"><![CDATA[Popular Posts]]></string>
     <string name="_bx_posts_menu_title_view_entry_submenu"><![CDATA[View Post Submenu]]></string>

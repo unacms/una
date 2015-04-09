@@ -139,7 +139,8 @@
     <string name="_bx_persons_menu_item_title_system_entries_public"><![CDATA[Публичные]]></string>
     <string name="_bx_persons_menu_item_title_entries_recent"><![CDATA[Новые профили]]></string>
     <string name="_bx_persons_menu_item_title_system_entries_recent"><![CDATA[Новые профили]]></string>
-    <string name="_bx_persons_menu_item_title_entries_manage"><![CDATA[Управление]]></string>
+    <string name="_bx_persons_menu_item_title_system_entries_manage"><![CDATA[Управление профилями]]></string>
+    <string name="_bx_persons_menu_item_title_entries_manage"><![CDATA[Управление профилями]]></string>
     <string name="_bx_persons_menu_item_title_system_entries_home"><![CDATA[Персоны]]></string>
     <string name="_bx_persons_menu_item_title_entries_home"><![CDATA[Люди]]></string>
 	<string name="_bx_persons_menu_item_title_system_admt_persons"><![CDATA[Профили]]></string>

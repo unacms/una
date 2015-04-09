@@ -119,8 +119,8 @@
     <string name="_bx_albums_menu_item_title_entries_home"><![CDATA[Albums]]></string>
     <string name="_bx_albums_menu_item_title_system_entries_recent"><![CDATA[Recent Albums]]></string>
     <string name="_bx_albums_menu_item_title_entries_recent"><![CDATA[Recent Albums]]></string>
-    <string name="_bx_albums_menu_item_title_system_entries_manage"><![CDATA[Manage]]></string>
-    <string name="_bx_albums_menu_item_title_entries_manage"><![CDATA[Manage]]></string>
+    <string name="_bx_albums_menu_item_title_system_entries_manage"><![CDATA[Manage Albums]]></string>
+    <string name="_bx_albums_menu_item_title_entries_manage"><![CDATA[Manage Albums]]></string>
     <string name="_bx_albums_menu_item_title_system_entries_popular"><![CDATA[Popular Albums]]></string>
     <string name="_bx_albums_menu_item_title_entries_popular"><![CDATA[Popular Albums]]></string>
     <string name="_bx_albums_menu_item_title_system_entries_updated"><![CDATA[Updated Albums]]></string>
