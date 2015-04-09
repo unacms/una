@@ -25,7 +25,7 @@ class BxBaseCategory extends BxDolCategory
             $this->_oTemplate = BxDolTemplate::getInstance();
     }
 
-    public function getCategoryUrl($sName, $sValue)
+    public function getCategoryUrl($sValue)
     {
         $sUrl = BX_DOL_URL_ROOT . 'searchKeyword.php?cat=' . rawurlencode($this->getObjectName()) . '&keyword=' . rawurlencode($sValue);
         if ($this->_aObject['search_object'])
@@ -41,7 +41,7 @@ class BxBaseCategory extends BxDolCategory
      */
     public function getCategoryLink($sName, $sValue)
     {
-        $sUrl = $this->getCategoryUrl($sName, $sValue);
+        $sUrl = $this->getCategoryUrl($sValue);
         return '<a class="bx-category-link" href="' . $sUrl . '">' . $sName . '</a>';
     }
 
@@ -64,7 +64,7 @@ class BxBaseCategory extends BxDolCategory
             if (!$bDisplayEmptyCats && !$iNum)
                 continue;
             $aVars['bx_repeat:cats'][] = array(
-                'url' => $this->getCategoryUrl($sName, $sValue),
+                'url' => $this->getCategoryUrl($sValue),
                 'name' => $sName,
                 'value' => $sValue,
                 'num' => $iNum,

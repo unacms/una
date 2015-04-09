@@ -21,6 +21,9 @@
 	<string name="_bx_posts_form_entry_input_sys_title"><![CDATA[Title]]></string>
 	<string name="_bx_posts_form_entry_input_title"><![CDATA[Title]]></string>
 	<string name="_bx_posts_form_entry_input_title_err"><![CDATA[Title is essential. Please, fill in this field]]></string>
+	<string name="_bx_posts_form_entry_input_sys_cat"><![CDATA[Category]]></string>
+	<string name="_bx_posts_form_entry_input_cat"><![CDATA[Category]]></string>
+    <string name="_bx_posts_form_entry_input_cat_err"><![CDATA[Please select category]]></string>
 	<string name="_bx_posts_form_entry_input_sys_text"><![CDATA[Text]]></string>
 	<string name="_bx_posts_form_entry_input_text"><![CDATA[Text]]></string>
 	<string name="_bx_posts_form_entry_input_text_err"><![CDATA[Text field can't be empty]]></string>
@@ -93,6 +96,7 @@
 	<string name="_bx_posts_page_block_title_system_manage_administration"><![CDATA[Manage All Posts]]></string>
 	<string name="_bx_posts_page_block_title_manage"><![CDATA[Manage Posts]]></string>    
 	<string name="_bx_posts_page_block_title_popular_keywords"><![CDATA[Popular Hashtags]]></string>
+	<string name="_bx_posts_page_block_title_cats"><![CDATA[Posts Categories]]></string>
 
     <string name="_bx_posts_menu_set_title_view_entry"><![CDATA[Post Actions]]></string>
     <string name="_bx_posts_menu_title_view_entry"><![CDATA[Post Actions]]></string>
@@ -108,8 +112,8 @@
     <string name="_bx_posts_menu_item_title_system_view_entry"><![CDATA[View Post]]></string>
     <string name="_bx_posts_menu_item_title_system_entries_home"><![CDATA[Posts]]></string>
     <string name="_bx_posts_menu_item_title_entries_home"><![CDATA[Posts]]></string>
-    <string name="_bx_posts_menu_item_title_system_entries_public"><![CDATA[Public Posts]]></string>
-    <string name="_bx_posts_menu_item_title_entries_public"><![CDATA[Public Posts]]></string>
+    <string name="_bx_posts_menu_item_title_system_entries_public"><![CDATA[Recent Posts]]></string>
+    <string name="_bx_posts_menu_item_title_entries_public"><![CDATA[Recent Posts]]></string>
     <string name="_bx_posts_menu_item_title_system_entries_manage"><![CDATA[Manage Posts]]></string>
     <string name="_bx_posts_menu_item_title_entries_manage"><![CDATA[Manage Posts]]></string>
     <string name="_bx_posts_menu_item_title_system_entries_popular"><![CDATA[Popular Posts]]></string>
@@ -147,7 +151,42 @@
     <string name="_bx_posts_grid_action_err_delete"><![CDATA[Cannot delete the selected post(s).]]></string>
     <string name="_bx_posts_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
 
+    <string name="_bx_posts_pre_lists_cats"><![CDATA[Post categories]]></string>
+    <string name="_bx_posts_cat_Animals_Pets"><![CDATA[Animals & Pets]]></string>
+    <string name="_bx_posts_cat_Architecture"><![CDATA[Architecture]]></string>
+    <string name="_bx_posts_cat_Art"><![CDATA[Art]]></string>
+    <string name="_bx_posts_cat_Cars_Motorcycles"><![CDATA[Cars & Motorcycles]]></string>
+    <string name="_bx_posts_cat_Celebrities"><![CDATA[Celebrities]]></string>
+    <string name="_bx_posts_cat_Design"><![CDATA[Design]]></string>
+    <string name="_bx_posts_cat_DIY_Crafts"><![CDATA[DIY & Crafts]]></string>
+    <string name="_bx_posts_cat_Education"><![CDATA[Education]]></string>
+    <string name="_bx_posts_cat_Film_Music_Books"><![CDATA[Film, Music & Books]]></string>
+    <string name="_bx_posts_cat_Food_Drink"><![CDATA[Food & Drink]]></string>
+    <string name="_bx_posts_cat_Gardening"><![CDATA[Gardening]]></string>
+    <string name="_bx_posts_cat_Geek"><![CDATA[Geek]]></string>
+    <string name="_bx_posts_cat_Hair_Beauty"><![CDATA[Hair & Beauty]]></string>
+    <string name="_bx_posts_cat_Health_Fitness"><![CDATA[Health & Fitness]]></string>
+    <string name="_bx_posts_cat_History"><![CDATA[History]]></string>
+    <string name="_bx_posts_cat_Holidays_Events"><![CDATA[Holidays & Events]]></string>
+    <string name="_bx_posts_cat_Home_Decor"><![CDATA[Home Decor]]></string>
+    <string name="_bx_posts_cat_Humor"><![CDATA[Humor]]></string>
+    <string name="_bx_posts_cat_Illustrations_Posters"><![CDATA[Illustrations & Posters]]></string>
+    <string name="_bx_posts_cat_Kids_Parenting"><![CDATA[Kids & Parenting]]></string>
+    <string name="_bx_posts_cat_Mens_Fashion"><![CDATA[Men's Fashion]]></string>
+    <string name="_bx_posts_cat_Outdoors"><![CDATA[Outdoors]]></string>
+    <string name="_bx_posts_cat_Photography"><![CDATA[Photography]]></string>
+    <string name="_bx_posts_cat_Products"><![CDATA[Products]]></string>
+    <string name="_bx_posts_cat_Quotes"><![CDATA[Quotes]]></string>
+    <string name="_bx_posts_cat_Science_Nature"><![CDATA[Science & Nature]]></string>
+    <string name="_bx_posts_cat_Sports"><![CDATA[Sports]]></string>
+    <string name="_bx_posts_cat_Tattoos"><![CDATA[Tattoos]]></string>
+    <string name="_bx_posts_cat_Technology"><![CDATA[Technology]]></string>
+    <string name="_bx_posts_cat_Travel"><![CDATA[Travel]]></string>
+    <string name="_bx_posts_cat_Weddings"><![CDATA[Weddings]]></string>
+    <string name="_bx_posts_cat_Womens_Fashion"><![CDATA[Women's Fashion]]></string>
+
     <string name="_bx_posts_txt_all_entries_by"><![CDATA[<a href="{0}">All Posts by {1} ({2})</a>]]></string>
+    <string name="_bx_posts_txt_category_link"><![CDATA[<a href="{0}">{1}</a> category]]></string>
     <string name="_bx_posts_txt_sample_single"><![CDATA[post]]></string>
     <string name="_bx_posts_txt_sample_comment_single"><![CDATA[post's comment]]></string>    
 </resources>
