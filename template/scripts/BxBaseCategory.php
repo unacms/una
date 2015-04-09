@@ -71,6 +71,9 @@ class BxBaseCategory extends BxDolCategory
             );
         }
 
+        if (!$aVars['bx_repeat:cats'])
+            return '';
+
         return $this->_oTemplate->parseHtmlByName('category_list.html', $aVars);
     }
 }
