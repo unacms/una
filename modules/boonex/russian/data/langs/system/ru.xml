@@ -1287,7 +1287,6 @@
 	<string name="_adm_wgt_cpt_settings"><![CDATA[Настройки]]></string>
 	<string name="_adm_wgt_cpt_store"><![CDATA[Расширения]]></string>
 	<string name="_are you sure?"><![CDATA[Вы уверены?]]></string>
-	<string name="_bottom_text"><![CDATA[2002-{0}. Продукт <a class="bottom_text" href="http://www.boonex.com/">BoonEx Group</a>.]]></string>
 	<string name="_cmt_block_comments_title"><![CDATA[Комментарии ({0})]]></string>
 	<string name="_cmt_browse_all"><![CDATA[Все]]></string>
 	<string name="_cmt_browse_friends"><![CDATA[Друзья]]></string>

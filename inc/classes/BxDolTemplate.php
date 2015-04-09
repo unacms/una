@@ -1061,11 +1061,11 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
             case 'dol_options':
                 $sRet = $this->_processJsOptions();
                 break;
-            case 'bottom_text':
-                $sRet = _t( '_bottom_text', date('Y') );
-                break;
             case 'copyright':
-                $sRet = _t( '_copyright',   date('Y') ) . getVersionComment();
+                $sRet = _t( '_copyright', date('Y') ) . getVersionComment();
+                break;
+            case 'copyright_attr':
+                $sRet = bx_html_attribute(_t('_copyright', date('Y')));
                 break;
             case 'extra_js':
                 $sRet = empty($this->aPage['extra_js']) ? '' : $this->aPage['extra_js'];
