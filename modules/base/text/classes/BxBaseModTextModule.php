@@ -364,12 +364,26 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
         return $oCmts->getCommentsBlock(0, 0, false);
     }
 
-    protected function _entitySocialSharing ($iId, $iIdForTimeline, $iIdThumb, $sTitle, $sObjectStorage, $sObjectTranscoder, $sObjectVote, $sUriViewEntry)
+    protected function _entitySocialSharing ($iId, $iIdForTimeline, $iIdThumb, $sTitle, $sObjectStorage, $sObjectTranscoder, $sObjectVote, $sUriViewEntry, $sCommentsObject = '', $bEnableSocialSharing = true)
     {
         $sUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=' . $sUriViewEntry . '&id=' . $iId);
 
+        $sComments = '';
+        if ($sCommentsObject && ($oComments = BxTemplCmts::getObjectInstance($sCommentsObject, $iId))) {
+            $iNum = $oComments->getCommentsCountAll();
+            $sComments = $this->_oTemplate->parseHtmlByName('comments-item.html', array (
+                'url' => $sUrl . '#' . $oComments->getListAnchor(),
+                'bx_if:comments' => array (
+                    'condition' => $iNum,
+                    'content' => array (
+                        'num' => $iNum,
+                    ),
+                ),
+            ));
+        }
+
         $aCustomParams = false;
-        if ($iIdThumb) {
+        if ($iIdThumb && $bEnableSocialSharing) {
             if ($sObjectTranscoder)
                 $o = BxDolTranscoder::getObjectInstance($sObjectTranscoder);
             else
@@ -390,12 +404,13 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
             $sVotes = $oVotes->getElementBlock(array('show_do_vote_as_button' => true));
 
         $sShare = '';
-        if (BxDolRequest::serviceExists('bx_timeline', 'get_share_element_block'))
+        if ($iIdForTimeline && BxDolRequest::serviceExists('bx_timeline', 'get_share_element_block'))
             $sShare = BxDolService::call('bx_timeline', 'get_share_element_block', array(bx_get_logged_profile_id(), $this->_aModule['name'], 'added', $iIdForTimeline, array('show_do_share_as_button' => true)));
 
-        $sSocial = BxTemplSocialSharing::getInstance()->getCode($iId, $this->_aModule['name'], BX_DOL_URL_ROOT . $sUrl, $sTitle, $aCustomParams);
+        $sSocial = $bEnableSocialSharing ? BxTemplSocialSharing::getInstance()->getCode($iId, $this->_aModule['name'], BX_DOL_URL_ROOT . $sUrl, $sTitle, $aCustomParams) : '';
 
         return $this->_oTemplate->parseHtmlByName('entry-share.html', array(
+            'comments' => $sComments,
             'vote' => $sVotes,
             'share' => $sShare,
             'social' => $sSocial,

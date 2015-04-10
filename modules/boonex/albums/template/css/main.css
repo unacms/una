@@ -2,11 +2,12 @@
 @import url(../../../../base/text/template/css/main.css);
 
 .bx-albums-unit-size {
-    width: 300px;
     width: 18.75rem;
-    height: 300px;
     height: 18.75rem;
     object-fit: cover;
+}
+.bx-albums-media-wrapper {
+    width: 18.75rem;
 }
 
 @media (max-width:520px) {
@@ -14,6 +15,16 @@
         width: 100%;
         height: auto;
     }
+    .bx-albums-media-wrapper {
+        width: 100%;
+    }
+}
+
+.bx-albums-media-caption,
+.bx-albums-media-actions {
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
 
 .bx-albums-unit-images-cont {

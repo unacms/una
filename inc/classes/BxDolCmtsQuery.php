@@ -48,6 +48,12 @@ class BxDolCmtsQuery extends BxDolDb
     {
         return $this->_sTable;
     }
+    
+    function getCommentsCountAll ($iId)
+    {
+        $sQuery = $this->prepare("SELECT `{$this->_sTriggerFieldComments}` FROM `{$this->_sTriggerTable}` WHERE `{$this->_sTriggerFieldId}` = ?", $iId);
+        return (int)$this->getOne($sQuery);
+    }
 
     function getCommentsCount ($iId, $iCmtVParentId = -1, $iAuthorId = 0, $sFilter = '')
     {

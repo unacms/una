@@ -76,7 +76,7 @@ class BxAlbumsModule extends BxBaseModTextModule
         return $this->_serviceTemplateFunc ('mediaAuthor', $iMediaId, 'getMediaInfoById');
     }
 
-    public function serviceMediaSocialSharing ($iMediaId = 0)
+    public function serviceMediaSocialSharing ($iMediaId = 0, $bEnableCommentsBtn = false, $bEnableSocialSharing = true)
     {
         if (!$iMediaId)
             $iMediaId = bx_process_input(bx_get('id'), BX_DATA_INT);
@@ -88,7 +88,7 @@ class BxAlbumsModule extends BxBaseModTextModule
 
         $CNF = &$this->_oConfig->CNF;
 
-        return $this->_entitySocialSharing ($iMediaId, $aMediaInfo['content_id'], $aMediaInfo['file_id'], $iMediaId['title'], false, $CNF['OBJECT_IMAGES_TRANSCODER_BIG'], $CNF['OBJECT_VOTES_MEDIA'], $CNF['URI_VIEW_MEDIA']);
+        return $this->_entitySocialSharing ($iMediaId, 0, $aMediaInfo['file_id'], $iMediaId['title'], false, $CNF['OBJECT_IMAGES_TRANSCODER_BIG'], $CNF['OBJECT_VOTES_MEDIA'], $CNF['URI_VIEW_MEDIA'], $bEnableCommentsBtn ? $CNF['OBJECT_COMMENTS_MEDIA'] : '', $bEnableSocialSharing);
     }
 
     public function serviceMediaView ($iMediaId = 0, $mixedContext = false)
