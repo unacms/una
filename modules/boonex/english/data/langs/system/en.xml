@@ -1751,7 +1751,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_item_title_switch_language"><![CDATA[Language]]></string>
 	<string name="_sys_menu_item_title_switch_language_mask"><![CDATA[{1} {0}]]></string>
 	<string name="_sys_menu_item_title_switch_template"><![CDATA[Design]]></string>
-	<string name="_sys_menu_item_title_switch_template_mask"><![CDATA[{0} ({1})]]></string>
+	<string name="_sys_menu_item_title_switch_template_mask"><![CDATA[{0}]]></string>
 	<string name="_sys_menu_item_title_account_menu"><![CDATA[{member_display_name}]]></string>
 	<string name="_sys_menu_item_title_account_profile_context"><![CDATA[Profiles]]></string>
 	<string name="_sys_menu_item_title_account_dashboard"><![CDATA[Dashboard]]></string>
