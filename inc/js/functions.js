@@ -370,7 +370,6 @@ function bx_menu_slide (jSel, e, sPosition) {
             fPositionSite();
         
         eSlider.slideDown();
-        eSlider.find('.bx-sliding-menu-cont').css('left', '0');
 
         eSlider.data('data-control-btn', e);        
     };    

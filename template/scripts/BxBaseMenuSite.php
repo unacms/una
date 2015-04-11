@@ -20,7 +20,7 @@ class BxBaseMenuSite extends BxTemplMenu
     public function getCode ()
     {
         $s = parent::getCode ();
-        return '<div id="bx-sliding-menu-' . $this->_sObject . '" class="bx-sliding-menu-main bx-def-z-index-nav bx-def-color-bg-block bx-def-border-bottom" style="display:none;"><div class="bx-sliding-menu-cont">' . $s . '</div></div>';
+        return '<div id="bx-sliding-menu-' . $this->_sObject . '" class="bx-sliding-menu-main bx-def-z-index-nav bx-def-color-bg-block bx-def-border-bottom" style="display:none;">' . $s . '</div>';
     }
 }
 

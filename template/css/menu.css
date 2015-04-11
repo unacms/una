@@ -300,16 +300,6 @@ ul.bx-menu-toolbar li .sys-icon {
 
 /* --------------- floating blocks menu */
 
-.bx-sliding-menu-cont {
-    position:relative; 
-    left:-200vw;
-
-    -webkit-transition:left 0.5s cubic-bezier(0, 0.97, 0.65, 1.2);
-    -moz-transition:left 0.5s cubic-bezier(0, 0.97, 0.65, 1.2);
-    -o-transition:left 0.5s cubic-bezier(0, 0.97, 0.65, 1.2);
-    transition:left 0.5s cubic-bezier(0, 0.97, 0.65, 1.2);
-}
-
 .bx-sliding-menu-close,
 .bx-sliding-menu-close:hover {
     position:absolute;
