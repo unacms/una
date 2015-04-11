@@ -220,8 +220,15 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
 
     public function serviceProfileCover ($iContentId = 0)
     {
-       if (!$iContentId)
-            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if (!$iContentId) {
+            if (bx_get('id')) {
+                $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+            } elseif (bx_get('profile_id')) {
+                $oProfile = BxDolProfile::getInstance(bx_get('profile_id'));
+                if ($oProfile && ($a = $oProfile->getInfo()) && $this->getName() == $a['type'])
+                    $iContentId = $oProfile->getContentId();
+            }
+        }
         if (!$iContentId)
             return false;
 
