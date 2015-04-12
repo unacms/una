@@ -19,7 +19,7 @@
 .bx-page-wrapper,
 #bx-content-container,
 #bx-content-main {
-	width: 100vw;
+	width: 100%;
 	margin: 0px;
 	padding: 0px;
 }
@@ -119,7 +119,7 @@
 /*--- Slide 1 ---*/
 
 #bx-spl-slide01 {
-    width:100vw;
+    width:100%;
     height:100vh;
 }
 #bx-spl-slide01 .bx-spl-bg {
@@ -130,7 +130,7 @@
 #bx-spl-slide01 .bx-spl-slide-video {
     object-fit: cover;
 
-	width: 100vw;
+	width: 100%;
 	height: 100vh;
 }
 
@@ -172,7 +172,7 @@
 /*--- Slide 3 ---*/
 
 #bx-spl-slide03 {
-    width:100vw;
+    width:100%;
     height:150vh;
 }
 #bx-spl-slide03 .bx-spl-bg {
@@ -185,7 +185,7 @@
 /*--- Slide 4 ---*/
 
 #bx-spl-slide04 {
-    width:100vw;
+    width:100%;
     height:100vh;
 }
 #bx-spl-slide04 .bx-spl-bg {

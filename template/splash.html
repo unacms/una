@@ -57,6 +57,29 @@
 	</div>
 	<script type="text/javascript">
 		$(document).ready(function () {
+
+            // workaround for iOS 7 
+            if (!!navigator.userAgent.match(/i(Pad|Phone|Pod).+(Version\/7\.\d+ Mobile)/i)) {
+                var aSelVh = {
+                    '1': '#bx-spl-slide01, #bx-spl-slide01 .bx-spl-slide-video, #bx-spl-slide04',
+                    '1.5': '#bx-spl-slide03'
+                };
+                var aSelVw = {
+                    '0.35': '#bx-spl-slide02 .bx-spl-bg'
+                };
+                function fixMobileSafariViewport() {
+                    $.each(aSelVh, function (sVal, sSel) {
+                        $(sSel).css('height', window.innerHeight * parseFloat(sVal));
+                    });
+                    $.each(aSelVw, function (sVal, sSel) {
+                        $(sSel).css('height', window.innerWidth * parseFloat(sVal));
+                    });                
+                }
+                // listen to portrait/landscape changes
+                window.addEventListener('orientationchange', fixMobileSafariViewport, true);
+                fixMobileSafariViewport();
+            }
+
 			skrollr.init();
 		});
 	</script>
