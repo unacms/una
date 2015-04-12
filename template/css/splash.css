@@ -1,6 +1,16 @@
 
 /*--- General ---*/
 
+@media (max-width:1024px) {
+    #bx-menu-main-bar-wrapper,
+    #bx-toolbar {
+        display:none;
+    }
+    #bx-content-wrapper {
+        border:none;
+    }
+}
+
 #bx-content-wrapper {
 	padding-top: 0px;
     padding-bottom: 4rem;
