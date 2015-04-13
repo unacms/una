@@ -334,16 +334,6 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
 					'name' => 'page',
 					'value' => $this->sPage
 				),
-				'code' => array(
-					'type' => 'textarea',
-					'name' => 'code',
-					'caption' => '',
-					'value' => getParam('sys_site_cover_code'),
-					'html' => 2,
-					'db' => array (
-                        'pass' => 'XssHtml',
-                    ),
-				),
 				'enabled' => array(
 					'type' => 'checkbox',
 					'name' => 'enabled',
@@ -352,6 +342,15 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
 					'checked' => getParam('sys_site_cover_enabled') == 'on',
 					'db' => array (
                         'pass' => 'Xss',
+                    ),
+				),
+				'code' => array(
+					'type' => 'textarea',
+					'name' => 'code',
+					'caption' => '',
+					'value' => getParam('sys_site_cover_code'),
+					'db' => array (
+                        'pass' => 'XssHtml',
                     ),
 				),
 				'save' => array(
@@ -369,6 +368,15 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
 			echo $this->submitCover($oForm);
 			exit;
 		}
+
+        $oTemplate->addJs(array(
+            'codemirror/lib/codemirror.js', 
+            'codemirror/mode/xml/xml.js',
+            'codemirror/mode/javascript/javascript.js',
+            'codemirror/mode/css/css.js',
+            'codemirror/mode/htmlmixed/htmlmixed.js',
+        ));
+        $oTemplate->addCss(BX_DOL_URL_PLUGINS_PUBLIC . 'codemirror/lib/codemirror.css');
 
 		return $oTemplate->parseHtmlByName('designer.html', array(
 			'js_object' => $this->getPageJsObject(),
