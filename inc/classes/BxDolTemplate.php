@@ -1280,6 +1280,18 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
             $sContent
         );
     }
+
+	/**
+     * Minify JS
+     *
+     * @param  string $s JS string to minify
+     * @return string minified JS string.
+     */
+	function _minifyJs($s)
+    {
+    	return BxDolMinify::getInstance()->minifyJs($s);
+    }
+
     /**
      * Wrap an URL to JS file into JS tag.
      *
@@ -1290,6 +1302,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
     {
         return "<script language=\"javascript\" type=\"text/javascript\" src=\"" . $sFile . "\"></script>";
     }
+
     /**
      * Wrap JS code into JS tag.
      *
@@ -1424,18 +1437,18 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
 	                "'@import\s+url\s*\(\s*[\'|\"]*\s*([a-zA-Z0-9\.\/_-]+)\s*[\'|\"]*\s*\)\s*;'", function ($aMatches)  use($oTemplate, $sPath, $aIncluded) {
 	                	return $oTemplate->_compileCss(realpath($sPath . dirname($aMatches[1])) . DIRECTORY_SEPARATOR . basename($aMatches[1]), $aIncluded);
 	                }, $sContent);
-	
+
 	            $sContent = preg_replace_callback(
 	                "'url\s*\(\s*[\'|\"]*\s*([a-zA-Z0-9\.\/\?\#_=-]+)\s*[\'|\"]*\s*\)'", function ($aMatches)  use($oTemplate, $sPath) {
 						$sFile = basename($aMatches[1]);
 				        $sDirectory = dirname($aMatches[1]);
-				
+
 				        $sRootPath = realpath(BX_DIRECTORY_PATH_ROOT);
 				        $sAbsolutePath = realpath(addslashes($sPath) . $sDirectory) . DIRECTORY_SEPARATOR . $sFile;
-				
+
 				        $sRootPath = str_replace(DIRECTORY_SEPARATOR, '/', $sRootPath);
 				        $sAbsolutePath = str_replace(DIRECTORY_SEPARATOR, '/', $sAbsolutePath);
-				
+
 				        return 'url(' . bx_ltrim_str($sAbsolutePath, $sRootPath, BX_DOL_URL_ROOT) . ')';
 	                }, $sContent);
 			}
@@ -1485,8 +1498,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
      */
     function _minifyCss($s)
     {
-        require_once(BX_DIRECTORY_PATH_PLUGINS . 'minify/lib/Minify/CSS/Compressor.php');
-        return Minify_CSS_Compressor::process($s);
+    	return BxDolMinify::getInstance()->minifyCss($s);
     }
 
     /**
