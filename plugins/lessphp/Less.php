@@ -174,37 +174,47 @@ class Less_Parser{
 		$locale = setlocale(LC_NUMERIC, 0);
 		setlocale(LC_NUMERIC, "C");
 
+		try {
 
- 		$root = new Less_Tree_Ruleset(array(), $this->rules );
-		$root->root = true;
-		$root->firstRoot = true;
-
-
-		$this->PreVisitors($root);
-
-		self::$has_extends = false;
-		$evaldRoot = $root->compile($this->env);
+	 		$root = new Less_Tree_Ruleset(array(), $this->rules );
+			$root->root = true;
+			$root->firstRoot = true;
 
 
+			$this->PreVisitors($root);
 
-		$this->PostVisitors($evaldRoot);
+			self::$has_extends = false;
+			$evaldRoot = $root->compile($this->env);
 
-		if( Less_Parser::$options['sourceMap'] ){
-			$generator = new Less_SourceMap_Generator($evaldRoot, Less_Parser::$contentsMap, Less_Parser::$options );
-			// will also save file
-			// FIXME: should happen somewhere else?
-			$css = $generator->generateCSS();
-		}else{
-			$css = $evaldRoot->toCSS();
-		}
 
-		if( Less_Parser::$options['compress'] ){
-			$css = preg_replace('/(^(\s)+)|((\s)+$)/', '', $css);
-		}
+
+			$this->PostVisitors($evaldRoot);
+
+			if( Less_Parser::$options['sourceMap'] ){
+				$generator = new Less_SourceMap_Generator($evaldRoot, Less_Parser::$contentsMap, Less_Parser::$options );
+				// will also save file
+				// FIXME: should happen somewhere else?
+				$css = $generator->generateCSS();
+			}else{
+				$css = $evaldRoot->toCSS();
+			}
+
+			if( Less_Parser::$options['compress'] ){
+				$css = preg_replace('/(^(\s)+)|((\s)+$)/', '', $css);
+			}
+
+		} catch (Exception $exc) {
+        	   // Intentional fall-through so we can reset environment
+        	}
 
 		//reset php settings
 		@ini_set('precision',$precision);
 		setlocale(LC_NUMERIC, $locale);
+
+		// Rethrow exception after we handled resetting the environment
+		if (!empty($exc)) {
+            		throw $exc;
+        	}
 
 		return $css;
 	}
@@ -318,8 +328,13 @@ class Less_Parser{
 
 
 		$previousFileInfo = $this->env->currentFileInfo;
-		$filename = self::WinPath($filename);
+
+
+		if( $filename ){
+			$filename = self::WinPath(realpath($filename));
+		}
 		$uri_root = self::WinPath($uri_root);
+
 		$this->SetFileInfo($filename, $uri_root);
 
 		self::AddParsedFile($filename);
@@ -451,7 +466,17 @@ class Less_Parser{
 	 * @param string $file_path
 	 */
 	private function _parse( $file_path = null ){
+		if (ini_get("mbstring.func_overload")) {
+			$mb_internal_encoding = ini_get("mbstring.internal_encoding");
+			@ini_set("mbstring.internal_encoding", "ascii");
+		}
+
 		$this->rules = array_merge($this->rules, $this->GetRules( $file_path ));
+
+		//reset php settings
+		if (isset($mb_internal_encoding)) {
+			@ini_set("mbstring.internal_encoding", $mb_internal_encoding);
+		}
 	}
 
 
@@ -595,7 +620,7 @@ class Less_Parser{
 			$parts[] = $env;
 			$parts[] = Less_Version::cache_version;
 			$parts[] = Less_Parser::$options['cache_method'];
-			return Less_Cache::$cache_dir.'lessphp_'.base_convert( sha1(json_encode($parts) ), 16, 36).'.lesscache';
+			return Less_Cache::$cache_dir . Less_Cache::$prefix . base_convert( sha1(json_encode($parts) ), 16, 36) . '.lesscache';
 		}
 	}
 
@@ -4704,7 +4729,7 @@ class Less_Tree_Color extends Less_Tree{
 		// Values are capped between `0` and `255`, rounded and zero-padded.
 		//
 		if( $alpha < 1 ){
-			if( $alpha === 0 && isset($this->isTransparentKeyword) && $this->isTransparentKeyword ){
+			if( ( $alpha === 0 || $alpha === 0.0 ) && isset($this->isTransparentKeyword) && $this->isTransparentKeyword ){
 				return 'transparent';
 			}
 
@@ -5839,12 +5864,16 @@ class Less_Tree_Import extends Less_Tree{
 						$full_path = $path;
 						return array( $full_path, $uri );
 					}
-				}else{
+				}elseif( !empty($rootpath) ){
 					$path = rtrim($rootpath,'/\\').'/'.ltrim($evald_path,'/\\');
 
 					if( file_exists($path) ){
 						$full_path = Less_Environment::normalizePath($path);
 						$uri = Less_Environment::normalizePath(dirname($rooturi.$evald_path));
+						return array( $full_path, $uri );
+					} elseif( file_exists($path.'.less') ){
+						$full_path = Less_Environment::normalizePath($path.'.less');
+						$uri = Less_Environment::normalizePath(dirname($rooturi.$evald_path.'.less'));
 						return array( $full_path, $uri );
 					}
 				}
@@ -5887,7 +5916,7 @@ class Less_Tree_Import extends Less_Tree{
 	 */
 	private function Skip($path, $env){
 
-		$path = realpath($path);
+		$path = Less_Parser::winPath(realpath($path));
 
 		if( $path && Less_Parser::FileParsed($path) ){
 
@@ -7751,7 +7780,7 @@ class Less_Tree_Variable extends Less_Tree{
 			}
 		}
 
-		throw new Less_Exception_Compiler("variable " . $name . " is undefined in file ".$this->currentFileInfo["filename"], null, $this->index );
+		throw new Less_Exception_Compiler("variable " . $name . " is undefined in file ".$this->currentFileInfo["filename"], null, $this->index, $this->currentFileInfo);
 	}
 
 }
@@ -7974,7 +8003,7 @@ class Less_Tree_Mixin_Definition extends Less_Tree_Ruleset{
 
 
 	// less.js : /lib/less/tree/mixin.js : tree.mixin.Definition
-	public function __construct($name, $params, $rules, $condition, $variadic = false, $frames = null ){
+	public function __construct($name, $params, $rules, $condition, $variadic = false, $frames = array() ){
 		$this->name = $name;
 		$this->selectors = array(new Less_Tree_Selector(array( new Less_Tree_Element(null, $name))));
 
@@ -8149,6 +8178,11 @@ class Less_Tree_Mixin_Definition extends Less_Tree_Ruleset{
 			return true;
 		}
 
+		// set array to prevent error on array_merge
+		if(!is_array($this->frames)) {
+             $this->frames = array();
+        }
+
 		$frame = $this->compileParams($env, array_merge($this->frames,$env->frames), $args );
 
 		$compile_env = new Less_Environment();
@@ -8157,6 +8191,8 @@ class Less_Tree_Mixin_Definition extends Less_Tree_Ruleset{
 				, $this->frames		// the parent namespace/mixin frames
 				, $env->frames		// the current environment frames
 			);
+
+		$compile_env->functions = $env->functions;
 
 		return (bool)$this->condition->compile($compile_env);
 	}
@@ -9375,7 +9411,12 @@ class Less_Exception_Parser extends Exception{
 	 */
 	public function getLineNumber(){
 		if( $this->index ){
-			return substr_count($this->input, "\n", 0, $this->index) + 1;
+			// https://bugs.php.net/bug.php?id=49790
+			if (ini_get("mbstring.func_overload")) {
+				return substr_count(substr($this->input, 0, $this->index), "\n") + 1;
+			} else {
+				return substr_count($this->input, "\n", 0, $this->index) + 1;
+			}
 		}
 		return 1;
 	}
