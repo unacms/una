@@ -352,12 +352,6 @@ function bx_menu_slide (jSel, e, sPosition) {
         eSlider.slideUp()
     };
 
-    var fCloseAllOpened = function () {
-        $('.bx-sliding-menu-main:visible, .bx-popup-slide-wrapper:visible').each(function () {
-            bx_menu_slide('#' + this.id);
-        });
-    }
-
     var fOpen = function () {
         if (eIcon.length) {
             eIcon.attr('data-icon-orig', eIcon.attr('data-icon'));
@@ -370,7 +364,6 @@ function bx_menu_slide (jSel, e, sPosition) {
             fPositionSite();
         
         eSlider.slideDown();
-        eSlider.find('.bx-sliding-menu-cont').css('left', '0');
 
         eSlider.data('data-control-btn', e);        
     };    
@@ -385,7 +378,7 @@ function bx_menu_slide (jSel, e, sPosition) {
         $(window).off('resize.bx-sliding-menu');
     }
     else {
-        fCloseAllOpened();
+        bx_menu_slide_close_all_opened();
 
         $(document).off('click.bx-sliding-menu touchend.bx-sliding-menu');
         $(window).off('resize.bx-sliding-menu');
@@ -405,18 +398,27 @@ function bx_menu_slide (jSel, e, sPosition) {
                 if ($(this).width() == iWidthPrev)
                     return;
                 iWidthPrev = $(this).width();
-                fCloseAllOpened();
+                bx_menu_slide_close_all_opened();
             });
  
             $(document).on('click.bx-sliding-menu touchend.bx-sliding-menu', function (event) {
                 if ($(event.target).parents('.bx-sliding-menu-main, .bx-popup-slide-wrapper, .bx-db-header').length || $(event.target).filter('.bx-sliding-menu-main, .bx-popup-slide-wrapper, .bx-db-header').length || e === event.target)
                     event.stopPropagation();
                 else
-                    fCloseAllOpened();
+                    bx_menu_slide_close_all_opened();
             });
 
         }, 10);
     }
+}
+
+/**
+ * Close all opened sliding menus
+ */
+function bx_menu_slide_close_all_opened () {
+    $('.bx-sliding-menu-main:visible, .bx-popup-slide-wrapper:visible').each(function () {
+        bx_menu_slide('#' + this.id);
+    });
 }
 
 /**

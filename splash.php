@@ -22,10 +22,10 @@ function getPageMainCode()
 
     $oTemplate->addJs(array('skrollr/skrollr.min.js'));
     $oTemplate->addCss(array('splash.css'));
-    return $oTemplate->parseHtmlByName('splash.html', array(
+    return $oTemplate->parseHtmlByContent(getParam('sys_site_cover_code'), array(
     	'join_link' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account'),
     	'login_form' => BxDolService::call('system', 'login_form', array(), 'TemplServiceLogin')
-    )); //getParam('sys_site_cover_code');
+    )); 
 }
 
 check_logged();

@@ -136,18 +136,18 @@
     <string name="_bx_persons_menu_item_title_friend_requests"><![CDATA[{addon} friend requests]]></string>
     <string name="_bx_persons_menu_item_title_system_manage_my_profiles"><![CDATA[My profiles]]></string>
     <string name="_bx_persons_menu_item_title_manage_my_profiles"><![CDATA[{addon} profiles]]></string>    
-    <string name="_bx_persons_menu_item_title_system_entries_recent"><![CDATA[Recent]]></string>
-    <string name="_bx_persons_menu_item_title_entries_recent"><![CDATA[Recent]]></string>
-    <string name="_bx_persons_menu_item_title_system_entries_manage"><![CDATA[Manage]]></string>
-    <string name="_bx_persons_menu_item_title_entries_manage"><![CDATA[Manage]]></string>
+    <string name="_bx_persons_menu_item_title_system_entries_recent"><![CDATA[Recent People]]></string>
+    <string name="_bx_persons_menu_item_title_entries_recent"><![CDATA[Recent People]]></string>
+    <string name="_bx_persons_menu_item_title_system_entries_manage"><![CDATA[Manage People]]></string>
+    <string name="_bx_persons_menu_item_title_entries_manage"><![CDATA[Manage People]]></string>
     <string name="_bx_persons_menu_item_title_system_entries_home"><![CDATA[Persons]]></string>
     <string name="_bx_persons_menu_item_title_entries_home"><![CDATA[People]]></string>
 	<string name="_bx_persons_menu_item_title_system_admt_persons"><![CDATA[Profiles]]></string>
 	<string name="_bx_persons_menu_item_title_admt_persons"><![CDATA[Profiles - {addon} unapproved]]></string>
 	<string name="_bx_persons_menu_item_title_manage_my"><![CDATA[My Profiles]]></string>
 	<string name="_bx_persons_menu_item_title_manage_all"><![CDATA[All Profiles]]></string>   
-	<string name="_bx_persons_menu_item_title_system_entries_active"><![CDATA[Active]]></string>
-	<string name="_bx_persons_menu_item_title_entries_active"><![CDATA[Active]]></string>
+	<string name="_bx_persons_menu_item_title_system_entries_active"><![CDATA[Active People]]></string>
+	<string name="_bx_persons_menu_item_title_entries_active"><![CDATA[Active People]]></string>
 
 	<string name="_bx_persons_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
 	<string name="_bx_persons_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>

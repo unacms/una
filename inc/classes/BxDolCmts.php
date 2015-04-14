@@ -477,6 +477,11 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         return $this->_oQuery->getObjectTitle ($iObjectId ? $iObjectId : $this->getId());
     }
 
+    public function getCommentsCountAll ($iObjectId = 0)
+    {
+        return $this->_oQuery->getCommentsCountAll ($iObjectId ? $iObjectId : $this->getId());
+    }
+
     public function getCommentsCount ($iObjectId = 0, $iCmtVParentId = -1, $sFilter = '')
     {
         return $this->_oQuery->getCommentsCount ($iObjectId ? $iObjectId : $this->getId(), $iCmtVParentId, $this->_getAuthorId(), $sFilter);

@@ -59,16 +59,30 @@ class BxBaseMenuSubmenu extends BxTemplMenu
     public function getCode ()
     {
         $aMenuItemSelected = $this->_getSelectedMenuItem ();
-//        if (!$aMenuItemSelected)
-//            return false;
+        if (isset($aMenuItemSelected['set_name']) && 'sys_site' == $aMenuItemSelected['set_name'] && 'home' == $aMenuItemSelected['name'])
+            return '';
 
         $this->_addJsCss();
 
+        $oMenuSubmenu = BxDolMenu::getObjectInstance($this->_sObjectSubmenu);
         $aVars = array (
             'object' => $this->_sObject,
+            'id' => 'bx-menu-submenu-menu',
             'title' => $aMenuItemSelected['title'],
             'link' => BxDolPermalinks::getInstance()->permalink($aMenuItemSelected['link']),
-            'icon' => $aMenuItemSelected['icon'],
+            'popup' => $oMenuSubmenu ? BxTemplFunctions::getInstance()->transBox('bx-menu-submenu-menu', '<div class="bx-def-padding">' . $oMenuSubmenu->getCode() . '</div>', true) : '',
+            'bx_if:menu' => array (
+                'condition' => $oMenuSubmenu,
+                'content' => array(),
+            ),
+            'bx_if:image' => array (
+                'condition' => false !== strpos($aMenuItemSelected['icon'], '.'),
+                'content' => array('icon_url' => $aMenuItemSelected['icon']),
+            ),
+            'bx_if:icon' => array (
+                'condition' => false === strpos($aMenuItemSelected['icon'], '.'),
+                'content' => array('icon' => $aMenuItemSelected['icon']),
+            ),
             'bx_repeat:menus' => array (),
         );
 
@@ -90,7 +104,7 @@ class BxBaseMenuSubmenu extends BxTemplMenu
             );
         }
 
-        if (!$aVars['bx_repeat:menus'])
+        if (!$aVars['bx_repeat:menus'] && (!$oMenuSubmenu || !$aMenuItemSelected))
             return '';
 
         $sMenu = $this->_oTemplate->parseHtmlByName($this->_aObject['template'], $aVars);
@@ -100,13 +114,12 @@ class BxBaseMenuSubmenu extends BxTemplMenu
 
     protected function getSubmenuParams($aMenuItemSelected)
     {
-        if (!$this->_sObjectSubmenu && $aMenuItemSelected['submenu_object'])
+        if (!$this->_sObjectSubmenu && !$this->_mixedMainMenuItemSelected && $aMenuItemSelected['submenu_object'])
             $this->_sObjectSubmenu = $aMenuItemSelected['submenu_object'];
 
         return array (
             'social_sharing_menu' => array ('id' => 'bx-menu-social-sharing-menu', 'icon' => 'share', 'service' => $this->_aSocialSharingService),
-            'actions_menu' => array ('id' => 'bx-menu-actions-menu', 'icon' => 'cog', 'object' => $this->_sObjectActionsMenu),
-            'sub_menu' => array ('id' => 'bx-menu-submenu-menu', 'icon' => 'ellipsis-h', 'object' => $this->_sObjectSubmenu),
+            'actions_menu' => array ('id' => 'bx-menu-actions-menu', 'icon' => 'cog', 'object' => $this->_sObjectActionsMenu),            
         );
     }
 

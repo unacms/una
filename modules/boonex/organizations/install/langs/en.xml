@@ -141,18 +141,18 @@
     <string name="_bx_orgs_menu_item_title_friend_requests"><![CDATA[{addon} friend requests]]></string>
     <string name="_bx_orgs_menu_item_title_system_manage_my_organizations"><![CDATA[My organizations]]></string>
     <string name="_bx_orgs_menu_item_title_manage_my_organizations"><![CDATA[{addon} organizations]]></string>
-    <string name="_bx_orgs_menu_item_title_system_entries_recent"><![CDATA[Recent]]></string>
-    <string name="_bx_orgs_menu_item_title_entries_recent"><![CDATA[Recent]]></string>
-    <string name="_bx_orgs_menu_item_title_system_entries_manage"><![CDATA[Manage]]></string>
-    <string name="_bx_orgs_menu_item_title_entries_manage"><![CDATA[Manage]]></string>
+    <string name="_bx_orgs_menu_item_title_system_entries_recent"><![CDATA[Recent Organizations]]></string>
+    <string name="_bx_orgs_menu_item_title_entries_recent"><![CDATA[Recent Organizations]]></string>
+    <string name="_bx_orgs_menu_item_title_system_entries_manage"><![CDATA[Manage Organizations]]></string>
+    <string name="_bx_orgs_menu_item_title_entries_manage"><![CDATA[Manage Organizations]]></string>
     <string name="_bx_orgs_menu_item_title_system_entries_home"><![CDATA[Orgs]]></string>
     <string name="_bx_orgs_menu_item_title_entries_home"><![CDATA[Orgs]]></string>
     <string name="_bx_orgs_menu_item_title_system_admt_organizations"><![CDATA[Organizations]]></string>
 	<string name="_bx_orgs_menu_item_title_admt_organizations"><![CDATA[Organizations - {addon} unapproved]]></string>
 	<string name="_bx_orgs_menu_item_title_manage_my"><![CDATA[My Organizations]]></string>
 	<string name="_bx_orgs_menu_item_title_manage_all"><![CDATA[All Organizations]]></string>
-	<string name="_bx_orgs_menu_item_title_system_entries_active"><![CDATA[Active]]></string>
-	<string name="_bx_orgs_menu_item_title_entries_active"><![CDATA[Active]]></string>
+	<string name="_bx_orgs_menu_item_title_system_entries_active"><![CDATA[Active Organizations]]></string>
+	<string name="_bx_orgs_menu_item_title_entries_active"><![CDATA[Active Organizations]]></string>
 
 	<string name="_bx_orgs_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
 	<string name="_bx_orgs_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>

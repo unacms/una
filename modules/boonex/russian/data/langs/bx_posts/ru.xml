@@ -21,6 +21,9 @@
 	<string name="_bx_posts_form_entry_input_sys_title"><![CDATA[Заголовок]]></string>
 	<string name="_bx_posts_form_entry_input_title"><![CDATA[Заголовок]]></string>
 	<string name="_bx_posts_form_entry_input_title_err"><![CDATA[Заголовок обязателен. Пожалуйста, заполните это поле]]></string>
+	<string name="_bx_posts_form_entry_input_sys_cat"><![CDATA[Категория]]></string>
+	<string name="_bx_posts_form_entry_input_cat"><![CDATA[Категория]]></string>
+	<string name="_bx_posts_form_entry_input_cat_err"><![CDATA[Нужно обязательно выбрать категорию]]></string>
 	<string name="_bx_posts_form_entry_input_sys_text"><![CDATA[Текст]]></string>
 	<string name="_bx_posts_form_entry_input_text"><![CDATA[Текст]]></string>
 	<string name="_bx_posts_form_entry_input_text_err"><![CDATA[Поле для Текста не может быть пустым]]></string>
@@ -59,8 +62,8 @@
     <string name="_bx_posts_page_title_browse_updated"><![CDATA[Обновлённые Публикации]]></string>
     <string name="_bx_posts_page_title_sys_home"><![CDATA[Публикации - Домой]]></string>
     <string name="_bx_posts_page_title_home"><![CDATA[Публикации]]></string>
-    <string name="_bx_posts_page_block_title_recent_entries"><![CDATA[Недавние Публикации]]></string>
-    <string name="_bx_posts_page_block_title_recent_entries_view_extended"><![CDATA[Недавние Публикации (Дополнительный просмотр)]]></string>
+    <string name="_bx_posts_page_block_title_recent_entries"><![CDATA[Новые Публикации (Галерея)]]></string>
+    <string name="_bx_posts_page_block_title_recent_entries_view_extended"><![CDATA[Новые Публикации]]></string>
     <string name="_bx_posts_page_block_title_recent_entries_view_full"><![CDATA[Недавние Публикации (Полный просмотр)]]></string>
     <string name="_bx_posts_page_block_title_entry_social_sharing"><![CDATA[Поделиться]]></string>
     <string name="_bx_posts_page_block_title_entry_author"><![CDATA[Автор]]></string>
@@ -93,6 +96,7 @@
 	<string name="_bx_posts_page_block_title_system_manage_administration"><![CDATA[Управление всеми Публикациями]]></string>
 	<string name="_bx_posts_page_block_title_manage"><![CDATA[Управление Публикациями]]></string>    
 	<string name="_bx_posts_page_block_title_popular_keywords"><![CDATA[Популярные Хэштеги]]></string>
+	<string name="_bx_posts_page_block_title_cats"><![CDATA[Категории Публикаций]]></string>
 
     <string name="_bx_posts_menu_set_title_view_entry"><![CDATA[Действия для публикации]]></string>
     <string name="_bx_posts_menu_title_view_entry"><![CDATA[Действия для публикации]]></string>
@@ -108,12 +112,12 @@
     <string name="_bx_posts_menu_item_title_system_view_entry"><![CDATA[Просмотреть публикацию]]></string>
     <string name="_bx_posts_menu_item_title_system_entries_home"><![CDATA[Публикации]]></string>
     <string name="_bx_posts_menu_item_title_entries_home"><![CDATA[Публикации]]></string>
-    <string name="_bx_posts_menu_item_title_system_entries_public"><![CDATA[Публичные]]></string>
-    <string name="_bx_posts_menu_item_title_entries_public"><![CDATA[Публичные]]></string>
-    <string name="_bx_posts_menu_item_title_system_entries_manage"><![CDATA[Управление]]></string>
-    <string name="_bx_posts_menu_item_title_entries_manage"><![CDATA[Управление]]></string>
-    <string name="_bx_posts_menu_item_title_system_entries_popular"><![CDATA[Популярные]]></string>
-    <string name="_bx_posts_menu_item_title_entries_popular"><![CDATA[Популярные]]></string>
+    <string name="_bx_posts_menu_item_title_system_entries_public"><![CDATA[Новые публикации]]></string>
+    <string name="_bx_posts_menu_item_title_entries_public"><![CDATA[Новые публикации]]></string>
+    <string name="_bx_posts_menu_item_title_system_entries_manage"><![CDATA[Управление публикациями]]></string>
+    <string name="_bx_posts_menu_item_title_entries_manage"><![CDATA[Управление публикациями]]></string>
+    <string name="_bx_posts_menu_item_title_system_entries_popular"><![CDATA[Популярные публикации]]></string>
+    <string name="_bx_posts_menu_item_title_entries_popular"><![CDATA[Популярные публикации]]></string>
     <string name="_bx_posts_menu_title_view_entry_submenu"><![CDATA[Просмотреть публикацию - Подменю]]></string>
     <string name="_bx_posts_menu_set_title_view_entry_submenu"><![CDATA[Просмотреть публикацию - Подменю]]></string>
     <string name="_bx_posts_menu_item_title_view_entry_submenu_entry"><![CDATA[публикацию]]></string>
@@ -147,7 +151,42 @@
     <string name="_bx_posts_grid_action_err_delete"><![CDATA[Невозможно удалить выбранную(ные) публикацию(ции).]]></string>
     <string name="_bx_posts_grid_txt_account_manager"><![CDATA[Перенаправить в Управление аккаунтом.]]></string>
 
+    <string name="_bx_posts_pre_lists_cats"><![CDATA[Категории публикаций]]></string>
+    <string name="_bx_posts_cat_Animals_Pets"><![CDATA[Животные]]></string>
+    <string name="_bx_posts_cat_Architecture"><![CDATA[Архитектура]]></string>
+    <string name="_bx_posts_cat_Art"><![CDATA[Искусство]]></string>
+    <string name="_bx_posts_cat_Cars_Motorcycles"><![CDATA[Авто & мото]]></string>
+    <string name="_bx_posts_cat_Celebrities"><![CDATA[Знаменитости]]></string>
+    <string name="_bx_posts_cat_Design"><![CDATA[Дизайн]]></string>
+    <string name="_bx_posts_cat_DIY_Crafts"><![CDATA[Сделай сам]]></string>
+    <string name="_bx_posts_cat_Education"><![CDATA[Образование]]></string>
+    <string name="_bx_posts_cat_Film_Music_Books"><![CDATA[Фильмы, музыка & книги]]></string>
+    <string name="_bx_posts_cat_Food_Drink"><![CDATA[Еда & напитки]]></string>
+    <string name="_bx_posts_cat_Gardening"><![CDATA[Сад & огород]]></string>
+    <string name="_bx_posts_cat_Geek"><![CDATA[Гик]]></string>
+    <string name="_bx_posts_cat_Hair_Beauty"><![CDATA[Причёски & макияж]]></string>
+    <string name="_bx_posts_cat_Health_Fitness"><![CDATA[Здоровье & фитнесс]]></string>
+    <string name="_bx_posts_cat_History"><![CDATA[История]]></string>
+    <string name="_bx_posts_cat_Holidays_Events"><![CDATA[Праздники & события]]></string>
+    <string name="_bx_posts_cat_Home_Decor"><![CDATA[Интерьер]]></string>
+    <string name="_bx_posts_cat_Humor"><![CDATA[Юмор]]></string>
+    <string name="_bx_posts_cat_Illustrations_Posters"><![CDATA[Иллюстрации & постеры]]></string>
+    <string name="_bx_posts_cat_Kids_Parenting"><![CDATA[Дети & родители]]></string>
+    <string name="_bx_posts_cat_Mens_Fashion"><![CDATA[Мужская мода]]></string>
+    <string name="_bx_posts_cat_Outdoors"><![CDATA[Туризм]]></string>
+    <string name="_bx_posts_cat_Photography"><![CDATA[Фотография]]></string>
+    <string name="_bx_posts_cat_Products"><![CDATA[Продукты]]></string>
+    <string name="_bx_posts_cat_Quotes"><![CDATA[Цитаты]]></string>
+    <string name="_bx_posts_cat_Science_Nature"><![CDATA[Наука & природа]]></string>
+    <string name="_bx_posts_cat_Sports"><![CDATA[Спорт]]></string>
+    <string name="_bx_posts_cat_Tattoos"><![CDATA[Татуеровки]]></string>
+    <string name="_bx_posts_cat_Technology"><![CDATA[Технологии]]></string>
+    <string name="_bx_posts_cat_Travel"><![CDATA[Путешествия]]></string>
+    <string name="_bx_posts_cat_Weddings"><![CDATA[Свадьба]]></string>
+    <string name="_bx_posts_cat_Womens_Fashion"><![CDATA[Женская мода]]></string>
+
     <string name="_bx_posts_txt_all_entries_by"><![CDATA[<a href="{0}">Все публикации от {1} ({2})</a>]]></string>
+    <string name="_bx_posts_txt_category_link"><![CDATA[Категория <a href="{0}">{1}</a>]]></string>
     <string name="_bx_posts_txt_sample_single"><![CDATA[публикация]]></string>
     <string name="_bx_posts_txt_sample_comment_single"><![CDATA[комментарии к публикации]]></string>    
 </resources>

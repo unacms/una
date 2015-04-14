@@ -4,4 +4,10 @@ __content__
 	    sActionUrl: '<bx_url_studio />designer.php',
 	    sLogoPreviewId: '__logo_preview_id__'
 	});
+    $(document).ready (function () {
+        var e = CodeMirror.fromTextArea($('textarea[name=code]').get(0), {
+            lineNumbers: true,
+            mode: "htmlmixed"
+        });
+    });
 </script>

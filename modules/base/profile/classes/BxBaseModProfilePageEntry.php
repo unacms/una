@@ -48,7 +48,7 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
         $oMenuSubmenu->setObjectSubmenu($CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY'], array (
             'title' => $this->_oProfile->getDisplayName(),
             'link' => $this->_oProfile->getUrl(),
-            'icon' => $this->_oProfile->getIcon(),
+            'icon' => $CNF['ICON'],
         ));
 
         // add replaceable markers

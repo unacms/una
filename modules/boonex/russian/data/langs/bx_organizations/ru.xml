@@ -140,18 +140,18 @@
     <string name="_bx_orgs_menu_item_title_friend_requests"><![CDATA[{addon} запросов дружбы]]></string>
     <string name="_bx_orgs_menu_item_title_system_manage_my_organizations"><![CDATA[Мои организации]]></string>
     <string name="_bx_orgs_menu_item_title_manage_my_organizations"><![CDATA[{addon} организаций]]></string>
-    <string name="_bx_orgs_menu_item_title_system_entries_recent"><![CDATA[Новые]]></string>
-    <string name="_bx_orgs_menu_item_title_entries_recent"><![CDATA[Новые]]></string>
-    <string name="_bx_orgs_menu_item_title_system_entries_manage"><![CDATA[Управление]]></string>
-    <string name="_bx_orgs_menu_item_title_entries_manage"><![CDATA[Управление]]></string>
+    <string name="_bx_orgs_menu_item_title_system_entries_recent"><![CDATA[Новые Организации]]></string>
+    <string name="_bx_orgs_menu_item_title_entries_recent"><![CDATA[Новые Организации]]></string>
+    <string name="_bx_orgs_menu_item_title_system_entries_manage"><![CDATA[Управление Организациями]]></string>
+    <string name="_bx_orgs_menu_item_title_entries_manage"><![CDATA[Управление Организациями]]></string>
     <string name="_bx_orgs_menu_item_title_system_entries_home"><![CDATA[Организации]]></string>
     <string name="_bx_orgs_menu_item_title_entries_home"><![CDATA[Организации]]></string>
     <string name="_bx_orgs_menu_item_title_system_admt_organizations"><![CDATA[Организации]]></string>
 	<string name="_bx_orgs_menu_item_title_admt_organizations"><![CDATA[Организации - {addon} неодобрено]]></string>
 	<string name="_bx_orgs_menu_item_title_manage_my"><![CDATA[Мои организации]]></string>
 	<string name="_bx_orgs_menu_item_title_manage_all"><![CDATA[Все организации]]></string>
-	<string name="_bx_orgs_menu_item_title_system_entries_active"><![CDATA[Активные]]></string>
-	<string name="_bx_orgs_menu_item_title_entries_active"><![CDATA[Активные]]></string>
+	<string name="_bx_orgs_menu_item_title_system_entries_active"><![CDATA[Активные Организации]]></string>
+	<string name="_bx_orgs_menu_item_title_entries_active"><![CDATA[Активные Организации]]></string>
 
 	<string name="_bx_orgs_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
 	<string name="_bx_orgs_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>

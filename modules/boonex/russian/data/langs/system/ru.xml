@@ -1287,7 +1287,6 @@
 	<string name="_adm_wgt_cpt_settings"><![CDATA[Настройки]]></string>
 	<string name="_adm_wgt_cpt_store"><![CDATA[Расширения]]></string>
 	<string name="_are you sure?"><![CDATA[Вы уверены?]]></string>
-	<string name="_bottom_text"><![CDATA[2002-{0}. Продукт <a class="bottom_text" href="http://www.boonex.com/">BoonEx Group</a>.]]></string>
 	<string name="_cmt_block_comments_title"><![CDATA[Комментарии ({0})]]></string>
 	<string name="_cmt_browse_all"><![CDATA[Все]]></string>
 	<string name="_cmt_browse_friends"><![CDATA[Друзья]]></string>
@@ -1752,7 +1751,7 @@
 	<string name="_sys_menu_item_title_switch_language"><![CDATA[Язык]]></string>
 	<string name="_sys_menu_item_title_switch_language_mask"><![CDATA[{1} {0}]]></string>
 	<string name="_sys_menu_item_title_switch_template"><![CDATA[Дизайн]]></string>
-	<string name="_sys_menu_item_title_switch_template_mask"><![CDATA[{0} ({1})]]></string>
+	<string name="_sys_menu_item_title_switch_template_mask"><![CDATA[{0}]]></string>
 	<string name="_sys_menu_item_title_account_menu"><![CDATA[{member_display_name}]]></string>
 	<string name="_sys_menu_item_title_account_profile_context"><![CDATA[Профили]]></string>
 	<string name="_sys_menu_item_title_account_dashboard"><![CDATA[Панель]]></string>
@@ -2048,6 +2047,12 @@
 	<string name="_sys_txt_reset_pasword_email_send_failed"><![CDATA[Ваш новый пароль <b>{0}</b>. Пожалуйста, сохраните его в надёжном месте, так как нам не удалось отослать Вам его по эл. почте. Вы можете его поменять при первом входе в аккаунт.]]></string>
 	<string name="_sys_txt_reset_pasword_email_sent"><![CDATA[Ваш новый пароль - <b>{0}</b> - был отослан Вам по эл. почте. Вы можете его поменять при первом входе в аккаунт.]]></string>
 	<string name="_sys_txt_reset_pasword_error_occured"><![CDATA[Произошла ошибка, Пожалуйста <a href="{0}">попытайтесь снова</a>.]]></string>
+	<string name="_sys_txt_splash_btn_join"><![CDATA[Зарегистрироваться]]></string>
+	<string name="_sys_txt_splash_slide01_title"><![CDATA[Узнайте людей, которые раделяют Ваши увлечения]]></string>
+	<string name="_sys_txt_splash_slide01_desc"><![CDATA[Истории, идеи, фотографии, водео, вопросы, шутки, обсуждения, что угодно.<br />Следите за интересными людьми и будьте интересными для других.]]></string>
+	<string name="_sys_txt_splash_slide02_txt"><![CDATA["Присядь на стул. Попробуй.<br />Зарегистрируйся. Жизнь такая<br />сладкая."]]></string>
+	<string name="_sys_txt_splash_slide03_txt"><![CDATA["Лучший способ завести друзей - быть кому-то другом."]]></string>
+	<string name="_sys_txt_splash_slide04_txt"><![CDATA[Уже один из нас?]]></string>
 	<string name="_sys_txt_unsubscribe_email_settings_update_success"><![CDATA[Ваши имейл-установки были удачно обновлены.]]></string>
 	<string name="_sys_txt_unsubscribe_error_occured"><![CDATA[Произошла ошибка, Пожалуйста, зайдите в свой аккаунт и обновите имейл-установки там или свяжитесь с администратором сайта, чтобы он Вас отписал вручную.]]></string>
 	<string name="_sys_txt_unsubscribe_info"><![CDATA[Обновить имейл-установки для <b>{0}</b>]]></string>

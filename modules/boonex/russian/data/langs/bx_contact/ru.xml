@@ -27,8 +27,8 @@
 	<string name="_bx_contact_page_title_contact"><![CDATA[Написать нам]]></string>
 	<string name="_bx_contact_page_block_title_form"><![CDATA[Написать нам]]></string>
 
-    <string name="_bx_contact_menu_item_title_system_contact"><![CDATA[Написать нам]]></string>
-    <string name="_bx_contact_menu_item_title_contact"><![CDATA[Написать нам]]></string>
+    <string name="_bx_contact_menu_item_title_system_contact"><![CDATA[Связь]]></string>
+    <string name="_bx_contact_menu_item_title_contact"><![CDATA[Связь]]></string>
 
 	<string name="_bx_contact_option_email"><![CDATA[Адрес имейл для получения сообщений (если пусто, будет использован имейл сайта)]]></string>
 

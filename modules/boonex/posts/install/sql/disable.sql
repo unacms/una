@@ -28,6 +28,9 @@ DELETE FROM `sys_objects_search` WHERE `ObjectName` IN ('bx_posts', 'bx_posts_cm
 -- METATAGS
 DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_posts';
 
+-- CATEGORY
+DELETE FROM `sys_objects_category` WHERE `object` = 'bx_posts_cats';
+
 -- GRIDS
 DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_posts_administration', 'bx_posts_common');
 DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_posts_administration', 'bx_posts_common');

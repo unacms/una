@@ -22,6 +22,9 @@ class BxCnvConfig extends BxBaseModTextConfig
 
         $this->CNF = array (
 
+            // module icon
+            'ICON' => 'comments col-red1',
+
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'conversations',
 

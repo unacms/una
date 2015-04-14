@@ -107,10 +107,11 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
         $aVarsTmp = $aVars['bx_if:image']['condition'] ? $aVars['bx_if:image']['content'] : $aVars['bx_if:video']['content'];
 
         $aVars = array_merge($aVars, array (
-            'title' => bx_process_output($aData['title']),
+            'title' => $this->getMediaTitle($aData),
             'module_name' => _t($CNF['T']['txt_media_single']),
             'content_url' => $aVarsTmp['url'],
             'ts' => $aFile['added'],
+            'actions' => $oModule->serviceMediaSocialSharing($aData['id'], true, false),
             'bx_if:thumb' => array (
                 'condition' => $aData['file_id'],
                 'content' => array (
@@ -145,13 +146,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
 
         $sUrlAlbum = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aAlbumInfo[$CNF['FIELD_ID']]);
          
-        $sText = bx_process_output($aMediaInfo['title']);
-        if (!empty($CNF['OBJECT_METATAGS_MEDIA'])) {
-            $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS_MEDIA']);
-    
-            if ($oMetatags->keywordsIsEnabled())
-                $sText = $oMetatags->keywordsParse($iMediaId, $sText);
-        }
+        $sText = $this->getMediaTitle($aMediaInfo);
 
         $iProfileId = $aAlbumInfo[$CNF['FIELD_AUTHOR']];
         $oProfile = BxDolProfile::getInstance($iProfileId);
@@ -311,6 +306,22 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
     function getMediaDesc ($aData)
     {
         return _t('_sys_txt_n_by', bx_time_js($aData['added'], BX_FORMAT_DATE));
+    }
+
+    function getMediaTitle ($aMediaInfo)
+    {
+        $oModule = BxDolModule::getInstance($this->MODULE);
+        $CNF = &$oModule->_oConfig->CNF;
+         
+        $sText = bx_process_output($aMediaInfo['title']);
+        if (!empty($CNF['OBJECT_METATAGS_MEDIA'])) {
+            $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS_MEDIA']);
+    
+            if ($oMetatags->keywordsIsEnabled())
+                $sText = $oMetatags->keywordsParse($aMediaInfo['id'], $sText);
+        }
+
+        return $sText;
     }
 
     function mediaExif ($aMediaInfo, $iProfileId = false, $sFuncAuthorDesc = '', $sTemplateName = 'media-exif.html') 

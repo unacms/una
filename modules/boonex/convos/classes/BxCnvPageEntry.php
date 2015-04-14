@@ -33,7 +33,7 @@ class BxCnvPageEntry extends BxBaseModTextPageEntry
             exit;
         }
 
-        $this->_oModule->setModuleSubmenu ($iFolder);
+        //$this->_oModule->setModuleSubmenu ($iFolder);
 
         $this->_oModule->_oTemplate->addJs('main.js');
         $this->_oModule->_oTemplate->addCss(array('main-media-tablet.css', 'main-media-desktop.css'));

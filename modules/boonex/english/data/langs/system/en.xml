@@ -1287,7 +1287,6 @@
 	<string name="_adm_wgt_cpt_settings"><![CDATA[Settings]]></string>
 	<string name="_adm_wgt_cpt_store"><![CDATA[Apps]]></string>
 	<string name="_are you sure?"><![CDATA[Are you sure?]]></string>
-	<string name="_bottom_text"><![CDATA[2002-{0}. Product of <a class="bottom_text" href="http://www.boonex.com/">BoonEx Group</a>.]]></string>
 	<string name="_cmt_block_comments_title"><![CDATA[Comments ({0})]]></string>
 	<string name="_cmt_browse_all"><![CDATA[All]]></string>
 	<string name="_cmt_browse_friends"><![CDATA[Friends]]></string>
@@ -1752,7 +1751,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_item_title_switch_language"><![CDATA[Language]]></string>
 	<string name="_sys_menu_item_title_switch_language_mask"><![CDATA[{1} {0}]]></string>
 	<string name="_sys_menu_item_title_switch_template"><![CDATA[Design]]></string>
-	<string name="_sys_menu_item_title_switch_template_mask"><![CDATA[{0} ({1})]]></string>
+	<string name="_sys_menu_item_title_switch_template_mask"><![CDATA[{0}]]></string>
 	<string name="_sys_menu_item_title_account_menu"><![CDATA[{member_display_name}]]></string>
 	<string name="_sys_menu_item_title_account_profile_context"><![CDATA[Profiles]]></string>
 	<string name="_sys_menu_item_title_account_dashboard"><![CDATA[Dashboard]]></string>
@@ -2048,6 +2047,12 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_txt_reset_pasword_email_send_failed"><![CDATA[Your new password is <b>{0}</b>, please make sure to save it somewhere because we wasn't able to send it to your email. You can change it to any other password after first login.]]></string>
 	<string name="_sys_txt_reset_pasword_email_sent"><![CDATA[Your new password - <b>{0}</b> - was sent to your email. You can change it once you login to your account.]]></string>
 	<string name="_sys_txt_reset_pasword_error_occured"><![CDATA[Error occurred, please <a href="{0}">try again</a>.]]></string>
+	<string name="_sys_txt_splash_btn_join"><![CDATA[Join Now]]></string>
+	<string name="_sys_txt_splash_slide01_title"><![CDATA[Connect with people that share your passion.]]></string>
+	<string name="_sys_txt_splash_slide01_desc"><![CDATA[Stories, ideas, photos, videos, questions, jokes, discussions, anything.<br />Follow inspiring people and inspire your followers.]]></string>
+	<string name="_sys_txt_splash_slide02_txt"><![CDATA["Pull up a chair. Take a taste.<br />Come join us. Life is so endlessly<br />delicious."]]></string>
+	<string name="_sys_txt_splash_slide03_txt"><![CDATA["The only way to have a friend is to be one."]]></string>
+	<string name="_sys_txt_splash_slide04_txt"><![CDATA[Already one of us?]]></string>
 	<string name="_sys_txt_unsubscribe_email_settings_update_success"><![CDATA[Your email preferences has been successfully updated.]]></string>
 	<string name="_sys_txt_unsubscribe_error_occured"><![CDATA[Error occurred, please login to your account and update email references there or contact site administrator to unsubscribe you manually.]]></string>
 	<string name="_sys_txt_unsubscribe_info"><![CDATA[Update email preferences for <b>{0}</b>]]></string>

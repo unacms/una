@@ -137,17 +137,18 @@
     <string name="_bx_persons_menu_item_title_system_manage_my_profiles"><![CDATA[Мои профили]]></string>
     <string name="_bx_persons_menu_item_title_manage_my_profiles"><![CDATA[{addon} профили]]></string>    
     <string name="_bx_persons_menu_item_title_system_entries_public"><![CDATA[Публичные]]></string>
-    <string name="_bx_persons_menu_item_title_entries_recent"><![CDATA[Новые]]></string>
-    <string name="_bx_persons_menu_item_title_system_entries_recent"><![CDATA[Новые]]></string>
-    <string name="_bx_persons_menu_item_title_entries_manage"><![CDATA[Управление]]></string>
+    <string name="_bx_persons_menu_item_title_entries_recent"><![CDATA[Новые профили]]></string>
+    <string name="_bx_persons_menu_item_title_system_entries_recent"><![CDATA[Новые профили]]></string>
+    <string name="_bx_persons_menu_item_title_system_entries_manage"><![CDATA[Управление профилями]]></string>
+    <string name="_bx_persons_menu_item_title_entries_manage"><![CDATA[Управление профилями]]></string>
     <string name="_bx_persons_menu_item_title_system_entries_home"><![CDATA[Персоны]]></string>
     <string name="_bx_persons_menu_item_title_entries_home"><![CDATA[Люди]]></string>
 	<string name="_bx_persons_menu_item_title_system_admt_persons"><![CDATA[Профили]]></string>
 	<string name="_bx_persons_menu_item_title_admt_persons"><![CDATA[Профили - {addon} неодобрено]]></string>
 	<string name="_bx_persons_menu_item_title_manage_my"><![CDATA[Мои профили]]></string>
 	<string name="_bx_persons_menu_item_title_manage_all"><![CDATA[Все профили]]></string>   
-	<string name="_bx_persons_menu_item_title_system_entries_active"><![CDATA[Активные]]></string>
-	<string name="_bx_persons_menu_item_title_entries_active"><![CDATA[Активные]]></string>
+	<string name="_bx_persons_menu_item_title_system_entries_active"><![CDATA[Активные профили]]></string>
+	<string name="_bx_persons_menu_item_title_entries_active"><![CDATA[Активные профили]]></string>
 
 	<string name="_bx_persons_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
 	<string name="_bx_persons_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>

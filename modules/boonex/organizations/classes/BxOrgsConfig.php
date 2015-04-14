@@ -29,6 +29,9 @@ class BxOrgsConfig extends BxBaseModProfileConfig
 
         $this->CNF = array (
 
+            // module icon
+            'ICON' => 'briefcase col-red2',
+
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'data',
 
