@@ -334,7 +334,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
             'media-tablet.css',
             'media-phone.css',
             'media-print.css',
-            BX_DOL_URL_PLUGINS_PUBLIC . 'marka/marka.min.css',
+            'plugins_public/marka/|marka.min.css',
         ));
 
         //--- Load default JS ---//

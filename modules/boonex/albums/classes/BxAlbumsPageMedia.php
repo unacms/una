@@ -90,8 +90,8 @@ class BxAlbumsPageMedia extends BxTemplPage
         parent::_addJsCss();
 
         $this->_oModule->_oTemplate->addCss(array(
-            BX_DOL_URL_PLUGINS_PUBLIC . 'photo-swipe/photoswipe.css',
-            BX_DOL_URL_PLUGINS_PUBLIC . 'photo-swipe/default-skin/default-skin.css',
+            'plugins_public/photo-swipe/|photoswipe.css',
+            'plugins_public/photo-swipe/default-skin/|default-skin.css',
         ));
 
         $this->_oModule->_oTemplate->addJs(array(

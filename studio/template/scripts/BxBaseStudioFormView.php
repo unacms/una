@@ -24,7 +24,7 @@ class BxBaseStudioFormView extends BxDolStudioForm
         ));
 
         $this->oTemplate->addCss(array(
-        	BX_DOL_URL_PLUGINS_PUBLIC . 'flag-icon-css/css/flag-icon.min.css'
+        	'plugins_public/flag-icon-css/css/|flag-icon.min.css'
         ));
     }
 
