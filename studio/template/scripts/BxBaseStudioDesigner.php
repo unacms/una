@@ -376,7 +376,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
             'codemirror/mode/css/css.js',
             'codemirror/mode/htmlmixed/htmlmixed.js',
         ));
-        $oTemplate->addCss(BX_DOL_URL_PLUGINS_PUBLIC . 'codemirror/lib/codemirror.css');
+        $oTemplate->addCss('plugins_public/codemirror/lib/|codemirror.css');
 
 		return $oTemplate->parseHtmlByName('designer.html', array(
 			'js_object' => $this->getPageJsObject(),
