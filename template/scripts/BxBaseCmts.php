@@ -119,8 +119,14 @@ class BxBaseCmts extends BxDolCmts
         $this->_prepareParams($aBp, $aDp);
 
         $aCmts = $this->getCommentsArray($aBp['vparent_id'], $aBp['filter'], $aBp['order'], $aBp['start'], $aBp['per_view']);
-        if(empty($aCmts) || !is_array($aCmts))
+        if(empty($aCmts) || !is_array($aCmts)) {
+        	if((int)$aBp['parent_id'] == 0 && !isLogged())	{
+        		$oPermalink = BxDolPermalinks::getInstance();
+        		return MsgBox(_t('_cmt_msg_login_required', $oPermalink->permalink('page.php?i=login'), $oPermalink->permalink('page.php?i=create-account')));
+        	}
+
             return isset($aDp['show_empty']) && $aDp['show_empty'] === true ? $this->_getEmpty() : '';
+        }
 
         $sCmts = '';
         foreach($aCmts as $k => $aCmt)
