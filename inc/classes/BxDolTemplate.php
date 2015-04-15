@@ -157,10 +157,12 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
     protected $_iImagesMaxSize;
 
     protected $_bCssCache;
+    protected $_bCssMinify;
     protected $_bCssArchive;
     protected $_sCssCachePrefix;
 
     protected $_bJsCache;
+    protected $_bJsMinify;
     protected $_bJsArchive;
     protected $_sJsCachePrefix;
 
@@ -169,11 +171,6 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
      */
     protected $_bLessEnable;
     protected $_sLessCachePrefix;
-
-    /**
-     * Minify related fields
-     */
-    protected $_bMinifyEnable;
 
     protected $aPage;
     protected $aPageContent;
@@ -247,17 +244,17 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
 
         $bArchive = getParam('sys_template_cache_compress_enable') == 'on';
         $this->_bCssCache = !defined('BX_DOL_CRON_EXECUTE') && getParam('sys_template_cache_css_enable') == 'on';
+        $this->_bCssMinify = $this->_bCssCache && getParam('sys_template_cache_minify_css_enable') == 'on';
         $this->_bCssArchive = $this->_bCssCache && $bArchive;
         $this->_sCssCachePrefix = $this->_sCacheFilePrefix . 'css_';
 
         $this->_bJsCache = !defined('BX_DOL_CRON_EXECUTE') && getParam('sys_template_cache_js_enable') == 'on';
+        $this->_bJsMinify = $this->_bJsCache && getParam('sys_template_cache_minify_js_enable') == 'on';
         $this->_bJsArchive = $this->_bJsCache && $bArchive;
         $this->_sJsCachePrefix = $this->_sCacheFilePrefix . 'js_';
 
         $this->_bLessEnable = true;
         $this->_sLessCachePrefix = $this->_sCacheFilePrefix . 'less_';
-
-        $this->_bMinifyEnable = true;
 
         $this->aPage = array();
         $this->aPageContent = array();
@@ -1577,7 +1574,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
                 $sResult .= $sContent;
         }
 
-        if ($this->_bMinifyEnable && method_exists($this, $sMethodMinify))
+        if ($this->{'_b' . $sUpcaseType . 'Minify'})
             $sResult = $this->$sMethodMinify($sResult);
 
         $mixedWriteResult = false;
