@@ -1968,7 +1968,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
         $aLocations = array_reverse($this->_aLocations, true);
         foreach($aLocations as $sKey => $aLocation) {
             if(($sCheckIn == BX_DOL_TEMPLATE_CHECK_IN_BOTH || $sCheckIn == BX_DOL_TEMPLATE_CHECK_IN_TMPL) && extFileExists(BX_DIRECTORY_PATH_MODULES . $this->getPath(). 'data' . DIRECTORY_SEPARATOR . BX_DOL_TEMPLATE_FOLDER_ROOT . DIRECTORY_SEPARATOR . $sKey . DIRECTORY_SEPARATOR . $sFolder . $sName))
-                $sResult = $sRoot . 'modules' . $sDivider . $sDirectory. 'data' . $sDivider . 'template' . $sDivider . $sKey . $sDivider . $sFolder . $sName;
+                $sResult = $sRoot . 'modules' . $sDivider . $sDirectory. 'data' . $sDivider . BX_DOL_TEMPLATE_FOLDER_ROOT . $sDivider . $sKey . $sDivider . $sFolder . $sName;
             else if(($sCheckIn == BX_DOL_TEMPLATE_CHECK_IN_BOTH || $sCheckIn == BX_DOL_TEMPLATE_CHECK_IN_BASE) && extFileExists($aLocation['path'] . BX_DOL_TEMPLATE_FOLDER_ROOT . DIRECTORY_SEPARATOR . $sFolder . $sName))
                 $sResult = $aLocation[$sType] . BX_DOL_TEMPLATE_FOLDER_ROOT . $sDivider . $sFolder . $sName;
             else
