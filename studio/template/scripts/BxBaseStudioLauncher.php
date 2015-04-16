@@ -12,6 +12,8 @@ define('BX_DOL_STUDIO_LAUNCHER_JS_OBJECT', 'oBxDolStudioLauncher');
 
 class BxBaseStudioLauncher extends BxDolStudioLauncher
 {
+    protected $_sTourTheme = 'default';
+
     public function __construct()
     {
         parent::__construct();
@@ -35,7 +37,8 @@ class BxBaseStudioLauncher extends BxDolStudioLauncher
             'jquery.ui.touch-punch.min.js',
             'jquery.easing.js',
             'jquery.cookie.min.js',
-            'launcher.js'
+            'launcher.js',
+            'shepherd/shepherd.min.js',
         );
         foreach($this->aIncludes as $sName => $oInclude)
             $aJs = array_merge($aJs, $oInclude->getJs());
@@ -50,7 +53,10 @@ class BxBaseStudioLauncher extends BxDolStudioLauncher
 
     public function getPageCss()
     {
-        $aCss = array('launcher.css');
+        $aCss = array(
+            'launcher.css',
+            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'shepherd/css/|shepherd-theme-' . $this->_sTourTheme . '.css',
+        );
         foreach($this->aIncludes as $sName => $oInclude)
             $aCss = array_merge($aCss, $oInclude->getCss());
 
@@ -69,7 +75,8 @@ class BxBaseStudioLauncher extends BxDolStudioLauncher
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('launcher.html', array(
             'js_object' => $this->getPageJsObject(),
             'includes' => $sIncludes,
-            'items' => parent::getPageCode($bHidden)
+            'items' => parent::getPageCode($bHidden),
+            'tour_theme' => $this->_sTourTheme,
         ));
     }
 

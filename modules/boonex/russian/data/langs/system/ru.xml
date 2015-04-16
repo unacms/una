@@ -1867,6 +1867,7 @@
 	<string name="_sys_mobile_search"><![CDATA[Поиск]]></string>
 	<string name="_sys_mobile_status"><![CDATA[Статус]]></string>
     <string name="_sys_name"><![CDATA[Имя]]></string>
+    <string name="_sys_next"><![CDATA[Ещё]]></string>
     <string name="_sys_on"><![CDATA[вкл.]]></string>
     <string name="_sys_off"><![CDATA[выкл.]]></string>
 	<string name="_sys_page_block_title_about"><![CDATA[Об...]]></string>
@@ -2083,6 +2084,7 @@
 	<string name="_sys_uploader_simple_title"><![CDATA[Обычная Загрузка]]></string>
 	<string name="_sys_uploader_upload_canceled"><![CDATA[Очень жаль. Загрузка прервана.]]></string>
 	<string name="_sys_edit_profile"><![CDATA[Редактировать профиль]]></string>    
+	<string name="_sys_exit"><![CDATA[Закончить]]></string>    
 	<string name="_sys_warn"><![CDATA[предупреждение]]></string>
 	<string name="_sys_x_days"><![CDATA[{0} дней]]></string>
 	<string name="_to"><![CDATA[кому]]></string>

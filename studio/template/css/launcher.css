@@ -250,3 +250,10 @@ div.bx-std-widget-caption a {
     color: #ffffff;
     font-weight:normal;
 }
+
+/**
+ * Tour
+ */
+html .shepherd-step.shepherd-theme-default .shepherd-content footer .shepherd-buttons li .shepherd-button {
+    background: #55a892; 
+}
