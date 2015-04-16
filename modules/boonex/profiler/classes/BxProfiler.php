@@ -60,7 +60,7 @@ class BxProfiler extends BxDol
 
         $aCss = array (
 			'profiler.css',
-            'plugins_public/jush/|jush.css',
+            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'jush/|jush.css',
         );
         $aJs = array (
             'jquery.tablesorter.min.js',

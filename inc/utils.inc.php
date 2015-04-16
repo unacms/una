@@ -428,7 +428,7 @@ function genFlag($sLang = '', $oTemplate = null)
 {
     if (!$oTemplate)
         $oTemplate = BxDolTemplate::getInstance();
-    $oTemplate->addCss('plugins_public/flag-icon-css/css/|flag-icon.min.css');
+    $oTemplate->addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flag-icon-css/css/|flag-icon.min.css');
     $sFlag = BxDolLanguages::getInstance()->getLangFlag($sLang);
     return '<span title="' . $sFlag . '" class="flag-icon flag-icon-' . $sFlag . '"></span>';
 }

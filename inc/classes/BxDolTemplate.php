@@ -331,7 +331,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
             'media-tablet.css',
             'media-phone.css',
             'media-print.css',
-            'plugins_public/marka/|marka.min.css',
+            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'marka/|marka.min.css',
         ));
 
         //--- Load default JS ---//
@@ -1645,6 +1645,7 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
             //--- Process Custom CSS/JS file ---//
             else if(strpos($sFile, "|") !== false) {
                 $sFile = implode('', explode("|", $sFile));
+                $sFile = bx_ltrim_str($sFile, BX_DIRECTORY_PATH_ROOT);
 
                 $sUrl = BX_DOL_URL_ROOT . $sFile;
                 $sPath = realpath(BX_DIRECTORY_PATH_ROOT . $sFile);
