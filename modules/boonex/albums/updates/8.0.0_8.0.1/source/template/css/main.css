@@ -1,0 +1,98 @@
+
+@import url(../../../../base/text/template/css/main.css);
+
+.bx-albums-unit-size {
+    width: 18.75rem;
+    height: 18.75rem;
+    object-fit: cover;
+}
+.bx-albums-media-wrapper {
+    width: 18.75rem;
+}
+
+@media (max-width:520px) {
+    .bx-albums-unit-size {
+        width: 100%;
+        height: auto;
+    }
+    .bx-albums-media-wrapper {
+        width: 100%;
+    }
+}
+
+.bx-albums-media-caption,
+.bx-albums-media-actions {
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.bx-albums-unit-images-cont {
+    height:11.25rem;
+    overflow:hidden;
+}
+
+.bx-albums-unit-images {
+    white-space:nowrap;
+    width:100%;
+    height:16rem;
+    overflow-y:hidden;
+    overflow-x:scroll;
+    -webkit-overflow-scrolling:touch;
+}
+
+.bx-albums-unit-images img {
+    display:inline-block;
+    margin-right:0.125rem;
+    height:11.25rem;
+}
+
+.bx-albums-media-file {
+    text-align:center;    
+}
+
+.bx-albums-media-file img,
+.bx-albums-media-file video {
+    max-width:100%;
+}
+
+.bx-albums-media-title {
+    position:relative;
+    padding-right:6rem;
+}
+
+.bx-albums-media-title h1, 
+.bx-albums-media-title h2, 
+.bx-albums-media-title p {
+    margin:0;
+}
+
+.bx-albums-media-controls {
+    position:absolute;
+    top:0;
+    right:0;
+}
+
+.pswp__caption .pswp__caption__center {
+    text-align: center;
+}
+
+.pswp__video {
+    position:absolute;
+    text-align: center;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+}
+
+.pswp__video:before {
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  height: 100%;
+}
+
+.pswp__video video {
+    vertical-align: middle;    
+}

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="ru" flag="ru" title="Russian">
+	<string_add name="_bx_cnv_menu_title_view_entry_popup"><![CDATA[Всплывающие действия для сообщения]]></string_add>
+
+	<string_upd name="_bx_cnv_menu_set_title_view_entry"><![CDATA[Действия для сообщения]]></string_upd>
+    <string_upd name="_bx_cnv_menu_title_view_entry"><![CDATA[Действия для сообщения]]></string_upd>
+</resources>

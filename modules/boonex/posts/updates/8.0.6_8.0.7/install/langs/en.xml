@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_bx_posts_form_entry_input_sys_cat"><![CDATA[Category]]></string_add>
+	<string_add name="_bx_posts_form_entry_input_cat"><![CDATA[Category]]></string_add>
+    <string_add name="_bx_posts_form_entry_input_cat_err"><![CDATA[Please select category]]></string_add>
+	<string_add name="_bx_posts_page_title_browse_updated"><![CDATA[Updated Posts]]></string_add>
+	<string_add name="_bx_posts_page_block_title_entry_comments_link"><![CDATA[Comments to <a href="{entry_link}">{title}</a>]]></string_add>
+	<string_add name="_bx_posts_page_block_title_entry_all_actions"><![CDATA[All Actions]]></string_add>
+	<string_add name="_bx_posts_page_title_sys_entries_updated"><![CDATA[Updated Posts]]></string_add>
+    <string_add name="_bx_posts_page_title_entries_updated"><![CDATA[Updated Posts]]></string_add>
+	<string_add name="_bx_posts_page_block_title_updated_entries"><![CDATA[Updated Posts]]></string_add>
+	<string_add name="_bx_posts_page_block_title_sys_entries_of_author"><![CDATA[Posts of author]]></string_add>
+	<string_add name="_bx_posts_page_block_title_cats"><![CDATA[Posts Categories]]></string_add>
+	<string_add name="_bx_posts_menu_title_view_entry_popup"><![CDATA[Post Popup Actions]]></string_add>
+	<string_add name="_bx_posts_pre_lists_cats"><![CDATA[Post categories]]></string_add>
+    <string_add name="_bx_posts_cat_Animals_Pets"><![CDATA[Animals & Pets]]></string_add>
+    <string_add name="_bx_posts_cat_Architecture"><![CDATA[Architecture]]></string_add>
+    <string_add name="_bx_posts_cat_Art"><![CDATA[Art]]></string_add>
+    <string_add name="_bx_posts_cat_Cars_Motorcycles"><![CDATA[Cars & Motorcycles]]></string_add>
+    <string_add name="_bx_posts_cat_Celebrities"><![CDATA[Celebrities]]></string_add>
+    <string_add name="_bx_posts_cat_Design"><![CDATA[Design]]></string_add>
+    <string_add name="_bx_posts_cat_DIY_Crafts"><![CDATA[DIY & Crafts]]></string_add>
+    <string_add name="_bx_posts_cat_Education"><![CDATA[Education]]></string_add>
+    <string_add name="_bx_posts_cat_Film_Music_Books"><![CDATA[Film, Music & Books]]></string_add>
+    <string_add name="_bx_posts_cat_Food_Drink"><![CDATA[Food & Drink]]></string_add>
+    <string_add name="_bx_posts_cat_Gardening"><![CDATA[Gardening]]></string_add>
+    <string_add name="_bx_posts_cat_Geek"><![CDATA[Geek]]></string_add>
+    <string_add name="_bx_posts_cat_Hair_Beauty"><![CDATA[Hair & Beauty]]></string_add>
+    <string_add name="_bx_posts_cat_Health_Fitness"><![CDATA[Health & Fitness]]></string_add>
+    <string_add name="_bx_posts_cat_History"><![CDATA[History]]></string_add>
+    <string_add name="_bx_posts_cat_Holidays_Events"><![CDATA[Holidays & Events]]></string_add>
+    <string_add name="_bx_posts_cat_Home_Decor"><![CDATA[Home Decor]]></string_add>
+    <string_add name="_bx_posts_cat_Humor"><![CDATA[Humor]]></string_add>
+    <string_add name="_bx_posts_cat_Illustrations_Posters"><![CDATA[Illustrations & Posters]]></string_add>
+    <string_add name="_bx_posts_cat_Kids_Parenting"><![CDATA[Kids & Parenting]]></string_add>
+    <string_add name="_bx_posts_cat_Mens_Fashion"><![CDATA[Men's Fashion]]></string_add>
+    <string_add name="_bx_posts_cat_Outdoors"><![CDATA[Outdoors]]></string_add>
+    <string_add name="_bx_posts_cat_Photography"><![CDATA[Photography]]></string_add>
+    <string_add name="_bx_posts_cat_Products"><![CDATA[Products]]></string_add>
+    <string_add name="_bx_posts_cat_Quotes"><![CDATA[Quotes]]></string_add>
+    <string_add name="_bx_posts_cat_Science_Nature"><![CDATA[Science & Nature]]></string_add>
+    <string_add name="_bx_posts_cat_Sports"><![CDATA[Sports]]></string_add>
+    <string_add name="_bx_posts_cat_Tattoos"><![CDATA[Tattoos]]></string_add>
+    <string_add name="_bx_posts_cat_Technology"><![CDATA[Technology]]></string_add>
+    <string_add name="_bx_posts_cat_Travel"><![CDATA[Travel]]></string_add>
+    <string_add name="_bx_posts_cat_Weddings"><![CDATA[Weddings]]></string_add>
+    <string_add name="_bx_posts_cat_Womens_Fashion"><![CDATA[Women's Fashion]]></string_add>
+    <string_add name="_bx_posts_txt_all_entries_by"><![CDATA[<a href="{0}">All Posts by {1} ({2})</a>]]></string_add>
+    <string_add name="_bx_posts_txt_category_link"><![CDATA[<a href="{0}">{1}</a> category]]></string_add>
+
+
+	<string_upd name="_bx_posts_page_block_title_recent_entries"><![CDATA[Recent Posts (Gallery View)]]></string_upd>
+    <string_upd name="_bx_posts_page_block_title_recent_entries_view_extended"><![CDATA[Recent Posts]]></string_upd>
+	<string_upd name="_bx_posts_page_title_view_entry_comments"><![CDATA[Comments to {title}]]></string_upd>
+	<string_upd name="_bx_posts_page_title_entries_of_author"><![CDATA[Posts by {display_name}]]></string_upd>
+	<string_upd name="_bx_posts_page_block_title_entries_of_author"><![CDATA[Posts by <a href="{profile_link}">{display_name}</a>]]></string_upd>
+	<string_upd name="_bx_posts_menu_set_title_view_entry"><![CDATA[Post Actions]]></string_upd>
+	<string_upd name="_bx_posts_menu_title_view_entry"><![CDATA[Post Actions]]></string_upd>
+	<string_upd name="_bx_posts_menu_item_title_system_entries_public"><![CDATA[Recent Posts]]></string_upd>
+    <string_upd name="_bx_posts_menu_item_title_entries_public"><![CDATA[Recent Posts]]></string_upd>
+    <string_upd name="_bx_posts_menu_item_title_system_entries_manage"><![CDATA[Manage Posts]]></string_upd>
+    <string_upd name="_bx_posts_menu_item_title_entries_manage"><![CDATA[Manage Posts]]></string_upd>
+    <string_upd name="_bx_posts_menu_item_title_system_entries_popular"><![CDATA[Popular Posts]]></string_upd>
+    <string_upd name="_bx_posts_menu_item_title_entries_popular"><![CDATA[Popular Posts]]></string_upd>
+</resources>
