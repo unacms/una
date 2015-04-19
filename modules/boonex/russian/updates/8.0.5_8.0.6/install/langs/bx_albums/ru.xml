@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="ru" flag="ru" title="Russian">
+	<string_add name="_bx_albums_page_block_title_entry_view_media_exif"><![CDATA[EXIF]]></string_add>
+	<string_add name="_bx_albums_page_title_browse_updated"><![CDATA[Обновлённые альбомы]]></string_add>
+	<string_add name="_bx_albums_page_block_title_entry_comments_link"><![CDATA[Комментарии к <a href="{entry_link}">{title}</a>]]></string_add>
+	<string_add name="_bx_albums_page_title_sys_entries_updated"><![CDATA[Обновлённые альбомы]]></string_add>
+    <string_add name="_bx_albums_page_title_entries_updated"><![CDATA[Обновлённые альбомы]]></string_add>
+	<string_add name="_bx_albums_page_block_title_updated_entries"><![CDATA[Обновлённые альбомы]]></string_add>
+	<string_add name="_bx_albums_page_block_title_sys_entries_of_author"><![CDATA[Альбомы автора]]></string_add>
+	<string_add name="_bx_albums_page_block_title_popular_keywords_albums"><![CDATA[Популярные Хэштеги Альбомов]]></string_add>
+	<string_add name="_bx_albums_page_block_title_popular_keywords_media"><![CDATA[Популярные Хэштеги Изображений]]></string_add>
+	<string_add name="_bx_albums_page_block_title_popular_keywords_media_camera"><![CDATA[Популярные Фотокамеры]]></string_add>
+	<string_add name="_bx_albums_menu_title_view_entry_popup"><![CDATA[Всплывающие действия для альбома]]></string_add>
+	<string_add name="_bx_albums_menu_item_title_system_entries_recent"><![CDATA[Новые альбомы]]></string_add>
+    <string_add name="_bx_albums_menu_item_title_entries_recent"><![CDATA[Новые альбомы]]></string_add>
+	<string_add name="_bx_albums_menu_item_title_system_entries_updated"><![CDATA[Обновлённые альбомы]]></string_add>
+    <string_add name="_bx_albums_menu_item_title_entries_updated"><![CDATA[Обновлённые альбомы]]></string_add>
+	<string_add name="_bx_albums_txt_all_entries_by"><![CDATA[<a href="{0}">Все альбомы от {1} ({2})</a>]]></string_add>
+	<string_add name="_bx_albums_txt_media_single"><![CDATA[изображение]]></string_add>
+    <string_add name="_bx_albums_txt_media_comment_single"><![CDATA[комментарий к изображению]]></string_add>
+	<string_add name="_bx_albums_txt_media_album_camera"><![CDATA[Камера]]></string_add>
+	<string_add name="_bx_albums_txt_media_album_focal_length"><![CDATA[Фокусное расстояние]]></string_add>
+	<string_add name="_bx_albums_txt_media_album_focal_length_value"><![CDATA[{0} мм]]></string_add>
+	<string_add name="_bx_albums_txt_media_album_aperture"><![CDATA[Диафрагма]]></string_add>
+	<string_add name="_bx_albums_txt_media_album_shutter_speed"><![CDATA[Выдержка]]></string_add>
+	<string_add name="_bx_albums_txt_media_album_shutter_speed_value"><![CDATA[{0} сек]]></string_add>
+	<string_add name="_bx_albums_txt_media_album_iso"><![CDATA[Чувствительность (ISO)]]></string_add>
+
+	<string_upd name="_bx_albums_page_title_browse_recent"><![CDATA[Новые альбомы]]></string_upd>
+	<string_upd name="_bx_albums_page_block_title_recent_entries"><![CDATA[Новые альбомы]]></string_upd>
+	<string_upd name="_bx_albums_page_title_view_entry_comments"><![CDATA[Комментарии к {title}]]></string_upd>
+	<string_upd name="_bx_albums_page_title_entries_of_author"><![CDATA[{display_name} - Альбомы]]></string_upd>
+    <string_upd name="_bx_albums_page_block_title_entries_of_author"><![CDATA[<a href="{profile_link}">{display_name}</a> - Альбомы]]></string_upd>
+	<string_upd name="_bx_albums_menu_set_title_view_entry"><![CDATA[Действия для альбома]]></string_upd>
+    <string_upd name="_bx_albums_menu_title_view_entry"><![CDATA[Действия для альбома]]></string_upd>
+	<string_upd name="_bx_albums_menu_item_title_system_entries_manage"><![CDATA[Управление альбомами]]></string_upd>
+    <string_upd name="_bx_albums_menu_item_title_entries_manage"><![CDATA[Управление альбомами]]></string_upd>
+	<string_upd name="_bx_albums_menu_item_title_view_entry_submenu_comments"><![CDATA[Комментарии к альбому]]></string_upd>
+	<string_upd name="_bx_albums_txt_media_album_link"><![CDATA[<a href="{0}">{1}</a> альбом от <a href="{2}">{3}</a>]]></string_upd>
+
+	<string_del name="_bx_albums_menu_item_title_system_entries_public" />
+	<string_del name="_bx_albums_menu_item_title_entries_public" />
+</resources>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="ru" flag="ru" title="Russian">
+	<string_add name="_bx_orgs_page_title_browse_active"><![CDATA[Последние Активные Организации]]></string_add>
+	<string_add name="_bx_orgs_page_title_sys_recent"><![CDATA[Последние Добавленные Организации]]></string_add>
+	<string_add name="_bx_orgs_page_title_recent"><![CDATA[Последние Добавленные Организации]]></string_add>
+	<string_add name="_bx_orgs_page_title_sys_active"><![CDATA[Последние Активные Организации]]></string_add>
+	<string_add name="_bx_orgs_page_title_active"><![CDATA[Последние Активные Организации]]></string_add>
+    <string_add name="_bx_orgs_page_block_title_categories"><![CDATA[Категории организаций]]></string_add>
+	<string_add name="_bx_orgs_page_block_title_profile_info_link"><![CDATA[<a href="{profile_link}">{display_name}</a> - Инфо]]></string_add>
+	<string_add name="_bx_orgs_page_block_title_system_profile_info"><![CDATA[Инфо]]></string_add>
+	<string_add name="_bx_orgs_page_block_title_profile_friends_link"><![CDATA[<a href="{profile_link}">{display_name}</a> - Друзья]]></string_add>
+	<string_add name="_bx_orgs_page_block_title_system_profile_friends"><![CDATA[Друзья]]></string_add>
+	<string_add name="_bx_orgs_page_block_title_active_profiles"><![CDATA[Последние Активные Организации]]></string_add>
+	<string_add name="_bx_orgs_menu_title_view_profile_actions_popup"><![CDATA[Организации - Всплывающие действия]]></string_add>
+	<string_add name="_bx_orgs_menu_title_view_profile_submenu_cover"><![CDATA[Подменю организации на обложке]]></string_add>
+	<string_add name="_bx_orgs_menu_item_title_system_entries_recent"><![CDATA[Новые Организации]]></string_add>
+    <string_add name="_bx_orgs_menu_item_title_entries_recent"><![CDATA[Новые Организации]]></string_add>
+	<string_add name="_bx_orgs_menu_item_title_system_entries_active"><![CDATA[Активные Организации]]></string_add>
+	<string_add name="_bx_orgs_menu_item_title_entries_active"><![CDATA[Активные Организации]]></string_add>
+
+	<string_upd name="_bx_orgs_page_title_browse_recent"><![CDATA[Последние Добавленные Организации]]></string_upd>
+	<string_upd name="_bx_orgs_page_block_title_latest_profiles"><![CDATA[Последние добавленные организации]]></string_upd>
+	<string_upd name="_bx_orgs_menu_set_title_view_profile_submenu"><![CDATA[Подменю просмотра организации]]></string_upd>
+	<string_upd name="_bx_orgs_menu_title_view_profile_submenu"><![CDATA[Подменю просмотра организации]]></string_upd>
+	<string_upd name="_bx_orgs_menu_item_title_system_entries_manage"><![CDATA[Управление Организациями]]></string_upd>
+    <string_upd name="_bx_orgs_menu_item_title_entries_manage"><![CDATA[Управление Организациями]]></string_upd>
+
+	<string_del name="_bx_orgs_page_title_sys_home" />
+	<string_del name="_bx_orgs_page_title_home" />
+	<string_del name="_bx_orgs_menu_item_title_system_entries_public" />
+	<string_del name="_bx_orgs_menu_item_title_entries_public" />
+</resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="ru" flag="ru" title="Russian">
+	<string name="_bx_accnt"><![CDATA[Аккаунты]]></string>
+
+	<string name="_bx_accnt_page_title_sys_manage_administration"><![CDATA[Управление всеми аккаунтами]]></string>
+	<string name="_bx_accnt_page_title_manage"><![CDATA[Управление аккаунтами]]></string>
+	<string name="_bx_accnt_page_title_browse"><![CDATA[Аккаунты]]></string>
+
+	<string name="_bx_accnt_page_block_title_system_manage_administration"><![CDATA[Управление всеми аккаунтами]]></string>
+	<string name="_bx_accnt_page_block_title_manage"><![CDATA[Управление аккаунтами]]></string>
+
+	<string name="_bx_accnt_menu_set_title_manage_tools"><![CDATA[Управление меню инструментов]]></string>
+    <string name="_bx_accnt_menu_title_manage_tools"><![CDATA[Управление меню инструментов]]></string>
+    <string name="_bx_accnt_menu_item_title_system_resend_cemail"><![CDATA[Подтвердить имейл]]></string>
+    <string name="_bx_accnt_menu_item_title_resend_cemail"><![CDATA[Подтвердить имейл]]></string>
+    <string name="_bx_accnt_menu_item_title_system_delete"><![CDATA[Удалить]]></string>
+    <string name="_bx_accnt_menu_item_title_delete"><![CDATA[Удалить]]></string>
+    <string name="_bx_accnt_menu_item_title_system_delete_with_content"><![CDATA[Удалить вместе с содержимым]]></string>
+    <string name="_bx_accnt_menu_item_title_delete_with_content"><![CDATA[Удалить вместе с содержимым]]></string>
+	<string name="_bx_accnt_menu_item_title_system_admt_accounts"><![CDATA[Аккаунты]]></string>
+	<string name="_bx_accnt_menu_item_title_admt_accounts"><![CDATA[Аккаунты - {addon} неподтверждено]]></string>
+	<string name="_bx_accnt_menu_item_title_manage"><![CDATA[Управление]]></string>
+
+	<string name="_bx_accnt_acl_action_edit_any_account"><![CDATA[Редактировать мой аккаунт]]></string>
+
+	<string name="_bx_accnt_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
+	<string name="_bx_accnt_grid_filter_item_title_adm_active"><![CDATA[Активный]]></string>
+	<string name="_bx_accnt_grid_filter_item_title_adm_pending"><![CDATA[Неактивный]]></string>
+	<string name="_bx_accnt_grid_filter_item_title_adm_suspended"><![CDATA[Заблокированный]]></string>
+	<string name="_bx_accnt_grid_column_title_adm_active"><![CDATA[Активный]]></string>
+    <string name="_bx_accnt_grid_column_title_adm_name"><![CDATA[Имя]]></string>
+    <string name="_bx_accnt_grid_column_title_adm_email"><![CDATA[Имейл]]></string>
+    <string name="_bx_accnt_grid_column_title_adm_email_confirmed"><![CDATA[Имейл подтверждён]]></string>
+    <string name="_bx_accnt_grid_column_title_adm_profiles"><![CDATA[Профили]]></string>
+    <string name="_bx_accnt_grid_column_title_adm_logged"><![CDATA[Последнее посещение]]></string>
+    <string name="_bx_accnt_grid_action_title_adm_activate"><![CDATA[Активировать]]></string>
+	<string name="_bx_accnt_grid_action_title_adm_suspend"><![CDATA[Заблокировать]]></string>
+    <string name="_bx_accnt_grid_action_title_adm_resend_cemail"><![CDATA[Подтвердить имейл]]></string>
+    <string name="_bx_accnt_grid_action_title_adm_delete"><![CDATA[Удалить]]></string>
+    <string name="_bx_accnt_grid_action_title_adm_delete_with_content"><![CDATA[Удалить вместе с содержимым]]></string>
+    <string name="_bx_accnt_grid_action_title_adm_more_actions"><![CDATA[Дополнительно]]></string>
+    <string name="_bx_accnt_grid_action_err_delete"><![CDATA[Невозможно удалить выбранный(ные) аккаунт(ы).]]></string>
+    <string name="_bx_accnt_grid_action_err_perform"><![CDATA[Невозможно выполнить действие для выбранного(ных) аккаунта(ов).]]></string>
+
+	<string name="_bx_accnt_txt_more"><![CDATA[{0} ещё]]></string>
+	<string name="_bx_accnt_txt_see_more"><![CDATA[Ещё]]></string>
+</resources>

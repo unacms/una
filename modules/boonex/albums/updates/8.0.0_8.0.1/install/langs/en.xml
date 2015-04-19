@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_bx_albums_page_block_title_entry_view_media_exif"><![CDATA[EXIF]]></string_add>
+	<string_add name="_bx_albums_page_title_browse_updated"><![CDATA[Updated Albums]]></string_add>
+	<string_add name="_bx_albums_page_block_title_entry_comments_link"><![CDATA[Comments to <a href="{entry_link}">{title}</a>]]></string_add>
+	<string_add name="_bx_albums_page_title_sys_entries_updated"><![CDATA[Updated Albums]]></string_add>
+    <string_add name="_bx_albums_page_title_entries_updated"><![CDATA[Updated Albums]]></string_add>
+	<string_add name="_bx_albums_page_block_title_updated_entries"><![CDATA[Updated Albums]]></string_add>
+	<string_add name="_bx_albums_page_block_title_sys_entries_of_author"><![CDATA[Albums of author]]></string_add>
+	<string_add name="_bx_albums_page_block_title_popular_keywords_albums"><![CDATA[Popular Albums Hashtags]]></string_add>
+	<string_add name="_bx_albums_page_block_title_popular_keywords_media"><![CDATA[Popular Media Hashtags]]></string_add>
+	<string_add name="_bx_albums_page_block_title_popular_keywords_media_camera"><![CDATA[Popular Cameras]]></string_add>
+	<string_add name="_bx_albums_menu_title_view_entry_popup"><![CDATA[Album Popup Actions]]></string_add>
+	<string_add name="_bx_albums_menu_item_title_system_entries_updated"><![CDATA[Updated Albums]]></string_add>
+    <string_add name="_bx_albums_menu_item_title_entries_updated"><![CDATA[Updated Albums]]></string_add>
+	<string_add name="_bx_albums_txt_all_entries_by"><![CDATA[<a href="{0}">All Albums by {1} ({2})</a>]]></string_add>
+	<string_add name="_bx_albums_txt_media_single"><![CDATA[image]]></string_add>
+    <string_add name="_bx_albums_txt_media_comment_single"><![CDATA[image's comment]]></string_add>
+	<string_add name="_bx_albums_txt_media_album_camera"><![CDATA[Camera]]></string_add>
+	<string_add name="_bx_albums_txt_media_album_focal_length"><![CDATA[Focal length]]></string_add>
+	<string_add name="_bx_albums_txt_media_album_focal_length_value"><![CDATA[{0}mm]]></string_add>
+	<string_add name="_bx_albums_txt_media_album_aperture"><![CDATA[Aperture]]></string_add>
+	<string_add name="_bx_albums_txt_media_album_shutter_speed"><![CDATA[Exposure time]]></string_add>
+	<string_add name="_bx_albums_txt_media_album_shutter_speed_value"><![CDATA[{0}s]]></string_add>
+	<string_add name="_bx_albums_txt_media_album_iso"><![CDATA[ISO]]></string_add>
+
+	<string_upd name="_bx_albums_page_title_view_entry_comments"><![CDATA[Comments to {title}]]></string_upd>
+	<string_upd name="_bx_albums_page_block_title_entries_of_author"><![CDATA[Albums by <a href="{profile_link}">{display_name}</a>]]></string_upd>   
+	<string_upd name="_bx_albums_menu_set_title_view_entry"><![CDATA[Album Actions]]></string_upd>
+	<string_upd name="_bx_albums_menu_title_view_entry"><![CDATA[Album Actions]]></string_upd>
+	<string_upd name="_bx_albums_menu_item_title_system_entries_manage"><![CDATA[Manage Albums]]></string_upd>
+    <string_upd name="_bx_albums_menu_item_title_entries_manage"><![CDATA[Manage Albums]]></string_upd>
+	<string_upd name="_bx_albums_menu_item_title_view_entry_submenu_comments"><![CDATA[Album Comments]]></string_upd>
+	<string_upd name="_bx_albums_txt_media_album_link"><![CDATA[<a href="{0}">{1}</a> album by <a href="{2}">{3}</a>]]></string_upd>
+
+	<string_del name="_bx_albums_menu_item_title_system_entries_public" />
+    <string_del name="_bx_albums_menu_item_title_entries_public" />
+</resources>
