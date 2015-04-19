@@ -1216,6 +1216,7 @@
 	<string name="_adm_tmi_cpt_favorite"><![CDATA[Show Favorite Only]]></string>
 	<string name="_adm_tmi_cpt_logout"><![CDATA[Sign out]]></string>
 	<string name="_adm_tmi_cpt_site"><![CDATA[Go To Site]]></string>
+	<string name="_adm_tmi_cpt_tour"><![CDATA[Tour]]></string>
 	<string name="_adm_txt_back_to_launcher"><![CDATA[Back to Launcher]]></string>
 	<string name="_adm_txt_confirm_cancel"><![CDATA[Cancel]]></string>
 	<string name="_adm_txt_confirm_ok"><![CDATA[OK]]></string>
@@ -1441,6 +1442,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_designbox_13"><![CDATA[Content + background + padding]]></string>
 	<string name="_sys_designbox_2"><![CDATA[Empty box]]></string>
 	<string name="_sys_designbox_3"><![CDATA[Content + background]]></string>
+	<string name="_sys_done"><![CDATA[Done]]></string>    
 	<string name="_sys_et_txt_about_us"><![CDATA[About us]]></string>
 	<string name="_sys_et_txt_body_admin_email"><![CDATA[<bx_include_auto:_email_header.html />
 <p>Hello,</p>
@@ -1994,6 +1996,33 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_storage_restriction_size"><![CDATA[Maximum file size limit is {0}]]></string>
 	<string name="_sys_switch_profile"><![CDATA[Switch profile]]></string>
 	<string name="_sys_submit"><![CDATA[Submit]]></string>
+
+	<string name="_sys_tour_launcher_welcome_title"><![CDATA[Welcome to Trident Studio!]]></string>
+	<string name="_sys_tour_launcher_welcome_txt"><![CDATA[Studio is where you customise your site; add and manage apps; control languages and design; set membership levels and permissions; build pages and navigation, and a lot more. You are now in Studio Launcher.]]></string>
+	<string name="_sys_tour_launcher_apps_title"><![CDATA[Add and manage Apps]]></string>
+	<string name="_sys_tour_launcher_apps_txt"><![CDATA[Apps are modules, languages, tools, templates - all the bits and pieces that make your site unique. You can download and install Apps and they will appear in Studio Launcher. Apps add and change functionality of your site.]]></string>
+	<string name="_sys_tour_launcher_designer_title"><![CDATA[Start making your site special]]></string>
+	<string name="_sys_tour_launcher_designer_txt"><![CDATA[Designer is the best place to start customisation. Change the site logo, choose design template and manage the “Cover Page”. Your site now shows Cover Page to all guest visitors. You can either customise it to turn it off to display a full homepage with content of your choice.]]></string>
+	<string name="_sys_tour_launcher_dashboard_title"><![CDATA[One look and you know it]]></string>
+	<string name="_sys_tour_launcher_dashboard_txt"><![CDATA[Dashboard gives a quick overview of the site status. Trident version, space usage, hosting tools and cache.  Different Apps will add their blocks to Dashboard.]]></string>
+	<string name="_sys_tour_launcher_builder_page_title"><![CDATA[Build your site the way you want it]]></string>
+	<string name="_sys_tour_launcher_builder_page_txt"><![CDATA[Pages allow you to edit the site by rearranging, adding and removing blocks on site pages. You can even create new custom pages of different types. You can also control visibility settings, SEO data, cacheing and page layouts.]]></string>
+	<string name="_sys_tour_launcher_builder_permissions_title"><![CDATA[Define who can do what]]></string>
+	<string name="_sys_tour_launcher_builder_permissions_txt"><![CDATA[Create and edit Membership Levels and associated Actions permissions.]]></string>
+	<string name="_sys_tour_launcher_builder_forms_title"><![CDATA[Form and re-form your forms]]></string>
+	<string name="_sys_tour_launcher_builder_forms_txt"><![CDATA[Forms builder is powerful tool that allows deep customisation of site database and forms. You can create and mange data lists, form fields and even display types (like Add/Edit/Delete). Your Forms will define the structure and theme of the site.]]></string>
+	<string name="_sys_tour_launcher_builder_menus_title"><![CDATA[Show them around]]></string>
+	<string name="_sys_tour_launcher_builder_menus_txt"><![CDATA[Add and manage site navigation menus. You can edit links, re-order them, add new ones, change icons and control visibility according to membership permissions.]]></string>
+	<string name="_sys_tour_launcher_polyglot_title"><![CDATA[Speak their language]]></string>
+	<string name="_sys_tour_launcher_polyglot_txt"><![CDATA["If you talk to a man in a language he understands, that goes to his head. If you talk to him in his language, that goes to his heart." Polyglot allows you to set site language and data format, edit site texts in all installed languages and even translate email templates.]]></string>
+	<string name="_sys_tour_launcher_reorganize_title"><![CDATA[Move the Apps around]]></string>
+	<string name="_sys_tour_launcher_reorganize_txt"><![CDATA[Activate reorganisation mode to rearrange Apps in Launcher or delete inactive ones altogether.]]></string>
+	<string name="_sys_tour_launcher_favourites_title"><![CDATA[Choose wisely]]></string>
+	<string name="_sys_tour_launcher_favourites_txt"><![CDATA[Your Studio may have hundreds of installed Apps. Choose the ones you access most often and use the Star to bring them up.]]></string>
+	<string name="_sys_tour_launcher_add_apps_title"><![CDATA[Now DO add new Apps!]]></string>
+	<string name="_sys_tour_launcher_add_apps_txt"><![CDATA[Trident comes with only a handful of core Apps. Choose, download and install Apps to add profiles types, modules, system tools, plugins, languages and design templates. You can activate and deactivate installed Apps. Trident is super-modular and incredibly flexible, letting you choose your own combination of functionality, settings and database structure to make the social site of your dreams real. Even without changing anything you will have the perfectly functioning social site!]]></string>
+
+
 	<string name="_sys_txt_access_denied"><![CDATA[Access denied]]></string>
 	<string name="_sys_txt_account_pending"><![CDATA[Your account is pending approval, please wait until it is activated.]]></string>
 	<string name="_sys_txt_account_profile_context_change_suggestion"><![CDATA[This is your profile, you can <a href="{0}">change your current profile</a> to this profile]]></string>

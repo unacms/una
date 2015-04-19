@@ -55,6 +55,13 @@ class BxDolStudioMenuTop extends BxDol
         $this->aItems[BX_DOL_STUDIO_MT_CENTER] = $iResult ? $aMatch[2] : '';
 
         $this->aItems[BX_DOL_STUDIO_MT_RIGHT] = array(
+            'tour' => array(
+                'name' => 'tour',
+                'icon' => 'question',
+                'link' => 'javascript:void(0);',
+                'onclick' => 'glTour.start()',
+                'title' => '_adm_tmi_cpt_tour'
+            ),
             'site' => array(
                 'name' => 'site',
                 'icon' => 'home',

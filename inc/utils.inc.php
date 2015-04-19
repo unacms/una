@@ -689,10 +689,10 @@ function bx_js_string ($mixedInput, $iQuoteType = BX_ESCAPE_STR_AUTO)
         $aUnits['<script'] = '<scr" + "ipt';
         $aUnits['</script>'] = '</scr" + "ipt>';
     } else {
-        $aUnits['"'] = '&quote;';
+        $aUnits['"'] = '&quot;';
         $aUnits["'"] = '&apos;';
-        $aUnits["<"] = '&lt;';
-        $aUnits[">"] = '&gt;';
+        $aUnits["<script>"] = '&lt;script&gt;';
+        $aUnits["</script>"] = '&lt;/script&gt;';
     }
     return str_replace(array_keys($aUnits), array_values($aUnits), $mixedInput);
 }

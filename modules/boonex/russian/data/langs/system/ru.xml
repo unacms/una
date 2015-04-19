@@ -839,7 +839,7 @@
 	<string name="_adm_mod_err_process_operation_failed"><![CDATA[Невозможно {0} модуль из "{1}" директории]]></string>
 	<string name="_adm_mod_msg_process_operation_scheduled"><![CDATA[Операция добавлена в очередь и будет выполнена через несколько минут. Пожалуйста, подождите.]]></string>
 	<string name="_adm_msg_modules_success_added_to_cart"><![CDATA[Товар был успешно добавлен в корзину.]]></string>
-	<string name="_adm_msg_modules_success_checkouted"><![CDATA[Оплата успешно принята и будет автоматически обработана через несколько минут. Затем приобретённые товары будут доступны в меню Расширения -> Покупки. Если по какой-то причине этого не произошло, пожалуйста свяжитесь с продавцом товара, предоставив ему детали транзакции.]]></string>
+	<string name="_adm_msg_modules_success_checkouted"><![CDATA[Оплата успешно принята и будет автоматически обработана через несколько минут. Затем приобретённые товары будут доступны в меню Приложения -> Покупки. Если по какой-то причине этого не произошло, пожалуйста свяжитесь с продавцом товара, предоставив ему детали транзакции.]]></string>
 	<string name="_adm_msg_modules_success_delete"><![CDATA[Пакет удачно удалён]]></string>
 	<string name="_adm_msg_modules_success_disable"><![CDATA[Пакет удачно отключён]]></string>
 	<string name="_adm_msg_modules_success_enable"><![CDATA[Пакет удачно подключён]]></string>
@@ -969,7 +969,7 @@
 	<string name="_adm_page_cpt_login"><![CDATA[Войти]]></string>
 	<string name="_adm_page_cpt_polyglot"><![CDATA[Полиглот]]></string>
 	<string name="_adm_page_cpt_settings"><![CDATA[Настройки]]></string>
-	<string name="_adm_page_cpt_store"><![CDATA[Расширения]]></string>
+	<string name="_adm_page_cpt_store"><![CDATA[Приложения]]></string>
 	<string name="_adm_pgt_btn_add_new_key"><![CDATA[Создать Новый Ключ]]></string>
 	<string name="_adm_pgt_btn_delete"><![CDATA[Удалить]]></string>
 	<string name="_adm_pgt_btn_delete_title"><![CDATA[Удалить ключ]]></string>
@@ -1186,9 +1186,9 @@
 	<string name="_adm_str_err_no_product_info"><![CDATA[Невозможно загрузить информацию о товаре. Попробуйте позднее.]]></string>
 	<string name="_adm_str_err_wrong_package_format"><![CDATA[Неверный формат пакета.]]></string>
 	<string name="_adm_str_err_zip_not_available"><![CDATA[ZIP-библиотека не доступна.]]></string>
-	<string name="_adm_str_msg_download_scheduled"><![CDATA[Закачка добавлена в очередь. Через несколько минут закачанный пакет будет доступен в  Расширения -> Скачанные.]]></string>
+	<string name="_adm_str_msg_download_scheduled"><![CDATA[Закачка добавлена в очередь. Через несколько минут закачанный пакет будет доступен в  Приложения -> Скачанные.]]></string>
 	<string name="_adm_str_msg_download_and_install_scheduled"><![CDATA[Закачка и последующая установка добавлены в очередь. Это может занять несколько минут.]]></string>
-	<string name="_adm_str_msg_download_successfully"><![CDATA[Закачка удачно завершена. Вы можете установить модуль через Расширения -> Скачанные.]]></string>
+	<string name="_adm_str_msg_download_successfully"><![CDATA[Закачка удачно завершена. Вы можете установить модуль через Приложения -> Скачанные.]]></string>
 	<string name="_adm_str_msg_download_and_install_successfully"><![CDATA[Закачка и последующая установка удачно завершены.]]></string>
 	<string name="_adm_str_txt_discount_csign"><![CDATA[({0}{1} для Премиум)]]></string>
 	<string name="_adm_str_txt_items_by"><![CDATA[элементов от]]></string>
@@ -1212,10 +1212,11 @@
 	<string name="_adm_str_txt_pv_version_mask"><![CDATA[{0} ({1} доступно)]]></string>
 	<string name="_adm_str_txt_update_from_to"><![CDATA[{0} - {1}]]></string>
 	<string name="_adm_tmi_cpt_edit"><![CDATA[Управление Загрузчиком]]></string>
-	<string name="_adm_tmi_cpt_extensions"><![CDATA[Добавить Расширения]]></string>
+	<string name="_adm_tmi_cpt_extensions"><![CDATA[Добавить Приложения]]></string>
 	<string name="_adm_tmi_cpt_favorite"><![CDATA[Показывать только Любимые]]></string>
 	<string name="_adm_tmi_cpt_logout"><![CDATA[Выйти]]></string>
 	<string name="_adm_tmi_cpt_site"><![CDATA[Перейти на сайт]]></string>
+	<string name="_adm_tmi_cpt_tour"><![CDATA[Инструкции]]></string>
 	<string name="_adm_txt_back_to_launcher"><![CDATA[Назад к Загрузчику]]></string>
 	<string name="_adm_txt_confirm_cancel"><![CDATA[Отменить]]></string>
 	<string name="_adm_txt_confirm_ok"><![CDATA[OK]]></string>
@@ -1287,7 +1288,7 @@
 	<string name="_adm_wgt_cpt_designer"><![CDATA[Дизайнер]]></string>
 	<string name="_adm_wgt_cpt_polyglot"><![CDATA[Полиглот]]></string>
 	<string name="_adm_wgt_cpt_settings"><![CDATA[Настройки]]></string>
-	<string name="_adm_wgt_cpt_store"><![CDATA[Расширения]]></string>
+	<string name="_adm_wgt_cpt_store"><![CDATA[Приложения]]></string>
 	<string name="_are you sure?"><![CDATA[Вы уверены?]]></string>
 	<string name="_cmt_block_comments_title"><![CDATA[Комментарии ({0})]]></string>
 	<string name="_cmt_browse_all"><![CDATA[Все]]></string>
@@ -1441,6 +1442,7 @@
 	<string name="_sys_designbox_13"><![CDATA[Содержимое + фон + отступ]]></string>
 	<string name="_sys_designbox_2"><![CDATA[Пустой квадратик]]></string>
 	<string name="_sys_designbox_3"><![CDATA[Содержимое + фон]]></string>
+	<string name="_sys_done"><![CDATA[Готово]]></string>
 	<string name="_sys_et_txt_about_us"><![CDATA[О нас]]></string>
 	<string name="_sys_et_txt_body_admin_email"><![CDATA[<bx_include_auto:_email_header.html />
 <p>Привет,</p>
@@ -1994,6 +1996,33 @@
 	<string name="_sys_storage_restriction_size"><![CDATA[Максимальный разрешённый размер файла {0}]]></string>
 	<string name="_sys_switch_profile"><![CDATA[Переключить профиль]]></string>
 	<string name="_sys_submit"><![CDATA[Выполнить]]></string>
+
+
+	<string name="_sys_tour_launcher_welcome_title"><![CDATA[Добро пожаловать в Trident Студию!]]></string>
+	<string name="_sys_tour_launcher_welcome_txt"><![CDATA[Студия это место, где можно настроить свой сайт: добавлять приложения и управлять ими; управлять языками и изменять дизайн; контролировать уровни доступа для пользователей; настраивать страницы и навигацию, а также многое другое. Текущая страница - стартовый экран Студии.]]></string>
+	<string name="_sys_tour_launcher_apps_title"><![CDATA[Добавь новые приложения]]></string>
+	<string name="_sys_tour_launcher_apps_txt"><![CDATA[Приложения это модули, языковые переводы, инструменты, различные дизайны сайта - кирпичики из которых складывается твой уникальный сайт. После скачивания и установки проложения, оно появляется на этой страничке. Приложения дополняют и изменяют функциональность сайта.]]></string>
+	<string name="_sys_tour_launcher_designer_title"><![CDATA[Сделай сайт особенным]]></string>
+	<string name="_sys_tour_launcher_designer_txt"><![CDATA[Дизайнер - это лучшее место, чтобы начать изменять свой сайт. Поменяйте логотоп сайта, выберете дизайн и отредактируйте "Обложку сайта". Сайт сейчас показывает "Обложку" для всех гостей сайта. Можно отредактировать её, или просто отключить, тогда гостям будет показываться полноценная главная страница, как для зарегестрированных пользователей.]]></string>
+	<string name="_sys_tour_launcher_dashboard_title"><![CDATA[Основная информация под рукой]]></string>
+	<string name="_sys_tour_launcher_dashboard_txt"><![CDATA["Приборная панель" показывает основную информацию о сайте: версию Trident, использование места, инструменты хостинга и кэш. Различные проложения могут добавлять свои блоки на эту страничку.]]></string>
+	<string name="_sys_tour_launcher_builder_page_title"><![CDATA[Перестрой свой сайт под себя]]></string>
+	<string name="_sys_tour_launcher_builder_page_txt"><![CDATA[Построитель страниц позволяет редактировать страницы перемещая, удаляя и добавляя секции на конкретной странице. Можно даже создавать новые страницы различного вида. Также можно контролировать доступ к странице, поисковую оптимизацию, кэш и дизайн страницы.]]></string>
+    <string name="_sys_tour_launcher_builder_permissions_title"><![CDATA[Определи уровни доступа пользователей]]></string>
+    <string name="_sys_tour_launcher_builder_permissions_txt"><![CDATA[Возможно редактировать уровни доступа для членств и создавать новые членства.]]></string>
+	<string name="_sys_tour_launcher_builder_forms_title"><![CDATA[Формируй и переформируй формы]]></string>
+	<string name="_sys_tour_launcher_builder_forms_txt"><![CDATA[Построитель форм это мощный инструмент, который позволяет менять формы сайта и базы данных. Возможно создавать списки, новые поля для форм и различные представления одной и той-же формы (такие как добавление, редактирование и др.). Формы определяют структуру и тему Вашего сайта.]]></string>
+	<string name="_sys_tour_launcher_builder_menus_title"><![CDATA[Показывай что угодно]]></string>
+	<string name="_sys_tour_launcher_builder_menus_txt"><![CDATA[Добавляй новые пункты в навигационное меню и меняй существующие. Возможно редактировать ссылки, передвигать их, менять иконки, а также контролировать видимость пунктов в зависимости от членства пользователя.]]></string>
+	<string name="_sys_tour_launcher_polyglot_title"><![CDATA[Говори на их языке]]></string>
+	<string name="_sys_tour_launcher_polyglot_txt"><![CDATA["Величайшее богатство народа — его язык". Полиглот позволяет поменять язык сайта, формат даты и времени, редактировать слова и фразы для всех языков и даже редактировать шаблоны писем.]]></string>
+	<string name="_sys_tour_launcher_reorganize_title"><![CDATA[<i class="sys-icon move"></i> Реорганизуй приложения]]></string>
+	<string name="_sys_tour_launcher_reorganize_txt"><![CDATA[Активируй этот режим, чтобы передвигать приложения и удалять неактивные.]]></string>
+	<string name="_sys_tour_launcher_favourites_title"><![CDATA[<i class="sys-icon star"></i> Выбери лучшие]]></string>
+	<string name="_sys_tour_launcher_favourites_txt"><![CDATA[В Студии может быть сотни приложений, выбери те, которыми пользуешся чаще всего. Их можно отфильтровать нажав на иконку звезды.]]></string>
+	<string name="_sys_tour_launcher_add_apps_title"><![CDATA[<i class="sys-icon plus"></i> А сейчас, добавь новые приложения!]]></string>
+	<string name="_sys_tour_launcher_add_apps_txt"><![CDATA[В Trident уже входят самые необходимые приложения. Выбери нужные, скачай и затем проинсталлируй приложения, чтобы добавить разные виды профайлов, модулей, системных утилит, языков и дизайнов. Проинсталлированные приложения можно активировать и деактивировать. Trident очень гибкий и имеет модульную архитектуру, тем самым позволяя создать сайт мечты выбрав нужную функциональность, настройки и структуру базы данных. Но даже не меняя ничего вы получите прекрасно фунционирующий сайт!]]></string>
+
 	<string name="_sys_txt_access_denied"><![CDATA[Доступ запрещён]]></string>
 	<string name="_sys_txt_account_pending"><![CDATA[Ваш аккаунт ожидает одобрения, пожалуйста, дождитесь его активации.]]></string>
 	<string name="_sys_txt_account_profile_context_change_suggestion"><![CDATA[Это Ваш профиль, Вы можете <a href="{0}">изменить свой текущий профиль</a> на этот]]></string>
