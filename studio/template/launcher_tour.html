@@ -86,14 +86,14 @@
             aBtns.push({
                 text: 0 == i ? '<bx_text_js:_sys_exit />' : '<bx_text_js:_sys_done />',
                 action: glTour.cancel,
-                classes: 0 == i ? 'shepherd-button-secondary' : 'shepherd-button-example-primary'
+                classes: 0 == i ? 'shepherd-button-secondary' : 'shepherd-button-primary'
             });
 
         if (i != (a.length - 1))
             aBtns.push({
                 text: '<bx_text_js:_sys_next />',
                 action: glTour.next,
-                classes: 'shepherd-button-example-primary'
+                classes: 'shepherd-button-primary'
             });
 
         glTour.addStep(a[i].id, {

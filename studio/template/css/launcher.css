@@ -254,10 +254,6 @@ div.bx-std-widget-caption a {
 /**
  * Tour
  */
-html .shepherd-step.shepherd-theme-default .shepherd-content footer .shepherd-buttons li .shepherd-button {
-    background: #55a892; 
-}
-
 body.shepherd-active #bx-std-menu-top-center,
 body.shepherd-active .bx-menu-toolbar li,
 body.shepherd-active .bx-std-widget-cont {
