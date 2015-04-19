@@ -48,9 +48,8 @@ class BxDolStudioToolsAudit extends BxDol
         );
 
         $this->aLatestPhp = array(
-            '5.3' => '5.3.29',
-            '5.4' => '5.4.37',
-            '5.5' => '5.5.21',
+            '5.4' => '5.4.40',
+            '5.5' => '5.5.24',
         );
         $this->sMinPhpVer = '5.3.0';
         $this->aPhpSettings = array (
@@ -259,10 +258,8 @@ class BxDolStudioToolsAudit extends BxDol
             $aVer = array('type' => BX_DOL_AUDIT_WARN, 'msg' => _t('_sys_audit_msg_version_is_outdated', $sLatestPhpVersion), 'params' => array ('real_val' => $sPhpVer));
         elseif (version_compare($sPhpVer, '5.5.0', '>=') && version_compare($sPhpVer, '5.6.0', '<') && !version_compare($sPhpVer, $this->aLatestPhp['5.5'], '>='))
             $aVer = array('type' => BX_DOL_AUDIT_WARN, 'msg' => _t('_sys_audit_msg_version_is_outdated', $this->aLatestPhp['5.5']), 'params' => array ('real_val' => $sPhpVer));
-        elseif (version_compare($sPhpVer, '5.4.0', '>=') && version_compare($sPhpVer, '5.5.0', '<') && !version_compare($sPhpVer, $this->aLatestPhp['5.4'], '>='))
+        elseif (version_compare($sPhpVer, '5.3.0', '>=') && version_compare($sPhpVer, '5.5.0', '<') && !version_compare($sPhpVer, $this->aLatestPhp['5.4'], '>='))
             $aVer = array('type' => BX_DOL_AUDIT_WARN, 'msg' => _t('_sys_audit_msg_version_is_outdated', $this->aLatestPhp['5.4']), 'params' => array ('real_val' => $sPhpVer));
-        elseif (version_compare($sPhpVer, '5.3.0', '>=') && version_compare($sPhpVer, '5.4.0', '<') && !version_compare($sPhpVer, $this->aLatestPhp['5.3'], '>='))
-            $aVer = array('type' => BX_DOL_AUDIT_WARN, 'msg' => _t('_sys_audit_msg_version_is_outdated', $this->aLatestPhp['5.3']), 'params' => array ('real_val' => $sPhpVer));
         else
             $aVer = array('type' => BX_DOL_AUDIT_OK, 'params' => array ('real_val' => $sPhpVer));
         $aMessages[_t('_sys_audit_version')] = $aVer;
