@@ -1,0 +1,43 @@
+<script defer type="text/javascript">
+<!--    
+    glTour = new Shepherd.Tour({
+        defaults: {
+            classes: 'shepherd-theme-__tour_theme__ bx-def-z-index-modal',
+            showCancelLink: true,
+            scrollTo: true
+        }
+    });
+
+    Shepherd.on('cancel', function () {
+        $.cookie('homepage-tour-hidden', 1, {expires: 9999});
+    });
+
+    glTour.addStep('tour-homepage', {
+        title: '<bx_text_js:_sys_tour_homepage_welcome_title />',
+        text: '<bx_text_js:_sys_tour_homepage_welcome_txt />',
+        buttons: [{
+            text: '<bx_text_js:_sys_exit />',
+            action: glTour.cancel,
+            classes: 'shepherd-button-secondary'
+        },{
+            text: '<bx_text_js:_sys_next />',
+            action: glTour.next,
+            classes: 'shepherd-button-primary'
+        }]
+    });
+
+    glTour.addStep('tour-account-menu', {
+        title: '<bx_text_js:_sys_tour_homepage_account_menu_title />',
+        text: '<bx_text_js:_sys_tour_homepage_account_menu_txt />',
+        attachTo: '#bx-menu-toolbar-item-account bottom',
+        buttons: [{
+            text: '<bx_text_js:_sys_done />',
+            action: glTour.cancel,
+            classes: 'shepherd-button-primary'
+        }]
+    });
+
+    if (!$.cookie('homepage-tour-hidden'))
+        glTour.start();
+-->
+</script>
