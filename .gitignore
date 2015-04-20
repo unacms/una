@@ -22,6 +22,7 @@ Thumbs.db
 build.properties
 tests/vendor
 tests/composer.phar
+samples/img/*
 
 # Exclude custom modules
 modules/boonex/air*
