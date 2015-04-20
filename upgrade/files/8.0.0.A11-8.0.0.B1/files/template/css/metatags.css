@@ -1,0 +1,23 @@
+.bx-metatags-keywords-container {
+    text-align:center;
+}
+
+.bx-metatags-keyword {
+    line-height:2rem;
+    margin: 0 0.25rem 0 0;
+}
+
+.bx-metatags-locations-map {
+    position:relative;
+    height:144px;
+    background-position:center center;
+    background-repeat:no-repeat;
+}
+
+.bx-metatags-locations-map-string {
+    position:absolute;
+    bottom:0;
+    left:0;
+    text-shadow:1px 1px 0.125rem #fff;
+    background-color:rgba(255,255,255,0.7);
+}

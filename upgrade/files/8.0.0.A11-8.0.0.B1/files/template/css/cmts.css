@@ -1,0 +1,293 @@
+    /*--- General Styles ---*/
+    div.cmts {}
+
+    ul.cmts {
+    	position: relative;
+        margin: 0px;
+        padding: 0px;
+        list-style: none;
+    }
+    ul.cmts-margin,
+    div.cmt-reply-margin {
+    	margin-top: 20px;
+    	margin-top: 1.2rem;
+
+		padding-left: 60px;
+    	padding-left: 3.75rem;
+    }
+    li.cmt {
+    	position: relative;
+    }
+    li.cmt-err {
+        color: red;
+    }
+    li.cmt-hidden {
+       display: none;
+    }
+    li.cmt-replacement {
+    	position: relative;
+		height: 30px;
+		height: 1.875rem;
+		background-color: #ededed;
+		text-indent: 10px;
+    	text-indent: 0.5rem;
+		line-height: 30px;
+    	line-height: 1.875rem;
+    	overflow: hidden;
+    }
+    li.cmt-blink div.cmt-blink-plate {
+		display: block;
+    }
+    div.cmt-cnt {
+		position: relative;
+    }
+
+	/*--- More ---*/
+    li.cmt-more,
+	li.cmt-more-root {
+		text-transform:uppercase;
+	}
+
+	div.cmt-more-cont {
+		font-weight: bold;
+	}
+
+	
+    li.cmt-more-root div.cmt-more-cont {
+    	position: relative;
+    }
+    li.cmt-more-root .bx-btn {
+    	position: relative;
+		float: none;
+    	display: inline-block;
+    	text-transform: uppercase;
+    }    
+
+    /*--- Comment ---*/
+	div.cmt-avatar {
+		position: absolute;
+		top: 0px;
+		left: 0px;
+    	text-align: center;
+    }
+    div.cmt-avatar .sys-icon {
+    	font-size: 60px;
+		font-size: 3.75rem;
+    }
+    div.cmt-info {
+    	position: realtive;
+	}
+	div.cmt-blink-plate {
+		position: absolute;
+		display: none;
+		top: -10px;
+		left: -10px;
+		width: 100%;
+		height: 100%;
+		padding: 10px;
+    	background-color: rgb(255, 244, 213);
+    	background-color: rgba(255, 234, 193, 0.5);
+    }
+	div.cmt-head,
+	div.cmt-subhead {
+    	text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+	}
+    span.cmt-reply-to a {
+		text-decoration: none;
+    }
+    span.cmt-posted-ago {
+        text-transform: lovercase;
+    }
+	span.cmt-points {
+        text-transform: lovercase;
+    }
+
+    /*--- Comment Body ---*/
+    div.cmt-cont {
+        position: relative;
+    }
+	div.cmt-cont .bullet {
+		padding: 0px 5px;
+		padding: 0px 0.3rem;
+    }
+    div.cmt-cont .cmt-post-reply .bx-form-element-wrapper {
+		margin-top: 10px;
+    	margin-top: 0.5rem;
+    }
+	div.cmt-cont .cmt-post-reply .bx-form-element-wrapper:first-child {
+		margin-top: 0px;
+    }
+    span.cmt-body-see-more a {
+		font-weight: bold;
+    }
+    div.cmt-attached-preview {
+		overflow:hidden;
+    }
+    div.cmt-attached-preview,
+    div.cmt-attached-preview img {
+    	width: 100px;
+    	width: 6.25rem;
+    	height: 100px;
+    	height: 6.25rem;
+    }
+    div.cmt-attached-preview {
+    	position: relative;
+    	float: left;
+	}
+	div.cmt-attached-preview img {
+		background-position: center center;
+		background-repeat: no-repeat;
+	}
+	
+    /*--- Comment Actions ---*/
+	div.cmt-actions {
+		position: relative;
+	}
+	div.cmt-ago,
+	div.cmt-comment-manage-link, 
+	div.cmt-actions ul.bx-menu-hor,
+	div.cmt-points-wrp {
+		position: relative;
+		float: left;
+	}
+    div.cmt-comment-manage .bx-menu-ver li {
+		white-space: nowrap;
+    }
+
+    /*--- Add Comment/Reply Styles ---*/
+    div.cmt-reply {
+		position: relative;
+    }
+	div.cmt-post-reply {
+        position: relative;
+    }
+
+    /*--- Add Comment/Reply Form Styles ---*/
+    form.cmt-post-reply .bx-form-input-textarea {
+		height: 64px;
+    	height: 4rem;
+    }
+    form.cmt-post-reply .bx-form-input-submit {
+    	text-transform: uppercase;
+    }
+    form.cmt-post-reply div#bx-form-element-cmt_image,
+    form.cmt-post-reply .bx-form-input-files-uploaders {
+		margin-top: 0px;
+    }
+
+    a.cmts-uploader-button {
+		position: absolute;
+    	right: 0px;
+    	text-decoration: none;
+    }
+    div.cmts-uploader-file {
+		position: relative;
+    	float: left;
+    }
+    div.cmts-uploader-file-preview {
+		overflow: hidden;
+    }
+    div.cmts-uploader-file-preview,
+    div.cmts-uploader-file-preview img {
+		width: 100px;
+    	width: 6.25rem;
+    	height: 100px;
+    	height: 6.25rem;
+    }
+    div.cmts-uploader-file-preview img {
+		background-position: center center;
+		background-repeat: no-repeat;
+    }
+
+    /*--- Live Update Notification Styles ---*/
+	.cmt-notif-holder {
+		padding-top: 70px;
+    	padding-top: 4.375rem;
+    }
+    div.cmt-notifs {
+		position: relative;
+
+    	width: 100%;
+    }
+    div.cmt-notif {
+    	position: relative;
+
+    	width: 100%;
+    	height: 68px;
+    	height: 4.25rem;
+
+    	border-color: #000000;
+    	background-color: rgba(85, 85, 85, .9);
+
+    	color: #ffffff;
+    }
+    div.cmt-notif-cnt {
+		position: relative;
+    	padding: 0px 50px;
+    	padding: 0px 3.125rem;
+    }
+    div.cmt-notif-actions {
+		position: absolute;
+    	height: 100%;
+    	top: 0px;
+
+    	line-height: 68px;
+    	line-height: 4.25rem;
+    }
+	div.cmt-na-left {
+    	left: 0px;
+	}
+    div.cmt-na-right {
+    	right: 0px;
+	}
+    div.cmt-notif-actions a {
+    	line-height: initial;
+    	text-decoration: none;
+    	font-size: 28px;
+    	font-size: 1.75rem;
+    	color: #9c9c9c;
+    }
+
+    /*--- Comment Styles in Live Update Notification ---*/
+	div.cmt-notif-comment {
+		position: relative;
+		width: 80%;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	div.cmt-notif-avatar {
+		position: absolute;
+		top: 0px;
+		left: 0px;
+    	text-align: center;
+    }
+    div.cmt-notif-avatar .sys-icon {
+    	font-size: 60px;
+		font-size: 3.75rem;
+    }
+    div.cmt-notif-info {
+    	position: realtive;
+	}
+	div.cmt-notifi-username {
+		line-height: 24px;
+		line-height: 1.5rem;
+
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+	}
+	div.cmt-notifi-username,
+	div.cmt-notifi-username a {
+		color: #cccccc;
+	}
+	div.cmt-notifi-actions a {
+		text-decoration: underline;
+		color: #ffffff;
+	}
+	div.cmt-notifi-actions a:hover,
+    div.cmt-notifi-actions a:active {
+    	text-decoration: none;
+		color: #ffffff;
+    }

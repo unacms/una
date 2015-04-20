@@ -1,0 +1,97 @@
+<div class="bx-std-product-view">
+	<bx_if:show_screenshots>
+		<div class="bx-std-pv-screenshots">
+			<div class="bx-std-pvs-left">
+				<i class="sys-icon caret-left"></i>
+			</div>
+			<div class="bx-std-pvs-cnt" style="width:__width__px">
+				<bx_repeat:screenshots>
+					<div class="bx-std-pvs-item bx-def-margin-left-auto" style="background-image:url('__image_url__');">
+						<a href="__view_url__" rel="group">
+			        		<img src="<bx_image_url:spacer.gif />" />
+			        	</a>
+			        </div>
+				</bx_repeat:screenshots>
+				<div class="clear">&#160;</div>
+			</div>
+			<div class="bx-std-pvs-right">
+				<i class="sys-icon caret-right"></i>
+			</div>
+		</div>
+	</bx_if:show_screenshots>
+	<div class="bx-std-pv-line">
+		<span class="bx-std-pv-cpt bx-def-font-grayed">
+			<bx_text:_adm_str_txt_pv_title />:
+		</span> <a href="__url__" target="_blank">__title__</a>
+	</div>
+	<div class="bx-std-pv-line">
+		<span class="bx-std-pv-cpt bx-def-font-grayed">
+			<bx_text:_adm_str_txt_pv_vendor />:
+		</span> <a href="__author_url__">__author_name__</a>
+	</div>
+	<div class="bx-std-pv-line">
+		<span class="bx-std-pv-cpt bx-def-font-grayed">
+			<bx_text:_adm_str_txt_pv_version />:
+		</span> __version__
+	</div>
+	<div class="bx-std-pv-line">
+		<span class="bx-std-pv-cpt bx-def-font-grayed">
+			<bx_text:_adm_str_txt_pv_price />:
+		</span> __price__ 
+	</div>
+	<bx_if:show_discount>
+		<div class="bx-std-pv-line">
+			<span class="bx-std-pv-cpt bx-def-font-grayed">
+				<bx_text:_adm_str_txt_pv_discount />:
+			</span> __discount__
+		</div>
+	</bx_if:show_discount>
+	<div class="bx-std-pv-line">
+		<span class="bx-std-pv-cpt bx-def-font-grayed">
+			<bx_text:_adm_str_txt_pv_category />:
+		</span> <a href="__category_url__">__category__</a>
+	</div>
+	<div class="bx-std-pv-line">
+		<span class="bx-std-pv-cpt bx-def-font-grayed">
+			<bx_text:_adm_str_txt_pv_tags />:
+		</span> __tags__
+	</div>
+	<div class="bx-std-pv-line">
+		<span class="bx-std-pv-cpt bx-def-font-grayed">
+			<bx_text:_adm_str_txt_pv_stats />:
+		</span> <a href="__reviews_url__">__reviews__</a>, __likes__, __views__ 
+	</div>
+	<div class="bx-std-pv-line">
+		<span class="bx-std-pv-cpt bx-def-font-grayed">
+			<bx_text:_adm_str_txt_pv_created />:
+		</span> __created__
+	</div>
+	<div class="bx-std-pv-line">
+		<span class="bx-std-pv-cpt bx-def-font-grayed">
+			<bx_text:_adm_str_txt_pv_updated />:
+		</span> __updated__
+	</div>
+	<div class="bx-std-pv-line">
+		<span class="bx-std-pv-cpt bx-def-font-grayed">
+			<bx_text:_adm_str_txt_pv_description />:
+		</span> __description__
+	</div>
+	<div class="bx-std-pv-actions bx-def-margin-top">
+		<bx_if:show_purchase>
+			<input class="bx-btn bx-def-margin-right" type="button" value="<bx_text:_adm_btn_purchase_submit />" onclick="javascript:__js_object__.addToCart('__vendor__', __id__, this)" />
+		</bx_if:show_purchase>
+		<bx_if:show_checkout>
+			<button class="bx-btn bx-def-margin-right" type="button" onclick="javascript:__js_object__.checkoutCart('__vendor__', this)" <bx_if:show_as_hidden>style="display:none;"</bx_if:show_as_hidden>>
+				<bx_text:_adm_btn_checkout_submit />
+			</button>
+		</bx_if:show_checkout>
+		<bx_if:show_download>
+			<input class="bx-btn bx-def-margin-right" type="button" value="<bx_text:_adm_btn_download_submit />" onclick="javascript:__js_object__.getFile(__file_id__, this)" />
+		</bx_if:show_download>
+		<bx_if:show_download_disabled>
+			<input class="bx-btn bx-btn-disabled bx-def-margin-right" type="button" value="<bx_text:_adm_btn_download_submit />" disabled="disabled" />
+		</bx_if:show_download_disabled>
+		<input class="bx-btn bx-def-margin-right" type="button" value="<bx_text:_adm_btn_cancel_submit />" onclick="javascript:$('.bx-popup-applied:visible').dolPopupHide();" />
+		<div class="bx-std-cb"></div>
+	</div>
+</div>

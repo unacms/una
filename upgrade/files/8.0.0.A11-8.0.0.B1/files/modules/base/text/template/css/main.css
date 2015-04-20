@@ -1,0 +1,190 @@
+
+@import url(../../../general/template/css/main.css);
+
+/* unit */
+
+.bx-base-text-unit:first-child h2,
+.bx-base-text-unit:first-child h1 {
+    padding-top:0;
+}
+
+.bx-base-text-unit h2,
+.bx-base-text-unit h1 {
+    margin:0;
+}
+
+.bx-base-text-unit .sys-icon {
+    vertical-align:middle;
+}
+
+.bx-base-text-unit-no-thumb,
+.bx-base-text-unit-thumb {
+    display:block;
+    overflow:hidden;
+}
+
+.bx-base-text-unit-summary p {
+    margin:0;
+}
+
+.bx-base-text-unit-info {
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.bx-base-text-unit-gallery .bx-base-text-unit-no-thumb,
+.bx-base-text-unit-gallery .bx-base-text-unit-thumb {
+    float:none;
+    line-height:1.25em;
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-position:center center;
+    display:table;
+    width:100%;
+}
+
+.bx-base-text-unit-gallery h2 {
+    line-height:1.25em;
+    max-height:3.75em;
+    overflow:hidden; 
+    margin-bottom:0;
+}
+
+.bx-base-text-wrapper {
+    margin-bottom:0;
+}
+
+.bx-base-text-unit-ext .bx-base-text-unit-thumb {
+    float:left;
+}
+
+.bx-base-text-unit-strecher {
+    visibility: hidden;
+}
+
+
+/* flexbox */
+
+.bx-base-text-unit-gallery-wrapper {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+
+    /* makes all items on a row equal height */
+    -webkit-box-align: stretch;
+    -webkit-align-items: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+
+    /* wrap onto the next line rather than stretching or shrinking */
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+
+    /* tells flexbox to start items from the left */
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    plex-pack: start;
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start;
+}
+
+.bx-base-text-unit-gallery-wrapper .bx-base-text-unit-gallery {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+
+    -webkit-box-flex: 0;
+
+    -webkit-flex: 0 0 100%;
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+
+    overflow:hidden;
+}
+
+@media (min-width:533px) and (max-width:720px) {
+    .bx-layout-column-half .bx-base-text-unit-gallery-wrapper .bx-base-text-unit-gallery,
+    .bx-layout-column-thin .bx-base-text-unit-gallery-wrapper .bx-base-text-unit-gallery {
+        -webkit-flex: 0 0 49.8%;
+        -ms-flex: 0 0 49.8%;
+        flex: 0 0 49.8%;
+    }
+}
+
+@media (min-width:533px) and (max-width:1024px) {
+    .bx-layout-column-wide .bx-base-text-unit-gallery-wrapper .bx-base-text-unit-gallery,
+    #sys_search_results .bx-base-text-unit-gallery-wrapper .bx-base-text-unit-gallery,
+    .bx-layout-column-fullwidth .bx-base-text-unit-gallery-wrapper .bx-base-text-unit-gallery {
+        -webkit-flex: 0 0 49.8%;
+        -ms-flex: 0 0 49.8%;
+        flex: 0 0 49.8%;
+    }
+}
+
+@media (min-width:1024px) {
+    .bx-layout-column-wide .bx-base-text-unit-gallery-wrapper .bx-base-text-unit-gallery {
+        -webkit-flex: 0 0 49.8%;
+        -ms-flex: 0 0 49.8%;
+        flex: 0 0 49.8%;
+    }
+    #sys_search_results .bx-base-text-unit-gallery-wrapper .bx-base-text-unit-gallery,
+    .bx-layout-column-fullwidth .bx-base-text-unit-gallery-wrapper .bx-base-text-unit-gallery {
+        -webkit-flex: 0 0 33.25%;
+        -ms-flex: 0 0 33.25%;
+        flex: 0 0 33.25%;
+    }
+}
+
+/* view page */
+
+.bx-base-text-entity-content p:first-child,
+.bx-base-text-entity-content h2:first-child,
+.bx-base-text-entity-content h1:first-child {
+    margin-top:0;
+}
+
+.bx-base-text-entity-content p:last-child,
+.bx-base-text-entity-content h2:last-child,
+.bx-base-text-entity-content h1:last-child {
+    margin-bottom:0;
+}
+
+.bx-base-text-entity-share .bx-vote,
+.bx-base-text-entity-share .bx-tl-share,
+.bx-base-text-entity-share .bx-social-sharing {
+	position: relative;
+	float: left;
+}
+
+.bx-base-text-attachments .bx-base-text-attachment video,
+.bx-base-text-attachments .bx-base-text-attachment {
+    width:18.75rem;
+    height:12.5rem;
+}
+
+.bx-base-text-attachments {
+    margin:-1px;
+}
+.bx-base-text-attachment {
+    margin:1px;
+}
+
+.bx-base-text-entity-actions-all .bx-base-text-entity-share,
+.bx-base-text-entity-actions-all .bx-menu-btns-hor {
+    display:inline-block;
+    vertical-align:top;
+}
+
+.bx-base-text-comments-item {
+    float: left;
+}
+
+.bx-base-text-comments-item-counter-holder {
+    float: left;
+    font-size: 1.5rem;
+    line-height: 2.2rem;
+}
