@@ -18,7 +18,7 @@ $aConfig = array(
     'name' => 'bx_posts',
     'title' => 'Posts',
     'note' => 'Basic blogging module.',
-    'version' => '8.0.7.DEV',
+    'version' => '8.0.8.DEV',
     'vendor' => 'BoonEx',
 	'help_url' => 'http://feed.boonex.com/?section={module_name}',
 
