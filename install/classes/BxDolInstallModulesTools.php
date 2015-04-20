@@ -56,7 +56,7 @@ class BxDolInstallModulesTools
 
     public function readLanguage ($aModuleConfig)
     {
-        $sPath = BX_INSTALL_DIR_MODULES . $aModuleConfig['home_dir'] . 'data/langs/system.xml';
+        $sPath = BX_INSTALL_DIR_MODULES . $aModuleConfig['home_dir'] . 'data/langs/system/' . $aModuleConfig['home_uri'] . '.xml';
 
         if(!file_exists($sPath))
             return array();
