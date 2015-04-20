@@ -1674,6 +1674,7 @@
 	<string name="_sys_inst_conf_desc_db_sock"><![CDATA[Оставьте пустым или укажите другой путь к сокету.]]></string>
 	<string name="_sys_inst_conf_desc_db_user"><![CDATA[MySQL БД - имя пользователя с правами чтения/записи.]]></string>
 	<string name="_sys_inst_conf_desc_language"><![CDATA[Язык для установки по умолчанию.]]></string>
+	<string name="_sys_inst_conf_desc_profiles"><![CDATA[Модуль профилей для установки по умолчанию.]]></string>
 	<string name="_sys_inst_conf_desc_oauth_key_secret"><![CDATA[<a target="_blank" href="http://www.boonex.com/oauth/key_and_secret">Получить BoonEx Key & Secret</a>]]></string>
 	<string name="_sys_inst_conf_desc_path_to_binary"><![CDATA[If '{0}' программа не существует, нужно установить <a target="_blank" href="http://www.imagemagick.org/">ImageMagick</a>.]]></string>
 	<string name="_sys_inst_conf_desc_root_dir"><![CDATA[Путь к директории, где содержатся файлы Trident.]]></string>
@@ -1692,6 +1693,7 @@
 	<string name="_sys_inst_conf_field_db_sock"><![CDATA[База Данных - путь к сокету]]></string>
 	<string name="_sys_inst_conf_field_db_user"><![CDATA[База Данных - имя пользователя]]></string>
 	<string name="_sys_inst_conf_field_language"><![CDATA[Язык]]></string>
+	<string name="_sys_inst_conf_field_profiles"><![CDATA[Профили]]></string>
 	<string name="_sys_inst_conf_field_oauth_key"><![CDATA[BoonEx key]]></string>
 	<string name="_sys_inst_conf_field_oauth_secret"><![CDATA[BoonEx secret]]></string>
 	<string name="_sys_inst_conf_field_path_to_binary"><![CDATA[Путь к '{0}' программе]]></string>

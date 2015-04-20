@@ -227,6 +227,14 @@ class BxDolInstallSiteConfig
                 'vals' => $this->getSelectValues(BX_DOL_MODULE_TYPE_TEMPLATE),
             ),
 
+            BX_DOL_MODULE_TYPE_MODULE => array(
+                'name' => _t('_sys_inst_conf_field_profiles'),
+                'desc' => _t('_sys_inst_conf_desc_profiles'),
+                'def' => 'persons',
+                'func' => 'rowSelect',
+                'vals' => $this->getSelectValues(BX_DOL_MODULE_TYPE_MODULE),
+            ),
+
             'section_modules_close' => array(
                 'func' => 'rowSectionClose',
             ),
@@ -375,7 +383,7 @@ EOF;
 
     public function processModules ($a)
     {
-        $aTypes = array (BX_DOL_MODULE_TYPE_LANGUAGE, BX_DOL_MODULE_TYPE_TEMPLATE);
+        $aTypes = array (BX_DOL_MODULE_TYPE_LANGUAGE, BX_DOL_MODULE_TYPE_TEMPLATE, BX_DOL_MODULE_TYPE_MODULE);
         foreach ($aTypes as $sModuleType) {
             if (empty($a[$sModuleType]))
                 continue;

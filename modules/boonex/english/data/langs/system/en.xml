@@ -1674,6 +1674,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_inst_conf_desc_db_sock"><![CDATA[Leave blank or specify MySQL database socket path.]]></string>
 	<string name="_sys_inst_conf_desc_db_user"><![CDATA[Your MySQL database user name with read/write access.]]></string>
 	<string name="_sys_inst_conf_desc_language"><![CDATA[Language to install by default.]]></string>
+	<string name="_sys_inst_conf_desc_profiles"><![CDATA[Profiles module to install by default.]]></string>
 	<string name="_sys_inst_conf_desc_oauth_key_secret"><![CDATA[<a target="_blank" href="http://www.boonex.com/oauth/key_and_secret">Get BoonEx Key & Secret</a>]]></string>
 	<string name="_sys_inst_conf_desc_path_to_binary"><![CDATA[If '{0}' binary doesn't exist, you need to install <a target="_blank" href="http://www.imagemagick.org/">ImageMagick</a>.]]></string>
 	<string name="_sys_inst_conf_desc_root_dir"><![CDATA[Path to directory where Trident files are stored.]]></string>
@@ -1692,6 +1693,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_inst_conf_field_db_sock"><![CDATA[Database socket path]]></string>
 	<string name="_sys_inst_conf_field_db_user"><![CDATA[Database user]]></string>
 	<string name="_sys_inst_conf_field_language"><![CDATA[Language]]></string>
+	<string name="_sys_inst_conf_field_profiles"><![CDATA[Profiles]]></string>
 	<string name="_sys_inst_conf_field_oauth_key"><![CDATA[BoonEx key]]></string>
 	<string name="_sys_inst_conf_field_oauth_secret"><![CDATA[BoonEx secret]]></string>
 	<string name="_sys_inst_conf_field_path_to_binary"><![CDATA[Path to '{0}' binary]]></string>
