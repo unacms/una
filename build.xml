@@ -83,7 +83,9 @@
         <exclude name="tmp/**" />
         <exclude name="plugins/**" />
         <exclude name="plugins_public/**" />
+        <exclude name="modules/boonex/sites/**" />
         <exclude name="modules/boonex/membership_pricing/**" />
+        <exclude name="**/updates/**" />
     </fileset>
 
     <!-- ============================================  -->
