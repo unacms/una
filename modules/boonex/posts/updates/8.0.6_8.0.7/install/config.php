@@ -30,12 +30,20 @@ $aConfig = array(
     'class_prefix' => 'BxPosts',
 
     /**
+     * List of menu triggers.
+     */
+    'menu_triggers' => array (
+    	'trigger_profile_view_submenu'
+    ),
+
+    /**
      * Installation/Uninstallation Section.
      */
     'install' => array(
 		'execute_sql' => 1,
         'update_files' => 1,
         'update_languages' => 1,
+    	'process_menu_triggers' => 1,
 		'clear_db_cache' => 1,
     ),
 

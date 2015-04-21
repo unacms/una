@@ -40,6 +40,29 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `
 ('', 0, 'bx_albums', '', '_bx_albums_page_block_title_popular_keywords_media_camera', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:14:"keywords_cloud";s:6:"params";a:2:{i:0;s:22:"bx_albums_media_camera";i:1;s:22:"bx_albums_media_camera";}s:5:"class";s:20:"TemplServiceMetatags";}', 0, 1, 1, @iBlockOrder + 4);
 
 
+-- MENU
+DELETE FROM `sys_menu_items` WHERE `set_name`='sys_homepage' AND `name`='albums-home';
+SET @iHomepageMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_homepage' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
+INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('sys_homepage', 'bx_albums', 'albums-home', '_bx_albums_menu_item_title_system_entries_home', '_bx_albums_menu_item_title_entries_home', 'page.php?i=albums-home', '', '', 'picture-o col-blue1', 'bx_albums_submenu', 2147483647, 1, 1, IFNULL(@iHomepageMenuOrder, 0) + 1);
+
+DELETE FROM `sys_objects_menu` WHERE `object`='bx_albums_view_popup';
+INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
+('bx_albums_view_popup', '_bx_albums_menu_title_view_entry_popup', '', 'bx_albums', 16, 0, 1, 'BxAlbumsMenuViewActions', 'modules/boonex/albums/classes/BxAlbumsMenuViewActions.php');
+
+UPDATE `sys_objects_menu` SET `template_id`='6' WHERE `object`='bx_albums_submenu';
+
+UPDATE `sys_menu_items` SET `title_system`='_bx_albums_menu_item_title_system_entries_recent', `title`='_bx_albums_menu_item_title_entries_recent' WHERE `set_name`='bx_albums_submenu' AND `name`='albums-home';
+
+DELETE FROM `sys_menu_items` WHERE `set_name`='bx_albums_submenu' AND `name`='albums-updated';
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('bx_albums_submenu', 'bx_albums', 'albums-updated', '_bx_albums_menu_item_title_system_entries_updated', '_bx_albums_menu_item_title_entries_updated', 'page.php?i=albums-updated', '', '', '', '', 2147483647, 1, 1, 3);
+
+UPDATE `sys_objects_menu` SET `template_id`='6' WHERE `object`='bx_albums_view_submenu';
+
+UPDATE `sys_menu_items` SET `icon`='picture-o col-blue1' WHERE `set_name`='trigger_profile_view_submenu' AND `name`='albums-author';
+
+
 -- SEARCH
 UPDATE `sys_objects_search` SET `GlobalSearch`='1' WHERE `ObjectName` IN ('bx_albums', 'bx_albums_cmts', 'bx_albums_media', 'bx_albums_media_cmts');
 
