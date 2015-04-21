@@ -1,0 +1,56 @@
+<div class="bx-std-product" id="bx-std-product-__id__">
+	<div class="bx-std-product-cnt bx-def-widget-size-max-height bx-def-margin-sec">
+	    <div class="bx-stdp-icon bx-def-widget-size bx-def-round-corners-widget">
+	        <a href="javascript:void(0)" onclick="javascript:__js_object__.info('__name__', this)">
+	            <bx_if:icon>
+					<img class="bx-def-widget-size" src="<bx_icon_url:wi-empty.png />" />
+					<i class="sys-icon __icon__"></i>
+				</bx_if:icon>
+				<bx_if:image><img class="bx-def-widget-size" src="__icon_url__" /></bx_if:image>
+	        </a>
+	    </div>
+	    <div class="bx-stdp-content bx-def-widget-size-min-height bx-def-widget-size-left-indent">
+	        <div class="bx-std-pc-title bx-def-margin-sec-top bx-def-font-large">
+	            <a href="javascript:void(0)" onclick="javascript:__js_object__.info('__name__', this)">__title__</a>
+	        </div>
+	        <bx_if:show_vendor_price>
+	        	<div class="bx-std-pc-vendor bx-def-margin-thd-top bx-def-font-small">__vendor__ &bull; <span class="bx-std-pc-price">__price__ __discount__</span></div>
+	        </bx_if:show_vendor_price>
+	        <bx_if:show_count_price>
+	        	<div class="bx-std-pc-count bx-def-margin-thd-top bx-def-font-small">__count__ <bx_text:_adm_str_txt_items_by /> <span class="bx-std-pc-price">__price__ __discount__</span></div>
+	        </bx_if:show_count_price>
+	        <div class="bx-std-pc-action bx-def-margin-thd-top bx-clearfix">
+	        	<bx_if:show_purchase>
+					<button class="bx-btn bx-btn-small bx-std-pc-purchase" type="button" onclick="javascript:__js_object__.addToCart('__vendor__', __id__, this)">
+	            		<bx_text:_adm_btn_purchase_submit />
+	            	</button>
+	            </bx_if:show_purchase>
+	            <bx_if:show_checkout>
+	           		<button class="bx-btn bx-btn-small bx-std-pc-checkout" type="button" onclick="javascript:__js_object__.checkoutCart('__vendor__', this)" <bx_if:show_as_hidden>style="display:none;"</bx_if:show_as_hidden>>
+	            		<bx_text:_adm_btn_checkout_submit />
+	            	</button>
+	            </bx_if:show_checkout>
+	        	<bx_if:show_download>
+	            	<button class="bx-btn bx-btn-small bx-std-pc-download" type="button" onclick="javascript:__js_object__.getFile(__file_id__, this)">
+	            		<bx_text:_adm_btn_download_submit />
+	            	</button>
+	            </bx_if:show_download>
+	            <bx_if:show_download_disabled>
+	            	<button class="bx-btn bx-btn-small bx-btn-disabled bx-std-pc-download" type="button" disabled="disabled">
+	            		<bx_text:_adm_btn_download_submit />
+	            	</button>
+	            </bx_if:show_download_disabled>
+	            <bx_if:show_queued_disabled>
+	            	<button class="bx-btn bx-btn-small bx-btn-disabled bx-std-pc-queued" type="button" disabled="disabled">
+	            		<bx_text:_adm_btn_queued_submit />
+	            	</button>
+	            </bx_if:show_queued_disabled>
+	            <bx_if:show_delete>
+	            	<button class="bx-btn bx-btn-small bx-std-pc-delete" type="button" onclick="javascript:__js_object__.deleteFromCart('__vendor__', __id__, this)">
+	            		<bx_text:_adm_btn_delete_submit />
+	            	</button>
+	            </bx_if:show_delete>
+	        </div>
+	    </div>
+	</div>
+</div>

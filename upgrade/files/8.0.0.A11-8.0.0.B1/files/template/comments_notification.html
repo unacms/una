@@ -1,0 +1,40 @@
+<div id="__html_id__" class="__style_prefix__-notifs" style="display:none;">
+	<bx_repeat:notifs>
+		<div class="__style_prefix__-notif bx-def-border-top bx-def-border-bottom"<bx_if:show_as_hidden> style="display:none;"</bx_if:show_as_hidden>>
+			<div class="__style_prefix__-notif-cnt">
+				<div class="__style_prefix__-notif-comment bx-def-thumb-size-max-height bx-def-margin-sec-topbottom">
+					<div class="__style_prefix__-notif-avatar bx-def-thumb bx-def-thumb-size">
+						<bx_if:show_icon>
+							<img class="bx-def-thumb bx-def-thumb-size" src="__author_icon__" />
+						</bx_if:show_icon>
+						<bx_if:show_icon_empty>
+							<i class="sys-icon user"></i>
+						</bx_if:show_icon_empty>
+					</div>
+					<div class="__style_prefix__-notif-info bx-def-thumb-size-min-height bx-def-thumb-size-left-indent bx-def-font-small">
+						<div class="__style_prefix__-notifi-username">
+							<b class="__style_prefix__-notifi-username">
+								<bx_if:show_author_link><a href="__author_link__" title="__author_title__">__author_name__</a>: </bx_if:show_author_link>
+								<bx_if:show_author_text>__author_name__: </bx_if:show_author_text>
+							</b>
+							__text__
+						</div>
+						<div class="__style_prefix__-notifi-actions">
+							<a href="javascript:void(0)" onclick="__show_onclick__"><bx_text:_cmt_txt_link_show /></a>
+							<bx_text:_cmt_txt_or />
+							<a href="javascript:void(0)" onclick="__reply_onclick__"><bx_text:_cmt_txt_link_reply /></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<bx_if:show_previous>
+				<div class="__style_prefix__-notif-actions cmt-na-left bx-def-padding-sec-left">
+					<a href="javascript:void(0)" onclick="javascript:__js_object__.previousLiveUpdate(this);"><i class="sys-icon arrow-left"></i></a>
+				</div>
+			</bx_if:show_previous>
+			<div class="__style_prefix__-notif-actions cmt-na-right bx-def-padding-sec-right">
+				<a href="javascript:void(0)" onclick="javascript:__js_object__.hideLiveUpdate(this);"><i class="sys-icon times"></i></a>
+			</div>
+		</div>
+	</bx_repeat:notifs>
+</div>
