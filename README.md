@@ -11,3 +11,4 @@ Trident is licensed under the Creative Commons Public License, see license.txt f
 - [Wiki](https://github.com/boonex/trident/wiki)
 - [Forum](http://www.boonex.com/forums)
 - [Contact us](http://www.boonex.com/help/contact)
+- [[Auto generated documentation|http://ci.boonex.com/docs/]]
