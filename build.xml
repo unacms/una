@@ -64,6 +64,28 @@
         <exclude name="upgrade/**" />
     </fileset>
 
+    <fileset dir="${project.basedir}" defaultexcludes="true" id="doc_files">
+        <include name="**/*" />
+        <exclude name="**/*.swp" />
+        <exclude name="inc/header*" />
+        <exclude name="build.xml" />
+        <exclude name="build.properties" />
+        <exclude name="storage/**/*" />
+        <exclude name="samples/**" />
+        <exclude name="scripts/**" />
+        <exclude name="tests/**" />
+        <exclude name="packages/**" />
+        <exclude name="upgrade/**" />
+
+        <exclude name="cache/**" />
+        <exclude name="cache_public/**" />
+        <exclude name="logs/**" />
+        <exclude name="tmp/**" />
+        <exclude name="plugins/**" />
+        <exclude name="plugins_public/**" />
+        <exclude name="modules/boonex/membership_pricing/**" />
+    </fileset>
+
     <!-- ============================================  -->
     <!-- Target: prepare                               -->
     <!-- ============================================  -->
@@ -227,6 +249,24 @@
 
         <delete dir="${deploy_path}/install" failonerror="true" />
 
+    </target>
+
+    <!-- ============================================  -->
+    <!-- Target: copy files for doc generation         -->
+    <!-- ============================================  -->
+    <target name="copy_for_doc">
+        <property name="path" value="/tmp/doc_files" override="yes" />
+        <echo msg="Copying to '${path}' folder..." />
+
+        <delete failonerror="true">
+            <fileset dir="${path}">
+                <include name="**/*" />
+            </fileset>
+        </delete>
+
+        <copy todir="${path}">
+            <fileset refid="doc_files" />
+        </copy>
     </target>
 
     <!-- ============================================  -->
