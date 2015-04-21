@@ -82,6 +82,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                 BxDolForm::setSubmittedValue('onclick', 'bx_menu_popup(\'' . $sSubmenu . '\', this);', $oForm->aFormAttrs['method']);
             }
 
+            bx_import('BxDolStudioUtils');
             $iId = (int)$oForm->insert(array('module' => BX_DOL_STUDIO_MODULE_CUSTOM, 'name' => $sName, 'active' => 1, 'order' => $this->oDb->getItemOrderMax($this->sSet) + 1));
             if($iId != 0)
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
