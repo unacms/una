@@ -19,6 +19,8 @@ class BxBaseStudioNavigationImport extends BxDolStudioNavigationImport
 
     public function performActionImport()
     {
+    	bx_import('BxDolStudioUtils');
+
         $iAffected = 0;
         $aIds = bx_get('ids');
         if(!$aIds || !is_array($aIds)) {

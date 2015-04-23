@@ -20,6 +20,8 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
         $sJsObject = $this->getJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
 
+        bx_import('BxTemplStudioFormView');
+
         $this->aForm = array(
             'form_attrs' => array(
                 'id' => '',

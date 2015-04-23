@@ -33,6 +33,8 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
+        	bx_import('BxDolStudioUtils');
+
             $oLanguage = BxDolStudioLanguagesUtils::getInstance();
             $sLanguage = $oLanguage->getCurrentLangName(false);
 
@@ -89,6 +91,8 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
+			bx_import('BxDolStudioUtils');
+        	
             //--- New Set Creation
             if($oForm->getCleanValue('set_name') == $this->sCreateNew) {
                 $sSetTitleValue = $oForm->getCleanValue('set_title');
