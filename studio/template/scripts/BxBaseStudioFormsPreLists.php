@@ -345,6 +345,7 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists
 
     protected function _canDelete($aList)
     {
+    	bx_import('BxDolStudioUtils');
         return $aList['module'] == BX_DOL_STUDIO_MODULE_CUSTOM;
     }
 }

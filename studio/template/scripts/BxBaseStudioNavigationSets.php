@@ -93,6 +93,8 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
+        	bx_import('BxDolStudioUtils');
+
             $sLanguage = BxDolStudioLanguagesUtils::getInstance()->getCurrentLangName(false);
 
             $sName = BxDolForm::getSubmittedValue('title-' . $sLanguage, $aForm['form_attrs']['method']);
