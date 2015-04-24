@@ -410,7 +410,6 @@ class BxDolProfile extends BxDol implements iBxDolProfile
 
         if ($aInfo['type'] == 'system' && count($aProfiles) == 1) {
             $sUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=account-profile-switcher');
-
             $oInformer->add('sys-account-profile-system', _t('_sys_txt_account_profile_system', $sUrl), BX_INFORMER_ALERT);
         }
     }

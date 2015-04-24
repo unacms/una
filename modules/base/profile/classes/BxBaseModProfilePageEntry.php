@@ -23,8 +23,6 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
 
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $aInformers = array ();
-
         // get profile info
         $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
         $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
@@ -58,7 +56,9 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
         $this->addMarkers(array('profile_link' => $this->_oProfile->getUrl())); // profile link
 
         // display message if profile isn't active
-        if (bx_get_logged_profile_id() == $this->_oProfile->id() && !empty($CNF['INFORMERS']['status'])) {
+        $aInformers = array ();
+        $oInformer = BxDolInformer::getInstance($this->_oTemplate);
+        if (bx_get_logged_profile_id() == $this->_oProfile->id() && !empty($CNF['INFORMERS']['status']) && $oInformer) {
             $sStatus = $this->_aContentInfo['profile_status'];
             if (isset($CNF['INFORMERS']['status']['map'][$sStatus]))
                 $aInformers[] = array ('name' => $CNF['INFORMERS']['status']['name'], 'msg' => _t($CNF['INFORMERS']['status']['map'][$sStatus]), 'type' => BX_INFORMER_ALERT);
@@ -70,12 +70,9 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
             $oProfile->checkSwitchToProfile($this->_oTemplate);
 
         // add informers
-        if ($aInformers) {
-            $oInformer = BxDolInformer::getInstance($this->_oTemplate);
-            if ($oInformer) {
-                foreach ($aInformers as $a)
-                    $oInformer->add($a['name'], $this->_replaceMarkers($a['msg']), $a['type']);
-            }
+        if ($aInformers && $oInformer) {
+            foreach ($aInformers as $a)
+                $oInformer->add($a['name'], $this->_replaceMarkers($a['msg']), $a['type']);
         }
     }
 
