@@ -369,14 +369,8 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
 			exit;
 		}
 
-        $oTemplate->addJs(array(
-            'codemirror/lib/codemirror.js', 
-            'codemirror/mode/xml/xml.js',
-            'codemirror/mode/javascript/javascript.js',
-            'codemirror/mode/css/css.js',
-            'codemirror/mode/htmlmixed/htmlmixed.js',
-        ));
-        $oTemplate->addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'codemirror/lib/|codemirror.css');
+        $oTemplate->addJs(array('codemirror/codemirror.min.js'));
+        $oTemplate->addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'codemirror/|codemirror.css');
 
 		return $oTemplate->parseHtmlByName('designer.html', array(
 			'js_object' => $this->getPageJsObject(),
