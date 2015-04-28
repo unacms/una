@@ -1210,7 +1210,7 @@ function bx_check_redirect_to_correct_hostname ($bProcessRedirect = false)
     $bRedirectRequired = isset($_SERVER['HTTP_HOST']) && 0 != strcasecmp($_SERVER['HTTP_HOST'], $aUrl['host']) && 0 != strcasecmp($_SERVER['HTTP_HOST'], $aUrl['host'] . ':80');
 
     if ($bRedirectRequired && $bProcessRedirect) {
-        header( "Location:http://{$aUrl['host']}{$_SERVER['REQUEST_URI']}" );
+        header( "Location:{$aUrl['scheme']}://{$aUrl['host']}{$_SERVER['REQUEST_URI']}" );
         exit;
     }
     
