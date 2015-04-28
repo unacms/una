@@ -9,7 +9,7 @@ INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order` )
 VALUES (@iTypeId, 'bx_profiler', 'Debug Panel', 1);
 SET @iCategoryId = LAST_INSERT_ID();
 INSERT INTO `sys_options` (`category_id`, `name`, `value`, `caption`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'bx_profiler_show_debug_panel', 'admins', 'Show debug panel below the page for', 'select', 'none,admins,all', '', '', 1);
+(@iCategoryId, 'bx_profiler_show_debug_panel', 'none', 'Show debug panel below the page for', 'select', 'none,admins,all', '', '', 1);
 
 
 INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order` )  
