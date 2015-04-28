@@ -1286,7 +1286,8 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
      */
 	function _minifyJs($s)
     {
-    	return BxDolMinify::getInstance()->minifyJs($s);
+        // since each JS file is minified separately, it has to be in own scope
+    	return "\n {\n" . BxDolMinify::getInstance()->minifyJs($s) . "\n }\n";
     }
 
     /**
@@ -1575,8 +1576,8 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
 
             if (!preg_match('/[\.-]min.(js|css)$/i', $aFile['path']) && $this->{'_b' . $sUpcaseType . 'Minify'}) // don't minify minified files
                 $sContent = $this->$sMethodMinify($sContent);
-
-            $sResult .= "\n {\n" . $sContent . "\n }\n"; // since each file is minified separately, it needs to be in own scope
+            
+            $sResult .= $sContent;
         }
 
         $mixedWriteResult = false;
