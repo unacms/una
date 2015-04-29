@@ -1403,7 +1403,7 @@ If it is not enabled then please consider implement this optimization, since it 
 If it is not enabled then please consider implement this optimization, since it improve perceived site speed and save the bandwidth, refer to <a target="_blank" href="http://www.boonex.com/trac/dolphin/wiki/HostingServerSetupRecommendations#Usersidecachingforstaticcontent">this tutorial</a> on how to do this.<br />{1}]]></string>
 	<string name="_sys_audit_msg_value_checking_failed"><![CDATA[value checking failed]]></string>
 	<string name="_sys_audit_msg_version_is_incompatible"><![CDATA[your version is incompatible with Trident, must be at least {0}]]></string>
-	<string name="_sys_audit_msg_version_is_outdated"><![CDATA[your version is probably outdated, upgrade to the latest {0} maybe required]]></string>
+	<string name="_sys_audit_msg_version_is_outdated"><![CDATA[your version is outdated, upgrade to the latest {0} maybe required]]></string>
 	<string name="_sys_audit_permissions"><![CDATA[Files and folders permissions]]></string>
 	<string name="_sys_audit_php_accelerator"><![CDATA[PHP accelerator]]></string>
 	<string name="_sys_audit_php_setup"><![CDATA[PHP setup]]></string>
