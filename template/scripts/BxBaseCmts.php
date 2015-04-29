@@ -141,14 +141,17 @@ class BxBaseCmts extends BxDolCmts
      */
     function getCommentBlock($iCmtId = 0, $aBp = array(), $aDp = array())
     {
+        $sComment = $this->getComment(
+        	$iCmtId, 
+        	array_merge(array('type' => $this->_sBrowseType), $aBp), 
+        	array_merge(array('type' => BX_CMT_DISPLAY_THREADED), $aDp)
+        );
+        if (!$sComment)
+            return '';
         return BxDolTemplate::getInstance()->parseHtmlByName('comment_block.html', array(
             'system' => $this->_sSystem,
             'id' => $this->getId(),
-            'comment' => $this->getComment(
-        		$iCmtId, 
-        		array_merge(array('type' => $this->_sBrowseType), $aBp), 
-        		array_merge(array('type' => BX_CMT_DISPLAY_THREADED), $aDp)
-        	),
+            'comment' => $sComment,
         	'view_image_popup' => $this->_getViewImagePopup(), 
             'script' => $this->getJsScript()
         ));
@@ -166,6 +169,8 @@ class BxBaseCmts extends BxDolCmts
 
         $iUserId = $this->_getAuthorId();
         $aCmt = !is_array($mixedCmt) ? $this->getCommentRow((int)$mixedCmt) : $mixedCmt;
+        if (!$aCmt)
+            return '';
 
         list($sAuthorName, $sAuthorLink, $sAuthorIcon) = $this->_getAuthorInfo($aCmt['cmt_author_id']);
 
