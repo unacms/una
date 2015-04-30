@@ -20,6 +20,10 @@
 .bx-base-text-unit-no-thumb,
 .bx-base-text-unit-thumb {
     display:block;
+    overflow:hidden;    
+}
+
+.bx-base-text-unit-summary {
     overflow:hidden;
 }
 
