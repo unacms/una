@@ -37,7 +37,7 @@ class BxBaseModTextPageAuthor extends BxTemplPage
             $oMenuSubmenu->setObjectSubmenu('bx_persons_view_submenu', array (
                 'title' => $this->_oProfile->getDisplayName(),
                 'link' => $this->_oProfile->getUrl(),
-                'icon' => $this->_oProfile->getIcon(),
+                'icon' => $this->_oProfile->getIconModule(),
             ));
         }
 

@@ -228,6 +228,15 @@ class BxDolProfile extends BxDol implements iBxDolProfile
     }
 
     /**
+     * Get module icon
+     */
+    public function getIconModule($iProfileId = 0)
+    {
+        $aInfo = $this->getInfo($iProfileId);
+        return BxDolService::call($aInfo['type'], 'module_icon');
+    }
+
+    /**
      * get profile edit page url
      */
     public function getEditUrl($iProfileId = 0)
