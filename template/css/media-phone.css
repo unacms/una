@@ -23,7 +23,7 @@ html {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 
-    max-width:300px !important;
+    max-width:100% !important;
     overflow:hidden !important;
 }
 .bx-def-constraint-img img {
