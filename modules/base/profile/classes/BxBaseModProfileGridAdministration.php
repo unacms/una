@@ -152,7 +152,7 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
 
 	protected function _getCellAccount($mixedValue, $sKey, $aField, $aRow)
     {
-    	$sManageAccountUrl = $this->_getManageAccountUrl($mixedValue);
+    	$sManageAccountUrl = $this->_getManageAccountUrl($aRow[$sKey]);
     	if(!empty($sManageAccountUrl)) {
     		$mixedValue = $this->_oTemplate->parseHtmlByName('account_link.html', array(
     			'href' => $sManageAccountUrl,
