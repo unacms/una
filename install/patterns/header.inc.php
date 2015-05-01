@@ -14,8 +14,6 @@ define('BX_DATABASE_PASS', '%DB_PASSWORD%'); ///< db password
 define('BX_DATABASE_NAME', '%DB_NAME%'); ///< db name
 
 define('BX_SYSTEM_FFMPEG', '%FFMPEG_PATH%'); ///< path to ffmpeg binary
-define('BX_SYSTEM_CONVERT', '%CONVERT_PATH%'); ///< path to ImageMagick convert binary
-define('BX_SYSTEM_COMPOSITE', '%COMPOSITE_PATH%'); ///< path to ImageMagick composite binary
 define('BX_DOL_SECRET', '%SECRET%'); ///< secret word
 
 define('BX_DB_FULL_VISUAL_PROCESSING', true); ///< upon db error - show error message
