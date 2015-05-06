@@ -107,6 +107,14 @@ class BxDolProfileUndefined extends BxDol implements iBxDolSingleton, iBxDolProf
     }
 
     /**
+     * Get module icon
+     */
+    public function getIconModule($iProfileId = 0)
+    {
+        return 'user';
+    }
+
+    /**
      * Get profile edit url
      */
     public function getEditUrl()

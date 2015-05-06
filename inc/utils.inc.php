@@ -306,7 +306,7 @@ function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0
         return false;
 
     // get recipient account
-    $oAccount = BxDolAccount::getInstance($sRecipientEmail);
+    $oAccount = !$isDisableAlert ? BxDolAccount::getInstance($sRecipientEmail) : null;
     $aAccountInfo = $oAccount ? $oAccount->getInfo() : false;
 
     // don't send bulk emails if user didn't subscribed to site news or email is unconfirmed
@@ -326,11 +326,11 @@ function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0
     }
 
     // get site vars
-    $sEmailNotify       = getParam('site_email_notify');
-    $sSiteTitle         = getParam('site_title');
+    $sEmailNotify = !$isDisableAlert ? getParam('site_email_notify') : $sRecipientEmail;
+    $sSiteTitle = !$isDisableAlert ? getParam('site_title') : 'Trident ' . BX_DOL_VERSION;
 
     // add unsubscribe link
-    if (empty($aPlus['unsubscribe'])) {
+    if (!$isDisableAlert && empty($aPlus['unsubscribe'])) {
         $aPlus['unsubscribe'] = '';
         if ($oAccount && (BX_EMAIL_MASS == $iEmailType || BX_EMAIL_NOTIFY == $iEmailType))
             $aPlus['unsubscribe'] = ($sLink = $oAccount->getUnsubscribeLink($iEmailType)) ? '<a href="' . BX_DOL_URL_ROOT . $sLink . '">' . _t('_sys_et_txt_unsubscribe') . '</a>' : '';
@@ -1210,7 +1210,7 @@ function bx_check_redirect_to_correct_hostname ($bProcessRedirect = false)
     $bRedirectRequired = isset($_SERVER['HTTP_HOST']) && 0 != strcasecmp($_SERVER['HTTP_HOST'], $aUrl['host']) && 0 != strcasecmp($_SERVER['HTTP_HOST'], $aUrl['host'] . ':80');
 
     if ($bRedirectRequired && $bProcessRedirect) {
-        header( "Location:http://{$aUrl['host']}{$_SERVER['REQUEST_URI']}" );
+        header( "Location:{$aUrl['scheme']}://{$aUrl['host']}{$_SERVER['REQUEST_URI']}" );
         exit;
     }
     

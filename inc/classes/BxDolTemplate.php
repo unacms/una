@@ -1286,7 +1286,8 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
      */
 	function _minifyJs($s)
     {
-    	return BxDolMinify::getInstance()->minifyJs($s);
+        // since each JS file is minified separately, it has to be in own scope
+    	return "\n {\n" . BxDolMinify::getInstance()->minifyJs($s) . "\n }\n";
     }
 
     /**
@@ -1570,18 +1571,20 @@ class BxDolTemplate extends BxDol implements iBxDolSingleton
         	if($bLess)
 				$aFile = $this->$sMethodLess($aFile);
 
-            if(($sContent = $this->$sMethodCompile($aFile['path'], $aIncluded)) !== false)
-                $sResult .= $sContent;
-        }
+            if(($sContent = $this->$sMethodCompile($aFile['path'], $aIncluded)) === false)
+                continue;                
 
-        if ($this->{'_b' . $sUpcaseType . 'Minify'})
-            $sResult = $this->$sMethodMinify($sResult);
+            if (!preg_match('/[\.-]min.(js|css)$/i', $aFile['path']) && $this->{'_b' . $sUpcaseType . 'Minify'}) // don't minify minified files
+                $sContent = $this->$sMethodMinify($sContent);
+            
+            $sResult .= $sContent;
+        }
 
         $mixedWriteResult = false;
         if(!empty($sResult) && ($rHandler = fopen($sCacheAbsolutePath, 'w')) !== false) {
             $mixedWriteResult = fwrite($rHandler, $sResult);
             fclose($rHandler);
-            @chmod ($sCacheAbsolutePath, 0666);
+            @chmod ($sCacheAbsolutePath, BX_DOL_FILE_RIGHTS);
         }
 
         if($mixedWriteResult === false)

@@ -65,22 +65,6 @@ class BxDolInstallSiteConfig
                 'def_exp' => array('defPath', ''),
                 'check' => array('checkLength', 1),
             ),
-            'convert_path' => array(
-                'name' => _t('_sys_inst_conf_field_path_to_binary', 'convert'),
-                'ex' => '/usr/local/bin/convert',
-                'desc' => _t('_sys_inst_conf_desc_path_to_binary', 'convert'),
-                'def' => '/usr/local/bin/convert',
-                'def_exp' => array('defImageMagickBin', 'convert'),
-                'check' => array('checkLength', 7),
-            ),
-            'composite_path' => array(
-                'name' => _t('_sys_inst_conf_field_path_to_binary', 'composite'),
-                'ex' => '/usr/local/bin/composite',
-                'desc' => _t('_sys_inst_conf_desc_path_to_binary', 'composite'),
-                'def' => '/usr/local/bin/composite',
-                'def_exp' => array('defImageMagickBin', 'composite'),
-                'check' => array('checkLength', 7),
-            ),
 
             'section_site_paths_close' => array(
                 'func' => 'rowSectionClose',
@@ -618,22 +602,6 @@ EOF;
     {
         $s = rtrim($this->_sServerDocumentRoot, '/') . $this->_sServerPhpSelf;
         return preg_replace("/install\/(index\.php$)/", '', $s);
-    }
-
-    protected function defImageMagickBin ($sBin)
-    {
-        $a = array(
-            '/usr/X11R6/bin/',
-            '/usr/local/bin/',
-            '/usr/bin/',
-            '/usr/local/X11R6/bin/',
-            '/usr/bin/X11/',
-            '/opt/local/bin/',
-        );
-        foreach ($a as $sPath)
-            if (file_exists($sPath . $sBin))
-                return $sPath . $sBin;
-        return '';
     }
 
     protected function getSelectValues($sType)

@@ -1403,7 +1403,7 @@
 Если он не задействован, тогда попробуйте применить эту оптимизацию, так как она улучшает скорость сайта и сохраняет трафик, обратитесь к <a target="_blank" href="http://www.boonex.com/trac/dolphin/wiki/HostingServerSetupRecommendations#Usersidecachingforstaticcontent">этому руководству</a>, чтобы узнать больше.<br />{1}]]></string>
 	<string name="_sys_audit_msg_value_checking_failed"><![CDATA[проверка значения не удалась]]></string>
 	<string name="_sys_audit_msg_version_is_incompatible"><![CDATA[Ваша версия несовместима с Trident, нужно как минимум {0}]]></string>
-	<string name="_sys_audit_msg_version_is_outdated"><![CDATA[Ваша версия скорее всего устарела, может потребоваться обновление до последней версии {0}]]></string>
+	<string name="_sys_audit_msg_version_is_outdated"><![CDATA[Ваша версия устарела, может потребоваться обновление до последней версии {0}]]></string>
 	<string name="_sys_audit_permissions"><![CDATA[Разрешения файлов и папок]]></string>
 	<string name="_sys_audit_php_accelerator"><![CDATA[PHP-акселератор]]></string>
 	<string name="_sys_audit_php_setup"><![CDATA[PHP-настройка]]></string>
@@ -2089,7 +2089,7 @@
 	<string name="_sys_txt_reset_pasword_error_occured"><![CDATA[Произошла ошибка, Пожалуйста <a href="{0}">попытайтесь снова</a>.]]></string>
 	<string name="_sys_txt_splash_btn_join"><![CDATA[Зарегистрироваться]]></string>
 	<string name="_sys_txt_splash_slide01_title"><![CDATA[Узнайте людей, которые раделяют Ваши увлечения]]></string>
-	<string name="_sys_txt_splash_slide01_desc"><![CDATA[Истории, идеи, фотографии, водео, вопросы, шутки, обсуждения, что угодно.<br />Следите за интересными людьми и будьте интересными для других.]]></string>
+	<string name="_sys_txt_splash_slide01_desc"><![CDATA[Истории, идеи, фотографии, видео, вопросы, шутки, обсуждения, что угодно.<br />Следите за интересными людьми и будьте интересными для других.]]></string>
 	<string name="_sys_txt_splash_slide02_txt"><![CDATA["Присядь на стул. Попробуй.<br />Зарегистрируйся. Жизнь такая<br />сладкая."]]></string>
 	<string name="_sys_txt_splash_slide03_txt"><![CDATA["Лучший способ завести друзей - быть кому-то другом."]]></string>
 	<string name="_sys_txt_splash_slide04_txt"><![CDATA[Уже один из нас?]]></string>

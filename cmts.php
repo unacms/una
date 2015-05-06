@@ -30,17 +30,26 @@ if ($oCmts && $sSys && $iObjectId) {
 
     $iCmtId = bx_get('cmt_id');
     if($iCmtId !== false) {
-        $sObjectTitle = $oCmts->getObjectTitle($iObjectId);
-
-        $sHeader = _t('_cmt_page_view_header', $sObjectTitle);
-        $sTitle = _t('_cmt_page_view_title', $oCmts->getBaseUrl(), $sObjectTitle);
-        $sContent = DesignBoxContent($sTitle, $oCmts->getCommentBlock($iCmtId), BX_DB_PADDING_DEF);
-
         $oTemplate = BxDolTemplate::getInstance();
-        $oTemplate->setPageNameIndex(BX_PAGE_DEFAULT);
-        $oTemplate->setPageHeader($sHeader);
-        $oTemplate->setPageContent('page_main_code', $sContent);
-        $oTemplate->getPageCode();
+        $sComment = $oCmts->getCommentBlock($iCmtId);
+        if ($sComment) {
+
+            $sObjectTitle = $oCmts->getObjectTitle($iObjectId);
+
+            $sHeader = _t('_cmt_page_view_header', $sObjectTitle);
+            $sTitle = _t('_cmt_page_view_title', $oCmts->getBaseUrl(), $sObjectTitle);
+            $sContent = DesignBoxContent($sTitle, $sComment, BX_DB_PADDING_DEF);
+            
+            $oTemplate->setPageNameIndex(BX_PAGE_DEFAULT);
+            $oTemplate->setPageHeader($sHeader);
+            $oTemplate->setPageContent('page_main_code', $sContent);
+            $oTemplate->getPageCode();
+
+        } else {
+
+            $oTemplate->displayPageNotFound();
+
+        }
     }
 }
 

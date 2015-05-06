@@ -61,6 +61,7 @@ interface iBxDolProfile
     public function getAvatar();
     public function getThumb();
     public function getIcon();
+    public function getIconModule();
     public function getEditUrl();
     public function isActive();
 }

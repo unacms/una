@@ -58,25 +58,6 @@ class BxProfiler extends BxDol
         $this->oTemplate = new BxProfilerTemplate ($this->oConfig);
         $this->oTemplateAdmin = BxDolStudioTemplate::getInstance();
 
-        $aCss = array (
-			'profiler.css',
-            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'jush/|jush.css',
-        );
-        $aJs = array (
-            'jquery.tablesorter.min.js',
-            'profiler.js',
-            'jush/jush.js',
-        );
-
-        foreach ($aCss as $sCssUrl) {
-            $this->oTemplate->addCss($sCssUrl);
-            $this->oTemplateAdmin->addCss($sCssUrl);
-        }
-        foreach ($aJs as $sJsUrl) {
-            $this->oTemplate->addJs($sJsUrl);
-            $this->oTemplateAdmin->addJs($sJsUrl);
-        }
-
         if (getParam ('bx_profiler_long_sql_queries_log'))
             $this->aConf['long_query'] = getParam ('bx_profiler_long_sql_queries_time');
         if (getParam ('bx_profiler_long_module_query_log'))
@@ -104,6 +85,25 @@ class BxProfiler extends BxDol
         case 'none':
         default:
             return;
+        }
+
+        $aCss = array (
+			'profiler.css',
+            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'jush/|jush.css',
+        );
+        $aJs = array (
+            'jquery.tablesorter.min.js',
+            'profiler.js',
+            'jush/jush.js',
+        );
+
+        foreach ($aCss as $sCssUrl) {
+            $this->oTemplate->addCss($sCssUrl);
+            $this->oTemplateAdmin->addCss($sCssUrl);
+        }
+        foreach ($aJs as $sJsUrl) {
+            $this->oTemplate->addJs($sJsUrl);
+            $this->oTemplateAdmin->addJs($sJsUrl);
         }
 
         $sContentType = $this->_getHeaderContentType();

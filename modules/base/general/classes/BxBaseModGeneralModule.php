@@ -34,6 +34,11 @@ class BxBaseModGeneralModule extends BxDolModule
 
     // ====== SERVICE METHODS
 
+    public function serviceModuleIcon ()
+    {
+        return isset($this->_oConfig->CNF['ICON']) ? $this->_oConfig->CNF['ICON'] : '';
+    }
+
 	public function serviceManageTools($sType = 'common')
     {
         $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->getGridObject($sType));

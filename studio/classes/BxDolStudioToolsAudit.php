@@ -17,7 +17,6 @@ class BxDolStudioToolsAudit extends BxDol
     protected $aType2ClassCSS;
     protected $aType2Title;
 
-    protected $aLatestPhp;
     protected $sMinPhpVer;
     protected $aPhpSettings;
     protected $iPhpErrorReporting;
@@ -47,10 +46,6 @@ class BxDolStudioToolsAudit extends BxDol
             BX_DOL_AUDIT_OK => _t('_sys_audit_title_ok'),
         );
 
-        $this->aLatestPhp = array(
-            '5.4' => '5.4.40',
-            '5.5' => '5.5.24',
-        );
         $this->sMinPhpVer = '5.3.0';
         $this->aPhpSettings = array (
             'allow_url_fopen' => array('op' => '=', 'val' => true, 'type' => 'bool'),
@@ -62,7 +57,7 @@ class BxDolStudioToolsAudit extends BxDol
             'register_globals' => array('op' => '=', 'val' => false, 'type' => 'bool'),
             'safe_mode' => array('op' => '=', 'val' => false, 'type' => 'bool'),
             'short_open_tag' => array('op' => '=', 'val' => true, 'type' => 'bool'),
-            'disable_functions' => array('op' => '=', 'val' => ''),
+            'disable_functions' => array('op' => 'without', 'val' => 'shell_exec,eval,assert,phpinfo,getenv,ini_set,mail,fsockopen,chmod,parse_ini_file'),
             'php module: mysql' => array('op' => 'module', 'val' => 'mysql'),
             'php module: curl' => array('op' => 'module', 'val' => 'curl'),
             'php module: gd' => array('op' => 'module', 'val' => 'gd'),
@@ -254,14 +249,11 @@ class BxDolStudioToolsAudit extends BxDol
             $aVer = array('type' => BX_DOL_AUDIT_UNDEF, 'msg' => _t('_sys_audit_msg_value_checking_failed'), 'params' => array ('real_val' => $sPhpVer));
         elseif (version_compare($sPhpVer, $this->sMinPhpVer, '<'))
             $aVer = array('type' => BX_DOL_AUDIT_FAIL, 'msg' => _t('_sys_audit_msg_version_is_incompatible', $this->sMinPhpVer), 'params' => array ('real_val' => $sPhpVer));
-        elseif (version_compare($sPhpVer, '5.6.0', '>=') && version_compare($sPhpVer, '6.0.0', '<') && !version_compare($sPhpVer, $sLatestPhpVersion, '>='))
+        elseif (version_compare($sPhpVer, '5.3.0', '>=') && version_compare($sPhpVer, '5.4.0', '<'))
             $aVer = array('type' => BX_DOL_AUDIT_WARN, 'msg' => _t('_sys_audit_msg_version_is_outdated', $sLatestPhpVersion), 'params' => array ('real_val' => $sPhpVer));
-        elseif (version_compare($sPhpVer, '5.5.0', '>=') && version_compare($sPhpVer, '5.6.0', '<') && !version_compare($sPhpVer, $this->aLatestPhp['5.5'], '>='))
-            $aVer = array('type' => BX_DOL_AUDIT_WARN, 'msg' => _t('_sys_audit_msg_version_is_outdated', $this->aLatestPhp['5.5']), 'params' => array ('real_val' => $sPhpVer));
-        elseif (version_compare($sPhpVer, '5.3.0', '>=') && version_compare($sPhpVer, '5.5.0', '<') && !version_compare($sPhpVer, $this->aLatestPhp['5.4'], '>='))
-            $aVer = array('type' => BX_DOL_AUDIT_WARN, 'msg' => _t('_sys_audit_msg_version_is_outdated', $this->aLatestPhp['5.4']), 'params' => array ('real_val' => $sPhpVer));
         else
             $aVer = array('type' => BX_DOL_AUDIT_OK, 'params' => array ('real_val' => $sPhpVer));
+
         $aMessages[_t('_sys_audit_version')] = $aVer;
 
         foreach ($this->aPhpSettings as $sName => $r) {
@@ -470,6 +462,12 @@ class BxDolStudioToolsAudit extends BxDol
         $mixedVal = $this->format_input ($mixedVal, $a);
 
         switch ($a['op']) {
+            case 'without':
+                $aFuncsDisabled = explode(',', $mixedVal);
+                $aFuncsMustBeEnabled = explode(',', $a['val']);
+                $a = array_intersect($aFuncsDisabled, $aFuncsMustBeEnabled);
+                $bResult = !$a;
+                break;
             case 'module':
                 $bResult = extension_loaded($a['val']);
                 $mixedVal = $bResult ? $a['val'] : '';

@@ -527,7 +527,7 @@ class BxDolDb extends BxDol implements iBxDolSingleton
             if( $aFoundError ) {
                 $sFoundError = <<<EOJ
 Found error in the file '<b>{$aFoundError['file']}</b>' at line <b>{$aFoundError['line']}</b>.<br />
-Called '<b>{$aFoundError['function']}</b>' function with erroneous argument #<b>{$aFoundError['arg']}</b>.<br /><br />
+Called '<b>{$aFoundError['function']}</b>' function.<br /><br />
 EOJ;
             }
         }
@@ -541,34 +541,8 @@ EOJ;
                     <div style="text-align:center;background-color:red;color:white;font-weight:bold;">Error</div>
                     <div style="text-align:center;"><?php echo $sOutput; ?></div>
             <?php
-            if (defined('BX_DB_FULL_DEBUG_MODE') && BX_DB_FULL_DEBUG_MODE) {
-                if (!empty($query))
-                    echo "<div><b>Query:</b><br />{$query}</div>";
-
-                if ($this->_rLink)
-                    echo '<div><b>Mysql error:</b><br />' . $this->getErrorMessage() . '</div>';
-
-                echo '<div style="overflow:scroll;height:300px;border:1px solid gray;">';
-                    echo $sFoundError;
-                    echo "<b>Debug backtrace:</b><br />";
-
-                    $sBackTrace = print_r($aBackTrace, true);
-                    $sBackTrace = str_replace('[password] => ' . BX_DATABASE_PASS, '[password] => *****', $sBackTrace);
-                    $sBackTrace = str_replace('[user] => ' . BX_DATABASE_USER, '[user] => *****', $sBackTrace);
-
-                    echo '<pre>' . htmlspecialchars_adv($sBackTrace) . '</pre>';
-
-                    if ($sParamsOutput) {
-                        echo '<hr />';
-                        echo "<b>Settings:</b><br />";
-                        echo '<pre>' . htmlspecialchars_adv($sParamsOutput) . '</pre>';
-                    }
-
-                    echo "<b>Called script:</b> " . $_SERVER['PHP_SELF'] . "<br />";
-                    echo "<b>Request parameters:</b><br />";
-                    echoDbg( $_REQUEST );
-                echo '</div>';
-            }
+            if (defined('BX_DB_FULL_DEBUG_MODE') && BX_DB_FULL_DEBUG_MODE)
+                echo $this->verboseErrorOutput ($query, $sFoundError, $aBackTrace, $sParamsOutput);
             ?>
                 </div>
             <?php
@@ -580,30 +554,47 @@ EOJ;
             $sSiteTitle = $this->getParam('site_title');
             $sMailBody = "Database error in " . $sSiteTitle . "<br /><br /> \n";
 
-            if( strlen( $query ) )
-                $sMailBody .= "Query:  <pre>" . htmlspecialchars_adv($query) . "</pre> ";
-
-            if ($this->_rLink)
-                $sMailBody .= "Mysql error: " . $this->getErrorMessage() . "<br /><br /> ";
-
-            $sMailBody .= $sFoundError. '<br /> ';
-
-            $sBackTrace = print_r($aBackTrace, true);
-            $sBackTrace = str_replace('[password] => ' . BX_DATABASE_PASS, '[password] => *****', $sBackTrace);
-            $sBackTrace = str_replace('[user] => ' . BX_DATABASE_USER, '[user] => *****', $sBackTrace);
-            $sMailBody .= "Debug backtrace:\n <pre>" . htmlspecialchars_adv($sBackTrace) . "</pre> ";
-
-            if ($sParamsOutput)
-                $sMailBody .= "<hr />Settings:\n <pre>" . htmlspecialchars_adv($sParamsOutput) . "</pre> ";
-
-            $sMailBody .= "<hr />Called script: " . $_SERVER['PHP_SELF'] . "<br /> ";
-            $sMailBody .= "<hr />Request parameters: <pre>" . print_r( $_REQUEST, true ) . " </pre>";
-            $sMailBody .= "--\nAuto-report system\n";
+            $sMailBody .= $this->verboseErrorOutput ($query, $sFoundError, $aBackTrace, $sParamsOutput);
+            $sMailBody .= "<hr />Auto-report system";
 
             sendMail($this->getParam('site_email'), "Database error in " . $sSiteTitle, $sMailBody, 0, array(), BX_EMAIL_SYSTEM, 'html', true);
         }
 
         bx_show_service_unavailable_error_and_exit($sOutput);
+    }
+
+    protected function verboseErrorOutput ($query, $sFoundError, &$aBackTrace, $sParamsOutput)
+    {
+        ob_start();
+
+        if (!empty($query))
+            echo "<div><b>Query:</b><br />{$query}</div>";
+
+        if ($this->_rLink)
+            echo '<div><b>Mysql error:</b><br />' . $this->getErrorMessage() . '</div>';
+
+        echo '<div style="overflow:scroll;height:300px;border:1px solid gray;">';
+            echo $sFoundError;
+            echo "<b>Debug backtrace:</b><br />";
+
+            $sBackTrace = print_r($aBackTrace, true);
+            $sBackTrace = str_replace('[password] => ' . BX_DATABASE_PASS, '[password] => *****', $sBackTrace);
+            $sBackTrace = str_replace('[user] => ' . BX_DATABASE_USER, '[user] => *****', $sBackTrace);
+
+            echo '<pre>' . htmlspecialchars_adv($sBackTrace) . '</pre>';
+
+            if ($sParamsOutput) {
+                echo '<hr />';
+                echo "<b>Settings:</b><br />";
+                echo '<pre>' . htmlspecialchars_adv($sParamsOutput) . '</pre>';
+            }
+
+            echo "<b>Called script:</b> " . $_SERVER['PHP_SELF'] . "<br />";
+            echo "<b>Request parameters:</b><br />";
+            echoDbg( $_REQUEST );
+        echo '</div>';
+
+        return ob_get_clean();
     }
 
     function setErrorChecking ($b)
