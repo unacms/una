@@ -169,6 +169,8 @@ class BxDolStudioLanguagesUtils extends BxDolLanguages implements iBxDolSingleto
         }
 
         $this->init();
+        BxDolCacheUtilities::getInstance()->clear('template');
+
         return true;
     }
 
