@@ -474,6 +474,9 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 
     public function getObjectTitle ($iObjectId = 0)
     {
+    	if(empty($this->_aSystem['trigger_field_title']))
+    		return '';
+
         return $this->_oQuery->getObjectTitle ($iObjectId ? $iObjectId : $this->getId());
     }
 
