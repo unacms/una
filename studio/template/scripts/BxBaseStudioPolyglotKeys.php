@@ -55,7 +55,7 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys
                     'name' => 'category_id',
                     'caption' => _t('_adm_pgt_txt_nkp_module'),
                     'values' => $this->oDb->getCategories(),
-                    'value' => '1',
+                    'value' => BX_DOL_STUDIO_PK_CATEGORY_CUSTOM,
                     'db' => array (
                         'pass' => 'Int',
                     ),

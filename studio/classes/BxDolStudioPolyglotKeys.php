@@ -7,6 +7,9 @@
  * @{
  */
 
+define('BX_DOL_STUDIO_PK_CATEGORY_SYSTEM', 1);
+define('BX_DOL_STUDIO_PK_CATEGORY_CUSTOM', 2);
+
 define('BX_DOL_STUDIO_PK_PREVIEW', 100);
 
 class BxDolStudioPolyglotKeys extends BxTemplStudioGrid
