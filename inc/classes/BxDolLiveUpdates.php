@@ -159,9 +159,12 @@ class BxDolLiveUpdates extends BxDol
     				break;
 
     			case 'data':
+    				if(!isset($aCached[$sType]))
+    					$aCached[$sType] = array();
+
     				$aRequested = $this->_getRequestedData();
-    				foreach($aRequested as $sName => $aData)
-    					$aCached[$sType][$sName] = $aData['count'];
+    				foreach($this->_aSystems as $sName => $aSystem)
+    					$aCached[$sType][$sName] = !empty($aRequested[$sName]['count']) ? (int)$aRequested[$sName]['count'] : 0;
     				break;
     		}
 
