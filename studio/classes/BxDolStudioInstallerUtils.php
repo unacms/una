@@ -255,6 +255,9 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
         $aFailed = array();
 		$aUpdates = $this->checkUpdates();
+		if(empty($aUpdates) || !is_array($aUpdates))
+			return true;
+
 	    foreach($aUpdates as $aUpdate) {
 	    	$mixedResult = $this->downloadUpdatePublic($aUpdate['name']);
 	        if($mixedResult !== true) {
@@ -265,6 +268,9 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
 		$aSuccess = array();
 		$aUpdates = $this->getUpdates();
+		if(empty($aUpdates) || !is_array($aUpdates))
+			return true;
+
 		foreach($aUpdates as $aUpdate) {
 			$aResult = $this->perform($aUpdate['dir'], 'update');
 			if((int)$aResult['code'] != 0) {
