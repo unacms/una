@@ -454,15 +454,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
             $aMatches = array();
             preg_match($this->_oConfig->getPregPattern('url'), $sLink, $aMatches);
-            $sLink = (empty($aMatches[1]) ? 'http://' : '') . $aMatches[0];
+            $sLink = (empty($aMatches[2]) ? 'http://' : '') . $aMatches[0];
 
             $aMatches = array();
             preg_match($this->_oConfig->getPregPattern('meta_title'), $sLinkContent, $aMatches);
-            $sLinkTitle = $aMatches ? $aMatches[1] : '';
+            $sLinkTitle = !empty($aMatches[1]) ? $aMatches[1] : $sLink;
 
             $aMatches = array();
             preg_match($this->_oConfig->getPregPattern('meta_description'), $sLinkContent, $aMatches);
-            $sLinkDescription = $aMatches ? $aMatches[1] : '';
+            $sLinkDescription = !empty($aMatches[1]) ? $aMatches[1] : '';
 
             $iId = (int)$oForm->insert(array('profile_id' => $iUserId, 'url' => $sLink, 'title' => $sLinkTitle, 'text' => $sLinkDescription, 'added' => time()));
             if(!empty($iId))
