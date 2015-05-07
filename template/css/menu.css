@@ -187,6 +187,7 @@ ul.bx-menu-main {
 .bx-menu-main li a,
 .bx-menu-main li span,
 .bx-menu-main li .sys-icon,
+.bx-menu-main li .sys-icon-a,
 .bx-menu-main-submenu li a {
     display:inline-block;
     text-decoration:none;
@@ -198,13 +199,17 @@ ul.bx-menu-main {
     font-size:0;
     height:2rem;
 }
-.bx-menu-main li .sys-icon {
+.bx-menu-main li .sys-icon,
+.bx-menu-main li .sys-icon-a {
     min-width:1.5rem;
     font-size:1.5rem;
     text-align:center;
 }
 .bx-menu-main li .sys-icon:first-child {
     vertical-align:baseline;
+}
+.bx-menu-main li .sys-icon-a {
+    margin-top:0.5rem;
 }
 .bx-menu-main li img {
     width:2rem;
