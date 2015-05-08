@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="ru" flag="ru" title="Russian">
+	<string_upd name="_sys_audit_msg_version_is_outdated"><![CDATA[Ваша версия устарела, может потребоваться обновление до последней версии {0}]]></string_upd>
+	<string_upd name="_sys_txt_splash_slide01_desc"><![CDATA[Истории, идеи, фотографии, видео, вопросы, шутки, обсуждения, что угодно.<br />Следите за интересными людьми и будьте интересными для других.]]></string_upd>
+</resources>

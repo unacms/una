@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_upd name="_sys_audit_msg_version_is_outdated"><![CDATA[your version is outdated, upgrade to the latest {0} maybe required]]></string_upd>
+</resources>
