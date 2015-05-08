@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_profiler',
     'title' => 'Profiler',
     'note' => 'Measure different site timings.',
-    'version' => '8.0.5.DEV',
+    'version' => '8.0.6.DEV',
     'vendor' => 'Boonex',
 	'help_url' => 'http://feed.boonex.com/?section={module_name}',
 

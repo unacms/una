@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_ru',
     'title' => 'Russian',
     'note' => 'Language file',
-    'version' => '8.0.7.DEV',
+    'version' => '8.0.8.DEV',
     'vendor' => 'Boonex',
 	'help_url' => 'http://feed.boonex.com/?section={module_name}',
 
