@@ -637,9 +637,7 @@ BLAH;
         if (isset($aInput['id']))
             return $aInput['id'];
 
-        $sPattern = 'a-z0-9';
-
-        $sName = preg_replace("/[^$sPattern]/i", '_', $aInput['name']);
+        $sName = md5($aInput['name']);
 
         $sID = $this->id . '_input_' . $sName;
 
@@ -653,7 +651,7 @@ BLAH;
             ) and
             isset($aInput['value']) // if we can make difference
         ) {
-            $sValue = preg_replace("/[^$sPattern]/i", '_', $aInput['value']);
+            $sValue = md5($aInput['value']);
 
             // add value
             $sID .= '_' . $sValue;
