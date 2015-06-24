@@ -19,6 +19,7 @@ class BxBaseEditorTinyMCE extends BxDolEditor
     protected static $CONF_COMMON = "
                     jQuery('{bx_var_selector}').tinymce({
                         {bx_var_custom_init}
+                        {bx_var_custom_conf}
                         document_base_url: '{bx_url_root}',
                         skin_url: '{bx_url_tinymce}skins/{bx_var_skin}/',
                         language_url: '{bx_url_tinymce}langs/{bx_var_lang}.js',
@@ -112,6 +113,8 @@ class BxBaseEditorTinyMCE extends BxDolEditor
                         image_advtab: true,
     ";
 
+    protected $_sConfCustom = '';
+
     /**
      * Available editor languages
      */
@@ -128,6 +131,14 @@ class BxBaseEditorTinyMCE extends BxDolEditor
             $this->_oTemplate = $oTemplate;
         else
             $this->_oTemplate = BxDolTemplate::getInstance();
+    }
+
+    /**
+     * Set custom TinyMCE configuration option
+     */
+    public function setCustomConf ($s)
+    {
+        $this->_sConfCustom = $s;
     }
 
     /**
@@ -157,6 +168,7 @@ class BxBaseEditorTinyMCE extends BxDolEditor
         // initialize editor
         $sInitEditor = $this->_replaceMarkers(self::$CONF_COMMON, array(
             'bx_var_custom_init' => $sToolsItems,
+            'bx_var_custom_conf' => $this->_sConfCustom,
             'bx_var_plugins_path' => bx_js_string(BX_DOL_URL_PLUGINS, BX_ESCAPE_STR_APOS),
             'bx_var_css_path' => bx_js_string($this->_oTemplate->getCssUrl('editor.css'), BX_ESCAPE_STR_APOS),
             'bx_var_skin' => bx_js_string($this->_aObject['skin'], BX_ESCAPE_STR_APOS),

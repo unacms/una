@@ -110,6 +110,14 @@ class BxDolEditor extends BxDol implements iBxDolFactoryObject
     }
 
     /**
+     * Get object name
+     */
+    public function getObjectName ()
+    {
+        return $this->_sObject;
+    }
+
+    /**
      * Get minimal width which is neede for editor for the provided view mode
      */
     public function getWidth ($iViewMode)
