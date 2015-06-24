@@ -274,6 +274,12 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
             $this->query("OPTIMIZE TABLE `sys_acl_levels_members`");
         return $iDeleteMemLevels;
     }
+
+    function clearActionsTracksForMember($iMemberId)
+    {
+        $sQuery = $this->prepare("DELETE FROM `sys_acl_actions_track` WHERE `IDMember` = ?", (int)$iMemberId);
+	    return $this->query($sQuery);
+    }
 }
 
 /** @} */

@@ -518,8 +518,11 @@ class BxDolAcl extends BxDol implements iBxDolSingleton
                 $iDateStarts = $aMembershipLatest['date_expires'];
             else if(is_null($aMembershipLatest['date_expires']) && $aMembershipLatest['id'] != MEMBERSHIP_ID_STANDARD)
                 return false;
-        } else
-            $this->oDb->deleteLevelByProfileId($iProfileId, true); ///< Delete any profile's membership level
+        } else {
+            // Delete any profile's membership level and actions traces
+            $this->oDb->deleteLevelByProfileId($iProfileId, true); 
+            $this->oDb->clearActionsTracksForMember($iProfileId);
+        }
 
         // set lifetime membership if 0 days is used.
         $iDateExpires = $iDays != 0 ? (int)$iDateStarts + $iDays * $iSecInDay : null;
