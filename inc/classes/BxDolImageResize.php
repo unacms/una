@@ -256,6 +256,7 @@ class BxDolImageResize extends BxDol implements iBxDolSingleton
                     ->orientate()
                     ->resize($this->w, $this->h, function ($constraint) {
                         $constraint->aspectRatio();
+                        $constraint->upsize();
                     })
                     ->save($sDstImage ? $sDstImage : $sSrcImage, $this->_iJpegQuality);
             }
