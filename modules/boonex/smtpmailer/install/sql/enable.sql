@@ -17,7 +17,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_smtp_password', '', @iCategId, 'SMTP password (only if SMTP authentication is enabled)', 'digit', '', '', 4, ''),
 ('bx_smtp_host', '', @iCategId, 'SMTP server name or IP address', 'digit', '', '', 5, ''),
 ('bx_smtp_port', '25', @iCategId, 'SMTP server port number (25 - default, 465 - for secure ssl connection, 587 - for secure tls connection)', 'digit', '', '', 6, ''),
-('bx_smtp_secure', 'Not Secure', @iCategId, 'Is your SMTP server requires secure connection', 'select', '', '', 7, 'Not Secure,SSL,TSL'), 
+('bx_smtp_secure', 'Not Secure', @iCategId, 'Is your SMTP server requires secure connection', 'select', '', '', 7, 'Not Secure,SSL,TLS'), 
 ('bx_smtp_from_name', '', @iCategId, '''From'' name of the message', 'digit', '', '', 8, ''),
 ('bx_smtp_from_email', '', @iCategId, 'Override default sender email address', 'digit', '', '', 9, ''),
 ('bx_smtp_send_attachments', '', @iCategId, 'Attach every outgoing email all files from ''modules/boonex/smtpmailer/data/attach/'' folder', 'checkbox', '', '', 10, '');

@@ -36,10 +36,10 @@ class BxSMTPModule extends BxDolModule
             // smtp server auth or not
             $mail->SMTPAuth = 'on' == getParam('bx_smtp_auth') ? true : false;
 
-            // from settings, smtp server secure ssl/tsl
+            // from settings, smtp server secure ssl/tls
             $sParamSecure = getParam('bx_smtp_secure');
-            if ('SSL' == $sParamSecure || 'TSL' == $sParamSecure)
-                $mail->SMTPSecure = "ssl";
+            if ('SSL' == $sParamSecure || 'TLS' == $sParamSecure)
+                $mail->SMTPSecure = strtolower($sParamSecure);
 
             // from settings, smtp server
             $sParamHost = getParam('bx_smtp_host');
