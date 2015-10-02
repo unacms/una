@@ -179,7 +179,7 @@ class BxAlbumsModule extends BxBaseModTextModule
             return array();
 
         $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);
-        $aMediaList = array_slice($aMediaList, 0, 5);
+        $aMediaList = array_slice($aMediaList, 0, 3);
         $aOutput = array();
         foreach ($aMediaList as $aMedia) {
             $aOutput[] = array (
