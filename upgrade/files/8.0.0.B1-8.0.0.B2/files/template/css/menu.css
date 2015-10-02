@@ -1,0 +1,525 @@
+/* --------------- horizontal menu */
+
+ul.bx-menu-hor {
+    padding:0;
+    margin:0;
+    list-style:none;
+}
+
+.bx-menu-hor li {
+    float:left;
+}
+
+.bx-menu-hor li a {
+    display:block;
+    text-decoration:none;
+}
+
+.bx-menu-hor-inline li a {
+	display:inline;
+}
+
+.bx-menu-hor li.bx-menu-tab-active a {
+    color:#000;
+}
+
+.bx-menu-hor li img,
+.bx-menu-hor li .sys-icon {
+	display:inline-block;
+}
+
+/* --------------- vertical, vertical lite, notifications menu */
+
+ul.bx-menu-notif,
+ul.bx-menu-verlit,
+ul.bx-menu-ver {
+    padding:0;
+    margin:0;
+    list-style:none;
+}
+
+.bx-menu-ver li {
+    margin-top:1px;
+}
+
+.bx-menu-notif li:first-child,
+.bx-menu-verlit li:first-child,
+.bx-menu-ver li:first-child {
+    margin-top:0px;
+}
+
+.bx-menu-verlit li a,
+.bx-menu-ver li a {
+    display:block;
+    text-decoration:none;
+}
+
+.bx-menu-notif li.bx-menu-tab-active a,
+.bx-menu-verlit li.bx-menu-tab-active a,
+.bx-menu-ver li.bx-menu-tab-active a {
+    color:#000;
+}
+
+.bx-menu-notif li img,
+.bx-menu-notif li .sys-icon,
+.bx-menu-notif li span,
+.bx-menu-verlit li img,
+.bx-menu-verlit li .sys-icon,
+.bx-menu-verlit li span,
+.bx-menu-ver li img,
+.bx-menu-ver li .sys-icon,
+.bx-menu-ver li span {
+    display:inline-block;
+    vertical-align:middle;
+}
+
+.bx-menu-notif li img,
+.bx-menu-notif li .sys-icon,
+.bx-menu-verlit li img,
+.bx-menu-verlit li .sys-icon,
+.bx-menu-ver li img,
+.bx-menu-ver li .sys-icon {
+    width:20px;
+    width:1.25rem;
+    height:20px;
+    height:1.25rem;
+    margin-right:2px;
+    margin-right:0.125rem;
+    text-align:center;
+}
+
+.bx-menu-ver li img {
+    background-position:center center;
+    background-repeat:no-repeat;
+}
+
+.bx-menu-ver li .sys-icon {
+    font-size:20px;
+    font-size:1.25rem;
+}
+
+.bx-menu-ver li .flag-icon {
+    vertical-align:baseline;
+}
+
+.bx-menu-notif li .sys-icon {
+    font-size:24px;
+    font-size:1.5rem;
+    width:24px;
+    width:1.5rem;
+    height:24px;
+    height:1.5rem;
+    margin-right:5px;
+    margin-right:0.3rem;
+}
+
+.bx-menu-ver .bx-def-hr {
+    margin:0;
+}
+
+.bx-menu-verlit li img {
+    width:24px;
+    width:1.5rem;
+    height:24px;
+    height:1.5rem;
+    background-position:center center;
+    background-repeat:no-repeat;
+    vertical-align:middle;
+}
+
+.bx-menu-notif .bx-def-unit-alert-middle {
+    position:relative;
+    float:right;
+}
+
+/* --------------- main menu */
+
+#bx-homepage-menu-sys_homepage {
+    text-align:center;
+}
+
+#bx-menu-main-container {
+    height:40px;
+    height:2.5rem;
+    white-space: nowrap;
+    overflow:hidden;    
+}
+
+#bx-menu-main-container-scroller {
+    height:60px;
+    height:4rem;
+    overflow:auto;
+    text-align:left;
+    /* -webkit-overflow-scrolling:touch; */
+}
+
+#bx-menu-main-submenu,
+#bx-menu-main {
+    display:inline-block;
+    line-height:2.5rem;
+    vertical-align:top;
+}
+
+#bx-menu-main-container #bx-menu-main-submenu:first-child .bx-menu-main-submenu-div:first-child {
+    display:none;
+}
+
+.bx-menu-main-submenu-div .sys-icon {
+    font-size:32px;
+    font-size:2rem;
+}
+
+ul.bx-menu-main-submenu,
+ul.bx-menu-main {    
+    padding:0;
+    margin:0;
+    list-style:none;
+    white-space:nowrap;
+}
+
+.bx-menu-main-submenu li,
+.bx-menu-main li {
+    display:inline-block;
+    margin:0;    
+    vertical-align:top;
+}
+
+.bx-menu-main li a,
+.bx-menu-main li span,
+.bx-menu-main li .sys-icon,
+.bx-menu-main li .sys-icon-a,
+.bx-menu-main-submenu li a {
+    display:inline-block;
+    text-decoration:none;
+    font-size:1.2rem;
+    line-height:2.5rem;
+    vertical-align:top;
+}
+.bx-menu-main li a {
+    font-size:0;
+    height:2rem;
+}
+.bx-menu-main li .sys-icon,
+.bx-menu-main li .sys-icon-a {
+    min-width:1.5rem;
+    font-size:1.5rem;
+    text-align:center;
+}
+.bx-menu-main li .sys-icon:first-child {
+    vertical-align:baseline;
+}
+.bx-menu-main li .sys-icon-a {
+    margin-top:0.5rem;
+}
+.bx-menu-main li img {
+    width:2rem;
+    height:40px;
+    height:2.5rem;
+    vertical-align:middle;
+    background-repeat:no-repeat;
+    background-position:center center;
+}
+
+.bx-menu-main-submenu li.bx-menu-tab-active a,
+.bx-menu-main li span {
+    color:#000;
+}
+
+#bx-menu-main li a span {
+    max-width:16rem;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+/* --------------- toolbar menu */
+
+#bx-menu-toolbar-1-container .bx-menu-toolbar {
+    float:left;
+}
+
+#bx-menu-toolbar-2-container .bx-menu-toolbar {
+    float:right;
+}
+
+.bx-menu-toolbar {
+    list-style:none;
+    margin:0 0 0 0;
+    padding:0;
+}
+ul.bx-menu-toolbar li {
+    float:left;
+    margin:0px;
+} 
+
+ul.bx-menu-toolbar li a {
+    position:relative;
+    display:block;
+    min-width:48px;
+    min-width:3rem;
+    height:48px;
+    height:3rem;
+
+    line-height:48px;
+    line-height:3rem;
+    font-size:16px;
+    font-size:1rem;
+    text-align: center;
+    vertical-align:middle;
+    text-decoration:none;
+}
+
+ul.bx-menu-toolbar li a .sys-icon,
+ul.bx-menu-toolbar li a .sys-icon-a,
+ul.bx-menu-toolbar li a img,
+ul.bx-menu-toolbar li a span {
+    vertical-align:top;
+}
+ul.bx-menu-toolbar li a .sys-icon-a {
+    margin-top:0.5rem;
+}
+ul.bx-menu-toolbar li a span {
+    margin-right:0;
+}
+
+ul.bx-menu-toolbar li:first-child a {
+    margin-left:0;
+}
+
+ul.bx-menu-toolbar li img {
+    background-position:center center;
+    background-repeat:no-repeat;
+}
+
+ul.bx-menu-toolbar li .sys-icon-a,
+ul.bx-menu-toolbar li .sys-icon {
+    display:inline-block;
+    vertical-align:middle;
+    font-size:32px;
+    font-size:2rem;
+    text-align:center;
+    width:2rem;
+    height:2rem;
+}
+
+
+/* --------------- floating blocks menu */
+
+.bx-sliding-menu-close,
+.bx-sliding-menu-close:hover {
+    position:absolute;
+    top:0;
+    right:0;
+    text-decoration:none;
+}
+
+.bx-sliding-menu-main {
+    width:100%;    
+    opacity:0.9;
+    overflow-x:auto;
+    /* -webkit-overflow-scrolling:touch; */
+}
+
+.bx-sliding-menu-fullheight {
+    height:calc(100% - 3rem);
+    overflow-x:hidden;
+    overflow-y:auto;
+}
+
+.bx-sliding-menu-main ul.bx-menu-floating-blocks-big {
+    display:table;
+    margin:0 auto;
+    white-space:nowrap;
+}
+
+.bx-sliding-menu-main .bx-menu-account-popup-profile-switcher {
+    overflow:hidden;
+
+}
+
+.bx-popup-content .bx-menu-floating-blocks {
+    width:256px;
+    width:16rem;
+}
+.bx-popup-content .bx-menu-account-popup .bx-menu-floating-blocks {
+    width:auto;
+}
+
+ul.bx-menu-floating-blocks-big,
+ul.bx-menu-floating-blocks {
+    padding:0;
+    margin:0;
+    list-style:none;
+}
+
+.bx-menu-floating-blocks-big li,
+.bx-menu-floating-blocks li {
+    display: inline-block;
+    /* For IE 7 */
+    zoom: 1;
+    *display: inline;
+    vertical-align:top;    
+
+    width:80px;
+    width:5rem;
+    height:80px;
+    height:5rem;
+}
+.bx-menu-floating-blocks-big li {
+    width:128px;
+    width:8rem;
+    height:128px;
+    height:8rem;
+}
+
+.bx-menu-floating-blocks-big li:hover,
+.bx-menu-floating-blocks li:hover {
+    opacity:0.8;
+}
+
+.bx-menu-floating-blocks-big li:active,
+.bx-menu-floating-blocks-big li.bx-menu-tab-active,
+.bx-menu-floating-blocks li:active,
+.bx-menu-floating-blocks li.bx-menu-tab-active {
+    opacity:1.0;
+}
+
+.bx-menu-floating-blocks-big li a,
+.bx-menu-floating-blocks li a {
+    display:block;
+    text-decoration:none;
+}
+
+.bx-menu-floating-blocks-big li.bx-menu-tab-active a,
+.bx-menu-floating-blocks li.bx-menu-tab-active a {
+    color:#000;
+}
+
+.bx-menu-floating-blocks li img,
+.bx-menu-floating-blocks li .sys-icon {
+    display:block;
+    width:32px;
+    width:2rem;
+    height:32px;
+    height:2rem;
+    margin:16px 20px 3px 20px;
+    margin:1rem 1.5rem 0.2rem 1.5rem;
+}
+.bx-menu-floating-blocks-big li img,
+.bx-menu-floating-blocks-big li .sys-icon {
+    display:block;
+    width:64px;
+    width:4rem;
+    height:64px;
+    height:4rem;
+    margin:16px 32px 8px 32px;
+    margin:1rem 2rem 0.5rem 2rem;
+}
+
+.bx-menu-floating-blocks-big li img,
+.bx-menu-floating-blocks li img {
+    background-position:center center;
+    background-repeat:no-repeat;
+}
+
+.bx-menu-floating-blocks-big li .sys-icon,
+.bx-menu-floating-blocks li .sys-icon {
+    text-align:center;
+    vertical-align:bottom;
+    line-height:32px;
+    line-height:2rem;
+    font-size:32px;
+    font-size:2rem;
+}
+.bx-menu-floating-blocks-big li .sys-icon {
+    line-height:64px;
+    line-height:4rem;
+    font-size:64px;
+    font-size:4rem;
+}
+
+.bx-menu-floating-blocks-big li .bx-menu-floating-blocks-title,
+.bx-menu-floating-blocks li .bx-menu-floating-blocks-title {
+    text-align:center;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+/* --------------- interactive block menu */
+ul.bx-menu-inter,
+ul.bx-menu-inter-vert {
+	padding:0;
+    margin:0;
+	list-style:none;
+}
+ul.bx-menu-inter li {
+    float:left;
+}
+li.bx-menu-inter-div {
+	padding: 0px 3px;
+}
+li.bx-menu-inter-div:first-child {
+	display: none;
+}
+li.bx-menu-inter-act {}
+li.bx-menu-inter-pas a:hover {
+	text-decoration: none;
+}
+li.bx-menu-inter-hidden {
+	display: none;
+}
+
+/* --------------- horizontal buttons menu */
+
+ul.bx-menu-btns-ver,
+ul.bx-menu-btns-hor {
+	padding:0;
+    margin:0;
+	list-style:none;
+    text-align:center;
+}
+ul.bx-menu-btns-hor li {
+    display:inline;
+    display:inline-block;
+	vertical-align: bottom;
+}
+ul.bx-menu-btns-ver li {
+    text-align:center;
+}
+ul.bx-menu-btns-ver li .bx-btn {
+    float:none;
+    display:inline-block;
+}
+
+/* --------------- account popup menu */
+
+.bx-popup-content .bx-menu-account-popup {
+    min-width:17em;
+}
+
+.bx-menu-search-popup-title,
+.bx-menu-account-popup-profile,
+.bx-menu-account-popup-menu {
+    text-align:center;
+}
+
+.bx-sliding-menu-main > .bx-def-page-width {
+    position:relative;
+}
+
+.bx-menu-account-popup-profile-switcher-link b {
+    vertical-align:middle;
+}
+
+.bx-menu-account-popup-profile-switcher-link a:hover,
+.bx-menu-account-popup-profile-switcher-link a {
+    text-decoration:none;
+}
+
+/* --------------- custom menu */
+
+.bx-menu-custom > li > span,
+.bx-menu-custom > li > a {
+    display:inline-block;
+}

@@ -1,0 +1,29 @@
+<ul id="bx-menu-main" class="bx-menu-main bx-menu-object-__object__ bx-clearfix">
+    <li class="bx-def-color-bg-hl-hover bx-def-margin-right">
+        <a class="bx-def-padding-sec-leftright" href="javascript:void(0);">
+            <bx_if:icon><i class="sys-icon __icon__"></i></bx_if:icon>
+            <bx_if:image><img style="background-image:url(__icon_url__)" src="<bx_icon_url:spacer.gif />" /></bx_if:image>
+            <span class="bx-def-margin-sec-left">__title__</span>
+            <bx_if:menu>
+                <i class="sys-icon-a" data-rotate="down" data-icon="chevron" ></i>
+            </bx_if:menu>
+        </a>
+    </li>    
+    __popup__
+    <bx_repeat:menus>
+        <li class="bx-def-color-bg-hl-hover"><a class="bx-def-padding-sec-leftright" href="javascript:void(0);" onclick="$('#__id__').dolPopup({pointer:{el:$(this)}})"><i class="sys-icon __icon__"></i></a></li>
+        __popup__
+    </bx_repeat:menus>
+</ul>
+<script>
+    $("#bx-menu-main > li > a").click(function () {
+        var eIconAnim = (new Marka($(this).find('.sys-icon-a').get(0)));
+        eIconAnim.set('times');
+        $('#__id__').dolPopup({
+            pointer:{el:$(this)},
+            onBeforeHide:function () {
+                eIconAnim.set('chevron');
+            }
+        });
+    });
+</script>
