@@ -1,0 +1,135 @@
+.bx-air-splash,
+.bx-air-s-cnt {
+	position: relative;
+}
+.bx-air-s-image,
+.bx-air-s-text,
+.bx-air-s-text-aux,
+.bx-air-s-learn-more {
+	position: relative;
+	text-align: center;
+}
+.bx-air-st-title {
+	font-weight: 700;
+}
+.bx-air-st-text span {
+	font-weight: 600;
+}
+.bx-air-st-button .bx-btn {
+	display: inline-block;
+	float: none;
+
+	padding: 0 34px;
+	padding: 0 2.125rem;
+
+	height: 90px;
+	height: 5.625rem;
+	line-height: 88px;
+	line-height: 5.5rem;
+
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+	border: 1px solid rgba(0, 0, 0, 0.5);
+	background-color: #27c93f;
+
+	font-weight: 600;
+}
+.bx-air-st-button .bx-btn:active,
+.bx-air-st-button .bx-btn:hover {	
+    background-color: #1ddb4b;
+}
+.bx-air-st-button .bx-btn:active {
+	box-shadow: none;
+}
+.bx-air-st-button .bx-btn .bx-air-stb-main {
+	text-transform: uppercase; 
+	font-size: 28px;
+	font-size: 1.75rem;
+}
+.bx-air-st-button .bx-btn .bx-air-stb-aux {
+	font-size: 22px;
+	font-size: 1.375rem;
+}
+.bx-air-st-links a {
+	line-height: 26px;
+	line-height: 1.625rem;
+}
+
+/*--- Aux Text Section ---*/
+.bx-air-s-text-aux {
+	padding-top: 50px;
+}
+
+/*--- More Section ---*/
+.bx-air-s-learn-more,
+.bx-air-s-more,
+.bx-air-sm-row {
+	position: relative;
+	margin-top: 70px;
+	margin-top: 4.375rem;
+}
+.bx-air-s-learn-more a {
+	text-decoration: none;
+}
+.bx-air-smr-image {
+	position: relative;
+	text-align: center;
+}
+.bx-air-smr-image img {
+	width: 300px;
+	width: 18.75rem;
+	height: 300px;
+	height: 18.75rem;
+}
+.bx-air-smr-text {
+	position: relative;
+	text-align: center;
+}
+.bx-air-smr-text h2,
+.bx-air-smr-text p {
+	width: 100%;
+	margin: 0px;
+}
+
+
+@media (max-width:480px) {
+	.bx-air-splash .bx-air-s-cnt .bx-air-s-image img {
+		width: 300px;
+		width: 22.0575rem;
+		height: 165px;
+		height: 12.125rem;
+	}
+	.bx-air-splash .bx-air-s-cnt .bx-air-st-title.bx-def-font-h1 {
+		font-size: 22px;
+		font-size: 1.375rem;
+	}
+	.bx-air-splash .bx-air-s-cnt .bx-air-st-button .bx-btn {
+		height: 60px;
+		height: 3.75rem;
+		line-height: 60px;
+		line-height: 3.75rem;
+	}
+	.bx-air-splash .bx-air-s-cnt .bx-air-st-button .bx-btn .bx-air-stb-main {
+		text-transform: uppercase; 
+		font-size: 18px;
+		font-size: 1.125rem;
+	}
+	.bx-air-splash .bx-air-s-cnt .bx-air-st-button .bx-btn .bx-air-stb-aux {
+		font-size: 14px;
+		font-size: 0.875rem;
+	}
+} /* @media end */
+
+@media (min-width:480px) and (max-width:720px) {
+	.bx-air-splash .bx-air-s-cnt {
+		width: 100%;
+		margin-left: auto;
+		margin-right: auto; 
+	}
+
+	.bx-air-splash .bx-air-s-cnt .bx-air-s-image img {
+		width: 400px;
+		width: 33.3rem;
+		height: 220px;
+		height: 18.3rem;
+	}
+} /* @media end */

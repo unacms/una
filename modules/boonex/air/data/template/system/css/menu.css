@@ -1,0 +1,111 @@
+@import url(../../../../../../../template/css/menu.css);
+
+/* --------------- menu menu */
+#bx-menu-main-container-scroller {
+	height:40px;
+    height:2.5rem;
+	text-align: center;
+	overflow: hidden;
+}
+.bx-menu-main-submenu-div .sys-icon {
+    font-size:18px;
+    font-size:1.125rem;
+}
+.bx-menu-main li a,
+.bx-menu-main li span,
+.bx-menu-main li .sys-icon,
+.bx-menu-main-submenu li a {
+    text-decoration:none;
+    font-size:18px;
+    font-size:1.125rem;
+}
+
+/* --------------- toolbar menu */
+ul.bx-menu-toolbar .bx-def-font-contrasted {
+	color: #01aff8;
+}
+ul.bx-menu-toolbar li a {
+    min-width: 64px;
+    min-width: 4rem;
+    height: 64px;
+    height: 4rem;
+
+    line-height: 64px;
+    line-height: 4rem;
+}
+
+ul.bx-menu-toolbar li a img {
+	margin-top: 8px;
+    margin-top: 0.5rem;
+}
+
+.bx-menu-toolbar-item-title {
+	font-weight: bold;
+}
+.bx-menu-toolbar-item-addon {
+	background-color: #008fb8;
+}
+
+ul.bx-menu-toolbar li .sys-icon-a,
+ul.bx-menu-toolbar li .sys-icon {
+    font-size: 32px;
+    font-size: 2rem;
+
+    width: 32px;
+    width: 2rem;
+
+	height: 32px;
+    height: 2rem;
+}
+
+ul.bx-menu-toolbar li a .sys-icon-a {
+	margin-top: 16px;
+    margin-top: 1rem;
+}
+
+
+/* --------------- floating blocks menu */
+.bx-sliding-menu-fullheight {
+    height:calc(100% - 4rem);
+}
+
+.bx-menu-floating-blocks-big li a .sys-icon,
+.bx-menu-floating-blocks li a .sys-icon,
+.bx-menu-floating-blocks-big li.bx-menu-tab-active a,
+.bx-menu-floating-blocks li.bx-menu-tab-active a {
+    color:#01aff8;
+}
+
+.bx-menu-account-popup-profile-switcher-link b {
+    vertical-align:baseline;
+}
+
+.bx-menu-floating-blocks-big li {
+    width:96px;
+    width:6rem;
+    height:96px;
+    height:6rem;
+}
+
+.bx-menu-floating-blocks-big li img,
+.bx-menu-floating-blocks-big li .sys-icon {
+    display:block;
+    width:48px;
+    width:3rem;
+    height:48px;
+    height:3rem;
+    margin:8px 24px 8px 24px;
+    margin:0.5rem 1.5rem 0.5rem 1.5rem;
+}
+
+.bx-menu-floating-blocks-big li .sys-icon {
+    line-height:48px;
+    line-height:3rem;
+    font-size:48px;
+    font-size:3rem;
+}
+
+/* --------------- account popup menu */
+.bx-menu-account-popup-profile {
+	font-weight: bold;
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string name="_bx_air_wgt_cpt"><![CDATA[Air]]></string>
+	<string name="_bx_air_stg_cpt_type"><![CDATA[Air]]></string>
+	<string name="_bx_air_stg_cpt_category_system"><![CDATA[General]]></string>
+	<string name="_bx_air_stg_cpt_option_switcher_name"><![CDATA[Name In Template Switcher]]></string>
+	<string name="_bx_air_stg_cpt_option_page_width"><![CDATA[Page Width]]></string>
+
+	<string name="_bx_air_page_block_title_splash_home"><![CDATA[Splash]]></string>
+	<string name="_bx_air_page_block_title_info_home"><![CDATA[Info]]></string>
+
+	<string name="_bx_air_txt_caption"><![CDATA[Launch Your Own Social Network]]></string>
+	<string name="_bx_air_txt_slogan_trident"><![CDATA[Trident]]></string>
+	<string name="_bx_air_txt_slogan"><![CDATA[ is a powerful software platform that you can use to create awesome social networks.]]></string>
+	<string name="_bx_air_txt_description"><![CDATA[Quite simply, we made it very, very easy to launch and manage your own social website. Trident is responsive, modular, customisable and updates automatically.]]></string>
+	<string name="_bx_air_txt_learn_more"><![CDATA[Learn More]]></string>
+	<string name="_bx_air_txt_responsive_cpt"><![CDATA[Responsive]]></string>
+	<string name="_bx_air_txt_responsive_cnt"><![CDATA[Designed to look great on any screen and work seamlessly on any device.]]></string>
+	<string name="_bx_air_txt_open_cpt"><![CDATA[Open]]></string>
+	<string name="_bx_air_txt_open_cnt"><![CDATA[Downloadable open-source software platform, full data portability.]]></string>
+	<string name="_bx_air_txt_optimized_cpt"><![CDATA[Optimized]]></string>
+	<string name="_bx_air_txt_optimized_cnt"><![CDATA[Excellent loading speed, search engine optimization and usability.]]></string>
+	<string name="_bx_air_btn_download"><![CDATA[Download Trident ]]></string>
+</resources>

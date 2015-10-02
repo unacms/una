@@ -1,0 +1,34 @@
+@import url(../../../../../../../studio/template/css/forms.css);
+
+/* form inputs */
+
+.bx-form-input-slider,
+.bx-form-input-doublerange,
+.bx-form-input-select_multiple,
+.bx-form-input-select,
+.bx-form-input-radio_set,
+.bx-form-input-checkbox_set,
+.bx-form-input-number,
+.bx-form-input-datepicker,
+.bx-form-input-datetime,
+.bx-form-input-textarea,
+.bx-form-input-password,
+.bx-form-input-text {
+    border-color:#6097b0;
+}
+
+.bx-form-input-slider:focus,
+.bx-form-input-doublerange:focus,
+.bx-form-input-number:focus,
+.bx-form-input-datepicker:focus,
+.bx-form-input-datetime:focus,
+.bx-form-input-textarea:focus,
+.bx-form-input-password:focus,
+.bx-form-input-text:focus {
+	border-color:#57889e;
+}
+
+/* switcher */
+.bx-switcher-cont {
+	border-color: #6097b0;
+}
