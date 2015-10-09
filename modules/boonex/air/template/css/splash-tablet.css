@@ -1,0 +1,8 @@
+@media (min-width:720px) and (max-width:1024px) {
+	.bx-air-splash .bx-air-s-cnt {
+		width: 540px;
+		width: 33.75rem;
+		margin-left: auto;
+		margin-right: auto; 
+	}
+} /* @media end */

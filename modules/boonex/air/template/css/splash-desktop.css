@@ -1,0 +1,11 @@
+@media (min-width:1024px) {
+	.bx-air-splash .bx-air-s-cnt {
+		width: auto;
+		margin-left: 0px;
+		margin-right: 0px; 
+	}
+	.bx-air-splash .bx-air-st-title {
+		padding-top: 16px;
+		padding-top: 1rem;
+	}	
+} /* @media end */

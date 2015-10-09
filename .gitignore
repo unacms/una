@@ -24,5 +24,3 @@ tests/vendor
 tests/composer.phar
 samples/img/*
 
-# Exclude custom modules
-modules/boonex/air*
