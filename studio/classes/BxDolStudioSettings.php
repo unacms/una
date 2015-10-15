@@ -99,7 +99,12 @@ class BxDolStudioSettings extends BxTemplStudioPage
                 else
                     $aData[$aOption['name']] = $this->getEmptyValue($aOption);
 
-                $this->oDb->setParam($aOption['name'], $aData[$aOption['name']]);
+                if($this->oDb->setParam($aOption['name'], $aData[$aOption['name']])) {
+                	$aCategoryInfo = array();
+		            $this->oDb->getCategories(array('type' => 'by_name', 'value' => $sCategory), $aCategoryInfo, false);
+
+	        		bx_alert('system', 'save_setting', 0, 0, array('category' => $aCategoryInfo, 'option' => $aOption['name'], 'value' => $aData[$aOption['name']]));
+                }
             }
         }
 

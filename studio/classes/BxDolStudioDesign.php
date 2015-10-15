@@ -17,7 +17,7 @@ class BxDolStudioDesign extends BxTemplStudioPage
     protected $aTemplate;
     protected $sPage;
 
-    function __construct($sTemplate = "", $sPage = "")
+    public function __construct($sTemplate = "", $sPage = "")
     {
         parent::__construct($sTemplate);
 
@@ -66,7 +66,7 @@ class BxDolStudioDesign extends BxTemplStudioPage
         ), false);
     }
 
-    function activate($sTemplate)
+    public function activate($sTemplate)
     {
         $aTemplate = BxDolModuleQuery::getInstance()->getModuleByName($sTemplate);
         if(empty($aTemplate) || !is_array($aTemplate))

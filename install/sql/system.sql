@@ -200,7 +200,7 @@ CREATE TABLE `sys_options_types` (
   `group` varchar(64) NOT NULL default '',
   `name` varchar(64) NOT NULL default '',
   `caption` varchar(64) NOT NULL default '',
-  `icon` varchar(64) NOT NULL default '',
+  `icon` varchar(255) NOT NULL default '',
   `order` int(11) default '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name`(`name`)
@@ -969,8 +969,6 @@ CREATE TABLE `sys_alerts_handlers` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
-
-
 CREATE TABLE `sys_alerts` (
   `id` int(11) unsigned NOT NULL auto_increment,  
   `unit` varchar(128) NOT NULL default '',
@@ -979,6 +977,13 @@ CREATE TABLE `sys_alerts` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `alert_handler` (`unit`, `action`, `handler_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+INSERT INTO `sys_alerts_handlers` (`name`, `service_call`) VALUES
+('sys_studio_settings_save_design', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:28:"alert_response_settings_save";s:6:"params";a:0:{}s:5:"class";s:25:"TemplStudioDesignServices";}');
+SET @iIdHandler = LAST_INSERT_ID();
+
+INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
+('system', 'save_setting', @iIdHandler);
 
 
 -- --------------------------------------------------------
