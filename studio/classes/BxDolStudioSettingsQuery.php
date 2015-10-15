@@ -68,7 +68,7 @@ class BxDolStudioSettingsQuery extends BxDolStudioPageQuery
                 break;
             case 'by_name':
                 $aMethod['name'] = 'getRow';
-                $sSelectClause .= ", `tt`.`name` AS `type_name`";
+                $sSelectClause .= ", `tt`.`name` AS `type_name`, `tt`.`group` AS `type_group`";
                 $sJoinClause .= "LEFT JOIN `sys_options_types` AS `tt` ON `tc`.`type_id`=`tt`.`id` ";
                 $sWhereClause .= $this->prepare("AND `tc`.`name`=?", $aParams['value']);
                 $sLimitClause .= "LIMIT 1";

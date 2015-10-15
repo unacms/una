@@ -93,7 +93,7 @@ class BxDolView extends BxDolObject
 
     public static function &getSystems()
     {
-        if(!isset($GLOBALS['bx_dol_vote_systems']))
+        if(!isset($GLOBALS['bx_dol_view_systems']))
             $GLOBALS['bx_dol_view_systems'] = BxDolDb::getInstance()->fromCache('sys_objects_view', 'getAllWithKey', '
                 SELECT
                     `id` as `id`,
