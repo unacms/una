@@ -106,8 +106,9 @@ class BxCmtsMy extends BxTemplCmts
     {
         $oForm = parent::_getFormObject($sAction, $iId);
 
-        $sFieldName = BxDolPrivacy::getFieldName('view');
-        $aFieldDescriptor = BxDolPrivacy::getGroupChooser('comments_view');
+        $sPrivacyObject = 'comments_view';
+        $sFieldName = BxDolPrivacy::getFieldName($sPrivacyObject);
+        $aFieldDescriptor = BxDolPrivacy::getGroupChooser($sPrivacyObject);
         $aFieldDescriptor['caption'] = '';
 
         $oForm->aInputs = bx_array_insert_after(array($sFieldName => $aFieldDescriptor), $oForm->aInputs, 'cmt_text');
