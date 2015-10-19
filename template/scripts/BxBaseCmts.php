@@ -15,9 +15,9 @@ class BxBaseCmts extends BxDolCmts
     protected $_sJsObjName;
     protected $_sStylePrefix;
 
-    function __construct( $sSystem, $iId, $iInit = 1 )
+    function __construct( $sSystem, $iId, $iInit = true, $oTemplate = false)
     {
-        parent::__construct( $sSystem, $iId, $iInit );
+        parent::__construct($sSystem, $iId, $iInit, $oTemplate);
         if (empty($sSystem))
             return;
 
@@ -32,10 +32,8 @@ class BxBaseCmts extends BxDolCmts
      */
     public function addCssJs ()
     {
-        $oTemplate = BxDolTemplate::getInstance();
-
-        $oTemplate->addCss(array('cmts.css'));
-        $oTemplate->addJs(array('jquery.anim.js', 'jquery.form.min.js', 'BxDolCmts.js'));
+        $this->_oTemplate->addCss(array('cmts.css'));
+        $this->_oTemplate->addJs(array('jquery.anim.js', 'jquery.form.min.js', 'BxDolCmts.js'));
 
         $oForm = BxDolForm::getObjectInstance($this->_sFormObject, $this->_sFormDisplayPost);
         $oForm->addCssJs();
@@ -165,8 +163,6 @@ class BxBaseCmts extends BxDolCmts
      */
     function getComment($mixedCmt, $aBp = array(), $aDp = array())
     {
-        $oTemplate = BxDolTemplate::getInstance();
-
         $iUserId = $this->_getAuthorId();
         $aCmt = !is_array($mixedCmt) ? $this->getCommentRow((int)$mixedCmt) : $mixedCmt;
         if (!$aCmt)
@@ -176,7 +172,7 @@ class BxBaseCmts extends BxDolCmts
 
         $sClass = '';
         if(isset($aCmt['vote_rate']) && (float)$aCmt['vote_rate'] < $this->_aSystem['viewing_threshold']) {
-            $oTemplate->pareseHtmlByName('comment_hidden.html', array(
+            $this->_oTemplate->pareseHtmlByName('comment_hidden.html', array(
                 'js_object' => $this->_sJsObjName,
                 'id' => $aCmt['cmt_id'],
                 'title' => bx_process_output(_t('_hidden_comment', $sAuthorName)),
@@ -238,7 +234,7 @@ class BxBaseCmts extends BxDolCmts
 
 		$sAgo = bx_time_js($aCmt['cmt_time']);
         $bObjectTitle = !empty($this->_aSystem['trigger_field_title']);
-        return $oTemplate->parseHtmlByName('comment.html', array_merge(array(
+        return $this->_oTemplate->parseHtmlByName('comment.html', array_merge(array(
             'system' => $this->_sSystem,
             'style_prefix' => $this->_sStylePrefix,
             'js_object' => $this->_sJsObjName,
@@ -378,8 +374,6 @@ class BxBaseCmts extends BxDolCmts
      */
     protected function _getControlsBox()
     {
-        $oTemplate = BxDolTemplate::getInstance();
-
         $sDisplay = '';
         $bDisplay = (int)$this->_aSystem['is_display_switch'] == 1;
         if($bDisplay) {
@@ -421,7 +415,7 @@ class BxBaseCmts extends BxDolCmts
             $sBrowseFilter = $oMenu->getCode();
         }
 
-        return $oTemplate->parseHtmlByName('comments_controls.html', array(
+        return $this->_oTemplate->parseHtmlByName('comments_controls.html', array(
             'display_switcher' => $bDisplay ? $sDisplay : '',
             'bx_if:is_divider_1' => array(
                 'condition' => $bDisplay && $bBrowseType,
@@ -442,9 +436,8 @@ class BxBaseCmts extends BxDolCmts
 
     protected function _getActionsBox(&$aCmt, $aDp = array())
     {
-    	$oTemplate = BxDolTemplate::getInstance();
-
     	$bViewOnly = isset($aDp['view_only']) && $aDp['view_only'] === true;
+    	$bDynamicMode = isset($aDp['dynamic_mode']) && $aDp['dynamic_mode'] === true;
 
         $bMenuManage = false;
         $sMenuActions = $sMenuManage = '';
@@ -453,12 +446,16 @@ class BxBaseCmts extends BxDolCmts
 	        //--- Actions Menu
 	        $oMenuActions = BxDolMenu::getObjectInstance($this->_sMenuObjActions);
 	        $oMenuActions->setCmtsData($this, $aCmt['cmt_id']);
+	        $oMenuActions->setDynamicMode($bDynamicMode);
 	        $sMenuActions = $oMenuActions->getCode();
 
+	        /*
+	        TODO: Remove before commit.
 	        $oVote = $this->getVoteObject($aCmt['cmt_id']);
 	        if($oVote !== false)
 	            $sMenuActions .= $oVote->getJsScript();
-	
+			*/
+
 	        //--- Manage Menu
 	        $oMenuManage = BxDolMenu::getObjectInstance($this->_sMenuObjManage);
 	        $oMenuManage->setCmtsData($this, $aCmt['cmt_id']);
@@ -466,7 +463,7 @@ class BxBaseCmts extends BxDolCmts
 	        $sMenuManage = $oMenuManage->getCode();
 	        $bMenuManage = !empty($sMenuManage);
 	        if($bMenuManage) {
-	            $sMenuManage = $oTemplate->parseHtmlByName('comment_manage.html', array(
+	            $sMenuManage = $this->_oTemplate->parseHtmlByName('comment_manage.html', array(
 	                'style_prefix' => $this->_sStylePrefix,
 	                'content' => $sMenuManage
 	            ));
@@ -475,7 +472,7 @@ class BxBaseCmts extends BxDolCmts
 	        }
 		}
 
-        return $oTemplate->parseHtmlByName('comment_actions.html', array(
+        return $this->_oTemplate->parseHtmlByName('comment_actions.html', array(
             'id' => $aCmt['cmt_id'],
             'js_object' => $this->_sJsObjName,
             'style_prefix' => $this->_sStylePrefix,

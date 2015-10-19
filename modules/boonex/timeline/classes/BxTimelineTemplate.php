@@ -519,7 +519,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'content' => $aTmplVarsMenuItemActions
             ),
             'comments' => $bBrowseItem ? $this->_getComments($aEvent['comments']) : '',
-            'votes' => '' //$this->_getVotes($aEvent['votes'])
         );
 
         return $this->parseHtmlByName('item.html', $aTmplVars);
@@ -543,22 +542,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         list($sSystem, $iObjectId, $iCount) = $mixedComments;
         return $this->getComments($sSystem, $iObjectId);
-    }
-
-    protected function _getVotes($aVotes)
-    {
-        $oModule = $this->getModule();
-
-        $mixedVotes = $oModule->getVotesData($aVotes);
-        if($mixedVotes === false)
-            return '';
-
-        list($sSystem, $iObjectId, $iCount) = $mixedVotes;
-        $oVote = $oModule->getVoteObject($sSystem, $iObjectId);
-        if($oVote === false)
-            return '';
-
-        return $oVote->getJsScript();
     }
 
     protected function _getImagePopup()

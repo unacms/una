@@ -45,7 +45,7 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
         if(!$oVote)
         	return false;
 
-    	return $oVote->getElementInline();
+    	return $oVote->getElementInline(array('dynamic_mode' => $this->_bDynamicMode));
     }
 
     /**

@@ -131,6 +131,7 @@ define('BX_CMT_RATE_VALUE_MINUS', -1);
 class BxDolCmts extends BxDol implements iBxDolReplaceable
 {
     protected $_oQuery = null;
+    protected $_oTemplate = null;
 
     protected $_sFormObject;
     protected $_sFormDisplayPost;
@@ -175,7 +176,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
      * $sSystem - comments system name
      * $iId - obect id to be commented
      */
-    function __construct($sSystem, $iId, $iInit = 1)
+    function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
         parent::__construct();
 
@@ -236,6 +237,11 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 
         if ($iInit)
             $this->init($iId);
+
+		if ($oTemplate)
+            $this->_oTemplate = $oTemplate;
+        else
+            $this->_oTemplate = BxDolTemplate::getInstance();
     }
 
     /**
@@ -245,7 +251,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
      * @param $iInit perform initialization
      * @return null on error, or ready to use class instance
      */
-    public static function getObjectInstance($sSys, $iId, $iInit = true)
+    public static function getObjectInstance($sSys, $iId, $iInit = true, $oTemplate = false)
     {
         if(isset($GLOBALS['bxDolClasses']['BxDolCmts!' . $sSys . $iId]))
             return $GLOBALS['bxDolClasses']['BxDolCmts!' . $sSys . $iId];
@@ -261,7 +267,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
                 require_once(BX_DIRECTORY_PATH_ROOT . $aSystems[$sSys]['class_file']);
         }
 
-        $o = new $sClassName($sSys, $iId, $iInit);
+        $o = new $sClassName($sSys, $iId, $iInit, $oTemplate);
         return ($GLOBALS['bxDolClasses']['BxDolCmts!' . $sSys . $iId] = $o);
     }
 
@@ -410,7 +416,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         if(empty($this->_aSystem['object_vote']))
         	$this->_aSystem['object_vote'] = 'sys_cmts';
 
-        $oVote = BxDolVote::getObjectInstance($this->_aSystem['object_vote'], $iId);
+        $oVote = BxDolVote::getObjectInstance($this->_aSystem['object_vote'], $iId, true, $this->_oTemplate);
         if(!$oVote || !$oVote->isEnabled())
             return false;
 
@@ -701,7 +707,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         $this->_echoResultJson(array(
             'parent_id' => $aCmt['cmt_parent_id'],
             'vparent_id' => $aCmt['cmt_vparent_id'],
-            'content' => $this->getComment($aCmt, array('type' => $sCmtBrowse), array('type' => $sCmtDisplay))
+            'content' => $this->getComment($aCmt, array('type' => $sCmtBrowse), array('type' => $sCmtDisplay, 'dynamic_mode' => true))
         ));
     }
 
@@ -713,6 +719,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         $aBp = $aDp = array();
 		$this->_getParams($aBp, $aDp);
 
+		$aDp['dynamic_mode'] = true;
         return $this->getComments($aBp, $aDp);
     }
 
