@@ -519,7 +519,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'content' => $aTmplVarsMenuItemActions
             ),
             'comments' => $bBrowseItem ? $this->_getComments($aEvent['comments']) : '',
-            'votes' => $this->_getVotes($aEvent['votes'])
+            'votes' => '' //$this->_getVotes($aEvent['votes'])
         );
 
         return $this->parseHtmlByName('item.html', $aTmplVars);
@@ -571,10 +571,11 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     	return BxTemplFunctions::getInstance()->transBox($sViewImagePopupId, $sViewImagePopupContent, true);
     }
 
-    protected function _getTmplVarsMenuItemActions(&$aEvent)
+    protected function _getTmplVarsMenuItemActions(&$aEvent, $aBrowseParams = array())
     {
         $oMenu = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_actions'));
         $oMenu->setEvent($aEvent);
+        $oMenu->setDynamicMode(isset($aBrowseParams['dynamic_mode']) && $aBrowseParams['dynamic_mode'] === true);
 
         $sMenu = $oMenu->getCode();
         if(empty($sMenu))

@@ -65,6 +65,7 @@ class BxBaseSocialSharing extends BxDolSocialSharing
             switch ($aButton['type']) {
                 case 'html':
                     $sButton = $this->_replaceMarkers($aButton['content'], $aMarkers);
+                    $sButton = $this->_oTemplate->parseHtmlByContent($sButton, array());
                     break;
                 case 'service':
                     $a = @unserialize($aButton['content']);

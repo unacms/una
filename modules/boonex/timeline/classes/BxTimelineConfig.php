@@ -27,7 +27,6 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     protected $_sMenuItemManage;
     protected $_sMenuItemActions;
 
-    protected $_bJsMode;
     protected $_aShareDefaults;
 
     protected $_iTimelineVisibilityThreshold;
@@ -194,21 +193,6 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         return $this->_iCharsDisplayMax;
     }
 
-    public function isJsMode()
-    {
-        return $this->_bJsMode;
-    }
-
-    public function getJsMode()
-    {
-        return $this->_bJsMode;
-    }
-
-    public function setJsMode($bJsMode)
-    {
-        $this->_bJsMode = $bJsMode;
-    }
-
     public function getShareDefaults()
     {
         return $this->_aShareDefaults;
@@ -247,7 +231,6 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         if(empty($aHandler['module_name']) || empty($aHandler['module_class']) || empty($aHandler['module_method']))
         	return false; 
 
-		$aEvent['js_mode'] = $this->getJsMode();
 		return BxDolService::call($aHandler['module_name'], $aHandler['module_method'], array($aEvent), $aHandler['module_class']);
     }
     public function getSystemDataByDescriptor($sType, $sAction, $iObjectId)

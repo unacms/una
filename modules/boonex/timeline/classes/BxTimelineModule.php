@@ -151,19 +151,16 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
     function actionGetPost()
     {
-        $this->_oConfig->setJsMode(true);
         $this->_iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
 
         $iEvent = bx_process_input(bx_get('id'), BX_DATA_INT);
         $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iEvent));
 
-        $this->_echoResultJson(array('item' => $this->_oTemplate->getPost($aEvent, array('type' => 'owner', 'owner_id' => $this->_iOwnerId))));
+        $this->_echoResultJson(array('item' => $this->_oTemplate->getPost($aEvent, array('type' => 'owner', 'owner_id' => $this->_iOwnerId, 'dynamic_mode' => true))));
     }
 
     function actionGetPosts()
     {
-        $this->_oConfig->setJsMode(true);
-
         $aParams = $this->_prepareParamsGet();
         list($sItems, $sLoadMore, $sBack) = $this->_oTemplate->getPosts($aParams);
 
@@ -557,7 +554,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         if(empty($sSystem) || (int)$iId == 0)
             return false;
 
-        $oVote = BxDolVote::getObjectInstance($sSystem, $iId);
+        $oVote = BxDolVote::getObjectInstance($sSystem, $iId, true, $this->_oTemplate);
         if(!$oVote->isEnabled())
             return false;
 
@@ -816,6 +813,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
     {
         $aParams = array();
         $aParams['browse'] = 'list';
+        $aParams['dynamic_mode'] = true;
 
         $sType = bx_get('type');
         $aParams['type'] = $sType !== false ? bx_process_input($sType, BX_DATA_TEXT) : BX_TIMELINE_TYPE_DEFAULT;

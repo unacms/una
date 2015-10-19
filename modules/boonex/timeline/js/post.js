@@ -198,9 +198,6 @@ BxTimelinePost.prototype._getPost = function(oElement, iPostId) {
         		if(oView.find('.' + $this.sSP + '-empty').is(':visible'))
         			oView.find('.' + $this.sSP + '-empty').hide();
 
-        		if(!$this.isMasonry())
-        			$this.initMasonry();
-
         		$this.prependMasonry($(oData.item).bxTime());
         	}
         },

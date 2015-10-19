@@ -86,6 +86,8 @@ class BxDolMenu extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
     protected static $SEL_MODULE = '';
     protected static $SEL_NAME = '';
 
+    protected $_bDynamicMode;
+
     protected $_sSelModule;
     protected $_sSelName;
 
@@ -102,6 +104,8 @@ class BxDolMenu extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
     public function __construct($aObject)
     {
         parent::__construct();
+
+        $this->_bDynamicMode = false;
 
         $this->_sObject = isset($aObject['object']) ? $aObject['object'] : 'bx-menu-obj-' . time() . rand(0, PHP_INT_MAX);
         $this->_aObject = $aObject;
@@ -202,6 +206,11 @@ class BxDolMenu extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
     {
         $this->_sSelModule = $sModule;
         $this->_sSelName = $sName;
+    }
+
+    public function setDynamicMode ($bDynamicMode)
+    {
+        $this->_bDynamicMode = $bDynamicMode;
     }
 
     /**
