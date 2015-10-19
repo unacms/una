@@ -12,6 +12,8 @@
  */
 class BxBaseVote extends BxDolVote
 {
+	protected $_bCssJsAdded;
+
     protected $_sJsObjName;
     protected $_sStylePrefix;
 
@@ -23,9 +25,11 @@ class BxBaseVote extends BxDolVote
     protected $_sTmplNameDoVoteLikes;
     protected $_sTmplNameDoVoteStars;
 
-    public function __construct($sSystem, $iId, $iInit = 1)
+    public function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
-        parent::__construct($sSystem, $iId, $iInit);
+        parent::__construct($sSystem, $iId, $iInit, $oTemplate);
+
+        $this->_bCssJsAdded = false;
 
         $this->_sJsObjName = 'oVote' . bx_gen_method_name($sSystem, array('_' , '-')) . $iId;
         $this->_sStylePrefix = 'bx-vote';
@@ -57,12 +61,15 @@ class BxBaseVote extends BxDolVote
         $this->_sTmplNameDoVoteStars = 'vote_do_vote_stars.html';
     }
 
-    public function addCssJs()
+    public function addCssJs($bDynamicMode = false)
     {
-        $oTemplate = BxDolTemplate::getInstance();
+    	if($bDynamicMode || $this->_bCssJsAdded)
+    		return;
 
-        $oTemplate->addJs('BxDolVote.js');
-        $oTemplate->addCss('vote.css');
+    	$this->_oTemplate->addJs(array('BxDolVote.js'));
+        $this->_oTemplate->addCss(array('vote.css'));
+
+        $this->_bCssJsAdded = true;
     }
 
     public function getJsObjectName()
@@ -70,7 +77,7 @@ class BxBaseVote extends BxDolVote
         return $this->_sJsObjName;
     }
 
-    public function getJsScript()
+    public function getJsScript($bDynamicMode = false)
     {
         $aParams = array(
             'sObjName' => $this->_sJsObjName,
@@ -82,9 +89,17 @@ class BxBaseVote extends BxDolVote
             'sStylePrefix' => $this->_sStylePrefix,
             'aHtmlIds' => $this->_aHtmlIds
         );
+        $sCode = "var " . $this->_sJsObjName . " = new BxDolVote(" . json_encode($aParams) . ");";
 
-        $this->addCssJs();
-        return BxDolTemplate::getInstance()->_wrapInTagJsCode("var " . $this->_sJsObjName . " = new BxDolVote(" . json_encode($aParams) . ");");
+        if($bDynamicMode) {
+			$sCode = "$.getScript('" . bx_js_string($this->_oTemplate->getJsUrl('BxDolVote.js'), BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
+				bx_get_style('" . bx_js_string($this->_oTemplate->getCssUrl('vote.css'), BX_ESCAPE_STR_APOS) . "');
+				" . $sCode . "
+        	}); ";
+        }
+
+        $this->addCssJs($bDynamicMode);
+        return $this->_oTemplate->_wrapInTagJsCode($sCode);
     }
 
     public function getJsClick()
@@ -101,7 +116,7 @@ class BxBaseVote extends BxDolVote
 
         $aVote = $this->_oQuery->getVote($this->getId());
 
-        return BxDolTemplate::getInstance()->parseHtmlByName($this->_sTmplNameCounter, array(
+        return $this->_oTemplate->parseHtmlByName($this->_sTmplNameCounter, array(
             'href' => 'javascript:void(0)',
             'title' => _t('_vote_do_like_by'),
             'bx_repeat:attrs' => array(
@@ -129,6 +144,8 @@ class BxBaseVote extends BxDolVote
 
     public function getElement($aParams = array())
     {
+    	$bDynamicMode = isset($aParams['dynamic_mode']) && $aParams['dynamic_mode'] === true;
+
         $bLike =  $this->isLikeMode();
         $sType = $bLike ? BX_DOL_VOTE_TYPE_LIKES : BX_DOL_VOTE_TYPE_STARS;
 
@@ -150,7 +167,7 @@ class BxBaseVote extends BxDolVote
         $aParams['is_voted'] = $this->_oQuery->isVoted($iObjectId, $iAuthorId) ? true : false;
 
         $sTmplName = 'vote_element_' . (!empty($aParams['usage']) ? $aParams['usage'] : BX_DOL_VOTE_USAGE_DEFAULT) . '.html';
-        return BxDolTemplate::getInstance()->parseHtmlByName($sTmplName, array(
+        return $this->_oTemplate->parseHtmlByName($sTmplName, array(
             'style_prefix' => $this->_sStylePrefix,
             'html_id' => $this->_aHtmlIds['main_' . $sType],
             'class' => $this->_sStylePrefix . '-' . $sType . ($bShowDoVoteAsButton ? '-button' : '') . ($bShowDoVoteAsButtonSmall ? '-button-small' : ''),
@@ -168,7 +185,7 @@ class BxBaseVote extends BxDolVote
                     'counter' => $this->getCounter()
                 )
             ),
-            'script' => $this->getJsScript()
+            'script' => $this->getJsScript($bDynamicMode)
         ));
     }
 
@@ -205,7 +222,7 @@ class BxBaseVote extends BxDolVote
             );
         }
 
-        return BxDolTemplate::getInstance()->parseHtmlByName($this->_sTmplNameDoVoteStars, array(
+        return $this->_oTemplate->parseHtmlByName($this->_sTmplNameDoVoteStars, array(
             'style_prefix' => $this->_sStylePrefix,
             'bx_repeat:stars' => $aTmplVarsStars,
             'bx_if:show_legend' => array(
@@ -236,7 +253,7 @@ class BxBaseVote extends BxDolVote
 		if($bDisabled)
 			$sClass .= $bShowDoVoteAsButton || $bShowDoVoteAsButtonSmall ? ' bx-btn-disabled' : 'bx-vote-disabled';
 
-        return BxDolTemplate::getInstance()->parseHtmlByName($this->_sTmplNameDoVoteLikes, array(
+        return $this->_oTemplate->parseHtmlByName($this->_sTmplNameDoVoteLikes, array(
             'style_prefix' => $this->_sStylePrefix,
             'class' => $sClass,
             'title' => _t($bVoted && $this->isUndo() ? '_vote_do_unlike' : '_vote_do_like'),
@@ -259,7 +276,7 @@ class BxBaseVote extends BxDolVote
     protected function _getLabelDoLike($aParams = array())
     {
     	$bVoted = isset($aParams['is_voted']) && $aParams['is_voted'] === true;
-        return BxDolTemplate::getInstance()->parseHtmlByName('vote_do_vote_likes_label.html', array(
+        return $this->_oTemplate->parseHtmlByName('vote_do_vote_likes_label.html', array(
         	'bx_if:show_icon' => array(
         		'condition' => isset($aParams['show_do_vote_icon']) && $aParams['show_do_vote_icon'] == true,
         		'content' => array(
@@ -291,7 +308,7 @@ class BxBaseVote extends BxDolVote
         if(empty($aTmplUsers))
             $aTmplUsers = MsgBox(_t('_Empty'));
 
-        return BxDolTemplate::getInstance()->parseHtmlByName('vote_by_list.html', array(
+        return $this->_oTemplate->parseHtmlByName('vote_by_list.html', array(
             'style_prefix' => $this->_sStylePrefix,
             'bx_repeat:list' => $aTmplUsers
         ));

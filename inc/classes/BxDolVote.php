@@ -86,13 +86,20 @@ define('BX_DOL_VOTE_USAGE_DEFAULT', BX_DOL_VOTE_USAGE_BLOCK);
 
 class BxDolVote extends BxDolObject
 {
-    public function __construct($sSystem, $iId, $iInit = true)
+	protected $_oTemplate;
+
+    public function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
         parent::__construct($sSystem, $iId, $iInit);
         if(empty($this->_sSystem))
             return;
 
         $this->_oQuery = new BxDolVoteQuery($this);
+
+        if ($oTemplate)
+            $this->_oTemplate = $oTemplate;
+        else
+            $this->_oTemplate = BxDolTemplate::getInstance();
     }
 
     /**
@@ -102,7 +109,7 @@ class BxDolVote extends BxDolObject
      * @param $iInit perform initialization
      * @return null on error, or ready to use class instance
      */
-    public static function getObjectInstance($sSys, $iId, $iInit = true)
+    public static function getObjectInstance($sSys, $iId, $iInit = true, $oTemplate = false)
     {
         if(isset($GLOBALS['bxDolClasses']['BxDolVote!' . $sSys . $iId]))
             return $GLOBALS['bxDolClasses']['BxDolVote!' . $sSys . $iId];
@@ -118,7 +125,7 @@ class BxDolVote extends BxDolObject
                 require_once(BX_DIRECTORY_PATH_ROOT . $aSystems[$sSys]['class_file']);
         }
 
-        $o = new $sClassName($sSys, $iId, $iInit);
+        $o = new $sClassName($sSys, $iId, $iInit, $oTemplate);
         return ($GLOBALS['bxDolClasses']['BxDolVote!' . $sSys . $iId] = $o);
     }
 

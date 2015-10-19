@@ -12,9 +12,9 @@
  */
 class BxTemplVote extends BxBaseVote
 {
-    function __construct($sSystem, $iId, $iInit = 1)
+    function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
-        parent::__construct($sSystem, $iId, $iInit);
+        parent::__construct($sSystem, $iId, $iInit, $oTemplate);
     }
 }
 

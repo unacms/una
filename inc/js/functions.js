@@ -646,4 +646,8 @@ function bx_activate_anim_icons(sColor)
     });
 }
 
+bx_get_style = function(sUrl) {
+	$("head").append($("<link rel='stylesheet' href='" + sUrl + "' type='text/css' />"));
+};
+
 /** @} */
