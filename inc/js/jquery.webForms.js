@@ -228,60 +228,7 @@
                 if (window.navigator.appVersion.search(/Chrome\/(.*?) /) == -1 || parseInt(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10) < 24)
                     if( this.getAttribute("allow_input") == null)
                         $(this).attr('readonly', 'readonly');
-
 			}
-
-            // add clear input button
-            var eInput = $(this);
-            var aClearInputClassSelectors = ['.bx-form-input-wrapper-datetime', '.bx-form-input-wrapper-datepicker', '.bx-form-input-wrapper-text', '.bx-form-input-wrapper-password'];
-            for (var i in aClearInputClassSelectors) {
-                var sClassSelector = aClearInputClassSelectors[i];
-
-                var eWrapper = $(this).parents().filter(sClassSelector);
-                if (!eWrapper.length)
-                    continue;
-                if (eWrapper.hasClass('bx-form-input-btn-cross-processed'))
-                    return;
-                eWrapper.addClass('bx-form-input-btn-cross-processed');
-
-                if ('relative' != eWrapper.css('position') && 'absolute' != eWrapper.css('position'))
-                    eWrapper.css('position', 'relative');
-
-                eWrapper.append('<div style="display:none;" class="bx-form-input-btn-cross bx-def-font-grayed"><i class="sys-icon remove"></i></div>');
-
-                eInput.css('padding-right', parseInt(eInput.css('padding-right')) + 16 + 'px');
-
-                var eBtnCross = eWrapper.find('.bx-form-input-btn-cross');
-
-                eInput.on('focus', function () {
-                	var iTop = ($(this).outerHeight() - eBtnCross.height())/2; 
-
-                    eBtnCross.show().position({
-                            of: $(this),
-                            my: 'right center',
-                            at: 'right-8 center',
-                            collision: 'none none'
-                    });
-                });
-
-                eInput.on('blur', function (event) {
-                    eBtnCross.hide();
-                });
-                
-                eBtnCross.on('mousedown', function () {
-                    eInput.val('');
-                    setTimeout(function () {                        
-                        var eWrapper = eInput.parents().filter('.bx-form-input-wrapper');
-                        if (eWrapper.hasClass('bx-form-input-wrapper-datepicker')) 
-                            $(eInput).datepicker('disable');
-                        eInput.focus();
-                        if (eWrapper.hasClass('bx-form-input-wrapper-datepicker'))
-                            $(eInput).datepicker('enable');
-                    }, 100);
-                });
-
-            }
-
         });
         return this;
     };
