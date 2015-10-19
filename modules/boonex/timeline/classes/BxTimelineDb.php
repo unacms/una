@@ -355,6 +355,11 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 		if($sWhereModuleFilter != '')
 			$sWhereClause .= $sWhereModuleFilter;
 
+		//--- Apply privacy filter
+		$oPrivacy = BxDolPrivacy::getObjectInstance($this->_oConfig->getObject('privacy_view'));
+		$aQueryParts = $oPrivacy->getContentByGroupAsSQLPart(BX_DOL_PG_ALL);
+		$sWhereClause .= $aQueryParts['where'] . " ";
+
 		//--- Check type
 		switch($aParams['type']) {
 			case BX_BASE_MOD_NTFS_TYPE_OWNER:
