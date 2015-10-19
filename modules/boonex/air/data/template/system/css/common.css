@@ -10,6 +10,9 @@ a {
 
     border: 1px solid #d5dde0;
 }
+.bx-db-container.bx-dbc-nobg {
+	border-style: none;
+}
 .bx-page-block-container.bx-def-padding-topbottom {
 	padding-top: 10px;
 	padding-top: 0.625rem;

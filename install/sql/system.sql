@@ -3200,12 +3200,14 @@ CREATE TABLE IF NOT EXISTS `sys_pages_design_boxes` (
 
 INSERT INTO `sys_pages_design_boxes` (`id`, `title`, `template`, `order`) VALUES
 (0, '_sys_designbox_0', 'designbox_0.html', '2'),
-(1, '_sys_designbox_1', 'designbox_1.html', '6'),
+(1, '_sys_designbox_1', 'designbox_1.html', '8'),
 (2, '_sys_designbox_2', 'designbox_2.html', '1'),
 (3, '_sys_designbox_3', 'designbox_3.html', '4'),
+(4, '_sys_designbox_4', 'designbox_4.html', '6'),
 (10, '_sys_designbox_10', 'designbox_10.html', '3'),
-(11, '_sys_designbox_11', 'designbox_11.html', '7'),
-(13, '_sys_designbox_13', 'designbox_13.html', '5');
+(11, '_sys_designbox_11', 'designbox_11.html', '9'),
+(13, '_sys_designbox_13', 'designbox_13.html', '5'),
+(14, '_sys_designbox_14', 'designbox_14.html', '7');
 
 
 
