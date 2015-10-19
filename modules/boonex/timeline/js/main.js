@@ -49,7 +49,12 @@ BxTimelineMain.prototype.prependMasonry = function(oItems) {
 	oItems.find('img.' + this.sSP + '-item-image').load(function() {
 		$this.reloadMasonry();
 	});
-	$(this.sIdView + ' .' + this.sClassItems).prepend(oItems).masonry('prepended', oItems);
+
+	var oHolder = $(this.sIdView + ' .' + this.sClassItems).prepend(oItems);
+	if(!this.isMasonry())
+		this.initMasonry();
+	else
+		oHolder.masonry('prepended', oItems);
 };
 
 BxTimelineMain.prototype.reloadMasonry = function() {

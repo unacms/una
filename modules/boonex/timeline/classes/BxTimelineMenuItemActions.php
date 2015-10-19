@@ -76,7 +76,7 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
 
 		$sVotesSystem = $this->_aEvent['votes']['system'];
 		$iVotesObject = $this->_aEvent['votes']['object_id'];
-    	return $this->_oModule->getVoteObject($sVotesSystem, $iVotesObject)->getElementInline();
+    	return $this->_oModule->getVoteObject($sVotesSystem, $iVotesObject)->getElementInline(array('dynamic_mode' => $this->_bDynamicMode));
     }
 
 	protected function _getMenuItemItemShare($aItem)
