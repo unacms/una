@@ -2718,6 +2718,7 @@ CREATE TABLE IF NOT EXISTS `sys_menu_items` (
   `icon` varchar(255) NOT NULL,
   `addon` text NOT NULL,
   `submenu_object` varchar(64) NOT NULL,
+  `submenu_popup` tinyint(4) NOT NULL DEFAULT '0',
   `visible_for_levels` int(11) NOT NULL DEFAULT '2147483647',
   `active` tinyint(4) NOT NULL DEFAULT '1',
   `copyable` tinyint(4) NOT NULL DEFAULT '1',
@@ -2744,10 +2745,10 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('sys_toolbar_site', 'system', 'search', '_sys_menu_item_title_system_search', '', 'javascript:void(0);', 'bx_menu_slide(''#bx-sliding-menu-search'', this, ''site'');', '', 'search', '', 2147483647, 1, 1, 2);
 
 -- member toolbar menu
-INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_toolbar_member', 'system', 'add-content', '_sys_menu_item_title_system_add_content', '', 'javascript:void(0);', 'bx_menu_slide(\'#bx-sliding-menu-sys_add_content\', this, \'site\');', '', 'a:plus', '', '', 510, 1, 1, 0),
-('sys_toolbar_member', 'system', 'account', '_sys_menu_item_title_system_account_menu', '_sys_menu_item_title_account_menu', 'javascript:void(0);', 'bx_menu_slide(''#bx-sliding-menu-account'', this, ''site'');', '', 'user',  'a:3:{s:6:"module";s:6:"system";s:6:"method";s:21:"profile_notifications";s:5:"class";s:20:"TemplServiceProfiles";}', 'sys_account_popup', 510, 1, 0, 1),
-('sys_toolbar_member', 'system', 'login', '_sys_menu_item_title_system_login', '', 'page.php?i=login', '', '', 'user',  '', '', 1, 1, 0, 2);
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('sys_toolbar_member', 'system', 'add-content', '_sys_menu_item_title_system_add_content', '', 'javascript:void(0);', 'bx_menu_slide(\'#bx-sliding-menu-sys_add_content\', this, \'site\');', '', 'a:plus', '', '', 0, 510, 1, 1, 0),
+('sys_toolbar_member', 'system', 'account', '_sys_menu_item_title_system_account_menu', '_sys_menu_item_title_account_menu', 'javascript:void(0);', 'bx_menu_slide(''#bx-sliding-menu-account'', this, ''site'');', '', 'user',  'a:3:{s:6:"module";s:6:"system";s:6:"method";s:21:"profile_notifications";s:5:"class";s:20:"TemplServiceProfiles";}', 'sys_account_popup', 1, 510, 1, 0, 1),
+('sys_toolbar_member', 'system', 'login', '_sys_menu_item_title_system_login', '', 'page.php?i=login', '', '', 'user',  '', '', 0, 1, 1, 0, 2);
 
 -- simple menu in account popup
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES

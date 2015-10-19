@@ -925,6 +925,7 @@
 	<string name="_adm_nav_txt_items_show_to_popup"><![CDATA[Отображать "{0}" элемент меню для: ]]></string>
 	<string name="_adm_nav_txt_items_submenu"><![CDATA[Подменю]]></string>
 	<string name="_adm_nav_txt_items_submenu_empty"><![CDATA[Без Подменю]]></string>
+	<string name="_adm_nav_txt_items_submenu_popup"><![CDATA[Выводить подменю во всплывающем окне]]></string>
 	<string name="_adm_nav_txt_items_target"><![CDATA[Цель]]></string>
 	<string name="_adm_nav_txt_items_target_blank"><![CDATA[Новая Страница]]></string>
 	<string name="_adm_nav_txt_items_target_self"><![CDATA[Эта же Страница]]></string>

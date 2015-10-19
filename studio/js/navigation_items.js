@@ -19,6 +19,7 @@ function BxDolStudioNavigationItems(oOptions) {
 
 BxDolStudioNavigationItems.prototype.onChangeSubmenu = function(oSelect) {
 	var sSubmenu = $(oSelect).val();
+	$('#bx-form-element-submenu_popup').bx_anim(sSubmenu == '' ? 'hide' : 'show',  this.sAnimationEffect, this.iAnimationSpeed);
 	$('#bx-form-element-link, #bx-form-element-target').bx_anim(sSubmenu == '' ? 'show' : 'hide',  this.sAnimationEffect, this.iAnimationSpeed);
 };
 

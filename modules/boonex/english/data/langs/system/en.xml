@@ -925,6 +925,7 @@
 	<string name="_adm_nav_txt_items_show_to_popup"><![CDATA[Show "{0}" menu item to: ]]></string>
 	<string name="_adm_nav_txt_items_submenu"><![CDATA[Submenu]]></string>
 	<string name="_adm_nav_txt_items_submenu_empty"><![CDATA[No Submenu]]></string>
+	<string name="_adm_nav_txt_items_submenu_popup"><![CDATA[Show submenu in popup]]></string>
 	<string name="_adm_nav_txt_items_target"><![CDATA[Target]]></string>
 	<string name="_adm_nav_txt_items_target_blank"><![CDATA[New Page]]></string>
 	<string name="_adm_nav_txt_items_target_self"><![CDATA[Same Page]]></string>
