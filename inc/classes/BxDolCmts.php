@@ -895,7 +895,8 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 
     protected function _prepareTextForOutput ($s, $iCmtId = 0)
     {
-    	$s = bx_process_output($s, BX_DATA_HTML);
+    	$iDataAction = $this->isNl2br() ? BX_DATA_TEXT_MULTILINE : BX_DATA_HTML;
+    	$s = bx_process_output($s, $iDataAction);
     	$s = bx_convert_links($s);
 
         if ($this->_sMetatagsObj && $iCmtId) {
@@ -1031,7 +1032,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         $aAccount = BxDolAccount::getInstance($iAccount)->getInfo();
 
         $aPlus = array();
-        $aPlus['reply_text'] = bx_process_output($aCmt['cmt_text']);
+        $aPlus['reply_text'] = $this->_prepareTextForOutput($aCmt['cmt_text'], $iCmtId);
         $aPlus['comment_url'] = sprintf('%scmts.php?sys=%s&id=%d&cmt_id=%d', BX_DOL_URL_ROOT, $this->_sSystem, $this->_iId, $iCmtParentId);
 
         $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_CommentReplied', $aPlus);
