@@ -43,6 +43,8 @@
 	<string name="_bx_timeline_form_attach_link_input_do_submit"><![CDATA[Add]]></string>
 	<string name="_bx_timeline_form_attach_link_input_do_cancel"><![CDATA[Close]]></string>
 
+	<string name="_bx_timeline_privacy_view"><![CDATA[View event]]></string>
+
 	<string name="_bx_timeline_acl_action_post"><![CDATA[Post]]></string>
 	<string name="_bx_timeline_acl_action_delete"><![CDATA[Delete]]></string>
 	<string name="_bx_timeline_acl_action_vote"><![CDATA[Vote]]></string>

@@ -17,6 +17,10 @@ DELETE FROM `sys_options_categories` WHERE `type_id` = @iTypeId;
 DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 
 
+-- PRIVACY 
+DELETE FROM `sys_objects_privacy` WHERE `object` = 'bx_timeline_privacy_view';
+
+
 -- ACL
 DELETE `sys_acl_actions`, `sys_acl_matrix` FROM `sys_acl_actions`, `sys_acl_matrix` WHERE `sys_acl_matrix`.`IDAction` = `sys_acl_actions`.`ID` AND `sys_acl_actions`.`Module` = 'bx_timeline';
 DELETE FROM `sys_acl_actions` WHERE `Module` = 'bx_timeline';

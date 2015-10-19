@@ -318,24 +318,6 @@
     background-color:#e7938a;
 }
 
-
-
-.bx-form-input-btn-cross {
-    position:absolute;
-    top:0px;
-    left:0px;
-    width:1.2rem;
-    height:1.2rem;
-    
-    cursor:pointer;
-}
-
-.bx-form-input-btn-cross .sys-icon {
-    line-height:1.2rem;
-    font-size:1.2rem;
-    text-decoration:none;
-}
-
 .bx-form-value-oneline,
 .bx-form-caption-oneline {
     float:left;

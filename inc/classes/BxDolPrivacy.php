@@ -140,7 +140,7 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
         if(isset($aParams['dynamic_groups']) && is_array($aParams['dynamic_groups']))
             $aValues = array_merge($aValues, $aParams['dynamic_groups']);
 
-        $sName = self::getFieldName($sAction);
+        $sName = $oPrivacy->convertActionToField($sAction);
 
         $sTitle = isset($aParams['title']) && !empty($aParams['title']) ? $aParams['title'] : '';
         if(empty($sTitle)) {
@@ -167,12 +167,20 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
     /**
      * Get database field name for action.
      *
+     * @param  string $sObject privacy object name.
      * @param  string $sAction action name.
      * @return string with field name.
      */
-    public static function getFieldName($sAction)
+    public static function getFieldName($sObject, $sAction = '')
     {
-        return 'allow_' . strtolower(str_replace(' ', '-', $sAction)) . '_to';
+    	$oPrivacy = BxDolPrivacy::getObjectInstance($sObject);
+        if(empty($oPrivacy))
+            return '';
+
+		if(empty($sAction))
+			$sAction = $oPrivacy->_aObject['action'];
+
+        return $oPrivacy->convertActionToField($sAction);
     }
 
     /**
@@ -186,7 +194,7 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
             'restriction' => array (
                 'privacy_' . $this->_sObject => array(
                     'value' => $mixedGroupId,
-                    'field' => self::getFieldName($this->_aObject['action']),
+                    'field' => $this->convertActionToField($this->_aObject['action']),
                     'operator' => is_array($mixedGroupId) ? 'in' : '=',
                     'table' => $this->_aObject['table'],
                 ),
@@ -222,7 +230,7 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
      */
     public function getContentByGroupAsSQLPart($mixedGroupId)
     {
-        $sField = self::getFieldName($this->_aObject['action']);
+        $sField = $this->convertActionToField($this->_aObject['action']);
         return $this->_oDb->getContentByGroupAsSQLPart($sField, $mixedGroupId);
     }
 
@@ -284,6 +292,11 @@ class BxDolPrivacy extends BxDol implements iBxDolFactoryObject
             return false;
 
         return bx_gen_method_name(str_replace('@', 'check_', $s));
+    }
+
+    protected function convertActionToField($sAction)
+    {
+    	return 'allow_' . strtolower(str_replace(' ', '-', $sAction)) . '_to';
     }
 
     /**

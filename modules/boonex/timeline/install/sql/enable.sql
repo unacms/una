@@ -88,6 +88,11 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_timeline_chars_display_max', '300', @iCategId, '_bx_timeline_option_chars_display_max', 'digit', 'GreaterThan', 'a:1:{s:3:"min";i:150;}', '_bx_timeline_option_err_chars_display_max', '', 8);
 
 
+-- PRIVACY 
+INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `default_group`, `table`, `table_field_id`, `table_field_author`, `override_class_name`, `override_class_file`) VALUES
+('bx_timeline_privacy_view', 'bx_timeline', 'view', '_bx_timeline_privacy_view', '3', 'bx_timeline_events', 'id', 'owner_id', 'BxTimelinePrivacy', 'modules/boonex/timeline/classes/BxTimelinePrivacy.php');
+
+
 -- ACL
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('bx_timeline', 'post', NULL, '_bx_timeline_acl_action_post', '', 1, 3);

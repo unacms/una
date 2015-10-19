@@ -76,6 +76,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         	'transcoder_videos_mp4' => $this->_sName . '_videos_mp4',
         	'transcoder_videos_webm' => $this->_sName . '_videos_webm',
 
+        	'privacy_view' => 'bx_timeline_privacy_view',
+
         	'conn_subscriptions' => 'sys_profiles_subscriptions',
 
         	'menu_item_manage' => $this->_sName . '_menu_item_manage',

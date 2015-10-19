@@ -1441,8 +1441,10 @@
 	<string name="_sys_designbox_10"><![CDATA[Содержимое + отступ]]></string>
 	<string name="_sys_designbox_11"><![CDATA[Содержимое + заголовок + фон + отступ]]></string>
 	<string name="_sys_designbox_13"><![CDATA[Содержимое + фон + отступ]]></string>
+	<string name="_sys_designbox_14"><![CDATA[Содержимое + заголовок + отступ]]></string>
 	<string name="_sys_designbox_2"><![CDATA[Пустой квадратик]]></string>
 	<string name="_sys_designbox_3"><![CDATA[Содержимое + фон]]></string>
+	<string name="_sys_designbox_4"><![CDATA[Содержимое + заголовок]]></string>
 	<string name="_sys_done"><![CDATA[Готово]]></string>
 	<string name="_sys_et_txt_about_us"><![CDATA[О нас]]></string>
 	<string name="_sys_et_txt_body_admin_email"><![CDATA[<bx_include_auto:_email_header.html />
