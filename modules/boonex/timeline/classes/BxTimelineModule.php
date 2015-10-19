@@ -542,7 +542,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         if(empty($sSystem) || (int)$iId == 0)
             return false;
 
-        $oCmts = BxDolCmts::getObjectInstance($sSystem, $iId);
+        $oCmts = BxDolCmts::getObjectInstance($sSystem, $iId, true, $this->_oTemplate);
         if(!$oCmts->isEnabled())
             return false;
 

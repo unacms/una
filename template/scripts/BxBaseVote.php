@@ -89,14 +89,17 @@ class BxBaseVote extends BxDolVote
             'sStylePrefix' => $this->_sStylePrefix,
             'aHtmlIds' => $this->_aHtmlIds
         );
-        $sCode = "var " . $this->_sJsObjName . " = new BxDolVote(" . json_encode($aParams) . ");";
+        $sCode = $this->_sJsObjName . " = new BxDolVote(" . json_encode($aParams) . ");";
 
         if($bDynamicMode) {
-			$sCode = "$.getScript('" . bx_js_string($this->_oTemplate->getJsUrl('BxDolVote.js'), BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
+			$sCode = "var " . $this->_sJsObjName . " = null; 
+			$.getScript('" . bx_js_string($this->_oTemplate->getJsUrl('BxDolVote.js'), BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
 				bx_get_style('" . bx_js_string($this->_oTemplate->getCssUrl('vote.css'), BX_ESCAPE_STR_APOS) . "');
 				" . $sCode . "
         	}); ";
         }
+        else
+        	$sCode = "var " . $sCode;
 
         $this->addCssJs($bDynamicMode);
         return $this->_oTemplate->_wrapInTagJsCode($sCode);
