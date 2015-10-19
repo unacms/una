@@ -204,6 +204,7 @@ class BxDolStudioNavigationQuery extends BxDolDb
                 `tmi`.`target` AS `target`,
                 `tmi`.`icon` AS `icon`,
                 `tmi`.`submenu_object` AS `submenu_object`,
+                `tmi`.`submenu_popup` AS `submenu_popup`,
                 `tmi`.`visible_for_levels` AS `visible_for_levels`,
                 `tmi`.`active` AS `active`,
                 `tmi`.`copyable` AS `copyable`,

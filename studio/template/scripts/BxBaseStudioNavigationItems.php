@@ -157,11 +157,16 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                 	BxDolForm::setSubmittedValue('link', 'javascript:void(0)', $oForm->aFormAttrs['method']);
 
                 BxDolForm::setSubmittedValue('target', '', $oForm->aFormAttrs['method']);
-                BxDolForm::setSubmittedValue('onclick', 'bx_menu_popup(\'' . $sSubmenu . '\', this);', $oForm->aFormAttrs['method']);
-            } else {
+
+                $iSubmenuPopup = $oForm->getCleanValue('submenu_popup');
+               	BxDolForm::setSubmittedValue('onclick', $iSubmenuPopup == 1 ? 'bx_menu_popup(\'' . $sSubmenu . '\', this);' : '', $oForm->aFormAttrs['method']);
+            } 
+            else {
                 $sOnClick = $oForm->getCleanValue('onclick');
-                if(mb_substr($sOnClick, 0, 13) == 'bx_menu_popup')
+                if(mb_substr($sOnClick, 0, 13) == 'bx_menu_popup') {
                     BxDolForm::setSubmittedValue('onclick', '', $oForm->aFormAttrs['method']);
+                    BxDolForm::setSubmittedValue('submenu_popup', 0, $oForm->aFormAttrs['method']);
+                }
             }
 
             $sTarget = $oForm->getCleanValue('target');
@@ -623,6 +628,17 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                         'pass' => 'Xss',
                     ),
                 ),
+                'submenu_popup' => array(
+                    'type' => 'switcher',
+                    'name' => 'submenu_popup',
+                    'caption' => _t('_adm_nav_txt_items_submenu_popup'),
+                    'info' => '',
+                    'value' => '1',
+                    'checked' => $aItem['submenu_popup'] == '1',
+                    'db' => array (
+                        'pass' => 'Int',
+                    )
+                ),
                 'link' => array(
                     'type' => 'text',
                     'name' => 'link',
@@ -732,10 +748,13 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                 $aForm['inputs']['icon_image']['caption'] = _t('_adm_nav_txt_items_icon_image_new');
                 $aForm['inputs']['controls'][0]['value'] = _t('_adm_nav_btn_items_save');
 
-                if(($bSubmenu = !empty($aItem['submenu_object'])) === true) {
+                $bSubmenu = !empty($aItem['submenu_object']);
+                if($bSubmenu === true) {
                     $aForm['inputs']['link']['tr_attrs']['style'] = 'display:none;';
                     $aForm['inputs']['target']['tr_attrs']['style'] = 'display:none;';
                 }
+                else 
+                	$aForm['inputs']['submenu_popup']['tr_attrs']['style'] = 'display:none;';
 
                 if(!$bSubmenu && ($aItem['onclick'] != "" || !in_array($aItem['target'], array('', '_blank')))) {
                     $aForm['inputs']['submenu_object']['tr_attrs']['style'] = 'display:none;';
