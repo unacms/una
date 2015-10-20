@@ -26,15 +26,22 @@ class BxInvTemplate extends BxDolModuleTemplate
 
     public function getBlockInvite($iAccountId, $iProfileId)
     {
-    	$iInvites = $this->_oConfig->getCountPerUser();
-        $iInvited = $this->_oDb->getInvites(array('type' => 'count_by_account', 'value' => $iAccountId));
+    	$sInvitesRemain = '';
+    	if(!isAdmin($iAccountId)) {
+	    	$iInvites = $this->_oConfig->getCountPerUser();
+	        $iInvited = $this->_oDb->getInvites(array('type' => 'count_by_account', 'value' => $iAccountId));
+
+	        $sInvitesRemain = $iInvites - $iInvited;
+    	}
+    	else 
+    		$sInvitesRemain = _t('_bx_invites_txt_unlimited');
 
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($this->_oConfig->CNF['URL_INVITE']);
 
         $this->addCss(array('main.css'));
     	return $this->parseHtmlByName('block_invite.html', array(
     		'style_prefix' => $this->_oConfig->getPrefix('style'),
-    		'text' => _t('_bx_invites_txt_invite_block_text', $iInvites - $iInvited),
+    		'text' => _t('_bx_invites_txt_invite_block_text', $sInvitesRemain),
     		'url' => $sUrl
     	));
     }
