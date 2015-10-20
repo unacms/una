@@ -109,6 +109,7 @@
 	<!-- Common Texts -->
 	<string name="_bx_invites_txt_invite_block_text"><![CDATA[You can invite your friends to join. You have <b>{0}</b> invites to share.]]></string>
 	<string name="_bx_invites_txt_request_block_text"><![CDATA[Registration is by invitation only.]]></string>
+	<string name="_bx_invites_txt_unlimited"><![CDATA[unlimited]]></string>
 	
 	<string name="_bx_invites_btn_invite"><![CDATA[Invite]]></string>
 	<string name="_bx_invites_btn_request"><![CDATA[Request Invitation]]></string>

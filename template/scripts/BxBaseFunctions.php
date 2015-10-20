@@ -351,7 +351,7 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
             $sImageUrlApl = $this->_oTemplate->getIconUrl('apple-touch-icon.png');
 
         $sRet = '';
-        $sRet .= '<link rel="icon" sizes="16x16" type="image/png" href="' . $sImageUrlFav . '" />';
+        $sRet .= '<link rel="shortcut icon" type="image/x-icon" href="' . $sImageUrlFav . '" />';
         $sRet .= '<link rel="image_src" sizes="100x100" href="' . $sImageUrlFcb . '" />';
         $sRet .= '<link rel="apple-touch-icon" sizes="152x152" href="' . $sImageUrlApl . '" />';
 

@@ -39,7 +39,7 @@ class BxInvModule extends BxDolModule
             return '';
 
 		$iInvited = (int)$this->_oDb->getInvites(array('type' => 'count_by_account', 'value' => $iAccountId));
-		if($iInvited >= $this->_oConfig->getCountPerUser())
+		if(!isAdmin($iAccountId) && $iInvited >= $this->_oConfig->getCountPerUser())
 			return '';
 
     	return array(
@@ -58,12 +58,15 @@ class BxInvModule extends BxDolModule
                 'content' => MsgBox($mixedAllowed)
             );
 
-		$iInvited = (int)$this->_oDb->getInvites(array('type' => 'count_by_account', 'value' => $iAccountId));
-		$iInvites = $this->_oConfig->getCountPerUser() - $iInvited;
-		if($iInvites <= 0)
-			return array(
-				'content' => MsgBox(_t('_bx_invites_err_limit_reached'))
-			);
+		$mixedInvites = false;
+		if(!isAdmin($iAccountId)) {
+			$iInvited = (int)$this->_oDb->getInvites(array('type' => 'count_by_account', 'value' => $iAccountId));
+			$mixedInvites = $this->_oConfig->getCountPerUser() - $iInvited;
+			if($mixedInvites <= 0)
+				return array(
+					'content' => MsgBox(_t('_bx_invites_err_limit_reached'))
+				);
+		}
 
         $oForm = $this->getFormObjectInvite();
         $oForm->aInputs['text']['value'] = _t('_bx_invites_msg_invitation');
@@ -74,7 +77,7 @@ class BxInvModule extends BxDolModule
         	$sEmails = bx_process_input($oForm->getCleanValue('emails'));
         	$sText = bx_process_pass($oForm->getCleanValue('text'));
 
-        	$mixedResult = $this->invite(BX_INV_TYPE_FROM_MEMBER, $sEmails, $sText, $iInvites, $oForm);
+        	$mixedResult = $this->invite(BX_INV_TYPE_FROM_MEMBER, $sEmails, $sText, $mixedInvites, $oForm);
         	if($mixedResult !== false)
         		$sResult = _t('_bx_invites_msg_invitation_sent', (int)$mixedResult);
         	else
@@ -153,7 +156,7 @@ class BxInvModule extends BxDolModule
         return $this->_oDb->getRequests(array('type' => 'count_all'));
 	}
 
-	public function invite($sType, $sEmails, $sText, $iLimit = false, $oForm = null)
+	public function invite($sType, $sEmails, $sText, $mixedLimit = false, $oForm = null)
 	{
 		$iProfileId = $this->getProfileId();
 		$iAccountId = $this->getAccountId($iProfileId);
@@ -190,7 +193,7 @@ class BxInvModule extends BxDolModule
 		$aEmails = preg_split("/[\s\n,;]+/", $sEmails);
 		if(is_array($aEmails) && !empty($aEmails))
 			foreach($aEmails as $sEmail) {
-				if($iLimit !== false && (int)$iLimit <= 0)
+				if($mixedLimit !== false && (int)$mixedLimit <= 0)
 					break;
 
 				$sEmail = trim($sEmail);
@@ -209,8 +212,8 @@ class BxInvModule extends BxDolModule
 					$this->onInvite($iAccountId, $iProfileId);
 
 					$iSent += 1;
-					if($iLimit !== false) 
-						$iLimit -= 1;					
+					if($mixedLimit !== false) 
+						$mixedLimit -= 1;					
 				}
 			}
 

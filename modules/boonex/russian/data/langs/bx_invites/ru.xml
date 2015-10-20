@@ -109,6 +109,7 @@
 	<!-- Common Texts -->
 	<string name="_bx_invites_txt_invite_block_text"><![CDATA[Вы можете пригласить друзей для регистрации на сайте. У Вас осталось <b>{0}</b> приглашений.]]></string>
 	<string name="_bx_invites_txt_request_block_text"><![CDATA[Регистрация только по приглашению.]]></string>
+	<string name="_bx_invites_txt_unlimited"><![CDATA[неограниченное количество]]></string>
 	
 	<string name="_bx_invites_btn_invite"><![CDATA[Пригласить]]></string>
 	<string name="_bx_invites_btn_request"><![CDATA[Запросить приглашение]]></string>
