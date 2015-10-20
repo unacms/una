@@ -103,6 +103,10 @@
     <string name="_bx_dev_frm_btn_displays_save"><![CDATA[Сохранить]]></string>
     <string name="_bx_dev_frm_btn_sys_displays_cancel"><![CDATA[Отменить]]></string>
     <string name="_bx_dev_frm_btn_displays_cancel"><![CDATA[Отменить]]></string>
+    <string name="_bx_dev_frm_txt_field_title_editable"><![CDATA[Редактируемое]]></string>
+    <string name="_bx_dev_frm_txt_field_info_editable"><![CDATA[Сделать поле Редактируемым в Редакторе Форм в Студии]]></string>
+    <string name="_bx_dev_frm_txt_field_title_deletable"><![CDATA[Удаляемое]]></string>
+    <string name="_bx_dev_frm_txt_field_info_deletable"><![CDATA[Сделать поле Удаляемым в Редакторе Форм в Студии]]></string>
     <string name="_bx_dev_frm_txt_prelists_create_popup"><![CDATA[Добавить список данных]]></string>
     <string name="_bx_dev_frm_err_prelists_create"><![CDATA[Невозможно добавить список данных]]></string>
     <string name="_bx_dev_frm_txt_prelists_edit_popup"><![CDATA[Редактировать список данных "{0}"]]></string>

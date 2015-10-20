@@ -49,6 +49,32 @@ class BxDevFunctions
                 if(isset($aInput['checker']['func']) && stripos($aInput['checker']['func'], $sTrlCheckFuncPostfix) !== false)
                     $aInputs[$sName]['checker']['func'] = str_ireplace($sTrlCheckFuncPostfix, '', $aInput['checker']['func']);
             }
+
+		$aFields = array(
+            'editable' => array(
+                'type' => 'switcher',
+                'name' => 'editable',
+                'caption' => _t('_bx_dev_frm_txt_field_title_editable'),
+                'info' => _t('_bx_dev_frm_txt_field_info_editable'),
+                'value' => '1',
+                'required' => '0',
+                'db' => array (
+                    'pass' => 'Int',
+                )
+            ),
+            'deletable' => array(
+                'type' => 'switcher',
+                'name' => 'deletable',
+                'caption' => _t('_bx_dev_frm_txt_field_title_deletable'),
+                'info' => _t('_bx_dev_frm_txt_field_info_deletable'),
+                'value' => '1',
+                'required' => '0',
+                'db' => array (
+                    'pass' => 'Int',
+                )
+            ),
+        );
+        $aInputs = BxDolStudioUtils::addInArray($aInputs, 'controls', $aFields, false);
     }
 
     public static function serializeString($sValue)

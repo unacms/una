@@ -177,7 +177,7 @@ class BxDolStudioUtils extends BxDol
         }
     }
 
-    public static function addInArray($aInput, $sKey, $aValues)
+    public static function addInArray($aInput, $sKey, $aValues, $bAddAfter = true)
     {
         reset($aInput);
         $iInput = count($aInput);
@@ -185,9 +185,12 @@ class BxDolStudioUtils extends BxDol
             if(key($aInput) == $sKey)
                 break;
 
-        $aOutput = array_slice($aInput, 0, $i + 1);
+		if($bAddAfter)
+			$i += 1;
+
+        $aOutput = array_slice($aInput, 0, $i);
         $aOutput = array_merge($aOutput, $aValues);
-        $aOutput = array_merge($aOutput, array_slice($aInput, $i + 1));
+        $aOutput = array_merge($aOutput, array_slice($aInput, $i));
 
         return $aOutput;
     }
