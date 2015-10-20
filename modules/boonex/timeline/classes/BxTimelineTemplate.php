@@ -614,12 +614,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'content' => $sTitle
             ));
 
-        $sText = isset($aContent['text']) ? strip_tags($aContent['text'], $bBrowseItem ? '<br><br/><p>' : '') : '';
+        $sText = isset($aContent['text']) ? $aContent['text'] : '';
         $sTextMore = '';
 
-        if(!$bBrowseItem) {
-        	$iMaxLength = $this->_oConfig->getCharsDisplayMax();
+        if($bBrowseItem)
+        	 $sText = strip_tags($sText, '<br><br/><p>');
+        else {
+        	$sText = strip_tags(preg_replace("/<br[\s\/]*>/i", "\n", $sText));
 
+        	$iMaxLength = $this->_oConfig->getCharsDisplayMax();
         	if(strlen($sText) > $iMaxLength) {
             	$iLength = strpos($sText, ' ', $iMaxLength);
 
