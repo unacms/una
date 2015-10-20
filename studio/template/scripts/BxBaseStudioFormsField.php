@@ -268,6 +268,12 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
                         $aParams = unserialize($this->aField['attrs']);
                         $aForm['inputs'][$sKey]['value'] = isset($aParams['src']) ? $aParams['src'] : '';
                         break;
+                    case 'editable':
+                        $aForm['inputs'][$sKey]['checked'] = (int)$this->aField[$sKey];
+                        break;
+					case 'deletable':
+                        $aForm['inputs'][$sKey]['checked'] = (int)$this->aField[$sKey];
+                        break;
                     default:
                         $aForm['inputs'][$sKey]['value'] = $this->aField[$sKey];
                 }

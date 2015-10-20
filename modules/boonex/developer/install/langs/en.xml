@@ -103,6 +103,10 @@
     <string name="_bx_dev_frm_btn_displays_save"><![CDATA[Save]]></string>
     <string name="_bx_dev_frm_btn_sys_displays_cancel"><![CDATA[Cancel]]></string>
     <string name="_bx_dev_frm_btn_displays_cancel"><![CDATA[Cancel]]></string>
+    <string name="_bx_dev_frm_txt_field_title_editable"><![CDATA[Editable]]></string>
+    <string name="_bx_dev_frm_txt_field_info_editable"><![CDATA[Make the field Editable in Studio Forms Builder]]></string>
+    <string name="_bx_dev_frm_txt_field_title_deletable"><![CDATA[Deletable]]></string>
+    <string name="_bx_dev_frm_txt_field_info_deletable"><![CDATA[Make the field Deletable in Studio Forms Builder]]></string>
     <string name="_bx_dev_frm_txt_prelists_create_popup"><![CDATA[Add Data List]]></string>
     <string name="_bx_dev_frm_err_prelists_create"><![CDATA[Cannot add data list]]></string>
     <string name="_bx_dev_frm_txt_prelists_edit_popup"><![CDATA[Edit "{0}" Data List]]></string>

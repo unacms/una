@@ -41,6 +41,16 @@ class BxDevFormsFields extends BxTemplStudioFormsFields
             $this->_aQueryAppend['display'] = $this->sDisplay;
         }
     }
+
+	protected function _isEditable(&$aRow)
+    {
+    	return true;
+    }
+
+	protected function _isDeletable(&$aRow)
+    {
+    	return true;
+    }
 }
 
 /** @} */

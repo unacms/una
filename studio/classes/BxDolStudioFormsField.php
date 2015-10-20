@@ -95,9 +95,9 @@ class BxDolStudioFormsField extends BxDol
         return BxDolStudioUtils::getClassName($sValue);
     }
 
-    protected function addInArray($aInput, $sKey, $aValues)
+    protected function addInArray($aInput, $sKey, $aValues, $bAddAfter = true)
     {
-        return BxDolStudioUtils::addInArray($aInput, $sKey, $aValues);
+        return BxDolStudioUtils::addInArray($aInput, $sKey, $aValues, $bAddAfter);
     }
 }
 

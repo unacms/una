@@ -347,7 +347,7 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields
 
     protected function _getCellSwitcher ($mixedValue, $sKey, $aField, $aRow)
     {
-        if((int)$aRow['editable'] == 0)
+        if(!$this->_isEditable($aRow))
             return parent::_getCellDefault('', $sKey, $aField, $aRow);
 
         return parent::_getCellSwitcher($mixedValue, $sKey, $aField, $aRow);
@@ -367,7 +367,7 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields
 
     protected function _getCellVisibleForLevels ($mixedValue, $sKey, $aField, $aRow)
     {
-        if((int)$aRow['editable'] == 0)
+        if(!$this->_isEditable($aRow))
             return parent::_getCellDefault('', $sKey, $aField, $aRow);
 
         $mixedValue = $this->_oTemplate->parseHtmlByName('bx_a.html', array(
@@ -393,7 +393,7 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields
 
     protected function _getActionEdit ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
-        if($sType == 'single' && (int)$aRow['editable'] == 0)
+        if($sType == 'single' && !$this->_isEditable($aRow))
             return '';
 
         return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
@@ -401,7 +401,7 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields
 
     protected function _getActionDelete ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
-        if($sType == 'single' && (int)$aRow['deletable'] == 0)
+        if($sType == 'single' && !$this->_isDeletable($aRow))
             return '';
 
         return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
@@ -438,6 +438,16 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields
         $sContent .= $oForm->genRow($aInputSearch);
 
         return  $sContent;
+    }
+
+    protected function _isEditable(&$aRow)
+    {
+    	return (int)$aRow['editable'] != 0;
+    }
+
+	protected function _isDeletable(&$aRow)
+    {
+    	return (int)$aRow['deletable'] != 0;
     }
 }
 
