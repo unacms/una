@@ -812,7 +812,7 @@ class BxDolTranscoder extends BxDol implements iBxDolFactoryObject
      * @param $sName filter name
      * @return array of filter params if filter was found, or false if given filter isn't enabled for the transcoder
      */
-    protected function getFilterParams ($sName)
+    public function getFilterParams ($sName)
     {
         $this->initFilters ();
         foreach ($this->_aObject['filters'] as $aParams)

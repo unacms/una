@@ -239,9 +239,25 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
                     break;
                 }
 
+                $aFilterParams = $oTranscoder->getFilterParams('Resize');
+				$bFilterWidth = !empty($aFilterParams['w']);
+				$bFilterHeight = !empty($aFilterParams['h']);
+
                 $aTmplVars['bx_repeat:images'][] = array(
                     'caption' => _t($sTitle),
-                    'url' => $sImageUrl
+                    'url' => $sImageUrl,
+                	'bx_if:show_width' => array(
+                		'condition' => $bFilterWidth,
+                		'content' => array(
+                			'width' => $bFilterWidth ? (int)$aFilterParams['w'] : 0
+                		)
+                	),
+                	'bx_if:show_height' => array(
+                		'condition' => $bFilterHeight,
+                		'content' => array(
+                			'height' => $bFilterHeight ? (int)$aFilterParams['h'] : 0
+                		)
+                	), 
                 );
             }
 
