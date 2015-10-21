@@ -18,6 +18,7 @@ class BxInvConfig extends BxBaseModGeneralConfig
     protected $_iKeyLifetime;
     protected $_bRequestInvite;
     protected $_sRequestsEmail;
+    protected $_bRegistrationByInvitation;
 
     /**
      * Constructor
@@ -48,8 +49,9 @@ class BxInvConfig extends BxBaseModGeneralConfig
         $this->_iCountPerUser = 0;
         $this->_sKeyCode = 'icode';
         $this->_iKeyLifetime = 86400;
-        $this->_bRequestInvite = false;
+        $this->_bRequestInvite = true;
         $this->_sRequestsEmail = '';
+        $this->_bRegistrationByInvitation = true;
     }
 
     public function init(&$oDb)
@@ -62,6 +64,7 @@ class BxInvConfig extends BxBaseModGeneralConfig
         $this->_iKeyLifetime = 86400 * (int)getParam($sOptionPrefix . 'key_lifetime');
         $this->_bRequestInvite = getParam($sOptionPrefix . 'enable_request_invite') == 'on';
         $this->_sRequestsEmail = getParam($sOptionPrefix . 'requests_email');
+        $this->_bRegistrationByInvitation = getParam($sOptionPrefix . 'enable_reg_by_inv') == 'on';
     }
 
 	public function getCountPerUser()
@@ -87,6 +90,11 @@ class BxInvConfig extends BxBaseModGeneralConfig
     public function getRequestsEmail()
     {
         return $this->_sRequestsEmail;
+    }
+
+	public function isRegistrationByInvitation()
+    {
+        return $this->_bRegistrationByInvitation;
     }
 }
 

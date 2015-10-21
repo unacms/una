@@ -69,6 +69,7 @@
 	<string name="_bx_invites_option_key_lifetime"><![CDATA[Invitation key lifetime (in days)]]></string>
 	<string name="_bx_invites_option_enable_request_invite"><![CDATA[Enable invitation requests]]></string>
 	<string name="_bx_invites_option_requests_email"><![CDATA[Email to send invitation requests to]]></string>
+	<string name="_bx_invites_option_enable_reg_by_inv"><![CDATA[Enable registration by invitation only]]></string>
 
 
 	<!-- ACL -->
