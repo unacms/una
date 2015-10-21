@@ -36,6 +36,8 @@ class BxFormAccountCheckerHelper extends BxDolFormCheckerHelper
      */
     function checkEmailUniq ($s)
     {
+    	$s = trim($s);
+
         if (!$this->checkEmail($s))
             return false;
 
@@ -57,6 +59,7 @@ class BxFormAccountCheckerHelper extends BxDolFormCheckerHelper
  */
 class BxBaseFormAccount extends BxTemplFormView
 {
+	static $FIELD_EMAIL = 'email';
     static $FIELD_PASSWORD = 'password';
     static $FIELD_SALT = 'salt';
     static $FIELD_ADDED = 'added';
@@ -90,11 +93,15 @@ class BxBaseFormAccount extends BxTemplFormView
 
     public function insert ($aValsToAdd = array(), $isIgnore = false)
     {
+    	$sEmail = $this->getCleanValue(self::$FIELD_EMAIL);
+    	$sEmail = trim(strtolower($sEmail));
+    	
         $sPwd = $this->getCleanValue(self::$FIELD_PASSWORD);
         $sSalt = genRndSalt();
         $sPasswordHash = encryptUserPwd($sPwd, $sSalt);
 
         $aValsToAdd = array_merge($aValsToAdd, array (
+        	self::$FIELD_EMAIL => $sEmail, 
             self::$FIELD_PASSWORD => $sPasswordHash,
             self::$FIELD_SALT => $sSalt,
             self::$FIELD_ADDED => time(),

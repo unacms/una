@@ -30,8 +30,9 @@ if (isset($_POST['ID'])) { // login form is submitted
         exit;
 
     } elseif ($bLoginSuccess) {
+    	$sId = trim($oForm->getCleanValue('ID'));
 
-        $oAccount = BxDolAccount::getInstance($oForm->getCleanValue('ID'));
+        $oAccount = BxDolAccount::getInstance($sId);
         $aAccount = bx_login($oAccount->id(), ($oForm->getCleanValue('rememberMe') ? true : false));
 
         $sUrlRelocate = $oForm->getCleanValue('relocate');
