@@ -72,7 +72,14 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
             		break;
             	}
 
-            	$aEvent = $this->_oModule->_oDb->getEvents(array('browse' => 'descriptor', 'type' => $oAlert->sUnit, 'object_id' => $oAlert->iObject));
+            	$aHandlers = $this->_oModule->_oDb->getHandlers(array('type' => 'by_group_key_type', 'group' => $aHandler['group']));
+
+            	$aEvent = $this->_oModule->_oDb->getEvents(array(
+            		'browse' => 'descriptor', 
+            		'type' => $oAlert->sUnit,
+            		'action' => $aHandlers[BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT]['alert_action'], 
+            		'object_id' => $oAlert->iObject
+            	));
             	$this->_oModule->deleteEvent($aEvent);
                 break;
         }

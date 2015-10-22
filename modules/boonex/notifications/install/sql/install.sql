@@ -9,8 +9,10 @@ CREATE TABLE IF NOT EXISTS `bx_notifications_events` (
   `action` varchar(255) collate utf8_unicode_ci NOT NULL,
   `object_id` text collate utf8_unicode_ci NOT NULL,
   `object_privacy_view` int(11) NOT NULL default '3',
+  `subobject_id` int(11) NOT NULL default '0',
   `content` text collate utf8_unicode_ci NOT NULL,
   `date` int(11) NOT NULL default '0',
+  `processed` tinyint(4) NOT NULL default '0',
   `active` tinyint(4) NOT NULL default '1',
   PRIMARY KEY  (`id`),
   KEY `owner_id` (`owner_id`)
@@ -24,16 +26,18 @@ CREATE TABLE IF NOT EXISTS `bx_notifications_events2users` (
 
 CREATE TABLE IF NOT EXISTS `bx_notifications_handlers` (
   `id` int(11) NOT NULL auto_increment,
+  `group` varchar(64) NOT NULL default '',
   `type` enum('insert','update','delete') NOT NULL DEFAULT 'insert',
   `alert_unit` varchar(64) NOT NULL default '',
   `alert_action` varchar(64) NOT NULL default '',
   `content` text collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`id`),
-  UNIQUE `handler` (`alert_unit`, `alert_action`)
+  UNIQUE `handler` (`group`, `type`),
+  UNIQUE `alert` (`alert_unit`, `alert_action`)
 );
 
-INSERT INTO `bx_notifications_handlers`(`type`, `alert_unit`, `alert_action`, `content`) VALUES
-('delete', 'profile', 'delete', '');
+INSERT INTO `bx_notifications_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`) VALUES
+('profile', 'delete', 'profile', 'delete', '');
 
 -- STUDIO PAGE & WIDGET
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES

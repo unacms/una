@@ -56,6 +56,11 @@ class BxNtfsDb extends BxBaseModNotificationsDb
 			$sWhereClause .= $this->prepare("AND `{$this->_sTable}`.`id`>? ", $iId);
 		}
 
+		//--- Apply privacy filter
+		$oPrivacy = BxDolPrivacy::getObjectInstance($this->_oConfig->getObject('privacy_view'));
+		$aQueryParts = $oPrivacy->getContentByGroupAsSQLPart(BX_DOL_PG_ALL);
+		$sWhereClause .= $aQueryParts['where'] . " ";
+
 		//--- Check type
 		if(!empty($aParams['owner_id']))
 			switch($aParams['type']) {

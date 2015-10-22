@@ -74,12 +74,12 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
     {
     	$oModule = $this->getModule();
 
-    	if(empty($aEvent['content'])) {
+    	if((int)$aEvent['processed'] == 0) {
     		$aContent = $this->_getContent($aEvent);
     		if(!empty($aContent) && is_array($aContent)) {
     			$aEvent['content'] = serialize($aContent);
 
-    			$this->_oDb->updateEvent(array('content' => $aEvent['content']), array('id' => $aEvent['id']));
+    			$this->_oDb->updateEvent(array('content' => $aEvent['content'], 'processed' => 1), array('id' => $aEvent['id']));
     		}
     	}
 
@@ -90,7 +90,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         $aContent['owner_name'] = $sOwnerName;
         $aContent['owner_link'] = $sOwnerUrl;
 
-    	$sContent = _t(!empty($aContent['lang_key']) ? $aContent['lang_key'] : '_bx_ntfs_txt_item_added');
+    	$sContent = _t(!empty($aContent['lang_key']) ? $aContent['lang_key'] : $this->_getLangKey($aEvent));
     	$sContent = $this->parseHtmlByContent($sContent, $aContent, array('{', '}'));
 
         return $this->parseHtmlByName('event.html', array (
@@ -138,6 +138,16 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         	return array();
 
 		return $this->$sMethod($aEvent);
+    }
+
+    protected function _getLangKey(&$aEvent)
+    {
+    	$sResult = '_bx_ntfs_txt_object_added';
+
+    	if(!empty($aEvent['subobject_id']))
+    		$sResult = '_bx_ntfs_txt_subobject_added';
+
+    	return $sResult;
     }
 }
 

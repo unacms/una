@@ -52,10 +52,11 @@ class BxBaseModNotificationsDb extends BxDolModuleDb
             $sQuery = $this->prepare("INSERT INTO
                     `{$this->_sTableHandlers}`
                 SET
+                	`group`=?,
                     `type`=?,
                     `alert_unit`=?,
                     `alert_action`=?,
-                    `content`=?", $aHandler['type'], $aHandler['alert_unit'], $aHandler['alert_action'], $sContent);
+                    `content`=?", $aHandler['group'], $aHandler['type'], $aHandler['alert_unit'], $aHandler['alert_action'], $sContent);
 
             $this->query($sQuery);
         }
@@ -121,22 +122,21 @@ class BxBaseModNotificationsDb extends BxDolModuleDb
 
     public function getHandlers($aParams = array())
     {
-        $sMethod = 'getAll';
+        $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sWhereClause = '';
 
         if(!empty($aParams))
-            switch($aParams['type']) {}
+            switch($aParams['type']) {
+ 				case 'by_group_key_type':
+ 					$aMethod['name'] = 'getAllWithKey';
+ 					$aMethod['params'][1] = 'type';
 
-        $sSql = "SELECT
-                `id` AS `id`,
-                `type` AS `type`,
-                `alert_unit` AS `alert_unit`,
-                `alert_action` AS `alert_action`,
-                `content` AS `content`
-            FROM `{$this->_sTableHandlers}`
-            WHERE 1 " . $sWhereClause;
+ 					$sWhereClause = $this->prepare("AND `group`=?", $aParams['group']);
+ 					break;
+            }
 
-        return $this->$sMethod($sSql);
+        $aMethod['params'][0] = "SELECT * FROM `{$this->_sTableHandlers}` WHERE 1 " . $sWhereClause;
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
 
     public function insertEvent($aParamsSet)

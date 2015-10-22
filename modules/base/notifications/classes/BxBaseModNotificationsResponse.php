@@ -22,6 +22,14 @@ class BxBaseModNotificationsResponse extends BxDolAlertsResponse
     {
         return is_array($aExtras) && isset($aExtras['privacy_view']) ? (int)$aExtras['privacy_view'] : $this->_oModule->_oConfig->getPrivacyViewDefault();
     }
+
+	protected function _getSubobjectId($aExtras)
+    {
+    	if(is_array($aExtras) && isset($aExtras['comment_id']))
+    		return (int)$aExtras['comment_id'];
+
+        return 0;
+    }
 }
 
 /** @} */

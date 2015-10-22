@@ -40,6 +40,11 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_notifications_events_hide', '', @iCategId, '_bx_ntfs_option_events_hide', 'rlist', '', '', '', 'a:2:{s:6:"module";s:16:"bx_notifications";s:6:"method";s:21:"get_actions_checklist";}', 2);
 
 
+-- PRIVACY 
+INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `default_group`, `table`, `table_field_id`, `table_field_author`, `override_class_name`, `override_class_file`) VALUES
+('bx_notifications_privacy_view', @sName, 'view', '_bx_notifications_privacy_view', '3', 'bx_notifications_events', 'id', 'owner_id', 'BxNtfsPrivacy', 'modules/boonex/notifications/classes/BxNtfsPrivacy.php');
+
+
 -- ALERTS
 INSERT INTO `sys_alerts_handlers`(`name`, `class`, `file`, `service_call`) VALUES 
 (@sName, 'BxNtfsResponse', 'modules/boonex/notifications/classes/BxNtfsResponse.php', '');
