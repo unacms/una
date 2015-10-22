@@ -18,7 +18,7 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 
 
 -- PRIVACY 
-DELETE FROM `sys_objects_privacy` WHERE `object` = 'bx_timeline_privacy_view';
+DELETE FROM `sys_objects_privacy` WHERE `module` = 'bx_timeline';
 
 
 -- ACL

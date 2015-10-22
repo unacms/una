@@ -62,8 +62,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         	'common_post' => 'timeline_common_'
         );
 
-        $this->_aObjects = array(
-        	'alert' => $this->_sName,
+        $this->_aObjects = array_merge($this->_aObjects, array(
         	'comment' => $this->CNF['OBJECT_COMMENTS'],
         	'vote' => $this->_sName,
         	'metatags' => $this->_sName,
@@ -76,10 +75,6 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         	'transcoder_videos_mp4' => $this->_sName . '_videos_mp4',
         	'transcoder_videos_webm' => $this->_sName . '_videos_webm',
 
-        	'privacy_view' => 'bx_timeline_privacy_view',
-
-        	'conn_subscriptions' => 'sys_profiles_subscriptions',
-
         	'menu_item_manage' => $this->_sName . '_menu_item_manage',
         	'menu_item_actions' => $this->_sName . '_menu_item_actions',
         	'menu_post_attachments' => $this->_sName . '_menu_post_attachments',
@@ -88,7 +83,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         	'form_attach_link' => $this->_sName . '_attach_link',
         	'form_display_post_add' => $this->_sName . '_post_add',
         	'form_display_attach_link_add' => $this->_sName . '_attach_link_add'
-        );
+        ));
 
         $this->_aHandlerDescriptor = array('module_name' => '', 'module_method' => '', 'module_class' => '', 'groupable' => '', 'group_by' => '');
         $this->_sHandlersMethod = 'get_timeline_data';

@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxTimelinePrivacy extends BxBaseModNotificationsPrivacy
+class BxNtfsPrivacy extends BxBaseModNotificationsPrivacy
 {
 	public function __construct ($aOptions, $oTemplate = false)
     {
