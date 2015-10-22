@@ -38,6 +38,9 @@ class BxInvResponse extends BxDolAlertsResponse
 
     protected function _processAccountAddForm($oAlert)
     {
+    	if(!$this->_oModule->_oConfig->isRegistrationByInvitation())
+    		return;
+
     	$oSession = BxDolSession::getInstance();
 
 		$sKeyCode = $this->_oModule->_oConfig->getKeyCode();
@@ -58,6 +61,9 @@ class BxInvResponse extends BxDolAlertsResponse
 
     protected function _processAccountAdded($oAlert)
     {
+    	if(!$this->_oModule->_oConfig->isRegistrationByInvitation())
+    		return;
+
     	$sKeyCode = $this->_oModule->_oConfig->getKeyCode();
 
     	$sKey = BxDolSession::getInstance()->getUnsetValue($sKeyCode);
