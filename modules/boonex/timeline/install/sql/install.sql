@@ -24,18 +24,20 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_events` (
 
 CREATE TABLE IF NOT EXISTS `bx_timeline_handlers` (
   `id` int(11) NOT NULL auto_increment,
+  `group` varchar(64) NOT NULL default '',
   `type` enum('insert','update','delete') NOT NULL DEFAULT 'insert',
   `alert_unit` varchar(64) NOT NULL default '',
   `alert_action` varchar(64) NOT NULL default '',
   `content` text collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`id`),
-  UNIQUE `handler` (`alert_unit`, `alert_action`)
+  UNIQUE `handler` (`group`, `type`),
+  UNIQUE `alert` (`alert_unit`, `alert_action`)
 );
 
-INSERT INTO `bx_timeline_handlers`(`type`, `alert_unit`, `alert_action`, `content`) VALUES
-('insert', 'timeline_common_post', '', ''),
-('insert', 'timeline_common_share', '', ''),
-('delete', 'profile', 'delete', '');
+INSERT INTO `bx_timeline_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`) VALUES
+('common_post', 'insert', 'timeline_common_post', '', ''),
+('common_share', 'insert', 'timeline_common_share', '', ''),
+('profile', 'delete', 'profile', 'delete', '');
 
 -- TABLES: STORAGES, TRANSCODERS, UPLOADERS
 CREATE TABLE IF NOT EXISTS `bx_timeline_photos` (
@@ -172,11 +174,13 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_votes` (
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `bx_timeline_votes_track` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL default '0',
   `author_id` int(11) NOT NULL default '0',
   `author_nip` int(11) unsigned NOT NULL default '0',
   `value` tinyint(4) NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
   KEY `vote` (`object_id`, `author_nip`)
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;
 

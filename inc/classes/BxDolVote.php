@@ -270,14 +270,15 @@ class BxDolVote extends BxDolObject
         if($iValue > $iMaxValue)
             $iValue = $iMaxValue;
 
-        if(!$this->_oQuery->putVote($iObjectId, $iAuthorId, $iAuthorIp, $iValue, $bPerformUndo)) {
+		$iId = $this->_oQuery->putVote($iObjectId, $iAuthorId, $iAuthorIp, $iValue, $bPerformUndo);
+        if($iId === false) {
             $this->_echoResultJson(array('code' => 5));
             return;
         }
 
         $this->_triggerVote();
 
-        $oZ = new BxDolAlerts($this->_sSystem, 'rate', $this->getId(), $iAuthorId, array('value' => $iValue, 'undo' => $bPerformUndo));
+        $oZ = new BxDolAlerts($this->_sSystem, ($bPerformUndo ? 'un' : '') . 'doVote', $this->getId(), $iAuthorId, array('vote_id' => $iId, 'vote_author_id' => $iAuthorId, 'value' => $iValue));
         $oZ->alert();
 
         $aVote = $this->_oQuery->getVote($iObjectId);

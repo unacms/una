@@ -83,15 +83,23 @@ class BxDolVoteQuery extends BxDolDb
         if((int)$this->query($sQuery) == 0)
             return false;
 
-        if($bUndo)
-            $sQuery = $this->prepare("DELETE FROM `{$this->_sTableTrack}` WHERE `object_id` = ? AND `author_id` = ? LIMIT 1", $iObjectId, $iAuthorId);
+        if($bUndo) {
+        	$sQuery = $this->prepare("SELECT `id` FROM `{$this->_sTableTrack}` WHERE `object_id` = ? AND `author_id` = ? LIMIT 1", $iObjectId, $iAuthorId);
+        	$iId = (int)$this->getOne($sQuery);
+
+            $sQuery = $this->prepare("DELETE FROM `{$this->_sTableTrack}` WHERE `id` = ? LIMIT 1", $iId);
+            if((int)$this->query($sQuery) > 0)
+            	return $iId;
+        }
         else {
             $iNow = time();
             $iAuthorNip = ip2long($sAuthorIp);
             $sQuery = $this->prepare("INSERT INTO `{$this->_sTableTrack}` SET `object_id` = ?, `author_id` = ?, `author_nip` = ?, `value` = ?, `date` = ?", $iObjectId, $iAuthorId, $iAuthorNip, $iValue, $iNow);
+            if((int)$this->query($sQuery) > 0)
+            	return $this->lastId();
         }
 
-        return (int)$this->query($sQuery) > 0;
+        return false;
     }
 
     public function getSqlParts($sMainTable, $sMainField)

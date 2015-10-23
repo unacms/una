@@ -187,34 +187,44 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
     }
 
 	/**
-     * Data for Notification
+     * Data for Notifications module
      */
     public function serviceGetNotificationsData()
     {
+    	$sModule = $this->_aModule['name'];
+
         return array(
             'handlers' => array(
-                array('type' => 'insert', 'alert_unit' => $this->_aModule['name'], 'alert_action' => 'added', 'module_name' => $this->_aModule['name'], 'module_method' => 'get_notifications_post', 'module_class' => 'Module'),
-                array('type' => 'update', 'alert_unit' => $this->_aModule['name'], 'alert_action' => 'edited'),
-                array('type' => 'delete', 'alert_unit' => $this->_aModule['name'], 'alert_action' => 'deleted')
+                array('group' => $sModule . '_object', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'added', 'module_name' => $sModule, 'module_method' => 'get_notifications_post', 'module_class' => 'Module'),
+                array('group' => $sModule . '_object', 'type' => 'update', 'alert_unit' => $sModule, 'alert_action' => 'edited'),
+                array('group' => $sModule . '_object', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'deleted'),
+                array('group' => $sModule . '_comment', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'commentPost', 'module_name' => $sModule, 'module_method' => 'get_notifications_comment', 'module_class' => 'Module'),
+                array('group' => $sModule . '_comment', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'commentRemoved'),
+                array('group' => $sModule . '_vote', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVote', 'module_name' => $sModule, 'module_method' => 'get_notifications_vote', 'module_class' => 'Module'),
+				array('group' => $sModule . '_vote', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'undoVote'),
             ),
             'alerts' => array(
-                array('unit' => $this->_aModule['name'], 'action' => 'added'),
-                array('unit' => $this->_aModule['name'], 'action' => 'edited'),
-                array('unit' => $this->_aModule['name'], 'action' => 'deleted'),
+                array('unit' => $sModule, 'action' => 'added'),
+                array('unit' => $sModule, 'action' => 'edited'),
+                array('unit' => $sModule, 'action' => 'deleted'),
+                array('unit' => $sModule, 'action' => 'commentPost'),
+                array('unit' => $sModule, 'action' => 'commentRemoved'),
+                array('unit' => $sModule, 'action' => 'doVote'),
+                array('unit' => $sModule, 'action' => 'undoVote'),
             )
         );
     }
 
     /**
-     * Entry post for Timeline
+     * Entry post for Notifications module
      */
     public function serviceGetNotificationsPost($aEvent)
     {
+		$CNF = &$this->_oConfig->CNF;
+
         $aContentInfo = $this->_oDb->getContentInfoById($aEvent['object_id']);
         if(empty($aContentInfo) || !is_array($aContentInfo))
             return array();
-
-		$CNF = &$this->_oConfig->CNF;
 
         $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
         $sEntryCaption = isset($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...');
@@ -227,27 +237,86 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
 		);
     }
 
+	/**
+     * Entry post comment for Notifications module
+     */
+    public function serviceGetNotificationsComment($aEvent)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	$iContentId = (int)$aEvent['object_id'];
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return array();
+
+		$oComment = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $iContentId);
+        if(!$oComment || !$oComment->isEnabled())
+            return array();
+
+        $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+        $sEntryCaption = isset($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...');
+
+		return array(
+			'entry_sample' => _t($CNF['T']['txt_sample_single']),
+			'entry_url' => $sEntryUrl,
+			'entry_caption' => $sEntryCaption,
+			'subentry_sample' => _t($CNF['T']['txt_sample_comment_single']),
+			'subentry_url' => $oComment->getViewUrl((int)$aEvent['subobject_id']),
+			'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
+		);
+    }
+
+	/**
+     * Entry post vote for Notifications module
+     */
+    public function serviceGetNotificationsVote($aEvent)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	$iContentId = (int)$aEvent['object_id'];
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return array();
+
+		$oVote = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $iContentId);
+        if(!$oVote || !$oVote->isEnabled())
+            return array();
+
+        $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+        $sEntryCaption = isset($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...');
+
+		return array(
+			'entry_sample' => _t($CNF['T']['txt_sample_single']),
+			'entry_url' => $sEntryUrl,
+			'entry_caption' => $sEntryCaption,
+			'subentry_sample' => _t($CNF['T']['txt_sample_vote_single']),
+			'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
+		);
+    }
+
     /**
-     * Data for Timeline
+     * Data for Timeline module
      */
     public function serviceGetTimelineData()
     {
+    	$sModule = $this->_aModule['name'];
+
         return array(
             'handlers' => array(
-                array('type' => 'insert', 'alert_unit' => $this->_aModule['name'], 'alert_action' => 'added', 'module_name' => $this->_aModule['name'], 'module_method' => 'get_timeline_post', 'module_class' => 'Module',  'groupable' => 0, 'group_by' => ''),
-                array('type' => 'update', 'alert_unit' => $this->_aModule['name'], 'alert_action' => 'edited'),
-                array('type' => 'delete', 'alert_unit' => $this->_aModule['name'], 'alert_action' => 'deleted')
+                array('group' => $sModule . '_object', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'added', 'module_name' => $sModule, 'module_method' => 'get_timeline_post', 'module_class' => 'Module',  'groupable' => 0, 'group_by' => ''),
+                array('group' => $sModule . '_object', 'type' => 'update', 'alert_unit' => $sModule, 'alert_action' => 'edited'),
+                array('group' => $sModule . '_object', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'deleted')
             ),
             'alerts' => array(
-                array('unit' => $this->_aModule['name'], 'action' => 'added'),
-                array('unit' => $this->_aModule['name'], 'action' => 'edited'),
-                array('unit' => $this->_aModule['name'], 'action' => 'deleted'),
+                array('unit' => $sModule, 'action' => 'added'),
+                array('unit' => $sModule, 'action' => 'edited'),
+                array('unit' => $sModule, 'action' => 'deleted'),
             )
         );
     }
 
     /**
-     * Entry post for Timeline
+     * Entry post for Timeline module
      */
     public function serviceGetTimelinePost($aEvent)
     {

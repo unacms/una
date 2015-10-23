@@ -188,5 +188,6 @@
     <string name="_bx_posts_txt_all_entries_by"><![CDATA[<a href="{0}">Все публикации от {1} ({2})</a>]]></string>
     <string name="_bx_posts_txt_category_link"><![CDATA[Категория <a href="{0}">{1}</a>]]></string>
     <string name="_bx_posts_txt_sample_single"><![CDATA[публикация]]></string>
-    <string name="_bx_posts_txt_sample_comment_single"><![CDATA[комментарии к публикации]]></string>    
+    <string name="_bx_posts_txt_sample_comment_single"><![CDATA[комментарии к публикации]]></string>
+    <string name="_bx_posts_txt_sample_vote_single"><![CDATA[голос за публикацию]]></string>
 </resources>

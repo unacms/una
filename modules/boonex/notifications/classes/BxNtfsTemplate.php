@@ -74,24 +74,24 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
     {
     	$oModule = $this->getModule();
 
-    	if(empty($aEvent['content'])) {
+    	if((int)$aEvent['processed'] == 0) {
     		$aContent = $this->_getContent($aEvent);
     		if(!empty($aContent) && is_array($aContent)) {
     			$aEvent['content'] = serialize($aContent);
 
-    			$this->_oDb->updateEvent(array('content' => $aEvent['content']), array('id' => $aEvent['id']));
+    			$this->_oDb->updateEvent(array('content' => $aEvent['content'], 'processed' => 1), array('id' => $aEvent['id']));
     		}
     	}
 
         list($sOwnerName, $sOwnerUrl, $sOwnerIcon) = $oModule->getUserInfo($aEvent['owner_id']);
         $bAuthorIcon = !empty($sOwnerIcon);
 
-        $aContent = unserialize($aEvent['content']);
-        $aContent['owner_name'] = $sOwnerName;
-        $aContent['owner_link'] = $sOwnerUrl;
+        $aEvent['content'] = unserialize($aEvent['content']);
+        $aEvent['content']['owner_name'] = $sOwnerName;
+        $aEvent['content']['owner_link'] = $sOwnerUrl;
 
-    	$sContent = _t(!empty($aContent['lang_key']) ? $aContent['lang_key'] : '_bx_ntfs_txt_item_added');
-    	$sContent = $this->parseHtmlByContent($sContent, $aContent, array('{', '}'));
+    	$sContent = _t(!empty($aEvent['content']['lang_key']) ? $aEvent['content']['lang_key'] : $this->_getLangKey($aEvent));
+    	$sContent = $this->parseHtmlByContent($sContent, $aEvent['content'], array('{', '}'));
 
         return $this->parseHtmlByName('event.html', array (
         	'html_id' => $this->_oConfig->getHtmlIds('view', 'event') . $aEvent['id'],
@@ -138,6 +138,16 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         	return array();
 
 		return $this->$sMethod($aEvent);
+    }
+
+    protected function _getLangKey(&$aEvent)
+    {
+    	$sResult = '_bx_ntfs_txt_object_added';
+
+    	if(!empty($aEvent['subobject_id']))
+    		$sResult = '_bx_ntfs_txt_subobject_added_' . (!empty($aEvent['content']['subentry_url']) ? 'link' : 'text');
+
+    	return $sResult;
     }
 }
 

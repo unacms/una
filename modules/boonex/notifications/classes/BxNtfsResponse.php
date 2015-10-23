@@ -38,9 +38,11 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
                     'action' => $oAlert->sAction,
                     'object_id' => $oAlert->iObject,
                     'object_privacy_view' => $iPrivacyView,
+                	'subobject_id' => $this->_getSubObjectId($oAlert->aExtras),
                     'content' => '',
+                	'processed' => 0
                 ));
-
+ 
 				if(!empty($iId))
 					$this->_oModule->onPost($iId);
 
@@ -56,7 +58,13 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
 					break;
             	}
 
-                $this->_oModule->_oDb->deleteEvent(array('type' => $oAlert->sUnit, 'object_id' => $oAlert->iObject));
+            	$aHandlers = $this->_oModule->_oDb->getHandlers(array('type' => 'by_group_key_type', 'group' => $aHandler['group']));
+                $this->_oModule->_oDb->deleteEvent(array(
+                	'type' => $oAlert->sUnit, 
+                	'action' => $aHandlers[BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT]['alert_action'], 
+                	'object_id' => $oAlert->iObject,
+                	'subobject_id' => $this->_getSubObjectId($oAlert->aExtras)
+                ));
                 break;
         }
     }

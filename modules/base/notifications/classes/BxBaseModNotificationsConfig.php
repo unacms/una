@@ -35,6 +35,9 @@ class BxBaseModNotificationsConfig extends BxBaseModGeneralConfig
 		$this->_aPrefixes = array();
 		$this->_aObjects = array(
 			'alert' => $this->_sName,
+
+			'privacy_view' => $this->_sName . '_privacy_view',
+
 			'conn_subscriptions' => 'sys_profiles_subscriptions'
 		);
 
