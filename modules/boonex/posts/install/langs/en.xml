@@ -188,5 +188,6 @@
     <string name="_bx_posts_txt_all_entries_by"><![CDATA[<a href="{0}">All Posts by {1} ({2})</a>]]></string>
     <string name="_bx_posts_txt_category_link"><![CDATA[<a href="{0}">{1}</a> category]]></string>
     <string name="_bx_posts_txt_sample_single"><![CDATA[post]]></string>
-    <string name="_bx_posts_txt_sample_comment_single"><![CDATA[post's comment]]></string>    
+    <string name="_bx_posts_txt_sample_comment_single"><![CDATA[post's comment]]></string>
+    <string name="_bx_posts_txt_sample_vote_single"><![CDATA[post's vote]]></string>
 </resources>

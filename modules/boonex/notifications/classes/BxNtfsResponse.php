@@ -38,7 +38,7 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
                     'action' => $oAlert->sAction,
                     'object_id' => $oAlert->iObject,
                     'object_privacy_view' => $iPrivacyView,
-                	'subobject_id' => $this->_getSubobjectId($oAlert->aExtras),
+                	'subobject_id' => $this->_getSubObjectId($oAlert->aExtras),
                     'content' => '',
                 	'processed' => 0
                 ));
@@ -63,7 +63,7 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
                 	'type' => $oAlert->sUnit, 
                 	'action' => $aHandlers[BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT]['alert_action'], 
                 	'object_id' => $oAlert->iObject,
-                	'subobject_id' => $this->_getSubobjectId($oAlert->aExtras)
+                	'subobject_id' => $this->_getSubObjectId($oAlert->aExtras)
                 ));
                 break;
         }
