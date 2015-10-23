@@ -1571,6 +1571,16 @@
 	<string name="_sys_form_account"><![CDATA[Аккаунт]]></string>
 	<string name="_sys_form_account_input_captcha"><![CDATA[Капча]]></string>
 	<string name="_sys_form_account_input_captcha_error"><![CDATA[Проверка капчи не удалась. Попытайтесь ещё раз.]]></string>
+	<string name="_sys_form_account_input_captcha_label_text_image"><![CDATA[Введите текст:]]></string>
+	<string name="_sys_form_account_input_captcha_label_text_audio"><![CDATA[Введите услышанный текст:]]></string>
+	<string name="_sys_form_account_input_captcha_action_refresh"><![CDATA[обновить]]></string>
+	<string name="_sys_form_account_input_captcha_action_title_refresh"><![CDATA[Получить другую CAPTCHA]]></string>
+	<string name="_sys_form_account_input_captcha_action_audio"><![CDATA[аудио]]></string>
+	<string name="_sys_form_account_input_captcha_action_title_audio"><![CDATA[Прослушать CAPTCHA]]></string>
+	<string name="_sys_form_account_input_captcha_action_image"><![CDATA[изображение]]></string>
+	<string name="_sys_form_account_input_captcha_action_title_image"><![CDATA[Получить CAPTCHA в виде изображения]]></string>
+	<string name="_sys_form_account_input_captcha_action_help"><![CDATA[помощь]]></string>
+	<string name="_sys_form_account_input_captcha_action_title_help"><![CDATA[Получить помощь]]></string>
 	<string name="_sys_form_account_input_delete_confirm"><![CDATA[Я уверен, что хочу удалить аккаунт вместе с содержимым.]]></string>
 	<string name="_sys_form_account_input_delete_confirm_error"><![CDATA[Пожалуйста, отметьте этот флажок, если Вы действительно хотите удалить свой аккаунт вместе с содержимым.]]></string>
 	<string name="_sys_form_account_input_delete_confirm_info"><![CDATA[Это действие не может быть отменено.]]></string>

@@ -243,7 +243,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_redirect_after_account_added', '', 'page.php?i=create-persons-profile', 'digit', '', '', '', 50),
 
 (@iCategoryId, 'sys_editor_default', '', 'sys_tinymce', 'digit', '', '', '', 60),
-(@iCategoryId, 'sys_captcha_default', '', 'sys_recaptcha_new', 'digit', '', '', '', 61),
+(@iCategoryId, 'sys_captcha_default', '', 'sys_recaptcha', 'digit', '', '', '', 61),
 
 (@iCategoryId, 'sys_live_updates_interval', '', '10000', 'digit', '', '', '', 70);
 
