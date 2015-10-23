@@ -16,7 +16,7 @@ class BxBaseCaptchaReCAPTCHA extends BxDolCaptcha
     protected $_bJsCssAdded = false;
     protected $_oTemplate;
 
-    protected $_sSkin = 'white';
+    protected $_sSkin = 'custom';
     protected $_error = null;
     protected $_sKeyPublic;
     protected $_sKeyPrivate;
@@ -42,39 +42,32 @@ class BxBaseCaptchaReCAPTCHA extends BxDolCaptcha
         // TODO: captcha don't display error in javascript mode, try to find the way on how to pass error code in this mode
 
         $sId = 'sys-captcha-' . time() . rand(0, PHP_INT_MAX);
-        $sInit = "
-            Recaptcha.create('" . $this->_sKeyPublic . "', '" . $sId . "', {
-                lang: '" . BxDolLanguages::getInstance()->getCurrentLanguage() . "',
-                theme: '" . $this->_sSkin . "',
-                callback: Recaptcha.focus_response_field
-            });
-        ";
+        $sJsObject = 'Recaptcha';
 
-        if ($bDynamicMode) {
+        $sInit = $sJsObject . ".create('" . $this->_sKeyPublic . "', '" . $sId . "', {
+			lang: '" . BxDolLanguages::getInstance()->getCurrentLanguage() . "',
+			theme: '" . $this->_sSkin . "',
+			custom_theme_widget: '" . $sId . "',
+			callback: " . $sJsObject . ".focus_response_field
+		});";
 
-            $sCode = "
-            <script>
-                if ('undefined' == typeof(window.Recaptcha)) {
-                    $.getScript('http://www.google.com/recaptcha/api/js/recaptcha_ajax.js', function(data, textStatus, jqxhr) {
-                        $sInit
-                    });
-                } else {
-                    $sInit
-                }
-            </script>";
-
-        } else {
-
-            $sCode = "
-            <script>
-                $(document).ready(function () {
-                    $sInit
-                });
-            </script>";
-
-        }
-
-        return $this->_addJsCss($bDynamicMode) . '<div id="' . $sId . '"></div>' . $sCode;
+        return $this->_addJsCss($bDynamicMode) . $this->_oTemplate->parseHtmlByName('reCaptcha.html', array(
+        	'js_object' => $sJsObject, 
+        	'id' => $sId,
+        	'bx_if:show_common' => array(
+        		'condition' => !$bDynamicMode,
+        		'content' => array(
+        			'js_init' => $sInit,
+        		)
+        	),
+        	'bx_if:show_dynamic' => array(
+        		'condition' => $bDynamicMode,
+        		'content' => array(
+        			'js_object' => $sJsObject,
+        			'js_init' => $sInit,
+        		)
+        	),
+        ));
     }
 
     /**
