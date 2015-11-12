@@ -248,7 +248,7 @@ function process_pass_data( $text, $strip_tags = 0 )
  */
 function htmlspecialchars_adv( $string )
 {
-    return htmlspecialchars($string, ENT_COMPAT, 'UTF-8');
+    return htmlspecialchars($string, ENT_COMPAT, 'UTF-8', false);
 }
 
 /**
