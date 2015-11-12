@@ -17,7 +17,7 @@ check_logged();
 $oTemplate = BxDolTemplate::getInstance();
 
 $sURI = bx_process_input(bx_get('i'));
-$oPage = BxDolPage::getObjectInstanceByURI($sURI);
+$oPage = $sURI ? BxDolPage::getObjectInstanceByURI($sURI) : false;
 
 if ($oPage) {
 
