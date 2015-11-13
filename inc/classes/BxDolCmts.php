@@ -897,7 +897,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
     {
     	$iDataAction = $this->isNl2br() ? BX_DATA_TEXT_MULTILINE : BX_DATA_HTML;
     	$s = bx_process_output($s, $iDataAction);
-    	$s = bx_convert_links($s);
+    	$s = bx_linkify_html($s);
 
         if ($this->_sMetatagsObj && $iCmtId) {
             $oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj);

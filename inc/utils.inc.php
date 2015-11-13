@@ -76,21 +76,6 @@ function html2txt($content, $tags = "")
     return $content;
 }
 
-function html_encode($text)
-{
-     $searcharray =  array(
-    "'([-_\w\d.]+@[-_\w\d.]+)'",
-    "'((?:(?!://).{3}|^.{0,2}))(www\.[-\d\w\.\/]+)'",
-    "'(http[s]?:\/\/[-_~\w\d\.\/]+)'");
-
-    $replacearray = array(
-    "<a href=\"mailto:\\1\">\\1</a>",
-    "\\1http://\\2",
-    "<a href=\"\\1\" target=_blank>\\1</a>");
-
-   return preg_replace($searcharray, $replacearray, stripslashes($text));
-}
-
 /**
  * Functions to process user input.
  * DON'T use to process data before passing to SQL query - use db prepare instead @see BxDolDb::prepare.
@@ -978,38 +963,6 @@ function bx_rtrim_str ($sString, $sPrefix, $sReplace = '')
     return $sString;
 }
 
-function bx_convert_links($s)
-{
-	$oTemplate = BxDolTemplate::getInstance();
-
-	$bAddNofollow = getParam('sys_add_nofollow') == 'on';
-
-	$aRegExp = array(
-//		"/((https?|ftp|news):\/\/)?(www\.)?([a-z]([a-z0-9\-]*\.)+(aero|arpa|biz|com|coop|edu|gov|info|int|jobs|mil|museum|name|nato|net|org|pro|travel|[a-z]{2}))(\/[a-z0-9_\-\.~'\s]+)*(\/([a-z0-9_\-\.]*)(\?[a-z0-9+_\-\.%=&amp;]*)?)?(#[a-z][a-z0-9_]*)?/" => array('link' => 0, 'protocol' => 1),
-		"/(([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?/" => array('link' => 0, 'protocol' => 2)
-	);
-
-	foreach($aRegExp as $sRegExp => $aIndexes)
-		$s = preg_replace_callback($sRegExp, function($aMatches) use($oTemplate, $bAddNofollow, $aIndexes) {
-        	$aLinkAttrs = array(
-        		array('key' => 'target', 'value' => '_blank')
-        	);
-
-        	$sLink = $aMatches[$aIndexes['link']];
-	        if($bAddNofollow && strncmp(BX_DOL_URL_ROOT, $sLink, strlen(BX_DOL_URL_ROOT)) != 0)
-	        	$aLinkAttrs[] = array('key' => 'rel', 'value' => 'nofollow');
-
-        	return $oTemplate->parsePageByName('bx_a.html', array(
-        		'href' => (empty($aMatches[$aIndexes['protocol']]) ? 'http://' : '') . $sLink,
-        		'title' => $sLink,
-        		'bx_repeat:attrs' => $aLinkAttrs,
-        		'content' => $sLink,
-        	));
-        }, $s);
-
-	return $s;
-}
-
 /**
  * Convert array to attributes string
  *
@@ -1320,6 +1273,79 @@ function bx_smart_readfile($sPath, $sFilename = '', $sMimeType = 'application/oc
     fclose($fp);
 
     return true;
+}
+
+/**
+ * Wrap in A tag links in TEXT string
+ * @param $sHtmlOrig - text string without tags
+ * @param $sAttrs - attributes string to add to the added A tag
+ * @return string where all links are wrapped in A tag
+ */
+function bx_linkify($text, $sAttrs = '', $bHtmlSpecialChars = false)
+{
+    if ($bHtmlSpecialChars)
+        $text = htmlspecialchars($text, ENT_NOQUOTES, 'UTF-8');
+
+    $re = "@\b((https?://)|(www\.))(([0-9a-zA-Z_!~*'().&=+$%-]+:)?[0-9a-zA-Z_!~*'().&=+$%-]+\@)?(([0-9]{1,3}\.){3}[0-9]{1,3}|([0-9a-zA-Z_!~*'()-]+\.)*([0-9a-zA-Z][0-9a-zA-Z-]{0,61})?[0-9a-zA-Z]\.[a-zA-Z]{2,6})(:[0-9]{1,4})?((/[0-9a-zA-Z_!~*'().;?:\@&=+$,%#-]+)*/?)@";
+    preg_match_all($re, $text, $matches, PREG_OFFSET_CAPTURE);
+
+    $matches = $matches[0];
+
+    if ($i = count($matches))
+        $bAddNofollow = getParam('sys_add_nofollow') == 'on';
+
+    while ($i--)
+    {
+        $url = $matches[$i][0];
+        if (!preg_match('@^https?://@', $url))
+            $url = 'http://'.$url;
+
+        if (strncmp(BX_DOL_URL_ROOT, $url, strlen(BX_DOL_URL_ROOT)) != 0) {
+            $sAttrs .= ' target="_blank" ';
+            if ($bAddNofollow)
+                $sAttrs .= ' rel="nofollow" ';
+        }
+
+        $text = substr_replace($text, '<a ' . $sAttrs . ' href="'.$url.'">'.$matches[$i][0].'</a>', $matches[$i][1], strlen($matches[$i][0]));
+    }
+
+    return $text;
+}
+
+/**
+ * Wrap in A tag links in HTML string, which aren't wrapped in A tag yet
+ * @param $sHtmlOrig - HTML string
+ * @param $sAttrs - attributes string to add to the added A tag
+ * @return modified HTML string, in case of errror original string is returned
+ */
+function bx_linkify_html($sHtmlOrig, $sAttrs = '') 
+{
+    if (!trim($sHtmlOrig))
+        return $sHtmlOrig;
+
+    $sId = 'bx-linkify-' . md5(microtime());
+    $dom = new DOMDocument();
+    @$dom->loadHTML('<?xml encoding="UTF-8"><div id="' . $sId . '">' . $sHtmlOrig . '</div>');
+    $xpath = new DOMXpath($dom);
+
+    foreach ($xpath->query('//text()') as $text) {
+        $frag = $dom->createDocumentFragment();
+        $frag->appendXML(bx_linkify($text->nodeValue, $sAttrs, true));
+        $text->parentNode->replaceChild($frag, $text);
+    }
+
+    if (version_compare(PHP_VERSION, '5.3.6') >= 0)
+        $s = $dom->saveHTML($dom->getElementById($sId));
+    else
+        $s = $dom->saveXML($dom->getElementById($sId), LIBXML_NOEMPTYTAG);
+
+    if (false === $s) // in case of error return original string
+        return $sHtmlOrig;
+
+    if (false !== ($iPos = mb_strpos($s, '<html><body>')) && $iPos < mb_strpos($s, $sId))
+        $s = mb_substr($s, $iPos + 12, -15); // strip <html><body> tags and everything before them
+
+    return mb_substr($s, 54, -6); // strip added tags
 }
 
 /** @} */
