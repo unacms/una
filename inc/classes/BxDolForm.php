@@ -1036,7 +1036,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
      * @param $aInput form field array
      * @return boolean
      */
-    protected function _isVisible ($aInput)
+    static public function isVisible ($aInput)
     {
         return BxDolAcl::getInstance()->isMemberLevelInSet($aInput['visible_for_levels']);
     }
@@ -1115,6 +1115,9 @@ class BxDolFormChecker
         $sSubmitName = false;
 
         foreach ($aInputs as $k => $a) {
+            if (isset($a['visible_for_levels']) && !BxDolForm::isVisible($a))
+                continue;
+
             if (empty($a['name']) || 'submit' == $a['type'] || 'reset' == $a['type'] || 'button' == $a['type'] || 'value' == $a['type']) {
                 if (isset($a['type']) && 'submit' == $a['type'])
                     $sSubmitName = $k;

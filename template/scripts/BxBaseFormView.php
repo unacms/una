@@ -173,7 +173,7 @@ BLAH;
         $sCont = '';
         $sFuncGenRow = isset($this->aParams['view_mode']) && $this->aParams['view_mode'] ? 'genViewRow' : 'genRow';
         foreach ($this->aInputs as $aInput)
-            if (!isset($aInput['visible_for_levels']) || $this->_isVisible($aInput))
+            if (!isset($aInput['visible_for_levels']) || self::isVisible($aInput))
                 $sCont .= $this->$sFuncGenRow($aInput);
 
         $sCloseSection = $this->{$this->_sSectionClose}();
