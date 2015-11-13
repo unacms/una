@@ -31,7 +31,11 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         if (!($aFile = $oSrorage->getFile((int)$iFileId)) || !($aContentInfo = $this->_oDb->getContentInfoById($iContentId)) || $aContentInfo[$sFieldPicture] != (int)$iFileId)
             $aResult = array('error' => 1, 'msg' => _t('_sys_storage_err_file_not_found'));
 
-        if ((!$aResult && !isLogged()) || (!$aResult && $aFile['profile_id'] != bx_get_logged_profile_id() && !$this->_isModerator()))           
+        $oAccountProfile = BxDolProfile::getInstanceAccountProfile();
+        if ($oAccountProfile)
+            $iAccountProfileId = $oAccountProfile->id();
+
+        if ((!$aResult && !isLogged()) || (!$aResult && $aFile['profile_id'] != $iAccountProfileId && !$this->_isModerator()))           
             $aResult = array('error' => 2, 'msg' => _t('_Access denied'));
 
         $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'], $this->_oTemplate);
