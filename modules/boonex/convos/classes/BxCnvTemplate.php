@@ -228,7 +228,7 @@ class BxCnvTemplate extends BxBaseModTextTemplate
 
         $aVars = array (
             'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $oModule->_oConfig->CNF['URI_VIEW_ENTRY'] . '&id=' . $r['id']),
-            'text' => $sText,
+            'text' => $sText ? $sText : _t('_Empty'),
             'cmt_text' => $sTextCmt,
             'last_reply_time_and_replier' => _t('_bx_cnv_x_date_by_x_replier', bx_time_js($r['last_reply_timestamp'], BX_FORMAT_DATE), $oProfileLast->getDisplayName()),
             'bx_if:unread_messages' => array (
