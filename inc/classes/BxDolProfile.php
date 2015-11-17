@@ -83,6 +83,17 @@ class BxDolProfile extends BxDol implements iBxDolProfile
     }
 
     /**
+     * Get singleton instance of Profile by Account id (currently active profile is returned)
+     */
+    public static function getInstanceByAccount($iAccountId = false)
+    {
+        $oQuery = BxDolProfileQuery::getInstance();
+        $mixedProfileId = $oQuery->getCurrentProfileByAccount($iAccountId);
+
+        return self::getInstance($mixedProfileId);
+    }
+
+    /**
      * Get singleton instance of Profile by profile id
      */
     public static function getInstance($mixedProfileId = false)

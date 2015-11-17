@@ -16,19 +16,19 @@ class BxAntispamAkismet extends BxDol
 {
     protected $oAkismet = null;
 
-    public function __construct($iProfileID = 0)
+    public function __construct($iAccoutId = 0)
     {
         parent::__construct();
         $sKey = getParam('bx_antispam_akismet_api_key');
-        if ($sKey) {
+        if ($sKey && $oAccount = BxDolAccount::getInstance((int)$iAccoutId)) {
             require_once (BX_DIRECTORY_PATH_PLUGINS . 'akismet/Akismet.class.php');
             $this->oAkismet = new Akismet(BX_DOL_URL_ROOT, $sKey);
-            $aProfile = getProfileInfo($iProfileID);
-            if ($aProfile) {
-                $this->oAkismet->setCommentAuthor($aProfile['NickName']);
-                $this->oAkismet->setCommentAuthorEmail($aProfile['Email']);
-                $this->oAkismet->setCommentAuthorURL(getProfileLink($aProfile['ID']));
-            }
+
+            $oProfile = BxDolProfile::getInstanceByAccount((int)$iAccoutId);
+
+            $this->oAkismet->setCommentAuthorEmail($oAccount->getEmail());
+            $this->oAkismet->setCommentAuthor($oProfile->getDisplayName());
+            $this->oAkismet->setCommentAuthorURL($oProfile->getUrl());
         }
     }
 
@@ -46,7 +46,7 @@ class BxAntispamAkismet extends BxDol
 
     public function onPositiveDetection ($sExtraData = '')
     {
-        $o = bx_instance('BxAntispamDNSBlacklists', array(), 'bx_antispam');
+        $o = bx_instance('DNSBlacklists', array(), 'bx_antispam');
         $o->onPositiveDetection (getVisitorIP(), $sExtraData, 'akismet');
     }
 }

@@ -95,7 +95,7 @@ class BxAntispamStopForumSpam extends BxDol
 
     public function onPositiveDetection ($sExtraData = '')
     {
-        $o = bx_instance('BxAntispamDNSBlacklists', array(), 'bx_antispam');
+        $o = bx_instance('DNSBlacklists', array(), 'bx_antispam');
         $o->onPositiveDetection (getVisitorIP(false), $sExtraData, 'stopforumspam');
     }
 }

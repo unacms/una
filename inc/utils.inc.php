@@ -636,13 +636,20 @@ function bx_autoload($sClassName)
  * @param array $aModule an array with module description. Is used when the requested class is located in some module.
  * @return unknown
  */
-function bx_instance($sClassName, $aParams = array(), $aModule = array())
+function bx_instance($sClassName, $aParams = array(), $mixedModule = array())
 {
     if(isset($GLOBALS['bxDolClasses'][$sClassName]))
         return $GLOBALS['bxDolClasses'][$sClassName];
 
-    if ($aModule)
-        bx_import((empty($aModule) ? $sClassName : str_replace($aModule['class_prefix'], '', $sClassName)), $aModule);
+    if ($mixedModule) {
+        if (!is_array($mixedModule)) {
+            $o = BxDolModule::getInstance($mixedModule);
+            $mixedModule = $o->_aModule;
+        }
+        $sClassName = bx_ltrim_str($sClassName, $mixedModule['class_prefix']);
+        bx_import($sClassName, $mixedModule);
+        $sClassName = $mixedModule['class_prefix'] . $sClassName;
+    }
 
     $oClass = new ReflectionClass($sClassName);
 
