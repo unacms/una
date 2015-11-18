@@ -362,7 +362,7 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject
 
     /**
      * Store file in the storage area. It is not recommended to use this function directly,
-     * use other funtions like: storeFileFromForm, storeFileFromXhr, storeFileFromPath
+     * use other funtions like: storeFileFromForm, storeFileFromXhr, storeFileFromPath, storeFileFromUrl
      * @param $sMethod upload method, like regular Form upload, upload from URL, etc
      * @param $aMethodParams upload method params
      * @param $sName file name with extention
@@ -506,6 +506,14 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject
     public function storeFileFromPath($sPath, $isPrivate = true, $iProfileId = 0, $iContentId = 0)
     {
         return $this->storeFile('Path', array('path' => $sPath), false, $isPrivate, $iProfileId, $iContentId);
+    }
+
+    /**
+     * the same as storeFileFromPath, but it tries to do it from URL
+     */
+    public function storeFileFromUrl($sUrl, $isPrivate = true, $iProfileId = 0, $iContentId = 0)
+    {
+        return $this->storeFile('Url', array('url' => $sUrl), false, $isPrivate, $iProfileId, $iContentId);
     }
 
     /**
