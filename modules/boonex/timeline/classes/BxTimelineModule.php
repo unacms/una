@@ -447,21 +447,17 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
             $sLink = $oForm->getCleanValue('url');
-            $sLinkContent = bx_file_get_contents($sLink);
 
             $aMatches = array();
             preg_match($this->_oConfig->getPregPattern('url'), $sLink, $aMatches);
             $sLink = (empty($aMatches[2]) ? 'http://' : '') . $aMatches[0];
 
-            $aMatches = array();
-            preg_match($this->_oConfig->getPregPattern('meta_title'), $sLinkContent, $aMatches);
-            $sLinkTitle = !empty($aMatches[1]) ? $aMatches[1] : $sLink;
+            $aSiteInfo = bx_get_site_info($sLink, array(
+                'thumbnailUrl' => array('tag' => 'link', 'content_attr' => 'href'),
+                'OGImage' => array('name_attr' => 'property', 'name' => 'og:image'),
+            ));
 
-            $aMatches = array();
-            preg_match($this->_oConfig->getPregPattern('meta_description'), $sLinkContent, $aMatches);
-            $sLinkDescription = !empty($aMatches[1]) ? $aMatches[1] : '';
-
-            $iId = (int)$oForm->insert(array('profile_id' => $iUserId, 'url' => $sLink, 'title' => $sLinkTitle, 'text' => $sLinkDescription, 'added' => time()));
+            $iId = (int)$oForm->insert(array('profile_id' => $iUserId, 'url' => $sLink, 'title' => $aSiteInfo['title'], 'text' => $aSiteInfo['description'], 'added' => time()));
             if(!empty($iId))
                 return array('item' => $this->_oTemplate->getAttachLinkItem($iUserId, $iId));
 

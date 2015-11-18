@@ -780,6 +780,56 @@ function bx_file_get_contents($sFileUrl, $aParams = array(), $bChangeTimeout = f
     return $sResult;
 }
 
+function bx_get_site_info($sSourceUrl, $aProcessAdditionalTags = array())
+{
+    $aResult = array();
+    $sContent = bx_file_get_contents($sSourceUrl);
+
+    if ($sContent) {
+        $sCharset = '';
+        preg_match("/<meta.+charset=([A-Za-z0-9-]+).+>/i", $sContent, $aMatch);
+        if (isset($aMatch[1]))
+            $sCharset = $aMatch[1];
+
+        if (preg_match("/<title.*>(.*)<\/title>/i", $sContent, $aMatch))
+            $aResult['title'] = $aMatch[1];
+        else
+            $aResult['title'] = parse_url($sSourceUrl, PHP_URL_HOST);
+
+        $aResult['description'] = bx_parse_html_tag($sContent, 'meta', 'name', 'description', 'content', $sCharset);
+        $aResult['keywords'] = bx_parse_html_tag($sContent, 'meta', 'name', 'keywords', 'content', $sCharset);
+
+        if ($aProcessAdditionalTags) {
+
+            foreach ($aProcessAdditionalTags as $k => $a) {
+                $aResult[$k] = bx_parse_html_tag(
+                    $sContent, 
+                    isset($a['tag']) ? $a['tag'] : 'meta', 
+                    isset($a['name_attr']) ? $a['name_attr'] : 'itemprop', 
+                    isset($a['name']) ? $a['name'] : $k, 
+                    isset($a['content_attr']) ? $a['content_attr'] : 'content', 
+                    $sCharset); 
+            }
+
+        }
+    }
+
+    return $aResult;
+}
+
+function bx_parse_html_tag ($sContent, $sTag, $sAttrNameName, $sAttrNameValue, $sAttrContentName, $sCharset = false)
+{
+    if (!preg_match("/<{$sTag}\s+{$sAttrNameName}[='\" ]+{$sAttrNameValue}['\"]\s+{$sAttrContentName}[='\" ]+([^<]*)['\"][\/\s]*>/i", $sContent, $aMatch) || !isset($aMatch[1]))
+        preg_match("/<{$sTag}\s+{$sAttrContentName}[='\" ]+([^<]*)['\"]\s+{$sAttrNameName}[='\" ]+{$sAttrNameValue}['\"][\/\s]*>/i", $sContent, $aMatch);
+
+    $s = isset($aMatch[1]) ? $aMatch[1] : '';
+
+    if ($s && $sCharset)
+        $s = mb_convert_encoding($s, 'UTF-8', $sCharset);
+
+    return $s;
+}
+
 // calculation ini_get('upload_max_filesize') in bytes as example
 function return_bytes($val)
 {
