@@ -791,7 +791,7 @@ function bx_get_site_info($sSourceUrl, $aProcessAdditionalTags = array())
         if (isset($aMatch[1]))
             $sCharset = $aMatch[1];
 
-        if (preg_match("/<title.*>(.*)<\/title>/i", $sContent, $aMatch))
+        if (preg_match("/<title[^>]*>(.*)<\/title>/i", $sContent, $aMatch))
             $aResult['title'] = $aMatch[1];
         else
             $aResult['title'] = parse_url($sSourceUrl, PHP_URL_HOST);
@@ -819,8 +819,8 @@ function bx_get_site_info($sSourceUrl, $aProcessAdditionalTags = array())
 
 function bx_parse_html_tag ($sContent, $sTag, $sAttrNameName, $sAttrNameValue, $sAttrContentName, $sCharset = false)
 {
-    if (!preg_match("/<{$sTag}\s+{$sAttrNameName}[='\" ]+{$sAttrNameValue}['\"]\s+{$sAttrContentName}[='\" ]+([^<]*)['\"][\/\s]*>/i", $sContent, $aMatch) || !isset($aMatch[1]))
-        preg_match("/<{$sTag}\s+{$sAttrContentName}[='\" ]+([^<]*)['\"]\s+{$sAttrNameName}[='\" ]+{$sAttrNameValue}['\"][\/\s]*>/i", $sContent, $aMatch);
+    if (!preg_match("/<{$sTag}\s+{$sAttrNameName}[='\" ]+{$sAttrNameValue}['\"]\s+{$sAttrContentName}[='\" ]+([^('>\")]*)['\"][^>]*>/i", $sContent, $aMatch) || !isset($aMatch[1]))
+        preg_match("/<{$sTag}\s+{$sAttrContentName}[='\" ]+([^('>\")]*)['\"]\s+{$sAttrNameName}[='\" ]+{$sAttrNameValue}['\"][^>]*>/i", $sContent, $aMatch);
 
     $s = isset($aMatch[1]) ? $aMatch[1] : '';
 
