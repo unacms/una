@@ -1164,6 +1164,36 @@ class BxDolStorageHelperPath
 }
 
 /**
+ * Store file from URL
+ */
+class BxDolStorageHelperUrl extends BxDolStorageHelperPath
+{
+    function BxDolStorageHelperUrl ($aParams)
+    {   
+        $aParams['path'] = tempnam(BX_DIRECTORY_PATH_TMP, '');
+
+        $s = bx_file_get_contents ($aParams['url']);
+        if ($s)
+            file_put_contents($aParams['path'], $s);
+
+        parent::BxDolStorageHelperPath($aParams);
+    }
+
+    function getImmediateError()
+    {
+        $iRet = parent::getImmediateError();
+        if (BX_DOL_STORAGE_ERR_OK != $iRet)
+            return $iRet;
+        return $this->getSize() > 0 ? BX_DOL_STORAGE_ERR_OK : BX_DOL_STORAGE_INVALID_FILE;
+    }
+
+    function __destruct() 
+    {
+        @unlink($this->sPath);
+    }
+}
+
+/**
  * Handle file uploads from the same or another storage object
  */
 class BxDolStorageHelperStorage
