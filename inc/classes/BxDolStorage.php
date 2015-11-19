@@ -1179,7 +1179,7 @@ class BxDolStorageHelperUrl extends BxDolStorageHelperPath
     function BxDolStorageHelperUrl ($aParams)
     {   
         $aParams['path'] = '';
-        $sExt = preg_match('/^(\w+)/', pathinfo($aParams['url'], PATHINFO_EXTENSION), $m) ? $m[1] : '';
+        $sExt = pathinfo(parse_url($aParams['url'], PHP_URL_PATH), PATHINFO_EXTENSION);
         if ($sTmpFilename = tempnam(BX_DIRECTORY_PATH_TMP, '')) {
             $aParams['path'] =  $sTmpFilename . '.' . $sExt;
             @rename($sTmpFilename, $aParams['path']);
