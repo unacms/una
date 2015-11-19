@@ -400,8 +400,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
 
         $CNF = &$this->_oConfig->CNF;
 
-        $oProfileAuthor = BxDolProfile::getInstance($aDataEntry[$CNF['FIELD_AUTHOR']]);
-        $oProfile = $oProfileAuthor ? BxDolProfile::getInstanceByContentTypeAccount($aDataEntry[$CNF['FIELD_ID']], $this->_aModule['name'], $oProfileAuthor->getAccountId()) : false;
+        $oProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$CNF['FIELD_ID']], $this->_aModule['name']);
         if (!$oProfile || $oProfile->id() == $this->_iProfileId)
             return _t('_sys_txt_access_denied');
 
