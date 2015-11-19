@@ -41,17 +41,30 @@ div.bx-tl-uploader-file-preview img {
 	background-repeat: no-repeat;
 }
 
+
 /*--- Attach Link Form Styles ---*/
 div.bx-tl-attach-link-form {
 	width: 460px;
 	width: 28.75rem;
 }
 
+
 /*--- Attach Link Form Field Styles ---*/
 div.bx-tl-attach-link-form-field {}
 div.bx-tl-al-item {
 	position: relative;
-	float: left;
+	display: inline-block;
+	vertical-align: top;
+
 	width: 25%;
+
 	overflow: hidden;
+}
+div.bx-tl-ali-thumbnail img {
+	width: 100px;
+	height: 100px;
+}
+div.bx-tl-ali-actions .bx-btn {
+	display: inline-block;
+	float: none;
 }

@@ -210,6 +210,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         $sQuery = $this->prepare("SELECT
                 `tl`.`id` AS `id`,
                 `tl`.`profile_id` AS `profile_id`,
+                `tl`.`media_id` AS `media_id`,
                 `tl`.`url` AS `url`,
                 `tl`.`title` AS `title`,
                 `tl`.`text` AS `text`,
@@ -249,6 +250,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         $sQuery = $this->prepare("SELECT
                 `tl`.`id` AS `id`,
                 `tl`.`profile_id` AS `profile_id`,
+                `tl`.`media_id` AS `media_id`,
                 `tl`.`url` AS `url`,
                 `tl`.`title` AS `title`,
                 `tl`.`text` AS `text`,

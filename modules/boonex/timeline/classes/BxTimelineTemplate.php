@@ -447,6 +447,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if($this->_oDb->getParam('sys_add_nofollow') == 'on' && strncmp(BX_DOL_URL_ROOT, $aLink['url'], strlen(BX_DOL_URL_ROOT)) != 0)
         	$aLinkAttrs[] = array('key' => 'rel', 'value' => 'nofollow');
         
+		$sThumbnail = '';
+		if((int)$aLink['media_id'] != 0)
+			$sThumbnail = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_preview'))->getFileUrl($aLink['media_id']);		
+
         return $this->parsePageByName('attach_link_item.html', array(
             'html_id' => $sLinkIdPrefix . $aLink['id'],
             'style_prefix' => $sStylePrefix,
@@ -459,6 +463,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         		'bx_repeat:attrs' => $aLinkAttrs,
         		'content' => $aLink['title'],
         	)),
+        	'bx_if:show_thumbnail' => array(
+        		'condition' => !empty($sThumbnail),
+        		'content' => array(
+        			'style_prefix' => $sStylePrefix,
+        			'thumbnail' => $sThumbnail
+        		)
+        	) 
         ));
     }
 
@@ -638,7 +649,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sTextMore = $this->_prepareTextForOutput($sTextMore, $aEvent['id']);
 
         //--- Process Links ---//
-		$bAddNofollow = $this->_oDb->getParam('sys_add_nofollow') == 'on';
+        $bAddNofollow = $this->_oDb->getParam('sys_add_nofollow') == 'on';
 
         $aTmplVarsLinks = array();
         if(!empty($aContent['links']))
@@ -649,6 +660,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
                 $aTmplVarsLinks[] = array(
                     'style_prefix' => $sStylePrefix,
+                	'bx_if:show_thumbnail' => array(
+                		'condition' => !empty($aLink['thumbnail']),
+                		'content' => array(
+                			'style_prefix' => $sStylePrefix,
+                			'thumbnail' => $aLink['thumbnail']
+                		)
+                	),
                 	'link' => $this->parsePageByName('bx_a.html', array(
 		        		'href' => $aLink['url'],
 		        		'title' => $aLink['title'],
@@ -837,11 +855,14 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
                 $aLinks = $this->_oDb->getLinks($aEvent['id']);
                 if(!empty($aLinks) && is_array($aLinks))
+                	$oTranscoder = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_preview'));
+
                     foreach($aLinks as $aLink)
                         $aResult['content']['links'][] = array(
                             'url' => $aLink['url'],
                             'title' => $aLink['title'],
-                            'text' => $aLink['text']
+                            'text' => $aLink['text'],
+                        	'thumbnail' => (int)$aLink['media_id'] != 0 ? $oTranscoder->getFileUrl($aLink['media_id']) : ''
                         );
 
                 $aPhotos = $this->_oDb->getMedia(BX_TIMELINE_MEDIA_PHOTO, $aEvent['id']);

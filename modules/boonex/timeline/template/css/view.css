@@ -76,6 +76,18 @@ div.bx-tl-item-image img {
 	max-height: 100%;
 }
 
+/*+++ Item Link +++*/
+div.bx-tl-item-link {
+	text-align: center;
+}
+div.bx-tl-il-thumbnail img {
+	width: 100%;
+	max-width: 100px;
+	height: 100%;
+	max-height: 100px;
+}
+
+
 /*+++ Item Shared +++*/
 div.bx-tl-shared div.bx-tl-item-text {
 	padding-left: 5px;

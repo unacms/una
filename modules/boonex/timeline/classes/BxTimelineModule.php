@@ -201,14 +201,24 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
     public function actionDeleteAttachLink()
     {
+    	$iUserId = $this->getUserId();
         $iLinkId = bx_process_input(bx_get('id'), BX_DATA_INT);
         if(empty($iLinkId)) {
             $this->_echoResultJson(array());
             return;
         }
 
+        $aLink = $this->_oDb->getUnusedLinks($iUserId, $iLinkId);
+    	if(empty($aLink) || !is_array($aLink)) {
+            $this->_echoResultJson(array());
+            return;
+        }
+
+		if(!empty($aLink['media_id']))
+			BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage_photos'))->deleteFile($aLink['media_id']);
+
         $aResult = array();
-        if($this->_oDb->deleteUnusedLinks($this->getUserId(), $iLinkId))
+        if($this->_oDb->deleteUnusedLinks($iUserId, $iLinkId))
             $aResult = array('code' => 0);
         else
             $aResult = array('code' => 1, 'msg' => _t('_bx_timeline_form_post_input_link_err_delete'));
@@ -457,9 +467,30 @@ class BxTimelineModule extends BxBaseModNotificationsModule
                 'OGImage' => array('name_attr' => 'property', 'name' => 'og:image'),
             ));
 
-            $iId = (int)$oForm->insert(array('profile_id' => $iUserId, 'url' => $sLink, 'title' => $aSiteInfo['title'], 'text' => $aSiteInfo['description'], 'added' => time()));
-            if(!empty($iId))
+            $sTitle = !empty($aSiteInfo['title']) ? $aSiteInfo['title'] : _t('_Empty');
+            $sDescription = !empty($aSiteInfo['description']) ? $aSiteInfo['description'] : _t('_Empty');
+
+            $sMediaUrl = '';
+            if(!empty($aSiteInfo['thumbnailUrl']))
+            	$sMediaUrl = $aSiteInfo['thumbnailUrl'];
+            else if(!empty($aSiteInfo['OGImage']))
+            	$sMediaUrl = $aSiteInfo['OGImage'];
+
+			$iMediaId = 0;
+			$oStorage = null;
+            if(!empty($sMediaUrl)) {
+            	$oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage_' . BX_TIMELINE_MEDIA_PHOTO . 's'));
+
+            	$iMediaId = $oStorage->storeFileFromUrl($sMediaUrl, true, $iUserId);
+            }
+
+            $iId = (int)$oForm->insert(array('profile_id' => $iUserId, 'media_id' => $iMediaId, 'url' => $sLink, 'title' => $sTitle, 'text' => $sDescription, 'added' => time()));
+            if(!empty($iId)) {
+            	if(!empty($oStorage) && !empty($iMediaId))
+            		$oStorage->afterUploadCleanup($iMediaId, $iUserId);
+
                 return array('item' => $this->_oTemplate->getAttachLinkItem($iUserId, $iId));
+            }
 
             return array('msg' => _t('_bx_timeline_txt_err_cannot_perform_action'));
         }
@@ -700,7 +731,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
     		$this->_deleteMedia(BX_TIMELINE_MEDIA_PHOTO, $aEvent['id']);
     		$this->_deleteMedia(BX_TIMELINE_MEDIA_VIDEO, $aEvent['id']);
 
-	        $this->_oDb->deleteLinks($aEvent['id']);
+	        $this->_deleteLinks($aEvent['id']);
     	}
 
     	//--- Update parent event when share event was deleted.
@@ -760,6 +791,20 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         return array($sSystem, $iObjectId, $iCount);
     }
 
+	protected function _deleteLinks($iId)
+    {
+	    $aLinks = $this->_oDb->getLinks($iId);
+	    if(empty($aLinks) || !is_array($aLinks))
+	    	return;
+
+		$oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage_photos'));
+		foreach($aLinks as $aLink)
+			if(!empty($aLink['media_id']))
+				$oStorage->deleteFile($aLink['media_id']);
+
+		$this->_oDb->deleteLinks($iId);
+    }
+
     protected function _saveMedia($sType, $iId, $aItemIds)
     {
     	if(empty($aItemIds) || !is_array($aItemIds))
@@ -768,7 +813,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule
     	$iUserId = $this->getUserId();
 
 		$oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage_' . strtolower($sType) . 's'));
-
 		foreach($aItemIds as $iItemId)
         	if($this->_oDb->saveMedia($sType, $iId, $iItemId))
             	$oStorage->afterUploadCleanup($iItemId, $iUserId);
@@ -781,7 +825,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 	    	return;
 
 		$oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage_' . strtolower($sType) . 's'));
-
 		foreach($aItems as $iItemId)
 			$oStorage->deleteFile($iItemId);
 
