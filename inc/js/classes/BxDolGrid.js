@@ -281,15 +281,23 @@ BxDolGrid.prototype.reload = function (iStart, iPerPage) {
 BxDolGrid.prototype._getActionDataForReload = function (iStart, iPerPage) {
     var oData = {};
 
-    if (typeof(iStart) != 'undefined')
+    if (typeof(iStart) != 'undefined') {
         oData[this._oOptions.paginate_get_start] = iStart;
-    else
+        this._oOptions.start = iStart;
+    } 
+    else {
         oData[this._oOptions.paginate_get_start] = this._oOptions.start;
+    }
 
-    if (typeof(iPerPage) != 'undefined')
-        oData[this._oOptions.paginate_get_per_page] = iPerPage;
-    else
-        oData[this._oOptions.paginate_get_per_page] = this._oOptions.per_page;
+    if (this._oOptions.paginate_get_per_page.length) {
+        if (typeof(iPerPage) != 'undefined') {
+            oData[this._oOptions.paginate_get_per_page] = iPerPage;
+            this._oOptions.per_page = iPerPage;
+        }
+        else {
+            oData[this._oOptions.paginate_get_per_page] = this._oOptions.per_page;
+        }
+    }
 
     return oData;
 }
@@ -320,7 +328,9 @@ BxDolGrid.prototype._bindActionsSingle = function (eElement) {
         var sAction = $(this).attr('bx_grid_action_single');
         var sActionConfirm = $(this).attr('bx_grid_action_confirm');
         var sActionData = $(this).attr('bx_grid_action_data');
-        $this.actionWithId (sActionData, sAction, {}, '', false, sActionConfirm);
+        var iActionResetPaginate = parseInt($(this).attr('bx_grid_action_reset_paginate'));
+        var oData = iActionResetPaginate ? {} : $this._getActionDataForReload();
+        $this.actionWithId (sActionData, sAction, oData, '', false, sActionConfirm);
     });
 
 }
@@ -334,7 +344,9 @@ BxDolGrid.prototype._bindActions = function (isSkipSearchInput) {
         var sAction = $(this).attr('bx_grid_action_bulk');
         var sActionConfirm = $(this).attr('bx_grid_action_confirm');
         var sActionData = $(this).attr('bx_grid_action_data');
-        $this.actionWithSelected (sActionData, sAction, {}, '', false, sActionConfirm);
+        var iActionResetPaginate = parseInt($(this).attr('bx_grid_action_reset_paginate'));
+        var oData = iActionResetPaginate ? {} : $this._getActionDataForReload();
+        $this.actionWithSelected (sActionData, sAction, oData, '', false, sActionConfirm);
     });
 
     this._bindActionsSingle ();
@@ -345,7 +357,9 @@ BxDolGrid.prototype._bindActions = function (isSkipSearchInput) {
         var sAction = $(this).attr('bx_grid_action_single');
         var sActionConfirm = $(this).attr('bx_grid_action_confirm');
         var sActionData = $(this).attr('bx_grid_action_data');
-        $this.actionWithId (sActionData, sAction, {checked:this.checked ? 1 : 0}, '', false, sActionConfirm);
+        var iActionResetPaginate = parseInt($(this).attr('bx_grid_action_reset_paginate'));
+        var oData = iActionResetPaginate ? {} : $this._getActionDataForReload();
+        $this.actionWithId (sActionData, sAction, $.extend({}, oData, {checked:this.checked ? 1 : 0}), '', false, sActionConfirm);
     });
 
     if (typeof(isSkipSearchInput) == 'undefined' || false == isSkipSearchInput) {
@@ -355,7 +369,9 @@ BxDolGrid.prototype._bindActions = function (isSkipSearchInput) {
                 return;
             var sAction = $(this).attr('bx_grid_action_independent');
             var sActionConfirm = $(this).attr('bx_grid_action_confirm');
-            $this.action (sAction, {}, '', false, sActionConfirm);
+            var iActionResetPaginate = parseInt($(this).attr('bx_grid_action_reset_paginate'));
+            var oData = iActionResetPaginate ? {} : $this._getActionDataForReload();
+            $this.action (sAction, oData, '', false, sActionConfirm);
         });    
 
         jQuery('#bx-grid-search-' + this._sObject).bind({

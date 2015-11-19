@@ -28,7 +28,7 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys
         $aForm = array(
             'form_attrs' => array(
                 'id' => 'adm-lang-new-key-form',
-                'action' => BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction,
+                'action' => BX_DOL_URL_ROOT . 'grid.php?' . bx_encode_url_params($_GET, array('ids', '_r')),
                 'method' => 'post'
             ),
             'params' => array(

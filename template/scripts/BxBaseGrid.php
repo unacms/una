@@ -502,6 +502,7 @@ class BxBaseGrid extends BxDolGrid
                     $a['attr']['bx_grid_action_data'] = $sActionData;
                 if (isset($a['confirm']))
                     $a['attr']['bx_grid_action_confirm'] = $a['confirm'] ? 1 : 0;
+                $a['attr']['bx_grid_action_reset_paginate'] = false === strpos($sKey, 'delete') ? 0 : 1; // reset paginate after deleting row 
             }
 
             if ($isPermanentState && !isset($a['attr']['bx_grid_permanent_state']))
