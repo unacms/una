@@ -1146,7 +1146,7 @@ class BxDolStorageHelperPath
 
     function getImmediateError()
     {
-        if (!file_exists($this->sPath))
+        if (!$this->sPath || !file_exists($this->sPath))
             return BX_DOL_STORAGE_ERR_NO_FILE;
 
         return BX_DOL_STORAGE_ERR_OK;
@@ -1178,12 +1178,15 @@ class BxDolStorageHelperUrl extends BxDolStorageHelperPath
 {
     function BxDolStorageHelperUrl ($aParams)
     {   
-        $aParams['path'] = tempnam(BX_DIRECTORY_PATH_TMP, '');
+        $aParams['path'] = '';
+        $sExt = preg_match('/^(\w+)/', pathinfo($aParams['url'], PATHINFO_EXTENSION), $m) ? $m[1] : '';
+        if ($sTmpFilename = tempnam(BX_DIRECTORY_PATH_TMP, '')) {
+            $aParams['path'] =  $sTmpFilename . '.' . $sExt;
+            @rename($sTmpFilename, $aParams['path']);
 
-        $s = bx_file_get_contents ($aParams['url']);
-        if ($s)
-            file_put_contents($aParams['path'], $s);
-
+            if ($s = bx_file_get_contents ($aParams['url']))
+                file_put_contents($aParams['path'], $s);
+        }
         parent::BxDolStorageHelperPath($aParams);
     }
 
