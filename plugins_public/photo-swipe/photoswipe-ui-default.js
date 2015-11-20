@@ -1,4 +1,4 @@
-/*! PhotoSwipe Default UI - 4.0.5 - 2015-01-15
+/*! PhotoSwipe Default UI - 4.1.0 - 2015-07-11
 * http://photoswipe.com
 * Copyright (c) 2015 Dmitry Semenov; */
 /**
@@ -357,7 +357,7 @@ var PhotoSwipeUI_Default =
 						gap.bottom = bars.top; // if no caption, set size of bottom gap to size of top
 					}
 				} else {
-					gap.bottom = bars.bottom;
+					gap.bottom = bars.bottom === 'auto' ? 0 : bars.bottom;
 				}
 				
 				// height of top bar is static, no need to calculate it
@@ -694,8 +694,18 @@ var PhotoSwipeUI_Default =
 		_countNumItems();
 	};
 
-	ui.updateFullscreen = function() {
-		_togglePswpClass(pswp.template, 'fs', _fullscrenAPI.isFullscreen());
+	ui.updateFullscreen = function(e) {
+
+		if(e) {
+			// some browsers change window scroll position during the fullscreen
+			// so PhotoSwipe updates it just in case
+			setTimeout(function() {
+				pswp.setScrollOffset( 0, framework.getScrollY() );
+			}, 50);
+		}
+		
+		// toogle pswp--fs class on root element
+		framework[ (_fullscrenAPI.isFullscreen() ? 'add' : 'remove') + 'Class' ](pswp.template, 'pswp--fs');
 	};
 
 	ui.updateIndexIndicator = function() {
