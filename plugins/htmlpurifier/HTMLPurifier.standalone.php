@@ -7,7 +7,7 @@
  * primary concern and you are using an opcode cache. PLEASE DO NOT EDIT THIS
  * FILE, changes will be overwritten the next time the script is run.
  *
- * @version 4.6.0
+ * @version 4.7.0
  *
  * @warning
  *      You must *not* include any other HTML Purifier files before this file,
@@ -39,7 +39,7 @@
  */
 
 /*
-    HTML Purifier 4.6.0 - Standards Compliant HTML Filtering
+    HTML Purifier 4.7.0 - Standards Compliant HTML Filtering
     Copyright (C) 2006-2008 Edward Z. Yang
 
     This library is free software; you can redistribute it and/or
@@ -78,12 +78,12 @@ class HTMLPurifier
      * Version of HTML Purifier.
      * @type string
      */
-    public $version = '4.6.0';
+    public $version = '4.7.0';
 
     /**
      * Constant with version of HTML Purifier.
      */
-    const VERSION = '4.6.0';
+    const VERSION = '4.7.0';
 
     /**
      * Global configuration object.
@@ -1537,8 +1537,7 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
         $this->info['scrollbar-highlight-color'] = new HTMLPurifier_AttrDef_CSS_Color();
         $this->info['scrollbar-shadow-color'] = new HTMLPurifier_AttrDef_CSS_Color();
 
-        // technically not proprietary, but CSS3, and no one supports it
-        $this->info['opacity'] = new HTMLPurifier_AttrDef_CSS_AlphaValue();
+        // vendor specific prefixes of opacity
         $this->info['-moz-opacity'] = new HTMLPurifier_AttrDef_CSS_AlphaValue();
         $this->info['-khtml-opacity'] = new HTMLPurifier_AttrDef_CSS_AlphaValue();
 
@@ -1591,6 +1590,7 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
             array('visible', 'hidden', 'collapse')
         );
         $this->info['overflow'] = new HTMLPurifier_AttrDef_Enum(array('visible', 'hidden', 'auto', 'scroll'));
+        $this->info['opacity'] = new HTMLPurifier_AttrDef_CSS_AlphaValue();
     }
 
     /**
@@ -1736,7 +1736,7 @@ class HTMLPurifier_Config
      * HTML Purifier's version
      * @type string
      */
-    public $version = '4.6.0';
+    public $version = '4.7.0';
 
     /**
      * Whether or not to automatically finalize
@@ -2361,16 +2361,25 @@ class HTMLPurifier_Config
         return $this->getDefinition($name, true, true);
     }
 
+    /**
+     * @return HTMLPurifier_HTMLDefinition
+     */
     public function maybeGetRawHTMLDefinition()
     {
         return $this->getDefinition('HTML', true, true);
     }
-
+    
+    /**
+     * @return HTMLPurifier_CSSDefinition
+     */
     public function maybeGetRawCSSDefinition()
     {
         return $this->getDefinition('CSS', true, true);
     }
-
+    
+    /**
+     * @return HTMLPurifier_URIDefinition
+     */
     public function maybeGetRawURIDefinition()
     {
         return $this->getDefinition('URI', true, true);
@@ -12079,7 +12088,7 @@ class HTMLPurifier_AttrDef_CSS_Multiple extends HTMLPurifier_AttrDef
      */
     public function validate($string, $config, $context)
     {
-        $string = $this->parseCDATA($string);
+        $string = $this->mungeRgb($this->parseCDATA($string));
         if ($string === '') {
             return false;
         }
@@ -12316,9 +12325,6 @@ class HTMLPurifier_AttrDef_HTML_Bool extends HTMLPurifier_AttrDef
      */
     public function validate($string, $config, $context)
     {
-        if (empty($string)) {
-            return false;
-        }
         return $this->name;
     }
 
@@ -15282,9 +15288,15 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
             } elseif (!$this->_testPermissions($base, $chmod)) {
                 return false;
             }
-            $old = umask(0000);
             mkdir($directory, $chmod);
-            umask($old);
+            if (!$this->_testPermissions($directory, $chmod)) {
+                trigger_error(
+                    'Base directory ' . $base . ' does not exist,
+                    please create or change using %Cache.SerializerPath',
+                    E_USER_WARNING
+                );
+                return false;
+            }
         } elseif (!$this->_testPermissions($directory, $chmod)) {
             return false;
         }
@@ -18096,10 +18108,10 @@ class HTMLPurifier_Injector_RemoveEmpty extends HTMLPurifier_Injector
     private $removeNbspExceptions;
 
     /**
+     * Cached contents of %AutoFormat.RemoveEmpty.Predicate
      * @type array
-     * TODO: make me configurable
      */
-    private $_exclude = array('colgroup' => 1, 'th' => 1, 'td' => 1, 'iframe' => 1);
+    private $exclude;
 
     /**
      * @param HTMLPurifier_Config $config
@@ -18113,6 +18125,7 @@ class HTMLPurifier_Injector_RemoveEmpty extends HTMLPurifier_Injector
         $this->context = $context;
         $this->removeNbsp = $config->get('AutoFormat.RemoveEmpty.RemoveNbsp');
         $this->removeNbspExceptions = $config->get('AutoFormat.RemoveEmpty.RemoveNbsp.Exceptions');
+        $this->exclude = $config->get('AutoFormat.RemoveEmpty.Predicate');
         $this->attrValidator = new HTMLPurifier_AttrValidator();
     }
 
@@ -18143,11 +18156,15 @@ class HTMLPurifier_Injector_RemoveEmpty extends HTMLPurifier_Injector
             break;
         }
         if (!$next || ($next instanceof HTMLPurifier_Token_End && $next->name == $token->name)) {
-            if (isset($this->_exclude[$token->name])) {
-                return;
-            }
             $this->attrValidator->validateToken($token, $this->config, $this->context);
             $token->armor['ValidateAttributes'] = true;
+            if (isset($this->exclude[$token->name])) {
+                $r = true;
+                foreach ($this->exclude[$token->name] as $elem) {
+                    if (!isset($token->attr[$elem])) $r = false;
+                }
+                if ($r) return;
+            }
             if (isset($token->attr['id']) || isset($token->attr['name'])) {
                 return;
             }
@@ -18452,8 +18469,7 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
         $tokens = array();
         $this->tokenizeDOM(
             $doc->getElementsByTagName('html')->item(0)-> // <html>
-            getElementsByTagName('body')->item(0)-> //   <body>
-            getElementsByTagName('div')->item(0), //     <div>
+            getElementsByTagName('body')->item(0), //   <body>
             $tokens
         );
         return $tokens;
@@ -18649,7 +18665,7 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
         $ret .= '<html><head>';
         $ret .= '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
         // No protection if $html contains a stray </div>!
-        $ret .= '</head><body><div>' . $html . '</div></body></html>';
+        $ret .= '</head><body>' . $html . '</body></html>';
         return $ret;
     }
 }
