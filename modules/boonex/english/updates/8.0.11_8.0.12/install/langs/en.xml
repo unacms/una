@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_adm_nav_txt_items_submenu_popup"><![CDATA[Show submenu in popup]]></string_add>
+	<string_add name="_sys_designbox_14"><![CDATA[Content + Title + Padding]]></string_add>
+	<string_add name="_sys_designbox_4"><![CDATA[Content + Title]]></string_add>
+	<string_add name="_sys_form_account_input_captcha_label_text_image"><![CDATA[Type the text:]]></string_add>
+	<string_add name="_sys_form_account_input_captcha_label_text_audio"><![CDATA[Type the text you hear:]]></string_add>
+	<string_add name="_sys_form_account_input_captcha_action_refresh"><![CDATA[refresh]]></string_add>
+	<string_add name="_sys_form_account_input_captcha_action_title_refresh"><![CDATA[Get another CAPTCHA]]></string_add>
+	<string_add name="_sys_form_account_input_captcha_action_audio"><![CDATA[audio]]></string_add>
+	<string_add name="_sys_form_account_input_captcha_action_title_audio"><![CDATA[Get an audio CAPTCHA]]></string_add>
+	<string_add name="_sys_form_account_input_captcha_action_image"><![CDATA[image]]></string_add>
+	<string_add name="_sys_form_account_input_captcha_action_title_image"><![CDATA[Get an image CAPTCHA]]></string_add>
+	<string_add name="_sys_form_account_input_captcha_action_help"><![CDATA[help]]></string_add>
+	<string_add name="_sys_form_account_input_captcha_action_title_help"><![CDATA[Get Help]]></string_add>
+
+	<string_upd name="_sys_designbox_0"><![CDATA[Content only]]></string_upd>
+	<string_upd name="_sys_designbox_1"><![CDATA[Content + title + background]]></string_upd>
+	<string_upd name="_sys_designbox_10"><![CDATA[Content only + padding]]></string_upd>
+	<string_upd name="_sys_designbox_11"><![CDATA[Content + title + background + padding]]></string_upd>
+	<string_upd name="_sys_designbox_13"><![CDATA[Content + background + padding]]></string_upd>
+	<string_upd name="_sys_designbox_3"><![CDATA[Content + Background]]></string_upd>
+</resources>

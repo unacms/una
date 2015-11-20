@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_bx_invites_option_enable_reg_by_inv"><![CDATA[Enable registration by invitation only]]></string_add>
+	<string_add name="_bx_invites_txt_unlimited"><![CDATA[unlimited]]></string_add>
+</resources>

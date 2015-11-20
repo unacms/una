@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string name="_bx_ntfs"><![CDATA[Notifications]]></string>
+
+	<string name="_bx_ntfs_page_title_system_view"><![CDATA[Notifications]]></string>
+	<string name="_bx_ntfs_page_title_view"><![CDATA[Notifications]]></string>
+	<string name="_bx_ntfs_page_block_title_view"><![CDATA[Notifications]]></string>
+
+	<string name="_bx_ntfs_menu_title_submenu"><![CDATA[Notifications Submenu]]></string>
+	<string name="_bx_ntfs_menu_set_title_submenu"><![CDATA[Notifications Submenu]]></string>
+	<string name="_bx_ntfs_menu_item_title_system_notifications_all"><![CDATA[All Notifications]]></string>
+	<string name="_bx_ntfs_menu_item_title_notifications_all"><![CDATA[All Notifications]]></string>
+    <string name="_bx_ntfs_menu_item_title_system_notifications"><![CDATA[Notifications]]></string>
+    <string name="_bx_ntfs_menu_item_title_notifications"><![CDATA[Notifications]]></string>
+
+	<string name="_bx_ntfs_option_events_per_page"><![CDATA[Number of events are displayed on View page]]></string>
+	<string name="_bx_ntfs_option_events_hide"><![CDATA[Show events in Notifications]]></string>
+
+	<string name="_bx_ntfs_privacy_view"><![CDATA[View event]]></string>
+
+	<string name="_bx_ntfs_alert_action_added"><![CDATA[add]]></string>
+	<string name="_bx_ntfs_alert_action_commentPost"><![CDATA[add comment]]></string>
+
+	<string name="_bx_ntfs_txt_msg_no_results"><![CDATA[Empty]]></string>
+	<string name="_bx_ntfs_txt_object_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> added a new {entry_sample} <a href="{entry_url}">{entry_caption}</a>]]></string>
+	<string name="_bx_ntfs_txt_subobject_added_text"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> added a new {subentry_sample} to <a href="{entry_url}">{entry_caption}</a>]]></string>
+	<string name="_bx_ntfs_txt_subobject_added_link"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> added a new <a href="{subentry_url}">{subentry_sample}</a> to <a href="{entry_url}">{entry_caption}</a>]]></string>
+</resources>

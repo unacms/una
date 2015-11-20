@@ -1,0 +1,70 @@
+div.bx-tl-post {
+    position: relative;
+}
+div.bx-tl-post-cnt {
+    position: relative;
+    display: block;
+}
+
+/*--- Post Form Styles ---*/
+div#bx-timeline-post textarea.bx-form-input-textarea {
+	height: 36px;
+    height: 2.2rem;
+}
+
+div#bx-timeline-post div#bx-form-element-link,
+div#bx-timeline-post div#bx-form-element-photo,
+div#bx-timeline-post div#bx-form-element-video,
+div#bx-timeline-post .bx-form-input-files-uploaders {
+	margin-top: 0px;
+}
+div#bx-timeline-post div#bx-form-element-attachments {
+	position: absolute;
+	right: 0px;
+}
+div.bx-tl-uploader-file {
+	position: relative;
+	float: left;
+}
+div.bx-tl-uploader-file-preview {
+	overflow: hidden;
+}
+div.bx-tl-uploader-file-preview,
+div.bx-tl-uploader-file-preview img {
+	width: 100px;
+	width: 6.25rem;
+	height: 100px;
+	height: 6.25rem;
+}
+div.bx-tl-uploader-file-preview img {
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+
+/*--- Attach Link Form Styles ---*/
+div.bx-tl-attach-link-form {
+	width: 460px;
+	width: 28.75rem;
+}
+
+
+/*--- Attach Link Form Field Styles ---*/
+div.bx-tl-attach-link-form-field {}
+div.bx-tl-al-item {
+	position: relative;
+	display: inline-block;
+	vertical-align: top;
+
+	width: 25%;
+
+	overflow: hidden;
+}
+div.bx-tl-ali-thumbnail img {
+	width: 100px;
+	height: 100px;
+}
+div.bx-tl-ali-actions .bx-btn {
+	display: inline-block;
+	float: none;
+}
