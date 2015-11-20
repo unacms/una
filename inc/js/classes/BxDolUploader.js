@@ -136,22 +136,24 @@ BxDolUploaderSimple.prototype.restoreGhosts = function () {
         if (!$this.isMultiple())
             $('#' + $this._sResultContainerId + ' .bx-uploader-ghost').remove();
 
-        $.each(aData, function(iFileId, oVars) {
-            if ($('#bx-uploader-file-' + iFileId).length > 0)
-                return;
-            var sHTML;
-            if (typeof $this._sTemplateGhost == 'object')
-                sHTML = $this._sTemplateGhost[iFileId];
-            else
-                sHTML = $this._sTemplateGhost;
-            for (var i in oVars)
-                sHTML = sHTML.replace (new RegExp('{'+i+'}', 'g'), oVars[i]);
-            
-            $('#' + $this._sResultContainerId).prepend(sHTML);
+        if ('object' === typeof(aData)) {
+            $.each(aData, function(iFileId, oVars) {
+                if ($('#bx-uploader-file-' + iFileId).length > 0)
+                    return;
+                var sHTML;
+                if (typeof $this._sTemplateGhost == 'object')
+                    sHTML = $this._sTemplateGhost[iFileId];
+                else
+                    sHTML = $this._sTemplateGhost;
+                for (var i in oVars)
+                    sHTML = sHTML.replace (new RegExp('{'+i+'}', 'g'), oVars[i]);
+                
+                $('#' + $this._sResultContainerId).prepend(sHTML);
 
-            $('#bx-uploader-file-' + iFileId + ' .bx-uploader-ghost-preview img').hide().fadeIn(1000);
+                $('#bx-uploader-file-' + iFileId + ' .bx-uploader-ghost-preview img').hide().fadeIn(1000);
 
-        });
+            });
+        }
     });
 }
 
