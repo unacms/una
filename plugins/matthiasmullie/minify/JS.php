@@ -201,16 +201,18 @@ class JS extends Minify
         $callback = function ($match) use ($minifier) {
             $count = count($minifier->extracted);
             $placeholder = '/'.$count.'/';
-            $minifier->extracted[$placeholder] = '/'.$match[1].'/';
+            $minifier->extracted[$placeholder] = $match[1];
 
             return $placeholder;
         };
 
         // it's a regex if we can find an opening (not preceded by variable,
         // value or similar) & (non-escaped) closing /,
-        $before = $this->getOperatorsForRegex($this->operatorsBefore, '/');
-        $this->registerPattern('/^\s*+\K\/(.*?(?<!\\\\)(\\\\\\\\)*+)\//', $callback);
-        $this->registerPattern('/(?:'.implode('|', $before).')\s*+\K\/(.*?(?<!\\\\)(\\\\\\\\)*+)\//', $callback);
+        // include \n because it may be there for a reason
+        // (https://github.com/matthiasmullie/minify/issues/56)
+        $this->registerPattern('/^\s*+\K(\/.*?(?<!\\\\)(\\\\\\\\)*+\/\n?)/', $callback);
+        $before = $this->getOperatorsForRegex($this->operatorsBefore, '/') + $this->getKeywordsForRegex($this->keywordsReserved, '/');
+        $this->registerPattern('/(?:'.implode('|', $before).')\s*+\K(\/.*?(?<!\\\\)(\\\\\\\\)*+\/\n?)/', $callback);
     }
 
     /**
@@ -416,7 +418,32 @@ class JS extends Minify
         $content = preg_replace('/\bfalse\b/', '!1', $content);
 
         // for(;;) is exactly the same as while(true)
-        $content = preg_replace('/\bwhile\(!0\)/', 'for(;;)', $content);
+        $content = preg_replace('/\bwhile\(!0\){/', 'for(;;){', $content);
+
+        // now make sure we didn't turn any do ... while(true) into do ... for(;;)
+        preg_match_all('/\bdo\b/', $content, $dos, PREG_OFFSET_CAPTURE | PREG_SET_ORDER);
+
+        // go backward to make sure positional offsets aren't altered when $content changes
+        $dos = array_reverse($dos);
+        foreach ($dos as $do) {
+            $offsetDo = $do[0][1];
+
+            // find all `while` (now `for`) following `do`: one of those must be
+            // associated with the `do` and be turned back into `while`
+            preg_match_all('/\bfor\(;;\)/', $content, $whiles, PREG_OFFSET_CAPTURE | PREG_SET_ORDER, $offsetDo);
+            foreach ($whiles as $while) {
+                $offsetWhile = $while[0][1];
+
+                $open = substr_count($content, '{', $offsetDo, $offsetWhile - $offsetDo);
+                $close = substr_count($content, '}', $offsetDo, $offsetWhile - $offsetDo);
+                if ($open === $close) {
+                    // only restore `while` if amount of `{` and `}` are the same;
+                    // otherwise, that `for` isn't associated with this `do`
+                    $content = substr_replace($content, 'while(!0)', $offsetWhile, strlen('for(;;)'));
+                    break;
+                }
+            }
+        }
 
         return $content;
     }

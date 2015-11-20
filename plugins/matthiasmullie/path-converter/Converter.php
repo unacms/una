@@ -138,11 +138,11 @@ class Converter
 
         // strip shared ancestor paths
         $shared = $this->shared($path, $to);
-        $path = substr($path, mb_strlen($shared));
-        $to = substr($to, mb_strlen($shared));
+        $path = mb_substr($path, mb_strlen($shared));
+        $to = mb_substr($to, mb_strlen($shared));
 
         // add .. for every directory that needs to be traversed to new path
-        $to = str_repeat('../', substr_count($to, '/'));
+        $to = str_repeat('../', mb_substr_count($to, '/'));
 
         return $to.ltrim($path, '/');
     }
@@ -166,12 +166,12 @@ class Converter
         // no known file/dir, start making assumptions
 
         // ends in / = dir
-        if (substr($path, -1) === '/') {
+        if (mb_substr($path, -1) === '/') {
             return rtrim($path, '/');
         }
 
         // has a dot in the name, likely a file
-        if (preg_match('/(^\/).*\..*$/', $path) !== 0) {
+        if (preg_match('/.*\..*$/', basename($path)) !== 0) {
             return dirname($path);
         }
 

@@ -1,6 +1,8 @@
 <?php
 namespace MatthiasMullie\Minify;
 
+use Psr\Cache\CacheItemInterface;
+
 /**
  * Abstract minifier class.
  *
@@ -157,12 +159,26 @@ abstract class Minify
     }
 
     /**
+     * Minify the data & write it to a CacheItemInterface object.
+     *
+     * @param  CacheItemInterface $item Cache item to write the data to.
+     * @return CacheItemInterface       Cache item with the minifier data.
+     */
+    public function cache(CacheItemInterface $item)
+    {
+        $content = $this->execute();
+        $item->set($content);
+
+        return $item;
+    }
+
+    /**
      * Minify the data.
      *
      * @param  string[optional] $path Path to write the data to.
      * @return string           The minified data.
      */
-    abstract protected function execute($path = null);
+    abstract public function execute($path = null);
 
     /**
      * Register a pattern to execute against the source content.
@@ -329,7 +345,7 @@ abstract class Minify
          * considered as escape-char (times 2) and to get it in the regex,
          * escaped (times 2)
          */
-        $this->registerPattern('/(['.$chars.'])(.*?((?<!\\\\)|\\\\\\\\+))\\1/s', $callback);
+        $this->registerPattern('/(['.$chars.'])(.*?(?<!\\\\)(\\\\\\\\)*+)\\1/s', $callback);
     }
 
     /**
