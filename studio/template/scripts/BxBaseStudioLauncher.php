@@ -38,7 +38,8 @@ class BxBaseStudioLauncher extends BxDolStudioLauncher
             'jquery.easing.js',
             'jquery.cookie.min.js',
             'launcher.js',
-            'shepherd/shepherd.min.js',
+            'shepherd/js/tether.min.js',
+            'shepherd/js/shepherd.min.js',
         );
         foreach($this->aIncludes as $sName => $oInclude)
             $aJs = array_merge($aJs, $oInclude->getJs());

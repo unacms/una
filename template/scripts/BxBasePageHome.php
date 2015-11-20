@@ -32,7 +32,10 @@ class BxBasePageHome extends BxTemplPage
     {
         parent::_addJsCss();
         if (isAdmin()) {
-            $this->_oTemplate->addJs('shepherd/shepherd.min.js');
+            $this->_oTemplate->addJs(array(
+                'shepherd/js/tether.min.js',
+                'shepherd/js/shepherd.min.js',
+            ));
             $this->_oTemplate->addCss(array(
                 'homepage.css',
                 BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'shepherd/css/|shepherd-theme-' . $this->_sTourTheme . '.css'
