@@ -1,4 +1,11 @@
 <?php
+/**
+ * Netatmo service.
+ *
+ * @author  Pedro Amorim <contact@pamorim.fr>
+ * @license http://www.opensource.org/licenses/mit-license.html MIT License
+ * @link    https://dev.netatmo.com/doc/
+ */
 
 namespace OAuth\OAuth2\Service;
 
@@ -11,27 +18,24 @@ use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Uri\UriInterface;
 
 /**
- * Linkedin service.
+ * Netatmo service.
  *
- * @author Antoine Corcy <contact@sbin.dk>
- * @link http://developer.linkedin.com/documents/authentication
+ * @author  Pedro Amorim <contact@pamorim.fr>
+ * @license http://www.opensource.org/licenses/mit-license.html MIT License
+ * @link    https://dev.netatmo.com/doc/
  */
-class Linkedin extends AbstractService
+class Netatmo extends AbstractService
 {
-    /**
-     * Defined scopes
-     * @link http://developer.linkedin.com/documents/authentication#granting
-     */
-    const SCOPE_R_BASICPROFILE      = 'r_basicprofile';
-    const SCOPE_R_FULLPROFILE       = 'r_fullprofile';
-    const SCOPE_R_EMAILADDRESS      = 'r_emailaddress';
-    const SCOPE_R_NETWORK           = 'r_network';
-    const SCOPE_R_CONTACTINFO       = 'r_contactinfo';
-    const SCOPE_RW_NUS              = 'rw_nus';
-    const SCOPE_RW_COMPANY_ADMIN    = 'rw_company_admin';
-    const SCOPE_RW_GROUPS           = 'rw_groups';
-    const SCOPE_W_MESSAGES          = 'w_messages';
-    const SCOPE_W_SHARE             = 'w_share';
+
+    // SCOPES
+    // @link https://dev.netatmo.com/doc/authentication/scopes
+
+    // Used to read weather station's data (devicelist, getmeasure)
+    const SCOPE_STATION_READ        = 'read_station';
+    // Used to read thermostat's data (devicelist, getmeasure, getthermstate)
+    const SCOPE_THERMOSTAT_READ     = 'read_thermostat';
+    // Used to configure the thermostat (syncschedule, setthermpoint)
+    const SCOPE_THERMOSTAT_WRITE    = 'write_thermostat';
 
     public function __construct(
         CredentialsInterface $credentials,
@@ -40,10 +44,17 @@ class Linkedin extends AbstractService
         $scopes = array(),
         UriInterface $baseApiUri = null
     ) {
-        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri, true);
+        parent::__construct(
+            $credentials,
+            $httpClient,
+            $storage,
+            $scopes,
+            $baseApiUri,
+            true // use parameter state
+        );
 
         if (null === $baseApiUri) {
-            $this->baseApiUri = new Uri('https://api.linkedin.com/v1/');
+            $this->baseApiUri = new Uri('https://api.netatmo.net/');
         }
     }
 
@@ -52,7 +63,8 @@ class Linkedin extends AbstractService
      */
     public function getAuthorizationEndpoint()
     {
-        return new Uri('https://www.linkedin.com/uas/oauth2/authorization');
+        return new Uri($this->baseApiUri.'oauth2/authorize');
+
     }
 
     /**
@@ -60,7 +72,7 @@ class Linkedin extends AbstractService
      */
     public function getAccessTokenEndpoint()
     {
-        return new Uri('https://www.linkedin.com/uas/oauth2/accessToken');
+        return new Uri($this->baseApiUri.'oauth2/token');
     }
 
     /**
@@ -68,7 +80,7 @@ class Linkedin extends AbstractService
      */
     protected function getAuthorizationMethod()
     {
-        return static::AUTHORIZATION_METHOD_HEADER_BEARER;
+        return static::AUTHORIZATION_METHOD_QUERY_STRING;
     }
 
     /**
@@ -81,12 +93,14 @@ class Linkedin extends AbstractService
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+            throw new TokenResponseException(
+                'Error in retrieving token: "' . $data['error'] . '"'
+            );
         }
 
         $token = new StdOAuth2Token();
         $token->setAccessToken($data['access_token']);
-        $token->setLifeTime($data['expires_in']);
+        $token->setLifetime($data['expires_in']);
 
         if (isset($data['refresh_token'])) {
             $token->setRefreshToken($data['refresh_token']);

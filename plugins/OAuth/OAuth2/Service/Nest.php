@@ -1,4 +1,11 @@
 <?php
+/**
+ * Nest service.
+ *
+ * @author  Pedro Amorim <contact@pamorim.fr>
+ * @license http://www.opensource.org/licenses/mit-license.html MIT License
+ * @link    https://developer.nest.com/documentation
+ */
 
 namespace OAuth\OAuth2\Service;
 
@@ -11,27 +18,14 @@ use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Uri\UriInterface;
 
 /**
- * Linkedin service.
+ * Nest service.
  *
- * @author Antoine Corcy <contact@sbin.dk>
- * @link http://developer.linkedin.com/documents/authentication
+ * @author  Pedro Amorim <contact@pamorim.fr>
+ * @license http://www.opensource.org/licenses/mit-license.html MIT License
+ * @link    https://developer.nest.com/documentation
  */
-class Linkedin extends AbstractService
+class Nest extends AbstractService
 {
-    /**
-     * Defined scopes
-     * @link http://developer.linkedin.com/documents/authentication#granting
-     */
-    const SCOPE_R_BASICPROFILE      = 'r_basicprofile';
-    const SCOPE_R_FULLPROFILE       = 'r_fullprofile';
-    const SCOPE_R_EMAILADDRESS      = 'r_emailaddress';
-    const SCOPE_R_NETWORK           = 'r_network';
-    const SCOPE_R_CONTACTINFO       = 'r_contactinfo';
-    const SCOPE_RW_NUS              = 'rw_nus';
-    const SCOPE_RW_COMPANY_ADMIN    = 'rw_company_admin';
-    const SCOPE_RW_GROUPS           = 'rw_groups';
-    const SCOPE_W_MESSAGES          = 'w_messages';
-    const SCOPE_W_SHARE             = 'w_share';
 
     public function __construct(
         CredentialsInterface $credentials,
@@ -40,10 +34,17 @@ class Linkedin extends AbstractService
         $scopes = array(),
         UriInterface $baseApiUri = null
     ) {
-        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri, true);
+        parent::__construct(
+            $credentials,
+            $httpClient,
+            $storage,
+            $scopes,
+            $baseApiUri,
+            true
+        );
 
         if (null === $baseApiUri) {
-            $this->baseApiUri = new Uri('https://api.linkedin.com/v1/');
+            $this->baseApiUri = new Uri('https://developer-api.nest.com/');
         }
     }
 
@@ -52,7 +53,7 @@ class Linkedin extends AbstractService
      */
     public function getAuthorizationEndpoint()
     {
-        return new Uri('https://www.linkedin.com/uas/oauth2/authorization');
+        return new Uri('https://home.nest.com/login/oauth2');
     }
 
     /**
@@ -60,7 +61,7 @@ class Linkedin extends AbstractService
      */
     public function getAccessTokenEndpoint()
     {
-        return new Uri('https://www.linkedin.com/uas/oauth2/accessToken');
+        return new Uri('https://api.home.nest.com/oauth2/access_token');
     }
 
     /**
@@ -68,7 +69,7 @@ class Linkedin extends AbstractService
      */
     protected function getAuthorizationMethod()
     {
-        return static::AUTHORIZATION_METHOD_HEADER_BEARER;
+        return static::AUTHORIZATION_METHOD_QUERY_STRING_V4;
     }
 
     /**
@@ -81,7 +82,9 @@ class Linkedin extends AbstractService
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+            throw new TokenResponseException(
+                'Error in retrieving token: "' . $data['error'] . '"'
+            );
         }
 
         $token = new StdOAuth2Token();

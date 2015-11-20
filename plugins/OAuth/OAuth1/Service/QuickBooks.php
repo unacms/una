@@ -2,18 +2,20 @@
 
 namespace OAuth\OAuth1\Service;
 
-use OAuth\OAuth1\Signature\SignatureInterface;
 use OAuth\OAuth1\Token\StdOAuth1Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
 use OAuth\Common\Consumer\CredentialsInterface;
-use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Client\ClientInterface;
-use OAuth\OAuth1\Token\TokenInterface;
+use OAuth\Common\Http\Uri\UriInterface;
+use OAuth\OAuth1\Signature\SignatureInterface;
 
-class Yahoo extends AbstractService
+class QuickBooks extends AbstractService
 {
+    /**
+     * {@inheritdoc}
+     */
     public function __construct(
         CredentialsInterface $credentials,
         ClientInterface $httpClient,
@@ -21,19 +23,25 @@ class Yahoo extends AbstractService
         SignatureInterface $signature,
         UriInterface $baseApiUri = null
     ) {
-        parent::__construct($credentials, $httpClient, $storage, $signature, $baseApiUri);
+        parent::__construct(
+            $credentials,
+            $httpClient,
+            $storage,
+            $signature,
+            $baseApiUri
+        );
 
         if (null === $baseApiUri) {
-            $this->baseApiUri = new Uri('https://social.yahooapis.com/v1/');
+            $this->baseApiUri = new Uri('https://quickbooks.api.intuit.com/');
         }
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getRequestTokenEndpoint()
     {
-        return new Uri('https://api.login.yahoo.com/oauth/v2/get_request_token');
+        return new Uri('https://oauth.intuit.com/oauth/v1/get_request_token');
     }
 
     /**
@@ -41,7 +49,7 @@ class Yahoo extends AbstractService
      */
     public function getAuthorizationEndpoint()
     {
-        return new Uri('https://api.login.yahoo.com/oauth/v2/request_auth');
+        return new Uri('https://appcenter.intuit.com/Connect/Begin');
     }
 
     /**
@@ -49,36 +57,7 @@ class Yahoo extends AbstractService
      */
     public function getAccessTokenEndpoint()
     {
-        return new Uri('https://api.login.yahoo.com/oauth/v2/get_token');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function refreshAccessToken(TokenInterface $token)
-    {
-        $extraParams = $token->getExtraParams();
-        $bodyParams = array('oauth_session_handle' => $extraParams['oauth_session_handle']);
-
-        $authorizationHeader = array(
-            'Authorization' => $this->buildAuthorizationHeaderForAPIRequest(
-                'POST',
-                $this->getAccessTokenEndpoint(),
-                $this->storage->retrieveAccessToken($this->service()),
-                $bodyParams
-            )
-        );
-
-
-        
-        $headers = array_merge($authorizationHeader, $this->getExtraOAuthHeaders(), array());
-
-        $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $bodyParams, $headers);
-
-        $token = $this->parseAccessTokenResponse($responseBody);
-        $this->storage->storeAccessToken($this->service(), $token);
-
-        return $token;
+        return new Uri('https://oauth.intuit.com/oauth/v1/get_access_token');
     }
 
     /**
@@ -90,7 +69,8 @@ class Yahoo extends AbstractService
 
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
-        } elseif (!isset($data['oauth_callback_confirmed']) || $data['oauth_callback_confirmed'] !== 'true') {
+        } elseif (!isset($data['oauth_callback_confirmed'])
+            || $data['oauth_callback_confirmed'] !== 'true') {
             throw new TokenResponseException('Error in retrieving token.');
         }
 
@@ -107,7 +87,8 @@ class Yahoo extends AbstractService
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+            $message = 'Error in retrieving token: "' . $data['error'] . '"';
+            throw new TokenResponseException($message);
         }
 
         $token = new StdOAuth1Token();
@@ -117,15 +98,23 @@ class Yahoo extends AbstractService
         $token->setAccessToken($data['oauth_token']);
         $token->setAccessTokenSecret($data['oauth_token_secret']);
 
-        if (isset($data['oauth_expires_in'])) {
-            $token->setLifetime($data['oauth_expires_in']);
-        } else {
-            $token->setEndOfLife(StdOAuth1Token::EOL_NEVER_EXPIRES);
-        }
-
+        $token->setEndOfLife(StdOAuth1Token::EOL_NEVER_EXPIRES);
         unset($data['oauth_token'], $data['oauth_token_secret']);
         $token->setExtraParams($data);
 
         return $token;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function request(
+        $path,
+        $method = 'GET',
+        $body = null,
+        array $extraHeaders = array()
+    ) {
+        $extraHeaders['Accept'] = 'application/json';
+        return parent::request($path, $method, $body, $extraHeaders);
     }
 }

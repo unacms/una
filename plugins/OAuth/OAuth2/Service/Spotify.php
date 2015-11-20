@@ -10,28 +10,24 @@ use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Uri\UriInterface;
 
-/**
- * Linkedin service.
- *
- * @author Antoine Corcy <contact@sbin.dk>
- * @link http://developer.linkedin.com/documents/authentication
- */
-class Linkedin extends AbstractService
+class Spotify extends AbstractService
 {
     /**
-     * Defined scopes
-     * @link http://developer.linkedin.com/documents/authentication#granting
+     * Scopes
+     *
+     * @var string
      */
-    const SCOPE_R_BASICPROFILE      = 'r_basicprofile';
-    const SCOPE_R_FULLPROFILE       = 'r_fullprofile';
-    const SCOPE_R_EMAILADDRESS      = 'r_emailaddress';
-    const SCOPE_R_NETWORK           = 'r_network';
-    const SCOPE_R_CONTACTINFO       = 'r_contactinfo';
-    const SCOPE_RW_NUS              = 'rw_nus';
-    const SCOPE_RW_COMPANY_ADMIN    = 'rw_company_admin';
-    const SCOPE_RW_GROUPS           = 'rw_groups';
-    const SCOPE_W_MESSAGES          = 'w_messages';
-    const SCOPE_W_SHARE             = 'w_share';
+    const SCOPE_PLAYLIST_MODIFY_PUBLIC = 'playlist-modify-public';
+    const SCOPE_PLAYLIST_MODIFY_PRIVATE = 'playlist-modify-private';
+    const SCOPE_PLAYLIST_READ_PRIVATE = 'playlist-read-private';
+    const SCOPE_PLAYLIST_READ_COLABORATIVE = 'playlist-read-collaborative';
+    const SCOPE_STREAMING = 'streaming';
+    const SCOPE_USER_LIBRARY_MODIFY = 'user-library-modify';
+    const SCOPE_USER_LIBRARY_READ = 'user-library-read';
+    const SCOPE_USER_READ_PRIVATE = 'user-read-private';
+    const SCOPE_USER_READ_EMAIL = 'user-read-email';
+    const SCOPE_USER_READ_BIRTHDAY = 'user-read-birthdate';
+    const SCOPE_USER_READ_FOLLOW = 'user-follow-read';
 
     public function __construct(
         CredentialsInterface $credentials,
@@ -43,7 +39,7 @@ class Linkedin extends AbstractService
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri, true);
 
         if (null === $baseApiUri) {
-            $this->baseApiUri = new Uri('https://api.linkedin.com/v1/');
+            $this->baseApiUri = new Uri('https://api.spotify.com/v1/');
         }
     }
 
@@ -52,7 +48,7 @@ class Linkedin extends AbstractService
      */
     public function getAuthorizationEndpoint()
     {
-        return new Uri('https://www.linkedin.com/uas/oauth2/authorization');
+        return new Uri('https://accounts.spotify.com/authorize');
     }
 
     /**
@@ -60,7 +56,7 @@ class Linkedin extends AbstractService
      */
     public function getAccessTokenEndpoint()
     {
-        return new Uri('https://www.linkedin.com/uas/oauth2/accessToken');
+        return new Uri('https://accounts.spotify.com/api/token');
     }
 
     /**
@@ -84,9 +80,14 @@ class Linkedin extends AbstractService
             throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
         }
 
+
         $token = new StdOAuth2Token();
         $token->setAccessToken($data['access_token']);
-        $token->setLifeTime($data['expires_in']);
+
+        if (isset($data['expires_in'])) {
+            $token->setLifetime($data['expires_in']);
+            unset($data['expires_in']);
+        }
 
         if (isset($data['refresh_token'])) {
             $token->setRefreshToken($data['refresh_token']);
@@ -94,10 +95,18 @@ class Linkedin extends AbstractService
         }
 
         unset($data['access_token']);
-        unset($data['expires_in']);
 
         $token->setExtraParams($data);
 
         return $token;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getExtraOAuthHeaders()
+    {
+        return array('Authorization' => 'Basic ' .
+            base64_encode($this->credentials->getConsumerId() . ':' . $this->credentials->getConsumerSecret()));
     }
 }
