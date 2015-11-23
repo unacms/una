@@ -9,7 +9,7 @@
 
 bx_import('BxDolLanguages');
 
-define('BX_DOL_UNITY_URL_ROOT', 'http://www.boonex.com/');
+define('BX_DOL_UNITY_URL_ROOT', 'https://www.boonex.com/');
 define('BX_DOL_UNITY_URL_MARKET', BX_DOL_UNITY_URL_ROOT . 'market/');
 
 define('BX_DOL_STUDIO_IU_RC_SUCCESS', 0);
