@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+
+	<string name="_bx_invites"><![CDATA[Invitations]]></string>
+
+	<!-- Forms -->
+	<string name="_bx_invites_form_invite"><![CDATA[Invite]]></string>
+	<string name="_bx_invites_form_invite_display_send"><![CDATA[Send]]></string>
+	<string name="_bx_invites_form_invite_input_sys_emails"><![CDATA[Emails]]></string>
+	<string name="_bx_invites_form_invite_input_emails"><![CDATA[Emails]]></string>
+	<string name="_bx_invites_form_invite_input_emails_inf"><![CDATA[Use semicolon to separate emails.]]></string>
+	<string name="_bx_invites_form_invite_input_emails_err"><![CDATA[You need to use correct emails and enter at least one email.]]></string>
+	<string name="_bx_invites_form_invite_input_sys_text"><![CDATA[Text]]></string>
+	<string name="_bx_invites_form_invite_input_text"><![CDATA[Text]]></string>
+	<string name="_bx_invites_form_invite_input_text_err"><![CDATA[You need to type the text which will be added to invitation email.]]></string>
+	<string name="_bx_invites_form_invite_input_sys_do_submit"><![CDATA[Send]]></string>
+	<string name="_bx_invites_form_invite_input_do_submit"><![CDATA[Send]]></string>
+
+	<string name="_bx_invites_form_request"><![CDATA[Request Invitation]]></string>
+	<string name="_bx_invites_form_request_display_send"><![CDATA[Send]]></string>
+	<string name="_bx_invites_form_request_input_sys_name"><![CDATA[Your Name]]></string>
+	<string name="_bx_invites_form_request_input_name"><![CDATA[Your Name]]></string>
+	<string name="_bx_invites_form_request_input_name_err"><![CDATA[You need to type your name.]]></string>
+	<string name="_bx_invites_form_request_input_sys_email"><![CDATA[Your email]]></string>
+	<string name="_bx_invites_form_request_input_email"><![CDATA[Your email]]></string>
+	<string name="_bx_invites_form_request_input_email_err"><![CDATA[You need to type the correct email.]]></string>
+	<string name="_bx_invites_form_request_input_sys_text"><![CDATA[Text]]></string>
+	<string name="_bx_invites_form_request_input_text"><![CDATA[Why do you want to join?]]></string>
+	<string name="_bx_invites_form_request_input_text_err"><![CDATA[You need to briefly describe why you want to join our site.]]></string>
+	<string name="_bx_invites_form_request_input_sys_do_submit"><![CDATA[Send]]></string>
+	<string name="_bx_invites_form_request_input_do_submit"><![CDATA[Send]]></string>
+
+
+	<!-- Grids -->
+	<string name="_bx_invites_grid_column_title_name"><![CDATA[Name]]></string>
+	<string name="_bx_invites_grid_column_title_email"><![CDATA[Email]]></string>
+	<string name="_bx_invites_grid_column_title_nip"><![CDATA[IP]]></string>
+	<string name="_bx_invites_grid_column_title_date"><![CDATA[Date]]></string>
+
+	<string name="_bx_invites_grid_action_title_adm_info"><![CDATA[Info]]></string>
+	<string name="_bx_invites_grid_action_title_adm_invite"><![CDATA[Invite]]></string>
+	<string name="_bx_invites_grid_action_title_adm_delete"><![CDATA[Delete]]></string>
+
+
+	<!-- Pages and Blocks -->
+	<string name="_bx_invites_page_title_sys_invite"><![CDATA[Invite]]></string>
+	<string name="_bx_invites_page_title_invite"><![CDATA[Invite]]></string>
+	<string name="_bx_invites_page_block_title_invite_form"><![CDATA[Invite]]></string>
+
+	<string name="_bx_invites_page_title_sys_request"><![CDATA[Request Invitation]]></string>
+	<string name="_bx_invites_page_title_request"><![CDATA[Request Invitation]]></string>
+	<string name="_bx_invites_page_block_title_request_form"><![CDATA[Request Invitation]]></string>
+
+	<string name="_bx_invites_page_title_sys_requests"><![CDATA[Manage Requests]]></string>
+	<string name="_bx_invites_page_title_requests"><![CDATA[Manage Requests]]></string>
+	<string name="_bx_invites_page_block_title_requests"><![CDATA[Manage Requests]]></string>
+
+	<string name="_bx_invites_page_block_title_invite"><![CDATA[Invite]]></string>
+
+
+	<!-- Menus -->
+	<string name="_bx_invites_menu_item_title_system_requests"><![CDATA[Invitation requests]]></string>
+	<string name="_bx_invites_menu_item_title_requests"><![CDATA[Invitation requests - {addon} awaiting]]></string>
+	<string name="_bx_invites_menu_item_title_requests"><![CDATA[Requests]]></string>
+
+
+	<!-- Options -->
+	<string name="_bx_invites_option_count_per_user"><![CDATA[How many invitations one user can send]]></string>
+	<string name="_bx_invites_option_key_lifetime"><![CDATA[Invitation key lifetime (in days)]]></string>
+	<string name="_bx_invites_option_enable_request_invite"><![CDATA[Enable invitation requests]]></string>
+	<string name="_bx_invites_option_requests_email"><![CDATA[Email to send invitation requests to]]></string>
+	<string name="_bx_invites_option_enable_reg_by_inv"><![CDATA[Enable registration by invitation only]]></string>
+
+
+	<!-- ACL -->
+	<string name="_bx_invites_acl_action_invite"><![CDATA[Invite]]></string>
+	<string name="_bx_invites_acl_action_request"><![CDATA[Request Invitation]]></string>
+	<string name="_bx_invites_acl_action_delete_request"><![CDATA[Delete invitation requests]]></string>
+
+
+	<!-- Email Templates -->
+	<string name="_bx_invites_et_invite_form_message"><![CDATA[Invite form message.]]></string>
+	<string name="_bx_invites_et_invite_form_message_subject"><![CDATA[Invitation from {site_name}.]]></string>
+	<string name="_bx_invites_et_invite_form_message_body"><![CDATA[<bx_include_auto:_email_header.html />
+<p><b>Dear Friend</b>,</p>
+<p>{profile_name} invites you to join to <a href="{site_url}">{site_name}</a> community site.<br />Message from {profile_name}:</p>
+<hr />
+<p>{text}</p>
+<hr />
+<p>Click the following link to join: <a href="{join_url}">{join_url}</a></p>
+<bx_include_auto:_email_footer.html />]]></string>
+
+	<string name="_bx_invites_et_invite_by_request_message"><![CDATA[Invite by request message.]]></string>
+	<string name="_bx_invites_et_invite_by_request_message_subject"><![CDATA[Invitation from {site_name}.]]></string>
+	<string name="_bx_invites_et_invite_by_request_message_body"><![CDATA[<bx_include_auto:_email_header.html />
+<p><b>Dear Friend</b>,</p>
+<p>You are welcome to join <a href="{site_url}">{site_name}</a> community site.</p>
+<p>Click the following link to join: <a href="{join_url}">{join_url}</a></p>
+<bx_include_auto:_email_footer.html />]]></string>
+
+	<string name="_bx_invites_et_request_form_message"><![CDATA[Request Invitation form message.]]></string>
+	<string name="_bx_invites_et_request_form_message_subject"><![CDATA[Request invitation.]]></string>
+	<string name="_bx_invites_et_request_form_message_body"><![CDATA[<bx_include_auto:_email_header.html />
+<p><b>Dear Administrator</b>,</p>
+<p>{sender_name} (<a href="mailto:{sender_email}">{sender_email}</a>; IP {sender_ip}) requested an invitation to join <b>{site_name}</b> site.</p>
+<p><a href="{manage_url}">Click here</a> to manage requests.</p>
+<bx_include_auto:_email_footer.html />]]></string>
+
+
+	<!-- Common Texts -->
+	<string name="_bx_invites_txt_invite_block_text"><![CDATA[You can invite your friends to join. You have <b>{0}</b> invites to share.]]></string>
+	<string name="_bx_invites_txt_request_block_text"><![CDATA[Registration is by invitation only.]]></string>
+	<string name="_bx_invites_txt_unlimited"><![CDATA[unlimited]]></string>
+	
+	<string name="_bx_invites_btn_invite"><![CDATA[Invite]]></string>
+	<string name="_bx_invites_btn_request"><![CDATA[Request Invitation]]></string>
+	<string name="_bx_invites_msg_invitation"><![CDATA[Hello! This site might be interesting for you.]]></string>
+	<string name="_bx_invites_msg_invitation_sent"><![CDATA[Invitation message was sent to {0} email addresses from the list.]]></string>
+	<string name="_bx_invites_msg_request_sent"><![CDATA[Invitation request was sent.]]></string>
+	<string name="_bx_invites_err_limit_reached"><![CDATA[The number of invitations sent by you reached the limit.]]></string>
+	<string name="_bx_invites_err_not_available"><![CDATA[The feature is not available now. Please, try again later.]]></string>
+	<string name="_bx_invites_err_invite"><![CDATA[Cannot send an invitation on request.]]></string>
+	<string name="_bx_invites_err_delete_request"><![CDATA[Cannot delete the request.]]></string>
+</resources>

@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_en',
     'title' => 'English',
     'note' => 'Language file',
-    'version' => '8.0.12.DEV',
+    'version' => '8.0.13.DEV',
     'vendor' => 'Boonex',
 	'help_url' => 'http://feed.boonex.com/?section={module_name}',
 

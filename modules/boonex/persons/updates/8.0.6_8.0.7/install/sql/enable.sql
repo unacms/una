@@ -1,0 +1,2 @@
+UPDATE `sys_menu_items` SET `submenu_popup`='0' WHERE `set_name`='bx_persons_view_actions';
+UPDATE `sys_menu_items` SET `submenu_popup`='1' WHERE `set_name`='bx_persons_view_actions' AND `name`='profile-actions-more';

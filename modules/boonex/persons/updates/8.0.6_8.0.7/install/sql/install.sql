@@ -1,0 +1,1 @@
+UPDATE `sys_transcoder_filters` SET `filter_params`='a:1:{s:1:"w";s:4:"1024";}' WHERE `transcoder_object`='bx_persons_cover';

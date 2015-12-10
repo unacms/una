@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="ru" flag="ru" title="Russian">
+	<string_add name="_bx_albums_txt_sample_vote_single"><![CDATA[голос за альбом]]></string_add>
+</resources>

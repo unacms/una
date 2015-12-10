@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_bx_dev_frm_txt_field_title_editable"><![CDATA[Editable]]></string_add>
+    <string_add name="_bx_dev_frm_txt_field_info_editable"><![CDATA[Make the field Editable in Studio Forms Builder]]></string_add>
+    <string_add name="_bx_dev_frm_txt_field_title_deletable"><![CDATA[Deletable]]></string_add>
+    <string_add name="_bx_dev_frm_txt_field_info_deletable"><![CDATA[Make the field Deletable in Studio Forms Builder]]></string_add>
+</resources>

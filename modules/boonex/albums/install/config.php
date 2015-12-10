@@ -18,7 +18,7 @@ $aConfig = array(
     'name' => 'bx_albums',
     'title' => 'Albums',
     'note' => 'Photos & videos',
-    'version' => '8.0.2.DEV',
+    'version' => '8.0.3.DEV',
     'vendor' => 'BoonEx',
 	'help_url' => 'http://feed.boonex.com/?section={module_name}',
 

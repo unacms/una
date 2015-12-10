@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="ru" flag="ru" title="Russian">
+	<string_add name="_bx_dev_frm_txt_field_title_editable"><![CDATA[Редактируемое]]></string_add>
+    <string_add name="_bx_dev_frm_txt_field_info_editable"><![CDATA[Сделать поле Редактируемым в Редакторе Форм в Студии]]></string_add>
+    <string_add name="_bx_dev_frm_txt_field_title_deletable"><![CDATA[Удаляемое]]></string_add>
+    <string_add name="_bx_dev_frm_txt_field_info_deletable"><![CDATA[Сделать поле Удаляемым в Редакторе Форм в Студии]]></string_add>
+</resources>

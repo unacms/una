@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string_add name="_bx_ntfs_privacy_view"><![CDATA[View event]]></string_add>
+	<string_add name="_bx_ntfs_alert_action_commentPost"><![CDATA[add comment]]></string_add>
+	<string_add name="_bx_ntfs_txt_object_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> added a new {entry_sample} <a href="{entry_url}">{entry_caption}</a>]]></string_add>
+	<string_add name="_bx_ntfs_txt_subobject_added_text"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> added a new {subentry_sample} to <a href="{entry_url}">{entry_caption}</a>]]></string_add>
+	<string_add name="_bx_ntfs_txt_subobject_added_link"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> added a new <a href="{subentry_url}">{subentry_sample}</a> to <a href="{entry_url}">{entry_caption}</a>]]></string_add>
+
+	<string_del name="_bx_ntfs_txt_item_added" />
+</resources>

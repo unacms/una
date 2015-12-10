@@ -111,8 +111,9 @@ class BxGridMy extends BxTemplGrid
         $aForm = array(
             'form_attrs' => array(
                 'id' => 'sample-add-form',
-                'action' => 'grid.php?o=' . $this->_sObject . '&a=' . $sAction, // grid.php is usiversal actions handler file, we need to pass object and action names to it at least
+                'action' => 'grid.php?' . bx_encode_url_params($_GET, array('ids', '_r')), // grid.php is usiversal actions handler file, we need to pass object and action names to it at least, or just all the params to preserve such states like filter and paginate
                 'method' => 'post',
+                'class' => 'bx-def-margin-bottom',
             ),
             'params' => array (
                 'db' => array(
@@ -176,7 +177,7 @@ class BxGridMy extends BxTemplGrid
                         'name' => 'close',
                         'value' => _t('Close'),
                         'attrs' => array(
-                            'onclick' => "$('.dolPopup:visible').dolPopupHide()",
+                            'onclick' => "$('.bx-popup-active').dolPopupHide()",
                             'class' => 'bx-def-margin-sec-left',
                         ),
                     ),
@@ -192,7 +193,7 @@ class BxGridMy extends BxTemplGrid
 
             $iNewId = $oForm->insert (array(), true); // insert record to database
             if ($iNewId)
-                $aRes = array('grid' => $this->getCode(true), 'blink' => $iNewId); // if record is successfully added, reload grid and highlight added row
+                $aRes = array('grid' => $this->getCode(false), 'blink' => $iNewId); // if record is successfully added, reload grid and highlight added row
             else
                 $aRes = array('msg' => "Error occured"); // if record adding failed, display error message
 
@@ -211,7 +212,7 @@ class BxGridMy extends BxTemplGrid
                                 bx_loading($("#' . $aForm['form_attrs']['id'] . '"), true);
                             },
                             success: function (data) {
-                                $(".dolPopup:visible").dolPopupHide();
+                                $(".bx-popup-active").dolPopupHide();
                                 glGrids.' . $this->_sObject . '.processJson(data, "' . $sAction . '");
                             }
                         });
