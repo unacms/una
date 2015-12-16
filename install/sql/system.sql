@@ -83,8 +83,11 @@ INSERT INTO `sys_objects_captcha` (`object`, `title`, `override_class_name`, `ov
 
 CREATE TABLE `sys_objects_auths` (
   `ID` int(10) unsigned NOT NULL auto_increment,
+  `Name` varchar(64) NOT NULL,
   `Title` varchar(128) NOT NULL,
   `Link` varchar(255) NOT NULL,
+  `OnClick` varchar(255) NOT NULL,
+  `Icon` varchar(64) NOT NULL,
   PRIMARY KEY  (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 

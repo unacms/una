@@ -79,6 +79,8 @@ interface iBxDolProfileService
     public function serviceProfileUrl ($iContentId);
     public function serviceProfileEditUrl ($iContentId);
     public function serviceProfilesSearch ($sTerm, $iLimit);
+    public function serviceFormsHelper ();
+    public function servicePrepareFields ($aFieldsProfile);
 }
 
 /** @} */

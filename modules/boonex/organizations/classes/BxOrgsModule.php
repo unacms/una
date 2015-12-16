@@ -18,6 +18,15 @@ class BxOrgsModule extends BxBaseModProfileModule
     {
         parent::__construct($aModule);
     }
+
+    public function servicePrepareFields ($aFieldsProfile)
+    {
+        $aFieldsProfile['org_name'] = $aFieldsProfile['name'];
+        $aFieldsProfile['org_desc'] = $aFieldsProfile['description'];
+        unset($aFieldsProfile['name']);
+        unset($aFieldsProfile['description']);
+        return $aFieldsProfile;
+    }
 }
 
 /** @} */

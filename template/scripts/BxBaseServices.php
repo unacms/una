@@ -52,6 +52,16 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         return $this->_serviceProfileFunc('getUrl', $iContentId);
     }
 
+    public function serviceFormsHelper ()
+    {
+        return new BxTemplAccountForms();
+    }
+
+    public function servicePrepareFields ($aFieldsProfile)
+    {
+        return $aFieldsProfile;
+    }
+
     public function serviceProfilesSearch ($sTerm, $iLimit)
     {
         $oDb = BxDolAccountQuery::getInstance();

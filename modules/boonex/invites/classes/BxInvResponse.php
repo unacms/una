@@ -38,25 +38,9 @@ class BxInvResponse extends BxDolAlertsResponse
 
     protected function _processAccountAddForm($oAlert)
     {
-    	if(!$this->_oModule->_oConfig->isRegistrationByInvitation())
-    		return;
-
-    	$oSession = BxDolSession::getInstance();
-
-		$sKeyCode = $this->_oModule->_oConfig->getKeyCode();
-		if(bx_get($sKeyCode) !== false) {
-			$sKey = bx_process_input(bx_get($sKeyCode));
-
-        	$oKeys = BxDolKey::getInstance();
-        	if($oKeys && $oKeys->isKeyExists($sKey))
-		    	$oSession->setValue($sKeyCode, $sKey);
-		}
-
-		$sKey = $oSession->getValue($sKeyCode);
-		if($sKey === false)
-			$oAlert->aExtras['form_code'] = $this->_oModule->_oTemplate->getBlockRequest();
-
-		return;    	
+        $sCode = $this->_oModule->serviceAccountAddFormCheck();
+        if ($sCode)
+            $oAlert->aExtras['form_code'] = $this->_oModule->_oTemplate->getBlockRequest();
     }
 
     protected function _processAccountAdded($oAlert)

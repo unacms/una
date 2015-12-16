@@ -149,6 +149,11 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
     }
 
+    public function servicePrepareFields ($aFieldsProfile)
+    {
+        return $aFieldsProfile;
+    }
+
     public function serviceBrowseRecentProfiles ($bDisplayEmptyMsg = false)
     {
         return $this->_serviceBrowse ('recent', false, BX_DB_PADDING_DEF, $bDisplayEmptyMsg);

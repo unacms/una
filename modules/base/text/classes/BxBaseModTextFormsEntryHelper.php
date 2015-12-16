@@ -76,8 +76,11 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         return array ($oProfile, $aContentInfo);
     }
 
-    protected function onDataEditAfter ($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile)
+    public function onDataEditAfter ($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile)
     {
+        if ($s = parent::onDataEditAfter())
+            return $s;
+
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         if (!($aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId)))
@@ -93,8 +96,11 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         return '';
     }
 
-    protected function onDataAddAfter ($iContentId)
+    public function onDataAddAfter ($iAccountId, $iContentId)
     {
+        if ($s = parent::onDataAddAfter($iAccountId, $iContentId))
+            return $s;
+
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         if (!($aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId)))

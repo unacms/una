@@ -10,6 +10,7 @@
 define('BX_PROFILE_ACTION_AUTO', 0); ///< automatic action without any checking
 define('BX_PROFILE_ACTION_MANUAL', 1); ///< manual action performed by human
 define('BX_PROFILE_ACTION_ROBOT', 2); ///< action peformed by some robot based on some conditions
+define('BX_PROFILE_ACTION_EXTERNAL', 2); ///< action peformed by external service, like join using OAuth 
 
 class BxDolProfile extends BxDol implements iBxDolProfile
 {

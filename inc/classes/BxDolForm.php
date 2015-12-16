@@ -947,6 +947,20 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
         return $aData[$sKey] = $mixedValue;
     }
 
+    /**
+     * Check if field exists
+     * @param $sName field name 
+     * @param $bCheckAllFields true - check all fields; false - all fields except: password, captcha, hidden, file, button, image, reset, submit, block_header, input_set
+     * @return true if field exists or false otherwise
+     */
+    public function isFieldExist($sName, $bCheckAllFields = false)
+    {
+        if (!isset($this->aInputs[$sName]))
+            return false;
+        return $bCheckAllFields ? true : !in_array($this->aInputs[$sName]['type'], array('password', 'captcha', 'hidden', 'button', 'reset', 'submit', 'block_header', 'input_set'));
+    }
+
+
     // Static Methods related to CSRF Tocken
     public static function genCsrfToken($bReturn = false)
     {
