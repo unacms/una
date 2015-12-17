@@ -13,6 +13,9 @@ class BxBaseModConnectConfig extends BxBaseModGeneralConfig
 {
     public $sDefaultRedirectUrl;
     public $sRedirectPage;
+    public $sProfilesModule = 'system';
+    public $isAlwaysConfirmEmail = false;
+    public $isAlwaysAutoApprove = false;
 
     public $sSessionKey;
     public $sSessionUid;

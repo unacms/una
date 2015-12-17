@@ -62,7 +62,7 @@ class BxBaseModConnectModule extends BxDolModule
 
         // display error
         if (is_string($mixed)) {
-            $this->_oTemplate->getPage(_t($this->_oConfig->sDefaultTitleLangKey), MsgBox($mixed));
+            $this->_oTemplate->getPage(_t($this->_oConfig->sDefaultTitleLangKey), DesignBoxContent(_t($this->_oConfig->sDefaultTitleLangKey), MsgBox($mixed)));
             exit;
         } 
 
@@ -104,19 +104,18 @@ class BxBaseModConnectModule extends BxDolModule
      */
     function _createProfileRaw($aProfileInfo, $sAlternativeName = '', $isAutoFriends = true, $isSetLoggedIn = true)
     {
-        $sCountry = '';
-        $sCity = '';
-
         // join by invite only
         if (BxDolRequest::serviceExists('bx_invites', 'account_add_form_check') && $sCode = BxDolService::call('bx_invites', 'account_add_form_check'))
             return $sCode;
 
         // convert fields to unique format
         $aFieldsProfile = $aFieldsAccount = $this->_convertRemoteFields($aProfileInfo, $sAlternativeName);
+        if (empty($aFieldsProfile['email']))
+            return _t('_Incorrect Email');
 
         // prepare fields for particular module
         $aFieldsAccount = BxDolService::call('system', 'prepare_fields', array($aFieldsAccount));
-        $aFieldsProfile = BxDolService::call(getParam('bx_facebook_connect_module'), 'prepare_fields', array($aFieldsProfile));
+        $aFieldsProfile = BxDolService::call($this->_oConfig->sProfilesModule, 'prepare_fields', array($aFieldsProfile));
 
         // check fields existence in Account
         $oFormHelperAccount = BxDolService::call('system', 'forms_helper');
@@ -127,7 +126,7 @@ class BxBaseModConnectModule extends BxDolModule
         }
 
         // check fields existence in Profile
-        if ('system' != getParam('bx_facebook_connect_module') && $oFormHelperProfile = BxDolService::call(getParam('bx_facebook_connect_module'), 'forms_helper')) {
+        if ('system' != $this->_oConfig->sProfilesModule && $oFormHelperProfile = BxDolService::call($this->_oConfig->sProfilesModule, 'forms_helper')) {
             $oFormProfile = $oFormHelperProfile->getObjectFormAdd();
             foreach ($aFieldsProfile as $sKey => $mValue) {
                 if (!$oFormProfile->isFieldExist($sKey))
@@ -163,11 +162,11 @@ class BxBaseModConnectModule extends BxDolModule
 
             // create account
             $aFieldsAccount['password'] = genRndPwd();
-            $aFieldsAccount['email_confirmed'] = (bool)getParam('bx_facebook_connect_confirm_email'); 
+            $aFieldsAccount['email_confirmed'] = $this->_oConfig->isAlwaysConfirmEmail; 
             if (!($iAccountId = $oFormAccount->insert($aFieldsAccount)))
                 return _t('_sys_txt_error_account_creation');
 
-            $isSetPendingApproval = getParam('bx_facebook_connect_approve') ? false : !(bool)getParam('sys_account_autoapproval');
+            $isSetPendingApproval = $this->_oConfig->isAlwaysAutoApprove ? false : !(bool)getParam('sys_account_autoapproval');
             $iAccountProfileId = $oFormHelperAccount->onAccountCreated ($iAccountId, $isSetPendingApproval, BX_PROFILE_ACTION_EXTERNAL);
 
             // create profile
@@ -178,7 +177,7 @@ class BxBaseModConnectModule extends BxDolModule
                 if (!($iContentId = $oFormProfile->insert($aFieldsProfile)))
                     return _t('_sys_txt_error_account_creation');
 
-                $oFormHelperProfile->setAutoApproval($oFormHelperProfile->isAutoApproval() ? true : (bool)getParam('bx_facebook_connect_approve'));
+                $oFormHelperProfile->setAutoApproval($oFormHelperProfile->isAutoApproval() ? true : $this->_oConfig->isAlwaysAutoApprove);
                 if ($sErrorMsg = $oFormHelperProfile->onDataAddAfter ($iAccountId, $iContentId))
                     return $sErrorMsg;
                 
@@ -234,7 +233,7 @@ class BxBaseModConnectModule extends BxDolModule
 
         BxBaseAccountForms::$PROFILE_FIELDS = $aProfileFields;
 
-        $this->_oTemplate->getPage($oPage->getCode());
+        $this->_oTemplate->getPage(false, $oPage->getCode());
     }
 
     /**

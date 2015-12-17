@@ -18,7 +18,7 @@ class BxBaseModConnectTemplate extends BxDolModuleTemplate
         parent::__construct($oConfig, $oDb);
     }
 
-    function getPage($sPageContent, $sPageCaption = false)
+    function getPage($sPageCaption, $sPageContent)
     {
         $oTemplate = BxDolTemplate::getInstance();
 

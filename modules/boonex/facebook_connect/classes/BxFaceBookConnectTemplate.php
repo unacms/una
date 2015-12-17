@@ -24,7 +24,7 @@ class BxFaceBookConnectTemplate extends BxBaseModConnectTemplate
         if (!$oPage)
             $oTemplate->displayPageNotFound();
         else
-            parent::getPage($oPage->getCode());
+            parent::getPage(false, $oPage->getCode());
     }
 }
 

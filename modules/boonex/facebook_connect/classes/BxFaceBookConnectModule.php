@@ -224,15 +224,10 @@ class BxFaceBookConnectModule extends BxBaseModConnectModule
            }
         }
 
-        // try define the user's email
-        $sEmail = !empty($aProfileInfo['email'])
-            ? $aProfileInfo['email']
-            : $aProfileInfo['proxied_email'];
-
         // fill array with all needed values
         $aProfileFields = array(
             'name'      	=> $aProfileInfo['nick_name'] . $sAlternativeName,
-            'email'         => $sEmail,
+            'email'         => isset($aProfileInfo['email']) ? $aProfileInfo['email'] : '',
             'gender'        => isset($aProfileInfo['gender']) ? $aProfileInfo['gender'] : '',
             'birthday'      => isset($aProfileInfo['birthday']) ? $aProfileInfo['birthday'] : '',
             'fullname'		=> (isset($aProfileInfo['first_name']) ? $aProfileInfo['first_name'] : '') . (isset($aProfileInfo['last_name']) ? ' ' . $aProfileInfo['last_name'] : ''),
