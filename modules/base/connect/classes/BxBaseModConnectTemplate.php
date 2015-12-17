@@ -18,52 +18,16 @@ class BxBaseModConnectTemplate extends BxDolModuleTemplate
         parent::__construct($oConfig, $oDb);
     }
 
-    function pageCodeAdminStart()
+    function getPage($sPageContent, $sPageCaption = false)
     {
-        ob_start();
-    }
+        $oTemplate = BxDolTemplate::getInstance();
 
-    function pageCodeAdmin ($sTitle)
-    {
-        global $_page;
-        global $_page_cont;
+        $oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);
+        if ($sPageCaption)
+            $oTemplate->setPageTitle ($sPageCaption);
+        $oTemplate->setPageContent ('page_main_code', $sPageContent);
 
-        $_page['name_index'] = 9;
-
-        $_page['header'] = $sTitle ? $sTitle : $GLOBALS['site']['title'];
-        $_page['header_text'] = $sTitle;
-
-        $_page_cont[$_page['name_index']]['page_main_code'] = ob_get_clean();
-
-        PageCodeAdmin();
-    }
-
-    /**
-     * Function will generate default dolphin's page;
-     *
-     * @param  : $sPageCaption   (string) - page's title;
-     * @param  : $sPageContent   (string) - page's content;
-     * @return : (text) html presentation data;
-     */
-    function getPage($sPageCaption, $sPageContent)
-    {
-        global $_page;
-        global $_page_cont;
-
-        $_page['name_index'] = 0;
-
-        // set module's icon;
-        $GLOBALS['oTopMenu'] -> setCustomSubIconUrl(false === strpos($this->_sPageIcon, '.') ? $this->_sPageIcon : $this -> getIconUrl($this->_sPageIcon));
-        $GLOBALS['oTopMenu'] -> setCustomSubHeader($sPageCaption);
-
-        $_page['header'] = $sPageCaption;
-        $_page['header_text'] = $sPageCaption;
-
-        $_page_cont[0]['page_main_code'] = $sPageContent;
-
-        PageCode($this);
-
-        exit;
+        $oTemplate->getPageCode();
     }
 }
 

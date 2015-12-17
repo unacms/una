@@ -147,7 +147,7 @@ class BxBaseModConnectModule extends BxDolModule
 
         // check redirect page
         if ('join' == $this->_oConfig->sRedirectPage && !$oExistingAccount)
-            return array('remote_profile_info' => $aProfileInfo, 'profile_fields' => $aProfileFields, 'join_page_redirect' => true);
+            return array('remote_profile_info' => $aProfileInfo, 'profile_fields' => $aFieldsAccount, 'join_page_redirect' => true);
 
         // create new profile
         if ($oExistingAccount) {
@@ -230,19 +230,11 @@ class BxBaseModConnectModule extends BxDolModule
         $oSession = BxDolSession::getInstance();
         $oSession->setValue($this->_oConfig->sSessionUid, $iRemoteProfileId);
 
-        bx_import("BxDolJoinProcessor");
+        $oPage = BxDolPage::getObjectInstanceByURI('create-account');
 
-        $GLOBALS['oSysTemplate']->addJsTranslation('_Errors in join form');
-        $GLOBALS['oSysTemplate']->addJs(array('join.js', 'jquery.form.min.js'));
+        BxBaseAccountForms::$PROFILE_FIELDS = $aProfileFields;
 
-        $oJoin = new BxDolJoinProcessor();
-
-        // process received fields
-        foreach($aProfileFields as $sFieldName => $sValue)
-            $oJoin -> aValues[0][$sFieldName] = $sValue;
-
-        $this->_oTemplate->getPage(_t('_JOIN_H'), $oJoin->process());
-        exit;
+        $this->_oTemplate->getPage($oPage->getCode());
     }
 
     /**
@@ -253,29 +245,22 @@ class BxBaseModConnectModule extends BxDolModule
      */
     function _getRedirectUrl($iProfileId, $isExistingProfile = false)
     {
-        if ($isExistingProfile)
-            return 'index' == $this->_oConfig->sRedirectPage ? BX_DOL_URL_ROOT : BX_DOL_URL_ROOT . 'member.php';
-
         $sRedirectUrl = $this->_oConfig->sDefaultRedirectUrl;
 
         switch($this->_oConfig->sRedirectPage) {
-            case 'join':
-            case 'pedit':
-                $sRedirectUrl = BX_DOL_URL_ROOT . 'pedit.php?ID=' . (int)$iProfileId;
-                break;
-
-            case 'avatar':
-                if(BxDolInstallerUtils::isModuleInstalled('avatar') && BxDolService::call('avatar', 'join', array($iProfileId, '_Join complete')))
-                    exit;
-                break;
-
             case 'index':
                 $sRedirectUrl = BX_DOL_URL_ROOT;
                 break;
 
-            case 'member':
+            case 'settings':
+                if (!$isExistingProfile) { 
+                    $sRedirectUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=account-settings-email');
+                    break;
+                }
+
+            case 'dashboard':
             default:
-                $sRedirectUrl = BX_DOL_URL_ROOT . 'member.php';
+                $sRedirectUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=dashboard');
                 break;
             }
 

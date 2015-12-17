@@ -133,6 +133,8 @@ class BxFaceBookConnectModule extends BxBaseModConnectModule
         }
 
         if (!$this -> _oConfig -> mApiID || !$this -> _oConfig -> mApiSecret) {
+            require_once(BX_DIRECTORY_PATH_INC . 'design.inc.php');
+            bx_import('BxDolLanguages');
             $this->_setLastError(_t('_bx_facebook_profile_error_api_keys'));
         } 
         else {

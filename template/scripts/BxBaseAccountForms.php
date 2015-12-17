@@ -15,6 +15,8 @@ class BxBaseAccountForms extends BxDolProfileForms
 {
     protected $_iProfileId;
 
+    static public $PROFILE_FIELDS = array();
+
     public function __construct()
     {
         parent::__construct();
@@ -47,7 +49,9 @@ class BxBaseAccountForms extends BxDolProfileForms
         if (!$oForm)
             return MsgBox(_t('_sys_txt_error_occured'));
 
-        $oForm->initChecker();
+        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account');
+        $oForm->initChecker(self::$PROFILE_FIELDS);
+
         if (!$oForm->isSubmittedAndValid()) {
         	$sCode = $oForm->getCode();
 

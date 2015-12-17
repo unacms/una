@@ -17,10 +17,25 @@ class BxBaseModConnectAlerts extends BxDolAlertsResponse
     {
         if ($o->sUnit == 'profile') {
             switch ($o->sAction) {
+
                 case 'delete':
                     // remove remote account
                     $this->oModule->_oDb->deleteRemoteAccount($o->iObject);
                     break;
+
+                case 'add':
+                    // add remote account and local profile association
+                    bx_import('BxDolSession');
+                    $oSession = BxDolSession::getInstance();
+
+                    $iRemoteProfileId = $oSession->getValue($this->oModule->_oConfig->sSessionUid);
+                    if ($iRemoteProfileId) {
+                        $oSession->unsetValue($this->oModule->_oConfig->sSessionUid);
+                        $this->oModule->_oDb->saveRemoteId($o->iObject, $iRemoteProfileId);
+                    }
+
+                    break;
+
             }
         }
     }

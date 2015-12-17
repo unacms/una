@@ -17,7 +17,8 @@ SET @iHandlerId := (SELECT `id` FROM `sys_alerts_handlers`  WHERE `name` = 'bx_f
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('account', 'logout', @iHandlerId),
-('profile', 'delete', @iHandlerId);
+('profile', 'delete', @iHandlerId),
+('profile', 'add', @iHandlerId);
 
 -- SETTINGS
 
@@ -33,7 +34,7 @@ SET @iCategId = LAST_INSERT_ID();
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `order`, `extra`) VALUES
 ('bx_facebook_connect_api_key', '', @iCategId, '_bx_facebook_option_app_id', 'digit', '', '', 10, ''),
 ('bx_facebook_connect_secret', '', @iCategId, '_bx_facebook_option_app_secret', 'digit', '', '', 20, ''),
-('bx_facebook_connect_redirect_page', 'member', @iCategId, '_bx_facebook_option_redirect', 'select', '', '', 30, 'join,pedit,avatar,member,index'),
+('bx_facebook_connect_redirect_page', 'dashboard', @iCategId, '_bx_facebook_option_redirect', 'select', '', '', 30, 'join,settings,dashboard,index'),
 ('bx_facebook_connect_auto_friends', 'on', @iCategId, '_bx_facebook_option_auto_friends', 'checkbox', '', '', 40, ''),
 ('bx_facebook_connect_extended_info', '', @iCategId, '_bx_facebook_option_fetch_extended_info', 'checkbox', '', '', 50, ''),
 ('bx_facebook_connect_module', 'bx_persons', @iCategId, '_bx_facebook_option_module', 'select', '', '', 60, 'a:2:{s:6:"module";s:11:"bx_facebook";s:6:"method";s:20:"get_profiles_modules";}'),

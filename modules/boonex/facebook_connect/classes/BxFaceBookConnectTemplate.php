@@ -14,7 +14,6 @@ class BxFaceBookConnectTemplate extends BxBaseModConnectTemplate
     function __construct($oConfig, $oDb)
     {
         parent::__construct($oConfig, $oDb);
-        $this->_sPageIcon = 'facebook';
     }
 
     function dislayPageError() 
@@ -22,16 +21,10 @@ class BxFaceBookConnectTemplate extends BxBaseModConnectTemplate
         $oPage = BxDolPage::getObjectInstance('bx_facebook_error');
         $oTemplate = BxDolTemplate::getInstance();
 
-        if ($oPage) {
-
-            $oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);
-            $oTemplate->setPageContent ('page_main_code', $oPage->getCode());
-            $oTemplate->getPageCode();
-
-        } else {
-
+        if (!$oPage)
             $oTemplate->displayPageNotFound();
-        }
+        else
+            parent::getPage($oPage->getCode());
     }
 }
 

@@ -70,7 +70,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
                 return MsgBox(_t('_sys_txt_error_entry_creation'));
         }
 
-        $sResult = $this->onDataAddAfter (false, $iContentId);
+        $sResult = $this->onDataAddAfter (getLoggedId(), $iContentId);
         if ($sResult)
             return $sResult;
 
@@ -268,9 +268,6 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
 
     public function onDataAddAfter ($iAccountId, $iContentId)
     {
-        if (false === $iAccountId)
-            $iAccountId = getLoggedId();
-
         if (!empty($CNF['OBJECT_METATAGS'])) {
             list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
