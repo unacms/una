@@ -1653,7 +1653,6 @@
 	<string name="_sys_form_login_input_caption_system_remember_me"><![CDATA[Запомнить меня]]></string>
 	<string name="_sys_form_login_input_caption_system_role"><![CDATA[Роль]]></string>
 	<string name="_sys_form_login_input_caption_system_submit"><![CDATA[Выполнить]]></string>
-	<string name="_sys_form_login_input_caption_system_submit_block"><![CDATA[Блок Отправки]]></string>
 	<string name="_sys_form_login_input_caption_system_submit_text"><![CDATA[Текст Отправки]]></string>
 	<string name="_sys_form_login_input_email"><![CDATA[Имейл]]></string>
 	<string name="_sys_form_login_input_password"><![CDATA[Пароль]]></string>

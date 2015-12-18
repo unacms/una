@@ -2160,7 +2160,6 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('sys_login', 'system', 'ID', '', '', 0, 'text', '_sys_form_login_input_caption_system_id', '_sys_form_login_input_email', '', 1, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('sys_login', 'system', 'Password', '', '', 0, 'password', '_sys_form_login_input_caption_system_password', '_sys_form_login_input_password', '', 1, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('sys_login', 'system', 'rememberMe', '1', '', 0, 'switcher', '_sys_form_login_input_caption_system_remember_me', '_sys_form_login_input_remember_me', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
-('sys_login', 'system', 'submit_block', '', 'login,submit_text', 0, 'input_set', '_sys_form_login_input_caption_system_submit_block', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('sys_login', 'system', 'login', '_sys_form_login_input_submit', '', 0, 'submit', '_sys_form_login_input_caption_system_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('sys_login', 'system', 'submit_text', '', '', 0, 'custom', '_sys_form_login_input_caption_system_submit_text', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 
@@ -2216,9 +2215,8 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('sys_login', 'ID', 2147483647, 1, 3),
 ('sys_login', 'Password', 2147483647, 1, 4),
 ('sys_login', 'rememberMe', 2147483647, 1, 5),
-('sys_login', 'submit_block', 2147483647, 1, 6),
-('sys_login', 'login', 2147483647, 1, 7),
-('sys_login', 'submit_text', 2147483647, 1, 8),
+('sys_login', 'login', 2147483647, 1, 6),
+('sys_login', 'submit_text', 2147483647, 1, 7),
 
 ('sys_account_create', 'name', 2147483647, 1, 1),
 ('sys_account_create', 'email', 2147483647, 1, 2),
