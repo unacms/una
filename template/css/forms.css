@@ -327,16 +327,8 @@
     line-height:26px;
 }
 
-.bx-form-input-wrapper-submit {
-	text-align: center;
-}
 .bx-form-input-wrapper-submit .bx-btn {
-	display: inline-block;
     float: none;
-
-    width: 100%;
-    max-width: 450px;
-    max-width: 28rem;
 }
 
 .bx-form-input-wrapper-input_set .bx-btn {
