@@ -1899,6 +1899,8 @@
 	<string name="_sys_page_block_title_dashboard"><![CDATA[Панель]]></string>
     <string name="_sys_page_block_title_homepage_menu"><![CDATA[Меню модулей с содержимым]]></string>
 	<string name="_sys_page_block_title_forgot_password"><![CDATA[Забыли Пароль]]></string>
+	<string name="_sys_page_block_system_title_login"><![CDATA[Вход с линкой регистрации]]></string>
+	<string name="_sys_page_block_system_title_login_only"><![CDATA[Вход]]></string>
 	<string name="_sys_page_block_title_login"><![CDATA[Вход]]></string>
 	<string name="_sys_page_block_title_manage_tools"><![CDATA[Управление]]></string>
 	<string name="_sys_page_block_title_profile_stats"><![CDATA[Профиль - Статистика]]></string>

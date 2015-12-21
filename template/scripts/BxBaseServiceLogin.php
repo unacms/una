@@ -53,6 +53,14 @@ class BxBaseServiceLogin extends BxDol
         ));
     }
 
+    public function serviceLoginFormOnly ($sParams = '', $sForceRelocate = '')
+    {
+    	if(strpos($sParams, 'no_join_text') === false)
+    		$sParams = ($sParams != '' ? ' ' : '') . 'no_join_text';
+
+    	return $this->serviceLoginForm($sParams, $sForceRelocate);
+    }
+
     public function serviceLoginForm ($sParams = '', $sForceRelocate = '')
     {
         if (isLogged()) {
@@ -76,7 +84,7 @@ class BxBaseServiceLogin extends BxDol
 
         $sJoinText = '';
         if (strpos($sParams, 'no_join_text') === false) {
-            $sJoinText = '<hr class="bx-def-hr bx-def-margin-sec-topbottom" /><div>' . _t('_sys_txt_login_description', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account')) . '</div>';
+            $sJoinText = '<hr class="bx-def-hr bx-def-margin-sec-topbottom" /><div class="bx-def-font-align-center">' . _t('_sys_txt_login_description', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account')) . '</div>';
         }
 
         BxDolTemplate::getInstance()->addJs(array('jquery.form.min.js'));
