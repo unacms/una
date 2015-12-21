@@ -48,6 +48,13 @@ $aConfig = array(
     ),
 
     /**
+     * Menu triggers.
+     */
+    'menu_triggers' => array(
+    	'trigger_profile_view_submenu'
+    ),
+
+    /**
      * Storages.
      */
     'storages' => array(
@@ -86,6 +93,7 @@ $aConfig = array(
     ),
     'enable_success' => array(
     	'process_page_triggers' => 1,
+		'process_menu_triggers' => 1,
     	'register_transcoders' => 1,
     	'clear_db_cache' => 1,
     ),

@@ -97,6 +97,12 @@
     <string name="_bx_timeline_menu_item_title_system_timeline"><![CDATA[Лента]]></string>
     <string name="_bx_timeline_menu_item_title_timeline"><![CDATA[Лента]]></string>
 
+    <string name="_bx_timeline_menu_item_title_system_create_entry"><![CDATA[Лента]]></string>
+    <string name="_bx_timeline_menu_item_title_create_entry"><![CDATA[Лента]]></string>
+
+	<string name="_bx_timeline_menu_item_title_system_view_timeline_author"><![CDATA[Лента]]></string>
+	<string name="_bx_timeline_menu_item_title_view_timeline_author"><![CDATA[Лента]]></string>
+
 	<string name="_bx_timeline_alert_module_timeline_common_post"><![CDATA[Лента (разместить)]]></string>
 	<string name="_bx_timeline_alert_module_timeline_common_share"><![CDATA[Лента (разместить снова)]]></string>
 	<string name="_bx_timeline_alert_action_added"><![CDATA[добавить]]></string>

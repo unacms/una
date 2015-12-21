@@ -272,74 +272,63 @@ class BxTimelineModule extends BxBaseModNotificationsModule
      * 
      * Get Post block for a separate page.
      */
-    public function serviceGetBlockPost($sProfileModule = 'bx_persons', $iProfileId = 0)
+    public function serviceGetBlockPost($iProfileId = 0)
     {
-        return $this->serviceGetBlockPostProfile($sProfileModule, $iProfileId);
+    	if(empty($iProfileId) && bx_get('profile_id') !== false)
+			$iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+
+		if(empty($iProfileId) && isLogged())
+			$iProfileId = bx_get_logged_profile_id();
+
+        return $this->getBlockPost($iProfileId);
     }
 
-    public function serviceGetBlockPostProfile($sProfileModule = 'bx_persons', $iProfileId = 0)
+    public function serviceGetBlockPostProfile($sProfileModule = 'bx_persons', $iProfileContentId = 0)
     {
-        if(empty($iProfileId) && !empty($sProfileModule) && bx_get('id') !== false) {
-            $oProfile = BxDolProfile::getInstanceByContentAndType(bx_process_input(bx_get('id'), BX_DATA_INT), $sProfileModule);
-            if(!empty($oProfile))
-                $iProfileId = $oProfile->id();
-        }
+        if(empty($sProfileModule))
+    		return array();
 
-        if(!$iProfileId)
-            return array();
+    	if(empty($iProfileContentId) && bx_get('id') !== false)
+    		$iProfileContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
 
-        $this->_iOwnerId = $iProfileId;
+		$oProfile = BxDolProfile::getInstanceByContentAndType($iProfileContentId, $sProfileModule);
+		if(empty($oProfile))
+			return array();
 
-        if($this->isAllowedPost() !== true)
-            return array();
-
-        return array(
-            'content' => $this->_oTemplate->getPostBlock($this->_iOwnerId)
-        );
+		return $this->getBlockPost($oProfile->id());
     }
 
     /*
      * Get View block for a separate page. Will return a block with "Empty" message if nothing found.
      */
-    public function serviceGetBlockView($sProfileModule = 'bx_persons', $iProfileId = 0)
+    public function serviceGetBlockView($iProfileId = 0)
     {
-        $aBlock = $this->serviceGetBlockViewProfile($sProfileModule, $iProfileId);
+    	if(empty($iProfileId) && bx_get('profile_id') !== false)
+			$iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+
+		if(empty($iProfileId) && isLogged())
+			$iProfileId = bx_get_logged_profile_id();
+
+        $aBlock = $this->getBlockView($iProfileId);
         if(!empty($aBlock))
             return $aBlock;
 
         return array('content' => MsgBox(_t('_bx_timeline_txt_msg_no_results')));
     }
 
-    public function serviceGetBlockViewProfile($sProfileModule = 'bx_persons', $iProfileId = 0, $iStart = -1, $iPerPage = -1, $sFilter = '', $aModules = array(), $iTimeline = -1)
+	public function serviceGetBlockViewProfile($sProfileModule = 'bx_persons', $iProfileContentId = 0, $iStart = -1, $iPerPage = -1, $sFilter = '', $aModules = array(), $iTimeline = -1)
     {
-        if(empty($iProfileId) && !empty($sProfileModule) && bx_get('id') !== false) {
-            $oProfile = BxDolProfile::getInstanceByContentAndType(bx_process_input(bx_get('id'), BX_DATA_INT), $sProfileModule);
-            if(!empty($oProfile))
-                $iProfileId = $oProfile->id();
-        }
+    	if(empty($sProfileModule))
+    		return array();
 
-        if (!$iProfileId)
-            return array();
+    	if(empty($iProfileContentId) && bx_get('id') !== false)
+    		$iProfileContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
 
-        $sJsObject = $this->_oConfig->getJsObject('view');
-        $aParams = $this->_prepareParams(BX_BASE_MOD_NTFS_TYPE_OWNER, $iProfileId, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline);
-        $aParams['per_page'] = (int)$iPerPage > 0 ? $iPerPage : $this->_oConfig->getPerPage('profile');
+		$oProfile = BxDolProfile::getInstanceByContentAndType($iProfileContentId, $sProfileModule);
+		if(empty($oProfile))
+			return array();
 
-        $this->_iOwnerId = $aParams['owner_id'];
-        list($sUserName, $sUserUrl) = $this->getUserInfo($aParams['owner_id']);
-
-        $aMenu = array(
-            array('id' => 'timeline-view-all', 'name' => 'timeline-view-all', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:' . $sJsObject . '.changeFilter(this)', 'target' => '_self', 'title' => _t('_bx_timeline_menu_item_view_all'), 'active' => 1),
-            array('id' => 'timeline-view-owner', 'name' => 'timeline-view-owner', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:' . $sJsObject . '.changeFilter(this)', 'target' => '_self', 'title' => _t('_bx_timeline_menu_item_view_owner', $sUserName)),
-            array('id' => 'timeline-view-other', 'name' => 'timeline-view-other', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:' . $sJsObject . '.changeFilter(this)', 'target' => '_self', 'title' => _t('_bx_timeline_menu_item_view_other')),
-            array('id' => 'timeline-get-rss', 'name' => 'timeline-get-rss', 'class' => '', 'link' => BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'rss/' . $iProfileId . '/', 'target' => '_blank', 'title' => _t('_bx_timeline_menu_item_get_rss')),
-        );
-
-        $oMenu = new BxTemplMenuInteractive(array('template' => 'menu_interactive_vertical.html', 'menu_id'=> 'timeline-view-all', 'menu_items' => $aMenu));
-        $oMenu->setSelected('', 'timeline-view-all');
-
-        $sContent = $this->_oTemplate->getViewBlock($aParams);
-        return array('content' => $sContent, 'menu' => $oMenu);
+        return $this->getBlockView($oProfile->id(), $iStart, $iPerPage, $sFilter, $aModules, $iTimeline);
     }
 
     public function serviceGetBlockViewAccount($iProfileId = 0, $iStart = -1, $iPerPage = -1, $iTimeline = -1, $sFilter = '', $aModules = array())
@@ -437,6 +426,45 @@ class BxTimelineModule extends BxBaseModNotificationsModule
     /*
      * COMMON METHODS
      */
+	public function getBlockPost($iProfileId)
+    {
+    	if(!$iProfileId)
+            return array();
+
+        $this->_iOwnerId = $iProfileId;
+
+        if($this->isAllowedPost() !== true)
+            return array();
+
+		$sContent = $this->_oTemplate->getPostBlock($this->_iOwnerId);
+        return array('content' => $sContent);
+    }
+
+    public function getBlockView($iProfileId, $iStart = -1, $iPerPage = -1, $sFilter = '', $aModules = array(), $iTimeline = -1)
+    {
+        if(!$iProfileId)
+			return array();
+
+        $sJsObject = $this->_oConfig->getJsObject('view');
+        $aParams = $this->_prepareParams(BX_BASE_MOD_NTFS_TYPE_OWNER, $iProfileId, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline);
+        $aParams['per_page'] = (int)$iPerPage > 0 ? $iPerPage : $this->_oConfig->getPerPage('profile');
+
+        $this->_iOwnerId = $aParams['owner_id'];
+        list($sUserName, $sUserUrl) = $this->getUserInfo($aParams['owner_id']);
+
+        $aMenu = array(
+            array('id' => 'timeline-view-all', 'name' => 'timeline-view-all', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:' . $sJsObject . '.changeFilter(this)', 'target' => '_self', 'title' => _t('_bx_timeline_menu_item_view_all'), 'active' => 1),
+            array('id' => 'timeline-view-owner', 'name' => 'timeline-view-owner', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:' . $sJsObject . '.changeFilter(this)', 'target' => '_self', 'title' => _t('_bx_timeline_menu_item_view_owner', $sUserName)),
+            array('id' => 'timeline-view-other', 'name' => 'timeline-view-other', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:' . $sJsObject . '.changeFilter(this)', 'target' => '_self', 'title' => _t('_bx_timeline_menu_item_view_other')),
+            array('id' => 'timeline-get-rss', 'name' => 'timeline-get-rss', 'class' => '', 'link' => BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'rss/' . $iProfileId . '/', 'target' => '_blank', 'title' => _t('_bx_timeline_menu_item_get_rss')),
+        );
+
+        $oMenu = new BxTemplMenuInteractive(array('template' => 'menu_interactive_vertical.html', 'menu_id'=> 'timeline-view-all', 'menu_items' => $aMenu));
+        $oMenu->setSelected('', 'timeline-view-all');
+
+        $sContent = $this->_oTemplate->getViewBlock($aParams);
+        return array('content' => $sContent, 'menu' => $oMenu);
+    }
     public function deleteEvent($aEvent)
     {
     	if(empty($aEvent) || !is_array($aEvent) || !$this->_oDb->deleteEvent(array('id' => (int)$aEvent['id'])))
