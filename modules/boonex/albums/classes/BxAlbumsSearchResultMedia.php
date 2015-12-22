@@ -89,6 +89,7 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
                 $this->aCurrent['rss']['link'] = 'modules/?r=albums/rss_media/' . $sMode . '/' . (int)$aParams['album_id'];
                 $this->aCurrent['sorting'] = 'order';
                 $this->sOrderDirection = 'ASC';
+                $oProfileAuthor = BxDolProfile::getInstance((int)$aParams['author']);
                 break;
 
             case 'recent':

@@ -79,7 +79,7 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
 
     public function onDataEditAfter ($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile)
     {
-        if ($s = parent::onDataEditAfter())
+        if ($s = parent::onDataEditAfter($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile))
             return $s;
 
         $CNF = &$this->_oModule->_oConfig->CNF;

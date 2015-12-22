@@ -289,7 +289,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
         $oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$oModule->_oConfig->CNF;
 
-        return $oModule->_serviceBrowse ('album', array('unit_view' => 'gallery', 'album_id' => $aData[$CNF['FIELD_ID']]), BX_DB_PADDING_DEF, true, true, 'SearchResultMedia');
+        return $oModule->_serviceBrowse ('album', array('unit_view' => 'gallery', 'album_id' => $aData[$CNF['FIELD_ID']], 'author' => $aData[$CNF['FIELD_AUTHOR']]), BX_DB_PADDING_DEF, true, true, 'SearchResultMedia');
     }
 
     function mediaAuthor ($aMediaInfo, $iProfileId = false, $sFuncAuthorDesc = '', $sTemplateName = '') 
