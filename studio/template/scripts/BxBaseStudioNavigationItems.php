@@ -634,7 +634,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                     'caption' => _t('_adm_nav_txt_items_submenu_popup'),
                     'info' => '',
                     'value' => '1',
-                    'checked' => $aItem['submenu_popup'] == '1',
+                    'checked' => isset($aItem['submenu_popup']) && $aItem['submenu_popup'] == '1',
                     'db' => array (
                         'pass' => 'Int',
                     )

@@ -109,6 +109,9 @@
 }
 
 /* form inputs */
+.bx-form-input-wrapper {
+	position: relative;
+}
 
 .bx-form-input-slider,
 .bx-form-input-doublerange,
