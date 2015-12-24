@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS `bx_inv_invites` (
   `id` int(11) NOT NULL auto_increment,
   `account_id` int(11) collate utf8_unicode_ci NOT NULL,
   `profile_id` int(11) collate utf8_unicode_ci NOT NULL,
+  `key` varchar(128) collate utf8_unicode_ci NOT NULL,
   `email` varchar(128) collate utf8_unicode_ci NOT NULL,
   `date` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
