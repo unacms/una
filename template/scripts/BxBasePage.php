@@ -150,6 +150,8 @@ class BxBasePage extends BxDolPage
                     isset($mixedContent['menu']) ? $mixedContent['menu'] : false
 				);
             } elseif (is_string($mixedContent) && !empty($mixedContent)) {
+                if (!function_exists('DesignBoxContent'))
+                    require_once(BX_DIRECTORY_PATH_INC . 'design.inc.php');
                 $sContentWithBox = DesignBoxContent($sTitle, $mixedContent, $aBlock['designbox_id']);
             }
         }

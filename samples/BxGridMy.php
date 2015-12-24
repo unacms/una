@@ -113,7 +113,6 @@ class BxGridMy extends BxTemplGrid
                 'id' => 'sample-add-form',
                 'action' => 'grid.php?' . bx_encode_url_params($_GET, array('ids', '_r')), // grid.php is usiversal actions handler file, we need to pass object and action names to it at least, or just all the params to preserve such states like filter and paginate
                 'method' => 'post',
-                'class' => 'bx-def-margin-bottom',
             ),
             'params' => array (
                 'db' => array(
@@ -203,7 +202,7 @@ class BxGridMy extends BxTemplGrid
 
             // we need to use 'transBox' function to properly display 'popup'
             $s = BxTemplFunctions::getInstance()->transBox('', '
-                <div class="bx-def-padding-top bx-def-padding-left bx-def-padding-right bx-def-color-bg-block" style="width:300px;">' . $oForm->getCode() . '</div>
+                <div class="bx-def-padding bx-def-color-bg-block" style="width:300px;">' . $oForm->getCode() . '</div>
                 <script>
                     $(document).ready(function () {
                         $("#sample-add-form").ajaxForm({

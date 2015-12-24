@@ -108,6 +108,11 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         return $this->_serviceTemplateFunc('unit', $iContentId);
     }
 
+    public function serviceProfilePicture ($iContentId)
+    {
+        return $this->_serviceTemplateFunc('urlPicture', $iContentId);
+    }
+
     public function serviceProfileAvatar ($iContentId)
     {
         return $this->_serviceTemplateFunc('urlAvatar', $iContentId);
@@ -152,6 +157,11 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
     public function servicePrepareFields ($aFieldsProfile)
     {
         return $aFieldsProfile;
+    }
+
+    public function serviceFormsHelper ()
+    {
+        return parent::serviceFormsHelper ();
     }
 
     public function serviceBrowseRecentProfiles ($bDisplayEmptyMsg = false)

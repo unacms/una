@@ -248,14 +248,14 @@ function bx_require_authentication ($bStudio = false)
  * @param $bStudio display login form for studio
  * @param $bAjaxMode login form displayed via AJAX
  */
-function bx_login_form($bStudio = false, $bAjaxMode = false)
+function bx_login_form($bStudio = false, $bAjaxMode = false, $sForceRelocate = '')
 {
     if ($bStudio == 1) {
         BxTemplStudioFunctions::getInstance()->getLoginForm();
         exit;
     }
 
-    $sFormCode = BxDolService::call('system', 'login_form', array(), 'TemplServiceLogin');
+    $sFormCode = BxDolService::call('system', 'login_form', array('', $sForceRelocate), 'TemplServiceLogin');
 
     if ($bAjaxMode) {
         echo $GLOBALS['oFunctions']->transBox('', $sFormCode, false, true);

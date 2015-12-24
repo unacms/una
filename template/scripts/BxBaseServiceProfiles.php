@@ -135,7 +135,7 @@ class BxBaseServiceProfiles extends BxDol
         return $s . '<div class="bx-clear"></div>';
     }
 
-    public function serviceAccountProfileSwitcher ($iAccountId = false)
+    public function serviceAccountProfileSwitcher ($iAccountId = false, $iActiveProfileId = null, $sUrlProfileAction = '')
     {
         $oProfilesQuery = BxDolProfileQuery::getInstance();
 
@@ -143,7 +143,9 @@ class BxBaseServiceProfiles extends BxDol
         if (!$aProfiles)
             return false;
 
-        $iLoggedPofileId = bx_get_logged_profile_id();
+        if (null === $iActiveProfileId)
+            $iActiveProfileId = bx_get_logged_profile_id();
+
         $aVars = array (
             'bx_repeat:row' => array(),
         );
@@ -151,14 +153,14 @@ class BxBaseServiceProfiles extends BxDol
             if ($aProfile['type'] == 'system') // skip system account profile
                 continue;
             $aVars['bx_repeat:row'][] = array (
-                'class' => $iLoggedPofileId == $aProfile['id'] ? '' : 'bx-def-color-bg-box',
+                'class' => $iActiveProfileId == $aProfile['id'] ? '' : 'bx-def-color-bg-box',
                 'bx_if:active' => array (
-                    'condition' => $iLoggedPofileId == $aProfile['id'],
+                    'condition' => $iActiveProfileId == $aProfile['id'],
                     'content' => array('id' => $aProfile['id']),
                 ),
                 'bx_if:inactive' => array (
-                    'condition' => $iLoggedPofileId != $aProfile['id'],
-                    'content' => array('id' => $aProfile['id'], 'url_switch' => BxDolPermalinks::getInstance()->permalink('page.php?i=account-profile-switcher', array('switch_to_profile' => $aProfile['id']))),
+                    'condition' => $iActiveProfileId != $aProfile['id'],
+                    'content' => array('id' => $aProfile['id'], 'url_switch' => $sUrlProfileAction ? str_replace('{profile_id}', $aProfile['id'], $sUrlProfileAction) : BxDolPermalinks::getInstance()->permalink('page.php?i=account-profile-switcher', array('switch_to_profile' => $aProfile['id']))),
                 ),
                 'unit' => BxDolService::call($aProfile['type'], 'profile_unit', array($aProfile['content_id'])),
             );

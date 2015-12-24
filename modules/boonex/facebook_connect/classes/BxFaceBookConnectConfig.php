@@ -41,9 +41,7 @@ class BxFaceBookConnectConfig extends BxBaseModConnectConfig
         $this -> isAlwaysConfirmEmail = (bool)getParam('bx_facebook_connect_confirm_email'); 
         $this -> isAlwaysAutoApprove = (bool)getParam('bx_facebook_connect_approve');
 
-        $this -> bAutoFriends = 'on' == getParam('bx_facebook_connect_auto_friends')
-            ? true
-            : false;
+        $this -> bAutoFriends = 'on' == getParam('bx_facebook_connect_auto_friends');
 
         $this -> aFaceBookReqParams = array(
             'scope' => getParam('bx_facebook_connect_extended_info') 

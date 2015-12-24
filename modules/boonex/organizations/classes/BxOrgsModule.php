@@ -22,7 +22,7 @@ class BxOrgsModule extends BxBaseModProfileModule
     public function servicePrepareFields ($aFieldsProfile)
     {
         $aFieldsProfile['org_name'] = $aFieldsProfile['name'];
-        $aFieldsProfile['org_desc'] = $aFieldsProfile['description'];
+        $aFieldsProfile['org_desc'] = isset($aFieldsProfile['description']) ? $aFieldsProfile['description'] : '';
         unset($aFieldsProfile['name']);
         unset($aFieldsProfile['description']);
         return $aFieldsProfile;

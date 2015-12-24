@@ -6,12 +6,12 @@ INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `B
 
 -- OBJECTS: AUTH
 
-INSERT INTO  `sys_objects_auths` (`Name`, `Title`, `Link`, `Icon`) VALUES
+INSERT INTO `sys_objects_auths` (`Name`, `Title`, `Link`, `Icon`) VALUES
 ('bx_facebook', '_bx_facebook_auth_title', 'modules/?r=facebook_connect/login_form', 'facebook-square');
 
 -- ALERTS
 
-INSERT INTO `sys_alerts_handlers` SET `name`  = 'bx_facebook_connect', `class` = 'BxFaceBookConnectAlerts', `file` = 'modules/boonex/facebook_connect/classes/BxFaceBookConnectAlerts.php';
+INSERT INTO `sys_alerts_handlers` SET `name` = 'bx_facebook_connect', `class` = 'BxFaceBookConnectAlerts', `file` = 'modules/boonex/facebook_connect/classes/BxFaceBookConnectAlerts.php';
 
 SET @iHandlerId := (SELECT `id` FROM `sys_alerts_handlers`  WHERE `name` = 'bx_facebook_connect');
 
