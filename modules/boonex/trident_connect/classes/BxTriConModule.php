@@ -37,6 +37,7 @@ class BxTriConModule extends BxBaseModConnectModule
             $this->_redirect ($this -> _oConfig -> sDefaultRedirectUrl);
 
         if (!$this->_oConfig->sApiID || !$this->_oConfig->sApiSecret || !$this->_oConfig->sApiUrl) {
+            require_once(BX_DIRECTORY_PATH_INC . 'design.inc.php');
             $sCode =  MsgBox( _t('_bx_tricon_profile_error_api_keys') );
             $this->_oTemplate->getPage(_t('_bx_tricon'), $sCode);            
         } 
