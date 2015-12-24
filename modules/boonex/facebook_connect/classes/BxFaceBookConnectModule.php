@@ -93,8 +93,6 @@ class BxFaceBookConnectModule extends BxBaseModConnectModule
                     $this -> setLogged($iProfileId);
                 } 
                 else {
-                    $sAlternativeNickName = '';
-
                     // process profile's nickname
                     $aFacebookProfileInfo['nick_name'] = $this
                         -> _proccesNickName($aFacebookProfileInfo['first_name']);
@@ -109,7 +107,7 @@ class BxFaceBookConnectModule extends BxBaseModConnectModule
                     }
 
                     // create new profile
-                    $this -> _createProfile($aFacebookProfileInfo, $sAlternativeNickName);
+                    $this -> _createProfile($aFacebookProfileInfo);
                 }
             } else {
                 // FB profile info is not defined;

@@ -213,7 +213,16 @@ class BxDolProfile extends BxDol implements iBxDolProfile
     }
 
     /**
-     * Get thumbnail url
+     * Get picture url
+     */
+    public function getPicture($iProfileId = 0)
+    {
+        $aInfo = $this->getInfo($iProfileId);
+        return BxDolService::call($aInfo['type'], 'profile_picture', array($aInfo['content_id']));
+    }
+
+    /**
+     * Get avatar url
      */
     public function getAvatar($iProfileId = 0)
     {

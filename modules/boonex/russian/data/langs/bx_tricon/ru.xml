@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="ru" flag="ru" title="Russian">
+	<string name="_sys_module_tricon"><![CDATA[Trident-соединение]]></string>
+	<string name="_bx_tricon"><![CDATA[Trident-соединение]]></string>
+	<string name="_bx_tricon_settings"><![CDATA[Trident-соединение]]></string>
+	<string name="_bx_tricon_information"><![CDATA[Trident-соединение, информация]]></string>
+	<string name="_bx_tricon_information_block"><![CDATA[
+Этот модуль может использоваться для захода на сайт используя другой Trident сайт (главный сайт). <br />
+Для этого нужно зайти на главный сайт, установить модуль "OAuth2 Server", добавить новый клиентский сайт, указав любой заголовок и следующий URL: <br />
+<strong>{0}</strong><br />
+Затем нужно ввести полученные ключ и секретный код в настройках этого модуля]]></string>
+	<string name="_bx_tricon_error_join_unavailable"><![CDATA[Извините, но в данный момент регистрация не доступна. Пожалуйста, попробуйте позже.]]></string>
+	<string name="_bx_tricon_profile_error_info"><![CDATA[Невозможно получить информацию о Вашем профиле]]></string>
+	<string name="_bx_tricon_profile_error_api_keys"><![CDATA[Пожалуйста, настройте модуль в административной панели (невозможно определить ключи)]]></string>
+	<string name="_bx_tricon_chart"><![CDATA[Trident профили]]></string>
+	<string name="_bx_tricon_auth_title"><![CDATA[Trident-соединение]]></string>
+	<string name="_bx_tricon_state_invalid"><![CDATA['State' параметр не совпадает]]></string>
+
+    <string name="_bx_tricon_adm_stg_cpt_type"><![CDATA[Trident-соединение]]></string>
+    <string name="_bx_tricon_adm_stg_cpt_category_general"><![CDATA[Общие]]></string>
+    <string name="_bx_tricon_option_app_id"><![CDATA[Trident App ID]]></string>
+    <string name="_bx_tricon_option_app_secret"><![CDATA[Trident App Secret]]></string>
+    <string name="_bx_tricon_option_app_url"><![CDATA[URL главного Trident сайта]]></string>
+    <string name="_bx_tricon_option_redirect"><![CDATA[Перенаправления после захода на сайт]]></string>
+    <string name="_bx_tricon_option_auto_friends"><![CDATA[Автоматически делать друзьями тех, что уже друг на другом Trident сайте]]></string>
+    <string name="_bx_tricon_option_module"><![CDATA[Модуль в котором создавать профили]]></string>
+    <string name="_bx_tricon_option_confirm_email"><![CDATA[Всегда подтверждать емейл, когда заходят через Trident-соединение]]></string>
+    <string name="_bx_tricon_option_approve"><![CDATA[Всегда одобрять профиль, когда заходят через Trident-соединение]]></string>
+    <string name="_bx_tricon_option_rewrite"><![CDATA[Использовать преобразованные ссылки на главном Trident сайта]]></string>
+
+	<string name="_bx_tricon_et_password_generated"><![CDATA[Trident-соединение: временный пароль]]></string>
+	<string name="_bx_tricon_et_password_generated_subject"><![CDATA[Временный пароль]]></string>
+	<string name="_bx_tricon_et_password_generated_body"><![CDATA[<bx_include_auto:_email_header.html />
+<p>Временный пароль - <b>{password}</b></p>
+<p>Его нужно изменить, после первого захода на сайт.</p>
+<bx_include_auto:_email_footer.html />]]></string>
+</resources>

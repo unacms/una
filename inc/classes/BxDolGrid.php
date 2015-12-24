@@ -270,7 +270,7 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
      * @param $sObject object name
      * @return object instance or false on error
      */
-    public static function getObjectInstance($sObject)
+    public static function getObjectInstance($sObject, $oTemplate = false)
     {
         if (isset($GLOBALS['bxDolClasses']['BxDolGrid!'.$sObject]))
             return $GLOBALS['bxDolClasses']['BxDolGrid!'.$sObject];
@@ -286,7 +286,7 @@ class BxDolGrid extends BxDol implements iBxDolFactoryObject, iBxDolReplaceable
                 require_once(BX_DIRECTORY_PATH_ROOT . $aObject['override_class_file']);
         }
 
-        $o = new $sClass($aObject);
+        $o = new $sClass($aObject, $oTemplate);
 
         if (!$o->_isVisibleGrid($aObject))
             return false;

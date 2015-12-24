@@ -1496,7 +1496,7 @@
 <p>Ваш профиль был проверен и активирован!</p>
 <p>Просто перейдите по ссылке внизу, чтобы воспользоваться нашими услугами:<br />
 <a href="{site_url}member.php">{site_url}member.php</a></p>
-<p>Ваш имейл, использованнй для регистрации: <span style="color:#FF6633">{account_email}</span></p>
+<p>Ваш имейл, использованный для регистрации: <span style="color:#FF6633">{account_email}</span></p>
 <p><b>Спасибо за использование нашего сервиса!</b></p>
 <bx_include_auto:_email_footer.html />]]></string>
 	<string name="_sys_et_txt_body_profile_change_status_pending"><![CDATA[<bx_include_auto:_email_header.html />
@@ -1887,7 +1887,7 @@
     <string name="_sys_on"><![CDATA[вкл.]]></string>
     <string name="_sys_off"><![CDATA[выкл.]]></string>
 	<string name="_sys_page_block_title_about"><![CDATA[Об...]]></string>
-	<string name="_sys_page_block_title_account_profile_switcher"><![CDATA[Использовать сайт для ...]]></string>
+	<string name="_sys_page_block_title_account_profile_switcher"><![CDATA[Использовать сайт как ...]]></string>
 	<string name="_sys_page_block_title_account_settings_delete"><![CDATA[Удалить Аккаунт]]></string>
 	<string name="_sys_page_block_title_account_settings_email"><![CDATA[Имейл - Настройки]]></string>
 	<string name="_sys_page_block_title_account_settings_info"><![CDATA[Редактировать Аккаунт]]></string>

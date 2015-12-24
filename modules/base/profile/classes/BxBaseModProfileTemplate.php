@@ -130,7 +130,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     }
 
     /**
-     * Get profile picture preview url
+     * Get profile avatar url
      */
     function urlAvatar ($aData, $bSubstituteNoImage = true)
     {

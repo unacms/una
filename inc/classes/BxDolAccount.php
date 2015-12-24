@@ -186,7 +186,15 @@ class BxDolAccount extends BxDol
     }
 
     /**
-     * Get avatar picture url
+     * Get picture url
+     */
+    public function getPicture($iAccountId = false)
+    {
+        return BxDolTemplate::getInstance()->getImageUrl('account-picture.png');
+    }
+
+    /**
+     * Get avatar url
      */
     public function getAvatar($iAccountId = false)
     {
