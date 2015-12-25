@@ -298,6 +298,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
                     `ObjectVote` AS `object_vote`,
                     `TriggerTable` AS `trigger_table`,
                     `TriggerFieldId` AS `trigger_field_id`,
+                    `TriggerFieldAuthor` AS `trigger_field_author`,
                     `TriggerFieldTitle` AS `trigger_field_title`,
                     `TriggerFieldComments` AS `trigger_field_comments`,
                     `ClassName` AS `class_name`,
@@ -476,6 +477,14 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
     public function getCommentsTableName ()
     {
         return $this->_oQuery->getTableName ();
+    }
+
+	public function getObjectAuthorId ($iObjectId = 0)
+    {
+    	if(empty($this->_aSystem['trigger_field_author']))
+    		return 0;
+
+        return $this->_oQuery->getObjectAuthorId ($iObjectId ? $iObjectId : $this->getId());
     }
 
     public function getObjectTitle ($iObjectId = 0)
@@ -779,7 +788,8 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
             return;
         }
 
-        if($this->_oQuery->removeComment ($this->getId(), $aCmt['cmt_id'], $aCmt['cmt_parent_id'])) {
+        $iCmtObjectId = $this->getId();
+        if($this->_oQuery->removeComment($iCmtObjectId, $aCmt['cmt_id'], $aCmt['cmt_parent_id'])) {
             $this->_triggerComment();
 
             $oStorage = BxDolStorage::getObjectInstance($this->getStorageObjectName());
@@ -794,8 +804,11 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 
             $this->deleteMetaInfo ($aCmt['cmt_id']);
 
-            $oZ = new BxDolAlerts($this->_sSystem, 'commentRemoved', $this->getId(), $iCmtAuthorId, array('comment_id' => $aCmt['cmt_id'], 'comment_author_id' => $aCmt['cmt_author_id']));
+            $oZ = new BxDolAlerts($this->_sSystem, 'commentRemoved', $iCmtObjectId, $iCmtAuthorId, array('comment_id' => $aCmt['cmt_id'], 'comment_author_id' => $aCmt['cmt_author_id']));
             $oZ->alert();
+
+            $oZ = new BxDolAlerts('comment', 'deleted', $aCmt['cmt_id'], $iCmtAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iCmtObjectId));
+        	$oZ->alert();
 
             $this->_echoResultJson(array('id' => $iCmtId));
             return;

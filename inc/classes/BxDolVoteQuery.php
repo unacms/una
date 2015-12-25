@@ -18,6 +18,7 @@ class BxDolVoteQuery extends BxDolDb
     protected $_sTableTrack;
     protected $_sTriggerTable;
     protected $_sTriggerFieldId;
+    protected $_sTriggerFieldAuthor;
     protected $_sTriggerFieldRate;
     protected $_sTriggerFieldCount;
 
@@ -34,6 +35,7 @@ class BxDolVoteQuery extends BxDolDb
         $this->_sTableTrack = $aSystem['table_track'];
         $this->_sTriggerTable = $aSystem['trigger_table'];
         $this->_sTriggerFieldId = $aSystem['trigger_field_id'];
+        $this->_sTriggerFieldAuthor = $aSystem['trigger_field_author'];
         $this->_sTriggerFieldRate = $aSystem['trigger_field_rate'];
         $this->_sTriggerFieldCount = $aSystem['trigger_field_count'];
 
@@ -130,6 +132,12 @@ class BxDolVoteQuery extends BxDolDb
         $this->query ($sQuery);
 
         $this->query ("OPTIMIZE TABLE {$this->_sTableTrack}");
+    }
+
+	public function getObjectAuthorId($iId)
+    {
+        $sQuery = $this->prepare("SELECT `{$this->_sTriggerFieldAuthor}` FROM `{$this->_sTriggerTable}` WHERE `{$this->_sTriggerFieldId}` = ? LIMIT 1", $iId);
+        return $this->getOne($sQuery);
     }
 
     public function updateTriggerTable($iObjectId)

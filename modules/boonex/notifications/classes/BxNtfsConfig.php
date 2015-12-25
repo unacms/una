@@ -40,6 +40,7 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
         	'view' => 'BxNtfsView',
         );
         $this->_aJsObjects = array(
+        	'main' => 'oBxNtfsMain',
             'view' => 'oBxNtfsView',
         );
 

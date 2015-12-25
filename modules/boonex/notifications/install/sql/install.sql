@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS `bx_notifications_events` (
   `type` varchar(255) collate utf8_unicode_ci NOT NULL,
   `action` varchar(255) collate utf8_unicode_ci NOT NULL,
   `object_id` text collate utf8_unicode_ci NOT NULL,
+  `object_owner_id` int(11) unsigned NOT NULL default '0',
   `object_privacy_view` int(11) NOT NULL default '3',
   `subobject_id` int(11) NOT NULL default '0',
   `content` text collate utf8_unicode_ci NOT NULL,

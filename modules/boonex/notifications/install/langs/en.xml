@@ -13,6 +13,9 @@
     <string name="_bx_ntfs_menu_item_title_system_notifications"><![CDATA[Notifications]]></string>
     <string name="_bx_ntfs_menu_item_title_notifications"><![CDATA[Notifications]]></string>
 
+	<string name="_bx_ntfs_menu_item_title_connections"><![CDATA[My Subscriptions]]></string>
+	<string name="_bx_ntfs_menu_item_title_object_owner"><![CDATA[My Content]]></string>
+
 	<string name="_bx_ntfs_option_events_per_page"><![CDATA[Number of events are displayed on View page]]></string>
 	<string name="_bx_ntfs_option_events_hide"><![CDATA[Show events in Notifications]]></string>
 

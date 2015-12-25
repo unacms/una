@@ -90,8 +90,12 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         if ($oProfile->isActive() && !empty($aTrackTextFieldsChanges['changed_fields']))
             $oProfile->disapprove(BX_PROFILE_ACTION_AUTO);
 
-        // create an alert
-        bx_alert($this->_oModule->getName(), 'edited', $aContentInfo[$CNF['FIELD_ID']], false, array('privacy_view' => $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]));
+        // alert
+        $aParams = array('object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']]);
+        if(isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]))
+        	$aParams['privacy_view'] = $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']];
+
+        bx_alert($this->_oModule->getName(), 'edited', $aContentInfo[$CNF['FIELD_ID']], false, $aParams);
 
         return '';
     }
@@ -107,7 +111,10 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
             return MsgBox(_t('_sys_txt_error_occured'));
 
         // alert
-        $aParams = isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) ? array('privacy_view' => $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) : array();
+        $aParams = array('object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']]);
+        if(isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]))
+        	$aParams['privacy_view'] = $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']];
+
         bx_alert($this->_oModule->getName(), 'added', $iContentId, false, $aParams);
 
         return '';

@@ -282,15 +282,15 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 
 -- COMMENTS
 
-INSERT INTO `sys_objects_cmts` (`Name`, `Table`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Nl2br`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `BaseUrl`, `ObjectVote`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldTitle`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES
-('bx_albums', 'bx_albums_cmts', 1, 5000, 1000, 1, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-album&id={object_id}', '', 'bx_albums_albums', 'id', 'title', 'comments', '', ''),
-('bx_albums_media', 'bx_albums_cmts_media', 1, 5000, 1000, 1, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-album-media&id={object_id}', '', 'bx_albums_files2albums', 'id', 'title', 'comments', '', '');
+INSERT INTO `sys_objects_cmts` (`Name`, `Table`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Nl2br`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `BaseUrl`, `ObjectVote`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldTitle`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES
+('bx_albums', 'bx_albums_cmts', 1, 5000, 1000, 1, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-album&id={object_id}', '', 'bx_albums_albums', 'id', 'author', 'title', 'comments', '', ''),
+('bx_albums_media', 'bx_albums_cmts_media', 1, 5000, 1000, 1, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-album-media&id={object_id}', '', 'bx_albums_files2albums', 'id', '', 'title', 'comments', '', '');
 
 -- VOTES
 
-INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
-('bx_albums', 'bx_albums_votes', 'bx_albums_votes_track', '604800', '1', '1', '0', '1', 'bx_albums_albums', 'id', 'rate', 'votes', '', ''),
-('bx_albums_media', 'bx_albums_votes_media', 'bx_albums_votes_media_track', '604800', '1', '1', '0', '1', 'bx_albums_files2albums', 'id', 'rate', 'votes', '', '');
+INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
+('bx_albums', 'bx_albums_votes', 'bx_albums_votes_track', '604800', '1', '1', '0', '1', 'bx_albums_albums', 'id', 'author', 'rate', 'votes', '', ''),
+('bx_albums_media', 'bx_albums_votes_media', 'bx_albums_votes_media_track', '604800', '1', '1', '0', '1', 'bx_albums_files2albums', 'id', '', 'rate', 'votes', '', '');
 
 -- VIEWS
 

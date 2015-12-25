@@ -121,6 +121,7 @@ CREATE TABLE `sys_objects_cmts` (
   `ObjectVote` varchar(64) NOT NULL,
   `TriggerTable` varchar(32) NOT NULL,
   `TriggerFieldId` varchar(32) NOT NULL,
+  `TriggerFieldAuthor` varchar(32) NOT NULL,
   `TriggerFieldTitle` varchar(32) NOT NULL,
   `TriggerFieldComments` varchar(32) NOT NULL,
   `ClassName` varchar(32) NOT NULL,
@@ -734,6 +735,7 @@ CREATE TABLE `sys_objects_vote` (
   `IsOn` tinyint(1) NOT NULL default '1',
   `TriggerTable` varchar(32) NOT NULL default '',
   `TriggerFieldId` varchar(32) NOT NULL default '',
+  `TriggerFieldAuthor` varchar(32) NOT NULL default '',
   `TriggerFieldRate` varchar(32) NOT NULL default '',
   `TriggerFieldRateCount` varchar(32) NOT NULL default '',
   `ClassName` varchar(32) NOT NULL default '',
@@ -741,8 +743,8 @@ CREATE TABLE `sys_objects_vote` (
   PRIMARY KEY  (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
-INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
-('sys_cmts', 'sys_cmts_votes', 'sys_cmts_votes_track', '604800', '1', '1', '0', '1', 'sys_cmts_ids', 'id', 'rate', 'votes', '', '');
+INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
+('sys_cmts', 'sys_cmts_votes', 'sys_cmts_votes_track', '604800', '1', '1', '0', '1', 'sys_cmts_ids', 'id', '', 'rate', 'votes', '', '');
 
 
 -- -------------------------------------------------------

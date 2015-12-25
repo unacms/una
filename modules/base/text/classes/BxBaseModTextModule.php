@@ -233,6 +233,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
 			'entry_sample' => _t($CNF['T']['txt_sample_single']),
 			'entry_url' => $sEntryUrl,
 			'entry_caption' => $sEntryCaption,
+			'entry_author' => $aContentInfo[$CNF['FIELD_AUTHOR']],
 			'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
 		);
     }
@@ -260,6 +261,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
 			'entry_sample' => _t($CNF['T']['txt_sample_single']),
 			'entry_url' => $sEntryUrl,
 			'entry_caption' => $sEntryCaption,
+			'entry_author' => $aContentInfo[$CNF['FIELD_AUTHOR']],
 			'subentry_sample' => _t($CNF['T']['txt_sample_comment_single']),
 			'subentry_url' => $oComment->getViewUrl((int)$aEvent['subobject_id']),
 			'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
@@ -289,6 +291,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
 			'entry_sample' => _t($CNF['T']['txt_sample_single']),
 			'entry_url' => $sEntryUrl,
 			'entry_caption' => $sEntryCaption,
+			'entry_author' => $aContentInfo[$CNF['FIELD_AUTHOR']],
 			'subentry_sample' => _t($CNF['T']['txt_sample_vote_single']),
 			'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
 		);

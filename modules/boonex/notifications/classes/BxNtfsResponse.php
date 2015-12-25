@@ -25,8 +25,8 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
      */
     public function response($oAlert)
     {
-    	$iPrivacyView = $this->_getPrivacyView($oAlert->aExtras);
-        if($iPrivacyView == BX_DOL_PG_HIDDEN)
+    	$iObjectPrivacyView = $this->_getObjectPrivacyView($oAlert->aExtras);
+        if($iObjectPrivacyView == BX_DOL_PG_HIDDEN)
             return;
 
         $aHandler = $this->_oModule->_oConfig->getHandlers($oAlert->sUnit . '_' . $oAlert->sAction);
@@ -37,7 +37,8 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
                     'type' => $oAlert->sUnit,
                     'action' => $oAlert->sAction,
                     'object_id' => $oAlert->iObject,
-                    'object_privacy_view' => $iPrivacyView,
+                	'object_owner_id' => $this->_getObjectOwnerId($oAlert->aExtras),
+                    'object_privacy_view' => $iObjectPrivacyView,
                 	'subobject_id' => $this->_getSubObjectId($oAlert->aExtras),
                     'content' => '',
                 	'processed' => 0
@@ -49,7 +50,7 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
 				break;
 
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_UPDATE:
-                $this->_oModule->_oDb->updateEvent(array('object_privacy_view' => $iPrivacyView), array('type' => $oAlert->sUnit, 'object_id' => $oAlert->iObject));
+                $this->_oModule->_oDb->updateEvent(array('object_privacy_view' => $iObjectPrivacyView), array('type' => $oAlert->sUnit, 'object_id' => $oAlert->iObject));
                 break;
 
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_DELETE:

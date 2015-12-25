@@ -145,6 +145,7 @@ class BxDolVote extends BxDolObject
                     `IsOn` AS `is_on`,
                     `TriggerTable` AS `trigger_table`,
                     `TriggerFieldId` AS `trigger_field_id`,
+                    `TriggerFieldAuthor` AS `trigger_field_author`,
                     `TriggerFieldRate` AS `trigger_field_rate`,
                     `TriggerFieldRateCount` AS `trigger_field_count`,
                     `ClassName` AS `class_name`,
@@ -201,6 +202,14 @@ class BxDolVote extends BxDolObject
         return (int)$this->_aSystem['max_value'];
     }
 
+	public function getObjectAuthorId($iObjectId = 0)
+    {
+    	if(empty($this->_aSystem['trigger_field_author']))
+    		return 0;
+
+        return $this->_oQuery->getObjectAuthorId($iObjectId ? $iObjectId : $this->getId());
+    }
+
     /**
      * Interface functions for outer usage
      */
@@ -224,6 +233,7 @@ class BxDolVote extends BxDolObject
         return $this->_oQuery->getSqlParts($sMainTable, $sMainField);
     }
 
+
     /**
      * Actions functions
      */
@@ -235,6 +245,7 @@ class BxDolVote extends BxDolObject
         }
 
         $iObjectId = $this->getId();
+        $iObjectAuthorId = $this->getObjectAuthorId($iObjectId);
         $iAuthorId = $this->_getAuthorId();
         $iAuthorIp = $this->_getAuthorIp();
 
@@ -278,7 +289,10 @@ class BxDolVote extends BxDolObject
 
         $this->_triggerVote();
 
-        $oZ = new BxDolAlerts($this->_sSystem, ($bPerformUndo ? 'un' : '') . 'doVote', $this->getId(), $iAuthorId, array('vote_id' => $iId, 'vote_author_id' => $iAuthorId, 'value' => $iValue));
+        $oZ = new BxDolAlerts($this->_sSystem, ($bPerformUndo ? 'un' : '') . 'doVote', $iObjectId, $iAuthorId, array('vote_id' => $iId, 'vote_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId, 'value' => $iValue));
+        $oZ->alert();
+
+        $oZ = new BxDolAlerts('vote', ($bPerformUndo ? 'un' : '') . 'do', $iId, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId, 'value' => $iValue));
         $oZ->alert();
 
         $aVote = $this->_oQuery->getVote($iObjectId);

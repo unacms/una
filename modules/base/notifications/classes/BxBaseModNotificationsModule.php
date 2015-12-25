@@ -14,6 +14,7 @@ define('BX_BASE_MOD_NTFS_HANDLER_TYPE_UPDATE', 'update');
 define('BX_BASE_MOD_NTFS_HANDLER_TYPE_DELETE', 'delete');
 
 define('BX_BASE_MOD_NTFS_TYPE_OWNER', 'owner');
+define('BX_BASE_MOD_NTFS_TYPE_OBJECT_OWNER', 'object_owner');
 define('BX_BASE_MOD_NTFS_TYPE_CONNECTIONS', 'connections');
 define('BX_BASE_MOD_NTFS_TYPE_PUBLIC', 'public');
 

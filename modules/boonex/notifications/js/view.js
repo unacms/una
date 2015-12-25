@@ -11,6 +11,13 @@ function BxNtfsView(oOptions) {
 
 BxNtfsView.prototype = new BxNtfsMain();
 
+BxNtfsView.prototype.changeType = function(oElement, sType) {
+	this._oRequestParams.start = 0;
+	this._oRequestParams.type = sType;
+
+    this._getPosts(oElement);
+};
+
 BxNtfsView.prototype.changePage = function(oElement, iStart, iPerPage) {
 	this._oRequestParams.start = iStart;
     this._oRequestParams.per_page = iPerPage;
