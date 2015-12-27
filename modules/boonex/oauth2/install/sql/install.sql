@@ -15,7 +15,8 @@ CREATE TABLE IF NOT EXISTS `bx_oauth_authorization_codes` (
   `redirect_uri` varchar(255) DEFAULT NULL,
   `expires` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `scope` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`authorization_code`)
+  PRIMARY KEY (`authorization_code`),
+  KEY `user_id` (`user_id`)
 );
 
 CREATE TABLE IF NOT EXISTS `bx_oauth_clients` (
@@ -37,7 +38,8 @@ CREATE TABLE IF NOT EXISTS `bx_oauth_refresh_tokens` (
   `user_id` int(10) unsigned DEFAULT NULL,
   `expires` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `scope` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`refresh_token`)
+  PRIMARY KEY (`refresh_token`),
+  KEY `user_id` (`user_id`)
 );
 
 CREATE TABLE IF NOT EXISTS `bx_oauth_scopes` (

@@ -32,6 +32,7 @@ class BxOAuthModule extends BxDolModule
             'jti_table'  => '',
             'scope_table'  => 'bx_oauth_scopes',
             'public_key_table'  => '',
+            // 'refresh_token_lifetime' => 7776000, // TODO: set lifetime to 90 days
         );
 
         $this->_oStorage = new OAuth2\Storage\Pdo(array(
@@ -68,6 +69,7 @@ class BxOAuthModule extends BxDolModule
 
     function actionToken ()
     {
+        // TODO: try to reuse existing token!
         // Handle a request for an OAuth2.0 Access Token and send the response to the client
         $this->_oServer->handleTokenRequest(OAuth2\Request::createFromGlobals())->send();
     }
@@ -108,8 +110,9 @@ class BxOAuthModule extends BxDolModule
 
         // validate the authorize request
         if (!$this->_oServer->validateAuthorizeRequest($oRequest, $oResponse)) {
+            require_once(BX_DIRECTORY_PATH_INC . 'design.inc.php');
             $o = json_decode($oResponse->getResponseBody());
-            $this->_oTemplate->pageError($o->error_description);
+            $this->_oTemplate->getPage(false, MsgBox($o->error_description));
         }
 
         if (!isLogged()) {
@@ -119,13 +122,17 @@ class BxOAuthModule extends BxDolModule
             return;
         }
 
-        if (empty($_POST)) {
+        $aProfiles = BxDolAccount::getInstance()->getProfiles();
+        if (!($iProfileId = $this->_oDb->getSavedProfile($aProfiles)) && empty($_POST)) {
             $oPage = BxDolPage::getObjectInstanceByURI('oauth-authorization');
             $this->_oTemplate->getPage(false, $oPage->getCode());
             return;
-        }
+        } 
 
-        $this->_oServer->handleAuthorizeRequest($oRequest, $oResponse, (bool)bx_get('profile_id'), bx_get('profile_id'));
+        if (!$iProfileId)
+            $iProfileId = bx_get('profile_id');
+
+        $this->_oServer->handleAuthorizeRequest($oRequest, $oResponse, (bool)$iProfileId, $iProfileId);
 
         $oResponse->send();
     }

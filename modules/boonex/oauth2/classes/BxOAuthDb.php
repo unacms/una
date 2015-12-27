@@ -29,6 +29,13 @@ class BxOAuthDb extends BxDolModuleDb
             $this->query($sQuery);
         }
     }
+
+    function getSavedProfile($aProfiles)
+    {
+        $aIds = array_keys($aProfiles);
+        return $this->getOne("SELECT `user_id` FROM `bx_oauth_refresh_tokens` WHERE `user_id` IN (" . $this->implode_escape($aIds) . ") LIMIT 1");
+    }
+
 }
 
 /** @} */
