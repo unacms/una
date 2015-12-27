@@ -38,6 +38,7 @@ class BxTriConModule extends BxBaseModConnectModule
 
         if (!$this->_oConfig->sApiID || !$this->_oConfig->sApiSecret || !$this->_oConfig->sApiUrl) {
             require_once(BX_DIRECTORY_PATH_INC . 'design.inc.php');
+            bx_import('BxDolLanguages');
             $sCode =  MsgBox( _t('_bx_tricon_profile_error_api_keys') );
             $this->_oTemplate->getPage(_t('_bx_tricon'), $sCode);            
         } 
