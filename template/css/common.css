@@ -404,6 +404,10 @@ body > .bx-popup-wrapper {
     -moz-transition: background-color 0.2s ease-in-out;
     -o-transition: background-color 0.2s ease-in-out;
     transition: background-color 0.2s ease-in-out;
+
+    text-transform: uppercase;
+    font-size:1rem;
+    color:#fff;
 }
 .bx-btn:active,
 .bx-btn:hover {	
@@ -416,11 +420,7 @@ body > .bx-popup-wrapper {
 button.bx-btn,
 input.bx-btn {
 	padding-top:0px;
-	padding-bottom:0px;
-
-	text-transform: uppercase;
-    font-size:1rem;
-    color:#fff;
+	padding-bottom:0px;    
 }
 
 .bx-btn img {

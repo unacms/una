@@ -9,11 +9,23 @@
  * @{
  */
 
-class BxInvTemplate extends BxDolModuleTemplate
+class BxInvTemplate extends BxBaseModGeneralTemplate
 {
     function __construct(&$oConfig, &$oDb)
     {
         parent::__construct($oConfig, $oDb);
+    }
+
+	public function getCssJs()
+    {
+        $this->addCss(array(
+            'main.css',
+        ));
+
+        $this->addJs(array(
+        	'clipboard.min.js',
+            'main.js'
+        ));
     }
 
     public function getBlockRequestText($aRequest)
@@ -38,11 +50,13 @@ class BxInvTemplate extends BxDolModuleTemplate
 
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($this->_oConfig->CNF['URL_INVITE']);
 
-        $this->addCss(array('main.css'));
+        $this->getCssJs();
     	return $this->parseHtmlByName('block_invite.html', array(
     		'style_prefix' => $this->_oConfig->getPrefix('style'),
+    		'js_object' => $this->_oConfig->getJsObject('main'),
     		'text' => _t('_bx_invites_txt_invite_block_text', $sInvitesRemain),
-    		'url' => $sUrl
+    		'url' => $sUrl,
+    		'js_code' => $this->getJsCode('main')
     	));
     }
 
@@ -50,7 +64,7 @@ class BxInvTemplate extends BxDolModuleTemplate
     {
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($this->_oConfig->CNF['URL_REQUEST']);
 
-    	$this->addCss(array('main.css'));
+    	$this->getCssJs();
     	return $this->parseHtmlByName('block_request.html', array(
     		'style_prefix' => $this->_oConfig->getPrefix('style'),
     		'text' => _t('_bx_invites_txt_request_block_text'),
@@ -61,6 +75,28 @@ class BxInvTemplate extends BxDolModuleTemplate
     			)
     		)
     	));
+    }
+
+	public function getLinkPopup($sLink)
+    {
+        $sId = $this->_oConfig->getHtmlIds('link_popup');
+        $sTitle = _t('_bx_invites_txt_link_popup_title');
+        $sContent = $this->parseHtmlByName('popup_link.html', array(
+			'style_prefix' => $this->_oConfig->getPrefix('style'),
+        	'html_id_link' => $this->_oConfig->getHtmlIds('link_input'),
+        	'link' => $sLink
+        ));
+
+    	return BxTemplFunctions::getInstance()->popupBox($sId, $sTitle, $sContent, true);
+    }
+
+	public function getJsCode($sType, $aParams = array(), $bWrap = true)
+    {
+        $aParams = array_merge(array(
+            'aHtmlIds' => $this->_oConfig->getHtmlIds()
+        ), $aParams);
+
+        return parent::getJsCode($sType, $aParams, $bWrap);
     }
 }
 

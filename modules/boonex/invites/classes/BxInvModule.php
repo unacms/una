@@ -26,6 +26,44 @@ class BxInvModule extends BxDolModule
         $this->_oConfig->init($this->_oDb);
     }
 
+	/**
+     * ACTION METHODS
+     */
+	function actionGetLink()
+    {
+    	$iProfileId = $this->getProfileId();
+		$iAccountId = $this->getAccountId($iProfileId);
+
+        $mixedAllowed = $this->isAllowedInvite($iProfileId);
+        if($mixedAllowed !== true)
+        	return $this->_echoResultJson(array('message' => $mixedAllowed));
+
+	    if(!isAdmin($iAccountId)) {
+			$iInvited = (int)$this->_oDb->getInvites(array('type' => 'count_by_account', 'value' => $iAccountId));
+			if(($this->_oConfig->getCountPerUser() - $iInvited) <= 0)
+				return $this->_echoResultJson(array('message' => _t('_bx_invites_err_limit_reached')));
+		}
+
+    	$oKeys = BxDolKey::getInstance();
+    	if(!$oKeys)
+    		return  $this->_echoResultJson(array('message' => _t('_bx_invites_err_not_available')));  		
+
+    	$sKey = $oKeys->getNewKey(false, $this->_oConfig->getKeyLifetime());
+
+    	$oForm = $this->getFormObjectInvite();
+    	$oForm->insert(array(
+			'account_id' => $iAccountId,
+			'profile_id' => $iProfileId,
+			'key' => $sKey,
+			'email' => '',
+			'date' => time()
+		));
+
+        $this->_echoResultJson(array('popup' => $this->_oTemplate->getLinkPopup(
+        	$this->getJoinLink($sKey)
+        )));
+    }
+
     /**
      * SERVICE METHODS
      */
@@ -192,7 +230,6 @@ class BxInvModule extends BxDolModule
 		if(!$oKeys || !in_array($sType, array(BX_INV_TYPE_FROM_MEMBER, BX_INV_TYPE_FROM_SYSTEM)))
 			return false;
 
-		$sKeyCode = $this->_oConfig->getKeyCode();
 		$iKeyLifetime = $this->_oConfig->getKeyLifetime();
 
 		$sEmailTemplate = '';
@@ -208,8 +245,6 @@ class BxInvModule extends BxDolModule
 
 		if(empty($oForm))
 			$oForm = $this->getFormObjectInvite();
-
-		$sJoinUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account');
 
 		$aMessage = BxDolEmailTemplates::getInstance()->parseTemplate($sEmailTemplate, array(
 			'text' => $sText
@@ -228,10 +263,11 @@ class BxInvModule extends BxDolModule
 					continue;
 
 				$sKey = $oKeys->getNewKey(false, $iKeyLifetime);
-				if(sendMail($sEmail, $aMessage['Subject'], $aMessage['Body'], 0, array('join_url' => bx_append_url_params($sJoinUrl, array($sKeyCode => $sKey))), BX_EMAIL_SYSTEM)) {
+				if(sendMail($sEmail, $aMessage['Subject'], $aMessage['Body'], 0, array('join_url' => $this->getJoinLink($sKey)), BX_EMAIL_SYSTEM)) {
 					$oForm->insert(array(
 						'account_id' => $iAccountId,
 						'profile_id' => $iProfileId,
+						'key' => $sKey,
 						'email' => $sEmail,
 						'date' => $iDate
 					));
@@ -313,6 +349,24 @@ class BxInvModule extends BxDolModule
 
         bx_import('FormCheckerHelper', $this->_aModule);
         return BxDolForm::getObjectInstance($this->_oConfig->getObject('form_invite'), $sDisplay);
+    }
+
+	protected function getJoinLink($sKey)
+	{
+		$sKeyCode = $this->_oConfig->getKeyCode();
+
+		$sJoinUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account');
+		return bx_append_url_params($sJoinUrl, array($sKeyCode => $sKey));
+	}
+
+	protected function _echoResultJson($a, $isAutoWrapForFormFileSubmit = false)
+    {
+        header('Content-type: text/html; charset=utf-8');
+
+        $s = json_encode($a);
+        if ($isAutoWrapForFormFileSubmit && !empty($_FILES))
+            $s = '<textarea>' . $s . '</textarea>';
+        echo $s;
     }
 }
 

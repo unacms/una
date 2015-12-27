@@ -108,11 +108,14 @@
 
 
 	<!-- Common Texts -->
+	<string name="_bx_invites_txt_link_popup_title"><![CDATA[Invitation Link]]></string>
 	<string name="_bx_invites_txt_invite_block_text"><![CDATA[You can invite your friends to join. You have <b>{0}</b> invites to share.]]></string>
 	<string name="_bx_invites_txt_request_block_text"><![CDATA[Registration is by invitation only.]]></string>
 	<string name="_bx_invites_txt_unlimited"><![CDATA[unlimited]]></string>
 	
-	<string name="_bx_invites_btn_invite"><![CDATA[Invite]]></string>
+	<string name="_bx_invites_btn_invite_email"><![CDATA[Invite By Email]]></string>
+	<string name="_bx_invites_btn_invite_link"><![CDATA[Get Invitation Link]]></string>
+	<string name="_bx_invites_btn_copy"><![CDATA[Copy]]></string>
 	<string name="_bx_invites_btn_request"><![CDATA[Request Invitation]]></string>
 	<string name="_bx_invites_msg_invitation"><![CDATA[Hello! This site might be interesting for you.]]></string>
 	<string name="_bx_invites_msg_invitation_sent"><![CDATA[Invitation message was sent to {0} email addresses from the list.]]></string>
