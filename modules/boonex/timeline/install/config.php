@@ -89,6 +89,7 @@ $aConfig = array(
     ),
     'enable' => array(
         'execute_sql' => 1,
+    	'update_relations' => 1,
         'clear_db_cache' => 1,
     ),
     'enable_success' => array(
@@ -99,6 +100,7 @@ $aConfig = array(
     ),
     'disable' => array (
         'execute_sql' => 1,
+    	'update_relations' => 1,
     	'unregister_transcoders' => 1,
         'clear_db_cache' => 1,
     ),
@@ -112,6 +114,12 @@ $aConfig = array(
      */
     'dependencies' => array(),
 
+    /**
+     * Connections Section
+     */
+    'relations' => array(
+    	'bx_notifications'
+    )
 );
 
 /** @} */

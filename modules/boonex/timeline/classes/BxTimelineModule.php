@@ -362,6 +362,104 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         return array('content' => $this->_oTemplate->getItemBlock($iItemId));
     }
 
+	/**
+     * Data for Notifications module
+     */
+    public function serviceGetNotificationsData()
+    {
+    	$sModule = $this->_aModule['name'];
+
+        return array(
+            'handlers' => array(
+                array('group' => $sModule . '_object', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'post_common', 'module_name' => $sModule, 'module_method' => 'get_notifications_post', 'module_class' => 'Module'),
+                array('group' => $sModule . '_object', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'delete'),
+                array('group' => $sModule . '_comment', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'commentPost', 'module_name' => $sModule, 'module_method' => 'get_notifications_comment', 'module_class' => 'Module'),
+                array('group' => $sModule . '_comment', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'commentRemoved'),
+                array('group' => $sModule . '_vote', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVote', 'module_name' => $sModule, 'module_method' => 'get_notifications_vote', 'module_class' => 'Module'),
+				array('group' => $sModule . '_vote', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'undoVote'),
+            ),
+            'alerts' => array(
+                array('unit' => $sModule, 'action' => 'post_common'),
+                array('unit' => $sModule, 'action' => 'deleted'),
+                array('unit' => $sModule, 'action' => 'commentPost'),
+                array('unit' => $sModule, 'action' => 'commentRemoved'),
+                array('unit' => $sModule, 'action' => 'doVote'),
+                array('unit' => $sModule, 'action' => 'undoVote'),
+            )
+        );
+    }
+
+    public function serviceGetNotificationsPost($aEvent)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	$iContent = (int)$aEvent['object_id'];
+		$aContent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContent));
+        if(empty($aContent) || !is_array($aContent))
+            return array();
+
+        $sEntryCaption = !empty($aContent['title']) ? $aContent['title'] : strmaxtextlen($aContent['description'], 20, '...');
+
+		return array(
+			'entry_sample' => _t($CNF['T']['txt_sample_single_ext']),
+			'entry_url' => $this->_oConfig->getItemViewUrl($aContent),
+			'entry_caption' => $sEntryCaption,
+			'entry_author' => $aContent['owner_id'],
+			'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
+		);
+    }
+
+    public function serviceGetNotificationsComment($aEvent)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	$iContent = (int)$aEvent['object_id'];
+    	$aContent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContent));
+        if(empty($aContent) || !is_array($aContent))
+            return array();
+
+		$oComment = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $iContent);
+        if(!$oComment || !$oComment->isEnabled())
+            return array();
+
+        $sEntryCaption = !empty($aContent['title']) ? $aContent['title'] : strmaxtextlen($aContent['description'], 20, '...');
+
+		return array(
+			'entry_sample' => _t($CNF['T']['txt_sample_single']),
+			'entry_url' => $this->_oConfig->getItemViewUrl($aContent),
+			'entry_caption' => $sEntryCaption,
+			'entry_author' => $aContent['owner_id'],
+			'subentry_sample' => _t($CNF['T']['txt_sample_comment_single']),
+			'subentry_url' => $oComment->getViewUrl((int)$aEvent['subobject_id']),
+			'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
+		);
+    }
+
+    public function serviceGetNotificationsVote($aEvent)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	$iContent = (int)$aEvent['object_id'];
+    	$aContent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContent));
+        if(empty($aContent) || !is_array($aContent))
+            return array();
+
+		$oVote = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $iContent);
+        if(!$oVote || !$oVote->isEnabled())
+            return array();
+
+        $sEntryCaption = !empty($aContent['title']) ? $aContent['title'] : strmaxtextlen($aContent['description'], 20, '...');
+
+		return array(
+			'entry_sample' => _t($CNF['T']['txt_sample_single']),
+			'entry_url' => $this->_oConfig->getItemViewUrl($aContent),
+			'entry_caption' => $sEntryCaption,
+			'entry_author' => $aContent['owner_id'],
+			'subentry_sample' => _t($CNF['T']['txt_sample_vote_single']),
+			'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
+		);
+    }
+
     public function serviceGetShareElementBlock($iOwnerId, $sType, $sAction, $iObjectId, $aParams = array())
     {
     	if(!$this->isEnabled())
@@ -723,7 +821,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         }
 
         //--- Event -> Post for Alerts Engine ---//
-        $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'post_' . $sPostType, $iId, $iSenderId);
+        $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'post_' . $sPostType, $iId, $iSenderId, array(
+        	'object_author_id' => $aEvent['owner_id']
+        ));
         $oAlert->alert();
         //--- Event -> Post for Alerts Engine ---//
     }

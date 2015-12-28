@@ -121,6 +121,7 @@
 	<string name="_bx_timeline_txt_sample"><![CDATA[post]]></string>
 	<string name="_bx_timeline_txt_sample_ext"><![CDATA[timeline post]]></string>
 	<string name="_bx_timeline_txt_sample_comment_single"><![CDATA[timeline post's comment]]></string>
+    <string name="_bx_timeline_txt_sample_vote_single"><![CDATA[timeline post's vote]]></string>
 
 	<string name="_bx_timeline_txt_do_share"><![CDATA[Repost]]></string>
 	<string name="_bx_timeline_txt_shared"><![CDATA[Reposted {0}'s {1}.]]></string>
