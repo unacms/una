@@ -32,7 +32,6 @@ class BxOAuthModule extends BxDolModule
             'jti_table'  => '',
             'scope_table'  => 'bx_oauth_scopes',
             'public_key_table'  => '',
-            // 'refresh_token_lifetime' => 7776000, // TODO: set lifetime to 90 days
         );
 
         $this->_oStorage = new OAuth2\Storage\Pdo(array(
@@ -42,8 +41,9 @@ class BxOAuthModule extends BxDolModule
             'options' => array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'UTF8'"),
         ), $aConfig);
 
-        $this->_oServer = new OAuth2\Server($this->_oStorage, array (
+        $this->_oServer = new OAuth2\Server($this->_oStorage, array(
             'require_exact_redirect_uri' => false,
+            'refresh_token_lifetime' => 7776000, // set lifetime to 90 days
         ));
 
         // Add the "Client Credentials" grant type (it is the simplest of the grant types)
@@ -51,7 +51,6 @@ class BxOAuthModule extends BxDolModule
 
         // Add the "Authorization Code" grant type (this is where the oauth magic happens)
         $this->_oServer->addGrantType(new OAuth2\GrantType\AuthorizationCode($this->_oStorage));
-
     }
 
     protected function _buildDSN () 
@@ -69,7 +68,6 @@ class BxOAuthModule extends BxDolModule
 
     function actionToken ()
     {
-        // TODO: try to reuse existing token!
         // Handle a request for an OAuth2.0 Access Token and send the response to the client
         $this->_oServer->handleTokenRequest(OAuth2\Request::createFromGlobals())->send();
     }
