@@ -246,6 +246,15 @@ class BxDolAccount extends BxDol
     }
 
     /**
+     * Get all profiles associated with the account
+     */
+    public function getProfiles ()
+    {
+        $oProfileQuery = BxDolProfileQuery::getInstance();
+        return $oProfileQuery->getProfilesByAccount($this->_iAccountID);
+    }
+
+    /**
      * Delete profile.
      * @param $bDeleteWithContent - delete associated profiles with all its contents
      */

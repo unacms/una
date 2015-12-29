@@ -41,8 +41,9 @@ class BxOAuthModule extends BxDolModule
             'options' => array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'UTF8'"),
         ), $aConfig);
 
-        $this->_oServer = new OAuth2\Server($this->_oStorage, array (
+        $this->_oServer = new OAuth2\Server($this->_oStorage, array(
             'require_exact_redirect_uri' => false,
+            'refresh_token_lifetime' => 7776000, // set lifetime to 90 days
         ));
 
         // Add the "Client Credentials" grant type (it is the simplest of the grant types)
@@ -50,7 +51,6 @@ class BxOAuthModule extends BxDolModule
 
         // Add the "Authorization Code" grant type (this is where the oauth magic happens)
         $this->_oServer->addGrantType(new OAuth2\GrantType\AuthorizationCode($this->_oStorage));
-
     }
 
     protected function _buildDSN () 
@@ -108,8 +108,9 @@ class BxOAuthModule extends BxDolModule
 
         // validate the authorize request
         if (!$this->_oServer->validateAuthorizeRequest($oRequest, $oResponse)) {
+            require_once(BX_DIRECTORY_PATH_INC . 'design.inc.php');
             $o = json_decode($oResponse->getResponseBody());
-            $this->_oTemplate->pageError($o->error_description);
+            $this->_oTemplate->getPage(false, MsgBox($o->error_description));
         }
 
         if (!isLogged()) {
@@ -119,13 +120,17 @@ class BxOAuthModule extends BxDolModule
             return;
         }
 
-        if (empty($_POST)) {
+        $aProfiles = BxDolAccount::getInstance()->getProfiles();
+        if (!($iProfileId = $this->_oDb->getSavedProfile($aProfiles)) && empty($_POST)) {
             $oPage = BxDolPage::getObjectInstanceByURI('oauth-authorization');
             $this->_oTemplate->getPage(false, $oPage->getCode());
             return;
-        }
+        } 
 
-        $this->_oServer->handleAuthorizeRequest($oRequest, $oResponse, (bool)bx_get('profile_id'), bx_get('profile_id'));
+        if (!$iProfileId)
+            $iProfileId = bx_get('profile_id');
+
+        $this->_oServer->handleAuthorizeRequest($oRequest, $oResponse, (bool)$iProfileId, $iProfileId);
 
         $oResponse->send();
     }
