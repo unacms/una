@@ -42,9 +42,17 @@ class BxNtfsModule extends BxBaseModNotificationsModule
      * 
      * Get View block for a separate page. Will return a block with "Empty" message if nothing found.
      */
-    public function serviceGetBlockView($sType = BX_NTFS_TYPE_DEFAULT, $iStart = -1, $iPerPage = -1, $aModules = array())
+    public function serviceGetBlockView($sType = '', $iStart = -1, $iPerPage = -1, $aModules = array())
     {
     	$aBrowseTypes = array(BX_BASE_MOD_NTFS_TYPE_CONNECTIONS, BX_BASE_MOD_NTFS_TYPE_OBJECT_OWNER);
+    	if(empty($sType)) {
+    		$mType = bx_get('type');
+    		if($mType !== false && in_array($mType, $aBrowseTypes))
+    			$sType = $mType;
+
+	    	if(empty($sType))
+    			$sType = BX_NTFS_TYPE_DEFAULT;
+    	}
 
     	$iOwnerId = $this->getUserId();
         if(!$iOwnerId)

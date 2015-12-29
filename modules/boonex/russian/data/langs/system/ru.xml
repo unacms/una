@@ -1946,6 +1946,8 @@
 	<string name="_sys_paginate_info"><![CDATA[{0}-{1}]]></string>
 	<string name="_sys_paginate_view_all"><![CDATA[Просмотреть Все]]></string>
 	<string name="_sys_please_select"><![CDATA[Пожалуйста, выберите...]]></string>
+	<string name="_sys_profile_sample_single"><![CDATA[профиль]]></string>
+	<string name="_sys_profile_subscription_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> подписался на <a href="{entry_url}">{entry_caption}</a> {entry_sample}]]></string>
 	<string name="_sys_private"><![CDATA[Приватные]]></string>
     <string name="_sys_pruning_db"><![CDATA[<h3>Очистка Базы Данных:</h3>
         <ul>
