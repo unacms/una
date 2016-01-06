@@ -47,6 +47,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         	// objects
             'OBJECT_COMMENTS' => $this->_sName,
         	'OBJECT_VOTES' => $this->_sName,
+        	'OBJECT_REPORTS' => $this->_sName,
 
         	// some language keys
             'T' => array (
@@ -66,7 +67,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
         $this->_aObjects = array_merge($this->_aObjects, array(
         	'comment' => $this->CNF['OBJECT_COMMENTS'],
-        	'vote' => $this->_sName,
+        	'vote' => $this->CNF['OBJECT_VOTES'],
+        	'report' => $this->CNF['OBJECT_REPORTS'],
         	'metatags' => $this->_sName,
 
         	'storage_photos' => $this->_sName . '_photos',

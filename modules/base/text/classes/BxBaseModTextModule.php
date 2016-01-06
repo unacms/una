@@ -345,6 +345,17 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
                 'count' => $aContentInfo['votes']
             );
 
+		//--- Reports
+        $oReports = BxDolReport::getObjectInstance($CNF['OBJECT_REPORTS'], $aEvent['object_id']);
+
+        $aReports = array();
+        if ($oReports && $oReports->isEnabled())
+            $aReports = array(
+                'system' => $CNF['OBJECT_REPORTS'],
+                'object_id' => $aContentInfo[$CNF['FIELD_ID']],
+                'count' => $aContentInfo['reports']
+            );
+
         //--- Comments
         $oCmts = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $aEvent['object_id']);
 
@@ -367,6 +378,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
             ), //a string to display or array to parse default template before displaying.
             'date' => $aContentInfo[$CNF['FIELD_ADDED']],
             'votes' => $aVotes,
+            'reports' => $aReports,
             'comments' => $aComments,
             'title' => '', //may be empty.
             'description' => '' //may be empty.

@@ -56,7 +56,7 @@ div.bx-report div.bx-report-counter-holder {
 	line-height: 1.6rem;
 }
 
-.bx-report-report .bx-report-element-holder .bx-report-do-report.bx-report-disabled {
+.bx-report .bx-report-element-holder .bx-report-do-report.bx-report-disabled {
 	color: #ddd;
 }
 

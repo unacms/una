@@ -116,6 +116,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aEvent['object_owner_id'] = $aResult['owner_id'];
         $aEvent['content'] = $aResult['content'];
         $aEvent['votes'] = $aResult['votes'];
+        $aEvent['reports'] = $aResult['reports'];
         $aEvent['comments'] = $aResult['comments'];
 
         $sType = !empty($aResult['content_type']) ? $aResult['content_type'] : BX_TIMELINE_PARSE_TYPE_DEFAULT;
@@ -843,6 +844,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'url' => $this->_oConfig->getItemViewUrl($aEvent)
             ), //a string to display or array to parse default template before displaying.
             'votes' => '',
+            'reports' => '',
             'comments' => '',
             'title' => '', //may be empty.
             'description' => '' //may be empty.
@@ -934,6 +936,14 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'system' => $sSystem,
                 'object_id' => $aEvent['id'],
                 'count' => $aEvent['votes']
+            );
+
+		$sSystem = $this->_oConfig->getObject('report');
+        if($oModule->getReportObject($sSystem, $aEvent['id']) !== false)
+            $aResult['reports'] = array(
+                'system' => $sSystem,
+                'object_id' => $aEvent['id'],
+                'count' => $aEvent['reports']
             );
 
         $sSystem = $this->_oConfig->getObject('comment');

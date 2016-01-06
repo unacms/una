@@ -714,6 +714,18 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         return $oVote;
     }
 
+	public function getReportObject($sSystem, $iId)
+    {
+        if(empty($sSystem) || (int)$iId == 0)
+            return false;
+
+        $oReport = BxDolReport::getObjectInstance($sSystem, $iId, true, $this->_oTemplate);
+        if(!$oReport->isEnabled())
+            return false;
+
+        return $oReport;
+    }
+
     public function getAttachmentsMenuObject()
     {
         $oMenu = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_post_attachments'), $this->_oTemplate);
@@ -781,6 +793,22 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         list($sSystem, $iObjectId) = $mixedVotes;
         $oVote = $this->getVoteObject($sSystem, $iObjectId);
         $oVote->addCssJs();
+
+        if(isAdmin())
+            return true;
+
+        return true;
+    }
+
+    public function isAllowedReport($aEvent, $bPerform = false)
+    {
+        $mixedReports = $this->getReportsData($aEvent['reports']);
+        if($mixedReports === false)
+            return false;
+
+        list($sSystem, $iObjectId) = $mixedReports;
+        $oReport = $this->getReportObject($sSystem, $iObjectId);
+        $oReport->addCssJs();
 
         if(isAdmin())
             return true;
@@ -899,6 +927,20 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $sSystem = isset($aVotes['system']) ? $aVotes['system'] : '';
         $iObjectId = isset($aVotes['object_id']) ? (int)$aVotes['object_id'] : 0;
         $iCount = isset($aVotes['count']) ? (int)$aVotes['count'] : 0;
+        if($sSystem == '' || $iObjectId == 0)
+            return false;
+
+        return array($sSystem, $iObjectId, $iCount);
+    }
+
+    public function getReportsData(&$aReports)
+    {
+        if(empty($aReports) || !is_array($aReports))
+            return false;
+
+        $sSystem = isset($aReports['system']) ? $aReports['system'] : '';
+        $iObjectId = isset($aReports['object_id']) ? (int)$aReports['object_id'] : 0;
+        $iCount = isset($aReports['count']) ? (int)$aReports['count'] : 0;
         if($sSystem == '' || $iObjectId == 0)
             return false;
 

@@ -79,6 +79,16 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
     	return $this->_oModule->getVoteObject($sVotesSystem, $iVotesObject)->getElementInline(array('dynamic_mode' => $this->_bDynamicMode));
     }
 
+	protected function _getMenuItemItemReport($aItem)
+    {
+        if(!isset($this->_aEvent['reports']) || !is_array($this->_aEvent['reports']) || !isset($this->_aEvent['reports']['system'])) 
+        	return false;
+
+		$sReportsSystem = $this->_aEvent['reports']['system'];
+		$iReportsObject = $this->_aEvent['reports']['object_id'];
+    	return $this->_oModule->getReportObject($sReportsSystem, $iReportsObject)->getElementInline(array('dynamic_mode' => $this->_bDynamicMode));
+    }
+
 	protected function _getMenuItemItemShare($aItem)
     {
 		$iOwnerId = $this->_oModule->getUserId(); //--- in whose timeline the content will be shared
@@ -108,6 +118,10 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
 
             case 'item-vote':
                 $sCheckFuncName = 'isAllowedVote';
+                break;
+
+			case 'item-report':
+                $sCheckFuncName = 'isAllowedReport';
                 break;
 
             case 'item-more':
