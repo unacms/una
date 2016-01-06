@@ -1,7 +1,7 @@
 
 -- TABLES
 
-DROP TABLE IF EXISTS `bx_albums_albums`, `bx_albums_files`, `bx_albums_photos_resized`, `bx_albums_files2albums`, `bx_albums_cmts`, `bx_albums_cmts_media`, `bx_albums_votes`, `bx_albums_votes_track`, `bx_albums_votes_media`, `bx_albums_votes_media_track`, `bx_albums_views_track`, `bx_albums_views_media_track`, `bx_albums_meta_keywords`, `bx_albums_meta_keywords_media`, `bx_albums_meta_keywords_media_camera`, `bx_albums_meta_locations`;
+DROP TABLE IF EXISTS `bx_albums_albums`, `bx_albums_files`, `bx_albums_photos_resized`, `bx_albums_files2albums`, `bx_albums_cmts`, `bx_albums_cmts_media`, `bx_albums_votes`, `bx_albums_votes_track`, `bx_albums_votes_media`, `bx_albums_votes_media_track`, `bx_albums_views_track`, `bx_albums_views_media_track`, `bx_albums_meta_keywords`, `bx_albums_meta_keywords_media`, `bx_albums_meta_keywords_media_camera`, `bx_albums_meta_locations`, `bx_albums_reports`, `bx_albums_reports_track`;
 
 -- STORAGES & TRANSCODERS
 
@@ -26,6 +26,10 @@ DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_albums' OR `Name` = 'bx_albums
 -- VOTES
 
 DELETE FROM `sys_objects_vote` WHERE `Name` = 'bx_albums' OR `Name` = 'bx_albums_media';
+
+-- REPORTS
+
+DELETE FROM `sys_objects_report` WHERE `Name` = 'bx_albums';
 
 -- VIEWS
 

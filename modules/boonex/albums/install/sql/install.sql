@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS `bx_albums_albums` (
   `rate` float NOT NULL default '0',
   `votes` int(11) NOT NULL default '0',
   `comments` int(11) NOT NULL default '0',
+  `reports` int(11) NOT NULL default '0',
   `allow_view_to` int(11) NOT NULL DEFAULT '3',
   `status` enum('active','hidden') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
@@ -197,6 +198,25 @@ CREATE TABLE `bx_albums_meta_locations` (
   KEY `country_state_city` (`country`,`state`(8),`city`(8))
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- TABLE: reports
+
+CREATE TABLE IF NOT EXISTS `bx_albums_reports` (
+  `object_id` int(11) NOT NULL default '0',
+  `count` int(11) NOT NULL default '0',
+  UNIQUE KEY `object_id` (`object_id`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `bx_albums_reports_track` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `object_id` int(11) NOT NULL default '0',
+  `author_id` int(11) NOT NULL default '0',
+  `author_nip` int(11) unsigned NOT NULL default '0',
+  `type` varchar(32) NOT NULL default '',
+  `text` text NOT NULL default '',
+  `date` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
+  KEY `report` (`object_id`, `author_nip`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8;
 
 -- STORAGES & TRANSCODERS
 
@@ -291,6 +311,11 @@ INSERT INTO `sys_objects_cmts` (`Name`, `Table`, `CharsPostMin`, `CharsPostMax`,
 INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
 ('bx_albums', 'bx_albums_votes', 'bx_albums_votes_track', '604800', '1', '1', '0', '1', 'bx_albums_albums', 'id', 'author', 'rate', 'votes', '', ''),
 ('bx_albums_media', 'bx_albums_votes_media', 'bx_albums_votes_media_track', '604800', '1', '1', '0', '1', 'bx_albums_files2albums', 'id', '', 'rate', 'votes', '', '');
+
+-- REPORTS
+
+INSERT INTO `sys_objects_report` (`name`, `table_main`, `table_track`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_albums', 'bx_albums_reports', 'bx_albums_reports_track', '1', 'bx_albums_albums', 'id', 'author', 'reports', '', '');
 
 -- VIEWS
 

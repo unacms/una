@@ -88,7 +88,7 @@ class BxAlbumsModule extends BxBaseModTextModule
 
         $CNF = &$this->_oConfig->CNF;
 
-        return $this->_entitySocialSharing ($iMediaId, 0, $aMediaInfo['file_id'], $aMediaInfo['title'], false, $CNF['OBJECT_IMAGES_TRANSCODER_BIG'], $CNF['OBJECT_VOTES_MEDIA'], $CNF['URI_VIEW_MEDIA'], $bEnableCommentsBtn ? $CNF['OBJECT_COMMENTS_MEDIA'] : '', $bEnableSocialSharing);
+        return $this->_entitySocialSharing ($iMediaId, 0, $aMediaInfo['file_id'], $aMediaInfo['title'], false, $CNF['OBJECT_IMAGES_TRANSCODER_BIG'], $CNF['OBJECT_VOTES_MEDIA'], '', $CNF['URI_VIEW_MEDIA'], $bEnableCommentsBtn ? $CNF['OBJECT_COMMENTS_MEDIA'] : '', $bEnableSocialSharing);
     }
 
     public function serviceMediaView ($iMediaId = 0, $mixedContext = false)
