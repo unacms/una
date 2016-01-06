@@ -37,6 +37,30 @@ class BxDolObject extends BxDol
             $this->init($iId);
     }
 
+    /**
+     * it is called on cron every day or similar period to clean old votes
+     */
+    public static function maintenance()
+    {
+        $iResult = 0;
+        $oDb = BxDolDb::getInstance();
+
+        $aSystems = self::getSystems();
+        foreach($aSystems as $aSystem) {
+            if(!$aSystem['is_on'])
+                continue;
+
+            $sQuery = $oDb->prepare("DELETE FROM `{$aSystem['table_track']}` WHERE `date` < (UNIX_TIMESTAMP() - ?)", BX_DOL_VOTE_OLD_VOTES);
+            $iDeleted = (int)$oDb->query($sQuery);
+            if($iDeleted > 0)
+                $oDb->query("OPTIMIZE TABLE `{$aSystem['table_track']}`");
+
+            $iResult += $iDeleted;
+        }
+
+        return $iResult;
+    }
+
     public function init($iId)
     {
         if(!$this->isEnabled())
@@ -79,6 +103,93 @@ class BxDolObject extends BxDol
     public function isEnabled ()
     {
         return $this->_aSystem && (int)$this->_aSystem['is_on'] == 1;
+    }
+
+	/**
+	 * Interface functions for outer usage
+	 */
+	public function getSqlParts($sMainTable, $sMainField)
+    {
+        if(!$this->isEnabled())
+            return array();
+
+        return $this->_oQuery->getSqlParts($sMainTable, $sMainField);
+    }
+
+	/**
+     * Permissions functions
+     */
+	public function checkAction ($sAction, $isPerformAction = false)
+    {
+        $iId = $this->_getAuthorId();
+        $a = checkActionModule($iId, $sAction, 'system', $isPerformAction);
+        return $a[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED;
+    }
+
+    public function checkActionErrorMsg ($sAction)
+    {
+        $iId = $this->_getAuthorId();
+        $a = checkActionModule($iId, $sAction, 'system');
+        return $a[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $a[CHECK_ACTION_MESSAGE] : '';
+    }
+
+	/**
+     * Actions' response functions
+     */
+	public function onObjectDelete($iObjectId = 0)
+    {
+        $this->_oQuery->deleteObjectEntries($iObjectId ? $iObjectId : $this->getId());
+    }
+
+	/**
+     * Internal functions
+     */
+	protected function _getAuthorId ()
+    {
+        return isMember() ? bx_get_logged_profile_id() : 0;
+    }
+
+    protected function _getAuthorPassword ()
+    {
+        return isMember() ? $_COOKIE['memberPassword'] : "";
+    }
+
+    protected function _getAuthorIp ()
+    {
+        return getVisitorIP();
+    }
+
+    protected function _getAuthorInfo($iAuthorId = 0)
+    {
+        $oProfile = $this->_getAuthorObject($iAuthorId);
+
+        return array(
+            $oProfile->getDisplayName(),
+            $oProfile->getUrl(),
+            $oProfile->getThumb(),
+            $oProfile->getUnit()
+        );
+    }
+
+    protected function _getAuthorObject($iAuthorId = 0)
+    {
+        $oProfile = BxDolProfile::getInstance($iAuthorId);
+        if (!$oProfile)
+            $oProfile = BxDolProfileUndefined::getInstance();
+
+        return $oProfile;
+    }
+
+	protected function _trigger()
+    {
+        if(!$this->_aSystem['trigger_table'])
+            return false;
+
+        $iId = $this->getId();
+        if(!$iId)
+            return false;
+
+        return $this->_oQuery->updateTriggerTable($iId);
     }
 }
 
