@@ -101,7 +101,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
 
         $CNF = &$this->_oConfig->CNF;
 
-        return $this->_entitySocialSharing ($iContentId, $iContentId, $aContentInfo[$CNF['FIELD_THUMB']], $aContentInfo[$CNF['FIELD_TITLE']], $CNF['OBJECT_STORAGE'], false, $CNF['OBJECT_VOTES'], $CNF['URI_VIEW_ENTRY']);
+        return $this->_entitySocialSharing ($iContentId, $iContentId, $aContentInfo[$CNF['FIELD_THUMB']], $aContentInfo[$CNF['FIELD_TITLE']], $CNF['OBJECT_STORAGE'], false, $CNF['OBJECT_VOTES'], $CNF['OBJECT_REPORTS'], $CNF['URI_VIEW_ENTRY']);
     }
 
     public function serviceEntityAllActions ($iContentId = 0)
@@ -436,7 +436,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
         return $oCmts->getCommentsBlock(0, 0, false);
     }
 
-    protected function _entitySocialSharing ($iId, $iIdForTimeline, $iIdThumb, $sTitle, $sObjectStorage, $sObjectTranscoder, $sObjectVote, $sUriViewEntry, $sCommentsObject = '', $bEnableSocialSharing = true)
+    protected function _entitySocialSharing ($iId, $iIdForTimeline, $iIdThumb, $sTitle, $sObjectStorage, $sObjectTranscoder, $sObjectVote, $sObjectReport, $sUriViewEntry, $sCommentsObject = '', $bEnableSocialSharing = true)
     {
         $sUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=' . $sUriViewEntry . '&id=' . $iId);
 
@@ -479,12 +479,18 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
         if ($iIdForTimeline && BxDolRequest::serviceExists('bx_timeline', 'get_share_element_block'))
             $sShare = BxDolService::call('bx_timeline', 'get_share_element_block', array(bx_get_logged_profile_id(), $this->_aModule['name'], 'added', $iIdForTimeline, array('show_do_share_as_button' => true)));
 
+		$sReport = '';
+        $oReport = BxDolReport::getObjectInstance($sObjectReport, $iId);
+        if ($oReport)
+            $sReport = $oReport->getElementBlock(array('show_do_report_as_button' => true));
+
         $sSocial = $bEnableSocialSharing ? BxTemplSocialSharing::getInstance()->getCode($iId, $this->_aModule['name'], BX_DOL_URL_ROOT . $sUrl, $sTitle, $aCustomParams) : '';
 
         return $this->_oTemplate->parseHtmlByName('entry-share.html', array(
             'comments' => $sComments,
             'vote' => $sVotes,
             'share' => $sShare,
+        	'report' => $sReport,
             'social' => $sSocial,
         ));
         //TODO: Rebuild using menus engine when it will be ready for such elements like Vote, Share, etc.
