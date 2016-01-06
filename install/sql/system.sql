@@ -451,6 +451,14 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 SET @iIdActionVote = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('system', 'report', NULL, '_sys_acl_action_report', '', 0, 0);
+SET @iIdActionReport = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('system', 'report_view', NULL, '_sys_acl_action_report_view', '', 0, 0);
+SET @iIdActionReportView = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('system', 'comments post', NULL, '_sys_acl_action_comments_post', '', 0, 3);
 SET @iIdActionCmtPost = LAST_INSERT_ID();
 
@@ -521,6 +529,16 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iModerator, @iIdActionVote),
 (@iAdministrator, @iIdActionVote),
 (@iPremium, @iIdActionVote),
+
+-- report 
+(@iStandard, @iIdActionReport),
+(@iModerator, @iIdActionReport),
+(@iAdministrator, @iIdActionReport),
+(@iPremium, @iIdActionReport),
+
+-- report view 
+(@iModerator, @iIdActionReportView),
+(@iAdministrator, @iIdActionReportView),
 
 -- comments post
 (@iStandard, @iIdActionCmtPost),
@@ -991,6 +1009,25 @@ SET @iIdHandler = LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('system', 'save_setting', @iIdHandler);
+
+
+-- --------------------------------------------------------
+
+
+CREATE TABLE `sys_objects_report` (
+  `id` int(11) NOT NULL auto_increment,
+  `name` varchar(64) NOT NULL,
+  `table_main` varchar(32) NOT NULL,
+  `table_track` varchar(32) NOT NULL,
+  `is_on` tinyint(4) NOT NULL default '1',
+  `trigger_table` varchar(32) NOT NULL,
+  `trigger_field_id` varchar(32) NOT NULL,
+  `trigger_field_author` varchar(32) NOT NULL,
+  `trigger_field_count` varchar(32) NOT NULL,
+  `class_name` varchar(32) NOT NULL default '',
+  `class_file` varchar(256) NOT NULL default '',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 
 -- --------------------------------------------------------
@@ -2099,7 +2136,8 @@ INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_att
 ('sys_forgot_password', 'system', '_sys_form_forgot_password', '', '', 'do_submit', '', '', '', '', 'a:1:{s:14:"checker_helper";s:33:"BxFormForgotPasswordCheckerHelper";}', 0, 1, 'BxTemplFormForgotPassword', ''),
 ('sys_confirm_email', 'system', '_sys_form_confirm_email', '', '', 'do_submit', '', '', '', '', 'a:1:{s:14:"checker_helper";s:31:"BxFormConfirmEmailCheckerHelper";}', 0, 1, 'BxTemplFormConfirmEmail', ''),
 ('sys_unsubscribe', 'system', '_sys_form_unsubscribe', '', '', 'do_submit', 'sys_accounts', 'id', '', '', '', 0, 1, 'BxTemplFormAccount', ''),
-('sys_comment', 'system', '_sys_form_comment', 'cmts.php', 'a:3:{s:2:"id";s:17:"cmt-%s-form-%s-%d";s:4:"name";s:17:"cmt-%s-form-%s-%d";s:5:"class";s:14:"cmt-post-reply";}', 'cmt_submit', '', 'cmt_id', '', '', '', 0, 1, 'BxTemplCmtsForm', '');
+('sys_comment', 'system', '_sys_form_comment', 'cmts.php', 'a:3:{s:2:"id";s:17:"cmt-%s-form-%s-%d";s:4:"name";s:17:"cmt-%s-form-%s-%d";s:5:"class";s:14:"cmt-post-reply";}', 'cmt_submit', '', 'cmt_id', '', '', '', 0, 1, 'BxTemplCmtsForm', ''),
+('sys_report', 'system', '_sys_form_report', 'report.php', 'a:3:{s:2:"id";s:0:"";s:4:"name";s:0:"";s:5:"class";s:17:"bx-report-do-form";}', 'submit', '', 'id', '', '', '', 0, 1, '', '');
 
 CREATE TABLE IF NOT EXISTS `sys_form_displays` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -2124,7 +2162,8 @@ INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `v
 ('sys_unsubscribe_updates', 'system', 'sys_unsubscribe', '_sys_form_display_unsubscribe_updates', 0),
 ('sys_unsubscribe_news', 'system', 'sys_unsubscribe', '_sys_form_display_unsubscribe_news', 0),
 ('sys_comment_post', 'system', 'sys_comment', '_sys_form_display_comment_post', 0),
-('sys_comment_edit', 'system', 'sys_comment', '_sys_form_display_comment_edit', 0);
+('sys_comment_edit', 'system', 'sys_comment', '_sys_form_display_comment_edit', 0),
+('sys_report_post', 'system', 'sys_report', '_sys_form_display_report_post', 0);
 
 
 CREATE TABLE IF NOT EXISTS `sys_form_inputs` (
@@ -2196,7 +2235,15 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('sys_comment', 'system', 'cmt_parent_id', '', '', 0, 'hidden', '_sys_form_comment_input_caption_system_cmt_parent_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('sys_comment', 'system', 'cmt_text', '', '', 0, 'textarea', '_sys_form_comment_input_caption_system_cmt_text', '', '', 0, 0, 0, '', '', '', 'Length', 'a:2:{s:3:"min";i:1;s:3:"max";i:5000;}', '_Please enter n1-n2 characters', 'Xss', '', 1, 0),
 ('sys_comment', 'system', 'cmt_image', '', '', 0, 'files', '_sys_form_comment_input_caption_system_cmt_image', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('sys_comment', 'system', 'cmt_submit', '_sys_form_comment_input_submit', '', 0, 'submit', '_sys_form_comment_input_caption_system_cmt_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
+('sys_comment', 'system', 'cmt_submit', '_sys_form_comment_input_submit', '', 0, 'submit', '_sys_form_comment_input_caption_system_cmt_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+
+('sys_report', 'system', 'sys', '', '', 0, 'hidden', '_sys_form_report_input_caption_system_sys', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('sys_report', 'system', 'object_id', '', '', 0, 'hidden', '_sys_form_report_input_caption_system_object_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('sys_report', 'system', 'action', '', '', 0, 'hidden', '_sys_form_report_input_caption_system_action', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('sys_report', 'system', 'id', '', '', 0, 'hidden', '_sys_form_report_input_caption_system_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('sys_report', 'system', 'type', '', '#!sys_report_types', 0, 'select', '_sys_form_report_input_caption_system_type', '_sys_form_report_input_caption_type', '', 1, 0, 0, '', '', '', 'Avail', '', '_Please select value', 'Xss', '', 1, 0),
+('sys_report', 'system', 'text', '', '', 0, 'textarea', '_sys_form_report_input_caption_system_text', '_sys_form_report_input_caption_text', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
+('sys_report', 'system', 'submit', '_sys_form_report_input_caption_submit', '', 0, 'submit', '_sys_form_report_input_caption_system_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
 
 
 CREATE TABLE IF NOT EXISTS `sys_form_display_inputs` (
@@ -2279,7 +2326,15 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('sys_comment_edit', 'cmt_parent_id', 2147483647, 1, 5),
 ('sys_comment_edit', 'cmt_text', 2147483647, 1, 6),
 ('sys_comment_edit', 'cmt_image', 2147483647, 0, 7),
-('sys_comment_edit', 'cmt_submit', 2147483647, 1, 8);
+('sys_comment_edit', 'cmt_submit', 2147483647, 1, 8),
+
+('sys_report_post', 'sys', 2147483647, 1, 1),
+('sys_report_post', 'object_id', 2147483647, 1, 2),
+('sys_report_post', 'action', 2147483647, 1, 3),
+('sys_report_post', 'id', 2147483647, 0, 4),
+('sys_report_post', 'type', 2147483647, 1, 5),
+('sys_report_post', 'text', 2147483647, 1, 6),
+('sys_report_post', 'submit', 2147483647, 1, 7);
 
 
 CREATE TABLE `sys_form_pre_lists` (
@@ -2296,7 +2351,8 @@ CREATE TABLE `sys_form_pre_lists` (
 INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES
 ('Country', '_adm_form_txt_pre_lists_country', 'system', '0'),
 ('Sex', '_adm_form_txt_pre_lists_sex', 'system', '1'),
-('Language', '_adm_form_txt_pre_lists_language', 'system', '0');
+('Language', '_adm_form_txt_pre_lists_language', 'system', '0'),
+('sys_report_types', '_sys_pre_lists_report_types', 'system', '0');
 
 
 CREATE TABLE `sys_form_pre_values` (
@@ -2310,7 +2366,7 @@ CREATE TABLE `sys_form_pre_values` (
   FULLTEXT KEY `KeyAndValue` (`Key`, `Value`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALUES 
+INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALUES
 ('Country', 'AF', 1, '__Afghanistan', ''),
 ('Country', 'AX', 2, '__Aland_Islands', ''),
 ('Country', 'AL', 3, '__Albania', ''),
@@ -2616,6 +2672,13 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 ('Language', '50', 50, '__Urdu', ''),
 ('Language', '51', 51, '__Vietnamese', ''),
 ('Language', '52', 52, '__Visayan', '');
+
+INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALUES
+('sys_report_types', 'spam', 1, '_sys_pre_lists_report_types_spam', ''),
+('sys_report_types', 'scam', 2, '_sys_pre_lists_report_types_scam', ''),
+('sys_report_types', 'fraud', 3, '_sys_pre_lists_report_types_fraud', ''),
+('sys_report_types', 'nude', 4, '_sys_pre_lists_report_types_nude', ''),
+('sys_report_types', 'other', 5, '_sys_pre_lists_report_types_other', '');
 
 -- --------------------------------------------------------
 

@@ -61,7 +61,18 @@
 	<string name="_Period"><![CDATA[Период]]></string>
 	<string name="_Please Wait"><![CDATA[Пожалуйста, подождите]]></string>
 	<string name="_Please enter n1-n2 characters"><![CDATA[Пожалуйста, введите {0}-{1} символов]]></string>
+	<string name="_Please select value"><![CDATA[Пожалуйста, выберите значение из списка]]></string>
 	<string name="_Preview"><![CDATA[Предпросмотр]]></string>
+
+	<string name="_report_counter"><![CDATA[{0}]]></string>
+	<string name="_report_do_report"><![CDATA[Пожаловаться]]></string>
+	<string name="_report_do_report_by"><![CDATA[Пожаловались]]></string>
+	<string name="_report_err_cannot_perform_action"><![CDATA[Невозможно выполнить действие.]]></string>
+	<string name="_report_err_duplicate_report"><![CDATA[Ваша жалоба уже была принята ранее.]]></string>
+	<string name="_report_err_not_enabled"><![CDATA[Жалоба не может быть принята в данный момент. Пожалуйста, попробуйте позднее.]]></string>
+	<string name="_report_err_wrong_type"><![CDATA[Неправильный тип жалобы.]]></string>
+	<string name="_report_reported_as"><![CDATA[Тип жалобы:]]></string>
+
 	<string name="_RSS_Feed_Title_Common"><![CDATA[{0} RSS]]></string>
 	<string name="_RSS_Feed_Title_Profile"><![CDATA[{0} недавние {1}]]></string>
 	<string name="_Rate"><![CDATA[Оценить]]></string>
@@ -1365,6 +1376,8 @@
 	<string name="_sys_acl_action_unauthenticated"><![CDATA[Не вошедшие пользователи не могут '{1}'.]]></string>
 	<string name="_sys_acl_action_unconfirmed"><![CDATA[Вы не подтвердили свой профиль. Пожалуйста, проверьте эл. сообщение со ссылкой на активацию профиля. Неподтверждённые пользователи не могут <b>{1}</b>.]]></string>
 	<string name="_sys_acl_action_vote"><![CDATA[Голосовать]]></string>
+	<string name="_sys_acl_action_report"><![CDATA[Жаловаться]]></string>
+	<string name="_sys_acl_action_report_view"><![CDATA[Просматривать жалобы]]></string>
 	<string name="_sys_add_friend"><![CDATA[Добавить друга]]></string>
 	<string name="_sys_adm_installed"><![CDATA[Установленные]]></string>
 	<string name="_sys_admin_apply"><![CDATA[Применить]]></string>
@@ -1627,6 +1640,7 @@
 	<string name="_sys_form_display_confirm_email"><![CDATA[Подтверждение имейла]]></string>
 	<string name="_sys_form_display_forgot_password"><![CDATA[Забыли Пароль?]]></string>
 	<string name="_sys_form_display_login"><![CDATA[Войти]]></string>
+	<string name="_sys_form_display_report_post"><![CDATA[Форма добавления жалобы]]></string>
 	<string name="_sys_form_display_unsubscribe_news"><![CDATA[Отписаться от Новостей]]></string>
 	<string name="_sys_form_display_unsubscribe_updates"><![CDATA[Отписаться от Обновлений]]></string>
 	<string name="_sys_form_forgot_password"><![CDATA[Забыли Пароль?]]></string>
@@ -1658,6 +1672,17 @@
 	<string name="_sys_form_login_input_password"><![CDATA[Пароль]]></string>
 	<string name="_sys_form_login_input_remember_me"><![CDATA[Запомнить меня]]></string>
 	<string name="_sys_form_login_input_submit"><![CDATA[Вход]]></string>
+	<string name="_sys_form_report"><![CDATA[Пожаловаться]]></string>
+	<string name="_sys_form_report_input_caption_submit"><![CDATA[Пожаловаться]]></string>
+	<string name="_sys_form_report_input_caption_text"><![CDATA[Текст жалобы]]></string>
+	<string name="_sys_form_report_input_caption_type"><![CDATA[Тип жалобы]]></string>
+	<string name="_sys_form_report_input_caption_system_action"><![CDATA[Действие]]></string>
+	<string name="_sys_form_report_input_caption_system_object_id"><![CDATA[ID объекта]]></string>
+	<string name="_sys_form_report_input_caption_system_id"><![CDATA[ID жалобы]]></string>
+	<string name="_sys_form_report_input_caption_system_submit"><![CDATA[Пожаловаться]]></string>
+	<string name="_sys_form_report_input_caption_system_text"><![CDATA[Текст жалобы]]></string>
+	<string name="_sys_form_report_input_caption_system_type"><![CDATA[Тип жалобы]]></string>
+	<string name="_sys_form_report_input_caption_system_sys"><![CDATA[Тип объекта]]></string>
 	<string name="_sys_form_unsubscribe"><![CDATA[Отписаться]]></string>
 	<string name="_sys_form_unsubscribe_input_caption_system_code"><![CDATA[Код Безопасности]]></string>
 	<string name="_sys_form_unsubscribe_input_caption_system_do_submit"><![CDATA[Выполнить]]></string>
@@ -1946,6 +1971,12 @@
 	<string name="_sys_paginate_info"><![CDATA[{0}-{1}]]></string>
 	<string name="_sys_paginate_view_all"><![CDATA[Просмотреть Все]]></string>
 	<string name="_sys_please_select"><![CDATA[Пожалуйста, выберите...]]></string>
+	<string name="_sys_pre_lists_report_types"><![CDATA[Типы жалоб]]></string>
+	<string name="_sys_pre_lists_report_types_spam"><![CDATA[спам]]></string>
+	<string name="_sys_pre_lists_report_types_scam"><![CDATA[скам]]></string>
+	<string name="_sys_pre_lists_report_types_fraud"><![CDATA[обман]]></string>
+	<string name="_sys_pre_lists_report_types_nude"><![CDATA[обнаженность]]></string>
+	<string name="_sys_pre_lists_report_types_other"><![CDATA[другое]]></string>
 	<string name="_sys_profile_sample_single"><![CDATA[профиль]]></string>
 	<string name="_sys_profile_subscription_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> подписался на <a href="{entry_url}">{entry_caption}</a> {entry_sample}]]></string>
 	<string name="_sys_private"><![CDATA[Приватные]]></string>
@@ -2143,6 +2174,7 @@
 	<string name="_top"><![CDATA[Топ]]></string>
 	<string name="_uknown"><![CDATA[неизвестно]]></string>
 	<string name="_undefined"><![CDATA[неопределено]]></string>
+	<string name="_vote_counter"><![CDATA[{0}]]></string>
 	<string name="_vote_do_like"><![CDATA[Спасибо!]]></string>
 	<string name="_vote_do_unlike"><![CDATA[Нет, спасибо]]></string>
 	<string name="_vote_do_like_by"><![CDATA[Поблагодарил]]></string>

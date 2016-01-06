@@ -61,7 +61,18 @@
 	<string name="_Period"><![CDATA[Period]]></string>
 	<string name="_Please Wait"><![CDATA[Please Wait]]></string>
 	<string name="_Please enter n1-n2 characters"><![CDATA[Please enter {0}-{1} characters]]></string>
+	<string name="_Please select value"><![CDATA[Please select a value from the list]]></string>
 	<string name="_Preview"><![CDATA[Preview]]></string>
+
+	<string name="_report_counter"><![CDATA[{0}]]></string>
+	<string name="_report_do_report"><![CDATA[Report]]></string>
+	<string name="_report_do_report_by"><![CDATA[Reported by]]></string>
+	<string name="_report_err_cannot_perform_action"><![CDATA[Cannot perform action.]]></string>
+	<string name="_report_err_duplicate_report"><![CDATA[You already reported this item.]]></string>
+	<string name="_report_err_not_enabled"><![CDATA[The feature is not available right now. Please, try again later.]]></string>
+	<string name="_report_err_wrong_type"><![CDATA[Wrong report type.]]></string>
+	<string name="_report_reported_as"><![CDATA[Reported as:]]></string>
+
 	<string name="_RSS_Feed_Title_Common"><![CDATA[{0} RSS]]></string>
 	<string name="_RSS_Feed_Title_Profile"><![CDATA[{0}'s Recent {1}]]></string>
 	<string name="_Rate"><![CDATA[Rate]]></string>
@@ -1365,6 +1376,8 @@
 	<string name="_sys_acl_action_unauthenticated"><![CDATA[Not logged in users can't '{1}'.]]></string>
 	<string name="_sys_acl_action_unconfirmed"><![CDATA[You didn't confirm your profile. Please check your email with profile activation link. Unconfirmed members can't <b>{1}</b>.]]></string>
 	<string name="_sys_acl_action_vote"><![CDATA[Vote]]></string>
+	<string name="_sys_acl_action_report"><![CDATA[Report]]></string>
+	<string name="_sys_acl_action_report_view"><![CDATA[View reports]]></string>
 	<string name="_sys_add_friend"><![CDATA[Add friend]]></string>
 	<string name="_sys_adm_installed"><![CDATA[Installed]]></string>
 	<string name="_sys_admin_apply"><![CDATA[Apply]]></string>
@@ -1627,6 +1640,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_display_confirm_email"><![CDATA[Email Confirmation]]></string>
 	<string name="_sys_form_display_forgot_password"><![CDATA[Forgot Password]]></string>
 	<string name="_sys_form_display_login"><![CDATA[Sign in]]></string>
+	<string name="_sys_form_display_report_post"><![CDATA[Report From Post]]></string>
 	<string name="_sys_form_display_unsubscribe_news"><![CDATA[Unsubscribe From Newsletters]]></string>
 	<string name="_sys_form_display_unsubscribe_updates"><![CDATA[Unsubscribe From Updates]]></string>
 	<string name="_sys_form_forgot_password"><![CDATA[Forgot Password]]></string>
@@ -1658,6 +1672,17 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_login_input_password"><![CDATA[Password]]></string>
 	<string name="_sys_form_login_input_remember_me"><![CDATA[Remember me]]></string>
 	<string name="_sys_form_login_input_submit"><![CDATA[Sign in]]></string>
+	<string name="_sys_form_report"><![CDATA[Report]]></string>
+	<string name="_sys_form_report_input_caption_submit"><![CDATA[Post]]></string>
+	<string name="_sys_form_report_input_caption_text"><![CDATA[Report Text]]></string>
+	<string name="_sys_form_report_input_caption_type"><![CDATA[Report Type]]></string>
+	<string name="_sys_form_report_input_caption_system_action"><![CDATA[Action]]></string>
+	<string name="_sys_form_report_input_caption_system_object_id"><![CDATA[Object ID]]></string>	
+	<string name="_sys_form_report_input_caption_system_id"><![CDATA[Report ID]]></string>
+	<string name="_sys_form_report_input_caption_system_submit"><![CDATA[Post Report]]></string>
+	<string name="_sys_form_report_input_caption_system_text"><![CDATA[Report Text]]></string>
+	<string name="_sys_form_report_input_caption_system_type"><![CDATA[Report Type]]></string>
+	<string name="_sys_form_report_input_caption_system_sys"><![CDATA[Object Type]]></string>
 	<string name="_sys_form_unsubscribe"><![CDATA[Unsubscribe]]></string>
 	<string name="_sys_form_unsubscribe_input_caption_system_code"><![CDATA[Security Code]]></string>
 	<string name="_sys_form_unsubscribe_input_caption_system_do_submit"><![CDATA[Submit]]></string>
@@ -1946,6 +1971,12 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_paginate_info"><![CDATA[{0}-{1}]]></string>
 	<string name="_sys_paginate_view_all"><![CDATA[View All]]></string>
 	<string name="_sys_please_select"><![CDATA[Please select...]]></string>
+	<string name="_sys_pre_lists_report_types"><![CDATA[Report Types]]></string>
+	<string name="_sys_pre_lists_report_types_spam"><![CDATA[spam]]></string>
+	<string name="_sys_pre_lists_report_types_scam"><![CDATA[scam]]></string>
+	<string name="_sys_pre_lists_report_types_fraud"><![CDATA[fraud]]></string>
+	<string name="_sys_pre_lists_report_types_nude"><![CDATA[nude]]></string>
+	<string name="_sys_pre_lists_report_types_other"><![CDATA[other]]></string>
 	<string name="_sys_profile_sample_single"><![CDATA[profile]]></string>
 	<string name="_sys_profile_subscription_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> subscribed to <a href="{entry_url}">{entry_caption}</a> {entry_sample}]]></string>
 	<string name="_sys_private"><![CDATA[Private]]></string>
@@ -2142,6 +2173,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_top"><![CDATA[Top]]></string>
 	<string name="_uknown"><![CDATA[unknown]]></string>
 	<string name="_undefined"><![CDATA[undefined]]></string>
+	<string name="_vote_counter"><![CDATA[{0}]]></string>
 	<string name="_vote_do_like"><![CDATA[Thank you!]]></string>
 	<string name="_vote_do_unlike"><![CDATA[No thank you]]></string>
 	<string name="_vote_do_like_by"><![CDATA[Thanked by]]></string>
