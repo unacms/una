@@ -155,30 +155,6 @@ class BxDolVote extends BxDolObject
         return $GLOBALS['bx_dol_vote_systems'];
     }
 
-    /**
-     * it is called on cron every day or similar period to clean old votes
-     */
-    public static function maintenance()
-    {
-        $iResult = 0;
-        $oDb = BxDolDb::getInstance();
-
-        $aSystems = self::getSystems();
-        foreach($aSystems as $aSystem) {
-            if(!$aSystem['is_on'])
-                continue;
-
-            $sQuery = $oDb->prepare("DELETE FROM `{$aSystem['table_track']}` WHERE `date` < (UNIX_TIMESTAMP() - ?)", BX_DOL_VOTE_OLD_VOTES);
-            $iDeleted = (int)$oDb->query($sQuery);
-            if($iDeleted > 0)
-                $oDb->query("OPTIMIZE TABLE `{$aSystem['table_track']}`");
-
-            $iResult += $iDeleted;
-        }
-
-        return $iResult;
-    }
-
     public function isUndo()
     {
         return (int)$this->_aSystem['is_undo'] == 1;
@@ -225,15 +201,6 @@ class BxDolVote extends BxDolObject
         return $aVote['rate'];
     }
 
-    public function getSqlParts($sMainTable, $sMainField)
-    {
-        if(!$this->isEnabled())
-            return array();
-
-        return $this->_oQuery->getSqlParts($sMainTable, $sMainField);
-    }
-
-
     /**
      * Actions functions
      */
@@ -252,7 +219,7 @@ class BxDolVote extends BxDolObject
         $bUndo = $this->isUndo();
         $bLikeMode = $this->isLikeMode();
 
-        $bVoted = $this->_oQuery->isVoted($iObjectId, $iAuthorId);
+        $bVoted = $this->_oQuery->isPerformed($iObjectId, $iAuthorId);
         $bPerformUndo = $bVoted && $bUndo ? true : false;
 
         if(!$bPerformUndo && !$this->isAllowedVote(true)) {
@@ -287,7 +254,7 @@ class BxDolVote extends BxDolObject
             return;
         }
 
-        $this->_triggerVote();
+        $this->_trigger();
 
         $oZ = new BxDolAlerts($this->_sSystem, ($bPerformUndo ? 'un' : '') . 'doVote', $iObjectId, $iAuthorId, array('vote_id' => $iId, 'vote_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId, 'value' => $iValue));
         $oZ->alert();
@@ -318,20 +285,6 @@ class BxDolVote extends BxDolObject
     /**
      * Permissions functions
      */
-    public function checkAction ($sAction, $isPerformAction = false)
-    {
-        $iId = $this->_getAuthorId();
-        $a = checkActionModule($iId, $sAction, 'system', $isPerformAction);
-        return $a[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED;
-    }
-
-    public function checkActionErrorMsg ($sAction)
-    {
-        $iId = $this->_getAuthorId();
-        $a = checkActionModule($iId, $sAction, 'system');
-        return $a[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $a[CHECK_ACTION_MESSAGE] : '';
-    }
-
     public function isAllowedVote($isPerformAction = false)
     {
         if(isAdmin())
@@ -345,45 +298,9 @@ class BxDolVote extends BxDolObject
         return $this->checkActionErrorMsg('vote');
     }
 
-    function onObjectDelete($iObjectId = 0)
-    {
-        $this->_oQuery->deleteObjectVotes($iObjectId ? $iObjectId : $this->getId());
-    }
-
     /**
      * Internal functions
      */
-    protected function _getAuthorId ()
-    {
-        return isMember() ? bx_get_logged_profile_id() : 0;
-    }
-
-    protected function _getAuthorIp ()
-    {
-        return getVisitorIP();
-    }
-
-    protected function _getAuthorInfo($iAuthorId = 0)
-    {
-        $oProfile = $this->_getAuthorObject($iAuthorId);
-
-        return array(
-            $oProfile->getDisplayName(),
-            $oProfile->getUrl(),
-            $oProfile->getThumb(),
-            $oProfile->getUnit()
-        );
-    }
-
-    protected function _getAuthorObject($iAuthorId = 0)
-    {
-        $oProfile = BxDolProfile::getInstance($iAuthorId);
-        if (!$oProfile)
-            $oProfile = BxDolProfileUndefined::getInstance();
-
-        return $oProfile;
-    }
-
     protected function _getIconDoLike($bVoted)
     {
     	return $bVoted && $this->isUndo() ?  'thumbs-down' : 'thumbs-up';
@@ -392,18 +309,6 @@ class BxDolVote extends BxDolObject
     protected function _getTitleDoLike($bVoted)
     {
     	return $bVoted && $this->isUndo() ? '_vote_do_unlike' : '_vote_do_like';
-    }
-
-    protected function _triggerVote()
-    {
-        if(!$this->_aSystem['trigger_table'])
-            return false;
-
-        $iId = $this->getId();
-        if(!$iId)
-            return false;
-
-        return $this->_oQuery->updateTriggerTable($iId);
     }
 }
 

@@ -97,10 +97,11 @@ BxDolVote.prototype.vote = function (oLink, iValue)
     			$this._iSaveWidth = Math.round(oData.rate * $this._getStarWidth(oLink));
 
             var oCounter = $this._getCounter(oLink);
-            if(oCounter)
+            if(oCounter && oCounter.length > 0) {
             	oCounter.html(oData.countf);
 
-            oCounter.parents('.' + $this._sSP + '-counter-holder:first').bx_anim(oData.count > 0 ? 'show' : 'hide');
+            	oCounter.parents('.' + $this._sSP + '-counter-holder:first').bx_anim(oData.count > 0 ? 'show' : 'hide');
+            }
         },
         'json'
     );
@@ -126,13 +127,10 @@ BxDolVote.prototype._getStarWidth = function(oElement) {
 };
 
 BxDolVote.prototype._getCounter = function(oElement) {
-	if(this._aHtmlIds['counter'] && this._aHtmlIds['counter'].length > 0)
-		return $('#' + this._aHtmlIds['counter']);
-
 	if($(oElement).hasClass(this._sSP))
-		return $(oElement).find('.' + this._sSP + '-counter span');
+		return $(oElement).find('.' + this._sSP + '-counter');
 	else 
-		return $(oElement).parents('.' + this._sSP + ':first').find('.' + this._sSP + '-counter span');
+		return $(oElement).parents('.' + this._sSP + ':first').find('.' + this._sSP + '-counter');
 };
 
 BxDolVote.prototype._loadingInButton = function(e, bShow) {

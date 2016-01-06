@@ -167,7 +167,7 @@ class BxBaseVote extends BxDolVote
             return '';
 
         $aParams = array_merge($this->_aElementDefaults[$sType], $aParams);
-        $aParams['is_voted'] = $this->_oQuery->isVoted($iObjectId, $iAuthorId) ? true : false;
+        $aParams['is_voted'] = $this->_oQuery->isPerformed($iObjectId, $iAuthorId) ? true : false;
 
         $sTmplName = 'vote_element_' . (!empty($aParams['usage']) ? $aParams['usage'] : BX_DOL_VOTE_USAGE_DEFAULT) . '.html';
         return $this->_oTemplate->parseHtmlByName($sTmplName, array(
@@ -273,7 +273,7 @@ class BxBaseVote extends BxDolVote
 
     protected function _getLabelCounter($iCount)
     {
-        return $iCount;
+        return _t('_vote_counter', $iCount);
     }
 
     protected function _getLabelDoLike($aParams = array())
@@ -299,7 +299,7 @@ class BxBaseVote extends BxDolVote
     {
         $aTmplUsers = array();
 
-        $aUserIds = $this->_oQuery->getVotedBy($this->getId());
+        $aUserIds = $this->_oQuery->getPerformedBy($this->getId());
         foreach($aUserIds as $iUserId) {
             list($sUserName, $sUserUrl, $sUserIcon, $sUserUnit) = $this->_getAuthorInfo($iUserId);
             $aTmplUsers[] = array(
