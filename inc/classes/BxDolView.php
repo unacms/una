@@ -111,30 +111,6 @@ class BxDolView extends BxDolObject
         return $GLOBALS['bx_dol_view_systems'];
     }
 
-    /**
-     * it is called on cron every day or similar period to clean old votes
-     */
-    public static function maintenance()
-    {
-        $iResult = 0;
-        $oDb = BxDolDb::getInstance();
-
-        $aSystems = self::getSystems();
-        foreach($aSystems as $aSystem) {
-            if(!$aSystem['is_on'])
-                continue;
-
-            $sQuery = $oDb->prepare("DELETE FROM `{$aSystem['table_track']}` WHERE `date` < (UNIX_TIMESTAMP() - ?)", BX_DOL_VIEW_OLD_VIEWS);
-            $iDeleted = (int)$oDb->query($sQuery);
-            if($iDeleted > 0)
-                $oDb->query("OPTIMIZE TABLE `{$aSystem['table_track']}`");
-
-            $iResult += $iDeleted;
-        }
-
-        return $iResult;
-    }
-
     function doView()
     {
         if(!$this->isEnabled())
@@ -145,7 +121,7 @@ class BxDolView extends BxDolObject
         $sAuthorIp = $this->_getAuthorIp();
 
         if($this->_oQuery->doView($iObjectId, $iAuthorId, $sAuthorIp)) {
-            $this->_triggerView();
+            $this->_trigger();
 
             $oZ = new BxDolAlerts($this->_sSystem, 'view', $iObjectId, $iAuthorId);
             $oZ->alert();
@@ -154,33 +130,6 @@ class BxDolView extends BxDolObject
         }
 
         return false;
-    }
-
-    function onObjectDelete($iObjectId = 0)
-    {
-        $this->_oQuery->deleteObjectViews($iObjectId ? $iObjectId : $this->getId());
-    }
-
-    protected function _getAuthorId ()
-    {
-        return isMember() ? bx_get_logged_profile_id() : 0;
-    }
-
-    protected function _getAuthorIp ()
-    {
-        return getVisitorIP();
-    }
-
-    protected function _triggerView()
-    {
-        if(!$this->_aSystem['trigger_table'])
-            return false;
-
-        $iId = $this->getId();
-        if(!$iId)
-            return false;
-
-        return $this->_oQuery->updateTriggerTable($iId);
     }
 }
 
