@@ -33,10 +33,12 @@ BxTimelineShare.prototype.shareItem = function(oLink, iOwnerId, sType, sAction, 
         	if(oData && oData.msg != undefined && oData.msg.length > 0)
                 alert(oData.msg);
 
-        	if(oData && oData.counter != undefined) {
-        		var sCounter = $(oData.counter).attr('id');
-        		$('#' + sCounter).replaceWith(oData.counter);
-        		$('#' + sCounter).parents('.' + $this.sSP + '-share-counter-holder:first').bx_anim(oData.count > 0 ? 'show' : 'hide');
+        	var oCounter = $this._getCounter(oLink);
+        	if(oData && oData.counter != undefined && oCounter && oCounter.length > 0) {
+        		var oCounterHolder = oCounter.parents('.' + $this.sSP + '-share-counter-holder:first');
+
+        		oCounter.replaceWith(oData.counter);
+        		oCounterHolder.bx_anim(oData.count > 0 ? 'show' : 'hide');
         	}
 
         	if(oData && oData.disabled)
@@ -56,4 +58,13 @@ BxTimelineShare.prototype.toggleByPopup = function(oLink, iId) {
 	});
 
 	return false;
+};
+
+BxTimelineShare.prototype._getCounter = function(oElement) {
+	var sSPShare = this.sSP + '-share';
+
+	if($(oElement).hasClass(sSPShare))
+		return $(oElement).find('.' + sSPShare + '-counter');
+	else 
+		return $(oElement).parents('.' + sSPShare + ':first').find('.' + sSPShare + '-counter');
 };
