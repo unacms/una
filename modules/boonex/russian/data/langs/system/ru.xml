@@ -63,7 +63,6 @@
 	<string name="_Please enter n1-n2 characters"><![CDATA[Пожалуйста, введите {0}-{1} символов]]></string>
 	<string name="_Please select value"><![CDATA[Пожалуйста, выберите значение из списка]]></string>
 	<string name="_Preview"><![CDATA[Предпросмотр]]></string>
-
 	<string name="_report_counter"><![CDATA[{0}]]></string>
 	<string name="_report_do_report"><![CDATA[Пожаловаться]]></string>
 	<string name="_report_do_report_by"><![CDATA[Пожаловались]]></string>
@@ -72,7 +71,6 @@
 	<string name="_report_err_not_enabled"><![CDATA[Жалоба не может быть принята в данный момент. Пожалуйста, попробуйте позднее.]]></string>
 	<string name="_report_err_wrong_type"><![CDATA[Неправильный тип жалобы.]]></string>
 	<string name="_report_reported_as"><![CDATA[Тип жалобы:]]></string>
-
 	<string name="_RSS_Feed_Title_Common"><![CDATA[{0} RSS]]></string>
 	<string name="_RSS_Feed_Title_Profile"><![CDATA[{0} недавние {1}]]></string>
 	<string name="_Rate"><![CDATA[Оценить]]></string>
@@ -1473,6 +1471,12 @@
 <p>{reply_text}</p>
 <p>Пожалуйста, перейдите на страницу комментария для дополнительной информации: <a href="{comment_url}">Мой Комментарий</a></p>
 <bx_include_auto:_email_footer.html />]]></string>
+	<string name="_sys_et_txt_body_system_reported"><![CDATA[<bx_include_auto:_email_header.html />
+<p>Привет,</p>
+<p>Была получена новая жалоба с типом <b>{report_type}</b>. Сообщение:</p>
+<p>{report_text}</p>
+<p>Для получения дополнительной информации, пожалуйста, перейдите на <a href="{report_url}">страницу контента</a>.</p>
+<bx_include_auto:_email_footer.html />]]></string>
 	<string name="_sys_et_txt_body_confirmation"><![CDATA[<bx_include_auto:_email_header.html />
 <p>Привет!</p>
 <p>Пожалуйста, перейдите по ссылке подтверждения имейла:</p>
@@ -1548,6 +1552,7 @@
 	<string name="_sys_et_txt_body_modules_upgrade_failed"><![CDATA[<b>{0}</b> молуль: {1}<br />]]></string>
 	<string name="_sys_et_txt_name_system_admin_email"><![CDATA[Посылка сообщения из Панели Администратора]]></string>
 	<string name="_sys_et_txt_name_system_comment_replied"><![CDATA[Сообщение для посылки пользователям, чьи комментарии были отвечены]]></string>
+	<string name="_sys_et_txt_name_system_reported"><![CDATA[Уведомление о новой жалобе]]></string>
 	<string name="_sys_et_txt_name_system_confirmation"><![CDATA[Сообщение для подтверждения эл. адреса профиля]]></string>
 	<string name="_sys_et_txt_name_system_delayed_module_uninstall"><![CDATA[Уведомление об отложенном демонтировании модуля]]></string>
 	<string name="_sys_et_txt_name_system_forgot"><![CDATA[Сообщение о сбросе пароля]]></string>
@@ -1565,6 +1570,7 @@
 	<string name="_sys_et_txt_name_bg_operation_failed"><![CDATA[Фоновая операция не удалась]]></string>
 	<string name="_sys_et_txt_subject_admin_email"><![CDATA[Сообщение от <SiteName> Админа: <MessageSubject>]]></string>
 	<string name="_sys_et_txt_subject_comment_replied"><![CDATA[Ваш комментарий был отвечен]]></string>
+	<string name="_sys_et_txt_subject_system_reported"><![CDATA[Уведомление о новой жалобе]]></string>
 	<string name="_sys_et_txt_subject_confirmation"><![CDATA[Подтвердите свой эл. адрес (ОБЯЗАТЕЛЬНО)]]></string>
 	<string name="_sys_et_txt_subject_delayed_module_uninstall"><![CDATA[Отложенный демонтаж модуля {Module}: {Result}]]></string>
 	<string name="_sys_et_txt_subject_forgot"><![CDATA[Сбросьте свой пароль]]></string>

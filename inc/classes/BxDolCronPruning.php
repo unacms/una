@@ -54,9 +54,6 @@ class BxDolCronPruning extends BxDolCron
         $oKey = BxDolKey::getInstance();
         $iDeletedKeys = $oKey ? $oKey->prune() : 0;
 
-        // clean old votes
-        $iDeletedVotes = BxDolVote::maintenance();
-
         echo _t('_sys_pruning_db', $iDeleteMemLevels, $iSessions, $iDeletedViews, $iDeletedVotes, $iDeletedKeys, $iDeletedExpiredTokens, $iDeletedTranscodedImages);
     }
 

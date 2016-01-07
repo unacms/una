@@ -29,9 +29,17 @@ class BxDolReportQuery extends BxDolObjectQuery
         return $aResult;
     }
 
+	public function isPerformed($iObjectId, $iAuthorId)
+    {
+    	/*
+    	 * 'false' is returned everytime to allow multiple reports for everybody.
+    	 */
+        return false;
+    }
+
 	public function getPerformedBy($iObjectId)
     {
-        $sQuery = $this->prepare("SELECT `author_id`, `type`, `text` FROM `{$this->_sTableTrack}` WHERE `object_id`=?", $iObjectId);
+        $sQuery = $this->prepare("SELECT `author_id`, `type`, `text` FROM `{$this->_sTableTrack}` WHERE `object_id`=? ORDER BY `date` DESC", $iObjectId);
         return $this->getAll($sQuery);
     }
 

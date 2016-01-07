@@ -111,6 +111,30 @@ class BxDolView extends BxDolObject
         return $GLOBALS['bx_dol_view_systems'];
     }
 
+    /**
+     * it is called on cron every day or similar period to clean old votes
+     */
+    public static function maintenance()
+    {
+        $iResult = 0;
+        $oDb = BxDolDb::getInstance();
+
+        $aSystems = self::getSystems();
+        foreach($aSystems as $aSystem) {
+            if(!$aSystem['is_on'])
+                continue;
+
+            $sQuery = $oDb->prepare("DELETE FROM `{$aSystem['table_track']}` WHERE `date` < (UNIX_TIMESTAMP() - ?)", BX_DOL_VIEW_OLD_VIEWS);
+            $iDeleted = (int)$oDb->query($sQuery);
+            if($iDeleted > 0)
+                $oDb->query("OPTIMIZE TABLE `{$aSystem['table_track']}`");
+
+            $iResult += $iDeleted;
+        }
+
+        return $iResult;
+    }
+
     function doView()
     {
         if(!$this->isEnabled())

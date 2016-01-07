@@ -13,11 +13,13 @@
  */
 class BxDolObject extends BxDol
 {
+	protected $_oQuery = null;
+
     protected $_iId = 0; ///< item id the action to be performed with
     protected $_sSystem = ''; ///< current system name
     protected $_aSystem = array(); ///< current system array
 
-    protected $_oQuery = null;
+    protected $_aMarkers = array ();
 
     public function __construct($sSystem, $iId, $iInit = 1)
     {
@@ -37,30 +39,6 @@ class BxDolObject extends BxDol
             $this->init($iId);
     }
 
-    /**
-     * it is called on cron every day or similar period to clean old votes
-     */
-    public static function maintenance()
-    {
-        $iResult = 0;
-        $oDb = BxDolDb::getInstance();
-
-        $aSystems = self::getSystems();
-        foreach($aSystems as $aSystem) {
-            if(!$aSystem['is_on'])
-                continue;
-
-            $sQuery = $oDb->prepare("DELETE FROM `{$aSystem['table_track']}` WHERE `date` < (UNIX_TIMESTAMP() - ?)", BX_DOL_VOTE_OLD_VOTES);
-            $iDeleted = (int)$oDb->query($sQuery);
-            if($iDeleted > 0)
-                $oDb->query("OPTIMIZE TABLE `{$aSystem['table_track']}`");
-
-            $iResult += $iDeleted;
-        }
-
-        return $iResult;
-    }
-
     public function init($iId)
     {
         if(!$this->isEnabled())
@@ -68,6 +46,11 @@ class BxDolObject extends BxDol
 
         if(empty($this->_iId) && $iId)
             $this->setId($iId);
+
+		$this->addMarkers(array(
+            'object_id' => $this->getId(),
+            'user_id' => $this->_getAuthorId()
+        ));
 
         return true;
     }
@@ -114,6 +97,15 @@ class BxDolObject extends BxDol
             return array();
 
         return $this->_oQuery->getSqlParts($sMainTable, $sMainField);
+    }
+
+    public function addMarkers($aMarkers)
+    {
+        if(empty($aMarkers) || !is_array($aMarkers))
+			return false;
+
+        $this->_aMarkers = array_merge($this->_aMarkers, $aMarkers);
+        return true;
     }
 
 	/**
@@ -173,9 +165,12 @@ class BxDolObject extends BxDol
 
     protected function _getAuthorObject($iAuthorId = 0)
     {
+    	if($iAuthorId == 0)
+    		return BxDolProfileUndefined::getInstance();
+
         $oProfile = BxDolProfile::getInstance($iAuthorId);
-        if (!$oProfile)
-            $oProfile = BxDolProfileUndefined::getInstance();
+        if(!$oProfile)
+			$oProfile = BxDolProfileUndefined::getInstance();
 
         return $oProfile;
     }
@@ -190,6 +185,16 @@ class BxDolObject extends BxDol
             return false;
 
         return $this->_oQuery->updateTriggerTable($iId);
+    }
+
+    /**
+     * Replace provided markers in a string
+     * @param $mixed string or array to replace markers in
+     * @return string where all occured markers are replaced
+     */
+    protected function _replaceMarkers ($mixed)
+    {
+        return bx_replace_markers($mixed, $this->_aMarkers);
     }
 }
 

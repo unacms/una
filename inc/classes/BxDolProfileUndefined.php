@@ -79,7 +79,10 @@ class BxDolProfileUndefined extends BxDol implements iBxDolSingleton, iBxDolProf
      */
     public function getUnit()
     {
-        return '<div>' . $this->getDisplayName() . '</div>';
+		return BxDolTemplate::getInstance()->parseHtmlByName('profile_unit.html', array(
+        	'thumb_url' => $this->getThumb(),
+        	'title' => $this->getDisplayName()
+        ));
     }
 
     /**

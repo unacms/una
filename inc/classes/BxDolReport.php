@@ -27,61 +27,56 @@ define('BX_DOL_REPORT_USAGE_DEFAULT', BX_DOL_REPORT_USAGE_BLOCK);
  * - BxBaseReport - report base representation
  * - BxTemplReport - custom template representation
  *
- * AJAX vote for any content. Stars and Plus based representations are supported.
+ * AJAX report for any content.
  *
- * To add vote section to your feature you need to add a record to 'sys_objects_vote' table:
+ * To add report section to your feature you need to add a record to 'sys_objects_report' table:
  *
- * - ID - autoincremented id for internal usage
- * - Name - your unique module name, with vendor prefix, lowercase and spaces are underscored
- * - TableMain - table name where summary votigs are stored
- * - TableTrack - table name where each vote is stored
- * - PostTimeout - number of seconds to not allow duplicate vote
- * - MinValue - min vote value, 1 by default
- * - MaxValue - max vote value, 5 by default
- * - IsUndo - is Undo enabled for Plus based votes
- * - IsOn - is this vote object enabled
- * - TriggerTable - table to be updated upon each vote
- * - TriggerFieldId - TriggerTable table field with unique record id, primary key
- * - TriggerFieldRate - TriggerTable table field with average rate
- * - TriggerFieldRateCount - TriggerTable table field with votes count
- * - ClassName - your custom class name, if you overrride default class
- * - ClassFile - your custom class path
+ * - id - autoincremented id for internal usage
+ * - name - your unique module name, with vendor prefix, lowercase and spaces are underscored
+ * - table_main - table name where summary reports are stored
+ * - table_track - table name where each report is stored
+ * - is_on - is this report object enabled
+ * - base_url - base URL for reported object
+ * - trigger_table - table to be updated upon each report
+ * - trigger_field_id - trigger_table table field with unique record id, primary key
+ * - trigger_field_author - trigger_table table field with author
+ * - trigger_field_count - trigger_table table field with reports count
+ * - class_name - your custom class name, if you overrride default class
+ * - class_file - your custom class path
  *
  * You can refer to BoonEx modules for sample record in this table.
  *
  *
  *
  * @section example Example of usage:
- * To get Star based vote you need to have different values for MinValue and MaxValue (for example 1 and 5)
- * and IsUndo should be equal to 0. To get Plus(Like) based vote you need to have equal values
- * for MinValue and MaxValue (for example 1) and IsUndo should be equal to 1. After filling the other
- * paramenters in the table you can show vote in any place, using the following code:
+ * You can show report in any place, using the following code:
  * @code
- * $o = BxDolVote::getObjectInstance('system object name', $iYourEntryId);
- * if (!$o->isEnabled()) return '';
- *     echo $o->getElementBlock();
+ * $o = BxDolReport::getObjectInstance('system object name', $iYourEntryId);
+ * if (!$o->isEnabled()) 
+ *     return '';
+ * echo $o->getElementBlock();
  * @endcode
  *
  *
  * @section acl Memberships/ACL:
- * - vote
- *
+ * - report
+ * - report view
  *
  *
  * @section alerts Alerts:
  * Alerts type/unit - every module has own type/unit, it equals to ObjectName.
  * The following alerts are rised:
  *
- * - rate - comment was posted
- *      - $iObjectId - entry id
- *      - $iSenderId - rater user id
- *      - $aExtra['rate'] - rate
+ * - type: 'object name', action: doReport
+ * - type: report, action: do
  *
  */
 
 class BxDolReport extends BxDolObject
 {
 	protected $_oTemplate;
+
+	protected $_sBaseUrl;
 
 	protected $_sFormObject;
     protected $_sFormDisplayPost;
@@ -100,6 +95,10 @@ class BxDolReport extends BxDolObject
             $this->_oTemplate = $oTemplate;
         else
             $this->_oTemplate = BxDolTemplate::getInstance();
+
+		$this->_sBaseUrl = BxDolPermalinks::getInstance()->permalink($this->_aSystem['base_url']);
+        if(get_mb_substr($this->_sBaseUrl, 0, 4) != 'http')
+            $this->_sBaseUrl = BX_DOL_URL_ROOT . $this->_sBaseUrl;
 
 		$this->_sFormObject = 'sys_report';
 		$this->_sFormDisplayPost = 'sys_report_post';
@@ -144,6 +143,7 @@ class BxDolReport extends BxDolObject
                     `table_main` AS `table_main`,
                     `table_track` AS `table_track`,
                     `is_on` AS `is_on`,
+                    `base_url` AS `base_url`,
                     `trigger_table` AS `trigger_table`,
                     `trigger_field_id` AS `trigger_field_id`,
                     `trigger_field_author` AS `trigger_field_author`,
@@ -158,6 +158,11 @@ class BxDolReport extends BxDolObject
     /**
      * Interface functions for outer usage
      */
+	public function getBaseUrl()
+    {
+        return $this->_replaceMarkers($this->_sBaseUrl);
+    }
+
     public function getStatCounter()
     {
         $aReport = $this->_oQuery->getReport($this->getId());

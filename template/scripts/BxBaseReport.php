@@ -150,7 +150,7 @@ class BxBaseReport extends BxDolReport
 		$iAuthorId = $this->_getAuthorId();
         $aReport = $this->_oQuery->getReport($iObjectId);
 
-        if(!$this->isAllowedReport() && (int)$aReport['count'] == 0)
+        if(!$this->isAllowedReport() && (!$this->isAllowedReportView() || (int)$aReport['count'] == 0))
             return '';
 
         $aParams['is_reported'] = $this->_oQuery->isPerformed($iObjectId, $iAuthorId) ? true : false;
@@ -273,6 +273,14 @@ class BxBaseReport extends BxDolReport
 			$iId = (int)$oForm->insert(array('author_id' => $iAuthorId, 'author_nip' => $iAuthorNip, 'date' => time()));
 			if($iId != 0 && $this->_oQuery->putReport($iObjectId)) {
 				$this->_trigger();
+
+        		$aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_Reported', array(
+        			'report_type' => $sType,
+        			'report_text' => $sText,
+        			'report_url' => $this->getBaseUrl(),
+        		));
+        		if($aTemplate)
+        			sendMail(getParam('site_email'), $aTemplate['Subject'], $aTemplate['Body']);
 
 		        $oZ = new BxDolAlerts($this->_sSystem, 'doReport', $iObjectId, $iAuthorId, array('report_id' => $iId, 'report_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId, 'type' => $sType, 'text' => $sText));
 		        $oZ->alert();
