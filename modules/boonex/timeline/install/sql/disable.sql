@@ -40,6 +40,10 @@ DELETE FROM `sys_objects_cmts` WHERE `Name`='bx_timeline' LIMIT 1;
 DELETE FROM `sys_objects_vote` WHERE `Name`='bx_timeline' LIMIT 1;
 
 
+-- REPORTS
+DELETE FROM `sys_objects_report` WHERE `Name` = 'bx_timeline' LIMIT 1;
+
+
 -- SEARCH
 DELETE FROM `sys_objects_search` WHERE `ObjectName` IN ('bx_timeline', 'bx_timeline_cmts');
 

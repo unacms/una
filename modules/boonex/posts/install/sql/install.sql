@@ -271,8 +271,8 @@ INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`
 
 -- REPORTS
 
-INSERT INTO `sys_objects_report` (`name`, `table_main`, `table_track`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('bx_posts', 'bx_posts_reports', 'bx_posts_reports_track', '1', 'bx_posts_posts', 'id', 'author', 'reports', '', '');
+INSERT INTO `sys_objects_report` (`name`, `table_main`, `table_track`, `is_on`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_posts', 'bx_posts_reports', 'bx_posts_reports_track', '1', 'page.php?i=view-post&id={object_id}', 'bx_posts_posts', 'id', 'author', 'reports', '', '');
 
 -- VIEWS
 

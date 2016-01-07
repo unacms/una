@@ -314,8 +314,8 @@ INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`
 
 -- REPORTS
 
-INSERT INTO `sys_objects_report` (`name`, `table_main`, `table_track`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('bx_albums', 'bx_albums_reports', 'bx_albums_reports_track', '1', 'bx_albums_albums', 'id', 'author', 'reports', '', '');
+INSERT INTO `sys_objects_report` (`name`, `table_main`, `table_track`, `is_on`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_albums', 'bx_albums_reports', 'bx_albums_reports_track', '1', 'page.php?i=view-album&id={object_id}', 'bx_albums_albums', 'id', 'author', 'reports', '', '');
 
 -- VIEWS
 
