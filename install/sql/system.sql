@@ -3290,6 +3290,7 @@ CREATE TABLE IF NOT EXISTS `sys_pages_blocks` (
   `title` varchar(255) NOT NULL,
   `designbox_id` int(11) NOT NULL DEFAULT '11',
   `visible_for_levels` int(11) NOT NULL DEFAULT '2147483647',
+  `hidden_on` varchar(255) NOT NULL DEFAULT '',
   `type` enum('raw','html','lang','image','rss','menu','service') NOT NULL DEFAULT 'raw',
   `content` text NOT NULL,
   `deletable` tinyint(4) NOT NULL DEFAULT '1',

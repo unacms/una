@@ -502,6 +502,10 @@
 	<string name="_adm_bp_txt_block_content_service_module"><![CDATA[Module]]></string>
 	<string name="_adm_bp_txt_block_designbox"><![CDATA[Block Layout]]></string>
 	<string name="_adm_bp_txt_block_designbox_empty"><![CDATA[Select layout...]]></string>
+	<string name="_adm_bp_txt_block_hidden_on"><![CDATA[Hidden on]]></string>
+	<string name="_adm_bp_txt_block_hidden_on_phone"><![CDATA[phone]]></string>
+	<string name="_adm_bp_txt_block_hidden_on_tablet"><![CDATA[tablet]]></string>
+	<string name="_adm_bp_txt_block_hidden_on_desktop"><![CDATA[desktop]]></string>
 	<string name="_adm_bp_txt_block_selected"><![CDATA[blocks selected]]></string>
 	<string name="_adm_bp_txt_block_title"><![CDATA[Title]]></string>
 	<string name="_adm_bp_txt_block_visible_for"><![CDATA[Visible For]]></string>
