@@ -24,7 +24,7 @@ class BxBaseStudioNavigationImport extends BxDolStudioNavigationImport
         $iAffected = 0;
         $aIds = bx_get('ids');
         if(!$aIds || !is_array($aIds)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -40,7 +40,7 @@ class BxBaseStudioNavigationImport extends BxDolStudioNavigationImport
                 $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
 
                 if(($mixedIcon = $oStorage->storeFileFromStorage(array('id' => (int)$aItem['icon']), false, 0)) === false) {
-                    $this->_echoResultJson(array('msg' => _t('_adm_nav_err_items_icon_copy') . $oStorage->getErrorString()), true);
+                    echoJson(array('msg' => _t('_adm_nav_err_items_icon_copy') . $oStorage->getErrorString()));
                     return;
                 }
 
@@ -79,7 +79,7 @@ class BxBaseStudioNavigationImport extends BxDolStudioNavigationImport
                     'eval' => $this->getJsObject() . '.onImport(oData)'
                 );
         }
-        $this->_echoResultJson($aResult);
+        echoJson($aResult);
     }
 
     function getJsObject()

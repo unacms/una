@@ -196,7 +196,7 @@ class BxGridMy extends BxTemplGrid
             else
                 $aRes = array('msg' => "Error occured"); // if record adding failed, display error message
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
 
         } else { // if form is not submitted or some fields are invalid, display popup with form
 
@@ -218,7 +218,7 @@ class BxGridMy extends BxTemplGrid
                     });
                 </script>');
 
-            $this->_echoResultJson(array('popup' => array('html' => $s, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $s, 'options' => array('closeOnOuterClick' => false))));
 
         }
     }
@@ -231,7 +231,7 @@ class BxGridMy extends BxTemplGrid
         $iAffected = 0;
         $aIds = bx_get('ids');
         if (!$aIds || !is_array($aIds)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -243,7 +243,7 @@ class BxGridMy extends BxTemplGrid
             $iAffected++;
         }
 
-        $this->_echoResultJson(array_merge(
+        echoJson(array_merge(
                 array(
                     'grid' => $this->getCode(false),
                     'blink' => $aIdsAffected,

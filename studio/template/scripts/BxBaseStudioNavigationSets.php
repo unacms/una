@@ -105,7 +105,7 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets
             else
                 $aRes = array('msg' => _t('_adm_nav_err_sets_create'));
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         }
         else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-nav-set-create-popup', _t('_adm_nav_txt_sets_create_popup'), $this->_oTemplate->parseHtmlByName('nav_add_set.html', array(
@@ -115,7 +115,7 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
 
@@ -127,7 +127,7 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets
         if(!$aIds || !is_array($aIds)) {
             $sId = bx_get('set_name');
             if(!$sId) {
-                $this->_echoResultJson(array());
+                echoJson(array());
                 exit;
             }
 
@@ -139,7 +139,7 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets
         $aSet = array();
         $iSet = $this->oDb->getSets(array('type' => 'by_name', 'value' => $sId), $aSet);
         if($iSet != 1 || empty($aSet)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -215,7 +215,7 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets
             else
                 $aRes = array('msg' => _t('_adm_nav_err_sets_edit'));
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         }
         else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-nav-set-edit-popup', _t('_adm_nav_txt_sets_edit_popup', _t($aSet['title'])), $this->_oTemplate->parseHtmlByName('nav_add_set.html', array(
@@ -225,7 +225,7 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
 
@@ -234,13 +234,13 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets
         $iAffected = 0;
         $aIds = bx_get('ids');
         if(!$aIds || !is_array($aIds)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
         $oGridItems = BxDolGrid::getObjectInstance('sys_studio_nav_items');
         if(!$oGridItems) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -256,7 +256,7 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets
             $aMenus = array();
             $this->oDb->getMenus(array('type' => 'by_set_name', 'value' => $sId), $aMenus, false);
             if(is_array($aMenus) && count($aMenus) > 0) {
-                $this->_echoResultJson(array('msg' => _t('_adm_nav_err_sets_delete_used')));
+                echoJson(array('msg' => _t('_adm_nav_err_sets_delete_used')));
                 exit;
             }
 
@@ -275,7 +275,7 @@ class BxBaseStudioNavigationSets extends BxDolStudioNavigationSets
             $iAffected++;
         }
 
-        $this->_echoResultJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t('_adm_nav_err_sets_delete')));
+        echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t('_adm_nav_err_sets_delete')));
     }
 
     function getJsObject()

@@ -44,14 +44,14 @@ class BxDevPolyglotManage extends BxTemplStudioGrid
     {
         $aResult = array('msg' => _t(BxDolStudioLanguagesUtils::getInstance()->compileLanguage() ? '_adm_pgt_scs_recompiled' : '_adm_pgt_err_cannot_recompile_lang'));
 
-        $this->_echoResultJson($aResult, true);
+        echoJson($aResult);
     }
 
     public function performActionRestore()
     {
         $aResult = array('msg' => _t(BxDolStudioLanguagesUtils::getInstance()->restoreLanguage() ? '_adm_pgt_scs_restored' : '_adm_pgt_err_cannot_restore_lang'));
 
-        $this->_echoResultJson($aResult, true);
+        echoJson($aResult);
     }
 
     protected function _getCellDefault($mixedValue, $sKey, $aField, $aRow)

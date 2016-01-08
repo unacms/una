@@ -34,7 +34,7 @@ class BxNtfsModule extends BxBaseModNotificationsModule
         $aParams = $this->_prepareParamsGet();
         $sEvents = $this->_oTemplate->getPosts($aParams);
 
-        $this->_echoResultJson(array('events' => $sEvents));
+        echoJson(array('events' => $sEvents));
     }
 
     /**

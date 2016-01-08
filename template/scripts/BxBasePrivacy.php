@@ -32,16 +32,6 @@ class BxBasePrivacy extends BxDolPrivacy
         $this->_oTemplate->addCss('grid.css');
         */
     }
-
-    protected function _echoResultJson($a, $isAutoWrapForFormFileSubmit = false)
-    {
-        header('Content-type: text/html; charset=utf-8');
-
-        $s = json_encode($a);
-        if ($isAutoWrapForFormFileSubmit && !empty($_FILES))
-            $s = '<textarea>' . $s . '</textarea>';
-        echo $s;
-    }
 }
 
 /** @} */

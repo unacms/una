@@ -105,7 +105,7 @@ class BxBaseStudioPermissionsPrices extends BxDolStudioPermissionsPrices
             $aPrice = array();
             $iPrice = $this->oDb->getPrices(array('type' => 'by_level_id_duration', 'level_id' => $oForm->getCleanValue('IDLevel'), 'days' => $oForm->getCleanValue('Days')), $aPrice);
             if($iPrice != 0) {
-                $this->_echoResultJson(array('msg' => _t('_adm_prm_err_price_duplicate')), true);
+                echoJson(array('msg' => _t('_adm_prm_err_price_duplicate')));
                 return;
             }
 
@@ -116,7 +116,7 @@ class BxBaseStudioPermissionsPrices extends BxDolStudioPermissionsPrices
             } else
                 $aRes = array('msg' => _t('_adm_prm_err_price_create'));
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         } else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-prm-price-add-popup', _t('_adm_prm_txt_price_add_popup'), $this->_oTemplate->parseHtmlByName('prm_add_price.html', array(
@@ -126,7 +126,7 @@ class BxBaseStudioPermissionsPrices extends BxDolStudioPermissionsPrices
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
 
@@ -138,7 +138,7 @@ class BxBaseStudioPermissionsPrices extends BxDolStudioPermissionsPrices
         if(!$aIds || !is_array($aIds)) {
             $iId = (int)bx_get('id');
             if(!$iId) {
-                $this->_echoResultJson(array());
+                echoJson(array());
                 exit;
             }
 
@@ -150,7 +150,7 @@ class BxBaseStudioPermissionsPrices extends BxDolStudioPermissionsPrices
         $aPrice = array();
         $iPrice = $this->oDb->getPrices(array('type' => 'by_id', 'value' => $iId), $aPrice);
         if($iPrice != 1 || empty($aPrice)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -239,7 +239,7 @@ class BxBaseStudioPermissionsPrices extends BxDolStudioPermissionsPrices
             $aPrice = array();
             $iPrice = $this->oDb->getPrices(array('type' => 'by_level_id_duration', 'level_id' => $oForm->getCleanValue('IDLevel'), 'days' => $oForm->getCleanValue('Days')), $aPrice);
             if($iPrice != 0 && !empty($aPrice) && $aPrice['id'] != $iId) {
-                $this->_echoResultJson(array('msg' => _t('_adm_prm_err_price_duplicate')), true);
+                echoJson(array('msg' => _t('_adm_prm_err_price_duplicate')));
                 return;
             }
 
@@ -248,7 +248,7 @@ class BxBaseStudioPermissionsPrices extends BxDolStudioPermissionsPrices
             else
                 $aRes = array('msg' => _t('_adm_prm_err_price_update'));
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         } else {
             bx_import('BxTemplStudioFunctions');
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-prm-price-edit-popup', _t('_adm_prm_txt_price_edit_popup', $aPrice['days']), $this->_oTemplate->parseHtmlByName('prm_add_price.html', array(
@@ -258,7 +258,7 @@ class BxBaseStudioPermissionsPrices extends BxDolStudioPermissionsPrices
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
 
@@ -266,7 +266,7 @@ class BxBaseStudioPermissionsPrices extends BxDolStudioPermissionsPrices
     {
         $aIds = bx_get('ids');
         if (!$aIds || !is_array($aIds)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 

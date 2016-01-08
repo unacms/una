@@ -36,17 +36,17 @@ class BxInvModule extends BxDolModule
 
         $mixedAllowed = $this->isAllowedInvite($iProfileId);
         if($mixedAllowed !== true)
-        	return $this->_echoResultJson(array('message' => $mixedAllowed));
+        	return echoJson(array('message' => $mixedAllowed));
 
 	    if(!isAdmin($iAccountId)) {
 			$iInvited = (int)$this->_oDb->getInvites(array('type' => 'count_by_account', 'value' => $iAccountId));
 			if(($this->_oConfig->getCountPerUser() - $iInvited) <= 0)
-				return $this->_echoResultJson(array('message' => _t('_bx_invites_err_limit_reached')));
+				return echoJson(array('message' => _t('_bx_invites_err_limit_reached')));
 		}
 
     	$oKeys = BxDolKey::getInstance();
     	if(!$oKeys)
-    		return  $this->_echoResultJson(array('message' => _t('_bx_invites_err_not_available')));  		
+    		return  echoJson(array('message' => _t('_bx_invites_err_not_available')));  		
 
     	$sKey = $oKeys->getNewKey(false, $this->_oConfig->getKeyLifetime());
 
@@ -59,7 +59,7 @@ class BxInvModule extends BxDolModule
 			'date' => time()
 		));
 
-        $this->_echoResultJson(array('popup' => $this->_oTemplate->getLinkPopup(
+        echoJson(array('popup' => $this->_oTemplate->getLinkPopup(
         	$this->getJoinLink($sKey)
         )));
     }
@@ -358,16 +358,6 @@ class BxInvModule extends BxDolModule
 		$sJoinUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account');
 		return bx_append_url_params($sJoinUrl, array($sKeyCode => $sKey));
 	}
-
-	protected function _echoResultJson($a, $isAutoWrapForFormFileSubmit = false)
-    {
-        header('Content-type: text/html; charset=utf-8');
-
-        $s = json_encode($a);
-        if ($isAutoWrapForFormFileSubmit && !empty($_FILES))
-            $s = '<textarea>' . $s . '</textarea>';
-        echo $s;
-    }
 }
 
 /** @} */

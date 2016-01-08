@@ -33,9 +33,7 @@ class BxBaseGrid extends BxDolGrid
     {
         require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
-        $this->_echoResultJson(array (
-            'grid' => $this->getCode(false),
-        ));
+        echoJson(array('grid' => $this->getCode(false)));
     }
 
     public function performActionReorder()
@@ -47,7 +45,7 @@ class BxBaseGrid extends BxDolGrid
         foreach ($aOrder as $mixedId)
             $this->_updateOrder($mixedId, ++$iOrder);
 
-        $this->_echoResultJson(array());
+        echoJson(array());
     }
 
     public function performActionDelete()
@@ -57,14 +55,14 @@ class BxBaseGrid extends BxDolGrid
         $iAffected = 0;
         $aIds = bx_get('ids');
         if (!$aIds || !is_array($aIds)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
         foreach ($aIds as $mixedId)
             $iAffected += $this->_delete($mixedId) ? 1 : 0;
 
-        echo $this->_echoResultJson(array_merge(
+        echo echoJson(array_merge(
             array(
                 'grid' => $this->getCode(false),
             ),
@@ -78,7 +76,7 @@ class BxBaseGrid extends BxDolGrid
 
         $aIds = bx_get('ids');
         if (!$aIds || !is_array($aIds)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -88,9 +86,7 @@ class BxBaseGrid extends BxDolGrid
                 $aAffectedIds[] = $mixedId;
 
         $sAction = (int)bx_get('checked') ? 'enable' : 'disable';
-        echo $this->_echoResultJson(array(
-            $sAction => $aAffectedIds,
-        ));
+        echo echoJson(array($sAction => $aAffectedIds));
     }
 
     public function getCode ($isDisplayHeader = true)
@@ -615,16 +611,6 @@ class BxBaseGrid extends BxDolGrid
         $this->_oTemplate->addCss('grid.css');
 
         $this->_oTemplate->addJsTranslation('_sys_grid_confirmation');
-    }
-
-    protected function _echoResultJson($a, $isAutoWrapForFormFileSubmit = false)
-    {
-        header('Content-type: text/html; charset=utf-8');
-
-        $s = json_encode($a);
-        if ($isAutoWrapForFormFileSubmit && !empty($_FILES))
-            $s = '<textarea>' . $s . '</textarea>'; // http://jquery.malsup.com/form/#file-upload
-        echo $s;
     }
 }
 

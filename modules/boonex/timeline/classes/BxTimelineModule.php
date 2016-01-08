@@ -55,7 +55,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $sType = bx_process_input($_POST['type']);
         $sMethod = 'getForm' . ucfirst($sType);
         if(!method_exists($this, $sMethod)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             return;
         }
 
@@ -63,12 +63,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
         $mixedAllowed = $this->isAllowedPost(true);
         if($mixedAllowed !== true) {
-            $this->_echoResultJson(array('msg' => strip_tags($mixedAllowed)));
+            echoJson(array('msg' => strip_tags($mixedAllowed)));
             return;
         }
 
         $aResult = $this->$sMethod();
-        $this->_echoResultJson($aResult);
+        echoJson($aResult);
     }
 
     function actionDelete()
@@ -80,14 +80,14 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
         $mixedAllowed = $this->isAllowedDelete($aEvent, true);
         if($mixedAllowed !== true) {
-            $this->_echoResultJson(array('code' => 1, 'msg' => strip_tags($mixedAllowed)));
+            echoJson(array('code' => 1, 'msg' => strip_tags($mixedAllowed)));
             return;
         }
 
         if(!$this->deleteEvent($aEvent))
-        	$this->_echoResultJson(array('code' => 2));
+        	echoJson(array('code' => 2));
         else 
-        	$this->_echoResultJson(array('code' => 0, 'id' => $iId));
+        	echoJson(array('code' => 0, 'id' => $iId));
     }
 
     public function actionShare()
@@ -103,19 +103,19 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
         $aShared = $this->_oDb->getShared($aContent['type'], $aContent['action'], $aContent['object_id']);
         if(empty($aShared) || !is_array($aShared)) {
-            $this->_echoResultJson(array('code' => 1, 'msg' => _t('_bx_timeline_txt_err_cannot_share')));
+            echoJson(array('code' => 1, 'msg' => _t('_bx_timeline_txt_err_cannot_share')));
             return;
         }
 
         $mixedAllowed = $this->isAllowedShare($aShared, true);
         if($mixedAllowed !== true) {
-            $this->_echoResultJson(array('code' => 2, 'msg' => strip_tags($mixedAllowed)));
+            echoJson(array('code' => 2, 'msg' => strip_tags($mixedAllowed)));
             return;
         }
 
         $bShared = $this->_oDb->isShared($aShared['id'], $iOwnerId, $iAuthorId);
 		if($bShared) {
-        	$this->_echoResultJson(array('code' => 3, 'msg' => _t('_bx_timeline_txt_err_already_shared')));
+        	echoJson(array('code' => 3, 'msg' => _t('_bx_timeline_txt_err_already_shared')));
             return;
         }
 
@@ -131,7 +131,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         ));
 
         if(empty($iId)) {
-	        $this->_echoResultJson(array('code' => 4, 'msg' => _t('_bx_timeline_txt_err_cannot_share')));        
+	        echoJson(array('code' => 4, 'msg' => _t('_bx_timeline_txt_err_cannot_share')));        
 	        return;
         }
 
@@ -140,7 +140,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $aShared = $this->_oDb->getShared($aContent['type'], $aContent['action'], $aContent['object_id']);
 		$sCounter = $this->_oTemplate->getShareCounter($aShared);
 
-		$this->_echoResultJson(array(
+		echoJson(array(
 			'code' => 0, 
 			'msg' => _t('_bx_timeline_txt_msg_success_share'), 
 			'count' => $aShared['shares'], 
@@ -156,7 +156,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $iEvent = bx_process_input(bx_get('id'), BX_DATA_INT);
         $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iEvent));
 
-        $this->_echoResultJson(array('item' => $this->_oTemplate->getPost($aEvent, array('type' => 'owner', 'owner_id' => $this->_iOwnerId, 'dynamic_mode' => true))));
+        echoJson(array('item' => $this->_oTemplate->getPost($aEvent, array('type' => 'owner', 'owner_id' => $this->_iOwnerId, 'dynamic_mode' => true))));
     }
 
     function actionGetPosts()
@@ -164,7 +164,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $aParams = $this->_prepareParamsGet();
         list($sItems, $sLoadMore, $sBack) = $this->_oTemplate->getPosts($aParams);
 
-        $this->_echoResultJson(array('items' => $sItems, 'load_more' => $sLoadMore, 'back' => $sBack));
+        echoJson(array('items' => $sItems, 'load_more' => $sLoadMore, 'back' => $sBack));
     }
 
     public function actionGetPostForm($sType)
@@ -173,12 +173,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
         $sMethod = 'getForm' . ucfirst($sType);
         if(!method_exists($this, $sMethod)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             return;
         }
         $aResult = $this->$sMethod();
 
-        $this->_echoResultJson($aResult);
+        echoJson($aResult);
     }
 
     public function actionGetComments()
@@ -189,14 +189,14 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
         $sComments = $this->_oTemplate->getComments($sSystem, $iId);
 
-        $this->_echoResultJson(array('content' => $sComments));
+        echoJson(array('content' => $sComments));
     }
 
     public function actionAddAttachLink()
     {
         $aResult = $this->getFormAttachLink();
 
-        $this->_echoResultJson($aResult);
+        echoJson($aResult);
     }
 
     public function actionDeleteAttachLink()
@@ -204,13 +204,13 @@ class BxTimelineModule extends BxBaseModNotificationsModule
     	$iUserId = $this->getUserId();
         $iLinkId = bx_process_input(bx_get('id'), BX_DATA_INT);
         if(empty($iLinkId)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             return;
         }
 
         $aLink = $this->_oDb->getUnusedLinks($iUserId, $iLinkId);
     	if(empty($aLink) || !is_array($aLink)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             return;
         }
 
@@ -223,7 +223,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         else
             $aResult = array('code' => 1, 'msg' => _t('_bx_timeline_form_post_input_link_err_delete'));
 
-        $this->_echoResultJson($aResult);
+        echoJson($aResult);
     }
 
     public function actionGetAttachLinkForm()

@@ -33,7 +33,7 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
 
         if($oForm->isSubmittedAndValid()) {
             if(($iId = $this->_getAvailableId()) === false) {
-                $this->_echoResultJson(array('msg' => _t('_adm_prm_err_level_id')), true);
+                echoJson(array('msg' => _t('_adm_prm_err_level_id')));
                 return;
             }
 
@@ -43,7 +43,7 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
 
                 $mixedIcon = $oStorage->storeFileFromForm($_FILES['Icon_image'], false, 0);
                 if($mixedIcon === false) {
-                    $this->_echoResultJson(array('msg' => _t('_adm_prm_err_level_icon_image') . $oStorage->getErrorString()), true);
+                    echoJson(array('msg' => _t('_adm_prm_err_level_icon_image') . $oStorage->getErrorString()));
                     return;
                 }
 
@@ -70,7 +70,7 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
             else
                 $aRes = array('msg' => _t('_adm_prm_err_level_create'));
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         }
         else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-prm-level-create-popup', _t('_adm_prm_txt_level_create_popup'), $this->_oTemplate->parseHtmlByName('prm_add_level.html', array(
@@ -80,7 +80,7 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
 
@@ -92,7 +92,7 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
         if(!$aIds || !is_array($aIds)) {
             $iId = (int)bx_get('id');
             if(!$iId) {
-                $this->_echoResultJson(array());
+                echoJson(array());
                 exit;
             }
 
@@ -104,7 +104,7 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
         $aLevel = array();
         $iLevel = $this->oDb->getLevels(array('type' => 'by_id', 'value' => $iId), $aLevel);
         if($iLevel != 1 || empty($aLevel)){
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -121,7 +121,7 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
             if($bIconImageCur && ($bIconImageNew || $bIconFont)) {
                 $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
                 if(!$oStorage->deleteFile((int)$aLevel['icon'], 0)) {
-                    $this->_echoResultJson(array('msg' => _t('_adm_prm_err_level_icon_image_remove')), true);
+                    echoJson(array('msg' => _t('_adm_prm_err_level_icon_image_remove')));
                     return;
                 }
             }
@@ -131,7 +131,7 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
                 $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
                 $sIcon = $oStorage->storeFileFromForm($_FILES['Icon_image'], false, 0);
                 if($sIcon === false) {
-                    $this->_echoResultJson(array('msg' => _t('_adm_prm_err_level_icon_image') . $oStorage->getErrorString()), true);
+                    echoJson(array('msg' => _t('_adm_prm_err_level_icon_image') . $oStorage->getErrorString()));
                     return;
                 }
 
@@ -152,7 +152,7 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
             else
                 $aRes = array('msg' => _t('_adm_prm_err_level_edit'));
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         }
         else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-prm-level-edit-popup', _t('_adm_prm_txt_level_edit_popup', _t($aLevel['name'])), $this->_oTemplate->parseHtmlByName('prm_add_level.html', array(
@@ -162,7 +162,7 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
 
@@ -171,7 +171,7 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
         $iAffected = 0;
         $aIds = bx_get('ids');
         if(!$aIds || !is_array($aIds)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -184,7 +184,7 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
             $iAffected++;
         }
 
-        $this->_echoResultJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t('_adm_prm_err_level_delete')));
+        echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t('_adm_prm_err_level_delete')));
     }
 
     public function performActionDeleteIcon()
@@ -193,7 +193,7 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
 
         $aIds = bx_get('ids');
         if(empty($aIds[0])) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -202,18 +202,18 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
         $aLevel = array();
         $iLevel = $this->oDb->getLevels(array('type' => 'by_id', 'value' => $iId), $aLevel);
         if($iLevel != 1 || empty($aLevel)){
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
         if(is_numeric($aLevel['icon']) && (int)$aLevel['icon'] != 0)
             if(!BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES)->deleteFile((int)$aLevel['icon'], 0)) {
-                $this->_echoResultJson(array());
+                echoJson(array());
                 exit;
             }
 
         if($this->oDb->updateLevels($aLevel['id'], array('icon' => '')) !== false)
-            $this->_echoResultJson(array('grid' => $this->getCode(false), 'blink' => $iId, 'preview' => $this->_getIconPreview($aLevel['id']), 'eval' => $this->getJsObject() . ".onDeleteIcon(oData)"), true);
+            echoJson(array('grid' => $this->getCode(false), 'blink' => $iId, 'preview' => $this->_getIconPreview($aLevel['id']), 'eval' => $this->getJsObject() . ".onDeleteIcon(oData)"));
     }
 
     public function getJsObject()

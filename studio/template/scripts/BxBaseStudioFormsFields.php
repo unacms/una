@@ -41,16 +41,16 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields
         $oClass = new $sClass(array('module' => $this->sModule, 'object' => $this->sObject, 'display' => $this->sDisplay));
 
         if(!$oClass->canAdd()) {
-            $this->_echoResultJson(array('msg' => _t('_adm_form_err_field_add_not_allowed')), true);
+            echoJson(array('msg' => _t('_adm_form_err_field_add_not_allowed')));
             exit;
         }
 
         $mixedResult = $oClass->getCode($sAction, $this->_sObject);
         if(is_string($mixedResult))
-            $this->_echoResultJson(array('popup' => array('html' => $mixedResult, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $mixedResult, 'options' => array('closeOnOuterClick' => false))));
         else if(is_int($mixedResult) || is_bool($mixedResult)) {
             $aResult = $mixedResult !== false ? array('grid' => $this->getCode(false), 'blink' => (int)$mixedResult) : array('msg' => _t('_adm_form_err_field_add'));
-            $this->_echoResultJson($aResult, true);
+            echoJson($aResult);
         }
     }
 
@@ -62,7 +62,7 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields
         if(!$aIds || !is_array($aIds)) {
             $iId = (int)bx_get('di_id');
             if(!$iId) {
-                $this->_echoResultJson(array());
+                echoJson(array());
                 exit;
             }
 
@@ -74,7 +74,7 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields
         $aField = array();
         $this->oDb->getInputs(array('type' => 'by_object_id', 'object' => $this->sObject, 'id' => (int)$iId), $aField, false);
         if(empty($aField) || !is_array($aField)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -84,17 +84,17 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields
 
         $sClass = $this->sClass . $this->getClassName($aField['type']);
         if(!class_exists($sClass)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
         $oClass = new $sClass(array('module' => $this->sModule, 'object' => $this->sObject, 'display' => $this->sDisplay), $aField);
         $mixedResult = $oClass->getCode($sAction, $this->_sObject);
         if(is_string($mixedResult))
-            $this->_echoResultJson(array('popup' => array('html' => $mixedResult, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $mixedResult, 'options' => array('closeOnOuterClick' => false))));
         else if(is_bool($mixedResult)) {
             $aResult = $mixedResult ? array('grid' => $this->getCode(false), 'blink' => $iId) : array('msg' => _t('_adm_form_err_field_edit'));
-            $this->_echoResultJson($aResult, true);
+            echoJson($aResult);
         }
     }
 
@@ -105,7 +105,7 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields
         $iAffected = 0;
         $aIds = bx_get('ids');
         if(!$aIds || !is_array($aIds)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -139,7 +139,7 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields
             $iAffected++;
         }
 
-        $this->_echoResultJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t('_adm_from_err_field_delete')));
+        echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t('_adm_from_err_field_delete')));
     }
 
     public function performActionShowTo()
@@ -150,7 +150,7 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields
         if(!$aIds || !is_array($aIds)) {
             $iId = (int)bx_get('id');
             if(!$iId) {
-                $this->_echoResultJson(array());
+                echoJson(array());
                 exit;
             }
 
@@ -162,7 +162,7 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields
         $aField = array();
         $this->oDb->getInputs(array('type' => 'by_object_id', 'object' => $this->sObject, 'id' => (int)$iId), $aField, false);
         if(empty($aField) || !is_array($aField)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -255,7 +255,7 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields
             else
                 $aRes = array('msg' => _t('_adm_form_err_field_show_to'));
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         } 
         else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-form-field-show-to-popup', _t('_adm_form_txt_field_show_to_popup', _t($aField['caption_system'])), $this->_oTemplate->parseHtmlByName('form_add_field.html', array(
@@ -265,7 +265,7 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => $sContent), true);
+            echoJson(array('popup' => $sContent));
         }
     }
 

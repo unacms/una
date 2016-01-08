@@ -40,7 +40,7 @@ class BxAntispamGridDNSBL extends BxTemplGrid
             _t('_bx_antispam_help_dnsbl')
         );
 
-        $this->_echoResultJson(array('popup' => array('html' => $s)), true);
+        echoJson(array('popup' => array('html' => $s)));
     }
 
     /**
@@ -52,7 +52,7 @@ class BxAntispamGridDNSBL extends BxTemplGrid
         $sGrid = $oModule->serviceBlockLog();
 
         if (!$sGrid) {
-            $this->_echoResultJson(array('msg' => _t('_sys_txt_error_occured')), true);
+            echoJson(array('msg' => _t('_sys_txt_error_occured')));
             exit;
         }
 
@@ -62,7 +62,7 @@ class BxAntispamGridDNSBL extends BxTemplGrid
             $sGrid . '<button class="bx-btn" style="float:none;" onclick ="$(\'.bx-popup-applied:visible\').dolPopupHide();">' . _t('_sys_close') . '</button>'
         );
 
-        $this->_echoResultJson(array('popup' => array('html' => $s)), true);
+        echoJson(array('popup' => array('html' => $s)));
 
     }
 
@@ -173,7 +173,7 @@ class BxAntispamGridDNSBL extends BxTemplGrid
 
         $s = BxTemplFunctions::getInstance()->popupBox($oForm->getId() . '_form', _t('_bx_antispam_popup_dnsbl_recheck'), $s);
 
-        $this->_echoResultJson(array('popup' => array('html' => $s, 'options' => array('closeOnOuterClick' => false))), true);
+        echoJson(array('popup' => array('html' => $s, 'options' => array('closeOnOuterClick' => false))));
     }
 
     /**
@@ -252,7 +252,7 @@ class BxAntispamGridDNSBL extends BxTemplGrid
             else
                 $aRes = array('msg' => _t('_sys_txt_error_occured')); // if record adding failed, display error message
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
 
         } else { // if form is not submitted or some fields are invalid, display popup with form
 
@@ -272,7 +272,7 @@ class BxAntispamGridDNSBL extends BxTemplGrid
                     });
                 </script>');
 
-            $this->_echoResultJson(array('popup' => array('html' => $s, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $s, 'options' => array('closeOnOuterClick' => false))));
 
         }
     }

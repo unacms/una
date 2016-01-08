@@ -41,7 +41,7 @@ class BxDevFormsPreLists extends BxTemplStudioFormsPreLists
             else
                 $aRes = array('msg' => _t('_bx_dev_frm_err_prelists_create'));
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         } else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-frm-prelist-create-popup', _t('_bx_dev_frm_txt_prelists_create_popup'), $this->oModule->_oTemplate->parseHtmlByName('form_add_list.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
@@ -50,7 +50,7 @@ class BxDevFormsPreLists extends BxTemplStudioFormsPreLists
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
 
@@ -62,7 +62,7 @@ class BxDevFormsPreLists extends BxTemplStudioFormsPreLists
 
         $aList = $this->_getItem('getLists');
         if($aList === false) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -78,7 +78,7 @@ class BxDevFormsPreLists extends BxTemplStudioFormsPreLists
             else
                 $aRes = array('msg' => _t('_bx_dev_frm_err_prelists_edit'));
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         } else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-frm-prelist-edit-popup', _t('_bx_dev_frm_txt_prelists_edit_popup', _t($aList['title'])), $this->oModule->_oTemplate->parseHtmlByName('form_add_list.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
@@ -87,7 +87,7 @@ class BxDevFormsPreLists extends BxTemplStudioFormsPreLists
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
 
@@ -99,7 +99,7 @@ class BxDevFormsPreLists extends BxTemplStudioFormsPreLists
         if(!$aIds || !is_array($aIds)) {
             $iId = (int)bx_get('id');
             if(!$iId) {
-                $this->_echoResultJson(array());
+                echoJson(array());
                 exit;
             }
 
@@ -111,7 +111,7 @@ class BxDevFormsPreLists extends BxTemplStudioFormsPreLists
         $aList = array();
         $this->oDb->getLists(array('type' => 'by_id', 'value' => $iId), $aList, false);
         if(!is_array($aList) || empty($aList)){
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -154,7 +154,7 @@ class BxDevFormsPreLists extends BxTemplStudioFormsPreLists
             'content' => $oForm->getCode()
         )));
 
-        $this->_echoResultJson(array('popup' => $sContent), true);
+        echoJson(array('popup' => $sContent));
     }
 
     protected function _canDelete($aList)

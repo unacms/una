@@ -35,7 +35,7 @@ class BxSitesGridOverview extends BxTemplGrid
 
         $oForm = BxDolForm::getObjectInstance('bx_sites', 'bx_sites_site_confirm');
         if(!$oForm) {
-            $this->_echoResultJson(array('msg' => _t('_sys_txt_error_occured')), true);
+            echoJson(array('msg' => _t('_sys_txt_error_occured')));
             return;
         }
 
@@ -59,7 +59,7 @@ class BxSitesGridOverview extends BxTemplGrid
 
         $oForm = BxDolForm::getObjectInstance('bx_sites', 'bx_sites_site_pending');
         if(!$oForm) {
-            $this->_echoResultJson(array('msg' => _t('_sys_txt_error_occured')), true);
+            echoJson(array('msg' => _t('_sys_txt_error_occured')));
             return;
         }
 
@@ -75,7 +75,7 @@ class BxSitesGridOverview extends BxTemplGrid
 
         $oForm = BxDolForm::getObjectInstance('bx_sites', 'bx_sites_site_cancel');
         if(!$oForm) {
-            $this->_echoResultJson(array('msg' => _t('_sys_txt_error_occured')), true);
+            echoJson(array('msg' => _t('_sys_txt_error_occured')));
             return;
         }
 
@@ -89,14 +89,14 @@ class BxSitesGridOverview extends BxTemplGrid
 
         $bResult = $this->_oModule->cancelSubscription($aAccount['pd_profile_id']);
         if(!$bResult) {
-            $this->_echoResultJson(array('msg' => _t('_bx_sites_txt_err_cannot_perform')), true);
+            echoJson(array('msg' => _t('_bx_sites_txt_err_cannot_perform')));
             return;
         }
 
         $oPermalinks = BxDolPermalinks::getInstance();
 
         $sUrl = BX_DOL_URL_ROOT . $oPermalinks->permalink('page.php?i=site-view&id=' . $aAccount['id']);
-        $this->_echoResultJson(array('eval' => 'window.open(\'' . $sUrl . '\',\'_self\');'), true);
+        echoJson(array('eval' => 'window.open(\'' . $sUrl . '\',\'_self\');'));
     }
 
     public function performActionCanceled()
@@ -105,7 +105,7 @@ class BxSitesGridOverview extends BxTemplGrid
 
         $oForm = BxDolForm::getObjectInstance('bx_sites', 'bx_sites_site_reactivate');
         if(!$oForm) {
-            $this->_echoResultJson(array('msg' => _t('_sys_txt_error_occured')), true);
+            echoJson(array('msg' => _t('_sys_txt_error_occured')));
             return;
         }
 
@@ -123,7 +123,7 @@ class BxSitesGridOverview extends BxTemplGrid
 
         $oForm = BxDolForm::getObjectInstance('bx_sites', 'bx_sites_site_suspended');
         if(!$oForm) {
-            $this->_echoResultJson(array('msg' => _t('_sys_txt_error_occured')), true);
+            echoJson(array('msg' => _t('_sys_txt_error_occured')));
             return;
         }
 
@@ -267,7 +267,7 @@ class BxSitesGridOverview extends BxTemplGrid
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
             return;
         }
 
@@ -277,7 +277,7 @@ class BxSitesGridOverview extends BxTemplGrid
         $iAccount = $oForm->getCleanValue('id');
         $aAccount = $this->_oModule->_oDb->getAccount(array('type' => 'id', 'value' => $iAccount));
         if(empty($aAccount) || !is_array($aAccount)) {
-            $this->_echoResultJson(array('msg' => _t('_bx_sites_txt_err_site_is_not_defined')), true);
+            echoJson(array('msg' => _t('_bx_sites_txt_err_site_is_not_defined')));
             return;
         }
 
@@ -288,11 +288,11 @@ class BxSitesGridOverview extends BxTemplGrid
     {
         $sUrl = $this->_oModule->startSubscription($aAccount['id']);
         if(empty($sUrl)) {
-            $this->_echoResultJson(array('msg' => _t('_bx_sites_txt_err_cannot_perform')), true);
+            echoJson(array('msg' => _t('_bx_sites_txt_err_cannot_perform')));
             return;
         }
 
-        $this->_echoResultJson(array('eval' => 'window.open(\'' . $sUrl . '\', \'_self\');', 'popup_not_hide' => 1), true);
+        echoJson(array('eval' => 'window.open(\'' . $sUrl . '\', \'_self\');', 'popup_not_hide' => 1));
     }
 }
 /** @} */

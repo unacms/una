@@ -440,6 +440,13 @@ function echoDbgLog($mWhat, $sDesc = '', $sFileName = 'debug.log')
     fclose($rFile);
 }
 
+function echoJson($a)
+{
+	header('Content-type: text/html; charset=utf-8');
+
+	echo json_encode($a);
+}
+
 function clear_xss($val)
 {
     if ($GLOBALS['logged']['admin'])

@@ -51,7 +51,7 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems
             else
                 $aRes = array('msg' => _t('_bx_dev_nav_err_items_create'));
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         } else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-nav-item-create-popup', _t('_bx_dev_nav_txt_items_create_popup'), $this->_oTemplate->parseHtmlByName('nav_add_item.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
@@ -60,7 +60,7 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
 
@@ -72,7 +72,7 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems
 
         $aItem = $this->_getItem('getItems');
         if($aItem === false) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -88,7 +88,7 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems
             else
                 $aRes = array('msg' => _t('_bx_dev_nav_err_items_edit'));
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         } else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-nav-item-edit-popup', _t('_bx_dev_nav_txt_items_edit_popup', _t($aItem['title_system'])), $this->oModule->_oTemplate->parseHtmlByName('nav_add_item.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
@@ -97,7 +97,7 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
 

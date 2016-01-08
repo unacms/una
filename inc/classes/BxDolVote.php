@@ -205,7 +205,7 @@ class BxDolVote extends BxDolObject
     public function actionVote()
     {
         if(!$this->isEnabled()) {
-            $this->_echoResultJson(array('code' => 1));
+            echoJson(array('code' => 1));
             return;
         }
 
@@ -221,18 +221,18 @@ class BxDolVote extends BxDolObject
         $bPerformUndo = $bVoted && $bUndo ? true : false;
 
         if(!$bPerformUndo && !$this->isAllowedVote(true)) {
-            $this->_echoResultJson(array('code' => 2, 'msg' => $this->msgErrAllowedVote()));
+            echoJson(array('code' => 2, 'msg' => $this->msgErrAllowedVote()));
             return;
         }
 
         if((!$bLikeMode && !$this->_oQuery->isPostTimeoutEnded($iObjectId, $iAuthorIp)) || ($bLikeMode && $bVoted && !$bUndo)) {
-            $this->_echoResultJson(array('code' => 3, 'msg' => _t('_vote_err_duplicate_vote')));
+            echoJson(array('code' => 3, 'msg' => _t('_vote_err_duplicate_vote')));
             return;
         }
 
         $iValue = bx_get('value');
         if($iValue === false) {
-            $this->_echoResultJson(array('code' => 4));
+            echoJson(array('code' => 4));
             return;
         }
 
@@ -248,7 +248,7 @@ class BxDolVote extends BxDolObject
 
 		$iId = $this->_oQuery->putVote($iObjectId, $iAuthorId, $iAuthorIp, $iValue, $bPerformUndo);
         if($iId === false) {
-            $this->_echoResultJson(array('code' => 5));
+            echoJson(array('code' => 5));
             return;
         }
 
@@ -261,7 +261,7 @@ class BxDolVote extends BxDolObject
         $oZ->alert();
 
         $aVote = $this->_oQuery->getVote($iObjectId);
-        $this->_echoResultJson(array(
+        echoJson(array(
             'code' => 0,
             'rate' => $aVote['rate'],
             'count' => $aVote['count'],

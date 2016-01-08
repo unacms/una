@@ -174,7 +174,7 @@ class BxDolReport extends BxDolObject
      */
     public function actionReport()
     {
-        return $this->_echoResultJson($this->_getReport());
+        return echoJson($this->_getReport());
     }
 
 	public function actionGetReportedBy()

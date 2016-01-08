@@ -25,19 +25,19 @@ class BxInvGridRequests extends BxTemplGrid
     {
     	$aIds = bx_get('ids');
         if(!$aIds || !is_array($aIds)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
         $aRequest = $this->_oModule->_oDb->getRequests(array('type' => 'by_id', 'value' => (int)array_shift($aIds)));
 		if(empty($aRequest) || !is_array($aRequest)){
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
 		$sContent = BxTemplFunctions::getInstance()->transBox('bx-invites-info-popup', $this->_oModule->_oTemplate->getBlockRequestText($aRequest));
 
-		$this->_echoResultJson(array('popup' => array('html' => $sContent)), true);
+		echoJson(array('popup' => array('html' => $sContent)));
     }
 	public function performActionInvite($aParams = array())
     {
@@ -45,14 +45,14 @@ class BxInvGridRequests extends BxTemplGrid
 
     	$mixedAllowed = $this->_oModule->isAllowedInvite($iProfileId);
     	if($mixedAllowed !== true) {
-	    	$this->_echoResultJson(array('msg' => $mixedAllowed));
+	    	echoJson(array('msg' => $mixedAllowed));
 			exit;
     	}
 
         $iAffected = 0;
         $aIds = bx_get('ids');
         if(!$aIds || !is_array($aIds)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -78,7 +78,7 @@ class BxInvGridRequests extends BxTemplGrid
             $iAffected++;
         }
 
-        $this->_echoResultJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected, 'msg' => _t('_bx_invites_msg_invitation_sent', $iAffected)) : array('msg' => _t('_bx_invites_err_invite')));
+        echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected, 'msg' => _t('_bx_invites_msg_invitation_sent', $iAffected)) : array('msg' => _t('_bx_invites_err_invite')));
     }
 	public function performActionDelete($aParams = array())
     {
@@ -86,14 +86,14 @@ class BxInvGridRequests extends BxTemplGrid
 
     	$mixedAllowed = $this->_oModule->isAllowedDeleteRequest($iProfileId);
     	if($mixedAllowed !== true) {
-	    	$this->_echoResultJson(array('msg' => $mixedAllowed));
+	    	echoJson(array('msg' => $mixedAllowed));
 			exit;
     	}
 
         $iAffected = 0;
         $aIds = bx_get('ids');
         if(!$aIds || !is_array($aIds)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -110,7 +110,7 @@ class BxInvGridRequests extends BxTemplGrid
             $iAffected++;
         }
 
-        $this->_echoResultJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t('_bx_invites_err_delete_request')));
+        echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t('_bx_invites_err_delete_request')));
     }
 
 	protected function _getCellNip($mixedValue, $sKey, $aField, $aRow)

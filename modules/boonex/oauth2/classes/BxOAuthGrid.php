@@ -47,7 +47,7 @@ class BxOAuthGrid extends BxTemplGrid
             else
                 $aRes = array('msg' => "Error occured"); // if record adding failed, display error message
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
 
         } else { // if form is not submitted or some fields are invalid, display popup with form
 
@@ -69,7 +69,7 @@ class BxOAuthGrid extends BxTemplGrid
                     });
                 </script>');
 
-            $this->_echoResultJson(array('popup' => array('html' => $s, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $s, 'options' => array('closeOnOuterClick' => false))));
 
         }
     }

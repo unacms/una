@@ -140,16 +140,6 @@ class BxBaseModNotificationsModule extends BxDolModule
 				break;
 		}
     }
-
-    protected function _echoResultJson($a, $isAutoWrapForFormFileSubmit = false)
-    {
-        header('Content-type: text/html; charset=utf-8');
-
-        $s = json_encode($a);
-        if ($isAutoWrapForFormFileSubmit && !empty($_FILES))
-            $s = '<textarea>' . $s . '</textarea>';
-        echo $s;
-    }
 }
 
 /** @} */

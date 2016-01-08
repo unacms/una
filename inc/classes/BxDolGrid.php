@@ -205,7 +205,7 @@
  *     $iAffected = 0;
  *     $aIds = bx_get('ids');
  *     if (!$aIds || !is_array($aIds)) {
- *         $this->_echoResultJson(array());
+ *         echoJson(array());
  *         exit;
  *     }
  *
@@ -217,7 +217,7 @@
  *         $iAffected++;
  *     }
  *
- *     $this->_echoResultJson(array(
+ *     echoJson(array(
  *         'msg' => $iAffected > 0 ? sprintf("%d profiles successfully activated", $iAffected) : "Profile(s) activation failed",
  *         'grid' => $this->getCode(false),
  *         'blink' => $aIdsAffected,
@@ -235,7 +235,7 @@
  *
  * The action can be used as 'single' or 'bulk', in the case of 'single' action 'ids' array always has one element.
  *
- * As the result, action must outputs JSON array, which is done by _echoResultJson function.
+ * As the result, action must outputs JSON array, which is done by echoJson function.
  * The defined indexes in the array determines behavior after action is performed, the following behaviors are supported:
  *
  * - msg: display javascript alert message.
