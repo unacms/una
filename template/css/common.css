@@ -428,8 +428,8 @@ input.bx-btn {
     height:16px;
 }
 .bx-btn u {
-    margin-left:2px;
-    text-decoration:none;
+    margin-left: 10px;
+    text-decoration: none;
 }
 .bx-btn .sys-icon {
     font-size:1.2em;
