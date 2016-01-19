@@ -4,20 +4,18 @@
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
  * @defgroup    Lagoon Lagoon
- * @ingroup     DolphinModules
+ * @ingroup     TridentModules
  *
  * @{
  */
 
-bx_import ('BxBaseModGeneralModule');
+bx_import ('BxBaseModTemplateModule');
 
-class BxLagoonModule extends BxBaseModGeneralModule
+class BxLagoonModule extends BxBaseModTemplateModule
 {
     function __construct(&$aModule)
     {
         parent::__construct($aModule);
-
-        $this->_oConfig->init($this->_oDb);
     }
 }
 

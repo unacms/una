@@ -3,23 +3,21 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    Air Air
+ * @defgroup    BaseTemplate Base classes for template modules
  * @ingroup     TridentModules
  *
  * @{
  */
 
-bx_import('BxBaseModTemplateConfig');
+bx_import ('BxBaseModGeneralModule');
 
-class BxAirConfig extends BxBaseModTemplateConfig
+class BxBaseModTemplateModule extends BxBaseModGeneralModule
 {
-    function __construct($aModule)
+    function __construct(&$aModule)
     {
         parent::__construct($aModule);
 
-        $this->_aPrefixes = array(
-        	'option' => 'bx_air_'
-        );
+        $this->_oConfig->init($this->_oDb);
     }
 }
 

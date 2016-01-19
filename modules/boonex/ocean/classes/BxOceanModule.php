@@ -4,20 +4,18 @@
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
  * @defgroup    Ocean Ocean
- * @ingroup     DolphinModules
+ * @ingroup     TridentModules
  *
  * @{
  */
 
-bx_import ('BxBaseModGeneralModule');
+bx_import ('BxBaseModTemplateModule');
 
-class BxOceanModule extends BxBaseModGeneralModule
+class BxOceanModule extends BxBaseModTemplateModule
 {
     function __construct(&$aModule)
     {
         parent::__construct($aModule);
-
-        $this->_oConfig->init($this->_oDb);
     }
 }
 

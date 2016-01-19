@@ -4,23 +4,21 @@
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
  * @defgroup    Air Air
- * @ingroup     DolphinModules
+ * @ingroup     TridentModules
  *
  * @{
  */
 
-bx_import ('BxBaseModGeneralModule');
+bx_import ('BxBaseModTemplateModule');
 
 /**
  * Air module
  */
-class BxAirModule extends BxBaseModGeneralModule
+class BxAirModule extends BxBaseModTemplateModule
 {
     function __construct(&$aModule)
     {
         parent::__construct($aModule);
-
-        $this->_oConfig->init($this->_oDb);
     }
 
     public function serviceGetSplash()
