@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    Air Air
+ * @defgroup    Ocean Ocean
  * @ingroup     DolphinModules
  *
  * @{
@@ -11,21 +11,13 @@
 
 bx_import ('BxBaseModGeneralModule');
 
-/**
- * Air module
- */
-class BxAirModule extends BxBaseModGeneralModule
+class BxOceanModule extends BxBaseModGeneralModule
 {
     function __construct(&$aModule)
     {
         parent::__construct($aModule);
 
         $this->_oConfig->init($this->_oDb);
-    }
-
-    public function serviceGetSplash()
-    {
-    	return $this->_oTemplate->getSplash();
     }
 }
 

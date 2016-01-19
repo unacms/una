@@ -3,7 +3,7 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    Air Air
+ * @defgroup    Ocean Ocean
  * @ingroup     DolphinModules
  *
  * @{
@@ -11,7 +11,7 @@
 
 bx_import('BxBaseModGeneralConfig');
 
-class BxAirConfig extends BxBaseModGeneralConfig
+class BxOceanConfig extends BxBaseModGeneralConfig
 {
 	protected $_oDb;
 
@@ -25,7 +25,7 @@ class BxAirConfig extends BxBaseModGeneralConfig
         parent::__construct($aModule);
 
         $this->_aPrefixes = array(
-        	'option' => 'bx_air_'
+        	'option' => 'bx_ocean_'
         );
     }
 
