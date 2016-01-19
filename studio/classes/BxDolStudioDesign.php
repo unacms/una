@@ -9,13 +9,20 @@
 
 define('BX_DOL_STUDIO_TEMPL_DEFAULT', 'basic');
 define('BX_DOL_STUDIO_TEMPL_TYPE_SETTINGS', 'settings');
+define('BX_DOL_STUDIO_TEMPL_TYPE_LOGO', 'logo');
 define('BX_DOL_STUDIO_TEMPL_TYPE_DEFAULT', BX_DOL_STUDIO_TEMPL_TYPE_SETTINGS);
+
 
 class BxDolStudioDesign extends BxTemplStudioPage
 {
+    protected $MODULE;
+
     protected $sTemplate;
     protected $aTemplate;
     protected $sPage;
+
+    protected $sManageUrlPattern;
+    protected $sManageUrl;
 
     public function __construct($sTemplate = "", $sPage = "")
     {
@@ -31,24 +38,36 @@ class BxDolStudioDesign extends BxTemplStudioPage
         if(is_string($sPage) && !empty($sPage))
             $this->sPage = $sPage;
 
-        //--- Check actions ---//
-        if(($sAction = bx_get('templ_action')) !== false) {
-            $sAction = bx_process_input($sAction);
+		$this->sManageUrl = BX_DOL_URL_STUDIO . 'design.php?name=' . $this->sTemplate;
+    }
 
-            $aResult = array('code' => 1, 'message' => _t('_adm_dsg_err_cannot_process_action'));
-            switch($sAction) {
-                case 'activate':
-                    $sValue = bx_process_input(bx_get('templ_value'));
-                    if(empty($sValue))
-                        break;
+	public static function getObjectInstance($sModule = "", $sPage = "", $bInit = true)
+	{
+	    $oModuleDb = BxDolModuleQuery::getInstance();
 
-                    $aResult = $this->activate($sValue);
-                    break;
-            }
+        $sClass = 'BxTemplStudioDesign';
+	    if($sModule != '' && $oModuleDb->isModuleByName($sModule)) {
+	        $aModule = $oModuleDb->getModuleByName($sModule);
 
-            echo json_encode($aResult);
-            exit;
-        }
+	        if(file_exists(BX_DIRECTORY_PATH_MODULES . $aModule['path'] . 'classes/' . $aModule['class_prefix'] . 'StudioPage.php')) {
+	            bx_import('StudioPage', $aModule);
+	            $sClass = $aModule['class_prefix'] . 'StudioPage';
+	        }
+	    }
+
+	    $oObject = new $sClass($sModule, $sPage);
+	    if($bInit)
+	    	$oObject->init();
+
+	    return $oObject;
+	}
+
+	public function init()
+    {
+    	$this->checkAction();
+
+    	$oDesigner = $this->getObjectDesigner();
+    	$oDesigner->checkAction();
 
         $this->aTemplate = BxDolModuleQuery::getInstance()->getModuleByName($this->sTemplate);
         if(empty($this->aTemplate) || !is_array($this->aTemplate))
@@ -64,6 +83,37 @@ class BxDolStudioDesign extends BxTemplStudioPage
             'checked' => (int)$this->aTemplate['enabled'] == 1,
             'onchange' => "javascript:" . $this->getPageJsObject() . ".activate('" . $this->sTemplate . "', this)"
         ), false);
+    }
+
+    public function checkAction()
+    {
+    	$sAction = bx_get('templ_action');
+    	if($sAction === false)
+    		return;
+
+		$sAction = bx_process_input($sAction);
+
+		$aResult = array('code' => 1, 'message' => _t('_adm_dsg_err_cannot_process_action'));
+		switch($sAction) {
+			case 'activate':
+				$sValue = bx_process_input(bx_get('templ_value'));
+				if(empty($sValue))
+					break;
+
+				$aResult = $this->activate($sValue);
+				break;
+
+			case 'delete_logo':
+				$oPage = $this->getObjectDesigner();
+
+				$aResult = array('code' => 0, 'message' => '');
+				if(!$oPage->deleteLogo())
+					$aResult = array('code' => 2, 'message' => _t('_adm_dsg_err_remove_old_logo'));
+				break;
+		}
+
+		echo json_encode($aResult);
+		exit;
     }
 
     public function activate($sTemplate)
@@ -99,6 +149,17 @@ class BxDolStudioDesign extends BxTemplStudioPage
             $aResult['content'] = "";
 
         return $aResult;
+    }
+
+    protected function getObjectDesigner()
+    {
+    	$oPage = new BxTemplStudioDesigner($this->sPage);
+    	$oPage->setManageUrl($this->sManageUrl);
+
+    	$oModule = BxDolModule::getInstance($this->MODULE);
+    	$oPage->setLogoParams($oModule->_oConfig->getLogoParams());
+
+    	return $oPage;
     }
 }
 

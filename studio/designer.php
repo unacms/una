@@ -19,6 +19,7 @@ $sPage = bx_get('page');
 $sPage = $sPage !== false ? bx_process_input($sPage) : '';
 
 $oPage = new BxTemplStudioDesigner($sPage);
+$oPage->checkAction();
 
 $oTemplate = BxDolStudioTemplate::getInstance();
 $oTemplate->setPageNameIndex($oPage->getPageIndex());

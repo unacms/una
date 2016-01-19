@@ -56,24 +56,7 @@ class BxDolStudioModule extends BxTemplStudioPage
 
     public function init()
     {
-        //--- Check Actions ---//
-        if(($sAction = bx_get('mod_action')) !== false) {
-            $sAction = bx_process_input($sAction);
-
-            $aResult = array('code' => 1, 'message' => _t('_adm_mod_err_cannot_process_action'));
-            switch($sAction) {
-                case 'activate':
-                    $sValue = bx_process_input(bx_get('mod_value'));
-                    if(empty($sValue))
-                        break;
-
-                    $aResult = $this->activate($sValue);
-                    break;
-            }
-
-            echo json_encode($aResult);
-            exit;
-        }
+        $this->checkAction();
 
         $this->aModule = $this->oDb->getModuleByName($this->sModule);
         if(empty($this->aModule) || !is_array($this->aModule))
@@ -95,6 +78,29 @@ class BxDolStudioModule extends BxTemplStudioPage
             'checked' => (int)$this->aModule['enabled'] == 1,
             'onchange' => "javascript:" . $this->getPageJsObject() . ".activate('" . $this->sModule . "', this)"
         ), false);
+    }
+
+	public function checkAction()
+    {
+    	$sAction = bx_get('mod_action');
+    	if($sAction === false)
+    		return;
+
+		$sAction = bx_process_input($sAction);
+
+		$aResult = array('code' => 1, 'message' => _t('_adm_mod_err_cannot_process_action'));
+		switch($sAction) {
+			case 'activate':
+				$sValue = bx_process_input(bx_get('mod_value'));
+				if(empty($sValue))
+					break;
+
+				$aResult = $this->activate($sValue);
+				break;
+		}
+
+		echo json_encode($aResult);
+		exit;
     }
 
     public function activate($sModule)
