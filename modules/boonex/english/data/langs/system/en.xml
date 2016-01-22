@@ -79,6 +79,7 @@
 	<string name="_Reset"><![CDATA[Reset]]></string>
 	<string name="_Search"><![CDATA[Search]]></string>
 	<string name="_Section"><![CDATA[Section]]></string>
+	<string name="_Select_one"><![CDATA[Select one...]]></string>
 	<string name="_Select_all"><![CDATA[Select all]]></string>
 	<string name="_Show"><![CDATA[Show]]></string>
 	<string name="_Sorry, your IP been banned"><![CDATA[Sorry, your IP has been banned]]></string>
@@ -1148,6 +1149,8 @@
 	<string name="_adm_stg_cpt_option_sys_cache_memcache_port"><![CDATA[Memcached server port]]></string>
 	<string name="_adm_stg_cpt_option_sys_db_cache_enable"><![CDATA[Enable DB cache]]></string>
 	<string name="_adm_stg_cpt_option_sys_db_cache_engine"><![CDATA[DB cache engine (other than File option may require custom server setup)]]></string>
+	<string name="_adm_stg_cpt_option_sys_default_payment"><![CDATA[Payment module]]></string>
+	<string name="_adm_stg_err_option_sys_default_payment"><![CDATA[You need to install at least one payment processing module and activate it here by selecting from the list.]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_date"><![CDATA[Date Format]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_datetime"><![CDATA[Datetime Format]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_time"><![CDATA[Time Format]]></string>

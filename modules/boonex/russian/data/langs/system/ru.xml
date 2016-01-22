@@ -79,6 +79,7 @@
 	<string name="_Reset"><![CDATA[Сбросить]]></string>
 	<string name="_Search"><![CDATA[Поиск]]></string>
 	<string name="_Section"><![CDATA[Отдел]]></string>
+	<string name="_Select_one"><![CDATA[Выберите один...]]></string>
 	<string name="_Select_all"><![CDATA[Выбрать всё]]></string>
 	<string name="_Show"><![CDATA[Показать]]></string>
 	<string name="_Sorry, your IP been banned"><![CDATA[Извините, Ваш IP был забанен]]></string>
@@ -1148,6 +1149,8 @@
 	<string name="_adm_stg_cpt_option_sys_cache_memcache_port"><![CDATA[Memcached - порт сервера]]></string>
 	<string name="_adm_stg_cpt_option_sys_db_cache_enable"><![CDATA[Задействовать кэш БД]]></string>
 	<string name="_adm_stg_cpt_option_sys_db_cache_engine"><![CDATA[Кэш-движок для БД (значение, отличное от File, может потребовать дополнительной настройки сервера)]]></string>
+	<string name="_adm_stg_cpt_option_sys_default_payment"><![CDATA[Модуль оплаты]]></string>
+	<string name="_adm_stg_err_option_sys_default_payment"><![CDATA[Вам нужно установить как минимум один модуль для обработки проплат и активировать его, выбрав из списка.]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_date"><![CDATA[Формат Даты]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_datetime"><![CDATA[Формат Даты и Времени]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_time"><![CDATA[Формат Времени]]></string>
