@@ -7,6 +7,8 @@
  * @{
  */
 
+define('BX_DOL_LINK_CLASS', 'bx-link'); ///< class to add to every link in user content
+
 define('BX_DATA_TEXT', 1); ///< regular text data type
 define('BX_DATA_TEXT_MULTILINE', 2); ///< regular multiline text data type
 define('BX_DATA_INT', 3); ///< integer data type
@@ -474,7 +476,7 @@ function clear_xss($val)
             $oConfig->set('HTML.Nofollow', 'true');
         }
 
-        $oConfig->set('Filter.Custom', array (new HTMLPurifier_Filter_YouTube(), new HTMLPurifier_Filter_YoutubeIframe()));
+        $oConfig->set('Filter.Custom', array (new HTMLPurifier_Filter_YouTube(), new HTMLPurifier_Filter_YoutubeIframe(), new HTMLPurifier_Filter_AddBxLinksClass()));
 
         $oDef = $oConfig->getHTMLDefinition(true);
         $oDef->addAttribute('a', 'target', 'Enum#_blank,_self,_target,_top');
