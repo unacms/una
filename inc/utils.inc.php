@@ -451,13 +451,11 @@ function echoJson($a)
 
 function clear_xss($val)
 {
-    if ($GLOBALS['logged']['admin'])
-        return $val;
-
     // HTML Purifier plugin
     global $oHtmlPurifier;
-    require_once( BX_DIRECTORY_PATH_PLUGINS . 'htmlpurifier/HTMLPurifier.standalone.php' );
-    if (!isset($oHtmlPurifier)) {
+    if (!isset($oHtmlPurifier) && !$GLOBALS['logged']['admin']) {
+
+        require_once( BX_DIRECTORY_PATH_PLUGINS . 'htmlpurifier/HTMLPurifier.standalone.php' );
 
         HTMLPurifier_Bootstrap::registerAutoload();
 
@@ -484,7 +482,12 @@ function clear_xss($val)
         $oHtmlPurifier = new HTMLPurifier($oConfig);
     }
 
-    return $oHtmlPurifier->purify($val);
+    if (!$GLOBALS['logged']['admin'])
+        $val = $oHtmlPurifier->purify($val);
+
+    bx_alert('system', 'clear_xss', 0, 0, array('oHtmlPurifier' => $oHtmlPurifier, 'return_data' => &$val));
+
+    return $val;
 }
 
 //--------------------------------------- friendly permalinks --------------------------------------//
