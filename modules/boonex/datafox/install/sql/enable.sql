@@ -23,3 +23,8 @@ SET @iHandler := LAST_INSERT_ID();
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('system', 'clear_xss', @iHandler);
 
+-- injections
+
+INSERT INTO `sys_injections` (`name`, `page_index`, `key`, `type`, `data`, `replace`, `active`) VALUES
+('bx_datafox', 0, 'injection_head', 'service', 'a:2:{s:6:"module";s:10:"bx_datafox";s:6:"method";s:14:"include_css_js";}', 0, 1);
+

@@ -9,3 +9,7 @@ SET @iHandler := (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = 'bx_data
 DELETE FROM `sys_alerts` WHERE `handler_id` = @iHandler;
 DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandler;
 
+-- injections
+
+DELETE FROM `sys_injections` WHERE `name` = 'bx_datafox';
+
