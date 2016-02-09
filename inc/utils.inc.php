@@ -744,7 +744,7 @@ function bx_php_string_quot ($mixedInput)
  * @param array $aHeaders - custom headers.
  * @return string the file's contents.
  */
-function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $aHeaders = array(), &$sHttpCode = null)
+function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $aHeaders = array(), &$sHttpCode = null, $aBasicAuth = array())
 {
     $bChangeTimeout = false;
 
@@ -770,6 +770,9 @@ function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $
 
         if ($aHeaders)
             curl_setopt($rConnect, CURLOPT_HTTPHEADER, $aHeaders);
+
+        if ($aBasicAuth)
+            curl_setopt($rConnect, CURLOPT_USERPWD, $aBasicAuth['user'] . ':' . $aBasicAuth['password']);
 
         if ('post' == $sMethod) {
             curl_setopt($rConnect, CURLOPT_POST, true);
