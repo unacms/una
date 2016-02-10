@@ -1,0 +1,21 @@
+<div class="bx-payment-processed-add bx-def-color-bg-block">
+    <div class="bx-payment-processed-add-cnt">
+        __form__
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#__form_id__").ajaxForm({ 
+                    dataType: "json",
+                    beforeSubmit: function (formData, jqForm, options) {
+                        bx_loading($("#__form_id__"), true);
+                    },
+                    success: function (data) {
+                        $(".bx-popup-applied:visible").dolPopupHide();
+                        glGrids.__object__.processJson(data, '__action__');
+                    }
+                });
+
+                __js_object__.paOnShowPopup();
+            });
+        </script>
+    </div>
+</div>

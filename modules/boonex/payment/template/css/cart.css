@@ -1,0 +1,60 @@
+/*--- Box Styles ---*/
+div.bx-payment-box-wrp {}
+div.bx-payment-box {
+    position:relative;
+    background-color: #f2f2ff;
+}
+div.bx-payment-box-cpt {
+    height: 28px;
+
+    background-color: #ececec;
+
+    line-height: 28px;
+}
+div.bx-payment-box-collapse {
+	position: absolute;
+
+	top: 5px;
+    right: 5px;
+    width: 16px;
+    height: 16px;
+
+	line-height: 16px;
+	text-align: center;
+}
+div.bx-payment-box-collapse a {
+	text-decoration: none;
+}
+div.bx-payment-box-cnt {
+    position: relative;
+    background-color: #f2f2ff;    
+}
+
+/*--- Cart Styles ---*/
+div.bx-payment-vendor-icon {
+    top: 10px;
+    left: 10px;
+    width: 32px;
+    height: 32px;
+
+    position: absolute;
+}
+div.bx-payment-providers {
+    margin: 10px 0 0 52px;
+    min-height: 32px;
+}
+div.bx-payment-provider {
+    padding: 2px 0px;
+}
+div.bx-payment-provider input {
+    margin: 0px;
+    padding: 0px;
+}
+
+div.bx-payment-item {
+    padding: 2px 0px;
+}
+div.bx-payment-item input {
+    margin: 0px;
+    padding: 0px;
+}
