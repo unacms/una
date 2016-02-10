@@ -960,7 +960,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     protected function _prepareTextForOutput($s, $iEventId = 0)
     {
     	$s = bx_process_output($s, BX_DATA_HTML);
-        $s = bx_linkify_html($s);
+        $s = bx_linkify_html($s, 'class="' . BX_DOL_LINK_CLASS . '"');
 
         $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
 		$s = $oMetatags->keywordsParse($iEventId, $s);

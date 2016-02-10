@@ -7,6 +7,8 @@
  * @{
  */
 
+define('BX_DOL_LINK_CLASS', 'bx-link'); ///< class to add to every link in user content
+
 define('BX_DATA_TEXT', 1); ///< regular text data type
 define('BX_DATA_TEXT_MULTILINE', 2); ///< regular multiline text data type
 define('BX_DATA_INT', 3); ///< integer data type
@@ -449,13 +451,11 @@ function echoJson($a)
 
 function clear_xss($val)
 {
-    if ($GLOBALS['logged']['admin'])
-        return $val;
-
     // HTML Purifier plugin
     global $oHtmlPurifier;
-    require_once( BX_DIRECTORY_PATH_PLUGINS . 'htmlpurifier/HTMLPurifier.standalone.php' );
-    if (!isset($oHtmlPurifier)) {
+    if (!isset($oHtmlPurifier) && !$GLOBALS['logged']['admin']) {
+
+        require_once( BX_DIRECTORY_PATH_PLUGINS . 'htmlpurifier/HTMLPurifier.standalone.php' );
 
         HTMLPurifier_Bootstrap::registerAutoload();
 
@@ -474,7 +474,7 @@ function clear_xss($val)
             $oConfig->set('HTML.Nofollow', 'true');
         }
 
-        $oConfig->set('Filter.Custom', array (new HTMLPurifier_Filter_YouTube(), new HTMLPurifier_Filter_YoutubeIframe()));
+        $oConfig->set('Filter.Custom', array (new HTMLPurifier_Filter_YouTube(), new HTMLPurifier_Filter_YoutubeIframe(), new HTMLPurifier_Filter_AddBxLinksClass()));
 
         $oDef = $oConfig->getHTMLDefinition(true);
         $oDef->addAttribute('a', 'target', 'Enum#_blank,_self,_target,_top');
@@ -482,7 +482,12 @@ function clear_xss($val)
         $oHtmlPurifier = new HTMLPurifier($oConfig);
     }
 
-    return $oHtmlPurifier->purify($val);
+    if (!$GLOBALS['logged']['admin'])
+        $val = $oHtmlPurifier->purify($val);
+
+    bx_alert('system', 'clear_xss', 0, 0, array('oHtmlPurifier' => $oHtmlPurifier, 'return_data' => &$val));
+
+    return $val;
 }
 
 //--------------------------------------- friendly permalinks --------------------------------------//
@@ -739,7 +744,7 @@ function bx_php_string_quot ($mixedInput)
  * @param array $aHeaders - custom headers.
  * @return string the file's contents.
  */
-function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $aHeaders = array(), &$sHttpCode = null)
+function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $aHeaders = array(), &$sHttpCode = null, $aBasicAuth = array())
 {
     $bChangeTimeout = false;
 
@@ -765,6 +770,9 @@ function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $
 
         if ($aHeaders)
             curl_setopt($rConnect, CURLOPT_HTTPHEADER, $aHeaders);
+
+        if ($aBasicAuth)
+            curl_setopt($rConnect, CURLOPT_USERPWD, $aBasicAuth['user'] . ':' . $aBasicAuth['password']);
 
         if ('post' == $sMethod) {
             curl_setopt($rConnect, CURLOPT_POST, true);
