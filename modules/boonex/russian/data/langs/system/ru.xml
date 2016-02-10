@@ -1819,6 +1819,7 @@
 	<string name="_sys_menu_item_title_account_settings_info"><![CDATA[Аккаунт]]></string>
 	<string name="_sys_menu_item_title_account_settings_pwd"><![CDATA[Пароль]]></string>
 	<string name="_sys_menu_item_title_add_content"><![CDATA[Добавить...]]></string>
+	<string name="_sys_menu_item_title_cart"><![CDATA[Корзина]]></string>
 	<string name="_sys_menu_item_title_cmts_item_delete"><![CDATA[Удалить]]></string>
 	<string name="_sys_menu_item_title_cmts_item_edit"><![CDATA[Редактировать]]></string>
 	<string name="_sys_menu_item_title_cmts_item_reply"><![CDATA[Ответить]]></string>
@@ -1827,6 +1828,7 @@
 	<string name="_sys_menu_item_title_home"><![CDATA[Домой]]></string>
 	<string name="_sys_menu_item_title_logout"><![CDATA[Выйти]]></string>
 	<string name="_sys_menu_item_title_more"><![CDATA[Ещё]]></string>
+	<string name="_sys_menu_item_title_orders"><![CDATA[Заказы]]></string>
 	<string name="_sys_menu_item_title_profile"><![CDATA[Профиль]]></string>
 	<string name="_sys_menu_item_title_set_acl_level"><![CDATA[Назначить членство]]></string>
 	<string name="_sys_menu_item_title_studio"><![CDATA[Студия]]></string>
@@ -1842,6 +1844,7 @@
 	<string name="_sys_menu_item_title_system_account_settings_info"><![CDATA[Аккаунт]]></string>
 	<string name="_sys_menu_item_title_system_account_settings_pwd"><![CDATA[Пароль]]></string>
 	<string name="_sys_menu_item_title_system_add_content"><![CDATA[Добавить Содержимое]]></string>
+	<string name="_sys_menu_item_title_system_cart"><![CDATA[Корзина]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_delete"><![CDATA[Удалить]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_edit"><![CDATA[Редактировать]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_reply"><![CDATA[Ответить]]></string>
@@ -1852,6 +1855,7 @@
 	<string name="_sys_menu_item_title_system_logout"><![CDATA[Выйти]]></string>
 	<string name="_sys_menu_item_title_system_main_menu"><![CDATA[Главное Меню]]></string>
 	<string name="_sys_menu_item_title_system_more"><![CDATA[Ещё]]></string>
+	<string name="_sys_menu_item_title_system_orders"><![CDATA[Заказы]]></string>
 	<string name="_sys_menu_item_title_system_profile"><![CDATA[Профиль]]></string>
 	<string name="_sys_menu_item_title_system_search"><![CDATA[Поиск]]></string>
 	<string name="_sys_menu_item_title_system_set_acl_level"><![CDATA[Назначить членство]]></string>

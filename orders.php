@@ -14,11 +14,11 @@ bx_import('BxDolLanguages');
 
 check_logged();
 
-$sUrl = BxDolPayments::getInstance()->getOrdersUrl();
-if(empty($sUrl))
+$sLink = BxDolPayments::getInstance()->getOrdersLink();
+if(empty($sLink))
 	BxDolTemplate::getInstance()->displayPageNotFound();
 
-header('Location: ' . $sUrl);
+header('Location: ' . $sLink);
 exit;
 
 /** @} */

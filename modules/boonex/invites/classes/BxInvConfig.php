@@ -53,7 +53,7 @@ class BxInvConfig extends BxBaseModGeneralConfig
         $this->_sRequestsEmail = '';
         $this->_bRegistrationByInvitation = true;
 
-        $this->_aJsClass = array(
+        $this->_aJsClasses = array(
         	'main' => 'BxInvMain',
         );
         $this->_aJsObjects = array(

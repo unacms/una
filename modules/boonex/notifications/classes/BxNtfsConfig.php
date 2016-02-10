@@ -35,7 +35,7 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
         $this->_aHandlerDescriptor = array('module_name' => '', 'module_method' => '', 'module_class' => '');
         $this->_sHandlersMethod = 'get_notifications_data';
 
-        $this->_aJsClass = array(
+        $this->_aJsClasses = array(
             'main' => 'BxNtfsMain',
         	'view' => 'BxNtfsView',
         );

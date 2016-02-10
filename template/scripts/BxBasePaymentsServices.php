@@ -21,6 +21,16 @@ class BxBasePaymentsServices extends BxDol
     {
         return BxDolPayments::getInstance()->getPayments();
     }
+
+    public function serviceGetCartItemsCount()
+    {
+    	return BxDolPayments::getInstance()->getCartItemsCount();
+    }
+
+    public function serviceGetOrdersCount($sType)
+    {
+    	return BxDolPayments::getInstance()->getOrdersCount($sType);
+    }
 }
 
 /** @} */

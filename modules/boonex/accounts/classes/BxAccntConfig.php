@@ -45,7 +45,7 @@ class BxAccntConfig extends BxBaseModGeneralConfig
         	'alert' => $this->_sName,
         );
 
-        $this->_aJsClass = array(
+        $this->_aJsClasses = array(
         	'manage_tools' => 'BxAccntManageTools'
         );
 

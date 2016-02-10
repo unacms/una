@@ -85,73 +85,74 @@ class BxDolPayments extends BxDol implements iBxDolSingleton
     	return BxDolService::call($this->_sActive, 'get_option', array($sOption));
     }
 
-    public function getOrdersUrl()
+    public function getOrdersLink()
     {
-    	if(!BxDolRequest::serviceExists($this->_sActive, 'get_orders_url'))
+    	if(!BxDolRequest::serviceExists($this->_sActive, 'get_orders_link', 'Orders'))
     		return '';
 
-    	return BxDolService::call($this->_sActive, 'get_orders_url');
+    	return BxDolService::call($this->_sActive, 'get_orders_link', array(), 'Orders');
     }
 
-    public function getCartUrl()
+    public function getOrdersCount($sType)
     {
-    	if(!BxDolRequest::serviceExists($this->_sActive, 'get_cart_url'))
+    	if(!BxDolRequest::serviceExists($this->_sActive, 'get_orders_count_new', 'Orders'))
+    		return array();
+
+		$aSrvParams = array($sType);
+		return BxDolService::call($this->_sActive, 'get_orders_count_new', $aSrvParams, 'Orders');
+    }
+
+    public function getCartLink()
+    {
+    	if(!BxDolRequest::serviceExists($this->_sActive, 'get_cart_link', 'Cart'))
     		return '';
 
-    	return BxDolService::call($this->_sActive, 'get_cart_url');
+    	return BxDolService::call($this->_sActive, 'get_cart_link', array(), 'Cart');
     }
 
-    public function getCartItems()
+    public function getCartItemsCount()
     {
-    	if(!BxDolRequest::serviceExists($this->_sActive, 'get_cart_items'))
-    		return MsgBox(_t('_sys_txt_empty'));
+    	if(!BxDolRequest::serviceExists($this->_sActive, 'get_cart_items_count', 'Cart'))
+    		return array();
 
-    	return BxDolService::call($this->_sActive, 'get_cart_items');
-    }
-
-    public function getCartItemCount($iUserId, $iOldCount = 0)
-    {
-    	if(!BxDolRequest::serviceExists($this->_sActive, 'get_cart_item_count'))
-    		return array('count' => 0, 'messages' => array());
-
-		$aSrvParams = array($iUserId, $iOldCount);
-    	return BxDolService::call($this->_sActive, 'get_cart_item_count', $aSrvParams);
+		$aSrvParams = array();
+		return BxDolService::call($this->_sActive, 'get_cart_items_count', $aSrvParams, 'Cart');
     }
 
     public function getCartItemDescriptor($iVendorId, $iModuleId, $iItemId, $iItemCount)
     {
-    	if(!BxDolRequest::serviceExists($this->_sActive, 'get_cart_item_descriptor'))
+    	if(!BxDolRequest::serviceExists($this->_sActive, 'get_cart_item_descriptor', 'Cart'))
     		return '';
 
     	$aSrvParams = array($iVendorId, $iModuleId, $iItemId, $iItemCount);
-		return BxDolService::call($this->_sActive, 'get_cart_item_descriptor', $aSrvParams);
+		return BxDolService::call($this->_sActive, 'get_cart_item_descriptor', $aSrvParams, 'Cart');
     }
     
     public function getCartJs($bWrapped = true)
     {
-    	if(!BxDolRequest::serviceExists($this->_sActive, 'get_cart_js'))
+    	if(!BxDolRequest::serviceExists($this->_sActive, 'get_cart_js', 'Cart'))
 			return '';
 
 		$aSrvParams = array($bWrapped);
-		return BxDolService::call($this->_sActive, 'get_cart_js', $aSrvParams);
+		return BxDolService::call($this->_sActive, 'get_cart_js', $aSrvParams, 'Cart');
     }
 
     public function getAddToCartJs($iVendorId, $mixedModuleId, $iItemId, $iItemCount, $bNeedRedirect = false, $bWrapped = true)
     {
-    	if(!BxDolRequest::serviceExists($this->_sActive, 'get_add_to_cart_js'))
+    	if(!BxDolRequest::serviceExists($this->_sActive, 'get_add_to_cart_js', 'Cart'))
 			return array();
 
 		$aSrvParams = array($iVendorId, $mixedModuleId, $iItemId, $iItemCount, $bNeedRedirect, $bWrapped);
-		return BxDolService::call($this->_sActive, 'get_add_to_cart_js', $aSrvParams);
+		return BxDolService::call($this->_sActive, 'get_add_to_cart_js', $aSrvParams, 'Cart');
     }
 
     public function getAddToCartLink($iVendorId, $mixedModuleId, $iItemId, $iItemCount, $bNeedRedirect = false)
     {
-		if(!BxDolRequest::serviceExists($this->_sActive, 'get_add_to_cart_link'))
+		if(!BxDolRequest::serviceExists($this->_sActive, 'get_add_to_cart_link', 'Cart'))
 			return '';
 
 		$aSrvParams = array($iVendorId, $mixedModuleId, $iItemId, $iItemCount, $bNeedRedirect);
-		return BxDolService::call($this->_sActive, 'get_add_to_cart_link', $aSrvParams);
+		return BxDolService::call($this->_sActive, 'get_add_to_cart_link', $aSrvParams, 'Cart');
     }
 
     public function initializeCheckout($iVendorId, $sProvider, $aItems = array())
