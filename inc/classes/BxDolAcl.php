@@ -542,33 +542,6 @@ class BxDolAcl extends BxDol implements iBxDolSingleton
     }
 
     /**
-     * Define action, defining all names are translated the following way:
-     *  my action => BX_MY_ACTION
-     *
-     * @param $aActions array of actions from sys_acl_actions table, with default array keys (starting from 0) and text values
-     */
-    function defineMembershipActions($mixedActions, $sPrefix = 'BX_')
-    {
-        if (is_array($mixedActions))
-            $aActions = $mixedActions;
-        else
-            $aActions = array($mixedActions);
-
-        $aNames = array();
-        foreach ($aActions as $sName)
-            if(!defined($sPrefix . strtoupper(str_replace(' ', '_', $sName))))
-                $aNames[] = $sName;
-
-        if(!$aNames)
-            return;
-
-        $aActions = array();
-        $this->oDb->getActions(array('type' => 'by_names', 'value' => $aNames), $aActions, false);
-        foreach($aActions as $aAction)
-            define($sPrefix . strtoupper(str_replace(' ', '_', $aAction['name'])), $aAction['id']);
-    }
-
-    /**
      * get action id by module and name
      * @param $sAction action name
      * @param $sModule module name
@@ -699,7 +672,7 @@ function checkActionModule($iProfileId, $sActionName, $sModuleName, $bPerformAct
 
     $iActionId = $oACL->getMembershipActionId($sActionName, $sModuleName);
 
-    return BxDolAcl::getInstance()->checkAction($iProfileId, $iActionId, $bPerformAction);
+    return $oACL->checkAction($iProfileId, $iActionId, $bPerformAction);
 }
 
 /** @} */

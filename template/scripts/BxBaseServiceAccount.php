@@ -23,9 +23,9 @@ class BxBaseServiceAccount extends BxDol
         $this->_oAccountQuery = BxDolAccountQuery::getInstance();
     }
 
-    public function serviceCreateAccountForm ()
+    public function serviceCreateAccountForm ($aParams = array())
     {
-        return $this->_oAccountForms->createAccountForm();
+        return $this->_oAccountForms->createAccountForm($aParams);
     }
 
     public function serviceAccountSettingsEmail ($iAccountId = false)

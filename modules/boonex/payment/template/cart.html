@@ -1,0 +1,43 @@
+<div class="bx-payment-box-wrp bx-clearfix">
+    <bx_repeat:vendors>
+        <div class="bx-payment-box bx-def-border bx-def-margin-top-auto">
+            <div class="bx-payment-box-cpt bx-def-padding-sec-left">
+                <div class="bx-payment-box-collapse">
+                	<a href="javascript:void(0)" onclick="javascript:__js_object__.toggle(this)">
+                		<i class="sys-icon caret-down"></i>
+                	</a>
+                </div>
+                <bx_if:show_link>
+                	<a href="__vendor_url__">__txt_shopping_cart__</a> (__items_count__) - __items_price__ __vendor_currency_code__
+                </bx_if:show_link>
+                <bx_if:show_text>__txt_shopping_cart__ (__items_count__) - __items_price__ __vendor_currency_code__</bx_if:show_text>
+            </div>
+            <div class="bx-payment-box-cnt bx-def-border-top">
+                <form id="items_from___vendor_id__" name="items_from___vendor_id__" method="POST" action="__process_url__" onsubmit="javascript:return __js_object__.onSubmit(this)">
+                    <input type="hidden" name="vendor_id" value="__vendor_id__" />
+                    <div class="bx-payment-vendor-icon">
+                    	<img src="__vendor_icon__" />
+                    </div>
+                    <div class="bx-payment-providers">
+                        <bx_repeat:providers>
+                            <div class="bx-payment-provider">
+                                <input type="radio" name="provider" value="__name__" __checked__ />
+                                <b>__caption__</b>
+                            </div>
+                        </bx_repeat:providers>
+                    </div>
+                    <div class="bx-payment-items bx-def-padding-sec">
+                        <bx_repeat:items>
+                            <div class="bx-payment-item">
+                                <input type="checkbox" name="items[]" value="__vendor_id_____module_id_____item_id_____item_quantity__" checked="checked" />
+                                <a href="__item_url__">__item_title__</a> (__item_quantity__) - <bx_if:show_price_paid>__item_price__ __vendor_currency_code__</bx_if:show_price_paid><bx_if:show_price_free><bx_text:_payment_txt_free /></bx_if:show_price_free>
+                            </div>
+                        </bx_repeat:items>
+                    </div>
+                    __control_panel__
+                </form>
+            </div>
+        </div>
+    </bx_repeat:vendors>
+</div>
+__js_content__

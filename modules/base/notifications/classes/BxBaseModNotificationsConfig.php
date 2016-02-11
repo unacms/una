@@ -46,7 +46,7 @@ class BxBaseModNotificationsConfig extends BxBaseModGeneralConfig
         $this->_aHandlersHidden = array();
         $this->_aHandlers = array();
 
-		$this->_aJsClass = array();
+		$this->_aJsClasses = array();
 		$this->_aJsObjects = array();
 
 		$this->_aPerPage = array();

@@ -134,7 +134,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
 
         );
 
-        $this->_aJsClass = array(
+        $this->_aJsClasses = array(
         	'manage_tools' => 'BxOrgsManageTools'
         );
 

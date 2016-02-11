@@ -38,7 +38,7 @@ class BxBaseAccountForms extends BxDolProfileForms
         return BxDolForm::getObjectInstance('sys_account', 'sys_account_settings_del_account');
     }
 
-    public function createAccountForm ()
+    public function createAccountForm ($aParams = array())
     {
         // check access
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = BxDolAccount::isAllowedCreate (0)))
@@ -49,7 +49,7 @@ class BxBaseAccountForms extends BxDolProfileForms
         if (!$oForm)
             return MsgBox(_t('_sys_txt_error_occured'));
 
-        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account');
+        $oForm->aFormAttrs['action'] = !empty($aParams['action']) ? $aParams['action'] : BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account');
         $oForm->initChecker(self::$PROFILE_FIELDS);
 
         if (!$oForm->isSubmittedAndValid()) {

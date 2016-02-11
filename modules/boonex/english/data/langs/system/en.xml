@@ -79,6 +79,7 @@
 	<string name="_Reset"><![CDATA[Reset]]></string>
 	<string name="_Search"><![CDATA[Search]]></string>
 	<string name="_Section"><![CDATA[Section]]></string>
+	<string name="_Select_one"><![CDATA[Select one...]]></string>
 	<string name="_Select_all"><![CDATA[Select all]]></string>
 	<string name="_Show"><![CDATA[Show]]></string>
 	<string name="_Sorry, your IP been banned"><![CDATA[Sorry, your IP has been banned]]></string>
@@ -1148,6 +1149,8 @@
 	<string name="_adm_stg_cpt_option_sys_cache_memcache_port"><![CDATA[Memcached server port]]></string>
 	<string name="_adm_stg_cpt_option_sys_db_cache_enable"><![CDATA[Enable DB cache]]></string>
 	<string name="_adm_stg_cpt_option_sys_db_cache_engine"><![CDATA[DB cache engine (other than File option may require custom server setup)]]></string>
+	<string name="_adm_stg_cpt_option_sys_default_payment"><![CDATA[Payment module]]></string>
+	<string name="_adm_stg_err_option_sys_default_payment"><![CDATA[You need to install at least one payment processing module and activate it here by selecting from the list.]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_date"><![CDATA[Date Format]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_datetime"><![CDATA[Datetime Format]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_time"><![CDATA[Time Format]]></string>
@@ -1816,6 +1819,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_item_title_account_settings_info"><![CDATA[Account]]></string>
 	<string name="_sys_menu_item_title_account_settings_pwd"><![CDATA[Password]]></string>
 	<string name="_sys_menu_item_title_add_content"><![CDATA[Add...]]></string>
+	<string name="_sys_menu_item_title_cart"><![CDATA[Cart]]></string>
 	<string name="_sys_menu_item_title_cmts_item_delete"><![CDATA[Delete]]></string>
 	<string name="_sys_menu_item_title_cmts_item_edit"><![CDATA[Edit]]></string>
 	<string name="_sys_menu_item_title_cmts_item_reply"><![CDATA[Reply]]></string>
@@ -1824,6 +1828,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_item_title_home"><![CDATA[Home]]></string>
 	<string name="_sys_menu_item_title_logout"><![CDATA[Sign out]]></string>
 	<string name="_sys_menu_item_title_more"><![CDATA[More]]></string>
+	<string name="_sys_menu_item_title_orders"><![CDATA[Orders]]></string>
 	<string name="_sys_menu_item_title_profile"><![CDATA[Profile]]></string>
 	<string name="_sys_menu_item_title_set_acl_level"><![CDATA[Set membership]]></string>
 	<string name="_sys_menu_item_title_studio"><![CDATA[Studio]]></string>
@@ -1839,6 +1844,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_item_title_system_account_settings_info"><![CDATA[Account]]></string>
 	<string name="_sys_menu_item_title_system_account_settings_pwd"><![CDATA[Password]]></string>
 	<string name="_sys_menu_item_title_system_add_content"><![CDATA[Add Content]]></string>
+	<string name="_sys_menu_item_title_system_cart"><![CDATA[Cart]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_delete"><![CDATA[Delete]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_edit"><![CDATA[Edit]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_reply"><![CDATA[Reply]]></string>
@@ -1849,6 +1855,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_item_title_system_logout"><![CDATA[Sign out]]></string>
 	<string name="_sys_menu_item_title_system_main_menu"><![CDATA[Main Menu]]></string>
 	<string name="_sys_menu_item_title_system_more"><![CDATA[More]]></string>
+	<string name="_sys_menu_item_title_system_orders"><![CDATA[Orders]]></string>
 	<string name="_sys_menu_item_title_system_profile"><![CDATA[Profile]]></string>
 	<string name="_sys_menu_item_title_system_search"><![CDATA[Search]]></string>
 	<string name="_sys_menu_item_title_system_set_acl_level"><![CDATA[Set membership]]></string>

@@ -16,7 +16,11 @@ function BxDolGrid (sObject, oOptions) {
     this._sOrderField = undefined == oOptions.order_field ? '' : oOptions.order_field;
     this._sOrderDir = undefined == oOptions.order_dir ? 'ASC' : oOptions.order_dir;
     this._sSearchInputText = undefined == oOptions.text_search_input ? '' : oOptions.text_search_input;
-    this._oPopupOptions = oOptions.popup_options || {};
+    this._oPopupOptions = $.extend({
+    	onBeforeShow: function(oElement) {
+    		jQuery(oElement).bxTime();
+    	}
+    }, oOptions.popup_options);
     this._oQueryAppend = oOptions.query_append;
     this._oConfirmMessages = oOptions.confirm_messages;
 

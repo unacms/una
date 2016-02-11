@@ -134,7 +134,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
 
         );
 
-        $this->_aJsClass = array(
+        $this->_aJsClasses = array(
         	'manage_tools' => 'BxPersonsManageTools'
         );
 

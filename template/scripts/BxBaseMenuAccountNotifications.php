@@ -29,12 +29,26 @@ class BxBaseMenuAccountNotifications extends BxTemplMenu
         if (!BxDolAcl::getInstance()->isMemberLevelInSet($a['visible_for_levels']))
             return false;
 
-        // show only friends for currently active profile for friend request notification
-        if ('notifications-friend-requests' == $a['name'] || 'profile-stats-friend-requests' == $a['name']) {
-            $oProfile = BxDolProfile::getInstance();
-            $aInfo = $oProfile->getInfo();
-            if ($a['module'] != $aInfo['type'])
-                return false;
+        switch ($a['name']) {
+        	case 'cart':
+        		$oPayments = BxDolPayments::getInstance();
+        		if(!$oPayments->isActive())
+        			return false;
+        		break;
+
+        	case 'orders':
+        		$oPayments = BxDolPayments::getInstance();
+        		if(!$oPayments->isActive())
+        			return false;
+        		break;
+
+			// show only friends for currently active profile for friend request notification
+        	case 'notifications-friend-requests':
+        	case 'profile-stats-friend-requests':
+	            $aInfo = BxDolProfile::getInstance()->getInfo();
+	            if($a['module'] != $aInfo['type'])
+	                return false;
+				break;
         }
 
         return true;

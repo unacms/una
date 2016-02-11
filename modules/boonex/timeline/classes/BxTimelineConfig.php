@@ -96,7 +96,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_aVideoUploaders = array($this->_sName . '_simple_video');
 
         $this->_bJsMode = false;
-        $this->_aJsClass = array(
+        $this->_aJsClasses = array(
             'main' => 'BxTimelineMain',
             'view' => 'BxTimelineView',
             'post' => 'BxTimelinePost',
