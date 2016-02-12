@@ -12,8 +12,10 @@
     
             </div>
         </div>
-        <script>
-            $('<sup><a href="javascript:void(0);" onclick="$(\'html, body\').animate({scrollTop:$(\'#__link_id__\').offset().top}, 500);">[__item_number__]</a></sup>').insertAfter($('a.__link_id__'));
-        </script>
     </bx_repeat:companies>
+    <script>
+    <bx_repeat:companies2>
+        $('<sup><a href="javascript:void(0);" onclick="$(\'html, body\').animate({scrollTop:$(\'#__link_id__\').offset().top}, 500);">[__item_number__]</a></sup>').insertAfter($('a.__link_id__'));
+    </bx_repeat:companies2>
+    </script>
 </div>

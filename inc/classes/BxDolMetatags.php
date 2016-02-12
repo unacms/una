@@ -232,14 +232,15 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
     public function keywordsAdd($iId, $s) 
     {
         $a = array();
-        if (!preg_match_all('/(\#[\pL\pN]+)/u', strip_tags($s), $a)) {
+        if (!preg_match_all('/[^&](\#[\pL\pN]+)/u', strip_tags($s), $a)) {
             $this->_oQuery->keywordsDelete($iId);
             return 0;
         }
 
-        $a[0] = array_unique($a[0]);
+        $aTags = array_unique($a[1]);
+        $aTags = array_slice($aTags, 0, BX_METATAGS_KEYWORDS_MAX);
 
-        return $this->_oQuery->keywordsAdd($iId, array_slice($a[0], 0, BX_METATAGS_KEYWORDS_MAX));
+        return $this->_oQuery->keywordsAdd($iId, $aTags);
     }
 
     /**
@@ -310,7 +311,7 @@ class BxDolMetatags extends BxDol implements iBxDolFactoryObject
         $a = $this->keywordsGet($iId);
         if (empty($a))
             return $s;
-    
+
         foreach ($a as $sKeyword)
             $s = str_ireplace('#' . $sKeyword, '<a rel="tag" href="' . BX_DOL_URL_ROOT . 'searchKeyword.php?type=keyword&keyword=' . rawurlencode($sKeyword) . '"><s>#</s><b>' . $sKeyword . '</b></a>', $s);
 

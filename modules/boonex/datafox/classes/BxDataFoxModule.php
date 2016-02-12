@@ -55,7 +55,7 @@ class BxDataFoxModule extends BxDolModule
             $e->parentNode->removeChild($e);
 
         // save the result 
-        if (false === ($s = $dom->saveXML($dom->getElementById($sId)))) // in case of error return original string
+        if (false === ($s = $dom->saveXML($dom->getElementsByTagName('div')->item(0)))) // in case of error return original string
             return $sHtml;
 
         // strip added tags
@@ -66,6 +66,7 @@ class BxDataFoxModule extends BxDolModule
 
         $sHtml .= $this->_oTemplate->parseHtmlByName('companies.html', array(
             'bx_repeat:companies' => $aCompanies,
+            'bx_repeat:companies2' => $aCompanies,
         ));
 
         return $sHtml;
@@ -84,7 +85,7 @@ class BxDataFoxModule extends BxDolModule
             unset($a['top_keywords']);
             $aCompanies[$a['id']] = $a;
         }
-        return $aCompanies;
+        return array_values($aCompanies);
     }
 
     function apiGetAccessToken()
