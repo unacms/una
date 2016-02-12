@@ -1,10 +1,10 @@
 
 -- TABLES
-DROP TABLE IF EXISTS `bx_market_products`, `bx_market_files`, `bx_market_photos_resized`, `bx_market_cmts`, `bx_market_votes`, `bx_market_votes_track`, `bx_market_views_track`, `bx_market_meta_keywords`, `bx_market_meta_locations`, `bx_market_reports`, `bx_market_reports_track`;
+DROP TABLE IF EXISTS `bx_market_products`, `bx_market_customers`, `bx_market_files`, `bx_market_photos`, `bx_market_photos_resized`, `bx_market_cmts`, `bx_market_votes`, `bx_market_votes_track`, `bx_market_views_track`, `bx_market_meta_keywords`, `bx_market_meta_locations`, `bx_market_reports`, `bx_market_reports_track`;
 
 -- STORAGES & TRANSCODERS
-DELETE FROM `sys_objects_storage` WHERE `object` = 'bx_market_files' OR `object` = 'bx_market_photos_resized';
-DELETE FROM `sys_storage_tokens` WHERE `object` = 'bx_market_files' OR `object` = 'bx_market_photos_resized';
+DELETE FROM `sys_objects_storage` WHERE `object` IN('bx_market_files', 'bx_market_photos', 'bx_market_photos_resized');
+DELETE FROM `sys_storage_tokens` WHERE `object` IN('bx_market_files', 'bx_market_photos', 'bx_market_photos_resized');
 
 DELETE FROM `sys_objects_transcoder` WHERE `object` IN('bx_market_preview', 'bx_market_gallery');
 DELETE FROM `sys_transcoder_filters` WHERE `transcoder_object` IN('bx_market_preview', 'bx_market_gallery');

@@ -39,6 +39,14 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 ('bx_market_delete_entry', 1, 'bx_market', '_bx_market_page_block_title_delete_entry', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:13:"entity_delete";}', 0, 0, 0);
 
 
+-- PAGE: download entry
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_market_download_entry', '_bx_market_page_title_sys_download_entry', '_bx_market_page_title_download_entry', 'bx_market', 5, 2147483647, 1, 'download-product', '', '', '', '', 0, 1, 0, 'BxMarketPageEntry', 'modules/boonex/market/classes/BxMarketPageEntry.php');
+
+INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
+('bx_market_download_entry', 1, 'bx_market', '_bx_market_page_block_title_download_entry', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:15:"entity_download";}', 0, 0, 0);
+
+
 -- PAGE: view entry
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_market_view_entry', '_bx_market_page_title_sys_view_entry', '_bx_market_page_title_view_entry', 'bx_market', 10, 2147483647, 1, 'view-product', '', '', '', '', 0, 1, 0, 'BxMarketPageEntry', 'modules/boonex/market/classes/BxMarketPageEntry.php');
@@ -160,7 +168,9 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_market_view', 'bx_market', 'edit-product', '_bx_market_menu_item_title_system_edit_entry', '_bx_market_menu_item_title_edit_entry', 'page.php?i=edit-product&id={content_id}', '', '', 'pencil', '', 2147483647, 1, 0, 1),
-('bx_market_view', 'bx_market', 'delete-product', '_bx_market_menu_item_title_system_delete_entry', '_bx_market_menu_item_title_delete_entry', 'page.php?i=delete-product&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 2);
+('bx_market_view', 'bx_market', 'delete-product', '_bx_market_menu_item_title_system_delete_entry', '_bx_market_menu_item_title_delete_entry', 'page.php?i=delete-product&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 2),
+('bx_market_view', 'bx_market', 'download', '_bx_market_menu_item_title_system_download', '_bx_market_menu_item_title_download', 'page.php?i=download-product&id={content_id}', '', '', 'download', '', 2147483647, 1, 0, 3),
+('bx_market_view', 'bx_market', 'add-to-cart', '_bx_market_menu_item_title_system_add_to_cart', '_bx_market_menu_item_title_add_to_cart', 'javascript:void(0);', 'javascript:{add_to_cart_onclick}', '', 'cart-plus', '', 2147483647, 1, 0, 4);
 
 
 -- MENU: actions menu for my entries
@@ -238,6 +248,10 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 SET @iIdActionEntryDelete = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('bx_market', 'download entry', NULL, '_bx_market_acl_action_download_entry', '', 1, 3);
+SET @iIdActionEntryDownload = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('bx_market', 'view entry', NULL, '_bx_market_acl_action_view_entry', '', 1, 0);
 SET @iIdActionEntryView = LAST_INSERT_ID();
 
@@ -272,6 +286,12 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iModerator, @iIdActionEntryDelete),
 (@iAdministrator, @iIdActionEntryDelete),
 (@iPremium, @iIdActionEntryDelete),
+
+-- entry download
+(@iStandard, @iIdActionEntryDownload),
+(@iModerator, @iIdActionEntryDownload),
+(@iAdministrator, @iIdActionEntryDownload),
+(@iPremium, @iIdActionEntryDownload),
 
 -- entry view
 (@iUnauthenticated, @iIdActionEntryView),
@@ -336,6 +356,7 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_market_common', 'single', 'edit', '_bx_market_grid_action_title_adm_edit', 'pencil', 1, 0, 1),
 ('bx_market_common', 'single', 'delete', '_bx_market_grid_action_title_adm_delete', 'remove', 1, 1, 2),
 ('bx_market_common', 'single', 'settings', '_bx_market_grid_action_title_adm_more_actions', 'cog', 1, 0, 3);
+
 
 -- ALERTS
 INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALUES 

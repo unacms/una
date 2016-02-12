@@ -36,11 +36,16 @@
 	<string name="_bx_market_form_entry_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete the product]]></string>
 	<string name="_bx_market_form_entry_input_sys_pictures"><![CDATA[Pictures]]></string>
 	<string name="_bx_market_form_entry_input_pictures"><![CDATA[Pictures]]></string>
+	<string name="_bx_market_form_entry_input_sys_files"><![CDATA[Files]]></string>
+	<string name="_bx_market_form_entry_input_files"><![CDATA[Files]]></string>
+	<string name="_bx_market_form_entry_input_files_use_as_main"><![CDATA[Use as Main]]></string>
+	<string name="_bx_market_form_entry_input_files_version"><![CDATA[Version:]]></string>
     <string name="_bx_market_form_entry_input_sys_allow_view_to"><![CDATA[Visibility]]></string>
     <string name="_bx_market_form_entry_input_allow_view_to"><![CDATA[Visibility]]></string>
 
 	<string name="_bx_market_acl_action_create_entry"><![CDATA[Create Product]]></string>
 	<string name="_bx_market_acl_action_delete_entry"><![CDATA[Delete Product]]></string>
+	<string name="_bx_market_acl_action_download_entry"><![CDATA[Download Product]]></string>
 	<string name="_bx_market_acl_action_view_entry"><![CDATA[View Product]]></string>
 	<string name="_bx_market_acl_action_set_thumb"><![CDATA[Set Product Thumbnail]]></string>
 	<string name="_bx_market_acl_action_edit_any_entry"><![CDATA[Edit Any Product]]></string>
@@ -54,6 +59,9 @@
     <string name="_bx_market_page_title_sys_delete_entry"><![CDATA[Delete Product]]></string>
     <string name="_bx_market_page_title_delete_entry"><![CDATA[Delete Product]]></string>
     <string name="_bx_market_page_block_title_delete_entry"><![CDATA[Delete Product]]></string>
+	<string name="_bx_market_page_title_sys_download_entry"><![CDATA[Download Product]]></string>
+    <string name="_bx_market_page_title_download_entry"><![CDATA[Download Product]]></string>
+    <string name="_bx_market_page_block_title_download_entry"><![CDATA[Download Product]]></string>
 	<string name="_bx_market_page_title_sys_view_entry"><![CDATA[View Product]]></string>
 	<string name="_bx_market_page_title_view_entry"><![CDATA[{title}]]></string>
 	<string name="_bx_market_page_block_title_entry_text"><![CDATA[Product Text]]></string>
@@ -116,6 +124,10 @@
     <string name="_bx_market_menu_item_title_edit_entry"><![CDATA[Edit Product]]></string>
     <string name="_bx_market_menu_item_title_system_delete_entry"><![CDATA[Delete Product]]></string>
     <string name="_bx_market_menu_item_title_delete_entry"><![CDATA[Delete Product]]></string>
+    <string name="_bx_market_menu_item_title_system_add_to_cart"><![CDATA[Add to Cart]]></string>
+    <string name="_bx_market_menu_item_title_add_to_cart"><![CDATA[Add to Cart]]></string>
+    <string name="_bx_market_menu_item_title_system_download"><![CDATA[Download]]></string>
+    <string name="_bx_market_menu_item_title_download"><![CDATA[Download]]></string>
     <string name="_bx_market_menu_item_title_system_view_entry"><![CDATA[View Product]]></string>
     <string name="_bx_market_menu_item_title_system_entries_home"><![CDATA[Market]]></string>
     <string name="_bx_market_menu_item_title_entries_home"><![CDATA[Market]]></string>
@@ -208,6 +220,7 @@
     <string name="_bx_market_cat_price_4"><![CDATA[4]]></string>
     <string name="_bx_market_cat_price_5"><![CDATA[5]]></string>
 
+	<string name="_bx_market_err_access_denied"><![CDATA[Access denied.]]></string>
 
     <string name="_bx_market_txt_all_entries_by"><![CDATA[<a href="{0}">All Products by {1} ({2})</a>]]></string>
     <string name="_bx_market_txt_category_link"><![CDATA[<a href="{0}">{1}</a> category]]></string>

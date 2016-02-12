@@ -18,6 +18,115 @@ class BxMarketModule extends BxBaseModTextModule
     {
         parent::__construct($aModule);
     }
+
+    public function serviceEntityDownload ($iContentId = 0)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	if(!$iContentId)
+            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+
+        if(!$iContentId)
+            return false;
+
+		$aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+		if(empty($aContentInfo) || !is_array($aContentInfo))
+            return MsgBox(_t('_sys_txt_error_occured'));
+
+    	if($this->checkAllowedDownload($aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED)
+    		return MsgBox(_t('_bx_market_err_access_denied'));
+
+        return $this->_oTemplate->entryAttachmentsByStorage($CNF['OBJECT_STORAGE_FILES'], $aContentInfo);
+    }
+
+    public function checkAllowedDownload($aDataEntry, $isPerformAction = false)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        // moderator and owner always have access
+        if ($aDataEntry[$CNF['FIELD_AUTHOR']] == $this->_iProfileId || $this->_isModerator($isPerformAction))
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+        // check ACL
+        $aCheck = checkActionModule($this->_iProfileId, 'download entry', $this->getName(), $isPerformAction);
+        if($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
+			return $aCheck[CHECK_ACTION_MESSAGE];
+
+		if(!$this->_oDb->isPurchasedEntry($this->_iProfileId, $aDataEntry[$CNF['FIELD_ID']]))
+            return true;
+
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
+
+    /**
+     * Integration with Payment based modules.  
+     */
+	public function serviceGetPaymentData()
+    {
+        return $this->_aModule;
+    }
+
+    public function serviceGetCartItem($iItemId)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+        if(!$iItemId)
+			return array();
+
+		$aItem = $this->_oDb->getContentInfoById($iItemId);
+        if(empty($aItem) || !is_array($aItem))
+			return array();
+
+		return array (
+			'id' => $aItem[$CNF['FIELD_ID']],
+			'author_id' => $aItem[$CNF['FIELD_AUTHOR']],
+			'title' => $aItem[$CNF['FIELD_TITLE']],
+			'description' => $aItem[$CNF['FIELD_TEXT']],
+			'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=view-product&id=' . $aItem[$CNF['FIELD_ID']]),
+			'price' => $aItem[$CNF['FIELD_PRICE']],
+        );
+    }
+
+    public function serviceGetCartItems($iSellerId)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+        $iSellerId = (int)$iSellerId;
+        if(empty($iSellerId))
+            return array();
+
+        $aItems = $this->_oDb->getEntriesByAuthor($iSellerId);
+
+        $aResult = array();
+        foreach($aItems as $aItem)
+            $aResult[] = array(
+				'id' => $aItem[$CNF['FIELD_ID']],
+				'author_id' => $aItem[$CNF['FIELD_AUTHOR']],
+				'title' => $aItem[$CNF['FIELD_TITLE']],
+				'description' => $aItem[$CNF['FIELD_TEXT']],
+				'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=view-product&id=' . $aItem[$CNF['FIELD_ID']]),
+				'price' => $aItem[$CNF['FIELD_PRICE']],
+           );
+
+        return $aResult;
+    }
+
+    public function serviceRegisterCartItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrderId)
+    {
+        $aItem = $this->serviceGetCartItem($iItemId);
+        if(empty($aItem) || !is_array($aItem))
+			return array();
+
+        if(!$this->_oDb->registerCustomer($iClientId, $iItemId, $sOrderId, $iItemCount, time()))
+            return array();
+
+        return $aItem;
+    }
+
+    public function serviceUnregisterCartItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrderId)
+    {
+        return $this->_oDb->unregisterCustomer($iClientId, $iItemId, $sOrderId);
+    }
 }
 
 /** @} */

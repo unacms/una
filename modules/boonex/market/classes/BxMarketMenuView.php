@@ -19,6 +19,16 @@ class BxMarketMenuView extends BxBaseModTextMenuView
         $this->MODULE = 'bx_market';
         parent::__construct($aObject, $oTemplate);
     }
+
+	public function getCode()
+    {
+    	list($sJsCode, $sJsMethod) = BxDolPayments::getInstance()->getAddToCartJs($this->_aContentInfo['author'], $this->MODULE, $this->_aContentInfo['id'], 1);
+        $this->addMarkers(array(
+        	'add_to_cart_onclick' => $sJsMethod
+        ));
+
+        return $sJsCode . parent::getCode();
+    }
 }
 
 /** @} */

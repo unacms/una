@@ -40,6 +40,8 @@ class BxMarketConfig extends BxBaseModTextConfig
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_PHOTO' => 'pictures',
             'FIELD_THUMB' => 'thumb',
+        	'FIELD_FILE' => 'files',
+        	'FIELD_PACKAGE' => 'package',
             'FIELD_COMMENTS' => 'comments',
             'FIELD_LOCATION_PREFIX' => 'location',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
@@ -62,8 +64,9 @@ class BxMarketConfig extends BxBaseModTextConfig
             'PARAM_CHARS_SUMMARY_PLAIN' => 'bx_market_plain_summary_chars',
             'PARAM_NUM_RSS' => 'bx_market_rss_num',
 
-            // objects
-            'OBJECT_STORAGE' => 'bx_market_files',
+            // objects            
+            'OBJECT_STORAGE' => 'bx_market_photos',
+        	'OBJECT_STORAGE_FILES' => 'bx_market_files',
             'OBJECT_IMAGES_TRANSCODER_PREVIEW' => 'bx_market_preview',
             'OBJECT_IMAGES_TRANSCODER_GALLERY' => 'bx_market_gallery',
             'OBJECT_VIDEOS_TRANSCODERS' => array(),
@@ -114,7 +117,7 @@ class BxMarketConfig extends BxBaseModTextConfig
             ),
         );
 
-        $this->_aJsClass = array(
+        $this->_aJsClasses = array(
         	'manage_tools' => 'BxMarketManageTools'
         );
 

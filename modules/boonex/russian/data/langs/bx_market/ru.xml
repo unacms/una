@@ -36,11 +36,16 @@
 	<string name="_bx_market_form_entry_input_delete_confirm_error"><![CDATA[Пожалуйста, отметьте этот флажок, если действительно хотите удалить продукт]]></string>
 	<string name="_bx_market_form_entry_input_sys_pictures"><![CDATA[Картинки]]></string>
 	<string name="_bx_market_form_entry_input_pictures"><![CDATA[Картинки]]></string>
+	<string name="_bx_market_form_entry_input_sys_files"><![CDATA[Файлы]]></string>
+	<string name="_bx_market_form_entry_input_files"><![CDATA[Файлы]]></string>
+	<string name="_bx_market_form_entry_input_files_use_as_main"><![CDATA[Использовать как главный]]></string>
+	<string name="_bx_market_form_entry_input_files_version"><![CDATA[Версия:]]></string>
     <string name="_bx_market_form_entry_input_sys_allow_view_to"><![CDATA[Видимость]]></string>
     <string name="_bx_market_form_entry_input_allow_view_to"><![CDATA[Видимость]]></string>
 
 	<string name="_bx_market_acl_action_create_entry"><![CDATA[Создать продукт]]></string>
 	<string name="_bx_market_acl_action_delete_entry"><![CDATA[Удалить продукт]]></string>
+	<string name="_bx_market_acl_action_download_entry"><![CDATA[Скачать продукт]]></string>
 	<string name="_bx_market_acl_action_view_entry"><![CDATA[Просмотреть продукт]]></string>
 	<string name="_bx_market_acl_action_set_thumb"><![CDATA[Назначить значок продукта]]></string>
 	<string name="_bx_market_acl_action_edit_any_entry"><![CDATA[Редактировать любой продукт]]></string>
@@ -54,6 +59,9 @@
     <string name="_bx_market_page_title_sys_delete_entry"><![CDATA[Удалить продукт]]></string>
     <string name="_bx_market_page_title_delete_entry"><![CDATA[Удалить продукт]]></string>
     <string name="_bx_market_page_block_title_delete_entry"><![CDATA[Удалить продукт]]></string>
+    <string name="_bx_market_page_title_sys_download_entry"><![CDATA[Скачать продукт]]></string>
+    <string name="_bx_market_page_title_download_entry"><![CDATA[Скачать продукт]]></string>
+    <string name="_bx_market_page_block_title_download_entry"><![CDATA[Скачать продукт]]></string>
 	<string name="_bx_market_page_title_sys_view_entry"><![CDATA[Просмотреть продукт]]></string>
 	<string name="_bx_market_page_title_view_entry"><![CDATA[{title}]]></string>
 	<string name="_bx_market_page_block_title_entry_text"><![CDATA[Текст продукта]]></string>
@@ -115,6 +123,8 @@
     <string name="_bx_market_menu_item_title_edit_entry"><![CDATA[Редактировать продукт]]></string>
     <string name="_bx_market_menu_item_title_system_delete_entry"><![CDATA[Удалить продукт]]></string>
     <string name="_bx_market_menu_item_title_delete_entry"><![CDATA[Удалить продукт]]></string>
+	<string name="_bx_market_menu_item_title_system_add_to_cart"><![CDATA[В корзину]]></string>
+    <string name="_bx_market_menu_item_title_add_to_cart"><![CDATA[В корзину]]></string>
     <string name="_bx_market_menu_item_title_system_view_entry"><![CDATA[Просмотреть продукт]]></string>
     <string name="_bx_market_menu_item_title_system_entries_home"><![CDATA[Рынок]]></string>
     <string name="_bx_market_menu_item_title_entries_home"><![CDATA[Рынок]]></string>

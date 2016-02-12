@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS `bx_market_products` (
   `added` int(11) NOT NULL,
   `changed` int(11) NOT NULL,
   `thumb` int(11) NOT NULL,
+  `package` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `text` text NOT NULL,
   `cat` int(11) NOT NULL,
@@ -21,8 +22,36 @@ CREATE TABLE IF NOT EXISTS `bx_market_products` (
   FULLTEXT KEY `title_text` (`title`,`text`)
 );
 
+-- TABLE: customers
+CREATE TABLE IF NOT EXISTS `bx_market_customers` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `client_id` int(11) unsigned NOT NULL default '0',
+  `product_id` int(11) unsigned NOT NULL default '0',
+  `order_id` varchar(32) collate utf8_unicode_ci NOT NULL default '',
+  `count` int(11) unsigned NOT NULL default '0',
+  `date` int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`,`client_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 -- TABLE: storages & transcoders
 CREATE TABLE IF NOT EXISTS `bx_market_files` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `profile_id` int(10) unsigned NOT NULL,
+  `remote_id` varchar(255) NOT NULL,
+  `path` varchar(255) NOT NULL,
+  `file_name` varchar(255) NOT NULL,
+  `mime_type` varchar(128) NOT NULL,
+  `ext` varchar(32) NOT NULL,
+  `size` int(11) NOT NULL,
+  `added` int(11) NOT NULL,
+  `modified` int(11) NOT NULL,
+  `private` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `remote_id` (`remote_id`)
+);
+
+CREATE TABLE IF NOT EXISTS `bx_market_photos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(10) unsigned NOT NULL,
   `remote_id` varchar(255) NOT NULL,
@@ -142,12 +171,13 @@ CREATE TABLE IF NOT EXISTS `bx_market_reports_track` (
 
 -- STORAGES & TRANSCODERS
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
-('bx_market_files', 'Local', '', 360, 2592000, 3, 'bx_market_files', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
+('bx_market_files', 'Local', '', 360, 2592000, 3, 'bx_market_files', 'allow-deny', 'zip', '', 0, 0, 0, 0, 0, 0),
+('bx_market_photos', 'Local', '', 360, 2592000, 3, 'bx_market_photos', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
 ('bx_market_photos_resized', 'Local', '', 360, 2592000, 3, 'bx_market_photos_resized', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0);
 
 INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`) VALUES 
-('bx_market_preview', 'bx_market_photos_resized', 'Storage', 'a:1:{s:6:"object";s:15:"bx_market_files";}', 'no', '1', '2592000', '0'),
-('bx_market_gallery', 'bx_market_photos_resized', 'Storage', 'a:1:{s:6:"object";s:15:"bx_market_files";}', 'no', '1', '2592000', '0');
+('bx_market_preview', 'bx_market_photos_resized', 'Storage', 'a:1:{s:6:"object";s:16:"bx_market_photos";}', 'no', '1', '2592000', '0'),
+('bx_market_gallery', 'bx_market_photos_resized', 'Storage', 'a:1:{s:6:"object";s:16:"bx_market_photos";}', 'no', '1', '2592000', '0');
 
 INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_params`, `order`) VALUES 
 ('bx_market_preview', 'Resize', 'a:3:{s:1:"w";s:3:"128";s:1:"h";s:3:"128";s:11:"crop_resize";s:1:"1";}', '0'),
@@ -170,6 +200,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_market', 'bx_market', 'do_submit', '_bx_market_form_entry_input_do_submit', '', 0, 'submit', '_bx_market_form_entry_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_market', 'bx_market', 'location', '', '', 0, 'custom', '_sys_form_input_sys_location', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_market', 'bx_market', 'pictures', '', '', 0, 'files', '_bx_market_form_entry_input_sys_pictures', '_bx_market_form_entry_input_pictures', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_market', 'bx_market', 'files', '', '', 0, 'files', '_bx_market_form_entry_input_sys_files', '_bx_market_form_entry_input_files', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_market', 'bx_market', 'text', '', '', 0, 'textarea', '_bx_market_form_entry_input_sys_text', '_bx_market_form_entry_input_text', '', 1, 0, 2, '', '', '', 'Avail', '', '_bx_market_form_entry_input_text_err', 'XssHtml', '', 1, 0),
 ('bx_market', 'bx_market', 'title', '', '', 0, 'text', '_bx_market_form_entry_input_sys_title', '_bx_market_form_entry_input_title', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_market_form_entry_input_title_err', 'Xss', '', 1, 0),
 ('bx_market', 'bx_market', 'cat', '', '#!bx_market_cats', 0, 'select', '_bx_market_form_entry_input_sys_cat', '_bx_market_form_entry_input_cat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_market_form_entry_input_cat_err', 'Xss', '', 1, 0),
@@ -181,15 +212,17 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_market_entry_add', 'cat', 2147483647, 1, 3),
 ('bx_market_entry_add', 'text', 2147483647, 1, 4),
 ('bx_market_entry_add', 'pictures', 2147483647, 1, 5),
-('bx_market_entry_add', 'price', 2147483647, 1, 6),
-('bx_market_entry_add', 'allow_view_to', 2147483647, 1, 7),
-('bx_market_entry_add', 'location', 2147483647, 1, 8),
-('bx_market_entry_add', 'do_submit', 2147483647, 0, 9),
-('bx_market_entry_add', 'do_publish', 2147483647, 1, 10),
+('bx_market_entry_add', 'files', 2147483647, 1, 6),
+('bx_market_entry_add', 'price', 2147483647, 1, 7),
+('bx_market_entry_add', 'allow_view_to', 2147483647, 1, 8),
+('bx_market_entry_add', 'location', 2147483647, 1, 9),
+('bx_market_entry_add', 'do_submit', 2147483647, 0, 10),
+('bx_market_entry_add', 'do_publish', 2147483647, 1, 11),
 ('bx_market_entry_delete', 'location', 2147483647, 0, 0),
 ('bx_market_entry_delete', 'cat', 2147483647, 0, 0),
 ('bx_market_entry_delete', 'price', 2147483647, 0, 0),
 ('bx_market_entry_delete', 'pictures', 2147483647, 0, 0),
+('bx_market_entry_delete', 'files', 2147483647, 0, 0),
 ('bx_market_entry_delete', 'text', 2147483647, 0, 0),
 ('bx_market_entry_delete', 'do_publish', 2147483647, 0, 0),
 ('bx_market_entry_delete', 'title', 2147483647, 0, 0),
@@ -202,14 +235,16 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_market_entry_edit', 'cat', 2147483647, 1, 4),
 ('bx_market_entry_edit', 'text', 2147483647, 1, 5),
 ('bx_market_entry_edit', 'pictures', 2147483647, 1, 6),
-('bx_market_entry_edit', 'price', 2147483647, 1, 7),
-('bx_market_entry_edit', 'allow_view_to', 2147483647, 1, 8),
-('bx_market_entry_edit', 'location', 2147483647, 1, 9),
-('bx_market_entry_edit', 'do_submit', 2147483647, 1, 10),
+('bx_market_entry_edit', 'files', 2147483647, 1, 7),
+('bx_market_entry_edit', 'price', 2147483647, 1, 8),
+('bx_market_entry_edit', 'allow_view_to', 2147483647, 1, 9),
+('bx_market_entry_edit', 'location', 2147483647, 1, 10),
+('bx_market_entry_edit', 'do_submit', 2147483647, 1, 11),
 ('bx_market_entry_view', 'location', 2147483647, 0, 0),
 ('bx_market_entry_view', 'cat', 2147483647, 0, 0),
 ('bx_market_entry_view', 'price', 2147483647, 0, 0),
 ('bx_market_entry_view', 'pictures', 2147483647, 0, 0),
+('bx_market_entry_view', 'files', 2147483647, 0, 0),
 ('bx_market_entry_view', 'delete_confirm', 2147483647, 0, 0),
 ('bx_market_entry_view', 'text', 2147483647, 1, 0),
 ('bx_market_entry_view', 'do_publish', 2147483647, 0, 0),

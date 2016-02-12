@@ -175,10 +175,41 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
     function entryAttachments ($aData)
     {
+    	return $this->getAttachments($oModule->_oConfig->CNF['OBJECT_STORAGE'], $aData);
+    }
+
+	function entryAttachmentsByStorage ($sStorage, $aData)
+    {
+    	return $this->getAttachments($sStorage, $aData);
+    }
+
+    function entryAllActions ($sActionsEntity, $sActionsSocial)
+    {
+        $aVars = array (
+            'actions_entity' => $sActionsEntity,
+            'actions_social' => $sActionsSocial,
+        );
+        return $this->parseHtmlByName('entry-all-actions.html', $aVars);
+    }
+
+    protected function checkPrivacy ($aData, $isCheckPrivateContent, $oModule)
+    {
+        if ($isCheckPrivateContent && CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $oModule->checkAllowedView($aData))) {
+            $aVars = array (
+                'summary' => $sMsg,
+            );
+            return $this->parseHtmlByName('unit_private.html', $aVars);
+        }
+
+        return '';
+    }
+
+	protected function getAttachments ($sStorage, $aData)
+    {
         $oModule = BxDolModule::getInstance($this->MODULE);
         $CNF = &$oModule->_oConfig->CNF;
 
-        $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
+        $oStorage = BxDolStorage::getObjectInstance($sStorage);
         $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);
         $aTranscodersVideo = false;
 
@@ -240,27 +271,6 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             'bx_repeat:attachments' => $aGhostFiles,
         );
         return $this->parseHtmlByName('attachments.html', $aVars);
-    }
-
-    function entryAllActions ($sActionsEntity, $sActionsSocial)
-    {
-        $aVars = array (
-            'actions_entity' => $sActionsEntity,
-            'actions_social' => $sActionsSocial,
-        );
-        return $this->parseHtmlByName('entry-all-actions.html', $aVars);
-    }
-
-    protected function checkPrivacy ($aData, $isCheckPrivateContent, $oModule)
-    {
-        if ($isCheckPrivateContent && CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $oModule->checkAllowedView($aData))) {
-            $aVars = array (
-                'summary' => $sMsg,
-            );
-            return $this->parseHtmlByName('unit_private.html', $aVars);
-        }
-
-        return '';
     }
 }
 
