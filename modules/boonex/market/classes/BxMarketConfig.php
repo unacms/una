@@ -11,6 +11,8 @@
 
 class BxMarketConfig extends BxBaseModTextConfig
 {
+	protected $_aCurrency;
+
     function __construct($aModule)
     {
         parent::__construct($aModule);
@@ -131,6 +133,17 @@ class BxMarketConfig extends BxBaseModTextConfig
         	'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
         	
         );
+
+        $oPayments = BxDolPayments::getInstance();
+        $this->_aCurrency = array(
+        	'code' => $oPayments->getOption('default_currency_code'),
+        	'sign' => $oPayments->getOption('default_currency_sign')
+        );
+    }
+
+    public function getCurrency()
+    {
+    	return $this->_aCurrency;
     }
 }
 

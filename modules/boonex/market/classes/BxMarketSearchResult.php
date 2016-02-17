@@ -21,7 +21,7 @@ class BxMarketSearchResult extends BxBaseModTextSearchResult
             'object_metatags' => 'bx_market',
             'title' => _t('_bx_market_page_title_browse'),
             'table' => 'bx_market_products',
-            'ownFields' => array('id', 'title', 'text', 'thumb', 'author', 'added'),
+            'ownFields' => array('id', 'title', 'text', 'price', 'thumb', 'author', 'added'),
             'searchFields' => array('title', 'text'),
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),

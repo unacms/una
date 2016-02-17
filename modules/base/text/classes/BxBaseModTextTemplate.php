@@ -21,83 +21,13 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
     function unit ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html', $aParams = array())
     {
-        $oModule = BxDolModule::getInstance($this->MODULE);
-        $CNF = &$oModule->_oConfig->CNF;
+    	$oModule = BxDolModule::getInstance($this->MODULE);
 
-        if ($s = $this->checkPrivacy ($aData, $isCheckPrivateContent, $oModule))
-            return $s;
+    	$sResult = $this->checkPrivacy ($aData, $isCheckPrivateContent, $oModule);
+    	if($sResult)
+            return $sResult;
 
-        // get thumb url
-        $sPhotoThumb = '';
-        $sPhotoGallery = '';
-        if ($aData[$CNF['FIELD_THUMB']]) {
-
-            $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);
-            if ($oImagesTranscoder)
-                $sPhotoThumb = $oImagesTranscoder->getFileUrl($aData[$CNF['FIELD_THUMB']]);
-
-            $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY']);
-            if ($oImagesTranscoder)
-                $sPhotoGallery = $oImagesTranscoder->getFileUrl($aData[$CNF['FIELD_THUMB']]);
-            else
-                $sPhotoGallery = $sPhotoThumb;
-        }
-
-        // get entry url
-        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
-
-        $oProfile = BxDolProfile::getInstance($aData[$CNF['FIELD_AUTHOR']]);
-        if (!$oProfile) 
-            $oProfile = BxDolProfileUndefined::getInstance();
-
-        // get summary
-        $sLinkMore = ' <a title="' . bx_html_attribute(_t('_sys_read_more', $aData[$CNF['FIELD_TITLE']])) . '" href="' . $sUrl . '"><i class="sys-icon ellipsis-h"></i></a>';
-        $sSummary = strmaxtextlen($aData[$CNF['FIELD_TEXT']], (int)getParam($CNF['PARAM_CHARS_SUMMARY']), $sLinkMore);
-        $sSummaryPlain = BxTemplFunctions::getInstance()->getStringWithLimitedLength(strip_tags($sSummary), (int)getParam($CNF['PARAM_CHARS_SUMMARY_PLAIN']));
-
-        $sText = $aData[$CNF['FIELD_TEXT']];
-        if (!empty($CNF['OBJECT_METATAGS'])) {
-            $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
-    
-            // keywords
-            if ($oMetatags->keywordsIsEnabled())
-                $sText = $oMetatags->keywordsParse($aData[$CNF['FIELD_ID']], $sText);
-        }
-
-        // generate html
-        $aVars = array (
-            'id' => $aData[$CNF['FIELD_ID']],
-            'content_url' => $sUrl,
-            'title' => bx_process_output($aData[$CNF['FIELD_TITLE']]),
-            'summary' => $sSummary,
-            'text' => $sText,
-            'author' => $oProfile->getDisplayName(),
-            'author_url' => $oProfile->getUrl(),
-            'entry_posting_date' => bx_time_js($aData[$CNF['FIELD_ADDED']], BX_FORMAT_DATE),
-            'module_name' => _t($CNF['T']['txt_sample_single']),
-            'ts' => $aData[$CNF['FIELD_ADDED']],
-            'bx_if:thumb' => array (
-                'condition' => $sPhotoThumb,
-                'content' => array (
-                    'title' => bx_process_output($aData[$CNF['FIELD_TITLE']]),
-                    'summary_attr' => bx_html_attribute($sSummaryPlain),
-                    'content_url' => $sUrl,
-                    'thumb_url' => $sPhotoThumb ? $sPhotoThumb : '',
-                    'gallery_url' => $sPhotoGallery ? $sPhotoGallery : '',
-                    'strecher' => str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ', 40),
-                ),
-            ),
-            'bx_if:no_thumb' => array (
-                'condition' => !$sPhotoThumb,
-                'content' => array (
-                    'content_url' => $sUrl,
-                    'summary_plain' => $sSummaryPlain,
-                    'strecher' => mb_strlen($sSummaryPlain) > 240 ? '' : str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ', round((240 - mb_strlen($sSummaryPlain)) / 6)),
-                ),
-            ),
-        );
-
-        return $this->parseHtmlByName($sTemplateName, $aVars);
+		return $this->parseHtmlByName($sTemplateName, $this->getUnit($aData, $aParams));
     }
 
     function entryText ($aData, $sTemplateName = 'entry-text.html')
@@ -206,6 +136,81 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         }
 
         return '';
+    }
+
+	protected function getUnit ($aData, $aParams = array())
+    {
+        $CNF = &BxDolModule::getInstance($this->MODULE)->_oConfig->CNF;
+
+        // get thumb url
+        $sPhotoThumb = '';
+        $sPhotoGallery = '';
+        if ($aData[$CNF['FIELD_THUMB']]) {
+
+            $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);
+            if ($oImagesTranscoder)
+                $sPhotoThumb = $oImagesTranscoder->getFileUrl($aData[$CNF['FIELD_THUMB']]);
+
+            $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY']);
+            if ($oImagesTranscoder)
+                $sPhotoGallery = $oImagesTranscoder->getFileUrl($aData[$CNF['FIELD_THUMB']]);
+            else
+                $sPhotoGallery = $sPhotoThumb;
+        }
+
+        // get entry url
+        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
+
+        $oProfile = BxDolProfile::getInstance($aData[$CNF['FIELD_AUTHOR']]);
+        if (!$oProfile) 
+            $oProfile = BxDolProfileUndefined::getInstance();
+
+        // get summary
+        $sLinkMore = ' <a title="' . bx_html_attribute(_t('_sys_read_more', $aData[$CNF['FIELD_TITLE']])) . '" href="' . $sUrl . '"><i class="sys-icon ellipsis-h"></i></a>';
+        $sSummary = strmaxtextlen($aData[$CNF['FIELD_TEXT']], (int)getParam($CNF['PARAM_CHARS_SUMMARY']), $sLinkMore);
+        $sSummaryPlain = BxTemplFunctions::getInstance()->getStringWithLimitedLength(strip_tags($sSummary), (int)getParam($CNF['PARAM_CHARS_SUMMARY_PLAIN']));
+
+        $sText = $aData[$CNF['FIELD_TEXT']];
+        if (!empty($CNF['OBJECT_METATAGS'])) {
+            $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
+    
+            // keywords
+            if ($oMetatags->keywordsIsEnabled())
+                $sText = $oMetatags->keywordsParse($aData[$CNF['FIELD_ID']], $sText);
+        }
+
+        // generate html
+        return array (
+            'id' => $aData[$CNF['FIELD_ID']],
+            'content_url' => $sUrl,
+            'title' => bx_process_output($aData[$CNF['FIELD_TITLE']]),
+            'summary' => $sSummary,
+            'text' => $sText,
+            'author' => $oProfile->getDisplayName(),
+            'author_url' => $oProfile->getUrl(),
+            'entry_posting_date' => bx_time_js($aData[$CNF['FIELD_ADDED']], BX_FORMAT_DATE),
+            'module_name' => _t($CNF['T']['txt_sample_single']),
+            'ts' => $aData[$CNF['FIELD_ADDED']],
+            'bx_if:thumb' => array (
+                'condition' => $sPhotoThumb,
+                'content' => array (
+                    'title' => bx_process_output($aData[$CNF['FIELD_TITLE']]),
+                    'summary_attr' => bx_html_attribute($sSummaryPlain),
+                    'content_url' => $sUrl,
+                    'thumb_url' => $sPhotoThumb ? $sPhotoThumb : '',
+                    'gallery_url' => $sPhotoGallery ? $sPhotoGallery : '',
+                    'strecher' => str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ', 40),
+                ),
+            ),
+            'bx_if:no_thumb' => array (
+                'condition' => !$sPhotoThumb,
+                'content' => array (
+                    'content_url' => $sUrl,
+                    'summary_plain' => $sSummaryPlain,
+                    'strecher' => mb_strlen($sSummaryPlain) > 240 ? '' : str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ', round((240 - mb_strlen($sSummaryPlain)) / 6)),
+                ),
+            ),
+        );
     }
 
 	protected function getAttachments ($sStorage, $aData)

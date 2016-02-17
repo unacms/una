@@ -1,6 +1,25 @@
 
 @import url(../../../../base/text/template/css/main.css);
 
+/*--- Snippet ---*/
+div.bx-market-unit-title {
+	text-align: center;
+}
+div.bx-market-unit-info {
+	white-space: nowrap;
+}
+div.bx-market-ui-cell {
+	display: inline-block;
+	vertical-align: top;
+}
+div.bx-market-uic-wide {
+	width: 68%;
+}
+div.bx-market-uic-narrow {
+	width: 30%;
+	text-align: right;
+}
+
 /*--- Attachments ---*/
 div.bx-market-attachment {
 	position: relative;

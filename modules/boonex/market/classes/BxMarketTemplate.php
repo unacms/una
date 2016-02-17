@@ -14,6 +14,8 @@
  */
 class BxMarketTemplate extends BxBaseModTextTemplate
 {
+	protected $_aCurrency;
+
     /**
      * Constructor
      */
@@ -21,6 +23,8 @@ class BxMarketTemplate extends BxBaseModTextTemplate
     {
         $this->MODULE = 'bx_market';
         parent::__construct($oConfig, $oDb);
+
+        $this->_aCurrency = $this->_oConfig->getCurrency();
     }
 
     function getAuthorAddon ($aData, $oProfile)
@@ -38,6 +42,17 @@ class BxMarketTemplate extends BxBaseModTextTemplate
         $s = _t('_bx_market_txt_category_link', $oCat->getCategoryUrl($aData['cat']), $aCats[$aData['cat']]) . '<br />' . $s;
 
         return $s;
+    }
+
+    protected function getUnit ($aData, $aParams = array())
+    {
+    	$aUnit = parent::getUnit($aData, $aParams);
+
+    	$aUnit['entry_price'] = $aData['price'];
+    	$aUnit['currency_sign'] = $this->_aCurrency['sign'];
+    	$aUnit['currency_code'] = $this->_aCurrency['code'];
+
+    	return $aUnit;
     }
 
     protected function getAttachments($sStorage, $aData)
