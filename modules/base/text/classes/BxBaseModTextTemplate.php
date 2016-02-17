@@ -175,12 +175,16 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
     function entryAttachments ($aData)
     {
-    	return $this->getAttachments($oModule->_oConfig->CNF['OBJECT_STORAGE'], $aData);
+    	return $this->parseHtmlByName('attachments.html', array(
+            'bx_repeat:attachments' => $this->getAttachments($oModule->_oConfig->CNF['OBJECT_STORAGE'], $aData),
+        ));
     }
 
 	function entryAttachmentsByStorage ($sStorage, $aData)
     {
-    	return $this->getAttachments($sStorage, $aData);
+    	return $this->parseHtmlByName('attachments.html', array(
+            'bx_repeat:attachments' => $this->getAttachments($sStorage, $aData),
+        ));
     }
 
     function entryAllActions ($sActionsEntity, $sActionsSocial)
@@ -267,10 +271,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             );
         }
 
-        $aVars = array(
-            'bx_repeat:attachments' => $aGhostFiles,
-        );
-        return $this->parseHtmlByName('attachments.html', $aVars);
+        return $aGhostFiles;
     }
 }
 

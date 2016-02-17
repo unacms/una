@@ -65,7 +65,7 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
         }
     }
 
-    function _deleteFile ($iFileId)
+    function _deleteFile ($iFileId, $sStorage = '')
     {
         if (!($bRet = parent::_deleteFile ($iFileId)))
             return false;
