@@ -27,6 +27,7 @@ class BxMarketConfig extends BxBaseModTextConfig
 
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'products',
+        	'TABLE_FILES2ENTRIES' => $aModule['db_prefix'] . 'files2products',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -90,7 +91,7 @@ class BxMarketConfig extends BxBaseModTextConfig
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_market_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_GRID_ADMINISTRATION' => 'bx_market_administration',
         	'OBJECT_GRID_COMMON' => 'bx_market_common',
-            'OBJECT_UPLOADERS' => array('sys_simple', 'sys_html5'),
+            'OBJECT_UPLOADERS' => array('bx_market_simple', 'bx_market_html5'),
 
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (

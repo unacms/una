@@ -36,6 +36,9 @@ DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_market_administration', 'b
 DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_market_administration', 'bx_market_common');
 DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_market_administration', 'bx_market_common');
 
+-- UPLOADERS
+DELETE FROM `sys_objects_uploader` WHERE `object` IN('bx_market_simple', 'bx_market_html5');
+
 -- ALERTS
 SET @iHandler := (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = 'bx_market' LIMIT 1);
 DELETE FROM `sys_alerts` WHERE `handler_id` = @iHandler;

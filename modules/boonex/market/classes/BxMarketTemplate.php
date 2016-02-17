@@ -39,6 +39,25 @@ class BxMarketTemplate extends BxBaseModTextTemplate
 
         return $s;
     }
+
+    protected function getAttachments($sStorage, $aData)
+    {
+    	$aFiles = $this->_oDb->getFile(array('type' => 'content_id_key_file_id', 'content_id' => $aData['id']));
+
+    	$aAttachments = parent::getAttachments($sStorage, $aData);
+    	foreach($aAttachments as $iIndex => $aAttachment) {
+    		$iAttachmentId = (int)$aAttachment['id'];
+
+    		$aAttachments[$iIndex]['bx_if:main'] = array(
+    			'condition' => (int)$aData['package'] == $iAttachmentId,
+    			'content' => array()
+    		);
+
+    		$aAttachments[$iIndex]['bx_if:not_image']['content']['file_version'] = !empty($aFiles[$iAttachmentId]) ? $aFiles[$iAttachmentId]['version'] : '';
+    	}
+
+    	return $aAttachments;
+    }
 }
 
 /** @} */

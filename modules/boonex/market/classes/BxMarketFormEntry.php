@@ -44,7 +44,7 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
                 $this->aInputs[$CNF['FIELD_FILE']]['content_id'] = $aValues['id'];
             }
 
-            $aVars = array (
+            $this->aInputs[$CNF['FIELD_FILE']]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName('form_ghost_template_file.html', array (
                 'name' => $this->aInputs[$CNF['FIELD_FILE']]['name'],
                 'content_id' => $this->aInputs[$CNF['FIELD_FILE']]['content_id'],
                 'editor_id' => $CNF['FIELD_TEXT_ID'],
@@ -55,8 +55,7 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
             			'name_thumb' => $CNF['FIELD_PACKAGE'],
             		),
                 ),
-            );
-            $this->aInputs[$CNF['FIELD_FILE']]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName('form_ghost_template_file.html', $aVars);
+            ));
         }
 
         return parent::initChecker($aValues, $aSpecificValues);
@@ -92,6 +91,24 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
         $this->_processFiles($CNF['FIELD_FILE'], $iContentId, false, $CNF['OBJECT_STORAGE_FILES']);
 
         return $iResult;
+    }
+
+	function delete ($iContentId, $aContentInfo = array())
+    {
+    	$bResult = parent::delete($iContentId, $aContentInfo);
+        if(!$bResult)
+			return $bResult;
+
+		return $this->_oModule->_oDb->deassociateFileWithContent($iContentId, 0);
+    }
+
+    protected function _associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId)
+    {
+        parent::_associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId);
+
+        $sStorage = $oStorage->getObject();
+        if($sStorage == $this->_oModule->_oConfig->CNF['OBJECT_STORAGE_FILES'])
+        	$this->_oModule->_oDb->associateFileWithContent($iContentId, $iFileId, $this->getCleanValue('version-' . $iFileId));
     }
 }
 

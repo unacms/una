@@ -1,3 +1,13 @@
 
 @import url(../../../../base/text/template/css/main.css);
 
+/*--- Attachments ---*/
+div.bx-market-attachment {
+	position: relative;
+}
+div.bx-market-a-main {
+	position: absolute;
+
+	top: 5px;
+	right: 10px;
+}

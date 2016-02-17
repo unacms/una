@@ -358,6 +358,12 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_market_common', 'single', 'settings', '_bx_market_grid_action_title_adm_more_actions', 'cog', 1, 0, 3);
 
 
+-- UPLOADERS
+INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
+('bx_market_simple', 1, 'BxMarketUploaderSimple', 'modules/boonex/market/classes/BxMarketUploaderSimple.php'),
+('bx_market_html5', 1, 'BxMarketUploaderHTML5', 'modules/boonex/market/classes/BxMarketUploaderHTML5.php');
+
+
 -- ALERTS
 INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALUES 
 ('bx_market', 'BxMarketAlertsResponse', 'modules/boonex/market/classes/BxMarketAlertsResponse.php', '');

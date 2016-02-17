@@ -19,6 +19,58 @@ class BxMarketDb extends BxBaseModTextDb
         parent::__construct($oConfig);
     }
 
+    public function getFile($aParams = array())
+    {
+    	$aMethod = array('name' => 'getRow', 'params' => array(0 => 'query'));
+    	
+    	$sWhereClause = "";
+        switch($aParams['type']) {
+            case 'id':
+                $sWhereClause = $this->prepare(" AND `tfe`.`id`=?", $aParams['id']);
+                break;
+
+			case 'file_id':
+                $sWhereClause = $this->prepare(" AND `tfe`.`file_id`=?", $aParams['file_id']);
+                break;
+
+			case 'content_id_key_file_id':
+				$aMethod['name'] = 'getAllWithKey';
+				$aMethod['params'][1] = 'file_id';
+
+                $sWhereClause = $this->prepare(" AND `tfe`.`content_id`=?", $aParams['content_id']);
+                break;
+        }
+
+        $aMethod['params'][0] = "SELECT
+        		`tfe`.*
+            FROM `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` AS `tfe`
+            WHERE 1" . $sWhereClause;
+
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+    }
+
+    public function associateFileWithContent($iContentId, $iFileId, $sVersion)
+    {
+        $sQuery = $this->prepare ("SELECT MAX(`order`) FROM `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` WHERE `content_id` = ?", $iContentId);
+        $iOrder = 1 + (int)$this->getOne($sQuery);
+
+        $sQuery = $this->prepare ("INSERT INTO `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` SET `content_id` = ?, `file_id` = ?, `version` = ?, `order` = ? ON DUPLICATE KEY UPDATE `version` = ?", $iContentId, $iFileId, $sVersion, $iOrder, $sVersion);
+        return $this->res($sQuery);
+    }
+
+	public function deassociateFileWithContent($iContentId, $iFileId)
+    {
+        $sWhere = '';
+        if ($iContentId)
+            $sWhere .= $this->prepare (" AND `content_id` = ? ", $iContentId);
+
+        if ($iFileId)
+            $sWhere .= $this->prepare (" AND `file_id` = ? ", $iFileId);
+
+        $sQuery = "DELETE FROM `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` WHERE 1 ";
+        return $this->query($sQuery . $sWhere);
+    }
+
     /**
      * Integration with Payment based modules.  
      */

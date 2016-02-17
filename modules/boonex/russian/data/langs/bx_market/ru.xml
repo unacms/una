@@ -39,6 +39,7 @@
 	<string name="_bx_market_form_entry_input_sys_files"><![CDATA[Файлы]]></string>
 	<string name="_bx_market_form_entry_input_files"><![CDATA[Файлы]]></string>
 	<string name="_bx_market_form_entry_input_files_use_as_main"><![CDATA[Использовать как главный]]></string>
+	<string name="_bx_market_form_entry_input_files_name"><![CDATA[Имя:]]></string>
 	<string name="_bx_market_form_entry_input_files_version"><![CDATA[Версия:]]></string>
     <string name="_bx_market_form_entry_input_sys_allow_view_to"><![CDATA[Видимость]]></string>
     <string name="_bx_market_form_entry_input_allow_view_to"><![CDATA[Видимость]]></string>
@@ -212,6 +213,7 @@
 
     <string name="_bx_market_txt_all_entries_by"><![CDATA[<a href="{0}">Все продукты от {1} ({2})</a>]]></string>
     <string name="_bx_market_txt_category_link"><![CDATA[Категория <a href="{0}">{1}</a>]]></string>
+    <string name="_bx_market_txt_most_current_version"><![CDATA[Самая новая версия]]></string>
     <string name="_bx_market_txt_sample_single"><![CDATA[продукт]]></string>
     <string name="_bx_market_txt_sample_comment_single"><![CDATA[комментарии к продукту]]></string>
     <string name="_bx_market_txt_sample_vote_single"><![CDATA[голос за продукт]]></string>

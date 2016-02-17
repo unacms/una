@@ -51,6 +51,18 @@ CREATE TABLE IF NOT EXISTS `bx_market_files` (
   UNIQUE KEY `remote_id` (`remote_id`)
 );
 
+CREATE TABLE IF NOT EXISTS `bx_market_files2products` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `content_id` int(11) unsigned NOT NULL,
+  `file_id` int(11) NOT NULL,
+  `version` varchar(255) NOT NULL,
+  `downloads` int(11) NOT NULL,
+  `order` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `file_content` (`file_id`,`content_id`),
+  KEY `content_id` (`content_id`)
+);
+
 CREATE TABLE IF NOT EXISTS `bx_market_photos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(10) unsigned NOT NULL,

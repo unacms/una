@@ -2,16 +2,16 @@
  * Copyright (c) BoonEx Pty Limited - http://www.boonex.com/
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
- * @defgroup    Posts Posts
+ * @defgroup    Market Market
  * @ingroup     TridentModules
  *
  * @{
  */
 
-function BxPostsManageTools(oOptions) {
+function BxMarketManageTools(oOptions) {
 	this._sActionsUrl = oOptions.sActionUrl;
 	this._sObjNameGrid = oOptions.sObjNameGrid;
-    this._sObjName = oOptions.sObjName == undefined ? 'oBxPostsManageTools' : oOptions.sObjName;
+    this._sObjName = oOptions.sObjName == undefined ? 'oBxMarketManageTools' : oOptions.sObjName;
 
     this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'fade' : oOptions.sAnimationEffect;
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
@@ -21,7 +21,7 @@ function BxPostsManageTools(oOptions) {
     this._oRequestParams = oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams;
 }
 
-BxPostsManageTools.prototype.onChangeFilter = function(oFilter) {
+BxMarketManageTools.prototype.onChangeFilter = function(oFilter) {
 	var oFilter1 = $('#bx-grid-filter1-' + this._sObjNameGrid);
 	var sValueFilter1 = oFilter1.length > 0 ? oFilter1.val() : '';
 
@@ -33,7 +33,7 @@ BxPostsManageTools.prototype.onChangeFilter = function(oFilter) {
 	glGrids[this._sObjNameGrid].setFilter(sValueFilter1 + this._sParamsDivider + sValueSearch, true);
 };
 
-BxPostsManageTools.prototype.onClickSettings = function(sMenuObject, oButton) {
+BxMarketManageTools.prototype.onClickSettings = function(sMenuObject, oButton) {
 	if($(oButton).hasClass('bx-btn-disabled'))
 		return false;
 
@@ -42,7 +42,7 @@ BxPostsManageTools.prototype.onClickSettings = function(sMenuObject, oButton) {
 	});
 };
 
-BxPostsManageTools.prototype.onClickDelete = function(iContentId) {
+BxMarketManageTools.prototype.onClickDelete = function(iContentId) {
 	$('.bx-popup-applied:visible').dolPopupHide();
 
 	glGrids[this._sObjNameGrid].actionWithId(iContentId, 'delete', {}, '', false, 1);
