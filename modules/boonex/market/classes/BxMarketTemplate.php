@@ -27,21 +27,55 @@ class BxMarketTemplate extends BxBaseModTextTemplate
         $this->_aCurrency = $this->_oConfig->getCurrency();
     }
 
-    function getAuthorAddon ($aData, $oProfile)
+    public function entryInfo($aData)
     {
-        $s = parent::getAuthorAddon ($aData, $oProfile);
-        if (!$aData['cat'])
-            return $s;
+    	$aCategory = array();
+    	$oCategory = BxTemplCategory::getObjectInstance('bx_market_cats');
+    	$aCategories = BxDolForm::getDataItems('bx_market_cats');
+    	if($oCategory && $aCategories && isset($aCategories[$aData['cat']]))
+    		$aCategory = array(
+    			'category_url' => $oCategory->getCategoryUrl($aData['cat']),
+    			'category_title' => $aCategories[$aData['cat']]
+    		);
 
-        if (!($oCat = BxTemplCategory::getObjectInstance('bx_market_cats')))
-            return $s;
+    	return $this->parseHtmlByName('entry-info.html', array(
+    		'bx_if:show_category' => array(
+    			'condition' => !empty($aCategory),
+    			'content' => $aCategory
+    		),
+    		'category' => '',
+    		'released' => bx_time_js($aData['added']),
+	    	'updated' => bx_time_js($aData['changed']),
+	    	'installs' => '?',
+    	));
+    }
 
-        if (!($aCats = BxDolForm::getDataItems('bx_market_cats')) || !isset($aCats[$aData['cat']]))
-            return $s;
+    public function entryRating($aData)
+    {
+    	$oModule = BxDolModule::getInstance($this->MODULE);
+        $CNF = &$oModule->_oConfig->CNF;
 
-        $s = _t('_bx_market_txt_category_link', $oCat->getCategoryUrl($aData['cat']), $aCats[$aData['cat']]) . '<br />' . $s;
+    	$sVotes = '';
+        $oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $aData['id']);
+        if ($oVotes)
+            $sVotes = $oVotes->getElementBlock(array('show_counter' => true, 'show_legend' => true));
 
-        return $s;
+    	return $this->parseHtmlByName('entry-rating.html', array(
+    		'content' => $sVotes,
+    	));
+    }
+
+    public function getAuthorAddon ($aData, $oProfile)
+    {
+        $aAccount = $oProfile->getAccountObject()->getInfo();
+
+        $sContent = $this->parseHtmlByName('entry-author.html', array(
+    		'joined' => bx_time_js($aAccount['added']),
+	    	'last_active' => bx_time_js($aAccount['logged']),
+	    	'installs' => '?',
+    	));
+
+    	return $sContent . parent::getAuthorAddon ($aData, $oProfile);
     }
 
     protected function getUnit ($aData, $aParams = array())
