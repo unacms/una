@@ -58,6 +58,39 @@ class BxMarketModule extends BxBaseModTextModule
         return CHECK_ACTION_RESULT_ALLOWED;
     }
 
+	public function serviceEntityInfo ($iContentId = 0)
+    {
+        return $this->_serviceTemplateFunc ('entryInfo', $iContentId);
+    }
+
+    public function serviceEntityRating($iContentId = 0)
+    {
+    	return $this->_serviceTemplateFunc ('entryRating', $iContentId);
+    }
+
+	public function serviceEntityAuthorEntities($iContentId = 0)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	if (!$iContentId)
+            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if (!$iContentId)
+            return false;
+
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if (!$aContentInfo)
+            return false;
+
+		$oProfile = BxDolProfile::getInstance($aContentInfo[$CNF['FIELD_AUTHOR']]);
+        if (!$oProfile)
+            $oProfile = BxDolProfileUndefined::getInstance();
+
+		$aBlock = $this->_serviceBrowse ('author', array('author' => $aContentInfo[$CNF['FIELD_AUTHOR']], 'except' => array($iContentId), 'per_page' => 2), BX_DB_PADDING_DEF, true);
+		$aBlock['title'] = _t('_bx_market_page_block_title_entry_author_entries', $oProfile->getDisplayName());
+
+    	return $aBlock;
+    }
+
     /**
      * Integration with Payment based modules.  
      */

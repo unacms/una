@@ -25,6 +25,7 @@ class BxMarketSearchResult extends BxBaseModTextSearchResult
             'searchFields' => array('title', 'text'),
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
+        		'except' => array('value' => '', 'field' => 'id', 'operator' => 'not in'),
         		'status' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
             ),
             'paginate' => array('perPage' => getParam('bx_market_per_page_browse'), 'start' => 0),
@@ -62,6 +63,12 @@ class BxMarketSearchResult extends BxBaseModTextSearchResult
                 }
 
                 $this->aCurrent['restriction']['author']['value'] = $oProfileAuthor->id();
+
+                if(!empty($aParams['except']))
+                	$this->aCurrent['restriction']['except']['value'] = is_array($aParams['except']) ? $aParams['except'] : array($aParams['except']); 
+
+                if(!empty($aParams['per_page']))
+                	$this->aCurrent['paginate']['perPage'] = (int)$aParams['per_page']; 
 
                 $this->sBrowseUrl = 'page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id={profile_id}';
                 $this->aCurrent['title'] = _t('_bx_market_page_title_browse_by_author');

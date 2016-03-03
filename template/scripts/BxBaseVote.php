@@ -22,6 +22,7 @@ class BxBaseVote extends BxDolVote
     protected $_aElementDefaults;
 
     protected $_sTmplNameCounter;
+    protected $_sTmplNameLegend;
     protected $_sTmplNameDoVoteLikes;
     protected $_sTmplNameDoVoteStars;
 
@@ -39,24 +40,28 @@ class BxBaseVote extends BxDolVote
             'main_stars' => 'bx-vote-stars-' . $sHtmlId,
             'main_likes' => 'bx-vote-likes-' . $sHtmlId,
             'counter' => 'bx-vote-counter-' . $sHtmlId,
-            'by_popup' => 'bx-vote-by-popup-' . $sHtmlId
+            'by_popup' => 'bx-vote-by-popup-' . $sHtmlId,
+        	'legend_stars' => 'bx-vote-stars-legend-' . $sHtmlId,
         );
 
         $this->_aElementDefaults = array(
             'stars' => array(
                 'show_do_vote_legend' => false,
-                'show_counter' => true
+                'show_counter' => true,
+        		'show_legend' => false
             ),
             'likes' => array(
                 'show_do_vote_as_button' => false,
                 'show_do_vote_as_button_small' => false,
                 'show_do_vote_icon' => true,
                 'show_do_vote_label' => false,
-                'show_counter' => true
+                'show_counter' => true,
+            	'show_legend' => false
             )
         );
 
         $this->_sTmplNameCounter = 'vote_counter.html';
+        $this->_sTmplNameLegend = 'vote_legend.html';
         $this->_sTmplNameDoVoteLikes = 'vote_do_vote_likes.html';
         $this->_sTmplNameDoVoteStars = 'vote_do_vote_stars.html';
     }
@@ -131,6 +136,48 @@ class BxBaseVote extends BxDolVote
         ));
     }
 
+    /**
+     * Note. The Legend is available in Start based mode only.  
+     */
+    public function getLegend($aParams = array())
+    {
+        $sJsObject = $this->getJsObjectName();
+        $iMinValue = $this->getMinValue();
+        $iMaxValue = $this->getMaxValue();
+
+        $aLegend = $this->_oQuery->getLegend($this->_iId);
+
+        $aTmplVarsItems = array();
+        for($i = $iMaxValue; $i >= $iMinValue; $i--) {
+        	$aTmplVarsStars = $aTmplVarsSlider = array();
+
+	        for($j = $iMinValue; $j <= $iMaxValue; $j++) {
+	        	$aTmplVarsStars[] = array(
+	                'style_prefix' => $this->_sStylePrefix,
+	                'value' => $i
+	            );
+	
+	            $aTmplVarsSlider[] = array(
+	                'style_prefix' => $this->_sStylePrefix
+	            );
+	        }
+
+	        $aTmplVarsItems[] = array(
+	        	'style_prefix' => $this->_sStylePrefix,
+	        	'value' => $i,
+	        	'bx_repeat:stars' => $aTmplVarsStars,
+	        	'bx_repeat:slider' => $aTmplVarsSlider,
+	        	'label' => isset($aLegend[$i]['count']) ? (int)$aLegend[$i]['count'] : 0
+	        );
+        }
+
+        return $this->_oTemplate->parseHtmlByName($this->_sTmplNameLegend, array(
+        	'style_prefix'  => $this->_sStylePrefix,
+        	'html_id' => $this->_aHtmlIds['legend_stars'],
+        	'bx_repeat:items' => $aTmplVarsItems
+        ));
+    }
+
     public function getElementBlock($aParams = array())
     {
         $aParams['usage'] = BX_DOL_VOTE_USAGE_BLOCK;
@@ -154,6 +201,8 @@ class BxBaseVote extends BxDolVote
 
         $bShowDoVoteAsButtonSmall = $bLike && isset($aParams['show_do_vote_as_button_small']) && $aParams['show_do_vote_as_button_small'] == true;
         $bShowDoVoteAsButton = $bLike && !$bShowDoVoteAsButtonSmall && isset($aParams['show_do_vote_as_button']) && $aParams['show_do_vote_as_button'] == true;
+        $bShowCounter = isset($aParams['show_counter']) && $aParams['show_counter'] === true;
+        $bShowLegend = !$bLike && isset($aParams['show_legend']) && $aParams['show_legend'] === true;
 
         $sMethodDoVote = '_getDoVote' . ucfirst($sType);
         if(!method_exists($this, $sMethodDoVote))
@@ -169,6 +218,25 @@ class BxBaseVote extends BxDolVote
         $aParams = array_merge($this->_aElementDefaults[$sType], $aParams);
         $aParams['is_voted'] = $this->_oQuery->isPerformed($iObjectId, $iAuthorId) ? true : false;
 
+        //--- Counter
+        $aTmplVarsCounter = array();
+        if($bShowCounter)
+        	$aTmplVarsCounter = array(
+				'style_prefix' => $this->_sStylePrefix,
+				'bx_if:show_hidden' => array(
+					'condition' => (int)$aVote['count'] == 0,
+					'content' => array()
+				),
+				'counter' => $this->getCounter($aParams)
+        	);
+
+		//--- Legend
+		$aTmplVarsLegend = array();
+		if($bShowLegend)
+			$aTmplVarsLegend = array(
+				'legend' => $this->getLegend($aParams)
+			);
+
         $sTmplName = 'vote_element_' . (!empty($aParams['usage']) ? $aParams['usage'] : BX_DOL_VOTE_USAGE_DEFAULT) . '.html';
         return $this->_oTemplate->parseHtmlByName($sTmplName, array(
             'style_prefix' => $this->_sStylePrefix,
@@ -178,15 +246,12 @@ class BxBaseVote extends BxDolVote
             'count' => $aVote['count'],
             'do_vote' => $this->$sMethodDoVote($aParams),
             'bx_if:show_counter' => array(
-                'condition' => isset($aParams['show_counter']) && $aParams['show_counter'] === true,
-                'content' => array(
-                    'style_prefix' => $this->_sStylePrefix,
-        			'bx_if:show_hidden' => array(
-        				'condition' => (int)$aVote['count'] == 0,
-        				'content' => array()
-        			),
-                    'counter' => $this->getCounter()
-                )
+                'condition' => $bShowCounter,
+                'content' => $aTmplVarsCounter
+            ),
+            'bx_if:show_legend' => array(
+            	'condition' => $bShowLegend,
+            	'content' => $aTmplVarsLegend
             ),
             'script' => $this->getJsScript($bDynamicMode)
         ));
@@ -202,7 +267,7 @@ class BxBaseVote extends BxDolVote
         $iMinValue = $this->getMinValue();
         $iMaxValue = $this->getMaxValue();
 
-        $aTmplVarsButtons = $aTmplVarsStars = array();
+        $aTmplVarsStars = $aTmplVarsLegend = $aTmplVarsSlider = $aTmplVarsButtons = array();
         for($i = $iMinValue; $i <= $iMaxValue; $i++) {
             $aTmplVarsStars[] = array(
                 'style_prefix' => $this->_sStylePrefix,

@@ -25,13 +25,25 @@ function BxDolVote(options)
     this._iSaveWidth = -1;
 
     //--- Init stars based vote ---//
+    var $this = this;
     if(!this._iLikeMode) {
 	    var oMainStars = $('#' + this._aHtmlIds['main_stars']);
 	    if(oMainStars) {
 	    	var fRate = oMainStars.attr('bx_vote_data_rate');
-	    	var iStarWidth = this._getStarWidth(oMainStars);
+	    	var iStarWidth = this._getStarWidthDo(oMainStars);
 
-	    	this._getSlider(oMainStars).width(Math.round(fRate * iStarWidth));
+	    	this._getSliderDo(oMainStars).width(Math.round(fRate * iStarWidth));
+	    }
+
+	    var oLegendStars = $('#' + this._aHtmlIds['legend_stars']);
+	    if(oLegendStars) {
+	    	var iStarWidth = this._getStarWidthLegend(oLegendStars);
+
+	    	oLegendStars.find('.' + this._sSP + '-legend-item').each(function() {
+	    		var oItem = $(this);
+
+	    		oItem.find('.' + $this._sSP + '-slider').width(parseInt(oItem.attr('bx_vote_item_value')) * iStarWidth); 
+	    	});
 	    }
     }
 }
@@ -49,16 +61,16 @@ BxDolVote.prototype.toggleByPopup = function(oLink) {
 
 BxDolVote.prototype.over = function (oLink)
 {
-	var oSlider = this._getSlider(oLink);
+	var oSlider = this._getSliderDo(oLink);
 	var iIndex = this._getButtons(oLink).index(oLink);
 
     this._iSaveWidth = parseInt(oSlider.width());
-    oSlider.width((iIndex + 1) * this._getStarWidth(oLink));
+    oSlider.width((iIndex + 1) * this._getStarWidthDo(oLink));
 };
 
 BxDolVote.prototype.out = function (oLink)
 {
-	var oSlider = this._getSlider(oLink);
+	var oSlider = this._getSliderDo(oLink);
 
 	oSlider.width(this._iSaveWidth);
 };
@@ -94,7 +106,7 @@ BxDolVote.prototype.vote = function (oLink, iValue)
     		}
 
     		if(!$this._iLikeMode)
-    			$this._iSaveWidth = Math.round(oData.rate * $this._getStarWidth(oLink));
+    			$this._iSaveWidth = Math.round(oData.rate * $this._getStarWidthDo(oLink));
 
             var oCounter = $this._getCounter(oLink);
             if(oCounter && oCounter.length > 0) {
@@ -114,16 +126,26 @@ BxDolVote.prototype._getButtons = function(oElement) {
 		return $(oElement).parents('.' + this._sSP + ':first').find('.' + this._sSP + '-button');
 };
 
-BxDolVote.prototype._getSlider = function(oElement) {
+BxDolVote.prototype._getSliderDo = function(oElement) {
+	return this._getSlider(oElement, '.' + this._sSP + '-do');
+};
+BxDolVote.prototype._getSliderLegend = function(oElement) {
+	return this._getSlider(oElement, '.' + this._sSP + '-legend');
+};
+BxDolVote.prototype._getSlider = function(oElement, sParent) {
+	var sSlider = (sParent.length > 0 ? sParent + ' ' : '') + '.' + this._sSP + '-slider';
+
 	if($(oElement).hasClass(this._sSP))
-		return $(oElement).find('.' + this._sSP + '-slider');
+		return $(oElement).find(sSlider);
 	else
-		return $(oElement).parents('.' + this._sSP + ':first').find('.' + this._sSP + '-slider');
+		return $(oElement).parents('.' + this._sSP + ':first').find(sSlider);
 };
 
-BxDolVote.prototype._getStarWidth = function(oElement) {
-	var oSlider = this._getSlider(oElement);
-	return oSlider.find('.sys-icon').width();
+BxDolVote.prototype._getStarWidthDo = function(oElement) {
+	return this._getSliderDo(oElement).find('.sys-icon').width();
+};
+BxDolVote.prototype._getStarWidthLegend = function(oElement) {
+	return this._getSliderLegend(oElement).find('.sys-icon').width();
 };
 
 BxDolVote.prototype._getCounter = function(oElement) {

@@ -78,13 +78,16 @@
     <string name="_bx_market_page_block_title_recent_entries_view_extended"><![CDATA[Новые Продукты]]></string>
     <string name="_bx_market_page_block_title_recent_entries_view_full"><![CDATA[Недавние Продукты (Полный просмотр)]]></string>
     <string name="_bx_market_page_block_title_entry_social_sharing"><![CDATA[Поделиться]]></string>
-    <string name="_bx_market_page_block_title_entry_author"><![CDATA[Автор]]></string>
+    <string name="_bx_market_page_block_title_entry_author"><![CDATA[Продавец]]></string>
+    <string name="_bx_market_page_block_title_entry_author_entries"><![CDATA[Другие продукты от {0}]]></string>
     <string name="_bx_market_page_block_title_entry_actions"><![CDATA[Действия]]></string>
     <string name="_bx_market_page_block_title_entry_comments"><![CDATA[Комментарии]]></string>
     <string name="_bx_market_page_block_title_entry_comments_link"><![CDATA[Комментарии к <a href="{entry_link}">{title}</a>]]></string>
+    <string name="_bx_market_page_block_title_entry_info"><![CDATA[Информация]]></string>
     <string name="_bx_market_page_block_title_entry_location"><![CDATA[Расположение]]></string>
     <string name="_bx_market_page_block_title_entry_attachments"><![CDATA[Прикрепления]]></string>
     <string name="_bx_market_page_block_title_entry_all_actions"><![CDATA[Все Действия]]></string>
+    <string name="_bx_market_page_block_title_entry_rating"><![CDATA[Рейтинг]]></string>
     <string name="_bx_market_page_title_sys_entries_popular"><![CDATA[Популярные Продукты]]></string>
     <string name="_bx_market_page_title_entries_popular"><![CDATA[Популярные Продукты]]></string>
     <string name="_bx_market_page_title_sys_entries_updated"><![CDATA[Обновленные Продукты]]></string>
@@ -211,10 +214,26 @@
     <string name="_bx_market_cat_translations"><![CDATA[Переводы]]></string>
     <string name="_bx_market_cat_video"><![CDATA[Видео]]></string>
 
+    <string name="_bx_market_pre_lists_prices"><![CDATA[Product prices]]></string>
+    <string name="_bx_market_cat_price_1"><![CDATA[1]]></string>
+    <string name="_bx_market_cat_price_2"><![CDATA[2]]></string>
+    <string name="_bx_market_cat_price_3"><![CDATA[3]]></string>
+    <string name="_bx_market_cat_price_4"><![CDATA[4]]></string>
+    <string name="_bx_market_cat_price_5"><![CDATA[5]]></string>
+
+	<string name="_bx_market_vote_counter"><![CDATA[{0} голосов]]></string>
+
+	<string name="_bx_market_err_access_denied"><![CDATA[Доступ запрещен.]]></string>
+
     <string name="_bx_market_txt_all_entries_by"><![CDATA[<a href="{0}">Все продукты от {1} ({2})</a>]]></string>
-    <string name="_bx_market_txt_category_link"><![CDATA[Категория <a href="{0}">{1}</a>]]></string>
+    <string name="_bx_market_txt_category"><![CDATA[Категория:]]></string>
+    <string name="_bx_market_txt_installs"><![CDATA[Установок:]]></string>
     <string name="_bx_market_txt_most_current_version"><![CDATA[Самая новая версия]]></string>
+    <string name="_bx_market_txt_released"><![CDATA[Дата выпуска:]]></string>
     <string name="_bx_market_txt_sample_single"><![CDATA[продукт]]></string>
     <string name="_bx_market_txt_sample_comment_single"><![CDATA[комментарии к продукту]]></string>
     <string name="_bx_market_txt_sample_vote_single"><![CDATA[голос за продукт]]></string>
+    <string name="_bx_market_txt_updated"><![CDATA[Дата обновления:]]></string>
+    <string name="_bx_market_txt_joined"><![CDATA[Зарегистрирован:]]></string>
+    <string name="_bx_market_txt_last_active"><![CDATA[Последняя активность:]]></string>
 </resources>

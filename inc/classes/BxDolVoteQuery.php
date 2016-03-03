@@ -82,6 +82,13 @@ class BxDolVoteQuery extends BxDolObjectQuery
         return false;
     }
 
+    public function getLegend($iObjectId)
+    {
+    	$sQuery = $this->prepare("SELECT `value` AS `value`, COUNT(`value`) AS `count` FROM `{$this->_sTableTrack}` WHERE `object_id` = ? GROUP BY `value`", $iObjectId);
+
+    	return $this->getAllWithKey($sQuery, 'value');
+    }
+
     public function getSqlParts($sMainTable, $sMainField)
     {
     	$aResult = parent::getSqlParts($sMainTable, $sMainField);
