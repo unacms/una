@@ -7,6 +7,8 @@
  * @{
  */
 
+require_once(BX_DIRECTORY_PATH_INC . 'design.inc.php');
+
 /**
  * Page representation.
  * @see BxDolPage
@@ -163,9 +165,8 @@ class BxBasePage extends BxDolPage
                     isset($mixedContent['designbox_id']) ? $mixedContent['designbox_id'] : $aBlock['designbox_id'],
                     isset($mixedContent['menu']) ? $mixedContent['menu'] : false
 				);
-            } elseif (is_string($mixedContent) && !empty($mixedContent)) {
-                if (!function_exists('DesignBoxContent'))
-                    require_once(BX_DIRECTORY_PATH_INC . 'design.inc.php');
+            } 
+            elseif (is_string($mixedContent) && !empty($mixedContent)) {                    
                 $sContentWithBox = DesignBoxContent($sTitle, $mixedContent, $aBlock['designbox_id']);
             }
         }

@@ -136,6 +136,7 @@ class BxOAuthAPI extends BxDol
     {
         $oAccount = $oProfile->getAccountObject();
         $aProfileInfo = $oProfile->getInfo();
+        $aAccountInfo = $oAccount->getInfo();
 
         if ($bPublicFieldsOnly) {
             $aProfileInfo = array(
@@ -153,6 +154,7 @@ class BxOAuthAPI extends BxDol
         }
 
 
+        $aProfileInfo['role'] = $aAccountInfo['role'];
         $aProfileInfo['name'] = $oAccount->getDisplayName();
         $aProfileInfo['profile_display_name'] = $oProfile->getDisplayName();
         $aProfileInfo['profile_link'] = $oProfile->getUrl();
