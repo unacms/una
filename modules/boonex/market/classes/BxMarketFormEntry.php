@@ -99,7 +99,10 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
         if(!$bResult)
 			return $bResult;
 
-		return $this->_oModule->_oDb->deassociateFileWithContent($iContentId, 0);
+		$bResult &= $this->_oModule->_oDb->deassociatePhotoWithContent($iContentId, 0);
+		$bResult &= $this->_oModule->_oDb->deassociateFileWithContent($iContentId, 0);
+
+		return $bResult;
     }
 
     protected function _associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId)
@@ -107,8 +110,15 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
         parent::_associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId);
 
         $sStorage = $oStorage->getObject();
-        if($sStorage == $this->_oModule->_oConfig->CNF['OBJECT_STORAGE_FILES'])
-        	$this->_oModule->_oDb->associateFileWithContent($iContentId, $iFileId, $this->getCleanValue('version-' . $iFileId));
+        switch($sStorage) {
+        	case $this->_oModule->_oConfig->CNF['OBJECT_STORAGE']:
+        		$this->_oModule->_oDb->associatePhotoWithContent($iContentId, $iFileId, $this->getCleanValue('title-' . $iFileId));
+        		break;
+
+        	case $this->_oModule->_oConfig->CNF['OBJECT_STORAGE_FILES']:
+        		$this->_oModule->_oDb->associateFileWithContent($iContentId, $iFileId, $this->getCleanValue('version-' . $iFileId));
+        		break;
+        }
     }
 }
 

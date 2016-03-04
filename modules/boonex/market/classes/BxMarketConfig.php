@@ -29,6 +29,7 @@ class BxMarketConfig extends BxBaseModTextConfig
 
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'products',
+        	'TABLE_PHOTOS2ENTRIES' => $aModule['db_prefix'] . 'photos2products',
         	'TABLE_FILES2ENTRIES' => $aModule['db_prefix'] . 'files2products',
 
             // database fields
@@ -71,6 +72,7 @@ class BxMarketConfig extends BxBaseModTextConfig
             'OBJECT_STORAGE' => 'bx_market_photos',
         	'OBJECT_STORAGE_FILES' => 'bx_market_files',
             'OBJECT_IMAGES_TRANSCODER_PREVIEW' => 'bx_market_preview',
+        	'OBJECT_IMAGES_TRANSCODER_SCREENSHOT' => 'bx_market_screenshot',
             'OBJECT_IMAGES_TRANSCODER_GALLERY' => 'bx_market_gallery',
             'OBJECT_VIDEOS_TRANSCODERS' => array(),
         	'OBJECT_REPORTS' => 'bx_market',
@@ -121,10 +123,12 @@ class BxMarketConfig extends BxBaseModTextConfig
         );
 
         $this->_aJsClasses = array(
+        	'entry' => 'BxMarketEntry',
         	'manage_tools' => 'BxMarketManageTools'
         );
 
         $this->_aJsObjects = array(
+        	'entry' => 'oBxMarketEntry',
         	'manage_tools' => 'oBxMarketManageTools'
         );
 

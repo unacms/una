@@ -160,6 +160,37 @@ class BxMarketModule extends BxBaseModTextModule
     {
         return $this->_oDb->unregisterCustomer($iClientId, $iItemId, $sOrderId);
     }
+
+    public function getGhostTemplateVars($aFile, $iProfileId, $iContentId, $oStorage, $oImagesTranscoder)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	$sMethod = '';
+    	$sStorage = $oStorage->getObject();
+        switch($sStorage) {
+        	case $CNF['OBJECT_STORAGE']:
+        		$sMethod = 'getPhoto';
+        		break;
+
+			case $CNF['OBJECT_STORAGE_FILES']:
+				$sMethod = 'getFile';
+				break;
+        }
+
+		$aFileInfo = $this->_oDb->$sMethod(array('type' => 'file_id', 'file_id' => $aFile['id']));
+        $bFileInfo = !empty($aFileInfo) && is_array($aFileInfo);
+
+        $bFileInfoTitle = $bFileInfo && isset($aFileInfo['title']);
+        $bFileInfoVersion = $bFileInfo && isset($aFileInfo['version']);
+
+		return array(
+			'file_title' => $bFileInfoTitle ? $aFileInfo['title'] : '',
+			'file_title_attr' => $bFileInfoTitle ? bx_html_attribute($aFileInfo['title']) : '',
+
+			'file_version' => $bFileInfoVersion ? $aFileInfo['version'] : '',
+			'file_version_attr' => $bFileInfoVersion ? bx_html_attribute($aFileInfo['version']) : '',
+		);
+    }
 }
 
 /** @} */

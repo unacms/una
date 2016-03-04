@@ -79,6 +79,17 @@ CREATE TABLE IF NOT EXISTS `bx_market_photos` (
   UNIQUE KEY `remote_id` (`remote_id`)
 );
 
+CREATE TABLE IF NOT EXISTS `bx_market_photos2products` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `content_id` int(11) unsigned NOT NULL,
+  `file_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `order` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `file_content` (`file_id`,`content_id`),
+  KEY `content_id` (`content_id`)
+);
+
 CREATE TABLE IF NOT EXISTS `bx_market_photos_resized` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(10) unsigned NOT NULL,
@@ -189,10 +200,12 @@ INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `
 
 INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`) VALUES 
 ('bx_market_preview', 'bx_market_photos_resized', 'Storage', 'a:1:{s:6:"object";s:16:"bx_market_photos";}', 'no', '1', '2592000', '0'),
+('bx_market_screenshot', 'bx_market_photos_resized', 'Storage', 'a:1:{s:6:"object";s:16:"bx_market_photos";}', 'no', '1', '2592000', '0'),
 ('bx_market_gallery', 'bx_market_photos_resized', 'Storage', 'a:1:{s:6:"object";s:16:"bx_market_photos";}', 'no', '1', '2592000', '0');
 
 INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_params`, `order`) VALUES 
-('bx_market_preview', 'Resize', 'a:3:{s:1:"w";s:3:"128";s:1:"h";s:3:"128";s:11:"crop_resize";s:1:"1";}', '0'),
+('bx_market_preview', 'Resize', 'a:3:{s:1:"w";s:3:"148";s:1:"h";s:3:"148";s:11:"crop_resize";s:1:"1";}', '0'),
+('bx_market_screenshot', 'Resize', 'a:3:{s:1:"w";s:3:"200";s:1:"h";s:3:"120";s:11:"crop_resize";s:1:"1";}', '0'),
 ('bx_market_gallery', 'Resize', 'a:1:{s:1:"w";s:3:"500";}', '0');
 
 -- FORMS
@@ -319,7 +332,7 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 
 -- COMMENTS
 INSERT INTO `sys_objects_cmts` (`Name`, `Table`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Nl2br`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `BaseUrl`, `ObjectVote`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldTitle`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES
-('bx_market', 'bx_market_cmts', 1, 5000, 1000, 1, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-product&id={object_id}', '', 'bx_market_products', 'id', 'author', 'title', 'comments', '', '');
+('bx_market', 'bx_market_cmts', 1, 5000, 1000, 1, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-product&id={object_id}', '', 'bx_market_products', 'id', 'author', 'title', 'comments', 'BxMarketCmts', 'modules/boonex/market/classes/BxMarketCmts.php');
 
 -- VOTES
 INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
