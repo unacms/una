@@ -86,7 +86,7 @@ class BxBaseCmts extends BxDolCmts
 		BxDolLiveUpdates::getInstance()->add($this->_sSystem . '_live_updates_cmts_' . $this->_iId, 1, $sServiceCall);
 		//add live update
 
-        $sCaption = _t('_cmt_block_comments_title', $this->getCommentsCountAll());
+        $sCaption = _t($this->_aT['block_comments_title'], $this->getCommentsCountAll());
         $sContent = BxDolTemplate::getInstance()->parseHtmlByName('comments_block.html', array(
             'system' => $this->_sSystem,
             'list_anchor' => $this->getListAnchor(),

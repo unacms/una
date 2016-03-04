@@ -351,7 +351,8 @@
     font-family:@bx-font-family;
     font-weight:400; /* 27.13.13: prev val 300 */
     .font-size(@bx-font-size-default);
-    color:@bx-font-color-default;
+    /* TODO: Remove 'color' instruction later. It affects the font color in Buttons which is usually differs from text color in inputs. */
+    /*color:@bx-font-color-default; */ 
 }
 
 .bx-def-font-color {
