@@ -199,6 +199,7 @@ class BxBaseVote extends BxDolVote
         $bLike =  $this->isLikeMode();
         $sType = $bLike ? BX_DOL_VOTE_TYPE_LIKES : BX_DOL_VOTE_TYPE_STARS;
 
+        $bShowDoVote = !isset($aParams['show_do_vote']) || $aParams['show_do_vote'] == true;
         $bShowDoVoteAsButtonSmall = $bLike && isset($aParams['show_do_vote_as_button_small']) && $aParams['show_do_vote_as_button_small'] == true;
         $bShowDoVoteAsButton = $bLike && !$bShowDoVoteAsButtonSmall && isset($aParams['show_do_vote_as_button']) && $aParams['show_do_vote_as_button'] == true;
         $bShowCounter = isset($aParams['show_counter']) && $aParams['show_counter'] === true;
@@ -212,11 +213,20 @@ class BxBaseVote extends BxDolVote
 		$iAuthorId = $this->_getAuthorId();
         $aVote = $this->_oQuery->getVote($iObjectId);
 
-        if(!$this->isAllowedVote() && (int)$aVote['count'] == 0)
+        $isAllowedVote = $this->isAllowedVote();
+        if(!$isAllowedVote && (int)$aVote['count'] == 0)
             return '';
 
         $aParams = array_merge($this->_aElementDefaults[$sType], $aParams);
         $aParams['is_voted'] = $this->_oQuery->isPerformed($iObjectId, $iAuthorId) ? true : false;
+
+        //--- Do Vote
+        $aTmplVarsDoVote = array();
+        if($bShowDoVote && $isAllowedVote)
+        	$aTmplVarsDoVote = array(
+				'style_prefix' => $this->_sStylePrefix,
+				'do_vote' => $this->$sMethodDoVote($aParams),
+			);
 
         //--- Counter
         $aTmplVarsCounter = array();
@@ -244,11 +254,14 @@ class BxBaseVote extends BxDolVote
             'class' => $this->_sStylePrefix . '-' . $sType . ($bShowDoVoteAsButton ? '-button' : '') . ($bShowDoVoteAsButtonSmall ? '-button-small' : ''),
             'rate' => $aVote['rate'],
             'count' => $aVote['count'],
-            'do_vote' => $this->$sMethodDoVote($aParams),
-            'bx_if:show_counter' => array(
-                'condition' => $bShowCounter,
-                'content' => $aTmplVarsCounter
-            ),
+        	'bx_if:show_do_vote' => array(
+        		'condition' => $bShowDoVote && $isAllowedVote,
+        		'content' => $aTmplVarsDoVote
+        	),
+        	'bx_if:show_counter' => array(
+				'condition' => $bShowCounter,
+				'content' => $aTmplVarsCounter
+			),
             'bx_if:show_legend' => array(
             	'condition' => $bShowLegend,
             	'content' => $aTmplVarsLegend
@@ -259,10 +272,6 @@ class BxBaseVote extends BxDolVote
 
     protected function _getDoVoteStars($aParams = array())
     {
-    	//TODO: Add 'disabled' appearance for this type of votes.
-    	if(!$this->isAllowedVote())
-            return '';
-
         $sJsObject = $this->getJsObjectName();
         $iMinValue = $this->getMinValue();
         $iMaxValue = $this->getMaxValue();
