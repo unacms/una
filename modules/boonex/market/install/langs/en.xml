@@ -42,8 +42,14 @@
 	<string name="_bx_market_form_entry_input_files_use_as_main"><![CDATA[Use as Main]]></string>
 	<string name="_bx_market_form_entry_input_files_name"><![CDATA[Name:]]></string>
 	<string name="_bx_market_form_entry_input_files_version"><![CDATA[Version:]]></string>
-    <string name="_bx_market_form_entry_input_sys_allow_view_to"><![CDATA[Visibility]]></string>
-    <string name="_bx_market_form_entry_input_allow_view_to"><![CDATA[Visibility]]></string>
+    <string name="_bx_market_form_entry_input_sys_allow_view_to"><![CDATA[Who can view]]></string>
+    <string name="_bx_market_form_entry_input_allow_view_to"><![CDATA[Who can view]]></string>
+    <string name="_bx_market_form_entry_input_sys_allow_purchase_to"><![CDATA[Who can purchase]]></string>
+    <string name="_bx_market_form_entry_input_allow_purchase_to"><![CDATA[Who can purchase]]></string>
+    <string name="_bx_market_form_entry_input_sys_allow_comment_to"><![CDATA[Who can review]]></string>
+    <string name="_bx_market_form_entry_input_allow_comment_to"><![CDATA[Who can review]]></string>
+    <string name="_bx_market_form_entry_input_sys_allow_vote_to"><![CDATA[Who can vote]]></string>
+    <string name="_bx_market_form_entry_input_allow_vote_to"><![CDATA[Who can vote]]></string>
 
 	<string name="_bx_market_acl_action_create_entry"><![CDATA[Create Product]]></string>
 	<string name="_bx_market_acl_action_delete_entry"><![CDATA[Delete Product]]></string>
@@ -51,6 +57,8 @@
 	<string name="_bx_market_acl_action_view_entry"><![CDATA[View Product]]></string>
 	<string name="_bx_market_acl_action_set_thumb"><![CDATA[Set Product Thumbnail]]></string>
 	<string name="_bx_market_acl_action_edit_any_entry"><![CDATA[Edit Any Product]]></string>
+
+	<string name="_bx_market_privacy_group_customers"><![CDATA[Customers]]></string>
 
 	<string name="_bx_market_page_title_sys_create_entry"><![CDATA[New Product]]></string>
 	<string name="_bx_market_page_title_create_entry"><![CDATA[New Product]]></string>

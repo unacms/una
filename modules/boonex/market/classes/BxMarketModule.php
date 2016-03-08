@@ -72,14 +72,9 @@ class BxMarketModule extends BxBaseModTextModule
     {
     	$CNF = &$this->_oConfig->CNF;
 
-    	if (!$iContentId)
-            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        if (!$iContentId)
-            return false;
-
-        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-        if (!$aContentInfo)
-            return false;
+    	$aContentInfo = $this->_getContentInfo($iContentId);
+    	if($aContentInfo === false)
+    		return false;
 
 		$oProfile = BxDolProfile::getInstance($aContentInfo[$CNF['FIELD_AUTHOR']]);
         if (!$oProfile)
@@ -190,6 +185,21 @@ class BxMarketModule extends BxBaseModTextModule
 			'file_version' => $bFileInfoVersion ? $aFileInfo['version'] : '',
 			'file_version_attr' => $bFileInfoVersion ? bx_html_attribute($aFileInfo['version']) : '',
 		);
+    }
+
+    protected function _getContentInfo($iContentId = 0)
+    {
+    	if(!$iContentId)
+            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+
+        if(!$iContentId)
+            return false;
+
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(!$aContentInfo)
+            return false;
+
+		return $aContentInfo;
     }
 }
 

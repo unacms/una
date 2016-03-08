@@ -22,6 +22,7 @@ class BxMarketTemplate extends BxBaseModTextTemplate
     function __construct(&$oConfig, &$oDb)
     {
         $this->MODULE = 'bx_market';
+
         parent::__construct($oConfig, $oDb);
 
         $this->_aCurrency = $this->_oConfig->getCurrency();

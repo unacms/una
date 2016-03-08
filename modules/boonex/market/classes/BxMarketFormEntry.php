@@ -30,6 +30,25 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
             $this->aInputs[$CNF['FIELD_FILE']]['content_id'] = 0;
             $this->aInputs[$CNF['FIELD_FILE']]['ghost_template'] = '';
         }
+
+		if (isset($this->aInputs[$CNF['FIELD_ALLOW_PURCHASE_TO']]))
+			$this->aInputs[$CNF['FIELD_ALLOW_PURCHASE_TO']] = BxDolPrivacy::getGroupChooser($CNF['OBJECT_PRIVACY_PURCHASE']);
+
+		$iOwnerId = bx_get_logged_profile_id();
+		$aDynamicGroups = array(
+			array ('key' => '', 'value' => '----'),
+			array ('key' => 'c', 'value' => _t('_bx_market_privacy_group_customers'))
+		);
+
+		if(isset($this->aInputs[$CNF['FIELD_ALLOW_COMMENT_TO']])) {
+			$this->aInputs[$CNF['FIELD_ALLOW_COMMENT_TO']] = BxDolPrivacy::getGroupChooser($CNF['OBJECT_PRIVACY_COMMENT'], $iOwnerId, array('dynamic_groups' => $aDynamicGroups));
+			$this->aInputs[$CNF['FIELD_ALLOW_COMMENT_TO']]['db']['pass'] = 'Xss';
+		}
+
+		if(isset($this->aInputs[$CNF['FIELD_ALLOW_VOTE_TO']])) {
+			$this->aInputs[$CNF['FIELD_ALLOW_VOTE_TO']] = BxDolPrivacy::getGroupChooser($CNF['OBJECT_PRIVACY_VOTE'], $iOwnerId, array('dynamic_groups' => $aDynamicGroups));
+			$this->aInputs[$CNF['FIELD_ALLOW_VOTE_TO']]['db']['pass'] = 'Xss';
+		}
     }
 
 	function initChecker ($aValues = array (), $aSpecificValues = array())

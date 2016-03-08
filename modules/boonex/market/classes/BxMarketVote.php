@@ -11,9 +11,26 @@
 
 class BxMarketVote extends BxTemplVote
 {
+	protected $MODULE;
+	protected $_oModule;
+
     function __construct($sSystem, $iId, $iInit = 1)
     {
-        parent::__construct($sSystem, $iId, $iInit);
+    	$this->MODULE = 'bx_market';
+    	$this->_oModule = BxDolModule::getInstance($this->MODULE);
+
+        parent::__construct($sSystem, $iId, $iInit);        
+    }
+
+    public function isAllowedVote($isPerformAction = false)
+    {
+    	$CNF = &$this->_oModule->_oConfig->CNF;
+
+    	$oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VOTE']);
+		if($oPrivacy && !$oPrivacy->check($this->_iId))
+			return false;
+
+    	return parent::isAllowedVote($isPerformAction);
     }
 
 	protected function _getLabelCounter($iCount)
