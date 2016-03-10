@@ -29,6 +29,7 @@ class BxMarketConfig extends BxBaseModTextConfig
 
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'products',
+        	'TABLE_PHOTOS2ENTRIES' => $aModule['db_prefix'] . 'photos2products',
         	'TABLE_FILES2ENTRIES' => $aModule['db_prefix'] . 'files2products',
 
             // database fields
@@ -41,6 +42,9 @@ class BxMarketConfig extends BxBaseModTextConfig
             'FIELD_TEXT_ID' => 'product-text',
         	'FIELD_PRICE' => 'price',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
+			'FIELD_ALLOW_PURCHASE_TO' => 'allow_purchase_to',
+			'FIELD_ALLOW_COMMENT_TO' => 'allow_comment_to',
+			'FIELD_ALLOW_VOTE_TO' => 'allow_vote_to',
             'FIELD_PHOTO' => 'pictures',
             'FIELD_THUMB' => 'thumb',
         	'FIELD_FILE' => 'files',
@@ -71,6 +75,7 @@ class BxMarketConfig extends BxBaseModTextConfig
             'OBJECT_STORAGE' => 'bx_market_photos',
         	'OBJECT_STORAGE_FILES' => 'bx_market_files',
             'OBJECT_IMAGES_TRANSCODER_PREVIEW' => 'bx_market_preview',
+        	'OBJECT_IMAGES_TRANSCODER_SCREENSHOT' => 'bx_market_screenshot',
             'OBJECT_IMAGES_TRANSCODER_GALLERY' => 'bx_market_gallery',
             'OBJECT_VIDEOS_TRANSCODERS' => array(),
         	'OBJECT_REPORTS' => 'bx_market',
@@ -79,6 +84,9 @@ class BxMarketConfig extends BxBaseModTextConfig
             'OBJECT_METATAGS' => 'bx_market',
             'OBJECT_COMMENTS' => 'bx_market',
             'OBJECT_PRIVACY_VIEW' => 'bx_market_allow_view_to',
+			'OBJECT_PRIVACY_PURCHASE' => 'bx_market_allow_purchase_to',
+			'OBJECT_PRIVACY_COMMENT' => 'bx_market_allow_comment_to',
+			'OBJECT_PRIVACY_VOTE' => 'bx_market_allow_vote_to',
             'OBJECT_FORM_ENTRY' => 'bx_market',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_market_entry_view',
             'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_market_entry_add',
@@ -121,10 +129,12 @@ class BxMarketConfig extends BxBaseModTextConfig
         );
 
         $this->_aJsClasses = array(
+        	'entry' => 'BxMarketEntry',
         	'manage_tools' => 'BxMarketManageTools'
         );
 
         $this->_aJsObjects = array(
+        	'entry' => 'oBxMarketEntry',
         	'manage_tools' => 'oBxMarketManageTools'
         );
 

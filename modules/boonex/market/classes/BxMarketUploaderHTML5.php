@@ -22,13 +22,7 @@ class BxMarketUploaderHTML5 extends BxTemplUploaderHTML5
 
     protected function getGhostTemplateVars($aFile, $iProfileId, $iContentId, $oStorage, $oImagesTranscoder)
     {
-		$aFileInfo = $this->_oModule->_oDb->getFile(array('type' => 'file_id', 'file_id' => $aFile['id']));
-        $bFileInfo = !empty($aFileInfo) && is_array($aFileInfo);
-
-		return array(
-			'file_version' => $bFileInfo ? $aFileInfo['version'] : '',
-			'file_version_attr' => $bFileInfo ? bx_html_attribute($aFileInfo['version']) : ''
-		);
+    	return $this->_oModule->getGhostTemplateVars($aFile, $iProfileId, $iContentId, $oStorage, $oImagesTranscoder);
     }
 }
 

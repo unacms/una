@@ -72,14 +72,9 @@ class BxMarketModule extends BxBaseModTextModule
     {
     	$CNF = &$this->_oConfig->CNF;
 
-    	if (!$iContentId)
-            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        if (!$iContentId)
-            return false;
-
-        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-        if (!$aContentInfo)
-            return false;
+    	$aContentInfo = $this->_getContentInfo($iContentId);
+    	if($aContentInfo === false)
+    		return false;
 
 		$oProfile = BxDolProfile::getInstance($aContentInfo[$CNF['FIELD_AUTHOR']]);
         if (!$oProfile)
@@ -159,6 +154,52 @@ class BxMarketModule extends BxBaseModTextModule
     public function serviceUnregisterCartItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrderId)
     {
         return $this->_oDb->unregisterCustomer($iClientId, $iItemId, $sOrderId);
+    }
+
+    public function getGhostTemplateVars($aFile, $iProfileId, $iContentId, $oStorage, $oImagesTranscoder)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	$sMethod = '';
+    	$sStorage = $oStorage->getObject();
+        switch($sStorage) {
+        	case $CNF['OBJECT_STORAGE']:
+        		$sMethod = 'getPhoto';
+        		break;
+
+			case $CNF['OBJECT_STORAGE_FILES']:
+				$sMethod = 'getFile';
+				break;
+        }
+
+		$aFileInfo = $this->_oDb->$sMethod(array('type' => 'file_id', 'file_id' => $aFile['id']));
+        $bFileInfo = !empty($aFileInfo) && is_array($aFileInfo);
+
+        $bFileInfoTitle = $bFileInfo && isset($aFileInfo['title']);
+        $bFileInfoVersion = $bFileInfo && isset($aFileInfo['version']);
+
+		return array(
+			'file_title' => $bFileInfoTitle ? $aFileInfo['title'] : '',
+			'file_title_attr' => $bFileInfoTitle ? bx_html_attribute($aFileInfo['title']) : '',
+
+			'file_version' => $bFileInfoVersion ? $aFileInfo['version'] : '',
+			'file_version_attr' => $bFileInfoVersion ? bx_html_attribute($aFileInfo['version']) : '',
+		);
+    }
+
+    protected function _getContentInfo($iContentId = 0)
+    {
+    	if(!$iContentId)
+            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+
+        if(!$iContentId)
+            return false;
+
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(!$aContentInfo)
+            return false;
+
+		return $aContentInfo;
     }
 }
 

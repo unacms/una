@@ -128,6 +128,9 @@ class BxDolPayments extends BxDol implements iBxDolSingleton
 		return BxDolService::call($this->_sActive, 'get_cart_item_descriptor', $aSrvParams, 'Cart');
     }
     
+    /**
+     * Returns cart JavaScript code which should be included in the page to make "Add To Cart" buttons work properly.
+     */
     public function getCartJs($bWrapped = true)
     {
     	if(!BxDolRequest::serviceExists($this->_sActive, 'get_cart_js', 'Cart'))
@@ -137,6 +140,9 @@ class BxDolPayments extends BxDol implements iBxDolSingleton
 		return BxDolService::call($this->_sActive, 'get_cart_js', $aSrvParams, 'Cart');
     }
 
+    /**
+     * Returns "Add To Cart" JavaScript code to use in onclick attribute.
+     */
     public function getAddToCartJs($iVendorId, $mixedModuleId, $iItemId, $iItemCount, $bNeedRedirect = false, $bWrapped = true)
     {
     	if(!BxDolRequest::serviceExists($this->_sActive, 'get_add_to_cart_js', 'Cart'))
@@ -146,6 +152,9 @@ class BxDolPayments extends BxDol implements iBxDolSingleton
 		return BxDolService::call($this->_sActive, 'get_add_to_cart_js', $aSrvParams, 'Cart');
     }
 
+    /**
+     * Returns the whole "Add To Cart" link including HTML tag BUTTON and cart JavaScript code.
+     */
     public function getAddToCartLink($iVendorId, $mixedModuleId, $iItemId, $iItemCount, $bNeedRedirect = false)
     {
 		if(!BxDolRequest::serviceExists($this->_sActive, 'get_add_to_cart_link', 'Cart'))

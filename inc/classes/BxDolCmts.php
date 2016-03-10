@@ -154,6 +154,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
     protected $_aSystem = array (); ///< current comments system array
     protected $_iId = 0; ///< obect id to be commented
 
+    protected $_aT = array (); ///< an array of lang keys
     protected $_aMarkers = array ();
 
     protected $_sDisplayType = '';
@@ -234,6 +235,10 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         $this->_sMenuObjActions = 'sys_cmts_item_actions';
 
         $this->_sMetatagsObj = 'sys_cmts';
+
+        $this->_aT = array(
+        	'block_comments_title' => '_cmt_block_comments_title'
+        );
 
         if ($iInit)
             $this->init($iId);

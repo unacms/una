@@ -16,7 +16,10 @@ CREATE TABLE IF NOT EXISTS `bx_market_products` (
   `votes` int(11) NOT NULL default '0',
   `comments` int(11) NOT NULL default '0',
   `reports` int(11) NOT NULL default '0',
-  `allow_view_to` int(11) NOT NULL DEFAULT '3',
+  `allow_view_to` varchar(32) NOT NULL DEFAULT '3',
+  `allow_purchase_to` varchar(32) NOT NULL DEFAULT '3',
+  `allow_comment_to` varchar(32) NOT NULL DEFAULT 'c',
+  `allow_vote_to` varchar(32) NOT NULL DEFAULT 'c',
   `status` enum('active','hidden') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `title_text` (`title`,`text`)
@@ -77,6 +80,17 @@ CREATE TABLE IF NOT EXISTS `bx_market_photos` (
   `private` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `remote_id` (`remote_id`)
+);
+
+CREATE TABLE IF NOT EXISTS `bx_market_photos2products` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `content_id` int(11) unsigned NOT NULL,
+  `file_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `order` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `file_content` (`file_id`,`content_id`),
+  KEY `content_id` (`content_id`)
 );
 
 CREATE TABLE IF NOT EXISTS `bx_market_photos_resized` (
@@ -189,10 +203,12 @@ INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `
 
 INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`) VALUES 
 ('bx_market_preview', 'bx_market_photos_resized', 'Storage', 'a:1:{s:6:"object";s:16:"bx_market_photos";}', 'no', '1', '2592000', '0'),
+('bx_market_screenshot', 'bx_market_photos_resized', 'Storage', 'a:1:{s:6:"object";s:16:"bx_market_photos";}', 'no', '1', '2592000', '0'),
 ('bx_market_gallery', 'bx_market_photos_resized', 'Storage', 'a:1:{s:6:"object";s:16:"bx_market_photos";}', 'no', '1', '2592000', '0');
 
 INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_params`, `order`) VALUES 
-('bx_market_preview', 'Resize', 'a:3:{s:1:"w";s:3:"128";s:1:"h";s:3:"128";s:11:"crop_resize";s:1:"1";}', '0'),
+('bx_market_preview', 'Resize', 'a:3:{s:1:"w";s:3:"148";s:1:"h";s:3:"148";s:11:"crop_resize";s:1:"1";}', '0'),
+('bx_market_screenshot', 'Resize', 'a:3:{s:1:"w";s:3:"200";s:1:"h";s:3:"120";s:11:"crop_resize";s:1:"1";}', '0'),
 ('bx_market_gallery', 'Resize', 'a:1:{s:1:"w";s:3:"500";}', '0');
 
 -- FORMS
@@ -207,6 +223,9 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
 ('bx_market', 'bx_market', 'allow_view_to', '', '', 0, 'custom', '_bx_market_form_entry_input_sys_allow_view_to', '_bx_market_form_entry_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_market', 'bx_market', 'allow_purchase_to', '', '', 0, 'custom', '_bx_market_form_entry_input_sys_allow_purchase_to', '_bx_market_form_entry_input_allow_purchase_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_market', 'bx_market', 'allow_comment_to', '', '', 0, 'custom', '_bx_market_form_entry_input_sys_allow_comment_to', '_bx_market_form_entry_input_allow_comment_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_market', 'bx_market', 'allow_vote_to', '', '', 0, 'custom', '_bx_market_form_entry_input_sys_allow_vote_to', '_bx_market_form_entry_input_allow_vote_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_market', 'bx_market', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_market_form_entry_input_sys_delete_confirm', '_bx_market_form_entry_input_delete_confirm', '_bx_market_form_entry_input_delete_confirm_info', 1, 0, 0, '', '', '', 'Avail', '', '_bx_market_form_entry_input_delete_confirm_error', '', '', 1, 0),
 ('bx_market', 'bx_market', 'do_publish', '_bx_market_form_entry_input_do_publish', '', 0, 'submit', '_bx_market_form_entry_input_sys_do_publish', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_market', 'bx_market', 'do_submit', '_bx_market_form_entry_input_do_submit', '', 0, 'submit', '_bx_market_form_entry_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
@@ -227,9 +246,12 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_market_entry_add', 'files', 2147483647, 1, 6),
 ('bx_market_entry_add', 'price', 2147483647, 1, 7),
 ('bx_market_entry_add', 'allow_view_to', 2147483647, 1, 8),
-('bx_market_entry_add', 'location', 2147483647, 1, 9),
-('bx_market_entry_add', 'do_submit', 2147483647, 0, 10),
-('bx_market_entry_add', 'do_publish', 2147483647, 1, 11),
+('bx_market_entry_add', 'allow_purchase_to', 2147483647, 1, 9),
+('bx_market_entry_add', 'allow_comment_to', 2147483647, 1, 10),
+('bx_market_entry_add', 'allow_vote_to', 2147483647, 1, 11),
+('bx_market_entry_add', 'location', 2147483647, 1, 12),
+('bx_market_entry_add', 'do_submit', 2147483647, 0, 13),
+('bx_market_entry_add', 'do_publish', 2147483647, 1, 14),
 ('bx_market_entry_delete', 'location', 2147483647, 0, 0),
 ('bx_market_entry_delete', 'cat', 2147483647, 0, 0),
 ('bx_market_entry_delete', 'price', 2147483647, 0, 0),
@@ -239,6 +261,9 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_market_entry_delete', 'do_publish', 2147483647, 0, 0),
 ('bx_market_entry_delete', 'title', 2147483647, 0, 0),
 ('bx_market_entry_delete', 'allow_view_to', 2147483647, 0, 0),
+('bx_market_entry_delete', 'allow_purchase_to', 2147483647, 0, 0),
+('bx_market_entry_delete', 'allow_comment_to', 2147483647, 0, 0),
+('bx_market_entry_delete', 'allow_vote_to', 2147483647, 0, 0),
 ('bx_market_entry_delete', 'delete_confirm', 2147483647, 1, 1),
 ('bx_market_entry_delete', 'do_submit', 2147483647, 1, 2),
 ('bx_market_entry_edit', 'do_publish', 2147483647, 0, 1),
@@ -250,8 +275,11 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_market_entry_edit', 'files', 2147483647, 1, 7),
 ('bx_market_entry_edit', 'price', 2147483647, 1, 8),
 ('bx_market_entry_edit', 'allow_view_to', 2147483647, 1, 9),
-('bx_market_entry_edit', 'location', 2147483647, 1, 10),
-('bx_market_entry_edit', 'do_submit', 2147483647, 1, 11),
+('bx_market_entry_edit', 'allow_purchase_to', 2147483647, 1, 10),
+('bx_market_entry_edit', 'allow_comment_to', 2147483647, 1, 11),
+('bx_market_entry_edit', 'allow_vote_to', 2147483647, 1, 12),
+('bx_market_entry_edit', 'location', 2147483647, 1, 13),
+('bx_market_entry_edit', 'do_submit', 2147483647, 1, 14),
 ('bx_market_entry_view', 'location', 2147483647, 0, 0),
 ('bx_market_entry_view', 'cat', 2147483647, 0, 0),
 ('bx_market_entry_view', 'price', 2147483647, 0, 0),
@@ -262,7 +290,10 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_market_entry_view', 'do_publish', 2147483647, 0, 0),
 ('bx_market_entry_view', 'title', 2147483647, 0, 0),
 ('bx_market_entry_view', 'do_submit', 2147483647, 0, 0),
-('bx_market_entry_view', 'allow_view_to', 2147483647, 0, 0);
+('bx_market_entry_view', 'allow_view_to', 2147483647, 0, 0),
+('bx_market_entry_view', 'allow_purchase_to', 2147483647, 0, 0),
+('bx_market_entry_view', 'allow_comment_to', 2147483647, 0, 0),
+('bx_market_entry_view', 'allow_vote_to', 2147483647, 0, 0);
 
 -- PRE-VALUES
 INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES
@@ -319,7 +350,7 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 
 -- COMMENTS
 INSERT INTO `sys_objects_cmts` (`Name`, `Table`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Nl2br`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `BaseUrl`, `ObjectVote`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldTitle`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES
-('bx_market', 'bx_market_cmts', 1, 5000, 1000, 1, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-product&id={object_id}', '', 'bx_market_products', 'id', 'author', 'title', 'comments', '', '');
+('bx_market', 'bx_market_cmts', 1, 5000, 1000, 1, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-product&id={object_id}', '', 'bx_market_products', 'id', 'author', 'title', 'comments', 'BxMarketCmts', 'modules/boonex/market/classes/BxMarketCmts.php');
 
 -- VOTES
 INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 

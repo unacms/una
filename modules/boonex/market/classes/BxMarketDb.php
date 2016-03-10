@@ -19,7 +19,17 @@ class BxMarketDb extends BxBaseModTextDb
         parent::__construct($oConfig);
     }
 
+	public function getPhoto($aParams = array())
+    {
+    	return $this->_getAttachment($this->_oConfig->CNF['TABLE_PHOTOS2ENTRIES'], $aParams);
+    }
+
     public function getFile($aParams = array())
+    {
+    	return $this->_getAttachment($this->_oConfig->CNF['TABLE_FILES2ENTRIES'], $aParams);
+    }
+
+    protected function _getAttachment($sTable, $aParams = array())
     {
     	$aMethod = array('name' => 'getRow', 'params' => array(0 => 'query'));
     	
@@ -33,6 +43,15 @@ class BxMarketDb extends BxBaseModTextDb
                 $sWhereClause = $this->prepare(" AND `tfe`.`file_id`=?", $aParams['file_id']);
                 break;
 
+            case 'content_id':
+            	$aMethod['name'] = 'getAll';
+
+            	$sWhereClause = $this->prepare(" AND `tfe`.`content_id`=?", $aParams['content_id']);
+            	if(!empty($aParams['except']))
+            		$sWhereClause .= " AND `tfe`.`file_id` NOT IN (" . $this->implode_escape($aParams['except']) . ")";
+
+            	break;
+
 			case 'content_id_key_file_id':
 				$aMethod['name'] = 'getAllWithKey';
 				$aMethod['params'][1] = 'file_id';
@@ -43,10 +62,24 @@ class BxMarketDb extends BxBaseModTextDb
 
         $aMethod['params'][0] = "SELECT
         		`tfe`.*
-            FROM `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` AS `tfe`
+            FROM `" . $sTable . "` AS `tfe`
             WHERE 1" . $sWhereClause;
 
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+    }
+
+	public function associatePhotoWithContent($iContentId, $iFileId, $sTitle)
+    {
+        $sQuery = $this->prepare ("SELECT MAX(`order`) FROM `" . $this->_oConfig->CNF['TABLE_PHOTOS2ENTRIES'] . "` WHERE `content_id` = ?", $iContentId);
+        $iOrder = 1 + (int)$this->getOne($sQuery);
+
+        $sQuery = $this->prepare ("INSERT INTO `" . $this->_oConfig->CNF['TABLE_PHOTOS2ENTRIES'] . "` SET `content_id` = ?, `file_id` = ?, `title` = ?, `order` = ? ON DUPLICATE KEY UPDATE `title` = ?", $iContentId, $iFileId, $sTitle, $iOrder, $sTitle);
+        return $this->res($sQuery);
+    }
+
+	public function deassociatePhotoWithContent($iContentId, $iFileId)
+    {
+    	return $this->_deassociateAttachmentWithContent($this->_oConfig->CNF['TABLE_PHOTOS2ENTRIES'], $iContentId, $iFileId);
     }
 
     public function associateFileWithContent($iContentId, $iFileId, $sVersion)
@@ -58,7 +91,12 @@ class BxMarketDb extends BxBaseModTextDb
         return $this->res($sQuery);
     }
 
-	public function deassociateFileWithContent($iContentId, $iFileId)
+    public function deassociateFileWithContent($iContentId, $iFileId)
+    {
+    	return $this->_deassociateAttachmentWithContent($this->_oConfig->CNF['TABLE_FILES2ENTRIES'], $iContentId, $iFileId);
+    }
+    
+	protected function _deassociateAttachmentWithContent($sTable, $iContentId, $iFileId)
     {
         $sWhere = '';
         if ($iContentId)
@@ -67,7 +105,7 @@ class BxMarketDb extends BxBaseModTextDb
         if ($iFileId)
             $sWhere .= $this->prepare (" AND `file_id` = ? ", $iFileId);
 
-        $sQuery = "DELETE FROM `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` WHERE 1 ";
+        $sQuery = "DELETE FROM `" . $sTable . "` WHERE 1 ";
         return $this->query($sQuery . $sWhere);
     }
 

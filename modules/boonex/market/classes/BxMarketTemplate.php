@@ -22,6 +22,7 @@ class BxMarketTemplate extends BxBaseModTextTemplate
     function __construct(&$oConfig, &$oDb)
     {
         $this->MODULE = 'bx_market';
+
         parent::__construct($oConfig, $oDb);
 
         $this->_aCurrency = $this->_oConfig->getCurrency();
@@ -52,8 +53,7 @@ class BxMarketTemplate extends BxBaseModTextTemplate
 
     public function entryRating($aData)
     {
-    	$oModule = BxDolModule::getInstance($this->MODULE);
-        $CNF = &$oModule->_oConfig->CNF;
+        $CNF = &BxDolModule::getInstance($this->MODULE)->_oConfig->CNF;
 
     	$sVotes = '';
         $oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $aData['id']);
@@ -64,7 +64,52 @@ class BxMarketTemplate extends BxBaseModTextTemplate
     		'content' => $sVotes,
     	));
     }
+    
+    public function entryText ($aData, $sTemplateName = 'entry-text.html')
+    {
+    	$oModule = BxDolModule::getInstance($this->MODULE);
+    	$CNF = &$oModule->_oConfig->CNF;
 
+    	$sThumbUrl = '';
+        if ($aData[$CNF['FIELD_THUMB']]) {
+            $oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);
+            if ($oImagesTranscoder)
+                $sThumbUrl = $oImagesTranscoder->getFileUrl($aData[$CNF['FIELD_THUMB']]);
+        }
+
+        list($sBuyCode, $sBuyOnclick) = BxDolPayments::getInstance()->getAddToCartJs($aData[$CNF['FIELD_AUTHOR']], $this->_oConfig->getName(), $aData[$CNF['FIELD_ID']], 1);
+
+    	return $this->parseHtmlByContent(parent::entryText($aData), array(
+    		'title_attr' => bx_html_attribute(isset($aData[$CNF['FIELD_TITLE']]) ? $aData[$CNF['FIELD_TITLE']] : ''),
+    		'thumb_url' => $sThumbUrl,
+    		'buy_onclick' => $sBuyOnclick,
+    		'buy' => _t('_bx_market_txt_get_for_fixed', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE']]),
+    		'screenshots' => $this->getScreenshots($aData)
+    	));
+    }
+
+    public function getScreenshots($aData)
+    {
+    	$oModule = BxDolModule::getInstance($this->MODULE);
+    	$CNF = &$oModule->_oConfig->CNF;
+
+    	$oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
+    	$oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_SCREENSHOT']);
+    	$aPhotos = $this->_oDb->getPhoto(array('type' => 'content_id', 'content_id' => $aData[$CNF['FIELD_ID']], 'except' => $aData[$CNF['FIELD_THUMB']]));
+    	$iPhotos = count($aPhotos);
+
+    	$aTmplVarsPhotos = array();
+    	foreach($aPhotos as $aPhoto) 
+    		$aTmplVarsPhotos[] = array(
+    			'item_url_sm' => $oImagesTranscoder ? $oImagesTranscoder->getFileUrl($aPhoto['file_id']) : '',
+    			'item_url_bg' => $oStorage ? $oStorage->getFileUrlById($aPhoto['file_id']) : ''
+    		);
+
+    	return $this->parseHtmlByName('entry-screenshots.html', array(
+    		'bx_repeat:items' => $aTmplVarsPhotos
+    	));
+    }
+    
     public function getAuthorAddon ($aData, $oProfile)
     {
         $aAccount = $oProfile->getAccountObject()->getInfo();
@@ -80,9 +125,11 @@ class BxMarketTemplate extends BxBaseModTextTemplate
 
     protected function getUnit ($aData, $aParams = array())
     {
+    	$CNF = &BxDolModule::getInstance($this->MODULE)->_oConfig->CNF;
+
     	$aUnit = parent::getUnit($aData, $aParams);
 
-    	$aUnit['entry_price'] = $aData['price'];
+    	$aUnit['entry_price'] = $aData[$CNF['FIELD_PRICE']];
     	$aUnit['currency_sign'] = $this->_aCurrency['sign'];
     	$aUnit['currency_code'] = $this->_aCurrency['code'];
 

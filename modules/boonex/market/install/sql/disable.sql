@@ -16,7 +16,7 @@ DELETE FROM `sys_menu_sets` WHERE `module` = 'bx_market';
 DELETE FROM `sys_menu_items` WHERE `module` = 'bx_market' OR `set_name` IN('bx_market_view', 'bx_market_submenu', 'bx_market_view_submenu', 'bx_market_my');
 
 -- PRIVACY 
-DELETE FROM `sys_objects_privacy` WHERE `object` = 'bx_market_allow_view_to';
+DELETE FROM `sys_objects_privacy` WHERE `object` IN ('bx_market_allow_view_to', 'bx_market_allow_purchase_to', 'bx_market_allow_comment_to', 'bx_market_allow_vote_to');
 
 -- ACL
 DELETE `sys_acl_actions`, `sys_acl_matrix` FROM `sys_acl_actions`, `sys_acl_matrix` WHERE `sys_acl_matrix`.`IDAction` = `sys_acl_actions`.`ID` AND `sys_acl_actions`.`Module` = 'bx_market';

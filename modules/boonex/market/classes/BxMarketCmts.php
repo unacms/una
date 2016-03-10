@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxMarketVote extends BxTemplVote
+class BxMarketCmts extends BxTemplCmts
 {
 	protected $MODULE;
 	protected $_oModule;
@@ -19,23 +19,20 @@ class BxMarketVote extends BxTemplVote
     	$this->MODULE = 'bx_market';
     	$this->_oModule = BxDolModule::getInstance($this->MODULE);
 
-        parent::__construct($sSystem, $iId, $iInit);        
+        parent::__construct($sSystem, $iId, $iInit);
+
+        $this->_aT['block_comments_title'] = '_bx_market_page_block_title_entry_comments_n';
     }
 
-    public function isAllowedVote($isPerformAction = false)
+    public function isPostReplyAllowed ($isPerformAction = false)
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
-    	$oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VOTE']);
+    	$oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_COMMENT']);
 		if($oPrivacy && !$oPrivacy->check($this->_iId))
 			return false;
 
-    	return parent::isAllowedVote($isPerformAction);
-    }
-
-	protected function _getLabelCounter($iCount)
-    {
-        return _t('_bx_market_vote_counter', $iCount);
+		return parent::isPostReplyAllowed($isPerformAction);
     }
 }
 

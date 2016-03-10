@@ -52,9 +52,9 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_market_view_entry', '_bx_market_page_title_sys_view_entry', '_bx_market_page_title_view_entry', 'bx_market', 2, 2147483647, 1, 'view-product', '', '', '', '', 0, 1, 0, 'BxMarketPageEntry', 'modules/boonex/market/classes/BxMarketPageEntry.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_market_view_entry', 1, 'bx_market', '', '_bx_market_page_block_title_entry_text', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 0),
-('bx_market_view_entry', 1, 'bx_market', '', '_bx_market_page_block_title_entry_all_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:18:\"entity_all_actions\";}', 0, 0, 1, 1),
-('bx_market_view_entry', 1, 'bx_market', '', '_bx_market_page_block_title_entry_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:14:\"entity_actions\";}', 0, 0, 0, 2),
+('bx_market_view_entry', 1, 'bx_market', '', '_bx_market_page_block_title_entry_text', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 0),
+('bx_market_view_entry', 1, 'bx_market', '', '_bx_market_page_block_title_entry_all_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:18:\"entity_all_actions\";}', 0, 0, 0, 1),
+('bx_market_view_entry', 1, 'bx_market', '', '_bx_market_page_block_title_entry_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:14:\"entity_actions\";}', 0, 0, 1, 2),
 ('bx_market_view_entry', 1, 'bx_market', '', '_bx_market_page_block_title_entry_social_sharing', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:21:\"entity_social_sharing\";}', 0, 0, 0, 3),
 ('bx_market_view_entry', 1, 'bx_market', '', '_bx_market_page_block_title_entry_comments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:15:\"entity_comments\";}', 0, 0, 1, 4),
 ('bx_market_view_entry', 2, 'bx_market', '', '_bx_market_page_block_title_entry_info', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:11:\"entity_info\";}', 0, 0, 1, 0),
@@ -239,7 +239,11 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 
 -- PRIVACY 
 INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `default_group`, `table`, `table_field_id`, `table_field_author`, `override_class_name`, `override_class_file`) VALUES
-('bx_market_allow_view_to', 'bx_market', 'view', '_bx_market_form_entry_input_allow_view_to', '3', 'bx_market_products', 'id', 'author', '', '');
+('bx_market_allow_view_to', 'bx_market', 'view', '_bx_market_form_entry_input_allow_view_to', '3', 'bx_market_products', 'id', 'author', '', ''),
+('bx_market_allow_purchase_to', 'bx_market', 'purchase', '_bx_market_form_entry_input_allow_purchase_to', '3', 'bx_market_products', 'id', 'author', '', ''),
+('bx_market_allow_comment_to', 'bx_market', 'comment', '_bx_market_form_entry_input_allow_comment_to', 'c', 'bx_market_products', 'id', 'author', 'BxMarketPrivacy', 'modules/boonex/market/classes/BxMarketPrivacy.php'),
+('bx_market_allow_vote_to', 'bx_market', 'vote', '_bx_market_form_entry_input_allow_vote_to', 'c', 'bx_market_products', 'id', 'author', 'BxMarketPrivacy', 'modules/boonex/market/classes/BxMarketPrivacy.php');
+
 
 
 -- ACL
@@ -374,4 +378,6 @@ INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALU
 SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
+('bx_market_files', 'file_deleted', @iHandler),
+('bx_market_photos', 'file_deleted', @iHandler),
 ('profile', 'delete', @iHandler);

@@ -20,6 +20,32 @@ div.bx-market-uic-narrow {
 	text-align: right;
 }
 
+/*--- Defaults ---*/
+.bx-market-thumb-size {
+    width: 148px;
+    width: 9.25rem;
+    height: 148px;
+    height: 9.25rem;
+    line-height: 148px;
+    line-height: 9.25rem;
+}
+.bx-market-thumb-size-min-height {
+    min-height: 148px;
+    min-height: 9.25rem;
+}
+.bx-market-thumb-size-left-indent {
+	margin-left: 164px;
+	margin-left: 10.25rem;
+}
+.bx-market-screenshot-size {
+    width: 200px;
+    width: 12.5rem;
+    height: 120px;
+    height: 7.5rem;
+    line-height: 120px;
+    line-height: 7.5rem;
+}
+	
 /*--- Attachments ---*/
 div.bx-market-attachment {
 	position: relative;
