@@ -29,7 +29,7 @@ class BxPaymentProviderBitPay extends BxBaseModPaymentProvider implements iBxBas
         parent::__construct($aConfig);
 
         $this->_bRedirectOnResult = false;
-        $this->_sLogFile = BX_DIRECTORY_PATH_TMP . 'bx_pp_' . $this->_sName . '.log';
+        $this->_sLogFile = BX_DIRECTORY_PATH_LOGS . 'bx_pp_' . $this->_sName . '.log';
 
         $this->_initializeOptions();
     }

@@ -18,8 +18,6 @@ define('PP_PRC_TYPE_IPN', 3);
 
 class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBaseModPaymentProvider
 {
-    protected $_sDataReturnUrl;
-
     function __construct($aConfig)
     {
     	$this->MODULE = 'bx_payment';
@@ -27,7 +25,6 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
         parent::__construct($aConfig);
 
         $this->_bRedirectOnResult = false;
-        $this->_sDataReturnUrl = $this->_oModule->_oConfig->getUrl('URL_RETURN_DATA') . $this->_sName . '/';
     }
 
     public function initializeCheckout($iPendingId, $aCartInfo, $bRecurring = false, $iRecurringDays = 0)
@@ -69,14 +66,14 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
             case PP_PRC_TYPE_PDT:
             case PP_PRC_TYPE_DIRECT:
                 $aFormData = array_merge($aFormData, array(
-                    'return' => $this->_sDataReturnUrl . $aCartInfo['vendor_id'],
+                    'return' => $this->getReturnDataUrl($aCartInfo['vendor_id']),
                     'rm' => '2'
                 ));
                 break;
             case PP_PRC_TYPE_IPN:
                 $aFormData = array_merge($aFormData, array(
                     'return' => $this->_oConfig->getUrl('URL_RETURN'),
-                    'notify_url' => $this->_sDataReturnUrl . $aCartInfo['vendor_id'],
+                    'notify_url' => $this->getReturnDataUrl($aCartInfo['vendor_id']),
                     'rm' => '1'
                 ));
                 break;
