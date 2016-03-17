@@ -23,6 +23,7 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
         	'URL_DETAILS' => 'page.php?i=payment-details',
         	'URL_RETURN' => 'page.php?i=payment-cart',
         	'URL_RETURN_DATA' => BX_DOL_URL_ROOT . $this->getBaseUri() . 'finalize_checkout/',
+        	'URL_NOTIFY' => BX_DOL_URL_ROOT . $this->getBaseUri() . 'notify/',
 
         	'KEY_ARRAY_PRICE_SINGLE' => 'price_single',
         	'KEY_ARRAY_PRICE_RECURRING' => 'price_recurring',

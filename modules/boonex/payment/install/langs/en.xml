@@ -219,7 +219,7 @@
 	<string name="_bx_payment_pp_token_dsc"><![CDATA[Identity token]]></string>
 	<string name="_bx_payment_pp_sandbox_cpt"><![CDATA[Sandbox]]></string>
 	<string name="_bx_payment_pp_sandbox_dsc"><![CDATA[Sandbox email address]]></string>
-	<string name="_bx_payment_pp_return_url_cpt"><![CDATA[Data return URL]]></string>
+	<string name="_bx_payment_pp_return_data_url_cpt"><![CDATA[Data return URL]]></string>
 	<string name="_bx_payment_pp_err_no_data_given"><![CDATA[No data given.]]></string>
 	<string name="_bx_payment_pp_err_no_vendor_given"><![CDATA[Unknown vendor.]]></string>
 	<string name="_bx_payment_pp_err_not_completed"><![CDATA[Payment is not completed.]]></string>
@@ -249,7 +249,7 @@
 	<string name="_bx_payment_2co_payment_method_ppi"><![CDATA[PayPal(PPI)]]></string>
 	<string name="_bx_payment_2co_secret_word_cpt"><![CDATA[Secret Word]]></string>
 	<string name="_bx_payment_2co_secret_word_dsc"><![CDATA[Secret word is used to calculate a check hash]]></string>
-	<string name="_bx_payment_2co_return_url_cpt"><![CDATA[Data return URL]]></string>
+	<string name="_bx_payment_2co_return_data_url_cpt"><![CDATA[Data return URL]]></string>
 	<string name="_bx_payment_2co_err_no_vendor_given"><![CDATA[Unknown vendor]]></string>
 	<string name="_bx_payment_2co_err_no_data_given"><![CDATA[No data given.]]></string>
 	<string name="_bx_payment_2co_err_wrong_key"><![CDATA[Check key is incorrect.]]></string>
@@ -303,7 +303,8 @@
 	<string name="_bx_payment_cbee_test_site_dsc"><![CDATA[Your site name registered in Chargebee for 'test' mode]]></string>
 	<string name="_bx_payment_cbee_test_api_key_cpt"><![CDATA[API Key (test)]]></string>
 	<string name="_bx_payment_cbee_test_api_key_dsc"><![CDATA[Your Chargebee API Access key for 'test' mode]]></string>
-	<string name="_bx_payment_cbee_return_url_cpt"><![CDATA[Data return URL]]></string>
+	<string name="_bx_payment_cbee_return_data_url_cpt"><![CDATA[Data return URL]]></string>
+	<string name="_bx_payment_cbee_notify_url_cpt"><![CDATA[Webhooks URL]]></string>
 	<string name="_bx_payment_cbee_msg_subscribed"><![CDATA[Subscription was successfully created.]]></string>
 	<string name="_bx_payment_txt_cart_chargebee"><![CDATA[Chargebee]]></string>
 

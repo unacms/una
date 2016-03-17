@@ -90,7 +90,7 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
         return $aResult;
     }
 
-    public function processEvent()
+    public function notify()
     {
 		$iResult = $this->_processEvent();
 		http_response_code($iResult);

@@ -72,7 +72,7 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
                 break;
             case PP_PRC_TYPE_IPN:
                 $aFormData = array_merge($aFormData, array(
-                    'return' => $this->_oConfig->getUrl('URL_RETURN'),
+                    'return' => $this->getReturnUrl(),
                     'notify_url' => $this->getReturnDataUrl($aCartInfo['vendor_id']),
                     'rm' => '1'
                 ));

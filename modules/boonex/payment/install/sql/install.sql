@@ -94,7 +94,7 @@ INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `capti
 (@iProviderId, 'pp_prc_type', 'select', '_bx_payment_pp_prc_type_cpt', '_bx_payment_pp_prc_type_dsc', '1|_bx_payment_pp_prc_type_direct,2|_bx_payment_pp_prc_type_pdt,3|_bx_payment_pp_prc_type_ipn', '', '', '', 4),
 (@iProviderId, 'pp_token', 'text', '_bx_payment_pp_token_cpt', '_bx_payment_pp_token_dsc', '', '', '', '', 5),
 (@iProviderId, 'pp_sandbox', 'text', '_bx_payment_pp_sandbox_cpt', '_bx_payment_pp_sandbox_dsc', '', '', '', '', 6),
-(@iProviderId, 'pp_return_url', 'value', '_bx_payment_pp_return_url_cpt', '', '', '', '', '', 7);
+(@iProviderId, 'pp_return_data_url', 'value', '_bx_payment_pp_return_data_url_cpt', '', '', '', '', '', 7);
 
 
 -- 2Checkout payment provider
@@ -108,7 +108,7 @@ INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `capti
 (@iProviderId, '2co_account_id', 'text', '_bx_payment_2co_account_id_cpt', '_bx_payment_2co_account_id_dsc', '', '', '', '', 3),
 (@iProviderId, '2co_payment_method', 'select', '_bx_payment_2co_payment_method_cpt', '_bx_payment_2co_payment_method_dsc', 'CC|_bx_payment_2co_payment_method_cc,PPI|_bx_payment_2co_payment_method_ppi', '', '', '', 4),
 (@iProviderId, '2co_secret_word', 'text', '_bx_payment_2co_secret_word_cpt', '_bx_payment_2co_secret_word_dsc', '', '', '', '', 5),
-(@iProviderId, '2co_return_url', 'value', '_bx_payment_2co_return_url_cpt', '', '', '', '', '', 6);
+(@iProviderId, '2co_return_data_url', 'value', '_bx_payment_2co_return_data_url_cpt', '', '', '', '', '', 6);
 
 
 -- BitPay payment provider
@@ -136,7 +136,8 @@ INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `capti
 (@iProviderId, 'cbee_live_api_key', 'text', '_bx_payment_cbee_live_api_key_cpt', '_bx_payment_cbee_live_api_key_dsc', '', '', '', '', 4),
 (@iProviderId, 'cbee_test_site', 'text', '_bx_payment_cbee_test_site_cpt', '_bx_payment_cbee_test_site_dsc', '', '', '', '', 5),
 (@iProviderId, 'cbee_test_api_key', 'text', '_bx_payment_cbee_test_api_key_cpt', '_bx_payment_cbee_test_api_key_dsc', '', '', '', '', 6),
-(@iProviderId, 'cbee_return_url', 'value', '_bx_payment_cbee_return_url_cpt', '', '', '', '', '', 7);
+(@iProviderId, 'cbee_return_data_url', 'value', '_bx_payment_cbee_return_data_url_cpt', '', '', '', '', '', 7),
+(@iProviderId, 'cbee_notify_url', 'value', '_bx_payment_cbee_notify_url_cpt', '', '', '', '', '', 8);
 
 -- GRIDS
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `override_class_name`, `override_class_file`) VALUES

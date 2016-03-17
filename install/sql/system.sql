@@ -325,7 +325,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 (@iCategoryId, 'sys_transcoder_queue_storage', '_adm_stg_cpt_option_sys_transcoder_queue_storage', '', 'checkbox', '', '', '', 50),
 
-(@iCatGeneral, 'sys_default_payment', '_adm_stg_cpt_option_sys_default_payment', 'payment', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:12:"get_payments";s:5:"class";s:21:"TemplPaymentsServices";}', 'Avail', '_adm_stg_err_option_sys_default_payment', 60);
+(@iCategoryId, 'sys_default_payment', '_adm_stg_cpt_option_sys_default_payment', 'payment', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:12:"get_payments";s:5:"class";s:21:"TemplPaymentsServices";}', 'Avail', '_adm_stg_err_option_sys_default_payment', 60);
 
 
 --

@@ -146,8 +146,13 @@ class BxPaymentDetails extends BxDol
                     break;
 
 				 case 'value':
-				 	if(str_replace($aInput['provider_option_prefix'], '', $aInput['name']) == 'return_url')
-				 		$aForm['inputs'][$aInput['name']]['value'] = $oProvider->getReturnDataUrl($iUserId);
+				 	$sName = str_replace($aInput['provider_option_prefix'], '', $aInput['name']);
+				 	if(!in_array($sName, array('return_data_url', 'notify_url')))
+				 		break;
+
+				 	$sMethod = 'get' . bx_gen_method_name($sName);
+				 	if(method_exists($oProvider, $sMethod))
+						$aForm['inputs'][$aInput['name']]['value'] = $oProvider->$sMethod($iUserId);
 				 	break;
             }
 

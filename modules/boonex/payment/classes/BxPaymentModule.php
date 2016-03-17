@@ -318,7 +318,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
 			$this->registerPayment($aPending);
 
 		if($oProvider->needRedirect()) {
-			header('Location: ' . $this->_oConfig->getUrl('URL_RETURN'));
+			header('Location: ' . $oProvider->getReturnUrl());
 			exit;
 		}
 
@@ -335,13 +335,13 @@ class BxPaymentModule extends BxBaseModPaymentModule
         $this->_oTemplate->displayPageCodeResponse($aResult['message']);
     }
 
-    public function actionProcessEvent($sProvider, $mixedVendorId = "")
+    public function actionNotify($sProvider, $mixedVendorId = "")
     {
     	$oProvider = $this->getObjectProvider($sProvider, $mixedVendorId);
         if($oProvider === false)
         	return $this->_oTemplate->displayPageCodeError($this->_sLangsPrefix . 'err_incorrect_provider');
 
-		$oProvider->processEvent();
+		$oProvider->notify();
     }
 
     public function onProfileJoin($iProfileId)

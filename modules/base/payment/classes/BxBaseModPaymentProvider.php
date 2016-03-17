@@ -47,9 +47,19 @@ class BxBaseModPaymentProvider extends BxDol
         $this->_bRedirectOnResult = false;
     }
 
+	public function getReturnUrl()
+    {
+		return $this->_oModule->_oConfig->getUrl('URL_RETURN');
+    }
+
     public function getReturnDataUrl($iVendorId)
     {
 		return $this->_oModule->_oConfig->getUrl('URL_RETURN_DATA') . $this->_sName . '/' . $iVendorId;
+    }
+
+	public function getNotifyUrl($iVendorId)
+    {
+		return $this->_oModule->_oConfig->getUrl('URL_NOTIFY') . $this->_sName . '/' . $iVendorId;
     }
 
     /**
