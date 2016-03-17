@@ -29,8 +29,8 @@ class BxPaymentJoin extends BxBaseModPaymentJoin
      */
 	public function serviceGetBlockJoin()
     {
-    	$sSessionKeyPending = $this->_oModule->_oConfig->getKey('session_key_pending');
-    	$sRequestKeyPending = $this->_oModule->_oConfig->getKey('request_key_pending');
+    	$sSessionKeyPending = $this->_oModule->_oConfig->getKey('KEY_SESSION_PENDING');
+    	$sRequestKeyPending = $this->_oModule->_oConfig->getKey('KEY_REQUEST_PENDING');
 
     	$oSession = BxDolSession::getInstance();
     	$iPendingId = (int)$oSession->getValue($sSessionKeyPending);
@@ -63,7 +63,7 @@ class BxPaymentJoin extends BxBaseModPaymentJoin
         	return;
 		//--- 'System' -> 'Join after Payment' for Alerts Engine ---//
 
-    	$sContent = BxDolService::call('system', 'create_account_form', array(array('action' => $this->_oModule->_oConfig->getUrl('join'))), 'TemplServiceAccount');
+    	$sContent = BxDolService::call('system', 'create_account_form', array(array('action' => $this->_oModule->_oConfig->getUrl('URL_JOIN'))), 'TemplServiceAccount');
     	if(!empty($sOverrideError))
     		$sContent = MsgBox(_t($sOverrideError)) . $sContent;
 
@@ -72,29 +72,29 @@ class BxPaymentJoin extends BxBaseModPaymentJoin
 		);
     }
 
-	public function performJoin($iPendingId, $aPayment = array())
+	public function performJoin($iPendingId, $sClientName = '', $sClientEmail = '')
     {
-		BxDolSession::getInstance()->setValue($this->_oModule->_oConfig->getKey('session_key_pending'), (int)$iPendingId);
+		BxDolSession::getInstance()->setValue($this->_oModule->_oConfig->getKey('KEY_SESSION_PENDING'), (int)$iPendingId);
 
-		if(!empty($aPayment['payer_name']) && !empty($aPayment['payer_email'])) {
+		if(!empty($sClientName) && !empty($sClientEmail)) {
 			bx_import('BxDolEmailTemplates');
 			$oEmailTemplates = new BxDolEmailTemplates();
 
 			$aTemplate = $oEmailTemplates->parseTemplate($this->_oModule->_oConfig->getPrefix('general') . 'paid_need_join', array(
-				'RealName' => $aPayment['payer_name'],
-				'JoinLink' => $this->_oModule->_oConfig->getUrl('join', array($this->_oModule->_oConfig->getKey('request_key_pending') => (int)$iPendingId))
+				'RealName' => $sClientName,
+				'JoinLink' => $this->_oModule->_oConfig->getUrl('URL_JOIN', array($this->_oModule->_oConfig->getKey('KEY_REQUEST_PENDING') => (int)$iPendingId))
 			));
 
-			sendMail($aPayment['payer_email'], $aTemplate['Subject'], $aTemplate['Body'], 0, array(), 'html', false, true);
+			sendMail($sClientEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, array(), 'html', false, true);
 		}
 
-		header('Location: ' . $this->_oModule->_oConfig->getUrl('join'));
+		header('Location: ' . $this->_oModule->_oConfig->getUrl('URL_JOIN'));
 		exit;
 	}
 
 	public function onProfileJoin($iProfileId)
     {
-    	$sSessionKeyPending = $this->_oModule->_oConfig->getKey('session_key_pending');
+    	$sSessionKeyPending = $this->_oModule->_oConfig->getKey('KEY_SESSION_PENDING');
 
     	$oSession = BxDolSession::getInstance();
 		$iPendingId = (int)$oSession->getValue($sSessionKeyPending);
@@ -109,7 +109,7 @@ class BxPaymentJoin extends BxBaseModPaymentJoin
 		if(!$this->_oModule->_oDb->updateOrderPending($iPendingId, array('client_id' => $iProfileId)))
 			return;
 
-		$this->_oModule->getObjectCart()->updateInfo($iPendingId);
+		$this->_oModule->registerPayment($iPendingId);
 
 		$oSession->unsetValue($sSessionKeyPending);
     }

@@ -15,16 +15,18 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
     {
         parent::__construct($aModule);
 
-        $this->_aUrls = array(
-        	'join' => 'page.php?i=payment-join',
-        	'cart' => 'page.php?i=payment-cart',
-        	'history' => 'page.php?i=payment-history',
-        	'orders' => 'page.php?i=payment-orders',
-        	'details' => 'page.php?i=payment-details',
+        $this->CNF = array_merge($this->CNF, array(
+        	'URL_JOIN' => 'page.php?i=payment-join',
+        	'URL_CART' => 'page.php?i=payment-cart',
+        	'URL_HISTORY' => 'page.php?i=payment-history',
+        	'URL_ORDERS' => 'page.php?i=payment-orders',
+        	'URL_DETAILS' => 'page.php?i=payment-details',
+        	'URL_RETURN' => 'page.php?i=payment-cart',
+        	'URL_RETURN_DATA' => BX_DOL_URL_ROOT . $this->getBaseUri() . 'finalize_checkout/',
 
-        	'return' => 'page.php?i=payment-cart',
-        	'return_data' => BX_DOL_URL_ROOT . $this->getBaseUri() . 'finalize_checkout/'
-        );
+        	'KEY_ARRAY_PRICE_SINGLE' => 'price_single',
+        	'KEY_ARRAY_PRICE_RECURRING' => 'price_recurring',
+        ));
 
         $this->_aHtmlIds = array(
         	'history' => array(
@@ -86,6 +88,23 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
         return $sResult;
     }
 
+    public function getPrice($sType, $aItem)
+    {
+    	$fPrice = 0;
+
+		switch($sType) {
+			case BX_PAYMENT_TYPE_SINGLE:
+				$fPrice = $aItem[$this->getKey('KEY_ARRAY_PRICE_SINGLE')];
+				break;
+
+			case BX_PAYMENT_TYPE_RECURRING:
+				$fPrice = $aItem[$this->getKey('KEY_ARRAY_PRICE_RECURRING')];
+				break;
+		}
+
+		return (float)$fPrice;
+    }
+
     public function getModuleId($mixedId)
     {
     	if(is_int($mixedId))
@@ -105,12 +124,12 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
 
     public function descriptorA2S($a) 
     {
-    	return implode($this->getDivider('descriptor'), $a);
+    	return implode($this->getDivider('DIVIDER_DESCRIPTOR'), $a);
     }
 
 	public function descriptorS2A($s) 
     {
-    	return explode($this->getDivider('descriptor'), $s);
+    	return explode($this->getDivider('DIVIDER_DESCRIPTOR'), $s);
     }
 
 	/**
@@ -124,7 +143,7 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
         $aResult = array();
 
         if(is_string($mixed))
-           $aItems = explode($this->getDivider('descriptors'), $mixed);
+           $aItems = explode($this->getDivider('DIVIDER_DESCRIPTORS'), $mixed);
         else if(is_array($mixed))
            $aItems = $mixed;
         else

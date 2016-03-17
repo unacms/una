@@ -28,10 +28,10 @@ class BxPaymentProvider2Checkout extends BxBaseModPaymentProvider implements iBx
         parent::__construct($aConfig);
 
         $this->_bRedirectOnResult = true;
-        $this->_sDataReturnUrl = $this->_oModule->_oConfig->getUrl('return_data') . $this->_sName . '/';
+        $this->_sDataReturnUrl = $this->_oModule->_oConfig->getUrl('URL_RETURN_DATA') . $this->_sName . '/';
     }
 
-    public function initializeCheckout($iPendingId, $aCartInfo, $bRecurring = false, $iRecurringDays = 0)
+    public function initializeCheckout($iPendingId, $aCartInfo)
     {
     	$bTest = (int)$this->getOption('mode') == TUCO_MODE_TEST;
 
@@ -67,8 +67,6 @@ class BxPaymentProvider2Checkout extends BxBaseModPaymentProvider implements iBx
         return $this->_registerCheckout($aData);
     }
 
-	public function checkoutFinished() {}
-
     /**
      *
      * @param $aData - data from payment provider.
@@ -85,7 +83,6 @@ class BxPaymentProvider2Checkout extends BxBaseModPaymentProvider implements iBx
             return array('code' => 2, 'message' => _t('_payment_2co_err_no_vendor_given'));
 
         $aResult = $this->_validateCheckout($aData);
-
         if(empty($aResult['pending_id']))
             return $aResult;
 
@@ -117,16 +114,13 @@ class BxPaymentProvider2Checkout extends BxBaseModPaymentProvider implements iBx
         if((float)$sAmount != (float)$aPending['amount'])
             return array('code' => 5, 'message' => _t('_payment_2co_err_wrong_payment'), 'pending_id' => $iPendingId);
 
-		$sBuyerFirstName = bx_process_input($aData['first_name'], BX_TAGS_STRIP);
-        $sBuyerLastName = bx_process_input($aData['last_name'], BX_TAGS_STRIP);
-        $sBuyerEmail = bx_process_input($aData['email'], BX_TAGS_STRIP);
-
         return array(
-        	'code' => 1, 
+        	'code' => BX_PAYMENT_RESULT_SUCCESS, 
         	'message' => _t('_payment_2co_msg_verified'), 
         	'pending_id' => $iPendingId,
-        	'payer_name' => _t('_payment_txt_buyer_name_mask', $sBuyerFirstName, $sBuyerLastName),
-        	'payer_email' => $sBuyerEmail
+        	'client_name' => _t('_payment_txt_buyer_name_mask', bx_process_input($aData['first_name']), bx_process_input($aData['last_name'])),
+        	'client_email' => bx_process_input($aData['email']),
+        	'paid' => true
         );
     }
 

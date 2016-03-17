@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS `bx_payment_providers` (
   `description` text NOT NULL default '',
   `option_prefix` varchar(32) NOT NULL default '',
   `for_visitor` tinyint(4) NOT NULL default '0',
+  `for_subscription` tinyint(4) NOT NULL default '0',
   `class_name` varchar(128) NOT NULL default '',
   `class_file` varchar(255) NOT NULL  default '',
   PRIMARY KEY(`id`)
@@ -46,13 +47,13 @@ CREATE TABLE IF NOT EXISTS `bx_payment_cart` (
 CREATE TABLE IF NOT EXISTS `bx_payment_transactions` (
   `id` int(11) NOT NULL auto_increment,
   `pending_id` int(11) NOT NULL default '0',
-  `order_id` varchar(16) NOT NULL default '',
   `client_id` int(11) NOT NULL default '0',
   `seller_id` int(11) NOT NULL default '0',
   `module_id` int(11) NOT NULL default '0',  
   `item_id` int(11) NOT NULL default '0',
   `item_count` int(11) NOT NULL default '0',
   `amount` float NOT NULL default '0',
+  `license` varchar(16) NOT NULL default '',
   `date` int(11) NOT NULL default '0',
   PRIMARY KEY(`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
@@ -61,12 +62,13 @@ CREATE TABLE IF NOT EXISTS `bx_payment_transactions_pending` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `client_id` int(11) NOT NULL default '0',
   `seller_id` int(11) NOT NULL default '0',
+  `type` varchar(16) NOT NULL default 'single',
+  `provider` varchar(32) NOT NULL default '',
   `items` text NOT NULL default '',
   `amount` float NOT NULL default '0',
   `order` varchar(32) NOT NULL default '',
   `error_code` varchar(16) NOT NULL default '',
   `error_msg` varchar(255) NOT NULL default '',
-  `provider` varchar(32) NOT NULL default '',
   `date` int(11) NOT NULL default '0',
   `processed` tinyint(4) NOT NULL default '0',
   PRIMARY KEY(`id`)
@@ -81,8 +83,8 @@ CREATE TABLE IF NOT EXISTS `bx_payment_modules` (
 
 
 -- PayPal payment provider
-INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `class_name`) VALUES
-('paypal', '_bx_payment_pp_cpt', '_bx_payment_pp_dsc', 'pp_', 1, 'BxPaymentProviderPayPal');
+INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`,`for_subscription`, `class_name`) VALUES
+('paypal', '_bx_payment_pp_cpt', '_bx_payment_pp_dsc', 'pp_', 1, 0, 'BxPaymentProviderPayPal');
 SET @iProviderId = LAST_INSERT_ID();
 
 INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `caption`, `description`, `extra`, `check_type`, `check_params`, `check_error`, `order`) VALUES
@@ -90,15 +92,14 @@ INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `capti
 (@iProviderId, 'pp_mode', 'select', '_bx_payment_pp_mode_cpt', '_bx_payment_pp_mode_dsc', '1|_bx_payment_pp_mode_live,2|_bx_payment_pp_mode_test', '', '', '', 2),
 (@iProviderId, 'pp_business', 'text', '_bx_payment_pp_business_cpt', '_bx_payment_pp_business_dsc', '', '', '', '', 3),
 (@iProviderId, 'pp_prc_type', 'select', '_bx_payment_pp_prc_type_cpt', '_bx_payment_pp_prc_type_dsc', '1|_bx_payment_pp_prc_type_direct,2|_bx_payment_pp_prc_type_pdt,3|_bx_payment_pp_prc_type_ipn', '', '', '', 4),
-(@iProviderId, 'pp_cnt_type', 'select', '_bx_payment_pp_cnt_type_cpt', '_bx_payment_pp_cnt_type_dsc', '1|_bx_payment_pp_cnt_type_ssl,2|_bx_payment_pp_cnt_type_http', '', '', '', 5),
-(@iProviderId, 'pp_token', 'text', '_bx_payment_pp_token_cpt', '_bx_payment_pp_token_dsc', '', '', '', '', 6),
-(@iProviderId, 'pp_sandbox', 'text', '_bx_payment_pp_sandbox_cpt', '_bx_payment_pp_sandbox_dsc', '', '', '', '', 7),
-(@iProviderId, 'pp_return_url', 'value', '_bx_payment_pp_return_url_cpt', '', '', '', '', '', 8);
+(@iProviderId, 'pp_token', 'text', '_bx_payment_pp_token_cpt', '_bx_payment_pp_token_dsc', '', '', '', '', 5),
+(@iProviderId, 'pp_sandbox', 'text', '_bx_payment_pp_sandbox_cpt', '_bx_payment_pp_sandbox_dsc', '', '', '', '', 6),
+(@iProviderId, 'pp_return_url', 'value', '_bx_payment_pp_return_url_cpt', '', '', '', '', '', 7);
 
 
 -- 2Checkout payment provider
-INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `class_name`) VALUES
-('2checkout', '_bx_payment_2co_cpt', '_bx_payment_2co_dsc', '2co_', 1, 'BxPaymentProvider2Checkout');
+INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_subscription`, `class_name`) VALUES
+('2checkout', '_bx_payment_2co_cpt', '_bx_payment_2co_dsc', '2co_', 1, 0, 'BxPaymentProvider2Checkout');
 SET @iProviderId = LAST_INSERT_ID();
 
 INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `caption`, `description`, `extra`, `check_type`, `check_params`, `check_error`, `order`) VALUES
@@ -111,8 +112,8 @@ INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `capti
 
 
 -- BitPay payment provider
-INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `class_name`) VALUES
-('bitpay', '_bx_payment_bp_cpt', '_bx_payment_bp_dsc', 'bp_', 0, 'BxPaymentProviderBitPay');
+INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_subscription`, `class_name`) VALUES
+('bitpay', '_bx_payment_bp_cpt', '_bx_payment_bp_dsc', 'bp_', 0, 0, 'BxPaymentProviderBitPay');
 SET @iProviderId = LAST_INSERT_ID();
 
 INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `caption`, `description`, `extra`, `check_type`, `check_params`, `check_error`, `order`) VALUES
@@ -123,10 +124,24 @@ INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `capti
 (@iProviderId, 'bp_notification_email', 'text', '_bx_payment_bp_notification_email_cpt', '_bx_payment_bp_notification_email_dsc', '', '', '', '', 5);
 
 
+-- Chargebee payment provider
+INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_subscription`, `class_name`) VALUES
+('chargebee', '_bx_payment_cbee_cpt', '_bx_payment_cbee_dsc', 'cbee_', 1, 1, 'BxPaymentProviderChargebee');
+SET @iProviderId = LAST_INSERT_ID();
+
+INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `caption`, `description`, `extra`, `check_type`, `check_params`, `check_error`, `order`) VALUES
+(@iProviderId, 'cbee_active', 'checkbox', '_bx_payment_cbee_active_cpt', '_bx_payment_cbee_active_dsc', '', 'https', '', '_bx_payment_cbee_active_err', 1);
+(@iProviderId, 'cbee_mode', 'select', '_bx_payment_cbee_mode_cpt', '_bx_payment_cbee_mode_dsc', '1|_bx_payment_cbee_mode_live,2|_bx_payment_cbee_mode_test', '', '', '', 2),
+(@iProviderId, 'cbee_live_site', 'text', '_bx_payment_cbee_live_site_cpt', '_bx_payment_cbee_live_site_dsc', '', '', '', '', 3),
+(@iProviderId, 'cbee_live_api_key', 'text', '_bx_payment_cbee_live_api_key_cpt', '_bx_payment_cbee_live_api_key_dsc', '', '', '', '', 4),
+(@iProviderId, 'cbee_test_site', 'text', '_bx_payment_cbee_test_site_cpt', '_bx_payment_cbee_test_site_dsc', '', '', '', '', 5),
+(@iProviderId, 'cbee_test_api_key', 'text', '_bx_payment_cbee_test_api_key_cpt', '_bx_payment_cbee_test_api_key_dsc', '', '', '', '', 6),
+(@iProviderId, 'cbee_return_url', 'value', '_bx_payment_cbee_return_url_cpt', '', '', '', '', '', 7);
+
 -- GRIDS
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `override_class_name`, `override_class_file`) VALUES
-('bx_payment_grid_orders_history', 'Sql', 'SELECT `tt`.`id` AS `id`, `tt`.`seller_id` AS `seller_id`, `ttp`.`order` AS `transaction`, `tt`.`order_id` AS `license`, `tt`.`amount` AS `amount`, `tt`.`date` AS `date` FROM `bx_payment_transactions` AS `tt` LEFT JOIN `bx_payment_transactions_pending` AS `ttp` ON `tt`.`pending_id`=`ttp`.`id` WHERE 1 ', 'bx_payment_transactions', 'id', 'date', '', '', 100, NULL, 'start', '', 'ttp`.`order,tt`.`order_id,tt`.`amount,tt`.`date', '', 'auto', '', '', 'BxPaymentGridHistory', 'modules/boonex/payment/classes/BxPaymentGridHistory.php'),
-('bx_payment_grid_orders_processed', 'Sql', 'SELECT `tt`.`id` AS `id`, `tt`.`client_id` AS `client_id`, `tt`.`seller_id` AS `seller_id`, `tt`.`module_id` AS `module_id`, `tt`.`item_id` AS `item_id`, `tt`.`item_count` AS `item_count`, `ttp`.`order` AS `transaction`, `ttp`.`error_msg` AS `error_msg`, `ttp`.`provider` AS `provider`, `tt`.`order_id` AS `license`, `tt`.`amount` AS `amount`, `tt`.`date` AS `date` FROM `bx_payment_transactions` AS `tt` LEFT JOIN `bx_payment_transactions_pending` AS `ttp` ON `tt`.`pending_id`=`ttp`.`id` WHERE 1 ', 'bx_payment_transactions', 'id', 'date', '', '', 100, NULL, 'start', '', 'ttp`.`order,tt`.`order_id,tt`.`amount,tt`.`date', '', 'auto', '', '', 'BxPaymentGridProcessed', 'modules/boonex/payment/classes/BxPaymentGridProcessed.php'),
+('bx_payment_grid_orders_history', 'Sql', 'SELECT `tt`.`id` AS `id`, `tt`.`seller_id` AS `seller_id`, `ttp`.`order` AS `transaction`, `tt`.`license` AS `license`, `tt`.`amount` AS `amount`, `tt`.`date` AS `date` FROM `bx_payment_transactions` AS `tt` LEFT JOIN `bx_payment_transactions_pending` AS `ttp` ON `tt`.`pending_id`=`ttp`.`id` WHERE 1 ', 'bx_payment_transactions', 'id', 'date', '', '', 100, NULL, 'start', '', 'ttp`.`order,tt`.`license,tt`.`amount,tt`.`date', '', 'auto', '', '', 'BxPaymentGridHistory', 'modules/boonex/payment/classes/BxPaymentGridHistory.php'),
+('bx_payment_grid_orders_processed', 'Sql', 'SELECT `tt`.`id` AS `id`, `tt`.`client_id` AS `client_id`, `tt`.`seller_id` AS `seller_id`, `tt`.`module_id` AS `module_id`, `tt`.`item_id` AS `item_id`, `tt`.`item_count` AS `item_count`, `ttp`.`order` AS `transaction`, `ttp`.`error_msg` AS `error_msg`, `ttp`.`provider` AS `provider`, `tt`.`license` AS `license`, `tt`.`amount` AS `amount`, `tt`.`date` AS `date` FROM `bx_payment_transactions` AS `tt` LEFT JOIN `bx_payment_transactions_pending` AS `ttp` ON `tt`.`pending_id`=`ttp`.`id` WHERE 1 ', 'bx_payment_transactions', 'id', 'date', '', '', 100, NULL, 'start', '', 'ttp`.`order,tt`.`license,tt`.`amount,tt`.`date', '', 'auto', '', '', 'BxPaymentGridProcessed', 'modules/boonex/payment/classes/BxPaymentGridProcessed.php'),
 ('bx_payment_grid_orders_pending', 'Sql', 'SELECT `tt`.`id` AS `id`, `tt`.`client_id` AS `client_id`, `tt`.`seller_id` AS `seller_id`, `tt`.`items` AS `items`, `tt`.`amount` AS `amount`, `tt`.`order` AS `transaction`, `tt`.`error_msg` AS `error_msg`, `tt`.`provider` AS `provider`, `tt`.`date` AS `date` FROM `bx_payment_transactions_pending` AS `tt` WHERE 1 AND (ISNULL(`tt`.`order`) OR (NOT ISNULL(`tt`.`order`) AND `tt`.`error_code`<>''0'')) ', 'bx_payment_transactions_pending', 'id', 'date', '', '', 100, NULL, 'start', '', 'tt`.`order,tt`.`amount,tt`.`date', '', 'auto', '', '', 'BxPaymentGridPending', 'modules/boonex/payment/classes/BxPaymentGridPending.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES

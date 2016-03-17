@@ -85,15 +85,14 @@ class BxPaymentDetails extends BxDol
         );
 
         $bCollapsed = $this->_bCollapseFirst;
-        $iProviderId = 0;
-        $sProviderName = "";
+        $iProvider = 0;
+        $sProvider = "";
+        $oProvider = null;
         $aUserValues = $this->_oModule->_oDb->getFormData($iUserId);
         foreach($aInputs as $aInput) {
-            $sReturnDataUrl = $this->_oModule->_oConfig->getUrl('return_data') . $sProviderName . '/' . $iUserId;
-
-            if($iProviderId != $aInput['provider_id']) {
-                if(!empty($iProviderId))
-                    $aForm['inputs']['provider_' . $iProviderId . '_end'] = array(
+            if($iProvider != $aInput['provider_id']) {
+                if(!empty($iProvider))
+                    $aForm['inputs']['provider_' . $iProvider . '_end'] = array(
                         'type' => 'block_end'
                     );
 
@@ -104,8 +103,9 @@ class BxPaymentDetails extends BxDol
                     'collapsed' => $bCollapsed
                 );
 
-                $iProviderId = $aInput['provider_id'];
-                $sProviderName = $aInput['provider_name'];
+                $iProvider = $aInput['provider_id'];
+                $sProvider = $aInput['provider_name'];
+                $oProvider = $this->_oModule->getObjectProvider($sProvider);
                 $bCollapsed = true;
             }
 
@@ -116,7 +116,7 @@ class BxPaymentDetails extends BxDol
                 'value' => isset($aUserValues[$aInput['id']]['value']) ? $aUserValues[$aInput['id']]['value'] : '',
                 'info' => _t($aInput['description']),
             	'attrs' => array(
-            		'bx-data-provider' => $iProviderId
+            		'bx-data-provider' => $iProvider
             	),
                 'checker' => array (
                     'func' => $aInput['check_type'],
@@ -147,7 +147,7 @@ class BxPaymentDetails extends BxDol
 
 				 case 'value':
 				 	if(str_replace($aInput['provider_option_prefix'], '', $aInput['name']) == 'return_url')
-				 		$aForm['inputs'][$aInput['name']]['value'] = $sReturnDataUrl;
+				 		$aForm['inputs'][$aInput['name']]['value'] = $oProvider->getReturnDataUrl($iUserId);
 				 	break;
             }
 
@@ -155,7 +155,7 @@ class BxPaymentDetails extends BxDol
                 $aForm['inputs'][$aInput['name']] = array_merge($aForm['inputs'][$aInput['name']], $aAddon);
         }
 
-        $aForm['inputs']['provider_' . $iProviderId . '_end'] = array(
+        $aForm['inputs']['provider_' . $iProvider . '_end'] = array(
             'type' => 'block_end'
         );
         $aForm['inputs']['submit'] = array(
@@ -172,16 +172,17 @@ class BxPaymentDetails extends BxDol
             $aOptions = $this->_oModule->_oDb->getOptions();
             foreach($aOptions as $aOption) {
             	$sValue = bx_get($aOption['name']) !== false ? bx_get($aOption['name']) : '';
-                $this->_oModule->_oDb->updateOption($iUserId, $aOption['id'], bx_process_input($sValue, BX_TAGS_STRIP));
+                $this->_oModule->_oDb->updateOption($iUserId, $aOption['id'], bx_process_input($sValue));
             }
 
             header('Location: ' . $oForm->aFormAttrs['action']);
         }
         else {
         	foreach($oForm->aInputs as $aInput)
-        		if(!empty($aInput['error'])) {
-        			$iProviderId = (int)$aInput['attrs']['bx-data-provider'];
-        			$oForm->aInputs['provider_' . $iProviderId . '_begin']['collapsed'] = false;
+        		if(!empty($aInput['error']) && !empty($aInput['attrs']['bx-data-provider'])) {
+        			$sProviderBlock = 'provider_' . (int)$aInput['attrs']['bx-data-provider'] . '_begin';
+        			if(!empty($oForm->aInputs[$sProviderBlock]))
+        				$oForm->aInputs[$sProviderBlock]['collapsed'] = false;
         		}
 
 			return $oForm->getCode();

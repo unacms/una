@@ -16,9 +16,6 @@ define('PP_PRC_TYPE_DIRECT', 1);
 define('PP_PRC_TYPE_PDT', 2);
 define('PP_PRC_TYPE_IPN', 3);
 
-define('PP_CNT_TYPE_SSL', 1);
-define('PP_CNT_TYPE_HTML', 2);
-
 class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBaseModPaymentProvider
 {
     protected $_sDataReturnUrl;
@@ -30,7 +27,7 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
         parent::__construct($aConfig);
 
         $this->_bRedirectOnResult = false;
-        $this->_sDataReturnUrl = $this->_oModule->_oConfig->getUrl('return_data') . $this->_sName . '/';
+        $this->_sDataReturnUrl = $this->_oModule->_oConfig->getUrl('URL_RETURN_DATA') . $this->_sName . '/';
     }
 
     public function initializeCheckout($iPendingId, $aCartInfo, $bRecurring = false, $iRecurringDays = 0)
@@ -78,7 +75,7 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
                 break;
             case PP_PRC_TYPE_IPN:
                 $aFormData = array_merge($aFormData, array(
-                    'return' => $this->_oConfig->getUrl('return'),
+                    'return' => $this->_oConfig->getUrl('URL_RETURN'),
                     'notify_url' => $this->_sDataReturnUrl . $aCartInfo['vendor_id'],
                     'rm' => '1'
                 ));
@@ -96,8 +93,6 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
 
 		return $this->_registerCheckout($aData);
     }
-
-	public function checkoutFinished() {}
 
     /**
      *
@@ -136,13 +131,10 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
             'error_msg' => _t($aResult['message'])
         ));
 
-        $sBuyerFirstName = bx_process_input($aData['first_name']);
-        $sBuyerLastName = bx_process_input($aData['last_name']);
-        $sBuyerEmail = bx_process_input($aData['payer_email']);
-
         $aResult['pending_id'] = $iPendingId;
-        $aResult['payer_name'] = _t($this->_sLangsPrefix . 'txt_buyer_name_mask', $sBuyerFirstName, $sBuyerLastName); 
-		$aResult['payer_email'] = $sBuyerEmail;
+        $aResult['client_name'] = _t($this->_sLangsPrefix . 'txt_buyer_name_mask', bx_process_input($aData['first_name']), bx_process_input($aData['last_name'])); 
+		$aResult['client_email'] = bx_process_input($aData['payer_email']);
+		$aResult['paid'] = true;
         return $aResult;
     }
 
@@ -231,12 +223,9 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
 
         $iErrCode = 0;
         $sErrMessage = "";
-        if($this->getOption('cnt_type') == PP_CNT_TYPE_SSL)
-            $rSocket = fsockopen("ssl://" . $sConnectionUrl, 443, $iErrCode, $sErrMessage, 60);
-        else
-            $rSocket = fsockopen("tcp://" . $sConnectionUrl, 80, $iErrCode, $sErrMessage, 60);
 
-        if(!$rSocket)
+        $rSocket = fsockopen("ssl://" . $sConnectionUrl, 443, $iErrCode, $sErrMessage, 60);
+		if(!$rSocket)
             return array('code' => 6, 'message' => $this->_sLangsPrefix . 'err_cannot_validate');
 
         fputs($rSocket, $sHeader);

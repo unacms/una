@@ -29,11 +29,12 @@ class BxPaymentProviderBitPay extends BxBaseModPaymentProvider implements iBxBas
         parent::__construct($aConfig);
 
         $this->_bRedirectOnResult = false;
+        $this->_sLogFile = BX_DIRECTORY_PATH_TMP . 'bx_pp_' . $this->_sName . '.log';
 
         $this->_initializeOptions();
     }
 
-    public function initializeCheckout($iPendingId, $aCartInfo, $bRecurring = false, $iRecurringDays = 0)
+    public function initializeCheckout($iPendingId, $aCartInfo)
     {
     	$this->aBpOptions['redirectURL'] .= $aCartInfo['vendor_id'];
 
@@ -105,13 +106,18 @@ class BxPaymentProviderBitPay extends BxBaseModPaymentProvider implements iBxBas
 
         //--- Process purchased items in the database if STATUS became CONFIRMED (HIGH and MEDIUM speed), COMPLETE (LOW speed)
 		$sSpeed = $this->aBpOptions['transactionSpeed'];
-		if((in_array($sSpeed, array(BP_SPEED_HIGH, BP_SPEED_MEDIUM)) && $sStatus == BP_STATUS_CONFIRMED) || ($sSpeed == BP_SPEED_LOW && $sStatus == BP_STATUS_COMPLETE))		
-	        return array('code' => 1, 'message' => '', 'pending_id' => $iPendingId);
+		if(!((in_array($sSpeed, array(BP_SPEED_HIGH, BP_SPEED_MEDIUM)) && $sStatus == BP_STATUS_CONFIRMED) || ($sSpeed == BP_SPEED_LOW && $sStatus == BP_STATUS_COMPLETE)))
+			return array('code' => 7, 'message' => _t('_payment_bp_err_no_confirmation_given'));		
 
-		return array('code' => 7, 'message' => _t('_payment_bp_err_no_confirmation_given'));
+		return array(
+			'code' => BX_PAYMENT_RESULT_SUCCESS, 
+			'message' => '', 
+			'pending_id' => $iPendingId,
+			'paid' => true
+		);
     }
 
-    public function checkoutFinished()
+    public function finalizedCheckout()
     {
     	return array(
     		'message' => _t('_payment_bp_msg_checkout_finished')
@@ -175,10 +181,10 @@ class BxPaymentProviderBitPay extends BxBaseModPaymentProvider implements iBxBas
 			$response = $this->_curl('https://bitpay.com/api/invoice/', $options['apiKey'], $post);
 
 			if($this->aBpOptions['useLogging']) {
-				$this->_log('Create Invoice: ');
-				$this->_log('-- Data: ' . $post);
-				$this->_log('Response: ');
-				$this->_log($response);
+				$this->log('Create Invoice: ');
+				$this->log('-- Data: ' . $post);
+				$this->log('Response: ');
+				$this->log($response);
 			}
 
 			return $response;
@@ -186,7 +192,7 @@ class BxPaymentProviderBitPay extends BxBaseModPaymentProvider implements iBxBas
 		}
 		catch (Exception $e) {
 			if($this->aBpOptions['useLogging'])
-				$this->_log('Error: ' . $e->getMessage());
+				$this->log('Error: ' . $e->getMessage());
 
 			return array('error' => $e->getMessage());
 		}
@@ -218,7 +224,7 @@ class BxPaymentProviderBitPay extends BxBaseModPaymentProvider implements iBxBas
 		}
 		catch (Exception $e) {
 			if($this->aBpOptions['useLogging'])
-				$this->_log('Error: ' . $e->getMessage());
+				$this->log('Error: ' . $e->getMessage());
 
 			return 'Error: ' . $e->getMessage();
 		}
@@ -248,7 +254,7 @@ class BxPaymentProviderBitPay extends BxBaseModPaymentProvider implements iBxBas
 		}
 		catch (Exception $e) {
 			if($this->aBpOptions['useLogging'])
-				$this->_log('Error: ' . $e->getMessage());
+				$this->log('Error: ' . $e->getMessage());
 
 			return 'Error: ' . $e->getMessage();
 		}
@@ -281,7 +287,7 @@ class BxPaymentProviderBitPay extends BxBaseModPaymentProvider implements iBxBas
 		}
 		catch (Exception $e) {
 			if($this->aBpOptions['useLogging'])
-				$this->_log('Error: ' . $e->getMessage());
+				$this->log('Error: ' . $e->getMessage());
 			return 'Error: ' . $e->getMessage();
 		}
 	}
@@ -300,7 +306,7 @@ class BxPaymentProviderBitPay extends BxBaseModPaymentProvider implements iBxBas
 
 		// url where bit-pay server should send update notifications.  See API doc for more details.
 		// example: $bpNotificationUrl = 'http://www.example.com/callback.php';
-		$this->aBpOptions['notificationURL'] = $this->_oModule->_oConfig->getUrl('return_data', array(), true) . $this->_sName . '/';
+		$this->aBpOptions['notificationURL'] = $this->_oModule->_oConfig->getUrl('URL_RETURN_DATA', array(), true) . $this->_sName . '/';
 
 		// url where the customer should be directed to after paying for the order
 		// example: $bpNotificationUrl = 'http://www.example.com/confirmation.php';
@@ -323,10 +329,6 @@ class BxPaymentProviderBitPay extends BxBaseModPaymentProvider implements iBxBas
 		// transaction speed: low/medium/high.   See API docs for more details.
 		$this->aBpOptions['transactionSpeed'] = $this->getOption('transaction_speed'); 
 
-		// Logfile for use by the bpLog function.  Note: ensure the web server process has write access
-		// to this file and/or directory!
-		$this->aBpOptions['logFile'] = $GLOBALS['dir']['tmp'] . 'bx_payment_bp.log';
-
 		// Change to 'true' if you would like automatic logging of invoices and errors.
 		// Otherwise you will have to call the bpLog function manually to log any information.
 		$this->aBpOptions['useLogging'] = true;
@@ -343,29 +345,29 @@ class BxPaymentProviderBitPay extends BxBaseModPaymentProvider implements iBxBas
 	 */
 	protected function _verifyNotification() {
 		try {
-			$this->_log('Notification received: ' . date("m.d.y H:i:s"));
+			$this->log('Notification received: ' . date("m.d.y H:i:s"));
 
 			$post = file_get_contents("php://input");
 			if(!$post) {
-				$this->_log('Error: No post data');
+				$this->log('Error: No post data');
 				return false;
 			}
 
 			$json = json_decode($post, true);
-			$this->_log('-- Data: ' . $post);
-			$this->_log($json);
+			$this->log('-- Data: ' . $post);
+			$this->log($json);
 
 			if(is_string($json))
 				return false;
 
 			if(!array_key_exists('posData', $json)) {
-				$this->_log('Error: No posData');
+				$this->log('Error: No posData');
 				return false;
 			}
 
 			$json['posData'] = json_decode($json['posData'], true);
 			if(empty($json['posData']) || !is_array($json['posData'])) {
-				$this->_log('Error: Empty posData');
+				$this->log('Error: Empty posData');
 				return false;
 			}
 
@@ -373,7 +375,7 @@ class BxPaymentProviderBitPay extends BxBaseModPaymentProvider implements iBxBas
 		}
 		catch (Exception $e) {
 			if($this->aBpOptions['useLogging'])
-				$this->_log('Error: ' . $e->getMessage());
+				$this->log('Error: ' . $e->getMessage());
 
 			return false;
 		}
@@ -390,7 +392,7 @@ class BxPaymentProviderBitPay extends BxBaseModPaymentProvider implements iBxBas
 	protected function _verifyPosData($aPosData) {
 		if(!$this->aBpOptions['verifyPos']) {
 			if(empty($aPosData['d']) || !is_array($aPosData['d'])) {
-				$this->_log('Error: Payment data cannot be found.');
+				$this->log('Error: Payment data cannot be found.');
 				return false;
 			}
 
@@ -398,7 +400,7 @@ class BxPaymentProviderBitPay extends BxBaseModPaymentProvider implements iBxBas
 		}
 
 		if($this->_hash(serialize($aPosData['d']), $this->aBpOptions['apiKey']) != $aPosData['h']) {
-			$this->_log('Error: Authentication failed (bad posData hash).');
+			$this->log('Error: Authentication failed (bad posData hash).');
 			return false;
 		}
 
@@ -434,7 +436,7 @@ class BxPaymentProviderBitPay extends BxBaseModPaymentProvider implements iBxBas
 		} 
 		catch (Exception $e) {
 			if($this->aBpOptions['useLogging'])
-				$this->_log('Error: ' . $e->getMessage());
+				$this->log('Error: ' . $e->getMessage());
 
 			return array('error' => $e->getMessage());
 		}
@@ -456,7 +458,7 @@ class BxPaymentProviderBitPay extends BxBaseModPaymentProvider implements iBxBas
 		}
 		catch (Exception $e) {
 			if($this->aBpOptions['useLogging'])
-				$this->_log('Error: ' . $e->getMessage());
+				$this->log('Error: ' . $e->getMessage());
 
 			return 'Error: ' . $e->getMessage();
 		}
@@ -475,7 +477,7 @@ class BxPaymentProviderBitPay extends BxBaseModPaymentProvider implements iBxBas
 		if(!isset($url) || trim($url) == '' || !isset($apiKey) || trim($apiKey) == '') {
 			// Invalid parameter specified
 			if($this->aBpOptions['useLogging'])
-				$this->_log('Error: You must supply non-empty url and apiKey parameters.');
+				$this->log('Error: You must supply non-empty url and apiKey parameters.');
 
 	    	return array('error' => 'You must supply non-empty url and apiKey parameters.');
 		}
@@ -515,14 +517,14 @@ class BxPaymentProviderBitPay extends BxBaseModPaymentProvider implements iBxBas
 				if($responseString == false) {
 					$response = array('error' => curl_error($curl));
 					if($this->aBpOptions['useLogging'])
-						$this->_log('Error: ' . curl_error($curl));
+						$this->log('Error: ' . curl_error($curl));
 				} 
 				else {
 					$response = json_decode($responseString, true);
 					if (!$response) {
 						$response = array('error' => 'invalid json: '.$responseString);
 						if($this->aBpOptions['useLogging'])
-							$this->_log('Error - Invalid JSON: ' . $responseString);
+							$this->log('Error - Invalid JSON: ' . $responseString);
 					}
 				}
 
@@ -533,7 +535,7 @@ class BxPaymentProviderBitPay extends BxBaseModPaymentProvider implements iBxBas
 				curl_close($curl);
 	
 				if($this->aBpOptions['useLogging'])
-					$this->_log('Invalid data found in apiKey value passed to Bitpay::curl method. (Failed: base64_encode(apikey))');
+					$this->log('Invalid data found in apiKey value passed to Bitpay::curl method. (Failed: base64_encode(apikey))');
 
 				return array('error' => 'Invalid data found in apiKey value passed to Bitpay::curl method. (Failed: base64_encode(apikey))');
 			}
@@ -541,44 +543,9 @@ class BxPaymentProviderBitPay extends BxBaseModPaymentProvider implements iBxBas
 		catch (Exception $e) {
 			@curl_close($curl);
 			if($this->aBpOptions['useLogging'])
-			$this->_log('Error: ' . $e->getMessage());
+			$this->log('Error: ' . $e->getMessage());
 			return array('error' => $e->getMessage());
 		}
-	}
-
-	/**
-	 *
-	 * Writes $contents to a log file specified in the bp_options file or, if missing,
-	 * defaults to a standard filename of 'bplog.txt'.
-	 *
-	 * @param mixed $contents
-	 * @return
-	 * @throws Exception $e 
-	 *
-	 */
-	protected function _log($contents) {
-		try {
-			if(isset($this->aBpOptions['logFile']) && $this->aBpOptions['logFile'] != '') {
-				$file = $this->aBpOptions['logFile'];
-	    	} 
-	    	else {
-				// Fallback to using a default logfile name in case the variable is
-				// missing or not set.
-				$file = dirname(__FILE__) . '/bplog.txt';
-			}
-
-			file_put_contents($file, date('m-d H:i:s').": ", FILE_APPEND);
-
-			if (is_array($contents))
-				$contents = var_export($contents, true);	
-			else if (is_object($contents))
-				$contents = json_encode($contents);
-
-			file_put_contents($file, $contents."\n", FILE_APPEND);
-	  	}
-	  	catch (Exception $e) {
-			echo 'Error: ' . $e->getMessage();
-	  	}
 	}
 }
 

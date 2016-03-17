@@ -54,7 +54,7 @@ class BxPaymentGridPending extends BxBaseModPaymentGridOrders
 				'error_msg' => 'Manually processed'
 			));
 
-            if($this->_oModule->getObjectCart()->updateInfo($iId))
+            if($this->_oModule->registerPayment($iId))
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
             else
                 $aRes = array('msg' => _t($this->_sLangsPrefix . 'err_cannot_perform'));

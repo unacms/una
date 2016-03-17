@@ -3,7 +3,7 @@
         <div class="bx-payment-box bx-def-border bx-def-margin-top-auto">
             <div class="bx-payment-box-cpt bx-def-padding-sec-left">
                 <div class="bx-payment-box-collapse">
-                	<a href="javascript:void(0)" onclick="javascript:__js_object__.toggle(this)">
+                	<a href="javascript:void(0)" onclick="javascript:__js_object__.toggleCartVendor(this)">
                 		<i class="sys-icon caret-down"></i>
                 	</a>
                 </div>
@@ -13,7 +13,7 @@
                 <bx_if:show_text>__txt_shopping_cart__ (__items_count__) - __items_price__ __vendor_currency_code__</bx_if:show_text>
             </div>
             <div class="bx-payment-box-cnt bx-def-border-top">
-                <form id="items_from___vendor_id__" name="items_from___vendor_id__" method="POST" action="__process_url__" onsubmit="javascript:return __js_object__.onSubmit(this)">
+                <form id="items_from___vendor_id__" name="items_from___vendor_id__" method="POST" action="__process_url__" onsubmit="javascript:return __js_object__.onCartSubmit(this)">
                     <input type="hidden" name="vendor_id" value="__vendor_id__" />
                     <div class="bx-payment-vendor-icon">
                     	<img src="__vendor_icon__" />

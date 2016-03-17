@@ -171,6 +171,8 @@
 
 
 	<!-- Other -->
+	<string name="_bx_payment_txt_add_to_cart"><![CDATA[Add to Cart]]></string>
+	<string name="_bx_payment_txt_subscribe"><![CDATA[Subscribe]]></string>
 	<string name="_bx_payment_txt_shopping_cart"><![CDATA[{0}'s cart]]></string>
 	<string name="_bx_payment_txt_payment_to"><![CDATA[Payment to {0} for:]]></string>
 	<string name="_bx_payment_txt_client"><![CDATA[Client]]></string>
@@ -213,10 +215,6 @@
 	<string name="_bx_payment_pp_prc_type_direct"><![CDATA[direct]]></string>
 	<string name="_bx_payment_pp_prc_type_pdt"><![CDATA[PDT]]></string>
 	<string name="_bx_payment_pp_prc_type_ipn"><![CDATA[IPN]]></string>
-	<string name="_bx_payment_pp_cnt_type_cpt"><![CDATA[Connection type]]></string>
-	<string name="_bx_payment_pp_cnt_type_dsc"><![CDATA[The type of connection to be used to transfer data]]></string>
-	<string name="_bx_payment_pp_cnt_type_ssl"><![CDATA[SSL]]></string>
-	<string name="_bx_payment_pp_cnt_type_http"><![CDATA[HTTP]]></string>
 	<string name="_bx_payment_pp_token_cpt"><![CDATA[Identity token]]></string>
 	<string name="_bx_payment_pp_token_dsc"><![CDATA[Identity token]]></string>
 	<string name="_bx_payment_pp_sandbox_cpt"><![CDATA[Sandbox]]></string>
@@ -286,4 +284,27 @@
 	<string name="_bx_payment_bp_err_no_confirmation_given"><![CDATA[Payment is waiting for full confirmation from the Bitcoin network.]]></string>
 	<string name="_bx_payment_bp_msg_checkout_finished"><![CDATA[A payment has been confirmed. Once the transaction is fully confirmed on the Bitcoin network, the payment will be processed automatically here. Then the purchased product(s) will be displayed in shopping cart history.<br /><b>Note.</b> If it doesn't happen for some reason, you need to contact with product\'s vendor and provide him with your payment's details. He'll be able to process payment manually if the payment was received.]]></string>
 	<string name="_bx_payment_txt_cart_bitpay"><![CDATA[BitPay]]></string>
+
+	<!-- Chargebee payment provider -->
+	<string name="_bx_payment_cbee_cpt"><![CDATA[Chargebee]]></string>
+	<string name="_bx_payment_cbee_dsc"><![CDATA[Chargebee payment provider]]></string>
+	<string name="_bx_payment_cbee_active_cpt"><![CDATA[Active]]></string>
+	<string name="_bx_payment_cbee_active_dsc"><![CDATA[Activate(Deactivate) provider]]></string>
+	<string name="_bx_payment_cbee_active_err"><![CDATA[You should have SSL certificate (HTTPS connection) to activate and use Chargebee on your site.]]></string>
+	<string name="_bx_payment_cbee_mode_cpt"><![CDATA[Mode]]></string>
+	<string name="_bx_payment_cbee_mode_dsc"><![CDATA[Mode to process payments]]></string>
+	<string name="_bx_payment_cbee_mode_live"><![CDATA[live]]></string>
+	<string name="_bx_payment_cbee_mode_test"><![CDATA[test]]></string>
+	<string name="_bx_payment_cbee_live_site_cpt"><![CDATA[Site (live)]]></string>
+	<string name="_bx_payment_cbee_live_site_dsc"><![CDATA[Your site name registered in Chargebee for 'live' mode]]></string>
+	<string name="_bx_payment_cbee_live_api_key_cpt"><![CDATA[API Key (live)]]></string>
+	<string name="_bx_payment_cbee_live_api_key_dsc"><![CDATA[Your Chargebee API Access key for 'live' mode]]></string>
+	<string name="_bx_payment_cbee_test_site_cpt"><![CDATA[Site (test)]]></string>
+	<string name="_bx_payment_cbee_test_site_dsc"><![CDATA[Your site name registered in Chargebee for 'test' mode]]></string>
+	<string name="_bx_payment_cbee_test_api_key_cpt"><![CDATA[API Key (test)]]></string>
+	<string name="_bx_payment_cbee_test_api_key_dsc"><![CDATA[Your Chargebee API Access key for 'test' mode]]></string>
+	<string name="_bx_payment_cbee_return_url_cpt"><![CDATA[Data return URL]]></string>
+	<string name="_bx_payment_cbee_msg_subscribed"><![CDATA[Subscription was successfully created.]]></string>
+	<string name="_bx_payment_txt_cart_chargebee"><![CDATA[Chargebee]]></string>
+
 </resources>

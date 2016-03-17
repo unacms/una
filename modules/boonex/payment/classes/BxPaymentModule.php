@@ -9,6 +9,9 @@
  * @{
  */
 
+define('BX_PAYMENT_TYPE_SINGLE', 'single');
+define('BX_PAYMENT_TYPE_RECURRING', 'recurring');
+
 define('BX_PAYMENT_ORDERS_TYPE_PENDING', 'pending');
 define('BX_PAYMENT_ORDERS_TYPE_PROCESSED', 'processed');
 define('BX_PAYMENT_ORDERS_TYPE_SUBSCRIPTION', 'subscription');
@@ -147,7 +150,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
      * Check transaction(s) in database which satisty all conditions.
      *
      * @param array $aConditions an array of pears('key' => 'value'). Available keys are the following:
-     * a. order_id - internal order ID (string)
+     * a. license - internal license (string)
      * b. client_id - client's ID (integer)
      * c. seller_id - seller's ID (integer)
      * d. module_id - modules's where the purchased product is located. (integer)
@@ -182,12 +185,12 @@ class BxPaymentModule extends BxBaseModPaymentModule
 			$sProvider = bx_process_input(bx_get('provider'));
 			$aItems = bx_get('items');
 
-			$sError = $this->serviceInitializeCheckout($iVendorId, $sProvider, $aItems);
-			if(!empty($sError))
-	    		return $this->_oTemplate->displayPageCodeError($sError, false);
+			$mixedResult = $this->serviceInitializeCheckout(BX_PAYMENT_TYPE_SINGLE, $iVendorId, $sProvider, $aItems);
+			if($mixedResult !== true)
+	    		return $this->_oTemplate->displayPageCodeError($mixedResult);
 		}
 
-        header('Location: ' . $this->_oConfig->getUrl('cart'));
+        header('Location: ' . $this->_oConfig->getUrl('URL_CART'));
         exit;
     }
 
@@ -215,34 +218,42 @@ class BxPaymentModule extends BxBaseModPaymentModule
 		echoJson($aResult);
     }
 
+    public function actionSubscribe($iVendorId, $iModuleId, $iItemId, $iItemCount = 1)
+    {
+        $aResult = $this->getObjectCart()->serviceSubscribe($iVendorId, $iModuleId, $iItemId, $iItemCount);
+		echoJson($aResult);
+    }
+
 
     /**
      * Payment Processing Methods
      */
-	public function serviceInitializeCheckout($iVendorId, $sProvider, $aItems = array())
+	public function serviceInitializeCheckout($sType, $iVendorId, $sProvider, $aItems = array())
 	{
 		if(!is_array($aItems))
 			$aItems = array($aItems);
 
 		$iVendorId = (int)$iVendorId;
         if($iVendorId == BX_PAYMENT_EMPTY_ID)
-            return MsgBox(_t($this->_sLangsPrefix . 'err_unknown_vendor'));
+            return $this->_sLangsPrefix . 'err_unknown_vendor';
 
 		$oProvider = $this->getObjectProvider($sProvider, $iVendorId);
         if($oProvider === false)
-        	return MsgBox(_t($this->_sLangsPrefix . 'err_incorrect_provider'));
+        	return $this->_sLangsPrefix . 'err_incorrect_provider';
 
-        $aInfo = $this->getObjectCart()->getInfo($this->_iUserId, $iVendorId, $aItems);
+        $aInfo = $this->getObjectCart()->getInfo($sType, $this->_iUserId, $iVendorId, $aItems);
         if(empty($aInfo) || $aInfo['vendor_id'] == BX_PAYMENT_EMPTY_ID || empty($aInfo['items']))
-            return MsgBox(_t($this->_sLangsPrefix . 'err_empty_order'));
+            return $this->_sLangsPrefix . 'err_empty_order';
 
 		/*
 		 * Process FREE (price = 0) items for LOGGED IN members
 		 * WITHOUT processing via payment provider.
 		 */
 		$bProcessedFree = false;
+		$sKeyPriceSingle = $this->_oConfig->getKey('KEY_ARRAY_PRICE_SINGLE');
+		$sKeyPriceRecurring = $this->_oConfig->getKey('KEY_ARRAY_PRICE_RECURRING');
 		foreach($aInfo['items'] as $iIndex => $aItem)
-			if((int)$aInfo['client_id'] != 0 && (float)$aItem['price'] == 0) {
+			if((int)$aInfo['client_id'] != 0 && (float)$aItem[$sKeyPriceSingle] == 0 && (float)$aItem[$sKeyPriceRecurring] == 0) {
 				$aItemInfo = $this->callRegisterCartItem((int)$aItem['module_id'], array($aInfo['client_id'], $aInfo['vendor_id'], $aItem['id'], $aItem['quantity'], $this->_oConfig->getLicense()));
 	            if(is_array($aItemInfo) && !empty($aItemInfo))
 	            	$bProcessedFree = true;
@@ -256,11 +267,11 @@ class BxPaymentModule extends BxBaseModPaymentModule
 			}
 
 		if(empty($aInfo['items']))
-            return MsgBox(_t($this->_sLangsPrefix . ($bProcessedFree ? 'msg_successfully_processed_free' : 'err_empty_order')));
+            return $this->_sLangsPrefix . ($bProcessedFree ? 'msg_successfully_processed_free' : 'err_empty_order');
 
-        $iPendingId = $this->_oDb->insertOrderPending($this->_iUserId, $sProvider, $aInfo);
+        $iPendingId = $this->_oDb->insertOrderPending($this->_iUserId, $sType, $sProvider, $aInfo);
         if(empty($iPendingId))
-            return MsgBox(_t($this->_sLangsPrefix . 'err_access_db'));
+            return $this->_sLangsPrefix . 'err_access_db';
 
 		/*
 		 * Perform Join WITHOUT processing via payment provider
@@ -270,7 +281,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
 			reset($aInfo['items']);
 			$aItem = current($aInfo['items']);
 
-			if(!empty($aItem) && $aItem['price'] == 0) {
+			if(!empty($aItem) && $this->_oConfig->getPrice($sType, $aItem)) {
 				$this->_oDb->updateOrderPending($iPendingId, array(
 		            'order' => $this->_oConfig->getLicense(),
 		            'error_code' => '1',
@@ -281,11 +292,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
 			}
 		}
 
-		$sError = $oProvider->initializeCheckout($iPendingId, $aInfo);
-		if(!empty($sError))
-			return MsgBox($sError);
-
-        return true;
+		return $oProvider->initializeCheckout($iPendingId, $aInfo);
 	}
 
     public function actionFinalizeCheckout($sProvider, $mixedVendorId = "")
@@ -304,31 +311,38 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
 		//--- Check "Pay Before Join" situation
 		if((int)$aPending['client_id'] == 0)
-			$this->getObjectJoin()->performJoin((int)$aPending['id'], $aResult);
+			$this->getObjectJoin()->performJoin((int)$aPending['id'], isset($aResult['client_name']) ? $aResult['client_name'] : '', isset($aResult['client_email']) ? $aResult['client_email'] : '');
 
 		//--- Register payment for purchased items in associated modules 
-		$this->getObjectCart()->updateInfo($aPending);
+		if(!empty($aResult['paid']))
+			$this->registerPayment($aPending);
 
 		if($oProvider->needRedirect()) {
-			header('Location: ' . $this->_oConfig->getUrl('return'));
+			header('Location: ' . $this->_oConfig->getUrl('URL_RETURN'));
 			exit;
 		}
 
-		return $this->_oTemplate->displayPageCodeResponse($aResult['message']);
+		$this->_oTemplate->displayPageCodeResponse($aResult['message']);
     }
 
-    public function actionCheckoutFinished($sProvider, $mixedVendorId = "")
+    public function actionFinalizedCheckout($sProvider, $mixedVendorId = "")
     {
         $oProvider = $this->getObjectProvider($sProvider, $mixedVendorId);
         if($oProvider === false)
         	return $this->_oTemplate->displayPageCodeError($this->_sLangsPrefix . 'err_incorrect_provider');
 
-        $aResult = $oProvider->checkoutFinished();
-
+        $aResult = $oProvider->finalizedCheckout();
         $this->_oTemplate->displayPageCodeResponse($aResult['message']);
-        exit;
     }
 
+    public function actionProcessEvent($sProvider, $mixedVendorId = "")
+    {
+    	$oProvider = $this->getObjectProvider($sProvider, $mixedVendorId);
+        if($oProvider === false)
+        	return $this->_oTemplate->displayPageCodeError($this->_sLangsPrefix . 'err_incorrect_provider');
+
+		$oProvider->processEvent();
+    }
 
     public function onProfileJoin($iProfileId)
     {
@@ -359,6 +373,90 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
         return $aCheckResult[CHECK_ACTION_MESSAGE];
     }
+
+	public function registerPayment($mixedPending)
+    {
+    	$aPending = is_array($mixedPending) ? $mixedPending : $this->_oDb->getOrderPending(array('type' => 'id', 'id' => (int)$mixedPending));
+    	if(empty($aPending) || !is_array($aPending))
+    		return false;
+
+		if((int)$aPending['processed'] == 1)
+			return true;
+
+		$sType = $aPending['type'];
+		$bTypeSingle = $sType == BX_PAYMENT_TYPE_SINGLE;
+
+		$iClientId = (int)$aPending['client_id'];
+		$sLicense = $this->_oConfig->getLicense();
+
+		$sCartItems = '';
+		if($bTypeSingle)
+			$sCartItems = $this->_oDb->getCartItems($iClientId);
+
+        $aItems = $this->_oConfig->descriptorsM2A($aPending['items']);
+        foreach($aItems as $aItem) {
+        	$sMethod = $bTypeSingle ? 'callRegisterCartItem' : 'callRegisterSubscriptionItem';
+        	$aItemInfo = $this->$sMethod((int)$aItem['module_id'], array($aPending['client_id'], $aPending['seller_id'], $aItem['item_id'], $aItem['item_count'], $aPending['order'], $sLicense));
+            if(empty($aItemInfo) || !is_array($aItemInfo))
+                continue;
+
+            $this->_oDb->insertOrderProcessed(array(
+                'pending_id' => $aPending['id'],
+                'client_id' => $aPending['client_id'],
+                'seller_id' => $aPending['seller_id'],
+                'module_id' => $aItem['module_id'],
+                'item_id' => $aItem['item_id'],
+                'item_count' => $aItem['item_count'],
+                'amount' => $this->_oConfig->getPrice($sType, $aItem) * $aItem['item_count'],
+            	'license' => $sLicense,
+            ));
+
+            if($bTypeSingle)
+            	$sCartItems = trim(preg_replace("'" . $this->_oConfig->descriptorA2S($aItem) . ":?'", "", $sCartItems), ":");
+        }
+
+        if($bTypeSingle)
+			$this->_oDb->setCartItems($iClientId, $sCartItems);
+
+        return $this->_oDb->updateOrderPending($aPending['id'], array('processed' => 1));
+    }
+
+	public function refundPayment($mixedPending)
+	{
+		$aPending = is_array($mixedPending) ? $mixedPending : $this->_oDb->getOrderPending(array('type' => 'id', 'id' => (int)$mixedPending));
+    	if(empty($aPending) || !is_array($aPending))
+    		return false;
+
+		$bTypeSingle = $aPending['type'] == BX_PAYMENT_TYPE_SINGLE;
+
+		$iCanceled = 0;
+		$aOrders = $this->_oDb->getOrderProcessed(array('type' => 'pending_id', 'pending_id' => (int)$aPending['id']));
+		foreach($aOrders as $aOrder) {
+			$sMethod = $bTypeSingle ? 'callUnregisterCartItem' : 'callUnregisterSubscriptionItem';
+			$bResult = $this->$sMethod((int)$aOrder['module_id'], array($aOrder['client_id'], $aOrder['seller_id'], $aOrder['item_id'], $aOrder['item_count'], $aPending['order'], $aOrder['license']));
+			if(!$bResult)
+                continue;
+
+            if($this->_oDb->deleteOrderProcessed($aOrder['id']))
+            	$iCanceled++;
+		}
+
+		if($iCanceled != count($aOrders))
+			return false;
+
+		return $this->_oDb->deleteOrderPending($aPending['id']);
+	}
+
+	public function cancelSubscription($mixedPending)
+	{
+		$aPending = is_array($mixedPending) ? $mixedPending : $this->_oDb->getOrderPending(array('type' => 'id', 'id' => (int)$mixedPending));
+    	if(empty($aPending) || !is_array($aPending) || $aPending['type'] != BX_PAYMENT_TYPE_RECURRING)
+    		return false;
+
+		$aItems = $this->_oConfig->descriptorsM2A($aPending['items']);
+        foreach($aItems as $aItem)
+			$this->callCancelSubscriptionItem((int)$aItem['module_id'], array($aPending['client_id'], $aPending['seller_id'], $aItem['item_id'], $aItem['item_count'], $aPending['order']));
+	}
 }
 
 /** @} */

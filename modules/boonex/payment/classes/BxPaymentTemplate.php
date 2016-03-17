@@ -77,6 +77,34 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
         ));
     }
 
+	public function displaySubscribeJs($iVendorId, $iModuleId, $iItemId, $iItemCount = 1, $bWrapped = true)
+    {
+        $sJsCode = $this->displayCartJs($bWrapped);
+        $sJsMethod = $this->parseHtmlByName('subscribe_js.html', array(
+            'js_object' => $this->_oConfig->getJsObject('cart'),
+            'vendor_id' => $iVendorId,
+            'module_id' => $iModuleId,
+            'item_id' => $iItemId,
+            'item_count' => $iItemCount
+        ));
+
+        return array($sJsCode, $sJsMethod);
+    }
+
+    public function displaySubscribeLink($iVendorId, $iModuleId, $iItemId, $iItemCount = 1)
+    {
+        $this->addJsCssCart();
+        return $this->parseHtmlByName('subscribe.html', array(
+        	'js_object' => $this->_oConfig->getJsObject('cart'),
+        	'js_content' => $this->displayJsCode('cart'),
+        	'txt_add_to_cart' => _t($this->_sLangsPrefix . 'txt_subscribe'),
+            'vendor_id' => $iVendorId,
+            'module_id' => $iModuleId,
+            'item_id' => $iItemId,
+            'item_count' => $iItemCount,
+        ));
+    }
+
 	public function displayBlockCart($aCartInfo, $iVendorId = BX_PAYMENT_EMPTY_ID)
     {
     	if(empty($aCartInfo))
@@ -91,13 +119,15 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
         foreach($aCartInfo as $aVendor) {
             //--- Get Providers ---//
             $aProviders = array();
-            $aVendorProviders = $this->_oDb->getVendorInfoProviders($aVendor['vendor_id']);
-            foreach($aVendorProviders as $aProvider)
-                $aProviders[] = array(
-                    'name' => $aProvider['name'],
-                    'caption' => _t($this->_sLangsPrefix . 'txt_cart_' . $aProvider['name']),
-                    'checked' => empty($aProviders) ? 'checked="checked"' : ''
-                );
+            $aVendorProviders = $this->_oDb->getVendorInfoProvidersCart($aVendor['vendor_id']);
+
+            if(!empty($aVendorProviders) && is_array($aVendorProviders))
+	            foreach($aVendorProviders as $aProvider)
+	                $aProviders[] = array(
+	                    'name' => $aProvider['name'],
+	                    'caption' => _t($this->_sLangsPrefix . 'txt_cart_' . $aProvider['name']),
+	                    'checked' => empty($aProviders) ? 'checked="checked"' : ''
+	                );
 
             //--- Get Items ---//
             $aItems = array();

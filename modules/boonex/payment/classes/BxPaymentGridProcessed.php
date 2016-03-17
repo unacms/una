@@ -75,12 +75,13 @@ class BxPaymentGridProcessed extends BxBaseModPaymentGridOrders
 			}
 
         	$mixedResult = $this->_oModule->getObjectOrders()->addOrder(array(
-        		'provider' => 'manual',
-        		'error_code' => 0,
-        		'error_msg' => 'Manually processed',
-        		'seller_id' => $oForm->getCleanValue('seller_id'),
         		'client_id' => $oForm->getCleanValue('client_id'),
+        		'seller_id' => $oForm->getCleanValue('seller_id'),
+        		'provider' => 'manual',
+        		'type' => BX_PAYMENT_TYPE_SINGLE,
         		'order' => $oForm->getCleanValue('order'),
+        		'error_code' => 0,
+        		'error_msg' => 'Manually processed',        		
         		'module_id' => $oForm->getCleanValue('module_id'),
         		'items' => $aItems
         	));
@@ -88,7 +89,7 @@ class BxPaymentGridProcessed extends BxBaseModPaymentGridOrders
         		return echoJson($mixedResult);
 
 			$iPendingId = (int)$mixedResult;
-        	if(!$this->_oModule->getObjectCart()->updateInfo($iPendingId))
+        	if(!$this->_oModule->registerPayment($iPendingId))
         		return echoJson(array('msg' => _t($this->_sLangsPrefix . 'err_cannot_perform')));
 
 			$aOrders = $this->_oModule->_oDb->getOrderProcessed(array('type' => 'pending_id', 'pending_id' => $iPendingId, 'with_key' => 'id'));

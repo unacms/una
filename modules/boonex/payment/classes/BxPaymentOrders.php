@@ -56,7 +56,7 @@ class BxPaymentOrders extends BxBaseModPaymentOrders
         	if(!$this->_oModule->isAllowedSell(array('module_id' => $aData['module_id'], 'item_id' => $aItem['id']), true))
         		continue;
 
-            $aCartInfo['items_price'] += $aItem['price'] * $aItem['quantity'];
+            $aCartInfo['items_price'] += $this->_oModule->_oConfig->getPrice($aData['type'], $aItem) * $aItem['quantity'];
             $aCartInfo['items'][] = array(
                 'vendor_id' => $iSellerId,
                 'module_id' => $aData['module_id'],
@@ -65,7 +65,7 @@ class BxPaymentOrders extends BxBaseModPaymentOrders
             );
         }
 
-        $iPendingId = $this->_oModule->_oDb->insertOrderPending($aData['client_id'], $aData['provider'], $aCartInfo);
+        $iPendingId = $this->_oModule->_oDb->insertOrderPending($aData['client_id'], $aData['type'], $aData['provider'], $aCartInfo);
         $this->_oModule->_oDb->updateOrderPending($iPendingId, array(
             'order' => $sOrder,
             'error_code' => $aData['error_code'],
@@ -82,15 +82,15 @@ class BxPaymentOrders extends BxBaseModPaymentOrders
 
     public function cancel($sType, $iOrderId)
     {
-    	$sMethodName = "getOrder" . bx_gen_method_name($sType);
+    	$sMethodName = 'getOrder' . bx_gen_method_name($sType);
     	$aOrder = $this->_oModule->_oDb->$sMethodName(array('type' => 'id', 'id' => $iOrderId));
 		if(empty($aOrder) || !is_array($aOrder))
 	    	return true;
 
-		if($sType == BX_PAYMENT_ORDERS_TYPE_PROCESSED && !BxDolService::call((int)$aOrder['module_id'], 'unregister_cart_item', array($aOrder['client_id'], $aOrder['seller_id'], $aOrder['item_id'], $aOrder['item_count'], $aOrder['order_id'])))
+		if($sType == BX_PAYMENT_ORDERS_TYPE_PROCESSED && !$this->_oModule->callUnregisterCartItem((int)$aOrder['module_id'], array($aOrder['client_id'], $aOrder['seller_id'], $aOrder['item_id'], $aOrder['item_count'], $aOrder['license'])))
 			return false;
 
-		$sMethodName = "cancelOrder" . bx_gen_method_name($sType);
+		$sMethodName = 'deleteOrder' . bx_gen_method_name($sType);
 		if(!$this->_oModule->_oDb->$sMethodName($iOrderId))
 			return false;
 

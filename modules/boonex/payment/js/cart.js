@@ -15,10 +15,11 @@ BxPaymentCart.prototype.init = function(oOptions) {
 };
 
 BxPaymentCart.prototype.addToCart = function(iVendorId, iModuleId, iItemId, iItemCount, iNeedRedirect) {
+	var $this = this;
     var oDate = new Date();
-    var $this = this;
 
-    if(!(iNeedRedirect = parseInt(iNeedRedirect)))
+    iNeedRedirect = parseInt(iNeedRedirect);
+    if(!iNeedRedirect)
     	iNeedRedirect = 0;
 
     $.post(
@@ -27,7 +28,7 @@ BxPaymentCart.prototype.addToCart = function(iVendorId, iModuleId, iItemId, iIte
             _t:oDate.getTime()
         },
         function(oData){
-        	alert(oData.message);
+        	$this.processResult(oData);
 
             if(oData.code == 0) {
             	/*
@@ -98,15 +99,61 @@ BxPaymentCart.prototype.emptyCart = function(iVendorId) {
     );
 };
 
-BxPaymentCart.prototype.toggle = function(oElement) {
-	$(oElement).find('.sys-icon').toggleClass('caret-down').toggleClass('caret-right');
-    $(oElement).parents('.bx-payment-box:first').find('.bx-payment-box-cnt').bx_anim('toggle', 'slide', this._iAnimationSpeed);
-};
-
-BxPaymentCart.prototype.onSubmit = function(oForm) {
+BxPaymentCart.prototype.onCartSubmit = function(oForm) {
     if($(oForm).find(":checkbox[name='items[]']:checked").length > 0)
     	return true;
 
     alert(_t(this._sErrNothingSelected));
 	return false;
+};
+
+BxPaymentCart.prototype.toggleCartVendor = function(oElement) {
+	$(oElement).find('.sys-icon').toggleClass('caret-down').toggleClass('caret-right');
+    $(oElement).parents('.bx-payment-box:first').find('.bx-payment-box-cnt').bx_anim('toggle', 'slide', this._iAnimationSpeed);
+};
+
+BxPaymentCart.prototype.subscribe = function(iVendorId, iModuleId, iItemId, iItemCount) {
+    var $this = this;
+    var oDate = new Date();
+
+    $.post(
+        this._sActionsUrl + 'subscribe/' + iVendorId + '/' + iModuleId + '/' + iItemId + (iItemCount != undefined ? '/' + iItemCount + '/' : ''),
+        {
+            _t:oDate.getTime()
+        },
+        function(oData){
+        	$this.processResult(oData);
+        },
+        'json'
+    );
+};
+
+BxPaymentCart.prototype.onSubscribeSubmit = function(oData) {
+	document.location = oData.redirect;
+};
+
+BxPaymentCart.prototype.processResult = function(oData) {
+	var $this = this;
+
+	if(oData && oData.message != undefined && oData.message.length != 0)
+    	alert(oData.message);
+
+    if(oData && oData.reload != undefined && parseInt(oData.reload) == 1)
+    	document.location = document.location;
+
+    if(oData && oData.popup != undefined) {
+    	var oPopup = $(oData.popup).hide(); 
+
+    	$('#' + oPopup.attr('id')).remove();
+        oPopup.prependTo('body').dolPopup({
+            fog: {
+				color: '#fff',
+				opacity: .7
+            },
+            closeOnOuterClick: false
+        });
+    }
+
+    if (oData && oData.eval != undefined)
+        eval(oData.eval);
 };

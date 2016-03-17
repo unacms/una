@@ -54,25 +54,40 @@ class BxPaymentDb extends BxBaseModPaymentDb
         return $this->getAllWithKey($sQuery, 'option_id');
     }
 
-	public function getProviders($sName = '')
+	public function getProviders($aParams = array())
     {
-        $sWhereClause = "1";
-        if(!empty($sName))
-            $sWhereClause = $this->prepare("`tp`.`name`=?", $sName);
+    	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
 
-        $sQuery = "SELECT
+        $sWhereClause = "";
+        switch($aParams['type']) {
+        	case 'by_name':
+        		$aMethod['name'] = 'getRow';
+        		$sWhereClause = $this->prepare(" AND `tp`.`name`=?", $aParams['name']);
+        		break;
+
+			case 'for_cart':
+				$sWhereClause = " AND `tp`.`for_subscription`='0'";
+        		break;
+
+			case 'for_subscription':
+				$sWhereClause = " AND `tp`.`for_subscription`='1'";
+        		break;
+        }          
+
+        $aMethod['params'][0] = "SELECT
                 `tp`.`id` AS `id`,
                 `tp`.`name` AS `name`,
                 `tp`.`caption` AS `caption`,
                 `tp`.`description` AS `description`,
                 `tp`.`option_prefix` AS `option_prefix`,
                 `tp`.`for_visitor` AS `for_visitor`,
+                `tp`.`for_subscription` AS `for_subscription`,
                 `tp`.`class_name` AS `class_name`,
                 `tp`.`class_file` AS `class_file`
             FROM `" . $this->_sPrefix . "providers` AS `tp`
-            WHERE " . $sWhereClause;
+            WHERE 1" . $sWhereClause;
 
-        return !empty($sName) ? $this->getRow($sQuery) : $this->getAll($sQuery);
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
 
     public function getOptions($iUserId = BX_PAYMENT_EMPTY_ID, $iProviderId = 0)
@@ -119,35 +134,45 @@ class BxPaymentDb extends BxBaseModPaymentDb
 
         return $this->query($sQuery);
     }
-    public function getVendorInfoProviders($iId, $sProvider = '')
+
+	public function getVendorInfoProvidersCart($iVendorId)
     {
-        $aResult = array();
+    	return $this->getVendorInfoProviders($iVendorId, array('type' => 'for_cart'));
+    }
 
-        //--- Get specified payment provider if it's available ---//
-        if(!empty($sProvider)) {
-            $aProvider = $this->getProviders($sProvider);
-            $aOptions = $this->getOptions($iId, $aProvider['id']);
+	public function getVendorInfoProvidersSubscription($iVendorId)
+    {
+    	return $this->getVendorInfoProviders($iVendorId, array('type' => 'for_subscription'));
+    }
 
-            if(isset($aOptions[$aProvider['option_prefix'] . 'active']) && $aOptions[$aProvider['option_prefix'] . 'active']['value'] == 'on') {
-                $aProvider['options'] = $aOptions;
-                $aResult = $aProvider;
-            }
-        }
-        //--- Get all available payment providers ---//
-        else{
-            $aProviders = $this->getProviders();
-            $aOptions = $this->getOptions($iId);
+    public function getVendorInfoProviders($iVendorId, $aParams = array())
+    {
+		$aProviders = $this->getProviders($aParams);
+		$aOptions = $this->getOptions($iVendorId);
 
-            foreach($aProviders as $aProvider)
-               if(isset($aOptions[$aProvider['option_prefix'] . 'active']) && $aOptions[$aProvider['option_prefix'] . 'active']['value'] == 'on') {
-                   foreach($aOptions as $sName => $aOption)
-                       if(strpos($sName, $aProvider['option_prefix']) !== false)
-                           $aProvider['options'][$sName] = $aOption;
-                   $aResult[] = $aProvider;
-               }
-        }
+		$aResult = array();
+		foreach($aProviders as $aProvider)
+			if(isset($aOptions[$aProvider['option_prefix'] . 'active']) && $aOptions[$aProvider['option_prefix'] . 'active']['value'] == 'on') {
+				foreach($aOptions as $sName => $aOption)
+					if(strpos($sName, $aProvider['option_prefix']) !== false)
+						$aProvider['options'][$sName] = $aOption;
+				$aResult[] = $aProvider;
+			}
 
-        return $aResult;
+		return $aResult;
+	}
+    public function getVendorInfoProvider($iVendorId, $sProvider)
+    {
+		$aProvider = $this->getProviders(array('type' => 'by_name', 'name' => $sProvider));
+		$aOptions = $this->getOptions($iVendorId, $aProvider['id']);
+
+		$aResult = array();
+		if(isset($aOptions[$aProvider['option_prefix'] . 'active']) && $aOptions[$aProvider['option_prefix'] . 'active']['value'] == 'on') {
+			$aProvider['options'] = $aOptions;
+			$aResult = $aProvider;
+		}
+
+		return $aResult;
     }
     public function getFirstAdminId()
     {
@@ -174,13 +199,18 @@ class BxPaymentDb extends BxBaseModPaymentDb
                 $sWhereClause = $this->prepare(" AND `id`=?", $aParams['id']);
                 $sLimitClause = " LIMIT 1";
                 break;
+
+            case 'order':
+            	$sWhereClause = $this->prepare(" AND `order`=?", $aParams['order']);
+                $sLimitClause = " LIMIT 1";
+                break;
         }
 
         $aMethod['params'][0] = "SELECT * FROM `" . $this->_sPrefix . "transactions_pending` WHERE 1 " . $sWhereClause . $sLimitClause;
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
 
-    public function insertOrderPending($iClientId, $sProviderName, $aCartInfo)
+    public function insertOrderPending($iClientId, $sType, $sProvider, $aCartInfo)
     {
         $sItems = "";
         foreach($aCartInfo['items'] as $aItem)
@@ -189,10 +219,11 @@ class BxPaymentDb extends BxBaseModPaymentDb
         $sQuery = $this->prepare("INSERT INTO `" . $this->_sPrefix . "transactions_pending` SET
                     `client_id`=?,
                     `seller_id`=?,
+                    `type`=?,
+                    `provider`=?,
                     `items`=?,
                     `amount`=?,
-                    `provider`=?,
-                    `date`=UNIX_TIMESTAMP()", $iClientId, $aCartInfo['vendor_id'], trim($sItems, ':'), $aCartInfo['items_price'], $sProviderName);
+                    `date`=UNIX_TIMESTAMP()", $iClientId, $aCartInfo['vendor_id'], $sType, $sProvider, trim($sItems, ':'), $aCartInfo['items_price']);
 
         return (int)$this->query($sQuery) > 0 ? $this->lastId() : 0;
     }
@@ -203,7 +234,7 @@ class BxPaymentDb extends BxBaseModPaymentDb
         return (int)$this->query($sQuery) > 0;
     }
 
-    public function cancelOrderPending($mixedId)
+    public function deleteOrderPending($mixedId)
     {
     	if(!is_array($mixedId))
     		$mixedId = array($mixedId);
@@ -233,9 +264,9 @@ class BxPaymentDb extends BxBaseModPaymentDb
                 $sWhereClause = $this->prepare(" AND `tt`.`pending_id`=?", $aParams['pending_id']);
                 break;
 
-            case 'order_id':
+            case 'license':
                 $aMethod['name'] = 'getAll';
-                $sWhereClause = $this->prepare(" AND `tt`.`order_id`=?", $aParams['order_id']);
+                $sWhereClause = $this->prepare(" AND `tt`.`license`=?", $aParams['license']);
                 break;
 
             case 'mixed':
@@ -248,7 +279,7 @@ class BxPaymentDb extends BxBaseModPaymentDb
 
         $aMethod['params'][0] = "SELECT
         		`tt`.`id`,
-                `tt`.`order_id`,
+                `tt`.`license`,
                 `tt`.`client_id`,
                 `tt`.`seller_id`,
                 `tt`.`module_id`,
@@ -277,7 +308,7 @@ class BxPaymentDb extends BxBaseModPaymentDb
         return (int)$this->query($sQuery) > 0;
     }
 
-    public function cancelOrderProcessed($mixedId)
+    public function deleteOrderProcessed($mixedId)
     {
     	if(!is_array($mixedId))
     		$mixedId = array($mixedId);
