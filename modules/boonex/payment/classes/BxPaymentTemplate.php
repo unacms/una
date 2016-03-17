@@ -131,7 +131,9 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
 
             //--- Get Items ---//
             $aItems = array();
-            foreach($aVendor['items'] as $aItem)
+            foreach($aVendor['items'] as $aItem) {
+            	$fPrice = $this->_oConfig->getPrice(BX_PAYMENT_TYPE_SINGLE, $aItem);
+
                 $aItems[] = array(
                     'vendor_id' => $aVendor['vendor_id'],
                     'vendor_currency_code' => $aVendor['vendor_currency_code'],
@@ -141,18 +143,19 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
                     'item_url' => $aItem['url'],
                     'item_quantity' => $aItem['quantity'],
                 	'bx_if:show_price_paid' => array(
-                		'condition' => (int)$aItem['price'] != 0,
+                		'condition' => $fPrice != 0,
                 		'content' => array(
-                			'item_price' => $aItem['quantity'] * $aItem['price'],
+                			'item_price' => $aItem['quantity'] * $fPrice,
                 			'vendor_currency_code' => $aVendor['vendor_currency_code'],
                 		)
                 	),
                 	'bx_if:show_price_free' => array(
-                		'condition' => (int)$aItem['price'] == 0,
+                		'condition' => $fPrice == 0,
                 		'content' => array()
                 	),
                     'js_object' => $sJsObject
                 );
+            }
 
             //--- Get Control Panel ---//
             $aButtons = array(

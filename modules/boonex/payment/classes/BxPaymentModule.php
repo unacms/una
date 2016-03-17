@@ -407,7 +407,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
                 'module_id' => $aItem['module_id'],
                 'item_id' => $aItem['item_id'],
                 'item_count' => $aItem['item_count'],
-                'amount' => $this->_oConfig->getPrice($sType, $aItem) * $aItem['item_count'],
+                'amount' => $aItem['item_count'] * $this->_oConfig->getPrice($sType, $aItemInfo),
             	'license' => $sLicense,
             ));
 
