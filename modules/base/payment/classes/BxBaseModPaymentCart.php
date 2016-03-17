@@ -26,12 +26,21 @@ class BxBaseModPaymentCart extends BxDol
     	if(!$this->_oModule->isLogged())
             return '';
 
-    	return $this->_oModule->_oConfig->getUrl('cart');
+    	return $this->_oModule->_oConfig->getUrl('URL_CART');
     }
 
     public function serviceGetCartJs($bWrapped = true)
     {
         return $this->_oModule->_oTemplate->displayCartJs($bWrapped);
+    }
+
+    public function serviceGetAddToCartJs($iVendorId, $mixedModuleId, $iItemId, $iItemCount, $bNeedRedirect = false, $bWrapped = true)
+    {
+		$iModuleId = $this->_oModule->_oConfig->getModuleId($mixedModuleId);
+        if(empty($iModuleId))
+            return '';
+
+        return $this->_oModule->_oTemplate->displayAddToCartJs($iVendorId, $iModuleId, $iItemId, $iItemCount, $bNeedRedirect, $bWrapped);
     }
 
 	public function serviceGetAddToCartLink($iVendorId, $mixedModuleId, $iItemId, $iItemCount, $bNeedRedirect = false)
@@ -43,13 +52,22 @@ class BxBaseModPaymentCart extends BxDol
 		return $this->_oModule->_oTemplate->displayAddToCartLink($iVendorId, $iModuleId, $iItemId, $iItemCount, $bNeedRedirect);
     }
 
-    public function serviceGetAddToCartJs($iVendorId, $mixedModuleId, $iItemId, $iItemCount, $bNeedRedirect = false, $bWrapped = true)
+	public function serviceGetSubscribeJs($iVendorId, $mixedModuleId, $iItemId, $iItemCount = 1, $bWrapped = true)
     {
 		$iModuleId = $this->_oModule->_oConfig->getModuleId($mixedModuleId);
         if(empty($iModuleId))
             return '';
 
-        return $this->_oModule->_oTemplate->displayAddToCartJs($iVendorId, $iModuleId, $iItemId, $iItemCount, $bNeedRedirect, $bWrapped);
+        return $this->_oModule->_oTemplate->displaySubscribeJs($iVendorId, $iModuleId, $iItemId, $iItemCount, $bWrapped);
+    }
+
+	public function serviceGetSubscribeLink($iVendorId, $mixedModuleId, $iItemId, $iItemCount = 1)
+    {
+        $iModuleId = $this->_oModule->_oConfig->getModuleId($mixedModuleId);
+        if(empty($iModuleId))
+            return '';
+
+		return $this->_oModule->_oTemplate->displaySubscribeLink($iVendorId, $iModuleId, $iItemId, $iItemCount);
     }
 
 	public function serviceGetCartItemDescriptor($iVendorId, $iModuleId, $iItemId, $iItemCount)
@@ -63,7 +81,7 @@ class BxBaseModPaymentCart extends BxDol
         if(empty($iUserId))
             return 0;
 
-        $aInfo = $this->getInfo($iUserId);
+        $aInfo = $this->getInfo(BX_PAYMENT_TYPE_SINGLE, $iUserId);
 
         $iCount = 0;
         foreach($aInfo as $iVendorId => $aVendorCart)

@@ -23,6 +23,8 @@ class BxBaseModGeneralConfig extends BxDolModuleConfig
     {
         parent::__construct($aModule);
 
+        $this->CNF = array();
+
         $this->_aObjects = array();
         $this->_aPrefixes = array();
         $this->_aJsClasses = array();

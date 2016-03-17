@@ -26,7 +26,7 @@ class BxBaseModPaymentOrders extends BxDol
     	if(!$this->_oModule->isLogged())
             return '';
 
-    	return $this->_oModule->_oConfig->getUrl('orders');
+    	return $this->_oModule->_oConfig->getUrl('URL_ORDERS');
     }
 }
 

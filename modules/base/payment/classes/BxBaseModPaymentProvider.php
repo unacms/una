@@ -11,9 +11,9 @@
 
 interface iBxBaseModPaymentProvider
 {
-	public function initializeCheckout($iPendingId, $aCartInfo, $bRecurring = false, $iRecurringDays = 0);
+	public function initializeCheckout($iPendingId, $aCartInfo);
     public function finalizeCheckout(&$aData);
-    public function checkoutFinished();
+    public function finalizedCheckout();
 }
 
 class BxBaseModPaymentProvider extends BxDol
@@ -29,6 +29,7 @@ class BxBaseModPaymentProvider extends BxDol
     protected $_sPrefix;
     protected $_aOptions;
     protected $_bRedirectOnResult;
+    protected $_sLogFile;
 
     function __construct($aConfig)
     {
@@ -46,6 +47,11 @@ class BxBaseModPaymentProvider extends BxDol
         $this->_bRedirectOnResult = false;
     }
 
+    public function getReturnDataUrl($iVendorId)
+    {
+		return $this->_oModule->_oConfig->getUrl('URL_RETURN_DATA') . $this->_sName . '/' . $iVendorId;
+    }
+
     /**
      * TODO: Check whether the method is needed or not. 
      * Is used on success only.
@@ -54,6 +60,8 @@ class BxBaseModPaymentProvider extends BxDol
     {
         return $this->_bRedirectOnResult;
     }
+
+	public function finalizedCheckout() {}
 
     protected function getOptionsByPending($iPendingId)
     {
@@ -68,6 +76,38 @@ class BxBaseModPaymentProvider extends BxDol
     {
         return isset($this->_aOptions[$this->_sPrefix . $sName]) ? $this->_aOptions[$this->_sPrefix . $sName]['value'] : "";
     }
+
+    /**
+	 *
+	 * Writes $contents to a log file specified in the bp_options file or, if missing,
+	 * defaults to a standard filename of 'bplog.txt'.
+	 *
+	 * @param mixed $contents
+	 * @return
+	 * @throws Exception $e 
+	 *
+	 */
+	protected function log($sContents)
+	{
+		try {
+			if($this->_sLogFile != '')
+				$file = $this->_sLogFile;
+	    	else 
+				$file = dirname(__FILE__) . '/bx_pp_' . $this->_sName . '.log';
+	
+			file_put_contents($file, date('m-d H:i:s').": ", FILE_APPEND);
+	
+			if (is_array($sContents))
+				$sContents = var_export($sContents, true);	
+			else if (is_object($sContents))
+				$sContents = json_encode($sContents);
+	
+			file_put_contents($file, $sContents."\n", FILE_APPEND);
+	  	} 
+	  	catch (Exception $e) {
+			echo 'Error: ' . $e->getMessage();
+	  	}
+	}
 }
 
 /** @} */

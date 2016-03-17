@@ -49,9 +49,9 @@ class BxBaseModPaymentModule extends BxDolModule
     	return $this->_oDb->getParam($this->_oConfig->getPrefix('options') . $sOption);
     }
 
-	public function serviceGetProviders($iVendorId, $sProvider = '')
+	public function serviceGetProvidersCart($iVendorId)
 	{
-		$aVendorProviders = $this->_oDb->getVendorInfoProviders($iVendorId, $sProvider);
+		$aVendorProviders = $this->_oDb->getVendorInfoProvidersCart($iVendorId);
 
 		$aResult = array();
 		foreach($aVendorProviders as $aProvider) {
@@ -79,10 +79,12 @@ class BxBaseModPaymentModule extends BxDolModule
 	public function getProfileInfo($iUserId = 0)
     {
         $oProfile = $this->getObjectUser($iUserId);
+        $oAccount = $oProfile->getAccountObject();
 
         return array(
         	'id' => $iUserId,
             'name' => $oProfile->getDisplayName(),
+        	'email' => $oAccount->getEmail(),
             'link' => $oProfile->getUrl(),
             'icon' => $oProfile->getIcon(),
             'unit' => $oProfile->getUnit(),
@@ -148,7 +150,7 @@ class BxBaseModPaymentModule extends BxDolModule
 
 	public function getObjectProvider($sProvider, $mixedVendorId = BX_PAYMENT_EMPTY_ID)
 	{
-		$aProvider = is_numeric($mixedVendorId) && (int)$mixedVendorId != BX_PAYMENT_EMPTY_ID ? $this->_oDb->getVendorInfoProviders((int)$mixedVendorId, $sProvider) : $this->_oDb->getProviders($sProvider);
+		$aProvider = is_numeric($mixedVendorId) && (int)$mixedVendorId != BX_PAYMENT_EMPTY_ID ? $this->_oDb->getVendorInfoProvider((int)$mixedVendorId, $sProvider) : $this->_oDb->getProviders(array('type' => 'by_name', 'name' => $sProvider));
         $sClassPath = !empty($aProvider['class_file']) ? BX_DIRECTORY_PATH_ROOT . $aProvider['class_file'] : $this->_oConfig->getClassPath() . $aProvider['class_name'] . '.php';
         if(empty($aProvider) || !file_exists($sClassPath))
         	return false;
@@ -179,6 +181,26 @@ class BxBaseModPaymentModule extends BxDolModule
     public function callRegisterCartItem($mixedModule, $aParams)
     {
     	return BxDolService::call($mixedModule, 'register_cart_item', $aParams);
+    }
+
+	public function callRegisterSubscriptionItem($mixedModule, $aParams)
+    {
+    	return BxDolService::call($mixedModule, 'register_subscription_item', $aParams);
+    }
+
+    public function callUnregisterCartItem($mixedModule, $aParams)
+    {
+		return BxDolService::call($mixedModule, 'unregister_cart_item', $aParams);
+    }
+
+	public function callUnregisterSubscriptionItem($mixedModule, $aParams)
+    {
+		return BxDolService::call($mixedModule, 'unregister_subscription_item', $aParams);
+    }
+
+    public function callCancelSubscriptionItem($mixedModule, $aParams)
+    {
+    	return BxDolService::call($mixedModule, 'cancel_subscription_item', $aParams);
     }
 }
 

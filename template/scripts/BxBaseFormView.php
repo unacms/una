@@ -424,13 +424,7 @@ EOS;
     {
         $sAttr = isset($aInput['attrs_wrapper']) && is_array($aInput['attrs_wrapper']) ? bx_convert_array2attrs($aInput['attrs_wrapper']) : '';
 
-        $sCode = <<<BLAH
-                <div class="bx-form-input-wrapper bx-form-input-wrapper-{$aInput['type']}" $sAttr>
-                    $sContent
-                </div>
-BLAH;
-
-        return $sCode;
+        return "<div class=\"bx-form-input-wrapper bx-form-input-wrapper-{$aInput['type']}\" $sAttr>$sContent</div>";
     }
 
     /**

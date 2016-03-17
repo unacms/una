@@ -17,10 +17,6 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
 	protected $_sCurrencySign;
     protected $_sCurrencyCode;
 
-    protected $_aKeys;
-    protected $_aUrls;
-    protected $_aDividers;
-
     protected $_aPerPage;
     protected $_aHtmlIds;
 
@@ -31,17 +27,13 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
     {
         parent::__construct($aModule);
 
-        $this->_aKeys = array(
-        	'session_key_pending' => $this->_sName . '_pending_id',
-        	'request_key_pending' => $this->_sName . '_pending_id'
-        );
-
-        $this->_aUrls = array();
-
-        $this->_aDividers = array(
-        	'descriptor' => '_',
-        	'descriptors' => ':'
-        );
+        $this->CNF = array_merge($this->CNF, array(
+        	'KEY_SESSION_PENDING' => $this->_sName . '_pending_id',
+        	'KEY_REQUEST_PENDING' => $this->_sName . '_pending_id',
+        	
+        	'DIVIDER_DESCRIPTOR' => '_',
+        	'DIVIDER_DESCRIPTORS' => ':',
+        ));
 
 		$this->_aPrefixes = array(
 			'general' => $this->_sName . '_',
@@ -100,35 +92,34 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
 
 	public function getKey($sType)
     {
-    	if(empty($sType))
-            return $this->_aKeys;
+    	$sResult = '';
+    	if(empty($sType) || !isset($this->CNF[$sType]))
+            return $sResult;
 
-        return isset($this->_aKeys[$sType]) ? $this->_aKeys[$sType] : '';
+        return $this->CNF[$sType];
     }
 
     public function getUrl($sType, $aParams = array(), $bSsl = false)
     {
-    	if(empty($sType))
-            return $this->_aUrls;
-
 		$sResult = '';
-		if(!isset($this->_aUrls[$sType]))
+		if(empty($sType) || !isset($this->CNF[$sType]))
 			return $sResult;
 
-		if(strncmp($this->_aUrls[$sType], BX_DOL_URL_ROOT, strlen(BX_DOL_URL_ROOT)) == 0)
-			$sResult = bx_append_url_params($this->_aUrls[$sType], $aParams);
+		if(strncmp($this->CNF[$sType], BX_DOL_URL_ROOT, strlen(BX_DOL_URL_ROOT)) == 0)
+			$sResult = bx_append_url_params($this->CNF[$sType], $aParams);
 		else
-			$sResult = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($this->_aUrls[$sType], $aParams);
+			$sResult = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($this->CNF[$sType], $aParams);
 
     	return $bSsl ? $this->http2https($sResult) : $sResult;
     }
 
 	public function getDivider($sType)
     {
-    	if(empty($sType))
-            return $this->_aDividers;
+    	$sResult = '';
+    	if(empty($sType) || !isset($this->CNF[$sType]))
+            return $sResult;
 
-        return isset($this->_aDividers[$sType]) ? $this->_aDividers[$sType] : '';
+        return $this->CNF[$sType];
     }
 
 	public function getPerPage($sType = 'default')

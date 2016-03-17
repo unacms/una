@@ -1162,12 +1162,12 @@ function bx_site_hash($sSalt = '', $isSkipVersion = false)
 
 /**
  * Transform string to method name string, for example it changes 'some_method' string to 'SomeMethod' string
- * @param string where words are separated with underscore
+ * @param array where words are separated with underscore
  * @return string where every word begins with capital letter
  */
-function bx_gen_method_name ($s, $sWordsDelimiter = '_')
+function bx_gen_method_name ($s, $aWordsDelimiter = array('_'))
 {
-    return str_replace(' ', '', ucwords(str_replace($sWordsDelimiter, ' ', $s)));
+    return str_replace(' ', '', ucwords(str_replace($aWordsDelimiter, ' ', $s)));
 }
 
 /**
