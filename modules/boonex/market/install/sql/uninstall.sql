@@ -1,6 +1,6 @@
 
 -- TABLES
-DROP TABLE IF EXISTS `bx_market_products`, `bx_market_customers`, `bx_market_files`, `bx_market_files2products`, `bx_market_photos`, `bx_market_photos2products`, `bx_market_photos_resized`, `bx_market_cmts`, `bx_market_votes`, `bx_market_votes_track`, `bx_market_views_track`, `bx_market_meta_keywords`, `bx_market_meta_locations`, `bx_market_reports`, `bx_market_reports_track`;
+DROP TABLE IF EXISTS `bx_market_products`, `bx_market_licenses`, `bx_market_files`, `bx_market_files2products`, `bx_market_photos`, `bx_market_photos2products`, `bx_market_photos_resized`, `bx_market_cmts`, `bx_market_votes`, `bx_market_votes_track`, `bx_market_views_track`, `bx_market_meta_keywords`, `bx_market_meta_locations`, `bx_market_reports`, `bx_market_reports_track`;
 
 -- STORAGES & TRANSCODERS
 DELETE FROM `sys_objects_storage` WHERE `object` IN('bx_market_files', 'bx_market_photos', 'bx_market_photos_resized');

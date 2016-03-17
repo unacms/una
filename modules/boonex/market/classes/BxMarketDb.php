@@ -112,28 +112,22 @@ class BxMarketDb extends BxBaseModTextDb
     /**
      * Integration with Payment based modules.  
      */
-    public function isCustomer ($iClientId, $iProductId)
+    public function hasLicense ($iClientId, $iProductId)
     {
-    	$sQuery = $this->prepare("SELECT `id` FROM `" . $this->_sPrefix . "customers` WHERE `client_id` = ? AND `product_id` = ? LIMIT 1", $iClientId, $iProductId);
+    	$sQuery = $this->prepare("SELECT `id` FROM `" . $this->_sPrefix . "licenses` WHERE `client_id` = ? AND `product_id` = ? LIMIT 1", $iClientId, $iProductId);
         return (int)$this->getOne($sQuery) > 0;
     }
 
-	public function registerCustomer($iClientId, $iProductId, $sOrderId, $iCount, $iDate)
+	public function registerLicense($iClientId, $iProductId, $iCount, $sOrder, $sLicense)
     {
-    	$sQuery = $this->prepare("INSERT INTO `" . $this->_sPrefix . "customers`(`client_id`, `product_id`, `order_id`, `count`, `date`) VALUES(?, ?, ?, ?, ?)", $iClientId, $iProductId, $sOrderId, $iCount, $iDate);
+    	$sQuery = $this->prepare("INSERT INTO `" . $this->_sPrefix . "licenses`(`client_id`, `product_id`, `count`, `order`, `license`, `date`) VALUES(?, ?, ?, ?, ?, UNIX_TIMESTAMP())", $iClientId, $iProductId, $iCount, $sOrder, $sLicense);
         return (int)$this->query($sQuery) > 0;
     }
 
-    public function unregisterCustomer($iClientId, $iProductId, $sOrderId)
+    public function unregisterLicense($iClientId, $iProductId, $sOrder, $sLicense)
     {
-    	$sQuery = $this->prepare("DELETE FROM `" . $this->_sPrefix . "customers` WHERE `client_id` = ? AND `product_id` = ? AND `order_id` = ?", $iClientId, $iProductId, $sOrderId);
+    	$sQuery = $this->prepare("DELETE FROM `" . $this->_sPrefix . "licenses` WHERE `client_id` = ? AND `product_id` = ? AND `order` = ? AND `license` = ?", $iClientId, $iProductId, $sOrder, $sLicense);
         return (int)$this->query($sQuery) > 0;
-    }
-
-    function isPurchasedEntry ($iClientId, $iProductId)
-    {
-    	$sQuery = $this->prepare("SELECT `id` FROM `" . $this->_sPrefix . "customers` WHERE `client_id` = ? AND `product_id` = ? LIMIT 1", $iClientId, $iProductId);
-        return (int)$this->getOne($sQuery) > 0;
     }
 }
 

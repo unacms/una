@@ -10,10 +10,11 @@ VALUES (@iTypeId, 'bx_market', '_bx_market', 1);
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
-('bx_market_summary_chars', '700', @iCategId, '_bx_market_option_summary_chars', 'digit', '', '', '', 1),
-('bx_market_plain_summary_chars', '240', @iCategId, '_bx_market_option_plain_summary_chars', 'digit', '', '', '', 2),
-('bx_market_per_page_browse', '12', @iCategId, '_bx_market_option_per_page_browse', 'digit', '', '', '', 10),
-('bx_market_rss_num', '10', @iCategId, '_bx_market_option_rss_num', 'digit', '', '', '', 20);
+('bx_market_enable_recurring', 'on', @iCategId, '_bx_market_option_enable_recurring', 'checkbox', '', '', '', 1),
+('bx_market_summary_chars', '700', @iCategId, '_bx_market_option_summary_chars', 'digit', '', '', '', 10),
+('bx_market_plain_summary_chars', '240', @iCategId, '_bx_market_option_plain_summary_chars', 'digit', '', '', '', 11),
+('bx_market_per_page_browse', '12', @iCategId, '_bx_market_option_per_page_browse', 'digit', '', '', '', 20),
+('bx_market_rss_num', '10', @iCategId, '_bx_market_option_rss_num', 'digit', '', '', '', 21);
 
 -- PAGE: create entry
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -174,7 +175,8 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_market_view', 'bx_market', 'edit-product', '_bx_market_menu_item_title_system_edit_entry', '_bx_market_menu_item_title_edit_entry', 'page.php?i=edit-product&id={content_id}', '', '', 'pencil', '', 2147483647, 1, 0, 1),
 ('bx_market_view', 'bx_market', 'delete-product', '_bx_market_menu_item_title_system_delete_entry', '_bx_market_menu_item_title_delete_entry', 'page.php?i=delete-product&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 2),
 ('bx_market_view', 'bx_market', 'download', '_bx_market_menu_item_title_system_download', '_bx_market_menu_item_title_download', 'page.php?i=download-product&id={content_id}', '', '', 'download', '', 2147483647, 1, 0, 3),
-('bx_market_view', 'bx_market', 'add-to-cart', '_bx_market_menu_item_title_system_add_to_cart', '_bx_market_menu_item_title_add_to_cart', 'javascript:void(0);', 'javascript:{add_to_cart_onclick}', '', 'cart-plus', '', 2147483647, 1, 0, 4);
+('bx_market_view', 'bx_market', 'add-to-cart', '_bx_market_menu_item_title_system_add_to_cart', '_bx_market_menu_item_title_add_to_cart', 'javascript:void(0);', 'javascript:{add_to_cart_onclick}', '', 'cart-plus', '', 2147483647, 1, 0, 4),
+('bx_market_view', 'bx_market', 'subscribe', '_bx_market_menu_item_title_system_subscribe', '_bx_market_menu_item_title_subscribe', 'javascript:void(0);', 'javascript:{subscribe_onclick}', '', 'rss', '', 2147483647, 1, 0, 5);
 
 
 -- MENU: actions menu for my entries

@@ -19,6 +19,27 @@ class BxMarketModule extends BxBaseModTextModule
         parent::__construct($aModule);
     }
 
+    public function actionCheckName()
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	$sTitle = strtolower(bx_process_input(bx_get('title')));
+    	if(empty($sTitle))
+    		return echoJson(array());
+
+    	echoJson(array(
+    		'title' => $sTitle,
+    		'name' => uriGenerate($sTitle, $CNF['TABLE_ENTRIES'], $CNF['FIELD_NAME'])
+    	));
+    }
+
+    public function serviceEntityCreate ()
+    {
+    	$this->_oTemplate->addJs(array('entry.js'));
+
+    	return $this->_oTemplate->getJsCode('entry') . parent::serviceEntityCreate();
+    }
+
     public function serviceEntityDownload ($iContentId = 0)
     {
     	$CNF = &$this->_oConfig->CNF;
@@ -37,25 +58,6 @@ class BxMarketModule extends BxBaseModTextModule
     		return MsgBox(_t('_bx_market_err_access_denied'));
 
         return $this->_oTemplate->entryAttachmentsByStorage($CNF['OBJECT_STORAGE_FILES'], $aContentInfo);
-    }
-
-    public function checkAllowedDownload($aDataEntry, $isPerformAction = false)
-    {
-        $CNF = &$this->_oConfig->CNF;
-
-        // moderator and owner always have access
-        if ($aDataEntry[$CNF['FIELD_AUTHOR']] == $this->_iProfileId || $this->_isModerator($isPerformAction))
-            return CHECK_ACTION_RESULT_ALLOWED;
-
-        // check ACL
-        $aCheck = checkActionModule($this->_iProfileId, 'download entry', $this->getName(), $isPerformAction);
-        if($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
-			return $aCheck[CHECK_ACTION_MESSAGE];
-
-		if(!$this->_oDb->isPurchasedEntry($this->_iProfileId, $aDataEntry[$CNF['FIELD_ID']]))
-            return true;
-
-        return CHECK_ACTION_RESULT_ALLOWED;
     }
 
 	public function serviceEntityInfo ($iContentId = 0)
@@ -108,10 +110,12 @@ class BxMarketModule extends BxBaseModTextModule
 		return array (
 			'id' => $aItem[$CNF['FIELD_ID']],
 			'author_id' => $aItem[$CNF['FIELD_AUTHOR']],
+			'name' => $aItem[$CNF['FIELD_NAME']],
 			'title' => $aItem[$CNF['FIELD_TITLE']],
 			'description' => $aItem[$CNF['FIELD_TEXT']],
 			'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=view-product&id=' . $aItem[$CNF['FIELD_ID']]),
-			'price' => $aItem[$CNF['FIELD_PRICE']],
+			'price_single' => $aItem[$CNF['FIELD_PRICE_SINGLE']],
+			'price_recurring' => $aItem[$CNF['FIELD_PRICE_RECURRING']],
         );
     }
 
@@ -130,30 +134,46 @@ class BxMarketModule extends BxBaseModTextModule
             $aResult[] = array(
 				'id' => $aItem[$CNF['FIELD_ID']],
 				'author_id' => $aItem[$CNF['FIELD_AUTHOR']],
+            	'name' => $aItem[$CNF['FIELD_NAME']],
 				'title' => $aItem[$CNF['FIELD_TITLE']],
 				'description' => $aItem[$CNF['FIELD_TEXT']],
 				'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=view-product&id=' . $aItem[$CNF['FIELD_ID']]),
-				'price' => $aItem[$CNF['FIELD_PRICE']],
+				'price' => $aItem[$CNF['FIELD_PRICE_SINGLE']],
            );
 
         return $aResult;
     }
 
-    public function serviceRegisterCartItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrderId)
+    public function serviceRegisterCartItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense)
     {
         $aItem = $this->serviceGetCartItem($iItemId);
         if(empty($aItem) || !is_array($aItem))
 			return array();
 
-        if(!$this->_oDb->registerCustomer($iClientId, $iItemId, $sOrderId, $iItemCount, time()))
+        if(!$this->_oDb->registerLicense($iClientId, $iItemId, $iItemCount, $sOrder, $sLicense))
             return array();
 
         return $aItem;
     }
 
-    public function serviceUnregisterCartItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrderId)
+    public function serviceRegisterSubscriptionItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense)
     {
-        return $this->_oDb->unregisterCustomer($iClientId, $iItemId, $sOrderId);
+		return $this->serviceRegisterCartItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense);
+    }
+
+    public function serviceUnregisterCartItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense)
+    {
+        return $this->_oDb->unregisterLicense($iClientId, $iItemId, $sOrder, $sLicense);
+    }
+
+    public function serviceUnregisterSubscriptionItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense)
+    {
+    	return $this->serviceUnregisterCartItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense); 
+    }
+
+	public function serviceCancelSubscriptionItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder)
+    {
+    	//TODO: Do something if it's necessary. 
     }
 
     public function getGhostTemplateVars($aFile, $iProfileId, $iContentId, $oStorage, $oImagesTranscoder)
@@ -185,6 +205,25 @@ class BxMarketModule extends BxBaseModTextModule
 			'file_version' => $bFileInfoVersion ? $aFileInfo['version'] : '',
 			'file_version_attr' => $bFileInfoVersion ? bx_html_attribute($aFileInfo['version']) : '',
 		);
+    }
+
+	public function checkAllowedDownload($aDataEntry, $isPerformAction = false)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        // moderator and owner always have access
+        if ($aDataEntry[$CNF['FIELD_AUTHOR']] == $this->_iProfileId || $this->_isModerator($isPerformAction))
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+        // check ACL
+        $aCheck = checkActionModule($this->_iProfileId, 'download entry', $this->getName(), $isPerformAction);
+        if($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
+			return $aCheck[CHECK_ACTION_MESSAGE];
+
+		if(!$this->_oDb->hasLicense($this->_iProfileId, $aDataEntry[$CNF['FIELD_ID']]))
+            return true;
+
+        return CHECK_ACTION_RESULT_ALLOWED;
     }
 
     protected function _getContentInfo($iContentId = 0)

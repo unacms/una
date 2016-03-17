@@ -38,7 +38,7 @@ class BxMarketPrivacy extends BxTemplPrivacy
         if($mixedGroupId != 'c')
         	return false; 
 
-        return $this->_oModule->_oDb->isCustomer($iViewerId, $iObjectId);
+        return $this->_oModule->_oDb->hasLicense($iViewerId, $iObjectId);
     }
 }
 

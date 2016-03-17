@@ -13,11 +13,14 @@ div.bx-market-ui-cell {
 	vertical-align: top;
 }
 div.bx-market-uic-wide {
-	width: 68%;
+	width: 49%;
 }
 div.bx-market-uic-narrow {
-	width: 30%;
+	width: 49%;
 	text-align: right;
+}
+.bx-market-ui-price-or:first-child {
+	display: none;
 }
 
 /*--- Defaults ---*/

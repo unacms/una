@@ -21,7 +21,14 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
 
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-	    if (isset($this->aInputs[$CNF['FIELD_FILE']])) {
+        if(isset($this->aInputs[$CNF['FIELD_TITLE']], $this->aInputs[$CNF['FIELD_NAME']])) {
+        	$sJsObject = $this->_oModule->_oConfig->getJsObject('entry');
+
+        	$this->aInputs[$CNF['FIELD_TITLE']]['attrs']['onblur'] = "javascript:" . $sJsObject . ".checkName('" . $CNF['FIELD_TITLE'] . "', '" . $CNF['FIELD_NAME'] . "');";
+        	$this->aInputs[$CNF['FIELD_TITLE']]['attrs']['onkeyup'] = "javascript:" . $sJsObject . ".updateName('" . $CNF['FIELD_TITLE'] . "', '" . $CNF['FIELD_NAME'] . "');";
+        }
+
+	    if(isset($this->aInputs[$CNF['FIELD_FILE']])) {
             $this->aInputs[$CNF['FIELD_FILE']]['storage_object'] = $CNF['OBJECT_STORAGE_FILES'];
             $this->aInputs[$CNF['FIELD_FILE']]['uploaders'] = $CNF['OBJECT_UPLOADERS'];
             $this->aInputs[$CNF['FIELD_FILE']]['images_transcoder'] = '';
@@ -31,7 +38,12 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
             $this->aInputs[$CNF['FIELD_FILE']]['ghost_template'] = '';
         }
 
-		if (isset($this->aInputs[$CNF['FIELD_ALLOW_PURCHASE_TO']]))
+        if($this->_oModule->_oDb->getParam($CNF['OPTION_ENABLE_RECURRING']) != 'on') {
+			$this->aInputs[$CNF['FIELD_PRICE_RECURRING']]['type'] = 'hidden';
+			$this->aInputs[$CNF['FIELD_PRICE_RECURRING']]['value'] = 0;
+        }
+        
+		if(isset($this->aInputs[$CNF['FIELD_ALLOW_PURCHASE_TO']]))
 			$this->aInputs[$CNF['FIELD_ALLOW_PURCHASE_TO']] = BxDolPrivacy::getGroupChooser($CNF['OBJECT_PRIVACY_PURCHASE']);
 
 		$iOwnerId = bx_get_logged_profile_id();

@@ -14,9 +14,42 @@ function BxMarketEntry(oOptions) {
     });
 }
 
+BxMarketEntry.prototype.updateName = function(sTitleId, sNameId) {
+	var sTitle = jQuery("[name='" + sTitleId + "']").val();
+	sTitle = sTitle.replace(/[^A-Za-z0-9_]/g, '-');
+	sTitle = sTitle.replace(/[-]{2,}/g, '-');
+
+	jQuery("[name='" + sNameId + "']").val(sTitle.toLowerCase());
+};
+
+BxMarketEntry.prototype.checkName = function(sTitleId, sNameId) {
+	var oDate = new Date();
+
+	var sTitle = jQuery("[name='" + sTitleId + "']").val();
+	if(sTitle.length == 0)
+		return;
+
+	jQuery.get(
+		this._sActionsUrl + 'check_name',
+		{
+			title: sTitle,
+    		_t: oDate.getTime()
+    	},
+    	function(oData) {
+    		if(!oData || oData.name == undefined)
+    			return;
+
+    		jQuery("[name='" + sNameId + "']").val(oData.name);
+    	},
+    	'json'
+	);
+};
+
 BxMarketEntry.prototype.initScreenshots = function() {
 	var oItems = jQuery(".bx-market-screenshots .bx-market-ss-item");
-	
+	if(oItems.length == 0)
+		return;
+
 	var iWidth = oItems.width();
 	var iWidthOuter = oItems.outerWidth();
 	var bBusy = false;
@@ -30,7 +63,7 @@ BxMarketEntry.prototype.initScreenshots = function() {
 
 	if(oItems.length <= 2)
 		return;
-	console.log(iWidth, iWidthOuter);
+
 	jQuery(".bx-market-ss-left").bind('click', function() {
 		if(bBusy || parseInt(jQuery(".bx-market-ss-cnt").css('left')) >= 0)
 			return;

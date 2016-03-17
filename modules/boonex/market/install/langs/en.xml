@@ -4,6 +4,7 @@
 	<string name="_bx_market"><![CDATA[Market]]></string>
 	<string name="_bx_market_cmts"><![CDATA[Market's Reviews]]></string>
 
+	<string name="_bx_market_option_enable_recurring"><![CDATA[Allow to sell subscriptions]]></string>
 	<string name="_bx_market_option_summary_chars"><![CDATA[Number of characters in auto-cropped product summary]]></string>
 	<string name="_bx_market_option_plain_summary_chars"><![CDATA[Number of characters in plain product description when product hasn't thumb]]></string>
 	<string name="_bx_market_option_per_page_browse"><![CDATA[Number of items per page]]></string>
@@ -21,12 +22,18 @@
 	<string name="_bx_market_form_entry_input_sys_title"><![CDATA[Title]]></string>
 	<string name="_bx_market_form_entry_input_title"><![CDATA[Title]]></string>
 	<string name="_bx_market_form_entry_input_title_err"><![CDATA[Title is essential. Please, fill in this field]]></string>
+	<string name="_bx_market_form_entry_input_sys_name"><![CDATA[Name]]></string>
+	<string name="_bx_market_form_entry_input_name"><![CDATA[Name]]></string>
+	<string name="_bx_market_form_entry_input_name_err"><![CDATA[Name should be unique and is needed for internal usage. Please, fill in this field]]></string>
 	<string name="_bx_market_form_entry_input_sys_cat"><![CDATA[Category]]></string>
 	<string name="_bx_market_form_entry_input_cat"><![CDATA[Category]]></string>
     <string name="_bx_market_form_entry_input_cat_err"><![CDATA[Please select category]]></string>
-    <string name="_bx_market_form_entry_input_sys_price"><![CDATA[Monthly price]]></string>
-	<string name="_bx_market_form_entry_input_price"><![CDATA[Monthly price]]></string>
-    <string name="_bx_market_form_entry_input_price_err"><![CDATA[Please select price]]></string>
+    <string name="_bx_market_form_entry_input_sys_price_single"><![CDATA[Price]]></string>
+	<string name="_bx_market_form_entry_input_price_single"><![CDATA[Price]]></string>
+    <string name="_bx_market_form_entry_input_price_single_inf"><![CDATA[Leave empty to make the product free.]]></string>
+    <string name="_bx_market_form_entry_input_sys_price_recurring"><![CDATA[Monthly price]]></string>
+	<string name="_bx_market_form_entry_input_price_recurring"><![CDATA[Monthly price]]></string>
+    <string name="_bx_market_form_entry_input_price_recurring_inf"><![CDATA[Leave empty to make the product free.]]></string>
 	<string name="_bx_market_form_entry_input_sys_text"><![CDATA[Text]]></string>
 	<string name="_bx_market_form_entry_input_text"><![CDATA[Text]]></string>
 	<string name="_bx_market_form_entry_input_text_err"><![CDATA[Text field can't be empty]]></string>
@@ -140,6 +147,8 @@
     <string name="_bx_market_menu_item_title_delete_entry"><![CDATA[Delete Product]]></string>
     <string name="_bx_market_menu_item_title_system_add_to_cart"><![CDATA[Add to Cart]]></string>
     <string name="_bx_market_menu_item_title_add_to_cart"><![CDATA[Add to Cart]]></string>
+    <string name="_bx_market_menu_item_title_system_subscribe"><![CDATA[Subscribe]]></string>
+    <string name="_bx_market_menu_item_title_subscribe"><![CDATA[Subscribe]]></string>
     <string name="_bx_market_menu_item_title_system_download"><![CDATA[Download]]></string>
     <string name="_bx_market_menu_item_title_download"><![CDATA[Download]]></string>
     <string name="_bx_market_menu_item_title_system_view_entry"><![CDATA[View Product]]></string>
@@ -228,6 +237,7 @@
     <string name="_bx_market_cat_video"><![CDATA[Video]]></string>
 
     <string name="_bx_market_pre_lists_prices"><![CDATA[Product prices]]></string>
+    <string name="_bx_market_cat_price_0"><![CDATA[None]]></string>
     <string name="_bx_market_cat_price_1"><![CDATA[1]]></string>
     <string name="_bx_market_cat_price_2"><![CDATA[2]]></string>
     <string name="_bx_market_cat_price_3"><![CDATA[3]]></string>
@@ -249,6 +259,10 @@
     <string name="_bx_market_txt_updated"><![CDATA[Updated:]]></string>
     <string name="_bx_market_txt_joined"><![CDATA[Joined:]]></string>
     <string name="_bx_market_txt_last_active"><![CDATA[Last Active:]]></string>
-    <string name="_bx_market_txt_get_for_fixed"><![CDATA[Get for {0}{1}]]></string>
-    <string name="_bx_market_txt_get_for_per_month"><![CDATA[Get for {0}{1}/month]]></string>
+    <string name="_bx_market_txt_get_for_single"><![CDATA[Get for {0}{1}]]></string>
+    <string name="_bx_market_txt_price_single"><![CDATA[{0}{1}]]></string>
+    <string name="_bx_market_txt_get_for_recurring"><![CDATA[Get for {0}{1}/month]]></string>
+    <string name="_bx_market_txt_price_recurring"><![CDATA[{0}{1}/mo]]></string>
+    <string name="_bx_market_txt_or"><![CDATA[or]]></string>
+    <string name="_bx_market_txt_get_for_free"><![CDATA[Free]]></string>
 </resources>

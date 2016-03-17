@@ -77,14 +77,49 @@ class BxMarketTemplate extends BxBaseModTextTemplate
                 $sThumbUrl = $oImagesTranscoder->getFileUrl($aData[$CNF['FIELD_THUMB']]);
         }
 
-        list($sBuyCode, $sBuyOnclick) = BxDolPayments::getInstance()->getAddToCartJs($aData[$CNF['FIELD_AUTHOR']], $this->_oConfig->getName(), $aData[$CNF['FIELD_ID']], 1);
+        $sJsCode = '';
+        $oPayment = BxDolPayments::getInstance();
+
+        $aTmplVarsSingle = array();
+        $bSingle = (float)$aData[$CNF['FIELD_PRICE_SINGLE']] != 0;
+        if($bSingle) {
+        	list($sJsCode, $sBuyOnclick) = $oPayment->getAddToCartJs($aData[$CNF['FIELD_AUTHOR']], $this->_oConfig->getName(), $aData[$CNF['FIELD_ID']], 1);
+
+        	$aTmplVarsSingle = array(
+        		'buy_onclick' => $sBuyOnclick,
+    			'buy' => _t('_bx_market_txt_get_for_single', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE_SINGLE']]),
+        	);
+        }
+        
+        
+        $aTmplVarsRecurring = array();
+        $bRecurring = $this->_oDb->getParam($CNF['OPTION_ENABLE_RECURRING']) == 'on' && (float)$aData[$CNF['FIELD_PRICE_RECURRING']] != 0;
+        if($bRecurring) {
+        	list($sJsCode, $sRecurringOnclick) = $oPayment->getSubscribeJs($aData[$CNF['FIELD_AUTHOR']], $this->_oConfig->getName(), $aData[$CNF['FIELD_ID']], 1);
+
+        	$aTmplVarsRecurring = array(
+        		'recurring_onclick' => $sRecurringOnclick,
+        		'recurring' => _t('_bx_market_txt_get_for_recurring', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE_RECURRING']]),
+        	);
+        }
 
     	return $this->parseHtmlByContent(parent::entryText($aData), array(
     		'title_attr' => bx_html_attribute(isset($aData[$CNF['FIELD_TITLE']]) ? $aData[$CNF['FIELD_TITLE']] : ''),
     		'thumb_url' => $sThumbUrl,
-    		'buy_onclick' => $sBuyOnclick,
-    		'buy' => _t('_bx_market_txt_get_for_fixed', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE']]),
-    		'screenshots' => $this->getScreenshots($aData)
+    		'bx_if:show_single' => array(
+    			'condition' => $bSingle,
+    			'content' => $aTmplVarsSingle
+    		),
+    		'bx_if:show_recurring' => array(
+    			'condition' => $bRecurring,
+    			'content' => $aTmplVarsRecurring
+    		),
+    		'bx_if:show_free' => array(
+    			'condition' => !$bSingle && !$bRecurring,
+    			'content' => array()
+    		),
+    		'screenshots' => $this->getScreenshots($aData),
+    		'js_code' => $sJsCode
     	));
     }
 
@@ -129,9 +164,27 @@ class BxMarketTemplate extends BxBaseModTextTemplate
 
     	$aUnit = parent::getUnit($aData, $aParams);
 
-    	$aUnit['entry_price'] = $aData[$CNF['FIELD_PRICE']];
-    	$aUnit['currency_sign'] = $this->_aCurrency['sign'];
-    	$aUnit['currency_code'] = $this->_aCurrency['code'];
+    	$bSingle = (float)$aData[$CNF['FIELD_PRICE_SINGLE']] != 0;
+    	$bRecurring = (float)$aData[$CNF['FIELD_PRICE_RECURRING']] != 0;
+    	
+    	$aUnit = array_merge($aUnit, array(
+    		'bx_if:show_single' => array(
+    			'condition' => $bSingle,
+    			'content' => array(
+    				'entry_price_single' => _t('_bx_market_txt_price_single', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE_SINGLE']])
+    			)
+    		),
+    		'bx_if:show_recurring' => array(
+    			'condition' => $bRecurring,
+    			'content' => array(
+    				'entry_price_recurring' => _t('_bx_market_txt_price_recurring', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE_RECURRING']])
+    			)
+    		),
+    		'bx_if:show_free' => array(
+    			'condition' => !$bSingle && !$bRecurring,
+    			'content' => array()
+    		),
+    	));
 
     	return $aUnit;
     }

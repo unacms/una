@@ -25,7 +25,12 @@ div.bx-market-ech-info-cnt {
 div.bx-market-ech-info .bx-market-ech-title {
 	margin: 0px;
 }
-
+div.bx-market-ech-info .bx-market-ech-paid {
+	display: inline-block;
+	float: none;
+	vertical-align: top;
+}
+div.bx-market-ech-info .bx-market-ech-free {}
 
 /*--- Entry Screenshots ---*/
 div.bx-market-screenshots {

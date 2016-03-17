@@ -31,7 +31,16 @@
 			        -->
 		        </div>
 		        <div class="bx-market-ui-cell bx-market-uic-narrow">
-		        	<span class="bx-market-ui-price bx-def-font-semibold col-green3">__currency_sign____entry_price__</span>
+		        	<bx_if:show_single>
+		        		<span class="bx-market-ui-price col-green3">__entry_price_single__</span>
+		        	</bx_if:show_single>
+		        	<bx_if:show_recurring>
+		        		<span class="bx-market-ui-price-or bx-def-font-grayed"><bx_text:_bx_market_txt_or /></span>
+		        		<span class="bx-market-ui-price col-green3">__entry_price_recurring__</span>
+		        	</bx_if:show_recurring>
+		        	<bx_if:show_free>
+		        		<span class="bx-market-ui-price bx-def-font-semibold col-green3"><bx_text:_bx_market_txt_get_for_free /></span>
+		        	</bx_if:show_free>
 		        </div>
 		    </div>
 		</div>

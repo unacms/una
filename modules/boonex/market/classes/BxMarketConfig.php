@@ -37,10 +37,12 @@ class BxMarketConfig extends BxBaseModTextConfig
             'FIELD_AUTHOR' => 'author',
             'FIELD_ADDED' => 'added',
             'FIELD_CHANGED' => 'changed',
+        	'FIELD_NAME' => 'name',
             'FIELD_TITLE' => 'title',
             'FIELD_TEXT' => 'text',
             'FIELD_TEXT_ID' => 'product-text',
-        	'FIELD_PRICE' => 'price',
+        	'FIELD_PRICE_SINGLE' => 'price_single',
+        	'FIELD_PRICE_RECURRING' => 'price_recurring',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
 			'FIELD_ALLOW_PURCHASE_TO' => 'allow_purchase_to',
 			'FIELD_ALLOW_COMMENT_TO' => 'allow_comment_to',
@@ -111,6 +113,9 @@ class BxMarketConfig extends BxBaseModTextConfig
                 'bx_market_view' => $aMenuItems2Methods,
                 'bx_market_view_popup' => $aMenuItems2Methods,
             ),
+
+            // global settings
+			'OPTION_ENABLE_RECURRING' => 'bx_market_enable_recurring',
 
             // some language keys
             'T' => array (

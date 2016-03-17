@@ -20,14 +20,41 @@ class BxMarketMenuView extends BxBaseModTextMenuView
         parent::__construct($aObject, $oTemplate);
     }
 
-	public function getCode()
+    protected function _isVisible ($a)
     {
-    	list($sJsCode, $sJsMethod) = BxDolPayments::getInstance()->getAddToCartJs($this->_aContentInfo['author'], $this->MODULE, $this->_aContentInfo['id'], 1);
-        $this->addMarkers(array(
-        	'add_to_cart_onclick' => $sJsMethod
-        ));
+    	$CNF = &$this->_oModule->_oConfig->CNF;
 
-        return $sJsCode . parent::getCode();
+		if(!parent::_isVisible($a))
+			return false;
+
+		$oPayment = BxDolPayments::getInstance();
+
+		$bResult = true;
+		switch ($a['name']) {
+			case 'add-to-cart':
+				$bResult = (float)$this->_aContentInfo[$CNF['FIELD_PRICE_SINGLE']] != 0;
+				if(!$bResult) 
+					break;
+
+				list($sJsCode, $sJsMethod) = $oPayment->getAddToCartJs($this->_aContentInfo['author'], $this->MODULE, $this->_aContentInfo['id'], 1);
+				$this->addMarkers(array(
+		        	'add_to_cart_onclick' => $sJsMethod
+		        ));
+				break;
+
+			case 'subscribe':
+				$bResult = (float)$this->_aContentInfo[$CNF['FIELD_PRICE_RECURRING']] != 0;
+				if(!$bResult) 
+					break;
+
+				list($sJsCode, $sJsMethod) = $oPayment->getSubscribeJs($this->_aContentInfo['author'], $this->MODULE, $this->_aContentInfo['id'], 1);
+				$this->addMarkers(array(
+		        	'subscribe_onclick' => $sJsMethod
+		        )); 
+				break;
+		}
+
+		return $bResult;
     }
 }
 
