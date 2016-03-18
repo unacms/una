@@ -294,7 +294,7 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
 	                    )
 	                ),
 	                'quantity' => $aItem['item_count'],
-	                'price' => $aInfo['price'],
+	                'price' => $this->_oConfig->getPrice($aOrder['type'], $aInfo),
 	                'currency_code' => $aSeller['currency_code']
 	            );
         }

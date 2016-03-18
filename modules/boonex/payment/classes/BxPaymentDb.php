@@ -280,6 +280,7 @@ class BxPaymentDb extends BxBaseModPaymentDb
         $aMethod['params'][0] = "SELECT
         		`tt`.`id`,
                 `tt`.`license`,
+                `ttp`.`type`,
                 `tt`.`client_id`,
                 `tt`.`seller_id`,
                 `tt`.`module_id`,
