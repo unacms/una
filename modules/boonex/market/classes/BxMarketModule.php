@@ -9,6 +9,9 @@
  * @{
  */
 
+define('BX_MARKET_LICENSE_TYPE_SINGLE', 'single'); //--- one-time payment license
+define('BX_MARKET_LICENSE_TYPE_RECURRING', 'recurring'); //--- recurring payment license
+
 /**
  * Market module
  */
@@ -146,34 +149,51 @@ class BxMarketModule extends BxBaseModTextModule
 
     public function serviceRegisterCartItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense)
     {
-        $aItem = $this->serviceGetCartItem($iItemId);
+        $this->_serviceRegisterItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense, BX_MARKET_LICENSE_TYPE_SINGLE);
+    }
+
+    public function serviceRegisterSubscriptionItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense)
+    {
+		return $this->_serviceRegisterItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense, BX_MARKET_LICENSE_TYPE_RECURRING);
+    }
+
+    public function serviceUnregisterCartItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense)
+    {
+        return $this->_serviceUnregisterItem($iClientId, $iItemId, $sOrder, $sLicense, BX_MARKET_LICENSE_TYPE_SINGLE);
+    }
+
+    public function serviceUnregisterSubscriptionItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense)
+    {
+    	return $this->_serviceUnregisterItem($iClientId, $iItemId, $sOrder, $sLicense, BX_MARKET_LICENSE_TYPE_RECURRING); 
+    }
+
+	public function serviceCancelSubscriptionItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder)
+    {
+    	//TODO: Do something if it's necessary.
+    }
+
+    protected function _serviceRegisterItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense, $sType)
+    {
+    	$aItem = $this->serviceGetCartItem($iItemId);
         if(empty($aItem) || !is_array($aItem))
 			return array();
 
-        if(!$this->_oDb->registerLicense($iClientId, $iItemId, $iItemCount, $sOrder, $sLicense))
+		$sDuration = '';
+		if($sType == BX_MARKET_LICENSE_TYPE_RECURRING) {
+			$aProduct = $this->_oDb->getContentInfoById($iItemId);
+
+			$sDuration = $aProduct[$this->_oConfig->CNF['FIELD_DURATION_RECURRING']];
+		}
+
+        if(!$this->_oDb->registerLicense($iClientId, $iItemId, $iItemCount, $sOrder, $sLicense, $sType, $sDuration))
             return array();
 
         return $aItem;
     }
 
-    public function serviceRegisterSubscriptionItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense)
+    protected function _serviceUnregisterItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense, $sType)
     {
-		return $this->serviceRegisterCartItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense);
-    }
-
-    public function serviceUnregisterCartItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense)
-    {
-        return $this->_oDb->unregisterLicense($iClientId, $iItemId, $sOrder, $sLicense);
-    }
-
-    public function serviceUnregisterSubscriptionItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense)
-    {
-    	return $this->serviceUnregisterCartItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense); 
-    }
-
-	public function serviceCancelSubscriptionItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder)
-    {
-    	//TODO: Do something if it's necessary. 
+    	return $this->_oDb->unregisterLicense($iClientId, $iItemId, $sOrder, $sLicense, $sType);
     }
 
     public function getGhostTemplateVars($aFile, $iProfileId, $iContentId, $oStorage, $oImagesTranscoder)

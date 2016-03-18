@@ -14,9 +14,19 @@
  */
 class BxMarketDb extends BxBaseModTextDb
 {
+	protected $_iRecurringReserve;
+	protected $_aRecurringDurations;
+
     function __construct(&$oConfig)
     {
         parent::__construct($oConfig);
+
+        $this->_iRecurringReserve = 4;
+        $this->_aRecurringDurations = array(
+        	'week' => 'INTERVAL 7 DAY',
+        	'month' => 'INTERVAL 1 MONTH',
+        	'year' => 'INTERVAL 1 YEAR',
+        );
     }
 
 	public function getPhoto($aParams = array())
@@ -118,13 +128,24 @@ class BxMarketDb extends BxBaseModTextDb
         return (int)$this->getOne($sQuery) > 0;
     }
 
-	public function registerLicense($iClientId, $iProductId, $iCount, $sOrder, $sLicense)
+	public function registerLicense($iClientId, $iProductId, $iCount, $sOrder, $sLicense, $sType, $sDuration = '')
     {
-    	$sQuery = $this->prepare("INSERT INTO `" . $this->_sPrefix . "licenses`(`client_id`, `product_id`, `count`, `order`, `license`, `date`) VALUES(?, ?, ?, ?, ?, UNIX_TIMESTAMP())", $iClientId, $iProductId, $iCount, $sOrder, $sLicense);
+    	$aQueryParams = array(
+    		`client_id` => $iClientId,
+    		`product_id` => $iProductId,
+    		`count` => $iCount, 
+    		`order` => $sOrder, 
+    		`license` => $sLicense,
+    		`type` => $sType,
+    		`added` => 'UNIX_TIMESTAMP()',
+    		`expired` => !empty($sDuration) ? 'UNIX_TIMESTAMP(DATE_ADD(DATE_ADD(NOW(), ' . $this->_aRecurringDurations[$sDuration] . '), INTERVAL ' . $this->_iRecurringReserve . ' DAY))' : 0
+    	);
+
+    	$sQuery = $this->prepare("INSERT INTO `" . $this->_sPrefix . "licenses SET " . $this->arrayToSQL($aQueryParams));
         return (int)$this->query($sQuery) > 0;
     }
 
-    public function unregisterLicense($iClientId, $iProductId, $sOrder, $sLicense)
+    public function unregisterLicense($iClientId, $iProductId, $sOrder, $sLicense, $sType)
     {
     	$sQuery = $this->prepare("DELETE FROM `" . $this->_sPrefix . "licenses` WHERE `client_id` = ? AND `product_id` = ? AND `order` = ? AND `license` = ?", $iClientId, $iProductId, $sOrder, $sLicense);
         return (int)$this->query($sQuery) > 0;

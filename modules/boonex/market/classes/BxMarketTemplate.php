@@ -99,7 +99,7 @@ class BxMarketTemplate extends BxBaseModTextTemplate
 
         	$aTmplVarsRecurring = array(
         		'recurring_onclick' => $sRecurringOnclick,
-        		'recurring' => _t('_bx_market_txt_get_for_recurring', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE_RECURRING']]),
+        		'recurring' => _t('_bx_market_txt_get_for_recurring', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE_RECURRING']], _t('_bx_market_txt_per_' . $aData[$CNF['FIELD_DURATION_RECURRING']])),
         	);
         }
 
@@ -177,7 +177,7 @@ class BxMarketTemplate extends BxBaseModTextTemplate
     		'bx_if:show_recurring' => array(
     			'condition' => $bRecurring,
     			'content' => array(
-    				'entry_price_recurring' => _t('_bx_market_txt_price_recurring', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE_RECURRING']])
+    				'entry_price_recurring' => _t('_bx_market_txt_price_recurring', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE_RECURRING']], _t('_bx_market_txt_per_' . $aData[$CNF['FIELD_DURATION_RECURRING']] . '_short'))
     			)
     		),
     		'bx_if:show_free' => array(

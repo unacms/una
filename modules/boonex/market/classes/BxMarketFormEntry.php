@@ -39,10 +39,16 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
         }
 
         if($this->_oModule->_oDb->getParam($CNF['OPTION_ENABLE_RECURRING']) != 'on') {
+        	$this->aInputs[$CNF['FIELD_DURATION_RECURRING']]['type'] = 'hidden';
 			$this->aInputs[$CNF['FIELD_PRICE_RECURRING']]['type'] = 'hidden';
 			$this->aInputs[$CNF['FIELD_PRICE_RECURRING']]['value'] = 0;
+
+			unset($this->aInputs[$CNF['FIELD_HEADER_BEG_SINGLE']]);
+			unset($this->aInputs[$CNF['FIELD_HEADER_END_SINGLE']]);
+			unset($this->aInputs[$CNF['FIELD_HEADER_BEG_RECURRING']]);
+			unset($this->aInputs[$CNF['FIELD_HEADER_END_RECURRING']]);
         }
-        
+
 		if(isset($this->aInputs[$CNF['FIELD_ALLOW_PURCHASE_TO']]))
 			$this->aInputs[$CNF['FIELD_ALLOW_PURCHASE_TO']] = BxDolPrivacy::getGroupChooser($CNF['OBJECT_PRIVACY_PURCHASE']);
 

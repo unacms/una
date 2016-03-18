@@ -31,9 +31,20 @@
     <string name="_bx_market_form_entry_input_sys_price_single"><![CDATA[Price]]></string>
 	<string name="_bx_market_form_entry_input_price_single"><![CDATA[Price]]></string>
     <string name="_bx_market_form_entry_input_price_single_inf"><![CDATA[Leave empty to make the product free.]]></string>
-    <string name="_bx_market_form_entry_input_sys_price_recurring"><![CDATA[Monthly price]]></string>
-	<string name="_bx_market_form_entry_input_price_recurring"><![CDATA[Monthly price]]></string>
+    <string name="_bx_market_form_entry_input_sys_price_recurring"><![CDATA[Recurring price]]></string>
+	<string name="_bx_market_form_entry_input_price_recurring"><![CDATA[Price]]></string>
     <string name="_bx_market_form_entry_input_price_recurring_inf"><![CDATA[Leave empty to make the product free.]]></string>
+    <string name="_bx_market_form_entry_input_sys_duration_recurring"><![CDATA[Billing period]]></string>
+    <string name="_bx_market_form_entry_input_duration_recurring"><![CDATA[Billing period]]></string>
+    <string name="_bx_market_form_entry_input_sys_header_beg_single"><![CDATA[One-time payment: begin]]></string>
+    <string name="_bx_market_form_entry_input_header_beg_single"><![CDATA[One-time payment]]></string>
+    <string name="_bx_market_form_entry_input_sys_header_beg_recurring"><![CDATA[Recurring payment: begin]]></string>
+    <string name="_bx_market_form_entry_input_header_beg_recurring"><![CDATA[Recurring payment]]></string>
+    <string name="_bx_market_form_entry_input_sys_header_beg_privacy"><![CDATA[Privacy: begin]]></string>
+    <string name="_bx_market_form_entry_input_header_beg_privacy"><![CDATA[Privacy]]></string>
+    <string name="_bx_market_form_entry_input_sys_header_end_single"><![CDATA[One-time payment: end]]></string>
+    <string name="_bx_market_form_entry_input_sys_header_end_recurring"><![CDATA[Recurring payment: end]]></string>
+    <string name="_bx_market_form_entry_input_sys_header_end_privacy"><![CDATA[Privacy: end]]></string>
 	<string name="_bx_market_form_entry_input_sys_text"><![CDATA[Text]]></string>
 	<string name="_bx_market_form_entry_input_text"><![CDATA[Text]]></string>
 	<string name="_bx_market_form_entry_input_text_err"><![CDATA[Text field can't be empty]]></string>
@@ -244,6 +255,11 @@
     <string name="_bx_market_cat_price_4"><![CDATA[4]]></string>
     <string name="_bx_market_cat_price_5"><![CDATA[5]]></string>
 
+	<string name="_bx_market_pre_lists_durations"><![CDATA[Product durations]]></string>
+	<string name="_bx_market_cat_duration_week"><![CDATA[weekly]]></string>
+	<string name="_bx_market_cat_duration_month"><![CDATA[monthly]]></string>
+	<string name="_bx_market_cat_duration_year"><![CDATA[yearly]]></string>
+
     <string name="_bx_market_vote_counter"><![CDATA[{0} ratings]]></string>
 
 	<string name="_bx_market_err_access_denied"><![CDATA[Access denied.]]></string>
@@ -261,8 +277,14 @@
     <string name="_bx_market_txt_last_active"><![CDATA[Last Active:]]></string>
     <string name="_bx_market_txt_get_for_single"><![CDATA[Get for {0}{1}]]></string>
     <string name="_bx_market_txt_price_single"><![CDATA[{0}{1}]]></string>
-    <string name="_bx_market_txt_get_for_recurring"><![CDATA[Get for {0}{1}/month]]></string>
-    <string name="_bx_market_txt_price_recurring"><![CDATA[{0}{1}/mo]]></string>
+    <string name="_bx_market_txt_get_for_recurring"><![CDATA[Get for {0}{1}/{2}]]></string>
+    <string name="_bx_market_txt_price_recurring"><![CDATA[{0}{1}/{2}]]></string>
+    <string name="_bx_market_txt_per_week"><![CDATA[week]]></string>
+    <string name="_bx_market_txt_per_week_short"><![CDATA[wk]]></string>
+    <string name="_bx_market_txt_per_month"><![CDATA[month]]></string>
+    <string name="_bx_market_txt_per_month_short"><![CDATA[mo]]></string>
+    <string name="_bx_market_txt_per_year"><![CDATA[year]]></string>
+    <string name="_bx_market_txt_per_year_short"><![CDATA[yr]]></string>
     <string name="_bx_market_txt_or"><![CDATA[or]]></string>
     <string name="_bx_market_txt_get_for_free"><![CDATA[Free]]></string>
 </resources>
