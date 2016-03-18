@@ -5,6 +5,7 @@
 	<string name="_bx_market_cmts"><![CDATA[Market's Reviews]]></string>
 
 	<string name="_bx_market_option_enable_recurring"><![CDATA[Allow to sell subscriptions]]></string>
+	<string name="_bx_market_option_recurring_reserve"><![CDATA[Reserve (in days) to accept and process recurring payment notification]]></string>
 	<string name="_bx_market_option_summary_chars"><![CDATA[Number of characters in auto-cropped product summary]]></string>
 	<string name="_bx_market_option_plain_summary_chars"><![CDATA[Number of characters in plain product description when product hasn't thumb]]></string>
 	<string name="_bx_market_option_per_page_browse"><![CDATA[Number of items per page]]></string>
@@ -33,7 +34,7 @@
     <string name="_bx_market_form_entry_input_price_single_inf"><![CDATA[Leave empty to make the product free.]]></string>
     <string name="_bx_market_form_entry_input_sys_price_recurring"><![CDATA[Recurring price]]></string>
 	<string name="_bx_market_form_entry_input_price_recurring"><![CDATA[Price]]></string>
-    <string name="_bx_market_form_entry_input_price_recurring_inf"><![CDATA[Leave empty to make the product free.]]></string>
+    <string name="_bx_market_form_entry_input_price_recurring_inf"><![CDATA[Select 'None' to make the product free.]]></string>
     <string name="_bx_market_form_entry_input_sys_duration_recurring"><![CDATA[Billing period]]></string>
     <string name="_bx_market_form_entry_input_duration_recurring"><![CDATA[Billing period]]></string>
     <string name="_bx_market_form_entry_input_sys_header_beg_single"><![CDATA[One-time payment: begin]]></string>

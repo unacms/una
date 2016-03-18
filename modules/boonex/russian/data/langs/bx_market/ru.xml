@@ -5,6 +5,7 @@
 	<string name="_bx_market_cmts"><![CDATA[Рынок - Обзоры]]></string>
 
 	<string name="_bx_market_option_enable_recurring"><![CDATA[Разрешить продажу подписок]]></string>
+	<string name="_bx_market_option_recurring_reserve"><![CDATA[Резерв (в днях) на принятие и обработку сообщения об оплате подписки.]]></string>
 	<string name="_bx_market_option_summary_chars"><![CDATA[Количество символов в автогенерируемой сводке к продуктам]]></string>
 	<string name="_bx_market_option_plain_summary_chars"><![CDATA[Количество символов в описании продукта при отсутствующей картинке продукта]]></string>
 	<string name="_bx_market_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>
@@ -33,7 +34,7 @@
     <string name="_bx_market_form_entry_input_price_single_inf"><![CDATA[Оставьте пустым, чтобы сделать продукт бесплатным.]]></string>
 	<string name="_bx_market_form_entry_input_sys_price_recurring"><![CDATA[Оплата за месяц]]></string>
 	<string name="_bx_market_form_entry_input_price_recurring"><![CDATA[Оплата за месяц]]></string>
-    <string name="_bx_market_form_entry_input_price_recurring_inf"><![CDATA[Оставьте пустым, чтобы сделать продукт бесплатным.]]></string>
+    <string name="_bx_market_form_entry_input_price_recurring_inf"><![CDATA[Выберите 'Нет', чтобы сделать продукт бесплатным.]]></string>
 	<string name="_bx_market_form_entry_input_sys_duration_recurring"><![CDATA[Период оплаты]]></string>
     <string name="_bx_market_form_entry_input_duration_recurring"><![CDATA[Период оплаты]]></string>
     <string name="_bx_market_form_entry_input_sys_header_beg_single"><![CDATA[Разовая оплата: начало]]></string>

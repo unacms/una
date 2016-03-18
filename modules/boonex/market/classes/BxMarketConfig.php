@@ -121,6 +121,7 @@ class BxMarketConfig extends BxBaseModTextConfig
 
             // global settings
 			'OPTION_ENABLE_RECURRING' => 'bx_market_enable_recurring',
+            'OPTION_RECURRING_RESERVE' => 'bx_market_recurring_reserve',
 
             // some language keys
             'T' => array (
