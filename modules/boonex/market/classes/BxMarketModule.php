@@ -92,6 +92,34 @@ class BxMarketModule extends BxBaseModTextModule
     }
 
     /**
+     * Licenses 
+     */
+	public function serviceBlockLicenses() 
+	{
+		$sGrid = $this->_oConfig->getGridObject('licenses');
+		$oGrid = BxDolGrid::getObjectInstance($sGrid);
+        if(!$oGrid)
+			return '';
+
+		return array(
+        	'content' => $this->_oTemplate->getJsCode('licenses', array('sObjNameGrid' => $sGrid)) . $oGrid->getCode(),
+        );
+	}
+    /**
+     * Get number of unused licenses for some profile
+     * @param $iProfileId - profile to get unused licenses for, if omitted then currently logged in profile is used
+     * @return integer
+     */
+    public function serviceGetUnusedLicensesNum ($iProfileId = 0)
+    {
+        if(!$iProfileId)
+			$iProfileId = bx_get_logged_profile_id();
+
+        $aLicenses = $this->_oDb->getLicense(array('type' => 'unused', 'profile_id' => (int)$iProfileId));
+        return !empty($aLicenses) && is_array($aLicenses) ? count($aLicenses) : 0;
+    }
+
+    /**
      * Integration with Payment based modules.  
      */
 	public function serviceGetPaymentData()

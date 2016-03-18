@@ -144,6 +144,9 @@
     <string name="_bx_market_page_title_sys_entries_categories"><![CDATA[Категории]]></string>
     <string name="_bx_market_page_title_entries_categories"><![CDATA[Категории]]></string>
     <string name="_bx_market_page_block_title_categories_entries"><![CDATA[Продукты]]></string>
+    <string name="_bx_market_page_title_sys_licenses"><![CDATA[Лицензии]]></string>
+    <string name="_bx_market_page_title_licenses"><![CDATA[Лицензии]]></string>
+    <string name="_bx_market_page_block_title_licenses"><![CDATA[Лицензии]]></string>
 
     <string name="_bx_market_menu_set_title_view_entry"><![CDATA[Действия для продукта]]></string>
     <string name="_bx_market_menu_title_view_entry"><![CDATA[Действия для продукта]]></string>
@@ -188,6 +191,8 @@
 	<string name="_bx_market_menu_item_title_admt_posts"><![CDATA[Продукты - {addon} спрятано]]></string>
 	<string name="_bx_market_menu_item_title_manage_my"><![CDATA[Мои Продукты]]></string>
 	<string name="_bx_market_menu_item_title_manage_all"><![CDATA[Все Продукты]]></string>
+	<string name="_bx_market_menu_item_title_system_notifications_licenses"><![CDATA[Лицензии]]></string>
+	<string name="_bx_market_menu_item_title_notifications_licenses"><![CDATA[Лицензии]]></string>
 
 	<string name="_bx_market_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
 	<string name="_bx_market_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>
@@ -201,6 +206,18 @@
     <string name="_bx_market_grid_action_title_adm_more_actions"><![CDATA[Дополнительные действия]]></string>
     <string name="_bx_market_grid_action_err_delete"><![CDATA[Невозможно удалить выбранный(ные) продукт(ы).]]></string>
     <string name="_bx_market_grid_txt_account_manager"><![CDATA[Перенаправить в Управление аккаунтом.]]></string>
+    
+    <string name="_bx_market_grid_column_title_lcs_product"><![CDATA[Продукт]]></string>
+	<string name="_bx_market_grid_column_title_lcs_license"><![CDATA[Лицензия]]></string>
+	<string name="_bx_market_grid_column_title_lcs_type"><![CDATA[Тип]]></string>
+	<string name="_bx_market_grid_column_title_lcs_domain"><![CDATA[Домен]]></string>
+	<string name="_bx_market_grid_column_title_lcs_added"><![CDATA[Начало]]></string>
+	<string name="_bx_market_grid_column_title_lcs_expired"><![CDATA[Конец]]></string>
+	<string name="_bx_market_grid_action_title_lcs_reset"><![CDATA[Сбросить]]></string>
+	<string name="_bx_market_grid_action_err_cannot_perform"><![CDATA[Не могу выполнить действие. Пожалуйста, сообщите.]]></string>
+	<string name="_bx_market_grid_txt_lcs_type_single"><![CDATA[постоянная]]></string>
+	<string name="_bx_market_grid_txt_lcs_type_recurring"><![CDATA[подписка]]></string>
+	<string name="_bx_market_grid_txt_lcs_never"><![CDATA[никогда]]></string>
 
     <string name="_bx_market_pre_lists_cats"><![CDATA[Категории продуктов]]></string>
     <string name="_bx_market_cat_administration"><![CDATA[Администрирование]]></string>

@@ -120,18 +120,57 @@ class BxMarketDb extends BxBaseModTextDb
     /**
      * Integration with Payment based modules.  
      */
-    public function hasLicense ($iClientId, $iProductId)
+	public function getLicense($aParams = array())
     {
-    	$sQuery = $this->prepare("SELECT `id` FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` WHERE `client_id` = ? AND `product_id` = ? LIMIT 1", $iClientId, $iProductId);
+    	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
+    	
+    	$sWhereClause = "";
+        switch($aParams['type']) {
+            case 'id':
+            	$aMethod['name'] = 'getRow';
+                $sWhereClause = $this->prepare(" AND `tl`.`id`=?", $aParams['id']);
+                break;
+
+			case 'unused':
+                $sWhereClause = $this->prepare(" AND `tl`.`profile_id`=? AND `tl`.`domain`=''", $aParams['profile_id']);
+                break;
+        }
+
+        $aMethod['params'][0] = "SELECT
+        		`tl`.*
+            FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` AS `tl`
+            WHERE 1" . $sWhereClause;
+
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+    }
+
+	public function updateLicense($aSet, $aWhere)
+    {
+        $sQuery = "UPDATE `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` SET " . $this->arrayToSQL($aSet) . " WHERE " . (!empty($aWhere) ? $this->arrayToSQL($aWhere, ' AND ') : "1");
+        return (int)$this->query($sQuery) > 0;
+    }
+
+	public function deleteLicense($aWhere)
+    {
+    	if(empty($aWhere))
+    		return false;
+
+        $sQuery = "DELETE FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` WHERE " . $this->arrayToSQL($aWhere, ' AND ');
+        return (int)$this->query($sQuery) > 0;
+    }
+
+    public function hasLicense ($iProfileId, $iProductId)
+    {
+    	$sQuery = $this->prepare("SELECT `id` FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` WHERE `profile_id` = ? AND `product_id` = ? LIMIT 1", $iProfileId, $iProductId);
         return (int)$this->getOne($sQuery) > 0;
     }
 
-	public function registerLicense($iClientId, $iProductId, $iCount, $sOrder, $sLicense, $sType, $sDuration = '')
+	public function registerLicense($iProfileId, $iProductId, $iCount, $sOrder, $sLicense, $sType, $sDuration = '')
     {
     	$CNF = &$this->_oConfig->CNF;
 
     	$aQueryParams = array(
-    		'client_id' => $iClientId,
+    		'profile_id' => $iProfileId,
     		'product_id' => $iProductId,
     		'count' => $iCount, 
     		'order' => $sOrder, 
@@ -147,9 +186,9 @@ class BxMarketDb extends BxBaseModTextDb
         return (int)$this->query($sQuery) > 0;
     }
 
-    public function unregisterLicense($iClientId, $iProductId, $sOrder, $sLicense, $sType)
+    public function unregisterLicense($iProfileId, $iProductId, $sOrder, $sLicense, $sType)
     {
-    	$sQuery = $this->prepare("DELETE FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` WHERE `client_id` = ? AND `product_id` = ? AND `order` = ? AND `license` = ?", $iClientId, $iProductId, $sOrder, $sLicense);
+    	$sQuery = $this->prepare("DELETE FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` WHERE `profile_id` = ? AND `product_id` = ? AND `order` = ? AND `license` = ?", $iProfileId, $iProductId, $sOrder, $sLicense);
         return (int)$this->query($sQuery) > 0;
     }
 }

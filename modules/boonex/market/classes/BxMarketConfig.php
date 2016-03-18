@@ -73,6 +73,7 @@ class BxMarketConfig extends BxBaseModTextConfig
             'URL_UPDATED' => 'page.php?i=products-updated',
         	'URL_MANAGE_COMMON' => 'page.php?i=products-manage',
         	'URL_MANAGE_ADMINISTRATION' => 'page.php?i=products-administration',
+        	'URL_VIEW_ENTRY' => 'page.php?i=view-product&id=',
 
             // some params
             'PARAM_CHARS_SUMMARY' => 'bx_market_summary_chars',
@@ -109,6 +110,7 @@ class BxMarketConfig extends BxBaseModTextConfig
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_market_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_GRID_ADMINISTRATION' => 'bx_market_administration',
         	'OBJECT_GRID_COMMON' => 'bx_market_common',
+        	'OBJECT_GRID_LICENSES' => 'bx_market_licenses',
             'OBJECT_UPLOADERS' => array('bx_market_simple', 'bx_market_html5'),
 
             // menu items which visibility depends on custom visibility checking
@@ -142,18 +144,20 @@ class BxMarketConfig extends BxBaseModTextConfig
 
         $this->_aJsClasses = array(
         	'entry' => 'BxMarketEntry',
-        	'manage_tools' => 'BxMarketManageTools'
+        	'manage_tools' => 'BxMarketManageTools',
+        	'licenses' => 'BxMarketLicenses'
         );
 
         $this->_aJsObjects = array(
         	'entry' => 'oBxMarketEntry',
-        	'manage_tools' => 'oBxMarketManageTools'
+        	'manage_tools' => 'oBxMarketManageTools',
+        	'licenses' => 'oBxMarketLicenses'
         );
 
         $this->_aGridObjects = array(
         	'common' => $this->CNF['OBJECT_GRID_COMMON'],
         	'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
-        	
+        	'licenses' => $this->CNF['OBJECT_GRID_LICENSES'],
         );
 
         $oPayments = BxDolPayments::getInstance();

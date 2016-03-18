@@ -144,6 +144,9 @@
 	<string name="_bx_market_page_title_sys_entries_categories"><![CDATA[Categories]]></string>
     <string name="_bx_market_page_title_entries_categories"><![CDATA[Categories]]></string>
     <string name="_bx_market_page_block_title_categories_entries"><![CDATA[Products]]></string>
+    <string name="_bx_market_page_title_sys_licenses"><![CDATA[Licenses]]></string>
+    <string name="_bx_market_page_title_licenses"><![CDATA[Licenses]]></string>
+    <string name="_bx_market_page_block_title_licenses"><![CDATA[Licenses]]></string>
     
 
     <string name="_bx_market_menu_set_title_view_entry"><![CDATA[Product Actions]]></string>
@@ -193,6 +196,9 @@
 	<string name="_bx_market_menu_item_title_admt_products"><![CDATA[Products - {addon} hidden]]></string>
 	<string name="_bx_market_menu_item_title_manage_my"><![CDATA[My Products]]></string>
 	<string name="_bx_market_menu_item_title_manage_all"><![CDATA[All Products]]></string>
+	<string name="_bx_market_menu_item_title_system_notifications_licenses"><![CDATA[Licenses]]></string>
+	<string name="_bx_market_menu_item_title_notifications_licenses"><![CDATA[Licenses]]></string>
+
 
 	<string name="_bx_market_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
 	<string name="_bx_market_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
@@ -206,6 +212,20 @@
     <string name="_bx_market_grid_action_title_adm_more_actions"><![CDATA[More Actions]]></string>
     <string name="_bx_market_grid_action_err_delete"><![CDATA[Cannot delete the selected product(s).]]></string>
     <string name="_bx_market_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
+
+	<string name="_bx_market_grid_column_title_lcs_product"><![CDATA[Product]]></string>
+	<string name="_bx_market_grid_column_title_lcs_license"><![CDATA[License]]></string>
+	<string name="_bx_market_grid_column_title_lcs_type"><![CDATA[Type]]></string>
+	<string name="_bx_market_grid_column_title_lcs_domain"><![CDATA[Domain]]></string>
+	<string name="_bx_market_grid_column_title_lcs_added"><![CDATA[Begin]]></string>
+	<string name="_bx_market_grid_column_title_lcs_expired"><![CDATA[Expire]]></string>
+	<string name="_bx_market_grid_action_title_lcs_reset"><![CDATA[Reset]]></string>
+	<string name="_bx_market_grid_action_err_cannot_perform"><![CDATA[Cannot perform the action. Please report.]]></string>
+	<string name="_bx_market_grid_txt_lcs_type_single"><![CDATA[one-time]]></string>
+	<string name="_bx_market_grid_txt_lcs_type_recurring"><![CDATA[recurring]]></string>
+	<string name="_bx_market_grid_txt_lcs_never"><![CDATA[never]]></string>
+	<string name=""><![CDATA[]]></string>
+	<string name=""><![CDATA[]]></string>
 
     <string name="_bx_market_pre_lists_cats"><![CDATA[Product categories]]></string>
     <string name="_bx_market_cat_administration"><![CDATA[Administration]]></string>

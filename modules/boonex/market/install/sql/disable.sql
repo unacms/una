@@ -32,9 +32,9 @@ DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_market';
 DELETE FROM `sys_objects_category` WHERE `object` = 'bx_market_cats';
 
 -- GRIDS
-DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_market_administration', 'bx_market_common');
-DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_market_administration', 'bx_market_common');
-DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_market_administration', 'bx_market_common');
+DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_market_administration', 'bx_market_common', 'bx_market_licenses');
+DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_market_administration', 'bx_market_common', 'bx_market_licenses');
+DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_market_administration', 'bx_market_common', 'bx_market_licenses');
 
 -- UPLOADERS
 DELETE FROM `sys_objects_uploader` WHERE `object` IN('bx_market_simple', 'bx_market_html5');

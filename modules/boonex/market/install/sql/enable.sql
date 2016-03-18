@@ -110,6 +110,13 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_market_author', 1, 'bx_market', '', '_bx_market_page_block_title_entries_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:18:\"my_entries_actions\";}', 0, 0, 1, 0),
 ('bx_market_author', 1, 'bx_market', '_bx_market_page_block_title_sys_entries_of_author', '_bx_market_page_block_title_entries_of_author', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:13:\"browse_author\";}', 0, 0, 1, 1);
 
+-- PAGE: profile's licenses
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_market_licenses', '_bx_market_page_title_sys_licenses', '_bx_market_page_title_licenses', 'bx_market', 5, 2147483647, 1, 'products-licenses', '', '', '', '', 0, 1, 0, 'BxMarketPageLicenses', 'modules/boonex/market/classes/BxMarketPageLicenses.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_market_licenses', 1, 'bx_market', '', '_bx_market_page_block_title_licenses', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_market\";s:6:\"method\";s:14:\"block_licenses\";}', 0, 0, 1, 0);
+
 -- PAGE: module home
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_market_home', 'products-home', '_bx_market_page_title_sys_home', '_bx_market_page_title_home', 'bx_market', 1, 2147483647, 1, 'page.php?i=products-home', '', '', '', 0, 1, 0, 'BxMarketPageBrowse', 'modules/boonex/market/classes/BxMarketPageBrowse.php');
@@ -147,6 +154,7 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 ('', 0, 'bx_market', '_bx_market_page_block_title_recent_entries_view_full', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:13:"browse_public";s:6:"params";a:1:{i:0;s:4:"full";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 2),
 ('', 0, 'bx_market', '_bx_market_page_block_title_popular_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:14:"browse_popular";s:6:"params";a:1:{i:0;s:8:"extended";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 3),
 ('', 0, 'bx_market', '_bx_market_page_block_title_popular_entries_view_full', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:14:"browse_popular";s:6:"params";a:1:{i:0;s:4:"full";}}', 0, 1, IFNULL(@iBlockOrder, 0) + 4);
+
 
 -- MENU: add to site menu
 SET @iSiteMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_site' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
@@ -238,6 +246,11 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 -- MENU: add menu item to profiles modules (trigger* menu sets are processed separately upon modules enable/disable)
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('trigger_profile_view_submenu', 'bx_market', 'products-author', '_bx_market_menu_item_title_system_view_entries_author', '_bx_market_menu_item_title_view_entries_author', 'page.php?i=products-author&profile_id={profile_id}', '', '', 'shopping-cart col-green3', '', 2147483647, 1, 0, 0);
+
+-- MENU: Notifications
+SET @iMIOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_account_notifications');
+INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
+('sys_account_notifications', 'bx_market', 'notifications-licenses', '_bx_market_menu_item_title_system_notifications_licenses', '_bx_market_menu_item_title_notifications_licenses', 'page.php?i=products-licenses', '', '', 'certificate col-green2', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:23:"get_unused_licenses_num";}', '', 2147483646, 1, 0, @iMIOrder + 1);
 
 
 -- PRIVACY 
@@ -342,7 +355,10 @@ INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `l
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `override_class_name`, `override_class_file`) VALUES
 ('bx_market_administration', 'Sql', 'SELECT * FROM `bx_market_products` WHERE 1 ', 'bx_market_products', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 'BxMarketGridAdministration', 'modules/boonex/market/classes/BxMarketGridAdministration.php'),
-('bx_market_common', 'Sql', 'SELECT * FROM `bx_market_products` WHERE 1 ', 'bx_market_products', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 'BxMarketGridCommon', 'modules/boonex/market/classes/BxMarketGridCommon.php');
+('bx_market_common', 'Sql', 'SELECT * FROM `bx_market_products` WHERE 1 ', 'bx_market_products', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 'BxMarketGridCommon', 'modules/boonex/market/classes/BxMarketGridCommon.php'),
+
+-- GRIDS: Licenses
+('bx_market_licenses', 'Sql', 'SELECT `tl`.`id` AS `id`, `tl`.`profile_id` AS `profile_id`, `tl`.`product_id` AS `product_id`, `tp`.`title` AS `product`, `tl`.`license` AS `license`, `tl`.`type` AS `type`, `tl`.`domain` AS `domain`, `tl`.`added` AS `added`, `tl`.`expired` AS `expired` FROM `bx_market_licenses` AS `tl` LEFT JOIN `bx_market_products` AS `tp` ON `tl`.`product_id`=`tp`.`id` WHERE 1 ', 'bx_market_licenses', 'id', 'added', '', '', 20, NULL, 'start', '', 'tp`.`title,tl`.`license,tl`.`type,tl`.`domain', '', 'like', '', '', 'BxMarketGridLicenses', 'modules/boonex/market/classes/BxMarketGridLicenses.php');
 
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
@@ -356,7 +372,15 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_market_common', 'switcher', '_bx_market_grid_column_title_adm_active', '8%', 0, '', '', 2),
 ('bx_market_common', 'title', '_bx_market_grid_column_title_adm_title', '40%', 0, '', '', 3),
 ('bx_market_common', 'added', '_bx_market_grid_column_title_adm_added', '30%', 1, '25', '', 4),
-('bx_market_common', 'actions', '', '20%', 0, '', '', 5);
+('bx_market_common', 'actions', '', '20%', 0, '', '', 5),
+
+('bx_market_licenses', 'product', '_bx_market_grid_column_title_lcs_product', '30%', 0, '28', '', 1),
+('bx_market_licenses', 'license', '_bx_market_grid_column_title_lcs_license', '10%', 0, '8', '', 3),
+('bx_market_licenses', 'type', '_bx_market_grid_column_title_lcs_type', '10%', 1, '12', '', 4),
+('bx_market_licenses', 'domain', '_bx_market_grid_column_title_lcs_domain', '20%', 0, '18', '', 5),
+('bx_market_licenses', 'added', '_bx_market_grid_column_title_lcs_added', '10%', 1, '25', '', 6),
+('bx_market_licenses', 'expired', '_bx_market_grid_column_title_lcs_expired', '10%', 1, '25', '', 7),
+('bx_market_licenses', 'actions', '', '10%', 0, '', '', 8);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_market_administration', 'bulk', 'delete', '_bx_market_grid_action_title_adm_delete', '', 0, 1, 1),
@@ -366,7 +390,9 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_market_common', 'bulk', 'delete', '_bx_market_grid_action_title_adm_delete', '', 0, 1, 1),
 ('bx_market_common', 'single', 'edit', '_bx_market_grid_action_title_adm_edit', 'pencil', 1, 0, 1),
 ('bx_market_common', 'single', 'delete', '_bx_market_grid_action_title_adm_delete', 'remove', 1, 1, 2),
-('bx_market_common', 'single', 'settings', '_bx_market_grid_action_title_adm_more_actions', 'cog', 1, 0, 3);
+('bx_market_common', 'single', 'settings', '_bx_market_grid_action_title_adm_more_actions', 'cog', 1, 0, 3),
+
+('bx_market_licenses', 'single', 'reset', '_bx_market_grid_action_title_lcs_reset', 'eraser', 1, 1, 1);
 
 
 -- UPLOADERS
