@@ -14,14 +14,12 @@
  */
 class BxMarketDb extends BxBaseModTextDb
 {
-	protected $_iRecurringReserve;
 	protected $_aRecurringDurations;
 
     function __construct(&$oConfig)
     {
         parent::__construct($oConfig);
 
-        $this->_iRecurringReserve = 4;
         $this->_aRecurringDurations = array(
         	'week' => 'INTERVAL 7 DAY',
         	'month' => 'INTERVAL 1 MONTH',
@@ -124,7 +122,7 @@ class BxMarketDb extends BxBaseModTextDb
      */
     public function hasLicense ($iClientId, $iProductId)
     {
-    	$sQuery = $this->prepare("SELECT `id` FROM `" . $this->_sPrefix . "licenses` WHERE `client_id` = ? AND `product_id` = ? LIMIT 1", $iClientId, $iProductId);
+    	$sQuery = $this->prepare("SELECT `id` FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` WHERE `client_id` = ? AND `product_id` = ? LIMIT 1", $iClientId, $iProductId);
         return (int)$this->getOne($sQuery) > 0;
     }
 
@@ -145,13 +143,13 @@ class BxMarketDb extends BxBaseModTextDb
 		if(!empty($sDuration))
 			$sExpireParam = ', `expired`=UNIX_TIMESTAMP(DATE_ADD(DATE_ADD(NOW(), ' . $this->_aRecurringDurations[$sDuration] . '), INTERVAL ' . (int)$this->getParam($CNF['OPTION_RECURRING_RESERVE']) . ' DAY))';
 
-    	$sQuery = $this->prepare("INSERT INTO `" . $this->_sPrefix . "licenses SET " . $this->arrayToSQL($aQueryParams) . ", `added`=UNIX_TIMESTAMP()" . $sExpireParam);
+    	$sQuery = $this->prepare("INSERT INTO `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` SET " . $this->arrayToSQL($aQueryParams) . ", `added`=UNIX_TIMESTAMP()" . $sExpireParam);
         return (int)$this->query($sQuery) > 0;
     }
 
     public function unregisterLicense($iClientId, $iProductId, $sOrder, $sLicense, $sType)
     {
-    	$sQuery = $this->prepare("DELETE FROM `" . $this->_sPrefix . "licenses` WHERE `client_id` = ? AND `product_id` = ? AND `order` = ? AND `license` = ?", $iClientId, $iProductId, $sOrder, $sLicense);
+    	$sQuery = $this->prepare("DELETE FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` WHERE `client_id` = ? AND `product_id` = ? AND `order` = ? AND `license` = ?", $iClientId, $iProductId, $sOrder, $sLicense);
         return (int)$this->query($sQuery) > 0;
     }
 }
