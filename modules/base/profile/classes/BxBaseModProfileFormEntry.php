@@ -104,13 +104,13 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if (!empty($this->aInputs[$CNF['FIELD_PICTURE']])) {
+        if (!empty($this->aInputs[$CNF['FIELD_PICTURE']]) && !empty($this->aInputs[$CNF['FIELD_PICTURE']]['file_id'])) {
             $aValsToAdd = array_merge($aValsToAdd, array (
                 $CNF['FIELD_PICTURE'] => $this->aInputs[$CNF['FIELD_PICTURE']]['file_id'],
             ));
         }
 
-        if (!empty($this->aInputs[$CNF['FIELD_COVER']])) {
+        if (!empty($this->aInputs[$CNF['FIELD_COVER']]) && !empty($this->aInputs[$CNF['FIELD_COVER']]['file_id'])) {
             $aValsToAdd = array_merge($aValsToAdd, array (
                 $CNF['FIELD_COVER'] => $this->aInputs[$CNF['FIELD_COVER']]['file_id'],
             ));
@@ -123,10 +123,10 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if (!empty($this->aInputs[$CNF['FIELD_COVER']]))
+        if (!empty($this->aInputs[$CNF['FIELD_COVER']]) && !empty($this->aInputs[$CNF['FIELD_COVER']]['file_id']))
             $aValsToAdd[$CNF['FIELD_COVER']] = $this->aInputs[$CNF['FIELD_COVER']]['file_id'];
 
-        if (!empty($this->aInputs[$CNF['FIELD_PICTURE']]))
+        if (!empty($this->aInputs[$CNF['FIELD_PICTURE']]) && !empty($this->aInputs[$CNF['FIELD_PICTURE']]['file_id']))
             $aValsToAdd[$CNF['FIELD_PICTURE']] = $this->aInputs[$CNF['FIELD_PICTURE']]['file_id'];
 
         return parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);

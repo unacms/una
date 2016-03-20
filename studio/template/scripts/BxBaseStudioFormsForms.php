@@ -29,7 +29,7 @@ class BxBaseStudioFormsForms extends BxDolStudioFormsForms
         if(!$aIds || !is_array($aIds)) {
             $iId = (int)bx_get('id');
             if(!$iId) {
-                $this->_echoResultJson(array());
+                echoJson(array());
                 exit;
             }
 
@@ -41,7 +41,7 @@ class BxBaseStudioFormsForms extends BxDolStudioFormsForms
         $aFormData = array();
         $iFormData = $this->oDb->getForms(array('type' => 'by_id', 'value' => $iId), $aFormData);
         if($iFormData != 1 || empty($aFormData)){
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -117,7 +117,7 @@ class BxBaseStudioFormsForms extends BxDolStudioFormsForms
             else
                 $aRes = array('msg' => _t('_adm_form_err_forms_edit'));
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         }
         else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-form-forms-edit-popup', _t('_adm_form_txt_forms_edit_popup', _t($aFormData['title'])), $this->_oTemplate->parseHtmlByName('form_add_form.html', array(
@@ -127,7 +127,7 @@ class BxBaseStudioFormsForms extends BxDolStudioFormsForms
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
 

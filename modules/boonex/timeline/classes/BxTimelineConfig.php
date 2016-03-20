@@ -46,12 +46,15 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
         	// objects
             'OBJECT_COMMENTS' => $this->_sName,
-        
+        	'OBJECT_VOTES' => $this->_sName,
+        	'OBJECT_REPORTS' => $this->_sName,
+
         	// some language keys
             'T' => array (
                 'txt_sample_single' => '_bx_timeline_txt_sample',
         		'txt_sample_single_ext' => '_bx_timeline_txt_sample_ext',
             	'txt_sample_comment_single' => '_bx_timeline_txt_sample_comment_single',
+        		'txt_sample_vote_single' => '_bx_timeline_txt_sample_vote_single',
             ),
         );
 
@@ -64,7 +67,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
         $this->_aObjects = array_merge($this->_aObjects, array(
         	'comment' => $this->CNF['OBJECT_COMMENTS'],
-        	'vote' => $this->_sName,
+        	'vote' => $this->CNF['OBJECT_VOTES'],
+        	'report' => $this->CNF['OBJECT_REPORTS'],
         	'metatags' => $this->_sName,
 
         	'storage_photos' => $this->_sName . '_photos',
@@ -92,7 +96,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_aVideoUploaders = array($this->_sName . '_simple_video');
 
         $this->_bJsMode = false;
-        $this->_aJsClass = array(
+        $this->_aJsClasses = array(
             'main' => 'BxTimelineMain',
             'view' => 'BxTimelineView',
             'post' => 'BxTimelinePost',

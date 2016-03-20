@@ -25,8 +25,8 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
      */
     public function response($oAlert)
     {
-    	$iPrivacyView = $this->_getPrivacyView($oAlert->aExtras);
-        if($iPrivacyView == BX_DOL_PG_HIDDEN)
+    	$iObjectPrivacyView = $this->_getObjectPrivacyView($oAlert->aExtras);
+        if($iObjectPrivacyView == BX_DOL_PG_HIDDEN)
             return;
 
         $aHandler = $this->_oModule->_oConfig->getHandlers($oAlert->sUnit . '_' . $oAlert->sAction);
@@ -39,7 +39,7 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                     'type' => $oAlert->sUnit,
                     'action' => $oAlert->sAction,
                     'object_id' => $oAlert->iObject,
-                    'object_privacy_view' => $iPrivacyView,
+                    'object_privacy_view' => $iObjectPrivacyView,
                     'content' => $sContent,
                     'title' => '',
                     'description' => ''
@@ -55,7 +55,7 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_UPDATE:
                 $sContent = !empty($oAlert->aExtras) && is_array($oAlert->aExtras) ? serialize(bx_process_input($oAlert->aExtras)) : '';
 
-                $this->_oModule->_oDb->updateEvent(array('object_privacy_view' => $iPrivacyView, 'content' => $sContent), array('type' => $oAlert->sUnit, 'object_id' => $oAlert->iObject));
+                $this->_oModule->_oDb->updateEvent(array('object_privacy_view' => $iObjectPrivacyView, 'content' => $sContent), array('type' => $oAlert->sUnit, 'object_id' => $oAlert->iObject));
                 break;
 
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_DELETE:

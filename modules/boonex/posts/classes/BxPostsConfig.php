@@ -66,6 +66,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             'OBJECT_IMAGES_TRANSCODER_PREVIEW' => 'bx_posts_preview',
             'OBJECT_IMAGES_TRANSCODER_GALLERY' => 'bx_posts_gallery',
             'OBJECT_VIDEOS_TRANSCODERS' => array(),
+        	'OBJECT_REPORTS' => 'bx_posts',
             'OBJECT_VIEWS' => 'bx_posts',
             'OBJECT_VOTES' => 'bx_posts',
             'OBJECT_METATAGS' => 'bx_posts',
@@ -112,7 +113,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             ),
         );
 
-        $this->_aJsClass = array(
+        $this->_aJsClasses = array(
         	'manage_tools' => 'BxPostsManageTools'
         );
 

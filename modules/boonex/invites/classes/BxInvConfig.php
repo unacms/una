@@ -52,6 +52,19 @@ class BxInvConfig extends BxBaseModGeneralConfig
         $this->_bRequestInvite = true;
         $this->_sRequestsEmail = '';
         $this->_bRegistrationByInvitation = true;
+
+        $this->_aJsClasses = array(
+        	'main' => 'BxInvMain',
+        );
+        $this->_aJsObjects = array(
+            'main' => 'oInvMain',
+        );
+
+        $sHtmlPrefix = str_replace('_', '-', $this->_sName);
+        $this->_aHtmlIds = array(
+        	'link_popup' => $sHtmlPrefix . '-link-popup',
+        	'link_input' => $sHtmlPrefix . '-link-input',
+        );
     }
 
     public function init(&$oDb)
@@ -95,6 +108,14 @@ class BxInvConfig extends BxBaseModGeneralConfig
 	public function isRegistrationByInvitation()
     {
         return $this->_bRegistrationByInvitation;
+    }
+
+	public function getHtmlIds($sKey = '')
+    {
+        if(empty($sKey))
+            return $this->_aHtmlIds;
+
+        return isset($this->_aHtmlIds[$sKey]) ? $this->_aHtmlIds[$sKey] : '';
     }
 }
 

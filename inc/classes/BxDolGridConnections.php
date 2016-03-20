@@ -55,7 +55,7 @@ class BxDolGridConnections extends BxTemplGrid
             $iId = (int)array_pop($aIds);
 
         if (!$iId) {
-            $this->_echoResultJson(array('msg' => _t('_sys_txt_error_occured')), true);
+            echoJson(array('msg' => _t('_sys_txt_error_occured')));
             exit;
         }
 
@@ -63,9 +63,9 @@ class BxDolGridConnections extends BxTemplGrid
 
         $a = $oConn->actionAdd($iId);
         if (isset($a['err']) && $a['err'])
-            $this->_echoResultJson(array('msg' => $a['msg']), true);
+            echoJson(array('msg' => $a['msg']));
         else
-            $this->_echoResultJson(array('grid' => $this->getCode(false), 'blink' => $iId), true);
+            echoJson(array('grid' => $this->getCode(false), 'blink' => $iId));
     }
 
     /**

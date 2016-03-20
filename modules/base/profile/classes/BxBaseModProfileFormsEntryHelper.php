@@ -14,9 +14,22 @@
  */
 class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
 {
+    protected $_bAutoApproval = false;
+
     public function __construct($oModule)
     {
         parent::__construct($oModule);
+        $this->setAutoApproval((bool)getParam($oModule->_oConfig->CNF['PARAM_AUTOAPPROVAL']));
+    }
+
+    public function isAutoApproval()
+    {
+        return $this->_bAutoApproval;
+    }
+
+    public function setAutoApproval($b)
+    {
+        return ($this->_bAutoApproval = $b);
     }
 
     protected function _getProfileAndContentData ($iContentId)
@@ -53,45 +66,48 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         return parent::deleteData ($iContentId, $aContentInfo, $oProfile, $oForm);
     }
 
-    protected function onDataEditBefore ($iContentId, $aContentInfo, &$aTrackTextFieldsChanges)
+    public function onDataEditBefore ($iContentId, $aContentInfo, &$aTrackTextFieldsChanges)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         $aProfileInfo = $oProfile->getInfo();
 
-        $isAutoApprove = getParam($CNF['PARAM_AUTOAPPROVAL']) ? true : false;
-        if (!$isAutoApprove && BX_PROFILE_STATUS_ACTIVE == $aProfileInfo['status'])
+        if (!$this->isAutoApproval() && BX_PROFILE_STATUS_ACTIVE == $aProfileInfo['status'])
             $aTrackTextFieldsChanges = array ();
     }
 
-    protected function onDataEditAfter ($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile)
+    public function onDataEditAfter ($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile)
     {
+        if ($s = parent::onDataEditAfter($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile))
+            return $s;
+
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         $aProfileInfo = $oProfile->getInfo();
 
         // change profile to 'pending' only if profile is 'active'
-        $isAutoApprove = getParam($CNF['PARAM_AUTOAPPROVAL']) ? true : false;
-        if (!$isAutoApprove && BX_PROFILE_STATUS_ACTIVE == $aProfileInfo['status'] && !empty($aTrackTextFieldsChanges['changed_fields']))
+        if (!$this->isAutoApproval() && BX_PROFILE_STATUS_ACTIVE == $aProfileInfo['status'] && !empty($aTrackTextFieldsChanges['changed_fields']))
             $oProfile->disapprove(BX_PROFILE_ACTION_AUTO);
 
         // create an alert
         bx_alert($this->_oModule->getName(), 'edited', $aContentInfo[$CNF['FIELD_ID']]);
     }
 
-    protected function onDataAddAfter ($iContentId)
+    public function onDataAddAfter ($iAccountId, $iContentId)
     {
+        if ($s = parent::onDataAddAfter($iAccountId, $iContentId))
+            return $s;
+
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         // add account and content association
-        $iProfileId = BxDolProfile::add(BX_PROFILE_ACTION_MANUAL, getLoggedId(), $iContentId, BX_PROFILE_STATUS_PENDING, $this->_oModule->getName());
+        $iProfileId = BxDolProfile::add(BX_PROFILE_ACTION_MANUAL, $iAccountId, $iContentId, BX_PROFILE_STATUS_PENDING, $this->_oModule->getName());
         $oProfile = BxDolProfile::getInstance($iProfileId);
 
         // approve profile if auto-approval is enabled and profile status is 'pending'
         $sStatus = $oProfile->getStatus();
-        $isAutoApprove = getParam($CNF['PARAM_AUTOAPPROVAL']) ? true : false;
-        if ($sStatus == BX_PROFILE_STATUS_PENDING && $isAutoApprove)
+        if ($sStatus == BX_PROFILE_STATUS_PENDING && $this->isAutoApproval())
             $oProfile->approve(BX_PROFILE_ACTION_AUTO);
 
         // set created profile some default membership
@@ -102,7 +118,7 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         bx_alert($this->_oModule->getName(), 'added', $iContentId);
 
         // switch context to the created profile
-        $oAccount = BxDolAccount::getInstance();
+        $oAccount = BxDolAccount::getInstance($iAccountId);
         $oAccount->updateProfileContext($iProfileId);
 
         return '';

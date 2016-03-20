@@ -1,0 +1,23 @@
+<div id="__html_id__" class="bx-payment-pa-items">
+	<div class="bx-payment-pa-items-cnt">
+		<bx_repeat:items>
+		    <div class="bx-payment-pa-item bx-def-margin-thd-top-auto bx-clearfix">
+		        <div class="bx-payment-pa-item-chb">
+		            <input type="checkbox" name="items[]" value="__id__" />
+		            <input type="hidden" name="item-price-__id__" value="__price__" />
+		        </div><div class="bx-payment-pa-item-title">
+		        	<div class="bx-payment-pa-item-title-cnt bx-def-padding-sec-leftright">
+			            <bx_if:link>
+			                <a href="__url__" target="_blank" title="__title__">__title__</a>
+			            </bx_if:link>
+			            <bx_if:text>__title__</bx_if:text>
+					</div>
+		        </div><div class="bx-payment-pa-item-quantity">
+		        	<div class="bx-form-input-wrapper bx-form-input-wrapper-text">
+	                    <input type="text" class="bx-def-font-inputs bx-form-input-text" name="item-quantity-__id__" value="1" />
+	                </div>
+		        </div>
+		    </div>
+		</bx_repeat:items>
+	</div>
+</div>

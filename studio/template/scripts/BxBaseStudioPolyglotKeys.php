@@ -117,7 +117,7 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys
             else
                 $aRes = array('msg' => $mixedResult);
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         }
         else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-lang-new-key-popup', _t('_adm_pgt_txt_nkp_add_popup'), $this->_oTemplate->parseHtmlByName('pgt_new_key.html', array(
@@ -127,7 +127,7 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
 
@@ -139,7 +139,7 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys
         if(!$aIds || !is_array($aIds)) {
             $iId = (int)bx_get('id');
             if(!$iId) {
-                $this->_echoResultJson(array());
+                echoJson(array());
                 exit;
             }
 
@@ -233,7 +233,7 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys
             else
                 $aRes = array('msg' => $mixedResult);
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         }
         else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-lang-edit-key-popup', _t('_adm_pgt_txt_nkp_edit_popup', $aKey['key']), $this->_oTemplate->parseHtmlByName('pgt_new_key.html', array(
@@ -243,7 +243,7 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
 
@@ -252,7 +252,7 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys
         $iAffected = 0;
         $aIds = bx_get('ids');
         if(!$aIds || !is_array($aIds)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -265,7 +265,7 @@ class BxBaseStudioPolyglotKeys extends BxDolStudioPolyglotKeys
             $iAffected++;
         }
 
-        $this->_echoResultJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t('_adm_pgt_err_save')));
+        echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t('_adm_pgt_err_save')));
     }
 
     function getJsObject()

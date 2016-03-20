@@ -52,6 +52,25 @@ class BxBaseServiceConnections extends BxDol
 
         return $i;
     }
+
+    /*
+     * Get notification data for Notifications module. 
+     */
+	public function serviceGetNotificationsPost($aEvent)
+    {
+    	$iProfile = (int)$aEvent['object_id'];
+    	$oProfile = BxDolProfile::getInstance($iProfile);
+        if(!$oProfile)
+			return array();
+
+		return array(
+			'entry_sample' => _t('_sys_profile_sample_single'),
+			'entry_url' => $oProfile->getUrl(),
+			'entry_caption' => $oProfile->getDisplayName(),
+			'entry_author' => $oProfile->id(),
+			'lang_key' => '_sys_profile_subscription_added',
+		);
+    }
 }
 
 /** @} */

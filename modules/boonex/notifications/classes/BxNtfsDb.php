@@ -68,6 +68,10 @@ class BxNtfsDb extends BxBaseModNotificationsDb
 					$sWhereClause .= $this->prepare("AND `{$this->_sTable}`.`owner_id`=? ", $aParams['owner_id']);
 					break;
 
+				case BX_BASE_MOD_NTFS_TYPE_OBJECT_OWNER:
+					$sWhereClause .= $this->prepare("AND `{$this->_sTable}`.`owner_id`<>`{$this->_sTable}`.`object_owner_id` AND `{$this->_sTable}`.`object_owner_id`=? ", $aParams['owner_id']);
+					break;
+
 				case BX_BASE_MOD_NTFS_TYPE_CONNECTIONS:
 					$oConnection = BxDolConnection::getObjectInstance($this->_oConfig->getObject('conn_subscriptions'));
 

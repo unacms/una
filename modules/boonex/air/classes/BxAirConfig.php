@@ -4,18 +4,22 @@
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
  * @defgroup    Air Air
- * @ingroup     DolphinModules
+ * @ingroup     TridentModules
  *
  * @{
  */
 
-bx_import('BxBaseModGeneralConfig');
+bx_import('BxBaseModTemplateConfig');
 
-class BxAirConfig extends BxBaseModGeneralConfig
+class BxAirConfig extends BxBaseModTemplateConfig
 {
     function __construct($aModule)
     {
         parent::__construct($aModule);
+
+        $this->_aPrefixes = array(
+        	'option' => 'bx_air_'
+        );
     }
 }
 

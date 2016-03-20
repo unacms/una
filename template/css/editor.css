@@ -33,3 +33,8 @@ blockquote {
     border-left: 2px solid #ccc;
     padding-left: 10px;
 }
+
+.bx-hide-in-htmleditor {
+    display:none;
+}
+

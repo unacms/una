@@ -51,7 +51,9 @@ INSERT INTO `sys_alerts_handlers`(`name`, `class`, `file`, `service_call`) VALUE
 SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
-('profile', 'delete', @iHandler);
+('profile', 'delete', @iHandler),
+('sys_profiles_subscriptions', 'connection_added', @iHandler),
+('sys_profiles_subscriptions', 'connection_removed', @iHandler);
 
 
 -- MODULES' CONNECTIONS

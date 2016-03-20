@@ -116,6 +116,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aEvent['object_owner_id'] = $aResult['owner_id'];
         $aEvent['content'] = $aResult['content'];
         $aEvent['votes'] = $aResult['votes'];
+        $aEvent['reports'] = $aResult['reports'];
         $aEvent['comments'] = $aResult['comments'];
 
         $sType = !empty($aResult['content_type']) ? $aResult['content_type'] : BX_TIMELINE_PARSE_TYPE_DEFAULT;
@@ -353,7 +354,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'title' => _t('_bx_timeline_txt_shared_by'),
             'bx_repeat:attrs' => array(
                 array('key' => 'id', 'value' => $this->_oConfig->getHtmlIds('share', 'counter') . $aEvent['id']),
-                array('key' => 'class', 'value' => $sStylePrefix . '-counter'),
+                array('key' => 'class', 'value' => $sStylePrefix . '-share-counter'),
                 array('key' => 'onclick', 'value' => 'javascript:' . $sJsObject . '.toggleByPopup(this, ' . $aEvent['id'] . ')')
             ),
             'content' => !empty($aEvent['shares']) && (int)$aEvent['shares'] > 0 ? $aEvent['shares'] : ''
@@ -843,6 +844,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'url' => $this->_oConfig->getItemViewUrl($aEvent)
             ), //a string to display or array to parse default template before displaying.
             'votes' => '',
+            'reports' => '',
             'comments' => '',
             'title' => '', //may be empty.
             'description' => '' //may be empty.
@@ -936,6 +938,14 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'count' => $aEvent['votes']
             );
 
+		$sSystem = $this->_oConfig->getObject('report');
+        if($oModule->getReportObject($sSystem, $aEvent['id']) !== false)
+            $aResult['reports'] = array(
+                'system' => $sSystem,
+                'object_id' => $aEvent['id'],
+                'count' => $aEvent['reports']
+            );
+
         $sSystem = $this->_oConfig->getObject('comment');
         if($oModule->getCmtsObject($sSystem, $aEvent['id']) !== false)
             $aResult['comments'] = array(
@@ -950,7 +960,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     protected function _prepareTextForOutput($s, $iEventId = 0)
     {
     	$s = bx_process_output($s, BX_DATA_HTML);
-        $s = bx_linkify_html($s);
+        $s = bx_linkify_html($s, 'class="' . BX_DOL_LINK_CLASS . '"');
 
         $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
 		$s = $oMetatags->keywordsParse($iEventId, $s);

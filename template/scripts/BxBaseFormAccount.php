@@ -91,12 +91,17 @@ class BxBaseFormAccount extends BxTemplFormView
         return $this->_bSetPendingApproval;
     }
 
+    public function setPendingApproval($b)
+    {
+        return ($this->_bSetPendingApproval = $b);
+    }
+
     public function insert ($aValsToAdd = array(), $isIgnore = false)
     {
-    	$sEmail = $this->getCleanValue(self::$FIELD_EMAIL);
+    	$sEmail = isset($aValsToAdd[self::$FIELD_EMAIL]) ? $aValsToAdd[self::$FIELD_EMAIL] : $this->getCleanValue(self::$FIELD_EMAIL);
     	$sEmail = trim(strtolower($sEmail));
     	
-        $sPwd = $this->getCleanValue(self::$FIELD_PASSWORD);
+        $sPwd = isset($aValsToAdd[self::$FIELD_PASSWORD]) ? $aValsToAdd[self::$FIELD_PASSWORD] : $this->getCleanValue(self::$FIELD_PASSWORD);
         $sSalt = genRndSalt();
         $sPasswordHash = encryptUserPwd($sPwd, $sSalt);
 

@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_events` (
   `rate` float NOT NULL default '0',
   `votes` int(11) unsigned NOT NULL default '0',
   `comments` int(11) unsigned NOT NULL default '0',
+  `reports` int(11) unsigned NOT NULL default '0',
   `shares` int(11) unsigned NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
   `active` tinyint(4) NOT NULL default '1',
@@ -204,6 +205,26 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_meta_locations` (
   PRIMARY KEY (`object_id`),
   KEY `country_state_city` (`country`,`state`(8),`city`(8))
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- TABLE: reports
+CREATE TABLE IF NOT EXISTS `bx_timeline_reports` (
+  `object_id` int(11) NOT NULL default '0',
+  `count` int(11) NOT NULL default '0',
+  UNIQUE KEY `object_id` (`object_id`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `bx_timeline_reports_track` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `object_id` int(11) NOT NULL default '0',
+  `author_id` int(11) NOT NULL default '0',
+  `author_nip` int(11) unsigned NOT NULL default '0',
+  `type` varchar(32) NOT NULL default '',
+  `text` text NOT NULL default '',
+  `date` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
+  KEY `report` (`object_id`, `author_nip`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+
 
 -- STORAGES, TRANSCODERS, UPLOADERS
 INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES

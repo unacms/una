@@ -23,13 +23,7 @@ $sName = $sName !== false ? bx_process_input($sName) : '';
 $sPage = bx_get('page');
 $sPage = $sPage !== false ? bx_process_input($sPage) : '';
 
-$sCustomTemplateClass = BX_DIRECTORY_PATH_ROOT . 'templates/tmpl_' . $sName . '/scripts/BxTemplDesign.php';
-if(file_exists($sCustomTemplateClass)) {
-    require_once($sCustomTemplateClass);
-    $oPage = new BxTemplDesign($sName, $sPage);
-}
-else
-	$oPage = new BxTemplStudioDesign($sName, $sPage);
+$oPage = BxDolStudioDesign::getObjectInstance($sName, $sPage);
 
 $oTemplate = BxDolStudioTemplate::getInstance();
 $oTemplate->setPageNameIndex($oPage->getPageIndex());

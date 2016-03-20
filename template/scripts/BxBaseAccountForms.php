@@ -15,24 +15,43 @@ class BxBaseAccountForms extends BxDolProfileForms
 {
     protected $_iProfileId;
 
+    static public $PROFILE_FIELDS = array();
+
     public function __construct()
     {
         parent::__construct();
         $this->_iProfileId = bx_get_logged_profile_id();
     }
 
-    public function createAccountForm ()
+    public function getObjectFormAdd ()
+    {
+        return BxDolForm::getObjectInstance('sys_account', 'sys_account_create');
+    }
+
+    public function getObjectFormEdit ()
+    {
+        return BxDolForm::getObjectInstance('sys_account', 'sys_account_settings_info');
+    }
+
+    public function getObjectFormDelete ()
+    {
+        return BxDolForm::getObjectInstance('sys_account', 'sys_account_settings_del_account');
+    }
+
+    public function createAccountForm ($aParams = array())
     {
         // check access
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = BxDolAccount::isAllowedCreate (0)))
             return MsgBox($sMsg);
 
         // check and display form
-        $oForm = BxDolForm::getObjectInstance('sys_account', 'sys_account_create');
+        $oForm = $this->getObjectFormAdd ();
         if (!$oForm)
             return MsgBox(_t('_sys_txt_error_occured'));
 
-        $oForm->initChecker();
+        $oForm->aFormAttrs['action'] = !empty($aParams['action']) ? $aParams['action'] : BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account');
+        $oForm->initChecker(self::$PROFILE_FIELDS);
+
         if (!$oForm->isSubmittedAndValid()) {
         	$sCode = $oForm->getCode();
 
@@ -56,6 +75,22 @@ class BxBaseAccountForms extends BxDolProfileForms
                 return MsgBox(_t('_sys_txt_error_account_creation'));
         }
 
+        $iProfileId = $this->onAccountCreated($iAccountId, $oForm->isSetPendingApproval());
+
+        // perform action
+        BxDolAccount::isAllowedCreate ($iProfileId, true);
+
+        $this->_iProfileId = bx_get_logged_profile_id();
+
+        // redirect
+        $this->_redirectAndExit(getParam('sys_redirect_after_account_added'), true, array(
+            'account_id' => $iAccountId,
+            'profile_id' => $iProfileId,
+        ));
+    }
+
+    public function onAccountCreated ($iAccountId, $isSetPendingApproval, $iAction = BX_PROFILE_ACTION_MANUAL)
+    {
         // alert
         bx_alert('account', 'add', $iAccountId, 0);
 
@@ -70,25 +105,17 @@ class BxBaseAccountForms extends BxDolProfileForms
 
         // approve profile if auto-approval is enabled and profile status is 'pending'
         $sStatus = $oProfile->getStatus();
-        $isAutoApprove = $oForm->isSetPendingApproval() ? false : true;
+        $isAutoApprove = !$isSetPendingApproval;
         if ($sStatus == BX_PROFILE_STATUS_PENDING && $isAutoApprove)
             $oProfile->approve(BX_PROFILE_ACTION_AUTO);
-
-        // perform action
-        BxDolAccount::isAllowedCreate ($iProfileId, true);
 
         // alert
         bx_alert('account', 'added', $iAccountId);
 
         // login to the created account automatically
         bx_login($iAccountId);
-        $this->_iProfileId = bx_get_logged_profile_id();
 
-        // redirect
-        $this->_redirectAndExit(getParam('sys_redirect_after_account_added'), true, array(
-            'account_id' => $iAccountId,
-            'profile_id' => $iProfileId,
-        ));
+        return $iProfileId;
     }
 
     public function editAccountEmailSettingsForm ($iAccountId)
@@ -118,7 +145,7 @@ class BxBaseAccountForms extends BxDolProfileForms
             return MsgBox($sMsg);
 
         // check and display form
-        $oForm = BxDolForm::getObjectInstance('sys_account', 'sys_account_settings_del_account');
+        $oForm = $this->getObjectFormDelete();
         if (!$oForm)
             return MsgBox(_t('_sys_txt_error_occured'));
 
@@ -204,7 +231,7 @@ class BxBaseAccountForms extends BxDolProfileForms
         // display result message
         $sMsg = MsgBox(_t('_sys_txt_data_successfully_submitted'));
         return $sMsg . $oForm->getCode();
-    }
+    }    
 
 }
 

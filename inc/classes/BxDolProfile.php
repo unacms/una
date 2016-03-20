@@ -10,6 +10,7 @@
 define('BX_PROFILE_ACTION_AUTO', 0); ///< automatic action without any checking
 define('BX_PROFILE_ACTION_MANUAL', 1); ///< manual action performed by human
 define('BX_PROFILE_ACTION_ROBOT', 2); ///< action peformed by some robot based on some conditions
+define('BX_PROFILE_ACTION_EXTERNAL', 2); ///< action peformed by external service, like join using OAuth 
 
 class BxDolProfile extends BxDol implements iBxDolProfile
 {
@@ -212,7 +213,16 @@ class BxDolProfile extends BxDol implements iBxDolProfile
     }
 
     /**
-     * Get thumbnail url
+     * Get picture url
+     */
+    public function getPicture($iProfileId = 0)
+    {
+        $aInfo = $this->getInfo($iProfileId);
+        return BxDolService::call($aInfo['type'], 'profile_picture', array($aInfo['content_id']));
+    }
+
+    /**
+     * Get avatar url
      */
     public function getAvatar($iProfileId = 0)
     {

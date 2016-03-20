@@ -52,7 +52,7 @@ class BxDevFormsPreValues extends BxTemplStudioFormsPreValues
             else
                 $aRes = array('msg' => _t('_bx_dev_frm_err_prevalues_create'));
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         } else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-frm-prevalue-create-popup', _t('_bx_dev_frm_txt_prevalues_create_popup'), $this->oModule->_oTemplate->parseHtmlByName('form_add_value.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
@@ -61,7 +61,7 @@ class BxDevFormsPreValues extends BxTemplStudioFormsPreValues
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
 
@@ -73,7 +73,7 @@ class BxDevFormsPreValues extends BxTemplStudioFormsPreValues
 
         $aValue = $this->_getItem('getValues');
         if($aValue === false) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -90,7 +90,7 @@ class BxDevFormsPreValues extends BxTemplStudioFormsPreValues
             } else
                 $aRes = array('msg' => _t('_bx_dev_frm_err_prevalues_edit'));
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         } else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-frm-prevalue-edit-popup', _t('_bx_dev_frm_txt_prevalues_edit_popup', _t($aValue['lkey'])), $this->oModule->_oTemplate->parseHtmlByName('form_add_value.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
@@ -99,7 +99,7 @@ class BxDevFormsPreValues extends BxTemplStudioFormsPreValues
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
 
@@ -126,7 +126,7 @@ class BxDevFormsPreValues extends BxTemplStudioFormsPreValues
             $mixedValue = $oForm->getCleanValue('Value');
             if(!$this->canUseForSet($mixedValue)) {
                 if($this->oDb->isListUsedInSet($this->sList)) {
-                    $this->_echoResultJson(array('msg' => _t('_bx_dev_frm_err_prevalues_create_forbidden', BX_DOL_STUDIO_FIELD_PRE_VALUE_INT_MAX)), true);
+                    echoJson(array('msg' => _t('_bx_dev_frm_err_prevalues_create_forbidden', BX_DOL_STUDIO_FIELD_PRE_VALUE_INT_MAX)));
                     return false;
                 }
 

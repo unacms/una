@@ -55,7 +55,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $sType = bx_process_input($_POST['type']);
         $sMethod = 'getForm' . ucfirst($sType);
         if(!method_exists($this, $sMethod)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             return;
         }
 
@@ -63,12 +63,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
         $mixedAllowed = $this->isAllowedPost(true);
         if($mixedAllowed !== true) {
-            $this->_echoResultJson(array('msg' => strip_tags($mixedAllowed)));
+            echoJson(array('msg' => strip_tags($mixedAllowed)));
             return;
         }
 
         $aResult = $this->$sMethod();
-        $this->_echoResultJson($aResult);
+        echoJson($aResult);
     }
 
     function actionDelete()
@@ -80,14 +80,14 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
         $mixedAllowed = $this->isAllowedDelete($aEvent, true);
         if($mixedAllowed !== true) {
-            $this->_echoResultJson(array('code' => 1, 'msg' => strip_tags($mixedAllowed)));
+            echoJson(array('code' => 1, 'msg' => strip_tags($mixedAllowed)));
             return;
         }
 
         if(!$this->deleteEvent($aEvent))
-        	$this->_echoResultJson(array('code' => 2));
+        	echoJson(array('code' => 2));
         else 
-        	$this->_echoResultJson(array('code' => 0, 'id' => $iId));
+        	echoJson(array('code' => 0, 'id' => $iId));
     }
 
     public function actionShare()
@@ -103,19 +103,19 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
         $aShared = $this->_oDb->getShared($aContent['type'], $aContent['action'], $aContent['object_id']);
         if(empty($aShared) || !is_array($aShared)) {
-            $this->_echoResultJson(array('code' => 1, 'msg' => _t('_bx_timeline_txt_err_cannot_share')));
+            echoJson(array('code' => 1, 'msg' => _t('_bx_timeline_txt_err_cannot_share')));
             return;
         }
 
         $mixedAllowed = $this->isAllowedShare($aShared, true);
         if($mixedAllowed !== true) {
-            $this->_echoResultJson(array('code' => 2, 'msg' => strip_tags($mixedAllowed)));
+            echoJson(array('code' => 2, 'msg' => strip_tags($mixedAllowed)));
             return;
         }
 
         $bShared = $this->_oDb->isShared($aShared['id'], $iOwnerId, $iAuthorId);
 		if($bShared) {
-        	$this->_echoResultJson(array('code' => 3, 'msg' => _t('_bx_timeline_txt_err_already_shared')));
+        	echoJson(array('code' => 3, 'msg' => _t('_bx_timeline_txt_err_already_shared')));
             return;
         }
 
@@ -131,7 +131,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         ));
 
         if(empty($iId)) {
-	        $this->_echoResultJson(array('code' => 4, 'msg' => _t('_bx_timeline_txt_err_cannot_share')));        
+	        echoJson(array('code' => 4, 'msg' => _t('_bx_timeline_txt_err_cannot_share')));        
 	        return;
         }
 
@@ -140,7 +140,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $aShared = $this->_oDb->getShared($aContent['type'], $aContent['action'], $aContent['object_id']);
 		$sCounter = $this->_oTemplate->getShareCounter($aShared);
 
-		$this->_echoResultJson(array(
+		echoJson(array(
 			'code' => 0, 
 			'msg' => _t('_bx_timeline_txt_msg_success_share'), 
 			'count' => $aShared['shares'], 
@@ -156,7 +156,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $iEvent = bx_process_input(bx_get('id'), BX_DATA_INT);
         $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iEvent));
 
-        $this->_echoResultJson(array('item' => $this->_oTemplate->getPost($aEvent, array('type' => 'owner', 'owner_id' => $this->_iOwnerId, 'dynamic_mode' => true))));
+        echoJson(array('item' => $this->_oTemplate->getPost($aEvent, array('type' => 'owner', 'owner_id' => $this->_iOwnerId, 'dynamic_mode' => true))));
     }
 
     function actionGetPosts()
@@ -164,7 +164,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $aParams = $this->_prepareParamsGet();
         list($sItems, $sLoadMore, $sBack) = $this->_oTemplate->getPosts($aParams);
 
-        $this->_echoResultJson(array('items' => $sItems, 'load_more' => $sLoadMore, 'back' => $sBack));
+        echoJson(array('items' => $sItems, 'load_more' => $sLoadMore, 'back' => $sBack));
     }
 
     public function actionGetPostForm($sType)
@@ -173,12 +173,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule
 
         $sMethod = 'getForm' . ucfirst($sType);
         if(!method_exists($this, $sMethod)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             return;
         }
         $aResult = $this->$sMethod();
 
-        $this->_echoResultJson($aResult);
+        echoJson($aResult);
     }
 
     public function actionGetComments()
@@ -189,14 +189,14 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
         $sComments = $this->_oTemplate->getComments($sSystem, $iId);
 
-        $this->_echoResultJson(array('content' => $sComments));
+        echoJson(array('content' => $sComments));
     }
 
     public function actionAddAttachLink()
     {
         $aResult = $this->getFormAttachLink();
 
-        $this->_echoResultJson($aResult);
+        echoJson($aResult);
     }
 
     public function actionDeleteAttachLink()
@@ -204,13 +204,13 @@ class BxTimelineModule extends BxBaseModNotificationsModule
     	$iUserId = $this->getUserId();
         $iLinkId = bx_process_input(bx_get('id'), BX_DATA_INT);
         if(empty($iLinkId)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             return;
         }
 
         $aLink = $this->_oDb->getUnusedLinks($iUserId, $iLinkId);
     	if(empty($aLink) || !is_array($aLink)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             return;
         }
 
@@ -223,7 +223,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         else
             $aResult = array('code' => 1, 'msg' => _t('_bx_timeline_form_post_input_link_err_delete'));
 
-        $this->_echoResultJson($aResult);
+        echoJson($aResult);
     }
 
     public function actionGetAttachLinkForm()
@@ -272,74 +272,63 @@ class BxTimelineModule extends BxBaseModNotificationsModule
      * 
      * Get Post block for a separate page.
      */
-    public function serviceGetBlockPost($sProfileModule = 'bx_persons', $iProfileId = 0)
+    public function serviceGetBlockPost($iProfileId = 0)
     {
-        return $this->serviceGetBlockPostProfile($sProfileModule, $iProfileId);
+    	if(empty($iProfileId) && bx_get('profile_id') !== false)
+			$iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+
+		if(empty($iProfileId) && isLogged())
+			$iProfileId = bx_get_logged_profile_id();
+
+        return $this->getBlockPost($iProfileId);
     }
 
-    public function serviceGetBlockPostProfile($sProfileModule = 'bx_persons', $iProfileId = 0)
+    public function serviceGetBlockPostProfile($sProfileModule = 'bx_persons', $iProfileContentId = 0)
     {
-        if(empty($iProfileId) && !empty($sProfileModule) && bx_get('id') !== false) {
-            $oProfile = BxDolProfile::getInstanceByContentAndType(bx_process_input(bx_get('id'), BX_DATA_INT), $sProfileModule);
-            if(!empty($oProfile))
-                $iProfileId = $oProfile->id();
-        }
+        if(empty($sProfileModule))
+    		return array();
 
-        if(!$iProfileId)
-            return array();
+    	if(empty($iProfileContentId) && bx_get('id') !== false)
+    		$iProfileContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
 
-        $this->_iOwnerId = $iProfileId;
+		$oProfile = BxDolProfile::getInstanceByContentAndType($iProfileContentId, $sProfileModule);
+		if(empty($oProfile))
+			return array();
 
-        if($this->isAllowedPost() !== true)
-            return array();
-
-        return array(
-            'content' => $this->_oTemplate->getPostBlock($this->_iOwnerId)
-        );
+		return $this->getBlockPost($oProfile->id());
     }
 
     /*
      * Get View block for a separate page. Will return a block with "Empty" message if nothing found.
      */
-    public function serviceGetBlockView($sProfileModule = 'bx_persons', $iProfileId = 0)
+    public function serviceGetBlockView($iProfileId = 0)
     {
-        $aBlock = $this->serviceGetBlockViewProfile($sProfileModule, $iProfileId);
+    	if(empty($iProfileId) && bx_get('profile_id') !== false)
+			$iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+
+		if(empty($iProfileId) && isLogged())
+			$iProfileId = bx_get_logged_profile_id();
+
+        $aBlock = $this->getBlockView($iProfileId);
         if(!empty($aBlock))
             return $aBlock;
 
         return array('content' => MsgBox(_t('_bx_timeline_txt_msg_no_results')));
     }
 
-    public function serviceGetBlockViewProfile($sProfileModule = 'bx_persons', $iProfileId = 0, $iStart = -1, $iPerPage = -1, $sFilter = '', $aModules = array(), $iTimeline = -1)
+	public function serviceGetBlockViewProfile($sProfileModule = 'bx_persons', $iProfileContentId = 0, $iStart = -1, $iPerPage = -1, $sFilter = '', $aModules = array(), $iTimeline = -1)
     {
-        if(empty($iProfileId) && !empty($sProfileModule) && bx_get('id') !== false) {
-            $oProfile = BxDolProfile::getInstanceByContentAndType(bx_process_input(bx_get('id'), BX_DATA_INT), $sProfileModule);
-            if(!empty($oProfile))
-                $iProfileId = $oProfile->id();
-        }
+    	if(empty($sProfileModule))
+    		return array();
 
-        if (!$iProfileId)
-            return array();
+    	if(empty($iProfileContentId) && bx_get('id') !== false)
+    		$iProfileContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
 
-        $sJsObject = $this->_oConfig->getJsObject('view');
-        $aParams = $this->_prepareParams(BX_BASE_MOD_NTFS_TYPE_OWNER, $iProfileId, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline);
-        $aParams['per_page'] = (int)$iPerPage > 0 ? $iPerPage : $this->_oConfig->getPerPage('profile');
+		$oProfile = BxDolProfile::getInstanceByContentAndType($iProfileContentId, $sProfileModule);
+		if(empty($oProfile))
+			return array();
 
-        $this->_iOwnerId = $aParams['owner_id'];
-        list($sUserName, $sUserUrl) = $this->getUserInfo($aParams['owner_id']);
-
-        $aMenu = array(
-            array('id' => 'timeline-view-all', 'name' => 'timeline-view-all', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:' . $sJsObject . '.changeFilter(this)', 'target' => '_self', 'title' => _t('_bx_timeline_menu_item_view_all'), 'active' => 1),
-            array('id' => 'timeline-view-owner', 'name' => 'timeline-view-owner', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:' . $sJsObject . '.changeFilter(this)', 'target' => '_self', 'title' => _t('_bx_timeline_menu_item_view_owner', $sUserName)),
-            array('id' => 'timeline-view-other', 'name' => 'timeline-view-other', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:' . $sJsObject . '.changeFilter(this)', 'target' => '_self', 'title' => _t('_bx_timeline_menu_item_view_other')),
-            array('id' => 'timeline-get-rss', 'name' => 'timeline-get-rss', 'class' => '', 'link' => BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'rss/' . $iProfileId . '/', 'target' => '_blank', 'title' => _t('_bx_timeline_menu_item_get_rss')),
-        );
-
-        $oMenu = new BxTemplMenuInteractive(array('template' => 'menu_interactive_vertical.html', 'menu_id'=> 'timeline-view-all', 'menu_items' => $aMenu));
-        $oMenu->setSelected('', 'timeline-view-all');
-
-        $sContent = $this->_oTemplate->getViewBlock($aParams);
-        return array('content' => $sContent, 'menu' => $oMenu);
+        return $this->getBlockView($oProfile->id(), $iStart, $iPerPage, $sFilter, $aModules, $iTimeline);
     }
 
     public function serviceGetBlockViewAccount($iProfileId = 0, $iStart = -1, $iPerPage = -1, $iTimeline = -1, $sFilter = '', $aModules = array())
@@ -371,6 +360,104 @@ class BxTimelineModule extends BxBaseModNotificationsModule
             return array();
 
         return array('content' => $this->_oTemplate->getItemBlock($iItemId));
+    }
+
+	/**
+     * Data for Notifications module
+     */
+    public function serviceGetNotificationsData()
+    {
+    	$sModule = $this->_aModule['name'];
+
+        return array(
+            'handlers' => array(
+                array('group' => $sModule . '_object', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'post_common', 'module_name' => $sModule, 'module_method' => 'get_notifications_post', 'module_class' => 'Module'),
+                array('group' => $sModule . '_object', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'delete'),
+                array('group' => $sModule . '_comment', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'commentPost', 'module_name' => $sModule, 'module_method' => 'get_notifications_comment', 'module_class' => 'Module'),
+                array('group' => $sModule . '_comment', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'commentRemoved'),
+                array('group' => $sModule . '_vote', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVote', 'module_name' => $sModule, 'module_method' => 'get_notifications_vote', 'module_class' => 'Module'),
+				array('group' => $sModule . '_vote', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'undoVote'),
+            ),
+            'alerts' => array(
+                array('unit' => $sModule, 'action' => 'post_common'),
+                array('unit' => $sModule, 'action' => 'deleted'),
+                array('unit' => $sModule, 'action' => 'commentPost'),
+                array('unit' => $sModule, 'action' => 'commentRemoved'),
+                array('unit' => $sModule, 'action' => 'doVote'),
+                array('unit' => $sModule, 'action' => 'undoVote'),
+            )
+        );
+    }
+
+    public function serviceGetNotificationsPost($aEvent)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	$iContent = (int)$aEvent['object_id'];
+		$aContent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContent));
+        if(empty($aContent) || !is_array($aContent))
+            return array();
+
+        $sEntryCaption = !empty($aContent['title']) ? $aContent['title'] : strmaxtextlen($aContent['description'], 20, '...');
+
+		return array(
+			'entry_sample' => _t($CNF['T']['txt_sample_single_ext']),
+			'entry_url' => $this->_oConfig->getItemViewUrl($aContent),
+			'entry_caption' => $sEntryCaption,
+			'entry_author' => $aContent['owner_id'],
+			'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
+		);
+    }
+
+    public function serviceGetNotificationsComment($aEvent)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	$iContent = (int)$aEvent['object_id'];
+    	$aContent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContent));
+        if(empty($aContent) || !is_array($aContent))
+            return array();
+
+		$oComment = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $iContent);
+        if(!$oComment || !$oComment->isEnabled())
+            return array();
+
+        $sEntryCaption = !empty($aContent['title']) ? $aContent['title'] : strmaxtextlen($aContent['description'], 20, '...');
+
+		return array(
+			'entry_sample' => _t($CNF['T']['txt_sample_single']),
+			'entry_url' => $this->_oConfig->getItemViewUrl($aContent),
+			'entry_caption' => $sEntryCaption,
+			'entry_author' => $aContent['owner_id'],
+			'subentry_sample' => _t($CNF['T']['txt_sample_comment_single']),
+			'subentry_url' => $oComment->getViewUrl((int)$aEvent['subobject_id']),
+			'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
+		);
+    }
+
+    public function serviceGetNotificationsVote($aEvent)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	$iContent = (int)$aEvent['object_id'];
+    	$aContent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContent));
+        if(empty($aContent) || !is_array($aContent))
+            return array();
+
+		$oVote = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $iContent);
+        if(!$oVote || !$oVote->isEnabled())
+            return array();
+
+        $sEntryCaption = !empty($aContent['title']) ? $aContent['title'] : strmaxtextlen($aContent['description'], 20, '...');
+
+		return array(
+			'entry_sample' => _t($CNF['T']['txt_sample_single']),
+			'entry_url' => $this->_oConfig->getItemViewUrl($aContent),
+			'entry_caption' => $sEntryCaption,
+			'entry_author' => $aContent['owner_id'],
+			'subentry_sample' => _t($CNF['T']['txt_sample_vote_single']),
+			'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
+		);
     }
 
     public function serviceGetShareElementBlock($iOwnerId, $sType, $sAction, $iObjectId, $aParams = array())
@@ -437,6 +524,45 @@ class BxTimelineModule extends BxBaseModNotificationsModule
     /*
      * COMMON METHODS
      */
+	public function getBlockPost($iProfileId)
+    {
+    	if(!$iProfileId)
+            return array();
+
+        $this->_iOwnerId = $iProfileId;
+
+        if($this->isAllowedPost() !== true)
+            return array();
+
+		$sContent = $this->_oTemplate->getPostBlock($this->_iOwnerId);
+        return array('content' => $sContent);
+    }
+
+    public function getBlockView($iProfileId, $iStart = -1, $iPerPage = -1, $sFilter = '', $aModules = array(), $iTimeline = -1)
+    {
+        if(!$iProfileId)
+			return array();
+
+        $sJsObject = $this->_oConfig->getJsObject('view');
+        $aParams = $this->_prepareParams(BX_BASE_MOD_NTFS_TYPE_OWNER, $iProfileId, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline);
+        $aParams['per_page'] = (int)$iPerPage > 0 ? $iPerPage : $this->_oConfig->getPerPage('profile');
+
+        $this->_iOwnerId = $aParams['owner_id'];
+        list($sUserName, $sUserUrl) = $this->getUserInfo($aParams['owner_id']);
+
+        $aMenu = array(
+            array('id' => 'timeline-view-all', 'name' => 'timeline-view-all', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:' . $sJsObject . '.changeFilter(this)', 'target' => '_self', 'title' => _t('_bx_timeline_menu_item_view_all'), 'active' => 1),
+            array('id' => 'timeline-view-owner', 'name' => 'timeline-view-owner', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:' . $sJsObject . '.changeFilter(this)', 'target' => '_self', 'title' => _t('_bx_timeline_menu_item_view_owner', $sUserName)),
+            array('id' => 'timeline-view-other', 'name' => 'timeline-view-other', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:' . $sJsObject . '.changeFilter(this)', 'target' => '_self', 'title' => _t('_bx_timeline_menu_item_view_other')),
+            array('id' => 'timeline-get-rss', 'name' => 'timeline-get-rss', 'class' => '', 'link' => BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'rss/' . $iProfileId . '/', 'target' => '_blank', 'title' => _t('_bx_timeline_menu_item_get_rss')),
+        );
+
+        $oMenu = new BxTemplMenuInteractive(array('template' => 'menu_interactive_vertical.html', 'menu_id'=> 'timeline-view-all', 'menu_items' => $aMenu));
+        $oMenu->setSelected('', 'timeline-view-all');
+
+        $sContent = $this->_oTemplate->getViewBlock($aParams);
+        return array('content' => $sContent, 'menu' => $oMenu);
+    }
     public function deleteEvent($aEvent)
     {
     	if(empty($aEvent) || !is_array($aEvent) || !$this->_oDb->deleteEvent(array('id' => (int)$aEvent['id'])))
@@ -588,6 +714,18 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         return $oVote;
     }
 
+	public function getReportObject($sSystem, $iId)
+    {
+        if(empty($sSystem) || (int)$iId == 0)
+            return false;
+
+        $oReport = BxDolReport::getObjectInstance($sSystem, $iId, true, $this->_oTemplate);
+        if(!$oReport->isEnabled())
+            return false;
+
+        return $oReport;
+    }
+
     public function getAttachmentsMenuObject()
     {
         $oMenu = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_post_attachments'), $this->_oTemplate);
@@ -662,6 +800,22 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         return true;
     }
 
+    public function isAllowedReport($aEvent, $bPerform = false)
+    {
+        $mixedReports = $this->getReportsData($aEvent['reports']);
+        if($mixedReports === false)
+            return false;
+
+        list($sSystem, $iObjectId) = $mixedReports;
+        $oReport = $this->getReportObject($sSystem, $iObjectId);
+        $oReport->addCssJs();
+
+        if(isAdmin())
+            return true;
+
+        return true;
+    }
+
     public function isAllowedShare($aEvent, $bPerform = false)
     {
         if(isAdmin())
@@ -695,7 +849,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         }
 
         //--- Event -> Post for Alerts Engine ---//
-        $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'post_' . $sPostType, $iId, $iSenderId);
+        $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'post_' . $sPostType, $iId, $iSenderId, array(
+        	'object_author_id' => $aEvent['owner_id']
+        ));
         $oAlert->alert();
         //--- Event -> Post for Alerts Engine ---//
     }
@@ -771,6 +927,20 @@ class BxTimelineModule extends BxBaseModNotificationsModule
         $sSystem = isset($aVotes['system']) ? $aVotes['system'] : '';
         $iObjectId = isset($aVotes['object_id']) ? (int)$aVotes['object_id'] : 0;
         $iCount = isset($aVotes['count']) ? (int)$aVotes['count'] : 0;
+        if($sSystem == '' || $iObjectId == 0)
+            return false;
+
+        return array($sSystem, $iObjectId, $iCount);
+    }
+
+    public function getReportsData(&$aReports)
+    {
+        if(empty($aReports) || !is_array($aReports))
+            return false;
+
+        $sSystem = isset($aReports['system']) ? $aReports['system'] : '';
+        $iObjectId = isset($aReports['object_id']) ? (int)$aReports['object_id'] : 0;
+        $iCount = isset($aReports['count']) ? (int)$aReports['count'] : 0;
         if($sSystem == '' || $iObjectId == 0)
             return false;
 

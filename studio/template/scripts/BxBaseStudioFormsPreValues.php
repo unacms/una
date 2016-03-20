@@ -121,7 +121,7 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
                 $mixedValue = $oForm->getCleanValue('Value');
                 if(!$this->canUseForSet($mixedValue)) {
                     if($this->oDb->isListUsedInSet($this->sList)) {
-                        $this->_echoResultJson(array('msg' => _t('_adm_form_err_pre_values_create_forbidden', BX_DOL_STUDIO_FIELD_PRE_VALUE_INT_MAX)), true);
+                        echoJson(array('msg' => _t('_adm_form_err_pre_values_create_forbidden', BX_DOL_STUDIO_FIELD_PRE_VALUE_INT_MAX)));
                         return;
                     }
 
@@ -135,7 +135,7 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
             else
                 $aRes = array('msg' => _t('_adm_form_err_pre_values_create'));
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         }
         else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-form-pre-value-create-popup', _t('_adm_form_txt_pre_values_create_popup'), $this->_oTemplate->parseHtmlByName('form_add_value.html', array(
@@ -145,7 +145,7 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
 
@@ -155,7 +155,7 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
 
         $aValue = $this->_getItem('getValues');
         if($aValue === false) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -251,7 +251,7 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
                 $mixedValue = $aAdd['Value'];
                 if(!$this->canUseForSet($mixedValue)) {
                     if($this->oDb->isListUsedInSet($this->sList)) {
-                        $this->_echoResultJson(array('msg' => _t('_adm_form_err_pre_values_create_forbidden', BX_DOL_STUDIO_FIELD_PRE_VALUE_INT_MAX)), true);
+                        echoJson(array('msg' => _t('_adm_form_err_pre_values_create_forbidden', BX_DOL_STUDIO_FIELD_PRE_VALUE_INT_MAX)));
                         return;
                     }
 
@@ -264,7 +264,7 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
             else
                 $aRes = array('msg' => _t('_adm_form_err_pre_values_edit'));
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         } 
         else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-form-pre-value-edit-popup', _t('_adm_form_txt_pre_values_edit_popup', _t($aValue['lkey'])), $this->_oTemplate->parseHtmlByName('form_add_value.html', array(
@@ -274,7 +274,7 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
 
@@ -285,7 +285,7 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
         $iAffected = 0;
         $aIds = bx_get('ids');
         if(!$aIds || !is_array($aIds)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -324,7 +324,7 @@ class BxBaseStudioFormsPreValues extends BxDolStudioFormsPreValues
             $iAffected++;
         }
 
-        $this->_echoResultJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t('_adm_form_err_pre_values_delete')));
+        echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t('_adm_form_err_pre_values_delete')));
     }
 
     function getJsObject()

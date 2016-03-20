@@ -22,37 +22,52 @@ class BxBaseServiceLogin extends BxDol
         return $n*2;
     }
 
+    public function serviceMemberAuthCode($aAuthTypes)
+    {
+        $aTmplButtons = array();
+        foreach($aAuthTypes as $iKey => $aItems) {
+            $sTitle = _t($aItems['Title']);
+
+            $aTmplButtons[] = array(
+                'href' => !empty($aItems['Link']) ? BX_DOL_URL_ROOT . $aItems['Link'] : 'javascript:void(0)',
+                'bx_if:show_onclick' => array(
+                    'condition' => !empty($aItems['OnClick']),
+                    'content' => array(
+                        'onclick' => 'javascript:' . $aItems['OnClick']
+                    )
+                ),
+                'bx_if:show_icon' => array(
+                    'condition' => !empty($aItems['Icon']),
+                    'content' => array(
+                        'icon' => $aItems['Icon']
+                    )
+                ),
+                'title' => !empty($sTitleKey) ? _t($sTitleKey, $sTitle) : $sTitle
+            );
+        }
+
+        BxDolTemplate::getInstance()->addCss(array('auth.css'));
+
+        return BxDolTemplate::getInstance()->parseHtmlByName('auth.html', array(
+            'bx_repeat:buttons' => $aTmplButtons
+        ));
+    }
+
+    public function serviceLoginFormOnly ($sParams = '', $sForceRelocate = '')
+    {
+    	if(strpos($sParams, 'no_join_text') === false)
+    		$sParams = ($sParams != '' ? ' ' : '') . 'no_join_text';
+
+    	return $this->serviceLoginForm($sParams, $sForceRelocate);
+    }
+
     public function serviceLoginForm ($sParams = '', $sForceRelocate = '')
     {
         if (isLogged()) {
             return false;
         }
-
         // get all auth types
         $aAuthTypes = BxDolDb::getInstance()->fromCache('sys_objects_auths', 'getAll', 'SELECT * FROM `sys_objects_auths`');
-
-        // define additional auth types
-        if ($aAuthTypes) {
-
-            $aAddInputEl[''] = _t('_Basic');
-
-            // procces all additional menu's items
-            foreach($aAuthTypes as $iKey => $aItems)
-                $aAddInputEl[$aItems['Link']] = _t($aItems['Title']);
-
-            $aAuthTypes = array(
-                'type' => 'select',
-                'caption' => _t('_Auth type'),
-                'values' => $aAddInputEl,
-                'value' => '',
-                'attrs' => array ('onchange' => 'if (this.value) { location.href = "' . BX_DOL_URL_ROOT . '" + this.value }'),
-            );
-
-        } else {
-
-            $aAuthTypes = array('type' => 'hidden');
-
-        }
 
         $oForm = BxDolForm::getObjectInstance('sys_login', 'sys_login');
 
@@ -69,12 +84,14 @@ class BxBaseServiceLogin extends BxDol
 
         $sJoinText = '';
         if (strpos($sParams, 'no_join_text') === false) {
-            $sJoinText = '<hr class="bx-def-hr bx-def-margin-sec-topbottom" /><div>' . _t('_sys_txt_login_description', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account')) . '</div>';
+            $sJoinText = '<hr class="bx-def-hr bx-def-margin-sec-topbottom" /><div class="bx-def-font-align-center">' . _t('_sys_txt_login_description', BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account')) . '</div>';
         }
 
         BxDolTemplate::getInstance()->addJs(array('jquery.form.min.js'));
 
-        return $sCustomHtmlBefore . $sFormCode . $sCustomHtmlAfter . $sJoinText;
+        $sAuth = $this->serviceMemberAuthCode($aAuthTypes);
+
+        return $sCustomHtmlBefore . $sAuth . $sFormCode . $sCustomHtmlAfter . $sJoinText;
 
     }
 

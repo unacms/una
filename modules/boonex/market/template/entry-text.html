@@ -1,0 +1,26 @@
+<div class="bx-base-text-entity-content bx-market-entity-content bx-def-constraint-list bx-def-constraint-pre bx-def-constraint-object bx-def-constraint-iframe bx-def-constraint-img">
+    <div class="bx-market-ec-head">
+    	<div class="bx-market-ech-thumbnail bx-market-thumb-size">
+    		<img class="bx-market-thumb-size bx-def-round-corners" alt="__title_attr__" src="__thumb_url__" />
+    	</div>
+    	<div class="bx-market-ech-info bx-market-thumb-size-min-height bx-market-thumb-size-left-indent">
+    		<div class="bx-market-ech-info-cnt">
+	    		<h1 class="bx-market-ech-title">__title__</h1>
+	    		<div class="bx-market-ech-price bx-def-margin-sec-top">
+	    			<bx_if:show_single>
+	    				<a class="bx-market-ech-paid bx-btn bx-def-margin-sec-right" href="javascript:void(0)" onclick="javascript:__buy_onclick__">__buy__</a>
+	    			</bx_if:show_single>
+	    			<bx_if:show_recurring>
+						<a class="bx-market-ech-paid bx-btn" href="javascript:void(0)" onclick="javascript:__recurring_onclick__">__recurring__</a>
+		    		</bx_if:show_recurring>
+		    		<bx_if:show_free>
+		    			<span class="bx-market-ech-free bx-def-font-bold col-green3"><bx_text:_bx_market_txt_get_for_free /></span>
+		    		</bx_if:show_free>
+	    		</div>
+	    	</div>
+    	</div>
+    </div>
+    <div class="bx-market-ec-slideshow bx-def-margin-top">__screenshots__</div>
+    <div class="bx-market-ec-description bx-def-margin-top">__text__</div>
+</div>
+__js_code__

@@ -11,7 +11,8 @@
 class BxBaseStudioDesign extends BxDolStudioDesign
 {
     protected $aMenuItems = array(
-        BX_DOL_STUDIO_TEMPL_TYPE_SETTINGS => array('caption' => '_adm_lmi_cpt_settings', 'icon' => 'cogs')
+        BX_DOL_STUDIO_TEMPL_TYPE_SETTINGS => array('caption' => '_adm_lmi_cpt_settings', 'icon' => 'cogs'),
+        BX_DOL_STUDIO_TEMPL_TYPE_LOGO => array('caption' => '_adm_lmi_cpt_logo', 'icon' => 'pencil')
     );
 
     function __construct($sTemplate = "", $sPage = "")
@@ -56,7 +57,7 @@ class BxBaseStudioDesign extends BxDolStudioDesign
             $aMenu[] = array(
                 'name' => $sName,
                 'icon' => $aItem['icon'],
-                'link' => BX_DOL_URL_STUDIO . 'design.php?name=' . $this->sTemplate . '&page=' . $sName,
+                'link' => bx_append_url_params($this->sManageUrl, array('page' => $sName)),
                 'title' => _t($aItem['caption']),
                 'selected' => $sName == $this->sPage
             );
@@ -80,6 +81,18 @@ class BxBaseStudioDesign extends BxDolStudioDesign
         $oPage = new BxTemplStudioSettings($this->sTemplate);
 
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('design.html', array(
+            'content' => $oPage->getPageCode()
+        ));
+    }
+
+    protected function getLogo()
+    {
+    	$oPage = $this->getObjectDesigner();
+
+		$oTemplate = BxDolStudioTemplate::getInstance();
+        $oTemplate->addJs($oPage->getPageJs());
+        $oTemplate->addCss($oPage->getPageCss());
+    	return $oTemplate->parseHtmlByName('design.html', array(
             'content' => $oPage->getPageCode()
         ));
     }

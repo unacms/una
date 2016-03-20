@@ -186,7 +186,15 @@ class BxDolAccount extends BxDol
     }
 
     /**
-     * Get avatar picture url
+     * Get picture url
+     */
+    public function getPicture($iAccountId = false)
+    {
+        return BxDolTemplate::getInstance()->getImageUrl('account-picture.png');
+    }
+
+    /**
+     * Get avatar url
      */
     public function getAvatar($iAccountId = false)
     {
@@ -235,6 +243,15 @@ class BxDolAccount extends BxDol
 
         $iId = $oQuery->getIdById((int)$s);
         return $iId ? $iId : false;
+    }
+
+    /**
+     * Get all profiles associated with the account
+     */
+    public function getProfiles ()
+    {
+        $oProfileQuery = BxDolProfileQuery::getInstance();
+        return $oProfileQuery->getProfilesByAccount($this->_iAccountID);
     }
 
     /**

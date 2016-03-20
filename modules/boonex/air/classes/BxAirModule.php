@@ -4,17 +4,17 @@
  * CC-BY License - http://creativecommons.org/licenses/by/3.0/
  *
  * @defgroup    Air Air
- * @ingroup     DolphinModules
+ * @ingroup     TridentModules
  *
  * @{
  */
 
-bx_import ('BxBaseModGeneralModule');
+bx_import ('BxBaseModTemplateModule');
 
 /**
  * Air module
  */
-class BxAirModule extends BxBaseModGeneralModule
+class BxAirModule extends BxBaseModTemplateModule
 {
     function __construct(&$aModule)
     {

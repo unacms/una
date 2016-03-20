@@ -17,6 +17,7 @@ class BxDolCmtsQuery extends BxDolDb
     protected $_sTable;
     protected $_sTriggerTable;
     protected $_sTriggerFieldId;
+    protected $_sTriggerFieldAuthor;
     protected $_sTriggerFieldTitle;
     protected $_sTriggerFieldComments;
 
@@ -33,6 +34,7 @@ class BxDolCmtsQuery extends BxDolDb
         $this->_sTable = $aSystem['table'];
         $this->_sTriggerTable = $aSystem['trigger_table'];
         $this->_sTriggerFieldId = $aSystem['trigger_field_id'];
+        $this->_sTriggerFieldAuthor = $aSystem['trigger_field_author'];
         $this->_sTriggerFieldTitle = $aSystem['trigger_field_title'];
         $this->_sTriggerFieldComments = $aSystem['trigger_field_comments'];
 
@@ -345,6 +347,12 @@ class BxDolCmtsQuery extends BxDolDb
     {
         $sQuery = $this->prepare("DELETE FROM {$this->_sTableIds} WHERE `system_id` = ? AND `cmt_id` = ?", $iSystemId, $iCmtId);
         return $this->query ($sQuery);
+    }
+
+	function getObjectAuthorId($iId)
+    {
+        $sQuery = $this->prepare("SELECT `{$this->_sTriggerFieldAuthor}` FROM `{$this->_sTriggerTable}` WHERE `{$this->_sTriggerFieldId}` = ? LIMIT 1", $iId);
+        return $this->getOne($sQuery);
     }
 
     function getObjectTitle($iId)

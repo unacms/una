@@ -85,8 +85,10 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
                 $aValsToAdd[$CNF['FIELD_THUMB']] = $iFileThumb;
         }
 
-        if ($iContentId = parent::insert ($aValsToAdd, $isIgnore))
-            $this->_processFiles ($this->getCleanValue($CNF['FIELD_PHOTO']), $iContentId, true);
+        $iContentId = parent::insert ($aValsToAdd, $isIgnore);
+        if(!empty($iContentId))
+            $this->_processFiles ($CNF['FIELD_PHOTO'], $iContentId, true);
+
         return $iContentId;
     }
 
@@ -102,20 +104,21 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
         }
 
         $iRet = parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
-        
-        $this->_processFiles ($this->getCleanValue($CNF['FIELD_PHOTO']), $iContentId, false);
-        
+
+        $this->_processFiles ($CNF['FIELD_PHOTO'], $iContentId, false);
+
         return $iRet;
     }
 
-    function _processFiles ($mixedFileIds, $iContentId = 0, $isAssociateWithContent = false)
+    function _processFiles ($sFieldFile, $iContentId = 0, $isAssociateWithContent = false)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if (!$mixedFileIds)
+        $mixedFileIds = $this->getCleanValue($sFieldFile);
+        if(!$mixedFileIds)
             return true;
 
-        $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
+        $oStorage = BxDolStorage::getObjectInstance($this->aInputs[$sFieldFile]['storage_object']);
         if (!$oStorage)
             return false;
 
@@ -136,14 +139,16 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
         return true;
     }
 
-    function _deleteFile ($iFileId)
+    function _deleteFile ($iFileId, $sStorage = '')
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         if (!$iFileId)
             return true;
 
-        if (!($oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE'])))
+		$sStorage = !empty($sStorage) ? $sStorage : $CNF['OBJECT_STORAGE'];
+		$oStorage = BxDolStorage::getObjectInstance($sStorage);
+        if (!$oStorage)
             return false;
 
         if (!$oStorage->getFile($iFileId))

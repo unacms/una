@@ -108,6 +108,11 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
         return $this->_serviceTemplateFunc('unit', $iContentId);
     }
 
+    public function serviceProfilePicture ($iContentId)
+    {
+        return $this->_serviceTemplateFunc('urlPicture', $iContentId);
+    }
+
     public function serviceProfileAvatar ($iContentId)
     {
         return $this->_serviceTemplateFunc('urlAvatar', $iContentId);
@@ -147,6 +152,16 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolPro
             return false;
         $CNF = $this->_oConfig->CNF;
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+    }
+
+    public function servicePrepareFields ($aFieldsProfile)
+    {
+        return $aFieldsProfile;
+    }
+
+    public function serviceFormsHelper ()
+    {
+        return parent::serviceFormsHelper ();
     }
 
     public function serviceBrowseRecentProfiles ($bDisplayEmptyMsg = false)

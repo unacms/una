@@ -10,34 +10,20 @@
 /**
  * @see BxDolVote
  */
-class BxDolVoteQuery extends BxDolDb
+class BxDolVoteQuery extends BxDolObjectQuery
 {
-    protected $_oModule;
-
-    protected $_sTable;
-    protected $_sTableTrack;
-    protected $_sTriggerTable;
-    protected $_sTriggerFieldId;
-    protected $_sTriggerFieldRate;
-    protected $_sTriggerFieldCount;
-
     protected $_iPostTimeout;
 
     public function __construct(&$oModule)
     {
-        parent::__construct();
-
-        $this->_oModule = $oModule;
+        parent::__construct($oModule);
 
         $aSystem = $this->_oModule->getSystemInfo();
-        $this->_sTable = $aSystem['table_main'];
-        $this->_sTableTrack = $aSystem['table_track'];
-        $this->_sTriggerTable = $aSystem['trigger_table'];
-        $this->_sTriggerFieldId = $aSystem['trigger_field_id'];
         $this->_sTriggerFieldRate = $aSystem['trigger_field_rate'];
-        $this->_sTriggerFieldCount = $aSystem['trigger_field_count'];
 
         $this->_iPostTimeout = (int)$aSystem['post_timeout'];
+
+        $this->_sMethodGetEntry = 'getVote';
     }
 
     public function isPostTimeoutEnded($iObjectId, $sAuthorIp)
@@ -60,12 +46,6 @@ class BxDolVoteQuery extends BxDolDb
             $aResult = array('count' => 0, 'sum' => 0, 'rate' => 0);
 
         return $aResult;
-    }
-
-    public function isVoted($iObjectId, $iAuthorId)
-    {
-        $sQuery = $this->prepare("SELECT `object_id` FROM `{$this->_sTableTrack}` WHERE `object_id` = ? AND `author_id` = ? LIMIT 1", $iObjectId, $iAuthorId);
-        return (int)$this->getOne($sQuery) != 0;
     }
 
     public function putVote($iObjectId, $iAuthorId, $sAuthorIp, $iValue, $bUndo = false)
@@ -102,44 +82,21 @@ class BxDolVoteQuery extends BxDolDb
         return false;
     }
 
+    public function getLegend($iObjectId)
+    {
+    	$sQuery = $this->prepare("SELECT `value` AS `value`, COUNT(`value`) AS `count` FROM `{$this->_sTableTrack}` WHERE `object_id` = ? GROUP BY `value`", $iObjectId);
+
+    	return $this->getAllWithKey($sQuery, 'value');
+    }
+
     public function getSqlParts($sMainTable, $sMainField)
     {
-        if(empty($sMainTable) || empty($sMainField))
-            return array();
+    	$aResult = parent::getSqlParts($sMainTable, $sMainField);
+        if(empty($aResult))
+            return $aResult;
 
-        return array (
-            'fields' => ",`{$this->_sTable}`.`count` as `vote_count`, (`{$this->_sTable}`.`sum` / `{$this->_sTable}`.`count`) AS `vote_rate` ",
-            'join' => " LEFT JOIN `{$this->_sTable}` ON (`{$this->_sTable}`.`object_id` = `{$sMainTable}`.`{$sMainField}`) ",
-        );
-    }
-
-    public function getVotedBy($iObjectId)
-    {
-        $sQuery = $this->prepare("SELECT `author_id` FROM `{$this->_sTableTrack}` WHERE `object_id`=?", $iObjectId);
-        return $this->getColumn($sQuery);
-    }
-
-    public function deleteObjectVotes($iObjectId)
-    {
-        $sQuery = $this->prepare("DELETE FROM {$this->_sTable} WHERE `object_id` = ?", $iObjectId);
-        $this->query ($sQuery);
-
-        $this->query ("OPTIMIZE TABLE {$this->_sTable}");
-
-        $sQuery = $this->prepare("DELETE FROM {$this->_sTableTrack} WHERE `object_id` = ?", $iObjectId);
-        $this->query ($sQuery);
-
-        $this->query ("OPTIMIZE TABLE {$this->_sTableTrack}");
-    }
-
-    public function updateTriggerTable($iObjectId)
-    {
-        $aVote = $this->getVote($iObjectId);
-        if(empty($aVote) || !is_array($aVote))
-            return false;
-
-        $sQuery = $this->prepare("UPDATE `{$this->_sTriggerTable}` SET `{$this->_sTriggerFieldCount}` = ?, `{$this->_sTriggerFieldRate}` = ? WHERE `{$this->_sTriggerFieldId}` = ?", $aVote['count'], $aVote['rate'], $iObjectId);
-        return (int)$this->query($sQuery) > 0;
+		$aResult['fields'] = ",`{$this->_sTable}`.`count` as `vote_count`, (`{$this->_sTable}`.`sum` / `{$this->_sTable}`.`count`) AS `vote_rate` ";
+        return $aResult;
     }
 }
 

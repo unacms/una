@@ -25,7 +25,7 @@ class BxBaseStudioPolyglotEtemplates extends BxDolStudioPolyglotEtemplates
         if(!$aIds || !is_array($aIds)) {
             $iId = (int)bx_get('id');
             if(!$iId) {
-                $this->_echoResultJson(array());
+                echoJson(array());
                 exit;
             }
 
@@ -37,7 +37,7 @@ class BxBaseStudioPolyglotEtemplates extends BxDolStudioPolyglotEtemplates
         $aEtemplate = array();
         $this->oDb->getEtemplates(array('type' => 'by_id', 'value' => $iId), $aEtemplate, false);
         if(empty($aEtemplate) || !is_array($aEtemplate)){
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -145,7 +145,7 @@ class BxBaseStudioPolyglotEtemplates extends BxDolStudioPolyglotEtemplates
             else
                 $aRes = array('msg' => _t('_adm_pgt_err_etemplates_edit'));
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         }
         else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-pgt-etemplate-edit-popup', _t('_adm_pgt_txt_etemplates_edit_popup', _t($aEtemplate['name_system'])), $this->_oTemplate->parseHtmlByName('pgt_new_etemplate.html', array(
@@ -155,7 +155,7 @@ class BxBaseStudioPolyglotEtemplates extends BxDolStudioPolyglotEtemplates
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
 

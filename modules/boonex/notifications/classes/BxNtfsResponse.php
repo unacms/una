@@ -25,23 +25,18 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
      */
     public function response($oAlert)
     {
-    	$iPrivacyView = $this->_getPrivacyView($oAlert->aExtras);
-        if($iPrivacyView == BX_DOL_PG_HIDDEN)
+    	$iObjectPrivacyView = $this->_getObjectPrivacyView($oAlert->aExtras);
+        if($iObjectPrivacyView == BX_DOL_PG_HIDDEN)
             return;
 
         $aHandler = $this->_oModule->_oConfig->getHandlers($oAlert->sUnit . '_' . $oAlert->sAction);
         switch($aHandler['type']) {
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT:
-                $iId = $this->_oModule->_oDb->insertEvent(array(
-                    'owner_id' => $oAlert->iSender,
-                    'type' => $oAlert->sUnit,
-                    'action' => $oAlert->sAction,
-                    'object_id' => $oAlert->iObject,
-                    'object_privacy_view' => $iPrivacyView,
-                	'subobject_id' => $this->_getSubObjectId($oAlert->aExtras),
-                    'content' => '',
-                	'processed' => 0
-                ));
+            	$sMethod = 'getInsertData' . bx_gen_method_name($oAlert->sUnit . '_' . $oAlert->sAction);           	
+            	if(!method_exists($this, $sMethod))
+            		$sMethod = 'getInsertData';
+
+                $iId = $this->_oModule->_oDb->insertEvent($this->$sMethod($oAlert));
  
 				if(!empty($iId))
 					$this->_oModule->onPost($iId);
@@ -49,7 +44,7 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
 				break;
 
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_UPDATE:
-                $this->_oModule->_oDb->updateEvent(array('object_privacy_view' => $iPrivacyView), array('type' => $oAlert->sUnit, 'object_id' => $oAlert->iObject));
+                $this->_oModule->_oDb->updateEvent(array('object_privacy_view' => $iObjectPrivacyView), array('type' => $oAlert->sUnit, 'object_id' => $oAlert->iObject));
                 break;
 
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_DELETE:
@@ -67,6 +62,39 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
                 ));
                 break;
         }
+    }
+
+    protected function getInsertData(&$oAlert)
+    {
+    	return array(
+			'owner_id' => $oAlert->iSender,
+			'type' => $oAlert->sUnit,
+			'action' => $oAlert->sAction,
+			'object_id' => $oAlert->iObject,
+			'object_owner_id' => $this->_getObjectOwnerId($oAlert->aExtras),
+			'object_privacy_view' => $this->_getObjectPrivacyView($oAlert->aExtras),
+			'subobject_id' => $this->_getSubObjectId($oAlert->aExtras),
+			'content' => '',
+			'processed' => 0
+		);
+    }
+
+    /**
+     * Custom insert data getter for sys_profiles_subscriptions -> connection_added alert. 
+     */
+    protected function getInsertDataSysProfilesSubscriptionsConnectionAdded(&$oAlert)
+    {
+    	return array(
+			'owner_id' => $oAlert->iSender,
+			'type' => $oAlert->sUnit,
+			'action' => $oAlert->sAction,
+			'object_id' => $oAlert->aExtras['content'],
+			'object_owner_id' => $oAlert->aExtras['content'],
+			'object_privacy_view' => $this->_getObjectPrivacyView($oAlert->aExtras),
+			'subobject_id' => 0,
+			'content' => '',
+			'processed' => 0
+		);
     }
 }
 

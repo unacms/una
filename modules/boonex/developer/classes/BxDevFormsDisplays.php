@@ -53,7 +53,7 @@ class BxDevFormsDisplays extends BxTemplStudioFormsDisplays
             else
                 $aRes = array('msg' => _t('_bx_dev_frm_err_displays_create'));
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         } else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-frm-display-create-popup', _t('_bx_dev_frm_txt_displays_create_popup'), $this->_oTemplate->parseHtmlByName('form_add_display.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
@@ -62,7 +62,7 @@ class BxDevFormsDisplays extends BxTemplStudioFormsDisplays
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
 
@@ -76,7 +76,7 @@ class BxDevFormsDisplays extends BxTemplStudioFormsDisplays
         if(!$aIds || !is_array($aIds)) {
             $iId = (int)bx_get('id');
             if(!$iId) {
-                $this->_echoResultJson(array());
+                echoJson(array());
                 exit;
             }
 
@@ -88,7 +88,7 @@ class BxDevFormsDisplays extends BxTemplStudioFormsDisplays
         $aDisplay = array();
         $iDisplay = $this->oDb->getDisplays(array('type' => 'by_id', 'value' => $iId), $aDisplay);
         if($iDisplay != 1 || empty($aDisplay)){
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -104,7 +104,7 @@ class BxDevFormsDisplays extends BxTemplStudioFormsDisplays
             else
                 $aRes = array('msg' => _t('_bx_dev_frm_err_displays_edit'));
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         } else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-frm-display-edit-popup', _t('_bx_dev_frm_txt_displays_edit_popup', _t($aDisplay['title'])), $this->_oTemplate->parseHtmlByName('form_add_display.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
@@ -113,7 +113,7 @@ class BxDevFormsDisplays extends BxTemplStudioFormsDisplays
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
 

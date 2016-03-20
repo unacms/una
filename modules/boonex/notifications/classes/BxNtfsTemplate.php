@@ -77,9 +77,20 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
     	if((int)$aEvent['processed'] == 0) {
     		$aContent = $this->_getContent($aEvent);
     		if(!empty($aContent) && is_array($aContent)) {
-    			$aEvent['content'] = serialize($aContent);
+    			$aSet = array();
 
-    			$this->_oDb->updateEvent(array('content' => $aEvent['content'], 'processed' => 1), array('id' => $aEvent['id']));
+    			if(!empty($aContent['entry_author'])) {
+    				$aSet['object_owner_id'] = (int)$aContent['entry_author'];
+    				unset($aContent['entry_author']);
+    			}
+
+    			$aEvent['content'] = serialize($aContent);
+    			$aSet = array_merge($aSet, array(
+    				'content' => $aEvent['content'], 
+    				'processed' => 1
+    			));
+
+    			$this->_oDb->updateEvent($aSet, array('id' => $aEvent['id']));
     		}
     	}
 

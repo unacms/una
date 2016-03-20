@@ -7,6 +7,17 @@ div.bx-inv-invite-btn .bx-btn {
 	display: inline-block;
 }
 
+
+/*--- Invitation Link popup ---*/
+div.bx-inv-link-actions {
+	text-align: center;
+}
+div.bx-inv-link-actions .bx-btn {
+	float: none;
+	display: inline-block;
+}
+
+
 /*--- Request Invite block ---*/
 div.bx-inv-request-btn  {}
 

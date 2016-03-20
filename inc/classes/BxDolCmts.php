@@ -154,6 +154,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
     protected $_aSystem = array (); ///< current comments system array
     protected $_iId = 0; ///< obect id to be commented
 
+    protected $_aT = array (); ///< an array of lang keys
     protected $_aMarkers = array ();
 
     protected $_sDisplayType = '';
@@ -235,6 +236,10 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 
         $this->_sMetatagsObj = 'sys_cmts';
 
+        $this->_aT = array(
+        	'block_comments_title' => '_cmt_block_comments_title'
+        );
+
         if ($iInit)
             $this->init($iId);
 
@@ -298,6 +303,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
                     `ObjectVote` AS `object_vote`,
                     `TriggerTable` AS `trigger_table`,
                     `TriggerFieldId` AS `trigger_field_id`,
+                    `TriggerFieldAuthor` AS `trigger_field_author`,
                     `TriggerFieldTitle` AS `trigger_field_title`,
                     `TriggerFieldComments` AS `trigger_field_comments`,
                     `ClassName` AS `class_name`,
@@ -476,6 +482,14 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
     public function getCommentsTableName ()
     {
         return $this->_oQuery->getTableName ();
+    }
+
+	public function getObjectAuthorId ($iObjectId = 0)
+    {
+    	if(empty($this->_aSystem['trigger_field_author']))
+    		return 0;
+
+        return $this->_oQuery->getObjectAuthorId ($iObjectId ? $iObjectId : $this->getId());
     }
 
     public function getObjectTitle ($iObjectId = 0)
@@ -686,12 +700,12 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
     public function actionGetFormEdit ()
     {
         if (!$this->isEnabled()){
-            $this->_echoResultJson(array());
+            echoJson(array());
             return;
         }
 
         $iCmtId = bx_process_input(bx_get('Cmt'), BX_DATA_INT);
-        $this->_echoResultJson($this->getFormEdit($iCmtId));
+        echoJson($this->getFormEdit($iCmtId));
     }
 
     public function actionGetCmt ()
@@ -704,7 +718,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         $sCmtDisplay = isset($_REQUEST['CmtDisplay']) ? bx_process_input($_REQUEST['CmtDisplay'], BX_DATA_TEXT) : '';
 
         $aCmt = $this->getCommentRow($iCmtId);
-        $this->_echoResultJson(array(
+        echoJson(array(
             'parent_id' => $aCmt['cmt_parent_id'],
             'vparent_id' => $aCmt['cmt_vparent_id'],
             'content' => $this->getComment($aCmt, array('type' => $sCmtBrowse), array('type' => $sCmtDisplay, 'dynamic_mode' => true))
@@ -726,7 +740,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
     public function actionSubmitPostForm()
     {
         if(!$this->isEnabled() || !$this->isPostReplyAllowed()) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             return;
         }
 
@@ -734,13 +748,13 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         if(bx_get('cmt_parent_id') !== false)
             $iCmtParentId = bx_process_input(bx_get('cmt_parent_id'), BX_DATA_INT);
 
-        $this->_echoResultJson($this->getFormPost($iCmtParentId));
+        echoJson($this->getFormPost($iCmtParentId));
     }
 
     public function actionSubmitEditForm()
     {
         if (!$this->isEnabled()) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             return;
         };
 
@@ -748,13 +762,13 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
         if(bx_get('cmt_id') !== false)
             $iCmtId = bx_process_input(bx_get('cmt_id'), BX_DATA_INT);
 
-        $this->_echoResultJson($this->getFormEdit($iCmtId));
+        echoJson($this->getFormEdit($iCmtId));
     }
 
     public function actionRemove()
     {
         if (!$this->isEnabled()) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             return;
         };
 
@@ -764,22 +778,23 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 
         $aCmt = $this->_oQuery->getCommentSimple ($this->getId(), $iCmtId);
         if(!$aCmt) {
-            $this->_echoResultJson(array('msg' => _t('_No such comment')));
+            echoJson(array('msg' => _t('_No such comment')));
             return;
         }
 
         if ($aCmt['cmt_replies'] > 0) {
-            $this->_echoResultJson(array('msg' => _t('_Can not delete comments with replies')));
+            echoJson(array('msg' => _t('_Can not delete comments with replies')));
             return;
         }
 
         $iCmtAuthorId = $this->_getAuthorId();
         if(!$this->isRemoveAllowed($aCmt)) {
-            $this->_echoResultJson(array('msg' => $aCmt['cmt_author_id'] == $iCmtAuthorId ? strip_tags($this->msgErrRemoveAllowed()) : _t('_Access denied')));
+            echoJson(array('msg' => $aCmt['cmt_author_id'] == $iCmtAuthorId ? strip_tags($this->msgErrRemoveAllowed()) : _t('_Access denied')));
             return;
         }
 
-        if($this->_oQuery->removeComment ($this->getId(), $aCmt['cmt_id'], $aCmt['cmt_parent_id'])) {
+        $iCmtObjectId = $this->getId();
+        if($this->_oQuery->removeComment($iCmtObjectId, $aCmt['cmt_id'], $aCmt['cmt_parent_id'])) {
             $this->_triggerComment();
 
             $oStorage = BxDolStorage::getObjectInstance($this->getStorageObjectName());
@@ -794,14 +809,17 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
 
             $this->deleteMetaInfo ($aCmt['cmt_id']);
 
-            $oZ = new BxDolAlerts($this->_sSystem, 'commentRemoved', $this->getId(), $iCmtAuthorId, array('comment_id' => $aCmt['cmt_id'], 'comment_author_id' => $aCmt['cmt_author_id']));
+            $oZ = new BxDolAlerts($this->_sSystem, 'commentRemoved', $iCmtObjectId, $iCmtAuthorId, array('comment_id' => $aCmt['cmt_id'], 'comment_author_id' => $aCmt['cmt_author_id']));
             $oZ->alert();
 
-            $this->_echoResultJson(array('id' => $iCmtId));
+            $oZ = new BxDolAlerts('comment', 'deleted', $aCmt['cmt_id'], $iCmtAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iCmtObjectId));
+        	$oZ->alert();
+
+            echoJson(array('id' => $iCmtId));
             return;
         }
 
-        $this->_echoResultJson(array('msg' => _t('_cmt_err_cannot_perform_action')));
+        echoJson(array('msg' => _t('_cmt_err_cannot_perform_action')));
     }
 
     public function actionResumeLiveUpdate()
@@ -897,7 +915,7 @@ class BxDolCmts extends BxDol implements iBxDolReplaceable
     {
     	$iDataAction = $this->isNl2br() ? BX_DATA_TEXT_MULTILINE : BX_DATA_HTML;
     	$s = bx_process_output($s, $iDataAction);
-    	$s = bx_linkify_html($s);
+    	$s = bx_linkify_html($s, 'class="' . BX_DOL_LINK_CLASS . '"');
 
         if ($this->_sMetatagsObj && $iCmtId) {
             $oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj);

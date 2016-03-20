@@ -145,7 +145,7 @@ class BxDolView extends BxDolObject
         $sAuthorIp = $this->_getAuthorIp();
 
         if($this->_oQuery->doView($iObjectId, $iAuthorId, $sAuthorIp)) {
-            $this->_triggerView();
+            $this->_trigger();
 
             $oZ = new BxDolAlerts($this->_sSystem, 'view', $iObjectId, $iAuthorId);
             $oZ->alert();
@@ -154,33 +154,6 @@ class BxDolView extends BxDolObject
         }
 
         return false;
-    }
-
-    function onObjectDelete($iObjectId = 0)
-    {
-        $this->_oQuery->deleteObjectViews($iObjectId ? $iObjectId : $this->getId());
-    }
-
-    protected function _getAuthorId ()
-    {
-        return isMember() ? bx_get_logged_profile_id() : 0;
-    }
-
-    protected function _getAuthorIp ()
-    {
-        return getVisitorIP();
-    }
-
-    protected function _triggerView()
-    {
-        if(!$this->_aSystem['trigger_table'])
-            return false;
-
-        $iId = $this->getId();
-        if(!$iId)
-            return false;
-
-        return $this->_oQuery->updateTriggerTable($iId);
     }
 }
 

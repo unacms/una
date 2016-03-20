@@ -25,7 +25,7 @@ class BxBaseStudioStore extends BxDolStudioStore
     function getPageJs()
     {
     	BxDolStudioTemplate::getInstance()->addJsTranslation(array('_adm_btn_queued_submit'));
-        return array_merge(parent::getPageJs(), array('jquery.fancybox.pack.js', 'store.js'));
+        return array_merge(parent::getPageJs(), array('fancybox/jquery.fancybox.pack.js', 'store.js'));
     }
 
     function getPageJsObject()

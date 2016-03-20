@@ -34,7 +34,7 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
 
     	$aIds = bx_get('ids');
         if(!$aIds || !is_array($aIds)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             return;
         }
 
@@ -48,7 +48,7 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
         		$iAffected++;
 			}
 
-		$this->_echoResultJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t($CNF['T']['grid_action_err_perform'])));
+		echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t($CNF['T']['grid_action_err_perform'])));
     }
 
     public function resetQueryParams()
@@ -66,7 +66,7 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
 
     	$aIds = bx_get('ids');
         if(!$aIds || !is_array($aIds)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             return;
         }
 
@@ -78,7 +78,7 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
         		$iAffected++;
         	}
 
-        $this->_echoResultJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t($CNF['T']['grid_action_err_perform'])));
+        echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t($CNF['T']['grid_action_err_perform'])));
     }
 
     protected function _enable($mixedId, $isChecked)

@@ -34,7 +34,7 @@ class BxNtfsModule extends BxBaseModNotificationsModule
         $aParams = $this->_prepareParamsGet();
         $sEvents = $this->_oTemplate->getPosts($aParams);
 
-        $this->_echoResultJson(array('events' => $sEvents));
+        echoJson(array('events' => $sEvents));
     }
 
     /**
@@ -42,13 +42,23 @@ class BxNtfsModule extends BxBaseModNotificationsModule
      * 
      * Get View block for a separate page. Will return a block with "Empty" message if nothing found.
      */
-    public function serviceGetBlockView($iStart = -1, $iPerPage = -1, $aModules = array())
+    public function serviceGetBlockView($sType = '', $iStart = -1, $iPerPage = -1, $aModules = array())
     {
+    	$aBrowseTypes = array(BX_BASE_MOD_NTFS_TYPE_CONNECTIONS, BX_BASE_MOD_NTFS_TYPE_OBJECT_OWNER);
+    	if(empty($sType)) {
+    		$mType = bx_get('type');
+    		if($mType !== false && in_array($mType, $aBrowseTypes))
+    			$sType = $mType;
+
+	    	if(empty($sType))
+    			$sType = BX_NTFS_TYPE_DEFAULT;
+    	}
+
     	$iOwnerId = $this->getUserId();
         if(!$iOwnerId)
-            return array('content' => MsgBox(_t('_bx_timeline_txt_msg_no_results')));
+            return array('content' => MsgBox(_t('_bx_ntfs_txt_msg_no_results')));
 
-		$aParams = $this->_prepareParams(BX_NTFS_TYPE_DEFAULT, $iOwnerId, $iStart, $iPerPage, $aModules);
+		$aParams = $this->_prepareParams($sType, $iOwnerId, $iStart, $iPerPage, $aModules);
 		$sContent = $this->_oTemplate->getViewBlock($aParams);
 
 		$aParams['browse'] = 'first';
@@ -56,7 +66,28 @@ class BxNtfsModule extends BxBaseModNotificationsModule
     	if(!empty($aEvent))
 			$this->_oDb->markAsRead($iOwnerId, $aEvent['id']);
 
-        return array('content' => $sContent); 
+		$sModule = $this->_oConfig->getName();
+		$sJsObject = $this->_oConfig->getJsObject('view');
+
+		$aMenu = array();
+		foreach($aBrowseTypes as $sBrowseType)
+			$aMenu[] = array(
+				'id' => $sModule . '-' . $sBrowseType,
+				'name' => $sModule . '-' . $sBrowseType,
+				'class' => '',
+				'title' => '_bx_ntfs_menu_item_title_' . $sBrowseType,
+				'target' => '_self',
+				'onclick' => 'javascript:' . $sJsObject . '.changeType(this, \'' . $sBrowseType . '\');'
+			);
+
+		$oMenu = new BxTemplMenuInteractive(array(
+        	'template' => 'menu_interactive_vertical.html',
+			'menu_id' => $sModule . '-browse-types',
+        	'menu_items' => $aMenu
+        ), $this->_oTemplate);
+        $oMenu->setSelected($sModule, $sModule . '-' . $sType);
+
+        return array('content' => $sContent, 'menu' => $oMenu); 
     }
 
     public function serviceGetUnreadNotificationsNum($iOwnerId = 0)

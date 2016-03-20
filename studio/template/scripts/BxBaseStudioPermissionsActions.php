@@ -23,7 +23,7 @@ class BxBaseStudioPermissionsActions extends BxDolStudioPermissionsActions
         $bEnable = (int)bx_get('checked');
 
         if(!$aIds || !is_array($aIds)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -37,7 +37,7 @@ class BxBaseStudioPermissionsActions extends BxDolStudioPermissionsActions
         }
 
         $sAction = $bEnable ? 'enable' : 'disable';
-        echo $this->_echoResultJson(array(
+        echo echoJson(array(
             $sAction => $aResultIds,
         ));
     }
@@ -51,7 +51,7 @@ class BxBaseStudioPermissionsActions extends BxDolStudioPermissionsActions
         if(!$aIds || !is_array($aIds)) {
             $iId = (int)bx_get('IDAction');
             if(!$iId) {
-                $this->_echoResultJson(array());
+                echoJson(array());
                 exit;
             }
 
@@ -66,7 +66,7 @@ class BxBaseStudioPermissionsActions extends BxDolStudioPermissionsActions
         $aOption = array();
         $iOption = $this->oDb->getOptions(array('type' => 'by_level_action_ids', 'level_id' => $this->iLevel, 'action_id' => $iId), $aOption);
         if($iOption != 1 || empty($aOption)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -197,7 +197,7 @@ class BxBaseStudioPermissionsActions extends BxDolStudioPermissionsActions
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
 

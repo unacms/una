@@ -83,6 +83,7 @@
     <string name="_bx_timeline_menu_item_title_item_comment"><![CDATA[Комментарий]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_vote"><![CDATA[Голосовать]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_share"><![CDATA[Поделиться]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_report"><![CDATA[Пожаловаться]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_more"><![CDATA[Ещё]]></string>
 
 	<string name="_bx_timeline_menu_title_post_attachments"><![CDATA[Форма - Прикрепления]]></string>
@@ -96,6 +97,12 @@
 
     <string name="_bx_timeline_menu_item_title_system_timeline"><![CDATA[Лента]]></string>
     <string name="_bx_timeline_menu_item_title_timeline"><![CDATA[Лента]]></string>
+
+    <string name="_bx_timeline_menu_item_title_system_create_entry"><![CDATA[Лента]]></string>
+    <string name="_bx_timeline_menu_item_title_create_entry"><![CDATA[Лента]]></string>
+
+	<string name="_bx_timeline_menu_item_title_system_view_timeline_author"><![CDATA[Лента]]></string>
+	<string name="_bx_timeline_menu_item_title_view_timeline_author"><![CDATA[Лента]]></string>
 
 	<string name="_bx_timeline_alert_module_timeline_common_post"><![CDATA[Лента (разместить)]]></string>
 	<string name="_bx_timeline_alert_module_timeline_common_share"><![CDATA[Лента (разместить снова)]]></string>
@@ -112,9 +119,10 @@
 	<string name="_bx_timeline_txt_rss_caption"><![CDATA[Лента {0}]]></string>
 	<string name="_bx_timeline_txt_user_added_sample"><![CDATA[{0} добавил {1}]]></string>
 	<string name="_bx_timeline_txt_user_shared_sample"><![CDATA[{0} снова разместил {1} {2}]]></string>
-	<string name="_bx_timeline_txt_sample"><![CDATA[разместить]]></string>
+	<string name="_bx_timeline_txt_sample"><![CDATA[сообщение]]></string>
 	<string name="_bx_timeline_txt_sample_ext"><![CDATA[сообщение в ленте]]></string>
-	<string name="_bx_timeline_txt_sample_comment_single"><![CDATA[комментировать сообщение в ленте]]></string>
+	<string name="_bx_timeline_txt_sample_comment_single"><![CDATA[комментарий к сообщению в ленте]]></string>
+	<string name="_bx_timeline_txt_sample_vote_single"><![CDATA[голос за сообщение в ленте]]></string>
 
 	<string name="_bx_timeline_txt_do_share"><![CDATA[Поделиться]]></string>
 	<string name="_bx_timeline_txt_shared"><![CDATA[Поделился {0} {1}.]]></string>

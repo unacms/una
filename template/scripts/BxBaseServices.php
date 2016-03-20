@@ -22,6 +22,11 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         return $this->_serviceProfileFunc('getUnit', $iContentId);
     }
 
+    public function serviceProfilePicture ($iContentId)
+    {
+        return $this->_serviceProfileFunc('getPicture', $iContentId);
+    }
+
     public function serviceProfileAvatar ($iContentId)
     {
         return $this->_serviceProfileFunc('getAvatar', $iContentId);
@@ -50,6 +55,16 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
     public function serviceProfileUrl ($iContentId)
     {
         return $this->_serviceProfileFunc('getUrl', $iContentId);
+    }
+
+    public function serviceFormsHelper ()
+    {
+        return new BxTemplAccountForms();
+    }
+
+    public function servicePrepareFields ($aFieldsProfile)
+    {
+        return $aFieldsProfile;
     }
 
     public function serviceProfilesSearch ($sTerm, $iLimit)

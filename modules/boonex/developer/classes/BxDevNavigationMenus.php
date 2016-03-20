@@ -43,7 +43,7 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus
             else
                 $aRes = array('msg' => _t('_bx_dev_nav_err_menus_create'));
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         } else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-nav-menu-create-popup', _t('_bx_dev_nav_txt_menus_create_popup'), $this->oModule->_oTemplate->parseHtmlByName('nav_add_menu.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
@@ -52,7 +52,7 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
 
@@ -64,7 +64,7 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus
 
         $aMenu = $this->_getItem('getMenus');
         if($aMenu === false) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -80,7 +80,7 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus
             else
                 $aRes = array('msg' => _t('_bx_dev_nav_err_menus_edit'));
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         } else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-nav-menu-edit-popup', _t('_bx_dev_nav_txt_menus_edit_popup', _t($aMenu['title'])), $this->oModule->_oTemplate->parseHtmlByName('nav_add_menu.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
@@ -89,7 +89,7 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
 
@@ -99,7 +99,7 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus
 
         $aMenu = $this->_getItem('getMenus');
         if($aMenu === false) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -147,7 +147,7 @@ class BxDevNavigationMenus extends BxTemplStudioNavigationMenus
             'content' => $oForm->getCode()
         )));
 
-        $this->_echoResultJson(array('popup' => $sContent), true);
+        echoJson(array('popup' => $sContent));
     }
 
     private function fillInSelects(&$aInputs)

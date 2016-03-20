@@ -90,6 +90,13 @@ class BxBaseModGeneralModule extends BxDolModule
     	return 0;
     }
 
+    public function serviceFormsHelper ()
+    {
+        bx_import('FormsEntryHelper', $this->_aModule);
+        $sClass = $this->_aModule['class_prefix'] . 'FormsEntryHelper';
+        return new $sClass($this);
+    }
+
     /**
      * Add entry form
      * @return HTML string

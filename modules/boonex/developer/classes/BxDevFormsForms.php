@@ -43,7 +43,7 @@ class BxDevFormsForms extends BxTemplStudioFormsForms
             else
                 $aRes = array('msg' => _t('_bx_dev_frm_err_forms_create'));
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         } else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-frm-form-create-popup', _t('_bx_dev_frm_txt_forms_create_popup'), $this->oModule->_oTemplate->parseHtmlByName('form_add_form.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
@@ -52,7 +52,7 @@ class BxDevFormsForms extends BxTemplStudioFormsForms
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
 
@@ -66,7 +66,7 @@ class BxDevFormsForms extends BxTemplStudioFormsForms
         if(!$aIds || !is_array($aIds)) {
             $iId = (int)bx_get('id');
             if(!$iId) {
-                $this->_echoResultJson(array());
+                echoJson(array());
                 exit;
             }
 
@@ -78,7 +78,7 @@ class BxDevFormsForms extends BxTemplStudioFormsForms
         $aForm = array();
         $this->oDb->getForms(array('type' => 'by_id', 'value' => $iId), $aForm, false);
         if(empty($aForm) || !is_array($aForm)){
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -105,7 +105,7 @@ class BxDevFormsForms extends BxTemplStudioFormsForms
             else
                 $aRes = array('msg' => _t('_bx_dev_frm_err_forms_edit'));
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         } else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-frm-form-edit-popup', _t('_bx_dev_frm_txt_forms_edit_popup', _t($aForm['title'])), $this->oModule->_oTemplate->parseHtmlByName('form_add_form.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
@@ -114,7 +114,7 @@ class BxDevFormsForms extends BxTemplStudioFormsForms
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
 
@@ -124,7 +124,7 @@ class BxDevFormsForms extends BxTemplStudioFormsForms
 
         $aForm = $this->_getItem('getForms');
         if($aForm === false) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -177,7 +177,7 @@ class BxDevFormsForms extends BxTemplStudioFormsForms
             'content' => $oForm->getCode()
         )));
 
-        $this->_echoResultJson(array('popup' => $sContent), true);
+        echoJson(array('popup' => $sContent));
     }
 }
 /** @} */

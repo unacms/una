@@ -77,7 +77,7 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
         $this->sFilterName = 'bx_albums_filter';
         $this->oModule = $this->getMain();
 
-        $oProfileAuthor = null;
+        $oProfileAuthor = isset($aParams['author']) ? BxDolProfile::getInstance((int)$aParams['author']) : null;
 
         $CNF = &$this->oModule->_oConfig->CNF;
 
@@ -88,7 +88,7 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
                 $this->aCurrent['title'] = _t('_bx_albums_page_title_browse_media_in_album');
                 $this->aCurrent['rss']['link'] = 'modules/?r=albums/rss_media/' . $sMode . '/' . (int)$aParams['album_id'];
                 $this->aCurrent['sorting'] = 'order';
-                $this->sOrderDirection = 'ASC';
+                $this->sOrderDirection = 'ASC';                
                 break;
 
             case 'recent':

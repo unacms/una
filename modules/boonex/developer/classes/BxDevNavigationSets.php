@@ -41,7 +41,7 @@ class BxDevNavigationSets extends BxTemplStudioNavigationSets
             else
                 $aRes = array('msg' => _t('_bx_dev_nav_err_sets_create'));
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         } else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-nav-set-create-popup', _t('_bx_dev_nav_txt_sets_create_popup'), $this->_oTemplate->parseHtmlByName('nav_add_set.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
@@ -50,7 +50,7 @@ class BxDevNavigationSets extends BxTemplStudioNavigationSets
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
 
@@ -64,7 +64,7 @@ class BxDevNavigationSets extends BxTemplStudioNavigationSets
         if(!$aIds || !is_array($aIds)) {
             $sId = bx_get('set_name');
             if(!$sId) {
-                $this->_echoResultJson(array());
+                echoJson(array());
                 exit;
             }
 
@@ -76,7 +76,7 @@ class BxDevNavigationSets extends BxTemplStudioNavigationSets
         $aSet = array();
         $this->oDb->getSets(array('type' => 'by_name', 'value' => $sId), $aSet, false);
         if(empty($aSet) || !is_array($aSet)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -92,7 +92,7 @@ class BxDevNavigationSets extends BxTemplStudioNavigationSets
             else
                 $aRes = array('msg' => _t('_bx_dev_nav_err_sets_edit'));
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         } else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-dev-nav-set-edit-popup', _t('_bx_dev_nav_txt_sets_edit_popup', _t($aSet['title'])), $this->_oTemplate->parseHtmlByName('nav_add_set.html', array(
                 'form_id' => $oForm->aFormAttrs['id'],
@@ -101,7 +101,7 @@ class BxDevNavigationSets extends BxTemplStudioNavigationSets
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
 

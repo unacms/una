@@ -10,29 +10,15 @@
 /**
  * @see BxDolView
  */
-class BxDolViewQuery extends BxDolDb
+class BxDolViewQuery extends BxDolObjectQuery
 {
-    protected $_oModule;
-
-    protected $_sTableTrack;
-    protected $_sTriggerTable;
-    protected $_sTriggerFieldId;
-    protected $_sTriggerFieldCount;
-
     protected $_iPeriod;
 
     public function __construct(&$oModule)
     {
-        parent::__construct();
-
-        $this->_oModule = $oModule;
+        parent::__construct($oModule);
 
         $aSystem = $this->_oModule->getSystemInfo();
-        $this->_sTableTrack = $aSystem['table_track'];
-        $this->_sTriggerTable = $aSystem['trigger_table'];
-        $this->_sTriggerFieldId = $aSystem['trigger_field_id'];
-        $this->_sTriggerFieldCount = $aSystem['trigger_field_count'];
-
         $this->_iPeriod = (int)$aSystem['period'];
     }
 
@@ -58,13 +44,6 @@ class BxDolViewQuery extends BxDolDb
             $sQuery = $this->prepare("UPDATE `{$this->_sTableTrack}` SET `date` = ? WHERE `object_id` = ? AND `viewer_id` = ? AND `viewer_nip` = ?", $iDateNow, $iObjectId, $iAuthorId, $iAuthorNip);
             return (int)$this->query($sQuery) > 0;
         }
-    }
-
-    public function deleteObjectViews($iObjectId)
-    {
-        $sQuery = $this->prepare("DELETE FROM {$this->_sTableTrack} WHERE `object_id` = ?", $iObjectId);
-        if ($this->query ($sQuery))
-            $this->query ("OPTIMIZE TABLE {$this->_sTableTrack}");
     }
 
     public function updateTriggerTable($iObjectId)

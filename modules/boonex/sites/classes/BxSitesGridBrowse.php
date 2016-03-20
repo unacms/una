@@ -34,13 +34,13 @@ class BxSitesGridBrowse extends BxTemplGrid
 
         $sMsg = $this->_oModule->isAllowedAdd();
         if($sMsg !== CHECK_ACTION_RESULT_ALLOWED) {
-            $this->_echoResultJson(array('msg' => $sMsg), true);
+            echoJson(array('msg' => $sMsg));
             return;
         }
 
         $oForm = BxDolForm::getObjectInstance('bx_sites', 'bx_sites_site_add');
         if(!$oForm) {
-            $this->_echoResultJson(array('msg' => _t('_sys_txt_error_occured')), true);
+            echoJson(array('msg' => _t('_sys_txt_error_occured')));
             return;
         }
 
@@ -55,13 +55,13 @@ class BxSitesGridBrowse extends BxTemplGrid
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
             return;
         }
 
         $sDomain = $oForm->getCleanValue('domain');
         if($this->_oModule->_oDb->isAccount(array('domain' => $sDomain))) {
-            $this->_echoResultJson(array('msg' => _t('_bx_sites_txt_err_site_exists')), true);
+            echoJson(array('msg' => _t('_bx_sites_txt_err_site_exists')));
             return;
         }
 
@@ -72,7 +72,7 @@ class BxSitesGridBrowse extends BxTemplGrid
         ));
 
         if(!$iAccountId) {
-            $this->_echoResultJson(array('msg' => _t('_bx_sites_txt_err_site_creation')), true);
+            echoJson(array('msg' => _t('_bx_sites_txt_err_site_creation')));
             return;
         }
 
@@ -80,25 +80,25 @@ class BxSitesGridBrowse extends BxTemplGrid
         $oAccount->onAccountCreated($iAccountId);
 
         $sUrl = $this->_oModule->startSubscription($iAccountId);
-        $this->_echoResultJson(array('eval' => 'window.open(\'' . $sUrl . '\', \'_self\');', 'popup_not_hide' => 1), true);
+        echoJson(array('eval' => 'window.open(\'' . $sUrl . '\', \'_self\');', 'popup_not_hide' => 1));
     }
 
     public function performActionView()
     {
         $aIds = bx_get('ids');
         if(empty($aIds) || !is_array($aIds)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             return;
         }
 
         $aAccount = $this->_oModule->_oDb->getAccount(array('type' => 'id', 'value' => $aIds[0]));
         if(empty($aAccount) || !is_array($aAccount)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             return;
         }
 
         $sUrl = $this->_oModule->getDomain($aAccount['domain'], true, true);
-        $this->_echoResultJson(array('eval' => 'window.open(\'' . $sUrl . '\',\'_blank\');'), true);
+        echoJson(array('eval' => 'window.open(\'' . $sUrl . '\',\'_blank\');'));
     }
 
     protected function _addJsCss()

@@ -48,6 +48,13 @@ $aConfig = array(
     ),
 
     /**
+     * Menu triggers.
+     */
+    'menu_triggers' => array(
+    	'trigger_profile_view_submenu'
+    ),
+
+    /**
      * Storages.
      */
     'storages' => array(
@@ -82,15 +89,18 @@ $aConfig = array(
     ),
     'enable' => array(
         'execute_sql' => 1,
+    	'update_relations' => 1,
         'clear_db_cache' => 1,
     ),
     'enable_success' => array(
     	'process_page_triggers' => 1,
+		'process_menu_triggers' => 1,
     	'register_transcoders' => 1,
     	'clear_db_cache' => 1,
     ),
     'disable' => array (
         'execute_sql' => 1,
+    	'update_relations' => 1,
     	'unregister_transcoders' => 1,
         'clear_db_cache' => 1,
     ),
@@ -104,6 +114,12 @@ $aConfig = array(
      */
     'dependencies' => array(),
 
+    /**
+     * Connections Section
+     */
+    'relations' => array(
+    	'bx_notifications'
+    )
 );
 
 /** @} */

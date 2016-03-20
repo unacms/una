@@ -113,7 +113,6 @@ class BxGridMy extends BxTemplGrid
                 'id' => 'sample-add-form',
                 'action' => 'grid.php?' . bx_encode_url_params($_GET, array('ids', '_r')), // grid.php is usiversal actions handler file, we need to pass object and action names to it at least, or just all the params to preserve such states like filter and paginate
                 'method' => 'post',
-                'class' => 'bx-def-margin-bottom',
             ),
             'params' => array (
                 'db' => array(
@@ -197,13 +196,13 @@ class BxGridMy extends BxTemplGrid
             else
                 $aRes = array('msg' => "Error occured"); // if record adding failed, display error message
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
 
         } else { // if form is not submitted or some fields are invalid, display popup with form
 
             // we need to use 'transBox' function to properly display 'popup'
             $s = BxTemplFunctions::getInstance()->transBox('', '
-                <div class="bx-def-padding-top bx-def-padding-left bx-def-padding-right bx-def-color-bg-block" style="width:300px;">' . $oForm->getCode() . '</div>
+                <div class="bx-def-padding bx-def-color-bg-block" style="width:300px;">' . $oForm->getCode() . '</div>
                 <script>
                     $(document).ready(function () {
                         $("#sample-add-form").ajaxForm({
@@ -219,7 +218,7 @@ class BxGridMy extends BxTemplGrid
                     });
                 </script>');
 
-            $this->_echoResultJson(array('popup' => array('html' => $s, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $s, 'options' => array('closeOnOuterClick' => false))));
 
         }
     }
@@ -232,7 +231,7 @@ class BxGridMy extends BxTemplGrid
         $iAffected = 0;
         $aIds = bx_get('ids');
         if (!$aIds || !is_array($aIds)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -244,7 +243,7 @@ class BxGridMy extends BxTemplGrid
             $iAffected++;
         }
 
-        $this->_echoResultJson(array_merge(
+        echoJson(array_merge(
                 array(
                     'grid' => $this->getCode(false),
                     'blink' => $aIdsAffected,

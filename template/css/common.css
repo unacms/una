@@ -404,6 +404,10 @@ body > .bx-popup-wrapper {
     -moz-transition: background-color 0.2s ease-in-out;
     -o-transition: background-color 0.2s ease-in-out;
     transition: background-color 0.2s ease-in-out;
+
+    text-transform: uppercase;
+    font-size:1rem;
+    color:#fff;
 }
 .bx-btn:active,
 .bx-btn:hover {	
@@ -414,11 +418,9 @@ body > .bx-popup-wrapper {
     margin-left:0;
 }
 button.bx-btn,
-input.bx-btn {    
+input.bx-btn {
 	padding-top:0px;
-	padding-bottom:0px;
-    font-size:1rem;
-    color:#fff;
+	padding-bottom:0px;    
 }
 
 .bx-btn img {
@@ -426,8 +428,8 @@ input.bx-btn {
     height:16px;
 }
 .bx-btn u {
-    margin-left:2px;
-    text-decoration:none;
+    margin-left: 10px;
+    text-decoration: none;
 }
 .bx-btn .sys-icon {
     font-size:1.2em;

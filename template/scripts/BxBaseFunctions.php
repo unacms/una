@@ -282,7 +282,9 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
      */
     function getMainLogoUrl()
     {
-        $iFileId = (int)getParam('sys_site_logo');
+		$oDesigns = BxDolDesigns::getInstance();
+
+        $iFileId = (int)$oDesigns->getSiteLogo();
         if (!$iFileId) 
             return false;
 
@@ -291,10 +293,13 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
         if (!$sFileUrl) 
             return false;
 
-        if (getParam('sys_site_logo_width') > 0)
-            $sFileUrl = bx_append_url_params($sFileUrl, array('x' => getParam('sys_site_logo_width')));
-        if (getParam('sys_site_logo_height') > 0)
-            $sFileUrl = bx_append_url_params($sFileUrl, array('y' => getParam('sys_site_logo_height')));
+		$iLogoWidth = (int)$oDesigns->getSiteLogoWidth();
+        if($iLogoWidth > 0)
+            $sFileUrl = bx_append_url_params($sFileUrl, array('x' => $iLogoWidth));
+
+		$iLogoHeight = (int)$oDesigns->getSiteLogoHeight();
+        if($iLogoHeight > 0)
+            $sFileUrl = bx_append_url_params($sFileUrl, array('y' => $iLogoHeight));
 
         return $sFileUrl;
     }
@@ -305,12 +310,22 @@ class BxBaseFunctions extends BxDol implements iBxDolSingleton
      */
     function getMainLogo()
     {
-        $sAlt = getParam('sys_site_logo_alt') ? getParam('sys_site_logo_alt') : getParam('site_title');
+		$oDesigns = BxDolDesigns::getInstance();
+
+        $sAlt = $oDesigns->getSiteLogoAlt();
+        if(empty($sAlt))
+        	$sAlt = getParam('site_title');
+
         $sLogo = $sAlt;
 
-        if ($sFileUrl = $this->getMainLogoUrl()) {
-            $sMaxWidth = getParam('sys_site_logo_width') > 0 ? 'max-width:' . round(getParam('sys_site_logo_width')/16, 3) . 'rem;' : '';
-            $sMaxHeight = getParam('sys_site_logo_height') > 0 ? 'max-height:' . round(getParam('sys_site_logo_height')/16, 3) . 'rem;' : '';
+        $sFileUrl = $this->getMainLogoUrl();
+        if (!empty($sFileUrl)) {
+        	$iLogoWidth = (int)$oDesigns->getSiteLogoWidth();
+            $sMaxWidth = $iLogoWidth > 0 ? 'max-width:' . round($iLogoWidth/16, 3) . 'rem;' : '';
+
+            $iLogoHeight = (int)$oDesigns->getSiteLogoHeight();
+            $sMaxHeight = $iLogoHeight > 0 ? 'max-height:' . round($iLogoHeight/16, 3) . 'rem;' : '';
+
             $sLogo = '<img style="' . $sMaxWidth . $sMaxHeight . '" src="' . $sFileUrl . '" id="bx-logo" alt="' . bx_html_attribute($sAlt, BX_ESCAPE_STR_QUOTE) . '" />';
         }
 

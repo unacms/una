@@ -49,7 +49,7 @@
  * 1. Pass template as string - just plain string with HTML, for example:
  *
  * @code
- * <div id="bx-uploader-file-{file_id}" class="bx-uploader-ghost">
+ * <div id="bx-uploader-file-{storage_object}-{file_id}" class="bx-uploader-ghost">
  *     <div style="border:2px dotted green; padding:10px; margin-bottom:10px;">
  *         <input type="hidden" name="f[]" value="{file_id}" />
  *         {file_name} <br />
@@ -332,6 +332,7 @@ abstract class BxDolUploader extends BxDol
                 $sFileIcon = $this->_oTemplate->getIconUrl($oStorage->getIconNameByFileName($aFile['file_name']));
 
             $aVars = array (
+            	'storage_object' => $this->_sStorageObject,
                 'file_id' => $aFile['id'],
                 'file_name' => $aFile['file_name'],
                 'file_title' => $oStorage->getFileTitle($aFile['file_name']),

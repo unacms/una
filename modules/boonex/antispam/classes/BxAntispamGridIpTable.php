@@ -52,7 +52,7 @@ class BxAntispamGridIpTable extends BxTemplGrid
             $iId = (int)bx_get('ID');
 
         if (!$iId) {
-            $this->_echoResultJson(array('msg' => _t('_sys_txt_error_occured')), true);
+            echoJson(array('msg' => _t('_sys_txt_error_occured')));
             exit;
         }
 
@@ -63,7 +63,7 @@ class BxAntispamGridIpTable extends BxTemplGrid
     {
         $oForm = BxDolForm::getObjectInstance('bx_antispam_ip_table_form', $sDisplay); // get form instance for specified form object and display
         if (!$oForm) {
-            $this->_echoResultJson(array('msg' => _t('_sys_txt_error_occured')), true);
+            echoJson(array('msg' => _t('_sys_txt_error_occured')));
             exit;
         }
 
@@ -101,7 +101,7 @@ class BxAntispamGridIpTable extends BxTemplGrid
             else
                 $aRes = array('msg' => _t('_sys_txt_error_occured')); // if record adding failed, display error message
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
 
         } else { // if form is not submitted or some fields are invalid, display popup with form
 
@@ -121,7 +121,7 @@ class BxAntispamGridIpTable extends BxTemplGrid
                     });
                 </script>');
 
-            $this->_echoResultJson(array('popup' => array('html' => $s, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $s, 'options' => array('closeOnOuterClick' => false))));
 
         }
     }

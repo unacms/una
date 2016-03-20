@@ -76,8 +76,11 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         return array ($oProfile, $aContentInfo);
     }
 
-    protected function onDataEditAfter ($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile)
+    public function onDataEditAfter ($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile)
     {
+        if ($s = parent::onDataEditAfter($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile))
+            return $s;
+
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         if (!($aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId)))
@@ -87,21 +90,31 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         if ($oProfile->isActive() && !empty($aTrackTextFieldsChanges['changed_fields']))
             $oProfile->disapprove(BX_PROFILE_ACTION_AUTO);
 
-        // create an alert
-        bx_alert($this->_oModule->getName(), 'edited', $aContentInfo[$CNF['FIELD_ID']], false, array('privacy_view' => $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]));
+        // alert
+        $aParams = array('object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']]);
+        if(isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]))
+        	$aParams['privacy_view'] = $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']];
+
+        bx_alert($this->_oModule->getName(), 'edited', $aContentInfo[$CNF['FIELD_ID']], false, $aParams);
 
         return '';
     }
 
-    protected function onDataAddAfter ($iContentId)
+    public function onDataAddAfter ($iAccountId, $iContentId)
     {
+        if ($s = parent::onDataAddAfter($iAccountId, $iContentId))
+            return $s;
+
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         if (!($aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId)))
             return MsgBox(_t('_sys_txt_error_occured'));
 
         // alert
-        $aParams = isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) ? array('privacy_view' => $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) : array();
+        $aParams = array('object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']]);
+        if(isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]))
+        	$aParams['privacy_view'] = $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']];
+
         bx_alert($this->_oModule->getName(), 'added', $iContentId, false, $aParams);
 
         return '';

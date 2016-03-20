@@ -41,7 +41,7 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
 
     	$aIds = bx_get('ids');
         if(!$aIds || !is_array($aIds) || !$oMenu) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             return;
         }
 
@@ -55,7 +55,7 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
         }
 
         if(empty($aIdsResult)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             return;
         }
 
@@ -68,7 +68,7 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
 
 		$sContent = BxTemplFunctions::getInstance()->transBox($this->_oModule->_oConfig->getName() . 'set_acl_level_popup', $sContent);
 
-    	$this->_echoResultJson(array('popup' => $sContent), true);
+    	echoJson(array('popup' => $sContent));
     }
 
 	public function performActionDeleteWithContent()

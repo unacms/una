@@ -101,7 +101,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
 
         $CNF = &$this->_oConfig->CNF;
 
-        return $this->_entitySocialSharing ($iContentId, $iContentId, $aContentInfo[$CNF['FIELD_THUMB']], $aContentInfo[$CNF['FIELD_TITLE']], $CNF['OBJECT_STORAGE'], false, $CNF['OBJECT_VOTES'], $CNF['URI_VIEW_ENTRY']);
+        return $this->_entitySocialSharing ($iContentId, $iContentId, $aContentInfo[$CNF['FIELD_THUMB']], $aContentInfo[$CNF['FIELD_TITLE']], $CNF['OBJECT_STORAGE'], false, $CNF['OBJECT_VOTES'], $CNF['OBJECT_REPORTS'], $CNF['URI_VIEW_ENTRY']);
     }
 
     public function serviceEntityAllActions ($iContentId = 0)
@@ -233,6 +233,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
 			'entry_sample' => _t($CNF['T']['txt_sample_single']),
 			'entry_url' => $sEntryUrl,
 			'entry_caption' => $sEntryCaption,
+			'entry_author' => $aContentInfo[$CNF['FIELD_AUTHOR']],
 			'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
 		);
     }
@@ -260,6 +261,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
 			'entry_sample' => _t($CNF['T']['txt_sample_single']),
 			'entry_url' => $sEntryUrl,
 			'entry_caption' => $sEntryCaption,
+			'entry_author' => $aContentInfo[$CNF['FIELD_AUTHOR']],
 			'subentry_sample' => _t($CNF['T']['txt_sample_comment_single']),
 			'subentry_url' => $oComment->getViewUrl((int)$aEvent['subobject_id']),
 			'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
@@ -289,6 +291,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
 			'entry_sample' => _t($CNF['T']['txt_sample_single']),
 			'entry_url' => $sEntryUrl,
 			'entry_caption' => $sEntryCaption,
+			'entry_author' => $aContentInfo[$CNF['FIELD_AUTHOR']],
 			'subentry_sample' => _t($CNF['T']['txt_sample_vote_single']),
 			'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
 		);
@@ -342,6 +345,17 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
                 'count' => $aContentInfo['votes']
             );
 
+		//--- Reports
+        $oReports = BxDolReport::getObjectInstance($CNF['OBJECT_REPORTS'], $aEvent['object_id']);
+
+        $aReports = array();
+        if ($oReports && $oReports->isEnabled())
+            $aReports = array(
+                'system' => $CNF['OBJECT_REPORTS'],
+                'object_id' => $aContentInfo[$CNF['FIELD_ID']],
+                'count' => $aContentInfo['reports']
+            );
+
         //--- Comments
         $oCmts = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $aEvent['object_id']);
 
@@ -364,6 +378,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
             ), //a string to display or array to parse default template before displaying.
             'date' => $aContentInfo[$CNF['FIELD_ADDED']],
             'votes' => $aVotes,
+            'reports' => $aReports,
             'comments' => $aComments,
             'title' => '', //may be empty.
             'description' => '' //may be empty.
@@ -433,7 +448,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
         return $oCmts->getCommentsBlock(0, 0, false);
     }
 
-    protected function _entitySocialSharing ($iId, $iIdForTimeline, $iIdThumb, $sTitle, $sObjectStorage, $sObjectTranscoder, $sObjectVote, $sUriViewEntry, $sCommentsObject = '', $bEnableSocialSharing = true)
+    protected function _entitySocialSharing ($iId, $iIdForTimeline, $iIdThumb, $sTitle, $sObjectStorage, $sObjectTranscoder, $sObjectVote, $sObjectReport, $sUriViewEntry, $sCommentsObject = '', $bEnableSocialSharing = true)
     {
         $sUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=' . $sUriViewEntry . '&id=' . $iId);
 
@@ -476,12 +491,18 @@ class BxBaseModTextModule extends BxBaseModGeneralModule
         if ($iIdForTimeline && BxDolRequest::serviceExists('bx_timeline', 'get_share_element_block'))
             $sShare = BxDolService::call('bx_timeline', 'get_share_element_block', array(bx_get_logged_profile_id(), $this->_aModule['name'], 'added', $iIdForTimeline, array('show_do_share_as_button' => true)));
 
+		$sReport = '';
+        $oReport = BxDolReport::getObjectInstance($sObjectReport, $iId);
+        if ($oReport)
+            $sReport = $oReport->getElementBlock(array('show_do_report_as_button' => true));
+
         $sSocial = $bEnableSocialSharing ? BxTemplSocialSharing::getInstance()->getCode($iId, $this->_aModule['name'], BX_DOL_URL_ROOT . $sUrl, $sTitle, $aCustomParams) : '';
 
         return $this->_oTemplate->parseHtmlByName('entry-share.html', array(
             'comments' => $sComments,
             'vote' => $sVotes,
             'share' => $sShare,
+        	'report' => $sReport,
             'social' => $sSocial,
         ));
         //TODO: Rebuild using menus engine when it will be ready for such elements like Vote, Share, etc.

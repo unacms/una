@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS `bx_notifications_events` (
   `type` varchar(255) collate utf8_unicode_ci NOT NULL,
   `action` varchar(255) collate utf8_unicode_ci NOT NULL,
   `object_id` text collate utf8_unicode_ci NOT NULL,
+  `object_owner_id` int(11) unsigned NOT NULL default '0',
   `object_privacy_view` int(11) NOT NULL default '3',
   `subobject_id` int(11) NOT NULL default '0',
   `content` text collate utf8_unicode_ci NOT NULL,
@@ -37,7 +38,9 @@ CREATE TABLE IF NOT EXISTS `bx_notifications_handlers` (
 );
 
 INSERT INTO `bx_notifications_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`) VALUES
-('profile', 'delete', 'profile', 'delete', '');
+('profile', 'delete', 'profile', 'delete', ''),
+('subscription', 'insert', 'sys_profiles_subscriptions', 'connection_added', 'a:3:{s:11:"module_name";s:6:"system";s:13:"module_method";s:22:"get_notifications_post";s:12:"module_class";s:23:"TemplServiceConnections";}'),
+('subscription', 'delete', 'sys_profiles_subscriptions', 'connection_removed', '');
 
 -- STUDIO PAGE & WIDGET
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES

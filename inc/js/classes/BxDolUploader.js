@@ -34,7 +34,7 @@ BxDolUploaderSimple.prototype.init = function (sUploaderObject, sStorageObject, 
 
     this._sFormContainerId = 'bx-form-input-files-' + sUniqId + '-form-cont';
 
-    this._sTemplateGhost = options.template_ghost ? options.template_ghost : '<div id="bx-uploader-file-{file_id}"><input type="hidden" name="f[]" value="{file_id}" />{file_name} (<a href="javascript:void(0);" onclick="{js_instance_name}.deleteGhost(\'{file_id}\')">delete</a>)</div>';
+    this._sTemplateGhost = options.template_ghost ? options.template_ghost : '<div id="' + this._getFileContainerId('{file_id}') + '"><input type="hidden" name="f[]" value="{file_id}" />{file_name} (<a href="javascript:void(0);" onclick="{js_instance_name}.deleteGhost(\'{file_id}\')">delete</a>)</div>';
     this._sTemplateError = options.template_error_msg ? options.template_error_msg : '<div>{error}</div>' ;
     this._sTemplateErrorGhosts = options.template_error_ghosts ? options.template_error_ghosts : this._sTemplateError;
 
@@ -138,7 +138,8 @@ BxDolUploaderSimple.prototype.restoreGhosts = function () {
 
         if ('object' === typeof(aData)) {
             $.each(aData, function(iFileId, oVars) {
-                if ($('#bx-uploader-file-' + iFileId).length > 0)
+            	var oFileContainer = $('#' + $this._getFileContainerId(iFileId));
+                if (oFileContainer.length > 0)
                     return;
                 var sHTML;
                 if (typeof $this._sTemplateGhost == 'object')
@@ -150,30 +151,30 @@ BxDolUploaderSimple.prototype.restoreGhosts = function () {
                 
                 $('#' + $this._sResultContainerId).prepend(sHTML);
 
-                $('#bx-uploader-file-' + iFileId + ' .bx-uploader-ghost-preview img').hide().fadeIn(1000);
-
+                oFileContainer.find('.bx-uploader-ghost-preview img').hide().fadeIn(1000);
             });
         }
     });
-}
+};
 
 BxDolUploaderSimple.prototype.deleteGhost = function (iFileId) {
     var sUrl = this._getUrlWithStandardParams() + '&a=delete&id=' + iFileId;
     var $this = this;
 
-    bx_loading('bx-uploader-file-' + iFileId, true);
+    var sFileContainerId = $this._getFileContainerId(iFileId);
+    bx_loading(sFileContainerId, true);
 
     $.post(sUrl, function (sMsg) {
-        bx_loading('bx-uploader-file-' + iFileId, false);
+        bx_loading(sFileContainerId, false);
         if ('ok' == sMsg) {
-            $('#bx-uploader-file-' + iFileId).slideUp('slow', function () {
-                $('#bx-uploader-file-' + iFileId).remove();
+            $('#' + sFileContainerId).slideUp('slow', function () {
+                $(this).remove();
             });
         } else {
             $('#' + this._sResultContainerId).prepend($this._sTemplateErrorGhosts.replace('{error}', sMsg));
         }        
     });
-}
+};
 
 BxDolUploaderSimple.prototype._showError = function (s, bAppend) {
     if (s == undefined || !s.length)
@@ -183,7 +184,11 @@ BxDolUploaderSimple.prototype._showError = function (s, bAppend) {
     else
         $('#' + this._sPopupContainerId + ' #' + this._sErrorsContainerId).prepend(this._sTemplateError.replace('{error}', s));
     this._isErrorShown = true;
-}
+};
+
+BxDolUploaderSimple.prototype._getFileContainerId = function (iFileId) {
+	return 'bx-uploader-file-' + this._sStorageObject + '-' + iFileId;
+};
 
 BxDolUploaderSimple.prototype._getUrlWithStandardParams = function () {
     return sUrlRoot + 'storage_uploader.php?uo=' + this._sUploaderObject + '&so=' + this._sStorageObject + '&uid=' + this._sUniqId;

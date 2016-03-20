@@ -61,7 +61,16 @@
 	<string name="_Period"><![CDATA[Период]]></string>
 	<string name="_Please Wait"><![CDATA[Пожалуйста, подождите]]></string>
 	<string name="_Please enter n1-n2 characters"><![CDATA[Пожалуйста, введите {0}-{1} символов]]></string>
+	<string name="_Please select value"><![CDATA[Пожалуйста, выберите значение из списка]]></string>
 	<string name="_Preview"><![CDATA[Предпросмотр]]></string>
+	<string name="_report_counter"><![CDATA[{0}]]></string>
+	<string name="_report_do_report"><![CDATA[Пожаловаться]]></string>
+	<string name="_report_do_report_by"><![CDATA[Пожаловались]]></string>
+	<string name="_report_err_cannot_perform_action"><![CDATA[Невозможно выполнить действие.]]></string>
+	<string name="_report_err_duplicate_report"><![CDATA[Ваша жалоба уже была принята ранее.]]></string>
+	<string name="_report_err_not_enabled"><![CDATA[Жалоба не может быть принята в данный момент. Пожалуйста, попробуйте позднее.]]></string>
+	<string name="_report_err_wrong_type"><![CDATA[Неправильный тип жалобы.]]></string>
+	<string name="_report_reported_as"><![CDATA[Тип жалобы:]]></string>
 	<string name="_RSS_Feed_Title_Common"><![CDATA[{0} RSS]]></string>
 	<string name="_RSS_Feed_Title_Profile"><![CDATA[{0} недавние {1}]]></string>
 	<string name="_Rate"><![CDATA[Оценить]]></string>
@@ -70,6 +79,7 @@
 	<string name="_Reset"><![CDATA[Сбросить]]></string>
 	<string name="_Search"><![CDATA[Поиск]]></string>
 	<string name="_Section"><![CDATA[Отдел]]></string>
+	<string name="_Select_one"><![CDATA[Выберите один...]]></string>
 	<string name="_Select_all"><![CDATA[Выбрать всё]]></string>
 	<string name="_Show"><![CDATA[Показать]]></string>
 	<string name="_Sorry, your IP been banned"><![CDATA[Извините, Ваш IP был забанен]]></string>
@@ -493,6 +503,10 @@
 	<string name="_adm_bp_txt_block_content_service_module"><![CDATA[Модуль]]></string>
 	<string name="_adm_bp_txt_block_designbox"><![CDATA[Отображение Блока]]></string>
 	<string name="_adm_bp_txt_block_designbox_empty"><![CDATA[Выбрать отображение...]]></string>
+	<string name="_adm_bp_txt_block_hidden_on"><![CDATA[Скрыть на]]></string>
+	<string name="_adm_bp_txt_block_hidden_on_phone"><![CDATA[телефоне]]></string>
+	<string name="_adm_bp_txt_block_hidden_on_tablet"><![CDATA[планшете]]></string>
+	<string name="_adm_bp_txt_block_hidden_on_desktop"><![CDATA[настольном компьютере]]></string>
 	<string name="_adm_bp_txt_block_selected"><![CDATA[блоков выбрано]]></string>
 	<string name="_adm_bp_txt_block_title"><![CDATA[Заголовок]]></string>
 	<string name="_adm_bp_txt_block_visible_for"><![CDATA[Видимо для]]></string>
@@ -1135,6 +1149,8 @@
 	<string name="_adm_stg_cpt_option_sys_cache_memcache_port"><![CDATA[Memcached - порт сервера]]></string>
 	<string name="_adm_stg_cpt_option_sys_db_cache_enable"><![CDATA[Задействовать кэш БД]]></string>
 	<string name="_adm_stg_cpt_option_sys_db_cache_engine"><![CDATA[Кэш-движок для БД (значение, отличное от File, может потребовать дополнительной настройки сервера)]]></string>
+	<string name="_adm_stg_cpt_option_sys_default_payment"><![CDATA[Модуль оплаты]]></string>
+	<string name="_adm_stg_err_option_sys_default_payment"><![CDATA[Вам нужно установить как минимум один модуль для обработки проплат и активировать его, выбрав из списка.]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_date"><![CDATA[Формат Даты]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_datetime"><![CDATA[Формат Даты и Времени]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_time"><![CDATA[Формат Времени]]></string>
@@ -1365,6 +1381,8 @@
 	<string name="_sys_acl_action_unauthenticated"><![CDATA[Не вошедшие пользователи не могут '{1}'.]]></string>
 	<string name="_sys_acl_action_unconfirmed"><![CDATA[Вы не подтвердили свой профиль. Пожалуйста, проверьте эл. сообщение со ссылкой на активацию профиля. Неподтверждённые пользователи не могут <b>{1}</b>.]]></string>
 	<string name="_sys_acl_action_vote"><![CDATA[Голосовать]]></string>
+	<string name="_sys_acl_action_report"><![CDATA[Жаловаться]]></string>
+	<string name="_sys_acl_action_report_view"><![CDATA[Просматривать жалобы]]></string>
 	<string name="_sys_add_friend"><![CDATA[Добавить друга]]></string>
 	<string name="_sys_adm_installed"><![CDATA[Установленные]]></string>
 	<string name="_sys_admin_apply"><![CDATA[Применить]]></string>
@@ -1460,6 +1478,12 @@
 <p>{reply_text}</p>
 <p>Пожалуйста, перейдите на страницу комментария для дополнительной информации: <a href="{comment_url}">Мой Комментарий</a></p>
 <bx_include_auto:_email_footer.html />]]></string>
+	<string name="_sys_et_txt_body_system_reported"><![CDATA[<bx_include_auto:_email_header.html />
+<p>Привет,</p>
+<p>Была получена новая жалоба с типом <b>{report_type}</b>. Сообщение:</p>
+<p>{report_text}</p>
+<p>Для получения дополнительной информации, пожалуйста, перейдите на <a href="{report_url}">страницу контента</a>.</p>
+<bx_include_auto:_email_footer.html />]]></string>
 	<string name="_sys_et_txt_body_confirmation"><![CDATA[<bx_include_auto:_email_header.html />
 <p>Привет!</p>
 <p>Пожалуйста, перейдите по ссылке подтверждения имейла:</p>
@@ -1496,7 +1520,7 @@
 <p>Ваш профиль был проверен и активирован!</p>
 <p>Просто перейдите по ссылке внизу, чтобы воспользоваться нашими услугами:<br />
 <a href="{site_url}member.php">{site_url}member.php</a></p>
-<p>Ваш имейл, использованнй для регистрации: <span style="color:#FF6633">{account_email}</span></p>
+<p>Ваш имейл, использованный для регистрации: <span style="color:#FF6633">{account_email}</span></p>
 <p><b>Спасибо за использование нашего сервиса!</b></p>
 <bx_include_auto:_email_footer.html />]]></string>
 	<string name="_sys_et_txt_body_profile_change_status_pending"><![CDATA[<bx_include_auto:_email_header.html />
@@ -1535,6 +1559,7 @@
 	<string name="_sys_et_txt_body_modules_upgrade_failed"><![CDATA[<b>{0}</b> молуль: {1}<br />]]></string>
 	<string name="_sys_et_txt_name_system_admin_email"><![CDATA[Посылка сообщения из Панели Администратора]]></string>
 	<string name="_sys_et_txt_name_system_comment_replied"><![CDATA[Сообщение для посылки пользователям, чьи комментарии были отвечены]]></string>
+	<string name="_sys_et_txt_name_system_reported"><![CDATA[Уведомление о новой жалобе]]></string>
 	<string name="_sys_et_txt_name_system_confirmation"><![CDATA[Сообщение для подтверждения эл. адреса профиля]]></string>
 	<string name="_sys_et_txt_name_system_delayed_module_uninstall"><![CDATA[Уведомление об отложенном демонтировании модуля]]></string>
 	<string name="_sys_et_txt_name_system_forgot"><![CDATA[Сообщение о сбросе пароля]]></string>
@@ -1552,6 +1577,7 @@
 	<string name="_sys_et_txt_name_bg_operation_failed"><![CDATA[Фоновая операция не удалась]]></string>
 	<string name="_sys_et_txt_subject_admin_email"><![CDATA[Сообщение от <SiteName> Админа: <MessageSubject>]]></string>
 	<string name="_sys_et_txt_subject_comment_replied"><![CDATA[Ваш комментарий был отвечен]]></string>
+	<string name="_sys_et_txt_subject_system_reported"><![CDATA[Уведомление о новой жалобе]]></string>
 	<string name="_sys_et_txt_subject_confirmation"><![CDATA[Подтвердите свой эл. адрес (ОБЯЗАТЕЛЬНО)]]></string>
 	<string name="_sys_et_txt_subject_delayed_module_uninstall"><![CDATA[Отложенный демонтаж модуля {Module}: {Result}]]></string>
 	<string name="_sys_et_txt_subject_forgot"><![CDATA[Сбросьте свой пароль]]></string>
@@ -1627,6 +1653,7 @@
 	<string name="_sys_form_display_confirm_email"><![CDATA[Подтверждение имейла]]></string>
 	<string name="_sys_form_display_forgot_password"><![CDATA[Забыли Пароль?]]></string>
 	<string name="_sys_form_display_login"><![CDATA[Войти]]></string>
+	<string name="_sys_form_display_report_post"><![CDATA[Форма добавления жалобы]]></string>
 	<string name="_sys_form_display_unsubscribe_news"><![CDATA[Отписаться от Новостей]]></string>
 	<string name="_sys_form_display_unsubscribe_updates"><![CDATA[Отписаться от Обновлений]]></string>
 	<string name="_sys_form_forgot_password"><![CDATA[Забыли Пароль?]]></string>
@@ -1653,12 +1680,22 @@
 	<string name="_sys_form_login_input_caption_system_remember_me"><![CDATA[Запомнить меня]]></string>
 	<string name="_sys_form_login_input_caption_system_role"><![CDATA[Роль]]></string>
 	<string name="_sys_form_login_input_caption_system_submit"><![CDATA[Выполнить]]></string>
-	<string name="_sys_form_login_input_caption_system_submit_block"><![CDATA[Блок Отправки]]></string>
 	<string name="_sys_form_login_input_caption_system_submit_text"><![CDATA[Текст Отправки]]></string>
 	<string name="_sys_form_login_input_email"><![CDATA[Имейл]]></string>
 	<string name="_sys_form_login_input_password"><![CDATA[Пароль]]></string>
 	<string name="_sys_form_login_input_remember_me"><![CDATA[Запомнить меня]]></string>
 	<string name="_sys_form_login_input_submit"><![CDATA[Вход]]></string>
+	<string name="_sys_form_report"><![CDATA[Пожаловаться]]></string>
+	<string name="_sys_form_report_input_caption_submit"><![CDATA[Пожаловаться]]></string>
+	<string name="_sys_form_report_input_caption_text"><![CDATA[Текст жалобы]]></string>
+	<string name="_sys_form_report_input_caption_type"><![CDATA[Тип жалобы]]></string>
+	<string name="_sys_form_report_input_caption_system_action"><![CDATA[Действие]]></string>
+	<string name="_sys_form_report_input_caption_system_object_id"><![CDATA[ID объекта]]></string>
+	<string name="_sys_form_report_input_caption_system_id"><![CDATA[ID жалобы]]></string>
+	<string name="_sys_form_report_input_caption_system_submit"><![CDATA[Пожаловаться]]></string>
+	<string name="_sys_form_report_input_caption_system_text"><![CDATA[Текст жалобы]]></string>
+	<string name="_sys_form_report_input_caption_system_type"><![CDATA[Тип жалобы]]></string>
+	<string name="_sys_form_report_input_caption_system_sys"><![CDATA[Тип объекта]]></string>
 	<string name="_sys_form_unsubscribe"><![CDATA[Отписаться]]></string>
 	<string name="_sys_form_unsubscribe_input_caption_system_code"><![CDATA[Код Безопасности]]></string>
 	<string name="_sys_form_unsubscribe_input_caption_system_do_submit"><![CDATA[Выполнить]]></string>
@@ -1782,6 +1819,7 @@
 	<string name="_sys_menu_item_title_account_settings_info"><![CDATA[Аккаунт]]></string>
 	<string name="_sys_menu_item_title_account_settings_pwd"><![CDATA[Пароль]]></string>
 	<string name="_sys_menu_item_title_add_content"><![CDATA[Добавить...]]></string>
+	<string name="_sys_menu_item_title_cart"><![CDATA[Корзина]]></string>
 	<string name="_sys_menu_item_title_cmts_item_delete"><![CDATA[Удалить]]></string>
 	<string name="_sys_menu_item_title_cmts_item_edit"><![CDATA[Редактировать]]></string>
 	<string name="_sys_menu_item_title_cmts_item_reply"><![CDATA[Ответить]]></string>
@@ -1790,6 +1828,7 @@
 	<string name="_sys_menu_item_title_home"><![CDATA[Домой]]></string>
 	<string name="_sys_menu_item_title_logout"><![CDATA[Выйти]]></string>
 	<string name="_sys_menu_item_title_more"><![CDATA[Ещё]]></string>
+	<string name="_sys_menu_item_title_orders"><![CDATA[Заказы]]></string>
 	<string name="_sys_menu_item_title_profile"><![CDATA[Профиль]]></string>
 	<string name="_sys_menu_item_title_set_acl_level"><![CDATA[Назначить членство]]></string>
 	<string name="_sys_menu_item_title_studio"><![CDATA[Студия]]></string>
@@ -1805,6 +1844,7 @@
 	<string name="_sys_menu_item_title_system_account_settings_info"><![CDATA[Аккаунт]]></string>
 	<string name="_sys_menu_item_title_system_account_settings_pwd"><![CDATA[Пароль]]></string>
 	<string name="_sys_menu_item_title_system_add_content"><![CDATA[Добавить Содержимое]]></string>
+	<string name="_sys_menu_item_title_system_cart"><![CDATA[Корзина]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_delete"><![CDATA[Удалить]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_edit"><![CDATA[Редактировать]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_reply"><![CDATA[Ответить]]></string>
@@ -1815,6 +1855,7 @@
 	<string name="_sys_menu_item_title_system_logout"><![CDATA[Выйти]]></string>
 	<string name="_sys_menu_item_title_system_main_menu"><![CDATA[Главное Меню]]></string>
 	<string name="_sys_menu_item_title_system_more"><![CDATA[Ещё]]></string>
+	<string name="_sys_menu_item_title_system_orders"><![CDATA[Заказы]]></string>
 	<string name="_sys_menu_item_title_system_profile"><![CDATA[Профиль]]></string>
 	<string name="_sys_menu_item_title_system_search"><![CDATA[Поиск]]></string>
 	<string name="_sys_menu_item_title_system_set_acl_level"><![CDATA[Назначить членство]]></string>
@@ -1888,7 +1929,7 @@
     <string name="_sys_on"><![CDATA[вкл.]]></string>
     <string name="_sys_off"><![CDATA[выкл.]]></string>
 	<string name="_sys_page_block_title_about"><![CDATA[Об...]]></string>
-	<string name="_sys_page_block_title_account_profile_switcher"><![CDATA[Использовать сайт для ...]]></string>
+	<string name="_sys_page_block_title_account_profile_switcher"><![CDATA[Использовать сайт как ...]]></string>
 	<string name="_sys_page_block_title_account_settings_delete"><![CDATA[Удалить Аккаунт]]></string>
 	<string name="_sys_page_block_title_account_settings_email"><![CDATA[Имейл - Настройки]]></string>
 	<string name="_sys_page_block_title_account_settings_info"><![CDATA[Редактировать Аккаунт]]></string>
@@ -1900,6 +1941,8 @@
 	<string name="_sys_page_block_title_dashboard"><![CDATA[Панель]]></string>
     <string name="_sys_page_block_title_homepage_menu"><![CDATA[Меню модулей с содержимым]]></string>
 	<string name="_sys_page_block_title_forgot_password"><![CDATA[Забыли Пароль]]></string>
+	<string name="_sys_page_block_system_title_login"><![CDATA[Вход с линкой регистрации]]></string>
+	<string name="_sys_page_block_system_title_login_only"><![CDATA[Вход]]></string>
 	<string name="_sys_page_block_title_login"><![CDATA[Вход]]></string>
 	<string name="_sys_page_block_title_manage_tools"><![CDATA[Управление]]></string>
 	<string name="_sys_page_block_title_profile_stats"><![CDATA[Профиль - Статистика]]></string>
@@ -1945,16 +1988,23 @@
 	<string name="_sys_paginate_info"><![CDATA[{0}-{1}]]></string>
 	<string name="_sys_paginate_view_all"><![CDATA[Просмотреть Все]]></string>
 	<string name="_sys_please_select"><![CDATA[Пожалуйста, выберите...]]></string>
+	<string name="_sys_pre_lists_report_types"><![CDATA[Типы жалоб]]></string>
+	<string name="_sys_pre_lists_report_types_spam"><![CDATA[спам]]></string>
+	<string name="_sys_pre_lists_report_types_scam"><![CDATA[скам]]></string>
+	<string name="_sys_pre_lists_report_types_fraud"><![CDATA[обман]]></string>
+	<string name="_sys_pre_lists_report_types_nude"><![CDATA[обнаженность]]></string>
+	<string name="_sys_pre_lists_report_types_other"><![CDATA[другое]]></string>
+	<string name="_sys_profile_sample_single"><![CDATA[профиль]]></string>
+	<string name="_sys_profile_subscription_added"><![CDATA[<a class="bx-ntfs-content-profile" href="{owner_link}">{owner_name}</a> подписался на <a href="{entry_url}">{entry_caption}</a> {entry_sample}]]></string>
 	<string name="_sys_private"><![CDATA[Приватные]]></string>
     <string name="_sys_pruning_db"><![CDATA[<h3>Очистка Базы Данных:</h3>
         <ul>
             <li><b>{0}</b> удалено просроченных членств</li>
             <li><b>{1}</b> удалено просроченных сессий</li>
             <li><b>{2}</b> удалено просроченных просмотров</li>
-            <li><b>{3}</b> удалено просроченных голосов</li>
-            <li><b>{4}</b> удалено просроченных ключей</li>
-            <li><b>{5}</b> удалено просроченных токенов хранилища</li>
-            <li><b>{6}</b> удалено просроченных транскодированных изображений</li>
+            <li><b>{3}</b> удалено просроченных ключей</li>
+            <li><b>{4}</b> удалено просроченных токенов хранилища</li>
+            <li><b>{5}</b> удалено просроченных транскодированных изображений</li>
         </ul>]]></string>
     <string name="_sys_pruning_files"><![CDATA[<h3>Очистка Файлов:</h3>
         <ul>
@@ -2048,7 +2098,7 @@
 	<string name="_sys_txt_account_profile_context_change_suggestion"><![CDATA[Это Ваш профиль, Вы можете <a href="{0}">изменить свой текущий профиль</a> на этот]]></string>
 	<string name="_sys_txt_account_profile_context_changed_success"><![CDATA[Текущий профиль удачно изменён на: <b>{0}</b>]]></string>
 	<string name="_sys_txt_account_suspended"><![CDATA[Ваш аккаунт заблокирован.]]></string>
-	<string name="_sys_txt_account_unconfirmed"><![CDATA[Ваш имейл неподтверждён. Пожалуйста, проверьте свой эл. ящик ({1}) на наличие письма подтверждения и перейдите по ссылке в нём. Не можете найти письмо? Проверьте папку SPAM или <a href="{0}">снова запросите письмо верификации</a>.]]></string>
+	<string name="_sys_txt_account_unconfirmed"><![CDATA[Ваш емейл не подтверждён. Пожалуйста, проверьте свой эл. ящик ({1}) на наличие письма подтверждения и перейдите по ссылке в нём. <br />Не можете найти письмо? Проверьте папку "спам" или <a href="{0}">снова запросите письмо верификации</a>.]]></string>
 	<string name="_sys_txt_account_profile_system"><![CDATA[У Вас нет созданных профилей, поэтому Вы не можете пользоваться сайтом, пожалуйста, <a href="{0}">создайте профиль</a>.]]></string>
 	<string name="_sys_txt_captcha_not_available"><![CDATA[CAPTCHA недоступна]]></string>
     <string name="_sys_txt_change_image"><![CDATA[Изменить Картинку]]></string>
@@ -2140,6 +2190,7 @@
 	<string name="_top"><![CDATA[Топ]]></string>
 	<string name="_uknown"><![CDATA[неизвестно]]></string>
 	<string name="_undefined"><![CDATA[неопределено]]></string>
+	<string name="_vote_counter"><![CDATA[{0}]]></string>
 	<string name="_vote_do_like"><![CDATA[Спасибо!]]></string>
 	<string name="_vote_do_unlike"><![CDATA[Нет, спасибо]]></string>
 	<string name="_vote_do_like_by"><![CDATA[Поблагодарил]]></string>

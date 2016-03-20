@@ -7,6 +7,8 @@
  * @{
  */
 
+require_once(BX_DIRECTORY_PATH_INC . 'design.inc.php');
+
 /**
  * Page representation.
  * @see BxDolPage
@@ -100,14 +102,28 @@ class BxBasePage extends BxDolPage
      */
     protected function _getPageCode ()
     {
+    	$aHiddenOn = array(
+			pow(2, BX_DB_HIDDEN_PHONE - 1) => 'bx-def-media-phone-hide',
+			pow(2, BX_DB_HIDDEN_TABLET - 1) => 'bx-def-media-tablet-hide',
+			pow(2, BX_DB_HIDDEN_DESKTOP - 1) => 'bx-def-media-desktop-hide'
+		);
+
         $aVars = array ();
         $aBlocks = $this->_oQuery->getPageBlocks();
         foreach ($aBlocks as $sKey => $aCell) {
             $sCell = '';
             foreach ($aCell as $aBlock) {
                 $sContentWithBox = $this->_getBlockCode($aBlock);
+
+            	$sHiddenOn = '';
+		    	if(!empty($aBlock['hidden_on']))
+		    		foreach($aHiddenOn as $iHiddenOn => $sClass)
+		    			if((int)$aBlock['hidden_on'] & $iHiddenOn)
+		    				$sHiddenOn .= ' ' . $sClass;
+    	
+    	
                 if ($sContentWithBox)
-                    $sCell .= '<div class="bx-page-block-container bx-def-padding-topbottom" id="bx-page-block-' . $aBlock['id'] . '">' . $sContentWithBox . '</div>';
+                    $sCell .= '<div class="bx-page-block-container bx-def-padding-topbottom' . $sHiddenOn . '" id="bx-page-block-' . $aBlock['id'] . '">' . $sContentWithBox . '</div>';
             }
             $aVars[$sKey] = $sCell;
         }
@@ -149,7 +165,8 @@ class BxBasePage extends BxDolPage
                     isset($mixedContent['designbox_id']) ? $mixedContent['designbox_id'] : $aBlock['designbox_id'],
                     isset($mixedContent['menu']) ? $mixedContent['menu'] : false
 				);
-            } elseif (is_string($mixedContent) && !empty($mixedContent)) {
+            } 
+            elseif (is_string($mixedContent) && !empty($mixedContent)) {                    
                 $sContentWithBox = DesignBoxContent($sTitle, $mixedContent, $aBlock['designbox_id']);
             }
         }

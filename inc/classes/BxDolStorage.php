@@ -295,6 +295,11 @@ abstract class BxDolStorage extends BxDol implements iBxDolFactoryObject
         return true;
     }
 
+    public function getObject()
+    {
+    	return $this->_aObject['object'];
+    }
+
     /**
      * Get error code from the last occured error
      * @return error code

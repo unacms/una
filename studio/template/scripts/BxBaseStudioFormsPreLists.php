@@ -114,7 +114,7 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists
             else
                 $aRes = array('msg' => _t('_adm_form_err_pre_lists_create'));
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         } 
         else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-form-pre-list-create-popup', _t('_adm_form_txt_pre_lists_create_popup'), $this->_oTemplate->parseHtmlByName('form_add_list.html', array(
@@ -124,7 +124,7 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
 
@@ -134,7 +134,7 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists
 
         $aList = $this->_getItem('getLists');
         if($aList === false) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -210,7 +210,7 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists
             else
                 $aRes = array('msg' => _t('_adm_form_err_pre_lists_edit'));
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         }
         else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-form-pre-list-edit-popup', _t('_adm_form_txt_pre_lists_edit_popup', _t($aList['title'])), $this->_oTemplate->parseHtmlByName('form_add_list.html', array(
@@ -220,7 +220,7 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
 
@@ -231,7 +231,7 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists
         $iAffected = 0;
         $aIds = bx_get('ids');
         if(!$aIds || !is_array($aIds)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -254,7 +254,7 @@ class BxBaseStudioFormsPreLists extends BxDolStudioFormsPreLists
             $iAffected++;
         }
 
-        $this->_echoResultJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t('_adm_from_err_pre_lists_delete')));
+        echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t('_adm_from_err_pre_lists_delete')));
     }
 
     function getJsObject()

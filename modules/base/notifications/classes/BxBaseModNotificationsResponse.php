@@ -18,7 +18,12 @@ class BxBaseModNotificationsResponse extends BxDolAlertsResponse
         parent::__construct();
     }
 
-    protected function _getPrivacyView($aExtras)
+	protected function _getObjectOwnerId($aExtras)
+    {
+        return is_array($aExtras) && isset($aExtras['object_author_id']) ? (int)$aExtras['object_author_id'] : 0;
+    }
+
+    protected function _getObjectPrivacyView($aExtras)
     {
         return is_array($aExtras) && isset($aExtras['privacy_view']) ? (int)$aExtras['privacy_view'] : $this->_oModule->_oConfig->getPrivacyViewDefault();
     }

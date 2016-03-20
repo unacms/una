@@ -276,7 +276,7 @@ class BxDolInstallSiteConfig
                     <div class="bx-form-element-wrapper bx-def-margin-top">
                         <div class="bx-form-value">
                             <div class="bx-form-input-wrapper bx-form-input-wrapper-submit">
-                                <button class="bx-def-font-inputs bx-form-input-submit bx-btn bx-btn-primary" type="submit" name="site_config">
+                                <button class="bx-def-font-inputs bx-form-input-submit bx-btn bx-btn-primary" type="submit" name="site_config" value="1">
                                     {$sSubmitTitle}
                                 </button>
                             </div>

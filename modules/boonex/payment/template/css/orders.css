@@ -1,0 +1,68 @@
+iframe.hidden {
+    width: 0px;
+    height: 0px;
+    display: none;
+}
+
+/*--- 'Manual Order' and 'More' windows ---*/
+.ui-autocomplete.ui-front {
+	z-index: 1001;
+}
+div.bx-payment-pa-items {
+	max-height: 300px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+div.bx-payment-pa-item {
+	width: 100%;
+	white-space: nowrap;
+}
+div.bx-payment-pa-item-chb,
+div.bx-payment-pa-item-title,
+div.bx-payment-pa-item-quantity {
+    position: relative;
+    display: inline-block;
+	vertical-align: middle;
+}
+div.bx-payment-pa-item-chb {
+    width: 4%;
+}
+div.bx-payment-pa-item-chb input {
+    margin: 0px;
+    padding: 0px;
+}
+div.bx-payment-pa-item-title {
+    width: 80%;
+}
+div.bx-payment-pa-item-title-cnt {
+	TEXT-OVERFLOW: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space: nowrap;
+	overflow: hidden;
+}
+div.bx-payment-pa-item-quantity {
+    width: 16%;
+}
+
+/*--- View Order ---*/
+div.bx-payment-view-order {
+    border-top-width: 0px;
+}
+div.bx-payment-vo-row {
+	white-space: nowrap;
+}
+div.bx-payment-vo-caption,
+div.bx-payment-vo-content,
+div.bx-payment-vo-items {
+    position: relative;
+    display: inline-block;
+	vertical-align: top;
+
+    overflow: hidden;
+}
+div.bx-payment-vo-caption {
+    width: 30%;
+}
+div.bx-payment-vo-content {
+    width: 70%;
+}

@@ -34,7 +34,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
             'grid' => $oGrid->getCode()
         )));
 
-        $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+        echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
     }
 
     public function performActionAdd()
@@ -50,7 +50,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
 
                 $mixedIcon = $oStorage->storeFileFromForm($_FILES['icon_image'], false, 0);
                 if($mixedIcon === false) {
-                    $this->_echoResultJson(array('msg' => _t('_adm_nav_err_items_icon_image') . $oStorage->getErrorString()), true);
+                    echoJson(array('msg' => _t('_adm_nav_err_items_icon_image') . $oStorage->getErrorString()));
                     return;
                 }
 
@@ -89,7 +89,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
             else
                 $aRes = array('msg' => _t('_adm_nav_err_items_create'));
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         }
         else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-nav-item-create-popup', _t('_adm_nav_txt_items_create_popup'), $this->_oTemplate->parseHtmlByName('nav_add_item.html', array(
@@ -99,7 +99,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
 
@@ -109,7 +109,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
 
         $aItem = $this->_getItem('getItems');
         if($aItem === false) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -126,7 +126,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
             if($bIconImageCur && ($bIconImageNew || $bIconFont)) {
                 $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
                 if(!$oStorage->deleteFile((int)$aItem['icon'], 0)) {
-                    $this->_echoResultJson(array('msg' => _t('_adm_nav_err_items_icon_image_remove')), true);
+                    echoJson(array('msg' => _t('_adm_nav_err_items_icon_image_remove')));
                     return;
                 }
             }
@@ -136,7 +136,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                 $oStorage = BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES);
                 $sIcon = $oStorage->storeFileFromForm($_FILES['icon_image'], false, 0);
                 if($sIcon === false) {
-                    $this->_echoResultJson(array('msg' => _t('_adm_nav_err_items_icon_image') . $oStorage->getErrorString()), true);
+                    echoJson(array('msg' => _t('_adm_nav_err_items_icon_image') . $oStorage->getErrorString()));
                     return;
                 }
 
@@ -178,7 +178,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
             else
                 $aRes = array('msg' => _t('_adm_nav_err_items_edit'));
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         }
         else {
             $sTitle = _t($aItem['title']);
@@ -193,7 +193,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
             if($bUpdateGrid)
                 $aRes = array_merge($aRes, array('grid' => $this->getCode(false), 'blink' => $aItem['id']));
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         }
     }
 
@@ -202,7 +202,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
         $iAffected = 0;
         $aIds = bx_get('ids');
         if(!$aIds || !is_array($aIds)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -215,7 +215,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
             $iAffected++;
         }
 
-        $this->_echoResultJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t('_adm_nav_err_items_delete')));
+        echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t('_adm_nav_err_items_delete')));
     }
 
     public function performActionShowTo()
@@ -224,7 +224,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
 
         $aItem = $this->_getItem('getItems');
         if($aItem === false) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -317,7 +317,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
             else
                 $aRes = array('msg' => _t('_adm_nav_err_items_show_to'));
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         }
         else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-nav-item-hide-from-popup', _t('_adm_nav_txt_items_show_to_popup', _t($aItem['title'])), $this->_oTemplate->parseHtmlByName('nav_add_item.html', array(
@@ -327,7 +327,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => $sContent), true);
+            echoJson(array('popup' => $sContent));
         }
     }
 
@@ -337,7 +337,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
 
         $aIds = bx_get('ids');
         if(empty($aIds[0])) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -346,18 +346,18 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
         $aItem = array();
         $iItem = $this->oDb->getItems(array('type' => 'by_id', 'value' => $iId), $aItem);
         if($iItem != 1 || empty($aItem)){
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
         if(is_numeric($aItem['icon']) && (int)$aItem['icon'] != 0)
             if(!BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES)->deleteFile((int)$aItem['icon'], 0)) {
-                $this->_echoResultJson(array());
+                echoJson(array());
                 exit;
             }
 
         if($this->oDb->updateItem($aItem['id'], array('icon' => '')) !== false)
-            $this->_echoResultJson(array('grid' => $this->getCode(false), 'blink' => $iId, 'preview' => $this->_getIconPreview($aItem['id']), 'eval' => $this->getJsObject() . ".onDeleteIcon(oData)"), true);
+            echoJson(array('grid' => $this->getCode(false), 'blink' => $iId, 'preview' => $this->_getIconPreview($aItem['id']), 'eval' => $this->getJsObject() . ".onDeleteIcon(oData)"));
     }
 
     public function getJsObject()
@@ -634,7 +634,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                     'caption' => _t('_adm_nav_txt_items_submenu_popup'),
                     'info' => '',
                     'value' => '1',
-                    'checked' => $aItem['submenu_popup'] == '1',
+                    'checked' => isset($aItem['submenu_popup']) && $aItem['submenu_popup'] == '1',
                     'db' => array (
                         'pass' => 'Int',
                     )

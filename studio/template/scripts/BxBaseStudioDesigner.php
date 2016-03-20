@@ -115,6 +115,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
 
         return $oTemplate->parseHtmlByName('designer.html', array(
             'js_object' => $this->getPageJsObject(),
+        	'action_url' => $this->sManageUrl,
             'content' => $sContent,
         ));
     }
@@ -127,7 +128,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
             'form_attrs' => array(
                 'id' => $this->sLogoFormId,
                 'name' => $this->sLogoFormId,
-                'action' => BX_DOL_URL_STUDIO . 'designer.php',
+                'action' => $this->sManageUrl,
                 'method' => 'post',
                 'enctype' => 'multipart/form-data',
                 'target' => $this->sLogoIframeId
@@ -155,15 +156,15 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
                     'ajax_action_delete' => $this->getPageJsObject() . '.deleteLogo()',
                     'storage_object' => 'sys_images_custom',
                     'transcoder_object' => 'sys_custom_images',
-                    'transcoder_image_width' => getParam('sys_site_logo_width'),
-                    'transcoder_image_height' => getParam('sys_site_logo_height'),
-                    'value' => (int)getParam('sys_site_logo'),
+                    'transcoder_image_width' => (int)getParam($this->sParamLogoWidth),
+                    'transcoder_image_height' => (int)getParam($this->sParamLogoHeight),
+                    'value' => (int)getParam($this->sParamLogo),
                 ),
                 'width' => array(
                     'type' => 'text',
                     'name' => 'width',
                     'caption' => _t('_adm_stg_cpt_option_sys_site_logo_width'),
-                    'value' => getParam('sys_site_logo_width'),
+                    'value' => (int)getParam($this->sParamLogoWidth),
                     'db' => array (
                         'pass' => 'Int',
                     ),
@@ -172,7 +173,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
                     'type' => 'text',
                     'name' => 'height',
                     'caption' => _t('_adm_stg_cpt_option_sys_site_logo_height'),
-                    'value' => getParam('sys_site_logo_height'),
+                    'value' => (int)getParam($this->sParamLogoHeight),
                     'db' => array (
                         'pass' => 'Int',
                     ),
@@ -182,7 +183,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
                     'name' => 'alt',
                     'caption' => _t('_adm_dsg_txt_alt_text'),
                     'info' => _t('_adm_dsg_dsc_alt_text'),
-                    'value' => getParam('sys_site_logo_alt'),
+                    'value' => getParam($this->sParamLogoAlt),
                     'checker' => array(
                         'func' => '',
                         'params' => array(),
@@ -210,6 +211,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
 
         return $oTemplate->parseHtmlByName('designer.html', array(
             'js_object' => $this->getPageJsObject(),
+        	'action_url' => $this->sManageUrl,
             'content' => $this->getBlockCode(array(
 				'items' => $oTemplate->parseHtmlByName('dsr_logo.html', array('logo_iframe_id' => $this->sLogoIframeId, 'form' => $oForm->getCode())),
 			))
@@ -316,6 +318,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
 
         return $oTemplate->parseHtmlByName('designer.html', array(
             'js_object' => $this->getPageJsObject(),
+        	'action_url' => $this->sManageUrl,
             'content' => $this->getBlockCode(array(
 				'items' => $oTemplate->parseHtmlByName('dsr_icon.html', array('icon_iframe_id' => $this->sIconIframeId, 'form' => $oForm->getCode())),
 			))
@@ -388,8 +391,9 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
         $oTemplate->addJs(array('codemirror/codemirror.min.js'));
         $oTemplate->addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'codemirror/|codemirror.css');
 
-		return $oTemplate->parseHtmlByName('designer.html', array(
+		return $oTemplate->parseHtmlByName('designer_cover.html', array(
 			'js_object' => $this->getPageJsObject(),
+			'action_url' => $this->sManageUrl,
 			'content' => $this->getBlockCode(array(
 				'items' => $oTemplate->parseHtmlByName('dsr_cover.html', array(
 					'warning' => MsgBox(_t('_adm_dsg_dsc_cover_warning')),
@@ -406,6 +410,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
 
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('designer.html', array(
             'js_object' => $this->getPageJsObject(),
+        	'action_url' => $this->sManageUrl,
             'content' => $oPage->getPageCode()
         ));
     }

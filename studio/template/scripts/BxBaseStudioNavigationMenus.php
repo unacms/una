@@ -61,7 +61,7 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus
             else
                 $aRes = array('msg' => _t('_adm_nav_err_menus_create'));
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         }
         else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-nav-menu-create-popup', _t('_adm_nav_txt_menus_create_popup'), $this->_oTemplate->parseHtmlByName('nav_add_menu.html', array(
@@ -71,7 +71,7 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
 
@@ -81,7 +81,7 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus
 
         $aMenu = $this->_getItem('getMenus');
         if($aMenu === false) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -112,7 +112,7 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus
             else
                 $aRes = array('msg' => _t('_adm_nav_err_menus_edit'));
 
-            $this->_echoResultJson($aRes, true);
+            echoJson($aRes);
         }
         else {
             $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-nav-menu-edit-popup', _t('_adm_nav_txt_menus_edit_popup', _t($aMenu['title'])), $this->_oTemplate->parseHtmlByName('nav_add_menu.html', array(
@@ -122,7 +122,7 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus
                 'action' => $sAction
             )));
 
-            $this->_echoResultJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))), true);
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
 
@@ -131,7 +131,7 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus
         $iAffected = 0;
         $aIds = bx_get('ids');
         if(!$aIds || !is_array($aIds)) {
-            $this->_echoResultJson(array());
+            echoJson(array());
             exit;
         }
 
@@ -154,7 +154,7 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus
             $iAffected++;
         }
 
-        $this->_echoResultJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t('_adm_nav_err_menus_delete')));
+        echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t('_adm_nav_err_menus_delete')));
     }
 
     function getJsObject()
