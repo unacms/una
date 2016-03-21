@@ -238,7 +238,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
             return $this->_sLangsPrefix . 'err_unknown_vendor';
 
 		$oProvider = $this->getObjectProvider($sProvider, $iVendorId);
-        if($oProvider === false)
+        if($oProvider === false || !$oProvider->isActive())
         	return $this->_sLangsPrefix . 'err_incorrect_provider';
 
         $aInfo = $this->getObjectCart()->getInfo($sType, $this->_iUserId, $iVendorId, $aItems);
@@ -300,7 +300,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
         $aData = &$_REQUEST;
 
         $oProvider = $this->getObjectProvider($sProvider, $mixedVendorId);
-        if($oProvider === false)
+        if($oProvider === false || !$oProvider->isActive())
         	return $this->_oTemplate->displayPageCodeError($this->_sLangsPrefix . 'err_incorrect_provider');
 
         $aResult = $oProvider->finalizeCheckout($aData);
@@ -328,7 +328,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
     public function actionFinalizedCheckout($sProvider, $mixedVendorId = "")
     {
         $oProvider = $this->getObjectProvider($sProvider, $mixedVendorId);
-        if($oProvider === false)
+        if($oProvider === false || !$oProvider->isActive())
         	return $this->_oTemplate->displayPageCodeError($this->_sLangsPrefix . 'err_incorrect_provider');
 
         $aResult = $oProvider->finalizedCheckout();
@@ -338,7 +338,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
     public function actionNotify($sProvider, $mixedVendorId = "")
     {
     	$oProvider = $this->getObjectProvider($sProvider, $mixedVendorId);
-        if($oProvider === false)
+        if($oProvider === false || !$oProvider->isActive())
         	return $this->_oTemplate->displayPageCodeError($this->_sLangsPrefix . 'err_incorrect_provider');
 
 		$oProvider->notify();

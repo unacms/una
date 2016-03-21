@@ -1,11 +1,16 @@
 
 function bx_base_text_select_thumb(eCheckbox) {
-    var eCont = $(eCheckbox).parents('.bx-form-input-files-result');
+	bx_base_text_select_ghost(eCheckbox, 'thumb');
+}
+
+function bx_base_text_select_ghost(eCheckbox, sName) {
+	var eCont = $(eCheckbox).parents('.bx-form-input-files-result');
     if (!eCont.length)
         return;
-    eCont.find('.bx-base-text-use-as-thumb input:checked').each (function () {        
-        if ($(this).attr('id') != $(eCheckbox).attr('id'))
-            $(this).css('border', '1px solid red').attr('checked', false);
+
+    eCont.find('.bx-base-text-use-as-' + sName + ' input:checked').each (function () {        
+        if($(this).attr('id') != $(eCheckbox).attr('id'))
+        	$(this).css('border', '1px solid red').attr('checked', false);
     });
 }
 

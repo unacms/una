@@ -289,8 +289,7 @@
 	<string name="_bx_payment_cbee_cpt"><![CDATA[Chargebee]]></string>
 	<string name="_bx_payment_cbee_dsc"><![CDATA[Chargebee payment provider]]></string>
 	<string name="_bx_payment_cbee_active_cpt"><![CDATA[Active]]></string>
-	<string name="_bx_payment_cbee_active_dsc"><![CDATA[Activate(Deactivate) provider]]></string>
-	<string name="_bx_payment_cbee_active_err"><![CDATA[You should have SSL certificate (HTTPS connection) to activate and use Chargebee on your site.]]></string>
+	<string name="_bx_payment_cbee_active_dsc"><![CDATA[Activate(Deactivate) provider. Note. It's recommended to use SSL for better payment processing.]]></string>
 	<string name="_bx_payment_cbee_mode_cpt"><![CDATA[Mode]]></string>
 	<string name="_bx_payment_cbee_mode_dsc"><![CDATA[Mode to process payments]]></string>
 	<string name="_bx_payment_cbee_mode_live"><![CDATA[live]]></string>
@@ -303,6 +302,8 @@
 	<string name="_bx_payment_cbee_test_site_dsc"><![CDATA[Your site name registered in Chargebee for 'test' mode]]></string>
 	<string name="_bx_payment_cbee_test_api_key_cpt"><![CDATA[API Key (test)]]></string>
 	<string name="_bx_payment_cbee_test_api_key_dsc"><![CDATA[Your Chargebee API Access key for 'test' mode]]></string>
+	<string name="_bx_payment_cbee_ssl_cpt"><![CDATA[Enable SSL]]></string>
+	<string name="_bx_payment_cbee_ssl_dsc"><![CDATA[Enable SSL connection to communicate with Chargebee. Note. URLs below will be updated after saving.]]></string>
 	<string name="_bx_payment_cbee_return_data_url_cpt"><![CDATA[Data return URL]]></string>
 	<string name="_bx_payment_cbee_notify_url_cpt"><![CDATA[Webhooks URL]]></string>
 	<string name="_bx_payment_cbee_msg_subscribed"><![CDATA[Subscription was successfully created.]]></string>

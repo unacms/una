@@ -47,6 +47,19 @@ class BxBaseModPaymentProvider extends BxDol
         $this->_bRedirectOnResult = false;
     }
 
+    public function isActive()
+    {
+    	return $this->getOption('active') == 'on';
+    }
+
+    public function getOption($sName)
+    {
+    	if(substr($sName, 0, strlen($this->_sPrefix)) != $this->_sPrefix)
+    		$sName = $this->_sPrefix . $sName;
+
+        return isset($this->_aOptions[$sName]) ? $this->_aOptions[$sName]['value'] : '';
+    }
+
 	public function getReturnUrl()
     {
 		return $this->_oModule->_oConfig->getUrl('URL_RETURN');
@@ -82,10 +95,6 @@ class BxBaseModPaymentProvider extends BxDol
         return $this->_oModule->_oDb->getOptions((int)$aPending['seller_id'], $this->_iId);
     }
 
-    protected function getOption($sName)
-    {
-        return isset($this->_aOptions[$this->_sPrefix . $sName]) ? $this->_aOptions[$this->_sPrefix . $sName]['value'] : "";
-    }
 
     /**
 	 *

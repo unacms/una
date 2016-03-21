@@ -56,19 +56,7 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
                 $this->aInputs[$CNF['FIELD_PHOTO']]['content_id'] = $aValues['id'];
             }
 
-            $aVars = array (
-                'name' => $this->aInputs[$CNF['FIELD_PHOTO']]['name'],
-                'content_id' => $this->aInputs[$CNF['FIELD_PHOTO']]['content_id'],
-                'editor_id' => $CNF['FIELD_TEXT_ID'],
-                'thumb_id' => isset($aContentInfo[$CNF['FIELD_THUMB']]) ? $aContentInfo[$CNF['FIELD_THUMB']] : 0,
-                'bx_if:set_thumb' => array (
-                    'condition' => CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedSetThumb(),
-                    'content' => array (
-                        'name_thumb' => $CNF['FIELD_THUMB'],
-                    ),
-                ),
-            );
-            $this->aInputs[$CNF['FIELD_PHOTO']]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName('form_ghost_template.html', $aVars);
+            $this->aInputs[$CNF['FIELD_PHOTO']]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName('form_ghost_template.html', $this->_getPhotoGhostTmplVars($aContentInfo));
         }
 
         return parent::initChecker($aValues, $aSpecificValues);
@@ -172,6 +160,24 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
     protected function _associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId)
     {
         $oStorage->updateGhostsContentId ($iFileId, $iProfileId, $iContentId);
+    }
+
+    protected function _getPhotoGhostTmplVars($aContentInfo = array())
+    {
+    	$CNF = &$this->_oModule->_oConfig->CNF;
+
+    	return array (
+			'name' => $this->aInputs[$CNF['FIELD_PHOTO']]['name'],
+			'content_id' => $this->aInputs[$CNF['FIELD_PHOTO']]['content_id'],
+			'editor_id' => $CNF['FIELD_TEXT_ID'],
+			'thumb_id' => isset($aContentInfo[$CNF['FIELD_THUMB']]) ? $aContentInfo[$CNF['FIELD_THUMB']] : 0,
+			'bx_if:set_thumb' => array (
+				'condition' => CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedSetThumb(),
+				'content' => array (
+					'name_thumb' => $CNF['FIELD_THUMB'],
+				),
+			),
+		);
     }
 }
 

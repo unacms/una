@@ -174,6 +174,7 @@ class BxBaseVote extends BxDolVote
         return $this->_oTemplate->parseHtmlByName($this->_sTmplNameLegend, array(
         	'style_prefix'  => $this->_sStylePrefix,
         	'html_id' => $this->_aHtmlIds['legend_stars'],
+        	'type' => $this->_sType,
         	'bx_repeat:items' => $aTmplVarsItems
         ));
     }
@@ -194,18 +195,16 @@ class BxBaseVote extends BxDolVote
 
     public function getElement($aParams = array())
     {
+    	$aParams = array_merge($this->_aElementDefaults[$this->_sType], $aParams);
     	$bDynamicMode = isset($aParams['dynamic_mode']) && $aParams['dynamic_mode'] === true;
 
-        $bLike =  $this->isLikeMode();
-        $sType = $bLike ? BX_DOL_VOTE_TYPE_LIKES : BX_DOL_VOTE_TYPE_STARS;
-
         $bShowDoVote = !isset($aParams['show_do_vote']) || $aParams['show_do_vote'] == true;
-        $bShowDoVoteAsButtonSmall = $bLike && isset($aParams['show_do_vote_as_button_small']) && $aParams['show_do_vote_as_button_small'] == true;
-        $bShowDoVoteAsButton = $bLike && !$bShowDoVoteAsButtonSmall && isset($aParams['show_do_vote_as_button']) && $aParams['show_do_vote_as_button'] == true;
+        $bShowDoVoteAsButtonSmall = $this->_bLike && isset($aParams['show_do_vote_as_button_small']) && $aParams['show_do_vote_as_button_small'] == true;
+        $bShowDoVoteAsButton = $this->_bLike && !$bShowDoVoteAsButtonSmall && isset($aParams['show_do_vote_as_button']) && $aParams['show_do_vote_as_button'] == true;
         $bShowCounter = isset($aParams['show_counter']) && $aParams['show_counter'] === true;
-        $bShowLegend = !$bLike && isset($aParams['show_legend']) && $aParams['show_legend'] === true;
+        $bShowLegend = !$this->_bLike && isset($aParams['show_legend']) && $aParams['show_legend'] === true;
 
-        $sMethodDoVote = '_getDoVote' . ucfirst($sType);
+        $sMethodDoVote = '_getDoVote' . ucfirst($this->_sType);
         if(!method_exists($this, $sMethodDoVote))
             return '';
 
@@ -217,15 +216,15 @@ class BxBaseVote extends BxDolVote
         if(!$isAllowedVote && (int)$aVote['count'] == 0)
             return '';
 
-        $aParams = array_merge($this->_aElementDefaults[$sType], $aParams);
         $aParams['is_voted'] = $this->_oQuery->isPerformed($iObjectId, $iAuthorId) ? true : false;
 
         //--- Do Vote
+        $bTmplVarsDoVote = $bShowDoVote && (!$this->_bLike || ($this->_bLike && $isAllowedVote));
         $aTmplVarsDoVote = array();
-        if($bShowDoVote && $isAllowedVote)
+        if($bTmplVarsDoVote)
         	$aTmplVarsDoVote = array(
 				'style_prefix' => $this->_sStylePrefix,
-				'do_vote' => $this->$sMethodDoVote($aParams),
+				'do_vote' => $this->$sMethodDoVote($aParams, $isAllowedVote),
 			);
 
         //--- Counter
@@ -250,12 +249,12 @@ class BxBaseVote extends BxDolVote
         $sTmplName = 'vote_element_' . (!empty($aParams['usage']) ? $aParams['usage'] : BX_DOL_VOTE_USAGE_DEFAULT) . '.html';
         return $this->_oTemplate->parseHtmlByName($sTmplName, array(
             'style_prefix' => $this->_sStylePrefix,
-            'html_id' => $this->_aHtmlIds['main_' . $sType],
-            'class' => $this->_sStylePrefix . '-' . $sType . ($bShowDoVoteAsButton ? '-button' : '') . ($bShowDoVoteAsButtonSmall ? '-button-small' : ''),
+            'html_id' => $this->_aHtmlIds['main_' . $this->_sType],
+            'class' => $this->_sStylePrefix . '-' . $this->_sType . ($bShowDoVoteAsButton ? '-button' : '') . ($bShowDoVoteAsButtonSmall ? '-button-small' : ''),
             'rate' => $aVote['rate'],
             'count' => $aVote['count'],
         	'bx_if:show_do_vote' => array(
-        		'condition' => $bShowDoVote && $isAllowedVote,
+        		'condition' => $bTmplVarsDoVote,
         		'content' => $aTmplVarsDoVote
         	),
         	'bx_if:show_counter' => array(
@@ -270,7 +269,7 @@ class BxBaseVote extends BxDolVote
         ));
     }
 
-    protected function _getDoVoteStars($aParams = array())
+    protected function _getDoVoteStars($aParams = array(), $isAllowedVote = true)
     {
         $sJsObject = $this->getJsObjectName();
         $iMinValue = $this->getMinValue();
@@ -292,11 +291,12 @@ class BxBaseVote extends BxDolVote
                 'style_prefix' => $this->_sStylePrefix
             );
 
-            $aTmplVarsButtons[] = array(
-                'style_prefix' => $this->_sStylePrefix,
-                'js_object' => $sJsObject,
-                'value' => $i
-            );
+            if($isAllowedVote)
+	            $aTmplVarsButtons[] = array(
+	                'style_prefix' => $this->_sStylePrefix,
+	                'js_object' => $sJsObject,
+	                'value' => $i
+	            );
         }
 
         return $this->_oTemplate->parseHtmlByName($this->_sTmplNameDoVoteStars, array(
@@ -314,7 +314,7 @@ class BxBaseVote extends BxDolVote
         ));
     }
 
-    protected function _getDoVoteLikes($aParams = array())
+    protected function _getDoVoteLikes($aParams = array(), $isAllowedVote = true)
     {
     	$bVoted = isset($aParams['is_voted']) && $aParams['is_voted'] === true;
         $bShowDoVoteAsButtonSmall = isset($aParams['show_do_vote_as_button_small']) && $aParams['show_do_vote_as_button_small'] == true;

@@ -10,14 +10,23 @@ div.bx-market-unit-info {
 }
 div.bx-market-ui-cell {
 	display: inline-block;
+	vertical-align: middle;
+}
+div.bx-market-uic-left {
+	width: 34%;
+}
+div.bx-market-uic-right {
+	width: 64%;
+	text-align: right;
+}
+.bx-market-ui-price {
+	display: inline-block;
+	float: none;
 	vertical-align: top;
 }
-div.bx-market-uic-wide {
-	width: 49%;
-}
-div.bx-market-uic-narrow {
-	width: 49%;
-	text-align: right;
+.bx-market-ui-price-or {
+	line-height: 24px;
+    line-height: 1.5rem;
 }
 .bx-market-ui-price-or:first-child {
 	display: none;
