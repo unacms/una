@@ -102,6 +102,14 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
+	    if($this->_oModule->checkAllowedSetCover() === CHECK_ACTION_RESULT_ALLOWED) {
+            $aCover = isset($_POST[$CNF['FIELD_COVER']]) ? bx_process_input ($_POST[$CNF['FIELD_COVER']], BX_DATA_INT) : false;
+
+            $aValsToAdd[$CNF['FIELD_COVER']] = 0;
+            if(!empty($aCover) && is_array($aCover) && ($iFileCover = array_pop($aCover)))
+                $aValsToAdd[$CNF['FIELD_COVER']] = $iFileCover;
+        }
+
         $aPackage = bx_process_input(bx_get($CNF['FIELD_PACKAGE']), BX_DATA_INT);
 		$aValsToAdd[$CNF['FIELD_PACKAGE']] = 0;
 		if(!empty($aPackage) && is_array($aPackage) && ($iFilePackage = array_pop($aPackage)))
@@ -117,6 +125,14 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
 	function update ($iContentId, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
+
+	    if($this->_oModule->checkAllowedSetCover() === CHECK_ACTION_RESULT_ALLOWED) {
+            $aCover = bx_process_input (bx_get($CNF['FIELD_COVER']), BX_DATA_INT);
+
+            $aValsToAdd[$CNF['FIELD_COVER']] = 0;
+            if (!empty($aCover) && is_array($aCover) && ($iFileCover = array_pop($aCover)))
+                $aValsToAdd[$CNF['FIELD_COVER']] = $iFileCover;
+        }
 
 		$aPackage = bx_process_input(bx_get($CNF['FIELD_PACKAGE']), BX_DATA_INT);
 		$aValsToAdd[$CNF['FIELD_PACKAGE']] = 0;
@@ -157,6 +173,24 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
         		break;
         }
     }
+
+    protected function _getPhotoGhostTmplVars($aContentInfo = array())
+    {
+    	$CNF = &$this->_oModule->_oConfig->CNF;
+
+    	$aResult = parent::_getPhotoGhostTmplVars($aContentInfo);
+    	$aResult = array_merge($aResult, array(
+    		'cover_id' => isset($aContentInfo[$CNF['FIELD_COVER']]) ? $aContentInfo[$CNF['FIELD_COVER']] : 0,
+    		'bx_if:set_cover' => array (
+				'condition' => CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedSetCover(),
+				'content' => array (
+					'name_cover' => $CNF['FIELD_COVER'],
+				),
+			),
+    	));
+
+    	return $aResult;
+	}
 }
 
 /** @} */

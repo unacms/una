@@ -255,6 +255,15 @@ class BxMarketModule extends BxBaseModTextModule
 		);
     }
 
+    public function checkAllowedSetCover ()
+    {
+        $aCheck = checkActionModule($this->_iProfileId, 'set cover', $this->getName(), false);
+        if($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
+            return $aCheck[CHECK_ACTION_MESSAGE];
+
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
+
 	public function checkAllowedDownload($aDataEntry, $isPerformAction = false)
     {
         $CNF = &$this->_oConfig->CNF;

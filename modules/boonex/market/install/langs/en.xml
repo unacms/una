@@ -56,7 +56,8 @@
 	<string name="_bx_market_form_entry_input_sys_pictures"><![CDATA[Pictures]]></string>
 	<string name="_bx_market_form_entry_input_pictures"><![CDATA[Pictures]]></string>
 	<string name="_bx_market_form_entry_input_pictures_title"><![CDATA[Title]]></string>
-	<string name="_bx_market_form_entry_input_pictures_use_as_thumb"><![CDATA[Preview-picture]]></string>
+	<string name="_bx_market_form_entry_input_pictures_use_as_thumb"><![CDATA[Preview picture]]></string>
+	<string name="_bx_market_form_entry_input_pictures_use_as_cover"><![CDATA[Cover picture]]></string>
 	<string name="_bx_market_form_entry_input_sys_files"><![CDATA[Files]]></string>
 	<string name="_bx_market_form_entry_input_files"><![CDATA[Files]]></string>
 	<string name="_bx_market_form_entry_input_files_use_as_main"><![CDATA[Use as Main]]></string>

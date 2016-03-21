@@ -133,7 +133,7 @@ class BxMarketTemplate extends BxBaseModTextTemplate
 
     	$oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
     	$oImagesTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_SCREENSHOT']);
-    	$aPhotos = $this->_oDb->getPhoto(array('type' => 'content_id', 'content_id' => $aData[$CNF['FIELD_ID']], 'except' => $aData[$CNF['FIELD_THUMB']]));
+    	$aPhotos = $this->_oDb->getPhoto(array('type' => 'content_id', 'content_id' => $aData[$CNF['FIELD_ID']], 'except' => array($aData[$CNF['FIELD_THUMB']], $aData[$CNF['FIELD_COVER']])));
     	$iPhotos = count($aPhotos);
 
     	$aTmplVarsPhotos = array();

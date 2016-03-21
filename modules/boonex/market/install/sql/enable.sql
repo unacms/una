@@ -284,6 +284,10 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 SET @iIdActionSetThumb = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('bx_market', 'set cover', NULL, '_bx_market_acl_action_set_cover', '', 1, 3);
+SET @iIdActionSetCover = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('bx_market', 'edit any entry', NULL, '_bx_market_acl_action_edit_any_entry', '', 1, 3);
 SET @iIdActionEntryEditAny = LAST_INSERT_ID();
 
@@ -332,6 +336,12 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iModerator, @iIdActionSetThumb),
 (@iAdministrator, @iIdActionSetThumb),
 (@iPremium, @iIdActionSetThumb),
+
+-- set entry cover
+(@iStandard, @iIdActionSetCover),
+(@iModerator, @iIdActionSetCover),
+(@iAdministrator, @iIdActionSetCover),
+(@iPremium, @iIdActionSetCover),
 
 -- edit any entry
 (@iModerator, @iIdActionEntryEditAny),

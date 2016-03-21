@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS `bx_market_products` (
   `added` int(11) NOT NULL default '0',
   `changed` int(11) NOT NULL default '0',
   `thumb` int(11) NOT NULL default '0',
+  `cover` int(11) NOT NULL default '0',
   `package` int(11) NOT NULL default '0',
   `name` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
@@ -211,13 +212,15 @@ INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `
 
 INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`) VALUES 
 ('bx_market_preview', 'bx_market_photos_resized', 'Storage', 'a:1:{s:6:"object";s:16:"bx_market_photos";}', 'no', '1', '2592000', '0'),
+('bx_market_cover', 'bx_market_photos_resized', 'Storage', 'a:1:{s:6:"object";s:16:"bx_market_photos";}', 'no', '1', '2592000', '0'),
 ('bx_market_screenshot', 'bx_market_photos_resized', 'Storage', 'a:1:{s:6:"object";s:16:"bx_market_photos";}', 'no', '1', '2592000', '0'),
 ('bx_market_gallery', 'bx_market_photos_resized', 'Storage', 'a:1:{s:6:"object";s:16:"bx_market_photos";}', 'no', '1', '2592000', '0');
 
 INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_params`, `order`) VALUES 
-('bx_market_preview', 'Resize', 'a:3:{s:1:"w";s:3:"148";s:1:"h";s:3:"148";s:11:"crop_resize";s:1:"1";}', '0'),
+('bx_market_preview', 'Resize', 'a:3:{s:1:"w";s:3:"150";s:1:"h";s:3:"150";s:11:"crop_resize";s:1:"1";}', '0'),
+('bx_market_cover', 'Resize', 'a:3:{s:1:"w";s:3:"2000";s:1:"h";s:3:"2000";s:11:"crop_resize";s:1:"1";}', '0'),
 ('bx_market_screenshot', 'Resize', 'a:3:{s:1:"w";s:3:"200";s:1:"h";s:3:"120";s:11:"crop_resize";s:1:"1";}', '0'),
-('bx_market_gallery', 'Resize', 'a:1:{s:1:"w";s:3:"500";}', '0');
+('bx_market_gallery', 'Resize', 'a:3:{s:1:"w";s:3:"300";s:1:"h";s:3:"300";s:11:"crop_resize";s:1:"1";}', '0');
 
 -- FORMS
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 

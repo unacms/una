@@ -9,6 +9,12 @@
     max-height:12.5rem;
 }
 
+.bx-uploader-ghost .bx-btn {
+	float: none;
+	display: inline-block;
+	vertical-align: top; 
+}
+
 .bx-base-text-uploader-ghost input.bx-form-input-text {
     width:18.75rem;
 }
