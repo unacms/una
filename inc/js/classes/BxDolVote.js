@@ -27,24 +27,24 @@ function BxDolVote(options)
     //--- Init stars based vote ---//
     var $this = this;
     if(!this._iLikeMode) {
-	    var oMainStars = $('#' + this._aHtmlIds['main_stars']);
-	    if(oMainStars) {
-	    	var fRate = oMainStars.attr('bx_vote_data_rate');
-	    	var iStarWidth = this._getStarWidthDo(oMainStars);
+    	$('.' + this._sSP + '.' + this._sSP + '-stars').each(function() {
+    		var oDoVote = $(this);
+	    	var fRate = oDoVote.attr('bx_vote_data_rate');
+	    	var iStarWidth = $this._getStarWidthDo(oDoVote);
 
-	    	this._getSliderDo(oMainStars).width(Math.round(fRate * iStarWidth));
-	    }
+	    	$this._getSliderDo(oDoVote).width(Math.round(fRate * iStarWidth));
+    	});
 
-	    var oLegendStars = $('#' + this._aHtmlIds['legend_stars']);
-	    if(oLegendStars) {
-	    	var iStarWidth = this._getStarWidthLegend(oLegendStars);
+    	$('.' + this._sSP + '-legend.' + this._sSP + '-legend-stars').each(function() {
+    		var oLegend = $(this);
+    		var iStarWidth = $this._getStarWidthLegend(oLegend);
 
-	    	oLegendStars.find('.' + this._sSP + '-legend-item').each(function() {
+	    	oLegend.find('.' + $this._sSP + '-legend-item').each(function() {
 	    		var oItem = $(this);
 
 	    		oItem.find('.' + $this._sSP + '-slider').width(parseInt(oItem.attr('bx_vote_item_value')) * iStarWidth); 
 	    	});
-	    }
+    	});
     }
 }
 
