@@ -43,17 +43,6 @@ class BxPaymentDb extends BxBaseModPaymentDb
         return $this->getAll($sQuery);
     }
 
-    public function getFormData($iUserId)
-    {
-        $sQuery = $this->prepare("SELECT
-                `tuv`.`option_id` AS `option_id`,
-                `tuv`.`value` AS `value`
-            FROM `" . $this->_sPrefix . "user_values` AS `tuv`
-            WHERE `tuv`.`user_id`=?", $iUserId);
-
-        return $this->getAllWithKey($sQuery, 'option_id');
-    }
-
 	public function getProviders($aParams = array())
     {
     	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
@@ -161,24 +150,13 @@ class BxPaymentDb extends BxBaseModPaymentDb
 
 		return $aResult;
 	}
-    public function getVendorInfoProvider($iVendorId, $sProvider)
-    {
-		$aProvider = $this->getProviders(array('type' => 'by_name', 'name' => $sProvider));
-		$aOptions = $this->getOptions($iVendorId, $aProvider['id']);
 
-		$aResult = array();
-		if(isset($aOptions[$aProvider['option_prefix'] . 'active']) && $aOptions[$aProvider['option_prefix'] . 'active']['value'] == 'on') {
-			$aProvider['options'] = $aOptions;
-			$aResult = $aProvider;
-		}
-
-		return $aResult;
-    }
     public function getFirstAdminId()
     {
     	$sQuery = $this->prepare("SELECT `profile_id` FROM `sys_accounts` WHERE `role`&" . BX_DOL_ROLE_ADMIN . " ORDER BY `profile_id` ASC LIMIT 1");
         return (int)$this->getOne($sQuery);
     }
+
     public function getAdminsIds()
     {
     	$sQuery = $this->prepare("SELECT `profile_id` FROM `sys_accounts` WHERE `role`&" . BX_DOL_ROLE_ADMIN . " ORDER BY `profile_id` ASC");

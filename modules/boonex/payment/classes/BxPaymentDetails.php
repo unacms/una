@@ -88,7 +88,6 @@ class BxPaymentDetails extends BxDol
         $iProvider = 0;
         $sProvider = "";
         $oProvider = null;
-        $aUserValues = $this->_oModule->_oDb->getFormData($iUserId);
         foreach($aInputs as $aInput) {
             if($iProvider != $aInput['provider_id']) {
                 if(!empty($iProvider))
@@ -105,7 +104,7 @@ class BxPaymentDetails extends BxDol
 
                 $iProvider = $aInput['provider_id'];
                 $sProvider = $aInput['provider_name'];
-                $oProvider = $this->_oModule->getObjectProvider($sProvider);
+                $oProvider = $this->_oModule->getObjectProvider($sProvider, $iUserId);
                 $bCollapsed = true;
             }
 
@@ -113,7 +112,7 @@ class BxPaymentDetails extends BxDol
 				'type' => $aInput['type'],
                 'name' => $aInput['name'],
                 'caption' => _t($aInput['caption']),
-                'value' => isset($aUserValues[$aInput['id']]['value']) ? $aUserValues[$aInput['id']]['value'] : '',
+                'value' => $oProvider->getOption($aInput['name']),
                 'info' => _t($aInput['description']),
             	'attrs' => array(
             		'bx-data-provider' => $iProvider
@@ -142,7 +141,7 @@ class BxPaymentDetails extends BxDol
 
                 case 'checkbox':
                     $aForm['inputs'][$aInput['name']]['value'] = 'on';
-                    $aAddon = array('checked' => isset($aUserValues[$aInput['id']]['value']) && $aUserValues[$aInput['id']]['value'] == 'on' ? true : false);
+                    $aAddon = array('checked' => $oProvider->getOption($aInput['name']) == 'on');
                     break;
 
 				 case 'value':
